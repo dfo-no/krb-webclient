@@ -19,7 +19,7 @@ jobs:
         with:
           node-version: ${{ env.NODE_VERSION }}
 
-      - name: Build for develop
+      - name: Build for develop (yarn install, and build)
         run: |
           yarn install
           yarn build
