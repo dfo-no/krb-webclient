@@ -2,10 +2,10 @@ name: Continuous Deployment
 
 on:
   push:
-    branches: [main]
+    branches: [main, deploytest]
 
 env:
-  AZURE_WEBAPP_NAME: krb-webclient # set this to your application's name
+  AZURE_WEBAPP_NAME: Krb-Kravbank-dev-app # set this to your application's name
   AZURE_WEBAPP_PACKAGE_PATH: 'build' # set this to the path to your web app project, defaults to the repository root
   NODE_VERSION: '14.x'
 
