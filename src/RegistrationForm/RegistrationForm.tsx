@@ -5,7 +5,7 @@ import { useHistory } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 
 export default function RegistrationForm (this: any): ReactElement {
-  const { register, handleSubmit, errors } = useForm<IFormInput>();
+  const { register, handleSubmit } = useForm<IFormInput>();
   const { t } = useTranslation('translations');
   const history = useHistory();
   const onSubmit = (data: IFormInput) => {
