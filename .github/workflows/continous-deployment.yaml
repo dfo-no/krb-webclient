@@ -19,6 +19,10 @@ jobs:
         with:
           node-version: ${{ env.NODE_VERSION }}
 
+      - name: Install pm2 globally
+        run: |
+          yarn global add pm2
+
       - name: Build for develop (yarn install, and build)
         run: |
           yarn install
