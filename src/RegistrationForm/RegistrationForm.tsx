@@ -2,11 +2,9 @@ import React, { ReactElement } from 'react';
 import { useForm } from 'react-hook-form';
 import styles from './RegistrationForm.module.scss';
 import { useHistory } from 'react-router-dom';
-import { useTranslation } from 'react-i18next';
 
 export default function RegistrationForm (this: any): ReactElement {
   const { register, handleSubmit } = useForm<IFormInput>();
-  const { t } = useTranslation('translations');
   const history = useHistory();
   const onSubmit = (data: IFormInput) => {
     console.log(data);
