@@ -8,7 +8,7 @@ export default function RegistrationForm (this: any): ReactElement {
   const history = useHistory();
   const onSubmit = (data: IFormInput) => {
     console.log(data);
-    history.push(`/kravbank`);
+    history.push(`/katalog`);
   };
 
   interface IFormInput {

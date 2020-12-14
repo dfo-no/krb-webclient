@@ -4,7 +4,9 @@ import RegistrationForm from './RegistrationForm/RegistrationForm';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import KravbankSide from './KravbankSide/KravbankSide';
 import Header from './Header/Header';
-
+import EditorSide from './EditorSide/EditorSide';
+import KravbankKatalogSide from './KravbankKatalogSide/KravbankKatalogSide';
+import NyKravbankSide from './NyKravbankSide/NyKravbankSide';
 
 
 function App() {
@@ -17,8 +19,17 @@ function App() {
           <Route exact path={'/'}>
             <RegistrationForm />
           </Route>  
+          <Route exact path={'/katalog'}>
+            <KravbankKatalogSide />
+          </Route>
+          <Route exact path={'/edit/:id'}>
+            <EditorSide />
+          </Route>    
           <Route exact path={'/kravbank'}>
             <KravbankSide />
+          </Route>  
+          <Route exact path={'/kravbank/ny'}>
+            <NyKravbankSide />
           </Route>  
         </Switch>
       </Router>
