@@ -8,29 +8,27 @@ import EditorSide from './EditorSide/EditorSide';
 import KravbankKatalogSide from './KravbankKatalogSide/KravbankKatalogSide';
 import NyKravbankSide from './NyKravbankSide/NyKravbankSide';
 
-
 function App() {
-
   return (
     <div className={styles.App}>
       <Router>
-       <Header />
+        <Header />
         <Switch>
           <Route exact path={'/'}>
             <RegistrationForm />
-          </Route>  
+          </Route>
           <Route exact path={'/katalog'}>
             <KravbankKatalogSide />
           </Route>
           <Route exact path={'/edit/:id'}>
             <EditorSide />
-          </Route>    
+          </Route>
           <Route exact path={'/kravbank'}>
             <KravbankSide />
-          </Route>  
+          </Route>
           <Route exact path={'/kravbank/ny'}>
             <NyKravbankSide />
-          </Route>  
+          </Route>
         </Switch>
       </Router>
     </div>
