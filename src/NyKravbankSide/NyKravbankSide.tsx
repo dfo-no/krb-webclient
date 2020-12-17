@@ -2,7 +2,6 @@ import React, { ReactElement } from 'react';
 import styles from './NyKravbankSide.module.scss';
 import { useForm } from 'react-hook-form';
 import { Kravbank } from '../models/Kravbank';
-import * as uuid from 'uuid';
 
 export default function NyKravbankSide(this: any): ReactElement {
   const { register, handleSubmit } = useForm<Kravbank>();
