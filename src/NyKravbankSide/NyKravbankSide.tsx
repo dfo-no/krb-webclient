@@ -1,4 +1,4 @@
-import React, { ReactElement, useEffect, useState } from 'react';
+import React, { ReactElement } from 'react';
 import styles from './NyKravbankSide.module.scss';
 import { useForm } from 'react-hook-form';
 import { Kravbank } from '../models/Kravbank';
@@ -7,13 +7,7 @@ import * as uuid from 'uuid';
 export default function NyKravbankSide(this: any): ReactElement {
   const { register, handleSubmit } = useForm<Kravbank>();
 
-  const onSubmit = (data: Kravbank) => {
-    const Kravbank: Kravbank = {
-      tittel: data.tittel,
-      id: uuid.v4(),
-      beskrivelse: data.beskrivelse
-    };
-  };
+  const onSubmit = (data: Kravbank) => {};
 
   return (
     <div>
