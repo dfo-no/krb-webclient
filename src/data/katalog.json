@@ -1,0 +1,28 @@
+{
+    "dtgdjgjs": {
+        "id":"dtgdjgjs",
+        "tittel": "Kurs og konferanse",
+        "beskrivelse": "...",
+        "ordering": 1,
+        "behov": {
+            "1234": {
+                "id": "1234",
+                "tittel": "Møterom"
+            },
+            "1235": {
+                "id": "1235",
+                "tittel": "Bespisning"
+            },
+            "1236": {
+                "id": "1236",
+                "tittel": "Transport"
+            }
+        }
+    },
+    "dtgdjgjs2": {
+        "id":"dtgdjgjs2",
+        "tittel": "Elbil til hjemmetjenesten",
+        "beskrivelse": "...",
+        "ordering": 2
+    }
+}

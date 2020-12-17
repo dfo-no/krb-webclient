@@ -8,9 +8,7 @@ import EditorSide from './EditorSide/EditorSide';
 import KravbankKatalogSide from './KravbankKatalogSide/KravbankKatalogSide';
 import NyKravbankSide from './NyKravbankSide/NyKravbankSide';
 
-
 function App() {
-
   return (
     <div className={styles.App}>
       <Router>
@@ -33,7 +31,8 @@ function App() {
           </Route>  
         </Switch>
       </Router>
-    </div>
+      </div>
+
   );
 }
 

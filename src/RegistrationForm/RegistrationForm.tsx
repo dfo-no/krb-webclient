@@ -12,9 +12,8 @@ export default function RegistrationForm (this: any): ReactElement {
   };
 
   interface IFormInput {
-   username: string;
+    username: string;
     password: string;
-    age:Boolean;
   }
 
   return (

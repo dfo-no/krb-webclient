@@ -1,13 +1,9 @@
-import { Behov } from "./Behov";
-import { Kodeliste } from "./Kodeliste";
-
-export interface Krav{
+export interface Krav {
     id:string,
     tittel:string, 
     beskrivelse:string, 
-    behov:Behov;
+    behov_id:string;
     version: number;
     type:string;
-    kodeliste?:Kodeliste;
-
+    kodeliste_id?:string;
 }
