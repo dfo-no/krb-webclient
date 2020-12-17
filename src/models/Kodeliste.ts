@@ -1,6 +1,5 @@
-export interface Kodeliste{
-    id:string,
-    tittel:string, 
-    koder:string[]
-
+export interface Kodeliste {
+  id: string;
+  tittel: string;
+  koder: string[];
 }

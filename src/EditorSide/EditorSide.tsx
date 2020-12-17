@@ -1,11 +1,6 @@
-import React,  { ReactElement } from "react";
-import { Kravbank } from "../models/Kravbank";
+import React, { ReactElement } from 'react';
+import { Kravbank } from '../models/Kravbank';
 
-export default function EditorSide (this: any): ReactElement {
-
-    return (
-      <div>
-        
-      </div>
-    );
-    }
+export default function EditorSide(this: any): ReactElement {
+  return <div></div>;
+}
