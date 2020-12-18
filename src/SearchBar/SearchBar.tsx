@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { ReactElement, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Kravbank } from '../models/Kravbank';
 
@@ -23,12 +23,16 @@ const displaylist = (list: Kravbank[]) => {
   });
 };
 
-const SearchBar = (list: Kravbank[]) => {
+interface SearchBarProps {
+  list: Kravbank[];
+}
+
+export default function SearchBar(props: SearchBarProps): ReactElement {
   const [input, setInput] = useState('');
-  const [searchList, setSearchList] = useState(list);
+  const [searchList, setSearchList] = useState(props.list);
 
   const updateInput = async (input: any) => {
-    const filtered = list.filter((element) => {
+    const filtered = props.list.filter((element) => {
       return element.tittel.toLowerCase().includes(input.toLowerCase());
     });
     setInput(input);
@@ -46,6 +50,4 @@ const SearchBar = (list: Kravbank[]) => {
       <div>{displaylist(searchList)}</div>
     </div>
   );
-};
-
-export default SearchBar;
+}

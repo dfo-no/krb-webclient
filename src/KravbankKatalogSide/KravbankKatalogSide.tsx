@@ -48,8 +48,9 @@ export default function KravbankKatalogSide(this: any): ReactElement {
       >
         Opprett Kravbank
       </button>
+
       <div className={styles.katalogcontainer}></div>
-      {SearchBar(katalogitems)}
+      <SearchBar list={katalogitems} />
     </div>
   );
 }
