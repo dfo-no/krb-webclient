@@ -26,14 +26,15 @@ export default function KravbankKatalogSide(this: any): ReactElement {
   };
   const fetchKatalog = () => {
     setKatalog(data as Katalog);
-    setLoading(false);
   };
 
   useEffect(() => {
     if (Object.values(katalog).length === 0) {
       fetchKatalog();
+    } else {
+      setLoading(false);
     }
-  });
+  }, [katalog]);
 
   useEffect(() => {
     setKatalogItems(Object.values(katalog));
@@ -48,9 +49,8 @@ export default function KravbankKatalogSide(this: any): ReactElement {
       >
         Opprett Kravbank
       </button>
-
       <div className={styles.katalogcontainer}></div>
-      <SearchBar list={katalogitems} />
+      {loading ? <div></div> : <SearchBar list={katalogitems} />}
     </div>
   );
 }
