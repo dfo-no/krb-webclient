@@ -19,9 +19,20 @@ jobs:
         with:
           node-version: ${{ env.NODE_VERSION }}
 
-      - name: Build for develop (yarn install, and build)
+      - name: Test
+        shell: bash
         run: |
           yarn install
+          yarn lint
+          yarn test --coverage
+
+      - name: Fix CC paths
+        working-directory: coverage
+        run: |
+          sed -i 's/\/home\/runner\/work\/krb-webclient\/krb-webclient\//\/github\/workspace\//g' lcov.info
+
+      - name: Build for develop
+        run: |
           yarn build
 
       - name: Analyze
