@@ -1,11 +1,17 @@
+import { Kravbank } from '../../models/Kravbank';
 import { Action, ActionType } from '../actions';
+import data1 from '../../data/katalog2.json';
+import data2 from '../../data/katalog1.json';
 
 export interface State {
   loading: boolean;
+  kravbanker: Kravbank[];
+  selectedkravbank?: Kravbank;
 }
 
 const initialState: State = {
-  loading: false
+  loading: false,
+  kravbanker: [...data1, ...data2]
 };
 
 // TODO: prevent switch-hell

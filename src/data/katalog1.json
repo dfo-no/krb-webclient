@@ -1,5 +1,5 @@
-{
-  "dtgdjgjs": {
+[
+  {
     "id": "dtgdjgjs",
     "tittel": "Kurs og konferanse",
     "beskrivelse": "...",
@@ -19,10 +19,10 @@
       }
     }
   },
-  "dtgdjgjs2": {
+  {
     "id": "dtgdjgjs2",
     "tittel": "Elbil til hjemmetjenesten",
     "beskrivelse": "...",
     "ordering": 2
   }
-}
+]
