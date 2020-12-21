@@ -1,6 +1,6 @@
 import React, { ReactElement, useEffect, useState } from 'react';
 import styles from './KravbankKatalogSide.module.scss';
-import { useHistory } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import data from '../data/katalog1.json';
 import { Katalog } from '../models/Katalog';
 import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
@@ -46,17 +46,6 @@ export default function KravbankKatalogSide(this: any): ReactElement {
   const handleCreateNew = () => (event: any) => {
     history.push(`/kravbank/ny`);
   };
-  const fetchKatalog = () => {
-    setKatalog(data as Katalog);
-  };
-
-  useEffect(() => {
-    if (Object.values(katalog).length === 0) fetchKatalog();
-  });
-
-  useEffect(() => {
-    setKatalogItems(Object.values(katalog));
-  }, [katalog]);
 
   const handleOnDragEnd = (result: any) => {
     if (!result.destination) return;
