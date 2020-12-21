@@ -11,7 +11,7 @@ export default function Header(): ReactElement {
 
   return (
     <header className={css.Header}>
-      <div className={css.brand} onClick={home}>
+      <div className={css.brand} onClick={home} role="link">
         <img src={'/logo-blue.svg'} alt={'DFØ Logo'} />
       </div>
     </header>
