@@ -1,6 +1,10 @@
 import React, { ReactElement, useEffect, useState } from 'react';
 import styles from './KravbankKatalogSide.module.scss';
+<<<<<<< Updated upstream
 import { Link, useHistory } from 'react-router-dom';
+=======
+import { useHistory } from 'react-router-dom';
+>>>>>>> Stashed changes
 import data from '../data/katalog1.json';
 import { Katalog } from '../models/Katalog';
 import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
