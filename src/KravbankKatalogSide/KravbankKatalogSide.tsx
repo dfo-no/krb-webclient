@@ -1,10 +1,11 @@
 import React, { ReactElement } from 'react';
-import styles from './KravbankKatalogSide.module.scss';
 import { useHistory } from 'react-router-dom';
-import { State } from '../store/index';
-import { Kravbank } from '../models/Kravbank';
-import SearchBar from '../SearchBar/SearchBar';
 import { connect } from 'react-redux';
+
+import { Kravbank } from '../models/Kravbank';
+import { State } from '../store/index';
+import SearchBar from '../SearchBar/SearchBar';
+import styles from './KravbankKatalogSide.module.scss';
 
 interface IProps {
   kravbanker: Kravbank[];

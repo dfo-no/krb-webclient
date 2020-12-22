@@ -1,10 +1,11 @@
 import React, { ReactElement } from 'react';
-import styles from './NyKravbankSide.module.scss';
 import { useForm } from 'react-hook-form';
-import { Kravbank } from '../models/Kravbank';
 import { useHistory } from 'react-router-dom';
 import { connect } from 'react-redux';
 import uuid from 'uuid';
+
+import { Kravbank } from '../models/Kravbank';
+import styles from './NyKravbankSide.module.scss';
 
 interface IProps {
   registerNew: any;
@@ -59,7 +60,7 @@ function NyKravbankSide(props: IProps): ReactElement {
 }
 
 const registerNew = (kravbank: Kravbank) => ({
-  type: '[KRAVBANKER] NY',
+  type: '[KRAVBANK] NEW',
   payload: kravbank
 });
 

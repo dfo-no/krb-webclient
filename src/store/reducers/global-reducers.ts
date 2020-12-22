@@ -28,7 +28,7 @@ export function globalReducers(
       };
       break;
 
-    case ActionType.KRAVBANKER_NY:
+    case ActionType.KRAVBANK_NEW:
       state = {
         ...state,
         kravbanker: [...state.kravbanker, action.payload],

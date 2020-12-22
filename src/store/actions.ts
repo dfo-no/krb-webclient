@@ -3,7 +3,7 @@ import { Kravbank } from '../models/Kravbank';
 // TODO: find a design pattern for these strings, and link to that in the docs.
 export enum ActionType {
   LOADING = '[GLOBAL] Loading',
-  KRAVBANKER_NY = '[KRAVBANKER] NY'
+  KRAVBANK_NEW = '[KRAVBANK] NEW'
 }
 
 export interface Action {
@@ -21,7 +21,7 @@ export class KRB {
   }
   static registerNew(kravbank: Kravbank): Action {
     return {
-      type: ActionType.KRAVBANKER_NY,
+      type: ActionType.KRAVBANK_NEW,
       payload: kravbank
     };
   }
