@@ -2,11 +2,26 @@ import React, { ReactElement } from 'react';
 import styles from './NyKravbankSide.module.scss';
 import { useForm } from 'react-hook-form';
 import { Kravbank } from '../models/Kravbank';
+import { useHistory } from 'react-router-dom';
+import { connect } from 'react-redux';
+import uuid from 'uuid';
 
-export default function NyKravbankSide(this: any): ReactElement {
+interface IProps {
+  registerNew: any;
+}
+
+function NyKravbankSide(props: IProps): ReactElement {
   const { register, handleSubmit } = useForm<Kravbank>();
-
-  const onSubmit = (data: Kravbank) => {};
+  const history = useHistory();
+  const onSubmit = (data: Kravbank) => {
+    const kravbank: Kravbank = {
+      id: uuid.v4(),
+      tittel: data.tittel,
+      beskrivelse: data.beskrivelse
+    };
+    props.registerNew(kravbank);
+    history.push('/katalog/');
+  };
 
   return (
     <div>
@@ -20,9 +35,9 @@ export default function NyKravbankSide(this: any): ReactElement {
           <input
             name="tittel"
             ref={register({
-              pattern: /^[A-Za-z]+$/i,
+              pattern: /^[a-zA-Z0-9_ ]+$/i,
               required: true,
-              maxLength: 20
+              maxLength: 40
             })}
           />
         </label>
@@ -31,9 +46,9 @@ export default function NyKravbankSide(this: any): ReactElement {
           <input
             name="beskrivelse"
             ref={register({
-              pattern: /^[A-Za-z]+$/i,
+              pattern: /^[a-zA-Z0-9_ ]+$/i,
               required: true,
-              maxLength: 20
+              maxLength: 50
             })}
           />
         </label>
@@ -42,3 +57,17 @@ export default function NyKravbankSide(this: any): ReactElement {
     </div>
   );
 }
+
+const registerNew = (kravbank: Kravbank) => ({
+  type: '[KRAVBANKER] NY',
+  payload: kravbank
+});
+
+const mapDispatchToProps = (dispatch: any) => {
+  const actions = {
+    registerNew: (kravbank: Kravbank) => dispatch(registerNew(kravbank))
+  };
+  return actions;
+};
+
+export default connect(null, mapDispatchToProps)(NyKravbankSide);

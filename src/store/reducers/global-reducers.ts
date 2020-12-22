@@ -21,11 +21,21 @@ export function globalReducers(
 ): State {
   switch (action.type) {
     case ActionType.LOADING:
+      console.log(action.payload);
       state = {
         ...state,
         loading: action.payload
       };
       break;
+
+    case ActionType.KRAVBANKER_NY:
+      state = {
+        ...state,
+        kravbanker: [...state.kravbanker, action.payload],
+        loading: false
+      };
+      break;
+
     default:
       // TODO: do this with type-safety
       /*if (

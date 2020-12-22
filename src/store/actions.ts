@@ -1,6 +1,9 @@
+import { Kravbank } from '../models/Kravbank';
+
 // TODO: find a design pattern for these strings, and link to that in the docs.
 export enum ActionType {
-  LOADING = '[GLOBAL] Loading'
+  LOADING = '[GLOBAL] Loading',
+  KRAVBANKER_NY = '[KRAVBANKER] NY'
 }
 
 export interface Action {
@@ -14,6 +17,12 @@ export class KRB {
     return {
       type: ActionType.LOADING,
       payload: value
+    };
+  }
+  static registerNew(kravbank: Kravbank): Action {
+    return {
+      type: ActionType.KRAVBANKER_NY,
+      payload: kravbank
     };
   }
 }

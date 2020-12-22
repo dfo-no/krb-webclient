@@ -1,44 +1,20 @@
-import React, { ReactElement, useEffect, useState } from 'react';
+import React, { ReactElement } from 'react';
 import styles from './KravbankKatalogSide.module.scss';
 import { useHistory } from 'react-router-dom';
-import data from '../data/katalog.json';
-import { Katalog } from '../models/Katalog';
+import { State } from '../store/index';
 import { Kravbank } from '../models/Kravbank';
 import SearchBar from '../SearchBar/SearchBar';
+import { connect } from 'react-redux';
 
-export default function KravbankKatalogSide(this: any): ReactElement {
-  const [katalog, setKatalog] = useState<Katalog>({});
-  const [loading, setLoading] = useState<boolean>(true);
-  const defaultkatalogitem = [
-    {
-      id: 'default',
-      tittel: '',
-      beskrivelse: ''
-    }
-  ];
-  const [katalogitems, setKatalogItems] = useState<Kravbank[]>(
-    defaultkatalogitem
-  );
+interface IProps {
+  kravbanker: Kravbank[];
+}
 
+function KravbankKatalogSide(props: IProps): ReactElement {
   const history = useHistory();
   const handleCreateNew = () => (event: any) => {
     history.push(`/kravbank/ny`);
   };
-  const fetchKatalog = () => {
-    setKatalog(data as Katalog);
-  };
-
-  useEffect(() => {
-    if (Object.values(katalog).length === 0) {
-      fetchKatalog();
-    } else {
-      setLoading(false);
-    }
-  }, [katalog]);
-
-  useEffect(() => {
-    setKatalogItems(Object.values(katalog));
-  }, [katalog]);
 
   return (
     <div className={styles.container}>
@@ -50,7 +26,13 @@ export default function KravbankKatalogSide(this: any): ReactElement {
         Opprett Kravbank
       </button>
       <div className={styles.katalogcontainer}></div>
-      {loading ? <div></div> : <SearchBar list={katalogitems} />}
+      <SearchBar list={props.kravbanker}></SearchBar>
     </div>
   );
 }
+
+const mapStateToProps = (store: State) => {
+  return { kravbanker: store.kravbanker };
+};
+
+export default connect(mapStateToProps)(KravbankKatalogSide);
