@@ -111,7 +111,7 @@ if (
   process.env.KRB_CONTAINER_ID,
   process.env.KRB_PORT)
 ) {
-  app.listen(process.env.KRB_PORT);
+  app.listen(80);
 } else {
   console.log('Exit: Missing environment variables');
 }
