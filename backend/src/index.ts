@@ -20,6 +20,14 @@ function getContainer() {
   return database.container(containerId);
 }
 
+app.get('/', function (req, res) {
+  const date = new Date();
+  res.setHeader('Content-Type', 'text/html');
+  res.send(
+    '<html><head></head><body>' + date.getUTCMilliseconds() + '</body></html>'
+  );
+});
+
 app.get('/ping', function (_req, res) {
   return res.send('pong');
 });
