@@ -104,6 +104,8 @@ app.put('/api/kravbank', jsonParser, async function (req, res) {
   return res.json({});
 });
 
+console.log('Bobbo');
+console.log(process.env.PORT);
 /*if (
   (process.env.KRB_ENDPOINT,
   process.env.KRB_KEY,
