@@ -7,7 +7,6 @@ import { StatusCodes } from 'http-status-codes';
 const app = express();
 // app.use(express.static(path.join(__dirname, 'build')));
 // app.use(express.static(path.join(__dirname, 'build')));
-const PORT = 8080;
 
 const endpoint = process.env.KRB_ENDPOINT || '';
 const key = process.env.KRB_KEY || '';
@@ -101,9 +100,10 @@ if (
   (process.env.KRB_ENDPOINT,
   process.env.KRB_KEY,
   process.env.KRB_DATABASE_ID,
-  process.env.KRB_CONTAINER_ID)
+  process.env.KRB_CONTAINER_ID,
+  process.env.KRB_PORT)
 ) {
-  app.listen(process.env.PORT || PORT);
+  app.listen(process.env.KRB_PORT);
 } else {
   console.log('Exit: Missing environment variables');
 }
