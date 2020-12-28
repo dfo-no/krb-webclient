@@ -104,14 +104,14 @@ app.put('/api/kravbank', jsonParser, async function (req, res) {
   return res.json({});
 });
 
-if (
+/*if (
   (process.env.KRB_ENDPOINT,
   process.env.KRB_KEY,
   process.env.KRB_DATABASE_ID,
   process.env.KRB_CONTAINER_ID,
-  process.env.KRB_PORT)
-) {
-  app.listen(process.env.KRB_PORT);
-} else {
+  process.env.PORT)
+) {*/
+app.listen(process.env.PORT);
+/*} else {
   console.log('Exit: Missing environment variables');
-}
+}*/
