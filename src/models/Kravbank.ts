@@ -10,8 +10,8 @@ export interface Kravbank {
   id: string;
   tittel: string;
   beskrivelse: string;
-  behov?: mymap<Behov>;
-  krav?: mymap<Krav>;
+  behov: Behov[];
+  krav?: Krav[];
   kodeliste?: mymap<Kodeliste>;
   ordering?: number;
 }

@@ -1,9 +1,12 @@
+import { Behov } from '../models/Behov';
 import { Kravbank } from '../models/Kravbank';
 
 // TODO: find a design pattern for these strings, and link to that in the docs.
 export enum ActionType {
   LOADING = '[GLOBAL] Loading',
-  KRAVBANK_NEW = '[KRAVBANK] NEW'
+  KRAVBANK_NEW = '[KRAVBANK] NEW',
+  KRAVBANK_EDIT = '[KRAVBANK] EDIT',
+  BEHOV_NEW = '[BEHOV] NEW'
 }
 
 export interface Action {
@@ -23,6 +26,18 @@ export class KRB {
     return {
       type: ActionType.KRAVBANK_NEW,
       payload: kravbank
+    };
+  }
+  static editKravbank(kravbankid: number): Action {
+    return {
+      type: ActionType.KRAVBANK_EDIT,
+      payload: kravbankid
+    };
+  }
+  static addBehov(behov: Behov): Action {
+    return {
+      type: ActionType.BEHOV_NEW,
+      payload: behov
     };
   }
 }

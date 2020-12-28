@@ -1,28 +1,29 @@
-[
-  {
-    "id": "dtgdjgjs",
+{
+  "0": {
+    "id": "0",
     "tittel": "Kurs og konferanse",
-    "beskrivelse": "...",
+    "beskrivelse": "testing",
     "ordering": 1,
-    "behov": {
-      "1234": {
+    "behov": [
+      {
         "id": "1234",
         "tittel": "Møterom"
       },
-      "1235": {
+      {
         "id": "1235",
         "tittel": "Bespisning"
       },
-      "1236": {
+      {
         "id": "1236",
         "tittel": "Transport"
       }
-    }
+    ]
   },
-  {
-    "id": "dtgdjgjs2",
+  "1": {
+    "id": "1",
     "tittel": "Elbil til hjemmetjenesten",
     "beskrivelse": "...",
-    "ordering": 2
+    "ordering": 2,
+    "behov": []
   }
-]
+}

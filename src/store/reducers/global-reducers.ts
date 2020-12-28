@@ -1,17 +1,17 @@
-import { Kravbank } from '../../models/Kravbank';
 import { Action, ActionType } from '../actions';
-import data1 from '../../data/katalog2.json';
-import data2 from '../../data/katalog1.json';
+import data1 from '../../data/katalog1.json';
+import { Katalog } from '../../models/Katalog';
 
 export interface State {
   loading: boolean;
-  kravbanker: Kravbank[];
-  selectedkravbank?: Kravbank;
+  kravbanker: Katalog;
+  selectedkravbank: number;
 }
 
 const initialState: State = {
   loading: false,
-  kravbanker: [...data1, ...data2]
+  kravbanker: data1,
+  selectedkravbank: 0
 };
 
 // TODO: prevent switch-hell
@@ -21,7 +21,6 @@ export function globalReducers(
 ): State {
   switch (action.type) {
     case ActionType.LOADING:
-      console.log(action.payload);
       state = {
         ...state,
         loading: action.payload
@@ -31,11 +30,38 @@ export function globalReducers(
     case ActionType.KRAVBANK_NEW:
       state = {
         ...state,
-        kravbanker: [...state.kravbanker, action.payload],
+        kravbanker: {
+          ...state.kravbanker,
+          [action.payload.id]: action.payload
+        },
         loading: false
       };
       break;
 
+    case ActionType.KRAVBANK_EDIT:
+      state = {
+        ...state,
+        selectedkravbank: action.payload,
+        loading: false
+      };
+      break;
+
+    case ActionType.BEHOV_NEW:
+      const id: number = state.selectedkravbank;
+      state = {
+        ...state,
+
+        kravbanker: {
+          ...state.kravbanker,
+          [id]: {
+            ...state.kravbanker[id],
+            behov: [...state.kravbanker[id].behov, action.payload]
+          }
+        },
+
+        loading: false
+      };
+      break;
     default:
       // TODO: do this with type-safety
       /*if (

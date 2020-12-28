@@ -1,5 +1,6 @@
 import React, { ReactElement, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { Katalog } from '../models/Katalog';
 import { Kravbank } from '../models/Kravbank';
 
 import styles from './SearchBar.module.scss';

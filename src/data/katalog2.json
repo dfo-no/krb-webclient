@@ -4,25 +4,26 @@
     "tittel": "Skolebygging",
     "beskrivelse": "...",
     "ordering": 1,
-    "behov": {
-      "1234": {
+    "behov": [
+      {
         "id": "1234",
         "tittel": "Møterom"
       },
-      "1235": {
+      {
         "id": "1235",
         "tittel": "Bespisning"
       },
-      "1236": {
+      {
         "id": "1236",
         "tittel": "Transport"
       }
-    }
+    ]
   },
   {
     "id": "dtgdjgjs2wrewr",
     "tittel": "Elbil til sykepleierne",
     "beskrivelse": "...",
-    "ordering": 2
+    "ordering": 2,
+    "behov": []
   }
 ]

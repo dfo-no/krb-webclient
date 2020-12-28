@@ -25,7 +25,7 @@ function App() {
               <KravbankKatalogSide />
             </Route>
             <Route exact path={'/edit/:id'}>
-              <EditorSide />
+              <KravbankSide />
             </Route>
             <Route exact path={'/kravbank'}>
               <KravbankSide />

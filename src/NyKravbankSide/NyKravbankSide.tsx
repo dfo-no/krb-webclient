@@ -18,7 +18,8 @@ function NyKravbankSide(props: IProps): ReactElement {
     const kravbank: Kravbank = {
       id: uuid.v4(),
       tittel: data.tittel,
-      beskrivelse: data.beskrivelse
+      beskrivelse: data.beskrivelse,
+      behov: []
     };
     props.registerNew(kravbank);
     history.push('/katalog/');
