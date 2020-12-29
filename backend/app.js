@@ -1,10 +1,30 @@
 import express from 'express';
+
+const app = express();
+
+app.get('/', function (req, res) {
+  const date = new Date();
+  res.setHeader('Content-Type', 'text/html');
+  res.send(
+    '<html><head></head><body>' + date.getUTCMilliseconds() + '</body></html>'
+  );
+});
+
+app.get('/ping', function (_req, res) {
+  return res.send('pong');
+});
+
+const port = Number(process.env.PORT || 80);
+console.log(port);
+app.listen(port, () => {
+  console.log('Express server started on port ' + port);
+});
+
 // import bodyParser from 'body-parser';
 // import { CosmosClient } from '@azure/cosmos';
 // import { StatusCodes } from 'http-status-codes';
 // import * as path from 'path';
 
-const app = express();
 // app.use(express.static(path.join(__dirname, 'build')));
 // app.use(express.static(path.join(__dirname, 'build')));
 
@@ -19,18 +39,6 @@ function getContainer() {
   const database = client.database(databaseId);
   return database.container(containerId);
 }*/
-
-app.get('/', function (req, res) {
-  const date = new Date();
-  res.setHeader('Content-Type', 'text/html');
-  res.send(
-    '<html><head></head><body>' + date.getUTCMilliseconds() + '</body></html>'
-  );
-});
-
-app.get('/ping', function (_req, res) {
-  return res.send('pong');
-});
 
 /*app.get('/api/kravbank', async function (req, res) {
   const querySpec = {
@@ -111,11 +119,7 @@ app.post('/api/kravbank', async function (req, res) {
   process.env.KRB_CONTAINER_ID,
   process.env.PORT)
 ) {*/
-const port = Number(process.env.WEBSITES_PORT || 3000);
-console.log(port);
-app.listen(port, () => {
-  console.log('Express server started on port ' + port);
-});
+
 /*} else {
   console.log('Exit: Missing environment variables');
 }*/

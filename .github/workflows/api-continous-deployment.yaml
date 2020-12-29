@@ -25,17 +25,17 @@ jobs:
         run: |
           yarn install
 
-      - name: Build for develop
-        working-directory: ./backend
-        run: |
-          yarn build
+      #      - name: Build for develop
+      #        working-directory: ./backend
+      #        run: |
+      #          yarn build
 
-      - name: Analyze
-        if: github.ref == 'refs/heads/develop'
-        uses: SonarSource/sonarcloud-github-action@master
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+      #      - name: Analyze
+      #        if: github.ref == 'refs/heads/develop'
+      #        uses: SonarSource/sonarcloud-github-action@master
+      #        env:
+      #          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      #          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
       - name: 'Deploy to Azure WebApp'
         uses: azure/webapps-deploy@v2
