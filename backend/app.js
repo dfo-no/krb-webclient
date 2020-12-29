@@ -1,6 +1,12 @@
-import express from 'express';
-
+const express = require('express');
 const app = express();
+const port = Number(process.env.PORT || 80);
+
+app.get('', (req, res) => {
+  var today = new Date();
+
+  res.send(today);
+});
 
 app.get('/', function (req, res) {
   const date = new Date();
@@ -14,8 +20,6 @@ app.get('/ping', function (_req, res) {
   return res.send('pong');
 });
 
-const port = Number(process.env.PORT || 80);
-console.log(port);
 app.listen(port, () => {
   console.log('Express server started on port ' + port);
 });
