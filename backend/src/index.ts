@@ -111,7 +111,7 @@ app.post('/api/kravbank', async function (req, res) {
   process.env.KRB_CONTAINER_ID,
   process.env.PORT)
 ) {*/
-const port = Number(80);
+const port = Number(process.env.WEBSITES_PORT || 3000);
 console.log(port);
 app.listen(port, () => {
   console.log('Express server started on port ' + port);
