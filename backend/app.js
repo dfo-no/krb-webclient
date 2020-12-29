@@ -1,6 +1,22 @@
 const express = require('express');
+const bodyParser = require('body-parser');
+const CosmosClient = require('@azure/cosmos');
+const StatusCodes = require('http-status-codes');
+
 const app = express();
+
+const endpoint = process.env.KRB_ENDPOINT || '';
+const key = process.env.KRB_KEY || '';
+const databaseId = process.env.KRB_DATABASE_ID || '';
+const containerId = process.env.KRB_CONTAINER_ID || '';
+var jsonParser = bodyParser.json();
 const port = Number(process.env.PORT || 80);
+
+function getContainer() {
+  const client = new CosmosClient({ endpoint, key });
+  const database = client.database(databaseId);
+  return database.container(containerId);
+}
 
 app.get('', (req, res) => {
   var today = new Date();
@@ -20,6 +36,16 @@ app.get('/ping', function (_req, res) {
   return res.send('pong');
 });
 
+app.get('/api/kravbank', async function (req, res) {
+  const querySpec = {
+    query: 'SELECT * FROM c'
+  };
+  const { resources: items } = await getContainer()
+    .items.query(querySpec)
+    .fetchAll();
+  return res.json(items);
+});
+
 app.listen(port, () => {
   console.log('Express server started on port ' + port);
 });
@@ -32,29 +58,7 @@ app.listen(port, () => {
 // app.use(express.static(path.join(__dirname, 'build')));
 // app.use(express.static(path.join(__dirname, 'build')));
 
-/*const endpoint = process.env.KRB_ENDPOINT || '';
-const key = process.env.KRB_KEY || '';
-const databaseId = process.env.KRB_DATABASE_ID || '';
-const containerId = process.env.KRB_CONTAINER_ID || '';
-var jsonParser = bodyParser.json();
-
-function getContainer() {
-  const client = new CosmosClient({ endpoint, key });
-  const database = client.database(databaseId);
-  return database.container(containerId);
-}*/
-
-/*app.get('/api/kravbank', async function (req, res) {
-  const querySpec = {
-    query: 'SELECT * FROM c'
-  };
-  const { resources: items } = await getContainer()
-    .items.query(querySpec)
-    .fetchAll();
-  return res.json(items);
-});
-
-app.get('/api/kravbank/:id', async function (req, res) {
+/*app.get('/api/kravbank/:id', async function (req, res) {
   const querySpec = {
     query: 'SELECT * FROM c WHERE c.id = @id',
     parameters: [
