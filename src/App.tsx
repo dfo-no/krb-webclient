@@ -4,9 +4,9 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
 import styles from './App.module.scss';
 import RegistrationForm from './RegistrationForm/RegistrationForm';
-import KravbankSide from './KravbankSide/KravbankSide';
+import KravbankEditorSide from './KravbankEditorSide/KravbankEditorSide';
 import Header from './Header/Header';
-import EditorSide from './EditorSide/EditorSide';
+import BehovEditorSide from './BehovEditorSide/BehovEditorSide';
 import KravbankKatalogSide from './KravbankKatalogSide/KravbankKatalogSide';
 import NyKravbankSide from './NyKravbankSide/NyKravbankSide';
 import { store } from './store';
@@ -25,10 +25,13 @@ function App() {
               <KravbankKatalogSide />
             </Route>
             <Route exact path={'/edit/:id'}>
-              <KravbankSide />
+              <KravbankEditorSide />
+            </Route>
+            <Route exact path={'/edit/behov/:id'}>
+              <BehovEditorSide />
             </Route>
             <Route exact path={'/kravbank'}>
-              <KravbankSide />
+              <KravbankEditorSide />
             </Route>
             <Route exact path={'/kravbank/ny'}>
               <NyKravbankSide />

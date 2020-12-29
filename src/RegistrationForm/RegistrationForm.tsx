@@ -9,10 +9,7 @@ export default function RegistrationForm(this: any): ReactElement {
   const history = useHistory();
 
   const onSubmit = (data: IFormInput) => {
-    console.log(data);
     history.push(`/katalog`);
-
-    // TODO: remove example
     store.dispatch(KRB.loading(true));
   };
 

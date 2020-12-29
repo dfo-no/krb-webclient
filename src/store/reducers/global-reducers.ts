@@ -1,17 +1,20 @@
 import { Action, ActionType } from '../actions';
-import data1 from '../../data/katalog1.json';
+import data from '../../data/katalog1.json';
 import { Katalog } from '../../models/Katalog';
+import { Kravbank } from '../../models/Kravbank';
 
 export interface State {
   loading: boolean;
-  kravbanker: Katalog;
+  kravbanker: Katalog<Kravbank>;
   selectedkravbank: number;
+  selectedbehov: number;
 }
 
 const initialState: State = {
   loading: false,
-  kravbanker: data1,
-  selectedkravbank: 0
+  kravbanker: data,
+  selectedkravbank: 0,
+  selectedbehov: 1234
 };
 
 // TODO: prevent switch-hell
@@ -46,6 +49,14 @@ export function globalReducers(
       };
       break;
 
+    case ActionType.BEHOV_EDIT:
+      state = {
+        ...state,
+        selectedbehov: action.payload,
+        loading: false
+      };
+      break;
+
     case ActionType.BEHOV_NEW:
       const id: number = state.selectedkravbank;
       state = {
@@ -55,10 +66,36 @@ export function globalReducers(
           ...state.kravbanker,
           [id]: {
             ...state.kravbanker[id],
-            behov: [...state.kravbanker[id].behov, action.payload]
+            behov: {
+              ...state.kravbanker[id].behov,
+              [action.payload.id]: action.payload
+            }
           }
         },
+        loading: false
+      };
+      break;
+    case ActionType.UNDERBEHOV_NEW:
+      const behovid: number = state.selectedbehov;
+      const kravbankid: number = state.selectedkravbank;
+      state = {
+        ...state,
 
+        kravbanker: {
+          ...state.kravbanker,
+          [kravbankid]: {
+            ...state.kravbanker[kravbankid],
+            behov: {
+              ...state.kravbanker[kravbankid].behov,
+              [behovid]: {
+                ...state.kravbanker[kravbankid].behov[behovid],
+                underbehov: {
+                  [action.payload.id]: action.payload
+                }
+              }
+            }
+          }
+        },
         loading: false
       };
       break;

@@ -1,17 +1,14 @@
 import { Behov } from './Behov';
+import { Katalog } from './Katalog';
 import { Kodeliste } from './Kodeliste';
 import { Krav } from './Krav';
 
-interface mymap<T> {
-  [key: string]: T;
-}
-
 export interface Kravbank {
-  id: string;
+  id: number;
   tittel: string;
   beskrivelse: string;
-  behov: Behov[];
+  behov: Katalog<Behov>;
   krav?: Krav[];
-  kodeliste?: mymap<Kodeliste>;
+  kodeliste?: Katalog<Kodeliste>;
   ordering?: number;
 }

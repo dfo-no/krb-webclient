@@ -6,9 +6,10 @@ export enum ActionType {
   LOADING = '[GLOBAL] Loading',
   KRAVBANK_NEW = '[KRAVBANK] NEW',
   KRAVBANK_EDIT = '[KRAVBANK] EDIT',
-  BEHOV_NEW = '[BEHOV] NEW'
+  BEHOV_NEW = '[BEHOV] NEW',
+  BEHOV_EDIT = '[BEHOV] EDIT',
+  UNDERBEHOV_NEW = '[UNDERBEHOV] NEW'
 }
-
 export interface Action {
   type: ActionType;
   payload?: any;
@@ -37,6 +38,18 @@ export class KRB {
   static addBehov(behov: Behov): Action {
     return {
       type: ActionType.BEHOV_NEW,
+      payload: behov
+    };
+  }
+  static editBehov(behovid: number): Action {
+    return {
+      type: ActionType.KRAVBANK_EDIT,
+      payload: behovid
+    };
+  }
+  static addUnderBehov(behov: Behov): Action {
+    return {
+      type: ActionType.UNDERBEHOV_NEW,
       payload: behov
     };
   }

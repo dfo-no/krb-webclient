@@ -1,51 +1,27 @@
 import React, { ReactElement } from 'react';
 import { connect } from 'react-redux';
-import { Behov } from '../models/Behov';
-import uuid from 'uuid';
 import Modal from 'react-modal';
 import { useForm } from 'react-hook-form';
+import { useHistory } from 'react-router-dom';
 
-import { State } from '../store/index';
-import { Link } from 'react-router-dom';
-import styles from './KravbankSide.module.scss';
+import { Behov } from '../models/Behov';
 import { Katalog } from '../models/Katalog';
-import { findByLabelText } from '@testing-library/dom';
+import { Kravbank } from '../models/Kravbank';
+import { State } from '../store/index';
+import styles from './KravbankEditorSide.module.scss';
 
 interface IProps {
   selectedKravbank: number;
-  kravbanker: Katalog;
+  kravbanker: Katalog<Kravbank>;
   addBehov: any;
+  editBehov: any;
 }
 
-const customStyles = {
-  content: {
-    top: '50%',
-    left: '50%',
-    right: 'auto',
-    bottom: 'auto',
-    marginRight: '-50%',
-    transform: 'translate(-50%, -50%)'
-  }
-};
-
-const mapList = (list: Behov[]) => {
-  return list.map((element: Behov) => {
-    return (
-      <div className={styles.listitem} key={element.id}>
-        <p>{element.tittel}</p>
-        <Link to={'/katalog/'}>
-          <button type="button" className={styles.editbutton}>
-            Rediger
-          </button>
-        </Link>
-      </div>
-    );
-  });
-};
-
-function KravbankSide(props: IProps): ReactElement {
+function KravbankEditorSide(props: IProps): ReactElement {
   const { register, handleSubmit } = useForm<Behov>();
   const [modalIsOpen, setIsOpen] = React.useState(false);
+  const history = useHistory();
+
   function openModal() {
     setIsOpen(true);
   }
@@ -54,15 +30,43 @@ function KravbankSide(props: IProps): ReactElement {
     setIsOpen(false);
   }
 
+  const handleEdit = (id: number) => (event: any) => {
+    //const selectedKravbank = props.kravbanker.find((e) => e.id === id);
+    props.editBehov(id);
+    history.push(`/edit/behov/${id}`);
+  };
+
+  const createBehovOutput = (behovkatalog: Katalog<Behov>) => {
+    let newlist = [];
+    for (let key in behovkatalog) {
+      let value = behovkatalog[key];
+      newlist.push(value);
+      // Use `key` and `value`
+    }
+    return newlist.map((element: Behov) => {
+      return (
+        <div className={styles.listitem} key={element.id}>
+          <p>{element.tittel}</p>
+          <button
+            type="button"
+            className={styles.editbutton}
+            onClick={handleEdit(element.id)}
+          >
+            Rediger
+          </button>
+        </div>
+      );
+    });
+  };
+
   const onSubmit = (data: Behov) => {
     const behov: Behov = {
-      id: uuid.v4(),
+      id: Math.random(),
       tittel: data.tittel,
       beskrivelse: data.beskrivelse
     };
     props.addBehov(behov);
     closeModal();
-    console.log(behov);
   };
   return props.kravbanker[props.selectedKravbank] ? (
     <div>
@@ -91,13 +95,14 @@ function KravbankSide(props: IProps): ReactElement {
           </button>
         </div>
         {props.kravbanker[props.selectedKravbank].behov &&
-          mapList(props.kravbanker[props.selectedKravbank].behov)}
+          createBehovOutput(props.kravbanker[props.selectedKravbank].behov)}
       </div>
       <Modal
         isOpen={modalIsOpen}
         onRequestClose={closeModal}
-        style={customStyles}
+        className={styles.modal}
         contentLabel="Example Modal"
+        ariaHideApp={false}
       >
         <form
           onSubmit={handleSubmit(onSubmit)}
@@ -135,13 +140,19 @@ function KravbankSide(props: IProps): ReactElement {
   );
 }
 
+const editBehov = (behovid: number) => ({
+  type: '[BEHOV] EDIT',
+  payload: behovid
+});
+
 const addBehov = (behov: Behov) => ({
   type: '[BEHOV] NEW',
   payload: behov
 });
 const mapDispatchToProps = (dispatch: any) => {
   const actions = {
-    addBehov: (behov: Behov) => dispatch(addBehov(behov))
+    addBehov: (behov: Behov) => dispatch(addBehov(behov)),
+    editBehov: (behovid: number) => dispatch(editBehov(behovid))
   };
   return actions;
 };
@@ -153,4 +164,4 @@ const mapStateToProps = (store: State) => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(KravbankSide);
+export default connect(mapStateToProps, mapDispatchToProps)(KravbankEditorSide);

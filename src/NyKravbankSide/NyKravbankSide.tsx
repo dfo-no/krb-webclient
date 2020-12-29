@@ -2,7 +2,6 @@ import React, { ReactElement } from 'react';
 import { useForm } from 'react-hook-form';
 import { useHistory } from 'react-router-dom';
 import { connect } from 'react-redux';
-import uuid from 'uuid';
 
 import { Kravbank } from '../models/Kravbank';
 import styles from './NyKravbankSide.module.scss';
@@ -16,7 +15,7 @@ function NyKravbankSide(props: IProps): ReactElement {
   const history = useHistory();
   const onSubmit = (data: Kravbank) => {
     const kravbank: Kravbank = {
-      id: uuid.v4(),
+      id: Math.random(),
       tittel: data.tittel,
       beskrivelse: data.beskrivelse,
       behov: []

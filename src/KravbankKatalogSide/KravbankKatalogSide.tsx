@@ -3,40 +3,31 @@ import { useHistory } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import { Kravbank } from '../models/Kravbank';
+import { Katalog } from '../models/Katalog';
 import { State } from '../store/index';
 import SearchBar from '../SearchBar/SearchBar';
 import styles from './KravbankKatalogSide.module.scss';
-import { Katalog } from '../models/Katalog';
 
 interface IProps {
-  kravbanker: Katalog;
-  editKravbank: any;
+  kravbanker: Katalog<Kravbank>;
 }
 
 function KravbankKatalogSide(props: IProps): ReactElement {
-  console.log(props.kravbanker);
-  const maptoList = (katalog: Katalog) => {
-    let newlist = [];
+  const maptoList = (katalog: Katalog<Kravbank>) => {
+    let list = [];
     for (let key in katalog) {
       let value = katalog[key];
-      newlist.push(value);
-      // Use `key` and `value`
+      list.push(value);
     }
-    return newlist;
+    return list;
   };
 
-  const testing = maptoList(props.kravbanker);
+  const kravbankListe = maptoList(props.kravbanker);
   const history = useHistory();
   const handleCreateNew = () => (event: any) => {
     history.push(`/kravbank/ny`);
   };
 
-  const handleEdit = (id: string) => (event: any) => {
-    //const selectedKravbank = props.kravbanker.find((e) => e.id === id);
-    const converted: number = +id;
-    props.editKravbank(converted);
-    history.push(`/edit/${id}`);
-  };
   return (
     <div className={styles.container}>
       <button
@@ -47,36 +38,15 @@ function KravbankKatalogSide(props: IProps): ReactElement {
         Opprett Kravbank
       </button>
 
-      <button
-        className={styles.newkatalogbutton}
-        type="button"
-        onClick={handleEdit('0')}
-      >
-        Edit
-      </button>
       <div className={styles.katalogcontainer}></div>
-      <SearchBar list={testing}></SearchBar>
+      <SearchBar list={kravbankListe}></SearchBar>
     </div>
   );
 }
 
-const editKravbank = (kravbankid: number) => ({
-  type: '[KRAVBANK] EDIT',
-  payload: kravbankid
-});
-
-const mapDispatchToProps = (dispatch: any) => {
-  const actions = {
-    editKravbank: (kravbankid: number) => dispatch(editKravbank(kravbankid))
-  };
-  return actions;
-};
-
+//TODO: find better solution for edit-possibility in combination with search
 const mapStateToProps = (store: State) => {
   return { kravbanker: store.kravbanker };
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(KravbankKatalogSide);
+export default connect(mapStateToProps)(KravbankKatalogSide);
