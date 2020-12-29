@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "@azure/cosmos": "^3.9.3",
+    "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "http-status-codes": "^2.1.4"
   },

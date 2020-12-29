@@ -1,14 +1,14 @@
 import express from 'express';
-import bodyParser from 'body-parser';
-import { CosmosClient } from '@azure/cosmos';
-import { StatusCodes } from 'http-status-codes';
+// import bodyParser from 'body-parser';
+// import { CosmosClient } from '@azure/cosmos';
+// import { StatusCodes } from 'http-status-codes';
 // import * as path from 'path';
 
 const app = express();
 // app.use(express.static(path.join(__dirname, 'build')));
 // app.use(express.static(path.join(__dirname, 'build')));
 
-const endpoint = process.env.KRB_ENDPOINT || '';
+/*const endpoint = process.env.KRB_ENDPOINT || '';
 const key = process.env.KRB_KEY || '';
 const databaseId = process.env.KRB_DATABASE_ID || '';
 const containerId = process.env.KRB_CONTAINER_ID || '';
@@ -18,7 +18,7 @@ function getContainer() {
   const client = new CosmosClient({ endpoint, key });
   const database = client.database(databaseId);
   return database.container(containerId);
-}
+}*/
 
 app.get('/', function (req, res) {
   const date = new Date();
@@ -32,7 +32,7 @@ app.get('/ping', function (_req, res) {
   return res.send('pong');
 });
 
-app.get('/api/kravbank', async function (req, res) {
+/*app.get('/api/kravbank', async function (req, res) {
   const querySpec = {
     query: 'SELECT * FROM c'
   };
@@ -70,9 +70,9 @@ app.post('/api/kravbank', async function (req, res) {
     res.status(StatusCodes.BAD_REQUEST);
     return res.json({});
   }
-});
+});*/
 
-app.put('/api/kravbank', jsonParser, async function (req, res) {
+/*app.put('/api/kravbank', jsonParser, async function (req, res) {
   const item = req.body;
   if (!item.id) {
     res.status(StatusCodes.BAD_REQUEST);
@@ -102,10 +102,8 @@ app.put('/api/kravbank', jsonParser, async function (req, res) {
 
   res.status(StatusCodes.CREATED);
   return res.json({});
-});
+});*/
 
-console.log('Bobbo');
-console.log(process.env.PORT);
 /*if (
   (process.env.KRB_ENDPOINT,
   process.env.KRB_KEY,
@@ -113,7 +111,11 @@ console.log(process.env.PORT);
   process.env.KRB_CONTAINER_ID,
   process.env.PORT)
 ) {*/
-app.listen(process.env.PORT);
+const port = Number(process.env.KRB_PORT || 3000);
+console.log(port);
+app.listen(port, () => {
+  console.log('Express server started on port ' + port);
+});
 /*} else {
   console.log('Exit: Missing environment variables');
 }*/
