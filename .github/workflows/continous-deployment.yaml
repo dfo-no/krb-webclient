@@ -2,7 +2,7 @@ name: Continuous Deployment
 
 on:
   push:
-    branches: [main, deploytest]
+    branches: [main, develop]
 
 env:
   AZURE_WEBAPP_NAME: Krb-Kravbank-dev-app # set this to your application's name
@@ -19,10 +19,29 @@ jobs:
         with:
           node-version: ${{ env.NODE_VERSION }}
 
-      - name: Build for develop (yarn install, and build)
+      - name: Test
+        shell: bash
         run: |
           yarn install
+          yarn lint
+          yarn test --coverage
+
+      - name: Fix CC paths
+        working-directory: coverage
+        run: |
+          sed -i 's/\/home\/runner\/work\/krb-webclient\/krb-webclient\//\/github\/workspace\//g' lcov.info
+
+      - name: Build for develop
+        run: |
           yarn build
+
+      - name: Analyze
+        if: github.ref == 'refs/heads/develop'
+        uses: SonarSource/sonarcloud-github-action@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+
       - name: 'Deploy to Azure WebApp'
         uses: azure/webapps-deploy@v2
         with:

@@ -1,9 +1,48 @@
+.modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  margin-right: '-50%';
+  background-color: white;
+}
+
+.listitem {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 400px;
+  padding: 10px;
+  margin: 10px;
+}
+
+.listitem p {
+  color: #005b91;
+  margin: 0;
+}
+
+.editbutton {
+  height: 25px;
+}
+
+.subsection {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 400px;
+}
+
+.subsection button {
+  height: 30px;
+  margin: 15px;
+}
+
 .formwrapper {
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
-  width: 500px;
+  width: 350px;
   margin: 100px;
 }
 

@@ -1,43 +1,52 @@
-import React,  { ReactElement, useEffect, useState } from "react";
-import styles from './KravbankKatalogSide.module.scss'
-import { Link, useHistory } from 'react-router-dom';
-import { Kravbank } from "../models/Kravbank";
-import data from '../data/kravbank1.json';
+import React, { ReactElement } from 'react';
+import { useHistory } from 'react-router-dom';
+import { connect } from 'react-redux';
 
-export default function KravbankKatalogSide (this: any): ReactElement {
-    const [katalog, setKatalog] = useState<Kravbank[]>([]);
-    const katalogitems = katalog.map((kravbank) =>
-      <div className= {styles.katalogitem} key={kravbank.id}>
-        <p>{kravbank.navn}</p>
-        <Link to={"/edit/" + kravbank.id}>
-          <button className={styles.editbutton} type="button">Rediger</button>
-        </Link>
-      </div>
-    )
+import { Kravbank } from '../models/Kravbank';
+import { Katalog } from '../models/Katalog';
+import { State } from '../store/index';
+import SearchBar from '../SearchBar/SearchBar';
+import styles from './KravbankKatalogSide.module.scss';
 
-    const history = useHistory();
-    const handleCreateNew = () => (event: any) => {
-      history.push(`/kravbank/ny`);
-    };
-    const fetchKatalog=()=> {
-      const newKravbank: Kravbank = {
-        navn: data.navn,
-        id: data.id
-      }
-      setKatalog([newKravbank]);
-        
-    }
-    useEffect(()=>{
-      if(katalog.length === 0)
-        fetchKatalog();
-    })
-   
-    return (
-      <div className={styles.container}>
-        <button className={styles.newkatalogbutton} type="button" onClick={handleCreateNew()}>Opprett Kravbank</button>
-        <div className={styles.katalogcontainer}>
-          {katalogitems}
-        </div>
-      </div>
-    );
+interface IProps {
+  kravbanker: Katalog<Kravbank>;
 }
+
+function KravbankKatalogSide(props: IProps): ReactElement {
+  const maptoList = (katalog: Katalog<Kravbank>) => {
+    let list = [];
+    for (let key in katalog) {
+      let value = katalog[key];
+      list.push(value);
+    }
+    return list;
+  };
+
+  const kravbankListe = maptoList(props.kravbanker);
+  const history = useHistory();
+  const handleCreateNew = () => (event: any) => {
+    history.push(`/kravbank/ny`);
+  };
+
+  return (
+    <div className={styles.container}>
+      <button
+        className={styles.newkatalogbutton}
+        type="button"
+        onClick={handleCreateNew()}
+      >
+        Opprett Kravbank
+      </button>
+
+      <div className={styles.katalogcontainer}></div>
+      <SearchBar list={kravbankListe}></SearchBar>
+    </div>
+  );
+}
+
+//TODO: find better solution for edit-possibility in combination with search
+const mapStateToProps = (store: State) => {
+  return { kravbanker: store.kravbanker };
+};
+
+export default connect(mapStateToProps)(KravbankKatalogSide);
