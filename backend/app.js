@@ -1,15 +1,15 @@
 const express = require('express');
-const bodyParser = require('body-parser');
-const CosmosClient = require('@azure/cosmos');
-const StatusCodes = require('http-status-codes');
+const CosmosClient = require('@azure/cosmos').CosmosClient;
+const StatusCodes = require('http-status-codes').StatusCodes;
 
 const app = express();
+app.use(express.json()); // parse body with Type application/json
+app.use(express.urlencoded()); //Parse URL-encoded bodies
 
 const endpoint = process.env.KRB_ENDPOINT || '';
 const key = process.env.KRB_KEY || '';
 const databaseId = process.env.KRB_DATABASE_ID || '';
 const containerId = process.env.KRB_CONTAINER_ID || '';
-var jsonParser = bodyParser.json();
 const port = Number(process.env.PORT || 80);
 
 function getContainer() {
@@ -20,45 +20,58 @@ function getContainer() {
 
 app.get('', (req, res) => {
   var today = new Date();
-
   res.send(today);
 });
 
-app.get('/', function (req, res) {
-  const date = new Date();
-  res.setHeader('Content-Type', 'text/html');
-  res.send(
-    '<html><head></head><body>' + date.getUTCMilliseconds() + '</body></html>'
-  );
-});
-
 app.get('/ping', function (_req, res) {
+  res.status(StatusCodes.OK);
   return res.send('pong');
 });
 
+/**
+ * Get all
+ */
 app.get('/api/kravbank', async function (req, res) {
   const querySpec = {
     query: 'SELECT * FROM c'
   };
-  const { resources: items } = await getContainer()
-    .items.query(querySpec)
-    .fetchAll();
-  return res.json(items);
+  const results = await getContainer().items.query(querySpec).fetchAll();
+  res.status(StatusCodes.OK);
+  return res.json(results.resources);
 });
 
-app.listen(port, () => {
-  console.log('Express server started on port ' + port);
+/**
+ * Get one
+ */
+app.get('/api/kravbank/:id', async function (req, res) {
+  const querySpec = {
+    query: 'SELECT * FROM c WHERE c.id = @id',
+    parameters: [
+      {
+        name: '@id',
+        value: req.params.id
+      }
+    ]
+  };
+  const results = await getContainer().items.query(querySpec).fetchAll();
+  if (results.resources.length === 0) {
+    res.status(StatusCodes.NOT_FOUND);
+    return res.json({});
+  }
+  res.status(StatusCodes.OK);
+  return res.json(results.resources[0]);
 });
 
-// import bodyParser from 'body-parser';
-// import { CosmosClient } from '@azure/cosmos';
-// import { StatusCodes } from 'http-status-codes';
-// import * as path from 'path';
+/**
+ * Create new
+ */
+app.post('/api/kravbank', async function (req, res) {
+  const item = req.body;
+  if (!item.id) {
+    res.status(StatusCodes.BAD_REQUEST);
+    return res.json({});
+  }
 
-// app.use(express.static(path.join(__dirname, 'build')));
-// app.use(express.static(path.join(__dirname, 'build')));
-
-/*app.get('/api/kravbank/:id', async function (req, res) {
   const querySpec = {
     query: 'SELECT * FROM c WHERE c.id = @id',
     parameters: [
@@ -73,24 +86,21 @@ app.listen(port, () => {
     .fetchAll();
 
   if (results.length === 0) {
-    res.status(StatusCodes.NOT_FOUND);
+    const response = await getContainer().items.create(item);
+    res.status(StatusCodes.CREATED);
+    return res.json(response.resource);
+  } else {
+    res.status(StatusCodes.UNPROCESSABLE_ENTITY);
     return res.json({});
   }
-
-  return res.json(results);
 });
 
-app.post('/api/kravbank', async function (req, res) {
-  const item = req.body;
-  if (!item.id) {
-    res.status(StatusCodes.BAD_REQUEST);
-    return res.json({});
-  }
-});*/
-
-/*app.put('/api/kravbank', jsonParser, async function (req, res) {
-  const item = req.body;
-  if (!item.id) {
+/**
+ * Update
+ */
+app.put('/api/kravbank/:id', async function (req, res) {
+  const newItem = req.body;
+  if (!newItem.id) {
     res.status(StatusCodes.BAD_REQUEST);
     return res.json({});
   }
@@ -100,7 +110,7 @@ app.post('/api/kravbank', async function (req, res) {
     parameters: [
       {
         name: '@id',
-        value: item.id
+        value: newItem.id
       }
     ]
   };
@@ -109,25 +119,48 @@ app.post('/api/kravbank', async function (req, res) {
     .items.query(querySpec)
     .fetchAll();
 
-  if (results.length !== 0) {
-    res.status(StatusCodes.BAD_REQUEST);
+  if (results.length === 0) {
+    res.status(StatusCodes.NOT_FOUND);
     return res.json({});
   }
 
-  await getContainer().items.create(item);
+  const response = await getContainer().items.upsert(newItem);
 
-  res.status(StatusCodes.CREATED);
+  res.status(StatusCodes.OK);
+  return res.json(response.resource);
+});
+
+/**
+ * Delete
+ */
+/*app.delete('/api/kravbank/:id', async function (req, res) {
+  const querySpec = {
+    query: 'SELECT * FROM c WHERE  c.id = @id',
+    parameters: [
+      {
+        name: '@id',
+        value: req.params.id
+      }
+    ]
+  };
+
+  const { resources: results } = await getContainer()
+    .items.query(querySpec)
+    .fetchAll();
+
+  if (results.length === 0) {
+    res.status(StatusCodes.NOT_FOUND);
+    return res.json({});
+  }
+
+  console.log(results[0]);
+
+  const results2 = await getContainer.item(results[0].id).delete();
+
+  res.status(StatusCodes.IM_A_TEAPOT);
   return res.json({});
 });*/
 
-/*if (
-  (process.env.KRB_ENDPOINT,
-  process.env.KRB_KEY,
-  process.env.KRB_DATABASE_ID,
-  process.env.KRB_CONTAINER_ID,
-  process.env.PORT)
-) {*/
-
-/*} else {
-  console.log('Exit: Missing environment variables');
-}*/
+app.listen(port, () => {
+  console.log('Express server started on port ' + port);
+});
