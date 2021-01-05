@@ -133,7 +133,7 @@ app.put('/api/kravbank/:id', async function (req, res) {
 /**
  * Delete
  */
-/*app.delete('/api/kravbank/:id', async function (req, res) {
+app.delete('/api/kravbank/:id', async function (req, res) {
   const querySpec = {
     query: 'SELECT * FROM c WHERE  c.id = @id',
     parameters: [
@@ -153,13 +153,10 @@ app.put('/api/kravbank/:id', async function (req, res) {
     return res.json({});
   }
 
-  console.log(results[0]);
-
-  const results2 = await getContainer.item(results[0].id).delete();
-
-  res.status(StatusCodes.IM_A_TEAPOT);
+  await getContainer().item(results[0].id, results[0].id).delete();
+  res.status(StatusCodes.NO_CONTENT);
   return res.json({});
-});*/
+});
 
 app.listen(port, () => {
   console.log('Express server started on port ' + port);
