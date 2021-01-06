@@ -3,13 +3,13 @@ import { connect } from 'react-redux';
 import Modal from 'react-modal';
 import { useForm } from 'react-hook-form';
 import { useHistory } from 'react-router-dom';
+import { AiFillEdit, AiFillPlusSquare } from 'react-icons/ai';
 
 import { Behov } from '../models/Behov';
 import { Katalog } from '../models/Katalog';
 import { Kravbank } from '../models/Kravbank';
 import { State } from '../store/index';
 import styles from './KravbankEditorSide.module.scss';
-import { AiFillEdit, AiFillPlusSquare } from 'react-icons/ai';
 
 interface IProps {
   selectedKravbank: number;

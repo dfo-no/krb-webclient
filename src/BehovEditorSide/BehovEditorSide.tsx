@@ -1,17 +1,16 @@
 import React, { ReactElement } from 'react';
 import { useForm } from 'react-hook-form';
 import { connect } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 import Modal from 'react-modal';
-import { AiFillPlusSquare } from 'react-icons/ai';
-import { AiFillEdit } from 'react-icons/ai';
+import { AiFillPlusSquare, AiFillEdit } from 'react-icons/ai';
 
 import { Behov } from '../models/Behov';
 import { Katalog } from '../models/Katalog';
 import { Kravbank } from '../models/Kravbank';
-import styles from './BehovEditorSide.module.scss';
 import { State } from '../store';
 import { Krav } from '../models/Krav';
-import { useHistory } from 'react-router-dom';
+import styles from './BehovEditorSide.module.scss';
 
 interface IProps {
   selectedkravbank: number;

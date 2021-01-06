@@ -1,4 +1,4 @@
-import React, { ReactElement, useEffect, useState } from 'react';
+import React, { ReactElement, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { connect } from 'react-redux';
 
@@ -18,10 +18,10 @@ interface IProps {
 }
 
 function KravEditorSide(props: IProps): ReactElement {
+  const { register, handleSubmit } = useForm<Krav>();
   const behov =
     props.kravbanker[props.selectedkravbank].behov[props.selectedbehov];
   const krav = behov.krav ? behov.krav[props.selectedkrav] : undefined;
-  const { register, handleSubmit } = useForm<Krav>();
   const [isKodelisteEksakt, setIsKodelisteEksakt] = useState(
     krav?.type === 'kodeliste-eksakt' ? true : false
   );
@@ -65,7 +65,6 @@ function KravEditorSide(props: IProps): ReactElement {
     props.addKrav(krav);
   };
 
-  useEffect(() => {});
   return krav ? (
     <form onSubmit={handleSubmit(saveKrav)} autoComplete="on">
       <div>
