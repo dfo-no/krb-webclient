@@ -8,7 +8,7 @@ export interface Kravbank {
   tittel: string;
   beskrivelse: string;
   behov: Katalog<Behov>;
-  krav?: Krav[];
+  krav?: Katalog<Krav>;
   kodeliste?: Katalog<Kodeliste>;
   ordering?: number;
 }

@@ -29,7 +29,7 @@ export default function RegistrationForm(this: any): ReactElement {
         <input
           name="username"
           ref={register({
-            pattern: /^[A-Za-z]+$/i,
+            pattern: /^[ÆØÅæøåA-Za-z0-9_ ]+$/i,
             required: true,
             maxLength: 20
           })}

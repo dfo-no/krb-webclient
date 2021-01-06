@@ -8,13 +8,15 @@ export interface State {
   kravbanker: Katalog<Kravbank>;
   selectedkravbank: number;
   selectedbehov: number;
+  selectedkrav: number;
 }
 
 const initialState: State = {
   loading: false,
   kravbanker: data,
   selectedkravbank: 0,
-  selectedbehov: 1234
+  selectedbehov: 1234,
+  selectedkrav: 0
 };
 
 // TODO: prevent switch-hell
@@ -96,6 +98,41 @@ export function globalReducers(
             }
           }
         },
+        loading: false
+      };
+      break;
+
+    case ActionType.KRAV_NEW:
+      const kravbank_id: number = state.selectedkravbank;
+      const behov_id: number = state.selectedbehov;
+
+      state = {
+        ...state,
+
+        kravbanker: {
+          ...state.kravbanker,
+          [kravbank_id]: {
+            ...state.kravbanker[kravbank_id],
+            behov: {
+              ...state.kravbanker[kravbank_id].behov,
+              [behov_id]: {
+                ...state.kravbanker[kravbank_id].behov[behov_id],
+                krav: {
+                  ...state.kravbanker[kravbank_id].behov[behov_id].krav,
+                  [action.payload.id]: action.payload
+                }
+              }
+            }
+          }
+        },
+        loading: false
+      };
+      break;
+
+    case ActionType.KRAV_EDIT:
+      state = {
+        ...state,
+        selectedkrav: action.payload,
         loading: false
       };
       break;

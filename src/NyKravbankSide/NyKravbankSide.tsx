@@ -36,7 +36,7 @@ function NyKravbankSide(props: IProps): ReactElement {
           <input
             name="tittel"
             ref={register({
-              pattern: /^[a-zA-Z0-9_ ]+$/i,
+              pattern: /^[ÆØÅæøåA-Za-z0-9_ ]+$/i,
               required: true,
               maxLength: 40
             })}
@@ -47,7 +47,7 @@ function NyKravbankSide(props: IProps): ReactElement {
           <input
             name="beskrivelse"
             ref={register({
-              pattern: /^[a-zA-Z0-9_ ]+$/i,
+              pattern: /^[ÆØÅæøåA-Za-z0-9_ ]+$/i,
               required: true,
               maxLength: 50
             })}

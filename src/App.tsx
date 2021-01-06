@@ -10,6 +10,7 @@ import BehovEditorSide from './BehovEditorSide/BehovEditorSide';
 import KravbankKatalogSide from './KravbankKatalogSide/KravbankKatalogSide';
 import NyKravbankSide from './NyKravbankSide/NyKravbankSide';
 import { store } from './store';
+import KravEditorSide from './KravEditorSide/KravEditorSide';
 
 function App() {
   return (
@@ -29,6 +30,9 @@ function App() {
             </Route>
             <Route exact path={'/edit/behov/:id'}>
               <BehovEditorSide />
+            </Route>
+            <Route exact path={'/edit/krav/:id'}>
+              <KravEditorSide />
             </Route>
             <Route exact path={'/kravbank'}>
               <KravbankEditorSide />

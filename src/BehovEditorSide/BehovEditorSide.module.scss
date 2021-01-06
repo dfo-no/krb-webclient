@@ -5,6 +5,44 @@
   transform: translate(-50%, -50%);
   margin-right: '-50%';
   background-color: white;
+  border: black 1px solid;
+}
+
+.modal :focus {
+  outline: none;
+}
+
+.listitem {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 400px;
+  margin-top: 15px;
+}
+
+.listitem p {
+  margin: 0;
+}
+
+.editbutton {
+  height: 25px;
+}
+
+.subsection {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 400px;
+}
+
+.icon {
+  margin: 25px 0px 15px 15px;
+  color: #005b91;
+}
+
+.editicon {
+  margin: 0px 0px 15px 15px;
+  color: #005b91;
 }
 
 .formwrapper {
@@ -12,7 +50,8 @@
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
-  width: 350px;
+  width: 300px;
+  height: 200px;
   margin: 100px;
 }
 
@@ -20,12 +59,21 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
+  margin: 10px 0;
 }
 
 .formlabel input {
   align-items: center;
 }
 input {
+  width: 400px;
+  padding: 12px 20px;
+  margin: 8px 0;
+  box-sizing: border-box;
+  border-radius: 10px;
+}
+
+select {
   width: 400px;
   padding: 12px 20px;
   margin: 8px 0;

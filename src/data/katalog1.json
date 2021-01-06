@@ -15,7 +15,23 @@
       },
       "1236": {
         "id": 1236,
-        "tittel": "Transport"
+        "tittel": "Transport",
+        "krav": {
+          "7800": {
+            "id": 7800,
+            "tittel": "Elbil",
+            "behov_id": 1236,
+            "beskrivelse": "Elbilen må kjøre minst 10km",
+            "type": "kodeliste-eksakt"
+          },
+          "7801": {
+            "id": 7801,
+            "tittel": "Alle med lappen skal kunne kjøre bilen",
+            "behov_id": 1236,
+            "beskrivelse": "Bilen må være automat",
+            "type": "kodeliste"
+          }
+        }
       }
     }
   },

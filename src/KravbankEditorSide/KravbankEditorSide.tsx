@@ -9,6 +9,7 @@ import { Katalog } from '../models/Katalog';
 import { Kravbank } from '../models/Kravbank';
 import { State } from '../store/index';
 import styles from './KravbankEditorSide.module.scss';
+import { AiFillEdit, AiFillPlusSquare } from 'react-icons/ai';
 
 interface IProps {
   selectedKravbank: number;
@@ -47,13 +48,10 @@ function KravbankEditorSide(props: IProps): ReactElement {
       return (
         <div className={styles.listitem} key={element.id}>
           <p>{element.tittel}</p>
-          <button
-            type="button"
-            className={styles.editbutton}
+          <AiFillEdit
+            className={styles.editicon}
             onClick={handleEdit(element.id)}
-          >
-            Rediger
-          </button>
+          />
         </div>
       );
     });
@@ -90,9 +88,11 @@ function KravbankEditorSide(props: IProps): ReactElement {
       <div>
         <div className={styles.subsection}>
           <h2>Behov</h2>
-          <button type="button" onClick={openModal}>
-            Nytt behov
-          </button>
+          <AiFillPlusSquare
+            size={25}
+            onClick={openModal}
+            className={styles.icon}
+          />
         </div>
         {props.kravbanker[props.selectedKravbank].behov &&
           createBehovOutput(props.kravbanker[props.selectedKravbank].behov)}
@@ -125,7 +125,7 @@ function KravbankEditorSide(props: IProps): ReactElement {
             <input
               name="beskrivelse"
               ref={register({
-                pattern: /^[a-zA-Z0-9_ ]+$/i,
+                pattern: /^[ÆØÅæøåA-Za-z0-9_ ]+$/i,
                 required: true,
                 maxLength: 50
               })}
