@@ -2,12 +2,23 @@
   "0": {
     "id": 0,
     "tittel": "Kurs og konferanse",
-    "beskrivelse": "testing",
+    "beskrivelse": "Generelle behov og krav",
     "ordering": 1,
     "behov": {
       "1234": {
         "id": 1234,
-        "tittel": "Møterom"
+        "tittel": "Lokaler",
+        "beskrivelse": "Passende lokaler",
+        "underbehov": {
+          "84848484": {
+            "id": 84848484,
+            "tittel": "Parkeringsmuligheter"
+          },
+          "84848485": {
+            "id": 84848485,
+            "tittel": "Auditorium"
+          }
+        }
       },
       "1235": {
         "id": 1235,
@@ -38,6 +49,20 @@
   "1": {
     "id": 1,
     "tittel": "Elbil til hjemmetjenesten",
+    "beskrivelse": "...",
+    "ordering": 2,
+    "behov": {}
+  },
+  "2": {
+    "id": 2,
+    "tittel": "Vedlikehold",
+    "beskrivelse": "...",
+    "ordering": 2,
+    "behov": {}
+  },
+  "3": {
+    "id": 3,
+    "tittel": "Kantineløsning",
     "beskrivelse": "...",
     "ordering": 2,
     "behov": {}

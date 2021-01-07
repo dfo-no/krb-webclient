@@ -8,6 +8,7 @@ import { Kravbank } from '../models/Kravbank';
 import { State } from '../store';
 import styles from './KravEditorSide.module.scss';
 import koder from '../data/kodelister.json';
+import { useHistory } from 'react-router-dom';
 
 interface IProps {
   selectedkravbank: number;
@@ -19,6 +20,8 @@ interface IProps {
 
 function KravEditorSide(props: IProps): ReactElement {
   const { register, handleSubmit } = useForm<Krav>();
+  const history = useHistory();
+
   const behov =
     props.kravbanker[props.selectedkravbank].behov[props.selectedbehov];
   const krav = behov.krav ? behov.krav[props.selectedkrav] : undefined;
@@ -63,6 +66,7 @@ function KravEditorSide(props: IProps): ReactElement {
       file: data.file
     };
     props.addKrav(krav);
+    history.push(`/edit/behov/${props.selectedbehov}`);
   };
 
   return krav ? (

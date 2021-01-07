@@ -92,6 +92,7 @@ export function globalReducers(
               [behovid]: {
                 ...state.kravbanker[kravbankid].behov[behovid],
                 underbehov: {
+                  ...state.kravbanker[kravbankid].behov[behovid].underbehov,
                   [action.payload.id]: action.payload
                 }
               }
@@ -100,6 +101,7 @@ export function globalReducers(
         },
         loading: false
       };
+      console.log(state.kravbanker[kravbankid].behov[behovid]);
       break;
 
     case ActionType.KRAV_NEW:

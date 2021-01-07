@@ -29,21 +29,21 @@ function BehovEditorSide(props: IProps): ReactElement {
   const [kravModalIsOpen, setKravIsOpen] = React.useState(false);
   const history = useHistory();
 
-  const openModal = (type: string) => (event: any) => {
-    if (type === 'behov') {
-      setBehovIsOpen(true);
-    } else {
-      setKravIsOpen(true);
-    }
-  };
+  function openModal() {
+    setBehovIsOpen(true);
+  }
 
-  const closeModal = (type: string) => (event: any) => {
-    if (type === 'behov') {
-      setBehovIsOpen(false);
-    } else {
-      setKravIsOpen(false);
-    }
-  };
+  function closeModal() {
+    setBehovIsOpen(false);
+  }
+
+  function openModal2() {
+    setKravIsOpen(true);
+  }
+
+  function closeModal2() {
+    setKravIsOpen(false);
+  }
 
   const handleEdit = (elementid: number) => (event: any) => {
     props.editKrav(elementid);
@@ -76,7 +76,7 @@ function BehovEditorSide(props: IProps): ReactElement {
       beskrivelse: data.beskrivelse
     };
     props.addUnderBehov(behov);
-    closeModal('behov');
+    closeModal();
   };
 
   const submitKrav = (data: Krav) => {
@@ -88,7 +88,7 @@ function BehovEditorSide(props: IProps): ReactElement {
       behov_id: props.selectedbehov
     };
     props.addKrav(krav);
-    closeModal('krav');
+    closeModal2();
   };
 
   return behov ? (
@@ -107,7 +107,7 @@ function BehovEditorSide(props: IProps): ReactElement {
           <h2>Underbehov</h2>
           <AiFillPlusSquare
             size={25}
-            onClick={openModal('behov')}
+            onClick={openModal}
             className={styles.icon}
           />
         </div>
@@ -115,7 +115,7 @@ function BehovEditorSide(props: IProps): ReactElement {
       </div>
       <Modal
         isOpen={behovModalIsOpen}
-        onRequestClose={closeModal('behov')}
+        onRequestClose={closeModal}
         className={styles.modal}
         contentLabel="Example Modal"
         ariaHideApp={false}
@@ -155,7 +155,7 @@ function BehovEditorSide(props: IProps): ReactElement {
           <h2>Krav</h2>
           <AiFillPlusSquare
             size={25}
-            onClick={openModal('behov')}
+            onClick={openModal2}
             className={styles.icon}
           />
         </div>
@@ -163,7 +163,7 @@ function BehovEditorSide(props: IProps): ReactElement {
       </div>
       <Modal
         isOpen={kravModalIsOpen}
-        onRequestClose={closeModal('krav')}
+        onRequestClose={closeModal2}
         className={styles.modal}
         contentLabel="Example Modal"
         ariaHideApp={false}
@@ -197,10 +197,10 @@ function BehovEditorSide(props: IProps): ReactElement {
           </label>
           <label className={styles.formlabel}>
             <b>Type</b>
-            <select id="cars" name="cars" ref={register}>
-              <option value="Kodeliste">Kodeliste</option>
-              <option value="Kodeliste-eksakt">Kodeliste-eksakt</option>
-              <option value="Fritekst">Fritekst</option>
+            <select id="type" name="type" ref={register}>
+              <option value="kodeliste">Kodeliste</option>
+              <option value="kodeliste-eksakt">Kodeliste-eksakt</option>
+              <option value="fritekst">Fritekst</option>
             </select>
           </label>
           <input type="submit" value="Oprett krav" />

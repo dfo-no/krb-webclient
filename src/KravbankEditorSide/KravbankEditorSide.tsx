@@ -78,7 +78,7 @@ function KravbankEditorSide(props: IProps): ReactElement {
         />
       </label>
       <label className={styles.formlabel}>
-        <b>Tittel</b>
+        <b>Beskrivelse</b>
         <input
           type="text"
           name="tittel"
