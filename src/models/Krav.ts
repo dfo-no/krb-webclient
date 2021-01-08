@@ -2,7 +2,7 @@ export interface Krav {
   id: number;
   tittel: string;
   beskrivelse: string;
-  behov_id: number;
+  behovId: number;
   version?: number;
   type: string;
   kodeliste_id?: number;

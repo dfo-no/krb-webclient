@@ -6,17 +6,17 @@ import { Kravbank } from '../../models/Kravbank';
 export interface State {
   loading: boolean;
   kravbanker: Katalog<Kravbank>;
-  selectedkravbank: number;
-  selectedbehov: number;
-  selectedkrav: number;
+  selectedKravbank: number;
+  selectedBehov: number;
+  selectedKrav: number;
 }
 
 const initialState: State = {
   loading: false,
   kravbanker: data,
-  selectedkravbank: 0,
-  selectedbehov: 1234,
-  selectedkrav: 0
+  selectedKravbank: 0,
+  selectedBehov: 1234,
+  selectedKrav: 0
 };
 
 // TODO: prevent switch-hell
@@ -46,7 +46,7 @@ export function globalReducers(
     case ActionType.KRAVBANK_EDIT:
       state = {
         ...state,
-        selectedkravbank: action.payload,
+        selectedKravbank: action.payload,
         loading: false
       };
       break;
@@ -54,13 +54,13 @@ export function globalReducers(
     case ActionType.BEHOV_EDIT:
       state = {
         ...state,
-        selectedbehov: action.payload,
+        selectedBehov: action.payload,
         loading: false
       };
       break;
 
     case ActionType.BEHOV_NEW:
-      const id: number = state.selectedkravbank;
+      const id: number = state.selectedKravbank;
       state = {
         ...state,
 
@@ -78,8 +78,8 @@ export function globalReducers(
       };
       break;
     case ActionType.UNDERBEHOV_NEW:
-      const behovid: number = state.selectedbehov;
-      const kravbankid: number = state.selectedkravbank;
+      const behovid: number = state.selectedBehov;
+      const kravbankid: number = state.selectedKravbank;
       state = {
         ...state,
 
@@ -105,8 +105,8 @@ export function globalReducers(
       break;
 
     case ActionType.KRAV_NEW:
-      const kravbank_id: number = state.selectedkravbank;
-      const behov_id: number = state.selectedbehov;
+      const kravbank_id: number = state.selectedKravbank;
+      const behov_id: number = state.selectedBehov;
 
       state = {
         ...state,
@@ -134,7 +134,7 @@ export function globalReducers(
     case ActionType.KRAV_EDIT:
       state = {
         ...state,
-        selectedkrav: action.payload,
+        selectedKrav: action.payload,
         loading: false
       };
       break;

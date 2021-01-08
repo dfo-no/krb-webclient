@@ -159,7 +159,7 @@ const mapDispatchToProps = (dispatch: any) => {
 
 const mapStateToProps = (store: State) => {
   return {
-    selectedKravbank: store.selectedkravbank,
+    selectedKravbank: store.selectedKravbank,
     kravbanker: store.kravbanker
   };
 };

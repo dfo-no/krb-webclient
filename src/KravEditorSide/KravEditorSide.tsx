@@ -11,10 +11,10 @@ import koder from '../data/kodelister.json';
 import { useHistory } from 'react-router-dom';
 
 interface IProps {
-  selectedkravbank: number;
-  selectedbehov: number;
+  selectedKravbank: number;
+  selectedBehov: number;
   kravbanker: Katalog<Kravbank>;
-  selectedkrav: number;
+  selectedKrav: number;
   addKrav: any;
 }
 
@@ -23,8 +23,8 @@ function KravEditorSide(props: IProps): ReactElement {
   const history = useHistory();
 
   const behov =
-    props.kravbanker[props.selectedkravbank].behov[props.selectedbehov];
-  const krav = behov.krav ? behov.krav[props.selectedkrav] : undefined;
+    props.kravbanker[props.selectedKravbank].behov[props.selectedBehov];
+  const krav = behov.krav ? behov.krav[props.selectedKrav] : undefined;
   const [isKodelisteEksakt, setIsKodelisteEksakt] = useState(
     krav?.type === 'kodeliste-eksakt' ? true : false
   );
@@ -58,15 +58,15 @@ function KravEditorSide(props: IProps): ReactElement {
 
   const saveKrav = (data: Krav) => {
     const krav: Krav = {
-      id: props.selectedkrav,
+      id: props.selectedKrav,
       tittel: data.tittel,
       beskrivelse: data.beskrivelse,
       type: data.type,
-      behov_id: props.selectedbehov,
+      behovId: props.selectedBehov,
       file: data.file
     };
     props.addKrav(krav);
-    history.push(`/edit/behov/${props.selectedbehov}`);
+    history.push(`/edit/behov/${props.selectedBehov}`);
   };
 
   return krav ? (
@@ -140,9 +140,9 @@ const mapDispatchToProps = (dispatch: any) => {
 
 const mapStateToProps = (store: State) => {
   return {
-    selectedkrav: store.selectedkrav,
-    selectedbehov: store.selectedbehov,
-    selectedkravbank: store.selectedkravbank,
+    selectedKrav: store.selectedKrav,
+    selectedBehov: store.selectedBehov,
+    selectedKravbank: store.selectedKravbank,
     kravbanker: store.kravbanker
   };
 };

@@ -13,8 +13,8 @@ import { Krav } from '../models/Krav';
 import styles from './BehovEditorSide.module.scss';
 
 interface IProps {
-  selectedkravbank: number;
-  selectedbehov: number;
+  selectedKravbank: number;
+  selectedBehov: number;
   kravbanker: Katalog<Kravbank>;
   addUnderBehov: any;
   editKrav: any;
@@ -23,34 +23,26 @@ interface IProps {
 
 function BehovEditorSide(props: IProps): ReactElement {
   const behov =
-    props.kravbanker[props.selectedkravbank].behov[props.selectedbehov];
+    props.kravbanker[props.selectedKravbank].behov[props.selectedBehov];
   const { register, handleSubmit } = useForm<Behov>();
   const [behovModalIsOpen, setBehovIsOpen] = React.useState(false);
   const [kravModalIsOpen, setKravIsOpen] = React.useState(false);
   const history = useHistory();
 
-  function openModal() {
-    setBehovIsOpen(true);
-  }
+  const behovModal = (open: boolean) => (event: any) => {
+    setBehovIsOpen(open);
+  };
 
-  function closeModal() {
-    setBehovIsOpen(false);
-  }
-
-  function openModal2() {
-    setKravIsOpen(true);
-  }
-
-  function closeModal2() {
-    setKravIsOpen(false);
-  }
+  const kravModal = (open: boolean) => (event: any) => {
+    setKravIsOpen(open);
+  };
 
   const handleEdit = (elementid: number) => (event: any) => {
     props.editKrav(elementid);
     history.push(`/edit/krav/${elementid}`);
   };
 
-  const createListOutput = (katalog: Katalog<Behov> | Katalog<Krav>) => {
+  const createListOutput = (katalog: Katalog<Behov | Krav>) => {
     let list = [];
     for (let key in katalog) {
       let value = katalog[key];
@@ -70,13 +62,14 @@ function BehovEditorSide(props: IProps): ReactElement {
   };
 
   const submitBehov = (data: Behov) => {
+    // TODO: ikke gi ID til nye behov.
     const behov: Behov = {
       id: Math.random(),
       tittel: data.tittel,
       beskrivelse: data.beskrivelse
     };
     props.addUnderBehov(behov);
-    closeModal();
+    behovModal(false);
   };
 
   const submitKrav = (data: Krav) => {
@@ -85,10 +78,10 @@ function BehovEditorSide(props: IProps): ReactElement {
       tittel: data.tittel,
       beskrivelse: data.beskrivelse,
       type: data.type,
-      behov_id: props.selectedbehov
+      behovId: props.selectedBehov
     };
     props.addKrav(krav);
-    closeModal2();
+    kravModal(false);
   };
 
   return behov ? (
@@ -107,7 +100,7 @@ function BehovEditorSide(props: IProps): ReactElement {
           <h2>Underbehov</h2>
           <AiFillPlusSquare
             size={25}
-            onClick={openModal}
+            onClick={behovModal(true)}
             className={styles.icon}
           />
         </div>
@@ -115,7 +108,7 @@ function BehovEditorSide(props: IProps): ReactElement {
       </div>
       <Modal
         isOpen={behovModalIsOpen}
-        onRequestClose={closeModal}
+        onRequestClose={behovModal(false)}
         className={styles.modal}
         contentLabel="Example Modal"
         ariaHideApp={false}
@@ -157,7 +150,7 @@ function BehovEditorSide(props: IProps): ReactElement {
           <h2>Krav</h2>
           <AiFillPlusSquare
             size={25}
-            onClick={openModal2}
+            onClick={kravModal(true)}
             className={styles.icon}
           />
         </div>
@@ -165,7 +158,7 @@ function BehovEditorSide(props: IProps): ReactElement {
       </div>
       <Modal
         isOpen={kravModalIsOpen}
-        onRequestClose={closeModal2}
+        onRequestClose={kravModal(false)}
         className={styles.modal}
         contentLabel="Example Modal"
         ariaHideApp={false}
@@ -240,8 +233,8 @@ const mapDispatchToProps = (dispatch: any) => {
 
 const mapStateToProps = (store: State) => {
   return {
-    selectedbehov: store.selectedbehov,
-    selectedkravbank: store.selectedkravbank,
+    selectedBehov: store.selectedBehov,
+    selectedKravbank: store.selectedKravbank,
     kravbanker: store.kravbanker
   };
 };
