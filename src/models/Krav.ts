@@ -1,9 +1,10 @@
 export interface Krav {
-  id: string;
+  id: number;
   tittel: string;
   beskrivelse: string;
-  behov_id: string;
-  version: number;
+  behovId: number;
+  version?: number;
   type: string;
-  kodeliste_id?: string;
+  kodeliste_id?: number;
+  file?: FileList;
 }

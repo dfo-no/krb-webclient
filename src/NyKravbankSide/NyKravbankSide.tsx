@@ -2,7 +2,6 @@ import React, { ReactElement } from 'react';
 import { useForm } from 'react-hook-form';
 import { useHistory } from 'react-router-dom';
 import { connect } from 'react-redux';
-import uuid from 'uuid';
 
 import { Kravbank } from '../models/Kravbank';
 import styles from './NyKravbankSide.module.scss';
@@ -16,9 +15,10 @@ function NyKravbankSide(props: IProps): ReactElement {
   const history = useHistory();
   const onSubmit = (data: Kravbank) => {
     const kravbank: Kravbank = {
-      id: uuid.v4(),
+      id: Math.random(),
       tittel: data.tittel,
-      beskrivelse: data.beskrivelse
+      beskrivelse: data.beskrivelse,
+      behov: []
     };
     props.registerNew(kravbank);
     history.push('/katalog/');
@@ -36,7 +36,7 @@ function NyKravbankSide(props: IProps): ReactElement {
           <input
             name="tittel"
             ref={register({
-              pattern: /^[a-zA-Z0-9_ ]+$/i,
+              pattern: /^[ÆØÅæøåA-Za-z0-9_ ]+$/i,
               required: true,
               maxLength: 40
             })}
@@ -47,7 +47,7 @@ function NyKravbankSide(props: IProps): ReactElement {
           <input
             name="beskrivelse"
             ref={register({
-              pattern: /^[a-zA-Z0-9_ ]+$/i,
+              pattern: /^[ÆØÅæøåA-Za-z0-9_ ]+$/i,
               required: true,
               maxLength: 50
             })}

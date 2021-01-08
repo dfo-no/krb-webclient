@@ -9,10 +9,7 @@ export default function RegistrationForm(this: any): ReactElement {
   const history = useHistory();
 
   const onSubmit = (data: IFormInput) => {
-    console.log(data);
     history.push(`/katalog`);
-
-    // TODO: remove example
     store.dispatch(KRB.loading(true));
   };
 
@@ -32,7 +29,7 @@ export default function RegistrationForm(this: any): ReactElement {
         <input
           name="username"
           ref={register({
-            pattern: /^[A-Za-z]+$/i,
+            pattern: /^[ÆØÅæøåA-Za-z0-9_ ]+$/i,
             required: true,
             maxLength: 20
           })}
