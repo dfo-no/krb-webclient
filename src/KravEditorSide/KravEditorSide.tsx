@@ -70,7 +70,7 @@ function KravEditorSide(props: IProps): ReactElement {
   };
 
   return krav ? (
-    <form onSubmit={handleSubmit(saveKrav)} autoComplete="on">
+    <form onSubmit={handleSubmit(saveKrav)} autoComplete="off">
       <div>
         <h1>{krav.tittel}</h1>
         <label className={styles.formlabel}>

@@ -107,7 +107,7 @@ function KravbankEditorSide(props: IProps): ReactElement {
         <form
           onSubmit={handleSubmit(onSubmit)}
           className={styles.formwrapper}
-          autoComplete="on"
+          autoComplete="off"
         >
           <label className={styles.formlabel}>
             <b>Tittel</b>
@@ -121,7 +121,7 @@ function KravbankEditorSide(props: IProps): ReactElement {
             />
           </label>
           <label className={styles.formlabel}>
-            <b>beskrivelse</b>
+            <b>Beskrivelse</b>
             <input
               name="beskrivelse"
               ref={register({

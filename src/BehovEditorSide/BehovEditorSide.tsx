@@ -122,12 +122,13 @@ function BehovEditorSide(props: IProps): ReactElement {
       >
         <form
           onSubmit={handleSubmit(submitBehov)}
-          autoComplete="on"
+          autoComplete="off"
           className={styles.formwrapper}
         >
           <label className={styles.formlabel}>
             <b>Tittel</b>
             <input
+              autoComplete="off"
               name="tittel"
               ref={register({
                 pattern: /^[ÆØÅæøåA-Za-z0-9_ ]+$/i,
@@ -137,8 +138,9 @@ function BehovEditorSide(props: IProps): ReactElement {
             />
           </label>
           <label className={styles.formlabel}>
-            <b>beskrivelse</b>
+            <b>Beskrivelse</b>
             <input
+              autoComplete="off"
               name="beskrivelse"
               ref={register({
                 pattern: /^[ÆØÅæøåA-Za-z0-9_ ]+$/i,
@@ -170,7 +172,7 @@ function BehovEditorSide(props: IProps): ReactElement {
       >
         <form
           onSubmit={handleSubmit(submitKrav)}
-          autoComplete="on"
+          autoComplete="off"
           className={styles.formwrapper}
         >
           <label className={styles.formlabel}>
@@ -185,7 +187,7 @@ function BehovEditorSide(props: IProps): ReactElement {
             />
           </label>
           <label className={styles.formlabel}>
-            <b>beskrivelse</b>
+            <b>Beskrivelse</b>
             <input
               name="beskrivelse"
               ref={register({
