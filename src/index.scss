@@ -1,0 +1,25 @@
+*,
+*::after,
+*::before {
+  margin: 0;
+  padding: 0;
+  /* box-sizing default not inheritet, we force inheritnce*/
+  box-sizing: inherit;
+}
+html {
+  /* set the root font size -> since we know whats it is, we can use rem */
+  /* set to % so users can zoom in by setting their own defult font-size */
+  /* 10/16 = */
+  font-size: 62.5%;
+}
+body {
+  /* fonts are inherited, therefore fonts on the body element */
+  font-family: ‘Lato’ sans-serif;
+  font-weight: 400;
+  line-height: 1.7;
+  color: #fff;
+  /* add padding around site*/
+  padding: 3rem;
+  /* do not add border or padding  w/hin addition to elemts w/h*/
+  box-sizing: border-box;
+}
