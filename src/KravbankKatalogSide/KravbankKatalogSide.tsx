@@ -23,6 +23,7 @@ function KravbankKatalogSide(props: IProps): ReactElement {
       let value = katalog[key];
       list.push(value);
     }
+    console.log(list);
     return list;
   };
 
@@ -33,21 +34,18 @@ function KravbankKatalogSide(props: IProps): ReactElement {
   };
 
   return (
-    <Container fluid>
-      <Col id="sidebar-wrapper">
-        <SideBar />
-      </Col>
-      <Col id="page-content-wrapper">
-        <Button variant="primary">Primary</Button>{' '}
-        <button
-          type="button"
-          className="btn btn-primary"
-          onClick={handleCreateNew()}
-        >
-          Opprett Kravbank
-        </button>
-        <SearchBar list={kravbankListe}></SearchBar>
-      </Col>
+    <Container fluid p-0>
+      <Row>
+        <Col id="sidebar-wrapper" className="col-2 p-0">
+          <SideBar />
+        </Col>
+        <Col id="page-content-wrapper" className="col-15 ">
+          <Button variant="primary" onClick={handleCreateNew()}>
+            Opprett Kravbank
+          </Button>{' '}
+          <SearchBar list={kravbankListe}></SearchBar>
+        </Col>
+      </Row>
     </Container>
   );
 }

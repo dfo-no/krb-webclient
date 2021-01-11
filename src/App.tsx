@@ -1,7 +1,6 @@
 import React from 'react';
 import { Provider } from 'react-redux';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import 'react-bootstrap/dist/react-bootstrap.min.js';
 
 import styles from './App.module.scss';
 import RegistrationForm from './RegistrationForm/RegistrationForm';
