@@ -12,7 +12,6 @@ interface SearchBarProps {
 }
 
 function SearchBar(props: SearchBarProps): ReactElement {
-  console.log(props.list);
   const [input, setInput] = useState('');
   const [searchList, setSearchList] = useState(props.list);
   const history = useHistory();
@@ -33,7 +32,6 @@ function SearchBar(props: SearchBarProps): ReactElement {
 
   const displaylist = (list: Kravbank[]) => {
     return list.map((kravbank: Kravbank) => {
-      console.log(kravbank.tittel);
       if (kravbank.tittel) {
         return (
           <div className={styles.katalogitem} key={kravbank.id}>

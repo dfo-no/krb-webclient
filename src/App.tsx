@@ -15,7 +15,7 @@ import SideBar from './SideBar/SideBar';
 import { Col, Container, Row } from 'react-bootstrap';
 
 function App() {
-  const pathname = window.location.pathname;
+  const pathName = window.location.pathname;
   return (
     <Provider store={store}>
       <div className={styles.App}>
@@ -23,7 +23,7 @@ function App() {
           <Header />
           <Container fluid>
             <Row>
-              {pathname === '/' || pathname === '/katalog' ? (
+              {pathName === '/' || pathName === '/katalog' ? (
                 <Col className="col-3 p-0"></Col>
               ) : (
                 <Col className="col-2 p-0">
