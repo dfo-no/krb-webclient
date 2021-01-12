@@ -9,6 +9,7 @@ import { Behov } from '../models/Behov';
 import styles from './KravbankEditorSide.module.scss';
 import { RootState } from '../store/configureStore';
 import { addBehov, editBehov } from '../store/reducers/kravbank-reducer';
+import { Col } from 'react-bootstrap';
 
 function KravbankEditorSide(): ReactElement {
   const dispatch = useDispatch();
@@ -29,7 +30,6 @@ function KravbankEditorSide(): ReactElement {
   }
 
   const handleEdit = (id: number) => (event: any) => {
-    //const selectedKravbank = props.kravbanker.find((e) => e.id === id);
     dispatch(editBehov(id));
     history.push(`/edit/behov/${id}`);
   };
@@ -57,8 +57,9 @@ function KravbankEditorSide(): ReactElement {
     dispatch(addBehov(behov));
     closeModal();
   };
+
   return kravbanker[selectedKravbank] ? (
-    <div>
+    <Col className="col-20 p-5">
       <h1>{kravbanker[selectedKravbank].tittel}</h1>
       <label className={styles.formlabel}>
         <b>Tittel</b>
@@ -125,7 +126,7 @@ function KravbankEditorSide(): ReactElement {
           <input type="submit" value="Oprett behov" />
         </form>
       </Modal>
-    </div>
+    </Col>
   ) : (
     <div></div>
   );
