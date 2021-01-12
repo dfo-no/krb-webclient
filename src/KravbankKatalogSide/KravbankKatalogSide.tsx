@@ -2,6 +2,8 @@ import React, { ReactElement } from 'react';
 import { useHistory } from 'react-router-dom';
 import { connect } from 'react-redux';
 
+import Button from 'react-bootstrap/Button';
+
 import { Kravbank } from '../models/Kravbank';
 import { Katalog } from '../models/Katalog';
 import { State } from '../store/index';
@@ -30,13 +32,13 @@ function KravbankKatalogSide(props: IProps): ReactElement {
 
   return (
     <div className={styles.container}>
-      <button
-        className={styles.newkatalogbutton}
+      <Button
+        className={`primary ${styles.newkatalogbutton}`}
         type="button"
         onClick={handleCreateNew()}
       >
         Opprett Kravbank
-      </button>
+      </Button>
 
       <div className={styles.katalogcontainer}></div>
       <SearchBar list={kravbankListe}></SearchBar>

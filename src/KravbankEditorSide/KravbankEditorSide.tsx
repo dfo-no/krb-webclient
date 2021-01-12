@@ -10,6 +10,8 @@ import { Katalog } from '../models/Katalog';
 import { Kravbank } from '../models/Kravbank';
 import { State } from '../store/index';
 import styles from './KravbankEditorSide.module.scss';
+import { Col, Container, Row } from 'react-bootstrap';
+import SideBar from '../SideBar/SideBar';
 
 interface IProps {
   selectedKravbank: number;
@@ -67,74 +69,76 @@ function KravbankEditorSide(props: IProps): ReactElement {
     closeModal();
   };
   return props.kravbanker[props.selectedKravbank] ? (
-    <div>
-      <h1>{props.kravbanker[props.selectedKravbank].tittel}</h1>
-      <label className={styles.formlabel}>
-        <b>Tittel</b>
-        <input
-          type="text"
-          name="tittel"
-          defaultValue={props.kravbanker[props.selectedKravbank].tittel}
-        />
-      </label>
-      <label className={styles.formlabel}>
-        <b>Beskrivelse</b>
-        <input
-          type="text"
-          name="tittel"
-          defaultValue={props.kravbanker[props.selectedKravbank].beskrivelse}
-        />
-      </label>
+    <Col className="col-20 p-5">
       <div>
-        <div className={styles.subsection}>
-          <h2>Behov</h2>
-          <AiFillPlusSquare
-            size={25}
-            onClick={openModal}
-            className={styles.icon}
+        <h1>{props.kravbanker[props.selectedKravbank].tittel}</h1>
+        <label className={styles.formlabel}>
+          <b>Tittel</b>
+          <input
+            type="text"
+            name="tittel"
+            defaultValue={props.kravbanker[props.selectedKravbank].tittel}
           />
+        </label>
+        <label className={styles.formlabel}>
+          <b>Beskrivelse</b>
+          <input
+            type="text"
+            name="tittel"
+            defaultValue={props.kravbanker[props.selectedKravbank].beskrivelse}
+          />
+        </label>
+        <div>
+          <div className={styles.subsection}>
+            <h2>Behov</h2>
+            <AiFillPlusSquare
+              size={25}
+              onClick={openModal}
+              className={styles.icon}
+            />
+          </div>
+          {props.kravbanker[props.selectedKravbank].behov &&
+            createBehovOutput(props.kravbanker[props.selectedKravbank].behov)}
         </div>
-        {props.kravbanker[props.selectedKravbank].behov &&
-          createBehovOutput(props.kravbanker[props.selectedKravbank].behov)}
-      </div>
-      <Modal
-        isOpen={modalIsOpen}
-        onRequestClose={closeModal}
-        className={styles.modal}
-        contentLabel="Example Modal"
-        ariaHideApp={false}
-      >
-        <form
-          onSubmit={handleSubmit(onSubmit)}
-          className={styles.formwrapper}
-          autoComplete="off"
+        <Modal
+          isOpen={modalIsOpen}
+          onRequestClose={closeModal}
+          className={styles.modal}
+          contentLabel="Example Modal"
+          ariaHideApp={false}
         >
-          <label className={styles.formlabel}>
-            <b>Tittel</b>
-            <input
-              name="tittel"
-              ref={register({
-                pattern: /^[a-zA-Z0-9_ ]+$/i,
-                required: true,
-                maxLength: 40
-              })}
-            />
-          </label>
-          <label className={styles.formlabel}>
-            <b>Beskrivelse</b>
-            <input
-              name="beskrivelse"
-              ref={register({
-                pattern: /^[ÆØÅæøåA-Za-z0-9_ ]+$/i,
-                required: true,
-                maxLength: 50
-              })}
-            />
-          </label>
-          <input type="submit" value="Oprett behov" />
-        </form>
-      </Modal>
-    </div>
+          <form
+            onSubmit={handleSubmit(onSubmit)}
+            className={styles.formwrapper}
+            autoComplete="off"
+          >
+            <label className={styles.formlabel}>
+              <b>Tittel</b>
+              <input
+                name="tittel"
+                ref={register({
+                  pattern: /^[a-zA-Z0-9_ ]+$/i,
+                  required: true,
+                  maxLength: 40
+                })}
+              />
+            </label>
+            <label className={styles.formlabel}>
+              <b>Beskrivelse</b>
+              <input
+                name="beskrivelse"
+                ref={register({
+                  pattern: /^[ÆØÅæøåA-Za-z0-9_ ]+$/i,
+                  required: true,
+                  maxLength: 50
+                })}
+              />
+            </label>
+            <input type="submit" value="Oprett behov" />
+          </form>
+        </Modal>
+      </div>
+    </Col>
   ) : (
     <div></div>
   );
