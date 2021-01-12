@@ -1,16 +1,9 @@
 import { ReactElement } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 import { useForm } from 'react-hook-form';
 import styles from './RegistrationForm.module.scss';
 import { useHistory } from 'react-router-dom';
-import { decrement, increment } from '../store/reducers/counter-reducer';
-import { RootState } from '../store/configureStore';
 
 function RegistrationForm(this: any): ReactElement {
-  const dispatch = useDispatch();
-
-  const { value } = useSelector((state: RootState) => state.counter);
-
   const { register, handleSubmit } = useForm<IFormInput>();
   const history = useHistory();
 
@@ -23,14 +16,6 @@ function RegistrationForm(this: any): ReactElement {
     username: string;
     password: string;
   }
-
-  const handleIncrement = () => {
-    dispatch(increment());
-  };
-
-  const handleDecrement = () => {
-    dispatch(decrement());
-  };
 
   return (
     <div>
@@ -65,9 +50,6 @@ function RegistrationForm(this: any): ReactElement {
 
         <input type="submit" value="Logg inn" />
       </form>
-      <button onClick={handleIncrement}>Increment</button>
-      <p>{value}</p>
-      <button onClick={handleDecrement}>Decrement</button>
     </div>
   );
 }
