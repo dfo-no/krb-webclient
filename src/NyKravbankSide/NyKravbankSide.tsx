@@ -1,16 +1,15 @@
-import React, { ReactElement } from 'react';
+import { ReactElement } from 'react';
 import { useForm } from 'react-hook-form';
 import { useHistory } from 'react-router-dom';
-import { connect } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
 import { Kravbank } from '../models/Kravbank';
 import styles from './NyKravbankSide.module.scss';
+import { newKravbank } from '../store/reducers/kravbank-reducer';
 
-interface IProps {
-  registerNew: any;
-}
+function NyKravbankSide(): ReactElement {
+  const dispatch = useDispatch();
 
-function NyKravbankSide(props: IProps): ReactElement {
   const { register, handleSubmit } = useForm<Kravbank>();
   const history = useHistory();
   const onSubmit = (data: Kravbank) => {
@@ -18,9 +17,12 @@ function NyKravbankSide(props: IProps): ReactElement {
       id: Math.random(),
       tittel: data.tittel,
       beskrivelse: data.beskrivelse,
-      behov: []
+      behov: [],
+      krav: [],
+      kodeliste: [],
+      ordering: 0
     };
-    props.registerNew(kravbank);
+    dispatch(newKravbank(kravbank));
     history.push('/katalog/');
   };
 
@@ -59,16 +61,4 @@ function NyKravbankSide(props: IProps): ReactElement {
   );
 }
 
-const registerNew = (kravbank: Kravbank) => ({
-  type: '[KRAVBANK] NEW',
-  payload: kravbank
-});
-
-const mapDispatchToProps = (dispatch: any) => {
-  const actions = {
-    registerNew: (kravbank: Kravbank) => dispatch(registerNew(kravbank))
-  };
-  return actions;
-};
-
-export default connect(null, mapDispatchToProps)(NyKravbankSide);
+export default NyKravbankSide;

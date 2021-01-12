@@ -18,7 +18,7 @@ export interface Action {
   payload?: any;
 }
 
-export class KRB {
+export class KRB2 {
   // TODO: prevent this namespace from growing large in a single file, possibly selctor-pattern from Ngrx
   static loading(value: boolean): Action {
     return {

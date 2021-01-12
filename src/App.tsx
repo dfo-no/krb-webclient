@@ -9,8 +9,9 @@ import Header from './Header/Header';
 import BehovEditorSide from './BehovEditorSide/BehovEditorSide';
 import KravbankKatalogSide from './KravbankKatalogSide/KravbankKatalogSide';
 import NyKravbankSide from './NyKravbankSide/NyKravbankSide';
-import { store } from './store';
 import KravEditorSide from './KravEditorSide/KravEditorSide';
+
+import store from './store/configureStore';
 
 function App() {
   return (

@@ -1,70 +1,78 @@
-{
-  "0": {
+[
+  {
     "id": 0,
     "tittel": "Kurs og konferanse",
     "beskrivelse": "Generelle behov og krav",
     "ordering": 1,
-    "behov": {
-      "1234": {
+    "behov": [
+      {
         "id": 1234,
         "tittel": "Lokaler",
         "beskrivelse": "Passende lokaler",
-        "underbehov": {
-          "84848484": {
+        "underbehov": [
+          {
             "id": 84848484,
             "tittel": "Parkeringsmuligheter"
           },
-          "84848485": {
+          {
             "id": 84848485,
             "tittel": "Auditorium"
           }
-        }
+        ]
       },
-      "1235": {
+      {
         "id": 1235,
         "tittel": "Bespisning"
       },
-      "1236": {
+      {
         "id": 1236,
         "tittel": "Transport",
-        "krav": {
-          "7800": {
+        "krav": [
+          {
             "id": 7800,
             "tittel": "Elbil",
             "behovId": 1236,
             "beskrivelse": "Elbilen må kjøre minst 10km",
             "type": "kodeliste-eksakt"
           },
-          "7801": {
+          {
             "id": 7801,
             "tittel": "Alle med lappen skal kunne kjøre bilen",
             "behovId": 1236,
             "beskrivelse": "Bilen må være automat",
             "type": "kodeliste"
           }
-        }
+        ]
       }
-    }
+    ],
+    "krav": [],
+    "kodeliste": []
   },
-  "1": {
+  {
     "id": 1,
     "tittel": "Elbil til hjemmetjenesten",
     "beskrivelse": "...",
     "ordering": 2,
-    "behov": {}
+    "behov": [],
+    "krav": [],
+    "kodeliste": []
   },
-  "2": {
+  {
     "id": 2,
     "tittel": "Vedlikehold",
     "beskrivelse": "...",
     "ordering": 2,
-    "behov": {}
+    "behov": [],
+    "krav": [],
+    "kodeliste": []
   },
-  "3": {
+  {
     "id": 3,
     "tittel": "Kantineløsning",
     "beskrivelse": "...",
     "ordering": 2,
-    "behov": {}
+    "behov": [],
+    "krav": [],
+    "kodeliste": []
   }
-}
+]
