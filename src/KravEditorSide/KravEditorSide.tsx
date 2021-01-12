@@ -1,30 +1,29 @@
-import React, { ReactElement, useState } from 'react';
+import { ReactElement, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { connect } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
-import { Katalog } from '../models/Katalog';
 import { Krav } from '../models/Krav';
-import { Kravbank } from '../models/Kravbank';
-import { State } from '../store';
 import styles from './KravEditorSide.module.scss';
 import koder from '../data/kodelister.json';
 import { useHistory } from 'react-router-dom';
+import { RootState } from '../store/configureStore';
+import { addKrav } from '../store/reducers/kravbank-reducer';
 
-interface IProps {
-  selectedKravbank: number;
-  selectedBehov: number;
-  kravbanker: Katalog<Kravbank>;
-  selectedKrav: number;
-  addKrav: any;
-}
+function KravEditorSide(): ReactElement {
+  const dispatch = useDispatch();
 
-function KravEditorSide(props: IProps): ReactElement {
+  const {
+    kravbanker,
+    selectedBehov,
+    selectedKravbank,
+    selectedKrav
+  } = useSelector((state: RootState) => state.kravbank);
+
   const { register, handleSubmit } = useForm<Krav>();
   const history = useHistory();
 
-  const behov =
-    props.kravbanker[props.selectedKravbank].behov[props.selectedBehov];
-  const krav = behov.krav ? behov.krav[props.selectedKrav] : undefined;
+  const behov = kravbanker[selectedKravbank].behov[selectedBehov];
+  const krav = behov.krav ? behov.krav[selectedKrav] : undefined;
   const [isKodelisteEksakt, setIsKodelisteEksakt] = useState(
     krav?.type === 'kodeliste-eksakt' ? true : false
   );
@@ -58,15 +57,15 @@ function KravEditorSide(props: IProps): ReactElement {
 
   const saveKrav = (data: Krav) => {
     const krav: Krav = {
-      id: props.selectedKrav,
+      id: selectedKrav,
       tittel: data.tittel,
       beskrivelse: data.beskrivelse,
       type: data.type,
-      behovId: props.selectedBehov,
+      behovId: selectedBehov,
       file: data.file
     };
-    props.addKrav(krav);
-    history.push(`/edit/behov/${props.selectedBehov}`);
+    dispatch(addKrav(krav));
+    history.push(`/edit/behov/${selectedBehov}`);
   };
 
   return krav ? (
@@ -126,25 +125,4 @@ function KravEditorSide(props: IProps): ReactElement {
   );
 }
 
-const addKrav = (krav: Krav) => ({
-  type: '[KRAV] NEW',
-  payload: krav
-});
-
-const mapDispatchToProps = (dispatch: any) => {
-  const actions = {
-    addKrav: (krav: Krav) => dispatch(addKrav(krav))
-  };
-  return actions;
-};
-
-const mapStateToProps = (store: State) => {
-  return {
-    selectedKrav: store.selectedKrav,
-    selectedBehov: store.selectedBehov,
-    selectedKravbank: store.selectedKravbank,
-    kravbanker: store.kravbanker
-  };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(KravEditorSide);
+export default KravEditorSide;

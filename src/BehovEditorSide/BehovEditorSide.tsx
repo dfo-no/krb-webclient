@@ -1,29 +1,27 @@
 import React, { ReactElement } from 'react';
 import { useForm } from 'react-hook-form';
-import { connect } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import Modal from 'react-modal';
 import { AiFillPlusSquare, AiFillEdit } from 'react-icons/ai';
 
 import { Behov } from '../models/Behov';
-import { Katalog } from '../models/Katalog';
-import { Kravbank } from '../models/Kravbank';
-import { State } from '../store';
 import { Krav } from '../models/Krav';
 import styles from './BehovEditorSide.module.scss';
+import { RootState } from '../store/configureStore';
+import {
+  addKrav,
+  addUnderBehov,
+  editKrav
+} from '../store/reducers/kravbank-reducer';
 
-interface IProps {
-  selectedKravbank: number;
-  selectedBehov: number;
-  kravbanker: Katalog<Kravbank>;
-  addUnderBehov: any;
-  editKrav: any;
-  addKrav: any;
-}
+function BehovEditorSide(): ReactElement {
+  const dispatch = useDispatch();
+  const { kravbanker, selectedKravbank, selectedBehov } = useSelector(
+    (state: RootState) => state.kravbank
+  );
 
-function BehovEditorSide(props: IProps): ReactElement {
-  const behov =
-    props.kravbanker[props.selectedKravbank].behov[props.selectedBehov];
+  const behov = kravbanker[selectedKravbank].behov[selectedBehov];
   const { register, handleSubmit } = useForm<Behov>();
   const [behovModalIsOpen, setBehovIsOpen] = React.useState(false);
   const [kravModalIsOpen, setKravIsOpen] = React.useState(false);
@@ -37,24 +35,19 @@ function BehovEditorSide(props: IProps): ReactElement {
     setKravIsOpen(open);
   };
 
-  const handleEdit = (elementid: number) => (event: any) => {
-    props.editKrav(elementid);
-    history.push(`/edit/krav/${elementid}`);
+  const handleEditKrav = (krav: Krav) => (event: any) => {
+    dispatch(editKrav(krav));
+    history.push(`/edit/krav/${krav.id}`);
   };
 
-  const createListOutput = (katalog: Katalog<Behov | Krav>) => {
-    let list = [];
-    for (let key in katalog) {
-      let value = katalog[key];
-      list.push(value);
-    }
+  const createListOutput = (list: any) => {
     return list.map((element: Behov | Krav) => {
       return (
         <div className={styles.listitem} key={element.id}>
           <p>{element.tittel}</p>
           <AiFillEdit
             className={styles.editicon}
-            onClick={handleEdit(element.id)}
+            onClick={handleEditKrav(element as Krav)}
           />
         </div>
       );
@@ -68,7 +61,7 @@ function BehovEditorSide(props: IProps): ReactElement {
       tittel: data.tittel,
       beskrivelse: data.beskrivelse
     };
-    props.addUnderBehov(behov);
+    dispatch(addUnderBehov(behov));
     behovModal(false);
   };
 
@@ -78,9 +71,9 @@ function BehovEditorSide(props: IProps): ReactElement {
       tittel: data.tittel,
       beskrivelse: data.beskrivelse,
       type: data.type,
-      behovId: props.selectedBehov
+      behovId: selectedBehov
     };
-    props.addKrav(krav);
+    dispatch(addKrav(krav));
     kravModal(false);
   };
 
@@ -198,7 +191,7 @@ function BehovEditorSide(props: IProps): ReactElement {
               <option value="fritekst">Fritekst</option>
             </select>
           </label>
-          <input type="submit" value="Oprett krav" />
+          <input type="submit" value="Opprett krav" />
         </form>
       </Modal>
     </div>
@@ -207,36 +200,4 @@ function BehovEditorSide(props: IProps): ReactElement {
   );
 }
 
-const addUnderBehov = (behov: Behov) => ({
-  type: '[UNDERBEHOV] NEW',
-  payload: behov
-});
-
-const editKrav = (kravid: number) => ({
-  type: '[KRAV] EDIT',
-  payload: kravid
-});
-
-const addKrav = (krav: Krav) => ({
-  type: '[KRAV] NEW',
-  payload: krav
-});
-
-const mapDispatchToProps = (dispatch: any) => {
-  const actions = {
-    addUnderBehov: (behov: Behov) => dispatch(addUnderBehov(behov)),
-    editKrav: (kravid: number) => dispatch(editKrav(kravid)),
-    addKrav: (krav: Krav) => dispatch(addKrav(krav))
-  };
-  return actions;
-};
-
-const mapStateToProps = (store: State) => {
-  return {
-    selectedBehov: store.selectedBehov,
-    selectedKravbank: store.selectedKravbank,
-    kravbanker: store.kravbanker
-  };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(BehovEditorSide);
+export default BehovEditorSide;

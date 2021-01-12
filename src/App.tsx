@@ -9,10 +9,11 @@ import Header from './Header/Header';
 import BehovEditorSide from './BehovEditorSide/BehovEditorSide';
 import KravbankKatalogSide from './KravbankKatalogSide/KravbankKatalogSide';
 import NyKravbankSide from './NyKravbankSide/NyKravbankSide';
-import { store } from './store';
 import KravEditorSide from './KravEditorSide/KravEditorSide';
 import SideBar from './SideBar/SideBar';
 import { Col, Container, Row } from 'react-bootstrap';
+
+import store from './store/configureStore';
 
 function App() {
   const pathName = window.location.pathname;
