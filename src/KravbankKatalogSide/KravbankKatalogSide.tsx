@@ -1,7 +1,6 @@
 import React, { ReactElement } from 'react';
 import { useHistory } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { Container, Row, Col } from 'react-bootstrap';
 
 import Button from 'react-bootstrap/Button';
 
@@ -9,7 +8,6 @@ import { Kravbank } from '../models/Kravbank';
 import { Katalog } from '../models/Katalog';
 import { State } from '../store/index';
 import SearchBar from '../SearchBar/SearchBar';
-import SideBar from '../SideBar/SideBar';
 import styles from './KravbankKatalogSide.module.scss';
 
 interface IProps {
@@ -23,7 +21,6 @@ function KravbankKatalogSide(props: IProps): ReactElement {
       let value = katalog[key];
       list.push(value);
     }
-    console.log(list);
     return list;
   };
 
@@ -34,19 +31,18 @@ function KravbankKatalogSide(props: IProps): ReactElement {
   };
 
   return (
-    <Container fluid p-0>
-      <Row>
-        <Col id="sidebar-wrapper" className="col-2 p-0">
-          <SideBar />
-        </Col>
-        <Col id="page-content-wrapper" className="col-15 ">
-          <Button variant="primary" onClick={handleCreateNew()}>
-            Opprett Kravbank
-          </Button>{' '}
-          <SearchBar list={kravbankListe}></SearchBar>
-        </Col>
-      </Row>
-    </Container>
+    <div className={styles.container}>
+      <Button
+        className={`primary ${styles.newkatalogbutton}`}
+        type="button"
+        onClick={handleCreateNew()}
+      >
+        Opprett Kravbank
+      </Button>
+
+      <div className={styles.katalogcontainer}></div>
+      <SearchBar list={kravbankListe}></SearchBar>
+    </div>
   );
 }
 

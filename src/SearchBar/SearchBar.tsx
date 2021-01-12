@@ -1,4 +1,5 @@
 import React, { ReactElement, useState } from 'react';
+import { Button } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 
@@ -37,13 +38,13 @@ function SearchBar(props: SearchBarProps): ReactElement {
         return (
           <div className={styles.katalogitem} key={kravbank.id}>
             {kravbank.tittel}
-            <button
-              className={styles.editbutton}
+            <Button
+              className={`primary ${styles.editbutton}`}
               type="button"
               onClick={handleEdit(kravbank.id)}
             >
               Rediger
-            </button>
+            </Button>
           </div>
         );
       } else {

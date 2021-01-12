@@ -11,6 +11,7 @@ import KravbankKatalogSide from './KravbankKatalogSide/KravbankKatalogSide';
 import NyKravbankSide from './NyKravbankSide/NyKravbankSide';
 import { store } from './store';
 import KravEditorSide from './KravEditorSide/KravEditorSide';
+import SideBar from './SideBar/SideBar';
 
 function App() {
   return (
@@ -28,10 +29,10 @@ function App() {
             <Route exact path={'/edit/:id'}>
               <KravbankEditorSide />
             </Route>
-            <Route exact path={'/edit/behov/:id'}>
+            <Route exact path={'/edit/behov/'}>
               <BehovEditorSide />
             </Route>
-            <Route exact path={'/edit/krav/:id'}>
+            <Route exact path={'/edit/krav/'}>
               <KravEditorSide />
             </Route>
             <Route exact path={'/kravbank'}>
