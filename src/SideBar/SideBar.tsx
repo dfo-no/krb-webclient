@@ -7,8 +7,8 @@ function SideBar(props: any): ReactElement {
   return (
     <Nav className="sidebar col-md-12 flex-column vh-100" activeKey="/home">
       <Nav.Item>
-        <Nav.Link href="/edit/behov" className={styles.navbarel}>
-          <p className="h2  ">Behov</p>
+        <Nav.Link href="/edit/behov" className={styles.navbartopel}>
+          <p className="h2 ">Behov</p>
         </Nav.Link>
       </Nav.Item>
       <Nav.Item>
