@@ -2,8 +2,17 @@ import { ReactElement } from 'react';
 import { useForm } from 'react-hook-form';
 import styles from './RegistrationForm.module.scss';
 import { useHistory } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { fetchBanks } from '../store/reducers/kravbank-reducer';
 
 function RegistrationForm(this: any): ReactElement {
+  const dispatch = useDispatch();
+
+  const initBanks = async () => {
+    await dispatch(fetchBanks());
+  };
+  initBanks();
+
   const { register, handleSubmit } = useForm<IFormInput>();
   const history = useHistory();
 
