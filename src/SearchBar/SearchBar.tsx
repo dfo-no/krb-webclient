@@ -1,5 +1,5 @@
 import React, { ReactElement, useState } from 'react';
-import { Button } from 'react-bootstrap';
+import { Button, ListGroup } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 
@@ -31,24 +31,25 @@ function SearchBar(props: SearchBarProps): ReactElement {
   };
 
   const displaylist = (list: Kravbank[]) => {
-    return list.map((kravbank: Kravbank) => {
+    const jsx = list.map((kravbank: Kravbank) => {
       if (kravbank.tittel) {
         return (
-          <div className={styles.katalogitem} key={kravbank.id}>
+          <ListGroup.Item key={kravbank.id} className={styles.katalogitem}>
             {kravbank.tittel}
             <Button
-              className={`primary ${styles.editbutton}`}
+              className={`primary`}
               type="button"
               onClick={handleEdit(kravbank.id)}
             >
               Rediger
             </Button>
-          </div>
+          </ListGroup.Item>
         );
       } else {
         return null;
       }
     });
+    return <ListGroup>{jsx}</ListGroup>;
   };
 
   return (

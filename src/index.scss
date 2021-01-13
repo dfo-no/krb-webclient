@@ -7,10 +7,6 @@
   box-sizing: inherit;
 }
 html {
-  /* set the root font size -> since we know whats it is, we can use rem */
-  /* set to % so users can zoom in by setting their own defult font-size */
-  /* 10/16 = */
-  font-size: 62.5%;
 }
 body {
   /* fonts are inherited, therefore fonts on the body element */

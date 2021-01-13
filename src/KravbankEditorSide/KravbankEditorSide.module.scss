@@ -1,3 +1,5 @@
+@import '../dfo-theme.scss';
+
 .modal {
   position: fixed;
   top: 50%;
@@ -63,18 +65,18 @@ input {
 }
 
 input[type='submit'] {
-  background-color: #005b91;
+  background-color: $dfo-blue;
   color: white;
 }
 
 .icon {
-  margin: 25px 0px 15px 15px;
-  color: #005b91;
+  font-size: x-large;
+  color: $dfo-blue;
 }
 
 .editicon {
-  margin: 0px 0px 15px 15px;
-  color: #005b91;
+  font-size: x-large;
+  color: $dfo-blue;
 }
 
 @media only screen and (max-width: 600px) {
