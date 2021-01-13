@@ -17,7 +17,7 @@ export default function KodelisteEditorSide(): ReactElement {
   const [tittel, setTittel] = useState('');
   const [beskrivelse, setBeskrivelse] = useState('');
 
-  const createListOutput = (codelist: Kodeliste[]) => {
+  const renderCodelist = (codelist: Kodeliste[]) => {
     codelist.sort((a, b) =>
       a.tittel.toLowerCase() > b.tittel.toLowerCase() ? 1 : -1
     );
@@ -36,7 +36,7 @@ export default function KodelisteEditorSide(): ReactElement {
     return <ListGroup className={styles.codeoutput}>{jsx}</ListGroup>;
   };
 
-  const handleClick = () => {
+  const handleShowEditor = () => {
     setShowEdior(true);
   };
 
@@ -48,19 +48,19 @@ export default function KodelisteEditorSide(): ReactElement {
   };
 
   const addNewKodelist = () => {
-    const newArr: Kodeliste[] = [...kodeliste];
+    const newKodeliste: Kodeliste[] = [...kodeliste];
     let Kodeliste = {
       tittel: tittel,
       beskrivelse: beskrivelse,
       id: Math.random()
     };
-    newArr.push(Kodeliste);
-    setKodeliste(newArr);
+    newKodeliste.push(Kodeliste);
+    setKodeliste(newKodeliste);
     setShowEdior(false);
     dispatch(addKodeliste(Kodeliste));
   };
 
-  function renderCodeList(show: boolean) {
+  function renderCodelistEditor(show: boolean) {
     if (show) {
       return (
         <div className={styles.formdiv}>
@@ -91,9 +91,9 @@ export default function KodelisteEditorSide(): ReactElement {
         </Col>
         <Col className="col-md-15 p-5">
           <h1>Kodelister</h1>
-          <Button onClick={handleClick}>Ny kodeliste</Button>
-          {renderCodeList(showEditor)}
-          {createListOutput(kodeliste)}
+          <Button onClick={handleShowEditor}>Ny kodeliste</Button>
+          {renderCodelistEditor(showEditor)}
+          {renderCodelist(kodeliste)}
         </Col>
       </Row>
     </Container>

@@ -85,11 +85,7 @@ function KravbankEditorSide(): ReactElement {
         <div>
           <div className={styles.subsection}>
             <h2>Behov</h2>
-            <AiFillPlusSquare
-              size={25}
-              onClick={openModal}
-              className={styles.icon}
-            />
+            <AiFillPlusSquare onClick={openModal} className={styles.icon} />
           </div>
           {kravbanker[selectedKravbank].behov &&
             createBehovOutput(kravbanker[selectedKravbank].behov)}
