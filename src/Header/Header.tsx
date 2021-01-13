@@ -1,5 +1,7 @@
-import { ReactElement } from 'react';
+import React, { ReactElement } from 'react';
 import { useHistory } from 'react-router-dom';
+import Navbar from 'react-bootstrap/Navbar';
+import { Button } from 'react-bootstrap';
 
 import css from './Header.module.scss';
 
@@ -10,10 +12,12 @@ export default function Header(): ReactElement {
   };
 
   return (
-    <header className={css.Header}>
-      <div className={css.brand} onClick={home} role="link">
-        <img src={'/logo-blue.svg'} alt={'DFØ Logo'} />
-      </div>
-    </header>
+    <Navbar bg="light" variant="dark" className={css.header}>
+      <Navbar.Brand onClick={home} role="link" className={css.header__brand}>
+        <img alt={'DFØ Logo'} src="/logo-blue.svg" />{' '}
+      </Navbar.Brand>
+      <div className={css.header__spacer}></div>
+      <Button variant="outline-primary">Log out</Button>
+    </Navbar>
   );
 }
