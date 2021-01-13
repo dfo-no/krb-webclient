@@ -1,3 +1,5 @@
+@import './../dfo-theme.scss';
+
 .container {
   display: flex;
   flex-direction: column;
@@ -22,17 +24,11 @@
 }
 
 .newkatalogbutton {
-  width: 100px;
-  height: 50px;
   align-self: flex-end;
 }
 
-.editbutton {
-  height: 25px;
-}
-
 button {
-  background-color: #005b91;
+  background-color: $dfo-blue;
   color: white;
 }
 

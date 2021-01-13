@@ -1,3 +1,5 @@
+@import './../dfo-theme.scss';
+
 .formwrapper {
   display: flex;
   flex-direction: column;
@@ -25,7 +27,7 @@ input {
 }
 
 input[type='submit'] {
-  background-color: #005b91;
+  background-color: $dfo-blue;
   color: white;
 }
 
