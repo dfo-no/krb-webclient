@@ -2,18 +2,24 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { Kravbank } from '../../models/Kravbank';
 import { Krav } from '../../models/Krav';
 import { Behov } from '../../models/Behov';
+import { Kodeliste } from '../../models/Kodeliste';
+
 interface KravbankState {
   kravbanker: Kravbank[];
   selectedKravbank: number;
   selectedBehov: number;
   selectedKrav: number;
+  kodelister: Kodeliste[];
+  selectedKodeliste: number;
 }
 
 const initialState: KravbankState = {
   kravbanker: [],
   selectedKravbank: 0,
   selectedBehov: 0,
-  selectedKrav: 0
+  selectedKrav: 0,
+  kodelister: [],
+  selectedKodeliste: 0
 };
 
 const kravbankSlice = createSlice({

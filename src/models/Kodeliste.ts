@@ -1,5 +1,8 @@
+import { Kode } from './Kode';
+
 export interface Kodeliste {
-  id: string;
+  id: number;
   tittel: string;
-  koder: string[];
+  beskrivelse: string;
+  koder: Kode[];
 }
