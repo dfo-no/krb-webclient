@@ -2,19 +2,24 @@ import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { Kravbank } from '../../models/Kravbank';
 import { Krav } from '../../models/Krav';
 import { Behov } from '../../models/Behov';
+import { Kodeliste } from '../../models/Kodeliste';
 
 interface KravbankState {
   kravbanker: Kravbank[];
   selectedKravbank: number;
   selectedBehov: number;
   selectedKrav: number;
+  kodelister: Kodeliste[];
+  selectedKodeliste: number;
 }
 
 const initialState: KravbankState = {
   kravbanker: [],
   selectedKravbank: 0,
   selectedBehov: 0,
-  selectedKrav: 0
+  selectedKrav: 0,
+  kodelister: [],
+  selectedKodeliste: 0
 };
 
 export const fetchBanks = createAsyncThunk('users/fetchById', async () => {
@@ -52,6 +57,9 @@ const kravbankSlice = createSlice({
       const behovId = state.selectedBehov;
       state.kravbanker[kravbankId].behov[behovId].krav?.push(payload);
     },
+    addKodeliste(state, { payload }: PayloadAction<Kodeliste>) {
+      state.kodelister.push(payload);
+    },
     addKrav(state, { payload }: PayloadAction<Krav>) {},
     banksReceived(state, { payload }: PayloadAction<Kravbank[]>) {
       state.kravbanker = payload;
@@ -72,6 +80,7 @@ export const {
   addBehov,
   addUnderBehov,
   registerNew,
+  addKodeliste,
   addKrav,
   banksReceived
 } = kravbankSlice.actions;

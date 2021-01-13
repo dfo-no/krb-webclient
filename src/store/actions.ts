@@ -1,4 +1,5 @@
 import { Behov } from '../models/Behov';
+import { Kodeliste } from '../models/Kodeliste';
 import { Krav } from '../models/Krav';
 import { Kravbank } from '../models/Kravbank';
 
@@ -11,7 +12,8 @@ export enum ActionType {
   BEHOV_EDIT = '[BEHOV] EDIT',
   UNDERBEHOV_NEW = '[UNDERBEHOV] NEW',
   KRAV_NEW = '[KRAV] NEW',
-  KRAV_EDIT = '[KRAV] EDIT'
+  KRAV_EDIT = '[KRAV] EDIT',
+  KODELISTE_NEW = '[KODELISTE] NEW'
 }
 export interface Action {
   type: ActionType;
@@ -66,6 +68,12 @@ export class KRB {
     return {
       type: ActionType.KRAV_EDIT,
       payload: kravid
+    };
+  }
+  static addKodeliste(kodeliste: Kodeliste): Action {
+    return {
+      type: ActionType.KODELISTE_NEW,
+      payload: kodeliste
     };
   }
 }

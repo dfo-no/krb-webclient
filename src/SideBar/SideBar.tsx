@@ -5,7 +5,7 @@ import styles from '../SideBar/SideBar.module.scss';
 
 function SideBar(props: any): ReactElement {
   return (
-    <Nav className="sidebar col-md-12 flex-column vh-100" activeKey="/home">
+    <Nav className="sidebar col-sm-5 flex-column vh-100" activeKey="/home">
       <Nav.Item>
         <Nav.Link href="/edit/behov" className={styles.navbartopel}>
           <p className="h2 ">Behov</p>
