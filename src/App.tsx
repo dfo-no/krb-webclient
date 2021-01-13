@@ -9,15 +9,12 @@ import Header from './Header/Header';
 import BehovEditorSide from './BehovEditorSide/BehovEditorSide';
 import KravbankKatalogSide from './KravbankKatalogSide/KravbankKatalogSide';
 import NyKravbankSide from './NyKravbankSide/NyKravbankSide';
-import KravEditorSide from './KravEditorSide/KravEditorSide';
-import KodelisteEditorSide from './KodelisteEditor/KodelisteEditorSide';
-import { Col, Container, Row } from 'react-bootstrap';
 
 import store from './store/configureStore';
 import KodelisteKatalogSide from './KodelisteKatalogSide/KodelisteKatalogSide';
 
 function App() {
-  const pathName = window.location.pathname;
+  /*const pathName = window.location.pathname;*/
   return (
     <Provider store={store}>
       <div className={styles.App}>
@@ -52,7 +49,6 @@ function App() {
               path={'/kodelistekatalog'}
               component={KodelisteKatalogSide}
             ></Route>
-            <Route path={'/kodeliste'} component={KodelisteEditorSide}></Route>
             <Route exact path={'/kravbank/ny'}>
               <NyKravbankSide />
             </Route>

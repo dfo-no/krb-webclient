@@ -60,7 +60,6 @@ function KravbankEditorSide(): ReactElement {
   };
 
   return kravbanker[selectedKravbank] ? (
-<<<<<<< HEAD
     <Row>
       <Col className="col-2 p-0">
         <SideBar />
@@ -94,30 +93,6 @@ function KravbankEditorSide(): ReactElement {
           </div>
           {kravbanker[selectedKravbank].behov &&
             createBehovOutput(kravbanker[selectedKravbank].behov)}
-=======
-    <Col className="col-20 p-5">
-      <h1>{kravbanker[selectedKravbank].tittel}</h1>
-      <label className={styles.formlabel}>
-        <b>Tittel</b>
-        <input
-          type="text"
-          name="tittel"
-          defaultValue={kravbanker[selectedKravbank].tittel}
-        />
-      </label>
-      <label className={styles.formlabel}>
-        <b>Beskrivelse</b>
-        <input
-          type="text"
-          name="tittel"
-          defaultValue={kravbanker[selectedKravbank].beskrivelse}
-        />
-      </label>
-      <div>
-        <div className={styles.subsection}>
-          <h2>Behov</h2>
-          <AiFillPlusSquare onClick={openModal} className={styles.icon} />
->>>>>>> bc9d57f755d5345995cb8997f363c16d2f0a895e
         </div>
         <Modal
           isOpen={modalIsOpen}

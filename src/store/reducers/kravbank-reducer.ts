@@ -57,6 +57,9 @@ const kravbankSlice = createSlice({
       const behovId = state.selectedBehov;
       state.kravbanker[kravbankId].behov[behovId].krav?.push(payload);
     },
+    addKodeliste(state, { payload }: PayloadAction<Kodeliste>) {
+      state.kodelister.push(payload);
+    },
     addKrav(state, { payload }: PayloadAction<Krav>) {},
     banksReceived(state, { payload }: PayloadAction<Kravbank[]>) {
       state.kravbanker = payload;
@@ -77,6 +80,7 @@ export const {
   addBehov,
   addUnderBehov,
   registerNew,
+  addKodeliste,
   addKrav,
   banksReceived
 } = kravbankSlice.actions;
