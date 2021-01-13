@@ -3,7 +3,6 @@ import { useHistory } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
 import Button from 'react-bootstrap/Button';
-
 import SearchBar from '../SearchBar/SearchBar';
 import styles from './KravbankKatalogSide.module.scss';
 import { RootState } from '../store/configureStore';
