@@ -4,62 +4,72 @@ import styles from './RegistrationForm.module.scss';
 import { useHistory } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { fetchBanks } from '../store/reducers/kravbank-reducer';
+import { Form, Button } from 'react-bootstrap';
 
 function RegistrationForm(this: any): ReactElement {
   const dispatch = useDispatch();
 
   const initBanks = async () => {
-    await dispatch(fetchBanks());
+    dispatch(fetchBanks());
   };
   initBanks();
 
-  const { register, handleSubmit } = useForm<IFormInput>();
+  const { register, handleSubmit, errors } = useForm();
+
   const history = useHistory();
 
-  const onSubmit = (data: IFormInput) => {
+  const onSubmit = (event: any) => {
     history.push(`/katalog`);
-    // store.dispatch(KRB.loading(true));
   };
 
-  interface IFormInput {
-    username: string;
-    password: string;
-  }
-
   return (
-    <div>
-      <form
-        onSubmit={handleSubmit(onSubmit)}
-        className={styles.formwrapper}
-        autoComplete="on"
-      >
-        <label className={styles.formlabel}>
-          <b>Brukernavn</b>
-          <input
-            name="username"
-            ref={register({
-              pattern: /^[ÆØÅæøåA-Za-z0-9_ ]+$/i,
-              required: true,
-              maxLength: 20
-            })}
-          />
-        </label>
-        <label className={styles.formlabel}>
-          <b>Passord</b>
-          <input
-            type="password"
-            name="password"
-            ref={register({
-              pattern: /^[A-Za-z]+$/i,
-              required: true,
-              minLength: 5
-            })}
-          />
-        </label>
+    <Form
+      onSubmit={handleSubmit(onSubmit)}
+      className={styles.formwrapper}
+      autoComplete="on"
+    >
+      <Form.Group>
+        <Form.Label>Brukernavn</Form.Label>
+        <Form.Control
+          name="username"
+          type="text"
+          ref={register({
+            pattern: /^[ÆØÅæøåA-Za-z0-9_ ]+$/i,
+            required: true,
+            maxLength: 20
+          })}
+          isInvalid={!!errors.username}
+        ></Form.Control>
+        {errors.username && (
+          <Form.Control.Feedback type="invalid">
+            {errors.username.type}
+          </Form.Control.Feedback>
+        )}
+      </Form.Group>
 
-        <input type="submit" value="Logg inn" />
-      </form>
-    </div>
+      <Form.Group>
+        <Form.Label>Passord</Form.Label>
+        <Form.Control
+          name="password"
+          type="password"
+          ref={register({
+            pattern: /^[A-Za-z]+$/i,
+            required: true,
+            maxLength: 20
+          })}
+          isInvalid={!!errors.password}
+        ></Form.Control>
+        {errors.password && (
+          <Form.Control.Feedback type="invalid">
+            {errors.password.type}
+          </Form.Control.Feedback>
+        )}
+      </Form.Group>
+
+      <Button variant="primary" type="submit">
+        Logg inn
+      </Button>
+    </Form>
   );
 }
 
