@@ -1,13 +1,11 @@
 @import '../dfo-theme.scss';
 
-.navbarel {
-  margin-top: 3rem;
-  margin-left: 3rem;
-  color: $dfo-blue;
-}
-
-.navbartopel {
-  margin-top: 6rem;
-  margin-left: 3rem;
-  color: $dfo-blue;
+.sidebar {
+  border-right: $dfo-light-border;
+  background-color: $light;
+  &__item {
+    &__active {
+      color: $purple;
+    }
+  }
 }

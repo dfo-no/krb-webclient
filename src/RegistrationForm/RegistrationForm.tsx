@@ -19,7 +19,8 @@ function RegistrationForm(this: any): ReactElement {
   const history = useHistory();
 
   const onSubmit = (event: any) => {
-    history.push(`/katalog`);
+    //TODO: check if this is correct via BrowserRouter
+    history.push('/workbench');
   };
 
   return (

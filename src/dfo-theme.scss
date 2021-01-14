@@ -1,5 +1,11 @@
 $dfo-blue: #005b91;
 $dfo-input-background: #f2f1f9;
+$dfo-light-border: 1px solid rgba(0, 0, 0, 0.125);
+
+/* $theme-colors : (
+  "info": tomato,
+  "danger": teal
+)*/
 
 /* import bootstrap to set changes */
 @import '~bootstrap/scss/bootstrap';

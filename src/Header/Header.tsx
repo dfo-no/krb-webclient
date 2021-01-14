@@ -2,7 +2,6 @@ import React, { ReactElement } from 'react';
 import { useHistory } from 'react-router-dom';
 import Navbar from 'react-bootstrap/Navbar';
 import { Button } from 'react-bootstrap';
-
 import css from './Header.module.scss';
 
 export default function Header(): ReactElement {
@@ -17,7 +16,9 @@ export default function Header(): ReactElement {
         <img alt={'DFØ Logo'} src="/logo-blue.svg" />{' '}
       </Navbar.Brand>
       <div className={css.header__spacer}></div>
-      <Button variant="outline-primary">Log out</Button>
+      <Button variant="primary">
+        <i className="bi bi-person-fill"></i>&nbsp;Log out
+      </Button>
     </Navbar>
   );
 }
