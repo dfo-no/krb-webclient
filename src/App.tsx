@@ -12,7 +12,7 @@ import NyKravbankSide from './NyKravbankSide/NyKravbankSide';
 
 import store from './store/configureStore';
 import CodelistPage from './Codelist/CodelistPage';
-import ProductPage from './Product/ProductPage';
+import ProductPage from './Workbench/Product/ProductPage';
 import ProjectPage from './Project/ProjectPage';
 import NeedPage from './Need/NeedPage';
 import RequirementPage from './Requirement/RequirementPage';

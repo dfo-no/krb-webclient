@@ -3,6 +3,7 @@ import { Kravbank } from '../../models/Kravbank';
 import { Krav } from '../../models/Krav';
 import { Behov } from '../../models/Behov';
 import { Kodeliste } from '../../models/Kodeliste';
+import { Product } from '../../models/Product';
 
 interface KravbankState {
   kravbanker: Kravbank[];
@@ -11,6 +12,7 @@ interface KravbankState {
   selectedKrav: number;
   kodelister: Kodeliste[];
   selectedKodeliste: number;
+  products: Product[];
 }
 
 const initialState: KravbankState = {
@@ -19,7 +21,8 @@ const initialState: KravbankState = {
   selectedBehov: 0,
   selectedKrav: 0,
   kodelister: [],
-  selectedKodeliste: 0
+  selectedKodeliste: 0,
+  products: []
 };
 
 export const fetchBanks = createAsyncThunk('users/fetchById', async () => {
@@ -60,6 +63,15 @@ const kravbankSlice = createSlice({
     addKodeliste(state, { payload }: PayloadAction<Kodeliste>) {
       state.kodelister.push(payload);
     },
+    addProduct(state, { payload }: PayloadAction<Product>) {
+      state.products.push(payload);
+    },
+    editProduct(state, { payload }: PayloadAction<Product>) {
+      let productindex = state.products.findIndex(
+        (product) => product.id === payload.id
+      );
+      state.products[productindex] = payload;
+    },
     addKrav(state, { payload }: PayloadAction<Krav>) {},
     banksReceived(state, { payload }: PayloadAction<Kravbank[]>) {
       state.kravbanker = payload;
@@ -82,6 +94,8 @@ export const {
   registerNew,
   addKodeliste,
   addKrav,
+  editProduct,
+  addProduct,
   banksReceived
 } = kravbankSlice.actions;
 
