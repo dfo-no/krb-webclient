@@ -20,6 +20,7 @@ import WorkbenchPage from './Workbench/WorkbenchPage';
 import HomePage from './Home/HomePage';
 import { Col, Container, Row } from 'react-bootstrap';
 import SideBar from './SideBar/SideBar';
+import KravEditorSide from './KravEditorSide/KravEditorSide';
 
 function App() {
   const location = useLocation();
