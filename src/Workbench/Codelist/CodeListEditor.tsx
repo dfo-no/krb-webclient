@@ -10,17 +10,17 @@ import {
   Row
 } from 'react-bootstrap';
 
-import styles from './KodelisteEditor.module.scss';
-import { RootState } from '../store/configureStore';
-import SideBar from '../SideBar/SideBar';
-import { Kode } from '../models/Kode';
+import styles from './CodeListEditor.module.scss';
+import { RootState } from '../../store/configureStore';
+import SideBar from '../../SideBar/SideBar';
+import { Kode } from '../../models/Kode';
 import {
   addKode,
   editKode,
   editKodeliste
-} from '../store/reducers/kravbank-reducer';
+} from '../../store/reducers/kravbank-reducer';
 
-export default function KodelisteEditor(): ReactElement {
+export default function CodeListEditor(): ReactElement {
   const dispatch = useDispatch();
   const { kodelister, selectedKodeliste } = useSelector(
     (state: RootState) => state.kravbank
@@ -214,22 +214,15 @@ export default function KodelisteEditor(): ReactElement {
   }
 
   return codelist ? (
-    <Container fluid>
-      <Row>
-        <Col className="col-md-3 p-0 m-0">
-          <SideBar />
-        </Col>
-        <Col className="col-md-15 p-5">
-          {renderHeaderSection(editmode)}
-          <div>
-            <h4>Codes</h4>
-            <Button onClick={handleShowEditor}>New Code</Button>
-            {renderCodeEditor(showEditor)}
-            {renderKodeOutput(codes, selectedItem)}
-          </div>
-        </Col>
-      </Row>
-    </Container>
+    <div>
+      {renderHeaderSection(editmode)}
+      <div>
+        <h4>Codes</h4>
+        <Button onClick={handleShowEditor}>New Code</Button>
+        {renderCodeEditor(showEditor)}
+        {renderKodeOutput(codes, selectedItem)}
+      </div>
+    </div>
   ) : (
     <div></div>
   );

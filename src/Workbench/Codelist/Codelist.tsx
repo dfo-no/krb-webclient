@@ -1,26 +1,17 @@
 import React, { ReactElement, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import {
-  Button,
-  Col,
-  Container,
-  FormControl,
-  InputGroup,
-  ListGroup,
-  Row
-} from 'react-bootstrap';
+import { Button, FormControl, InputGroup, ListGroup } from 'react-bootstrap';
 
-import styles from './KodelisteKatalogSide.module.scss';
-import { RootState } from '../store/configureStore';
-import SideBar from '../SideBar/SideBar';
-import { Kodeliste } from '../models/Kodeliste';
+import styles from './Codelist.module.scss';
+import { RootState } from '../../store/configureStore';
+import { Kodeliste } from '../../models/Kodeliste';
 import {
   addKodeliste,
   selectKodeliste
-} from '../store/reducers/kravbank-reducer';
+} from '../../store/reducers/kravbank-reducer';
 
-export default function KodelisteEditorSide(): ReactElement {
+export default function Codelist(): ReactElement {
   const dispatch = useDispatch();
   const { kodelister } = useSelector((state: RootState) => state.kravbank);
   const [kodeliste, setKodeliste] = useState(kodelister);
@@ -37,7 +28,7 @@ export default function KodelisteEditorSide(): ReactElement {
         <ListGroup.Item key={element.id}>
           <Link
             onClick={setSelectedKodeliste(element.id)}
-            to={`/kodeliste/edit/${element.id}`}
+            to={`/workbench/codelist/${element.id}`}
           >
             <h5>{element.tittel}</h5>
             <p>{element.beskrivelse}</p>
@@ -102,18 +93,11 @@ export default function KodelisteEditorSide(): ReactElement {
   }
 
   return (
-    <Container fluid>
-      <Row>
-        <Col className="col-md-3 p-0 m-0">
-          <SideBar />
-        </Col>
-        <Col className="col-md-15 p-5">
-          <h1>Codelists</h1>
-          <Button onClick={handleShowEditor}>New </Button>
-          {renderCodelistEditor(showEditor)}
-          {renderCodelist(kodeliste)}
-        </Col>
-      </Row>
-    </Container>
+    <div>
+      <h1>Codelists</h1>
+      <Button onClick={handleShowEditor}>New </Button>
+      {renderCodelistEditor(showEditor)}
+      {renderCodelist(kodeliste)}
+    </div>
   );
 }

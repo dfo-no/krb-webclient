@@ -11,9 +11,8 @@ import KravbankKatalogSide from './KravbankKatalogSide/KravbankKatalogSide';
 import NyKravbankSide from './NyKravbankSide/NyKravbankSide';
 
 import store from './store/configureStore';
-import KodelisteKatalogSide from './KodelisteKatalogSide/KodelisteKatalogSide';
-import KodelisteEditor from './KodelisteEditor/KodelisteEditor';
-import CodelistPage from './Codelist/CodelistPage';
+import Codelist from './Workbench/Codelist/Codelist';
+import CodeListEditor from './Workbench/Codelist/CodeListEditor';
 import ProductPage from './Product/ProductPage';
 import ProjectPage from './Project/ProjectPage';
 import NeedPage from './Need/NeedPage';
@@ -76,7 +75,10 @@ function App() {
                   <RequirementPage></RequirementPage>
                 </Route>
                 <Route exact path={'/workbench/codelist'}>
-                  <CodelistPage></CodelistPage>
+                  <Codelist></Codelist>
+                </Route>
+                <Route exact path={'/workbench/codelist/:id'}>
+                  <CodeListEditor></CodeListEditor>
                 </Route>
                 <Route exact path={'/workbench/product'}>
                   <ProductPage></ProductPage>
