@@ -2,12 +2,14 @@ import { configureStore } from '@reduxjs/toolkit';
 import counterReducer from './reducers/counter-reducer';
 import kravbankReducer from './reducers/kravbank-reducer';
 import loaderReducer from './reducers/loader-reducer';
+import userReducer from './reducers/userReducer';
 
 const store = configureStore({
   reducer: {
     counter: counterReducer,
     loader: loaderReducer,
-    kravbank: kravbankReducer
+    kravbank: kravbankReducer,
+    user: userReducer
   },
   devTools: process.env.NODE_ENV !== 'production'
 });

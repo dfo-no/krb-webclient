@@ -5,11 +5,14 @@ import './index.scss';
 import App from './App';
 import './i18n';
 import reportWebVitals from './reportWebVitals';
+import { BrowserRouter } from 'react-router-dom';
 
 ReactDOM.render(
   <React.StrictMode>
     <Suspense fallback="">
-      <App />
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
     </Suspense>
   </React.StrictMode>,
   document.getElementById('root')

@@ -1,28 +1,46 @@
 import React, { ReactElement } from 'react';
 import { Nav } from 'react-bootstrap';
 import { withRouter } from 'react-router';
-import styles from '../SideBar/SideBar.module.scss';
+import { NavLink } from 'react-router-dom';
+import css from '../SideBar/SideBar.module.scss';
 
-function SideBar(props: any): ReactElement {
+interface IRouteLink {
+  link: string;
+  name: string;
+}
+
+const routes = [
+  { link: '/workbench', name: 'Workbench: (prosjektnavn hvis valgt)' },
+  { link: '/workbench/need', name: 'Need' },
+  { link: '/workbench/requirement', name: 'Requirement' },
+  { link: '/workbench/codelist', name: 'Codelist' },
+  { link: '/workbench/product', name: 'Products' }
+];
+
+const renderRouteLinks = (routes: IRouteLink[]) => {
+  return routes.map((route, index) => {
+    return (
+      <Nav.Item key={index} className={`${css.sidebar__item}`}>
+        <Nav.Link
+          as={NavLink}
+          to={route.link}
+          role="link"
+          activeClassName={`${css.sidebar__item__active}`}
+        >
+          {route.name}
+        </Nav.Link>
+      </Nav.Item>
+    );
+  });
+};
+
+function SideBar(): ReactElement {
   return (
-    <Nav className="sidebar col-sm-5 flex-column vh-100" activeKey="/home">
-      <Nav.Item>
-        <Nav.Link href="/edit/behov" className={styles.navbartopel}>
-          <p className="h2 ">Behov</p>
-        </Nav.Link>
-      </Nav.Item>
-      <Nav.Item>
-        <Nav.Link href="/edit/krav" className={styles.navbarel}>
-          <p className="h2 ">Krav</p>
-        </Nav.Link>
-      </Nav.Item>
-      <Nav.Item>
-        <Nav.Link href="/edit/kodeliste" className={styles.navbarel}>
-          <p className="h2 ">KodeListe</p>
-        </Nav.Link>
-      </Nav.Item>
-      <Nav.Item></Nav.Item>
-    </Nav>
+    <>
+      <Nav className={`sidebar col-md-12 flex-column vh-100 ${css.sidebar}`}>
+        {renderRouteLinks(routes)}
+      </Nav>
+    </>
   );
 }
 
