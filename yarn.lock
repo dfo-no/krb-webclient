@@ -9927,6 +9927,13 @@ react-beautiful-dnd@^13.0.0:
     redux "^4.0.4"
     use-memo-one "^1.1.1"
 
+react-bootstrap-icons@^1.2.3:
+  version "1.2.3"
+  resolved "https://registry.yarnpkg.com/react-bootstrap-icons/-/react-bootstrap-icons-1.2.3.tgz#af142830b8f017a7e459790aba579ae05ed85214"
+  integrity sha512-VPQFuFMVwsK93FTbvE/8InUbX5irc2VlQbCOiMvj80oei6+xek0Q5sOpHPdgVRUn2BeiCAAc9OEOgrebZLWLMA==
+  dependencies:
+    prop-types "^15.7.2"
+
 react-bootstrap@^1.4.3:
   version "1.4.3"
   resolved "https://registry.yarnpkg.com/react-bootstrap/-/react-bootstrap-1.4.3.tgz#9a76a66800b57f422dd824c9dbe4c9dcef634790"
