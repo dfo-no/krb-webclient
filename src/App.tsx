@@ -9,9 +9,6 @@ import Header from './Header/Header';
 import BehovEditorSide from './BehovEditorSide/BehovEditorSide';
 import KravbankKatalogSide from './KravbankKatalogSide/KravbankKatalogSide';
 import NyKravbankSide from './NyKravbankSide/NyKravbankSide';
-import KravEditorSide from './KravEditorSide/KravEditorSide';
-import SideBar from './SideBar/SideBar';
-import { Col, Container, Row } from 'react-bootstrap';
 
 import store from './store/configureStore';
 import CodelistPage from './Codelist/CodelistPage';
@@ -21,6 +18,8 @@ import NeedPage from './Need/NeedPage';
 import RequirementPage from './Requirement/RequirementPage';
 import WorkbenchPage from './Workbench/WorkbenchPage';
 import HomePage from './Home/HomePage';
+import { Col, Container, Row } from 'react-bootstrap';
+import SideBar from './SideBar/SideBar';
 
 function App() {
   const location = useLocation();
