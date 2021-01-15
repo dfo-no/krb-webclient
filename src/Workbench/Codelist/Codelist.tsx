@@ -5,13 +5,13 @@ import { Button, FormControl, InputGroup, ListGroup } from 'react-bootstrap';
 
 import styles from './Codelist.module.scss';
 import { RootState } from '../../store/configureStore';
-import { Kodeliste } from '../../models/Kodeliste';
+import { Codelist } from '../../models/Codelist';
 import {
   addCodelist,
   selectCodelist
 } from '../../store/reducers/kravbank-reducer';
 
-export default function Codelist(): ReactElement {
+export default function CodelistPage(): ReactElement {
   const dispatch = useDispatch();
   const { codelists } = useSelector((state: RootState) => state.kravbank);
   const [codelist, setCodelist] = useState(codelists);
@@ -19,19 +19,19 @@ export default function Codelist(): ReactElement {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
 
-  const renderCodelist = (codelist: Kodeliste[]) => {
+  const renderCodelist = (codelist: Codelist[]) => {
     codelist.sort((a, b) =>
-      a.tittel.toLowerCase() > b.tittel.toLowerCase() ? 1 : -1
+      a.title.toLowerCase() > b.title.toLowerCase() ? 1 : -1
     );
-    const jsx = codelist.map((element: Kodeliste) => {
+    const jsx = codelist.map((element: Codelist) => {
       return (
         <ListGroup.Item key={element.id}>
           <Link
             onClick={setSelectedKodeliste(element.id)}
             to={`/workbench/codelist/${element.id}`}
           >
-            <h5>{element.tittel}</h5>
-            <p>{element.beskrivelse}</p>
+            <h5>{element.title}</h5>
+            <p>{element.description}</p>
           </Link>
         </ListGroup.Item>
       );
@@ -54,12 +54,12 @@ export default function Codelist(): ReactElement {
   };
 
   const addNewCodelist = () => {
-    const newCodelist: Kodeliste[] = [...codelist];
+    const newCodelist: Codelist[] = [...codelist];
     let codeList = {
-      tittel: title,
-      beskrivelse: description,
+      title: title,
+      description: description,
       id: Math.random(),
-      koder: []
+      codes: []
     };
     newCodelist.push(codeList);
     setCodelist(newCodelist);

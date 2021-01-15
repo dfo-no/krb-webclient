@@ -4,7 +4,7 @@ import { Button, FormControl, InputGroup, ListGroup } from 'react-bootstrap';
 
 import styles from './CodeListEditor.module.scss';
 import { RootState } from '../../store/configureStore';
-import { Kode } from '../../models/Kode';
+import { Code } from '../../models/Code';
 import {
   addCode,
   editCode,
@@ -21,7 +21,7 @@ export default function CodeListEditor(): ReactElement {
     (codelist) => codelist.id === selectedCodelist
   );
   const codelist = codelists[listIndex];
-  const [codes, setCodes] = useState(codelist ? codelist.koder : []);
+  const [codes, setCodes] = useState(codelist ? codelist.codes : []);
   const [showEditor, setShowEdior] = useState(false);
   const [editmode, setEditMode] = useState(false);
   const [title, setTitle] = useState('');
@@ -48,10 +48,10 @@ export default function CodeListEditor(): ReactElement {
   };
 
   const addNewCode = () => {
-    let newCodeList: Kode[] = [...codes];
+    let newCodeList: Code[] = [...codes];
     let Kode = {
-      tittel: title,
-      beskrivelse: description,
+      title: title,
+      description: description,
       id: Math.random()
     };
     newCodeList.push(Kode);
@@ -63,10 +63,10 @@ export default function CodeListEditor(): ReactElement {
   const editCodeElement = (id: number, index: number) => () => {
     let code = {
       id: id,
-      tittel: title,
-      beskrivelse: description
+      title: title,
+      description: description
     };
-    let newCodeList: Kode[] = [...codes];
+    let newCodeList: Code[] = [...codes];
     newCodeList[index] = code;
     setSelectedItem(0);
     setCodes(newCodeList);
@@ -76,9 +76,9 @@ export default function CodeListEditor(): ReactElement {
   const editCodeList = () => {
     let newCodelist = {
       id: codelist.id,
-      tittel: title,
-      beskrivelse: description,
-      koder: codes
+      title: title,
+      description: description,
+      codes: codes
     };
     dispatch(editCodelist(newCodelist));
     setEditMode(false);
@@ -96,7 +96,7 @@ export default function CodeListEditor(): ReactElement {
             <FormControl
               name="title"
               onChange={handleTitleChange}
-              defaultValue={codelist.tittel}
+              defaultValue={codelist.title}
             />
           </InputGroup>
           <label htmlFor="description">Description</label>
@@ -104,7 +104,7 @@ export default function CodeListEditor(): ReactElement {
             <FormControl
               name="description"
               onChange={handleDescriptionChange}
-              defaultValue={codelist.beskrivelse}
+              defaultValue={codelist.description}
             />
           </InputGroup>
           <Button className={styles.newbutton} onClick={editCodeList}>
@@ -115,8 +115,8 @@ export default function CodeListEditor(): ReactElement {
     } else {
       return (
         <div className={styles.headersection}>
-          <h1>{codelist.tittel}</h1>
-          <h5>{codelist.beskrivelse}</h5>{' '}
+          <h1>{codelist.title}</h1>
+          <h5>{codelist.description}</h5>{' '}
           <Button className={styles.newbutton} onClick={handleEditCodelist}>
             Edit
           </Button>
@@ -125,9 +125,9 @@ export default function CodeListEditor(): ReactElement {
     }
   }
 
-  const renderKodeOutput = (codelist: Kode[], selectedItem: number) => {
+  const renderKodeOutput = (codelist: Code[], selectedItem: number) => {
     let codeindex = codelist.findIndex((kode) => kode.id === selectedItem);
-    const jsx = codelist.map((element: Kode) => {
+    const jsx = codelist.map((element: Code) => {
       if (element.id === selectedItem) {
         return (
           <ListGroup.Item key={element.id}>
@@ -135,7 +135,7 @@ export default function CodeListEditor(): ReactElement {
             <InputGroup className="mb-3 30vw">
               <FormControl
                 name="title"
-                defaultValue={codelist[codeindex].tittel}
+                defaultValue={codelist[codeindex].title}
                 onChange={handleTitleChange}
               />
             </InputGroup>
@@ -143,7 +143,7 @@ export default function CodeListEditor(): ReactElement {
             <InputGroup>
               <FormControl
                 name="beskrivelse"
-                defaultValue={codelist[codeindex].beskrivelse}
+                defaultValue={codelist[codeindex].description}
                 onChange={handleDescriptionChange}
               />
             </InputGroup>
@@ -161,8 +161,8 @@ export default function CodeListEditor(): ReactElement {
             key={element.id}
             onClick={handleCodeSelected(element.id)}
           >
-            <h5>{element.tittel}</h5>
-            <p>{element.beskrivelse}</p>
+            <h5>{element.title}</h5>
+            <p>{element.description}</p>
           </ListGroup.Item>
         );
       }
@@ -215,6 +215,6 @@ export default function CodeListEditor(): ReactElement {
       </div>
     </>
   ) : (
-    <div></div>
+    <></>
   );
 }
