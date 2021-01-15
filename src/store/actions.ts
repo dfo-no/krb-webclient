@@ -1,5 +1,5 @@
 import { Behov } from '../models/Behov';
-import { Kodeliste } from '../models/Kodeliste';
+import { Kodeliste } from '../models/Codelist';
 import { Krav } from '../models/Krav';
 import { Kravbank } from '../models/Kravbank';
 
