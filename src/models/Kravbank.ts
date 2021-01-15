@@ -1,5 +1,5 @@
 import { Behov } from './Behov';
-import { Kodeliste } from './Kodeliste';
+import { Codelist } from './Codelist';
 import { Krav } from './Krav';
 
 export interface Kravbank {
@@ -8,6 +8,6 @@ export interface Kravbank {
   beskrivelse: string;
   behov: Behov[];
   krav: Krav[];
-  kodeliste: Kodeliste[];
+  codelist: Codelist[];
   ordering: number;
 }

@@ -2,7 +2,8 @@ import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { Kravbank } from '../../models/Kravbank';
 import { Krav } from '../../models/Krav';
 import { Behov } from '../../models/Behov';
-import { Kodeliste } from '../../models/Kodeliste';
+import { Codelist } from '../../models/Codelist';
+import { Code } from '../../models/Code';
 import { Product } from '../../models/Product';
 
 interface KravbankState {
@@ -10,8 +11,8 @@ interface KravbankState {
   selectedKravbank: number;
   selectedBehov: number;
   selectedKrav: number;
-  kodelister: Kodeliste[];
-  selectedKodeliste: number;
+  codelists: Codelist[];
+  selectedCodelist: number;
   products: Product[];
 }
 
@@ -20,8 +21,8 @@ const initialState: KravbankState = {
   selectedKravbank: 0,
   selectedBehov: 0,
   selectedKrav: 0,
-  kodelister: [],
-  selectedKodeliste: 0,
+  codelists: [],
+  selectedCodelist: 0,
   products: []
 };
 
@@ -60,8 +61,34 @@ const kravbankSlice = createSlice({
       const behovId = state.selectedBehov;
       state.kravbanker[kravbankId].behov[behovId].krav?.push(payload);
     },
-    addKodeliste(state, { payload }: PayloadAction<Kodeliste>) {
-      state.kodelister.push(payload);
+    addCodelist(state, { payload }: PayloadAction<Codelist>) {
+      state.codelists.push(payload);
+    },
+    selectCodelist(state, { payload }: PayloadAction<number>) {
+      state.selectedCodelist = payload;
+    },
+    editCodelist(state, { payload }: PayloadAction<Codelist>) {
+      let codelistindex = state.codelists.findIndex(
+        (codelist) => codelist.id === state.selectedCodelist
+      );
+      state.codelists[codelistindex] = payload;
+    },
+    addCode(state, { payload }: PayloadAction<Code>) {
+      //TODO: find more suitable place to perform this action
+      let codelistindex = state.codelists.findIndex(
+        (codelist) => codelist.id === state.selectedCodelist
+      );
+      state.codelists[codelistindex].codes.push(payload);
+    },
+    editCode(state, { payload }: PayloadAction<Code>) {
+      //todo: move to more suitable and less repetetive place
+      let listindex = state.codelists.findIndex(
+        (codelist) => codelist.id === state.selectedCodelist
+      );
+      let codeindex = state.codelists[listindex].codes.findIndex(
+        (code) => code.id === payload.id
+      );
+      state.codelists[listindex].codes[codeindex] = payload;
     },
     addProduct(state, { payload }: PayloadAction<Product>) {
       state.products.push(payload);
@@ -92,7 +119,11 @@ export const {
   addBehov,
   addUnderBehov,
   registerNew,
-  addKodeliste,
+  addCodelist,
+  addCode,
+  editCodelist,
+  selectCodelist,
+  editCode,
   addKrav,
   editProduct,
   addProduct,
