@@ -1,18 +1,9 @@
 import React, { ReactElement, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import {
-  Button,
-  Col,
-  Container,
-  FormControl,
-  InputGroup,
-  ListGroup,
-  Row
-} from 'react-bootstrap';
+import { Button, FormControl, InputGroup, ListGroup } from 'react-bootstrap';
 
 import styles from './CodeListEditor.module.scss';
 import { RootState } from '../../store/configureStore';
-import SideBar from '../../SideBar/SideBar';
 import { Kode } from '../../models/Kode';
 import {
   addKode,
