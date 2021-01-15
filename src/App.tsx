@@ -11,10 +11,8 @@ import KravbankKatalogSide from './KravbankKatalogSide/KravbankKatalogSide';
 import NyKravbankSide from './NyKravbankSide/NyKravbankSide';
 
 import store from './store/configureStore';
-<<<<<<< HEAD
 import KodelisteKatalogSide from './KodelisteKatalogSide/KodelisteKatalogSide';
 import KodelisteEditor from './KodelisteEditor/KodelisteEditor';
-=======
 import CodelistPage from './Codelist/CodelistPage';
 import ProductPage from './Product/ProductPage';
 import ProjectPage from './Project/ProjectPage';
@@ -25,7 +23,6 @@ import HomePage from './Home/HomePage';
 import { Col, Container, Row } from 'react-bootstrap';
 import SideBar from './SideBar/SideBar';
 import KravEditorSide from './KravEditorSide/KravEditorSide';
->>>>>>> e7c97845331afa369a7dd29874a63f014ebc4e7e
 
 function App() {
   const location = useLocation();
