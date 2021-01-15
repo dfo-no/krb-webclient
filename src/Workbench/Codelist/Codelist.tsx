@@ -7,14 +7,14 @@ import styles from './Codelist.module.scss';
 import { RootState } from '../../store/configureStore';
 import { Kodeliste } from '../../models/Kodeliste';
 import {
-  addKodeliste,
-  selectKodeliste
+  addCodelist,
+  selectCodelist
 } from '../../store/reducers/kravbank-reducer';
 
 export default function Codelist(): ReactElement {
   const dispatch = useDispatch();
-  const { kodelister } = useSelector((state: RootState) => state.kravbank);
-  const [kodeliste, setKodeliste] = useState(kodelister);
+  const { codelists } = useSelector((state: RootState) => state.kravbank);
+  const [codelist, setCodelist] = useState(codelists);
   const [showEditor, setShowEdior] = useState(false);
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
@@ -40,7 +40,7 @@ export default function Codelist(): ReactElement {
   };
 
   const setSelectedKodeliste = (id: number) => () => {
-    dispatch(selectKodeliste(id));
+    dispatch(selectCodelist(id));
   };
   const handleShowEditor = () => {
     setShowEdior(true);
@@ -54,17 +54,17 @@ export default function Codelist(): ReactElement {
   };
 
   const addNewCodelist = () => {
-    const newKodeliste: Kodeliste[] = [...kodeliste];
-    let Kodeliste = {
+    const newCodelist: Kodeliste[] = [...codelist];
+    let codeList = {
       tittel: title,
       beskrivelse: description,
       id: Math.random(),
       koder: []
     };
-    newKodeliste.push(Kodeliste);
-    setKodeliste(newKodeliste);
+    newCodelist.push(codeList);
+    setCodelist(newCodelist);
     setShowEdior(false);
-    dispatch(addKodeliste(Kodeliste));
+    dispatch(addCodelist(codeList));
   };
 
   function renderCodelistEditor(show: boolean) {
@@ -88,16 +88,16 @@ export default function Codelist(): ReactElement {
         </div>
       );
     } else {
-      return <div></div>;
+      return <></>;
     }
   }
 
   return (
-    <div>
+    <>
       <h1>Codelists</h1>
-      <Button onClick={handleShowEditor}>New </Button>
+      <Button onClick={handleShowEditor}>New</Button>
       {renderCodelistEditor(showEditor)}
-      {renderCodelist(kodeliste)}
-    </div>
+      {renderCodelist(codelist)}
+    </>
   );
 }

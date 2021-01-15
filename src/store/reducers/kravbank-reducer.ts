@@ -10,8 +10,8 @@ interface KravbankState {
   selectedKravbank: number;
   selectedBehov: number;
   selectedKrav: number;
-  kodelister: Kodeliste[];
-  selectedKodeliste: number;
+  codelists: Kodeliste[];
+  selectedCodelist: number;
 }
 
 const initialState: KravbankState = {
@@ -19,8 +19,8 @@ const initialState: KravbankState = {
   selectedKravbank: 0,
   selectedBehov: 0,
   selectedKrav: 0,
-  kodelister: [],
-  selectedKodeliste: 0
+  codelists: [],
+  selectedCodelist: 0
 };
 
 export const fetchBanks = createAsyncThunk('users/fetchById', async () => {
@@ -58,34 +58,34 @@ const kravbankSlice = createSlice({
       const behovId = state.selectedBehov;
       state.kravbanker[kravbankId].behov[behovId].krav?.push(payload);
     },
-    addKodeliste(state, { payload }: PayloadAction<Kodeliste>) {
-      state.kodelister.push(payload);
+    addCodelist(state, { payload }: PayloadAction<Kodeliste>) {
+      state.codelists.push(payload);
     },
-    selectKodeliste(state, { payload }: PayloadAction<number>) {
-      state.selectedKodeliste = payload;
+    selectCodelist(state, { payload }: PayloadAction<number>) {
+      state.selectedCodelist = payload;
     },
-    editKodeliste(state, { payload }: PayloadAction<Kodeliste>) {
-      let kodelisteindex = state.kodelister.findIndex(
-        (kodeliste) => kodeliste.id === state.selectedKodeliste
+    editCodelist(state, { payload }: PayloadAction<Kodeliste>) {
+      let codelistindex = state.codelists.findIndex(
+        (codelist) => codelist.id === state.selectedCodelist
       );
-      state.kodelister[kodelisteindex] = payload;
+      state.codelists[codelistindex] = payload;
     },
-    addKode(state, { payload }: PayloadAction<Kode>) {
+    addCode(state, { payload }: PayloadAction<Kode>) {
       //TODO: find more suitable place to perform this action
-      let kodelisteindex = state.kodelister.findIndex(
-        (kodeliste) => kodeliste.id === state.selectedKodeliste
+      let codelistindex = state.codelists.findIndex(
+        (codelist) => codelist.id === state.selectedCodelist
       );
-      state.kodelister[kodelisteindex].koder.push(payload);
+      state.codelists[codelistindex].koder.push(payload);
     },
-    editKode(state, { payload }: PayloadAction<Kode>) {
+    editCode(state, { payload }: PayloadAction<Kode>) {
       //todo: move to more suitable and less repetetive place
-      let listindex = state.kodelister.findIndex(
-        (kodeliste) => kodeliste.id === state.selectedKodeliste
+      let listindex = state.codelists.findIndex(
+        (codelist) => codelist.id === state.selectedCodelist
       );
-      let codeindex = state.kodelister[listindex].koder.findIndex(
+      let codeindex = state.codelists[listindex].koder.findIndex(
         (code) => code.id === payload.id
       );
-      state.kodelister[listindex].koder[codeindex] = payload;
+      state.codelists[listindex].koder[codeindex] = payload;
     },
     addKrav(state, { payload }: PayloadAction<Krav>) {},
     banksReceived(state, { payload }: PayloadAction<Kravbank[]>) {
@@ -107,11 +107,11 @@ export const {
   addBehov,
   addUnderBehov,
   registerNew,
-  addKodeliste,
-  addKode,
-  editKodeliste,
-  selectKodeliste,
-  editKode,
+  addCodelist,
+  addCode,
+  editCodelist,
+  selectCodelist,
+  editCode,
   addKrav,
   banksReceived
 } = kravbankSlice.actions;

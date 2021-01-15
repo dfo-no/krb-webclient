@@ -6,21 +6,21 @@ import styles from './CodeListEditor.module.scss';
 import { RootState } from '../../store/configureStore';
 import { Kode } from '../../models/Kode';
 import {
-  addKode,
-  editKode,
-  editKodeliste
+  addCode,
+  editCode,
+  editCodelist
 } from '../../store/reducers/kravbank-reducer';
 
 export default function CodeListEditor(): ReactElement {
   const dispatch = useDispatch();
-  const { kodelister, selectedKodeliste } = useSelector(
+  const { codelists, selectedCodelist } = useSelector(
     (state: RootState) => state.kravbank
   );
 
-  const kodelisteIndex = kodelister.findIndex(
-    (kodeliste) => kodeliste.id === selectedKodeliste
+  const listIndex = codelists.findIndex(
+    (codelist) => codelist.id === selectedCodelist
   );
-  const codelist = kodelister[kodelisteIndex];
+  const codelist = codelists[listIndex];
   const [codes, setCodes] = useState(codelist ? codelist.koder : []);
   const [showEditor, setShowEdior] = useState(false);
   const [editmode, setEditMode] = useState(false);
@@ -57,10 +57,10 @@ export default function CodeListEditor(): ReactElement {
     newCodeList.push(Kode);
     setCodes(newCodeList);
     setShowEdior(false);
-    dispatch(addKode(Kode));
+    dispatch(addCode(Kode));
   };
 
-  const editCode = (id: number, index: number) => () => {
+  const editCodeElement = (id: number, index: number) => () => {
     let code = {
       id: id,
       tittel: title,
@@ -70,17 +70,17 @@ export default function CodeListEditor(): ReactElement {
     newCodeList[index] = code;
     setSelectedItem(0);
     setCodes(newCodeList);
-    dispatch(editKode(code));
+    dispatch(editCode(code));
   };
 
-  const editCodelist = () => {
+  const editCodeList = () => {
     let newCodelist = {
       id: codelist.id,
       tittel: title,
       beskrivelse: description,
       koder: codes
     };
-    dispatch(editKodeliste(newCodelist));
+    dispatch(editCodelist(newCodelist));
     setEditMode(false);
   };
 
@@ -107,7 +107,7 @@ export default function CodeListEditor(): ReactElement {
               defaultValue={codelist.beskrivelse}
             />
           </InputGroup>
-          <Button className={styles.newbutton} onClick={editCodelist}>
+          <Button className={styles.newbutton} onClick={editCodeList}>
             Save
           </Button>
         </div>
@@ -149,7 +149,7 @@ export default function CodeListEditor(): ReactElement {
             </InputGroup>
             <Button
               className={styles.newbutton}
-              onClick={editCode(element.id, codeindex)}
+              onClick={editCodeElement(element.id, codeindex)}
             >
               Save
             </Button>
@@ -200,12 +200,12 @@ export default function CodeListEditor(): ReactElement {
         </div>
       );
     } else {
-      return <div></div>;
+      return <></>;
     }
   }
 
   return codelist ? (
-    <div>
+    <>
       {renderHeaderSection(editmode)}
       <div>
         <h4>Codes</h4>
@@ -213,7 +213,7 @@ export default function CodeListEditor(): ReactElement {
         {renderCodeEditor(showEditor)}
         {renderKodeOutput(codes, selectedItem)}
       </div>
-    </div>
+    </>
   ) : (
     <div></div>
   );
