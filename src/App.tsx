@@ -12,6 +12,7 @@ import NyKravbankSide from './NyKravbankSide/NyKravbankSide';
 
 import store from './store/configureStore';
 import KodelisteKatalogSide from './KodelisteKatalogSide/KodelisteKatalogSide';
+import KodelisteEditor from './KodelisteEditor/KodelisteEditor';
 
 function App() {
   /*const pathName = window.location.pathname;*/
@@ -49,6 +50,7 @@ function App() {
               path={'/kodelistekatalog'}
               component={KodelisteKatalogSide}
             ></Route>
+            <Route path={'/kodeliste/:id'} component={KodelisteEditor}></Route>
             <Route exact path={'/kravbank/ny'}>
               <NyKravbankSide />
             </Route>

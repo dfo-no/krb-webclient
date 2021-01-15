@@ -3,6 +3,7 @@ import { Kravbank } from '../../models/Kravbank';
 import { Krav } from '../../models/Krav';
 import { Behov } from '../../models/Behov';
 import { Kodeliste } from '../../models/Kodeliste';
+import { Kode } from '../../models/Kode';
 
 interface KravbankState {
   kravbanker: Kravbank[];
@@ -60,6 +61,32 @@ const kravbankSlice = createSlice({
     addKodeliste(state, { payload }: PayloadAction<Kodeliste>) {
       state.kodelister.push(payload);
     },
+    selectKodeliste(state, { payload }: PayloadAction<number>) {
+      state.selectedKodeliste = payload;
+    },
+    editKodeliste(state, { payload }: PayloadAction<Kodeliste>) {
+      let kodelisteindex = state.kodelister.findIndex(
+        (kodeliste) => kodeliste.id === state.selectedKodeliste
+      );
+      state.kodelister[kodelisteindex] = payload;
+    },
+    addKode(state, { payload }: PayloadAction<Kode>) {
+      //TODO: find more suitable place to perform this action
+      let kodelisteindex = state.kodelister.findIndex(
+        (kodeliste) => kodeliste.id === state.selectedKodeliste
+      );
+      state.kodelister[kodelisteindex].koder.push(payload);
+    },
+    editKode(state, { payload }: PayloadAction<Kode>) {
+      //todo: move to more suitable and less repetetive place
+      let listindex = state.kodelister.findIndex(
+        (kodeliste) => kodeliste.id === state.selectedKodeliste
+      );
+      let codeindex = state.kodelister[listindex].koder.findIndex(
+        (code) => code.id === payload.id
+      );
+      state.kodelister[listindex].koder[codeindex] = payload;
+    },
     addKrav(state, { payload }: PayloadAction<Krav>) {},
     banksReceived(state, { payload }: PayloadAction<Kravbank[]>) {
       state.kravbanker = payload;
@@ -81,6 +108,10 @@ export const {
   addUnderBehov,
   registerNew,
   addKodeliste,
+  addKode,
+  editKodeliste,
+  selectKodeliste,
+  editKode,
   addKrav,
   banksReceived
 } = kravbankSlice.actions;

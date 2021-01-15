@@ -8,17 +8,17 @@ function SideBar(props: any): ReactElement {
     <Nav className="sidebar col-sm-5 flex-column vh-100" activeKey="/home">
       <Nav.Item>
         <Nav.Link href="/edit/behov" className={styles.navbartopel}>
-          <p className="h2 ">Behov</p>
+          <p className="h5">Behov</p>
         </Nav.Link>
       </Nav.Item>
       <Nav.Item>
         <Nav.Link href="/edit/krav" className={styles.navbarel}>
-          <p className="h2 ">Krav</p>
+          <p className="h5">Krav</p>
         </Nav.Link>
       </Nav.Item>
       <Nav.Item>
         <Nav.Link href="/edit/kodeliste" className={styles.navbarel}>
-          <p className="h2 ">KodeListe</p>
+          <p className="h5">KodeListe</p>
         </Nav.Link>
       </Nav.Item>
       <Nav.Item></Nav.Item>
