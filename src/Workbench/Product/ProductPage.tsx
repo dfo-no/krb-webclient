@@ -52,7 +52,7 @@ export default function ProductPage(): ReactElement {
   function productEditor(show: boolean) {
     if (show) {
       return (
-        <div className={styles.formdiv}>
+        <div className={styles.product}>
           <ListGroup.Item>
             <label htmlFor="title">Title</label>
             <InputGroup className="mb-3 30vw">
@@ -70,10 +70,10 @@ export default function ProductPage(): ReactElement {
               />
             </InputGroup>
             <Button
-              className={`primary ${styles.formdiv__button}`}
+              className={`primary ${styles.product__addButton}`}
               onClick={addNewProduct}
             >
-              Save
+              Add
             </Button>
           </ListGroup.Item>
         </div>
@@ -109,7 +109,7 @@ export default function ProductPage(): ReactElement {
             </InputGroup>
             <Button
               onClick={editProductElement(element.id)}
-              className={`primary ${styles.productOutput__button}`}
+              className={`primary ${styles.productList__saveButton}`}
             >
               Save
             </Button>
@@ -127,7 +127,7 @@ export default function ProductPage(): ReactElement {
         );
       }
     });
-    return <ListGroup className={styles.productOutput}>{jsx}</ListGroup>;
+    return <ListGroup className={styles.productList}>{jsx}</ListGroup>;
   };
   return (
     <>
