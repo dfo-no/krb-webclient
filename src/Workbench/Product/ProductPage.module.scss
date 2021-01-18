@@ -1,0 +1,21 @@
+.formdiv {
+  display: flex;
+  flex-direction: column;
+  margin-top: 2rem;
+  width: 40vw;
+
+  &__button {
+    width: 7rem;
+    margin-top: 1rem;
+  }
+}
+
+.productOutput {
+  width: 40vw;
+  margin-top: 4rem;
+
+  &__button {
+    width: 7rem;
+    margin-top: 1rem;
+  }
+}
