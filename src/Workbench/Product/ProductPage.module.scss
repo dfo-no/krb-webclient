@@ -1,0 +1,21 @@
+.product {
+  display: flex;
+  flex-direction: column;
+  margin-top: 2rem;
+  width: 40vw;
+
+  &__addButton {
+    width: 7rem;
+    margin-top: 1rem;
+  }
+}
+
+.productList {
+  width: 40vw;
+  margin-top: 4rem;
+
+  &__saveButton {
+    width: 7rem;
+    margin-top: 1rem;
+  }
+}

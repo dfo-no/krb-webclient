@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { Button, FormControl, InputGroup, ListGroup } from 'react-bootstrap';
 
-import styles from './Codelist.module.scss';
+import styles from './CodelistPage.module.scss';
 import { RootState } from '../../store/configureStore';
 import { Codelist } from '../../models/Codelist';
 import {
