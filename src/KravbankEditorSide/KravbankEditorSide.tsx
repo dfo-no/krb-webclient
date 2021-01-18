@@ -14,7 +14,7 @@ import SideBar from '../SideBar/SideBar';
 
 function KravbankEditorSide(): ReactElement {
   const dispatch = useDispatch();
-  const { kravbanker, selectedKravbank } = useSelector(
+  const { projects, selectedProject } = useSelector(
     (state: RootState) => state.kravbank
   );
 
@@ -59,19 +59,19 @@ function KravbankEditorSide(): ReactElement {
     closeModal();
   };
 
-  return kravbanker[selectedKravbank] ? (
+  return selectedProject ? (
     <Row>
       <Col className="col-2 p-0">
         <SideBar />
       </Col>
       <Col className="col-10 p-5">
-        <h1>{kravbanker[selectedKravbank].tittel}</h1>
+        <h1>{projects[selectedProject].title}</h1>
         <label className={styles.formlabel}>
           <b>Tittel</b>
           <input
             type="text"
             name="tittel"
-            defaultValue={kravbanker[selectedKravbank].tittel}
+            defaultValue={projects[selectedProject].title}
           />
         </label>
         <label className={styles.formlabel}>
@@ -79,7 +79,7 @@ function KravbankEditorSide(): ReactElement {
           <input
             type="text"
             name="tittel"
-            defaultValue={kravbanker[selectedKravbank].beskrivelse}
+            defaultValue={projects[selectedProject].description}
           />
         </label>
         <div>
@@ -87,8 +87,8 @@ function KravbankEditorSide(): ReactElement {
             <h2>Behov</h2>
             <AiFillPlusSquare onClick={openModal} className={styles.icon} />
           </div>
-          {kravbanker[selectedKravbank].behov &&
-            createBehovOutput(kravbanker[selectedKravbank].behov)}
+          {projects[selectedProject].behov &&
+            createBehovOutput(projects[selectedProject].behov)}
         </div>
         <Modal
           isOpen={modalIsOpen}

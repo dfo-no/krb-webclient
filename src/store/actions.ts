@@ -1,7 +1,7 @@
 import { Behov } from '../models/Behov';
 import { Codelist } from '../models/Codelist';
 import { Krav } from '../models/Krav';
-import { Kravbank } from '../models/Kravbank';
+import { Bank } from '../models/Bank';
 
 // TODO: find a design pattern for these strings, and link to that in the docs.
 export enum ActionType {
@@ -28,7 +28,7 @@ export class KRB {
       payload: value
     };
   }
-  static registerNew(kravbank: Kravbank): Action {
+  static registerNew(kravbank: Bank): Action {
     return {
       type: ActionType.KRAVBANK_NEW,
       payload: kravbank

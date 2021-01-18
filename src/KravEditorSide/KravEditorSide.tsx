@@ -13,16 +13,16 @@ function KravEditorSide(): ReactElement {
   const dispatch = useDispatch();
 
   const {
-    kravbanker,
+    projects,
     selectedBehov,
-    selectedKravbank,
+    selectedProject,
     selectedKrav
   } = useSelector((state: RootState) => state.kravbank);
 
   const { register, handleSubmit } = useForm<Krav>();
   const history = useHistory();
 
-  const behov = kravbanker[selectedKravbank].behov[selectedBehov];
+  const behov = projects[selectedProject].behov[selectedBehov];
   const krav = behov.krav ? behov.krav[selectedKrav] : undefined;
   const [isKodelisteEksakt, setIsKodelisteEksakt] = useState(
     krav?.type === 'kodeliste-eksakt' ? true : false

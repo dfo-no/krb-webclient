@@ -7,8 +7,6 @@ import styles from './App.module.scss';
 import KravbankEditorSide from './KravbankEditorSide/KravbankEditorSide';
 import Header from './Header/Header';
 import BehovEditorSide from './BehovEditorSide/BehovEditorSide';
-import KravbankKatalogSide from './KravbankKatalogSide/KravbankKatalogSide';
-import NyKravbankSide from './NyKravbankSide/NyKravbankSide';
 
 import store from './store/configureStore';
 import CodeListEditor from './Workbench/Codelist/CodeListEditor';
@@ -45,9 +43,6 @@ function App() {
                   {/* <RegistrationForm /> */}
                 </Route>
                 {/* to be deprecated */}
-                <Route exact path={'/katalog'}>
-                  <KravbankKatalogSide />
-                </Route>
                 <Route exact path={'/edit/:id'}>
                   <KravbankEditorSide />
                 </Route>
@@ -59,9 +54,6 @@ function App() {
                 </Route>
                 <Route exact path={'/edit/kravbank'}>
                   <KravbankEditorSide />
-                </Route>
-                <Route exact path={'/kravbank/ny'}>
-                  <NyKravbankSide />
                 </Route>
                 {/* end deprectation */}
                 <Route exact path={'/workbench'}>
