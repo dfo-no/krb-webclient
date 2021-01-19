@@ -85,7 +85,7 @@ function LoginForm(props: RouteComponentProps): ReactElement {
               <Button
                 variant="warning"
                 type="submit"
-                className={css.loginCard__button}
+                className={css.loginCard__submitButton}
               >
                 Logg inn
               </Button>
