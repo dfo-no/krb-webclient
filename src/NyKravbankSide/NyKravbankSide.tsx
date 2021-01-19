@@ -19,7 +19,7 @@ function NyKravbankSide(): ReactElement {
       beskrivelse: data.beskrivelse,
       behov: [],
       krav: [],
-      kodeliste: [],
+      codelist: [],
       ordering: 0
     };
     dispatch(newKravbank(kravbank));

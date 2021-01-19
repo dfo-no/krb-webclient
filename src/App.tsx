@@ -11,8 +11,8 @@ import KravbankKatalogSide from './KravbankKatalogSide/KravbankKatalogSide';
 import NyKravbankSide from './NyKravbankSide/NyKravbankSide';
 
 import store from './store/configureStore';
-import CodelistPage from './Codelist/CodelistPage';
-import ProductPage from './Product/ProductPage';
+import CodeListEditor from './Workbench/Codelist/CodeListEditor';
+import ProductPage from './Workbench/Product/ProductPage';
 import ProjectPage from './Project/ProjectPage';
 import NeedPage from './Need/NeedPage';
 import RequirementPage from './Requirement/RequirementPage';
@@ -22,6 +22,7 @@ import { Col, Container, Row } from 'react-bootstrap';
 import SideBar from './SideBar/SideBar';
 import KravEditorSide from './KravEditorSide/KravEditorSide';
 import { ProtectedRoute } from './authentication/ProtectedRoute';
+import CodelistPage from './Workbench/Codelist/CodelistPage';
 
 function App() {
   const location = useLocation();
@@ -86,6 +87,11 @@ function App() {
                   exact
                   path={'/workbench/codelist'}
                   component={CodelistPage}
+                />
+                <ProtectedRoute
+                  exact
+                  path={'/workbench/codelist/:id'}
+                  component={CodeListEditor}
                 />
                 <ProtectedRoute
                   exact

@@ -1,5 +1,5 @@
 import { Behov } from '../models/Behov';
-import { Kodeliste } from '../models/Kodeliste';
+import { Codelist } from '../models/Codelist';
 import { Krav } from '../models/Krav';
 import { Kravbank } from '../models/Kravbank';
 
@@ -70,7 +70,7 @@ export class KRB {
       payload: kravid
     };
   }
-  static addKodeliste(kodeliste: Kodeliste): Action {
+  static addKodeliste(kodeliste: Codelist): Action {
     return {
       type: ActionType.KODELISTE_NEW,
       payload: kodeliste
