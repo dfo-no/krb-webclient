@@ -2,7 +2,7 @@ name: Continuous Deployment
 
 on:
   push:
-    branches: [main, develop]
+    branches: [main]
 
 env:
   AZURE_WEBAPP_NAME: Krb-Kravbank-dev-app # set this to your application's name
