@@ -8,7 +8,7 @@ import { Product } from '../../models/Product';
 
 interface KravbankState {
   projects: Bank[];
-  selectedProject: number;
+  selectedProject: number | null;
   selectedNeed: number;
   selectedKrav: number;
   codelists: Codelist[];
@@ -18,7 +18,7 @@ interface KravbankState {
 
 const initialState: KravbankState = {
   projects: [],
-  selectedProject: 0,
+  selectedProject: null,
   selectedNeed: 0,
   selectedKrav: 0,
   codelists: [],
@@ -50,16 +50,25 @@ const kravbankSlice = createSlice({
     },
     addNeed(state, { payload }: PayloadAction<Need>) {
       const id = state.selectedProject;
+      if (id === null) {
+        return state;
+      }
       state.projects[id].needs.push(payload);
     },
     addSubNeed(state, { payload }: PayloadAction<Need>) {
       const needId = state.selectedNeed;
       const kravbankId = state.selectedProject;
+      if (kravbankId === null) {
+        return state;
+      }
       state.projects[kravbankId].needs[needId].needs?.push(payload);
     },
     registerNew(state, { payload }: PayloadAction<Krav>) {
       const kravbankId = state.selectedProject;
       const needId = state.selectedNeed;
+      if (kravbankId === null) {
+        return state;
+      }
       state.projects[kravbankId].needs[needId].krav?.push(payload);
     },
     addCodelist(state, { payload }: PayloadAction<Codelist>) {

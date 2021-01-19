@@ -1,31 +1,34 @@
-import React, { ReactElement } from 'react';
+import React, { ReactElement, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import Modal from 'react-modal';
 import { AiFillPlusSquare, AiFillEdit } from 'react-icons/ai';
 
-import { Need } from '../models/Need';
-import { Krav } from '../models/Krav';
+import { Need } from '../../models/Need';
+import { Krav } from '../../models/Krav';
 import styles from './NeedPage.module.scss';
-import { RootState } from '../store/configureStore';
+import { RootState } from '../../store/configureStore';
 import {
   addKrav,
   addSubNeed,
   editKrav
-} from '../store/reducers/kravbank-reducer';
+} from '../../store/reducers/kravbank-reducer';
 
 function NeedPage(): ReactElement {
   const dispatch = useDispatch();
   const { projects, selectedProject, selectedNeed } = useSelector(
     (state: RootState) => state.kravbank
   );
-
-  const need = projects[selectedProject].needs[selectedNeed];
+  const [needModalIsOpen, setNeedIsOpen] = useState(false);
+  const [kravModalIsOpen, setKravIsOpen] = useState(false);
   const { register, handleSubmit } = useForm<Need>();
-  const [needModalIsOpen, setNeedIsOpen] = React.useState(false);
-  const [kravModalIsOpen, setKravIsOpen] = React.useState(false);
   const history = useHistory();
+
+  if (selectedProject === null) {
+    return <p>No Project selected</p>;
+  }
+  const need = projects[selectedProject].needs[selectedNeed];
 
   const needModal = (open: boolean) => (event: any) => {
     setNeedIsOpen(open);

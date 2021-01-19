@@ -10,7 +10,7 @@ import styles from './KravbankEditorSide.module.scss';
 import { RootState } from '../store/configureStore';
 import { addNeed, editNeed } from '../store/reducers/kravbank-reducer';
 import { Col, Row } from 'react-bootstrap';
-import SideBar from '../SideBar/SideBar';
+import SideBar from '../Workbench/SideBar/SideBar';
 
 function KravbankEditorSide(): ReactElement {
   const dispatch = useDispatch();
@@ -32,7 +32,7 @@ function KravbankEditorSide(): ReactElement {
 
   const handleEdit = (id: number) => (event: any) => {
     dispatch(editNeed(id));
-    history.push(`/workbench/need/${id}`);
+    history.push(`/workbench/${id}/need`);
   };
 
   const createNeedOutput = (needList: Need[]) => {

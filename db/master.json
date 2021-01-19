@@ -1,16 +1,16 @@
 {
   "catalogue": [
     {
-      "id": 0,
+      "id": 10,
       "title": "Kurs og konferanse",
       "description": "Generelle behov og krav",
       "ordering": 1,
-      "behov": [
+      "needs": [
         {
           "id": 1234,
           "tittel": "Lokaler",
           "beskrivelse": "Passende lokaler",
-          "underbehov": [
+          "needs": [
             {
               "id": 84848484,
               "tittel": "Parkeringsmuligheter"
@@ -48,25 +48,25 @@
       ]
     },
     {
-      "id": 1,
+      "id": 11,
       "title": "Elbil til hjemmetjenesten",
       "description": "...",
       "ordering": 2,
-      "behov": []
+      "needs": []
     },
     {
-      "id": 2,
+      "id": 12,
       "title": "Vedlikehold",
       "description": "...",
       "ordering": 2,
-      "behov": []
+      "needs": []
     },
     {
-      "id": 3,
+      "id": 13,
       "title": "Kantineløsning",
       "description": "...",
       "ordering": 2,
-      "behov": []
+      "needs": []
     }
   ],
   "codelist": [

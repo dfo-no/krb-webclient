@@ -6,7 +6,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../store/configureStore';
 import { Bank } from '../models/Bank';
 import styles from './WorkbenchPage.module.scss';
-import { addProject, selectProject } from '../store/reducers/kravbank-reducer';
+import {
+  addProject,
+  fetchBanks,
+  selectProject
+} from '../store/reducers/kravbank-reducer';
 
 export default function WorkbenchPage(): ReactElement {
   const dispatch = useDispatch();
@@ -14,6 +18,11 @@ export default function WorkbenchPage(): ReactElement {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [showEditor, setShowEdior] = useState(false);
+
+  const initBanks = async () => {
+    dispatch(fetchBanks());
+  };
+  initBanks();
 
   const handleShowEditor = () => {
     setShowEdior(true);

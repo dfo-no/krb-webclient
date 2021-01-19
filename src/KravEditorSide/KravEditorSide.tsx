@@ -10,23 +10,24 @@ import { RootState } from '../store/configureStore';
 import { addKrav } from '../store/reducers/kravbank-reducer';
 
 function KravEditorSide(): ReactElement {
+  const [isKodelisteEksakt, setIsKodelisteEksakt] = useState(false);
+
   const dispatch = useDispatch();
 
-  const {
-    projects,
-    selectedNeed: selectedBehov,
-    selectedProject,
-    selectedKrav
-  } = useSelector((state: RootState) => state.kravbank);
+  const { projects, selectedNeed, selectedProject, selectedKrav } = useSelector(
+    (state: RootState) => state.kravbank
+  );
 
   const { register, handleSubmit } = useForm<Krav>();
   const history = useHistory();
 
-  const need = projects[selectedProject].needs[selectedBehov];
+  if (selectedProject === null) {
+    return <p>No project choosen</p>;
+  }
+  const need = projects[selectedProject].needs[selectedNeed];
   const krav = need.krav ? need.krav[selectedKrav] : undefined;
-  const [isKodelisteEksakt, setIsKodelisteEksakt] = useState(
-    krav?.type === 'kodeliste-eksakt' ? true : false
-  );
+
+  setIsKodelisteEksakt(krav?.type === 'kodeliste-eksakt' ? true : false);
 
   const renderTypeSpecificField = () => {
     if (isKodelisteEksakt) {
@@ -61,11 +62,11 @@ function KravEditorSide(): ReactElement {
       tittel: data.tittel,
       beskrivelse: data.beskrivelse,
       type: data.type,
-      needId: selectedBehov,
+      needId: selectedNeed,
       file: data.file
     };
     dispatch(addKrav(krav));
-    history.push(`/workbench/need/${selectedBehov}`);
+    history.push(`/workbench/${selectedNeed}/need`);
   };
 
   return krav ? (
