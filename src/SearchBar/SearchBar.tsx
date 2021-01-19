@@ -15,9 +15,8 @@ export default function SearchBar(props: SearchBarProps): ReactElement {
   const [input, setInput] = useState('');
   const [searchList, setSearchList] = useState(props.list);
   const dispatch = useDispatch();
-  console.log(props.list);
 
-  const updateInput = async (input: any) => {
+  const updateSearchText = async (input: any) => {
     const filtered = props.list.filter((element) => {
       return element.title.toLowerCase().includes(input.toLowerCase());
     });
@@ -48,7 +47,7 @@ export default function SearchBar(props: SearchBarProps): ReactElement {
         className={styles.BarStyling}
         value={input}
         placeholder={'search projects'}
-        onChange={(e) => updateInput(e.target.value)}
+        onChange={(e) => updateSearchText(e.target.value)}
       />
       {displaylist(searchList)}
     </>
