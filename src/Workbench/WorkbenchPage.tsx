@@ -44,6 +44,9 @@ export default function WorkbenchPage(): ReactElement {
   };
 
   const renderProjects = (projectList: Bank[]) => {
+    projectList.sort((a, b) =>
+      a.title.toLowerCase() > b.title.toLowerCase() ? 1 : -1
+    );
     const jsx = projectList.map((element: Bank) => {
       return (
         <ListGroup.Item key={element.id}>
