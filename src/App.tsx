@@ -3,7 +3,7 @@ import { Provider } from 'react-redux';
 import { Route, Switch, useLocation } from 'react-router-dom';
 
 import styles from './App.module.scss';
-// import RegistrationForm from './RegistrationForm/RegistrationForm';
+import LoginForm from './LoginForm/LoginForm';
 import KravbankEditorSide from './KravbankEditorSide/KravbankEditorSide';
 import Header from './Header/Header';
 import BehovEditorSide from './BehovEditorSide/BehovEditorSide';
@@ -21,6 +21,7 @@ import HomePage from './Home/HomePage';
 import { Col, Container, Row } from 'react-bootstrap';
 import SideBar from './SideBar/SideBar';
 import KravEditorSide from './KravEditorSide/KravEditorSide';
+import { ProtectedRoute } from './authentication/ProtectedRoute';
 
 function App() {
   const location = useLocation();
@@ -30,7 +31,9 @@ function App() {
         <Header />
         <Container fluid>
           <Row>
-            {location.pathname === '/' || location.pathname === '/katalog' ? (
+            {location.pathname === '/' ||
+            location.pathname === '/katalog' ||
+            location.pathname === '/login' ? (
               <></>
             ) : (
               <Col className="col-2 p-0">
@@ -41,8 +44,8 @@ function App() {
               <Switch>
                 <Route exact path={'/'}>
                   <HomePage></HomePage>
-                  {/* <RegistrationForm /> */}
                 </Route>
+                <Route exact path={'/login'} component={LoginForm} />
                 {/* to be deprecated */}
                 <Route exact path={'/katalog'}>
                   <KravbankKatalogSide />
@@ -63,25 +66,37 @@ function App() {
                   <NyKravbankSide />
                 </Route>
                 {/* end deprectation */}
-                <Route exact path={'/workbench'}>
-                  <WorkbenchPage></WorkbenchPage>
-                </Route>
+                <ProtectedRoute
+                  exact
+                  path={'/workbench'}
+                  component={WorkbenchPage}
+                ></ProtectedRoute>
 
-                <Route exact path={'/workbench/need'}>
-                  <NeedPage></NeedPage>
-                </Route>
-                <Route exact path={'/workbench/requirement'}>
-                  <RequirementPage></RequirementPage>
-                </Route>
-                <Route exact path={'/workbench/codelist'}>
-                  <CodelistPage></CodelistPage>
-                </Route>
-                <Route exact path={'/workbench/product'}>
-                  <ProductPage></ProductPage>
-                </Route>
-                <Route exact path={'/workbench/:id'}>
-                  <ProjectPage></ProjectPage>
-                </Route>
+                <ProtectedRoute
+                  exact
+                  path={'/workbench/need'}
+                  component={NeedPage}
+                />
+                <ProtectedRoute
+                  exact
+                  path={'/workbench/requirement'}
+                  component={RequirementPage}
+                />
+                <ProtectedRoute
+                  exact
+                  path={'/workbench/codelist'}
+                  component={CodelistPage}
+                />
+                <ProtectedRoute
+                  exact
+                  path={'/workbench/product'}
+                  component={ProductPage}
+                />
+                <ProtectedRoute
+                  exact
+                  path={'/workbench/:id'}
+                  component={ProjectPage}
+                />
               </Switch>
             </Col>
           </Row>

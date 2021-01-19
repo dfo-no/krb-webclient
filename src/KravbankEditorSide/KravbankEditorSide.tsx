@@ -124,7 +124,7 @@ function KravbankEditorSide(): ReactElement {
                 })}
               />
             </label>
-            <input type="submit" value="Oprett behov" />
+            <input type="submit" value="Opprett behov" />
           </form>
         </Modal>
       </Col>

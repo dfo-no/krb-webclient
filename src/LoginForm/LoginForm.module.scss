@@ -1,0 +1,16 @@
+@import '../dfo-theme.scss';
+
+.container {
+  height: 50vh;
+  display: flex;
+  justify-content: center; /* center items vertically, in this case */
+  align-items: center;
+
+  .loginCard {
+    width: 25rem;
+
+    &__button {
+      float: right;
+    }
+  }
+}
