@@ -4,12 +4,12 @@
     "tittel": "Kurs og konferanse",
     "beskrivelse": "Generelle behov og krav",
     "ordering": 1,
-    "behov": [
+    "needs": [
       {
         "id": 1234,
         "tittel": "Lokaler",
         "beskrivelse": "Passende lokaler",
-        "underbehov": [
+        "need": [
           {
             "id": 84848484,
             "tittel": "Parkeringsmuligheter"
@@ -31,14 +31,14 @@
           {
             "id": 7800,
             "tittel": "Elbil",
-            "behovId": 1236,
+            "needId": 1236,
             "beskrivelse": "Elbilen må kjøre minst 10km",
             "type": "kodeliste-eksakt"
           },
           {
             "id": 7801,
             "tittel": "Alle med lappen skal kunne kjøre bilen",
-            "behovId": 1236,
+            "needId": 1236,
             "beskrivelse": "Bilen må være automat",
             "type": "kodeliste"
           }
@@ -53,7 +53,7 @@
     "tittel": "Elbil til hjemmetjenesten",
     "beskrivelse": "...",
     "ordering": 2,
-    "behov": [],
+    "needs": [],
     "krav": [],
     "kodeliste": []
   },
@@ -62,7 +62,7 @@
     "tittel": "Vedlikehold",
     "beskrivelse": "...",
     "ordering": 2,
-    "behov": [],
+    "needs": [],
     "krav": [],
     "kodeliste": []
   },
@@ -71,7 +71,7 @@
     "tittel": "Kantineløsning",
     "beskrivelse": "...",
     "ordering": 2,
-    "behov": [],
+    "needs": [],
     "krav": [],
     "kodeliste": []
   }

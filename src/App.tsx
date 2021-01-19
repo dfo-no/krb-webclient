@@ -6,7 +6,6 @@ import styles from './App.module.scss';
 import LoginForm from './LoginForm/LoginForm';
 import KravbankEditorSide from './KravbankEditorSide/KravbankEditorSide';
 import Header from './Header/Header';
-import BehovEditorSide from './BehovEditorSide/BehovEditorSide';
 
 import store from './store/configureStore';
 import CodeListEditor from './Workbench/Codelist/CodeListEditor';
@@ -48,9 +47,6 @@ function App() {
                 {/* to be deprecated */}
                 <Route exact path={'/edit/:id'}>
                   <KravbankEditorSide />
-                </Route>
-                <Route exact path={'/edit/behov/'}>
-                  <BehovEditorSide />
                 </Route>
                 <Route exact path={'/edit/krav/'}>
                   <KravEditorSide />

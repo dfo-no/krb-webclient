@@ -1,10 +1,10 @@
 import { Krav } from './Krav';
 
-export interface Behov {
+export interface Need {
   id: number;
   tittel: string;
   beskrivelse?: string;
-  underbehov?: Behov[];
+  needs?: Need[];
   order?: number;
   krav?: Krav[];
 }

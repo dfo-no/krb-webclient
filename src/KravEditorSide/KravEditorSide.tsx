@@ -14,7 +14,7 @@ function KravEditorSide(): ReactElement {
 
   const {
     projects,
-    selectedBehov,
+    selectedNeed: selectedBehov,
     selectedProject,
     selectedKrav
   } = useSelector((state: RootState) => state.kravbank);
@@ -22,8 +22,8 @@ function KravEditorSide(): ReactElement {
   const { register, handleSubmit } = useForm<Krav>();
   const history = useHistory();
 
-  const behov = projects[selectedProject].behov[selectedBehov];
-  const krav = behov.krav ? behov.krav[selectedKrav] : undefined;
+  const need = projects[selectedProject].needs[selectedBehov];
+  const krav = need.krav ? need.krav[selectedKrav] : undefined;
   const [isKodelisteEksakt, setIsKodelisteEksakt] = useState(
     krav?.type === 'kodeliste-eksakt' ? true : false
   );
@@ -61,11 +61,11 @@ function KravEditorSide(): ReactElement {
       tittel: data.tittel,
       beskrivelse: data.beskrivelse,
       type: data.type,
-      behovId: selectedBehov,
+      needId: selectedBehov,
       file: data.file
     };
     dispatch(addKrav(krav));
-    history.push(`/edit/behov/${selectedBehov}`);
+    history.push(`/workbench/need/${selectedBehov}`);
   };
 
   return krav ? (

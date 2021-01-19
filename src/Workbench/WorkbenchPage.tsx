@@ -31,7 +31,7 @@ export default function WorkbenchPage(): ReactElement {
       id: Math.random(),
       title: title,
       description: description,
-      behov: [],
+      needs: [],
       krav: [],
       codelist: []
     };
