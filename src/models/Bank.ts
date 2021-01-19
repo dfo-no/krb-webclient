@@ -7,7 +7,7 @@ export interface Bank {
   title: string;
   description: string;
   behov: Behov[];
-  krav: Krav[];
-  codelist: Codelist[];
+  krav?: Krav[];
+  codelist?: Codelist[];
   ordering?: number;
 }

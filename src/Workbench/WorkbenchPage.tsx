@@ -5,9 +5,8 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { RootState } from '../store/configureStore';
 import { Bank } from '../models/Bank';
-import SearchBar from '../SearchBar/SearchBar';
 import styles from './WorkbenchPage.module.scss';
-import { addProject } from '../store/reducers/kravbank-reducer';
+import { addProject, selectProject } from '../store/reducers/kravbank-reducer';
 
 export default function WorkbenchPage(): ReactElement {
   const dispatch = useDispatch();
@@ -15,7 +14,6 @@ export default function WorkbenchPage(): ReactElement {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [showEditor, setShowEdior] = useState(false);
-  console.log(projects);
 
   const handleShowEditor = () => {
     setShowEdior(true);
@@ -41,16 +39,25 @@ export default function WorkbenchPage(): ReactElement {
     setShowEdior(false);
   };
 
-  const renderProducts = (productList: Bank[]) => {
-    const jsx = productList.map((element: Bank) => {
+  const handleSelectedProject = (id: number) => () => {
+    dispatch(selectProject(id));
+  };
+
+  const renderProjects = (projectList: Bank[]) => {
+    const jsx = projectList.map((element: Bank) => {
       return (
         <ListGroup.Item key={element.id}>
-          <h5>{element.title}</h5>
-          <p>{element.description}</p>
+          <Link
+            to={`/workbench/${element.id}`}
+            onClick={handleSelectedProject(element.id)}
+          >
+            <h5>{element.title}</h5>
+            <p>{element.description}</p>
+          </Link>
         </ListGroup.Item>
       );
     });
-    return <ListGroup className={styles.productList}>{jsx}</ListGroup>;
+    return <ListGroup className={styles.projectList}>{jsx}</ListGroup>;
   };
   function projectEditor(show: boolean) {
     if (show) {
@@ -88,13 +95,10 @@ export default function WorkbenchPage(): ReactElement {
 
   return (
     <>
-      <p>WorkbenchPage</p>
-
-      <p>Projects</p>
+      <h3>Projects</h3>
       <Button onClick={handleShowEditor}>New Project</Button>
       {projectEditor(showEditor)}
-      {renderProducts(projects)}
-      <Link to={'/'}>Root / (dev)</Link>
+      {renderProjects(projects)}
     </>
   );
 }
