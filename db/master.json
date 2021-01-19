@@ -2,8 +2,8 @@
   "catalogue": [
     {
       "id": 0,
-      "tittel": "Kurs og konferanse",
-      "beskrivelse": "Generelle behov og krav",
+      "title": "Kurs og konferanse",
+      "description": "Generelle behov og krav",
       "ordering": 1,
       "behov": [
         {
@@ -49,22 +49,22 @@
     },
     {
       "id": 1,
-      "tittel": "Elbil til hjemmetjenesten",
-      "beskrivelse": "...",
+      "title": "Elbil til hjemmetjenesten",
+      "description": "...",
       "ordering": 2,
       "behov": []
     },
     {
       "id": 2,
-      "tittel": "Vedlikehold",
-      "beskrivelse": "...",
+      "title": "Vedlikehold",
+      "description": "...",
       "ordering": 2,
       "behov": []
     },
     {
       "id": 3,
-      "tittel": "Kantineløsning",
-      "beskrivelse": "...",
+      "title": "Kantineløsning",
+      "description": "...",
       "ordering": 2,
       "behov": []
     }
@@ -76,15 +76,15 @@
     },
     {
       "id": 123457,
-      "tittel": "Konferanselokaler"
+      "title": "Konferanselokaler"
     },
     {
       "id": 123458,
-      "tittel": "Matallergier"
+      "title": "Matallergier"
     },
     {
       "id": 123459,
-      "tittel": "HC-tilpasning"
+      "title": "HC-tilpasning"
     }
   ]
 }

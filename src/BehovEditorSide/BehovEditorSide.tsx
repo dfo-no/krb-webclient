@@ -17,11 +17,11 @@ import {
 
 function BehovEditorSide(): ReactElement {
   const dispatch = useDispatch();
-  const { kravbanker, selectedKravbank, selectedBehov } = useSelector(
+  const { projects, selectedProject, selectedBehov } = useSelector(
     (state: RootState) => state.kravbank
   );
 
-  const behov = kravbanker[selectedKravbank].behov[selectedBehov];
+  const behov = projects[selectedProject].behov[selectedBehov];
   const { register, handleSubmit } = useForm<Behov>();
   const [behovModalIsOpen, setBehovIsOpen] = React.useState(false);
   const [kravModalIsOpen, setKravIsOpen] = React.useState(false);
