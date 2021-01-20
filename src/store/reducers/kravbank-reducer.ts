@@ -26,15 +26,18 @@ const initialState: KravbankState = {
   products: []
 };
 
-export const fetchBanks = createAsyncThunk('users/fetchById', async () => {
+/* export const fetchBanks = createAsyncThunk('fetchBanks', async () => {
   const response = await fetch(`http://localhost:3001/catalogue`);
   return (await response.json()) as Bank[];
-});
+}); */
 
 const kravbankSlice = createSlice({
   name: 'kravbank',
   initialState,
   reducers: {
+    addBanks(state, { payload }: PayloadAction<Bank[]>) {
+      state.projects = payload;
+    },
     addProject(state, { payload }: PayloadAction<Bank>) {
       state.projects.push(payload);
     },
@@ -116,13 +119,14 @@ const kravbankSlice = createSlice({
     }
   },
   extraReducers: (builder) => {
-    builder.addCase(fetchBanks.fulfilled, (state, { payload }) => {
+    /* builder.addCase(fetchBanks.fulfilled, (state, { payload }) => {
       state.projects = payload;
-    });
+    }); */
   }
 });
 
 export const {
+  addBanks,
   addProject,
   selectProject,
   editNeed,

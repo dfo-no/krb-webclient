@@ -1,4 +1,4 @@
-import { ReactElement, useState } from 'react';
+import { ReactElement, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Button, FormControl, InputGroup, ListGroup } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
@@ -8,9 +8,10 @@ import { Bank } from '../models/Bank';
 import styles from './WorkbenchPage.module.scss';
 import {
   addProject,
-  fetchBanks,
-  selectProject
+  selectProject,
+  addBanks
 } from '../store/reducers/kravbank-reducer';
+import { fetchAllBanks } from '../api/bankApi';
 
 export default function WorkbenchPage(): ReactElement {
   const dispatch = useDispatch();
@@ -19,10 +20,13 @@ export default function WorkbenchPage(): ReactElement {
   const [description, setDescription] = useState('');
   const [showEditor, setShowEdior] = useState(false);
 
-  const initBanks = async () => {
-    dispatch(fetchBanks());
-  };
-  initBanks();
+  useEffect(() => {
+    async function fetchEverything() {
+      const banks = await fetchAllBanks();
+      dispatch(addBanks(banks));
+    }
+    fetchEverything();
+  });
 
   const handleShowEditor = () => {
     setShowEdior(true);
