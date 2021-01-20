@@ -1,66 +1,100 @@
-import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { Bank } from '../../models/Bank';
-import { Krav } from '../../models/Krav';
-import { Behov } from '../../models/Behov';
+import { Need } from '../../models/Need';
 import { Codelist } from '../../models/Codelist';
 import { Code } from '../../models/Code';
 import { Product } from '../../models/Product';
+import { Publication } from '../../models/Publication';
+import { Requirement } from '../../models/Requirement';
 
 interface KravbankState {
+  //projects: banks being edited, not published.
+  //banks: Finished and published versions of banks
   projects: Bank[];
-  selectedProject: number;
-  selectedBehov: number;
-  selectedKrav: number;
+  selectedProject: Bank | null;
+  selectedNeed: number;
   codelists: Codelist[];
   selectedCodelist: number;
   products: Product[];
+  banks: Bank[];
 }
 
 const initialState: KravbankState = {
   projects: [],
-  selectedProject: 0,
-  selectedBehov: 0,
-  selectedKrav: 0,
+  selectedProject: null,
+  selectedNeed: 0,
   codelists: [],
   selectedCodelist: 0,
-  products: []
+  products: [],
+  banks: []
 };
 
-export const fetchBanks = createAsyncThunk('users/fetchById', async () => {
+/* export const fetchBanks = createAsyncThunk('fetchBanks', async () => {
   const response = await fetch(`http://localhost:3001/catalogue`);
   return (await response.json()) as Bank[];
-});
+}); */
 
 const kravbankSlice = createSlice({
   name: 'kravbank',
   initialState,
   reducers: {
+    addBanks(state, { payload }: PayloadAction<Bank[]>) {
+      state.projects = payload;
+    },
     addProject(state, { payload }: PayloadAction<Bank>) {
       state.projects.push(payload);
     },
-    selectProject(state, { payload }: PayloadAction<number>) {
+    selectProject(state, { payload }: PayloadAction<Bank>) {
       state.selectedProject = payload;
     },
-    publishProject(state, { payload }: PayloadAction<Bank>) {},
-    editBehov(state, { payload }: PayloadAction<number>) {
-      state.selectedBehov = payload;
+    editProject(state, { payload }: PayloadAction<Bank>) {
+      const id = state.selectedProject?.id;
+      let projectindex = state.projects.findIndex(
+        (project) => project.id === id
+      );
+      state.projects[projectindex] = payload;
     },
-    editKrav(state, { payload }: PayloadAction<Krav>) {
-      state.selectedKrav = payload.id;
+
+    publishProject(state, { payload }: PayloadAction<Publication>) {
+      const id = state.selectedProject?.id;
+      let projectindex = state.projects.findIndex(
+        (project) => project.id === id
+      );
+      let project = state.projects[projectindex];
+      state.banks.push(project);
+      //increase version-number before continued editing
+      project.version = payload.version + 1;
+
+      if (!project.publications) project.publications = [];
+
+      project.publications?.push(payload);
     },
-    addBehov(state, { payload }: PayloadAction<Behov>) {
-      const id = state.selectedProject;
-      state.projects[id].behov.push(payload);
+    editNeed(state, { payload }: PayloadAction<number>) {
+      state.selectedNeed = payload;
     },
-    addUnderBehov(state, { payload }: PayloadAction<Behov>) {
-      const behovId = state.selectedBehov;
-      const kravbankId = state.selectedProject;
-      state.projects[kravbankId].behov[behovId].underbehov?.push(payload);
+    editRequirement(state, { payload }: PayloadAction<Requirement>) {},
+    addNeed(state, { payload }: PayloadAction<Need>) {
+      const id = state.selectedProject?.id;
+      if (id === undefined) {
+        return state;
+      }
+      state.projects[id].needs.push(payload);
     },
-    registerNew(state, { payload }: PayloadAction<Krav>) {
-      const kravbankId = state.selectedProject;
-      const behovId = state.selectedBehov;
-      state.projects[kravbankId].behov[behovId].krav?.push(payload);
+    addSubNeed(state, { payload }: PayloadAction<Need>) {
+      const needId = state.selectedNeed;
+      const kravbankId = state.selectedProject?.id;
+      if (kravbankId === undefined) {
+        return state;
+      }
+      state.projects[kravbankId].needs[needId].needs?.push(payload);
+    },
+    registerNew(state, { payload }: PayloadAction<Requirement>) {
+      const kravbankId = state.selectedProject?.id;
+      const needId = state.selectedNeed;
+      if (kravbankId === undefined) {
+        return state;
+      }
+      state.projects[kravbankId].needs[needId].requirements?.push(payload);
     },
     addCodelist(state, { payload }: PayloadAction<Codelist>) {
       state.codelists.push(payload);
@@ -100,33 +134,34 @@ const kravbankSlice = createSlice({
       );
       state.products[productindex] = payload;
     },
-    addKrav(state, { payload }: PayloadAction<Krav>) {},
     banksReceived(state, { payload }: PayloadAction<Bank[]>) {
       state.projects = payload;
       console.log(state.projects);
     }
   },
   extraReducers: (builder) => {
-    builder.addCase(fetchBanks.fulfilled, (state, { payload }) => {
+    /* builder.addCase(fetchBanks.fulfilled, (state, { payload }) => {
       state.projects = payload;
-    });
+    }); */
   }
 });
 
 export const {
+  addBanks,
   addProject,
   selectProject,
-  editBehov,
-  editKrav,
-  addBehov,
-  addUnderBehov,
+  editNeed,
+  editProject,
+  publishProject,
+  editRequirement,
+  addNeed,
+  addSubNeed,
   registerNew,
   addCodelist,
   addCode,
   editCodelist,
   selectCodelist,
   editCode,
-  addKrav,
   editProduct,
   addProduct,
   banksReceived

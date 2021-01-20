@@ -2,31 +2,29 @@ import { ReactElement, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { Krav } from '../models/Krav';
 import styles from './KravEditorSide.module.scss';
 import koder from '../data/kodelister.json';
 import { useHistory } from 'react-router-dom';
-import { RootState } from '../store/configureStore';
-import { addKrav } from '../store/reducers/kravbank-reducer';
 
-function KravEditorSide(): ReactElement {
+/*function KravEditorSide(): ReactElement {
+  const [isKodelisteEksakt, setIsKodelisteEksakt] = useState(false);
+
   const dispatch = useDispatch();
 
-  const {
-    projects,
-    selectedBehov,
-    selectedProject,
-    selectedKrav
-  } = useSelector((state: RootState) => state.kravbank);
+  const { projects, selectedNeed, selectedProject, selectedKrav } = useSelector(
+    (state: RootState) => state.kravbank
+  );
 
   const { register, handleSubmit } = useForm<Krav>();
   const history = useHistory();
 
-  const behov = projects[selectedProject].behov[selectedBehov];
-  const krav = behov.krav ? behov.krav[selectedKrav] : undefined;
-  const [isKodelisteEksakt, setIsKodelisteEksakt] = useState(
-    krav?.type === 'kodeliste-eksakt' ? true : false
-  );
+  if (selectedProject === null) {
+    return <p>No project choosen</p>;
+  }
+  const need = projects[selectedProject.id].needs[selectedNeed];
+  const krav = need.krav ? need.krav[selectedKrav] : undefined;
+
+  setIsKodelisteEksakt(krav?.type === 'kodeliste-eksakt' ? true : false);
 
   const renderTypeSpecificField = () => {
     if (isKodelisteEksakt) {
@@ -61,11 +59,11 @@ function KravEditorSide(): ReactElement {
       tittel: data.tittel,
       beskrivelse: data.beskrivelse,
       type: data.type,
-      behovId: selectedBehov,
+      needId: selectedNeed,
       file: data.file
     };
     dispatch(addKrav(krav));
-    history.push(`/edit/behov/${selectedBehov}`);
+    history.push(`/workbench/${selectedNeed}/need`);
   };
 
   return krav ? (
@@ -125,4 +123,4 @@ function KravEditorSide(): ReactElement {
   );
 }
 
-export default KravEditorSide;
+export default KravEditorSide;*/

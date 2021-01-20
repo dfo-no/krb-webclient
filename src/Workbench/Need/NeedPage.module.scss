@@ -1,4 +1,4 @@
-@import './../dfo-theme.scss';
+@import './../../dfo-theme.scss';
 
 .modal {
   position: fixed;
@@ -14,12 +14,23 @@
   outline: none;
 }
 
-.listitem {
-  display: flex;
+.needs {
+  /* display: flex;
   flex-direction: row;
-  justify-content: space-between;
-  width: 400px;
-  margin-top: 15px;
+  justify-content: space-between; */
+  width: 900px;
+  margin-top: 2rem;
+}
+
+.need {
+  display: flex;
+  &__title {
+  }
+  &__spacer {
+    flex: 1 1 auto;
+  }
+  &__editbutton {
+  }
 }
 
 .listitem p {

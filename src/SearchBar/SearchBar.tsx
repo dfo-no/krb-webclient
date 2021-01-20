@@ -24,15 +24,15 @@ export default function SearchBar(props: SearchBarProps): ReactElement {
     setSearchList(filtered);
   };
 
-  const handleEdit = (id: number) => () => {
-    dispatch(selectProject(id));
+  const handleEdit = (bank: Bank) => () => {
+    dispatch(selectProject(bank));
   };
 
   const displaylist = (list: Bank[]) => {
     const jsx = list.map((bank: Bank) => {
       return (
         <ListGroup.Item key={bank.id} className={styles.katalogitem}>
-          <Link to={`/workbench/${bank.id}`} onClick={handleEdit(bank.id)}>
+          <Link to={`/workbench/${bank.id}`} onClick={handleEdit(bank)}>
             {bank.title}
           </Link>
         </ListGroup.Item>

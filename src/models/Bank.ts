@@ -1,13 +1,15 @@
-import { Behov } from './Behov';
+import { Need } from './Need';
 import { Codelist } from './Codelist';
-import { Krav } from './Krav';
+import { Publication } from './Publication';
+import { Requirement } from './Requirement';
 
 export interface Bank {
   id: number;
   title: string;
   description: string;
-  behov: Behov[];
-  krav?: Krav[];
+  needs: Need[];
+  requirements?: Requirement[];
   codelist?: Codelist[];
-  ordering?: number;
+  version: number;
+  publications?: Publication[];
 }

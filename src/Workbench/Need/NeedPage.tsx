@@ -1,107 +1,110 @@
-import React, { ReactElement } from 'react';
+import React, { ReactElement, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import Modal from 'react-modal';
 import { AiFillPlusSquare, AiFillEdit } from 'react-icons/ai';
 
-import { Behov } from '../models/Behov';
-import { Krav } from '../models/Krav';
-import styles from './BehovEditorSide.module.scss';
-import { RootState } from '../store/configureStore';
-import {
-  addKrav,
-  addUnderBehov,
-  editKrav
-} from '../store/reducers/kravbank-reducer';
+import { Need } from '../../models/Need';
+import styles from './NeedPage.module.scss';
+import { RootState } from '../../store/configureStore';
+import { addSubNeed } from '../../store/reducers/kravbank-reducer';
+import { Button, ListGroup } from 'react-bootstrap';
 
-function BehovEditorSide(): ReactElement {
+function NeedPage(): ReactElement {
   const dispatch = useDispatch();
-  const { projects, selectedProject, selectedBehov } = useSelector(
+  const { projects, selectedProject, selectedNeed } = useSelector(
     (state: RootState) => state.kravbank
   );
-
-  const behov = projects[selectedProject].behov[selectedBehov];
-  const { register, handleSubmit } = useForm<Behov>();
-  const [behovModalIsOpen, setBehovIsOpen] = React.useState(false);
-  const [kravModalIsOpen, setKravIsOpen] = React.useState(false);
+  const [needModalIsOpen, setNeedIsOpen] = useState(false);
+  const [kravModalIsOpen, setKravIsOpen] = useState(false);
+  const { register, handleSubmit } = useForm<Need>();
   const history = useHistory();
 
-  const behovModal = (open: boolean) => (event: any) => {
-    setBehovIsOpen(open);
+  if (!selectedProject) {
+    return <p>No Project selected</p>;
+  }
+  //const need = projects[selectedProject.id].needs[selectedNeed];
+  const needs = selectedProject.needs;
+
+  const needModal = (open: boolean) => (event: any) => {
+    setNeedIsOpen(open);
   };
 
   const kravModal = (open: boolean) => (event: any) => {
     setKravIsOpen(open);
   };
 
-  const handleEditKrav = (krav: Krav) => (event: any) => {
-    dispatch(editKrav(krav));
-    history.push(`/edit/krav/${krav.id}`);
-  };
-
-  const createListOutput = (list: any) => {
-    return list.map((element: Behov | Krav) => {
+  const renderNeeds = (list: any) => {
+    return list.map((element: Need) => {
       return (
-        <div className={styles.listitem} key={element.id}>
+        <ListGroup.Item key={element.id} className={styles.need}>
+          <div className={styles.need__title}>{element.tittel}</div>
+          <div className={styles.need__spacer}></div>
+          <Button variant="info" className={styles.need__editButton}>
+            <AiFillEdit></AiFillEdit>
+          </Button>
+        </ListGroup.Item>
+        /* <div className={styles.listitem} key={element.id}>
           <p>{element.tittel}</p>
           <AiFillEdit
             className={styles.editicon}
             onClick={handleEditKrav(element as Krav)}
           />
-        </div>
+        </div> */
       );
     });
   };
 
-  const submitBehov = (data: Behov) => {
+  /* const submitBehov = (data: Need) => {
     // TODO: ikke gi ID til nye behov.
-    const behov: Behov = {
+    const need: Need = {
       id: Math.random(),
       tittel: data.tittel,
       beskrivelse: data.beskrivelse
     };
-    dispatch(addUnderBehov(behov));
-    behovModal(false);
-  };
+    dispatch(addSubNeed(need));
+    needModal(false);
+  }; */
 
-  const submitKrav = (data: Krav) => {
+  /* const submitKrav = (data: Krav) => {
     const krav: Krav = {
       id: Math.random(),
       tittel: data.tittel,
       beskrivelse: data.beskrivelse,
       type: data.type,
-      behovId: selectedBehov
+      needId: selectedNeed
     };
     dispatch(addKrav(krav));
     kravModal(false);
-  };
+  }; */
 
-  return behov ? (
-    <div>
-      <h1>{behov.tittel}</h1>
+  return needs ? (
+    <>
+      <ListGroup className={styles.needs}>{renderNeeds(needs)}</ListGroup>
+      {/* <h1>{need.tittel}</h1>
       <label className={styles.formlabel}>
         <b>Tittel</b>
-        <input type="text" name="tittel" defaultValue={behov.tittel} />
+        <input type="text" name="tittel" defaultValue={need.tittel} />
       </label>
       <label className={styles.formlabel}>
         <b>Beskrivelse</b>
-        <input type="text" name="tittel" defaultValue={behov.beskrivelse} />
+        <input type="text" name="tittel" defaultValue={need.beskrivelse} />
       </label>
       <div>
         <div className={styles.subsection}>
-          <h2>Underbehov</h2>
+          <h2>Sub needs</h2>
           <AiFillPlusSquare
             size={25}
-            onClick={behovModal(true)}
+            onClick={needModal(true)}
             className={styles.icon}
           />
         </div>
-        {behov.underbehov && createListOutput(behov.underbehov)}
-      </div>
-      <Modal
-        isOpen={behovModalIsOpen}
-        onRequestClose={behovModal(false)}
+        {need.needs && renderNeeds(need.needs)}
+      </div> */}
+      {/*       <Modal
+        isOpen={needModalIsOpen}
+        onRequestClose={needModal(false)}
         className={styles.modal}
         contentLabel="Example Modal"
         ariaHideApp={false}
@@ -135,10 +138,10 @@ function BehovEditorSide(): ReactElement {
               })}
             />
           </label>
-          <input type="submit" value="Oprett behov" />
+          <input type="submit" value="New need" />
         </form>
-      </Modal>
-      <div>
+      </Modal> */}
+      {/* <div>
         <div className={styles.subsection}>
           <h2>Krav</h2>
           <AiFillPlusSquare
@@ -147,9 +150,9 @@ function BehovEditorSide(): ReactElement {
             className={styles.icon}
           />
         </div>
-        {behov.krav && createListOutput(behov.krav)}
-      </div>
-      <Modal
+        {need.krav && renderNeeds(need.krav)}
+      </div> */}
+      {/* <Modal
         isOpen={kravModalIsOpen}
         onRequestClose={kravModal(false)}
         className={styles.modal}
@@ -193,11 +196,11 @@ function BehovEditorSide(): ReactElement {
           </label>
           <input type="submit" value="Opprett krav" />
         </form>
-      </Modal>
-    </div>
+      </Modal> */}
+    </>
   ) : (
     <div></div>
   );
 }
 
-export default BehovEditorSide;
+export default NeedPage;

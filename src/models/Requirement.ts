@@ -4,6 +4,6 @@ export interface Requirement {
   description?: string;
   needId?: number;
   type?: string;
-  codelistId?: number;
+  kodeliste_id?: number;
   file?: FileList;
 }
