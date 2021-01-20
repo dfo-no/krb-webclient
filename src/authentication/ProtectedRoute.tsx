@@ -10,7 +10,7 @@ export const ProtectedRoute: React.ComponentType<any> = ({
     <Route
       {...rest}
       render={(props) =>
-        fakeAuth.isAuthenticated ? (
+        fakeAuth.isAuthenticated() ? (
           <Component {...props} />
         ) : (
           <Redirect

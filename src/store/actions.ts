@@ -1,4 +1,4 @@
-import { Behov } from '../models/Behov';
+import { Need } from '../models/Need';
 import { Codelist } from '../models/Codelist';
 import { Krav } from '../models/Krav';
 import { Bank } from '../models/Bank';
@@ -8,9 +8,9 @@ export enum ActionType {
   LOADING = '[GLOBAL] Loading',
   KRAVBANK_NEW = '[KRAVBANK] NEW',
   KRAVBANK_EDIT = '[KRAVBANK] EDIT',
-  BEHOV_NEW = '[BEHOV] NEW',
-  BEHOV_EDIT = '[BEHOV] EDIT',
-  UNDERBEHOV_NEW = '[UNDERBEHOV] NEW',
+  NEED_NEW = '[NEED] NEW',
+  NEED_EDIT = '[NEED] EDIT',
+  SUB_NEED_NEW = '[SUB_NEED] NEW',
   KRAV_NEW = '[KRAV] NEW',
   KRAV_EDIT = '[KRAV] EDIT',
   KODELISTE_NEW = '[KODELISTE] NEW'
@@ -40,22 +40,22 @@ export class KRB {
       payload: kravbankid
     };
   }
-  static addBehov(behov: Behov): Action {
+  static addNeed(need: Need): Action {
     return {
-      type: ActionType.BEHOV_NEW,
-      payload: behov
+      type: ActionType.NEED_NEW,
+      payload: need
     };
   }
-  static editBehov(behovid: number): Action {
+  static editNeed(needId: number): Action {
     return {
       type: ActionType.KRAVBANK_EDIT,
-      payload: behovid
+      payload: needId
     };
   }
-  static addUnderBehov(behov: Behov): Action {
+  static addSubNeed(need: Need): Action {
     return {
-      type: ActionType.UNDERBEHOV_NEW,
-      payload: behov
+      type: ActionType.SUB_NEED_NEW,
+      payload: need
     };
   }
   static addKrav(krav: Krav): Action {

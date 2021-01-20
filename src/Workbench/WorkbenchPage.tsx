@@ -1,4 +1,4 @@
-import { ReactElement, useState } from 'react';
+import { ReactElement, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Button, FormControl, InputGroup, ListGroup } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
@@ -6,7 +6,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../store/configureStore';
 import { Bank } from '../models/Bank';
 import styles from './WorkbenchPage.module.scss';
-import { addProject, selectProject } from '../store/reducers/kravbank-reducer';
+import {
+  addProject,
+  selectProject,
+  addBanks
+} from '../store/reducers/kravbank-reducer';
+import { fetchAllBanks } from '../api/bankApi';
 
 export default function WorkbenchPage(): ReactElement {
   const dispatch = useDispatch();
@@ -14,6 +19,14 @@ export default function WorkbenchPage(): ReactElement {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [showEditor, setShowEdior] = useState(false);
+
+  useEffect(() => {
+    async function fetchEverything() {
+      const banks = await fetchAllBanks();
+      dispatch(addBanks(banks));
+    }
+    fetchEverything();
+  });
 
   const handleShowEditor = () => {
     setShowEdior(true);
@@ -31,7 +44,7 @@ export default function WorkbenchPage(): ReactElement {
       id: Math.random(),
       title: title,
       description: description,
-      behov: [],
+      needs: [],
       krav: [],
       codelist: [],
       version: 1
@@ -40,8 +53,8 @@ export default function WorkbenchPage(): ReactElement {
     setShowEdior(false);
   };
 
-  const handleSelectedProject = (id: number) => () => {
-    dispatch(selectProject(id));
+  const handleSelectedProject = (bank: Bank) => () => {
+    dispatch(selectProject(bank));
   };
 
   const renderProjects = (projectList: Bank[]) => {
@@ -53,7 +66,7 @@ export default function WorkbenchPage(): ReactElement {
         <ListGroup.Item key={element.id}>
           <Link
             to={`/workbench/${element.id}`}
-            onClick={handleSelectedProject(element.id)}
+            onClick={handleSelectedProject(element)}
           >
             <h5>{element.title}</h5>
             <p>{element.description}</p>

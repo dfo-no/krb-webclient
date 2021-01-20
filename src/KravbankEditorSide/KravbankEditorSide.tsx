@@ -5,12 +5,11 @@ import { useForm } from 'react-hook-form';
 import { useHistory } from 'react-router-dom';
 import { AiFillEdit, AiFillPlusSquare } from 'react-icons/ai';
 
-import { Behov } from '../models/Behov';
+import { Need } from '../models/Need';
 import styles from './KravbankEditorSide.module.scss';
 import { RootState } from '../store/configureStore';
-import { addBehov, editBehov } from '../store/reducers/kravbank-reducer';
+import { addNeed, editNeed } from '../store/reducers/kravbank-reducer';
 import { Col, Row } from 'react-bootstrap';
-import SideBar from '../SideBar/SideBar';
 
 function KravbankEditorSide(): ReactElement {
   const dispatch = useDispatch();
@@ -18,7 +17,7 @@ function KravbankEditorSide(): ReactElement {
     (state: RootState) => state.kravbank
   );
 
-  const { register, handleSubmit } = useForm<Behov>();
+  const { register, handleSubmit } = useForm<Need>();
   const [modalIsOpen, setIsOpen] = React.useState(false);
   const history = useHistory();
 
@@ -31,12 +30,12 @@ function KravbankEditorSide(): ReactElement {
   }
 
   const handleEdit = (id: number) => (event: any) => {
-    dispatch(editBehov(id));
-    history.push(`/edit/behov/${id}`);
+    dispatch(editNeed(id));
+    history.push(`/workbench/${id}/need`);
   };
 
-  const createBehovOutput = (behovList: Behov[]) => {
-    return behovList.map((element: Behov) => {
+  const createNeedOutput = (needList: Need[]) => {
+    return needList.map((element: Need) => {
       return (
         <div className={styles.listitem} key={element.id}>
           <p>{element.tittel}</p>
@@ -49,29 +48,26 @@ function KravbankEditorSide(): ReactElement {
     });
   };
 
-  const onSubmit = (data: Behov) => {
-    const behov: Behov = {
+  const onSubmit = (data: Need) => {
+    const need: Need = {
       id: Math.random(),
       tittel: data.tittel,
       beskrivelse: data.beskrivelse
     };
-    dispatch(addBehov(behov));
+    dispatch(addNeed(need));
     closeModal();
   };
 
   return selectedProject ? (
     <Row>
-      <Col className="col-2 p-0">
-        <SideBar />
-      </Col>
-      <Col className="col-10 p-5">
-        <h1>{projects[selectedProject].title}</h1>
+      <Col className="col-12 p-5">
+        <h1>{projects[selectedProject.id].title}</h1>
         <label className={styles.formlabel}>
           <b>Tittel</b>
           <input
             type="text"
             name="tittel"
-            defaultValue={projects[selectedProject].title}
+            defaultValue={projects[selectedProject.id].title}
           />
         </label>
         <label className={styles.formlabel}>
@@ -79,7 +75,7 @@ function KravbankEditorSide(): ReactElement {
           <input
             type="text"
             name="tittel"
-            defaultValue={projects[selectedProject].description}
+            defaultValue={projects[selectedProject.id].description}
           />
         </label>
         <div>
@@ -87,8 +83,8 @@ function KravbankEditorSide(): ReactElement {
             <h2>Behov</h2>
             <AiFillPlusSquare onClick={openModal} className={styles.icon} />
           </div>
-          {projects[selectedProject].behov &&
-            createBehovOutput(projects[selectedProject].behov)}
+          {projects[selectedProject.id].needs &&
+            createNeedOutput(projects[selectedProject.id].needs)}
         </div>
         <Modal
           isOpen={modalIsOpen}
@@ -124,7 +120,7 @@ function KravbankEditorSide(): ReactElement {
                 })}
               />
             </label>
-            <input type="submit" value="Opprett behov" />
+            <input type="submit" value="New need" />
           </form>
         </Modal>
       </Col>

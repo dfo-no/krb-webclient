@@ -2,8 +2,6 @@ import React, { ReactElement, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import css from './LoginForm.module.scss';
 import { Redirect, RouteComponentProps } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
-import { fetchBanks } from '../store/reducers/kravbank-reducer';
 import { Form, Button, Container, Card } from 'react-bootstrap';
 import { fakeAuth } from '../authentication/AuthenticationHandler';
 
@@ -11,14 +9,6 @@ function LoginForm(props: RouteComponentProps): ReactElement {
   const [redirectToReferrer, setRedirectToReferrer] = useState(false);
 
   let { from } = (props.location.state as any) || { from: { pathname: '/' } };
-
-  const dispatch = useDispatch();
-
-  const initBanks = async () => {
-    dispatch(fetchBanks());
-  };
-  initBanks();
-
   const { register, handleSubmit, errors } = useForm();
 
   const onSubmit = (post: { username: string; password: string }) => {

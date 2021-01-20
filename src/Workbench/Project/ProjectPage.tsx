@@ -18,7 +18,7 @@ export default function ProjectPage(): ReactElement {
     (state: RootState) => state.kravbank
   );
   let projectindex = projects.findIndex(
-    (project) => project.id === selectedProject
+    (project) => project.id === selectedProject?.id
   );
   const project = projects[projectindex];
   const publications = project.publications;
@@ -46,7 +46,7 @@ export default function ProjectPage(): ReactElement {
       id: project.id,
       title: title,
       description: description,
-      behov: project.behov,
+      needs: project.needs,
       krav: project.krav,
       codelist: project.codelist,
       version: project.version,
