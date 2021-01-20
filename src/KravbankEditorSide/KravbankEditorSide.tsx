@@ -10,7 +10,6 @@ import styles from './KravbankEditorSide.module.scss';
 import { RootState } from '../store/configureStore';
 import { addNeed, editNeed } from '../store/reducers/kravbank-reducer';
 import { Col, Row } from 'react-bootstrap';
-import SideBar from '../Workbench/SideBar/SideBar';
 
 function KravbankEditorSide(): ReactElement {
   const dispatch = useDispatch();
@@ -61,10 +60,7 @@ function KravbankEditorSide(): ReactElement {
 
   return selectedProject ? (
     <Row>
-      <Col className="col-2 p-0">
-        <SideBar />
-      </Col>
-      <Col className="col-10 p-5">
+      <Col className="col-12 p-5">
         <h1>{projects[selectedProject.id].title}</h1>
         <label className={styles.formlabel}>
           <b>Tittel</b>
