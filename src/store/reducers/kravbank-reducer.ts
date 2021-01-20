@@ -8,6 +8,8 @@ import { Product } from '../../models/Product';
 import { Publication } from '../../models/Publication';
 
 interface KravbankState {
+  //projects: banks being edited, not published.
+  //banks: Finished and published versions of banks
   projects: Bank[];
   selectedProject: number;
   selectedBehov: number;
@@ -56,8 +58,9 @@ const kravbankSlice = createSlice({
         (project) => project.id === state.selectedProject
       );
       let project = state.projects[projectindex];
-      project.version = payload.version;
       state.banks.push(project);
+      //increase version-number before continued editing
+      project.version = payload.version + 1;
 
       if (!project.publications) project.publications = [];
 

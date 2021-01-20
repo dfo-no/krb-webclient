@@ -33,7 +33,8 @@ export default function WorkbenchPage(): ReactElement {
       description: description,
       behov: [],
       krav: [],
-      codelist: []
+      codelist: [],
+      version: 1
     };
     dispatch(addProject(project));
     setShowEdior(false);

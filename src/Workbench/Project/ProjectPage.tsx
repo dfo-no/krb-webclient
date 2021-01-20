@@ -108,18 +108,11 @@ export default function ProjectPage(): ReactElement {
   const publicationList = (publications?: Publication[]) => {
     if (publications) {
       const jsx = publications.map((element: Publication) => {
-        const date = dayjs(element.date);
+        // TODO- Check locale for locale dateformat.
+        const date = dayjs(element.date).format('DD/MM/YYYY');
         return (
           <ListGroup.Item key={element.id}>
-            <p>
-              {dayjs(date).get('date') +
-                '.' +
-                (dayjs(date).get('month') + 1) +
-                '.' +
-                dayjs(date).get('year') +
-                '     ' +
-                element.comment}
-            </p>
+            <p>{date + '     ' + element.comment}</p>
           </ListGroup.Item>
         );
       });

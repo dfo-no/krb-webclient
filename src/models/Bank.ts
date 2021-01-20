@@ -10,6 +10,6 @@ export interface Bank {
   behov: Behov[];
   krav?: Krav[];
   codelist?: Codelist[];
-  version?: number;
+  version: number;
   publications?: Publication[];
 }
