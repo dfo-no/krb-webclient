@@ -1,6 +1,7 @@
 import { Behov } from './Behov';
 import { Codelist } from './Codelist';
 import { Krav } from './Krav';
+import { Publication } from './Publication';
 
 export interface Bank {
   id: number;
@@ -9,5 +10,6 @@ export interface Bank {
   behov: Behov[];
   krav?: Krav[];
   codelist?: Codelist[];
-  ordering?: number;
+  version?: number;
+  publications?: Publication[];
 }
