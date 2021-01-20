@@ -46,7 +46,8 @@ export default function WorkbenchPage(): ReactElement {
       description: description,
       needs: [],
       krav: [],
-      codelist: []
+      codelist: [],
+      version: 1
     };
     dispatch(addProject(project));
     setShowEdior(false);

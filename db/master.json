@@ -4,6 +4,7 @@
       "id": 10,
       "title": "Kurs og konferanse",
       "description": "Generelle behov og krav",
+      "version": 1,
       "ordering": 1,
       "needs": [
         {
@@ -51,6 +52,7 @@
       "id": 11,
       "title": "Elbil til hjemmetjenesten",
       "description": "...",
+      "version": 1,
       "ordering": 2,
       "needs": []
     },
@@ -58,12 +60,14 @@
       "id": 12,
       "title": "Vedlikehold",
       "description": "...",
+      "version": 1,
       "ordering": 2,
       "needs": []
     },
     {
       "id": 13,
       "title": "Kantineløsning",
+      "version": 1,
       "description": "...",
       "ordering": 2,
       "needs": []

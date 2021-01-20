@@ -5,8 +5,11 @@ import { Need } from '../../models/Need';
 import { Codelist } from '../../models/Codelist';
 import { Code } from '../../models/Code';
 import { Product } from '../../models/Product';
+import { Publication } from '../../models/Publication';
 
 interface KravbankState {
+  //projects: banks being edited, not published.
+  //banks: Finished and published versions of banks
   projects: Bank[];
   selectedProject: Bank | null;
   selectedNeed: number;
@@ -14,6 +17,7 @@ interface KravbankState {
   codelists: Codelist[];
   selectedCodelist: number;
   products: Product[];
+  banks: Bank[];
 }
 
 const initialState: KravbankState = {
@@ -23,7 +27,8 @@ const initialState: KravbankState = {
   selectedKrav: 0,
   codelists: [],
   selectedCodelist: 0,
-  products: []
+  products: [],
+  banks: []
 };
 
 /* export const fetchBanks = createAsyncThunk('fetchBanks', async () => {
@@ -44,7 +49,28 @@ const kravbankSlice = createSlice({
     selectProject(state, { payload }: PayloadAction<Bank>) {
       state.selectedProject = payload;
     },
-    publishProject(state, { payload }: PayloadAction<Bank>) {},
+    editProject(state, { payload }: PayloadAction<Bank>) {
+      const id = state.selectedProject?.id;
+      let projectindex = state.projects.findIndex(
+        (project) => project.id === id
+      );
+      state.projects[projectindex] = payload;
+    },
+
+    publishProject(state, { payload }: PayloadAction<Publication>) {
+      const id = state.selectedProject?.id;
+      let projectindex = state.projects.findIndex(
+        (project) => project.id === id
+      );
+      let project = state.projects[projectindex];
+      state.banks.push(project);
+      //increase version-number before continued editing
+      project.version = payload.version + 1;
+
+      if (!project.publications) project.publications = [];
+
+      project.publications?.push(payload);
+    },
     editNeed(state, { payload }: PayloadAction<number>) {
       state.selectedNeed = payload;
     },
@@ -130,6 +156,8 @@ export const {
   addProject,
   selectProject,
   editNeed,
+  editProject,
+  publishProject,
   editKrav,
   addNeed,
   addSubNeed,

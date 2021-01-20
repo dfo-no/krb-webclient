@@ -1,12 +1,12 @@
 import React, { ReactElement } from 'react';
 import { Col, Container, Row } from 'react-bootstrap';
 import { Route, Switch, useRouteMatch } from 'react-router-dom';
-import ProjectPage from '../Project/ProjectPage';
 import RequirementPage from '../Requirement/RequirementPage';
 import CodeListEditor from './Codelist/CodeListEditor';
 import CodelistPage from './Codelist/CodelistPage';
 import NeedPage from './Need/NeedPage';
 import ProductPage from './Product/ProductPage';
+import ProjectPage from './Project/ProjectPage';
 import SideBar from './SideBar/SideBar';
 import WorkbenchPage from './WorkbenchPage';
 

@@ -1,6 +1,7 @@
 import { Need } from './Need';
 import { Codelist } from './Codelist';
 import { Krav } from './Krav';
+import { Publication } from './Publication';
 
 export interface Bank {
   id: number;
@@ -9,5 +10,6 @@ export interface Bank {
   needs: Need[];
   krav?: Krav[];
   codelist?: Codelist[];
-  ordering?: number;
+  version: number;
+  publications?: Publication[];
 }
