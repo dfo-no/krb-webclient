@@ -11,7 +11,7 @@ import BehovEditorSide from './BehovEditorSide/BehovEditorSide';
 import store from './store/configureStore';
 import CodeListEditor from './Workbench/Codelist/CodeListEditor';
 import ProductPage from './Workbench/Product/ProductPage';
-import ProjectPage from './Project/ProjectPage';
+import ProjectPage from './Workbench/Project/ProjectPage';
 import NeedPage from './Need/NeedPage';
 import RequirementPage from './Requirement/RequirementPage';
 import WorkbenchPage from './Workbench/WorkbenchPage';

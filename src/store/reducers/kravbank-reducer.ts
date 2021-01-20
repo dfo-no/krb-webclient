@@ -5,8 +5,11 @@ import { Behov } from '../../models/Behov';
 import { Codelist } from '../../models/Codelist';
 import { Code } from '../../models/Code';
 import { Product } from '../../models/Product';
+import { Publication } from '../../models/Publication';
 
 interface KravbankState {
+  //projects: banks being edited, not published.
+  //banks: Finished and published versions of banks
   projects: Bank[];
   selectedProject: number;
   selectedBehov: number;
@@ -14,6 +17,7 @@ interface KravbankState {
   codelists: Codelist[];
   selectedCodelist: number;
   products: Product[];
+  banks: Bank[];
 }
 
 const initialState: KravbankState = {
@@ -23,7 +27,8 @@ const initialState: KravbankState = {
   selectedKrav: 0,
   codelists: [],
   selectedCodelist: 0,
-  products: []
+  products: [],
+  banks: []
 };
 
 export const fetchBanks = createAsyncThunk('users/fetchById', async () => {
@@ -41,7 +46,26 @@ const kravbankSlice = createSlice({
     selectProject(state, { payload }: PayloadAction<number>) {
       state.selectedProject = payload;
     },
-    publishProject(state, { payload }: PayloadAction<Bank>) {},
+    editProject(state, { payload }: PayloadAction<Bank>) {
+      let projectindex = state.projects.findIndex(
+        (project) => project.id === state.selectedProject
+      );
+      state.projects[projectindex] = payload;
+    },
+
+    publishProject(state, { payload }: PayloadAction<Publication>) {
+      let projectindex = state.projects.findIndex(
+        (project) => project.id === state.selectedProject
+      );
+      let project = state.projects[projectindex];
+      state.banks.push(project);
+      //increase version-number before continued editing
+      project.version = payload.version + 1;
+
+      if (!project.publications) project.publications = [];
+
+      project.publications?.push(payload);
+    },
     editBehov(state, { payload }: PayloadAction<number>) {
       state.selectedBehov = payload;
     },
@@ -116,6 +140,8 @@ const kravbankSlice = createSlice({
 export const {
   addProject,
   selectProject,
+  editProject,
+  publishProject,
   editBehov,
   editKrav,
   addBehov,
