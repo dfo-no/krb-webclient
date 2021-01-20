@@ -15,7 +15,7 @@ interface RouteParams {
   projectId: string;
 }
 
-const renderRouteLinks = (routes: IRouteLink[], isProjectDisabled: boolean) => {
+const renderRouteLinks = (routes: IRouteLink[], isProjectSelected: boolean) => {
   return routes.map((route, index) => {
     return (
       <Nav.Item key={index} className={`${css.sidebar__item}`}>
@@ -24,7 +24,7 @@ const renderRouteLinks = (routes: IRouteLink[], isProjectDisabled: boolean) => {
           to={route.link}
           role="link"
           activeClassName={`${css.sidebar__item__active}`}
-          disabled={!isProjectDisabled}
+          disabled={!isProjectSelected}
         >
           {route.name}
         </Nav.Link>
@@ -34,7 +34,7 @@ const renderRouteLinks = (routes: IRouteLink[], isProjectDisabled: boolean) => {
 };
 
 function SideBar(): ReactElement {
-  const projectNumber = useSelector(
+  const projectBank = useSelector(
     (state: RootState) => state.kravbank.selectedProject
   );
 
@@ -47,10 +47,12 @@ function SideBar(): ReactElement {
   }*/
 
   const currentUrl = match?.url ? match.url : '/workbench';
-  const isProjectDisabled = projectNumber ? true : false;
+  const isProjectSelected = projectBank ? true : false;
+
+  const displayTitle = projectBank ? projectBank.title : '<None selected>';
 
   const routes = [
-    { link: `${currentUrl}`, name: 'Workbench: (prosjektnavn hvis valgt)' },
+    { link: `${currentUrl}`, name: 'Workbench: ' + displayTitle },
     { link: `${currentUrl}/need`, name: 'Need' },
     { link: `${currentUrl}/requirement`, name: 'Requirement' },
     { link: `${currentUrl}/codelist`, name: 'Codelist' },
@@ -59,7 +61,7 @@ function SideBar(): ReactElement {
 
   return (
     <Nav className={`sidebar col-md-12 flex-column vh-100 ${css.sidebar}`}>
-      {renderRouteLinks(routes, isProjectDisabled)}
+      {renderRouteLinks(routes, isProjectSelected)}
     </Nav>
   );
 }
