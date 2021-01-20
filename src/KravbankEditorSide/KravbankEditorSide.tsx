@@ -65,13 +65,13 @@ function KravbankEditorSide(): ReactElement {
         <SideBar />
       </Col>
       <Col className="col-10 p-5">
-        <h1>{projects[selectedProject].title}</h1>
+        <h1>{projects[selectedProject.id].title}</h1>
         <label className={styles.formlabel}>
           <b>Tittel</b>
           <input
             type="text"
             name="tittel"
-            defaultValue={projects[selectedProject].title}
+            defaultValue={projects[selectedProject.id].title}
           />
         </label>
         <label className={styles.formlabel}>
@@ -79,7 +79,7 @@ function KravbankEditorSide(): ReactElement {
           <input
             type="text"
             name="tittel"
-            defaultValue={projects[selectedProject].description}
+            defaultValue={projects[selectedProject.id].description}
           />
         </label>
         <div>
@@ -87,8 +87,8 @@ function KravbankEditorSide(): ReactElement {
             <h2>Behov</h2>
             <AiFillPlusSquare onClick={openModal} className={styles.icon} />
           </div>
-          {projects[selectedProject].needs &&
-            createNeedOutput(projects[selectedProject].needs)}
+          {projects[selectedProject.id].needs &&
+            createNeedOutput(projects[selectedProject.id].needs)}
         </div>
         <Modal
           isOpen={modalIsOpen}

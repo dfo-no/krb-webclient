@@ -18,6 +18,14 @@ export default function Header(): ReactElement {
       </Navbar.Brand>
       <div className={css.header__spacer}></div>
       <Button
+        variant="danger"
+        onClick={() => {
+          history.push('/workbench');
+        }}
+      >
+        workbench (dev)
+      </Button>
+      <Button
         variant="primary"
         onClick={() => {
           fakeAuth.signout(() => history.push('/'));

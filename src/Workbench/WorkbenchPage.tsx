@@ -52,8 +52,8 @@ export default function WorkbenchPage(): ReactElement {
     setShowEdior(false);
   };
 
-  const handleSelectedProject = (id: number) => () => {
-    dispatch(selectProject(id));
+  const handleSelectedProject = (bank: Bank) => () => {
+    dispatch(selectProject(bank));
   };
 
   const renderProjects = (projectList: Bank[]) => {
@@ -65,7 +65,7 @@ export default function WorkbenchPage(): ReactElement {
         <ListGroup.Item key={element.id}>
           <Link
             to={`/workbench/${element.id}`}
-            onClick={handleSelectedProject(element.id)}
+            onClick={handleSelectedProject(element)}
           >
             <h5>{element.title}</h5>
             <p>{element.description}</p>

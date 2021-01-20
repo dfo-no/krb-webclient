@@ -14,6 +14,7 @@ import {
   addSubNeed,
   editKrav
 } from '../../store/reducers/kravbank-reducer';
+import { Button, ListGroup } from 'react-bootstrap';
 
 function NeedPage(): ReactElement {
   const dispatch = useDispatch();
@@ -25,10 +26,11 @@ function NeedPage(): ReactElement {
   const { register, handleSubmit } = useForm<Need>();
   const history = useHistory();
 
-  if (selectedProject === null) {
+  if (!selectedProject) {
     return <p>No Project selected</p>;
   }
-  const need = projects[selectedProject].needs[selectedNeed];
+  //const need = projects[selectedProject.id].needs[selectedNeed];
+  const needs = selectedProject.needs;
 
   const needModal = (open: boolean) => (event: any) => {
     setNeedIsOpen(open);
@@ -43,21 +45,28 @@ function NeedPage(): ReactElement {
     history.push(`/workbench/requirement/${krav.id}`);
   };
 
-  const createListOutput = (list: any) => {
-    return list.map((element: Need | Krav) => {
+  const renderNeeds = (list: any) => {
+    return list.map((element: Need) => {
       return (
-        <div className={styles.listitem} key={element.id}>
+        <ListGroup.Item key={element.id} className={styles.need}>
+          <div className={styles.need__title}>{element.tittel}</div>
+          <div className={styles.need__spacer}></div>
+          <Button variant="info" className={styles.need__editButton}>
+            <AiFillEdit></AiFillEdit>
+          </Button>
+        </ListGroup.Item>
+        /* <div className={styles.listitem} key={element.id}>
           <p>{element.tittel}</p>
           <AiFillEdit
             className={styles.editicon}
             onClick={handleEditKrav(element as Krav)}
           />
-        </div>
+        </div> */
       );
     });
   };
 
-  const submitBehov = (data: Need) => {
+  /* const submitBehov = (data: Need) => {
     // TODO: ikke gi ID til nye behov.
     const need: Need = {
       id: Math.random(),
@@ -66,9 +75,9 @@ function NeedPage(): ReactElement {
     };
     dispatch(addSubNeed(need));
     needModal(false);
-  };
+  }; */
 
-  const submitKrav = (data: Krav) => {
+  /* const submitKrav = (data: Krav) => {
     const krav: Krav = {
       id: Math.random(),
       tittel: data.tittel,
@@ -78,11 +87,12 @@ function NeedPage(): ReactElement {
     };
     dispatch(addKrav(krav));
     kravModal(false);
-  };
+  }; */
 
-  return need ? (
-    <div>
-      <h1>{need.tittel}</h1>
+  return needs ? (
+    <>
+      <ListGroup className={styles.needs}>{renderNeeds(needs)}</ListGroup>
+      {/* <h1>{need.tittel}</h1>
       <label className={styles.formlabel}>
         <b>Tittel</b>
         <input type="text" name="tittel" defaultValue={need.tittel} />
@@ -100,9 +110,9 @@ function NeedPage(): ReactElement {
             className={styles.icon}
           />
         </div>
-        {need.needs && createListOutput(need.needs)}
-      </div>
-      <Modal
+        {need.needs && renderNeeds(need.needs)}
+      </div> */}
+      {/*       <Modal
         isOpen={needModalIsOpen}
         onRequestClose={needModal(false)}
         className={styles.modal}
@@ -140,8 +150,8 @@ function NeedPage(): ReactElement {
           </label>
           <input type="submit" value="New need" />
         </form>
-      </Modal>
-      <div>
+      </Modal> */}
+      {/* <div>
         <div className={styles.subsection}>
           <h2>Krav</h2>
           <AiFillPlusSquare
@@ -150,9 +160,9 @@ function NeedPage(): ReactElement {
             className={styles.icon}
           />
         </div>
-        {need.krav && createListOutput(need.krav)}
-      </div>
-      <Modal
+        {need.krav && renderNeeds(need.krav)}
+      </div> */}
+      {/* <Modal
         isOpen={kravModalIsOpen}
         onRequestClose={kravModal(false)}
         className={styles.modal}
@@ -196,8 +206,8 @@ function NeedPage(): ReactElement {
           </label>
           <input type="submit" value="Opprett krav" />
         </form>
-      </Modal>
-    </div>
+      </Modal> */}
+    </>
   ) : (
     <div></div>
   );

@@ -24,7 +24,7 @@ function KravEditorSide(): ReactElement {
   if (selectedProject === null) {
     return <p>No project choosen</p>;
   }
-  const need = projects[selectedProject].needs[selectedNeed];
+  const need = projects[selectedProject.id].needs[selectedNeed];
   const krav = need.krav ? need.krav[selectedKrav] : undefined;
 
   setIsKodelisteEksakt(krav?.type === 'kodeliste-eksakt' ? true : false);

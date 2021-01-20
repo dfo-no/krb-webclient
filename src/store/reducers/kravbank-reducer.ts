@@ -1,4 +1,4 @@
-import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { Bank } from '../../models/Bank';
 import { Krav } from '../../models/Krav';
 import { Need } from '../../models/Need';
@@ -8,7 +8,7 @@ import { Product } from '../../models/Product';
 
 interface KravbankState {
   projects: Bank[];
-  selectedProject: number | null;
+  selectedProject: Bank | null;
   selectedNeed: number;
   selectedKrav: number;
   codelists: Codelist[];
@@ -41,7 +41,7 @@ const kravbankSlice = createSlice({
     addProject(state, { payload }: PayloadAction<Bank>) {
       state.projects.push(payload);
     },
-    selectProject(state, { payload }: PayloadAction<number>) {
+    selectProject(state, { payload }: PayloadAction<Bank>) {
       state.selectedProject = payload;
     },
     publishProject(state, { payload }: PayloadAction<Bank>) {},
@@ -52,24 +52,24 @@ const kravbankSlice = createSlice({
       state.selectedKrav = payload.id;
     },
     addNeed(state, { payload }: PayloadAction<Need>) {
-      const id = state.selectedProject;
-      if (id === null) {
+      const id = state.selectedProject?.id;
+      if (id === undefined) {
         return state;
       }
       state.projects[id].needs.push(payload);
     },
     addSubNeed(state, { payload }: PayloadAction<Need>) {
       const needId = state.selectedNeed;
-      const kravbankId = state.selectedProject;
-      if (kravbankId === null) {
+      const kravbankId = state.selectedProject?.id;
+      if (kravbankId === undefined) {
         return state;
       }
       state.projects[kravbankId].needs[needId].needs?.push(payload);
     },
     registerNew(state, { payload }: PayloadAction<Krav>) {
-      const kravbankId = state.selectedProject;
+      const kravbankId = state.selectedProject?.id;
       const needId = state.selectedNeed;
-      if (kravbankId === null) {
+      if (kravbankId === undefined) {
         return state;
       }
       state.projects[kravbankId].needs[needId].krav?.push(payload);
