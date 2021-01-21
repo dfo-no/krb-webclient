@@ -1,6 +1,6 @@
 import { Need } from '../models/Need';
 import { Codelist } from '../models/Codelist';
-import { Krav } from '../models/Krav';
+import { Requirement } from '../models/Requirement';
 import { Bank } from '../models/Bank';
 
 // TODO: find a design pattern for these strings, and link to that in the docs.
@@ -58,10 +58,10 @@ export class KRB {
       payload: need
     };
   }
-  static addKrav(krav: Krav): Action {
+  static addKrav(requirement: Requirement): Action {
     return {
       type: ActionType.KRAV_NEW,
-      payload: krav
+      payload: requirement
     };
   }
   static editKrav(kravid: number): Action {

@@ -6,14 +6,9 @@ import Modal from 'react-modal';
 import { AiFillPlusSquare, AiFillEdit } from 'react-icons/ai';
 
 import { Need } from '../../models/Need';
-import { Krav } from '../../models/Krav';
 import styles from './NeedPage.module.scss';
 import { RootState } from '../../store/configureStore';
-import {
-  addKrav,
-  addSubNeed,
-  editKrav
-} from '../../store/reducers/kravbank-reducer';
+import { addSubNeed } from '../../store/reducers/kravbank-reducer';
 import { Button, ListGroup } from 'react-bootstrap';
 
 function NeedPage(): ReactElement {
@@ -38,11 +33,6 @@ function NeedPage(): ReactElement {
 
   const kravModal = (open: boolean) => (event: any) => {
     setKravIsOpen(open);
-  };
-
-  const handleEditKrav = (krav: Krav) => (event: any) => {
-    dispatch(editKrav(krav));
-    history.push(`/workbench/requirement/${krav.id}`);
   };
 
   const renderNeeds = (list: any) => {

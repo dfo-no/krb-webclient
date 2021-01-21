@@ -1,11 +1,11 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { Bank } from '../../models/Bank';
-import { Krav } from '../../models/Krav';
 import { Need } from '../../models/Need';
 import { Codelist } from '../../models/Codelist';
 import { Code } from '../../models/Code';
 import { Product } from '../../models/Product';
 import { Publication } from '../../models/Publication';
+import { Requirement } from '../../models/Requirement';
 
 interface KravbankState {
   //projects: banks being edited, not published.
@@ -13,7 +13,6 @@ interface KravbankState {
   projects: Bank[];
   selectedProject: Bank | null;
   selectedNeed: number;
-  selectedKrav: number;
   codelists: Codelist[];
   selectedCodelist: number;
   products: Product[];
@@ -24,7 +23,6 @@ const initialState: KravbankState = {
   projects: [],
   selectedProject: null,
   selectedNeed: 0,
-  selectedKrav: 0,
   codelists: [],
   selectedCodelist: 0,
   products: [],
@@ -74,8 +72,35 @@ const kravbankSlice = createSlice({
     editNeed(state, { payload }: PayloadAction<number>) {
       state.selectedNeed = payload;
     },
-    editKrav(state, { payload }: PayloadAction<Krav>) {
-      state.selectedKrav = payload.id;
+    editRequirementToSelected(
+      state,
+      {
+        payload
+      }: PayloadAction<{
+        requirement: Requirement;
+        needIndex: number;
+        requirementIndex: number;
+      }>
+    ) {
+      if (
+        state.selectedProject?.needs[payload.needIndex]?.requirements[
+          payload.requirementIndex
+        ]
+      ) {
+        state.selectedProject.needs[payload.needIndex].requirements[
+          payload.requirementIndex
+        ] = payload.requirement;
+      }
+    },
+    addRequirementToSelectedNeed(
+      state,
+      {
+        payload
+      }: PayloadAction<{ requirement: Requirement; needIndex: number }>
+    ) {
+      state.selectedProject?.needs[payload.needIndex].requirements.push(
+        payload.requirement
+      );
     },
     addNeed(state, { payload }: PayloadAction<Need>) {
       const id = state.selectedProject?.id;
@@ -92,14 +117,7 @@ const kravbankSlice = createSlice({
       }
       state.projects[kravbankId].needs[needId].needs?.push(payload);
     },
-    registerNew(state, { payload }: PayloadAction<Krav>) {
-      const kravbankId = state.selectedProject?.id;
-      const needId = state.selectedNeed;
-      if (kravbankId === undefined) {
-        return state;
-      }
-      state.projects[kravbankId].needs[needId].krav?.push(payload);
-    },
+
     addCodelist(state, { payload }: PayloadAction<Codelist>) {
       state.codelists.push(payload);
     },
@@ -138,7 +156,6 @@ const kravbankSlice = createSlice({
       );
       state.products[productindex] = payload;
     },
-    addKrav(state, { payload }: PayloadAction<Krav>) {},
     banksReceived(state, { payload }: PayloadAction<Bank[]>) {
       state.projects = payload;
       console.log(state.projects);
@@ -158,16 +175,15 @@ export const {
   editNeed,
   editProject,
   publishProject,
-  editKrav,
+  editRequirementToSelected,
   addNeed,
   addSubNeed,
-  registerNew,
+  addRequirementToSelectedNeed,
   addCodelist,
   addCode,
   editCodelist,
   selectCodelist,
   editCode,
-  addKrav,
   editProduct,
   addProduct,
   banksReceived

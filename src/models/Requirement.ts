@@ -1,9 +1,8 @@
-export interface Krav {
+export interface Requirement {
   id: number;
-  tittel: string;
-  beskrivelse?: string;
+  title: string;
+  description?: string;
   needId?: number;
-  version?: number;
   type?: string;
   kodeliste_id?: number;
   file?: FileList;

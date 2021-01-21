@@ -1,4 +1,4 @@
-import { Krav } from './Krav';
+import { Requirement } from './Requirement';
 
 export interface Need {
   id: number;
@@ -6,5 +6,5 @@ export interface Need {
   beskrivelse?: string;
   needs?: Need[];
   order?: number;
-  krav?: Krav[];
+  requirements: Requirement[];
 }

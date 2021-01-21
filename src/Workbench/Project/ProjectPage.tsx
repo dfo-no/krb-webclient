@@ -47,7 +47,7 @@ export default function ProjectPage(): ReactElement {
       title: title,
       description: description,
       needs: project.needs,
-      krav: project.krav,
+      requirements: project.requirements,
       codelist: project.codelist,
       version: project.version,
       publications: project.publications

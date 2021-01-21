@@ -2,14 +2,11 @@ import { ReactElement, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { Krav } from '../models/Krav';
 import styles from './KravEditorSide.module.scss';
 import koder from '../data/kodelister.json';
 import { useHistory } from 'react-router-dom';
-import { RootState } from '../store/configureStore';
-import { addKrav } from '../store/reducers/kravbank-reducer';
 
-function KravEditorSide(): ReactElement {
+/*function KravEditorSide(): ReactElement {
   const [isKodelisteEksakt, setIsKodelisteEksakt] = useState(false);
 
   const dispatch = useDispatch();
@@ -126,4 +123,4 @@ function KravEditorSide(): ReactElement {
   );
 }
 
-export default KravEditorSide;
+export default KravEditorSide;*/
