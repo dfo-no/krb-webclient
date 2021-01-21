@@ -14,8 +14,8 @@ import {
 import { RootState } from '../../store/configureStore';
 import { useDispatch, useSelector } from 'react-redux';
 import {
-  addRequirement,
-  editRequirement
+  addRequirementToSelectedNeed,
+  editRequirementToSelected
 } from '../../store/reducers/kravbank-reducer';
 
 import styles from './RequirementPage.module.scss';
@@ -54,7 +54,7 @@ export default function RequirementPage(): ReactElement {
       title: title,
       description: description,
       needId: selectedNeed?.id,
-      type: 'ja/nei'
+      type: 'yes/no'
     };
 
     const needIndex = selectedProject.needs.findIndex(
@@ -62,7 +62,10 @@ export default function RequirementPage(): ReactElement {
     );
     setShowEditor(false);
     dispatch(
-      addRequirement({ requirement: requirement, needIndex: needIndex })
+      addRequirementToSelectedNeed({
+        requirement: requirement,
+        needIndex: needIndex
+      })
     );
   };
   const editRequirementElement = (id: number) => () => {
@@ -71,7 +74,7 @@ export default function RequirementPage(): ReactElement {
       title: title,
       description: description,
       needId: selectedNeed?.id,
-      type: 'ja/nei'
+      type: 'yes/no'
     };
     const needIndex = selectedProject.needs.findIndex(
       (need) => need.id === selectedNeed?.id
@@ -80,7 +83,7 @@ export default function RequirementPage(): ReactElement {
       (req) => req.id === id
     );
     dispatch(
-      editRequirement({
+      editRequirementToSelected({
         requirement: requirement,
         needIndex: needIndex,
         requirementIndex: reqIndex
@@ -91,7 +94,9 @@ export default function RequirementPage(): ReactElement {
   const requirements = (need: Need | undefined) => {
     if (need === undefined) {
       return (
-        <p>Du har ikke valgt noe behov, velg et for å komme i gang med krav</p>
+        <p>
+          You have not selected a need, select one to work with requirements
+        </p>
       );
     } else {
       if (need.requirements) {
@@ -145,7 +150,7 @@ export default function RequirementPage(): ReactElement {
           </>
         );
       } else {
-        return <p>Dette behovet har ingen krav, legg til noen</p>;
+        return <p>This need has no requirements, add one</p>;
       }
     }
   };

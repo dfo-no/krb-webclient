@@ -72,7 +72,7 @@ const kravbankSlice = createSlice({
     editNeed(state, { payload }: PayloadAction<number>) {
       state.selectedNeed = payload;
     },
-    editRequirement(
+    editRequirementToSelected(
       state,
       {
         payload
@@ -92,7 +92,7 @@ const kravbankSlice = createSlice({
         ] = payload.requirement;
       }
     },
-    addRequirement(
+    addRequirementToSelectedNeed(
       state,
       {
         payload
@@ -175,10 +175,10 @@ export const {
   editNeed,
   editProject,
   publishProject,
-  editRequirement,
+  editRequirementToSelected,
   addNeed,
   addSubNeed,
-  addRequirement,
+  addRequirementToSelectedNeed,
   addCodelist,
   addCode,
   editCodelist,
