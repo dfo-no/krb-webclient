@@ -6,5 +6,5 @@ export interface Need {
   beskrivelse?: string;
   needs?: Need[];
   order?: number;
-  requirements?: Requirement[];
+  requirements: Requirement[];
 }

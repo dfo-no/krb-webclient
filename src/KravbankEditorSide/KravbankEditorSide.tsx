@@ -52,7 +52,8 @@ function KravbankEditorSide(): ReactElement {
     const need: Need = {
       id: Math.random(),
       tittel: data.tittel,
-      beskrivelse: data.beskrivelse
+      beskrivelse: data.beskrivelse,
+      requirements: []
     };
     dispatch(addNeed(need));
     closeModal();

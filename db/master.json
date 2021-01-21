@@ -20,28 +20,30 @@
               "id": 84848485,
               "tittel": "Auditorium"
             }
-          ]
+          ],
+          "requirements": []
         },
         {
           "id": 1235,
-          "tittel": "Bespisning"
+          "tittel": "Bespisning",
+          "requirements": []
         },
         {
           "id": 1236,
           "tittel": "Transport",
-          "krav": [
+          "requirements": [
             {
               "id": 7800,
-              "tittel": "Elbil",
-              "behovId": 1236,
-              "beskrivelse": "Elbilen må kjøre minst 10km",
+              "title": "Elbil",
+              "needId": 1236,
+              "description": "Elbilen må kjøre minst 10km",
               "type": "kodeliste-eksakt"
             },
             {
               "id": 7801,
-              "tittel": "Alle med lappen skal kunne kjøre bilen",
-              "behovId": 1236,
-              "beskrivelse": "Bilen må være automat",
+              "title": "Alle med lappen skal kunne kjøre bilen",
+              "needId": 1236,
+              "description": "Bilen må være automat",
               "type": "kodeliste"
             }
           ]

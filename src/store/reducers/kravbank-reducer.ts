@@ -72,7 +72,36 @@ const kravbankSlice = createSlice({
     editNeed(state, { payload }: PayloadAction<number>) {
       state.selectedNeed = payload;
     },
-    editRequirement(state, { payload }: PayloadAction<Requirement>) {},
+    editRequirement(
+      state,
+      {
+        payload
+      }: PayloadAction<{
+        requirement: Requirement;
+        needIndex: number;
+        requirementIndex: number;
+      }>
+    ) {
+      if (
+        state.selectedProject?.needs[payload.needIndex]?.requirements[
+          payload.requirementIndex
+        ]
+      ) {
+        state.selectedProject.needs[payload.needIndex].requirements[
+          payload.requirementIndex
+        ] = payload.requirement;
+      }
+    },
+    addRequirement(
+      state,
+      {
+        payload
+      }: PayloadAction<{ requirement: Requirement; needIndex: number }>
+    ) {
+      state.selectedProject?.needs[payload.needIndex].requirements.push(
+        payload.requirement
+      );
+    },
     addNeed(state, { payload }: PayloadAction<Need>) {
       const id = state.selectedProject?.id;
       if (id === undefined) {
@@ -88,14 +117,7 @@ const kravbankSlice = createSlice({
       }
       state.projects[kravbankId].needs[needId].needs?.push(payload);
     },
-    registerNew(state, { payload }: PayloadAction<Requirement>) {
-      const kravbankId = state.selectedProject?.id;
-      const needId = state.selectedNeed;
-      if (kravbankId === undefined) {
-        return state;
-      }
-      state.projects[kravbankId].needs[needId].requirements?.push(payload);
-    },
+
     addCodelist(state, { payload }: PayloadAction<Codelist>) {
       state.codelists.push(payload);
     },
@@ -156,7 +178,7 @@ export const {
   editRequirement,
   addNeed,
   addSubNeed,
-  registerNew,
+  addRequirement,
   addCodelist,
   addCode,
   editCodelist,
