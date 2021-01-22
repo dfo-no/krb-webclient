@@ -1,6 +1,13 @@
 import React, { ReactElement, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Button, FormControl, InputGroup, ListGroup } from 'react-bootstrap';
+import {
+  Accordion,
+  Button,
+  Card,
+  FormControl,
+  InputGroup,
+  ListGroup
+} from 'react-bootstrap';
 
 import styles from './CodeListEditor.module.scss';
 import { RootState } from '../../store/configureStore';
@@ -26,11 +33,6 @@ export default function CodeListEditor(): ReactElement {
   const [editmode, setEditMode] = useState(false);
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
-  const [selectedItem, setSelectedItem] = useState(0);
-
-  const handleCodeSelected = (id: number) => () => {
-    setSelectedItem(id);
-  };
 
   const handleShowEditor = () => {
     setShowEdior(true);
@@ -68,7 +70,6 @@ export default function CodeListEditor(): ReactElement {
     };
     let newCodeList: Code[] = [...codes];
     newCodeList[index] = code;
-    setSelectedItem(0);
     setCodes(newCodeList);
     dispatch(editCode(code));
   };
@@ -90,27 +91,29 @@ export default function CodeListEditor(): ReactElement {
         /*TODO: finne ut hvor sannsynlig det er at bruker skriver
          mange steder på samme tid, og derfor om handleTitleChange, 
          og descriptionchange må skrives om de tre separate funksjoner */
-        <div className={styles.headersection}>
-          <label htmlFor="title">Title</label>
-          <InputGroup className="mb-3 30vw">
-            <FormControl
-              name="title"
-              onChange={handleTitleChange}
-              defaultValue={codelist.title}
-            />
-          </InputGroup>
-          <label htmlFor="description">Description</label>
-          <InputGroup>
-            <FormControl
-              name="description"
-              onChange={handleDescriptionChange}
-              defaultValue={codelist.description}
-            />
-          </InputGroup>
-          <Button className={styles.newbutton} onClick={editCodeList}>
-            Save
-          </Button>
-        </div>
+        <Card>
+          <Card.Body>
+            <label htmlFor="title">Title</label>
+            <InputGroup className="mb-3 30vw">
+              <FormControl
+                name="title"
+                onChange={handleTitleChange}
+                defaultValue={codelist.title}
+              />
+            </InputGroup>
+            <label htmlFor="description">Description</label>
+            <InputGroup>
+              <FormControl
+                name="description"
+                onChange={handleDescriptionChange}
+                defaultValue={codelist.description}
+              />
+            </InputGroup>
+            <Button className={styles.newbutton} onClick={editCodeList}>
+              Save
+            </Button>
+          </Card.Body>
+        </Card>
       );
     } else {
       return (
@@ -125,56 +128,54 @@ export default function CodeListEditor(): ReactElement {
     }
   }
 
-  const renderKodeOutput = (codelist: Code[], selectedItem: number) => {
-    let codeindex = codelist.findIndex((kode) => kode.id === selectedItem);
-    const jsx = codelist.map((element: Code) => {
-      if (element.id === selectedItem) {
-        return (
-          <ListGroup.Item key={element.id}>
-            <label htmlFor="title">Title</label>
-            <InputGroup className="mb-3 30vw">
-              <FormControl
-                name="title"
-                defaultValue={codelist[codeindex].title}
-                onChange={handleTitleChange}
-              />
-            </InputGroup>
-            <label htmlFor="description">Description</label>
-            <InputGroup>
-              <FormControl
-                name="beskrivelse"
-                defaultValue={codelist[codeindex].description}
-                onChange={handleDescriptionChange}
-              />
-            </InputGroup>
-            <Button
-              className={styles.newbutton}
-              onClick={editCodeElement(element.id, codeindex)}
-            >
-              Save
-            </Button>
-          </ListGroup.Item>
-        );
-      } else {
-        return (
-          <ListGroup.Item
-            key={element.id}
-            onClick={handleCodeSelected(element.id)}
-          >
-            <h5>{element.title}</h5>
+  const renderKodeOutput = (codelist: Code[]) => {
+    const jsx = codelist.map((element: Code, index) => {
+      return (
+        <Card>
+          <Accordion.Toggle as={Card.Header} eventKey={index.toString()}>
+            <b>{element.title}</b>
+            <br></br>
             <p>{element.description}</p>
-          </ListGroup.Item>
-        );
-      }
+          </Accordion.Toggle>
+          <Accordion.Collapse eventKey={index.toString()}>
+            <Card.Body>
+              <>
+                <label htmlFor="title">Title</label>
+                <InputGroup className="mb-3 30vw">
+                  <FormControl
+                    name="title"
+                    defaultValue={element.title}
+                    onChange={handleTitleChange}
+                  />
+                </InputGroup>
+                <label htmlFor="title">Requirement text</label>
+                <InputGroup className="mb-3 30vw">
+                  <FormControl
+                    name="description"
+                    defaultValue={element.description}
+                    onChange={handleDescriptionChange}
+                  />
+                </InputGroup>
+                <Button
+                  className={styles.newbutton}
+                  onClick={editCodeElement(element.id, index)}
+                >
+                  Save
+                </Button>
+              </>
+            </Card.Body>
+          </Accordion.Collapse>
+        </Card>
+      );
     });
-    return <ListGroup className={styles.codeoutput}>{jsx}</ListGroup>;
+    return <Accordion className={styles.codeoutput}>{jsx}</Accordion>;
   };
 
   function renderCodeEditor(show: boolean) {
     if (show) {
       return (
-        <div className={styles.formdiv}>
-          <ListGroup.Item>
+        <Card>
+          <Card.Body>
             <label htmlFor="title">Title</label>
             <InputGroup className="mb-3 30vw">
               <FormControl
@@ -196,8 +197,8 @@ export default function CodeListEditor(): ReactElement {
             >
               Save
             </Button>
-          </ListGroup.Item>
-        </div>
+          </Card.Body>
+        </Card>
       );
     } else {
       return <></>;
@@ -211,7 +212,7 @@ export default function CodeListEditor(): ReactElement {
         <h4>Codes</h4>
         <Button onClick={handleShowEditor}>New Code</Button>
         {renderCodeEditor(showEditor)}
-        {renderKodeOutput(codes, selectedItem)}
+        {renderKodeOutput(codes)}
       </div>
     </>
   ) : (
