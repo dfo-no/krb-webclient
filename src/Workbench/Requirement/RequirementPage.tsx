@@ -25,6 +25,7 @@ export default function RequirementPage(): ReactElement {
   const dispatch = useDispatch();
   const { selectedProject } = useSelector((state: RootState) => state.kravbank);
   const [selectedNeed, setSelectedNeed] = useState<Need | undefined>(undefined);
+  const [requirementList, setRequirementsLIst] = useState<Requirement[]>([]);
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [showEditor, setShowEditor] = useState(false);
@@ -56,7 +57,9 @@ export default function RequirementPage(): ReactElement {
       needId: selectedNeed?.id,
       type: 'yes/no'
     };
-
+    let reqList = [...requirementList];
+    reqList.push(requirement);
+    setRequirementsLIst(reqList);
     const needIndex = selectedProject.needs.findIndex(
       (need) => need.id === selectedNeed?.id
     );
@@ -76,6 +79,9 @@ export default function RequirementPage(): ReactElement {
       needId: selectedNeed?.id,
       type: 'yes/no'
     };
+    let reqList = [...requirementList];
+    reqList.push(requirement);
+    setRequirementsLIst(reqList);
     const needIndex = selectedProject.needs.findIndex(
       (need) => need.id === selectedNeed?.id
     );
@@ -91,16 +97,21 @@ export default function RequirementPage(): ReactElement {
     );
   };
 
-  const requirements = (need: Need | undefined) => {
-    if (need === undefined) {
+  const handleSelectedNeed = (need: Need) => {
+    setSelectedNeed(need);
+    setRequirementsLIst(need.requirements);
+  };
+
+  const requirements = (requirements: Requirement[]) => {
+    if (selectedNeed === undefined) {
       return (
         <p>
           You have not selected a need, select one to work with requirements
         </p>
       );
     } else {
-      if (need.requirements) {
-        const jsx = need.requirements.map((element: Requirement, index) => {
+      if (requirements.length > 0) {
+        const jsx = requirements.map((element: Requirement, index) => {
           return (
             <Card>
               <Card.Header>
@@ -213,9 +224,7 @@ export default function RequirementPage(): ReactElement {
             as={NavLink}
             role="link"
             activeClassName={`${styles.sidebar__item__active}`}
-            onClick={() => {
-              setSelectedNeed(element);
-            }}
+            onClick={() => handleSelectedNeed(element)}
           >
             {element.tittel}
           </Nav.Link>
@@ -234,7 +243,7 @@ export default function RequirementPage(): ReactElement {
         </Col>
         <Col>
           {header(selectedNeed)}
-          {requirements(selectedNeed)}
+          {requirements(requirementList)}
         </Col>
       </Row>
     </>
