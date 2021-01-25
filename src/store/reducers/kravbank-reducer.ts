@@ -61,7 +61,10 @@ const kravbankSlice = createSlice({
         (project) => project.id === id
       );
       let project = state.projects[projectindex];
-      state.banks.push(project);
+      let publishedProject = state.projects[projectindex];
+      publishedProject.publishedDate = payload.date;
+
+      state.banks.push(publishedProject);
       //increase version-number before continued editing
       project.version = payload.version + 1;
 

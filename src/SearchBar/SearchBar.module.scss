@@ -1,15 +1,7 @@
 @import './../dfo-theme.scss';
 
-.BarStyling {
-  width: 350px;
-  background: $dfo-input-background;
-}
-
-.katalogitem {
-  display: flex;
-  justify-content: space-between;
-}
-
-.katalogitem p {
-  margin: 0;
+.searchResults {
+  border: solid 1px lightgrey;
+  border-top: none;
+  border-radius: 0 0 10px 10px;
 }

@@ -1,5 +1,5 @@
 import React, { ReactElement, useState } from 'react';
-import { ListGroup } from 'react-bootstrap';
+import { ListGroup, FormControl } from 'react-bootstrap';
 import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 
@@ -13,15 +13,19 @@ interface SearchBarProps {
 
 export default function SearchBar(props: SearchBarProps): ReactElement {
   const [input, setInput] = useState('');
-  const [searchList, setSearchList] = useState(props.list);
+  const [searchList, setSearchList] = useState<Bank[]>([]);
   const dispatch = useDispatch();
 
   const updateSearchText = async (input: any) => {
-    const filtered = props.list.filter((element) => {
-      return element.title.toLowerCase().includes(input.toLowerCase());
-    });
+    if (input === '' || input === ' ') {
+      setSearchList([]);
+    } else {
+      const filtered = props.list.filter((element) => {
+        return element.title.toLowerCase().includes(input.toLowerCase());
+      });
+      setSearchList(filtered.slice(0, 5));
+    }
     setInput(input);
-    setSearchList(filtered);
   };
 
   const handleEdit = (bank: Bank) => () => {
@@ -29,7 +33,7 @@ export default function SearchBar(props: SearchBarProps): ReactElement {
   };
 
   const displaylist = (list: Bank[]) => {
-    const jsx = list.map((bank: Bank) => {
+    const bankList = list.map((bank: Bank) => {
       return (
         <ListGroup.Item key={bank.id} className={styles.katalogitem}>
           <Link to={`/workbench/${bank.id}`} onClick={handleEdit(bank)}>
@@ -38,13 +42,16 @@ export default function SearchBar(props: SearchBarProps): ReactElement {
         </ListGroup.Item>
       );
     });
-    return <ListGroup>{jsx}</ListGroup>;
+    return (
+      <ListGroup className={styles.searchResults} variant="flush">
+        {bankList}
+      </ListGroup>
+    );
   };
 
   return (
     <>
-      <input
-        className={styles.BarStyling}
+      <FormControl
         value={input}
         placeholder={'search projects'}
         onChange={(e) => updateSearchText(e.target.value)}
