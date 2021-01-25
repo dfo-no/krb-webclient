@@ -2,7 +2,7 @@
   display: flex;
   flex-direction: column;
   margin-top: 2rem;
-  width: 40vw;
+  width: 50vw;
 
   &__addButton {
     width: 7rem;
@@ -11,7 +11,6 @@
 }
 
 .productList {
-  width: 40vw;
   margin-top: 4rem;
 
   &__saveButton {

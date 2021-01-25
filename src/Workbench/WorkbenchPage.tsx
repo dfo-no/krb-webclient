@@ -61,7 +61,7 @@ export default function WorkbenchPage(): ReactElement {
     projectList
       .slice()
       .sort((a, b) => (a.title.toLowerCase() > b.title.toLowerCase() ? 1 : -1));
-    const jsx = projectList.map((element: Bank) => {
+    const projects = projectList.map((element: Bank) => {
       return (
         <ListGroup.Item key={element.id}>
           <Link
@@ -74,7 +74,7 @@ export default function WorkbenchPage(): ReactElement {
         </ListGroup.Item>
       );
     });
-    return <ListGroup className={styles.projectList}>{jsx}</ListGroup>;
+    return <ListGroup className={styles.projectList}>{projects}</ListGroup>;
   };
   function projectEditor(show: boolean) {
     if (show) {

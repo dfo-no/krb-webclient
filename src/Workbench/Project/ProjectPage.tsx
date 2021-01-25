@@ -107,7 +107,7 @@ export default function ProjectPage(): ReactElement {
   }
   const publicationList = (publications?: Publication[]) => {
     if (publications) {
-      const jsx = publications.map((element: Publication) => {
+      const publication = publications.map((element: Publication) => {
         // TODO- Check locale for locale dateformat.
         const date = dayjs(element.date).format('DD/MM/YYYY');
         return (
@@ -116,7 +116,9 @@ export default function ProjectPage(): ReactElement {
           </ListGroup.Item>
         );
       });
-      return <ListGroup className={styles.publicationList}>{jsx}</ListGroup>;
+      return (
+        <ListGroup className={styles.publicationList}>{publication}</ListGroup>
+      );
     }
   };
 

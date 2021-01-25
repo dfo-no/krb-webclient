@@ -1,5 +1,12 @@
 import React, { ReactElement, useState } from 'react';
-import { Button, FormControl, InputGroup, ListGroup } from 'react-bootstrap';
+import {
+  Button,
+  Card,
+  FormControl,
+  InputGroup,
+  ListGroup,
+  Accordion
+} from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { Product } from '../../models/Product';
@@ -13,11 +20,6 @@ export default function ProductPage(): ReactElement {
   const [showEditor, setShowEdior] = useState(false);
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
-  const [selectedItem, setSelectedItem] = useState(0);
-
-  const handleCodeSelected = (id: number) => () => {
-    setSelectedItem(id);
-  };
 
   const handleTitleChange = (event: any) => {
     setTitle(event.target.value);
@@ -36,7 +38,6 @@ export default function ProductPage(): ReactElement {
       description: description,
       id: id
     };
-    setSelectedItem(0);
     dispatch(editProduct(product));
   };
 
@@ -83,58 +84,52 @@ export default function ProductPage(): ReactElement {
     }
   }
 
-  const renderProducts = (productList: Product[], selectedItem: number) => {
-    let productindex = productList.findIndex(
-      (product) => product.id === selectedItem
-    );
-    const jsx = productList.map((element: Product) => {
-      if (element.id === selectedItem) {
-        return (
-          <ListGroup.Item key={element.id}>
-            <label htmlFor="title">Title</label>
-            <InputGroup className="mb-3 30vw">
-              <FormControl
-                name="title"
-                defaultValue={productList[productindex].title}
-                onChange={handleTitleChange}
-              />
-            </InputGroup>
-            <label htmlFor="description">Description</label>
-            <InputGroup>
-              <FormControl
-                name="beskrivelse"
-                defaultValue={productList[productindex].description}
-                onChange={handleDescriptionChange}
-              />
-            </InputGroup>
-            <Button
-              onClick={editProductElement(element.id)}
-              className={`primary ${styles.productList__saveButton}`}
-            >
-              Save
-            </Button>
-          </ListGroup.Item>
-        );
-      } else {
-        return (
-          <ListGroup.Item
-            key={element.id}
-            onClick={handleCodeSelected(element.id)}
-          >
-            <h5>{element.title}</h5>
+  const renderProducts = (productList: Product[]) => {
+    const products = productList.map((element: Product, index) => {
+      return (
+        <Card>
+          <Accordion.Toggle as={Card.Header} eventKey={index.toString()}>
+            <h6>{element.title}</h6>
             <p>{element.description}</p>
-          </ListGroup.Item>
-        );
-      }
+          </Accordion.Toggle>
+          <Accordion.Collapse eventKey={index.toString()}>
+            <Card.Body>
+              <label htmlFor="title">Title</label>
+              <InputGroup>
+                <FormControl
+                  name="title"
+                  defaultValue={productList[index].title}
+                  onChange={handleTitleChange}
+                />
+              </InputGroup>
+              <label htmlFor="description">Description</label>
+              <InputGroup>
+                <FormControl
+                  name="beskrivelse"
+                  defaultValue={productList[index].description}
+                  onChange={handleDescriptionChange}
+                />
+              </InputGroup>
+              <Button
+                onClick={editProductElement(element.id)}
+                className={`primary ${styles.productList__saveButton}`}
+              >
+                Save
+              </Button>
+            </Card.Body>
+          </Accordion.Collapse>
+        </Card>
+      );
     });
-    return <ListGroup className={styles.productList}>{jsx}</ListGroup>;
+    return <Accordion className={styles.productList}>{products}</Accordion>;
   };
+
   return (
     <>
       <h1>Products</h1>
       <Button onClick={handleShowEditor}>New Product</Button>
       {productEditor(showEditor)}
-      {renderProducts(products, selectedItem)}
+      {renderProducts(products)}
     </>
   );
 }
