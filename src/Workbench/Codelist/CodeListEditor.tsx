@@ -5,8 +5,7 @@ import {
   Button,
   Card,
   FormControl,
-  InputGroup,
-  ListGroup
+  InputGroup
 } from 'react-bootstrap';
 
 import styles from './CodeListEditor.module.scss';
@@ -109,32 +108,27 @@ export default function CodeListEditor(): ReactElement {
                 defaultValue={codelist.description}
               />
             </InputGroup>
-            <Button className={styles.newbutton} onClick={editCodeList}>
-              Save
-            </Button>
+            <Button onClick={editCodeList}>Save</Button>
           </Card.Body>
         </Card>
       );
     } else {
       return (
-        <div className={styles.headersection}>
+        <div className={styles.codelistSection}>
           <h1>{codelist.title}</h1>
-          <h5>{codelist.description}</h5>{' '}
-          <Button className={styles.newbutton} onClick={handleEditCodelist}>
-            Edit
-          </Button>
+          <h5>{codelist.description}</h5>
+          <Button onClick={handleEditCodelist}>Edit</Button>
         </div>
       );
     }
   }
 
-  const renderKodeOutput = (codelist: Code[]) => {
-    const jsx = codelist.map((element: Code, index) => {
+  const codeList = (codelist: Code[]) => {
+    const codes = codelist.map((element: Code, index) => {
       return (
         <Card>
           <Accordion.Toggle as={Card.Header} eventKey={index.toString()}>
-            <b>{element.title}</b>
-            <br></br>
+            <h6>{element.title}</h6>
             <p>{element.description}</p>
           </Accordion.Toggle>
           <Accordion.Collapse eventKey={index.toString()}>
@@ -168,10 +162,10 @@ export default function CodeListEditor(): ReactElement {
         </Card>
       );
     });
-    return <Accordion className={styles.codeoutput}>{jsx}</Accordion>;
+    return <Accordion className={styles.codeoutput}>{codes}</Accordion>;
   };
 
-  function renderCodeEditor(show: boolean) {
+  function codeEditor(show: boolean) {
     if (show) {
       return (
         <Card>
@@ -211,8 +205,8 @@ export default function CodeListEditor(): ReactElement {
       <div>
         <h4>Codes</h4>
         <Button onClick={handleShowEditor}>New Code</Button>
-        {renderCodeEditor(showEditor)}
-        {renderKodeOutput(codes)}
+        {codeEditor(showEditor)}
+        {codeList(codes)}
       </div>
     </>
   ) : (

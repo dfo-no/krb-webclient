@@ -85,12 +85,11 @@ export default function ProductPage(): ReactElement {
   }
 
   const renderProducts = (productList: Product[]) => {
-    const jsx = productList.map((element: Product, index) => {
+    const products = productList.map((element: Product, index) => {
       return (
         <Card>
           <Accordion.Toggle as={Card.Header} eventKey={index.toString()}>
-            <b>{element.title}</b>
-            <br></br>
+            <h6>{element.title}</h6>
             <p>{element.description}</p>
           </Accordion.Toggle>
           <Accordion.Collapse eventKey={index.toString()}>
@@ -122,7 +121,7 @@ export default function ProductPage(): ReactElement {
         </Card>
       );
     });
-    return <Accordion className={styles.productList}>{jsx}</Accordion>;
+    return <Accordion className={styles.productList}>{products}</Accordion>;
   };
 
   return (

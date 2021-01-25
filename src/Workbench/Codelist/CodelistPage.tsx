@@ -31,10 +31,10 @@ export default function CodelistPage(): ReactElement {
   }
 
   const renderCodelist = (codelist: Codelist[]) => {
-    codelist.sort((a, b) =>
-      a.title.toLowerCase() > b.title.toLowerCase() ? 1 : -1
-    );
-    const jsx = codelist.map((element: Codelist) => {
+    codelist
+      .slice()
+      .sort((a, b) => (a.title.toLowerCase() > b.title.toLowerCase() ? 1 : -1));
+    const codes = codelist.map((element: Codelist) => {
       return (
         <ListGroup.Item key={element.id}>
           <Link
@@ -47,7 +47,7 @@ export default function CodelistPage(): ReactElement {
         </ListGroup.Item>
       );
     });
-    return <ListGroup className={styles.codeoutput}>{jsx}</ListGroup>;
+    return <ListGroup className={styles.codeoutput}>{codes}</ListGroup>;
   };
 
   const setSelectedKodeliste = (id: number) => () => {
