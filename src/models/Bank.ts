@@ -12,4 +12,5 @@ export interface Bank {
   codelist?: Codelist[];
   version: number;
   publications?: Publication[];
+  publishedDate?: string;
 }
