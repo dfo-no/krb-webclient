@@ -33,7 +33,7 @@ export default function SearchBar(props: SearchBarProps): ReactElement {
   };
 
   const displaylist = (list: Bank[]) => {
-    const jsx = list.map((bank: Bank) => {
+    const bankList = list.map((bank: Bank) => {
       return (
         <ListGroup.Item key={bank.id} className={styles.katalogitem}>
           <Link to={`/workbench/${bank.id}`} onClick={handleEdit(bank)}>
@@ -44,7 +44,7 @@ export default function SearchBar(props: SearchBarProps): ReactElement {
     });
     return (
       <ListGroup className={styles.searchResults} variant="flush">
-        {jsx}
+        {bankList}
       </ListGroup>
     );
   };
