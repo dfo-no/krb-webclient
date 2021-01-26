@@ -90,7 +90,7 @@ export default function CodeListEditor(): ReactElement {
         /*TODO: finne ut hvor sannsynlig det er at bruker skriver
          mange steder på samme tid, og derfor om handleTitleChange, 
          og descriptionchange må skrives om de tre separate funksjoner */
-        <Card>
+        <Card className="mt-3">
           <Card.Body>
             <label htmlFor="title">Title</label>
             <InputGroup className="mb-3 30vw">
@@ -108,7 +108,9 @@ export default function CodeListEditor(): ReactElement {
                 defaultValue={codelist.description}
               />
             </InputGroup>
-            <Button onClick={editCodeList}>Save</Button>
+            <Button className={styles.addButton} onClick={editCodeList}>
+              Save
+            </Button>
           </Card.Body>
         </Card>
       );
@@ -150,10 +152,7 @@ export default function CodeListEditor(): ReactElement {
                     onChange={handleDescriptionChange}
                   />
                 </InputGroup>
-                <Button
-                  className={styles.newbutton}
-                  onClick={editCodeElement(element.id, index)}
-                >
+                <Button onClick={editCodeElement(element.id, index)}>
                   Save
                 </Button>
               </>
@@ -162,13 +161,13 @@ export default function CodeListEditor(): ReactElement {
         </Card>
       );
     });
-    return <Accordion className={styles.codeoutput}>{codes}</Accordion>;
+    return <Accordion className={styles.codes}>{codes}</Accordion>;
   };
 
-  function codeEditor(show: boolean) {
+  function codeListEditor(show: boolean) {
     if (show) {
       return (
-        <Card>
+        <Card className="mt-3">
           <Card.Body>
             <label htmlFor="title">Title</label>
             <InputGroup className="mb-3 30vw">
@@ -185,10 +184,7 @@ export default function CodeListEditor(): ReactElement {
                 onChange={handleDescriptionChange}
               />
             </InputGroup>
-            <Button
-              className={`primary ${styles.newbutton}`}
-              onClick={addNewCode}
-            >
+            <Button className={styles.addButton} onClick={addNewCode}>
               Save
             </Button>
           </Card.Body>
@@ -205,7 +201,7 @@ export default function CodeListEditor(): ReactElement {
       <div>
         <h4>Codes</h4>
         <Button onClick={handleShowEditor}>New Code</Button>
-        {codeEditor(showEditor)}
+        {codeListEditor(showEditor)}
         {codeList(codes)}
       </div>
     </>
