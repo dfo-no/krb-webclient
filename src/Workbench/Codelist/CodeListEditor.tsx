@@ -108,7 +108,7 @@ export default function CodeListEditor(): ReactElement {
                 defaultValue={codelist.description}
               />
             </InputGroup>
-            <Button className={styles.addButton} onClick={editCodeList}>
+            <Button className="mt-2" onClick={editCodeList}>
               Save
             </Button>
           </Card.Body>
@@ -184,7 +184,7 @@ export default function CodeListEditor(): ReactElement {
                 onChange={handleDescriptionChange}
               />
             </InputGroup>
-            <Button className={styles.addButton} onClick={addNewCode}>
+            <Button className="mt-2" onClick={addNewCode}>
               Save
             </Button>
           </Card.Body>
@@ -198,12 +198,10 @@ export default function CodeListEditor(): ReactElement {
   return codelist ? (
     <>
       {renderHeaderSection(editmode)}
-      <div>
-        <h4>Codes</h4>
-        <Button onClick={handleShowEditor}>New Code</Button>
-        {codeListEditor(showEditor)}
-        {codeList(codes)}
-      </div>
+      <h4>Codes</h4>
+      <Button onClick={handleShowEditor}>New Code</Button>
+      {codeListEditor(showEditor)}
+      {codeList(codes)}
     </>
   ) : (
     <></>
