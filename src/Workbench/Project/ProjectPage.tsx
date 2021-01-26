@@ -9,7 +9,6 @@ import {
   publishProject,
   editProject
 } from '../../store/reducers/kravbank-reducer';
-
 import styles from './ProjectPage.module.scss';
 
 export default function ProjectPage(): ReactElement {
