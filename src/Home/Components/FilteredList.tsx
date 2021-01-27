@@ -1,8 +1,11 @@
 import dayjs from 'dayjs';
 import React, { ReactElement } from 'react';
 import { ListGroup } from 'react-bootstrap';
+import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
+
 import { Bank } from '../../models/Bank';
+import { selectBank } from '../../store/reducers/kravbank-reducer';
 
 interface FilteredListProps {
   list: Bank[];
@@ -11,6 +14,12 @@ interface FilteredListProps {
 }
 
 export default function FilteredList(props: FilteredListProps): ReactElement {
+  const dispatch = useDispatch();
+
+  const handleSelectedElement = (element: Bank) => () => {
+    dispatch(selectBank(element));
+  };
+
   let list: Bank[] = [];
   if (props.filterType === 'date') {
     list = props.list
@@ -29,7 +38,12 @@ export default function FilteredList(props: FilteredListProps): ReactElement {
   const filteredElements = list.slice(0, 5).map((element: Bank) => {
     return (
       <ListGroup.Item>
-        <Link to={`/workbench/${element.id}`}>{element.title}</Link>
+        <Link
+          to={`/bank/${element.id}`}
+          onClick={handleSelectedElement(element)}
+        >
+          {element.title}
+        </Link>
       </ListGroup.Item>
     );
   });
