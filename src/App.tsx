@@ -7,6 +7,7 @@ import LoginForm from './LoginForm/LoginForm';
 import Header from './Header/Header';
 import store from './store/configureStore';
 import HomePage from './Home/HomePage';
+import BankPage from './Home/BankPage';
 import { ProtectedRoute } from './authentication/ProtectedRoute';
 import WorkbenchModule from './Workbench/WorkbenchModule';
 
@@ -18,6 +19,9 @@ function App(props: any) {
         <Switch>
           <Route exact path={'/'}>
             <HomePage></HomePage>
+          </Route>
+          <Route exact path={`/bank/:bankId`}>
+            <BankPage></BankPage>
           </Route>
           <Route exact path={'/login'} component={LoginForm} />
           <ProtectedRoute

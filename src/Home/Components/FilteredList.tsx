@@ -1,9 +1,11 @@
 import dayjs from 'dayjs';
 import React, { ReactElement } from 'react';
 import { ListGroup } from 'react-bootstrap';
+import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 
 import { Bank } from '../../models/Bank';
+import { selectBank } from '../../store/reducers/kravbank-reducer';
 
 interface FilteredListProps {
   list: Bank[];
@@ -12,6 +14,12 @@ interface FilteredListProps {
 }
 
 export default function FilteredList(props: FilteredListProps): ReactElement {
+  const dispatch = useDispatch();
+
+  const handleSelectedBank = (bank: Bank) => () => {
+    dispatch(selectBank(bank));
+  };
+
   let list: Bank[] = [];
   if (props.filterType === 'date') {
     list = props.list
@@ -27,10 +35,12 @@ export default function FilteredList(props: FilteredListProps): ReactElement {
   }
   //TODO: correct link to other page than workbench when site exist.
   //TODO: Discuss suitable amount of elements displayed
-  const filteredElements = list.slice(0, 5).map((element: Bank) => {
+  const filteredElements = list.slice(0, 5).map((bank: Bank) => {
     return (
       <ListGroup.Item>
-        <Link to={`/workbench/${element.id}`}>{element.title}</Link>
+        <Link to={`/bank/${bank.id}`} onClick={handleSelectedBank(bank)}>
+          {bank.title}
+        </Link>
       </ListGroup.Item>
     );
   });
