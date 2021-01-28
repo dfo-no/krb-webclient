@@ -3,6 +3,7 @@ import { useForm } from 'react-hook-form';
 import css from './LoginForm.module.scss';
 import { Redirect, RouteComponentProps } from 'react-router-dom';
 import { Form, Button, Container, Card } from 'react-bootstrap';
+
 import { fakeAuth } from '../authentication/AuthenticationHandler';
 
 function LoginForm(props: RouteComponentProps): ReactElement {

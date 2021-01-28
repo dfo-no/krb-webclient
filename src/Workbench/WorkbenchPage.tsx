@@ -5,7 +5,6 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { RootState } from '../store/configureStore';
 import { Bank } from '../models/Bank';
-import styles from './WorkbenchPage.module.scss';
 import {
   addProject,
   selectProject,
@@ -74,15 +73,15 @@ export default function WorkbenchPage(): ReactElement {
         </ListGroup.Item>
       );
     });
-    return <ListGroup className={styles.projectList}>{projects}</ListGroup>;
+    return <ListGroup className="mt-5">{projects}</ListGroup>;
   };
   function projectEditor(show: boolean) {
     if (show) {
       return (
-        <div className={styles.project}>
+        <ListGroup className="mt-3">
           <ListGroup.Item>
             <label htmlFor="title">Title</label>
-            <InputGroup className="mb-3 30vw">
+            <InputGroup>
               <FormControl
                 className="input-sm"
                 name="title"
@@ -96,14 +95,11 @@ export default function WorkbenchPage(): ReactElement {
                 onChange={handleDescriptionChange}
               />
             </InputGroup>
-            <Button
-              className={`primary ${styles.project__addButton}`}
-              onClick={addNewProject}
-            >
+            <Button className="mt-2" onClick={addNewProject}>
               Add
             </Button>
           </ListGroup.Item>
-        </div>
+        </ListGroup>
       );
     } else {
       return <></>;

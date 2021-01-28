@@ -1,5 +1,4 @@
 import { ReactElement, useState } from 'react';
-import { Need } from '../../models/Need';
 import {
   Row,
   Col,
@@ -11,15 +10,16 @@ import {
   InputGroup,
   FormControl
 } from 'react-bootstrap';
+
 import { RootState } from '../../store/configureStore';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   addRequirementToSelectedNeed,
   editRequirementToSelected
 } from '../../store/reducers/kravbank-reducer';
-
 import styles from './RequirementPage.module.scss';
 import { Requirement } from '../../models/Requirement';
+import { Need } from '../../models/Need';
 
 export default function RequirementPage(): ReactElement {
   const dispatch = useDispatch();
