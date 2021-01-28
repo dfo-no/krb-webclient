@@ -9,7 +9,7 @@ import {
 } from 'react-bootstrap';
 import dayjs from 'dayjs';
 
-import { RootState } from '../../store/configureStore';
+import { RootState } from '../../store/rootReducer';
 import { Publication } from '../../models/Publication';
 import {
   publishProject,

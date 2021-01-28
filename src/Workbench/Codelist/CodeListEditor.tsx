@@ -9,7 +9,7 @@ import {
 } from 'react-bootstrap';
 
 import styles from './CodeListEditor.module.scss';
-import { RootState } from '../../store/configureStore';
+import { RootState } from '../../store/rootReducer';
 import { Code } from '../../models/Code';
 import {
   addCode,
@@ -88,7 +88,7 @@ export default function CodeListEditor(): ReactElement {
     if (editmode) {
       return (
         /*TODO: finne ut hvor sannsynlig det er at bruker skriver
-         mange steder på samme tid, og derfor om handleTitleChange, 
+         mange steder på samme tid, og derfor om handleTitleChange,
          og descriptionchange må skrives om de tre separate funksjoner */
         <Card className="mt-3">
           <Card.Body>

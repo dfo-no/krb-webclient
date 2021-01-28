@@ -32,7 +32,7 @@ const initialState: KravbankState = {
 };
 
 /* export const fetchBanks = createAsyncThunk('fetchBanks', async () => {
-  const response = await fetch(`http://localhost:3001/catalogue`);
+  const response = await fetch(`http://localhost:3001/banks`);
   return (await response.json()) as Bank[];
 }); */
 
