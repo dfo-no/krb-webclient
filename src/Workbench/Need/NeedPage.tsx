@@ -7,7 +7,7 @@ import { AiFillPlusSquare, AiFillEdit } from 'react-icons/ai';
 
 import { Need } from '../../models/Need';
 import styles from './NeedPage.module.scss';
-import { RootState } from '../../store/configureStore';
+import { RootState } from '../../store/rootReducer';
 import { addSubNeed } from '../../store/reducers/kravbank-reducer';
 import { Button, ListGroup } from 'react-bootstrap';
 

@@ -10,7 +10,7 @@ import {
 import { useDispatch, useSelector } from 'react-redux';
 
 import { Product } from '../../models/Product';
-import { RootState } from '../../store/configureStore';
+import { RootState } from '../../store/rootReducer';
 import { addProduct, editProduct } from '../../store/reducers/kravbank-reducer';
 import styles from './ProductPage.module.scss';
 

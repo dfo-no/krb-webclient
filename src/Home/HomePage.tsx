@@ -1,20 +1,31 @@
-import React, { ReactElement } from 'react';
+import React, { ReactElement, useEffect } from 'react';
 import { Container, Row, Col, ListGroup } from 'react-bootstrap';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 
 import SearchBar from '../SearchBar/SearchBar';
 import FilteredList from './Components/FilteredList';
-import { RootState } from '../store/configureStore';
+import { RootState } from '../store/rootReducer';
+import { getBanks } from '../store/reducers/bank-reducer';
 
 export default function HomePage(): ReactElement {
-  const { banks } = useSelector((state: RootState) => state.kravbank);
+  const dispatch = useDispatch();
+  const { list, status } = useSelector((state: RootState) => state.bank);
+
+  useEffect(() => {
+    async function fetchEverything() {
+      if (status === 'idle') {
+        dispatch(getBanks());
+      }
+    }
+    fetchEverything();
+  }, [status, dispatch]);
 
   return (
     <Container fluid>
       <Row className="mt-2">
         <Col>
-          <SearchBar list={banks} />
+          <SearchBar list={list} />
         </Col>
         <Col>
           <ListGroup variant="flush">
@@ -39,14 +50,14 @@ export default function HomePage(): ReactElement {
       <Row className="mt-5">
         <Col>
           <FilteredList
-            list={banks}
+            list={list}
             filterTitle={'Newest banks'}
             filterType={'date'}
           />
         </Col>
         <Col>
           <FilteredList
-            list={banks}
+            list={list}
             filterTitle={'Popular banks'}
             filterType={'alphabetic'}
           />

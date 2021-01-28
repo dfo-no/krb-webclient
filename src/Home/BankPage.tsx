@@ -2,7 +2,7 @@ import React, { ReactElement } from 'react';
 import { Container, Row, Button } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
 
-import { RootState } from '../store/configureStore';
+import { RootState } from '../store/rootReducer';
 
 export default function BankPage(): ReactElement {
   const { selectedBank } = useSelector((state: RootState) => state.kravbank);
