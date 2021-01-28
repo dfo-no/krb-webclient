@@ -1,5 +1,5 @@
 {
-  "catalogue": [
+  "banks": [
     {
       "id": 10,
       "title": "Kurs og konferanse",
@@ -14,11 +14,13 @@
           "needs": [
             {
               "id": 84848484,
-              "tittel": "Parkeringsmuligheter"
+              "tittel": "Parkeringsmuligheter",
+              "requirements": []
             },
             {
               "id": 84848485,
-              "tittel": "Auditorium"
+              "tittel": "Auditorium",
+              "requirements": []
             }
           ],
           "requirements": []
