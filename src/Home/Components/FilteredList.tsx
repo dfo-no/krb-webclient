@@ -16,8 +16,8 @@ interface FilteredListProps {
 export default function FilteredList(props: FilteredListProps): ReactElement {
   const dispatch = useDispatch();
 
-  const handleSelectedElement = (element: Bank) => () => {
-    dispatch(selectBank(element));
+  const handleSelectedBank = (bank: Bank) => () => {
+    dispatch(selectBank(bank));
   };
 
   let list: Bank[] = [];
@@ -35,14 +35,11 @@ export default function FilteredList(props: FilteredListProps): ReactElement {
   }
   //TODO: correct link to other page than workbench when site exist.
   //TODO: Discuss suitable amount of elements displayed
-  const filteredElements = list.slice(0, 5).map((element: Bank) => {
+  const filteredElements = list.slice(0, 5).map((bank: Bank) => {
     return (
       <ListGroup.Item>
-        <Link
-          to={`/bank/${element.id}`}
-          onClick={handleSelectedElement(element)}
-        >
-          {element.title}
+        <Link to={`/bank/${bank.id}`} onClick={handleSelectedBank(bank)}>
+          {bank.title}
         </Link>
       </ListGroup.Item>
     );

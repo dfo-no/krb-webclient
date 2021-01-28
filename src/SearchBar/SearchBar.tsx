@@ -33,10 +33,10 @@ export default function SearchBar(props: SearchBarProps): ReactElement {
   };
 
   const displaylist = (list: Bank[]) => {
-    const bankList = list.map((bank: Bank) => {
+    const bankList = list.map((bank: Bank, index: number) => {
       return (
-        <ListGroup.Item key={bank.id}>
-          <Link to={`/bank/${bank.id}`} onClick={handleEdit(bank)}>
+        <ListGroup.Item key={index}>
+          <Link to={`/workbench/${bank.id}`} onClick={handleEdit(bank)}>
             {bank.title}
           </Link>
         </ListGroup.Item>
