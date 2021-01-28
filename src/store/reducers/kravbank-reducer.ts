@@ -12,6 +12,7 @@ interface KravbankState {
   //banks: Finished and published versions of banks
   projects: Bank[];
   selectedProject: Bank | null;
+  selectedBank: Bank | null;
   selectedNeed: number;
   codelists: Codelist[];
   selectedCodelist: number;
@@ -22,6 +23,7 @@ interface KravbankState {
 const initialState: KravbankState = {
   projects: [],
   selectedProject: null,
+  selectedBank: null,
   selectedNeed: 0,
   codelists: [],
   selectedCodelist: 0,
@@ -40,6 +42,9 @@ const kravbankSlice = createSlice({
   reducers: {
     addBanks(state, { payload }: PayloadAction<Bank[]>) {
       state.projects = payload;
+    },
+    selectBank(state, { payload }: PayloadAction<Bank>) {
+      state.selectedBank = payload;
     },
     addProject(state, { payload }: PayloadAction<Bank>) {
       state.projects.push(payload);
@@ -189,7 +194,8 @@ export const {
   editCode,
   editProduct,
   addProduct,
-  banksReceived
+  banksReceived,
+  selectBank
 } = kravbankSlice.actions;
 
 /*export const fetchBanks = () => async (dispatch: any) => {
