@@ -35,9 +35,9 @@ export default function FilteredList(props: FilteredListProps): ReactElement {
   }
   //TODO: correct link to other page than workbench when site exist.
   //TODO: Discuss suitable amount of elements displayed
-  const filteredElements = list.slice(0, 5).map((bank: Bank) => {
+  const filteredElements = list.slice(0, 5).map((bank: Bank, index: number) => {
     return (
-      <ListGroup.Item>
+      <ListGroup.Item key={index}>
         <Link to={`/bank/${bank.id}`} onClick={handleSelectedBank(bank)}>
           {bank.title}
         </Link>
