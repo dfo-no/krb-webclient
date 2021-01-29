@@ -26,7 +26,15 @@
         {
           "id": 1235,
           "tittel": "Bespisning",
-          "requirements": []
+          "requirements": [
+            {
+              "id": 7800,
+              "title": "Elbil",
+              "needId": 1236,
+              "description": "Elbilen må kjøre minst 10km",
+              "type": "kodeliste-eksakt"
+            }
+          ]
         },
         {
           "id": 1236,
