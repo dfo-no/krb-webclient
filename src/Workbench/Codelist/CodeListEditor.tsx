@@ -16,6 +16,7 @@ import {
   editCode,
   editCodelist
 } from '../../store/reducers/kravbank-reducer';
+import { Utils } from '../../common/Utils';
 
 export default function CodeListEditor(): ReactElement {
   const dispatch = useDispatch();
@@ -53,7 +54,7 @@ export default function CodeListEditor(): ReactElement {
     let Kode = {
       title: title,
       description: description,
-      id: Math.random()
+      id: Utils.getRandomNumber()
     };
     newCodeList.push(Kode);
     setCodes(newCodeList);

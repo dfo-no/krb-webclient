@@ -16,6 +16,7 @@ import {
   addCodelist,
   selectCodelist
 } from '../../store/reducers/kravbank-reducer';
+import { Utils } from '../../common/Utils';
 
 export default function CodelistPage(): ReactElement {
   const dispatch = useDispatch();
@@ -68,7 +69,7 @@ export default function CodelistPage(): ReactElement {
     let codeList = {
       title: title,
       description: description,
-      id: Math.random(),
+      id: Utils.getRandomNumber(),
       codes: []
     };
     setShowEdior(false);

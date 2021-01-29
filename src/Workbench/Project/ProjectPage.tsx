@@ -15,6 +15,7 @@ import {
   publishProject,
   editProject
 } from '../../store/reducers/kravbank-reducer';
+import { Utils } from '../../common/Utils';
 
 export default function ProjectPage(): ReactElement {
   const dispatch = useDispatch();
@@ -39,7 +40,7 @@ export default function ProjectPage(): ReactElement {
       date: convertedDate,
       comment: comment,
       version: versionNumber,
-      id: Math.random()
+      id: Utils.getRandomNumber()
     };
     setShowEditor(false);
     dispatch(publishProject(publication));
