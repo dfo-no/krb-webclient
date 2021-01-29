@@ -1,55 +1,67 @@
-import { ReactElement, useEffect, useState } from 'react';
+import React, { ReactElement, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Button, FormControl, InputGroup, ListGroup } from 'react-bootstrap';
+import { Button, Col, Form, ListGroup, Row } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
-
+import css from './WorkbenchPage.module.scss';
 import { RootState } from '../store/rootReducer';
 import { Bank } from '../models/Bank';
-import { addProject, selectProject } from '../store/reducers/kravbank-reducer';
-import { getBanks } from '../store/reducers/bank-reducer';
+import {
+  deleteProjectThunk,
+  getProjectsThunk,
+  postProjectThunk
+} from '../store/reducers/project-reducer';
+import { AiFillDelete } from 'react-icons/ai';
+import { useForm } from 'react-hook-form';
+import { selectProject } from '../store/reducers/kravbank-reducer';
+import { Utils } from '../common/Utils';
+
+type FormValues = {
+  title: string;
+  description: string;
+};
 
 export default function WorkbenchPage(): ReactElement {
   const dispatch = useDispatch();
-  const { projects } = useSelector((state: RootState) => state.kravbank);
-  const [title, setTitle] = useState('');
-  const [description, setDescription] = useState('');
-  const [showEditor, setShowEdior] = useState(false);
+  const { list } = useSelector((state: RootState) => state.project);
+  const [showEditor, setShowEditor] = useState(false);
 
   useEffect(() => {
     async function fetchEverything() {
-      await getBanks();
+      dispatch(getProjectsThunk());
     }
     fetchEverything();
-  });
+  }, [dispatch]);
+
+  const { register, handleSubmit, reset, errors } = useForm<FormValues>();
+  const [validated] = useState(false);
 
   const handleShowEditor = () => {
-    setShowEdior(true);
+    setShowEditor(true);
   };
 
-  const handleTitleChange = (event: any) => {
-    setTitle(event.target.value);
-  };
-  const handleDescriptionChange = (event: any) => {
-    setDescription(event.target.value);
-  };
-
-  const addNewProject = () => {
-    let project = {
-      id: Math.random(),
-      title: title,
-      description: description,
+  const onSubmit = (post: FormValues, e: any) => {
+    let project: Bank = {
+      id: Utils.getRandomNumber(),
+      title: post.title,
+      description: post.description,
       needs: [],
-      krav: [],
       codelist: [],
       version: 1
     };
-    dispatch(addProject(project));
-    setShowEdior(false);
+    dispatch(postProjectThunk(project));
+    reset();
+    setShowEditor(false);
   };
 
-  const handleSelectedProject = (bank: Bank) => () => {
-    dispatch(selectProject(bank));
-  };
+  function onSelect(project: Bank) {
+    // TODO: does not work yet
+    dispatch(selectProject(project));
+  }
+
+  function onDelete(project: Bank) {
+    dispatch(deleteProjectThunk(project));
+    dispatch(getProjectsThunk());
+  }
 
   const renderProjects = (projectList: Bank[]) => {
     projectList
@@ -57,42 +69,79 @@ export default function WorkbenchPage(): ReactElement {
       .sort((a, b) => (a.title.toLowerCase() > b.title.toLowerCase() ? 1 : -1));
     const projects = projectList.map((element: Bank) => {
       return (
-        <ListGroup.Item key={element.id}>
+        <ListGroup.Item key={element.id} className={`${css.list__item}`}>
           <Link
             to={`/workbench/${element.id}`}
-            onClick={handleSelectedProject(element)}
+            onClick={() => onSelect(element)}
           >
             <h5>{element.title}</h5>
             <p>{element.description}</p>
           </Link>
+          <div className={css.list__item__spacer}></div>
+          <Button variant="warning" onClick={() => onDelete(element)}>
+            <AiFillDelete></AiFillDelete>
+            <div>(Dev)</div>
+          </Button>
         </ListGroup.Item>
       );
     });
-    return <ListGroup className="mt-5">{projects}</ListGroup>;
+    return <ListGroup className={`${css.list} mt-5`}>{projects}</ListGroup>;
   };
   function projectEditor(show: boolean) {
     if (show) {
       return (
         <ListGroup className="mt-3">
           <ListGroup.Item>
-            <label htmlFor="title">Title</label>
-            <InputGroup>
-              <FormControl
-                className="input-sm"
-                name="title"
-                onChange={handleTitleChange}
-              />
-            </InputGroup>
-            <label htmlFor="description">Description</label>
-            <InputGroup>
-              <FormControl
-                name="description"
-                onChange={handleDescriptionChange}
-              />
-            </InputGroup>
-            <Button className="mt-2" onClick={addNewProject}>
-              Add
-            </Button>
+            <Form
+              onSubmit={handleSubmit(onSubmit)}
+              autoComplete="on"
+              noValidate
+              validated={validated}
+            >
+              <Form.Group as={Row}>
+                <Form.Label column sm="2">
+                  Title
+                </Form.Label>
+                <Col sm={10}>
+                  <Form.Control
+                    name="title"
+                    ref={register({
+                      required: { value: true, message: 'Required' },
+                      minLength: { value: 2, message: 'Minimum 2 characters' }
+                    })}
+                    isInvalid={!!errors.title}
+                  ></Form.Control>
+                  {errors.title && (
+                    <Form.Control.Feedback type="invalid">
+                      {errors.title.message}
+                    </Form.Control.Feedback>
+                  )}
+                </Col>
+              </Form.Group>
+              <Form.Group as={Row}>
+                <Form.Label column sm="2">
+                  Description
+                </Form.Label>
+                <Col sm={10}>
+                  <Form.Control
+                    name="description"
+                    ref={register({
+                      required: { value: true, message: 'Required' },
+                      minLength: { value: 2, message: 'Minimum 2 characters' }
+                    })}
+                    isInvalid={!!errors.description}
+                  ></Form.Control>
+                  {errors.description && (
+                    <Form.Control.Feedback type="invalid">
+                      {errors.description.message}
+                    </Form.Control.Feedback>
+                  )}
+                </Col>
+              </Form.Group>
+              <Button className="mt-2" type="submit">
+                Save
+              </Button>
+            </Form>
           </ListGroup.Item>
         </ListGroup>
       );
@@ -103,10 +152,10 @@ export default function WorkbenchPage(): ReactElement {
 
   return (
     <>
-      <h3>Projects</h3>
+      <h3>Projects </h3>
       <Button onClick={handleShowEditor}>New Project</Button>
       {projectEditor(showEditor)}
-      {renderProjects(projects)}
+      {renderProjects(list)}
     </>
   );
 }

@@ -3,6 +3,7 @@ import bankReducer from './reducers/bank-reducer';
 import counterReducer from './reducers/counter-reducer';
 import kravbankReducer from './reducers/kravbank-reducer';
 import loaderReducer from './reducers/loader-reducer';
+import projectReducer from './reducers/project-reducer';
 import userReducer from './reducers/userReducer';
 
 const rootReducer = combineReducers({
@@ -10,7 +11,8 @@ const rootReducer = combineReducers({
   loader: loaderReducer,
   kravbank: kravbankReducer,
   user: userReducer,
-  bank: bankReducer
+  bank: bankReducer,
+  project: projectReducer
 });
 
 export type RootState = ReturnType<typeof rootReducer>;
