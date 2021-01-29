@@ -1,6 +1,7 @@
 import React, { ReactElement } from 'react';
 import { Container, Row, Button } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
 
 import { RootState } from '../store/rootReducer';
 
@@ -17,7 +18,9 @@ export default function BankPage(): ReactElement {
         <h1>{selectedBank.title}</h1>
       </Row>
       <Row>
-        <Button>Create spec</Button>
+        <Link to={`/speceditor/${selectedBank.id}`}>
+          <Button>Create spec</Button>
+        </Link>
       </Row>
     </Container>
   );
