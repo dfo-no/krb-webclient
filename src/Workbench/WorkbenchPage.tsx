@@ -1,5 +1,5 @@
 import React, { ReactElement, useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { Button, Col, Form, ListGroup, Row } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import css from './WorkbenchPage.module.scss';
@@ -23,6 +23,7 @@ type FormValues = {
 export default function WorkbenchPage(): ReactElement {
   const dispatch = useDispatch();
   const { list } = useSelector((state: RootState) => state.project);
+  const history = useHistory();
   const [showEditor, setShowEditor] = useState(false);
 
   useEffect(() => {
@@ -45,6 +46,7 @@ export default function WorkbenchPage(): ReactElement {
       title: post.title,
       description: post.description,
       needs: [],
+      publications: [],
       codelist: [],
       version: 1
     };
@@ -54,8 +56,8 @@ export default function WorkbenchPage(): ReactElement {
   };
 
   function onSelect(project: Bank) {
-    // TODO: does not work yet
     dispatch(selectProject(project));
+    history.push(`/workbench/${project.id}`);
   }
 
   function onDelete(project: Bank) {
@@ -70,13 +72,11 @@ export default function WorkbenchPage(): ReactElement {
     const projects = projectList.map((element: Bank) => {
       return (
         <ListGroup.Item key={element.id} className={`${css.list__item}`}>
-          <Link
-            to={`/workbench/${element.id}`}
-            onClick={() => onSelect(element)}
-          >
+          {/* TODO: fix styling  */}
+          <Button onClick={() => onSelect(element)}>
             <h5>{element.title}</h5>
             <p>{element.description}</p>
-          </Link>
+          </Button>
           <div className={css.list__item__spacer}></div>
           <Button variant="warning" onClick={() => onDelete(element)}>
             <AiFillDelete></AiFillDelete>
