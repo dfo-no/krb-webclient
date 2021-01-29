@@ -4,9 +4,8 @@ import { useSelector } from 'react-redux';
 
 import { Requirement } from '../models/Requirement';
 import { Need } from '../models/Need';
-import { RootState } from '../store/configureStore';
+import { RootState } from '../store/rootReducer';
 import { useForm } from 'react-hook-form';
-import { selectBank } from '../store/reducers/kravbank-reducer';
 
 export default function SpecEditor(): ReactElement {
   const { selectedBank } = useSelector((state: RootState) => state.kravbank);
@@ -97,7 +96,7 @@ export default function SpecEditor(): ReactElement {
             {needList(needs)}
             <Button type="submit" className="mt-4">
               Select
-            </Button>
+            </Button>}
           </form>
         </Col>
       </Row>

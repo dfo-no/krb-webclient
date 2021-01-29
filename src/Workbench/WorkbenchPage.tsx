@@ -3,14 +3,10 @@ import { Link } from 'react-router-dom';
 import { Button, FormControl, InputGroup, ListGroup } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { RootState } from '../store/configureStore';
+import { RootState } from '../store/rootReducer';
 import { Bank } from '../models/Bank';
-import {
-  addProject,
-  selectProject,
-  addBanks
-} from '../store/reducers/kravbank-reducer';
-import { fetchAllBanks } from '../api/bankApi';
+import { addProject, selectProject } from '../store/reducers/kravbank-reducer';
+import { getBanks } from '../store/reducers/bank-reducer';
 
 export default function WorkbenchPage(): ReactElement {
   const dispatch = useDispatch();
@@ -21,8 +17,7 @@ export default function WorkbenchPage(): ReactElement {
 
   useEffect(() => {
     async function fetchEverything() {
-      const banks = await fetchAllBanks();
-      dispatch(addBanks(banks));
+      await getBanks();
     }
     fetchEverything();
   });

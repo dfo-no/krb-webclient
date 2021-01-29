@@ -11,7 +11,7 @@ import {
   FormControl
 } from 'react-bootstrap';
 
-import { RootState } from '../../store/configureStore';
+import { RootState } from '../../store/rootReducer';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   addRequirementToSelectedNeed,
