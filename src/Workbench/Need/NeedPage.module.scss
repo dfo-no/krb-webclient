@@ -1,0 +1,113 @@
+@import './../../dfo-theme.scss';
+
+.modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  margin-right: '-50%';
+  background-color: white;
+  border: black 1px solid;
+}
+
+.modal :focus {
+  outline: none;
+}
+
+.needs {
+  /* display: flex;
+  flex-direction: row;
+  justify-content: space-between; */
+  width: 900px;
+  margin-top: 2rem;
+}
+
+.need {
+  display: flex;
+  &__title {
+  }
+  &__spacer {
+    flex: 1 1 auto;
+  }
+  &__editbutton {
+  }
+}
+
+.listitem p {
+  margin: 0;
+}
+
+.editbutton {
+  height: 25px;
+}
+
+.subsection {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 400px;
+}
+
+.icon {
+  margin: 25px 0px 15px 15px;
+  color: $dfo-blue;
+}
+
+.editicon {
+  margin: 0px 0px 15px 15px;
+  color: $dfo-blue;
+}
+
+.formwrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  width: 300px;
+  height: 300px;
+  margin: 100px;
+}
+
+.formlabel {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin: 10px 0;
+}
+
+.formlabel input {
+  align-items: center;
+}
+input {
+  width: 400px;
+  padding: 12px 20px;
+  margin: 8px 0;
+  box-sizing: border-box;
+  border-radius: 10px;
+}
+
+select {
+  width: 400px;
+  padding: 12px 20px;
+  margin: 8px 0;
+  box-sizing: border-box;
+  border-radius: 10px;
+}
+
+input[type='submit'] {
+  background-color: $dfo-blue;
+  color: white;
+}
+
+@media only screen and (max-width: 600px) {
+  .formwrapper {
+    width: 100%;
+  }
+
+  .formlabel {
+    width: 100%;
+  }
+  input {
+    width: 90%;
+  }
+}

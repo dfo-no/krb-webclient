@@ -1,7 +1,9 @@
-import { ReactElement } from 'react';
-import { useHistory } from 'react-router-dom';
-
+import React, { ReactElement } from 'react';
+import { useHistory, useRouteMatch } from 'react-router-dom';
+import Navbar from 'react-bootstrap/Navbar';
+import { Button } from 'react-bootstrap';
 import css from './Header.module.scss';
+import { fakeAuth } from '../authentication/AuthenticationHandler';
 
 export default function Header(): ReactElement {
   const history = useHistory();
@@ -9,11 +11,39 @@ export default function Header(): ReactElement {
     history.push('/');
   };
 
+  const match = useRouteMatch({
+    path: '/workbench/',
+    strict: false,
+    sensitive: true
+  });
+
   return (
-    <header className={css.Header}>
-      <div className={css.brand} onClick={home} role="link">
-        <img src={'/logo-blue.svg'} alt={'DFØ Logo'} />
-      </div>
-    </header>
+    <Navbar bg="light" variant="dark" className={css.header}>
+      <Navbar.Brand onClick={home} role="link" className={css.header__brand}>
+        <img alt={'DFØ Logo'} src="/logo-blue.svg" />{' '}
+      </Navbar.Brand>
+      <div className={css.header__spacer}></div>
+      {match && (
+        <Button
+          variant="danger"
+          onClick={() => {
+            history.push('/workbench');
+          }}
+        >
+          Select project (dev)
+        </Button>
+      )}
+
+      {fakeAuth.isAuthenticated() && (
+        <Button
+          variant="primary"
+          onClick={() => {
+            fakeAuth.signout(() => history.push('/'));
+          }}
+        >
+          <i className="bi bi-person-fill"></i>&nbsp;Log out
+        </Button>
+      )}
+    </Navbar>
   );
 }

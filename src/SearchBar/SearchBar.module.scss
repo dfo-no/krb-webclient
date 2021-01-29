@@ -1,24 +1,7 @@
-.BarStyling {
-  width: 350px;
-  background: '#F2F1F9';
-  border: 'none';
-  padding: '0.5rem';
-}
+@import './../dfo-theme.scss';
 
-.katalogitem {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  width: 300px;
-  padding: 10px;
-  margin: 10px;
-}
-
-.katalogitem p {
-  color: #005b91;
-  margin: 0;
-}
-
-.editbutton {
-  height: 25px;
+.searchResults {
+  border: solid 1px lightgrey;
+  border-top: none;
+  border-radius: 0 0 10px 10px;
 }

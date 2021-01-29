@@ -1,0 +1,20 @@
+$dfo-blue: #005b91;
+$dfo-input-background: #f2f1f9;
+$dfo-light-border: 1px solid rgba(0, 0, 0, 0.125);
+
+// Acceccible colors to be used now, even it is out-commented
+// @see  https://getbootstrap.com/docs/5.0/customize/color/
+
+/*$theme-colors: (
+  "primary":    $primary,
+  "secondary":  $secondary,
+  "success":    $success,
+  "info":       $info,
+  "warning":    $warning,
+  "danger":     $danger,
+  "light":      $light,
+  "dark":       $dark
+);*/
+
+/* import bootstrap to set changes */
+@import '~bootstrap/scss/bootstrap';

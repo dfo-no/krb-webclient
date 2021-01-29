@@ -1,0 +1,19 @@
+*,
+*::after,
+*::before {
+  margin: 0;
+  padding: 0;
+  /* box-sizing default not inheritet, we force inheritnce*/
+  box-sizing: inherit;
+}
+html {
+}
+body {
+  /* fonts are inherited, therefore fonts on the body element */
+  /* add padding around site*/
+  /* do not add border or padding  w/hin addition to elemts w/h*/
+  box-sizing: border-box;
+}
+
+@import '~bootstrap/scss/bootstrap';
+@import url('https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css');

@@ -1,14 +1,19 @@
-import { Behov } from '../models/Behov';
-import { Kravbank } from '../models/Kravbank';
+import { Need } from '../models/Need';
+import { Codelist } from '../models/Codelist';
+import { Requirement } from '../models/Requirement';
+import { Bank } from '../models/Bank';
 
 // TODO: find a design pattern for these strings, and link to that in the docs.
 export enum ActionType {
   LOADING = '[GLOBAL] Loading',
   KRAVBANK_NEW = '[KRAVBANK] NEW',
   KRAVBANK_EDIT = '[KRAVBANK] EDIT',
-  BEHOV_NEW = '[BEHOV] NEW',
-  BEHOV_EDIT = '[BEHOV] EDIT',
-  UNDERBEHOV_NEW = '[UNDERBEHOV] NEW'
+  NEED_NEW = '[NEED] NEW',
+  NEED_EDIT = '[NEED] EDIT',
+  SUB_NEED_NEW = '[SUB_NEED] NEW',
+  KRAV_NEW = '[KRAV] NEW',
+  KRAV_EDIT = '[KRAV] EDIT',
+  KODELISTE_NEW = '[KODELISTE] NEW'
 }
 export interface Action {
   type: ActionType;
@@ -23,7 +28,7 @@ export class KRB {
       payload: value
     };
   }
-  static registerNew(kravbank: Kravbank): Action {
+  static registerNew(kravbank: Bank): Action {
     return {
       type: ActionType.KRAVBANK_NEW,
       payload: kravbank
@@ -35,22 +40,40 @@ export class KRB {
       payload: kravbankid
     };
   }
-  static addBehov(behov: Behov): Action {
+  static addNeed(need: Need): Action {
     return {
-      type: ActionType.BEHOV_NEW,
-      payload: behov
+      type: ActionType.NEED_NEW,
+      payload: need
     };
   }
-  static editBehov(behovid: number): Action {
+  static editNeed(needId: number): Action {
     return {
       type: ActionType.KRAVBANK_EDIT,
-      payload: behovid
+      payload: needId
     };
   }
-  static addUnderBehov(behov: Behov): Action {
+  static addSubNeed(need: Need): Action {
     return {
-      type: ActionType.UNDERBEHOV_NEW,
-      payload: behov
+      type: ActionType.SUB_NEED_NEW,
+      payload: need
+    };
+  }
+  static addKrav(requirement: Requirement): Action {
+    return {
+      type: ActionType.KRAV_NEW,
+      payload: requirement
+    };
+  }
+  static editKrav(kravid: number): Action {
+    return {
+      type: ActionType.KRAV_EDIT,
+      payload: kravid
+    };
+  }
+  static addKodeliste(kodeliste: Codelist): Action {
+    return {
+      type: ActionType.KODELISTE_NEW,
+      payload: kodeliste
     };
   }
 }

@@ -1,45 +1,34 @@
 import React from 'react';
 import { Provider } from 'react-redux';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { Route, Switch } from 'react-router-dom';
 
 import styles from './App.module.scss';
-import RegistrationForm from './RegistrationForm/RegistrationForm';
-import KravbankEditorSide from './KravbankEditorSide/KravbankEditorSide';
+import LoginForm from './LoginForm/LoginForm';
 import Header from './Header/Header';
-import BehovEditorSide from './BehovEditorSide/BehovEditorSide';
-import KravbankKatalogSide from './KravbankKatalogSide/KravbankKatalogSide';
-import NyKravbankSide from './NyKravbankSide/NyKravbankSide';
-import { store } from './store';
+import HomePage from './Home/HomePage';
+import BankPage from './Home/BankPage';
+import { ProtectedRoute } from './authentication/ProtectedRoute';
+import WorkbenchModule from './Workbench/WorkbenchModule';
 
-function App() {
+function App(props: any) {
   return (
-    <Provider store={store}>
-      <div className={styles.App}>
-        <Router>
-          <Header />
-          <Switch>
-            <Route exact path={'/'}>
-              <RegistrationForm />
-            </Route>
-            <Route exact path={'/katalog'}>
-              <KravbankKatalogSide />
-            </Route>
-            <Route exact path={'/edit/:id'}>
-              <KravbankEditorSide />
-            </Route>
-            <Route exact path={'/edit/behov/:id'}>
-              <BehovEditorSide />
-            </Route>
-            <Route exact path={'/kravbank'}>
-              <KravbankEditorSide />
-            </Route>
-            <Route exact path={'/kravbank/ny'}>
-              <NyKravbankSide />
-            </Route>
-          </Switch>
-        </Router>
-      </div>
-    </Provider>
+    <div className={styles.App}>
+      <Header />
+      <Switch>
+        <Route exact path={'/'}>
+          <HomePage></HomePage>
+        </Route>
+        <Route exact path={`/bank/:bankId`}>
+          <BankPage></BankPage>
+        </Route>
+        <Route exact path={'/login'} component={LoginForm} />
+        <ProtectedRoute
+          path="/workbench"
+          component={WorkbenchModule}
+          {...props}
+        />
+      </Switch>
+    </div>
   );
 }
 

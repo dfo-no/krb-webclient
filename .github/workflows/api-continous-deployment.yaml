@@ -1,0 +1,45 @@
+name: Continuous Deployment
+
+on:
+  push:
+    branches: [main]
+
+env:
+  AZURE_WEBAPP_NAME: Krb-KravbankApi-dev-app # set this to your application's name
+  AZURE_WEBAPP_PACKAGE_PATH: 'backend' # set this to the path to your web app project, defaults to the repository root
+  NODE_VERSION: '12.x'
+
+jobs:
+  Build_and_Deploy:
+    runs-on: ubuntu-18.04
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: actions/setup-node@v1
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+
+      - name: Install
+        working-directory: ./backend
+        shell: bash
+        run: |
+          yarn install
+
+      #      - name: Build for develop
+      #        working-directory: ./backend
+      #        run: |
+      #          yarn build
+
+      #      - name: Analyze
+      #        if: github.ref == 'refs/heads/develop'
+      #        uses: SonarSource/sonarcloud-github-action@master
+      #        env:
+      #          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      #          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+
+      - name: 'Deploy to Azure WebApp'
+        uses: azure/webapps-deploy@v2
+        with:
+          app-name: ${{ env.AZURE_WEBAPP_NAME }}
+          publish-profile: ${{ secrets.AZURE_WEBAPP_API_PUBLISH_PROFILE }}
+          package: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
