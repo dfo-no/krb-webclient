@@ -20,6 +20,7 @@ import {
 import styles from './RequirementPage.module.scss';
 import { Requirement } from '../../models/Requirement';
 import { Need } from '../../models/Need';
+import { Utils } from '../../common/Utils';
 
 export default function RequirementPage(): ReactElement {
   const dispatch = useDispatch();
@@ -51,7 +52,7 @@ export default function RequirementPage(): ReactElement {
 
   const addRequirementElement = () => () => {
     let requirement = {
-      id: Math.random(),
+      id: Utils.getRandomNumber(),
       title: title,
       description: description,
       needId: selectedNeed?.id,
