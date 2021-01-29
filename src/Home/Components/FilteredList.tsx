@@ -3,6 +3,7 @@ import React, { ReactElement } from 'react';
 import { ListGroup } from 'react-bootstrap';
 import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
+
 import { Bank } from '../../models/Bank';
 import { selectBank } from '../../store/reducers/kravbank-reducer';
 

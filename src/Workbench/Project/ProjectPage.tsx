@@ -1,6 +1,12 @@
 import React, { ReactElement, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Button, ListGroup, InputGroup, FormControl } from 'react-bootstrap';
+import {
+  Button,
+  ListGroup,
+  InputGroup,
+  FormControl,
+  Card
+} from 'react-bootstrap';
 import dayjs from 'dayjs';
 
 import { RootState } from '../../store/configureStore';
@@ -9,8 +15,6 @@ import {
   publishProject,
   editProject
 } from '../../store/reducers/kravbank-reducer';
-
-import styles from './ProjectPage.module.scss';
 
 export default function ProjectPage(): ReactElement {
   const dispatch = useDispatch();
@@ -70,36 +74,35 @@ export default function ProjectPage(): ReactElement {
   function headerSection(editmode: boolean) {
     if (editmode) {
       return (
-        <div className={styles.header}>
-          <label htmlFor="title">Title</label>
-          <InputGroup className="mb-3 30vw">
-            <FormControl
-              name="title"
-              onChange={handleTitleChange}
-              defaultValue={project.title}
-            />
-          </InputGroup>
-          <label htmlFor="description">Description</label>
-          <InputGroup>
-            <FormControl
-              name="description"
-              onChange={handleDescriptionChange}
-              defaultValue={project.description}
-            />
-          </InputGroup>
-          <Button
-            onClick={editProjectInfo()}
-            className={styles.header__saveButton}
-          >
-            Save
-          </Button>
-        </div>
+        <Card className="mt-3">
+          <Card.Body>
+            <label htmlFor="title">Title</label>
+            <InputGroup className="mb-3">
+              <FormControl
+                name="title"
+                onChange={handleTitleChange}
+                defaultValue={project.title}
+              />
+            </InputGroup>
+            <label htmlFor="description">Description</label>
+            <InputGroup>
+              <FormControl
+                name="description"
+                onChange={handleDescriptionChange}
+                defaultValue={project.description}
+              />
+            </InputGroup>
+            <Button className="mt-3" onClick={editProjectInfo()}>
+              Save
+            </Button>
+          </Card.Body>
+        </Card>
       );
     } else {
       return (
-        <div className={styles.header}>
+        <div className="mt-3 mb-5">
           <h1>{project.title}</h1>
-          <h5>{project.description}</h5>{' '}
+          <h5>{project.description}</h5>
           <Button onClick={() => setEditMode(true)}>Edit</Button>
         </div>
       );
@@ -116,16 +119,14 @@ export default function ProjectPage(): ReactElement {
           </ListGroup.Item>
         );
       });
-      return (
-        <ListGroup className={styles.publicationList}>{publication}</ListGroup>
-      );
+      return <ListGroup className="mt-3">{publication}</ListGroup>;
     }
   };
 
   const publicationEditor = (show: boolean) => {
     if (show) {
       return (
-        <div className={styles.publication}>
+        <ListGroup className="mt-3">
           <ListGroup.Item>
             <label htmlFor="title">Comment</label>
             <InputGroup className="mb-3 30vw">
@@ -136,14 +137,9 @@ export default function ProjectPage(): ReactElement {
                 onChange={handleCommentChange}
               />
             </InputGroup>
-            <Button
-              onClick={handlePublishProject()}
-              className={styles.publication__addButton}
-            >
-              Publish
-            </Button>
+            <Button onClick={handlePublishProject()}>Publish</Button>
           </ListGroup.Item>
-        </div>
+        </ListGroup>
       );
     } else {
       return <></>;
@@ -154,7 +150,9 @@ export default function ProjectPage(): ReactElement {
     <>
       {headerSection(editMode)}
       <h4>Publications</h4>
-      <Button onClick={() => setShowEditor(true)}>New publication</Button>
+      <Button className="mb-3" onClick={() => setShowEditor(true)}>
+        New publication
+      </Button>
       {publicationEditor(showEditor)}
       {publicationList(publications)}
     </>

@@ -1,25 +1,8 @@
-.formdiv {
-  display: flex;
-  flex-direction: column;
-  margin-top: 2rem;
-}
-
-label {
-  display: flex;
-  flex-direction: column;
-}
-
-.newbutton {
-  width: 7rem;
+.addButton {
   margin-top: 1rem;
 }
 
-.codeoutput {
+.codeList {
   margin-top: 4rem;
   width: 40vw;
-}
-.codeinput {
-  width: 40vw;
-  margin-bottom: 3rem;
-  margin-top: 1rem;
 }

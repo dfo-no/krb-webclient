@@ -47,7 +47,7 @@ export default function CodelistPage(): ReactElement {
         </ListGroup.Item>
       );
     });
-    return <ListGroup className={styles.codeoutput}>{codes}</ListGroup>;
+    return <ListGroup className={styles.codeList}>{codes}</ListGroup>;
   };
 
   const setSelectedKodeliste = (id: number) => () => {
@@ -78,7 +78,7 @@ export default function CodelistPage(): ReactElement {
   function renderCodelistEditor(show: boolean) {
     if (show) {
       return (
-        <Card>
+        <Card className="mt-3">
           <Card.Body>
             <label htmlFor="title">Title</label>
             <InputGroup className="mb-3 30vw">
@@ -91,7 +91,7 @@ export default function CodelistPage(): ReactElement {
                 onChange={handleDescriptionChange}
               />
             </InputGroup>
-            <Button className={styles.newbutton} onClick={addNewCodelist}>
+            <Button className={styles.addButton} onClick={addNewCodelist}>
               Create
             </Button>
           </Card.Body>
