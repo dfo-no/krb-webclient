@@ -45,7 +45,7 @@ export default function SpecEditor(): ReactElement {
     setSelectedNeedList(selectedNeeds);
   };
 
-  const OnDownload = () => {
+  const onDownLoad = () => {
     const newBank = {
       id: selectedBank.id,
       title: selectedBank.title,
@@ -93,7 +93,7 @@ export default function SpecEditor(): ReactElement {
           <h2>{selectedBank.title}</h2>
         </Col>
         <Col>
-          <Button onClick={OnDownload}>Download</Button>
+          <Button onClick={onDownLoad}>Download</Button>
         </Col>
       </Row>
       <Row className="m-5">

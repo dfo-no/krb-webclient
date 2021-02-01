@@ -34,7 +34,7 @@ function App(props: any) {
           {...props}
         />
         <ProtectedRoute
-          path="/reponseeditor"
+          path="/responseeditor"
           component={ResponseEditor}
           {...props}
         />

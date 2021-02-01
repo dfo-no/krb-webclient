@@ -5,7 +5,6 @@ import { Requirement } from '../models/Requirement';
 import { Need } from '../models/Need';
 import { useForm } from 'react-hook-form';
 import { Bank } from '../models/Bank';
-import styles from './ResponseEditor.module.scss';
 
 export default function ResponseEditor(): ReactElement {
   const { register, handleSubmit } = useForm();
@@ -60,7 +59,7 @@ export default function ResponseEditor(): ReactElement {
     setSelectedNeedList(selectedNeeds);
   };
 
-  const OnDownload = () => {
+  const onDownLoad = () => {
     const newBank = {
       id: uploadedBank.id,
       title: uploadedBank.title,
@@ -109,7 +108,7 @@ export default function ResponseEditor(): ReactElement {
           <h2>{uploadedBank.title}</h2>
         </Col>
         <Col>
-          <Button onClick={OnDownload}>Download</Button>
+          <Button onClick={onDownLoad}>Download</Button>
         </Col>
       </Row>
       <Row className="m-5">
