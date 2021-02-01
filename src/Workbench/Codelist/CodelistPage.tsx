@@ -1,6 +1,6 @@
 import React, { ReactElement, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import {
   Button,
   Card,
@@ -12,24 +12,30 @@ import {
 import styles from './CodelistPage.module.scss';
 import { RootState } from '../../store/rootReducer';
 import { Codelist } from '../../models/Codelist';
-import {
-  addCodelist,
-  selectCodelist
-} from '../../store/reducers/kravbank-reducer';
+import { addCodeList } from '../../store/reducers/project-reducer';
+import { selectCodeList } from '../../store/reducers/selectedCodelist-reducer';
 import { Utils } from '../../common/Utils';
+import { Bank } from '../../models/Bank';
+
+interface RouteParams {
+  projectId: string;
+}
 
 export default function CodelistPage(): ReactElement {
   const dispatch = useDispatch();
-  const { codelists, selectedProject } = useSelector(
-    (state: RootState) => state.kravbank
-  );
+  const { list } = useSelector((state: RootState) => state.project);
+  const { id } = useSelector((state: RootState) => state.selectedProject);
+  let { projectId } = useParams<RouteParams>();
   const [showEditor, setShowEdior] = useState(false);
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
 
-  if (!selectedProject) {
+  if (!id) {
     return <p>Please select a project</p>;
   }
+  const selectedProject = Utils.ensure(
+    list.find((bank: Bank) => bank.id === id)
+  );
 
   const renderCodelist = (codelist: Codelist[]) => {
     codelist
@@ -52,7 +58,7 @@ export default function CodelistPage(): ReactElement {
   };
 
   const setSelectedKodeliste = (id: number) => () => {
-    dispatch(selectCodelist(id));
+    dispatch(selectCodeList(id));
   };
   const handleShowEditor = () => {
     setShowEdior(true);
@@ -66,14 +72,15 @@ export default function CodelistPage(): ReactElement {
   };
 
   const addNewCodelist = () => {
-    let codeList = {
+    let codeList: Codelist = {
       title: title,
       description: description,
       id: Utils.getRandomNumber(),
       codes: []
     };
+    const projectIdNumber = +projectId;
     setShowEdior(false);
-    dispatch(addCodelist(codeList));
+    dispatch(addCodeList({ id: projectIdNumber, codelist: codeList }));
   };
 
   function renderCodelistEditor(show: boolean) {
@@ -108,7 +115,7 @@ export default function CodelistPage(): ReactElement {
       <h1>Codelists</h1>
       <Button onClick={handleShowEditor}>New</Button>
       {renderCodelistEditor(showEditor)}
-      {renderCodelist(codelists)}
+      {renderCodelist(selectedProject.codelist)}
     </>
   );
 }

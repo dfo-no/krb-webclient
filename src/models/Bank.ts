@@ -9,7 +9,7 @@ export interface Bank {
   description: string;
   needs: Need[];
   requirements?: Requirement[];
-  codelist?: Codelist[];
+  codelist: Codelist[];
   version: number;
   publications?: Publication[];
   publishedDate?: string;

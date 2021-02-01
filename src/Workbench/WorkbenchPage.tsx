@@ -12,7 +12,7 @@ import {
 } from '../store/reducers/project-reducer';
 import { AiFillDelete } from 'react-icons/ai';
 import { useForm } from 'react-hook-form';
-import { selectProject } from '../store/reducers/kravbank-reducer';
+import { selectProject } from '../store/reducers/selectedProject-reducer';
 import { Utils } from '../common/Utils';
 
 type FormValues = {
@@ -56,7 +56,7 @@ export default function WorkbenchPage(): ReactElement {
   };
 
   function onSelect(project: Bank) {
-    dispatch(selectProject(project));
+    dispatch(selectProject(project.id));
     history.push(`/workbench/${project.id}`);
   }
 
