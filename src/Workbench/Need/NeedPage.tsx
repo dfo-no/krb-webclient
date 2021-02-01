@@ -59,7 +59,7 @@ function NeedPage(): ReactElement {
   /* const submitBehov = (data: Need) => {
     // TODO: ikke gi ID til nye behov.
     const need: Need = {
-      id: Math.random(),
+      id: Utils.getRandomNumber(),
       tittel: data.tittel,
       beskrivelse: data.beskrivelse
     };
@@ -69,7 +69,7 @@ function NeedPage(): ReactElement {
 
   /* const submitKrav = (data: Krav) => {
     const krav: Krav = {
-      id: Math.random(),
+      id: Utils.getRandomNumber(),
       tittel: data.tittel,
       beskrivelse: data.beskrivelse,
       type: data.type,

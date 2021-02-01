@@ -13,6 +13,7 @@ import { Product } from '../../models/Product';
 import { RootState } from '../../store/rootReducer';
 import { addProduct, editProduct } from '../../store/reducers/kravbank-reducer';
 import styles from './ProductPage.module.scss';
+import { Utils } from '../../common/Utils';
 
 export default function ProductPage(): ReactElement {
   const dispatch = useDispatch();
@@ -45,7 +46,7 @@ export default function ProductPage(): ReactElement {
     let product = {
       title: title,
       description: description,
-      id: Math.random()
+      id: Utils.getRandomNumber()
     };
     setShowEdior(false);
     dispatch(addProduct(product));

@@ -6,4 +6,5 @@ export interface Requirement {
   type?: string;
   kodeliste_id?: number;
   file?: FileList;
+  selected?: boolean;
 }

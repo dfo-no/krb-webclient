@@ -1,5 +1,4 @@
 import React from 'react';
-import { Provider } from 'react-redux';
 import { Route, Switch } from 'react-router-dom';
 
 import styles from './App.module.scss';
@@ -10,6 +9,7 @@ import BankPage from './Home/BankPage';
 import { ProtectedRoute } from './authentication/ProtectedRoute';
 import WorkbenchModule from './Workbench/WorkbenchModule';
 import ResponseEditor from './ResponseEditor/ResponseEditor';
+import SpecEditor from './SpecEditor/SpecEditor';
 
 function App(props: any) {
   return (
@@ -26,6 +26,11 @@ function App(props: any) {
         <ProtectedRoute
           path="/workbench"
           component={WorkbenchModule}
+          {...props}
+        />
+        <ProtectedRoute
+          path="/speceditor/:id"
+          component={SpecEditor}
           {...props}
         />
         <ProtectedRoute
