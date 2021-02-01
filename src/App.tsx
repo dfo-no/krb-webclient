@@ -9,6 +9,7 @@ import HomePage from './Home/HomePage';
 import BankPage from './Home/BankPage';
 import { ProtectedRoute } from './authentication/ProtectedRoute';
 import WorkbenchModule from './Workbench/WorkbenchModule';
+import ResponseEditor from './ResponseEditor/ResponseEditor';
 
 function App(props: any) {
   return (
@@ -25,6 +26,11 @@ function App(props: any) {
         <ProtectedRoute
           path="/workbench"
           component={WorkbenchModule}
+          {...props}
+        />
+        <ProtectedRoute
+          path="/reponseeditor"
+          component={ResponseEditor}
           {...props}
         />
       </Switch>

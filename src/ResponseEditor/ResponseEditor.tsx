@@ -1,25 +1,41 @@
 import React, { ReactElement, useState } from 'react';
 import { Container, Row, Button, Col } from 'react-bootstrap';
-import { useSelector } from 'react-redux';
 
 import { Requirement } from '../models/Requirement';
 import { Need } from '../models/Need';
-import { RootState } from '../store/rootReducer';
 import { useForm } from 'react-hook-form';
+import { Bank } from '../models/Bank';
+import styles from './ResponseEditor.module.scss';
 
-export default function SpecEditor(): ReactElement {
+export default function ResponseEditor(): ReactElement {
   const { register, handleSubmit } = useForm();
-  const [selectedNeedlist, setSelectedNeedList] = useState<Need[]>([]);
   const [fileUploaded, setFileUploaded] = useState(false);
+  const [uploadedBank, setUploadedBank] = useState<Bank | null>(null);
+  const [selectedNeedlist, setSelectedNeedList] = useState<Need[]>([]);
 
-  const onFileChange = (event: any) => {
-    console.log(event.target.files[0] as Bank);
+  const onLoad = async (e: any) => {
+    e.preventDefault();
+    const reader = new FileReader();
+    reader.onload = async (e: any) => {
+      const text = e.target.result;
+      let parsedText = JSON.parse(text);
+      setUploadedBank(parsedText as Bank);
+    };
+    reader.readAsText(e.target.files[0]);
+    setFileUploaded(true);
   };
+
   if (!fileUploaded) {
-    return <input type="file" onChange={onFileChange} />;
+    return <input type="file" onChange={onLoad} />;
   }
 
-  /* const onSubmit = (data: any) => {
+  if (uploadedBank === null) {
+    return <p>A bank must be uploaded</p>;
+  }
+
+  const needs = uploadedBank.needs;
+
+  const onSubmit = (data: any) => {
     let selectedNeeds: Need[] = [];
     needs.forEach((need: Need) => {
       if (need.tittel in data && data[need.tittel] !== false) {
@@ -46,16 +62,19 @@ export default function SpecEditor(): ReactElement {
 
   const OnDownload = () => {
     const newBank = {
-      id: selectedBank.id,
-      title: selectedBank.title,
-      description: selectedBank.description,
+      id: uploadedBank.id,
+      title: uploadedBank.title,
+      description: uploadedBank.description,
       needs: selectedNeedlist,
-      codelist: selectedBank.codelist,
-      version: selectedBank.version,
-      publishedDate: selectedBank.publishedDate
+      codelist: uploadedBank.codelist,
+      version: uploadedBank.version,
+      publishedDate: uploadedBank.publishedDate
     };
     const fileDownload = require('js-file-download');
-    fileDownload(JSON.stringify(newBank), 'filename.json');
+    fileDownload(
+      JSON.stringify(newBank),
+      `${uploadedBank.title}-${uploadedBank.publishedDate}.json`
+    );
   };
 
   const needList = (needlist: Need[]) => {
@@ -64,15 +83,16 @@ export default function SpecEditor(): ReactElement {
         <>
           <h5>{need.tittel}</h5>
           {need.requirements.map((c, i) => (
-            <div className="ml-5">
+            <div className={`ml-5`}>
               <label key={c.id}>
+                {c.title}
                 <input
                   type="checkbox"
                   value={i}
                   name={need.tittel}
                   ref={register}
+                  className={`ml-2`}
                 />
-                {c.title}
               </label>
             </div>
           ))}
@@ -81,12 +101,12 @@ export default function SpecEditor(): ReactElement {
     });
     return <>{needs}</>;
   };
-*/
+
   return (
     <Container fluid>
-      {/*<Row >
+      <Row className="m-4">
         <Col>
-          <h2>{selectedBank.title}</h2>
+          <h2>{uploadedBank.title}</h2>
         </Col>
         <Col>
           <Button onClick={OnDownload}>Download</Button>
@@ -101,7 +121,7 @@ export default function SpecEditor(): ReactElement {
             </Button>
           </form>
         </Col>
-      </Row>*/}
+      </Row>
     </Container>
   );
 }

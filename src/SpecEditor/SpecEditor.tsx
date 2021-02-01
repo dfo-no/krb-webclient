@@ -62,17 +62,19 @@ export default function SpecEditor(): ReactElement {
         <>
           <h5>{need.tittel}</h5>
           {need.requirements.map((c, i) => (
-            <div className="ml-5">
-              <label key={c.id}>
+            <Row>
+              <Col>
+                <label key={c.id}>{c.title}</label>
+              </Col>
+              <Col>
                 <input
                   type="checkbox"
                   value={i}
                   name={need.tittel}
                   ref={register}
                 />
-                {c.title}
-              </label>
-            </div>
+              </Col>
+            </Row>
           ))}
         </>
       );
