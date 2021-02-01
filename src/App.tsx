@@ -8,6 +8,7 @@ import HomePage from './Home/HomePage';
 import BankPage from './Home/BankPage';
 import { ProtectedRoute } from './authentication/ProtectedRoute';
 import WorkbenchModule from './Workbench/WorkbenchModule';
+import ResponseEditor from './ResponseEditor/ResponseEditor';
 import SpecEditor from './SpecEditor/SpecEditor';
 
 function App(props: any) {
@@ -30,6 +31,11 @@ function App(props: any) {
         <ProtectedRoute
           path="/speceditor/:id"
           component={SpecEditor}
+          {...props}
+        />
+        <ProtectedRoute
+          path="/responseeditor"
+          component={ResponseEditor}
           {...props}
         />
       </Switch>

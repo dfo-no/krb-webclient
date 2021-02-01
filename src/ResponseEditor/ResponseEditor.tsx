@@ -59,7 +59,7 @@ export default function ResponseEditor(): ReactElement {
     setSelectedNeedList(selectedNeeds);
   };
 
-  const OnDownload = () => {
+  const onDownLoad = () => {
     const newBank = {
       id: uploadedBank.id,
       title: uploadedBank.title,
@@ -108,7 +108,7 @@ export default function ResponseEditor(): ReactElement {
           <h2>{uploadedBank.title}</h2>
         </Col>
         <Col>
-          <Button onClick={OnDownload}>Download</Button>
+          <Button onClick={onDownLoad}>Download</Button>
         </Col>
       </Row>
       <Row className="m-5">
