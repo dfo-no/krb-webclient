@@ -1,6 +1,8 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { del, get, post, put } from '../../api/http';
+import { Utils } from '../../common/Utils';
 import { Bank } from '../../models/Bank';
+import { Need } from '../../models/Need';
 
 interface ProjectState {
   list: Bank[];
@@ -70,12 +72,20 @@ const projectSlice = createSlice({
 
     // Should not be needed, when removing, we reload the list
     deleteProject(state, { payload }: PayloadAction<Bank>) {
-      const index = state.list.findIndex(
-        (project) => project.id === payload.id
+      const index = Utils.ensure(
+        state.list.findIndex((project) => project.id === payload.id)
       );
-      if (index !== -1) {
-        state.list.splice(index, 1);
-      }
+      state.list.splice(index, 1);
+    },
+    addNeed(state, { payload }: PayloadAction<{ id: number; need: Need }>) {
+      /* This 'findIndex' is wrapped in Utils.ensure() because we findIndex can
+      return "undefined", but we are *sure* this index exist there.
+      Otherwise the program would not work. If we didn't use Utils.ensure(),
+      we would have to have a if-else statement to check for undefined.*/
+      const index = Utils.ensure(
+        state.list.findIndex((project) => project.id === payload.id)
+      );
+      state.list[index].needs.push(payload.need);
     }
   },
   extraReducers: (builder) => {
@@ -112,6 +122,6 @@ const projectSlice = createSlice({
   }
 });
 
-export const { addProjects, deleteProject } = projectSlice.actions;
+export const { addProjects, deleteProject, addNeed } = projectSlice.actions;
 
 export default projectSlice.reducer;

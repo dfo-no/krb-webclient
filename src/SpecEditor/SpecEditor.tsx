@@ -21,9 +21,9 @@ export default function SpecEditor(): ReactElement {
   const onSubmit = (data: any) => {
     let selectedNeeds: Need[] = [];
     needs.forEach((need: Need) => {
-      //Check if need.tittel is present to ensure need has any possible requirements to select. 
-      //React hook forms, sets the value of data.(need-title) to false if none are selected, 
-      // so we need to ensure data actually exist. 
+      //Check if need.tittel is present to ensure need has any possible requirements to select.
+      //React hook forms, sets the value of data.(need-title) to false if none are selected,
+      // so we need to ensure data actually exist.
       if (need.tittel in data && data[need.tittel] !== false) {
         let reqIndexes: string[];
         need.requirements.length <= 1
@@ -57,7 +57,10 @@ export default function SpecEditor(): ReactElement {
       publishedDate: selectedBank.publishedDate
     };
     const fileDownload = require('js-file-download');
-    fileDownload(JSON.stringify(newBank), `${selectedBank.title}-${selectedBank.publishedDate}.json`);
+    fileDownload(
+      JSON.stringify(newBank),
+      `${selectedBank.title}-${selectedBank.publishedDate}.json`
+    );
   };
 
   const needList = (needlist: Need[]) => {
@@ -100,7 +103,7 @@ export default function SpecEditor(): ReactElement {
             {needList(needs)}
             <Button type="submit" className="mt-4">
               Select
-            </Button>}
+            </Button>
           </form>
         </Col>
       </Row>

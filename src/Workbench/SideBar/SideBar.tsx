@@ -34,9 +34,9 @@ const renderRouteLinks = (routes: IRouteLink[], isProjectSelected: boolean) => {
 };
 
 function SideBar(): ReactElement {
-  const projectBank = useSelector(
-    (state: RootState) => state.kravbank.selectedProject
-  );
+  const { id } = useSelector((state: RootState) => state.selectedProject);
+
+  const { list } = useSelector((state: RootState) => state.project);
 
   let match = useRouteMatch<RouteParams>('/workbench/:projectId');
   /* match = {
@@ -47,9 +47,11 @@ function SideBar(): ReactElement {
   }*/
 
   const currentUrl = match?.url ? match.url : '/workbench';
-  const isProjectSelected = projectBank ? true : false;
+  const isProjectSelected = id ? true : false;
 
-  const displayTitle = projectBank ? projectBank.title : '<None selected>';
+  const selectProject = list.find((bank) => bank.id === id);
+
+  const displayTitle = selectProject ? selectProject.title : '<None selected>';
 
   const routes = [
     { link: `${currentUrl}`, name: 'Workbench: ' + displayTitle },

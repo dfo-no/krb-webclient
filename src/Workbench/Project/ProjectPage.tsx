@@ -19,14 +19,12 @@ import { Utils } from '../../common/Utils';
 
 export default function ProjectPage(): ReactElement {
   const dispatch = useDispatch();
-  const { selectedProject } = useSelector((state: RootState) => state.kravbank);
+  const { id } = useSelector((state: RootState) => state.selectedProject);
 
   const { list } = useSelector((state: RootState) => state.project);
 
-  let projectindex = list.findIndex(
-    (project) => project.id === selectedProject?.id
-  );
-  const project = list[projectindex];
+  let project = Utils.ensure(list.find((project) => project.id === id));
+
   const publications = project.publications;
   const [showEditor, setShowEditor] = useState(false);
   const [comment, setComment] = useState('');

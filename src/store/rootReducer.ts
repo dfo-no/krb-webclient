@@ -4,6 +4,7 @@ import counterReducer from './reducers/counter-reducer';
 import kravbankReducer from './reducers/kravbank-reducer';
 import loaderReducer from './reducers/loader-reducer';
 import projectReducer from './reducers/project-reducer';
+import selectedProjectReducer from './reducers/selectedProject-reducer';
 import userReducer from './reducers/userReducer';
 
 const rootReducer = combineReducers({
@@ -12,7 +13,8 @@ const rootReducer = combineReducers({
   kravbank: kravbankReducer,
   user: userReducer,
   bank: bankReducer,
-  project: projectReducer
+  project: projectReducer,
+  selectedProject: selectedProjectReducer
 });
 
 export type RootState = ReturnType<typeof rootReducer>;

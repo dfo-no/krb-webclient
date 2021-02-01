@@ -1,4 +1,4 @@
-import React, { ReactElement } from 'react';
+import React, { ReactElement, useEffect } from 'react';
 import { Col, Container, Row } from 'react-bootstrap';
 import { Route, Switch, useRouteMatch } from 'react-router-dom';
 
@@ -10,9 +10,22 @@ import ProductPage from './Product/ProductPage';
 import ProjectPage from './Project/ProjectPage';
 import SideBar from './SideBar/SideBar';
 import WorkbenchPage from './WorkbenchPage';
+import { useDispatch } from 'react-redux';
+import { getProjectsThunk } from '../store/reducers/project-reducer';
 
 export default function WorkbenchModule(): ReactElement {
   let { url } = useRouteMatch();
+  const dispatch = useDispatch();
+
+  /* Every child of this WorkbenchModule need the list of projects.
+     So we fetch it here instead of in each child. This also makes it
+     possible to have a loading-indicator or some other nice stuff */
+  useEffect(() => {
+    async function fetchEverything() {
+      dispatch(getProjectsThunk());
+    }
+    fetchEverything();
+  }, [dispatch]);
 
   return (
     <Container fluid>

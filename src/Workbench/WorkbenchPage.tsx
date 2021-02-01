@@ -1,4 +1,4 @@
-import React, { ReactElement, useEffect, useState } from 'react';
+import React, { ReactElement, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { Button, Col, Form, ListGroup, Row } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
@@ -12,8 +12,8 @@ import {
 } from '../store/reducers/project-reducer';
 import { AiFillDelete } from 'react-icons/ai';
 import { useForm } from 'react-hook-form';
-import { selectProject } from '../store/reducers/kravbank-reducer';
 import { Utils } from '../common/Utils';
+import { selectProject } from '../store/reducers/selectedProject-reducer';
 
 type FormValues = {
   title: string;
@@ -25,13 +25,6 @@ export default function WorkbenchPage(): ReactElement {
   const { list } = useSelector((state: RootState) => state.project);
   const history = useHistory();
   const [showEditor, setShowEditor] = useState(false);
-
-  useEffect(() => {
-    async function fetchEverything() {
-      dispatch(getProjectsThunk());
-    }
-    fetchEverything();
-  }, [dispatch]);
 
   const { register, handleSubmit, reset, errors } = useForm<FormValues>();
   const [validated] = useState(false);
@@ -56,7 +49,7 @@ export default function WorkbenchPage(): ReactElement {
   };
 
   function onSelect(project: Bank) {
-    dispatch(selectProject(project));
+    dispatch(selectProject(project.id));
     history.push(`/workbench/${project.id}`);
   }
 

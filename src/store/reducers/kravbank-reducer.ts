@@ -49,9 +49,9 @@ const kravbankSlice = createSlice({
     addProject(state, { payload }: PayloadAction<Bank>) {
       state.projects.push(payload);
     },
-    selectProject(state, { payload }: PayloadAction<Bank>) {
+    /*selectProject(state, { payload }: PayloadAction<Bank>) {
       state.selectedProject = payload;
-    },
+    },*/
     editProject(state, { payload }: PayloadAction<Bank>) {
       const id = state.selectedProject?.id;
       let projectindex = state.projects.findIndex(
@@ -179,7 +179,6 @@ const kravbankSlice = createSlice({
 export const {
   addBanks,
   addProject,
-  selectProject,
   editNeed,
   editProject,
   publishProject,
