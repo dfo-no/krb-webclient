@@ -12,8 +12,8 @@ import {
 } from '../store/reducers/project-reducer';
 import { AiFillDelete } from 'react-icons/ai';
 import { useForm } from 'react-hook-form';
-import { Utils } from '../common/Utils';
 import { selectProject } from '../store/reducers/selectedProject-reducer';
+import { Utils } from '../common/Utils';
 
 type FormValues = {
   title: string;
@@ -39,7 +39,7 @@ function WorkbenchPage(): ReactElement {
       title: post.title,
       description: post.description,
       needs: [],
-      publications: [],
+      products: [],
       codelist: [],
       version: 1
     };

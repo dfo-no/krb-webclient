@@ -13,8 +13,10 @@ import { RootState } from '../../store/rootReducer';
 import { Publication } from '../../models/Publication';
 import {
   publishProject,
-  editProject
-} from '../../store/reducers/kravbank-reducer';
+  editProject,
+  putProjectThunk
+} from '../../store/reducers/project-reducer';
+import { postBank } from '../../store/reducers/bank-reducer';
 import { Utils } from '../../common/Utils';
 import { Bank } from '../../models/Bank';
 
@@ -22,24 +24,28 @@ function ProjectPage(): ReactElement {
   const dispatch = useDispatch();
   const { id } = useSelector((state: RootState) => state.selectedProject);
   const { list } = useSelector((state: RootState) => state.project);
-
   const [showEditor, setShowEditor] = useState(false);
   const [comment, setComment] = useState('');
   const [editMode, setEditMode] = useState(false);
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
 
-  if (list.length === 0) {
-    return <div>Loading ProjectPage....</div>;
+  if (!list) {
+    return <p>Loading ....</p>;
   }
 
-  let project = Utils.ensure(list.find((project) => project.id === id));
-
-  const publications = project.publications;
+  let project = Utils.ensure(list.find((project: Bank) => project.id === id));
 
   const handlePublishProject = () => () => {
-    let versionNumber = publications ? publications[-1].version + 1 : 1;
+    let versionNumber = project.publications
+      ? project.publications[project.publications.length - 1].version + 1
+      : 1;
     let convertedDate = dayjs(new Date()).toJSON();
+    let publishedProject = { ...project };
+    publishedProject.publishedDate = convertedDate;
+    publishedProject.id = Utils.getRandomNumber();
+    dispatch(postBank(publishedProject));
+
     const publication: Publication = {
       date: convertedDate,
       comment: comment,
@@ -47,7 +53,8 @@ function ProjectPage(): ReactElement {
       id: Utils.getRandomNumber()
     };
     setShowEditor(false);
-    dispatch(publishProject(publication));
+    dispatch(publishProject({ id: project.id, publication: publication }));
+    dispatch(putProjectThunk(project));
   };
 
   const editProjectInfo = () => () => {
@@ -56,13 +63,14 @@ function ProjectPage(): ReactElement {
       title: title,
       description: description,
       needs: project.needs,
-      requirements: project.requirements,
+      products: project.products,
       codelist: project.codelist,
       version: project.version,
       publications: project.publications
     };
     setEditMode(false);
     dispatch(editProject(newproject));
+    dispatch(putProjectThunk(project));
   };
 
   const handleCommentChange = (event: any) => {
@@ -158,7 +166,7 @@ function ProjectPage(): ReactElement {
         New publication
       </Button>
       {publicationEditor(showEditor)}
-      {publicationList(publications)}
+      {publicationList(project.publications)}
     </>
   );
 }

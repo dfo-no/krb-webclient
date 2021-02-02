@@ -11,13 +11,25 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { Product } from '../../models/Product';
 import { RootState } from '../../store/rootReducer';
-import { addProduct, editProduct } from '../../store/reducers/kravbank-reducer';
+import {
+  addProduct,
+  editProduct,
+  putProjectThunk
+} from '../../store/reducers/project-reducer';
 import styles from './ProductPage.module.scss';
 import { Utils } from '../../common/Utils';
+import { useParams } from 'react-router-dom';
+import { Bank } from '../../models/Bank';
+
+interface RouteParams {
+  projectId: string;
+}
 
 export default function ProductPage(): ReactElement {
   const dispatch = useDispatch();
-  const { products } = useSelector((state: RootState) => state.kravbank);
+  const { id } = useSelector((state: RootState) => state.selectedProject);
+  let { projectId } = useParams<RouteParams>();
+  const { list } = useSelector((state: RootState) => state.project);
   const [showEditor, setShowEdior] = useState(false);
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
@@ -33,23 +45,35 @@ export default function ProductPage(): ReactElement {
     setShowEdior(true);
   };
 
+  if (!id) {
+    return <p>No Project selected</p>;
+  }
+
+  const selectedProject = Utils.ensure(
+    list.find((bank: Bank) => bank.id === id)
+  );
+
   const editProductElement = (id: number) => () => {
-    let product = {
+    let product: Product = {
       title: title,
       description: description,
       id: id
     };
-    dispatch(editProduct(product));
+    const projectIdNumber = +projectId;
+    dispatch(editProduct({ id: projectIdNumber, product: product }));
+    dispatch(putProjectThunk(selectedProject));
   };
 
   const addNewProduct = () => {
-    let product = {
+    let product: Product = {
       title: title,
       description: description,
       id: Utils.getRandomNumber()
     };
+    const projectIdNumber = +projectId;
     setShowEdior(false);
-    dispatch(addProduct(product));
+    dispatch(addProduct({ id: projectIdNumber, product: product }));
+    dispatch(putProjectThunk(selectedProject));
   };
   function productEditor(show: boolean) {
     if (show) {
@@ -130,7 +154,7 @@ export default function ProductPage(): ReactElement {
       <h1>Products</h1>
       <Button onClick={handleShowEditor}>New Product</Button>
       {productEditor(showEditor)}
-      {renderProducts(products)}
+      {renderProducts(selectedProject.products)}
     </>
   );
 }
