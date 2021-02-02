@@ -32,7 +32,6 @@ export default function CodeListEditor(): ReactElement {
   const { id } = useSelector((state: RootState) => state.selectedProject);
   const { listId } = useSelector((state: RootState) => state.selectedCodeList);
   let { projectId } = useParams<RouteParams>();
-  //const [codes, setCodes] = useState(codelist ? codelist.codes : []);
   const [showEditor, setShowEdior] = useState(false);
   const [editmode, setEditMode] = useState(false);
   const [title, setTitle] = useState('');
@@ -70,14 +69,11 @@ export default function CodeListEditor(): ReactElement {
   };
 
   const addNewCode = () => {
-    //let newCodeList: Code[] = [...codes];
     let code = {
       title: title,
       description: description,
       id: Utils.getRandomNumber()
     };
-    //newCodeList.push(Kode);
-    //setCodes(newCodeList);
     const projectIdNumber = +projectId;
     setShowEdior(false);
     dispatch(
@@ -97,9 +93,6 @@ export default function CodeListEditor(): ReactElement {
       description: description
     };
     const projectIdNumber = +projectId;
-    //let newCodeList: Code[] = [...codes];
-    //newCodeList[index] = code;
-    //setCodes(newCodeList);
     dispatch(
       editCode({
         id: projectIdNumber,
