@@ -24,10 +24,7 @@ export const getBanks = createAsyncThunk('getBanks', async () => {
 });
 
 export const postBank = createAsyncThunk('postBank', async (bank: Bank) => {
-  const response = await post<Bank>(
-    `http://localhost:3001/banks`,
-    JSON.stringify(bank)
-  );
+  const response = await post<Bank>(`http://localhost:3001/banks`, bank);
   return response.data;
 });
 

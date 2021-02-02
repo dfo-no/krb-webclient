@@ -97,11 +97,6 @@ const projectSlice = createSlice({
       const index = state.list.findIndex(
         (project) => project.id === payload.id
       );
-      /*let publishedProject = state.projects[projectindex];
-      publishedProject.publishedDate = payload.date;
-
-      state.banks.push(publishedProject);*/
-      //increase version-number before continued editing
       state.list[index].version += 1;
 
       if (!state.list[index].publications) state.list[index].publications = [];

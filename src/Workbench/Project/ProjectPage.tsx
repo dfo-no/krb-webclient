@@ -13,7 +13,8 @@ import { RootState } from '../../store/rootReducer';
 import { Publication } from '../../models/Publication';
 import {
   publishProject,
-  editProject
+  editProject,
+  putProjectThunk
 } from '../../store/reducers/project-reducer';
 import { postBank } from '../../store/reducers/bank-reducer';
 import { Utils } from '../../common/Utils';
@@ -36,7 +37,6 @@ export default function ProjectPage(): ReactElement {
   let project = Utils.ensure(list.find((project: Bank) => project.id === id));
 
   const handlePublishProject = () => () => {
-    console.log(project.publications);
     let versionNumber = project.publications
       ? project.publications[project.publications.length - 1].version + 1
       : 1;
@@ -53,6 +53,7 @@ export default function ProjectPage(): ReactElement {
     };
     setShowEditor(false);
     dispatch(publishProject({ id: project.id, publication: publication }));
+    dispatch(putProjectThunk(project));
   };
 
   const editProjectInfo = () => () => {
@@ -68,6 +69,7 @@ export default function ProjectPage(): ReactElement {
     };
     setEditMode(false);
     dispatch(editProject(newproject));
+    dispatch(putProjectThunk(project));
   };
 
   const handleCommentChange = (event: any) => {
