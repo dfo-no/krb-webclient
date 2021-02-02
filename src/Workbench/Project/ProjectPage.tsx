@@ -16,17 +16,16 @@ import {
   editProject
 } from '../../store/reducers/kravbank-reducer';
 import { Utils } from '../../common/Utils';
+import { Bank } from '../../models/Bank';
 
 export default function ProjectPage(): ReactElement {
   const dispatch = useDispatch();
-  const { selectedProject } = useSelector((state: RootState) => state.kravbank);
+  const { id } = useSelector((state: RootState) => state.selectedProject);
 
   const { list } = useSelector((state: RootState) => state.project);
 
-  let projectindex = list.findIndex(
-    (project) => project.id === selectedProject?.id
-  );
-  const project = list[projectindex];
+  let project = Utils.ensure(list.find((project: Bank) => project.id === id));
+
   const publications = project.publications;
   const [showEditor, setShowEditor] = useState(false);
   const [comment, setComment] = useState('');
@@ -53,7 +52,7 @@ export default function ProjectPage(): ReactElement {
       title: title,
       description: description,
       needs: project.needs,
-      requirements: project.requirements,
+      products: project.products,
       codelist: project.codelist,
       version: project.version,
       publications: project.publications

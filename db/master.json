@@ -6,6 +6,8 @@
       "description": "Generelle behov og krav",
       "version": 1,
       "ordering": 1,
+      "codelist": [],
+      "products": [],
       "needs": [
         {
           "id": 1234,
@@ -67,6 +69,8 @@
       "description": "...",
       "version": 1,
       "ordering": 2,
+      "codelist": [],
+      "products": [],
       "needs": [],
       "publishedDate": "2021-01-02T02:00:00.000Z"
     },
@@ -77,6 +81,7 @@
       "version": 1,
       "ordering": 2,
       "needs": [],
+      "products": [],
       "publishedDate": "2021-01-03T02:00:00.000Z"
     },
     {
@@ -85,27 +90,58 @@
       "version": 1,
       "description": "...",
       "ordering": 2,
+      "codelist": [],
       "needs": [],
+      "products": [],
       "publishedDate": "2021-01-04T02:00:00.000Z"
     }
   ],
-  "projects": [],
-  "codelist": [
+  "projects": [
     {
-      "id": 123456,
-      "tittel": "Møteromsoppsett"
-    },
-    {
-      "id": 123457,
-      "title": "Konferanselokaler"
-    },
-    {
-      "id": 123458,
-      "title": "Matallergier"
-    },
-    {
-      "id": 123459,
-      "title": "HC-tilpasning"
+      "id": 56236,
+      "title": "666",
+      "description": "qwrqwereqr",
+      "needs": [],
+      "publications": [],
+      "products": [
+        {
+          "title": "Kurs og konferanse3",
+          "description": "yyytry",
+          "id": 516502
+        }
+      ],
+      "codelist": [
+        {
+          "id": 274466,
+          "title": "66677",
+          "description": "ewtwrtkkk",
+          "codes": [
+            {
+              "title": "Kurs og konferanse3",
+              "description": "yyytry",
+              "id": 690894
+            },
+            {
+              "title": "jjjss",
+              "description": "yyytry",
+              "id": 395369
+            }
+          ]
+        },
+        {
+          "title": "6668",
+          "description": "yyytry",
+          "id": 296510,
+          "codes": []
+        },
+        {
+          "title": "Kurs og konferanse3",
+          "description": "yyytry",
+          "id": 236762,
+          "codes": []
+        }
+      ],
+      "version": 1
     }
   ]
 }

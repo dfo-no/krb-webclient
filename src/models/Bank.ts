@@ -2,14 +2,15 @@ import { Need } from './Need';
 import { Codelist } from './Codelist';
 import { Publication } from './Publication';
 import { Requirement } from './Requirement';
+import { Product } from './Product';
 
 export interface Bank {
   id: number;
   title: string;
   description: string;
   needs: Need[];
-  requirements?: Requirement[];
-  codelist?: Codelist[];
+  codelist: Codelist[];
+  products: Product[];
   version: number;
   publications?: Publication[];
   publishedDate?: string;

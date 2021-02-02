@@ -1,6 +1,11 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { del, get, post, put } from '../../api/http';
+import { Utils } from '../../common/Utils';
 import { Bank } from '../../models/Bank';
+import { Code } from '../../models/Code';
+import { Codelist } from '../../models/Codelist';
+import { Need } from '../../models/Need';
+import { Product } from '../../models/Product';
 
 interface ProjectState {
   list: Bank[];
@@ -42,10 +47,10 @@ export const postProjectThunk = createAsyncThunk(
 export const putProjectThunk = createAsyncThunk(
   'putProjectThunk',
   async (project: Bank) => {
-    const response = await put(`http://localhost:3001/projects/${project.id}`, {
-      method: 'PUT',
-      body: JSON.stringify(project)
-    });
+    const response = await put(
+      `http://localhost:3001/projects/${project.id}`,
+      JSON.stringify(project)
+    );
     return response.data;
   }
 );
@@ -76,6 +81,91 @@ const projectSlice = createSlice({
       if (index !== -1) {
         state.list.splice(index, 1);
       }
+    },
+    addNeed(state, { payload }: PayloadAction<{ id: number; need: Need }>) {
+      /* This 'findIndex' is wrapped in Utils.ensure() because we findIndex can
+      return "undefined", but we are *sure* this index exist there.
+      Otherwise the program would not work. If we didn't use Utils.ensure(),
+      we would have to have a if-else statement to check for undefined.*/
+      const index = Utils.ensure(
+        state.list.findIndex((project) => project.id === payload.id)
+      );
+      state.list[index].needs.push(payload.need);
+    },
+    addCodeList(
+      state,
+      { payload }: PayloadAction<{ id: number; codelist: Codelist }>
+    ) {
+      const index = Utils.ensure(
+        state.list.findIndex((project) => project.id === payload.id)
+      );
+      state.list[index].codelist.push(payload.codelist);
+    },
+    addProduct(
+      state,
+      { payload }: PayloadAction<{ id: number; product: Product }>
+    ) {
+      const index = Utils.ensure(
+        state.list.findIndex((project) => project.id === payload.id)
+      );
+      state.list[index].products.push(payload.product);
+    },
+    editProduct(
+      state,
+      { payload }: PayloadAction<{ id: number; product: Product }>
+    ) {
+      const index = Utils.ensure(
+        state.list.findIndex((project) => project.id === payload.id)
+      );
+      const productindex = state.list[index].products.findIndex(
+        (product) => product.id === payload.id
+      );
+      state.list[index].products[productindex] = payload.product;
+    },
+    editCodelist(
+      state,
+      {
+        payload
+      }: PayloadAction<{ id: number; codeList: Codelist; codeListId: number }>
+    ) {
+      const index = Utils.ensure(
+        state.list.findIndex((project) => project.id === payload.id)
+      );
+      let codeListIndex = state.list[index].codelist.findIndex(
+        (codelist) => codelist.id === payload.codeListId
+      );
+      state.list[index].codelist[codeListIndex] = payload.codeList;
+    },
+    addCode(
+      state,
+      { payload }: PayloadAction<{ id: number; code: Code; codeListId: number }>
+    ) {
+      //TODO: find more suitable place to perform this action
+      const index = Utils.ensure(
+        state.list.findIndex((project) => project.id === payload.id)
+      );
+      let codeListIndex = state.list[index].codelist.findIndex(
+        (codelist) => codelist.id === payload.codeListId
+      );
+
+      state.list[index].codelist[codeListIndex].codes.push(payload.code);
+    },
+    editCode(
+      state,
+      { payload }: PayloadAction<{ id: number; code: Code; codeListId: number }>
+    ) {
+      //todo: move to more suitable and less repetetive place
+      const index = Utils.ensure(
+        state.list.findIndex((project) => project.id === payload.id)
+      );
+      let codeListIndex = state.list[index].codelist.findIndex(
+        (codelist) => codelist.id === payload.codeListId
+      );
+      let codeIndex = state.list[index].codelist[codeListIndex].codes.findIndex(
+        (code) => code.id === payload.code.id
+      );
+
+      state.list[index].codelist[codeListIndex].codes[codeIndex] = payload.code;
     }
   },
   extraReducers: (builder) => {
@@ -112,6 +202,15 @@ const projectSlice = createSlice({
   }
 });
 
-export const { addProjects, deleteProject } = projectSlice.actions;
+export const {
+  addProjects,
+  deleteProject,
+  addCodeList,
+  addProduct,
+  editProduct,
+  addCode,
+  editCode,
+  editCodelist
+} = projectSlice.actions;
 
 export default projectSlice.reducer;
