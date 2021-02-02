@@ -6,6 +6,7 @@ import { Code } from '../../models/Code';
 import { Codelist } from '../../models/Codelist';
 import { Need } from '../../models/Need';
 import { Product } from '../../models/Product';
+import { Publication } from '../../models/Publication';
 
 interface ProjectState {
   list: Bank[];
@@ -81,6 +82,31 @@ const projectSlice = createSlice({
       if (index !== -1) {
         state.list.splice(index, 1);
       }
+    },
+    editProject(state, { payload }: PayloadAction<Bank>) {
+      const index = state.list.findIndex(
+        (project) => project.id === payload.id
+      );
+      state.list[index] = payload;
+    },
+
+    publishProject(
+      state,
+      { payload }: PayloadAction<{ id: number; publication: Publication }>
+    ) {
+      const index = state.list.findIndex(
+        (project) => project.id === payload.id
+      );
+      /*let publishedProject = state.projects[projectindex];
+      publishedProject.publishedDate = payload.date;
+
+      state.banks.push(publishedProject);*/
+      //increase version-number before continued editing
+      state.list[index].version += 1;
+
+      if (!state.list[index].publications) state.list[index].publications = [];
+
+      state.list[index].publications?.push(payload.publication);
     },
     addNeed(state, { payload }: PayloadAction<{ id: number; need: Need }>) {
       /* This 'findIndex' is wrapped in Utils.ensure() because we findIndex can
@@ -210,7 +236,9 @@ export const {
   editProduct,
   addCode,
   editCode,
-  editCodelist
+  editCodelist,
+  publishProject,
+  editProject
 } = projectSlice.actions;
 
 export default projectSlice.reducer;

@@ -112,9 +112,9 @@
       ],
       "codelist": [
         {
+          "title": "666",
+          "description": "ewtwrt",
           "id": 274466,
-          "title": "66677",
-          "description": "ewtwrtkkk",
           "codes": [
             {
               "title": "Kurs og konferanse3",
@@ -125,6 +125,11 @@
               "title": "jjjss",
               "description": "yyytry",
               "id": 395369
+            },
+            {
+              "title": "6668",
+              "description": "yyytry",
+              "id": 990430
             }
           ]
         },
@@ -141,6 +146,25 @@
           "codes": []
         }
       ],
+      "version": 1
+    },
+    {
+      "id": 704830,
+      "title": "6668",
+      "description": "ewtwrt",
+      "needs": [],
+      "publications": [],
+      "products": [],
+      "codelist": [],
+      "version": 1
+    },
+    {
+      "id": 747600,
+      "title": "testing ",
+      "description": "55g.l",
+      "needs": [],
+      "products": [],
+      "codelist": [],
       "version": 1
     }
   ]

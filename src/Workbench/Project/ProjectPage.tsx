@@ -14,28 +14,37 @@ import { Publication } from '../../models/Publication';
 import {
   publishProject,
   editProject
-} from '../../store/reducers/kravbank-reducer';
+} from '../../store/reducers/project-reducer';
+import { postBank } from '../../store/reducers/bank-reducer';
 import { Utils } from '../../common/Utils';
 import { Bank } from '../../models/Bank';
 
 export default function ProjectPage(): ReactElement {
   const dispatch = useDispatch();
   const { id } = useSelector((state: RootState) => state.selectedProject);
-
   const { list } = useSelector((state: RootState) => state.project);
-
-  let project = Utils.ensure(list.find((project: Bank) => project.id === id));
-
-  const publications = project.publications;
   const [showEditor, setShowEditor] = useState(false);
   const [comment, setComment] = useState('');
   const [editMode, setEditMode] = useState(false);
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
 
+  if (!id) {
+    return <p>Please select a project</p>;
+  }
+
+  let project = Utils.ensure(list.find((project: Bank) => project.id === id));
+
   const handlePublishProject = () => () => {
-    let versionNumber = publications ? publications[-1].version + 1 : 1;
+    console.log(project.publications);
+    let versionNumber = project.publications
+      ? project.publications[project.publications.length - 1].version + 1
+      : 1;
     let convertedDate = dayjs(new Date()).toJSON();
+    let publishedProject = { ...project };
+    publishedProject.publishedDate = convertedDate;
+    dispatch(postBank(publishedProject));
+
     const publication: Publication = {
       date: convertedDate,
       comment: comment,
@@ -43,7 +52,7 @@ export default function ProjectPage(): ReactElement {
       id: Utils.getRandomNumber()
     };
     setShowEditor(false);
-    dispatch(publishProject(publication));
+    dispatch(publishProject({ id: project.id, publication: publication }));
   };
 
   const editProjectInfo = () => () => {
@@ -155,7 +164,7 @@ export default function ProjectPage(): ReactElement {
         New publication
       </Button>
       {publicationEditor(showEditor)}
-      {publicationList(publications)}
+      {publicationList(project.publications)}
     </>
   );
 }
