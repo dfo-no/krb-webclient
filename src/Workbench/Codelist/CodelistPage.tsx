@@ -12,7 +12,10 @@ import {
 import styles from './CodelistPage.module.scss';
 import { RootState } from '../../store/rootReducer';
 import { Codelist } from '../../models/Codelist';
-import { addCodeList } from '../../store/reducers/project-reducer';
+import {
+  addCodeList,
+  putProjectThunk
+} from '../../store/reducers/project-reducer';
 import { selectCodeList } from '../../store/reducers/selectedCodelist-reducer';
 import { Utils } from '../../common/Utils';
 import { Bank } from '../../models/Bank';
@@ -81,6 +84,7 @@ export default function CodelistPage(): ReactElement {
     const projectIdNumber = +projectId;
     setShowEdior(false);
     dispatch(addCodeList({ id: projectIdNumber, codelist: codeList }));
+    dispatch(putProjectThunk(selectedProject));
   };
 
   function renderCodelistEditor(show: boolean) {

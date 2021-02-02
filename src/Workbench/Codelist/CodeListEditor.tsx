@@ -14,25 +14,45 @@ import { Code } from '../../models/Code';
 import {
   addCode,
   editCode,
-  editCodelist
-} from '../../store/reducers/kravbank-reducer';
+  editCodelist,
+  putProjectThunk
+} from '../../store/reducers/project-reducer';
 import { Utils } from '../../common/Utils';
+import { useParams } from 'react-router-dom';
+import { Codelist } from '../../models/Codelist';
+import { Bank } from '../../models/Bank';
+
+interface RouteParams {
+  projectId: string;
+}
 
 export default function CodeListEditor(): ReactElement {
   const dispatch = useDispatch();
-  const { codelists, selectedCodelist } = useSelector(
-    (state: RootState) => state.kravbank
-  );
-
-  const listIndex = codelists.findIndex(
-    (codelist) => codelist.id === selectedCodelist
-  );
-  const codelist = codelists[listIndex];
-  const [codes, setCodes] = useState(codelist ? codelist.codes : []);
+  const { list } = useSelector((state: RootState) => state.project);
+  const { id } = useSelector((state: RootState) => state.selectedProject);
+  const { listId } = useSelector((state: RootState) => state.selectedCodeList);
+  let { projectId } = useParams<RouteParams>();
+  //const [codes, setCodes] = useState(codelist ? codelist.codes : []);
   const [showEditor, setShowEdior] = useState(false);
   const [editmode, setEditMode] = useState(false);
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
+
+  if (!id) {
+    return <p>Please select a project</p>;
+  }
+  if (!listId) {
+    return <p>Please select a codelist</p>;
+  }
+
+  const selectedProject = Utils.ensure(
+    list.find((bank: Bank) => bank.id === id)
+  );
+  const selectedCodeList = Utils.ensure(
+    selectedProject.codelist.find(
+      (codelist: Codelist) => codelist.id === listId
+    )
+  );
 
   const handleShowEditor = () => {
     setShowEdior(true);
@@ -50,16 +70,24 @@ export default function CodeListEditor(): ReactElement {
   };
 
   const addNewCode = () => {
-    let newCodeList: Code[] = [...codes];
-    let Kode = {
+    //let newCodeList: Code[] = [...codes];
+    let code = {
       title: title,
       description: description,
       id: Utils.getRandomNumber()
     };
-    newCodeList.push(Kode);
-    setCodes(newCodeList);
+    //newCodeList.push(Kode);
+    //setCodes(newCodeList);
+    const projectIdNumber = +projectId;
     setShowEdior(false);
-    dispatch(addCode(Kode));
+    dispatch(
+      addCode({
+        id: projectIdNumber,
+        code: code,
+        codeListId: selectedCodeList.id
+      })
+    );
+    dispatch(putProjectThunk(selectedProject));
   };
 
   const editCodeElement = (id: number, index: number) => () => {
@@ -68,21 +96,37 @@ export default function CodeListEditor(): ReactElement {
       title: title,
       description: description
     };
-    let newCodeList: Code[] = [...codes];
-    newCodeList[index] = code;
-    setCodes(newCodeList);
-    dispatch(editCode(code));
+    const projectIdNumber = +projectId;
+    //let newCodeList: Code[] = [...codes];
+    //newCodeList[index] = code;
+    //setCodes(newCodeList);
+    dispatch(
+      editCode({
+        id: projectIdNumber,
+        code: code,
+        codeListId: selectedCodeList.id
+      })
+    );
+    dispatch(putProjectThunk(selectedProject));
   };
 
   const editCodeList = () => {
-    let newCodelist = {
-      id: codelist.id,
+    let newCodelist: Codelist = {
+      id: selectedCodeList.id,
       title: title,
       description: description,
-      codes: codes
+      codes: selectedCodeList.codes
     };
-    dispatch(editCodelist(newCodelist));
+    const projectIdNumber = +projectId;
+    dispatch(
+      editCodelist({
+        id: projectIdNumber,
+        codeList: newCodelist,
+        codeListId: selectedCodeList.id
+      })
+    );
     setEditMode(false);
+    dispatch(putProjectThunk(selectedProject));
   };
 
   function renderHeaderSection(editmode: boolean) {
@@ -98,7 +142,7 @@ export default function CodeListEditor(): ReactElement {
               <FormControl
                 name="title"
                 onChange={handleTitleChange}
-                defaultValue={codelist.title}
+                defaultValue={selectedCodeList.title}
               />
             </InputGroup>
             <label htmlFor="description">Description</label>
@@ -106,7 +150,7 @@ export default function CodeListEditor(): ReactElement {
               <FormControl
                 name="description"
                 onChange={handleDescriptionChange}
-                defaultValue={codelist.description}
+                defaultValue={selectedCodeList.description}
               />
             </InputGroup>
             <Button className="mt-2" onClick={editCodeList}>
@@ -118,8 +162,8 @@ export default function CodeListEditor(): ReactElement {
     } else {
       return (
         <div className={styles.codelistSection}>
-          <h1>{codelist.title}</h1>
-          <h5>{codelist.description}</h5>
+          <h1>{selectedCodeList.title}</h1>
+          <h5>{selectedCodeList.description}</h5>
           <Button onClick={handleEditCodelist}>Edit</Button>
         </div>
       );
@@ -196,15 +240,13 @@ export default function CodeListEditor(): ReactElement {
     }
   }
 
-  return codelist ? (
+  return (
     <>
       {renderHeaderSection(editmode)}
       <h4>Codes</h4>
       <Button onClick={handleShowEditor}>New Code</Button>
       {codeListEditor(showEditor)}
-      {codeList(codes)}
+      {codeList(selectedCodeList.codes)}
     </>
-  ) : (
-    <></>
   );
 }

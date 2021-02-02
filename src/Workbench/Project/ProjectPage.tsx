@@ -52,7 +52,7 @@ export default function ProjectPage(): ReactElement {
       title: title,
       description: description,
       needs: project.needs,
-      requirements: project.requirements,
+      products: project.products,
       codelist: project.codelist,
       version: project.version,
       publications: project.publications

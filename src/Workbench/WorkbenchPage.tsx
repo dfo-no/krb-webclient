@@ -47,6 +47,7 @@ export default function WorkbenchPage(): ReactElement {
       description: post.description,
       needs: [],
       publications: [],
+      products: [],
       codelist: [],
       version: 1
     };
