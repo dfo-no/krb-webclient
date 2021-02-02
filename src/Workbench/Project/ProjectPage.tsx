@@ -43,6 +43,7 @@ export default function ProjectPage(): ReactElement {
     let convertedDate = dayjs(new Date()).toJSON();
     let publishedProject = { ...project };
     publishedProject.publishedDate = convertedDate;
+    publishedProject.id = Utils.getRandomNumber();
     dispatch(postBank(publishedProject));
 
     const publication: Publication = {
