@@ -24,18 +24,15 @@ export const getBanks = createAsyncThunk('getBanks', async () => {
 });
 
 export const postBank = createAsyncThunk('postBank', async (bank: Bank) => {
-  const response = await post<Bank>(`http://localhost:3001/banks`, {
-    method: 'POST',
-    body: JSON.stringify(bank)
-  });
+  const response = await post<Bank>(`http://localhost:3001/banks`, bank);
   return response.data;
 });
 
 export const putBank = createAsyncThunk('putBank', async (bank: Bank) => {
-  const response = await put(`http://localhost:3001/banks/${bank.id}`, {
-    method: 'PUT',
-    body: JSON.stringify(bank)
-  });
+  const response = await put(
+    `http://localhost:3001/banks/${bank.id}`,
+    JSON.stringify(bank)
+  );
   return response.data;
 });
 
