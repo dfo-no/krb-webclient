@@ -14,25 +14,39 @@ import {
 import { RootState } from '../../store/rootReducer';
 import { useDispatch, useSelector } from 'react-redux';
 import {
-  addRequirementToSelectedNeed,
-  editRequirementToSelected
-} from '../../store/reducers/kravbank-reducer';
+  addRequirement,
+  editRequirement,
+  putProjectThunk
+} from '../../store/reducers/project-reducer';
 import styles from './RequirementPage.module.scss';
 import { Requirement } from '../../models/Requirement';
 import { Need } from '../../models/Need';
 import { Utils } from '../../common/Utils';
+import { Bank } from '../../models/Bank';
+import { useParams } from 'react-router-dom';
+import { selectCodeList } from '../../store/reducers/selectedCodelist-reducer';
+
+interface RouteParams {
+  projectId: string;
+}
 
 export default function RequirementPage(): ReactElement {
   const dispatch = useDispatch();
-  const { selectedProject } = useSelector((state: RootState) => state.kravbank);
+  const { id } = useSelector((state: RootState) => state.selectedProject);
+  const { list } = useSelector((state: RootState) => state.project);
+  let { projectId } = useParams<RouteParams>();
   const [selectedNeed, setSelectedNeed] = useState<Need | undefined>(undefined);
-  const [requirementList, setRequirementsLIst] = useState<Requirement[]>([]);
+  const [requirementList, setRequirementsList] = useState<Requirement[]>([]);
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [showEditor, setShowEditor] = useState(false);
-  if (!selectedProject) {
+  if (!id) {
     return <p>No project selected</p>;
   }
+
+  const selectedProject = Utils.ensure(
+    list.find((project: Bank) => project.id === id)
+  );
 
   if (!selectedProject.needs) {
     return (
@@ -60,17 +74,20 @@ export default function RequirementPage(): ReactElement {
     };
     let reqList = [...requirementList];
     reqList.push(requirement);
-    setRequirementsLIst(reqList);
+    setRequirementsList(reqList);
+    setShowEditor(false);
     const needIndex = selectedProject.needs.findIndex(
       (need) => need.id === selectedNeed?.id
     );
-    setShowEditor(false);
+    const projectIdNumber = +projectId;
     dispatch(
-      addRequirementToSelectedNeed({
+      addRequirement({
+        id: projectIdNumber,
         requirement: requirement,
         needIndex: needIndex
       })
     );
+    dispatch(putProjectThunk(selectedProject));
   };
   const editRequirementElement = (id: number) => () => {
     let requirement = {
@@ -82,25 +99,28 @@ export default function RequirementPage(): ReactElement {
     };
     let reqList = [...requirementList];
     reqList.push(requirement);
-    setRequirementsLIst(reqList);
+    setRequirementsList(reqList);
     const needIndex = selectedProject.needs.findIndex(
       (need) => need.id === selectedNeed?.id
     );
     const reqIndex = selectedProject.needs[needIndex].requirements.findIndex(
       (req) => req.id === id
     );
+    const projectIdNumber = +projectId;
     dispatch(
-      editRequirementToSelected({
+      editRequirement({
+        id: projectIdNumber,
         requirement: requirement,
         needIndex: needIndex,
         requirementIndex: reqIndex
       })
     );
+    dispatch(putProjectThunk(selectedProject));
   };
 
   const handleSelectedNeed = (need: Need) => {
     setSelectedNeed(need);
-    setRequirementsLIst(need.requirements);
+    setRequirementsList(need.requirements);
   };
 
   const requirements = (requirements: Requirement[]) => {

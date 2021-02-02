@@ -117,93 +117,54 @@
       ],
       "version": 1,
       "publishedDate": "2021-02-02T11:48:27.274Z"
-    }
-  ],
-  "projects": [
-    {
-      "id": 56236,
-      "title": "666",
-      "description": "qwrqwereqr",
-      "needs": [],
-      "publications": [],
-      "products": [
-        {
-          "title": "Kurs og konferanse3",
-          "description": "yyytry",
-          "id": 516502
-        }
-      ],
-      "codelist": [
-        {
-          "title": "666",
-          "description": "ewtwrt",
-          "id": 274466,
-          "codes": [
-            {
-              "title": "Kurs og konferanse3",
-              "description": "yyytry",
-              "id": 690894
-            },
-            {
-              "title": "jjjss",
-              "description": "yyytry",
-              "id": 395369
-            },
-            {
-              "title": "6668",
-              "description": "yyytry",
-              "id": 990430
-            }
-          ]
-        },
-        {
-          "title": "6668",
-          "description": "yyytry",
-          "id": 296510,
-          "codes": []
-        },
-        {
-          "title": "Kurs og konferanse3",
-          "description": "yyytry",
-          "id": 236762,
-          "codes": []
-        }
-      ],
-      "version": 1
     },
     {
-      "id": 704830,
-      "title": "6668",
-      "description": "ewtwrt",
-      "needs": [],
-      "publications": [],
-      "products": [],
-      "codelist": [],
-      "version": 1
-    },
-    {
-      "id": 747600,
-      "title": "testing ",
-      "description": "55g.l",
-      "needs": [],
-      "products": [],
-      "codelist": [],
-      "version": 1
-    },
-    {
-      "id": 449983,
-      "title": "Kurs og konferanse3",
-      "description": "ewtwrt",
-      "needs": [],
-      "products": [],
-      "codelist": [],
-      "version": 1
-    },
-    {
-      "id": 820562,
+      "id": 317708,
       "title": "Hytte til kommunen",
       "description": "ewtwrt",
-      "needs": [],
+      "needs": [
+        {
+          "id": 1235,
+          "tittel": "Bespisning",
+          "requirements": [
+            {
+              "id": 7800,
+              "title": "Elbil",
+              "needId": 1236,
+              "description": "Elbilen må kjøre minst 10km",
+              "type": "kodeliste-eksakt"
+            },
+            {
+              "id": 24941,
+              "title": "Kurs og konferanse7",
+              "description": "666",
+              "needId": 1235,
+              "type": "yes/no"
+            },
+            {
+              "id": 28588,
+              "title": "Kurs og konferanse5",
+              "description": "ewtwrt",
+              "needId": 1235,
+              "type": "yes/no"
+            },
+            {
+              "id": 448493,
+              "title": "Kurs og konferanse6",
+              "description": "666",
+              "needId": 1235,
+              "type": "yes/no"
+            },
+            {
+              "id": 140653,
+              "title": "testing ",
+              "description": "ewtwrt",
+              "needId": 1235,
+              "type": "yes/no"
+            }
+          ]
+        }
+      ],
       "products": [],
       "codelist": [
         {
@@ -219,7 +180,82 @@
           "codes": []
         }
       ],
-      "version": 1
+      "version": 1,
+      "publishedDate": "2021-02-02T13:08:31.693Z"
+    },
+    {
+      "id": 21013,
+      "title": "Hytte til kommunen",
+      "description": "ewtwrt",
+      "needs": [
+        {
+          "id": 1235,
+          "tittel": "Bespisning",
+          "requirements": [
+            {
+              "id": 7800,
+              "title": "Elbil",
+              "needId": 1236,
+              "description": "Elbilen må kjøre minst 10km",
+              "type": "kodeliste-eksakt"
+            },
+            {
+              "id": 24941,
+              "title": "Kurs og konferanse7",
+              "description": "666",
+              "needId": 1235,
+              "type": "yes/no"
+            },
+            {
+              "id": 28588,
+              "title": "Kurs og konferanse5",
+              "description": "ewtwrt",
+              "needId": 1235,
+              "type": "yes/no"
+            },
+            {
+              "id": 448493,
+              "title": "Kurs og konferanse6",
+              "description": "666",
+              "needId": 1235,
+              "type": "yes/no"
+            },
+            {
+              "id": 140653,
+              "title": "testing ",
+              "description": "ewtwrt",
+              "needId": 1235,
+              "type": "yes/no"
+            }
+          ]
+        }
+      ],
+      "products": [],
+      "codelist": [
+        {
+          "title": "Kurs og konferanse3",
+          "description": "dasds",
+          "id": 314042,
+          "codes": []
+        },
+        {
+          "title": "Kurs og konferanse5",
+          "description": "yyytry",
+          "id": 923166,
+          "codes": []
+        }
+      ],
+      "version": 2,
+      "publications": [
+        {
+          "date": "2021-02-02T13:08:31.693Z",
+          "comment": "666",
+          "version": 1,
+          "id": 457827
+        }
+      ],
+      "publishedDate": "2021-02-02T13:08:36.355Z"
     }
-  ]
+  ],
+  "projects": []
 }

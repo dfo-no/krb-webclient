@@ -7,6 +7,7 @@ import { Codelist } from '../../models/Codelist';
 import { Need } from '../../models/Need';
 import { Product } from '../../models/Product';
 import { Publication } from '../../models/Publication';
+import { Requirement } from '../../models/Requirement';
 
 interface ProjectState {
   list: Bank[];
@@ -187,6 +188,41 @@ const projectSlice = createSlice({
       );
 
       state.list[index].codelist[codeListIndex].codes[codeIndex] = payload.code;
+    },
+    editRequirement(
+      state,
+      {
+        payload
+      }: PayloadAction<{
+        id: number;
+        requirement: Requirement;
+        needIndex: number;
+        requirementIndex: number;
+      }>
+    ) {
+      const index = Utils.ensure(
+        state.list.findIndex((project) => project.id === payload.id)
+      );
+      state.list[index].needs[payload.needIndex].requirements[
+        payload.requirementIndex
+      ] = payload.requirement;
+    },
+    addRequirement(
+      state,
+      {
+        payload
+      }: PayloadAction<{
+        id: number;
+        requirement: Requirement;
+        needIndex: number;
+      }>
+    ) {
+      const index = Utils.ensure(
+        state.list.findIndex((project) => project.id === payload.id)
+      );
+      state.list[index].needs[payload.needIndex].requirements.push(
+        payload.requirement
+      );
     }
   },
   extraReducers: (builder) => {
@@ -233,7 +269,9 @@ export const {
   editCode,
   editCodelist,
   publishProject,
-  editProject
+  editProject,
+  editRequirement,
+  addRequirement
 } = projectSlice.actions;
 
 export default projectSlice.reducer;
