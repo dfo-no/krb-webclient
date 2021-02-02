@@ -1,57 +1,43 @@
 import React, { ReactElement, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
-import { useParams } from 'react-router-dom';
 import { AiFillEdit } from 'react-icons/ai';
 import { Button, Col, Form, ListGroup, Row } from 'react-bootstrap';
 import { Need } from '../../models/Need';
 import styles from './NeedPage.module.scss';
 import { RootState } from '../../store/rootReducer';
 import { Utils } from '../../common/Utils';
-import { addNeed, putProjectThunk } from '../../store/reducers/project-reducer';
-import { selectProject } from '../../store/reducers/selectedProject-reducer';
+import { putProjectThunk } from '../../store/reducers/project-reducer';
 
 type FormValues = {
   tittel: string;
   beskrivelse: string;
 };
 
-interface RouteParams {
-  projectId: string;
-}
-
 function NeedPage(): ReactElement {
   const dispatch = useDispatch();
-  const { id } = useSelector((state: RootState) => state.selectedProject);
-  let { projectId } = useParams<RouteParams>();
-  const { list } = useSelector((state: RootState) => state.project);
-
-  // we arrived at this page directly by url, not by seleting a project!
-  // TODO: fetch the selected project using the url parameter
-  /*if (!id) {
-    dispatch(selectProject(+projectId));
-  }*/
-
-  const selectedProject = Utils.ensure(list.find((banks) => banks.id === id));
-
   const { register, handleSubmit, errors } = useForm<Need>();
   const [validated] = useState(false);
+  const { id } = useSelector((state: RootState) => state.selectedProject);
+  const { list } = useSelector((state: RootState) => state.project);
+
+  if (list.length === 0 || !id) {
+    return <div>Loading NeedPage....</div>;
+  }
+  let project = Utils.ensure(list.find((banks) => banks.id === id));
 
   const onNewNeedSubmit = (post: FormValues, e: any) => {
-    let need: Need = {
+    const need: Need = {
       id: Utils.getRandomNumber(),
       tittel: post.tittel,
       beskrivelse: post.beskrivelse,
       requirements: []
     };
-    const projectIdNumber = +projectId;
-    dispatch(addNeed({ id: projectIdNumber, need }));
-    dispatch(putProjectThunk(selectedProject));
+    // TODO: Black magic here. Must be a better way
+    let clonedProject = { ...project };
+    clonedProject.needs = [...project.needs, need];
+    dispatch(putProjectThunk(clonedProject));
   };
-
-  if (!id) {
-    return <p>No Project selected</p>;
-  }
 
   const renderNeeds = (list: any) => {
     return list.map((element: Need) => {
@@ -122,7 +108,7 @@ function NeedPage(): ReactElement {
         </Form>
       </ListGroup.Item>
 
-      {renderNeeds(selectedProject.needs)}
+      {renderNeeds(project.needs)}
     </ListGroup>
   );
 }

@@ -20,7 +20,7 @@ type FormValues = {
   description: string;
 };
 
-export default function WorkbenchPage(): ReactElement {
+function WorkbenchPage(): ReactElement {
   const dispatch = useDispatch();
   const { list } = useSelector((state: RootState) => state.project);
   const history = useHistory();
@@ -80,6 +80,7 @@ export default function WorkbenchPage(): ReactElement {
     });
     return <ListGroup className={`${css.list} mt-5`}>{projects}</ListGroup>;
   };
+
   function projectEditor(show: boolean) {
     if (show) {
       return (
@@ -152,3 +153,5 @@ export default function WorkbenchPage(): ReactElement {
     </>
   );
 }
+
+export default WorkbenchPage;

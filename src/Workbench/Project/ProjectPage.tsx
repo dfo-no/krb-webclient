@@ -1,4 +1,4 @@
-import React, { ReactElement, useState } from 'react';
+import { ReactElement, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   Button,
@@ -16,21 +16,26 @@ import {
   editProject
 } from '../../store/reducers/kravbank-reducer';
 import { Utils } from '../../common/Utils';
+import { Bank } from '../../models/Bank';
 
-export default function ProjectPage(): ReactElement {
+function ProjectPage(): ReactElement {
   const dispatch = useDispatch();
   const { id } = useSelector((state: RootState) => state.selectedProject);
-
   const { list } = useSelector((state: RootState) => state.project);
 
-  let project = Utils.ensure(list.find((project) => project.id === id));
-
-  const publications = project.publications;
   const [showEditor, setShowEditor] = useState(false);
   const [comment, setComment] = useState('');
   const [editMode, setEditMode] = useState(false);
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
+
+  if (list.length === 0) {
+    return <div>Loading ProjectPage....</div>;
+  }
+
+  let project = Utils.ensure(list.find((project) => project.id === id));
+
+  const publications = project.publications;
 
   const handlePublishProject = () => () => {
     let versionNumber = publications ? publications[-1].version + 1 : 1;
@@ -46,7 +51,7 @@ export default function ProjectPage(): ReactElement {
   };
 
   const editProjectInfo = () => () => {
-    let newproject = {
+    let newproject: Bank = {
       id: project.id,
       title: title,
       description: description,
@@ -111,7 +116,6 @@ export default function ProjectPage(): ReactElement {
   const publicationList = (publications?: Publication[]) => {
     if (publications) {
       const publication = publications.map((element: Publication) => {
-        // TODO- Check locale for locale dateformat.
         const date = dayjs(element.date).format('DD/MM/YYYY');
         return (
           <ListGroup.Item key={element.id}>
@@ -158,3 +162,5 @@ export default function ProjectPage(): ReactElement {
     </>
   );
 }
+
+export default ProjectPage;

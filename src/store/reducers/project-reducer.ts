@@ -2,7 +2,6 @@ import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { del, get, post, put } from '../../api/http';
 import { Utils } from '../../common/Utils';
 import { Bank } from '../../models/Bank';
-import { Need } from '../../models/Need';
 
 interface ProjectState {
   list: Bank[];
@@ -44,10 +43,10 @@ export const postProjectThunk = createAsyncThunk(
 export const putProjectThunk = createAsyncThunk(
   'putProjectThunk',
   async (project: Bank) => {
-    const response = await put(`http://localhost:3001/projects/${project.id}`, {
-      method: 'PUT',
-      body: JSON.stringify(project)
-    });
+    const response = await put<Bank>(
+      `http://localhost:3001/projects/${project.id}`,
+      project
+    );
     return response.data;
   }
 );
@@ -76,16 +75,6 @@ const projectSlice = createSlice({
         state.list.findIndex((project) => project.id === payload.id)
       );
       state.list.splice(index, 1);
-    },
-    addNeed(state, { payload }: PayloadAction<{ id: number; need: Need }>) {
-      /* This 'findIndex' is wrapped in Utils.ensure() because we findIndex can
-      return "undefined", but we are *sure* this index exist there.
-      Otherwise the program would not work. If we didn't use Utils.ensure(),
-      we would have to have a if-else statement to check for undefined.*/
-      const index = Utils.ensure(
-        state.list.findIndex((project) => project.id === payload.id)
-      );
-      state.list[index].needs.push(payload.need);
     }
   },
   extraReducers: (builder) => {
@@ -104,14 +93,32 @@ const projectSlice = createSlice({
     });
     builder.addCase(postProjectThunk.fulfilled, (state, { payload }) => {
       state.list.push(payload);
+      state.status = 'fulfilled';
     });
-    builder.addCase(postProjectThunk.pending, (state, { payload }) => {});
-    builder.addCase(postProjectThunk.rejected, (state, { payload }) => {});
-    builder.addCase(putProjectThunk.fulfilled, (state, { payload }) => {});
-    builder.addCase(putProjectThunk.pending, (state, { payload }) => {});
-    builder.addCase(putProjectThunk.rejected, (state, { payload }) => {});
+    builder.addCase(postProjectThunk.pending, (state, { payload }) => {
+      state.status = 'pending';
+    });
+    builder.addCase(postProjectThunk.rejected, (state, { payload }) => {
+      state.status = 'rejected';
+    });
+    builder.addCase(putProjectThunk.fulfilled, (state, { payload }) => {
+      state.status = 'fulfilled';
+
+      /* After updating successfully, we update the store with the
+      new object to be shown on the page*/
+      const projectIndex = Utils.ensure(
+        state.list.findIndex((project) => project.id === payload.id)
+      );
+      state.list[projectIndex] = payload;
+    });
+    builder.addCase(putProjectThunk.pending, (state, { payload }) => {
+      state.status = 'pending';
+    });
+    builder.addCase(putProjectThunk.rejected, (state, { payload }) => {
+      state.status = 'rejected';
+    });
     builder.addCase(deleteProjectThunk.fulfilled, (state, { payload }) => {
-      state.status = 'idle';
+      state.status = 'fulfilled';
     });
     builder.addCase(deleteProjectThunk.pending, (state, { payload }) => {
       state.status = 'pending';
@@ -122,6 +129,6 @@ const projectSlice = createSlice({
   }
 });
 
-export const { addProjects, deleteProject, addNeed } = projectSlice.actions;
+export const { addProjects, deleteProject } = projectSlice.actions;
 
 export default projectSlice.reducer;
