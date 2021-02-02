@@ -162,7 +162,7 @@ const projectSlice = createSlice({
         (codelist) => codelist.id === payload.codeListId
       );
       let codeIndex = state.list[index].codelist[codeListIndex].codes.findIndex(
-        (codelist) => codelist.id === payload.codeListId
+        (code) => code.id === payload.code.id
       );
 
       state.list[index].codelist[codeListIndex].codes[codeIndex] = payload.code;
