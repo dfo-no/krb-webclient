@@ -1,7 +1,6 @@
 import { Need } from './Need';
 import { Codelist } from './Codelist';
 import { Publication } from './Publication';
-import { Requirement } from './Requirement';
 import { Product } from './Product';
 
 export interface Bank {

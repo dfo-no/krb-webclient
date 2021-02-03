@@ -10,6 +10,7 @@ import { ProtectedRoute } from './authentication/ProtectedRoute';
 import WorkbenchModule from './Workbench/WorkbenchModule';
 import ResponseEditor from './ResponseEditor/ResponseEditor';
 import SpecEditor from './SpecEditor/SpecEditor';
+import Evaluation from './Evaluation/Evaluation';
 
 function App(props: any) {
   return (
@@ -38,6 +39,7 @@ function App(props: any) {
           component={ResponseEditor}
           {...props}
         />
+        <ProtectedRoute path="/evaluation" component={Evaluation} {...props} />
       </Switch>
     </div>
   );

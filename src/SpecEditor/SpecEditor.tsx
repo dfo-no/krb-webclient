@@ -1,16 +1,26 @@
 import React, { ReactElement, useState } from 'react';
-import { Container, Row, Button, Col } from 'react-bootstrap';
+import {
+  Container,
+  Row,
+  Button,
+  Col,
+  InputGroup,
+  FormControl
+} from 'react-bootstrap';
 import { useSelector } from 'react-redux';
 
 import { Requirement } from '../models/Requirement';
 import { Need } from '../models/Need';
 import { RootState } from '../store/rootReducer';
 import { useForm } from 'react-hook-form';
+import { FileDownLoad } from '../models/FileDownLoad';
 
 export default function SpecEditor(): ReactElement {
   const { selectedBank } = useSelector((state: RootState) => state.kravbank);
   const { register, handleSubmit } = useForm();
   const [selectedNeedlist, setSelectedNeedList] = useState<Need[]>([]);
+  const [name, setName] = useState('');
+
   if (!selectedBank) {
     return <p>No selected bank</p>;
   }
@@ -46,20 +56,28 @@ export default function SpecEditor(): ReactElement {
   };
 
   const onDownLoad = () => {
-    const newBank = {
-      id: selectedBank.id,
-      title: selectedBank.title,
-      description: selectedBank.description,
-      needs: selectedNeedlist,
-      codelist: selectedBank.codelist,
-      version: selectedBank.version,
-      publishedDate: selectedBank.publishedDate
+    const newFile: FileDownLoad = {
+      name: name,
+      bank: {
+        id: selectedBank.id,
+        title: selectedBank.title,
+        description: selectedBank.description,
+        needs: selectedNeedlist,
+        codelist: selectedBank.codelist,
+        version: selectedBank.version,
+        products: selectedBank.products,
+        publishedDate: selectedBank.publishedDate
+      }
     };
     const fileDownload = require('js-file-download');
     fileDownload(
-      JSON.stringify(newBank),
-      `${selectedBank.title}-${selectedBank.publishedDate}.json`
+      JSON.stringify(newFile),
+      `${name}-${selectedBank.publishedDate}.json`
     );
+  };
+
+  const handleNameChange = (event: any) => {
+    setName(event.target.value);
   };
 
   const needList = (needlist: Need[]) => {
@@ -90,7 +108,10 @@ export default function SpecEditor(): ReactElement {
     <Container fluid>
       <Row className="m-4">
         <Col>
-          <h2>{selectedBank.title}</h2>
+          <label htmlFor="title">Name</label>
+          <InputGroup className="mb-3 30vw">
+            <FormControl name="name" onChange={handleNameChange} />
+          </InputGroup>
         </Col>
         <Col>
           <Button onClick={onDownLoad}>Download</Button>
