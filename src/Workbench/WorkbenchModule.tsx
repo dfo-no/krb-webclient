@@ -1,4 +1,4 @@
-import React, { ReactElement } from 'react';
+import React, { ReactElement, useEffect } from 'react';
 import { Col, Container, Row } from 'react-bootstrap';
 import { Route, Switch, useRouteMatch } from 'react-router-dom';
 
@@ -10,9 +10,39 @@ import ProductPage from './Product/ProductPage';
 import ProjectPage from './Project/ProjectPage';
 import SideBar from './SideBar/SideBar';
 import WorkbenchPage from './WorkbenchPage';
+import { useDispatch, useSelector } from 'react-redux';
+import { getProjectsThunk } from '../store/reducers/project-reducer';
+import { RootState } from '../store/rootReducer';
+import { selectProject } from '../store/reducers/selectedProject-reducer';
+
+interface RouteParams {
+  projectId: string;
+}
 
 export default function WorkbenchModule(): ReactElement {
   let { url } = useRouteMatch();
+
+  let projectMatch = useRouteMatch<RouteParams>('/workbench/:projectId');
+  const dispatch = useDispatch();
+  const { id } = useSelector((state: RootState) => state.selectedProject);
+
+  // Can set this safely, even if we got here directly by url or by clicks
+  if (projectMatch?.params.projectId && !id) {
+    dispatch(selectProject(+projectMatch?.params.projectId));
+  }
+
+  /* Every child of this WorkbenchModule need the list of projects.
+    So we fetch it here instead of in each child. This also makes it
+    possible to have a loading-indicator or some other nice stuff */
+  useEffect(() => {
+    async function fetchEverything() {
+      // TODO: remove delay after implementing spinner
+      setTimeout(async () => {
+        dispatch(getProjectsThunk());
+      }, 1000);
+    }
+    fetchEverything();
+  }, [dispatch]);
 
   return (
     <Container fluid>

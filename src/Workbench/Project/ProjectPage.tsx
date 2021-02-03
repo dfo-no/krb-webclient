@@ -1,4 +1,4 @@
-import React, { ReactElement, useState } from 'react';
+import { ReactElement, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   Button,
@@ -20,7 +20,7 @@ import { postBank } from '../../store/reducers/bank-reducer';
 import { Utils } from '../../common/Utils';
 import { Bank } from '../../models/Bank';
 
-export default function ProjectPage(): ReactElement {
+function ProjectPage(): ReactElement {
   const dispatch = useDispatch();
   const { id } = useSelector((state: RootState) => state.selectedProject);
   const { list } = useSelector((state: RootState) => state.project);
@@ -30,8 +30,8 @@ export default function ProjectPage(): ReactElement {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
 
-  if (!id) {
-    return <p>Please select a project</p>;
+  if (!list) {
+    return <p>Loading ....</p>;
   }
 
   let project = Utils.ensure(list.find((project: Bank) => project.id === id));
@@ -58,7 +58,7 @@ export default function ProjectPage(): ReactElement {
   };
 
   const editProjectInfo = () => () => {
-    let newproject = {
+    let newproject: Bank = {
       id: project.id,
       title: title,
       description: description,
@@ -124,7 +124,6 @@ export default function ProjectPage(): ReactElement {
   const publicationList = (publications?: Publication[]) => {
     if (publications) {
       const publication = publications.map((element: Publication) => {
-        // TODO- Check locale for locale dateformat.
         const date = dayjs(element.date).format('DD/MM/YYYY');
         return (
           <ListGroup.Item key={element.id}>
@@ -171,3 +170,5 @@ export default function ProjectPage(): ReactElement {
     </>
   );
 }
+
+export default ProjectPage;
