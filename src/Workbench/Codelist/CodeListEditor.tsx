@@ -4,8 +4,11 @@ import {
   Accordion,
   Button,
   Card,
+  Col,
+  Form,
   FormControl,
-  InputGroup
+  InputGroup,
+  Row
 } from 'react-bootstrap';
 
 import styles from './CodeListEditor.module.scss';
@@ -21,10 +24,15 @@ import { Utils } from '../../common/Utils';
 import { useParams } from 'react-router-dom';
 import { Codelist } from '../../models/Codelist';
 import { Bank } from '../../models/Bank';
+import { useForm } from 'react-hook-form';
 
 interface RouteParams {
   projectId: string;
 }
+type FormValues = {
+  title: string;
+  description: string;
+};
 
 export default function CodeListEditor(): ReactElement {
   const dispatch = useDispatch();
@@ -36,6 +44,8 @@ export default function CodeListEditor(): ReactElement {
   const [editmode, setEditMode] = useState(false);
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
+  const { register, handleSubmit, errors } = useForm<Codelist, Code>();
+  const [validated] = useState(false);
 
   if (!id) {
     return <p>Please select a project</p>;
@@ -103,11 +113,11 @@ export default function CodeListEditor(): ReactElement {
     dispatch(putProjectThunk(selectedProject));
   };
 
-  const editCodeList = () => {
+  const editCodeList = (post: FormValues) => {
     let newCodelist: Codelist = {
       id: selectedCodeList.id,
-      title: title,
-      description: description,
+      title: post.title,
+      description: post.description,
       codes: selectedCodeList.codes
     };
     const projectIdNumber = +projectId;
@@ -125,30 +135,60 @@ export default function CodeListEditor(): ReactElement {
   function renderHeaderSection(editmode: boolean) {
     if (editmode) {
       return (
-        /*TODO: finne ut hvor sannsynlig det er at bruker skriver
-         mange steder på samme tid, og derfor om handleTitleChange,
-         og descriptionchange må skrives om de tre separate funksjoner */
         <Card className="mt-3">
           <Card.Body>
-            <label htmlFor="title">Title</label>
-            <InputGroup className="mb-3 30vw">
-              <FormControl
-                name="title"
-                onChange={handleTitleChange}
-                defaultValue={selectedCodeList.title}
-              />
-            </InputGroup>
-            <label htmlFor="description">Description</label>
-            <InputGroup>
-              <FormControl
-                name="description"
-                onChange={handleDescriptionChange}
-                defaultValue={selectedCodeList.description}
-              />
-            </InputGroup>
-            <Button className="mt-2" onClick={editCodeList}>
-              Save
-            </Button>
+            <Form
+              onSubmit={handleSubmit(editCodeList)}
+              autoComplete="on"
+              noValidate
+              validated={validated}
+            >
+              <Form.Group as={Row}>
+                <Form.Label column sm="2">
+                  Title
+                </Form.Label>
+                <Col sm={10}>
+                  <Form.Control
+                    name="title"
+                    defaultValue={selectedCodeList.title}
+                    ref={register({
+                      required: { value: true, message: 'Required' },
+                      minLength: { value: 2, message: 'Minimum 2 characters' }
+                    })}
+                    isInvalid={!!errors.title}
+                  ></Form.Control>
+                  {errors.title && (
+                    <Form.Control.Feedback type="invalid">
+                      {errors.title.message}
+                    </Form.Control.Feedback>
+                  )}
+                </Col>
+              </Form.Group>
+              <Form.Group as={Row}>
+                <Form.Label column sm="2">
+                  Description
+                </Form.Label>
+                <Col sm={10}>
+                  <Form.Control
+                    name="description"
+                    defaultValue={selectedCodeList.description}
+                    ref={register({
+                      required: { value: true, message: 'Required' },
+                      minLength: { value: 2, message: 'Minimum 2 characters' }
+                    })}
+                    isInvalid={!!errors.description}
+                  ></Form.Control>
+                  {errors.description && (
+                    <Form.Control.Feedback type="invalid">
+                      {errors.description.message}
+                    </Form.Control.Feedback>
+                  )}
+                </Col>
+              </Form.Group>
+              <Button className="mt-2" type="submit">
+                Save
+              </Button>
+            </Form>
           </Card.Body>
         </Card>
       );
