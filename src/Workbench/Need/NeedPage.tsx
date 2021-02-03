@@ -2,7 +2,15 @@ import React, { ReactElement, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import { AiFillEdit } from 'react-icons/ai';
-import { Button, Col, Form, ListGroup, Row } from 'react-bootstrap';
+import {
+  Accordion,
+  Button,
+  Card,
+  Col,
+  Form,
+  ListGroup,
+  Row
+} from 'react-bootstrap';
 import { Need } from '../../models/Need';
 import styles from './NeedPage.module.scss';
 import { RootState } from '../../store/rootReducer';
@@ -16,10 +24,11 @@ type FormValues = {
 
 function NeedPage(): ReactElement {
   const dispatch = useDispatch();
-  const { register, handleSubmit, errors } = useForm<Need>();
+  const { register, handleSubmit, reset, errors } = useForm<Need>();
   const [validated] = useState(false);
   const { id } = useSelector((state: RootState) => state.selectedProject);
   const { list } = useSelector((state: RootState) => state.project);
+  const [activeKey, setActiveKey] = useState('');
 
   if (list.length === 0 || !id) {
     return <div>Loading NeedPage....</div>;
@@ -37,6 +46,11 @@ function NeedPage(): ReactElement {
     let clonedProject = { ...project };
     clonedProject.needs = [...project.needs, need];
     dispatch(putProjectThunk(clonedProject));
+    // reset the form
+    reset();
+
+    // collapse the Accordion
+    setActiveKey('');
   };
 
   const renderNeeds = (list: any) => {
@@ -53,60 +67,79 @@ function NeedPage(): ReactElement {
     });
   };
 
+  const onOpenClose = (e: any) => {
+    setActiveKey(e);
+  };
+
   return (
     <ListGroup className={styles.needs}>
-      <ListGroup.Item>
-        <Form
-          onSubmit={handleSubmit(onNewNeedSubmit)}
-          autoComplete="on"
-          noValidate
-          validated={validated}
-        >
-          <Form.Group as={Row}>
-            <Form.Label column sm="2">
-              Title
-            </Form.Label>
-            <Col sm={10}>
-              <Form.Control
-                name="tittel"
-                ref={register({
-                  required: { value: true, message: 'Required' },
-                  minLength: { value: 2, message: 'Minimum 2 characters' }
-                })}
-                isInvalid={!!errors.tittel}
-              ></Form.Control>
-              {errors.tittel && (
-                <Form.Control.Feedback type="invalid">
-                  {errors.tittel.message}
-                </Form.Control.Feedback>
-              )}
-            </Col>
-          </Form.Group>
-          <Form.Group as={Row}>
-            <Form.Label column sm="2">
-              Description
-            </Form.Label>
-            <Col sm={10}>
-              <Form.Control
-                name="beskrivelse"
-                ref={register({
-                  required: { value: true, message: 'Required' },
-                  minLength: { value: 2, message: 'Minimum 2 characters' }
-                })}
-                isInvalid={!!errors.beskrivelse}
-              ></Form.Control>
-              {errors.beskrivelse && (
-                <Form.Control.Feedback type="invalid">
-                  {errors.beskrivelse.message}
-                </Form.Control.Feedback>
-              )}
-            </Col>
-          </Form.Group>
-          <Button className="mt-2" type="submit">
-            Save
-          </Button>
-        </Form>
-      </ListGroup.Item>
+      <Accordion activeKey={activeKey} onSelect={onOpenClose}>
+        <Card>
+          <Accordion.Toggle as={Card.Header} eventKey="0">
+            <Button>Add Need</Button>
+          </Accordion.Toggle>
+          <Accordion.Collapse eventKey="0">
+            <Card.Body>
+              <Form
+                onSubmit={handleSubmit(onNewNeedSubmit)}
+                autoComplete="on"
+                noValidate
+                validated={validated}
+              >
+                <Form.Group as={Row}>
+                  <Form.Label column sm="2">
+                    Title
+                  </Form.Label>
+                  <Col sm={10}>
+                    <Form.Control
+                      name="tittel"
+                      ref={register({
+                        required: { value: true, message: 'Required' },
+                        minLength: {
+                          value: 2,
+                          message: 'Minimum 2 characters'
+                        }
+                      })}
+                      isInvalid={!!errors.tittel}
+                    ></Form.Control>
+                    {errors.tittel && (
+                      <Form.Control.Feedback type="invalid">
+                        {errors.tittel.message}
+                      </Form.Control.Feedback>
+                    )}
+                  </Col>
+                </Form.Group>
+                <Form.Group as={Row}>
+                  <Form.Label column sm="2">
+                    Description
+                  </Form.Label>
+                  <Col sm={10}>
+                    <Form.Control
+                      name="beskrivelse"
+                      ref={register({
+                        required: { value: true, message: 'Required' },
+                        minLength: {
+                          value: 2,
+                          message: 'Minimum 2 characters'
+                        }
+                      })}
+                      isInvalid={!!errors.beskrivelse}
+                    ></Form.Control>
+                    {errors.beskrivelse && (
+                      <Form.Control.Feedback type="invalid">
+                        {errors.beskrivelse.message}
+                      </Form.Control.Feedback>
+                    )}
+                  </Col>
+                </Form.Group>
+                <Button className="mt-2" type="submit">
+                  Save
+                </Button>
+              </Form>
+            </Card.Body>
+          </Accordion.Collapse>
+        </Card>
+      </Accordion>
 
       {renderNeeds(project.needs)}
     </ListGroup>
