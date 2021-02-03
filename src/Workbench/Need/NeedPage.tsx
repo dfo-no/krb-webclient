@@ -1,38 +1,56 @@
 import React, { ReactElement, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
-import { useHistory } from 'react-router-dom';
-import Modal from 'react-modal';
-import { AiFillPlusSquare, AiFillEdit } from 'react-icons/ai';
-
+import { AiFillEdit } from 'react-icons/ai';
+import {
+  Accordion,
+  Button,
+  Card,
+  Col,
+  Form,
+  ListGroup,
+  Row
+} from 'react-bootstrap';
 import { Need } from '../../models/Need';
 import styles from './NeedPage.module.scss';
 import { RootState } from '../../store/rootReducer';
-import { addSubNeed } from '../../store/reducers/kravbank-reducer';
-import { Button, ListGroup } from 'react-bootstrap';
+import { Utils } from '../../common/Utils';
+import { putProjectThunk } from '../../store/reducers/project-reducer';
+
+type FormValues = {
+  tittel: string;
+  beskrivelse: string;
+};
 
 function NeedPage(): ReactElement {
   const dispatch = useDispatch();
-  const { projects, selectedProject, selectedNeed } = useSelector(
-    (state: RootState) => state.kravbank
-  );
-  const [needModalIsOpen, setNeedIsOpen] = useState(false);
-  const [kravModalIsOpen, setKravIsOpen] = useState(false);
-  const { register, handleSubmit } = useForm<Need>();
-  const history = useHistory();
+  const { register, handleSubmit, reset, errors } = useForm<Need>();
+  const [validated] = useState(false);
+  const { id } = useSelector((state: RootState) => state.selectedProject);
+  const { list } = useSelector((state: RootState) => state.project);
+  const [activeKey, setActiveKey] = useState('');
 
-  if (!selectedProject) {
-    return <p>No Project selected</p>;
+  if (list.length === 0 || !id) {
+    return <div>Loading NeedPage....</div>;
   }
-  //const need = projects[selectedProject.id].needs[selectedNeed];
-  const needs = selectedProject.needs;
+  let project = Utils.ensure(list.find((banks) => banks.id === id));
 
-  const needModal = (open: boolean) => (event: any) => {
-    setNeedIsOpen(open);
-  };
+  const onNewNeedSubmit = (post: FormValues, e: any) => {
+    const need: Need = {
+      id: Utils.getRandomNumber(),
+      tittel: post.tittel,
+      beskrivelse: post.beskrivelse,
+      requirements: []
+    };
+    // TODO: Black magic here. Must be a better way
+    let clonedProject = { ...project };
+    clonedProject.needs = [...project.needs, need];
+    dispatch(putProjectThunk(clonedProject));
+    // reset the form
+    reset();
 
-  const kravModal = (open: boolean) => (event: any) => {
-    setKravIsOpen(open);
+    // collapse the Accordion
+    setActiveKey('');
   };
 
   const renderNeeds = (list: any) => {
@@ -45,161 +63,86 @@ function NeedPage(): ReactElement {
             <AiFillEdit></AiFillEdit>
           </Button>
         </ListGroup.Item>
-        /* <div className={styles.listitem} key={element.id}>
-          <p>{element.tittel}</p>
-          <AiFillEdit
-            className={styles.editicon}
-            onClick={handleEditKrav(element as Krav)}
-          />
-        </div> */
       );
     });
   };
 
-  /* const submitBehov = (data: Need) => {
-    // TODO: ikke gi ID til nye behov.
-    const need: Need = {
-      id: Utils.getRandomNumber(),
-      tittel: data.tittel,
-      beskrivelse: data.beskrivelse
-    };
-    dispatch(addSubNeed(need));
-    needModal(false);
-  }; */
+  const onOpenClose = (e: any) => {
+    setActiveKey(e);
+  };
 
-  /* const submitKrav = (data: Krav) => {
-    const krav: Krav = {
-      id: Utils.getRandomNumber(),
-      tittel: data.tittel,
-      beskrivelse: data.beskrivelse,
-      type: data.type,
-      needId: selectedNeed
-    };
-    dispatch(addKrav(krav));
-    kravModal(false);
-  }; */
+  return (
+    <ListGroup className={styles.needs}>
+      <Accordion activeKey={activeKey} onSelect={onOpenClose}>
+        <Card>
+          <Accordion.Toggle as={Card.Header} eventKey="0">
+            <Button>Add Need</Button>
+          </Accordion.Toggle>
+          <Accordion.Collapse eventKey="0">
+            <Card.Body>
+              <Form
+                onSubmit={handleSubmit(onNewNeedSubmit)}
+                autoComplete="on"
+                noValidate
+                validated={validated}
+              >
+                <Form.Group as={Row}>
+                  <Form.Label column sm="2">
+                    Title
+                  </Form.Label>
+                  <Col sm={10}>
+                    <Form.Control
+                      name="tittel"
+                      ref={register({
+                        required: { value: true, message: 'Required' },
+                        minLength: {
+                          value: 2,
+                          message: 'Minimum 2 characters'
+                        }
+                      })}
+                      isInvalid={!!errors.tittel}
+                    ></Form.Control>
+                    {errors.tittel && (
+                      <Form.Control.Feedback type="invalid">
+                        {errors.tittel.message}
+                      </Form.Control.Feedback>
+                    )}
+                  </Col>
+                </Form.Group>
+                <Form.Group as={Row}>
+                  <Form.Label column sm="2">
+                    Description
+                  </Form.Label>
+                  <Col sm={10}>
+                    <Form.Control
+                      name="beskrivelse"
+                      ref={register({
+                        required: { value: true, message: 'Required' },
+                        minLength: {
+                          value: 2,
+                          message: 'Minimum 2 characters'
+                        }
+                      })}
+                      isInvalid={!!errors.beskrivelse}
+                    ></Form.Control>
+                    {errors.beskrivelse && (
+                      <Form.Control.Feedback type="invalid">
+                        {errors.beskrivelse.message}
+                      </Form.Control.Feedback>
+                    )}
+                  </Col>
+                </Form.Group>
+                <Button className="mt-2" type="submit">
+                  Save
+                </Button>
+              </Form>
+            </Card.Body>
+          </Accordion.Collapse>
+        </Card>
+      </Accordion>
 
-  return needs ? (
-    <>
-      <ListGroup className={styles.needs}>{renderNeeds(needs)}</ListGroup>
-      {/* <h1>{need.tittel}</h1>
-      <label className={styles.formlabel}>
-        <b>Tittel</b>
-        <input type="text" name="tittel" defaultValue={need.tittel} />
-      </label>
-      <label className={styles.formlabel}>
-        <b>Beskrivelse</b>
-        <input type="text" name="tittel" defaultValue={need.beskrivelse} />
-      </label>
-      <div>
-        <div className={styles.subsection}>
-          <h2>Sub needs</h2>
-          <AiFillPlusSquare
-            size={25}
-            onClick={needModal(true)}
-            className={styles.icon}
-          />
-        </div>
-        {need.needs && renderNeeds(need.needs)}
-      </div> */}
-      {/*       <Modal
-        isOpen={needModalIsOpen}
-        onRequestClose={needModal(false)}
-        className={styles.modal}
-        contentLabel="Example Modal"
-        ariaHideApp={false}
-      >
-        <form
-          onSubmit={handleSubmit(submitBehov)}
-          autoComplete="off"
-          className={styles.formwrapper}
-        >
-          <label className={styles.formlabel}>
-            <b>Tittel</b>
-            <input
-              autoComplete="off"
-              name="tittel"
-              ref={register({
-                pattern: /^[ÆØÅæøåA-Za-z0-9_ ]+$/i,
-                required: true,
-                maxLength: 40
-              })}
-            />
-          </label>
-          <label className={styles.formlabel}>
-            <b>Beskrivelse</b>
-            <input
-              autoComplete="off"
-              name="beskrivelse"
-              ref={register({
-                pattern: /^[ÆØÅæøåA-Za-z0-9_ ]+$/i,
-                required: true,
-                maxLength: 50
-              })}
-            />
-          </label>
-          <input type="submit" value="New need" />
-        </form>
-      </Modal> */}
-      {/* <div>
-        <div className={styles.subsection}>
-          <h2>Krav</h2>
-          <AiFillPlusSquare
-            size={25}
-            onClick={kravModal(true)}
-            className={styles.icon}
-          />
-        </div>
-        {need.krav && renderNeeds(need.krav)}
-      </div> */}
-      {/* <Modal
-        isOpen={kravModalIsOpen}
-        onRequestClose={kravModal(false)}
-        className={styles.modal}
-        contentLabel="Example Modal"
-        ariaHideApp={false}
-      >
-        <form
-          onSubmit={handleSubmit(submitKrav)}
-          autoComplete="off"
-          className={styles.formwrapper}
-        >
-          <label className={styles.formlabel}>
-            <b>Tittel</b>
-            <input
-              name="tittel"
-              ref={register({
-                pattern: /^[ÆØÅæøåA-Za-z0-9_ ]+$/i,
-                required: true,
-                maxLength: 40
-              })}
-            />
-          </label>
-          <label className={styles.formlabel}>
-            <b>Beskrivelse</b>
-            <input
-              name="beskrivelse"
-              ref={register({
-                pattern: /^[ÆØÅæøåA-Za-z0-9_ ]+$/i,
-                required: true,
-                maxLength: 50
-              })}
-            />
-          </label>
-          <label className={styles.formlabel}>
-            <b>Type</b>
-            <select id="type" name="type" ref={register}>
-              <option value="kodeliste">Kodeliste</option>
-              <option value="kodeliste-eksakt">Kodeliste-eksakt</option>
-              <option value="fritekst">Fritekst</option>
-            </select>
-          </label>
-          <input type="submit" value="Opprett krav" />
-        </form>
-      </Modal> */}
-    </>
-  ) : (
-    <div></div>
+      {renderNeeds(project.needs)}
+    </ListGroup>
   );
 }
 

@@ -1,4 +1,4 @@
-import React, { ReactElement, useEffect, useState } from 'react';
+import React, { ReactElement, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { Button, Col, Form, ListGroup, Row } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
@@ -20,18 +20,11 @@ type FormValues = {
   description: string;
 };
 
-export default function WorkbenchPage(): ReactElement {
+function WorkbenchPage(): ReactElement {
   const dispatch = useDispatch();
   const { list } = useSelector((state: RootState) => state.project);
   const history = useHistory();
   const [showEditor, setShowEditor] = useState(false);
-
-  useEffect(() => {
-    async function fetchEverything() {
-      dispatch(getProjectsThunk());
-    }
-    fetchEverything();
-  }, [dispatch]);
 
   const { register, handleSubmit, reset, errors } = useForm<FormValues>();
   const [validated] = useState(false);
@@ -87,6 +80,7 @@ export default function WorkbenchPage(): ReactElement {
     });
     return <ListGroup className={`${css.list} mt-5`}>{projects}</ListGroup>;
   };
+
   function projectEditor(show: boolean) {
     if (show) {
       return (
@@ -159,3 +153,5 @@ export default function WorkbenchPage(): ReactElement {
     </>
   );
 }
+
+export default WorkbenchPage;

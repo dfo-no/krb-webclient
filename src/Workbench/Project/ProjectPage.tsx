@@ -1,4 +1,4 @@
-import React, { ReactElement, useState } from 'react';
+import { ReactElement, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   Button,
@@ -29,7 +29,7 @@ type FormValues = {
   description: string;
 };
 
-export default function ProjectPage(): ReactElement {
+function ProjectPage(): ReactElement {
   const dispatch = useDispatch();
   const { id } = useSelector((state: RootState) => state.selectedProject);
   const { list } = useSelector((state: RootState) => state.project);
@@ -39,8 +39,8 @@ export default function ProjectPage(): ReactElement {
   const { register, handleSubmit, errors } = useForm<Bank>();
   const [validated] = useState(false);
 
-  if (!id) {
-    return <p>Please select a project</p>;
+  if (!list) {
+    return <p>Loading ....</p>;
   }
 
   let project = Utils.ensure(list.find((project: Bank) => project.id === id));
@@ -66,8 +66,8 @@ export default function ProjectPage(): ReactElement {
     dispatch(putProjectThunk(project));
   };
 
-  const editProjectInfo = (post: FormValues) => {
-    let newproject = {
+  const editProjectInfo = (post: FormValues) => () => {
+    let newproject: Bank = {
       id: project.id,
       title: post.title,
       description: post.description,
@@ -159,7 +159,6 @@ export default function ProjectPage(): ReactElement {
   const publicationList = (publications?: Publication[]) => {
     if (publications) {
       const publication = publications.map((element: Publication) => {
-        // TODO- Check locale for locale dateformat.
         const date = dayjs(element.date).format('DD/MM/YYYY');
         return (
           <ListGroup.Item key={element.id}>
@@ -206,3 +205,5 @@ export default function ProjectPage(): ReactElement {
     </>
   );
 }
+
+export default ProjectPage;

@@ -49,9 +49,9 @@ export const postProjectThunk = createAsyncThunk(
 export const putProjectThunk = createAsyncThunk(
   'putProjectThunk',
   async (project: Bank) => {
-    const response = await put(
+    const response = await put<Bank>(
       `http://localhost:3001/projects/${project.id}`,
-      JSON.stringify(project)
+      project
     );
     return response.data;
   }
@@ -77,8 +77,8 @@ const projectSlice = createSlice({
 
     // Should not be needed, when removing, we reload the list
     deleteProject(state, { payload }: PayloadAction<Bank>) {
-      const index = state.list.findIndex(
-        (project) => project.id === payload.id
+      const index = Utils.ensure(
+        state.list.findIndex((project) => project.id === payload.id)
       );
       if (index !== -1) {
         state.list.splice(index, 1);
@@ -241,14 +241,32 @@ const projectSlice = createSlice({
     });
     builder.addCase(postProjectThunk.fulfilled, (state, { payload }) => {
       state.list.push(payload);
+      state.status = 'fulfilled';
     });
-    builder.addCase(postProjectThunk.pending, (state, { payload }) => {});
-    builder.addCase(postProjectThunk.rejected, (state, { payload }) => {});
-    builder.addCase(putProjectThunk.fulfilled, (state, { payload }) => {});
-    builder.addCase(putProjectThunk.pending, (state, { payload }) => {});
-    builder.addCase(putProjectThunk.rejected, (state, { payload }) => {});
+    builder.addCase(postProjectThunk.pending, (state, { payload }) => {
+      state.status = 'pending';
+    });
+    builder.addCase(postProjectThunk.rejected, (state, { payload }) => {
+      state.status = 'rejected';
+    });
+    builder.addCase(putProjectThunk.fulfilled, (state, { payload }) => {
+      state.status = 'fulfilled';
+
+      /* After updating successfully, we update the store with the
+      new object to be shown on the page*/
+      const projectIndex = Utils.ensure(
+        state.list.findIndex((project) => project.id === payload.id)
+      );
+      state.list[projectIndex] = payload;
+    });
+    builder.addCase(putProjectThunk.pending, (state, { payload }) => {
+      state.status = 'pending';
+    });
+    builder.addCase(putProjectThunk.rejected, (state, { payload }) => {
+      state.status = 'rejected';
+    });
     builder.addCase(deleteProjectThunk.fulfilled, (state, { payload }) => {
-      state.status = 'idle';
+      state.status = 'fulfilled';
     });
     builder.addCase(deleteProjectThunk.pending, (state, { payload }) => {
       state.status = 'pending';
