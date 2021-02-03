@@ -190,12 +190,6 @@
       "publishedDate": "2021-02-02T13:08:31.693Z"
     },
     {
-<<<<<<< HEAD
-      "id": 820562,
-      "title": "Hytteområde for ansatte ",
-      "description": "ansatte i kommunen skal ha tilgang",
-      "needs": [],
-=======
       "id": 21013,
       "title": "Hytte til kommunen",
       "description": "ewtwrt",
@@ -242,7 +236,6 @@
           ]
         }
       ],
->>>>>>> e8dc3f1ab49feee0bae8dbd48c23f4f6718d6874
       "products": [],
       "codelist": [
         {
