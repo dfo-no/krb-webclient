@@ -5,7 +5,10 @@ import {
   FormControl,
   InputGroup,
   ListGroup,
-  Accordion
+  Accordion,
+  Form,
+  Col,
+  Row
 } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -20,10 +23,16 @@ import styles from './ProductPage.module.scss';
 import { Utils } from '../../common/Utils';
 import { useParams } from 'react-router-dom';
 import { Bank } from '../../models/Bank';
+import { useForm } from 'react-hook-form';
 
 interface RouteParams {
   projectId: string;
 }
+
+type FormValues = {
+  title: string;
+  description: string;
+};
 
 export default function ProductPage(): ReactElement {
   const dispatch = useDispatch();
@@ -33,6 +42,8 @@ export default function ProductPage(): ReactElement {
   const [showEditor, setShowEdior] = useState(false);
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
+  const { register, handleSubmit, errors } = useForm<Product>();
+  const [validated] = useState(false);
 
   const handleTitleChange = (event: any) => {
     setTitle(event.target.value);
@@ -64,10 +75,10 @@ export default function ProductPage(): ReactElement {
     dispatch(putProjectThunk(selectedProject));
   };
 
-  const addNewProduct = () => {
+  const addNewProduct = (post: FormValues) => {
     let product: Product = {
-      title: title,
-      description: description,
+      title: post.title,
+      description: post.description,
       id: Utils.getRandomNumber()
     };
     const projectIdNumber = +projectId;
@@ -78,31 +89,60 @@ export default function ProductPage(): ReactElement {
   function productEditor(show: boolean) {
     if (show) {
       return (
-        <div className={styles.product}>
-          <ListGroup.Item>
-            <label htmlFor="title">Title</label>
-            <InputGroup className="mb-3 30vw">
-              <FormControl
-                className="input-sm"
-                name="title"
-                onChange={handleTitleChange}
-              />
-            </InputGroup>
-            <label htmlFor="description">Description</label>
-            <InputGroup>
-              <FormControl
-                name="description"
-                onChange={handleDescriptionChange}
-              />
-            </InputGroup>
-            <Button
-              className={`primary ${styles.product__addButton}`}
-              onClick={addNewProduct}
+        <Card className="mt-3">
+          <Card.Body>
+            <Form
+              onSubmit={handleSubmit(addNewProduct)}
+              autoComplete="on"
+              noValidate
+              validated={validated}
             >
-              Add
-            </Button>
-          </ListGroup.Item>
-        </div>
+              <Form.Group as={Row}>
+                <Form.Label column sm="2">
+                  Title
+                </Form.Label>
+                <Col sm={10}>
+                  <Form.Control
+                    name="title"
+                    ref={register({
+                      required: { value: true, message: 'Required' },
+                      minLength: { value: 2, message: 'Minimum 2 characters' }
+                    })}
+                    isInvalid={!!errors.title}
+                  ></Form.Control>
+                  {errors.title && (
+                    <Form.Control.Feedback type="invalid">
+                      {errors.title.message}
+                    </Form.Control.Feedback>
+                  )}
+                </Col>
+              </Form.Group>
+              <Form.Group as={Row}>
+                <Form.Label column sm="2">
+                  Description
+                </Form.Label>
+                <Col sm={10}>
+                  <Form.Control
+                    name="description"
+                    ref={register({
+                      required: { value: true, message: 'Required' },
+                      minLength: { value: 2, message: 'Minimum 2 characters' }
+                    })}
+                    isInvalid={!!errors.description}
+                  ></Form.Control>
+                  {errors.description && (
+                    <Form.Control.Feedback type="invalid">
+                      {errors.description.message}
+                    </Form.Control.Feedback>
+                  )}
+                </Col>
+              </Form.Group>
+              <Button className="mt-2" type="submit">
+                Save
+              </Button>
+            </Form>
+          </Card.Body>
+        </Card>
       );
     } else {
       return <></>;

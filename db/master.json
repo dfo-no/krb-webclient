@@ -178,6 +178,12 @@
           "description": "yyytry",
           "id": 923166,
           "codes": []
+        },
+        {
+          "title": "Kurs og konferanse3",
+          "description": "yyytry",
+          "id": 905810,
+          "codes": []
         }
       ],
       "version": 1,
@@ -233,10 +239,16 @@
       "products": [],
       "codelist": [
         {
-          "title": "Kurs og konferanse3",
-          "description": "dasds",
           "id": 314042,
-          "codes": []
+          "title": "testing 6",
+          "description": "yyytryjj",
+          "codes": [
+            {
+              "id": 194504,
+              "title": "testing ",
+              "description": "ansatte i kommunen skal ha tilgang"
+            }
+          ]
         },
         {
           "title": "Kurs og konferanse5",

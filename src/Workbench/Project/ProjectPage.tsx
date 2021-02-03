@@ -5,7 +5,10 @@ import {
   ListGroup,
   InputGroup,
   FormControl,
-  Card
+  Card,
+  Form,
+  Row,
+  Col
 } from 'react-bootstrap';
 import dayjs from 'dayjs';
 
@@ -19,6 +22,12 @@ import {
 import { postBank } from '../../store/reducers/bank-reducer';
 import { Utils } from '../../common/Utils';
 import { Bank } from '../../models/Bank';
+import { useForm } from 'react-hook-form';
+
+type FormValues = {
+  title: string;
+  description: string;
+};
 
 function ProjectPage(): ReactElement {
   const dispatch = useDispatch();
@@ -27,8 +36,8 @@ function ProjectPage(): ReactElement {
   const [showEditor, setShowEditor] = useState(false);
   const [comment, setComment] = useState('');
   const [editMode, setEditMode] = useState(false);
-  const [title, setTitle] = useState('');
-  const [description, setDescription] = useState('');
+  const { register, handleSubmit, errors } = useForm<Bank>();
+  const [validated] = useState(false);
 
   if (!list) {
     return <p>Loading ....</p>;
@@ -57,11 +66,11 @@ function ProjectPage(): ReactElement {
     dispatch(putProjectThunk(project));
   };
 
-  const editProjectInfo = () => () => {
+  const editProjectInfo = (post: FormValues) => () => {
     let newproject: Bank = {
       id: project.id,
-      title: title,
-      description: description,
+      title: post.title,
+      description: post.description,
       needs: project.needs,
       products: project.products,
       codelist: project.codelist,
@@ -70,18 +79,11 @@ function ProjectPage(): ReactElement {
     };
     setEditMode(false);
     dispatch(editProject(newproject));
-    dispatch(putProjectThunk(project));
+    dispatch(putProjectThunk(newproject));
   };
 
   const handleCommentChange = (event: any) => {
     setComment(event.target.value);
-  };
-
-  const handleTitleChange = (event: any) => {
-    setTitle(event.target.value);
-  };
-  const handleDescriptionChange = (event: any) => {
-    setDescription(event.target.value);
   };
 
   function headerSection(editmode: boolean) {
@@ -89,25 +91,58 @@ function ProjectPage(): ReactElement {
       return (
         <Card className="mt-3">
           <Card.Body>
-            <label htmlFor="title">Title</label>
-            <InputGroup className="mb-3">
-              <FormControl
-                name="title"
-                onChange={handleTitleChange}
-                defaultValue={project.title}
-              />
-            </InputGroup>
-            <label htmlFor="description">Description</label>
-            <InputGroup>
-              <FormControl
-                name="description"
-                onChange={handleDescriptionChange}
-                defaultValue={project.description}
-              />
-            </InputGroup>
-            <Button className="mt-3" onClick={editProjectInfo()}>
-              Save
-            </Button>
+            <Form
+              onSubmit={handleSubmit(editProjectInfo)}
+              autoComplete="on"
+              noValidate
+              validated={validated}
+            >
+              <Form.Group as={Row}>
+                <Form.Label column sm="2">
+                  Title
+                </Form.Label>
+                <Col sm={10}>
+                  <Form.Control
+                    name="title"
+                    defaultValue={project.title}
+                    ref={register({
+                      required: { value: true, message: 'Required' },
+                      minLength: { value: 2, message: 'Minimum 2 characters' }
+                    })}
+                    isInvalid={!!errors.title}
+                  ></Form.Control>
+                  {errors.title && (
+                    <Form.Control.Feedback type="invalid">
+                      {errors.title.message}
+                    </Form.Control.Feedback>
+                  )}
+                </Col>
+              </Form.Group>
+              <Form.Group as={Row}>
+                <Form.Label column sm="2">
+                  Description
+                </Form.Label>
+                <Col sm={10}>
+                  <Form.Control
+                    name="description"
+                    defaultValue={project.description}
+                    ref={register({
+                      required: { value: true, message: 'Required' },
+                      minLength: { value: 2, message: 'Minimum 2 characters' }
+                    })}
+                    isInvalid={!!errors.description}
+                  ></Form.Control>
+                  {errors.description && (
+                    <Form.Control.Feedback type="invalid">
+                      {errors.description.message}
+                    </Form.Control.Feedback>
+                  )}
+                </Col>
+              </Form.Group>
+              <Button className="mt-2" type="submit">
+                Save
+              </Button>
+            </Form>
           </Card.Body>
         </Card>
       );

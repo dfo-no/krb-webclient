@@ -1,13 +1,8 @@
 import React, { ReactElement, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useParams } from 'react-router-dom';
-import {
-  Button,
-  Card,
-  FormControl,
-  InputGroup,
-  ListGroup
-} from 'react-bootstrap';
+import { Button, Card, Col, Form, ListGroup, Row } from 'react-bootstrap';
+import { useForm } from 'react-hook-form';
 
 import styles from './CodelistPage.module.scss';
 import { RootState } from '../../store/rootReducer';
@@ -23,6 +18,10 @@ import { Bank } from '../../models/Bank';
 interface RouteParams {
   projectId: string;
 }
+type FormValues = {
+  title: string;
+  description: string;
+};
 
 export default function CodelistPage(): ReactElement {
   const dispatch = useDispatch();
@@ -30,9 +29,8 @@ export default function CodelistPage(): ReactElement {
   const { id } = useSelector((state: RootState) => state.selectedProject);
   let { projectId } = useParams<RouteParams>();
   const [showEditor, setShowEdior] = useState(false);
-  const [title, setTitle] = useState('');
-  const [description, setDescription] = useState('');
-
+  const { register, handleSubmit, errors } = useForm<Codelist>();
+  const [validated] = useState(false);
   if (!id) {
     return <p>Please select a project</p>;
   }
@@ -67,17 +65,10 @@ export default function CodelistPage(): ReactElement {
     setShowEdior(true);
   };
 
-  const handleTitleChange = (event: any) => {
-    setTitle(event.target.value);
-  };
-  const handleDescriptionChange = (event: any) => {
-    setDescription(event.target.value);
-  };
-
-  const addNewCodelist = () => {
+  const addNewCodelist = (post: FormValues) => {
     let codeList: Codelist = {
-      title: title,
-      description: description,
+      title: post.title,
+      description: post.description,
       id: Utils.getRandomNumber(),
       codes: []
     };
@@ -92,20 +83,56 @@ export default function CodelistPage(): ReactElement {
       return (
         <Card className="mt-3">
           <Card.Body>
-            <label htmlFor="title">Title</label>
-            <InputGroup className="mb-3 30vw">
-              <FormControl name="title" onChange={handleTitleChange} />
-            </InputGroup>
-            <label htmlFor="description">Description</label>
-            <InputGroup>
-              <FormControl
-                name="description"
-                onChange={handleDescriptionChange}
-              />
-            </InputGroup>
-            <Button className={styles.addButton} onClick={addNewCodelist}>
-              Create
-            </Button>
+            <Form
+              onSubmit={handleSubmit(addNewCodelist)}
+              autoComplete="on"
+              noValidate
+              validated={validated}
+            >
+              <Form.Group as={Row}>
+                <Form.Label column sm="2">
+                  Title
+                </Form.Label>
+                <Col sm={10}>
+                  <Form.Control
+                    name="title"
+                    ref={register({
+                      required: { value: true, message: 'Required' },
+                      minLength: { value: 2, message: 'Minimum 2 characters' }
+                    })}
+                    isInvalid={!!errors.title}
+                  ></Form.Control>
+                  {errors.title && (
+                    <Form.Control.Feedback type="invalid">
+                      {errors.title.message}
+                    </Form.Control.Feedback>
+                  )}
+                </Col>
+              </Form.Group>
+              <Form.Group as={Row}>
+                <Form.Label column sm="2">
+                  Description
+                </Form.Label>
+                <Col sm={10}>
+                  <Form.Control
+                    name="description"
+                    ref={register({
+                      required: { value: true, message: 'Required' },
+                      minLength: { value: 2, message: 'Minimum 2 characters' }
+                    })}
+                    isInvalid={!!errors.description}
+                  ></Form.Control>
+                  {errors.description && (
+                    <Form.Control.Feedback type="invalid">
+                      {errors.description.message}
+                    </Form.Control.Feedback>
+                  )}
+                </Col>
+              </Form.Group>
+              <Button className="mt-2" type="submit">
+                Save
+              </Button>
+            </Form>
           </Card.Body>
         </Card>
       );
