@@ -17,4 +17,19 @@ export class Utils {
     //The maximum is exclusive and the minimum is inclusive
     return Math.floor(Math.random() * (max - min) + min);
   }
+
+  static truncate(
+    str: string | undefined,
+    length: number = 100,
+    ending: string = '...'
+  ): string {
+    if (str === undefined) {
+      return '';
+    }
+    if (str.length > length) {
+      return str.substring(0, length - ending.length) + ending;
+    } else {
+      return str;
+    }
+  }
 }
