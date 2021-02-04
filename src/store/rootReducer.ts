@@ -7,6 +7,7 @@ import projectReducer from './reducers/project-reducer';
 import selectedProjectReducer from './reducers/selectedProject-reducer';
 import selectedCodeListReducer from './reducers/selectedCodelist-reducer';
 import userReducer from './reducers/userReducer';
+import selectedBankReducer from './reducers/selectedBank-reducer';
 
 const rootReducer = combineReducers({
   counter: counterReducer,
@@ -16,7 +17,8 @@ const rootReducer = combineReducers({
   bank: bankReducer,
   project: projectReducer,
   selectedProject: selectedProjectReducer,
-  selectedCodeList: selectedCodeListReducer
+  selectedCodeList: selectedCodeListReducer,
+  selectedBank: selectedBankReducer
 });
 
 export type RootState = ReturnType<typeof rootReducer>;

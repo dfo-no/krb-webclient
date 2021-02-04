@@ -5,7 +5,8 @@ import {
   Button,
   Col,
   InputGroup,
-  FormControl
+  FormControl,
+  Card
 } from 'react-bootstrap';
 
 import { Requirement } from '../models/Requirement';
@@ -13,6 +14,7 @@ import { Need } from '../models/Need';
 import { useForm } from 'react-hook-form';
 import { Bank } from '../models/Bank';
 import { FileDownLoad } from '../models/FileDownLoad';
+import styles from './ResponseEditor.module.scss';
 
 export default function ResponseEditor(): ReactElement {
   const { register, handleSubmit } = useForm();
@@ -103,7 +105,7 @@ export default function ResponseEditor(): ReactElement {
           {need.requirements.map((c, i) => (
             <div className={`ml-5`}>
               <label key={c.id}>
-                {c.title}
+                {c.title} &nbsp;
                 <input
                   type="checkbox"
                   value={i}
@@ -117,7 +119,11 @@ export default function ResponseEditor(): ReactElement {
         </>
       );
     });
-    return <>{needs}</>;
+    return (
+      <Card className="bg-light">
+        <Card.Body> {needs}</Card.Body>
+      </Card>
+    );
   };
 
   return (
@@ -125,15 +131,17 @@ export default function ResponseEditor(): ReactElement {
       <Row className="m-4">
         <Col>
           <label htmlFor="title">Name</label>
-          <InputGroup className="mb-3 30vw">
+          <InputGroup className="mb-3">
             <FormControl name="name" onChange={handleNameChange} />
           </InputGroup>
         </Col>
         <Col>
-          <Button onClick={onDownLoad}>Download</Button>
+          <Button className={styles.downLoadButton} onClick={onDownLoad}>
+            Download
+          </Button>
         </Col>
       </Row>
-      <Row className="m-5">
+      <Row className="m-4">
         <Col>
           <form onSubmit={handleSubmit(onSubmit)}>
             {needList(needs)}

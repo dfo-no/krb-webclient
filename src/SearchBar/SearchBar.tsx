@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 
 import { Bank } from '../models/Bank';
-import { selectBank } from '../store/reducers/kravbank-reducer';
+import { selectBank } from '../store/reducers/selectedBank-reducer';
 import styles from './SearchBar.module.scss';
 
 interface SearchBarProps {
@@ -29,7 +29,7 @@ export default function SearchBar(props: SearchBarProps): ReactElement {
   };
 
   const handleEdit = (bank: Bank) => () => {
-    dispatch(selectBank(bank));
+    dispatch(selectBank(bank.id));
   };
 
   const displaylist = (list: Bank[]) => {

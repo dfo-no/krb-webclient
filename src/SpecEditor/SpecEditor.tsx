@@ -5,7 +5,8 @@ import {
   Button,
   Col,
   InputGroup,
-  FormControl
+  FormControl,
+  Card
 } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
 
@@ -14,16 +15,22 @@ import { Need } from '../models/Need';
 import { RootState } from '../store/rootReducer';
 import { useForm } from 'react-hook-form';
 import { FileDownLoad } from '../models/FileDownLoad';
+import styles from './SpecEditor.module.scss';
+import { Bank } from '../models/Bank';
+import { Utils } from '../common/Utils';
 
 export default function SpecEditor(): ReactElement {
-  const { selectedBank } = useSelector((state: RootState) => state.kravbank);
+  const { id } = useSelector((state: RootState) => state.selectedBank);
+  const { list } = useSelector((state: RootState) => state.bank);
   const { register, handleSubmit } = useForm();
   const [selectedNeedlist, setSelectedNeedList] = useState<Need[]>([]);
   const [name, setName] = useState('');
 
-  if (!selectedBank) {
+  if (!id) {
     return <p>No selected bank</p>;
   }
+
+  const selectedBank = Utils.ensure(list.find((bank: Bank) => bank.id === id));
 
   const needs = selectedBank.needs;
 
@@ -87,14 +94,18 @@ export default function SpecEditor(): ReactElement {
                   name={need.tittel}
                   ref={register}
                 />
-                {c.title}
+                &nbsp;{c.title}
               </label>
             </div>
           ))}
         </>
       );
     });
-    return <>{needs}</>;
+    return (
+      <Card className="bg-light">
+        <Card.Body>{needs}</Card.Body>
+      </Card>
+    );
   };
 
   return (
@@ -102,15 +113,17 @@ export default function SpecEditor(): ReactElement {
       <Row className="m-4">
         <Col>
           <label htmlFor="title">Name</label>
-          <InputGroup className="mb-3 30vw">
+          <InputGroup className="mb-5">
             <FormControl name="name" onChange={handleNameChange} />
           </InputGroup>
         </Col>
         <Col>
-          <Button onClick={onDownLoad}>Download</Button>
+          <Button className={styles.downLoadButton} onClick={onDownLoad}>
+            Download
+          </Button>
         </Col>
       </Row>
-      <Row className="m-5">
+      <Row className="m-4">
         <Col>
           <form onSubmit={handleSubmit(onSubmit)}>
             {needList(needs)}

@@ -5,7 +5,7 @@ import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 
 import { Bank } from '../../models/Bank';
-import { selectBank } from '../../store/reducers/kravbank-reducer';
+import { selectBank } from '../../store/reducers/selectedBank-reducer';
 
 interface FilteredListProps {
   list: Bank[];
@@ -17,7 +17,7 @@ export default function FilteredList(props: FilteredListProps): ReactElement {
   const dispatch = useDispatch();
 
   const handleSelectedBank = (bank: Bank) => () => {
-    dispatch(selectBank(bank));
+    dispatch(selectBank(bank.id));
   };
 
   let list: Bank[] = [];
