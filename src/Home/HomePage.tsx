@@ -35,12 +35,12 @@ export default function HomePage(): ReactElement {
               </Link>
             </ListGroup.Item>
             <ListGroup.Item>
-              <Link to={'/reponseeditor'}>
+              <Link to={'/responseeditor'}>
                 <h5>Create response</h5>
               </Link>
             </ListGroup.Item>
             <ListGroup.Item>
-              <Link to={'/workbench'}>
+              <Link to={'/evaluation'}>
                 <h5>Create evaluation</h5>
               </Link>
             </ListGroup.Item>

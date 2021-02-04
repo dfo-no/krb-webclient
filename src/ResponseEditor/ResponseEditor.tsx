@@ -1,16 +1,25 @@
 import React, { ReactElement, useState } from 'react';
-import { Container, Row, Button, Col } from 'react-bootstrap';
+import {
+  Container,
+  Row,
+  Button,
+  Col,
+  InputGroup,
+  FormControl
+} from 'react-bootstrap';
 
 import { Requirement } from '../models/Requirement';
 import { Need } from '../models/Need';
 import { useForm } from 'react-hook-form';
 import { Bank } from '../models/Bank';
+import { FileDownLoad } from '../models/FileDownLoad';
 
 export default function ResponseEditor(): ReactElement {
   const { register, handleSubmit } = useForm();
   const [fileUploaded, setFileUploaded] = useState(false);
   const [uploadedBank, setUploadedBank] = useState<Bank | null>(null);
   const [selectedNeedlist, setSelectedNeedList] = useState<Need[]>([]);
+  const [name, setName] = useState('');
 
   const onLoad = async (e: any) => {
     e.preventDefault();
@@ -18,14 +27,27 @@ export default function ResponseEditor(): ReactElement {
     reader.onload = async (e: any) => {
       const text = e.target.result;
       let parsedText = JSON.parse(text);
-      setUploadedBank(parsedText as Bank);
+      let file = parsedText as FileDownLoad;
+      setUploadedBank(file.bank as Bank);
     };
     reader.readAsText(e.target.files[0]);
     setFileUploaded(true);
   };
+  const handleNameChange = (event: any) => {
+    setName(event.target.value);
+  };
 
   if (!fileUploaded) {
-    return <input type="file" onChange={onLoad} />;
+    return (
+      <>
+        <Col>
+          <h4>Upload Spesification to create a response</h4>
+          <InputGroup>
+            <input type="file" onChange={onLoad} />
+          </InputGroup>
+        </Col>
+      </>
+    );
   }
 
   if (uploadedBank === null) {
@@ -60,19 +82,16 @@ export default function ResponseEditor(): ReactElement {
   };
 
   const onDownLoad = () => {
-    const newBank = {
-      id: uploadedBank.id,
-      title: uploadedBank.title,
-      description: uploadedBank.description,
-      needs: selectedNeedlist,
-      codelist: uploadedBank.codelist,
-      version: uploadedBank.version,
-      publishedDate: uploadedBank.publishedDate
+    const bank = { ...uploadedBank };
+    bank.needs = selectedNeedlist;
+    const newFile: FileDownLoad = {
+      name: name,
+      bank: bank
     };
     const fileDownload = require('js-file-download');
     fileDownload(
-      JSON.stringify(newBank),
-      `${uploadedBank.title}-${uploadedBank.publishedDate}.json`
+      JSON.stringify(newFile),
+      `${name}-${uploadedBank.publishedDate}.json`
     );
   };
 
@@ -105,7 +124,10 @@ export default function ResponseEditor(): ReactElement {
     <Container fluid>
       <Row className="m-4">
         <Col>
-          <h2>{uploadedBank.title}</h2>
+          <label htmlFor="title">Name</label>
+          <InputGroup className="mb-3 30vw">
+            <FormControl name="name" onChange={handleNameChange} />
+          </InputGroup>
         </Col>
         <Col>
           <Button onClick={onDownLoad}>Download</Button>
