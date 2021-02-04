@@ -1,31 +1,15 @@
 import React, { ReactElement, useState } from 'react';
-import { useForm } from 'react-hook-form';
-import { useDispatch, useSelector } from 'react-redux';
-import { AiFillEdit } from 'react-icons/ai';
-import {
-  Accordion,
-  Button,
-  Card,
-  Col,
-  Form,
-  ListGroup,
-  Row
-} from 'react-bootstrap';
+import { useSelector } from 'react-redux';
+import { Accordion, Button, Card, ListGroup } from 'react-bootstrap';
 import { Need } from '../../models/Need';
 import styles from './NeedPage.module.scss';
 import { RootState } from '../../store/rootReducer';
 import { Utils } from '../../common/Utils';
-import { putProjectThunk } from '../../store/reducers/project-reducer';
-
-type FormValues = {
-  tittel: string;
-  beskrivelse: string;
-};
+import NewNeedForm from './NewNeedForm';
+import { AccordionContext } from './AccordionContext';
+import EditNeedForm from './EditNeedForm';
 
 function NeedPage(): ReactElement {
-  const dispatch = useDispatch();
-  const { register, handleSubmit, reset, errors } = useForm<Need>();
-  const [validated] = useState(false);
   const { id } = useSelector((state: RootState) => state.selectedProject);
   const { list } = useSelector((state: RootState) => state.project);
   const [activeKey, setActiveKey] = useState('');
@@ -35,114 +19,48 @@ function NeedPage(): ReactElement {
   }
   let project = Utils.ensure(list.find((banks) => banks.id === id));
 
-  const onNewNeedSubmit = (post: FormValues, e: any) => {
-    const need: Need = {
-      id: Utils.getRandomNumber(),
-      tittel: post.tittel,
-      beskrivelse: post.beskrivelse,
-      requirements: []
-    };
-    // TODO: Black magic here. Must be a better way
-    let clonedProject = { ...project };
-    clonedProject.needs = [...project.needs, need];
-    dispatch(putProjectThunk(clonedProject));
-    // reset the form
-    reset();
-
-    // collapse the Accordion
-    setActiveKey('');
-  };
-
-  const renderNeeds = (list: any) => {
-    return list.map((element: Need) => {
-      return (
-        <ListGroup.Item key={element.id} className={styles.need}>
-          <div className={styles.need__title}>{element.tittel}</div>
-          <div className={styles.need__spacer}></div>
-          <Button variant="info" className={styles.need__editButton}>
-            <AiFillEdit></AiFillEdit>
-          </Button>
-        </ListGroup.Item>
-      );
-    });
-  };
-
   const onOpenClose = (e: any) => {
     setActiveKey(e);
   };
 
-  return (
-    <ListGroup className={styles.needs}>
-      <Accordion activeKey={activeKey} onSelect={onOpenClose}>
-        <Card>
-          <Accordion.Toggle as={Card.Header} eventKey="0">
-            <Button>Add Need</Button>
+  const renderNeeds = (list: any) => {
+    return list.map((element: Need, index: number) => {
+      let indexString = (index + 1).toString();
+      return (
+        <Card key={index}>
+          <Accordion.Toggle as={Card.Header} eventKey={indexString}>
+            <Button>{element.tittel}</Button>
+            <span>&nbsp;{element.beskrivelse}</span>
           </Accordion.Toggle>
-          <Accordion.Collapse eventKey="0">
+          <Accordion.Collapse eventKey={indexString}>
             <Card.Body>
-              <Form
-                onSubmit={handleSubmit(onNewNeedSubmit)}
-                autoComplete="on"
-                noValidate
-                validated={validated}
-              >
-                <Form.Group as={Row}>
-                  <Form.Label column sm="2">
-                    Title
-                  </Form.Label>
-                  <Col sm={10}>
-                    <Form.Control
-                      name="tittel"
-                      ref={register({
-                        required: { value: true, message: 'Required' },
-                        minLength: {
-                          value: 2,
-                          message: 'Minimum 2 characters'
-                        }
-                      })}
-                      isInvalid={!!errors.tittel}
-                    ></Form.Control>
-                    {errors.tittel && (
-                      <Form.Control.Feedback type="invalid">
-                        {errors.tittel.message}
-                      </Form.Control.Feedback>
-                    )}
-                  </Col>
-                </Form.Group>
-                <Form.Group as={Row}>
-                  <Form.Label column sm="2">
-                    Description
-                  </Form.Label>
-                  <Col sm={10}>
-                    <Form.Control
-                      name="beskrivelse"
-                      ref={register({
-                        required: { value: true, message: 'Required' },
-                        minLength: {
-                          value: 2,
-                          message: 'Minimum 2 characters'
-                        }
-                      })}
-                      isInvalid={!!errors.beskrivelse}
-                    ></Form.Control>
-                    {errors.beskrivelse && (
-                      <Form.Control.Feedback type="invalid">
-                        {errors.beskrivelse.message}
-                      </Form.Control.Feedback>
-                    )}
-                  </Col>
-                </Form.Group>
-                <Button className="mt-2" type="submit">
-                  Save
-                </Button>
-              </Form>
+              Body&nbsp;{indexString}
+              <EditNeedForm project={project} need={element}></EditNeedForm>
             </Card.Body>
           </Accordion.Collapse>
         </Card>
-      </Accordion>
+      );
+    });
+  };
 
-      {renderNeeds(project.needs)}
-    </ListGroup>
+  return (
+    <AccordionContext.Provider value={{ onOpenClose: onOpenClose }}>
+      <ListGroup className={styles.needs}>
+        <Accordion activeKey={activeKey} onSelect={onOpenClose}>
+          <Card>
+            <Accordion.Toggle as={Card.Header} eventKey="0">
+              <Button>Add Need</Button>
+            </Accordion.Toggle>
+            <Accordion.Collapse eventKey="0">
+              <Card.Body>
+                <NewNeedForm project={project}></NewNeedForm>
+              </Card.Body>
+            </Accordion.Collapse>
+          </Card>
+          {renderNeeds(project.needs)}
+        </Accordion>
+      </ListGroup>
+    </AccordionContext.Provider>
   );
 }
 
