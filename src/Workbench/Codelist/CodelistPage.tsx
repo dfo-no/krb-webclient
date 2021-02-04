@@ -81,7 +81,7 @@ export default function CodelistPage(): ReactElement {
           <Card.Body>
             <Form
               onSubmit={handleSubmit(addNewCodelist)}
-              autoComplete="on"
+              autoComplete="off"
               noValidate
               validated={validated}
             >

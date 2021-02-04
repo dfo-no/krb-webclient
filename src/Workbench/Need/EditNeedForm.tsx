@@ -53,7 +53,7 @@ function EditNeedForm(props: IProps): ReactElement {
   return (
     <Form
       onSubmit={handleSubmit(onNewNeedSubmit)}
-      autoComplete="on"
+      autoComplete="off"
       noValidate
       validated={validated}
     >

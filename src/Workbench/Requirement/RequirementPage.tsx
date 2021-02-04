@@ -33,6 +33,7 @@ export default function RequirementPage(): ReactElement {
   const dispatch = useDispatch();
   const { id } = useSelector((state: RootState) => state.selectedProject);
   const { list } = useSelector((state: RootState) => state.project);
+  const { needId } = useSelector((state: RootState) => state.selectNeed);
   let { projectId } = useParams<RouteParams>();
   const [selectedNeed, setSelectedNeed] = useState<Need | undefined>(undefined);
   const [requirementList, setRequirementsList] = useState<Requirement[]>([]);
@@ -78,21 +79,18 @@ export default function RequirementPage(): ReactElement {
     const needIndex = selectedProject.needs.findIndex(
       (need) => need.id === selectedNeed?.id
     );
-    const projectIdNumber = +projectId;
-    dispatch(
-      addRequirement({
-        id: projectIdNumber,
-        requirement: requirement,
-        needIndex: needIndex
-      })
-    );
-    dispatch(putProjectThunk(selectedProject));
+    let clonedProject = { ...selectedProject };
+    let clonedNeed: Need = selectedNeed
+      ? { ...selectedNeed }
+      : { id: 0, tittel: '', requirements: [] };
+    clonedNeed.requirements = reqList;
+    let clonedNeedList: Need[] = [...selectedProject.needs];
+    console.log(clonedNeedList);
+    clonedNeedList[needIndex] = clonedNeed;
+    clonedProject.needs = clonedNeedList;
+    dispatch(putProjectThunk(clonedProject));
   };
-  const editRequirementElement = (
-    id: number,
-    index: number,
-    selectedNeedId: number
-  ) => () => {
+  const editRequirementElement = (id: number, index: number) => () => {
     let requirement = {
       id: id,
       title: title,
@@ -104,34 +102,22 @@ export default function RequirementPage(): ReactElement {
     reqList[index] = requirement;
     setRequirementsList(reqList);
     const needIndex = Utils.ensure(
-      selectedProject.needs.findIndex((need) => need.id === selectedNeed?.id)
-    );
-    const reqIndex = selectedProject.needs[needIndex].requirements.findIndex(
-      (req) => req.id === id
-    );
-    const projectIdNumber = +projectId;
-    dispatch(
-      editRequirement({
-        id: projectIdNumber,
-        requirement: requirement,
-        needIndex: needIndex,
-        requirementIndex: reqIndex
+      selectedProject.needs.findIndex((need) => {
+        if (selectedNeed && selectedNeed.id) return need.id === selectedNeed.id;
+        return 0;
       })
     );
-    dispatch(putProjectThunk(selectedProject));
-  };
-  /*  let needIndex1 = Utils.ensure(
-      selectedProject.needs.findIndex((need) => need.id === selectedNeedId
-    );
-
     let clonedProject = { ...selectedProject };
-    let clonedNeed = { ...selectedNeed };
+    let clonedNeed: Need = selectedNeed
+      ? { ...selectedNeed }
+      : { id: 0, tittel: '', requirements: [] };
     clonedNeed.requirements = reqList;
-    let clonedNeedList = [...selectedProject.needs];
-    clonedNeedList[needIndex1] = clonedNeed;
-    clonedProject.needs = clonedNeedLists;
+    let clonedNeedList: Need[] = [...selectedProject.needs];
+    console.log(clonedNeedList);
+    clonedNeedList[needIndex] = clonedNeed;
+    clonedProject.needs = clonedNeedList;
     dispatch(putProjectThunk(clonedProject));
-  };*/
+  };
 
   const handleSelectedNeed = (need: Need) => {
     setSelectedNeed(need);
@@ -139,7 +125,7 @@ export default function RequirementPage(): ReactElement {
   };
 
   const requirements = (requirements: Requirement[]) => {
-    if (selectedNeed === undefined) {
+    if (!selectedNeed) {
       return (
         <p>
           You have not selected a need, select one to work with requirements
@@ -180,11 +166,7 @@ export default function RequirementPage(): ReactElement {
                     </InputGroup>
                     <Button
                       className={styles.newbutton}
-                      onClick={editRequirementElement(
-                        element.id,
-                        index,
-                        selectedNeed.id
-                      )}
+                      onClick={editRequirementElement(element.id, index)}
                     >
                       Save
                     </Button>

@@ -62,11 +62,17 @@ function ProjectPage(): ReactElement {
       id: Utils.getRandomNumber()
     };
     setShowEditor(false);
-    dispatch(publishProject({ id: project.id, publication: publication }));
-    dispatch(putProjectThunk(project));
+
+    let newProject = { ...project };
+
+    if (!newProject.publications) newProject.publications = [];
+    let publications = [...newProject.publications, publication];
+    newProject.version += 1;
+    newProject.publications = publications;
+    dispatch(putProjectThunk(newProject));
   };
 
-  const editProjectInfo = (post: FormValues) => () => {
+  const editProjectInfo = (post: FormValues) => {
     let newproject: Bank = {
       id: project.id,
       title: post.title,
@@ -78,7 +84,6 @@ function ProjectPage(): ReactElement {
       publications: project.publications
     };
     setEditMode(false);
-    dispatch(editProject(newproject));
     dispatch(putProjectThunk(newproject));
   };
 
@@ -93,7 +98,7 @@ function ProjectPage(): ReactElement {
           <Card.Body>
             <Form
               onSubmit={handleSubmit(editProjectInfo)}
-              autoComplete="on"
+              autoComplete="off"
               noValidate
               validated={validated}
             >

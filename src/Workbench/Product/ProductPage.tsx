@@ -94,7 +94,7 @@ export default function ProductPage(): ReactElement {
           <Card.Body>
             <Form
               onSubmit={handleSubmit(addNewProduct)}
-              autoComplete="on"
+              autoComplete="off"
               noValidate
               validated={validated}
             >
