@@ -41,8 +41,12 @@ export default function Header(): ReactElement {
 
       {fakeAuth.isAuthenticated() && (
         <Dropdown drop="left">
-          <Dropdown.Toggle variant="info" id="dropdown-basic">
-            <BsFillPersonFill></BsFillPersonFill>&nbsp;&nbsp;
+          <Dropdown.Toggle
+            variant="info"
+            id="dropdown-basic"
+            className="iconText"
+          >
+            <BsFillPersonFill></BsFillPersonFill>
           </Dropdown.Toggle>
 
           <Dropdown.Menu>
