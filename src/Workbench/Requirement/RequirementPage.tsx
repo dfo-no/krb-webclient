@@ -24,7 +24,6 @@ import { Need } from '../../models/Need';
 import { Utils } from '../../common/Utils';
 import { Bank } from '../../models/Bank';
 import { useParams } from 'react-router-dom';
-import { selectCodeList } from '../../store/reducers/selectedCodelist-reducer';
 
 interface RouteParams {
   projectId: string;
@@ -89,7 +88,11 @@ export default function RequirementPage(): ReactElement {
     );
     dispatch(putProjectThunk(selectedProject));
   };
-  const editRequirementElement = (id: number) => () => {
+  const editRequirementElement = (
+    id: number,
+    index: number,
+    selectedNeedId: number
+  ) => () => {
     let requirement = {
       id: id,
       title: title,
@@ -98,10 +101,10 @@ export default function RequirementPage(): ReactElement {
       type: 'yes/no'
     };
     let reqList = [...requirementList];
-    reqList.push(requirement);
+    reqList[index] = requirement;
     setRequirementsList(reqList);
-    const needIndex = selectedProject.needs.findIndex(
-      (need) => need.id === selectedNeed?.id
+    const needIndex = Utils.ensure(
+      selectedProject.needs.findIndex((need) => need.id === selectedNeed?.id)
     );
     const reqIndex = selectedProject.needs[needIndex].requirements.findIndex(
       (req) => req.id === id
@@ -117,6 +120,18 @@ export default function RequirementPage(): ReactElement {
     );
     dispatch(putProjectThunk(selectedProject));
   };
+  /*  let needIndex1 = Utils.ensure(
+      selectedProject.needs.findIndex((need) => need.id === selectedNeedId
+    );
+
+    let clonedProject = { ...selectedProject };
+    let clonedNeed = { ...selectedNeed };
+    clonedNeed.requirements = reqList;
+    let clonedNeedList = [...selectedProject.needs];
+    clonedNeedList[needIndex1] = clonedNeed;
+    clonedProject.needs = clonedNeedLists;
+    dispatch(putProjectThunk(clonedProject));
+  };*/
 
   const handleSelectedNeed = (need: Need) => {
     setSelectedNeed(need);
@@ -165,7 +180,11 @@ export default function RequirementPage(): ReactElement {
                     </InputGroup>
                     <Button
                       className={styles.newbutton}
-                      onClick={editRequirementElement(element.id)}
+                      onClick={editRequirementElement(
+                        element.id,
+                        index,
+                        selectedNeed.id
+                      )}
                     >
                       Save
                     </Button>
