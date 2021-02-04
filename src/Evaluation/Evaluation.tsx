@@ -1,5 +1,5 @@
 import React, { ReactElement, useState } from 'react';
-import { Container, Row, Button, Col, InputGroup } from 'react-bootstrap';
+import { Container, Row, Button, Col, InputGroup, Card } from 'react-bootstrap';
 
 import { Bank } from '../models/Bank';
 import { FileDownLoad } from '../models/FileDownLoad';
@@ -94,19 +94,21 @@ export default function Evaluation(): ReactElement {
       );
     });
     return (
-      <>
-        <Row>
-          <Col>
-            <h6>Responders name </h6>
-            <hr />
-          </Col>
-          <Col>
-            <h6>Calculated score | Maximal score : {maxScore} </h6>
-            <hr />
-          </Col>
-        </Row>
-        {list}
-      </>
+      <Card className="bg-light">
+        <Card.Body>
+          <Row>
+            <Col>
+              <h6>Responders name </h6>
+              <hr />
+            </Col>
+            <Col>
+              <h6>Calculated score | Maximal score : {maxScore} </h6>
+              <hr />
+            </Col>
+          </Row>
+          {list}
+        </Card.Body>
+      </Card>
     );
   };
 
@@ -118,7 +120,7 @@ export default function Evaluation(): ReactElement {
         </Col>
         <Col>
           <h6>Upload Responses</h6>
-          <InputGroup>
+          <InputGroup className="mb-5">
             <input type="file" onChange={onMultipleLoad} />
           </InputGroup>
         </Col>
@@ -126,7 +128,7 @@ export default function Evaluation(): ReactElement {
           <Button onClick={onDownLoad}>Download</Button>
         </Col>
       </Row>
-      <Row className="m-5">
+      <Row className="m-4">
         <Col>{responses.length !== 0 && evaluations(responses)}</Col>
       </Row>
     </Container>
