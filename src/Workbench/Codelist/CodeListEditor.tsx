@@ -1,51 +1,32 @@
-import React, { ReactElement, useState } from 'react';
+import React, { ReactElement, useContext, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   Accordion,
   Button,
   Card,
-  Col,
-  Form,
   FormControl,
-  InputGroup,
-  Row
+  InputGroup
 } from 'react-bootstrap';
 
 import styles from './CodeListEditor.module.scss';
 import { RootState } from '../../store/rootReducer';
 import { Code } from '../../models/Code';
-import {
-  addCode,
-  editCode,
-  editCodelist,
-  putProjectThunk
-} from '../../store/reducers/project-reducer';
+import { putProjectThunk } from '../../store/reducers/project-reducer';
 import { Utils } from '../../common/Utils';
-import { useParams } from 'react-router-dom';
 import { Codelist } from '../../models/Codelist';
 import { Bank } from '../../models/Bank';
-import { useForm } from 'react-hook-form';
-
-interface RouteParams {
-  projectId: string;
-}
-type FormValues = {
-  title: string;
-  description: string;
-};
+import { AccordionContext } from '../Need/AccordionContext';
 
 export default function CodeListEditor(): ReactElement {
   const dispatch = useDispatch();
+  const { onOpenClose } = useContext(AccordionContext);
   const { list } = useSelector((state: RootState) => state.project);
   const { id } = useSelector((state: RootState) => state.selectedProject);
   const { listId } = useSelector((state: RootState) => state.selectedCodeList);
-  let { projectId } = useParams<RouteParams>();
   const [showEditor, setShowEdior] = useState(false);
   const [editmode, setEditMode] = useState(false);
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
-  const { register, handleSubmit, errors } = useForm<Codelist, Code>();
-  const [validated] = useState(false);
 
   if (!id) {
     return <p>Please select a project</p>;
@@ -84,16 +65,19 @@ export default function CodeListEditor(): ReactElement {
       description: description,
       id: Utils.getRandomNumber()
     };
-    const projectIdNumber = +projectId;
-    setShowEdior(false);
-    dispatch(
-      addCode({
-        id: projectIdNumber,
-        code: code,
-        codeListId: selectedCodeList.id
-      })
+    let listIndex = Utils.ensure(
+      selectedProject.codelist.findIndex(
+        (codelist: Codelist) => codelist.id === listId
+      )
     );
-    dispatch(putProjectThunk(selectedProject));
+    let clonedProject = { ...selectedProject };
+    let clonedCodeList = { ...selectedCodeList };
+    clonedCodeList.codes = [...clonedCodeList.codes, code];
+    let clonedCodeLists = [...selectedProject.codelist];
+    clonedCodeLists[listIndex] = clonedCodeList;
+    clonedProject.codelist = clonedCodeLists;
+    dispatch(putProjectThunk(clonedProject));
+    setShowEdior(false);
   };
 
   const editCodeElement = (id: number, index: number) => () => {
@@ -102,93 +86,70 @@ export default function CodeListEditor(): ReactElement {
       title: title,
       description: description
     };
-    const projectIdNumber = +projectId;
-    dispatch(
-      editCode({
-        id: projectIdNumber,
-        code: code,
-        codeListId: selectedCodeList.id
-      })
+    let listIndex = Utils.ensure(
+      selectedProject.codelist.findIndex(
+        (codelist: Codelist) => codelist.id === listId
+      )
     );
-    dispatch(putProjectThunk(selectedProject));
+    let clonedProject = { ...selectedProject };
+    let clonedCodeList = { ...selectedCodeList };
+    let clonedListOfCodes = [...clonedCodeList.codes];
+    clonedListOfCodes[index] = code;
+    clonedCodeList.codes = clonedListOfCodes;
+    let clonedCodeLists = [...selectedProject.codelist];
+    clonedCodeLists[listIndex] = clonedCodeList;
+    clonedProject.codelist = clonedCodeLists;
+    dispatch(putProjectThunk(clonedProject));
+    onOpenClose('');
   };
 
-  const editCodeList = (post: FormValues) => {
+  const editCodeList = () => {
     let newCodelist: Codelist = {
       id: selectedCodeList.id,
-      title: post.title,
-      description: post.description,
+      title: title,
+      description: description,
       codes: selectedCodeList.codes
     };
-    const projectIdNumber = +projectId;
-    dispatch(
-      editCodelist({
-        id: projectIdNumber,
-        codeList: newCodelist,
-        codeListId: selectedCodeList.id
-      })
+    let index = Utils.ensure(
+      selectedProject.codelist.findIndex(
+        (codelist: Codelist) => codelist.id === listId
+      )
     );
+    let clonedProject = { ...selectedProject };
+    let clonedCodeList = [...selectedProject.codelist];
+    clonedCodeList[index] = newCodelist;
+    clonedProject.codelist = clonedCodeList;
+    dispatch(putProjectThunk(clonedProject));
     setEditMode(false);
-    dispatch(putProjectThunk(selectedProject));
   };
 
   function renderHeaderSection(editmode: boolean) {
     if (editmode) {
       return (
+        /*TODO: finne ut hvor sannsynlig det er at bruker skriver
+         mange steder på samme tid, og derfor om handleTitleChange,
+         og descriptionchange må skrives om de tre separate funksjoner */
         <Card className="mt-3">
           <Card.Body>
-            <Form
-              onSubmit={handleSubmit(editCodeList)}
-              autoComplete="on"
-              noValidate
-              validated={validated}
-            >
-              <Form.Group as={Row}>
-                <Form.Label column sm="2">
-                  Title
-                </Form.Label>
-                <Col sm={10}>
-                  <Form.Control
-                    name="title"
-                    defaultValue={selectedCodeList.title}
-                    ref={register({
-                      required: { value: true, message: 'Required' },
-                      minLength: { value: 2, message: 'Minimum 2 characters' }
-                    })}
-                    isInvalid={!!errors.title}
-                  ></Form.Control>
-                  {errors.title && (
-                    <Form.Control.Feedback type="invalid">
-                      {errors.title.message}
-                    </Form.Control.Feedback>
-                  )}
-                </Col>
-              </Form.Group>
-              <Form.Group as={Row}>
-                <Form.Label column sm="2">
-                  Description
-                </Form.Label>
-                <Col sm={10}>
-                  <Form.Control
-                    name="description"
-                    defaultValue={selectedCodeList.description}
-                    ref={register({
-                      required: { value: true, message: 'Required' },
-                      minLength: { value: 2, message: 'Minimum 2 characters' }
-                    })}
-                    isInvalid={!!errors.description}
-                  ></Form.Control>
-                  {errors.description && (
-                    <Form.Control.Feedback type="invalid">
-                      {errors.description.message}
-                    </Form.Control.Feedback>
-                  )}
-                </Col>
-              </Form.Group>
-              <Button className="mt-2" type="submit">
-                Save
-              </Button>
-            </Form>
+            <label htmlFor="title">Title</label>
+            <InputGroup className="mb-3 30vw">
+              <FormControl
+                name="title"
+                onChange={handleTitleChange}
+                defaultValue={selectedCodeList.title}
+              />
+            </InputGroup>
+            <label htmlFor="description">Description</label>
+            <InputGroup>
+              <FormControl
+                name="description"
+                onChange={handleDescriptionChange}
+                defaultValue={selectedCodeList.description}
+              />
+            </InputGroup>
+            <Button className="mt-2" onClick={editCodeList}>
+              Save
+            </Button>
           </Card.Body>
         </Card>
       );

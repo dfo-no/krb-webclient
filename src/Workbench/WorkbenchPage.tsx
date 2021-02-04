@@ -88,7 +88,7 @@ function WorkbenchPage(): ReactElement {
           <ListGroup.Item>
             <Form
               onSubmit={handleSubmit(onSubmit)}
-              autoComplete="on"
+              autoComplete="off"
               noValidate
               validated={validated}
             >
