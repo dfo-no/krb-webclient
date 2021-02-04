@@ -82,18 +82,11 @@ export default function ResponseEditor(): ReactElement {
   };
 
   const onDownLoad = () => {
+    const bank = { ...uploadedBank };
+    bank.needs = selectedNeedlist;
     const newFile: FileDownLoad = {
       name: name,
-      bank: {
-        id: uploadedBank.id,
-        title: uploadedBank.title,
-        description: uploadedBank.description,
-        needs: selectedNeedlist,
-        codelist: uploadedBank.codelist,
-        version: uploadedBank.version,
-        products: uploadedBank.products,
-        publishedDate: uploadedBank.publishedDate
-      }
+      bank: bank
     };
     const fileDownload = require('js-file-download');
     fileDownload(

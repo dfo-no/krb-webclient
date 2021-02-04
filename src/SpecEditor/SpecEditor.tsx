@@ -56,18 +56,11 @@ export default function SpecEditor(): ReactElement {
   };
 
   const onDownLoad = () => {
+    const bank = { ...selectedBank };
+    bank.needs = selectedNeedlist;
     const newFile: FileDownLoad = {
       name: name,
-      bank: {
-        id: selectedBank.id,
-        title: selectedBank.title,
-        description: selectedBank.description,
-        needs: selectedNeedlist,
-        codelist: selectedBank.codelist,
-        version: selectedBank.version,
-        products: selectedBank.products,
-        publishedDate: selectedBank.publishedDate
-      }
+      bank: bank
     };
     const fileDownload = require('js-file-download');
     fileDownload(
