@@ -15,9 +15,6 @@ import { selectCodeList } from '../../store/reducers/selectedCodelist-reducer';
 import { Utils } from '../../common/Utils';
 import { Bank } from '../../models/Bank';
 
-interface RouteParams {
-  projectId: string;
-}
 type FormValues = {
   title: string;
   description: string;
@@ -27,7 +24,6 @@ export default function CodelistPage(): ReactElement {
   const dispatch = useDispatch();
   const { list } = useSelector((state: RootState) => state.project);
   const { id } = useSelector((state: RootState) => state.selectedProject);
-  let { projectId } = useParams<RouteParams>();
   const [showEditor, setShowEdior] = useState(false);
   const { register, handleSubmit, errors } = useForm<Codelist>();
   const [validated] = useState(false);
@@ -72,10 +68,10 @@ export default function CodelistPage(): ReactElement {
       id: Utils.getRandomNumber(),
       codes: []
     };
-    const projectIdNumber = +projectId;
     setShowEdior(false);
-    dispatch(addCodeList({ id: projectIdNumber, codelist: codeList }));
-    dispatch(putProjectThunk(selectedProject));
+    let clonedProject = { ...selectedProject };
+    clonedProject.codelist = [...selectedProject.codelist, codeList];
+    dispatch(putProjectThunk(clonedProject));
   };
 
   function renderCodelistEditor(show: boolean) {

@@ -80,6 +80,7 @@
       "description": "...",
       "version": 1,
       "ordering": 2,
+      "codelist": [],
       "needs": [],
       "products": [],
       "publishedDate": "2021-01-03T02:00:00.000Z"
@@ -269,5 +270,97 @@
       "publishedDate": "2021-02-02T13:08:36.355Z"
     }
   ],
-  "projects": []
+  "projects": [
+    {
+      "id": 2087,
+      "title": "ewrwerew",
+      "description": "yyytry",
+      "needs": [
+        {
+          "id": 997673,
+          "tittel": "testing ",
+          "beskrivelse": "dsfdsfds",
+          "requirements": []
+        }
+      ],
+      "products": [
+        {
+          "title": "6666",
+          "description": "yyytry6",
+          "id": 222398
+        },
+        {
+          "title": "6668",
+          "description": "ansatte i kommunen skal ha tilgang",
+          "id": 568085
+        }
+      ],
+      "codelist": [
+        {
+          "title": "ewrwerew",
+          "description": "ansatte i kommunen skal ha tilgang",
+          "id": 338274,
+          "codes": [
+            {
+              "title": "testing ",
+              "description": "qwrqwereqr",
+              "id": 86550
+            },
+            {
+              "title": "testing ",
+              "description": "qwrqwereqr",
+              "id": 761262
+            }
+          ]
+        },
+        {
+          "title": "Kurs og konferanse3",
+          "description": "ewtwrt",
+          "id": 574345,
+          "codes": []
+        }
+      ],
+      "version": 1
+    },
+    {
+      "id": 516922,
+      "title": "ewrwerew",
+      "description": "55g.l",
+      "needs": [
+        {
+          "id": 198656,
+          "tittel": "testing",
+          "beskrivelse": "ewrewr",
+          "requirements": []
+        },
+        {
+          "id": 31187,
+          "tittel": "Detteerenkravbank",
+          "beskrivelse": "dsfdsf",
+          "requirements": []
+        }
+      ],
+      "products": [],
+      "codelist": [
+        {
+          "title": "ewrwerew",
+          "description": "ewtwrt",
+          "id": 181797,
+          "codes": [
+            {
+              "id": 301335,
+              "title": "testing9",
+              "description": ""
+            },
+            {
+              "id": 740950,
+              "title": "Kurs og konferanse7",
+              "description": "werewqr"
+            }
+          ]
+        }
+      ],
+      "version": 1
+    }
+  ]
 }

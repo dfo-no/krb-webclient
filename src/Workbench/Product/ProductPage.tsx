@@ -1,10 +1,9 @@
-import React, { ReactElement, useState } from 'react';
+import React, { ReactElement, useContext, useState } from 'react';
 import {
   Button,
   Card,
   FormControl,
   InputGroup,
-  ListGroup,
   Accordion,
   Form,
   Col,
@@ -14,16 +13,13 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { Product } from '../../models/Product';
 import { RootState } from '../../store/rootReducer';
-import {
-  addProduct,
-  editProduct,
-  putProjectThunk
-} from '../../store/reducers/project-reducer';
+import { putProjectThunk } from '../../store/reducers/project-reducer';
 import styles from './ProductPage.module.scss';
 import { Utils } from '../../common/Utils';
 import { useParams } from 'react-router-dom';
 import { Bank } from '../../models/Bank';
 import { useForm } from 'react-hook-form';
+import { AccordionContext } from '../Need/AccordionContext';
 
 interface RouteParams {
   projectId: string;
@@ -36,6 +32,7 @@ type FormValues = {
 
 export default function ProductPage(): ReactElement {
   const dispatch = useDispatch();
+  const { onOpenClose } = useContext(AccordionContext);
   const { id } = useSelector((state: RootState) => state.selectedProject);
   let { projectId } = useParams<RouteParams>();
   const { list } = useSelector((state: RootState) => state.project);
@@ -64,15 +61,19 @@ export default function ProductPage(): ReactElement {
     list.find((bank: Bank) => bank.id === id)
   );
 
-  const editProductElement = (id: number) => () => {
+  const editProductElement = (id: number, index: number) => () => {
     let product: Product = {
       title: title,
       description: description,
       id: id
     };
-    const projectIdNumber = +projectId;
-    dispatch(editProduct({ id: projectIdNumber, product: product }));
-    dispatch(putProjectThunk(selectedProject));
+
+    let clonedProject = { ...selectedProject };
+    let clonedProducts = [...selectedProject.products];
+    clonedProducts[index] = product;
+    clonedProject.products = clonedProducts;
+    dispatch(putProjectThunk(clonedProject));
+    onOpenClose('');
   };
 
   const addNewProduct = (post: FormValues) => {
@@ -81,10 +82,10 @@ export default function ProductPage(): ReactElement {
       description: post.description,
       id: Utils.getRandomNumber()
     };
-    const projectIdNumber = +projectId;
     setShowEdior(false);
-    dispatch(addProduct({ id: projectIdNumber, product: product }));
-    dispatch(putProjectThunk(selectedProject));
+    let clonedProject = { ...selectedProject };
+    clonedProject.products = [...selectedProject.products, product];
+    dispatch(putProjectThunk(clonedProject));
   };
   function productEditor(show: boolean) {
     if (show) {
@@ -176,7 +177,7 @@ export default function ProductPage(): ReactElement {
                 />
               </InputGroup>
               <Button
-                onClick={editProductElement(element.id)}
+                onClick={editProductElement(element.id, index)}
                 className={`primary ${styles.productList__saveButton}`}
               >
                 Save
