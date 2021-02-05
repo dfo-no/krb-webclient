@@ -56,7 +56,7 @@ export const putProjectThunk = createAsyncThunk<
     state: RootState;
   }
 >('putProjectThunk', async (projectId: number, thunkApi) => {
-  /* We cannot save project param directly becasue it is a reference to the project
+  /* We cannot save project param directly because it is a reference to the project
      before we updated it. We must fetch the project from the store, where it *is* updated.
      Therefore we just send in the id of the project, as sending in the reference would be useless.
   */
@@ -99,13 +99,43 @@ const projectSlice = createSlice({
         state.list.splice(index, 1);
       }
     },
-    editProject(state, { payload }: PayloadAction<Bank>) {
-      const index = state.list.findIndex(
-        (project) => project.id === payload.id
+    editProject(
+      state,
+      {
+        payload
+      }: PayloadAction<{
+        projectId: number;
+        title: string;
+        description: string;
+      }>
+    ) {
+      const projectIndex = state.list.findIndex(
+        (project) => project.id === payload.projectId
       );
-      state.list[index] = payload;
+      state.list[projectIndex].title = payload.title;
+      state.list[projectIndex].description = payload.description;
     },
+    incrementProjectVersion(state, { payload }: PayloadAction<number>) {
+      const projectIndex = state.list.findIndex(
+        (project) => project.id === payload
+      );
+      state.list[projectIndex].version += 1;
+    },
+    addPublication(
+      state,
+      {
+        payload
+      }: PayloadAction<{ projectId: number; publication: Publication }>
+    ) {
+      const projectIndex = Utils.ensure(
+        state.list.findIndex((project) => project.id === payload.projectId)
+      );
 
+      if (!state.list[projectIndex].publications) {
+        state.list[projectIndex].publications = [];
+      }
+      state.list[projectIndex].publications?.push(payload.publication);
+    },
     publishProject(
       state,
       { payload }: PayloadAction<{ id: number; publication: Publication }>
@@ -149,7 +179,7 @@ const projectSlice = createSlice({
       state.list[projectIndex].needs[needIndex].beskrivelse =
         payload.beskrivelse;
     },
-    addCodeList(
+    addCodelist(
       state,
       { payload }: PayloadAction<{ id: number; codelist: Codelist }>
     ) {
@@ -193,21 +223,69 @@ const projectSlice = createSlice({
       state,
       {
         payload
-      }: PayloadAction<{ id: number; codeList: Codelist; codeListId: number }>
+      }: PayloadAction<{
+        projectId: number;
+        codelistId: number;
+        title: string;
+        description: string;
+      }>
     ) {
-      const index = Utils.ensure(
-        state.list.findIndex((project) => project.id === payload.id)
+      const projectIndex = Utils.ensure(
+        state.list.findIndex((project) => project.id === payload.projectId)
       );
-      let codeListIndex = state.list[index].codelist.findIndex(
-        (codelist) => codelist.id === payload.codeListId
+      let codeListIndex = state.list[projectIndex].codelist.findIndex(
+        (codelist) => codelist.id === payload.codelistId
       );
-      state.list[index].codelist[codeListIndex] = payload.codeList;
+      state.list[projectIndex].codelist[codeListIndex].title = payload.title;
+      state.list[projectIndex].codelist[codeListIndex].description =
+        payload.description;
+    },
+    editCodeInCodelist(
+      state,
+      {
+        payload
+      }: PayloadAction<{ projectId: number; codelistId: number; code: Code }>
+    ) {
+      const projectIndex = Utils.ensure(
+        state.list.findIndex((project) => project.id === payload.projectId)
+      );
+      const codelistIndex = Utils.ensure(
+        state.list[projectIndex].codelist.findIndex(
+          (codelist) => codelist.id === payload.codelistId
+        )
+      );
+      const codeIndex = Utils.ensure(
+        state.list[projectIndex].codelist[codelistIndex].codes.findIndex(
+          (code) => code.id === payload.code.id
+        )
+      );
+      state.list[projectIndex].codelist[codelistIndex].codes[codeIndex].title =
+        payload.code.title;
+      state.list[projectIndex].codelist[codelistIndex].codes[
+        codeIndex
+      ].description = payload.code.description;
+    },
+
+    addCodeToCodelist(
+      state,
+      {
+        payload
+      }: PayloadAction<{ projectId: number; codelistId: number; code: Code }>
+    ) {
+      const projectIndex = Utils.ensure(
+        state.list.findIndex((project) => project.id === payload.projectId)
+      );
+      const codelistIndex = Utils.ensure(
+        state.list[projectIndex].codelist.findIndex(
+          (codelist) => codelist.id === payload.codelistId
+        )
+      );
+      state.list[projectIndex].codelist[codelistIndex].codes.push(payload.code);
     },
     addCode(
       state,
       { payload }: PayloadAction<{ id: number; code: Code; codeListId: number }>
     ) {
-      //TODO: find more suitable place to perform this action
       const index = Utils.ensure(
         state.list.findIndex((project) => project.id === payload.id)
       );
@@ -233,6 +311,45 @@ const projectSlice = createSlice({
       );
 
       state.list[index].codelist[codeListIndex].codes[codeIndex] = payload.code;
+    },
+    setRequirementListToNeed(
+      state,
+      {
+        payload
+      }: PayloadAction<{
+        projectId: number;
+        needIndex: number;
+        reqList: Requirement[];
+      }>
+    ) {
+      const projectIndex = Utils.ensure(
+        state.list.findIndex((project) => project.id === payload.projectId)
+      );
+      state.list[projectIndex].needs[payload.needIndex].requirements =
+        payload.reqList;
+    },
+    editRequirementInNeed(
+      state,
+      {
+        payload
+      }: PayloadAction<{
+        projectId: number;
+        needIndex: number;
+        reqId: number;
+        requirement: Requirement;
+      }>
+    ) {
+      const projectIndex = Utils.ensure(
+        state.list.findIndex((project) => project.id === payload.projectId)
+      );
+      const needIndex = Utils.ensure(
+        state.list[projectIndex].needs[
+          payload.needIndex
+        ].requirements.findIndex((req) => req.id === payload.reqId)
+      );
+      state.list[projectIndex].needs[payload.needIndex].requirements[
+        needIndex
+      ] = payload.requirement;
     },
     editRequirement(
       state,
@@ -322,16 +439,22 @@ const projectSlice = createSlice({
 export const {
   addProjects,
   deleteProject,
-  addCodeList,
+  addCodelist,
   addProduct,
   editProduct,
   addCode,
+  addCodeToCodelist,
+  editCodeInCodelist,
+  addPublication,
+  incrementProjectVersion,
   addNeed,
   editNeed,
   editCode,
   editCodelist,
   publishProject,
   editProject,
+  setRequirementListToNeed,
+  editRequirementInNeed,
   editRequirement,
   addRequirement
 } = projectSlice.actions;

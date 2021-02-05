@@ -16,7 +16,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import {
   addRequirement,
   editRequirement,
-  putProjectThunk
+  editRequirementInNeed,
+  putProjectThunk,
+  setRequirementListToNeed
 } from '../../store/reducers/project-reducer';
 import styles from './RequirementPage.module.scss';
 import { Requirement } from '../../models/Requirement';
@@ -64,7 +66,7 @@ export default function RequirementPage(): ReactElement {
     setDescription(event.target.value);
   };
 
-  const addRequirementElement = () => () => {
+  const addRequirementElement = () => {
     let requirement = {
       id: Utils.getRandomNumber(),
       title: title,
@@ -74,25 +76,25 @@ export default function RequirementPage(): ReactElement {
     };
     let reqList = [...requirementList];
     reqList.push(requirement);
+
     setRequirementsList(reqList);
     setShowEditor(false);
     const needIndex = selectedProject.needs.findIndex(
       (need) => need.id === selectedNeed?.id
     );
-    let clonedProject = { ...selectedProject };
-    let clonedNeed: Need = selectedNeed
-      ? { ...selectedNeed }
-      : { id: 0, tittel: '', requirements: [] };
-    clonedNeed.requirements = reqList;
-    let clonedNeedList: Need[] = [...selectedProject.needs];
-    console.log(clonedNeedList);
-    clonedNeedList[needIndex] = clonedNeed;
-    clonedProject.needs = clonedNeedList;
-    dispatch(putProjectThunk(clonedProject));
+    dispatch(
+      setRequirementListToNeed({
+        projectId: id,
+        needIndex: needIndex,
+        reqList
+      })
+    );
+    dispatch(putProjectThunk(id));
   };
-  const editRequirementElement = (id: number, index: number) => () => {
+
+  const editRequirementElement = (reqId: number, index: number) => () => {
     let requirement = {
-      id: id,
+      id: reqId,
       title: title,
       description: description,
       needId: selectedNeed?.id,
@@ -107,16 +109,14 @@ export default function RequirementPage(): ReactElement {
         return 0;
       })
     );
-    let clonedProject = { ...selectedProject };
-    let clonedNeed: Need = selectedNeed
-      ? { ...selectedNeed }
-      : { id: 0, tittel: '', requirements: [] };
-    clonedNeed.requirements = reqList;
-    let clonedNeedList: Need[] = [...selectedProject.needs];
-    console.log(clonedNeedList);
-    clonedNeedList[needIndex] = clonedNeed;
-    clonedProject.needs = clonedNeedList;
-    dispatch(putProjectThunk(clonedProject));
+    dispatch(
+      editRequirementInNeed({
+        projectId: id,
+        needIndex: needIndex,
+        reqId: requirement.id,
+        requirement: requirement
+      })
+    );
   };
 
   const handleSelectedNeed = (need: Need) => {
@@ -135,7 +135,7 @@ export default function RequirementPage(): ReactElement {
       if (requirements.length > 0) {
         const jsx = requirements.map((element: Requirement, index) => {
           return (
-            <Card>
+            <Card key={index}>
               <Card.Header>
                 <Accordion.Toggle
                   as={Button}
@@ -206,7 +206,7 @@ export default function RequirementPage(): ReactElement {
             </InputGroup>
             <Button
               className={styles.newbutton}
-              onClick={addRequirementElement()}
+              onClick={() => addRequirementElement()}
             >
               Create
             </Button>
@@ -245,7 +245,8 @@ export default function RequirementPage(): ReactElement {
           <Nav.Link
             as={NavLink}
             role="link"
-            activeClassName={`${styles.sidebar__item__active}`}
+            /* TODO: activeClassName not reconized ny React */
+            /* activeClassName={`${styles.sidebar__item__active}`} */
             onClick={() => handleSelectedNeed(element)}
           >
             {element.tittel}

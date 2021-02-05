@@ -11,7 +11,12 @@ import {
 import styles from './CodeListEditor.module.scss';
 import { RootState } from '../../store/rootReducer';
 import { Code } from '../../models/Code';
-import { putProjectThunk } from '../../store/reducers/project-reducer';
+import {
+  addCodeToCodelist,
+  editCodeInCodelist,
+  editCodelist,
+  putProjectThunk
+} from '../../store/reducers/project-reducer';
 import { Utils } from '../../common/Utils';
 import { Codelist } from '../../models/Codelist';
 import { Bank } from '../../models/Bank';
@@ -65,61 +70,33 @@ export default function CodeListEditor(): ReactElement {
       description: description,
       id: Utils.getRandomNumber()
     };
-    let listIndex = Utils.ensure(
-      selectedProject.codelist.findIndex(
-        (codelist: Codelist) => codelist.id === listId
-      )
-    );
-    let clonedProject = { ...selectedProject };
-    let clonedCodeList = { ...selectedCodeList };
-    clonedCodeList.codes = [...clonedCodeList.codes, code];
-    let clonedCodeLists = [...selectedProject.codelist];
-    clonedCodeLists[listIndex] = clonedCodeList;
-    clonedProject.codelist = clonedCodeLists;
-    dispatch(putProjectThunk(clonedProject));
+    dispatch(addCodeToCodelist({ projectId: id, codelistId: listId, code }));
+    dispatch(putProjectThunk(id));
     setShowEdior(false);
   };
 
-  const editCodeElement = (id: number, index: number) => () => {
+  const editCodeElement = (codeId: number) => () => {
     let code = {
-      id: id,
+      id: codeId, // TODO: suspicious about this one
       title: title,
       description: description
     };
-    let listIndex = Utils.ensure(
-      selectedProject.codelist.findIndex(
-        (codelist: Codelist) => codelist.id === listId
-      )
-    );
-    let clonedProject = { ...selectedProject };
-    let clonedCodeList = { ...selectedCodeList };
-    let clonedListOfCodes = [...clonedCodeList.codes];
-    clonedListOfCodes[index] = code;
-    clonedCodeList.codes = clonedListOfCodes;
-    let clonedCodeLists = [...selectedProject.codelist];
-    clonedCodeLists[listIndex] = clonedCodeList;
-    clonedProject.codelist = clonedCodeLists;
-    dispatch(putProjectThunk(clonedProject));
+
+    dispatch(editCodeInCodelist({ projectId: id, codelistId: listId, code }));
+    dispatch(putProjectThunk(id));
     onOpenClose('');
   };
 
-  const editCodeList = () => {
-    let newCodelist: Codelist = {
-      id: selectedCodeList.id,
-      title: title,
-      description: description,
-      codes: selectedCodeList.codes
-    };
-    let index = Utils.ensure(
-      selectedProject.codelist.findIndex(
-        (codelist: Codelist) => codelist.id === listId
-      )
+  const onEditCodelist = () => {
+    dispatch(
+      editCodelist({
+        projectId: id,
+        codelistId: selectedCodeList.id,
+        title: title,
+        description: description
+      })
     );
-    let clonedProject = { ...selectedProject };
-    let clonedCodeList = [...selectedProject.codelist];
-    clonedCodeList[index] = newCodelist;
-    clonedProject.codelist = clonedCodeList;
-    dispatch(putProjectThunk(clonedProject));
+    dispatch(putProjectThunk(id));
     setEditMode(false);
   };
 
@@ -131,7 +108,7 @@ export default function CodeListEditor(): ReactElement {
          og descriptionchange må skrives om de tre separate funksjoner */
         <Card className="mt-3">
           <Card.Body>
-            <label htmlFor="title">Title</label>
+            <label htmlFor="title">Title2</label>
             <InputGroup className="mb-3 30vw">
               <FormControl
                 name="title"
@@ -147,7 +124,12 @@ export default function CodeListEditor(): ReactElement {
                 defaultValue={selectedCodeList.description}
               />
             </InputGroup>
-            <Button className="mt-2" onClick={editCodeList}>
+            <FormControl
+              name="codelistId"
+              type="hidden"
+              value={selectedCodeList.id}
+            ></FormControl>
+            <Button className="mt-2" onClick={onEditCodelist}>
               Save
             </Button>
           </Card.Body>
@@ -167,7 +149,7 @@ export default function CodeListEditor(): ReactElement {
   const codeList = (codelist: Code[]) => {
     const codes = codelist.map((element: Code, index) => {
       return (
-        <Card>
+        <Card key={index}>
           <Accordion.Toggle as={Card.Header} eventKey={index.toString()}>
             <h6>{element.title}</h6>
             <p>{element.description}</p>
@@ -175,7 +157,7 @@ export default function CodeListEditor(): ReactElement {
           <Accordion.Collapse eventKey={index.toString()}>
             <Card.Body>
               <>
-                <label htmlFor="title">Title</label>
+                <label htmlFor="title">Title3</label>
                 <InputGroup className="mb-3 30vw">
                   <FormControl
                     name="title"
@@ -191,9 +173,7 @@ export default function CodeListEditor(): ReactElement {
                     onChange={handleDescriptionChange}
                   />
                 </InputGroup>
-                <Button onClick={editCodeElement(element.id, index)}>
-                  Save
-                </Button>
+                <Button onClick={editCodeElement(element.id)}>Save</Button>
               </>
             </Card.Body>
           </Accordion.Collapse>

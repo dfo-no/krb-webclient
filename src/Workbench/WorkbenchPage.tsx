@@ -55,7 +55,7 @@ function WorkbenchPage(): ReactElement {
 
   function onDelete(project: Bank) {
     dispatch(deleteProjectThunk(project));
-    dispatch(getProjectsThunk());
+    dispatch(getProjectsThunk()); // TODO: Should not be neccessary
   }
 
   const renderProjects = (projectList: Bank[]) => {
