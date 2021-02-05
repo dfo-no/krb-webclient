@@ -8,6 +8,8 @@ import { Need } from '../../models/Need';
 import { Product } from '../../models/Product';
 import { Publication } from '../../models/Publication';
 import { Requirement } from '../../models/Requirement';
+import { RootState } from '../rootReducer';
+import { AppDispatch } from '../store';
 
 interface ProjectState {
   list: Bank[];
@@ -46,16 +48,29 @@ export const postProjectThunk = createAsyncThunk(
   }
 );
 
-export const putProjectThunk = createAsyncThunk(
-  'putProjectThunk',
-  async (project: Bank) => {
-    const response = await put<Bank>(
-      `http://localhost:3001/projects/${project.id}`,
-      project
-    );
-    return response.data;
+export const putProjectThunk = createAsyncThunk<
+  Bank,
+  number,
+  {
+    dispatch: AppDispatch;
+    state: RootState;
   }
-);
+>('putProjectThunk', async (projectId: number, thunkApi) => {
+  /* We cannot save project param directly becasue it is a reference to the project
+     before we updated it. We must fetch the project from the store, where it *is* updated.
+     Therefore we just send in the id of the project, as sending in the reference would be useless.
+  */
+  const project = Utils.ensure(
+    thunkApi
+      .getState()
+      .project.list.find((element: Bank) => element.id === projectId)
+  );
+  const response = await put<Bank>(
+    `http://localhost:3001/projects/${project.id}`,
+    project
+  );
+  return response.data as Bank;
+});
 
 export const deleteProjectThunk = createAsyncThunk(
   'deleteProjectThunk',
@@ -105,14 +120,34 @@ const projectSlice = createSlice({
       state.list[index].publications?.push(payload.publication);
     },
     addNeed(state, { payload }: PayloadAction<{ id: number; need: Need }>) {
-      /* This 'findIndex' is wrapped in Utils.ensure() because we findIndex can
-      return "undefined", but we are *sure* this index exist there.
-      Otherwise the program would not work. If we didn't use Utils.ensure(),
-      we would have to have a if-else statement to check for undefined.*/
-      const index = Utils.ensure(
+      const projectIndex = Utils.ensure(
         state.list.findIndex((project) => project.id === payload.id)
       );
-      state.list[index].needs.push(payload.need);
+      state.list[projectIndex].needs.push(payload.need);
+    },
+    editNeed(
+      state,
+      {
+        payload
+      }: PayloadAction<{
+        projectId: number;
+        needId: number;
+        tittel: string;
+        beskrivelse: string;
+      }>
+    ) {
+      const projectIndex = Utils.ensure(
+        state.list.findIndex((project) => project.id === payload.projectId)
+      );
+      const needIndex = Utils.ensure(
+        state.list[projectIndex].needs.findIndex(
+          (need) => need.id === payload.needId
+        )
+      );
+
+      state.list[projectIndex].needs[needIndex].tittel = payload.tittel;
+      state.list[projectIndex].needs[needIndex].beskrivelse =
+        payload.beskrivelse;
     },
     addCodeList(
       state,
@@ -134,15 +169,25 @@ const projectSlice = createSlice({
     },
     editProduct(
       state,
-      { payload }: PayloadAction<{ id: number; product: Product }>
+      {
+        payload
+      }: PayloadAction<{
+        projectId: number;
+        productId: number;
+        title: string;
+        description: string;
+      }>
     ) {
-      const index = Utils.ensure(
-        state.list.findIndex((project) => project.id === payload.id)
+      const projectIndex = Utils.ensure(
+        state.list.findIndex((project) => project.id === payload.projectId)
       );
-      const productindex = state.list[index].products.findIndex(
-        (product) => product.id === payload.id
+      const productindex = state.list[projectIndex].products.findIndex(
+        (product) => product.id === payload.productId
       );
-      state.list[index].products[productindex] = payload.product;
+
+      state.list[projectIndex].products[productindex].title = payload.title;
+      state.list[projectIndex].products[productindex].description =
+        payload.description;
     },
     editCodelist(
       state,
@@ -251,9 +296,6 @@ const projectSlice = createSlice({
     });
     builder.addCase(putProjectThunk.fulfilled, (state, { payload }) => {
       state.status = 'fulfilled';
-
-      /* After updating successfully, we update the store with the
-      new object to be shown on the page*/
       const projectIndex = Utils.ensure(
         state.list.findIndex((project) => project.id === payload.id)
       );
@@ -284,6 +326,8 @@ export const {
   addProduct,
   editProduct,
   addCode,
+  addNeed,
+  editNeed,
   editCode,
   editCodelist,
   publishProject,
