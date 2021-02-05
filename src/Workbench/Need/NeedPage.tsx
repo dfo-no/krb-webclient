@@ -59,7 +59,7 @@ function NeedPage(): ReactElement {
           </Accordion.Toggle>
           <Accordion.Collapse eventKey="0">
             <Card.Body>
-              <NewNeedForm project={project}></NewNeedForm>
+              <NewNeedForm />
             </Card.Body>
           </Accordion.Collapse>
         </Card>
