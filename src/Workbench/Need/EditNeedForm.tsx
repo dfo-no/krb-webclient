@@ -102,7 +102,7 @@ function EditNeedForm(props: IProps): ReactElement {
           )}
         </Col>
       </Form.Group>
-      <Form.Control type="hidden" name="id" ref={register}></Form.Control>
+      <Form.Control type="hidden" name="id" ref={register} />
       <Button className="mt-2" type="submit">
         Save
       </Button>

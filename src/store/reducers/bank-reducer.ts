@@ -3,7 +3,7 @@ import { del, get, post, put } from '../../api/http';
 import { Bank } from '../../models/Bank';
 
 interface BankState {
-  //banks: Finished and published versions of banks
+  // banks: Finished and published versions of banks
   list: Bank[];
   status: 'idle' | 'fulfilled' | 'rejected' | 'pending';
 }

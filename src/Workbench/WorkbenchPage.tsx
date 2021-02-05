@@ -2,6 +2,8 @@ import React, { ReactElement, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { Button, Col, Form, ListGroup, Row } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
+import { AiFillDelete } from 'react-icons/ai';
+import { useForm } from 'react-hook-form';
 import css from './WorkbenchPage.module.scss';
 import { RootState } from '../store/rootReducer';
 import { Bank } from '../models/Bank';
@@ -10,8 +12,6 @@ import {
   getProjectsThunk,
   postProjectThunk
 } from '../store/reducers/project-reducer';
-import { AiFillDelete } from 'react-icons/ai';
-import { useForm } from 'react-hook-form';
 import { selectProject } from '../store/reducers/selectedProject-reducer';
 import { Utils } from '../common/Utils';
 
@@ -34,7 +34,7 @@ function WorkbenchPage(): ReactElement {
   };
 
   const onSubmit = (post: FormValues, e: any) => {
-    let project: Bank = {
+    const project: Bank = {
       id: Utils.getRandomNumber(),
       title: post.title,
       description: post.description,
@@ -70,9 +70,9 @@ function WorkbenchPage(): ReactElement {
             <h5>{element.title}</h5>
             <p>{element.description}</p>
           </Button>
-          <div className={css.list__item__spacer}></div>
+          <div className={css.list__item__spacer} />
           <Button variant="warning" onClick={() => onDelete(element)}>
-            <AiFillDelete></AiFillDelete>
+            <AiFillDelete />
             <div>(Dev)</div>
           </Button>
         </ListGroup.Item>
@@ -104,7 +104,7 @@ function WorkbenchPage(): ReactElement {
                       minLength: { value: 2, message: 'Minimum 2 characters' }
                     })}
                     isInvalid={!!errors.title}
-                  ></Form.Control>
+                  />
                   {errors.title && (
                     <Form.Control.Feedback type="invalid">
                       {errors.title.message}
@@ -124,7 +124,7 @@ function WorkbenchPage(): ReactElement {
                       minLength: { value: 2, message: 'Minimum 2 characters' }
                     })}
                     isInvalid={!!errors.description}
-                  ></Form.Control>
+                  />
                   {errors.description && (
                     <Form.Control.Feedback type="invalid">
                       {errors.description.message}
@@ -139,9 +139,8 @@ function WorkbenchPage(): ReactElement {
           </ListGroup.Item>
         </ListGroup>
       );
-    } else {
-      return <></>;
     }
+    return <></>;
   }
 
   return (

@@ -14,8 +14,8 @@ export default function Evaluation(): ReactElement {
     const reader = new FileReader();
     reader.onload = async (e: any) => {
       const text = e.target.result;
-      let parsedText = JSON.parse(text);
-      let file = parsedText as FileDownLoad;
+      const parsedText = JSON.parse(text);
+      const file = parsedText as FileDownLoad;
       setUploadedBank(file.bank as Bank);
     };
     reader.readAsText(e.target.files[0]);
@@ -27,9 +27,9 @@ export default function Evaluation(): ReactElement {
     const reader = new FileReader();
     reader.onload = async (e: any) => {
       const text = e.target.result;
-      let parsedText = JSON.parse(text);
-      let file = parsedText as FileDownLoad;
-      let responseArray = [...responses];
+      const parsedText = JSON.parse(text);
+      const file = parsedText as FileDownLoad;
+      const responseArray = [...responses];
       responseArray.push(file);
       setResponses(responseArray);
     };
@@ -56,7 +56,7 @@ export default function Evaluation(): ReactElement {
   const onDownLoad = () => {
     const newFile = {
       spec: uploadedBank,
-      responses: responses
+      responses
     };
     const fileDownload = require('js-file-download');
     fileDownload(
@@ -66,7 +66,7 @@ export default function Evaluation(): ReactElement {
   };
 
   const calculateScore = (bank: Bank) => {
-    let score: number = 0;
+    let score = 0;
     bank.needs.forEach((need) => {
       score += need.requirements.length;
     });

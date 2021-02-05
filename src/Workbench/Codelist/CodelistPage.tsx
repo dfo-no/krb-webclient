@@ -62,7 +62,7 @@ export default function CodelistPage(): ReactElement {
   };
 
   const addNewCodelist = (post: FormValues) => {
-    let codelist: Codelist = {
+    const codelist: Codelist = {
       title: post.title,
       description: post.description,
       id: Utils.getRandomNumber(),
@@ -96,7 +96,7 @@ export default function CodelistPage(): ReactElement {
                       minLength: { value: 2, message: 'Minimum 2 characters' }
                     })}
                     isInvalid={!!errors.title}
-                  ></Form.Control>
+                  />
                   {errors.title && (
                     <Form.Control.Feedback type="invalid">
                       {errors.title.message}
@@ -116,7 +116,7 @@ export default function CodelistPage(): ReactElement {
                       minLength: { value: 2, message: 'Minimum 2 characters' }
                     })}
                     isInvalid={!!errors.description}
-                  ></Form.Control>
+                  />
                   {errors.description && (
                     <Form.Control.Feedback type="invalid">
                       {errors.description.message}
@@ -131,9 +131,8 @@ export default function CodelistPage(): ReactElement {
           </Card.Body>
         </Card>
       );
-    } else {
-      return <></>;
     }
+    return <></>;
   }
 
   return (

@@ -10,10 +10,10 @@ import {
 } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
 
+import { useForm } from 'react-hook-form';
 import { Requirement } from '../models/Requirement';
 import { Need } from '../models/Need';
 import { RootState } from '../store/rootReducer';
-import { useForm } from 'react-hook-form';
 import { FileDownLoad } from '../models/FileDownLoad';
 import styles from './SpecEditor.module.scss';
 import { Bank } from '../models/Bank';
@@ -32,24 +32,24 @@ export default function SpecEditor(): ReactElement {
 
   const selectedBank = Utils.ensure(list.find((bank: Bank) => bank.id === id));
 
-  const needs = selectedBank.needs;
+  const { needs } = selectedBank;
 
   const onSubmit = (data: any) => {
-    let selectedNeeds: Need[] = [];
+    const selectedNeeds: Need[] = [];
     needs.forEach((need: Need) => {
-      //Check if need.tittel is present to ensure need has any possible requirements to select.
-      //React hook forms, sets the value of data.(need-title) to false if none are selected,
+      // Check if need.tittel is present to ensure need has any possible requirements to select.
+      // React hook forms, sets the value of data.(need-title) to false if none are selected,
       // so we need to ensure data actually exist.
       if (need.tittel in data && data[need.tittel] !== false) {
         let reqIndexes: string[];
         need.requirements.length <= 1
           ? (reqIndexes = [data[need.tittel]])
           : (reqIndexes = data[need.tittel]);
-        let newRequirementList: Requirement[] = [];
-        for (var i = 0; i < reqIndexes.length; i++) {
+        const newRequirementList: Requirement[] = [];
+        for (let i = 0; i < reqIndexes.length; i++) {
           newRequirementList.push(need.requirements[Number(reqIndexes[i])]);
         }
-        let updatedBehov = {
+        const updatedBehov = {
           id: need.id,
           tittel: need.tittel,
           beskrivelse: need.beskrivelse,
@@ -66,8 +66,8 @@ export default function SpecEditor(): ReactElement {
     const bank = { ...selectedBank };
     bank.needs = selectedNeedlist;
     const newFile: FileDownLoad = {
-      name: name,
-      bank: bank
+      name,
+      bank
     };
     const fileDownload = require('js-file-download');
     fileDownload(

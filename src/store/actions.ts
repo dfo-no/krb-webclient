@@ -28,48 +28,56 @@ export class KRB {
       payload: value
     };
   }
+
   static registerNew(kravbank: Bank): Action {
     return {
       type: ActionType.KRAVBANK_NEW,
       payload: kravbank
     };
   }
+
   static editKravbank(kravbankid: number): Action {
     return {
       type: ActionType.KRAVBANK_EDIT,
       payload: kravbankid
     };
   }
+
   static addNeed(need: Need): Action {
     return {
       type: ActionType.NEED_NEW,
       payload: need
     };
   }
+
   static editNeed(needId: number): Action {
     return {
       type: ActionType.KRAVBANK_EDIT,
       payload: needId
     };
   }
+
   static addSubNeed(need: Need): Action {
     return {
       type: ActionType.SUB_NEED_NEW,
       payload: need
     };
   }
+
   static addKrav(requirement: Requirement): Action {
     return {
       type: ActionType.KRAV_NEW,
       payload: requirement
     };
   }
+
   static editKrav(kravid: number): Action {
     return {
       type: ActionType.KRAV_EDIT,
       payload: kravid
     };
   }
+
   static addKodeliste(kodeliste: Codelist): Action {
     return {
       type: ActionType.KODELISTE_NEW,

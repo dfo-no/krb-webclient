@@ -33,8 +33,8 @@ export default function FilteredList(props: FilteredListProps): ReactElement {
       .slice()
       .sort((a, b) => (a.title.toLowerCase() > b.title.toLowerCase() ? 1 : -1));
   }
-  //TODO: correct link to other page than workbench when site exist.
-  //TODO: Discuss suitable amount of elements displayed
+  // TODO: correct link to other page than workbench when site exist.
+  // TODO: Discuss suitable amount of elements displayed
   const filteredElements = list.slice(0, 5).map((bank: Bank, index: number) => {
     return (
       <ListGroup.Item key={index}>

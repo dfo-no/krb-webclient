@@ -17,13 +17,13 @@ function App(props: any) {
     <div className={styles.App}>
       <Header />
       <Switch>
-        <Route exact path={'/'}>
-          <HomePage></HomePage>
+        <Route exact path="/">
+          <HomePage />
         </Route>
-        <Route exact path={`/bank/:bankId`}>
-          <BankPage></BankPage>
+        <Route exact path="/bank/:bankId">
+          <BankPage />
         </Route>
-        <Route exact path={'/login'} component={LoginForm} />
+        <Route exact path="/login" component={LoginForm} />
         <ProtectedRoute
           path="/workbench"
           component={WorkbenchModule}

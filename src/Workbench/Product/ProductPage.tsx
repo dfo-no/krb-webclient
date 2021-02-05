@@ -11,6 +11,7 @@ import {
 } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 
+import { useForm } from 'react-hook-form';
 import { Product } from '../../models/Product';
 import { RootState } from '../../store/rootReducer';
 import {
@@ -21,7 +22,6 @@ import {
 import styles from './ProductPage.module.scss';
 import { Utils } from '../../common/Utils';
 import { Bank } from '../../models/Bank';
-import { useForm } from 'react-hook-form';
 import { AccordionContext } from '../Need/AccordionContext';
 
 type FormValues = {
@@ -63,9 +63,9 @@ export default function ProductPage(): ReactElement {
     dispatch(
       editProduct({
         projectId: id,
-        productId: productId, // TODO: get from post
-        title: title, // TODO: get from post
-        description: description // TODO: get from post
+        productId, // TODO: get from post
+        title, // TODO: get from post
+        description // TODO: get from post
       })
     );
     dispatch(putProjectThunk(id));
@@ -73,7 +73,7 @@ export default function ProductPage(): ReactElement {
   };
 
   const addNewProduct = (post: FormValues) => {
-    let product: Product = {
+    const product: Product = {
       id: Utils.getRandomNumber(),
       title: post.title,
       description: post.description
@@ -105,7 +105,7 @@ export default function ProductPage(): ReactElement {
                       minLength: { value: 2, message: 'Minimum 2 characters' }
                     })}
                     isInvalid={!!errors.title}
-                  ></Form.Control>
+                  />
                   {errors.title && (
                     <Form.Control.Feedback type="invalid">
                       {errors.title.message}
@@ -125,7 +125,7 @@ export default function ProductPage(): ReactElement {
                       minLength: { value: 2, message: 'Minimum 2 characters' }
                     })}
                     isInvalid={!!errors.description}
-                  ></Form.Control>
+                  />
                   {errors.description && (
                     <Form.Control.Feedback type="invalid">
                       {errors.description.message}
@@ -140,9 +140,8 @@ export default function ProductPage(): ReactElement {
           </Card.Body>
         </Card>
       );
-    } else {
-      return <></>;
     }
+    return <></>;
   }
 
   const renderProducts = (productList: Product[]) => {

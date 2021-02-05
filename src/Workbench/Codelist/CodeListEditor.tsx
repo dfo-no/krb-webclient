@@ -65,9 +65,9 @@ export default function CodeListEditor(): ReactElement {
   };
 
   const addNewCode = () => {
-    let code = {
-      title: title,
-      description: description,
+    const code = {
+      title,
+      description,
       id: Utils.getRandomNumber()
     };
     dispatch(addCodeToCodelist({ projectId: id, codelistId: listId, code }));
@@ -76,10 +76,10 @@ export default function CodeListEditor(): ReactElement {
   };
 
   const editCodeElement = (codeId: number) => () => {
-    let code = {
+    const code = {
       id: codeId, // TODO: suspicious about this one
-      title: title,
-      description: description
+      title,
+      description
     };
 
     dispatch(editCodeInCodelist({ projectId: id, codelistId: listId, code }));
@@ -92,8 +92,8 @@ export default function CodeListEditor(): ReactElement {
       editCodelist({
         projectId: id,
         codelistId: selectedCodeList.id,
-        title: title,
-        description: description
+        title,
+        description
       })
     );
     dispatch(putProjectThunk(id));
@@ -103,7 +103,7 @@ export default function CodeListEditor(): ReactElement {
   function renderHeaderSection(editmode: boolean) {
     if (editmode) {
       return (
-        /*TODO: finne ut hvor sannsynlig det er at bruker skriver
+        /* TODO: finne ut hvor sannsynlig det er at bruker skriver
          mange steder på samme tid, og derfor om handleTitleChange,
          og descriptionchange må skrives om de tre separate funksjoner */
         <Card className="mt-3">
@@ -128,22 +128,21 @@ export default function CodeListEditor(): ReactElement {
               name="codelistId"
               type="hidden"
               value={selectedCodeList.id}
-            ></FormControl>
+            />
             <Button className="mt-2" onClick={onEditCodelist}>
               Save
             </Button>
           </Card.Body>
         </Card>
       );
-    } else {
-      return (
-        <div className={styles.codelistSection}>
-          <h1>{selectedCodeList.title}</h1>
-          <h5>{selectedCodeList.description}</h5>
-          <Button onClick={handleEditCodelist}>Edit</Button>
-        </div>
-      );
     }
+    return (
+      <div className={styles.codelistSection}>
+        <h1>{selectedCodeList.title}</h1>
+        <h5>{selectedCodeList.description}</h5>
+        <Button onClick={handleEditCodelist}>Edit</Button>
+      </div>
+    );
   }
 
   const codeList = (codelist: Code[]) => {
@@ -209,9 +208,8 @@ export default function CodeListEditor(): ReactElement {
           </Card.Body>
         </Card>
       );
-    } else {
-      return <></>;
     }
+    return <></>;
   }
 
   return (

@@ -2,8 +2,8 @@ import React, { ReactElement } from 'react';
 import { Nav } from 'react-bootstrap';
 import { withRouter } from 'react-router';
 import { NavLink, useRouteMatch } from 'react-router-dom';
-import css from '../SideBar/SideBar.module.scss';
 import { useSelector } from 'react-redux';
+import css from './SideBar.module.scss';
 import { RootState } from '../../store/rootReducer';
 
 interface IRouteLink {
@@ -38,23 +38,23 @@ function SideBar(): ReactElement {
 
   const { list } = useSelector((state: RootState) => state.project);
 
-  let match = useRouteMatch<RouteParams>('/workbench/:projectId');
+  const match = useRouteMatch<RouteParams>('/workbench/:projectId');
   /* match = {
     isExact: true,
     params: { projectId: number},
     url: "workbench/2" <!-- this is never null, otherwise this route wouldn't match
     path: "/workbench/:projectId"
-  }*/
+  } */
 
   const currentUrl = match?.url ? match.url : '/workbench';
-  const isProjectSelected = id ? true : false;
+  const isProjectSelected = !!id;
 
   const selectProject = list.find((bank) => bank.id === id);
 
   const displayTitle = selectProject ? selectProject.title : '<None selected>';
 
   const routes = [
-    { link: `${currentUrl}`, name: 'Workbench: ' + displayTitle },
+    { link: `${currentUrl}`, name: `Workbench: ${displayTitle}` },
     { link: `${currentUrl}/need`, name: 'Need' },
     { link: `${currentUrl}/requirement`, name: 'Requirement' },
     { link: `${currentUrl}/codelist`, name: 'Codelist' },

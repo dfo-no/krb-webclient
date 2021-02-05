@@ -12,6 +12,7 @@ import {
 } from 'react-bootstrap';
 import dayjs from 'dayjs';
 
+import { useForm } from 'react-hook-form';
 import { RootState } from '../../store/rootReducer';
 import { Publication } from '../../models/Publication';
 import {
@@ -23,7 +24,6 @@ import {
 import { postBank } from '../../store/reducers/bank-reducer';
 import { Utils } from '../../common/Utils';
 import { Bank } from '../../models/Bank';
-import { useForm } from 'react-hook-form';
 
 type FormValues = {
   title: string;
@@ -44,22 +44,22 @@ function ProjectPage(): ReactElement {
     return <p>Loading ....</p>;
   }
 
-  let project = Utils.ensure(list.find((project: Bank) => project.id === id));
+  const project = Utils.ensure(list.find((project: Bank) => project.id === id));
 
   const handlePublishProject = () => () => {
-    let versionNumber = project.publications
+    const versionNumber = project.publications
       ? project.publications[project.publications.length - 1].version + 1
       : 1;
 
-    let convertedDate = dayjs(new Date()).toJSON();
-    let publishedProject = { ...project };
+    const convertedDate = dayjs(new Date()).toJSON();
+    const publishedProject = { ...project };
     publishedProject.publishedDate = convertedDate;
     publishedProject.id = Utils.getRandomNumber();
     dispatch(postBank(publishedProject));
 
     const publication: Publication = {
       date: convertedDate,
-      comment: comment,
+      comment,
       version: versionNumber,
       id: Utils.getRandomNumber()
     };
@@ -110,7 +110,7 @@ function ProjectPage(): ReactElement {
                       minLength: { value: 2, message: 'Minimum 2 characters' }
                     })}
                     isInvalid={!!errors.title}
-                  ></Form.Control>
+                  />
                   {errors.title && (
                     <Form.Control.Feedback type="invalid">
                       {errors.title.message}
@@ -131,7 +131,7 @@ function ProjectPage(): ReactElement {
                       minLength: { value: 2, message: 'Minimum 2 characters' }
                     })}
                     isInvalid={!!errors.description}
-                  ></Form.Control>
+                  />
                   {errors.description && (
                     <Form.Control.Feedback type="invalid">
                       {errors.description.message}
@@ -146,15 +146,14 @@ function ProjectPage(): ReactElement {
           </Card.Body>
         </Card>
       );
-    } else {
-      return (
-        <div className="mt-3 mb-5">
-          <h1>{project.title}</h1>
-          <h5>{project.description}</h5>
-          <Button onClick={() => setEditMode(true)}>Edit</Button>
-        </div>
-      );
     }
+    return (
+      <div className="mt-3 mb-5">
+        <h1>{project.title}</h1>
+        <h5>{project.description}</h5>
+        <Button onClick={() => setEditMode(true)}>Edit</Button>
+      </div>
+    );
   }
   const publicationList = (publications?: Publication[]) => {
     if (publications) {
@@ -162,7 +161,7 @@ function ProjectPage(): ReactElement {
         const date = dayjs(element.date).format('DD/MM/YYYY');
         return (
           <ListGroup.Item key={element.id}>
-            <p>{date + '     ' + element.comment}</p>
+            <p>{`${date}     ${element.comment}`}</p>
           </ListGroup.Item>
         );
       });
@@ -188,9 +187,8 @@ function ProjectPage(): ReactElement {
           </ListGroup.Item>
         </ListGroup>
       );
-    } else {
-      return <></>;
     }
+    return <></>;
   };
 
   return (

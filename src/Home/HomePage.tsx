@@ -30,17 +30,17 @@ export default function HomePage(): ReactElement {
         <Col>
           <ListGroup variant="flush">
             <ListGroup.Item>
-              <Link to={'/workbench'}>
+              <Link to="/workbench">
                 <h5>Editor</h5>
               </Link>
             </ListGroup.Item>
             <ListGroup.Item>
-              <Link to={'/responseeditor'}>
+              <Link to="/responseeditor">
                 <h5>Create response</h5>
               </Link>
             </ListGroup.Item>
             <ListGroup.Item>
-              <Link to={'/evaluation'}>
+              <Link to="/evaluation">
                 <h5>Create evaluation</h5>
               </Link>
             </ListGroup.Item>
@@ -51,15 +51,15 @@ export default function HomePage(): ReactElement {
         <Col>
           <FilteredList
             list={list}
-            filterTitle={'Newest banks'}
-            filterType={'date'}
+            filterTitle="Newest banks"
+            filterType="date"
           />
         </Col>
         <Col>
           <FilteredList
             list={list}
-            filterTitle={'Popular banks'}
-            filterType={'alphabetic'}
+            filterTitle="Popular banks"
+            filterType="alphabetic"
           />
         </Col>
       </Row>

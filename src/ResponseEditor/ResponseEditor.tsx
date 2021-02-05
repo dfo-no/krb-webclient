@@ -9,9 +9,9 @@ import {
   Card
 } from 'react-bootstrap';
 
+import { useForm } from 'react-hook-form';
 import { Requirement } from '../models/Requirement';
 import { Need } from '../models/Need';
-import { useForm } from 'react-hook-form';
 import { Bank } from '../models/Bank';
 import { FileDownLoad } from '../models/FileDownLoad';
 import styles from './ResponseEditor.module.scss';
@@ -28,8 +28,8 @@ export default function ResponseEditor(): ReactElement {
     const reader = new FileReader();
     reader.onload = async (e: any) => {
       const text = e.target.result;
-      let parsedText = JSON.parse(text);
-      let file = parsedText as FileDownLoad;
+      const parsedText = JSON.parse(text);
+      const file = parsedText as FileDownLoad;
       setUploadedBank(file.bank as Bank);
     };
     reader.readAsText(e.target.files[0]);
@@ -56,21 +56,21 @@ export default function ResponseEditor(): ReactElement {
     return <p>A bank must be uploaded</p>;
   }
 
-  const needs = uploadedBank.needs;
+  const { needs } = uploadedBank;
 
   const onSubmit = (data: any) => {
-    let selectedNeeds: Need[] = [];
+    const selectedNeeds: Need[] = [];
     needs.forEach((need: Need) => {
       if (need.tittel in data && data[need.tittel] !== false) {
         let reqIndexes: string[];
         need.requirements.length <= 1
           ? (reqIndexes = [data[need.tittel]])
           : (reqIndexes = data[need.tittel]);
-        let newRequirementList: Requirement[] = [];
-        for (var i = 0; i < reqIndexes.length; i++) {
+        const newRequirementList: Requirement[] = [];
+        for (let i = 0; i < reqIndexes.length; i++) {
           newRequirementList.push(need.requirements[Number(reqIndexes[i])]);
         }
-        let updatedBehov = {
+        const updatedBehov = {
           id: need.id,
           tittel: need.tittel,
           beskrivelse: need.beskrivelse,
@@ -87,8 +87,8 @@ export default function ResponseEditor(): ReactElement {
     const bank = { ...uploadedBank };
     bank.needs = selectedNeedlist;
     const newFile: FileDownLoad = {
-      name: name,
-      bank: bank
+      name,
+      bank
     };
     const fileDownload = require('js-file-download');
     fileDownload(
@@ -103,7 +103,7 @@ export default function ResponseEditor(): ReactElement {
         <>
           <h5>{need.tittel}</h5>
           {need.requirements.map((c, i) => (
-            <div className={`ml-5`}>
+            <div className="ml-5">
               <label key={c.id}>
                 {c.title} &nbsp;
                 <input
@@ -111,7 +111,7 @@ export default function ResponseEditor(): ReactElement {
                   value={i}
                   name={need.tittel}
                   ref={register}
-                  className={`ml-2`}
+                  className="ml-2"
                 />
               </label>
             </div>

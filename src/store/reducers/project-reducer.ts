@@ -233,7 +233,7 @@ const projectSlice = createSlice({
       const projectIndex = Utils.ensure(
         state.list.findIndex((project) => project.id === payload.projectId)
       );
-      let codeListIndex = state.list[projectIndex].codelist.findIndex(
+      const codeListIndex = state.list[projectIndex].codelist.findIndex(
         (codelist) => codelist.id === payload.codelistId
       );
       state.list[projectIndex].codelist[codeListIndex].title = payload.title;
@@ -289,7 +289,7 @@ const projectSlice = createSlice({
       const index = Utils.ensure(
         state.list.findIndex((project) => project.id === payload.id)
       );
-      let codeListIndex = state.list[index].codelist.findIndex(
+      const codeListIndex = state.list[index].codelist.findIndex(
         (codelist) => codelist.id === payload.codeListId
       );
 
@@ -299,16 +299,16 @@ const projectSlice = createSlice({
       state,
       { payload }: PayloadAction<{ id: number; code: Code; codeListId: number }>
     ) {
-      //todo: move to more suitable and less repetetive place
+      // todo: move to more suitable and less repetetive place
       const index = Utils.ensure(
         state.list.findIndex((project) => project.id === payload.id)
       );
-      let codeListIndex = state.list[index].codelist.findIndex(
+      const codeListIndex = state.list[index].codelist.findIndex(
         (codelist) => codelist.id === payload.codeListId
       );
-      let codeIndex = state.list[index].codelist[codeListIndex].codes.findIndex(
-        (code) => code.id === payload.code.id
-      );
+      const codeIndex = state.list[index].codelist[
+        codeListIndex
+      ].codes.findIndex((code) => code.id === payload.code.id);
 
       state.list[index].codelist[codeListIndex].codes[codeIndex] = payload.code;
     },

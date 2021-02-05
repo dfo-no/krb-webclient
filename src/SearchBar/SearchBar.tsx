@@ -53,7 +53,7 @@ export default function SearchBar(props: SearchBarProps): ReactElement {
     <>
       <FormControl
         value={input}
-        placeholder={'search projects'}
+        placeholder="search projects"
         onChange={(e) => updateSearchText(e.target.value)}
       />
       {displaylist(searchList)}
