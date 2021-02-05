@@ -80,6 +80,7 @@
       "description": "...",
       "version": 1,
       "ordering": 2,
+      "codelist": [],
       "needs": [],
       "products": [],
       "publishedDate": "2021-01-03T02:00:00.000Z"
@@ -267,7 +268,377 @@
         }
       ],
       "publishedDate": "2021-02-02T13:08:36.355Z"
+    },
+    {
+      "id": 863299,
+      "title": "ewrwerew",
+      "description": "yyytry",
+      "needs": [
+        {
+          "id": 997673,
+          "tittel": "testing ",
+          "beskrivelse": "dsfdsfds",
+          "requirements": [
+            {
+              "id": 498350,
+              "title": "6668",
+              "description": "werewqr",
+              "needId": 997673,
+              "type": "yes/no"
+            },
+            {
+              "id": 550110,
+              "title": "666",
+              "description": "yyytry",
+              "needId": 997673,
+              "type": "yes/no"
+            },
+            {
+              "id": 942748,
+              "title": "Kurs og konferanse3",
+              "description": "werewqr",
+              "needId": 997673,
+              "type": "yes/no"
+            }
+          ]
+        }
+      ],
+      "products": [
+        {
+          "title": "6666",
+          "description": "yyytry6",
+          "id": 222398
+        },
+        {
+          "title": "6668",
+          "description": "ansatte i kommunen skal ha tilgang",
+          "id": 568085
+        }
+      ],
+      "codelist": [
+        {
+          "title": "ewrwerew",
+          "description": "ansatte i kommunen skal ha tilgang",
+          "id": 338274,
+          "codes": [
+            {
+              "title": "testing ",
+              "description": "qwrqwereqr",
+              "id": 86550
+            },
+            {
+              "title": "testing ",
+              "description": "qwrqwereqr",
+              "id": 761262
+            }
+          ]
+        },
+        {
+          "title": "Kurs og konferanse3",
+          "description": "ewtwrt",
+          "id": 574345,
+          "codes": []
+        }
+      ],
+      "version": 1,
+      "publishedDate": "2021-02-04T16:04:00.665Z"
+    },
+    {
+      "id": 596144,
+      "title": "ewrwerew",
+      "description": "yyytry",
+      "needs": [
+        {
+          "id": 997673,
+          "tittel": "testing ",
+          "beskrivelse": "dsfdsfds",
+          "requirements": [
+            {
+              "id": 498350,
+              "title": "6668",
+              "description": "werewqr",
+              "needId": 997673,
+              "type": "yes/no"
+            },
+            {
+              "id": 550110,
+              "title": "666",
+              "description": "yyytry",
+              "needId": 997673,
+              "type": "yes/no"
+            },
+            {
+              "id": 942748,
+              "title": "Kurs og konferanse3",
+              "description": "werewqr",
+              "needId": 997673,
+              "type": "yes/no"
+            }
+          ]
+        }
+      ],
+      "products": [
+        {
+          "title": "6666",
+          "description": "yyytry6",
+          "id": 222398
+        },
+        {
+          "title": "6668",
+          "description": "ansatte i kommunen skal ha tilgang",
+          "id": 568085
+        }
+      ],
+      "codelist": [
+        {
+          "title": "ewrwerew",
+          "description": "ansatte i kommunen skal ha tilgang",
+          "id": 338274,
+          "codes": [
+            {
+              "title": "testing ",
+              "description": "qwrqwereqr",
+              "id": 86550
+            },
+            {
+              "title": "testing ",
+              "description": "qwrqwereqr",
+              "id": 761262
+            }
+          ]
+        },
+        {
+          "title": "Kurs og konferanse3",
+          "description": "ewtwrt",
+          "id": 574345,
+          "codes": []
+        }
+      ],
+      "version": 1,
+      "publishedDate": "2021-02-04T16:13:46.266Z"
+    },
+    {
+      "id": 681358,
+      "title": "ewrwerew7",
+      "description": "yyytry77",
+      "needs": [
+        {
+          "id": 997673,
+          "tittel": "testing ",
+          "beskrivelse": "dsfdsfds",
+          "requirements": [
+            {
+              "id": 498350,
+              "title": "6668",
+              "description": "werewqr",
+              "needId": 997673,
+              "type": "yes/no"
+            },
+            {
+              "id": 550110,
+              "title": "666",
+              "description": "yyytry",
+              "needId": 997673,
+              "type": "yes/no"
+            },
+            {
+              "id": 942748,
+              "title": "Kurs og konferanse3",
+              "description": "werewqr",
+              "needId": 997673,
+              "type": "yes/no"
+            }
+          ]
+        }
+      ],
+      "products": [
+        {
+          "title": "6666",
+          "description": "yyytry6",
+          "id": 222398
+        },
+        {
+          "title": "6668",
+          "description": "ansatte i kommunen skal ha tilgang",
+          "id": 568085
+        }
+      ],
+      "codelist": [
+        {
+          "title": "ewrwerew",
+          "description": "ansatte i kommunen skal ha tilgang",
+          "id": 338274,
+          "codes": [
+            {
+              "title": "testing ",
+              "description": "qwrqwereqr",
+              "id": 86550
+            },
+            {
+              "title": "testing ",
+              "description": "qwrqwereqr",
+              "id": 761262
+            }
+          ]
+        },
+        {
+          "title": "Kurs og konferanse3",
+          "description": "ewtwrt",
+          "id": 574345,
+          "codes": []
+        }
+      ],
+      "version": 2,
+      "publications": [
+        {
+          "date": "2021-02-04T16:13:46.266Z",
+          "comment": "testing ",
+          "version": 1,
+          "id": 893214
+        }
+      ],
+      "publishedDate": "2021-02-04T16:15:06.240Z"
     }
   ],
-  "projects": []
+  "projects": [
+    {
+      "id": 2087,
+      "title": "ewrwerew7",
+      "description": "yyytry77",
+      "needs": [
+        {
+          "id": 997673,
+          "tittel": "testing ",
+          "beskrivelse": "dsfdsfds",
+          "requirements": [
+            {
+              "id": 498350,
+              "title": "6668",
+              "description": "werewqr",
+              "needId": 997673,
+              "type": "yes/no"
+            },
+            {
+              "id": 550110,
+              "title": "666",
+              "description": "yyytry",
+              "needId": 997673,
+              "type": "yes/no"
+            },
+            {
+              "id": 942748,
+              "title": "Kurs og konferanse3",
+              "description": "werewqr",
+              "needId": 997673,
+              "type": "yes/no"
+            }
+          ]
+        },
+        {
+          "id": 268098,
+          "tittel": "Dehhh",
+          "beskrivelse": "ewrewr",
+          "requirements": []
+        },
+        {
+          "id": 79659,
+          "tittel": "hfgh",
+          "beskrivelse": "gfh",
+          "requirements": []
+        }
+      ],
+      "products": [
+        {
+          "title": "6666",
+          "description": "yyytry6",
+          "id": 222398
+        },
+        {
+          "title": "6668",
+          "description": "ansatte i kommunen skal ha tilgang",
+          "id": 568085
+        }
+      ],
+      "codelist": [
+        {
+          "title": "ewrwerew",
+          "description": "ansatte i kommunen skal ha tilgang",
+          "id": 338274,
+          "codes": [
+            {
+              "title": "testing ",
+              "description": "qwrqwereqr",
+              "id": 86550
+            },
+            {
+              "title": "testing ",
+              "description": "qwrqwereqr",
+              "id": 761262
+            }
+          ]
+        },
+        {
+          "title": "Kurs og konferanse3",
+          "description": "ewtwrt",
+          "id": 574345,
+          "codes": []
+        }
+      ],
+      "version": 3,
+      "publications": [
+        {
+          "date": "2021-02-04T16:13:46.266Z",
+          "comment": "testing ",
+          "version": 1,
+          "id": 893214
+        },
+        {
+          "date": "2021-02-04T16:15:06.240Z",
+          "comment": "ewrwerew",
+          "version": 2,
+          "id": 876342
+        }
+      ]
+    },
+    {
+      "id": 516922,
+      "title": "ewrwerew",
+      "description": "55g.l",
+      "needs": [
+        {
+          "id": 198656,
+          "tittel": "testing",
+          "beskrivelse": "ewrewr",
+          "requirements": []
+        },
+        {
+          "id": 31187,
+          "tittel": "Detteerenkravbank",
+          "beskrivelse": "dsfdsf",
+          "requirements": []
+        }
+      ],
+      "products": [],
+      "codelist": [
+        {
+          "title": "ewrwerew",
+          "description": "ewtwrt",
+          "id": 181797,
+          "codes": [
+            {
+              "id": 301335,
+              "title": "testing9",
+              "description": ""
+            },
+            {
+              "id": 740950,
+              "title": "Kurs og konferanse7",
+              "description": "werewqr"
+            }
+          ]
+        }
+      ],
+      "version": 1
+    }
+  ]
 }

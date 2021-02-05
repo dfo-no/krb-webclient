@@ -15,9 +15,10 @@ import dayjs from 'dayjs';
 import { RootState } from '../../store/rootReducer';
 import { Publication } from '../../models/Publication';
 import {
-  publishProject,
   editProject,
-  putProjectThunk
+  putProjectThunk,
+  addPublication,
+  incrementProjectVersion
 } from '../../store/reducers/project-reducer';
 import { postBank } from '../../store/reducers/bank-reducer';
 import { Utils } from '../../common/Utils';
@@ -49,6 +50,7 @@ function ProjectPage(): ReactElement {
     let versionNumber = project.publications
       ? project.publications[project.publications.length - 1].version + 1
       : 1;
+
     let convertedDate = dayjs(new Date()).toJSON();
     let publishedProject = { ...project };
     publishedProject.publishedDate = convertedDate;
@@ -62,24 +64,22 @@ function ProjectPage(): ReactElement {
       id: Utils.getRandomNumber()
     };
     setShowEditor(false);
-    dispatch(publishProject({ id: project.id, publication: publication }));
-    dispatch(putProjectThunk(project));
+
+    dispatch(addPublication({ projectId: project.id, publication }));
+    dispatch(incrementProjectVersion(project.id));
+    dispatch(putProjectThunk(project.id));
   };
 
-  const editProjectInfo = (post: FormValues) => () => {
-    let newproject: Bank = {
-      id: project.id,
-      title: post.title,
-      description: post.description,
-      needs: project.needs,
-      products: project.products,
-      codelist: project.codelist,
-      version: project.version,
-      publications: project.publications
-    };
+  const editProjectInfo = (post: FormValues) => {
+    dispatch(
+      editProject({
+        projectId: project.id,
+        title: post.title,
+        description: post.description
+      })
+    );
+    dispatch(putProjectThunk(project.id));
     setEditMode(false);
-    dispatch(editProject(newproject));
-    dispatch(putProjectThunk(newproject));
   };
 
   const handleCommentChange = (event: any) => {
@@ -93,7 +93,7 @@ function ProjectPage(): ReactElement {
           <Card.Body>
             <Form
               onSubmit={handleSubmit(editProjectInfo)}
-              autoComplete="on"
+              autoComplete="off"
               noValidate
               validated={validated}
             >

@@ -1,10 +1,9 @@
-import React, { ReactElement, useState } from 'react';
+import React, { ReactElement, useContext, useState } from 'react';
 import {
   Button,
   Card,
   FormControl,
   InputGroup,
-  ListGroup,
   Accordion,
   Form,
   Col,
@@ -21,13 +20,9 @@ import {
 } from '../../store/reducers/project-reducer';
 import styles from './ProductPage.module.scss';
 import { Utils } from '../../common/Utils';
-import { useParams } from 'react-router-dom';
 import { Bank } from '../../models/Bank';
 import { useForm } from 'react-hook-form';
-
-interface RouteParams {
-  projectId: string;
-}
+import { AccordionContext } from '../Need/AccordionContext';
 
 type FormValues = {
   title: string;
@@ -36,8 +31,8 @@ type FormValues = {
 
 export default function ProductPage(): ReactElement {
   const dispatch = useDispatch();
+  const { onOpenClose } = useContext(AccordionContext);
   const { id } = useSelector((state: RootState) => state.selectedProject);
-  let { projectId } = useParams<RouteParams>();
   const { list } = useSelector((state: RootState) => state.project);
   const [showEditor, setShowEdior] = useState(false);
   const [title, setTitle] = useState('');
@@ -64,28 +59,29 @@ export default function ProductPage(): ReactElement {
     list.find((bank: Bank) => bank.id === id)
   );
 
-  const editProductElement = (id: number) => () => {
-    let product: Product = {
-      title: title,
-      description: description,
-      id: id
-    };
-    const projectIdNumber = +projectId;
-    dispatch(editProduct({ id: projectIdNumber, product: product }));
-    dispatch(putProjectThunk(selectedProject));
+  const editProductElement = (productId: number) => () => {
+    dispatch(
+      editProduct({
+        projectId: id,
+        productId: productId, // TODO: get from post
+        title: title, // TODO: get from post
+        description: description // TODO: get from post
+      })
+    );
+    dispatch(putProjectThunk(id));
+    onOpenClose('');
   };
 
   const addNewProduct = (post: FormValues) => {
     let product: Product = {
+      id: Utils.getRandomNumber(),
       title: post.title,
-      description: post.description,
-      id: Utils.getRandomNumber()
+      description: post.description
     };
-    const projectIdNumber = +projectId;
-    setShowEdior(false);
-    dispatch(addProduct({ id: projectIdNumber, product: product }));
-    dispatch(putProjectThunk(selectedProject));
+    dispatch(addProduct({ id, product }));
+    dispatch(putProjectThunk(id));
   };
+
   function productEditor(show: boolean) {
     if (show) {
       return (
@@ -93,7 +89,7 @@ export default function ProductPage(): ReactElement {
           <Card.Body>
             <Form
               onSubmit={handleSubmit(addNewProduct)}
-              autoComplete="on"
+              autoComplete="off"
               noValidate
               validated={validated}
             >
@@ -152,7 +148,7 @@ export default function ProductPage(): ReactElement {
   const renderProducts = (productList: Product[]) => {
     const products = productList.map((element: Product, index) => {
       return (
-        <Card>
+        <Card key={element.id}>
           <Accordion.Toggle as={Card.Header} eventKey={index.toString()}>
             <h6>{element.title}</h6>
             <p>{element.description}</p>

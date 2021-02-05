@@ -1,51 +1,37 @@
-import React, { ReactElement, useState } from 'react';
+import React, { ReactElement, useContext, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   Accordion,
   Button,
   Card,
-  Col,
-  Form,
   FormControl,
-  InputGroup,
-  Row
+  InputGroup
 } from 'react-bootstrap';
 
 import styles from './CodeListEditor.module.scss';
 import { RootState } from '../../store/rootReducer';
 import { Code } from '../../models/Code';
 import {
-  addCode,
-  editCode,
+  addCodeToCodelist,
+  editCodeInCodelist,
   editCodelist,
   putProjectThunk
 } from '../../store/reducers/project-reducer';
 import { Utils } from '../../common/Utils';
-import { useParams } from 'react-router-dom';
 import { Codelist } from '../../models/Codelist';
 import { Bank } from '../../models/Bank';
-import { useForm } from 'react-hook-form';
-
-interface RouteParams {
-  projectId: string;
-}
-type FormValues = {
-  title: string;
-  description: string;
-};
+import { AccordionContext } from '../Need/AccordionContext';
 
 export default function CodeListEditor(): ReactElement {
   const dispatch = useDispatch();
+  const { onOpenClose } = useContext(AccordionContext);
   const { list } = useSelector((state: RootState) => state.project);
   const { id } = useSelector((state: RootState) => state.selectedProject);
   const { listId } = useSelector((state: RootState) => state.selectedCodeList);
-  let { projectId } = useParams<RouteParams>();
   const [showEditor, setShowEdior] = useState(false);
   const [editmode, setEditMode] = useState(false);
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
-  const { register, handleSubmit, errors } = useForm<Codelist, Code>();
-  const [validated] = useState(false);
 
   if (!id) {
     return <p>Please select a project</p>;
@@ -84,111 +70,68 @@ export default function CodeListEditor(): ReactElement {
       description: description,
       id: Utils.getRandomNumber()
     };
-    const projectIdNumber = +projectId;
+    dispatch(addCodeToCodelist({ projectId: id, codelistId: listId, code }));
+    dispatch(putProjectThunk(id));
     setShowEdior(false);
-    dispatch(
-      addCode({
-        id: projectIdNumber,
-        code: code,
-        codeListId: selectedCodeList.id
-      })
-    );
-    dispatch(putProjectThunk(selectedProject));
   };
 
-  const editCodeElement = (id: number, index: number) => () => {
+  const editCodeElement = (codeId: number) => () => {
     let code = {
-      id: id,
+      id: codeId, // TODO: suspicious about this one
       title: title,
       description: description
     };
-    const projectIdNumber = +projectId;
-    dispatch(
-      editCode({
-        id: projectIdNumber,
-        code: code,
-        codeListId: selectedCodeList.id
-      })
-    );
-    dispatch(putProjectThunk(selectedProject));
+
+    dispatch(editCodeInCodelist({ projectId: id, codelistId: listId, code }));
+    dispatch(putProjectThunk(id));
+    onOpenClose('');
   };
 
-  const editCodeList = (post: FormValues) => {
-    let newCodelist: Codelist = {
-      id: selectedCodeList.id,
-      title: post.title,
-      description: post.description,
-      codes: selectedCodeList.codes
-    };
-    const projectIdNumber = +projectId;
+  const onEditCodelist = () => {
     dispatch(
       editCodelist({
-        id: projectIdNumber,
-        codeList: newCodelist,
-        codeListId: selectedCodeList.id
+        projectId: id,
+        codelistId: selectedCodeList.id,
+        title: title,
+        description: description
       })
     );
+    dispatch(putProjectThunk(id));
     setEditMode(false);
-    dispatch(putProjectThunk(selectedProject));
   };
 
   function renderHeaderSection(editmode: boolean) {
     if (editmode) {
       return (
+        /*TODO: finne ut hvor sannsynlig det er at bruker skriver
+         mange steder på samme tid, og derfor om handleTitleChange,
+         og descriptionchange må skrives om de tre separate funksjoner */
         <Card className="mt-3">
           <Card.Body>
-            <Form
-              onSubmit={handleSubmit(editCodeList)}
-              autoComplete="on"
-              noValidate
-              validated={validated}
-            >
-              <Form.Group as={Row}>
-                <Form.Label column sm="2">
-                  Title
-                </Form.Label>
-                <Col sm={10}>
-                  <Form.Control
-                    name="title"
-                    defaultValue={selectedCodeList.title}
-                    ref={register({
-                      required: { value: true, message: 'Required' },
-                      minLength: { value: 2, message: 'Minimum 2 characters' }
-                    })}
-                    isInvalid={!!errors.title}
-                  ></Form.Control>
-                  {errors.title && (
-                    <Form.Control.Feedback type="invalid">
-                      {errors.title.message}
-                    </Form.Control.Feedback>
-                  )}
-                </Col>
-              </Form.Group>
-              <Form.Group as={Row}>
-                <Form.Label column sm="2">
-                  Description
-                </Form.Label>
-                <Col sm={10}>
-                  <Form.Control
-                    name="description"
-                    defaultValue={selectedCodeList.description}
-                    ref={register({
-                      required: { value: true, message: 'Required' },
-                      minLength: { value: 2, message: 'Minimum 2 characters' }
-                    })}
-                    isInvalid={!!errors.description}
-                  ></Form.Control>
-                  {errors.description && (
-                    <Form.Control.Feedback type="invalid">
-                      {errors.description.message}
-                    </Form.Control.Feedback>
-                  )}
-                </Col>
-              </Form.Group>
-              <Button className="mt-2" type="submit">
-                Save
-              </Button>
-            </Form>
+            <label htmlFor="title">Title2</label>
+            <InputGroup className="mb-3 30vw">
+              <FormControl
+                name="title"
+                onChange={handleTitleChange}
+                defaultValue={selectedCodeList.title}
+              />
+            </InputGroup>
+            <label htmlFor="description">Description</label>
+            <InputGroup>
+              <FormControl
+                name="description"
+                onChange={handleDescriptionChange}
+                defaultValue={selectedCodeList.description}
+              />
+            </InputGroup>
+            <FormControl
+              name="codelistId"
+              type="hidden"
+              value={selectedCodeList.id}
+            ></FormControl>
+            <Button className="mt-2" onClick={onEditCodelist}>
+              Save
+            </Button>
           </Card.Body>
         </Card>
       );
@@ -206,7 +149,7 @@ export default function CodeListEditor(): ReactElement {
   const codeList = (codelist: Code[]) => {
     const codes = codelist.map((element: Code, index) => {
       return (
-        <Card>
+        <Card key={index}>
           <Accordion.Toggle as={Card.Header} eventKey={index.toString()}>
             <h6>{element.title}</h6>
             <p>{element.description}</p>
@@ -214,7 +157,7 @@ export default function CodeListEditor(): ReactElement {
           <Accordion.Collapse eventKey={index.toString()}>
             <Card.Body>
               <>
-                <label htmlFor="title">Title</label>
+                <label htmlFor="title">Title3</label>
                 <InputGroup className="mb-3 30vw">
                   <FormControl
                     name="title"
@@ -230,9 +173,7 @@ export default function CodeListEditor(): ReactElement {
                     onChange={handleDescriptionChange}
                   />
                 </InputGroup>
-                <Button onClick={editCodeElement(element.id, index)}>
-                  Save
-                </Button>
+                <Button onClick={editCodeElement(element.id)}>Save</Button>
               </>
             </Card.Body>
           </Accordion.Collapse>

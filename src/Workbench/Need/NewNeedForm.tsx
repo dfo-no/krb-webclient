@@ -2,26 +2,29 @@ import React, { ReactElement, useContext, useState } from 'react';
 
 import { Button, Col, Form, Row } from 'react-bootstrap';
 import { useForm } from 'react-hook-form';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Utils } from '../../common/Utils';
-import { Bank } from '../../models/Bank';
 import { Need } from '../../models/Need';
-import { putProjectThunk } from '../../store/reducers/project-reducer';
+import { addNeed, putProjectThunk } from '../../store/reducers/project-reducer';
+import { RootState } from '../../store/rootReducer';
 import { AccordionContext } from './AccordionContext';
 
 type FormValues = {
+  projectId: number;
   tittel: string;
   beskrivelse: string;
 };
-interface IProps {
-  project: Bank;
-}
 
-function NewNeedForm(props: IProps): ReactElement {
+function NewNeedForm(): ReactElement {
   const dispatch = useDispatch();
   const { onOpenClose } = useContext(AccordionContext);
   const [validated] = useState(false);
   const { register, handleSubmit, reset, errors } = useForm();
+  const { id } = useSelector((state: RootState) => state.selectedProject);
+
+  if (!id) {
+    return <div>Loading NeedForm</div>;
+  }
 
   const onNewNeedSubmit = (post: FormValues, e: any) => {
     const need: Need = {
@@ -30,10 +33,8 @@ function NewNeedForm(props: IProps): ReactElement {
       beskrivelse: post.beskrivelse,
       requirements: []
     };
-    // TODO: Black magic here. Must be a better way
-    let clonedProject = { ...props.project };
-    clonedProject.needs = [...clonedProject.needs, need];
-    dispatch(putProjectThunk(clonedProject));
+    dispatch(addNeed({ id, need }));
+    dispatch(putProjectThunk(id));
     // reset the form
     reset();
 
@@ -44,7 +45,7 @@ function NewNeedForm(props: IProps): ReactElement {
   return (
     <Form
       onSubmit={handleSubmit(onNewNeedSubmit)}
-      autoComplete="on"
+      autoComplete="off"
       noValidate
       validated={validated}
     >
@@ -63,7 +64,7 @@ function NewNeedForm(props: IProps): ReactElement {
               }
             })}
             isInvalid={!!errors.tittel}
-          ></Form.Control>
+          />
           {errors.tittel && (
             <Form.Control.Feedback type="invalid">
               {errors.tittel.message}
@@ -86,7 +87,7 @@ function NewNeedForm(props: IProps): ReactElement {
               }
             })}
             isInvalid={!!errors.beskrivelse}
-          ></Form.Control>
+          />
           {errors.beskrivelse && (
             <Form.Control.Feedback type="invalid">
               {errors.beskrivelse.message}

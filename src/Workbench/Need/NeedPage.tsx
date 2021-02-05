@@ -31,7 +31,7 @@ function NeedPage(): ReactElement {
         <Card key={index}>
           <Accordion.Toggle as={Card.Header} eventKey={indexString}>
             <h4>{element.tittel}</h4>
-            <span>{Utils.truncate(element.beskrivelse, 80)}</span>
+            <span>{element.beskrivelse}</span>
           </Accordion.Toggle>
           <Accordion.Collapse eventKey={indexString}>
             <Card.Body>
@@ -59,7 +59,7 @@ function NeedPage(): ReactElement {
           </Accordion.Toggle>
           <Accordion.Collapse eventKey="0">
             <Card.Body>
-              <NewNeedForm project={project}></NewNeedForm>
+              <NewNeedForm />
             </Card.Body>
           </Accordion.Collapse>
         </Card>

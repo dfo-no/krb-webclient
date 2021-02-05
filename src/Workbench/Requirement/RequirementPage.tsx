@@ -16,7 +16,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import {
   addRequirement,
   editRequirement,
-  putProjectThunk
+  editRequirementInNeed,
+  putProjectThunk,
+  setRequirementListToNeed
 } from '../../store/reducers/project-reducer';
 import styles from './RequirementPage.module.scss';
 import { Requirement } from '../../models/Requirement';
@@ -24,7 +26,6 @@ import { Need } from '../../models/Need';
 import { Utils } from '../../common/Utils';
 import { Bank } from '../../models/Bank';
 import { useParams } from 'react-router-dom';
-import { selectCodeList } from '../../store/reducers/selectedCodelist-reducer';
 
 interface RouteParams {
   projectId: string;
@@ -34,6 +35,7 @@ export default function RequirementPage(): ReactElement {
   const dispatch = useDispatch();
   const { id } = useSelector((state: RootState) => state.selectedProject);
   const { list } = useSelector((state: RootState) => state.project);
+  const { needId } = useSelector((state: RootState) => state.selectNeed);
   let { projectId } = useParams<RouteParams>();
   const [selectedNeed, setSelectedNeed] = useState<Need | undefined>(undefined);
   const [requirementList, setRequirementsList] = useState<Requirement[]>([]);
@@ -64,7 +66,7 @@ export default function RequirementPage(): ReactElement {
     setDescription(event.target.value);
   };
 
-  const addRequirementElement = () => () => {
+  const addRequirementElement = () => {
     let requirement = {
       id: Utils.getRandomNumber(),
       title: title,
@@ -74,48 +76,47 @@ export default function RequirementPage(): ReactElement {
     };
     let reqList = [...requirementList];
     reqList.push(requirement);
+
     setRequirementsList(reqList);
     setShowEditor(false);
     const needIndex = selectedProject.needs.findIndex(
       (need) => need.id === selectedNeed?.id
     );
-    const projectIdNumber = +projectId;
     dispatch(
-      addRequirement({
-        id: projectIdNumber,
-        requirement: requirement,
-        needIndex: needIndex
+      setRequirementListToNeed({
+        projectId: id,
+        needIndex: needIndex,
+        reqList
       })
     );
-    dispatch(putProjectThunk(selectedProject));
+    dispatch(putProjectThunk(id));
   };
-  const editRequirementElement = (id: number) => () => {
+
+  const editRequirementElement = (reqId: number, index: number) => () => {
     let requirement = {
-      id: id,
+      id: reqId,
       title: title,
       description: description,
       needId: selectedNeed?.id,
       type: 'yes/no'
     };
     let reqList = [...requirementList];
-    reqList.push(requirement);
+    reqList[index] = requirement;
     setRequirementsList(reqList);
-    const needIndex = selectedProject.needs.findIndex(
-      (need) => need.id === selectedNeed?.id
-    );
-    const reqIndex = selectedProject.needs[needIndex].requirements.findIndex(
-      (req) => req.id === id
-    );
-    const projectIdNumber = +projectId;
-    dispatch(
-      editRequirement({
-        id: projectIdNumber,
-        requirement: requirement,
-        needIndex: needIndex,
-        requirementIndex: reqIndex
+    const needIndex = Utils.ensure(
+      selectedProject.needs.findIndex((need) => {
+        if (selectedNeed && selectedNeed.id) return need.id === selectedNeed.id;
+        return 0;
       })
     );
-    dispatch(putProjectThunk(selectedProject));
+    dispatch(
+      editRequirementInNeed({
+        projectId: id,
+        needIndex: needIndex,
+        reqId: requirement.id,
+        requirement: requirement
+      })
+    );
   };
 
   const handleSelectedNeed = (need: Need) => {
@@ -124,7 +125,7 @@ export default function RequirementPage(): ReactElement {
   };
 
   const requirements = (requirements: Requirement[]) => {
-    if (selectedNeed === undefined) {
+    if (!selectedNeed) {
       return (
         <p>
           You have not selected a need, select one to work with requirements
@@ -134,7 +135,7 @@ export default function RequirementPage(): ReactElement {
       if (requirements.length > 0) {
         const jsx = requirements.map((element: Requirement, index) => {
           return (
-            <Card>
+            <Card key={index}>
               <Card.Header>
                 <Accordion.Toggle
                   as={Button}
@@ -165,7 +166,7 @@ export default function RequirementPage(): ReactElement {
                     </InputGroup>
                     <Button
                       className={styles.newbutton}
-                      onClick={editRequirementElement(element.id)}
+                      onClick={editRequirementElement(element.id, index)}
                     >
                       Save
                     </Button>
@@ -205,7 +206,7 @@ export default function RequirementPage(): ReactElement {
             </InputGroup>
             <Button
               className={styles.newbutton}
-              onClick={addRequirementElement()}
+              onClick={() => addRequirementElement()}
             >
               Create
             </Button>
@@ -244,7 +245,8 @@ export default function RequirementPage(): ReactElement {
           <Nav.Link
             as={NavLink}
             role="link"
-            activeClassName={`${styles.sidebar__item__active}`}
+            /* TODO: activeClassName not reconized ny React */
+            /* activeClassName={`${styles.sidebar__item__active}`} */
             onClick={() => handleSelectedNeed(element)}
           >
             {element.tittel}

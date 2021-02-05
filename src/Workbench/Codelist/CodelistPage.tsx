@@ -8,16 +8,13 @@ import styles from './CodelistPage.module.scss';
 import { RootState } from '../../store/rootReducer';
 import { Codelist } from '../../models/Codelist';
 import {
-  addCodeList,
+  addCodelist,
   putProjectThunk
 } from '../../store/reducers/project-reducer';
 import { selectCodeList } from '../../store/reducers/selectedCodelist-reducer';
 import { Utils } from '../../common/Utils';
 import { Bank } from '../../models/Bank';
 
-interface RouteParams {
-  projectId: string;
-}
 type FormValues = {
   title: string;
   description: string;
@@ -27,7 +24,6 @@ export default function CodelistPage(): ReactElement {
   const dispatch = useDispatch();
   const { list } = useSelector((state: RootState) => state.project);
   const { id } = useSelector((state: RootState) => state.selectedProject);
-  let { projectId } = useParams<RouteParams>();
   const [showEditor, setShowEdior] = useState(false);
   const { register, handleSubmit, errors } = useForm<Codelist>();
   const [validated] = useState(false);
@@ -66,16 +62,15 @@ export default function CodelistPage(): ReactElement {
   };
 
   const addNewCodelist = (post: FormValues) => {
-    let codeList: Codelist = {
+    let codelist: Codelist = {
       title: post.title,
       description: post.description,
       id: Utils.getRandomNumber(),
       codes: []
     };
-    const projectIdNumber = +projectId;
+    dispatch(addCodelist({ id, codelist }));
+    dispatch(putProjectThunk(id));
     setShowEdior(false);
-    dispatch(addCodeList({ id: projectIdNumber, codelist: codeList }));
-    dispatch(putProjectThunk(selectedProject));
   };
 
   function renderCodelistEditor(show: boolean) {
@@ -85,7 +80,7 @@ export default function CodelistPage(): ReactElement {
           <Card.Body>
             <Form
               onSubmit={handleSubmit(addNewCodelist)}
-              autoComplete="on"
+              autoComplete="off"
               noValidate
               validated={validated}
             >
