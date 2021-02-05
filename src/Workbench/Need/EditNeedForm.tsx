@@ -6,10 +6,14 @@ import { useDispatch } from 'react-redux';
 import { Utils } from '../../common/Utils';
 import { Bank } from '../../models/Bank';
 import { Need } from '../../models/Need';
-import { putProjectThunk } from '../../store/reducers/project-reducer';
+import {
+  editNeed,
+  putProjectThunk
+} from '../../store/reducers/project-reducer';
 import { AccordionContext } from './AccordionContext';
 
 type FormValues = {
+  id: string;
   tittel: string;
   beskrivelse: string;
 };
@@ -24,27 +28,22 @@ function EditNeedForm(props: IProps): ReactElement {
   const [validated] = useState(false);
   const { register, handleSubmit, errors } = useForm({
     defaultValues: {
+      id: props.need.id,
       tittel: props.need.tittel,
       beskrivelse: props.need.beskrivelse
     }
   });
 
-  const onNewNeedSubmit = (post: FormValues, e: any) => {
-    // TODO: Black magic here. Must be a better way
-    let clonedProject = { ...props.project };
-    let clonedNeeds = [...props.project.needs];
-    let needIndex = Utils.ensure(
-      clonedNeeds.findIndex((elem) => elem.id === props.need.id)
+  const onEditNeedSubmit = (post: FormValues) => {
+    dispatch(
+      editNeed({
+        projectId: props.project.id,
+        needId: +post.id,
+        tittel: post.tittel,
+        beskrivelse: post.beskrivelse
+      })
     );
-
-    let clonedNeed = { ...clonedNeeds[needIndex] };
-
-    clonedNeed.tittel = post.tittel;
-    clonedNeed.beskrivelse = post.beskrivelse;
-
-    clonedNeeds[needIndex] = clonedNeed;
-    clonedProject.needs = clonedNeeds;
-    dispatch(putProjectThunk(clonedProject));
+    dispatch(putProjectThunk(props.project.id));
 
     // Close accordion via useContext
     onOpenClose('');
@@ -52,7 +51,7 @@ function EditNeedForm(props: IProps): ReactElement {
 
   return (
     <Form
-      onSubmit={handleSubmit(onNewNeedSubmit)}
+      onSubmit={handleSubmit(onEditNeedSubmit)}
       autoComplete="off"
       noValidate
       validated={validated}
@@ -72,7 +71,7 @@ function EditNeedForm(props: IProps): ReactElement {
               }
             })}
             isInvalid={!!errors.tittel}
-          ></Form.Control>
+          />
           {errors.tittel && (
             <Form.Control.Feedback type="invalid">
               {errors.tittel.message}
@@ -95,7 +94,7 @@ function EditNeedForm(props: IProps): ReactElement {
               }
             })}
             isInvalid={!!errors.beskrivelse}
-          ></Form.Control>
+          />
           {errors.beskrivelse && (
             <Form.Control.Feedback type="invalid">
               {errors.beskrivelse.message}
@@ -103,6 +102,7 @@ function EditNeedForm(props: IProps): ReactElement {
           )}
         </Col>
       </Form.Group>
+      <Form.Control type="hidden" name="id" ref={register}></Form.Control>
       <Button className="mt-2" type="submit">
         Save
       </Button>

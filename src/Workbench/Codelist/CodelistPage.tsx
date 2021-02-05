@@ -8,7 +8,7 @@ import styles from './CodelistPage.module.scss';
 import { RootState } from '../../store/rootReducer';
 import { Codelist } from '../../models/Codelist';
 import {
-  addCodeList,
+  addCodelist,
   putProjectThunk
 } from '../../store/reducers/project-reducer';
 import { selectCodeList } from '../../store/reducers/selectedCodelist-reducer';
@@ -62,16 +62,15 @@ export default function CodelistPage(): ReactElement {
   };
 
   const addNewCodelist = (post: FormValues) => {
-    let codeList: Codelist = {
+    let codelist: Codelist = {
       title: post.title,
       description: post.description,
       id: Utils.getRandomNumber(),
       codes: []
     };
+    dispatch(addCodelist({ id, codelist }));
+    dispatch(putProjectThunk(id));
     setShowEdior(false);
-    let clonedProject = { ...selectedProject };
-    clonedProject.codelist = [...selectedProject.codelist, codeList];
-    dispatch(putProjectThunk(clonedProject));
   };
 
   function renderCodelistEditor(show: boolean) {
