@@ -1,8 +1,8 @@
 import React from 'react';
 import { Redirect, Route } from 'react-router-dom';
-import { fakeAuth } from './AuthenticationHandler';
+import fakeAuth from './AuthenticationHandler';
 
-export const ProtectedRoute: React.ComponentType<any> = ({
+const ProtectedRoute: React.ComponentType<any> = ({
   component: Component,
   ...rest
 }) => {
@@ -24,3 +24,5 @@ export const ProtectedRoute: React.ComponentType<any> = ({
     />
   );
 };
+
+export default ProtectedRoute;

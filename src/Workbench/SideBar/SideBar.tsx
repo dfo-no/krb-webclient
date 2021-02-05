@@ -16,9 +16,9 @@ interface RouteParams {
 }
 
 const renderRouteLinks = (routes: IRouteLink[], isProjectSelected: boolean) => {
-  return routes.map((route, index) => {
+  return routes.map((route) => {
     return (
-      <Nav.Item key={index} className={`${css.sidebar__item}`}>
+      <Nav.Item key={route.name} className={`${css.sidebar__item}`}>
         <Nav.Link
           as={NavLink}
           to={route.link}

@@ -8,7 +8,7 @@ import {
   BsFillPersonLinesFill
 } from 'react-icons/bs';
 import css from './Header.module.scss';
-import { fakeAuth } from '../authentication/AuthenticationHandler';
+import fakeAuth from '../authentication/AuthenticationHandler';
 
 export default function Header(): ReactElement {
   const history = useHistory();

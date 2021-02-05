@@ -35,20 +35,19 @@ export default function ResponseEditor(): ReactElement {
     reader.readAsText(e.target.files[0]);
     setFileUploaded(true);
   };
+
   const handleNameChange = (event: any) => {
     setName(event.target.value);
   };
 
   if (!fileUploaded) {
     return (
-      <>
-        <Col>
-          <h4>Upload Spesification to create a response</h4>
-          <InputGroup>
-            <input type="file" onChange={onLoad} />
-          </InputGroup>
-        </Col>
-      </>
+      <Col>
+        <h4>Upload Spesification to create a response</h4>
+        <InputGroup>
+          <input type="file" onChange={onLoad} />
+        </InputGroup>
+      </Col>
     );
   }
 
@@ -67,7 +66,7 @@ export default function ResponseEditor(): ReactElement {
           ? (reqIndexes = [data[need.tittel]])
           : (reqIndexes = data[need.tittel]);
         const newRequirementList: Requirement[] = [];
-        for (let i = 0; i < reqIndexes.length; i++) {
+        for (let i = 0; i < reqIndexes.length; i += 1) {
           newRequirementList.push(need.requirements[Number(reqIndexes[i])]);
         }
         const updatedBehov = {
@@ -98,7 +97,7 @@ export default function ResponseEditor(): ReactElement {
   };
 
   const needList = (needlist: Need[]) => {
-    const needs = needlist.map((need: Need, index: number) => {
+    const needs = needlist.map((need: Need) => {
       return (
         <>
           <h5>{need.tittel}</h5>

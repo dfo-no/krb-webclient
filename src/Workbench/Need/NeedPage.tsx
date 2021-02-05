@@ -5,7 +5,7 @@ import { BsPlusSquare } from 'react-icons/bs';
 import { Need } from '../../models/Need';
 import css from './NeedPage.module.scss';
 import { RootState } from '../../store/rootReducer';
-import { Utils } from '../../common/Utils';
+import Utils from '../../common/Utils';
 import NewNeedForm from './NewNeedForm';
 import { AccordionContext } from './AccordionContext';
 import EditNeedForm from './EditNeedForm';
@@ -20,15 +20,15 @@ function NeedPage(): ReactElement {
   }
   const project = Utils.ensure(list.find((banks) => banks.id === id));
 
-  const onOpenClose = (e: any) => {
+  const onOpenClose = (e = '') => {
     setActiveKey(e);
   };
 
-  const renderNeeds = (list: any) => {
-    return list.map((element: Need, index: number) => {
+  const renderNeeds = (needList: Need[]) => {
+    return needList.map((element: Need, index: number) => {
       const indexString = (index + 1).toString();
       return (
-        <Card key={index}>
+        <Card key={element.id}>
           <Accordion.Toggle as={Card.Header} eventKey={indexString}>
             <h4>{element.tittel}</h4>
             <span>{element.beskrivelse}</span>
@@ -47,7 +47,7 @@ function NeedPage(): ReactElement {
     <AccordionContext.Provider value={{ onOpenClose }}>
       <Accordion
         activeKey={activeKey}
-        onSelect={onOpenClose}
+        onSelect={(e) => onOpenClose(e)}
         className={`${css.needs}`}
       >
         <Card>

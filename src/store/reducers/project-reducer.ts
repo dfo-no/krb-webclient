@@ -1,6 +1,7 @@
+/* eslint-disable no-param-reassign */
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { del, get, post, put } from '../../api/http';
-import { Utils } from '../../common/Utils';
+import Utils from '../../common/Utils';
 import { Bank } from '../../models/Bank';
 import { Code } from '../../models/Code';
 import { Codelist } from '../../models/Codelist';

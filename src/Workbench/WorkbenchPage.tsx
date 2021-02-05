@@ -13,7 +13,7 @@ import {
   postProjectThunk
 } from '../store/reducers/project-reducer';
 import { selectProject } from '../store/reducers/selectedProject-reducer';
-import { Utils } from '../common/Utils';
+import Utils from '../common/Utils';
 
 type FormValues = {
   title: string;
@@ -33,7 +33,7 @@ function WorkbenchPage(): ReactElement {
     setShowEditor(true);
   };
 
-  const onSubmit = (post: FormValues, e: any) => {
+  const onSubmit = (post: FormValues) => {
     const project: Bank = {
       id: Utils.getRandomNumber(),
       title: post.title,

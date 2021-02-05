@@ -1,4 +1,4 @@
-export class Utils {
+class Utils {
   static ensure<T>(
     argument: T | undefined | null,
     message = 'This value was promised to be there.'
@@ -9,7 +9,7 @@ export class Utils {
     return argument;
   }
 
-  static getRandomNumber() {
+  static getRandomNumber(): number {
     // TODO: this is just for dev
     const min = Math.ceil(100);
     const max = Math.floor(1000000);
@@ -32,3 +32,4 @@ export class Utils {
     return str;
   }
 }
+export default Utils;

@@ -1,3 +1,4 @@
+/* eslint-disable no-param-reassign */
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { Bank } from '../../models/Bank';
 import { Need } from '../../models/Need';
@@ -31,11 +32,6 @@ const initialState: KravbankState = {
   banks: []
 };
 
-/* export const fetchBanks = createAsyncThunk('fetchBanks', async () => {
-  const response = await fetch(`http://localhost:3001/banks`);
-  return (await response.json()) as Bank[];
-}); */
-
 const kravbankSlice = createSlice({
   name: 'kravbank',
   initialState,
@@ -49,9 +45,6 @@ const kravbankSlice = createSlice({
     addProject(state, { payload }: PayloadAction<Bank>) {
       state.projects.push(payload);
     },
-    /* selectProject(state, { payload }: PayloadAction<Bank>) {
-      state.selectedProject = payload;
-    }, */
     editProject(state, { payload }: PayloadAction<Bank>) {
       const id = state.selectedProject?.id;
       const projectindex = state.projects.findIndex(
@@ -112,18 +105,16 @@ const kravbankSlice = createSlice({
     },
     addNeed(state, { payload }: PayloadAction<Need>) {
       const id = state.selectedProject?.id;
-      if (id === undefined) {
-        return state;
+      if (id !== undefined) {
+        state.projects[id].needs.push(payload);
       }
-      state.projects[id].needs.push(payload);
     },
     addSubNeed(state, { payload }: PayloadAction<Need>) {
       const needId = state.selectedNeed;
       const kravbankId = state.selectedProject?.id;
-      if (kravbankId === undefined) {
-        return state;
+      if (kravbankId !== undefined) {
+        state.projects[kravbankId].needs[needId].needs?.push(payload);
       }
-      state.projects[kravbankId].needs[needId].needs?.push(payload);
     },
 
     addCodelist(state, { payload }: PayloadAction<Codelist>) {
@@ -166,14 +157,9 @@ const kravbankSlice = createSlice({
     },
     banksReceived(state, { payload }: PayloadAction<Bank[]>) {
       state.projects = payload;
-      console.log(state.projects);
     }
   },
-  extraReducers: (builder) => {
-    /* builder.addCase(fetchBanks.fulfilled, (state, { payload }) => {
-      state.projects = payload;
-    }); */
-  }
+  extraReducers: () => {}
 });
 
 export const {
@@ -196,11 +182,5 @@ export const {
   banksReceived,
   selectBank
 } = kravbankSlice.actions;
-
-/* export const fetchBanks = () => async (dispatch: any) => {
-  dispatch(setLoading(true));
-  const response = await BankService.fetchAll();
-  dispatch(banksReceived(response));
-}; */
 
 export default kravbankSlice.reducer;

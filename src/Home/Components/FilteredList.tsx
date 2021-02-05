@@ -13,31 +13,35 @@ interface FilteredListProps {
   filterType: string;
 }
 
-export default function FilteredList(props: FilteredListProps): ReactElement {
+export default function FilteredList({
+  list,
+  filterTitle,
+  filterType
+}: FilteredListProps): ReactElement {
   const dispatch = useDispatch();
 
   const handleSelectedBank = (bank: Bank) => () => {
     dispatch(selectBank(bank.id));
   };
 
-  let list: Bank[] = [];
-  if (props.filterType === 'date') {
-    list = props.list
+  let bankList: Bank[] = [];
+  if (filterType === 'date') {
+    bankList = list
       .slice()
       .sort((a, b) =>
         dayjs(a.publishedDate).isBefore(dayjs(b.publishedDate)) ? 1 : -1
       );
   }
-  if (props.filterType === 'alphabetic') {
-    list = props.list
+  if (filterType === 'alphabetic') {
+    bankList = list
       .slice()
       .sort((a, b) => (a.title.toLowerCase() > b.title.toLowerCase() ? 1 : -1));
   }
   // TODO: correct link to other page than workbench when site exist.
   // TODO: Discuss suitable amount of elements displayed
-  const filteredElements = list.slice(0, 5).map((bank: Bank, index: number) => {
+  const filteredElements = bankList.slice(0, 5).map((bank: Bank) => {
     return (
-      <ListGroup.Item key={index}>
+      <ListGroup.Item key={bank.id}>
         <Link to={`/bank/${bank.id}`} onClick={handleSelectedBank(bank)}>
           {bank.title}
         </Link>
@@ -46,7 +50,7 @@ export default function FilteredList(props: FilteredListProps): ReactElement {
   });
   return (
     <ListGroup variant="flush">
-      <h5>{props.filterTitle}</h5>
+      <h5>{filterTitle}</h5>
       {filteredElements}
     </ListGroup>
   );

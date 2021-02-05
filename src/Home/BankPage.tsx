@@ -2,7 +2,7 @@ import React, { ReactElement } from 'react';
 import { Container, Row, Button } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { Utils } from '../common/Utils';
+import Utils from '../common/Utils';
 import { Bank } from '../models/Bank';
 
 import { RootState } from '../store/rootReducer';

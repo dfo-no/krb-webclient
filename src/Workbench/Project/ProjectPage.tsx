@@ -1,4 +1,4 @@
-import { ReactElement, useState } from 'react';
+import React, { ReactElement, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   Button,
@@ -22,7 +22,7 @@ import {
   incrementProjectVersion
 } from '../../store/reducers/project-reducer';
 import { postBank } from '../../store/reducers/bank-reducer';
-import { Utils } from '../../common/Utils';
+import Utils from '../../common/Utils';
 import { Bank } from '../../models/Bank';
 
 type FormValues = {
@@ -44,7 +44,7 @@ function ProjectPage(): ReactElement {
     return <p>Loading ....</p>;
   }
 
-  const project = Utils.ensure(list.find((project: Bank) => project.id === id));
+  const project = Utils.ensure(list.find((element) => element.id === id));
 
   const handlePublishProject = () => () => {
     const versionNumber = project.publications
@@ -167,6 +167,7 @@ function ProjectPage(): ReactElement {
       });
       return <ListGroup className="mt-3">{publication}</ListGroup>;
     }
+    return <></>;
   };
 
   const publicationEditor = (show: boolean) => {

@@ -1,5 +1,5 @@
-export const fakeAuth = {
-  isAuthenticated() {
+const fakeAuth = {
+  isAuthenticated(): boolean {
     const result =
       localStorage.getItem('kravbank') &&
       localStorage.getItem('kravbank') === 'loggedIn';
@@ -8,15 +8,17 @@ export const fakeAuth = {
     }
     return false;
   },
-  authenticate(cb: () => void) {
+  authenticate(cb: () => void): boolean {
     const result = setTimeout(cb, 100); // fake async
     if (result) {
       localStorage.setItem('kravbank', 'loggedIn');
       return true;
     }
+    return false;
   },
-  signout(cb: () => void) {
+  signout(cb: () => void): void {
     localStorage.removeItem('kravbank');
     setTimeout(cb, 100);
   }
 };
+export default fakeAuth;

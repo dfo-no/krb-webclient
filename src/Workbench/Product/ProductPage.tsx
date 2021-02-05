@@ -20,7 +20,7 @@ import {
   putProjectThunk
 } from '../../store/reducers/project-reducer';
 import styles from './ProductPage.module.scss';
-import { Utils } from '../../common/Utils';
+import Utils from '../../common/Utils';
 import { Bank } from '../../models/Bank';
 import { AccordionContext } from '../Need/AccordionContext';
 

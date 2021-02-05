@@ -17,7 +17,7 @@ import { RootState } from '../store/rootReducer';
 import { FileDownLoad } from '../models/FileDownLoad';
 import styles from './SpecEditor.module.scss';
 import { Bank } from '../models/Bank';
-import { Utils } from '../common/Utils';
+import Utils from '../common/Utils';
 
 export default function SpecEditor(): ReactElement {
   const { id } = useSelector((state: RootState) => state.selectedBank);
@@ -81,7 +81,7 @@ export default function SpecEditor(): ReactElement {
   };
 
   const needList = (needlist: Need[]) => {
-    const needs = needlist.map((need: Need, index: number) => {
+    const needs = needlist.map((need: Need) => {
       return (
         <>
           <h5>{need.tittel}</h5>

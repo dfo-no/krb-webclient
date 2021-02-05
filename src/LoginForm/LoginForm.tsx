@@ -4,15 +4,15 @@ import { Redirect, RouteComponentProps } from 'react-router-dom';
 import { Form, Button, Container, Card } from 'react-bootstrap';
 import css from './LoginForm.module.scss';
 
-import { fakeAuth } from '../authentication/AuthenticationHandler';
+import fakeAuth from '../authentication/AuthenticationHandler';
 
-function LoginForm(props: RouteComponentProps): ReactElement {
+function LoginForm({ location }: RouteComponentProps): ReactElement {
   const [redirectToReferrer, setRedirectToReferrer] = useState(false);
 
-  const { from } = (props.location.state as any) || { from: { pathname: '/' } };
+  const { from } = (location.state as any) || { from: { pathname: '/' } };
   const { register, handleSubmit, errors } = useForm();
 
-  const onSubmit = (post: { username: string; password: string }) => {
+  const onSubmit = () => {
     fakeAuth.authenticate(() => {
       setRedirectToReferrer(true);
     });

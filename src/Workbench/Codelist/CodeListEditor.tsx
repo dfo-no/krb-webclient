@@ -17,7 +17,7 @@ import {
   editCodelist,
   putProjectThunk
 } from '../../store/reducers/project-reducer';
-import { Utils } from '../../common/Utils';
+import Utils from '../../common/Utils';
 import { Codelist } from '../../models/Codelist';
 import { Bank } from '../../models/Bank';
 import { AccordionContext } from '../Need/AccordionContext';
@@ -148,7 +148,7 @@ export default function CodeListEditor(): ReactElement {
   const codeList = (codelist: Code[]) => {
     const codes = codelist.map((element: Code, index) => {
       return (
-        <Card key={index}>
+        <Card key={element.id}>
           <Accordion.Toggle as={Card.Header} eventKey={index.toString()}>
             <h6>{element.title}</h6>
             <p>{element.description}</p>

@@ -1,4 +1,4 @@
-import { ReactElement, useState } from 'react';
+import React, { ReactElement, useState } from 'react';
 import {
   Row,
   Col,
@@ -24,7 +24,7 @@ import {
 import styles from './RequirementPage.module.scss';
 import { Requirement } from '../../models/Requirement';
 import { Need } from '../../models/Need';
-import { Utils } from '../../common/Utils';
+import Utils from '../../common/Utils';
 import { Bank } from '../../models/Bank';
 
 interface RouteParams {
@@ -35,8 +35,6 @@ export default function RequirementPage(): ReactElement {
   const dispatch = useDispatch();
   const { id } = useSelector((state: RootState) => state.selectedProject);
   const { list } = useSelector((state: RootState) => state.project);
-  const { needId } = useSelector((state: RootState) => state.selectNeed);
-  const { projectId } = useParams<RouteParams>();
   const [selectedNeed, setSelectedNeed] = useState<Need | undefined>(undefined);
   const [requirementList, setRequirementsList] = useState<Requirement[]>([]);
   const [title, setTitle] = useState('');
@@ -124,7 +122,7 @@ export default function RequirementPage(): ReactElement {
     setRequirementsList(need.requirements);
   };
 
-  const requirements = (requirements: Requirement[]) => {
+  const requirements = (reqs: Requirement[]) => {
     if (!selectedNeed) {
       return (
         <p>
@@ -132,10 +130,10 @@ export default function RequirementPage(): ReactElement {
         </p>
       );
     }
-    if (requirements.length > 0) {
-      const jsx = requirements.map((element: Requirement, index) => {
+    if (reqs.length > 0) {
+      const jsx = reqs.map((element: Requirement, index) => {
         return (
-          <Card key={index}>
+          <Card key={element.id}>
             <Card.Header>
               <Accordion.Toggle
                 as={Button}
@@ -235,8 +233,8 @@ export default function RequirementPage(): ReactElement {
     );
   };
 
-  const needList = (needs: Need[]) => {
-    return needs.map((element: Need) => {
+  const needList = (needsList: Need[]) => {
+    return needsList.map((element: Need) => {
       return (
         <Nav.Item key={element.id} className={`${styles.sidebar__item}`}>
           <Nav.Link
@@ -254,18 +252,16 @@ export default function RequirementPage(): ReactElement {
   };
 
   return (
-    <>
-      <Row>
-        <Col className="col-2 p-0">
-          <Nav className={`sidebar flex-column vh-100 p-0 ${styles.sidebar}`}>
-            {needList(needs)}
-          </Nav>
-        </Col>
-        <Col>
-          {header(selectedNeed)}
-          {requirements(requirementList)}
-        </Col>
-      </Row>
-    </>
+    <Row>
+      <Col className="col-2 p-0">
+        <Nav className={`sidebar flex-column vh-100 p-0 ${styles.sidebar}`}>
+          {needList(needs)}
+        </Nav>
+      </Col>
+      <Col>
+        {header(selectedNeed)}
+        {requirements(requirementList)}
+      </Col>
+    </Row>
   );
 }

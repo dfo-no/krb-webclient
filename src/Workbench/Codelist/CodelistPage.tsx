@@ -1,6 +1,6 @@
 import React, { ReactElement, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link, useParams } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { Button, Card, Col, Form, ListGroup, Row } from 'react-bootstrap';
 import { useForm } from 'react-hook-form';
 
@@ -12,7 +12,7 @@ import {
   putProjectThunk
 } from '../../store/reducers/project-reducer';
 import { selectCodeList } from '../../store/reducers/selectedCodelist-reducer';
-import { Utils } from '../../common/Utils';
+import Utils from '../../common/Utils';
 import { Bank } from '../../models/Bank';
 
 type FormValues = {
@@ -34,6 +34,10 @@ export default function CodelistPage(): ReactElement {
     list.find((bank: Bank) => bank.id === id)
   );
 
+  const setSelectedKodeliste = (id: number) => () => {
+    dispatch(selectCodeList(id));
+  };
+
   const renderCodelist = (codelist: Codelist[]) => {
     codelist
       .slice()
@@ -54,9 +58,6 @@ export default function CodelistPage(): ReactElement {
     return <ListGroup className={styles.codeList}>{codes}</ListGroup>;
   };
 
-  const setSelectedKodeliste = (id: number) => () => {
-    dispatch(selectCodeList(id));
-  };
   const handleShowEditor = () => {
     setShowEdior(true);
   };
