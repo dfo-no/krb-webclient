@@ -83,7 +83,11 @@ function ProjectPage(): ReactElement {
     setEditMode(false);
   };
 
-  const handleCommentChange = (event: any) => {
+  const handleCommentChange = (
+    event: React.ChangeEvent<
+      HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
+    >
+  ) => {
     setComment(event.target.value);
   };
 
@@ -182,7 +186,7 @@ function ProjectPage(): ReactElement {
                 className="input-sm"
                 name="title"
                 placeholder="What did you change?"
-                onChange={handleCommentChange}
+                onChange={(e) => handleCommentChange(e)}
               />
             </InputGroup>
             <Button onClick={handlePublishProject()}>Publish</Button>
