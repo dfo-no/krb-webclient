@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/label-has-associated-control */
 import React, { ReactElement, useContext, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
@@ -53,10 +54,18 @@ export default function CodeListEditor(): ReactElement {
     setShowEdior(true);
   };
 
-  const handleTitleChange = (event: any) => {
+  const handleTitleChange = (
+    event: React.ChangeEvent<
+      HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
+    >
+  ) => {
     setTitle(event.target.value);
   };
-  const handleDescriptionChange = (event: any) => {
+  const handleDescriptionChange = (
+    event: React.ChangeEvent<
+      HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
+    >
+  ) => {
     setDescription(event.target.value);
   };
 
@@ -100,8 +109,8 @@ export default function CodeListEditor(): ReactElement {
     setEditMode(false);
   };
 
-  function renderHeaderSection(editmode: boolean) {
-    if (editmode) {
+  function renderHeaderSection(edit: boolean) {
+    if (edit) {
       return (
         /* TODO: finne ut hvor sannsynlig det er at bruker skriver
          mange steder på samme tid, og derfor om handleTitleChange,
@@ -161,7 +170,7 @@ export default function CodeListEditor(): ReactElement {
                   <FormControl
                     name="title"
                     defaultValue={element.title}
-                    onChange={handleTitleChange}
+                    onChange={(e) => handleTitleChange(e)}
                   />
                 </InputGroup>
                 <label htmlFor="title">Requirement text</label>
@@ -169,7 +178,7 @@ export default function CodeListEditor(): ReactElement {
                   <FormControl
                     name="description"
                     defaultValue={element.description}
-                    onChange={handleDescriptionChange}
+                    onChange={(e) => handleDescriptionChange(e)}
                   />
                 </InputGroup>
                 <Button onClick={editCodeElement(element.id)}>Save</Button>
@@ -192,14 +201,14 @@ export default function CodeListEditor(): ReactElement {
               <FormControl
                 className="input-sm"
                 name="title"
-                onChange={handleTitleChange}
+                onChange={(e) => handleTitleChange(e)}
               />
             </InputGroup>
             <label htmlFor="description">Description</label>
             <InputGroup>
               <FormControl
                 name="description"
-                onChange={handleDescriptionChange}
+                onChange={(e) => handleDescriptionChange(e)}
               />
             </InputGroup>
             <Button className="mt-2" onClick={addNewCode}>

@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/label-has-associated-control */
 import React, { ReactElement, useContext, useState } from 'react';
 import {
   Button,

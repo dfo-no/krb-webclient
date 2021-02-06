@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-props-no-spreading */
 import React, { ReactElement } from 'react';
 import { Route, Switch } from 'react-router-dom';
 
