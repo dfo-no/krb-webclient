@@ -20,8 +20,12 @@ function NeedPage(): ReactElement {
   }
   const project = Utils.ensure(list.find((banks) => banks.id === id));
 
-  const onOpenClose = (e = '') => {
-    setActiveKey(e);
+  const onOpenClose = (e: string | null) => {
+    if (e) {
+      setActiveKey(e);
+    } else {
+      setActiveKey('');
+    }
   };
 
   const renderNeeds = (needList: Need[]) => {

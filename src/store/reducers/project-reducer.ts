@@ -389,27 +389,27 @@ const projectSlice = createSlice({
     }
   },
   extraReducers: (builder) => {
-    builder.addCase(getProjectThunk.fulfilled, (state, { payload }) => {});
-    builder.addCase(getProjectThunk.pending, (state, { payload }) => {});
-    builder.addCase(getProjectThunk.rejected, (state, { payload }) => {});
-    builder.addCase(getProjectsThunk.pending, (state, { payload }) => {
+    builder.addCase(getProjectThunk.fulfilled, () => {});
+    builder.addCase(getProjectThunk.pending, () => {});
+    builder.addCase(getProjectThunk.rejected, () => {});
+    builder.addCase(getProjectsThunk.pending, (state) => {
       state.status = 'pending';
     });
     builder.addCase(getProjectsThunk.fulfilled, (state, { payload }) => {
       state.list = payload;
       state.status = 'fulfilled';
     });
-    builder.addCase(getProjectsThunk.rejected, (state, { payload }) => {
+    builder.addCase(getProjectsThunk.rejected, (state) => {
       state.status = 'rejected';
     });
     builder.addCase(postProjectThunk.fulfilled, (state, { payload }) => {
       state.list.push(payload);
       state.status = 'fulfilled';
     });
-    builder.addCase(postProjectThunk.pending, (state, { payload }) => {
+    builder.addCase(postProjectThunk.pending, (state) => {
       state.status = 'pending';
     });
-    builder.addCase(postProjectThunk.rejected, (state, { payload }) => {
+    builder.addCase(postProjectThunk.rejected, (state) => {
       state.status = 'rejected';
     });
     builder.addCase(putProjectThunk.fulfilled, (state, { payload }) => {
@@ -419,19 +419,19 @@ const projectSlice = createSlice({
       );
       state.list[projectIndex] = payload;
     });
-    builder.addCase(putProjectThunk.pending, (state, { payload }) => {
+    builder.addCase(putProjectThunk.pending, (state) => {
       state.status = 'pending';
     });
-    builder.addCase(putProjectThunk.rejected, (state, { payload }) => {
+    builder.addCase(putProjectThunk.rejected, (state) => {
       state.status = 'rejected';
     });
-    builder.addCase(deleteProjectThunk.fulfilled, (state, { payload }) => {
+    builder.addCase(deleteProjectThunk.fulfilled, (state) => {
       state.status = 'fulfilled';
     });
-    builder.addCase(deleteProjectThunk.pending, (state, { payload }) => {
+    builder.addCase(deleteProjectThunk.pending, (state) => {
       state.status = 'pending';
     });
-    builder.addCase(deleteProjectThunk.rejected, (state, { payload }) => {
+    builder.addCase(deleteProjectThunk.rejected, (state) => {
       state.status = 'rejected';
     });
   }
