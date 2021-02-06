@@ -34,8 +34,8 @@ export default function CodelistPage(): ReactElement {
     list.find((bank: Bank) => bank.id === id)
   );
 
-  const setSelectedKodeliste = (id: number) => () => {
-    dispatch(selectCodeList(id));
+  const setSelectedKodeliste = (selectedCodelistId: number) => () => {
+    dispatch(selectCodeList(selectedCodelistId));
   };
 
   const renderCodelist = (codelist: Codelist[]) => {
