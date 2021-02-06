@@ -14,7 +14,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { useForm } from 'react-hook-form';
 import { Product } from '../../models/Product';
-import { RootState } from '../../store/rootReducer';
+import { RootState } from '../../store/store';
 import {
   addProduct,
   editProduct,

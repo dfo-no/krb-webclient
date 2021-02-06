@@ -13,7 +13,7 @@ import {
 } from 'react-bootstrap';
 
 import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from '../../store/rootReducer';
+import { RootState } from '../../store/store';
 import {
   editRequirementInNeed,
   putProjectThunk,

@@ -14,7 +14,7 @@ import {
 import dayjs from 'dayjs';
 
 import { useForm } from 'react-hook-form';
-import { RootState } from '../../store/rootReducer';
+import { RootState } from '../../store/store';
 import { Publication } from '../../models/Publication';
 import {
   editProject,

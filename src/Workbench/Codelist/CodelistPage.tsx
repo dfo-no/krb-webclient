@@ -5,7 +5,7 @@ import { Button, Card, Col, Form, ListGroup, Row } from 'react-bootstrap';
 import { useForm } from 'react-hook-form';
 
 import styles from './CodelistPage.module.scss';
-import { RootState } from '../../store/rootReducer';
+import { RootState } from '../../store/store';
 import { Codelist } from '../../models/Codelist';
 import {
   addCodelist,

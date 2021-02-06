@@ -14,7 +14,7 @@ import { useSelector } from 'react-redux';
 import { useForm } from 'react-hook-form';
 import { Requirement } from '../models/Requirement';
 import { Need } from '../models/Need';
-import { RootState } from '../store/rootReducer';
+import { RootState } from '../store/store';
 import { FileDownLoad } from '../models/FileDownLoad';
 import styles from './SpecEditor.module.scss';
 import { Bank } from '../models/Bank';

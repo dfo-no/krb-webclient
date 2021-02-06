@@ -4,7 +4,7 @@ import { Accordion, Button, Card } from 'react-bootstrap';
 import { BsPlusSquare } from 'react-icons/bs';
 import { Need } from '../../models/Need';
 import css from './NeedPage.module.scss';
-import { RootState } from '../../store/rootReducer';
+import { RootState } from '../../store/store';
 import Utils from '../../common/Utils';
 import NewNeedForm from './NewNeedForm';
 import { AccordionContext } from './AccordionContext';

@@ -5,8 +5,8 @@ import { Link } from 'react-router-dom';
 
 import SearchBar from '../SearchBar/SearchBar';
 import FilteredList from './Components/FilteredList';
-import { RootState } from '../store/rootReducer';
 import { getBanks } from '../store/reducers/bank-reducer';
+import { RootState } from '../store/store';
 
 export default function HomePage(): ReactElement {
   const dispatch = useDispatch();

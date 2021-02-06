@@ -4,8 +4,7 @@ import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import Utils from '../common/Utils';
 import { Bank } from '../models/Bank';
-
-import { RootState } from '../store/rootReducer';
+import { RootState } from '../store/store';
 
 export default function BankPage(): ReactElement {
   const { id } = useSelector((state: RootState) => state.selectedBank);

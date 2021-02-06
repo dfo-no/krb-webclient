@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import Utils from '../../common/Utils';
 import { Need } from '../../models/Need';
 import { addNeed, putProjectThunk } from '../../store/reducers/project-reducer';
-import { RootState } from '../../store/rootReducer';
+import { RootState } from '../../store/store';
 import { AccordionContext } from './AccordionContext';
 
 type FormValues = {

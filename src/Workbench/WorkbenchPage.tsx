@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { AiFillDelete } from 'react-icons/ai';
 import { useForm } from 'react-hook-form';
 import css from './WorkbenchPage.module.scss';
-import { RootState } from '../store/rootReducer';
+import { RootState } from '../store/store';
 import { Bank } from '../models/Bank';
 import {
   deleteProjectThunk,

@@ -9,8 +9,9 @@ import { Need } from '../../models/Need';
 import { Product } from '../../models/Product';
 import { Publication } from '../../models/Publication';
 import { Requirement } from '../../models/Requirement';
-import { RootState } from '../rootReducer';
-import { AppDispatch } from '../store';
+
+// eslint-disable-next-line import/no-cycle
+import { AppDispatch, RootState } from '../store';
 
 interface ProjectState {
   list: Bank[];
@@ -57,10 +58,6 @@ export const putProjectThunk = createAsyncThunk<
     state: RootState;
   }
 >('putProjectThunk', async (projectId: number, thunkApi) => {
-  /* We cannot save project param directly because it is a reference to the project
-     before we updated it. We must fetch the project from the store, where it *is* updated.
-     Therefore we just send in the id of the project, as sending in the reference would be useless.
-  */
   const project = Utils.ensure(
     thunkApi
       .getState()

@@ -10,7 +10,7 @@ import {
 } from 'react-bootstrap';
 
 import styles from './CodeListEditor.module.scss';
-import { RootState } from '../../store/rootReducer';
+import { RootState } from '../../store/store';
 import { Code } from '../../models/Code';
 import {
   addCodeToCodelist,

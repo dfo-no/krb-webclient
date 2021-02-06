@@ -12,7 +12,7 @@ import ProjectPage from './Project/ProjectPage';
 import SideBar from './SideBar/SideBar';
 import WorkbenchPage from './WorkbenchPage';
 import { getProjectsThunk } from '../store/reducers/project-reducer';
-import { RootState } from '../store/rootReducer';
+import { RootState } from '../store/store';
 import { selectProject } from '../store/reducers/selectedProject-reducer';
 
 interface RouteParams {
