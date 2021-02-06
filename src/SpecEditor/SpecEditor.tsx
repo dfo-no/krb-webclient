@@ -43,11 +43,13 @@ export default function SpecEditor(): ReactElement {
       // so we need to ensure data actually exist.
       if (need.tittel in data && data[need.tittel] !== false) {
         let reqIndexes: string[];
-        need.requirements.length <= 1
-          ? (reqIndexes = [data[need.tittel]])
-          : (reqIndexes = data[need.tittel]);
+        if (need.requirements.length <= 1) {
+          reqIndexes = [data[need.tittel]];
+        } else {
+          reqIndexes = data[need.tittel];
+        }
         const newRequirementList: Requirement[] = [];
-        for (let i = 0; i < reqIndexes.length; i++) {
+        for (let i = 0; i < reqIndexes.length; i += 1) {
           newRequirementList.push(need.requirements[Number(reqIndexes[i])]);
         }
         const updatedBehov = {
@@ -66,23 +68,27 @@ export default function SpecEditor(): ReactElement {
   const onDownLoad = () => {
     const bank = { ...selectedBank };
     bank.needs = selectedNeedlist;
-    const newFile: FileDownLoad = {
+    /* const newFile: FileDownLoad = {
       name,
       bank
     };
-    const fileDownload = require('js-file-download');
+     const fileDownload = require('js-file-download');
     fileDownload(
       JSON.stringify(newFile),
       `${name}-${selectedBank.publishedDate}.json`
-    );
+    ); */
   };
 
-  const handleNameChange = (event: any) => {
+  const handleNameChange = (
+    event: React.ChangeEvent<
+      HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
+    >
+  ) => {
     setName(event.target.value);
   };
 
   const needList = (needlist: Need[]) => {
-    const needs = needlist.map((need: Need) => {
+    const needsJsx = needlist.map((need: Need) => {
       return (
         <>
           <h5>{need.tittel}</h5>
@@ -104,7 +110,7 @@ export default function SpecEditor(): ReactElement {
     });
     return (
       <Card className="bg-light">
-        <Card.Body>{needs}</Card.Body>
+        <Card.Body>{needsJsx}</Card.Body>
       </Card>
     );
   };
@@ -115,7 +121,7 @@ export default function SpecEditor(): ReactElement {
         <Col>
           <label htmlFor="title">Name</label>
           <InputGroup className="mb-5">
-            <FormControl name="name" onChange={handleNameChange} />
+            <FormControl name="name" onChange={(e) => handleNameChange(e)} />
           </InputGroup>
         </Col>
         <Col>
@@ -126,7 +132,7 @@ export default function SpecEditor(): ReactElement {
       </Row>
       <Row className="m-4">
         <Col>
-          <form onSubmit={handleSubmit(onSubmit)}>
+          <form onSubmit={handleSubmit((e) => onSubmit(e))}>
             {needList(needs)}
             <Button type="submit" className="mt-4">
               Select
