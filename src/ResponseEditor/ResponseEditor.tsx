@@ -24,9 +24,9 @@ export default function ResponseEditor(): ReactElement {
   const [selectedNeedlist, setSelectedNeedList] = useState<Need[]>([]);
   const [name, setName] = useState('');
 
-  const onLoad = async (e: any) => {
+  const onLoad = async (e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
-    const reader = new FileReader();
+    /* const reader = new FileReader();
     reader.onload = async (e: any) => {
       const text = e.target.result;
       const parsedText = JSON.parse(text);
@@ -34,7 +34,7 @@ export default function ResponseEditor(): ReactElement {
       setUploadedBank(file.bank as Bank);
     };
     reader.readAsText(e.target.files[0]);
-    setFileUploaded(true);
+    setFileUploaded(true); */
   };
 
   const handleNameChange = (event: any) => {
@@ -46,7 +46,7 @@ export default function ResponseEditor(): ReactElement {
       <Col>
         <h4>Upload Spesification to create a response</h4>
         <InputGroup>
-          <input type="file" onChange={onLoad} />
+          <input type="file" onChange={(e) => onLoad(e)} />
         </InputGroup>
       </Col>
     );
@@ -63,9 +63,11 @@ export default function ResponseEditor(): ReactElement {
     needs.forEach((need: Need) => {
       if (need.tittel in data && data[need.tittel] !== false) {
         let reqIndexes: string[];
-        need.requirements.length <= 1
-          ? (reqIndexes = [data[need.tittel]])
-          : (reqIndexes = data[need.tittel]);
+        if (need.requirements.length <= 1) {
+          reqIndexes = [data[need.tittel]];
+        } else {
+          reqIndexes = data[need.tittel];
+        }
         const newRequirementList: Requirement[] = [];
         for (let i = 0; i < reqIndexes.length; i += 1) {
           newRequirementList.push(need.requirements[Number(reqIndexes[i])]);
@@ -84,7 +86,8 @@ export default function ResponseEditor(): ReactElement {
   };
 
   const onDownLoad = () => {
-    const bank = { ...uploadedBank };
+    // TODO: fix this with typings
+    /* const bank = { ...uploadedBank };
     bank.needs = selectedNeedlist;
     const newFile: FileDownLoad = {
       name,
@@ -94,11 +97,11 @@ export default function ResponseEditor(): ReactElement {
     fileDownload(
       JSON.stringify(newFile),
       `${name}-${uploadedBank.publishedDate}.json`
-    );
+    ); */
   };
 
   const needList = (needlist: Need[]) => {
-    const needs = needlist.map((need: Need) => {
+    const needsJsx = needlist.map((need: Need) => {
       return (
         <>
           <h5>{need.tittel}</h5>
@@ -121,7 +124,7 @@ export default function ResponseEditor(): ReactElement {
     });
     return (
       <Card className="bg-light">
-        <Card.Body> {needs}</Card.Body>
+        <Card.Body> {needsJsx}</Card.Body>
       </Card>
     );
   };
@@ -132,11 +135,14 @@ export default function ResponseEditor(): ReactElement {
         <Col>
           <label htmlFor="title">Name</label>
           <InputGroup className="mb-3">
-            <FormControl name="name" onChange={handleNameChange} />
+            <FormControl name="name" onChange={(e) => handleNameChange(e)} />
           </InputGroup>
         </Col>
         <Col>
-          <Button className={styles.downLoadButton} onClick={onDownLoad}>
+          <Button
+            className={styles.downLoadButton}
+            onClick={() => onDownLoad()}
+          >
             Download
           </Button>
         </Col>
