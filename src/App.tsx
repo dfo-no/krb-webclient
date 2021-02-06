@@ -13,7 +13,7 @@ import ResponseEditor from './ResponseEditor/ResponseEditor';
 import SpecEditor from './SpecEditor/SpecEditor';
 import Evaluation from './Evaluation/Evaluation';
 
-function App(props: any): ReactElement {
+function App(): ReactElement {
   return (
     <div className={styles.App}>
       <Header />
@@ -25,22 +25,10 @@ function App(props: any): ReactElement {
           <BankPage />
         </Route>
         <Route exact path="/login" component={LoginForm} />
-        <ProtectedRoute
-          path="/workbench"
-          component={WorkbenchModule}
-          {...props}
-        />
-        <ProtectedRoute
-          path="/speceditor/:id"
-          component={SpecEditor}
-          {...props}
-        />
-        <ProtectedRoute
-          path="/responseeditor"
-          component={ResponseEditor}
-          {...props}
-        />
-        <ProtectedRoute path="/evaluation" component={Evaluation} {...props} />
+        <ProtectedRoute path="/workbench" component={WorkbenchModule} />
+        <ProtectedRoute path="/speceditor/:id" component={SpecEditor} />
+        <ProtectedRoute path="/responseeditor" component={ResponseEditor} />
+        <ProtectedRoute path="/evaluation" component={Evaluation} />
       </Switch>
     </div>
   );

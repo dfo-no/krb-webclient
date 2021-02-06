@@ -1,3 +1,5 @@
+/* eslint-disable react/jsx-props-no-spreading */
+/* eslint-disable react/prop-types */
 import React from 'react';
 import { Redirect, Route } from 'react-router-dom';
 import fakeAuth from './AuthenticationHandler';
