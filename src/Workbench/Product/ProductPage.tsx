@@ -41,10 +41,18 @@ export default function ProductPage(): ReactElement {
   const { register, handleSubmit, errors } = useForm<Product>();
   const [validated] = useState(false);
 
-  const handleTitleChange = (event: any) => {
+  const handleTitleChange = (
+    event: React.ChangeEvent<
+      HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
+    >
+  ) => {
     setTitle(event.target.value);
   };
-  const handleDescriptionChange = (event: any) => {
+  const handleDescriptionChange = (
+    event: React.ChangeEvent<
+      HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
+    >
+  ) => {
     setDescription(event.target.value);
   };
 
@@ -160,7 +168,7 @@ export default function ProductPage(): ReactElement {
                 <FormControl
                   name="title"
                   defaultValue={productList[index].title}
-                  onChange={handleTitleChange}
+                  onChange={(e) => handleTitleChange(e)}
                 />
               </InputGroup>
               <label htmlFor="description">Description</label>
@@ -168,7 +176,7 @@ export default function ProductPage(): ReactElement {
                 <FormControl
                   name="beskrivelse"
                   defaultValue={productList[index].description}
-                  onChange={handleDescriptionChange}
+                  onChange={(e) => handleDescriptionChange(e)}
                 />
               </InputGroup>
               <Button
