@@ -13,11 +13,8 @@ import {
 } from 'react-bootstrap';
 
 import { useDispatch, useSelector } from 'react-redux';
-import { useParams } from 'react-router-dom';
 import { RootState } from '../../store/rootReducer';
 import {
-  addRequirement,
-  editRequirement,
   editRequirementInNeed,
   putProjectThunk,
   setRequirementListToNeed
@@ -27,10 +24,6 @@ import { Requirement } from '../../models/Requirement';
 import { Need } from '../../models/Need';
 import Utils from '../../common/Utils';
 import { Bank } from '../../models/Bank';
-
-interface RouteParams {
-  projectId: string;
-}
 
 export default function RequirementPage(): ReactElement {
   const dispatch = useDispatch();
@@ -57,11 +50,19 @@ export default function RequirementPage(): ReactElement {
 
   const { needs } = selectedProject;
 
-  const handleTitleChange = (event: any) => {
+  const handleTitleChange = (
+    event: React.ChangeEvent<
+      HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
+    >
+  ) => {
     setTitle(event.target.value);
   };
 
-  const handleDescriptionChange = (event: any) => {
+  const handleDescriptionChange = (
+    event: React.ChangeEvent<
+      HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
+    >
+  ) => {
     setDescription(event.target.value);
   };
 
@@ -152,7 +153,7 @@ export default function RequirementPage(): ReactElement {
                     <FormControl
                       name="title"
                       defaultValue={element.title}
-                      onChange={handleTitleChange}
+                      onChange={(e) => handleTitleChange(e)}
                     />
                   </InputGroup>
                   <label htmlFor="title">Requirement text</label>
@@ -160,7 +161,7 @@ export default function RequirementPage(): ReactElement {
                     <FormControl
                       name="description"
                       defaultValue={element.description}
-                      onChange={handleDescriptionChange}
+                      onChange={(e) => handleDescriptionChange(e)}
                     />
                   </InputGroup>
                   <Button
@@ -211,6 +212,7 @@ export default function RequirementPage(): ReactElement {
         </Card>
       );
     }
+    return <></>;
   };
 
   const header = (need: Need | undefined) => {
