@@ -30,7 +30,7 @@ const getAxiosInstance = () => {
   return instance;
 };
 
-const get = <T = any, R = AxiosResponse<T>>(
+const get = <T, R = AxiosResponse<T>>(
   url: string,
   config?: AxiosRequestConfig
 ): Promise<R> => {
@@ -43,9 +43,9 @@ const get = <T = any, R = AxiosResponse<T>>(
   });
 };
 
-const post = <T = any, R = AxiosResponse<T>>(
+const post = <T, R = AxiosResponse<T>>(
   url: string,
-  data?: any,
+  data?: T,
   config?: AxiosRequestConfig
 ): Promise<R> => {
   return getAxiosInstance().post<T, R>(url, data, {
@@ -57,9 +57,9 @@ const post = <T = any, R = AxiosResponse<T>>(
   });
 };
 
-const put = <T = any, R = AxiosResponse<T>>(
+const put = <T, R = AxiosResponse<T>>(
   url: string,
-  data?: any,
+  data?: T,
   config?: AxiosRequestConfig
 ): Promise<R> => {
   return getAxiosInstance().put<T, R>(url, data, {
@@ -71,7 +71,7 @@ const put = <T = any, R = AxiosResponse<T>>(
   });
 };
 
-const del = <T = any, R = AxiosResponse<T>>(
+const del = <T, R = AxiosResponse<T>>(
   url: string,
   config?: AxiosRequestConfig
 ): Promise<R> => {
