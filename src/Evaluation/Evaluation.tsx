@@ -9,20 +9,20 @@ export default function Evaluation(): ReactElement {
   const [uploadedBank, setUploadedBank] = useState<Bank | null>(null);
   const [responses, setResponses] = useState<FileDownLoad[]>([]);
 
-  const onLoad = async (e: any) => {
+  const onLoad = async (e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
-    const reader = new FileReader();
-    reader.onload = async (e: any) => {
+    /* const reader = new FileReader();
+    reader.onload = async (ev) => {
       const text = e.target.result;
       const parsedText = JSON.parse(text);
       const file = parsedText as FileDownLoad;
       setUploadedBank(file.bank as Bank);
     };
     reader.readAsText(e.target.files[0]);
-    setBankFileUploaded(true);
+    setBankFileUploaded(true); */
   };
 
-  const onMultipleLoad = async (e: any) => {
+  /* const onMultipleLoad = async (e: any) => {
     e.preventDefault();
     const reader = new FileReader();
     reader.onload = async (e: any) => {
@@ -36,14 +36,14 @@ export default function Evaluation(): ReactElement {
     Array.from(e.target.files).forEach((element: any) => {
       reader.readAsText(element);
     });
-  };
+  }; */
 
   if (!bankFileUploaded) {
     return (
       <Col>
         <h4>Upload a spesification to start the evaluation</h4>
         <InputGroup>
-          <input type="file" onChange={onLoad} />
+          <input type="file" onChange={(e) => onLoad(e)} />
         </InputGroup>
       </Col>
     );
@@ -53,7 +53,7 @@ export default function Evaluation(): ReactElement {
     return <p>The spec uploaded does not have the correct format</p>;
   }
 
-  const onDownLoad = () => {
+  /* const onDownLoad = () => {
     const newFile = {
       spec: uploadedBank,
       responses
@@ -63,7 +63,7 @@ export default function Evaluation(): ReactElement {
       JSON.stringify(newFile),
       `${uploadedBank.title}-evaluations.json`
     );
-  };
+  }; */
 
   const calculateScore = (bank: Bank) => {
     let score = 0;
@@ -75,8 +75,8 @@ export default function Evaluation(): ReactElement {
 
   const maxScore: number = calculateScore(uploadedBank);
 
-  const evaluations = (responses: FileDownLoad[]) => {
-    const sortedResponses = [...responses].sort(
+  const evaluations = (fileDownload: FileDownLoad[]) => {
+    const sortedResponses = [...fileDownload].sort(
       (a, b) => calculateScore(b.bank) - calculateScore(a.bank)
     );
     const list = sortedResponses.map((response: FileDownLoad) => {
@@ -121,11 +121,13 @@ export default function Evaluation(): ReactElement {
         <Col>
           <h6>Upload Responses</h6>
           <InputGroup className="mb-5">
-            <input type="file" onChange={onMultipleLoad} />
+            <p>onMultipleLoad</p>
+            {/* <input type="file" onChange={onMultipleLoad} /> */}
           </InputGroup>
         </Col>
         <Col>
-          <Button onClick={onDownLoad}>Download</Button>
+          <p>Ondownload</p>
+          {/* <Button onClick={onDownLoad}>Download</Button> */}
         </Col>
       </Row>
       <Row className="m-4">
