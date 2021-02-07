@@ -12,6 +12,7 @@ import {
 import { useSelector } from 'react-redux';
 
 import { useForm } from 'react-hook-form';
+import fileDownload from 'js-file-download';
 import { Requirement } from '../models/Requirement';
 import { Need } from '../models/Need';
 import { RootState } from '../store/store';
@@ -68,15 +69,14 @@ export default function SpecEditor(): ReactElement {
   const onDownLoad = () => {
     const bank = { ...selectedBank };
     bank.needs = selectedNeedlist;
-    /* const newFile: FileDownLoad = {
+    const newFile: FileDownLoad = {
       name,
       bank
     };
-     const fileDownload = require('js-file-download');
     fileDownload(
       JSON.stringify(newFile),
       `${name}-${selectedBank.publishedDate}.json`
-    ); */
+    );
   };
 
   const handleNameChange = (
