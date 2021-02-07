@@ -1,6 +1,14 @@
 import React, { ReactElement, useState } from 'react';
-import { Container, Row, Button, Col, InputGroup, Card } from 'react-bootstrap';
-
+import {
+  Container,
+  Row,
+  Button,
+  Col,
+  InputGroup,
+  Card,
+  Form
+} from 'react-bootstrap';
+import fileDownload from 'js-file-download';
 import { Bank } from '../models/Bank';
 import { FileDownLoad } from '../models/FileDownLoad';
 
@@ -9,43 +17,39 @@ export default function Evaluation(): ReactElement {
   const [uploadedBank, setUploadedBank] = useState<Bank | null>(null);
   const [responses, setResponses] = useState<FileDownLoad[]>([]);
 
-  const onLoad = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    e.preventDefault();
-    /* const reader = new FileReader();
-    reader.onload = async (ev) => {
-      const text = e.target.result;
-      const parsedText = JSON.parse(text);
-      const file = parsedText as FileDownLoad;
-      setUploadedBank(file.bank as Bank);
-    };
-    reader.readAsText(e.target.files[0]);
-    setBankFileUploaded(true); */
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const files = event.target.files as FileList;
+    for (let index = 0; index < files.length; index += 1) {
+      const file = files[index];
+      const reader = new FileReader();
+      reader.onload = (evt) => {
+        if (evt.target?.result) {
+          const typeFileDownload = JSON.parse(
+            evt.target.result.toString()
+          ) as FileDownLoad;
+          setUploadedBank(typeFileDownload.bank);
+        }
+      };
+      reader.readAsText(file);
+      setBankFileUploaded(true);
+    }
   };
-
-  /* const onMultipleLoad = async (e: any) => {
-    e.preventDefault();
-    const reader = new FileReader();
-    reader.onload = async (e: any) => {
-      const text = e.target.result;
-      const parsedText = JSON.parse(text);
-      const file = parsedText as FileDownLoad;
-      const responseArray = [...responses];
-      responseArray.push(file);
-      setResponses(responseArray);
-    };
-    Array.from(e.target.files).forEach((element: any) => {
-      reader.readAsText(element);
-    });
-  }; */
 
   if (!bankFileUploaded) {
     return (
-      <Col>
-        <h4>Upload a spesification to start the evaluation</h4>
-        <InputGroup>
-          <input type="file" onChange={(e) => onLoad(e)} />
-        </InputGroup>
-      </Col>
+      <Form>
+        <Col>
+          <h4>Upload a spesification to start the evaluation</h4>
+          <InputGroup>
+            <Form.File.Input
+              multiple
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                handleChange(e)
+              }
+            />
+          </InputGroup>
+        </Col>
+      </Form>
     );
   }
 
@@ -53,17 +57,16 @@ export default function Evaluation(): ReactElement {
     return <p>The spec uploaded does not have the correct format</p>;
   }
 
-  /* const onDownLoad = () => {
+  const onDownLoad = () => {
     const newFile = {
       spec: uploadedBank,
       responses
     };
-    const fileDownload = require('js-file-download');
     fileDownload(
       JSON.stringify(newFile),
       `${uploadedBank.title}-evaluations.json`
     );
-  }; */
+  };
 
   const calculateScore = (bank: Bank) => {
     let score = 0;
@@ -75,8 +78,8 @@ export default function Evaluation(): ReactElement {
 
   const maxScore: number = calculateScore(uploadedBank);
 
-  const evaluations = (fileDownload: FileDownLoad[]) => {
-    const sortedResponses = [...fileDownload].sort(
+  const evaluations = (file: FileDownLoad[]) => {
+    const sortedResponses = [...file].sort(
       (a, b) => calculateScore(b.bank) - calculateScore(a.bank)
     );
     const list = sortedResponses.map((response: FileDownLoad) => {
@@ -121,13 +124,13 @@ export default function Evaluation(): ReactElement {
         <Col>
           <h6>Upload Responses</h6>
           <InputGroup className="mb-5">
-            <p>onMultipleLoad</p>
-            {/* <input type="file" onChange={onMultipleLoad} /> */}
+            {/* TODO: use handleChange here */}
+            <input type="file" multiple onChange={() => {}} />
           </InputGroup>
         </Col>
         <Col>
           <p>Ondownload</p>
-          {/* <Button onClick={onDownLoad}>Download</Button> */}
+          <Button onClick={() => onDownLoad()}>Download</Button>
         </Col>
       </Row>
       <Row className="m-4">
