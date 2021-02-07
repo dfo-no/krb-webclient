@@ -11,6 +11,7 @@ import {
 } from 'react-bootstrap';
 
 import { useForm } from 'react-hook-form';
+import fileDownload from 'js-file-download';
 import { Requirement } from '../models/Requirement';
 import { Need } from '../models/Need';
 import { Bank } from '../models/Bank';
@@ -26,18 +27,25 @@ export default function ResponseEditor(): ReactElement {
 
   const onLoad = async (e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
-    /* const reader = new FileReader();
-    reader.onload = async (e: any) => {
-      const text = e.target.result;
-      const parsedText = JSON.parse(text);
-      const file = parsedText as FileDownLoad;
-      setUploadedBank(file.bank as Bank);
-    };
-    reader.readAsText(e.target.files[0]);
-    setFileUploaded(true); */
+    const reader = new FileReader();
+    if (e.target.files && e.target.files[0]) {
+      reader.onload = async (event) => {
+        if (event.target?.result) {
+          const parsedText = JSON.parse(event.target.result.toString());
+          const file = parsedText as FileDownLoad;
+          setUploadedBank(file.bank as Bank);
+        }
+      };
+      reader.readAsText(e.target.files[0]);
+      setFileUploaded(true);
+    }
   };
 
-  const handleNameChange = (event: any) => {
+  const handleNameChange = (
+    event: React.ChangeEvent<
+      HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
+    >
+  ) => {
     setName(event.target.value);
   };
 
@@ -58,7 +66,7 @@ export default function ResponseEditor(): ReactElement {
 
   const { needs } = uploadedBank;
 
-  const onSubmit = (data: any) => {
+  const onSubmit = (data: { [x: string]: any }) => {
     const selectedNeeds: Need[] = [];
     needs.forEach((need: Need) => {
       if (need.tittel in data && data[need.tittel] !== false) {
@@ -87,17 +95,16 @@ export default function ResponseEditor(): ReactElement {
 
   const onDownLoad = () => {
     // TODO: fix this with typings
-    /* const bank = { ...uploadedBank };
+    const bank = { ...uploadedBank };
     bank.needs = selectedNeedlist;
     const newFile: FileDownLoad = {
       name,
       bank
     };
-    const fileDownload = require('js-file-download');
     fileDownload(
       JSON.stringify(newFile),
       `${name}-${uploadedBank.publishedDate}.json`
-    ); */
+    );
   };
 
   const needList = (needlist: Need[]) => {
@@ -149,7 +156,7 @@ export default function ResponseEditor(): ReactElement {
       </Row>
       <Row className="m-4">
         <Col>
-          <form onSubmit={handleSubmit(onSubmit)}>
+          <form onSubmit={handleSubmit((e) => onSubmit(e))}>
             {needList(needs)}
             <Button type="submit" className="mt-4">
               Select
