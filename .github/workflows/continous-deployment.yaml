@@ -23,8 +23,8 @@ jobs:
         shell: bash
         run: |
           npm install
-          npm lint
-          npm test --coverage
+          npm run-script lint
+          npm run-script test --coverage
 
       - name: Fix CC paths
         working-directory: coverage
