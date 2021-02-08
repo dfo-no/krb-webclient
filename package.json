@@ -47,7 +47,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test",
+    "test": "react-scripts test --env=jsdom",
     "backend": "json-server --port 3001 --watch db/master.json",
     "lint": "tsc --noEmit && eslint src/**/*.ts{,x}",
     "prettier": "prettier  --write \"src/**/*.{js,jsx,ts,tsx,json,css,scss,md}\""

@@ -2,7 +2,7 @@ name: Continuous Deployment
 
 on:
   push:
-    branches: [main]
+    branches: [main, krb-79]
 
 env:
   AZURE_WEBAPP_NAME: Krb-Kravbank-dev-app # set this to your application's name
@@ -22,9 +22,9 @@ jobs:
       - name: Test
         shell: bash
         run: |
-          yarn install
-          yarn lint
-          yarn test --coverage
+          npm install
+          npm lint
+          npm test --coverage
 
       - name: Fix CC paths
         working-directory: coverage
@@ -33,7 +33,7 @@ jobs:
 
       - name: Build for develop
         run: |
-          yarn build
+          npm build
 
       - name: Analyze
         if: github.ref == 'refs/heads/develop'
