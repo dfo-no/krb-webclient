@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/label-has-associated-control */
 import React, { ReactElement, useState } from 'react';
 import {
   Container,
@@ -9,9 +10,10 @@ import {
   Card
 } from 'react-bootstrap';
 
+import { useForm } from 'react-hook-form';
+import fileDownload from 'js-file-download';
 import { Requirement } from '../models/Requirement';
 import { Need } from '../models/Need';
-import { useForm } from 'react-hook-form';
 import { Bank } from '../models/Bank';
 import { FileDownLoad } from '../models/FileDownLoad';
 import styles from './ResponseEditor.module.scss';
@@ -23,32 +25,38 @@ export default function ResponseEditor(): ReactElement {
   const [selectedNeedlist, setSelectedNeedList] = useState<Need[]>([]);
   const [name, setName] = useState('');
 
-  const onLoad = async (e: any) => {
+  const onLoad = async (e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
     const reader = new FileReader();
-    reader.onload = async (e: any) => {
-      const text = e.target.result;
-      let parsedText = JSON.parse(text);
-      let file = parsedText as FileDownLoad;
-      setUploadedBank(file.bank as Bank);
-    };
-    reader.readAsText(e.target.files[0]);
-    setFileUploaded(true);
+    if (e.target.files && e.target.files[0]) {
+      reader.onload = async (event) => {
+        if (event.target?.result) {
+          const parsedText = JSON.parse(event.target.result.toString());
+          const file = parsedText as FileDownLoad;
+          setUploadedBank(file.bank as Bank);
+        }
+      };
+      reader.readAsText(e.target.files[0]);
+      setFileUploaded(true);
+    }
   };
-  const handleNameChange = (event: any) => {
+
+  const handleNameChange = (
+    event: React.ChangeEvent<
+      HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
+    >
+  ) => {
     setName(event.target.value);
   };
 
   if (!fileUploaded) {
     return (
-      <>
-        <Col>
-          <h4>Upload Spesification to create a response</h4>
-          <InputGroup>
-            <input type="file" onChange={onLoad} />
-          </InputGroup>
-        </Col>
-      </>
+      <Col>
+        <h4>Upload Spesification to create a response</h4>
+        <InputGroup>
+          <input type="file" onChange={(e) => onLoad(e)} />
+        </InputGroup>
+      </Col>
     );
   }
 
@@ -56,21 +64,23 @@ export default function ResponseEditor(): ReactElement {
     return <p>A bank must be uploaded</p>;
   }
 
-  const needs = uploadedBank.needs;
+  const { needs } = uploadedBank;
 
-  const onSubmit = (data: any) => {
-    let selectedNeeds: Need[] = [];
+  const onSubmit = (data: { [x: string]: any }) => {
+    const selectedNeeds: Need[] = [];
     needs.forEach((need: Need) => {
       if (need.tittel in data && data[need.tittel] !== false) {
         let reqIndexes: string[];
-        need.requirements.length <= 1
-          ? (reqIndexes = [data[need.tittel]])
-          : (reqIndexes = data[need.tittel]);
-        let newRequirementList: Requirement[] = [];
-        for (var i = 0; i < reqIndexes.length; i++) {
+        if (need.requirements.length <= 1) {
+          reqIndexes = [data[need.tittel]];
+        } else {
+          reqIndexes = data[need.tittel];
+        }
+        const newRequirementList: Requirement[] = [];
+        for (let i = 0; i < reqIndexes.length; i += 1) {
           newRequirementList.push(need.requirements[Number(reqIndexes[i])]);
         }
-        let updatedBehov = {
+        const updatedBehov = {
           id: need.id,
           tittel: need.tittel,
           beskrivelse: need.beskrivelse,
@@ -84,13 +94,13 @@ export default function ResponseEditor(): ReactElement {
   };
 
   const onDownLoad = () => {
+    // TODO: fix this with typings
     const bank = { ...uploadedBank };
     bank.needs = selectedNeedlist;
     const newFile: FileDownLoad = {
-      name: name,
-      bank: bank
+      name,
+      bank
     };
-    const fileDownload = require('js-file-download');
     fileDownload(
       JSON.stringify(newFile),
       `${name}-${uploadedBank.publishedDate}.json`
@@ -98,12 +108,12 @@ export default function ResponseEditor(): ReactElement {
   };
 
   const needList = (needlist: Need[]) => {
-    const needs = needlist.map((need: Need, index: number) => {
+    const needsJsx = needlist.map((need: Need) => {
       return (
         <>
           <h5>{need.tittel}</h5>
           {need.requirements.map((c, i) => (
-            <div className={`ml-5`}>
+            <div className="ml-5">
               <label key={c.id}>
                 {c.title} &nbsp;
                 <input
@@ -111,7 +121,7 @@ export default function ResponseEditor(): ReactElement {
                   value={i}
                   name={need.tittel}
                   ref={register}
-                  className={`ml-2`}
+                  className="ml-2"
                 />
               </label>
             </div>
@@ -121,7 +131,7 @@ export default function ResponseEditor(): ReactElement {
     });
     return (
       <Card className="bg-light">
-        <Card.Body> {needs}</Card.Body>
+        <Card.Body> {needsJsx}</Card.Body>
       </Card>
     );
   };
@@ -132,18 +142,21 @@ export default function ResponseEditor(): ReactElement {
         <Col>
           <label htmlFor="title">Name</label>
           <InputGroup className="mb-3">
-            <FormControl name="name" onChange={handleNameChange} />
+            <FormControl name="name" onChange={(e) => handleNameChange(e)} />
           </InputGroup>
         </Col>
         <Col>
-          <Button className={styles.downLoadButton} onClick={onDownLoad}>
+          <Button
+            className={styles.downLoadButton}
+            onClick={() => onDownLoad()}
+          >
             Download
           </Button>
         </Col>
       </Row>
       <Row className="m-4">
         <Col>
-          <form onSubmit={handleSubmit(onSubmit)}>
+          <form onSubmit={handleSubmit((e) => onSubmit(e))}>
             {needList(needs)}
             <Button type="submit" className="mt-4">
               Select

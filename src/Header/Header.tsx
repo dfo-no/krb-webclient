@@ -2,13 +2,13 @@ import React, { ReactElement } from 'react';
 import { useHistory, useRouteMatch } from 'react-router-dom';
 import Navbar from 'react-bootstrap/Navbar';
 import { Button, Dropdown } from 'react-bootstrap';
-import css from './Header.module.scss';
-import { fakeAuth } from '../authentication/AuthenticationHandler';
 import {
   BsBoxArrowRight,
   BsFillPersonFill,
   BsFillPersonLinesFill
 } from 'react-icons/bs';
+import css from './Header.module.scss';
+import fakeAuth from '../authentication/AuthenticationHandler';
 
 export default function Header(): ReactElement {
   const history = useHistory();
@@ -25,7 +25,7 @@ export default function Header(): ReactElement {
   return (
     <Navbar bg="light" variant="dark" className={css.header}>
       <Navbar.Brand onClick={home} role="link" className={css.header__brand}>
-        <img alt={'DFØ Logo'} src="/logo-blue.svg" />{' '}
+        <img alt="DFØ Logo" src="/logo-blue.svg" />{' '}
       </Navbar.Brand>
       {match && (
         <Button
@@ -37,7 +37,7 @@ export default function Header(): ReactElement {
           All projects
         </Button>
       )}
-      <div className={css.header__spacer}></div>
+      <div className={css.header__spacer} />
 
       {fakeAuth.isAuthenticated() && (
         <Dropdown drop="left">
@@ -46,12 +46,12 @@ export default function Header(): ReactElement {
             id="dropdown-basic"
             className="iconText"
           >
-            <BsFillPersonFill></BsFillPersonFill>
+            <BsFillPersonFill />
           </Dropdown.Toggle>
 
           <Dropdown.Menu>
-            <Dropdown.Item disabled={true}>
-              <BsFillPersonLinesFill></BsFillPersonLinesFill>
+            <Dropdown.Item disabled>
+              <BsFillPersonLinesFill />
               <span>&nbsp;&nbsp;My page</span>
             </Dropdown.Item>
             <Dropdown.Item
@@ -59,7 +59,7 @@ export default function Header(): ReactElement {
                 fakeAuth.signout(() => history.push('/'));
               }}
             >
-              <BsBoxArrowRight></BsBoxArrowRight>
+              <BsBoxArrowRight />
               <span>&nbsp;&nbsp;Log out</span>
             </Dropdown.Item>
           </Dropdown.Menu>

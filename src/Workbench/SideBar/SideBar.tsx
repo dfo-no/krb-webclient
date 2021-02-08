@@ -2,9 +2,9 @@ import React, { ReactElement } from 'react';
 import { Nav } from 'react-bootstrap';
 import { withRouter } from 'react-router';
 import { NavLink, useRouteMatch } from 'react-router-dom';
-import css from '../SideBar/SideBar.module.scss';
 import { useSelector } from 'react-redux';
-import { RootState } from '../../store/rootReducer';
+import css from './SideBar.module.scss';
+import { RootState } from '../../store/store';
 
 interface IRouteLink {
   link: string;
@@ -16,9 +16,9 @@ interface RouteParams {
 }
 
 const renderRouteLinks = (routes: IRouteLink[], isProjectSelected: boolean) => {
-  return routes.map((route, index) => {
+  return routes.map((route) => {
     return (
-      <Nav.Item key={index} className={`${css.sidebar__item}`}>
+      <Nav.Item key={route.name} className={`${css.sidebar__item}`}>
         <Nav.Link
           as={NavLink}
           to={route.link}
@@ -38,23 +38,23 @@ function SideBar(): ReactElement {
 
   const { list } = useSelector((state: RootState) => state.project);
 
-  let match = useRouteMatch<RouteParams>('/workbench/:projectId');
+  const match = useRouteMatch<RouteParams>('/workbench/:projectId');
   /* match = {
     isExact: true,
     params: { projectId: number},
     url: "workbench/2" <!-- this is never null, otherwise this route wouldn't match
     path: "/workbench/:projectId"
-  }*/
+  } */
 
   const currentUrl = match?.url ? match.url : '/workbench';
-  const isProjectSelected = id ? true : false;
+  const isProjectSelected = !!id;
 
   const selectProject = list.find((bank) => bank.id === id);
 
   const displayTitle = selectProject ? selectProject.title : '<None selected>';
 
   const routes = [
-    { link: `${currentUrl}`, name: 'Workbench: ' + displayTitle },
+    { link: `${currentUrl}`, name: `Workbench: ${displayTitle}` },
     { link: `${currentUrl}/need`, name: 'Need' },
     { link: `${currentUrl}/requirement`, name: 'Requirement' },
     { link: `${currentUrl}/codelist`, name: 'Codelist' },

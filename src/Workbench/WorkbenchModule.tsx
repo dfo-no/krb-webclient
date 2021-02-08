@@ -2,6 +2,7 @@ import React, { ReactElement, useEffect } from 'react';
 import { Col, Container, Row } from 'react-bootstrap';
 import { Route, Switch, useRouteMatch } from 'react-router-dom';
 
+import { useDispatch, useSelector } from 'react-redux';
 import RequirementPage from './Requirement/RequirementPage';
 import CodeListEditor from './Codelist/CodeListEditor';
 import CodelistPage from './Codelist/CodelistPage';
@@ -10,9 +11,8 @@ import ProductPage from './Product/ProductPage';
 import ProjectPage from './Project/ProjectPage';
 import SideBar from './SideBar/SideBar';
 import WorkbenchPage from './WorkbenchPage';
-import { useDispatch, useSelector } from 'react-redux';
 import { getProjectsThunk } from '../store/reducers/project-reducer';
-import { RootState } from '../store/rootReducer';
+import { RootState } from '../store/store';
 import { selectProject } from '../store/reducers/selectedProject-reducer';
 
 interface RouteParams {
@@ -20,9 +20,9 @@ interface RouteParams {
 }
 
 export default function WorkbenchModule(): ReactElement {
-  let { url } = useRouteMatch();
+  const { url } = useRouteMatch();
 
-  let projectMatch = useRouteMatch<RouteParams>('/workbench/:projectId');
+  const projectMatch = useRouteMatch<RouteParams>('/workbench/:projectId');
   const dispatch = useDispatch();
   const { id } = useSelector((state: RootState) => state.selectedProject);
 

@@ -3,6 +3,7 @@ import bankReducer from './reducers/bank-reducer';
 import counterReducer from './reducers/counter-reducer';
 import kravbankReducer from './reducers/kravbank-reducer';
 import loaderReducer from './reducers/loader-reducer';
+// eslint-disable-next-line import/no-cycle
 import projectReducer from './reducers/project-reducer';
 import selectedProjectReducer from './reducers/selectedProject-reducer';
 import selectedCodeListReducer from './reducers/selectedCodelist-reducer';
@@ -22,7 +23,5 @@ const rootReducer = combineReducers({
   selectedBank: selectedBankReducer,
   selectNeed: selectedNeedReducer
 });
-
-export type RootState = ReturnType<typeof rootReducer>;
 
 export default rootReducer;

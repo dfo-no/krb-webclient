@@ -1,9 +1,10 @@
+/* eslint-disable no-param-reassign */
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { del, get, post, put } from '../../api/http';
 import { Bank } from '../../models/Bank';
 
 interface BankState {
-  //banks: Finished and published versions of banks
+  // banks: Finished and published versions of banks
   list: Bank[];
   status: 'idle' | 'fulfilled' | 'rejected' | 'pending';
 }
@@ -52,28 +53,28 @@ const bankSlice = createSlice({
     }
   },
   extraReducers: (builder) => {
-    builder.addCase(getBank.fulfilled, (state, { payload }) => {});
-    builder.addCase(getBank.pending, (state, { payload }) => {});
-    builder.addCase(getBank.rejected, (state, { payload }) => {});
-    builder.addCase(getBanks.pending, (state, { payload }) => {
+    // builder.addCase(getBank.fulfilled, (state, { payload }) => {});
+    // builder.addCase(getBank.pending, (state, { payload }) => {});
+    // builder.addCase(getBank.rejected, (state, { payload }) => {});
+    builder.addCase(getBanks.pending, (state) => {
       state.status = 'pending';
     });
     builder.addCase(getBanks.fulfilled, (state, { payload }) => {
       state.list = payload;
       state.status = 'fulfilled';
     });
-    builder.addCase(getBanks.rejected, (state, { payload }) => {
+    builder.addCase(getBanks.rejected, (state) => {
       state.status = 'rejected';
     });
-    builder.addCase(postBank.fulfilled, (state, { payload }) => {});
-    builder.addCase(postBank.pending, (state, { payload }) => {});
-    builder.addCase(postBank.rejected, (state, { payload }) => {});
-    builder.addCase(putBank.fulfilled, (state, { payload }) => {});
-    builder.addCase(putBank.pending, (state, { payload }) => {});
-    builder.addCase(putBank.rejected, (state, { payload }) => {});
-    builder.addCase(deleteBank.fulfilled, (state, { payload }) => {});
-    builder.addCase(deleteBank.pending, (state, { payload }) => {});
-    builder.addCase(deleteBank.rejected, (state, { payload }) => {});
+    // builder.addCase(postBank.fulfilled, (state, { payload }) => {});
+    // builder.addCase(postBank.pending, (state, { payload }) => {});
+    // builder.addCase(postBank.rejected, (state, { payload }) => {});
+    // builder.addCase(putBank.fulfilled, (state, { payload }) => {});
+    // builder.addCase(putBank.pending, (state, { payload }) => {});
+    // builder.addCase(putBank.rejected, (state, { payload }) => {});
+    // builder.addCase(deleteBank.fulfilled, (state, { payload }) => {});
+    // builder.addCase(deleteBank.pending, (state, { payload }) => {});
+    // builder.addCase(deleteBank.rejected, (state, { payload }) => {});
   }
 });
 

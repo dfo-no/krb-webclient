@@ -1,18 +1,18 @@
 import React, { ReactElement, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link, useParams } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { Button, Card, Col, Form, ListGroup, Row } from 'react-bootstrap';
 import { useForm } from 'react-hook-form';
 
 import styles from './CodelistPage.module.scss';
-import { RootState } from '../../store/rootReducer';
+import { RootState } from '../../store/store';
 import { Codelist } from '../../models/Codelist';
 import {
   addCodelist,
   putProjectThunk
 } from '../../store/reducers/project-reducer';
 import { selectCodeList } from '../../store/reducers/selectedCodelist-reducer';
-import { Utils } from '../../common/Utils';
+import Utils from '../../common/Utils';
 import { Bank } from '../../models/Bank';
 
 type FormValues = {
@@ -34,6 +34,10 @@ export default function CodelistPage(): ReactElement {
     list.find((bank: Bank) => bank.id === id)
   );
 
+  const setSelectedKodeliste = (selectedCodelistId: number) => () => {
+    dispatch(selectCodeList(selectedCodelistId));
+  };
+
   const renderCodelist = (codelist: Codelist[]) => {
     codelist
       .slice()
@@ -54,15 +58,12 @@ export default function CodelistPage(): ReactElement {
     return <ListGroup className={styles.codeList}>{codes}</ListGroup>;
   };
 
-  const setSelectedKodeliste = (id: number) => () => {
-    dispatch(selectCodeList(id));
-  };
   const handleShowEditor = () => {
     setShowEdior(true);
   };
 
   const addNewCodelist = (post: FormValues) => {
-    let codelist: Codelist = {
+    const codelist: Codelist = {
       title: post.title,
       description: post.description,
       id: Utils.getRandomNumber(),
@@ -96,7 +97,7 @@ export default function CodelistPage(): ReactElement {
                       minLength: { value: 2, message: 'Minimum 2 characters' }
                     })}
                     isInvalid={!!errors.title}
-                  ></Form.Control>
+                  />
                   {errors.title && (
                     <Form.Control.Feedback type="invalid">
                       {errors.title.message}
@@ -116,7 +117,7 @@ export default function CodelistPage(): ReactElement {
                       minLength: { value: 2, message: 'Minimum 2 characters' }
                     })}
                     isInvalid={!!errors.description}
-                  ></Form.Control>
+                  />
                   {errors.description && (
                     <Form.Control.Feedback type="invalid">
                       {errors.description.message}
@@ -131,9 +132,8 @@ export default function CodelistPage(): ReactElement {
           </Card.Body>
         </Card>
       );
-    } else {
-      return <></>;
     }
+    return <></>;
   }
 
   return (

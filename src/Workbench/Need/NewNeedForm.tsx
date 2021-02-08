@@ -3,10 +3,10 @@ import React, { ReactElement, useContext, useState } from 'react';
 import { Button, Col, Form, Row } from 'react-bootstrap';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
-import { Utils } from '../../common/Utils';
+import Utils from '../../common/Utils';
 import { Need } from '../../models/Need';
 import { addNeed, putProjectThunk } from '../../store/reducers/project-reducer';
-import { RootState } from '../../store/rootReducer';
+import { RootState } from '../../store/store';
 import { AccordionContext } from './AccordionContext';
 
 type FormValues = {
@@ -26,7 +26,7 @@ function NewNeedForm(): ReactElement {
     return <div>Loading NeedForm</div>;
   }
 
-  const onNewNeedSubmit = (post: FormValues, e: any) => {
+  const onNewNeedSubmit = (post: FormValues) => {
     const need: Need = {
       id: Utils.getRandomNumber(),
       tittel: post.tittel,

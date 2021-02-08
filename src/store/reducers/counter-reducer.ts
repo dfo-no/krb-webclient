@@ -1,3 +1,4 @@
+/* eslint-disable no-param-reassign */
 import { createSlice } from '@reduxjs/toolkit';
 
 interface CounterState {
@@ -11,10 +12,10 @@ const counterSlice = createSlice({
   initialState,
   reducers: {
     increment(state) {
-      state.value = state.value + 1;
+      state.value += 1;
     },
     decrement(state) {
-      state.value = state.value - 1;
+      state.value -= 1;
     },
     reset(state) {
       state.value = 0;

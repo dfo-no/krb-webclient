@@ -1,6 +1,7 @@
+/* eslint-disable no-param-reassign */
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { del, get, post, put } from '../../api/http';
-import { Utils } from '../../common/Utils';
+import Utils from '../../common/Utils';
 import { Bank } from '../../models/Bank';
 import { Code } from '../../models/Code';
 import { Codelist } from '../../models/Codelist';
@@ -8,8 +9,9 @@ import { Need } from '../../models/Need';
 import { Product } from '../../models/Product';
 import { Publication } from '../../models/Publication';
 import { Requirement } from '../../models/Requirement';
-import { RootState } from '../rootReducer';
-import { AppDispatch } from '../store';
+
+// eslint-disable-next-line import/no-cycle
+import { AppDispatch, RootState } from '../store';
 
 interface ProjectState {
   list: Bank[];
@@ -56,10 +58,6 @@ export const putProjectThunk = createAsyncThunk<
     state: RootState;
   }
 >('putProjectThunk', async (projectId: number, thunkApi) => {
-  /* We cannot save project param directly because it is a reference to the project
-     before we updated it. We must fetch the project from the store, where it *is* updated.
-     Therefore we just send in the id of the project, as sending in the reference would be useless.
-  */
   const project = Utils.ensure(
     thunkApi
       .getState()
@@ -233,7 +231,7 @@ const projectSlice = createSlice({
       const projectIndex = Utils.ensure(
         state.list.findIndex((project) => project.id === payload.projectId)
       );
-      let codeListIndex = state.list[projectIndex].codelist.findIndex(
+      const codeListIndex = state.list[projectIndex].codelist.findIndex(
         (codelist) => codelist.id === payload.codelistId
       );
       state.list[projectIndex].codelist[codeListIndex].title = payload.title;
@@ -289,7 +287,7 @@ const projectSlice = createSlice({
       const index = Utils.ensure(
         state.list.findIndex((project) => project.id === payload.id)
       );
-      let codeListIndex = state.list[index].codelist.findIndex(
+      const codeListIndex = state.list[index].codelist.findIndex(
         (codelist) => codelist.id === payload.codeListId
       );
 
@@ -299,16 +297,16 @@ const projectSlice = createSlice({
       state,
       { payload }: PayloadAction<{ id: number; code: Code; codeListId: number }>
     ) {
-      //todo: move to more suitable and less repetetive place
+      // todo: move to more suitable and less repetetive place
       const index = Utils.ensure(
         state.list.findIndex((project) => project.id === payload.id)
       );
-      let codeListIndex = state.list[index].codelist.findIndex(
+      const codeListIndex = state.list[index].codelist.findIndex(
         (codelist) => codelist.id === payload.codeListId
       );
-      let codeIndex = state.list[index].codelist[codeListIndex].codes.findIndex(
-        (code) => code.id === payload.code.id
-      );
+      const codeIndex = state.list[index].codelist[
+        codeListIndex
+      ].codes.findIndex((code) => code.id === payload.code.id);
 
       state.list[index].codelist[codeListIndex].codes[codeIndex] = payload.code;
     },
@@ -388,27 +386,27 @@ const projectSlice = createSlice({
     }
   },
   extraReducers: (builder) => {
-    builder.addCase(getProjectThunk.fulfilled, (state, { payload }) => {});
-    builder.addCase(getProjectThunk.pending, (state, { payload }) => {});
-    builder.addCase(getProjectThunk.rejected, (state, { payload }) => {});
-    builder.addCase(getProjectsThunk.pending, (state, { payload }) => {
+    builder.addCase(getProjectThunk.fulfilled, () => {});
+    builder.addCase(getProjectThunk.pending, () => {});
+    builder.addCase(getProjectThunk.rejected, () => {});
+    builder.addCase(getProjectsThunk.pending, (state) => {
       state.status = 'pending';
     });
     builder.addCase(getProjectsThunk.fulfilled, (state, { payload }) => {
       state.list = payload;
       state.status = 'fulfilled';
     });
-    builder.addCase(getProjectsThunk.rejected, (state, { payload }) => {
+    builder.addCase(getProjectsThunk.rejected, (state) => {
       state.status = 'rejected';
     });
     builder.addCase(postProjectThunk.fulfilled, (state, { payload }) => {
       state.list.push(payload);
       state.status = 'fulfilled';
     });
-    builder.addCase(postProjectThunk.pending, (state, { payload }) => {
+    builder.addCase(postProjectThunk.pending, (state) => {
       state.status = 'pending';
     });
-    builder.addCase(postProjectThunk.rejected, (state, { payload }) => {
+    builder.addCase(postProjectThunk.rejected, (state) => {
       state.status = 'rejected';
     });
     builder.addCase(putProjectThunk.fulfilled, (state, { payload }) => {
@@ -418,19 +416,19 @@ const projectSlice = createSlice({
       );
       state.list[projectIndex] = payload;
     });
-    builder.addCase(putProjectThunk.pending, (state, { payload }) => {
+    builder.addCase(putProjectThunk.pending, (state) => {
       state.status = 'pending';
     });
-    builder.addCase(putProjectThunk.rejected, (state, { payload }) => {
+    builder.addCase(putProjectThunk.rejected, (state) => {
       state.status = 'rejected';
     });
-    builder.addCase(deleteProjectThunk.fulfilled, (state, { payload }) => {
+    builder.addCase(deleteProjectThunk.fulfilled, (state) => {
       state.status = 'fulfilled';
     });
-    builder.addCase(deleteProjectThunk.pending, (state, { payload }) => {
+    builder.addCase(deleteProjectThunk.pending, (state) => {
       state.status = 'pending';
     });
-    builder.addCase(deleteProjectThunk.rejected, (state, { payload }) => {
+    builder.addCase(deleteProjectThunk.rejected, (state) => {
       state.status = 'rejected';
     });
   }

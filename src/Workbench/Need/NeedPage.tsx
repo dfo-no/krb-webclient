@@ -1,14 +1,14 @@
 import React, { ReactElement, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Accordion, Button, Card } from 'react-bootstrap';
+import { BsPlusSquare } from 'react-icons/bs';
 import { Need } from '../../models/Need';
 import css from './NeedPage.module.scss';
-import { RootState } from '../../store/rootReducer';
-import { Utils } from '../../common/Utils';
+import { RootState } from '../../store/store';
+import Utils from '../../common/Utils';
 import NewNeedForm from './NewNeedForm';
 import { AccordionContext } from './AccordionContext';
 import EditNeedForm from './EditNeedForm';
-import { BsPlusSquare } from 'react-icons/bs';
 
 function NeedPage(): ReactElement {
   const { id } = useSelector((state: RootState) => state.selectedProject);
@@ -18,24 +18,28 @@ function NeedPage(): ReactElement {
   if (list.length === 0 || !id) {
     return <div>Loading NeedPage....</div>;
   }
-  let project = Utils.ensure(list.find((banks) => banks.id === id));
+  const project = Utils.ensure(list.find((banks) => banks.id === id));
 
-  const onOpenClose = (e: any) => {
-    setActiveKey(e);
+  const onOpenClose = (e: string | null) => {
+    if (e) {
+      setActiveKey(e);
+    } else {
+      setActiveKey('');
+    }
   };
 
-  const renderNeeds = (list: any) => {
-    return list.map((element: Need, index: number) => {
-      let indexString = (index + 1).toString();
+  const renderNeeds = (needList: Need[]) => {
+    return needList.map((element: Need, index: number) => {
+      const indexString = (index + 1).toString();
       return (
-        <Card key={index}>
+        <Card key={element.id}>
           <Accordion.Toggle as={Card.Header} eventKey={indexString}>
             <h4>{element.tittel}</h4>
             <span>{element.beskrivelse}</span>
           </Accordion.Toggle>
           <Accordion.Collapse eventKey={indexString}>
             <Card.Body>
-              <EditNeedForm project={project} need={element}></EditNeedForm>
+              <EditNeedForm project={project} need={element} />
             </Card.Body>
           </Accordion.Collapse>
         </Card>
@@ -44,16 +48,16 @@ function NeedPage(): ReactElement {
   };
 
   return (
-    <AccordionContext.Provider value={{ onOpenClose: onOpenClose }}>
+    <AccordionContext.Provider value={{ onOpenClose }}>
       <Accordion
         activeKey={activeKey}
-        onSelect={onOpenClose}
+        onSelect={(e) => onOpenClose(e)}
         className={`${css.needs}`}
       >
         <Card>
           <Accordion.Toggle as={Card.Header} eventKey="0">
             <Button className="iconText">
-              <BsPlusSquare></BsPlusSquare>
+              <BsPlusSquare />
               <span>Add new need</span>
             </Button>
           </Accordion.Toggle>

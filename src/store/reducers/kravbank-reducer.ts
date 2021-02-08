@@ -1,3 +1,4 @@
+/* eslint-disable no-param-reassign */
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { Bank } from '../../models/Bank';
 import { Need } from '../../models/Need';
@@ -8,8 +9,8 @@ import { Publication } from '../../models/Publication';
 import { Requirement } from '../../models/Requirement';
 
 interface KravbankState {
-  //projects: banks being edited, not published.
-  //banks: Finished and published versions of banks
+  // projects: banks being edited, not published.
+  // banks: Finished and published versions of banks
   projects: Bank[];
   selectedProject: Bank | null;
   selectedBank: Bank | null;
@@ -31,11 +32,6 @@ const initialState: KravbankState = {
   banks: []
 };
 
-/* export const fetchBanks = createAsyncThunk('fetchBanks', async () => {
-  const response = await fetch(`http://localhost:3001/banks`);
-  return (await response.json()) as Bank[];
-}); */
-
 const kravbankSlice = createSlice({
   name: 'kravbank',
   initialState,
@@ -49,12 +45,9 @@ const kravbankSlice = createSlice({
     addProject(state, { payload }: PayloadAction<Bank>) {
       state.projects.push(payload);
     },
-    /*selectProject(state, { payload }: PayloadAction<Bank>) {
-      state.selectedProject = payload;
-    },*/
     editProject(state, { payload }: PayloadAction<Bank>) {
       const id = state.selectedProject?.id;
-      let projectindex = state.projects.findIndex(
+      const projectindex = state.projects.findIndex(
         (project) => project.id === id
       );
       state.projects[projectindex] = payload;
@@ -62,15 +55,15 @@ const kravbankSlice = createSlice({
 
     publishProject(state, { payload }: PayloadAction<Publication>) {
       const id = state.selectedProject?.id;
-      let projectindex = state.projects.findIndex(
+      const projectindex = state.projects.findIndex(
         (project) => project.id === id
       );
-      let project = state.projects[projectindex];
-      let publishedProject = state.projects[projectindex];
+      const project = state.projects[projectindex];
+      const publishedProject = state.projects[projectindex];
       publishedProject.publishedDate = payload.date;
 
       state.banks.push(publishedProject);
-      //increase version-number before continued editing
+      // increase version-number before continued editing
       project.version = payload.version + 1;
 
       if (!project.publications) project.publications = [];
@@ -112,18 +105,16 @@ const kravbankSlice = createSlice({
     },
     addNeed(state, { payload }: PayloadAction<Need>) {
       const id = state.selectedProject?.id;
-      if (id === undefined) {
-        return state;
+      if (id !== undefined) {
+        state.projects[id].needs.push(payload);
       }
-      state.projects[id].needs.push(payload);
     },
     addSubNeed(state, { payload }: PayloadAction<Need>) {
       const needId = state.selectedNeed;
       const kravbankId = state.selectedProject?.id;
-      if (kravbankId === undefined) {
-        return state;
+      if (kravbankId !== undefined) {
+        state.projects[kravbankId].needs[needId].needs?.push(payload);
       }
-      state.projects[kravbankId].needs[needId].needs?.push(payload);
     },
 
     addCodelist(state, { payload }: PayloadAction<Codelist>) {
@@ -133,24 +124,24 @@ const kravbankSlice = createSlice({
       state.selectedCodelist = payload;
     },
     editCodelist(state, { payload }: PayloadAction<Codelist>) {
-      let codelistindex = state.codelists.findIndex(
+      const codelistindex = state.codelists.findIndex(
         (codelist) => codelist.id === state.selectedCodelist
       );
       state.codelists[codelistindex] = payload;
     },
     addCode(state, { payload }: PayloadAction<Code>) {
-      //TODO: find more suitable place to perform this action
-      let codelistindex = state.codelists.findIndex(
+      // TODO: find more suitable place to perform this action
+      const codelistindex = state.codelists.findIndex(
         (codelist) => codelist.id === state.selectedCodelist
       );
       state.codelists[codelistindex].codes.push(payload);
     },
     editCode(state, { payload }: PayloadAction<Code>) {
-      //todo: move to more suitable and less repetetive place
-      let listindex = state.codelists.findIndex(
+      // todo: move to more suitable and less repetetive place
+      const listindex = state.codelists.findIndex(
         (codelist) => codelist.id === state.selectedCodelist
       );
-      let codeindex = state.codelists[listindex].codes.findIndex(
+      const codeindex = state.codelists[listindex].codes.findIndex(
         (code) => code.id === payload.id
       );
       state.codelists[listindex].codes[codeindex] = payload;
@@ -159,21 +150,16 @@ const kravbankSlice = createSlice({
       state.products.push(payload);
     },
     editProduct(state, { payload }: PayloadAction<Product>) {
-      let productindex = state.products.findIndex(
+      const productindex = state.products.findIndex(
         (product) => product.id === payload.id
       );
       state.products[productindex] = payload;
     },
     banksReceived(state, { payload }: PayloadAction<Bank[]>) {
       state.projects = payload;
-      console.log(state.projects);
     }
   },
-  extraReducers: (builder) => {
-    /* builder.addCase(fetchBanks.fulfilled, (state, { payload }) => {
-      state.projects = payload;
-    }); */
-  }
+  extraReducers: () => {}
 });
 
 export const {
@@ -196,11 +182,5 @@ export const {
   banksReceived,
   selectBank
 } = kravbankSlice.actions;
-
-/*export const fetchBanks = () => async (dispatch: any) => {
-  dispatch(setLoading(true));
-  const response = await BankService.fetchAll();
-  dispatch(banksReceived(response));
-};*/
 
 export default kravbankSlice.reducer;

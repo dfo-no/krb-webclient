@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/label-has-associated-control */
 import React, { ReactElement, useContext, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
@@ -9,7 +10,7 @@ import {
 } from 'react-bootstrap';
 
 import styles from './CodeListEditor.module.scss';
-import { RootState } from '../../store/rootReducer';
+import { RootState } from '../../store/store';
 import { Code } from '../../models/Code';
 import {
   addCodeToCodelist,
@@ -17,7 +18,7 @@ import {
   editCodelist,
   putProjectThunk
 } from '../../store/reducers/project-reducer';
-import { Utils } from '../../common/Utils';
+import Utils from '../../common/Utils';
 import { Codelist } from '../../models/Codelist';
 import { Bank } from '../../models/Bank';
 import { AccordionContext } from '../Need/AccordionContext';
@@ -53,10 +54,18 @@ export default function CodeListEditor(): ReactElement {
     setShowEdior(true);
   };
 
-  const handleTitleChange = (event: any) => {
+  const handleTitleChange = (
+    event: React.ChangeEvent<
+      HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
+    >
+  ) => {
     setTitle(event.target.value);
   };
-  const handleDescriptionChange = (event: any) => {
+  const handleDescriptionChange = (
+    event: React.ChangeEvent<
+      HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
+    >
+  ) => {
     setDescription(event.target.value);
   };
 
@@ -65,9 +74,9 @@ export default function CodeListEditor(): ReactElement {
   };
 
   const addNewCode = () => {
-    let code = {
-      title: title,
-      description: description,
+    const code = {
+      title,
+      description,
       id: Utils.getRandomNumber()
     };
     dispatch(addCodeToCodelist({ projectId: id, codelistId: listId, code }));
@@ -76,10 +85,10 @@ export default function CodeListEditor(): ReactElement {
   };
 
   const editCodeElement = (codeId: number) => () => {
-    let code = {
+    const code = {
       id: codeId, // TODO: suspicious about this one
-      title: title,
-      description: description
+      title,
+      description
     };
 
     dispatch(editCodeInCodelist({ projectId: id, codelistId: listId, code }));
@@ -92,18 +101,18 @@ export default function CodeListEditor(): ReactElement {
       editCodelist({
         projectId: id,
         codelistId: selectedCodeList.id,
-        title: title,
-        description: description
+        title,
+        description
       })
     );
     dispatch(putProjectThunk(id));
     setEditMode(false);
   };
 
-  function renderHeaderSection(editmode: boolean) {
-    if (editmode) {
+  function renderHeaderSection(edit: boolean) {
+    if (edit) {
       return (
-        /*TODO: finne ut hvor sannsynlig det er at bruker skriver
+        /* TODO: finne ut hvor sannsynlig det er at bruker skriver
          mange steder på samme tid, og derfor om handleTitleChange,
          og descriptionchange må skrives om de tre separate funksjoner */
         <Card className="mt-3">
@@ -128,28 +137,27 @@ export default function CodeListEditor(): ReactElement {
               name="codelistId"
               type="hidden"
               value={selectedCodeList.id}
-            ></FormControl>
+            />
             <Button className="mt-2" onClick={onEditCodelist}>
               Save
             </Button>
           </Card.Body>
         </Card>
       );
-    } else {
-      return (
-        <div className={styles.codelistSection}>
-          <h1>{selectedCodeList.title}</h1>
-          <h5>{selectedCodeList.description}</h5>
-          <Button onClick={handleEditCodelist}>Edit</Button>
-        </div>
-      );
     }
+    return (
+      <div className={styles.codelistSection}>
+        <h1>{selectedCodeList.title}</h1>
+        <h5>{selectedCodeList.description}</h5>
+        <Button onClick={handleEditCodelist}>Edit</Button>
+      </div>
+    );
   }
 
   const codeList = (codelist: Code[]) => {
     const codes = codelist.map((element: Code, index) => {
       return (
-        <Card key={index}>
+        <Card key={element.id}>
           <Accordion.Toggle as={Card.Header} eventKey={index.toString()}>
             <h6>{element.title}</h6>
             <p>{element.description}</p>
@@ -162,7 +170,7 @@ export default function CodeListEditor(): ReactElement {
                   <FormControl
                     name="title"
                     defaultValue={element.title}
-                    onChange={handleTitleChange}
+                    onChange={(e) => handleTitleChange(e)}
                   />
                 </InputGroup>
                 <label htmlFor="title">Requirement text</label>
@@ -170,7 +178,7 @@ export default function CodeListEditor(): ReactElement {
                   <FormControl
                     name="description"
                     defaultValue={element.description}
-                    onChange={handleDescriptionChange}
+                    onChange={(e) => handleDescriptionChange(e)}
                   />
                 </InputGroup>
                 <Button onClick={editCodeElement(element.id)}>Save</Button>
@@ -193,14 +201,14 @@ export default function CodeListEditor(): ReactElement {
               <FormControl
                 className="input-sm"
                 name="title"
-                onChange={handleTitleChange}
+                onChange={(e) => handleTitleChange(e)}
               />
             </InputGroup>
             <label htmlFor="description">Description</label>
             <InputGroup>
               <FormControl
                 name="description"
-                onChange={handleDescriptionChange}
+                onChange={(e) => handleDescriptionChange(e)}
               />
             </InputGroup>
             <Button className="mt-2" onClick={addNewCode}>
@@ -209,9 +217,8 @@ export default function CodeListEditor(): ReactElement {
           </Card.Body>
         </Card>
       );
-    } else {
-      return <></>;
     }
+    return <></>;
   }
 
   return (
