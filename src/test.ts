@@ -1,7 +1,14 @@
-import jsonRaw from '../db/master.json';
-import { Bank } from './models/Bank';
+import Ajv from 'ajv';
+import schema from './schema.json';
+import data from './testData.json';
 
-const bank: Bank[] = jsonRaw.banks;
+const ajv = new Ajv();
+const validate = ajv.compile(schema);
+if (validate(data)) {
+  // data is MyData here
+  console.log(data.banks);
+} else {
+  console.log(validate.errors);
+}
 
-console.log(bank);
 // for type-checing the master.json file
