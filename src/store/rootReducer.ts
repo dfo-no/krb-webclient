@@ -1,7 +1,5 @@
 import { combineReducers } from '@reduxjs/toolkit';
 import bankReducer from './reducers/bank-reducer';
-import counterReducer from './reducers/counter-reducer';
-import kravbankReducer from './reducers/kravbank-reducer';
 import loaderReducer from './reducers/loader-reducer';
 // eslint-disable-next-line import/no-cycle
 import projectReducer from './reducers/project-reducer';
@@ -12,9 +10,7 @@ import selectedBankReducer from './reducers/selectedBank-reducer';
 import selectedNeedReducer from './reducers/selectedNeed-reducer';
 
 const rootReducer = combineReducers({
-  counter: counterReducer,
   loader: loaderReducer,
-  kravbank: kravbankReducer,
   user: userReducer,
   bank: bankReducer,
   project: projectReducer,
