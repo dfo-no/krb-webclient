@@ -46,7 +46,7 @@
     "prettier": "^2.2.1"
   },
   "scripts": {
-    "start": "npm run git-info; react-scripts start",
+    "start": "react-scripts start",
     "build": "react-scripts build",
     "build:ci": "env-cmd -f .env.cloud.ci react-scripts build",
     "test": "react-scripts test",
