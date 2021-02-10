@@ -69,14 +69,14 @@
                       "type": { "type": "string" },
                       "kodeliste_id": { "type": "number" }
                     },
-                    "required": ["id", "title"]
+                    "required": ["id", "title", "needId", "type"]
                   },
                   "minItems": 0,
                   "uniqueItems": true
                 }
               }
             },
-            "required": ["id", "title"]
+            "required": ["id", "title", "requirements"]
           },
           "products": {
             "type": "array",
@@ -189,7 +189,8 @@
                       "type": { "type": "string" },
                       "kodeliste_id": { "type": "number" }
                     },
-                    "required": ["id", "title"]
+                    "required": ["id", "title"],
+                    "additionalProperties": false
                   },
                   "minItems": 0,
                   "uniqueItems": true
@@ -206,7 +207,8 @@
                 "id": { "type": "number" },
                 "title": { "type": "string" },
                 "description": { "type": "string" }
-              }
+              },
+              "additionalProperties": false
             },
             "required": ["id", "title", "description"],
             "minItems": 0,
@@ -229,7 +231,8 @@
                 "version": {
                   "type": "number"
                 }
-              }
+              },
+              "additionalProperties": false
             }
           }
         },
