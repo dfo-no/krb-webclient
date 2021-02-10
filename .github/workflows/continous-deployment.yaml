@@ -26,16 +26,16 @@ jobs:
           npm run-script lint
           npm run-script test --coverage
 
-      #- name: Fix CC paths
-      #  working-directory: coverage
-      #  run: |
-      #    sed -i 's/\/home\/runner\/work\/krb-webclient\/krb-webclient\//\/github\/workspace\//g' lcov.info
-
-      - name: Build for develop
+      - name: Fix CC paths
+        working-directory: coverage
         run: |
-          npm run-script build
+          sed -i 's/\/home\/runner\/work\/krb-webclient\/krb-webclient\//\/github\/workspace\//g' lcov.info
 
-      - name: Analyze
+      - name: Build
+        run: |
+          npm run-script build:ci
+
+      - name: Sonarcube
         if: github.ref == 'refs/heads/develop'
         uses: SonarSource/sonarcloud-github-action@master
         env:
