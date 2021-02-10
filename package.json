@@ -21,6 +21,7 @@
     "axios": "^0.21.1",
     "bootstrap": "^4.5.3",
     "dayjs": "^1.10.3",
+    "env-cmd": "^10.1.0",
     "i18next": "^19.8.4",
     "i18next-browser-languagedetector": "^6.0.1",
     "i18next-http-backend": "^1.0.21",
@@ -63,10 +64,12 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
+    "build:ci": "env-cmd -f .env.cloud.ci react-scripts build",
     "test": "react-scripts test",
     "backend": "json-server --port 3001 --watch db/master.json",
     "lint": "tsc --noEmit && eslint src/**/*.ts{,x}",
-    "prettier": "prettier  --write \"src/**/*.{js,jsx,ts,tsx,json,css,scss,md}\""
+    "prettier": "prettier  --write \"src/**/*.{js,jsx,ts,tsx,json,css,scss,md}\"",
+    "git-info": "echo export const LAST_COMMIT = \"{\\\"sha\\\": \\\"$(git show -s --format='%h')\\\", \\\"msg\\\": \\\"$(git show -s --format='%s')\\\"}\"  > src/Common/lastCommit.ts"
   },
   "eslintConfig": {
     "extends": [
