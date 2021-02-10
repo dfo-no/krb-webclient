@@ -1,6 +1,6 @@
 import React, { ReactElement, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link, useParams } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { Button, Card, Col, Form, ListGroup, Row } from 'react-bootstrap';
 import { useForm } from 'react-hook-form';
 

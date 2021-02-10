@@ -14,8 +14,6 @@ import {
 import { RootState } from '../../store/rootReducer';
 import { useDispatch, useSelector } from 'react-redux';
 import {
-  addRequirement,
-  editRequirement,
   editRequirementInNeed,
   putProjectThunk,
   setRequirementListToNeed
@@ -25,18 +23,11 @@ import { Requirement } from '../../models/Requirement';
 import { Need } from '../../models/Need';
 import { Utils } from '../../common/Utils';
 import { Bank } from '../../models/Bank';
-import { useParams } from 'react-router-dom';
-
-interface RouteParams {
-  projectId: string;
-}
 
 export default function RequirementPage(): ReactElement {
   const dispatch = useDispatch();
   const { id } = useSelector((state: RootState) => state.selectedProject);
   const { list } = useSelector((state: RootState) => state.project);
-  const { needId } = useSelector((state: RootState) => state.selectNeed);
-  let { projectId } = useParams<RouteParams>();
   const [selectedNeed, setSelectedNeed] = useState<Need | undefined>(undefined);
   const [requirementList, setRequirementsList] = useState<Requirement[]>([]);
   const [title, setTitle] = useState('');
