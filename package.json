@@ -46,13 +46,14 @@
     "prettier": "^2.2.1"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "npm run git-info; react-scripts start",
     "build": "react-scripts build",
     "build:ci": "env-cmd -f .env.cloud.ci react-scripts build",
     "test": "react-scripts test",
     "backend": "json-server --port 3001 --watch db/master.json",
     "lint": "tsc --noEmit && eslint src/**/*.ts{,x}",
-    "prettier": "prettier  --write \"src/**/*.{js,jsx,ts,tsx,json,css,scss,md}\""
+    "prettier": "prettier  --write \"src/**/*.{js,jsx,ts,tsx,json,css,scss,md}\"",
+    "git-info": "echo export const LAST_COMMIT = \"{\\\"sha\\\": \\\"$(git show -s --format='%h')\\\", \\\"msg\\\": \\\"$(git show -s --format='%s')\\\"}\"  > src/Common/lastCommit.ts"
   },
   "eslintConfig": {
     "extends": [
