@@ -2,7 +2,7 @@ name: Continuous Deployment
 
 on:
   push:
-    branches: [main, krb-79]
+    branches: [main, krb-79] # TODO: remove krb-79 when merge is done
 
 env:
   AZURE_WEBAPP_NAME: krb-webclient # set this to your application's name
