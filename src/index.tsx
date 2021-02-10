@@ -8,8 +8,53 @@ import reportWebVitals from './reportWebVitals';
 import store from './store/store';
 import { getBanks } from './store/reducers/bank-reducer';
 import App from './App';
+
+// Leave this here for debugging. Will be removed later
+// import CosmosAPI from './database/CosmosApi';
+// import dbConfig from './database/config';
+
 // fetch all banks here because they are published and will show on the front page.
 store.dispatch(getBanks());
+
+// Leave this here for debugging. Will be removed later
+/* const api = new CosmosAPI(dbConfig);
+api
+  .createDatabase()
+  .then(() => api.readDatabase())
+  .then(() => api.createContainer())
+  .then(() => api.readContainer())
+  .then(() =>
+    api.createFamilyItem({
+      id: 'Anderson.1',
+      Country: 'USA',
+      lastName: 'Andersen',
+      parents: [
+        {
+          firstName: 'Thomas'
+        },
+        {
+          firstName: 'Mary Kay'
+        }
+      ],
+      children: [
+        {
+          firstName: 'Henriette Thaulow',
+          gender: 'female',
+          grade: 5,
+          pets: [
+            {
+              givenName: 'Fluffy'
+            }
+          ]
+        }
+      ],
+      address: {
+        state: 'WA',
+        county: 'King',
+        city: 'Seattle'
+      }
+    })
+  ); */
 
 // Hot reload the component tree whenever a component file changes
 const render = () => {
