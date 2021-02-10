@@ -1,8 +1,10 @@
 import React, { ReactElement, useContext, useState } from 'react';
-
 import { Button, Col, Form, Row } from 'react-bootstrap';
 import { useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as yup from 'yup';
+
 import { Bank } from '../../models/Bank';
 import { Need } from '../../models/Need';
 import {
@@ -21,6 +23,12 @@ interface IProps {
   need: Need;
 }
 
+const needSchema = yup.object().shape({
+  id: yup.number().required(),
+  tittel: yup.string().required(),
+  beskrivelse: yup.string().required()
+});
+
 function EditNeedForm({ project, need }: IProps): ReactElement {
   const dispatch = useDispatch();
   const { onOpenClose } = useContext(AccordionContext);
@@ -30,7 +38,8 @@ function EditNeedForm({ project, need }: IProps): ReactElement {
       id: need.id,
       tittel: need.tittel,
       beskrivelse: need.beskrivelse
-    }
+    },
+    resolver: yupResolver(needSchema)
   });
 
   const onEditNeedSubmit = (post: FormValues) => {
@@ -62,13 +71,7 @@ function EditNeedForm({ project, need }: IProps): ReactElement {
         <Col sm={10}>
           <Form.Control
             name="tittel"
-            ref={register({
-              required: { value: true, message: 'Required' },
-              minLength: {
-                value: 2,
-                message: 'Minimum 2 characters'
-              }
-            })}
+            ref={register}
             isInvalid={!!errors.tittel}
           />
           {errors.tittel && (
@@ -85,13 +88,7 @@ function EditNeedForm({ project, need }: IProps): ReactElement {
         <Col sm={10}>
           <Form.Control
             name="beskrivelse"
-            ref={register({
-              required: { value: true, message: 'Required' },
-              minLength: {
-                value: 2,
-                message: 'Minimum 2 characters'
-              }
-            })}
+            ref={register}
             isInvalid={!!errors.beskrivelse}
           />
           {errors.beskrivelse && (
