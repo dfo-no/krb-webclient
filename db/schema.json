@@ -177,7 +177,7 @@
                 "id": { "type": "number" },
                 "title": { "type": "string" },
                 "description": { "type": "string" },
-                "requirements": {
+                "needs": {
                   "type": "array",
                   "items": {
                     "type": "object",
@@ -185,67 +185,114 @@
                       "id": { "type": "number" },
                       "title": { "type": "string" },
                       "description": { "type": "string" },
-                      "needId": { "type": "number" },
-                      "type": { "type": "string" },
-                      "kodeliste_id": { "type": "number" }
+                      "needs": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {}
+                        }
+                      },
+                      "requirements": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "id": { "type": "number" },
+                            "title": { "type": "string" },
+                            "description": { "type": "string" },
+                            "needId": { "type": "number" },
+                            "type": { "type": "string" }
+                          },
+                          "required": [
+                            "id",
+                            "title",
+                            "description",
+                            "needId",
+                            "type"
+                          ],
+                          "additionalProperties": false
+                        },
+                        "minItems": 0,
+                        "uniqueItems": true
+                      }
                     },
-                    "required": ["id", "title"],
-                    "additionalProperties": false
-                  },
-                  "minItems": 0,
-                  "uniqueItems": true
+                    "required": [
+                      "id",
+                      "title",
+                      "description",
+                      "needs",
+                      "requirements"
+                    ]
+                  }
                 }
               }
             },
-            "required": ["id", "title"]
-          },
-          "products": {
-            "type": "array",
-            "items": {
-              "type": "object",
-              "properties": {
-                "id": { "type": "number" },
-                "title": { "type": "string" },
-                "description": { "type": "string" }
+            "requirements": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "id": { "type": "number" },
+                  "title": { "type": "string" },
+                  "description": { "type": "string" },
+                  "needId": { "type": "number" },
+                  "type": { "type": "string" }
+                },
+                "required": ["id", "title", "description", "needId", "type"],
+                "additionalProperties": false
               },
-              "additionalProperties": false
+              "minItems": 0,
+              "uniqueItems": true
             },
-            "required": ["id", "title", "description"],
-            "minItems": 0,
-            "uniqueItems": true
-          },
-          "version": {
-            "type": "number"
-          },
-          "publishedDate": {
-            "type": "string"
-          },
-          "publications": {
-            "type": "array",
-            "items": {
-              "type": "object",
-              "properties": {
-                "id": { "type": "number" },
-                "comment": { "type": "string" },
-                "date": { "type": "string" },
-                "version": {
-                  "type": "number"
-                }
-              },
-              "additionalProperties": false
-            }
+            "required": ["id", "title", "description", "needs", "requirements"]
           }
         },
-        "required": [
-          "id",
-          "title",
-          "description",
-          "needs",
-          "codelist",
-          "products",
-          "version"
-        ]
-      }
+        "products": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": { "type": "number" },
+              "title": { "type": "string" },
+              "description": { "type": "string" }
+            },
+            "additionalProperties": false
+          },
+          "required": ["id", "title", "description"],
+          "minItems": 0,
+          "uniqueItems": true
+        },
+        "version": {
+          "type": "number"
+        },
+        "publishedDate": {
+          "type": "string"
+        },
+        "publications": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": { "type": "number" },
+              "comment": { "type": "string" },
+              "date": { "type": "string" },
+              "version": {
+                "type": "number"
+              }
+            },
+            "additionalProperties": false
+          }
+        }
+      },
+      "required": [
+        "id",
+        "title",
+        "description",
+        "needs",
+        "codelist",
+        "products",
+        "version"
+      ]
     }
   },
   "required": ["banks", "projects"]

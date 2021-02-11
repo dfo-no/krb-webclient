@@ -13,8 +13,8 @@ import { AccordionContext } from './AccordionContext';
 
 type FormValues = {
   projectId: number;
-  tittel: string;
-  beskrivelse: string;
+  title: string;
+  description: string;
 };
 
 const needSchema = yup.object().shape({
@@ -40,9 +40,10 @@ function NewNeedForm(): ReactElement {
   const onNewNeedSubmit = (post: FormValues) => {
     const need: Need = {
       id: Utils.getRandomNumber(),
-      tittel: post.tittel,
-      beskrivelse: post.beskrivelse,
-      requirements: []
+      title: post.title,
+      description: post.description,
+      requirements: [],
+      needs: []
     };
     dispatch(addNeed({ id, need }));
     dispatch(putProjectThunk(id));
@@ -65,13 +66,13 @@ function NewNeedForm(): ReactElement {
         </Form.Label>
         <Col sm={10}>
           <Form.Control
-            name="tittel"
+            name="title"
             ref={register}
-            isInvalid={!!errors.tittel}
+            isInvalid={!!errors.title}
           />
-          {errors.tittel && (
+          {errors.title && (
             <Form.Control.Feedback type="invalid">
-              {errors.tittel?.message}
+              {errors.title?.message}
             </Form.Control.Feedback>
           )}
         </Col>
@@ -82,13 +83,13 @@ function NewNeedForm(): ReactElement {
         </Form.Label>
         <Col sm={10}>
           <Form.Control
-            name="beskrivelse"
+            name="description"
             ref={register}
-            isInvalid={!!errors.beskrivelse}
+            isInvalid={!!errors.description}
           />
-          {errors.beskrivelse && (
+          {errors.description && (
             <Form.Control.Feedback type="invalid">
-              {errors.beskrivelse.message}
+              {errors.description.message}
             </Form.Control.Feedback>
           )}
         </Col>
