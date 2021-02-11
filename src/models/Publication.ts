@@ -3,4 +3,5 @@ export interface Publication {
   comment: string;
   date: string;
   version: number;
+  bankId: number;
 }
