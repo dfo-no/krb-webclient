@@ -15,8 +15,8 @@ import { AccordionContext } from './AccordionContext';
 
 type FormValues = {
   id: string;
-  tittel: string;
-  beskrivelse: string;
+  title: string;
+  description: string;
 };
 interface IProps {
   project: Bank;
@@ -36,8 +36,8 @@ function EditNeedForm({ project, need }: IProps): ReactElement {
   const { register, handleSubmit, errors } = useForm({
     defaultValues: {
       id: need.id,
-      tittel: need.tittel,
-      beskrivelse: need.beskrivelse
+      title: need.title,
+      description: need.description
     },
     resolver: yupResolver(needSchema)
   });
@@ -47,8 +47,8 @@ function EditNeedForm({ project, need }: IProps): ReactElement {
       editNeed({
         projectId: project.id,
         needId: +post.id,
-        tittel: post.tittel,
-        beskrivelse: post.beskrivelse
+        title: post.title,
+        description: post.description
       })
     );
     dispatch(putProjectThunk(project.id));
@@ -70,13 +70,13 @@ function EditNeedForm({ project, need }: IProps): ReactElement {
         </Form.Label>
         <Col sm={10}>
           <Form.Control
-            name="tittel"
+            name="title"
             ref={register}
-            isInvalid={!!errors.tittel}
+            isInvalid={!!errors.title}
           />
-          {errors.tittel && (
+          {errors.title && (
             <Form.Control.Feedback type="invalid">
-              {errors.tittel.message}
+              {errors.title.message}
             </Form.Control.Feedback>
           )}
         </Col>
@@ -87,13 +87,13 @@ function EditNeedForm({ project, need }: IProps): ReactElement {
         </Form.Label>
         <Col sm={10}>
           <Form.Control
-            name="beskrivelse"
+            name="description"
             ref={register}
-            isInvalid={!!errors.beskrivelse}
+            isInvalid={!!errors.description}
           />
-          {errors.beskrivelse && (
+          {errors.description && (
             <Form.Control.Feedback type="invalid">
-              {errors.beskrivelse.message}
+              {errors.description.message}
             </Form.Control.Feedback>
           )}
         </Col>

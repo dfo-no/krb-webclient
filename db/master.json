@@ -30,6 +30,7 @@
         {
           "id": 1235,
           "tittel": "Bespisning",
+          "needs": [],
           "requirements": [
             {
               "id": 7800,
@@ -43,6 +44,7 @@
         {
           "id": 1236,
           "tittel": "Transport",
+          "needs": [],
           "requirements": [
             {
               "id": 7800,
@@ -127,6 +129,7 @@
         {
           "id": 1235,
           "tittel": "Bespisning",
+          "needs": [],
           "requirements": [
             {
               "id": 7800,
@@ -198,6 +201,7 @@
         {
           "id": 1235,
           "tittel": "Bespisning",
+          "needs": [],
           "requirements": [
             {
               "id": 7800,
@@ -278,6 +282,7 @@
           "id": 997673,
           "tittel": "testing ",
           "beskrivelse": "dsfdsfds",
+          "needs": [],
           "requirements": [
             {
               "id": 498350,
@@ -352,6 +357,7 @@
           "id": 997673,
           "tittel": "testing ",
           "beskrivelse": "dsfdsfds",
+          "needs": [],
           "requirements": [
             {
               "id": 498350,
@@ -426,6 +432,7 @@
           "id": 997673,
           "tittel": "testing ",
           "beskrivelse": "dsfdsfds",
+          "needs": [],
           "requirements": [
             {
               "id": 498350,
