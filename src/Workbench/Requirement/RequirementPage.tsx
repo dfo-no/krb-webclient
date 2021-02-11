@@ -67,11 +67,16 @@ export default function RequirementPage(): ReactElement {
   };
 
   const addRequirementElement = () => {
+    // find better solution to ts stating object might be undefined
+    let needId;
+    if (selectedNeed) {
+      needId = selectedNeed.id;
+    } else needId = 0;
     const requirement = {
       id: Utils.getRandomNumber(),
       title,
       description,
-      needId: selectedNeed?.id,
+      needId,
       type: 'yes/no'
     };
     const reqList = [...requirementList];
@@ -93,11 +98,15 @@ export default function RequirementPage(): ReactElement {
   };
 
   const editRequirementElement = (reqId: number, index: number) => () => {
+    let needId;
+    if (selectedNeed) {
+      needId = selectedNeed.id;
+    } else needId = 0;
     const requirement = {
       id: reqId,
       title,
       description,
-      needId: selectedNeed?.id,
+      needId,
       type: 'yes/no'
     };
     const reqList = [...requirementList];
@@ -221,8 +230,8 @@ export default function RequirementPage(): ReactElement {
     }
     return (
       <div className={styles.headerSection}>
-        <h4>{need.tittel}</h4>
-        <h5>{need.beskrivelse}</h5>
+        <h4>{need.title}</h4>
+        <h5>{need.description}</h5>
         <Button
           onClick={() => {
             setShowEditor(true);
@@ -247,7 +256,7 @@ export default function RequirementPage(): ReactElement {
             /* activeClassName={`${styles.sidebar__item__active}`} */
             onClick={() => handleSelectedNeed(element)}
           >
-            {element.tittel}
+            {element.title}
           </Nav.Link>
         </Nav.Item>
       );

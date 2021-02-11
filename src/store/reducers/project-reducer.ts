@@ -160,8 +160,8 @@ const projectSlice = createSlice({
       }: PayloadAction<{
         projectId: number;
         needId: number;
-        tittel: string;
-        beskrivelse: string;
+        title: string;
+        description: string;
       }>
     ) {
       const projectIndex = Utils.ensure(
@@ -173,9 +173,9 @@ const projectSlice = createSlice({
         )
       );
 
-      state.list[projectIndex].needs[needIndex].tittel = payload.tittel;
-      state.list[projectIndex].needs[needIndex].beskrivelse =
-        payload.beskrivelse;
+      state.list[projectIndex].needs[needIndex].title = payload.title;
+      state.list[projectIndex].needs[needIndex].description =
+        payload.description;
     },
     addCodelist(
       state,
