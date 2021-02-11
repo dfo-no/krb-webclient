@@ -1,8 +1,10 @@
 import React, { ReactElement, useContext, useState } from 'react';
-
 import { Button, Col, Form, Row } from 'react-bootstrap';
 import { useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
 import { useDispatch, useSelector } from 'react-redux';
+import * as yup from 'yup';
+
 import Utils from '../../common/Utils';
 import { Need } from '../../models/Need';
 import { addNeed, putProjectThunk } from '../../store/reducers/project-reducer';
@@ -15,11 +17,20 @@ type FormValues = {
   beskrivelse: string;
 };
 
+const needSchema = yup.object().shape({
+  id: yup.number().required(),
+  tittel: yup.string().required(),
+  beskrivelse: yup.string().required()
+});
+
 function NewNeedForm(): ReactElement {
   const dispatch = useDispatch();
   const { onOpenClose } = useContext(AccordionContext);
   const [validated] = useState(false);
-  const { register, handleSubmit, reset, errors } = useForm();
+  const { register, handleSubmit, reset, errors } = useForm({
+    resolver: yupResolver(needSchema)
+  });
+
   const { id } = useSelector((state: RootState) => state.selectedProject);
 
   if (!id) {
@@ -37,7 +48,6 @@ function NewNeedForm(): ReactElement {
     dispatch(putProjectThunk(id));
     // reset the form
     reset();
-
     // Close accordion via useContext
     onOpenClose('');
   };
@@ -56,18 +66,12 @@ function NewNeedForm(): ReactElement {
         <Col sm={10}>
           <Form.Control
             name="tittel"
-            ref={register({
-              required: { value: true, message: 'Required' },
-              minLength: {
-                value: 2,
-                message: 'Minimum 2 characters'
-              }
-            })}
+            ref={register}
             isInvalid={!!errors.tittel}
           />
           {errors.tittel && (
             <Form.Control.Feedback type="invalid">
-              {errors.tittel.message}
+              {errors.tittel?.message}
             </Form.Control.Feedback>
           )}
         </Col>
@@ -79,13 +83,7 @@ function NewNeedForm(): ReactElement {
         <Col sm={10}>
           <Form.Control
             name="beskrivelse"
-            ref={register({
-              required: { value: true, message: 'Required' },
-              minLength: {
-                value: 2,
-                message: 'Minimum 2 characters'
-              }
-            })}
+            ref={register}
             isInvalid={!!errors.beskrivelse}
           />
           {errors.beskrivelse && (
