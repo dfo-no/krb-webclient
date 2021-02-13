@@ -42,21 +42,21 @@ export default function SpecEditor(): ReactElement {
       // Check if need.tittel is present to ensure need has any possible requirements to select.
       // React hook forms, sets the value of data.(need-title) to false if none are selected,
       // so we need to ensure data actually exist.
-      if (need.tittel in data && data[need.tittel] !== false) {
+      if (need.title in data && data[need.title] !== false) {
         let reqIndexes: string[];
         if (need.requirements.length <= 1) {
-          reqIndexes = [data[need.tittel]];
+          reqIndexes = [data[need.title]];
         } else {
-          reqIndexes = data[need.tittel];
+          reqIndexes = data[need.title];
         }
         const newRequirementList: Requirement[] = [];
         for (let i = 0; i < reqIndexes.length; i += 1) {
           newRequirementList.push(need.requirements[Number(reqIndexes[i])]);
         }
-        const updatedBehov = {
+        const updatedBehov: Need = {
           id: need.id,
-          tittel: need.tittel,
-          beskrivelse: need.beskrivelse,
+          title: need.title,
+          description: need.description,
           needs: need.needs,
           requirements: newRequirementList
         };
@@ -91,14 +91,14 @@ export default function SpecEditor(): ReactElement {
     const needsJsx = needlist.map((need: Need) => {
       return (
         <>
-          <h5>{need.tittel}</h5>
+          <h5>{need.title}</h5>
           {need.requirements.map((c, i) => (
             <div className="ml-5">
               <label key={c.id}>
                 <input
                   type="checkbox"
                   value={i}
-                  name={need.tittel}
+                  name={need.title}
                   ref={register}
                 />
                 &nbsp;{c.title}
