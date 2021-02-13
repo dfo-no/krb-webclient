@@ -1,4 +1,3 @@
-/* eslint-disable no-underscore-dangle */
 import {
   ContainerResponse,
   CosmosClient,
@@ -69,32 +68,6 @@ export class CosmosApi {
       .container(this.containerId)
       .items.upsert(itemBody);
   }
-
-  /**
-   * Scale a container
-   * You can scale the throughput (RU/s) of your container up and down to meet the needs of the workload. Learn more: https://aka.ms/cosmos-request-units
-   */
-  /* async scaleContainer() {
-    const { resource: containerDefinition } = await this.client
-      .database(this.databaseId)
-      .container(this.containerId)
-      .read();
-    const { resources: offers } = await this.client.offers.readAll().fetchAll();
-
-    const newRups = 500;
-
-    for (let index = 0; index < offers.length; index += 1) {
-      const offer = offers[index];
-      if (containerDefinition._rid !== offer.offerResourceId) {
-        continue;
-      }
-      offer.content.offerThroughput = newRups;
-      const offerToReplace = client.offer(offer.id);
-      await offerToReplace.replace(offer);
-      // console.log(`Updated offer to ${newRups} RU/s\n`);
-      break;
-    }
-  } */
 }
 
 export default CosmosApi;
