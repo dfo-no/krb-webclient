@@ -5,7 +5,7 @@ import {
   ItemDefinition,
   ItemResponse
 } from '@azure/cosmos';
-import { IConfig } from './config';
+import { Bank } from '../models/Bank';
 
 interface IPartitionKey {
   kind: string;
@@ -18,55 +18,91 @@ interface IPartitionKey {
 export class CosmosApi {
   private client: CosmosClient;
 
-  private endpoint = '';
+  private endpoint: string;
 
-  private databaseId = '';
+  private databaseId: string;
 
-  private containerId = '';
+  private containerId: string;
+
+  private readWriteKey: string;
 
   private partitionKey: IPartitionKey;
 
-  constructor(dbConfig: IConfig) {
-    const { endpoint } = dbConfig;
-    const { key } = dbConfig;
+  constructor() {
+    if (
+      !process.env.REACT_APP_COSMOS_API_URL ||
+      !process.env.REACT_APP_COSMOS_DATABASE ||
+      !process.env.REACT_APP_COSMOS_CONTAINER ||
+      !process.env.REACT_APP_COSMOS_KEY
+    ) {
+      throw Error('Missing credentials for database');
+    }
 
-    this.databaseId = dbConfig.database.id;
-    this.containerId = dbConfig.container.id;
+    this.endpoint = process.env.REACT_APP_COSMOS_API_URL;
+    this.databaseId = process.env.REACT_APP_COSMOS_DATABASE;
+    this.containerId = process.env.REACT_APP_COSMOS_CONTAINER;
+    this.readWriteKey = process.env.REACT_APP_COSMOS_KEY;
+
+    // TODO: Make new partitionkey
     this.partitionKey = { kind: 'Hash', paths: ['/Country'] };
-    this.client = new CosmosClient({ endpoint, key });
-  }
-
-  async createDatabase(): Promise<DatabaseResponse> {
-    return this.client.databases.createIfNotExists({
-      id: this.databaseId
+    this.client = new CosmosClient({
+      endpoint: this.endpoint,
+      key: this.readWriteKey
     });
   }
 
+  async createDatabase(): Promise<DatabaseResponse> {
+    const result = await this.client.databases.createIfNotExists({
+      id: this.databaseId
+    });
+    console.log('createDatabase', result);
+    return result;
+  }
+
   async readDatabase(): Promise<DatabaseResponse> {
-    return this.client.database(this.databaseId).read();
+    const result = await this.client.database(this.databaseId).read();
+    console.log('readDatabase', result);
+    return result;
   }
 
   async createContainer(): Promise<ContainerResponse> {
-    return this.client
+    const result = await this.client
       .database(this.databaseId)
       .containers.createIfNotExists(
         { id: this.containerId, partitionKey: this.partitionKey },
         { offerThroughput: 400 }
       );
+    console.log('createContainer', result);
+    return result;
   }
 
   async readContainer(): Promise<ContainerResponse> {
-    return this.client
+    const result = await this.client
       .database(this.databaseId)
       .container(this.containerId)
       .read();
+    console.log('readContainer', result);
+    return result;
   }
 
-  async createFamilyItem(itemBody: any): Promise<ItemResponse<ItemDefinition>> {
-    return this.client
+  async createBank(bank: any): Promise<ItemResponse<ItemDefinition>> {
+    const result = await this.client
       .database(this.databaseId)
       .container(this.containerId)
-      .items.upsert(itemBody);
+      // .items.create(bank);
+      .items.upsert(bank);
+    console.log('createbank', result);
+    return result;
+  }
+
+  async readBank(id: string): Promise<ItemResponse<any>> {
+    const result = await this.client
+      .database(this.databaseId)
+      .container(this.containerId)
+      .item(id)
+      .read();
+    console.log('readBank', result);
+    return result;
   }
 }
 
