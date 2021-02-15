@@ -13,7 +13,6 @@ import {
   postProjectThunk
 } from '../store/reducers/project-reducer';
 import { selectProject } from '../store/reducers/selectedProject-reducer';
-import Utils from '../common/Utils';
 
 type FormValues = {
   title: string;
@@ -35,7 +34,7 @@ function WorkbenchPage(): ReactElement {
 
   const onSubmit = (post: FormValues) => {
     const project: Bank = {
-      id: Utils.getRandomNumber(),
+      id: '',
       title: post.title,
       description: post.description,
       needs: [],

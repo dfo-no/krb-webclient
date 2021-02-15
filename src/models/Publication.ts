@@ -1,7 +1,7 @@
 export interface Publication {
-  id: number;
+  id: string;
   comment: string;
   date: string;
   version: number;
-  bankId: number;
+  bankId: string;
 }

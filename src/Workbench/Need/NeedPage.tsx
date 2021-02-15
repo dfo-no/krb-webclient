@@ -34,8 +34,8 @@ function NeedPage(): ReactElement {
       return (
         <Card key={element.id}>
           <Accordion.Toggle as={Card.Header} eventKey={indexString}>
-            <h4>{element.tittel}</h4>
-            <span>{element.beskrivelse}</span>
+            <h4>{element.title}</h4>
+            <span>{element.description}</span>
           </Accordion.Toggle>
           <Accordion.Collapse eventKey={indexString}>
             <Card.Body>

@@ -5,7 +5,6 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { useDispatch, useSelector } from 'react-redux';
 import * as yup from 'yup';
 
-import Utils from '../../common/Utils';
 import { Need } from '../../models/Need';
 import { addNeed, putProjectThunk } from '../../store/reducers/project-reducer';
 import { RootState } from '../../store/store';
@@ -39,7 +38,7 @@ function NewNeedForm(): ReactElement {
 
   const onNewNeedSubmit = (post: FormValues) => {
     const need: Need = {
-      id: Utils.getRandomNumber(),
+      id: '',
       title: post.title,
       description: post.description,
       requirements: [],

@@ -46,7 +46,7 @@ function EditNeedForm({ project, need }: IProps): ReactElement {
     dispatch(
       editNeed({
         projectId: project.id,
-        needId: +post.id,
+        needId: post.id,
         title: post.title,
         description: post.description
       })

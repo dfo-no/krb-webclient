@@ -1,7 +1,7 @@
 import { Requirement } from './Requirement';
 
 export interface Need {
-  id: number;
+  id: string;
   title: string;
   description: string;
   needs: Need[];
