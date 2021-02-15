@@ -12,8 +12,9 @@ import {
   Col
 } from 'react-bootstrap';
 import dayjs from 'dayjs';
-
+import { Link } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
+
 import { RootState } from '../../store/store';
 import { Publication } from '../../models/Publication';
 import {
@@ -25,6 +26,7 @@ import {
 import { postBank } from '../../store/reducers/bank-reducer';
 import Utils from '../../common/Utils';
 import { Bank } from '../../models/Bank';
+import { selectBank } from '../../store/reducers/selectedBank-reducer';
 
 type FormValues = {
   title: string;
@@ -62,7 +64,8 @@ function ProjectPage(): ReactElement {
       date: convertedDate,
       comment,
       version: versionNumber,
-      id: Utils.getRandomNumber()
+      id: Utils.getRandomNumber(),
+      bankId: publishedProject.id
     };
     setShowEditor(false);
 
@@ -81,6 +84,9 @@ function ProjectPage(): ReactElement {
     );
     dispatch(putProjectThunk(project.id));
     setEditMode(false);
+  };
+  const handleSelectedPublication = (bankId: number) => () => {
+    dispatch(selectBank(bankId));
   };
 
   const handleCommentChange = (
@@ -166,7 +172,12 @@ function ProjectPage(): ReactElement {
         const date = dayjs(element.date).format('DD/MM/YYYY');
         return (
           <ListGroup.Item key={element.id}>
-            <p>{`${date}     ${element.comment}`}</p>
+            <Link
+              to={`/bank/${element.bankId}`}
+              onClick={handleSelectedPublication(element.bankId)}
+            >
+              <p>{`${date}     ${element.comment}`}</p>
+            </Link>
           </ListGroup.Item>
         );
       });
