@@ -1,6 +1,8 @@
 /* eslint-disable no-param-reassign */
+import { FeedResponse } from '@azure/cosmos';
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { del, get, post, put } from '../../api/http';
+import { CosmosApi } from '../../database/CosmosApi';
 import { Bank } from '../../models/Bank';
 
 interface BankState {
@@ -20,6 +22,19 @@ export const getBank = createAsyncThunk('getBank', async (id: number) => {
 });
 
 export const getBanks = createAsyncThunk('getBanks', async () => {
+  const api = new CosmosApi();
+  const result: FeedResponse<Bank[]> = await api.fetchAllBanks();
+  const banks: Bank[] = [];
+  for (let i = 0; i < result.resources.length; i += 1) {
+    // TODO: do not fetch inedxed
+    const element = result.resources[i] as unknown;
+    banks.push(element as Bank);
+  }
+  return banks;
+});
+
+/** @deprecated */
+export const getBanks2 = createAsyncThunk('getBanks', async () => {
   const response = await get<Bank[]>(`http://localhost:3001/banks`);
   return response.data;
 });

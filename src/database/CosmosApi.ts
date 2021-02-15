@@ -2,6 +2,7 @@ import {
   ContainerResponse,
   CosmosClient,
   DatabaseResponse,
+  FeedResponse,
   ItemDefinition,
   ItemResponse
 } from '@azure/cosmos';
@@ -55,13 +56,13 @@ export class CosmosApi {
     const result = await this.client.databases.createIfNotExists({
       id: this.databaseId
     });
-    console.log('createDatabase', result);
+    // console.log('createDatabase', result);
     return result;
   }
 
   async readDatabase(): Promise<DatabaseResponse> {
     const result = await this.client.database(this.databaseId).read();
-    console.log('readDatabase', result);
+    // console.log('readDatabase', result);
     return result;
   }
 
@@ -72,7 +73,7 @@ export class CosmosApi {
         { id: this.containerId, partitionKey: this.partitionKey },
         { offerThroughput: 400 }
       );
-    console.log('createContainer', result);
+    // console.log('createContainer', result);
     return result;
   }
 
@@ -81,7 +82,7 @@ export class CosmosApi {
       .database(this.databaseId)
       .container(this.containerId)
       .read();
-    console.log('readContainer', result);
+    // console.log('readContainer', result);
     return result;
   }
 
@@ -91,7 +92,7 @@ export class CosmosApi {
       .container(this.containerId)
       // .items.create(bank);
       .items.upsert(bank);
-    console.log('createbank', result);
+    // console.log('createbank', result);
     return result;
   }
 
@@ -101,7 +102,20 @@ export class CosmosApi {
       .container(this.containerId)
       .item(id)
       .read();
-    console.log('readBank', result);
+    // console.log('readBank', result);
+    return result;
+  }
+
+  async fetchAllBanks(): Promise<FeedResponse<Bank[]>> {
+    const querySpec = {
+      query: 'SELECT * FROM c'
+    };
+
+    const result = this.client
+      .database(this.databaseId)
+      .container(this.containerId)
+      .items.query(querySpec)
+      .fetchAll();
     return result;
   }
 }
