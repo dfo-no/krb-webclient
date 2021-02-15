@@ -77,14 +77,14 @@ export default function CodeListEditor(): ReactElement {
     const code = {
       title,
       description,
-      id: Utils.getRandomNumber()
+      id: ''
     };
     dispatch(addCodeToCodelist({ projectId: id, codelistId: listId, code }));
     dispatch(putProjectThunk(id));
     setShowEdior(false);
   };
 
-  const editCodeElement = (codeId: number) => () => {
+  const editCodeElement = (codeId: string) => () => {
     const code = {
       id: codeId, // TODO: suspicious about this one
       title,

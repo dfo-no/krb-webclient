@@ -2,7 +2,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 interface SelectedCodeListState {
-  listId: number | null;
+  listId: string | null;
 }
 
 const initialState: SelectedCodeListState = { listId: null };
@@ -11,7 +11,7 @@ const selectedCodeListState = createSlice({
   name: 'selectedCodeList',
   initialState,
   reducers: {
-    selectCodeList(state, { payload }: PayloadAction<number>) {
+    selectCodeList(state, { payload }: PayloadAction<string>) {
       state.listId = payload;
     }
   }

@@ -1,7 +1,7 @@
 import { Code } from './Code';
 
 export interface Codelist {
-  id: number;
+  id: string;
   title: string;
   description: string;
   codes: Code[];

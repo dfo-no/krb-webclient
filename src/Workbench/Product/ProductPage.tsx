@@ -68,7 +68,7 @@ export default function ProductPage(): ReactElement {
     list.find((bank: Bank) => bank.id === id)
   );
 
-  const editProductElement = (productId: number) => () => {
+  const editProductElement = (productId: string) => () => {
     dispatch(
       editProduct({
         projectId: id,
@@ -83,7 +83,7 @@ export default function ProductPage(): ReactElement {
 
   const addNewProduct = (post: FormValues) => {
     const product: Product = {
-      id: Utils.getRandomNumber(),
+      id: '',
       title: post.title,
       description: post.description
     };

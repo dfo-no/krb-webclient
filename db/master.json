@@ -1,7 +1,7 @@
 {
   "banks": [
     {
-      "id": 10,
+      "id": "10",
       "title": "Kurs og konferanse",
       "description": "Generelle behov og krav",
       "version": 1,
@@ -10,17 +10,17 @@
       "products": [],
       "needs": [
         {
-          "id": 1234,
+          "id": "1234",
           "tittel": "Lokaler",
           "beskrivelse": "Passende lokaler",
           "needs": [
             {
-              "id": 84848484,
+              "id": "84848484",
               "tittel": "Parkeringsmuligheter",
               "requirements": []
             },
             {
-              "id": 84848485,
+              "id": "84848485",
               "tittel": "Auditorium",
               "requirements": []
             }
@@ -28,35 +28,35 @@
           "requirements": []
         },
         {
-          "id": 1235,
+          "id": "1235",
           "tittel": "Bespisning",
           "needs": [],
           "requirements": [
             {
-              "id": 7800,
+              "id": "7800",
               "title": "Elbil",
-              "needId": 1236,
+              "needId": "1236",
               "description": "Elbilen må kjøre minst 10km",
               "type": "kodeliste-eksakt"
             }
           ]
         },
         {
-          "id": 1236,
+          "id": "1236",
           "tittel": "Transport",
           "needs": [],
           "requirements": [
             {
-              "id": 7800,
+              "id": "7800",
               "title": "Elbil",
-              "needId": 1236,
+              "needId": "1236",
               "description": "Elbilen må kjøre minst 10km",
               "type": "kodeliste-eksakt"
             },
             {
-              "id": 7801,
+              "id": "7801",
               "title": "Alle med lappen skal kunne kjøre bilen",
-              "needId": 1236,
+              "needId": "1236",
               "description": "Bilen må være automat",
               "type": "kodeliste"
             }
@@ -66,40 +66,37 @@
       "publishedDate": "2021-01-01T02:00:00.000Z"
     },
     {
-      "id": 11,
+      "id": "11",
       "title": "Elbil til hjemmetjenesten",
       "description": "...",
       "version": 1,
-      "ordering": 2,
       "codelist": [],
       "products": [],
       "needs": [],
       "publishedDate": "2021-01-02T02:00:00.000Z"
     },
     {
-      "id": 12,
+      "id": "12",
       "title": "Vedlikehold",
       "description": "...",
       "version": 1,
-      "ordering": 2,
       "codelist": [],
       "needs": [],
       "products": [],
       "publishedDate": "2021-01-03T02:00:00.000Z"
     },
     {
-      "id": 13,
+      "id": "13",
       "title": "Kantineløsning",
       "version": 1,
       "description": "...",
-      "ordering": 2,
       "codelist": [],
       "needs": [],
       "products": [],
       "publishedDate": "2021-01-04T02:00:00.000Z"
     },
     {
-      "id": 820562,
+      "id": "820562",
       "title": "Hytte til kommunen",
       "description": "ewtwrt",
       "needs": [],
@@ -108,13 +105,13 @@
         {
           "title": "Kurs og konferanse3",
           "description": "dasds",
-          "id": 314042,
+          "id": "314042",
           "codes": []
         },
         {
           "title": "Kurs og konferanse5",
           "description": "yyytry",
-          "id": 923166,
+          "id": "923166",
           "codes": []
         }
       ],
@@ -122,48 +119,48 @@
       "publishedDate": "2021-02-02T11:48:27.274Z"
     },
     {
-      "id": 317708,
+      "id": "317708",
       "title": "Hytte til kommunen",
       "description": "ewtwrt",
       "needs": [
         {
-          "id": 1235,
+          "id": "1235",
           "tittel": "Bespisning",
           "needs": [],
           "requirements": [
             {
-              "id": 7800,
+              "id": "7800",
               "title": "Elbil",
-              "needId": 1236,
+              "needId": "1236",
               "description": "Elbilen må kjøre minst 10km",
               "type": "kodeliste-eksakt"
             },
             {
-              "id": 24941,
+              "id": "24941",
               "title": "Kurs og konferanse7",
               "description": "666",
-              "needId": 1235,
+              "needId": "1235",
               "type": "yes/no"
             },
             {
-              "id": 28588,
+              "id": "28588",
               "title": "Kurs og konferanse5",
               "description": "ewtwrt",
-              "needId": 1235,
+              "needId": "1235",
               "type": "yes/no"
             },
             {
-              "id": 448493,
+              "id": "448493",
               "title": "Kurs og konferanse6",
               "description": "666",
-              "needId": 1235,
+              "needId": "1235",
               "type": "yes/no"
             },
             {
-              "id": 140653,
+              "id": "140653",
               "title": "testing ",
               "description": "ewtwrt",
-              "needId": 1235,
+              "needId": "1235",
               "type": "yes/no"
             }
           ]
@@ -174,19 +171,19 @@
         {
           "title": "Kurs og konferanse3",
           "description": "dasds",
-          "id": 314042,
+          "id": "314042",
           "codes": []
         },
         {
           "title": "Kurs og konferanse5",
           "description": "yyytry",
-          "id": 923166,
+          "id": "923166",
           "codes": []
         },
         {
           "title": "Kurs og konferanse3",
           "description": "yyytry",
-          "id": 905810,
+          "id": "905810",
           "codes": []
         }
       ],
@@ -194,48 +191,48 @@
       "publishedDate": "2021-02-02T13:08:31.693Z"
     },
     {
-      "id": 21013,
+      "id": "21013",
       "title": "Hytte til kommunen",
       "description": "ewtwrt",
       "needs": [
         {
-          "id": 1235,
+          "id": "1235",
           "tittel": "Bespisning",
           "needs": [],
           "requirements": [
             {
-              "id": 7800,
+              "id": "7800",
               "title": "Elbil",
-              "needId": 1236,
+              "needId": "1236",
               "description": "Elbilen må kjøre minst 10km",
               "type": "kodeliste-eksakt"
             },
             {
-              "id": 24941,
+              "id": "24941",
               "title": "Kurs og konferanse7",
               "description": "666",
-              "needId": 1235,
+              "needId": "1235",
               "type": "yes/no"
             },
             {
-              "id": 28588,
+              "id": "28588",
               "title": "Kurs og konferanse5",
               "description": "ewtwrt",
-              "needId": 1235,
+              "needId": "1235",
               "type": "yes/no"
             },
             {
-              "id": 448493,
+              "id": "448493",
               "title": "Kurs og konferanse6",
               "description": "666",
-              "needId": 1235,
+              "needId": "1235",
               "type": "yes/no"
             },
             {
-              "id": 140653,
+              "id": "140653",
               "title": "testing ",
               "description": "ewtwrt",
-              "needId": 1235,
+              "needId": "1235",
               "type": "yes/no"
             }
           ]
@@ -244,12 +241,12 @@
       "products": [],
       "codelist": [
         {
-          "id": 314042,
+          "id": "314042",
           "title": "testing 6",
           "description": "yyytryjj",
           "codes": [
             {
-              "id": 194504,
+              "id": "194504",
               "title": "testing ",
               "description": "ansatte i kommunen skal ha tilgang"
             }
@@ -258,7 +255,7 @@
         {
           "title": "Kurs og konferanse5",
           "description": "yyytry",
-          "id": 923166,
+          "id": "923166",
           "codes": []
         }
       ],
@@ -268,41 +265,41 @@
           "date": "2021-02-02T13:08:31.693Z",
           "comment": "666",
           "version": 1,
-          "id": 457827
+          "id": "457827"
         }
       ],
       "publishedDate": "2021-02-02T13:08:36.355Z"
     },
     {
-      "id": 863299,
+      "id": "863299",
       "title": "ewrwerew",
       "description": "yyytry",
       "needs": [
         {
-          "id": 997673,
+          "id": "997673",
           "tittel": "testing ",
           "beskrivelse": "dsfdsfds",
           "needs": [],
           "requirements": [
             {
-              "id": 498350,
+              "id": "498350",
               "title": "6668",
               "description": "werewqr",
-              "needId": 997673,
+              "needId": "997673",
               "type": "yes/no"
             },
             {
-              "id": 550110,
+              "id": "550110",
               "title": "666",
               "description": "yyytry",
-              "needId": 997673,
+              "needId": "997673",
               "type": "yes/no"
             },
             {
-              "id": 942748,
+              "id": "942748",
               "title": "Kurs og konferanse3",
               "description": "werewqr",
-              "needId": 997673,
+              "needId": "997673",
               "type": "yes/no"
             }
           ]
@@ -312,36 +309,36 @@
         {
           "title": "6666",
           "description": "yyytry6",
-          "id": 222398
+          "id": "222398"
         },
         {
           "title": "6668",
           "description": "ansatte i kommunen skal ha tilgang",
-          "id": 568085
+          "id": "568085"
         }
       ],
       "codelist": [
         {
           "title": "ewrwerew",
           "description": "ansatte i kommunen skal ha tilgang",
-          "id": 338274,
+          "id": "338274",
           "codes": [
             {
               "title": "testing ",
               "description": "qwrqwereqr",
-              "id": 86550
+              "id": "86550"
             },
             {
               "title": "testing ",
               "description": "qwrqwereqr",
-              "id": 761262
+              "id": "761262"
             }
           ]
         },
         {
           "title": "Kurs og konferanse3",
           "description": "ewtwrt",
-          "id": 574345,
+          "id": "574345",
           "codes": []
         }
       ],
@@ -349,35 +346,35 @@
       "publishedDate": "2021-02-04T16:04:00.665Z"
     },
     {
-      "id": 596144,
+      "id": "596144",
       "title": "ewrwerew",
       "description": "yyytry",
       "needs": [
         {
-          "id": 997673,
+          "id": "997673",
           "tittel": "testing ",
           "beskrivelse": "dsfdsfds",
           "needs": [],
           "requirements": [
             {
-              "id": 498350,
+              "id": "498350",
               "title": "6668",
               "description": "werewqr",
-              "needId": 997673,
+              "needId": "997673",
               "type": "yes/no"
             },
             {
-              "id": 550110,
+              "id": "550110",
               "title": "666",
               "description": "yyytry",
-              "needId": 997673,
+              "needId": "997673",
               "type": "yes/no"
             },
             {
-              "id": 942748,
+              "id": "942748",
               "title": "Kurs og konferanse3",
               "description": "werewqr",
-              "needId": 997673,
+              "needId": "997673",
               "type": "yes/no"
             }
           ]
@@ -387,36 +384,36 @@
         {
           "title": "6666",
           "description": "yyytry6",
-          "id": 222398
+          "id": "222398"
         },
         {
           "title": "6668",
           "description": "ansatte i kommunen skal ha tilgang",
-          "id": 568085
+          "id": "568085"
         }
       ],
       "codelist": [
         {
           "title": "ewrwerew",
           "description": "ansatte i kommunen skal ha tilgang",
-          "id": 338274,
+          "id": "338274",
           "codes": [
             {
               "title": "testing ",
               "description": "qwrqwereqr",
-              "id": 86550
+              "id": "86550"
             },
             {
               "title": "testing ",
               "description": "qwrqwereqr",
-              "id": 761262
+              "id": "761262"
             }
           ]
         },
         {
           "title": "Kurs og konferanse3",
           "description": "ewtwrt",
-          "id": 574345,
+          "id": "574345",
           "codes": []
         }
       ],
@@ -424,35 +421,35 @@
       "publishedDate": "2021-02-04T16:13:46.266Z"
     },
     {
-      "id": 681358,
+      "id": "681358",
       "title": "ewrwerew7",
       "description": "yyytry77",
       "needs": [
         {
-          "id": 997673,
+          "id": "997673",
           "tittel": "testing ",
           "beskrivelse": "dsfdsfds",
           "needs": [],
           "requirements": [
             {
-              "id": 498350,
+              "id": "498350",
               "title": "6668",
               "description": "werewqr",
-              "needId": 997673,
+              "needId": "997673",
               "type": "yes/no"
             },
             {
-              "id": 550110,
+              "id": "550110",
               "title": "666",
               "description": "yyytry",
-              "needId": 997673,
+              "needId": "997673",
               "type": "yes/no"
             },
             {
-              "id": 942748,
+              "id": "942748",
               "title": "Kurs og konferanse3",
               "description": "werewqr",
-              "needId": 997673,
+              "needId": "997673",
               "type": "yes/no"
             }
           ]
@@ -462,36 +459,36 @@
         {
           "title": "6666",
           "description": "yyytry6",
-          "id": 222398
+          "id": "222398"
         },
         {
           "title": "6668",
           "description": "ansatte i kommunen skal ha tilgang",
-          "id": 568085
+          "id": "568085"
         }
       ],
       "codelist": [
         {
           "title": "ewrwerew",
           "description": "ansatte i kommunen skal ha tilgang",
-          "id": 338274,
+          "id": "338274",
           "codes": [
             {
               "title": "testing ",
               "description": "qwrqwereqr",
-              "id": 86550
+              "id": "86550"
             },
             {
               "title": "testing ",
               "description": "qwrqwereqr",
-              "id": 761262
+              "id": "761262"
             }
           ]
         },
         {
           "title": "Kurs og konferanse3",
           "description": "ewtwrt",
-          "id": 574345,
+          "id": "574345",
           "codes": []
         }
       ],
@@ -501,7 +498,7 @@
           "date": "2021-02-04T16:13:46.266Z",
           "comment": "testing ",
           "version": 1,
-          "id": 893214
+          "id": "893214"
         }
       ],
       "publishedDate": "2021-02-04T16:15:06.240Z"

@@ -71,9 +71,9 @@ export default function RequirementPage(): ReactElement {
     let needId;
     if (selectedNeed) {
       needId = selectedNeed.id;
-    } else needId = 0;
+    } else needId = '';
     const requirement = {
-      id: Utils.getRandomNumber(),
+      id: '',
       title,
       description,
       needId,
@@ -97,11 +97,11 @@ export default function RequirementPage(): ReactElement {
     dispatch(putProjectThunk(id));
   };
 
-  const editRequirementElement = (reqId: number, index: number) => () => {
+  const editRequirementElement = (reqId: string, index: number) => () => {
     let needId;
     if (selectedNeed) {
       needId = selectedNeed.id;
-    } else needId = 0;
+    } else needId = '';
     const requirement = {
       id: reqId,
       title,

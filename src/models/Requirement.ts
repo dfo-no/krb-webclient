@@ -1,7 +1,7 @@
 export interface Requirement {
-  id: number;
+  id: string;
   title: string;
   description: string;
-  needId: number;
+  needId: string;
   type: string;
 }

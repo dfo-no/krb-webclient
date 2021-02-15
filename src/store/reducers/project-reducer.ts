@@ -52,12 +52,12 @@ export const postProjectThunk = createAsyncThunk(
 
 export const putProjectThunk = createAsyncThunk<
   Bank,
-  number,
+  string,
   {
     dispatch: AppDispatch;
     state: RootState;
   }
->('putProjectThunk', async (projectId: number, thunkApi) => {
+>('putProjectThunk', async (projectId: string, thunkApi) => {
   const project = Utils.ensure(
     thunkApi
       .getState()
@@ -102,7 +102,7 @@ const projectSlice = createSlice({
       {
         payload
       }: PayloadAction<{
-        projectId: number;
+        projectId: string;
         title: string;
         description: string;
       }>
@@ -113,7 +113,7 @@ const projectSlice = createSlice({
       state.list[projectIndex].title = payload.title;
       state.list[projectIndex].description = payload.description;
     },
-    incrementProjectVersion(state, { payload }: PayloadAction<number>) {
+    incrementProjectVersion(state, { payload }: PayloadAction<string>) {
       const projectIndex = state.list.findIndex(
         (project) => project.id === payload
       );
@@ -123,7 +123,7 @@ const projectSlice = createSlice({
       state,
       {
         payload
-      }: PayloadAction<{ projectId: number; publication: Publication }>
+      }: PayloadAction<{ projectId: string; publication: Publication }>
     ) {
       const projectIndex = Utils.ensure(
         state.list.findIndex((project) => project.id === payload.projectId)
@@ -136,7 +136,7 @@ const projectSlice = createSlice({
     },
     publishProject(
       state,
-      { payload }: PayloadAction<{ id: number; publication: Publication }>
+      { payload }: PayloadAction<{ id: string; publication: Publication }>
     ) {
       const index = state.list.findIndex(
         (project) => project.id === payload.id
@@ -147,7 +147,7 @@ const projectSlice = createSlice({
 
       state.list[index].publications?.push(payload.publication);
     },
-    addNeed(state, { payload }: PayloadAction<{ id: number; need: Need }>) {
+    addNeed(state, { payload }: PayloadAction<{ id: string; need: Need }>) {
       const projectIndex = Utils.ensure(
         state.list.findIndex((project) => project.id === payload.id)
       );
@@ -158,8 +158,8 @@ const projectSlice = createSlice({
       {
         payload
       }: PayloadAction<{
-        projectId: number;
-        needId: number;
+        projectId: string;
+        needId: string;
         title: string;
         description: string;
       }>
@@ -179,7 +179,7 @@ const projectSlice = createSlice({
     },
     addCodelist(
       state,
-      { payload }: PayloadAction<{ id: number; codelist: Codelist }>
+      { payload }: PayloadAction<{ id: string; codelist: Codelist }>
     ) {
       const index = Utils.ensure(
         state.list.findIndex((project) => project.id === payload.id)
@@ -188,7 +188,7 @@ const projectSlice = createSlice({
     },
     addProduct(
       state,
-      { payload }: PayloadAction<{ id: number; product: Product }>
+      { payload }: PayloadAction<{ id: string; product: Product }>
     ) {
       const index = Utils.ensure(
         state.list.findIndex((project) => project.id === payload.id)
@@ -200,8 +200,8 @@ const projectSlice = createSlice({
       {
         payload
       }: PayloadAction<{
-        projectId: number;
-        productId: number;
+        projectId: string;
+        productId: string;
         title: string;
         description: string;
       }>
@@ -222,8 +222,8 @@ const projectSlice = createSlice({
       {
         payload
       }: PayloadAction<{
-        projectId: number;
-        codelistId: number;
+        projectId: string;
+        codelistId: string;
         title: string;
         description: string;
       }>
@@ -242,7 +242,7 @@ const projectSlice = createSlice({
       state,
       {
         payload
-      }: PayloadAction<{ projectId: number; codelistId: number; code: Code }>
+      }: PayloadAction<{ projectId: string; codelistId: string; code: Code }>
     ) {
       const projectIndex = Utils.ensure(
         state.list.findIndex((project) => project.id === payload.projectId)
@@ -268,7 +268,7 @@ const projectSlice = createSlice({
       state,
       {
         payload
-      }: PayloadAction<{ projectId: number; codelistId: number; code: Code }>
+      }: PayloadAction<{ projectId: string; codelistId: string; code: Code }>
     ) {
       const projectIndex = Utils.ensure(
         state.list.findIndex((project) => project.id === payload.projectId)
@@ -282,7 +282,7 @@ const projectSlice = createSlice({
     },
     addCode(
       state,
-      { payload }: PayloadAction<{ id: number; code: Code; codeListId: number }>
+      { payload }: PayloadAction<{ id: string; code: Code; codeListId: string }>
     ) {
       const index = Utils.ensure(
         state.list.findIndex((project) => project.id === payload.id)
@@ -295,7 +295,7 @@ const projectSlice = createSlice({
     },
     editCode(
       state,
-      { payload }: PayloadAction<{ id: number; code: Code; codeListId: number }>
+      { payload }: PayloadAction<{ id: string; code: Code; codeListId: string }>
     ) {
       // todo: move to more suitable and less repetetive place
       const index = Utils.ensure(
@@ -315,7 +315,7 @@ const projectSlice = createSlice({
       {
         payload
       }: PayloadAction<{
-        projectId: number;
+        projectId: string;
         needIndex: number;
         reqList: Requirement[];
       }>
@@ -331,9 +331,9 @@ const projectSlice = createSlice({
       {
         payload
       }: PayloadAction<{
-        projectId: number;
+        projectId: string;
         needIndex: number;
-        reqId: number;
+        reqId: string;
         requirement: Requirement;
       }>
     ) {
@@ -354,7 +354,7 @@ const projectSlice = createSlice({
       {
         payload
       }: PayloadAction<{
-        id: number;
+        id: string;
         requirement: Requirement;
         needIndex: number;
         requirementIndex: number;
@@ -372,7 +372,7 @@ const projectSlice = createSlice({
       {
         payload
       }: PayloadAction<{
-        id: number;
+        id: string;
         requirement: Requirement;
         needIndex: number;
       }>

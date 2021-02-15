@@ -39,7 +39,7 @@ function NewNeedForm(): ReactElement {
 
   const onNewNeedSubmit = (post: FormValues) => {
     const need: Need = {
-      id: Utils.getRandomNumber(),
+      id: '',
       title: post.title,
       description: post.description,
       requirements: [],
