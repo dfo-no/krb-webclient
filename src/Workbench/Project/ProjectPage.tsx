@@ -57,14 +57,14 @@ function ProjectPage(): ReactElement {
     const convertedDate = dayjs(new Date()).toJSON();
     const publishedProject = { ...project };
     publishedProject.publishedDate = convertedDate;
-    publishedProject.id = Utils.getRandomNumber();
+    publishedProject.id = '';
     dispatch(postBank(publishedProject));
 
     const publication: Publication = {
       date: convertedDate,
       comment,
       version: versionNumber,
-      id: Utils.getRandomNumber(),
+      id: '',
       bankId: publishedProject.id
     };
     setShowEditor(false);
@@ -85,7 +85,7 @@ function ProjectPage(): ReactElement {
     dispatch(putProjectThunk(project.id));
     setEditMode(false);
   };
-  const handleSelectedPublication = (bankId: number) => () => {
+  const handleSelectedPublication = (bankId: string) => () => {
     dispatch(selectBank(bankId));
   };
 

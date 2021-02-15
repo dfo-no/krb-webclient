@@ -34,7 +34,7 @@ export default function CodelistPage(): ReactElement {
     list.find((bank: Bank) => bank.id === id)
   );
 
-  const setSelectedKodeliste = (selectedCodelistId: number) => () => {
+  const setSelectedKodeliste = (selectedCodelistId: string) => () => {
     dispatch(selectCodeList(selectedCodelistId));
   };
 
@@ -66,7 +66,7 @@ export default function CodelistPage(): ReactElement {
     const codelist: Codelist = {
       title: post.title,
       description: post.description,
-      id: Utils.getRandomNumber(),
+      id: '',
       codes: []
     };
     dispatch(addCodelist({ id, codelist }));

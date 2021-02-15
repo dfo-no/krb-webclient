@@ -4,7 +4,7 @@ import { Publication } from './Publication';
 import { Product } from './Product';
 
 export interface Bank {
-  id: number;
+  id: string;
   title: string;
   description: string;
   needs: Need[];
