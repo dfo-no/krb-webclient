@@ -58,7 +58,8 @@ export default function SpecEditor(): ReactElement {
           title: need.title,
           description: need.description,
           needs: need.needs,
-          requirements: newRequirementList
+          requirements: newRequirementList,
+          type: 'need'
         };
         selectedNeeds.push(updatedBehov);
       }

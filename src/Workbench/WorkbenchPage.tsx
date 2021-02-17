@@ -40,7 +40,8 @@ function WorkbenchPage(): ReactElement {
       needs: [],
       products: [],
       codelist: [],
-      version: 1
+      version: 1,
+      type: 'bank'
     };
     dispatch(postProjectThunk(project));
     reset();

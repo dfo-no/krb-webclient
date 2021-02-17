@@ -67,7 +67,8 @@ export default function CodelistPage(): ReactElement {
       title: post.title,
       description: post.description,
       id: '',
-      codes: []
+      codes: [],
+      type: 'codelist'
     };
     dispatch(addCodelist({ id, codelist }));
     dispatch(putProjectThunk(id));

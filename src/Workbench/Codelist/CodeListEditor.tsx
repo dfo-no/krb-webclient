@@ -74,10 +74,11 @@ export default function CodeListEditor(): ReactElement {
   };
 
   const addNewCode = () => {
-    const code = {
+    const code: Code = {
       title,
       description,
-      id: ''
+      id: '',
+      type: 'code'
     };
     dispatch(addCodeToCodelist({ projectId: id, codelistId: listId, code }));
     dispatch(putProjectThunk(id));
@@ -85,10 +86,11 @@ export default function CodeListEditor(): ReactElement {
   };
 
   const editCodeElement = (codeId: string) => () => {
-    const code = {
+    const code: Code = {
       id: codeId, // TODO: suspicious about this one
       title,
-      description
+      description,
+      type: 'code'
     };
 
     dispatch(editCodeInCodelist({ projectId: id, codelistId: listId, code }));
