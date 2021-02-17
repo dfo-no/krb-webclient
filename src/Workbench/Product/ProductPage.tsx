@@ -85,7 +85,8 @@ export default function ProductPage(): ReactElement {
     const product: Product = {
       id: '',
       title: post.title,
-      description: post.description
+      description: post.description,
+      type: 'product'
     };
     dispatch(addProduct({ id, product }));
     dispatch(putProjectThunk(id));

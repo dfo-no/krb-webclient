@@ -42,7 +42,8 @@ function NewNeedForm(): ReactElement {
       title: post.title,
       description: post.description,
       requirements: [],
-      needs: []
+      needs: [],
+      type: 'need'
     };
     dispatch(addNeed({ id, need }));
     dispatch(putProjectThunk(id));

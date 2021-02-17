@@ -65,7 +65,8 @@ function ProjectPage(): ReactElement {
       comment,
       version: versionNumber,
       id: '',
-      bankId: publishedProject.id
+      bankId: publishedProject.id,
+      type: 'publication'
     };
     setShowEditor(false);
 
