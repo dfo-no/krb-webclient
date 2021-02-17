@@ -13,6 +13,7 @@ import {
 import { useDispatch, useSelector } from 'react-redux';
 
 import { useForm } from 'react-hook-form';
+import { v4 as uuidv4 } from 'uuid';
 import { Product } from '../../models/Product';
 import { RootState } from '../../store/store';
 import {
@@ -83,7 +84,7 @@ export default function ProductPage(): ReactElement {
 
   const addNewProduct = (post: FormValues) => {
     const product: Product = {
-      id: '',
+      id: uuidv4(),
       title: post.title,
       description: post.description,
       type: 'product'

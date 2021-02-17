@@ -12,6 +12,7 @@ import {
   FormControl
 } from 'react-bootstrap';
 
+import { v4 as uuidv4 } from 'uuid';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../store/store';
 import {
@@ -73,7 +74,7 @@ export default function RequirementPage(): ReactElement {
       needId = selectedNeed.id;
     } else needId = '';
     const requirement: Requirement = {
-      id: '',
+      id: uuidv4(),
       title,
       description,
       needId,
