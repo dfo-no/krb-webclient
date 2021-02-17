@@ -12,6 +12,7 @@ import {
   FormControl
 } from 'react-bootstrap';
 
+import { v4 as uuidv4 } from 'uuid';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../store/store';
 import {
@@ -72,12 +73,13 @@ export default function RequirementPage(): ReactElement {
     if (selectedNeed) {
       needId = selectedNeed.id;
     } else needId = '';
-    const requirement = {
-      id: '',
+    const requirement: Requirement = {
+      id: uuidv4(),
       title,
       description,
       needId,
-      type: 'yes/no'
+      kind: 'yes/no',
+      type: 'requirement'
     };
     const reqList = [...requirementList];
     reqList.push(requirement);
@@ -102,12 +104,13 @@ export default function RequirementPage(): ReactElement {
     if (selectedNeed) {
       needId = selectedNeed.id;
     } else needId = '';
-    const requirement = {
+    const requirement: Requirement = {
       id: reqId,
       title,
       description,
       needId,
-      type: 'yes/no'
+      kind: 'yes/no',
+      type: 'requirement'
     };
     const reqList = [...requirementList];
     reqList[index] = requirement;

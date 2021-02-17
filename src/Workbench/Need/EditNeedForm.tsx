@@ -24,9 +24,9 @@ interface IProps {
 }
 
 const needSchema = yup.object().shape({
-  id: yup.number().required(),
-  tittel: yup.string().required(),
-  beskrivelse: yup.string().required()
+  id: yup.string().required(),
+  title: yup.string().required(),
+  description: yup.string().required()
 });
 
 function EditNeedForm({ project, need }: IProps): ReactElement {
@@ -59,7 +59,7 @@ function EditNeedForm({ project, need }: IProps): ReactElement {
 
   return (
     <Form
-      onSubmit={handleSubmit(onEditNeedSubmit)}
+      onSubmit={handleSubmit((e) => onEditNeedSubmit(e))}
       autoComplete="off"
       noValidate
       validated={validated}

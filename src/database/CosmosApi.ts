@@ -1,100 +1,149 @@
-/* eslint-disable no-underscore-dangle */
 import {
+  Container,
   ContainerResponse,
   CosmosClient,
+  Database,
   DatabaseResponse,
+  FeedResponse,
   ItemDefinition,
   ItemResponse
 } from '@azure/cosmos';
-import { IConfig } from './config';
+
+import { Bank } from '../models/Bank';
 
 interface IPartitionKey {
   kind: string;
   paths: string[];
 }
 
-// TODO: Strong typing, read result in a meaningful manner, error handeling etc....
-// This is a work in progress
-
 export class CosmosApi {
   private client: CosmosClient;
 
-  private endpoint = '';
+  private endpoint: string;
 
-  private databaseId = '';
+  private databaseId: string;
 
-  private containerId = '';
+  private containerId: string;
+
+  private readWriteKey: string;
 
   private partitionKey: IPartitionKey;
 
-  constructor(dbConfig: IConfig) {
-    const { endpoint } = dbConfig;
-    const { key } = dbConfig;
+  private container: Container;
 
-    this.databaseId = dbConfig.database.id;
-    this.containerId = dbConfig.container.id;
-    this.partitionKey = { kind: 'Hash', paths: ['/Country'] };
-    this.client = new CosmosClient({ endpoint, key });
+  private database: Database;
+
+  constructor() {
+    if (
+      !process.env.REACT_APP_COSMOS_API_URL ||
+      !process.env.REACT_APP_COSMOS_DATABASE ||
+      !process.env.REACT_APP_COSMOS_CONTAINER ||
+      !process.env.REACT_APP_COSMOS_KEY
+    ) {
+      throw Error('Missing credentials for database');
+    }
+
+    this.endpoint = process.env.REACT_APP_COSMOS_API_URL;
+    this.databaseId = process.env.REACT_APP_COSMOS_DATABASE;
+    this.containerId = process.env.REACT_APP_COSMOS_CONTAINER;
+    this.readWriteKey = process.env.REACT_APP_COSMOS_KEY;
+
+    // TODO: Make new partitionkey
+    this.partitionKey = { kind: 'Hash', paths: ['/type'] };
+    this.client = new CosmosClient({
+      endpoint: this.endpoint,
+      key: this.readWriteKey
+    });
+    this.database = this.client.database(this.databaseId);
+    this.container = this.database.container(this.containerId);
   }
 
-  async createDatabase(): Promise<DatabaseResponse> {
-    return this.client.databases.createIfNotExists({
+  async createDatabaseIfNotExists(): Promise<DatabaseResponse> {
+    const result = await this.client.databases.createIfNotExists({
       id: this.databaseId
     });
+    return result;
   }
 
+  /**
+   * Read the database definition
+   */
   async readDatabase(): Promise<DatabaseResponse> {
-    return this.client.database(this.databaseId).read();
+    const result = await this.database.read();
+    return result;
   }
 
-  async createContainer(): Promise<ContainerResponse> {
-    return this.client
+  async createContainerIfNotExists(): Promise<ContainerResponse> {
+    const result = await this.client
       .database(this.databaseId)
       .containers.createIfNotExists(
         { id: this.containerId, partitionKey: this.partitionKey },
         { offerThroughput: 400 }
       );
+    return result;
   }
 
   async readContainer(): Promise<ContainerResponse> {
-    return this.client
-      .database(this.databaseId)
-      .container(this.containerId)
-      .read();
-  }
-
-  async createFamilyItem(itemBody: any): Promise<ItemResponse<ItemDefinition>> {
-    return this.client
-      .database(this.databaseId)
-      .container(this.containerId)
-      .items.upsert(itemBody);
+    const result = await this.container.read();
+    return result;
   }
 
   /**
-   * Scale a container
-   * You can scale the throughput (RU/s) of your container up and down to meet the needs of the workload. Learn more: https://aka.ms/cosmos-request-units
+   * Query the container using SQL
    */
-  /* async scaleContainer() {
-    const { resource: containerDefinition } = await this.client
-      .database(this.databaseId)
-      .container(this.containerId)
-      .read();
-    const { resources: offers } = await this.client.offers.readAll().fetchAll();
+  async queryContainer(): Promise<FeedResponse<Bank>> {
+    const querySpec = {
+      query: 'SELECT VALUE r FROM root r WHERE r.id = @id',
+      parameters: [
+        {
+          name: '@id',
+          value: '2'
+        }
+      ]
+    };
 
-    const newRups = 500;
+    const result = await this.container.items.query(querySpec).fetchAll();
+    return result;
+  }
 
-    for (let index = 0; index < offers.length; index += 1) {
-      const offer = offers[index];
-      if (containerDefinition._rid !== offer.offerResourceId) {
-        continue;
-      }
-      offer.content.offerThroughput = newRups;
-      const offerToReplace = client.offer(offer.id);
-      await offerToReplace.replace(offer);
-      // console.log(`Updated offer to ${newRups} RU/s\n`);
-      break;
-    }
-  } */
+  async createBank(bank: Bank): Promise<ItemResponse<Bank>> {
+    const result = await this.container.items.upsert<Bank>(bank);
+    return result;
+  }
+
+  async readBank(id: string): Promise<ItemResponse<Bank>> {
+    const result = await this.container.item(id).read<Bank>();
+    return result;
+  }
+
+  async replaceBank(bank: Bank): Promise<ItemResponse<ItemDefinition>> {
+    const result = await this.container.item(bank.id).replace({ ...bank });
+    return result;
+  }
+
+  async deleteBank(id: string): Promise<ItemResponse<any>> {
+    const result = await this.container.item(id).delete();
+    return result;
+  }
+
+  async fetchAllBanks(): Promise<FeedResponse<Bank[]>> {
+    const querySpec = {
+      query: "SELECT * FROM c WHERE c.type = 'bank' AND c.publishedDate != ''"
+    };
+
+    const result = this.container.items.query<Bank[]>(querySpec).fetchAll();
+    return result;
+  }
+
+  async fetchAllProjects(): Promise<FeedResponse<Bank[]>> {
+    const querySpec = {
+      query:
+        "SELECT * FROM c WHERE c.type='bank' AND (NOT IS_DEFINED(c.publishedDate) OR c.publishedDate = '')"
+    };
+
+    const result = this.container.items.query<Bank[]>(querySpec).fetchAll();
+    return result;
+  }
 }
 
 export default CosmosApi;

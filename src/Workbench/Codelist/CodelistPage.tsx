@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { Button, Card, Col, Form, ListGroup, Row } from 'react-bootstrap';
 import { useForm } from 'react-hook-form';
-
+import { v4 as uuidv4 } from 'uuid';
 import styles from './CodelistPage.module.scss';
 import { RootState } from '../../store/store';
 import { Codelist } from '../../models/Codelist';
@@ -66,8 +66,9 @@ export default function CodelistPage(): ReactElement {
     const codelist: Codelist = {
       title: post.title,
       description: post.description,
-      id: '',
-      codes: []
+      id: uuidv4(),
+      codes: [],
+      type: 'codelist'
     };
     dispatch(addCodelist({ id, codelist }));
     dispatch(putProjectThunk(id));

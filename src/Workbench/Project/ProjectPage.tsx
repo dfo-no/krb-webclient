@@ -23,7 +23,7 @@ import {
   addPublication,
   incrementProjectVersion
 } from '../../store/reducers/project-reducer';
-import { postBank } from '../../store/reducers/bank-reducer';
+import { postBankThunk } from '../../store/reducers/bank-reducer';
 import Utils from '../../common/Utils';
 import { Bank } from '../../models/Bank';
 import { selectBank } from '../../store/reducers/selectedBank-reducer';
@@ -58,14 +58,15 @@ function ProjectPage(): ReactElement {
     const publishedProject = { ...project };
     publishedProject.publishedDate = convertedDate;
     publishedProject.id = '';
-    dispatch(postBank(publishedProject));
+    dispatch(postBankThunk(publishedProject));
 
     const publication: Publication = {
       date: convertedDate,
       comment,
       version: versionNumber,
       id: '',
-      bankId: publishedProject.id
+      bankId: publishedProject.id,
+      type: 'publication'
     };
     setShowEditor(false);
 

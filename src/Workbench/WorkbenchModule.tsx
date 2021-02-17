@@ -28,7 +28,7 @@ export default function WorkbenchModule(): ReactElement {
 
   // Can set this safely, even if we got here directly by url or by clicks
   if (projectMatch?.params.projectId && !id) {
-    dispatch(selectProject(+projectMatch?.params.projectId));
+    dispatch(selectProject(projectMatch?.params.projectId));
   }
 
   /* Every child of this WorkbenchModule need the list of projects.
