@@ -9,15 +9,6 @@ class Utils {
     return argument;
   }
 
-  static getRandomNumber(): number {
-    // TODO: this is just for dev
-    const min = Math.ceil(100);
-    const max = Math.floor(1000000);
-
-    // The maximum is exclusive and the minimum is inclusive
-    return Math.floor(Math.random() * (max - min) + min);
-  }
-
   static truncate(
     str: string | undefined,
     length = 100,
