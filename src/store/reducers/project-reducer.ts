@@ -1,7 +1,6 @@
 /* eslint-disable no-param-reassign */
 import { FeedResponse, ItemDefinition, ItemResponse } from '@azure/cosmos';
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { del, get, post, put } from '../../api/http';
 import Utils from '../../common/Utils';
 import { CosmosApi } from '../../database/CosmosApi';
 import { Bank } from '../../models/Bank';
@@ -27,9 +26,10 @@ const initialState: ProjectState = {
 
 export const getProjectThunk = createAsyncThunk(
   'getProjectThunk',
-  async (id: number) => {
-    const response = await get<Bank[]>(`http://localhost:3001/projects/${id}`);
-    return response.data;
+  async (id: string) => {
+    const api = new CosmosApi();
+    const result = await api.readBank(id);
+    return result.resource;
   }
 );
 
@@ -66,6 +66,7 @@ export const putProjectThunk = createAsyncThunk<
     state: RootState;
   }
 >('putProjectThunk', async (projectId: string, thunkApi) => {
+  // get updated project from redux
   const project = Utils.ensure(
     thunkApi
       .getState()
@@ -74,16 +75,16 @@ export const putProjectThunk = createAsyncThunk<
   const api = new CosmosApi();
   const result: ItemResponse<ItemDefinition> = await api.replaceBank(project);
   const res = result.resource as unknown;
+
   return res as Bank;
 });
 
 export const deleteProjectThunk = createAsyncThunk(
   'deleteProjectThunk',
   async (project: Bank) => {
-    const response = await del(`http://localhost:3001/projects/${project.id}`, {
-      method: 'DELETE'
-    });
-    return response.data;
+    const api = new CosmosApi();
+    const result = await api.deleteBank(project.id);
+    return result.resource;
   }
 );
 
@@ -407,7 +408,6 @@ const projectSlice = createSlice({
       state.status = 'rejected';
     });
     builder.addCase(postProjectThunk.fulfilled, (state, { payload }) => {
-      console.log(payload);
       state.list.push(payload);
       state.status = 'fulfilled';
     });

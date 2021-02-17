@@ -37,8 +37,8 @@ export const postBankThunk = createAsyncThunk(
   'postBank',
   async (bank: Bank) => {
     const api = new CosmosApi();
-    const result = api.createBank(bank);
-    return result;
+    const result = await api.createBank(bank);
+    return result.resource;
   }
 );
 

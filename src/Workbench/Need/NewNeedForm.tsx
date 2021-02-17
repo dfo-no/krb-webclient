@@ -5,27 +5,27 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { useDispatch, useSelector } from 'react-redux';
 import * as yup from 'yup';
 
+import { v4 as uuidv4 } from 'uuid';
 import { Need } from '../../models/Need';
 import { addNeed, putProjectThunk } from '../../store/reducers/project-reducer';
 import { RootState } from '../../store/store';
 import { AccordionContext } from './AccordionContext';
 
 type FormValues = {
-  projectId: number;
   title: string;
   description: string;
 };
 
 const needSchema = yup.object().shape({
-  id: yup.number().required(),
-  tittel: yup.string().required(),
-  beskrivelse: yup.string().required()
+  title: yup.string().required(),
+  description: yup.string().required()
 });
 
 function NewNeedForm(): ReactElement {
   const dispatch = useDispatch();
   const { onOpenClose } = useContext(AccordionContext);
   const [validated] = useState(false);
+
   const { register, handleSubmit, reset, errors } = useForm({
     resolver: yupResolver(needSchema)
   });
@@ -36,9 +36,10 @@ function NewNeedForm(): ReactElement {
     return <div>Loading NeedForm</div>;
   }
 
-  const onNewNeedSubmit = (post: FormValues) => {
+  const onNewNeedSubmit = (post: any) => {
     const need: Need = {
-      id: '',
+      // TODO: remove uuidv4, this should be CosmosDB's task (perhaps by reference)
+      id: uuidv4(),
       title: post.title,
       description: post.description,
       requirements: [],
@@ -55,7 +56,7 @@ function NewNeedForm(): ReactElement {
 
   return (
     <Form
-      onSubmit={handleSubmit(onNewNeedSubmit)}
+      onSubmit={handleSubmit((e) => onNewNeedSubmit(e))}
       autoComplete="off"
       noValidate
       validated={validated}
