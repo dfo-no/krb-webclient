@@ -21,7 +21,7 @@ export const getBank = createAsyncThunk('getBank', async (id: number) => {
   return response.data;
 });
 
-export const getBanks = createAsyncThunk('getBanks', async () => {
+export const getBanksThunk = createAsyncThunk('getBanks', async () => {
   const api = new CosmosApi();
   const result: FeedResponse<Bank[]> = await api.fetchAllBanks();
   const banks: Bank[] = [];
@@ -33,16 +33,14 @@ export const getBanks = createAsyncThunk('getBanks', async () => {
   return banks;
 });
 
-/** @deprecated */
-export const getBanks2 = createAsyncThunk('getBanks', async () => {
-  const response = await get<Bank[]>(`http://localhost:3001/banks`);
-  return response.data;
-});
-
-export const postBank = createAsyncThunk('postBank', async (bank: Bank) => {
-  const response = await post<Bank>(`http://localhost:3001/banks`, bank);
-  return response.data;
-});
+export const postBankThunk = createAsyncThunk(
+  'postBank',
+  async (bank: Bank) => {
+    const api = new CosmosApi();
+    const result = api.createBank(bank);
+    return result;
+  }
+);
 
 export const putBank = createAsyncThunk('putBank', async (bank: Bank) => {
   const response = await put(
@@ -71,14 +69,14 @@ const bankSlice = createSlice({
     // builder.addCase(getBank.fulfilled, (state, { payload }) => {});
     // builder.addCase(getBank.pending, (state, { payload }) => {});
     // builder.addCase(getBank.rejected, (state, { payload }) => {});
-    builder.addCase(getBanks.pending, (state) => {
+    builder.addCase(getBanksThunk.pending, (state) => {
       state.status = 'pending';
     });
-    builder.addCase(getBanks.fulfilled, (state, { payload }) => {
+    builder.addCase(getBanksThunk.fulfilled, (state, { payload }) => {
       state.list = payload;
       state.status = 'fulfilled';
     });
-    builder.addCase(getBanks.rejected, (state) => {
+    builder.addCase(getBanksThunk.rejected, (state) => {
       state.status = 'rejected';
     });
     // builder.addCase(postBank.fulfilled, (state, { payload }) => {});

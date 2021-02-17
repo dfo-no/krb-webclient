@@ -6,11 +6,11 @@ import './i18n';
 import { Provider } from 'react-redux';
 import reportWebVitals from './reportWebVitals';
 import store from './store/store';
-import { getBanks } from './store/reducers/bank-reducer';
+import { getBanksThunk } from './store/reducers/bank-reducer';
 import App from './App';
 
 // fetch all banks here because they are published and will show on the front page.
-store.dispatch(getBanks());
+store.dispatch(getBanksThunk());
 
 // Hot reload the component tree whenever a component file changes
 const render = () => {
