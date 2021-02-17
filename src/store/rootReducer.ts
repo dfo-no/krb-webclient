@@ -8,6 +8,7 @@ import selectedCodeListReducer from './reducers/selectedCodelist-reducer';
 import userReducer from './reducers/userReducer';
 import selectedBankReducer from './reducers/selectedBank-reducer';
 import selectedNeedReducer from './reducers/selectedNeed-reducer';
+import selectedRequirementReducer from './reducers/selectedRequirement-reducer';
 
 const rootReducer = combineReducers({
   loader: loaderReducer,
@@ -17,7 +18,8 @@ const rootReducer = combineReducers({
   selectedProject: selectedProjectReducer,
   selectedCodeList: selectedCodeListReducer,
   selectedBank: selectedBankReducer,
-  selectNeed: selectedNeedReducer
+  selectNeed: selectedNeedReducer,
+  selectedRequirement: selectedRequirementReducer
 });
 
 export default rootReducer;

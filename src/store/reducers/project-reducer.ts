@@ -25,7 +25,7 @@ const initialState: ProjectState = {
 
 export const getProjectThunk = createAsyncThunk(
   'getProjectThunk',
-  async (id: number) => {
+  async (id: string) => {
     const response = await get<Bank[]>(`http://localhost:3001/projects/${id}`);
     return response.data;
   }

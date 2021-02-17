@@ -11,8 +11,9 @@ import {
   InputGroup,
   FormControl
 } from 'react-bootstrap';
-
+import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
+
 import { RootState } from '../../store/store';
 import {
   editRequirementInNeed,
@@ -24,6 +25,7 @@ import { Requirement } from '../../models/Requirement';
 import { Need } from '../../models/Need';
 import Utils from '../../common/Utils';
 import { Bank } from '../../models/Bank';
+import { selectRequirement } from '../../store/reducers/selectedRequirement-reducer';
 
 export default function RequirementPage(): ReactElement {
   const dispatch = useDispatch();
@@ -133,6 +135,10 @@ export default function RequirementPage(): ReactElement {
     setRequirementsList(need.requirements);
   };
 
+  const setSelectedRequirement = (reqId: string) => () => {
+    dispatch(selectRequirement(reqId));
+  };
+
   const requirements = (reqs: Requirement[]) => {
     if (!selectedNeed) {
       return (
@@ -156,7 +162,10 @@ export default function RequirementPage(): ReactElement {
             </Card.Header>
             <Accordion.Collapse eventKey={index.toString()}>
               <Card.Body>
-                <>
+                <Link
+                  to={`/workbench/${selectedProject.id}/requirement/${element.id}`}
+                  onClick={setSelectedRequirement(element.id)}
+                >
                   <label htmlFor="title">Title</label>
                   <InputGroup className="mb-3 30vw">
                     <FormControl
@@ -179,7 +188,7 @@ export default function RequirementPage(): ReactElement {
                   >
                     Save
                   </Button>
-                </>
+                </Link>
               </Card.Body>
             </Accordion.Collapse>
           </Card>
