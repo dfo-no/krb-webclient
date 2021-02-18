@@ -69,23 +69,24 @@ export default function ResponseEditor(): ReactElement {
   const onSubmit = (data: { [x: string]: any }) => {
     const selectedNeeds: Need[] = [];
     needs.forEach((need: Need) => {
-      if (need.tittel in data && data[need.tittel] !== false) {
+      if (need.title in data && data[need.title] !== false) {
         let reqIndexes: string[];
         if (need.requirements.length <= 1) {
-          reqIndexes = [data[need.tittel]];
+          reqIndexes = [data[need.title]];
         } else {
-          reqIndexes = data[need.tittel];
+          reqIndexes = data[need.title];
         }
         const newRequirementList: Requirement[] = [];
         for (let i = 0; i < reqIndexes.length; i += 1) {
           newRequirementList.push(need.requirements[Number(reqIndexes[i])]);
         }
-        const updatedBehov = {
+        const updatedBehov: Need = {
           id: need.id,
-          tittel: need.tittel,
-          beskrivelse: need.beskrivelse,
+          title: need.title,
+          description: need.description,
           needs: need.needs,
-          requirements: newRequirementList
+          requirements: newRequirementList,
+          type: 'need'
         };
         selectedNeeds.push(updatedBehov);
       }
@@ -111,7 +112,7 @@ export default function ResponseEditor(): ReactElement {
     const needsJsx = needlist.map((need: Need) => {
       return (
         <>
-          <h5>{need.tittel}</h5>
+          <h5>{need.title}</h5>
           {need.requirements.map((c, i) => (
             <div className="ml-5">
               <label key={c.id}>
@@ -119,7 +120,7 @@ export default function ResponseEditor(): ReactElement {
                 <input
                   type="checkbox"
                   value={i}
-                  name={need.tittel}
+                  name={need.title}
                   ref={register}
                   className="ml-2"
                 />

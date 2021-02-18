@@ -40,7 +40,8 @@ function WorkbenchPage(): ReactElement {
       needs: [],
       products: [],
       codelist: [],
-      version: 1
+      version: 1,
+      type: 'bank'
     };
     dispatch(postProjectThunk(project));
     reset();
@@ -52,9 +53,11 @@ function WorkbenchPage(): ReactElement {
     history.push(`/workbench/${project.id}`);
   }
 
-  function onDelete(project: Bank) {
-    dispatch(deleteProjectThunk(project));
-    dispatch(getProjectsThunk()); // TODO: Should not be neccessary
+  async function onDelete(project: Bank) {
+    // TODO: fix this logic
+    // must await here otherwise the 'getProjectsThunk will fetch before delete is complete.
+    await dispatch(deleteProjectThunk(project));
+    dispatch(getProjectsThunk());
   }
 
   const renderProjects = (projectList: Bank[]) => {

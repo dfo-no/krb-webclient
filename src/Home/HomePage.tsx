@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 
 import SearchBar from '../SearchBar/SearchBar';
 import FilteredList from './Components/FilteredList';
-import { getBanks } from '../store/reducers/bank-reducer';
+import { getBanksThunk } from '../store/reducers/bank-reducer';
 import { RootState } from '../store/store';
 
 export default function HomePage(): ReactElement {
@@ -15,7 +15,7 @@ export default function HomePage(): ReactElement {
   useEffect(() => {
     async function fetchEverything() {
       if (status === 'idle') {
-        dispatch(getBanks());
+        dispatch(getBanksThunk());
       }
     }
     fetchEverything();

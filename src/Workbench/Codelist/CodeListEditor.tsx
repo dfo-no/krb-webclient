@@ -9,6 +9,7 @@ import {
   InputGroup
 } from 'react-bootstrap';
 
+import { v4 as uuidv4 } from 'uuid';
 import styles from './CodeListEditor.module.scss';
 import { RootState } from '../../store/store';
 import { Code } from '../../models/Code';
@@ -74,10 +75,11 @@ export default function CodeListEditor(): ReactElement {
   };
 
   const addNewCode = () => {
-    const code = {
+    const code: Code = {
       title,
       description,
-      id: ''
+      id: uuidv4(),
+      type: 'code'
     };
     dispatch(addCodeToCodelist({ projectId: id, codelistId: listId, code }));
     dispatch(putProjectThunk(id));
@@ -85,10 +87,11 @@ export default function CodeListEditor(): ReactElement {
   };
 
   const editCodeElement = (codeId: string) => () => {
-    const code = {
+    const code: Code = {
       id: codeId, // TODO: suspicious about this one
       title,
-      description
+      description,
+      type: 'code'
     };
 
     dispatch(editCodeInCodelist({ projectId: id, codelistId: listId, code }));

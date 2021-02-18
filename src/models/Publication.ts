@@ -1,4 +1,6 @@
-export interface Publication {
+import { BaseModel } from './BaseModel';
+
+export interface Publication extends BaseModel {
   id: string;
   comment: string;
   date: string;

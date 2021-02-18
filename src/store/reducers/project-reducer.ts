@@ -1,7 +1,8 @@
 /* eslint-disable no-param-reassign */
+import { FeedResponse, ItemDefinition, ItemResponse } from '@azure/cosmos';
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { del, get, post, put } from '../../api/http';
 import Utils from '../../common/Utils';
+import { CosmosApi } from '../../database/CosmosApi';
 import { Bank } from '../../models/Bank';
 import { Code } from '../../models/Code';
 import { Codelist } from '../../models/Codelist';
@@ -26,27 +27,34 @@ const initialState: ProjectState = {
 export const getProjectThunk = createAsyncThunk(
   'getProjectThunk',
   async (id: string) => {
-    const response = await get<Bank[]>(`http://localhost:3001/projects/${id}`);
-    return response.data;
+    const api = new CosmosApi();
+    const result = await api.readBank(id);
+    return result.resource;
   }
 );
 
+// this, this is the one
 export const getProjectsThunk = createAsyncThunk(
   'getProjectsThunk',
   async () => {
-    const response = await get<Bank[]>(`http://localhost:3001/projects`);
-    return response.data;
+    const api = new CosmosApi();
+    const result: FeedResponse<Bank[]> = await api.fetchAllProjects();
+    const banks: Bank[] = [];
+    for (let i = 0; i < result.resources.length; i += 1) {
+      // TODO: do not fetch inedxed
+      const element = result.resources[i] as unknown;
+      banks.push(element as Bank);
+    }
+    return banks;
   }
 );
 
 export const postProjectThunk = createAsyncThunk(
   'postProjectThunk',
   async (project: Bank) => {
-    const response = await post<Bank>(
-      `http://localhost:3001/projects`,
-      project
-    );
-    return response.data;
+    const api = new CosmosApi();
+    const result = await api.createBank(project);
+    return result.resource as Bank;
   }
 );
 
@@ -58,25 +66,25 @@ export const putProjectThunk = createAsyncThunk<
     state: RootState;
   }
 >('putProjectThunk', async (projectId: string, thunkApi) => {
+  // get updated project from redux
   const project = Utils.ensure(
     thunkApi
       .getState()
       .project.list.find((element: Bank) => element.id === projectId)
   );
-  const response = await put<Bank>(
-    `http://localhost:3001/projects/${project.id}`,
-    project
-  );
-  return response.data as Bank;
+  const api = new CosmosApi();
+  const result: ItemResponse<ItemDefinition> = await api.replaceBank(project);
+  const res = result.resource as unknown;
+
+  return res as Bank;
 });
 
 export const deleteProjectThunk = createAsyncThunk(
   'deleteProjectThunk',
   async (project: Bank) => {
-    const response = await del(`http://localhost:3001/projects/${project.id}`, {
-      method: 'DELETE'
-    });
-    return response.data;
+    const api = new CosmosApi();
+    const result = await api.deleteBank(project.id);
+    return result.resource;
   }
 );
 
