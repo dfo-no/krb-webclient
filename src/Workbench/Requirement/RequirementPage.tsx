@@ -169,7 +169,7 @@ export default function RequirementPage(): ReactElement {
             <Accordion.Collapse eventKey={index.toString()}>
               <Card.Body>
                 <Link
-                  to={`/workbench/${selectedProject.id}/requirement/${element.id}`}
+                  to={`/workbench/${selectedProject.id}/requirement/${element.id}/edit`}
                   onClick={setSelectedRequirement(element.id)}
                 >
                   <label htmlFor="title">Title</label>

@@ -4,6 +4,7 @@ import { Route, Switch, useRouteMatch } from 'react-router-dom';
 
 import { useDispatch, useSelector } from 'react-redux';
 import RequirementPage from './Requirement/RequirementPage';
+import RequirementEditor from './Requirement/RequirementEditor';
 import CodeListEditor from './Codelist/CodeListEditor';
 import CodelistPage from './Codelist/CodelistPage';
 import NeedPage from './Need/NeedPage';
@@ -60,6 +61,9 @@ export default function WorkbenchModule(): ReactElement {
             </Route>
             <Route exact path={`${url}/:projectId/requirement`}>
               <RequirementPage />
+            </Route>
+            <Route exact path={`${url}/:projectId/requirement/:id/edit`}>
+              <RequirementEditor />
             </Route>
             <Route exact path={`${url}/:projectId/codelist`}>
               <CodelistPage />
