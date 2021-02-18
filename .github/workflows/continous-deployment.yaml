@@ -33,7 +33,7 @@ jobs:
 
       - name: Build
         run: |
-          npm run-script build:ci
+          npm run-script build
 
       #- name: Sonarcube
       #  if: github.ref == 'refs/heads/develop'
