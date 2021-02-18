@@ -13,7 +13,9 @@ export default function RequirementEditor(): ReactElement {
   const { reqId } = useSelector(
     (state: RootState) => state.selectedRequirement
   );
+
   const { needId } = useSelector((state: RootState) => state.selectNeed);
+  console.log(needId);
   const project = Utils.ensure(list.find((element) => element.id === id));
   const need = Utils.ensure(
     project.needs.find((element) => element.id === needId)

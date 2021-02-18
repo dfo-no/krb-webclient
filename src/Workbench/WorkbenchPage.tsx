@@ -20,7 +20,6 @@ type FormValues = {
 };
 
 function WorkbenchPage(): ReactElement {
-  console.log(process.env.REACT_APP_COSMOS_CONTAINER);
   const dispatch = useDispatch();
   const { list } = useSelector((state: RootState) => state.project);
   const history = useHistory();

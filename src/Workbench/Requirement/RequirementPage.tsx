@@ -28,6 +28,7 @@ import { Need } from '../../models/Need';
 import Utils from '../../common/Utils';
 import { Bank } from '../../models/Bank';
 import { selectRequirement } from '../../store/reducers/selectedRequirement-reducer';
+import { selectNeed } from '../../store/reducers/selectedNeed-reducer';
 
 export default function RequirementPage(): ReactElement {
   const dispatch = useDispatch();
@@ -139,6 +140,7 @@ export default function RequirementPage(): ReactElement {
   const handleSelectedNeed = (need: Need) => {
     setSelectedNeed(need);
     setRequirementsList(need.requirements);
+    dispatch(selectNeed(need.id));
   };
 
   const setSelectedRequirement = (reqId: string) => () => {
