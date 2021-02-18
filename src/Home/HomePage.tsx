@@ -31,7 +31,7 @@ export default function HomePage(): ReactElement {
           <ListGroup variant="flush">
             <ListGroup.Item>
               <Link to="/workbench">
-                <h5>Editor</h5>
+                <h5>Editor1</h5>
               </Link>
             </ListGroup.Item>
             <ListGroup.Item>
