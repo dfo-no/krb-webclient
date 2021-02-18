@@ -32,11 +32,7 @@ jobs:
           sed -i 's/\/home\/runner\/work\/krb-webclient\/krb-webclient\//\/github\/workspace\//g' lcov.info
 
       - name: Build
-        env:
-          REACT_APP_COSMOSDB_CONNECTION_STRING: '${{ secrets.REACT_APP_COSMOSDB_CONNECTION_STRING }}'
         run: |
-          echo "REACT_APP_COSMOSDB_CONNECTION_STRING=${{ secrets.REACT_APP_COSMOSDB_CONNECTION_STRING }}" \
-            >> .env.cloud.ci
           npm run-script build:ci
 
       #- name: Sonarcube
