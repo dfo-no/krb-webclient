@@ -28,3 +28,5 @@ yarn-error.log*
 
 # JSON Server
 db/local.json
+
+.env.cloud.ci
