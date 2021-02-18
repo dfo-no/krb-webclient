@@ -15,6 +15,8 @@ import {
   CodelistAlternative,
   ValueAlternative
 } from '../../models/Alternatives';
+import CodeListAlternative from './CodeListAlternative';
+import Value from './ValueAlternative';
 
 interface IProps {
   alternatives: (CodelistAlternative | ValueAlternative)[];

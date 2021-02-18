@@ -81,6 +81,7 @@ export default function RequirementPage(): ReactElement {
       title,
       description,
       needId,
+      layouts: [],
       kind: 'yes/no',
       type: 'requirement'
     };
@@ -107,15 +108,16 @@ export default function RequirementPage(): ReactElement {
     if (selectedNeed) {
       needId = selectedNeed.id;
     } else needId = '';
+    const reqList = [...requirementList];
     const requirement: Requirement = {
       id: reqId,
       title,
       description,
       needId,
+      layouts: reqList[index].layouts,
       kind: 'yes/no',
       type: 'requirement'
     };
-    const reqList = [...requirementList];
     reqList[index] = requirement;
     setRequirementsList(reqList);
     const needIndex = Utils.ensure(

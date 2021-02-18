@@ -58,7 +58,5 @@ export default function Layout({
     const newRequirement = { ...requirement };
     newRequirement.layouts = newLayoutList;
   };
-  return (
-  
-  );
+  return <p>test</p>;
 }
