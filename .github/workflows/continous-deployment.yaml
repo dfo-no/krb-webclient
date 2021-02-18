@@ -26,14 +26,18 @@ jobs:
           npm run-script lint
           npm run-script test --coverage
 
-      #- name: Fix CC paths
-      #  working-directory: coverage
-      #  run: |
-      #    sed -i 's/\/home\/runner\/work\/krb-webclient\/krb-webclient\//\/github\/workspace\//g' lcov.info
+      - name: Fix CC paths
+        working-directory: coverage
+        run: |
+          sed -i 's/\/home\/runner\/work\/krb-webclient\/krb-webclient\//\/github\/workspace\//g' lcov.info
 
       - name: Build
+        env:
+          REACT_APP_COSMOSDB_CONNECTION_STRING: '${{ secrets.REACT_APP_COSMOSDB_CONNECTION_STRING }}'
         run: |
-          npm run-script build
+          echo "REACT_APP_COSMOSDB_CONNECTION_STRING=${{ secrets.REACT_APP_COSMOSDB_CONNECTION_STRING }}" \
+            >> .env.cloud.ci
+          npm run-script build:ci
 
       #- name: Sonarcube
       #  if: github.ref == 'refs/heads/develop'

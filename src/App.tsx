@@ -13,8 +13,6 @@ import ResponseEditor from './ResponseEditor/ResponseEditor';
 import SpecEditor from './SpecEditor/SpecEditor';
 import Evaluation from './Evaluation/Evaluation';
 
-console.log(process.env);
-
 function App(): ReactElement {
   return (
     <div className={styles.App}>
