@@ -9,10 +9,13 @@ import {
   Form
 } from 'react-bootstrap';
 import fileDownload from 'js-file-download';
+import { useForm } from 'react-hook-form';
 import { Bank } from '../models/Bank';
 import { FileDownLoad } from '../models/FileDownLoad';
 
 export default function Evaluation(): ReactElement {
+  const { register, handleSubmit } = useForm();
+
   const [bankFileUploaded, setBankFileUploaded] = useState(false);
   const [uploadedBank, setUploadedBank] = useState<Bank | null>(null);
   const [responses, setResponses] = useState<FileDownLoad[]>([]);
@@ -35,6 +38,24 @@ export default function Evaluation(): ReactElement {
     }
   };
 
+  const onSubmitResponses = (data: any) => {
+    const ary: FileDownLoad[] = [];
+    for (let i = 0; i < data.responseFiles.length; i += 1) {
+      const reader = new FileReader();
+      reader.onload = (evt) => {
+        if (evt.target?.result) {
+          const content = JSON.parse(
+            evt.target.result.toString()
+          ) as FileDownLoad;
+          ary.push(content);
+          setResponses([...responses, content]);
+        }
+      };
+      const file = data.responseFiles[i];
+      reader.readAsText(file);
+    }
+  };
+
   if (!bankFileUploaded) {
     return (
       <Form>
@@ -42,7 +63,6 @@ export default function Evaluation(): ReactElement {
           <h4>Upload a spesification to start the evaluation</h4>
           <InputGroup>
             <Form.File.Input
-              multiple
               onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                 handleChange(e)
               }
@@ -84,7 +104,7 @@ export default function Evaluation(): ReactElement {
     );
     const list = sortedResponses.map((response: FileDownLoad) => {
       return (
-        <Row>
+        <Row key={response.name}>
           <Col>
             <p> {response.name} </p>
           </Col>
@@ -117,6 +137,7 @@ export default function Evaluation(): ReactElement {
 
   return (
     <Container fluid>
+      <code>{JSON.stringify(responses)}</code>
       <Row className="m-4">
         <Col>
           <h4>{uploadedBank.title}</h4>
@@ -124,8 +145,10 @@ export default function Evaluation(): ReactElement {
         <Col>
           <h6>Upload Responses</h6>
           <InputGroup className="mb-5">
-            {/* TODO: use handleChange here */}
-            <input type="file" multiple onChange={() => {}} />
+            <form onSubmit={handleSubmit(onSubmitResponses)}>
+              <input ref={register} type="file" name="responseFiles" multiple />
+              <button type="submit">Submit</button>
+            </form>
           </InputGroup>
         </Col>
         <Col>
