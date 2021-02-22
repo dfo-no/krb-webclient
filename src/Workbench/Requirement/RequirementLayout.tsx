@@ -1,5 +1,5 @@
 import React, { ReactElement, useState } from 'react';
-import { Button, Col, Form, Row } from 'react-bootstrap';
+import { Button, Card, Col, Form, Row } from 'react-bootstrap';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -11,36 +11,41 @@ import { Need } from '../../models/Need';
 import { Requirement } from '../../models/Requirement';
 import { RequirementLayout } from '../../models/RequirementLayout';
 import { RootState } from '../../store/store';
+import {
+  editRequirementInNeed,
+  putProjectThunk
+} from '../../store/reducers/project-reducer';
+import Alternatives from './Alternatives';
 
 interface IProps {
   layout: RequirementLayout;
-  need: Need;
+  nIndex: number;
   project: Bank;
   requirement: Requirement;
 }
 
 type FormValues = {
-  id: string;
-  requirementText: string;
+  reqText: string;
   instruction: string;
 };
 
 const layoutSchema = yup.object().shape({
   id: yup.number().required(),
-  requirementText: yup.string().required(),
-  instruction: yup.string().required()
+  reqText: yup.string().required().min(5),
+  instruction: yup.string().required().min(5)
 });
 
 export default function Layout({
   project,
-  need,
+  nIndex,
   layout,
   requirement
 }: IProps): ReactElement {
+  const dispatch = useDispatch();
   const { register, handleSubmit, errors } = useForm({
     defaultValues: {
       id: layout.id,
-      requirementText: layout.requirementText,
+      reqText: layout.requirementText,
       instruction: layout.instruction
     },
     resolver: yupResolver(layoutSchema)
@@ -49,14 +54,76 @@ export default function Layout({
 
   const onEditLayoutSubmit = (post: FormValues) => {
     const newLayout = {
-      id: '',
-      requirementText: post.requirementText,
+      id: layout.id,
+      requirementText: post.reqText,
       instruction: post.instruction,
-      alternatives: []
+      alternatives: layout.alternatives
     };
-    const newLayoutList = [...requirement.layouts, newLayout];
+    const newLayoutList = [...requirement.layouts];
+    const layoutindex = requirement.layouts.findIndex(
+      (element) => element.id === layout.id
+    );
+    newLayoutList[layoutindex] = newLayout;
     const newRequirement = { ...requirement };
     newRequirement.layouts = newLayoutList;
+    dispatch(
+      editRequirementInNeed({
+        projectId: project.id,
+        needIndex: nIndex,
+        requirement: newRequirement
+      })
+    );
+    dispatch(putProjectThunk(project.id));
   };
-  return <p>test</p>;
+  return (
+    <Card className="bg-light m-3">
+      <Card.Body>
+        <h4>Layout</h4>
+        <Form
+          onSubmit={handleSubmit(onEditLayoutSubmit)}
+          noValidate
+          validated={validated}
+        >
+          <Form.Group>
+            <Form.Label>Requirement Text</Form.Label>
+            <Form.Control
+              as="textarea"
+              name="reqText"
+              ref={register}
+              isInvalid={!!errors.reqText}
+            />
+            {errors.reqText && (
+              <Form.Control.Feedback type="invalid">
+                {errors.reqText.message}
+              </Form.Control.Feedback>
+            )}
+          </Form.Group>
+          <Form.Group>
+            <Form.Label>Instruction</Form.Label>
+            <Form.Control
+              as="textarea"
+              name="instruction"
+              ref={register}
+              isInvalid={!!errors.instruction}
+            />
+            {errors.instruction && (
+              <Form.Control.Feedback type="invalid">
+                {errors.instruction?.message}
+              </Form.Control.Feedback>
+            )}
+          </Form.Group>
+          <Button className="mt-2 mb-4" type="submit">
+            Save
+          </Button>
+        </Form>
+        <Alternatives
+          project={project}
+          nIndex={nIndex}
+          requirement={requirement}
+          alternatives={layout.alternatives}
+          layout={layout}
+        />
+      </Card.Body>
+    </Card>
+  );
 }

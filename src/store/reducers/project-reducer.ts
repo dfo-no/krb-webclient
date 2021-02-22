@@ -341,7 +341,6 @@ const projectSlice = createSlice({
       }: PayloadAction<{
         projectId: string;
         needIndex: number;
-        reqId: string;
         requirement: Requirement;
       }>
     ) {
@@ -351,7 +350,7 @@ const projectSlice = createSlice({
       const needIndex = Utils.ensure(
         state.list[projectIndex].needs[
           payload.needIndex
-        ].requirements.findIndex((req) => req.id === payload.reqId)
+        ].requirements.findIndex((req) => req.id === payload.requirement.id)
       );
       state.list[projectIndex].needs[payload.needIndex].requirements[
         needIndex

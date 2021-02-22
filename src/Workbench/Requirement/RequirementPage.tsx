@@ -131,7 +131,6 @@ export default function RequirementPage(): ReactElement {
       editRequirementInNeed({
         projectId: id,
         needIndex,
-        reqId: requirement.id,
         requirement
       })
     );
