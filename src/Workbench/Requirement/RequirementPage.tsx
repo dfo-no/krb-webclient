@@ -169,32 +169,34 @@ export default function RequirementPage(): ReactElement {
             </Card.Header>
             <Accordion.Collapse eventKey={index.toString()}>
               <Card.Body>
+                <label htmlFor="title">Title</label>
+                <InputGroup className="mb-3 30vw">
+                  <FormControl
+                    name="title"
+                    defaultValue={element.title}
+                    onChange={(e) => handleTitleChange(e)}
+                  />
+                </InputGroup>
+                <label htmlFor="title">Requirement text</label>
+                <InputGroup className="mb-3 30vw">
+                  <FormControl
+                    name="description"
+                    defaultValue={element.description}
+                    onChange={(e) => handleDescriptionChange(e)}
+                  />
+                </InputGroup>
+                <Button
+                  className={styles.newbutton}
+                  onClick={editRequirementElement(element.id, index)}
+                >
+                  Save
+                </Button>
+
                 <Link
                   to={`/workbench/${selectedProject.id}/requirement/${element.id}/edit`}
                   onClick={setSelectedRequirement(element.id)}
                 >
-                  <label htmlFor="title">Title</label>
-                  <InputGroup className="mb-3 30vw">
-                    <FormControl
-                      name="title"
-                      defaultValue={element.title}
-                      onChange={(e) => handleTitleChange(e)}
-                    />
-                  </InputGroup>
-                  <label htmlFor="title">Requirement text</label>
-                  <InputGroup className="mb-3 30vw">
-                    <FormControl
-                      name="description"
-                      defaultValue={element.description}
-                      onChange={(e) => handleDescriptionChange(e)}
-                    />
-                  </InputGroup>
-                  <Button
-                    className={styles.newbutton}
-                    onClick={editRequirementElement(element.id, index)}
-                  >
-                    Save
-                  </Button>
+                  <Button className={`${styles.newbutton} ml-4`}>Edit</Button>
                 </Link>
               </Card.Body>
             </Accordion.Collapse>
