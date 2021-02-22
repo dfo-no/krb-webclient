@@ -1,16 +1,14 @@
 import React, { ReactElement, useState } from 'react';
-import { Button, Card, Col, Form, Row } from 'react-bootstrap';
+import { Button, Card, Form } from 'react-bootstrap';
 import { useForm } from 'react-hook-form';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 
-import Utils from '../../common/Utils';
 import { Bank } from '../../models/Bank';
-import { Need } from '../../models/Need';
 import { Requirement } from '../../models/Requirement';
 import { RequirementLayout } from '../../models/RequirementLayout';
-import { RootState } from '../../store/store';
+
 import {
   editRequirementInNeed,
   putProjectThunk

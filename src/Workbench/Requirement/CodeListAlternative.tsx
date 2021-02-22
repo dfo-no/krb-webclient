@@ -1,4 +1,4 @@
-import React, { ReactElement, useState } from 'react';
+import React, { ReactElement } from 'react';
 import { Accordion, Button, Card, Form, Row } from 'react-bootstrap';
 import { useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
@@ -7,7 +7,7 @@ import { Bank } from '../../models/Bank';
 import { Codelist } from '../../models/Codelist';
 import { Requirement } from '../../models/Requirement';
 import { RequirementLayout } from '../../models/RequirementLayout';
-import projectReducer, {
+import {
   editRequirementInNeed,
   putProjectThunk
 } from '../../store/reducers/project-reducer';
@@ -31,7 +31,7 @@ export default function CodeListAlternative({
   nIndex,
   requirement
 }: IProps): ReactElement {
-  const { register, handleSubmit, errors } = useForm();
+  const { register, handleSubmit } = useForm();
   const dispatch = useDispatch();
   const selectOptions = () => {
     return project.codelist.map((element: Codelist) => {
