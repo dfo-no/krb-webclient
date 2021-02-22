@@ -11,9 +11,11 @@ import {
   InputGroup,
   FormControl
 } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 
 import { v4 as uuidv4 } from 'uuid';
 import { useDispatch, useSelector } from 'react-redux';
+
 import { RootState } from '../../store/store';
 import {
   editRequirementInNeed,
@@ -25,6 +27,8 @@ import { Requirement } from '../../models/Requirement';
 import { Need } from '../../models/Need';
 import Utils from '../../common/Utils';
 import { Bank } from '../../models/Bank';
+import { selectRequirement } from '../../store/reducers/selectedRequirement-reducer';
+import { selectNeed } from '../../store/reducers/selectedNeed-reducer';
 
 export default function RequirementPage(): ReactElement {
   const dispatch = useDispatch();
@@ -78,6 +82,7 @@ export default function RequirementPage(): ReactElement {
       title,
       description,
       needId,
+      layouts: [],
       kind: 'yes/no',
       type: 'requirement'
     };
@@ -104,15 +109,16 @@ export default function RequirementPage(): ReactElement {
     if (selectedNeed) {
       needId = selectedNeed.id;
     } else needId = '';
+    const reqList = [...requirementList];
     const requirement: Requirement = {
       id: reqId,
       title,
       description,
       needId,
+      layouts: reqList[index].layouts,
       kind: 'yes/no',
       type: 'requirement'
     };
-    const reqList = [...requirementList];
     reqList[index] = requirement;
     setRequirementsList(reqList);
     const needIndex = Utils.ensure(
@@ -125,7 +131,6 @@ export default function RequirementPage(): ReactElement {
       editRequirementInNeed({
         projectId: id,
         needIndex,
-        reqId: requirement.id,
         requirement
       })
     );
@@ -134,6 +139,11 @@ export default function RequirementPage(): ReactElement {
   const handleSelectedNeed = (need: Need) => {
     setSelectedNeed(need);
     setRequirementsList(need.requirements);
+    dispatch(selectNeed(need.id));
+  };
+
+  const setSelectedRequirement = (reqId: string) => () => {
+    dispatch(selectRequirement(reqId));
   };
 
   const requirements = (reqs: Requirement[]) => {
@@ -159,30 +169,35 @@ export default function RequirementPage(): ReactElement {
             </Card.Header>
             <Accordion.Collapse eventKey={index.toString()}>
               <Card.Body>
-                <>
-                  <label htmlFor="title">Title</label>
-                  <InputGroup className="mb-3 30vw">
-                    <FormControl
-                      name="title"
-                      defaultValue={element.title}
-                      onChange={(e) => handleTitleChange(e)}
-                    />
-                  </InputGroup>
-                  <label htmlFor="title">Requirement text</label>
-                  <InputGroup className="mb-3 30vw">
-                    <FormControl
-                      name="description"
-                      defaultValue={element.description}
-                      onChange={(e) => handleDescriptionChange(e)}
-                    />
-                  </InputGroup>
-                  <Button
-                    className={styles.newbutton}
-                    onClick={editRequirementElement(element.id, index)}
-                  >
-                    Save
-                  </Button>
-                </>
+                <label htmlFor="title">Title</label>
+                <InputGroup className="mb-3 30vw">
+                  <FormControl
+                    name="title"
+                    defaultValue={element.title}
+                    onChange={(e) => handleTitleChange(e)}
+                  />
+                </InputGroup>
+                <label htmlFor="title">Requirement text</label>
+                <InputGroup className="mb-3 30vw">
+                  <FormControl
+                    name="description"
+                    defaultValue={element.description}
+                    onChange={(e) => handleDescriptionChange(e)}
+                  />
+                </InputGroup>
+                <Button
+                  className={styles.newbutton}
+                  onClick={editRequirementElement(element.id, index)}
+                >
+                  Save
+                </Button>
+
+                <Link
+                  to={`/workbench/${selectedProject.id}/requirement/${element.id}/edit`}
+                  onClick={setSelectedRequirement(element.id)}
+                >
+                  <Button className={`${styles.newbutton} ml-4`}>Edit</Button>
+                </Link>
               </Card.Body>
             </Accordion.Collapse>
           </Card>

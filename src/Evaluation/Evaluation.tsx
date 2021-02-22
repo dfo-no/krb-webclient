@@ -15,7 +15,6 @@ import { FileDownLoad } from '../models/FileDownLoad';
 
 export default function Evaluation(): ReactElement {
   const { register, handleSubmit } = useForm();
-
   const [bankFileUploaded, setBankFileUploaded] = useState(false);
   const [uploadedBank, setUploadedBank] = useState<Bank | null>(null);
   const [responses, setResponses] = useState<FileDownLoad[]>([]);
