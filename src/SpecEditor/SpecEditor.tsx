@@ -57,9 +57,9 @@ export default function SpecEditor(): ReactElement {
           id: need.id,
           title: need.title,
           description: need.description,
-          needs: need.needs,
           requirements: newRequirementList,
-          type: 'need'
+          type: 'need',
+          parent: need.parent
         };
         selectedNeeds.push(updatedBehov);
       }
