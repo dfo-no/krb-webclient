@@ -1,36 +1,30 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
-import React, { ReactElement, useContext, useState } from 'react';
+import React, { ReactElement, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import {
-  Accordion,
-  Button,
-  Card,
-  FormControl,
-  InputGroup
-} from 'react-bootstrap';
+import { Button, Card, FormControl, InputGroup } from 'react-bootstrap';
 
-import { v4 as uuidv4 } from 'uuid';
 import styles from './CodeListEditor.module.scss';
 import { RootState } from '../../store/store';
 import { Code } from '../../models/Code';
 import {
-  addCodeToCodelist,
-  editCodeInCodelist,
   editCodelist,
-  putProjectThunk
+  putProjectThunk,
+  updateCodeList
 } from '../../store/reducers/project-reducer';
 import Utils from '../../common/Utils';
 import { Codelist } from '../../models/Codelist';
 import { Bank } from '../../models/Bank';
-import { AccordionContext } from '../Need/AccordionContext';
+
+import NestableHierarcy from '../../NestableHierarchy/Nestable';
+import EditCodeForm from './EditCodeForm';
+import NewCodeForm from './NewCodeForm';
 
 export default function CodeListEditor(): ReactElement {
   const dispatch = useDispatch();
-  const { onOpenClose } = useContext(AccordionContext);
   const { list } = useSelector((state: RootState) => state.project);
   const { id } = useSelector((state: RootState) => state.selectedProject);
   const { listId } = useSelector((state: RootState) => state.selectedCodeList);
-  const [showEditor, setShowEdior] = useState(false);
+  const [toggleEditor, setToggleEditor] = useState(false);
   const [editmode, setEditMode] = useState(false);
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
@@ -51,10 +45,6 @@ export default function CodeListEditor(): ReactElement {
     )
   );
 
-  const handleShowEditor = () => {
-    setShowEdior(true);
-  };
-
   const handleTitleChange = (
     event: React.ChangeEvent<
       HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
@@ -74,31 +64,6 @@ export default function CodeListEditor(): ReactElement {
     setEditMode(true);
   };
 
-  const addNewCode = () => {
-    const code: Code = {
-      title,
-      description,
-      id: uuidv4(),
-      type: 'code'
-    };
-    dispatch(addCodeToCodelist({ projectId: id, codelistId: listId, code }));
-    dispatch(putProjectThunk(id));
-    setShowEdior(false);
-  };
-
-  const editCodeElement = (codeId: string) => () => {
-    const code: Code = {
-      id: codeId, // TODO: suspicious about this one
-      title,
-      description,
-      type: 'code'
-    };
-
-    dispatch(editCodeInCodelist({ projectId: id, codelistId: listId, code }));
-    dispatch(putProjectThunk(id));
-    onOpenClose('');
-  };
-
   const onEditCodelist = () => {
     dispatch(
       editCodelist({
@@ -115,12 +80,9 @@ export default function CodeListEditor(): ReactElement {
   function renderHeaderSection(edit: boolean) {
     if (edit) {
       return (
-        /* TODO: finne ut hvor sannsynlig det er at bruker skriver
-         mange steder på samme tid, og derfor om handleTitleChange,
-         og descriptionchange må skrives om de tre separate funksjoner */
         <Card className="mt-3">
           <Card.Body>
-            <label htmlFor="title">Title2</label>
+            <label htmlFor="title">Title</label>
             <InputGroup className="mb-3 30vw">
               <FormControl
                 name="title"
@@ -157,80 +119,42 @@ export default function CodeListEditor(): ReactElement {
     );
   }
 
-  const codeList = (codelist: Code[]) => {
-    const codes = codelist.map((element: Code, index) => {
-      return (
-        <Card key={element.id}>
-          <Accordion.Toggle as={Card.Header} eventKey={index.toString()}>
-            <h6>{element.title}</h6>
-            <p>{element.description}</p>
-          </Accordion.Toggle>
-          <Accordion.Collapse eventKey={index.toString()}>
-            <Card.Body>
-              <>
-                <label htmlFor="title">Title3</label>
-                <InputGroup className="mb-3 30vw">
-                  <FormControl
-                    name="title"
-                    defaultValue={element.title}
-                    onChange={(e) => handleTitleChange(e)}
-                  />
-                </InputGroup>
-                <label htmlFor="title">Requirement text</label>
-                <InputGroup className="mb-3 30vw">
-                  <FormControl
-                    name="description"
-                    defaultValue={element.description}
-                    onChange={(e) => handleDescriptionChange(e)}
-                  />
-                </InputGroup>
-                <Button onClick={editCodeElement(element.id)}>Save</Button>
-              </>
-            </Card.Body>
-          </Accordion.Collapse>
-        </Card>
-      );
-    });
-    return <Accordion className={styles.codes}>{codes}</Accordion>;
-  };
-
   function codeListEditor(show: boolean) {
     if (show) {
       return (
-        <Card className="mt-3">
-          <Card.Body>
-            <label htmlFor="title">Title</label>
-            <InputGroup className="mb-3 30vw">
-              <FormControl
-                className="input-sm"
-                name="title"
-                onChange={(e) => handleTitleChange(e)}
-              />
-            </InputGroup>
-            <label htmlFor="description">Description</label>
-            <InputGroup>
-              <FormControl
-                name="description"
-                onChange={(e) => handleDescriptionChange(e)}
-              />
-            </InputGroup>
-            <Button className="mt-2" onClick={addNewCode}>
-              Save
-            </Button>
-          </Card.Body>
-        </Card>
+        <NewCodeForm
+          codelistId={selectedCodeList.id}
+          toggleShow={setToggleEditor}
+        />
       );
     }
     return <></>;
   }
 
+  const newListofCodes = (projectId: string, items: Code[]) => {
+    dispatch(
+      updateCodeList({ id: projectId, codes: items, codelistId: listId })
+    );
+    dispatch(putProjectThunk(projectId));
+  };
+
   return (
     <>
       {renderHeaderSection(editmode)}
       <h4>Codes</h4>
-      <Button onClick={handleShowEditor}>New Code</Button>
-      {codeListEditor(showEditor)}
-      {codeList(selectedCodeList.codes)}
+      <Button onClick={() => setToggleEditor(true)} className="mb-4">
+        New Code
+      </Button>
+      {codeListEditor(toggleEditor)}
+      <NestableHierarcy
+        dispatchfunc={(projectId: string, items: Code[]) =>
+          newListofCodes(projectId, items)
+        }
+        inputlist={selectedCodeList.codes}
+        projectId={id}
+        component={<EditCodeForm element={selectedCodeList.codes[0]} />}
+        depth={1}
+      />
     </>
   );
 }

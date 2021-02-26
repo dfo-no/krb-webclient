@@ -1,17 +1,17 @@
 import React, { ReactElement, useContext, useState } from 'react';
 import { Button, Col, Form, Row } from 'react-bootstrap';
 import { useForm } from 'react-hook-form';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 
-import { Bank } from '../../models/Bank';
 import { Need } from '../../models/Need';
 import {
   editNeed,
   putProjectThunk
 } from '../../store/reducers/project-reducer';
 import { AccordionContext } from './AccordionContext';
+import { RootState } from '../../store/store';
 
 type FormValues = {
   id: string;
@@ -19,8 +19,7 @@ type FormValues = {
   description: string;
 };
 interface IProps {
-  project: Bank;
-  need: Need;
+  element: Need;
 }
 
 const needSchema = yup.object().shape({
@@ -29,29 +28,34 @@ const needSchema = yup.object().shape({
   description: yup.string().required()
 });
 
-function EditNeedForm({ project, need }: IProps): ReactElement {
+function EditNeedForm({ element }: IProps): ReactElement {
+  const { id } = useSelector((state: RootState) => state.selectedProject);
   const dispatch = useDispatch();
   const { onOpenClose } = useContext(AccordionContext);
   const [validated] = useState(false);
   const { register, handleSubmit, errors } = useForm({
     defaultValues: {
-      id: need.id,
-      title: need.title,
-      description: need.description
+      id: element.id,
+      title: element.title,
+      description: element.description
     },
     resolver: yupResolver(needSchema)
   });
 
+  if (!id) {
+    return <p>No project selected</p>;
+  }
+
   const onEditNeedSubmit = (post: FormValues) => {
     dispatch(
       editNeed({
-        projectId: project.id,
+        projectId: id,
         needId: post.id,
         title: post.title,
         description: post.description
       })
     );
-    dispatch(putProjectThunk(project.id));
+    dispatch(putProjectThunk(id));
 
     // Close accordion via useContext
     onOpenClose('');

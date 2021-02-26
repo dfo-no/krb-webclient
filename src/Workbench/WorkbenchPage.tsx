@@ -4,6 +4,7 @@ import { Button, Col, Form, ListGroup, Row } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { AiFillDelete } from 'react-icons/ai';
 import { useForm } from 'react-hook-form';
+import { v4 as uuidv4 } from 'uuid';
 import css from './WorkbenchPage.module.scss';
 import { RootState } from '../store/store';
 import { Bank } from '../models/Bank';
@@ -34,7 +35,7 @@ function WorkbenchPage(): ReactElement {
 
   const onSubmit = (post: FormValues) => {
     const project: Bank = {
-      id: '',
+      id: uuidv4(),
       title: post.title,
       description: post.description,
       needs: [],

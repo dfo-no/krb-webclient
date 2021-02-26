@@ -1,75 +1,62 @@
 import React, { ReactElement, useState } from 'react';
-import { useSelector } from 'react-redux';
-import { Accordion, Button, Card } from 'react-bootstrap';
-import { BsPlusSquare } from 'react-icons/bs';
+import { useDispatch, useSelector } from 'react-redux';
+import { Button } from 'react-bootstrap';
+
 import { Need } from '../../models/Need';
-import css from './NeedPage.module.scss';
 import { RootState } from '../../store/store';
 import Utils from '../../common/Utils';
 import NewNeedForm from './NewNeedForm';
-import { AccordionContext } from './AccordionContext';
 import EditNeedForm from './EditNeedForm';
+import NestableHierarcy from '../../NestableHierarchy/Nestable';
+import {
+  putProjectThunk,
+  updateNeedList
+} from '../../store/reducers/project-reducer';
 
 function NeedPage(): ReactElement {
   const { id } = useSelector((state: RootState) => state.selectedProject);
   const { list } = useSelector((state: RootState) => state.project);
-  const [activeKey, setActiveKey] = useState('');
-
+  const [toggleEditor, setToggleEditor] = useState(false);
+  const dispatch = useDispatch();
   if (list.length === 0 || !id) {
     return <div>Loading NeedPage....</div>;
   }
   const project = Utils.ensure(list.find((banks) => banks.id === id));
 
-  const onOpenClose = (e: string | null) => {
-    if (e) {
-      setActiveKey(e);
-    } else {
-      setActiveKey('');
+  function newNeed(show: boolean) {
+    if (show) {
+      return <NewNeedForm toggleShow={setToggleEditor} />;
     }
-  };
+    return <></>;
+  }
 
-  const renderNeeds = (needList: Need[]) => {
-    return needList.map((element: Need, index: number) => {
-      const indexString = (index + 1).toString();
-      return (
-        <Card key={element.id}>
-          <Accordion.Toggle as={Card.Header} eventKey={indexString}>
-            <h4>{element.title}</h4>
-            <span>{element.description}</span>
-          </Accordion.Toggle>
-          <Accordion.Collapse eventKey={indexString}>
-            <Card.Body>
-              <EditNeedForm project={project} need={element} />
-            </Card.Body>
-          </Accordion.Collapse>
-        </Card>
-      );
-    });
+  const newNeedList = (projectId: string, items: Need[]) => {
+    dispatch(updateNeedList({ id: projectId, needs: items }));
+    dispatch(putProjectThunk(projectId));
   };
 
   return (
-    <AccordionContext.Provider value={{ onOpenClose }}>
-      <Accordion
-        activeKey={activeKey}
-        onSelect={(e) => onOpenClose(e)}
-        className={`${css.needs}`}
+    <>
+      <h3>Needs</h3>
+      <Button
+        onClick={() => {
+          setToggleEditor(true);
+        }}
+        className="mb-4"
       >
-        <Card>
-          <Accordion.Toggle as={Card.Header} eventKey="0">
-            <Button className="iconText">
-              <BsPlusSquare />
-              <span>Add new need</span>
-            </Button>
-          </Accordion.Toggle>
-          <Accordion.Collapse eventKey="0">
-            <Card.Body>
-              <NewNeedForm />
-            </Card.Body>
-          </Accordion.Collapse>
-        </Card>
-        {renderNeeds(project.needs)}
-      </Accordion>
-    </AccordionContext.Provider>
+        New Need
+      </Button>
+      {newNeed(toggleEditor)}
+      <NestableHierarcy
+        dispatchfunc={(projectId: string, items: Need[]) =>
+          newNeedList(projectId, items)
+        }
+        inputlist={project.needs}
+        projectId={id}
+        component={<EditNeedForm element={project.needs[0]} />}
+        depth={10}
+      />
+    </>
   );
 }
 
