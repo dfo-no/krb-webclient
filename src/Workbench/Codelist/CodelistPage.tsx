@@ -36,7 +36,7 @@ export default function CodelistPage(): ReactElement {
       return (
         <Card className="bg-light mb-2">
           <Card.Header className="pb-1 pt-1">
-            <Row className="d-flex justify-content-between">
+            <Row className="d-flex justify-content-between mr-2">
               <h6 className="ml-2">{element.title}</h6>
               <Link
                 onClick={setSelectedKodeliste(element.id)}

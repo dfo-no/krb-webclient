@@ -6,32 +6,23 @@ import {
   ListGroup,
   InputGroup,
   FormControl,
-  Card,
-  Form,
-  Row,
-  Col
+  Row
 } from 'react-bootstrap';
 import dayjs from 'dayjs';
 import { Link } from 'react-router-dom';
-import { useForm } from 'react-hook-form';
 
+import { BsPencil } from 'react-icons/bs';
 import { RootState } from '../../store/store';
 import { Publication } from '../../models/Publication';
 import {
-  editProject,
   putProjectThunk,
   addPublication,
   incrementProjectVersion
 } from '../../store/reducers/project-reducer';
 import { postBankThunk } from '../../store/reducers/bank-reducer';
 import Utils from '../../common/Utils';
-import { Bank } from '../../models/Bank';
 import { selectBank } from '../../store/reducers/selectedBank-reducer';
-
-type FormValues = {
-  title: string;
-  description: string;
-};
+import EditProjectForm from './EditProjectForm';
 
 function ProjectPage(): ReactElement {
   const dispatch = useDispatch();
@@ -40,9 +31,6 @@ function ProjectPage(): ReactElement {
   const [showEditor, setShowEditor] = useState(false);
   const [comment, setComment] = useState('');
   const [editMode, setEditMode] = useState(false);
-  const { register, handleSubmit, errors } = useForm<Bank>();
-  const [validated] = useState(false);
-
   if (!list) {
     return <p>Loading ....</p>;
   }
@@ -75,17 +63,6 @@ function ProjectPage(): ReactElement {
     dispatch(putProjectThunk(project.id));
   };
 
-  const editProjectInfo = (post: FormValues) => {
-    dispatch(
-      editProject({
-        projectId: project.id,
-        title: post.title,
-        description: post.description
-      })
-    );
-    dispatch(putProjectThunk(project.id));
-    setEditMode(false);
-  };
   const handleSelectedPublication = (bankId: string) => () => {
     dispatch(selectBank(bankId));
   };
@@ -98,74 +75,11 @@ function ProjectPage(): ReactElement {
     setComment(event.target.value);
   };
 
-  function headerSection(editmode: boolean) {
-    if (editmode) {
-      return (
-        <Card className="mt-3">
-          <Card.Body>
-            <Form
-              onSubmit={handleSubmit(editProjectInfo)}
-              autoComplete="off"
-              noValidate
-              validated={validated}
-            >
-              <Form.Group as={Row}>
-                <Form.Label column sm="2">
-                  Title
-                </Form.Label>
-                <Col sm={10}>
-                  <Form.Control
-                    name="title"
-                    defaultValue={project.title}
-                    ref={register({
-                      required: { value: true, message: 'Required' },
-                      minLength: { value: 2, message: 'Minimum 2 characters' }
-                    })}
-                    isInvalid={!!errors.title}
-                  />
-                  {errors.title && (
-                    <Form.Control.Feedback type="invalid">
-                      {errors.title.message}
-                    </Form.Control.Feedback>
-                  )}
-                </Col>
-              </Form.Group>
-              <Form.Group as={Row}>
-                <Form.Label column sm="2">
-                  Description
-                </Form.Label>
-                <Col sm={10}>
-                  <Form.Control
-                    name="description"
-                    defaultValue={project.description}
-                    ref={register({
-                      required: { value: true, message: 'Required' },
-                      minLength: { value: 2, message: 'Minimum 2 characters' }
-                    })}
-                    isInvalid={!!errors.description}
-                  />
-                  {errors.description && (
-                    <Form.Control.Feedback type="invalid">
-                      {errors.description.message}
-                    </Form.Control.Feedback>
-                  )}
-                </Col>
-              </Form.Group>
-              <Button className="mt-2" type="submit">
-                Save
-              </Button>
-            </Form>
-          </Card.Body>
-        </Card>
-      );
+  function editProjectForm(edit: boolean) {
+    if (edit) {
+      return <EditProjectForm toggleShow={setEditMode} project={project} />;
     }
-    return (
-      <div className="mt-3 mb-5">
-        <h1>{project.title}</h1>
-        <h5>{project.description}</h5>
-        <Button onClick={() => setEditMode(true)}>Edit</Button>
-      </div>
-    );
+    return <></>;
   }
   const publicationList = (publications?: Publication[]) => {
     if (publications) {
@@ -211,7 +125,14 @@ function ProjectPage(): ReactElement {
 
   return (
     <>
-      {headerSection(editMode)}
+      <Row className="m-1">
+        <h3> {project.title} </h3>
+        <Button className="ml-3" onClick={() => setEditMode(true)}>
+          <BsPencil />
+        </Button>
+      </Row>
+      <h6 className="ml-1 mb-3">{project.description}</h6>
+      {editProjectForm(editMode)}
       <h4>Publications</h4>
       <Button className="mb-3" onClick={() => setShowEditor(true)}>
         New publication

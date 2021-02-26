@@ -10,7 +10,7 @@ import {
   editNeed,
   putProjectThunk
 } from '../../store/reducers/project-reducer';
-import { AccordionContext } from './AccordionContext';
+import { AccordionContext } from '../../NestableHierarchy/AccordionContext';
 import { RootState } from '../../store/store';
 
 type FormValues = {

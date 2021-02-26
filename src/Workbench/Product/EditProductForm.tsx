@@ -1,7 +1,10 @@
-import React, { ReactElement } from 'react';
-import { Button, Form, Row } from 'react-bootstrap';
+import { yupResolver } from '@hookform/resolvers/yup';
+import React, { ReactElement, useContext, useState } from 'react';
+import { Button, Col, Form, Row } from 'react-bootstrap';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
+import * as yup from 'yup';
+import { AccordionContext } from '../../NestableHierarchy/AccordionContext';
 import { Product } from '../../models/Product';
 
 import {
@@ -19,10 +22,20 @@ type FormInput = {
   description: string;
 };
 
+const productSchema = yup.object().shape({
+  title: yup.string().required(),
+  description: yup.string().required()
+});
+
 export default function ProductForm({ element }: IProps): ReactElement {
   const { id } = useSelector((state: RootState) => state.selectedProject);
   const dispatch = useDispatch();
-  const { register, handleSubmit } = useForm();
+  const { onOpenClose } = useContext(AccordionContext);
+  const [validated] = useState(false);
+
+  const { register, handleSubmit, errors } = useForm({
+    resolver: yupResolver(productSchema)
+  });
   if (!id) {
     return <p>No project selected</p>;
   }
@@ -38,31 +51,57 @@ export default function ProductForm({ element }: IProps): ReactElement {
       })
     );
     dispatch(putProjectThunk(id));
+    onOpenClose('');
   };
 
   return (
-    <Form onSubmit={handleSubmit(edit)}>
+    <Form
+      onSubmit={handleSubmit(edit)}
+      autoComplete="off"
+      noValidate
+      validated={validated}
+    >
       <Form.Group as={Row}>
-        <Form.Label className="ml-2">Title</Form.Label>
-        <Form.Control
-          className="m-2"
-          name="title"
-          ref={register}
-          defaultValue={element.title}
-        />
+        <Form.Label column sm="2">
+          Title
+        </Form.Label>
+        <Col sm={10}>
+          <Form.Control
+            name="title"
+            ref={register}
+            defaultValue={element.title}
+            isInvalid={!!errors.title}
+          />
+          {errors.title && (
+            <Form.Control.Feedback type="invalid">
+              {errors.title?.message}
+            </Form.Control.Feedback>
+          )}
+        </Col>
       </Form.Group>
       <Form.Group as={Row}>
-        <Form.Label className="ml-2">Description</Form.Label>
-        <Form.Control
-          className="m-2"
-          name="description"
-          ref={register}
-          defaultValue={element.description}
-        />
+        <Form.Label column sm="2">
+          Description
+        </Form.Label>
+        <Col sm={10}>
+          <Form.Control
+            name="description"
+            ref={register}
+            defaultValue={element.description}
+            isInvalid={!!errors.description}
+          />
+          {errors.description && (
+            <Form.Control.Feedback type="invalid">
+              {errors.description.message}
+            </Form.Control.Feedback>
+          )}
+        </Col>
       </Form.Group>
-      <Button type="submit" className="m-2">
-        Save
-      </Button>
+      <Row>
+        <Button className="mt-2  ml-3" type="submit">
+          Save
+        </Button>
+      </Row>
     </Form>
   );
 }

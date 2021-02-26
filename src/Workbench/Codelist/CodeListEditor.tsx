@@ -1,13 +1,12 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import React, { ReactElement, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Button, Card, FormControl, InputGroup } from 'react-bootstrap';
+import { Button, Row } from 'react-bootstrap';
+import { BsPencil } from 'react-icons/bs';
 
-import styles from './CodeListEditor.module.scss';
 import { RootState } from '../../store/store';
 import { Code } from '../../models/Code';
 import {
-  editCodelist,
   putProjectThunk,
   updateCodeList
 } from '../../store/reducers/project-reducer';
@@ -18,6 +17,7 @@ import { Bank } from '../../models/Bank';
 import NestableHierarcy from '../../NestableHierarchy/Nestable';
 import EditCodeForm from './EditCodeForm';
 import NewCodeForm from './NewCodeForm';
+import EditCodeListForm from './EditCodeListForm';
 
 export default function CodeListEditor(): ReactElement {
   const dispatch = useDispatch();
@@ -26,8 +26,6 @@ export default function CodeListEditor(): ReactElement {
   const { listId } = useSelector((state: RootState) => state.selectedCodeList);
   const [toggleEditor, setToggleEditor] = useState(false);
   const [editmode, setEditMode] = useState(false);
-  const [title, setTitle] = useState('');
-  const [description, setDescription] = useState('');
 
   if (!id) {
     return <p>Please select a project</p>;
@@ -45,78 +43,16 @@ export default function CodeListEditor(): ReactElement {
     )
   );
 
-  const handleTitleChange = (
-    event: React.ChangeEvent<
-      HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
-    >
-  ) => {
-    setTitle(event.target.value);
-  };
-  const handleDescriptionChange = (
-    event: React.ChangeEvent<
-      HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
-    >
-  ) => {
-    setDescription(event.target.value);
-  };
-
-  const handleEditCodelist = () => {
-    setEditMode(true);
-  };
-
-  const onEditCodelist = () => {
-    dispatch(
-      editCodelist({
-        projectId: id,
-        codelistId: selectedCodeList.id,
-        title,
-        description
-      })
-    );
-    dispatch(putProjectThunk(id));
-    setEditMode(false);
-  };
-
-  function renderHeaderSection(edit: boolean) {
+  function editCodeList(edit: boolean) {
     if (edit) {
       return (
-        <Card className="mt-3">
-          <Card.Body>
-            <label htmlFor="title">Title</label>
-            <InputGroup className="mb-3 30vw">
-              <FormControl
-                name="title"
-                onChange={handleTitleChange}
-                defaultValue={selectedCodeList.title}
-              />
-            </InputGroup>
-            <label htmlFor="description">Description</label>
-            <InputGroup>
-              <FormControl
-                name="description"
-                onChange={handleDescriptionChange}
-                defaultValue={selectedCodeList.description}
-              />
-            </InputGroup>
-            <FormControl
-              name="codelistId"
-              type="hidden"
-              value={selectedCodeList.id}
-            />
-            <Button className="mt-2" onClick={onEditCodelist}>
-              Save
-            </Button>
-          </Card.Body>
-        </Card>
+        <EditCodeListForm
+          toggleShow={setEditMode}
+          codelistId={selectedCodeList.id}
+        />
       );
     }
-    return (
-      <div className={styles.codelistSection}>
-        <h1>{selectedCodeList.title}</h1>
-        <h5>{selectedCodeList.description}</h5>
-        <Button onClick={handleEditCodelist}>Edit</Button>
-      </div>
-    );
+    return <></>;
   }
 
   function codeListEditor(show: boolean) {
@@ -140,8 +76,15 @@ export default function CodeListEditor(): ReactElement {
 
   return (
     <>
-      {renderHeaderSection(editmode)}
-      <h4>Codes</h4>
+      <Row className="m-1">
+        <h3>Codelist: {selectedCodeList.title}</h3>
+        <Button className="ml-3" onClick={() => setEditMode(true)}>
+          <BsPencil />
+        </Button>
+      </Row>
+      <p className="ml-1 mb-4">{selectedCodeList.description}</p>
+      {editCodeList(editmode)}
+      <h5>Codes</h5>
       <Button onClick={() => setToggleEditor(true)} className="mb-4">
         New Code
       </Button>

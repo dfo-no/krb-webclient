@@ -1,10 +1,11 @@
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 /* eslint-disable react/prop-types */
 
-import React from 'react';
+import React, { useState } from 'react';
 import Nestable from 'react-nestable';
 import { Card, Accordion, Button, Row } from 'react-bootstrap';
 import { BsChevronDown } from 'react-icons/bs';
+import { AccordionContext } from './AccordionContext';
 
 export default function NestableHierarcy({
   dispatchfunc,
@@ -13,6 +14,7 @@ export default function NestableHierarcy({
   component,
   depth
 }) {
+  const [activeKey, setActiveKey] = useState('');
   const dfs = (tree, key, collection) => {
     if ((!tree[key] || tree[key].length === 0) && collection.includes(tree)) {
       const copiedTree = { ...tree };
@@ -74,38 +76,48 @@ export default function NestableHierarcy({
     dispatchfunc(projectId, itemList);
   };
 
+  const onOpenClose = (e) => {
+    if (e) {
+      setActiveKey(e);
+    } else {
+      setActiveKey('');
+    }
+  };
+
   const renderItem = ({ item, collapseIcon, handler }) => {
     return (
-      <Accordion>
-        <Card key={item.id}>
-          <Card.Header>
-            <Row className="d-flex justify-content-between">
-              <h6 className="ml-2 mt-2">
-                {item.title}
-                {collapseIcon}
-              </h6>
-              <Accordion.Toggle as={Button} variant="link" eventKey={item.id}>
-                <BsChevronDown />
-              </Accordion.Toggle>
-            </Row>
-          </Card.Header>
-          <Accordion.Collapse eventKey={item.id}>
-            <Card.Body>
-              {React.cloneElement(component, { element: item })}
-            </Card.Body>
-          </Accordion.Collapse>
-          {handler}
-        </Card>
-      </Accordion>
+      <Card key={item.id}>
+        <Card.Header>
+          <Row className="d-flex justify-content-between">
+            <h6 className="ml-2 mt-2">
+              {item.title}
+              {collapseIcon}
+            </h6>
+            <Accordion.Toggle as={Button} variant="link" eventKey={item.id}>
+              <BsChevronDown />
+            </Accordion.Toggle>
+          </Row>
+        </Card.Header>
+        <Accordion.Collapse eventKey={item.id}>
+          <Card.Body>
+            {React.cloneElement(component, { element: item })}
+          </Card.Body>
+        </Accordion.Collapse>
+        {handler}
+      </Card>
     );
   };
 
   return (
-    <Nestable
-      items={hierarchyList}
-      renderItem={renderItem}
-      onChange={saveOrder}
-      maxDepth={depth}
-    />
+    <AccordionContext.Provider value={{ onOpenClose }}>
+      <Accordion activeKey={activeKey} onSelect={(e) => onOpenClose(e)}>
+        <Nestable
+          items={hierarchyList}
+          renderItem={renderItem}
+          onChange={saveOrder}
+          maxDepth={depth}
+        />
+      </Accordion>
+    </AccordionContext.Provider>
   );
 }
