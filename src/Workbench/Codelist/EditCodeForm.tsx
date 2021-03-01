@@ -1,5 +1,5 @@
 import { yupResolver } from '@hookform/resolvers/yup';
-import React, { ReactElement, useState } from 'react';
+import React, { ReactElement, useContext, useState } from 'react';
 import { Button, Col, Form, Row } from 'react-bootstrap';
 import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
@@ -11,6 +11,7 @@ import {
   putProjectThunk
 } from '../../store/reducers/project-reducer';
 import { RootState } from '../../store/store';
+import { AccordionContext } from '../../NestableHierarchy/AccordionContext';
 
 interface IProps {
   element: Code;
@@ -29,6 +30,7 @@ const codeSchema = yup.object().shape({
 export default function EditCodeForm({ element }: IProps): ReactElement {
   const { id } = useSelector((state: RootState) => state.selectedProject);
   const { listId } = useSelector((state: RootState) => state.selectedCodeList);
+  const { onOpenClose } = useContext(AccordionContext);
   const dispatch = useDispatch();
   const [validated] = useState(false);
 
