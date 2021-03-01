@@ -62,7 +62,7 @@ function SideBar(): ReactElement {
   ];
 
   return (
-    <Nav className={`sidebar col-md-12 flex-column vh-100 ${css.sidebar}`}>
+    <Nav className={`sidebar col-md-12 flex-column ${css.sidebar}`}>
       {renderRouteLinks(routes, isProjectSelected)}
     </Nav>
   );

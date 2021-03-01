@@ -51,7 +51,7 @@ export default function WorkbenchModule(): ReactElement {
         <Col className="col-2 p-0">
           <SideBar /> {/* Sidebar outside Switch *may* be a very bad idea */}
         </Col>
-        <Col>
+        <Col style={{ minHeight: '100vh' }}>
           <Switch>
             <Route exact path={`${url}`}>
               <WorkbenchPage />
