@@ -33,6 +33,7 @@ import Utils from '../../common/Utils';
 import { Bank } from '../../models/Bank';
 import { selectRequirement } from '../../store/reducers/selectedRequirement-reducer';
 import { selectNeed } from '../../store/reducers/selectedNeed-reducer';
+import { AccordionContext } from '../../NestableHierarchy/AccordionContext';
 
 type FormValues = {
   title: string;
@@ -57,6 +58,7 @@ export default function RequirementPage(): ReactElement {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [showEditor, setShowEditor] = useState(false);
+  const [activeKey, setActiveKey] = useState('');
   if (!id) {
     return <p>No project selected</p>;
   }
@@ -87,6 +89,14 @@ export default function RequirementPage(): ReactElement {
     >
   ) => {
     setDescription(event.target.value);
+  };
+
+  const onOpenClose = (e: string | null) => {
+    if (e) {
+      setActiveKey(e);
+    } else {
+      setActiveKey('');
+    }
   };
 
   const addRequirementElement = (post: FormValues) => {
@@ -153,6 +163,7 @@ export default function RequirementPage(): ReactElement {
         requirement
       })
     );
+    onOpenClose('');
   };
 
   const handleSelectedNeed = (need: Need) => {
@@ -226,7 +237,11 @@ export default function RequirementPage(): ReactElement {
       return (
         <>
           <h5>Requirements</h5>
-          <Accordion>{jsx}</Accordion>
+          <AccordionContext.Provider value={{ onOpenClose }}>
+            <Accordion activeKey={activeKey} onSelect={(e) => onOpenClose(e)}>
+              {jsx}
+            </Accordion>
+          </AccordionContext.Provider>
         </>
       );
     }
