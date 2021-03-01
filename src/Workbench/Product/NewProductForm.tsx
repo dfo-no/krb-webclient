@@ -6,9 +6,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import * as yup from 'yup';
 
 import { v4 as uuidv4 } from 'uuid';
-import { Need } from '../../models/Need';
-import { addNeed, putProjectThunk } from '../../store/reducers/project-reducer';
+import {
+  addProduct,
+  putProjectThunk
+} from '../../store/reducers/project-reducer';
 import { RootState } from '../../store/store';
+import { Product } from '../../models/Product';
 
 type FormValues = {
   title: string;
@@ -18,36 +21,35 @@ interface IProps {
   toggleShow: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const needSchema = yup.object().shape({
+const productSchema = yup.object().shape({
   title: yup.string().required(),
   description: yup.string().required()
 });
 
-function NewNeedForm({ toggleShow }: IProps): ReactElement {
+function NewProductForm({ toggleShow }: IProps): ReactElement {
   const dispatch = useDispatch();
   const [validated] = useState(false);
 
   const { register, handleSubmit, reset, errors } = useForm({
-    resolver: yupResolver(needSchema)
+    resolver: yupResolver(productSchema)
   });
 
   const { id } = useSelector((state: RootState) => state.selectedProject);
 
   if (!id) {
-    return <div>Loading NeedForm</div>;
+    return <div>Loading Productform</div>;
   }
 
-  const onNewNeedSubmit = (post: FormValues) => {
-    const need: Need = {
+  const onNewProductSubmit = (post: FormValues) => {
+    const product: Product = {
       // TODO: remove uuidv4, this should be CosmosDB's task (perhaps by reference)
       id: uuidv4(),
       title: post.title,
       description: post.description,
-      requirements: [],
-      type: 'need',
-      parent: ''
+      parent: '',
+      type: 'product'
     };
-    dispatch(addNeed({ id, need }));
+    dispatch(addProduct({ id, product }));
     dispatch(putProjectThunk(id));
 
     // reset the form
@@ -59,7 +61,7 @@ function NewNeedForm({ toggleShow }: IProps): ReactElement {
     <Card className="mb-4">
       <Card.Body>
         <Form
-          onSubmit={handleSubmit(onNewNeedSubmit)}
+          onSubmit={handleSubmit(onNewProductSubmit)}
           autoComplete="off"
           noValidate
           validated={validated}
@@ -106,7 +108,7 @@ function NewNeedForm({ toggleShow }: IProps): ReactElement {
               className="mt-2 ml-3 btn-warning"
               onClick={() => toggleShow(false)}
             >
-              Avbryt
+              Cancel
             </Button>
           </Row>
         </Form>
@@ -115,4 +117,4 @@ function NewNeedForm({ toggleShow }: IProps): ReactElement {
   );
 }
 
-export default NewNeedForm;
+export default NewProductForm;

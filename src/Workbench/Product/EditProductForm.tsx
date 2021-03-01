@@ -1,69 +1,62 @@
+import { yupResolver } from '@hookform/resolvers/yup';
 import React, { ReactElement, useContext, useState } from 'react';
 import { Button, Col, Form, Row } from 'react-bootstrap';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
-import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
+import { AccordionContext } from '../../NestableHierarchy/AccordionContext';
+import { Product } from '../../models/Product';
 
-import { Need } from '../../models/Need';
 import {
-  editNeed,
+  editProduct,
   putProjectThunk
 } from '../../store/reducers/project-reducer';
-import { AccordionContext } from '../../NestableHierarchy/AccordionContext';
 import { RootState } from '../../store/store';
 
-type FormValues = {
-  id: string;
+interface IProps {
+  element: Product;
+}
+
+type FormInput = {
   title: string;
   description: string;
 };
-interface IProps {
-  element: Need;
-}
 
-const needSchema = yup.object().shape({
-  id: yup.string().required(),
+const productSchema = yup.object().shape({
   title: yup.string().required(),
   description: yup.string().required()
 });
 
-function EditNeedForm({ element }: IProps): ReactElement {
+export default function ProductForm({ element }: IProps): ReactElement {
   const { id } = useSelector((state: RootState) => state.selectedProject);
   const dispatch = useDispatch();
   const { onOpenClose } = useContext(AccordionContext);
   const [validated] = useState(false);
-  const { register, handleSubmit, errors } = useForm({
-    defaultValues: {
-      id: element.id,
-      title: element.title,
-      description: element.description
-    },
-    resolver: yupResolver(needSchema)
-  });
 
+  const { register, handleSubmit, errors } = useForm({
+    resolver: yupResolver(productSchema)
+  });
   if (!id) {
     return <p>No project selected</p>;
   }
 
-  const onEditNeedSubmit = (post: FormValues) => {
+  const edit = (post: FormInput) => {
+    const newProduct = { ...element };
+    newProduct.title = post.title;
+    newProduct.description = post.description;
     dispatch(
-      editNeed({
+      editProduct({
         projectId: id,
-        needId: post.id,
-        title: post.title,
-        description: post.description
+        product: newProduct
       })
     );
     dispatch(putProjectThunk(id));
-
-    // Close accordion via useContext
     onOpenClose('');
   };
 
   return (
     <Form
-      onSubmit={handleSubmit((e) => onEditNeedSubmit(e))}
+      onSubmit={handleSubmit(edit)}
       autoComplete="off"
       noValidate
       validated={validated}
@@ -76,11 +69,12 @@ function EditNeedForm({ element }: IProps): ReactElement {
           <Form.Control
             name="title"
             ref={register}
+            defaultValue={element.title}
             isInvalid={!!errors.title}
           />
           {errors.title && (
             <Form.Control.Feedback type="invalid">
-              {errors.title.message}
+              {errors.title?.message}
             </Form.Control.Feedback>
           )}
         </Col>
@@ -93,6 +87,7 @@ function EditNeedForm({ element }: IProps): ReactElement {
           <Form.Control
             name="description"
             ref={register}
+            defaultValue={element.description}
             isInvalid={!!errors.description}
           />
           {errors.description && (
@@ -102,12 +97,11 @@ function EditNeedForm({ element }: IProps): ReactElement {
           )}
         </Col>
       </Form.Group>
-      <Form.Control type="hidden" name="id" ref={register} />
-      <Button className="mt-2" type="submit">
-        Save
-      </Button>
+      <Row>
+        <Button className="mt-2  ml-3" type="submit">
+          Save
+        </Button>
+      </Row>
     </Form>
   );
 }
-
-export default EditNeedForm;

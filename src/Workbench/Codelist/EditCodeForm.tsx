@@ -1,69 +1,68 @@
+import { yupResolver } from '@hookform/resolvers/yup';
 import React, { ReactElement, useContext, useState } from 'react';
 import { Button, Col, Form, Row } from 'react-bootstrap';
 import { useForm } from 'react-hook-form';
-import { useDispatch, useSelector } from 'react-redux';
-import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
+import { useDispatch, useSelector } from 'react-redux';
+import { Code } from '../../models/Code';
 
-import { Need } from '../../models/Need';
 import {
-  editNeed,
+  editCodeInCodelist,
   putProjectThunk
 } from '../../store/reducers/project-reducer';
-import { AccordionContext } from '../../NestableHierarchy/AccordionContext';
 import { RootState } from '../../store/store';
+import { AccordionContext } from '../../NestableHierarchy/AccordionContext';
 
-type FormValues = {
-  id: string;
+interface IProps {
+  element: Code;
+}
+
+type FormInput = {
   title: string;
   description: string;
 };
-interface IProps {
-  element: Need;
-}
 
-const needSchema = yup.object().shape({
-  id: yup.string().required(),
+const codeSchema = yup.object().shape({
   title: yup.string().required(),
   description: yup.string().required()
 });
 
-function EditNeedForm({ element }: IProps): ReactElement {
+export default function EditCodeForm({ element }: IProps): ReactElement {
   const { id } = useSelector((state: RootState) => state.selectedProject);
-  const dispatch = useDispatch();
+  const { listId } = useSelector((state: RootState) => state.selectedCodeList);
   const { onOpenClose } = useContext(AccordionContext);
+  const dispatch = useDispatch();
   const [validated] = useState(false);
-  const { register, handleSubmit, errors } = useForm({
-    defaultValues: {
-      id: element.id,
-      title: element.title,
-      description: element.description
-    },
-    resolver: yupResolver(needSchema)
-  });
 
+  const { register, handleSubmit, errors } = useForm({
+    resolver: yupResolver(codeSchema)
+  });
   if (!id) {
     return <p>No project selected</p>;
   }
 
-  const onEditNeedSubmit = (post: FormValues) => {
+  if (!listId) {
+    return <p>No codelist selected</p>;
+  }
+
+  const edit = (post: FormInput) => {
+    const newCode = { ...element };
+    newCode.title = post.title;
+    newCode.description = post.description;
     dispatch(
-      editNeed({
+      editCodeInCodelist({
         projectId: id,
-        needId: post.id,
-        title: post.title,
-        description: post.description
+        codelistId: listId,
+        code: newCode
       })
     );
     dispatch(putProjectThunk(id));
-
-    // Close accordion via useContext
     onOpenClose('');
   };
 
   return (
     <Form
-      onSubmit={handleSubmit((e) => onEditNeedSubmit(e))}
+      onSubmit={handleSubmit(edit)}
       autoComplete="off"
       noValidate
       validated={validated}
@@ -77,10 +76,11 @@ function EditNeedForm({ element }: IProps): ReactElement {
             name="title"
             ref={register}
             isInvalid={!!errors.title}
+            defaultValue={element.title}
           />
           {errors.title && (
             <Form.Control.Feedback type="invalid">
-              {errors.title.message}
+              {errors.title?.message}
             </Form.Control.Feedback>
           )}
         </Col>
@@ -93,6 +93,7 @@ function EditNeedForm({ element }: IProps): ReactElement {
           <Form.Control
             name="description"
             ref={register}
+            defaultValue={element.description}
             isInvalid={!!errors.description}
           />
           {errors.description && (
@@ -102,12 +103,11 @@ function EditNeedForm({ element }: IProps): ReactElement {
           )}
         </Col>
       </Form.Group>
-      <Form.Control type="hidden" name="id" ref={register} />
-      <Button className="mt-2" type="submit">
-        Save
-      </Button>
+      <Row>
+        <Button className="mt-2  ml-3" type="submit">
+          Save
+        </Button>
+      </Row>
     </Form>
   );
 }
-
-export default EditNeedForm;

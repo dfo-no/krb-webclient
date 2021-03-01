@@ -9,13 +9,17 @@ import {
   Card,
   Button,
   InputGroup,
-  FormControl
+  FormControl,
+  Form
 } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
-
 import { v4 as uuidv4 } from 'uuid';
 import { useDispatch, useSelector } from 'react-redux';
+import { useForm } from 'react-hook-form';
+import * as yup from 'yup';
+import { yupResolver } from '@hookform/resolvers/yup';
 
+import { BsChevronDown } from 'react-icons/bs';
 import { RootState } from '../../store/store';
 import {
   editRequirementInNeed,
@@ -29,9 +33,24 @@ import Utils from '../../common/Utils';
 import { Bank } from '../../models/Bank';
 import { selectRequirement } from '../../store/reducers/selectedRequirement-reducer';
 import { selectNeed } from '../../store/reducers/selectedNeed-reducer';
+import { AccordionContext } from '../../NestableHierarchy/AccordionContext';
+
+type FormValues = {
+  title: string;
+  description: string;
+};
+
+const requirementSchema = yup.object().shape({
+  title: yup.string().required(),
+  description: yup.string().required()
+});
 
 export default function RequirementPage(): ReactElement {
   const dispatch = useDispatch();
+  const { register, handleSubmit, reset, errors } = useForm({
+    resolver: yupResolver(requirementSchema)
+  });
+  const [validated] = useState(false);
   const { id } = useSelector((state: RootState) => state.selectedProject);
   const { list } = useSelector((state: RootState) => state.project);
   const [selectedNeed, setSelectedNeed] = useState<Need | undefined>(undefined);
@@ -39,6 +58,7 @@ export default function RequirementPage(): ReactElement {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [showEditor, setShowEditor] = useState(false);
+  const [activeKey, setActiveKey] = useState('');
   if (!id) {
     return <p>No project selected</p>;
   }
@@ -71,7 +91,15 @@ export default function RequirementPage(): ReactElement {
     setDescription(event.target.value);
   };
 
-  const addRequirementElement = () => {
+  const onOpenClose = (e: string | null) => {
+    if (e) {
+      setActiveKey(e);
+    } else {
+      setActiveKey('');
+    }
+  };
+
+  const addRequirementElement = (post: FormValues) => {
     // find better solution to ts stating object might be undefined
     let needId;
     if (selectedNeed) {
@@ -79,8 +107,8 @@ export default function RequirementPage(): ReactElement {
     } else needId = '';
     const requirement: Requirement = {
       id: uuidv4(),
-      title,
-      description,
+      title: post.title,
+      description: post.description,
       needId,
       layouts: [],
       kind: 'yes/no',
@@ -102,6 +130,7 @@ export default function RequirementPage(): ReactElement {
       })
     );
     dispatch(putProjectThunk(id));
+    reset();
   };
 
   const editRequirementElement = (reqId: string, index: number) => () => {
@@ -134,6 +163,7 @@ export default function RequirementPage(): ReactElement {
         requirement
       })
     );
+    onOpenClose('');
   };
 
   const handleSelectedNeed = (need: Need) => {
@@ -158,16 +188,17 @@ export default function RequirementPage(): ReactElement {
       const jsx = reqs.map((element: Requirement, index) => {
         return (
           <Card key={element.id}>
-            <Card.Header>
+            <Card.Header className="d-flex justify-content-between">
+              <h6 className="mt-2">{element.title}</h6>
               <Accordion.Toggle
                 as={Button}
                 variant="link"
-                eventKey={index.toString()}
+                eventKey={element.id}
               >
-                {element.title}
+                <BsChevronDown />
               </Accordion.Toggle>
             </Card.Header>
-            <Accordion.Collapse eventKey={index.toString()}>
+            <Accordion.Collapse eventKey={element.id}>
               <Card.Body>
                 <label htmlFor="title">Title</label>
                 <InputGroup className="mb-3 30vw">
@@ -206,7 +237,11 @@ export default function RequirementPage(): ReactElement {
       return (
         <>
           <h5>Requirements</h5>
-          <Accordion>{jsx}</Accordion>
+          <AccordionContext.Provider value={{ onOpenClose }}>
+            <Accordion activeKey={activeKey} onSelect={(e) => onOpenClose(e)}>
+              {jsx}
+            </Accordion>
+          </AccordionContext.Provider>
         </>
       );
     }
@@ -216,25 +251,60 @@ export default function RequirementPage(): ReactElement {
   const newRequirement = (show: boolean) => {
     if (show) {
       return (
-        <Card className={styles.headerSection__requirement}>
+        <Card className="mb-4">
           <Card.Body>
-            <label htmlFor="title">Title</label>
-            <InputGroup className="mb-3 30vw">
-              <FormControl name="title" onChange={handleTitleChange} />
-            </InputGroup>
-            <label htmlFor="title">Requirement text</label>
-            <InputGroup className="mb-3 30vw">
-              <FormControl
-                name="description"
-                onChange={handleDescriptionChange}
-              />
-            </InputGroup>
-            <Button
-              className={styles.newbutton}
-              onClick={() => addRequirementElement()}
+            <Form
+              onSubmit={handleSubmit(addRequirementElement)}
+              autoComplete="off"
+              noValidate
+              validated={validated}
             >
-              Create
-            </Button>
+              <Form.Group as={Row}>
+                <Form.Label column sm="2">
+                  Title
+                </Form.Label>
+                <Col sm={10}>
+                  <Form.Control
+                    name="title"
+                    ref={register}
+                    isInvalid={!!errors.title}
+                  />
+                  {errors.title && (
+                    <Form.Control.Feedback type="invalid">
+                      {errors.title?.message}
+                    </Form.Control.Feedback>
+                  )}
+                </Col>
+              </Form.Group>
+              <Form.Group as={Row}>
+                <Form.Label column sm="2">
+                  Requirement Text
+                </Form.Label>
+                <Col sm={10}>
+                  <Form.Control
+                    name="description"
+                    ref={register}
+                    isInvalid={!!errors.description}
+                  />
+                  {errors.description && (
+                    <Form.Control.Feedback type="invalid">
+                      {errors.description.message}
+                    </Form.Control.Feedback>
+                  )}
+                </Col>
+              </Form.Group>
+              <Row>
+                <Button className="mt-2  ml-3" type="submit">
+                  Save
+                </Button>
+                <Button
+                  className="mt-2 ml-3 btn-warning"
+                  onClick={() => setShowEditor(false)}
+                >
+                  Cancel
+                </Button>
+              </Row>
+            </Form>
           </Card.Body>
         </Card>
       );
@@ -254,7 +324,7 @@ export default function RequirementPage(): ReactElement {
           onClick={() => {
             setShowEditor(true);
           }}
-          className={styles.headersection__addButton}
+          className="mb-4"
         >
           New Requirement
         </Button>

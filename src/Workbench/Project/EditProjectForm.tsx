@@ -1,57 +1,57 @@
+import { yupResolver } from '@hookform/resolvers/yup';
 import React, { ReactElement, useState } from 'react';
 import { Button, Card, Col, Form, Row } from 'react-bootstrap';
 import { useForm } from 'react-hook-form';
-import { yupResolver } from '@hookform/resolvers/yup';
 import { useDispatch, useSelector } from 'react-redux';
 import * as yup from 'yup';
+import { Bank } from '../../models/Bank';
 
-import { v4 as uuidv4 } from 'uuid';
-import { Need } from '../../models/Need';
-import { addNeed, putProjectThunk } from '../../store/reducers/project-reducer';
+import {
+  editProject,
+  putProjectThunk
+} from '../../store/reducers/project-reducer';
 import { RootState } from '../../store/store';
 
-type FormValues = {
-  title: string;
-  description: string;
-};
 interface IProps {
+  project: Bank;
   toggleShow: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const needSchema = yup.object().shape({
+type FormInput = {
+  title: string;
+  description: string;
+};
+
+const projectSchema = yup.object().shape({
   title: yup.string().required(),
   description: yup.string().required()
 });
 
-function NewNeedForm({ toggleShow }: IProps): ReactElement {
+export default function EditProjectForm({
+  project,
+  toggleShow
+}: IProps): ReactElement {
+  const { id } = useSelector((state: RootState) => state.selectedProject);
   const dispatch = useDispatch();
   const [validated] = useState(false);
 
-  const { register, handleSubmit, reset, errors } = useForm({
-    resolver: yupResolver(needSchema)
+  const { register, handleSubmit, errors } = useForm({
+    resolver: yupResolver(projectSchema)
   });
 
-  const { id } = useSelector((state: RootState) => state.selectedProject);
-
   if (!id) {
-    return <div>Loading NeedForm</div>;
+    return <p>No project selected</p>;
   }
 
-  const onNewNeedSubmit = (post: FormValues) => {
-    const need: Need = {
-      // TODO: remove uuidv4, this should be CosmosDB's task (perhaps by reference)
-      id: uuidv4(),
-      title: post.title,
-      description: post.description,
-      requirements: [],
-      type: 'need',
-      parent: ''
-    };
-    dispatch(addNeed({ id, need }));
+  const onEditProjectSubmit = (post: FormInput) => {
+    dispatch(
+      editProject({
+        projectId: project.id,
+        title: post.title,
+        description: post.description
+      })
+    );
     dispatch(putProjectThunk(id));
-
-    // reset the form
-    reset();
     toggleShow(false);
   };
 
@@ -59,7 +59,7 @@ function NewNeedForm({ toggleShow }: IProps): ReactElement {
     <Card className="mb-4">
       <Card.Body>
         <Form
-          onSubmit={handleSubmit(onNewNeedSubmit)}
+          onSubmit={handleSubmit(onEditProjectSubmit)}
           autoComplete="off"
           noValidate
           validated={validated}
@@ -73,6 +73,7 @@ function NewNeedForm({ toggleShow }: IProps): ReactElement {
                 name="title"
                 ref={register}
                 isInvalid={!!errors.title}
+                defaultValue={project.title}
               />
               {errors.title && (
                 <Form.Control.Feedback type="invalid">
@@ -90,6 +91,7 @@ function NewNeedForm({ toggleShow }: IProps): ReactElement {
                 name="description"
                 ref={register}
                 isInvalid={!!errors.description}
+                defaultValue={project.description}
               />
               {errors.description && (
                 <Form.Control.Feedback type="invalid">
@@ -106,7 +108,7 @@ function NewNeedForm({ toggleShow }: IProps): ReactElement {
               className="mt-2 ml-3 btn-warning"
               onClick={() => toggleShow(false)}
             >
-              Avbryt
+              Cancel
             </Button>
           </Row>
         </Form>
@@ -114,5 +116,3 @@ function NewNeedForm({ toggleShow }: IProps): ReactElement {
     </Card>
   );
 }
-
-export default NewNeedForm;

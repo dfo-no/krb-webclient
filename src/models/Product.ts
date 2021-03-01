@@ -4,4 +4,5 @@ export interface Product extends BaseModel {
   id: string;
   title: string;
   description: string;
+  parent: string;
 }
