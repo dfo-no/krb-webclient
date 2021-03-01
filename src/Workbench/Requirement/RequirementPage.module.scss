@@ -3,13 +3,13 @@
 .sidebar {
   border-right: $dfo-light-border;
   background-color: $light;
+  min-height: 100vh;
   &__item {
     &__active {
       color: $purple;
     }
   }
 }
-
 .headerSection {
   margin-top: 2rem;
   margin-bottom: 2rem;
