@@ -15,6 +15,7 @@ import WorkbenchPage from './WorkbenchPage';
 import { getProjectsThunk } from '../store/reducers/project-reducer';
 import { RootState } from '../store/store';
 import { selectProject } from '../store/reducers/selectedProject-reducer';
+import styles from './WorkBench.module.scss';
 
 interface RouteParams {
   projectId: string;
@@ -51,7 +52,7 @@ export default function WorkbenchModule(): ReactElement {
         <Col className="col-2 p-0">
           <SideBar /> {/* Sidebar outside Switch *may* be a very bad idea */}
         </Col>
-        <Col>
+        <Col className={styles.editor}>
           <Switch>
             <Route exact path={`${url}`}>
               <WorkbenchPage />

@@ -131,6 +131,7 @@ export default function RequirementPage(): ReactElement {
       })
     );
     dispatch(putProjectThunk(id));
+    reset();
   };
 
   const editRequirementElement = (reqId: string, index: number) => () => {
@@ -354,7 +355,7 @@ export default function RequirementPage(): ReactElement {
   return (
     <Row>
       <Col className="col-2 p-0">
-        <Nav className={`sidebar flex-column vh-100 p-0 ${styles.sidebar}`}>
+        <Nav className={`sidebar col-md-12 flex-column p-0 ${styles.sidebar}`}>
           {needList(needs)}
         </Nav>
       </Col>
