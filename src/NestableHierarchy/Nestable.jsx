@@ -15,7 +15,7 @@ export default function NestableHierarcy({
   depth
 }) {
   const [activeKey, setActiveKey] = useState('');
-  const dfs = (tree, key, collection) => {
+  const convertTreeToList = (tree, key, collection) => {
     if ((!tree[key] || tree[key].length === 0) && collection.includes(tree)) {
       const copiedTree = { ...tree };
       delete copiedTree.children;
@@ -30,7 +30,7 @@ export default function NestableHierarcy({
     for (let i = 0; i < tree[key].length; i += 1) {
       const child = tree[key][i];
       child.parent = tree.id === undefined ? '' : tree.id;
-      dfs(child, key, collection);
+      convertTreeToList(child, key, collection);
     }
   };
 
@@ -39,7 +39,7 @@ export default function NestableHierarcy({
     list.forEach((element) => {
       const copy = element;
       copy.parent = '';
-      dfs(element, 'children', flattenedCollection);
+      convertTreeToList(element, 'children', flattenedCollection);
     });
     return flattenedCollection;
   };

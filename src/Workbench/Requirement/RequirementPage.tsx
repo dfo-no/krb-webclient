@@ -131,6 +131,7 @@ export default function RequirementPage(): ReactElement {
       })
     );
     dispatch(putProjectThunk(id));
+    reset();
   };
 
   const editRequirementElement = (reqId: string, index: number) => () => {
