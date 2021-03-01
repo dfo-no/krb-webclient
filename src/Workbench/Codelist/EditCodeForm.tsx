@@ -55,6 +55,7 @@ export default function EditCodeForm({ element }: IProps): ReactElement {
       })
     );
     dispatch(putProjectThunk(id));
+    onOpenClose('');
   };
 
   return (
