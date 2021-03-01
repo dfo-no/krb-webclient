@@ -122,7 +122,6 @@ export default function RequirementPage(): ReactElement {
     const needIndex = selectedProject.needs.findIndex(
       (need) => need.id === selectedNeed?.id
     );
-    reset();
     dispatch(
       setRequirementListToNeed({
         projectId: id,
@@ -131,6 +130,7 @@ export default function RequirementPage(): ReactElement {
       })
     );
     dispatch(putProjectThunk(id));
+    reset();
   };
 
   const editRequirementElement = (reqId: string, index: number) => () => {

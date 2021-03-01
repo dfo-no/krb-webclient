@@ -33,7 +33,7 @@ export default function ProductPage(): ReactElement {
     if (show) {
       return <NewProductForm toggleShow={setToggleEditor} />;
     }
-    return <></>;
+    return null;
   }
   const newProductList = (projectId: string, items: Product[]) => {
     dispatch(updateProductList({ id: projectId, products: items }));

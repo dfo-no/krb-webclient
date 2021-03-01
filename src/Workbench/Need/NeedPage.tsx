@@ -27,7 +27,7 @@ function NeedPage(): ReactElement {
     if (show) {
       return <NewNeedForm toggleShow={setToggleEditor} />;
     }
-    return <></>;
+    return null;
   }
 
   const newNeedList = (projectId: string, items: Need[]) => {
