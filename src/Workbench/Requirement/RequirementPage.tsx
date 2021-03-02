@@ -1,5 +1,5 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
-import React, { ReactElement, useState } from 'react';
+import React, { ReactElement, useState, useEffect } from 'react';
 import {
   Row,
   Col,
@@ -61,6 +61,13 @@ export default function RequirementPage(): ReactElement {
   const [showEditor, setShowEditor] = useState(false);
   const [activeKey, setActiveKey] = useState('');
   const [showAlert, setShowAlert] = useState(false);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setShowAlert(false);
+    }, 2000);
+    return () => clearTimeout(timer);
+  }, [showAlert]);
 
   if (!id) {
     return <p>No project selected</p>;

@@ -1,4 +1,4 @@
-import React, { ReactElement, useState } from 'react';
+import React, { ReactElement, useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Button } from 'react-bootstrap';
 
@@ -20,6 +20,14 @@ function NeedPage(): ReactElement {
   const [showAlert, setShowAlert] = useState(false);
   const [toggleEditor, setToggleEditor] = useState(false);
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setShowAlert(false);
+    }, 2000);
+    return () => clearTimeout(timer);
+  }, [showAlert]);
+
   if (list.length === 0 || !id) {
     return <div>Loading NeedPage....</div>;
   }

@@ -1,5 +1,5 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
-import React, { ReactElement, useState } from 'react';
+import React, { ReactElement, useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Button, Row } from 'react-bootstrap';
 import { BsPencil } from 'react-icons/bs';
@@ -28,6 +28,13 @@ export default function CodeListEditor(): ReactElement {
   const [toggleEditor, setToggleEditor] = useState(false);
   const [editmode, setEditMode] = useState(false);
   const [showAlert, setShowAlert] = useState(false);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setShowAlert(false);
+    }, 2000);
+    return () => clearTimeout(timer);
+  }, [showAlert]);
 
   if (!id) {
     return <p>Please select a project</p>;

@@ -1,4 +1,4 @@
-import React, { ReactElement, useState } from 'react';
+import React, { ReactElement, useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { Button, Card, Row } from 'react-bootstrap';
@@ -18,6 +18,13 @@ export default function CodelistPage(): ReactElement {
   const { id } = useSelector((state: RootState) => state.selectedProject);
   const [toggleEditor, setToggleEditor] = useState(false);
   const [showAlert, setShowAlert] = useState(false);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setShowAlert(false);
+    }, 2000);
+    return () => clearTimeout(timer);
+  }, [showAlert]);
 
   if (!id) {
     return <p>Please select a project</p>;
