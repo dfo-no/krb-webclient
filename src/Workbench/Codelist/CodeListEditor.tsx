@@ -18,6 +18,7 @@ import NestableHierarcy from '../../NestableHierarchy/Nestable';
 import EditCodeForm from './EditCodeForm';
 import NewCodeForm from './NewCodeForm';
 import EditCodeListForm from './EditCodeListForm';
+import SuccessAlert from '../Successalert';
 
 export default function CodeListEditor(): ReactElement {
   const dispatch = useDispatch();
@@ -26,6 +27,7 @@ export default function CodeListEditor(): ReactElement {
   const { listId } = useSelector((state: RootState) => state.selectedCodeList);
   const [toggleEditor, setToggleEditor] = useState(false);
   const [editmode, setEditMode] = useState(false);
+  const [showAlert, setShowAlert] = useState(false);
 
   if (!id) {
     return <p>Please select a project</p>;
@@ -61,6 +63,7 @@ export default function CodeListEditor(): ReactElement {
         <NewCodeForm
           codelistId={selectedCodeList.id}
           toggleShow={setToggleEditor}
+          toggleAlert={setShowAlert}
         />
       );
     }
@@ -88,6 +91,7 @@ export default function CodeListEditor(): ReactElement {
       <Button onClick={() => setToggleEditor(true)} className="mb-4">
         New Code
       </Button>
+      {showAlert && <SuccessAlert toggleShow={setShowAlert} type="code" />}
       {codeListEditor(toggleEditor)}
       <NestableHierarcy
         dispatchfunc={(projectId: string, items: Code[]) =>

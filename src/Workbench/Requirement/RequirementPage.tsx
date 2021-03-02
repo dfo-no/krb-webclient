@@ -34,6 +34,7 @@ import { Bank } from '../../models/Bank';
 import { selectRequirement } from '../../store/reducers/selectedRequirement-reducer';
 import { selectNeed } from '../../store/reducers/selectedNeed-reducer';
 import { AccordionContext } from '../../NestableHierarchy/AccordionContext';
+import SuccessAlert from '../Successalert';
 
 type FormValues = {
   title: string;
@@ -59,6 +60,8 @@ export default function RequirementPage(): ReactElement {
   const [description, setDescription] = useState('');
   const [showEditor, setShowEditor] = useState(false);
   const [activeKey, setActiveKey] = useState('');
+  const [showAlert, setShowAlert] = useState(false);
+
   if (!id) {
     return <p>No project selected</p>;
   }
@@ -132,6 +135,7 @@ export default function RequirementPage(): ReactElement {
     );
     dispatch(putProjectThunk(id));
     reset();
+    setShowAlert(true);
   };
 
   const editRequirementElement = (reqId: string, index: number) => () => {
@@ -329,6 +333,9 @@ export default function RequirementPage(): ReactElement {
         >
           New Requirement
         </Button>
+        {showAlert && (
+          <SuccessAlert toggleShow={setShowAlert} type="requirement" />
+        )}
         {newRequirement(showEditor)}
       </div>
     );

@@ -10,12 +10,14 @@ import { selectCodeList } from '../../store/reducers/selectedCodelist-reducer';
 import Utils from '../../common/Utils';
 import { Bank } from '../../models/Bank';
 import NewCodeListForm from './NewCodeListForm';
+import SuccessAlert from '../Successalert';
 
 export default function CodelistPage(): ReactElement {
   const dispatch = useDispatch();
   const { list } = useSelector((state: RootState) => state.project);
   const { id } = useSelector((state: RootState) => state.selectedProject);
   const [toggleEditor, setToggleEditor] = useState(false);
+  const [showAlert, setShowAlert] = useState(false);
 
   if (!id) {
     return <p>Please select a project</p>;
@@ -56,7 +58,12 @@ export default function CodelistPage(): ReactElement {
 
   function newCodeList(show: boolean) {
     if (show) {
-      return <NewCodeListForm toggleShow={setToggleEditor} />;
+      return (
+        <NewCodeListForm
+          toggleAlert={setShowAlert}
+          toggleShow={setToggleEditor}
+        />
+      );
     }
     return <></>;
   }
@@ -67,6 +74,7 @@ export default function CodelistPage(): ReactElement {
       <Button className="mb-4" onClick={() => setToggleEditor(true)}>
         New Codelist
       </Button>
+      {showAlert && <SuccessAlert toggleShow={setShowAlert} type="codelist" />}
       {newCodeList(toggleEditor)}
       {renderCodelist(selectedProject.codelist)}
     </>

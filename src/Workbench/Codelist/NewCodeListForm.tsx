@@ -19,6 +19,7 @@ type FormValues = {
 };
 interface IProps {
   toggleShow: React.Dispatch<React.SetStateAction<boolean>>;
+  toggleAlert: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const codeListSchema = yup.object().shape({
@@ -26,7 +27,7 @@ const codeListSchema = yup.object().shape({
   description: yup.string().required()
 });
 
-function NewCodeListForm({ toggleShow }: IProps): ReactElement {
+function NewCodeListForm({ toggleShow, toggleAlert }: IProps): ReactElement {
   const dispatch = useDispatch();
   const [validated] = useState(false);
 
@@ -52,6 +53,7 @@ function NewCodeListForm({ toggleShow }: IProps): ReactElement {
     dispatch(putProjectThunk(id));
     reset();
     toggleShow(false);
+    toggleAlert(true);
   };
 
   return (

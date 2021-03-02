@@ -14,6 +14,7 @@ import {
   postProjectThunk
 } from '../store/reducers/project-reducer';
 import { selectProject } from '../store/reducers/selectedProject-reducer';
+import SuccessAlert from './Successalert';
 
 type FormValues = {
   title: string;
@@ -25,6 +26,7 @@ function WorkbenchPage(): ReactElement {
   const { list } = useSelector((state: RootState) => state.project);
   const history = useHistory();
   const [showEditor, setShowEditor] = useState(false);
+  const [showAlert, setShowAlert] = useState(false);
 
   const { register, handleSubmit, reset, errors } = useForm<FormValues>();
   const [validated] = useState(false);
@@ -47,6 +49,7 @@ function WorkbenchPage(): ReactElement {
     dispatch(postProjectThunk(project));
     reset();
     setShowEditor(false);
+    setShowAlert(true);
   };
 
   function onSelect(project: Bank) {
@@ -150,6 +153,7 @@ function WorkbenchPage(): ReactElement {
     <>
       <h3>Projects </h3>
       <Button onClick={handleShowEditor}>New Project</Button>
+      {showAlert && <SuccessAlert toggleShow={setShowAlert} type="project" />}
       {projectEditor(showEditor)}
       {renderProjects(list)}
     </>

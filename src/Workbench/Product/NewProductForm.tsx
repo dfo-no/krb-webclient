@@ -19,6 +19,7 @@ type FormValues = {
 };
 interface IProps {
   toggleShow: React.Dispatch<React.SetStateAction<boolean>>;
+  toggleAlert: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const productSchema = yup.object().shape({
@@ -26,7 +27,7 @@ const productSchema = yup.object().shape({
   description: yup.string().required()
 });
 
-function NewProductForm({ toggleShow }: IProps): ReactElement {
+function NewProductForm({ toggleShow, toggleAlert }: IProps): ReactElement {
   const dispatch = useDispatch();
   const [validated] = useState(false);
 
@@ -55,6 +56,7 @@ function NewProductForm({ toggleShow }: IProps): ReactElement {
     // reset the form
     reset();
     toggleShow(false);
+    toggleAlert(true);
   };
 
   return (
