@@ -348,29 +348,68 @@ export default function RequirementPage(): ReactElement {
     );
   };
 
-  const needList = (needsList: Need[]) => {
-    return needsList.map((element: Need) => {
+  const childrenHierarchy = (listofneed: any[], level: number) => {
+    let n = level;
+    let children: any;
+    const cssClass = `level${n}`;
+    return listofneed.map((element: any) => {
+      if (element.children.length > 0) {
+        n += 1;
+        children = childrenHierarchy(element.children, n);
+      }
       return (
-        <Nav.Item key={element.id} className={`${styles.sidebar__item}`}>
-          <Nav.Link
-            as={NavLink}
-            role="link"
-            /* TODO: activeClassName not reconized ny React */
-            /* activeClassName={`${styles.sidebar__item__active}`} */
-            onClick={() => handleSelectedNeed(element)}
+        <>
+          <Nav.Item key={element.id} className={` ${styles[cssClass]} pt-0`}>
+            <Nav.Link
+              as={NavLink}
+              role="link"
+              /* TODO: activeClassName not reconized ny React */
+              /* activeClassName={`${styles.sidebar__item__active}`} */
+              onClick={() => handleSelectedNeed(element)}
+            >
+              {element.title}
+            </Nav.Link>
+          </Nav.Item>
+          {children}
+        </>
+      );
+    });
+  };
+
+  const needHierarchy = (needsList: Need[]) => {
+    const newList = Utils.unflatten(needsList);
+    let children: any;
+    return newList.map((element: any) => {
+      if (element.children.length > 0) {
+        children = childrenHierarchy(element.children, 1);
+      }
+      return (
+        <>
+          <Nav.Item
+            key={element.id}
+            className={`${styles.sidebar__item} m-0 p-0`}
           >
-            {element.title}
-          </Nav.Link>
-        </Nav.Item>
+            <Nav.Link
+              as={NavLink}
+              role="link"
+              /* TODO: activeClassName not reconized ny React */
+              /* activeClassName={`${styles.sidebar__item__active}`} */
+              onClick={() => handleSelectedNeed(element)}
+            >
+              {element.title}
+            </Nav.Link>
+          </Nav.Item>
+          {children}
+        </>
       );
     });
   };
 
   return (
     <Row>
-      <Col className="col-2 p-0">
-        <Nav className={`sidebar col-md-12 flex-column p-0 ${styles.sidebar}`}>
-          {needList(needs)}
+      <Col className="col-3 p-0">
+        <Nav className={`sidebar flex-column p-0 ${styles.sidebar}`}>
+          {needHierarchy(needs)}
         </Nav>
       </Col>
       <Col>
