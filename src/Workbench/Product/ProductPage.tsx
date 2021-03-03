@@ -1,5 +1,5 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
-import React, { ReactElement, useState } from 'react';
+import React, { ReactElement, useState, useEffect } from 'react';
 import { Button } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -14,12 +14,21 @@ import { Bank } from '../../models/Bank';
 import NestableHierarcy from '../../NestableHierarchy/Nestable';
 import ProductForm from './EditProductForm';
 import NewProductForm from './NewProductForm';
+import SuccessAlert from '../SuccessAlert';
 
 export default function ProductPage(): ReactElement {
   const dispatch = useDispatch();
   const { id } = useSelector((state: RootState) => state.selectedProject);
   const { list } = useSelector((state: RootState) => state.project);
   const [toggleEditor, setToggleEditor] = useState(false);
+  const [showAlert, setShowAlert] = useState(false);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setShowAlert(false);
+    }, 2000);
+    return () => clearTimeout(timer);
+  }, [showAlert]);
 
   if (!id) {
     return <p>No Project selected</p>;
@@ -31,7 +40,12 @@ export default function ProductPage(): ReactElement {
 
   function productEditor(show: boolean) {
     if (show) {
-      return <NewProductForm toggleShow={setToggleEditor} />;
+      return (
+        <NewProductForm
+          toggleAlert={setShowAlert}
+          toggleShow={setToggleEditor}
+        />
+      );
     }
     return null;
   }
@@ -50,6 +64,7 @@ export default function ProductPage(): ReactElement {
       >
         New Product
       </Button>
+      {showAlert && <SuccessAlert toggleShow={setShowAlert} type="product" />}
       {productEditor(toggleEditor)}
       <NestableHierarcy
         dispatchfunc={(projectId: string, items: Product[]) =>

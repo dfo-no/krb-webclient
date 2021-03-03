@@ -23,12 +23,14 @@ import { postBankThunk } from '../../store/reducers/bank-reducer';
 import Utils from '../../common/Utils';
 import { selectBank } from '../../store/reducers/selectedBank-reducer';
 import EditProjectForm from './EditProjectForm';
+import SuccessAlert from '../SuccessAlert';
 
 function ProjectPage(): ReactElement {
   const dispatch = useDispatch();
   const { id } = useSelector((state: RootState) => state.selectedProject);
   const { list } = useSelector((state: RootState) => state.project);
   const [showEditor, setShowEditor] = useState(false);
+  const [showAlert, setShowAlert] = useState(false);
   const [comment, setComment] = useState('');
   const [editMode, setEditMode] = useState(false);
   if (!list) {
@@ -61,6 +63,7 @@ function ProjectPage(): ReactElement {
     dispatch(addPublication({ projectId: project.id, publication }));
     dispatch(incrementProjectVersion(project.id));
     dispatch(putProjectThunk(project.id));
+    setShowAlert(true);
   };
 
   const handleSelectedPublication = (bankId: string) => () => {
@@ -137,6 +140,9 @@ function ProjectPage(): ReactElement {
       <Button className="mb-3" onClick={() => setShowEditor(true)}>
         New publication
       </Button>
+      {showAlert && (
+        <SuccessAlert toggleShow={setShowAlert} type="publication" />
+      )}
       {publicationEditor(showEditor)}
       {publicationList(project.publications)}
     </>

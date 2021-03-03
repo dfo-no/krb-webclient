@@ -1,4 +1,4 @@
-import React, { ReactElement, useState } from 'react';
+import React, { ReactElement, useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { Button, Card, Row } from 'react-bootstrap';
@@ -10,12 +10,22 @@ import { selectCodeList } from '../../store/reducers/selectedCodelist-reducer';
 import Utils from '../../common/Utils';
 import { Bank } from '../../models/Bank';
 import NewCodeListForm from './NewCodeListForm';
+import SuccessAlert from '../SuccessAlert';
 
 export default function CodelistPage(): ReactElement {
   const dispatch = useDispatch();
   const { list } = useSelector((state: RootState) => state.project);
   const { id } = useSelector((state: RootState) => state.selectedProject);
   const [toggleEditor, setToggleEditor] = useState(false);
+  const [showAlert, setShowAlert] = useState(false);
+
+  // TODO: make environment variable of 2000
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setShowAlert(false);
+    }, 2000);
+    return () => clearTimeout(timer);
+  }, [showAlert]);
 
   if (!id) {
     return <p>Please select a project</p>;
@@ -56,7 +66,12 @@ export default function CodelistPage(): ReactElement {
 
   function newCodeList(show: boolean) {
     if (show) {
-      return <NewCodeListForm toggleShow={setToggleEditor} />;
+      return (
+        <NewCodeListForm
+          toggleAlert={setShowAlert}
+          toggleShow={setToggleEditor}
+        />
+      );
     }
     return <></>;
   }
@@ -67,6 +82,7 @@ export default function CodelistPage(): ReactElement {
       <Button className="mb-4" onClick={() => setToggleEditor(true)}>
         New Codelist
       </Button>
+      {showAlert && <SuccessAlert toggleShow={setShowAlert} type="codelist" />}
       {newCodeList(toggleEditor)}
       {renderCodelist(selectedProject.codelist)}
     </>

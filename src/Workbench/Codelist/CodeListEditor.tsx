@@ -1,5 +1,5 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
-import React, { ReactElement, useState } from 'react';
+import React, { ReactElement, useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Button, Row } from 'react-bootstrap';
 import { BsPencil } from 'react-icons/bs';
@@ -18,6 +18,7 @@ import NestableHierarcy from '../../NestableHierarchy/Nestable';
 import EditCodeForm from './EditCodeForm';
 import NewCodeForm from './NewCodeForm';
 import EditCodeListForm from './EditCodeListForm';
+import SuccessAlert from '../SuccessAlert';
 
 export default function CodeListEditor(): ReactElement {
   const dispatch = useDispatch();
@@ -26,6 +27,14 @@ export default function CodeListEditor(): ReactElement {
   const { listId } = useSelector((state: RootState) => state.selectedCodeList);
   const [toggleEditor, setToggleEditor] = useState(false);
   const [editmode, setEditMode] = useState(false);
+  const [showAlert, setShowAlert] = useState(false);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setShowAlert(false);
+    }, 2000);
+    return () => clearTimeout(timer);
+  }, [showAlert]);
 
   if (!id) {
     return <p>Please select a project</p>;
@@ -61,6 +70,7 @@ export default function CodeListEditor(): ReactElement {
         <NewCodeForm
           codelistId={selectedCodeList.id}
           toggleShow={setToggleEditor}
+          toggleAlert={setShowAlert}
         />
       );
     }
@@ -88,6 +98,7 @@ export default function CodeListEditor(): ReactElement {
       <Button onClick={() => setToggleEditor(true)} className="mb-4">
         New Code
       </Button>
+      {showAlert && <SuccessAlert toggleShow={setShowAlert} type="code" />}
       {codeListEditor(toggleEditor)}
       <NestableHierarcy
         dispatchfunc={(projectId: string, items: Code[]) =>

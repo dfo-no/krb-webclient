@@ -1,4 +1,4 @@
-import React, { ReactElement, useState } from 'react';
+import React, { ReactElement, useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Button } from 'react-bootstrap';
 
@@ -12,12 +12,22 @@ import {
   putProjectThunk,
   updateNeedList
 } from '../../store/reducers/project-reducer';
+import SuccessAlert from '../SuccessAlert';
 
 function NeedPage(): ReactElement {
   const { id } = useSelector((state: RootState) => state.selectedProject);
   const { list } = useSelector((state: RootState) => state.project);
+  const [showAlert, setShowAlert] = useState(false);
   const [toggleEditor, setToggleEditor] = useState(false);
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setShowAlert(false);
+    }, 2000);
+    return () => clearTimeout(timer);
+  }, [showAlert]);
+
   if (list.length === 0 || !id) {
     return <div>Loading NeedPage....</div>;
   }
@@ -25,7 +35,9 @@ function NeedPage(): ReactElement {
 
   function newNeed(show: boolean) {
     if (show) {
-      return <NewNeedForm toggleShow={setToggleEditor} />;
+      return (
+        <NewNeedForm toggleAlert={setShowAlert} toggleShow={setToggleEditor} />
+      );
     }
     return null;
   }
@@ -46,6 +58,7 @@ function NeedPage(): ReactElement {
       >
         New Need
       </Button>
+      {showAlert && <SuccessAlert toggleShow={setShowAlert} type="need" />}
       {newNeed(toggleEditor)}
       <NestableHierarcy
         dispatchfunc={(projectId: string, items: Need[]) =>

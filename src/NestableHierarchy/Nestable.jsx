@@ -6,6 +6,7 @@ import Nestable from 'react-nestable';
 import { Card, Accordion, Button, Row } from 'react-bootstrap';
 import { BsChevronDown } from 'react-icons/bs';
 import { AccordionContext } from './AccordionContext';
+import Utils from '../common/Utils';
 
 export default function NestableHierarcy({
   dispatchfunc,
@@ -15,6 +16,7 @@ export default function NestableHierarcy({
   depth
 }) {
   const [activeKey, setActiveKey] = useState('');
+
   const convertTreeToList = (tree, key, collection) => {
     if ((!tree[key] || tree[key].length === 0) && collection.includes(tree)) {
       const copiedTree = { ...tree };
@@ -43,34 +45,7 @@ export default function NestableHierarcy({
     });
     return flattenedCollection;
   };
-
-  function unflatten(items) {
-    const hierarchy = [];
-    const mappedArr = {};
-
-    items.forEach((item) => {
-      const Id = item.id;
-      if (!Object.prototype.hasOwnProperty.call(mappedArr, Id)) {
-        mappedArr[Id] = { ...item };
-        mappedArr[Id].children = [];
-      }
-    });
-    Object.keys(mappedArr).forEach((key) => {
-      if (Object.prototype.hasOwnProperty.call(mappedArr, key)) {
-        const mappedElem = mappedArr[key];
-
-        if (mappedElem.parent) {
-          const parentId = mappedElem.parent;
-          mappedArr[parentId].children.push(mappedElem);
-        } else {
-          hierarchy.push(mappedElem);
-        }
-      }
-    });
-
-    return hierarchy;
-  }
-  const hierarchyList = unflatten(inputlist);
+  const hierarchyList = Utils.unflatten(inputlist);
   const saveOrder = (items) => {
     const itemList = flatten(items);
     dispatchfunc(projectId, itemList);

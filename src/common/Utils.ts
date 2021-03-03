@@ -22,5 +22,34 @@ class Utils {
     }
     return str;
   }
+
+  // make Generic and make Test".
+  static unflatten(items: any[]): any[] {
+    const hierarchy: any[] = [];
+    const mappedArr: { [key: string]: any } = {};
+
+    items.forEach((item) => {
+      const Id = item.id;
+      if (!Object.prototype.hasOwnProperty.call(mappedArr, Id)) {
+        mappedArr[Id] = { ...item };
+        mappedArr[Id].children = [];
+      }
+    });
+    Object.keys(mappedArr).forEach((key) => {
+      if (Object.prototype.hasOwnProperty.call(mappedArr, key)) {
+        const mappedElem = mappedArr[key];
+
+        if (mappedElem.parent) {
+          const parentId = mappedElem.parent;
+          mappedArr[parentId].children.push(mappedElem);
+        } else {
+          hierarchy.push(mappedElem);
+        }
+      }
+    });
+
+    return hierarchy;
+  }
 }
+
 export default Utils;

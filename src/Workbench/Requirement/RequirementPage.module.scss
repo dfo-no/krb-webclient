@@ -18,3 +18,10 @@
     margin-top: 2rem;
   }
 }
+
+@for $i from 1 through 9 {
+  $margin: 1rem * $i;
+  .level#{$i} {
+    margin-left: $margin;
+  }
+}

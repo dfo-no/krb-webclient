@@ -1,5 +1,5 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
-import React, { ReactElement, useState } from 'react';
+import React, { ReactElement, useState, useEffect } from 'react';
 import {
   Row,
   Col,
@@ -34,6 +34,7 @@ import { Bank } from '../../models/Bank';
 import { selectRequirement } from '../../store/reducers/selectedRequirement-reducer';
 import { selectNeed } from '../../store/reducers/selectedNeed-reducer';
 import { AccordionContext } from '../../NestableHierarchy/AccordionContext';
+import SuccessAlert from '../SuccessAlert';
 
 type FormValues = {
   title: string;
@@ -59,6 +60,15 @@ export default function RequirementPage(): ReactElement {
   const [description, setDescription] = useState('');
   const [showEditor, setShowEditor] = useState(false);
   const [activeKey, setActiveKey] = useState('');
+  const [showAlert, setShowAlert] = useState(false);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setShowAlert(false);
+    }, 2000);
+    return () => clearTimeout(timer);
+  }, [showAlert]);
+
   if (!id) {
     return <p>No project selected</p>;
   }
@@ -132,6 +142,7 @@ export default function RequirementPage(): ReactElement {
     );
     dispatch(putProjectThunk(id));
     reset();
+    setShowAlert(true);
   };
 
   const editRequirementElement = (reqId: string, index: number) => () => {
@@ -329,34 +340,76 @@ export default function RequirementPage(): ReactElement {
         >
           New Requirement
         </Button>
+        {showAlert && (
+          <SuccessAlert toggleShow={setShowAlert} type="requirement" />
+        )}
         {newRequirement(showEditor)}
       </div>
     );
   };
 
-  const needList = (needsList: Need[]) => {
-    return needsList.map((element: Need) => {
+  const childrenHierarchy = (listofneed: any[], level: number) => {
+    let n = level;
+    let children: any;
+    const cssClass = `level${n}`;
+    return listofneed.map((element: any) => {
+      if (element.children.length > 0) {
+        n += 1;
+        children = childrenHierarchy(element.children, n);
+      }
       return (
-        <Nav.Item key={element.id} className={`${styles.sidebar__item}`}>
-          <Nav.Link
-            as={NavLink}
-            role="link"
-            /* TODO: activeClassName not reconized ny React */
-            /* activeClassName={`${styles.sidebar__item__active}`} */
-            onClick={() => handleSelectedNeed(element)}
+        <>
+          <Nav.Item key={element.id} className={` ${styles[cssClass]} pt-0`}>
+            <Nav.Link
+              as={NavLink}
+              role="link"
+              /* TODO: activeClassName not reconized ny React */
+              /* activeClassName={`${styles.sidebar__item__active}`} */
+              onClick={() => handleSelectedNeed(element)}
+            >
+              {element.title}
+            </Nav.Link>
+          </Nav.Item>
+          {children}
+        </>
+      );
+    });
+  };
+
+  const needHierarchy = (needsList: Need[]) => {
+    const newList = Utils.unflatten(needsList);
+    let children: any;
+    return newList.map((element: any) => {
+      if (element.children.length > 0) {
+        children = childrenHierarchy(element.children, 1);
+      }
+      return (
+        <>
+          <Nav.Item
+            key={element.id}
+            className={`${styles.sidebar__item} m-0 p-0`}
           >
-            {element.title}
-          </Nav.Link>
-        </Nav.Item>
+            <Nav.Link
+              as={NavLink}
+              role="link"
+              /* TODO: activeClassName not reconized ny React */
+              /* activeClassName={`${styles.sidebar__item__active}`} */
+              onClick={() => handleSelectedNeed(element)}
+            >
+              {element.title}
+            </Nav.Link>
+          </Nav.Item>
+          {children}
+        </>
       );
     });
   };
 
   return (
     <Row>
-      <Col className="col-2 p-0">
-        <Nav className={`sidebar col-md-12 flex-column p-0 ${styles.sidebar}`}>
-          {needList(needs)}
+      <Col className="col-3 p-0">
+        <Nav className={`sidebar flex-column p-0 ${styles.sidebar}`}>
+          {needHierarchy(needs)}
         </Nav>
       </Col>
       <Col>

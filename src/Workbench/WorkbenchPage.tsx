@@ -1,4 +1,4 @@
-import React, { ReactElement, useState } from 'react';
+import React, { ReactElement, useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { Button, Col, Form, ListGroup, Row } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
@@ -14,6 +14,7 @@ import {
   postProjectThunk
 } from '../store/reducers/project-reducer';
 import { selectProject } from '../store/reducers/selectedProject-reducer';
+import SuccessAlert from './SuccessAlert';
 
 type FormValues = {
   title: string;
@@ -25,6 +26,7 @@ function WorkbenchPage(): ReactElement {
   const { list } = useSelector((state: RootState) => state.project);
   const history = useHistory();
   const [showEditor, setShowEditor] = useState(false);
+  const [showAlert, setShowAlert] = useState(false);
 
   const { register, handleSubmit, reset, errors } = useForm<FormValues>();
   const [validated] = useState(false);
@@ -32,6 +34,13 @@ function WorkbenchPage(): ReactElement {
   const handleShowEditor = () => {
     setShowEditor(true);
   };
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setShowAlert(false);
+    }, 2000);
+    return () => clearTimeout(timer);
+  }, [showAlert]);
 
   const onSubmit = (post: FormValues) => {
     const project: Bank = {
@@ -47,6 +56,7 @@ function WorkbenchPage(): ReactElement {
     dispatch(postProjectThunk(project));
     reset();
     setShowEditor(false);
+    setShowAlert(true);
   };
 
   function onSelect(project: Bank) {
@@ -150,6 +160,7 @@ function WorkbenchPage(): ReactElement {
     <>
       <h3>Projects </h3>
       <Button onClick={handleShowEditor}>New Project</Button>
+      {showAlert && <SuccessAlert toggleShow={setShowAlert} type="project" />}
       {projectEditor(showEditor)}
       {renderProjects(list)}
     </>
