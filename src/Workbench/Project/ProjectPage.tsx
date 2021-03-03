@@ -23,7 +23,7 @@ import { postBankThunk } from '../../store/reducers/bank-reducer';
 import Utils from '../../common/Utils';
 import { selectBank } from '../../store/reducers/selectedBank-reducer';
 import EditProjectForm from './EditProjectForm';
-import SuccessAlert from '../Successalert';
+import SuccessAlert from '../SuccessAlert';
 
 function ProjectPage(): ReactElement {
   const dispatch = useDispatch();

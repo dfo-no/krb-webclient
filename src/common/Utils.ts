@@ -23,6 +23,7 @@ class Utils {
     return str;
   }
 
+  // make Generic and make Test".
   static unflatten(items: any[]): any[] {
     const hierarchy: any[] = [];
     const mappedArr: { [key: string]: any } = {};

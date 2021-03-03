@@ -34,7 +34,7 @@ import { Bank } from '../../models/Bank';
 import { selectRequirement } from '../../store/reducers/selectedRequirement-reducer';
 import { selectNeed } from '../../store/reducers/selectedNeed-reducer';
 import { AccordionContext } from '../../NestableHierarchy/AccordionContext';
-import SuccessAlert from '../Successalert';
+import SuccessAlert from '../SuccessAlert';
 
 type FormValues = {
   title: string;

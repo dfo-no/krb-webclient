@@ -14,7 +14,7 @@ import {
   postProjectThunk
 } from '../store/reducers/project-reducer';
 import { selectProject } from '../store/reducers/selectedProject-reducer';
-import SuccessAlert from './Successalert';
+import SuccessAlert from './SuccessAlert';
 
 type FormValues = {
   title: string;

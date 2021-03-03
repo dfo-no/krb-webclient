@@ -18,7 +18,7 @@ import NestableHierarcy from '../../NestableHierarchy/Nestable';
 import EditCodeForm from './EditCodeForm';
 import NewCodeForm from './NewCodeForm';
 import EditCodeListForm from './EditCodeListForm';
-import SuccessAlert from '../Successalert';
+import SuccessAlert from '../SuccessAlert';
 
 export default function CodeListEditor(): ReactElement {
   const dispatch = useDispatch();

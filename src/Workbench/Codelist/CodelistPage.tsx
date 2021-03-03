@@ -10,7 +10,7 @@ import { selectCodeList } from '../../store/reducers/selectedCodelist-reducer';
 import Utils from '../../common/Utils';
 import { Bank } from '../../models/Bank';
 import NewCodeListForm from './NewCodeListForm';
-import SuccessAlert from '../Successalert';
+import SuccessAlert from '../SuccessAlert';
 
 export default function CodelistPage(): ReactElement {
   const dispatch = useDispatch();
@@ -19,6 +19,7 @@ export default function CodelistPage(): ReactElement {
   const [toggleEditor, setToggleEditor] = useState(false);
   const [showAlert, setShowAlert] = useState(false);
 
+  // TODO: make environment variable of 2000
   useEffect(() => {
     const timer = setTimeout(() => {
       setShowAlert(false);
