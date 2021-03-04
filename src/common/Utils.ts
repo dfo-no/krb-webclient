@@ -1,6 +1,6 @@
-export interface Hierarcicable {
+export interface Hierarchical {
   id: string;
-  children: Hierarcicable[];
+  children: Hierarchical[];
   parent: string;
 }
 
@@ -30,7 +30,7 @@ class Utils {
   }
 
   // make Generic and make Test".
-  static unflatten<T extends Hierarcicable>(items: any[]): T[] {
+  static unflatten<T extends Hierarchical>(items: any[]): T[] {
     const hierarchy: T[] = [];
     const mappedArr: { [key: string]: T } = {};
 

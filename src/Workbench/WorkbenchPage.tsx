@@ -86,7 +86,6 @@ function WorkbenchPage(): ReactElement {
           <div className={css.list__item__spacer} />
           <Button variant="warning" onClick={() => onDelete(element)}>
             <AiFillDelete />
-            <div>(Dev)</div>
           </Button>
         </ListGroup.Item>
       );

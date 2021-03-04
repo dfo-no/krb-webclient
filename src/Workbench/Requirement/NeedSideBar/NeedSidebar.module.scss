@@ -1,4 +1,4 @@
-@import '../../dfo-theme.scss';
+@import '../../../dfo-theme.scss';
 
 .sidebar {
   border-right: $dfo-light-border;
@@ -8,14 +8,6 @@
     &__active {
       color: $purple;
     }
-  }
-}
-.headerSection {
-  margin-top: 2rem;
-  margin-bottom: 2rem;
-
-  &__requirement {
-    margin-top: 2rem;
   }
 }
 
