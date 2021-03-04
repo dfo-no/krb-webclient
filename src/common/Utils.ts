@@ -1,3 +1,9 @@
+export interface Hierarcicable {
+  id: string;
+  children: Hierarcicable[];
+  parent: string;
+}
+
 class Utils {
   static ensure<T>(
     argument: T | undefined | null,
@@ -24,9 +30,9 @@ class Utils {
   }
 
   // make Generic and make Test".
-  static unflatten(items: any[]): any[] {
-    const hierarchy: any[] = [];
-    const mappedArr: { [key: string]: any } = {};
+  static unflatten<T extends Hierarcicable>(items: any[]): T[] {
+    const hierarchy: T[] = [];
+    const mappedArr: { [key: string]: T } = {};
 
     items.forEach((item) => {
       const Id = item.id;
