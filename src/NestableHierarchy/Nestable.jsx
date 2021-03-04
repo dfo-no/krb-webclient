@@ -16,7 +16,6 @@ export default function NestableHierarcy({
   depth
 }) {
   const [activeKey, setActiveKey] = useState('');
-
   const convertTreeToList = (tree, key, collection) => {
     if ((!tree[key] || tree[key].length === 0) && collection.includes(tree)) {
       const copiedTree = { ...tree };
