@@ -4,12 +4,14 @@ import { Button, Col, Form, Row } from 'react-bootstrap';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import * as yup from 'yup';
+import { Link } from 'react-router-dom';
 import { AccordionContext } from '../../NestableHierarchy/AccordionContext';
 
 import {
   editRequirementInNeed,
   putProjectThunk
 } from '../../store/reducers/project-reducer';
+import { selectRequirement } from '../../store/reducers/selectedRequirement-reducer';
 import { RootState } from '../../store/store';
 import { Requirement } from '../../models/Requirement';
 import { Need } from '../../models/Need';
@@ -118,6 +120,12 @@ export default function EditRequirementForm({
         <Button className="mt-2  ml-3" type="submit">
           Save
         </Button>
+        <Link
+          to={`/workbench/${id}/requirement/${element.id}/edit`}
+          onClick={() => dispatch(selectRequirement(element.id))}
+        >
+          <Button className="ml-4 mt-2 ">Edit</Button>
+        </Link>
       </Row>
     </Form>
   );
