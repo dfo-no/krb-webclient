@@ -12,6 +12,7 @@ import {
 } from '../../store/reducers/project-reducer';
 import { RootState } from '../../store/store';
 import { Product } from '../../models/Product';
+import MODELTYPE from '../../models/ModelType';
 
 type FormValues = {
   title: string;
@@ -48,7 +49,7 @@ function NewProductForm({ toggleShow, toggleAlert }: IProps): ReactElement {
       title: post.title,
       description: post.description,
       parent: '',
-      type: 'product'
+      type: MODELTYPE.product
     };
     dispatch(addProduct({ id, product }));
     dispatch(putProjectThunk(id));

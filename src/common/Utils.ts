@@ -1,8 +1,4 @@
-export interface Hierarchical {
-  id: string;
-  children: Hierarchical[];
-  parent: string;
-}
+import { Hierarchical } from '../models/Hierarchical';
 
 class Utils {
   static ensure<T>(
@@ -30,7 +26,7 @@ class Utils {
   }
 
   // make Generic and make Test".
-  static unflatten<T extends Hierarchical>(items: any[]): T[] {
+  static unflatten<T extends Hierarchical>(items: T[]): T[] {
     const hierarchy: T[] = [];
     const mappedArr: { [key: string]: T } = {};
 
@@ -47,7 +43,11 @@ class Utils {
 
         if (mappedElem.parent) {
           const parentId = mappedElem.parent;
-          mappedArr[parentId].children.push(mappedElem);
+          const parent = mappedArr[parentId];
+          if (!parent.children) {
+            parent.children = [];
+          }
+          parent.children.push(mappedElem);
         } else {
           hierarchy.push(mappedElem);
         }

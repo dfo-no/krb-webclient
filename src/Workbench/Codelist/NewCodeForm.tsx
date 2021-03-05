@@ -12,6 +12,7 @@ import {
 } from '../../store/reducers/project-reducer';
 import { RootState } from '../../store/store';
 import { Code } from '../../models/Code';
+import MODELTYPE from '../../models/ModelType';
 
 type FormValues = {
   title: string;
@@ -51,7 +52,7 @@ function NewCodeForm({
       id: uuidv4(),
       title: post.title,
       description: post.description,
-      type: 'code'
+      type: MODELTYPE.code
     };
     dispatch(addCodeToCodelist({ projectId: id, codelistId, code }));
     dispatch(putProjectThunk(id));

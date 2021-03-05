@@ -14,6 +14,7 @@ import { RootState } from '../../store/store';
 
 import { Need } from '../../models/Need';
 import { Requirement } from '../../models/Requirement';
+import MODELTYPE from '../../models/ModelType';
 
 type FormValues = {
   title: string;
@@ -58,7 +59,7 @@ function NewRequirementForm({
       needId: need.id,
       layouts: [],
       kind: 'yes/no',
-      type: 'requirement'
+      type: MODELTYPE.requirement
     };
     const reqList = [...need.requirements];
     reqList.push(requirement);
