@@ -79,7 +79,11 @@ export default function RequirementEditor(): ReactElement {
       id: uuidv4(),
       requirementText: '',
       instruction: '',
-      alternatives: []
+      alternatives: [],
+      use_product: false,
+      use_spesification: false,
+      use_qualification: false,
+      products: []
     };
     const newLayouts = [...requirement.layouts, layout];
     newRequirement.layouts = newLayouts;
