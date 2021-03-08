@@ -1,7 +1,7 @@
 import React, { ReactElement, useState } from 'react';
-import { Button, Col, Form, Row } from 'react-bootstrap';
+import { Button, Form } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
-import { useFieldArray, useForm } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 
@@ -80,9 +80,9 @@ export default function RequirementEditor(): ReactElement {
       requirementText: '',
       instruction: '',
       alternatives: [],
-      use_product: false,
-      use_spesification: false,
-      use_qualification: false,
+      use_Product: false,
+      use_Spesification: false,
+      use_Qualification: false,
       products: []
     };
     const newLayouts = [...requirement.layouts, layout];

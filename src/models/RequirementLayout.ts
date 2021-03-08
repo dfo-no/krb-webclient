@@ -4,9 +4,9 @@ export interface RequirementLayout {
   id: string;
   requirementText: string;
   instruction: string;
-  use_product: boolean;
-  use_spesification: boolean;
-  use_qualification: boolean;
+  use_Product: boolean;
+  use_Spesification: boolean;
+  use_Qualification: boolean;
   products: string[];
   alternatives: (CodelistAlternative | ValueAlternative)[];
 }

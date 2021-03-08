@@ -31,7 +31,7 @@ type FormValues = {
   product: boolean;
   qualification: boolean;
   spesification: boolean;
-  productlist: string[];
+  productList: string[];
 };
 
 const layoutSchema = yup.object().shape({
@@ -55,7 +55,7 @@ export default function Layout({
     resolver: yupResolver(layoutSchema)
   });
   const [validated] = useState(false);
-  const [isProductChecked, setProductIsChecked] = useState(layout.use_product);
+  const [isProductChecked, setProductChecked] = useState(layout.use_Product);
 
   const onEditLayoutSubmit = (post: FormValues) => {
     const newLayout = {
@@ -63,10 +63,10 @@ export default function Layout({
       requirementText: post.reqText,
       instruction: post.instruction,
       alternatives: layout.alternatives,
-      use_product: post.product,
-      use_spesification: post.spesification,
-      use_qualification: post.qualification,
-      products: post.productlist
+      use_Product: post.product,
+      use_Spesification: post.spesification,
+      use_Qualification: post.qualification,
+      products: post.productList
     };
     const newLayoutList = [...requirement.layouts];
     const layoutindex = requirement.layouts.findIndex(
@@ -170,9 +170,9 @@ export default function Layout({
               ref={register}
               type="checkbox"
               label="Products"
-              defaultChecked={layout.use_product}
+              defaultChecked={layout.use_Product}
               onChange={(e) => {
-                setProductIsChecked(e.target.checked);
+                setProductChecked(e.target.checked);
               }}
             />
             <Form.Check
@@ -180,14 +180,14 @@ export default function Layout({
               type="checkbox"
               label="Qualification"
               ref={register}
-              defaultChecked={layout.use_qualification}
+              defaultChecked={layout.use_Qualification}
             />
             <Form.Check
               name="spesification"
               type="checkbox"
               label="Requirement Spesification"
               ref={register}
-              defaultChecked={layout.use_spesification}
+              defaultChecked={layout.use_Spesification}
             />
           </Form.Group>
           {isProductChecked && (
