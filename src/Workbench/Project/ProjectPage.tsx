@@ -24,6 +24,7 @@ import Utils from '../../common/Utils';
 import { selectBank } from '../../store/reducers/selectedBank-reducer';
 import EditProjectForm from './EditProjectForm';
 import SuccessAlert from '../SuccessAlert';
+import MODELTYPE from '../../models/ModelType';
 
 function ProjectPage(): ReactElement {
   const dispatch = useDispatch();
@@ -56,7 +57,7 @@ function ProjectPage(): ReactElement {
       version: versionNumber,
       id: '',
       bankId: publishedProject.id,
-      type: 'publication'
+      type: MODELTYPE.publication
     };
     setShowEditor(false);
 

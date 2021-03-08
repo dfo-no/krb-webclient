@@ -17,6 +17,7 @@ import { Need } from '../models/Need';
 import { Bank } from '../models/Bank';
 import { FileDownLoad } from '../models/FileDownLoad';
 import styles from './ResponseEditor.module.scss';
+import MODELTYPE from '../models/ModelType';
 
 export default function ResponseEditor(): ReactElement {
   const { register, handleSubmit } = useForm();
@@ -85,7 +86,7 @@ export default function ResponseEditor(): ReactElement {
           title: need.title,
           description: need.description,
           requirements: newRequirementList,
-          type: 'need',
+          type: MODELTYPE.need,
           parent: need.parent
         };
         selectedNeeds.push(updatedBehov);
