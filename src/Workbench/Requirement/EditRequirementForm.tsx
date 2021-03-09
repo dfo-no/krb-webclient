@@ -1,69 +1,81 @@
+import { yupResolver } from '@hookform/resolvers/yup';
 import React, { ReactElement, useContext, useState } from 'react';
 import { Button, Col, Form, Row } from 'react-bootstrap';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
-import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
+import { Link } from 'react-router-dom';
+import { AccordionContext } from '../../NestableHierarchy/AccordionContext';
 
-import { Need } from '../../models/Need';
 import {
-  editNeed,
+  editRequirementInNeed,
   putProjectThunk
 } from '../../store/reducers/project-reducer';
-import { AccordionContext } from '../../NestableHierarchy/AccordionContext';
+import { selectRequirement } from '../../store/reducers/selectedRequirement-reducer';
 import { RootState } from '../../store/store';
+import { Requirement } from '../../models/Requirement';
+import { Need } from '../../models/Need';
 
-type FormValues = {
-  id: string;
+interface IProps {
+  element: Requirement;
+  index: number;
+  need: Need;
+  needList: Need[];
+}
+
+type FormInput = {
   title: string;
   description: string;
 };
-interface IProps {
-  element: Need;
-}
 
-const needSchema = yup.object().shape({
-  id: yup.string().required(),
+const productSchema = yup.object().shape({
   title: yup.string().required(),
   description: yup.string().required()
 });
 
-function EditNeedForm({ element }: IProps): ReactElement {
+export default function EditRequirementForm({
+  element,
+  index,
+  need,
+  needList
+}: IProps): ReactElement {
   const { id } = useSelector((state: RootState) => state.selectedProject);
   const dispatch = useDispatch();
   const { onOpenClose } = useContext(AccordionContext);
   const [validated] = useState(false);
-  const { register, handleSubmit, errors } = useForm({
-    defaultValues: {
-      id: element.id,
-      title: element.title,
-      description: element.description
-    },
-    resolver: yupResolver(needSchema)
-  });
 
+  const { register, handleSubmit, errors } = useForm({
+    resolver: yupResolver(productSchema)
+  });
   if (!id) {
     return <p>No project selected</p>;
   }
 
-  const onEditNeedSubmit = (post: FormValues) => {
+  const edit = (post: FormInput) => {
+    const reqList = [...need.requirements];
+    const requirement: Requirement = {
+      ...element
+    };
+    requirement.title = post.title;
+    requirement.description = post.description;
+    reqList[index] = requirement;
+    const needIndex = needList.findIndex(
+      (needElement) => needElement.id === need.id
+    );
     dispatch(
-      editNeed({
+      editRequirementInNeed({
         projectId: id,
-        needId: post.id,
-        title: post.title,
-        description: post.description
+        needIndex,
+        requirement
       })
     );
     dispatch(putProjectThunk(id));
-
-    // Close accordion via useContext
     onOpenClose('');
   };
 
   return (
     <Form
-      onSubmit={handleSubmit((e) => onEditNeedSubmit(e))}
+      onSubmit={handleSubmit(edit)}
       autoComplete="off"
       noValidate
       validated={validated}
@@ -76,23 +88,25 @@ function EditNeedForm({ element }: IProps): ReactElement {
           <Form.Control
             name="title"
             ref={register}
+            defaultValue={element.title}
             isInvalid={!!errors.title}
           />
           {errors.title && (
             <Form.Control.Feedback type="invalid">
-              {errors.title.message}
+              {errors.title?.message}
             </Form.Control.Feedback>
           )}
         </Col>
       </Form.Group>
       <Form.Group as={Row}>
         <Form.Label column sm="2">
-          Description
+          Requirement text
         </Form.Label>
         <Col sm={10}>
           <Form.Control
             name="description"
             ref={register}
+            defaultValue={element.description}
             isInvalid={!!errors.description}
           />
           {errors.description && (
@@ -102,12 +116,17 @@ function EditNeedForm({ element }: IProps): ReactElement {
           )}
         </Col>
       </Form.Group>
-      <Form.Control type="hidden" name="id" ref={register} />
-      <Button className="mt-2" type="submit">
-        Save
-      </Button>
+      <Row>
+        <Button className="mt-2  ml-3" type="submit">
+          Save
+        </Button>
+        <Link
+          to={`/workbench/${id}/requirement/${element.id}/edit`}
+          onClick={() => dispatch(selectRequirement(element.id))}
+        >
+          <Button className="ml-4 mt-2 ">Edit</Button>
+        </Link>
+      </Row>
     </Form>
   );
 }
-
-export default EditNeedForm;

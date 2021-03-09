@@ -1,3 +1,9 @@
+export interface Hierarchical {
+  id: string;
+  children: Hierarchical[];
+  parent: string;
+}
+
 class Utils {
   static ensure<T>(
     argument: T | undefined | null,
@@ -22,5 +28,34 @@ class Utils {
     }
     return str;
   }
+
+  // make Generic and make Test".
+  static unflatten<T extends Hierarchical>(items: any[]): T[] {
+    const hierarchy: T[] = [];
+    const mappedArr: { [key: string]: T } = {};
+
+    items.forEach((item) => {
+      const Id = item.id;
+      if (!Object.prototype.hasOwnProperty.call(mappedArr, Id)) {
+        mappedArr[Id] = { ...item };
+        mappedArr[Id].children = [];
+      }
+    });
+    Object.keys(mappedArr).forEach((key) => {
+      if (Object.prototype.hasOwnProperty.call(mappedArr, key)) {
+        const mappedElem = mappedArr[key];
+
+        if (mappedElem.parent) {
+          const parentId = mappedElem.parent;
+          mappedArr[parentId].children.push(mappedElem);
+        } else {
+          hierarchy.push(mappedElem);
+        }
+      }
+    });
+
+    return hierarchy;
+  }
 }
+
 export default Utils;

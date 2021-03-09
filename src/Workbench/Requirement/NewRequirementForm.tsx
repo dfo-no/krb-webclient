@@ -6,9 +6,14 @@ import { useDispatch, useSelector } from 'react-redux';
 import * as yup from 'yup';
 
 import { v4 as uuidv4 } from 'uuid';
-import { Need } from '../../models/Need';
-import { addNeed, putProjectThunk } from '../../store/reducers/project-reducer';
+import {
+  putProjectThunk,
+  setRequirementListToNeed
+} from '../../store/reducers/project-reducer';
 import { RootState } from '../../store/store';
+
+import { Need } from '../../models/Need';
+import { Requirement } from '../../models/Requirement';
 
 type FormValues = {
   title: string;
@@ -17,41 +22,56 @@ type FormValues = {
 interface IProps {
   toggleShow: React.Dispatch<React.SetStateAction<boolean>>;
   toggleAlert: React.Dispatch<React.SetStateAction<boolean>>;
+  need: Need;
+  needList: Need[];
 }
 
-const needSchema = yup.object().shape({
+const requirementSchema = yup.object().shape({
   title: yup.string().required(),
   description: yup.string().required()
 });
 
-function NewNeedForm({ toggleShow, toggleAlert }: IProps): ReactElement {
+function NewRequirementForm({
+  toggleShow,
+  toggleAlert,
+  need,
+  needList
+}: IProps): ReactElement {
   const dispatch = useDispatch();
   const [validated] = useState(false);
 
   const { register, handleSubmit, reset, errors } = useForm({
-    resolver: yupResolver(needSchema)
+    resolver: yupResolver(requirementSchema)
   });
 
   const { id } = useSelector((state: RootState) => state.selectedProject);
 
   if (!id) {
-    return <div>Loading NeedForm</div>;
+    return <div>Loading Requirementform</div>;
   }
 
-  const onNewNeedSubmit = (post: FormValues) => {
-    const need: Need = {
-      // TODO: remove uuidv4, this should be CosmosDB's task (perhaps by reference)
+  const onNewRequirementSubmit = (post: FormValues) => {
+    const requirement: Requirement = {
       id: uuidv4(),
       title: post.title,
       description: post.description,
-      requirements: [],
-      type: 'need',
-      parent: ''
+      needId: need.id,
+      layouts: [],
+      kind: 'yes/no',
+      type: 'requirement'
     };
-    dispatch(addNeed({ id, need }));
+    const reqList = [...need.requirements];
+    reqList.push(requirement);
+    const needIndex = needList.findIndex((element) => element.id === need.id);
+    reset();
+    dispatch(
+      setRequirementListToNeed({
+        projectId: id,
+        needIndex,
+        reqList
+      })
+    );
     dispatch(putProjectThunk(id));
-
-    // reset the form
     reset();
     toggleShow(false);
     toggleAlert(true);
@@ -61,7 +81,7 @@ function NewNeedForm({ toggleShow, toggleAlert }: IProps): ReactElement {
     <Card className="mb-4">
       <Card.Body>
         <Form
-          onSubmit={handleSubmit(onNewNeedSubmit)}
+          onSubmit={handleSubmit(onNewRequirementSubmit)}
           autoComplete="off"
           noValidate
           validated={validated}
@@ -108,7 +128,7 @@ function NewNeedForm({ toggleShow, toggleAlert }: IProps): ReactElement {
               className="mt-2 ml-3 btn-warning"
               onClick={() => toggleShow(false)}
             >
-              Avbryt
+              Cancel
             </Button>
           </Row>
         </Form>
@@ -117,4 +137,4 @@ function NewNeedForm({ toggleShow, toggleAlert }: IProps): ReactElement {
   );
 }
 
-export default NewNeedForm;
+export default NewRequirementForm;

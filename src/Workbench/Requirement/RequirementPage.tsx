@@ -1,40 +1,36 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
-import React, { ReactElement, useState } from 'react';
-import {
-  Row,
-  Col,
-  Nav,
-  NavLink,
-  Accordion,
-  Card,
-  Button,
-  InputGroup,
-  FormControl
-} from 'react-bootstrap';
+import React, { ReactElement, useState, useEffect } from 'react';
+import { Row, Col, Accordion, Card, Button } from 'react-bootstrap';
 
-import { v4 as uuidv4 } from 'uuid';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
+
+import { BsChevronDown } from 'react-icons/bs';
 import { RootState } from '../../store/store';
-import {
-  editRequirementInNeed,
-  putProjectThunk,
-  setRequirementListToNeed
-} from '../../store/reducers/project-reducer';
-import styles from './RequirementPage.module.scss';
 import { Requirement } from '../../models/Requirement';
 import { Need } from '../../models/Need';
 import Utils from '../../common/Utils';
 import { Bank } from '../../models/Bank';
+import { AccordionContext } from '../../NestableHierarchy/AccordionContext';
+import SuccessAlert from '../SuccessAlert';
+import NewRequirementForm from './NewRequirementForm';
+import EditRequirementForm from './EditRequirementForm';
+import NeedSideBar from './NeedSideBar/NeedSidebar';
 
 export default function RequirementPage(): ReactElement {
-  const dispatch = useDispatch();
   const { id } = useSelector((state: RootState) => state.selectedProject);
   const { list } = useSelector((state: RootState) => state.project);
-  const [selectedNeed, setSelectedNeed] = useState<Need | undefined>(undefined);
-  const [requirementList, setRequirementsList] = useState<Requirement[]>([]);
-  const [title, setTitle] = useState('');
-  const [description, setDescription] = useState('');
-  const [showEditor, setShowEditor] = useState(false);
+  const { needId } = useSelector((state: RootState) => state.selectNeed);
+  const [activeKey, setActiveKey] = useState('');
+  const [toggleEditor, setToggleEditor] = useState(false);
+  const [showAlert, setShowAlert] = useState(false);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setShowAlert(false);
+    }, 2000);
+    return () => clearTimeout(timer);
+  }, [showAlert]);
+
   if (!id) {
     return <p>No project selected</p>;
   }
@@ -48,141 +44,56 @@ export default function RequirementPage(): ReactElement {
       <p>The project has no needs, add one to continue with requirements</p>
     );
   }
-
   const { needs } = selectedProject;
 
-  const handleTitleChange = (
-    event: React.ChangeEvent<
-      HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
-    >
-  ) => {
-    setTitle(event.target.value);
-  };
-
-  const handleDescriptionChange = (
-    event: React.ChangeEvent<
-      HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
-    >
-  ) => {
-    setDescription(event.target.value);
-  };
-
-  const addRequirementElement = () => {
-    // find better solution to ts stating object might be undefined
-    let needId;
-    if (selectedNeed) {
-      needId = selectedNeed.id;
-    } else needId = '';
-    const requirement: Requirement = {
-      id: uuidv4(),
-      title,
-      description,
-      needId,
-      kind: 'yes/no',
-      type: 'requirement'
-    };
-    const reqList = [...requirementList];
-    reqList.push(requirement);
-
-    setRequirementsList(reqList);
-    setShowEditor(false);
-    const needIndex = selectedProject.needs.findIndex(
-      (need) => need.id === selectedNeed?.id
+  if (!needId) {
+    return (
+      <Row>
+        <Col className="col-3 p-0">
+          <NeedSideBar needs={needs} />
+        </Col>
+        <Col>
+          You have not selected a new, select one to work with requirement
+        </Col>
+      </Row>
     );
-    dispatch(
-      setRequirementListToNeed({
-        projectId: id,
-        needIndex,
-        reqList
-      })
-    );
-    dispatch(putProjectThunk(id));
-  };
+  }
 
-  const editRequirementElement = (reqId: string, index: number) => () => {
-    let needId;
-    if (selectedNeed) {
-      needId = selectedNeed.id;
-    } else needId = '';
-    const requirement: Requirement = {
-      id: reqId,
-      title,
-      description,
-      needId,
-      kind: 'yes/no',
-      type: 'requirement'
-    };
-    const reqList = [...requirementList];
-    reqList[index] = requirement;
-    setRequirementsList(reqList);
-    const needIndex = Utils.ensure(
-      selectedProject.needs.findIndex((need) => {
-        if (selectedNeed && selectedNeed.id) return need.id === selectedNeed.id;
-        return 0;
-      })
-    );
-    dispatch(
-      editRequirementInNeed({
-        projectId: id,
-        needIndex,
-        reqId: requirement.id,
-        requirement
-      })
-    );
-  };
+  const selectedNeed = Utils.ensure(
+    needs.find((need: Need) => need.id === needId)
+  );
 
-  const handleSelectedNeed = (need: Need) => {
-    setSelectedNeed(need);
-    setRequirementsList(need.requirements);
+  const onOpenClose = (e: string | null) => {
+    if (e) {
+      setActiveKey(e);
+    } else {
+      setActiveKey('');
+    }
   };
 
   const requirements = (reqs: Requirement[]) => {
-    if (!selectedNeed) {
-      return (
-        <p>
-          You have not selected a need, select one to work with requirements
-        </p>
-      );
-    }
     if (reqs.length > 0) {
       const jsx = reqs.map((element: Requirement, index) => {
         return (
           <Card key={element.id}>
-            <Card.Header>
+            <Card.Header className="d-flex justify-content-between">
+              <h6 className="mt-2">{element.title}</h6>
               <Accordion.Toggle
                 as={Button}
                 variant="link"
-                eventKey={index.toString()}
+                eventKey={element.id}
               >
-                {element.title}
+                <BsChevronDown />
               </Accordion.Toggle>
             </Card.Header>
-            <Accordion.Collapse eventKey={index.toString()}>
+            <Accordion.Collapse eventKey={element.id}>
               <Card.Body>
-                <>
-                  <label htmlFor="title">Title</label>
-                  <InputGroup className="mb-3 30vw">
-                    <FormControl
-                      name="title"
-                      defaultValue={element.title}
-                      onChange={(e) => handleTitleChange(e)}
-                    />
-                  </InputGroup>
-                  <label htmlFor="title">Requirement text</label>
-                  <InputGroup className="mb-3 30vw">
-                    <FormControl
-                      name="description"
-                      defaultValue={element.description}
-                      onChange={(e) => handleDescriptionChange(e)}
-                    />
-                  </InputGroup>
-                  <Button
-                    className={styles.newbutton}
-                    onClick={editRequirementElement(element.id, index)}
-                  >
-                    Save
-                  </Button>
-                </>
+                <EditRequirementForm
+                  index={index}
+                  element={element}
+                  needList={needs}
+                  need={selectedNeed}
+                />
               </Card.Body>
             </Accordion.Collapse>
           </Card>
@@ -191,91 +102,45 @@ export default function RequirementPage(): ReactElement {
       return (
         <>
           <h5>Requirements</h5>
-          <Accordion>{jsx}</Accordion>
+          <AccordionContext.Provider value={{ onOpenClose }}>
+            <Accordion activeKey={activeKey} onSelect={(e) => onOpenClose(e)}>
+              {jsx}
+            </Accordion>
+          </AccordionContext.Provider>
         </>
       );
     }
     return <p>This need has no requirements, add one</p>;
   };
 
-  const newRequirement = (show: boolean) => {
-    if (show) {
-      return (
-        <Card className={styles.headerSection__requirement}>
-          <Card.Body>
-            <label htmlFor="title">Title</label>
-            <InputGroup className="mb-3 30vw">
-              <FormControl name="title" onChange={handleTitleChange} />
-            </InputGroup>
-            <label htmlFor="title">Requirement text</label>
-            <InputGroup className="mb-3 30vw">
-              <FormControl
-                name="description"
-                onChange={handleDescriptionChange}
-              />
-            </InputGroup>
-            <Button
-              className={styles.newbutton}
-              onClick={() => addRequirementElement()}
-            >
-              Create
-            </Button>
-          </Card.Body>
-        </Card>
-      );
-    }
-    return <></>;
-  };
-
-  const header = (need: Need | undefined) => {
-    if (need === undefined) {
-      return <></>;
-    }
-    return (
-      <div className={styles.headerSection}>
-        <h4>{need.title}</h4>
-        <h5>{need.description}</h5>
+  return (
+    <Row>
+      <Col className="col-3 p-0">
+        <NeedSideBar needs={needs} />
+      </Col>
+      <Col>
+        <h4>{selectedNeed.title}</h4>
+        <h5>{selectedNeed.description}</h5>
         <Button
           onClick={() => {
-            setShowEditor(true);
+            setToggleEditor(true);
           }}
-          className={styles.headersection__addButton}
+          className="mb-4"
         >
           New Requirement
         </Button>
-        {newRequirement(showEditor)}
-      </div>
-    );
-  };
-
-  const needList = (needsList: Need[]) => {
-    return needsList.map((element: Need) => {
-      return (
-        <Nav.Item key={element.id} className={`${styles.sidebar__item}`}>
-          <Nav.Link
-            as={NavLink}
-            role="link"
-            /* TODO: activeClassName not reconized ny React */
-            /* activeClassName={`${styles.sidebar__item__active}`} */
-            onClick={() => handleSelectedNeed(element)}
-          >
-            {element.title}
-          </Nav.Link>
-        </Nav.Item>
-      );
-    });
-  };
-
-  return (
-    <Row>
-      <Col className="col-2 p-0">
-        <Nav className={`sidebar flex-column vh-100 p-0 ${styles.sidebar}`}>
-          {needList(needs)}
-        </Nav>
-      </Col>
-      <Col>
-        {header(selectedNeed)}
-        {requirements(requirementList)}
+        {showAlert && (
+          <SuccessAlert toggleShow={setShowAlert} type="requirement" />
+        )}
+        {toggleEditor && (
+          <NewRequirementForm
+            toggleAlert={setShowAlert}
+            toggleShow={setToggleEditor}
+            need={selectedNeed}
+            needList={needs}
+          />
+        )}
+        {requirements(selectedNeed.requirements)}
       </Col>
     </Row>
   );

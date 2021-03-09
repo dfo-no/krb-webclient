@@ -155,6 +155,15 @@ const projectSlice = createSlice({
 
       state.list[index].publications?.push(payload.publication);
     },
+    updateNeedList(
+      state,
+      { payload }: PayloadAction<{ id: string; needs: Need[] }>
+    ) {
+      const index = Utils.ensure(
+        state.list.findIndex((project) => project.id === payload.id)
+      );
+      state.list[index].needs = payload.needs;
+    },
     addNeed(state, { payload }: PayloadAction<{ id: string; need: Need }>) {
       const projectIndex = Utils.ensure(
         state.list.findIndex((project) => project.id === payload.id)
@@ -203,27 +212,46 @@ const projectSlice = createSlice({
       );
       state.list[index].products.push(payload.product);
     },
+    updateProductList(
+      state,
+      { payload }: PayloadAction<{ id: string; products: Product[] }>
+    ) {
+      const index = Utils.ensure(
+        state.list.findIndex((project) => project.id === payload.id)
+      );
+      state.list[index].products = payload.products;
+    },
     editProduct(
       state,
       {
         payload
       }: PayloadAction<{
         projectId: string;
-        productId: string;
-        title: string;
-        description: string;
+        product: Product;
       }>
     ) {
       const projectIndex = Utils.ensure(
         state.list.findIndex((project) => project.id === payload.projectId)
       );
       const productindex = state.list[projectIndex].products.findIndex(
-        (product) => product.id === payload.productId
+        (product) => product.id === payload.product.id
       );
 
-      state.list[projectIndex].products[productindex].title = payload.title;
-      state.list[projectIndex].products[productindex].description =
-        payload.description;
+      state.list[projectIndex].products[productindex] = payload.product;
+    },
+    updateCodeList(
+      state,
+      {
+        payload
+      }: PayloadAction<{ id: string; codelistId: string; codes: Code[] }>
+    ) {
+      const index = Utils.ensure(
+        state.list.findIndex((project) => project.id === payload.id)
+      );
+      const codeListIndex = state.list[index].codelist.findIndex(
+        (codelist) => codelist.id === payload.codelistId
+      );
+      state.list[index].codelist[codeListIndex].codes = payload.codes;
     },
     editCodelist(
       state,
@@ -341,7 +369,6 @@ const projectSlice = createSlice({
       }: PayloadAction<{
         projectId: string;
         needIndex: number;
-        reqId: string;
         requirement: Requirement;
       }>
     ) {
@@ -351,7 +378,7 @@ const projectSlice = createSlice({
       const needIndex = Utils.ensure(
         state.list[projectIndex].needs[
           payload.needIndex
-        ].requirements.findIndex((req) => req.id === payload.reqId)
+        ].requirements.findIndex((req) => req.id === payload.requirement.id)
       );
       state.list[projectIndex].needs[payload.needIndex].requirements[
         needIndex
@@ -447,8 +474,11 @@ export const {
   deleteProject,
   addCodelist,
   addProduct,
+  updateProductList,
+  updateNeedList,
   editProduct,
   addCode,
+  updateCodeList,
   addCodeToCodelist,
   editCodeInCodelist,
   addPublication,

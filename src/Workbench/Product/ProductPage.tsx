@@ -1,65 +1,34 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
-import React, { ReactElement, useContext, useState } from 'react';
-import {
-  Button,
-  Card,
-  FormControl,
-  InputGroup,
-  Accordion,
-  Form,
-  Col,
-  Row
-} from 'react-bootstrap';
+import React, { ReactElement, useState, useEffect } from 'react';
+import { Button } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { useForm } from 'react-hook-form';
-import { v4 as uuidv4 } from 'uuid';
 import { Product } from '../../models/Product';
 import { RootState } from '../../store/store';
 import {
-  addProduct,
-  editProduct,
-  putProjectThunk
+  putProjectThunk,
+  updateProductList
 } from '../../store/reducers/project-reducer';
-import styles from './ProductPage.module.scss';
 import Utils from '../../common/Utils';
 import { Bank } from '../../models/Bank';
-import { AccordionContext } from '../Need/AccordionContext';
-
-type FormValues = {
-  title: string;
-  description: string;
-};
+import NestableHierarcy from '../../NestableHierarchy/Nestable';
+import ProductForm from './EditProductForm';
+import NewProductForm from './NewProductForm';
+import SuccessAlert from '../SuccessAlert';
 
 export default function ProductPage(): ReactElement {
   const dispatch = useDispatch();
-  const { onOpenClose } = useContext(AccordionContext);
   const { id } = useSelector((state: RootState) => state.selectedProject);
   const { list } = useSelector((state: RootState) => state.project);
-  const [showEditor, setShowEdior] = useState(false);
-  const [title, setTitle] = useState('');
-  const [description, setDescription] = useState('');
-  const { register, handleSubmit, errors } = useForm<Product>();
-  const [validated] = useState(false);
+  const [toggleEditor, setToggleEditor] = useState(false);
+  const [showAlert, setShowAlert] = useState(false);
 
-  const handleTitleChange = (
-    event: React.ChangeEvent<
-      HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
-    >
-  ) => {
-    setTitle(event.target.value);
-  };
-  const handleDescriptionChange = (
-    event: React.ChangeEvent<
-      HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
-    >
-  ) => {
-    setDescription(event.target.value);
-  };
-
-  const handleShowEditor = () => {
-    setShowEdior(true);
-  };
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setShowAlert(false);
+    }, 2000);
+    return () => clearTimeout(timer);
+  }, [showAlert]);
 
   if (!id) {
     return <p>No Project selected</p>;
@@ -69,138 +38,43 @@ export default function ProductPage(): ReactElement {
     list.find((bank: Bank) => bank.id === id)
   );
 
-  const editProductElement = (productId: string) => () => {
-    dispatch(
-      editProduct({
-        projectId: id,
-        productId, // TODO: get from post
-        title, // TODO: get from post
-        description // TODO: get from post
-      })
-    );
-    dispatch(putProjectThunk(id));
-    onOpenClose('');
-  };
-
-  const addNewProduct = (post: FormValues) => {
-    const product: Product = {
-      id: uuidv4(),
-      title: post.title,
-      description: post.description,
-      type: 'product'
-    };
-    dispatch(addProduct({ id, product }));
-    dispatch(putProjectThunk(id));
-  };
-
   function productEditor(show: boolean) {
     if (show) {
       return (
-        <Card className="mt-3">
-          <Card.Body>
-            <Form
-              onSubmit={handleSubmit(addNewProduct)}
-              autoComplete="off"
-              noValidate
-              validated={validated}
-            >
-              <Form.Group as={Row}>
-                <Form.Label column sm="2">
-                  Title
-                </Form.Label>
-                <Col sm={10}>
-                  <Form.Control
-                    name="title"
-                    ref={register({
-                      required: { value: true, message: 'Required' },
-                      minLength: { value: 2, message: 'Minimum 2 characters' }
-                    })}
-                    isInvalid={!!errors.title}
-                  />
-                  {errors.title && (
-                    <Form.Control.Feedback type="invalid">
-                      {errors.title.message}
-                    </Form.Control.Feedback>
-                  )}
-                </Col>
-              </Form.Group>
-              <Form.Group as={Row}>
-                <Form.Label column sm="2">
-                  Description
-                </Form.Label>
-                <Col sm={10}>
-                  <Form.Control
-                    name="description"
-                    ref={register({
-                      required: { value: true, message: 'Required' },
-                      minLength: { value: 2, message: 'Minimum 2 characters' }
-                    })}
-                    isInvalid={!!errors.description}
-                  />
-                  {errors.description && (
-                    <Form.Control.Feedback type="invalid">
-                      {errors.description.message}
-                    </Form.Control.Feedback>
-                  )}
-                </Col>
-              </Form.Group>
-              <Button className="mt-2" type="submit">
-                Save
-              </Button>
-            </Form>
-          </Card.Body>
-        </Card>
+        <NewProductForm
+          toggleAlert={setShowAlert}
+          toggleShow={setToggleEditor}
+        />
       );
     }
-    return <></>;
+    return null;
   }
-
-  const renderProducts = (productList: Product[]) => {
-    const products = productList.map((element: Product, index) => {
-      return (
-        <Card key={element.id}>
-          <Accordion.Toggle as={Card.Header} eventKey={index.toString()}>
-            <h6>{element.title}</h6>
-            <p>{element.description}</p>
-          </Accordion.Toggle>
-          <Accordion.Collapse eventKey={index.toString()}>
-            <Card.Body>
-              <label htmlFor="title">Title</label>
-              <InputGroup>
-                <FormControl
-                  name="title"
-                  defaultValue={productList[index].title}
-                  onChange={(e) => handleTitleChange(e)}
-                />
-              </InputGroup>
-              <label htmlFor="description">Description</label>
-              <InputGroup>
-                <FormControl
-                  name="beskrivelse"
-                  defaultValue={productList[index].description}
-                  onChange={(e) => handleDescriptionChange(e)}
-                />
-              </InputGroup>
-              <Button
-                onClick={editProductElement(element.id)}
-                className={`primary ${styles.productList__saveButton}`}
-              >
-                Save
-              </Button>
-            </Card.Body>
-          </Accordion.Collapse>
-        </Card>
-      );
-    });
-    return <Accordion className={styles.productList}>{products}</Accordion>;
+  const newProductList = (projectId: string, items: Product[]) => {
+    dispatch(updateProductList({ id: projectId, products: items }));
+    dispatch(putProjectThunk(projectId));
   };
-
   return (
-    <>
+    <div className="pb-4">
       <h1>Products</h1>
-      <Button onClick={handleShowEditor}>New Product</Button>
-      {productEditor(showEditor)}
-      {renderProducts(selectedProject.products)}
-    </>
+      <Button
+        onClick={() => {
+          setToggleEditor(true);
+        }}
+        className="mb-4"
+      >
+        New Product
+      </Button>
+      {showAlert && <SuccessAlert toggleShow={setShowAlert} type="product" />}
+      {productEditor(toggleEditor)}
+      <NestableHierarcy
+        dispatchfunc={(projectId: string, items: Product[]) =>
+          newProductList(projectId, items)
+        }
+        inputlist={selectedProject.products}
+        projectId={id}
+        component={<ProductForm element={selectedProject.products[0]} />}
+        depth={5}
+      />
+    </div>
   );
 }

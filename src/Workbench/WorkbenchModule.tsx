@@ -4,6 +4,7 @@ import { Route, Switch, useRouteMatch } from 'react-router-dom';
 
 import { useDispatch, useSelector } from 'react-redux';
 import RequirementPage from './Requirement/RequirementPage';
+import RequirementEditor from './Requirement/RequirementEditor';
 import CodeListEditor from './Codelist/CodeListEditor';
 import CodelistPage from './Codelist/CodelistPage';
 import NeedPage from './Need/NeedPage';
@@ -14,6 +15,7 @@ import WorkbenchPage from './WorkbenchPage';
 import { getProjectsThunk } from '../store/reducers/project-reducer';
 import { RootState } from '../store/store';
 import { selectProject } from '../store/reducers/selectedProject-reducer';
+import styles from './WorkBench.module.scss';
 
 interface RouteParams {
   projectId: string;
@@ -50,7 +52,7 @@ export default function WorkbenchModule(): ReactElement {
         <Col className="col-2 p-0">
           <SideBar /> {/* Sidebar outside Switch *may* be a very bad idea */}
         </Col>
-        <Col>
+        <Col className={styles.editor}>
           <Switch>
             <Route exact path={`${url}`}>
               <WorkbenchPage />
@@ -60,6 +62,9 @@ export default function WorkbenchModule(): ReactElement {
             </Route>
             <Route exact path={`${url}/:projectId/requirement`}>
               <RequirementPage />
+            </Route>
+            <Route exact path={`${url}/:projectId/requirement/:id/edit`}>
+              <RequirementEditor />
             </Route>
             <Route exact path={`${url}/:projectId/codelist`}>
               <CodelistPage />

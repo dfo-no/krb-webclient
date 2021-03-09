@@ -2,7 +2,7 @@ name: Continuous Deployment
 
 on:
   push:
-    branches: [develop, deploy]
+    branches: [deploy]
 
 env:
   AZURE_WEBAPP_NAME: krb-webclient # set this to your application's name
@@ -33,7 +33,7 @@ jobs:
 
       - name: Build
         run: |
-          npm run-script build
+          npm run-script build:ci
 
       #- name: Sonarcube
       #  if: github.ref == 'refs/heads/develop'
