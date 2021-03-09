@@ -15,6 +15,7 @@ import { RootState } from '../../store/store';
 import { Need } from '../../models/Need';
 import { Requirement } from '../../models/Requirement';
 import MODELTYPE from '../../models/ModelType';
+import RequirementType from '../../models/RequirementType';
 
 type FormValues = {
   title: string;
@@ -25,6 +26,7 @@ interface IProps {
   toggleAlert: React.Dispatch<React.SetStateAction<boolean>>;
   need: Need;
   needList: Need[];
+  type: RequirementType;
 }
 
 const requirementSchema = yup.object().shape({
@@ -36,7 +38,8 @@ function NewRequirementForm({
   toggleShow,
   toggleAlert,
   need,
-  needList
+  needList,
+  type
 }: IProps): ReactElement {
   const dispatch = useDispatch();
   const [validated] = useState(false);
@@ -59,7 +62,8 @@ function NewRequirementForm({
       needId: need.id,
       layouts: [],
       kind: 'yes/no',
-      type: MODELTYPE.requirement
+      type: MODELTYPE.requirement,
+      requirement_Type: type
     };
     const reqList = [...need.requirements];
     reqList.push(requirement);

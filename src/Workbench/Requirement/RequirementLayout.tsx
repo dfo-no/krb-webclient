@@ -129,7 +129,7 @@ export default function Layout({
   return (
     <Card className="bg-light m-3">
       <Card.Body>
-        <h4>Layout</h4>
+        <h4>Variant</h4>
         <Form
           onSubmit={handleSubmit(onEditLayoutSubmit)}
           noValidate
