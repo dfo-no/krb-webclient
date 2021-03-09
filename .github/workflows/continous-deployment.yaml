@@ -33,7 +33,7 @@ jobs:
 
       - name: Build
         env:
-          REACT_APP_TROND: 'AlbinussenString'
+          REACT_APP_TROND: ${{ secrets.AZURE_APP_TROND }}
         run: |
           npm run-script build:ci
 
