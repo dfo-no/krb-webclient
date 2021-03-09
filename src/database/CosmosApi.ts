@@ -114,7 +114,7 @@ export class CosmosApi {
     return result;
   }
 
-  async deleteBank(id: string): Promise<ItemResponse<any>> {
+  async deleteBank(id: string): Promise<ItemResponse<ItemDefinition>> {
     const result = await this.container.item(id).delete();
     return result;
   }

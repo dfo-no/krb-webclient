@@ -20,6 +20,7 @@ import { FileDownLoad } from '../models/FileDownLoad';
 import styles from './SpecEditor.module.scss';
 import { Bank } from '../models/Bank';
 import Utils from '../common/Utils';
+import MODELTYPE from '../models/ModelType';
 
 export default function SpecEditor(): ReactElement {
   const { id } = useSelector((state: RootState) => state.selectedBank);
@@ -58,7 +59,7 @@ export default function SpecEditor(): ReactElement {
           title: need.title,
           description: need.description,
           requirements: newRequirementList,
-          type: 'need',
+          type: MODELTYPE.need,
           parent: need.parent
         };
         selectedNeeds.push(updatedBehov);
@@ -91,7 +92,7 @@ export default function SpecEditor(): ReactElement {
   const needList = (needlist: Need[]) => {
     const needsJsx = needlist.map((need: Need) => {
       return (
-        <>
+        <div key={need.id}>
           <h5>{need.title}</h5>
           {need.requirements.map((c, i) => (
             <div className="ml-5">
@@ -106,7 +107,7 @@ export default function SpecEditor(): ReactElement {
               </label>
             </div>
           ))}
-        </>
+        </div>
       );
     });
     return (
