@@ -25,6 +25,10 @@ class Utils {
     return str;
   }
 
+  static capitalizeFirstLetter(string: string): string {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+  }
+
   // make Generic and make Test".
   static unflatten<T extends Hierarchical>(items: T[]): T[] {
     const hierarchy: T[] = [];
