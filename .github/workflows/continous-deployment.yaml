@@ -32,6 +32,7 @@ jobs:
       #    sed -i 's/\/home\/runner\/work\/krb-webclient\/krb-webclient\//\/github\/workspace\//g' lcov.info
 
       - name: Build
+          env: REACT_APP_TROND: ${{ secrets.AZURE_APP_TROND }}
         run: |
           npm run-script build:ci
 
