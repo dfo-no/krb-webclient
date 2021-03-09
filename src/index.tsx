@@ -11,6 +11,7 @@ import App from './App';
 
 // eslint-disable-next-line no-console
 console.log(process.env);
+console.log(process.env.REACT_APP_TROND);
 // fetch all banks here because they are published and will show on the front page.
 store.dispatch(getBanksThunk());
 
