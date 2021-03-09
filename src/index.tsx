@@ -9,6 +9,7 @@ import store from './store/store';
 import { getBanksThunk } from './store/reducers/bank-reducer';
 import App from './App';
 
+// eslint-disable-next-line no-console
 console.log(process.env);
 // fetch all banks here because they are published and will show on the front page.
 store.dispatch(getBanksThunk());

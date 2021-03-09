@@ -13,9 +13,6 @@ import ResponseEditor from './ResponseEditor/ResponseEditor';
 import SpecEditor from './SpecEditor/SpecEditor';
 import Evaluation from './Evaluation/Evaluation';
 
-// eslint-disable-next-line no-console
-console.log(process.env.REACT_APP_TROND);
-
 function App(): ReactElement {
   return (
     <div className={styles.App}>
