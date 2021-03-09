@@ -20,6 +20,7 @@ import { FileDownLoad } from '../models/FileDownLoad';
 import styles from './SpecEditor.module.scss';
 import { Bank } from '../models/Bank';
 import Utils from '../common/Utils';
+import MODELTYPE from '../models/ModelType';
 
 export default function SpecEditor(): ReactElement {
   const { id } = useSelector((state: RootState) => state.selectedBank);
@@ -58,7 +59,7 @@ export default function SpecEditor(): ReactElement {
           title: need.title,
           description: need.description,
           requirements: newRequirementList,
-          type: 'need',
+          type: MODELTYPE.need,
           parent: need.parent
         };
         selectedNeeds.push(updatedBehov);

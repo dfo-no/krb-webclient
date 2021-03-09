@@ -9,6 +9,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { Need } from '../../models/Need';
 import { addNeed, putProjectThunk } from '../../store/reducers/project-reducer';
 import { RootState } from '../../store/store';
+import MODELTYPE from '../../models/ModelType';
 
 type FormValues = {
   title: string;
@@ -45,7 +46,7 @@ function NewNeedForm({ toggleShow, toggleAlert }: IProps): ReactElement {
       title: post.title,
       description: post.description,
       requirements: [],
-      type: 'need',
+      type: MODELTYPE.need,
       parent: ''
     };
     dispatch(addNeed({ id, need }));

@@ -114,7 +114,9 @@ export default function RequirementEditor(): ReactElement {
 
   return (
     <>
-      <h4 className="mt-3 mb-3">Requirement Page</h4>
+      <h4 className="mt-3 mb-3">
+        {Utils.capitalizeFirstLetter(requirement.requirement_Type)} Page
+      </h4>
       <Form
         onSubmit={handleSubmit(updateRequirement)}
         noValidate
@@ -139,7 +141,7 @@ export default function RequirementEditor(): ReactElement {
       </Form>
 
       <Button onClick={newLayout()} className="mt-2 mb-2">
-        New Layout
+        New Variant
       </Button>
 
       {layouts(requirement.layouts)}

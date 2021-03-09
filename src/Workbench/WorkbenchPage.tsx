@@ -15,6 +15,7 @@ import {
 } from '../store/reducers/project-reducer';
 import { selectProject } from '../store/reducers/selectedProject-reducer';
 import SuccessAlert from './SuccessAlert';
+import MODELTYPE from '../models/ModelType';
 
 type FormValues = {
   title: string;
@@ -51,7 +52,7 @@ function WorkbenchPage(): ReactElement {
       products: [],
       codelist: [],
       version: 1,
-      type: 'bank'
+      type: MODELTYPE.bank
     };
     dispatch(postProjectThunk(project));
     reset();
