@@ -40,7 +40,7 @@ jobs:
           npm run-script build:ci
 
       - name: Sonarcube
-        if: github.ref == 'refs/heads/develop'
+        if: github.ref == 'refs/heads/krb-111'
         uses: SonarSource/sonarcloud-github-action@master
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
