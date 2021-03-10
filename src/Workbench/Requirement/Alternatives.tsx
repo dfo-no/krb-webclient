@@ -2,7 +2,7 @@ import React, { ReactElement, useState } from 'react';
 import { Accordion, Button, Card, Col, Form, Row } from 'react-bootstrap';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
-import { yupResolver } from '@hookform/resolvers/yup';
+import { joiResolver } from '@hookform/resolvers/joi';
 import Joi from 'joi';
 
 import { v4 as uuidv4 } from 'uuid';

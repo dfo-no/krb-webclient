@@ -1,7 +1,7 @@
 import React, { ReactElement, useState } from 'react';
 import { Button, Card, Col, Form, Row } from 'react-bootstrap';
 import { useForm } from 'react-hook-form';
-import { yupResolver } from '@hookform/resolvers/yup';
+import { joiResolver } from '@hookform/resolvers/joi';
 import { useDispatch, useSelector } from 'react-redux';
 import Joi from 'joi';
 
@@ -38,7 +38,7 @@ function NewCodeForm({
   const [validated] = useState(false);
 
   const { register, handleSubmit, reset, errors } = useForm({
-    resolver: yupResolver(codeSchema)
+    resolver: joiResolver(codeSchema)
   });
 
   const { id } = useSelector((state: RootState) => state.selectedProject);

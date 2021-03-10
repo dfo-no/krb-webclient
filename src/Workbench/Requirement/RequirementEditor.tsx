@@ -2,7 +2,7 @@ import React, { ReactElement, useState } from 'react';
 import { Button, Form } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { useForm } from 'react-hook-form';
-import { yupResolver } from '@hookform/resolvers/yup';
+import { joiResolver } from '@hookform/resolvers/joi';
 import Joi from 'joi';
 
 import { v4 as uuidv4 } from 'uuid';
@@ -50,7 +50,7 @@ export default function RequirementEditor(): ReactElement {
     defaultValues: {
       title: requirement.title
     },
-    resolver: yupResolver(requirementSchema)
+    resolver: joiResolver(requirementSchema)
   });
 
   if (!list) {

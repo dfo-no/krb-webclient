@@ -1,8 +1,8 @@
-import { yupResolver } from '@hookform/resolvers/yup';
 import React, { ReactElement, useContext, useState } from 'react';
 import { Button, Col, Form, Row } from 'react-bootstrap';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
+import { joiResolver } from '@hookform/resolvers/joi';
 import Joi from 'joi';
 import { AccordionContext } from '../../NestableHierarchy/AccordionContext';
 import { Product } from '../../models/Product';
@@ -34,7 +34,7 @@ export default function ProductForm({ element }: IProps): ReactElement {
   const [validated] = useState(false);
 
   const { register, handleSubmit, errors } = useForm({
-    resolver: yupResolver(productSchema)
+    resolver: joiResolver(productSchema)
   });
   if (!id) {
     return <p>No project selected</p>;

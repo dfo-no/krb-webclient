@@ -2,7 +2,7 @@ import React, { ReactElement, useState } from 'react';
 import { Button, Card, Form } from 'react-bootstrap';
 import { useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
-import { yupResolver } from '@hookform/resolvers/yup';
+import { joiResolver } from '@hookform/resolvers/joi';
 import Joi from 'joi';
 
 import { Bank } from '../../models/Bank';
@@ -52,7 +52,7 @@ export default function Layout({
       reqText: layout.requirementText,
       instruction: layout.instruction
     },
-    resolver: yupResolver(layoutSchema)
+    resolver: joiResolver(layoutSchema)
   });
   const [validated] = useState(false);
   const [isProductChecked, setProductChecked] = useState(layout.use_Product);

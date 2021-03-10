@@ -1,4 +1,4 @@
-import { yupResolver } from '@hookform/resolvers/yup';
+import { joiResolver } from '@hookform/resolvers/joi';
 import React, { ReactElement, useContext, useState } from 'react';
 import { Button, Col, Form, Row } from 'react-bootstrap';
 import { useForm } from 'react-hook-form';
@@ -35,7 +35,7 @@ export default function EditCodeForm({ element }: IProps): ReactElement {
   const [validated] = useState(false);
 
   const { register, handleSubmit, errors } = useForm({
-    resolver: yupResolver(codeSchema)
+    resolver: joiResolver(codeSchema)
   });
   if (!id) {
     return <p>No project selected</p>;

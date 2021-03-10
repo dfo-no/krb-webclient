@@ -2,7 +2,7 @@ import React, { ReactElement, useContext, useState } from 'react';
 import { Button, Col, Form, Row } from 'react-bootstrap';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
-import { yupResolver } from '@hookform/resolvers/yup';
+import { joiResolver } from '@hookform/resolvers/joi';
 import Joi from 'joi';
 
 import { Need } from '../../models/Need';
@@ -39,7 +39,7 @@ function EditNeedForm({ element }: IProps): ReactElement {
       title: element.title,
       description: element.description
     },
-    resolver: yupResolver(needSchema)
+    resolver: joiResolver(needSchema)
   });
 
   if (!id) {
