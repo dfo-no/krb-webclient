@@ -65,7 +65,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "build:ci": "env-cmd -f .env.cloud.ci react-scripts build",
+    "build:ci": "react-scripts build",
     "test": "react-scripts test",
     "lint": "tsc --noEmit && eslint src/**/*.ts{,x}",
     "prettier": "prettier  --write \"src/**/*.{js,jsx,ts,tsx,json,css,scss,md}\"",

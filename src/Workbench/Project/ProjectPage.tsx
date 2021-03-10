@@ -23,7 +23,7 @@ import { postBankThunk } from '../../store/reducers/bank-reducer';
 import Utils from '../../common/Utils';
 import { selectBank } from '../../store/reducers/selectedBank-reducer';
 import EditProjectForm from './EditProjectForm';
-import SuccessAlert from '../SuccessAlert';
+import SuccessBobbo from '../SuccessAlert';
 import MODELTYPE from '../../models/ModelType';
 
 function ProjectPage(): ReactElement {
@@ -142,7 +142,7 @@ function ProjectPage(): ReactElement {
         New publication
       </Button>
       {showAlert && (
-        <SuccessAlert toggleShow={setShowAlert} type="publication" />
+        <SuccessBobbo toggleShow={setShowAlert} type="publication" />
       )}
       {publicationEditor(showEditor)}
       {publicationList(project.publications)}

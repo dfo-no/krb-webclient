@@ -11,7 +11,7 @@ import { Need } from '../../models/Need';
 import Utils from '../../common/Utils';
 import { Bank } from '../../models/Bank';
 import { AccordionContext } from '../../NestableHierarchy/AccordionContext';
-import SuccessAlert from '../SuccessAlert';
+import SuccessBobbo from '../SuccessAlert';
 import NewRequirementForm from './NewRequirementForm';
 import EditRequirementForm from './EditRequirementForm';
 import NeedSideBar from './NeedSideBar/NeedSidebar';
@@ -195,7 +195,7 @@ export default function RequirementPage(): ReactElement {
         </Row>
 
         {showAlert && (
-          <SuccessAlert toggleShow={setShowAlert} type="requirement" />
+          <SuccessBobbo toggleShow={setShowAlert} type="requirement" />
         )}
         {toggleEditor && (
           <NewRequirementForm
