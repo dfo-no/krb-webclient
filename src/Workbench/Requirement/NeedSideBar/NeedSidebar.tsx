@@ -53,11 +53,8 @@ export default function NeedSideBar({ needs }: IProps): ReactElement {
         children = childrenHierarchy(element.children, 1);
       }
       return (
-        <>
-          <Nav.Item
-            key={element.id}
-            className={`${styles.sidebar__item} m-0 p-0`}
-          >
+        <span key={element.id}>
+          <Nav.Item className={`${styles.sidebar__item} m-0 p-0`}>
             <Nav.Link
               as={NavLink}
               role="link"
@@ -69,7 +66,7 @@ export default function NeedSideBar({ needs }: IProps): ReactElement {
             </Nav.Link>
           </Nav.Item>
           {children}
-        </>
+        </span>
       );
     });
   };
