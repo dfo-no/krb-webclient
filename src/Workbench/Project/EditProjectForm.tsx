@@ -3,7 +3,7 @@ import React, { ReactElement, useState } from 'react';
 import { Button, Card, Col, Form, Row } from 'react-bootstrap';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
-import * as yup from 'yup';
+import Joi from 'joi';
 import { Bank } from '../../models/Bank';
 
 import {
@@ -22,9 +22,9 @@ type FormInput = {
   description: string;
 };
 
-const projectSchema = yup.object().shape({
-  title: yup.string().required(),
-  description: yup.string().required()
+const projectSchema = Joi.object().keys({
+  title: Joi.string().required(),
+  description: Joi.string().required()
 });
 
 export default function EditProjectForm({

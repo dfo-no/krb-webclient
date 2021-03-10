@@ -3,7 +3,7 @@ import { Button, Card, Col, Form, Row } from 'react-bootstrap';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useDispatch, useSelector } from 'react-redux';
-import * as yup from 'yup';
+import Joi from 'joi';
 
 import {
   editCodelist,
@@ -20,9 +20,9 @@ interface IProps {
   codelistId: string;
 }
 
-const codeListSchema = yup.object().shape({
-  title: yup.string().required(),
-  description: yup.string().required()
+const codeListSchema = Joi.object().keys({
+  title: Joi.string().required(),
+  description: Joi.string().required()
 });
 
 function EditCodeListForm({ toggleShow, codelistId }: IProps): ReactElement {

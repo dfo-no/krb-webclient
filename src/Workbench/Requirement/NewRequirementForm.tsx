@@ -3,7 +3,7 @@ import { Button, Card, Col, Form, Row } from 'react-bootstrap';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useDispatch, useSelector } from 'react-redux';
-import * as yup from 'yup';
+import Joi from 'joi';
 
 import { v4 as uuidv4 } from 'uuid';
 import {
@@ -29,9 +29,9 @@ interface IProps {
   type: RequirementType;
 }
 
-const requirementSchema = yup.object().shape({
-  title: yup.string().required(),
-  description: yup.string().required()
+const requirementSchema = Joi.object().keys({
+  title: Joi.string().required(),
+  description: Joi.string().required()
 });
 
 function NewRequirementForm({

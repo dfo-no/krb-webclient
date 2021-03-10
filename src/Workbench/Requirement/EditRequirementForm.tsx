@@ -3,7 +3,7 @@ import React, { ReactElement, useContext, useState } from 'react';
 import { Button, Col, Form, Row } from 'react-bootstrap';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
-import * as yup from 'yup';
+import Joi from 'joi';
 import { Link } from 'react-router-dom';
 import { AccordionContext } from '../../NestableHierarchy/AccordionContext';
 
@@ -28,9 +28,9 @@ type FormInput = {
   description: string;
 };
 
-const productSchema = yup.object().shape({
-  title: yup.string().required(),
-  description: yup.string().required()
+const productSchema = Joi.object().keys({
+  title: Joi.string().required(),
+  description: Joi.string().required()
 });
 
 export default function EditRequirementForm({

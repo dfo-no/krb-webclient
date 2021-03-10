@@ -3,7 +3,7 @@ import { Accordion, Button, Card, Col, Form, Row } from 'react-bootstrap';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import { yupResolver } from '@hookform/resolvers/yup';
-import * as yup from 'yup';
+import Joi from 'joi';
 
 import { v4 as uuidv4 } from 'uuid';
 import Utils from '../../common/Utils';

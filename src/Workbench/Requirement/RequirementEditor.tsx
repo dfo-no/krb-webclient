@@ -3,7 +3,7 @@ import { Button, Form } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import * as yup from 'yup';
+import Joi from 'joi';
 
 import { v4 as uuidv4 } from 'uuid';
 import Utils from '../../common/Utils';
@@ -19,13 +19,12 @@ type FormInput = {
   title: string;
 };
 
-const requirementSchema = yup.object().shape({
-  id: yup.string().required(),
-  title: yup
-    .string()
+const requirementSchema = Joi.object().keys({
+  id: Joi.string().required(),
+  title: Joi.string()
     .required()
     .min(3)
-    .matches(/^([^0-9]*)$/, 'Title can not contain numbers')
+    .regex(/^([^0-9]*)$/, 'Title can not contain numbers')
 });
 
 export default function RequirementEditor(): ReactElement {

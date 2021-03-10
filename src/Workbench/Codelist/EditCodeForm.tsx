@@ -2,7 +2,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import React, { ReactElement, useContext, useState } from 'react';
 import { Button, Col, Form, Row } from 'react-bootstrap';
 import { useForm } from 'react-hook-form';
-import * as yup from 'yup';
+import Joi from 'joi';
 import { useDispatch, useSelector } from 'react-redux';
 import { Code } from '../../models/Code';
 
@@ -22,9 +22,9 @@ type FormInput = {
   description: string;
 };
 
-const codeSchema = yup.object().shape({
-  title: yup.string().required(),
-  description: yup.string().required()
+const codeSchema = Joi.object().keys({
+  title: Joi.string().required(),
+  description: Joi.string().required()
 });
 
 export default function EditCodeForm({ element }: IProps): ReactElement {

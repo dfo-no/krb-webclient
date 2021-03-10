@@ -3,7 +3,7 @@ import { Button, Card, Form } from 'react-bootstrap';
 import { useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
 import { yupResolver } from '@hookform/resolvers/yup';
-import * as yup from 'yup';
+import Joi from 'joi';
 
 import { Bank } from '../../models/Bank';
 import { Requirement } from '../../models/Requirement';
@@ -34,9 +34,9 @@ type FormValues = {
   productList: string[];
 };
 
-const layoutSchema = yup.object().shape({
-  reqText: yup.string().required().min(5),
-  instruction: yup.string().required().min(5)
+const layoutSchema = Joi.object().keys({
+  reqText: Joi.string().required().min(5),
+  instruction: Joi.string().required().min(5)
 });
 
 export default function Layout({

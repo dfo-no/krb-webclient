@@ -3,7 +3,7 @@ import { Button, Col, Form, Row } from 'react-bootstrap';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import { yupResolver } from '@hookform/resolvers/yup';
-import * as yup from 'yup';
+import Joi from 'joi';
 
 import { Need } from '../../models/Need';
 import {
@@ -22,10 +22,10 @@ interface IProps {
   element: Need;
 }
 
-const needSchema = yup.object().shape({
-  id: yup.string().required(),
-  title: yup.string().required(),
-  description: yup.string().required()
+const needSchema = Joi.object().keys({
+  id: Joi.string().required(),
+  title: Joi.string().required(),
+  description: Joi.string().required()
 });
 
 function EditNeedForm({ element }: IProps): ReactElement {
