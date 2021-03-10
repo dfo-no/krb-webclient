@@ -11,10 +11,11 @@ import { Need } from '../../models/Need';
 import Utils from '../../common/Utils';
 import { Bank } from '../../models/Bank';
 import { AccordionContext } from '../../NestableHierarchy/AccordionContext';
-import SuccessAlert from '../SuccessAlert';
+import SuccessBobbo from '../SuccessAlert';
 import NewRequirementForm from './NewRequirementForm';
 import EditRequirementForm from './EditRequirementForm';
 import NeedSideBar from './NeedSideBar/NeedSidebar';
+import RequirementType from '../../models/RequirementType';
 
 export default function RequirementPage(): ReactElement {
   const { id } = useSelector((state: RootState) => state.selectedProject);
@@ -23,6 +24,9 @@ export default function RequirementPage(): ReactElement {
   const [activeKey, setActiveKey] = useState('');
   const [toggleEditor, setToggleEditor] = useState(false);
   const [showAlert, setShowAlert] = useState(false);
+  const [requirementType, setRequirementType] = useState<RequirementType>(
+    RequirementType.requirement
+  );
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -73,7 +77,10 @@ export default function RequirementPage(): ReactElement {
 
   const requirements = (reqs: Requirement[]) => {
     if (reqs.length > 0) {
-      const jsx = reqs.map((element: Requirement, index) => {
+      const filteredList = reqs.filter(
+        (element) => element.requirement_Type === 'requirement'
+      );
+      const jsx = filteredList.map((element: Requirement, index) => {
         return (
           <Card key={element.id}>
             <Card.Header className="d-flex justify-content-between">
@@ -101,7 +108,7 @@ export default function RequirementPage(): ReactElement {
       });
       return (
         <>
-          <h5>Requirements</h5>
+          {filteredList.length > 0 && <h5 className="mt-4">Requirements: </h5>}
           <AccordionContext.Provider value={{ onOpenClose }}>
             <Accordion activeKey={activeKey} onSelect={(e) => onOpenClose(e)}>
               {jsx}
@@ -113,24 +120,82 @@ export default function RequirementPage(): ReactElement {
     return <p>This need has no requirements, add one</p>;
   };
 
+  const info = (reqs: Requirement[]) => {
+    if (reqs.length > 0) {
+      const filteredList = reqs.filter(
+        (element) => element.requirement_Type === 'info'
+      );
+      const jsx = filteredList.map((element: Requirement, index) => {
+        return (
+          <Card key={element.id}>
+            <Card.Header className="d-flex justify-content-between">
+              <h6 className="mt-2">{element.title}</h6>
+              <Accordion.Toggle
+                as={Button}
+                variant="link"
+                eventKey={element.id}
+              >
+                <BsChevronDown />
+              </Accordion.Toggle>
+            </Card.Header>
+            <Accordion.Collapse eventKey={element.id}>
+              <Card.Body>
+                <EditRequirementForm
+                  index={index}
+                  element={element}
+                  needList={needs}
+                  need={selectedNeed}
+                />
+              </Card.Body>
+            </Accordion.Collapse>
+          </Card>
+        );
+      });
+      return (
+        <>
+          {filteredList.length > 0 && <h5 className="mt-4">Info fields:</h5>}
+          <AccordionContext.Provider value={{ onOpenClose }}>
+            <Accordion activeKey={activeKey} onSelect={(e) => onOpenClose(e)}>
+              {jsx}
+            </Accordion>
+          </AccordionContext.Provider>
+        </>
+      );
+    }
+    return null;
+  };
+
   return (
     <Row>
       <Col className="col-3 p-0">
         <NeedSideBar needs={needs} />
       </Col>
       <Col>
-        <h4>{selectedNeed.title}</h4>
+        <h4 className="mt-4">Need: {selectedNeed.title}</h4>
         <h5>{selectedNeed.description}</h5>
-        <Button
-          onClick={() => {
-            setToggleEditor(true);
-          }}
-          className="mb-4"
-        >
-          New Requirement
-        </Button>
+        <Row className="flex justify-content-end">
+          <Button
+            onClick={() => {
+              setToggleEditor(true);
+              setRequirementType(RequirementType.requirement);
+            }}
+            className="mb-4 mr-3"
+          >
+            New Requirement
+          </Button>
+          <Button
+            onClick={() => {
+              setToggleEditor(true);
+              setRequirementType(RequirementType.info);
+            }}
+            className="mb-4 mr-3"
+          >
+            New Info field
+          </Button>
+        </Row>
+
         {showAlert && (
-          <SuccessAlert toggleShow={setShowAlert} type="requirement" />
+          <SuccessBobbo toggleShow={setShowAlert} type="requirement" />
         )}
         {toggleEditor && (
           <NewRequirementForm
@@ -138,8 +203,10 @@ export default function RequirementPage(): ReactElement {
             toggleShow={setToggleEditor}
             need={selectedNeed}
             needList={needs}
+            type={requirementType}
           />
         )}
+        {info(selectedNeed.requirements)}
         {requirements(selectedNeed.requirements)}
       </Col>
     </Row>

@@ -1,7 +1,7 @@
 import React, { ReactElement, useState } from 'react';
-import { Button, Col, Form, Row } from 'react-bootstrap';
+import { Button, Form } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
-import { useFieldArray, useForm } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 
@@ -79,7 +79,11 @@ export default function RequirementEditor(): ReactElement {
       id: uuidv4(),
       requirementText: '',
       instruction: '',
-      alternatives: []
+      alternatives: [],
+      use_Product: false,
+      use_Spesification: false,
+      use_Qualification: false,
+      products: []
     };
     const newLayouts = [...requirement.layouts, layout];
     newRequirement.layouts = newLayouts;
@@ -110,7 +114,9 @@ export default function RequirementEditor(): ReactElement {
 
   return (
     <>
-      <h4 className="mt-3 mb-3">Requirement Page</h4>
+      <h4 className="mt-3 mb-3">
+        {Utils.capitalizeFirstLetter(requirement.requirement_Type)} Page
+      </h4>
       <Form
         onSubmit={handleSubmit(updateRequirement)}
         noValidate
@@ -135,7 +141,7 @@ export default function RequirementEditor(): ReactElement {
       </Form>
 
       <Button onClick={newLayout()} className="mt-2 mb-2">
-        New Layout
+        New Variant
       </Button>
 
       {layouts(requirement.layouts)}

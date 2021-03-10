@@ -45,6 +45,7 @@ export default function Alternatives({
   const dispatch = useDispatch();
   const { register, control, handleSubmit, errors } = useForm();
   const newAlternative = (data: FormInput) => {
+    // TODO: prevent type info from having more than one alternative, hide button or similar
     let alternative: CodelistAlternative | ValueAlternative;
     const newRequirement = { ...requirement };
     if (data.alternative === 'Value') {
