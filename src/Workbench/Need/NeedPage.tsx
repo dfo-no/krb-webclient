@@ -12,7 +12,7 @@ import {
   putProjectThunk,
   updateNeedList
 } from '../../store/reducers/project-reducer';
-import SuccessAlert from '../SuccessAlert';
+import SuccessBobbo from '../SuccessBobbo';
 
 function NeedPage(): ReactElement {
   const { id } = useSelector((state: RootState) => state.selectedProject);
@@ -58,7 +58,7 @@ function NeedPage(): ReactElement {
       >
         New Need
       </Button>
-      {showAlert && <SuccessAlert toggleShow={setShowAlert} type="need" />}
+      {showAlert && <SuccessBobbo toggleShow={setShowAlert} type="need" />}
       {newNeed(toggleEditor)}
       <NestableHierarcy
         dispatchfunc={(projectId: string, items: Need[]) =>

@@ -14,7 +14,7 @@ import {
   postProjectThunk
 } from '../store/reducers/project-reducer';
 import { selectProject } from '../store/reducers/selectedProject-reducer';
-import SuccessAlert from './SuccessAlert';
+import SuccessBobbo from './SuccessBobbo';
 import MODELTYPE from '../models/ModelType';
 
 type FormValues = {
@@ -160,7 +160,7 @@ function WorkbenchPage(): ReactElement {
     <>
       <h3>Projects </h3>
       <Button onClick={handleShowEditor}>New Project</Button>
-      {showAlert && <SuccessAlert toggleShow={setShowAlert} type="project" />}
+      {showAlert && <SuccessBobbo toggleShow={setShowAlert} type="project" />}
       {projectEditor(showEditor)}
       {renderProjects(list)}
     </>
