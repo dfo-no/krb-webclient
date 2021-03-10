@@ -1,15 +1,16 @@
 import { Need } from './Need';
 import { Codelist } from './Codelist';
 import { Publication } from './Publication';
-import { Requirement } from './Requirement';
+import { Product } from './Product';
+import { BaseModel } from './BaseModel';
 
-export interface Bank {
-  id: number;
+export interface Bank extends BaseModel {
+  id: string;
   title: string;
   description: string;
   needs: Need[];
-  requirements?: Requirement[];
-  codelist?: Codelist[];
+  codelist: Codelist[];
+  products: Product[];
   version: number;
   publications?: Publication[];
   publishedDate?: string;

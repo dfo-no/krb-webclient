@@ -1,251 +1,214 @@
-import { ReactElement, useState } from 'react';
-import {
-  Row,
-  Col,
-  Nav,
-  NavLink,
-  Accordion,
-  Card,
-  Button,
-  InputGroup,
-  FormControl
-} from 'react-bootstrap';
+/* eslint-disable jsx-a11y/label-has-associated-control */
+import React, { ReactElement, useState, useEffect } from 'react';
+import { Row, Col, Accordion, Card, Button } from 'react-bootstrap';
 
-import { RootState } from '../../store/rootReducer';
-import { useDispatch, useSelector } from 'react-redux';
-import {
-  addRequirementToSelectedNeed,
-  editRequirementToSelected
-} from '../../store/reducers/kravbank-reducer';
-import styles from './RequirementPage.module.scss';
+import { useSelector } from 'react-redux';
+
+import { BsChevronDown } from 'react-icons/bs';
+import { RootState } from '../../store/store';
 import { Requirement } from '../../models/Requirement';
 import { Need } from '../../models/Need';
+import Utils from '../../common/Utils';
+import { Bank } from '../../models/Bank';
+import { AccordionContext } from '../../NestableHierarchy/AccordionContext';
+import SuccessAlert from '../SuccessAlert';
+import NewRequirementForm from './NewRequirementForm';
+import EditRequirementForm from './EditRequirementForm';
+import NeedSideBar from './NeedSideBar/NeedSidebar';
+import RequirementType from '../../models/RequirementType';
 
 export default function RequirementPage(): ReactElement {
-  const dispatch = useDispatch();
-  const { selectedProject } = useSelector((state: RootState) => state.kravbank);
-  const [selectedNeed, setSelectedNeed] = useState<Need | undefined>(undefined);
-  const [requirementList, setRequirementsLIst] = useState<Requirement[]>([]);
-  const [title, setTitle] = useState('');
-  const [description, setDescription] = useState('');
-  const [showEditor, setShowEditor] = useState(false);
-  if (!selectedProject) {
+  const { id } = useSelector((state: RootState) => state.selectedProject);
+  const { list } = useSelector((state: RootState) => state.project);
+  const { needId } = useSelector((state: RootState) => state.selectNeed);
+  const [activeKey, setActiveKey] = useState('');
+  const [toggleEditor, setToggleEditor] = useState(false);
+  const [showAlert, setShowAlert] = useState(false);
+  const [requirementType, setRequirementType] = useState<RequirementType>(
+    RequirementType.requirement
+  );
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setShowAlert(false);
+    }, 2000);
+    return () => clearTimeout(timer);
+  }, [showAlert]);
+
+  if (!id) {
     return <p>No project selected</p>;
   }
+
+  const selectedProject = Utils.ensure(
+    list.find((project: Bank) => project.id === id)
+  );
 
   if (!selectedProject.needs) {
     return (
       <p>The project has no needs, add one to continue with requirements</p>
     );
   }
+  const { needs } = selectedProject;
 
-  const needs = selectedProject.needs;
-
-  const handleTitleChange = (event: any) => {
-    setTitle(event.target.value);
-  };
-
-  const handleDescriptionChange = (event: any) => {
-    setDescription(event.target.value);
-  };
-
-  const addRequirementElement = () => () => {
-    let requirement = {
-      id: Math.random(),
-      title: title,
-      description: description,
-      needId: selectedNeed?.id,
-      type: 'yes/no'
-    };
-    let reqList = [...requirementList];
-    reqList.push(requirement);
-    setRequirementsLIst(reqList);
-    const needIndex = selectedProject.needs.findIndex(
-      (need) => need.id === selectedNeed?.id
+  if (!needId) {
+    return (
+      <Row>
+        <Col className="col-3 p-0">
+          <NeedSideBar needs={needs} />
+        </Col>
+        <Col>
+          You have not selected a new, select one to work with requirement
+        </Col>
+      </Row>
     );
-    setShowEditor(false);
-    dispatch(
-      addRequirementToSelectedNeed({
-        requirement: requirement,
-        needIndex: needIndex
-      })
-    );
-  };
-  const editRequirementElement = (id: number) => () => {
-    let requirement = {
-      id: id,
-      title: title,
-      description: description,
-      needId: selectedNeed?.id,
-      type: 'yes/no'
-    };
-    let reqList = [...requirementList];
-    reqList.push(requirement);
-    setRequirementsLIst(reqList);
-    const needIndex = selectedProject.needs.findIndex(
-      (need) => need.id === selectedNeed?.id
-    );
-    const reqIndex = selectedProject.needs[needIndex].requirements.findIndex(
-      (req) => req.id === id
-    );
-    dispatch(
-      editRequirementToSelected({
-        requirement: requirement,
-        needIndex: needIndex,
-        requirementIndex: reqIndex
-      })
-    );
-  };
+  }
 
-  const handleSelectedNeed = (need: Need) => {
-    setSelectedNeed(need);
-    setRequirementsLIst(need.requirements);
-  };
+  const selectedNeed = Utils.ensure(
+    needs.find((need: Need) => need.id === needId)
+  );
 
-  const requirements = (requirements: Requirement[]) => {
-    if (selectedNeed === undefined) {
-      return (
-        <p>
-          You have not selected a need, select one to work with requirements
-        </p>
-      );
+  const onOpenClose = (e: string | null) => {
+    if (e) {
+      setActiveKey(e);
     } else {
-      if (requirements.length > 0) {
-        const jsx = requirements.map((element: Requirement, index) => {
-          return (
-            <Card>
-              <Card.Header>
-                <Accordion.Toggle
-                  as={Button}
-                  variant="link"
-                  eventKey={index.toString()}
-                >
-                  {element.title}
-                </Accordion.Toggle>
-              </Card.Header>
-              <Accordion.Collapse eventKey={index.toString()}>
-                <Card.Body>
-                  <>
-                    <label htmlFor="title">Title</label>
-                    <InputGroup className="mb-3 30vw">
-                      <FormControl
-                        name="title"
-                        defaultValue={element.title}
-                        onChange={handleTitleChange}
-                      />
-                    </InputGroup>
-                    <label htmlFor="title">Requirement text</label>
-                    <InputGroup className="mb-3 30vw">
-                      <FormControl
-                        name="description"
-                        defaultValue={element.description}
-                        onChange={handleDescriptionChange}
-                      />
-                    </InputGroup>
-                    <Button
-                      className={styles.newbutton}
-                      onClick={editRequirementElement(element.id)}
-                    >
-                      Save
-                    </Button>
-                  </>
-                </Card.Body>
-              </Accordion.Collapse>
-            </Card>
-          );
-        });
+      setActiveKey('');
+    }
+  };
+
+  const requirements = (reqs: Requirement[]) => {
+    if (reqs.length > 0) {
+      const filteredList = reqs.filter(
+        (element) => element.requirement_Type === 'requirement'
+      );
+      const jsx = filteredList.map((element: Requirement, index) => {
         return (
-          <>
-            <h5>Requirements</h5>
-            <Accordion>{jsx}</Accordion>
-          </>
+          <Card key={element.id}>
+            <Card.Header className="d-flex justify-content-between">
+              <h6 className="mt-2">{element.title}</h6>
+              <Accordion.Toggle
+                as={Button}
+                variant="link"
+                eventKey={element.id}
+              >
+                <BsChevronDown />
+              </Accordion.Toggle>
+            </Card.Header>
+            <Accordion.Collapse eventKey={element.id}>
+              <Card.Body>
+                <EditRequirementForm
+                  index={index}
+                  element={element}
+                  needList={needs}
+                  need={selectedNeed}
+                />
+              </Card.Body>
+            </Accordion.Collapse>
+          </Card>
         );
-      } else {
-        return <p>This need has no requirements, add one</p>;
-      }
-    }
-  };
-
-  const newRequirement = (show: boolean) => {
-    if (show) {
+      });
       return (
-        <Card className={styles.headerSection__requirement}>
-          <Card.Body>
-            <label htmlFor="title">Title</label>
-            <InputGroup className="mb-3 30vw">
-              <FormControl name="title" onChange={handleTitleChange} />
-            </InputGroup>
-            <label htmlFor="title">Requirement text</label>
-            <InputGroup className="mb-3 30vw">
-              <FormControl
-                name="description"
-                onChange={handleDescriptionChange}
-              />
-            </InputGroup>
-            <Button
-              className={styles.newbutton}
-              onClick={addRequirementElement()}
-            >
-              Create
-            </Button>
-          </Card.Body>
-        </Card>
+        <>
+          {filteredList.length > 0 && <h5 className="mt-4">Requirements: </h5>}
+          <AccordionContext.Provider value={{ onOpenClose }}>
+            <Accordion activeKey={activeKey} onSelect={(e) => onOpenClose(e)}>
+              {jsx}
+            </Accordion>
+          </AccordionContext.Provider>
+        </>
       );
     }
+    return <p>This need has no requirements, add one</p>;
   };
 
-  const header = (need: Need | undefined) => {
-    if (need === undefined) {
-      return <></>;
-    } else {
+  const info = (reqs: Requirement[]) => {
+    if (reqs.length > 0) {
+      const filteredList = reqs.filter(
+        (element) => element.requirement_Type === 'info'
+      );
+      const jsx = filteredList.map((element: Requirement, index) => {
+        return (
+          <Card key={element.id}>
+            <Card.Header className="d-flex justify-content-between">
+              <h6 className="mt-2">{element.title}</h6>
+              <Accordion.Toggle
+                as={Button}
+                variant="link"
+                eventKey={element.id}
+              >
+                <BsChevronDown />
+              </Accordion.Toggle>
+            </Card.Header>
+            <Accordion.Collapse eventKey={element.id}>
+              <Card.Body>
+                <EditRequirementForm
+                  index={index}
+                  element={element}
+                  needList={needs}
+                  need={selectedNeed}
+                />
+              </Card.Body>
+            </Accordion.Collapse>
+          </Card>
+        );
+      });
       return (
-        <div className={styles.headerSection}>
-          <h4>{need.tittel}</h4>
-          <h5>{need.beskrivelse}</h5>
-          <Button
-            onClick={() => {
-              setShowEditor(true);
-            }}
-            className={styles.headersection__addButton}
-          >
-            New Requirement
-          </Button>
-          {newRequirement(showEditor)}
-        </div>
+        <>
+          {filteredList.length > 0 && <h5 className="mt-4">Info fields:</h5>}
+          <AccordionContext.Provider value={{ onOpenClose }}>
+            <Accordion activeKey={activeKey} onSelect={(e) => onOpenClose(e)}>
+              {jsx}
+            </Accordion>
+          </AccordionContext.Provider>
+        </>
       );
     }
-  };
-
-  const needList = (needs: Need[]) => {
-    return needs.map((element: Need) => {
-      return (
-        <Nav.Item key={element.id} className={`${styles.sidebar__item}`}>
-          <Nav.Link
-            as={NavLink}
-            role="link"
-            activeClassName={`${styles.sidebar__item__active}`}
-            onClick={() => handleSelectedNeed(element)}
-          >
-            {element.tittel}
-          </Nav.Link>
-        </Nav.Item>
-      );
-    });
+    return null;
   };
 
   return (
-    <>
-      <Row>
-        <Col className="col-2 p-0">
-          <Nav className={`sidebar flex-column vh-100 p-0 ${styles.sidebar}`}>
-            {needList(needs)}
-          </Nav>
-        </Col>
-        <Col>
-          {header(selectedNeed)}
-          {requirements(requirementList)}
-        </Col>
-      </Row>
-    </>
+    <Row>
+      <Col className="col-3 p-0">
+        <NeedSideBar needs={needs} />
+      </Col>
+      <Col>
+        <h4 className="mt-4">Need: {selectedNeed.title}</h4>
+        <h5>{selectedNeed.description}</h5>
+        <Row className="flex justify-content-end">
+          <Button
+            onClick={() => {
+              setToggleEditor(true);
+              setRequirementType(RequirementType.requirement);
+            }}
+            className="mb-4 mr-3"
+          >
+            New Requirement
+          </Button>
+          <Button
+            onClick={() => {
+              setToggleEditor(true);
+              setRequirementType(RequirementType.info);
+            }}
+            className="mb-4 mr-3"
+          >
+            New Info field
+          </Button>
+        </Row>
+
+        {showAlert && (
+          <SuccessAlert toggleShow={setShowAlert} type="requirement" />
+        )}
+        {toggleEditor && (
+          <NewRequirementForm
+            toggleAlert={setShowAlert}
+            toggleShow={setToggleEditor}
+            need={selectedNeed}
+            needList={needs}
+            type={requirementType}
+          />
+        )}
+        {info(selectedNeed.requirements)}
+        {requirements(selectedNeed.requirements)}
+      </Col>
+    </Row>
   );
 }

@@ -5,8 +5,8 @@ import { Link } from 'react-router-dom';
 
 import SearchBar from '../SearchBar/SearchBar';
 import FilteredList from './Components/FilteredList';
-import { RootState } from '../store/rootReducer';
-import { getBanks } from '../store/reducers/bank-reducer';
+import { getBanksThunk } from '../store/reducers/bank-reducer';
+import { RootState } from '../store/store';
 
 export default function HomePage(): ReactElement {
   const dispatch = useDispatch();
@@ -15,7 +15,7 @@ export default function HomePage(): ReactElement {
   useEffect(() => {
     async function fetchEverything() {
       if (status === 'idle') {
-        dispatch(getBanks());
+        dispatch(getBanksThunk());
       }
     }
     fetchEverything();
@@ -30,17 +30,17 @@ export default function HomePage(): ReactElement {
         <Col>
           <ListGroup variant="flush">
             <ListGroup.Item>
-              <Link to={'/workbench'}>
+              <Link to="/workbench">
                 <h5>Editor</h5>
               </Link>
             </ListGroup.Item>
             <ListGroup.Item>
-              <Link to={'/workbench'}>
+              <Link to="/responseeditor">
                 <h5>Create response</h5>
               </Link>
             </ListGroup.Item>
             <ListGroup.Item>
-              <Link to={'/workbench'}>
+              <Link to="/evaluation">
                 <h5>Create evaluation</h5>
               </Link>
             </ListGroup.Item>
@@ -51,15 +51,15 @@ export default function HomePage(): ReactElement {
         <Col>
           <FilteredList
             list={list}
-            filterTitle={'Newest banks'}
-            filterType={'date'}
+            filterTitle="Newest banks"
+            filterType="date"
           />
         </Col>
         <Col>
           <FilteredList
             list={list}
-            filterTitle={'Popular banks'}
-            filterType={'alphabetic'}
+            filterTitle="Popular banks"
+            filterType="alphabetic"
           />
         </Col>
       </Row>

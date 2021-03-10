@@ -2,10 +2,10 @@ name: Continuous Deployment
 
 on:
   push:
-    branches: [main]
+    branches: [develop, deploy]
 
 env:
-  AZURE_WEBAPP_NAME: Krb-Kravbank-dev-app # set this to your application's name
+  AZURE_WEBAPP_NAME: krb-webclient # set this to your application's name
   AZURE_WEBAPP_PACKAGE_PATH: 'build' # set this to the path to your web app project, defaults to the repository root
   NODE_VERSION: '12.x'
 
@@ -19,28 +19,28 @@ jobs:
         with:
           node-version: ${{ env.NODE_VERSION }}
 
-      - name: Test
+      - name: Install
         shell: bash
         run: |
-          yarn install
-          yarn lint
-          yarn test --coverage
+          npm install
+          npm run-script lint
+          npm run-script test --coverage
 
-      - name: Fix CC paths
-        working-directory: coverage
+      #- name: Fix CC paths
+      #  working-directory: coverage
+      #  run: |
+      #    sed -i 's/\/home\/runner\/work\/krb-webclient\/krb-webclient\//\/github\/workspace\//g' lcov.info
+
+      - name: Build
         run: |
-          sed -i 's/\/home\/runner\/work\/krb-webclient\/krb-webclient\//\/github\/workspace\//g' lcov.info
+          npm run-script build:ci
 
-      - name: Build for develop
-        run: |
-          yarn build
-
-      - name: Analyze
-        if: github.ref == 'refs/heads/develop'
-        uses: SonarSource/sonarcloud-github-action@master
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+      #- name: Sonarcube
+      #  if: github.ref == 'refs/heads/develop'
+      #  uses: SonarSource/sonarcloud-github-action@master
+      #  env:
+      #    GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      #    SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
       - name: 'Deploy to Azure WebApp'
         uses: azure/webapps-deploy@v2

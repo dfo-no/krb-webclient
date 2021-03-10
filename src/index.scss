@@ -15,5 +15,18 @@ body {
   box-sizing: border-box;
 }
 
+/* Following is global styles. They must be used as className="iconText" etc... */
+.iconText {
+  display: flex;
+  align-items: center;
+  svg {
+    font-size: larger;
+    vertical-align: sub;
+  }
+  span {
+    margin-left: 0.5rem;
+  }
+}
+
 @import '~bootstrap/scss/bootstrap';
 @import url('https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css');
