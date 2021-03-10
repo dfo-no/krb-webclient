@@ -2,7 +2,7 @@ name: Continuous Deployment
 
 on:
   push:
-    branches: [develop, deploy]
+    branches: [krb-111]
 
 env:
   AZURE_WEBAPP_NAME: krb-webclient # set this to your application's name
@@ -32,6 +32,8 @@ jobs:
       #    sed -i 's/\/home\/runner\/work\/krb-webclient\/krb-webclient\//\/github\/workspace\//g' lcov.info
 
       - name: Build
+        env:
+          REACT_APP_COSMOSDB_CONNECTION_STRING: ${{ secrets.REACT_APP_COSMOSDB_CONNECTION_STRING }}
         run: |
           npm run-script build:ci
 
