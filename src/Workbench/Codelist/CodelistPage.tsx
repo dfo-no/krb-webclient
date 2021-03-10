@@ -10,7 +10,7 @@ import { selectCodeList } from '../../store/reducers/selectedCodelist-reducer';
 import Utils from '../../common/Utils';
 import { Bank } from '../../models/Bank';
 import NewCodeListForm from './NewCodeListForm';
-import SuccessBobbo from '../SuccessBobbo';
+import SuccessBobbo from '../SuccessAlert';
 
 export default function CodelistPage(): ReactElement {
   const dispatch = useDispatch();

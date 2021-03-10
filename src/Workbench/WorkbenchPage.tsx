@@ -14,7 +14,7 @@ import {
   postProjectThunk
 } from '../store/reducers/project-reducer';
 import { selectProject } from '../store/reducers/selectedProject-reducer';
-import SuccessBobbo from './SuccessBobbo';
+import SuccessBobbo from './SuccessAlert';
 import MODELTYPE from '../models/ModelType';
 
 type FormValues = {

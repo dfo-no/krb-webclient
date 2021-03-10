@@ -14,7 +14,7 @@ import { Bank } from '../../models/Bank';
 import NestableHierarcy from '../../NestableHierarchy/Nestable';
 import ProductForm from './EditProductForm';
 import NewProductForm from './NewProductForm';
-import SuccessBobbo from '../SuccessBobbo';
+import SuccessBobbo from '../SuccessAlert';
 
 export default function ProductPage(): ReactElement {
   const dispatch = useDispatch();

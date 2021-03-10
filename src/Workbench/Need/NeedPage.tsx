@@ -12,7 +12,7 @@ import {
   putProjectThunk,
   updateNeedList
 } from '../../store/reducers/project-reducer';
-import SuccessBobbo from '../SuccessBobbo';
+import SuccessBobbo from '../SuccessAlert';
 
 function NeedPage(): ReactElement {
   const { id } = useSelector((state: RootState) => state.selectedProject);
