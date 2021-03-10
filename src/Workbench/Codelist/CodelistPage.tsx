@@ -10,7 +10,7 @@ import { selectCodeList } from '../../store/reducers/selectedCodelist-reducer';
 import Utils from '../../common/Utils';
 import { Bank } from '../../models/Bank';
 import NewCodeListForm from './NewCodeListForm';
-import SuccessBobbo from '../SuccessAlert';
+import SuccessAlert from '../SuccessAlert';
 
 export default function CodelistPage(): ReactElement {
   const dispatch = useDispatch();
@@ -82,7 +82,7 @@ export default function CodelistPage(): ReactElement {
       <Button className="mb-4" onClick={() => setToggleEditor(true)}>
         New Codelist
       </Button>
-      {showAlert && <SuccessBobbo toggleShow={setShowAlert} type="codelist" />}
+      {showAlert && <SuccessAlert toggleShow={setShowAlert} type="codelist" />}
       {newCodeList(toggleEditor)}
       {renderCodelist(selectedProject.codelist)}
     </>

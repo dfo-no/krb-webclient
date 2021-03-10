@@ -7,7 +7,7 @@ interface IProps {
   type: string;
 }
 
-export default function SuccessBobbo({
+export default function SuccessAlert({
   toggleShow,
   type
 }: IProps): ReactElement {

@@ -14,7 +14,7 @@ import { Bank } from '../../models/Bank';
 import NestableHierarcy from '../../NestableHierarchy/Nestable';
 import ProductForm from './EditProductForm';
 import NewProductForm from './NewProductForm';
-import SuccessBobbo from '../SuccessAlert';
+import SuccessAlert from '../SuccessAlert';
 
 export default function ProductPage(): ReactElement {
   const dispatch = useDispatch();
@@ -64,7 +64,7 @@ export default function ProductPage(): ReactElement {
       >
         New Product
       </Button>
-      {showAlert && <SuccessBobbo toggleShow={setShowAlert} type="product" />}
+      {showAlert && <SuccessAlert toggleShow={setShowAlert} type="product" />}
       {productEditor(toggleEditor)}
       <NestableHierarcy
         dispatchfunc={(projectId: string, items: Product[]) =>
