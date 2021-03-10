@@ -2,7 +2,7 @@ name: Continuous Deployment
 
 on:
   push:
-    branches: [krb-111]
+    branches: [develop]
 
 env:
   AZURE_WEBAPP_NAME: krb-webclient # set this to your application's name
@@ -40,7 +40,7 @@ jobs:
           npm run-script build:ci
 
       - name: Sonarcube
-        if: github.ref == 'refs/heads/krb-111'
+        if: github.ref == 'refs/heads/develop'
         uses: SonarSource/sonarcloud-github-action@master
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
