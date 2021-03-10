@@ -4,39 +4,44 @@ import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 
 import { Bank } from '../models/Bank';
-import { selectProject } from '../store/reducers/kravbank-reducer';
+import { selectBank } from '../store/reducers/selectedBank-reducer';
 import styles from './SearchBar.module.scss';
 
 interface SearchBarProps {
   list: Bank[];
 }
 
-export default function SearchBar(props: SearchBarProps): ReactElement {
+export default function SearchBar({ list }: SearchBarProps): ReactElement {
   const [input, setInput] = useState('');
   const [searchList, setSearchList] = useState<Bank[]>([]);
   const dispatch = useDispatch();
 
-  const updateSearchText = async (input: any) => {
-    if (input === '' || input === ' ') {
+  const updateSearchText = async (
+    event: React.ChangeEvent<
+      HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
+    >
+  ) => {
+    const { value } = event.target;
+    if (value === '' || value === ' ') {
       setSearchList([]);
     } else {
-      const filtered = props.list.filter((element) => {
-        return element.title.toLowerCase().includes(input.toLowerCase());
+      const filtered = list.filter((element) => {
+        return element.title.toLowerCase().includes(value.toLowerCase());
       });
       setSearchList(filtered.slice(0, 5));
     }
-    setInput(input);
+    setInput(value);
   };
 
   const handleEdit = (bank: Bank) => () => {
-    dispatch(selectProject(bank));
+    dispatch(selectBank(bank.id));
   };
 
-  const displaylist = (list: Bank[]) => {
-    const bankList = list.map((bank: Bank, index: number) => {
+  const displaylist = (bankList: Bank[]) => {
+    const resultList = bankList.map((bank: Bank) => {
       return (
-        <ListGroup.Item key={index}>
-          <Link to={`/workbench/${bank.id}`} onClick={handleEdit(bank)}>
+        <ListGroup.Item key={bank.id} className={styles.katalogitem}>
+          <Link to={`/bank/${bank.id}`} onClick={handleEdit(bank)}>
             {bank.title}
           </Link>
         </ListGroup.Item>
@@ -44,7 +49,7 @@ export default function SearchBar(props: SearchBarProps): ReactElement {
     });
     return (
       <ListGroup className={styles.searchResults} variant="flush">
-        {bankList}
+        {resultList}
       </ListGroup>
     );
   };
@@ -53,8 +58,9 @@ export default function SearchBar(props: SearchBarProps): ReactElement {
     <>
       <FormControl
         value={input}
-        placeholder={'search projects'}
-        onChange={(e) => updateSearchText(e.target.value)}
+        type="text"
+        placeholder="search projects"
+        onChange={(e) => updateSearchText(e)}
       />
       {displaylist(searchList)}
     </>

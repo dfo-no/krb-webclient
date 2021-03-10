@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/label-has-associated-control */
 import React, { ReactElement, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
@@ -5,122 +6,103 @@ import {
   ListGroup,
   InputGroup,
   FormControl,
-  Card
+  Row
 } from 'react-bootstrap';
 import dayjs from 'dayjs';
+import { Link } from 'react-router-dom';
 
-import { RootState } from '../../store/rootReducer';
+import { BsPencil } from 'react-icons/bs';
+import { RootState } from '../../store/store';
 import { Publication } from '../../models/Publication';
 import {
-  publishProject,
-  editProject
-} from '../../store/reducers/kravbank-reducer';
+  putProjectThunk,
+  addPublication,
+  incrementProjectVersion
+} from '../../store/reducers/project-reducer';
+import { postBankThunk } from '../../store/reducers/bank-reducer';
+import Utils from '../../common/Utils';
+import { selectBank } from '../../store/reducers/selectedBank-reducer';
+import EditProjectForm from './EditProjectForm';
+import SuccessAlert from '../SuccessAlert';
+import MODELTYPE from '../../models/ModelType';
 
-export default function ProjectPage(): ReactElement {
+function ProjectPage(): ReactElement {
   const dispatch = useDispatch();
-  const { projects, selectedProject } = useSelector(
-    (state: RootState) => state.kravbank
-  );
-  let projectindex = projects.findIndex(
-    (project) => project.id === selectedProject?.id
-  );
-  const project = projects[projectindex];
-  const publications = project.publications;
+  const { id } = useSelector((state: RootState) => state.selectedProject);
+  const { list } = useSelector((state: RootState) => state.project);
   const [showEditor, setShowEditor] = useState(false);
+  const [showAlert, setShowAlert] = useState(false);
   const [comment, setComment] = useState('');
   const [editMode, setEditMode] = useState(false);
-  const [title, setTitle] = useState('');
-  const [description, setDescription] = useState('');
+  if (!list) {
+    return <p>Loading ....</p>;
+  }
+
+  const project = Utils.ensure(list.find((element) => element.id === id));
 
   const handlePublishProject = () => () => {
-    let versionNumber = publications ? publications[-1].version + 1 : 1;
-    let convertedDate = dayjs(new Date()).toJSON();
+    const versionNumber = project.publications
+      ? project.publications[project.publications.length - 1].version + 1
+      : 1;
+
+    const convertedDate = dayjs(new Date()).toJSON();
+    const publishedProject = { ...project };
+    publishedProject.publishedDate = convertedDate;
+    publishedProject.id = '';
+    dispatch(postBankThunk(publishedProject));
+
     const publication: Publication = {
       date: convertedDate,
-      comment: comment,
+      comment,
       version: versionNumber,
-      id: Math.random()
+      id: '',
+      bankId: publishedProject.id,
+      type: MODELTYPE.publication
     };
     setShowEditor(false);
-    dispatch(publishProject(publication));
+
+    dispatch(addPublication({ projectId: project.id, publication }));
+    dispatch(incrementProjectVersion(project.id));
+    dispatch(putProjectThunk(project.id));
+    setShowAlert(true);
   };
 
-  const editProjectInfo = () => () => {
-    let newproject = {
-      id: project.id,
-      title: title,
-      description: description,
-      needs: project.needs,
-      requirements: project.requirements,
-      codelist: project.codelist,
-      version: project.version,
-      publications: project.publications
-    };
-    setEditMode(false);
-    dispatch(editProject(newproject));
+  const handleSelectedPublication = (bankId: string) => () => {
+    dispatch(selectBank(bankId));
   };
 
-  const handleCommentChange = (event: any) => {
+  const handleCommentChange = (
+    event: React.ChangeEvent<
+      HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
+    >
+  ) => {
     setComment(event.target.value);
   };
 
-  const handleTitleChange = (event: any) => {
-    setTitle(event.target.value);
-  };
-  const handleDescriptionChange = (event: any) => {
-    setDescription(event.target.value);
-  };
-
-  function headerSection(editmode: boolean) {
-    if (editmode) {
-      return (
-        <Card className="mt-3">
-          <Card.Body>
-            <label htmlFor="title">Title</label>
-            <InputGroup className="mb-3">
-              <FormControl
-                name="title"
-                onChange={handleTitleChange}
-                defaultValue={project.title}
-              />
-            </InputGroup>
-            <label htmlFor="description">Description</label>
-            <InputGroup>
-              <FormControl
-                name="description"
-                onChange={handleDescriptionChange}
-                defaultValue={project.description}
-              />
-            </InputGroup>
-            <Button className="mt-3" onClick={editProjectInfo()}>
-              Save
-            </Button>
-          </Card.Body>
-        </Card>
-      );
-    } else {
-      return (
-        <div className="mt-3 mb-5">
-          <h1>{project.title}</h1>
-          <h5>{project.description}</h5>
-          <Button onClick={() => setEditMode(true)}>Edit</Button>
-        </div>
-      );
+  function editProjectForm(edit: boolean) {
+    if (edit) {
+      return <EditProjectForm toggleShow={setEditMode} project={project} />;
     }
+    return <></>;
   }
   const publicationList = (publications?: Publication[]) => {
     if (publications) {
       const publication = publications.map((element: Publication) => {
-        // TODO- Check locale for locale dateformat.
         const date = dayjs(element.date).format('DD/MM/YYYY');
         return (
           <ListGroup.Item key={element.id}>
-            <p>{date + '     ' + element.comment}</p>
+            <Link
+              to={`/bank/${element.bankId}`}
+              onClick={handleSelectedPublication(element.bankId)}
+            >
+              <p>{`${date}     ${element.comment}`}</p>
+            </Link>
           </ListGroup.Item>
         );
       });
       return <ListGroup className="mt-3">{publication}</ListGroup>;
     }
+    return <></>;
   };
 
   const publicationEditor = (show: boolean) => {
@@ -134,27 +116,38 @@ export default function ProjectPage(): ReactElement {
                 className="input-sm"
                 name="title"
                 placeholder="What did you change?"
-                onChange={handleCommentChange}
+                onChange={(e) => handleCommentChange(e)}
               />
             </InputGroup>
             <Button onClick={handlePublishProject()}>Publish</Button>
           </ListGroup.Item>
         </ListGroup>
       );
-    } else {
-      return <></>;
     }
+    return <></>;
   };
 
   return (
     <>
-      {headerSection(editMode)}
+      <Row className="m-1">
+        <h3> {project.title} </h3>
+        <Button className="ml-3" onClick={() => setEditMode(true)}>
+          <BsPencil />
+        </Button>
+      </Row>
+      <h6 className="ml-1 mb-3">{project.description}</h6>
+      {editProjectForm(editMode)}
       <h4>Publications</h4>
       <Button className="mb-3" onClick={() => setShowEditor(true)}>
         New publication
       </Button>
+      {showAlert && (
+        <SuccessAlert toggleShow={setShowAlert} type="publication" />
+      )}
       {publicationEditor(showEditor)}
-      {publicationList(publications)}
+      {publicationList(project.publications)}
     </>
   );
 }
+
+export default ProjectPage;

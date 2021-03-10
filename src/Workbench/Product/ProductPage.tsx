@@ -1,135 +1,80 @@
-import React, { ReactElement, useState } from 'react';
-import {
-  Button,
-  Card,
-  FormControl,
-  InputGroup,
-  ListGroup,
-  Accordion
-} from 'react-bootstrap';
+/* eslint-disable jsx-a11y/label-has-associated-control */
+import React, { ReactElement, useState, useEffect } from 'react';
+import { Button } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { Product } from '../../models/Product';
-import { RootState } from '../../store/rootReducer';
-import { addProduct, editProduct } from '../../store/reducers/kravbank-reducer';
-import styles from './ProductPage.module.scss';
+import { RootState } from '../../store/store';
+import {
+  putProjectThunk,
+  updateProductList
+} from '../../store/reducers/project-reducer';
+import Utils from '../../common/Utils';
+import { Bank } from '../../models/Bank';
+import NestableHierarcy from '../../NestableHierarchy/Nestable';
+import ProductForm from './EditProductForm';
+import NewProductForm from './NewProductForm';
+import SuccessAlert from '../SuccessAlert';
 
 export default function ProductPage(): ReactElement {
   const dispatch = useDispatch();
-  const { products } = useSelector((state: RootState) => state.kravbank);
-  const [showEditor, setShowEdior] = useState(false);
-  const [title, setTitle] = useState('');
-  const [description, setDescription] = useState('');
+  const { id } = useSelector((state: RootState) => state.selectedProject);
+  const { list } = useSelector((state: RootState) => state.project);
+  const [toggleEditor, setToggleEditor] = useState(false);
+  const [showAlert, setShowAlert] = useState(false);
 
-  const handleTitleChange = (event: any) => {
-    setTitle(event.target.value);
-  };
-  const handleDescriptionChange = (event: any) => {
-    setDescription(event.target.value);
-  };
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setShowAlert(false);
+    }, 2000);
+    return () => clearTimeout(timer);
+  }, [showAlert]);
 
-  const handleShowEditor = () => {
-    setShowEdior(true);
-  };
+  if (!id) {
+    return <p>No Project selected</p>;
+  }
 
-  const editProductElement = (id: number) => () => {
-    let product = {
-      title: title,
-      description: description,
-      id: id
-    };
-    dispatch(editProduct(product));
-  };
+  const selectedProject = Utils.ensure(
+    list.find((bank: Bank) => bank.id === id)
+  );
 
-  const addNewProduct = () => {
-    let product = {
-      title: title,
-      description: description,
-      id: Math.random()
-    };
-    setShowEdior(false);
-    dispatch(addProduct(product));
-  };
   function productEditor(show: boolean) {
     if (show) {
       return (
-        <div className={styles.product}>
-          <ListGroup.Item>
-            <label htmlFor="title">Title</label>
-            <InputGroup className="mb-3 30vw">
-              <FormControl
-                className="input-sm"
-                name="title"
-                onChange={handleTitleChange}
-              />
-            </InputGroup>
-            <label htmlFor="description">Description</label>
-            <InputGroup>
-              <FormControl
-                name="description"
-                onChange={handleDescriptionChange}
-              />
-            </InputGroup>
-            <Button
-              className={`primary ${styles.product__addButton}`}
-              onClick={addNewProduct}
-            >
-              Add
-            </Button>
-          </ListGroup.Item>
-        </div>
+        <NewProductForm
+          toggleAlert={setShowAlert}
+          toggleShow={setToggleEditor}
+        />
       );
-    } else {
-      return <></>;
     }
+    return null;
   }
-
-  const renderProducts = (productList: Product[]) => {
-    const products = productList.map((element: Product, index) => {
-      return (
-        <Card>
-          <Accordion.Toggle as={Card.Header} eventKey={index.toString()}>
-            <h6>{element.title}</h6>
-            <p>{element.description}</p>
-          </Accordion.Toggle>
-          <Accordion.Collapse eventKey={index.toString()}>
-            <Card.Body>
-              <label htmlFor="title">Title</label>
-              <InputGroup>
-                <FormControl
-                  name="title"
-                  defaultValue={productList[index].title}
-                  onChange={handleTitleChange}
-                />
-              </InputGroup>
-              <label htmlFor="description">Description</label>
-              <InputGroup>
-                <FormControl
-                  name="beskrivelse"
-                  defaultValue={productList[index].description}
-                  onChange={handleDescriptionChange}
-                />
-              </InputGroup>
-              <Button
-                onClick={editProductElement(element.id)}
-                className={`primary ${styles.productList__saveButton}`}
-              >
-                Save
-              </Button>
-            </Card.Body>
-          </Accordion.Collapse>
-        </Card>
-      );
-    });
-    return <Accordion className={styles.productList}>{products}</Accordion>;
+  const newProductList = (projectId: string, items: Product[]) => {
+    dispatch(updateProductList({ id: projectId, products: items }));
+    dispatch(putProjectThunk(projectId));
   };
-
   return (
-    <>
+    <div className="pb-4">
       <h1>Products</h1>
-      <Button onClick={handleShowEditor}>New Product</Button>
-      {productEditor(showEditor)}
-      {renderProducts(products)}
-    </>
+      <Button
+        onClick={() => {
+          setToggleEditor(true);
+        }}
+        className="mb-4"
+      >
+        New Product
+      </Button>
+      {showAlert && <SuccessAlert toggleShow={setShowAlert} type="product" />}
+      {productEditor(toggleEditor)}
+      <NestableHierarcy
+        dispatchfunc={(projectId: string, items: Product[]) =>
+          newProductList(projectId, items)
+        }
+        inputlist={selectedProject.products}
+        projectId={id}
+        component={<ProductForm element={selectedProject.products[0]} />}
+        depth={5}
+      />
+    </div>
   );
 }
