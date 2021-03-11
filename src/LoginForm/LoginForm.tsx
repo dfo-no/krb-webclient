@@ -1,18 +1,39 @@
 import React, { ReactElement, useState } from 'react';
 import { useForm } from 'react-hook-form';
+import Joi from 'joi';
+import { joiResolver } from '@hookform/resolvers/joi';
 import { Redirect, RouteComponentProps } from 'react-router-dom';
 import { Form, Button, Container, Card } from 'react-bootstrap';
 import css from './LoginForm.module.scss';
 
 import fakeAuth from '../authentication/AuthenticationHandler';
 
+const loginSchema = Joi.object({
+  email: Joi.string().email({ tlds: false }).required(),
+  password: Joi.string().min(8).required()
+});
+
+type FormData = {
+  email: string;
+  password: string;
+};
+
 function LoginForm({ location }: RouteComponentProps): ReactElement {
   const [redirectToReferrer, setRedirectToReferrer] = useState(false);
 
   const { from } = (location.state as any) || { from: { pathname: '/' } };
-  const { register, handleSubmit, errors } = useForm();
 
-  const onSubmit = () => {
+  const defaultValues: FormData = {
+    email: 'oakley@carruthers.com',
+    password: 'a3MDsBSWmFjLRpT'
+  };
+
+  const { register, handleSubmit, errors } = useForm<FormData>({
+    resolver: joiResolver(loginSchema),
+    defaultValues
+  });
+
+  const onSubmit = (e: FormData) => {
     fakeAuth.authenticate(() => {
       setRedirectToReferrer(true);
     });
@@ -26,7 +47,7 @@ function LoginForm({ location }: RouteComponentProps): ReactElement {
       <Card className={css.loginCard} bg="light">
         <Card.Body>
           <Form
-            onSubmit={handleSubmit(onSubmit)}
+            onSubmit={handleSubmit((e) => onSubmit(e))}
             className={css.formwrapper}
             autoComplete="on"
             noValidate
@@ -34,37 +55,23 @@ function LoginForm({ location }: RouteComponentProps): ReactElement {
             <Form.Group>
               <Form.Label>Email address</Form.Label>
               <Form.Control
-                name="username"
-                type="email"
-                ref={register({
-                  pattern: {
-                    message: 'Not a valid email address',
-                    value: /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-                  },
-                  required: true
-                })}
-                isInvalid={!!errors.username}
-                defaultValue="oakley@carruthers.com"
+                name="email"
+                ref={register}
+                isInvalid={!!errors.email}
               />
-              {errors.username && (
+              {errors.email && (
                 <Form.Control.Feedback type="invalid">
-                  {errors.username.message}
+                  {errors.email.message}
                 </Form.Control.Feedback>
               )}
             </Form.Group>
-
             <Form.Group>
               <Form.Label>Passord</Form.Label>
               <Form.Control
                 name="password"
                 type="password"
-                ref={register({
-                  required: true,
-                  minLength: { value: 8, message: 'Minimum 8 characters' },
-                  maxLength: { value: 50, message: 'Maximum 50 characters' }
-                })}
+                ref={register}
                 isInvalid={!!errors.password}
-                defaultValue="a3MDsBSWmFjLRpT"
               />
               {errors.password && (
                 <Form.Control.Feedback type="invalid">
@@ -72,7 +79,6 @@ function LoginForm({ location }: RouteComponentProps): ReactElement {
                 </Form.Control.Feedback>
               )}
             </Form.Group>
-
             <Button
               variant="warning"
               type="submit"
