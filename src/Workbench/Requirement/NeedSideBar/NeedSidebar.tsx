@@ -16,7 +16,6 @@ export default function NeedSideBar({ needs }: IProps): ReactElement {
   const handleSelectedNeed = (need: Need) => {
     dispatch(selectNeed(need.id));
   };
-
   const childrenHierarchy = (listofneed: any[], level: number) => {
     let n = level;
     let children: any;
@@ -32,14 +31,15 @@ export default function NeedSideBar({ needs }: IProps): ReactElement {
             <Nav.Link
               as={NavLink}
               role="link"
-              /* TODO: activeClassName not reconized ny React */
-              /* activeClassName={`${styles.sidebar__item__active}`} */
+              // TODO: activeClassName not reconized ny React
+              // activeClassName={`${styles.sidebar__item__active}`}
               onClick={() => handleSelectedNeed(element)}
             >
               {element.title}
             </Nav.Link>
           </Nav.Item>
-          {children}
+
+          {element.children.length > 0 && children}
         </>
       );
     });
@@ -68,7 +68,7 @@ export default function NeedSideBar({ needs }: IProps): ReactElement {
               {element.title}
             </Nav.Link>
           </Nav.Item>
-          {children}
+          {element.children.length > 0 && children}
         </>
       );
     });
