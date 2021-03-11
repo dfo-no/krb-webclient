@@ -69,7 +69,8 @@
     "test": "react-scripts test",
     "lint": "tsc --noEmit && eslint src/**/*.ts{,x}",
     "prettier": "prettier  --write \"src/**/*.{js,jsx,ts,tsx,json,css,scss,md}\"",
-    "git-info": "echo export const LAST_COMMIT = \"{\\\"sha\\\": \\\"$(git show -s --format='%h')\\\", \\\"msg\\\": \\\"$(git show -s --format='%s')\\\"}\"  > src/Common/lastCommit.ts"
+    "git-info": "echo export const LAST_COMMIT = \"{\\\"sha\\\": \\\"$(git show -s --format='%h')\\\", \\\"msg\\\": \\\"$(git show -s --format='%s')\\\"}\"  > src/Common/lastCommit.ts",
+    "analyse": "node analyse.js"
   },
   "eslintConfig": {
     "extends": [
@@ -126,5 +127,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "webpack-bundle-analyzer": "^4.4.0"
   }
 }
