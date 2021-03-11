@@ -64,7 +64,7 @@ export default function NestableHierarcy({
         <Card.Header>
           <Row className="d-flex justify-content-between">
             <h6 className="ml-2 mt-2">
-              {item.title}
+              {Utils.capitalizeFirstLetter(item.title)}
               {collapseIcon}
             </h6>
             <Accordion.Toggle as={Button} variant="link" eventKey={item.id}>
