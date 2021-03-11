@@ -24,7 +24,7 @@ type FormInput = {
 
 const projectSchema = Joi.object().keys({
   title: Joi.string().required(),
-  description: Joi.string().required()
+  description: Joi.string().allow(null, '').required()
 });
 
 export default function EditProjectForm({

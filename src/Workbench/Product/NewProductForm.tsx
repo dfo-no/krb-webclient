@@ -25,7 +25,7 @@ interface IProps {
 
 const productSchema = Joi.object().keys({
   title: Joi.string().required(),
-  description: Joi.string().required()
+  description: Joi.string().allow(null, '').required()
 });
 
 function NewProductForm({ toggleShow, toggleAlert }: IProps): ReactElement {

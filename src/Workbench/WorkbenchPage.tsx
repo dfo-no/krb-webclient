@@ -5,6 +5,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { AiFillDelete } from 'react-icons/ai';
 import { useForm } from 'react-hook-form';
 import { v4 as uuidv4 } from 'uuid';
+import Joi from 'joi';
+import { joiResolver } from '@hookform/resolvers/joi';
 import css from './WorkbenchPage.module.scss';
 import { RootState } from '../store/store';
 import { Bank } from '../models/Bank';
@@ -28,9 +30,22 @@ function WorkbenchPage(): ReactElement {
   const history = useHistory();
   const [showEditor, setShowEditor] = useState(false);
   const [showAlert, setShowAlert] = useState(false);
-
-  const { register, handleSubmit, reset, errors } = useForm<FormValues>();
   const [validated] = useState(false);
+
+  const projectSchema = Joi.object().keys({
+    title: Joi.string().required(),
+    description: Joi.string().allow(null, '').required()
+  });
+
+  const defaultValues = {
+    title: '',
+    description: ''
+  };
+
+  const { register, handleSubmit, reset, errors } = useForm<FormValues>({
+    resolver: joiResolver(projectSchema),
+    defaultValues
+  });
 
   const handleShowEditor = () => {
     setShowEditor(true);
@@ -112,10 +127,7 @@ function WorkbenchPage(): ReactElement {
                 <Col sm={10}>
                   <Form.Control
                     name="title"
-                    ref={register({
-                      required: { value: true, message: 'Required' },
-                      minLength: { value: 2, message: 'Minimum 2 characters' }
-                    })}
+                    ref={register}
                     isInvalid={!!errors.title}
                   />
                   {errors.title && (
@@ -132,10 +144,7 @@ function WorkbenchPage(): ReactElement {
                 <Col sm={10}>
                   <Form.Control
                     name="description"
-                    ref={register({
-                      required: { value: true, message: 'Required' },
-                      minLength: { value: 2, message: 'Minimum 2 characters' }
-                    })}
+                    ref={register}
                     isInvalid={!!errors.description}
                   />
                   {errors.description && (

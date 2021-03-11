@@ -22,7 +22,7 @@ interface IProps {
 
 const needSchema = Joi.object().keys({
   title: Joi.string().required(),
-  description: Joi.string().required()
+  description: Joi.string().allow(null, '').required()
 });
 
 function NewNeedForm({ toggleShow, toggleAlert }: IProps): ReactElement {

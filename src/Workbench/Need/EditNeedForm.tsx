@@ -25,7 +25,7 @@ interface IProps {
 const needSchema = Joi.object().keys({
   id: Joi.string().required(),
   title: Joi.string().required(),
-  description: Joi.string().required()
+  description: Joi.string().allow(null, '').required()
 });
 
 function EditNeedForm({ element }: IProps): ReactElement {

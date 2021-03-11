@@ -25,7 +25,7 @@ interface IProps {
 
 const codeListSchema = Joi.object().keys({
   title: Joi.string().required(),
-  description: Joi.string().required()
+  description: Joi.string().allow(null, '').required()
 });
 
 function NewCodeListForm({ toggleShow, toggleAlert }: IProps): ReactElement {
