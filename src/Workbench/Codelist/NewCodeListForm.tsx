@@ -50,7 +50,7 @@ function NewCodeListForm({ toggleShow, toggleAlert }: IProps): ReactElement {
       codes: [],
       type: MODELTYPE.codelist
     };
-    dispatch(dispatch(addCodelist({ id, codelist: codeList })));
+    dispatch(addCodelist({ id, codelist: codeList }));
     dispatch(putProjectThunk(id));
     reset();
     toggleShow(false);

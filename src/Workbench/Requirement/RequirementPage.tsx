@@ -57,7 +57,7 @@ export default function RequirementPage(): ReactElement {
           <NeedSideBar needs={needs} />
         </Col>
         <Col>
-          You have not selected a new, select one to work with requirement
+          You have not selected a need, select one to work with requirement
         </Col>
       </Row>
     );
@@ -171,7 +171,9 @@ export default function RequirementPage(): ReactElement {
         <NeedSideBar needs={needs} />
       </Col>
       <Col>
-        <h4 className="mt-4">Need: {selectedNeed.title}</h4>
+        <h4 className="mt-4">
+          {Utils.capitalizeFirstLetter(selectedNeed.title)}
+        </h4>
         <h5>{selectedNeed.description}</h5>
         <Row className="flex justify-content-end">
           <Button

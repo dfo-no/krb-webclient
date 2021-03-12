@@ -16,6 +16,7 @@ import { getProjectsThunk } from '../store/reducers/project-reducer';
 import { RootState } from '../store/store';
 import { selectProject } from '../store/reducers/selectedProject-reducer';
 import styles from './WorkBench.module.scss';
+import ProductPreview from './Product/ProductPreview';
 
 interface RouteParams {
   projectId: string;
@@ -74,6 +75,9 @@ export default function WorkbenchModule(): ReactElement {
             </Route>
             <Route exact path={`${url}/:projectId/product`}>
               <ProductPage />
+            </Route>
+            <Route exact path={`${url}/:projectId/:productId/product`}>
+              <ProductPreview />
             </Route>
             <Route exact path={`${url}/:projectId`}>
               <ProjectPage />

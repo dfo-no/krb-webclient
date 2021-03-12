@@ -103,7 +103,7 @@ export default function Layout({
           >
             {element.title}
           </option>
-          {children}
+          {element.children.length > 0 && children}
         </>
       );
     });
@@ -121,7 +121,7 @@ export default function Layout({
           <option key={element.id} value={element.id}>
             {element.title}
           </option>
-          {children}
+          {element.children.length > 0 && children}
         </>
       );
     });
@@ -196,7 +196,7 @@ export default function Layout({
               <Form.Control
                 as="select"
                 multiple
-                name="productlist"
+                name="productList"
                 ref={register}
                 defaultValue={layout.products}
               >

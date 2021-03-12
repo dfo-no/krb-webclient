@@ -29,17 +29,17 @@ export default function HomePage(): ReactElement {
         </Col>
         <Col>
           <ListGroup variant="flush">
-            <ListGroup.Item>
+            <ListGroup.Item className="mt-3 ">
               <Link to="/workbench">
                 <h5>Editor</h5>
               </Link>
             </ListGroup.Item>
-            <ListGroup.Item>
+            <ListGroup.Item className="mt-3 ">
               <Link to="/responseeditor">
                 <h5>Create response</h5>
               </Link>
             </ListGroup.Item>
-            <ListGroup.Item>
+            <ListGroup.Item className="mt-3 ">
               <Link to="/evaluation">
                 <h5>Create evaluation</h5>
               </Link>

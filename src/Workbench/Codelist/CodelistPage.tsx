@@ -47,7 +47,9 @@ export default function CodelistPage(): ReactElement {
         <Card className="bg-light mb-2">
           <Card.Header className="pb-1 pt-1">
             <Row className="d-flex justify-content-between mr-2">
-              <h6 className="ml-2">{element.title}</h6>
+              <h6 className="ml-2">
+                {Utils.capitalizeFirstLetter(element.title)}
+              </h6>
               <Link
                 onClick={setSelectedKodeliste(element.id)}
                 to={`/workbench/${selectedProject.id}/codelist/${element.id}`}
