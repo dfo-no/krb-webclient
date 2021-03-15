@@ -121,7 +121,7 @@ export default function EditRequirementForm({
           Save
         </Button>
         <Link
-          to={`/workbench/${id}/requirement/${element.id}/edit`}
+          to={`/workbench/${id}/need/${need.id}/requirement/${element.id}/edit`}
           onClick={() => dispatch(selectRequirement(element.id))}
         >
           <Button className="ml-4 mt-2 ">Edit</Button>

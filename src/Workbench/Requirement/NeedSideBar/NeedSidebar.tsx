@@ -1,21 +1,26 @@
 import React, { ReactElement } from 'react';
-import { Nav, NavLink } from 'react-bootstrap';
-import { useDispatch } from 'react-redux';
+import { Nav } from 'react-bootstrap';
+import { NavLink, useRouteMatch } from 'react-router-dom';
 
 import Utils from '../../../common/Utils';
 import { Need } from '../../../models/Need';
-import { selectNeed } from '../../../store/reducers/selectedNeed-reducer';
 import styles from './NeedSidebar.module.scss';
 
 interface IProps {
   needs: Need[];
 }
 
+interface RouteParams {
+  projectId: string;
+  requirementId: string;
+}
+
 export default function NeedSideBar({ needs }: IProps): ReactElement {
-  const dispatch = useDispatch();
-  const handleSelectedNeed = (need: Need) => {
-    dispatch(selectNeed(need.id));
-  };
+  const projectMatch = useRouteMatch<RouteParams>('/workbench/:projectId');
+
+  if (!projectMatch?.params.projectId) {
+    return <p>Undefined project in NeedSideBar</p>;
+  }
 
   const childrenHierarchy = (listofneed: any[], level: number) => {
     let n = level;
@@ -27,20 +32,20 @@ export default function NeedSideBar({ needs }: IProps): ReactElement {
         children = childrenHierarchy(element.children, n);
       }
       return (
-        <>
+        <span key={element.id}>
           <Nav.Item key={element.id} className={` ${styles[cssClass]} pt-0`}>
             <Nav.Link
               as={NavLink}
+              // TODO: activeClassName not reconized ny React
+              // activeClassName={`${styles.sidebar__item__active}`}
+              to={`/workbench/${projectMatch?.params.projectId}/need/${element.id}/requirement`}
               role="link"
-              /* TODO: activeClassName not reconized ny React */
-              /* activeClassName={`${styles.sidebar__item__active}`} */
-              onClick={() => handleSelectedNeed(element)}
             >
               {element.title}
             </Nav.Link>
           </Nav.Item>
           {children}
-        </>
+        </span>
       );
     });
   };
@@ -57,10 +62,11 @@ export default function NeedSideBar({ needs }: IProps): ReactElement {
           <Nav.Item className={`${styles.sidebar__item} m-0 p-0`}>
             <Nav.Link
               as={NavLink}
+              // TODO: activeClassName not reconized ny React
+              // activeClassName={`${styles.sidebar__item__active}`}
+              to={`/workbench/${projectMatch?.params.projectId}/need/${element.id}/requirement`}
               role="link"
-              /* TODO: activeClassName not reconized ny React */
-              /* activeClassName={`${styles.sidebar__item__active}`} */
-              onClick={() => handleSelectedNeed(element)}
+              // onClick={() => handleSelectedNeed(element)}
             >
               {element.title}
             </Nav.Link>

@@ -1,8 +1,12 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import React, { ReactElement, useState, useEffect } from 'react';
-import { Row, Col, Accordion, Card, Button } from 'react-bootstrap';
-
-import { useSelector } from 'react-redux';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
+import Accordion from 'react-bootstrap/Accordion';
+import Card from 'react-bootstrap/Card';
+import Button from 'react-bootstrap/Button';
+import { useRouteMatch } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
 
 import { BsChevronDown } from 'react-icons/bs';
 import { RootState } from '../../store/store';
@@ -16,8 +20,23 @@ import NewRequirementForm from './NewRequirementForm';
 import EditRequirementForm from './EditRequirementForm';
 import NeedSideBar from './NeedSideBar/NeedSidebar';
 import RequirementType from '../../models/RequirementType';
+import { selectNeed } from '../../store/reducers/selectedNeed-reducer';
+
+interface RouteParams {
+  projectId: string;
+  needId: string;
+}
 
 export default function RequirementPage(): ReactElement {
+  const dispatch = useDispatch();
+  const projectMatch = useRouteMatch<RouteParams>(
+    '/workbench/:projectId/need/:needId/requirement'
+  );
+
+  if (projectMatch?.params.needId) {
+    dispatch(selectNeed(projectMatch?.params.needId));
+  }
+
   const { id } = useSelector((state: RootState) => state.selectedProject);
   const { list } = useSelector((state: RootState) => state.project);
   const { needId } = useSelector((state: RootState) => state.selectNeed);
@@ -57,7 +76,7 @@ export default function RequirementPage(): ReactElement {
           <NeedSideBar needs={needs} />
         </Col>
         <Col>
-          You have not selected a new, select one to work with requirement
+          You have not selected a Need, select one to work with requirement
         </Col>
       </Row>
     );
