@@ -56,6 +56,27 @@ export default function ProductPreview(): ReactElement {
     return parentList;
   }
 
+  function checkParentInProductList(
+    products: string[],
+    parentId: string
+  ): boolean {
+    if (parentId === '') return false;
+    const parentProduct = Utils.ensure(
+      selectedProject.products.find(
+        (product: Product) => product.id === parentId
+      )
+    );
+    if (products.includes(parentId)) {
+      return true;
+    }
+
+    if (parentProduct.parent !== '') {
+      return checkParentInProductList(products, parentProduct.parent);
+    }
+
+    return false;
+  }
+
   function findAssociatedRequirements(
     needs: Need[]
   ): [{ [key: string]: Requirement[] }, Need[]] {
@@ -66,7 +87,7 @@ export default function ProductPreview(): ReactElement {
         req.layouts.forEach((layout: RequirementLayout) => {
           if (
             layout.products.includes(selectedProduct.id) ||
-            layout.products.includes(selectedProduct.parent)
+            checkParentInProductList(layout.products, selectedProduct.parent)
           ) {
             if (element.id in relevantRequirements) {
               const prevArray = relevantRequirements[element.id];
