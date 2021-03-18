@@ -96,7 +96,7 @@ function ProjectPage(): ReactElement {
           </ListGroup.Item>
         );
       });
-      return <ListGroup className="mt-3">{publication}</ListGroup>;
+      return <ListGroup className="mt-4">{publication}</ListGroup>;
     }
     return <></>;
   };
@@ -125,7 +125,7 @@ function ProjectPage(): ReactElement {
 
   return (
     <>
-      <Row className="m-1">
+      <Row className="ml-1 mt-3">
         <h3> {project.title} </h3>
         <Button className="ml-3" onClick={() => setEditMode(true)}>
           <BsPencil />

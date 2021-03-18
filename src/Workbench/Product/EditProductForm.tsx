@@ -4,6 +4,7 @@ import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import { joiResolver } from '@hookform/resolvers/joi';
 import Joi from 'joi';
+import { Link } from 'react-router-dom';
 import { AccordionContext } from '../../NestableHierarchy/AccordionContext';
 import { Product } from '../../models/Product';
 
@@ -12,6 +13,7 @@ import {
   putProjectThunk
 } from '../../store/reducers/project-reducer';
 import { RootState } from '../../store/store';
+import { selectProduct } from '../../store/reducers/selectedProduct-reducer';
 
 interface IProps {
   element: Product;
@@ -101,6 +103,12 @@ export default function ProductForm({ element }: IProps): ReactElement {
         <Button className="mt-2  ml-3" type="submit">
           Save
         </Button>
+        <Link
+          to={`/workbench/${id}/${element.id}/product`}
+          onClick={() => dispatch(selectProduct(element.id))}
+        >
+          <Button className="mt-2  ml-3">Preview</Button>
+        </Link>
       </Row>
     </Form>
   );

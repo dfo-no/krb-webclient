@@ -19,6 +19,7 @@ import { RootState } from '../store/store';
 import { selectProject } from '../store/reducers/selectedProject-reducer';
 import styles from './WorkBench.module.scss';
 import NotFound from '../NotFound';
+import ProductPreview from './Product/ProductPreview';
 
 interface RouteParams {
   projectId: string;
@@ -74,10 +75,6 @@ export default function WorkbenchModule(): ReactElement {
               >
                 <RequirementEditor />
               </Route>
-              <Route exact path="/workbench/:projectId/requirement">
-                <RequirementPage />
-              </Route>
-
               <Route exact path="/workbench/:projectId/codelist">
                 <CodelistPage />
               </Route>
@@ -86,6 +83,9 @@ export default function WorkbenchModule(): ReactElement {
               </Route>
               <Route exact path="/workbench/:projectId/product">
                 <ProductPage />
+              </Route>
+              <Route exact path="/workbench/:projectId/:productId/product">
+                <ProductPreview />
               </Route>
               <Route exact path="/workbench/:projectId">
                 <ProjectPage />
@@ -99,5 +99,5 @@ export default function WorkbenchModule(): ReactElement {
       </Container>
     );
   }
-  return <p>Loading ....</p>;
+  return <p>Loading...</p>;
 }

@@ -44,7 +44,7 @@ export default function NeedSideBar({ needs }: IProps): ReactElement {
               {element.title}
             </Nav.Link>
           </Nav.Item>
-          {children}
+          {element.children.length > 0 && children}
         </span>
       );
     });
@@ -70,7 +70,7 @@ export default function NeedSideBar({ needs }: IProps): ReactElement {
               {element.title}
             </Nav.Link>
           </Nav.Item>
-          {children}
+          {element.children.length > 0 && children}
         </span>
       );
     });

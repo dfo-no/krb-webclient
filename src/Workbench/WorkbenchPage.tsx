@@ -1,5 +1,5 @@
 import React, { ReactElement, useEffect, useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { Button, Col, Form, ListGroup, Row } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { AiFillDelete } from 'react-icons/ai';
@@ -57,7 +57,6 @@ function WorkbenchPage(): ReactElement {
     }, 2000);
     return () => clearTimeout(timer);
   }, [showAlert]);
-
   const onSubmit = (post: FormValues) => {
     const project: Bank = {
       id: uuidv4(),
@@ -77,7 +76,6 @@ function WorkbenchPage(): ReactElement {
 
   function onSelect(project: Bank) {
     dispatch(selectProject(project.id));
-    history.push(`/workbench/${project.id}`);
   }
 
   async function onDelete(project: Bank) {
@@ -93,20 +91,30 @@ function WorkbenchPage(): ReactElement {
       .sort((a, b) => (a.title.toLowerCase() > b.title.toLowerCase() ? 1 : -1));
     const projects = projectList.map((element: Bank) => {
       return (
-        <ListGroup.Item key={element.id} className={`${css.list__item}`}>
+        <ListGroup.Item key={element.id} onClick={() => onSelect(element)}>
           {/* TODO: fix styling  */}
-          <Button onClick={() => onSelect(element)}>
-            <h5>{element.title}</h5>
+          <Row className="d-flex justify-content-between ml-1">
+            <Link
+              to={`/workbench/${element.id}`}
+              onClick={() => onSelect(element)}
+            >
+              <h5>{element.title}</h5>
+            </Link>
+            <Button
+              className="mr-2"
+              variant="warning"
+              onClick={() => onDelete(element)}
+            >
+              <AiFillDelete onClick={() => onDelete(element)} />
+            </Button>
+          </Row>
+          <Row className="ml-1">
             <p>{element.description}</p>
-          </Button>
-          <div className={css.list__item__spacer} />
-          <Button variant="warning" onClick={() => onDelete(element)}>
-            <AiFillDelete />
-          </Button>
+          </Row>
         </ListGroup.Item>
       );
     });
-    return <ListGroup className={`${css.list} mt-5`}>{projects}</ListGroup>;
+    return <ListGroup className=" mt-5">{projects}</ListGroup>;
   };
 
   function projectEditor(show: boolean) {
@@ -167,8 +175,10 @@ function WorkbenchPage(): ReactElement {
 
   return (
     <>
-      <h3>Projects </h3>
-      <Button onClick={handleShowEditor}>New Project</Button>
+      <h3 className="mt-3 ">Projects </h3>
+      <Button onClick={handleShowEditor} variant="primary">
+        New Project
+      </Button>
       {showAlert && <SuccessAlert toggleShow={setShowAlert} type="project" />}
       {projectEditor(showEditor)}
       {renderProjects(list)}
