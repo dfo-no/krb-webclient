@@ -55,7 +55,7 @@ export default function ProductPage(): ReactElement {
   };
   return (
     <div className="pb-4">
-      <h1>Products</h1>
+      <h3 className="mt-3">Products</h3>
       <Button
         onClick={() => {
           setToggleEditor(true);

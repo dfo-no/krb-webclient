@@ -166,7 +166,7 @@ function WorkbenchPage(): ReactElement {
 
   return (
     <>
-      <h3>Projects </h3>
+      <h3 className="mt-3 ">Projects </h3>
       <Button onClick={handleShowEditor} variant="primary">
         New Project
       </Button>

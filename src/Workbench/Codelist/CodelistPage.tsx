@@ -80,7 +80,7 @@ export default function CodelistPage(): ReactElement {
 
   return (
     <>
-      <h1>Codelists</h1>
+      <h3 className="mt-3">Codelists</h3>
       <Button className="mb-4" onClick={() => setToggleEditor(true)}>
         New Codelist
       </Button>
