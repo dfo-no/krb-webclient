@@ -7,7 +7,7 @@ import {
 } from '@azure/msal-react';
 import { loginRequest } from '../authentication/authConfig';
 
-export default function SignInSignOutButton(): ReactElement {
+export default function SignedButton(): ReactElement {
   const { instance } = useMsal();
   return (
     <>

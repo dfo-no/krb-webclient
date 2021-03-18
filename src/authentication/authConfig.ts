@@ -1,10 +1,11 @@
 import { Configuration, PopupRequest } from '@azure/msal-browser';
+import { useHistory } from 'react-router';
 import Utils from '../common/Utils';
 
 // Config object to be passed to Msal on creation
 export const msalConfig: Configuration = {
   auth: {
-    clientId: Utils.ensure(process.env.REACT_APP_clientId),
+    clientId: Utils.ensure(process.env.REACT_APP_CLIENTID),
     redirectUri: window.location.origin,
     postLogoutRedirectUri: window.location.origin
   }
