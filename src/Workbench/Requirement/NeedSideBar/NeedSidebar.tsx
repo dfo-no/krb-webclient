@@ -19,7 +19,7 @@ export default function NeedSideBar({ needs }: IProps): ReactElement {
   const projectMatch = useRouteMatch<RouteParams>('/workbench/:projectId');
 
   if (!projectMatch?.params.projectId) {
-    return <p>Undefined project in NeedSideBar</p>;
+    return <p>No project selected</p>;
   }
 
   const childrenHierarchy = (listofneed: any[], level: number) => {
@@ -66,7 +66,6 @@ export default function NeedSideBar({ needs }: IProps): ReactElement {
               // activeClassName={`${styles.sidebar__item__active}`}
               to={`/workbench/${projectMatch?.params.projectId}/need/${element.id}/requirement`}
               role="link"
-              // onClick={() => handleSelectedNeed(element)}
             >
               {element.title}
             </Nav.Link>

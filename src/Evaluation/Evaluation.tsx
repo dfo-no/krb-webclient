@@ -1,13 +1,11 @@
 import React, { ReactElement, useState } from 'react';
-import {
-  Container,
-  Row,
-  Button,
-  Col,
-  InputGroup,
-  Card,
-  Form
-} from 'react-bootstrap';
+import Row from 'react-bootstrap/Row';
+import Button from 'react-bootstrap/Button';
+import Col from 'react-bootstrap/Col';
+import InputGroup from 'react-bootstrap/InputGroup';
+import Card from 'react-bootstrap/Card';
+import Form from 'react-bootstrap/Form';
+import Container from 'react-bootstrap/Container';
 import fileDownload from 'js-file-download';
 import { useForm } from 'react-hook-form';
 import { Bank } from '../models/Bank';

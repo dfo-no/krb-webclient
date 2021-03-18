@@ -1,5 +1,10 @@
 import React, { ReactElement, useState } from 'react';
-import { Button, Form, Row, Col, Card } from 'react-bootstrap';
+import Button from 'react-bootstrap/Button';
+import Form from 'react-bootstrap/Form';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
+import Card from 'react-bootstrap/Card';
+
 import { useRouteMatch } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { useForm } from 'react-hook-form';
@@ -136,6 +141,7 @@ export default function RequirementEditor(): ReactElement {
   if (!needId || !reqId) {
     return <p>You have to select a requirement to work with</p>;
   }
+
   const saveRequirement = (post: Requirement) => {
     dispatch(
       editRequirementInNeed({
