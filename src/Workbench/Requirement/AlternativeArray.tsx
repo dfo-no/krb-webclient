@@ -1,31 +1,16 @@
 import React, { ReactElement, useState } from 'react';
-import Accordion from 'react-bootstrap/Accordion';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import { useForm, useFieldArray } from 'react-hook-form';
-import { useDispatch } from 'react-redux';
-import { joiResolver } from '@hookform/resolvers/joi';
-import Joi from 'joi';
+import { useFieldArray } from 'react-hook-form';
 
 import { v4 as uuidv4 } from 'uuid';
-import { Bank } from '../../models/Bank';
 
-import { Requirement } from '../../models/Requirement';
-import { IVariant } from '../../models/IVariant';
-
-import { ICodelistAlternative } from '../../models/ICodelistAlternative';
-import { ISelectable } from '../../models/ISelectable';
-import { IValueAlternative } from '../../models/IValueAlternative';
 import CodeListAlternative from './CodeListAlternative';
 import ValueAlternative from './ValueAlternative';
 
-import projectReducer, {
-  editRequirementInNeed,
-  putProjectThunk
-} from '../../store/reducers/project-reducer';
 import { InputProps } from '../../models/InputProps';
 
 interface IProps extends InputProps {
@@ -64,7 +49,6 @@ export default function AlternativeArray({
         type: 'value'
       });
     } else if (getAlternative === 'codelist') {
-      console.log(project.codelist[0]);
       append({
         id: uuidv4(),
         type: 'codelist',

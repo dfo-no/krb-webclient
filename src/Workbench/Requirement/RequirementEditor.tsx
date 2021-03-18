@@ -137,15 +137,14 @@ export default function RequirementEditor(): ReactElement {
     return <p>You have to select a requirement to work with</p>;
   }
   const saveRequirement = (post: Requirement) => {
-    console.log(post);
-    /* dispatch(
+    dispatch(
       editRequirementInNeed({
         projectId: project.id,
         needIndex: nIndex,
         requirement: post
       })
     );
-    dispatch(putProjectThunk(project.id)); */
+    dispatch(putProjectThunk(project.id));
   };
 
   const deleteVariant = (variant: IVariant) => {
