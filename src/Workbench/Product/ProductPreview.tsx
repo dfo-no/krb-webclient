@@ -79,9 +79,10 @@ export default function ProductPreview(): ReactElement {
 
   function findAssociatedRequirements(
     needs: Need[]
-  ): [{ [key: string]: Requirement[] }, Need[]] {
+  ): [{ [key: string]: Requirement[] }, Need[], RequirementLayout[]] {
     const relevantRequirements: { [key: string]: Requirement[] } = {};
     let needList: Need[] = [];
+    const layoutList: RequirementLayout[] = [];
     needs.forEach((element: Need) => {
       element.requirements.forEach((req: Requirement) => {
         req.layouts.forEach((layout: RequirementLayout) => {
@@ -89,6 +90,7 @@ export default function ProductPreview(): ReactElement {
             layout.products.includes(selectedProduct.id) ||
             checkParentInProductList(layout.products, selectedProduct.parent)
           ) {
+            layoutList.push(layout);
             if (element.id in relevantRequirements) {
               const prevArray = relevantRequirements[element.id];
               relevantRequirements[element.id] = [...prevArray, req];
@@ -120,21 +122,35 @@ export default function ProductPreview(): ReactElement {
         });
       });
     });
-    return [relevantRequirements, needList];
+    return [relevantRequirements, needList, layoutList];
   }
 
-  const [associatedRequirements, associatedNeeds] = findAssociatedRequirements(
-    selectedProject.needs
-  );
+  const [
+    associatedRequirements,
+    associatedNeeds,
+    associatedLayouts
+  ] = findAssociatedRequirements(selectedProject.needs);
 
   const findRequirementText = (layouts: RequirementLayout[]) => {
-    let texts = '';
-    layouts.forEach((layout: RequirementLayout) => {
-      if (layout.requirementText.trim().length > 0)
-        texts += `${layout.requirementText}`;
-      if (layouts[layouts.length - 1] !== layout) texts += ',';
+    const texts = layouts.map((layout: RequirementLayout) => {
+      if (associatedLayouts.includes(layout)) {
+        if (layout.requirementText.trim().length > 0)
+          return { text: layout.requirementText };
+      }
+      return null;
     });
-    return texts;
+
+    const textFiltered = texts.filter((text) => text !== null);
+
+    if (textFiltered.length === 1) {
+      return texts[0]?.text;
+    }
+    let returnText = '';
+    textFiltered.forEach((text, index) => {
+      if (textFiltered.length - 1 !== index) returnText += `${text?.text}, `;
+      else returnText += `${text?.text}`;
+    });
+    return returnText;
   };
 
   const requirementList = (requirements: Requirement[], need: Need) => {
