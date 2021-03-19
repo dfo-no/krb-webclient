@@ -23,8 +23,9 @@ export default function CodeListAlternative({
   project
 }: IProps): ReactElement {
   return (
-    <Card>
+    <Card className="mb-3">
       <Card.Body>
+        <h6>Alternative: Codelist</h6>
         <Form.Control
           as="input"
           type="hidden"

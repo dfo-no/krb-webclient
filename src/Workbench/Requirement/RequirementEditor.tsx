@@ -170,107 +170,105 @@ export default function RequirementEditor(): ReactElement {
   };
 
   return (
-    <Card>
-      <Card.Header>
-        {Utils.capitalizeFirstLetter(requirement.requirement_Type)} Page
-      </Card.Header>
-      <Card.Body>
-        <Form
-          onSubmit={handleSubmit((e) => saveRequirement(e))}
-          noValidate
-          validated={validated}
-        >
-          <Form.Control
-            readOnly
-            as="input"
-            name="id"
-            type="hidden"
-            ref={register}
-            isInvalid={!!errors.id}
-          />
-          <Form.Control
-            readOnly
-            as="input"
-            name="description"
-            type="hidden"
-            ref={register}
-            isInvalid={!!errors.description}
-          />
-          <Form.Control
-            readOnly
-            as="input"
-            name="needId"
-            type="hidden"
-            ref={register}
-            isInvalid={!!errors.needId}
-          />
-          <Form.Control
-            readOnly
-            as="input"
-            name="kind"
-            type="hidden"
-            ref={register}
-            isInvalid={!!errors.kind}
-          />
-          <Form.Control
-            readOnly
-            as="input"
-            name="type"
-            type="hidden"
-            ref={register}
-            isInvalid={!!errors.type}
-          />
-          <Form.Control
-            readOnly
-            as="input"
-            name="requirement_Type"
-            type="hidden"
-            ref={register}
-            isInvalid={!!errors.requirement_Type}
-          />
+    <>
+      <h3 className="mt-3">
+        {Utils.capitalizeFirstLetter(requirement.requirement_Type)} Page{' '}
+      </h3>
+      <Form
+        onSubmit={handleSubmit((e) => saveRequirement(e))}
+        noValidate
+        validated={validated}
+      >
+        <Form.Control
+          readOnly
+          as="input"
+          name="id"
+          type="hidden"
+          ref={register}
+          isInvalid={!!errors.id}
+        />
+        <Form.Control
+          readOnly
+          as="input"
+          name="description"
+          type="hidden"
+          ref={register}
+          isInvalid={!!errors.description}
+        />
+        <Form.Control
+          readOnly
+          as="input"
+          name="needId"
+          type="hidden"
+          ref={register}
+          isInvalid={!!errors.needId}
+        />
+        <Form.Control
+          readOnly
+          as="input"
+          name="kind"
+          type="hidden"
+          ref={register}
+          isInvalid={!!errors.kind}
+        />
+        <Form.Control
+          readOnly
+          as="input"
+          name="type"
+          type="hidden"
+          ref={register}
+          isInvalid={!!errors.type}
+        />
+        <Form.Control
+          readOnly
+          as="input"
+          name="requirement_Type"
+          type="hidden"
+          ref={register}
+          isInvalid={!!errors.requirement_Type}
+        />
 
-          <Form.Group as={Row}>
-            <Form.Label column sm={1}>
-              Title
-            </Form.Label>
-            <Col sm={8}>
-              <Form.Control
-                name="title"
-                ref={register}
-                isInvalid={!!errors.title}
-              />
-              {errors.title && (
-                <Form.Control.Feedback as={Col} type="invalid">
-                  {errors.title?.message}
-                </Form.Control.Feedback>
-              )}
-            </Col>
-            <Col sm={3}>
-              <Button type="submit">Save</Button>
-            </Col>
-          </Form.Group>
+        <Form.Group as={Row}>
+          <Form.Label column sm={1}>
+            Title
+          </Form.Label>
+          <Col sm={8}>
+            <Form.Control
+              name="title"
+              ref={register}
+              isInvalid={!!errors.title}
+            />
+            {errors.title && (
+              <Form.Control.Feedback as={Col} type="invalid">
+                {errors.title?.message}
+              </Form.Control.Feedback>
+            )}
+          </Col>
+          <Col sm={3}>
+            <Button type="submit">Save</Button>
+          </Col>
+        </Form.Group>
 
-          <VariantArray
-            {...{
-              control,
-              register,
-              getValues,
-              setValue,
-              errors,
-              defaultValues,
-              project
-            }}
-          />
+        <VariantArray
+          {...{
+            control,
+            register,
+            getValues,
+            setValue,
+            errors,
+            defaultValues,
+            project
+          }}
+        />
 
-          <div style={{ color: 'red' }}>
-            <pre>
-              {Object.keys(errors).length > 0 && (
-                <div>{JSON.stringify(errors, null, 2)}</div>
-              )}
-            </pre>
-          </div>
-        </Form>
-      </Card.Body>
-    </Card>
+        <div style={{ color: 'red' }}>
+          <pre>
+            {Object.keys(errors).length > 0 && (
+              <div>{JSON.stringify(errors, null, 2)}</div>
+            )}
+          </pre>
+        </div>
+      </Form>
+    </>
   );
 }

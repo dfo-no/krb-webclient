@@ -58,7 +58,8 @@ export default function AlternativeArray({
   };
 
   return (
-    <Card>
+    <div>
+      <h6>Alternatives</h6>
       <Form.Group as={Row}>
         <Form.Label column sm="3">
           Select Alternative Type
@@ -114,6 +115,6 @@ export default function AlternativeArray({
           </div>
         );
       })}
-    </Card>
+    </div>
   );
 }
