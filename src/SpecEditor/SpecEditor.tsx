@@ -92,7 +92,7 @@ export default function SpecEditor(): ReactElement {
   const needList = (needlist: Need[]) => {
     const needsJsx = needlist.map((need: Need) => {
       return (
-        <>
+        <div key={need.id}>
           <h5>{need.title}</h5>
           {need.requirements.map((c, i) => (
             <div className="ml-5">
@@ -107,7 +107,7 @@ export default function SpecEditor(): ReactElement {
               </label>
             </div>
           ))}
-        </>
+        </div>
       );
     });
     return (

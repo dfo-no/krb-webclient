@@ -13,7 +13,7 @@ import { Bank } from '../../models/Bank';
 import { Product } from '../../models/Product';
 import { Need } from '../../models/Need';
 import { Requirement } from '../../models/Requirement';
-import { RequirementLayout } from '../../models/RequirementLayout';
+import { IVariant } from '../../models/IVariant';
 import styles from './ProductPreview.module.scss';
 import { selectNeed } from '../../store/reducers/selectedNeed-reducer';
 import { selectRequirement } from '../../store/reducers/selectedRequirement-reducer';
@@ -79,13 +79,13 @@ export default function ProductPreview(): ReactElement {
 
   function findAssociatedRequirements(
     needs: Need[]
-  ): [{ [key: string]: Requirement[] }, Need[], RequirementLayout[]] {
+  ): [{ [key: string]: Requirement[] }, Need[], IVariant[]] {
     const relevantRequirements: { [key: string]: Requirement[] } = {};
     let needList: Need[] = [];
-    const layoutList: RequirementLayout[] = [];
+    const layoutList: IVariant[] = [];
     needs.forEach((element: Need) => {
       element.requirements.forEach((req: Requirement) => {
-        req.layouts.forEach((layout: RequirementLayout) => {
+        req.layouts.forEach((layout: IVariant) => {
           if (
             layout.products.includes(selectedProduct.id) ||
             checkParentInProductList(layout.products, selectedProduct.parent)
@@ -131,8 +131,8 @@ export default function ProductPreview(): ReactElement {
     associatedLayouts
   ] = findAssociatedRequirements(selectedProject.needs);
 
-  const findRequirementText = (layouts: RequirementLayout[]) => {
-    const texts = layouts.map((layout: RequirementLayout) => {
+  const findRequirementText = (layouts: IVariant[]) => {
+    const texts = layouts.map((layout: IVariant) => {
       if (associatedLayouts.includes(layout)) {
         if (layout.requirementText.trim().length > 0)
           return { text: layout.requirementText };

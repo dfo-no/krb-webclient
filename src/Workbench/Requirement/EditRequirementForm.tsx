@@ -1,9 +1,9 @@
-import { yupResolver } from '@hookform/resolvers/yup';
 import React, { ReactElement, useContext, useState } from 'react';
 import { Button, Col, Form, Row } from 'react-bootstrap';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
-import * as yup from 'yup';
+import Joi from 'joi';
+import { joiResolver } from '@hookform/resolvers/joi';
 import { Link } from 'react-router-dom';
 import { AccordionContext } from '../../NestableHierarchy/AccordionContext';
 
@@ -28,9 +28,9 @@ type FormInput = {
   description: string;
 };
 
-const productSchema = yup.object().shape({
-  title: yup.string().required(),
-  description: yup.string().required()
+const productSchema = Joi.object().keys({
+  title: Joi.string().required(),
+  description: Joi.string().required()
 });
 
 export default function EditRequirementForm({
@@ -45,7 +45,7 @@ export default function EditRequirementForm({
   const [validated] = useState(false);
 
   const { register, handleSubmit, errors } = useForm({
-    resolver: yupResolver(productSchema)
+    resolver: joiResolver(productSchema)
   });
   if (!id) {
     return <p>No project selected</p>;
@@ -121,7 +121,7 @@ export default function EditRequirementForm({
           Save
         </Button>
         <Link
-          to={`/workbench/${id}/requirement/${element.id}/edit`}
+          to={`/workbench/${id}/need/${need.id}/requirement/${element.id}/edit`}
           onClick={() => dispatch(selectRequirement(element.id))}
         >
           <Button className="ml-4 mt-2 ">Edit</Button>

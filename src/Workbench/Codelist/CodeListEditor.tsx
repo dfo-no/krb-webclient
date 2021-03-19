@@ -18,7 +18,7 @@ import NestableHierarcy from '../../NestableHierarchy/Nestable';
 import EditCodeForm from './EditCodeForm';
 import NewCodeForm from './NewCodeForm';
 import EditCodeListForm from './EditCodeListForm';
-import SuccessBobbo from '../SuccessAlert';
+import SuccessAlert from '../SuccessAlert';
 
 export default function CodeListEditor(): ReactElement {
   const dispatch = useDispatch();
@@ -98,7 +98,7 @@ export default function CodeListEditor(): ReactElement {
       <Button onClick={() => setToggleEditor(true)} className="mb-4">
         New Code
       </Button>
-      {showAlert && <SuccessBobbo toggleShow={setShowAlert} type="code" />}
+      {showAlert && <SuccessAlert toggleShow={setShowAlert} type="code" />}
       {codeListEditor(toggleEditor)}
       <NestableHierarcy
         dispatchfunc={(projectId: string, items: Code[]) =>

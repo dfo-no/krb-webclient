@@ -1,13 +1,11 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import React, { ReactElement, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import {
-  Button,
-  ListGroup,
-  InputGroup,
-  FormControl,
-  Row
-} from 'react-bootstrap';
+import Button from 'react-bootstrap/Button';
+import ListGroup from 'react-bootstrap/ListGroup';
+import InputGroup from 'react-bootstrap/InputGroup';
+import FormControl from 'react-bootstrap/FormControl';
+import Row from 'react-bootstrap/Row';
 import dayjs from 'dayjs';
 import { Link } from 'react-router-dom';
 
@@ -23,20 +21,18 @@ import { postBankThunk } from '../../store/reducers/bank-reducer';
 import Utils from '../../common/Utils';
 import { selectBank } from '../../store/reducers/selectedBank-reducer';
 import EditProjectForm from './EditProjectForm';
-import SuccessBobbo from '../SuccessAlert';
+import SuccessAlert from '../SuccessAlert';
 import MODELTYPE from '../../models/ModelType';
 
 function ProjectPage(): ReactElement {
   const dispatch = useDispatch();
   const { id } = useSelector((state: RootState) => state.selectedProject);
+
   const { list } = useSelector((state: RootState) => state.project);
   const [showEditor, setShowEditor] = useState(false);
   const [showAlert, setShowAlert] = useState(false);
   const [comment, setComment] = useState('');
   const [editMode, setEditMode] = useState(false);
-  if (!list) {
-    return <p>Loading ....</p>;
-  }
 
   const project = Utils.ensure(list.find((element) => element.id === id));
 
@@ -142,7 +138,7 @@ function ProjectPage(): ReactElement {
         New publication
       </Button>
       {showAlert && (
-        <SuccessBobbo toggleShow={setShowAlert} type="publication" />
+        <SuccessAlert toggleShow={setShowAlert} type="publication" />
       )}
       {publicationEditor(showEditor)}
       {publicationList(project.publications)}

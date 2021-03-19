@@ -7,7 +7,7 @@ interface IProps {
   type: string;
 }
 
-export default function SuccessBobbo({
+export default function SuccessAlert({
   toggleShow,
   type
 }: IProps): ReactElement {
@@ -19,7 +19,7 @@ export default function SuccessBobbo({
       className="mt-2 mb-2"
       transition={Fade}
     >
-      <p>Success! The {type} was created and added to the list</p>
+      <p>Success! The {type} was created and added to the list.</p>
     </Alert>
   );
 }

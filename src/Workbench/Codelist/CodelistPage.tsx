@@ -10,7 +10,7 @@ import { selectCodeList } from '../../store/reducers/selectedCodelist-reducer';
 import Utils from '../../common/Utils';
 import { Bank } from '../../models/Bank';
 import NewCodeListForm from './NewCodeListForm';
-import SuccessBobbo from '../SuccessAlert';
+import SuccessAlert from '../SuccessAlert';
 
 export default function CodelistPage(): ReactElement {
   const dispatch = useDispatch();
@@ -44,7 +44,7 @@ export default function CodelistPage(): ReactElement {
       .sort((a, b) => (a.title.toLowerCase() < b.title.toLowerCase() ? -1 : 1));
     return sorted.map((element: Codelist) => {
       return (
-        <Card className="bg-light mb-2">
+        <Card className="bg-light mb-2" key={element.id}>
           <Card.Header className="pb-1 pt-1">
             <Row className="d-flex justify-content-between mr-2">
               <h6 className="ml-2">
@@ -84,7 +84,7 @@ export default function CodelistPage(): ReactElement {
       <Button className="mb-4" onClick={() => setToggleEditor(true)}>
         New Codelist
       </Button>
-      {showAlert && <SuccessBobbo toggleShow={setShowAlert} type="codelist" />}
+      {showAlert && <SuccessAlert toggleShow={setShowAlert} type="codelist" />}
       {newCodeList(toggleEditor)}
       {renderCodelist(selectedProject.codelist)}
     </>
