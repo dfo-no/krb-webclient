@@ -24,7 +24,7 @@ import { selectNeed } from '../../store/reducers/selectedNeed-reducer';
 
 interface RouteParams {
   projectId: string;
-  needId: string;
+  needId?: string;
 }
 
 export default function RequirementPage(): ReactElement {
