@@ -69,6 +69,9 @@ export default function WorkbenchModule(): ReactElement {
               >
                 <RequirementPage />
               </Route>
+              <Route exact path="/workbench/:projectId/requirement">
+                <RequirementPage />
+              </Route>
               <Route
                 exact
                 path="/workbench/:projectId/need/:needId/requirement/:requirementId/edit"
