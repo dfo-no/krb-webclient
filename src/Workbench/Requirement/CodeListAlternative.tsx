@@ -62,6 +62,7 @@ export default function CodeListAlternative({
           name={`layouts[${vIx}].alternatives[${aIx}].codelist`}
           defaultValue={item.codelist}
           codelists={project.codelist}
+          errors={errors}
         />
       </Card.Body>
     </Card>
