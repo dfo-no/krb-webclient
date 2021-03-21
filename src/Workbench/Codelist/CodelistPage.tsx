@@ -44,10 +44,12 @@ export default function CodelistPage(): ReactElement {
       .sort((a, b) => (a.title.toLowerCase() < b.title.toLowerCase() ? -1 : 1));
     return sorted.map((element: Codelist) => {
       return (
-        <Card className="bg-light mb-2">
+        <Card className="bg-light mb-2" key={element.id}>
           <Card.Header className="pb-1 pt-1">
             <Row className="d-flex justify-content-between mr-2">
-              <h6 className="ml-2">{element.title}</h6>
+              <h6 className="ml-2">
+                {Utils.capitalizeFirstLetter(element.title)}
+              </h6>
               <Link
                 onClick={setSelectedKodeliste(element.id)}
                 to={`/workbench/${selectedProject.id}/codelist/${element.id}`}
@@ -78,7 +80,7 @@ export default function CodelistPage(): ReactElement {
 
   return (
     <>
-      <h1>Codelists</h1>
+      <h3 className="mt-3">Codelists</h3>
       <Button className="mb-4" onClick={() => setToggleEditor(true)}>
         New Codelist
       </Button>

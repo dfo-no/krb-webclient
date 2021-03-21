@@ -1,9 +1,9 @@
 import React, { ReactElement, useState } from 'react';
 import { Button, Card, Col, Form, Row } from 'react-bootstrap';
 import { useForm } from 'react-hook-form';
-import { yupResolver } from '@hookform/resolvers/yup';
+import { joiResolver } from '@hookform/resolvers/joi';
 import { useDispatch, useSelector } from 'react-redux';
-import * as yup from 'yup';
+import Joi from 'joi';
 
 import {
   editCodelist,
@@ -20,9 +20,9 @@ interface IProps {
   codelistId: string;
 }
 
-const codeListSchema = yup.object().shape({
-  title: yup.string().required(),
-  description: yup.string().required()
+const codeListSchema = Joi.object().keys({
+  title: Joi.string().required(),
+  description: Joi.string().allow(null, '').required()
 });
 
 function EditCodeListForm({ toggleShow, codelistId }: IProps): ReactElement {
@@ -30,7 +30,7 @@ function EditCodeListForm({ toggleShow, codelistId }: IProps): ReactElement {
   const [validated] = useState(false);
 
   const { register, handleSubmit, reset, errors } = useForm({
-    resolver: yupResolver(codeListSchema)
+    resolver: joiResolver(codeListSchema)
   });
 
   const { id } = useSelector((state: RootState) => state.selectedProject);
