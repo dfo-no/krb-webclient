@@ -1,5 +1,5 @@
 import React, { ReactElement } from 'react';
-import { Nav } from 'react-bootstrap';
+import Nav from 'react-bootstrap/Nav';
 import { NavLink, useRouteMatch } from 'react-router-dom';
 
 import Utils from '../../../common/Utils';

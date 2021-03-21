@@ -1,6 +1,6 @@
 import React, { ReactElement } from 'react';
-import Alert from 'react-bootstrap/esm/Alert';
-import Fade from 'react-bootstrap/esm/Fade';
+import Alert from 'react-bootstrap/Alert';
+import Fade from 'react-bootstrap/Fade';
 
 interface IProps {
   toggleShow: React.Dispatch<React.SetStateAction<boolean>>;

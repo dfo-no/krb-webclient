@@ -1,5 +1,7 @@
 import React, { ReactElement } from 'react';
-import { Container, Row, Button } from 'react-bootstrap';
+import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row';
+import Button from 'react-bootstrap/Button';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import Utils from '../common/Utils';

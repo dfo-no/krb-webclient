@@ -1,6 +1,6 @@
 import React, { ReactElement, useState } from 'react';
 import { useMsal, useAccount } from '@azure/msal-react';
-import Button from 'react-bootstrap/esm/Button';
+import Button from 'react-bootstrap/Button';
 import { loginRequest } from '../authentication/authConfig';
 import { callMsGraph, ProfileData } from './GraphProfileData';
 
