@@ -1,45 +1,52 @@
-import React from 'react';
-import { Provider } from 'react-redux';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+/* eslint-disable react/jsx-props-no-spreading */
+import React, { ReactElement, useState } from 'react';
+import { Route, Switch } from 'react-router-dom';
+import { PublicClientApplication } from '@azure/msal-browser';
+import {
+  MsalProvider,
+  AuthenticatedTemplate,
+  UnauthenticatedTemplate
+} from '@azure/msal-react';
 
 import styles from './App.module.scss';
-import RegistrationForm from './RegistrationForm/RegistrationForm';
-import KravbankEditorSide from './KravbankEditorSide/KravbankEditorSide';
 import Header from './Header/Header';
-import BehovEditorSide from './BehovEditorSide/BehovEditorSide';
-import KravbankKatalogSide from './KravbankKatalogSide/KravbankKatalogSide';
-import NyKravbankSide from './NyKravbankSide/NyKravbankSide';
-import { store } from './store';
+import HomePage from './Home/HomePage';
+import BankPage from './Home/BankPage';
+import WorkbenchModule from './Workbench/WorkbenchModule';
+import ResponseEditor from './ResponseEditor/ResponseEditor';
+import SpecEditor from './SpecEditor/SpecEditor';
+import Evaluation from './Evaluation/Evaluation';
+import { msalConfig } from './authentication/authConfig';
+import PageLayout from './PageLayout';
 
-function App() {
+const msalInstance = new PublicClientApplication(msalConfig);
+
+function App(): ReactElement {
   return (
-    <Provider store={store}>
-      <div className={styles.App}>
-        <Router>
-          <Header />
-          <Switch>
-            <Route exact path={'/'}>
-              <RegistrationForm />
-            </Route>
-            <Route exact path={'/katalog'}>
-              <KravbankKatalogSide />
-            </Route>
-            <Route exact path={'/edit/:id'}>
-              <KravbankEditorSide />
-            </Route>
-            <Route exact path={'/edit/behov/:id'}>
-              <BehovEditorSide />
-            </Route>
-            <Route exact path={'/kravbank'}>
-              <KravbankEditorSide />
-            </Route>
-            <Route exact path={'/kravbank/ny'}>
-              <NyKravbankSide />
-            </Route>
-          </Switch>
-        </Router>
-      </div>
-    </Provider>
+    <div className={styles.App}>
+      <MsalProvider instance={msalInstance}>
+        <Header />
+        <Switch>
+          <Route exact path="/">
+            <HomePage />
+          </Route>
+          <Route exact path="/bank/:bankId">
+            <BankPage />
+          </Route>
+          <PageLayout>
+            <AuthenticatedTemplate>
+              <Route path="/workbench" component={WorkbenchModule} />
+              <Route path="/speceditor/:id" component={SpecEditor} />
+              <Route path="/responseeditor" component={ResponseEditor} />
+              <Route path="/evaluation" component={Evaluation} />
+            </AuthenticatedTemplate>
+            <UnauthenticatedTemplate>
+              <h5 className="card-title">Please sign-in to access this page</h5>
+            </UnauthenticatedTemplate>
+          </PageLayout>
+        </Switch>
+      </MsalProvider>
+    </div>
   );
 }
 

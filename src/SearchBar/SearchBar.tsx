@@ -1,78 +1,68 @@
 import React, { ReactElement, useState } from 'react';
-import { connect } from 'react-redux';
-import { useHistory } from 'react-router-dom';
+import { ListGroup, FormControl } from 'react-bootstrap';
+import { useDispatch } from 'react-redux';
+import { Link } from 'react-router-dom';
 
-import { Kravbank } from '../models/Kravbank';
+import { Bank } from '../models/Bank';
+import { selectBank } from '../store/reducers/selectedBank-reducer';
 import styles from './SearchBar.module.scss';
 
 interface SearchBarProps {
-  list: Kravbank[];
-  editKravbank: any;
+  list: Bank[];
 }
 
-function SearchBar(props: SearchBarProps): ReactElement {
+export default function SearchBar({ list }: SearchBarProps): ReactElement {
   const [input, setInput] = useState('');
-  const [searchList, setSearchList] = useState(props.list);
-  const history = useHistory();
+  const [searchList, setSearchList] = useState<Bank[]>([]);
+  const dispatch = useDispatch();
 
-  const updateInput = async (input: any) => {
-    const filtered = props.list.filter((element) => {
-      return element.tittel.toLowerCase().includes(input.toLowerCase());
-    });
-    setInput(input);
-    setSearchList(filtered);
+  const updateSearchText = async (
+    event: React.ChangeEvent<
+      HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
+    >
+  ) => {
+    const { value } = event.target;
+    if (value === '' || value === ' ') {
+      setSearchList([]);
+    } else {
+      const filtered = list.filter((element) => {
+        return element.title.toLowerCase().includes(value.toLowerCase());
+      });
+      setSearchList(filtered.slice(0, 5));
+    }
+    setInput(value);
   };
 
-  const handleEdit = (id: number) => (event: any) => {
-    //const selectedKravbank = props.kravbanker.find((e) => e.id === id);
-    props.editKravbank(id);
-    history.push(`/edit/${id}`);
+  const handleEdit = (bank: Bank) => () => {
+    dispatch(selectBank(bank.id));
   };
 
-  const displaylist = (list: Kravbank[]) => {
-    return list.map((kravbank: Kravbank) => {
-      if (kravbank.tittel) {
-        return (
-          <div className={styles.katalogitem} key={kravbank.id}>
-            <p>{kravbank.tittel}</p>
-            <button
-              className={styles.editbutton}
-              type="button"
-              onClick={handleEdit(kravbank.id)}
-            >
-              Rediger
-            </button>
-          </div>
-        );
-      } else {
-        return null;
-      }
+  const displaylist = (bankList: Bank[]) => {
+    const resultList = bankList.map((bank: Bank) => {
+      return (
+        <ListGroup.Item key={bank.id} className={styles.katalogitem}>
+          <Link to={`/bank/${bank.id}`} onClick={handleEdit(bank)}>
+            {bank.title}
+          </Link>
+        </ListGroup.Item>
+      );
     });
+    return (
+      <ListGroup className={styles.searchResults} variant="flush">
+        {resultList}
+      </ListGroup>
+    );
   };
 
   return (
-    <div>
-      <input
-        className={styles.BarStyling}
+    <>
+      <FormControl
         value={input}
-        placeholder={'søk i katalog'}
-        onChange={(e) => updateInput(e.target.value)}
+        type="text"
+        placeholder="search projects"
+        onChange={(e) => updateSearchText(e)}
       />
-      <div>{displaylist(searchList)}</div>
-    </div>
+      {displaylist(searchList)}
+    </>
   );
 }
-
-const editKravbank = (kravbankid: number) => ({
-  type: '[KRAVBANK] EDIT',
-  payload: kravbankid
-});
-
-const mapDispatchToProps = (dispatch: any) => {
-  const actions = {
-    editKravbank: (kravbankid: number) => dispatch(editKravbank(kravbankid))
-  };
-  return actions;
-};
-
-export default connect(null, mapDispatchToProps)(SearchBar);
