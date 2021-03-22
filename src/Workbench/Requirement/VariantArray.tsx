@@ -1,5 +1,7 @@
 import React, { ReactElement, useState } from 'react';
-import { Button, Card, Form } from 'react-bootstrap';
+import Button from 'react-bootstrap/Button';
+import Card from 'react-bootstrap/Card';
+import Form from 'react-bootstrap/Form';
 import { useFieldArray } from 'react-hook-form';
 
 import { v4 as uuidv4 } from 'uuid';

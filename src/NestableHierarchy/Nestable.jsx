@@ -3,7 +3,10 @@
 
 import React, { useState } from 'react';
 import Nestable from 'react-nestable';
-import { Card, Accordion, Button, Row } from 'react-bootstrap';
+import Card from 'react-bootstrap/Card';
+import Accordion from 'react-bootstrap/Accordion';
+import Row from 'react-bootstrap/Row';
+import Button from 'react-bootstrap/Button';
 import { BsChevronDown } from 'react-icons/bs';
 import { AccordionContext } from './AccordionContext';
 import Utils from '../common/Utils';

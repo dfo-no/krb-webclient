@@ -1,7 +1,8 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import React, { ReactElement, useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Button, Row } from 'react-bootstrap';
+import Button from 'react-bootstrap/Button';
+import Row from 'react-bootstrap/Row';
 import { BsPencil } from 'react-icons/bs';
 
 import { RootState } from '../../store/store';

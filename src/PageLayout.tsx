@@ -3,7 +3,7 @@ import {
   AuthenticatedTemplate,
   UnauthenticatedTemplate
 } from '@azure/msal-react';
-import Col from 'react-bootstrap/esm/Col';
+import Col from 'react-bootstrap/Col';
 import SignedButton from './SignedButton/SignedButton';
 
 interface Iprops {

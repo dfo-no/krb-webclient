@@ -1,6 +1,6 @@
 import dayjs from 'dayjs';
 import React, { ReactElement } from 'react';
-import { ListGroup } from 'react-bootstrap';
+import ListGroup from 'react-bootstrap/ListGroup';
 import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 

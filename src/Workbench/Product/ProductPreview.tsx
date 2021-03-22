@@ -2,8 +2,9 @@
 import React, { ReactElement } from 'react';
 
 import { useDispatch, useSelector } from 'react-redux';
-
-import { Badge, ListGroup, Row } from 'react-bootstrap';
+import Badge from 'react-bootstrap/Badge';
+import ListGroup from 'react-bootstrap/ListGroup';
+import Row from 'react-bootstrap/Row';
 import { BsArrowReturnRight, BsPencil } from 'react-icons/bs';
 import { Link } from 'react-router-dom';
 import { RootState } from '../../store/store';
