@@ -7,9 +7,11 @@ import Row from 'react-bootstrap/Row';
 import { useForm } from 'react-hook-form';
 import Joi from 'joi';
 import { useDispatch, useSelector } from 'react-redux';
+import { AiFillDelete } from 'react-icons/ai';
 import { Code } from '../../models/Code';
 
 import {
+  deleteCodeInCodelist,
   editCodeInCodelist,
   putProjectThunk
 } from '../../store/reducers/project-reducer';
@@ -63,6 +65,16 @@ export default function EditCodeForm({ element }: IProps): ReactElement {
     onOpenClose('');
   };
 
+  const removeCode = () => () => {
+    dispatch(
+      deleteCodeInCodelist({
+        projectId: id,
+        codelistId: listId,
+        codeId: element.id
+      })
+    );
+  };
+
   return (
     <Form
       onSubmit={handleSubmit(edit)}
@@ -109,6 +121,9 @@ export default function EditCodeForm({ element }: IProps): ReactElement {
       <Row>
         <Button className="mt-2  ml-3" type="submit">
           Save
+        </Button>
+        <Button className="mt-2  ml-3" variant="warning" onClick={removeCode()}>
+          Delete <AiFillDelete />
         </Button>
       </Row>
     </Form>
