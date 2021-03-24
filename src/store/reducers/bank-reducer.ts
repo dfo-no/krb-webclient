@@ -38,7 +38,7 @@ export const postBankThunk = createAsyncThunk(
   async (bank: Bank) => {
     const api = new CosmosApi();
     const result = await api.createBank(bank);
-    return result.resource;
+    return result.resource as Bank;
   }
 );
 
@@ -79,9 +79,15 @@ const bankSlice = createSlice({
     builder.addCase(getBanksThunk.rejected, (state) => {
       state.status = 'rejected';
     });
-    // builder.addCase(postBank.fulfilled, (state, { payload }) => {});
-    // builder.addCase(postBank.pending, (state, { payload }) => {});
-    // builder.addCase(postBank.rejected, (state, { payload }) => {});
+    /* builder.addCase(postBankThunk.fulfilled, (state, { payload }) => {
+      state.status = 'fulfilled';
+    });
+    builder.addCase(postBankThunk.pending, (state, { payload }) => {
+      state.status = 'pending';
+    });
+    builder.addCase(postBankThunk.rejected, (state, { payload }) => {
+      state.status = 'rejected';
+    }); */
     // builder.addCase(putBank.fulfilled, (state, { payload }) => {});
     // builder.addCase(putBank.pending, (state, { payload }) => {});
     // builder.addCase(putBank.rejected, (state, { payload }) => {});
