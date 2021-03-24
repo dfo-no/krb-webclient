@@ -67,7 +67,7 @@ function WorkbenchPage(): ReactElement {
       needs: [],
       products: [],
       codelist: [],
-      version: 1,
+      version: 0,
       type: MODELTYPE.bank
     };
     dispatch(postProjectThunk(project));
