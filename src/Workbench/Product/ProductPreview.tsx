@@ -1,4 +1,3 @@
-/* eslint-disable jsx-a11y/label-has-associated-control */
 import React, { ReactElement } from 'react';
 
 import { useDispatch, useSelector } from 'react-redux';
