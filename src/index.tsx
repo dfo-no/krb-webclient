@@ -8,6 +8,7 @@ import reportWebVitals from './reportWebVitals';
 import store from './store/store';
 import { getBanksThunk } from './store/reducers/bank-reducer';
 import App from './App';
+import './dfo-theme.scss';
 
 // fetch all banks here because they are published and will show on the front page.
 store.dispatch(getBanksThunk());

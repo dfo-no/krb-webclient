@@ -49,7 +49,7 @@ function NeedPage(): ReactElement {
 
   return (
     <>
-      <h3>Needs</h3>
+      <h3 className="mt-3">Needs</h3>
       <Button
         onClick={() => {
           setToggleEditor(true);

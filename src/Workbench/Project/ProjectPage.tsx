@@ -1,13 +1,11 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import React, { ReactElement, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import {
-  Button,
-  ListGroup,
-  InputGroup,
-  FormControl,
-  Row
-} from 'react-bootstrap';
+import Button from 'react-bootstrap/Button';
+import ListGroup from 'react-bootstrap/ListGroup';
+import InputGroup from 'react-bootstrap/InputGroup';
+import FormControl from 'react-bootstrap/FormControl';
+import Row from 'react-bootstrap/Row';
 import dayjs from 'dayjs';
 import { Link } from 'react-router-dom';
 
@@ -34,9 +32,6 @@ function ProjectPage(): ReactElement {
   const [showAlert, setShowAlert] = useState(false);
   const [comment, setComment] = useState('');
   const [editMode, setEditMode] = useState(false);
-  if (!list) {
-    return <p>Loading ....</p>;
-  }
 
   const project = Utils.ensure(list.find((element) => element.id === id));
 
@@ -100,7 +95,7 @@ function ProjectPage(): ReactElement {
           </ListGroup.Item>
         );
       });
-      return <ListGroup className="mt-3">{publication}</ListGroup>;
+      return <ListGroup className="mt-4">{publication}</ListGroup>;
     }
     return <></>;
   };
@@ -129,7 +124,7 @@ function ProjectPage(): ReactElement {
 
   return (
     <>
-      <Row className="m-1">
+      <Row className="ml-1 mt-3">
         <h3> {project.title} </h3>
         <Button className="ml-3" onClick={() => setEditMode(true)}>
           <BsPencil />
