@@ -65,7 +65,7 @@ export default function EditCodeForm({ element }: IProps): ReactElement {
     onOpenClose('');
   };
 
-  const removeCode = () => () => {
+  const removeCode = () => {
     dispatch(
       deleteCodeInCodelist({
         projectId: id,
@@ -73,6 +73,7 @@ export default function EditCodeForm({ element }: IProps): ReactElement {
         codeId: element.id
       })
     );
+    dispatch(putProjectThunk(id));
   };
 
   return (
@@ -122,7 +123,7 @@ export default function EditCodeForm({ element }: IProps): ReactElement {
         <Button className="mt-2  ml-3" type="submit">
           Save
         </Button>
-        <Button className="mt-2  ml-3" variant="warning" onClick={removeCode()}>
+        <Button className="mt-2  ml-3" variant="warning" onClick={removeCode}>
           Delete <AiFillDelete />
         </Button>
       </Row>

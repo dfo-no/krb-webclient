@@ -81,6 +81,7 @@ function EditNeedForm({ element }: IProps): ReactElement {
       );
     } else {
       dispatch(deleteNeed({ projectId: id, needId: element.id }));
+      dispatch(putProjectThunk(id));
     }
     onOpenClose('');
   };
