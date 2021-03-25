@@ -1,5 +1,5 @@
 import React, { ReactElement } from 'react';
-import { Nav } from 'react-bootstrap';
+import Nav from 'react-bootstrap/Nav';
 import { NavLink, useRouteMatch } from 'react-router-dom';
 
 import Utils from '../../../common/Utils';
@@ -51,7 +51,7 @@ export default function NeedSideBar({ needs }: IProps): ReactElement {
   };
 
   const needHierarchy = (needsList: Need[]) => {
-    const newList = Utils.unflatten(needsList);
+    const newList = Utils.unflatten(needsList)[0];
     let children: any;
     return newList.map((element: any) => {
       if (element.children.length > 0) {

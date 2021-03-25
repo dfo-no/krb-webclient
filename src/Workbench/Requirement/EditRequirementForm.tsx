@@ -1,13 +1,18 @@
 import React, { ReactElement, useContext, useState } from 'react';
-import { Button, Col, Form, Row } from 'react-bootstrap';
+import Button from 'react-bootstrap/Button';
+import Col from 'react-bootstrap/Col';
+import Form from 'react-bootstrap/Form';
+import Row from 'react-bootstrap/Row';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import Joi from 'joi';
 import { joiResolver } from '@hookform/resolvers/joi';
 import { Link } from 'react-router-dom';
+import { AiFillDelete } from 'react-icons/ai';
 import { AccordionContext } from '../../NestableHierarchy/AccordionContext';
 
 import {
+  deleteRequirement,
   editRequirementInNeed,
   putProjectThunk
 } from '../../store/reducers/project-reducer';
@@ -59,18 +64,31 @@ export default function EditRequirementForm({
     requirement.title = post.title;
     requirement.description = post.description;
     reqList[index] = requirement;
-    const needIndex = needList.findIndex(
-      (needElement) => needElement.id === need.id
-    );
     dispatch(
       editRequirementInNeed({
         projectId: id,
-        needIndex,
-        requirement
+        oldNeedId: need.id,
+        needId: need.id,
+        requirement,
+        requirementIndex: index
       })
     );
     dispatch(putProjectThunk(id));
     onOpenClose('');
+  };
+
+  const removeRequirement = () => {
+    const needIndex = needList.findIndex(
+      (needElement) => needElement.id === need.id
+    );
+    dispatch(
+      deleteRequirement({
+        id,
+        needIndex,
+        requirementIndex: index
+      })
+    );
+    dispatch(putProjectThunk(id));
   };
 
   return (
@@ -126,6 +144,13 @@ export default function EditRequirementForm({
         >
           <Button className="ml-4 mt-2 ">Edit</Button>
         </Link>
+        <Button
+          className="mt-2  ml-3"
+          variant="warning"
+          onClick={removeRequirement}
+        >
+          Delete <AiFillDelete />
+        </Button>
       </Row>
     </Form>
   );

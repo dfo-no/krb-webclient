@@ -1,13 +1,16 @@
 import React, { ReactElement, useEffect, useState } from 'react';
-import { Link, useHistory } from 'react-router-dom';
-import { Button, Col, Form, ListGroup, Row } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
+import Button from 'react-bootstrap/Button';
+import Col from 'react-bootstrap/Col';
+import Form from 'react-bootstrap/Form';
+import ListGroup from 'react-bootstrap/ListGroup';
+import Row from 'react-bootstrap/Row';
 import { useDispatch, useSelector } from 'react-redux';
 import { AiFillDelete } from 'react-icons/ai';
 import { useForm } from 'react-hook-form';
 import { v4 as uuidv4 } from 'uuid';
 import Joi from 'joi';
 import { joiResolver } from '@hookform/resolvers/joi';
-import css from './WorkbenchPage.module.scss';
 import { RootState } from '../store/store';
 import { Bank } from '../models/Bank';
 import {
@@ -27,7 +30,6 @@ type FormValues = {
 function WorkbenchPage(): ReactElement {
   const dispatch = useDispatch();
   const { list } = useSelector((state: RootState) => state.project);
-  const history = useHistory();
   const [showEditor, setShowEditor] = useState(false);
   const [showAlert, setShowAlert] = useState(false);
   const [validated] = useState(false);
@@ -65,7 +67,7 @@ function WorkbenchPage(): ReactElement {
       needs: [],
       products: [],
       codelist: [],
-      version: 1,
+      version: 0,
       type: MODELTYPE.bank
     };
     dispatch(postProjectThunk(project));
