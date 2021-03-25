@@ -4,7 +4,7 @@ import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 
-import { useRouteMatch } from 'react-router-dom';
+import { useHistory, useRouteMatch } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { useForm } from 'react-hook-form';
 import { joiResolver } from '@hookform/resolvers/joi';
@@ -95,6 +95,7 @@ interface RouteParams {
 export default function RequirementEditor(): ReactElement {
   const [validated] = useState(false);
   const dispatch = useDispatch();
+  const history = useHistory();
 
   const projectMatch = useRouteMatch<RouteParams>(
     '/workbench/:projectId/need/:needId/requirement/:requirementId/edit'
@@ -120,13 +121,9 @@ export default function RequirementEditor(): ReactElement {
     project.needs.find((element) => element.id === needId)
   );
   const nIndex = project.needs.findIndex((element) => element.id === need.id);
-  const requirement = Utils.ensure(
-    need.requirements.find((element) => element.id === reqId)
-  );
-  console.log(need);
-
-  const defaultValues: Requirement = { ...requirement };
-
+  const requirement = need.requirements.find((element) => element.id === reqId);
+  const defaultValues: Requirement | Record<string, never> =
+    requirement !== undefined ? { ...requirement } : {};
   const {
     control,
     register,
@@ -138,6 +135,11 @@ export default function RequirementEditor(): ReactElement {
     resolver: joiResolver(requirementSchema),
     defaultValues
   });
+
+  if (requirement === undefined) {
+    history.push(`/workbench/${project.id}/requirement`);
+    return <p> Could not find requirement </p>;
+  }
 
   if (!needId || !reqId) {
     return <p>You have to select a requirement to work with</p>;
@@ -288,8 +290,8 @@ export default function RequirementEditor(): ReactElement {
             getValues,
             setValue,
             errors,
-            defaultValues,
-            project
+            project,
+            defaultValues
           }}
         />
 
