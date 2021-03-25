@@ -13,6 +13,7 @@ import { Publication } from '../../models/Publication';
 import MODELTYPE from '../../models/ModelType';
 import SuccessAlert from '../SuccessAlert';
 import css from './PublicationList.module.scss';
+import * as Constants from '../../common/Constants';
 
 export default function PublicationList({
   control,
@@ -60,9 +61,9 @@ export default function PublicationList({
         <SuccessAlert toggleShow={setShowAlert} type="publication" />
       )}
 
-      <ListGroup>
+      <ListGroup className="mt-4">
         {fields.map((field, index: number) => {
-          const date = dayjs(field.date).format('DD.MM.YYYY H:m');
+          const date = dayjs(field.date).format(Constants.DATE_FORMAT_SHORT);
           return (
             <ListGroup.Item
               as="div"
@@ -124,7 +125,7 @@ export default function PublicationList({
                     name={`publications[${index}].comment`}
                     type="text"
                     ref={register()}
-                    defaultValue={field.comment}
+                    defaultValue="Summarize the changes ..."
                     isInvalid={
                       !!(
                         errors.publications &&
@@ -140,7 +141,11 @@ export default function PublicationList({
                         {errors.publications[index].comment.message}
                       </Form.Control.Feedback>
                     )}
-                  <Button type="submit" ref={publishButtonRef}>
+                  <Button
+                    className="ml-1 mr-1"
+                    type="submit"
+                    ref={publishButtonRef}
+                  >
                     Publish
                   </Button>
                 </>

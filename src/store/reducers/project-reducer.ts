@@ -451,39 +451,49 @@ const projectSlice = createSlice({
         payload
       }: PayloadAction<{
         projectId: string;
-        needIndex: number;
         requirement: Requirement;
+        oldNeedId: string;
+        needId: string;
+        requirementIndex: number;
       }>
     ) {
       const projectIndex = Utils.ensure(
         state.list.findIndex((project) => project.id === payload.projectId)
       );
       const needIndex = Utils.ensure(
-        state.list[projectIndex].needs[
-          payload.needIndex
-        ].requirements.findIndex((req) => req.id === payload.requirement.id)
+        state.list[projectIndex].needs.findIndex(
+          (need) => need.id === payload.needId
+        )
       );
-      state.list[projectIndex].needs[payload.needIndex].requirements[
-        needIndex
-      ] = payload.requirement;
+      const oldNeedIndex = Utils.ensure(
+        state.list[projectIndex].needs.findIndex(
+          (need) => need.id === payload.oldNeedId
+        )
+      );
+      state.list[projectIndex].needs[oldNeedIndex].requirements.splice(
+        payload.requirementIndex,
+        1
+      );
+
+      state.list[projectIndex].needs[needIndex].requirements.push(
+        payload.requirement
+      );
     },
-    editRequirement(
+    editRequirementParentNeed(
       state,
       {
         payload
       }: PayloadAction<{
         id: string;
         requirement: Requirement;
-        needIndex: number;
+        oldNeedId: string;
+        needId: string;
         requirementIndex: number;
       }>
     ) {
       const index = Utils.ensure(
         state.list.findIndex((project) => project.id === payload.id)
       );
-      state.list[index].needs[payload.needIndex].requirements[
-        payload.requirementIndex
-      ] = payload.requirement;
     },
     addRequirement(
       state,
@@ -592,11 +602,11 @@ export const {
   deleteNeed,
   editCode,
   editCodelist,
+  editRequirementParentNeed,
   publishProject,
   editProject,
   setRequirementListToNeed,
   editRequirementInNeed,
-  editRequirement,
   addRequirement,
   deleteRequirement
 } = projectSlice.actions;

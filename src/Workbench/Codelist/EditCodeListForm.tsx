@@ -88,13 +88,14 @@ function EditCodeListForm({ toggleShow, codelistId }: IProps): ReactElement {
     return used;
   };
 
-  const removeCodelist = () => () => {
+  const removeCodelist = () => {
     if (checkCodelistConnection()) {
       window.confirm(
         'The codelist is associated to one or more requirement variant, please remove the connection to be able to delete'
       );
     } else {
       dispatch(deleteCodelist({ projectId: id, codelistId }));
+      dispatch(putProjectThunk(id));
     }
   };
 
@@ -156,7 +157,7 @@ function EditCodeListForm({ toggleShow, codelistId }: IProps): ReactElement {
             <Button
               className="mt-2  ml-3"
               variant="warning"
-              onClick={removeCodelist()}
+              onClick={removeCodelist}
             >
               Delete <AiFillDelete />
             </Button>

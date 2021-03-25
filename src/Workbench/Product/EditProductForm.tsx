@@ -92,6 +92,7 @@ export default function ProductForm({ element }: IProps): ReactElement {
       );
     } else {
       dispatch(deleteProduct({ projectId: id, productId: element.id }));
+      dispatch(putProjectThunk(id));
     }
     onOpenClose('');
   };
