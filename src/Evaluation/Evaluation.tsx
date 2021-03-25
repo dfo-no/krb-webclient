@@ -177,7 +177,6 @@ export default function Evaluation(): ReactElement {
           </InputGroup>
         </Col>
         <Col>
-          <p>Ondownload</p>
           <Button onClick={() => onDownLoad()}>Download</Button>
         </Col>
       </Row>

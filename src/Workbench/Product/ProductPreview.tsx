@@ -156,7 +156,7 @@ export default function ProductPreview(): ReactElement {
   const requirementList = (requirements: Requirement[], need: Need) => {
     const reqList = requirements.map((element: Requirement) => {
       return (
-        <ListGroup.Item key={element.id}>
+        <ListGroup.Item key={element.id + 1}>
           <Row className="d-flex justify-content-between mr-2">
             <p className="ml-2 mt-1">
               {element.title}

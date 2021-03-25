@@ -3,20 +3,26 @@ import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
-import { useForm } from 'react-hook-form';
+import { NestedValue, useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import { joiResolver } from '@hookform/resolvers/joi';
 import Joi from 'joi';
 import { Link } from 'react-router-dom';
+import { AiFillDelete } from 'react-icons/ai';
 import { AccordionContext } from '../../NestableHierarchy/AccordionContext';
 import { Product } from '../../models/Product';
 
 import {
+  deleteProduct,
   editProduct,
   putProjectThunk
 } from '../../store/reducers/project-reducer';
 import { RootState } from '../../store/store';
 import { selectProduct } from '../../store/reducers/selectedProduct-reducer';
+import { Need } from '../../models/Need';
+import { Requirement } from '../../models/Requirement';
+import { IVariant } from '../../models/IVariant';
+import Utils from '../../common/Utils';
 
 interface IProps {
   element: Product;
@@ -34,6 +40,7 @@ const productSchema = Joi.object().keys({
 
 export default function ProductForm({ element }: IProps): ReactElement {
   const { id } = useSelector((state: RootState) => state.selectedProject);
+  const { list } = useSelector((state: RootState) => state.project);
   const dispatch = useDispatch();
   const { onOpenClose } = useContext(AccordionContext);
   const [validated] = useState(false);
@@ -44,6 +51,8 @@ export default function ProductForm({ element }: IProps): ReactElement {
   if (!id) {
     return <p>No project selected</p>;
   }
+
+  const project = Utils.ensure(list.find((bank) => bank.id === id));
 
   const edit = (post: FormInput) => {
     const newProduct = { ...element };
@@ -56,6 +65,34 @@ export default function ProductForm({ element }: IProps): ReactElement {
       })
     );
     dispatch(putProjectThunk(id));
+    onOpenClose('');
+  };
+
+  const checkProductConnection = () => {
+    let used = false;
+    project.needs.forEach((need: Need) => {
+      need.requirements.forEach((requirement: Requirement) => {
+        requirement.layouts.forEach((variant: IVariant) => {
+          if (variant.products.includes(element.id)) {
+            used = true;
+          }
+        });
+      });
+    });
+    return used;
+  };
+
+  const removeProduct = () => () => {
+    if (
+      Utils.checkIfParent(project.products, element.id) ||
+      checkProductConnection()
+    ) {
+      window.confirm(
+        'This product is associated to one or more requirement variants, please remove the connection to be able to delete'
+      );
+    } else {
+      dispatch(deleteProduct({ projectId: id, productId: element.id }));
+    }
     onOpenClose('');
   };
 
@@ -112,6 +149,13 @@ export default function ProductForm({ element }: IProps): ReactElement {
         >
           <Button className="mt-2  ml-3">Preview</Button>
         </Link>
+        <Button
+          className="mt-2  ml-3"
+          variant="warning"
+          onClick={removeProduct()}
+        >
+          Delete <AiFillDelete />
+        </Button>
       </Row>
     </Form>
   );
