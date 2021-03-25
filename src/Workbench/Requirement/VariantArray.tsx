@@ -5,7 +5,7 @@ import Form from 'react-bootstrap/Form';
 import { useFieldArray } from 'react-hook-form';
 
 import { v4 as uuidv4 } from 'uuid';
-import { Row } from 'react-bootstrap';
+import Row from 'react-bootstrap/Row';
 import { InputProps } from '../../models/InputProps';
 import styles from './Variant.module.scss';
 

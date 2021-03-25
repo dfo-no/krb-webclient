@@ -71,7 +71,7 @@ function EditNeedForm({ element }: IProps): ReactElement {
     onOpenClose('');
   };
 
-  const removeNeed = () => () => {
+  const removeNeed = () => {
     if (
       element.requirements.length > 0 ||
       Utils.checkIfParent(project.needs, element.id)
@@ -130,7 +130,7 @@ function EditNeedForm({ element }: IProps): ReactElement {
       <Button className="mt-2" type="submit">
         Save
       </Button>
-      <Button className="mt-2  ml-3" variant="warning" onClick={removeNeed()}>
+      <Button className="mt-2  ml-3" variant="warning" onClick={removeNeed}>
         Delete <AiFillDelete />
       </Button>
     </Form>
