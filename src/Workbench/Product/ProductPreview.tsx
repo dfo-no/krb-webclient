@@ -1,9 +1,9 @@
-/* eslint-disable jsx-a11y/label-has-associated-control */
 import React, { ReactElement } from 'react';
 
 import { useDispatch, useSelector } from 'react-redux';
-
-import { Badge, ListGroup, Row } from 'react-bootstrap';
+import Badge from 'react-bootstrap/Badge';
+import ListGroup from 'react-bootstrap/ListGroup';
+import Row from 'react-bootstrap/Row';
 import { BsArrowReturnRight, BsPencil } from 'react-icons/bs';
 import { Link } from 'react-router-dom';
 import { RootState } from '../../store/store';
@@ -156,7 +156,7 @@ export default function ProductPreview(): ReactElement {
   const requirementList = (requirements: Requirement[], need: Need) => {
     const reqList = requirements.map((element: Requirement) => {
       return (
-        <ListGroup.Item key={element.id}>
+        <ListGroup.Item key={element.id + 1}>
           <Row className="d-flex justify-content-between mr-2">
             <p className="ml-2 mt-1">
               {element.title}

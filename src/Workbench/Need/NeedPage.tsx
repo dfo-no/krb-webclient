@@ -1,6 +1,6 @@
 import React, { ReactElement, useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Button } from 'react-bootstrap';
+import Button from 'react-bootstrap/Button';
 
 import { Need } from '../../models/Need';
 import { RootState } from '../../store/store';

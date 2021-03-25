@@ -1,11 +1,10 @@
-import React, { ReactElement, useState } from 'react';
+import React, { ChangeEvent, ReactElement, useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import Card from 'react-bootstrap/Card';
 
-import { useRouteMatch } from 'react-router-dom';
+import { useHistory, useRouteMatch } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { useForm } from 'react-hook-form';
 import { joiResolver } from '@hookform/resolvers/joi';
@@ -18,10 +17,12 @@ import { selectRequirement } from '../../store/reducers/selectedRequirement-redu
 import { selectNeed } from '../../store/reducers/selectedNeed-reducer';
 import {
   editRequirementInNeed,
+  editRequirementParentNeed,
   putProjectThunk
 } from '../../store/reducers/project-reducer';
 import VariantArray from './VariantArray';
 import { Requirement } from '../../models/Requirement';
+import { Need } from '../../models/Need';
 
 const valueSchema = Joi.object().keys({
   id: Joi.string().required(),
@@ -94,12 +95,14 @@ interface RouteParams {
 export default function RequirementEditor(): ReactElement {
   const [validated] = useState(false);
   const dispatch = useDispatch();
+  const history = useHistory();
 
   const projectMatch = useRouteMatch<RouteParams>(
     '/workbench/:projectId/need/:needId/requirement/:requirementId/edit'
   );
+  const { needId } = useSelector((state: RootState) => state.selectNeed);
 
-  if (projectMatch?.params.needId) {
+  if (projectMatch?.params.needId && projectMatch?.params.needId === needId) {
     dispatch(selectNeed(projectMatch?.params.needId));
   }
 
@@ -113,18 +116,14 @@ export default function RequirementEditor(): ReactElement {
     (state: RootState) => state.selectedRequirement
   );
 
-  const { needId } = useSelector((state: RootState) => state.selectNeed);
   const project = Utils.ensure(list.find((element) => element.id === id));
   const need = Utils.ensure(
     project.needs.find((element) => element.id === needId)
   );
   const nIndex = project.needs.findIndex((element) => element.id === need.id);
-  const requirement = Utils.ensure(
-    need.requirements.find((element) => element.id === reqId)
-  );
-
-  const defaultValues: Requirement = { ...requirement };
-
+  const requirement = need.requirements.find((element) => element.id === reqId);
+  const defaultValues: Requirement | Record<string, never> =
+    requirement !== undefined ? { ...requirement } : {};
   const {
     control,
     register,
@@ -137,19 +136,30 @@ export default function RequirementEditor(): ReactElement {
     defaultValues
   });
 
+  if (requirement === undefined) {
+    history.push(`/workbench/${project.id}/requirement`);
+    return <p> Could not find requirement </p>;
+  }
+
   if (!needId || !reqId) {
     return <p>You have to select a requirement to work with</p>;
   }
 
-  const saveRequirement = (post: Requirement) => {
-    dispatch(
+  const saveRequirement = async (post: Requirement) => {
+    const oldReqIndex = Utils.ensure(
+      need.requirements.findIndex((element) => element.id === reqId)
+    );
+    await dispatch(
       editRequirementInNeed({
         projectId: project.id,
-        needIndex: nIndex,
-        requirement: post
+        requirement: post,
+        oldNeedId: need.id,
+        needId: post.needId,
+        requirementIndex: oldReqIndex
       })
     );
-    dispatch(putProjectThunk(project.id));
+    await dispatch(putProjectThunk(project.id));
+    await dispatch(selectNeed(post.needId));
   };
 
   const deleteVariant = (variant: IVariant) => {
@@ -158,14 +168,18 @@ export default function RequirementEditor(): ReactElement {
       (element) => element.id !== variant.id
     );
     editRequirement.layouts = newVariants;
-    dispatch(
-      editRequirementInNeed({
-        projectId: project.id,
-        needIndex: nIndex,
-        requirement: editRequirement
-      })
-    );
     dispatch(putProjectThunk(project.id));
+  };
+
+  const needOptions = (needList: Need[]) => {
+    const result = needList.map((element: any) => {
+      return (
+        <option key={element.id} value={element.id}>
+          {element.title}
+        </option>
+      );
+    });
+    return result;
   };
 
   return (
@@ -247,6 +261,27 @@ export default function RequirementEditor(): ReactElement {
             <Button type="submit">Save</Button>
           </Col>
         </Form.Group>
+        <Form.Group as={Row}>
+          <Form.Label column sm={1}>
+            Need
+          </Form.Label>
+          <Col sm={8}>
+            <Form.Control
+              as="select"
+              name="needId"
+              ref={register}
+              defaultValue={requirement.needId}
+              isInvalid={!!errors.needId}
+            >
+              {needOptions(project.needs)}
+            </Form.Control>
+            {errors.needId && (
+              <Form.Control.Feedback as={Col} type="invalid">
+                {errors.needId?.message}
+              </Form.Control.Feedback>
+            )}
+          </Col>
+        </Form.Group>
 
         <VariantArray
           {...{
@@ -255,8 +290,8 @@ export default function RequirementEditor(): ReactElement {
             getValues,
             setValue,
             errors,
-            defaultValues,
-            project
+            project,
+            defaultValues
           }}
         />
 

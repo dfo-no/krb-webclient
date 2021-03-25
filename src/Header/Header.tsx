@@ -1,7 +1,7 @@
 import React, { ReactElement } from 'react';
 import { useHistory, useRouteMatch } from 'react-router-dom';
 import Navbar from 'react-bootstrap/Navbar';
-import { Button } from 'react-bootstrap';
+import Button from 'react-bootstrap/Button';
 import css from './Header.module.scss';
 import SignedButton from '../SignedButton/SignedButton';
 

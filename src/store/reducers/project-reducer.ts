@@ -10,6 +10,7 @@ import { Need } from '../../models/Need';
 import { Product } from '../../models/Product';
 import { Publication } from '../../models/Publication';
 import { Requirement } from '../../models/Requirement';
+import NeedSideBar from '../../Workbench/Requirement/NeedSideBar/NeedSidebar';
 
 // eslint-disable-next-line import/no-cycle
 import { AppDispatch, RootState } from '../store';
@@ -194,6 +195,24 @@ const projectSlice = createSlice({
       state.list[projectIndex].needs[needIndex].description =
         payload.description;
     },
+    deleteNeed(
+      state,
+      {
+        payload
+      }: PayloadAction<{
+        projectId: string;
+        needId: string;
+      }>
+    ) {
+      const projectIndex = Utils.ensure(
+        state.list.findIndex((project) => project.id === payload.projectId)
+      );
+      const needindex = state.list[projectIndex].needs.findIndex(
+        (need) => need.id === payload.needId
+      );
+
+      state.list[projectIndex].needs.splice(needindex, 1);
+    },
     addCodelist(
       state,
       { payload }: PayloadAction<{ id: string; codelist: Codelist }>
@@ -239,6 +258,24 @@ const projectSlice = createSlice({
 
       state.list[projectIndex].products[productindex] = payload.product;
     },
+    deleteProduct(
+      state,
+      {
+        payload
+      }: PayloadAction<{
+        projectId: string;
+        productId: string;
+      }>
+    ) {
+      const projectIndex = Utils.ensure(
+        state.list.findIndex((project) => project.id === payload.projectId)
+      );
+      const productindex = state.list[projectIndex].products.findIndex(
+        (product) => product.id === payload.productId
+      );
+
+      state.list[projectIndex].products.splice(productindex, 1);
+    },
     updateCodeList(
       state,
       {
@@ -274,6 +311,24 @@ const projectSlice = createSlice({
       state.list[projectIndex].codelist[codeListIndex].description =
         payload.description;
     },
+    deleteCodelist(
+      state,
+      {
+        payload
+      }: PayloadAction<{
+        projectId: string;
+        codelistId: string;
+      }>
+    ) {
+      const projectIndex = Utils.ensure(
+        state.list.findIndex((project) => project.id === payload.projectId)
+      );
+      const codeListIndex = state.list[projectIndex].codelist.findIndex(
+        (codelist) => codelist.id === payload.codelistId
+      );
+      state.list[projectIndex].codelist.splice(codeListIndex, 1);
+    },
+
     editCodeInCodelist(
       state,
       {
@@ -315,6 +370,34 @@ const projectSlice = createSlice({
         )
       );
       state.list[projectIndex].codelist[codelistIndex].codes.push(payload.code);
+    },
+    deleteCodeInCodelist(
+      state,
+      {
+        payload
+      }: PayloadAction<{
+        projectId: string;
+        codelistId: string;
+        codeId: string;
+      }>
+    ) {
+      const projectIndex = Utils.ensure(
+        state.list.findIndex((project) => project.id === payload.projectId)
+      );
+      const codelistIndex = Utils.ensure(
+        state.list[projectIndex].codelist.findIndex(
+          (codelist) => codelist.id === payload.codelistId
+        )
+      );
+      const codeIndex = Utils.ensure(
+        state.list[projectIndex].codelist[codelistIndex].codes.findIndex(
+          (code) => code.id === payload.codeId
+        )
+      );
+      state.list[projectIndex].codelist[codelistIndex].codes.splice(
+        codeIndex,
+        1
+      );
     },
     addCode(
       state,
@@ -368,39 +451,49 @@ const projectSlice = createSlice({
         payload
       }: PayloadAction<{
         projectId: string;
-        needIndex: number;
         requirement: Requirement;
+        oldNeedId: string;
+        needId: string;
+        requirementIndex: number;
       }>
     ) {
       const projectIndex = Utils.ensure(
         state.list.findIndex((project) => project.id === payload.projectId)
       );
       const needIndex = Utils.ensure(
-        state.list[projectIndex].needs[
-          payload.needIndex
-        ].requirements.findIndex((req) => req.id === payload.requirement.id)
+        state.list[projectIndex].needs.findIndex(
+          (need) => need.id === payload.needId
+        )
       );
-      state.list[projectIndex].needs[payload.needIndex].requirements[
-        needIndex
-      ] = payload.requirement;
+      const oldNeedIndex = Utils.ensure(
+        state.list[projectIndex].needs.findIndex(
+          (need) => need.id === payload.oldNeedId
+        )
+      );
+      state.list[projectIndex].needs[oldNeedIndex].requirements.splice(
+        payload.requirementIndex,
+        1
+      );
+
+      state.list[projectIndex].needs[needIndex].requirements.push(
+        payload.requirement
+      );
     },
-    editRequirement(
+    editRequirementParentNeed(
       state,
       {
         payload
       }: PayloadAction<{
         id: string;
         requirement: Requirement;
-        needIndex: number;
+        oldNeedId: string;
+        needId: string;
         requirementIndex: number;
       }>
     ) {
       const index = Utils.ensure(
         state.list.findIndex((project) => project.id === payload.id)
       );
-      state.list[index].needs[payload.needIndex].requirements[
-        payload.requirementIndex
-      ] = payload.requirement;
     },
     addRequirement(
       state,
@@ -417,6 +510,24 @@ const projectSlice = createSlice({
       );
       state.list[index].needs[payload.needIndex].requirements.push(
         payload.requirement
+      );
+    },
+    deleteRequirement(
+      state,
+      {
+        payload
+      }: PayloadAction<{
+        id: string;
+        needIndex: number;
+        requirementIndex: number;
+      }>
+    ) {
+      const index = Utils.ensure(
+        state.list.findIndex((project) => project.id === payload.id)
+      );
+      state.list[index].needs[payload.needIndex].requirements.splice(
+        payload.requirementIndex,
+        1
       );
     }
   },
@@ -477,22 +588,27 @@ export const {
   updateProductList,
   updateNeedList,
   editProduct,
+  deleteProduct,
   addCode,
   updateCodeList,
+  deleteCodelist,
   addCodeToCodelist,
   editCodeInCodelist,
+  deleteCodeInCodelist,
   addPublication,
   incrementProjectVersion,
   addNeed,
   editNeed,
+  deleteNeed,
   editCode,
   editCodelist,
+  editRequirementParentNeed,
   publishProject,
   editProject,
   setRequirementListToNeed,
   editRequirementInNeed,
-  editRequirement,
-  addRequirement
+  addRequirement,
+  deleteRequirement
 } = projectSlice.actions;
 
 export default projectSlice.reducer;
