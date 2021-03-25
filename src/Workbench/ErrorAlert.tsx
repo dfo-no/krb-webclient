@@ -1,25 +1,25 @@
 import React, { ReactElement } from 'react';
-import Alert from 'react-bootstrap/esm/Alert';
-import Fade from 'react-bootstrap/esm/Fade';
+import Alert from 'react-bootstrap/Alert';
+import Fade from 'react-bootstrap/Fade';
 
 interface IProps {
   toggleShow: React.Dispatch<React.SetStateAction<boolean>>;
-  type: string;
+  alertText: string;
 }
 
-export default function SuccessAlert({
+export default function ErrorAlert({
   toggleShow,
-  type
+  alertText
 }: IProps): ReactElement {
   return (
     <Alert
-      variant="success"
+      variant="error"
       onClose={() => toggleShow(false)}
       dismissible
       className="mt-2 mb-2"
       transition={Fade}
     >
-      <p>Success! The {type} was created and added to the list</p>
+      <p>{alertText}</p>
     </Alert>
   );
 }

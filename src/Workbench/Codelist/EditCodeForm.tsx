@@ -1,12 +1,17 @@
-import { yupResolver } from '@hookform/resolvers/yup';
+import { joiResolver } from '@hookform/resolvers/joi';
 import React, { ReactElement, useContext, useState } from 'react';
-import { Button, Col, Form, Row } from 'react-bootstrap';
+import Button from 'react-bootstrap/Button';
+import Col from 'react-bootstrap/Col';
+import Form from 'react-bootstrap/Form';
+import Row from 'react-bootstrap/Row';
 import { useForm } from 'react-hook-form';
-import * as yup from 'yup';
+import Joi from 'joi';
 import { useDispatch, useSelector } from 'react-redux';
+import { AiFillDelete } from 'react-icons/ai';
 import { Code } from '../../models/Code';
 
 import {
+  deleteCodeInCodelist,
   editCodeInCodelist,
   putProjectThunk
 } from '../../store/reducers/project-reducer';
@@ -22,9 +27,9 @@ type FormInput = {
   description: string;
 };
 
-const codeSchema = yup.object().shape({
-  title: yup.string().required(),
-  description: yup.string().required()
+const codeSchema = Joi.object().keys({
+  title: Joi.string().required(),
+  description: Joi.string().required()
 });
 
 export default function EditCodeForm({ element }: IProps): ReactElement {
@@ -35,7 +40,7 @@ export default function EditCodeForm({ element }: IProps): ReactElement {
   const [validated] = useState(false);
 
   const { register, handleSubmit, errors } = useForm({
-    resolver: yupResolver(codeSchema)
+    resolver: joiResolver(codeSchema)
   });
   if (!id) {
     return <p>No project selected</p>;
@@ -58,6 +63,17 @@ export default function EditCodeForm({ element }: IProps): ReactElement {
     );
     dispatch(putProjectThunk(id));
     onOpenClose('');
+  };
+
+  const removeCode = () => {
+    dispatch(
+      deleteCodeInCodelist({
+        projectId: id,
+        codelistId: listId,
+        codeId: element.id
+      })
+    );
+    dispatch(putProjectThunk(id));
   };
 
   return (
@@ -106,6 +122,9 @@ export default function EditCodeForm({ element }: IProps): ReactElement {
       <Row>
         <Button className="mt-2  ml-3" type="submit">
           Save
+        </Button>
+        <Button className="mt-2  ml-3" variant="warning" onClick={removeCode}>
+          Delete <AiFillDelete />
         </Button>
       </Row>
     </Form>

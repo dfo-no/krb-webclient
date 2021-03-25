@@ -1,6 +1,6 @@
-import { CodelistAlternative, ValueAlternative } from './Alternatives';
+import { ISelectable } from './ISelectable';
 
-export interface RequirementLayout {
+export interface IVariant {
   id: string;
   requirementText: string;
   instruction: string;
@@ -8,5 +8,5 @@ export interface RequirementLayout {
   use_Spesification: boolean;
   use_Qualification: boolean;
   products: string[];
-  alternatives: (CodelistAlternative | ValueAlternative)[];
+  alternatives: ISelectable[];
 }

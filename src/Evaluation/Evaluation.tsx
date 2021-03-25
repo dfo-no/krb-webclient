@@ -1,23 +1,61 @@
 import React, { ReactElement, useState } from 'react';
-import {
-  Container,
-  Row,
-  Button,
-  Col,
-  InputGroup,
-  Card,
-  Form
-} from 'react-bootstrap';
+import Row from 'react-bootstrap/Row';
+import Button from 'react-bootstrap/Button';
+import Col from 'react-bootstrap/Col';
+import InputGroup from 'react-bootstrap/InputGroup';
+import Card from 'react-bootstrap/Card';
+import Form from 'react-bootstrap/Form';
+import Container from 'react-bootstrap/Container';
 import fileDownload from 'js-file-download';
 import { useForm } from 'react-hook-form';
 import { Bank } from '../models/Bank';
 import { FileDownLoad } from '../models/FileDownLoad';
 
 export default function Evaluation(): ReactElement {
-  const { register, handleSubmit } = useForm();
+  const { register } = useForm();
   const [bankFileUploaded, setBankFileUploaded] = useState(false);
   const [uploadedBank, setUploadedBank] = useState<Bank | null>(null);
   const [responses, setResponses] = useState<FileDownLoad[]>([]);
+
+  const readFileContents = async (file: File) => {
+    return new Promise((resolve, reject) => {
+      const fileReader = new FileReader();
+      fileReader.onload = () => {
+        resolve(fileReader.result);
+      };
+      fileReader.onerror = reject;
+      fileReader.readAsText(file);
+    });
+  };
+
+  const readAllFiles = async (AllFiles: File[]) => {
+    const results = await Promise.all(
+      AllFiles.map(async (file: File) => {
+        const fileContents = await readFileContents(file);
+        return JSON.parse(fileContents as string) as FileDownLoad;
+      })
+    );
+    return results;
+  };
+
+  const handleResponseUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const allFiles: File[] = [];
+    if (e.target.files) {
+      for (let i = 0; i < e.target.files.length; i += 1) {
+        const element: File = e.target.files[i];
+        allFiles.push(element);
+      }
+      readAllFiles(allFiles)
+        .then((result) => {
+          setResponses(result);
+        })
+        .catch((err) => {
+          // TODO: handle error gracefully
+          // eslint-disable-next-line no-alert
+          alert(err);
+        });
+    }
+  };
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const files = event.target.files as FileList;
@@ -37,24 +75,6 @@ export default function Evaluation(): ReactElement {
     }
   };
 
-  const onSubmitResponses = (data: any) => {
-    const ary: FileDownLoad[] = [];
-    for (let i = 0; i < data.responseFiles.length; i += 1) {
-      const reader = new FileReader();
-      reader.onload = (evt) => {
-        if (evt.target?.result) {
-          const content = JSON.parse(
-            evt.target.result.toString()
-          ) as FileDownLoad;
-          ary.push(content);
-          setResponses([...responses, content]);
-        }
-      };
-      const file = data.responseFiles[i];
-      reader.readAsText(file);
-    }
-  };
-
   if (!bankFileUploaded) {
     return (
       <Form>
@@ -65,6 +85,7 @@ export default function Evaluation(): ReactElement {
               onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                 handleChange(e)
               }
+              accept=".json,application/json"
             />
           </InputGroup>
         </Col>
@@ -136,7 +157,6 @@ export default function Evaluation(): ReactElement {
 
   return (
     <Container fluid>
-      <code>{JSON.stringify(responses)}</code>
       <Row className="m-4">
         <Col>
           <h4>{uploadedBank.title}</h4>
@@ -144,14 +164,19 @@ export default function Evaluation(): ReactElement {
         <Col>
           <h6>Upload Responses</h6>
           <InputGroup className="mb-5">
-            <form onSubmit={handleSubmit(onSubmitResponses)}>
-              <input ref={register} type="file" name="responseFiles" multiple />
-              <button type="submit">Submit</button>
+            <form>
+              <input
+                ref={register}
+                type="file"
+                onChange={(e) => handleResponseUpload(e)}
+                name="responseFiles"
+                multiple
+                accept=".json,application/json"
+              />
             </form>
           </InputGroup>
         </Col>
         <Col>
-          <p>Ondownload</p>
           <Button onClick={() => onDownLoad()}>Download</Button>
         </Col>
       </Row>

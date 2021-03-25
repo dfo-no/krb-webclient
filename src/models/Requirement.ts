@@ -1,4 +1,4 @@
-import { RequirementLayout } from './RequirementLayout';
+import { IVariant } from './IVariant';
 import { BaseModel } from './BaseModel';
 import RequirementType from './RequirementType';
 
@@ -7,7 +7,7 @@ export interface Requirement extends BaseModel {
   title: string;
   description: string;
   needId: string;
-  layouts: RequirementLayout[];
+  layouts: IVariant[];
   kind: string;
   requirement_Type: RequirementType;
 }

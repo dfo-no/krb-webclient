@@ -1,6 +1,6 @@
 import React, { ReactElement, useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Button } from 'react-bootstrap';
+import Button from 'react-bootstrap/Button';
 
 import { Need } from '../../models/Need';
 import { RootState } from '../../store/store';
@@ -49,7 +49,7 @@ function NeedPage(): ReactElement {
 
   return (
     <>
-      <h3>Needs</h3>
+      <h3 className="mt-3">Needs</h3>
       <Button
         onClick={() => {
           setToggleEditor(true);

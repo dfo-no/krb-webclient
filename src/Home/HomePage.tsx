@@ -1,5 +1,8 @@
 import React, { ReactElement, useEffect } from 'react';
-import { Container, Row, Col, ListGroup } from 'react-bootstrap';
+import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
+import ListGroup from 'react-bootstrap/ListGroup';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 
@@ -29,17 +32,17 @@ export default function HomePage(): ReactElement {
         </Col>
         <Col>
           <ListGroup variant="flush">
-            <ListGroup.Item>
+            <ListGroup.Item className="mt-3 ">
               <Link to="/workbench">
                 <h5>Editor</h5>
               </Link>
             </ListGroup.Item>
-            <ListGroup.Item>
+            <ListGroup.Item className="mt-3 ">
               <Link to="/responseeditor">
                 <h5>Create response</h5>
               </Link>
             </ListGroup.Item>
-            <ListGroup.Item>
+            <ListGroup.Item className="mt-3 ">
               <Link to="/evaluation">
                 <h5>Create evaluation</h5>
               </Link>

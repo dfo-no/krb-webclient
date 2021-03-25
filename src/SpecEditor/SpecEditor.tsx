@@ -1,14 +1,13 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import React, { ReactElement, useState } from 'react';
-import {
-  Container,
-  Row,
-  Button,
-  Col,
-  InputGroup,
-  FormControl,
-  Card
-} from 'react-bootstrap';
+
+import Container from 'react-bootstrap/Container';
+import Button from 'react-bootstrap/Button';
+import Col from 'react-bootstrap/Col';
+import InputGroup from 'react-bootstrap/InputGroup';
+import FormControl from 'react-bootstrap/FormControl';
+import Card from 'react-bootstrap/Card';
+import Row from 'react-bootstrap/Row';
 import { useSelector } from 'react-redux';
 
 import { useForm } from 'react-hook-form';
@@ -92,7 +91,7 @@ export default function SpecEditor(): ReactElement {
   const needList = (needlist: Need[]) => {
     const needsJsx = needlist.map((need: Need) => {
       return (
-        <>
+        <div key={need.id}>
           <h5>{need.title}</h5>
           {need.requirements.map((c, i) => (
             <div className="ml-5">
@@ -107,7 +106,7 @@ export default function SpecEditor(): ReactElement {
               </label>
             </div>
           ))}
-        </>
+        </div>
       );
     });
     return (

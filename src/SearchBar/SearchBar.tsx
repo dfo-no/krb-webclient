@@ -1,5 +1,6 @@
 import React, { ReactElement, useState } from 'react';
-import { ListGroup, FormControl } from 'react-bootstrap';
+import ListGroup from 'react-bootstrap/ListGroup';
+import FormControl from 'react-bootstrap/FormControl';
 import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 

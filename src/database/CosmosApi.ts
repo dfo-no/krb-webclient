@@ -19,13 +19,9 @@ interface IPartitionKey {
 export class CosmosApi {
   private client: CosmosClient;
 
-  private endpoint: string;
-
   private databaseId: string;
 
   private containerId: string;
-
-  private readWriteKey: string;
 
   private partitionKey: IPartitionKey;
 
@@ -35,25 +31,21 @@ export class CosmosApi {
 
   constructor() {
     if (
-      !process.env.REACT_APP_COSMOS_API_URL ||
       !process.env.REACT_APP_COSMOS_DATABASE ||
       !process.env.REACT_APP_COSMOS_CONTAINER ||
-      !process.env.REACT_APP_COSMOS_KEY
+      !process.env.REACT_APP_COSMOSDB_CONNECTION_STRING
     ) {
       throw Error('Missing credentials for database');
     }
 
-    this.endpoint = process.env.REACT_APP_COSMOS_API_URL;
     this.databaseId = process.env.REACT_APP_COSMOS_DATABASE;
     this.containerId = process.env.REACT_APP_COSMOS_CONTAINER;
-    this.readWriteKey = process.env.REACT_APP_COSMOS_KEY;
 
     // TODO: Make new partitionkey
     this.partitionKey = { kind: 'Hash', paths: ['/type'] };
-    this.client = new CosmosClient({
-      endpoint: this.endpoint,
-      key: this.readWriteKey
-    });
+    this.client = new CosmosClient(
+      process.env.REACT_APP_COSMOSDB_CONNECTION_STRING
+    );
     this.database = this.client.database(this.databaseId);
     this.container = this.database.container(this.containerId);
   }

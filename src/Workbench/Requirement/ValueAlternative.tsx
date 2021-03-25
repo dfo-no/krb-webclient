@@ -1,125 +1,187 @@
-import React, { ReactElement, useState } from 'react';
-import { Accordion, Button, Card, Form, Row } from 'react-bootstrap';
-import { useForm } from 'react-hook-form';
-import { useDispatch } from 'react-redux';
-import { ValueAlternative } from '../../models/Alternatives';
-import { Bank } from '../../models/Bank';
-import { Requirement } from '../../models/Requirement';
-import { RequirementLayout } from '../../models/RequirementLayout';
-import {
-  editRequirementInNeed,
-  putProjectThunk
-} from '../../store/reducers/project-reducer';
+import React, { ReactElement } from 'react';
+import Card from 'react-bootstrap/Card';
+import Form from 'react-bootstrap/Form';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
+import Button from 'react-bootstrap/Button';
 
-interface IProps {
-  alternative: ValueAlternative;
-  project: Bank;
-  layout: RequirementLayout;
-  nIndex: number;
-  requirement: Requirement;
+import { InputProps } from '../../models/InputProps';
+
+interface IProps extends InputProps {
+  item: any;
+  vIx: number;
+  aIx: number;
 }
 
-type FormInput = {
-  min: number;
-  max: number;
-  step: number;
-  unit: string;
-};
-
 export default function Value({
-  alternative,
-  project,
-  layout,
-  nIndex,
-  requirement
+  register,
+  errors,
+  item,
+  vIx,
+  aIx
 }: IProps): ReactElement {
-  const dispatch = useDispatch();
-  const { register, handleSubmit, errors } = useForm();
-  const editValue = (post: FormInput) => {
-    const newAlternative = { ...alternative };
-    newAlternative.step = post.step;
-    newAlternative.min = post.min;
-    newAlternative.max = post.max;
-    newAlternative.unit = post.unit;
-    const newLayout = { ...layout };
-    const newLayoutList = [...requirement.layouts];
-    const layoutindex = requirement.layouts.findIndex(
-      (element) => element.id === layout.id
-    );
-    const alternativeIndex = layout.alternatives.findIndex(
-      (element) => element.id === alternative.id
-    );
-    const newalternatives = [...layout.alternatives];
-    newalternatives[alternativeIndex] = newAlternative;
-    newLayout.alternatives = newalternatives;
-    newLayoutList[layoutindex] = newLayout;
-    const newRequirement = { ...requirement };
-    newRequirement.layouts = newLayoutList;
-    dispatch(
-      editRequirementInNeed({
-        projectId: project.id,
-        needIndex: nIndex,
-        requirement: newRequirement
-      })
-    );
-    dispatch(putProjectThunk(project.id));
-  };
   return (
-    <Card key={alternative.id}>
-      <Accordion.Toggle as={Card.Header} eventKey={alternative.id}>
-        Value
-        {alternative.unit !== '' &&
-          `  Spenn ${alternative.min} - ${alternative.max} ${alternative.unit}, Step ${alternative.step}`}
-      </Accordion.Toggle>
-      <Accordion.Collapse eventKey={alternative.id}>
-        <Card.Body>
-          <Form onSubmit={handleSubmit(editValue)}>
-            <Form.Group as={Row}>
-              <Form.Label className="ml-2">Minimum</Form.Label>
-              <Form.Control
-                className="m-2"
-                type="number"
-                name="min"
-                ref={register}
-                defaultValue={alternative.min}
-              />
-            </Form.Group>
-            <Form.Group as={Row}>
-              <Form.Label className="ml-2">Maximum</Form.Label>
-              <Form.Control
-                className="m-2"
-                type="number"
-                name="max"
-                ref={register}
-                defaultValue={alternative.max}
-              />
-            </Form.Group>
-            <Form.Group as={Row}>
-              <Form.Label className="ml-2">Step</Form.Label>
-              <Form.Control
-                className="m-2"
-                type="number"
-                name="step"
-                ref={register}
-                defaultValue={alternative.step}
-              />
-            </Form.Group>
-            <Form.Group as={Row}>
-              <Form.Label className="ml-2">Unit</Form.Label>
-              <Form.Control
-                className="m-2"
-                type="text"
-                name="unit"
-                ref={register}
-                defaultValue={alternative.unit}
-              />
-              <Button type="submit" className="m-2">
-                Save
-              </Button>
-            </Form.Group>
-          </Form>
-        </Card.Body>
-      </Accordion.Collapse>
+    <Card className="mb-3">
+      <Card.Body>
+        <h6>Alternative: Value</h6>
+        <Form.Control
+          as="input"
+          type="hidden"
+          name={`layouts[${vIx}].alternatives[${aIx}].id`}
+          ref={register}
+          defaultValue={item.id}
+          isInvalid={
+            !!(
+              errors.layouts &&
+              errors.layouts[vIx] &&
+              errors.layouts[vIx].alternatives &&
+              errors.layouts[vIx].alternatives[aIx] &&
+              errors.layouts[vIx].alternatives[aIx].id
+            )
+          }
+        />
+
+        <Form.Control
+          as="input"
+          type="hidden"
+          name={`layouts[${vIx}].alternatives[${aIx}].type`}
+          ref={register}
+          defaultValue={item.type}
+          isInvalid={
+            !!(
+              errors.layouts &&
+              errors.layouts[vIx] &&
+              errors.layouts[vIx].alternatives &&
+              errors.layouts[vIx].alternatives[aIx] &&
+              errors.layouts[vIx].alternatives[aIx].type
+            )
+          }
+        />
+        <Form.Group as={Row}>
+          <Form.Label column sm="2">
+            Minimum
+          </Form.Label>
+          <Col sm="4">
+            <Form.Control
+              type="number"
+              name={`layouts[${vIx}].alternatives[${aIx}].min`}
+              ref={register}
+              defaultValue={item.min}
+              isInvalid={
+                !!(
+                  errors.layouts &&
+                  errors.layouts[vIx] &&
+                  errors.layouts[vIx].alternatives &&
+                  errors.layouts[vIx].alternatives[aIx] &&
+                  errors.layouts[vIx].alternatives[aIx].min
+                )
+              }
+            />
+            {errors.layouts &&
+              errors.layouts[vIx] &&
+              errors.layouts[vIx].alternatives &&
+              errors.layouts[vIx].alternatives[aIx] &&
+              errors.layouts[vIx].alternatives[aIx].min && (
+                <Form.Control.Feedback type="invalid">
+                  {errors.layouts[vIx].alternatives[aIx].min.message}
+                </Form.Control.Feedback>
+              )}
+          </Col>
+        </Form.Group>
+        <Form.Group as={Row}>
+          <Form.Label column sm="2">
+            Maximum
+          </Form.Label>
+          <Col sm="4">
+            <Form.Control
+              type="number"
+              name={`layouts[${vIx}].alternatives[${aIx}].max`}
+              ref={register}
+              defaultValue={item.max}
+              isInvalid={
+                !!(
+                  errors.layouts &&
+                  errors.layouts[vIx] &&
+                  errors.layouts[vIx].alternatives &&
+                  errors.layouts[vIx].alternatives[aIx] &&
+                  errors.layouts[vIx].alternatives[aIx].max
+                )
+              }
+            />
+            {errors.layouts &&
+              errors.layouts[vIx] &&
+              errors.layouts[vIx].alternatives &&
+              errors.layouts[vIx].alternatives[aIx] &&
+              errors.layouts[vIx].alternatives[aIx].max && (
+                <Form.Control.Feedback type="invalid">
+                  {errors.layouts[vIx].alternatives[aIx].max.message}
+                </Form.Control.Feedback>
+              )}
+          </Col>
+        </Form.Group>
+        <Form.Group as={Row}>
+          <Form.Label column sm="2">
+            Step
+          </Form.Label>
+          <Col sm={4}>
+            <Form.Control
+              type="number"
+              name={`layouts[${vIx}].alternatives[${aIx}].step`}
+              ref={register}
+              defaultValue={item.step}
+              isInvalid={
+                !!(
+                  errors.layouts &&
+                  errors.layouts[vIx] &&
+                  errors.layouts[vIx].alternatives &&
+                  errors.layouts[vIx].alternatives[aIx] &&
+                  errors.layouts[vIx].alternatives[aIx].step
+                )
+              }
+            />
+            {errors.layouts &&
+              errors.layouts[vIx] &&
+              errors.layouts[vIx].alternatives &&
+              errors.layouts[vIx].alternatives[aIx] &&
+              errors.layouts[vIx].alternatives[aIx].step && (
+                <Form.Control.Feedback type="invalid">
+                  {errors.layouts[vIx].alternatives[aIx].step.message}
+                </Form.Control.Feedback>
+              )}
+          </Col>
+        </Form.Group>
+        <Form.Group as={Row}>
+          <Form.Label column sm="2">
+            Unit
+          </Form.Label>
+          <Col sm="4">
+            <Form.Control
+              type="input"
+              name={`layouts[${vIx}].alternatives[${aIx}].unit`}
+              ref={register}
+              defaultValue={item.unit}
+              isInvalid={
+                !!(
+                  errors.layouts &&
+                  errors.layouts[vIx] &&
+                  errors.layouts[vIx].alternatives &&
+                  errors.layouts[vIx].alternatives[aIx] &&
+                  errors.layouts[vIx].alternatives[aIx].unit
+                )
+              }
+            />
+            {errors.layouts &&
+              errors.layouts[vIx] &&
+              errors.layouts[vIx].alternatives &&
+              errors.layouts[vIx].alternatives[aIx] &&
+              errors.layouts[vIx].alternatives[aIx].unit && (
+                <Form.Control.Feedback type="invalid">
+                  {errors.layouts[vIx].alternatives[aIx].unit.message}
+                </Form.Control.Feedback>
+              )}
+          </Col>
+        </Form.Group>
+      </Card.Body>
     </Card>
   );
 }

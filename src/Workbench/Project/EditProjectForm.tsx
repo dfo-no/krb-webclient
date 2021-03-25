@@ -1,9 +1,13 @@
-import { yupResolver } from '@hookform/resolvers/yup';
 import React, { ReactElement, useState } from 'react';
-import { Button, Card, Col, Form, Row } from 'react-bootstrap';
+import Button from 'react-bootstrap/Button';
+import Card from 'react-bootstrap/Card';
+import Col from 'react-bootstrap/Col';
+import Form from 'react-bootstrap/Form';
+import Row from 'react-bootstrap/Row';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
-import * as yup from 'yup';
+import Joi from 'joi';
+import { joiResolver } from '@hookform/resolvers/joi';
 import { Bank } from '../../models/Bank';
 
 import {
@@ -22,9 +26,9 @@ type FormInput = {
   description: string;
 };
 
-const projectSchema = yup.object().shape({
-  title: yup.string().required(),
-  description: yup.string().required()
+const projectSchema = Joi.object().keys({
+  title: Joi.string().required(),
+  description: Joi.string().allow(null, '').required()
 });
 
 export default function EditProjectForm({
@@ -36,7 +40,7 @@ export default function EditProjectForm({
   const [validated] = useState(false);
 
   const { register, handleSubmit, errors } = useForm({
-    resolver: yupResolver(projectSchema)
+    resolver: joiResolver(projectSchema)
   });
 
   if (!id) {
