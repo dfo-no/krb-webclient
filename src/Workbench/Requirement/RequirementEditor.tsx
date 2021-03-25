@@ -1,9 +1,8 @@
-import React, { ReactElement, useState } from 'react';
+import React, { ChangeEvent, ReactElement, useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import Card from 'react-bootstrap/Card';
 
 import { useRouteMatch } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
@@ -18,10 +17,12 @@ import { selectRequirement } from '../../store/reducers/selectedRequirement-redu
 import { selectNeed } from '../../store/reducers/selectedNeed-reducer';
 import {
   editRequirementInNeed,
+  editRequirementParentNeed,
   putProjectThunk
 } from '../../store/reducers/project-reducer';
 import VariantArray from './VariantArray';
 import { Requirement } from '../../models/Requirement';
+import { Need } from '../../models/Need';
 
 const valueSchema = Joi.object().keys({
   id: Joi.string().required(),
@@ -98,10 +99,11 @@ export default function RequirementEditor(): ReactElement {
   const projectMatch = useRouteMatch<RouteParams>(
     '/workbench/:projectId/need/:needId/requirement/:requirementId/edit'
   );
+  const { needId } = useSelector((state: RootState) => state.selectNeed);
 
-  if (projectMatch?.params.needId) {
+  /* if (projectMatch?.params.needId && projectMatch?.params.needId === needId) {
     dispatch(selectNeed(projectMatch?.params.needId));
-  }
+  } */
 
   if (projectMatch?.params.requirementId) {
     dispatch(selectRequirement(projectMatch?.params.requirementId));
@@ -112,8 +114,6 @@ export default function RequirementEditor(): ReactElement {
   const { reqId } = useSelector(
     (state: RootState) => state.selectedRequirement
   );
-
-  const { needId } = useSelector((state: RootState) => state.selectNeed);
 
   const project = Utils.ensure(list.find((element) => element.id === id));
   const need = Utils.ensure(
@@ -143,14 +143,20 @@ export default function RequirementEditor(): ReactElement {
   }
 
   const saveRequirement = (post: Requirement) => {
+    const oldReqIndex = Utils.ensure(
+      need.requirements.findIndex((element) => element.id === reqId)
+    );
     dispatch(
       editRequirementInNeed({
         projectId: project.id,
-        needIndex: nIndex,
-        requirement: post
+        requirement: post,
+        oldNeedId: need.id,
+        needId: post.needId,
+        requirementIndex: oldReqIndex
       })
     );
     dispatch(putProjectThunk(project.id));
+    dispatch(selectNeed(post.needId));
   };
 
   const deleteVariant = (variant: IVariant) => {
@@ -159,14 +165,18 @@ export default function RequirementEditor(): ReactElement {
       (element) => element.id !== variant.id
     );
     editRequirement.layouts = newVariants;
-    dispatch(
-      editRequirementInNeed({
-        projectId: project.id,
-        needIndex: nIndex,
-        requirement: editRequirement
-      })
-    );
     dispatch(putProjectThunk(project.id));
+  };
+
+  const needOptions = (needList: Need[]) => {
+    const result = needList.map((element: any) => {
+      return (
+        <option key={element.id} value={element.id}>
+          {element.title}
+        </option>
+      );
+    });
+    return result;
   };
 
   return (
@@ -246,6 +256,27 @@ export default function RequirementEditor(): ReactElement {
           </Col>
           <Col sm={3}>
             <Button type="submit">Save</Button>
+          </Col>
+        </Form.Group>
+        <Form.Group as={Row}>
+          <Form.Label column sm={1}>
+            Need
+          </Form.Label>
+          <Col sm={8}>
+            <Form.Control
+              as="select"
+              name="needId"
+              ref={register}
+              defaultValue={requirement.needId}
+              isInvalid={!!errors.needId}
+            >
+              {needOptions(project.needs)}
+            </Form.Control>
+            {errors.needId && (
+              <Form.Control.Feedback as={Col} type="invalid">
+                {errors.needId?.message}
+              </Form.Control.Feedback>
+            )}
           </Col>
         </Form.Group>
 

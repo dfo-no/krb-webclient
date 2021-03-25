@@ -62,14 +62,13 @@ export default function EditRequirementForm({
     requirement.title = post.title;
     requirement.description = post.description;
     reqList[index] = requirement;
-    const needIndex = needList.findIndex(
-      (needElement) => needElement.id === need.id
-    );
     dispatch(
       editRequirementInNeed({
         projectId: id,
-        needIndex,
-        requirement
+        oldNeedId: need.id,
+        needId: need.id,
+        requirement,
+        requirementIndex: index
       })
     );
     dispatch(putProjectThunk(id));
