@@ -101,9 +101,9 @@ export default function RequirementEditor(): ReactElement {
   );
   const { needId } = useSelector((state: RootState) => state.selectNeed);
 
-  /* if (projectMatch?.params.needId && projectMatch?.params.needId === needId) {
+  if (projectMatch?.params.needId && projectMatch?.params.needId === needId) {
     dispatch(selectNeed(projectMatch?.params.needId));
-  } */
+  }
 
   if (projectMatch?.params.requirementId) {
     dispatch(selectRequirement(projectMatch?.params.requirementId));
@@ -123,6 +123,7 @@ export default function RequirementEditor(): ReactElement {
   const requirement = Utils.ensure(
     need.requirements.find((element) => element.id === reqId)
   );
+  console.log(need);
 
   const defaultValues: Requirement = { ...requirement };
 
@@ -142,11 +143,11 @@ export default function RequirementEditor(): ReactElement {
     return <p>You have to select a requirement to work with</p>;
   }
 
-  const saveRequirement = (post: Requirement) => {
+  const saveRequirement = async (post: Requirement) => {
     const oldReqIndex = Utils.ensure(
       need.requirements.findIndex((element) => element.id === reqId)
     );
-    dispatch(
+    await dispatch(
       editRequirementInNeed({
         projectId: project.id,
         requirement: post,
@@ -155,8 +156,8 @@ export default function RequirementEditor(): ReactElement {
         requirementIndex: oldReqIndex
       })
     );
-    dispatch(putProjectThunk(project.id));
-    dispatch(selectNeed(post.needId));
+    await dispatch(putProjectThunk(project.id));
+    await dispatch(selectNeed(post.needId));
   };
 
   const deleteVariant = (variant: IVariant) => {
