@@ -30,7 +30,7 @@ export default function AlternativeArray({
   prefix,
   project
 }: IProps): ReactElement {
-  const { fields, append } = useFieldArray({
+  const { fields, append, remove } = useFieldArray({
     keyName: 'guid',
     control,
     name: `${prefix}`
