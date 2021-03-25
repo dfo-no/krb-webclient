@@ -8,9 +8,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import Joi from 'joi';
 import { joiResolver } from '@hookform/resolvers/joi';
 import { Link } from 'react-router-dom';
+import { AiFillDelete } from 'react-icons/ai';
 import { AccordionContext } from '../../NestableHierarchy/AccordionContext';
 
 import {
+  deleteRequirement,
   editRequirementInNeed,
   putProjectThunk
 } from '../../store/reducers/project-reducer';
@@ -75,6 +77,20 @@ export default function EditRequirementForm({
     onOpenClose('');
   };
 
+  const removeRequirement = () => {
+    const needIndex = needList.findIndex(
+      (needElement) => needElement.id === need.id
+    );
+    dispatch(
+      deleteRequirement({
+        id,
+        needIndex,
+        requirementIndex: index
+      })
+    );
+    dispatch(putProjectThunk(id));
+  };
+
   return (
     <Form
       onSubmit={handleSubmit(edit)}
@@ -128,6 +144,13 @@ export default function EditRequirementForm({
         >
           <Button className="ml-4 mt-2 ">Edit</Button>
         </Link>
+        <Button
+          className="mt-2  ml-3"
+          variant="warning"
+          onClick={removeRequirement}
+        >
+          Delete <AiFillDelete />
+        </Button>
       </Row>
     </Form>
   );
