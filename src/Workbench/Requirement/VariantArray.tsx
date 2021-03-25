@@ -5,6 +5,7 @@ import Form from 'react-bootstrap/Form';
 import { useFieldArray } from 'react-hook-form';
 
 import { v4 as uuidv4 } from 'uuid';
+import Row from 'react-bootstrap/Row';
 import { InputProps } from '../../models/InputProps';
 import styles from './Variant.module.scss';
 
@@ -24,7 +25,7 @@ export default function VariantArray({
   getValues,
   setValue
 }: IProps): ReactElement {
-  const { fields, append } = useFieldArray({
+  const { fields, append, remove } = useFieldArray({
     keyName: 'guid',
     control,
     name: 'layouts'
@@ -69,7 +70,7 @@ export default function VariantArray({
   };
 
   const productHierarchy = (productList: Product[]) => {
-    const newList = Utils.unflatten(productList);
+    const newList = Utils.unflatten(productList)[0];
     let children: any;
     const result = newList.map((element: any) => {
       if (element.children.length > 0) {
@@ -112,7 +113,19 @@ export default function VariantArray({
         return (
           <Card className="mb-3">
             <Card.Body key={item.id}>
-              <h5>Variant</h5>
+              <Row className="d-flex justify-content-between">
+                <h5>Variant</h5>
+                <Button
+                  className="mb-3"
+                  type="button"
+                  onClick={() => {
+                    remove(index);
+                  }}
+                >
+                  Delete
+                </Button>
+              </Row>
+
               <Form.Control
                 readOnly
                 as="input"

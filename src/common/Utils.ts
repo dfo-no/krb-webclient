@@ -30,7 +30,9 @@ class Utils {
   }
 
   // make Generic and make Test".
-  static unflatten<T extends Hierarchical>(items: T[]): T[] {
+  static unflatten<T extends Hierarchical>(
+    items: T[]
+  ): [T[], { [key: string]: T }] {
     const hierarchy: T[] = [];
     const mappedArr: { [key: string]: T } = {};
 
@@ -57,8 +59,21 @@ class Utils {
         }
       }
     });
+    return [hierarchy, mappedArr];
+  }
 
-    return hierarchy;
+  static checkIfParent<T extends Hierarchical>(
+    items: T[],
+    id: string
+  ): boolean {
+    const mappedArray = this.unflatten(items)[1];
+    const childArray = mappedArray[id].children;
+    if (childArray === undefined) {
+      return false;
+    }
+    if (childArray.length > 0) return true;
+
+    return false;
   }
 }
 

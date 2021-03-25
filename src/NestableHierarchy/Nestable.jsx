@@ -47,7 +47,7 @@ export default function NestableHierarcy({
     });
     return flattenedCollection;
   };
-  const hierarchyList = Utils.unflatten(inputlist);
+  const hierarchyList = Utils.unflatten(inputlist)[0];
   const saveOrder = (items) => {
     const itemList = flatten(items);
     dispatchfunc(projectId, itemList);
