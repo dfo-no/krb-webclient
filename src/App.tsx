@@ -18,6 +18,8 @@ import SpecEditor from './SpecEditor/SpecEditor';
 import Evaluation from './Evaluation/Evaluation';
 import { msalConfig } from './authentication/authConfig';
 import PageLayout from './PageLayout';
+import SpecPage from './SpecEditor/SpecPage';
+import SpecModule from './SpecEditor/SpecModule';
 
 const msalInstance = new PublicClientApplication(msalConfig);
 
@@ -30,13 +32,11 @@ function App(): ReactElement {
           <Route exact path="/">
             <HomePage />
           </Route>
-          <Route exact path="/bank/:bankId">
-            <BankPage />
-          </Route>
           <PageLayout>
             <AuthenticatedTemplate>
               <Route path="/workbench" component={WorkbenchModule} />
-              <Route path="/speceditor/:id" component={SpecEditor} />
+              <Route exact path="/speceditor" component={SpecPage} />
+              <Route exact path="/speceditor/:id" component={SpecModule} />
               <Route path="/responseeditor" component={ResponseEditor} />
               <Route path="/evaluation" component={Evaluation} />
             </AuthenticatedTemplate>

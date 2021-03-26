@@ -1,0 +1,12 @@
+@import '../dfo-theme.scss';
+
+.sidebar {
+  border-right: $dfo-light-border;
+  background-color: $light;
+  height: 100%;
+  &__item {
+    &__active {
+      color: $purple;
+    }
+  }
+}
