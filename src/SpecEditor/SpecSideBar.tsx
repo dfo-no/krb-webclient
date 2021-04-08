@@ -38,9 +38,9 @@ function SpecSideBar(): ReactElement {
 
   const { list } = useSelector((state: RootState) => state.bank);
 
-  const match = useRouteMatch<RouteParams>('/speceditor/:projectId');
+  const match = useRouteMatch<RouteParams>('/speceditor/:bankId');
 
-  const currentUrl = match?.url ? match.url : '/speceditor/:id';
+  const currentUrl = match?.url ? match.url : `/speceditor/${id}`;
   const isProjectSelected = !!id;
 
   const selectProject = list.find((bank) => bank.id === id);
