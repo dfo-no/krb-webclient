@@ -9,6 +9,7 @@ import { selectBank } from '../store/reducers/selectedBank-reducer';
 import { RootState } from '../store/store';
 import ProductSpecEditor from './ProductSpecEditor';
 import ProductSpecList from './ProductSpecList';
+import RequirementSpecEditor from './RequirementSpecEditor';
 import SpecEditor from './SpecEditor';
 import SpecSideBar from './SpecSideBar';
 
@@ -34,7 +35,7 @@ export default function SpecModule(): ReactElement {
         <Col>
           <Switch>
             <Route exact path="/speceditor/:id/requirement">
-              <SpecEditor />
+              <RequirementSpecEditor />
             </Route>
             <Route exact path="/speceditor/:id/product">
               <ProductSpecList />

@@ -221,7 +221,7 @@ export default function ProductPreview(): ReactElement {
   };
 
   const needHierarchy = (needsList: Need[]) => {
-    const newList = Utils.unflatten(needsList);
+    const newList = Utils.unflatten(needsList)[0];
     let children: any;
     let requirements: Requirement[] = [];
     const hierarchy = newList.map((element: any) => {
