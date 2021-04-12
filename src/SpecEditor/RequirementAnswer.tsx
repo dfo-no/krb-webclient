@@ -18,7 +18,7 @@ type InputProps = {
 
 type FormValue = {
   alternative: string;
-  weigth: number;
+  weight: number;
 };
 
 export default function RequirementAnswer({
@@ -30,8 +30,8 @@ export default function RequirementAnswer({
   const saveAnswer = (post: FormValue) => {
     const newAnswer = {
       id: uuidv4(),
-      alternative_id: post.alternative,
-      weigth: post.weigth
+      alternativeId: post.alternative,
+      weight: post.weight
     };
     dispatch(addAnswer({ answer: newAnswer }));
   };

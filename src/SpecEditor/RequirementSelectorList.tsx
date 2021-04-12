@@ -1,5 +1,4 @@
 import React, { ReactElement } from 'react';
-import { Card } from 'react-bootstrap';
 import ListGroup from 'react-bootstrap/ListGroup';
 import Row from 'react-bootstrap/Row';
 import { BsArrowReturnRight } from 'react-icons/bs';
@@ -11,7 +10,6 @@ import styles from './RequirementView.module.scss';
 
 interface InputProps {
   needList: Need[];
-  // eslint-disable-next-line react/require-default-props
 }
 
 export default function RequirementView({
