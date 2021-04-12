@@ -19,7 +19,7 @@ import { RootState } from '../store/store';
 import styles from './ProductSpecEditor.module.scss';
 import MODELTYPE from '../models/ModelType';
 import { selectSpecProduct } from '../store/reducers/selectedSpecProduct-reducer';
-import RequirementView from './RequirementView';
+import RequirementView from './RequirementSelectorList';
 
 type FormInput = {
   product: string;

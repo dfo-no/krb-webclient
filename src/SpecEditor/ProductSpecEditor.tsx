@@ -11,6 +11,7 @@ import Utils from '../common/Utils';
 import { SpecificationProduct } from '../models/SpecificationProduct';
 import { editSpecProduct } from '../store/reducers/spesification-reducer';
 import { RootState } from '../store/store';
+import ProductRequirementSelectorList from './ProductRequirementSelectorList';
 
 type FormInput = {
   title: string;
@@ -20,6 +21,7 @@ type FormInput = {
 
 export default function ProductSpecEditor(): ReactElement {
   const { id } = useSelector((state: RootState) => state.selectedBank);
+  const { list } = useSelector((state: RootState) => state.bank);
   const { products } = useSelector((state: RootState) => state.specification);
   const { productId } = useSelector(
     (state: RootState) => state.selectedSpecProduct
@@ -38,7 +40,7 @@ export default function ProductSpecEditor(): ReactElement {
   const specProduct = Utils.ensure(
     products.find((product: SpecificationProduct) => product.id === productId)
   );
-
+  const bankSelected = Utils.ensure(list.find((bank) => bank.id === id));
   const addProductToSpecification = (post: FormInput) => {
     const newProduct: SpecificationProduct = {
       ...specProduct
@@ -103,6 +105,12 @@ export default function ProductSpecEditor(): ReactElement {
           </Form>
         </Card.Body>
       </Card>
+      <Row className="m-4">
+        <ProductRequirementSelectorList
+          product={specProduct}
+          selectedBank={bankSelected}
+        />
+      </Row>
     </Container>
   );
 }
