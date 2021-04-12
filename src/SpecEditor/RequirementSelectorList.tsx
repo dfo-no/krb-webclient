@@ -10,7 +10,6 @@ import styles from './RequirementView.module.scss';
 
 interface InputProps {
   needList: Need[];
-  // eslint-disable-next-line react/require-default-props
 }
 
 export default function RequirementView({
