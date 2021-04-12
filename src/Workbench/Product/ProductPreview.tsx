@@ -7,7 +7,6 @@ import Row from 'react-bootstrap/Row';
 import { BsArrowReturnRight, BsPencil } from 'react-icons/bs';
 import { Link } from 'react-router-dom';
 import { RootState } from '../../store/store';
-
 import Utils from '../../common/Utils';
 import { Bank } from '../../models/Bank';
 import { Product } from '../../models/Product';

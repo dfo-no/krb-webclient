@@ -12,14 +12,11 @@ import styles from './RequirementView.module.scss';
 interface InputProps {
   needList: Need[];
   // eslint-disable-next-line react/require-default-props
-  requirementList?: Requirement[];
 }
 
 export default function RequirementView({
-  needList,
-  requirementList = []
+  needList
 }: InputProps): ReactElement {
-  const [reqs, setReqs] = useState();
   const requirements = (requirementArray: Requirement[]) => {
     return requirementArray.map((req) => {
       return <RequirementAnswer requirement={req} />;
