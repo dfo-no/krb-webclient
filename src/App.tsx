@@ -22,7 +22,10 @@ import PageLayout from './PageLayout';
 import SpecPage from './SpecEditor/SpecPage';
 import SpecModule from './SpecEditor/SpecModule';
 import ProductSpecList from './SpecEditor/ProductSpecList';
+<<<<<<< HEAD
+=======
 import { RootState } from './store/store';
+>>>>>>> b382928ba10a1e7910f384e1eed0324bd5eb5550
 
 const msalInstance = new PublicClientApplication(msalConfig);
 
@@ -67,6 +70,26 @@ function App(): ReactElement {
     <div className={styles.App}>
       <MsalProvider instance={msalInstance}>
         <Header />
+<<<<<<< HEAD
+        <Switch>
+          <Route exact path="/">
+            <HomePage />
+          </Route>
+          <PageLayout>
+            <AuthenticatedTemplate>
+              <Route path="/workbench" component={WorkbenchModule} />
+              <Route exact path="/speceditor" component={SpecPage} />
+              <Route path="/speceditor/:id" component={SpecModule} />
+              <Route path="/responseeditor" component={ResponseEditor} />
+              <Route path="/evaluation" component={Evaluation} />
+            </AuthenticatedTemplate>
+            <UnauthenticatedTemplate>
+              <h5 className="card-title">Please sign-in to access this page</h5>
+            </UnauthenticatedTemplate>
+          </PageLayout>
+        </Switch>
+=======
+>>>>>>> b382928ba10a1e7910f384e1eed0324bd5eb5550
       </MsalProvider>
       {renderContent()}
     </div>

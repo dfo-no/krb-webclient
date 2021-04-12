@@ -34,6 +34,39 @@ class Utils {
     return string.charAt(0).toUpperCase() + string.slice(1);
   }
 
+  // make Generic and make Test".
+  static unflatten<T extends Hierarchical>(
+    items: T[]
+  ): [T[], { [key: string]: T }] {
+    const hierarchy: T[] = [];
+    const mappedArr: { [key: string]: T } = {};
+
+    items.forEach((item) => {
+      const Id = item.id;
+      if (!Object.prototype.hasOwnProperty.call(mappedArr, Id)) {
+        mappedArr[Id] = { ...item };
+        mappedArr[Id].children = [];
+      }
+    });
+    Object.keys(mappedArr).forEach((key) => {
+      if (Object.prototype.hasOwnProperty.call(mappedArr, key)) {
+        const mappedElem = mappedArr[key];
+
+        if (mappedElem.parent) {
+          const parentId = mappedElem.parent;
+          const parent = mappedArr[parentId];
+          if (!parent.children) {
+            parent.children = [];
+          }
+          parent.children.push(mappedElem);
+        } else {
+          hierarchy.push(mappedElem);
+        }
+      }
+    });
+    return [hierarchy, mappedArr];
+  }
+
   static findNeedParents(
     element: Need,
     parents: Need[],
@@ -77,14 +110,13 @@ class Utils {
   }
 
   static findAssociatedRequirements(
-    needs: Need[],
-    selectedProject: Bank,
-    selectedProduct: Product
+    selectedProduct: Product,
+    selectedProject: Bank
   ): [{ [key: string]: Requirement[] }, Need[], IVariant[]] {
     const relevantRequirements: { [key: string]: Requirement[] } = {};
     let needList: Need[] = [];
     const layoutList: IVariant[] = [];
-    needs.forEach((element: Need) => {
+    selectedProject.needs.forEach((element: Need) => {
       element.requirements.forEach((req: Requirement) => {
         req.layouts.forEach((layout: IVariant) => {
           if (
@@ -132,39 +164,6 @@ class Utils {
       });
     });
     return [relevantRequirements, needList, layoutList];
-  }
-
-  // make Generic and make Test".
-  static unflatten<T extends Hierarchical>(
-    items: T[]
-  ): [T[], { [key: string]: T }] {
-    const hierarchy: T[] = [];
-    const mappedArr: { [key: string]: T } = {};
-
-    items.forEach((item) => {
-      const Id = item.id;
-      if (!Object.prototype.hasOwnProperty.call(mappedArr, Id)) {
-        mappedArr[Id] = { ...item };
-        mappedArr[Id].children = [];
-      }
-    });
-    Object.keys(mappedArr).forEach((key) => {
-      if (Object.prototype.hasOwnProperty.call(mappedArr, key)) {
-        const mappedElem = mappedArr[key];
-
-        if (mappedElem.parent) {
-          const parentId = mappedElem.parent;
-          const parent = mappedArr[parentId];
-          if (!parent.children) {
-            parent.children = [];
-          }
-          parent.children.push(mappedElem);
-        } else {
-          hierarchy.push(mappedElem);
-        }
-      }
-    });
-    return [hierarchy, mappedArr];
   }
 
   static checkIfParent<T extends Hierarchical>(
