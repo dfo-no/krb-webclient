@@ -7,6 +7,8 @@ import { Route, Switch, useRouteMatch } from 'react-router';
 import NotFound from '../NotFound';
 import { selectBank } from '../store/reducers/selectedBank-reducer';
 import { RootState } from '../store/store';
+import ProductSpecEditor from './ProductSpecEditor';
+import ProductSpecList from './ProductSpecList';
 import SpecEditor from './SpecEditor';
 import SpecSideBar from './SpecSideBar';
 
@@ -31,16 +33,19 @@ export default function SpecModule(): ReactElement {
         </Col>
         <Col>
           <Switch>
+            <Route exact path="/speceditor/:id/requirement">
+              <SpecEditor />
+            </Route>
+            <Route exact path="/speceditor/:id/product">
+              <ProductSpecList />
+            </Route>
+            <Route exact path="/speceditor/:id/product/:productid">
+              <ProductSpecEditor />
+            </Route>
+            <Route exact path="/speceditor/:id/download">
+              <SpecEditor />
+            </Route>
             <Route exact path="/speceditor/:id">
-              <SpecEditor />
-            </Route>
-            <Route exact path="/speceditor/:projectId/requirement">
-              <SpecEditor />
-            </Route>
-            <Route exact path="/speceditor/:projectId/product">
-              <SpecEditor />
-            </Route>
-            <Route exact path="/speceditor/:projectId/download">
               <SpecEditor />
             </Route>
             <Route>

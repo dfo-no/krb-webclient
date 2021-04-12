@@ -8,9 +8,9 @@ import { useSelector } from 'react-redux';
 
 import { useForm } from 'react-hook-form';
 import fileDownload from 'js-file-download';
-import Col from 'react-bootstrap/esm/Col';
+import Col from 'react-bootstrap/Col';
 import { Link } from 'react-router-dom';
-import Form from 'react-bootstrap/esm/Form';
+import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/esm/InputGroup';
 import { Requirement } from '../models/Requirement';
 import { Need } from '../models/Need';
