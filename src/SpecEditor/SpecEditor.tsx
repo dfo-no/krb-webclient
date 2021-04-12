@@ -12,7 +12,7 @@ import { useSelector } from 'react-redux';
 
 import { useForm } from 'react-hook-form';
 import fileDownload from 'js-file-download';
-import { Form } from 'react-bootstrap';
+import Form from 'react-bootstrap/Form';
 import { Requirement } from '../models/Requirement';
 import { Need } from '../models/Need';
 import { RootState } from '../store/store';
