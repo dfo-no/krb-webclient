@@ -15,13 +15,11 @@ import HomePage from './Home/HomePage';
 import BankPage from './Home/BankPage';
 import WorkbenchModule from './Workbench/WorkbenchModule';
 import ResponseEditor from './ResponseEditor/ResponseEditor';
-import SpecEditor from './SpecEditor/SpecEditor';
 import Evaluation from './Evaluation/Evaluation';
 import { msalConfig } from './authentication/authConfig';
 import PageLayout from './PageLayout';
 import SpecPage from './SpecEditor/SpecPage';
 import SpecModule from './SpecEditor/SpecModule';
-import ProductSpecList from './SpecEditor/ProductSpecList';
 import { RootState } from './store/store';
 
 const msalInstance = new PublicClientApplication(msalConfig);
