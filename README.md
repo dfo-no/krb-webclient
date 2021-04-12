@@ -44,3 +44,5 @@ You don’t have to ever use `eject`. The curated feature set is suitable for sm
 You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
 To learn React, check out the [React documentation](https://reactjs.org/).
+
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=dfo-no_krb-webclient&metric=alert_status&token=1177faf85ecdecd9898ed5cff839c98c71a4f411)](https://sonarcloud.io/dashboard?id=dfo-no_krb-webclient)
