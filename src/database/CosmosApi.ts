@@ -51,33 +51,29 @@ export class CosmosApi {
   }
 
   async createDatabaseIfNotExists(): Promise<DatabaseResponse> {
-    const result = await this.client.databases.createIfNotExists({
+    return this.client.databases.createIfNotExists({
       id: this.databaseId
     });
-    return result;
   }
 
   /**
    * Read the database definition
    */
   async readDatabase(): Promise<DatabaseResponse> {
-    const result = await this.database.read();
-    return result;
+    return this.database.read();
   }
 
   async createContainerIfNotExists(): Promise<ContainerResponse> {
-    const result = await this.client
+    return this.client
       .database(this.databaseId)
       .containers.createIfNotExists(
         { id: this.containerId, partitionKey: this.partitionKey },
         { offerThroughput: 400 }
       );
-    return result;
   }
 
   async readContainer(): Promise<ContainerResponse> {
-    const result = await this.container.read();
-    return result;
+    return this.container.read();
   }
 
   /**
@@ -94,28 +90,23 @@ export class CosmosApi {
       ]
     };
 
-    const result = await this.container.items.query(querySpec).fetchAll();
-    return result;
+    return this.container.items.query(querySpec).fetchAll();
   }
 
   async createBank(bank: Bank): Promise<ItemResponse<Bank>> {
-    const result = await this.container.items.upsert<Bank>(bank);
-    return result;
+    return this.container.items.upsert<Bank>(bank);
   }
 
   async readBank(id: string): Promise<ItemResponse<Bank>> {
-    const result = await this.container.item(id).read<Bank>();
-    return result;
+    return this.container.item(id).read<Bank>();
   }
 
   async replaceBank(bank: Bank): Promise<ItemResponse<ItemDefinition>> {
-    const result = await this.container.item(bank.id).replace({ ...bank });
-    return result;
+    return this.container.item(bank.id).replace({ ...bank });
   }
 
   async deleteBank(id: string): Promise<ItemResponse<ItemDefinition>> {
-    const result = await this.container.item(id).delete();
-    return result;
+    return this.container.item(id).delete();
   }
 
   async fetchAllBanks(): Promise<FeedResponse<Bank[]>> {
@@ -123,8 +114,7 @@ export class CosmosApi {
       query: "SELECT * FROM c WHERE c.type = 'bank' AND c.publishedDate != ''"
     };
 
-    const result = this.container.items.query<Bank[]>(querySpec).fetchAll();
-    return result;
+    return this.container.items.query<Bank[]>(querySpec).fetchAll();
   }
 
   async fetchAllProjects(): Promise<FeedResponse<Bank[]>> {
@@ -133,8 +123,7 @@ export class CosmosApi {
         "SELECT * FROM c WHERE c.type='bank' AND (NOT IS_DEFINED(c.publishedDate) OR c.publishedDate = '')"
     };
 
-    const result = this.container.items.query<Bank[]>(querySpec).fetchAll();
-    return result;
+    return this.container.items.query<Bank[]>(querySpec).fetchAll();
   }
 }
 
