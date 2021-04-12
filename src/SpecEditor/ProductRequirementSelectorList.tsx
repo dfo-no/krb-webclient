@@ -1,5 +1,4 @@
 import React, { ReactElement } from 'react';
-import { Card } from 'react-bootstrap';
 import ListGroup from 'react-bootstrap/ListGroup';
 import Row from 'react-bootstrap/Row';
 import { BsArrowReturnRight } from 'react-icons/bs';
@@ -29,11 +28,7 @@ export default function ProductRequirementSelectorList({
   const [
     associatedRequirements,
     associatedNeeds
-  ] = Utils.findAssociatedRequirements(
-    selectedBank.needs,
-    product.originProduct,
-    selectedBank
-  );
+  ] = Utils.findAssociatedRequirements(product.originProduct, selectedBank);
   const childrenHierarchy = (listofneed: any[], level: number) => {
     let n = level;
     let children: any;

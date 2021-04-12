@@ -34,106 +34,6 @@ class Utils {
     return string.charAt(0).toUpperCase() + string.slice(1);
   }
 
-  static findNeedParents(
-    element: Need,
-    parents: Need[],
-    selectedProject: Bank
-  ): Need[] {
-    const parentList = parents;
-    const parentNeed = Utils.ensure(
-      selectedProject.needs.find((need: Need) => need.id === element.parent)
-    );
-    parentList.push(parentNeed);
-    if (parentNeed.parent !== '') {
-      Utils.findNeedParents(parentNeed, parentList, selectedProject);
-    }
-    return parentList;
-  }
-
-  static checkParentInProductList(
-    products: string[],
-    parentId: string,
-    selectedProject: Bank
-  ): boolean {
-    if (parentId === '') return false;
-    const parentProduct = Utils.ensure(
-      selectedProject.products.find(
-        (product: Product) => product.id === parentId
-      )
-    );
-    if (products.includes(parentId)) {
-      return true;
-    }
-
-    if (parentProduct.parent !== '') {
-      return Utils.checkParentInProductList(
-        products,
-        parentProduct.parent,
-        selectedProject
-      );
-    }
-
-    return false;
-  }
-
-  static findAssociatedRequirements(
-    needs: Need[],
-    selectedProject: Bank,
-    selectedProduct: Product
-  ): [{ [key: string]: Requirement[] }, Need[], IVariant[]] {
-    const relevantRequirements: { [key: string]: Requirement[] } = {};
-    let needList: Need[] = [];
-    const layoutList: IVariant[] = [];
-    needs.forEach((element: Need) => {
-      element.requirements.forEach((req: Requirement) => {
-        req.layouts.forEach((layout: IVariant) => {
-          if (
-            layout.products.includes(selectedProduct.id) ||
-            Utils.checkParentInProductList(
-              layout.products,
-              selectedProduct.parent,
-              selectedProject
-            )
-          ) {
-            layoutList.push(layout);
-            if (element.id in relevantRequirements) {
-              const prevArray = relevantRequirements[element.id];
-              relevantRequirements[element.id] = [...prevArray, req];
-              needList.push(element);
-              if (
-                !needList.some((e) => e.id === element.parent) &&
-                element.parent.length > 0
-              ) {
-                const parentNeed = Utils.ensure(
-                  selectedProject.needs.find(
-                    (need: Need) => need.id === element.parent
-                  )
-                );
-                needList.push(parentNeed);
-              }
-            } else {
-              relevantRequirements[element.id] = [];
-              relevantRequirements[element.id] = [req];
-              needList.push(element);
-              if (
-                !needList.some((e) => e.id === element.parent) &&
-                element.parent.length > 0
-              ) {
-                const parentList = Utils.findNeedParents(
-                  element,
-                  [],
-                  selectedProject
-                );
-                needList = [...needList, ...parentList];
-              }
-            }
-          }
-        });
-      });
-    });
-    return [relevantRequirements, needList, layoutList];
-  }
-
   // make Generic and make Test".
   static unflatten<T extends Hierarchical>(
     items: T[]
@@ -210,14 +110,13 @@ class Utils {
   }
 
   static findAssociatedRequirements(
-    needs: Need[],
     selectedProduct: Product,
     selectedProject: Bank
   ): [{ [key: string]: Requirement[] }, Need[], IVariant[]] {
     const relevantRequirements: { [key: string]: Requirement[] } = {};
     let needList: Need[] = [];
     const layoutList: IVariant[] = [];
-    needs.forEach((element: Need) => {
+    selectedProject.needs.forEach((element: Need) => {
       element.requirements.forEach((req: Requirement) => {
         req.layouts.forEach((layout: IVariant) => {
           if (
