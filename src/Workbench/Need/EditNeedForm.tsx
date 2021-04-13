@@ -7,8 +7,8 @@ import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import { joiResolver } from '@hookform/resolvers/joi';
 import Joi from 'joi';
+import { BsTrashFill } from 'react-icons/bs';
 
-import { AiFillDelete } from 'react-icons/ai';
 import { Need } from '../../models/Need';
 import {
   deleteNeed,
@@ -132,7 +132,7 @@ function EditNeedForm({ element }: IProps): ReactElement {
         Save
       </Button>
       <Button className="mt-2  ml-3" variant="warning" onClick={removeNeed}>
-        Delete <AiFillDelete />
+        Delete <BsTrashFill />
       </Button>
     </Form>
   );
