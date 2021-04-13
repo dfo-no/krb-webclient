@@ -49,7 +49,7 @@ function App(): ReactElement {
           <AuthenticatedTemplate>
             <Route path="/workbench" component={WorkbenchModule} />
             <Route exact path="/speceditor" component={SpecPage} />
-            <Route exact path="/speceditor/:id" component={SpecModule} />
+            <Route path="/speceditor/:id" component={SpecModule} />
             <Route path="/responseeditor" component={ResponseEditor} />
             <Route path="/evaluation" component={Evaluation} />
           </AuthenticatedTemplate>
