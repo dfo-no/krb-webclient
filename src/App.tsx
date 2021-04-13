@@ -21,6 +21,7 @@ import PageLayout from './PageLayout';
 import SpecPage from './SpecEditor/SpecPage';
 import SpecModule from './SpecEditor/SpecModule';
 import { RootState } from './store/store';
+import ProductSpecList from './SpecEditor/ProductSpecList';
 
 const msalInstance = new PublicClientApplication(msalConfig);
 
@@ -48,8 +49,8 @@ function App(): ReactElement {
         <PageLayout>
           <AuthenticatedTemplate>
             <Route path="/workbench" component={WorkbenchModule} />
+            <Route path="/speceditor/:id" component={SpecModule} />
             <Route exact path="/speceditor" component={SpecPage} />
-            <Route exact path="/speceditor/:id" component={SpecModule} />
             <Route path="/responseeditor" component={ResponseEditor} />
             <Route path="/evaluation" component={Evaluation} />
           </AuthenticatedTemplate>

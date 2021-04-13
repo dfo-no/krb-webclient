@@ -34,7 +34,10 @@ export default function SpecModule(): ReactElement {
         </Col>
         <Col>
           <Switch>
-            <Route exact path="/speceditor/:id/requirement">
+            <Route exact path="/speceditor/:id">
+              <SpecEditor />
+            </Route>
+            <Route path="/speceditor/:id/requirement">
               <RequirementSpecEditor />
             </Route>
             <Route exact path="/speceditor/:id/product">
@@ -44,9 +47,6 @@ export default function SpecModule(): ReactElement {
               <ProductSpecEditor />
             </Route>
             <Route exact path="/speceditor/:id/download">
-              <SpecEditor />
-            </Route>
-            <Route exact path="/speceditor/:id">
               <SpecEditor />
             </Route>
             <Route>
