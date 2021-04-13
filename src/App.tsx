@@ -21,7 +21,6 @@ import PageLayout from './PageLayout';
 import SpecPage from './SpecEditor/SpecPage';
 import SpecModule from './SpecEditor/SpecModule';
 import { RootState } from './store/store';
-import ProductSpecList from './SpecEditor/ProductSpecList';
 
 const msalInstance = new PublicClientApplication(msalConfig);
 
