@@ -8,7 +8,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import Joi from 'joi';
 import { joiResolver } from '@hookform/resolvers/joi';
 import { Link } from 'react-router-dom';
-import { AiFillDelete } from 'react-icons/ai';
+import { BsTrashFill } from 'react-icons/bs';
 import { AccordionContext } from '../../NestableHierarchy/AccordionContext';
 
 import {
@@ -149,7 +149,7 @@ export default function EditRequirementForm({
           variant="warning"
           onClick={removeRequirement}
         >
-          Delete <AiFillDelete />
+          Delete <BsTrashFill />
         </Button>
       </Row>
     </Form>

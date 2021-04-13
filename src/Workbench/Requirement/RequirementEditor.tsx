@@ -1,4 +1,5 @@
-import React, { ChangeEvent, ReactElement, useState } from 'react';
+import React, { ReactElement, useState } from 'react';
+import Alert from 'react-bootstrap/Alert';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
@@ -17,7 +18,6 @@ import { selectRequirement } from '../../store/reducers/selectedRequirement-redu
 import { selectNeed } from '../../store/reducers/selectedNeed-reducer';
 import {
   editRequirementInNeed,
-  editRequirementParentNeed,
   putProjectThunk
 } from '../../store/reducers/project-reducer';
 import VariantArray from './VariantArray';
@@ -52,6 +52,13 @@ const codelistSchema = Joi.object().keys({
   })
 });
 
+const textSchema = Joi.object().keys({
+  id: Joi.string().required(),
+  type: Joi.string().equal('text').required(),
+  max: Joi.number().required(),
+  text: Joi.string().trim().max(Joi.ref('max')).required()
+});
+
 const variantSchema = Joi.object().keys({
   id: Joi.string().required(),
   requirementText: Joi.string().required(),
@@ -69,7 +76,8 @@ const variantSchema = Joi.object().keys({
     Joi.alternatives().conditional('.type', {
       switch: [
         { is: 'value', then: valueSchema },
-        { is: 'codelist', then: codelistSchema }
+        { is: 'codelist', then: codelistSchema },
+        { is: 'text', then: textSchema }
       ]
     })
   )
@@ -120,7 +128,7 @@ export default function RequirementEditor(): ReactElement {
   const need = Utils.ensure(
     project.needs.find((element) => element.id === needId)
   );
-  const nIndex = project.needs.findIndex((element) => element.id === need.id);
+
   const requirement = need.requirements.find((element) => element.id === reqId);
   const defaultValues: Requirement | Record<string, never> =
     requirement !== undefined ? { ...requirement } : {};
@@ -294,14 +302,12 @@ export default function RequirementEditor(): ReactElement {
             defaultValues
           }}
         />
-
-        <div style={{ color: 'red' }}>
-          <pre>
-            {Object.keys(errors).length > 0 && (
-              <div>{JSON.stringify(errors, null, 2)}</div>
-            )}
-          </pre>
-        </div>
+        {process.env.NODE_ENV === 'development' &&
+          Object.keys(errors).length > 0 && (
+            <Alert variant="warning">
+              <pre>{JSON.stringify(errors, null, 2)}</pre>
+            </Alert>
+          )}
       </Form>
     </>
   );

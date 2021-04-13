@@ -12,7 +12,7 @@ interface IProps extends InputProps {
   aIx: number;
 }
 
-export default function Value({
+export default function TextAlternative({
   register,
   errors,
   item,
@@ -58,38 +58,7 @@ export default function Value({
         />
         <Form.Group as={Row}>
           <Form.Label column sm="2">
-            Minimum
-          </Form.Label>
-          <Col sm="4">
-            <Form.Control
-              type="number"
-              name={`layouts[${vIx}].alternatives[${aIx}].min`}
-              ref={register}
-              defaultValue={item.min}
-              isInvalid={
-                !!(
-                  errors.layouts &&
-                  errors.layouts[vIx] &&
-                  errors.layouts[vIx].alternatives &&
-                  errors.layouts[vIx].alternatives[aIx] &&
-                  errors.layouts[vIx].alternatives[aIx].min
-                )
-              }
-            />
-            {errors.layouts &&
-              errors.layouts[vIx] &&
-              errors.layouts[vIx].alternatives &&
-              errors.layouts[vIx].alternatives[aIx] &&
-              errors.layouts[vIx].alternatives[aIx].min && (
-                <Form.Control.Feedback type="invalid">
-                  {errors.layouts[vIx].alternatives[aIx].min.message}
-                </Form.Control.Feedback>
-              )}
-          </Col>
-        </Form.Group>
-        <Form.Group as={Row}>
-          <Form.Label column sm="2">
-            Maximum
+            Max
           </Form.Label>
           <Col sm="4">
             <Form.Control
@@ -120,52 +89,21 @@ export default function Value({
         </Form.Group>
         <Form.Group as={Row}>
           <Form.Label column sm="2">
-            Step
-          </Form.Label>
-          <Col sm={4}>
-            <Form.Control
-              type="number"
-              name={`layouts[${vIx}].alternatives[${aIx}].step`}
-              ref={register}
-              defaultValue={item.step}
-              isInvalid={
-                !!(
-                  errors.layouts &&
-                  errors.layouts[vIx] &&
-                  errors.layouts[vIx].alternatives &&
-                  errors.layouts[vIx].alternatives[aIx] &&
-                  errors.layouts[vIx].alternatives[aIx].step
-                )
-              }
-            />
-            {errors.layouts &&
-              errors.layouts[vIx] &&
-              errors.layouts[vIx].alternatives &&
-              errors.layouts[vIx].alternatives[aIx] &&
-              errors.layouts[vIx].alternatives[aIx].step && (
-                <Form.Control.Feedback type="invalid">
-                  {errors.layouts[vIx].alternatives[aIx].step.message}
-                </Form.Control.Feedback>
-              )}
-          </Col>
-        </Form.Group>
-        <Form.Group as={Row}>
-          <Form.Label column sm="2">
-            Unit
+            Text
           </Form.Label>
           <Col sm="4">
             <Form.Control
               type="input"
-              name={`layouts[${vIx}].alternatives[${aIx}].unit`}
+              name={`layouts[${vIx}].alternatives[${aIx}].text`}
               ref={register}
-              defaultValue={item.unit}
+              defaultValue={item.text}
               isInvalid={
                 !!(
                   errors.layouts &&
                   errors.layouts[vIx] &&
                   errors.layouts[vIx].alternatives &&
                   errors.layouts[vIx].alternatives[aIx] &&
-                  errors.layouts[vIx].alternatives[aIx].unit
+                  errors.layouts[vIx].alternatives[aIx].text
                 )
               }
             />
@@ -173,9 +111,9 @@ export default function Value({
               errors.layouts[vIx] &&
               errors.layouts[vIx].alternatives &&
               errors.layouts[vIx].alternatives[aIx] &&
-              errors.layouts[vIx].alternatives[aIx].unit && (
+              errors.layouts[vIx].alternatives[aIx].text && (
                 <Form.Control.Feedback type="invalid">
-                  {errors.layouts[vIx].alternatives[aIx].unit.message}
+                  {errors.layouts[vIx].alternatives[aIx].text.message}
                 </Form.Control.Feedback>
               )}
           </Col>

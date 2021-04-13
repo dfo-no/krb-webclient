@@ -8,7 +8,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { joiResolver } from '@hookform/resolvers/joi';
 import Joi from 'joi';
 import { Link } from 'react-router-dom';
-import { AiFillDelete } from 'react-icons/ai';
+import { BsTrashFill } from 'react-icons/bs';
 import { AccordionContext } from '../../NestableHierarchy/AccordionContext';
 import { Product } from '../../models/Product';
 
@@ -155,7 +155,7 @@ export default function ProductForm({ element }: IProps): ReactElement {
           variant="warning"
           onClick={removeProduct()}
         >
-          Delete <AiFillDelete />
+          Delete <BsTrashFill />
         </Button>
       </Row>
     </Form>
