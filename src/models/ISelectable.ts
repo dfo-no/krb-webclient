@@ -1,4 +1,4 @@
 export interface ISelectable {
   id: string;
-  type: 'value' | 'codelist';
+  type: 'value' | 'codelist' | 'text';
 }

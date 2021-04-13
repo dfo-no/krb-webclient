@@ -10,6 +10,7 @@ import { v4 as uuidv4 } from 'uuid';
 
 import CodeListAlternative from './CodeListAlternative';
 import ValueAlternative from './ValueAlternative';
+import TextAlternative from './TextAlternative';
 
 import { InputProps } from '../../models/InputProps';
 
@@ -51,8 +52,15 @@ export default function AlternativeArray({
     } else if (getAlternative === 'codelist') {
       append({
         id: uuidv4(),
-        type: 'codelist',
-        codelist: { ...project.codelist[0] }
+        codelist: { ...project.codelist[0] },
+        type: 'codelist'
+      });
+    } else if (getAlternative === 'text') {
+      append({
+        id: uuidv4(),
+        max: 0,
+        text: '',
+        type: 'text'
       });
     }
   };
@@ -73,6 +81,7 @@ export default function AlternativeArray({
             {project.codelist && project.codelist.length > 0 && (
               <option value="codelist">Codelist</option>
             )}
+            <option value="text">Text</option>
           </Form.Control>
         </Col>
         <Button onClick={() => addAlternative()}>Add</Button>
@@ -103,6 +112,21 @@ export default function AlternativeArray({
                 defaultValues
                 item={item}
                 project={project}
+                {...{
+                  control,
+                  register,
+                  errors,
+                  getValues,
+                  setValue
+                }}
+              />
+            )}
+            {item.type === 'text' && (
+              <TextAlternative
+                vIx={variantIndex}
+                aIx={index}
+                defaultValues
+                item={item}
                 {...{
                   control,
                   register,
