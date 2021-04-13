@@ -1,9 +1,10 @@
-import React, { ReactElement, useEffect, useState } from 'react';
+import React, { ReactElement, useState } from 'react';
 import { Card } from 'react-bootstrap';
 import Col from 'react-bootstrap/Col';
 import { useDispatch } from 'react-redux';
 
 import Form from 'react-bootstrap/Form';
+import Row from 'react-bootstrap/Row';
 import { Requirement } from '../models/Requirement';
 import RequirementAnswer from './RequirementAnswer';
 import {
@@ -35,13 +36,15 @@ export default function SpesificationRequirement({
 
   return (
     <Card className="mb-3">
-      <Col sm={1}>
-        <Form.Check checked={isSelected} onChange={changedCheckedValue} />
-      </Col>
-      <Col>
-        {!isSelected && <p>{requirement.title}</p>}
-        {isSelected && <RequirementAnswer requirement={requirement} />}
-      </Col>
+      <Row className="p-0 m-2">
+        <Col sm={1}>
+          <Form.Check checked={isSelected} onChange={changedCheckedValue} />
+        </Col>
+        <Col>
+          {!isSelected && <p>{requirement.title}</p>}
+          {isSelected && <RequirementAnswer requirement={requirement} />}
+        </Col>
+      </Row>
     </Card>
   );
 }
