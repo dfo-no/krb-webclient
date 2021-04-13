@@ -2,11 +2,13 @@ import React, { ReactElement } from 'react';
 import ListGroup from 'react-bootstrap/ListGroup';
 import Row from 'react-bootstrap/Row';
 import { BsArrowReturnRight } from 'react-icons/bs';
+import { useSelector } from 'react-redux';
 import Utils from '../common/Utils';
 import { Need } from '../models/Need';
 import { Requirement } from '../models/Requirement';
-import RequirementAnswer from './RequirementAnswer';
+import { RootState } from '../store/store';
 import styles from './RequirementView.module.scss';
+import SpesificationRequirement from './SpesificationRequirement';
 
 interface InputProps {
   needList: Need[];
@@ -15,9 +17,13 @@ interface InputProps {
 export default function RequirementView({
   needList
 }: InputProps): ReactElement {
-  const requirements = (requirementArray: Requirement[]) => {
+  const { requirements } = useSelector(
+    (state: RootState) => state.specification
+  );
+  const requirementsAnswers = (requirementArray: Requirement[]) => {
     return requirementArray.map((req) => {
-      return <RequirementAnswer requirement={req} />;
+      const selected = !!requirements.includes(req.id);
+      return <SpesificationRequirement selected={selected} requirement={req} />;
     });
   };
   const childrenHierarchy = (listofneed: any[], level: number) => {
@@ -36,7 +42,7 @@ export default function RequirementView({
             <p>{element.title}</p>
           </Row>
           {element.requirements.length > 0 &&
-            requirements(element.requirements)}
+            requirementsAnswers(element.requirements)}
           {element.children.length > 0 && children}
         </div>
       );
@@ -55,7 +61,7 @@ export default function RequirementView({
           <ListGroup.Item className="mt-2 ml-0 pl-0">
             <b>{element.title}</b>
             {element.requirements.length > 0 &&
-              requirements(element.requirements)}
+              requirementsAnswers(element.requirements)}
             {element.children.length > 0 && children}
           </ListGroup.Item>
         </>
