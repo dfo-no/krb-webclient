@@ -7,7 +7,7 @@ import { RequirementAnswer } from '../../models/RequirementAnswer';
 
 interface SpecificationState {
   products: SpecificationProduct[];
-  requirements: Requirement[];
+  requirements: string[];
   requirementAnswers: RequirementAnswer[];
 }
 
@@ -41,6 +41,13 @@ const specificationSlice = createSlice({
       { payload }: PayloadAction<{ answer: RequirementAnswer }>
     ) {
       state.requirementAnswers.push(payload.answer);
+    },
+    addRequirement(state, { payload }: PayloadAction<string>) {
+      state.requirements.push(payload);
+    },
+    removeRequirement(state, { payload }: PayloadAction<string>) {
+      const index = state.requirements.findIndex((req) => req === payload);
+      state.requirements.splice(index, 1);
     }
   }
 });
@@ -48,7 +55,9 @@ const specificationSlice = createSlice({
 export const {
   addProduct,
   editSpecProduct,
-  addAnswer
+  addAnswer,
+  addRequirement,
+  removeRequirement
 } = specificationSlice.actions;
 
 export default specificationSlice.reducer;
