@@ -17,12 +17,10 @@ interface InputProps {
 export default function RequirementView({
   needList
 }: InputProps): ReactElement {
-  const { requirements } = useSelector(
-    (state: RootState) => state.specification
-  );
+  const { spec } = useSelector((state: RootState) => state.specification);
   const requirementsAnswers = (requirementArray: Requirement[]) => {
     return requirementArray.map((req) => {
-      const selected = !!requirements.includes(req.id);
+      const selected = !!spec.requirements.includes(req.id);
       return <SpesificationRequirement selected={selected} requirement={req} />;
     });
   };

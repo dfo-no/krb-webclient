@@ -32,7 +32,7 @@ export default function ProductSpecList(): ReactElement {
   const projectMatch = useRouteMatch<RouteParams>('/speceditor/:bankId');
   const { id } = useSelector((state: RootState) => state.selectedBank);
   const { list } = useSelector((state: RootState) => state.bank);
-  const { products } = useSelector((state: RootState) => state.specification);
+  const { spec } = useSelector((state: RootState) => state.specification);
   const { register, handleSubmit } = useForm();
   const dispatch = useDispatch();
 
@@ -148,7 +148,7 @@ export default function ProductSpecList(): ReactElement {
         <Row className="m-4">
           <h4>Products</h4>
         </Row>
-        <Row className=" ml-4">{productList(products)}</Row>
+        <Row className=" ml-4">{productList(spec.products)}</Row>
       </Form>
     </Container>
   );

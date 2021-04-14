@@ -26,8 +26,7 @@ export default function SpesificationRequirement({
 
   const changedCheckedValue = (event: any) => {
     setSelected(!isSelected);
-
-    if (event.target.value === true) {
+    if (event.target.checked === true) {
       dispatch(addRequirement(requirement.id));
     } else {
       dispatch(removeRequirement(requirement.id));
@@ -38,7 +37,10 @@ export default function SpesificationRequirement({
     <Card className="mb-3">
       <Row className="p-0 m-2">
         <Col sm={1}>
-          <Form.Check checked={isSelected} onChange={changedCheckedValue} />
+          <Form.Check
+            checked={isSelected}
+            onChange={(e) => changedCheckedValue(e)}
+          />
         </Col>
         <Col>
           {!isSelected && <p>{requirement.title}</p>}
