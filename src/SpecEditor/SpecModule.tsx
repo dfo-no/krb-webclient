@@ -7,6 +7,7 @@ import { Route, Switch, useRouteMatch } from 'react-router';
 import NotFound from '../NotFound';
 import { selectBank } from '../store/reducers/selectedBank-reducer';
 import { RootState } from '../store/store';
+import DownloadPage from './DownloadPage';
 import ProductSpecEditor from './ProductSpecEditor';
 import ProductSpecList from './ProductSpecList';
 import RequirementSpecEditor from './RequirementSpecEditor';
@@ -47,7 +48,7 @@ export default function SpecModule(): ReactElement {
               <ProductSpecEditor />
             </Route>
             <Route exact path="/speceditor/:id/download">
-              <SpecEditor />
+              <DownloadPage />
             </Route>
             <Route>
               <NotFound />

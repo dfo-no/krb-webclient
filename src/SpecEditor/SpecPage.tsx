@@ -1,30 +1,25 @@
-/* eslint-disable jsx-a11y/label-has-associated-control */
 import React, { ReactElement, useState } from 'react';
 
 import Container from 'react-bootstrap/Container';
 import Button from 'react-bootstrap/Button';
 import Row from 'react-bootstrap/Row';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
-import { useForm } from 'react-hook-form';
-import fileDownload from 'js-file-download';
 import Col from 'react-bootstrap/Col';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/esm/InputGroup';
-import { Requirement } from '../models/Requirement';
-import { Need } from '../models/Need';
+
 import { RootState } from '../store/store';
-import { FileDownLoad } from '../models/FileDownLoad';
-import styles from './SpecEditor.module.scss';
-import { Bank } from '../models/Bank';
-import Utils from '../common/Utils';
-import MODELTYPE from '../models/ModelType';
+import { Specification } from '../models/Specification';
+import { selectBank } from '../store/reducers/selectedBank-reducer';
+import { setSpecification } from '../store/reducers/spesification-reducer';
 
 export default function SpecPage(): ReactElement {
   const { id } = useSelector((state: RootState) => state.selectedBank);
   const { list } = useSelector((state: RootState) => state.bank);
-  const [uploadedBank, setUploadedBank] = useState<Bank | null>(null);
+  const dispatch = useDispatch();
+  const history = useHistory();
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const files = event.target.files as FileList;
@@ -33,10 +28,12 @@ export default function SpecPage(): ReactElement {
       const reader = new FileReader();
       reader.onload = (evt) => {
         if (evt.target?.result) {
-          const typeFileDownload = JSON.parse(
+          const typeSpecification = JSON.parse(
             evt.target.result.toString()
-          ) as FileDownLoad;
-          setUploadedBank(typeFileDownload.bank);
+          ) as Specification;
+          dispatch(selectBank(typeSpecification.bankId));
+          dispatch(setSpecification(typeSpecification));
+          history.push(`/speceditor/${typeSpecification.bankId}`);
         }
       };
       reader.readAsText(file);
