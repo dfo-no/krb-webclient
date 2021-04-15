@@ -1,5 +1,5 @@
 import React, { ReactElement, useState } from 'react';
-import { Card } from 'react-bootstrap';
+import Card from 'react-bootstrap/Card';
 import Col from 'react-bootstrap/Col';
 import Button from 'react-bootstrap/Button';
 import Row from 'react-bootstrap/Row';
@@ -16,9 +16,9 @@ import {
 } from '../store/reducers/spesification-reducer';
 import { RootState } from '../store/store';
 
-type InputProps = {
+interface IProps {
   requirement: Requirement;
-};
+}
 
 type FormValue = {
   alternative: string;
@@ -27,7 +27,7 @@ type FormValue = {
 
 export default function RequirementAnswer({
   requirement
-}: InputProps): ReactElement {
+}: IProps): ReactElement {
   const dispatch = useDispatch();
   const { register, handleSubmit } = useForm();
   const [selectedLayout, setSelectedLayout] = useState(requirement.layouts[0]);
@@ -42,7 +42,7 @@ export default function RequirementAnswer({
     dispatch(addAnswer({ answer: newAnswer }));
   };
 
-  function handleChange(event: any) {
+  function handleChange(event: React.ChangeEvent<HTMLSelectElement>) {
     const variantId = event.target.value;
     const variant = Utils.ensure(
       requirement.layouts.find((element: IVariant) => element.id === variantId)

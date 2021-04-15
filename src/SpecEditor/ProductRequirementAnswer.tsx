@@ -1,5 +1,5 @@
 import React, { ReactElement, useState } from 'react';
-import { Card } from 'react-bootstrap';
+import Card from 'react-bootstrap/Card';
 import Col from 'react-bootstrap/Col';
 import Button from 'react-bootstrap/Button';
 import Row from 'react-bootstrap/Row';
@@ -17,10 +17,10 @@ import {
 import { RootState } from '../store/store';
 import { SpecificationProduct } from '../models/SpecificationProduct';
 
-type InputProps = {
+interface IProps {
   requirement: Requirement;
   productId: string;
-};
+}
 
 type FormValue = {
   alternative: string;
@@ -30,7 +30,7 @@ type FormValue = {
 export default function ProductRequirementAnswer({
   requirement,
   productId
-}: InputProps): ReactElement {
+}: IProps): ReactElement {
   const dispatch = useDispatch();
   const { register, handleSubmit } = useForm();
   const { spec } = useSelector((state: RootState) => state.specification);
@@ -51,7 +51,7 @@ export default function ProductRequirementAnswer({
     )
   );
 
-  function handleChange(event: any) {
+  function handleChange(event: React.ChangeEvent<HTMLSelectElement>) {
     const variantId = event.target.value;
     const variant = Utils.ensure(
       requirement.layouts.find((element: IVariant) => element.id === variantId)

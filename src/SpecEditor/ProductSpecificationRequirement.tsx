@@ -38,7 +38,7 @@ export default function ProductSpesificationRequirement({
     )
   );
 
-  const changedCheckedValue = (event: any) => {
+  const changedCheckedValue = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSelected(!isSelected);
     if (event.target.checked === true) {
       dispatch(

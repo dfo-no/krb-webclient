@@ -27,7 +27,7 @@ export default function SpesificationRequirement({
   const [isSelected, setSelected] = useState(selected);
   const { spec } = useSelector((state: RootState) => state.specification);
 
-  const changedCheckedValue = (event: any) => {
+  const changedCheckedValue = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSelected(!isSelected);
     if (event.target.checked === true) {
       dispatch(addRequirement(requirement.id));
