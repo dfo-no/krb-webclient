@@ -10,7 +10,10 @@ import { v4 as uuidv4 } from 'uuid';
 import Utils from '../common/Utils';
 import { IVariant } from '../models/IVariant';
 import { Requirement } from '../models/Requirement';
-import { addProductAnswer } from '../store/reducers/spesification-reducer';
+import {
+  addProductAnswer,
+  deleteProductAnswer
+} from '../store/reducers/spesification-reducer';
 import { RootState } from '../store/store';
 import { SpecificationProduct } from '../models/SpecificationProduct';
 
@@ -42,19 +45,36 @@ export default function ProductRequirementAnswer({
     dispatch(addProductAnswer({ answer: newAnswer, productId }));
   };
 
-  function handleChange(event: any) {
-    const variantId = event.target.value;
-    const variant = Utils.ensure(
-      requirement.layouts.find((element: IVariant) => element.id === variantId)
-    );
-    setSelectedLayout(variant);
-  }
-
   const specProduct = Utils.ensure(
     spec.products.find(
       (product: SpecificationProduct) => product.id === productId
     )
   );
+
+  function handleChange(event: any) {
+    const variantId = event.target.value;
+    const variant = Utils.ensure(
+      requirement.layouts.find((element: IVariant) => element.id === variantId)
+    );
+    selectedLayout.alternatives.forEach((alternative) => {
+      if (
+        specProduct.requirementAnswers.find(
+          (answer) => answer.alternativeId === alternative.id
+        )
+      ) {
+        const index = specProduct.requirementAnswers.findIndex(
+          (answer) => answer.alternativeId === alternative.id
+        );
+        dispatch(
+          deleteProductAnswer({
+            answer: specProduct.requirementAnswers[index].id,
+            productId: specProduct.id
+          })
+        );
+      }
+    });
+    setSelectedLayout(variant);
+  }
 
   function findDefaultRequirementText(): string {
     let defaultText = requirement.layouts[0].id;

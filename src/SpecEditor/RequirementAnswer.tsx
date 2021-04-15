@@ -10,7 +10,10 @@ import { v4 as uuidv4 } from 'uuid';
 import Utils from '../common/Utils';
 import { IVariant } from '../models/IVariant';
 import { Requirement } from '../models/Requirement';
-import { addAnswer } from '../store/reducers/spesification-reducer';
+import {
+  addAnswer,
+  deleteAnswer
+} from '../store/reducers/spesification-reducer';
 import { RootState } from '../store/store';
 
 type InputProps = {
@@ -44,6 +47,18 @@ export default function RequirementAnswer({
     const variant = Utils.ensure(
       requirement.layouts.find((element: IVariant) => element.id === variantId)
     );
+    selectedLayout.alternatives.forEach((alternative) => {
+      if (
+        spec.requirementAnswers.find(
+          (answer) => answer.alternativeId === alternative.id
+        )
+      ) {
+        const index = spec.requirementAnswers.findIndex(
+          (answer) => answer.alternativeId === alternative.id
+        );
+        dispatch(deleteAnswer({ answer: spec.requirementAnswers[index].id }));
+      }
+    });
     setSelectedLayout(variant);
   }
 
