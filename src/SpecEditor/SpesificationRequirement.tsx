@@ -1,7 +1,7 @@
 import React, { ReactElement, useState } from 'react';
 import { Card } from 'react-bootstrap';
 import Col from 'react-bootstrap/Col';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
@@ -9,8 +9,10 @@ import { Requirement } from '../models/Requirement';
 import RequirementAnswer from './RequirementAnswer';
 import {
   addRequirement,
+  deleteAnswer,
   removeRequirement
 } from '../store/reducers/spesification-reducer';
+import { RootState } from '../store/store';
 
 type InputProps = {
   requirement: Requirement;
@@ -23,13 +25,30 @@ export default function SpesificationRequirement({
 }: InputProps): ReactElement {
   const dispatch = useDispatch();
   const [isSelected, setSelected] = useState(selected);
+  const { spec } = useSelector((state: RootState) => state.specification);
 
-  const changedCheckedValue = (event: any) => {
+  const changedCheckedValue = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSelected(!isSelected);
     if (event.target.checked === true) {
       dispatch(addRequirement(requirement.id));
     } else {
       dispatch(removeRequirement(requirement.id));
+      requirement.layouts.forEach((variant) => {
+        if (
+          spec.requirementAnswers.find(
+            (answer) => answer.reqTextId === variant.id
+          )
+        ) {
+          const index = spec.requirementAnswers.findIndex(
+            (answer) => answer.reqTextId === variant.id
+          );
+          dispatch(
+            deleteAnswer({
+              answer: spec.requirementAnswers[index].id
+            })
+          );
+        }
+      });
     }
   };
 
