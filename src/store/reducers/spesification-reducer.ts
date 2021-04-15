@@ -50,11 +50,91 @@ const specificationSlice = createSlice({
       );
       state.spec.products[index] = payload.product;
     },
+    addProductAnswer(
+      state,
+      {
+        payload
+      }: PayloadAction<{ answer: RequirementAnswer; productId: string }>
+    ) {
+      const index = Utils.ensure(
+        state.spec.products.findIndex(
+          (product) => product.id === payload.productId
+        )
+      );
+      if (
+        state.spec.products[index].requirementAnswers.find(
+          (answer) => answer.reqTextId === payload.answer.reqTextId
+        )
+      ) {
+        const oldSelectIndex = state.spec.products[
+          index
+        ].requirementAnswers.findIndex(
+          (answer) => answer.reqTextId === payload.answer.reqTextId
+        );
+        state.spec.products[index].requirementAnswers.splice(oldSelectIndex, 1);
+      }
+      state.spec.products[index].requirementAnswers.push(payload.answer);
+    },
+    deleteProductAnswer(
+      state,
+      { payload }: PayloadAction<{ answer: string; productId: string }>
+    ) {
+      const index = Utils.ensure(
+        state.spec.products.findIndex(
+          (product) => product.id === payload.productId
+        )
+      );
+      const answerIndex = state.spec.requirementAnswers.findIndex(
+        (req) => req.id === payload.answer
+      );
+      state.spec.products[index].requirementAnswers.splice(answerIndex, 1);
+    },
+    addProductRequirement(
+      state,
+      { payload }: PayloadAction<{ requirement: string; productId: string }>
+    ) {
+      const index = Utils.ensure(
+        state.spec.products.findIndex(
+          (product) => product.id === payload.productId
+        )
+      );
+      state.spec.products[index].requirements.push(payload.requirement);
+    },
+    removeProductRequirement(
+      state,
+      { payload }: PayloadAction<{ requirement: string; productId: string }>
+    ) {
+      const productIndex = Utils.ensure(
+        state.spec.products.findIndex(
+          (product) => product.id === payload.productId
+        )
+      );
+      const index = state.spec.requirements.findIndex(
+        (req) => req === payload.requirement
+      );
+      state.spec.products[productIndex].requirements.splice(index, 1);
+    },
     addAnswer(
       state,
       { payload }: PayloadAction<{ answer: RequirementAnswer }>
     ) {
+      if (
+        state.spec.requirementAnswers.find(
+          (answer) => answer.reqTextId === payload.answer.reqTextId
+        )
+      ) {
+        const oldSelectIndex = state.spec.requirementAnswers.findIndex(
+          (answer) => answer.reqTextId === payload.answer.reqTextId
+        );
+        state.spec.requirementAnswers.splice(oldSelectIndex, 1);
+      }
       state.spec.requirementAnswers.push(payload.answer);
+    },
+    deleteAnswer(state, { payload }: PayloadAction<{ answer: string }>) {
+      const index = state.spec.requirementAnswers.findIndex(
+        (req) => req.id === payload.answer
+      );
+      state.spec.requirementAnswers.splice(index, 1);
     },
     addRequirement(state, { payload }: PayloadAction<string>) {
       state.spec.requirements.push(payload);
@@ -74,7 +154,12 @@ export const {
   removeRequirement,
   setSpecification,
   editTitle,
-  editBankId
+  editBankId,
+  addProductAnswer,
+  addProductRequirement,
+  removeProductRequirement,
+  deleteProductAnswer,
+  deleteAnswer
 } = specificationSlice.actions;
 
 export default specificationSlice.reducer;

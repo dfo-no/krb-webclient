@@ -11,13 +11,15 @@ import Utils from '../common/Utils';
 import { IVariant } from '../models/IVariant';
 import { Requirement } from '../models/Requirement';
 import {
-  addAnswer,
-  deleteAnswer
+  addProductAnswer,
+  deleteProductAnswer
 } from '../store/reducers/spesification-reducer';
 import { RootState } from '../store/store';
+import { SpecificationProduct } from '../models/SpecificationProduct';
 
 interface IProps {
   requirement: Requirement;
+  productId: string;
 }
 
 type FormValue = {
@@ -25,13 +27,14 @@ type FormValue = {
   weight: number;
 };
 
-export default function RequirementAnswer({
-  requirement
+export default function ProductRequirementAnswer({
+  requirement,
+  productId
 }: IProps): ReactElement {
   const dispatch = useDispatch();
   const { register, handleSubmit } = useForm();
-  const [selectedLayout, setSelectedLayout] = useState(requirement.layouts[0]);
   const { spec } = useSelector((state: RootState) => state.specification);
+  const [selectedLayout, setSelectedLayout] = useState(requirement.layouts[0]);
   const saveAnswer = (post: FormValue) => {
     const newAnswer = {
       id: uuidv4(),
@@ -39,8 +42,14 @@ export default function RequirementAnswer({
       weight: post.weight,
       reqTextId: selectedLayout.id
     };
-    dispatch(addAnswer({ answer: newAnswer }));
+    dispatch(addProductAnswer({ answer: newAnswer, productId }));
   };
+
+  const specProduct = Utils.ensure(
+    spec.products.find(
+      (product: SpecificationProduct) => product.id === productId
+    )
+  );
 
   function handleChange(event: React.ChangeEvent<HTMLSelectElement>) {
     const variantId = event.target.value;
@@ -49,14 +58,19 @@ export default function RequirementAnswer({
     );
     selectedLayout.alternatives.forEach((alternative) => {
       if (
-        spec.requirementAnswers.find(
+        specProduct.requirementAnswers.find(
           (answer) => answer.alternativeId === alternative.id
         )
       ) {
-        const index = spec.requirementAnswers.findIndex(
+        const index = specProduct.requirementAnswers.findIndex(
           (answer) => answer.alternativeId === alternative.id
         );
-        dispatch(deleteAnswer({ answer: spec.requirementAnswers[index].id }));
+        dispatch(
+          deleteProductAnswer({
+            answer: specProduct.requirementAnswers[index].id,
+            productId: specProduct.id
+          })
+        );
       }
     });
     setSelectedLayout(variant);
@@ -66,7 +80,9 @@ export default function RequirementAnswer({
     let defaultText = requirement.layouts[0].id;
     requirement.layouts.forEach((layout) => {
       if (
-        spec.requirementAnswers.find((answer) => answer.reqTextId === layout.id)
+        specProduct.requirementAnswers.find(
+          (answer) => answer.reqTextId === layout.id
+        )
       ) {
         defaultText = layout.id;
       }
@@ -79,15 +95,15 @@ export default function RequirementAnswer({
     let defaultWeight = 0;
     selectedLayout.alternatives.forEach((alternative) => {
       if (
-        spec.requirementAnswers.find(
+        specProduct.requirementAnswers.find(
           (answer) => answer.alternativeId === alternative.id
         )
       ) {
         defaultText = alternative.id;
-        const index = spec.requirementAnswers.findIndex(
+        const index = specProduct.requirementAnswers.findIndex(
           (answer) => answer.alternativeId === alternative.id
         );
-        defaultWeight = spec.requirementAnswers[index].weight;
+        defaultWeight = specProduct.requirementAnswers[index].weight;
       }
     });
     return [defaultText, defaultWeight];

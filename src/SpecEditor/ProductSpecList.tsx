@@ -101,7 +101,9 @@ export default function ProductSpecList(): ReactElement {
       title: '',
       description: '',
       amount: 0,
-      type: MODELTYPE.specificationProduct
+      type: MODELTYPE.specificationProduct,
+      requirements: [],
+      requirementAnswers: []
     };
     dispatch(addProduct({ product: newProduct }));
   };

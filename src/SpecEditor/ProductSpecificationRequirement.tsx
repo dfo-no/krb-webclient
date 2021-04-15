@@ -8,43 +8,59 @@ import Row from 'react-bootstrap/Row';
 import { Requirement } from '../models/Requirement';
 import RequirementAnswer from './RequirementAnswer';
 import {
-  addRequirement,
-  deleteAnswer,
-  removeRequirement
+  addProductRequirement,
+  deleteProductAnswer,
+  removeProductRequirement
 } from '../store/reducers/spesification-reducer';
+import ProductRequirementAnswer from './ProductRequirementAnswer';
 import { RootState } from '../store/store';
+import { SpecificationProduct } from '../models/SpecificationProduct';
+import Utils from '../common/Utils';
 
 type InputProps = {
   requirement: Requirement;
   selected: boolean;
+  productId: string;
 };
 
-export default function SpesificationRequirement({
+export default function ProductSpesificationRequirement({
   requirement,
-  selected
+  selected,
+  productId
 }: InputProps): ReactElement {
   const dispatch = useDispatch();
   const [isSelected, setSelected] = useState(selected);
   const { spec } = useSelector((state: RootState) => state.specification);
 
+  const specProduct = Utils.ensure(
+    spec.products.find(
+      (product: SpecificationProduct) => product.id === productId
+    )
+  );
+
   const changedCheckedValue = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSelected(!isSelected);
     if (event.target.checked === true) {
-      dispatch(addRequirement(requirement.id));
+      dispatch(
+        addProductRequirement({ requirement: requirement.id, productId })
+      );
     } else {
-      dispatch(removeRequirement(requirement.id));
+      dispatch(
+        removeProductRequirement({ requirement: requirement.id, productId })
+      );
       requirement.layouts.forEach((variant) => {
         if (
-          spec.requirementAnswers.find(
+          specProduct.requirementAnswers.find(
             (answer) => answer.reqTextId === variant.id
           )
         ) {
-          const index = spec.requirementAnswers.findIndex(
+          const index = specProduct.requirementAnswers.findIndex(
             (answer) => answer.reqTextId === variant.id
           );
           dispatch(
-            deleteAnswer({
-              answer: spec.requirementAnswers[index].id
+            deleteProductAnswer({
+              answer: specProduct.requirementAnswers[index].id,
+              productId: specProduct.id
             })
           );
         }
@@ -63,7 +79,12 @@ export default function SpesificationRequirement({
         </Col>
         <Col>
           {!isSelected && <p>{requirement.title}</p>}
-          {isSelected && <RequirementAnswer requirement={requirement} />}
+          {isSelected && (
+            <ProductRequirementAnswer
+              requirement={requirement}
+              productId={productId}
+            />
+          )}
         </Col>
       </Row>
     </Card>
