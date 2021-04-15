@@ -22,6 +22,7 @@ type FormInput = {
 export default function SpecEditor(): ReactElement {
   const { id } = useSelector((state: RootState) => state.selectedBank);
   const { list } = useSelector((state: RootState) => state.bank);
+  const { spec } = useSelector((state: RootState) => state.specification);
   const { register, handleSubmit } = useForm();
   const dispatch = useDispatch();
 
@@ -44,7 +45,11 @@ export default function SpecEditor(): ReactElement {
             <Form.Group as={Row}>
               <Form.Label>Title</Form.Label>
               <Col sm={8}>
-                <FormControl name="title" ref={register} />
+                <FormControl
+                  name="title"
+                  ref={register}
+                  defaultValue={spec.title}
+                />
               </Col>
               <Col sm={2}>
                 <Button type="submit">Save</Button>

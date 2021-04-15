@@ -50,6 +50,44 @@ const specificationSlice = createSlice({
       );
       state.spec.products[index] = payload.product;
     },
+    addProductAnswer(
+      state,
+      {
+        payload
+      }: PayloadAction<{ answer: RequirementAnswer; productId: string }>
+    ) {
+      const index = Utils.ensure(
+        state.spec.products.findIndex(
+          (product) => product.id === payload.productId
+        )
+      );
+      state.spec.products[index].requirementAnswers.push(payload.answer);
+    },
+    addProductRequirement(
+      state,
+      { payload }: PayloadAction<{ requirement: string; productId: string }>
+    ) {
+      const index = Utils.ensure(
+        state.spec.products.findIndex(
+          (product) => product.id === payload.productId
+        )
+      );
+      state.spec.products[index].requirements.push(payload.requirement);
+    },
+    removeProductRequirement(
+      state,
+      { payload }: PayloadAction<{ requirement: string; productId: string }>
+    ) {
+      const productIndex = Utils.ensure(
+        state.spec.products.findIndex(
+          (product) => product.id === payload.productId
+        )
+      );
+      const index = state.spec.requirements.findIndex(
+        (req) => req === payload.requirement
+      );
+      state.spec.products[productIndex].requirements.splice(index, 1);
+    },
     addAnswer(
       state,
       { payload }: PayloadAction<{ answer: RequirementAnswer }>
@@ -74,7 +112,10 @@ export const {
   removeRequirement,
   setSpecification,
   editTitle,
-  editBankId
+  editBankId,
+  addProductAnswer,
+  addProductRequirement,
+  removeProductRequirement
 } = specificationSlice.actions;
 
 export default specificationSlice.reducer;

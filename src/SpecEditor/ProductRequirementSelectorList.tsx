@@ -2,15 +2,13 @@ import React, { ReactElement } from 'react';
 import ListGroup from 'react-bootstrap/ListGroup';
 import Row from 'react-bootstrap/Row';
 import { BsArrowReturnRight } from 'react-icons/bs';
-import { useSelector } from 'react-redux';
 import Utils from '../common/Utils';
 import { Need } from '../models/Need';
 import { Bank } from '../models/Bank';
 import { Requirement } from '../models/Requirement';
 import styles from './RequirementView.module.scss';
 import { SpecificationProduct } from '../models/SpecificationProduct';
-import SpesificationRequirement from './SpesificationRequirement';
-import { RootState } from '../store/store';
+import ProductSpesificationRequirement from './ProductSpecificationRequirement';
 
 interface InputProps {
   selectedBank: Bank;
@@ -21,11 +19,16 @@ export default function ProductRequirementSelectorList({
   selectedBank,
   product
 }: InputProps): ReactElement {
-  const { spec } = useSelector((state: RootState) => state.specification);
   const requirementsAnswers = (requirementArray: Requirement[]) => {
     return requirementArray.map((req) => {
-      const selected = !!spec.requirements.includes(req.id);
-      return <SpesificationRequirement selected={selected} requirement={req} />;
+      const selected = !!product.requirements.includes(req.id);
+      return (
+        <ProductSpesificationRequirement
+          selected={selected}
+          requirement={req}
+          productId={product.id}
+        />
+      );
     });
   };
 
