@@ -7,7 +7,7 @@ import Row from 'react-bootstrap/Row';
 import { useForm } from 'react-hook-form';
 import Joi from 'joi';
 import { useDispatch, useSelector } from 'react-redux';
-import { AiFillDelete } from 'react-icons/ai';
+import { BsTrashFill } from 'react-icons/bs';
 import { Code } from '../../models/Code';
 
 import {
@@ -124,7 +124,7 @@ export default function EditCodeForm({ element }: IProps): ReactElement {
           Save
         </Button>
         <Button className="mt-2  ml-3" variant="warning" onClick={removeCode}>
-          Delete <AiFillDelete />
+          Delete <BsTrashFill />
         </Button>
       </Row>
     </Form>

@@ -7,7 +7,6 @@ import Row from 'react-bootstrap/Row';
 import { BsArrowReturnRight, BsPencil } from 'react-icons/bs';
 import { Link } from 'react-router-dom';
 import { RootState } from '../../store/store';
-
 import Utils from '../../common/Utils';
 import { Bank } from '../../models/Bank';
 import { Product } from '../../models/Product';
@@ -44,92 +43,11 @@ export default function ProductPreview(): ReactElement {
     )
   );
 
-  function findNeedParents(element: Need, parents: Need[]): Need[] {
-    const parentList = parents;
-    const parentNeed = Utils.ensure(
-      selectedProject.needs.find((need: Need) => need.id === element.parent)
-    );
-    parentList.push(parentNeed);
-    if (parentNeed.parent !== '') {
-      findNeedParents(parentNeed, parentList);
-    }
-    return parentList;
-  }
-
-  function checkParentInProductList(
-    products: string[],
-    parentId: string
-  ): boolean {
-    if (parentId === '') return false;
-    const parentProduct = Utils.ensure(
-      selectedProject.products.find(
-        (product: Product) => product.id === parentId
-      )
-    );
-    if (products.includes(parentId)) {
-      return true;
-    }
-
-    if (parentProduct.parent !== '') {
-      return checkParentInProductList(products, parentProduct.parent);
-    }
-
-    return false;
-  }
-
-  function findAssociatedRequirements(
-    needs: Need[]
-  ): [{ [key: string]: Requirement[] }, Need[], IVariant[]] {
-    const relevantRequirements: { [key: string]: Requirement[] } = {};
-    let needList: Need[] = [];
-    const layoutList: IVariant[] = [];
-    needs.forEach((element: Need) => {
-      element.requirements.forEach((req: Requirement) => {
-        req.layouts.forEach((layout: IVariant) => {
-          if (
-            layout.products.includes(selectedProduct.id) ||
-            checkParentInProductList(layout.products, selectedProduct.parent)
-          ) {
-            layoutList.push(layout);
-            if (element.id in relevantRequirements) {
-              const prevArray = relevantRequirements[element.id];
-              relevantRequirements[element.id] = [...prevArray, req];
-              needList.push(element);
-              if (
-                !needList.some((e) => e.id === element.parent) &&
-                element.parent.length > 0
-              ) {
-                const parentNeed = Utils.ensure(
-                  selectedProject.needs.find(
-                    (need: Need) => need.id === element.parent
-                  )
-                );
-                needList.push(parentNeed);
-              }
-            } else {
-              relevantRequirements[element.id] = [];
-              relevantRequirements[element.id] = [req];
-              needList.push(element);
-              if (
-                !needList.some((e) => e.id === element.parent) &&
-                element.parent.length > 0
-              ) {
-                const parentList = findNeedParents(element, []);
-                needList = [...needList, ...parentList];
-              }
-            }
-          }
-        });
-      });
-    });
-    return [relevantRequirements, needList, layoutList];
-  }
-
   const [
     associatedRequirements,
     associatedNeeds,
     associatedLayouts
-  ] = findAssociatedRequirements(selectedProject.needs);
+  ] = Utils.findAssociatedRequirements(selectedProduct, selectedProject);
 
   const findRequirementText = (layouts: IVariant[]) => {
     const texts = layouts.map((layout: IVariant) => {
@@ -221,7 +139,7 @@ export default function ProductPreview(): ReactElement {
   };
 
   const needHierarchy = (needsList: Need[]) => {
-    const newList = Utils.unflatten(needsList);
+    const newList = Utils.unflatten(needsList)[0];
     let children: any;
     let requirements: Requirement[] = [];
     const hierarchy = newList.map((element: any) => {

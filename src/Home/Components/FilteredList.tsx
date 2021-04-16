@@ -42,7 +42,7 @@ export default function FilteredList({
   const filteredElements = bankList.slice(0, 5).map((bank: Bank) => {
     return (
       <ListGroup.Item key={bank.id}>
-        <Link to={`/bank/${bank.id}`} onClick={handleSelectedBank(bank)}>
+        <Link to="/speceditor" onClick={handleSelectedBank(bank)}>
           {bank.title}
         </Link>
       </ListGroup.Item>

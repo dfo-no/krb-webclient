@@ -3,6 +3,7 @@ import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import Form from 'react-bootstrap/Form';
 import { useFieldArray } from 'react-hook-form';
+import { BsTrashFill } from 'react-icons/bs';
 
 import { v4 as uuidv4 } from 'uuid';
 import Row from 'react-bootstrap/Row';
@@ -111,18 +112,19 @@ export default function VariantArray({
       </Button>
       {fields.map((item, index) => {
         return (
-          <Card className="mb-3">
-            <Card.Body key={item.id}>
+          <Card className="mb-3" key={item.id}>
+            <Card.Body>
               <Row className="d-flex justify-content-between">
                 <h5>Variant</h5>
                 <Button
                   className="mb-3"
                   type="button"
+                  variant="danger"
                   onClick={() => {
                     remove(index);
                   }}
                 >
-                  Delete
+                  <BsTrashFill />
                 </Button>
               </Row>
 

@@ -6,7 +6,7 @@ import Form from 'react-bootstrap/Form';
 import ListGroup from 'react-bootstrap/ListGroup';
 import Row from 'react-bootstrap/Row';
 import { useDispatch, useSelector } from 'react-redux';
-import { AiFillDelete } from 'react-icons/ai';
+import { BsTrashFill } from 'react-icons/bs';
 import { useForm } from 'react-hook-form';
 import { v4 as uuidv4 } from 'uuid';
 import Joi from 'joi';
@@ -107,7 +107,7 @@ function WorkbenchPage(): ReactElement {
               variant="warning"
               onClick={() => onDelete(element)}
             >
-              <AiFillDelete onClick={() => onDelete(element)} />
+              <BsTrashFill />
             </Button>
           </Row>
           <Row className="ml-1">

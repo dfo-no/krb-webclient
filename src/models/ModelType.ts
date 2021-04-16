@@ -5,7 +5,8 @@ enum MODELTYPE {
   need = 'need',
   product = 'product',
   publication = 'publication',
-  requirement = 'requirement'
+  requirement = 'requirement',
+  specificationProduct = 'specificationProduct'
 }
 
 export default MODELTYPE;

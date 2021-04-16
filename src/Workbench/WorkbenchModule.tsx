@@ -29,7 +29,6 @@ export default function WorkbenchModule(): ReactElement {
   const projectMatch = useRouteMatch<RouteParams>('/workbench/:projectId');
   const dispatch = useDispatch();
   const { id } = useSelector((state: RootState) => state.selectedProject);
-  const { status } = useSelector((state: RootState) => state.project);
   // Can set this safely, even if we got here directly by url or by clicks
   if (projectMatch?.params.projectId && !id) {
     dispatch(selectProject(projectMatch?.params.projectId));
@@ -43,64 +42,58 @@ export default function WorkbenchModule(): ReactElement {
       // TODO: remove delay after implementing spinner
       setTimeout(async () => {
         dispatch(getProjectsThunk());
-      }, 500);
+      }, 0);
     }
     fetchEverything();
   }, [dispatch]);
 
-  if (status === 'fulfilled') {
-    return (
-      <Container fluid>
-        <Row>
-          <Col className="col-2 p-0">
-            <SideBar /> {/* Sidebar outside Switch *may* be a very bad idea */}
-          </Col>
-          <Col className={styles.editor}>
-            <Switch>
-              <Route exact path="/workbench">
-                <WorkbenchPage />
-              </Route>
-              <Route exact path="/workbench/:projectId/need">
-                <NeedPage />
-              </Route>
-              <Route
-                exact
-                path="/workbench/:projectId/need/:needId/requirement"
-              >
-                <RequirementPage />
-              </Route>
-              <Route exact path="/workbench/:projectId/requirement">
-                <RequirementPage />
-              </Route>
-              <Route
-                exact
-                path="/workbench/:projectId/need/:needId/requirement/:requirementId/edit"
-              >
-                <RequirementEditor />
-              </Route>
-              <Route exact path="/workbench/:projectId/codelist">
-                <CodelistPage />
-              </Route>
-              <Route exact path="/workbench/:projectId/codelist/:id">
-                <CodeListEditor />
-              </Route>
-              <Route exact path="/workbench/:projectId/product">
-                <ProductPage />
-              </Route>
-              <Route exact path="/workbench/:projectId/:productId/product">
-                <ProductPreview />
-              </Route>
-              <Route exact path="/workbench/:projectId">
-                <ProjectPage />
-              </Route>
-              <Route>
-                <NotFound />
-              </Route>
-            </Switch>
-          </Col>
-        </Row>
-      </Container>
-    );
-  }
-  return <p>Loading...</p>;
+  return (
+    <Container fluid>
+      <Row>
+        <Col className="col-2 p-0">
+          <SideBar /> {/* Sidebar outside Switch *may* be a very bad idea */}
+        </Col>
+        <Col className={styles.editor}>
+          <Switch>
+            <Route exact path="/workbench">
+              <WorkbenchPage />
+            </Route>
+            <Route exact path="/workbench/:projectId/need">
+              <NeedPage />
+            </Route>
+            <Route exact path="/workbench/:projectId/need/:needId/requirement">
+              <RequirementPage />
+            </Route>
+            <Route exact path="/workbench/:projectId/requirement">
+              <RequirementPage />
+            </Route>
+            <Route
+              exact
+              path="/workbench/:projectId/need/:needId/requirement/:requirementId/edit"
+            >
+              <RequirementEditor />
+            </Route>
+            <Route exact path="/workbench/:projectId/codelist">
+              <CodelistPage />
+            </Route>
+            <Route exact path="/workbench/:projectId/codelist/:id">
+              <CodeListEditor />
+            </Route>
+            <Route exact path="/workbench/:projectId/product">
+              <ProductPage />
+            </Route>
+            <Route exact path="/workbench/:projectId/:productId/product">
+              <ProductPreview />
+            </Route>
+            <Route exact path="/workbench/:projectId">
+              <ProjectPage />
+            </Route>
+            <Route>
+              <NotFound />
+            </Route>
+          </Switch>
+        </Col>
+      </Row>
+    </Container>
+  );
 }

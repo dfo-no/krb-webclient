@@ -8,8 +8,8 @@ import { useForm } from 'react-hook-form';
 import { joiResolver } from '@hookform/resolvers/joi';
 import { useDispatch, useSelector } from 'react-redux';
 import Joi from 'joi';
+import { BsTrashFill } from 'react-icons/bs';
 
-import { AiFillDelete } from 'react-icons/ai';
 import {
   deleteCodelist,
   editCodelist,
@@ -159,7 +159,7 @@ function EditCodeListForm({ toggleShow, codelistId }: IProps): ReactElement {
               variant="warning"
               onClick={removeCodelist}
             >
-              Delete <AiFillDelete />
+              Delete <BsTrashFill />
             </Button>
           </Row>
         </Form>
