@@ -9,19 +9,17 @@ import { useDispatch, useSelector } from 'react-redux';
 import { v4 as uuidv4 } from 'uuid';
 import Joi from 'joi';
 import { joiResolver } from '@hookform/resolvers/joi';
-import Utils from '../common/Utils';
-import { IVariant } from '../models/IVariant';
-import { Requirement } from '../models/Requirement';
+import Utils from '../../common/Utils';
+import { IVariant } from '../../models/IVariant';
+import { Requirement } from '../../models/Requirement';
 import {
-  addProductAnswer,
-  deleteProductAnswer
-} from '../store/reducers/spesification-reducer';
-import { RootState } from '../store/store';
-import { SpecificationProduct } from '../models/SpecificationProduct';
+  addAnswer,
+  deleteAnswer
+} from '../../store/reducers/spesification-reducer';
+import { RootState } from '../../store/store';
 
 interface IProps {
   requirement: Requirement;
-  productId: string;
 }
 
 type FormValue = {
@@ -33,16 +31,15 @@ const alternativeSchema = Joi.object().keys({
   weight: Joi.number().integer().min(1).required()
 });
 
-export default function ProductRequirementAnswer({
-  requirement,
-  productId
+export default function RequirementAnswer({
+  requirement
 }: IProps): ReactElement {
   const dispatch = useDispatch();
-  const { register, handleSubmit } = useForm({
+  const { register, handleSubmit, errors } = useForm({
     resolver: joiResolver(alternativeSchema)
   });
-  const { spec } = useSelector((state: RootState) => state.specification);
   const [selectedLayout, setSelectedLayout] = useState(requirement.layouts[0]);
+  const { spec } = useSelector((state: RootState) => state.specification);
   const saveAnswer = (post: FormValue) => {
     const newAnswer = {
       id: uuidv4(),
@@ -50,14 +47,8 @@ export default function ProductRequirementAnswer({
       weight: post.weight,
       reqTextId: selectedLayout.id
     };
-    dispatch(addProductAnswer({ answer: newAnswer, productId }));
+    dispatch(addAnswer({ answer: newAnswer }));
   };
-
-  const specProduct = Utils.ensure(
-    spec.products.find(
-      (product: SpecificationProduct) => product.id === productId
-    )
-  );
 
   function handleChange(event: React.ChangeEvent<HTMLSelectElement>) {
     const variantId = event.target.value;
@@ -66,19 +57,14 @@ export default function ProductRequirementAnswer({
     );
     selectedLayout.alternatives.forEach((alternative) => {
       if (
-        specProduct.requirementAnswers.find(
+        spec.requirementAnswers.find(
           (answer) => answer.alternativeId === alternative.id
         )
       ) {
-        const index = specProduct.requirementAnswers.findIndex(
+        const index = spec.requirementAnswers.findIndex(
           (answer) => answer.alternativeId === alternative.id
         );
-        dispatch(
-          deleteProductAnswer({
-            answer: specProduct.requirementAnswers[index].id,
-            productId: specProduct.id
-          })
-        );
+        dispatch(deleteAnswer({ answer: spec.requirementAnswers[index].id }));
       }
     });
     setSelectedLayout(variant);
@@ -88,9 +74,7 @@ export default function ProductRequirementAnswer({
     let defaultText = requirement.layouts[0].id;
     requirement.layouts.forEach((layout) => {
       if (
-        specProduct.requirementAnswers.find(
-          (answer) => answer.reqTextId === layout.id
-        )
+        spec.requirementAnswers.find((answer) => answer.reqTextId === layout.id)
       ) {
         defaultText = layout.id;
       }
@@ -103,15 +87,15 @@ export default function ProductRequirementAnswer({
     let defaultWeight = 0;
     selectedLayout.alternatives.forEach((alternative) => {
       if (
-        specProduct.requirementAnswers.find(
+        spec.requirementAnswers.find(
           (answer) => answer.alternativeId === alternative.id
         )
       ) {
         defaultText = alternative.id;
-        const index = specProduct.requirementAnswers.findIndex(
+        const index = spec.requirementAnswers.findIndex(
           (answer) => answer.alternativeId === alternative.id
         );
-        defaultWeight = specProduct.requirementAnswers[index].weight;
+        defaultWeight = spec.requirementAnswers[index].weight;
       }
     });
     return [defaultText, defaultWeight];
@@ -177,7 +161,13 @@ export default function ProductRequirementAnswer({
               name="weight"
               ref={register}
               defaultValue={findDefaultAnswerOption()[1]}
+              isInvalid={!!errors.weight}
             />
+            {errors.weight && (
+              <Form.Control.Feedback type="invalid">
+                {errors.weight?.message}
+              </Form.Control.Feedback>
+            )}
           </Row>
           <Row>
             <Button type="submit" className="mt-2">

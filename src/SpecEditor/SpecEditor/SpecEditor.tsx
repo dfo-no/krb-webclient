@@ -12,10 +12,13 @@ import Form from 'react-bootstrap/Form';
 
 import Joi from 'joi';
 import { joiResolver } from '@hookform/resolvers/joi';
-import { RootState } from '../store/store';
-import { Bank } from '../models/Bank';
-import Utils from '../common/Utils';
-import { editBankId, editTitle } from '../store/reducers/spesification-reducer';
+import { RootState } from '../../store/store';
+import { Bank } from '../../models/Bank';
+import Utils from '../../common/Utils';
+import {
+  editBankId,
+  editTitle
+} from '../../store/reducers/spesification-reducer';
 
 type FormInput = {
   title: string;

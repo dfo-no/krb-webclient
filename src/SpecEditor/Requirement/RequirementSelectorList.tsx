@@ -2,63 +2,45 @@ import React, { ReactElement } from 'react';
 import ListGroup from 'react-bootstrap/ListGroup';
 import Row from 'react-bootstrap/Row';
 import { BsArrowReturnRight } from 'react-icons/bs';
-import Utils from '../common/Utils';
-import { Need } from '../models/Need';
-import { Bank } from '../models/Bank';
-import { Requirement } from '../models/Requirement';
+import { useSelector } from 'react-redux';
+import Utils from '../../common/Utils';
+import { Need } from '../../models/Need';
+import { Requirement } from '../../models/Requirement';
+import { RootState } from '../../store/store';
 import styles from './RequirementView.module.scss';
-import { SpecificationProduct } from '../models/SpecificationProduct';
-import ProductSpesificationRequirement from './ProductSpecificationRequirement';
+import SpesificationRequirement from './SpesificationRequirement';
 
 interface InputProps {
-  selectedBank: Bank;
-  product: SpecificationProduct;
+  needList: Need[];
 }
 
-export default function ProductRequirementSelectorList({
-  selectedBank,
-  product
+export default function RequirementView({
+  needList
 }: InputProps): ReactElement {
+  const { spec } = useSelector((state: RootState) => state.specification);
   const requirementsAnswers = (requirementArray: Requirement[]) => {
     return requirementArray.map((req) => {
-      const selected = !!product.requirements.includes(req.id);
-      return (
-        <ProductSpesificationRequirement
-          selected={selected}
-          requirement={req}
-          productId={product.id}
-        />
-      );
+      const selected = !!spec.requirements.includes(req.id);
+      return <SpesificationRequirement selected={selected} requirement={req} />;
     });
   };
-
-  const [
-    associatedRequirements,
-    associatedNeeds
-  ] = Utils.findAssociatedRequirements(product.originProduct, selectedBank);
   const childrenHierarchy = (listofneed: any[], level: number) => {
     let n = level;
     let children: any;
     const cssClass = `level${n}`;
-    let requirementsArray: Requirement[] = [];
     return listofneed.map((element: any) => {
       if (element.children.length > 0) {
         n += 1;
         children = childrenHierarchy(element.children, n);
       }
-      if (
-        element.id in associatedRequirements &&
-        associatedRequirements[element.id].length > 0
-      )
-        requirementsArray = associatedRequirements[element.id];
       return (
         <div className={` ${styles[cssClass]} pt-0`}>
           <Row>
             <BsArrowReturnRight className="ml-2 mt-1 mr-2" />
             <p>{element.title}</p>
           </Row>
-          {requirementsArray.length > 0 &&
-            requirementsAnswers(requirementsArray)}
+          {element.requirements.length > 0 &&
+            requirementsAnswers(element.requirements)}
           {element.children.length > 0 && children}
         </div>
       );
@@ -68,13 +50,7 @@ export default function ProductRequirementSelectorList({
   const needHierarchy = (needsList: Need[]) => {
     const newList = Utils.unflatten(needsList)[0];
     let children: any;
-    let requirementsArray: Requirement[] = [];
     const hierarchy = newList.map((element: any) => {
-      if (
-        element.id in associatedRequirements &&
-        associatedRequirements[element.id].length > 0
-      )
-        requirementsArray = associatedRequirements[element.id];
       if (element.children.length > 0) {
         children = childrenHierarchy(element.children, 1);
       }
@@ -82,8 +58,8 @@ export default function ProductRequirementSelectorList({
         <>
           <ListGroup.Item className="mt-2 ml-0 pl-0">
             <b>{element.title}</b>
-            {requirementsArray.length > 0 &&
-              requirementsAnswers(requirementsArray)}
+            {element.requirements.length > 0 &&
+              requirementsAnswers(element.requirements)}
             {element.children.length > 0 && children}
           </ListGroup.Item>
         </>
@@ -96,5 +72,5 @@ export default function ProductRequirementSelectorList({
     );
   };
 
-  return <>{needHierarchy(associatedNeeds)}</>;
+  return <>{needHierarchy(needList)}</>;
 }

@@ -102,7 +102,13 @@ export default function ProductSpecEditor(): ReactElement {
                   name="title"
                   defaultValue={specProduct.title}
                   ref={register}
+                  isInvalid={!!errors.title}
                 />
+                {errors.title && (
+                  <Form.Control.Feedback type="invalid">
+                    {errors.title?.message}
+                  </Form.Control.Feedback>
+                )}
               </Col>
             </Form.Group>
             <Form.Group as={Row}>
@@ -114,7 +120,13 @@ export default function ProductSpecEditor(): ReactElement {
                   name="description"
                   defaultValue={specProduct.description}
                   ref={register}
+                  isInvalid={!!errors.description}
                 />
+                {errors.description && (
+                  <Form.Control.Feedback type="invalid">
+                    {errors.description?.message}
+                  </Form.Control.Feedback>
+                )}
               </Col>
             </Form.Group>
             <Col className="p-0 d-flex justify-content-end">

@@ -98,8 +98,8 @@ export default function ProductSpecList(): ReactElement {
     const newProduct: SpecificationProduct = {
       id: uuidv4(),
       originProduct: selectedProduct,
-      title: '',
-      description: '',
+      title: selectedProduct.title,
+      description: selectedProduct.description,
       amount: 0,
       type: MODELTYPE.specificationProduct,
       requirements: [],

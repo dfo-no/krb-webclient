@@ -6,7 +6,7 @@ import Row from 'react-bootstrap/Row';
 import { useSelector } from 'react-redux';
 
 import Col from 'react-bootstrap/Col';
-import { RootState } from '../store/store';
+import { RootState } from '../../store/store';
 
 export default function SpecPage(): ReactElement {
   const { spec } = useSelector((state: RootState) => state.specification);
