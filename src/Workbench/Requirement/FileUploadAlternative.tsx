@@ -12,7 +12,7 @@ interface IProps extends InputProps {
   aIx: number;
 }
 
-export default function TextAlternative({
+export default function FileUploadAlternative({
   register,
   errors,
   item,
@@ -22,7 +22,7 @@ export default function TextAlternative({
   return (
     <Card className="mb-3">
       <Card.Body>
-        <h6>Alternative: Text</h6>
+        <h6>Alternative: File Upload</h6>
         <Form.Control
           as="input"
           type="hidden"
@@ -58,21 +58,20 @@ export default function TextAlternative({
         />
         <Form.Group as={Row}>
           <Form.Label column sm="2">
-            Max
+            File endings
           </Form.Label>
           <Col sm="4">
             <Form.Control
-              type="number"
-              name={`layouts[${vIx}].alternatives[${aIx}].max`}
+              name={`layouts[${vIx}].alternatives[${aIx}].fileEndings`}
               ref={register}
-              defaultValue={item.max}
+              defaultValue={item.fileEndings}
               isInvalid={
                 !!(
                   errors.layouts &&
                   errors.layouts[vIx] &&
                   errors.layouts[vIx].alternatives &&
                   errors.layouts[vIx].alternatives[aIx] &&
-                  errors.layouts[vIx].alternatives[aIx].max
+                  errors.layouts[vIx].alternatives[aIx].fileEndings
                 )
               }
             />
@@ -80,40 +79,9 @@ export default function TextAlternative({
               errors.layouts[vIx] &&
               errors.layouts[vIx].alternatives &&
               errors.layouts[vIx].alternatives[aIx] &&
-              errors.layouts[vIx].alternatives[aIx].max && (
+              errors.layouts[vIx].alternatives[aIx].fileEndings && (
                 <Form.Control.Feedback type="invalid">
-                  {errors.layouts[vIx].alternatives[aIx].max.message}
-                </Form.Control.Feedback>
-              )}
-          </Col>
-        </Form.Group>
-        <Form.Group as={Row}>
-          <Form.Label column sm="2">
-            Text
-          </Form.Label>
-          <Col sm="4">
-            <Form.Control
-              type="input"
-              name={`layouts[${vIx}].alternatives[${aIx}].text`}
-              ref={register}
-              defaultValue={item.text}
-              isInvalid={
-                !!(
-                  errors.layouts &&
-                  errors.layouts[vIx] &&
-                  errors.layouts[vIx].alternatives &&
-                  errors.layouts[vIx].alternatives[aIx] &&
-                  errors.layouts[vIx].alternatives[aIx].text
-                )
-              }
-            />
-            {errors.layouts &&
-              errors.layouts[vIx] &&
-              errors.layouts[vIx].alternatives &&
-              errors.layouts[vIx].alternatives[aIx] &&
-              errors.layouts[vIx].alternatives[aIx].text && (
-                <Form.Control.Feedback type="invalid">
-                  {errors.layouts[vIx].alternatives[aIx].text.message}
+                  {errors.layouts[vIx].alternatives[aIx].fileEndings.message}
                 </Form.Control.Feedback>
               )}
           </Col>

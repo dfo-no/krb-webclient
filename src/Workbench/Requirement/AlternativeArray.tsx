@@ -13,6 +13,8 @@ import ValueAlternative from './ValueAlternative';
 import TextAlternative from './TextAlternative';
 
 import { InputProps } from '../../models/InputProps';
+import YesNoAlternative from './YesNoAlternative';
+import FileUploadAlternative from './FileUploadAlternative';
 
 interface IProps extends InputProps {
   prefix: string;
@@ -62,6 +64,17 @@ export default function AlternativeArray({
         text: '',
         type: 'text'
       });
+    } else if (getAlternative === 'yesNo') {
+      append({
+        id: uuidv4(),
+        type: 'yesNo'
+      });
+    } else if (getAlternative === 'fileUpload') {
+      append({
+        id: uuidv4(),
+        type: 'fileUpload',
+        fileEndings: ''
+      });
     }
   };
 
@@ -82,6 +95,8 @@ export default function AlternativeArray({
               <option value="codelist">Codelist</option>
             )}
             <option value="text">Text</option>
+            <option value="yesNo">Yes/No </option>
+            <option value="fileUpload">File upload </option>
           </Form.Control>
         </Col>
         <Button onClick={() => addAlternative()}>Add</Button>
@@ -123,6 +138,36 @@ export default function AlternativeArray({
             )}
             {item.type === 'text' && (
               <TextAlternative
+                vIx={variantIndex}
+                aIx={index}
+                defaultValues
+                item={item}
+                {...{
+                  control,
+                  register,
+                  errors,
+                  getValues,
+                  setValue
+                }}
+              />
+            )}
+            {item.type === 'yesNo' && (
+              <YesNoAlternative
+                vIx={variantIndex}
+                aIx={index}
+                defaultValues
+                item={item}
+                {...{
+                  control,
+                  register,
+                  errors,
+                  getValues,
+                  setValue
+                }}
+              />
+            )}
+            {item.type === 'fileUpload' && (
+              <FileUploadAlternative
                 vIx={variantIndex}
                 aIx={index}
                 defaultValues
