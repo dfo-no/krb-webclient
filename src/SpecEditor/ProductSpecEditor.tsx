@@ -1,3 +1,5 @@
+import { joiResolver } from '@hookform/resolvers/joi';
+import Joi from 'joi';
 import React, { ReactElement } from 'react';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
@@ -19,6 +21,12 @@ type FormInput = {
   amount: number;
 };
 
+const productSchema = Joi.object().keys({
+  title: Joi.string(),
+  description: Joi.string(),
+  amount: Joi.number().integer().min(1).required()
+});
+
 export default function ProductSpecEditor(): ReactElement {
   const { id } = useSelector((state: RootState) => state.selectedBank);
   const { list } = useSelector((state: RootState) => state.bank);
@@ -26,7 +34,9 @@ export default function ProductSpecEditor(): ReactElement {
   const { productId } = useSelector(
     (state: RootState) => state.selectedSpecProduct
   );
-  const { register, handleSubmit } = useForm();
+  const { register, handleSubmit, errors } = useForm({
+    resolver: joiResolver(productSchema)
+  });
   const dispatch = useDispatch();
 
   if (!id) {
@@ -74,7 +84,13 @@ export default function ProductSpecEditor(): ReactElement {
                   type="number"
                   defaultValue={specProduct.amount}
                   ref={register}
+                  isInvalid={!!errors.amount}
                 />
+                {errors.amount && (
+                  <Form.Control.Feedback type="invalid">
+                    {errors.amount?.message}
+                  </Form.Control.Feedback>
+                )}
               </Col>
             </Form.Group>
             <Form.Group as={Row}>

@@ -1,5 +1,5 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
-import React, { ReactElement } from 'react';
+import React, { ReactElement, useState } from 'react';
 
 import Container from 'react-bootstrap/Container';
 import Button from 'react-bootstrap/Button';
@@ -10,6 +10,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useForm } from 'react-hook-form';
 import Form from 'react-bootstrap/Form';
 
+import Joi from 'joi';
+import { joiResolver } from '@hookform/resolvers/joi';
 import { RootState } from '../store/store';
 import { Bank } from '../models/Bank';
 import Utils from '../common/Utils';
@@ -19,11 +21,17 @@ type FormInput = {
   title: string;
 };
 
+const titleSchema = Joi.object().keys({
+  title: Joi.string().required()
+});
+
 export default function SpecEditor(): ReactElement {
   const { id } = useSelector((state: RootState) => state.selectedBank);
   const { list } = useSelector((state: RootState) => state.bank);
   const { spec } = useSelector((state: RootState) => state.specification);
-  const { register, handleSubmit } = useForm();
+  const { register, handleSubmit, errors } = useForm({
+    resolver: joiResolver(titleSchema)
+  });
   const dispatch = useDispatch();
 
   if (!id) {
@@ -49,7 +57,13 @@ export default function SpecEditor(): ReactElement {
                   name="title"
                   ref={register}
                   defaultValue={spec.title}
+                  isInvalid={!!errors.title}
                 />
+                {errors.title && (
+                  <Form.Control.Feedback type="invalid">
+                    {errors.title?.message}
+                  </Form.Control.Feedback>
+                )}
               </Col>
               <Col sm={2}>
                 <Button type="submit">Save</Button>

@@ -7,6 +7,8 @@ import Form from 'react-bootstrap/Form';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import { v4 as uuidv4 } from 'uuid';
+import Joi from 'joi';
+import { joiResolver } from '@hookform/resolvers/joi';
 import Utils from '../common/Utils';
 import { IVariant } from '../models/IVariant';
 import { Requirement } from '../models/Requirement';
@@ -27,12 +29,18 @@ type FormValue = {
   weight: number;
 };
 
+const alternativeSchema = Joi.object().keys({
+  weight: Joi.number().integer().min(1).required()
+});
+
 export default function ProductRequirementAnswer({
   requirement,
   productId
 }: IProps): ReactElement {
   const dispatch = useDispatch();
-  const { register, handleSubmit } = useForm();
+  const { register, handleSubmit } = useForm({
+    resolver: joiResolver(alternativeSchema)
+  });
   const { spec } = useSelector((state: RootState) => state.specification);
   const [selectedLayout, setSelectedLayout] = useState(requirement.layouts[0]);
   const saveAnswer = (post: FormValue) => {

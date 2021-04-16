@@ -7,6 +7,8 @@ import Form from 'react-bootstrap/Form';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import { v4 as uuidv4 } from 'uuid';
+import Joi from 'joi';
+import { joiResolver } from '@hookform/resolvers/joi';
 import Utils from '../common/Utils';
 import { IVariant } from '../models/IVariant';
 import { Requirement } from '../models/Requirement';
@@ -25,11 +27,17 @@ type FormValue = {
   weight: number;
 };
 
+const alternativeSchema = Joi.object().keys({
+  weight: Joi.number().integer().min(1).required()
+});
+
 export default function RequirementAnswer({
   requirement
 }: IProps): ReactElement {
   const dispatch = useDispatch();
-  const { register, handleSubmit } = useForm();
+  const { register, handleSubmit, errors } = useForm({
+    resolver: joiResolver(alternativeSchema)
+  });
   const [selectedLayout, setSelectedLayout] = useState(requirement.layouts[0]);
   const { spec } = useSelector((state: RootState) => state.specification);
   const saveAnswer = (post: FormValue) => {
@@ -153,7 +161,13 @@ export default function RequirementAnswer({
               name="weight"
               ref={register}
               defaultValue={findDefaultAnswerOption()[1]}
+              isInvalid={!!errors.weight}
             />
+            {errors.weight && (
+              <Form.Control.Feedback type="invalid">
+                {errors.weight?.message}
+              </Form.Control.Feedback>
+            )}
           </Row>
           <Row>
             <Button type="submit" className="mt-2">
