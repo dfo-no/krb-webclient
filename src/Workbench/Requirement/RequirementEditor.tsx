@@ -128,7 +128,6 @@ export default function RequirementEditor(): ReactElement {
   const need = Utils.ensure(
     project.needs.find((element) => element.id === needId)
   );
-
   const requirement = need.requirements.find((element) => element.id === reqId);
   const defaultValues: Requirement | Record<string, never> =
     requirement !== undefined ? { ...requirement } : {};

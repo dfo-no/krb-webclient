@@ -10,8 +10,11 @@ import selectedBankReducer from './reducers/selectedBank-reducer';
 import selectedNeedReducer from './reducers/selectedNeed-reducer';
 import selectedRequirementReducer from './reducers/selectedRequirement-reducer';
 import selectedProductReducer from './reducers/selectedProduct-reducer';
+<<<<<<< HEAD
 import specificationReducer from './reducers/spesification-reducer';
 import selectedSpecProductReducer from './reducers/selectedSpecProduct-reducer';
+=======
+>>>>>>> main
 
 const rootReducer = combineReducers({
   loader: loaderReducer,
