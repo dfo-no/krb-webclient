@@ -5,17 +5,16 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
-import { Requirement } from '../models/Requirement';
-import RequirementAnswer from './RequirementAnswer';
+import { Requirement } from '../../models/Requirement';
 import {
   addProductRequirement,
   deleteProductAnswer,
   removeProductRequirement
-} from '../store/reducers/spesification-reducer';
+} from '../../store/reducers/spesification-reducer';
 import ProductRequirementAnswer from './ProductRequirementAnswer';
-import { RootState } from '../store/store';
-import { SpecificationProduct } from '../models/SpecificationProduct';
-import Utils from '../common/Utils';
+import { RootState } from '../../store/store';
+import { SpecificationProduct } from '../../models/SpecificationProduct';
+import Utils from '../../common/Utils';
 
 type InputProps = {
   requirement: Requirement;

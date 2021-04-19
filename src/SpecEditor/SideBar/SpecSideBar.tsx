@@ -4,7 +4,7 @@ import { withRouter } from 'react-router';
 import { NavLink, useRouteMatch } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import css from './SpecSideBar.module.scss';
-import { RootState } from '../store/store';
+import { RootState } from '../../store/store';
 
 interface IRouteLink {
   link: string;

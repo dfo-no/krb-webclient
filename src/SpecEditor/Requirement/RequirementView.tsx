@@ -1,35 +1,36 @@
-import React, { ReactElement } from 'react';
+import React, { ReactElement, useState } from 'react';
 import ListGroup from 'react-bootstrap/ListGroup';
 import Row from 'react-bootstrap/Row';
 import { BsArrowReturnRight } from 'react-icons/bs';
-import { useSelector } from 'react-redux';
-import Utils from '../common/Utils';
-import { Nestable } from '../models/Nestable';
-import { Need } from '../models/Need';
-import { Requirement } from '../models/Requirement';
-import { RootState } from '../store/store';
+import Utils from '../../common/Utils';
+import { Need } from '../../models/Need';
+import { Nestable } from '../../models/Nestable';
+import { Requirement } from '../../models/Requirement';
+import RequirementAnswer from './RequirementAnswer';
 import styles from './RequirementView.module.scss';
-import SpesificationRequirement from './SpesificationRequirement';
 
 interface InputProps {
   needList: Nestable<Need>[];
+  // eslint-disable-next-line react/require-default-props
+  requirementList?: Requirement[];
 }
 
 export default function RequirementView({
-  needList
+  needList,
+  requirementList = []
 }: InputProps): ReactElement {
-  const { spec } = useSelector((state: RootState) => state.specification);
-  const requirementsAnswers = (requirementArray: Requirement[]) => {
+  const [reqs, setReqs] = useState();
+  const requirements = (requirementArray: Requirement[]) => {
     return requirementArray.map((req) => {
-      const selected = !!spec.requirements.includes(req.id);
-      return <SpesificationRequirement selected={selected} requirement={req} />;
+      return <RequirementAnswer requirement={req} />;
     });
   };
-  const childrenHierarchy = (listofneed: Nestable<Need>[], level: number) => {
+
+  const childrenHierarchy = (listOfNeed: Nestable<Need>[], level: number) => {
     let n = level;
     let children: JSX.Element[];
     const cssClass = `level${n}`;
-    return listofneed.map((element) => {
+    return listOfNeed.map((element) => {
       if (element.children && element.children.length > 0) {
         n += 1;
         children = childrenHierarchy(element.children, n);
@@ -41,7 +42,7 @@ export default function RequirementView({
             <p>{element.title}</p>
           </Row>
           {element.requirements.length > 0 &&
-            requirementsAnswers(element.requirements)}
+            requirements(element.requirements)}
           {element.children && element.children.length > 0 && children}
         </div>
       );
@@ -60,7 +61,7 @@ export default function RequirementView({
           <ListGroup.Item className="mt-2 ml-0 pl-0">
             <b>{element.title}</b>
             {element.requirements.length > 0 &&
-              requirementsAnswers(element.requirements)}
+              requirements(element.requirements)}
             {element.children && element.children.length > 0 && children}
           </ListGroup.Item>
         </>

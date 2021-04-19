@@ -2,12 +2,12 @@ import React, { ReactElement } from 'react';
 import ListGroup from 'react-bootstrap/ListGroup';
 import Row from 'react-bootstrap/Row';
 import { BsArrowReturnRight } from 'react-icons/bs';
-import Utils from '../common/Utils';
-import { Need } from '../models/Need';
-import { Bank } from '../models/Bank';
-import { Requirement } from '../models/Requirement';
+import Utils from '../../common/Utils';
+import { Need } from '../../models/Need';
+import { Bank } from '../../models/Bank';
+import { Requirement } from '../../models/Requirement';
 import styles from './RequirementView.module.scss';
-import { SpecificationProduct } from '../models/SpecificationProduct';
+import { SpecificationProduct } from '../../models/SpecificationProduct';
 import ProductSpesificationRequirement from './ProductSpecificationRequirement';
 import { Nestable } from '../models/Nestable';
 
