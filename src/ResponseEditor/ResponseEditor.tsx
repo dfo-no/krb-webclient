@@ -17,12 +17,15 @@ import { Bank } from '../models/Bank';
 import { FileDownLoad } from '../models/FileDownLoad';
 import styles from './ResponseEditor.module.scss';
 import MODELTYPE from '../models/ModelType';
+import { Nestable } from '../models/Nestable';
 
 export default function ResponseEditor(): ReactElement {
   const { register, handleSubmit } = useForm();
   const [fileUploaded, setFileUploaded] = useState(false);
   const [uploadedBank, setUploadedBank] = useState<Bank | null>(null);
-  const [selectedNeedlist, setSelectedNeedList] = useState<Need[]>([]);
+  const [selectedNeedlist, setSelectedNeedList] = useState<Nestable<Need>[]>(
+    []
+  );
   const [name, setName] = useState('');
 
   const onLoad = async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -67,8 +70,8 @@ export default function ResponseEditor(): ReactElement {
   const { needs } = uploadedBank;
 
   const onSubmit = (data: { [x: string]: any }) => {
-    const selectedNeeds: Need[] = [];
-    needs.forEach((need: Need) => {
+    const selectedNeeds: Nestable<Need>[] = [];
+    needs.forEach((need) => {
       if (need.title in data && data[need.title] !== false) {
         let reqIndexes: string[];
         if (need.requirements.length <= 1) {
@@ -80,7 +83,7 @@ export default function ResponseEditor(): ReactElement {
         for (let i = 0; i < reqIndexes.length; i += 1) {
           newRequirementList.push(need.requirements[Number(reqIndexes[i])]);
         }
-        const updatedBehov: Need = {
+        const updatedBehov: Nestable<Need> = {
           id: need.id,
           title: need.title,
           description: need.description,

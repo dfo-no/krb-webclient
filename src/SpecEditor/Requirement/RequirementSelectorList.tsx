@@ -5,13 +5,14 @@ import { BsArrowReturnRight } from 'react-icons/bs';
 import { useSelector } from 'react-redux';
 import Utils from '../../common/Utils';
 import { Need } from '../../models/Need';
+import { Nestable } from '../../models/Nestable';
 import { Requirement } from '../../models/Requirement';
 import { RootState } from '../../store/store';
 import styles from './RequirementView.module.scss';
 import SpesificationRequirement from './SpesificationRequirement';
 
 interface InputProps {
-  needList: Need[];
+  needList: Nestable<Need>[];
 }
 
 export default function RequirementView({
@@ -24,12 +25,12 @@ export default function RequirementView({
       return <SpesificationRequirement selected={selected} requirement={req} />;
     });
   };
-  const childrenHierarchy = (listofneed: any[], level: number) => {
+  const childrenHierarchy = (listofneed: Nestable<Need>[], level: number) => {
     let n = level;
-    let children: any;
+    let children: JSX.Element[];
     const cssClass = `level${n}`;
-    return listofneed.map((element: any) => {
-      if (element.children.length > 0) {
+    return listofneed.map((element) => {
+      if (element.children && element.children.length > 0) {
         n += 1;
         children = childrenHierarchy(element.children, n);
       }
@@ -41,17 +42,17 @@ export default function RequirementView({
           </Row>
           {element.requirements.length > 0 &&
             requirementsAnswers(element.requirements)}
-          {element.children.length > 0 && children}
+          {element.children && element.children.length > 0 && children}
         </div>
       );
     });
   };
 
-  const needHierarchy = (needsList: Need[]) => {
+  const needHierarchy = (needsList: Nestable<Need>[]) => {
     const newList = Utils.unflatten(needsList)[0];
-    let children: any;
-    const hierarchy = newList.map((element: any) => {
-      if (element.children.length > 0) {
+    let children: JSX.Element[];
+    const hierarchy = newList.map((element) => {
+      if (element.children && element.children.length > 0) {
         children = childrenHierarchy(element.children, 1);
       }
       return (
@@ -60,7 +61,7 @@ export default function RequirementView({
             <b>{element.title}</b>
             {element.requirements.length > 0 &&
               requirementsAnswers(element.requirements)}
-            {element.children.length > 0 && children}
+            {element.children && element.children.length > 0 && children}
           </ListGroup.Item>
         </>
       );
