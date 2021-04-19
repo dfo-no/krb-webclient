@@ -59,6 +59,18 @@ const textSchema = Joi.object().keys({
   text: Joi.string().trim().max(Joi.ref('max')).required()
 });
 
+const yesNoSchema = Joi.object().keys({
+  id: Joi.string().required(),
+  type: Joi.string().equal('yesNo').required(),
+  value: Joi.boolean()
+});
+
+const fileUploadSchema = Joi.object().keys({
+  id: Joi.string().required(),
+  type: Joi.string().equal('fileUpload').required(),
+  fileEndings: Joi.string().allow('')
+});
+
 const variantSchema = Joi.object().keys({
   id: Joi.string().required(),
   requirementText: Joi.string().required(),
@@ -77,7 +89,9 @@ const variantSchema = Joi.object().keys({
       switch: [
         { is: 'value', then: valueSchema },
         { is: 'codelist', then: codelistSchema },
-        { is: 'text', then: textSchema }
+        { is: 'text', then: textSchema },
+        { is: 'yesNo', then: yesNoSchema },
+        { is: 'fileUpload', then: fileUploadSchema }
       ]
     })
   )
@@ -128,7 +142,6 @@ export default function RequirementEditor(): ReactElement {
   const need = Utils.ensure(
     project.needs.find((element) => element.id === needId)
   );
-
   const requirement = need.requirements.find((element) => element.id === reqId);
   const defaultValues: Requirement | Record<string, never> =
     requirement !== undefined ? { ...requirement } : {};

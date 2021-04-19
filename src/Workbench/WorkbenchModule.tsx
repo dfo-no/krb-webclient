@@ -29,7 +29,6 @@ export default function WorkbenchModule(): ReactElement {
   const projectMatch = useRouteMatch<RouteParams>('/workbench/:projectId');
   const dispatch = useDispatch();
   const { id } = useSelector((state: RootState) => state.selectedProject);
-
   // Can set this safely, even if we got here directly by url or by clicks
   if (projectMatch?.params.projectId && !id) {
     dispatch(selectProject(projectMatch?.params.projectId));
