@@ -1,4 +1,4 @@
 export interface ISelectable {
   id: string;
-  type: 'value' | 'codelist' | 'text';
+  type: 'value' | 'codelist' | 'text' | 'yesNo' | 'fileUpload';
 }

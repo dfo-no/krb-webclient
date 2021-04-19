@@ -16,16 +16,10 @@ export default function SpecPage(): ReactElement {
   };
 
   return (
-    <Container fluid>
-      <Row className=" align-items-center">
-        <Col className="m-4 md-12">
-          <Row>
-            <Button type="submit" className="mt-4" onClick={onDownLoad}>
-              Download Specification
-            </Button>
-          </Row>
-        </Col>
-      </Row>
-    </Container>
+    <Row className="justify-content-md-center">
+      <Button type="submit" className="mt-4" onClick={onDownLoad}>
+        Download Specification
+      </Button>
+    </Row>
   );
 }
