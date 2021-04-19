@@ -6,10 +6,11 @@ import Utils from '../../common/Utils';
 import { Need } from '../../models/Need';
 import { Bank } from '../../models/Bank';
 import { Requirement } from '../../models/Requirement';
-import styles from './RequirementView.module.scss';
+/** TODO: Do not reuse files from another component */
+import styles from '../Requirement/RequirementView.module.scss';
 import { SpecificationProduct } from '../../models/SpecificationProduct';
 import ProductSpesificationRequirement from './ProductSpecificationRequirement';
-import { Nestable } from '../models/Nestable';
+import { Nestable } from '../../models/Nestable';
 
 interface InputProps {
   selectedBank: Bank;
@@ -37,13 +38,13 @@ export default function ProductRequirementSelectorList({
     associatedRequirements,
     associatedNeeds
   ] = Utils.findAssociatedRequirements(product.originProduct, selectedBank);
-  const childrenHierarchy = (listOfNeed: any[], level: number) => {
+  const childrenHierarchy = (listOfNeed: Nestable<Need>[], level: number) => {
     let n = level;
     let children: JSX.Element[];
     const cssClass = `level${n}`;
     let requirementsArray: Requirement[] = [];
-    return listOfNeed.map((element: any) => {
-      if (element.children.length > 0) {
+    return listOfNeed.map((element) => {
+      if (element.children && element.children.length > 0) {
         n += 1;
         children = childrenHierarchy(element.children, n);
       }
@@ -60,7 +61,7 @@ export default function ProductRequirementSelectorList({
           </Row>
           {requirementsArray.length > 0 &&
             requirementsAnswers(requirementsArray)}
-          {element.children.length > 0 && children}
+          {element.children && element.children.length > 0 && children}
         </div>
       );
     });
