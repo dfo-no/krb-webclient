@@ -7,12 +7,12 @@ import { Route, Switch, useRouteMatch } from 'react-router';
 import NotFound from '../NotFound';
 import { selectBank } from '../store/reducers/selectedBank-reducer';
 import { RootState } from '../store/store';
-import DownloadPage from './DownloadPage';
-import ProductSpecEditor from './ProductSpecEditor';
-import ProductSpecList from './ProductSpecList';
-import RequirementSpecEditor from './RequirementSpecEditor';
-import SpecEditor from './SpecEditor';
-import SpecSideBar from './SpecSideBar';
+import DownloadPage from './Download/DownloadPage';
+import ProductSpecEditor from './Product/ProductSpecEditor';
+import ProductSpecList from './Product/ProductSpecList';
+import RequirementSpecEditor from './Requirement/RequirementSpecEditor';
+import SpecEditor from './SpecEditor/SpecEditor';
+import SpecSideBar from './SideBar/SpecSideBar';
 
 interface RouteParams {
   bankId: string;

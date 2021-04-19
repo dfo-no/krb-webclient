@@ -3,9 +3,9 @@ import { Card } from 'react-bootstrap';
 import ListGroup from 'react-bootstrap/ListGroup';
 import Row from 'react-bootstrap/Row';
 import { BsArrowReturnRight } from 'react-icons/bs';
-import Utils from '../common/Utils';
-import { Need } from '../models/Need';
-import { Requirement } from '../models/Requirement';
+import Utils from '../../common/Utils';
+import { Need } from '../../models/Need';
+import { Requirement } from '../../models/Requirement';
 import RequirementAnswer from './RequirementAnswer';
 import styles from './RequirementView.module.scss';
 
