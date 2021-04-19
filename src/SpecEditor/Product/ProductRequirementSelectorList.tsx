@@ -6,10 +6,11 @@ import Utils from '../../common/Utils';
 import { Need } from '../../models/Need';
 import { Bank } from '../../models/Bank';
 import { Requirement } from '../../models/Requirement';
-import styles from './RequirementView.module.scss';
+/** TODO: Do not reuse files from another component */
+import styles from '../Requirement/RequirementView.module.scss';
 import { SpecificationProduct } from '../../models/SpecificationProduct';
 import ProductSpesificationRequirement from './ProductSpecificationRequirement';
-import { Nestable } from '../models/Nestable';
+import { Nestable } from '../../models/Nestable';
 
 interface InputProps {
   selectedBank: Bank;
