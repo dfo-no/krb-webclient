@@ -9,10 +9,10 @@ import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
-import Utils from '../common/Utils';
-import { SpecificationProduct } from '../models/SpecificationProduct';
-import { editSpecProduct } from '../store/reducers/spesification-reducer';
-import { RootState } from '../store/store';
+import Utils from '../../common/Utils';
+import { SpecificationProduct } from '../../models/SpecificationProduct';
+import { editSpecProduct } from '../../store/reducers/spesification-reducer';
+import { RootState } from '../../store/store';
 import ProductRequirementSelectorList from './ProductRequirementSelectorList';
 
 type FormInput = {
