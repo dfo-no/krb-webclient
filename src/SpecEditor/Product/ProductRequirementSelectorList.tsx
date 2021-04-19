@@ -38,13 +38,13 @@ export default function ProductRequirementSelectorList({
     associatedRequirements,
     associatedNeeds
   ] = Utils.findAssociatedRequirements(product.originProduct, selectedBank);
-  const childrenHierarchy = (listOfNeed: any[], level: number) => {
+  const childrenHierarchy = (listOfNeed: Nestable<Need>[], level: number) => {
     let n = level;
     let children: JSX.Element[];
     const cssClass = `level${n}`;
     let requirementsArray: Requirement[] = [];
-    return listOfNeed.map((element: any) => {
-      if (element.children.length > 0) {
+    return listOfNeed.map((element) => {
+      if (element.children && element.children.length > 0) {
         n += 1;
         children = childrenHierarchy(element.children, n);
       }
@@ -61,7 +61,7 @@ export default function ProductRequirementSelectorList({
           </Row>
           {requirementsArray.length > 0 &&
             requirementsAnswers(requirementsArray)}
-          {element.children.length > 0 && children}
+          {element.children && element.children.length > 0 && children}
         </div>
       );
     });
