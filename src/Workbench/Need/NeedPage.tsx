@@ -13,6 +13,7 @@ import {
   updateNeedList
 } from '../../store/reducers/project-reducer';
 import SuccessAlert from '../SuccessAlert';
+import { Nestable } from '../../models/Nestable';
 
 function NeedPage(): ReactElement {
   const { id } = useSelector((state: RootState) => state.selectedProject);
@@ -42,7 +43,7 @@ function NeedPage(): ReactElement {
     return null;
   }
 
-  const newNeedList = (projectId: string, items: Need[]) => {
+  const newNeedList = (projectId: string, items: Nestable<Need>[]) => {
     dispatch(updateNeedList({ id: projectId, needs: items }));
     dispatch(putProjectThunk(projectId));
   };
@@ -61,7 +62,7 @@ function NeedPage(): ReactElement {
       {showAlert && <SuccessAlert toggleShow={setShowAlert} type="need" />}
       {newNeed(toggleEditor)}
       <NestableHierarcy
-        dispatchfunc={(projectId: string, items: Need[]) =>
+        dispatchfunc={(projectId: string, items: Nestable<Need>[]) =>
           newNeedList(projectId, items)
         }
         inputlist={project.needs}

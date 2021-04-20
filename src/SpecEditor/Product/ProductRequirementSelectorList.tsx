@@ -9,6 +9,7 @@ import { Requirement } from '../../models/Requirement';
 import styles from './ProductSpecEditor.module.scss';
 import { SpecificationProduct } from '../../models/SpecificationProduct';
 import ProductSpesificationRequirement from './ProductSpecificationRequirement';
+import { Nestable } from '../../models/Nestable';
 
 interface InputProps {
   selectedBank: Bank;
@@ -37,13 +38,13 @@ export default function ProductRequirementSelectorList({
     associatedRequirements,
     associatedNeeds
   ] = Utils.findAssociatedRequirements(product.originProduct, selectedBank);
-  const childrenHierarchy = (listofneed: any[], level: number) => {
+  const childrenHierarchy = (listOfNeed: Nestable<Need>[], level: number) => {
     let n = level;
-    let children: any;
+    let children: JSX.Element[];
     const cssClass = `level${n}`;
     let requirementsArray: Requirement[] = [];
-    return listofneed.map((element: any) => {
-      if (element.children.length > 0) {
+    return listOfNeed.map((element) => {
+      if (element.children && element.children.length > 0) {
         n += 1;
         children = childrenHierarchy(element.children, n);
       }
@@ -60,23 +61,23 @@ export default function ProductRequirementSelectorList({
           </Row>
           {requirementsArray.length > 0 &&
             requirementsAnswers(requirementsArray)}
-          {element.children.length > 0 && children}
+          {element.children && element.children.length > 0 && children}
         </div>
       );
     });
   };
 
-  const needHierarchy = (needsList: Need[]) => {
+  const needHierarchy = (needsList: Nestable<Need>[]) => {
     const newList = Utils.unflatten(needsList)[0];
-    let children: any;
+    let children: JSX.Element[];
     let requirementsArray: Requirement[] = [];
-    const hierarchy = newList.map((element: any) => {
+    const hierarchy = newList.map((element) => {
       if (
         element.id in associatedRequirements &&
         associatedRequirements[element.id].length > 0
       )
         requirementsArray = associatedRequirements[element.id];
-      if (element.children.length > 0) {
+      if (element.children && element.children.length > 0) {
         children = childrenHierarchy(element.children, 1);
       }
       return (
@@ -85,7 +86,7 @@ export default function ProductRequirementSelectorList({
             <b>{element.title}</b>
             {requirementsArray.length > 0 &&
               requirementsAnswers(requirementsArray)}
-            {element.children.length > 0 && children}
+            {element.children && element.children.length > 0 && children}
           </ListGroup.Item>
         </>
       );

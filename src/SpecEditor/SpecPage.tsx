@@ -8,7 +8,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import Col from 'react-bootstrap/Col';
 import { Link, useHistory } from 'react-router-dom';
 import Form from 'react-bootstrap/Form';
-import InputGroup from 'react-bootstrap/esm/InputGroup';
+import InputGroup from 'react-bootstrap/InputGroup';
 import { RootState } from '../store/store';
 import { Specification } from '../models/Specification';
 import { selectBank } from '../store/reducers/selectedBank-reducer';

@@ -1,5 +1,6 @@
 import { Bank } from '../models/Bank';
-import { Hierarchical } from '../models/Hierarchical';
+import { BaseModel } from '../models/BaseModel';
+import { Nestable } from '../models/Nestable';
 import { IVariant } from '../models/IVariant';
 import { Need } from '../models/Need';
 import { Product } from '../models/Product';
@@ -34,8 +35,7 @@ class Utils {
     return string.charAt(0).toUpperCase() + string.slice(1);
   }
 
-  // make Generic and make Test".
-  static unflatten<T extends Hierarchical>(
+  /* static unflatten<T extends Hierarchical>(
     items: T[]
   ): [T[], { [key: string]: T }] {
     const hierarchy: T[] = [];
@@ -65,13 +65,45 @@ class Utils {
       }
     });
     return [hierarchy, mappedArr];
+  } */
+
+  static unflatten<T extends BaseModel>(
+    items: Nestable<T>[]
+  ): [Nestable<T>[], { [key: string]: Nestable<T> }] {
+    const hierarchy: Nestable<T>[] = [];
+    const mappedArr: { [key: string]: Nestable<T> } = {};
+
+    items.forEach((item) => {
+      const Id = item.id;
+      if (!Object.prototype.hasOwnProperty.call(mappedArr, Id)) {
+        mappedArr[Id] = { ...item };
+        mappedArr[Id].children = [];
+      }
+    });
+    Object.keys(mappedArr).forEach((key) => {
+      if (Object.prototype.hasOwnProperty.call(mappedArr, key)) {
+        const mappedElem = mappedArr[key];
+
+        if (mappedElem.parent) {
+          const parentId = mappedElem.parent;
+          const parent = mappedArr[parentId];
+          if (!parent.children) {
+            parent.children = [];
+          }
+          parent.children.push(mappedElem);
+        } else {
+          hierarchy.push(mappedElem);
+        }
+      }
+    });
+    return [hierarchy, mappedArr];
   }
 
   static findNeedParents(
-    element: Need,
-    parents: Need[],
+    element: Nestable<Need>,
+    parents: Nestable<Need>[],
     selectedProject: Bank
-  ): Need[] {
+  ): Nestable<Need>[] {
     const parentList = parents;
     const parentNeed = Utils.ensure(
       selectedProject.needs.find((need: Need) => need.id === element.parent)
@@ -112,11 +144,11 @@ class Utils {
   static findAssociatedRequirements(
     selectedProduct: Product,
     selectedProject: Bank
-  ): [{ [key: string]: Requirement[] }, Need[], IVariant[]] {
+  ): [{ [key: string]: Requirement[] }, Nestable<Need>[], IVariant[]] {
     const relevantRequirements: { [key: string]: Requirement[] } = {};
-    let needList: Need[] = [];
+    let needList: Nestable<Need>[] = [];
     const layoutList: IVariant[] = [];
-    selectedProject.needs.forEach((element: Need) => {
+    selectedProject.needs.forEach((element) => {
       element.requirements.forEach((req: Requirement) => {
         req.layouts.forEach((layout: IVariant) => {
           if (
@@ -138,7 +170,7 @@ class Utils {
               ) {
                 const parentNeed = Utils.ensure(
                   selectedProject.needs.find(
-                    (need: Need) => need.id === element.parent
+                    (need) => need.id === element.parent
                   )
                 );
                 needList.push(parentNeed);
@@ -166,8 +198,8 @@ class Utils {
     return [relevantRequirements, needList, layoutList];
   }
 
-  static checkIfParent<T extends Hierarchical>(
-    items: T[],
+  static checkIfParent<T extends BaseModel>(
+    items: Nestable<T>[],
     id: string
   ): boolean {
     const mappedArray = this.unflatten(items)[1];

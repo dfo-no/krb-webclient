@@ -1,9 +1,9 @@
 import React, { ReactElement, useState } from 'react';
 import { Button, ListGroup } from 'react-bootstrap';
-import Col from 'react-bootstrap/esm/Col';
-import Container from 'react-bootstrap/esm/Container';
-import Form from 'react-bootstrap/esm/Form';
-import Row from 'react-bootstrap/esm/Row';
+import Col from 'react-bootstrap/Col';
+import Container from 'react-bootstrap/Container';
+import Form from 'react-bootstrap/Form';
+import Row from 'react-bootstrap/Row';
 import { useForm } from 'react-hook-form';
 import { BsPencil } from 'react-icons/bs';
 import { useDispatch, useSelector } from 'react-redux';

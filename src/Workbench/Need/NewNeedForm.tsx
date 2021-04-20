@@ -14,6 +14,7 @@ import { Need } from '../../models/Need';
 import { addNeed, putProjectThunk } from '../../store/reducers/project-reducer';
 import { RootState } from '../../store/store';
 import MODELTYPE from '../../models/ModelType';
+import { Nestable } from '../../models/Nestable';
 
 type FormValues = {
   title: string;
@@ -44,7 +45,7 @@ function NewNeedForm({ toggleShow, toggleAlert }: IProps): ReactElement {
   }
 
   const onNewNeedSubmit = (post: FormValues) => {
-    const need: Need = {
+    const need: Nestable<Need> = {
       // TODO: remove uuidv4, this should be CosmosDB's task (perhaps by reference)
       id: uuidv4(),
       title: post.title,
