@@ -7,8 +7,10 @@ import Form from 'react-bootstrap/Form';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import { v4 as uuidv4 } from 'uuid';
-import Joi from 'joi';
+import Joi, { alternatives } from 'joi';
 import { joiResolver } from '@hookform/resolvers/joi';
+import { Alert } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 import Utils from '../../common/Utils';
 import { IVariant } from '../../models/IVariant';
 import { Requirement } from '../../models/Requirement';
@@ -17,6 +19,7 @@ import {
   deleteAnswer
 } from '../../store/reducers/spesification-reducer';
 import { RootState } from '../../store/store';
+import { selectAlternative } from '../../store/reducers/selectedAlternative-reducer';
 
 interface IProps {
   requirement: Requirement;
@@ -28,7 +31,9 @@ type FormValue = {
 };
 
 const alternativeSchema = Joi.object().keys({
-  weight: Joi.number().integer().min(1).required()
+  alternative: Joi.string().required(),
+  weight: Joi.number().integer().min(1).required(),
+  layout: Joi.string()
 });
 
 export default function RequirementAnswer({
@@ -39,15 +44,25 @@ export default function RequirementAnswer({
     resolver: joiResolver(alternativeSchema)
   });
   const [selectedLayout, setSelectedLayout] = useState(requirement.layouts[0]);
+  const [selectedAlternative, setSelectedAlternative] = useState(
+    requirement.layouts[0].alternatives[0].id
+  );
   const { spec } = useSelector((state: RootState) => state.specification);
+  const { id } = useSelector((state: RootState) => state.selectedBank);
   const saveAnswer = (post: FormValue) => {
+    const alternativeIndex = selectedLayout.alternatives.findIndex(
+      (alt) => alt.id === post.alternative
+    );
+    const alternative = selectedLayout.alternatives[alternativeIndex];
     const newAnswer = {
       id: uuidv4(),
       alternativeId: post.alternative,
       weight: post.weight,
-      reqTextId: selectedLayout.id
+      reqTextId: selectedLayout.id,
+      alternative
     };
     dispatch(addAnswer({ answer: newAnswer }));
+    setSelectedAlternative(newAnswer.id);
   };
 
   function handleChange(event: React.ChangeEvent<HTMLSelectElement>) {
@@ -104,7 +119,7 @@ export default function RequirementAnswer({
   const reqTextOptions = (req: Requirement) => {
     const reqText = req.layouts.map((layout) => {
       if (req.layouts.length === 1) {
-        return <p>{layout.requirementText}</p>;
+        return <p key={layout.id}>{layout.requirementText}</p>;
       }
       return (
         <option key={layout.id} value={layout.id}>
@@ -155,24 +170,32 @@ export default function RequirementAnswer({
             </Form.Control>
           </Row>
           <Row>
-            <Form.Label>Weight:</Form.Label>
-            <Form.Control
-              type="number"
-              name="weight"
-              ref={register}
-              defaultValue={findDefaultAnswerOption()[1]}
-              isInvalid={!!errors.weight}
-            />
-            {errors.weight && (
-              <Form.Control.Feedback type="invalid">
-                {errors.weight?.message}
-              </Form.Control.Feedback>
-            )}
+            <Form.Group>
+              <Form.Label>Weight:</Form.Label>
+              <Form.Control
+                type="number"
+                name="weight"
+                ref={register}
+                defaultValue={findDefaultAnswerOption()[1]}
+                isInvalid={!!errors.weight}
+              />
+              {errors.weight && (
+                <Form.Control.Feedback type="invalid">
+                  {errors.weight?.message}
+                </Form.Control.Feedback>
+              )}
+            </Form.Group>
           </Row>
           <Row>
             <Button type="submit" className="mt-2">
               Save
             </Button>
+            <Link
+              onClick={() => dispatch(selectAlternative(selectedAlternative))}
+              to={`/speceditor/${id}/requirement/alternative/${selectedAlternative}`}
+            >
+              <Button className="mt-2 ml-2">Edit Alternative</Button>
+            </Link>
           </Row>
         </Col>
       </Form>

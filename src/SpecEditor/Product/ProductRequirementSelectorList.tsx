@@ -6,7 +6,7 @@ import Utils from '../../common/Utils';
 import { Need } from '../../models/Need';
 import { Bank } from '../../models/Bank';
 import { Requirement } from '../../models/Requirement';
-import styles from './RequirementView.module.scss';
+import styles from './ProductSpecEditor.module.scss';
 import { SpecificationProduct } from '../../models/SpecificationProduct';
 import ProductSpesificationRequirement from './ProductSpecificationRequirement';
 
@@ -24,6 +24,7 @@ export default function ProductRequirementSelectorList({
       const selected = !!product.requirements.includes(req.id);
       return (
         <ProductSpesificationRequirement
+          key={req.id}
           selected={selected}
           requirement={req}
           productId={product.id}
