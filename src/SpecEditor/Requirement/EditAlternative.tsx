@@ -1,9 +1,7 @@
 import React, { ReactElement } from 'react';
 
 import Container from 'react-bootstrap/Container';
-import Row from 'react-bootstrap/esm/Row';
 import { useSelector } from 'react-redux';
-import { IValueAlternative } from '../../models/IValueAlternative';
 import { RootState } from '../../store/store';
 import ValueForm from './AlternativeForms/IValueAlternativeForm';
 

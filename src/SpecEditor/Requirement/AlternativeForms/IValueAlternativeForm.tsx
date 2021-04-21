@@ -6,11 +6,15 @@ import Col from 'react-bootstrap/Col';
 import Joi from 'joi';
 import { joiResolver } from '@hookform/resolvers/joi';
 import { useForm } from 'react-hook-form';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import Button from 'react-bootstrap/Button';
 import { IValueAlternative } from '../../../models/IValueAlternative';
 import { RequirementAnswer } from '../../../models/RequirementAnswer';
-import { editAnswer } from '../../../store/reducers/spesification-reducer';
+import {
+  editAnswer,
+  editProductAnswer
+} from '../../../store/reducers/spesification-reducer';
+import { RootState } from '../../../store/store';
 
 const valueSchema = Joi.object().keys({
   id: Joi.string().required(),
@@ -36,8 +40,16 @@ export default function ValueForm({ parentAnswer }: IProps): ReactElement {
   const { register, handleSubmit, errors } = useForm({
     resolver: joiResolver(valueSchema)
   });
+  const { productId } = useSelector(
+    (state: RootState) => state.selectedSpecProduct
+  );
   const item = parentAnswer.alternative as IValueAlternative;
   const dispatch = useDispatch();
+
+  if (!productId && parentAnswer.type === 'product') {
+    return <p>No product selected</p>;
+  }
+
   const saveValues = (post: FormValues) => {
     const newAlt = {
       ...item
@@ -53,6 +65,8 @@ export default function ValueForm({ parentAnswer }: IProps): ReactElement {
 
     if (newAnswer.type === 'requirement')
       dispatch(editAnswer({ answer: newAnswer }));
+    if (newAnswer.type === 'product' && productId !== null)
+      dispatch(editProductAnswer({ answer: newAnswer, productId }));
   };
 
   return (

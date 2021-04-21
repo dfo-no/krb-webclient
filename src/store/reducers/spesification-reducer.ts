@@ -82,14 +82,14 @@ const specificationSlice = createSlice({
         payload
       }: PayloadAction<{ answer: RequirementAnswer; productId: string }>
     ) {
-      const index = state.spec.requirementAnswers.findIndex(
-        (req) => req.id === payload.answer.id
-      );
       const productIndex = Utils.ensure(
         state.spec.products.findIndex(
           (product) => product.id === payload.productId
         )
       );
+      const index = state.spec.products[
+        productIndex
+      ].requirementAnswers.findIndex((req) => req.id === payload.answer.id);
       state.spec.products[productIndex].requirementAnswers[index] =
         payload.answer;
     },
@@ -188,7 +188,8 @@ export const {
   removeProductRequirement,
   deleteProductAnswer,
   deleteAnswer,
-  editAnswer
+  editAnswer,
+  editProductAnswer
 } = specificationSlice.actions;
 
 export default specificationSlice.reducer;
