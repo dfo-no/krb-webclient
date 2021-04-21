@@ -38,7 +38,10 @@ type FormValues = {
 
 export default function ValueForm({ parentAnswer }: IProps): ReactElement {
   const { register, handleSubmit, errors } = useForm({
-    resolver: joiResolver(valueSchema)
+    resolver: joiResolver(valueSchema),
+    defaultValues: {
+      ...(parentAnswer.alternative as IValueAlternative)
+    }
   });
   const { productId } = useSelector(
     (state: RootState) => state.selectedSpecProduct
@@ -79,7 +82,6 @@ export default function ValueForm({ parentAnswer }: IProps): ReactElement {
             type="hidden"
             name="id"
             ref={register}
-            defaultValue={item.id}
             isInvalid={!!errors.id}
           />
 
@@ -88,7 +90,6 @@ export default function ValueForm({ parentAnswer }: IProps): ReactElement {
             type="hidden"
             name="type"
             ref={register}
-            defaultValue={item.type}
             isInvalid={!!errors.type}
           />
           <Form.Group as={Row}>
@@ -100,7 +101,6 @@ export default function ValueForm({ parentAnswer }: IProps): ReactElement {
                 type="number"
                 name="min"
                 ref={register}
-                defaultValue={item.min}
                 isInvalid={!!errors.min}
               />
               {errors.min && (
@@ -119,7 +119,6 @@ export default function ValueForm({ parentAnswer }: IProps): ReactElement {
                 type="number"
                 name="max"
                 ref={register}
-                defaultValue={item.max}
                 isInvalid={!!errors.max}
               />
               {errors.max && (
@@ -138,7 +137,6 @@ export default function ValueForm({ parentAnswer }: IProps): ReactElement {
                 type="number"
                 name="step"
                 ref={register}
-                defaultValue={item.step}
                 isInvalid={!!errors.step}
               />
               {errors.step && (
@@ -157,7 +155,7 @@ export default function ValueForm({ parentAnswer }: IProps): ReactElement {
                 type="input"
                 name="unit"
                 ref={register}
-                defaultValue={item.unit}
+                // defaultValue={item.unit}
                 isInvalid={!!errors.unit}
               />
               {errors.unit && (
