@@ -39,9 +39,7 @@ export default function EditAlternative(): ReactElement {
   return (
     <Container fluid className="mt-4">
       <h4>Edit Alternative</h4>
-      {item.alternative.type === 'value' && (
-        <ValueForm item={item.alternative as IValueAlternative} />
-      )}
+      {item.alternative.type === 'value' && <ValueForm parentAnswer={item} />}
     </Container>
   );
 }

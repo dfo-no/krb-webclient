@@ -61,7 +61,8 @@ export default function ProductRequirementAnswer({
       alternativeId: post.alternative,
       weight: post.weight,
       reqTextId: selectedLayout.id,
-      alternative
+      alternative,
+      type: 'product'
     };
     dispatch(addProductAnswer({ answer: newAnswer, productId }));
     setSelectedAlternative(newAnswer.id);

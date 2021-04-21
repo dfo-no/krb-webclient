@@ -45,7 +45,7 @@ export default function RequirementSpecEditor(): ReactElement {
   const bankSelected = Utils.ensure(list.find((bank: Bank) => bank.id === id));
   return (
     <Container fluid>
-      <RequirementView needList={bankSelected.needs} />
+      <RequirementView key={bankSelected.id} needList={bankSelected.needs} />
     </Container>
   );
 }

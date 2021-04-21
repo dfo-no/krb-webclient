@@ -22,7 +22,7 @@ export default function RequirementView({
   const [reqs, setReqs] = useState();
   const requirements = (requirementArray: Requirement[]) => {
     return requirementArray.map((req) => {
-      return <RequirementAnswer requirement={req} />;
+      return <RequirementAnswer key={req.id} requirement={req} />;
     });
   };
 
@@ -36,7 +36,7 @@ export default function RequirementView({
         children = childrenHierarchy(element.children, n);
       }
       return (
-        <div className={` ${styles[cssClass]} pt-0`}>
+        <div key={element.id} className={` ${styles[cssClass]} pt-0`}>
           <Row>
             <BsArrowReturnRight className="ml-2 mt-1 mr-2" />
             <p>{element.title}</p>
@@ -58,7 +58,7 @@ export default function RequirementView({
       }
       return (
         <>
-          <ListGroup.Item className="mt-2 ml-0 pl-0">
+          <ListGroup.Item key={element.id} className="mt-2 ml-0 pl-0">
             <b>{element.title}</b>
             {element.requirements.length > 0 &&
               requirements(element.requirements)}

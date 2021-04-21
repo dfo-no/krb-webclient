@@ -6,7 +6,11 @@ import Col from 'react-bootstrap/Col';
 import Joi from 'joi';
 import { joiResolver } from '@hookform/resolvers/joi';
 import { useForm } from 'react-hook-form';
+import { useDispatch } from 'react-redux';
+import Button from 'react-bootstrap/Button';
 import { IValueAlternative } from '../../../models/IValueAlternative';
+import { RequirementAnswer } from '../../../models/RequirementAnswer';
+import { editAnswer } from '../../../store/reducers/spesification-reducer';
 
 const valueSchema = Joi.object().keys({
   id: Joi.string().required(),
@@ -18,110 +22,139 @@ const valueSchema = Joi.object().keys({
 });
 
 interface IProps {
-  item: IValueAlternative;
+  parentAnswer: RequirementAnswer;
 }
 
-export default function ValueForm({ item }: IProps): ReactElement {
+type FormValues = {
+  max: number;
+  min: number;
+  step: number;
+  unit: string;
+};
+
+export default function ValueForm({ parentAnswer }: IProps): ReactElement {
   const { register, handleSubmit, errors } = useForm({
     resolver: joiResolver(valueSchema)
   });
+  const item = parentAnswer.alternative as IValueAlternative;
+  const dispatch = useDispatch();
+  const saveValues = (post: FormValues) => {
+    const newAlt = {
+      ...item
+    };
+    const newAnswer = {
+      ...parentAnswer
+    };
+    newAlt.max = post.max;
+    newAlt.min = post.min;
+    newAlt.step = post.step;
+    newAlt.unit = post.unit;
+    newAnswer.alternative = newAlt;
+
+    if (newAnswer.type === 'requirement')
+      dispatch(editAnswer({ answer: newAnswer }));
+  };
+
   return (
     <Card className="mb-3">
       <Card.Body>
         <h6>Alternative: Value</h6>
-        <Form.Control
-          as="input"
-          type="hidden"
-          name="id"
-          ref={register}
-          defaultValue={item.id}
-          isInvalid={!!errors.id}
-        />
+        <Form onSubmit={handleSubmit(saveValues)}>
+          <Form.Control
+            as="input"
+            type="hidden"
+            name="id"
+            ref={register}
+            defaultValue={item.id}
+            isInvalid={!!errors.id}
+          />
 
-        <Form.Control
-          as="input"
-          type="hidden"
-          name="type"
-          ref={register}
-          defaultValue={item.type}
-          isInvalid={!!errors.type}
-        />
-        <Form.Group as={Row}>
-          <Form.Label column sm="2">
-            Minimum
-          </Form.Label>
-          <Col sm="4">
-            <Form.Control
-              type="number"
-              name="min"
-              ref={register}
-              defaultValue={item.min}
-              isInvalid={!!errors.min}
-            />
-            {errors.min && (
-              <Form.Control.Feedback type="invalid">
-                {errors.min.message}
-              </Form.Control.Feedback>
-            )}
-          </Col>
-        </Form.Group>
-        <Form.Group as={Row}>
-          <Form.Label column sm="2">
-            Maximum
-          </Form.Label>
-          <Col sm="4">
-            <Form.Control
-              type="number"
-              name="max"
-              ref={register}
-              defaultValue={item.max}
-              isInvalid={!!errors.max}
-            />
-            {errors.max && (
-              <Form.Control.Feedback type="invalid">
-                {errors.max.message}
-              </Form.Control.Feedback>
-            )}
-          </Col>
-        </Form.Group>
-        <Form.Group as={Row}>
-          <Form.Label column sm="2">
-            Step
-          </Form.Label>
-          <Col sm={4}>
-            <Form.Control
-              type="number"
-              name="step"
-              ref={register}
-              defaultValue={item.step}
-              isInvalid={!!errors.step}
-            />
-            {errors.step && (
-              <Form.Control.Feedback type="invalid">
-                {errors.step.message}
-              </Form.Control.Feedback>
-            )}
-          </Col>
-        </Form.Group>
-        <Form.Group as={Row}>
-          <Form.Label column sm="2">
-            Unit
-          </Form.Label>
-          <Col sm="4">
-            <Form.Control
-              type="input"
-              name="unit"
-              ref={register}
-              defaultValue={item.unit}
-              isInvalid={!!errors.unit}
-            />
-            {errors.unit && (
-              <Form.Control.Feedback type="invalid">
-                {errors.unit.message}
-              </Form.Control.Feedback>
-            )}
-          </Col>
-        </Form.Group>
+          <Form.Control
+            as="input"
+            type="hidden"
+            name="type"
+            ref={register}
+            defaultValue={item.type}
+            isInvalid={!!errors.type}
+          />
+          <Form.Group as={Row}>
+            <Form.Label column sm="2">
+              Minimum
+            </Form.Label>
+            <Col sm="4">
+              <Form.Control
+                type="number"
+                name="min"
+                ref={register}
+                defaultValue={item.min}
+                isInvalid={!!errors.min}
+              />
+              {errors.min && (
+                <Form.Control.Feedback type="invalid">
+                  {errors.min.message}
+                </Form.Control.Feedback>
+              )}
+            </Col>
+          </Form.Group>
+          <Form.Group as={Row}>
+            <Form.Label column sm="2">
+              Maximum
+            </Form.Label>
+            <Col sm="4">
+              <Form.Control
+                type="number"
+                name="max"
+                ref={register}
+                defaultValue={item.max}
+                isInvalid={!!errors.max}
+              />
+              {errors.max && (
+                <Form.Control.Feedback type="invalid">
+                  {errors.max.message}
+                </Form.Control.Feedback>
+              )}
+            </Col>
+          </Form.Group>
+          <Form.Group as={Row}>
+            <Form.Label column sm="2">
+              Step
+            </Form.Label>
+            <Col sm={4}>
+              <Form.Control
+                type="number"
+                name="step"
+                ref={register}
+                defaultValue={item.step}
+                isInvalid={!!errors.step}
+              />
+              {errors.step && (
+                <Form.Control.Feedback type="invalid">
+                  {errors.step.message}
+                </Form.Control.Feedback>
+              )}
+            </Col>
+          </Form.Group>
+          <Form.Group as={Row}>
+            <Form.Label column sm="2">
+              Unit
+            </Form.Label>
+            <Col sm="4">
+              <Form.Control
+                type="input"
+                name="unit"
+                ref={register}
+                defaultValue={item.unit}
+                isInvalid={!!errors.unit}
+              />
+              {errors.unit && (
+                <Form.Control.Feedback type="invalid">
+                  {errors.unit.message}
+                </Form.Control.Feedback>
+              )}
+            </Col>
+          </Form.Group>
+          <Button type="submit"> Save</Button>
+        </Form>
       </Card.Body>
     </Card>
   );
