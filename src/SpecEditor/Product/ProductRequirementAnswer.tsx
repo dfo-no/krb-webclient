@@ -98,6 +98,9 @@ export default function ProductRequirementAnswer({
     setSelectedLayout(variant);
   }
 
+  const selectAlt = () => {
+    dispatch(selectAlternative(selectedAlternative));
+  };
   function findDefaultRequirementText(): string {
     let defaultText = requirement.layouts[0].id;
     requirement.layouts.forEach((layout) => {
@@ -204,7 +207,7 @@ export default function ProductRequirementAnswer({
               Save
             </Button>
             <Link
-              onClick={() => dispatch(selectAlternative(selectedAlternative))}
+              onClick={selectAlt}
               to={`/speceditor/${id}/product/${productId}/alternative/${selectedAlternative}`}
             >
               <Button className="mt-2 ml-2">Edit Alternative</Button>

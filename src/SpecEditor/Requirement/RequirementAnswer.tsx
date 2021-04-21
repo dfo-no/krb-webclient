@@ -7,9 +7,8 @@ import Form from 'react-bootstrap/Form';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import { v4 as uuidv4 } from 'uuid';
-import Joi, { alternatives } from 'joi';
+import Joi from 'joi';
 import { joiResolver } from '@hookform/resolvers/joi';
-import { Alert } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import Utils from '../../common/Utils';
 import { IVariant } from '../../models/IVariant';
@@ -65,6 +64,9 @@ export default function RequirementAnswer({
     setSelectedAlternative(newAnswer.id);
   };
 
+  const selectAlt = () => {
+    dispatch(selectAlternative(selectedAlternative));
+  };
   function handleChange(event: React.ChangeEvent<HTMLSelectElement>) {
     const variantId = event.target.value;
     const variant = Utils.ensure(
@@ -191,7 +193,7 @@ export default function RequirementAnswer({
               Save
             </Button>
             <Link
-              onClick={() => dispatch(selectAlternative(selectedAlternative))}
+              onClick={selectAlt}
               to={`/speceditor/${id}/requirement/alternative/${selectedAlternative}`}
             >
               <Button className="mt-2 ml-2">Edit Alternative</Button>
