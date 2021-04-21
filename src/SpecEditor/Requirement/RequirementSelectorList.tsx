@@ -22,7 +22,13 @@ export default function RequirementView({
   const requirementsAnswers = (requirementArray: Requirement[]) => {
     return requirementArray.map((req) => {
       const selected = !!spec.requirements.includes(req.id);
-      return <SpesificationRequirement selected={selected} requirement={req} />;
+      return (
+        <SpesificationRequirement
+          key={req.id}
+          selected={selected}
+          requirement={req}
+        />
+      );
     });
   };
   const childrenHierarchy = (listofneed: Nestable<Need>[], level: number) => {

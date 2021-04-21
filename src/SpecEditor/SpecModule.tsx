@@ -13,6 +13,8 @@ import ProductSpecList from './Product/ProductSpecList';
 import RequirementSpecEditor from './Requirement/RequirementSpecEditor';
 import SpecEditor from './SpecEditor/SpecEditor';
 import SpecSideBar from './SideBar/SpecSideBar';
+import EditAlternative from './Requirement/EditAlternative';
+import EditProductAlternative from './Product/EditProductAlternative';
 
 interface RouteParams {
   bankId: string;
@@ -38,14 +40,23 @@ export default function SpecModule(): ReactElement {
             <Route exact path="/speceditor/:id">
               <SpecEditor />
             </Route>
-            <Route path="/speceditor/:id/requirement">
+            <Route exact path="/speceditor/:id/requirement">
               <RequirementSpecEditor />
+            </Route>
+            <Route exact path="/speceditor/:id/requirement/alternative/:altid">
+              <EditAlternative />
             </Route>
             <Route exact path="/speceditor/:id/product">
               <ProductSpecList />
             </Route>
             <Route exact path="/speceditor/:id/product/:productid">
               <ProductSpecEditor />
+            </Route>
+            <Route
+              exact
+              path="/speceditor/:id/product/:productid/alternative/:altid"
+            >
+              <EditProductAlternative />
             </Route>
             <Route exact path="/speceditor/:id/download">
               <DownloadPage />
