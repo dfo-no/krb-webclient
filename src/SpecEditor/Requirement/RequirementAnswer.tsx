@@ -70,7 +70,8 @@ export default function RequirementAnswer({
   };
 
   const selectAlt = () => {
-    dispatch(selectAlternative(selectedAlternative));
+    if (selectedAlternative !== undefined)
+      dispatch(selectAlternative(selectedAlternative));
   };
   function handleChange(event: React.ChangeEvent<HTMLSelectElement>) {
     const variantId = event.target.value;
