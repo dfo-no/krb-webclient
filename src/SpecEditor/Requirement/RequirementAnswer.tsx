@@ -42,11 +42,15 @@ export default function RequirementAnswer({
   const { register, handleSubmit, errors } = useForm({
     resolver: joiResolver(alternativeSchema)
   });
-  const [selectedLayout, setSelectedLayout] = useState(requirement.layouts[0]);
-  const [selectedAlternative, setSelectedAlternative] = useState(
-    requirement.layouts[0].alternatives[0].id
-  );
   const { spec } = useSelector((state: RootState) => state.specification);
+  const [selectedLayout, setSelectedLayout] = useState(requirement.layouts[0]);
+  const savedAlternative = spec.requirementAnswers.find(
+    (alt) => alt.reqTextId === selectedLayout.id
+  );
+  const [selectedAlternative, setSelectedAlternative] = useState<
+    string | undefined
+  >(savedAlternative !== undefined ? savedAlternative.id : undefined);
+
   const { id } = useSelector((state: RootState) => state.selectedBank);
   const saveAnswer = (post: FormValue) => {
     const alternativeIndex = selectedLayout.alternatives.findIndex(
@@ -58,14 +62,16 @@ export default function RequirementAnswer({
       alternativeId: post.alternative,
       weight: post.weight,
       reqTextId: selectedLayout.id,
-      alternative
+      alternative,
+      type: 'requirement'
     };
     dispatch(addAnswer({ answer: newAnswer }));
     setSelectedAlternative(newAnswer.id);
   };
 
   const selectAlt = () => {
-    dispatch(selectAlternative(selectedAlternative));
+    if (selectedAlternative !== undefined)
+      dispatch(selectAlternative(selectedAlternative));
   };
   function handleChange(event: React.ChangeEvent<HTMLSelectElement>) {
     const variantId = event.target.value;
@@ -192,12 +198,14 @@ export default function RequirementAnswer({
             <Button type="submit" className="mt-2">
               Save
             </Button>
-            <Link
-              onClick={selectAlt}
-              to={`/speceditor/${id}/requirement/alternative/${selectedAlternative}`}
-            >
-              <Button className="mt-2 ml-2">Edit Alternative</Button>
-            </Link>
+            {selectedAlternative !== undefined && (
+              <Link
+                onClick={selectAlt}
+                to={`/speceditor/${id}/requirement/alternative/${selectedAlternative}`}
+              >
+                <Button className="mt-2 ml-2">Edit Alternative</Button>
+              </Link>
+            )}
           </Row>
         </Col>
       </Form>

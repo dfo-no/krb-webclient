@@ -63,7 +63,7 @@ export default function RequirementView({
       }
       return (
         <>
-          <ListGroup.Item className="mt-2 ml-0 pl-0">
+          <ListGroup.Item key={element.id} className="mt-2 ml-0 pl-0">
             <b>{element.title}</b>
             {element.requirements.length > 0 &&
               requirementsAnswers(element.requirements)}

@@ -5,6 +5,7 @@ import { Requirement } from '../../models/Requirement';
 import { SpecificationProduct } from '../../models/SpecificationProduct';
 import { RequirementAnswer } from '../../models/RequirementAnswer';
 import { Specification } from '../../models/Specification';
+import { ISelectable } from '../../models/ISelectable';
 
 interface SpecificationState {
   spec: Specification;
@@ -75,6 +76,23 @@ const specificationSlice = createSlice({
       }
       state.spec.products[index].requirementAnswers.push(payload.answer);
     },
+    editProductAnswer(
+      state,
+      {
+        payload
+      }: PayloadAction<{ answer: RequirementAnswer; productId: string }>
+    ) {
+      const productIndex = Utils.ensure(
+        state.spec.products.findIndex(
+          (product) => product.id === payload.productId
+        )
+      );
+      const index = state.spec.products[
+        productIndex
+      ].requirementAnswers.findIndex((req) => req.id === payload.answer.id);
+      state.spec.products[productIndex].requirementAnswers[index] =
+        payload.answer;
+    },
     deleteProductAnswer(
       state,
       { payload }: PayloadAction<{ answer: string; productId: string }>
@@ -130,6 +148,16 @@ const specificationSlice = createSlice({
       }
       state.spec.requirementAnswers.push(payload.answer);
     },
+    editAnswer(
+      state,
+      { payload }: PayloadAction<{ answer: RequirementAnswer }>
+    ) {
+      const index = state.spec.requirementAnswers.findIndex(
+        (req) => req.id === payload.answer.id
+      );
+      state.spec.requirementAnswers[index] = payload.answer;
+    },
+
     deleteAnswer(state, { payload }: PayloadAction<{ answer: string }>) {
       const index = state.spec.requirementAnswers.findIndex(
         (req) => req.id === payload.answer
@@ -159,7 +187,9 @@ export const {
   addProductRequirement,
   removeProductRequirement,
   deleteProductAnswer,
-  deleteAnswer
+  deleteAnswer,
+  editAnswer,
+  editProductAnswer
 } = specificationSlice.actions;
 
 export default specificationSlice.reducer;

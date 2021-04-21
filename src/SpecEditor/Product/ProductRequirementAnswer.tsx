@@ -46,11 +46,19 @@ export default function ProductRequirementAnswer({
     resolver: joiResolver(alternativeSchema)
   });
   const { spec } = useSelector((state: RootState) => state.specification);
-  const [selectedAlternative, setSelectedAlternative] = useState(
-    requirement.layouts[0].alternatives[0].id
-  );
   const { id } = useSelector((state: RootState) => state.selectedBank);
   const [selectedLayout, setSelectedLayout] = useState(requirement.layouts[0]);
+  const specProduct = Utils.ensure(
+    spec.products.find(
+      (product: SpecificationProduct) => product.id === productId
+    )
+  );
+  const savedAlternative = specProduct.requirementAnswers.find(
+    (alt) => alt.reqTextId === selectedLayout.id
+  );
+  const [selectedAlternative, setSelectedAlternative] = useState<
+    string | undefined
+  >(savedAlternative !== undefined ? savedAlternative.id : undefined);
   const saveAnswer = (post: FormValue) => {
     const alternativeIndex = selectedLayout.alternatives.findIndex(
       (alt) => alt.id === post.alternative
@@ -61,17 +69,12 @@ export default function ProductRequirementAnswer({
       alternativeId: post.alternative,
       weight: post.weight,
       reqTextId: selectedLayout.id,
-      alternative
+      alternative,
+      type: 'product'
     };
     dispatch(addProductAnswer({ answer: newAnswer, productId }));
     setSelectedAlternative(newAnswer.id);
   };
-
-  const specProduct = Utils.ensure(
-    spec.products.find(
-      (product: SpecificationProduct) => product.id === productId
-    )
-  );
 
   function handleChange(event: React.ChangeEvent<HTMLSelectElement>) {
     const variantId = event.target.value;
@@ -99,7 +102,8 @@ export default function ProductRequirementAnswer({
   }
 
   const selectAlt = () => {
-    dispatch(selectAlternative(selectedAlternative));
+    if (selectedAlternative !== undefined)
+      dispatch(selectAlternative(selectedAlternative));
   };
   function findDefaultRequirementText(): string {
     let defaultText = requirement.layouts[0].id;
@@ -206,12 +210,14 @@ export default function ProductRequirementAnswer({
             <Button type="submit" className="mt-2">
               Save
             </Button>
-            <Link
-              onClick={selectAlt}
-              to={`/speceditor/${id}/product/${productId}/alternative/${selectedAlternative}`}
-            >
-              <Button className="mt-2 ml-2">Edit Alternative</Button>
-            </Link>
+            {selectedAlternative !== undefined && (
+              <Link
+                onClick={selectAlt}
+                to={`/speceditor/${id}/product/${productId}/alternative/${selectedAlternative}`}
+              >
+                <Button className="mt-2 ml-2">Edit Alternative</Button>
+              </Link>
+            )}
           </Row>
         </Col>
       </Form>

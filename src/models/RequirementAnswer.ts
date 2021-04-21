@@ -6,4 +6,5 @@ export interface RequirementAnswer {
   weight: number;
   reqTextId: string;
   alternative: ISelectable;
+  type: string;
 }

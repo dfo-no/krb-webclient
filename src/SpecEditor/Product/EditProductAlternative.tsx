@@ -1,9 +1,9 @@
 import React, { ReactElement } from 'react';
 
 import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/esm/Row';
 import { useSelector } from 'react-redux';
 import Utils from '../../common/Utils';
-import { IValueAlternative } from '../../models/IValueAlternative';
 import { SpecificationProduct } from '../../models/SpecificationProduct';
 import { RootState } from '../../store/store';
 import ValueForm from '../Requirement/AlternativeForms/IValueAlternativeForm';
@@ -33,14 +33,11 @@ export default function EditAlternative(): ReactElement {
   const itemIndex = spec.products[productIndex].requirementAnswers.findIndex(
     (alt) => alt.id === alternativeId
   );
-
   const item = spec.products[productIndex].requirementAnswers[itemIndex];
   return (
     <Container fluid className="mt-4">
       <h4>Edit Alternative</h4>
-      {item.alternative.type === 'value' && (
-        <ValueForm item={item.alternative as IValueAlternative} />
-      )}
+      {item.alternative.type === 'value' && <ValueForm parentAnswer={item} />}
     </Container>
   );
 }
