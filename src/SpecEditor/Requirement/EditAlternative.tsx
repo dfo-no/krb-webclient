@@ -5,6 +5,7 @@ import { useSelector } from 'react-redux';
 import { RootState } from '../../store/store';
 import ValueForm from './AlternativeForms/IValueAlternativeForm';
 import NoProperties from './AlternativeForms/NoProperties';
+import TextAlternativeForm from './AlternativeForms/TextAlternativeForm';
 
 export default function EditAlternative(): ReactElement {
   const { alternativeId } = useSelector(
@@ -26,6 +27,9 @@ export default function EditAlternative(): ReactElement {
     <Container fluid className="mt-4">
       <h4>Edit Alternative</h4>
       {item.alternative.type === 'value' && <ValueForm parentAnswer={item} />}
+      {item.alternative.type === 'text' && (
+        <TextAlternativeForm parentAnswer={item} />
+      )}
       {item.alternative.type === 'codelist' && <NoProperties />}
       {item.alternative.type === 'yesNo' && <NoProperties />}
     </Container>
