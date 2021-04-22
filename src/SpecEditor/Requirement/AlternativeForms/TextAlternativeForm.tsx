@@ -52,13 +52,13 @@ export default function TextForm({ parentAnswer }: IProps): ReactElement {
 
   const saveValues = (post: FormValues) => {
     const newAlt = {
-      ...item
+      ...item,
+      max = post.max,
+      text = post.text
     };
     const newAnswer = {
       ...parentAnswer
     };
-    newAlt.max = post.max;
-    newAlt.text = post.text;
     newAnswer.alternative = newAlt;
 
     if (newAnswer.type === 'requirement')
