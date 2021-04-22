@@ -28,7 +28,9 @@ export default function EditAlternative(): ReactElement {
     <Container fluid className="mt-4">
       <h4>Edit Alternative</h4>
       {item.alternative.type === 'value' && <ValueForm parentAnswer={item} />}
-      {item.alternative.type === 'fileUpload' && <FileInputForm />}
+      {item.alternative.type === 'fileUpload' && (
+        <FileInputForm parentAnswer={item} />
+      )}
       {item.alternative.type === 'text' && (
         <TextAlternativeForm parentAnswer={item} />
       )}
