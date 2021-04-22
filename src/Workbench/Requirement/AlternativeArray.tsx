@@ -11,7 +11,8 @@ import { v4 as uuidv4 } from 'uuid';
 import CodeListAlternative from './CodeListAlternative';
 import ValueAlternative from './ValueAlternative';
 import TextAlternative from './TextAlternative';
-
+import PeriodDateAlternative from './PeriodDateAlternative';
+import TimeAlternative from './TimeAlternative';
 import { InputProps } from '../../models/InputProps';
 
 interface IProps extends InputProps {
@@ -62,6 +63,24 @@ export default function AlternativeArray({
         text: '',
         type: 'text'
       });
+    } else if (getAlternative === 'periodDate') {
+      append({
+        id: uuidv4(),
+        minDays: 0,
+        maxDays: 0,
+        // fromDate: new Date(),
+        // toDate: new Date(),
+        fromDate: '',
+        toDate: '',
+        type: 'periodDate'
+      });
+    } else if (getAlternative === 'time') {
+      append({
+        id: uuidv4(),
+        fromTime: '',
+        toTime: '',
+        type: 'time'
+      });
     }
   };
 
@@ -82,6 +101,8 @@ export default function AlternativeArray({
               <option value="codelist">Codelist</option>
             )}
             <option value="text">Text</option>
+            <option value="periodDate">Period</option>
+            <option value="time">Time</option>
           </Form.Control>
         </Col>
         <Button onClick={() => addAlternative()}>Add</Button>
@@ -123,6 +144,36 @@ export default function AlternativeArray({
             )}
             {item.type === 'text' && (
               <TextAlternative
+                vIx={variantIndex}
+                aIx={index}
+                defaultValues
+                item={item}
+                {...{
+                  control,
+                  register,
+                  errors,
+                  getValues,
+                  setValue
+                }}
+              />
+            )}
+            {item.type === 'periodDate' && (
+              <PeriodDateAlternative
+                vIx={variantIndex}
+                aIx={index}
+                defaultValues
+                item={item}
+                {...{
+                  control,
+                  register,
+                  errors,
+                  getValues,
+                  setValue
+                }}
+              />
+            )}
+            {item.type === 'time' && (
+              <TimeAlternative
                 vIx={variantIndex}
                 aIx={index}
                 defaultValues

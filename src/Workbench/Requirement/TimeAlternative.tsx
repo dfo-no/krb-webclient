@@ -3,7 +3,6 @@ import Card from 'react-bootstrap/Card';
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-
 import { InputProps } from '../../models/InputProps';
 
 interface IProps extends InputProps {
@@ -12,7 +11,7 @@ interface IProps extends InputProps {
   aIx: number;
 }
 
-export default function TextAlternative({
+export default function TimeAlternative({
   register,
   errors,
   item,
@@ -22,7 +21,7 @@ export default function TextAlternative({
   return (
     <Card className="mb-3">
       <Card.Body>
-        <h6>Alternative: Text</h6>
+        <h6>Alternative: Time</h6>
         <Form.Control
           as="input"
           type="hidden"
@@ -39,7 +38,6 @@ export default function TextAlternative({
             )
           }
         />
-
         <Form.Control
           as="input"
           type="hidden"
@@ -58,21 +56,21 @@ export default function TextAlternative({
         />
         <Form.Group as={Row}>
           <Form.Label column sm="2">
-            Max
+            From time
           </Form.Label>
           <Col sm="4">
             <Form.Control
-              type="number"
-              name={`layouts[${vIx}].alternatives[${aIx}].max`}
+              type="input"
+              name={`layouts[${vIx}].alternatives[${aIx}].fromTime`}
               ref={register}
-              defaultValue={item.max}
+              defaultValue={item.fromTime}
               isInvalid={
                 !!(
                   errors.layouts &&
                   errors.layouts[vIx] &&
                   errors.layouts[vIx].alternatives &&
                   errors.layouts[vIx].alternatives[aIx] &&
-                  errors.layouts[vIx].alternatives[aIx].max
+                  errors.layouts[vIx].alternatives[aIx].fromTime
                 )
               }
             />
@@ -80,30 +78,30 @@ export default function TextAlternative({
               errors.layouts[vIx] &&
               errors.layouts[vIx].alternatives &&
               errors.layouts[vIx].alternatives[aIx] &&
-              errors.layouts[vIx].alternatives[aIx].max && (
+              errors.layouts[vIx].alternatives[aIx].fromTime && (
                 <Form.Control.Feedback type="invalid">
-                  {errors.layouts[vIx].alternatives[aIx].max.message}
+                  {errors.layouts[vIx].alternatives[aIx].fromTime.message}
                 </Form.Control.Feedback>
               )}
           </Col>
         </Form.Group>
         <Form.Group as={Row}>
           <Form.Label column sm="2">
-            Text
+            To time
           </Form.Label>
           <Col sm="4">
             <Form.Control
               type="input"
-              name={`layouts[${vIx}].alternatives[${aIx}].text`}
+              name={`layouts[${vIx}].alternatives[${aIx}].toTime`}
               ref={register}
-              defaultValue={item.text}
+              defaultValue={item.toTime}
               isInvalid={
                 !!(
                   errors.layouts &&
                   errors.layouts[vIx] &&
                   errors.layouts[vIx].alternatives &&
                   errors.layouts[vIx].alternatives[aIx] &&
-                  errors.layouts[vIx].alternatives[aIx].text
+                  errors.layouts[vIx].alternatives[aIx].toTime
                 )
               }
             />
@@ -111,9 +109,9 @@ export default function TextAlternative({
               errors.layouts[vIx] &&
               errors.layouts[vIx].alternatives &&
               errors.layouts[vIx].alternatives[aIx] &&
-              errors.layouts[vIx].alternatives[aIx].text && (
+              errors.layouts[vIx].alternatives[aIx].toTime && (
                 <Form.Control.Feedback type="invalid">
-                  {errors.layouts[vIx].alternatives[aIx].text.message}
+                  {errors.layouts[vIx].alternatives[aIx].toTime.message}
                 </Form.Control.Feedback>
               )}
           </Col>
