@@ -1,7 +1,6 @@
 import React, { ReactElement } from 'react';
 
 import Container from 'react-bootstrap/Container';
-import Row from 'react-bootstrap/esm/Row';
 import { useSelector } from 'react-redux';
 import Utils from '../../common/Utils';
 import { SpecificationProduct } from '../../models/SpecificationProduct';
