@@ -101,6 +101,10 @@ export default function ProductRequirementAnswer({
     setSelectedLayout(variant);
   }
 
+  const selectAlt = () => {
+    if (selectedAlternative !== undefined)
+      dispatch(selectAlternative(selectedAlternative));
+  };
   function findDefaultRequirementText(): string {
     let defaultText = requirement.layouts[0].id;
     requirement.layouts.forEach((layout) => {
@@ -208,7 +212,7 @@ export default function ProductRequirementAnswer({
             </Button>
             {selectedAlternative !== undefined && (
               <Link
-                onClick={() => dispatch(selectAlternative(selectedAlternative))}
+                onClick={selectAlt}
                 to={`/speceditor/${id}/product/${productId}/alternative/${selectedAlternative}`}
               >
                 <Button className="mt-2 ml-2">Edit Alternative</Button>

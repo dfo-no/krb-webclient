@@ -69,6 +69,10 @@ export default function RequirementAnswer({
     setSelectedAlternative(newAnswer.id);
   };
 
+  const selectAlt = () => {
+    if (selectedAlternative !== undefined)
+      dispatch(selectAlternative(selectedAlternative));
+  };
   function handleChange(event: React.ChangeEvent<HTMLSelectElement>) {
     const variantId = event.target.value;
     const variant = Utils.ensure(
@@ -196,7 +200,7 @@ export default function RequirementAnswer({
             </Button>
             {selectedAlternative !== undefined && (
               <Link
-                onClick={() => dispatch(selectAlternative(selectedAlternative))}
+                onClick={selectAlt}
                 to={`/speceditor/${id}/requirement/alternative/${selectedAlternative}`}
               >
                 <Button className="mt-2 ml-2">Edit Alternative</Button>
