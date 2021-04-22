@@ -7,11 +7,14 @@ import { Route, Switch, useRouteMatch } from 'react-router';
 import NotFound from '../NotFound';
 import { selectBank } from '../store/reducers/selectedBank-reducer';
 import { RootState } from '../store/store';
-import ProductSpecEditor from './ProductSpecEditor';
-import ProductSpecList from './ProductSpecList';
-import RequirementSpecEditor from './RequirementSpecEditor';
-import SpecEditor from './SpecEditor';
-import SpecSideBar from './SpecSideBar';
+import DownloadPage from './Download/DownloadPage';
+import ProductSpecEditor from './Product/ProductSpecEditor';
+import ProductSpecList from './Product/ProductSpecList';
+import RequirementSpecEditor from './Requirement/RequirementSpecEditor';
+import SpecEditor from './SpecEditor/SpecEditor';
+import SpecSideBar from './SideBar/SpecSideBar';
+import EditAlternative from './Requirement/EditAlternative';
+import EditProductAlternative from './Product/EditProductAlternative';
 
 interface RouteParams {
   bankId: string;
@@ -37,8 +40,11 @@ export default function SpecModule(): ReactElement {
             <Route exact path="/speceditor/:id">
               <SpecEditor />
             </Route>
-            <Route path="/speceditor/:id/requirement">
+            <Route exact path="/speceditor/:id/requirement">
               <RequirementSpecEditor />
+            </Route>
+            <Route exact path="/speceditor/:id/requirement/alternative/:altid">
+              <EditAlternative />
             </Route>
             <Route exact path="/speceditor/:id/product">
               <ProductSpecList />
@@ -46,8 +52,14 @@ export default function SpecModule(): ReactElement {
             <Route exact path="/speceditor/:id/product/:productid">
               <ProductSpecEditor />
             </Route>
+            <Route
+              exact
+              path="/speceditor/:id/product/:productid/alternative/:altid"
+            >
+              <EditProductAlternative />
+            </Route>
             <Route exact path="/speceditor/:id/download">
-              <SpecEditor />
+              <DownloadPage />
             </Route>
             <Route>
               <NotFound />

@@ -3,11 +3,12 @@ import Nav from 'react-bootstrap/Nav';
 import { NavLink, useRouteMatch } from 'react-router-dom';
 
 import Utils from '../../../common/Utils';
+import { Nestable } from '../../../models/Nestable';
 import { Need } from '../../../models/Need';
 import styles from './NeedSidebar.module.scss';
 
 interface IProps {
-  needs: Need[];
+  needs: Nestable<Need>[];
 }
 
 interface RouteParams {
@@ -22,12 +23,12 @@ export default function NeedSideBar({ needs }: IProps): ReactElement {
     return <p>No project selected</p>;
   }
 
-  const childrenHierarchy = (listofneed: any[], level: number) => {
+  const childrenHierarchy = (listOfNeed: Nestable<Need>[], level: number) => {
     let n = level;
-    let children: any;
+    let children: JSX.Element[];
     const cssClass = `level${n}`;
-    return listofneed.map((element: any) => {
-      if (element.children.length > 0) {
+    return listOfNeed.map((element) => {
+      if (element.children && element.children.length > 0) {
         n += 1;
         children = childrenHierarchy(element.children, n);
       }
@@ -44,17 +45,17 @@ export default function NeedSideBar({ needs }: IProps): ReactElement {
               {element.title}
             </Nav.Link>
           </Nav.Item>
-          {element.children.length > 0 && children}
+          {element.children && element.children.length > 0 && children}
         </span>
       );
     });
   };
 
-  const needHierarchy = (needsList: Need[]) => {
+  const needHierarchy = (needsList: Nestable<Need>[]) => {
     const newList = Utils.unflatten(needsList)[0];
-    let children: any;
-    return newList.map((element: any) => {
-      if (element.children.length > 0) {
+    let children: JSX.Element[];
+    return newList.map((element) => {
+      if (element.children && element.children.length > 0) {
         children = childrenHierarchy(element.children, 1);
       }
       return (
@@ -70,11 +71,12 @@ export default function NeedSideBar({ needs }: IProps): ReactElement {
               {element.title}
             </Nav.Link>
           </Nav.Item>
-          {element.children.length > 0 && children}
+          {element.children && element.children.length > 0 && children}
         </span>
       );
     });
   };
+
   return (
     <Nav className={`sidebar flex-column p-0 ${styles.sidebar}`}>
       {needHierarchy(needs)}

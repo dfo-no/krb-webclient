@@ -1,3 +1,5 @@
+import { joiResolver } from '@hookform/resolvers/joi';
+import Joi from 'joi';
 import React, { ReactElement } from 'react';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
@@ -7,10 +9,10 @@ import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
-import Utils from '../common/Utils';
-import { SpecificationProduct } from '../models/SpecificationProduct';
-import { editSpecProduct } from '../store/reducers/spesification-reducer';
-import { RootState } from '../store/store';
+import Utils from '../../common/Utils';
+import { SpecificationProduct } from '../../models/SpecificationProduct';
+import { editSpecProduct } from '../../store/reducers/spesification-reducer';
+import { RootState } from '../../store/store';
 import ProductRequirementSelectorList from './ProductRequirementSelectorList';
 
 type FormInput = {
@@ -19,14 +21,22 @@ type FormInput = {
   amount: number;
 };
 
+const productSchema = Joi.object().keys({
+  title: Joi.string(),
+  description: Joi.string(),
+  amount: Joi.number().integer().min(1).required()
+});
+
 export default function ProductSpecEditor(): ReactElement {
   const { id } = useSelector((state: RootState) => state.selectedBank);
   const { list } = useSelector((state: RootState) => state.bank);
-  const { products } = useSelector((state: RootState) => state.specification);
+  const { spec } = useSelector((state: RootState) => state.specification);
   const { productId } = useSelector(
     (state: RootState) => state.selectedSpecProduct
   );
-  const { register, handleSubmit } = useForm();
+  const { register, handleSubmit, errors } = useForm({
+    resolver: joiResolver(productSchema)
+  });
   const dispatch = useDispatch();
 
   if (!id) {
@@ -38,7 +48,9 @@ export default function ProductSpecEditor(): ReactElement {
   }
 
   const specProduct = Utils.ensure(
-    products.find((product: SpecificationProduct) => product.id === productId)
+    spec.products.find(
+      (product: SpecificationProduct) => product.id === productId
+    )
   );
   const bankSelected = Utils.ensure(list.find((bank) => bank.id === id));
   const addProductToSpecification = (post: FormInput) => {
@@ -72,7 +84,13 @@ export default function ProductSpecEditor(): ReactElement {
                   type="number"
                   defaultValue={specProduct.amount}
                   ref={register}
+                  isInvalid={!!errors.amount}
                 />
+                {errors.amount && (
+                  <Form.Control.Feedback type="invalid">
+                    {errors.amount?.message}
+                  </Form.Control.Feedback>
+                )}
               </Col>
             </Form.Group>
             <Form.Group as={Row}>
@@ -84,7 +102,13 @@ export default function ProductSpecEditor(): ReactElement {
                   name="title"
                   defaultValue={specProduct.title}
                   ref={register}
+                  isInvalid={!!errors.title}
                 />
+                {errors.title && (
+                  <Form.Control.Feedback type="invalid">
+                    {errors.title?.message}
+                  </Form.Control.Feedback>
+                )}
               </Col>
             </Form.Group>
             <Form.Group as={Row}>
@@ -96,7 +120,13 @@ export default function ProductSpecEditor(): ReactElement {
                   name="description"
                   defaultValue={specProduct.description}
                   ref={register}
+                  isInvalid={!!errors.description}
                 />
+                {errors.description && (
+                  <Form.Control.Feedback type="invalid">
+                    {errors.description?.message}
+                  </Form.Control.Feedback>
+                )}
               </Col>
             </Form.Group>
             <Col className="p-0 d-flex justify-content-end">

@@ -1,30 +1,23 @@
-/* eslint-disable jsx-a11y/label-has-associated-control */
-import React, { ReactElement, useState } from 'react';
+import React, { ReactElement } from 'react';
 
 import Container from 'react-bootstrap/Container';
 import Button from 'react-bootstrap/Button';
 import Row from 'react-bootstrap/Row';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
-import { useForm } from 'react-hook-form';
-import fileDownload from 'js-file-download';
 import Col from 'react-bootstrap/Col';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import Form from 'react-bootstrap/Form';
-import InputGroup from 'react-bootstrap/esm/InputGroup';
-import { Requirement } from '../models/Requirement';
-import { Need } from '../models/Need';
+import InputGroup from 'react-bootstrap/InputGroup';
 import { RootState } from '../store/store';
-import { FileDownLoad } from '../models/FileDownLoad';
-import styles from './SpecEditor.module.scss';
-import { Bank } from '../models/Bank';
-import Utils from '../common/Utils';
-import MODELTYPE from '../models/ModelType';
+import { Specification } from '../models/Specification';
+import { selectBank } from '../store/reducers/selectedBank-reducer';
+import { setSpecification } from '../store/reducers/spesification-reducer';
 
 export default function SpecPage(): ReactElement {
   const { id } = useSelector((state: RootState) => state.selectedBank);
-  const { list } = useSelector((state: RootState) => state.bank);
-  const [uploadedBank, setUploadedBank] = useState<Bank | null>(null);
+  const dispatch = useDispatch();
+  const history = useHistory();
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const files = event.target.files as FileList;
@@ -33,10 +26,12 @@ export default function SpecPage(): ReactElement {
       const reader = new FileReader();
       reader.onload = (evt) => {
         if (evt.target?.result) {
-          const typeFileDownload = JSON.parse(
+          const typeSpecification = JSON.parse(
             evt.target.result.toString()
-          ) as FileDownLoad;
-          setUploadedBank(typeFileDownload.bank);
+          ) as Specification;
+          dispatch(selectBank(typeSpecification.bankId));
+          dispatch(setSpecification(typeSpecification));
+          history.push(`/speceditor/${typeSpecification.bankId}`);
         }
       };
       reader.readAsText(file);
@@ -45,10 +40,10 @@ export default function SpecPage(): ReactElement {
 
   if (!id) {
     return (
-      <>
-        <Form>
-          <Col>
-            <h4>Upload existing spesification</h4>
+      <Row className="mt-4">
+        <Col sm={6}>
+          <Form>
+            <h4>Upload spesification</h4>
             <InputGroup>
               <Form.File.Input
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
@@ -57,31 +52,34 @@ export default function SpecPage(): ReactElement {
                 accept=".json,application/json"
               />
             </InputGroup>
-          </Col>
-        </Form>
-        <Link to="/">
-          <Button>Select Bank from Hub</Button>
-        </Link>
-      </>
+          </Form>
+        </Col>
+
+        <Col sm={6}>
+          <h4>Select Bank from Hub</h4>
+          <Link to="/">
+            <Button>Go to Hub</Button>
+          </Link>
+        </Col>
+      </Row>
     );
   }
 
   return (
-    <Container fluid>
-      <Row className=" align-items-center">
-        <Col className="m-4 md-12">
-          <Row>
-            <Link to={`/speceditor/${id}`}>
-              <Button type="submit" className="mt-4">
-                Opprett kravspec
-              </Button>
-            </Link>
-            <Button type="submit" className="mt-4">
-              Opprette kvalifakasjon
-            </Button>
-          </Row>
-        </Col>
-      </Row>
-    </Container>
+    <Row className="mt-4">
+      <Col sm={4}>
+        <Link to={`/speceditor/${id}`}>
+          <Button type="submit" className="mt-4">
+            Create Spesification
+          </Button>
+        </Link>
+      </Col>
+
+      <Col sm={4}>
+        <Button type="submit" className="mt-4">
+          Create Qualification
+        </Button>
+      </Col>
+    </Row>
   );
 }

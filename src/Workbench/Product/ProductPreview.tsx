@@ -16,6 +16,7 @@ import { IVariant } from '../../models/IVariant';
 import styles from './ProductPreview.module.scss';
 import { selectNeed } from '../../store/reducers/selectedNeed-reducer';
 import { selectRequirement } from '../../store/reducers/selectedRequirement-reducer';
+import { Nestable } from '../../models/Nestable';
 
 export default function ProductPreview(): ReactElement {
   const dispatch = useDispatch();
@@ -110,13 +111,13 @@ export default function ProductPreview(): ReactElement {
     );
   };
 
-  const childrenHierarchy = (listofneed: any[], level: number) => {
+  const childrenHierarchy = (listofneed: Nestable<Need>[], level: number) => {
     let n = level;
-    let children: any;
+    let children: JSX.Element[];
     const cssClass = `level${n}`;
     let requirements: Requirement[] = [];
-    return listofneed.map((element: any) => {
-      if (element.children.length > 0) {
+    return listofneed.map((element) => {
+      if (element.children && element.children.length > 0) {
         n += 1;
         children = childrenHierarchy(element.children, n);
       }
@@ -132,23 +133,23 @@ export default function ProductPreview(): ReactElement {
             <p>{element.title}</p>
           </Row>
           {requirements.length > 0 && requirementList(requirements, element)}
-          {element.children.length > 0 && children}
+          {element.children && element.children.length > 0 && children}
         </div>
       );
     });
   };
 
-  const needHierarchy = (needsList: Need[]) => {
+  const needHierarchy = (needsList: Nestable<Need>[]) => {
     const newList = Utils.unflatten(needsList)[0];
-    let children: any;
+    let children: JSX.Element[];
     let requirements: Requirement[] = [];
-    const hierarchy = newList.map((element: any) => {
+    const hierarchy = newList.map((element) => {
       if (
         element.id in associatedRequirements &&
         associatedRequirements[element.id].length > 0
       )
         requirements = associatedRequirements[element.id];
-      if (element.children.length > 0) {
+      if (element.children && element.children.length > 0) {
         children = childrenHierarchy(element.children, 1);
       }
       return (
@@ -156,7 +157,7 @@ export default function ProductPreview(): ReactElement {
           <ListGroup.Item className="mt-2 ml-0 pl-0">
             <b>{element.title}</b>
             {requirements.length > 0 && requirementList(requirements, element)}
-            {element.children.length > 0 && children}
+            {element.children && element.children.length > 0 && children}
           </ListGroup.Item>
         </>
       );

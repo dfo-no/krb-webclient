@@ -1,6 +1,5 @@
 import React, { ReactElement, useState } from 'react';
 import Button from 'react-bootstrap/Button';
-import Card from 'react-bootstrap/Card';
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
@@ -14,6 +13,8 @@ import TextAlternative from './TextAlternative';
 import PeriodDateAlternative from './PeriodDateAlternative';
 import TimeAlternative from './TimeAlternative';
 import { InputProps } from '../../models/InputProps';
+import YesNoAlternative from './YesNoAlternative';
+import FileUploadAlternative from './FileUploadAlternative';
 
 interface IProps extends InputProps {
   prefix: string;
@@ -81,6 +82,17 @@ export default function AlternativeArray({
         toTime: '',
         type: 'time'
       });
+    } else if (getAlternative === 'yesNo') {
+      append({
+        id: uuidv4(),
+        type: 'yesNo'
+      });
+    } else if (getAlternative === 'fileUpload') {
+      append({
+        id: uuidv4(),
+        type: 'fileUpload',
+        fileEndings: ''
+      });
     }
   };
 
@@ -103,6 +115,8 @@ export default function AlternativeArray({
             <option value="text">Text</option>
             <option value="periodDate">Period</option>
             <option value="time">Time</option>
+            <option value="yesNo">Yes/No </option>
+            <option value="fileUpload">File upload </option>
           </Form.Control>
         </Col>
         <Button onClick={() => addAlternative()}>Add</Button>
@@ -172,8 +186,38 @@ export default function AlternativeArray({
                 }}
               />
             )}
+            {item.type === 'yesNo' && (
+              <YesNoAlternative
+                vIx={variantIndex}
+                aIx={index}
+                defaultValues
+                item={item}
+                {...{
+                  control,
+                  register,
+                  errors,
+                  getValues,
+                  setValue
+                }}
+              />
+            )}
             {item.type === 'time' && (
               <TimeAlternative
+                vIx={variantIndex}
+                aIx={index}
+                defaultValues
+                item={item}
+                {...{
+                  control,
+                  register,
+                  errors,
+                  getValues,
+                  setValue
+                }}
+              />
+            )}
+            {item.type === 'fileUpload' && (
+              <FileUploadAlternative
                 vIx={variantIndex}
                 aIx={index}
                 defaultValues

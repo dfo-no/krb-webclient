@@ -9,16 +9,16 @@ import { BsPencil } from 'react-icons/bs';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useRouteMatch } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
-import Utils from '../common/Utils';
-import { Bank } from '../models/Bank';
-import { Product } from '../models/Product';
-import { SpecificationProduct } from '../models/SpecificationProduct';
-import { selectBank } from '../store/reducers/selectedBank-reducer';
-import { addProduct } from '../store/reducers/spesification-reducer';
-import { RootState } from '../store/store';
+import Utils from '../../common/Utils';
+import { Bank } from '../../models/Bank';
+import { Product } from '../../models/Product';
+import { SpecificationProduct } from '../../models/SpecificationProduct';
+import { selectBank } from '../../store/reducers/selectedBank-reducer';
+import { addProduct } from '../../store/reducers/spesification-reducer';
+import { RootState } from '../../store/store';
 import styles from './ProductSpecEditor.module.scss';
-import MODELTYPE from '../models/ModelType';
-import { selectSpecProduct } from '../store/reducers/selectedSpecProduct-reducer';
+import MODELTYPE from '../../models/ModelType';
+import { selectSpecProduct } from '../../store/reducers/selectedSpecProduct-reducer';
 
 type FormInput = {
   product: string;
@@ -32,7 +32,7 @@ export default function ProductSpecList(): ReactElement {
   const projectMatch = useRouteMatch<RouteParams>('/speceditor/:bankId');
   const { id } = useSelector((state: RootState) => state.selectedBank);
   const { list } = useSelector((state: RootState) => state.bank);
-  const { products } = useSelector((state: RootState) => state.specification);
+  const { spec } = useSelector((state: RootState) => state.specification);
   const { register, handleSubmit } = useForm();
   const dispatch = useDispatch();
 
@@ -98,10 +98,12 @@ export default function ProductSpecList(): ReactElement {
     const newProduct: SpecificationProduct = {
       id: uuidv4(),
       originProduct: selectedProduct,
-      title: '',
-      description: '',
+      title: selectedProduct.title,
+      description: selectedProduct.description,
       amount: 0,
-      type: MODELTYPE.specificationProduct
+      type: MODELTYPE.specificationProduct,
+      requirements: [],
+      requirementAnswers: []
     };
     dispatch(addProduct({ product: newProduct }));
   };
@@ -148,7 +150,7 @@ export default function ProductSpecList(): ReactElement {
         <Row className="m-4">
           <h4>Products</h4>
         </Row>
-        <Row className=" ml-4">{productList(products)}</Row>
+        <Row className=" ml-4">{productList(spec.products)}</Row>
       </Form>
     </Container>
   );

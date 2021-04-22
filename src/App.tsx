@@ -28,7 +28,7 @@ function App(): ReactElement {
   const { status } = useSelector((state: RootState) => state.bank);
 
   function renderContent() {
-    if (status === 'pending') {
+    /* if (status === 'pending') {
       return (
         <Spinner
           animation="grow"
@@ -36,7 +36,7 @@ function App(): ReactElement {
           variant="info"
         />
       );
-    }
+    } */
     return (
       <Switch>
         <Route exact path="/">
