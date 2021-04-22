@@ -5,8 +5,8 @@ import ListGroup from 'react-bootstrap/ListGroup';
 import Button from 'react-bootstrap/Button';
 import { BsTrashFill } from 'react-icons/bs';
 import Nav from 'react-bootstrap/Nav';
-import dayjs from 'dayjs';
 import { v4 as uuidv4 } from 'uuid';
+import { format, formatISO } from 'date-fns';
 
 import { InputProps } from '../../models/InputProps';
 import { Publication } from '../../models/Publication';
@@ -42,7 +42,7 @@ export default function PublicationList({
 
   const addPublication = () => {
     if (!publishButtonRef.current) {
-      const convertedDate = dayjs(new Date()).toJSON();
+      const convertedDate = formatISO(new Date());
       prepend({
         id: uuidv4(),
         comment: '',
@@ -63,7 +63,10 @@ export default function PublicationList({
 
       <ListGroup className="mt-4">
         {fields.map((field, index: number) => {
-          const date = dayjs(field.date).format(Constants.DATE_FORMAT_SHORT);
+          const date = format(
+            new Date(field.date),
+            Constants.DATE_FORMAT_SHORT
+          );
           return (
             <ListGroup.Item
               as="div"
@@ -71,7 +74,7 @@ export default function PublicationList({
               className={css.listGroup__item}
             >
               <Nav.Link href={`/bank/${field.bankId}`}>
-                {`${date} ${field.comment}`}
+                {` ${date} ${field.comment}`}
               </Nav.Link>
               <Form.Control
                 readOnly
