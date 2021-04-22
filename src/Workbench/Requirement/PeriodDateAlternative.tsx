@@ -61,7 +61,7 @@ export default function PeriodDateAlternative({
           </Form.Label>
           <Col sm="4">
             <Form.Control
-              type="number"
+              type="input"
               name={`layouts[${vIx}].alternatives[${aIx}].minDays`}
               ref={register}
               defaultValue={item.minDays}
@@ -123,7 +123,7 @@ export default function PeriodDateAlternative({
           </Form.Label>
           <Col sm="4">
             <Form.Control
-              type="number"
+              type="input"
               name={`layouts[${vIx}].alternatives[${aIx}].fromDate`}
               ref={register}
               defaultValue={item.fromDate}
@@ -154,7 +154,7 @@ export default function PeriodDateAlternative({
           </Form.Label>
           <Col sm="4">
             <Form.Control
-              type="number"
+              type="input"
               name={`layouts[${vIx}].alternatives[${aIx}].toDate`}
               ref={register}
               defaultValue={item.toDate}
