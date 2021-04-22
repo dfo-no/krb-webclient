@@ -59,6 +59,24 @@ const textSchema = Joi.object().keys({
   text: Joi.string().trim().max(Joi.ref('max')).required()
 });
 
+const periodDateSchema = Joi.object().keys({
+  id: Joi.string().required(),
+  type: Joi.string().equal('periodDate').required(),
+  minDays: Joi.number().required(),
+  maxDays: Joi.number().required(),
+  fromDate: Joi.string().trim().allow('').required(),
+  toDate: Joi.string().trim().allow('').required()
+  // fromDate: Joi.date().iso().required(),
+  // toDate: Joi.date().iso().greater(Joi.ref('from')).required()
+});
+
+const timeSchema = Joi.object().keys({
+  id: Joi.string().required(),
+  type: Joi.string().equal('time').required(),
+  fromTime: Joi.string().trim().allow('').required(),
+  toTime: Joi.string().trim().allow('').required()
+});
+
 const yesNoSchema = Joi.object().keys({
   id: Joi.string().required(),
   type: Joi.string().equal('yesNo').required(),
@@ -90,6 +108,8 @@ const variantSchema = Joi.object().keys({
         { is: 'value', then: valueSchema },
         { is: 'codelist', then: codelistSchema },
         { is: 'text', then: textSchema },
+        { is: 'periodDate', then: periodDateSchema },
+        { is: 'time', then: timeSchema },
         { is: 'yesNo', then: yesNoSchema },
         { is: 'fileUpload', then: fileUploadSchema }
       ]

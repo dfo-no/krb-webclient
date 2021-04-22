@@ -1,6 +1,5 @@
 import React, { ReactElement, useState } from 'react';
 import Button from 'react-bootstrap/Button';
-import Card from 'react-bootstrap/Card';
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
@@ -11,7 +10,8 @@ import { v4 as uuidv4 } from 'uuid';
 import CodeListAlternative from './CodeListAlternative';
 import ValueAlternative from './ValueAlternative';
 import TextAlternative from './TextAlternative';
-
+import PeriodDateAlternative from './PeriodDateAlternative';
+import TimeAlternative from './TimeAlternative';
 import { InputProps } from '../../models/InputProps';
 import YesNoAlternative from './YesNoAlternative';
 import FileUploadAlternative from './FileUploadAlternative';
@@ -64,6 +64,24 @@ export default function AlternativeArray({
         text: '',
         type: 'text'
       });
+    } else if (getAlternative === 'periodDate') {
+      append({
+        id: uuidv4(),
+        minDays: 0,
+        maxDays: 0,
+        // fromDate: new Date(),
+        // toDate: new Date(),
+        fromDate: '',
+        toDate: '',
+        type: 'periodDate'
+      });
+    } else if (getAlternative === 'time') {
+      append({
+        id: uuidv4(),
+        fromTime: '',
+        toTime: '',
+        type: 'time'
+      });
     } else if (getAlternative === 'yesNo') {
       append({
         id: uuidv4(),
@@ -95,6 +113,8 @@ export default function AlternativeArray({
               <option value="codelist">Codelist</option>
             )}
             <option value="text">Text</option>
+            <option value="periodDate">Period</option>
+            <option value="time">Time</option>
             <option value="yesNo">Yes/No </option>
             <option value="fileUpload">File upload </option>
           </Form.Control>
@@ -151,8 +171,38 @@ export default function AlternativeArray({
                 }}
               />
             )}
+            {item.type === 'periodDate' && (
+              <PeriodDateAlternative
+                vIx={variantIndex}
+                aIx={index}
+                defaultValues
+                item={item}
+                {...{
+                  control,
+                  register,
+                  errors,
+                  getValues,
+                  setValue
+                }}
+              />
+            )}
             {item.type === 'yesNo' && (
               <YesNoAlternative
+                vIx={variantIndex}
+                aIx={index}
+                defaultValues
+                item={item}
+                {...{
+                  control,
+                  register,
+                  errors,
+                  getValues,
+                  setValue
+                }}
+              />
+            )}
+            {item.type === 'time' && (
+              <TimeAlternative
                 vIx={variantIndex}
                 aIx={index}
                 defaultValues
