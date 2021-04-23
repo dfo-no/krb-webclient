@@ -177,7 +177,7 @@ export default function RequirementEditor(): ReactElement {
     defaultValues
   });
 
-  const { fields, append, remove } = useFieldArray({
+  const { remove } = useFieldArray({
     keyName: 'guid',
     control,
     name: 'requirement'

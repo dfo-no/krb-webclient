@@ -37,7 +37,6 @@ function ProjectPage(): ReactElement {
   const project = Utils.ensure(list.find((element) => element.id === id));
 
   const defaultValues = project;
-  Joi.string();
 
   const projectSchema = Joi.object().keys({
     id: Joi.string().required(),
@@ -66,7 +65,7 @@ function ProjectPage(): ReactElement {
     defaultValues
   });
 
-  const { fields, append, remove } = useFieldArray({
+  const { remove } = useFieldArray({
     keyName: 'guid',
     control,
     name: 'publication'
