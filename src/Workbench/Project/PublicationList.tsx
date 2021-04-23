@@ -6,7 +6,8 @@ import Button from 'react-bootstrap/Button';
 import { BsTrashFill } from 'react-icons/bs';
 import Nav from 'react-bootstrap/Nav';
 import { v4 as uuidv4 } from 'uuid';
-import { format, formatISO } from 'date-fns';
+import format from 'date-fns/format';
+import formatISO from 'date-fns/formatISO';
 
 import { InputProps } from '../../models/InputProps';
 import { Publication } from '../../models/Publication';
@@ -63,7 +64,7 @@ export default function PublicationList({
 
       <ListGroup className="mt-4">
         {fields.map((field, index: number) => {
-          const date = format(
+          const formattedDate = format(
             new Date(field.date),
             Constants.DATE_FORMAT_SHORT
           );
@@ -74,7 +75,7 @@ export default function PublicationList({
               className={css.listGroup__item}
             >
               <Nav.Link href={`/bank/${field.bankId}`}>
-                {` ${date} ${field.comment}`}
+                {` ${formattedDate} ${field.comment}`}
               </Nav.Link>
               <Form.Control
                 readOnly

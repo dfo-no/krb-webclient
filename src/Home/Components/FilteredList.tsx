@@ -2,7 +2,7 @@ import React, { ReactElement } from 'react';
 import ListGroup from 'react-bootstrap/ListGroup';
 import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { isBefore } from 'date-fns';
+import isBefore from 'date-fns/isBefore';
 
 import { Bank } from '../../models/Bank';
 import { selectBank } from '../../store/reducers/selectedBank-reducer';
