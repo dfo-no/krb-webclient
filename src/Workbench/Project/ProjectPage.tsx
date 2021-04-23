@@ -5,7 +5,7 @@ import Alert from 'react-bootstrap/Alert';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
-import dayjs from 'dayjs';
+import formatISO from 'date-fns/formatISO';
 import { useFieldArray, useForm } from 'react-hook-form';
 import { joiResolver } from '@hookform/resolvers/joi';
 import Joi from 'joi';
@@ -78,7 +78,7 @@ function ProjectPage(): ReactElement {
     const projectToBePublished: Bank = { ...project };
 
     /* Date from form is may have been stale (i.e waiting before clicking), update to now */
-    const convertedDate = dayjs(new Date()).toJSON();
+    const convertedDate = formatISO(new Date());
     projectToBePublished.publishedDate = convertedDate;
     projectToBePublished.id = '';
     delete projectToBePublished.publications;

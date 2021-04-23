@@ -1,8 +1,8 @@
-import dayjs from 'dayjs';
 import React, { ReactElement } from 'react';
 import ListGroup from 'react-bootstrap/ListGroup';
 import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
+import isBefore from 'date-fns/isBefore';
 
 import { Bank } from '../../models/Bank';
 import { selectBank } from '../../store/reducers/selectedBank-reducer';
@@ -29,7 +29,11 @@ export default function FilteredList({
     bankList = list
       .slice()
       .sort((a, b) =>
-        dayjs(a.publishedDate).isBefore(dayjs(b.publishedDate)) ? 1 : -1
+        a.publishedDate !== undefined &&
+        b.publishedDate !== undefined &&
+        isBefore(new Date(a.publishedDate), new Date(b.publishedDate))
+          ? 1
+          : -1
       );
   }
   if (filterType === 'alphabetic') {
