@@ -125,19 +125,24 @@ export default function AlternativeArray({
         return (
           <div key={item.id}>
             {item.type === 'value' && (
-              <ValueAlternative
-                vIx={variantIndex}
-                aIx={index}
-                defaultValues
-                item={item}
-                {...{
-                  control,
-                  register,
-                  errors,
-                  getValues,
-                  setValue
-                }}
-              />
+              <>
+                <ValueAlternative
+                  vIx={variantIndex}
+                  aIx={index}
+                  defaultValues
+                  item={item}
+                  {...{
+                    control,
+                    register,
+                    errors,
+                    getValues,
+                    setValue
+                  }}
+                  {...{
+                    remove
+                  }}
+                />
+              </>
             )}
 
             {item.type === 'codelist' && (
@@ -154,6 +159,9 @@ export default function AlternativeArray({
                   getValues,
                   setValue
                 }}
+                {...{
+                  remove
+                }}
               />
             )}
             {item.type === 'text' && (
@@ -168,6 +176,9 @@ export default function AlternativeArray({
                   errors,
                   getValues,
                   setValue
+                }}
+                {...{
+                  remove
                 }}
               />
             )}
@@ -184,6 +195,9 @@ export default function AlternativeArray({
                   getValues,
                   setValue
                 }}
+                {...{
+                  remove
+                }}
               />
             )}
             {item.type === 'yesNo' && (
@@ -198,6 +212,9 @@ export default function AlternativeArray({
                   errors,
                   getValues,
                   setValue
+                }}
+                {...{
+                  remove
                 }}
               />
             )}
@@ -214,6 +231,9 @@ export default function AlternativeArray({
                   getValues,
                   setValue
                 }}
+                {...{
+                  remove
+                }}
               />
             )}
             {item.type === 'fileUpload' && (
@@ -228,6 +248,9 @@ export default function AlternativeArray({
                   errors,
                   getValues,
                   setValue
+                }}
+                {...{
+                  remove
                 }}
               />
             )}

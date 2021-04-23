@@ -275,6 +275,7 @@ export default function VariantArray({
                   setValue,
                   alternatives: item.alternatives
                 }}
+                {...{ remove }}
               />
             </Card.Body>
           </Card>

@@ -3,6 +3,8 @@ import Card from 'react-bootstrap/Card';
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
+import Button from 'react-bootstrap/Button';
+import { BsTrashFill } from 'react-icons/bs';
 import { InputProps } from '../../models/InputProps';
 
 interface IProps extends InputProps {
@@ -12,6 +14,7 @@ interface IProps extends InputProps {
 }
 
 export default function TimeAlternative({
+  remove,
   register,
   errors,
   item,
@@ -21,7 +24,18 @@ export default function TimeAlternative({
   return (
     <Card className="mb-3">
       <Card.Body>
-        <h6>Alternative: Time</h6>
+        <Row className="m-1 d-flex justify-content-between">
+          <h6>Alternative: Time</h6>
+          <Button
+            className="mb-3"
+            type="button"
+            variant="danger"
+            onClick={() => remove(aIx)}
+          >
+            <BsTrashFill />
+          </Button>
+        </Row>
+
         <Form.Control
           as="input"
           type="hidden"

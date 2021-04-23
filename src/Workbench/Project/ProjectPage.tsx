@@ -6,7 +6,7 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 import formatISO from 'date-fns/formatISO';
-import { useForm } from 'react-hook-form';
+import { useFieldArray, useForm } from 'react-hook-form';
 import { joiResolver } from '@hookform/resolvers/joi';
 import Joi from 'joi';
 
@@ -37,7 +37,6 @@ function ProjectPage(): ReactElement {
   const project = Utils.ensure(list.find((element) => element.id === id));
 
   const defaultValues = project;
-  Joi.string();
 
   const projectSchema = Joi.object().keys({
     id: Joi.string().required(),
@@ -64,6 +63,12 @@ function ProjectPage(): ReactElement {
   } = useForm<Bank>({
     resolver: joiResolver(projectSchema),
     defaultValues
+  });
+
+  const { remove } = useFieldArray({
+    keyName: 'guid',
+    control,
+    name: 'publication'
   });
 
   const publishProject = async (e: any) => {
@@ -135,6 +140,9 @@ function ProjectPage(): ReactElement {
             errors,
             defaultValues,
             handleSubmit
+          }}
+          {...{
+            remove
           }}
         />
       </Form>

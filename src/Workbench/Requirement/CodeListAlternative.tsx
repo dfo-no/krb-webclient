@@ -1,7 +1,9 @@
 import React, { ReactElement } from 'react';
 import Card from 'react-bootstrap/Card';
 import Form from 'react-bootstrap/Form';
-
+import Row from 'react-bootstrap/Row';
+import Button from 'react-bootstrap/Button';
+import { BsTrashFill } from 'react-icons/bs';
 import { InputProps } from '../../models/InputProps';
 
 import CodelistSelect from './CodelistSelect';
@@ -14,6 +16,7 @@ interface IProps extends InputProps {
 }
 
 export default function CodeListAlternative({
+  remove,
   register,
   control,
   errors,
@@ -25,7 +28,17 @@ export default function CodeListAlternative({
   return (
     <Card className="mb-3">
       <Card.Body>
-        <h6>Alternative: Codelist</h6>
+        <Row className=" m-1 d-flex justify-content-between">
+          <h6>Alternative: Codelist</h6>
+          <Button
+            className="mb-3"
+            type="button"
+            variant="danger"
+            onClick={() => remove(aIx)}
+          >
+            <BsTrashFill />
+          </Button>
+        </Row>
         <Form.Control
           as="input"
           type="hidden"

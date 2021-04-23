@@ -8,7 +8,6 @@ import { joiResolver } from '@hookform/resolvers/joi';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import Button from 'react-bootstrap/Button';
-import { IValueAlternative } from '../../../models/IValueAlternative';
 import { RequirementAnswer } from '../../../models/RequirementAnswer';
 import {
   editAnswer,
@@ -70,7 +69,7 @@ export default function TextForm({ parentAnswer }: IProps): ReactElement {
   return (
     <Card className="mb-3">
       <Card.Body>
-        <h6>Alternative: Value</h6>
+        <h6>Alternative: Text</h6>
         <Form onSubmit={handleSubmit(saveValues)}>
           <Form.Control
             as="input"

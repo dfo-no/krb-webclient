@@ -7,7 +7,7 @@ import Col from 'react-bootstrap/Col';
 
 import { useHistory, useRouteMatch } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { useForm } from 'react-hook-form';
+import { useFieldArray, useForm } from 'react-hook-form';
 import { joiResolver } from '@hookform/resolvers/joi';
 import Joi from 'joi';
 
@@ -177,6 +177,12 @@ export default function RequirementEditor(): ReactElement {
     defaultValues
   });
 
+  const { remove } = useFieldArray({
+    keyName: 'guid',
+    control,
+    name: 'requirement'
+  });
+
   if (requirement === undefined) {
     history.push(`/workbench/${project.id}/requirement`);
     return <p> Could not find requirement </p>;
@@ -333,6 +339,9 @@ export default function RequirementEditor(): ReactElement {
             errors,
             project,
             defaultValues
+          }}
+          {...{
+            remove
           }}
         />
         {process.env.NODE_ENV === 'development' &&
