@@ -132,6 +132,10 @@
     ]
   },
   "devDependencies": {
+    "pre-commit": "^1.2.2",
     "webpack-bundle-analyzer": "^4.4.0"
-  }
+  },
+  "pre-commit": [
+    "lint"
+  ]
 }
