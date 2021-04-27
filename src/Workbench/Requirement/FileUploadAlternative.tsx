@@ -14,7 +14,7 @@ interface IProps extends InputProps {
 
 export default function FileUploadAlternative({
   register,
-  errors,
+  formState: { errors },
   item,
   vIx,
   aIx
@@ -26,8 +26,7 @@ export default function FileUploadAlternative({
         <Form.Control
           as="input"
           type="hidden"
-          name={`layouts[${vIx}].alternatives[${aIx}].id`}
-          ref={register}
+          {...register(`layouts[${vIx}].alternatives[${aIx}].id`)}
           defaultValue={item.id}
           isInvalid={
             !!(
@@ -43,8 +42,7 @@ export default function FileUploadAlternative({
         <Form.Control
           as="input"
           type="hidden"
-          name={`layouts[${vIx}].alternatives[${aIx}].type`}
-          ref={register}
+          {...register(`layouts[${vIx}].alternatives[${aIx}].type`)}
           defaultValue={item.type}
           isInvalid={
             !!(
@@ -62,8 +60,7 @@ export default function FileUploadAlternative({
           </Form.Label>
           <Col sm="4">
             <Form.Control
-              name={`layouts[${vIx}].alternatives[${aIx}].fileEndings`}
-              ref={register}
+              {...register(`layouts[${vIx}].alternatives[${aIx}].fileEndings`)}
               defaultValue={item.fileEndings}
               isInvalid={
                 !!(

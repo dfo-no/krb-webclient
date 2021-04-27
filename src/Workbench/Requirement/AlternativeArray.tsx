@@ -19,6 +19,7 @@ import FileUploadAlternative from './FileUploadAlternative';
 interface IProps extends InputProps {
   prefix: string;
   variantIndex: number;
+  // eslint-disable-next-line react/no-unused-prop-types
   alternatives: any;
   project: any;
 }
@@ -26,13 +27,14 @@ interface IProps extends InputProps {
 export default function AlternativeArray({
   control,
   register,
-  errors,
+  formState,
   getValues,
   setValue,
   variantIndex,
   prefix,
   project
 }: IProps): ReactElement {
+  const { errors } = formState;
   const { fields, append, remove } = useFieldArray({
     keyName: 'guid',
     control,
@@ -121,7 +123,7 @@ export default function AlternativeArray({
         </Col>
         <Button onClick={() => addAlternative()}>Add</Button>
       </Form.Group>
-      {fields.map((item, index) => {
+      {fields.map((item: any, index) => {
         return (
           <div key={item.id}>
             {item.type === 'value' && (
@@ -133,7 +135,7 @@ export default function AlternativeArray({
                 {...{
                   control,
                   register,
-                  errors,
+                  formState,
                   getValues,
                   setValue
                 }}
@@ -150,7 +152,7 @@ export default function AlternativeArray({
                 {...{
                   control,
                   register,
-                  errors,
+                  formState,
                   getValues,
                   setValue
                 }}
@@ -165,7 +167,7 @@ export default function AlternativeArray({
                 {...{
                   control,
                   register,
-                  errors,
+                  formState,
                   getValues,
                   setValue
                 }}
@@ -180,7 +182,7 @@ export default function AlternativeArray({
                 {...{
                   control,
                   register,
-                  errors,
+                  formState,
                   getValues,
                   setValue
                 }}
@@ -195,7 +197,7 @@ export default function AlternativeArray({
                 {...{
                   control,
                   register,
-                  errors,
+                  formState,
                   getValues,
                   setValue
                 }}
@@ -210,7 +212,7 @@ export default function AlternativeArray({
                 {...{
                   control,
                   register,
-                  errors,
+                  formState,
                   getValues,
                   setValue
                 }}
@@ -225,7 +227,7 @@ export default function AlternativeArray({
                 {...{
                   control,
                   register,
-                  errors,
+                  formState,
                   getValues,
                   setValue
                 }}

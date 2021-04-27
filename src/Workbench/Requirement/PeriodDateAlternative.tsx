@@ -14,7 +14,7 @@ interface IProps extends InputProps {
 
 export default function PeriodDateAlternative({
   register,
-  errors,
+  formState: { errors },
   item,
   vIx,
   aIx
@@ -26,8 +26,7 @@ export default function PeriodDateAlternative({
         <Form.Control
           as="input"
           type="hidden"
-          name={`layouts[${vIx}].alternatives[${aIx}].id`}
-          ref={register}
+          {...register(`layouts[${vIx}].alternatives[${aIx}].id`)}
           defaultValue={item.id}
           isInvalid={
             !!(
@@ -42,8 +41,7 @@ export default function PeriodDateAlternative({
         <Form.Control
           as="input"
           type="hidden"
-          name={`layouts[${vIx}].alternatives[${aIx}].type`}
-          ref={register}
+          {...register(`layouts[${vIx}].alternatives[${aIx}].type`)}
           defaultValue={item.type}
           isInvalid={
             !!(
@@ -62,8 +60,7 @@ export default function PeriodDateAlternative({
           <Col sm="4">
             <Form.Control
               type="input"
-              name={`layouts[${vIx}].alternatives[${aIx}].minDays`}
-              ref={register}
+              {...register(`layouts[${vIx}].alternatives[${aIx}].minDays`)}
               defaultValue={item.minDays}
               isInvalid={
                 !!(
@@ -93,8 +90,7 @@ export default function PeriodDateAlternative({
           <Col sm="4">
             <Form.Control
               type="number"
-              name={`layouts[${vIx}].alternatives[${aIx}].maxDays`}
-              ref={register}
+              {...register(`layouts[${vIx}].alternatives[${aIx}].maxDays`)}
               defaultValue={item.maxDays}
               isInvalid={
                 !!(
@@ -124,8 +120,7 @@ export default function PeriodDateAlternative({
           <Col sm="4">
             <Form.Control
               type="input"
-              name={`layouts[${vIx}].alternatives[${aIx}].fromDate`}
-              ref={register}
+              {...register(`layouts[${vIx}].alternatives[${aIx}].fromDate`)}
               defaultValue={item.fromDate}
               isInvalid={
                 !!(
@@ -155,8 +150,7 @@ export default function PeriodDateAlternative({
           <Col sm="4">
             <Form.Control
               type="input"
-              name={`layouts[${vIx}].alternatives[${aIx}].toDate`}
-              ref={register}
+              {...register(`layouts[${vIx}].alternatives[${aIx}].toDate`)}
               defaultValue={item.toDate}
               isInvalid={
                 !!(

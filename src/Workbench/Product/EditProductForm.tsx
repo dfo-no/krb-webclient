@@ -1,6 +1,5 @@
 import React, { ReactElement, useContext, useState } from 'react';
 import Button from 'react-bootstrap/Button';
-import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 import { useForm } from 'react-hook-form';
@@ -23,6 +22,7 @@ import { Need } from '../../models/Need';
 import { Requirement } from '../../models/Requirement';
 import { IVariant } from '../../models/IVariant';
 import Utils from '../../common/Utils';
+import InputRow from '../../Form/InputRow';
 
 interface IProps {
   element: Product;
@@ -45,8 +45,16 @@ export default function ProductForm({ element }: IProps): ReactElement {
   const { onOpenClose } = useContext(AccordionContext);
   const [validated] = useState(false);
 
-  const { register, handleSubmit, errors } = useForm({
-    resolver: joiResolver(productSchema)
+  const {
+    control,
+    handleSubmit,
+    formState: { errors }
+  } = useForm({
+    resolver: joiResolver(productSchema),
+    defaultValues: {
+      title: element.title,
+      description: element.description
+    }
   });
   if (!id) {
     return <p>No project selected</p>;
@@ -104,42 +112,13 @@ export default function ProductForm({ element }: IProps): ReactElement {
       noValidate
       validated={validated}
     >
-      <Form.Group as={Row}>
-        <Form.Label column sm="2">
-          Title
-        </Form.Label>
-        <Col sm={10}>
-          <Form.Control
-            name="title"
-            ref={register}
-            defaultValue={element.title}
-            isInvalid={!!errors.title}
-          />
-          {errors.title && (
-            <Form.Control.Feedback type="invalid">
-              {errors.title?.message}
-            </Form.Control.Feedback>
-          )}
-        </Col>
-      </Form.Group>
-      <Form.Group as={Row}>
-        <Form.Label column sm="2">
-          Description
-        </Form.Label>
-        <Col sm={10}>
-          <Form.Control
-            name="description"
-            ref={register}
-            defaultValue={element.description}
-            isInvalid={!!errors.description}
-          />
-          {errors.description && (
-            <Form.Control.Feedback type="invalid">
-              {errors.description.message}
-            </Form.Control.Feedback>
-          )}
-        </Col>
-      </Form.Group>
+      <InputRow control={control} name="title" errors={errors} label="Title" />
+      <InputRow
+        control={control}
+        name="description"
+        errors={errors}
+        label="Description"
+      />
       <Row>
         <Button className="mt-2  ml-3" type="submit">
           Save

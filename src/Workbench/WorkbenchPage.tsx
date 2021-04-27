@@ -1,7 +1,6 @@
 import React, { ReactElement, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import Button from 'react-bootstrap/Button';
-import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 import ListGroup from 'react-bootstrap/ListGroup';
 import Row from 'react-bootstrap/Row';
@@ -21,6 +20,7 @@ import {
 import { selectProject } from '../store/reducers/selectedProject-reducer';
 import SuccessAlert from './SuccessAlert';
 import MODELTYPE from '../models/ModelType';
+import InputRow from '../Form/InputRow';
 
 type FormValues = {
   title: string;
@@ -44,7 +44,12 @@ function WorkbenchPage(): ReactElement {
     description: ''
   };
 
-  const { register, handleSubmit, reset, errors } = useForm<FormValues>({
+  const {
+    handleSubmit,
+    reset,
+    control,
+    formState: { errors }
+  } = useForm<FormValues>({
     resolver: joiResolver(projectSchema),
     defaultValues
   });
@@ -119,7 +124,7 @@ function WorkbenchPage(): ReactElement {
     return <ListGroup className=" mt-5">{projects}</ListGroup>;
   };
 
-  function projectEditor(show: boolean) {
+  function projectEditor(show: boolean): JSX.Element {
     if (show) {
       return (
         <ListGroup className="mt-3">
@@ -130,40 +135,18 @@ function WorkbenchPage(): ReactElement {
               noValidate
               validated={validated}
             >
-              <Form.Group as={Row}>
-                <Form.Label column sm="2">
-                  Title
-                </Form.Label>
-                <Col sm={10}>
-                  <Form.Control
-                    name="title"
-                    ref={register}
-                    isInvalid={!!errors.title}
-                  />
-                  {errors.title && (
-                    <Form.Control.Feedback type="invalid">
-                      {errors.title.message}
-                    </Form.Control.Feedback>
-                  )}
-                </Col>
-              </Form.Group>
-              <Form.Group as={Row}>
-                <Form.Label column sm="2">
-                  Description
-                </Form.Label>
-                <Col sm={10}>
-                  <Form.Control
-                    name="description"
-                    ref={register}
-                    isInvalid={!!errors.description}
-                  />
-                  {errors.description && (
-                    <Form.Control.Feedback type="invalid">
-                      {errors.description.message}
-                    </Form.Control.Feedback>
-                  )}
-                </Col>
-              </Form.Group>
+              <InputRow
+                control={control}
+                name="title"
+                errors={errors}
+                label="Title"
+              />
+              <InputRow
+                control={control}
+                name="description"
+                errors={errors}
+                label="Description"
+              />
               <Button className="mt-2" type="submit">
                 Save
               </Button>

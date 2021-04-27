@@ -18,7 +18,7 @@ import * as Constants from '../../common/Constants';
 export default function PublicationList({
   control,
   register,
-  errors,
+  formState: { errors },
   defaultValues
 }: InputProps): ReactElement {
   const { fields, prepend, remove } = useFieldArray({
@@ -62,7 +62,7 @@ export default function PublicationList({
       )}
 
       <ListGroup className="mt-4">
-        {fields.map((field, index: number) => {
+        {fields.map((field: any, index: number) => {
           const date = dayjs(field.date).format(Constants.DATE_FORMAT_SHORT);
           return (
             <ListGroup.Item
@@ -76,9 +76,8 @@ export default function PublicationList({
               <Form.Control
                 readOnly
                 as="input"
-                name={`publications[${index}].id`}
                 type="hidden"
-                ref={register()}
+                {...register(`publications[${index}].id`)}
                 defaultValue={field.id}
                 isInvalid={
                   !!(
@@ -91,9 +90,8 @@ export default function PublicationList({
               <Form.Control
                 readOnly
                 as="input"
-                name={`publications[${index}].bankId`}
                 type="hidden"
-                ref={register()}
+                {...register(`publications[${index}].bankId`)}
                 defaultValue={field.bankId ? field.bankId : defaultValues.id}
                 isInvalid={
                   !!(
@@ -106,9 +104,8 @@ export default function PublicationList({
               <Form.Control
                 readOnly
                 as="input"
-                name={`publications[${index}].type`}
                 type="hidden"
-                ref={register()}
+                {...register(`publications[${index}].type`)}
                 defaultValue={field.type}
                 isInvalid={
                   !!(
@@ -122,9 +119,8 @@ export default function PublicationList({
                 <>
                   <Form.Control
                     as="input"
-                    name={`publications[${index}].comment`}
                     type="text"
-                    ref={register()}
+                    {...register(`publications[${index}].comment`)}
                     defaultValue="Summarize the changes ..."
                     isInvalid={
                       !!(
@@ -153,9 +149,8 @@ export default function PublicationList({
                 <Form.Control
                   readOnly
                   as="input"
-                  name={`publications[${index}].comment`}
                   type="hidden"
-                  ref={register()}
+                  {...register(`publications[${index}].comment`)}
                   defaultValue={field.comment}
                   isInvalid={
                     !!(
@@ -173,9 +168,8 @@ export default function PublicationList({
               <Form.Control
                 readOnly
                 as="input"
-                name={`publications[${index}].date`}
                 type="hidden"
-                ref={register()}
+                {...register(`publications[${index}].date`)}
                 defaultValue={field.date}
                 isInvalid={
                   !!(
@@ -188,9 +182,8 @@ export default function PublicationList({
               <Form.Control
                 readOnly
                 as="input"
-                name={`publications[${index}].version`}
                 type="hidden"
-                ref={register()}
+                {...register(`publications[${index}].version`)}
                 defaultValue={field.version}
                 isInvalid={
                   !!(

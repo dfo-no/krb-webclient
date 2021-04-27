@@ -169,14 +169,14 @@ export default function RequirementEditor(): ReactElement {
     control,
     register,
     handleSubmit,
-    errors,
+    formState,
     getValues,
     setValue
-  } = useForm<Requirement>({
+  } = useForm({
     resolver: joiResolver(requirementSchema),
-    defaultValues
+    // TODO: fix any useFieldArray typing
+    defaultValues: requirement as any
   });
-
   if (requirement === undefined) {
     history.push(`/workbench/${project.id}/requirement`);
     return <p> Could not find requirement </p>;
@@ -222,7 +222,7 @@ export default function RequirementEditor(): ReactElement {
     });
     return result;
   };
-
+  const { errors } = formState;
   return (
     <>
       <h3 className="mt-3">
@@ -236,49 +236,43 @@ export default function RequirementEditor(): ReactElement {
         <Form.Control
           readOnly
           as="input"
-          name="id"
           type="hidden"
-          ref={register}
+          {...register('id')}
           isInvalid={!!errors.id}
         />
         <Form.Control
           readOnly
           as="input"
-          name="description"
           type="hidden"
-          ref={register}
+          {...register('description')}
           isInvalid={!!errors.description}
         />
         <Form.Control
           readOnly
           as="input"
-          name="needId"
           type="hidden"
-          ref={register}
+          {...register('needId')}
           isInvalid={!!errors.needId}
         />
         <Form.Control
           readOnly
           as="input"
-          name="kind"
           type="hidden"
-          ref={register}
+          {...register('kind')}
           isInvalid={!!errors.kind}
         />
         <Form.Control
           readOnly
           as="input"
-          name="type"
           type="hidden"
-          ref={register}
+          {...register('type')}
           isInvalid={!!errors.type}
         />
         <Form.Control
           readOnly
           as="input"
-          name="requirement_Type"
           type="hidden"
-          ref={register}
+          {...register('requirement_Type')}
           isInvalid={!!errors.requirement_Type}
         />
 
@@ -287,11 +281,7 @@ export default function RequirementEditor(): ReactElement {
             Title
           </Form.Label>
           <Col sm={8}>
-            <Form.Control
-              name="title"
-              ref={register}
-              isInvalid={!!errors.title}
-            />
+            <Form.Control {...register('title')} isInvalid={!!errors.title} />
             {errors.title && (
               <Form.Control.Feedback as={Col} type="invalid">
                 {errors.title?.message}
@@ -309,8 +299,7 @@ export default function RequirementEditor(): ReactElement {
           <Col sm={8}>
             <Form.Control
               as="select"
-              name="needId"
-              ref={register}
+              {...register('needId')}
               defaultValue={requirement.needId}
               isInvalid={!!errors.needId}
             >
@@ -328,19 +317,19 @@ export default function RequirementEditor(): ReactElement {
           {...{
             control,
             register,
-            getValues,
             setValue,
-            errors,
-            project,
-            defaultValues
+            getValues,
+            formState,
+            defaultValues,
+            project
           }}
         />
-        {process.env.NODE_ENV === 'development' &&
+        {/* {process.env.NODE_ENV === 'development' &&
           Object.keys(errors).length > 0 && (
             <Alert variant="warning">
               <pre>{JSON.stringify(errors, null, 2)}</pre>
             </Alert>
-          )}
+          )} */}
       </Form>
     </>
   );

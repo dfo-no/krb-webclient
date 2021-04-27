@@ -12,7 +12,7 @@ interface IProps extends InputProps {
 
 export default function CodeListAlternative({
   register,
-  errors,
+  formState: { errors },
   item,
   vIx,
   aIx
@@ -24,8 +24,7 @@ export default function CodeListAlternative({
         <Form.Control
           as="input"
           type="hidden"
-          name={`layouts[${vIx}].alternatives[${aIx}].id`}
-          ref={register}
+          {...register(`layouts[${vIx}].alternatives[${aIx}].id`)}
           defaultValue={item.id}
           isInvalid={
             !!(
@@ -40,8 +39,7 @@ export default function CodeListAlternative({
         <Form.Control
           as="input"
           type="hidden"
-          name={`layouts[${vIx}].alternatives[${aIx}].type`}
-          ref={register}
+          {...register(`layouts[${vIx}].alternatives[${aIx}].type`)}
           defaultValue={item.type}
           isInvalid={
             !!(

@@ -36,7 +36,6 @@ function ProjectPage(): ReactElement {
 
   const project = Utils.ensure(list.find((element) => element.id === id));
 
-  const defaultValues = project;
   Joi.string();
 
   const projectSchema = Joi.object().keys({
@@ -54,18 +53,24 @@ function ProjectPage(): ReactElement {
       .unique('date')
   });
 
+  // TODO: fix any useFieldArray typing
+  const defaultValues = {
+    id: project.id,
+    publications: project.publications
+  } as any;
+
   const {
     control,
     register,
-    errors,
     handleSubmit,
     setValue,
-    getValues
-  } = useForm<Bank>({
+    getValues,
+    formState
+  } = useForm({
     resolver: joiResolver(projectSchema),
     defaultValues
   });
-
+  const { errors } = formState;
   const publishProject = async (e: any) => {
     // Publication is always first in array because we prepend
     const publication: Publication = e.publications[0];
@@ -118,33 +123,25 @@ function ProjectPage(): ReactElement {
         noValidate
         validated={validated}
       >
-        <Form.Control
-          readOnly
-          as="input"
-          name="id"
-          type="hidden"
-          ref={register}
-          isInvalid={!!errors.id}
-        />
+        <Form.Control readOnly type="hidden" as="input" {...register('id')} />
         <PublicationList
           {...{
             control,
             register,
-            getValues,
             setValue,
-            errors,
-            defaultValues,
-            handleSubmit
+            getValues,
+            formState,
+            defaultValues
           }}
         />
       </Form>
-      {Object.keys(errors).length > 0 && (
+      {/* {Object.keys(errors).length > 0 && (
         <Alert variant="danger">
           <pre>
             <div>{JSON.stringify(errors, null, 2)}</div>
           </pre>
         </Alert>
-      )}
+      )} */}
     </>
   );
 }

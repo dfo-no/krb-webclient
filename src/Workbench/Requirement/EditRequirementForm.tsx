@@ -20,6 +20,7 @@ import { selectRequirement } from '../../store/reducers/selectedRequirement-redu
 import { RootState } from '../../store/store';
 import { Requirement } from '../../models/Requirement';
 import { Need } from '../../models/Need';
+import InputRow from '../../Form/InputRow';
 
 interface IProps {
   element: Requirement;
@@ -49,8 +50,17 @@ export default function EditRequirementForm({
   const { onOpenClose } = useContext(AccordionContext);
   const [validated] = useState(false);
 
-  const { register, handleSubmit, errors } = useForm({
-    resolver: joiResolver(productSchema)
+  const {
+    register,
+    control,
+    handleSubmit,
+    formState: { errors }
+  } = useForm<FormInput>({
+    resolver: joiResolver(productSchema),
+    defaultValues: {
+      title: element.title,
+      description: element.description
+    }
   });
   if (!id) {
     return <p>No project selected</p>;
@@ -98,42 +108,14 @@ export default function EditRequirementForm({
       noValidate
       validated={validated}
     >
-      <Form.Group as={Row}>
-        <Form.Label column sm="2">
-          Title
-        </Form.Label>
-        <Col sm={10}>
-          <Form.Control
-            name="title"
-            ref={register}
-            defaultValue={element.title}
-            isInvalid={!!errors.title}
-          />
-          {errors.title && (
-            <Form.Control.Feedback type="invalid">
-              {errors.title?.message}
-            </Form.Control.Feedback>
-          )}
-        </Col>
-      </Form.Group>
-      <Form.Group as={Row}>
-        <Form.Label column sm="2">
-          Requirement text
-        </Form.Label>
-        <Col sm={10}>
-          <Form.Control
-            name="description"
-            ref={register}
-            defaultValue={element.description}
-            isInvalid={!!errors.description}
-          />
-          {errors.description && (
-            <Form.Control.Feedback type="invalid">
-              {errors.description.message}
-            </Form.Control.Feedback>
-          )}
-        </Col>
-      </Form.Group>
+      <InputRow name="title" control={control} errors={errors} label="Title" />
+
+      <InputRow
+        control={control}
+        errors={errors}
+        name="description"
+        label="Requirement text"
+      />
       <Row>
         <Button className="mt-2  ml-3" type="submit">
           Save

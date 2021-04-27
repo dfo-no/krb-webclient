@@ -15,6 +15,7 @@ import { addNeed, putProjectThunk } from '../../store/reducers/project-reducer';
 import { RootState } from '../../store/store';
 import MODELTYPE from '../../models/ModelType';
 import { Nestable } from '../../models/Nestable';
+import InputRow from '../../Form/InputRow';
 
 type FormValues = {
   title: string;
@@ -34,7 +35,13 @@ function NewNeedForm({ toggleShow, toggleAlert }: IProps): ReactElement {
   const dispatch = useDispatch();
   const [validated] = useState(false);
 
-  const { register, handleSubmit, reset, errors } = useForm({
+  const {
+    register,
+    control,
+    handleSubmit,
+    reset,
+    formState: { errors }
+  } = useForm({
     resolver: joiResolver(needSchema)
   });
 
@@ -72,40 +79,18 @@ function NewNeedForm({ toggleShow, toggleAlert }: IProps): ReactElement {
           noValidate
           validated={validated}
         >
-          <Form.Group as={Row}>
-            <Form.Label column sm="2">
-              Title
-            </Form.Label>
-            <Col sm={10}>
-              <Form.Control
-                name="title"
-                ref={register}
-                isInvalid={!!errors.title}
-              />
-              {errors.title && (
-                <Form.Control.Feedback type="invalid">
-                  {errors.title?.message}
-                </Form.Control.Feedback>
-              )}
-            </Col>
-          </Form.Group>
-          <Form.Group as={Row}>
-            <Form.Label column sm="2">
-              Description
-            </Form.Label>
-            <Col sm={10}>
-              <Form.Control
-                name="description"
-                ref={register}
-                isInvalid={!!errors.description}
-              />
-              {errors.description && (
-                <Form.Control.Feedback type="invalid">
-                  {errors.description.message}
-                </Form.Control.Feedback>
-              )}
-            </Col>
-          </Form.Group>
+          <InputRow
+            control={control}
+            name="title"
+            label="Title"
+            errors={errors}
+          />
+          <InputRow
+            control={control}
+            name="description"
+            label="Description"
+            errors={errors}
+          />
           <Row>
             <Button className="mt-2  ml-3" type="submit">
               Save

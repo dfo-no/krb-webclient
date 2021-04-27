@@ -13,7 +13,7 @@ interface IProps extends InputProps {
 
 export default function TimeAlternative({
   register,
-  errors,
+  formState: { errors },
   item,
   vIx,
   aIx
@@ -25,8 +25,7 @@ export default function TimeAlternative({
         <Form.Control
           as="input"
           type="hidden"
-          name={`layouts[${vIx}].alternatives[${aIx}].id`}
-          ref={register}
+          {...register(`layouts[${vIx}].alternatives[${aIx}].id`)}
           defaultValue={item.id}
           isInvalid={
             !!(
@@ -41,8 +40,7 @@ export default function TimeAlternative({
         <Form.Control
           as="input"
           type="hidden"
-          name={`layouts[${vIx}].alternatives[${aIx}].type`}
-          ref={register}
+          {...register(`layouts[${vIx}].alternatives[${aIx}].type`)}
           defaultValue={item.type}
           isInvalid={
             !!(
@@ -61,8 +59,7 @@ export default function TimeAlternative({
           <Col sm="4">
             <Form.Control
               type="input"
-              name={`layouts[${vIx}].alternatives[${aIx}].fromTime`}
-              ref={register}
+              {...register(`layouts[${vIx}].alternatives[${aIx}].fromTime`)}
               defaultValue={item.fromTime}
               isInvalid={
                 !!(
@@ -92,8 +89,7 @@ export default function TimeAlternative({
           <Col sm="4">
             <Form.Control
               type="input"
-              name={`layouts[${vIx}].alternatives[${aIx}].toTime`}
-              ref={register}
+              {...register(`layouts[${vIx}].alternatives[${aIx}].toTime`)}
               defaultValue={item.toTime}
               isInvalid={
                 !!(

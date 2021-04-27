@@ -166,7 +166,7 @@ export default function Evaluation(): ReactElement {
           <InputGroup className="mb-5">
             <form>
               <input
-                ref={register}
+                {...register('responseFiles')}
                 type="file"
                 onChange={(e) => handleResponseUpload(e)}
                 name="responseFiles"

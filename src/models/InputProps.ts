@@ -1,9 +1,9 @@
-import { UseFormMethods } from 'react-hook-form';
+import { UseFormReturn } from 'react-hook-form';
 
 export interface InputProps
   extends Pick<
-    UseFormMethods,
-    'control' | 'register' | 'errors' | 'setValue' | 'getValues'
+    UseFormReturn,
+    'control' | 'register' | 'setValue' | 'getValues' | 'formState'
   > {
   defaultValues?: any;
 }

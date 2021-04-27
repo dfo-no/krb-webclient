@@ -14,7 +14,7 @@ interface IProps extends InputProps {
 
 export default function Value({
   register,
-  errors,
+  formState: { errors },
   item,
   vIx,
   aIx
@@ -26,8 +26,7 @@ export default function Value({
         <Form.Control
           as="input"
           type="hidden"
-          name={`layouts[${vIx}].alternatives[${aIx}].id`}
-          ref={register}
+          {...register(`layouts[${vIx}].alternatives[${aIx}].id`)}
           defaultValue={item.id}
           isInvalid={
             !!(
@@ -43,8 +42,7 @@ export default function Value({
         <Form.Control
           as="input"
           type="hidden"
-          name={`layouts[${vIx}].alternatives[${aIx}].type`}
-          ref={register}
+          {...register(`layouts[${vIx}].alternatives[${aIx}].type`)}
           defaultValue={item.type}
           isInvalid={
             !!(
@@ -63,8 +61,7 @@ export default function Value({
           <Col sm="4">
             <Form.Control
               type="number"
-              name={`layouts[${vIx}].alternatives[${aIx}].min`}
-              ref={register}
+              {...register(`layouts[${vIx}].alternatives[${aIx}].min`)}
               defaultValue={item.min}
               isInvalid={
                 !!(
@@ -94,8 +91,7 @@ export default function Value({
           <Col sm="4">
             <Form.Control
               type="number"
-              name={`layouts[${vIx}].alternatives[${aIx}].max`}
-              ref={register}
+              {...register(`layouts[${vIx}].alternatives[${aIx}].max`)}
               defaultValue={item.max}
               isInvalid={
                 !!(
@@ -125,8 +121,7 @@ export default function Value({
           <Col sm={4}>
             <Form.Control
               type="number"
-              name={`layouts[${vIx}].alternatives[${aIx}].step`}
-              ref={register}
+              {...register(`layouts[${vIx}].alternatives[${aIx}].step`)}
               defaultValue={item.step}
               isInvalid={
                 !!(
@@ -149,6 +144,7 @@ export default function Value({
               )}
           </Col>
         </Form.Group>
+
         <Form.Group as={Row}>
           <Form.Label column sm="2">
             Unit
@@ -156,8 +152,7 @@ export default function Value({
           <Col sm="4">
             <Form.Control
               type="input"
-              name={`layouts[${vIx}].alternatives[${aIx}].unit`}
-              ref={register}
+              {...register(`layouts[${vIx}].alternatives[${aIx}].unit`)}
               defaultValue={item.unit}
               isInvalid={
                 !!(

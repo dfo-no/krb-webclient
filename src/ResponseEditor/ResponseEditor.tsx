@@ -123,8 +123,7 @@ export default function ResponseEditor(): ReactElement {
                 <input
                   type="checkbox"
                   value={i}
-                  name={need.title}
-                  ref={register}
+                  {...register(need.title)}
                   className="ml-2"
                 />
               </label>

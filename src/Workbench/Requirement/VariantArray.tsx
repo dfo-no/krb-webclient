@@ -21,11 +21,12 @@ interface IProps extends InputProps {
 export default function VariantArray({
   control,
   register,
-  errors,
+  formState,
   project,
   getValues,
   setValue
 }: IProps): ReactElement {
+  const { errors } = formState;
   const { fields, append, remove } = useFieldArray({
     keyName: 'guid',
     control,
@@ -110,7 +111,7 @@ export default function VariantArray({
       >
         Add Variant
       </Button>
-      {fields.map((item, index) => {
+      {fields.map((item: any, index) => {
         return (
           <Card className="mb-3" key={item.id}>
             <Card.Body>
@@ -131,18 +132,17 @@ export default function VariantArray({
               <Form.Control
                 readOnly
                 as="input"
-                name={`layouts[${index}].id`}
                 type="hidden"
-                ref={register}
+                {...register(`layouts[${index}].id`)}
                 defaultValue={item.id}
                 isInvalid={!!(errors[index] && errors[index].id)}
               />
+              {/* TODO: check replacement with Input */}
               <Form.Group>
                 <Form.Label>Requirement Text</Form.Label>
                 <Form.Control
                   as="textarea"
-                  name={`layouts[${index}].requirementText`}
-                  ref={register}
+                  {...register(`layouts[${index}].requirementText`)}
                   defaultValue={item.requirementText}
                   isInvalid={
                     !!(
@@ -164,8 +164,7 @@ export default function VariantArray({
                 <Form.Label>Instruction</Form.Label>
                 <Form.Control
                   as="textarea"
-                  name={`layouts[${index}].instruction`}
-                  ref={register}
+                  {...register(`layouts[${index}].instruction`)}
                   defaultValue={item.instruction}
                   isInvalid={
                     !!(
@@ -187,10 +186,9 @@ export default function VariantArray({
                 <Form.Label>Usage:</Form.Label>
 
                 <Form.Check
-                  name={`layouts[${index}].use_Qualification`}
                   type="checkbox"
                   label="Qualification"
-                  ref={register}
+                  {...register(`layouts[${index}].use_Qualification`)}
                   defaultChecked={item.use_Qualification}
                   isInvalid={
                     !!(
@@ -202,10 +200,9 @@ export default function VariantArray({
                   feedback={errors.use_Qualification?.message}
                 />
                 <Form.Check
-                  name={`layouts[${index}].use_Spesification`}
                   type="checkbox"
                   label="Requirement Spesification"
-                  ref={register}
+                  {...register(`layouts[${index}].use_Spesification`)}
                   defaultChecked={item.use_Spesification}
                   isInvalid={
                     !!(
@@ -217,12 +214,11 @@ export default function VariantArray({
                   feedback={errors.use_Spesification?.message}
                 />
                 <Form.Check
-                  name={`layouts[${index}].use_Product`}
-                  ref={register}
+                  {...register(`layouts[${index}].use_Product`)}
                   type="checkbox"
                   label="Products"
                   defaultChecked={item.use_Product}
-                  /* TODO: should be false/readOnly if no products exists, or if products has been removed */
+                  // TODO: should be false/readOnly if no products exists, or if products has been removed
                   onChange={(e) => {
                     toggleProductChecked(item.id, e.target.checked);
                   }}
@@ -240,8 +236,7 @@ export default function VariantArray({
                 <Form.Control
                   as="select"
                   multiple
-                  name={`layouts[${index}].products`}
-                  ref={register}
+                  {...register(`layouts[${index}].products`)}
                   defaultValue={item.products}
                   isInvalid={
                     !!(
@@ -270,7 +265,7 @@ export default function VariantArray({
                   variantIndex: index,
                   control,
                   register,
-                  errors,
+                  formState,
                   getValues,
                   setValue,
                   alternatives: item.alternatives

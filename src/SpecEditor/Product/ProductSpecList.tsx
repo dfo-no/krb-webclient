@@ -1,4 +1,4 @@
-import React, { ReactElement, useState } from 'react';
+import React, { ReactElement } from 'react';
 import { Button, ListGroup } from 'react-bootstrap';
 import Col from 'react-bootstrap/Col';
 import Container from 'react-bootstrap/Container';
@@ -139,7 +139,7 @@ export default function ProductSpecList(): ReactElement {
         </Row>
         <Row className="ml-2 mt-4">
           <Col>
-            <Form.Control as="select" name="product" ref={register}>
+            <Form.Control as="select" {...register('product')}>
               {productHierarchy(bankSelected.products)}
             </Form.Control>
           </Col>

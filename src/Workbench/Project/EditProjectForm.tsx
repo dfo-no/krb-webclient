@@ -39,8 +39,16 @@ export default function EditProjectForm({
   const dispatch = useDispatch();
   const [validated] = useState(false);
 
-  const { register, handleSubmit, errors } = useForm({
-    resolver: joiResolver(projectSchema)
+  const {
+    register,
+    handleSubmit,
+    formState: { errors }
+  } = useForm({
+    resolver: joiResolver(projectSchema),
+    defaultValues: {
+      title: project.title,
+      description: project.description
+    }
   });
 
   if (!id) {
@@ -73,12 +81,7 @@ export default function EditProjectForm({
               Title
             </Form.Label>
             <Col sm={10}>
-              <Form.Control
-                name="title"
-                ref={register}
-                isInvalid={!!errors.title}
-                defaultValue={project.title}
-              />
+              <Form.Control {...register('title')} isInvalid={!!errors.title} />
               {errors.title && (
                 <Form.Control.Feedback type="invalid">
                   {errors.title?.message}
@@ -92,10 +95,8 @@ export default function EditProjectForm({
             </Form.Label>
             <Col sm={10}>
               <Form.Control
-                name="description"
-                ref={register}
+                {...register('description')}
                 isInvalid={!!errors.description}
-                defaultValue={project.description}
               />
               {errors.description && (
                 <Form.Control.Feedback type="invalid">

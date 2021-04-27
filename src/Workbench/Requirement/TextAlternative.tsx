@@ -14,7 +14,7 @@ interface IProps extends InputProps {
 
 export default function TextAlternative({
   register,
-  errors,
+  formState: { errors },
   item,
   vIx,
   aIx
@@ -26,8 +26,7 @@ export default function TextAlternative({
         <Form.Control
           as="input"
           type="hidden"
-          name={`layouts[${vIx}].alternatives[${aIx}].id`}
-          ref={register}
+          {...register(`layouts[${vIx}].alternatives[${aIx}].id`)}
           defaultValue={item.id}
           isInvalid={
             !!(
@@ -43,8 +42,7 @@ export default function TextAlternative({
         <Form.Control
           as="input"
           type="hidden"
-          name={`layouts[${vIx}].alternatives[${aIx}].type`}
-          ref={register}
+          {...register(`layouts[${vIx}].alternatives[${aIx}].type`)}
           defaultValue={item.type}
           isInvalid={
             !!(
@@ -63,8 +61,7 @@ export default function TextAlternative({
           <Col sm="4">
             <Form.Control
               type="number"
-              name={`layouts[${vIx}].alternatives[${aIx}].max`}
-              ref={register}
+              {...register(`layouts[${vIx}].alternatives[${aIx}].max`)}
               defaultValue={item.max}
               isInvalid={
                 !!(
@@ -94,8 +91,7 @@ export default function TextAlternative({
           <Col sm="4">
             <Form.Control
               type="input"
-              name={`layouts[${vIx}].alternatives[${aIx}].text`}
-              ref={register}
+              {...register(`layouts[${vIx}].alternatives[${aIx}].text`)}
               defaultValue={item.text}
               isInvalid={
                 !!(
