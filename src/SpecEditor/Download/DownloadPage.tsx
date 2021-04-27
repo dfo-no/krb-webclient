@@ -1,11 +1,9 @@
 import React, { ReactElement } from 'react';
 import fileDownload from 'js-file-download';
-import Container from 'react-bootstrap/Container';
 import Button from 'react-bootstrap/Button';
 import Row from 'react-bootstrap/Row';
 import { useSelector } from 'react-redux';
 
-import Col from 'react-bootstrap/Col';
 import { RootState } from '../../store/store';
 
 export default function SpecPage(): ReactElement {

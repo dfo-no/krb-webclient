@@ -33,7 +33,11 @@ type FormValues = {
 };
 
 export default function TextForm({ parentAnswer }: IProps): ReactElement {
-  const { register, handleSubmit, errors } = useForm({
+  const {
+    register,
+    handleSubmit,
+    formState: { errors }
+  } = useForm({
     resolver: joiResolver(textSchema),
     defaultValues: {
       ...(parentAnswer.alternative as ITextAlternative)
@@ -74,16 +78,14 @@ export default function TextForm({ parentAnswer }: IProps): ReactElement {
           <Form.Control
             as="input"
             type="hidden"
-            name="id"
-            ref={register}
+            {...register('id')}
             isInvalid={!!errors.id}
           />
 
           <Form.Control
             as="input"
             type="hidden"
-            name="type"
-            ref={register}
+            {...register('type')}
             isInvalid={!!errors.type}
           />
           <Form.Group as={Row}>
@@ -93,8 +95,7 @@ export default function TextForm({ parentAnswer }: IProps): ReactElement {
             <Col sm="4">
               <Form.Control
                 type="input"
-                name="text"
-                ref={register}
+                {...register('text')}
                 isInvalid={!!errors.text}
               />
               {errors.text && (
@@ -111,8 +112,7 @@ export default function TextForm({ parentAnswer }: IProps): ReactElement {
             <Col sm="4">
               <Form.Control
                 type="number"
-                name="max"
-                ref={register}
+                {...register('max')}
                 isInvalid={!!errors.max}
               />
               {errors.max && (

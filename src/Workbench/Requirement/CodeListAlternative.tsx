@@ -19,12 +19,13 @@ export default function CodeListAlternative({
   remove,
   register,
   control,
-  formState: { errors },
+  formState,
   item,
   vIx,
   aIx,
   project
 }: IProps): ReactElement {
+  const { errors } = formState;
   return (
     <Card className="mb-3">
       <Card.Body>
@@ -74,7 +75,6 @@ export default function CodeListAlternative({
           name={`layouts[${vIx}].alternatives[${aIx}].codelist`}
           defaultValue={item.codelist}
           codelists={project.codelist}
-          errors={errors}
         />
       </Card.Body>
     </Card>

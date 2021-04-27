@@ -1,7 +1,6 @@
 import React, { ReactElement, useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
-import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 import { useForm } from 'react-hook-form';
@@ -36,7 +35,6 @@ function NewNeedForm({ toggleShow, toggleAlert }: IProps): ReactElement {
   const [validated] = useState(false);
 
   const {
-    register,
     control,
     handleSubmit,
     reset,

@@ -7,7 +7,7 @@ import {
   UnauthenticatedTemplate
 } from '@azure/msal-react';
 
-import Spinner from 'react-bootstrap/Spinner';
+// import Spinner from 'react-bootstrap/Spinner';
 import { useSelector } from 'react-redux';
 import styles from './App.module.scss';
 import Header from './Header/Header';
@@ -25,7 +25,7 @@ import { RootState } from './store/store';
 const msalInstance = new PublicClientApplication(msalConfig);
 
 function App(): ReactElement {
-  const { status } = useSelector((state: RootState) => state.bank);
+  // const { status } = useSelector((state: RootState) => state.bank);
 
   function renderContent() {
     /* if (status === 'pending') {

@@ -10,15 +10,13 @@ interface IProps {
   name: string;
   codelists: Codelist[];
   defaultValue: Codelist;
-  errors: any;
 }
 
 export default function CodelistSelect({
   name,
   control,
   codelists,
-  defaultValue,
-  errors
+  defaultValue
 }: IProps): ReactElement {
   const { field } = useController({ name, control, defaultValue });
   const renderOptions = () => {

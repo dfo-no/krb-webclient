@@ -1,29 +1,12 @@
-import React, { ReactElement, useState } from 'react';
-import { Button, ListGroup } from 'react-bootstrap';
-import Col from 'react-bootstrap/Col';
+import React, { ReactElement } from 'react';
 import Container from 'react-bootstrap/Container';
-import Form from 'react-bootstrap/Form';
-import Row from 'react-bootstrap/Row';
-import { useForm } from 'react-hook-form';
-import { BsPencil } from 'react-icons/bs';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link, useRouteMatch } from 'react-router-dom';
-import { v4 as uuidv4 } from 'uuid';
+import { useRouteMatch } from 'react-router-dom';
 import Utils from '../../common/Utils';
 import { Bank } from '../../models/Bank';
-import { Product } from '../../models/Product';
-import { SpecificationProduct } from '../../models/SpecificationProduct';
 import { selectBank } from '../../store/reducers/selectedBank-reducer';
-import { addProduct } from '../../store/reducers/spesification-reducer';
 import { RootState } from '../../store/store';
-import styles from './ProductSpecEditor.module.scss';
-import MODELTYPE from '../../models/ModelType';
-import { selectSpecProduct } from '../../store/reducers/selectedSpecProduct-reducer';
 import RequirementView from './RequirementSelectorList';
-
-type FormInput = {
-  product: string;
-};
 
 interface RouteParams {
   bankId: string;

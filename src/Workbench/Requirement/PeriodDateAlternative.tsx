@@ -6,7 +6,6 @@ import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
 import { BsTrashFill } from 'react-icons/bs';
 import { InputProps } from '../../models/InputProps';
-import { IPeriodDateAlternative } from '../../models/IPeriodDateAlternative';
 
 interface IProps extends InputProps {
   item: any;

@@ -31,7 +31,11 @@ type FormValues = {
 };
 
 export default function FileInputForm({ parentAnswer }: IProps): ReactElement {
-  const { register, handleSubmit, errors } = useForm({
+  const {
+    register,
+    handleSubmit,
+    formState: { errors }
+  } = useForm({
     resolver: joiResolver(fileUploadSchema),
     defaultValues: {
       ...(parentAnswer.alternative as IFileUploadAlternative)
@@ -71,16 +75,14 @@ export default function FileInputForm({ parentAnswer }: IProps): ReactElement {
           <Form.Control
             as="input"
             type="hidden"
-            name="id"
-            ref={register}
+            {...register('id')}
             isInvalid={!!errors.id}
           />
 
           <Form.Control
             as="input"
             type="hidden"
-            name="type"
-            ref={register}
+            {...register('type')}
             isInvalid={!!errors.type}
           />
           <Form.Group as={Row}>
@@ -90,8 +92,7 @@ export default function FileInputForm({ parentAnswer }: IProps): ReactElement {
             <Col sm="4">
               <Form.Control
                 type="input"
-                name="fileEndings"
-                ref={register}
+                {...register('fileEndings')}
                 isInvalid={!!errors.fileEndings}
               />
               {errors.fileEndings && (

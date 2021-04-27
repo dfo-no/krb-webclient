@@ -482,22 +482,6 @@ const projectSlice = createSlice({
         payload.requirement
       );
     },
-    editRequirementParentNeed(
-      state,
-      {
-        payload
-      }: PayloadAction<{
-        id: string;
-        requirement: Requirement;
-        oldNeedId: string;
-        needId: string;
-        requirementIndex: number;
-      }>
-    ) {
-      const index = Utils.ensure(
-        state.list.findIndex((project) => project.id === payload.id)
-      );
-    },
     addRequirement(
       state,
       {
@@ -605,7 +589,6 @@ export const {
   deleteNeed,
   editCode,
   editCodelist,
-  editRequirementParentNeed,
   publishProject,
   editProject,
   setRequirementListToNeed,

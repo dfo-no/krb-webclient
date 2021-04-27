@@ -11,7 +11,6 @@ import { joiResolver } from '@hookform/resolvers/joi';
 import Joi from 'joi';
 
 import Utils from '../../common/Utils';
-import { IVariant } from '../../models/IVariant';
 import { RootState } from '../../store/store';
 import { selectRequirement } from '../../store/reducers/selectedRequirement-reducer';
 import { selectNeed } from '../../store/reducers/selectedNeed-reducer';
