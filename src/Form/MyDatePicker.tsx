@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Controller, FieldErrors, UseFormReturn } from 'react-hook-form';
-import DayJsUtils from '@date-io/dayjs';
+import DateFnsUtils from '@date-io/date-fns';
 import { FormControl, FormHelperText } from '@material-ui/core';
 import {
   KeyboardDatePicker,
@@ -25,7 +25,7 @@ export default function MyDatePicker({
   name
 }: IProps): ReactElement {
   return (
-    <MuiPickersUtilsProvider utils={DayJsUtils}>
+    <MuiPickersUtilsProvider utils={DateFnsUtils}>
       <Controller
         name={name}
         control={control}
