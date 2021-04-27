@@ -1,7 +1,10 @@
 import React, { ReactElement } from 'react';
 import Card from 'react-bootstrap/Card';
 import Form from 'react-bootstrap/Form';
+import Row from 'react-bootstrap/Row';
+import Button from 'react-bootstrap/Button';
 
+import { BsTrashFill } from 'react-icons/bs';
 import { InputProps } from '../../models/InputProps';
 
 interface IProps extends InputProps {
@@ -10,9 +13,10 @@ interface IProps extends InputProps {
   aIx: number;
 }
 
-export default function CodeListAlternative({
+export default function YesNoAlternative({
   register,
   formState: { errors },
+  remove,
   item,
   vIx,
   aIx
@@ -20,7 +24,17 @@ export default function CodeListAlternative({
   return (
     <Card className="mb-3">
       <Card.Body>
-        <h6>Alternative: Yes/No</h6>
+        <Row className="m-1 d-flex justify-content-between">
+          <h6>Alternative: Yes/No</h6>
+          <Button
+            className="mb-3"
+            type="button"
+            variant="danger"
+            onClick={() => remove(aIx)}
+          >
+            <BsTrashFill />
+          </Button>
+        </Row>
         <Form.Control
           as="input"
           type="hidden"

@@ -1,12 +1,11 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import React, { ReactElement, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import Alert from 'react-bootstrap/Alert';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
-import dayjs from 'dayjs';
-import { useForm } from 'react-hook-form';
+import formatISO from 'date-fns/formatISO';
+import { useFieldArray, useForm } from 'react-hook-form';
 import { joiResolver } from '@hookform/resolvers/joi';
 import Joi from 'joi';
 
@@ -35,8 +34,6 @@ function ProjectPage(): ReactElement {
   const [validated] = useState(false);
 
   const project = Utils.ensure(list.find((element) => element.id === id));
-
-  Joi.string();
 
   const projectSchema = Joi.object().keys({
     id: Joi.string().required(),
@@ -70,7 +67,13 @@ function ProjectPage(): ReactElement {
     resolver: joiResolver(projectSchema),
     defaultValues
   });
-  const { errors } = formState;
+
+  const { remove } = useFieldArray({
+    keyName: 'guid',
+    control,
+    name: 'publication'
+  });
+
   const publishProject = async (e: any) => {
     // Publication is always first in array because we prepend
     const publication: Publication = e.publications[0];
@@ -78,7 +81,7 @@ function ProjectPage(): ReactElement {
     const projectToBePublished: Bank = { ...project };
 
     /* Date from form is may have been stale (i.e waiting before clicking), update to now */
-    const convertedDate = dayjs(new Date()).toJSON();
+    const convertedDate = formatISO(new Date());
     projectToBePublished.publishedDate = convertedDate;
     projectToBePublished.id = '';
     delete projectToBePublished.publications;
@@ -133,15 +136,11 @@ function ProjectPage(): ReactElement {
             formState,
             defaultValues
           }}
+          {...{
+            remove
+          }}
         />
       </Form>
-      {/* {Object.keys(errors).length > 0 && (
-        <Alert variant="danger">
-          <pre>
-            <div>{JSON.stringify(errors, null, 2)}</div>
-          </pre>
-        </Alert>
-      )} */}
     </>
   );
 }

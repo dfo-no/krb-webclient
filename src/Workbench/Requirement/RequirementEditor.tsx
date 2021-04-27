@@ -1,5 +1,4 @@
 import React, { ReactElement, useState } from 'react';
-import Alert from 'react-bootstrap/Alert';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
@@ -7,7 +6,7 @@ import Col from 'react-bootstrap/Col';
 
 import { useHistory, useRouteMatch } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { useForm } from 'react-hook-form';
+import { useFieldArray, useForm } from 'react-hook-form';
 import { joiResolver } from '@hookform/resolvers/joi';
 import Joi from 'joi';
 
@@ -177,6 +176,13 @@ export default function RequirementEditor(): ReactElement {
     // TODO: fix any useFieldArray typing
     defaultValues: requirement as any
   });
+
+  const { remove } = useFieldArray({
+    keyName: 'guid',
+    control,
+    name: 'requirement'
+  });
+
   if (requirement === undefined) {
     history.push(`/workbench/${project.id}/requirement`);
     return <p> Could not find requirement </p>;
@@ -203,14 +209,14 @@ export default function RequirementEditor(): ReactElement {
     await dispatch(selectNeed(post.needId));
   };
 
-  const deleteVariant = (variant: IVariant) => {
+  /* const deleteVariant = (variant: IVariant) => {
     const editRequirement = { ...requirement };
     const newVariants = requirement.layouts.filter(
       (element) => element.id !== variant.id
     );
     editRequirement.layouts = newVariants;
     dispatch(putProjectThunk(project.id));
-  };
+  }; */
 
   const needOptions = (needList: Need[]) => {
     const result = needList.map((element: any) => {
@@ -323,13 +329,10 @@ export default function RequirementEditor(): ReactElement {
             defaultValues,
             project
           }}
+          {...{
+            remove
+          }}
         />
-        {/* {process.env.NODE_ENV === 'development' &&
-          Object.keys(errors).length > 0 && (
-            <Alert variant="warning">
-              <pre>{JSON.stringify(errors, null, 2)}</pre>
-            </Alert>
-          )} */}
       </Form>
     </>
   );

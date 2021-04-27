@@ -34,7 +34,6 @@ export default function AlternativeArray({
   prefix,
   project
 }: IProps): ReactElement {
-  const { errors } = formState;
   const { fields, append, remove } = useFieldArray({
     keyName: 'guid',
     control,
@@ -127,19 +126,24 @@ export default function AlternativeArray({
         return (
           <div key={item.id}>
             {item.type === 'value' && (
-              <ValueAlternative
-                vIx={variantIndex}
-                aIx={index}
-                defaultValues
-                item={item}
-                {...{
-                  control,
-                  register,
-                  formState,
-                  getValues,
-                  setValue
-                }}
-              />
+              <>
+                <ValueAlternative
+                  vIx={variantIndex}
+                  aIx={index}
+                  defaultValues
+                  item={item}
+                  {...{
+                    control,
+                    register,
+                    formState,
+                    getValues,
+                    setValue
+                  }}
+                  {...{
+                    remove
+                  }}
+                />
+              </>
             )}
 
             {item.type === 'codelist' && (
@@ -156,6 +160,9 @@ export default function AlternativeArray({
                   getValues,
                   setValue
                 }}
+                {...{
+                  remove
+                }}
               />
             )}
             {item.type === 'text' && (
@@ -170,6 +177,9 @@ export default function AlternativeArray({
                   formState,
                   getValues,
                   setValue
+                }}
+                {...{
+                  remove
                 }}
               />
             )}
@@ -186,6 +196,9 @@ export default function AlternativeArray({
                   getValues,
                   setValue
                 }}
+                {...{
+                  remove
+                }}
               />
             )}
             {item.type === 'yesNo' && (
@@ -200,6 +213,9 @@ export default function AlternativeArray({
                   formState,
                   getValues,
                   setValue
+                }}
+                {...{
+                  remove
                 }}
               />
             )}
@@ -216,6 +232,9 @@ export default function AlternativeArray({
                   getValues,
                   setValue
                 }}
+                {...{
+                  remove
+                }}
               />
             )}
             {item.type === 'fileUpload' && (
@@ -230,6 +249,9 @@ export default function AlternativeArray({
                   formState,
                   getValues,
                   setValue
+                }}
+                {...{
+                  remove
                 }}
               />
             )}

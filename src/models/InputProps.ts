@@ -1,9 +1,10 @@
-import { UseFormReturn } from 'react-hook-form';
+import { UseFormReturn, UseFieldArrayReturn } from 'react-hook-form';
 
 export interface InputProps
   extends Pick<
-    UseFormReturn,
-    'control' | 'register' | 'setValue' | 'getValues' | 'formState'
-  > {
+      UseFormReturn,
+      'control' | 'register' | 'setValue' | 'getValues' | 'formState'
+    >,
+    Pick<UseFieldArrayReturn, 'remove'> {
   defaultValues?: any;
 }
