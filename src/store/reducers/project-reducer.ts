@@ -516,6 +516,24 @@ const projectSlice = createSlice({
         payload.requirementIndex,
         1
       );
+    },
+    deletePublication(
+      state,
+      {
+        payload
+      }: PayloadAction<{
+        projectId: string;
+        publicationId: string;
+      }>
+    ) {
+      const projectIndex = Utils.ensure(
+        state.list.findIndex((project) => project.id === payload.projectId)
+      );
+      const publicationIndex = state.list[projectIndex].publications.findIndex(
+        (p) => p.id === payload.publicationId
+      );
+
+      state.list[projectIndex].publications.splice(publicationIndex, 1);
     }
   },
   extraReducers: (builder) => {
@@ -594,7 +612,8 @@ export const {
   setRequirementListToNeed,
   editRequirementInNeed,
   addRequirement,
-  deleteRequirement
+  deleteRequirement,
+  deletePublication
 } = projectSlice.actions;
 
 export default projectSlice.reducer;

@@ -13,6 +13,6 @@ export interface Bank extends BaseModel {
   codelist: Codelist[];
   products: Product[];
   version: number;
-  publications?: Publication[];
+  publications: Publication[];
   publishedDate?: string;
 }

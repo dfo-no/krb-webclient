@@ -73,7 +73,8 @@ function WorkbenchPage(): ReactElement {
       products: [],
       codelist: [],
       version: 0,
-      type: MODELTYPE.bank
+      type: MODELTYPE.bank,
+      publications: []
     };
     dispatch(postProjectThunk(project));
     reset();

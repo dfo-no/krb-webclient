@@ -5,7 +5,7 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 import formatISO from 'date-fns/formatISO';
-import { useFieldArray, useForm } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { joiResolver } from '@hookform/resolvers/joi';
 import Joi from 'joi';
 
@@ -15,14 +15,17 @@ import { Publication, PublicationSchema } from '../../models/Publication';
 import {
   putProjectThunk,
   addPublication,
-  incrementProjectVersion
+  incrementProjectVersion,
+  deletePublication
 } from '../../store/reducers/project-reducer';
 import { postBankThunk } from '../../store/reducers/bank-reducer';
 import Utils from '../../common/Utils';
 import EditProjectForm from './EditProjectForm';
 import SuccessAlert from '../SuccessAlert';
 import { Bank } from '../../models/Bank';
-import PublicationList from './PublicationList';
+import PublicationsFieldArray from './PublicationsFieldArray';
+import { ProjectPublicationForm } from './ProjectPublicationForm';
+import SuccessDeleteAlert from '../SuccessDeleteAlert';
 
 function ProjectPage(): ReactElement {
   const dispatch = useDispatch();
@@ -30,6 +33,7 @@ function ProjectPage(): ReactElement {
 
   const { list } = useSelector((state: RootState) => state.project);
   const [showAlert, setShowAlert] = useState(false);
+  const [showDeleteAlert, setDeleteAlert] = useState(false);
   const [editMode, setEditMode] = useState(false);
   const [validated] = useState(false);
 
@@ -50,31 +54,26 @@ function ProjectPage(): ReactElement {
       .unique('date')
   });
 
-  // TODO: fix any useFieldArray typing
-  const defaultValues = {
-    id: project.id,
-    publications: project.publications
-  } as any;
-
   const {
     control,
     register,
     handleSubmit,
-    setValue,
-    getValues,
     formState
-  } = useForm({
+  } = useForm<ProjectPublicationForm>({
     resolver: joiResolver(projectSchema),
-    defaultValues
+    defaultValues: {
+      id: project.id,
+      publications: project.publications
+    }
   });
 
-  const { remove } = useFieldArray({
-    keyName: 'guid',
-    control,
-    name: 'publication'
-  });
+  const removePublication = async (publicationId: string) => {
+    dispatch(deletePublication({ projectId: project.id, publicationId }));
+    await dispatch(putProjectThunk(project.id));
+    setDeleteAlert(true);
+  };
 
-  const publishProject = async (e: any) => {
+  const publishProject = async (e: ProjectPublicationForm) => {
     // Publication is always first in array because we prepend
     const publication: Publication = e.publications[0];
 
@@ -84,7 +83,7 @@ function ProjectPage(): ReactElement {
     const convertedDate = formatISO(new Date());
     projectToBePublished.publishedDate = convertedDate;
     projectToBePublished.id = '';
-    delete projectToBePublished.publications;
+    projectToBePublished.publications = [];
     projectToBePublished.version = publication.version;
 
     // TODO: fix this any and figure out why we must use await
@@ -96,7 +95,7 @@ function ProjectPage(): ReactElement {
 
     dispatch(addPublication({ projectId: project.id, publication }));
     dispatch(incrementProjectVersion(project.id));
-    dispatch(putProjectThunk(project.id));
+    await dispatch(putProjectThunk(project.id));
     setShowAlert(true);
   };
 
@@ -118,6 +117,12 @@ function ProjectPage(): ReactElement {
       <h6 className="ml-1 mb-3">{project.description}</h6>
       {editProjectForm(editMode)}
       <h4>Publications</h4>
+      {showDeleteAlert && (
+        <SuccessDeleteAlert
+          toggleShow={setDeleteAlert}
+          text="Publication was deleted"
+        />
+      )}
       {showAlert && (
         <SuccessAlert toggleShow={setShowAlert} type="publication" />
       )}
@@ -127,18 +132,12 @@ function ProjectPage(): ReactElement {
         validated={validated}
       >
         <Form.Control readOnly type="hidden" as="input" {...register('id')} />
-        <PublicationList
-          {...{
-            control,
-            register,
-            setValue,
-            getValues,
-            formState,
-            defaultValues
-          }}
-          {...{
-            remove
-          }}
+        <PublicationsFieldArray
+          control={control}
+          register={register}
+          formState={formState}
+          projectId={project.id}
+          removePublication={removePublication}
         />
       </Form>
     </>
