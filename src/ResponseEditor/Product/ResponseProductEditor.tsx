@@ -13,10 +13,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import Utils from '../../common/Utils';
 import { ResponseProduct } from '../../models/ResponseProduct';
 import { SpecificationProduct } from '../../models/SpecificationProduct';
-import { editSpecProduct } from '../../store/reducers/spesification-reducer';
 import { RootState } from '../../store/store';
 import ModelType from '../../models/ModelType';
 import { addProduct, editProduct } from '../../store/reducers/response-reducer';
+import ProductRequirementView from './ProductRequirementView';
+import { Bank } from '../../models/Bank';
 
 interface IResponseProductForm {
   title: string;
@@ -32,6 +33,7 @@ const productSchema = Joi.object().keys({
 
 export default function ResponseProductEditor(): ReactElement {
   const { id } = useSelector((state: RootState) => state.selectedBank);
+  const { list } = useSelector((state: RootState) => state.bank);
   const { response } = useSelector((state: RootState) => state.response);
   const { productId } = useSelector(
     (state: RootState) => state.selectedResponseProduct
@@ -48,6 +50,8 @@ export default function ResponseProductEditor(): ReactElement {
   if (!productId) {
     return <p>No selected product</p>;
   }
+
+  const selectedBank = Utils.ensure(list.find((bank: Bank) => bank.id === id));
 
   const specProduct: SpecificationProduct = Utils.ensure(
     response.spesification.products.find(
@@ -165,6 +169,11 @@ export default function ResponseProductEditor(): ReactElement {
           </Form>
         </Card.Body>
       </Card>
+
+      <ProductRequirementView
+        product={specProduct}
+        selectedBank={selectedBank}
+      />
     </Container>
   );
 }

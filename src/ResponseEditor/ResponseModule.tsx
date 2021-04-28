@@ -12,6 +12,7 @@ import ResponseEditor from './Editor/ResponseEditor';
 import ProductResponseList from './Product/ProductResponsList';
 import ResponseProductEditor from './Product/ResponseProductEditor';
 import ResponseDownLoad from './Download/ResponseDownLoad';
+import RequirementPage from './Requirement/RequirementPage';
 
 interface RouteParams {
   bankId: string;
@@ -42,6 +43,9 @@ export default function SpecModule(): ReactElement {
             </Route>
             <Route exact path="/response/:id/product/:productId">
               <ResponseProductEditor />
+            </Route>
+            <Route exact path="/response/:id/requirement">
+              <RequirementPage />
             </Route>
             <Route exact path="/response/:id/download">
               <ResponseDownLoad />
