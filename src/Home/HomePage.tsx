@@ -38,7 +38,7 @@ export default function HomePage(): ReactElement {
               </Link>
             </ListGroup.Item>
             <ListGroup.Item className="mt-1 ">
-              <Link to="/responseeditor">
+              <Link to="/response">
                 <h5>Create response</h5>
               </Link>
             </ListGroup.Item>
