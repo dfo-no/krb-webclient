@@ -1,8 +1,8 @@
 name: Continuous Deployment
 
 on:
-  push:
-    branches: [main]
+  release:
+    types: [published]
 
 env:
   AZURE_WEBAPP_NAME: krb-webclient-prod # set this to your application's name
@@ -31,6 +31,7 @@ jobs:
           REACT_APP_COSMOSDB_CONNECTION_STRING: ${{ secrets.REACT_APP_COSMOSDB_CONNECTION_STRING_PROD }}
           REACT_APP_CLIENTID: ${{ secrets.REACT_APP_CLIENTID }}
         run: |
+          npm run-script git-info
           npm run-script build:ci
 
       - name: 'Deploy to Azure WebApp'

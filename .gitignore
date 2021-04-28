@@ -29,3 +29,6 @@ yarn-error.log*
 
 # JSON Server
 db/local.json
+
+#version 
+public/version.json

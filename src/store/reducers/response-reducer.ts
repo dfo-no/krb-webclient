@@ -40,7 +40,6 @@ const responseSlice = createSlice({
       state.response.spesification.bankId = payload;
     },
     addProduct(state, { payload }: PayloadAction<ResponseProduct>) {
-      console.log(payload);
       state.response.products.push(payload);
     },
     editProduct(
