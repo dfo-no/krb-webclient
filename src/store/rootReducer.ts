@@ -14,6 +14,7 @@ import specificationReducer from './reducers/spesification-reducer';
 import selectedSpecProductReducer from './reducers/selectedSpecProduct-reducer';
 import selectedAlternativeReducer from './reducers/selectedAlternative-reducer';
 import responseReducer from './reducers/response-reducer';
+import selectedResponseProductReducer from './reducers/selectedResponseProduct-reducer';
 
 const rootReducer = combineReducers({
   loader: loaderReducer,
@@ -29,7 +30,8 @@ const rootReducer = combineReducers({
   specification: specificationReducer,
   selectedSpecProduct: selectedSpecProductReducer,
   selectedAlternative: selectedAlternativeReducer,
-  response: responseReducer
+  response: responseReducer,
+  selectedResponseProduct: selectedResponseProductReducer
 });
 
 export default rootReducer;

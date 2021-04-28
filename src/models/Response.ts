@@ -4,7 +4,7 @@ import { Specification } from './Specification';
 
 export interface Response {
   spesification: Specification;
-  title: string;
+  supplier: string;
   products: ResponseProduct[];
   requirementAnswers: RequirementAnswer[];
 }
