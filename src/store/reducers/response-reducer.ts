@@ -2,6 +2,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { Specification } from '../../models/Specification';
 import { Response } from '../../models/Response';
+import { ResponseProduct } from '../../models/ResponseProduct';
 
 interface ResponseState {
   response: Response;
@@ -16,7 +17,7 @@ const initialState: ResponseState = {
       requirements: [],
       requirementAnswers: []
     },
-    title: '',
+    supplier: '',
     products: [],
     requirementAnswers: []
   }
@@ -26,22 +27,40 @@ const responseSlice = createSlice({
   name: 'response',
   initialState,
   reducers: {
+    setResponse(state, { payload }: PayloadAction<Response>) {
+      state.response = payload;
+    },
     setSpecification(state, { payload }: PayloadAction<Specification>) {
       state.response.spesification = payload;
     },
-    editTitle(state, { payload }: PayloadAction<string>) {
-      state.response.title = payload;
+    editSupplier(state, { payload }: PayloadAction<string>) {
+      state.response.supplier = payload;
     },
     editBankId(state, { payload }: PayloadAction<string>) {
       state.response.spesification.bankId = payload;
+    },
+    addProduct(state, { payload }: PayloadAction<ResponseProduct>) {
+      console.log(payload);
+      state.response.products.push(payload);
+    },
+    editProduct(
+      state,
+      {
+        payload
+      }: PayloadAction<{ product: ResponseProduct; productIndex: number }>
+    ) {
+      state.response.products[payload.productIndex] = payload.product;
     }
   }
 });
 
 export const {
   setSpecification,
-  editTitle,
-  editBankId
+  editSupplier,
+  editBankId,
+  addProduct,
+  editProduct,
+  setResponse
 } = responseSlice.actions;
 
 export default responseSlice.reducer;
