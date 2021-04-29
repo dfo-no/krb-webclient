@@ -23,8 +23,8 @@ interface IResponseInfoForm {
   supplier: string;
 }
 
-const titleSchema = Joi.object().keys({
-  title: Joi.string().required()
+const supplierSchema = Joi.object().keys({
+  supplier: Joi.string().required()
 });
 
 export default function ResponseEditor(): ReactElement {
@@ -32,7 +32,7 @@ export default function ResponseEditor(): ReactElement {
   const { list } = useSelector((state: RootState) => state.bank);
   const { response } = useSelector((state: RootState) => state.response);
   const { register, handleSubmit, errors } = useForm({
-    resolver: joiResolver(titleSchema)
+    resolver: joiResolver(supplierSchema)
   });
   const dispatch = useDispatch();
 
