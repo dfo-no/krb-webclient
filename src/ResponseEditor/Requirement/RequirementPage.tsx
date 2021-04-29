@@ -18,13 +18,64 @@ export default function RequirementPage(): ReactElement {
   const { id } = useSelector((state: RootState) => state.selectedBank);
 
   const selectedBank = Utils.ensure(list.find((bank: Bank) => bank.id === id));
+
+  function checkIfNeedHasChildWithRequirements(
+    listofneed: Nestable<Need>[]
+  ): boolean {
+    let foundMatch = false;
+    listofneed.forEach((element) => {
+      if (element.requirements.length > 0) {
+        element.requirements.forEach((requirement) => {
+          if (response.spesification.requirements.includes(requirement.id))
+            foundMatch = true;
+        });
+        return foundMatch;
+      }
+      if (element.children && element.children.length > 0) {
+        return checkIfNeedHasChildWithRequirements(element.children);
+      }
+      return foundMatch;
+    });
+    return foundMatch;
+  }
+
+  function checkNeed(element: Nestable<Need>): boolean {
+    if (element.requirements.length > 0) {
+      element.requirements.forEach((requirement) => {
+        if (response.spesification.requirements.includes(requirement.id))
+          return true;
+        return false;
+      });
+      return false;
+    }
+    if (element.children && element.children.length > 0) {
+      return checkIfNeedHasChildWithRequirements(element.children);
+    }
+    return false;
+  }
   const requirementsAnswers = (requirementArray: Requirement[]) => {
     return requirementArray.map((req) => {
       const selected = !!response.spesification.requirements.includes(req.id);
       if (selected) {
+        let requirementText;
+        let selectedAnswer;
+        req.layouts.forEach((layout) => {
+          if (
+            response.spesification.requirementAnswers.find(
+              (answer) => answer.reqTextId === layout.id
+            )
+          ) {
+            requirementText = layout.requirementText;
+            const index = response.spesification.requirementAnswers.findIndex(
+              (answer) => answer.reqTextId === layout.id
+            );
+            selectedAnswer = response.spesification.requirementAnswers[index];
+          }
+        });
+
         return (
           <Card className="ml-3 mb-3">
-            <Card.Body>Requirement response field</Card.Body>
+            <Card.Body>{requirementText}</Card.Body>
           </Card>
         );
       }
@@ -58,6 +109,7 @@ export default function RequirementPage(): ReactElement {
     const newList = Utils.unflatten(needsList)[0];
     let children: JSX.Element[];
     const hierarchy = newList.map((element) => {
+      if (!checkNeed(element)) return <></>;
       if (element.children && element.children.length > 0) {
         children = childrenHierarchy(element.children, 1);
       }
