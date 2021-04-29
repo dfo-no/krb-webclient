@@ -60,12 +60,15 @@ function ProjectPage(): ReactElement {
     handleSubmit,
     formState
   } = useForm<ProjectPublicationForm>({
+    criteriaMode: 'all',
     resolver: joiResolver(projectSchema),
     defaultValues: {
       id: project.id,
       publications: project.publications
     }
   });
+
+  const { errors } = formState;
 
   const removePublication = async (publicationId: string) => {
     dispatch(deletePublication({ projectId: project.id, publicationId }));

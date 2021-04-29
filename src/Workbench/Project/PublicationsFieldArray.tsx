@@ -94,21 +94,21 @@ export default function PublicationsFieldArray({
               <Form.Control
                 readOnly
                 as="input"
-                type="text"
+                type="hidden"
                 {...register(`publications.${index}.id` as const)}
                 defaultValue={field.id}
               />
               <Form.Control
                 readOnly
                 as="input"
-                type="text"
+                type="hidden"
                 {...register(`publications.${index}.bankId` as const)}
                 defaultValue={field.bankId}
               />
               <Form.Control
                 readOnly
                 as="input"
-                type="text"
+                type="hidden"
                 {...register(`publications.${index}.type` as const)}
                 defaultValue={field.type}
               />
@@ -147,7 +147,7 @@ export default function PublicationsFieldArray({
                 <Form.Control
                   readOnly
                   as="input"
-                  type="text"
+                  type="hidden"
                   {...register(`publications.${index}.comment` as const)}
                   defaultValue={field.comment}
                 />
@@ -166,14 +166,14 @@ export default function PublicationsFieldArray({
               <Form.Control
                 readOnly
                 as="input"
-                type="text"
+                type="hidden"
                 {...register(`publications.${index}.date` as const)}
                 defaultValue={field.date}
               />
               <Form.Control
                 readOnly
                 as="input"
-                type="text"
+                type="hidden"
                 {...register(`publications.${index}.version` as const)}
                 defaultValue={field.version}
               />

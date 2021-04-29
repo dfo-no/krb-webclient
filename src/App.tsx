@@ -25,7 +25,7 @@ import { RootState } from './store/store';
 const msalInstance = new PublicClientApplication(msalConfig);
 
 function App(): ReactElement {
-  // const { status } = useSelector((state: RootState) => state.bank);
+  const { status } = useSelector((state: RootState) => state.bank);
 
   function renderContent() {
     /* if (status === 'pending') {
