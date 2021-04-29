@@ -43,7 +43,7 @@ export default function SpecPage(): ReactElement {
       <Row className="mt-4">
         <Col sm={6}>
           <Form>
-            <h4>Upload spesification</h4>
+            <h4>Upload specification</h4>
             <InputGroup>
               <Form.File.Input
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
@@ -70,7 +70,7 @@ export default function SpecPage(): ReactElement {
       <Col sm={4}>
         <Link to={`/speceditor/${id}`}>
           <Button type="submit" className="mt-4">
-            Create Spesification
+            Create Specification
           </Button>
         </Link>
       </Col>

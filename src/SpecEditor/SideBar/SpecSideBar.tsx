@@ -48,7 +48,7 @@ function SpecSideBar(): ReactElement {
   const displayTitle = selectProject ? selectProject.title : '<None selected>';
 
   const routes = [
-    { link: `${currentUrl}`, name: `Spesification: ${displayTitle}` },
+    { link: `${currentUrl}`, name: `Specification: ${displayTitle}` },
     { link: `${currentUrl}/requirement`, name: 'Requirements' },
     { link: `${currentUrl}/download`, name: 'Download' },
     { link: `${currentUrl}/product`, name: 'Products' }
