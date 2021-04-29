@@ -20,13 +20,61 @@ export default function ProductRequirementView({
   selectedBank,
   product
 }: InputProps): ReactElement {
+  function checkIfNeedHasChildWithRequirements(
+    listofneed: Nestable<Need>[]
+  ): boolean {
+    let foundMatch = false;
+    listofneed.forEach((element) => {
+      if (element.requirements.length > 0) {
+        element.requirements.forEach((requirement) => {
+          if (product.requirements.includes(requirement.id)) foundMatch = true;
+        });
+        return foundMatch;
+      }
+      if (element.children && element.children.length > 0) {
+        return checkIfNeedHasChildWithRequirements(element.children);
+      }
+      return foundMatch;
+    });
+    return foundMatch;
+  }
+
+  function checkNeed(element: Nestable<Need>): boolean {
+    if (element.requirements.length > 0) {
+      element.requirements.forEach((requirement) => {
+        if (product.requirements.includes(requirement.id)) return true;
+        return false;
+      });
+      return false;
+    }
+    if (element.children && element.children.length > 0) {
+      return checkIfNeedHasChildWithRequirements(element.children);
+    }
+    return false;
+  }
   const requirementsAnswers = (requirementArray: Requirement[]) => {
     return requirementArray.map((req) => {
       const selected = !!product.requirements.includes(req.id);
       if (selected) {
+        let requirementText;
+        let selectedAnswer;
+        req.layouts.forEach((layout) => {
+          if (
+            product.requirementAnswers.find(
+              (answer) => answer.reqTextId === layout.id
+            )
+          ) {
+            requirementText = layout.requirementText;
+            const index = product.requirementAnswers.findIndex(
+              (answer) => answer.reqTextId === layout.id
+            );
+            selectedAnswer = product.requirementAnswers[index];
+          }
+        });
+
         return (
-          <Card className="ml-3">
-            <Card.Body>Requirement response field</Card.Body>
+          <Card className="ml-3 mb-3">
+            <Card.Body>{requirementText}</Card.Body>
           </Card>
         );
       }
@@ -72,6 +120,7 @@ export default function ProductRequirementView({
     let children: JSX.Element[];
     let requirementsArray: Requirement[] = [];
     const hierarchy = newList.map((element) => {
+      if (!checkNeed(element)) return <></>;
       if (
         element.id in associatedRequirements &&
         associatedRequirements[element.id].length > 0
