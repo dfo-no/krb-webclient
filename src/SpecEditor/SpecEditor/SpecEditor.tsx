@@ -15,10 +15,7 @@ import { joiResolver } from '@hookform/resolvers/joi';
 import { RootState } from '../../store/store';
 import { Bank } from '../../models/Bank';
 import Utils from '../../common/Utils';
-import {
-  editBankId,
-  editTitle
-} from '../../store/reducers/spesification-reducer';
+import { editTitle, setBank } from '../../store/reducers/spesification-reducer';
 
 type FormInput = {
   title: string;
@@ -41,9 +38,10 @@ export default function SpecEditor(): ReactElement {
     return <p>No selected bank</p>;
   }
 
-  dispatch(editBankId(id));
-
   const selectedBank = Utils.ensure(list.find((bank: Bank) => bank.id === id));
+
+  dispatch(setBank(selectedBank));
+
   const saveTitle = (post: FormInput) => {
     dispatch(editTitle(post.title));
   };

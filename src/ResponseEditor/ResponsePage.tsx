@@ -30,9 +30,9 @@ export default function ResponsePage(): ReactElement {
           const typeSpecification = JSON.parse(
             evt.target.result.toString()
           ) as Specification;
-          dispatch(selectBank(typeSpecification.bankId));
+          dispatch(selectBank(typeSpecification.bank.id));
           dispatch(setSpecification(typeSpecification));
-          history.push(`/response/${typeSpecification.bankId}`);
+          history.push(`/response/${typeSpecification.bank.id}`);
         }
       };
       reader.readAsText(file);
@@ -49,9 +49,9 @@ export default function ResponsePage(): ReactElement {
           const typeResponse = JSON.parse(
             evt.target.result.toString()
           ) as Response;
-          dispatch(selectBank(typeResponse.spesification.bankId));
+          dispatch(selectBank(typeResponse.spesification.bank.id));
           dispatch(setResponse(typeResponse));
-          history.push(`/response/${typeResponse.spesification.bankId}`);
+          history.push(`/response/${typeResponse.spesification.bank.id}`);
         }
       };
       reader.readAsText(file);

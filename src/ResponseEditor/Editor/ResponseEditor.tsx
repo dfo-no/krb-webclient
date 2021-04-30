@@ -12,10 +12,7 @@ import Form from 'react-bootstrap/Form';
 import Joi from 'joi';
 import { joiResolver } from '@hookform/resolvers/joi';
 import { RootState } from '../../store/store';
-import {
-  editBankId,
-  editSupplier
-} from '../../store/reducers/response-reducer';
+import { setBank, editSupplier } from '../../store/reducers/response-reducer';
 import Utils from '../../common/Utils';
 import { Bank } from '../../models/Bank';
 
@@ -40,8 +37,9 @@ export default function ResponseEditor(): ReactElement {
     return <p>No selected bank</p>;
   }
 
-  dispatch(editBankId(id));
   const selectedBank = Utils.ensure(list.find((bank: Bank) => bank.id === id));
+
+  dispatch(setBank(selectedBank));
 
   const saveSupplier = (post: IResponseInfoForm) => {
     dispatch(editSupplier(post.supplier));

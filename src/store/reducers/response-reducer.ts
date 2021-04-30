@@ -3,6 +3,8 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { Specification } from '../../models/Specification';
 import { Response } from '../../models/Response';
 import { ResponseProduct } from '../../models/ResponseProduct';
+import MODELTYPE from '../../models/ModelType';
+import { Bank } from '../../models/Bank';
 
 interface ResponseState {
   response: Response;
@@ -11,7 +13,16 @@ interface ResponseState {
 const initialState: ResponseState = {
   response: {
     spesification: {
-      bankId: '',
+      bank: {
+        id: '',
+        title: '',
+        description: '',
+        needs: [],
+        products: [],
+        codelist: [],
+        version: 0,
+        type: MODELTYPE.bank
+      },
       title: '',
       products: [],
       requirements: [],
@@ -36,8 +47,8 @@ const responseSlice = createSlice({
     editSupplier(state, { payload }: PayloadAction<string>) {
       state.response.supplier = payload;
     },
-    editBankId(state, { payload }: PayloadAction<string>) {
-      state.response.spesification.bankId = payload;
+    setBank(state, { payload }: PayloadAction<Bank>) {
+      state.response.spesification.bank = payload;
     },
     addProduct(state, { payload }: PayloadAction<ResponseProduct>) {
       state.response.products.push(payload);
@@ -56,7 +67,7 @@ const responseSlice = createSlice({
 export const {
   setSpecification,
   editSupplier,
-  editBankId,
+  setBank,
   addProduct,
   editProduct,
   setResponse
