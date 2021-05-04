@@ -16,6 +16,11 @@ export default function ErrorSummary<T>({
     return null;
   }
 
+  function isFieldError(value: unknown): value is FieldError {
+    return (value as FieldError)?.message !== undefined;
+  }
+
+  // TODO: remove eslint comments.
   const errorMessages = [];
   // eslint-disable-next-line no-restricted-syntax
   for (const [key, value] of Object.entries(errors)) {
@@ -25,8 +30,9 @@ export default function ErrorSummary<T>({
       for (const [key2, v] of Object.entries(arrayFieldError)) {
         // eslint-disable-next-line no-restricted-syntax
         for (const [key3, v2] of Object.entries(v)) {
-          const g = v2 as FieldError;
-          errorMessages.push(g.message);
+          if (isFieldError(v2)) {
+            errorMessages.push(v2.message);
+          }
         }
       }
     } else {
