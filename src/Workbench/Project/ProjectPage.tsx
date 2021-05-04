@@ -1,5 +1,5 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
-import React, { ReactElement, useState } from 'react';
+import React, { ReactElement, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Alert from 'react-bootstrap/Alert';
 import Button from 'react-bootstrap/Button';
@@ -11,12 +11,14 @@ import { joiResolver } from '@hookform/resolvers/joi';
 import Joi from 'joi';
 
 import { BsPencil } from 'react-icons/bs';
+import { useRouteMatch } from 'react-router';
 import { RootState } from '../../store/store';
 import { Publication, PublicationSchema } from '../../models/Publication';
 import {
   putProjectThunk,
   addPublication,
-  incrementProjectVersion
+  incrementProjectVersion,
+  getProjectsThunk
 } from '../../store/reducers/project-reducer';
 import { postBankThunk } from '../../store/reducers/bank-reducer';
 import Utils from '../../common/Utils';
@@ -24,17 +26,48 @@ import EditProjectForm from './EditProjectForm';
 import SuccessAlert from '../SuccessAlert';
 import { Bank } from '../../models/Bank';
 import PublicationList from './PublicationList';
+import { selectProject } from '../../store/reducers/selectedProject-reducer';
+import MODELTYPE from '../../models/ModelType';
+
+interface RouteParams {
+  projectId?: string;
+}
 
 function ProjectPage(): ReactElement {
-  const dispatch = useDispatch();
+  const projectMatch = useRouteMatch<RouteParams>('/workbench/:projectId');
+  const { list, status } = useSelector((state: RootState) => state.project);
   const { id } = useSelector((state: RootState) => state.selectedProject);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    async function fetchEverything() {
+      setTimeout(async () => {
+        await dispatch(getProjectsThunk());
+      }, 10);
+    }
+    fetchEverything();
+  }, [dispatch]);
 
-  const { list } = useSelector((state: RootState) => state.project);
+  if (projectMatch?.params.projectId) {
+    dispatch(selectProject(projectMatch?.params.projectId));
+  }
+
   const [showAlert, setShowAlert] = useState(false);
   const [editMode, setEditMode] = useState(false);
   const [validated] = useState(false);
-
-  const project = Utils.ensure(list.find((element) => element.id === id));
+  const bakcupProject = {
+    id: '',
+    title: '',
+    description: '',
+    needs: [],
+    products: [],
+    codelist: [],
+    version: 0,
+    type: MODELTYPE.bank
+  };
+  const project =
+    status === 'fulfilled'
+      ? Utils.ensure(list.find((element) => element.id === id))
+      : bakcupProject;
 
   const defaultValues = project;
 
@@ -71,6 +104,9 @@ function ProjectPage(): ReactElement {
     name: 'publication'
   });
 
+  if (list.length === 0 || !id) {
+    return <p>Loading project page ...</p>;
+  }
   const publishProject = async (e: any) => {
     // Publication is always first in array because we prepend
     const publication: Publication = e.publications[0];
@@ -106,52 +142,56 @@ function ProjectPage(): ReactElement {
 
   return (
     <>
-      <Row className="ml-1 mt-3">
-        <h3> {project.title} </h3>
-        <Button className="ml-3" onClick={() => setEditMode(true)}>
-          <BsPencil />
-        </Button>
-      </Row>
-      <h6 className="ml-1 mb-3">{project.description}</h6>
-      {editProjectForm(editMode)}
-      <h4>Publications</h4>
-      {showAlert && (
-        <SuccessAlert toggleShow={setShowAlert} type="publication" />
-      )}
-      <Form
-        onSubmit={handleSubmit((e) => publishProject(e))}
-        noValidate
-        validated={validated}
-      >
-        <Form.Control
-          readOnly
-          as="input"
-          name="id"
-          type="hidden"
-          ref={register}
-          isInvalid={!!errors.id}
-        />
-        <PublicationList
-          {...{
-            control,
-            register,
-            getValues,
-            setValue,
-            errors,
-            defaultValues,
-            handleSubmit
-          }}
-          {...{
-            remove
-          }}
-        />
-      </Form>
-      {Object.keys(errors).length > 0 && (
-        <Alert variant="danger">
-          <pre>
-            <div>{JSON.stringify(errors, null, 2)}</div>
-          </pre>
-        </Alert>
+      {status === 'fulfilled' && (
+        <>
+          <Row className="ml-1 mt-3">
+            <h3> {project.title} </h3>
+            <Button className="ml-3" onClick={() => setEditMode(true)}>
+              <BsPencil />
+            </Button>
+          </Row>
+          <h6 className="ml-1 mb-3">{project.description}</h6>
+          {editProjectForm(editMode)}
+          <h4>Publications</h4>
+          {showAlert && (
+            <SuccessAlert toggleShow={setShowAlert} type="publication" />
+          )}
+          <Form
+            onSubmit={handleSubmit((e) => publishProject(e))}
+            noValidate
+            validated={validated}
+          >
+            <Form.Control
+              readOnly
+              as="input"
+              name="id"
+              type="hidden"
+              ref={register}
+              isInvalid={!!errors.id}
+            />
+            <PublicationList
+              {...{
+                control,
+                register,
+                getValues,
+                setValue,
+                errors,
+                defaultValues,
+                handleSubmit
+              }}
+              {...{
+                remove
+              }}
+            />
+          </Form>
+          {Object.keys(errors).length > 0 && (
+            <Alert variant="danger">
+              <pre>
+                <div>{JSON.stringify(errors, null, 2)}</div>
+              </pre>
+            </Alert>
+          )}
+        </>
       )}
     </>
   );

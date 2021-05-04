@@ -1,6 +1,6 @@
 import React, { ReactElement, useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, useRouteMatch } from 'react-router-dom';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import Row from 'react-bootstrap/Row';
@@ -13,9 +13,23 @@ import Utils from '../../common/Utils';
 import { Bank } from '../../models/Bank';
 import NewCodeListForm from './NewCodeListForm';
 import SuccessAlert from '../SuccessAlert';
+import { getProjectsThunk } from '../../store/reducers/project-reducer';
+import { selectProject } from '../../store/reducers/selectedProject-reducer';
+
+interface RouteParams {
+  projectId: string;
+}
 
 export default function CodelistPage(): ReactElement {
+  const projectMatch = useRouteMatch<RouteParams>(
+    '/workbench/:projectId/codelist'
+  );
   const dispatch = useDispatch();
+
+  if (projectMatch?.params.projectId) {
+    dispatch(selectProject(projectMatch?.params.projectId));
+  }
+
   const { list } = useSelector((state: RootState) => state.project);
   const { id } = useSelector((state: RootState) => state.selectedProject);
   const [toggleEditor, setToggleEditor] = useState(false);
@@ -29,9 +43,19 @@ export default function CodelistPage(): ReactElement {
     return () => clearTimeout(timer);
   }, [showAlert]);
 
-  if (!id) {
-    return <p>Please select a project</p>;
+  useEffect(() => {
+    async function fetchEverything() {
+      setTimeout(async () => {
+        await dispatch(getProjectsThunk());
+      }, 10);
+    }
+    fetchEverything();
+  }, [dispatch]);
+
+  if (list.length === 0 || !id) {
+    return <p>Loading codelist Page...</p>;
   }
+
   const selectedProject = Utils.ensure(
     list.find((bank: Bank) => bank.id === id)
   );
