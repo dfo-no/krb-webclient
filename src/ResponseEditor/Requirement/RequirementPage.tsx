@@ -40,18 +40,17 @@ export default function RequirementPage(): ReactElement {
   }
 
   function checkNeed(element: Nestable<Need>): boolean {
+    let used = false;
     if (element.requirements.length > 0) {
       element.requirements.forEach((requirement) => {
         if (response.spesification.requirements.includes(requirement.id))
-          return true;
-        return false;
+          used = true;
       });
-      return false;
     }
-    if (element.children && element.children.length > 0) {
-      return checkIfNeedHasChildWithRequirements(element.children);
+    if (element.children && element.children.length > 0 && !used) {
+      used = checkIfNeedHasChildWithRequirements(element.children);
     }
-    return false;
+    return used;
   }
   const requirementsAnswers = (requirementArray: Requirement[]) => {
     return requirementArray.map((req) => {
