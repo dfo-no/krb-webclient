@@ -3,23 +3,28 @@ import Card from 'react-bootstrap/Card';
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 import Button from 'react-bootstrap/Button';
-
 import { BsTrashFill } from 'react-icons/bs';
-import { InputProps } from '../../models/InputProps';
+import { Control, FormState, UseFormRegister } from 'react-hook-form';
+import { Requirement } from '../../models/Requirement';
 
-interface IProps extends InputProps {
-  item: any;
-  vIx: number;
-  aIx: number;
-}
+import { IYesNoAlternative } from '../../models/IYesNoAlternative';
+
+type IProps = {
+  control: Control<Requirement>;
+  register: UseFormRegister<Requirement>;
+  formState: FormState<Requirement>;
+  item: IYesNoAlternative;
+  vIndex: number;
+  aIndex: number;
+  remove: (i: number) => void;
+};
 
 export default function YesNoAlternative({
   register,
-  formState: { errors },
   remove,
   item,
-  vIx,
-  aIx
+  vIndex,
+  aIndex
 }: IProps): ReactElement {
   return (
     <Card className="mb-3">
@@ -30,7 +35,7 @@ export default function YesNoAlternative({
             className="mb-3"
             type="button"
             variant="danger"
-            onClick={() => remove(aIx)}
+            onClick={() => remove(aIndex)}
           >
             <BsTrashFill />
           </Button>
@@ -38,32 +43,16 @@ export default function YesNoAlternative({
         <Form.Control
           as="input"
           type="hidden"
-          {...register(`layouts[${vIx}].alternatives[${aIx}].id`)}
+          {...register(`layouts.${vIndex}.alternatives.${aIndex}.id` as const)}
           defaultValue={item.id}
-          isInvalid={
-            !!(
-              errors.layouts &&
-              errors.layouts[vIx] &&
-              errors.layouts[vIx].alternatives &&
-              errors.layouts[vIx].alternatives[aIx] &&
-              errors.layouts[vIx].alternatives[aIx].id
-            )
-          }
         />
         <Form.Control
           as="input"
           type="hidden"
-          {...register(`layouts[${vIx}].alternatives[${aIx}].type`)}
+          {...register(
+            `layouts.${vIndex}.alternatives.${aIndex}.type` as const
+          )}
           defaultValue={item.type}
-          isInvalid={
-            !!(
-              errors.layouts &&
-              errors.layouts[vIx] &&
-              errors.layouts[vIx].alternatives &&
-              errors.layouts[vIx].alternatives[aIx] &&
-              errors.layouts[vIx].alternatives[aIx].type
-            )
-          }
         />
       </Card.Body>
     </Card>

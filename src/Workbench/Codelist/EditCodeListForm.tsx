@@ -88,7 +88,7 @@ function EditCodeListForm({ toggleShow, codelistId }: IProps): ReactElement {
           variant.alternatives.forEach((alternative: ISelectable) => {
             if (alternative.type === 'codelist') {
               const alt = alternative as ICodelistAlternative;
-              if (alt.codelist.id === codelistId) used = true;
+              if (alt.codelist === codelistId) used = true;
             }
           });
         });

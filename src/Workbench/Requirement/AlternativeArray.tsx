@@ -3,7 +3,12 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import { useFieldArray } from 'react-hook-form';
+import {
+  Control,
+  FormState,
+  useFieldArray,
+  UseFormRegister
+} from 'react-hook-form';
 
 import { v4 as uuidv4 } from 'uuid';
 
@@ -12,32 +17,38 @@ import ValueAlternative from './ValueAlternative';
 import TextAlternative from './TextAlternative';
 import PeriodDateAlternative from './PeriodDateAlternative';
 import TimeAlternative from './TimeAlternative';
-import { InputProps } from '../../models/InputProps';
 import YesNoAlternative from './YesNoAlternative';
 import FileUploadAlternative from './FileUploadAlternative';
+import { Requirement } from '../../models/Requirement';
+import { Bank } from '../../models/Bank';
+import { IValueAlternative } from '../../models/IValueAlternative';
+import { ICodelistAlternative } from '../../models/ICodelistAlternative';
+import { ITextAlternative } from '../../models/ITextAlternative';
+import { IPeriodDateAlternative } from '../../models/IPeriodDateAlternative';
+import { ITimeAlternative } from '../../models/ITimeAlternative';
+import { IYesNoAlternative } from '../../models/IYesNoAlternative';
+import { IFileUploadAlternative } from '../../models/IFileUploadAlternative';
+import { AlternativeType } from '../../models/IVariant';
 
-interface IProps extends InputProps {
-  prefix: string;
+type IProps = {
+  control: Control<Requirement>;
+  register: UseFormRegister<Requirement>;
+  formState: FormState<Requirement>;
   variantIndex: number;
-  // eslint-disable-next-line react/no-unused-prop-types
-  alternatives: any;
-  project: any;
-}
+  project: Bank;
+};
 
 export default function AlternativeArray({
   control,
   register,
   formState,
-  getValues,
-  setValue,
   variantIndex,
-  prefix,
   project
 }: IProps): ReactElement {
   const { fields, append, remove } = useFieldArray({
+    name: `layouts.${variantIndex}.alternatives` as 'layouts.0.alternatives',
     keyName: 'guid',
-    control,
-    name: `${prefix}`
+    control
   });
 
   const [getAlternative, setAlternativeSelected] = useState('value');
@@ -51,49 +62,47 @@ export default function AlternativeArray({
         step: 1,
         unit: '',
         type: 'value'
-      });
+      } as IValueAlternative);
     } else if (getAlternative === 'codelist') {
       append({
         id: uuidv4(),
-        codelist: { ...project.codelist[0] },
+        codelist: project.codelist[0].id,
         type: 'codelist'
-      });
+      } as ICodelistAlternative);
     } else if (getAlternative === 'text') {
       append({
         id: uuidv4(),
         max: 0,
         text: '',
         type: 'text'
-      });
+      } as ITextAlternative);
     } else if (getAlternative === 'periodDate') {
       append({
         id: uuidv4(),
         minDays: 0,
         maxDays: 0,
-        // fromDate: new Date(),
-        // toDate: new Date(),
         fromDate: '',
         toDate: '',
         type: 'periodDate'
-      });
+      } as IPeriodDateAlternative);
     } else if (getAlternative === 'time') {
       append({
         id: uuidv4(),
         fromTime: '',
         toTime: '',
         type: 'time'
-      });
+      } as ITimeAlternative);
     } else if (getAlternative === 'yesNo') {
       append({
         id: uuidv4(),
         type: 'yesNo'
-      });
+      } as IYesNoAlternative);
     } else if (getAlternative === 'fileUpload') {
       append({
         id: uuidv4(),
         type: 'fileUpload',
         fileEndings: ''
-      });
+      } as IFileUploadAlternative);
     }
   };
 
@@ -122,137 +131,86 @@ export default function AlternativeArray({
         </Col>
         <Button onClick={() => addAlternative()}>Add</Button>
       </Form.Group>
-      {fields.map((item: any, index) => {
+      {fields.map((item: AlternativeType, index) => {
         return (
           <div key={item.id}>
             {item.type === 'value' && (
-              <>
-                <ValueAlternative
-                  vIx={variantIndex}
-                  aIx={index}
-                  defaultValues
-                  item={item}
-                  {...{
-                    control,
-                    register,
-                    formState,
-                    getValues,
-                    setValue
-                  }}
-                  {...{
-                    remove
-                  }}
-                />
-              </>
+              <ValueAlternative
+                control={control}
+                register={register}
+                formState={formState}
+                item={item as IValueAlternative}
+                vIndex={variantIndex}
+                aIndex={index}
+                remove={remove}
+              />
             )}
 
             {item.type === 'codelist' && (
               <CodeListAlternative
-                vIx={variantIndex}
-                aIx={index}
-                defaultValues
-                item={item}
+                control={control}
+                register={register}
+                formState={formState}
+                item={item as ICodelistAlternative}
+                vIndex={variantIndex}
+                aIndex={index}
                 project={project}
-                {...{
-                  control,
-                  register,
-                  formState,
-                  getValues,
-                  setValue
-                }}
-                {...{
-                  remove
-                }}
+                remove={remove}
               />
             )}
             {item.type === 'text' && (
               <TextAlternative
-                vIx={variantIndex}
-                aIx={index}
-                defaultValues
-                item={item}
-                {...{
-                  control,
-                  register,
-                  formState,
-                  getValues,
-                  setValue
-                }}
-                {...{
-                  remove
-                }}
+                control={control}
+                register={register}
+                formState={formState}
+                item={item as ITextAlternative}
+                vIndex={variantIndex}
+                aIndex={index}
+                remove={remove}
               />
             )}
             {item.type === 'periodDate' && (
               <PeriodDateAlternative
-                vIx={variantIndex}
-                aIx={index}
-                defaultValues
-                item={item}
-                {...{
-                  control,
-                  register,
-                  formState,
-                  getValues,
-                  setValue
-                }}
-                {...{
-                  remove
-                }}
+                control={control}
+                register={register}
+                formState={formState}
+                item={item as IPeriodDateAlternative}
+                vIndex={variantIndex}
+                aIndex={index}
+                remove={remove}
               />
             )}
             {item.type === 'yesNo' && (
               <YesNoAlternative
-                vIx={variantIndex}
-                aIx={index}
-                defaultValues
-                item={item}
-                {...{
-                  control,
-                  register,
-                  formState,
-                  getValues,
-                  setValue
-                }}
-                {...{
-                  remove
-                }}
+                control={control}
+                register={register}
+                formState={formState}
+                item={item as IYesNoAlternative}
+                vIndex={variantIndex}
+                aIndex={index}
+                remove={remove}
               />
             )}
             {item.type === 'time' && (
               <TimeAlternative
-                vIx={variantIndex}
-                aIx={index}
-                defaultValues
-                item={item}
-                {...{
-                  control,
-                  register,
-                  formState,
-                  getValues,
-                  setValue
-                }}
-                {...{
-                  remove
-                }}
+                control={control}
+                register={register}
+                formState={formState}
+                item={item as ITimeAlternative}
+                vIndex={variantIndex}
+                aIndex={index}
+                remove={remove}
               />
             )}
             {item.type === 'fileUpload' && (
               <FileUploadAlternative
-                vIx={variantIndex}
-                aIx={index}
-                defaultValues
-                item={item}
-                {...{
-                  control,
-                  register,
-                  formState,
-                  getValues,
-                  setValue
-                }}
-                {...{
-                  remove
-                }}
+                control={control}
+                register={register}
+                formState={formState}
+                item={item as IFileUploadAlternative}
+                vIndex={variantIndex}
+                aIndex={index}
+                remove={remove}
               />
             )}
           </div>
