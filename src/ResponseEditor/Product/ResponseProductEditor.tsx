@@ -38,7 +38,11 @@ export default function ResponseProductEditor(): ReactElement {
   const { productId } = useSelector(
     (state: RootState) => state.selectedResponseProduct
   );
-  const { register, handleSubmit, errors } = useForm({
+  const {
+    register,
+    handleSubmit,
+    formState: { errors }
+  } = useForm({
     resolver: joiResolver(productSchema)
   });
   const dispatch = useDispatch();
@@ -115,8 +119,7 @@ export default function ResponseProductEditor(): ReactElement {
               <Col sm={10}>
                 <Form.Control
                   type="number"
-                  name="price"
-                  ref={register}
+                  {...register('price')}
                   defaultValue={product.price}
                   isInvalid={!!errors.price}
                 />
@@ -133,8 +136,7 @@ export default function ResponseProductEditor(): ReactElement {
               </Form.Label>
               <Col sm={10}>
                 <Form.Control
-                  name="title"
-                  ref={register}
+                  {...register('title')}
                   defaultValue={product.title}
                   isInvalid={!!errors.title}
                 />
@@ -151,8 +153,7 @@ export default function ResponseProductEditor(): ReactElement {
               </Form.Label>
               <Col sm={10}>
                 <Form.Control
-                  name="description"
-                  ref={register}
+                  {...register('description')}
                   defaultValue={product.description}
                   isInvalid={!!errors.description}
                 />
