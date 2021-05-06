@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Controller, FieldErrors, UseFormReturn } from 'react-hook-form';
+import { Controller, FieldErrors } from 'react-hook-form';
 import DateFnsUtils from '@date-io/date-fns';
 import { FormControl, FormHelperText } from '@material-ui/core';
 import {
@@ -7,11 +7,6 @@ import {
   MuiPickersUtilsProvider
 } from '@material-ui/pickers';
 import { ReactElement } from 'react';
-
-interface InputProps extends Pick<UseFormReturn, 'control'> {
-  errors: FieldErrors;
-  name: string;
-}
 
 interface IProps {
   control: any;

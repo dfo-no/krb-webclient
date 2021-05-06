@@ -1,4 +1,4 @@
-import React, { ReactElement, useEffect, useState } from 'react';
+import React, { ReactElement, useEffect } from 'react';
 import Col from 'react-bootstrap/Col';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
@@ -14,10 +14,7 @@ import ProductPage from './Product/ProductPage';
 import ProjectPage from './Project/ProjectPage';
 import SideBar from './SideBar/SideBar';
 import WorkbenchPage from './WorkbenchPage';
-import {
-  getProjectsThunk,
-  getProjectThunk
-} from '../store/reducers/project-reducer';
+import { getProjectsThunk } from '../store/reducers/project-reducer';
 import { RootState } from '../store/store';
 import { selectProject } from '../store/reducers/selectedProject-reducer';
 import styles from './WorkBench.module.scss';
