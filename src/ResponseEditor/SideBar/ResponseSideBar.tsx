@@ -39,7 +39,7 @@ function ResponseSideBar(): ReactElement {
 
   const match = useRouteMatch<RouteParams>('/response/:bankId');
   const currentUrl = match?.url ? match.url : `/response/${id}`;
-  const isProjectSelected = !!response.spesification.bankId;
+  const isProjectSelected = !!response.spesification.bank.id;
 
   const routes = [
     {

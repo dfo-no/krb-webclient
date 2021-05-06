@@ -29,9 +29,9 @@ export default function SpecPage(): ReactElement {
           const typeSpecification = JSON.parse(
             evt.target.result.toString()
           ) as Specification;
-          dispatch(selectBank(typeSpecification.bankId));
+          dispatch(selectBank(typeSpecification.bank.id));
           dispatch(setSpecification(typeSpecification));
-          history.push(`/speceditor/${typeSpecification.bankId}`);
+          history.push(`/speceditor/${typeSpecification.bank.id}`);
         }
       };
       reader.readAsText(file);
