@@ -4,6 +4,8 @@ import Utils from '../../common/Utils';
 import { SpecificationProduct } from '../../models/SpecificationProduct';
 import { RequirementAnswer } from '../../models/RequirementAnswer';
 import { Specification } from '../../models/Specification';
+import MODELTYPE from '../../models/ModelType';
+import { Bank } from '../../models/Bank';
 
 interface SpecificationState {
   spec: Specification;
@@ -11,7 +13,17 @@ interface SpecificationState {
 
 const initialState: SpecificationState = {
   spec: {
-    bankId: '',
+    bank: {
+      id: '',
+      title: '',
+      description: '',
+      needs: [],
+      products: [],
+      codelist: [],
+      version: 0,
+      type: MODELTYPE.bank,
+      publications: []
+    },
     title: '',
     products: [],
     requirements: [],
@@ -29,8 +41,8 @@ const specificationSlice = createSlice({
     editTitle(state, { payload }: PayloadAction<string>) {
       state.spec.title = payload;
     },
-    editBankId(state, { payload }: PayloadAction<string>) {
-      state.spec.bankId = payload;
+    setBank(state, { payload }: PayloadAction<Bank>) {
+      state.spec.bank = payload;
     },
     addProduct(
       state,
@@ -180,7 +192,7 @@ export const {
   removeRequirement,
   setSpecification,
   editTitle,
-  editBankId,
+  setBank,
   addProductAnswer,
   addProductRequirement,
   removeProductRequirement,

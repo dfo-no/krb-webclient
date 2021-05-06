@@ -12,31 +12,24 @@ import Form from 'react-bootstrap/Form';
 import Joi from 'joi';
 import { joiResolver } from '@hookform/resolvers/joi';
 import { RootState } from '../../store/store';
-import { Bank } from '../../models/Bank';
+import { setBank, editSupplier } from '../../store/reducers/response-reducer';
 import Utils from '../../common/Utils';
-import { editTitle, setBank } from '../../store/reducers/spesification-reducer';
+import { Bank } from '../../models/Bank';
 
-type FormInput = {
-  title: string;
-};
+interface IResponseInfoForm {
+  supplier: string;
+}
 
-const titleSchema = Joi.object().keys({
-  title: Joi.string().required()
+const supplierSchema = Joi.object().keys({
+  supplier: Joi.string().required()
 });
 
-export default function SpecEditor(): ReactElement {
+export default function ResponseEditor(): ReactElement {
   const { id } = useSelector((state: RootState) => state.selectedBank);
   const { list } = useSelector((state: RootState) => state.bank);
-  const { spec } = useSelector((state: RootState) => state.specification);
-  const {
-    register,
-    handleSubmit,
-    formState: { errors }
-  } = useForm<FormInput>({
-    resolver: joiResolver(titleSchema),
-    defaultValues: {
-      title: spec.title
-    }
+  const { response } = useSelector((state: RootState) => state.response);
+  const { register, handleSubmit, errors } = useForm({
+    resolver: joiResolver(supplierSchema)
   });
   const dispatch = useDispatch();
 
@@ -48,43 +41,45 @@ export default function SpecEditor(): ReactElement {
 
   dispatch(setBank(selectedBank));
 
-  const saveTitle = (post: FormInput) => {
-    dispatch(editTitle(post.title));
+  const saveSupplier = (post: IResponseInfoForm) => {
+    dispatch(editSupplier(post.supplier));
   };
 
   return (
     <Container fluid>
       <Row className="m-4">
         <Col>
-          <Form onSubmit={handleSubmit(saveTitle)}>
+          <Row className="mt-4">
+            <h3>Response </h3>
+          </Row>
+          <Row className="mt-4 mb-4">
+            <h5>Specification {response.spesification.title}</h5>
+          </Row>
+          <Row>
+            <h6>Kravbank {selectedBank.title}</h6>
+          </Row>
+          <Form onSubmit={handleSubmit(saveSupplier)}>
             <Form.Group as={Row}>
-              <Form.Label column sm={2}>
-                Title
-              </Form.Label>
-              <Col sm={6}>
+              <Form.Label>Supplier</Form.Label>
+              <Col sm={8}>
                 <FormControl
-                  {...register('title')}
-                  defaultValue={spec.title}
-                  isInvalid={!!errors.title}
+                  name="supplier"
+                  ref={register}
+                  defaultValue={response.supplier}
+                  isInvalid={!!errors.supplier}
                 />
-                {errors.title && (
+                {errors.supplier && (
                   <Form.Control.Feedback type="invalid">
-                    {errors.title?.message}
+                    {errors.supplier?.message}
                   </Form.Control.Feedback>
                 )}
               </Col>
-              <Col sm={4}>
+              <Col sm={2}>
                 <Button type="submit">Save</Button>
               </Col>
             </Form.Group>
           </Form>
         </Col>
-      </Row>
-      <Row className="m-4">
-        <h4>Bank {selectedBank.title}</h4>
-      </Row>
-      <Row className=" m-4 d-flex justify-content-md-end">
-        <Button>Update</Button>
       </Row>
     </Container>
   );

@@ -5,17 +5,20 @@ import Row from 'react-bootstrap/Row';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../store/store';
 
-export default function SpecPage(): ReactElement {
-  const { spec } = useSelector((state: RootState) => state.specification);
+export default function ResponseDownLoad(): ReactElement {
+  const { response } = useSelector((state: RootState) => state.response);
 
   const onDownLoad = () => {
-    fileDownload(JSON.stringify(spec), `${spec.title}-specfication.json`);
+    fileDownload(
+      JSON.stringify(response),
+      `${response.supplier}-response.json`
+    );
   };
 
   return (
     <Row className="justify-content-md-center">
       <Button type="submit" className="mt-4" onClick={onDownLoad}>
-        Download Specification
+        Download Response
       </Button>
     </Row>
   );

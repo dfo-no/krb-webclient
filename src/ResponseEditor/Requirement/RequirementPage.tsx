@@ -1,31 +1,23 @@
 import React, { ReactElement } from 'react';
 import ListGroup from 'react-bootstrap/ListGroup';
 import Row from 'react-bootstrap/Row';
+import Card from 'react-bootstrap/Card';
 import { BsArrowReturnRight } from 'react-icons/bs';
 import { useSelector } from 'react-redux';
 import Utils from '../../common/Utils';
+import { Bank } from '../../models/Bank';
 import { Need } from '../../models/Need';
 import { Nestable } from '../../models/Nestable';
 import { Requirement } from '../../models/Requirement';
 import { RootState } from '../../store/store';
 import styles from './RequirementView.module.scss';
-import SpesificationRequirement from './SpesificationRequirement';
 
-interface InputProps {
-  needList: Nestable<Need>[];
-}
+export default function RequirementPage(): ReactElement {
+  const { response } = useSelector((state: RootState) => state.response);
+  const { list } = useSelector((state: RootState) => state.bank);
+  const { id } = useSelector((state: RootState) => state.selectedBank);
 
-export default function RequirementView({
-  needList
-}: InputProps): ReactElement {
-  const { spec } = useSelector((state: RootState) => state.specification);
-  const checkIfReqHasVariantMatch = (req: Requirement) => {
-    let found = false;
-    req.layouts.forEach((layout) => {
-      if (layout.use_Spesification === true) found = true;
-    });
-    return found;
-  };
+  const selectedBank = Utils.ensure(list.find((bank: Bank) => bank.id === id));
 
   function checkIfNeedHasChildWithRequirements(
     listofneed: Nestable<Need>[]
@@ -34,10 +26,10 @@ export default function RequirementView({
     listofneed.forEach((element) => {
       if (element.requirements.length > 0) {
         element.requirements.forEach((requirement) => {
-          if (checkIfReqHasVariantMatch(requirement)) {
+          if (response.spesification.requirements.includes(requirement.id))
             foundMatch = true;
-          }
         });
+        return foundMatch;
       }
       if (element.children && element.children.length > 0) {
         return checkIfNeedHasChildWithRequirements(element.children);
@@ -48,30 +40,42 @@ export default function RequirementView({
   }
 
   function checkNeed(element: Nestable<Need>): boolean {
-    let found = false;
+    let used = false;
     if (element.requirements.length > 0) {
       element.requirements.forEach((requirement) => {
-        if (checkIfReqHasVariantMatch(requirement)) {
-          found = true;
-        }
+        if (response.spesification.requirements.includes(requirement.id))
+          used = true;
       });
     }
-    if (element.children && element.children.length > 0 && !found) {
-      found = checkIfNeedHasChildWithRequirements(element.children);
+    if (element.children && element.children.length > 0 && !used) {
+      used = checkIfNeedHasChildWithRequirements(element.children);
     }
-    return found;
+    return used;
   }
-
   const requirementsAnswers = (requirementArray: Requirement[]) => {
     return requirementArray.map((req) => {
-      const selected = !!spec.requirements.includes(req.id);
-      if (checkIfReqHasVariantMatch(req)) {
+      const selected = !!response.spesification.requirements.includes(req.id);
+      if (selected) {
+        let requirementText;
+        let selectedAnswer;
+        req.layouts.forEach((layout) => {
+          if (
+            response.spesification.requirementAnswers.find(
+              (answer) => answer.reqTextId === layout.id
+            )
+          ) {
+            requirementText = layout.requirementText;
+            const index = response.spesification.requirementAnswers.findIndex(
+              (answer) => answer.reqTextId === layout.id
+            );
+            selectedAnswer = response.spesification.requirementAnswers[index];
+          }
+        });
+
         return (
-          <SpesificationRequirement
-            key={req.id}
-            selected={selected}
-            requirement={req}
-          />
+          <Card className="ml-3 mb-3">
+            <Card.Body>{requirementText}</Card.Body>
+          </Card>
         );
       }
       return <></>;
@@ -104,7 +108,7 @@ export default function RequirementView({
     const newList = Utils.unflatten(needsList)[0];
     let children: JSX.Element[];
     const hierarchy = newList.map((element) => {
-      if (!checkNeed(element)) return null;
+      if (!checkNeed(element)) return <></>;
       if (element.children && element.children.length > 0) {
         children = childrenHierarchy(element.children, 1);
       }
@@ -126,5 +130,5 @@ export default function RequirementView({
     );
   };
 
-  return <>{needHierarchy(needList)}</>;
+  return <>{needHierarchy(selectedBank.needs)}</>;
 }

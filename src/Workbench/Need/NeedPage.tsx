@@ -2,6 +2,7 @@ import React, { ReactElement, useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Button from 'react-bootstrap/Button';
 
+import { useRouteMatch } from 'react-router';
 import { Need } from '../../models/Need';
 import { RootState } from '../../store/store';
 import Utils from '../../common/Utils';
@@ -9,13 +10,20 @@ import NewNeedForm from './NewNeedForm';
 import EditNeedForm from './EditNeedForm';
 import NestableHierarcy from '../../NestableHierarchy/Nestable';
 import {
+  getProjectsThunk,
   putProjectThunk,
   updateNeedList
 } from '../../store/reducers/project-reducer';
 import SuccessAlert from '../SuccessAlert';
 import { Nestable } from '../../models/Nestable';
+import { selectProject } from '../../store/reducers/selectedProject-reducer';
+
+interface RouteParams {
+  projectId?: string;
+}
 
 function NeedPage(): ReactElement {
+  const projectMatch = useRouteMatch<RouteParams>('/workbench/:projectId/need');
   const { id } = useSelector((state: RootState) => state.selectedProject);
   const { list } = useSelector((state: RootState) => state.project);
   const [showAlert, setShowAlert] = useState(false);
@@ -28,6 +36,19 @@ function NeedPage(): ReactElement {
     }, 2000);
     return () => clearTimeout(timer);
   }, [showAlert]);
+
+  useEffect(() => {
+    async function fetchEverything() {
+      setTimeout(async () => {
+        await dispatch(getProjectsThunk());
+      }, 10);
+    }
+    fetchEverything();
+  }, [dispatch]);
+
+  if (projectMatch?.params.projectId) {
+    dispatch(selectProject(projectMatch?.params.projectId));
+  }
 
   if (list.length === 0 || !id) {
     return <div>Loading NeedPage....</div>;

@@ -1,4 +1,4 @@
-import React, { ReactElement, useState } from 'react';
+import React, { ReactElement, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
@@ -9,13 +9,15 @@ import { joiResolver } from '@hookform/resolvers/joi';
 import Joi from 'joi';
 
 import { BsPencil } from 'react-icons/bs';
+import { useRouteMatch } from 'react-router';
 import { RootState } from '../../store/store';
 import { Publication, PublicationSchema } from '../../models/Publication';
 import {
   putProjectThunk,
   addPublication,
   incrementProjectVersion,
-  deletePublication
+  deletePublication,
+  getProjectsThunk
 } from '../../store/reducers/project-reducer';
 import { postBankThunk } from '../../store/reducers/bank-reducer';
 import Utils from '../../common/Utils';
@@ -26,18 +28,51 @@ import PublicationsFieldArray from './PublicationsFieldArray';
 import { ProjectPublicationForm } from './ProjectPublicationForm';
 import SuccessDeleteAlert from '../SuccessDeleteAlert';
 import ErrorSummary from '../../Form/ErrorSummary';
+import { selectProject } from '../../store/reducers/selectedProject-reducer';
+import MODELTYPE from '../../models/ModelType';
+
+interface RouteParams {
+  projectId?: string;
+}
 
 function ProjectPage(): ReactElement {
-  const dispatch = useDispatch();
+  const projectMatch = useRouteMatch<RouteParams>('/workbench/:projectId');
+  const { list, status } = useSelector((state: RootState) => state.project);
   const { id } = useSelector((state: RootState) => state.selectedProject);
+  const dispatch = useDispatch();
 
-  const { list } = useSelector((state: RootState) => state.project);
+  useEffect(() => {
+    async function fetchEverything() {
+      setTimeout(async () => {
+        await dispatch(getProjectsThunk());
+      }, 10);
+    }
+    fetchEverything();
+  }, [dispatch]);
+
+  if (projectMatch?.params.projectId) {
+    dispatch(selectProject(projectMatch?.params.projectId));
+  }
+
   const [showAlert, setShowAlert] = useState(false);
   const [showDeleteAlert, setDeleteAlert] = useState(false);
   const [editMode, setEditMode] = useState(false);
   const [validated] = useState(false);
-
-  const project = Utils.ensure(list.find((element) => element.id === id));
+  const bakcupProject = {
+    id: '',
+    title: '',
+    description: '',
+    needs: [],
+    products: [],
+    codelist: [],
+    version: 0,
+    type: MODELTYPE.bank,
+    publications: []
+  };
+  const project =
+    status === 'fulfilled'
+      ? Utils.ensure(list.find((element) => element.id === id))
+      : bakcupProject;
 
   const projectSchema = Joi.object().keys({
     id: Joi.string().required(),
@@ -76,7 +111,10 @@ function ProjectPage(): ReactElement {
     setDeleteAlert(true);
   };
 
-  const publishProject = async (e: ProjectPublicationForm) => {
+  if (list.length === 0 || !id) {
+    return <p>Loading project page ...</p>;
+  }
+  const publishProject = async (e: any) => {
     // Publication is always first in array because we prepend
     const publication: Publication = e.publications[0];
 

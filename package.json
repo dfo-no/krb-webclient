@@ -137,6 +137,10 @@
   },
   "devDependencies": {
     "@hookform/devtools": "^3.0.2",
-    "webpack-bundle-analyzer": "^4.4.1"
-  }
+    "webpack-bundle-analyzer": "^4.4.1",
+    "pre-commit": "^1.2.2"
+  },
+  "pre-commit": [
+    "lint"
+  ]
 }

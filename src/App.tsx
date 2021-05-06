@@ -14,13 +14,14 @@ import Header from './Header/Header';
 import HomePage from './Home/HomePage';
 import BankPage from './Home/BankPage';
 import WorkbenchModule from './Workbench/WorkbenchModule';
-import ResponseEditor from './ResponseEditor/ResponseEditor';
+import ResponsePage from './ResponseEditor/ResponsePage';
 import Evaluation from './Evaluation/Evaluation';
 import { msalConfig } from './authentication/authConfig';
 import PageLayout from './PageLayout';
 import SpecPage from './SpecEditor/SpecPage';
 import SpecModule from './SpecEditor/SpecModule';
 import { RootState } from './store/store';
+import ResponseModule from './ResponseEditor/ResponseModule';
 
 const msalInstance = new PublicClientApplication(msalConfig);
 
@@ -50,7 +51,8 @@ function App(): ReactElement {
             <Route path="/workbench" component={WorkbenchModule} />
             <Route path="/speceditor/:id" component={SpecModule} />
             <Route exact path="/speceditor" component={SpecPage} />
-            <Route path="/responseeditor" component={ResponseEditor} />
+            <Route path="/response/:id" component={ResponseModule} />
+            <Route exact path="/response" component={ResponsePage} />
             <Route path="/evaluation" component={Evaluation} />
           </AuthenticatedTemplate>
           <UnauthenticatedTemplate>

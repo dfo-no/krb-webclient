@@ -147,11 +147,14 @@ export default function ProductRequirementAnswer({
       if (req.layouts.length === 1) {
         return <p>{layout.requirementText}</p>;
       }
-      return (
-        <option key={layout.id} value={layout.id}>
-          {layout.requirementText}
-        </option>
-      );
+      if (layout.use_Product) {
+        return (
+          <option key={layout.id} value={layout.id}>
+            {layout.requirementText}
+          </option>
+        );
+      }
+      return <></>;
     });
 
     return (

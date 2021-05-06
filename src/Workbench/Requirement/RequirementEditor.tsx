@@ -1,4 +1,5 @@
-import React, { ReactElement, useState } from 'react';
+import React, { ReactElement, useEffect, useState } from 'react';
+import Alert from 'react-bootstrap/Alert';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
@@ -16,6 +17,7 @@ import { selectRequirement } from '../../store/reducers/selectedRequirement-redu
 import { selectNeed } from '../../store/reducers/selectedNeed-reducer';
 import {
   editRequirementInNeed,
+  getProjectsThunk,
   putProjectThunk
 } from '../../store/reducers/project-reducer';
 import VariantArray from './VariantArray';
@@ -134,7 +136,6 @@ export default function RequirementEditor(): ReactElement {
   const [validated] = useState(false);
   const dispatch = useDispatch();
   const history = useHistory();
-
   const projectMatch = useRouteMatch<RouteParams>(
     '/workbench/:projectId/need/:needId/requirement/:requirementId/edit'
   );
@@ -157,6 +158,15 @@ export default function RequirementEditor(): ReactElement {
   const { reqId } = useSelector(
     (state: RootState) => state.selectedRequirement
   );
+
+  useEffect(() => {
+    async function fetchEverything() {
+      setTimeout(async () => {
+        await dispatch(getProjectsThunk());
+      }, 10);
+    }
+    fetchEverything();
+  }, [dispatch]);
 
   const project = Utils.ensure(list.find((element) => element.id === id));
 
@@ -190,8 +200,8 @@ export default function RequirementEditor(): ReactElement {
     return <p> Could not find requirement </p>;
   }
 
-  if (!needId || !reqId) {
-    return <p>You have to select a requirement to work with</p>;
+  if (list.length === 0 || !needId || !reqId) {
+    return <p>Loading requirement ...</p>;
   }
 
   const saveRequirement = async (post: Requirement) => {

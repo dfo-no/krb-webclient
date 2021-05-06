@@ -28,9 +28,9 @@ export default function SpecPage(): ReactElement {
           const typeSpecification = JSON.parse(
             evt.target.result.toString()
           ) as Specification;
-          dispatch(selectBank(typeSpecification.bankId));
+          dispatch(selectBank(typeSpecification.bank.id));
           dispatch(setSpecification(typeSpecification));
-          history.push(`/speceditor/${typeSpecification.bankId}`);
+          history.push(`/speceditor/${typeSpecification.bank.id}`);
         }
       };
       reader.readAsText(file);
@@ -42,7 +42,7 @@ export default function SpecPage(): ReactElement {
       <Row className="mt-4">
         <Col sm={6}>
           <Form>
-            <h4>Upload spesification</h4>
+            <h4>Upload specification</h4>
             <InputGroup>
               <Form.File.Input
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
@@ -69,7 +69,7 @@ export default function SpecPage(): ReactElement {
       <Col sm={4}>
         <Link to={`/speceditor/${id}`}>
           <Button type="submit" className="mt-4">
-            Create Spesification
+            Create Specification
           </Button>
         </Link>
       </Col>
