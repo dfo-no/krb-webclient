@@ -4,6 +4,7 @@ import Button from 'react-bootstrap/Button';
 import Row from 'react-bootstrap/Row';
 import { BsPencil } from 'react-icons/bs';
 
+import { useRouteMatch } from 'react-router';
 import { RootState } from '../../store/store';
 import { Code } from '../../models/Code';
 import {
@@ -19,9 +20,24 @@ import EditCodeForm from './EditCodeForm';
 import NewCodeForm from './NewCodeForm';
 import EditCodeListForm from './EditCodeListForm';
 import SuccessAlert from '../SuccessAlert';
+import { selectProject } from '../../store/reducers/selectedProject-reducer';
+import { selectCodeList } from '../../store/reducers/selectedCodelist-reducer';
+
+interface RouteParams {
+  projectId: string;
+  codelistId?: string;
+}
 
 export default function CodeListEditor(): ReactElement {
+  const projectMatch = useRouteMatch<RouteParams>(
+    '/workbench/:projectId/codelist/:codelistId'
+  );
   const dispatch = useDispatch();
+
+  if (projectMatch?.params.projectId && projectMatch?.params.codelistId) {
+    dispatch(selectProject(projectMatch?.params.projectId));
+    dispatch(selectCodeList(projectMatch?.params.codelistId));
+  }
   const { list } = useSelector((state: RootState) => state.project);
   const { id } = useSelector((state: RootState) => state.selectedProject);
   const { listId } = useSelector((state: RootState) => state.selectedCodeList);
@@ -36,8 +52,8 @@ export default function CodeListEditor(): ReactElement {
     return () => clearTimeout(timer);
   }, [showAlert]);
 
-  if (!id) {
-    return <p>Please select a project</p>;
+  if (list.length === 0 || !id) {
+    return <p>Loading codelist editor...</p>;
   }
   if (!listId) {
     return <p>Please select a codelist</p>;
