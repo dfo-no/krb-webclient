@@ -1,4 +1,3 @@
-/* eslint-disable jsx-a11y/label-has-associated-control */
 import React, { ReactElement, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Button from 'react-bootstrap/Button';
@@ -26,6 +25,7 @@ import { Bank } from '../../models/Bank';
 import PublicationsFieldArray from './PublicationsFieldArray';
 import { ProjectPublicationForm } from './ProjectPublicationForm';
 import SuccessDeleteAlert from '../SuccessDeleteAlert';
+import ErrorSummary from '../../Form/ErrorSummary';
 
 function ProjectPage(): ReactElement {
   const dispatch = useDispatch();
@@ -143,6 +143,7 @@ function ProjectPage(): ReactElement {
           removePublication={removePublication}
         />
       </Form>
+      <ErrorSummary errors={errors} />
     </>
   );
 }
