@@ -41,24 +41,26 @@ function ProjectPage(): ReactElement {
   const { id } = useSelector((state: RootState) => state.selectedProject);
   const dispatch = useDispatch();
 
+  if (projectMatch?.params.projectId) {
+    dispatch(selectProject(projectMatch?.params.projectId));
+  }
+
   useEffect(() => {
     async function fetchEverything() {
       setTimeout(async () => {
         await dispatch(getProjectsThunk());
       }, 10);
     }
-    fetchEverything();
-  }, [dispatch]);
-
-  if (projectMatch?.params.projectId) {
-    dispatch(selectProject(projectMatch?.params.projectId));
-  }
+    if (!list) {
+      fetchEverything();
+    }
+  }, [dispatch, list]);
 
   const [showAlert, setShowAlert] = useState(false);
   const [showDeleteAlert, setDeleteAlert] = useState(false);
   const [editMode, setEditMode] = useState(false);
   const [validated] = useState(false);
-  const bakcupProject = {
+  const bakcupProject: Bank = {
     id: '',
     title: '',
     description: '',

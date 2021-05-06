@@ -6,9 +6,6 @@ import {
   AuthenticatedTemplate,
   UnauthenticatedTemplate
 } from '@azure/msal-react';
-
-// import Spinner from 'react-bootstrap/Spinner';
-import { useSelector } from 'react-redux';
 import styles from './App.module.scss';
 import Header from './Header/Header';
 import HomePage from './Home/HomePage';
@@ -20,24 +17,12 @@ import { msalConfig } from './authentication/authConfig';
 import PageLayout from './PageLayout';
 import SpecPage from './SpecEditor/SpecPage';
 import SpecModule from './SpecEditor/SpecModule';
-import { RootState } from './store/store';
 import ResponseModule from './ResponseEditor/ResponseModule';
 
 const msalInstance = new PublicClientApplication(msalConfig);
 
 function App(): ReactElement {
-  const { status } = useSelector((state: RootState) => state.bank);
-
   function renderContent() {
-    /* if (status === 'pending') {
-      return (
-        <Spinner
-          animation="grow"
-          className={styles.App__loader}
-          variant="info"
-        />
-      );
-    } */
     return (
       <Switch>
         <Route exact path="/">

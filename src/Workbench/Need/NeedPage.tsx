@@ -43,8 +43,10 @@ function NeedPage(): ReactElement {
         await dispatch(getProjectsThunk());
       }, 10);
     }
-    fetchEverything();
-  }, [dispatch]);
+    if (!list) {
+      fetchEverything();
+    }
+  }, [dispatch, list]);
 
   if (projectMatch?.params.projectId) {
     dispatch(selectProject(projectMatch?.params.projectId));

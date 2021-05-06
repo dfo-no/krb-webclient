@@ -1,5 +1,4 @@
 import React, { ReactElement, useEffect, useState } from 'react';
-import Alert from 'react-bootstrap/Alert';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
@@ -36,12 +35,12 @@ const valueSchema = Joi.object().keys({
   unit: Joi.string().required()
 });
 
-const codeSchema = Joi.object().keys({
+/* const codeSchema = Joi.object().keys({
   id: Joi.string().required(),
   title: Joi.string().required(),
   description: Joi.string().required(),
   type: Joi.string().equal('code').required()
-});
+}); */
 
 const codelistSchema = Joi.object().keys({
   id: Joi.string().required(),
@@ -165,8 +164,10 @@ export default function RequirementEditor(): ReactElement {
         await dispatch(getProjectsThunk());
       }, 10);
     }
-    fetchEverything();
-  }, [dispatch]);
+    if (!list) {
+      fetchEverything();
+    }
+  }, [dispatch, list]);
 
   const project = Utils.ensure(list.find((element) => element.id === id));
 
