@@ -2,6 +2,14 @@ import React, { ReactElement } from 'react';
 import Alert from 'react-bootstrap/Alert';
 import { FieldError, FieldErrors } from 'react-hook-form';
 
+function isFieldError(object: unknown): object is FieldError {
+  return (
+    Object.prototype.hasOwnProperty.call(object, 'message') &&
+    Object.prototype.hasOwnProperty.call(object, 'type') &&
+    Object.prototype.hasOwnProperty.call(object, 'ref')
+  );
+}
+
 type ErrorSummaryProps<T> = {
   errors: FieldErrors<T>;
 };
@@ -16,30 +24,20 @@ export default function ErrorSummary<T>({
     return null;
   }
 
-  function isFieldError(value: unknown): value is FieldError {
-    return (value as FieldError)?.message !== undefined;
-  }
-
-  // TODO: remove eslint comments.
-  const errorMessages = [];
-  // eslint-disable-next-line no-restricted-syntax
-  for (const [key, value] of Object.entries(errors)) {
-    if (Array.isArray(value)) {
-      const arrayFieldError = value as FieldError[];
-      // eslint-disable-next-line no-restricted-syntax
-      for (const [key2, v] of Object.entries(arrayFieldError)) {
-        // eslint-disable-next-line no-restricted-syntax
-        for (const [key3, v2] of Object.entries(v)) {
-          if (isFieldError(v2)) {
-            errorMessages.push(v2.message);
-          }
+  const errorMessages: string[] = [];
+  function traverse(o: any) {
+    // eslint-disable-next-line no-restricted-syntax
+    for (const i in o) {
+      if (!!o[i] && typeof o[i] === 'object') {
+        if (!isFieldError(o[i])) {
+          traverse(o[i]);
+        } else {
+          errorMessages.push(o[i].message);
         }
       }
-    } else {
-      const f = value as FieldError;
-      errorMessages.push(f.message);
     }
   }
+  traverse(errors);
 
   return (
     <Alert variant="danger">
