@@ -17,6 +17,7 @@ import { RootState } from '../../store/store';
 import { Codelist } from '../../models/Codelist';
 import MODELTYPE from '../../models/ModelType';
 import InputRow from '../../Form/InputRow';
+import ErrorSummary from '../../Form/ErrorSummary';
 
 type FormValues = {
   title: string;
@@ -98,6 +99,7 @@ function NewCodeListForm({ toggleShow, toggleAlert }: IProps): ReactElement {
               Cancel
             </Button>
           </Row>
+          <ErrorSummary errors={errors} />
         </Form>
       </Card.Body>
     </Card>

@@ -16,6 +16,7 @@ import { SpecificationProduct } from '../../models/SpecificationProduct';
 import { editSpecProduct } from '../../store/reducers/spesification-reducer';
 import { RootState } from '../../store/store';
 import ProductRequirementSelectorList from './ProductRequirementSelectorList';
+import ErrorSummary from '../../Form/ErrorSummary';
 
 type FormInput = {
   title: string;
@@ -108,6 +109,7 @@ export default function ProductSpecEditor(): ReactElement {
             <Col className="p-0 d-flex justify-content-end">
               <Button type="submit">Save</Button>
             </Col>
+            <ErrorSummary errors={errors} />
           </Form>
         </Card.Body>
       </Card>

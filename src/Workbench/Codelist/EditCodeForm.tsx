@@ -17,6 +17,7 @@ import {
 import { RootState } from '../../store/store';
 import { AccordionContext } from '../../NestableHierarchy/AccordionContext';
 import InputRow from '../../Form/InputRow';
+import ErrorSummary from '../../Form/ErrorSummary';
 
 interface IProps {
   element: Code;
@@ -106,6 +107,7 @@ export default function EditCodeForm({ element }: IProps): ReactElement {
           Delete <BsTrashFill />
         </Button>
       </Row>
+      <ErrorSummary errors={errors} />
     </Form>
   );
 }

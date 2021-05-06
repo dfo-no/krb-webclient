@@ -23,6 +23,7 @@ import { Requirement } from '../../models/Requirement';
 import { IVariant } from '../../models/IVariant';
 import Utils from '../../common/Utils';
 import InputRow from '../../Form/InputRow';
+import ErrorSummary from '../../Form/ErrorSummary';
 
 interface IProps {
   element: Product;
@@ -137,6 +138,7 @@ export default function ProductForm({ element }: IProps): ReactElement {
           Delete <BsTrashFill />
         </Button>
       </Row>
+      <ErrorSummary errors={errors} />
     </Form>
   );
 }

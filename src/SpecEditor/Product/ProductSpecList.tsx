@@ -19,6 +19,7 @@ import { RootState } from '../../store/store';
 import styles from './ProductSpecEditor.module.scss';
 import MODELTYPE from '../../models/ModelType';
 import { selectSpecProduct } from '../../store/reducers/selectedSpecProduct-reducer';
+import ErrorSummary from '../../Form/ErrorSummary';
 
 type FormInput = {
   product: string;
@@ -33,7 +34,11 @@ export default function ProductSpecList(): ReactElement {
   const { id } = useSelector((state: RootState) => state.selectedBank);
   const { list } = useSelector((state: RootState) => state.bank);
   const { spec } = useSelector((state: RootState) => state.specification);
-  const { register, handleSubmit } = useForm();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors }
+  } = useForm();
   const dispatch = useDispatch();
 
   if (projectMatch?.params.bankId && !id) {
@@ -151,6 +156,7 @@ export default function ProductSpecList(): ReactElement {
           <h4>Products</h4>
         </Row>
         <Row className=" ml-4">{productList(spec.products)}</Row>
+        <ErrorSummary errors={errors} />
       </Form>
     </Container>
   );

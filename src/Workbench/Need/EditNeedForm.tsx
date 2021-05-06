@@ -18,6 +18,7 @@ import { RootState } from '../../store/store';
 import Utils from '../../common/Utils';
 import { Bank } from '../../models/Bank';
 import InputRow from '../../Form/InputRow';
+import ErrorSummary from '../../Form/ErrorSummary';
 
 type FormValues = {
   id: string;
@@ -113,6 +114,7 @@ function EditNeedForm({ element }: IProps): ReactElement {
       <Button className="mt-2  ml-3" variant="warning" onClick={removeNeed}>
         Delete <BsTrashFill />
       </Button>
+      <ErrorSummary errors={errors} />
     </Form>
   );
 }

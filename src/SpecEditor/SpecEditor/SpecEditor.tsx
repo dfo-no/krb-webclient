@@ -15,6 +15,7 @@ import { RootState } from '../../store/store';
 import { Bank } from '../../models/Bank';
 import Utils from '../../common/Utils';
 import { editTitle, setBank } from '../../store/reducers/spesification-reducer';
+import ErrorSummary from '../../Form/ErrorSummary';
 
 type FormInput = {
   title: string;
@@ -77,6 +78,7 @@ export default function SpecEditor(): ReactElement {
                 <Button type="submit">Save</Button>
               </Col>
             </Form.Group>
+            <ErrorSummary errors={errors} />
           </Form>
         </Col>
       </Row>

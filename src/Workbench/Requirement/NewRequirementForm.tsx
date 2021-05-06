@@ -20,6 +20,7 @@ import { Requirement } from '../../models/Requirement';
 import MODELTYPE from '../../models/ModelType';
 import RequirementType from '../../models/RequirementType';
 import InputRow from '../../Form/InputRow';
+import ErrorSummary from '../../Form/ErrorSummary';
 
 type FormValues = {
   title: string;
@@ -124,6 +125,7 @@ function NewRequirementForm({
               Cancel
             </Button>
           </Row>
+          <ErrorSummary errors={errors} />
         </Form>
       </Card.Body>
     </Card>

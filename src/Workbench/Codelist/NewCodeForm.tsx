@@ -17,6 +17,7 @@ import { RootState } from '../../store/store';
 import { Code } from '../../models/Code';
 import MODELTYPE from '../../models/ModelType';
 import InputRow from '../../Form/InputRow';
+import ErrorSummary from '../../Form/ErrorSummary';
 
 type FormValues = {
   title: string;
@@ -104,6 +105,7 @@ function NewCodeForm({
               Cancel
             </Button>
           </Row>
+          <ErrorSummary errors={errors} />
         </Form>
       </Card.Body>
     </Card>

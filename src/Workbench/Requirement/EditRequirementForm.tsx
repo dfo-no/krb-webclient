@@ -20,6 +20,7 @@ import { RootState } from '../../store/store';
 import { Requirement } from '../../models/Requirement';
 import { Need } from '../../models/Need';
 import InputRow from '../../Form/InputRow';
+import ErrorSummary from '../../Form/ErrorSummary';
 
 interface IProps {
   element: Requirement;
@@ -132,6 +133,7 @@ export default function EditRequirementForm({
           Delete <BsTrashFill />
         </Button>
       </Row>
+      <ErrorSummary errors={errors} />
     </Form>
   );
 }

@@ -20,6 +20,7 @@ import {
 import { RootState } from '../../store/store';
 import { SpecificationProduct } from '../../models/SpecificationProduct';
 import { selectAlternative } from '../../store/reducers/selectedAlternative-reducer';
+import ErrorSummary from '../../Form/ErrorSummary';
 
 interface IProps {
   requirement: Requirement;
@@ -224,6 +225,7 @@ export default function ProductRequirementAnswer({
             )}
           </Row>
         </Col>
+        <ErrorSummary errors={errors} />
       </Form>
     );
   };

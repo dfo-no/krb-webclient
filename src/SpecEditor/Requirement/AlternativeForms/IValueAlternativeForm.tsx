@@ -14,6 +14,7 @@ import {
 } from '../../../store/reducers/spesification-reducer';
 import { RootState } from '../../../store/store';
 import InputRow from '../../../Form/InputRow';
+import ErrorSummary from '../../../Form/ErrorSummary';
 
 const valueSchema = Joi.object().keys({
   id: Joi.string().required(),
@@ -127,6 +128,7 @@ export default function ValueForm({ parentAnswer }: IProps): ReactElement {
             type="number"
           />
           <Button type="submit"> Save</Button>
+          <ErrorSummary errors={errors} />
         </Form>
       </Card.Body>
     </Card>

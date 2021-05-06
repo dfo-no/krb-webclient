@@ -15,6 +15,7 @@ import {
   putProjectThunk
 } from '../../store/reducers/project-reducer';
 import { RootState } from '../../store/store';
+import ErrorSummary from '../../Form/ErrorSummary';
 
 interface IProps {
   project: Bank;
@@ -116,6 +117,7 @@ export default function EditProjectForm({
               Cancel
             </Button>
           </Row>
+          <ErrorSummary errors={errors} />
         </Form>
       </Card.Body>
     </Card>

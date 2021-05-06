@@ -21,6 +21,7 @@ import { selectProject } from '../store/reducers/selectedProject-reducer';
 import SuccessAlert from './SuccessAlert';
 import MODELTYPE from '../models/ModelType';
 import InputRow from '../Form/InputRow';
+import ErrorSummary from '../Form/ErrorSummary';
 
 type FormValues = {
   title: string;
@@ -151,6 +152,7 @@ function WorkbenchPage(): ReactElement {
               <Button className="mt-2" type="submit">
                 Save
               </Button>
+              <ErrorSummary errors={errors} />
             </Form>
           </ListGroup.Item>
         </ListGroup>

@@ -15,6 +15,7 @@ import {
 } from '../../../store/reducers/spesification-reducer';
 import { RootState } from '../../../store/store';
 import { ITextAlternative } from '../../../models/ITextAlternative';
+import ErrorSummary from '../../../Form/ErrorSummary';
 
 const textSchema = Joi.object().keys({
   id: Joi.string().required(),
@@ -124,6 +125,7 @@ export default function TextForm({ parentAnswer }: IProps): ReactElement {
           </Form.Group>
 
           <Button type="submit"> Save</Button>
+          <ErrorSummary errors={errors} />
         </Form>
       </Card.Body>
     </Card>

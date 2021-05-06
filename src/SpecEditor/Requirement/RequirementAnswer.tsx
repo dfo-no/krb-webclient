@@ -19,6 +19,7 @@ import {
 } from '../../store/reducers/spesification-reducer';
 import { RootState } from '../../store/store';
 import { selectAlternative } from '../../store/reducers/selectedAlternative-reducer';
+import ErrorSummary from '../../Form/ErrorSummary';
 
 interface IProps {
   requirement: Requirement;
@@ -212,6 +213,7 @@ export default function RequirementAnswer({
             )}
           </Row>
         </Col>
+        <ErrorSummary errors={errors} />
       </Form>
     );
   };

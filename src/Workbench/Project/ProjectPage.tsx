@@ -182,8 +182,8 @@ function ProjectPage(): ReactElement {
           projectId={project.id}
           removePublication={removePublication}
         />
+        <ErrorSummary errors={errors} />
       </Form>
-      <ErrorSummary errors={errors} />
     </>
   );
 }
