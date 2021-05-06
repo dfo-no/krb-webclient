@@ -129,11 +129,14 @@ export default function RequirementAnswer({
       if (req.layouts.length === 1) {
         return <p key={layout.id}>{layout.requirementText}</p>;
       }
-      return (
-        <option key={layout.id} value={layout.id}>
-          {layout.requirementText}
-        </option>
-      );
+      if (layout.use_Spesification) {
+        return (
+          <option key={layout.id} value={layout.id}>
+            {layout.requirementText}
+          </option>
+        );
+      }
+      return <></>;
     });
 
     return (

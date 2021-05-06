@@ -19,16 +19,62 @@ export default function RequirementView({
   needList
 }: InputProps): ReactElement {
   const { spec } = useSelector((state: RootState) => state.specification);
+  const checkIfReqHasVariantMatch = (req: Requirement) => {
+    let found = false;
+    req.layouts.forEach((layout) => {
+      if (layout.use_Spesification === true) found = true;
+    });
+    return found;
+  };
+
+  function checkIfNeedHasChildWithRequirements(
+    listofneed: Nestable<Need>[]
+  ): boolean {
+    let foundMatch = false;
+    listofneed.forEach((element) => {
+      if (element.requirements.length > 0) {
+        element.requirements.forEach((requirement) => {
+          if (checkIfReqHasVariantMatch(requirement)) {
+            foundMatch = true;
+          }
+        });
+      }
+      if (element.children && element.children.length > 0) {
+        return checkIfNeedHasChildWithRequirements(element.children);
+      }
+      return foundMatch;
+    });
+    return foundMatch;
+  }
+
+  function checkNeed(element: Nestable<Need>): boolean {
+    let found = false;
+    if (element.requirements.length > 0) {
+      element.requirements.forEach((requirement) => {
+        if (checkIfReqHasVariantMatch(requirement)) {
+          found = true;
+        }
+      });
+    }
+    if (element.children && element.children.length > 0 && !found) {
+      found = checkIfNeedHasChildWithRequirements(element.children);
+    }
+    return found;
+  }
+
   const requirementsAnswers = (requirementArray: Requirement[]) => {
     return requirementArray.map((req) => {
       const selected = !!spec.requirements.includes(req.id);
-      return (
-        <SpesificationRequirement
-          key={req.id}
-          selected={selected}
-          requirement={req}
-        />
-      );
+      if (checkIfReqHasVariantMatch(req)) {
+        return (
+          <SpesificationRequirement
+            key={req.id}
+            selected={selected}
+            requirement={req}
+          />
+        );
+      }
+      return <></>;
     });
   };
   const childrenHierarchy = (listofneed: Nestable<Need>[], level: number) => {
@@ -58,6 +104,7 @@ export default function RequirementView({
     const newList = Utils.unflatten(needsList)[0];
     let children: JSX.Element[];
     const hierarchy = newList.map((element) => {
+      if (!checkNeed(element)) return null;
       if (element.children && element.children.length > 0) {
         children = childrenHierarchy(element.children, 1);
       }
