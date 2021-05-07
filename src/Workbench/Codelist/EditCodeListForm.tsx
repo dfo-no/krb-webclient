@@ -23,6 +23,8 @@ import { IVariant } from '../../models/IVariant';
 import { ISelectable } from '../../models/ISelectable';
 import { ICodelistAlternative } from '../../models/ICodelistAlternative';
 import InputRow from '../../Form/InputRow';
+import AlertModal from '../../common/AlertModal';
+import ErrorSummary from '../../Form/ErrorSummary';
 
 type FormValues = {
   title: string;
@@ -41,6 +43,7 @@ const codeListSchema = Joi.object().keys({
 function EditCodeListForm({ toggleShow, codelistId }: IProps): ReactElement {
   const dispatch = useDispatch();
   const [validated] = useState(false);
+  const [modalShow, setModalShow] = useState(false);
 
   const { id } = useSelector((state: RootState) => state.selectedProject);
   const { list } = useSelector((state: RootState) => state.project);
@@ -57,7 +60,7 @@ function EditCodeListForm({ toggleShow, codelistId }: IProps): ReactElement {
     handleSubmit,
     reset,
     formState: { errors }
-  } = useForm({
+  } = useForm<FormValues>({
     resolver: joiResolver(codeListSchema),
     defaultValues: {
       title: codelist.title,
@@ -101,9 +104,7 @@ function EditCodeListForm({ toggleShow, codelistId }: IProps): ReactElement {
 
   const removeCodelist = () => {
     if (checkCodelistConnection()) {
-      window.confirm(
-        'The codelist is associated to one or more requirement variant, please remove the connection to be able to delete'
-      );
+      setModalShow(true);
     } else {
       dispatch(deleteCodelist({ projectId: id, codelistId }));
       dispatch(putProjectThunk(id));
@@ -149,7 +150,14 @@ function EditCodeListForm({ toggleShow, codelistId }: IProps): ReactElement {
             >
               Delete <BsTrashFill />
             </Button>
+            <AlertModal
+              modalShow={modalShow}
+              setModalShow={setModalShow}
+              title="Attention"
+              text="The codelist is associated to one or more requirement variant, please remove the connection to be able to delete"
+            />
           </Row>
+          <ErrorSummary errors={errors} />
         </Form>
       </Card.Body>
     </Card>
