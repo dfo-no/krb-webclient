@@ -22,6 +22,7 @@ import { Requirement } from '../../models/Requirement';
 import { IVariant } from '../../models/IVariant';
 import { ISelectable } from '../../models/ISelectable';
 import { ICodelistAlternative } from '../../models/ICodelistAlternative';
+import AlertModal from '../../common/AlertModal';
 
 type FormValues = {
   title: string;
@@ -40,6 +41,7 @@ const codeListSchema = Joi.object().keys({
 function EditCodeListForm({ toggleShow, codelistId }: IProps): ReactElement {
   const dispatch = useDispatch();
   const [validated] = useState(false);
+  const [modalShow, setModalShow] = useState(false);
 
   const { register, handleSubmit, reset, errors } = useForm({
     resolver: joiResolver(codeListSchema)
@@ -90,9 +92,7 @@ function EditCodeListForm({ toggleShow, codelistId }: IProps): ReactElement {
 
   const removeCodelist = () => {
     if (checkCodelistConnection()) {
-      window.confirm(
-        'The codelist is associated to one or more requirement variant, please remove the connection to be able to delete'
-      );
+      setModalShow(true);
     } else {
       dispatch(deleteCodelist({ projectId: id, codelistId }));
       dispatch(putProjectThunk(id));
@@ -161,6 +161,12 @@ function EditCodeListForm({ toggleShow, codelistId }: IProps): ReactElement {
             >
               Delete <BsTrashFill />
             </Button>
+            <AlertModal
+              modalShow={modalShow}
+              setModalShow={setModalShow}
+              title="Attention"
+              text="The codelist is associated to one or more requirement variant, please remove the connection to be able to delete"
+            />
           </Row>
         </Form>
       </Card.Body>

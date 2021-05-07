@@ -19,6 +19,7 @@ import { AccordionContext } from '../../NestableHierarchy/AccordionContext';
 import { RootState } from '../../store/store';
 import Utils from '../../common/Utils';
 import { Bank } from '../../models/Bank';
+import AlertModal from '../../common/AlertModal';
 
 type FormValues = {
   id: string;
@@ -41,6 +42,7 @@ function EditNeedForm({ element }: IProps): ReactElement {
   const dispatch = useDispatch();
   const { onOpenClose } = useContext(AccordionContext);
   const [validated] = useState(false);
+  const [modalShow, setModalShow] = useState(false);
   const { register, handleSubmit, errors } = useForm({
     defaultValues: {
       id: element.id,
@@ -76,9 +78,7 @@ function EditNeedForm({ element }: IProps): ReactElement {
       element.requirements.length > 0 ||
       Utils.checkIfParent(project.needs, element.id)
     ) {
-      window.confirm(
-        'This product has one or more connected requirements or has subneeds, please remove them to be able to delete'
-      );
+      setModalShow(true);
     } else {
       dispatch(deleteNeed({ projectId: id, needId: element.id }));
       dispatch(putProjectThunk(id));
@@ -134,6 +134,12 @@ function EditNeedForm({ element }: IProps): ReactElement {
       <Button className="mt-2  ml-3" variant="warning" onClick={removeNeed}>
         Delete <BsTrashFill />
       </Button>
+      <AlertModal
+        modalShow={modalShow}
+        setModalShow={setModalShow}
+        title="Attention"
+        text="This product has one or more connected requirements or has subneeds, please remove them to be able to delete"
+      />
     </Form>
   );
 }
