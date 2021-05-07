@@ -9,6 +9,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import Joi from 'joi';
 import { BsTrashFill } from 'react-icons/bs';
 
+import { useHistory } from 'react-router-dom';
 import {
   deleteCodelist,
   editCodelist,
@@ -43,6 +44,7 @@ function EditCodeListForm({ toggleShow, codelistId }: IProps): ReactElement {
 
   const { id } = useSelector((state: RootState) => state.selectedProject);
   const { list } = useSelector((state: RootState) => state.project);
+  const history = useHistory();
 
   const project = Utils.ensure(list.find((bank) => bank.id === id));
 
@@ -105,6 +107,7 @@ function EditCodeListForm({ toggleShow, codelistId }: IProps): ReactElement {
     } else {
       dispatch(deleteCodelist({ projectId: id, codelistId }));
       dispatch(putProjectThunk(id));
+      history.push(`/workbench/${project.id}/codelist`);
     }
   };
 
