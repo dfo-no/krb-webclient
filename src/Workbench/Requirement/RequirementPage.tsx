@@ -60,8 +60,10 @@ export default function RequirementPage(): ReactElement {
         await dispatch(getProjectsThunk());
       }, 10);
     }
-    fetchEverything();
-  }, [dispatch]);
+    if (!list) {
+      fetchEverything();
+    }
+  }, [dispatch, list]);
 
   if (list.length === 0 || !id) {
     return <p>Loading requirement Page...</p>;

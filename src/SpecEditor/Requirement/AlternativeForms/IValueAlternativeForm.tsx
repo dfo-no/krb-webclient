@@ -1,8 +1,6 @@
 import React, { ReactElement } from 'react';
 import Card from 'react-bootstrap/Card';
 import Form from 'react-bootstrap/Form';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
 import Joi from 'joi';
 import { joiResolver } from '@hookform/resolvers/joi';
 import { useForm } from 'react-hook-form';
@@ -15,6 +13,8 @@ import {
   editProductAnswer
 } from '../../../store/reducers/spesification-reducer';
 import { RootState } from '../../../store/store';
+import InputRow from '../../../Form/InputRow';
+import ErrorSummary from '../../../Form/ErrorSummary';
 
 const valueSchema = Joi.object().keys({
   id: Joi.string().required(),
@@ -30,6 +30,8 @@ interface IProps {
 }
 
 type FormValues = {
+  id: string;
+  type: string;
   max: number;
   min: number;
   step: number;
@@ -37,7 +39,12 @@ type FormValues = {
 };
 
 export default function ValueForm({ parentAnswer }: IProps): ReactElement {
-  const { register, handleSubmit, errors } = useForm({
+  const {
+    register,
+    control,
+    handleSubmit,
+    formState: { errors }
+  } = useForm<FormValues>({
     resolver: joiResolver(valueSchema),
     defaultValues: {
       ...(parentAnswer.alternative as IValueAlternative)
@@ -80,92 +87,48 @@ export default function ValueForm({ parentAnswer }: IProps): ReactElement {
           <Form.Control
             as="input"
             type="hidden"
-            name="id"
-            ref={register}
+            {...register('id')}
             isInvalid={!!errors.id}
           />
 
           <Form.Control
             as="input"
             type="hidden"
-            name="type"
-            ref={register}
+            {...register('type')}
             isInvalid={!!errors.type}
           />
-          <Form.Group as={Row}>
-            <Form.Label column sm="2">
-              Minimum
-            </Form.Label>
-            <Col sm="4">
-              <Form.Control
-                type="number"
-                name="min"
-                ref={register}
-                isInvalid={!!errors.min}
-              />
-              {errors.min && (
-                <Form.Control.Feedback type="invalid">
-                  {errors.min.message}
-                </Form.Control.Feedback>
-              )}
-            </Col>
-          </Form.Group>
-          <Form.Group as={Row}>
-            <Form.Label column sm="2">
-              Maximum
-            </Form.Label>
-            <Col sm="4">
-              <Form.Control
-                type="number"
-                name="max"
-                ref={register}
-                isInvalid={!!errors.max}
-              />
-              {errors.max && (
-                <Form.Control.Feedback type="invalid">
-                  {errors.max.message}
-                </Form.Control.Feedback>
-              )}
-            </Col>
-          </Form.Group>
-          <Form.Group as={Row}>
-            <Form.Label column sm="2">
-              Step
-            </Form.Label>
-            <Col sm={4}>
-              <Form.Control
-                type="number"
-                name="step"
-                ref={register}
-                isInvalid={!!errors.step}
-              />
-              {errors.step && (
-                <Form.Control.Feedback type="invalid">
-                  {errors.step.message}
-                </Form.Control.Feedback>
-              )}
-            </Col>
-          </Form.Group>
-          <Form.Group as={Row}>
-            <Form.Label column sm="2">
-              Unit
-            </Form.Label>
-            <Col sm="4">
-              <Form.Control
-                type="input"
-                name="unit"
-                ref={register}
-                // defaultValue={item.unit}
-                isInvalid={!!errors.unit}
-              />
-              {errors.unit && (
-                <Form.Control.Feedback type="invalid">
-                  {errors.unit.message}
-                </Form.Control.Feedback>
-              )}
-            </Col>
-          </Form.Group>
+          <InputRow
+            control={control}
+            errors={errors}
+            name="min"
+            label="Minimum"
+            type="number"
+          />
+
+          <InputRow
+            control={control}
+            errors={errors}
+            name="max"
+            label="Maximum"
+            type="number"
+          />
+
+          <InputRow
+            control={control}
+            errors={errors}
+            name="step"
+            label="Step"
+            type="number"
+          />
+          <InputRow
+            control={control}
+            errors={errors}
+            name="unit"
+            label="Unit"
+            type="number"
+          />
           <Button type="submit"> Save</Button>
+          <ErrorSummary errors={errors} />
         </Form>
       </Card.Body>
     </Card>

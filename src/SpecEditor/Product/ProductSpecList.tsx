@@ -1,4 +1,4 @@
-import React, { ReactElement, useState } from 'react';
+import React, { ReactElement } from 'react';
 import { Button, ListGroup } from 'react-bootstrap';
 import Col from 'react-bootstrap/Col';
 import Container from 'react-bootstrap/Container';
@@ -19,6 +19,7 @@ import { RootState } from '../../store/store';
 import styles from './ProductSpecEditor.module.scss';
 import MODELTYPE from '../../models/ModelType';
 import { selectSpecProduct } from '../../store/reducers/selectedSpecProduct-reducer';
+import ErrorSummary from '../../Form/ErrorSummary';
 
 type FormInput = {
   product: string;
@@ -33,7 +34,11 @@ export default function ProductSpecList(): ReactElement {
   const { id } = useSelector((state: RootState) => state.selectedBank);
   const { list } = useSelector((state: RootState) => state.bank);
   const { spec } = useSelector((state: RootState) => state.specification);
-  const { register, handleSubmit } = useForm();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors }
+  } = useForm();
   const dispatch = useDispatch();
 
   if (projectMatch?.params.bankId && !id) {
@@ -139,7 +144,7 @@ export default function ProductSpecList(): ReactElement {
         </Row>
         <Row className="ml-2 mt-4">
           <Col>
-            <Form.Control as="select" name="product" ref={register}>
+            <Form.Control as="select" {...register('product')}>
               {productHierarchy(bankSelected.products)}
             </Form.Control>
           </Col>
@@ -151,6 +156,7 @@ export default function ProductSpecList(): ReactElement {
           <h4>Products</h4>
         </Row>
         <Row className=" ml-4">{productList(spec.products)}</Row>
+        <ErrorSummary errors={errors} />
       </Form>
     </Container>
   );

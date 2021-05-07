@@ -20,6 +20,7 @@ import {
 import { RootState } from '../../store/store';
 import { SpecificationProduct } from '../../models/SpecificationProduct';
 import { selectAlternative } from '../../store/reducers/selectedAlternative-reducer';
+import ErrorSummary from '../../Form/ErrorSummary';
 
 interface IProps {
   requirement: Requirement;
@@ -42,7 +43,11 @@ export default function ProductRequirementAnswer({
   productId
 }: IProps): ReactElement {
   const dispatch = useDispatch();
-  const { register, handleSubmit, errors } = useForm({
+  const {
+    register,
+    handleSubmit,
+    formState: { errors }
+  } = useForm({
     resolver: joiResolver(alternativeSchema)
   });
   const { spec } = useSelector((state: RootState) => state.specification);
@@ -158,8 +163,7 @@ export default function ProductRequirementAnswer({
         {requirement.layouts.length > 1 && (
           <Form.Control
             as="select"
-            name="layout"
-            ref={register}
+            {...register('layout')}
             onChange={handleChange}
             defaultValue={findDefaultRequirementText()}
           >
@@ -187,8 +191,7 @@ export default function ProductRequirementAnswer({
           <Row>
             <Form.Control
               as="select"
-              name="alternative"
-              ref={register}
+              {...register('alternative')}
               defaultValue={findDefaultAnswerOption()[0]}
             >
               {answers}
@@ -198,8 +201,7 @@ export default function ProductRequirementAnswer({
             <Form.Label>Weight:</Form.Label>
             <Form.Control
               type="number"
-              name="weight"
-              ref={register}
+              {...register('weight')}
               defaultValue={findDefaultAnswerOption()[1]}
               isInvalid={!!errors.weight}
             />
@@ -223,6 +225,7 @@ export default function ProductRequirementAnswer({
             )}
           </Row>
         </Col>
+        <ErrorSummary errors={errors} />
       </Form>
     );
   };

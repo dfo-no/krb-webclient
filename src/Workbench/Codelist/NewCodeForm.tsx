@@ -1,7 +1,6 @@
 import React, { ReactElement, useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
-import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 import { useForm } from 'react-hook-form';
@@ -17,6 +16,8 @@ import {
 import { RootState } from '../../store/store';
 import { Code } from '../../models/Code';
 import MODELTYPE from '../../models/ModelType';
+import InputRow from '../../Form/InputRow';
+import ErrorSummary from '../../Form/ErrorSummary';
 
 type FormValues = {
   title: string;
@@ -41,7 +42,12 @@ function NewCodeForm({
   const dispatch = useDispatch();
   const [validated] = useState(false);
 
-  const { register, handleSubmit, reset, errors } = useForm({
+  const {
+    control,
+    handleSubmit,
+    reset,
+    formState: { errors }
+  } = useForm({
     resolver: joiResolver(codeSchema)
   });
 
@@ -76,40 +82,18 @@ function NewCodeForm({
           noValidate
           validated={validated}
         >
-          <Form.Group as={Row}>
-            <Form.Label column sm="2">
-              Title
-            </Form.Label>
-            <Col sm={10}>
-              <Form.Control
-                name="title"
-                ref={register}
-                isInvalid={!!errors.title}
-              />
-              {errors.title && (
-                <Form.Control.Feedback type="invalid">
-                  {errors.title?.message}
-                </Form.Control.Feedback>
-              )}
-            </Col>
-          </Form.Group>
-          <Form.Group as={Row}>
-            <Form.Label column sm="2">
-              Description
-            </Form.Label>
-            <Col sm={10}>
-              <Form.Control
-                name="description"
-                ref={register}
-                isInvalid={!!errors.description}
-              />
-              {errors.description && (
-                <Form.Control.Feedback type="invalid">
-                  {errors.description.message}
-                </Form.Control.Feedback>
-              )}
-            </Col>
-          </Form.Group>
+          <InputRow
+            control={control}
+            name="title"
+            errors={errors}
+            label="Title"
+          />
+          <InputRow
+            control={control}
+            name="description"
+            errors={errors}
+            label="Description"
+          />
           <Row>
             <Button className="mt-2  ml-3" type="submit">
               Save
@@ -121,6 +105,7 @@ function NewCodeForm({
               Cancel
             </Button>
           </Row>
+          <ErrorSummary errors={errors} />
         </Form>
       </Card.Body>
     </Card>

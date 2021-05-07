@@ -1,8 +1,6 @@
 import React, { ReactElement, useContext, useState } from 'react';
 import Button from 'react-bootstrap/Button';
-import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
-import Row from 'react-bootstrap/Row';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import { joiResolver } from '@hookform/resolvers/joi';
@@ -19,6 +17,8 @@ import { AccordionContext } from '../../NestableHierarchy/AccordionContext';
 import { RootState } from '../../store/store';
 import Utils from '../../common/Utils';
 import { Bank } from '../../models/Bank';
+import InputRow from '../../Form/InputRow';
+import ErrorSummary from '../../Form/ErrorSummary';
 import AlertModal from '../../common/AlertModal';
 
 type FormValues = {
@@ -42,8 +42,13 @@ function EditNeedForm({ element }: IProps): ReactElement {
   const dispatch = useDispatch();
   const { onOpenClose } = useContext(AccordionContext);
   const [validated] = useState(false);
-  const [modalShow, setModalShow] = useState(false);
-  const { register, handleSubmit, errors } = useForm({
+
+  const {
+    register,
+    handleSubmit,
+    control,
+    formState: { errors }
+  } = useForm<FormValues>({
     defaultValues: {
       id: element.id,
       title: element.title,
@@ -52,6 +57,7 @@ function EditNeedForm({ element }: IProps): ReactElement {
     resolver: joiResolver(needSchema)
   });
 
+  const [modalShow, setModalShow] = useState(false);
   if (!id) {
     return <p>No project selected</p>;
   }
@@ -93,47 +99,23 @@ function EditNeedForm({ element }: IProps): ReactElement {
       noValidate
       validated={validated}
     >
-      <Form.Group as={Row}>
-        <Form.Label column sm="2">
-          Title
-        </Form.Label>
-        <Col sm={10}>
-          <Form.Control
-            name="title"
-            ref={register}
-            isInvalid={!!errors.title}
-          />
-          {errors.title && (
-            <Form.Control.Feedback type="invalid">
-              {errors.title.message}
-            </Form.Control.Feedback>
-          )}
-        </Col>
-      </Form.Group>
-      <Form.Group as={Row}>
-        <Form.Label column sm="2">
-          Description
-        </Form.Label>
-        <Col sm={10}>
-          <Form.Control
-            name="description"
-            ref={register}
-            isInvalid={!!errors.description}
-          />
-          {errors.description && (
-            <Form.Control.Feedback type="invalid">
-              {errors.description.message}
-            </Form.Control.Feedback>
-          )}
-        </Col>
-      </Form.Group>
-      <Form.Control type="hidden" name="id" ref={register} />
+      <InputRow control={control} name="title" errors={errors} label="Title" />
+
+      <InputRow
+        control={control}
+        name="description"
+        errors={errors}
+        label="Description"
+      />
+
+      <Form.Control type="hidden" {...register('id')} />
       <Button className="mt-2" type="submit">
         Save
       </Button>
       <Button className="mt-2  ml-3" variant="warning" onClick={removeNeed}>
         Delete <BsTrashFill />
       </Button>
+      <ErrorSummary errors={errors} />
       <AlertModal
         modalShow={modalShow}
         setModalShow={setModalShow}

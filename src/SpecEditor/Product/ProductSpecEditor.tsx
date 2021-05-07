@@ -1,6 +1,7 @@
+import React, { ReactElement } from 'react';
 import { joiResolver } from '@hookform/resolvers/joi';
 import Joi from 'joi';
-import React, { ReactElement } from 'react';
+
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import Col from 'react-bootstrap/Col';
@@ -10,10 +11,12 @@ import Row from 'react-bootstrap/Row';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import Utils from '../../common/Utils';
+import InputRow from '../../Form/InputRow';
 import { SpecificationProduct } from '../../models/SpecificationProduct';
 import { editSpecProduct } from '../../store/reducers/spesification-reducer';
 import { RootState } from '../../store/store';
 import ProductRequirementSelectorList from './ProductRequirementSelectorList';
+import ErrorSummary from '../../Form/ErrorSummary';
 
 type FormInput = {
   title: string;
@@ -34,19 +37,7 @@ export default function ProductSpecEditor(): ReactElement {
   const { productId } = useSelector(
     (state: RootState) => state.selectedSpecProduct
   );
-  const { register, handleSubmit, errors } = useForm({
-    resolver: joiResolver(productSchema)
-  });
   const dispatch = useDispatch();
-
-  if (!id) {
-    return <p>No selected bank</p>;
-  }
-
-  if (!productId) {
-    return <p>No selected product</p>;
-  }
-
   const specProduct = Utils.ensure(
     spec.products.find(
       (product: SpecificationProduct) => product.id === productId
@@ -63,6 +54,28 @@ export default function ProductSpecEditor(): ReactElement {
     dispatch(editSpecProduct({ product: newProduct }));
   };
 
+  const {
+    control,
+    handleSubmit,
+    formState: { errors }
+  } = useForm<FormInput>({
+    resolver: joiResolver(productSchema),
+    defaultValues: {
+      amount: specProduct.amount,
+      title: specProduct.title,
+      description: specProduct.description
+    }
+  });
+
+  /* TODO: wont' work due to defaultValues and form hook above */
+  /* if (!id) {
+    return <p>No selected bank</p>;
+  }
+
+  if (!productId) {
+    return <p>No selected product</p>;
+  } */
+
   return (
     <Container fluid>
       <Row className="m-4">
@@ -74,64 +87,29 @@ export default function ProductSpecEditor(): ReactElement {
             onSubmit={handleSubmit(addProductToSpecification)}
             autoComplete="off"
           >
-            <Form.Group as={Row}>
-              <Form.Label column sm="2">
-                Amount
-              </Form.Label>
-              <Col sm={10}>
-                <Form.Control
-                  name="amount"
-                  type="number"
-                  defaultValue={specProduct.amount}
-                  ref={register}
-                  isInvalid={!!errors.amount}
-                />
-                {errors.amount && (
-                  <Form.Control.Feedback type="invalid">
-                    {errors.amount?.message}
-                  </Form.Control.Feedback>
-                )}
-              </Col>
-            </Form.Group>
-            <Form.Group as={Row}>
-              <Form.Label column sm="2">
-                Title
-              </Form.Label>
-              <Col sm={10}>
-                <Form.Control
-                  name="title"
-                  defaultValue={specProduct.title}
-                  ref={register}
-                  isInvalid={!!errors.title}
-                />
-                {errors.title && (
-                  <Form.Control.Feedback type="invalid">
-                    {errors.title?.message}
-                  </Form.Control.Feedback>
-                )}
-              </Col>
-            </Form.Group>
-            <Form.Group as={Row}>
-              <Form.Label column sm="2">
-                Description
-              </Form.Label>
-              <Col sm={10}>
-                <Form.Control
-                  name="description"
-                  defaultValue={specProduct.description}
-                  ref={register}
-                  isInvalid={!!errors.description}
-                />
-                {errors.description && (
-                  <Form.Control.Feedback type="invalid">
-                    {errors.description?.message}
-                  </Form.Control.Feedback>
-                )}
-              </Col>
-            </Form.Group>
+            <InputRow
+              control={control}
+              errors={errors}
+              name="amount"
+              type="number"
+              label="Amount"
+            />
+            <InputRow
+              control={control}
+              errors={errors}
+              name="title"
+              label="Title"
+            />
+            <InputRow
+              control={control}
+              errors={errors}
+              name="description"
+              label="Description"
+            />
             <Col className="p-0 d-flex justify-content-end">
               <Button type="submit">Save</Button>
             </Col>
+            <ErrorSummary errors={errors} />
           </Form>
         </Card.Body>
       </Card>

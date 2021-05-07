@@ -1,5 +1,10 @@
 import React, { ReactElement, useState, useRef } from 'react';
-import { useFieldArray } from 'react-hook-form';
+import {
+  Control,
+  FormState,
+  useFieldArray,
+  UseFormRegister
+} from 'react-hook-form';
 import Form from 'react-bootstrap/Form';
 import ListGroup from 'react-bootstrap/ListGroup';
 import Button from 'react-bootstrap/Button';
@@ -9,47 +14,56 @@ import { v4 as uuidv4 } from 'uuid';
 import format from 'date-fns/format';
 import formatISO from 'date-fns/formatISO';
 
-import { InputProps } from '../../models/InputProps';
 import { Publication } from '../../models/Publication';
 import MODELTYPE from '../../models/ModelType';
 import SuccessAlert from '../SuccessAlert';
 import css from './PublicationList.module.scss';
 import * as Constants from '../../common/Constants';
+import { ProjectPublicationForm } from './ProjectPublicationForm';
 
-export default function PublicationList({
+type IProps = {
+  register: UseFormRegister<ProjectPublicationForm>;
+  control: Control<ProjectPublicationForm>;
+  formState: FormState<ProjectPublicationForm>;
+  projectId: string;
+  removePublication: (publicationId: string) => Promise<void>;
+};
+
+export default function PublicationsFieldArray({
   control,
   register,
-  errors,
-  defaultValues
-}: InputProps): ReactElement {
-  const { fields, prepend, remove } = useFieldArray({
-    keyName: 'guid' /* <- important not to be id! */,
-    control,
-    name: 'publications'
+  formState,
+  projectId,
+  removePublication
+}: IProps): ReactElement {
+  const { errors } = formState;
+
+  const { fields, remove, prepend } = useFieldArray({
+    name: 'publications',
+    keyName: 'guid',
+    control
   });
 
   const [showAlert, setShowAlert] = useState(false);
   const publishButtonRef = useRef(null);
 
-  const getNextVersion = (fieldList: any) => {
-    const maxVal = Math.max(...fieldList.map((p: Publication) => p.version));
-
-    // no publications exists
-    if (maxVal === -Infinity) {
-      return defaultValues.version + 1;
+  const getNextVersion = (publications: Publication[]) => {
+    if (publications.length === 0) {
+      return 1;
     }
-    return maxVal + 1;
+    return Math.max(...publications.map((p) => p.version)) + 1;
   };
 
   const addPublication = () => {
     if (!publishButtonRef.current) {
       const convertedDate = formatISO(new Date());
+      const nextVersion = getNextVersion(fields);
       prepend({
         id: uuidv4(),
         comment: '',
         date: convertedDate,
-        version: getNextVersion(fields),
-        bankId: defaultValues.id,
+        version: nextVersion,
+        bankId: projectId,
         type: MODELTYPE.publication
       });
     }
@@ -63,7 +77,7 @@ export default function PublicationList({
       )}
 
       <ListGroup className="mt-4">
-        {fields.map((field, index: number) => {
+        {fields.map((field, index) => {
           const formattedDate = format(
             new Date(field.date),
             Constants.DATE_FORMAT_SHORT
@@ -71,7 +85,7 @@ export default function PublicationList({
           return (
             <ListGroup.Item
               as="div"
-              key={field.id}
+              key={field.guid}
               className={css.listGroup__item}
             >
               <Nav.Link href={`/bank/${field.bankId}`}>
@@ -80,69 +94,45 @@ export default function PublicationList({
               <Form.Control
                 readOnly
                 as="input"
-                name={`publications[${index}].id`}
                 type="hidden"
-                ref={register()}
+                {...register(`publications.${index}.id` as const)}
                 defaultValue={field.id}
-                isInvalid={
-                  !!(
-                    errors.publications &&
-                    errors.publications[index] &&
-                    errors.publications[index].id
-                  )
-                }
               />
               <Form.Control
                 readOnly
                 as="input"
-                name={`publications[${index}].bankId`}
                 type="hidden"
-                ref={register()}
-                defaultValue={field.bankId ? field.bankId : defaultValues.id}
-                isInvalid={
-                  !!(
-                    errors.publications &&
-                    errors.publications[index] &&
-                    errors.publications[index].bankId
-                  )
-                }
+                {...register(`publications.${index}.bankId` as const)}
+                defaultValue={field.bankId}
               />
               <Form.Control
                 readOnly
                 as="input"
-                name={`publications[${index}].type`}
                 type="hidden"
-                ref={register()}
+                {...register(`publications.${index}.type` as const)}
                 defaultValue={field.type}
-                isInvalid={
-                  !!(
-                    errors.publications &&
-                    errors.publications[index] &&
-                    errors.publications[index].type
-                  )
-                }
               />
               {field.comment === '' ? (
                 <>
                   <Form.Control
                     as="input"
-                    name={`publications[${index}].comment`}
                     type="text"
-                    ref={register()}
-                    defaultValue="Summarize the changes ..."
+                    {...register(`publications.${index}.comment` as const)}
+                    placeholder="Summarize the changes ..."
+                    defaultValue=""
                     isInvalid={
                       !!(
                         errors.publications &&
                         errors.publications[index] &&
-                        errors.publications[index].comment
+                        errors.publications[index]?.comment
                       )
                     }
                   />
                   {errors.publications &&
                     errors.publications[index] &&
-                    errors.publications[index].comment && (
+                    errors.publications[index]?.comment && (
                       <Form.Control.Feedback type="invalid">
-                        {errors.publications[index].comment.message}
+                        {errors.publications[index]?.comment?.message}
                       </Form.Control.Feedback>
                     )}
                   <Button
@@ -157,52 +147,35 @@ export default function PublicationList({
                 <Form.Control
                   readOnly
                   as="input"
-                  name={`publications[${index}].comment`}
                   type="hidden"
-                  ref={register()}
+                  {...register(`publications.${index}.comment` as const)}
                   defaultValue={field.comment}
-                  isInvalid={
-                    !!(
-                      errors.publications &&
-                      errors.publications[index] &&
-                      errors.publications[index].comment
-                    )
-                  }
                 />
               )}
               <div className={css.listGroup__spacer} />
-              <Button variant="danger" onClick={() => remove(index)}>
+              <Button
+                variant="danger"
+                type="button"
+                onClick={() => {
+                  remove(index);
+                  removePublication(field.id);
+                }}
+              >
                 <BsTrashFill />
               </Button>
               <Form.Control
                 readOnly
                 as="input"
-                name={`publications[${index}].date`}
                 type="hidden"
-                ref={register()}
+                {...register(`publications.${index}.date` as const)}
                 defaultValue={field.date}
-                isInvalid={
-                  !!(
-                    errors.publications &&
-                    errors.publications[index] &&
-                    errors.publications[index].date
-                  )
-                }
               />
               <Form.Control
                 readOnly
                 as="input"
-                name={`publications[${index}].version`}
                 type="hidden"
-                ref={register()}
+                {...register(`publications.${index}.version` as const)}
                 defaultValue={field.version}
-                isInvalid={
-                  !!(
-                    errors.publications &&
-                    errors.publications[index] &&
-                    errors.publications[index].version
-                  )
-                }
               />
             </ListGroup.Item>
           );

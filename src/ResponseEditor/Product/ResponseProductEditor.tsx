@@ -18,6 +18,7 @@ import ModelType from '../../models/ModelType';
 import { addProduct, editProduct } from '../../store/reducers/response-reducer';
 import ProductRequirementView from './ProductRequirementView';
 import { Bank } from '../../models/Bank';
+import ErrorSummary from '../../Form/ErrorSummary';
 
 interface IResponseProductForm {
   title: string;
@@ -38,7 +39,11 @@ export default function ResponseProductEditor(): ReactElement {
   const { productId } = useSelector(
     (state: RootState) => state.selectedResponseProduct
   );
-  const { register, handleSubmit, errors } = useForm({
+  const {
+    register,
+    handleSubmit,
+    formState: { errors }
+  } = useForm({
     resolver: joiResolver(productSchema)
   });
   const dispatch = useDispatch();
@@ -115,8 +120,7 @@ export default function ResponseProductEditor(): ReactElement {
               <Col sm={10}>
                 <Form.Control
                   type="number"
-                  name="price"
-                  ref={register}
+                  {...register('price')}
                   defaultValue={product.price}
                   isInvalid={!!errors.price}
                 />
@@ -133,8 +137,7 @@ export default function ResponseProductEditor(): ReactElement {
               </Form.Label>
               <Col sm={10}>
                 <Form.Control
-                  name="title"
-                  ref={register}
+                  {...register('title')}
                   defaultValue={product.title}
                   isInvalid={!!errors.title}
                 />
@@ -151,8 +154,7 @@ export default function ResponseProductEditor(): ReactElement {
               </Form.Label>
               <Col sm={10}>
                 <Form.Control
-                  name="description"
-                  ref={register}
+                  {...register('description')}
                   defaultValue={product.description}
                   isInvalid={!!errors.description}
                 />
@@ -166,6 +168,7 @@ export default function ResponseProductEditor(): ReactElement {
             <Col className="p-0 d-flex justify-content-end">
               <Button type="submit">Save</Button>
             </Col>
+            <ErrorSummary errors={errors} />
           </Form>
         </Card.Body>
       </Card>

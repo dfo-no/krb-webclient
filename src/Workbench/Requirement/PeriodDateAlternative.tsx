@@ -5,22 +5,28 @@ import Row from 'react-bootstrap/Row';
 import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
 import { BsTrashFill } from 'react-icons/bs';
-import { InputProps } from '../../models/InputProps';
+import { Control, FormState, UseFormRegister } from 'react-hook-form';
+import { get, has } from 'lodash';
+import { Requirement } from '../../models/Requirement';
 import { IPeriodDateAlternative } from '../../models/IPeriodDateAlternative';
 
-interface IProps extends InputProps {
-  item: any;
-  vIx: number;
-  aIx: number;
-}
+type IProps = {
+  control: Control<Requirement>;
+  register: UseFormRegister<Requirement>;
+  formState: FormState<Requirement>;
+  item: IPeriodDateAlternative;
+  vIndex: number;
+  aIndex: number;
+  remove: (i: number) => void;
+};
 
 export default function PeriodDateAlternative({
   remove,
   register,
-  errors,
+  formState: { errors },
   item,
-  vIx,
-  aIx
+  vIndex,
+  aIndex
 }: IProps): ReactElement {
   return (
     <Card className="mb-3">
@@ -31,7 +37,7 @@ export default function PeriodDateAlternative({
             className="mb-3"
             type="button"
             variant="danger"
-            onClick={() => remove(aIx)}
+            onClick={() => remove(aIndex)}
           >
             <BsTrashFill />
           </Button>
@@ -39,34 +45,16 @@ export default function PeriodDateAlternative({
         <Form.Control
           as="input"
           type="hidden"
-          name={`layouts[${vIx}].alternatives[${aIx}].id`}
-          ref={register}
+          {...register(`layouts.${vIndex}.alternatives.${aIndex}.id` as const)}
           defaultValue={item.id}
-          isInvalid={
-            !!(
-              errors.layouts &&
-              errors.layouts[vIx] &&
-              errors.layouts[vIx].alternatives &&
-              errors.layouts[vIx].alternatives[aIx] &&
-              errors.layouts[vIx].alternatives[aIx].id
-            )
-          }
         />
         <Form.Control
           as="input"
           type="hidden"
-          name={`layouts[${vIx}].alternatives[${aIx}].type`}
-          ref={register}
+          {...register(
+            `layouts.${vIndex}.alternatives.${aIndex}.type` as const
+          )}
           defaultValue={item.type}
-          isInvalid={
-            !!(
-              errors.layouts &&
-              errors.layouts[vIx] &&
-              errors.layouts[vIx].alternatives &&
-              errors.layouts[vIx].alternatives[aIx] &&
-              errors.layouts[vIx].alternatives[aIx].type
-            )
-          }
         />
         <Form.Group as={Row}>
           <Form.Label column sm="2">
@@ -75,28 +63,24 @@ export default function PeriodDateAlternative({
           <Col sm="4">
             <Form.Control
               type="input"
-              name={`layouts[${vIx}].alternatives[${aIx}].minDays`}
-              ref={register}
+              {...register(
+                `layouts.${vIndex}.alternatives.${aIndex}.minDays` as const
+              )}
               defaultValue={item.minDays}
               isInvalid={
-                !!(
-                  errors.layouts &&
-                  errors.layouts[vIx] &&
-                  errors.layouts[vIx].alternatives &&
-                  errors.layouts[vIx].alternatives[aIx] &&
-                  errors.layouts[vIx].alternatives[aIx].minDays
+                !!has(
+                  errors,
+                  `layouts[${vIndex}].alternatives[${aIndex}].minDays` as const
                 )
               }
             />
-            {errors.layouts &&
-              errors.layouts[vIx] &&
-              errors.layouts[vIx].alternatives &&
-              errors.layouts[vIx].alternatives[aIx] &&
-              errors.layouts[vIx].alternatives[aIx].minDays && (
-                <Form.Control.Feedback type="invalid">
-                  {errors.layouts[vIx].alternatives[aIx].minDays.message}
-                </Form.Control.Feedback>
+
+            <Form.Control.Feedback type="invalid">
+              {get(
+                errors,
+                `layouts[${vIndex}].alternatives.[${aIndex}].minDays.message`
               )}
+            </Form.Control.Feedback>
           </Col>
         </Form.Group>
         <Form.Group as={Row}>
@@ -106,28 +90,24 @@ export default function PeriodDateAlternative({
           <Col sm="4">
             <Form.Control
               type="number"
-              name={`layouts[${vIx}].alternatives[${aIx}].maxDays`}
-              ref={register}
+              {...register(
+                `layouts.${vIndex}.alternatives.${aIndex}.maxDays` as const
+              )}
               defaultValue={item.maxDays}
               isInvalid={
-                !!(
-                  errors.layouts &&
-                  errors.layouts[vIx] &&
-                  errors.layouts[vIx].alternatives &&
-                  errors.layouts[vIx].alternatives[aIx] &&
-                  errors.layouts[vIx].alternatives[aIx].maxDays
+                !!has(
+                  errors,
+                  `layouts[${vIndex}].alternatives[${aIndex}].maxDays` as const
                 )
               }
             />
-            {errors.layouts &&
-              errors.layouts[vIx] &&
-              errors.layouts[vIx].alternatives &&
-              errors.layouts[vIx].alternatives[aIx] &&
-              errors.layouts[vIx].alternatives[aIx].maxDays && (
-                <Form.Control.Feedback type="invalid">
-                  {errors.layouts[vIx].alternatives[aIx].maxDays.message}
-                </Form.Control.Feedback>
+
+            <Form.Control.Feedback type="invalid">
+              {get(
+                errors,
+                `layouts[${vIndex}].alternatives.[${aIndex}].maxDays.message`
               )}
+            </Form.Control.Feedback>
           </Col>
         </Form.Group>
         <Form.Group as={Row}>
@@ -137,28 +117,24 @@ export default function PeriodDateAlternative({
           <Col sm="4">
             <Form.Control
               type="input"
-              name={`layouts[${vIx}].alternatives[${aIx}].fromDate`}
-              ref={register}
+              {...register(
+                `layouts.${vIndex}.alternatives.${aIndex}.fromDate` as const
+              )}
               defaultValue={item.fromDate}
               isInvalid={
-                !!(
-                  errors.layouts &&
-                  errors.layouts[vIx] &&
-                  errors.layouts[vIx].alternatives &&
-                  errors.layouts[vIx].alternatives[aIx] &&
-                  errors.layouts[vIx].alternatives[aIx].fromDate
+                !!has(
+                  errors,
+                  `layouts[${vIndex}].alternatives[${aIndex}].fromDate` as const
                 )
               }
             />
-            {errors.layouts &&
-              errors.layouts[vIx] &&
-              errors.layouts[vIx].alternatives &&
-              errors.layouts[vIx].alternatives[aIx] &&
-              errors.layouts[vIx].alternatives[aIx].fromDate && (
-                <Form.Control.Feedback type="invalid">
-                  {errors.layouts[vIx].alternatives[aIx].fromDate.message}
-                </Form.Control.Feedback>
+
+            <Form.Control.Feedback type="invalid">
+              {get(
+                errors,
+                `layouts[${vIndex}].alternatives.[${aIndex}].fromDate.message`
               )}
+            </Form.Control.Feedback>
           </Col>
         </Form.Group>
         <Form.Group as={Row}>
@@ -168,28 +144,24 @@ export default function PeriodDateAlternative({
           <Col sm="4">
             <Form.Control
               type="input"
-              name={`layouts[${vIx}].alternatives[${aIx}].toDate`}
-              ref={register}
+              {...register(
+                `layouts.${vIndex}.alternatives.${aIndex}.toDate` as const
+              )}
               defaultValue={item.toDate}
               isInvalid={
-                !!(
-                  errors.layouts &&
-                  errors.layouts[vIx] &&
-                  errors.layouts[vIx].alternatives &&
-                  errors.layouts[vIx].alternatives[aIx] &&
-                  errors.layouts[vIx].alternatives[aIx].toDate
+                !!has(
+                  errors,
+                  `layouts[${vIndex}].alternatives[${aIndex}].toDate` as const
                 )
               }
             />
-            {errors.layouts &&
-              errors.layouts[vIx] &&
-              errors.layouts[vIx].alternatives &&
-              errors.layouts[vIx].alternatives[aIx] &&
-              errors.layouts[vIx].alternatives[aIx].toDate && (
-                <Form.Control.Feedback type="invalid">
-                  {errors.layouts[vIx].alternatives[aIx].toDate.message}
-                </Form.Control.Feedback>
+
+            <Form.Control.Feedback type="invalid">
+              {get(
+                errors,
+                `layouts[${vIndex}].alternatives.[${aIndex}].toDate.message`
               )}
+            </Form.Control.Feedback>
           </Col>
         </Form.Group>
       </Card.Body>

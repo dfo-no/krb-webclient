@@ -1,5 +1,4 @@
-/* eslint-disable jsx-a11y/label-has-associated-control */
-import React, { ReactElement, useState } from 'react';
+import React, { ReactElement } from 'react';
 
 import Container from 'react-bootstrap/Container';
 import Button from 'react-bootstrap/Button';
@@ -16,6 +15,7 @@ import { RootState } from '../../store/store';
 import { Bank } from '../../models/Bank';
 import Utils from '../../common/Utils';
 import { editTitle, setBank } from '../../store/reducers/spesification-reducer';
+import ErrorSummary from '../../Form/ErrorSummary';
 
 type FormInput = {
   title: string;
@@ -29,8 +29,15 @@ export default function SpecEditor(): ReactElement {
   const { id } = useSelector((state: RootState) => state.selectedBank);
   const { list } = useSelector((state: RootState) => state.bank);
   const { spec } = useSelector((state: RootState) => state.specification);
-  const { register, handleSubmit, errors } = useForm({
-    resolver: joiResolver(titleSchema)
+  const {
+    register,
+    handleSubmit,
+    formState: { errors }
+  } = useForm<FormInput>({
+    resolver: joiResolver(titleSchema),
+    defaultValues: {
+      title: spec.title
+    }
   });
   const dispatch = useDispatch();
 
@@ -52,11 +59,12 @@ export default function SpecEditor(): ReactElement {
         <Col>
           <Form onSubmit={handleSubmit(saveTitle)}>
             <Form.Group as={Row}>
-              <Form.Label>Title</Form.Label>
-              <Col sm={8}>
+              <Form.Label column sm={2}>
+                Title
+              </Form.Label>
+              <Col sm={6}>
                 <FormControl
-                  name="title"
-                  ref={register}
+                  {...register('title')}
                   defaultValue={spec.title}
                   isInvalid={!!errors.title}
                 />
@@ -66,10 +74,11 @@ export default function SpecEditor(): ReactElement {
                   </Form.Control.Feedback>
                 )}
               </Col>
-              <Col sm={2}>
+              <Col sm={4}>
                 <Button type="submit">Save</Button>
               </Col>
             </Form.Group>
+            <ErrorSummary errors={errors} />
           </Form>
         </Col>
       </Row>

@@ -1,5 +1,4 @@
 import React, { ReactElement, useEffect, useState } from 'react';
-import Alert from 'react-bootstrap/Alert';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
@@ -12,7 +11,6 @@ import { joiResolver } from '@hookform/resolvers/joi';
 import Joi from 'joi';
 
 import Utils from '../../common/Utils';
-import { IVariant } from '../../models/IVariant';
 import { RootState } from '../../store/store';
 import { selectRequirement } from '../../store/reducers/selectedRequirement-reducer';
 import { selectNeed } from '../../store/reducers/selectedNeed-reducer';
@@ -24,6 +22,9 @@ import {
 import VariantArray from './VariantArray';
 import { Requirement } from '../../models/Requirement';
 import { Need } from '../../models/Need';
+import { selectProject } from '../../store/reducers/selectedProject-reducer';
+import ErrorSummary from '../../Form/ErrorSummary';
+import MODELTYPE from '../../models/ModelType';
 
 const valueSchema = Joi.object().keys({
   id: Joi.string().required(),
@@ -34,23 +35,17 @@ const valueSchema = Joi.object().keys({
   unit: Joi.string().required()
 });
 
-const codeSchema = Joi.object().keys({
+/* const codeSchema = Joi.object().keys({
   id: Joi.string().required(),
   title: Joi.string().required(),
   description: Joi.string().required(),
   type: Joi.string().equal('code').required()
-});
+}); */
 
 const codelistSchema = Joi.object().keys({
   id: Joi.string().required(),
   type: Joi.string().equal('codelist').required(),
-  codelist: Joi.object().keys({
-    id: Joi.string().required(),
-    title: Joi.string().required(),
-    description: Joi.string().required(),
-    codes: Joi.array().items(codeSchema).min(1).required(),
-    type: Joi.string().equal('codelist').required()
-  })
+  codelist: Joi.string().equal('bobbo').required()
 });
 
 const textSchema = Joi.object().keys({
@@ -102,7 +97,8 @@ const variantSchema = Joi.object().keys({
     .when('use_Product', {
       is: true,
       then: Joi.array().items(Joi.string()).min(1).required()
-    }),
+    })
+    .required(),
   alternatives: Joi.array().items(
     Joi.alternatives().conditional('.type', {
       switch: [
@@ -126,7 +122,7 @@ const requirementSchema = Joi.object().keys({
   layouts: Joi.array().items(variantSchema),
   kind: Joi.string().required(),
   requirement_Type: Joi.string().required(),
-  type: Joi.string().required()
+  type: Joi.string().equal(MODELTYPE.requirement).required()
 });
 
 interface RouteParams {
@@ -142,9 +138,12 @@ export default function RequirementEditor(): ReactElement {
   const projectMatch = useRouteMatch<RouteParams>(
     '/workbench/:projectId/need/:needId/requirement/:requirementId/edit'
   );
-  const { needId } = useSelector((state: RootState) => state.selectNeed);
 
-  if (projectMatch?.params.needId && projectMatch?.params.needId === needId) {
+  if (projectMatch?.params.projectId) {
+    dispatch(selectProject(projectMatch?.params.projectId));
+  }
+
+  if (projectMatch?.params.needId) {
     dispatch(selectNeed(projectMatch?.params.needId));
   }
 
@@ -154,6 +153,7 @@ export default function RequirementEditor(): ReactElement {
 
   const { id } = useSelector((state: RootState) => state.selectedProject);
   const { list } = useSelector((state: RootState) => state.project);
+  const { needId } = useSelector((state: RootState) => state.selectNeed);
   const { reqId } = useSelector(
     (state: RootState) => state.selectedRequirement
   );
@@ -164,13 +164,17 @@ export default function RequirementEditor(): ReactElement {
         await dispatch(getProjectsThunk());
       }, 10);
     }
-    fetchEverything();
-  }, [dispatch]);
+    if (!list) {
+      fetchEverything();
+    }
+  }, [dispatch, list]);
 
   const project = Utils.ensure(list.find((element) => element.id === id));
+
   const need = Utils.ensure(
     project.needs.find((element) => element.id === needId)
   );
+
   const requirement = need.requirements.find((element) => element.id === reqId);
   const defaultValues: Requirement | Record<string, never> =
     requirement !== undefined ? { ...requirement } : {};
@@ -178,18 +182,18 @@ export default function RequirementEditor(): ReactElement {
     control,
     register,
     handleSubmit,
-    errors,
+    formState,
     getValues,
     setValue
   } = useForm<Requirement>({
     resolver: joiResolver(requirementSchema),
-    defaultValues
+    defaultValues: { ...requirement }
   });
 
   const { remove } = useFieldArray({
     keyName: 'guid',
     control,
-    name: 'requirement'
+    name: 'layouts'
   });
 
   if (requirement === undefined) {
@@ -218,17 +222,17 @@ export default function RequirementEditor(): ReactElement {
     await dispatch(selectNeed(post.needId));
   };
 
-  const deleteVariant = (variant: IVariant) => {
+  /* const deleteVariant = (variant: IVariant) => {
     const editRequirement = { ...requirement };
     const newVariants = requirement.layouts.filter(
       (element) => element.id !== variant.id
     );
     editRequirement.layouts = newVariants;
     dispatch(putProjectThunk(project.id));
-  };
+  }; */
 
   const needOptions = (needList: Need[]) => {
-    const result = needList.map((element: any) => {
+    const result = needList.map((element) => {
       return (
         <option key={element.id} value={element.id}>
           {element.title}
@@ -237,6 +241,7 @@ export default function RequirementEditor(): ReactElement {
     });
     return result;
   };
+  const { errors } = formState;
 
   return (
     <>
@@ -248,52 +253,31 @@ export default function RequirementEditor(): ReactElement {
         noValidate
         validated={validated}
       >
+        <Form.Control readOnly as="input" type="hidden" {...register('id')} />
         <Form.Control
           readOnly
           as="input"
-          name="id"
           type="hidden"
-          ref={register}
-          isInvalid={!!errors.id}
+          {...register('description')}
         />
         <Form.Control
           readOnly
           as="input"
-          name="description"
           type="hidden"
-          ref={register}
-          isInvalid={!!errors.description}
+          {...register('needId')}
         />
+        <Form.Control readOnly as="input" type="hidden" {...register('kind')} />
         <Form.Control
-          readOnly
           as="input"
-          name="needId"
           type="hidden"
-          ref={register}
-          isInvalid={!!errors.needId}
-        />
-        <Form.Control
-          readOnly
-          as="input"
-          name="kind"
-          type="hidden"
-          ref={register}
-          isInvalid={!!errors.kind}
-        />
-        <Form.Control
-          readOnly
-          as="input"
-          name="type"
-          type="hidden"
-          ref={register}
+          {...register('type')}
           isInvalid={!!errors.type}
         />
         <Form.Control
           readOnly
           as="input"
-          name="requirement_Type"
           type="hidden"
-          ref={register}
+          {...register('requirement_Type')}
           isInvalid={!!errors.requirement_Type}
         />
 
@@ -302,11 +286,7 @@ export default function RequirementEditor(): ReactElement {
             Title
           </Form.Label>
           <Col sm={8}>
-            <Form.Control
-              name="title"
-              ref={register}
-              isInvalid={!!errors.title}
-            />
+            <Form.Control {...register('title')} isInvalid={!!errors.title} />
             {errors.title && (
               <Form.Control.Feedback as={Col} type="invalid">
                 {errors.title?.message}
@@ -324,8 +304,7 @@ export default function RequirementEditor(): ReactElement {
           <Col sm={8}>
             <Form.Control
               as="select"
-              name="needId"
-              ref={register}
+              {...register('needId')}
               defaultValue={requirement.needId}
               isInvalid={!!errors.needId}
             >
@@ -343,22 +322,17 @@ export default function RequirementEditor(): ReactElement {
           {...{
             control,
             register,
-            getValues,
             setValue,
-            errors,
-            project,
-            defaultValues
+            getValues,
+            formState,
+            defaultValues,
+            project
           }}
           {...{
             remove
           }}
         />
-        {process.env.NODE_ENV === 'development' &&
-          Object.keys(errors).length > 0 && (
-            <Alert variant="warning">
-              <pre>{JSON.stringify(errors, null, 2)}</pre>
-            </Alert>
-          )}
+        <ErrorSummary errors={errors} />
       </Form>
     </>
   );

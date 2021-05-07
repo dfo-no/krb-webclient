@@ -29,6 +29,7 @@ export default function WorkbenchModule(): ReactElement {
   const projectMatch = useRouteMatch<RouteParams>('/workbench/:projectId');
   const dispatch = useDispatch();
   const { id } = useSelector((state: RootState) => state.selectedProject);
+  const { status } = useSelector((state: RootState) => state.project);
   // Can set this safely, even if we got here directly by url or by clicks
   if (projectMatch?.params.projectId && !id) {
     dispatch(selectProject(projectMatch?.params.projectId));
@@ -39,10 +40,9 @@ export default function WorkbenchModule(): ReactElement {
     possible to have a loading-indicator or some other nice stuff */
   useEffect(() => {
     async function fetchEverything() {
-      // TODO: remove delay after implementing spinner
       setTimeout(async () => {
-        dispatch(getProjectsThunk());
-      }, 0);
+        await dispatch(getProjectsThunk());
+      });
     }
     fetchEverything();
   }, [dispatch]);

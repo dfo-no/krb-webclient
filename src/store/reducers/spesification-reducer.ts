@@ -1,11 +1,9 @@
 /* eslint-disable no-param-reassign */
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import Utils from '../../common/Utils';
-import { Requirement } from '../../models/Requirement';
 import { SpecificationProduct } from '../../models/SpecificationProduct';
 import { RequirementAnswer } from '../../models/RequirementAnswer';
 import { Specification } from '../../models/Specification';
-import { ISelectable } from '../../models/ISelectable';
 import MODELTYPE from '../../models/ModelType';
 import { Bank } from '../../models/Bank';
 
@@ -23,7 +21,8 @@ const initialState: SpecificationState = {
       products: [],
       codelist: [],
       version: 0,
-      type: MODELTYPE.bank
+      type: MODELTYPE.bank,
+      publications: []
     },
     title: '',
     products: [],

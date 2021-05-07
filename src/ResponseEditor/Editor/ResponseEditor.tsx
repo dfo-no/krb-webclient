@@ -15,6 +15,7 @@ import { RootState } from '../../store/store';
 import { setBank, editSupplier } from '../../store/reducers/response-reducer';
 import Utils from '../../common/Utils';
 import { Bank } from '../../models/Bank';
+import ErrorSummary from '../../Form/ErrorSummary';
 
 interface IResponseInfoForm {
   supplier: string;
@@ -28,7 +29,11 @@ export default function ResponseEditor(): ReactElement {
   const { id } = useSelector((state: RootState) => state.selectedBank);
   const { list } = useSelector((state: RootState) => state.bank);
   const { response } = useSelector((state: RootState) => state.response);
-  const { register, handleSubmit, errors } = useForm({
+  const {
+    register,
+    handleSubmit,
+    formState: { errors }
+  } = useForm({
     resolver: joiResolver(supplierSchema)
   });
   const dispatch = useDispatch();
@@ -63,8 +68,7 @@ export default function ResponseEditor(): ReactElement {
               <Form.Label>Supplier</Form.Label>
               <Col sm={8}>
                 <FormControl
-                  name="supplier"
-                  ref={register}
+                  {...register('supplier')}
                   defaultValue={response.supplier}
                   isInvalid={!!errors.supplier}
                 />
@@ -78,6 +82,7 @@ export default function ResponseEditor(): ReactElement {
                 <Button type="submit">Save</Button>
               </Col>
             </Form.Group>
+            <ErrorSummary errors={errors} />
           </Form>
         </Col>
       </Row>
