@@ -15,6 +15,7 @@ import { RootState } from '../../store/store';
 import MODELTYPE from '../../models/ModelType';
 import { Nestable } from '../../models/Nestable';
 import InputRow from '../../Form/InputRow';
+import ErrorSummary from '../../Form/ErrorSummary';
 
 type FormValues = {
   title: string;
@@ -100,6 +101,7 @@ function NewNeedForm({ toggleShow, toggleAlert }: IProps): ReactElement {
               Avbryt
             </Button>
           </Row>
+          <ErrorSummary errors={errors} />
         </Form>
       </Card.Body>
     </Card>

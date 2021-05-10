@@ -19,6 +19,7 @@ import Utils from '../../common/Utils';
 import { Bank } from '../../models/Bank';
 import InputRow from '../../Form/InputRow';
 import ErrorSummary from '../../Form/ErrorSummary';
+import AlertModal from '../../common/AlertModal';
 
 type FormValues = {
   id: string;
@@ -46,7 +47,7 @@ function EditNeedForm({ element }: IProps): ReactElement {
     handleSubmit,
     control,
     formState: { errors }
-  } = useForm({
+  } = useForm<FormValues>({
     defaultValues: {
       id: element.id,
       title: element.title,
@@ -55,6 +56,7 @@ function EditNeedForm({ element }: IProps): ReactElement {
     resolver: joiResolver(needSchema)
   });
 
+  const [modalShow, setModalShow] = useState(false);
   if (!id) {
     return <p>No project selected</p>;
   }
@@ -81,9 +83,7 @@ function EditNeedForm({ element }: IProps): ReactElement {
       element.requirements.length > 0 ||
       Utils.checkIfParent(project.needs, element.id)
     ) {
-      window.confirm(
-        'This product has one or more connected requirements or has subneeds, please remove them to be able to delete'
-      );
+      setModalShow(true);
     } else {
       dispatch(deleteNeed({ projectId: id, needId: element.id }));
       dispatch(putProjectThunk(id));
@@ -115,6 +115,12 @@ function EditNeedForm({ element }: IProps): ReactElement {
         Delete <BsTrashFill />
       </Button>
       <ErrorSummary errors={errors} />
+      <AlertModal
+        modalShow={modalShow}
+        setModalShow={setModalShow}
+        title="Attention"
+        text="This product has one or more connected requirements or has subneeds, please remove them to be able to delete"
+      />
     </Form>
   );
 }
