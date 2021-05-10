@@ -11,6 +11,7 @@ import Form from 'react-bootstrap/Form';
 
 import Joi from 'joi';
 import { joiResolver } from '@hookform/resolvers/joi';
+import { useTranslation } from 'react-i18next';
 import { RootState } from '../../store/store';
 import { Bank } from '../../models/Bank';
 import Utils from '../../common/Utils';
@@ -29,6 +30,7 @@ export default function SpecEditor(): ReactElement {
   const { id } = useSelector((state: RootState) => state.selectedBank);
   const { list } = useSelector((state: RootState) => state.bank);
   const { spec } = useSelector((state: RootState) => state.specification);
+  const { t } = useTranslation();
   const {
     register,
     handleSubmit,
@@ -75,7 +77,7 @@ export default function SpecEditor(): ReactElement {
                 )}
               </Col>
               <Col sm={4}>
-                <Button type="submit">Save</Button>
+                <Button type="submit">{t('save')}</Button>
               </Col>
             </Form.Group>
             <ErrorSummary errors={errors} />

@@ -7,6 +7,7 @@ import { joiResolver } from '@hookform/resolvers/joi';
 import Joi from 'joi';
 import { BsTrashFill } from 'react-icons/bs';
 
+import { useTranslation } from 'react-i18next';
 import { Need } from '../../models/Need';
 import {
   deleteNeed,
@@ -42,6 +43,7 @@ function EditNeedForm({ element }: IProps): ReactElement {
   const dispatch = useDispatch();
   const { onOpenClose } = useContext(AccordionContext);
   const [validated] = useState(false);
+  const { t } = useTranslation();
 
   const {
     register,
@@ -110,7 +112,7 @@ function EditNeedForm({ element }: IProps): ReactElement {
 
       <Form.Control type="hidden" {...register('id')} />
       <Button className="mt-2" type="submit">
-        Save
+        {t('save')}
       </Button>
       <Button className="mt-2  ml-3" variant="warning" onClick={removeNeed}>
         Delete <BsTrashFill />

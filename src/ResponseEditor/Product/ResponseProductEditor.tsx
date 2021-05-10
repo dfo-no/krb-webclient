@@ -10,6 +10,7 @@ import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
+import { useTranslation } from 'react-i18next';
 import Utils from '../../common/Utils';
 import { ResponseProduct } from '../../models/ResponseProduct';
 import { SpecificationProduct } from '../../models/SpecificationProduct';
@@ -39,6 +40,7 @@ export default function ResponseProductEditor(): ReactElement {
   const { productId } = useSelector(
     (state: RootState) => state.selectedResponseProduct
   );
+
   const {
     register,
     handleSubmit,
@@ -47,6 +49,7 @@ export default function ResponseProductEditor(): ReactElement {
     resolver: joiResolver(productSchema)
   });
   const dispatch = useDispatch();
+  const { t } = useTranslation();
 
   if (!id) {
     return <p>No selected bank</p>;
@@ -166,7 +169,7 @@ export default function ResponseProductEditor(): ReactElement {
               </Col>
             </Form.Group>
             <Col className="p-0 d-flex justify-content-end">
-              <Button type="submit">Save</Button>
+              <Button type="submit">{t('save')}</Button>
             </Col>
             <ErrorSummary errors={errors} />
           </Form>

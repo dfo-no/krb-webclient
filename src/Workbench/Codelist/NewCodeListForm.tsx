@@ -9,6 +9,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import Joi from 'joi';
 
 import { v4 as uuidv4 } from 'uuid';
+import { useTranslation } from 'react-i18next';
 import {
   addCodelist,
   putProjectThunk
@@ -36,6 +37,7 @@ const codeListSchema = Joi.object().keys({
 function NewCodeListForm({ toggleShow, toggleAlert }: IProps): ReactElement {
   const dispatch = useDispatch();
   const [validated] = useState(false);
+  const { t } = useTranslation();
 
   const {
     control,
@@ -90,13 +92,13 @@ function NewCodeListForm({ toggleShow, toggleAlert }: IProps): ReactElement {
           />
           <Row>
             <Button className="mt-2  ml-3" type="submit">
-              Save
+              {t('save')}
             </Button>
             <Button
               className="mt-2 ml-3 btn-warning"
               onClick={() => toggleShow(false)}
             >
-              Cancel
+              {t('cancel')}
             </Button>
           </Row>
           <ErrorSummary errors={errors} />
