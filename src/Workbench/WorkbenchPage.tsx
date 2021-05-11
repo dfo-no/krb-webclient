@@ -10,6 +10,7 @@ import { useForm } from 'react-hook-form';
 import { v4 as uuidv4 } from 'uuid';
 import Joi from 'joi';
 import { joiResolver } from '@hookform/resolvers/joi';
+import { useTranslation } from 'react-i18next';
 import { RootState } from '../store/store';
 import { Bank } from '../models/Bank';
 import {
@@ -34,6 +35,7 @@ function WorkbenchPage(): ReactElement {
   const [showEditor, setShowEditor] = useState(false);
   const [showAlert, setShowAlert] = useState(false);
   const [validated] = useState(false);
+  const { t } = useTranslation();
 
   const projectSchema = Joi.object().keys({
     title: Joi.string().required(),
@@ -150,7 +152,7 @@ function WorkbenchPage(): ReactElement {
                 label="Description"
               />
               <Button className="mt-2" type="submit">
-                Save
+                {t('save')}
               </Button>
               <ErrorSummary errors={errors} />
             </Form>

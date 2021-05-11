@@ -1,0 +1,20 @@
+{
+  "app_title": "Kravbank (Norsk)",
+  "Need": "Behov",
+  "Requirement": "Krav",
+  "Codelist": "Kodeliste",
+  "Products": "Produkter",
+  "create projects": "Lag/Rediger Prosjekter",
+  "create response": "Lag Besvarelse",
+  "create evaluation": "Lag Evaluering",
+  "create specification": "Lag Spesifikasjon",
+  "popular banks": "Populære kravbanker",
+  "newest banks": "Nyeste kravbanker",
+  "search banks": "Søk kravbanker",
+  "publications": "Publiseringer",
+  "new publication": "Ny publisering",
+  "summarize changes": "Oppsummer endringene",
+  "publish": "Publisher",
+  "save": "Lagre",
+  "cancel": "Avbryt"
+}

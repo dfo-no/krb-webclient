@@ -10,6 +10,7 @@ import Joi from 'joi';
 import { BsTrashFill } from 'react-icons/bs';
 
 import { useHistory } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import {
   deleteCodelist,
   editCodelist,
@@ -44,6 +45,7 @@ function EditCodeListForm({ toggleShow, codelistId }: IProps): ReactElement {
   const dispatch = useDispatch();
   const [validated] = useState(false);
   const [modalShow, setModalShow] = useState(false);
+  const { t } = useTranslation();
 
   const { id } = useSelector((state: RootState) => state.selectedProject);
   const { list } = useSelector((state: RootState) => state.project);
@@ -135,13 +137,13 @@ function EditCodeListForm({ toggleShow, codelistId }: IProps): ReactElement {
           />
           <Row>
             <Button className="mt-2  ml-3" type="submit">
-              Save
+              {t('save')}
             </Button>
             <Button
               className="mt-2 ml-3 btn-warning"
               onClick={() => toggleShow(false)}
             >
-              Cancel
+              {t('cancel')}
             </Button>
             <Button
               className="mt-2  ml-3"
