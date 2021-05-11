@@ -37,6 +37,7 @@ jobs:
           REACT_APP_COSMOS_CONTAINER: ${{ secrets.REACT_APP_COSMOS_CONTAINER }}
           REACT_APP_COSMOSDB_CONNECTION_STRING: ${{ secrets.REACT_APP_COSMOSDB_CONNECTION_STRING }}
           REACT_APP_CLIENTID: ${{ secrets.REACT_APP_CLIENTID }}
+          CI: ''
         run: |
           npm run-script build:ci
 
