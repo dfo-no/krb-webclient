@@ -7,6 +7,7 @@ import { useForm } from 'react-hook-form';
 import Joi from 'joi';
 import { useDispatch, useSelector } from 'react-redux';
 import { BsTrashFill } from 'react-icons/bs';
+import { useTranslation } from 'react-i18next';
 import { Code } from '../../models/Code';
 
 import {
@@ -39,6 +40,7 @@ export default function EditCodeForm({ element }: IProps): ReactElement {
   const { onOpenClose } = useContext(AccordionContext);
   const dispatch = useDispatch();
   const [validated] = useState(false);
+  const { t } = useTranslation();
 
   const {
     control,
@@ -101,7 +103,7 @@ export default function EditCodeForm({ element }: IProps): ReactElement {
       />
       <Row>
         <Button className="mt-2  ml-3" type="submit">
-          Save
+          {t('save')}
         </Button>
         <Button className="mt-2  ml-3" variant="warning" onClick={removeCode}>
           Delete <BsTrashFill />

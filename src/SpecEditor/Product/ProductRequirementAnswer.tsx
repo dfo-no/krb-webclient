@@ -10,6 +10,7 @@ import { v4 as uuidv4 } from 'uuid';
 import Joi from 'joi';
 import { joiResolver } from '@hookform/resolvers/joi';
 import { Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import Utils from '../../common/Utils';
 import { IVariant } from '../../models/IVariant';
 import { Requirement } from '../../models/Requirement';
@@ -53,6 +54,7 @@ export default function ProductRequirementAnswer({
   const { spec } = useSelector((state: RootState) => state.specification);
   const { id } = useSelector((state: RootState) => state.selectedBank);
   const [selectedLayout, setSelectedLayout] = useState(requirement.layouts[0]);
+  const { t } = useTranslation();
   const specProduct = Utils.ensure(
     spec.products.find(
       (product: SpecificationProduct) => product.id === productId
@@ -213,7 +215,7 @@ export default function ProductRequirementAnswer({
           </Row>
           <Row>
             <Button type="submit" className="mt-2">
-              Save
+              {t('save')}
             </Button>
             {selectedAlternative !== undefined && (
               <Link

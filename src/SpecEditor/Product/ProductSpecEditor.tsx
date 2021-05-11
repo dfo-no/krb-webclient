@@ -10,6 +10,7 @@ import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
+import { useTranslation } from 'react-i18next';
 import Utils from '../../common/Utils';
 import InputRow from '../../Form/InputRow';
 import { SpecificationProduct } from '../../models/SpecificationProduct';
@@ -34,6 +35,7 @@ export default function ProductSpecEditor(): ReactElement {
   const { id } = useSelector((state: RootState) => state.selectedBank);
   const { list } = useSelector((state: RootState) => state.bank);
   const { spec } = useSelector((state: RootState) => state.specification);
+  const { t } = useTranslation();
   const { productId } = useSelector(
     (state: RootState) => state.selectedSpecProduct
   );
@@ -107,7 +109,7 @@ export default function ProductSpecEditor(): ReactElement {
               label="Description"
             />
             <Col className="p-0 d-flex justify-content-end">
-              <Button type="submit">Save</Button>
+              <Button type="submit">{t('save')}</Button>
             </Col>
             <ErrorSummary errors={errors} />
           </Form>
