@@ -58,15 +58,15 @@ export default function ProductRequirementView({
       if (selected) {
         let requirementText;
         let selectedAnswer;
-        req.layouts.forEach((layout) => {
+        req.variants.forEach((variant) => {
           if (
             product.requirementAnswers.find(
-              (answer) => answer.reqTextId === layout.id
+              (answer) => answer.reqTextId === variant.id
             )
           ) {
-            requirementText = layout.requirementText;
+            requirementText = variant.requirementText;
             const index = product.requirementAnswers.findIndex(
-              (answer) => answer.reqTextId === layout.id
+              (answer) => answer.reqTextId === variant.id
             );
             selectedAnswer = product.requirementAnswers[index];
           }

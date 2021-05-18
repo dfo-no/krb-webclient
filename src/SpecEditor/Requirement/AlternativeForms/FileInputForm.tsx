@@ -9,7 +9,7 @@ import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import Button from 'react-bootstrap/Button';
 import { RequirementAnswer } from '../../../models/RequirementAnswer';
-import { IFileUploadAlternative } from '../../../models/IFileUploadAlternative';
+import { IFileUploadQuestion } from '../../../models/IFileUploadQuestion';
 import {
   editAnswer,
   editProductAnswer
@@ -39,13 +39,13 @@ export default function FileInputForm({ parentAnswer }: IProps): ReactElement {
   } = useForm({
     resolver: joiResolver(fileUploadSchema),
     defaultValues: {
-      ...(parentAnswer.alternative as IFileUploadAlternative)
+      ...(parentAnswer.alternative as IFileUploadQuestion)
     }
   });
   const { productId } = useSelector(
     (state: RootState) => state.selectedSpecProduct
   );
-  const item = parentAnswer.alternative as IFileUploadAlternative;
+  const item = parentAnswer.alternative as IFileUploadQuestion;
   const dispatch = useDispatch();
 
   if (!productId && parentAnswer.type === 'product') {
@@ -93,8 +93,8 @@ export default function FileInputForm({ parentAnswer }: IProps): ReactElement {
             <Col sm="4">
               <Form.Control
                 type="input"
-                {...register('fileEndings')}
-                isInvalid={!!errors.fileEndings}
+                {...register('answer.fileEndings')}
+                isInvalid={!!errors?.answer?.fileEndings}
               />
               {errors.fileEndings && (
                 <Form.Control.Feedback type="invalid">

@@ -8,13 +8,13 @@ import { BsTrashFill } from 'react-icons/bs';
 import { Control, FormState, UseFormRegister } from 'react-hook-form';
 import { get, has } from 'lodash';
 import { Requirement } from '../../models/Requirement';
-import { IPeriodDateAlternative } from '../../models/IPeriodDateAlternative';
+import { IPeriodDateQuestion } from '../../models/IPeriodDateQuestion';
 
 type IProps = {
   control: Control<Requirement>;
   register: UseFormRegister<Requirement>;
   formState: FormState<Requirement>;
-  item: IPeriodDateAlternative;
+  item: IPeriodDateQuestion;
   vIndex: number;
   aIndex: number;
   remove: (i: number) => void;
@@ -45,14 +45,14 @@ export default function PeriodDateAlternative({
         <Form.Control
           as="input"
           type="hidden"
-          {...register(`layouts.${vIndex}.alternatives.${aIndex}.id` as const)}
+          {...register(`variants.${vIndex}.alternatives.${aIndex}.id` as const)}
           defaultValue={item.id}
         />
         <Form.Control
           as="input"
           type="hidden"
           {...register(
-            `layouts.${vIndex}.alternatives.${aIndex}.type` as const
+            `variants.${vIndex}.alternatives.${aIndex}.type` as const
           )}
           defaultValue={item.type}
         />
@@ -64,13 +64,13 @@ export default function PeriodDateAlternative({
             <Form.Control
               type="input"
               {...register(
-                `layouts.${vIndex}.alternatives.${aIndex}.minDays` as const
+                `variants.${vIndex}.alternatives.${aIndex}.minDays` as const
               )}
               defaultValue={item.minDays}
               isInvalid={
                 !!has(
                   errors,
-                  `layouts[${vIndex}].alternatives[${aIndex}].minDays` as const
+                  `variants[${vIndex}].alternatives[${aIndex}].minDays` as const
                 )
               }
             />
@@ -78,7 +78,7 @@ export default function PeriodDateAlternative({
             <Form.Control.Feedback type="invalid">
               {get(
                 errors,
-                `layouts[${vIndex}].alternatives.[${aIndex}].minDays.message`
+                `variants[${vIndex}].alternatives.[${aIndex}].minDays.message`
               )}
             </Form.Control.Feedback>
           </Col>
@@ -91,13 +91,13 @@ export default function PeriodDateAlternative({
             <Form.Control
               type="number"
               {...register(
-                `layouts.${vIndex}.alternatives.${aIndex}.maxDays` as const
+                `variants.${vIndex}.alternatives.${aIndex}.maxDays` as const
               )}
               defaultValue={item.maxDays}
               isInvalid={
                 !!has(
                   errors,
-                  `layouts[${vIndex}].alternatives[${aIndex}].maxDays` as const
+                  `variants[${vIndex}].alternatives[${aIndex}].maxDays` as const
                 )
               }
             />
@@ -105,7 +105,7 @@ export default function PeriodDateAlternative({
             <Form.Control.Feedback type="invalid">
               {get(
                 errors,
-                `layouts[${vIndex}].alternatives.[${aIndex}].maxDays.message`
+                `variants[${vIndex}].alternatives.[${aIndex}].maxDays.message`
               )}
             </Form.Control.Feedback>
           </Col>
@@ -118,13 +118,13 @@ export default function PeriodDateAlternative({
             <Form.Control
               type="input"
               {...register(
-                `layouts.${vIndex}.alternatives.${aIndex}.fromDate` as const
+                `variants.${vIndex}.alternatives.${aIndex}.fromDate` as const
               )}
               defaultValue={item.fromDate}
               isInvalid={
                 !!has(
                   errors,
-                  `layouts[${vIndex}].alternatives[${aIndex}].fromDate` as const
+                  `variants[${vIndex}].alternatives[${aIndex}].fromDate` as const
                 )
               }
             />
@@ -132,7 +132,7 @@ export default function PeriodDateAlternative({
             <Form.Control.Feedback type="invalid">
               {get(
                 errors,
-                `layouts[${vIndex}].alternatives.[${aIndex}].fromDate.message`
+                `variants[${vIndex}].alternatives.[${aIndex}].fromDate.message`
               )}
             </Form.Control.Feedback>
           </Col>
@@ -145,13 +145,13 @@ export default function PeriodDateAlternative({
             <Form.Control
               type="input"
               {...register(
-                `layouts.${vIndex}.alternatives.${aIndex}.toDate` as const
+                `variants.${vIndex}.alternatives.${aIndex}.toDate` as const
               )}
               defaultValue={item.toDate}
               isInvalid={
                 !!has(
                   errors,
-                  `layouts[${vIndex}].alternatives[${aIndex}].toDate` as const
+                  `variants[${vIndex}].alternatives[${aIndex}].toDate` as const
                 )
               }
             />
@@ -159,7 +159,7 @@ export default function PeriodDateAlternative({
             <Form.Control.Feedback type="invalid">
               {get(
                 errors,
-                `layouts[${vIndex}].alternatives.[${aIndex}].toDate.message`
+                `variants[${vIndex}].alternatives.[${aIndex}].toDate.message`
               )}
             </Form.Control.Feedback>
           </Col>

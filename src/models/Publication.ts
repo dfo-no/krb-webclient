@@ -1,6 +1,6 @@
 import Joi from 'joi';
 import { BaseModel } from './BaseModel';
-import MODELTYPE from './ModelType';
+import ModelType from './ModelType';
 
 export const PublicationSchema = Joi.object().keys({
   id: Joi.string().required(),
@@ -8,7 +8,7 @@ export const PublicationSchema = Joi.object().keys({
   date: Joi.date().iso().required(),
   version: Joi.number().min(1).required(),
   bankId: Joi.string().required(),
-  type: Joi.string().equal(MODELTYPE.publication).required()
+  type: Joi.string().equal(ModelType.publication).required()
 });
 
 export interface Publication extends BaseModel {

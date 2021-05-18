@@ -9,14 +9,14 @@ import { Control, FormState, UseFormRegister } from 'react-hook-form';
 import { has } from 'lodash';
 
 import { Requirement } from '../../models/Requirement';
-import { ICodelistAlternative } from '../../models/ICodelistAlternative';
+import { ICodelistQuestion } from '../../models/ICodelistQuestion';
 import { Bank } from '../../models/Bank';
 
 type IProps = {
   control: Control<Requirement>;
   register: UseFormRegister<Requirement>;
   formState: FormState<Requirement>;
-  item: ICodelistAlternative;
+  item: ICodelistQuestion;
   vIndex: number;
   aIndex: number;
   remove: (i: number) => void;
@@ -61,14 +61,14 @@ export default function CodeListAlternative({
         <Form.Control
           as="input"
           type="hidden"
-          {...register(`layouts.${vIndex}.alternatives.${aIndex}.id` as const)}
+          {...register(`variants.${vIndex}.alternatives.${aIndex}.id` as const)}
           defaultValue={item.id}
         />
         <Form.Control
           as="input"
           type="hidden"
           {...register(
-            `layouts.${vIndex}.alternatives.${aIndex}.type` as const
+            `variants.${vIndex}.alternatives.${aIndex}.type` as const
           )}
           defaultValue={item.type}
         />
@@ -81,13 +81,13 @@ export default function CodeListAlternative({
               as="select"
               custom
               {...register(
-                `layouts.${vIndex}.alternatives.${aIndex}.codelist` as const
+                `variants.${vIndex}.alternatives.${aIndex}.codelist` as const
               )}
               defaultValue={item.codelist}
               isInvalid={
                 !!has(
                   errors,
-                  `layouts[${vIndex}].alternatives[${aIndex}].codelist` as const
+                  `variants[${vIndex}].alternatives[${aIndex}].codelist` as const
                 )
               }
             >

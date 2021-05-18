@@ -17,7 +17,7 @@ import { RootState } from '../../store/store';
 
 import { Need } from '../../models/Need';
 import { Requirement } from '../../models/Requirement';
-import MODELTYPE from '../../models/ModelType';
+import ModelType from '../../models/ModelType';
 import RequirementType from '../../models/RequirementType';
 import InputRow from '../../Form/InputRow';
 import ErrorSummary from '../../Form/ErrorSummary';
@@ -70,9 +70,9 @@ function NewRequirementForm({
       title: post.title,
       description: post.description,
       needId: need.id,
-      layouts: [],
+      variants: [],
       kind: 'yes/no',
-      type: MODELTYPE.requirement,
+      type: ModelType.requirement,
       requirement_Type: type
     };
     const reqList = [...need.requirements];

@@ -3,9 +3,10 @@ import React, { ReactElement } from 'react';
 import Container from 'react-bootstrap/Container';
 import { useSelector } from 'react-redux';
 import Utils from '../../common/Utils';
+import QuestionType from '../../models/QuestionType';
 import { SpecificationProduct } from '../../models/SpecificationProduct';
 import { RootState } from '../../store/store';
-import ValueForm from '../Requirement/AlternativeForms/IValueAlternativeForm';
+import ValueForm from '../Requirement/AlternativeForms/ISliderForm';
 import NoProperties from '../Requirement/AlternativeForms/NoProperties';
 import TextAlternativeForm from '../Requirement/AlternativeForms/TextAlternativeForm';
 
@@ -38,12 +39,14 @@ export default function EditAlternative(): ReactElement {
   return (
     <Container fluid className="mt-4">
       <h4>Edit Alternative</h4>
-      {item.alternative.type === 'value' && <ValueForm parentAnswer={item} />}
-      {item.alternative.type === 'text' && (
+      {item.alternative.type === QuestionType.Q_SLIDER && (
+        <ValueForm parentAnswer={item} />
+      )}
+      {item.alternative.type === QuestionType.Q_TEXT && (
         <TextAlternativeForm parentAnswer={item} />
       )}
-      {item.alternative.type === 'codelist' && <NoProperties />}
-      {item.alternative.type === 'yesNo' && <NoProperties />}
+      {item.alternative.type === QuestionType.Q_CODELIST && <NoProperties />}
+      {item.alternative.type === QuestionType.Q_CHECKBOX && <NoProperties />}
     </Container>
   );
 }

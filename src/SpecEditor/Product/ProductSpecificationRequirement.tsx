@@ -47,7 +47,7 @@ export default function ProductSpesificationRequirement({
       dispatch(
         removeProductRequirement({ requirement: requirement.id, productId })
       );
-      requirement.layouts.forEach((variant) => {
+      requirement.variants.forEach((variant) => {
         if (
           specProduct.requirementAnswers.find(
             (answer) => answer.reqTextId === variant.id

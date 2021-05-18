@@ -33,7 +33,7 @@ type FormValue = {
 const alternativeSchema = Joi.object().keys({
   alternative: Joi.string().required(),
   weight: Joi.number().integer().min(1).required(),
-  layout: Joi.string()
+  variant: Joi.string()
 });
 
 export default function RequirementAnswer({
@@ -48,9 +48,11 @@ export default function RequirementAnswer({
     resolver: joiResolver(alternativeSchema)
   });
   const { spec } = useSelector((state: RootState) => state.specification);
-  const [selectedLayout, setSelectedLayout] = useState(requirement.layouts[0]);
+  const [selectedVariant, setSelectedVariant] = useState(
+    requirement.variants[0]
+  );
   const savedAlternative = spec.requirementAnswers.find(
-    (alt) => alt.reqTextId === selectedLayout.id
+    (alt) => alt.reqTextId === selectedVariant.id
   );
   const [selectedAlternative, setSelectedAlternative] = useState<
     string | undefined
@@ -58,15 +60,15 @@ export default function RequirementAnswer({
 
   const { id } = useSelector((state: RootState) => state.selectedBank);
   const saveAnswer = (post: FormValue) => {
-    const alternativeIndex = selectedLayout.alternatives.findIndex(
+    const alternativeIndex = selectedVariant.alternatives.findIndex(
       (alt) => alt.id === post.alternative
     );
-    const alternative = selectedLayout.alternatives[alternativeIndex];
+    const alternative = selectedVariant.alternatives[alternativeIndex];
     const newAnswer = {
       id: uuidv4(),
       alternativeId: post.alternative,
       weight: post.weight,
-      reqTextId: selectedLayout.id,
+      reqTextId: selectedVariant.id,
       alternative,
       type: 'requirement'
     };
@@ -81,9 +83,9 @@ export default function RequirementAnswer({
   function handleChange(event: React.ChangeEvent<HTMLSelectElement>) {
     const variantId = event.target.value;
     const variant = Utils.ensure(
-      requirement.layouts.find((element: IVariant) => element.id === variantId)
+      requirement.variants.find((element: IVariant) => element.id === variantId)
     );
-    selectedLayout.alternatives.forEach((alternative) => {
+    selectedVariant.alternatives.forEach((alternative) => {
       if (
         spec.requirementAnswers.find(
           (answer) => answer.alternativeId === alternative.id
@@ -95,25 +97,27 @@ export default function RequirementAnswer({
         dispatch(deleteAnswer({ answer: spec.requirementAnswers[index].id }));
       }
     });
-    setSelectedLayout(variant);
+    setSelectedVariant(variant);
   }
 
   function findDefaultRequirementText(): string {
-    let defaultText = requirement.layouts[0].id;
-    requirement.layouts.forEach((layout) => {
+    let defaultText = requirement.variants[0].id;
+    requirement.variants.forEach((variant) => {
       if (
-        spec.requirementAnswers.find((answer) => answer.reqTextId === layout.id)
+        spec.requirementAnswers.find(
+          (answer) => answer.reqTextId === variant.id
+        )
       ) {
-        defaultText = layout.id;
+        defaultText = variant.id;
       }
     });
     return defaultText;
   }
 
   function findDefaultAnswerOption(): [string, number] {
-    let defaultText = selectedLayout.alternatives[0].id;
+    let defaultText = selectedVariant.alternatives[0].id;
     let defaultWeight = 0;
-    selectedLayout.alternatives.forEach((alternative) => {
+    selectedVariant.alternatives.forEach((alternative) => {
       if (
         spec.requirementAnswers.find(
           (answer) => answer.alternativeId === alternative.id
@@ -130,14 +134,14 @@ export default function RequirementAnswer({
   }
 
   const reqTextOptions = (req: Requirement) => {
-    const reqText = req.layouts.map((layout) => {
-      if (req.layouts.length === 1) {
-        return <p key={layout.id}>{layout.requirementText}</p>;
+    const reqText = req.variants.map((variant) => {
+      if (req.variants.length === 1) {
+        return <p key={variant.id}>{variant.requirementText}</p>;
       }
-      if (layout.use_Spesification) {
+      if (variant.use_Spesification) {
         return (
-          <option key={layout.id} value={layout.id}>
-            {layout.requirementText}
+          <option key={variant.id} value={variant.id}>
+            {variant.requirementText}
           </option>
         );
       }
@@ -146,25 +150,25 @@ export default function RequirementAnswer({
 
     return (
       <Col>
-        {requirement.layouts.length > 1 && (
+        {requirement.variants.length > 1 && (
           <Form.Control
             as="select"
-            {...register('layout')}
+            {...register('variant')}
             onChange={handleChange}
             defaultValue={findDefaultRequirementText()}
           >
             {reqText}
           </Form.Control>
         )}
-        {requirement.layouts.length <= 1 && (
-          <p>{requirement.layouts[0].requirementText}</p>
+        {requirement.variants.length <= 1 && (
+          <p>{requirement.variants[0].requirementText}</p>
         )}
       </Col>
     );
   };
 
-  const answerOptions = (layout: IVariant) => {
-    const answers = layout.alternatives.map((alternative) => {
+  const answerOptions = (variant: IVariant) => {
+    const answers = variant.alternatives.map((alternative) => {
       return (
         <option key={alternative.id} value={alternative.id}>
           {alternative.type}
@@ -223,7 +227,7 @@ export default function RequirementAnswer({
       <Card.Body>
         <Row>
           {reqTextOptions(requirement)}
-          {answerOptions(selectedLayout)}
+          {answerOptions(selectedVariant)}
         </Row>
       </Card.Body>
     </Card>

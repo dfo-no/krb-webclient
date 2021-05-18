@@ -14,7 +14,7 @@ import {
   editProductAnswer
 } from '../../../store/reducers/spesification-reducer';
 import { RootState } from '../../../store/store';
-import { ITextAlternative } from '../../../models/ITextAlternative';
+import { ITextQuestion } from '../../../models/ITextQuestion';
 import ErrorSummary from '../../../Form/ErrorSummary';
 
 const textSchema = Joi.object().keys({
@@ -41,13 +41,13 @@ export default function TextForm({ parentAnswer }: IProps): ReactElement {
   } = useForm({
     resolver: joiResolver(textSchema),
     defaultValues: {
-      ...(parentAnswer.alternative as ITextAlternative)
+      ...(parentAnswer.alternative as ITextQuestion)
     }
   });
   const { productId } = useSelector(
     (state: RootState) => state.selectedSpecProduct
   );
-  const item = parentAnswer.alternative as ITextAlternative;
+  const item = parentAnswer.alternative as ITextQuestion;
   const dispatch = useDispatch();
 
   if (!productId && parentAnswer.type === 'product') {

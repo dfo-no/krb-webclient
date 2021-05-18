@@ -147,19 +147,19 @@ class Utils {
   ): [{ [key: string]: Requirement[] }, Nestable<Need>[], IVariant[]] {
     const relevantRequirements: { [key: string]: Requirement[] } = {};
     let needList: Nestable<Need>[] = [];
-    const layoutList: IVariant[] = [];
+    const variantList: IVariant[] = [];
     selectedProject.needs.forEach((element) => {
       element.requirements.forEach((req: Requirement) => {
-        req.layouts.forEach((layout: IVariant) => {
+        req.variants.forEach((variant: IVariant) => {
           if (
-            layout.products.includes(selectedProduct.id) ||
+            variant.products.includes(selectedProduct.id) ||
             Utils.checkParentInProductList(
-              layout.products,
+              variant.products,
               selectedProduct.parent,
               selectedProject
             )
           ) {
-            layoutList.push(layout);
+            variantList.push(variant);
             if (element.id in relevantRequirements) {
               const prevArray = relevantRequirements[element.id];
               relevantRequirements[element.id] = [...prevArray, req];
@@ -195,7 +195,7 @@ class Utils {
         });
       });
     });
-    return [relevantRequirements, needList, layoutList];
+    return [relevantRequirements, needList, variantList];
   }
 
   static checkIfParent<T extends BaseModel>(

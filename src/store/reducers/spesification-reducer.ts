@@ -4,7 +4,7 @@ import Utils from '../../common/Utils';
 import { SpecificationProduct } from '../../models/SpecificationProduct';
 import { RequirementAnswer } from '../../models/RequirementAnswer';
 import { Specification } from '../../models/Specification';
-import MODELTYPE from '../../models/ModelType';
+import ModelType from '../../models/ModelType';
 import { Bank } from '../../models/Bank';
 
 interface SpecificationState {
@@ -21,7 +21,7 @@ const initialState: SpecificationState = {
       products: [],
       codelist: [],
       version: 0,
-      type: MODELTYPE.bank,
+      type: ModelType.bank,
       publications: []
     },
     title: '',

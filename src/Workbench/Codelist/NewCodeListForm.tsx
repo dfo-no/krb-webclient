@@ -15,7 +15,7 @@ import {
 } from '../../store/reducers/project-reducer';
 import { RootState } from '../../store/store';
 import { Codelist } from '../../models/Codelist';
-import MODELTYPE from '../../models/ModelType';
+import ModelType from '../../models/ModelType';
 import InputRow from '../../Form/InputRow';
 import ErrorSummary from '../../Form/ErrorSummary';
 
@@ -58,7 +58,7 @@ function NewCodeListForm({ toggleShow, toggleAlert }: IProps): ReactElement {
       title: post.title,
       description: post.description,
       codes: [],
-      type: MODELTYPE.codelist
+      type: ModelType.codelist
     };
     dispatch(addCodelist({ id, codelist: codeList }));
     dispatch(putProjectThunk(id));

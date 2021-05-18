@@ -21,8 +21,8 @@ export default function RequirementView({
   const { spec } = useSelector((state: RootState) => state.specification);
   const checkIfReqHasVariantMatch = (req: Requirement) => {
     let found = false;
-    req.layouts.forEach((layout) => {
-      if (layout.use_Spesification === true) found = true;
+    req.variants.forEach((variant) => {
+      if (variant.use_Spesification === true) found = true;
     });
     return found;
   };

@@ -7,13 +7,13 @@ import { BsTrashFill } from 'react-icons/bs';
 import { Control, FormState, UseFormRegister } from 'react-hook-form';
 import { Requirement } from '../../models/Requirement';
 
-import { IYesNoAlternative } from '../../models/IYesNoAlternative';
+import { ICheckboxQuestion } from '../../models/ICheckboxQuestion';
 
 type IProps = {
   control: Control<Requirement>;
   register: UseFormRegister<Requirement>;
   formState: FormState<Requirement>;
-  item: IYesNoAlternative;
+  item: ICheckboxQuestion;
   vIndex: number;
   aIndex: number;
   remove: (i: number) => void;
@@ -43,14 +43,14 @@ export default function YesNoAlternative({
         <Form.Control
           as="input"
           type="hidden"
-          {...register(`layouts.${vIndex}.alternatives.${aIndex}.id` as const)}
+          {...register(`variants.${vIndex}.alternatives.${aIndex}.id` as const)}
           defaultValue={item.id}
         />
         <Form.Control
           as="input"
           type="hidden"
           {...register(
-            `layouts.${vIndex}.alternatives.${aIndex}.type` as const
+            `variants.${vIndex}.alternatives.${aIndex}.type` as const
           )}
           defaultValue={item.type}
         />

@@ -13,7 +13,7 @@ import {
 import { v4 as uuidv4 } from 'uuid';
 
 import CodeListAlternative from './CodeListAlternative';
-import ValueAlternative from './ValueAlternative';
+import ValueAlternative from './SliderWorkbenchForm';
 import TextAlternative from './TextAlternative';
 import PeriodDateAlternative from './PeriodDateAlternative';
 import TimeAlternative from './TimeAlternative';
@@ -21,14 +21,15 @@ import YesNoAlternative from './YesNoAlternative';
 import FileUploadAlternative from './FileUploadAlternative';
 import { Requirement } from '../../models/Requirement';
 import { Bank } from '../../models/Bank';
-import { IValueAlternative } from '../../models/IValueAlternative';
-import { ICodelistAlternative } from '../../models/ICodelistAlternative';
-import { ITextAlternative } from '../../models/ITextAlternative';
-import { IPeriodDateAlternative } from '../../models/IPeriodDateAlternative';
-import { ITimeAlternative } from '../../models/ITimeAlternative';
-import { IYesNoAlternative } from '../../models/IYesNoAlternative';
-import { IFileUploadAlternative } from '../../models/IFileUploadAlternative';
+import { ISliderQuestion } from '../../models/Slider/ISliderQuestion';
+import { ICodelistQuestion } from '../../models/ICodelistQuestion';
+import { ITextQuestion } from '../../models/ITextQuestion';
+import { IPeriodDateQuestion } from '../../models/IPeriodDateQuestion';
+import { ITimeQuestion } from '../../models/ITimeQuestion';
+import { ICheckboxQuestion } from '../../models/ICheckboxQuestion';
+import { IFileUploadQuestion } from '../../models/IFileUploadQuestion';
 import { AlternativeType } from '../../models/IVariant';
+import QuestionType from '../../models/QuestionType';
 
 type IProps = {
   control: Control<Requirement>;
@@ -46,7 +47,7 @@ export default function AlternativeArray({
   project
 }: IProps): ReactElement {
   const { fields, append, remove } = useFieldArray({
-    name: `layouts.${variantIndex}.alternatives` as 'layouts.0.alternatives',
+    name: `variants.${variantIndex}.alternatives` as 'variants.0.alternatives',
     keyName: 'guid',
     control
   });
@@ -54,55 +55,55 @@ export default function AlternativeArray({
   const [getAlternative, setAlternativeSelected] = useState('value');
 
   const addAlternative = () => {
-    if (getAlternative === 'value') {
+    if (getAlternative === QuestionType.Q_SLIDER) {
       append({
         id: uuidv4(),
-        min: 0,
-        max: 0,
-        step: 1,
-        unit: '',
-        type: 'value'
-      } as IValueAlternative);
-    } else if (getAlternative === 'codelist') {
+        type: QuestionType.Q_SLIDER,
+        config: {
+          min: 0,
+          max: 0,
+          step: 1,
+          unit: ''
+        }
+      } as ISliderQuestion);
+    } else if (getAlternative === QuestionType.Q_CODELIST) {
       append({
         id: uuidv4(),
-        codelist: project.codelist[0].id,
-        type: 'codelist'
-      } as ICodelistAlternative);
-    } else if (getAlternative === 'text') {
+        type: QuestionType.Q_CODELIST
+      } as ICodelistQuestion);
+    } else if (getAlternative === QuestionType.Q_TEXT) {
       append({
         id: uuidv4(),
-        max: 0,
-        text: '',
-        type: 'text'
-      } as ITextAlternative);
-    } else if (getAlternative === 'periodDate') {
+        config: {
+          max: 0
+        },
+        type: QuestionType.Q_TEXT
+      } as ITextQuestion);
+    } else if (getAlternative === QuestionType.Q_PERIOD_DATE) {
       append({
         id: uuidv4(),
-        minDays: 0,
-        maxDays: 0,
-        fromDate: '',
-        toDate: '',
-        type: 'periodDate'
-      } as IPeriodDateAlternative);
-    } else if (getAlternative === 'time') {
+        config: { minDays: 0, maxDays: 0, fromDate: '', toDate: '' },
+        type: QuestionType.Q_PERIOD_DATE
+      } as IPeriodDateQuestion);
+    } else if (getAlternative === QuestionType.Q_TIME) {
       append({
         id: uuidv4(),
-        fromTime: '',
-        toTime: '',
-        type: 'time'
-      } as ITimeAlternative);
-    } else if (getAlternative === 'yesNo') {
+        config: {
+          fromTime: '',
+          toTime: ''
+        },
+        type: QuestionType.Q_TIME
+      } as ITimeQuestion);
+    } else if (getAlternative === QuestionType.Q_CHECKBOX) {
       append({
         id: uuidv4(),
-        type: 'yesNo'
-      } as IYesNoAlternative);
-    } else if (getAlternative === 'fileUpload') {
+        type: QuestionType.Q_CHECKBOX
+      } as ICheckboxQuestion);
+    } else if (getAlternative === QuestionType.Q_FILEUPLOAD) {
       append({
         id: uuidv4(),
-        type: 'fileUpload',
-        fileEndings: ''
-      } as IFileUploadAlternative);
+        type: QuestionType.Q_FILEUPLOAD
+      } as IFileUploadQuestion);
     }
   };
 
@@ -118,7 +119,8 @@ export default function AlternativeArray({
             as="select"
             onChange={(e) => setAlternativeSelected(e.currentTarget.value)}
           >
-            <option value="value">Value</option>
+            <option value="">...</option>
+            <option value={QuestionType.Q_SLIDER}>Value</option>
             {project.codelist && project.codelist.length > 0 && (
               <option value="codelist">Codelist</option>
             )}
@@ -134,80 +136,80 @@ export default function AlternativeArray({
       {fields.map((item: AlternativeType, index) => {
         return (
           <div key={item.id}>
-            {item.type === 'value' && (
+            {item.type === QuestionType.Q_SLIDER && (
               <ValueAlternative
                 control={control}
                 register={register}
                 formState={formState}
-                item={item as IValueAlternative}
+                item={item as ISliderQuestion}
                 vIndex={variantIndex}
                 aIndex={index}
                 remove={remove}
               />
             )}
 
-            {item.type === 'codelist' && (
+            {item.type === QuestionType.Q_CODELIST && (
               <CodeListAlternative
                 control={control}
                 register={register}
                 formState={formState}
-                item={item as ICodelistAlternative}
+                item={item as ICodelistQuestion}
                 vIndex={variantIndex}
                 aIndex={index}
                 project={project}
                 remove={remove}
               />
             )}
-            {item.type === 'text' && (
+            {item.type === QuestionType.Q_TEXT && (
               <TextAlternative
                 control={control}
                 register={register}
                 formState={formState}
-                item={item as ITextAlternative}
+                item={item as ITextQuestion}
                 vIndex={variantIndex}
                 aIndex={index}
                 remove={remove}
               />
             )}
-            {item.type === 'periodDate' && (
+            {item.type === QuestionType.Q_PERIOD_DATE && (
               <PeriodDateAlternative
                 control={control}
                 register={register}
                 formState={formState}
-                item={item as IPeriodDateAlternative}
+                item={item as IPeriodDateQuestion}
                 vIndex={variantIndex}
                 aIndex={index}
                 remove={remove}
               />
             )}
-            {item.type === 'yesNo' && (
+            {item.type === QuestionType.Q_CHECKBOX && (
               <YesNoAlternative
                 control={control}
                 register={register}
                 formState={formState}
-                item={item as IYesNoAlternative}
+                item={item as ICheckboxQuestion}
                 vIndex={variantIndex}
                 aIndex={index}
                 remove={remove}
               />
             )}
-            {item.type === 'time' && (
+            {item.type === QuestionType.Q_TIME && (
               <TimeAlternative
                 control={control}
                 register={register}
                 formState={formState}
-                item={item as ITimeAlternative}
+                item={item as ITimeQuestion}
                 vIndex={variantIndex}
                 aIndex={index}
                 remove={remove}
               />
             )}
-            {item.type === 'fileUpload' && (
+            {item.type === QuestionType.Q_FILEUPLOAD && (
               <FileUploadAlternative
                 control={control}
                 register={register}
                 formState={formState}
-                item={item as IFileUploadAlternative}
+                item={item as IFileUploadQuestion}
                 vIndex={variantIndex}
                 aIndex={index}
                 remove={remove}

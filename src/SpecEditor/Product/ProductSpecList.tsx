@@ -17,7 +17,7 @@ import { selectBank } from '../../store/reducers/selectedBank-reducer';
 import { addProduct } from '../../store/reducers/spesification-reducer';
 import { RootState } from '../../store/store';
 import styles from './ProductSpecEditor.module.scss';
-import MODELTYPE from '../../models/ModelType';
+import ModelType from '../../models/ModelType';
 import { selectSpecProduct } from '../../store/reducers/selectedSpecProduct-reducer';
 import ErrorSummary from '../../Form/ErrorSummary';
 
@@ -106,7 +106,7 @@ export default function ProductSpecList(): ReactElement {
       title: selectedProduct.title,
       description: selectedProduct.description,
       amount: 0,
-      type: MODELTYPE.specificationProduct,
+      type: ModelType.specificationProduct,
       requirements: [],
       requirementAnswers: []
     };

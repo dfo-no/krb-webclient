@@ -6,7 +6,7 @@ import { joiResolver } from '@hookform/resolvers/joi';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import Button from 'react-bootstrap/Button';
-import { IValueAlternative } from '../../../models/IValueAlternative';
+import { ISliderQuestion } from '../../../models/Slider/ISliderQuestion';
 import { RequirementAnswer } from '../../../models/RequirementAnswer';
 import {
   editAnswer,
@@ -47,13 +47,13 @@ export default function ValueForm({ parentAnswer }: IProps): ReactElement {
   } = useForm<FormValues>({
     resolver: joiResolver(valueSchema),
     defaultValues: {
-      ...(parentAnswer.alternative as IValueAlternative)
+      ...(parentAnswer.alternative as ISliderQuestion)
     }
   });
   const { productId } = useSelector(
     (state: RootState) => state.selectedSpecProduct
   );
-  const item = parentAnswer.alternative as IValueAlternative;
+  const item = parentAnswer.alternative as ISliderQuestion;
   const dispatch = useDispatch();
 
   if (!productId && parentAnswer.type === 'product') {

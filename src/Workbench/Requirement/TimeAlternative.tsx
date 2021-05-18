@@ -8,13 +8,13 @@ import { BsTrashFill } from 'react-icons/bs';
 import { Control, FormState, UseFormRegister } from 'react-hook-form';
 import { get, has } from 'lodash';
 import { Requirement } from '../../models/Requirement';
-import { ITimeAlternative } from '../../models/ITimeAlternative';
+import { ITimeQuestion } from '../../models/ITimeQuestion';
 
 type IProps = {
   control: Control<Requirement>;
   register: UseFormRegister<Requirement>;
   formState: FormState<Requirement>;
-  item: ITimeAlternative;
+  item: ITimeQuestion;
   vIndex: number;
   aIndex: number;
   remove: (i: number) => void;
@@ -46,14 +46,14 @@ export default function TimeAlternative({
         <Form.Control
           as="input"
           type="hidden"
-          {...register(`layouts.${vIndex}.alternatives.${aIndex}.id` as const)}
+          {...register(`variants.${vIndex}.alternatives.${aIndex}.id` as const)}
           defaultValue={item.id}
         />
         <Form.Control
           as="input"
           type="hidden"
           {...register(
-            `layouts.${vIndex}.alternatives.${aIndex}.type` as const
+            `variants.${vIndex}.alternatives.${aIndex}.type` as const
           )}
           defaultValue={item.type}
         />
@@ -65,13 +65,13 @@ export default function TimeAlternative({
             <Form.Control
               type="input"
               {...register(
-                `layouts.${vIndex}.alternatives.${aIndex}.fromTime` as const
+                `variants.${vIndex}.alternatives.${aIndex}.fromTime` as const
               )}
               defaultValue={item.fromTime}
               isInvalid={
                 !!has(
                   errors,
-                  `layouts[${vIndex}].alternatives[${aIndex}].fromTime` as const
+                  `variants[${vIndex}].alternatives[${aIndex}].fromTime` as const
                 )
               }
             />
@@ -79,7 +79,7 @@ export default function TimeAlternative({
             <Form.Control.Feedback type="invalid">
               {get(
                 errors,
-                `layouts[${vIndex}].alternatives.[${aIndex}].fromTime.message`
+                `variants[${vIndex}].alternatives.[${aIndex}].fromTime.message`
               )}
             </Form.Control.Feedback>
           </Col>
@@ -92,13 +92,13 @@ export default function TimeAlternative({
             <Form.Control
               type="input"
               {...register(
-                `layouts.${vIndex}.alternatives.${aIndex}.toTime` as const
+                `variants.${vIndex}.alternatives.${aIndex}.toTime` as const
               )}
               defaultValue={item.toTime}
               isInvalid={
                 !!has(
                   errors,
-                  `layouts[${vIndex}].alternatives[${aIndex}].toTime` as const
+                  `variants[${vIndex}].alternatives[${aIndex}].toTime` as const
                 )
               }
             />
@@ -106,7 +106,7 @@ export default function TimeAlternative({
             <Form.Control.Feedback type="invalid">
               {get(
                 errors,
-                `layouts[${vIndex}].alternatives.[${aIndex}].toTime.message`
+                `variants[${vIndex}].alternatives.[${aIndex}].toTime.message`
               )}
             </Form.Control.Feedback>
           </Col>

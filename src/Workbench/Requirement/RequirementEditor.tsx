@@ -24,15 +24,18 @@ import { Requirement } from '../../models/Requirement';
 import { Need } from '../../models/Need';
 import { selectProject } from '../../store/reducers/selectedProject-reducer';
 import ErrorSummary from '../../Form/ErrorSummary';
-import MODELTYPE from '../../models/ModelType';
+import ModelType from '../../models/ModelType';
+import QuestionType from '../../models/QuestionType';
 
-const valueSchema = Joi.object().keys({
+const sliderSchema = Joi.object().keys({
   id: Joi.string().required(),
-  type: Joi.string().equal('value').required(),
-  step: Joi.number().min(0).max(1000000000).required(),
-  min: Joi.number().min(0).max(1000000000).required(),
-  max: Joi.number().min(0).max(1000000000).required(),
-  unit: Joi.string().required()
+  type: Joi.string().equal(QuestionType.Q_SLIDER).required(),
+  config: Joi.object().keys({
+    step: Joi.number().min(0).max(1000000000).required(),
+    min: Joi.number().min(0).max(1000000000).required(),
+    max: Joi.number().min(0).max(1000000000).required(),
+    unit: Joi.string().required()
+  })
 });
 
 /* const codeSchema = Joi.object().keys({
@@ -102,13 +105,13 @@ const variantSchema = Joi.object().keys({
   alternatives: Joi.array().items(
     Joi.alternatives().conditional('.type', {
       switch: [
-        { is: 'value', then: valueSchema },
-        { is: 'codelist', then: codelistSchema },
-        { is: 'text', then: textSchema },
-        { is: 'periodDate', then: periodDateSchema },
-        { is: 'time', then: timeSchema },
-        { is: 'yesNo', then: yesNoSchema },
-        { is: 'fileUpload', then: fileUploadSchema }
+        { is: QuestionType.Q_SLIDER, then: sliderSchema },
+        { is: QuestionType.Q_CODELIST, then: codelistSchema },
+        { is: QuestionType.Q_TEXT, then: textSchema },
+        { is: QuestionType.Q_PERIOD_DATE, then: periodDateSchema },
+        { is: QuestionType.Q_TIME, then: timeSchema },
+        { is: QuestionType.Q_CHECKBOX, then: yesNoSchema },
+        { is: QuestionType.Q_FILEUPLOAD, then: fileUploadSchema }
       ]
     })
   )
@@ -119,10 +122,10 @@ const requirementSchema = Joi.object().keys({
   title: Joi.string().max(100).required(),
   description: Joi.string().required(),
   needId: Joi.string().required(),
-  layouts: Joi.array().items(variantSchema),
+  variants: Joi.array().items(variantSchema),
   kind: Joi.string().required(),
   requirement_Type: Joi.string().required(),
-  type: Joi.string().equal(MODELTYPE.requirement).required()
+  type: Joi.string().equal(ModelType.requirement).required()
 });
 
 interface RouteParams {
@@ -193,7 +196,7 @@ export default function RequirementEditor(): ReactElement {
   const { remove } = useFieldArray({
     keyName: 'guid',
     control,
-    name: 'layouts'
+    name: 'variants'
   });
 
   if (requirement === undefined) {
@@ -224,10 +227,10 @@ export default function RequirementEditor(): ReactElement {
 
   /* const deleteVariant = (variant: IVariant) => {
     const editRequirement = { ...requirement };
-    const newVariants = requirement.layouts.filter(
+    const newVariants = requirement.variants.filter(
       (element) => element.id !== variant.id
     );
-    editRequirement.layouts = newVariants;
+    editRequirement.variants = newVariants;
     dispatch(putProjectThunk(project.id));
   }; */
 

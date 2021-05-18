@@ -2,9 +2,10 @@ import React, { ReactElement } from 'react';
 
 import Container from 'react-bootstrap/Container';
 import { useSelector } from 'react-redux';
+import QuestionType from '../../models/QuestionType';
 import { RootState } from '../../store/store';
 import FileInputForm from './AlternativeForms/FileInputForm';
-import ValueForm from './AlternativeForms/IValueAlternativeForm';
+import ValueForm from './AlternativeForms/ISliderForm';
 import NoProperties from './AlternativeForms/NoProperties';
 import TextAlternativeForm from './AlternativeForms/TextAlternativeForm';
 
@@ -27,15 +28,17 @@ export default function EditAlternative(): ReactElement {
   return (
     <Container fluid className="mt-4">
       <h4>Edit Alternative</h4>
-      {item.alternative.type === 'value' && <ValueForm parentAnswer={item} />}
-      {item.alternative.type === 'fileUpload' && (
+      {item.alternative.type === QuestionType.Q_SLIDER && (
+        <ValueForm parentAnswer={item} />
+      )}
+      {item.alternative.type === QuestionType.Q_FILEUPLOAD && (
         <FileInputForm parentAnswer={item} />
       )}
-      {item.alternative.type === 'text' && (
+      {item.alternative.type === QuestionType.Q_TEXT && (
         <TextAlternativeForm parentAnswer={item} />
       )}
-      {item.alternative.type === 'codelist' && <NoProperties />}
-      {item.alternative.type === 'yesNo' && <NoProperties />}
+      {item.alternative.type === QuestionType.Q_CODELIST && <NoProperties />}
+      {item.alternative.type === QuestionType.Q_CHECKBOX && <NoProperties />}
     </Container>
   );
 }

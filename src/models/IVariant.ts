@@ -1,19 +1,19 @@
-import { ICodelistAlternative } from './ICodelistAlternative';
-import { IFileUploadAlternative } from './IFileUploadAlternative';
-import { IPeriodDateAlternative } from './IPeriodDateAlternative';
-import { ITextAlternative } from './ITextAlternative';
-import { ITimeAlternative } from './ITimeAlternative';
-import { IValueAlternative } from './IValueAlternative';
-import { IYesNoAlternative } from './IYesNoAlternative';
+import { ICodelistQuestion } from './ICodelistQuestion';
+import { IFileUploadQuestion } from './IFileUploadQuestion';
+import { IPeriodDateQuestion } from './IPeriodDateQuestion';
+import { ITextQuestion } from './ITextQuestion';
+import { ITimeQuestion } from './ITimeQuestion';
+import { ISliderQuestion } from './Slider/ISliderQuestion';
+import { ICheckboxQuestion } from './ICheckboxQuestion';
 
 export type AlternativeType =
-  | ICodelistAlternative
-  | IFileUploadAlternative
-  | IPeriodDateAlternative
-  | ITextAlternative
-  | ITimeAlternative
-  | IValueAlternative
-  | IYesNoAlternative;
+  | ICodelistQuestion
+  | IFileUploadQuestion
+  | IPeriodDateQuestion
+  | ITextQuestion
+  | ITimeQuestion
+  | ISliderQuestion
+  | ICheckboxQuestion;
 
 export type AlternativeTypes = Array<AlternativeType>;
 

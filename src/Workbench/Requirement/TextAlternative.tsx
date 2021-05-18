@@ -8,13 +8,13 @@ import { BsTrashFill } from 'react-icons/bs';
 import { Control, FormState, UseFormRegister } from 'react-hook-form';
 import { get, has } from 'lodash';
 import { Requirement } from '../../models/Requirement';
-import { ITextAlternative } from '../../models/ITextAlternative';
+import { ITextQuestion } from '../../models/ITextQuestion';
 
 type IProps = {
   control: Control<Requirement>;
   register: UseFormRegister<Requirement>;
   formState: FormState<Requirement>;
-  item: ITextAlternative;
+  item: ITextQuestion;
   vIndex: number;
   aIndex: number;
   remove: (i: number) => void;
@@ -45,7 +45,7 @@ export default function TextAlternative({
         <Form.Control
           as="input"
           type="hidden"
-          {...register(`layouts.${vIndex}.alternatives.${aIndex}.id` as const)}
+          {...register(`variants.${vIndex}.alternatives.${aIndex}.id` as const)}
           defaultValue={item.id}
         />
 
@@ -53,7 +53,7 @@ export default function TextAlternative({
           as="input"
           type="hidden"
           {...register(
-            `layouts.${vIndex}.alternatives.${aIndex}.type` as const
+            `variants.${vIndex}.alternatives.${aIndex}.type` as const
           )}
           defaultValue={item.type}
         />
@@ -65,20 +65,20 @@ export default function TextAlternative({
             <Form.Control
               type="number"
               {...register(
-                `layouts.${vIndex}.alternatives.${aIndex}.max` as const
+                `variants.${vIndex}.alternatives.${aIndex}.max` as const
               )}
               defaultValue={item.max}
               isInvalid={
                 !!has(
                   errors,
-                  `layouts[${vIndex}].alternatives[${aIndex}].max` as const
+                  `variants[${vIndex}].alternatives[${aIndex}].max` as const
                 )
               }
             />
             <Form.Control.Feedback type="invalid">
               {get(
                 errors,
-                `layouts[${vIndex}].alternatives.[${aIndex}].max.message`
+                `variants[${vIndex}].alternatives.[${aIndex}].max.message`
               )}
             </Form.Control.Feedback>
           </Col>
@@ -91,20 +91,20 @@ export default function TextAlternative({
             <Form.Control
               type="input"
               {...register(
-                `layouts.${vIndex}.alternatives.${aIndex}.text` as const
+                `variants.${vIndex}.alternatives.${aIndex}.text` as const
               )}
               defaultValue={item.text}
               isInvalid={
                 !!has(
                   errors,
-                  `layouts[${vIndex}].alternatives[${aIndex}].text` as const
+                  `variants[${vIndex}].alternatives[${aIndex}].text` as const
                 )
               }
             />
             <Form.Control.Feedback type="invalid">
               {get(
                 errors,
-                `layouts[${vIndex}].alternatives.[${aIndex}].text.message`
+                `variants[${vIndex}].alternatives.[${aIndex}].text.message`
               )}
             </Form.Control.Feedback>
           </Col>

@@ -9,13 +9,13 @@ import Button from 'react-bootstrap/Button';
 import { BsTrashFill } from 'react-icons/bs';
 import { Control, FormState, UseFormRegister } from 'react-hook-form';
 import { Requirement } from '../../models/Requirement';
-import { IValueAlternative } from '../../models/IValueAlternative';
+import { ISliderQuestion } from '../../models/Slider/ISliderQuestion';
 
 type IProps = {
   control: Control<Requirement>;
   register: UseFormRegister<Requirement>;
   formState: FormState<Requirement>;
-  item: IValueAlternative;
+  item: ISliderQuestion;
   vIndex: number;
   aIndex: number;
   remove: (i: number) => void;
@@ -46,7 +46,7 @@ export default function Value({
         <Form.Control
           as="input"
           type="hidden"
-          {...register(`layouts.${vIndex}.alternatives.${aIndex}.id` as const)}
+          {...register(`variants.${vIndex}.alternatives.${aIndex}.id` as const)}
           defaultValue={item.id}
         />
 
@@ -54,7 +54,7 @@ export default function Value({
           as="input"
           type="hidden"
           {...register(
-            `layouts.${vIndex}.alternatives.${aIndex}.type` as const
+            `variants.${vIndex}.alternatives.${aIndex}.type` as const
           )}
           defaultValue={item.type}
         />
@@ -67,17 +67,20 @@ export default function Value({
               as="input"
               type="text"
               {...register(
-                `layouts.${vIndex}.alternatives.${aIndex}.min` as const
+                `variants.${vIndex}.alternatives.${aIndex}.config.min` as const
               )}
-              defaultValue={item.min}
+              defaultValue={item?.config?.min}
               isInvalid={
-                !!has(errors, `layouts[${vIndex}].alternatives[${aIndex}].min`)
+                !!has(
+                  errors,
+                  `variants[${vIndex}].alternatives[${aIndex}].config.min`
+                )
               }
             />
             <Form.Control.Feedback type="invalid">
               {get(
                 errors,
-                `layouts[${vIndex}].alternatives.[${aIndex}].min.message`
+                `variants[${vIndex}].alternatives.[${aIndex}].config.min.message`
               )}
             </Form.Control.Feedback>
           </Col>
@@ -90,17 +93,20 @@ export default function Value({
             <Form.Control
               type="number"
               {...register(
-                `layouts.${vIndex}.alternatives.${aIndex}.max` as const
+                `variants.${vIndex}.alternatives.${aIndex}.config.max` as const
               )}
-              defaultValue={item.max}
+              defaultValue={item.config.max}
               isInvalid={
-                !!has(errors, `layouts[${vIndex}].alternatives[${aIndex}].max`)
+                !!has(
+                  errors,
+                  `variants[${vIndex}].alternatives[${aIndex}].config.max`
+                )
               }
             />
             <Form.Control.Feedback type="invalid">
               {get(
                 errors,
-                `layouts[${vIndex}].alternatives.[${aIndex}].max.message`
+                `variants[${vIndex}].alternatives.[${aIndex}].config.max.message`
               )}
             </Form.Control.Feedback>
           </Col>
@@ -113,17 +119,20 @@ export default function Value({
             <Form.Control
               type="number"
               {...register(
-                `layouts.${vIndex}.alternatives.${aIndex}.step` as const
+                `variants.${vIndex}.alternatives.${aIndex}.config.step` as const
               )}
-              defaultValue={item.step}
+              defaultValue={item.config.step}
               isInvalid={
-                !!has(errors, `layouts[${vIndex}].alternatives[${aIndex}].step`)
+                !!has(
+                  errors,
+                  `variants[${vIndex}].alternatives[${aIndex}].config.step`
+                )
               }
             />
             <Form.Control.Feedback type="invalid">
               {get(
                 errors,
-                `layouts[${vIndex}].alternatives.[${aIndex}].step.message`
+                `variants[${vIndex}].alternatives.[${aIndex}].config.step.message`
               )}
             </Form.Control.Feedback>
           </Col>
@@ -137,17 +146,20 @@ export default function Value({
             <Form.Control
               type="input"
               {...register(
-                `layouts.${vIndex}.alternatives.${aIndex}.unit` as const
+                `variants.${vIndex}.alternatives.${aIndex}.config.unit` as const
               )}
-              defaultValue={item.unit}
+              defaultValue={item.config.unit}
               isInvalid={
-                !!has(errors, `layouts[${vIndex}].alternatives[${aIndex}].unit`)
+                !!has(
+                  errors,
+                  `variants[${vIndex}].alternatives[${aIndex}].config.unit`
+                )
               }
             />
             <Form.Control.Feedback type="invalid">
               {get(
                 errors,
-                `layouts[${vIndex}].alternatives.[${aIndex}].unit.message`
+                `variants[${vIndex}].alternatives.[${aIndex}].config.unit.message`
               )}
             </Form.Control.Feedback>
           </Col>

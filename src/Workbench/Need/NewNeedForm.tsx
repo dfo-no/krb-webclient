@@ -12,7 +12,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { Need } from '../../models/Need';
 import { addNeed, putProjectThunk } from '../../store/reducers/project-reducer';
 import { RootState } from '../../store/store';
-import MODELTYPE from '../../models/ModelType';
+import ModelType from '../../models/ModelType';
 import { Nestable } from '../../models/Nestable';
 import InputRow from '../../Form/InputRow';
 import ErrorSummary from '../../Form/ErrorSummary';
@@ -57,7 +57,7 @@ function NewNeedForm({ toggleShow, toggleAlert }: IProps): ReactElement {
       title: post.title,
       description: post.description,
       requirements: [],
-      type: MODELTYPE.need,
+      type: ModelType.need,
       parent: ''
     };
     dispatch(addNeed({ id, need }));

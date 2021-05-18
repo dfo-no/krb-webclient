@@ -29,7 +29,7 @@ import { ProjectPublicationForm } from './ProjectPublicationForm';
 import SuccessDeleteAlert from '../SuccessDeleteAlert';
 import ErrorSummary from '../../Form/ErrorSummary';
 import { selectProject } from '../../store/reducers/selectedProject-reducer';
-import MODELTYPE from '../../models/ModelType';
+import ModelType from '../../models/ModelType';
 
 interface RouteParams {
   projectId?: string;
@@ -68,7 +68,7 @@ function ProjectPage(): ReactElement {
     products: [],
     codelist: [],
     version: 0,
-    type: MODELTYPE.bank,
+    type: ModelType.bank,
     publications: []
   };
   const project =
