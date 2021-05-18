@@ -38,8 +38,8 @@ jobs:
           REACT_APP_COSMOSDB_CONNECTION_STRING: ${{ secrets.REACT_APP_COSMOSDB_CONNECTION_STRING }}
           REACT_APP_CLIENTID: ${{ secrets.REACT_APP_CLIENTID }}
         run: npm run-script build:ci
-          env:
-            CI: ""
+        env:
+          CI: ""
 
       - name: Sonarcube
         if: github.ref == 'refs/heads/develop'
