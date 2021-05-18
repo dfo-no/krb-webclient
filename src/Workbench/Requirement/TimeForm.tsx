@@ -2,25 +2,25 @@ import React, { ReactElement } from 'react';
 import Card from 'react-bootstrap/Card';
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
-import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
+import Button from 'react-bootstrap/Button';
 import { BsTrashFill } from 'react-icons/bs';
 import { Control, FormState, UseFormRegister } from 'react-hook-form';
 import { get, has } from 'lodash';
 import { Requirement } from '../../models/Requirement';
-import { IPeriodDateQuestion } from '../../models/IPeriodDateQuestion';
+import { ITimeQuestion } from '../../models/ITimeQuestion';
 
 type IProps = {
   control: Control<Requirement>;
   register: UseFormRegister<Requirement>;
   formState: FormState<Requirement>;
-  item: IPeriodDateQuestion;
+  item: ITimeQuestion;
   vIndex: number;
   aIndex: number;
   remove: (i: number) => void;
 };
 
-export default function PeriodDateAlternative({
+export default function TimeForm({
   remove,
   register,
   formState: { errors },
@@ -32,7 +32,7 @@ export default function PeriodDateAlternative({
     <Card className="mb-3">
       <Card.Body>
         <Row className="m-1 d-flex justify-content-between">
-          <h6>Alternative: Period Date</h6>
+          <h6>Alternative: Time</h6>
           <Button
             className="mb-3"
             type="button"
@@ -42,6 +42,7 @@ export default function PeriodDateAlternative({
             <BsTrashFill />
           </Button>
         </Row>
+
         <Form.Control
           as="input"
           type="hidden"
@@ -58,19 +59,19 @@ export default function PeriodDateAlternative({
         />
         <Form.Group as={Row}>
           <Form.Label column sm="2">
-            Minimum days
+            From time
           </Form.Label>
           <Col sm="4">
             <Form.Control
               type="input"
               {...register(
-                `variants.${vIndex}.alternatives.${aIndex}.minDays` as const
+                `variants.${vIndex}.alternatives.${aIndex}.config.fromTime` as const
               )}
-              defaultValue={item.minDays}
+              defaultValue={item.config.fromTime}
               isInvalid={
                 !!has(
                   errors,
-                  `variants[${vIndex}].alternatives[${aIndex}].minDays` as const
+                  `variants[${vIndex}].alternatives[${aIndex}].config.fromTime` as const
                 )
               }
             />
@@ -78,53 +79,26 @@ export default function PeriodDateAlternative({
             <Form.Control.Feedback type="invalid">
               {get(
                 errors,
-                `variants[${vIndex}].alternatives.[${aIndex}].minDays.message`
+                `variants[${vIndex}].alternatives.[${aIndex}].config.fromTime.message`
               )}
             </Form.Control.Feedback>
           </Col>
         </Form.Group>
         <Form.Group as={Row}>
           <Form.Label column sm="2">
-            Maximum days
-          </Form.Label>
-          <Col sm="4">
-            <Form.Control
-              type="number"
-              {...register(
-                `variants.${vIndex}.alternatives.${aIndex}.maxDays` as const
-              )}
-              defaultValue={item.maxDays}
-              isInvalid={
-                !!has(
-                  errors,
-                  `variants[${vIndex}].alternatives[${aIndex}].maxDays` as const
-                )
-              }
-            />
-
-            <Form.Control.Feedback type="invalid">
-              {get(
-                errors,
-                `variants[${vIndex}].alternatives.[${aIndex}].maxDays.message`
-              )}
-            </Form.Control.Feedback>
-          </Col>
-        </Form.Group>
-        <Form.Group as={Row}>
-          <Form.Label column sm="2">
-            From date
+            To time
           </Form.Label>
           <Col sm="4">
             <Form.Control
               type="input"
               {...register(
-                `variants.${vIndex}.alternatives.${aIndex}.fromDate` as const
+                `variants.${vIndex}.alternatives.${aIndex}.config.toTime` as const
               )}
-              defaultValue={item.fromDate}
+              defaultValue={item.config.toTime}
               isInvalid={
                 !!has(
                   errors,
-                  `variants[${vIndex}].alternatives[${aIndex}].fromDate` as const
+                  `variants[${vIndex}].alternatives[${aIndex}].config.toTime` as const
                 )
               }
             />
@@ -132,34 +106,7 @@ export default function PeriodDateAlternative({
             <Form.Control.Feedback type="invalid">
               {get(
                 errors,
-                `variants[${vIndex}].alternatives.[${aIndex}].fromDate.message`
-              )}
-            </Form.Control.Feedback>
-          </Col>
-        </Form.Group>
-        <Form.Group as={Row}>
-          <Form.Label column sm="2">
-            To date
-          </Form.Label>
-          <Col sm="4">
-            <Form.Control
-              type="input"
-              {...register(
-                `variants.${vIndex}.alternatives.${aIndex}.toDate` as const
-              )}
-              defaultValue={item.toDate}
-              isInvalid={
-                !!has(
-                  errors,
-                  `variants[${vIndex}].alternatives[${aIndex}].toDate` as const
-                )
-              }
-            />
-
-            <Form.Control.Feedback type="invalid">
-              {get(
-                errors,
-                `variants[${vIndex}].alternatives.[${aIndex}].toDate.message`
+                `variants[${vIndex}].alternatives.[${aIndex}].config.toTime.message`
               )}
             </Form.Control.Feedback>
           </Col>

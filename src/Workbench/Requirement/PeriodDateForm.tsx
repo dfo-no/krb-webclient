@@ -2,26 +2,25 @@ import React, { ReactElement } from 'react';
 import Card from 'react-bootstrap/Card';
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
-import { has, get } from 'lodash';
-
 import Button from 'react-bootstrap/Button';
+import Col from 'react-bootstrap/Col';
 import { BsTrashFill } from 'react-icons/bs';
 import { Control, FormState, UseFormRegister } from 'react-hook-form';
+import { get, has } from 'lodash';
 import { Requirement } from '../../models/Requirement';
-import { ISliderQuestion } from '../../models/Slider/ISliderQuestion';
+import { IPeriodDateQuestion } from '../../models/IPeriodDateQuestion';
 
 type IProps = {
   control: Control<Requirement>;
   register: UseFormRegister<Requirement>;
   formState: FormState<Requirement>;
-  item: ISliderQuestion;
+  item: IPeriodDateQuestion;
   vIndex: number;
   aIndex: number;
   remove: (i: number) => void;
 };
 
-export default function Value({
+export default function PeriodDateForm({
   remove,
   register,
   formState: { errors },
@@ -33,7 +32,7 @@ export default function Value({
     <Card className="mb-3">
       <Card.Body>
         <Row className="m-1 d-flex justify-content-between">
-          <h6>Alternative: Value</h6>
+          <h6>Alternative: Period Date</h6>
           <Button
             className="mb-3"
             type="button"
@@ -49,7 +48,6 @@ export default function Value({
           {...register(`variants.${vIndex}.alternatives.${aIndex}.id` as const)}
           defaultValue={item.id}
         />
-
         <Form.Control
           as="input"
           type="hidden"
@@ -60,106 +58,108 @@ export default function Value({
         />
         <Form.Group as={Row}>
           <Form.Label column sm="2">
-            Minimum
-          </Form.Label>
-          <Col sm="4">
-            <Form.Control
-              as="input"
-              type="text"
-              {...register(
-                `variants.${vIndex}.alternatives.${aIndex}.config.min` as const
-              )}
-              defaultValue={item?.config?.min}
-              isInvalid={
-                !!has(
-                  errors,
-                  `variants[${vIndex}].alternatives[${aIndex}].config.min`
-                )
-              }
-            />
-            <Form.Control.Feedback type="invalid">
-              {get(
-                errors,
-                `variants[${vIndex}].alternatives.[${aIndex}].config.min.message`
-              )}
-            </Form.Control.Feedback>
-          </Col>
-        </Form.Group>
-        <Form.Group as={Row}>
-          <Form.Label column sm="2">
-            Maximum
-          </Form.Label>
-          <Col sm="4">
-            <Form.Control
-              type="number"
-              {...register(
-                `variants.${vIndex}.alternatives.${aIndex}.config.max` as const
-              )}
-              defaultValue={item.config.max}
-              isInvalid={
-                !!has(
-                  errors,
-                  `variants[${vIndex}].alternatives[${aIndex}].config.max`
-                )
-              }
-            />
-            <Form.Control.Feedback type="invalid">
-              {get(
-                errors,
-                `variants[${vIndex}].alternatives.[${aIndex}].config.max.message`
-              )}
-            </Form.Control.Feedback>
-          </Col>
-        </Form.Group>
-        <Form.Group as={Row}>
-          <Form.Label column sm="2">
-            Step
-          </Form.Label>
-          <Col sm={4}>
-            <Form.Control
-              type="number"
-              {...register(
-                `variants.${vIndex}.alternatives.${aIndex}.config.step` as const
-              )}
-              defaultValue={item.config.step}
-              isInvalid={
-                !!has(
-                  errors,
-                  `variants[${vIndex}].alternatives[${aIndex}].config.step`
-                )
-              }
-            />
-            <Form.Control.Feedback type="invalid">
-              {get(
-                errors,
-                `variants[${vIndex}].alternatives.[${aIndex}].config.step.message`
-              )}
-            </Form.Control.Feedback>
-          </Col>
-        </Form.Group>
-
-        <Form.Group as={Row}>
-          <Form.Label column sm="2">
-            Unit
+            Minimum days
           </Form.Label>
           <Col sm="4">
             <Form.Control
               type="input"
               {...register(
-                `variants.${vIndex}.alternatives.${aIndex}.config.unit` as const
+                `variants.${vIndex}.alternatives.${aIndex}.config.minDays` as const
               )}
-              defaultValue={item.config.unit}
+              defaultValue={item.config.minDays}
               isInvalid={
                 !!has(
                   errors,
-                  `variants[${vIndex}].alternatives[${aIndex}].config.unit`
+                  `variants[${vIndex}].alternatives[${aIndex}].config.minDays` as const
                 )
               }
             />
+
             <Form.Control.Feedback type="invalid">
               {get(
                 errors,
-                `variants[${vIndex}].alternatives.[${aIndex}].config.unit.message`
+                `variants[${vIndex}].alternatives.[${aIndex}].config.minDays.message`
+              )}
+            </Form.Control.Feedback>
+          </Col>
+        </Form.Group>
+        <Form.Group as={Row}>
+          <Form.Label column sm="2">
+            Maximum days
+          </Form.Label>
+          <Col sm="4">
+            <Form.Control
+              type="number"
+              {...register(
+                `variants.${vIndex}.alternatives.${aIndex}.config.maxDays` as const
+              )}
+              defaultValue={item.config.maxDays}
+              isInvalid={
+                !!has(
+                  errors,
+                  `variants[${vIndex}].alternatives[${aIndex}].config.maxDays` as const
+                )
+              }
+            />
+
+            <Form.Control.Feedback type="invalid">
+              {get(
+                errors,
+                `variants[${vIndex}].alternatives.[${aIndex}].config.maxDays.message`
+              )}
+            </Form.Control.Feedback>
+          </Col>
+        </Form.Group>
+        <Form.Group as={Row}>
+          <Form.Label column sm="2">
+            From date
+          </Form.Label>
+          <Col sm="4">
+            <Form.Control
+              type="input"
+              {...register(
+                `variants.${vIndex}.alternatives.${aIndex}.config.fromDate` as const
+              )}
+              defaultValue={item.config.fromDate}
+              isInvalid={
+                !!has(
+                  errors,
+                  `variants[${vIndex}].alternatives[${aIndex}].config.fromDate` as const
+                )
+              }
+            />
+
+            <Form.Control.Feedback type="invalid">
+              {get(
+                errors,
+                `variants[${vIndex}].alternatives.[${aIndex}].config.fromDate.message`
+              )}
+            </Form.Control.Feedback>
+          </Col>
+        </Form.Group>
+        <Form.Group as={Row}>
+          <Form.Label column sm="2">
+            To date
+          </Form.Label>
+          <Col sm="4">
+            <Form.Control
+              type="input"
+              {...register(
+                `variants.${vIndex}.alternatives.${aIndex}.config.toDate` as const
+              )}
+              defaultValue={item.config.toDate}
+              isInvalid={
+                !!has(
+                  errors,
+                  `variants[${vIndex}].alternatives[${aIndex}].config.toDate` as const
+                )
+              }
+            />
+
+            <Form.Control.Feedback type="invalid">
+              {get(
+                errors,
+                `variants[${vIndex}].alternatives.[${aIndex}].config.toDate.message`
               )}
             </Form.Control.Feedback>
           </Col>

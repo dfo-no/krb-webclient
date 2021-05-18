@@ -8,19 +8,19 @@ import { BsTrashFill } from 'react-icons/bs';
 import { Control, FormState, UseFormRegister } from 'react-hook-form';
 import { get, has } from 'lodash';
 import { Requirement } from '../../models/Requirement';
-import { ITimeQuestion } from '../../models/ITimeQuestion';
+import { ITextQuestion } from '../../models/ITextQuestion';
 
 type IProps = {
   control: Control<Requirement>;
   register: UseFormRegister<Requirement>;
   formState: FormState<Requirement>;
-  item: ITimeQuestion;
+  item: ITextQuestion;
   vIndex: number;
   aIndex: number;
   remove: (i: number) => void;
 };
 
-export default function TimeAlternative({
+export default function TextForm({
   remove,
   register,
   formState: { errors },
@@ -32,7 +32,7 @@ export default function TimeAlternative({
     <Card className="mb-3">
       <Card.Body>
         <Row className="m-1 d-flex justify-content-between">
-          <h6>Alternative: Time</h6>
+          <h6>Alternative: Text</h6>
           <Button
             className="mb-3"
             type="button"
@@ -42,13 +42,13 @@ export default function TimeAlternative({
             <BsTrashFill />
           </Button>
         </Row>
-
         <Form.Control
           as="input"
           type="hidden"
           {...register(`variants.${vIndex}.alternatives.${aIndex}.id` as const)}
           defaultValue={item.id}
         />
+
         <Form.Control
           as="input"
           type="hidden"
@@ -59,54 +59,26 @@ export default function TimeAlternative({
         />
         <Form.Group as={Row}>
           <Form.Label column sm="2">
-            From time
+            Max
           </Form.Label>
           <Col sm="4">
             <Form.Control
-              type="input"
+              type="number"
               {...register(
-                `variants.${vIndex}.alternatives.${aIndex}.fromTime` as const
+                `variants.${vIndex}.alternatives.${aIndex}.config.max` as const
               )}
-              defaultValue={item.fromTime}
+              defaultValue={item.config.max}
               isInvalid={
                 !!has(
                   errors,
-                  `variants[${vIndex}].alternatives[${aIndex}].fromTime` as const
+                  `variants[${vIndex}].alternatives[${aIndex}].config.max` as const
                 )
               }
             />
-
             <Form.Control.Feedback type="invalid">
               {get(
                 errors,
-                `variants[${vIndex}].alternatives.[${aIndex}].fromTime.message`
-              )}
-            </Form.Control.Feedback>
-          </Col>
-        </Form.Group>
-        <Form.Group as={Row}>
-          <Form.Label column sm="2">
-            To time
-          </Form.Label>
-          <Col sm="4">
-            <Form.Control
-              type="input"
-              {...register(
-                `variants.${vIndex}.alternatives.${aIndex}.toTime` as const
-              )}
-              defaultValue={item.toTime}
-              isInvalid={
-                !!has(
-                  errors,
-                  `variants[${vIndex}].alternatives[${aIndex}].toTime` as const
-                )
-              }
-            />
-
-            <Form.Control.Feedback type="invalid">
-              {get(
-                errors,
-                `variants[${vIndex}].alternatives.[${aIndex}].toTime.message`
+                `variants[${vIndex}].alternatives.[${aIndex}].config.max.message`
               )}
             </Form.Control.Feedback>
           </Col>

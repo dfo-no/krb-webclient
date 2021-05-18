@@ -1,54 +1,38 @@
 import React, { ReactElement } from 'react';
 import Card from 'react-bootstrap/Card';
-import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
 import Button from 'react-bootstrap/Button';
-import { BsTrashFill } from 'react-icons/bs';
 import { Control, FormState, UseFormRegister } from 'react-hook-form';
-import { has } from 'lodash';
-
+import { get, has } from 'lodash';
+import { BsTrashFill } from 'react-icons/bs';
 import { Requirement } from '../../models/Requirement';
-import { ICodelistQuestion } from '../../models/ICodelistQuestion';
-import { Bank } from '../../models/Bank';
+import { IFileUploadQuestion } from '../../models/IFileUploadQuestion';
 
 type IProps = {
   control: Control<Requirement>;
   register: UseFormRegister<Requirement>;
   formState: FormState<Requirement>;
-  item: ICodelistQuestion;
+  item: IFileUploadQuestion;
   vIndex: number;
   aIndex: number;
   remove: (i: number) => void;
-  project: Bank;
 };
 
-export default function CodeListAlternative({
+export default function FileUploadForm({
   remove,
   register,
   formState: { errors },
   item,
   vIndex,
-  aIndex,
-  project
+  aIndex
 }: IProps): ReactElement {
-  const renderOptions = () => {
-    if (project.codelist) {
-      return project.codelist.map((element) => {
-        return (
-          <option key={element.id} value={element.id}>
-            {element.title}
-          </option>
-        );
-      });
-    }
-    return null;
-  };
   return (
     <Card className="mb-3">
       <Card.Body>
-        <Row className=" m-1 d-flex justify-content-between">
-          <h6>Alternative: Codelist</h6>
+        <Row className="m-1 d-flex justify-content-between">
+          <h6>Alternative: File Upload</h6>
           <Button
             className="mb-3"
             type="button"
@@ -64,6 +48,7 @@ export default function CodeListAlternative({
           {...register(`variants.${vIndex}.alternatives.${aIndex}.id` as const)}
           defaultValue={item.id}
         />
+
         <Form.Control
           as="input"
           type="hidden"
@@ -74,25 +59,28 @@ export default function CodeListAlternative({
         />
         <Form.Group as={Row}>
           <Form.Label column sm="2">
-            Custom select
+            File endings
           </Form.Label>
-          <Col sm="10">
+          <Col sm="4">
             <Form.Control
-              as="select"
-              custom
               {...register(
-                `variants.${vIndex}.alternatives.${aIndex}.codelist` as const
+                `variants.${vIndex}.alternatives.${aIndex}.config.fileEndings` as const
               )}
-              defaultValue={item.codelist}
+              defaultValue={item?.config?.fileEndings}
               isInvalid={
                 !!has(
                   errors,
-                  `variants[${vIndex}].alternatives[${aIndex}].codelist` as const
+                  `variants[${vIndex}].alternatives[${aIndex}].config.fileEndings` as const
                 )
               }
-            >
-              {renderOptions()}
-            </Form.Control>
+            />
+
+            <Form.Control.Feedback type="invalid">
+              {get(
+                errors,
+                `variants[${vIndex}].alternatives.[${aIndex}].config.fileEndings.message`
+              )}
+            </Form.Control.Feedback>
           </Col>
         </Form.Group>
       </Card.Body>

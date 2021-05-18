@@ -12,22 +12,24 @@ import {
 
 import { v4 as uuidv4 } from 'uuid';
 
-import CodeListAlternative from './CodeListAlternative';
-import ValueAlternative from './SliderWorkbenchForm';
-import TextAlternative from './TextAlternative';
-import PeriodDateAlternative from './PeriodDateAlternative';
-import TimeAlternative from './TimeAlternative';
-import YesNoAlternative from './YesNoAlternative';
-import FileUploadAlternative from './FileUploadAlternative';
 import { Requirement } from '../../models/Requirement';
 import { Bank } from '../../models/Bank';
-import { ISliderQuestion } from '../../models/Slider/ISliderQuestion';
+
+import CodeListForm from './CodeListForm';
 import { ICodelistQuestion } from '../../models/ICodelistQuestion';
+import SliderForm from './SliderForm';
+import { ISliderQuestion } from '../../models/ISliderQuestion';
+import TextForm from './TextForm';
 import { ITextQuestion } from '../../models/ITextQuestion';
+import PeriodDateForm from './PeriodDateForm';
 import { IPeriodDateQuestion } from '../../models/IPeriodDateQuestion';
-import { ITimeQuestion } from '../../models/ITimeQuestion';
-import { ICheckboxQuestion } from '../../models/ICheckboxQuestion';
+import FileUploadForm from './FileUploadForm';
 import { IFileUploadQuestion } from '../../models/IFileUploadQuestion';
+import CheckboxForm from './CheckboxForm';
+import { ICheckboxQuestion } from '../../models/ICheckboxQuestion';
+import TimeForm from './TimeForm';
+import { ITimeQuestion } from '../../models/ITimeQuestion';
+
 import { AlternativeType } from '../../models/IVariant';
 import QuestionType from '../../models/QuestionType';
 
@@ -74,25 +76,30 @@ export default function AlternativeArray({
     } else if (getAlternative === QuestionType.Q_TEXT) {
       append({
         id: uuidv4(),
+        type: QuestionType.Q_TEXT,
         config: {
           max: 0
-        },
-        type: QuestionType.Q_TEXT
+        }
       } as ITextQuestion);
     } else if (getAlternative === QuestionType.Q_PERIOD_DATE) {
       append({
         id: uuidv4(),
-        config: { minDays: 0, maxDays: 0, fromDate: '', toDate: '' },
-        type: QuestionType.Q_PERIOD_DATE
+        type: QuestionType.Q_PERIOD_DATE,
+        config: {
+          minDays: 0,
+          maxDays: 0,
+          fromDate: '',
+          toDate: ''
+        }
       } as IPeriodDateQuestion);
     } else if (getAlternative === QuestionType.Q_TIME) {
       append({
         id: uuidv4(),
+        type: QuestionType.Q_TIME,
         config: {
           fromTime: '',
           toTime: ''
-        },
-        type: QuestionType.Q_TIME
+        }
       } as ITimeQuestion);
     } else if (getAlternative === QuestionType.Q_CHECKBOX) {
       append({
@@ -122,22 +129,23 @@ export default function AlternativeArray({
             <option value="">...</option>
             <option value={QuestionType.Q_SLIDER}>Value</option>
             {project.codelist && project.codelist.length > 0 && (
-              <option value="codelist">Codelist</option>
+              <option value={QuestionType.Q_CODELIST}>Codelist</option>
             )}
-            <option value="text">Text</option>
-            <option value="periodDate">Period</option>
-            <option value="time">Time</option>
-            <option value="yesNo">Yes/No </option>
-            <option value="fileUpload">File upload </option>
+            <option value={QuestionType.Q_TEXT}>Text</option>
+            <option value={QuestionType.Q_PERIOD_DATE}>Period</option>
+            <option value={QuestionType.Q_TIME}>Time</option>
+            <option value={QuestionType.Q_CHECKBOX}>Yes/No </option>
+            <option value={QuestionType.Q_FILEUPLOAD}>File upload </option>
           </Form.Control>
         </Col>
         <Button onClick={() => addAlternative()}>Add</Button>
       </Form.Group>
+
       {fields.map((item: AlternativeType, index) => {
         return (
           <div key={item.id}>
             {item.type === QuestionType.Q_SLIDER && (
-              <ValueAlternative
+              <SliderForm
                 control={control}
                 register={register}
                 formState={formState}
@@ -149,7 +157,7 @@ export default function AlternativeArray({
             )}
 
             {item.type === QuestionType.Q_CODELIST && (
-              <CodeListAlternative
+              <CodeListForm
                 control={control}
                 register={register}
                 formState={formState}
@@ -161,7 +169,7 @@ export default function AlternativeArray({
               />
             )}
             {item.type === QuestionType.Q_TEXT && (
-              <TextAlternative
+              <TextForm
                 control={control}
                 register={register}
                 formState={formState}
@@ -172,7 +180,7 @@ export default function AlternativeArray({
               />
             )}
             {item.type === QuestionType.Q_PERIOD_DATE && (
-              <PeriodDateAlternative
+              <PeriodDateForm
                 control={control}
                 register={register}
                 formState={formState}
@@ -183,7 +191,7 @@ export default function AlternativeArray({
               />
             )}
             {item.type === QuestionType.Q_CHECKBOX && (
-              <YesNoAlternative
+              <CheckboxForm
                 control={control}
                 register={register}
                 formState={formState}
@@ -194,7 +202,7 @@ export default function AlternativeArray({
               />
             )}
             {item.type === QuestionType.Q_TIME && (
-              <TimeAlternative
+              <TimeForm
                 control={control}
                 register={register}
                 formState={formState}
@@ -205,7 +213,7 @@ export default function AlternativeArray({
               />
             )}
             {item.type === QuestionType.Q_FILEUPLOAD && (
-              <FileUploadAlternative
+              <FileUploadForm
                 control={control}
                 register={register}
                 formState={formState}

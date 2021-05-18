@@ -27,7 +27,7 @@ import ErrorSummary from '../../Form/ErrorSummary';
 import ModelType from '../../models/ModelType';
 import QuestionType from '../../models/QuestionType';
 
-const sliderSchema = Joi.object().keys({
+export const SliderSchema = Joi.object().keys({
   id: Joi.string().required(),
   type: Joi.string().equal(QuestionType.Q_SLIDER).required(),
   config: Joi.object().keys({
@@ -45,47 +45,53 @@ const sliderSchema = Joi.object().keys({
   type: Joi.string().equal('code').required()
 }); */
 
-const codelistSchema = Joi.object().keys({
+export const CodelistSchema = Joi.object().keys({
   id: Joi.string().required(),
-  type: Joi.string().equal('codelist').required(),
-  codelist: Joi.string().equal('bobbo').required()
+  type: Joi.string().equal(QuestionType.Q_CODELIST).required()
 });
 
-const textSchema = Joi.object().keys({
+export const TextSchema = Joi.object().keys({
   id: Joi.string().required(),
-  type: Joi.string().equal('text').required(),
-  max: Joi.number().required(),
-  text: Joi.string().trim().max(Joi.ref('max')).required()
+  type: Joi.string().equal(QuestionType.Q_TEXT).required(),
+  config: Joi.object().keys({
+    max: Joi.number().required()
+  })
 });
 
-const periodDateSchema = Joi.object().keys({
+export const PeriodDateSchema = Joi.object().keys({
   id: Joi.string().required(),
-  type: Joi.string().equal('periodDate').required(),
-  minDays: Joi.number().required(),
-  maxDays: Joi.number().required(),
-  fromDate: Joi.string().trim().allow('').required(),
-  toDate: Joi.string().trim().allow('').required()
-  // fromDate: Joi.date().iso().required(),
-  // toDate: Joi.date().iso().greater(Joi.ref('from')).required()
+  type: Joi.string().equal(QuestionType.Q_PERIOD_DATE).required(),
+  config: Joi.object().keys({
+    minDays: Joi.number().required(),
+    maxDays: Joi.number().required(),
+    fromDate: Joi.string().trim().allow('').required(),
+    toDate: Joi.string().trim().allow('').required()
+  })
 });
 
-const timeSchema = Joi.object().keys({
+export const TimeSchema = Joi.object().keys({
   id: Joi.string().required(),
-  type: Joi.string().equal('time').required(),
-  fromTime: Joi.string().trim().allow('').required(),
-  toTime: Joi.string().trim().allow('').required()
+  type: Joi.string().equal(QuestionType.Q_TIME).required(),
+  config: Joi.object().keys({
+    fromTime: Joi.string().trim().allow('').required(),
+    toTime: Joi.string().trim().allow('').required()
+  })
 });
 
-const yesNoSchema = Joi.object().keys({
+export const CheckboxSchema = Joi.object().keys({
   id: Joi.string().required(),
-  type: Joi.string().equal('yesNo').required(),
-  value: Joi.boolean()
+  type: Joi.string().equal(QuestionType.Q_CHECKBOX).required(),
+  config: Joi.object().keys({
+    value: Joi.boolean()
+  })
 });
 
-const fileUploadSchema = Joi.object().keys({
+export const FileUploadSchema = Joi.object().keys({
   id: Joi.string().required(),
-  type: Joi.string().equal('fileUpload').required(),
-  fileEndings: Joi.string().allow('')
+  type: Joi.string().equal(QuestionType.Q_FILEUPLOAD).required(),
+  config: Joi.object().keys({
+    fileEndings: Joi.string().allow('')
+  })
 });
 
 const variantSchema = Joi.object().keys({
@@ -105,13 +111,13 @@ const variantSchema = Joi.object().keys({
   alternatives: Joi.array().items(
     Joi.alternatives().conditional('.type', {
       switch: [
-        { is: QuestionType.Q_SLIDER, then: sliderSchema },
-        { is: QuestionType.Q_CODELIST, then: codelistSchema },
-        { is: QuestionType.Q_TEXT, then: textSchema },
-        { is: QuestionType.Q_PERIOD_DATE, then: periodDateSchema },
-        { is: QuestionType.Q_TIME, then: timeSchema },
-        { is: QuestionType.Q_CHECKBOX, then: yesNoSchema },
-        { is: QuestionType.Q_FILEUPLOAD, then: fileUploadSchema }
+        { is: QuestionType.Q_SLIDER, then: SliderSchema },
+        { is: QuestionType.Q_CODELIST, then: CodelistSchema },
+        { is: QuestionType.Q_TEXT, then: TextSchema },
+        { is: QuestionType.Q_PERIOD_DATE, then: PeriodDateSchema },
+        { is: QuestionType.Q_TIME, then: TimeSchema },
+        { is: QuestionType.Q_CHECKBOX, then: CheckboxSchema },
+        { is: QuestionType.Q_FILEUPLOAD, then: FileUploadSchema }
       ]
     })
   )

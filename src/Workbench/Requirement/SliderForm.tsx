@@ -3,24 +3,25 @@ import Card from 'react-bootstrap/Card';
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
+import { has, get } from 'lodash';
+
 import Button from 'react-bootstrap/Button';
 import { BsTrashFill } from 'react-icons/bs';
 import { Control, FormState, UseFormRegister } from 'react-hook-form';
-import { get, has } from 'lodash';
 import { Requirement } from '../../models/Requirement';
-import { ITextQuestion } from '../../models/ITextQuestion';
+import { ISliderQuestion } from '../../models/ISliderQuestion';
 
 type IProps = {
   control: Control<Requirement>;
   register: UseFormRegister<Requirement>;
   formState: FormState<Requirement>;
-  item: ITextQuestion;
+  item: ISliderQuestion;
   vIndex: number;
   aIndex: number;
   remove: (i: number) => void;
 };
 
-export default function TextAlternative({
+export default function SliderForm({
   remove,
   register,
   formState: { errors },
@@ -32,7 +33,7 @@ export default function TextAlternative({
     <Card className="mb-3">
       <Card.Body>
         <Row className="m-1 d-flex justify-content-between">
-          <h6>Alternative: Text</h6>
+          <h6>Alternative: Value</h6>
           <Button
             className="mb-3"
             type="button"
@@ -59,52 +60,106 @@ export default function TextAlternative({
         />
         <Form.Group as={Row}>
           <Form.Label column sm="2">
-            Max
+            Minimum
           </Form.Label>
           <Col sm="4">
             <Form.Control
-              type="number"
+              as="input"
+              type="text"
               {...register(
-                `variants.${vIndex}.alternatives.${aIndex}.max` as const
+                `variants.${vIndex}.alternatives.${aIndex}.config.min` as const
               )}
-              defaultValue={item.max}
+              defaultValue={item?.config?.min}
               isInvalid={
                 !!has(
                   errors,
-                  `variants[${vIndex}].alternatives[${aIndex}].max` as const
+                  `variants[${vIndex}].alternatives[${aIndex}].config.min`
                 )
               }
             />
             <Form.Control.Feedback type="invalid">
               {get(
                 errors,
-                `variants[${vIndex}].alternatives.[${aIndex}].max.message`
+                `variants[${vIndex}].alternatives.[${aIndex}].config.min.message`
               )}
             </Form.Control.Feedback>
           </Col>
         </Form.Group>
         <Form.Group as={Row}>
           <Form.Label column sm="2">
-            Text
+            Maximum
           </Form.Label>
           <Col sm="4">
             <Form.Control
-              type="input"
+              type="number"
               {...register(
-                `variants.${vIndex}.alternatives.${aIndex}.text` as const
+                `variants.${vIndex}.alternatives.${aIndex}.config.max` as const
               )}
-              defaultValue={item.text}
+              defaultValue={item.config.max}
               isInvalid={
                 !!has(
                   errors,
-                  `variants[${vIndex}].alternatives[${aIndex}].text` as const
+                  `variants[${vIndex}].alternatives[${aIndex}].config.max`
                 )
               }
             />
             <Form.Control.Feedback type="invalid">
               {get(
                 errors,
-                `variants[${vIndex}].alternatives.[${aIndex}].text.message`
+                `variants[${vIndex}].alternatives.[${aIndex}].config.max.message`
+              )}
+            </Form.Control.Feedback>
+          </Col>
+        </Form.Group>
+        <Form.Group as={Row}>
+          <Form.Label column sm="2">
+            Step
+          </Form.Label>
+          <Col sm={4}>
+            <Form.Control
+              type="number"
+              {...register(
+                `variants.${vIndex}.alternatives.${aIndex}.config.step` as const
+              )}
+              defaultValue={item.config.step}
+              isInvalid={
+                !!has(
+                  errors,
+                  `variants[${vIndex}].alternatives[${aIndex}].config.step`
+                )
+              }
+            />
+            <Form.Control.Feedback type="invalid">
+              {get(
+                errors,
+                `variants[${vIndex}].alternatives.[${aIndex}].config.step.message`
+              )}
+            </Form.Control.Feedback>
+          </Col>
+        </Form.Group>
+
+        <Form.Group as={Row}>
+          <Form.Label column sm="2">
+            Unit
+          </Form.Label>
+          <Col sm="4">
+            <Form.Control
+              type="input"
+              {...register(
+                `variants.${vIndex}.alternatives.${aIndex}.config.unit` as const
+              )}
+              defaultValue={item.config.unit}
+              isInvalid={
+                !!has(
+                  errors,
+                  `variants[${vIndex}].alternatives[${aIndex}].config.unit`
+                )
+              }
+            />
+            <Form.Control.Feedback type="invalid">
+              {get(
+                errors,
+                `variants[${vIndex}].alternatives.[${aIndex}].config.unit.message`
               )}
             </Form.Control.Feedback>
           </Col>

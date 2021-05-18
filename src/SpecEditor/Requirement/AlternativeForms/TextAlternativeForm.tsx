@@ -1,9 +1,6 @@
 import React, { ReactElement } from 'react';
 import Card from 'react-bootstrap/Card';
 import Form from 'react-bootstrap/Form';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
-import Joi from 'joi';
 import { joiResolver } from '@hookform/resolvers/joi';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
@@ -16,30 +13,21 @@ import {
 import { RootState } from '../../../store/store';
 import { ITextQuestion } from '../../../models/ITextQuestion';
 import ErrorSummary from '../../../Form/ErrorSummary';
-
-const textSchema = Joi.object().keys({
-  id: Joi.string().required(),
-  type: Joi.string().equal('text').required(),
-  max: Joi.number().required(),
-  text: Joi.string().trim().max(Joi.ref('max')).required()
-});
+import { TextSchema } from '../../../Workbench/Requirement/RequirementEditor';
+import InputRow from '../../../Form/InputRow';
 
 interface IProps {
   parentAnswer: RequirementAnswer;
 }
 
-type FormValues = {
-  text: string;
-  max: number;
-};
-
 export default function TextForm({ parentAnswer }: IProps): ReactElement {
   const {
     register,
+    control,
     handleSubmit,
     formState: { errors }
-  } = useForm({
-    resolver: joiResolver(textSchema),
+  } = useForm<ITextQuestion>({
+    resolver: joiResolver(TextSchema),
     defaultValues: {
       ...(parentAnswer.alternative as ITextQuestion)
     }
@@ -54,15 +42,14 @@ export default function TextForm({ parentAnswer }: IProps): ReactElement {
     return <p>No product selected</p>;
   }
 
-  const saveValues = (post: FormValues) => {
+  const saveValues = (post: ITextQuestion) => {
     const newAlt = {
-      ...item,
-      max: post.max,
-      text: post.text
+      ...item
     };
     const newAnswer = {
       ...parentAnswer
     };
+    newAlt.config.max = post.config.max;
     newAnswer.alternative = newAlt;
 
     if (newAnswer.type === 'requirement')
@@ -89,40 +76,13 @@ export default function TextForm({ parentAnswer }: IProps): ReactElement {
             {...register('type')}
             isInvalid={!!errors.type}
           />
-          <Form.Group as={Row}>
-            <Form.Label column sm="2">
-              Text
-            </Form.Label>
-            <Col sm="4">
-              <Form.Control
-                type="input"
-                {...register('text')}
-                isInvalid={!!errors.text}
-              />
-              {errors.text && (
-                <Form.Control.Feedback type="invalid">
-                  {errors.text.message}
-                </Form.Control.Feedback>
-              )}
-            </Col>
-          </Form.Group>
-          <Form.Group as={Row}>
-            <Form.Label column sm="2">
-              Maximum
-            </Form.Label>
-            <Col sm="4">
-              <Form.Control
-                type="number"
-                {...register('max')}
-                isInvalid={!!errors.max}
-              />
-              {errors.max && (
-                <Form.Control.Feedback type="invalid">
-                  {errors.max.message}
-                </Form.Control.Feedback>
-              )}
-            </Col>
-          </Form.Group>
+          <InputRow
+            control={control}
+            errors={errors}
+            name="max"
+            label="Maximum"
+            type="number"
+          />
 
           <Button type="submit"> Save</Button>
           <ErrorSummary errors={errors} />

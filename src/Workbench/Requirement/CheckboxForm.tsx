@@ -19,7 +19,7 @@ type IProps = {
   remove: (i: number) => void;
 };
 
-export default function YesNoAlternative({
+export default function CheckboxForm({
   register,
   remove,
   item,
