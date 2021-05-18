@@ -1,5 +1,4 @@
-import { IQuestionBase } from './ISelectable';
-import { IConfigBase, IAnswerBase } from './Question';
+import { IQuestionBase, IConfigBase, IAnswerBase } from './Question';
 import QuestionType from './QuestionType';
 
 export interface IFileUploadQuestion

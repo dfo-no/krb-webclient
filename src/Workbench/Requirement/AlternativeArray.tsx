@@ -30,8 +30,8 @@ import { ICheckboxQuestion } from '../../models/ICheckboxQuestion';
 import TimeForm from './TimeForm';
 import { ITimeQuestion } from '../../models/ITimeQuestion';
 
-import { AlternativeType } from '../../models/IVariant';
 import QuestionType from '../../models/QuestionType';
+import { AlternativeType } from '../../models/AlternativeType';
 
 type IProps = {
   control: Control<Requirement>;
