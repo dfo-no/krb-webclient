@@ -8,6 +8,7 @@ import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import Joi from 'joi';
 import { joiResolver } from '@hookform/resolvers/joi';
+import { useTranslation } from 'react-i18next';
 import { Bank } from '../../models/Bank';
 
 import {
@@ -39,6 +40,7 @@ export default function EditProjectForm({
   const { id } = useSelector((state: RootState) => state.selectedProject);
   const dispatch = useDispatch();
   const [validated] = useState(false);
+  const { t } = useTranslation();
 
   const {
     register,
@@ -108,13 +110,13 @@ export default function EditProjectForm({
           </Form.Group>
           <Row>
             <Button className="mt-2  ml-3" type="submit">
-              Save
+              {t('save')}
             </Button>
             <Button
               className="mt-2 ml-3 btn-warning"
               onClick={() => toggleShow(false)}
             >
-              Cancel
+              {t('cancel')}
             </Button>
           </Row>
           <ErrorSummary errors={errors} />

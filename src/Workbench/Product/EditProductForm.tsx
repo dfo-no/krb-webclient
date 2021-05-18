@@ -8,6 +8,7 @@ import { joiResolver } from '@hookform/resolvers/joi';
 import Joi from 'joi';
 import { Link } from 'react-router-dom';
 import { BsTrashFill } from 'react-icons/bs';
+import { useTranslation } from 'react-i18next';
 import { AccordionContext } from '../../NestableHierarchy/AccordionContext';
 import { Product } from '../../models/Product';
 
@@ -45,6 +46,7 @@ export default function ProductForm({ element }: IProps): ReactElement {
   const dispatch = useDispatch();
   const { onOpenClose } = useContext(AccordionContext);
   const [validated] = useState(false);
+  const { t } = useTranslation();
 
   const {
     control,
@@ -122,7 +124,7 @@ export default function ProductForm({ element }: IProps): ReactElement {
       />
       <Row>
         <Button className="mt-2  ml-3" type="submit">
-          Save
+          {t('save')}
         </Button>
         <Link
           to={`/workbench/${id}/${element.id}/product`}

@@ -9,6 +9,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import Joi from 'joi';
 
 import { v4 as uuidv4 } from 'uuid';
+import { useTranslation } from 'react-i18next';
 import { Need } from '../../models/Need';
 import { addNeed, putProjectThunk } from '../../store/reducers/project-reducer';
 import { RootState } from '../../store/store';
@@ -34,6 +35,7 @@ const needSchema = Joi.object().keys({
 function NewNeedForm({ toggleShow, toggleAlert }: IProps): ReactElement {
   const dispatch = useDispatch();
   const [validated] = useState(false);
+  const { t } = useTranslation();
 
   const {
     control,
@@ -92,7 +94,7 @@ function NewNeedForm({ toggleShow, toggleAlert }: IProps): ReactElement {
           />
           <Row>
             <Button className="mt-2  ml-3" type="submit">
-              Save
+              {t('save')}
             </Button>
             <Button
               className="mt-2 ml-3 btn-warning"

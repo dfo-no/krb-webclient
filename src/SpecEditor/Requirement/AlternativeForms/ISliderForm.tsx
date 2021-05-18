@@ -5,6 +5,7 @@ import { joiResolver } from '@hookform/resolvers/joi';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import Button from 'react-bootstrap/Button';
+import { useTranslation } from 'react-i18next';
 import { ISliderQuestion } from '../../../models/ISliderQuestion';
 import { RequirementAnswer } from '../../../models/RequirementAnswer';
 import {
@@ -37,6 +38,7 @@ export default function ValueForm({ parentAnswer }: IProps): ReactElement {
   );
   const item = parentAnswer.alternative as ISliderQuestion;
   const dispatch = useDispatch();
+  const { t } = useTranslation();
 
   if (!productId && parentAnswer.type === 'product') {
     return <p>No product selected</p>;
@@ -109,7 +111,7 @@ export default function ValueForm({ parentAnswer }: IProps): ReactElement {
             label="Unit"
             type="number"
           />
-          <Button type="submit"> Save</Button>
+          <Button type="submit">{t('save')}</Button>
           <ErrorSummary errors={errors} />
         </Form>
       </Card.Body>

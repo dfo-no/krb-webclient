@@ -11,6 +11,7 @@ import Form from 'react-bootstrap/Form';
 
 import Joi from 'joi';
 import { joiResolver } from '@hookform/resolvers/joi';
+import { useTranslation } from 'react-i18next';
 import { RootState } from '../../store/store';
 import { setBank, editSupplier } from '../../store/reducers/response-reducer';
 import Utils from '../../common/Utils';
@@ -37,6 +38,7 @@ export default function ResponseEditor(): ReactElement {
     resolver: joiResolver(supplierSchema)
   });
   const dispatch = useDispatch();
+  const { t } = useTranslation();
 
   if (!id) {
     return <p>No selected bank</p>;
@@ -79,7 +81,7 @@ export default function ResponseEditor(): ReactElement {
                 )}
               </Col>
               <Col sm={2}>
-                <Button type="submit">Save</Button>
+                <Button type="submit">{t('save')}</Button>
               </Col>
             </Form.Group>
             <ErrorSummary errors={errors} />

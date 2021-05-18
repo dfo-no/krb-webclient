@@ -4,6 +4,7 @@ import FormControl from 'react-bootstrap/FormControl';
 import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 
+import { useTranslation } from 'react-i18next';
 import { Bank } from '../models/Bank';
 import { selectBank } from '../store/reducers/selectedBank-reducer';
 import styles from './SearchBar.module.scss';
@@ -16,6 +17,7 @@ export default function SearchBar({ list }: SearchBarProps): ReactElement {
   const [input, setInput] = useState('');
   const [searchList, setSearchList] = useState<Bank[]>([]);
   const dispatch = useDispatch();
+  const { t } = useTranslation();
 
   const updateSearchText = async (
     event: React.ChangeEvent<
@@ -60,7 +62,7 @@ export default function SearchBar({ list }: SearchBarProps): ReactElement {
       <FormControl
         value={input}
         type="text"
-        placeholder="search projects"
+        placeholder={t('search banks')}
         onChange={(e) => updateSearchText(e)}
       />
       {displaylist(searchList)}

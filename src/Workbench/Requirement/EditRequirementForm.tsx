@@ -8,6 +8,7 @@ import Joi from 'joi';
 import { joiResolver } from '@hookform/resolvers/joi';
 import { Link } from 'react-router-dom';
 import { BsTrashFill } from 'react-icons/bs';
+import { useTranslation } from 'react-i18next';
 import { AccordionContext } from '../../NestableHierarchy/AccordionContext';
 
 import {
@@ -49,6 +50,7 @@ export default function EditRequirementForm({
   const dispatch = useDispatch();
   const { onOpenClose } = useContext(AccordionContext);
   const [validated] = useState(false);
+  const { t } = useTranslation();
 
   const {
     control,
@@ -117,7 +119,7 @@ export default function EditRequirementForm({
       />
       <Row>
         <Button className="mt-2  ml-3" type="submit">
-          Save
+          {t('save')}
         </Button>
         <Link
           to={`/workbench/${id}/need/${need.id}/requirement/${element.id}/edit`}

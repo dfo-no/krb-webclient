@@ -10,6 +10,7 @@ import { useFieldArray, useForm } from 'react-hook-form';
 import { joiResolver } from '@hookform/resolvers/joi';
 import Joi from 'joi';
 
+import { useTranslation } from 'react-i18next';
 import Utils from '../../common/Utils';
 import { RootState } from '../../store/store';
 import { selectRequirement } from '../../store/reducers/selectedRequirement-reducer';
@@ -144,6 +145,7 @@ export default function RequirementEditor(): ReactElement {
   const [validated] = useState(false);
   const dispatch = useDispatch();
   const history = useHistory();
+  const { t } = useTranslation();
   const projectMatch = useRouteMatch<RouteParams>(
     '/workbench/:projectId/need/:needId/requirement/:requirementId/edit'
   );
@@ -303,7 +305,7 @@ export default function RequirementEditor(): ReactElement {
             )}
           </Col>
           <Col sm={3}>
-            <Button type="submit">Save</Button>
+            <Button type="submit">{t('save')}</Button>
           </Col>
         </Form.Group>
         <Form.Group as={Row}>

@@ -10,6 +10,7 @@ import Joi from 'joi';
 
 import { BsPencil } from 'react-icons/bs';
 import { useRouteMatch } from 'react-router';
+import { useTranslation } from 'react-i18next';
 import { RootState } from '../../store/store';
 import { Publication, PublicationSchema } from '../../models/Publication';
 import {
@@ -106,6 +107,7 @@ function ProjectPage(): ReactElement {
   });
 
   const { errors } = formState;
+  const { t } = useTranslation();
 
   const removePublication = async (publicationId: string) => {
     dispatch(deletePublication({ projectId: project.id, publicationId }));
@@ -159,7 +161,7 @@ function ProjectPage(): ReactElement {
       </Row>
       <h6 className="ml-1 mb-3">{project.description}</h6>
       {editProjectForm(editMode)}
-      <h4>Publications</h4>
+      <h4>{t('publications')}</h4>
       {showDeleteAlert && (
         <SuccessDeleteAlert
           toggleShow={setDeleteAlert}

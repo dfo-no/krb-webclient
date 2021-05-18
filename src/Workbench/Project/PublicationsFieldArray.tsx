@@ -14,6 +14,7 @@ import { v4 as uuidv4 } from 'uuid';
 import format from 'date-fns/format';
 import formatISO from 'date-fns/formatISO';
 
+import { useTranslation } from 'react-i18next';
 import { Publication } from '../../models/Publication';
 import ModelType from '../../models/ModelType';
 import SuccessAlert from '../SuccessAlert';
@@ -46,6 +47,7 @@ export default function PublicationsFieldArray({
 
   const [showAlert, setShowAlert] = useState(false);
   const publishButtonRef = useRef(null);
+  const { t } = useTranslation();
 
   const getNextVersion = (publications: Publication[]) => {
     if (publications.length === 0) {
@@ -71,7 +73,7 @@ export default function PublicationsFieldArray({
 
   return (
     <div>
-      <Button onClick={() => addPublication()}>New publication</Button>
+      <Button onClick={() => addPublication()}>{t('new publication')}</Button>
       {showAlert && (
         <SuccessAlert toggleShow={setShowAlert} type="publication" />
       )}
