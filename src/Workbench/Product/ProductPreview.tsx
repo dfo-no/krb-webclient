@@ -47,14 +47,14 @@ export default function ProductPreview(): ReactElement {
   const [
     associatedRequirements,
     associatedNeeds,
-    associatedLayouts
+    associatedVariants
   ] = Utils.findAssociatedRequirements(selectedProduct, selectedProject);
 
-  const findRequirementText = (layouts: IVariant[]) => {
-    const texts = layouts.map((layout: IVariant) => {
-      if (associatedLayouts.includes(layout)) {
-        if (layout.requirementText.trim().length > 0)
-          return { text: layout.requirementText };
+  const findRequirementText = (variants: IVariant[]) => {
+    const texts = variants.map((variant: IVariant) => {
+      if (associatedVariants.includes(variant)) {
+        if (variant.requirementText.trim().length > 0)
+          return { text: variant.requirementText };
       }
       return null;
     });
@@ -100,7 +100,7 @@ export default function ProductPreview(): ReactElement {
               <BsPencil />
             </Link>
           </Row>
-          <p>{findRequirementText(element.layouts)}</p>
+          <p>{findRequirementText(element.variants)}</p>
         </ListGroup.Item>
       );
     });

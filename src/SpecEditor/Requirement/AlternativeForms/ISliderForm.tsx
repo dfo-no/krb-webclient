@@ -1,13 +1,12 @@
 import React, { ReactElement } from 'react';
 import Card from 'react-bootstrap/Card';
 import Form from 'react-bootstrap/Form';
-import Joi from 'joi';
 import { joiResolver } from '@hookform/resolvers/joi';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import Button from 'react-bootstrap/Button';
 import { useTranslation } from 'react-i18next';
-import { IValueAlternative } from '../../../models/IValueAlternative';
+import { ISliderQuestion } from '../../../models/ISliderQuestion';
 import { RequirementAnswer } from '../../../models/RequirementAnswer';
 import {
   editAnswer,
@@ -16,28 +15,11 @@ import {
 import { RootState } from '../../../store/store';
 import InputRow from '../../../Form/InputRow';
 import ErrorSummary from '../../../Form/ErrorSummary';
-
-const valueSchema = Joi.object().keys({
-  id: Joi.string().required(),
-  type: Joi.string().equal('value').required(),
-  step: Joi.number().min(0).max(1000000000).required(),
-  min: Joi.number().min(0).max(1000000000).required(),
-  max: Joi.number().min(0).max(1000000000).required(),
-  unit: Joi.string().required()
-});
+import { SliderSchema } from '../../../Workbench/Requirement/RequirementEditor';
 
 interface IProps {
   parentAnswer: RequirementAnswer;
 }
-
-type FormValues = {
-  id: string;
-  type: string;
-  max: number;
-  min: number;
-  step: number;
-  unit: string;
-};
 
 export default function ValueForm({ parentAnswer }: IProps): ReactElement {
   const {
@@ -45,16 +27,16 @@ export default function ValueForm({ parentAnswer }: IProps): ReactElement {
     control,
     handleSubmit,
     formState: { errors }
-  } = useForm<FormValues>({
-    resolver: joiResolver(valueSchema),
+  } = useForm<ISliderQuestion>({
+    resolver: joiResolver(SliderSchema),
     defaultValues: {
-      ...(parentAnswer.alternative as IValueAlternative)
+      ...(parentAnswer.alternative as ISliderQuestion)
     }
   });
   const { productId } = useSelector(
     (state: RootState) => state.selectedSpecProduct
   );
-  const item = parentAnswer.alternative as IValueAlternative;
+  const item = parentAnswer.alternative as ISliderQuestion;
   const dispatch = useDispatch();
   const { t } = useTranslation();
 
@@ -62,17 +44,17 @@ export default function ValueForm({ parentAnswer }: IProps): ReactElement {
     return <p>No product selected</p>;
   }
 
-  const saveValues = (post: FormValues) => {
+  const saveValues = (post: ISliderQuestion) => {
     const newAlt = {
       ...item
     };
     const newAnswer = {
       ...parentAnswer
     };
-    newAlt.max = post.max;
-    newAlt.min = post.min;
-    newAlt.step = post.step;
-    newAlt.unit = post.unit;
+    newAlt.config.max = post.config.max;
+    newAlt.config.min = post.config.min;
+    newAlt.config.step = post.config.step;
+    newAlt.config.unit = post.config.unit;
     newAnswer.alternative = newAlt;
 
     if (newAnswer.type === 'requirement')

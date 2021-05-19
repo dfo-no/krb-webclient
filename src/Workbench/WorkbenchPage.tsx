@@ -20,7 +20,7 @@ import {
 } from '../store/reducers/project-reducer';
 import { selectProject } from '../store/reducers/selectedProject-reducer';
 import SuccessAlert from './SuccessAlert';
-import MODELTYPE from '../models/ModelType';
+import ModelType from '../models/ModelType';
 import InputRow from '../Form/InputRow';
 import ErrorSummary from '../Form/ErrorSummary';
 
@@ -76,7 +76,7 @@ function WorkbenchPage(): ReactElement {
       products: [],
       codelist: [],
       version: 0,
-      type: MODELTYPE.bank,
+      type: ModelType.bank,
       publications: []
     };
     dispatch(postProjectThunk(project));

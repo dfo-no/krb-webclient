@@ -25,15 +25,18 @@ import { Requirement } from '../../models/Requirement';
 import { Need } from '../../models/Need';
 import { selectProject } from '../../store/reducers/selectedProject-reducer';
 import ErrorSummary from '../../Form/ErrorSummary';
-import MODELTYPE from '../../models/ModelType';
+import ModelType from '../../models/ModelType';
+import QuestionType from '../../models/QuestionType';
 
-const valueSchema = Joi.object().keys({
+export const SliderSchema = Joi.object().keys({
   id: Joi.string().required(),
-  type: Joi.string().equal('value').required(),
-  step: Joi.number().min(0).max(1000000000).required(),
-  min: Joi.number().min(0).max(1000000000).required(),
-  max: Joi.number().min(0).max(1000000000).required(),
-  unit: Joi.string().required()
+  type: Joi.string().equal(QuestionType.Q_SLIDER).required(),
+  config: Joi.object().keys({
+    step: Joi.number().min(0).max(1000000000).required(),
+    min: Joi.number().min(0).max(1000000000).required(),
+    max: Joi.number().min(0).max(1000000000).required(),
+    unit: Joi.string().required()
+  })
 });
 
 /* const codeSchema = Joi.object().keys({
@@ -43,47 +46,53 @@ const valueSchema = Joi.object().keys({
   type: Joi.string().equal('code').required()
 }); */
 
-const codelistSchema = Joi.object().keys({
+export const CodelistSchema = Joi.object().keys({
   id: Joi.string().required(),
-  type: Joi.string().equal('codelist').required(),
-  codelist: Joi.string().equal('bobbo').required()
+  type: Joi.string().equal(QuestionType.Q_CODELIST).required()
 });
 
-const textSchema = Joi.object().keys({
+export const TextSchema = Joi.object().keys({
   id: Joi.string().required(),
-  type: Joi.string().equal('text').required(),
-  max: Joi.number().required(),
-  text: Joi.string().trim().max(Joi.ref('max')).required()
+  type: Joi.string().equal(QuestionType.Q_TEXT).required(),
+  config: Joi.object().keys({
+    max: Joi.number().required()
+  })
 });
 
-const periodDateSchema = Joi.object().keys({
+export const PeriodDateSchema = Joi.object().keys({
   id: Joi.string().required(),
-  type: Joi.string().equal('periodDate').required(),
-  minDays: Joi.number().required(),
-  maxDays: Joi.number().required(),
-  fromDate: Joi.string().trim().allow('').required(),
-  toDate: Joi.string().trim().allow('').required()
-  // fromDate: Joi.date().iso().required(),
-  // toDate: Joi.date().iso().greater(Joi.ref('from')).required()
+  type: Joi.string().equal(QuestionType.Q_PERIOD_DATE).required(),
+  config: Joi.object().keys({
+    minDays: Joi.number().required(),
+    maxDays: Joi.number().required(),
+    fromDate: Joi.string().trim().allow('').required(),
+    toDate: Joi.string().trim().allow('').required()
+  })
 });
 
-const timeSchema = Joi.object().keys({
+export const TimeSchema = Joi.object().keys({
   id: Joi.string().required(),
-  type: Joi.string().equal('time').required(),
-  fromTime: Joi.string().trim().allow('').required(),
-  toTime: Joi.string().trim().allow('').required()
+  type: Joi.string().equal(QuestionType.Q_TIME).required(),
+  config: Joi.object().keys({
+    fromTime: Joi.string().trim().allow('').required(),
+    toTime: Joi.string().trim().allow('').required()
+  })
 });
 
-const yesNoSchema = Joi.object().keys({
+export const CheckboxSchema = Joi.object().keys({
   id: Joi.string().required(),
-  type: Joi.string().equal('yesNo').required(),
-  value: Joi.boolean()
+  type: Joi.string().equal(QuestionType.Q_CHECKBOX).required(),
+  config: Joi.object().keys({
+    value: Joi.boolean()
+  })
 });
 
-const fileUploadSchema = Joi.object().keys({
+export const FileUploadSchema = Joi.object().keys({
   id: Joi.string().required(),
-  type: Joi.string().equal('fileUpload').required(),
-  fileEndings: Joi.string().allow('')
+  type: Joi.string().equal(QuestionType.Q_FILEUPLOAD).required(),
+  config: Joi.object().keys({
+    fileEndings: Joi.string().allow('')
+  })
 });
 
 const variantSchema = Joi.object().keys({
@@ -103,13 +112,13 @@ const variantSchema = Joi.object().keys({
   alternatives: Joi.array().items(
     Joi.alternatives().conditional('.type', {
       switch: [
-        { is: 'value', then: valueSchema },
-        { is: 'codelist', then: codelistSchema },
-        { is: 'text', then: textSchema },
-        { is: 'periodDate', then: periodDateSchema },
-        { is: 'time', then: timeSchema },
-        { is: 'yesNo', then: yesNoSchema },
-        { is: 'fileUpload', then: fileUploadSchema }
+        { is: QuestionType.Q_SLIDER, then: SliderSchema },
+        { is: QuestionType.Q_CODELIST, then: CodelistSchema },
+        { is: QuestionType.Q_TEXT, then: TextSchema },
+        { is: QuestionType.Q_PERIOD_DATE, then: PeriodDateSchema },
+        { is: QuestionType.Q_TIME, then: TimeSchema },
+        { is: QuestionType.Q_CHECKBOX, then: CheckboxSchema },
+        { is: QuestionType.Q_FILEUPLOAD, then: FileUploadSchema }
       ]
     })
   )
@@ -120,10 +129,10 @@ const requirementSchema = Joi.object().keys({
   title: Joi.string().max(100).required(),
   description: Joi.string().required(),
   needId: Joi.string().required(),
-  layouts: Joi.array().items(variantSchema),
+  variants: Joi.array().items(variantSchema),
   kind: Joi.string().required(),
   requirement_Type: Joi.string().required(),
-  type: Joi.string().equal(MODELTYPE.requirement).required()
+  type: Joi.string().equal(ModelType.requirement).required()
 });
 
 interface RouteParams {
@@ -195,7 +204,7 @@ export default function RequirementEditor(): ReactElement {
   const { remove } = useFieldArray({
     keyName: 'guid',
     control,
-    name: 'layouts'
+    name: 'variants'
   });
 
   if (requirement === undefined) {
@@ -226,10 +235,10 @@ export default function RequirementEditor(): ReactElement {
 
   /* const deleteVariant = (variant: IVariant) => {
     const editRequirement = { ...requirement };
-    const newVariants = requirement.layouts.filter(
+    const newVariants = requirement.variants.filter(
       (element) => element.id !== variant.id
     );
-    editRequirement.layouts = newVariants;
+    editRequirement.variants = newVariants;
     dispatch(putProjectThunk(project.id));
   }; */
 

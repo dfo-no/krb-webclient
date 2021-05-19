@@ -44,7 +44,7 @@ export default function VariantArray({
   const { fields, append, remove } = useFieldArray({
     keyName: 'guid',
     control,
-    name: 'layouts'
+    name: 'variants'
   });
 
   const [productChecked, setProductChecked] = useState<string[]>([]);
@@ -142,7 +142,7 @@ export default function VariantArray({
                 readOnly
                 as="input"
                 type="hidden"
-                {...register(`layouts.${index}.id` as const)}
+                {...register(`variants.${index}.id` as const)}
                 defaultValue={item.id}
               />
               {/* TODO: check replacement with Input */}
@@ -150,15 +150,20 @@ export default function VariantArray({
                 <Form.Label>Requirement Text</Form.Label>
                 <Form.Control
                   as="textarea"
-                  {...register(`layouts.${index}.requirementText` as const)}
+                  {...register(`variants.${index}.requirementText` as const)}
                   defaultValue={item.requirementText}
-                  isInvalid={!!has(errors, `layouts[${index}].requirementText`)}
+                  isInvalid={
+                    !!has(errors, `variants[${index}].requirementText`)
+                  }
                 />
-                {errors.layouts &&
-                  errors.layouts[index] &&
-                  errors.layouts[index]?.requirementText && (
+                {errors.variants &&
+                  errors.variants[index] &&
+                  errors.variants[index]?.requirementText && (
                     <Form.Control.Feedback type="invalid">
-                      {get(errors, `layouts[${index}].requirementText.message`)}
+                      {get(
+                        errors,
+                        `variants[${index}].requirementText.message`
+                      )}
                     </Form.Control.Feedback>
                   )}
               </Form.Group>
@@ -166,13 +171,13 @@ export default function VariantArray({
                 <Form.Label>Instruction</Form.Label>
                 <Form.Control
                   as="textarea"
-                  {...register(`layouts.${index}.instruction` as const)}
+                  {...register(`variants.${index}.instruction` as const)}
                   defaultValue={item.instruction}
-                  isInvalid={!!has(errors, `layouts[${index}].instruction`)}
+                  isInvalid={!!has(errors, `variants[${index}].instruction`)}
                 />
 
                 <Form.Control.Feedback type="invalid">
-                  {get(errors, `layouts[${index}].instruction.message`)}
+                  {get(errors, `variants[${index}].instruction.message`)}
                 </Form.Control.Feedback>
               </Form.Group>
               <Form.Group>
@@ -181,31 +186,31 @@ export default function VariantArray({
                 <Form.Check
                   type="checkbox"
                   label="Qualification"
-                  {...register(`layouts.${index}.use_Qualification` as const)}
+                  {...register(`variants.${index}.use_Qualification` as const)}
                   defaultChecked={item.use_Qualification}
                   isInvalid={
-                    !!has(errors, `layouts[${index}].use_Qualification`)
+                    !!has(errors, `variants[${index}].use_Qualification`)
                   }
                   feedback={get(
                     errors,
-                    `layouts[${index}].use_Qualification.message`
+                    `variants[${index}].use_Qualification.message`
                   )}
                 />
                 <Form.Check
                   type="checkbox"
                   label="Requirement Spesification"
-                  {...register(`layouts.${index}.use_Spesification` as const)}
+                  {...register(`variants.${index}.use_Spesification` as const)}
                   defaultChecked={item.use_Spesification}
                   isInvalid={
-                    !!has(errors, `layouts[${index}].use_Spesification`)
+                    !!has(errors, `variants[${index}].use_Spesification`)
                   }
                   feedback={get(
                     errors,
-                    `layouts[${index}].use_Spesification.message`
+                    `variants[${index}].use_Spesification.message`
                   )}
                 />
                 <Form.Check
-                  {...register(`layouts.${index}.use_Product` as const)}
+                  {...register(`variants.${index}.use_Product` as const)}
                   type="checkbox"
                   label="Products"
                   defaultChecked={item.use_Product}
@@ -213,10 +218,10 @@ export default function VariantArray({
                   onChange={(e) => {
                     toggleProductChecked(item.id, e.target.checked);
                   }}
-                  isInvalid={!!has(errors, `layouts[${index}].use_Product`)}
+                  isInvalid={!!has(errors, `variants[${index}].use_Product`)}
                   feedback={get(
                     errors,
-                    `layouts[${index}].use_Product.message`
+                    `variants[${index}].use_Product.message`
                   )}
                 />
               </Form.Group>
@@ -225,9 +230,9 @@ export default function VariantArray({
                 <Form.Control
                   as="select"
                   multiple
-                  {...register(`layouts.${index}.products` as const)}
+                  {...register(`variants.${index}.products` as const)}
                   defaultValue={item.products}
-                  isInvalid={!!has(errors, `layouts[${index}].products`)}
+                  isInvalid={!!has(errors, `variants[${index}].products`)}
                 >
                   {levelOptions(project.products).map((element) => (
                     <option
@@ -241,10 +246,10 @@ export default function VariantArray({
                 </Form.Control>
                 {/* TODO: This Feedback do not show */}
                 <Form.Control.Feedback type="invalid">
-                  {errors.layouts &&
-                    errors.layouts[index] &&
-                    errors.layouts[index]?.products &&
-                    renderMultipleErrors(errors.layouts[index]?.products)}
+                  {errors.variants &&
+                    errors.variants[index] &&
+                    errors.variants[index]?.products &&
+                    renderMultipleErrors(errors.variants[index]?.products)}
                 </Form.Control.Feedback>
               </Form.Group>
 

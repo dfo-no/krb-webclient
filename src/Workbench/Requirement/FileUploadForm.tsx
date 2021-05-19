@@ -8,19 +8,19 @@ import { Control, FormState, UseFormRegister } from 'react-hook-form';
 import { get, has } from 'lodash';
 import { BsTrashFill } from 'react-icons/bs';
 import { Requirement } from '../../models/Requirement';
-import { IFileUploadAlternative } from '../../models/IFileUploadAlternative';
+import { IFileUploadQuestion } from '../../models/IFileUploadQuestion';
 
 type IProps = {
   control: Control<Requirement>;
   register: UseFormRegister<Requirement>;
   formState: FormState<Requirement>;
-  item: IFileUploadAlternative;
+  item: IFileUploadQuestion;
   vIndex: number;
   aIndex: number;
   remove: (i: number) => void;
 };
 
-export default function FileUploadAlternative({
+export default function FileUploadForm({
   remove,
   register,
   formState: { errors },
@@ -45,7 +45,7 @@ export default function FileUploadAlternative({
         <Form.Control
           as="input"
           type="hidden"
-          {...register(`layouts.${vIndex}.alternatives.${aIndex}.id` as const)}
+          {...register(`variants.${vIndex}.alternatives.${aIndex}.id` as const)}
           defaultValue={item.id}
         />
 
@@ -53,7 +53,7 @@ export default function FileUploadAlternative({
           as="input"
           type="hidden"
           {...register(
-            `layouts.${vIndex}.alternatives.${aIndex}.type` as const
+            `variants.${vIndex}.alternatives.${aIndex}.type` as const
           )}
           defaultValue={item.type}
         />
@@ -64,13 +64,13 @@ export default function FileUploadAlternative({
           <Col sm="4">
             <Form.Control
               {...register(
-                `layouts.${vIndex}.alternatives.${aIndex}.fileEndings` as const
+                `variants.${vIndex}.alternatives.${aIndex}.config.fileEndings` as const
               )}
-              defaultValue={item.fileEndings}
+              defaultValue={item?.config?.fileEndings}
               isInvalid={
                 !!has(
                   errors,
-                  `layouts[${vIndex}].alternatives[${aIndex}].fileEndings` as const
+                  `variants[${vIndex}].alternatives[${aIndex}].config.fileEndings` as const
                 )
               }
             />
@@ -78,7 +78,7 @@ export default function FileUploadAlternative({
             <Form.Control.Feedback type="invalid">
               {get(
                 errors,
-                `layouts[${vIndex}].alternatives.[${aIndex}].fileEndings.message`
+                `variants[${vIndex}].alternatives.[${aIndex}].config.fileEndings.message`
               )}
             </Form.Control.Feedback>
           </Col>

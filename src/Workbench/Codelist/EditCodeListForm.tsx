@@ -21,11 +21,12 @@ import Utils from '../../common/Utils';
 import { Need } from '../../models/Need';
 import { Requirement } from '../../models/Requirement';
 import { IVariant } from '../../models/IVariant';
-import { ISelectable } from '../../models/ISelectable';
-import { ICodelistAlternative } from '../../models/ICodelistAlternative';
+import { ICodelistQuestion } from '../../models/ICodelistQuestion';
 import InputRow from '../../Form/InputRow';
 import AlertModal from '../../common/AlertModal';
 import ErrorSummary from '../../Form/ErrorSummary';
+import QuestionType from '../../models/QuestionType';
+import { IAnswerBase, IConfigBase, IQuestionBase } from '../../models/Question';
 
 type FormValues = {
   title: string;
@@ -91,13 +92,20 @@ function EditCodeListForm({ toggleShow, codelistId }: IProps): ReactElement {
     let used = false;
     project.needs.forEach((need: Need) => {
       need.requirements.forEach((requirement: Requirement) => {
-        requirement.layouts.forEach((variant: IVariant) => {
-          variant.alternatives.forEach((alternative: ISelectable) => {
-            if (alternative.type === 'codelist') {
-              const alt = alternative as ICodelistAlternative;
-              if (alt.codelist === codelistId) used = true;
+        requirement.variants.forEach((variant: IVariant) => {
+          variant.alternatives.forEach(
+            (alternative: IQuestionBase<IAnswerBase, IConfigBase>) => {
+              if (alternative.type === QuestionType.Q_CODELIST) {
+                const alt = alternative as ICodelistQuestion;
+                if (
+                  alt.answer &&
+                  alt.answer.codelist &&
+                  alt.answer.codelist === codelistId
+                )
+                  used = true;
+              }
             }
-          });
+          );
         });
       });
     });

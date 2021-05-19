@@ -33,7 +33,7 @@ export default function SpesificationRequirement({
       dispatch(addRequirement(requirement.id));
     } else {
       dispatch(removeRequirement(requirement.id));
-      requirement.layouts.forEach((variant) => {
+      requirement.variants.forEach((variant) => {
         if (
           spec.requirementAnswers.find(
             (answer) => answer.reqTextId === variant.id

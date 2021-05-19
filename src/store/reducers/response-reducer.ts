@@ -3,7 +3,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { Specification } from '../../models/Specification';
 import { Response } from '../../models/Response';
 import { ResponseProduct } from '../../models/ResponseProduct';
-import MODELTYPE from '../../models/ModelType';
+import ModelType from '../../models/ModelType';
 import { Bank } from '../../models/Bank';
 
 interface ResponseState {
@@ -21,7 +21,7 @@ const initialState: ResponseState = {
         products: [],
         codelist: [],
         version: 0,
-        type: MODELTYPE.bank,
+        type: ModelType.bank,
         publications: []
       },
       title: '',

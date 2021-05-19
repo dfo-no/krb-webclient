@@ -58,15 +58,15 @@ export default function RequirementPage(): ReactElement {
       if (selected) {
         let requirementText;
         let selectedAnswer;
-        req.layouts.forEach((layout) => {
+        req.variants.forEach((variant) => {
           if (
             response.spesification.requirementAnswers.find(
-              (answer) => answer.reqTextId === layout.id
+              (answer) => answer.reqTextId === variant.id
             )
           ) {
-            requirementText = layout.requirementText;
+            requirementText = variant.requirementText;
             const index = response.spesification.requirementAnswers.findIndex(
-              (answer) => answer.reqTextId === layout.id
+              (answer) => answer.reqTextId === variant.id
             );
             selectedAnswer = response.spesification.requirementAnswers[index];
           }

@@ -83,7 +83,7 @@ export default function ProductForm({ element }: IProps): ReactElement {
     let used = false;
     project.needs.forEach((need: Need) => {
       need.requirements.forEach((requirement: Requirement) => {
-        requirement.layouts.forEach((variant: IVariant) => {
+        requirement.variants.forEach((variant: IVariant) => {
           if (variant.products.includes(element.id)) {
             used = true;
           }

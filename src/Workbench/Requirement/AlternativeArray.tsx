@@ -12,23 +12,26 @@ import {
 
 import { v4 as uuidv4 } from 'uuid';
 
-import CodeListAlternative from './CodeListAlternative';
-import ValueAlternative from './ValueAlternative';
-import TextAlternative from './TextAlternative';
-import PeriodDateAlternative from './PeriodDateAlternative';
-import TimeAlternative from './TimeAlternative';
-import YesNoAlternative from './YesNoAlternative';
-import FileUploadAlternative from './FileUploadAlternative';
 import { Requirement } from '../../models/Requirement';
 import { Bank } from '../../models/Bank';
-import { IValueAlternative } from '../../models/IValueAlternative';
-import { ICodelistAlternative } from '../../models/ICodelistAlternative';
-import { ITextAlternative } from '../../models/ITextAlternative';
-import { IPeriodDateAlternative } from '../../models/IPeriodDateAlternative';
-import { ITimeAlternative } from '../../models/ITimeAlternative';
-import { IYesNoAlternative } from '../../models/IYesNoAlternative';
-import { IFileUploadAlternative } from '../../models/IFileUploadAlternative';
-import { AlternativeType } from '../../models/IVariant';
+
+import CodeListForm from './CodeListForm';
+import { ICodelistQuestion } from '../../models/ICodelistQuestion';
+import SliderForm from './SliderForm';
+import { ISliderQuestion } from '../../models/ISliderQuestion';
+import TextForm from './TextForm';
+import { ITextQuestion } from '../../models/ITextQuestion';
+import PeriodDateForm from './PeriodDateForm';
+import { IPeriodDateQuestion } from '../../models/IPeriodDateQuestion';
+import FileUploadForm from './FileUploadForm';
+import { IFileUploadQuestion } from '../../models/IFileUploadQuestion';
+import CheckboxForm from './CheckboxForm';
+import { ICheckboxQuestion } from '../../models/ICheckboxQuestion';
+import TimeForm from './TimeForm';
+import { ITimeQuestion } from '../../models/ITimeQuestion';
+
+import QuestionType from '../../models/QuestionType';
+import { AlternativeType } from '../../models/AlternativeType';
 
 type IProps = {
   control: Control<Requirement>;
@@ -46,7 +49,7 @@ export default function AlternativeArray({
   project
 }: IProps): ReactElement {
   const { fields, append, remove } = useFieldArray({
-    name: `layouts.${variantIndex}.alternatives` as 'layouts.0.alternatives',
+    name: `variants.${variantIndex}.alternatives` as 'variants.0.alternatives',
     keyName: 'guid',
     control
   });
@@ -54,55 +57,60 @@ export default function AlternativeArray({
   const [getAlternative, setAlternativeSelected] = useState('value');
 
   const addAlternative = () => {
-    if (getAlternative === 'value') {
+    if (getAlternative === QuestionType.Q_SLIDER) {
       append({
         id: uuidv4(),
-        min: 0,
-        max: 0,
-        step: 1,
-        unit: '',
-        type: 'value'
-      } as IValueAlternative);
-    } else if (getAlternative === 'codelist') {
+        type: QuestionType.Q_SLIDER,
+        config: {
+          min: 0,
+          max: 0,
+          step: 1,
+          unit: ''
+        }
+      } as ISliderQuestion);
+    } else if (getAlternative === QuestionType.Q_CODELIST) {
       append({
         id: uuidv4(),
-        codelist: project.codelist[0].id,
-        type: 'codelist'
-      } as ICodelistAlternative);
-    } else if (getAlternative === 'text') {
+        type: QuestionType.Q_CODELIST
+      } as ICodelistQuestion);
+    } else if (getAlternative === QuestionType.Q_TEXT) {
       append({
         id: uuidv4(),
-        max: 0,
-        text: '',
-        type: 'text'
-      } as ITextAlternative);
-    } else if (getAlternative === 'periodDate') {
+        type: QuestionType.Q_TEXT,
+        config: {
+          max: 0
+        }
+      } as ITextQuestion);
+    } else if (getAlternative === QuestionType.Q_PERIOD_DATE) {
       append({
         id: uuidv4(),
-        minDays: 0,
-        maxDays: 0,
-        fromDate: '',
-        toDate: '',
-        type: 'periodDate'
-      } as IPeriodDateAlternative);
-    } else if (getAlternative === 'time') {
+        type: QuestionType.Q_PERIOD_DATE,
+        config: {
+          minDays: 0,
+          maxDays: 0,
+          fromDate: '',
+          toDate: ''
+        }
+      } as IPeriodDateQuestion);
+    } else if (getAlternative === QuestionType.Q_TIME) {
       append({
         id: uuidv4(),
-        fromTime: '',
-        toTime: '',
-        type: 'time'
-      } as ITimeAlternative);
-    } else if (getAlternative === 'yesNo') {
+        type: QuestionType.Q_TIME,
+        config: {
+          fromTime: '',
+          toTime: ''
+        }
+      } as ITimeQuestion);
+    } else if (getAlternative === QuestionType.Q_CHECKBOX) {
       append({
         id: uuidv4(),
-        type: 'yesNo'
-      } as IYesNoAlternative);
-    } else if (getAlternative === 'fileUpload') {
+        type: QuestionType.Q_CHECKBOX
+      } as ICheckboxQuestion);
+    } else if (getAlternative === QuestionType.Q_FILEUPLOAD) {
       append({
         id: uuidv4(),
-        type: 'fileUpload',
-        fileEndings: ''
-      } as IFileUploadAlternative);
+        type: QuestionType.Q_FILEUPLOAD
+      } as IFileUploadQuestion);
     }
   };
 
@@ -118,96 +126,98 @@ export default function AlternativeArray({
             as="select"
             onChange={(e) => setAlternativeSelected(e.currentTarget.value)}
           >
-            <option value="value">Value</option>
+            <option value="">...</option>
+            <option value={QuestionType.Q_SLIDER}>Value</option>
             {project.codelist && project.codelist.length > 0 && (
-              <option value="codelist">Codelist</option>
+              <option value={QuestionType.Q_CODELIST}>Codelist</option>
             )}
-            <option value="text">Text</option>
-            <option value="periodDate">Period</option>
-            <option value="time">Time</option>
-            <option value="yesNo">Yes/No </option>
-            <option value="fileUpload">File upload </option>
+            <option value={QuestionType.Q_TEXT}>Text</option>
+            <option value={QuestionType.Q_PERIOD_DATE}>Period</option>
+            <option value={QuestionType.Q_TIME}>Time</option>
+            <option value={QuestionType.Q_CHECKBOX}>Yes/No </option>
+            <option value={QuestionType.Q_FILEUPLOAD}>File upload </option>
           </Form.Control>
         </Col>
         <Button onClick={() => addAlternative()}>Add</Button>
       </Form.Group>
+
       {fields.map((item: AlternativeType, index) => {
         return (
           <div key={item.id}>
-            {item.type === 'value' && (
-              <ValueAlternative
+            {item.type === QuestionType.Q_SLIDER && (
+              <SliderForm
                 control={control}
                 register={register}
                 formState={formState}
-                item={item as IValueAlternative}
+                item={item}
                 vIndex={variantIndex}
                 aIndex={index}
                 remove={remove}
               />
             )}
 
-            {item.type === 'codelist' && (
-              <CodeListAlternative
+            {item.type === QuestionType.Q_CODELIST && (
+              <CodeListForm
                 control={control}
                 register={register}
                 formState={formState}
-                item={item as ICodelistAlternative}
+                item={item}
                 vIndex={variantIndex}
                 aIndex={index}
                 project={project}
                 remove={remove}
               />
             )}
-            {item.type === 'text' && (
-              <TextAlternative
+            {item.type === QuestionType.Q_TEXT && (
+              <TextForm
                 control={control}
                 register={register}
                 formState={formState}
-                item={item as ITextAlternative}
+                item={item}
                 vIndex={variantIndex}
                 aIndex={index}
                 remove={remove}
               />
             )}
-            {item.type === 'periodDate' && (
-              <PeriodDateAlternative
+            {item.type === QuestionType.Q_PERIOD_DATE && (
+              <PeriodDateForm
                 control={control}
                 register={register}
                 formState={formState}
-                item={item as IPeriodDateAlternative}
+                item={item}
                 vIndex={variantIndex}
                 aIndex={index}
                 remove={remove}
               />
             )}
-            {item.type === 'yesNo' && (
-              <YesNoAlternative
+            {item.type === QuestionType.Q_CHECKBOX && (
+              <CheckboxForm
                 control={control}
                 register={register}
                 formState={formState}
-                item={item as IYesNoAlternative}
+                item={item}
                 vIndex={variantIndex}
                 aIndex={index}
                 remove={remove}
               />
             )}
-            {item.type === 'time' && (
-              <TimeAlternative
+            {item.type === QuestionType.Q_TIME && (
+              <TimeForm
                 control={control}
                 register={register}
                 formState={formState}
-                item={item as ITimeAlternative}
+                item={item}
                 vIndex={variantIndex}
                 aIndex={index}
                 remove={remove}
               />
             )}
-            {item.type === 'fileUpload' && (
-              <FileUploadAlternative
+            {item.type === QuestionType.Q_FILEUPLOAD && (
+              <FileUploadForm
                 control={control}
                 register={register}
                 formState={formState}
-                item={item as IFileUploadAlternative}
+                item={item}
                 vIndex={variantIndex}
                 aIndex={index}
                 remove={remove}

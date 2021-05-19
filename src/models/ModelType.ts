@@ -1,4 +1,4 @@
-enum MODELTYPE {
+enum ModelType {
   bank = 'bank',
   code = 'code',
   codelist = 'codelist',
@@ -10,4 +10,4 @@ enum MODELTYPE {
   responseProduct = 'responseProduct'
 }
 
-export default MODELTYPE;
+export default ModelType;

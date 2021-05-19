@@ -5,23 +5,25 @@ import Row from 'react-bootstrap/Row';
 import Button from 'react-bootstrap/Button';
 import { BsTrashFill } from 'react-icons/bs';
 import { Control, FormState, UseFormRegister } from 'react-hook-form';
-import { Requirement } from '../../models/Requirement';
 
-import { IYesNoAlternative } from '../../models/IYesNoAlternative';
+import { Requirement } from '../../models/Requirement';
+import { ICodelistQuestion } from '../../models/ICodelistQuestion';
+import { Bank } from '../../models/Bank';
 
 type IProps = {
   control: Control<Requirement>;
   register: UseFormRegister<Requirement>;
   formState: FormState<Requirement>;
-  item: IYesNoAlternative;
+  item: ICodelistQuestion;
   vIndex: number;
   aIndex: number;
   remove: (i: number) => void;
+  project: Bank;
 };
 
-export default function YesNoAlternative({
-  register,
+export default function CodeListForm({
   remove,
+  register,
   item,
   vIndex,
   aIndex
@@ -29,8 +31,8 @@ export default function YesNoAlternative({
   return (
     <Card className="mb-3">
       <Card.Body>
-        <Row className="m-1 d-flex justify-content-between">
-          <h6>Alternative: Yes/No</h6>
+        <Row className=" m-1 d-flex justify-content-between">
+          <h6>Alternative: Codelist</h6>
           <Button
             className="mb-3"
             type="button"
@@ -43,14 +45,14 @@ export default function YesNoAlternative({
         <Form.Control
           as="input"
           type="hidden"
-          {...register(`layouts.${vIndex}.alternatives.${aIndex}.id` as const)}
+          {...register(`variants.${vIndex}.alternatives.${aIndex}.id` as const)}
           defaultValue={item.id}
         />
         <Form.Control
           as="input"
           type="hidden"
           {...register(
-            `layouts.${vIndex}.alternatives.${aIndex}.type` as const
+            `variants.${vIndex}.alternatives.${aIndex}.type` as const
           )}
           defaultValue={item.type}
         />

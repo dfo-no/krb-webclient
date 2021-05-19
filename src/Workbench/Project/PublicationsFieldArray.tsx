@@ -16,7 +16,7 @@ import formatISO from 'date-fns/formatISO';
 
 import { useTranslation } from 'react-i18next';
 import { Publication } from '../../models/Publication';
-import MODELTYPE from '../../models/ModelType';
+import ModelType from '../../models/ModelType';
 import SuccessAlert from '../SuccessAlert';
 import css from './PublicationList.module.scss';
 import * as Constants from '../../common/Constants';
@@ -66,7 +66,7 @@ export default function PublicationsFieldArray({
         date: convertedDate,
         version: nextVersion,
         bankId: projectId,
-        type: MODELTYPE.publication
+        type: ModelType.publication
       });
     }
   };

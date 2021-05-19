@@ -36,7 +36,7 @@ type FormValue = {
 const alternativeSchema = Joi.object().keys({
   alternative: Joi.string().required(),
   weight: Joi.number().integer().min(1).required(),
-  layout: Joi.string()
+  variant: Joi.string()
 });
 
 export default function ProductRequirementAnswer({
@@ -44,6 +44,7 @@ export default function ProductRequirementAnswer({
   productId
 }: IProps): ReactElement {
   const dispatch = useDispatch();
+  const { t } = useTranslation();
   const {
     register,
     handleSubmit,
@@ -53,29 +54,30 @@ export default function ProductRequirementAnswer({
   });
   const { spec } = useSelector((state: RootState) => state.specification);
   const { id } = useSelector((state: RootState) => state.selectedBank);
-  const [selectedLayout, setSelectedLayout] = useState(requirement.layouts[0]);
-  const { t } = useTranslation();
+  const [selectedVariant, setSelectedVariant] = useState(
+    requirement.variants[0]
+  );
   const specProduct = Utils.ensure(
     spec.products.find(
       (product: SpecificationProduct) => product.id === productId
     )
   );
   const savedAlternative = specProduct.requirementAnswers.find(
-    (alt) => alt.reqTextId === selectedLayout.id
+    (alt) => alt.reqTextId === selectedVariant.id
   );
   const [selectedAlternative, setSelectedAlternative] = useState<
     string | undefined
   >(savedAlternative !== undefined ? savedAlternative.id : undefined);
   const saveAnswer = (post: FormValue) => {
-    const alternativeIndex = selectedLayout.alternatives.findIndex(
+    const alternativeIndex = selectedVariant.alternatives.findIndex(
       (alt) => alt.id === post.alternative
     );
-    const alternative = selectedLayout.alternatives[alternativeIndex];
+    const alternative = selectedVariant.alternatives[alternativeIndex];
     const newAnswer = {
       id: uuidv4(),
       alternativeId: post.alternative,
       weight: post.weight,
-      reqTextId: selectedLayout.id,
+      reqTextId: selectedVariant.id,
       alternative,
       type: 'product'
     };
@@ -86,9 +88,9 @@ export default function ProductRequirementAnswer({
   function handleChange(event: React.ChangeEvent<HTMLSelectElement>) {
     const variantId = event.target.value;
     const variant = Utils.ensure(
-      requirement.layouts.find((element: IVariant) => element.id === variantId)
+      requirement.variants.find((element: IVariant) => element.id === variantId)
     );
-    selectedLayout.alternatives.forEach((alternative) => {
+    selectedVariant.alternatives.forEach((alternative) => {
       if (
         specProduct.requirementAnswers.find(
           (answer) => answer.alternativeId === alternative.id
@@ -105,7 +107,7 @@ export default function ProductRequirementAnswer({
         );
       }
     });
-    setSelectedLayout(variant);
+    setSelectedVariant(variant);
   }
 
   const selectAlt = () => {
@@ -113,23 +115,23 @@ export default function ProductRequirementAnswer({
       dispatch(selectAlternative(selectedAlternative));
   };
   function findDefaultRequirementText(): string {
-    let defaultText = requirement.layouts[0].id;
-    requirement.layouts.forEach((layout) => {
+    let defaultText = requirement.variants[0].id;
+    requirement.variants.forEach((variant) => {
       if (
         specProduct.requirementAnswers.find(
-          (answer) => answer.reqTextId === layout.id
+          (answer) => answer.reqTextId === variant.id
         )
       ) {
-        defaultText = layout.id;
+        defaultText = variant.id;
       }
     });
     return defaultText;
   }
 
   function findDefaultAnswerOption(): [string, number] {
-    let defaultText = selectedLayout.alternatives[0].id;
+    let defaultText = selectedVariant.alternatives[0].id;
     let defaultWeight = 0;
-    selectedLayout.alternatives.forEach((alternative) => {
+    selectedVariant.alternatives.forEach((alternative) => {
       if (
         specProduct.requirementAnswers.find(
           (answer) => answer.alternativeId === alternative.id
@@ -146,14 +148,14 @@ export default function ProductRequirementAnswer({
   }
 
   const reqTextOptions = (req: Requirement) => {
-    const reqText = req.layouts.map((layout) => {
-      if (req.layouts.length === 1) {
-        return <p>{layout.requirementText}</p>;
+    const reqText = req.variants.map((variant) => {
+      if (req.variants.length === 1) {
+        return <p>{variant.requirementText}</p>;
       }
-      if (layout.use_Product) {
+      if (variant.use_Product) {
         return (
-          <option key={layout.id} value={layout.id}>
-            {layout.requirementText}
+          <option key={variant.id} value={variant.id}>
+            {variant.requirementText}
           </option>
         );
       }
@@ -162,25 +164,25 @@ export default function ProductRequirementAnswer({
 
     return (
       <Col>
-        {requirement.layouts.length > 1 && (
+        {requirement.variants.length > 1 && (
           <Form.Control
             as="select"
-            {...register('layout')}
+            {...register('variant')}
             onChange={handleChange}
             defaultValue={findDefaultRequirementText()}
           >
             {reqText}
           </Form.Control>
         )}
-        {requirement.layouts.length <= 1 && (
-          <p>{requirement.layouts[0].requirementText}</p>
+        {requirement.variants.length <= 1 && (
+          <p>{requirement.variants[0].requirementText}</p>
         )}
       </Col>
     );
   };
 
-  const answerOptions = (layout: IVariant) => {
-    const answers = layout.alternatives.map((alternative) => {
+  const answerOptions = (variant: IVariant) => {
+    const answers = variant.alternatives.map((alternative) => {
       return (
         <option key={alternative.id} value={alternative.id}>
           {alternative.type}
@@ -237,7 +239,7 @@ export default function ProductRequirementAnswer({
       <Card.Body>
         <Row>
           {reqTextOptions(requirement)}
-          {answerOptions(selectedLayout)}
+          {answerOptions(selectedVariant)}
         </Row>
       </Card.Body>
     </Card>

@@ -3,50 +3,40 @@ import Card from 'react-bootstrap/Card';
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import Joi from 'joi';
 import { joiResolver } from '@hookform/resolvers/joi';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import Button from 'react-bootstrap/Button';
 import { useTranslation } from 'react-i18next';
 import { RequirementAnswer } from '../../../models/RequirementAnswer';
-import { IFileUploadAlternative } from '../../../models/IFileUploadAlternative';
+import { IFileUploadQuestion } from '../../../models/IFileUploadQuestion';
 import {
   editAnswer,
   editProductAnswer
 } from '../../../store/reducers/spesification-reducer';
 import { RootState } from '../../../store/store';
 import ErrorSummary from '../../../Form/ErrorSummary';
-
-const fileUploadSchema = Joi.object().keys({
-  id: Joi.string().required(),
-  type: Joi.string().equal('fileUpload').required(),
-  fileEndings: Joi.string().allow('')
-});
+import { FileUploadSchema } from '../../../Workbench/Requirement/RequirementEditor';
 
 interface IProps {
   parentAnswer: RequirementAnswer;
 }
-
-type FormValues = {
-  fileEndings: string;
-};
 
 export default function FileInputForm({ parentAnswer }: IProps): ReactElement {
   const {
     register,
     handleSubmit,
     formState: { errors }
-  } = useForm({
-    resolver: joiResolver(fileUploadSchema),
+  } = useForm<IFileUploadQuestion>({
+    resolver: joiResolver(FileUploadSchema),
     defaultValues: {
-      ...(parentAnswer.alternative as IFileUploadAlternative)
+      ...(parentAnswer.alternative as IFileUploadQuestion)
     }
   });
   const { productId } = useSelector(
     (state: RootState) => state.selectedSpecProduct
   );
-  const item = parentAnswer.alternative as IFileUploadAlternative;
+  const item = parentAnswer.alternative as IFileUploadQuestion;
   const dispatch = useDispatch();
   const { t } = useTranslation();
 
@@ -54,10 +44,10 @@ export default function FileInputForm({ parentAnswer }: IProps): ReactElement {
     return <p>No product selected</p>;
   }
 
-  const saveValues = (post: FormValues) => {
+  const saveValues = (post: IFileUploadQuestion) => {
     const newAlt = {
       ...item,
-      fileEndings: post.fileEndings
+      fileEndings: post.config.fileEndings
     };
     const newAnswer = {
       ...parentAnswer
@@ -95,12 +85,12 @@ export default function FileInputForm({ parentAnswer }: IProps): ReactElement {
             <Col sm="4">
               <Form.Control
                 type="input"
-                {...register('fileEndings')}
-                isInvalid={!!errors.fileEndings}
+                {...register('config.fileEndings')}
+                isInvalid={!!errors?.config?.fileEndings}
               />
-              {errors.fileEndings && (
+              {errors?.config?.fileEndings && (
                 <Form.Control.Feedback type="invalid">
-                  {errors.fileEndings.message}
+                  {errors.config.fileEndings.message}
                 </Form.Control.Feedback>
               )}
             </Col>

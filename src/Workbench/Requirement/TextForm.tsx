@@ -1,54 +1,38 @@
 import React, { ReactElement } from 'react';
 import Card from 'react-bootstrap/Card';
-import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
 import Button from 'react-bootstrap/Button';
 import { BsTrashFill } from 'react-icons/bs';
 import { Control, FormState, UseFormRegister } from 'react-hook-form';
-import { has } from 'lodash';
-
+import { get, has } from 'lodash';
 import { Requirement } from '../../models/Requirement';
-import { ICodelistAlternative } from '../../models/ICodelistAlternative';
-import { Bank } from '../../models/Bank';
+import { ITextQuestion } from '../../models/ITextQuestion';
 
 type IProps = {
   control: Control<Requirement>;
   register: UseFormRegister<Requirement>;
   formState: FormState<Requirement>;
-  item: ICodelistAlternative;
+  item: ITextQuestion;
   vIndex: number;
   aIndex: number;
   remove: (i: number) => void;
-  project: Bank;
 };
 
-export default function CodeListAlternative({
+export default function TextForm({
   remove,
   register,
   formState: { errors },
   item,
   vIndex,
-  aIndex,
-  project
+  aIndex
 }: IProps): ReactElement {
-  const renderOptions = () => {
-    if (project.codelist) {
-      return project.codelist.map((element) => {
-        return (
-          <option key={element.id} value={element.id}>
-            {element.title}
-          </option>
-        );
-      });
-    }
-    return null;
-  };
   return (
     <Card className="mb-3">
       <Card.Body>
-        <Row className=" m-1 d-flex justify-content-between">
-          <h6>Alternative: Codelist</h6>
+        <Row className="m-1 d-flex justify-content-between">
+          <h6>Alternative: Text</h6>
           <Button
             className="mb-3"
             type="button"
@@ -61,38 +45,42 @@ export default function CodeListAlternative({
         <Form.Control
           as="input"
           type="hidden"
-          {...register(`layouts.${vIndex}.alternatives.${aIndex}.id` as const)}
+          {...register(`variants.${vIndex}.alternatives.${aIndex}.id` as const)}
           defaultValue={item.id}
         />
+
         <Form.Control
           as="input"
           type="hidden"
           {...register(
-            `layouts.${vIndex}.alternatives.${aIndex}.type` as const
+            `variants.${vIndex}.alternatives.${aIndex}.type` as const
           )}
           defaultValue={item.type}
         />
         <Form.Group as={Row}>
           <Form.Label column sm="2">
-            Custom select
+            Max
           </Form.Label>
-          <Col sm="10">
+          <Col sm="4">
             <Form.Control
-              as="select"
-              custom
+              type="number"
               {...register(
-                `layouts.${vIndex}.alternatives.${aIndex}.codelist` as const
+                `variants.${vIndex}.alternatives.${aIndex}.config.max` as const
               )}
-              defaultValue={item.codelist}
+              defaultValue={item.config.max}
               isInvalid={
                 !!has(
                   errors,
-                  `layouts[${vIndex}].alternatives[${aIndex}].codelist` as const
+                  `variants[${vIndex}].alternatives[${aIndex}].config.max` as const
                 )
               }
-            >
-              {renderOptions()}
-            </Form.Control>
+            />
+            <Form.Control.Feedback type="invalid">
+              {get(
+                errors,
+                `variants[${vIndex}].alternatives.[${aIndex}].config.max.message`
+              )}
+            </Form.Control.Feedback>
           </Col>
         </Form.Group>
       </Card.Body>
