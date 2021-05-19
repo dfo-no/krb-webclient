@@ -149,7 +149,7 @@ export default function AlternativeArray({
                 control={control}
                 register={register}
                 formState={formState}
-                item={item as ISliderQuestion}
+                item={item}
                 vIndex={variantIndex}
                 aIndex={index}
                 remove={remove}
@@ -161,7 +161,7 @@ export default function AlternativeArray({
                 control={control}
                 register={register}
                 formState={formState}
-                item={item as ICodelistQuestion}
+                item={item}
                 vIndex={variantIndex}
                 aIndex={index}
                 project={project}
@@ -173,7 +173,7 @@ export default function AlternativeArray({
                 control={control}
                 register={register}
                 formState={formState}
-                item={item as ITextQuestion}
+                item={item}
                 vIndex={variantIndex}
                 aIndex={index}
                 remove={remove}
@@ -184,7 +184,7 @@ export default function AlternativeArray({
                 control={control}
                 register={register}
                 formState={formState}
-                item={item as IPeriodDateQuestion}
+                item={item}
                 vIndex={variantIndex}
                 aIndex={index}
                 remove={remove}
@@ -195,7 +195,7 @@ export default function AlternativeArray({
                 control={control}
                 register={register}
                 formState={formState}
-                item={item as ICheckboxQuestion}
+                item={item}
                 vIndex={variantIndex}
                 aIndex={index}
                 remove={remove}
@@ -206,7 +206,7 @@ export default function AlternativeArray({
                 control={control}
                 register={register}
                 formState={formState}
-                item={item as ITimeQuestion}
+                item={item}
                 vIndex={variantIndex}
                 aIndex={index}
                 remove={remove}
@@ -217,7 +217,7 @@ export default function AlternativeArray({
                 control={control}
                 register={register}
                 formState={formState}
-                item={item as IFileUploadQuestion}
+                item={item}
                 vIndex={variantIndex}
                 aIndex={index}
                 remove={remove}
