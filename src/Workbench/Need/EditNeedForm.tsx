@@ -101,13 +101,18 @@ function EditNeedForm({ element }: IProps): ReactElement {
       noValidate
       validated={validated}
     >
-      <InputRow control={control} name="title" errors={errors} label="Title" />
+      <InputRow
+        control={control}
+        name="title"
+        errors={errors}
+        label={t('Title')}
+      />
 
       <InputRow
         control={control}
         name="description"
         errors={errors}
-        label="Description"
+        label={t('Description')}
       />
 
       <Form.Control type="hidden" {...register('id')} />
@@ -115,7 +120,7 @@ function EditNeedForm({ element }: IProps): ReactElement {
         {t('save')}
       </Button>
       <Button className="mt-2  ml-3" variant="warning" onClick={removeNeed}>
-        Delete <BsTrashFill />
+        {t('delete')} <BsTrashFill />
       </Button>
       <ErrorSummary errors={errors} />
       <AlertModal

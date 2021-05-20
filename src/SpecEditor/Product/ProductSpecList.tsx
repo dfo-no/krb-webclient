@@ -9,6 +9,7 @@ import { BsPencil } from 'react-icons/bs';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useRouteMatch } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
+import { useTranslation } from 'react-i18next';
 import Utils from '../../common/Utils';
 import { Bank } from '../../models/Bank';
 import { Product } from '../../models/Product';
@@ -34,6 +35,7 @@ export default function ProductSpecList(): ReactElement {
   const { id } = useSelector((state: RootState) => state.selectedBank);
   const { list } = useSelector((state: RootState) => state.bank);
   const { spec } = useSelector((state: RootState) => state.specification);
+  const { t } = useTranslation();
   const {
     register,
     handleSubmit,
@@ -140,7 +142,7 @@ export default function ProductSpecList(): ReactElement {
         autoComplete="off"
       >
         <Row>
-          <h2 className="m-4">Product selection</h2>
+          <h2 className="m-4">{t('product selection')}</h2>
         </Row>
         <Row className="ml-2 mt-4">
           <Col>
@@ -149,11 +151,11 @@ export default function ProductSpecList(): ReactElement {
             </Form.Control>
           </Col>
           <Col>
-            <Button type="submit">Add</Button>
+            <Button type="submit">{t('add')}</Button>
           </Col>
         </Row>
         <Row className="m-4">
-          <h4>Products</h4>
+          <h4>{t('Products')}</h4>
         </Row>
         <Row className=" ml-4">{productList(spec.products)}</Row>
         <ErrorSummary errors={errors} />

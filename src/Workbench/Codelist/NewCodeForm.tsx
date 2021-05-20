@@ -88,13 +88,13 @@ function NewCodeForm({
             control={control}
             name="title"
             errors={errors}
-            label="Title"
+            label={t('Title')}
           />
           <InputRow
             control={control}
             name="description"
             errors={errors}
-            label="Description"
+            label={t('Description')}
           />
           <Row>
             <Button className="mt-2  ml-3" type="submit">

@@ -142,7 +142,7 @@ export default function PublicationsFieldArray({
                     type="submit"
                     ref={publishButtonRef}
                   >
-                    Publish
+                    {t('publish')}
                   </Button>
                 </>
               ) : (

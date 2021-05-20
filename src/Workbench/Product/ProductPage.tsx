@@ -3,6 +3,7 @@ import Button from 'react-bootstrap/Button';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { useRouteMatch } from 'react-router';
+import { useTranslation } from 'react-i18next';
 import { Product } from '../../models/Product';
 import { RootState } from '../../store/store';
 import {
@@ -29,6 +30,7 @@ export default function ProductPage(): ReactElement {
   const { list } = useSelector((state: RootState) => state.project);
   const [toggleEditor, setToggleEditor] = useState(false);
   const [showAlert, setShowAlert] = useState(false);
+  const { t } = useTranslation();
 
   useEffect(() => {
     async function fetchEverything() {
@@ -78,14 +80,14 @@ export default function ProductPage(): ReactElement {
   return (
     <div className="pb-4">
       <>
-        <h3 className="mt-3">Products</h3>
+        <h3 className="mt-3">{t('Products')}</h3>
         <Button
           onClick={() => {
             setToggleEditor(true);
           }}
           className="mb-4"
         >
-          New Product
+          {t('new product')}
         </Button>
         {showAlert && <SuccessAlert toggleShow={setShowAlert} type="product" />}
         {productEditor(toggleEditor)}

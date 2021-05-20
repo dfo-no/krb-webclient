@@ -62,7 +62,7 @@ export default function SpecEditor(): ReactElement {
           <Form onSubmit={handleSubmit(saveTitle)}>
             <Form.Group as={Row}>
               <Form.Label column sm={2}>
-                Title
+                {t('Title')}
               </Form.Label>
               <Col sm={6}>
                 <FormControl
@@ -85,10 +85,12 @@ export default function SpecEditor(): ReactElement {
         </Col>
       </Row>
       <Row className="m-4">
-        <h4>Bank {selectedBank.title}</h4>
+        <h4>
+          {t('Bank')} {selectedBank.title}
+        </h4>
       </Row>
       <Row className=" m-4 d-flex justify-content-md-end">
-        <Button>Update</Button>
+        <Button>{t('update')}</Button>
       </Row>
     </Container>
   );

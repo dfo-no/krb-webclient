@@ -109,7 +109,12 @@ export default function EditRequirementForm({
       noValidate
       validated={validated}
     >
-      <InputRow name="title" control={control} errors={errors} label="Title" />
+      <InputRow
+        name="title"
+        control={control}
+        errors={errors}
+        label={t('Title')}
+      />
 
       <InputRow
         control={control}
@@ -125,14 +130,14 @@ export default function EditRequirementForm({
           to={`/workbench/${id}/need/${need.id}/requirement/${element.id}/edit`}
           onClick={() => dispatch(selectRequirement(element.id))}
         >
-          <Button className="ml-4 mt-2 ">Edit</Button>
+          <Button className="ml-4 mt-2 ">{t('edit')}</Button>
         </Link>
         <Button
           className="mt-2  ml-3"
           variant="warning"
           onClick={removeRequirement}
         >
-          Delete <BsTrashFill />
+          {t('delete')} <BsTrashFill />
         </Button>
       </Row>
       <ErrorSummary errors={errors} />

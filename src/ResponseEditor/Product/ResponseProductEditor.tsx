@@ -136,7 +136,7 @@ export default function ResponseProductEditor(): ReactElement {
             </Form.Group>
             <Form.Group as={Row}>
               <Form.Label column sm="2">
-                Title
+                {t('Title')}
               </Form.Label>
               <Col sm={10}>
                 <Form.Control
@@ -153,7 +153,7 @@ export default function ResponseProductEditor(): ReactElement {
             </Form.Group>
             <Form.Group as={Row}>
               <Form.Label column sm="2">
-                Description
+                {t('Description')}
               </Form.Label>
               <Col sm={10}>
                 <Form.Control

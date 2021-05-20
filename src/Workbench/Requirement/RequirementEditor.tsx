@@ -294,7 +294,7 @@ export default function RequirementEditor(): ReactElement {
 
         <Form.Group as={Row}>
           <Form.Label column sm={1}>
-            Title
+            {t('Title')}
           </Form.Label>
           <Col sm={8}>
             <Form.Control {...register('title')} isInvalid={!!errors.title} />

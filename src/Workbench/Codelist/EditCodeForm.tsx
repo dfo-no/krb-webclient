@@ -99,14 +99,14 @@ export default function EditCodeForm({ element }: IProps): ReactElement {
         control={control}
         name="description"
         errors={errors}
-        label="Description"
+        label={t('Description')}
       />
       <Row>
         <Button className="mt-2  ml-3" type="submit">
           {t('save')}
         </Button>
         <Button className="mt-2  ml-3" variant="warning" onClick={removeCode}>
-          Delete <BsTrashFill />
+          {t('delete')} <BsTrashFill />
         </Button>
       </Row>
       <ErrorSummary errors={errors} />

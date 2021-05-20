@@ -143,13 +143,13 @@ function WorkbenchPage(): ReactElement {
                 control={control}
                 name="title"
                 errors={errors}
-                label="Title"
+                label={t('Title')}
               />
               <InputRow
                 control={control}
                 name="description"
                 errors={errors}
-                label="Description"
+                label={t('Description')}
               />
               <Button className="mt-2" type="submit">
                 {t('save')}
@@ -165,9 +165,9 @@ function WorkbenchPage(): ReactElement {
 
   return (
     <>
-      <h3 className="mt-3 ">Projects </h3>
+      <h3 className="mt-3 ">{t('Projects')} </h3>
       <Button onClick={handleShowEditor} variant="primary">
-        New Project
+        {t('new project')}
       </Button>
       {showAlert && <SuccessAlert toggleShow={setShowAlert} type="project" />}
       {projectEditor(showEditor)}

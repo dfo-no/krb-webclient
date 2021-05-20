@@ -2,11 +2,13 @@ import React, { ReactElement } from 'react';
 import { useHistory, useRouteMatch } from 'react-router-dom';
 import Navbar from 'react-bootstrap/Navbar';
 import Button from 'react-bootstrap/Button';
+import { useTranslation } from 'react-i18next';
 import css from './Header.module.scss';
 import SignedButton from '../SignedButton/SignedButton';
 
 export default function Header(): ReactElement {
   const history = useHistory();
+  const { t } = useTranslation();
   const home = (): void => {
     history.push('/');
   };
@@ -29,7 +31,7 @@ export default function Header(): ReactElement {
             history.push('/workbench');
           }}
         >
-          All projects
+          {t('all projects')}
         </Button>
       )}
       <div className={css.header__spacer} />

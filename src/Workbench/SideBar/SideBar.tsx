@@ -45,10 +45,12 @@ function SideBar(): ReactElement {
 
   const selectProject = list.find((bank) => bank.id === id);
 
-  const displayTitle = selectProject ? selectProject.title : '<None selected>';
+  const displayTitle = selectProject
+    ? selectProject.title
+    : `<${t('none selected')}>`;
 
   const routes = [
-    { link: `${currentUrl}`, name: `Workbench: ${displayTitle}` },
+    { link: `${currentUrl}`, name: `${t('Workbench')}: ${displayTitle}` },
     { link: `${currentUrl}/need`, name: t('Need') },
     { link: `${currentUrl}/requirement`, name: t('Requirement') },
     { link: `${currentUrl}/codelist`, name: t('Codelist') },
