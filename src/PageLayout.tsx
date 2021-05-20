@@ -7,7 +7,7 @@ import Col from 'react-bootstrap/Col';
 import SignedButton from './SignedButton/SignedButton';
 
 interface Iprops {
-  children: any;
+  children: JSX.Element | JSX.Element[];
 }
 
 export default function PageLayout({ children }: Iprops): ReactElement {
