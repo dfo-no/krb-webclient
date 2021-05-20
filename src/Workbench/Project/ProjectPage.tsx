@@ -92,19 +92,15 @@ function ProjectPage(): ReactElement {
       .unique('date')
   });
 
-  const {
-    control,
-    register,
-    handleSubmit,
-    formState
-  } = useForm<ProjectPublicationForm>({
-    criteriaMode: 'all',
-    resolver: joiResolver(projectSchema),
-    defaultValues: {
-      id: project.id,
-      publications: project.publications
-    }
-  });
+  const { control, register, handleSubmit, formState } =
+    useForm<ProjectPublicationForm>({
+      criteriaMode: 'all',
+      resolver: joiResolver(projectSchema),
+      defaultValues: {
+        id: project.id,
+        publications: project.publications
+      }
+    });
 
   const { errors } = formState;
   const { t } = useTranslation();

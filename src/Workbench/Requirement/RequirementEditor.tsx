@@ -189,17 +189,11 @@ export default function RequirementEditor(): ReactElement {
   const requirement = need.requirements.find((element) => element.id === reqId);
   const defaultValues: Requirement | Record<string, never> =
     requirement !== undefined ? { ...requirement } : {};
-  const {
-    control,
-    register,
-    handleSubmit,
-    formState,
-    getValues,
-    setValue
-  } = useForm<Requirement>({
-    resolver: joiResolver(requirementSchema),
-    defaultValues: { ...requirement }
-  });
+  const { control, register, handleSubmit, formState, getValues, setValue } =
+    useForm<Requirement>({
+      resolver: joiResolver(requirementSchema),
+      defaultValues: { ...requirement }
+    });
 
   const { remove } = useFieldArray({
     keyName: 'guid',
