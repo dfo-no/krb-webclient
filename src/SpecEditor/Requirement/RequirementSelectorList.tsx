@@ -22,7 +22,7 @@ export default function RequirementView({
   const checkIfReqHasVariantMatch = (req: Requirement) => {
     let found = false;
     req.variants.forEach((variant) => {
-      if (variant.use_Spesification === true) found = true;
+      if (variant.useSpesification === true) found = true;
     });
     return found;
   };

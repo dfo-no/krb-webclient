@@ -140,7 +140,7 @@ export default function RequirementAnswer({
       if (req.variants.length === 1) {
         return <p key={variant.id}>{variant.requirementText}</p>;
       }
-      if (variant.use_Spesification) {
+      if (variant.useSpesification) {
         return (
           <option key={variant.id} value={variant.id}>
             {variant.requirementText}

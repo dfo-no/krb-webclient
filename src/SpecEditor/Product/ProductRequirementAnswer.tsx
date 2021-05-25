@@ -152,7 +152,7 @@ export default function ProductRequirementAnswer({
       if (req.variants.length === 1) {
         return <p>{variant.requirementText}</p>;
       }
-      if (variant.use_Product) {
+      if (variant.useProduct) {
         return (
           <option key={variant.id} value={variant.id}>
             {variant.requirementText}

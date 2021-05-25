@@ -92,12 +92,12 @@ const variantSchema = Joi.object().keys({
   id: Joi.string().required(),
   requirementText: Joi.string().required(),
   instruction: Joi.string().required(),
-  use_Product: Joi.boolean().required(),
-  use_Spesification: Joi.boolean().required(),
-  use_Qualification: Joi.boolean().required(),
+  useProduct: Joi.boolean().required(),
+  useSpesification: Joi.boolean().required(),
+  useQualification: Joi.boolean().required(),
   products: Joi.array()
     .items()
-    .when('use_Product', {
+    .when('useProduct', {
       is: true,
       then: Joi.array().items(Joi.string()).min(1).required()
     })
