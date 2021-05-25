@@ -45,16 +45,14 @@ export default function TextForm({
         <Form.Control
           as="input"
           type="hidden"
-          {...register(`variants.${vIndex}.alternatives.${aIndex}.id` as const)}
+          {...register(`variants.${vIndex}.questions.${aIndex}.id` as const)}
           defaultValue={item.id}
         />
 
         <Form.Control
           as="input"
           type="hidden"
-          {...register(
-            `variants.${vIndex}.alternatives.${aIndex}.type` as const
-          )}
+          {...register(`variants.${vIndex}.questions.${aIndex}.type` as const)}
           defaultValue={item.type}
         />
         <Form.Group as={Row}>
@@ -65,20 +63,20 @@ export default function TextForm({
             <Form.Control
               type="number"
               {...register(
-                `variants.${vIndex}.alternatives.${aIndex}.config.max` as const
+                `variants.${vIndex}.questions.${aIndex}.config.max` as const
               )}
               defaultValue={item.config.max}
               isInvalid={
                 !!has(
                   errors,
-                  `variants[${vIndex}].alternatives[${aIndex}].config.max` as const
+                  `variants[${vIndex}].questions[${aIndex}].config.max` as const
                 )
               }
             />
             <Form.Control.Feedback type="invalid">
               {get(
                 errors,
-                `variants[${vIndex}].alternatives.[${aIndex}].config.max.message`
+                `variants[${vIndex}].questions.[${aIndex}].config.max.message`
               )}
             </Form.Control.Feedback>
           </Col>

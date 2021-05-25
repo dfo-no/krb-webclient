@@ -102,7 +102,7 @@ const variantSchema = Joi.object().keys({
       then: Joi.array().items(Joi.string()).min(1).required()
     })
     .required(),
-  alternatives: Joi.array().items(
+  questions: Joi.array().items(
     Joi.alternatives().conditional('.type', {
       switch: [
         { is: QuestionEnum.Q_SLIDER, then: SliderSchema },

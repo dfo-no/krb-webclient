@@ -62,10 +62,10 @@ export default function RequirementAnswer({
 
   const { id } = useSelector((state: RootState) => state.selectedBank);
   const saveAnswer = (post: FormValue) => {
-    const alternativeIndex = selectedVariant.alternatives.findIndex(
+    const alternativeIndex = selectedVariant.questions.findIndex(
       (alt) => alt.id === post.alternative
     );
-    const alternative = selectedVariant.alternatives[alternativeIndex];
+    const alternative = selectedVariant.questions[alternativeIndex];
     const newAnswer = {
       id: uuidv4(),
       alternativeId: post.alternative,
@@ -87,7 +87,7 @@ export default function RequirementAnswer({
     const variant = Utils.ensure(
       requirement.variants.find((element: IVariant) => element.id === variantId)
     );
-    selectedVariant.alternatives.forEach((alternative) => {
+    selectedVariant.questions.forEach((alternative) => {
       if (
         spec.requirementAnswers.find(
           (answer) => answer.alternativeId === alternative.id
@@ -117,9 +117,9 @@ export default function RequirementAnswer({
   }
 
   function findDefaultAnswerOption(): [string, number] {
-    let defaultText = selectedVariant.alternatives[0].id;
+    let defaultText = selectedVariant.questions[0].id;
     let defaultWeight = 0;
-    selectedVariant.alternatives.forEach((alternative) => {
+    selectedVariant.questions.forEach((alternative) => {
       if (
         spec.requirementAnswers.find(
           (answer) => answer.alternativeId === alternative.id
@@ -170,7 +170,7 @@ export default function RequirementAnswer({
   };
 
   const answerOptions = (variant: IVariant) => {
-    const answers = variant.alternatives.map((alternative) => {
+    const answers = variant.questions.map((alternative) => {
       return (
         <option key={alternative.id} value={alternative.id}>
           {alternative.type}

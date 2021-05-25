@@ -8,5 +8,5 @@ export interface IVariant {
   use_Spesification: boolean;
   use_Qualification: boolean;
   products: string[];
-  alternatives: QuestionTypes;
+  questions: QuestionTypes;
 }

@@ -93,7 +93,7 @@ function EditCodeListForm({ toggleShow, codelistId }: IProps): ReactElement {
     project.needs.forEach((need: Need) => {
       need.requirements.forEach((requirement: Requirement) => {
         requirement.variants.forEach((variant: IVariant) => {
-          variant.alternatives.forEach(
+          variant.questions.forEach(
             (alternative: IQuestionBase<IAnswerBase, IConfigBase>) => {
               if (alternative.type === QuestionEnum.Q_CODELIST) {
                 const alt = alternative as ICodelistQuestion;

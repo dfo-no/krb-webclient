@@ -49,7 +49,7 @@ export default function QuestionArray({
   project
 }: IProps): ReactElement {
   const { fields, append, remove } = useFieldArray({
-    name: `variants.${variantIndex}.alternatives` as 'variants.0.alternatives',
+    name: `variants.${variantIndex}.questions` as 'variants.0.questions',
     control
   });
 

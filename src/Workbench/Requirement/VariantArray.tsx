@@ -110,7 +110,7 @@ export default function VariantArray({
             use_Spesification: false,
             use_Qualification: false,
             products: [],
-            alternatives: []
+            questions: []
           });
         }}
       >

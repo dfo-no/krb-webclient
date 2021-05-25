@@ -45,15 +45,13 @@ export default function CodeListForm({
         <Form.Control
           as="input"
           type="hidden"
-          {...register(`variants.${vIndex}.alternatives.${aIndex}.id` as const)}
+          {...register(`variants.${vIndex}.questions.${aIndex}.id` as const)}
           defaultValue={item.id}
         />
         <Form.Control
           as="input"
           type="hidden"
-          {...register(
-            `variants.${vIndex}.alternatives.${aIndex}.type` as const
-          )}
+          {...register(`variants.${vIndex}.questions.${aIndex}.type` as const)}
           defaultValue={item.type}
         />
       </Card.Body>
