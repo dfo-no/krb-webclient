@@ -1,9 +1,9 @@
 import { IAnswerBase, IConfigBase, IQuestionBase } from './Question';
-import QuestionType from './QuestionType';
+import QuestionEnum from './QuestionEnum';
 
 export interface ICheckboxQuestion
   extends IQuestionBase<ICheckboxAnswer, IConfigBase> {
-  type: QuestionType.Q_CHECKBOX;
+  type: QuestionEnum.Q_CHECKBOX;
 }
 
 export interface ICheckboxAnswer extends IAnswerBase {

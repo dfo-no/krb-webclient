@@ -1,9 +1,9 @@
 import { IAnswerBase, IConfigBase, IQuestionBase } from './Question';
-import QuestionType from './QuestionType';
+import QuestionEnum from './QuestionEnum';
 
 export interface ISliderQuestion
   extends IQuestionBase<ISliderAnswer, ISliderConfig> {
-  type: QuestionType.Q_SLIDER;
+  type: QuestionEnum.Q_SLIDER;
 }
 
 export interface ISliderAnswer extends IAnswerBase {

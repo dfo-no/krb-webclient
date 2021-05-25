@@ -25,7 +25,7 @@ import { ICodelistQuestion } from '../../models/ICodelistQuestion';
 import InputRow from '../../Form/InputRow';
 import AlertModal from '../../common/AlertModal';
 import ErrorSummary from '../../Form/ErrorSummary';
-import QuestionType from '../../models/QuestionType';
+import QuestionEnum from '../../models/QuestionEnum';
 import { IAnswerBase, IConfigBase, IQuestionBase } from '../../models/Question';
 
 type FormValues = {
@@ -95,7 +95,7 @@ function EditCodeListForm({ toggleShow, codelistId }: IProps): ReactElement {
         requirement.variants.forEach((variant: IVariant) => {
           variant.alternatives.forEach(
             (alternative: IQuestionBase<IAnswerBase, IConfigBase>) => {
-              if (alternative.type === QuestionType.Q_CODELIST) {
+              if (alternative.type === QuestionEnum.Q_CODELIST) {
                 const alt = alternative as ICodelistQuestion;
                 if (
                   alt.answer &&

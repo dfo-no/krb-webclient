@@ -30,7 +30,7 @@ import { ICheckboxQuestion } from '../../models/ICheckboxQuestion';
 import TimeForm from './TimeForm';
 import { ITimeQuestion } from '../../models/ITimeQuestion';
 
-import QuestionType from '../../models/QuestionType';
+import QuestionEnum from '../../models/QuestionEnum';
 import { AlternativeType } from '../../models/AlternativeType';
 
 type IProps = {
@@ -56,10 +56,10 @@ export default function AlternativeArray({
   const [getAlternative, setAlternativeSelected] = useState('value');
 
   const addAlternative = () => {
-    if (getAlternative === QuestionType.Q_SLIDER) {
+    if (getAlternative === QuestionEnum.Q_SLIDER) {
       append({
         id: uuidv4(),
-        type: QuestionType.Q_SLIDER,
+        type: QuestionEnum.Q_SLIDER,
         config: {
           min: 0,
           max: 0,
@@ -67,23 +67,23 @@ export default function AlternativeArray({
           unit: ''
         }
       } as ISliderQuestion);
-    } else if (getAlternative === QuestionType.Q_CODELIST) {
+    } else if (getAlternative === QuestionEnum.Q_CODELIST) {
       append({
         id: uuidv4(),
-        type: QuestionType.Q_CODELIST
+        type: QuestionEnum.Q_CODELIST
       } as ICodelistQuestion);
-    } else if (getAlternative === QuestionType.Q_TEXT) {
+    } else if (getAlternative === QuestionEnum.Q_TEXT) {
       append({
         id: uuidv4(),
-        type: QuestionType.Q_TEXT,
+        type: QuestionEnum.Q_TEXT,
         config: {
           max: 0
         }
       } as ITextQuestion);
-    } else if (getAlternative === QuestionType.Q_PERIOD_DATE) {
+    } else if (getAlternative === QuestionEnum.Q_PERIOD_DATE) {
       append({
         id: uuidv4(),
-        type: QuestionType.Q_PERIOD_DATE,
+        type: QuestionEnum.Q_PERIOD_DATE,
         config: {
           minDays: 0,
           maxDays: 0,
@@ -91,24 +91,24 @@ export default function AlternativeArray({
           toDate: ''
         }
       } as IPeriodDateQuestion);
-    } else if (getAlternative === QuestionType.Q_TIME) {
+    } else if (getAlternative === QuestionEnum.Q_TIME) {
       append({
         id: uuidv4(),
-        type: QuestionType.Q_TIME,
+        type: QuestionEnum.Q_TIME,
         config: {
           fromTime: '',
           toTime: ''
         }
       } as ITimeQuestion);
-    } else if (getAlternative === QuestionType.Q_CHECKBOX) {
+    } else if (getAlternative === QuestionEnum.Q_CHECKBOX) {
       append({
         id: uuidv4(),
-        type: QuestionType.Q_CHECKBOX
+        type: QuestionEnum.Q_CHECKBOX
       } as ICheckboxQuestion);
-    } else if (getAlternative === QuestionType.Q_FILEUPLOAD) {
+    } else if (getAlternative === QuestionEnum.Q_FILEUPLOAD) {
       append({
         id: uuidv4(),
-        type: QuestionType.Q_FILEUPLOAD
+        type: QuestionEnum.Q_FILEUPLOAD
       } as IFileUploadQuestion);
     }
   };
@@ -126,15 +126,15 @@ export default function AlternativeArray({
             onChange={(e) => setAlternativeSelected(e.currentTarget.value)}
           >
             <option value="">...</option>
-            <option value={QuestionType.Q_SLIDER}>Value</option>
+            <option value={QuestionEnum.Q_SLIDER}>Value</option>
             {project.codelist && project.codelist.length > 0 && (
-              <option value={QuestionType.Q_CODELIST}>Codelist</option>
+              <option value={QuestionEnum.Q_CODELIST}>Codelist</option>
             )}
-            <option value={QuestionType.Q_TEXT}>Text</option>
-            <option value={QuestionType.Q_PERIOD_DATE}>Period</option>
-            <option value={QuestionType.Q_TIME}>Time</option>
-            <option value={QuestionType.Q_CHECKBOX}>Yes/No </option>
-            <option value={QuestionType.Q_FILEUPLOAD}>File upload </option>
+            <option value={QuestionEnum.Q_TEXT}>Text</option>
+            <option value={QuestionEnum.Q_PERIOD_DATE}>Period</option>
+            <option value={QuestionEnum.Q_TIME}>Time</option>
+            <option value={QuestionEnum.Q_CHECKBOX}>Yes/No </option>
+            <option value={QuestionEnum.Q_FILEUPLOAD}>File upload </option>
           </Form.Control>
         </Col>
         <Button onClick={() => addAlternative()}>Add</Button>
@@ -143,7 +143,7 @@ export default function AlternativeArray({
       {fields.map((item: AlternativeType, index) => {
         return (
           <div key={item.id}>
-            {item.type === QuestionType.Q_SLIDER && (
+            {item.type === QuestionEnum.Q_SLIDER && (
               <SliderForm
                 control={control}
                 register={register}
@@ -155,7 +155,7 @@ export default function AlternativeArray({
               />
             )}
 
-            {item.type === QuestionType.Q_CODELIST && (
+            {item.type === QuestionEnum.Q_CODELIST && (
               <CodeListForm
                 control={control}
                 register={register}
@@ -167,7 +167,7 @@ export default function AlternativeArray({
                 remove={remove}
               />
             )}
-            {item.type === QuestionType.Q_TEXT && (
+            {item.type === QuestionEnum.Q_TEXT && (
               <TextForm
                 control={control}
                 register={register}
@@ -178,7 +178,7 @@ export default function AlternativeArray({
                 remove={remove}
               />
             )}
-            {item.type === QuestionType.Q_PERIOD_DATE && (
+            {item.type === QuestionEnum.Q_PERIOD_DATE && (
               <PeriodDateForm
                 control={control}
                 register={register}
@@ -189,7 +189,7 @@ export default function AlternativeArray({
                 remove={remove}
               />
             )}
-            {item.type === QuestionType.Q_CHECKBOX && (
+            {item.type === QuestionEnum.Q_CHECKBOX && (
               <CheckboxForm
                 control={control}
                 register={register}
@@ -200,7 +200,7 @@ export default function AlternativeArray({
                 remove={remove}
               />
             )}
-            {item.type === QuestionType.Q_TIME && (
+            {item.type === QuestionEnum.Q_TIME && (
               <TimeForm
                 control={control}
                 register={register}
@@ -211,7 +211,7 @@ export default function AlternativeArray({
                 remove={remove}
               />
             )}
-            {item.type === QuestionType.Q_FILEUPLOAD && (
+            {item.type === QuestionEnum.Q_FILEUPLOAD && (
               <FileUploadForm
                 control={control}
                 register={register}

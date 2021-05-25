@@ -1,8 +1,8 @@
 import { IAnswerBase, IConfigBase, IQuestionBase } from './Question';
-import QuestionType from './QuestionType';
+import QuestionEnum from './QuestionEnum';
 
 export interface ITimeQuestion extends IQuestionBase<ITimeAnswer, ITimeConfig> {
-  type: QuestionType.Q_TIME;
+  type: QuestionEnum.Q_TIME;
 }
 export interface ITimeAnswer extends IAnswerBase {
   time: string;

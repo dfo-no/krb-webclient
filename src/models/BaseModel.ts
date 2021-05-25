@@ -1,5 +1,5 @@
 import ModelType from './ModelType';
-import QuestionType from './QuestionType';
+import QuestionEnum from './QuestionEnum';
 /**
  * This interface is meant to be the most basic that can be saved
  * seperately in CosmosDB. Eventually the `type` property will be the marker that this is a separate
@@ -8,5 +8,5 @@ import QuestionType from './QuestionType';
 
 export interface BaseModel {
   id: string;
-  type: ModelType | QuestionType;
+  type: ModelType | QuestionEnum;
 }

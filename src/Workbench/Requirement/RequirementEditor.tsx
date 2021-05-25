@@ -26,11 +26,11 @@ import { Need } from '../../models/Need';
 import { selectProject } from '../../store/reducers/selectedProject-reducer';
 import ErrorSummary from '../../Form/ErrorSummary';
 import ModelType from '../../models/ModelType';
-import QuestionType from '../../models/QuestionType';
+import QuestionEnum from '../../models/QuestionEnum';
 
 export const SliderSchema = Joi.object().keys({
   id: Joi.string().required(),
-  type: Joi.string().equal(QuestionType.Q_SLIDER).required(),
+  type: Joi.string().equal(QuestionEnum.Q_SLIDER).required(),
   config: Joi.object().keys({
     step: Joi.number().min(0).max(1000000000).required(),
     min: Joi.number().min(0).max(1000000000).required(),
@@ -41,12 +41,12 @@ export const SliderSchema = Joi.object().keys({
 
 export const CodelistSchema = Joi.object().keys({
   id: Joi.string().required(),
-  type: Joi.string().equal(QuestionType.Q_CODELIST).required()
+  type: Joi.string().equal(QuestionEnum.Q_CODELIST).required()
 });
 
 export const TextSchema = Joi.object().keys({
   id: Joi.string().required(),
-  type: Joi.string().equal(QuestionType.Q_TEXT).required(),
+  type: Joi.string().equal(QuestionEnum.Q_TEXT).required(),
   config: Joi.object().keys({
     max: Joi.number().required()
   })
@@ -54,7 +54,7 @@ export const TextSchema = Joi.object().keys({
 
 export const PeriodDateSchema = Joi.object().keys({
   id: Joi.string().required(),
-  type: Joi.string().equal(QuestionType.Q_PERIOD_DATE).required(),
+  type: Joi.string().equal(QuestionEnum.Q_PERIOD_DATE).required(),
   config: Joi.object().keys({
     minDays: Joi.number().required(),
     maxDays: Joi.number().required(),
@@ -65,7 +65,7 @@ export const PeriodDateSchema = Joi.object().keys({
 
 export const TimeSchema = Joi.object().keys({
   id: Joi.string().required(),
-  type: Joi.string().equal(QuestionType.Q_TIME).required(),
+  type: Joi.string().equal(QuestionEnum.Q_TIME).required(),
   config: Joi.object().keys({
     fromTime: Joi.string().trim().allow('').required(),
     toTime: Joi.string().trim().allow('').required()
@@ -74,7 +74,7 @@ export const TimeSchema = Joi.object().keys({
 
 export const CheckboxSchema = Joi.object().keys({
   id: Joi.string().required(),
-  type: Joi.string().equal(QuestionType.Q_CHECKBOX).required(),
+  type: Joi.string().equal(QuestionEnum.Q_CHECKBOX).required(),
   config: Joi.object().keys({
     value: Joi.boolean()
   })
@@ -82,7 +82,7 @@ export const CheckboxSchema = Joi.object().keys({
 
 export const FileUploadSchema = Joi.object().keys({
   id: Joi.string().required(),
-  type: Joi.string().equal(QuestionType.Q_FILEUPLOAD).required(),
+  type: Joi.string().equal(QuestionEnum.Q_FILEUPLOAD).required(),
   config: Joi.object().keys({
     fileEndings: Joi.string().allow('')
   })
@@ -105,13 +105,13 @@ const variantSchema = Joi.object().keys({
   alternatives: Joi.array().items(
     Joi.alternatives().conditional('.type', {
       switch: [
-        { is: QuestionType.Q_SLIDER, then: SliderSchema },
-        { is: QuestionType.Q_CODELIST, then: CodelistSchema },
-        { is: QuestionType.Q_TEXT, then: TextSchema },
-        { is: QuestionType.Q_PERIOD_DATE, then: PeriodDateSchema },
-        { is: QuestionType.Q_TIME, then: TimeSchema },
-        { is: QuestionType.Q_CHECKBOX, then: CheckboxSchema },
-        { is: QuestionType.Q_FILEUPLOAD, then: FileUploadSchema }
+        { is: QuestionEnum.Q_SLIDER, then: SliderSchema },
+        { is: QuestionEnum.Q_CODELIST, then: CodelistSchema },
+        { is: QuestionEnum.Q_TEXT, then: TextSchema },
+        { is: QuestionEnum.Q_PERIOD_DATE, then: PeriodDateSchema },
+        { is: QuestionEnum.Q_TIME, then: TimeSchema },
+        { is: QuestionEnum.Q_CHECKBOX, then: CheckboxSchema },
+        { is: QuestionEnum.Q_FILEUPLOAD, then: FileUploadSchema }
       ]
     })
   )

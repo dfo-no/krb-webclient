@@ -2,7 +2,7 @@ import React, { ReactElement } from 'react';
 
 import Container from 'react-bootstrap/Container';
 import { useSelector } from 'react-redux';
-import QuestionType from '../../models/QuestionType';
+import QuestionEnum from '../../models/QuestionEnum';
 import { RootState } from '../../store/store';
 import FileInputForm from './AlternativeForms/FileInputForm';
 import ValueForm from './AlternativeForms/ISliderForm';
@@ -28,17 +28,17 @@ export default function EditAlternative(): ReactElement {
   return (
     <Container fluid className="mt-4">
       <h4>Edit Alternative</h4>
-      {item.alternative.type === QuestionType.Q_SLIDER && (
+      {item.alternative.type === QuestionEnum.Q_SLIDER && (
         <ValueForm parentAnswer={item} />
       )}
-      {item.alternative.type === QuestionType.Q_FILEUPLOAD && (
+      {item.alternative.type === QuestionEnum.Q_FILEUPLOAD && (
         <FileInputForm parentAnswer={item} />
       )}
-      {item.alternative.type === QuestionType.Q_TEXT && (
+      {item.alternative.type === QuestionEnum.Q_TEXT && (
         <TextAlternativeForm parentAnswer={item} />
       )}
-      {item.alternative.type === QuestionType.Q_CODELIST && <NoProperties />}
-      {item.alternative.type === QuestionType.Q_CHECKBOX && <NoProperties />}
+      {item.alternative.type === QuestionEnum.Q_CODELIST && <NoProperties />}
+      {item.alternative.type === QuestionEnum.Q_CHECKBOX && <NoProperties />}
     </Container>
   );
 }

@@ -1,9 +1,9 @@
 import { IAnswerBase, IConfigBase, IQuestionBase } from './Question';
-import QuestionType from './QuestionType';
+import QuestionEnum from './QuestionEnum';
 
 export interface ICodelistQuestion
   extends IQuestionBase<ICodelistAnswer, IConfigBase> {
-  type: QuestionType.Q_CODELIST;
+  type: QuestionEnum.Q_CODELIST;
 }
 
 export interface ICodelistAnswer extends IAnswerBase {
