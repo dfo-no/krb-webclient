@@ -6,7 +6,7 @@ import Col from 'react-bootstrap/Col';
 
 import { useHistory, useRouteMatch } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { useFieldArray, useForm } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { joiResolver } from '@hookform/resolvers/joi';
 import Joi from 'joi';
 
@@ -38,13 +38,6 @@ export const SliderSchema = Joi.object().keys({
     unit: Joi.string().required()
   })
 });
-
-/* const codeSchema = Joi.object().keys({
-  id: Joi.string().required(),
-  title: Joi.string().required(),
-  description: Joi.string().required(),
-  type: Joi.string().equal('code').required()
-}); */
 
 export const CodelistSchema = Joi.object().keys({
   id: Joi.string().required(),
@@ -171,9 +164,7 @@ export default function RequirementEditor(): ReactElement {
 
   useEffect(() => {
     async function fetchEverything() {
-      setTimeout(async () => {
-        await dispatch(getProjectsThunk());
-      }, 10);
+      await dispatch(getProjectsThunk());
     }
     if (!list) {
       fetchEverything();
@@ -187,18 +178,9 @@ export default function RequirementEditor(): ReactElement {
   );
 
   const requirement = need.requirements.find((element) => element.id === reqId);
-  const defaultValues: Requirement | Record<string, never> =
-    requirement !== undefined ? { ...requirement } : {};
-  const { control, register, handleSubmit, formState, getValues, setValue } =
-    useForm<Requirement>({
-      resolver: joiResolver(requirementSchema),
-      defaultValues: { ...requirement }
-    });
-
-  const { remove } = useFieldArray({
-    keyName: 'guid',
-    control,
-    name: 'variants'
+  const { control, register, handleSubmit, formState } = useForm<Requirement>({
+    resolver: joiResolver(requirementSchema),
+    defaultValues: requirement
   });
 
   if (requirement === undefined) {
@@ -227,24 +209,14 @@ export default function RequirementEditor(): ReactElement {
     await dispatch(selectNeed(post.needId));
   };
 
-  /* const deleteVariant = (variant: IVariant) => {
-    const editRequirement = { ...requirement };
-    const newVariants = requirement.variants.filter(
-      (element) => element.id !== variant.id
-    );
-    editRequirement.variants = newVariants;
-    dispatch(putProjectThunk(project.id));
-  }; */
-
   const needOptions = (needList: Need[]) => {
-    const result = needList.map((element) => {
+    return needList.map((element) => {
       return (
         <option key={element.id} value={element.id}>
           {element.title}
         </option>
       );
     });
-    return result;
   };
   const { errors } = formState;
 
@@ -324,18 +296,10 @@ export default function RequirementEditor(): ReactElement {
         </Form.Group>
 
         <VariantArray
-          {...{
-            control,
-            register,
-            setValue,
-            getValues,
-            formState,
-            defaultValues,
-            project
-          }}
-          {...{
-            remove
-          }}
+          control={control}
+          register={register}
+          formState={formState}
+          project={project}
         />
         <ErrorSummary errors={errors} />
       </Form>

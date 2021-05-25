@@ -50,7 +50,6 @@ export default function AlternativeArray({
 }: IProps): ReactElement {
   const { fields, append, remove } = useFieldArray({
     name: `variants.${variantIndex}.alternatives` as 'variants.0.alternatives',
-    keyName: 'guid',
     control
   });
 

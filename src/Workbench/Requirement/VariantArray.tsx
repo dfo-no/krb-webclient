@@ -7,9 +7,7 @@ import {
   FieldError,
   FormState,
   useFieldArray,
-  UseFormGetValues,
-  UseFormRegister,
-  UseFormSetValue
+  UseFormRegister
 } from 'react-hook-form';
 import { BsTrashFill } from 'react-icons/bs';
 import { has, get } from 'lodash';
@@ -30,8 +28,6 @@ type IProps = {
   register: UseFormRegister<Requirement>;
   formState: FormState<Requirement>;
   project: Bank;
-  getValues: UseFormGetValues<Requirement>;
-  setValue: UseFormSetValue<Requirement>;
 };
 
 export default function VariantArray({
@@ -42,7 +38,7 @@ export default function VariantArray({
 }: IProps): ReactElement {
   const { errors } = formState;
   const { fields, append, remove } = useFieldArray({
-    keyName: 'guid',
+    keyName: 'id',
     control,
     name: 'variants'
   });
@@ -73,13 +69,13 @@ export default function VariantArray({
       });
       if (item.children) {
         const iteration = level + 1;
-        item.children.map((i: Nestable<Product>) =>
+        item.children.forEach((i: Nestable<Product>) =>
           getAllItemsPerChildren(i, iteration)
         );
       }
     };
 
-    newList.map((element) => {
+    newList.forEach((element) => {
       return getAllItemsPerChildren(element);
     });
     return options;
@@ -254,15 +250,11 @@ export default function VariantArray({
               </Form.Group>
 
               <AlternativeArray
+                control={control}
+                register={register}
+                formState={formState}
+                variantIndex={index}
                 project={project}
-                {...{
-                  variantIndex: index,
-                  control,
-                  register,
-                  formState,
-                  alternatives: item.alternatives
-                }}
-                {...{ remove }}
               />
             </Card.Body>
           </Card>
