@@ -6,7 +6,7 @@ import { ITimeQuestion } from './ITimeQuestion';
 import { ISliderQuestion } from './ISliderQuestion';
 import { ICheckboxQuestion } from './ICheckboxQuestion';
 
-export type AlternativeType =
+export type QuestionType =
   | ICodelistQuestion
   | IFileUploadQuestion
   | IPeriodDateQuestion

@@ -18,7 +18,7 @@ import styles from './Variant.module.scss';
 
 import Utils from '../../common/Utils';
 import { Product } from '../../models/Product';
-import AlternativeArray from './AlternativeArray';
+import QuestionArray from './QuestionArray';
 import { Requirement } from '../../models/Requirement';
 import { Bank } from '../../models/Bank';
 import { Nestable } from '../../models/Nestable';
@@ -249,7 +249,7 @@ export default function VariantArray({
                 </Form.Control.Feedback>
               </Form.Group>
 
-              <AlternativeArray
+              <QuestionArray
                 control={control}
                 register={register}
                 formState={formState}

@@ -1,4 +1,4 @@
-import { AlternativeTypes } from './AlternativeTypes';
+import { QuestionTypes } from './QuestionTypes';
 
 export interface IVariant {
   id: string;
@@ -8,5 +8,5 @@ export interface IVariant {
   use_Spesification: boolean;
   use_Qualification: boolean;
   products: string[];
-  alternatives: AlternativeTypes;
+  alternatives: QuestionTypes;
 }

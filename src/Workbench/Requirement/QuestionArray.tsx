@@ -31,7 +31,7 @@ import TimeForm from './TimeForm';
 import { ITimeQuestion } from '../../models/ITimeQuestion';
 
 import QuestionEnum from '../../models/QuestionEnum';
-import { AlternativeType } from '../../models/AlternativeType';
+import { QuestionType } from '../../models/QuestionType';
 
 type IProps = {
   control: Control<Requirement>;
@@ -41,7 +41,7 @@ type IProps = {
   project: Bank;
 };
 
-export default function AlternativeArray({
+export default function QuestionArray({
   control,
   register,
   formState,
@@ -140,7 +140,7 @@ export default function AlternativeArray({
         <Button onClick={() => addAlternative()}>Add</Button>
       </Form.Group>
 
-      {fields.map((item: AlternativeType, index) => {
+      {fields.map((item: QuestionType, index) => {
         return (
           <div key={item.id}>
             {item.type === QuestionEnum.Q_SLIDER && (
