@@ -21,6 +21,7 @@ import styles from './ProductSpecEditor.module.scss';
 import ModelType from '../../models/ModelType';
 import { selectSpecProduct } from '../../store/reducers/selectedSpecProduct-reducer';
 import ErrorSummary from '../../Form/ErrorSummary';
+import { Nestable } from '../../models/Nestable';
 
 type FormInput = {
   product: string;
@@ -28,6 +29,12 @@ type FormInput = {
 
 interface RouteParams {
   bankId: string;
+}
+
+interface IOption {
+  id: string;
+  title: string;
+  level: number;
 }
 
 export default function ProductSpecList(): ReactElement {
@@ -53,47 +60,28 @@ export default function ProductSpecList(): ReactElement {
 
   const bankSelected = Utils.ensure(list.find((bank: Bank) => bank.id === id));
 
-  const childrenHierarchy = (listofProducts: any[], level: number) => {
-    let n = level;
-    let children: any;
-    const cssClass = `level${n}`;
-    return listofProducts.map((element: any) => {
-      if (element.children.length > 0) {
-        n += 1;
-        children = childrenHierarchy(element.children, n);
-      }
-      return (
-        <>
-          <option
-            key={element.id}
-            value={element.id}
-            className={` ${styles[cssClass]}`}
-          >
-            {element.title}
-          </option>
-          {children}
-        </>
-      );
-    });
-  };
-  const productHierarchy = (productList: Product[]) => {
-    const newList = Utils.unflatten(productList)[0];
-    let children: any;
-    const result = newList.map((element: any) => {
-      if (element.children.length > 0) {
-        children = childrenHierarchy(element.children, 1);
-      }
+  const levelOptions = (products: Nestable<Product>[]) => {
+    const newList = Utils.unflatten(products)[0];
+    const options: IOption[] = [];
 
-      return (
-        <>
-          <option key={element.id} value={element.id}>
-            {element.title}
-          </option>
-          {children}
-        </>
-      );
+    const getAllItemsPerChildren = (item: Nestable<Product>, level = 0) => {
+      options.push({
+        id: item.id,
+        title: item.title,
+        level
+      });
+      if (item.children) {
+        const iteration = level + 1;
+        item.children.forEach((i: Nestable<Product>) =>
+          getAllItemsPerChildren(i, iteration)
+        );
+      }
+    };
+
+    newList.forEach((element) => {
+      return getAllItemsPerChildren(element);
     });
-    return result;
+    return options;
   };
 
   const addProductToSpecification = (post: FormInput) => {
@@ -147,7 +135,15 @@ export default function ProductSpecList(): ReactElement {
         <Row className="ml-2 mt-4">
           <Col>
             <Form.Control as="select" {...register('product')}>
-              {productHierarchy(bankSelected.products)}
+              {levelOptions(bankSelected.products).map((element) => (
+                <option
+                  key={element.id}
+                  value={element.id}
+                  className={` ${styles[`level${element.level}`]}`}
+                >
+                  {element.title}
+                </option>
+              ))}
             </Form.Control>
           </Col>
           <Col>
