@@ -41,5 +41,7 @@
   "cancel": "Avbryt",
   "update": "Oppdater",
   "add": "Legg til",
-  "edit": "Rediger"
+  "edit": "Rediger",
+  "weighting": "vekting",
+  "Q_SLIDER": "Q_SLIDER"
 }

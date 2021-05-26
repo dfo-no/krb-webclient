@@ -21,6 +21,7 @@ import {
 import { RootState } from '../../store/store';
 import { selectAlternative } from '../../store/reducers/selectedAlternative-reducer';
 import ErrorSummary from '../../Form/ErrorSummary';
+import { IRequirementAnswer } from '../../models/RequirementAnswer';
 
 interface IProps {
   requirement: Requirement;
@@ -66,7 +67,7 @@ export default function RequirementAnswer({
       (alt) => alt.id === post.alternative
     );
     const alternative = selectedVariant.questions[alternativeIndex];
-    const newAnswer = {
+    const newAnswer: IRequirementAnswer = {
       id: uuidv4(),
       alternativeId: post.alternative,
       weight: post.weight,
@@ -143,7 +144,7 @@ export default function RequirementAnswer({
       if (variant.useSpesification) {
         return (
           <option key={variant.id} value={variant.id}>
-            {variant.requirementText}
+            {t(variant.requirementText)}
           </option>
         );
       }
@@ -151,7 +152,7 @@ export default function RequirementAnswer({
     });
 
     return (
-      <Col>
+      <Row>
         {requirement.variants.length > 1 && (
           <Form.Control
             as="select"
@@ -165,7 +166,7 @@ export default function RequirementAnswer({
         {requirement.variants.length <= 1 && (
           <p>{requirement.variants[0].requirementText}</p>
         )}
-      </Col>
+      </Row>
     );
   };
 
@@ -179,46 +180,45 @@ export default function RequirementAnswer({
     });
     return (
       <Form onSubmit={handleSubmit(saveAnswer)} autoComplete="off">
-        <Col>
-          <Row>
+        <Row>
+          <Form.Control
+            as="select"
+            {...register('alternative')}
+            defaultValue={findDefaultAnswerOption()[0]}
+          >
+            {answers}
+          </Form.Control>
+        </Row>
+        <Row>
+          <Form.Group>
+            <Form.Label>{t('weighting')}:</Form.Label>
             <Form.Control
-              as="select"
-              {...register('alternative')}
-              defaultValue={findDefaultAnswerOption()[0]}
-            >
-              {answers}
-            </Form.Control>
-          </Row>
-          <Row>
-            <Form.Group>
-              <Form.Label>Weight:</Form.Label>
-              <Form.Control
-                type="number"
-                {...register('weight')}
-                defaultValue={findDefaultAnswerOption()[1]}
-                isInvalid={!!errors.weight}
-              />
-              {errors.weight && (
-                <Form.Control.Feedback type="invalid">
-                  {errors.weight?.message}
-                </Form.Control.Feedback>
-              )}
-            </Form.Group>
-          </Row>
-          <Row>
-            <Button type="submit" className="mt-2">
-              {t('save')}
-            </Button>
-            {selectedAlternative !== undefined && (
-              <Link
-                onClick={selectAlt}
-                to={`/speceditor/${id}/requirement/alternative/${selectedAlternative}`}
-              >
-                <Button className="mt-2 ml-2">Edit Alternative</Button>
-              </Link>
+              type="number"
+              {...register('weight')}
+              defaultValue={findDefaultAnswerOption()[1]}
+              isInvalid={!!errors.weight}
+            />
+            {errors.weight && (
+              <Form.Control.Feedback type="invalid">
+                {errors.weight?.message}
+              </Form.Control.Feedback>
             )}
-          </Row>
-        </Col>
+          </Form.Group>
+        </Row>
+        <Row>
+          <Button type="submit" className="mt-2">
+            {t('save')}
+          </Button>
+          {selectedAlternative !== undefined && (
+            <Link
+              onClick={selectAlt}
+              to={`/speceditor/${id}/requirement/alternative/${selectedAlternative}`}
+            >
+              <Button className="mt-2 ml-2">Edit Alternative</Button>
+            </Link>
+          )}
+        </Row>
+
         <ErrorSummary errors={errors} />
       </Form>
     );
@@ -227,10 +227,8 @@ export default function RequirementAnswer({
   return (
     <Card className="mb-3">
       <Card.Body>
-        <Row>
-          {reqTextOptions(requirement)}
-          {answerOptions(selectedVariant)}
-        </Row>
+        {reqTextOptions(requirement)}
+        {answerOptions(selectedVariant)}
       </Card.Body>
     </Card>
   );

@@ -1,6 +1,6 @@
 import { IAnswerBase, IConfigBase, IQuestionBase } from './Question';
 
-export interface RequirementAnswer {
+export interface IRequirementAnswer {
   id: string;
   alternativeId: string;
   weight: number;

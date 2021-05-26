@@ -8,7 +8,7 @@ import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import Button from 'react-bootstrap/Button';
 import { useTranslation } from 'react-i18next';
-import { RequirementAnswer } from '../../../models/RequirementAnswer';
+import { IRequirementAnswer } from '../../../models/RequirementAnswer';
 import { IFileUploadQuestion } from '../../../models/IFileUploadQuestion';
 import {
   editAnswer,
@@ -19,7 +19,7 @@ import ErrorSummary from '../../../Form/ErrorSummary';
 import { FileUploadSchema } from '../../../Workbench/Requirement/RequirementEditor';
 
 interface IProps {
-  parentAnswer: RequirementAnswer;
+  parentAnswer: IRequirementAnswer;
 }
 
 export default function FileInputForm({ parentAnswer }: IProps): ReactElement {
