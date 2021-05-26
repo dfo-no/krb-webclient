@@ -14,17 +14,16 @@ import './dfo-theme.scss';
 store.dispatch(getBanksThunk());
 
 // Hot reload the component tree whenever a component file changes
+// TODO: // Add React.STrictMode when react-hook-form eances 7.6.7
 const render = () => {
   ReactDOM.render(
-    <React.StrictMode>
-      <Suspense fallback="">
-        <Provider store={store}>
-          <BrowserRouter>
-            <App />
-          </BrowserRouter>
-        </Provider>
-      </Suspense>
-    </React.StrictMode>,
+    <Suspense fallback="">
+      <Provider store={store}>
+        <BrowserRouter>
+          <App />
+        </BrowserRouter>
+      </Provider>
+    </Suspense>,
     document.getElementById('root')
   );
 };
