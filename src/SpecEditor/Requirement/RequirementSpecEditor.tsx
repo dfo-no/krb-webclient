@@ -6,7 +6,7 @@ import Utils from '../../common/Utils';
 import { Bank } from '../../models/Bank';
 import { selectBank } from '../../store/reducers/selectedBank-reducer';
 import { RootState } from '../../store/store';
-import RequirementView from './RequirementSelectorList';
+import RequirementSelectorList from './RequirementSelectorList';
 
 interface RouteParams {
   bankId: string;
@@ -28,7 +28,7 @@ export default function RequirementSpecEditor(): ReactElement {
   const bankSelected = Utils.ensure(list.find((bank: Bank) => bank.id === id));
   return (
     <Container fluid>
-      <RequirementView key={bankSelected.id} needList={bankSelected.needs} />
+      <RequirementSelectorList needList={bankSelected.needs} />
     </Container>
   );
 }
