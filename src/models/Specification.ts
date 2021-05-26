@@ -1,5 +1,5 @@
 import { Bank } from './Bank';
-import { IRequirementAnswer } from './RequirementAnswer';
+import { IRequirementAnswer } from './IRequirementAnswer';
 import { SpecificationProduct } from './SpecificationProduct';
 
 export interface Specification {

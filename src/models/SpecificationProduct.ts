@@ -1,6 +1,6 @@
 import { BaseModel } from './BaseModel';
 import { Product } from './Product';
-import { IRequirementAnswer } from './RequirementAnswer';
+import { IRequirementAnswer } from './IRequirementAnswer';
 
 export interface SpecificationProduct extends BaseModel {
   id: string;

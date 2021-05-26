@@ -21,7 +21,7 @@ import {
 import { RootState } from '../../store/store';
 import { selectAlternative } from '../../store/reducers/selectedAlternative-reducer';
 import ErrorSummary from '../../Form/ErrorSummary';
-import { IRequirementAnswer } from '../../models/RequirementAnswer';
+import { IRequirementAnswer } from '../../models/IRequirementAnswer';
 
 interface IProps {
   requirement: Requirement;

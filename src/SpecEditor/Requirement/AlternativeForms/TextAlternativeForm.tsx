@@ -6,7 +6,7 @@ import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import Button from 'react-bootstrap/Button';
 import { useTranslation } from 'react-i18next';
-import { IRequirementAnswer } from '../../../models/RequirementAnswer';
+import { IRequirementAnswer } from '../../../models/IRequirementAnswer';
 import {
   editAnswer,
   editProductAnswer

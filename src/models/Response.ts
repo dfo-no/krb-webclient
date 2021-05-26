@@ -1,4 +1,4 @@
-import { IRequirementAnswer } from './RequirementAnswer';
+import { IRequirementAnswer } from './IRequirementAnswer';
 import { ResponseProduct } from './ResponseProduct';
 import { Specification } from './Specification';
 

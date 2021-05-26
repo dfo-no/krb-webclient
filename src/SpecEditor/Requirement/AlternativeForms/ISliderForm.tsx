@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import Button from 'react-bootstrap/Button';
 import { useTranslation } from 'react-i18next';
 import { ISliderQuestion } from '../../../models/ISliderQuestion';
-import { IRequirementAnswer } from '../../../models/RequirementAnswer';
+import { IRequirementAnswer } from '../../../models/IRequirementAnswer';
 import {
   editAnswer,
   editProductAnswer
