@@ -83,13 +83,13 @@ function NewNeedForm({ toggleShow, toggleAlert }: IProps): ReactElement {
           <InputRow
             control={control}
             name="title"
-            label="Title"
+            label={t('Title')}
             errors={errors}
           />
           <InputRow
             control={control}
             name="description"
-            label="Description"
+            label={t('Description')}
             errors={errors}
           />
           <Row>

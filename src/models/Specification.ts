@@ -1,5 +1,5 @@
 import { Bank } from './Bank';
-import { RequirementAnswer } from './RequirementAnswer';
+import { IRequirementAnswer } from './IRequirementAnswer';
 import { SpecificationProduct } from './SpecificationProduct';
 
 export interface Specification {
@@ -7,5 +7,5 @@ export interface Specification {
   title: string;
   products: SpecificationProduct[];
   requirements: string[];
-  requirementAnswers: RequirementAnswer[];
+  requirementAnswers: IRequirementAnswer[];
 }

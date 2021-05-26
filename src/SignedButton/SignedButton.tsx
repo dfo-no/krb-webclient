@@ -5,10 +5,12 @@ import {
   UnauthenticatedTemplate,
   useMsal
 } from '@azure/msal-react';
+import { useTranslation } from 'react-i18next';
 import { loginRequest } from '../authentication/authConfig';
 
 export default function SignedButton(): ReactElement {
   const { instance } = useMsal();
+  const { t } = useTranslation();
   return (
     <>
       <AuthenticatedTemplate>
@@ -17,7 +19,7 @@ export default function SignedButton(): ReactElement {
           onClick={() => instance.logout()}
           className="ml-auto"
         >
-          Sign Out
+          {t('sign out')}
         </Button>
       </AuthenticatedTemplate>
       <UnauthenticatedTemplate>
@@ -26,7 +28,7 @@ export default function SignedButton(): ReactElement {
           className="ml-auto"
           onClick={() => instance.loginPopup(loginRequest)}
         >
-          Sign in
+          {t('sign in')}
         </Button>
       </UnauthenticatedTemplate>
     </>

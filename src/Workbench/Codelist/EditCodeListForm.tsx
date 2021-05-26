@@ -25,7 +25,7 @@ import { ICodelistQuestion } from '../../models/ICodelistQuestion';
 import InputRow from '../../Form/InputRow';
 import AlertModal from '../../common/AlertModal';
 import ErrorSummary from '../../Form/ErrorSummary';
-import QuestionType from '../../models/QuestionType';
+import QuestionEnum from '../../models/QuestionEnum';
 import { IAnswerBase, IConfigBase, IQuestionBase } from '../../models/Question';
 
 type FormValues = {
@@ -93,9 +93,9 @@ function EditCodeListForm({ toggleShow, codelistId }: IProps): ReactElement {
     project.needs.forEach((need: Need) => {
       need.requirements.forEach((requirement: Requirement) => {
         requirement.variants.forEach((variant: IVariant) => {
-          variant.alternatives.forEach(
+          variant.questions.forEach(
             (alternative: IQuestionBase<IAnswerBase, IConfigBase>) => {
-              if (alternative.type === QuestionType.Q_CODELIST) {
+              if (alternative.type === QuestionEnum.Q_CODELIST) {
                 const alt = alternative as ICodelistQuestion;
                 if (
                   alt.answer &&
@@ -135,13 +135,13 @@ function EditCodeListForm({ toggleShow, codelistId }: IProps): ReactElement {
             control={control}
             name="title"
             errors={errors}
-            label="Title"
+            label={t('Title')}
           />
           <InputRow
             control={control}
             name="description"
             errors={errors}
-            label="Description"
+            label={t('Description')}
           />
           <Row>
             <Button className="mt-2  ml-3" type="submit">
@@ -158,7 +158,7 @@ function EditCodeListForm({ toggleShow, codelistId }: IProps): ReactElement {
               variant="warning"
               onClick={removeCodelist}
             >
-              Delete <BsTrashFill />
+              {t('delete')} <BsTrashFill />
             </Button>
             <AlertModal
               modalShow={modalShow}

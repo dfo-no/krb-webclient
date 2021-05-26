@@ -1,9 +1,9 @@
 import { IQuestionBase, IConfigBase, IAnswerBase } from './Question';
-import QuestionType from './QuestionType';
+import QuestionEnum from './QuestionEnum';
 
 export interface IFileUploadQuestion
   extends IQuestionBase<IFileUploadAnswer, IFileUploadConfig> {
-  type: QuestionType.Q_FILEUPLOAD;
+  type: QuestionEnum.Q_FILEUPLOAD;
 }
 
 export interface IFileUploadAnswer extends IAnswerBase {

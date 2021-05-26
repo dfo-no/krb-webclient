@@ -1,13 +1,13 @@
-import * as React from 'react';
-import { Controller, FieldErrors } from 'react-hook-form';
-import { ReactElement } from 'react';
+import React, { ReactElement } from 'react';
+import { Control, Controller, FieldErrors } from 'react-hook-form';
 import Form from 'react-bootstrap/Form';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 import { has, get } from 'lodash';
 
 interface IProps {
-  control: any;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  control: Control<any>;
   errors: FieldErrors;
   name: string;
   label: string;

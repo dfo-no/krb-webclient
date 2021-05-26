@@ -8,21 +8,23 @@ import { Need } from '../../models/Need';
 import { Nestable } from '../../models/Nestable';
 import { Requirement } from '../../models/Requirement';
 import { RootState } from '../../store/store';
-import styles from './RequirementView.module.scss';
+import styles from './RequirementSelectorList.module.scss';
 import SpesificationRequirement from './SpesificationRequirement';
 
 interface InputProps {
   needList: Nestable<Need>[];
 }
 
-export default function RequirementView({
+export default function RequirementSelectorList({
   needList
 }: InputProps): ReactElement {
   const { spec } = useSelector((state: RootState) => state.specification);
-  const checkIfReqHasVariantMatch = (req: Requirement) => {
+  const checkIfReqHasVariantMatch = (req: Requirement): boolean => {
     let found = false;
     req.variants.forEach((variant) => {
-      if (variant.use_Spesification === true) found = true;
+      if (variant.useSpesification === true) {
+        found = true;
+      }
     });
     return found;
   };
@@ -74,7 +76,7 @@ export default function RequirementView({
           />
         );
       }
-      return <></>;
+      return null;
     });
   };
   const childrenHierarchy = (listofneed: Nestable<Need>[], level: number) => {
@@ -87,7 +89,7 @@ export default function RequirementView({
         children = childrenHierarchy(element.children, n);
       }
       return (
-        <div className={` ${styles[cssClass]} pt-0`}>
+        <div key={element.id} className={` ${styles[cssClass]} pt-0`}>
           <Row>
             <BsArrowReturnRight className="ml-2 mt-1 mr-2" />
             <p>{element.title}</p>
@@ -103,28 +105,25 @@ export default function RequirementView({
   const needHierarchy = (needsList: Nestable<Need>[]) => {
     const newList = Utils.unflatten(needsList)[0];
     let children: JSX.Element[];
-    const hierarchy = newList.map((element) => {
+    return newList.map((element) => {
       if (!checkNeed(element)) return null;
       if (element.children && element.children.length > 0) {
         children = childrenHierarchy(element.children, 1);
       }
       return (
-        <>
-          <ListGroup.Item key={element.id} className="mt-2 ml-0 pl-0">
-            <b>{element.title}</b>
-            {element.requirements.length > 0 &&
-              requirementsAnswers(element.requirements)}
-            {element.children && element.children.length > 0 && children}
-          </ListGroup.Item>
-        </>
+        <ListGroup.Item key={element.id} className="mt-2 ml-0 pl-0">
+          <b>{element.title}</b>
+          {element.requirements.length > 0 &&
+            requirementsAnswers(element.requirements)}
+          {element.children && element.children.length > 0 && children}
+        </ListGroup.Item>
       );
     });
-    return (
-      <ListGroup variant="flush" className="mt-4 ml-0 p-0">
-        {hierarchy}
-      </ListGroup>
-    );
   };
 
-  return <>{needHierarchy(needList)}</>;
+  return (
+    <ListGroup variant="flush" className="mt-4 ml-0 p-0">
+      {needHierarchy(needList)}
+    </ListGroup>
+  );
 }

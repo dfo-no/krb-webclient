@@ -44,11 +44,8 @@ export default function ProductPreview(): ReactElement {
     )
   );
 
-  const [
-    associatedRequirements,
-    associatedNeeds,
-    associatedVariants
-  ] = Utils.findAssociatedRequirements(selectedProduct, selectedProject);
+  const [associatedRequirements, associatedNeeds, associatedVariants] =
+    Utils.findAssociatedRequirements(selectedProduct, selectedProject);
 
   const findRequirementText = (variants: IVariant[]) => {
     const texts = variants.map((variant: IVariant) => {

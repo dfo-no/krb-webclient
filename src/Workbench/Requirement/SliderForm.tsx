@@ -46,16 +46,14 @@ export default function SliderForm({
         <Form.Control
           as="input"
           type="hidden"
-          {...register(`variants.${vIndex}.alternatives.${aIndex}.id` as const)}
+          {...register(`variants.${vIndex}.questions.${aIndex}.id` as const)}
           defaultValue={item.id}
         />
 
         <Form.Control
           as="input"
           type="hidden"
-          {...register(
-            `variants.${vIndex}.alternatives.${aIndex}.type` as const
-          )}
+          {...register(`variants.${vIndex}.questions.${aIndex}.type` as const)}
           defaultValue={item.type}
         />
         <Form.Group as={Row}>
@@ -67,20 +65,20 @@ export default function SliderForm({
               as="input"
               type="text"
               {...register(
-                `variants.${vIndex}.alternatives.${aIndex}.config.min` as const
+                `variants.${vIndex}.questions.${aIndex}.config.min` as const
               )}
               defaultValue={item?.config?.min}
               isInvalid={
                 !!has(
                   errors,
-                  `variants[${vIndex}].alternatives[${aIndex}].config.min`
+                  `variants[${vIndex}].questions[${aIndex}].config.min`
                 )
               }
             />
             <Form.Control.Feedback type="invalid">
               {get(
                 errors,
-                `variants[${vIndex}].alternatives.[${aIndex}].config.min.message`
+                `variants[${vIndex}].questions.[${aIndex}].config.min.message`
               )}
             </Form.Control.Feedback>
           </Col>
@@ -93,20 +91,20 @@ export default function SliderForm({
             <Form.Control
               type="number"
               {...register(
-                `variants.${vIndex}.alternatives.${aIndex}.config.max` as const
+                `variants.${vIndex}.questions.${aIndex}.config.max` as const
               )}
               defaultValue={item.config.max}
               isInvalid={
                 !!has(
                   errors,
-                  `variants[${vIndex}].alternatives[${aIndex}].config.max`
+                  `variants[${vIndex}].questions[${aIndex}].config.max`
                 )
               }
             />
             <Form.Control.Feedback type="invalid">
               {get(
                 errors,
-                `variants[${vIndex}].alternatives.[${aIndex}].config.max.message`
+                `variants[${vIndex}].questions.[${aIndex}].config.max.message`
               )}
             </Form.Control.Feedback>
           </Col>
@@ -119,20 +117,20 @@ export default function SliderForm({
             <Form.Control
               type="number"
               {...register(
-                `variants.${vIndex}.alternatives.${aIndex}.config.step` as const
+                `variants.${vIndex}.questions.${aIndex}.config.step` as const
               )}
               defaultValue={item.config.step}
               isInvalid={
                 !!has(
                   errors,
-                  `variants[${vIndex}].alternatives[${aIndex}].config.step`
+                  `variants[${vIndex}].questions[${aIndex}].config.step`
                 )
               }
             />
             <Form.Control.Feedback type="invalid">
               {get(
                 errors,
-                `variants[${vIndex}].alternatives.[${aIndex}].config.step.message`
+                `variants[${vIndex}].questions.[${aIndex}].config.step.message`
               )}
             </Form.Control.Feedback>
           </Col>
@@ -146,20 +144,20 @@ export default function SliderForm({
             <Form.Control
               type="input"
               {...register(
-                `variants.${vIndex}.alternatives.${aIndex}.config.unit` as const
+                `variants.${vIndex}.questions.${aIndex}.config.unit` as const
               )}
               defaultValue={item.config.unit}
               isInvalid={
                 !!has(
                   errors,
-                  `variants[${vIndex}].alternatives[${aIndex}].config.unit`
+                  `variants[${vIndex}].questions[${aIndex}].config.unit`
                 )
               }
             />
             <Form.Control.Feedback type="invalid">
               {get(
                 errors,
-                `variants[${vIndex}].alternatives.[${aIndex}].config.unit.message`
+                `variants[${vIndex}].questions.[${aIndex}].config.unit.message`
               )}
             </Form.Control.Feedback>
           </Col>

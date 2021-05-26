@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import Button from 'react-bootstrap/Button';
 import { useTranslation } from 'react-i18next';
 import { ISliderQuestion } from '../../../models/ISliderQuestion';
-import { RequirementAnswer } from '../../../models/RequirementAnswer';
+import { IRequirementAnswer } from '../../../models/IRequirementAnswer';
 import {
   editAnswer,
   editProductAnswer
@@ -18,7 +18,7 @@ import ErrorSummary from '../../../Form/ErrorSummary';
 import { SliderSchema } from '../../../Workbench/Requirement/RequirementEditor';
 
 interface IProps {
-  parentAnswer: RequirementAnswer;
+  parentAnswer: IRequirementAnswer;
 }
 
 export default function ValueForm({ parentAnswer }: IProps): ReactElement {

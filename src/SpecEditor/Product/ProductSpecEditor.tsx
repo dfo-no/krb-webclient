@@ -100,13 +100,13 @@ export default function ProductSpecEditor(): ReactElement {
               control={control}
               errors={errors}
               name="title"
-              label="Title"
+              label={t('Title')}
             />
             <InputRow
               control={control}
               errors={errors}
               name="description"
-              label="Description"
+              label={t('Description')}
             />
             <Col className="p-0 d-flex justify-content-end">
               <Button type="submit">{t('save')}</Button>

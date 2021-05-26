@@ -8,6 +8,7 @@ import Col from 'react-bootstrap/Col';
 import { Link, useHistory } from 'react-router-dom';
 import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
+import { useTranslation } from 'react-i18next';
 import { RootState } from '../store/store';
 import { Specification } from '../models/Specification';
 import { selectBank } from '../store/reducers/selectedBank-reducer';
@@ -17,6 +18,7 @@ export default function SpecPage(): ReactElement {
   const { id } = useSelector((state: RootState) => state.selectedBank);
   const dispatch = useDispatch();
   const history = useHistory();
+  const { t } = useTranslation();
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const files = event.target.files as FileList;
@@ -69,14 +71,14 @@ export default function SpecPage(): ReactElement {
       <Col sm={4}>
         <Link to={`/speceditor/${id}`}>
           <Button type="submit" className="mt-4">
-            Create Specification
+            {t('create specification')}
           </Button>
         </Link>
       </Col>
 
       <Col sm={4}>
         <Button type="submit" className="mt-4">
-          Create Qualification
+          {t('create qualification')}
         </Button>
       </Col>
     </Row>

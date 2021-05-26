@@ -36,6 +36,11 @@ interface RouteParams {
   projectId?: string;
 }
 
+interface IPublishPost {
+  id: string;
+  publications: Publication[];
+}
+
 function ProjectPage(): ReactElement {
   const projectMatch = useRouteMatch<RouteParams>('/workbench/:projectId');
   const { list, status } = useSelector((state: RootState) => state.project);
@@ -92,19 +97,15 @@ function ProjectPage(): ReactElement {
       .unique('date')
   });
 
-  const {
-    control,
-    register,
-    handleSubmit,
-    formState
-  } = useForm<ProjectPublicationForm>({
-    criteriaMode: 'all',
-    resolver: joiResolver(projectSchema),
-    defaultValues: {
-      id: project.id,
-      publications: project.publications
-    }
-  });
+  const { control, register, handleSubmit, formState } =
+    useForm<ProjectPublicationForm>({
+      criteriaMode: 'all',
+      resolver: joiResolver(projectSchema),
+      defaultValues: {
+        id: project.id,
+        publications: project.publications
+      }
+    });
 
   const { errors } = formState;
   const { t } = useTranslation();
@@ -118,13 +119,13 @@ function ProjectPage(): ReactElement {
   if (list.length === 0 || !id) {
     return <p>Loading project page ...</p>;
   }
-  const publishProject = async (e: any) => {
+  const publishProject = async (e: IPublishPost) => {
     // Publication is always first in array because we prepend
     const publication: Publication = e.publications[0];
 
     const projectToBePublished: Bank = { ...project };
 
-    /* Date from form is may have been stale (i.e waiting before clicking), update to now */
+    // Date from form is may have been stale (i.e waiting before clicking), update to now
     const convertedDate = formatISO(new Date());
     projectToBePublished.publishedDate = convertedDate;
     projectToBePublished.id = '';
@@ -133,7 +134,6 @@ function ProjectPage(): ReactElement {
 
     // TODO: fix this any and figure out why we must use await
     const result: any = await dispatch(postBankThunk(projectToBePublished));
-
     // update root project with new values
     publication.bankId = result.payload.id;
     publication.date = convertedDate;

@@ -25,6 +25,7 @@ import { IVariant } from '../../models/IVariant';
 import Utils from '../../common/Utils';
 import InputRow from '../../Form/InputRow';
 import ErrorSummary from '../../Form/ErrorSummary';
+import AlertModal from '../../common/AlertModal';
 
 interface IProps {
   element: Product;
@@ -46,6 +47,7 @@ export default function ProductForm({ element }: IProps): ReactElement {
   const dispatch = useDispatch();
   const { onOpenClose } = useContext(AccordionContext);
   const [validated] = useState(false);
+  const [modalShow, setModalShow] = useState(false);
   const { t } = useTranslation();
 
   const {
@@ -98,9 +100,7 @@ export default function ProductForm({ element }: IProps): ReactElement {
       Utils.checkIfParent(project.products, element.id) ||
       checkProductConnection()
     ) {
-      window.confirm(
-        'This product is associated to one or more requirement variants, please remove the connection to be able to delete'
-      );
+      setModalShow(true);
     } else {
       dispatch(deleteProduct({ projectId: id, productId: element.id }));
       dispatch(putProjectThunk(id));
@@ -115,12 +115,17 @@ export default function ProductForm({ element }: IProps): ReactElement {
       noValidate
       validated={validated}
     >
-      <InputRow control={control} name="title" errors={errors} label="Title" />
+      <InputRow
+        control={control}
+        name="title"
+        errors={errors}
+        label={t('Title')}
+      />
       <InputRow
         control={control}
         name="description"
         errors={errors}
-        label="Description"
+        label={t('Description')}
       />
       <Row>
         <Button className="mt-2  ml-3" type="submit">
@@ -137,8 +142,14 @@ export default function ProductForm({ element }: IProps): ReactElement {
           variant="warning"
           onClick={removeProduct()}
         >
-          Delete <BsTrashFill />
+          {t('delete')} <BsTrashFill />
         </Button>
+        <AlertModal
+          modalShow={modalShow}
+          setModalShow={setModalShow}
+          title="Attention"
+          text="This product is associated to one or more requirement variants, please remove the connection to be able to delete"
+        />
       </Row>
       <ErrorSummary errors={errors} />
     </Form>

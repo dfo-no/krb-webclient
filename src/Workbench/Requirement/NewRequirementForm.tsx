@@ -106,13 +106,13 @@ function NewRequirementForm({
           <InputRow
             name="title"
             control={control}
-            label="Title"
+            label={t('Title')}
             errors={errors}
           />
           <InputRow
             name="description"
             control={control}
-            label="Description"
+            label={t('Description')}
             errors={errors}
           />
 

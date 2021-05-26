@@ -2,7 +2,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import Utils from '../../common/Utils';
 import { SpecificationProduct } from '../../models/SpecificationProduct';
-import { RequirementAnswer } from '../../models/RequirementAnswer';
+import { IRequirementAnswer } from '../../models/IRequirementAnswer';
 import { Specification } from '../../models/Specification';
 import ModelType from '../../models/ModelType';
 import { Bank } from '../../models/Bank';
@@ -65,7 +65,7 @@ const specificationSlice = createSlice({
       state,
       {
         payload
-      }: PayloadAction<{ answer: RequirementAnswer; productId: string }>
+      }: PayloadAction<{ answer: IRequirementAnswer; productId: string }>
     ) {
       const index = Utils.ensure(
         state.spec.products.findIndex(
@@ -90,7 +90,7 @@ const specificationSlice = createSlice({
       state,
       {
         payload
-      }: PayloadAction<{ answer: RequirementAnswer; productId: string }>
+      }: PayloadAction<{ answer: IRequirementAnswer; productId: string }>
     ) {
       const productIndex = Utils.ensure(
         state.spec.products.findIndex(
@@ -144,7 +144,7 @@ const specificationSlice = createSlice({
     },
     addAnswer(
       state,
-      { payload }: PayloadAction<{ answer: RequirementAnswer }>
+      { payload }: PayloadAction<{ answer: IRequirementAnswer }>
     ) {
       if (
         state.spec.requirementAnswers.find(
@@ -160,7 +160,7 @@ const specificationSlice = createSlice({
     },
     editAnswer(
       state,
-      { payload }: PayloadAction<{ answer: RequirementAnswer }>
+      { payload }: PayloadAction<{ answer: IRequirementAnswer }>
     ) {
       const index = state.spec.requirementAnswers.findIndex(
         (req) => req.id === payload.answer.id

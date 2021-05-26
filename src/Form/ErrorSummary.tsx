@@ -25,6 +25,7 @@ export default function ErrorSummary<T>({
   }
 
   const errorMessages: string[] = [];
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   function traverse(o: any) {
     // eslint-disable-next-line no-restricted-syntax
     for (const i in o) {

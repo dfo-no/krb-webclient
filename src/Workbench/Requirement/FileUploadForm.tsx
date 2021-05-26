@@ -45,16 +45,14 @@ export default function FileUploadForm({
         <Form.Control
           as="input"
           type="hidden"
-          {...register(`variants.${vIndex}.alternatives.${aIndex}.id` as const)}
+          {...register(`variants.${vIndex}.questions.${aIndex}.id` as const)}
           defaultValue={item.id}
         />
 
         <Form.Control
           as="input"
           type="hidden"
-          {...register(
-            `variants.${vIndex}.alternatives.${aIndex}.type` as const
-          )}
+          {...register(`variants.${vIndex}.questions.${aIndex}.type` as const)}
           defaultValue={item.type}
         />
         <Form.Group as={Row}>
@@ -64,13 +62,13 @@ export default function FileUploadForm({
           <Col sm="4">
             <Form.Control
               {...register(
-                `variants.${vIndex}.alternatives.${aIndex}.config.fileEndings` as const
+                `variants.${vIndex}.questions.${aIndex}.config.fileEndings` as const
               )}
               defaultValue={item?.config?.fileEndings}
               isInvalid={
                 !!has(
                   errors,
-                  `variants[${vIndex}].alternatives[${aIndex}].config.fileEndings` as const
+                  `variants[${vIndex}].questions[${aIndex}].config.fileEndings` as const
                 )
               }
             />
@@ -78,7 +76,7 @@ export default function FileUploadForm({
             <Form.Control.Feedback type="invalid">
               {get(
                 errors,
-                `variants[${vIndex}].alternatives.[${aIndex}].config.fileEndings.message`
+                `variants[${vIndex}].questions.[${aIndex}].config.fileEndings.message`
               )}
             </Form.Control.Feedback>
           </Col>

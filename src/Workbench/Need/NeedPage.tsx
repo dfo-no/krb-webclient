@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import Button from 'react-bootstrap/Button';
 
 import { useRouteMatch } from 'react-router';
+import { useTranslation } from 'react-i18next';
 import { Need } from '../../models/Need';
 import { RootState } from '../../store/store';
 import Utils from '../../common/Utils';
@@ -29,6 +30,7 @@ function NeedPage(): ReactElement {
   const [showAlert, setShowAlert] = useState(false);
   const [toggleEditor, setToggleEditor] = useState(false);
   const dispatch = useDispatch();
+  const { t } = useTranslation();
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -73,14 +75,14 @@ function NeedPage(): ReactElement {
 
   return (
     <>
-      <h3 className="mt-3">Needs</h3>
+      <h3 className="mt-3">{t('Needs')}</h3>
       <Button
         onClick={() => {
           setToggleEditor(true);
         }}
         className="mb-4"
       >
-        New Need
+        {t('new need')}
       </Button>
       {showAlert && <SuccessAlert toggleShow={setShowAlert} type="need" />}
       {newNeed(toggleEditor)}

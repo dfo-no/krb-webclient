@@ -7,9 +7,7 @@ import {
   FieldError,
   FormState,
   useFieldArray,
-  UseFormGetValues,
-  UseFormRegister,
-  UseFormSetValue
+  UseFormRegister
 } from 'react-hook-form';
 import { BsTrashFill } from 'react-icons/bs';
 import { has, get } from 'lodash';
@@ -20,7 +18,7 @@ import styles from './Variant.module.scss';
 
 import Utils from '../../common/Utils';
 import { Product } from '../../models/Product';
-import AlternativeArray from './AlternativeArray';
+import QuestionArray from './QuestionArray';
 import { Requirement } from '../../models/Requirement';
 import { Bank } from '../../models/Bank';
 import { Nestable } from '../../models/Nestable';
@@ -30,8 +28,6 @@ type IProps = {
   register: UseFormRegister<Requirement>;
   formState: FormState<Requirement>;
   project: Bank;
-  getValues: UseFormGetValues<Requirement>;
-  setValue: UseFormSetValue<Requirement>;
 };
 
 export default function VariantArray({
@@ -42,7 +38,7 @@ export default function VariantArray({
 }: IProps): ReactElement {
   const { errors } = formState;
   const { fields, append, remove } = useFieldArray({
-    keyName: 'guid',
+    keyName: 'id',
     control,
     name: 'variants'
   });
@@ -73,13 +69,13 @@ export default function VariantArray({
       });
       if (item.children) {
         const iteration = level + 1;
-        item.children.map((i: Nestable<Product>) =>
+        item.children.forEach((i: Nestable<Product>) =>
           getAllItemsPerChildren(i, iteration)
         );
       }
     };
 
-    newList.map((element) => {
+    newList.forEach((element) => {
       return getAllItemsPerChildren(element);
     });
     return options;
@@ -110,11 +106,11 @@ export default function VariantArray({
             id: uuidv4(),
             requirementText: '',
             instruction: '',
-            use_Product: false,
-            use_Spesification: false,
-            use_Qualification: false,
+            useProduct: false,
+            useSpesification: false,
+            useQualification: false,
             products: [],
-            alternatives: []
+            questions: []
           });
         }}
       >
@@ -186,42 +182,42 @@ export default function VariantArray({
                 <Form.Check
                   type="checkbox"
                   label="Qualification"
-                  {...register(`variants.${index}.use_Qualification` as const)}
-                  defaultChecked={item.use_Qualification}
+                  {...register(`variants.${index}.useQualification` as const)}
+                  defaultChecked={item.useQualification}
                   isInvalid={
-                    !!has(errors, `variants[${index}].use_Qualification`)
+                    !!has(errors, `variants[${index}].useQualification`)
                   }
                   feedback={get(
                     errors,
-                    `variants[${index}].use_Qualification.message`
+                    `variants[${index}].useQualification.message`
                   )}
                 />
                 <Form.Check
                   type="checkbox"
                   label="Requirement Spesification"
-                  {...register(`variants.${index}.use_Spesification` as const)}
-                  defaultChecked={item.use_Spesification}
+                  {...register(`variants.${index}.useSpesification` as const)}
+                  defaultChecked={item.useSpesification}
                   isInvalid={
-                    !!has(errors, `variants[${index}].use_Spesification`)
+                    !!has(errors, `variants[${index}].useSpesification`)
                   }
                   feedback={get(
                     errors,
-                    `variants[${index}].use_Spesification.message`
+                    `variants[${index}].useSpesification.message`
                   )}
                 />
                 <Form.Check
-                  {...register(`variants.${index}.use_Product` as const)}
+                  {...register(`variants.${index}.useProduct` as const)}
                   type="checkbox"
                   label="Products"
-                  defaultChecked={item.use_Product}
+                  defaultChecked={item.useProduct}
                   // TODO: should be false/readOnly if no products exists, or if products has been removed
                   onChange={(e) => {
                     toggleProductChecked(item.id, e.target.checked);
                   }}
-                  isInvalid={!!has(errors, `variants[${index}].use_Product`)}
+                  isInvalid={!!has(errors, `variants[${index}].useProduct`)}
                   feedback={get(
                     errors,
-                    `variants[${index}].use_Product.message`
+                    `variants[${index}].useProduct.message`
                   )}
                 />
               </Form.Group>
@@ -253,16 +249,12 @@ export default function VariantArray({
                 </Form.Control.Feedback>
               </Form.Group>
 
-              <AlternativeArray
+              <QuestionArray
+                control={control}
+                register={register}
+                formState={formState}
+                variantIndex={index}
                 project={project}
-                {...{
-                  variantIndex: index,
-                  control,
-                  register,
-                  formState,
-                  alternatives: item.alternatives
-                }}
-                {...{ remove }}
               />
             </Card.Body>
           </Card>

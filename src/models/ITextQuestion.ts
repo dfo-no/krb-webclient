@@ -1,8 +1,8 @@
 import { IAnswerBase, IConfigBase, IQuestionBase } from './Question';
-import QuestionType from './QuestionType';
+import QuestionEnum from './QuestionEnum';
 
 export interface ITextQuestion extends IQuestionBase<ITextAnswer, ITextConfig> {
-  type: QuestionType.Q_TEXT;
+  type: QuestionEnum.Q_TEXT;
 }
 
 export interface ITextConfig extends IConfigBase {

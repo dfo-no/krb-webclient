@@ -1,9 +1,9 @@
 import { IQuestionBase, IConfigBase, IAnswerBase } from './Question';
-import QuestionType from './QuestionType';
+import QuestionEnum from './QuestionEnum';
 
 export interface IPeriodDateQuestion
   extends IQuestionBase<IPeriodDateAnswer, IPeriodDateConfig> {
-  type: QuestionType.Q_PERIOD_DATE;
+  type: QuestionEnum.Q_PERIOD_DATE;
 }
 
 export interface IPeriodDateAnswer extends IAnswerBase {

@@ -1,5 +1,5 @@
 import { BaseModel } from './BaseModel';
-import { RequirementAnswer } from './RequirementAnswer';
+import { IRequirementAnswer } from './IRequirementAnswer';
 import { SpecificationProduct } from './SpecificationProduct';
 
 export interface ResponseProduct extends BaseModel {
@@ -8,5 +8,5 @@ export interface ResponseProduct extends BaseModel {
   description: string;
   originProduct: SpecificationProduct;
   price: number;
-  requirementAnswers: RequirementAnswer[];
+  requirementAnswers: IRequirementAnswer[];
 }

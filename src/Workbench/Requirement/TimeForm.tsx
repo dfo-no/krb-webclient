@@ -46,15 +46,13 @@ export default function TimeForm({
         <Form.Control
           as="input"
           type="hidden"
-          {...register(`variants.${vIndex}.alternatives.${aIndex}.id` as const)}
+          {...register(`variants.${vIndex}.questions.${aIndex}.id` as const)}
           defaultValue={item.id}
         />
         <Form.Control
           as="input"
           type="hidden"
-          {...register(
-            `variants.${vIndex}.alternatives.${aIndex}.type` as const
-          )}
+          {...register(`variants.${vIndex}.questions.${aIndex}.type` as const)}
           defaultValue={item.type}
         />
         <Form.Group as={Row}>
@@ -65,13 +63,13 @@ export default function TimeForm({
             <Form.Control
               type="input"
               {...register(
-                `variants.${vIndex}.alternatives.${aIndex}.config.fromTime` as const
+                `variants.${vIndex}.questions.${aIndex}.config.fromTime` as const
               )}
               defaultValue={item.config.fromTime}
               isInvalid={
                 !!has(
                   errors,
-                  `variants[${vIndex}].alternatives[${aIndex}].config.fromTime` as const
+                  `variants[${vIndex}].questions[${aIndex}].config.fromTime` as const
                 )
               }
             />
@@ -79,7 +77,7 @@ export default function TimeForm({
             <Form.Control.Feedback type="invalid">
               {get(
                 errors,
-                `variants[${vIndex}].alternatives.[${aIndex}].config.fromTime.message`
+                `variants[${vIndex}].questions.[${aIndex}].config.fromTime.message`
               )}
             </Form.Control.Feedback>
           </Col>
@@ -92,13 +90,13 @@ export default function TimeForm({
             <Form.Control
               type="input"
               {...register(
-                `variants.${vIndex}.alternatives.${aIndex}.config.toTime` as const
+                `variants.${vIndex}.questions.${aIndex}.config.toTime` as const
               )}
               defaultValue={item.config.toTime}
               isInvalid={
                 !!has(
                   errors,
-                  `variants[${vIndex}].alternatives[${aIndex}].config.toTime` as const
+                  `variants[${vIndex}].questions[${aIndex}].config.toTime` as const
                 )
               }
             />
@@ -106,7 +104,7 @@ export default function TimeForm({
             <Form.Control.Feedback type="invalid">
               {get(
                 errors,
-                `variants[${vIndex}].alternatives.[${aIndex}].config.toTime.message`
+                `variants[${vIndex}].questions.[${aIndex}].config.toTime.message`
               )}
             </Form.Control.Feedback>
           </Col>

@@ -21,6 +21,7 @@ import {
 import { RootState } from '../../store/store';
 import { selectAlternative } from '../../store/reducers/selectedAlternative-reducer';
 import ErrorSummary from '../../Form/ErrorSummary';
+import { IRequirementAnswer } from '../../models/IRequirementAnswer';
 
 interface IProps {
   requirement: Requirement;
@@ -62,11 +63,11 @@ export default function RequirementAnswer({
 
   const { id } = useSelector((state: RootState) => state.selectedBank);
   const saveAnswer = (post: FormValue) => {
-    const alternativeIndex = selectedVariant.alternatives.findIndex(
+    const alternativeIndex = selectedVariant.questions.findIndex(
       (alt) => alt.id === post.alternative
     );
-    const alternative = selectedVariant.alternatives[alternativeIndex];
-    const newAnswer = {
+    const alternative = selectedVariant.questions[alternativeIndex];
+    const newAnswer: IRequirementAnswer = {
       id: uuidv4(),
       alternativeId: post.alternative,
       weight: post.weight,
@@ -87,7 +88,7 @@ export default function RequirementAnswer({
     const variant = Utils.ensure(
       requirement.variants.find((element: IVariant) => element.id === variantId)
     );
-    selectedVariant.alternatives.forEach((alternative) => {
+    selectedVariant.questions.forEach((alternative) => {
       if (
         spec.requirementAnswers.find(
           (answer) => answer.alternativeId === alternative.id
@@ -117,9 +118,9 @@ export default function RequirementAnswer({
   }
 
   function findDefaultAnswerOption(): [string, number] {
-    let defaultText = selectedVariant.alternatives[0].id;
+    let defaultText = selectedVariant.questions[0].id;
     let defaultWeight = 0;
-    selectedVariant.alternatives.forEach((alternative) => {
+    selectedVariant.questions.forEach((alternative) => {
       if (
         spec.requirementAnswers.find(
           (answer) => answer.alternativeId === alternative.id
@@ -140,10 +141,10 @@ export default function RequirementAnswer({
       if (req.variants.length === 1) {
         return <p key={variant.id}>{variant.requirementText}</p>;
       }
-      if (variant.use_Spesification) {
+      if (variant.useSpesification) {
         return (
           <option key={variant.id} value={variant.id}>
-            {variant.requirementText}
+            {t(variant.requirementText)}
           </option>
         );
       }
@@ -151,7 +152,7 @@ export default function RequirementAnswer({
     });
 
     return (
-      <Col>
+      <Row>
         {requirement.variants.length > 1 && (
           <Form.Control
             as="select"
@@ -165,12 +166,12 @@ export default function RequirementAnswer({
         {requirement.variants.length <= 1 && (
           <p>{requirement.variants[0].requirementText}</p>
         )}
-      </Col>
+      </Row>
     );
   };
 
   const answerOptions = (variant: IVariant) => {
-    const answers = variant.alternatives.map((alternative) => {
+    const answers = variant.questions.map((alternative) => {
       return (
         <option key={alternative.id} value={alternative.id}>
           {alternative.type}
@@ -179,46 +180,45 @@ export default function RequirementAnswer({
     });
     return (
       <Form onSubmit={handleSubmit(saveAnswer)} autoComplete="off">
-        <Col>
-          <Row>
+        <Row>
+          <Form.Control
+            as="select"
+            {...register('alternative')}
+            defaultValue={findDefaultAnswerOption()[0]}
+          >
+            {answers}
+          </Form.Control>
+        </Row>
+        <Row>
+          <Form.Group>
+            <Form.Label>{t('weighting')}:</Form.Label>
             <Form.Control
-              as="select"
-              {...register('alternative')}
-              defaultValue={findDefaultAnswerOption()[0]}
-            >
-              {answers}
-            </Form.Control>
-          </Row>
-          <Row>
-            <Form.Group>
-              <Form.Label>Weight:</Form.Label>
-              <Form.Control
-                type="number"
-                {...register('weight')}
-                defaultValue={findDefaultAnswerOption()[1]}
-                isInvalid={!!errors.weight}
-              />
-              {errors.weight && (
-                <Form.Control.Feedback type="invalid">
-                  {errors.weight?.message}
-                </Form.Control.Feedback>
-              )}
-            </Form.Group>
-          </Row>
-          <Row>
-            <Button type="submit" className="mt-2">
-              {t('save')}
-            </Button>
-            {selectedAlternative !== undefined && (
-              <Link
-                onClick={selectAlt}
-                to={`/speceditor/${id}/requirement/alternative/${selectedAlternative}`}
-              >
-                <Button className="mt-2 ml-2">Edit Alternative</Button>
-              </Link>
+              type="number"
+              {...register('weight')}
+              defaultValue={findDefaultAnswerOption()[1]}
+              isInvalid={!!errors.weight}
+            />
+            {errors.weight && (
+              <Form.Control.Feedback type="invalid">
+                {errors.weight?.message}
+              </Form.Control.Feedback>
             )}
-          </Row>
-        </Col>
+          </Form.Group>
+        </Row>
+        <Row>
+          <Button type="submit" className="mt-2">
+            {t('save')}
+          </Button>
+          {selectedAlternative !== undefined && (
+            <Link
+              onClick={selectAlt}
+              to={`/speceditor/${id}/requirement/alternative/${selectedAlternative}`}
+            >
+              <Button className="mt-2 ml-2">Edit Alternative</Button>
+            </Link>
+          )}
+        </Row>
+
         <ErrorSummary errors={errors} />
       </Form>
     );
@@ -227,10 +227,8 @@ export default function RequirementAnswer({
   return (
     <Card className="mb-3">
       <Card.Body>
-        <Row>
-          {reqTextOptions(requirement)}
-          {answerOptions(selectedVariant)}
-        </Row>
+        {reqTextOptions(requirement)}
+        {answerOptions(selectedVariant)}
       </Card.Body>
     </Card>
   );

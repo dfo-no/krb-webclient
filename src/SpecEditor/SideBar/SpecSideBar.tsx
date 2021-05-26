@@ -3,6 +3,7 @@ import Nav from 'react-bootstrap/Nav';
 import { withRouter } from 'react-router';
 import { NavLink, useRouteMatch } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import { useTranslation } from 'react-i18next';
 import css from './SpecSideBar.module.scss';
 import { RootState } from '../../store/store';
 
@@ -34,24 +35,26 @@ const renderRouteLinks = (routes: IRouteLink[], isProjectSelected: boolean) => {
 };
 
 function SpecSideBar(): ReactElement {
-  const { id } = useSelector((state: RootState) => state.selectedBank);
-
-  const { list } = useSelector((state: RootState) => state.bank);
-
+  const { t } = useTranslation();
   const match = useRouteMatch<RouteParams>('/speceditor/:bankId');
+
+  const { id } = useSelector((state: RootState) => state.selectedBank);
+  const { list } = useSelector((state: RootState) => state.bank);
 
   const currentUrl = match?.url ? match.url : `/speceditor/${id}`;
   const isProjectSelected = !!id;
 
   const selectProject = list.find((bank) => bank.id === id);
 
-  const displayTitle = selectProject ? selectProject.title : '<None selected>';
+  const displayTitle = selectProject
+    ? selectProject.title
+    : `<${t('none selected')}>`;
 
   const routes = [
-    { link: `${currentUrl}`, name: `Specification: ${displayTitle}` },
-    { link: `${currentUrl}/requirement`, name: 'Requirements' },
-    { link: `${currentUrl}/download`, name: 'Download' },
-    { link: `${currentUrl}/product`, name: 'Products' }
+    { link: `${currentUrl}`, name: `${t('Specification')}: ${displayTitle}` },
+    { link: `${currentUrl}/requirement`, name: t('Requirements') },
+    { link: `${currentUrl}/download`, name: t('Download') },
+    { link: `${currentUrl}/product`, name: t('Products') }
   ];
 
   return (

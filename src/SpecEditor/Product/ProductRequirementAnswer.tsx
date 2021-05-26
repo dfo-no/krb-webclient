@@ -69,10 +69,10 @@ export default function ProductRequirementAnswer({
     string | undefined
   >(savedAlternative !== undefined ? savedAlternative.id : undefined);
   const saveAnswer = (post: FormValue) => {
-    const alternativeIndex = selectedVariant.alternatives.findIndex(
+    const alternativeIndex = selectedVariant.questions.findIndex(
       (alt) => alt.id === post.alternative
     );
-    const alternative = selectedVariant.alternatives[alternativeIndex];
+    const alternative = selectedVariant.questions[alternativeIndex];
     const newAnswer = {
       id: uuidv4(),
       alternativeId: post.alternative,
@@ -90,7 +90,7 @@ export default function ProductRequirementAnswer({
     const variant = Utils.ensure(
       requirement.variants.find((element: IVariant) => element.id === variantId)
     );
-    selectedVariant.alternatives.forEach((alternative) => {
+    selectedVariant.questions.forEach((alternative) => {
       if (
         specProduct.requirementAnswers.find(
           (answer) => answer.alternativeId === alternative.id
@@ -129,9 +129,9 @@ export default function ProductRequirementAnswer({
   }
 
   function findDefaultAnswerOption(): [string, number] {
-    let defaultText = selectedVariant.alternatives[0].id;
+    let defaultText = selectedVariant.questions[0].id;
     let defaultWeight = 0;
-    selectedVariant.alternatives.forEach((alternative) => {
+    selectedVariant.questions.forEach((alternative) => {
       if (
         specProduct.requirementAnswers.find(
           (answer) => answer.alternativeId === alternative.id
@@ -152,7 +152,7 @@ export default function ProductRequirementAnswer({
       if (req.variants.length === 1) {
         return <p>{variant.requirementText}</p>;
       }
-      if (variant.use_Product) {
+      if (variant.useProduct) {
         return (
           <option key={variant.id} value={variant.id}>
             {variant.requirementText}
@@ -182,7 +182,7 @@ export default function ProductRequirementAnswer({
   };
 
   const answerOptions = (variant: IVariant) => {
-    const answers = variant.alternatives.map((alternative) => {
+    const answers = variant.questions.map((alternative) => {
       return (
         <option key={alternative.id} value={alternative.id}>
           {alternative.type}

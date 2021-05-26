@@ -82,10 +82,8 @@ export default function ProductRequirementView({
     });
   };
 
-  const [
-    associatedRequirements,
-    associatedNeeds
-  ] = Utils.findAssociatedRequirements(product.originProduct, selectedBank);
+  const [associatedRequirements, associatedNeeds] =
+    Utils.findAssociatedRequirements(product.originProduct, selectedBank);
   const childrenHierarchy = (listOfNeed: Nestable<Need>[], level: number) => {
     let n = level;
     let children: JSX.Element[];
