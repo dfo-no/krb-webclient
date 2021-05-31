@@ -48,7 +48,7 @@ export const TextSchema = Joi.object().keys({
   id: Joi.string().required(),
   type: Joi.string().equal(QuestionEnum.Q_TEXT).required(),
   config: Joi.object().keys({
-    max: Joi.number().required()
+    max: Joi.number().required().min(0)
   })
 });
 
@@ -193,6 +193,7 @@ export default function RequirementEditor(): ReactElement {
   }
 
   const saveRequirement = async (post: Requirement) => {
+    console.log(post);
     const oldReqIndex = Utils.ensure(
       need.requirements.findIndex((element) => element.id === reqId)
     );

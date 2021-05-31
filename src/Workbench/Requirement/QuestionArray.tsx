@@ -64,7 +64,7 @@ export default function QuestionArray({
           min: 0,
           max: 0,
           step: 1,
-          unit: ''
+          unit: 'GB'
         }
       } as ISliderQuestion);
     } else if (getAlternative === QuestionEnum.Q_CODELIST) {

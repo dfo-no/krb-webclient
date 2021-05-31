@@ -62,8 +62,7 @@ export default function SliderForm({
           </Form.Label>
           <Col sm="4">
             <Form.Control
-              as="input"
-              type="text"
+              type="number"
               {...register(
                 `variants.${vIndex}.questions.${aIndex}.config.min` as const
               )}
@@ -142,7 +141,7 @@ export default function SliderForm({
           </Form.Label>
           <Col sm="4">
             <Form.Control
-              type="input"
+              as="input"
               {...register(
                 `variants.${vIndex}.questions.${aIndex}.config.unit` as const
               )}
@@ -150,14 +149,14 @@ export default function SliderForm({
               isInvalid={
                 !!has(
                   errors,
-                  `variants[${vIndex}].questions[${aIndex}].config.unit`
+                  `variants${vIndex}.questions${aIndex}.config.unit` as const
                 )
               }
             />
             <Form.Control.Feedback type="invalid">
               {get(
                 errors,
-                `variants[${vIndex}].questions.[${aIndex}].config.unit.message`
+                `variants${vIndex}.questions.${aIndex}.config.unit.message`
               )}
             </Form.Control.Feedback>
           </Col>

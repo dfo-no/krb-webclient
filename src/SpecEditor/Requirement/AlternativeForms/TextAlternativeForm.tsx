@@ -78,11 +78,10 @@ export default function TextForm({ parentAnswer }: IProps): ReactElement {
             {...register('type')}
             isInvalid={!!errors.type}
           />
-          <InputRow
-            control={control}
-            errors={errors}
-            name="max"
-            label="Maximum"
+          <Form.Control
+            as="input"
+            {...register('config.max')}
+            isInvalid={!!errors.config?.max}
             type="number"
           />
 

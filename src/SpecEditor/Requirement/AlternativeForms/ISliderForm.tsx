@@ -81,36 +81,33 @@ export default function ValueForm({ parentAnswer }: IProps): ReactElement {
             {...register('type')}
             isInvalid={!!errors.type}
           />
-          <InputRow
-            control={control}
-            errors={errors}
-            name="min"
-            label="Minimum"
+          <Form.Control
+            as="input"
+            {...register('config.min')}
+            isInvalid={!!errors.config?.min}
             type="number"
           />
 
-          <InputRow
-            control={control}
-            errors={errors}
-            name="max"
-            label="Maximum"
+          <Form.Control
+            as="input"
+            {...register('config.max')}
+            isInvalid={!!errors.config?.max}
             type="number"
           />
 
-          <InputRow
-            control={control}
-            errors={errors}
-            name="step"
-            label="Step"
+          <Form.Control
+            as="input"
+            {...register('config.step')}
+            isInvalid={!!errors.config?.step}
             type="number"
           />
-          <InputRow
-            control={control}
-            errors={errors}
-            name="unit"
-            label="Unit"
-            type="number"
+
+          <Form.Control
+            as="input"
+            {...register('config.unit')}
+            isInvalid={!!errors.config?.unit}
           />
+
           <Button type="submit">{t('save')}</Button>
           <ErrorSummary errors={errors} />
         </Form>

@@ -11,6 +11,8 @@ import { Nestable } from '../../models/Nestable';
 import { Requirement } from '../../models/Requirement';
 import { RootState } from '../../store/store';
 import styles from './RequirementView.module.scss';
+import ISliderAnswer from '../AlternativeAnswerForms/ISliderAnswer';
+import { IRequirementAnswer } from '../../models/IRequirementAnswer';
 
 export default function RequirementPage(): ReactElement {
   const { response } = useSelector((state: RootState) => state.response);
@@ -57,7 +59,8 @@ export default function RequirementPage(): ReactElement {
       const selected = !!response.spesification.requirements.includes(req.id);
       if (selected) {
         let requirementText;
-        let selectedAnswer;
+        let selectedAnswer: IRequirementAnswer =
+          response.spesification.requirementAnswers[0];
         req.variants.forEach((variant) => {
           if (
             response.spesification.requirementAnswers.find(
@@ -73,12 +76,18 @@ export default function RequirementPage(): ReactElement {
         });
 
         return (
-          <Card className="ml-3 mb-3">
+          <Card key={req.id} className="ml-3 mb-3">
             <Card.Body>{requirementText}</Card.Body>
+            {selectedAnswer.alternative.type === 'Q_SLIDER' && (
+              <ISliderAnswer
+                key={selectedAnswer.id}
+                parentAnswer={selectedAnswer}
+              />
+            )}
           </Card>
         );
       }
-      return <></>;
+      return null;
     });
   };
   const childrenHierarchy = (listofneed: Nestable<Need>[], level: number) => {
@@ -91,7 +100,7 @@ export default function RequirementPage(): ReactElement {
         children = childrenHierarchy(element.children, n);
       }
       return (
-        <div className={` ${styles[cssClass]} pt-0`}>
+        <div key={element.id} className={` ${styles[cssClass]} pt-0`}>
           <Row>
             <BsArrowReturnRight className="ml-2 mt-1 mr-2" />
             <p>{element.title}</p>
@@ -108,7 +117,7 @@ export default function RequirementPage(): ReactElement {
     const newList = Utils.unflatten(needsList)[0];
     let children: JSX.Element[];
     const hierarchy = newList.map((element) => {
-      if (!checkNeed(element)) return <></>;
+      if (!checkNeed(element)) return null;
       if (element.children && element.children.length > 0) {
         children = childrenHierarchy(element.children, 1);
       }

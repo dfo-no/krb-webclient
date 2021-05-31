@@ -69,14 +69,14 @@ export default function TextForm({
               isInvalid={
                 !!has(
                   errors,
-                  `variants[${vIndex}].questions[${aIndex}].config.max` as const
+                  `variants.${vIndex}.questions.${aIndex}.config.max` as const
                 )
               }
             />
             <Form.Control.Feedback type="invalid">
               {get(
                 errors,
-                `variants[${vIndex}].questions.[${aIndex}].config.max.message`
+                `variants.${vIndex}.questions.${aIndex}.config.max.message`
               )}
             </Form.Control.Feedback>
           </Col>
