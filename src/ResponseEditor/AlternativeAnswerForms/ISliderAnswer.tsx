@@ -10,7 +10,7 @@ import Slider from '@material-ui/core/Slider';
 import Joi from 'joi';
 import { ISliderQuestion } from '../../models/ISliderQuestion';
 import { IRequirementAnswer } from '../../models/IRequirementAnswer';
-import { addReqAns } from '../../store/reducers/response-reducer';
+import { addRequrirementAnswer } from '../../store/reducers/response-reducer';
 import { RootState } from '../../store/store';
 import ErrorSummary from '../../Form/ErrorSummary';
 import QuestionEnum from '../../models/QuestionEnum';
@@ -62,7 +62,7 @@ export default function ISliderAnswer({ parentAnswer }: IProps): ReactElement {
       ...parentAnswer
     };
     newAnswer.alternative = post;
-    dispatch(addReqAns(newAnswer));
+    dispatch(addRequrirementAnswer(newAnswer));
   };
 
   const marks = [
