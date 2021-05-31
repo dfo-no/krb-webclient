@@ -13,7 +13,6 @@ import {
   editProductAnswer
 } from '../../../store/reducers/spesification-reducer';
 import { RootState } from '../../../store/store';
-import InputRow from '../../../Form/InputRow';
 import ErrorSummary from '../../../Form/ErrorSummary';
 import { SliderSchema } from '../../../Workbench/Requirement/RequirementEditor';
 
@@ -24,7 +23,6 @@ interface IProps {
 export default function ValueForm({ parentAnswer }: IProps): ReactElement {
   const {
     register,
-    control,
     handleSubmit,
     formState: { errors }
   } = useForm<ISliderQuestion>({

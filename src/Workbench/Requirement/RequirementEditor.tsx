@@ -193,7 +193,6 @@ export default function RequirementEditor(): ReactElement {
   }
 
   const saveRequirement = async (post: Requirement) => {
-    console.log(post);
     const oldReqIndex = Utils.ensure(
       need.requirements.findIndex((element) => element.id === reqId)
     );
