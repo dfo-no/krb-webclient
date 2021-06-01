@@ -15,7 +15,6 @@ import { RootState } from '../../../store/store';
 import { ITextQuestion } from '../../../models/ITextQuestion';
 import ErrorSummary from '../../../Form/ErrorSummary';
 import { TextSchema } from '../../../Workbench/Requirement/RequirementEditor';
-import InputRow from '../../../Form/InputRow';
 
 interface IProps {
   parentAnswer: IRequirementAnswer;
@@ -24,7 +23,6 @@ interface IProps {
 export default function TextForm({ parentAnswer }: IProps): ReactElement {
   const {
     register,
-    control,
     handleSubmit,
     formState: { errors }
   } = useForm<ITextQuestion>({
@@ -78,11 +76,10 @@ export default function TextForm({ parentAnswer }: IProps): ReactElement {
             {...register('type')}
             isInvalid={!!errors.type}
           />
-          <InputRow
-            control={control}
-            errors={errors}
-            name="max"
-            label="Maximum"
+          <Form.Control
+            as="input"
+            {...register('config.max')}
+            isInvalid={!!errors.config?.max}
             type="number"
           />
 

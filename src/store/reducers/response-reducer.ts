@@ -3,6 +3,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { Specification } from '../../models/Specification';
 import { Response } from '../../models/Response';
 import { ResponseProduct } from '../../models/ResponseProduct';
+import { IRequirementAnswer } from '../../models/IRequirementAnswer';
 import ModelType from '../../models/ModelType';
 import { Bank } from '../../models/Bank';
 
@@ -48,6 +49,22 @@ const responseSlice = createSlice({
     editSupplier(state, { payload }: PayloadAction<string>) {
       state.response.supplier = payload;
     },
+    addRequirementAnswer(
+      state,
+      { payload }: PayloadAction<IRequirementAnswer>
+    ) {
+      if (
+        state.response.requirementAnswers.find(
+          (answer) => answer.reqTextId === payload.reqTextId
+        )
+      ) {
+        const oldSelectIndex = state.response.requirementAnswers.findIndex(
+          (answer) => answer.reqTextId === payload.reqTextId
+        );
+        state.response.requirementAnswers.splice(oldSelectIndex, 1);
+      }
+      state.response.requirementAnswers.push(payload);
+    },
     setBank(state, { payload }: PayloadAction<Bank>) {
       state.response.spesification.bank = payload;
     },
@@ -71,7 +88,8 @@ export const {
   setBank,
   addProduct,
   editProduct,
-  setResponse
+  setResponse,
+  addRequirementAnswer
 } = responseSlice.actions;
 
 export default responseSlice.reducer;

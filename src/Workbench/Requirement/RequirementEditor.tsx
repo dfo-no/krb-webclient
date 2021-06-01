@@ -48,7 +48,7 @@ export const TextSchema = Joi.object().keys({
   id: Joi.string().required(),
   type: Joi.string().equal(QuestionEnum.Q_TEXT).required(),
   config: Joi.object().keys({
-    max: Joi.number().required()
+    max: Joi.number().required().min(0)
   })
 });
 
