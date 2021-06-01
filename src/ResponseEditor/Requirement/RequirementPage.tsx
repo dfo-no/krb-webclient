@@ -13,6 +13,8 @@ import { RootState } from '../../store/store';
 import styles from './RequirementView.module.scss';
 import ISliderAnswer from '../AlternativeAnswerForms/ISliderAnswer';
 import { IRequirementAnswer } from '../../models/IRequirementAnswer';
+import ITextAnswer from '../AlternativeAnswerForms/TextAnswerForm';
+import QuestionEnum from '../../models/QuestionEnum';
 
 export default function RequirementPage(): ReactElement {
   const { response } = useSelector((state: RootState) => state.response);
@@ -78,8 +80,14 @@ export default function RequirementPage(): ReactElement {
         return (
           <Card key={req.id} className="ml-3 mb-3">
             <Card.Body>{requirementText}</Card.Body>
-            {selectedAnswer.alternative.type === 'Q_SLIDER' && (
+            {selectedAnswer.alternative.type === QuestionEnum.Q_SLIDER && (
               <ISliderAnswer
+                key={selectedAnswer.id}
+                parentAnswer={selectedAnswer}
+              />
+            )}
+            {selectedAnswer.alternative.type === QuestionEnum.Q_TEXT && (
+              <ITextAnswer
                 key={selectedAnswer.id}
                 parentAnswer={selectedAnswer}
               />
