@@ -10,10 +10,11 @@ import Slider from '@material-ui/core/Slider';
 import Joi from 'joi';
 import { ISliderQuestion } from '../../models/ISliderQuestion';
 import { IRequirementAnswer } from '../../models/IRequirementAnswer';
-import { addReqAns } from '../../store/reducers/response-reducer';
+import { addRequirementAnswer } from '../../store/reducers/response-reducer';
 import { RootState } from '../../store/store';
 import ErrorSummary from '../../Form/ErrorSummary';
 import QuestionEnum from '../../models/QuestionEnum';
+import { IOption } from '../../models/IOption';
 
 interface IProps {
   parentAnswer: IRequirementAnswer;
@@ -26,7 +27,7 @@ export const ResponseSliderSchema = Joi.object().keys({
     step: Joi.number().min(0).max(1000000000).required(),
     min: Joi.number().min(0).max(1000000000).required(),
     max: Joi.number().min(0).max(1000000000).required(),
-    unit: Joi.string().required()
+    unit: Joi.string().disallow(null, '').required()
   }),
   answer: Joi.object().keys({
     value: Joi.number().min(0).max(1000000000).required()
@@ -62,10 +63,10 @@ export default function ISliderAnswer({ parentAnswer }: IProps): ReactElement {
       ...parentAnswer
     };
     newAnswer.alternative = post;
-    dispatch(addReqAns(newAnswer));
+    dispatch(addRequirementAnswer(newAnswer));
   };
 
-  const marks = [
+  const marks: IOption[] = [
     {
       value: sliderQuestion.config.min,
       label: `${sliderQuestion.config.min} ${sliderQuestion.config.unit}`
@@ -76,7 +77,7 @@ export default function ISliderAnswer({ parentAnswer }: IProps): ReactElement {
     }
   ];
 
-  function valuetext(input: number) {
+  function valueText(input: number) {
     return `${input}${sliderQuestion.config.unit}`;
   }
   return (
@@ -129,7 +130,7 @@ export default function ISliderAnswer({ parentAnswer }: IProps): ReactElement {
               <Slider
                 className=""
                 {...field}
-                getAriaValueText={valuetext}
+                getAriaValueText={valueText}
                 aria-labelledby="discrete-slider-always"
                 step={sliderQuestion.config.step}
                 min={sliderQuestion.config.min}
