@@ -11,7 +11,7 @@ import { IRequirementAnswer } from '../../models/IRequirementAnswer';
 import { RootState } from '../../store/store';
 import { ITextQuestion } from '../../models/ITextQuestion';
 import ErrorSummary from '../../Form/ErrorSummary';
-import { addRequrirementAnswer } from '../../store/reducers/response-reducer';
+import { addRequirementAnswer } from '../../store/reducers/response-reducer';
 import QuestionEnum from '../../models/QuestionEnum';
 
 interface IProps {
@@ -64,7 +64,7 @@ export default function ITextAnswer({ parentAnswer }: IProps): ReactElement {
       ...parentAnswer
     };
     newAnswer.alternative = post;
-    dispatch(addRequrirementAnswer(newAnswer));
+    dispatch(addRequirementAnswer(newAnswer));
   };
 
   return (

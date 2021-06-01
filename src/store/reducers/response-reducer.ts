@@ -49,7 +49,7 @@ const responseSlice = createSlice({
     editSupplier(state, { payload }: PayloadAction<string>) {
       state.response.supplier = payload;
     },
-    addRequrirementAnswer(
+    addRequirementAnswer(
       state,
       { payload }: PayloadAction<IRequirementAnswer>
     ) {
@@ -89,7 +89,7 @@ export const {
   addProduct,
   editProduct,
   setResponse,
-  addRequrirementAnswer
+  addRequirementAnswer
 } = responseSlice.actions;
 
 export default responseSlice.reducer;
