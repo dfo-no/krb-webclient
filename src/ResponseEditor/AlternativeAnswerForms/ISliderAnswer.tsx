@@ -43,8 +43,6 @@ export default function ISliderAnswer({ parentAnswer }: IProps): ReactElement {
     index === -1
       ? (parentAnswer.alternative as ISliderQuestion)
       : (response.requirementAnswers[index].alternative as ISliderQuestion);
-
-  console.log(defaultVal);
   const {
     register,
     control,
