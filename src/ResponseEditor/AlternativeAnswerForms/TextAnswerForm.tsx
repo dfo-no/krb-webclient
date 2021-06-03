@@ -13,6 +13,7 @@ import { ITextQuestion } from '../../models/ITextQuestion';
 import ErrorSummary from '../../Form/ErrorSummary';
 import { addRequirementAnswer } from '../../store/reducers/response-reducer';
 import QuestionEnum from '../../models/QuestionEnum';
+import { addProductAnswer } from '../../store/reducers/spesification-reducer';
 
 interface IProps {
   parentAnswer: IRequirementAnswer;
@@ -31,13 +32,34 @@ export const ResponseTextSchema = Joi.object().keys({
 
 export default function ITextAnswer({ parentAnswer }: IProps): ReactElement {
   const { response } = useSelector((state: RootState) => state.response);
-  const index = response.requirementAnswers.findIndex(
-    (answer) => answer.reqTextId === parentAnswer.reqTextId
+  const { productId } = useSelector(
+    (state: RootState) => state.selectedResponseProduct
   );
+  let index: number;
+
+  const productIndex = response.products.findIndex((p) => p.id === productId);
+
+  if (parentAnswer.type === 'requirement') {
+    index = response.requirementAnswers.findIndex(
+      (answer) => answer.reqTextId === parentAnswer.reqTextId
+    );
+  } else {
+    index =
+      response.products.length > 0
+        ? response.products[productIndex].requirementAnswers.findIndex(
+            (answer) => answer.reqTextId === parentAnswer.reqTextId
+          )
+        : -1;
+  }
+
   const defaultVal =
     index === -1
       ? (parentAnswer.alternative as ITextQuestion)
-      : (response.requirementAnswers[index].alternative as ITextQuestion);
+      : (response.requirementAnswers[index].alternative as ITextQuestion) ||
+        (parentAnswer.type === 'product' &&
+          (response.products[0].requirementAnswers[index]
+            .alternative as ITextQuestion));
+
   const {
     register,
     handleSubmit,
@@ -48,9 +70,6 @@ export default function ITextAnswer({ parentAnswer }: IProps): ReactElement {
       ...defaultVal
     }
   });
-  const { productId } = useSelector(
-    (state: RootState) => state.selectedSpecProduct
-  );
   const item = parentAnswer.alternative as ITextQuestion;
   const dispatch = useDispatch();
   const { t } = useTranslation();
@@ -64,7 +83,11 @@ export default function ITextAnswer({ parentAnswer }: IProps): ReactElement {
       ...parentAnswer
     };
     newAnswer.alternative = post;
-    dispatch(addRequirementAnswer(newAnswer));
+
+    if (newAnswer.type === 'requirement')
+      dispatch(addRequirementAnswer(newAnswer));
+    if (newAnswer.type === 'product' && productId !== null)
+      dispatch(addProductAnswer({ answer: newAnswer, productId }));
   };
 
   return (
