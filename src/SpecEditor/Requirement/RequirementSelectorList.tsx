@@ -89,6 +89,7 @@ export default function RequirementSelectorList({
         n += 1;
         children = childrenHierarchy(element.children, n);
       }
+      if (!checkNeed(element)) return <></>;
       return (
         <div key={element.id} className={` ${styles[cssClass]} pt-0`}>
           <Row>

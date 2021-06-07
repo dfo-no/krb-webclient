@@ -5,6 +5,7 @@ import { useSelector } from 'react-redux';
 import QuestionEnum from '../../models/QuestionEnum';
 import { RootState } from '../../store/store';
 import FileInputForm from './AlternativeForms/FileInputForm';
+import CodelistForm from './AlternativeForms/ICodeListForm';
 import ValueForm from './AlternativeForms/ISliderForm';
 import NoProperties from './AlternativeForms/NoProperties';
 import TextAlternativeForm from './AlternativeForms/TextAlternativeForm';
@@ -24,6 +25,7 @@ export default function EditAlternative(): ReactElement {
   );
 
   const item = spec.requirementAnswers[itemIndex];
+  console.log(item);
 
   return (
     <Container fluid className="mt-4">
@@ -37,7 +39,9 @@ export default function EditAlternative(): ReactElement {
       {item.alternative.type === QuestionEnum.Q_TEXT && (
         <TextAlternativeForm parentAnswer={item} />
       )}
-      {item.alternative.type === QuestionEnum.Q_CODELIST && <NoProperties />}
+      {item.alternative.type === QuestionEnum.Q_CODELIST && (
+        <CodelistForm parentAnswer={item} />
+      )}
       {item.alternative.type === QuestionEnum.Q_CHECKBOX && <NoProperties />}
     </Container>
   );

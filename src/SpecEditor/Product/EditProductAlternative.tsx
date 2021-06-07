@@ -6,6 +6,7 @@ import Utils from '../../common/Utils';
 import QuestionEnum from '../../models/QuestionEnum';
 import { SpecificationProduct } from '../../models/SpecificationProduct';
 import { RootState } from '../../store/store';
+import CodelistForm from '../Requirement/AlternativeForms/ICodeListForm';
 import ValueForm from '../Requirement/AlternativeForms/ISliderForm';
 import NoProperties from '../Requirement/AlternativeForms/NoProperties';
 import TextAlternativeForm from '../Requirement/AlternativeForms/TextAlternativeForm';
@@ -45,7 +46,9 @@ export default function EditAlternative(): ReactElement {
       {item.alternative.type === QuestionEnum.Q_TEXT && (
         <TextAlternativeForm parentAnswer={item} />
       )}
-      {item.alternative.type === QuestionEnum.Q_CODELIST && <NoProperties />}
+      {item.alternative.type === QuestionEnum.Q_CODELIST && (
+        <CodelistForm parentAnswer={item} />
+      )}
       {item.alternative.type === QuestionEnum.Q_CHECKBOX && <NoProperties />}
     </Container>
   );
