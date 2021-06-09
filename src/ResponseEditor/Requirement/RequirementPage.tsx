@@ -14,6 +14,7 @@ import styles from './RequirementView.module.scss';
 import ISliderAnswer from '../AlternativeAnswerForms/ISliderAnswer';
 import { IRequirementAnswer } from '../../models/IRequirementAnswer';
 import ITextAnswer from '../AlternativeAnswerForms/TextAnswerForm';
+import ICheckBoxAnswer from '../AlternativeAnswerForms/ICheckBoxAnswer';
 import QuestionEnum from '../../models/QuestionEnum';
 
 export default function RequirementPage(): ReactElement {
@@ -88,6 +89,12 @@ export default function RequirementPage(): ReactElement {
             )}
             {selectedAnswer.alternative.type === QuestionEnum.Q_TEXT && (
               <ITextAnswer
+                key={selectedAnswer.id}
+                parentAnswer={selectedAnswer}
+              />
+            )}
+            {selectedAnswer.alternative.type === QuestionEnum.Q_CHECKBOX && (
+              <ICheckBoxAnswer
                 key={selectedAnswer.id}
                 parentAnswer={selectedAnswer}
               />
