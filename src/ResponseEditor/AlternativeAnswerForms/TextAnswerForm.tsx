@@ -14,6 +14,7 @@ import ErrorSummary from '../../Form/ErrorSummary';
 import { addRequirementAnswer } from '../../store/reducers/response-reducer';
 import QuestionEnum from '../../models/QuestionEnum';
 import { addProductAnswer } from '../../store/reducers/spesification-reducer';
+import ModelType from '../../models/ModelType';
 
 interface IProps {
   parentAnswer: IRequirementAnswer;
@@ -39,7 +40,7 @@ export default function ITextAnswer({ parentAnswer }: IProps): ReactElement {
 
   const productIndex = response.products.findIndex((p) => p.id === productId);
 
-  if (parentAnswer.type === 'requirement') {
+  if (parentAnswer.type === ModelType.requirement) {
     index = response.requirementAnswers.findIndex(
       (answer) => answer.reqTextId === parentAnswer.reqTextId
     );
@@ -56,7 +57,7 @@ export default function ITextAnswer({ parentAnswer }: IProps): ReactElement {
     index === -1
       ? (parentAnswer.alternative as ITextQuestion)
       : (response.requirementAnswers[index].alternative as ITextQuestion) ||
-        (parentAnswer.type === 'product' &&
+        (parentAnswer.type === ModelType.product &&
           (response.products[0].requirementAnswers[index]
             .alternative as ITextQuestion));
 
@@ -74,7 +75,7 @@ export default function ITextAnswer({ parentAnswer }: IProps): ReactElement {
   const dispatch = useDispatch();
   const { t } = useTranslation();
 
-  if (!productId && parentAnswer.type === 'product') {
+  if (!productId && parentAnswer.type === ModelType.product) {
     return <p>No product selected</p>;
   }
 
@@ -84,9 +85,9 @@ export default function ITextAnswer({ parentAnswer }: IProps): ReactElement {
     };
     newAnswer.alternative = post;
 
-    if (newAnswer.type === 'requirement')
+    if (newAnswer.type === ModelType.requirement)
       dispatch(addRequirementAnswer(newAnswer));
-    if (newAnswer.type === 'product' && productId !== null)
+    if (newAnswer.type === ModelType.product && productId !== null)
       dispatch(addProductAnswer({ answer: newAnswer, productId }));
   };
 

@@ -18,6 +18,7 @@ import { RootState } from '../../store/store';
 import ErrorSummary from '../../Form/ErrorSummary';
 import QuestionEnum from '../../models/QuestionEnum';
 import { IOption } from '../../models/IOption';
+import ModelType from '../../models/ModelType';
 
 interface IProps {
   parentAnswer: IRequirementAnswer;
@@ -46,7 +47,7 @@ export default function ISliderAnswer({ parentAnswer }: IProps): ReactElement {
 
   const productIndex = response.products.findIndex((p) => p.id === productId);
 
-  if (parentAnswer.type === 'requirement') {
+  if (parentAnswer.type === ModelType.requirement) {
     index = response.requirementAnswers.findIndex(
       (answer) => answer.reqTextId === parentAnswer.reqTextId
     );
@@ -84,9 +85,9 @@ export default function ISliderAnswer({ parentAnswer }: IProps): ReactElement {
     };
     newAnswer.alternative = post;
 
-    if (newAnswer.type === 'requirement')
+    if (newAnswer.type === ModelType.requirement)
       dispatch(addRequirementAnswer(newAnswer));
-    if (newAnswer.type === 'product' && productId !== null)
+    if (newAnswer.type === ModelType.product && productId !== null)
       dispatch(addProductAnswer({ answer: newAnswer, productId }));
   };
 

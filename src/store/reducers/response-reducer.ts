@@ -83,9 +83,6 @@ const responseSlice = createSlice({
           (product) => product.id === payload.productId
         )
       );
-
-      console.log(payload.productId);
-      console.log(index);
       if (
         state.response.products[index].requirementAnswers.find(
           (answer) => answer.reqTextId === payload.answer.reqTextId

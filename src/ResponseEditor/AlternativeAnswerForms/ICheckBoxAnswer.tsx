@@ -8,7 +8,6 @@ import Button from 'react-bootstrap/Button';
 import { useTranslation } from 'react-i18next';
 import Joi from 'joi';
 import Switch from '@material-ui/core/Switch';
-import { ISliderQuestion } from '../../models/ISliderQuestion';
 import { IRequirementAnswer } from '../../models/IRequirementAnswer';
 import {
   addProductAnswer,
@@ -18,6 +17,7 @@ import { RootState } from '../../store/store';
 import ErrorSummary from '../../Form/ErrorSummary';
 import QuestionEnum from '../../models/QuestionEnum';
 import { ICheckboxQuestion } from '../../models/ICheckboxQuestion';
+import ModelType from '../../models/ModelType';
 
 interface IProps {
   parentAnswer: IRequirementAnswer;
@@ -42,7 +42,7 @@ export default function ICheckBoxAnswer({
 
   const productIndex = response.products.findIndex((p) => p.id === productId);
 
-  if (parentAnswer.type === 'requirement') {
+  if (parentAnswer.type === ModelType.requirement) {
     index = response.requirementAnswers.findIndex(
       (answer) => answer.reqTextId === parentAnswer.reqTextId
     );
@@ -58,10 +58,10 @@ export default function ICheckBoxAnswer({
   const defaultVal =
     index === -1
       ? (parentAnswer.alternative as ICheckboxQuestion)
-      : (parentAnswer.type === 'requirement' &&
+      : (parentAnswer.type === ModelType.requirement &&
           (response.requirementAnswers[index]
             .alternative as ICheckboxQuestion)) ||
-        (parentAnswer.type === 'product' &&
+        (parentAnswer.type === ModelType.product &&
           (response.products[0].requirementAnswers[index]
             .alternative as ICheckboxQuestion));
   const {
@@ -77,15 +77,14 @@ export default function ICheckBoxAnswer({
   });
   const dispatch = useDispatch();
   const { t } = useTranslation();
-
-  const saveValues = (post: ISliderQuestion) => {
+  const saveValues = (post: ICheckboxQuestion) => {
     const newAnswer = {
       ...parentAnswer
     };
     newAnswer.alternative = post;
-    if (newAnswer.type === 'requirement')
+    if (newAnswer.type === ModelType.requirement)
       dispatch(addRequirementAnswer(newAnswer));
-    if (newAnswer.type === 'product' && productId !== null)
+    if (newAnswer.type === ModelType.product && productId !== null)
       dispatch(addProductAnswer({ answer: newAnswer, productId }));
   };
 
