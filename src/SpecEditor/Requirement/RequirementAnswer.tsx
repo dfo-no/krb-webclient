@@ -21,6 +21,7 @@ import { RootState } from '../../store/store';
 import { selectAlternative } from '../../store/reducers/selectedAlternative-reducer';
 import ErrorSummary from '../../Form/ErrorSummary';
 import { IRequirementAnswer } from '../../models/IRequirementAnswer';
+import ModelType from '../../models/ModelType';
 
 interface IProps {
   requirement: Requirement;
@@ -72,7 +73,7 @@ export default function RequirementAnswer({
       weight: post.weight,
       reqTextId: selectedVariant.id,
       alternative,
-      type: 'requirement'
+      type: ModelType.requirement
     };
     dispatch(addAnswer({ answer: newAnswer }));
     setSelectedAlternative(newAnswer.id);

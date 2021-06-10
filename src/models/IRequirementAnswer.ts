@@ -1,3 +1,4 @@
+import ModelType from './ModelType';
 import { IAnswerBase, IConfigBase, IQuestionBase } from './Question';
 
 export interface IRequirementAnswer {
@@ -6,5 +7,5 @@ export interface IRequirementAnswer {
   weight: number;
   reqTextId: string;
   alternative: IQuestionBase<IAnswerBase, IConfigBase>;
-  type: string;
+  type: ModelType;
 }
