@@ -8,7 +8,6 @@ import Button from 'react-bootstrap/Button';
 import { useTranslation } from 'react-i18next';
 import Joi from 'joi';
 import Switch from '@material-ui/core/Switch';
-import { ISliderQuestion } from '../../models/ISliderQuestion';
 import { IRequirementAnswer } from '../../models/IRequirementAnswer';
 import {
   addProductAnswer,
@@ -62,7 +61,7 @@ export default function ICheckBoxAnswer({
       : (parentAnswer.type === ModelType.requirement &&
           (response.requirementAnswers[index]
             .alternative as ICheckboxQuestion)) ||
-        (parentAnswer.type === 'product' &&
+        (parentAnswer.type === ModelType.product &&
           (response.products[0].requirementAnswers[index]
             .alternative as ICheckboxQuestion));
   const {

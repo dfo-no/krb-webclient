@@ -57,7 +57,7 @@ export default function ITextAnswer({ parentAnswer }: IProps): ReactElement {
     index === -1
       ? (parentAnswer.alternative as ITextQuestion)
       : (response.requirementAnswers[index].alternative as ITextQuestion) ||
-        (parentAnswer.type === 'product' &&
+        (parentAnswer.type === ModelType.product &&
           (response.products[0].requirementAnswers[index]
             .alternative as ITextQuestion));
 
