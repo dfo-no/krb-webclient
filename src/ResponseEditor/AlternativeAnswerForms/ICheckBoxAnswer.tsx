@@ -78,8 +78,7 @@ export default function ICheckBoxAnswer({
   });
   const dispatch = useDispatch();
   const { t } = useTranslation();
-
-  const saveValues = (post: ISliderQuestion) => {
+  const saveValues = (post: ICheckboxQuestion) => {
     const newAnswer = {
       ...parentAnswer
     };
