@@ -16,6 +16,7 @@ import { IRequirementAnswer } from '../../models/IRequirementAnswer';
 import ITextAnswer from '../AlternativeAnswerForms/TextAnswerForm';
 import ICheckBoxAnswer from '../AlternativeAnswerForms/ICheckBoxAnswer';
 import QuestionEnum from '../../models/QuestionEnum';
+import ICodelistAnswer from '../AlternativeAnswerForms/ICodeListAnswer';
 
 export default function RequirementPage(): ReactElement {
   const { response } = useSelector((state: RootState) => state.response);
@@ -99,6 +100,12 @@ export default function RequirementPage(): ReactElement {
                 parentAnswer={selectedAnswer}
               />
             )}
+            {selectedAnswer.alternative.type === QuestionEnum.Q_CODELIST && (
+              <ICodelistAnswer
+                key={selectedAnswer.id}
+                parentAnswer={selectedAnswer}
+              />
+            )}
           </Card>
         );
       }
@@ -114,6 +121,7 @@ export default function RequirementPage(): ReactElement {
         n += 1;
         children = childrenHierarchy(element.children, n);
       }
+      if (!checkNeed(element)) return <></>;
       return (
         <div key={element.id} className={` ${styles[cssClass]} pt-0`}>
           <Row>

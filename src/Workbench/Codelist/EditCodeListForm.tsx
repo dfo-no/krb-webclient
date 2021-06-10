@@ -98,9 +98,9 @@ function EditCodeListForm({ toggleShow, codelistId }: IProps): ReactElement {
               if (alternative.type === QuestionEnum.Q_CODELIST) {
                 const alt = alternative as ICodelistQuestion;
                 if (
-                  alt.answer &&
-                  alt.answer.codelist &&
-                  alt.answer.codelist === codelistId
+                  alt.config &&
+                  alt.config.codelist &&
+                  alt.config.codelist === codelistId
                 )
                   used = true;
               }

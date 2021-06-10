@@ -17,6 +17,7 @@ import ITextAnswer from '../AlternativeAnswerForms/TextAnswerForm';
 import ICheckBoxAnswer from '../AlternativeAnswerForms/ICheckBoxAnswer';
 import QuestionEnum from '../../models/QuestionEnum';
 import { SpecificationProduct } from '../../models/SpecificationProduct';
+import ICodelistAnswer from '../AlternativeAnswerForms/ICodeListAnswer';
 
 interface InputProps {
   product: SpecificationProduct;
@@ -79,7 +80,9 @@ export default function ResponseProductRequirementSelector({
   }
   const requirementsAnswers = (requirementArray: Requirement[]) => {
     return requirementArray.map((req) => {
-      const selected = !!response.spesification.requirements.includes(req.id);
+      const selected = !!response.spesification.products[
+        productIndex
+      ].requirements.includes(req.id);
       if (selected) {
         let requirementText;
         let selectedAnswer: IRequirementAnswer =
@@ -104,7 +107,6 @@ export default function ResponseProductRequirementSelector({
               ];
           }
         });
-
         return (
           <Card key={req.id} className="ml-3 mb-3">
             <Card.Body>{requirementText}</Card.Body>
@@ -126,6 +128,12 @@ export default function ResponseProductRequirementSelector({
                 parentAnswer={selectedAnswer}
               />
             )}
+            {selectedAnswer.alternative.type === QuestionEnum.Q_CODELIST && (
+              <ICodelistAnswer
+                key={selectedAnswer.id}
+                parentAnswer={selectedAnswer}
+              />
+            )}
           </Card>
         );
       }
@@ -141,6 +149,7 @@ export default function ResponseProductRequirementSelector({
         n += 1;
         children = childrenHierarchy(element.children, n);
       }
+      if (!checkNeed(element)) return <></>;
       return (
         <div key={element.id} className={` ${styles[cssClass]} pt-0`}>
           <Row>

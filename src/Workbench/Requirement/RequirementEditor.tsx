@@ -41,7 +41,11 @@ export const SliderSchema = Joi.object().keys({
 
 export const CodelistSchema = Joi.object().keys({
   id: Joi.string().required(),
-  type: Joi.string().equal(QuestionEnum.Q_CODELIST).required()
+  type: Joi.string().equal(QuestionEnum.Q_CODELIST).required(),
+  config: Joi.object().keys({
+    codelist: Joi.string().required(),
+    multipleSelect: Joi.boolean().required()
+  })
 });
 
 export const TextSchema = Joi.object().keys({

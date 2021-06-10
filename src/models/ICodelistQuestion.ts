@@ -2,10 +2,15 @@ import { IAnswerBase, IConfigBase, IQuestionBase } from './Question';
 import QuestionEnum from './QuestionEnum';
 
 export interface ICodelistQuestion
-  extends IQuestionBase<ICodelistAnswer, IConfigBase> {
+  extends IQuestionBase<ICodelistAnswer, ICodelistConfig> {
   type: QuestionEnum.Q_CODELIST;
 }
 
+export interface ICodelistConfig extends IConfigBase {
+  codelist: string;
+  multipleSelect: boolean;
+}
+
 export interface ICodelistAnswer extends IAnswerBase {
-  codelist: string | null;
+  codes: string[] | string;
 }

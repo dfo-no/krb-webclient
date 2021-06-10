@@ -74,7 +74,7 @@ const specificationSlice = createSlice({
       );
       if (
         state.spec.products[index].requirementAnswers.find(
-          (answer) => answer.reqTextId === payload.answer.reqTextId
+          (answer) => answer.id === payload.answer.id
         )
       ) {
         const oldSelectIndex = state.spec.products[
@@ -148,7 +148,7 @@ const specificationSlice = createSlice({
     ) {
       if (
         state.spec.requirementAnswers.find(
-          (answer) => answer.reqTextId === payload.answer.reqTextId
+          (answer) => answer.id === payload.answer.id
         )
       ) {
         const oldSelectIndex = state.spec.requirementAnswers.findIndex(
