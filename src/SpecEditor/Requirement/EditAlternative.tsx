@@ -24,7 +24,6 @@ export default function EditAlternative(): ReactElement {
   );
 
   const item = spec.requirementAnswers[itemIndex];
-  console.log(item);
 
   return (
     <Container fluid className="mt-4">
