@@ -17,6 +17,7 @@ import ErrorSummary from '../../../Form/ErrorSummary';
 import { CodelistSchema } from '../../../Workbench/Requirement/RequirementEditor';
 import { ICodelistQuestion } from '../../../models/ICodelistQuestion';
 import { Codelist } from '../../../models/Codelist';
+import ModelType from '../../../models/ModelType';
 
 interface IProps {
   parentAnswer: IRequirementAnswer;
@@ -55,9 +56,9 @@ export default function CodelistForm({ parentAnswer }: IProps): ReactElement {
     };
     newAlt = post;
     newAnswer.alternative = newAlt;
-    if (newAnswer.type === 'requirement')
+    if (newAnswer.type === ModelType.requirement)
       dispatch(addAnswer({ answer: newAnswer }));
-    if (newAnswer.type === 'product' && productId !== null)
+    if (newAnswer.type === ModelType.product && productId !== null)
       dispatch(addProductAnswer({ answer: newAnswer, productId }));
   };
 

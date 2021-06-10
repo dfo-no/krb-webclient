@@ -2,12 +2,11 @@ import React, { ReactElement } from 'react';
 import Card from 'react-bootstrap/Card';
 import Form from 'react-bootstrap/Form';
 import { joiResolver } from '@hookform/resolvers/joi';
-import { Controller, useForm } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import Button from 'react-bootstrap/Button';
 import { useTranslation } from 'react-i18next';
 import Joi from 'joi';
-import Select from '@material-ui/core/Select';
 
 import { IRequirementAnswer } from '../../models/IRequirementAnswer';
 import {
@@ -88,7 +87,6 @@ export default function ICodelistAnswer({
   const {
     register,
     handleSubmit,
-    control,
     formState: { errors }
   } = useForm<ICodelistQuestion>({
     resolver: joiResolver(resolver),

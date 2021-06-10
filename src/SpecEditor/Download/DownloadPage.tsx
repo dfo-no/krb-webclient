@@ -12,7 +12,6 @@ import { Specification } from '../../models/Specification';
 export default function SpecPage(): ReactElement {
   const { t } = useTranslation();
   const { spec } = useSelector((state: RootState) => state.specification);
-
   const onDownLoad = () => {
     httpPost<Specification, AxiosResponse<File>>(
       `${process.env.REACT_APP_JAVA_API_URL}/generatePdf`,

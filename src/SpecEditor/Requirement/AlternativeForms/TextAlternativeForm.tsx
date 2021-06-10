@@ -8,8 +8,8 @@ import Button from 'react-bootstrap/Button';
 import { useTranslation } from 'react-i18next';
 import { IRequirementAnswer } from '../../../models/IRequirementAnswer';
 import {
-  editAnswer,
-  editProductAnswer
+  addAnswer,
+  addProductAnswer
 } from '../../../store/reducers/spesification-reducer';
 import { RootState } from '../../../store/store';
 import { ITextQuestion } from '../../../models/ITextQuestion';
@@ -35,7 +35,6 @@ export default function TextForm({ parentAnswer }: IProps): ReactElement {
   const { productId } = useSelector(
     (state: RootState) => state.selectedSpecProduct
   );
-  const item = parentAnswer.alternative as ITextQuestion;
   const dispatch = useDispatch();
   const { t } = useTranslation();
 
@@ -44,19 +43,14 @@ export default function TextForm({ parentAnswer }: IProps): ReactElement {
   }
 
   const saveValues = (post: ITextQuestion) => {
-    const newAlt = {
-      ...item
-    };
     const newAnswer = {
       ...parentAnswer
     };
-    newAlt.config.max = post.config.max;
-    newAnswer.alternative = newAlt;
-
+    newAnswer.alternative = post;
     if (newAnswer.type === ModelType.requirement)
-      dispatch(editAnswer({ answer: newAnswer }));
+      dispatch(addAnswer({ answer: newAnswer }));
     if (newAnswer.type === ModelType.product && productId !== null)
-      dispatch(editProductAnswer({ answer: newAnswer, productId }));
+      dispatch(addProductAnswer({ answer: newAnswer, productId }));
   };
 
   return (
