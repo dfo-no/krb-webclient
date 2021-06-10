@@ -10,7 +10,7 @@ import Utils from '../../common/Utils';
 import { SpecificationProduct } from '../../models/SpecificationProduct';
 import { selectBank } from '../../store/reducers/selectedBank-reducer';
 import { RootState } from '../../store/store';
-import { selectResponseProduct } from '../../store/reducers/selectedResponseProduct-reducer';
+import { selectSpecProduct } from '../../store/reducers/selectedSpecProduct-reducer';
 
 interface RouteParams {
   bankId: string;
@@ -40,7 +40,7 @@ export default function ProductResponseList(): ReactElement {
               {Utils.capitalizeFirstLetter(product.title)}, {product.amount} stk
             </p>
             <Link
-              onClick={() => dispatch(selectResponseProduct(product.id))}
+              onClick={() => dispatch(selectSpecProduct(product.id))}
               to={`/response/${id}/product/${product.id}`}
             >
               <BsPencil className="ml-4  mt-1" />

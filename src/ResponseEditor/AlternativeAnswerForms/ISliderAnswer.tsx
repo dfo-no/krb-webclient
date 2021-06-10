@@ -10,11 +10,15 @@ import Slider from '@material-ui/core/Slider';
 import Joi from 'joi';
 import { ISliderQuestion } from '../../models/ISliderQuestion';
 import { IRequirementAnswer } from '../../models/IRequirementAnswer';
-import { addRequirementAnswer } from '../../store/reducers/response-reducer';
+import {
+  addRequirementAnswer,
+  addProductAnswer
+} from '../../store/reducers/response-reducer';
 import { RootState } from '../../store/store';
 import ErrorSummary from '../../Form/ErrorSummary';
 import QuestionEnum from '../../models/QuestionEnum';
 import { IOption } from '../../models/IOption';
+import ModelType from '../../models/ModelType';
 
 interface IProps {
   parentAnswer: IRequirementAnswer;
@@ -36,9 +40,26 @@ export const ResponseSliderSchema = Joi.object().keys({
 
 export default function ISliderAnswer({ parentAnswer }: IProps): ReactElement {
   const { response } = useSelector((state: RootState) => state.response);
-  const index = response.requirementAnswers.findIndex(
-    (answer) => answer.reqTextId === parentAnswer.reqTextId
+  const { productId } = useSelector(
+    (state: RootState) => state.selectedResponseProduct
   );
+  let index: number;
+
+  const productIndex = response.products.findIndex((p) => p.id === productId);
+
+  if (parentAnswer.type === ModelType.requirement) {
+    index = response.requirementAnswers.findIndex(
+      (answer) => answer.reqTextId === parentAnswer.reqTextId
+    );
+  } else {
+    index =
+      response.products.length > 0
+        ? response.products[productIndex].requirementAnswers.findIndex(
+            (answer) => answer.reqTextId === parentAnswer.reqTextId
+          )
+        : -1;
+  }
+
   const defaultVal =
     index === -1
       ? (parentAnswer.alternative as ISliderQuestion)
@@ -63,7 +84,11 @@ export default function ISliderAnswer({ parentAnswer }: IProps): ReactElement {
       ...parentAnswer
     };
     newAnswer.alternative = post;
-    dispatch(addRequirementAnswer(newAnswer));
+
+    if (newAnswer.type === ModelType.requirement)
+      dispatch(addRequirementAnswer(newAnswer));
+    if (newAnswer.type === ModelType.product && productId !== null)
+      dispatch(addProductAnswer({ answer: newAnswer, productId }));
   };
 
   const marks: IOption[] = [

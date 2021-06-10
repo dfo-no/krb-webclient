@@ -17,9 +17,9 @@ import { SpecificationProduct } from '../../models/SpecificationProduct';
 import { RootState } from '../../store/store';
 import ModelType from '../../models/ModelType';
 import { addProduct, editProduct } from '../../store/reducers/response-reducer';
-import ProductRequirementView from './ProductRequirementView';
-import { Bank } from '../../models/Bank';
 import ErrorSummary from '../../Form/ErrorSummary';
+import ResponseProductRequirementSelector from './ResponseProductRequirementSelector';
+import { selectResponseProduct } from '../../store/reducers/selectedResponseProduct-reducer';
 
 interface IResponseProductForm {
   title: string;
@@ -35,10 +35,9 @@ const productSchema = Joi.object().keys({
 
 export default function ResponseProductEditor(): ReactElement {
   const { id } = useSelector((state: RootState) => state.selectedBank);
-  const { list } = useSelector((state: RootState) => state.bank);
   const { response } = useSelector((state: RootState) => state.response);
   const { productId } = useSelector(
-    (state: RootState) => state.selectedResponseProduct
+    (state: RootState) => state.selectedSpecProduct
   );
 
   const {
@@ -58,8 +57,6 @@ export default function ResponseProductEditor(): ReactElement {
   if (!productId) {
     return <p>No selected product</p>;
   }
-
-  const selectedBank = Utils.ensure(list.find((bank: Bank) => bank.id === id));
 
   const specProduct: SpecificationProduct = Utils.ensure(
     response.spesification.products.find(
@@ -83,7 +80,10 @@ export default function ResponseProductEditor(): ReactElement {
 
   const product =
     productIndex === -1 ? newProduct : response.products[productIndex];
-
+  dispatch(selectResponseProduct(product.id));
+  if (productIndex === -1) {
+    dispatch(addProduct(newProduct));
+  }
   const addProductToResponse = (post: IResponseProductForm) => {
     const newResponseProduct: ResponseProduct = {
       ...product
@@ -176,10 +176,7 @@ export default function ResponseProductEditor(): ReactElement {
         </Card.Body>
       </Card>
 
-      <ProductRequirementView
-        product={specProduct}
-        selectedBank={selectedBank}
-      />
+      <ResponseProductRequirementSelector product={specProduct} />
     </Container>
   );
 }

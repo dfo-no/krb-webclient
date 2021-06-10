@@ -1,5 +1,4 @@
 import React, { ReactElement } from 'react';
-
 import Container from 'react-bootstrap/Container';
 import { useSelector } from 'react-redux';
 import QuestionEnum from '../../models/QuestionEnum';

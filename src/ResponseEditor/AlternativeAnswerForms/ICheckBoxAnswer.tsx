@@ -8,14 +8,16 @@ import Button from 'react-bootstrap/Button';
 import { useTranslation } from 'react-i18next';
 import Joi from 'joi';
 import Switch from '@material-ui/core/Switch';
-import { FormControlLabel } from '@material-ui/core';
-import { ISliderQuestion } from '../../models/ISliderQuestion';
 import { IRequirementAnswer } from '../../models/IRequirementAnswer';
-import { addRequirementAnswer } from '../../store/reducers/response-reducer';
+import {
+  addProductAnswer,
+  addRequirementAnswer
+} from '../../store/reducers/response-reducer';
 import { RootState } from '../../store/store';
 import ErrorSummary from '../../Form/ErrorSummary';
 import QuestionEnum from '../../models/QuestionEnum';
 import { ICheckboxQuestion } from '../../models/ICheckboxQuestion';
+import ModelType from '../../models/ModelType';
 
 interface IProps {
   parentAnswer: IRequirementAnswer;
@@ -33,13 +35,35 @@ export default function ICheckBoxAnswer({
   parentAnswer
 }: IProps): ReactElement {
   const { response } = useSelector((state: RootState) => state.response);
-  const index = response.requirementAnswers.findIndex(
-    (answer) => answer.reqTextId === parentAnswer.reqTextId
+  let index: number;
+  const { productId } = useSelector(
+    (state: RootState) => state.selectedResponseProduct
   );
+
+  const productIndex = response.products.findIndex((p) => p.id === productId);
+
+  if (parentAnswer.type === ModelType.requirement) {
+    index = response.requirementAnswers.findIndex(
+      (answer) => answer.reqTextId === parentAnswer.reqTextId
+    );
+  } else {
+    index =
+      response.products.length > 0
+        ? response.products[productIndex].requirementAnswers.findIndex(
+            (answer) => answer.reqTextId === parentAnswer.reqTextId
+          )
+        : -1;
+  }
+
   const defaultVal =
     index === -1
       ? (parentAnswer.alternative as ICheckboxQuestion)
-      : (response.requirementAnswers[index].alternative as ICheckboxQuestion);
+      : (parentAnswer.type === ModelType.requirement &&
+          (response.requirementAnswers[index]
+            .alternative as ICheckboxQuestion)) ||
+        (parentAnswer.type === ModelType.product &&
+          (response.products[0].requirementAnswers[index]
+            .alternative as ICheckboxQuestion));
   const {
     register,
     control,
@@ -53,13 +77,15 @@ export default function ICheckBoxAnswer({
   });
   const dispatch = useDispatch();
   const { t } = useTranslation();
-  console.log(defaultVal);
-  const saveValues = (post: ISliderQuestion) => {
+  const saveValues = (post: ICheckboxQuestion) => {
     const newAnswer = {
       ...parentAnswer
     };
     newAnswer.alternative = post;
-    dispatch(addRequirementAnswer(newAnswer));
+    if (newAnswer.type === ModelType.requirement)
+      dispatch(addRequirementAnswer(newAnswer));
+    if (newAnswer.type === ModelType.product && productId !== null)
+      dispatch(addProductAnswer({ answer: newAnswer, productId }));
   };
 
   return (

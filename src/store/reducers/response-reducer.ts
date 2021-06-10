@@ -6,6 +6,7 @@ import { ResponseProduct } from '../../models/ResponseProduct';
 import { IRequirementAnswer } from '../../models/IRequirementAnswer';
 import ModelType from '../../models/ModelType';
 import { Bank } from '../../models/Bank';
+import Utils from '../../common/Utils';
 
 interface ResponseState {
   response: Response;
@@ -71,6 +72,34 @@ const responseSlice = createSlice({
     addProduct(state, { payload }: PayloadAction<ResponseProduct>) {
       state.response.products.push(payload);
     },
+    addProductAnswer(
+      state,
+      {
+        payload
+      }: PayloadAction<{ answer: IRequirementAnswer; productId: string }>
+    ) {
+      const index = Utils.ensure(
+        state.response.products.findIndex(
+          (product) => product.id === payload.productId
+        )
+      );
+      if (
+        state.response.products[index].requirementAnswers.find(
+          (answer) => answer.reqTextId === payload.answer.reqTextId
+        )
+      ) {
+        const oldSelectIndex = state.response.products[
+          index
+        ].requirementAnswers.findIndex(
+          (answer) => answer.reqTextId === payload.answer.reqTextId
+        );
+        state.response.products[index].requirementAnswers.splice(
+          oldSelectIndex,
+          1
+        );
+      }
+      state.response.products[index].requirementAnswers.push(payload.answer);
+    },
     editProduct(
       state,
       {
@@ -89,7 +118,8 @@ export const {
   addProduct,
   editProduct,
   setResponse,
-  addRequirementAnswer
+  addRequirementAnswer,
+  addProductAnswer
 } = responseSlice.actions;
 
 export default responseSlice.reducer;

@@ -15,6 +15,7 @@ import {
 import { RootState } from '../../../store/store';
 import ErrorSummary from '../../../Form/ErrorSummary';
 import { SliderSchema } from '../../../Workbench/Requirement/RequirementEditor';
+import ModelType from '../../../models/ModelType';
 
 interface IProps {
   parentAnswer: IRequirementAnswer;
@@ -38,7 +39,7 @@ export default function ValueForm({ parentAnswer }: IProps): ReactElement {
   const dispatch = useDispatch();
   const { t } = useTranslation();
 
-  if (!productId && parentAnswer.type === 'product') {
+  if (!productId && parentAnswer.type === ModelType.product) {
     return <p>No product selected</p>;
   }
 
@@ -55,9 +56,9 @@ export default function ValueForm({ parentAnswer }: IProps): ReactElement {
     newAlt.config.unit = post.config.unit;
     newAnswer.alternative = newAlt;
 
-    if (newAnswer.type === 'requirement')
+    if (newAnswer.type === ModelType.requirement)
       dispatch(editAnswer({ answer: newAnswer }));
-    if (newAnswer.type === 'product' && productId !== null)
+    if (newAnswer.type === ModelType.product && productId !== null)
       dispatch(editProductAnswer({ answer: newAnswer, productId }));
   };
 

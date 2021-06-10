@@ -44,7 +44,7 @@ export class CosmosApi {
     // TODO: Make new partitionkey
     this.partitionKey = { kind: 'Hash', paths: ['/type'] };
     this.client = new CosmosClient(
-      process.env.REACT_APP_COSMOSDB_CONNECTION_STRING
+      'AccountEndpoint=https://krb-cosmos-server-dev.documents.azure.com:443/;AccountKey=2anVhbxREcjzYFcG1eHldQAd8vJveJ0AYuxUHkVSsQrs7GmHj5rP2HXHRGpFjDTP2xGWgeaYygTbWLp68rJGsg=='
     );
     this.database = this.client.database(this.databaseId);
     this.container = this.database.container(this.containerId);
