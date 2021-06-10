@@ -9,7 +9,6 @@ import { RootState } from '../../store/store';
 export default function SpecPage(): ReactElement {
   const { t } = useTranslation();
   const { spec } = useSelector((state: RootState) => state.specification);
-
   const onDownLoad = () => {
     fileDownload(JSON.stringify(spec), `${spec.title}-specfication.json`);
   };
