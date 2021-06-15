@@ -11,7 +11,7 @@ import {
 } from 'react-hook-form';
 
 import { v4 as uuidv4 } from 'uuid';
-
+import 'date-fns';
 import { Requirement } from '../../models/Requirement';
 import { Bank } from '../../models/Bank';
 
@@ -85,10 +85,8 @@ export default function QuestionArray({
         id: uuidv4(),
         type: QuestionEnum.Q_PERIOD_DATE,
         config: {
-          minDays: 0,
-          maxDays: 0,
-          fromDate: '',
-          toDate: ''
+          fromDate: new Date().toISOString(),
+          toDate: new Date().toISOString()
         }
       } as IPeriodDateQuestion);
     } else if (getAlternative === QuestionEnum.Q_TIME) {

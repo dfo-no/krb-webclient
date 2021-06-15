@@ -60,8 +60,6 @@ export const PeriodDateSchema = Joi.object().keys({
   id: Joi.string().required(),
   type: Joi.string().equal(QuestionEnum.Q_PERIOD_DATE).required(),
   config: Joi.object().keys({
-    minDays: Joi.number().required(),
-    maxDays: Joi.number().required(),
     fromDate: Joi.string().trim().allow('').required(),
     toDate: Joi.string().trim().allow('').required()
   })
@@ -197,6 +195,7 @@ export default function RequirementEditor(): ReactElement {
   }
 
   const saveRequirement = async (post: Requirement) => {
+    console.log(post);
     const oldReqIndex = Utils.ensure(
       need.requirements.findIndex((element) => element.id === reqId)
     );

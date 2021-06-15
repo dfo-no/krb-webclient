@@ -17,6 +17,7 @@ import ITextAnswer from '../AlternativeAnswerForms/TextAnswerForm';
 import ICheckBoxAnswer from '../AlternativeAnswerForms/ICheckBoxAnswer';
 import QuestionEnum from '../../models/QuestionEnum';
 import ICodelistAnswer from '../AlternativeAnswerForms/ICodeListAnswer';
+import PeriodDateAnswer from '../AlternativeAnswerForms/IPeriodDateAnswer';
 
 export default function RequirementPage(): ReactElement {
   const { response } = useSelector((state: RootState) => state.response);
@@ -102,6 +103,12 @@ export default function RequirementPage(): ReactElement {
             )}
             {selectedAnswer.alternative.type === QuestionEnum.Q_CODELIST && (
               <ICodelistAnswer
+                key={selectedAnswer.id}
+                parentAnswer={selectedAnswer}
+              />
+            )}
+            {selectedAnswer.alternative.type === QuestionEnum.Q_PERIOD_DATE && (
+              <PeriodDateAnswer
                 key={selectedAnswer.id}
                 parentAnswer={selectedAnswer}
               />
