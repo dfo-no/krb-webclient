@@ -1,32 +1,28 @@
-import React, { ReactElement } from 'react';
-import Card from 'react-bootstrap/Card';
-import Form from 'react-bootstrap/Form';
+import DateFnsUtils from '@date-io/date-fns';
 import { joiResolver } from '@hookform/resolvers/joi';
-import { Controller, useForm } from 'react-hook-form';
-import { useDispatch, useSelector } from 'react-redux';
-import Button from 'react-bootstrap/Button';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
-import { useTranslation } from 'react-i18next';
 import {
   KeyboardDatePicker,
   MuiPickersUtilsProvider
 } from '@material-ui/pickers';
-import DateFnsUtils from '@date-io/date-fns';
-import { ISliderQuestion } from '../../../models/ISliderQuestion';
+import React, { ReactElement } from 'react';
+import Button from 'react-bootstrap/Button';
+import Card from 'react-bootstrap/Card';
+import Col from 'react-bootstrap/Col';
+import Form from 'react-bootstrap/Form';
+import Row from 'react-bootstrap/Row';
+import { Controller, useForm } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
+import { useDispatch, useSelector } from 'react-redux';
+import ErrorSummary from '../../../Form/ErrorSummary';
+import { IPeriodDateQuestion } from '../../../models/IPeriodDateQuestion';
 import { IRequirementAnswer } from '../../../models/IRequirementAnswer';
+import ModelType from '../../../models/ModelType';
 import {
   addAnswer,
   addProductAnswer
 } from '../../../store/reducers/spesification-reducer';
 import { RootState } from '../../../store/store';
-import ErrorSummary from '../../../Form/ErrorSummary';
 import { PeriodDateSchema } from '../../../Workbench/Requirement/RequirementEditor';
-import ModelType from '../../../models/ModelType';
-import {
-  IPeriodDateAnswer,
-  IPeriodDateQuestion
-} from '../../../models/IPeriodDateQuestion';
 
 interface IProps {
   parentAnswer: IRequirementAnswer;
