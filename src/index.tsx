@@ -1,14 +1,16 @@
+import DateFnsUtils from '@date-io/date-fns';
+import { MuiPickersUtilsProvider } from '@material-ui/pickers';
 import React, { Suspense } from 'react';
 import ReactDOM from 'react-dom';
-import { BrowserRouter } from 'react-router-dom';
-import './index.scss';
-import './i18n';
 import { Provider } from 'react-redux';
-import reportWebVitals from './reportWebVitals';
-import store from './store/store';
-import { getBanksThunk } from './store/reducers/bank-reducer';
+import { BrowserRouter } from 'react-router-dom';
 import App from './App';
 import './dfo-theme.scss';
+import './i18n';
+import './index.scss';
+import reportWebVitals from './reportWebVitals';
+import { getBanksThunk } from './store/reducers/bank-reducer';
+import store from './store/store';
 
 // fetch all banks here because they are published and will show on the front page.
 store.dispatch(getBanksThunk());
@@ -20,7 +22,9 @@ const render = () => {
       <Suspense fallback="">
         <Provider store={store}>
           <BrowserRouter>
-            <App />
+            <MuiPickersUtilsProvider utils={DateFnsUtils}>
+              <App />
+            </MuiPickersUtilsProvider>
           </BrowserRouter>
         </Provider>
       </Suspense>

@@ -43,5 +43,8 @@
   "add": "Legg til",
   "edit": "Rediger",
   "weighting": "vekting",
-  "Q_SLIDER": "Q_SLIDER"
+  "Q_SLIDER": "Q_SLIDER",
+  "From date" : "Fra dato",
+  "To date" : "Til dato", 
+  "Select date" : "Velg dato"
 }

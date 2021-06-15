@@ -6,6 +6,7 @@ import { RootState } from '../../store/store';
 import FileInputForm from './AlternativeForms/FileInputForm';
 import CodelistForm from './AlternativeForms/ICodeListForm';
 import ValueForm from './AlternativeForms/ISliderForm';
+import PeriodDateForm from './AlternativeForms/PeriodTimeForm';
 import NoProperties from './AlternativeForms/NoProperties';
 import TextAlternativeForm from './AlternativeForms/TextAlternativeForm';
 
@@ -39,6 +40,9 @@ export default function EditAlternative(): ReactElement {
       )}
       {item.alternative.type === QuestionEnum.Q_CODELIST && (
         <CodelistForm parentAnswer={item} />
+      )}
+      {item.alternative.type === QuestionEnum.Q_PERIOD_DATE && (
+        <PeriodDateForm parentAnswer={item} />
       )}
       {item.alternative.type === QuestionEnum.Q_CHECKBOX && <NoProperties />}
     </Container>

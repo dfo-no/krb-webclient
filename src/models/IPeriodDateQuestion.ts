@@ -11,8 +11,6 @@ export interface IPeriodDateAnswer extends IAnswerBase {
 }
 
 export interface IPeriodDateConfig extends IConfigBase {
-  fromDate?: string;
-  toDate?: string;
-  minDays?: number;
-  maxDays?: number;
+  fromDate: string;
+  toDate: string;
 }
