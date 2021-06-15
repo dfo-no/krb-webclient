@@ -14,7 +14,6 @@ import {
 } from '@material-ui/pickers';
 import DateFnsUtils from '@date-io/date-fns';
 import Joi from 'joi';
-import { ISliderQuestion } from '../../models/ISliderQuestion';
 import { IRequirementAnswer } from '../../models/IRequirementAnswer';
 import {
   addAnswer,
