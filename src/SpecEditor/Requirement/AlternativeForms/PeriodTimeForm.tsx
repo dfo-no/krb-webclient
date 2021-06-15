@@ -1,9 +1,5 @@
-import DateFnsUtils from '@date-io/date-fns';
 import { joiResolver } from '@hookform/resolvers/joi';
-import {
-  KeyboardDatePicker,
-  MuiPickersUtilsProvider
-} from '@material-ui/pickers';
+import { KeyboardDatePicker } from '@material-ui/pickers';
 import React, { ReactElement } from 'react';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
@@ -85,23 +81,21 @@ export default function PeriodDateForm({ parentAnswer }: IProps): ReactElement {
                 control={control}
                 name={`config.fromDate` as const}
                 render={({ field }) => (
-                  <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                    <KeyboardDatePicker
-                      {...field}
-                      disableToolbar
-                      variant="inline"
-                      format="MM/dd/yyyy"
-                      margin="normal"
-                      id="date-picker-inline"
-                      label="From Date"
-                      KeyboardButtonProps={{
-                        'aria-label': 'change date'
-                      }}
-                      onChange={(_, value) => {
-                        field.onChange(value);
-                      }}
-                    />
-                  </MuiPickersUtilsProvider>
+                  <KeyboardDatePicker
+                    {...field}
+                    disableToolbar
+                    variant="inline"
+                    format="MM/dd/yyyy"
+                    margin="normal"
+                    id="date-picker-inline"
+                    label={t('From date')}
+                    KeyboardButtonProps={{
+                      'aria-label': 'change date'
+                    }}
+                    onChange={(_, value) => {
+                      field.onChange(value);
+                    }}
+                  />
                 )}
               />
             </Col>
@@ -112,23 +106,21 @@ export default function PeriodDateForm({ parentAnswer }: IProps): ReactElement {
                 control={control}
                 name={`config.toDate` as const}
                 render={({ field }) => (
-                  <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                    <KeyboardDatePicker
-                      {...field}
-                      disableToolbar
-                      variant="inline"
-                      format="MM/dd/yyyy"
-                      margin="normal"
-                      id="date-picker-inline"
-                      label="To Date"
-                      KeyboardButtonProps={{
-                        'aria-label': 'change date'
-                      }}
-                      onChange={(_, value) => {
-                        field.onChange(value);
-                      }}
-                    />
-                  </MuiPickersUtilsProvider>
+                  <KeyboardDatePicker
+                    {...field}
+                    disableToolbar
+                    variant="inline"
+                    format="MM/dd/yyyy"
+                    margin="normal"
+                    id="date-picker-inline"
+                    label={t('To date')}
+                    KeyboardButtonProps={{
+                      'aria-label': 'change date'
+                    }}
+                    onChange={(_, value) => {
+                      field.onChange(value);
+                    }}
+                  />
                 )}
               />
             </Col>

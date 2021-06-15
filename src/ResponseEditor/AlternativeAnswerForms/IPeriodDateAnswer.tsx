@@ -1,29 +1,25 @@
-import React, { ReactElement } from 'react';
-import Card from 'react-bootstrap/Card';
-import Form from 'react-bootstrap/Form';
 import { joiResolver } from '@hookform/resolvers/joi';
-import { Controller, useForm } from 'react-hook-form';
-import { useDispatch, useSelector } from 'react-redux';
-import Button from 'react-bootstrap/Button';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
-import { useTranslation } from 'react-i18next';
-import {
-  KeyboardDatePicker,
-  MuiPickersUtilsProvider
-} from '@material-ui/pickers';
-import DateFnsUtils from '@date-io/date-fns';
+import { KeyboardDatePicker } from '@material-ui/pickers';
 import Joi from 'joi';
+import React, { ReactElement } from 'react';
+import Button from 'react-bootstrap/Button';
+import Card from 'react-bootstrap/Card';
+import Col from 'react-bootstrap/Col';
+import Form from 'react-bootstrap/Form';
+import Row from 'react-bootstrap/Row';
+import { Controller, useForm } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
+import { useDispatch, useSelector } from 'react-redux';
+import ErrorSummary from '../../Form/ErrorSummary';
+import { IPeriodDateQuestion } from '../../models/IPeriodDateQuestion';
 import { IRequirementAnswer } from '../../models/IRequirementAnswer';
+import ModelType from '../../models/ModelType';
+import QuestionEnum from '../../models/QuestionEnum';
 import {
   addAnswer,
   addProductAnswer
 } from '../../store/reducers/spesification-reducer';
 import { RootState } from '../../store/store';
-import ErrorSummary from '../../Form/ErrorSummary';
-import ModelType from '../../models/ModelType';
-import { IPeriodDateQuestion } from '../../models/IPeriodDateQuestion';
-import QuestionEnum from '../../models/QuestionEnum';
 
 interface IProps {
   parentAnswer: IRequirementAnswer;
@@ -114,25 +110,23 @@ export default function PeriodDateAnswer({
                 control={control}
                 name={`answer.date` as const}
                 render={({ field }) => (
-                  <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                    <KeyboardDatePicker
-                      {...field}
-                      disableToolbar
-                      variant="inline"
-                      format="MM/dd/yyyy"
-                      margin="normal"
-                      id="date-picker-inline"
-                      label="From Date"
-                      minDate={item.config.fromDate}
-                      maxDate={item.config.toDate}
-                      KeyboardButtonProps={{
-                        'aria-label': 'change date'
-                      }}
-                      onChange={(_, value) => {
-                        field.onChange(value);
-                      }}
-                    />
-                  </MuiPickersUtilsProvider>
+                  <KeyboardDatePicker
+                    {...field}
+                    disableToolbar
+                    variant="inline"
+                    format="MM/dd/yyyy"
+                    margin="normal"
+                    id="date-picker-inline"
+                    label={t('Select date')}
+                    minDate={item.config.fromDate}
+                    maxDate={item.config.toDate}
+                    KeyboardButtonProps={{
+                      'aria-label': 'change date'
+                    }}
+                    onChange={(_, value) => {
+                      field.onChange(value);
+                    }}
+                  />
                 )}
               />
             </Col>
