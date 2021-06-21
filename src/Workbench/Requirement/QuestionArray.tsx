@@ -1,37 +1,33 @@
 import React, { ReactElement, useState } from 'react';
 import Button from 'react-bootstrap/Button';
+import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
 import {
   Control,
   FormState,
   useFieldArray,
   UseFormRegister
 } from 'react-hook-form';
-
 import { v4 as uuidv4 } from 'uuid';
-
-import { Requirement } from '../../models/Requirement';
 import { Bank } from '../../models/Bank';
-
-import CodeListForm from './CodeListForm';
-import { ICodelistQuestion } from '../../models/ICodelistQuestion';
-import SliderForm from './SliderForm';
-import { ISliderQuestion } from '../../models/ISliderQuestion';
-import TextForm from './TextForm';
-import { ITextQuestion } from '../../models/ITextQuestion';
-import PeriodDateForm from './PeriodDateForm';
-import { IPeriodDateQuestion } from '../../models/IPeriodDateQuestion';
-import FileUploadForm from './FileUploadForm';
-import { IFileUploadQuestion } from '../../models/IFileUploadQuestion';
-import CheckboxForm from './CheckboxForm';
 import { ICheckboxQuestion } from '../../models/ICheckboxQuestion';
-import TimeForm from './TimeForm';
+import { ICodelistQuestion } from '../../models/ICodelistQuestion';
+import { IFileUploadQuestion } from '../../models/IFileUploadQuestion';
+import { IPeriodDateQuestion } from '../../models/IPeriodDateQuestion';
+import { ISliderQuestion } from '../../models/ISliderQuestion';
+import { ITextQuestion } from '../../models/ITextQuestion';
 import { ITimeQuestion } from '../../models/ITimeQuestion';
-
 import QuestionEnum from '../../models/QuestionEnum';
 import { QuestionType } from '../../models/QuestionType';
+import { Requirement } from '../../models/Requirement';
+import CheckboxForm from './CheckboxForm';
+import CodeListForm from './CodeListForm';
+import FileUploadForm from './FileUploadForm';
+import PeriodDateForm from './PeriodDateForm';
+import SliderForm from './SliderForm';
+import TextForm from './TextForm';
+import TimeForm from './TimeForm';
 
 type IProps = {
   control: Control<Requirement>;
@@ -70,7 +66,11 @@ export default function QuestionArray({
     } else if (getAlternative === QuestionEnum.Q_CODELIST) {
       append({
         id: uuidv4(),
-        type: QuestionEnum.Q_CODELIST
+        type: QuestionEnum.Q_CODELIST,
+        config: {
+          multipleSelect: false,
+          codelist: project.codelist[0].id
+        }
       } as ICodelistQuestion);
     } else if (getAlternative === QuestionEnum.Q_TEXT) {
       append({

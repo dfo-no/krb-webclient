@@ -1,32 +1,30 @@
-import React, { ReactElement, useEffect, useState } from 'react';
-import Button from 'react-bootstrap/Button';
-import Form from 'react-bootstrap/Form';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
-
-import { useHistory, useRouteMatch } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
-import { useForm } from 'react-hook-form';
 import { joiResolver } from '@hookform/resolvers/joi';
 import Joi from 'joi';
-
+import React, { ReactElement, useEffect, useState } from 'react';
+import Button from 'react-bootstrap/Button';
+import Col from 'react-bootstrap/Col';
+import Form from 'react-bootstrap/Form';
+import Row from 'react-bootstrap/Row';
+import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
+import { useDispatch, useSelector } from 'react-redux';
+import { useHistory, useRouteMatch } from 'react-router-dom';
 import Utils from '../../common/Utils';
-import { RootState } from '../../store/store';
-import { selectRequirement } from '../../store/reducers/selectedRequirement-reducer';
-import { selectNeed } from '../../store/reducers/selectedNeed-reducer';
+import ErrorSummary from '../../Form/ErrorSummary';
+import ModelType from '../../models/ModelType';
+import { Need } from '../../models/Need';
+import QuestionEnum from '../../models/QuestionEnum';
+import { Requirement } from '../../models/Requirement';
 import {
   editRequirementInNeed,
   getProjectsThunk,
   putProjectThunk
 } from '../../store/reducers/project-reducer';
-import VariantArray from './VariantArray';
-import { Requirement } from '../../models/Requirement';
-import { Need } from '../../models/Need';
+import { selectNeed } from '../../store/reducers/selectedNeed-reducer';
 import { selectProject } from '../../store/reducers/selectedProject-reducer';
-import ErrorSummary from '../../Form/ErrorSummary';
-import ModelType from '../../models/ModelType';
-import QuestionEnum from '../../models/QuestionEnum';
+import { selectRequirement } from '../../store/reducers/selectedRequirement-reducer';
+import { RootState } from '../../store/store';
+import VariantArray from './VariantArray';
 
 export const SliderSchema = Joi.object().keys({
   id: Joi.string().required(),
@@ -95,7 +93,7 @@ export const FileUploadSchema = Joi.object().keys({
 const variantSchema = Joi.object().keys({
   id: Joi.string().required(),
   requirementText: Joi.string().required(),
-  instruction: Joi.string().required(),
+  instruction: Joi.string().required().allow(''),
   useProduct: Joi.boolean().required(),
   useSpesification: Joi.boolean().required(),
   useQualification: Joi.boolean().required(),
@@ -124,7 +122,7 @@ const variantSchema = Joi.object().keys({
 const requirementSchema = Joi.object().keys({
   id: Joi.string().required(),
   title: Joi.string().max(100).required(),
-  description: Joi.string().required(),
+  description: Joi.string().required().allow(''),
   needId: Joi.string().required(),
   variants: Joi.array().items(variantSchema),
   kind: Joi.string().required(),
