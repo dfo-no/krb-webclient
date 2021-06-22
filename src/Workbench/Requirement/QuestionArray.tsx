@@ -1,3 +1,4 @@
+import 'date-fns';
 import React, { ReactElement, useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
@@ -85,10 +86,8 @@ export default function QuestionArray({
         id: uuidv4(),
         type: QuestionEnum.Q_PERIOD_DATE,
         config: {
-          minDays: 0,
-          maxDays: 0,
-          fromDate: '',
-          toDate: ''
+          fromDate: new Date().toISOString(),
+          toDate: new Date().toISOString()
         }
       } as IPeriodDateQuestion);
     } else if (getAlternative === QuestionEnum.Q_TIME) {

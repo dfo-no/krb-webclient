@@ -18,6 +18,7 @@ import ICheckBoxAnswer from '../AlternativeAnswerForms/ICheckBoxAnswer';
 import QuestionEnum from '../../models/QuestionEnum';
 import { SpecificationProduct } from '../../models/SpecificationProduct';
 import ICodelistAnswer from '../AlternativeAnswerForms/ICodeListAnswer';
+import PeriodDateAnswer from '../AlternativeAnswerForms/IPeriodDateAnswer';
 
 interface InputProps {
   product: SpecificationProduct;
@@ -130,6 +131,12 @@ export default function ResponseProductRequirementSelector({
             )}
             {selectedAnswer.alternative.type === QuestionEnum.Q_CODELIST && (
               <ICodelistAnswer
+                key={selectedAnswer.id}
+                parentAnswer={selectedAnswer}
+              />
+            )}
+            {selectedAnswer.alternative.type === QuestionEnum.Q_PERIOD_DATE && (
+              <PeriodDateAnswer
                 key={selectedAnswer.id}
                 parentAnswer={selectedAnswer}
               />
