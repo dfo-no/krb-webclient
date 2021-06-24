@@ -1,24 +1,23 @@
 import { joiResolver } from '@hookform/resolvers/joi';
+import Joi from 'joi';
 import React, { ReactElement, useContext, useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 import { useForm } from 'react-hook-form';
-import Joi from 'joi';
-import { useDispatch, useSelector } from 'react-redux';
-import { BsTrashFill } from 'react-icons/bs';
 import { useTranslation } from 'react-i18next';
+import { BsTrashFill } from 'react-icons/bs';
+import { useDispatch, useSelector } from 'react-redux';
+import ErrorSummary from '../../Form/ErrorSummary';
+import InputRow from '../../Form/InputRow';
 import { Code } from '../../models/Code';
-
+import { AccordionContext } from '../../NestableHierarchy/AccordionContext';
 import {
   deleteCodeInCodelist,
   editCodeInCodelist,
   putProjectThunk
 } from '../../store/reducers/project-reducer';
 import { RootState } from '../../store/store';
-import { AccordionContext } from '../../NestableHierarchy/AccordionContext';
-import InputRow from '../../Form/InputRow';
-import ErrorSummary from '../../Form/ErrorSummary';
 
 interface IProps {
   element: Code;
@@ -31,7 +30,7 @@ type FormInput = {
 
 const codeSchema = Joi.object().keys({
   title: Joi.string().required(),
-  description: Joi.string().required()
+  description: Joi.string().allow(null, '').required()
 });
 
 export default function EditCodeForm({ element }: IProps): ReactElement {

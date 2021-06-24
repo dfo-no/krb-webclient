@@ -5,23 +5,23 @@ import Container from 'react-bootstrap/Container';
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 import { useForm } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
 import { BsPencil } from 'react-icons/bs';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useRouteMatch } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
-import { useTranslation } from 'react-i18next';
 import Utils from '../../common/Utils';
+import ErrorSummary from '../../Form/ErrorSummary';
 import { Bank } from '../../models/Bank';
+import ModelType from '../../models/ModelType';
+import { Nestable } from '../../models/Nestable';
 import { Product } from '../../models/Product';
 import { SpecificationProduct } from '../../models/SpecificationProduct';
 import { selectBank } from '../../store/reducers/selectedBank-reducer';
+import { selectSpecProduct } from '../../store/reducers/selectedSpecProduct-reducer';
 import { addProduct } from '../../store/reducers/spesification-reducer';
 import { RootState } from '../../store/store';
 import styles from './ProductSpecEditor.module.scss';
-import ModelType from '../../models/ModelType';
-import { selectSpecProduct } from '../../store/reducers/selectedSpecProduct-reducer';
-import ErrorSummary from '../../Form/ErrorSummary';
-import { Nestable } from '../../models/Nestable';
 
 type FormInput = {
   product: string;
@@ -106,7 +106,7 @@ export default function ProductSpecList(): ReactElement {
   const productList = (productArray: SpecificationProduct[]) => {
     const items = productArray.map((product: SpecificationProduct) => {
       return (
-        <ListGroup.Item key={product.id + 1}>
+        <ListGroup.Item key={product.id}>
           <Row className="d-flex justify-content-end">
             <p className="ml-2 mr-4  mt-1">
               {Utils.capitalizeFirstLetter(product.originProduct.title)}

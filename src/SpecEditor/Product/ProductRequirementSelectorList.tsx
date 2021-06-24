@@ -3,13 +3,13 @@ import ListGroup from 'react-bootstrap/ListGroup';
 import Row from 'react-bootstrap/Row';
 import { BsArrowReturnRight } from 'react-icons/bs';
 import Utils from '../../common/Utils';
-import { Need } from '../../models/Need';
 import { Bank } from '../../models/Bank';
-import { Requirement } from '../../models/Requirement';
-import styles from './ProductSpecEditor.module.scss';
-import { SpecificationProduct } from '../../models/SpecificationProduct';
-import ProductSpesificationRequirement from './ProductSpecificationRequirement';
+import { Need } from '../../models/Need';
 import { Nestable } from '../../models/Nestable';
+import { Requirement } from '../../models/Requirement';
+import { SpecificationProduct } from '../../models/SpecificationProduct';
+import styles from './ProductSpecEditor.module.scss';
+import ProductSpesificationRequirement from './ProductSpecificationRequirement';
 
 interface InputProps {
   selectedBank: Bank;
@@ -52,7 +52,7 @@ export default function ProductRequirementSelectorList({
       )
         requirementsArray = associatedRequirements[element.id];
       return (
-        <div className={` ${styles[cssClass]} pt-0`}>
+        <div className={` ${styles[cssClass]} pt-0`} key={element.id}>
           <Row>
             <BsArrowReturnRight className="ml-2 mt-1 mr-2" />
             <p>{element.title}</p>
@@ -80,7 +80,7 @@ export default function ProductRequirementSelectorList({
       }
       return (
         <>
-          <ListGroup.Item className="mt-2 ml-0 pl-0">
+          <ListGroup.Item className="mt-2 ml-0 pl-0" key={element.id}>
             <b>{element.title}</b>
             {requirementsArray.length > 0 &&
               requirementsAnswers(requirementsArray)}

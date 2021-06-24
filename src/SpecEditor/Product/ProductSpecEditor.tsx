@@ -1,7 +1,6 @@
-import React, { ReactElement } from 'react';
 import { joiResolver } from '@hookform/resolvers/joi';
 import Joi from 'joi';
-
+import React, { ReactElement } from 'react';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import Col from 'react-bootstrap/Col';
@@ -9,15 +8,15 @@ import Container from 'react-bootstrap/Container';
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 import { useForm } from 'react-hook-form';
-import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
+import { useDispatch, useSelector } from 'react-redux';
 import Utils from '../../common/Utils';
+import ErrorSummary from '../../Form/ErrorSummary';
 import InputRow from '../../Form/InputRow';
 import { SpecificationProduct } from '../../models/SpecificationProduct';
 import { editSpecProduct } from '../../store/reducers/spesification-reducer';
 import { RootState } from '../../store/store';
 import ProductRequirementSelectorList from './ProductRequirementSelectorList';
-import ErrorSummary from '../../Form/ErrorSummary';
 
 type FormInput = {
   title: string;
@@ -26,8 +25,8 @@ type FormInput = {
 };
 
 const productSchema = Joi.object().keys({
-  title: Joi.string(),
-  description: Joi.string(),
+  title: Joi.string().required(),
+  description: Joi.string().allow(null, '').required(),
   amount: Joi.number().integer().min(1).required()
 });
 
