@@ -1,16 +1,19 @@
+import { joiResolver } from '@hookform/resolvers/joi';
+import Joi from 'joi';
 import React, { ReactElement, useContext, useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 import { useForm } from 'react-hook-form';
-import { useDispatch, useSelector } from 'react-redux';
-import Joi from 'joi';
-import { joiResolver } from '@hookform/resolvers/joi';
-import { Link } from 'react-router-dom';
-import { BsTrashFill } from 'react-icons/bs';
 import { useTranslation } from 'react-i18next';
+import { BsTrashFill } from 'react-icons/bs';
+import { useDispatch, useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
+import ErrorSummary from '../../Form/ErrorSummary';
+import InputRow from '../../Form/InputRow';
+import { Need } from '../../models/Need';
+import { Requirement } from '../../models/Requirement';
 import { AccordionContext } from '../../NestableHierarchy/AccordionContext';
-
 import {
   deleteRequirement,
   editRequirementInNeed,
@@ -18,10 +21,6 @@ import {
 } from '../../store/reducers/project-reducer';
 import { selectRequirement } from '../../store/reducers/selectedRequirement-reducer';
 import { RootState } from '../../store/store';
-import { Requirement } from '../../models/Requirement';
-import { Need } from '../../models/Need';
-import InputRow from '../../Form/InputRow';
-import ErrorSummary from '../../Form/ErrorSummary';
 
 interface IProps {
   element: Requirement;
@@ -35,9 +34,9 @@ type FormInput = {
   description: string;
 };
 
-const productSchema = Joi.object().keys({
+const reqSchema = Joi.object().keys({
   title: Joi.string().required(),
-  description: Joi.string().required()
+  description: Joi.string().allow(null, '').required()
 });
 
 export default function EditRequirementForm({
@@ -57,7 +56,7 @@ export default function EditRequirementForm({
     handleSubmit,
     formState: { errors }
   } = useForm<FormInput>({
-    resolver: joiResolver(productSchema),
+    resolver: joiResolver(reqSchema),
     defaultValues: {
       title: element.title,
       description: element.description

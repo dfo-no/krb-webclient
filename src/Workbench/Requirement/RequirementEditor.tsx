@@ -90,8 +90,8 @@ export const FileUploadSchema = Joi.object().keys({
 
 const variantSchema = Joi.object().keys({
   id: Joi.string().required(),
-  requirementText: Joi.string().required(),
-  instruction: Joi.string().required().allow(''),
+  requirementText: Joi.string().allow(null, '').required(),
+  instruction: Joi.string().allow(null, '').required(),
   useProduct: Joi.boolean().required(),
   useSpesification: Joi.boolean().required(),
   useQualification: Joi.boolean().required(),
@@ -120,7 +120,7 @@ const variantSchema = Joi.object().keys({
 const requirementSchema = Joi.object().keys({
   id: Joi.string().required(),
   title: Joi.string().max(100).required(),
-  description: Joi.string().required().allow(''),
+  description: Joi.string().allow(null, '').required(),
   needId: Joi.string().required(),
   variants: Joi.array().items(variantSchema),
   kind: Joi.string().required(),

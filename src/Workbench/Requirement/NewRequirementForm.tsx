@@ -1,27 +1,25 @@
+import { joiResolver } from '@hookform/resolvers/joi';
+import Joi from 'joi';
 import React, { ReactElement, useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 import { useForm } from 'react-hook-form';
-import { joiResolver } from '@hookform/resolvers/joi';
-import { useDispatch, useSelector } from 'react-redux';
-import Joi from 'joi';
-
-import { v4 as uuidv4 } from 'uuid';
 import { useTranslation } from 'react-i18next';
+import { useDispatch, useSelector } from 'react-redux';
+import { v4 as uuidv4 } from 'uuid';
+import ErrorSummary from '../../Form/ErrorSummary';
+import InputRow from '../../Form/InputRow';
+import ModelType from '../../models/ModelType';
+import { Need } from '../../models/Need';
+import { Requirement } from '../../models/Requirement';
+import RequirementType from '../../models/RequirementType';
 import {
   putProjectThunk,
   setRequirementListToNeed
 } from '../../store/reducers/project-reducer';
 import { RootState } from '../../store/store';
-
-import { Need } from '../../models/Need';
-import { Requirement } from '../../models/Requirement';
-import ModelType from '../../models/ModelType';
-import RequirementType from '../../models/RequirementType';
-import InputRow from '../../Form/InputRow';
-import ErrorSummary from '../../Form/ErrorSummary';
 
 type FormValues = {
   title: string;
@@ -37,7 +35,7 @@ interface IProps {
 
 const requirementSchema = Joi.object().keys({
   title: Joi.string().required(),
-  description: Joi.string().required()
+  description: Joi.string().allow(null, '').required()
 });
 
 function NewRequirementForm({
