@@ -1,61 +1,71 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
+import { AxiosResponse } from 'axios';
 import React, { ReactElement } from 'react';
-import Container from 'react-bootstrap/Container';
 import Col from 'react-bootstrap/Col';
-import Row from 'react-bootstrap/Row';
+import Container from 'react-bootstrap/Container';
 import InputGroup from 'react-bootstrap/InputGroup';
-import { useHistory } from 'react-router';
+import Row from 'react-bootstrap/Row';
 import { useDispatch } from 'react-redux';
-
-import { Specification } from '../models/Specification';
-import { selectBank } from '../store/reducers/selectedBank-reducer';
+import { useHistory } from 'react-router';
+import { httpPost } from '../api/http';
 import {
-  setSpecification,
-  setResponse
+  setResponse,
+  setSpecification
 } from '../store/reducers/response-reducer';
-
-import { Response } from '../models/Response';
+import { selectBank } from '../store/reducers/selectedBank-reducer';
 
 export default function ResponsePage(): ReactElement {
   const dispatch = useDispatch();
   const history = useHistory();
 
-  const uploadSpecification = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const onUploadSpecification = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    const formData = new FormData();
     const files = event.target.files as FileList;
     for (let index = 0; index < files.length; index += 1) {
       const file = files[index];
-      const reader = new FileReader();
-      reader.onload = (evt) => {
-        if (evt.target?.result) {
-          const typeSpecification = JSON.parse(
-            evt.target.result.toString()
-          ) as Specification;
-          dispatch(selectBank(typeSpecification.bank.id));
-          dispatch(setSpecification(typeSpecification));
-          history.push(`/response/${typeSpecification.bank.id}`);
-        }
-      };
-      reader.readAsText(file);
+      formData.append('file', file);
     }
+    httpPost<FormData, AxiosResponse>(
+      `${process.env.REACT_APP_JAVA_API_URL}/uploadPdf`,
+      formData,
+      {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        },
+        responseType: 'json'
+      }
+    ).then((response) => {
+      dispatch(selectBank(response.data.bank.id));
+      dispatch(setSpecification(response.data));
+      history.push(`/response/${response.data.bank.id}`);
+      return response;
+    });
   };
 
-  const uploadResponse = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const onUploadResponse = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const formData = new FormData();
     const files = event.target.files as FileList;
     for (let index = 0; index < files.length; index += 1) {
       const file = files[index];
-      const reader = new FileReader();
-      reader.onload = (evt) => {
-        if (evt.target?.result) {
-          const typeResponse = JSON.parse(
-            evt.target.result.toString()
-          ) as Response;
-          dispatch(selectBank(typeResponse.spesification.bank.id));
-          dispatch(setResponse(typeResponse));
-          history.push(`/response/${typeResponse.spesification.bank.id}`);
-        }
-      };
-      reader.readAsText(file);
+      formData.append('file', file);
     }
+    httpPost<FormData, AxiosResponse>(
+      `${process.env.REACT_APP_JAVA_API_URL}/uploadPdf`,
+      formData,
+      {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        },
+        responseType: 'json'
+      }
+    ).then((response) => {
+      dispatch(selectBank(response.data.spesification.bank.id));
+      dispatch(setResponse(response.data));
+      history.push(`/response/${response.data.spesification.bank.id}`);
+      return response;
+    });
   };
 
   return (
@@ -64,13 +74,21 @@ export default function ResponsePage(): ReactElement {
         <Col>
           <h4>Upload Spesification to create a new response</h4>
           <InputGroup>
-            <input type="file" onChange={(e) => uploadSpecification(e)} />
+            <input
+              type="file"
+              accept="application/pdf"
+              onChange={(e) => onUploadSpecification(e)}
+            />
           </InputGroup>
         </Col>
         <Col>
           <h4>Upload an existing response to keep editing</h4>
           <InputGroup>
-            <input type="file" onChange={(e) => uploadResponse(e)} />
+            <input
+              type="file"
+              accept="application/pdf"
+              onChange={(e) => onUploadResponse(e)}
+            />
           </InputGroup>
         </Col>
       </Row>
