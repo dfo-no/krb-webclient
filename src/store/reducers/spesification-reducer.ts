@@ -1,11 +1,11 @@
 /* eslint-disable no-param-reassign */
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import Utils from '../../common/Utils';
-import { SpecificationProduct } from '../../models/SpecificationProduct';
-import { IRequirementAnswer } from '../../models/IRequirementAnswer';
-import { Specification } from '../../models/Specification';
-import ModelType from '../../models/ModelType';
 import { Bank } from '../../models/Bank';
+import { IRequirementAnswer } from '../../models/IRequirementAnswer';
+import ModelType from '../../models/ModelType';
+import { Specification } from '../../models/Specification';
+import { SpecificationProduct } from '../../models/SpecificationProduct';
 
 interface SpecificationState {
   spec: Specification;

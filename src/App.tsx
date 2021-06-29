@@ -1,23 +1,23 @@
-import React, { ReactElement } from 'react';
-import { Route, Switch } from 'react-router-dom';
 import { PublicClientApplication } from '@azure/msal-browser';
 import {
-  MsalProvider,
   AuthenticatedTemplate,
+  MsalProvider,
   UnauthenticatedTemplate
 } from '@azure/msal-react';
+import React, { ReactElement } from 'react';
+import { Route, Switch } from 'react-router-dom';
 import styles from './App.module.scss';
-import Header from './Header/Header';
-import HomePage from './Home/HomePage';
-import BankPage from './Home/BankPage';
-import WorkbenchModule from './Workbench/WorkbenchModule';
-import ResponsePage from './ResponseEditor/ResponsePage';
-import Evaluation from './Evaluation/Evaluation';
 import { msalConfig } from './authentication/authConfig';
+import Evaluation from './Evaluation/Evaluation';
+import Header from './Header/Header';
+import BankPage from './Home/BankPage';
+import HomePage from './Home/HomePage';
 import PageLayout from './PageLayout';
-import SpecPage from './SpecEditor/SpecPage';
-import SpecModule from './SpecEditor/SpecModule';
 import ResponseModule from './ResponseEditor/ResponseModule';
+import ResponsePage from './ResponseEditor/ResponsePage';
+import SpecModule from './SpecEditor/SpecModule';
+import SpecPage from './SpecEditor/SpecPage';
+import WorkbenchModule from './Workbench/WorkbenchModule';
 
 const msalInstance = new PublicClientApplication(msalConfig);
 

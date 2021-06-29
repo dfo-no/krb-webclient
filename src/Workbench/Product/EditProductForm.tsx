@@ -1,31 +1,30 @@
+import { joiResolver } from '@hookform/resolvers/joi';
+import Joi from 'joi';
 import React, { ReactElement, useContext, useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 import { useForm } from 'react-hook-form';
-import { useDispatch, useSelector } from 'react-redux';
-import { joiResolver } from '@hookform/resolvers/joi';
-import Joi from 'joi';
-import { Link } from 'react-router-dom';
-import { BsTrashFill } from 'react-icons/bs';
 import { useTranslation } from 'react-i18next';
-import { AccordionContext } from '../../NestableHierarchy/AccordionContext';
+import { BsTrashFill } from 'react-icons/bs';
+import { useDispatch, useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
+import AlertModal from '../../common/AlertModal';
+import Utils from '../../common/Utils';
+import ErrorSummary from '../../Form/ErrorSummary';
+import InputRow from '../../Form/InputRow';
+import { IVariant } from '../../models/IVariant';
+import { Need } from '../../models/Need';
 import { Product } from '../../models/Product';
-
+import { Requirement } from '../../models/Requirement';
+import { AccordionContext } from '../../NestableHierarchy/AccordionContext';
 import {
   deleteProduct,
   editProduct,
   putProjectThunk
 } from '../../store/reducers/project-reducer';
-import { RootState } from '../../store/store';
 import { selectProduct } from '../../store/reducers/selectedProduct-reducer';
-import { Need } from '../../models/Need';
-import { Requirement } from '../../models/Requirement';
-import { IVariant } from '../../models/IVariant';
-import Utils from '../../common/Utils';
-import InputRow from '../../Form/InputRow';
-import ErrorSummary from '../../Form/ErrorSummary';
-import AlertModal from '../../common/AlertModal';
+import { RootState } from '../../store/store';
 
 interface IProps {
   element: Product;

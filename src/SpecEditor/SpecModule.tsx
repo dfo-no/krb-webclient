@@ -8,13 +8,13 @@ import NotFound from '../NotFound';
 import { selectBank } from '../store/reducers/selectedBank-reducer';
 import { RootState } from '../store/store';
 import DownloadPage from './Download/DownloadPage';
+import EditProductAlternative from './Product/EditProductAlternative';
 import ProductSpecEditor from './Product/ProductSpecEditor';
 import ProductSpecList from './Product/ProductSpecList';
-import RequirementSpecEditor from './Requirement/RequirementSpecEditor';
-import SpecEditor from './SpecEditor/SpecEditor';
-import SpecSideBar from './SideBar/SpecSideBar';
 import EditAlternative from './Requirement/EditAlternative';
-import EditProductAlternative from './Product/EditProductAlternative';
+import RequirementSpecEditor from './Requirement/RequirementSpecEditor';
+import SpecSideBar from './SideBar/SpecSideBar';
+import SpecEditor from './SpecEditor/SpecEditor';
 
 interface RouteParams {
   bankId: string;
