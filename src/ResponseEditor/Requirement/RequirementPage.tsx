@@ -1,23 +1,23 @@
 import React, { ReactElement } from 'react';
+import Card from 'react-bootstrap/Card';
 import ListGroup from 'react-bootstrap/ListGroup';
 import Row from 'react-bootstrap/Row';
-import Card from 'react-bootstrap/Card';
 import { BsArrowReturnRight } from 'react-icons/bs';
 import { useSelector } from 'react-redux';
 import Utils from '../../common/Utils';
 import { Bank } from '../../models/Bank';
+import { IRequirementAnswer } from '../../models/IRequirementAnswer';
 import { Need } from '../../models/Need';
 import { Nestable } from '../../models/Nestable';
+import QuestionEnum from '../../models/QuestionEnum';
 import { Requirement } from '../../models/Requirement';
 import { RootState } from '../../store/store';
-import styles from './RequirementView.module.scss';
-import ISliderAnswer from '../AlternativeAnswerForms/ISliderAnswer';
-import { IRequirementAnswer } from '../../models/IRequirementAnswer';
-import ITextAnswer from '../AlternativeAnswerForms/TextAnswerForm';
 import ICheckBoxAnswer from '../AlternativeAnswerForms/ICheckBoxAnswer';
-import QuestionEnum from '../../models/QuestionEnum';
 import ICodelistAnswer from '../AlternativeAnswerForms/ICodeListAnswer';
 import PeriodDateAnswer from '../AlternativeAnswerForms/IPeriodDateAnswer';
+import ISliderAnswer from '../AlternativeAnswerForms/ISliderAnswer';
+import ITextAnswer from '../AlternativeAnswerForms/TextAnswerForm';
+import styles from './RequirementView.module.scss';
 
 export default function RequirementPage(): ReactElement {
   const { response } = useSelector((state: RootState) => state.response);
@@ -68,11 +68,22 @@ export default function RequirementPage(): ReactElement {
           response.spesification.requirementAnswers[0];
         req.variants.forEach((variant) => {
           if (
-            response.spesification.requirementAnswers.find(
+            response.requirementAnswers.find(
               (answer) => answer.reqTextId === variant.id
             )
           ) {
+            const index = response.requirementAnswers.findIndex(
+              (answer) => answer.reqTextId === variant.id
+            );
+            selectedAnswer = response.requirementAnswers[index];
             requirementText = variant.requirementText;
+          } else {
+            if (
+              response.spesification.requirementAnswers.find(
+                (answer) => answer.reqTextId === variant.id
+              )
+            )
+              requirementText = variant.requirementText;
             const index = response.spesification.requirementAnswers.findIndex(
               (answer) => answer.reqTextId === variant.id
             );

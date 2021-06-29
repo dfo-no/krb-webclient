@@ -1,12 +1,12 @@
 /* eslint-disable no-param-reassign */
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { Specification } from '../../models/Specification';
-import { Response } from '../../models/Response';
-import { ResponseProduct } from '../../models/ResponseProduct';
+import Utils from '../../common/Utils';
+import { Bank } from '../../models/Bank';
 import { IRequirementAnswer } from '../../models/IRequirementAnswer';
 import ModelType from '../../models/ModelType';
-import { Bank } from '../../models/Bank';
-import Utils from '../../common/Utils';
+import { Response } from '../../models/Response';
+import { ResponseProduct } from '../../models/ResponseProduct';
+import { Specification } from '../../models/Specification';
 
 interface ResponseState {
   response: Response;
@@ -56,11 +56,11 @@ const responseSlice = createSlice({
     ) {
       if (
         state.response.requirementAnswers.find(
-          (answer) => answer.reqTextId === payload.reqTextId
+          (answer) => answer.id === payload.id
         )
       ) {
         const oldSelectIndex = state.response.requirementAnswers.findIndex(
-          (answer) => answer.reqTextId === payload.reqTextId
+          (answer) => answer.id === payload.id
         );
         state.response.requirementAnswers.splice(oldSelectIndex, 1);
       }
