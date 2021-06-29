@@ -16,9 +16,9 @@ import { IRequirementAnswer } from '../../models/IRequirementAnswer';
 import ModelType from '../../models/ModelType';
 import QuestionEnum from '../../models/QuestionEnum';
 import {
-  addAnswer,
-  addProductAnswer
-} from '../../store/reducers/spesification-reducer';
+  addProductAnswer,
+  addRequirementAnswer
+} from '../../store/reducers/response-reducer';
 import { RootState } from '../../store/store';
 
 interface IProps {
@@ -33,7 +33,7 @@ export const PeriodDateSchema = Joi.object().keys({
     toDate: Joi.string().trim().allow('').required()
   }),
   answer: Joi.object().keys({
-    date: Joi.string().trim().allow('').required()
+    date: Joi.date().raw().required()
   })
 });
 
@@ -63,13 +63,20 @@ export default function PeriodDateAnswer({
     return <p>No product selected</p>;
   }
 
-  const saveValues = (post: IPeriodDateQuestion) => {
+  const saveValues = (post: any) => {
     const newAnswer = {
       ...parentAnswer
     };
-    newAnswer.alternative = post;
+
+    const newAns = {
+      ...post
+    };
+    const newDate = post.answer.date.toISOString();
+    newAns.answer.date = newDate;
+    newAnswer.alternative = newAns;
+
     if (newAnswer.type === ModelType.requirement)
-      dispatch(addAnswer({ answer: newAnswer }));
+      dispatch(addRequirementAnswer(newAnswer));
     if (newAnswer.type === ModelType.product && productId !== null)
       dispatch(addProductAnswer({ answer: newAnswer, productId }));
   };
@@ -107,25 +114,22 @@ export default function PeriodDateAnswer({
           <Form.Group as={Row}>
             <Col sm="4">
               <Controller
-                control={control}
                 name={`answer.date` as const}
-                render={({ field }) => (
+                control={control}
+                defaultValue={item.config.fromDate}
+                render={({ field: { ref, ...rest } }) => (
                   <KeyboardDatePicker
-                    {...field}
-                    disableToolbar
-                    variant="inline"
-                    format="MM/dd/yyyy"
                     margin="normal"
-                    id="date-picker-inline"
-                    label={t('Select date')}
+                    id="date-picker-dialog"
+                    variant="inline"
                     minDate={item.config.fromDate}
                     maxDate={item.config.toDate}
+                    format="dd/MM/yyyy"
+                    label={t('Select date')}
                     KeyboardButtonProps={{
                       'aria-label': 'change date'
                     }}
-                    onChange={(_, value) => {
-                      field.onChange(value);
-                    }}
+                    {...rest}
                   />
                 )}
               />
