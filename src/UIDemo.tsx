@@ -342,7 +342,7 @@ export default function UIDemo(): JSX.Element {
   return (
     <Container>
       <h3>
-        Demo for ALL used UI components in this project!
+        Demo for ALL used UI components in this project! Test it!
         <Badge variant="info">{renderCount}</Badge>
       </h3>
       <form
