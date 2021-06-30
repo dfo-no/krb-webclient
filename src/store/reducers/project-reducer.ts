@@ -6,11 +6,11 @@ import { CosmosApi } from '../../database/CosmosApi';
 import { Bank } from '../../models/Bank';
 import { Code } from '../../models/Code';
 import { Codelist } from '../../models/Codelist';
+import { Nestable } from '../../models/Nestable';
 import { Need } from '../../models/Need';
 import { Product } from '../../models/Product';
 import { Publication } from '../../models/Publication';
 import { Requirement } from '../../models/Requirement';
-import NeedSideBar from '../../Workbench/Requirement/NeedSideBar/NeedSidebar';
 
 // eslint-disable-next-line import/no-cycle
 import { AppDispatch, RootState } from '../store';
@@ -158,14 +158,17 @@ const projectSlice = createSlice({
     },
     updateNeedList(
       state,
-      { payload }: PayloadAction<{ id: string; needs: Need[] }>
+      { payload }: PayloadAction<{ id: string; needs: Nestable<Need>[] }>
     ) {
       const index = Utils.ensure(
         state.list.findIndex((project) => project.id === payload.id)
       );
       state.list[index].needs = payload.needs;
     },
-    addNeed(state, { payload }: PayloadAction<{ id: string; need: Need }>) {
+    addNeed(
+      state,
+      { payload }: PayloadAction<{ id: string; need: Nestable<Need> }>
+    ) {
       const projectIndex = Utils.ensure(
         state.list.findIndex((project) => project.id === payload.id)
       );
@@ -479,22 +482,6 @@ const projectSlice = createSlice({
         payload.requirement
       );
     },
-    editRequirementParentNeed(
-      state,
-      {
-        payload
-      }: PayloadAction<{
-        id: string;
-        requirement: Requirement;
-        oldNeedId: string;
-        needId: string;
-        requirementIndex: number;
-      }>
-    ) {
-      const index = Utils.ensure(
-        state.list.findIndex((project) => project.id === payload.id)
-      );
-    },
     addRequirement(
       state,
       {
@@ -529,6 +516,24 @@ const projectSlice = createSlice({
         payload.requirementIndex,
         1
       );
+    },
+    deletePublication(
+      state,
+      {
+        payload
+      }: PayloadAction<{
+        projectId: string;
+        publicationId: string;
+      }>
+    ) {
+      const projectIndex = Utils.ensure(
+        state.list.findIndex((project) => project.id === payload.projectId)
+      );
+      const publicationIndex = state.list[projectIndex].publications.findIndex(
+        (p) => p.id === payload.publicationId
+      );
+
+      state.list[projectIndex].publications.splice(publicationIndex, 1);
     }
   },
   extraReducers: (builder) => {
@@ -602,13 +607,13 @@ export const {
   deleteNeed,
   editCode,
   editCodelist,
-  editRequirementParentNeed,
   publishProject,
   editProject,
   setRequirementListToNeed,
   editRequirementInNeed,
   addRequirement,
-  deleteRequirement
+  deleteRequirement,
+  deletePublication
 } = projectSlice.actions;
 
 export default projectSlice.reducer;

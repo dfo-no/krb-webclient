@@ -1,22 +1,23 @@
 import { joiResolver } from '@hookform/resolvers/joi';
+import Joi from 'joi';
 import React, { ReactElement, useContext, useState } from 'react';
 import Button from 'react-bootstrap/Button';
-import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 import { useForm } from 'react-hook-form';
-import Joi from 'joi';
-import { useDispatch, useSelector } from 'react-redux';
+import { useTranslation } from 'react-i18next';
 import { BsTrashFill } from 'react-icons/bs';
+import { useDispatch, useSelector } from 'react-redux';
+import ErrorSummary from '../../Form/ErrorSummary';
+import InputRow from '../../Form/InputRow';
 import { Code } from '../../models/Code';
-
+import { AccordionContext } from '../../NestableHierarchy/AccordionContext';
 import {
   deleteCodeInCodelist,
   editCodeInCodelist,
   putProjectThunk
 } from '../../store/reducers/project-reducer';
 import { RootState } from '../../store/store';
-import { AccordionContext } from '../../NestableHierarchy/AccordionContext';
 
 interface IProps {
   element: Code;
@@ -29,7 +30,7 @@ type FormInput = {
 
 const codeSchema = Joi.object().keys({
   title: Joi.string().required(),
-  description: Joi.string().required()
+  description: Joi.string().allow(null, '').required()
 });
 
 export default function EditCodeForm({ element }: IProps): ReactElement {
@@ -38,9 +39,18 @@ export default function EditCodeForm({ element }: IProps): ReactElement {
   const { onOpenClose } = useContext(AccordionContext);
   const dispatch = useDispatch();
   const [validated] = useState(false);
+  const { t } = useTranslation();
 
-  const { register, handleSubmit, errors } = useForm({
-    resolver: joiResolver(codeSchema)
+  const {
+    control,
+    handleSubmit,
+    formState: { errors }
+  } = useForm({
+    resolver: joiResolver(codeSchema),
+    defaultValues: {
+      title: element.title,
+      description: element.description
+    }
   });
   if (!id) {
     return <p>No project selected</p>;
@@ -83,50 +93,22 @@ export default function EditCodeForm({ element }: IProps): ReactElement {
       noValidate
       validated={validated}
     >
-      <Form.Group as={Row}>
-        <Form.Label column sm="2">
-          Title
-        </Form.Label>
-        <Col sm={10}>
-          <Form.Control
-            name="title"
-            ref={register}
-            isInvalid={!!errors.title}
-            defaultValue={element.title}
-          />
-          {errors.title && (
-            <Form.Control.Feedback type="invalid">
-              {errors.title?.message}
-            </Form.Control.Feedback>
-          )}
-        </Col>
-      </Form.Group>
-      <Form.Group as={Row}>
-        <Form.Label column sm="2">
-          Description
-        </Form.Label>
-        <Col sm={10}>
-          <Form.Control
-            name="description"
-            ref={register}
-            defaultValue={element.description}
-            isInvalid={!!errors.description}
-          />
-          {errors.description && (
-            <Form.Control.Feedback type="invalid">
-              {errors.description.message}
-            </Form.Control.Feedback>
-          )}
-        </Col>
-      </Form.Group>
+      <InputRow control={control} name="title" errors={errors} label="Title" />
+      <InputRow
+        control={control}
+        name="description"
+        errors={errors}
+        label={t('Description')}
+      />
       <Row>
         <Button className="mt-2  ml-3" type="submit">
-          Save
+          {t('save')}
         </Button>
         <Button className="mt-2  ml-3" variant="warning" onClick={removeCode}>
-          Delete <BsTrashFill />
+          {t('delete')} <BsTrashFill />
         </Button>
       </Row>
+      <ErrorSummary errors={errors} />
     </Form>
   );
 }

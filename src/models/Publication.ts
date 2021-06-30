@@ -1,17 +1,14 @@
 import Joi from 'joi';
 import { BaseModel } from './BaseModel';
-import MODELTYPE from './ModelType';
+import ModelType from './ModelType';
 
 export const PublicationSchema = Joi.object().keys({
   id: Joi.string().required(),
-  comment: Joi.string().required().messages({
-    'string.empty': `'Comment' should be a type of 'text'`,
-    'any.required': 'Comment is required'
-  }),
+  comment: Joi.string().required(),
   date: Joi.date().iso().required(),
   version: Joi.number().min(1).required(),
   bankId: Joi.string().required(),
-  type: Joi.string().equal(MODELTYPE.publication).required()
+  type: Joi.string().equal(ModelType.publication).required()
 });
 
 export interface Publication extends BaseModel {

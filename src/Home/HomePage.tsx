@@ -1,18 +1,19 @@
 import React, { ReactElement, useEffect } from 'react';
-import Container from 'react-bootstrap/Container';
-import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
+import Container from 'react-bootstrap/Container';
 import ListGroup from 'react-bootstrap/ListGroup';
+import Row from 'react-bootstrap/Row';
+import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-
 import SearchBar from '../SearchBar/SearchBar';
-import FilteredList from './Components/FilteredList';
 import { getBanksThunk } from '../store/reducers/bank-reducer';
 import { RootState } from '../store/store';
+import FilteredList from './Components/FilteredList';
 
 export default function HomePage(): ReactElement {
   const dispatch = useDispatch();
+  const { t } = useTranslation();
   const { list, status } = useSelector((state: RootState) => state.bank);
 
   useEffect(() => {
@@ -34,17 +35,22 @@ export default function HomePage(): ReactElement {
           <ListGroup variant="flush">
             <ListGroup.Item className="mt-1 ">
               <Link to="/workbench">
-                <h5>Editor</h5>
+                <h5>{t('create projects')}</h5>
               </Link>
             </ListGroup.Item>
             <ListGroup.Item className="mt-1 ">
-              <Link to="/responseeditor">
-                <h5>Create response</h5>
+              <Link to="/response">
+                <h5>{t('create response')}</h5>
               </Link>
             </ListGroup.Item>
             <ListGroup.Item className="mt-1 ">
               <Link to="/evaluation">
-                <h5>Create evaluation</h5>
+                <h5>{t('create evaluation')}</h5>
+              </Link>
+            </ListGroup.Item>
+            <ListGroup.Item className="mt-1 ">
+              <Link to="/speceditor">
+                <h5>{t('create specification')}</h5>
               </Link>
             </ListGroup.Item>
             <ListGroup.Item className="mt-1 ">
@@ -59,14 +65,14 @@ export default function HomePage(): ReactElement {
         <Col>
           <FilteredList
             list={list}
-            filterTitle="Newest banks"
+            filterTitle={t('newest banks')}
             filterType="date"
           />
         </Col>
         <Col>
           <FilteredList
             list={list}
-            filterTitle="Popular banks"
+            filterTitle={t('popular banks')}
             filterType="alphabetic"
           />
         </Col>

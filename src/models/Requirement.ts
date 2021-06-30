@@ -7,7 +7,7 @@ export interface Requirement extends BaseModel {
   title: string;
   description: string;
   needId: string;
-  layouts: IVariant[];
+  variants: IVariant[];
   kind: string;
   requirement_Type: RequirementType;
 }

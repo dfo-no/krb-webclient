@@ -1,24 +1,25 @@
-import React, { ReactElement, useContext, useState } from 'react';
-import Button from 'react-bootstrap/Button';
-import Col from 'react-bootstrap/Col';
-import Form from 'react-bootstrap/Form';
-import Row from 'react-bootstrap/Row';
-import { useForm } from 'react-hook-form';
-import { useDispatch, useSelector } from 'react-redux';
 import { joiResolver } from '@hookform/resolvers/joi';
 import Joi from 'joi';
+import React, { ReactElement, useContext, useState } from 'react';
+import Button from 'react-bootstrap/Button';
+import Form from 'react-bootstrap/Form';
+import { useForm } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
 import { BsTrashFill } from 'react-icons/bs';
-
+import { useDispatch, useSelector } from 'react-redux';
+import AlertModal from '../../common/AlertModal';
+import Utils from '../../common/Utils';
+import ErrorSummary from '../../Form/ErrorSummary';
+import InputRow from '../../Form/InputRow';
+import { Bank } from '../../models/Bank';
 import { Need } from '../../models/Need';
+import { AccordionContext } from '../../NestableHierarchy/AccordionContext';
 import {
   deleteNeed,
   editNeed,
   putProjectThunk
 } from '../../store/reducers/project-reducer';
-import { AccordionContext } from '../../NestableHierarchy/AccordionContext';
 import { RootState } from '../../store/store';
-import Utils from '../../common/Utils';
-import { Bank } from '../../models/Bank';
 
 type FormValues = {
   id: string;
@@ -41,7 +42,14 @@ function EditNeedForm({ element }: IProps): ReactElement {
   const dispatch = useDispatch();
   const { onOpenClose } = useContext(AccordionContext);
   const [validated] = useState(false);
-  const { register, handleSubmit, errors } = useForm({
+  const { t } = useTranslation();
+
+  const {
+    register,
+    handleSubmit,
+    control,
+    formState: { errors }
+  } = useForm<FormValues>({
     defaultValues: {
       id: element.id,
       title: element.title,
@@ -50,6 +58,7 @@ function EditNeedForm({ element }: IProps): ReactElement {
     resolver: joiResolver(needSchema)
   });
 
+  const [modalShow, setModalShow] = useState(false);
   if (!id) {
     return <p>No project selected</p>;
   }
@@ -76,9 +85,7 @@ function EditNeedForm({ element }: IProps): ReactElement {
       element.requirements.length > 0 ||
       Utils.checkIfParent(project.needs, element.id)
     ) {
-      window.confirm(
-        'This product has one or more connected requirements or has subneeds, please remove them to be able to delete'
-      );
+      setModalShow(true);
     } else {
       dispatch(deleteNeed({ projectId: id, needId: element.id }));
       dispatch(putProjectThunk(id));
@@ -93,47 +100,34 @@ function EditNeedForm({ element }: IProps): ReactElement {
       noValidate
       validated={validated}
     >
-      <Form.Group as={Row}>
-        <Form.Label column sm="2">
-          Title
-        </Form.Label>
-        <Col sm={10}>
-          <Form.Control
-            name="title"
-            ref={register}
-            isInvalid={!!errors.title}
-          />
-          {errors.title && (
-            <Form.Control.Feedback type="invalid">
-              {errors.title.message}
-            </Form.Control.Feedback>
-          )}
-        </Col>
-      </Form.Group>
-      <Form.Group as={Row}>
-        <Form.Label column sm="2">
-          Description
-        </Form.Label>
-        <Col sm={10}>
-          <Form.Control
-            name="description"
-            ref={register}
-            isInvalid={!!errors.description}
-          />
-          {errors.description && (
-            <Form.Control.Feedback type="invalid">
-              {errors.description.message}
-            </Form.Control.Feedback>
-          )}
-        </Col>
-      </Form.Group>
-      <Form.Control type="hidden" name="id" ref={register} />
+      <InputRow
+        control={control}
+        name="title"
+        errors={errors}
+        label={t('Title')}
+      />
+
+      <InputRow
+        control={control}
+        name="description"
+        errors={errors}
+        label={t('Description')}
+      />
+
+      <Form.Control type="hidden" {...register('id')} />
       <Button className="mt-2" type="submit">
-        Save
+        {t('save')}
       </Button>
       <Button className="mt-2  ml-3" variant="warning" onClick={removeNeed}>
-        Delete <BsTrashFill />
+        {t('delete')} <BsTrashFill />
       </Button>
+      <ErrorSummary errors={errors} />
+      <AlertModal
+        modalShow={modalShow}
+        setModalShow={setModalShow}
+        title="Attention"
+        text="This product has one or more connected requirements or has subneeds, please remove them to be able to delete"
+      />
     </Form>
   );
 }

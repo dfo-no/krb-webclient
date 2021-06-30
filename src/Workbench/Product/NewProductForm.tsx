@@ -1,7 +1,6 @@
 import React, { ReactElement, useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
-import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 import { useForm } from 'react-hook-form';
@@ -10,13 +9,15 @@ import { useDispatch, useSelector } from 'react-redux';
 import Joi from 'joi';
 
 import { v4 as uuidv4 } from 'uuid';
+import { useTranslation } from 'react-i18next';
 import {
   addProduct,
   putProjectThunk
 } from '../../store/reducers/project-reducer';
 import { RootState } from '../../store/store';
 import { Product } from '../../models/Product';
-import MODELTYPE from '../../models/ModelType';
+import ModelType from '../../models/ModelType';
+import InputRow from '../../Form/InputRow';
 
 type FormValues = {
   title: string;
@@ -35,8 +36,14 @@ const productSchema = Joi.object().keys({
 function NewProductForm({ toggleShow, toggleAlert }: IProps): ReactElement {
   const dispatch = useDispatch();
   const [validated] = useState(false);
+  const { t } = useTranslation();
 
-  const { register, handleSubmit, reset, errors } = useForm({
+  const {
+    control,
+    handleSubmit,
+    reset,
+    formState: { errors }
+  } = useForm({
     resolver: joiResolver(productSchema)
   });
 
@@ -53,7 +60,7 @@ function NewProductForm({ toggleShow, toggleAlert }: IProps): ReactElement {
       title: post.title,
       description: post.description,
       parent: '',
-      type: MODELTYPE.product
+      type: ModelType.product
     };
     dispatch(addProduct({ id, product }));
     dispatch(putProjectThunk(id));
@@ -73,49 +80,27 @@ function NewProductForm({ toggleShow, toggleAlert }: IProps): ReactElement {
           noValidate
           validated={validated}
         >
-          <Form.Group as={Row}>
-            <Form.Label column sm="2">
-              Title
-            </Form.Label>
-            <Col sm={10}>
-              <Form.Control
-                name="title"
-                ref={register}
-                isInvalid={!!errors.title}
-              />
-              {errors.title && (
-                <Form.Control.Feedback type="invalid">
-                  {errors.title?.message}
-                </Form.Control.Feedback>
-              )}
-            </Col>
-          </Form.Group>
-          <Form.Group as={Row}>
-            <Form.Label column sm="2">
-              Description
-            </Form.Label>
-            <Col sm={10}>
-              <Form.Control
-                name="description"
-                ref={register}
-                isInvalid={!!errors.description}
-              />
-              {errors.description && (
-                <Form.Control.Feedback type="invalid">
-                  {errors.description.message}
-                </Form.Control.Feedback>
-              )}
-            </Col>
-          </Form.Group>
+          <InputRow
+            control={control}
+            name="title"
+            errors={errors}
+            label={t('Title')}
+          />
+          <InputRow
+            control={control}
+            name="description"
+            errors={errors}
+            label={t('Description')}
+          />
           <Row>
             <Button className="mt-2  ml-3" type="submit">
-              Save
+              {t('save')}
             </Button>
             <Button
               className="mt-2 ml-3 btn-warning"
               onClick={() => toggleShow(false)}
             >
-              Cancel
+              {t('cancel')}
             </Button>
           </Row>
         </Form>

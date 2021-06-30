@@ -20,6 +20,7 @@ import EditRequirementForm from './EditRequirementForm';
 import NeedSideBar from './NeedSideBar/NeedSidebar';
 import RequirementType from '../../models/RequirementType';
 import { selectNeed } from '../../store/reducers/selectedNeed-reducer';
+import { getProjectsThunk } from '../../store/reducers/project-reducer';
 
 interface RouteParams {
   projectId: string;
@@ -53,8 +54,19 @@ export default function RequirementPage(): ReactElement {
     return () => clearTimeout(timer);
   }, [showAlert]);
 
-  if (!id) {
-    return <p>No project selected</p>;
+  useEffect(() => {
+    async function fetchEverything() {
+      setTimeout(async () => {
+        await dispatch(getProjectsThunk());
+      }, 10);
+    }
+    if (!list) {
+      fetchEverything();
+    }
+  }, [dispatch, list]);
+
+  if (list.length === 0 || !id) {
+    return <p>Loading requirement Page...</p>;
   }
 
   const selectedProject = Utils.ensure(

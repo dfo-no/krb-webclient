@@ -1,7 +1,6 @@
 import React, { ReactElement, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import Button from 'react-bootstrap/Button';
-import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 import ListGroup from 'react-bootstrap/ListGroup';
 import Row from 'react-bootstrap/Row';
@@ -11,6 +10,7 @@ import { useForm } from 'react-hook-form';
 import { v4 as uuidv4 } from 'uuid';
 import Joi from 'joi';
 import { joiResolver } from '@hookform/resolvers/joi';
+import { useTranslation } from 'react-i18next';
 import { RootState } from '../store/store';
 import { Bank } from '../models/Bank';
 import {
@@ -20,7 +20,9 @@ import {
 } from '../store/reducers/project-reducer';
 import { selectProject } from '../store/reducers/selectedProject-reducer';
 import SuccessAlert from './SuccessAlert';
-import MODELTYPE from '../models/ModelType';
+import ModelType from '../models/ModelType';
+import InputRow from '../Form/InputRow';
+import ErrorSummary from '../Form/ErrorSummary';
 
 type FormValues = {
   title: string;
@@ -33,6 +35,7 @@ function WorkbenchPage(): ReactElement {
   const [showEditor, setShowEditor] = useState(false);
   const [showAlert, setShowAlert] = useState(false);
   const [validated] = useState(false);
+  const { t } = useTranslation();
 
   const projectSchema = Joi.object().keys({
     title: Joi.string().required(),
@@ -44,7 +47,12 @@ function WorkbenchPage(): ReactElement {
     description: ''
   };
 
-  const { register, handleSubmit, reset, errors } = useForm<FormValues>({
+  const {
+    handleSubmit,
+    reset,
+    control,
+    formState: { errors }
+  } = useForm<FormValues>({
     resolver: joiResolver(projectSchema),
     defaultValues
   });
@@ -68,7 +76,8 @@ function WorkbenchPage(): ReactElement {
       products: [],
       codelist: [],
       version: 0,
-      type: MODELTYPE.bank
+      type: ModelType.bank,
+      publications: []
     };
     dispatch(postProjectThunk(project));
     reset();
@@ -119,7 +128,7 @@ function WorkbenchPage(): ReactElement {
     return <ListGroup className=" mt-5">{projects}</ListGroup>;
   };
 
-  function projectEditor(show: boolean) {
+  function projectEditor(show: boolean): JSX.Element {
     if (show) {
       return (
         <ListGroup className="mt-3">
@@ -130,43 +139,22 @@ function WorkbenchPage(): ReactElement {
               noValidate
               validated={validated}
             >
-              <Form.Group as={Row}>
-                <Form.Label column sm="2">
-                  Title
-                </Form.Label>
-                <Col sm={10}>
-                  <Form.Control
-                    name="title"
-                    ref={register}
-                    isInvalid={!!errors.title}
-                  />
-                  {errors.title && (
-                    <Form.Control.Feedback type="invalid">
-                      {errors.title.message}
-                    </Form.Control.Feedback>
-                  )}
-                </Col>
-              </Form.Group>
-              <Form.Group as={Row}>
-                <Form.Label column sm="2">
-                  Description
-                </Form.Label>
-                <Col sm={10}>
-                  <Form.Control
-                    name="description"
-                    ref={register}
-                    isInvalid={!!errors.description}
-                  />
-                  {errors.description && (
-                    <Form.Control.Feedback type="invalid">
-                      {errors.description.message}
-                    </Form.Control.Feedback>
-                  )}
-                </Col>
-              </Form.Group>
+              <InputRow
+                control={control}
+                name="title"
+                errors={errors}
+                label={t('Title')}
+              />
+              <InputRow
+                control={control}
+                name="description"
+                errors={errors}
+                label={t('Description')}
+              />
               <Button className="mt-2" type="submit">
-                Save
+                {t('save')}
               </Button>
+              <ErrorSummary errors={errors} />
             </Form>
           </ListGroup.Item>
         </ListGroup>
@@ -177,9 +165,9 @@ function WorkbenchPage(): ReactElement {
 
   return (
     <>
-      <h3 className="mt-3 ">Projects </h3>
+      <h3 className="mt-3 ">{t('Projects')} </h3>
       <Button onClick={handleShowEditor} variant="primary">
-        New Project
+        {t('new project')}
       </Button>
       {showAlert && <SuccessAlert toggleShow={setShowAlert} type="project" />}
       {projectEditor(showEditor)}

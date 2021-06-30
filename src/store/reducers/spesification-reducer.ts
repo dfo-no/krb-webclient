@@ -1,10 +1,11 @@
 /* eslint-disable no-param-reassign */
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import Utils from '../../common/Utils';
-import { Requirement } from '../../models/Requirement';
-import { SpecificationProduct } from '../../models/SpecificationProduct';
-import { RequirementAnswer } from '../../models/RequirementAnswer';
+import { Bank } from '../../models/Bank';
+import { IRequirementAnswer } from '../../models/IRequirementAnswer';
+import ModelType from '../../models/ModelType';
 import { Specification } from '../../models/Specification';
+import { SpecificationProduct } from '../../models/SpecificationProduct';
 
 interface SpecificationState {
   spec: Specification;
@@ -12,7 +13,17 @@ interface SpecificationState {
 
 const initialState: SpecificationState = {
   spec: {
-    bankId: '',
+    bank: {
+      id: '',
+      title: '',
+      description: '',
+      needs: [],
+      products: [],
+      codelist: [],
+      version: 0,
+      type: ModelType.bank,
+      publications: []
+    },
     title: '',
     products: [],
     requirements: [],
@@ -30,8 +41,8 @@ const specificationSlice = createSlice({
     editTitle(state, { payload }: PayloadAction<string>) {
       state.spec.title = payload;
     },
-    editBankId(state, { payload }: PayloadAction<string>) {
-      state.spec.bankId = payload;
+    setBank(state, { payload }: PayloadAction<Bank>) {
+      state.spec.bank = payload;
     },
     addProduct(
       state,
@@ -54,7 +65,7 @@ const specificationSlice = createSlice({
       state,
       {
         payload
-      }: PayloadAction<{ answer: RequirementAnswer; productId: string }>
+      }: PayloadAction<{ answer: IRequirementAnswer; productId: string }>
     ) {
       const index = Utils.ensure(
         state.spec.products.findIndex(
@@ -63,7 +74,7 @@ const specificationSlice = createSlice({
       );
       if (
         state.spec.products[index].requirementAnswers.find(
-          (answer) => answer.reqTextId === payload.answer.reqTextId
+          (answer) => answer.id === payload.answer.id
         )
       ) {
         const oldSelectIndex = state.spec.products[
@@ -74,6 +85,23 @@ const specificationSlice = createSlice({
         state.spec.products[index].requirementAnswers.splice(oldSelectIndex, 1);
       }
       state.spec.products[index].requirementAnswers.push(payload.answer);
+    },
+    editProductAnswer(
+      state,
+      {
+        payload
+      }: PayloadAction<{ answer: IRequirementAnswer; productId: string }>
+    ) {
+      const productIndex = Utils.ensure(
+        state.spec.products.findIndex(
+          (product) => product.id === payload.productId
+        )
+      );
+      const index = state.spec.products[
+        productIndex
+      ].requirementAnswers.findIndex((req) => req.id === payload.answer.id);
+      state.spec.products[productIndex].requirementAnswers[index] =
+        payload.answer;
     },
     deleteProductAnswer(
       state,
@@ -116,11 +144,11 @@ const specificationSlice = createSlice({
     },
     addAnswer(
       state,
-      { payload }: PayloadAction<{ answer: RequirementAnswer }>
+      { payload }: PayloadAction<{ answer: IRequirementAnswer }>
     ) {
       if (
         state.spec.requirementAnswers.find(
-          (answer) => answer.reqTextId === payload.answer.reqTextId
+          (answer) => answer.id === payload.answer.id
         )
       ) {
         const oldSelectIndex = state.spec.requirementAnswers.findIndex(
@@ -130,6 +158,16 @@ const specificationSlice = createSlice({
       }
       state.spec.requirementAnswers.push(payload.answer);
     },
+    editAnswer(
+      state,
+      { payload }: PayloadAction<{ answer: IRequirementAnswer }>
+    ) {
+      const index = state.spec.requirementAnswers.findIndex(
+        (req) => req.id === payload.answer.id
+      );
+      state.spec.requirementAnswers[index] = payload.answer;
+    },
+
     deleteAnswer(state, { payload }: PayloadAction<{ answer: string }>) {
       const index = state.spec.requirementAnswers.findIndex(
         (req) => req.id === payload.answer
@@ -154,12 +192,14 @@ export const {
   removeRequirement,
   setSpecification,
   editTitle,
-  editBankId,
+  setBank,
   addProductAnswer,
   addProductRequirement,
   removeProductRequirement,
   deleteProductAnswer,
-  deleteAnswer
+  deleteAnswer,
+  editAnswer,
+  editProductAnswer
 } = specificationSlice.actions;
 
 export default specificationSlice.reducer;

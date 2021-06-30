@@ -1,10 +1,11 @@
-import { RequirementAnswer } from './RequirementAnswer';
+import { Bank } from './Bank';
+import { IRequirementAnswer } from './IRequirementAnswer';
 import { SpecificationProduct } from './SpecificationProduct';
 
 export interface Specification {
-  bankId: string;
+  bank: Bank;
   title: string;
   products: SpecificationProduct[];
   requirements: string[];
-  requirementAnswers: RequirementAnswer[];
+  requirementAnswers: IRequirementAnswer[];
 }

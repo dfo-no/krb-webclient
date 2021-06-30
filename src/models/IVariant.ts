@@ -1,12 +1,12 @@
-import { ISelectable } from './ISelectable';
+import { QuestionTypes } from './QuestionTypes';
 
 export interface IVariant {
   id: string;
   requirementText: string;
   instruction: string;
-  use_Product: boolean;
-  use_Spesification: boolean;
-  use_Qualification: boolean;
+  useProduct: boolean;
+  useSpesification: boolean;
+  useQualification: boolean;
   products: string[];
-  alternatives: ISelectable[];
+  questions: QuestionTypes;
 }

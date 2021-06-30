@@ -3,6 +3,7 @@ import Nav from 'react-bootstrap/Nav';
 import { withRouter } from 'react-router';
 import { NavLink, useRouteMatch } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import { useTranslation } from 'react-i18next';
 import css from './SideBar.module.scss';
 import { RootState } from '../../store/store';
 
@@ -35,30 +36,25 @@ const renderRouteLinks = (routes: IRouteLink[], isProjectSelected: boolean) => {
 
 function SideBar(): ReactElement {
   const { id } = useSelector((state: RootState) => state.selectedProject);
-
   const { list } = useSelector((state: RootState) => state.project);
-
   const match = useRouteMatch<RouteParams>('/workbench/:projectId');
-  /* match = {
-    isExact: true,
-    params: { projectId: number},
-    url: "workbench/2" <!-- this is never null, otherwise this route wouldn't match
-    path: "/workbench/:projectId"
-  } */
+  const { t } = useTranslation();
 
   const currentUrl = match?.url ? match.url : '/workbench';
   const isProjectSelected = !!id;
 
   const selectProject = list.find((bank) => bank.id === id);
 
-  const displayTitle = selectProject ? selectProject.title : '<None selected>';
+  const displayTitle = selectProject
+    ? selectProject.title
+    : `<${t('none selected')}>`;
 
   const routes = [
-    { link: `${currentUrl}`, name: `Workbench: ${displayTitle}` },
-    { link: `${currentUrl}/need`, name: 'Need' },
-    { link: `${currentUrl}/requirement`, name: 'Requirement' },
-    { link: `${currentUrl}/codelist`, name: 'Codelist' },
-    { link: `${currentUrl}/product`, name: 'Products' }
+    { link: `${currentUrl}`, name: `${t('Workbench')}: ${displayTitle}` },
+    { link: `${currentUrl}/need`, name: t('Need') },
+    { link: `${currentUrl}/requirement`, name: t('Requirement') },
+    { link: `${currentUrl}/codelist`, name: t('Codelist') },
+    { link: `${currentUrl}/product`, name: t('Products') }
   ];
 
   return (

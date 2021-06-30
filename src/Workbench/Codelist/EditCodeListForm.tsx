@@ -1,27 +1,31 @@
+import { joiResolver } from '@hookform/resolvers/joi';
+import Joi from 'joi';
 import React, { ReactElement, useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
-import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 import { useForm } from 'react-hook-form';
-import { joiResolver } from '@hookform/resolvers/joi';
-import { useDispatch, useSelector } from 'react-redux';
-import Joi from 'joi';
+import { useTranslation } from 'react-i18next';
 import { BsTrashFill } from 'react-icons/bs';
-
+import { useDispatch, useSelector } from 'react-redux';
+import { useHistory } from 'react-router-dom';
+import AlertModal from '../../common/AlertModal';
+import Utils from '../../common/Utils';
+import ErrorSummary from '../../Form/ErrorSummary';
+import InputRow from '../../Form/InputRow';
+import { ICodelistQuestion } from '../../models/ICodelistQuestion';
+import { IVariant } from '../../models/IVariant';
+import { Need } from '../../models/Need';
+import { IAnswerBase, IConfigBase, IQuestionBase } from '../../models/Question';
+import QuestionEnum from '../../models/QuestionEnum';
+import { Requirement } from '../../models/Requirement';
 import {
   deleteCodelist,
   editCodelist,
   putProjectThunk
 } from '../../store/reducers/project-reducer';
 import { RootState } from '../../store/store';
-import Utils from '../../common/Utils';
-import { Need } from '../../models/Need';
-import { Requirement } from '../../models/Requirement';
-import { IVariant } from '../../models/IVariant';
-import { ISelectable } from '../../models/ISelectable';
-import { ICodelistAlternative } from '../../models/ICodelistAlternative';
 
 type FormValues = {
   title: string;
@@ -40,23 +44,35 @@ const codeListSchema = Joi.object().keys({
 function EditCodeListForm({ toggleShow, codelistId }: IProps): ReactElement {
   const dispatch = useDispatch();
   const [validated] = useState(false);
-
-  const { register, handleSubmit, reset, errors } = useForm({
-    resolver: joiResolver(codeListSchema)
-  });
+  const [modalShow, setModalShow] = useState(false);
+  const { t } = useTranslation();
 
   const { id } = useSelector((state: RootState) => state.selectedProject);
   const { list } = useSelector((state: RootState) => state.project);
-
-  if (!id) {
-    return <div>Loading Productform</div>;
-  }
+  const history = useHistory();
 
   const project = Utils.ensure(list.find((bank) => bank.id === id));
 
   const codelist = Utils.ensure(
     project.codelist.find((clist) => clist.id === codelistId)
   );
+
+  const {
+    control,
+    handleSubmit,
+    reset,
+    formState: { errors }
+  } = useForm<FormValues>({
+    resolver: joiResolver(codeListSchema),
+    defaultValues: {
+      title: codelist.title,
+      description: codelist.description
+    }
+  });
+
+  if (!id) {
+    return <div>Loading Productform</div>;
+  }
 
   const onEditCodeSubmit = (post: FormValues) => {
     dispatch(
@@ -75,13 +91,20 @@ function EditCodeListForm({ toggleShow, codelistId }: IProps): ReactElement {
     let used = false;
     project.needs.forEach((need: Need) => {
       need.requirements.forEach((requirement: Requirement) => {
-        requirement.layouts.forEach((variant: IVariant) => {
-          variant.alternatives.forEach((alternative: ISelectable) => {
-            if (alternative.type === 'codelist') {
-              const alt = alternative as ICodelistAlternative;
-              if (alt.codelist.id === codelistId) used = true;
+        requirement.variants.forEach((variant: IVariant) => {
+          variant.questions.forEach(
+            (alternative: IQuestionBase<IAnswerBase, IConfigBase>) => {
+              if (alternative.type === QuestionEnum.Q_CODELIST) {
+                const alt = alternative as ICodelistQuestion;
+                if (
+                  alt.config &&
+                  alt.config.codelist &&
+                  alt.config.codelist === codelistId
+                )
+                  used = true;
+              }
             }
-          });
+          );
         });
       });
     });
@@ -90,12 +113,11 @@ function EditCodeListForm({ toggleShow, codelistId }: IProps): ReactElement {
 
   const removeCodelist = () => {
     if (checkCodelistConnection()) {
-      window.confirm(
-        'The codelist is associated to one or more requirement variant, please remove the connection to be able to delete'
-      );
+      setModalShow(true);
     } else {
       dispatch(deleteCodelist({ projectId: id, codelistId }));
       dispatch(putProjectThunk(id));
+      history.push(`/workbench/${project.id}/codelist`);
     }
   };
 
@@ -108,60 +130,43 @@ function EditCodeListForm({ toggleShow, codelistId }: IProps): ReactElement {
           noValidate
           validated={validated}
         >
-          <Form.Group as={Row}>
-            <Form.Label column sm="2">
-              Title
-            </Form.Label>
-            <Col sm={10}>
-              <Form.Control
-                name="title"
-                ref={register}
-                isInvalid={!!errors.title}
-                defaultValue={codelist.title}
-              />
-              {errors.title && (
-                <Form.Control.Feedback type="invalid">
-                  {errors.title?.message}
-                </Form.Control.Feedback>
-              )}
-            </Col>
-          </Form.Group>
-          <Form.Group as={Row}>
-            <Form.Label column sm="2">
-              Description
-            </Form.Label>
-            <Col sm={10}>
-              <Form.Control
-                name="description"
-                ref={register}
-                isInvalid={!!errors.description}
-                defaultValue={codelist.description}
-              />
-              {errors.description && (
-                <Form.Control.Feedback type="invalid">
-                  {errors.description.message}
-                </Form.Control.Feedback>
-              )}
-            </Col>
-          </Form.Group>
+          <InputRow
+            control={control}
+            name="title"
+            errors={errors}
+            label={t('Title')}
+          />
+          <InputRow
+            control={control}
+            name="description"
+            errors={errors}
+            label={t('Description')}
+          />
           <Row>
             <Button className="mt-2  ml-3" type="submit">
-              Save
+              {t('save')}
             </Button>
             <Button
               className="mt-2 ml-3 btn-warning"
               onClick={() => toggleShow(false)}
             >
-              Cancel
+              {t('cancel')}
             </Button>
             <Button
               className="mt-2  ml-3"
               variant="warning"
               onClick={removeCodelist}
             >
-              Delete <BsTrashFill />
+              {t('delete')} <BsTrashFill />
             </Button>
+            <AlertModal
+              modalShow={modalShow}
+              setModalShow={setModalShow}
+              title="Attention"
+              text="The codelist is associated to one or more requirement variant, please remove the connection to be able to delete"
+            />
           </Row>
+          <ErrorSummary errors={errors} />
         </Form>
       </Card.Body>
     </Card>

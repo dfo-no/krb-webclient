@@ -1,54 +1,90 @@
-import React, { ReactElement, useState } from 'react';
-import Alert from 'react-bootstrap/Alert';
-import Button from 'react-bootstrap/Button';
-import Form from 'react-bootstrap/Form';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
-
-import { useHistory, useRouteMatch } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
-import { useForm } from 'react-hook-form';
 import { joiResolver } from '@hookform/resolvers/joi';
 import Joi from 'joi';
-
+import React, { ReactElement, useEffect, useState } from 'react';
+import Button from 'react-bootstrap/Button';
+import Col from 'react-bootstrap/Col';
+import Form from 'react-bootstrap/Form';
+import Row from 'react-bootstrap/Row';
+import { useForm } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
+import { useDispatch, useSelector } from 'react-redux';
+import { useHistory, useRouteMatch } from 'react-router-dom';
 import Utils from '../../common/Utils';
-import { IVariant } from '../../models/IVariant';
-import { RootState } from '../../store/store';
-import { selectRequirement } from '../../store/reducers/selectedRequirement-reducer';
-import { selectNeed } from '../../store/reducers/selectedNeed-reducer';
+import ErrorSummary from '../../Form/ErrorSummary';
+import ModelType from '../../models/ModelType';
+import { Need } from '../../models/Need';
+import QuestionEnum from '../../models/QuestionEnum';
+import { Requirement } from '../../models/Requirement';
 import {
   editRequirementInNeed,
+  getProjectsThunk,
   putProjectThunk
 } from '../../store/reducers/project-reducer';
+import { selectNeed } from '../../store/reducers/selectedNeed-reducer';
+import { selectProject } from '../../store/reducers/selectedProject-reducer';
+import { selectRequirement } from '../../store/reducers/selectedRequirement-reducer';
+import { RootState } from '../../store/store';
 import VariantArray from './VariantArray';
-import { Requirement } from '../../models/Requirement';
-import { Need } from '../../models/Need';
 
-const valueSchema = Joi.object().keys({
+export const SliderSchema = Joi.object().keys({
   id: Joi.string().required(),
-  type: Joi.string().equal('value').required(),
-  step: Joi.number().min(0).max(1000000000).required(),
-  min: Joi.number().min(0).max(1000000000).required(),
-  max: Joi.number().min(0).max(1000000000).required(),
-  unit: Joi.string().required()
+  type: Joi.string().equal(QuestionEnum.Q_SLIDER).required(),
+  config: Joi.object().keys({
+    step: Joi.number().min(0).max(1000000000).required(),
+    min: Joi.number().min(0).max(1000000000).required(),
+    max: Joi.number().min(0).max(1000000000).required(),
+    unit: Joi.string().required()
+  })
 });
 
-const codeSchema = Joi.object().keys({
+export const CodelistSchema = Joi.object().keys({
   id: Joi.string().required(),
-  title: Joi.string().required(),
-  description: Joi.string().required(),
-  type: Joi.string().equal('code').required()
+  type: Joi.string().equal(QuestionEnum.Q_CODELIST).required(),
+  config: Joi.object().keys({
+    codelist: Joi.string().required(),
+    multipleSelect: Joi.boolean().required()
+  })
 });
 
-const codelistSchema = Joi.object().keys({
+export const TextSchema = Joi.object().keys({
   id: Joi.string().required(),
-  type: Joi.string().equal('codelist').required(),
-  codelist: Joi.object().keys({
-    id: Joi.string().required(),
-    title: Joi.string().required(),
-    description: Joi.string().required(),
-    codes: Joi.array().items(codeSchema).min(1).required(),
-    type: Joi.string().equal('codelist').required()
+  type: Joi.string().equal(QuestionEnum.Q_TEXT).required(),
+  config: Joi.object().keys({
+    max: Joi.number().required().min(0)
+  })
+});
+
+export const PeriodDateSchema = Joi.object().keys({
+  id: Joi.string().required(),
+  type: Joi.string().equal(QuestionEnum.Q_PERIOD_DATE).required(),
+  config: Joi.object().keys({
+    fromDate: Joi.string().trim().allow('').required(),
+    toDate: Joi.string().trim().allow('').required()
+  })
+});
+
+export const TimeSchema = Joi.object().keys({
+  id: Joi.string().required(),
+  type: Joi.string().equal(QuestionEnum.Q_TIME).required(),
+  config: Joi.object().keys({
+    fromTime: Joi.string().trim().allow('').required(),
+    toTime: Joi.string().trim().allow('').required()
+  })
+});
+
+export const CheckboxSchema = Joi.object().keys({
+  id: Joi.string().required(),
+  type: Joi.string().equal(QuestionEnum.Q_CHECKBOX).required(),
+  config: Joi.object().keys({
+    value: Joi.boolean()
+  })
+});
+
+export const FileUploadSchema = Joi.object().keys({
+  id: Joi.string().required(),
+  type: Joi.string().equal(QuestionEnum.Q_FILEUPLOAD).required(),
+  config: Joi.object().keys({
+    fileEndings: Joi.string().allow('')
   })
 });
 
@@ -61,23 +97,28 @@ const textSchema = Joi.object().keys({
 
 const variantSchema = Joi.object().keys({
   id: Joi.string().required(),
-  requirementText: Joi.string().required(),
-  instruction: Joi.string().required(),
-  use_Product: Joi.boolean().required(),
-  use_Spesification: Joi.boolean().required(),
-  use_Qualification: Joi.boolean().required(),
+  requirementText: Joi.string().allow(null, '').required(),
+  instruction: Joi.string().allow(null, '').required(),
+  useProduct: Joi.boolean().required(),
+  useSpesification: Joi.boolean().required(),
+  useQualification: Joi.boolean().required(),
   products: Joi.array()
     .items()
-    .when('use_Product', {
+    .when('useProduct', {
       is: true,
       then: Joi.array().items(Joi.string()).min(1).required()
-    }),
-  alternatives: Joi.array().items(
+    })
+    .required(),
+  questions: Joi.array().items(
     Joi.alternatives().conditional('.type', {
       switch: [
-        { is: 'value', then: valueSchema },
-        { is: 'codelist', then: codelistSchema },
-        { is: 'text', then: textSchema }
+        { is: QuestionEnum.Q_SLIDER, then: SliderSchema },
+        { is: QuestionEnum.Q_CODELIST, then: CodelistSchema },
+        { is: QuestionEnum.Q_TEXT, then: TextSchema },
+        { is: QuestionEnum.Q_PERIOD_DATE, then: PeriodDateSchema },
+        { is: QuestionEnum.Q_TIME, then: TimeSchema },
+        { is: QuestionEnum.Q_CHECKBOX, then: CheckboxSchema },
+        { is: QuestionEnum.Q_FILEUPLOAD, then: FileUploadSchema }
       ]
     })
   )
@@ -86,12 +127,12 @@ const variantSchema = Joi.object().keys({
 const requirementSchema = Joi.object().keys({
   id: Joi.string().required(),
   title: Joi.string().max(100).required(),
-  description: Joi.string().required(),
+  description: Joi.string().allow(null, '').required(),
   needId: Joi.string().required(),
-  layouts: Joi.array().items(variantSchema),
+  variants: Joi.array().items(variantSchema),
   kind: Joi.string().required(),
   requirement_Type: Joi.string().required(),
-  type: Joi.string().required()
+  type: Joi.string().equal(ModelType.requirement).required()
 });
 
 interface RouteParams {
@@ -104,13 +145,16 @@ export default function RequirementEditor(): ReactElement {
   const [validated] = useState(false);
   const dispatch = useDispatch();
   const history = useHistory();
-
+  const { t } = useTranslation();
   const projectMatch = useRouteMatch<RouteParams>(
     '/workbench/:projectId/need/:needId/requirement/:requirementId/edit'
   );
-  const { needId } = useSelector((state: RootState) => state.selectNeed);
 
-  if (projectMatch?.params.needId && projectMatch?.params.needId === needId) {
+  if (projectMatch?.params.projectId) {
+    dispatch(selectProject(projectMatch?.params.projectId));
+  }
+
+  if (projectMatch?.params.needId) {
     dispatch(selectNeed(projectMatch?.params.needId));
   }
 
@@ -120,27 +164,29 @@ export default function RequirementEditor(): ReactElement {
 
   const { id } = useSelector((state: RootState) => state.selectedProject);
   const { list } = useSelector((state: RootState) => state.project);
+  const { needId } = useSelector((state: RootState) => state.selectNeed);
   const { reqId } = useSelector(
     (state: RootState) => state.selectedRequirement
   );
 
+  useEffect(() => {
+    async function fetchEverything() {
+      await dispatch(getProjectsThunk());
+    }
+    if (!list) {
+      fetchEverything();
+    }
+  }, [dispatch, list]);
+
   const project = Utils.ensure(list.find((element) => element.id === id));
+
   const need = Utils.ensure(
     project.needs.find((element) => element.id === needId)
   );
   const requirement = need.requirements.find((element) => element.id === reqId);
-  const defaultValues: Requirement | Record<string, never> =
-    requirement !== undefined ? { ...requirement } : {};
-  const {
-    control,
-    register,
-    handleSubmit,
-    errors,
-    getValues,
-    setValue
-  } = useForm<Requirement>({
+  const { control, register, handleSubmit, formState } = useForm<Requirement>({
     resolver: joiResolver(requirementSchema),
-    defaultValues
+    defaultValues: requirement
   });
 
   if (requirement === undefined) {
@@ -148,8 +194,8 @@ export default function RequirementEditor(): ReactElement {
     return <p> Could not find requirement </p>;
   }
 
-  if (!needId || !reqId) {
-    return <p>You have to select a requirement to work with</p>;
+  if (list.length === 0 || !needId || !reqId) {
+    return <p>Loading requirement ...</p>;
   }
 
   const saveRequirement = async (post: Requirement) => {
@@ -169,25 +215,16 @@ export default function RequirementEditor(): ReactElement {
     await dispatch(selectNeed(post.needId));
   };
 
-  const deleteVariant = (variant: IVariant) => {
-    const editRequirement = { ...requirement };
-    const newVariants = requirement.layouts.filter(
-      (element) => element.id !== variant.id
-    );
-    editRequirement.layouts = newVariants;
-    dispatch(putProjectThunk(project.id));
-  };
-
   const needOptions = (needList: Need[]) => {
-    const result = needList.map((element: any) => {
+    return needList.map((element) => {
       return (
         <option key={element.id} value={element.id}>
           {element.title}
         </option>
       );
     });
-    return result;
   };
+  const { errors } = formState;
 
   return (
     <>
@@ -199,65 +236,40 @@ export default function RequirementEditor(): ReactElement {
         noValidate
         validated={validated}
       >
+        <Form.Control readOnly as="input" type="hidden" {...register('id')} />
         <Form.Control
           readOnly
           as="input"
-          name="id"
           type="hidden"
-          ref={register}
-          isInvalid={!!errors.id}
+          {...register('description')}
         />
         <Form.Control
           readOnly
           as="input"
-          name="description"
           type="hidden"
-          ref={register}
-          isInvalid={!!errors.description}
+          {...register('needId')}
         />
+        <Form.Control readOnly as="input" type="hidden" {...register('kind')} />
         <Form.Control
-          readOnly
           as="input"
-          name="needId"
           type="hidden"
-          ref={register}
-          isInvalid={!!errors.needId}
-        />
-        <Form.Control
-          readOnly
-          as="input"
-          name="kind"
-          type="hidden"
-          ref={register}
-          isInvalid={!!errors.kind}
-        />
-        <Form.Control
-          readOnly
-          as="input"
-          name="type"
-          type="hidden"
-          ref={register}
+          {...register('type')}
           isInvalid={!!errors.type}
         />
         <Form.Control
           readOnly
           as="input"
-          name="requirement_Type"
           type="hidden"
-          ref={register}
+          {...register('requirement_Type')}
           isInvalid={!!errors.requirement_Type}
         />
 
         <Form.Group as={Row}>
           <Form.Label column sm={1}>
-            Title
+            {t('Title')}
           </Form.Label>
           <Col sm={8}>
-            <Form.Control
-              name="title"
-              ref={register}
-              isInvalid={!!errors.title}
-            />
+            <Form.Control {...register('title')} isInvalid={!!errors.title} />
             {errors.title && (
               <Form.Control.Feedback as={Col} type="invalid">
                 {errors.title?.message}
@@ -265,7 +277,7 @@ export default function RequirementEditor(): ReactElement {
             )}
           </Col>
           <Col sm={3}>
-            <Button type="submit">Save</Button>
+            <Button type="submit">{t('save')}</Button>
           </Col>
         </Form.Group>
         <Form.Group as={Row}>
@@ -275,8 +287,7 @@ export default function RequirementEditor(): ReactElement {
           <Col sm={8}>
             <Form.Control
               as="select"
-              name="needId"
-              ref={register}
+              {...register('needId')}
               defaultValue={requirement.needId}
               isInvalid={!!errors.needId}
             >
@@ -291,22 +302,12 @@ export default function RequirementEditor(): ReactElement {
         </Form.Group>
 
         <VariantArray
-          {...{
-            control,
-            register,
-            getValues,
-            setValue,
-            errors,
-            project,
-            defaultValues
-          }}
+          control={control}
+          register={register}
+          formState={formState}
+          project={project}
         />
-        {process.env.NODE_ENV === 'development' &&
-          Object.keys(errors).length > 0 && (
-            <Alert variant="warning">
-              <pre>{JSON.stringify(errors, null, 2)}</pre>
-            </Alert>
-          )}
+        <ErrorSummary errors={errors} />
       </Form>
     </>
   );

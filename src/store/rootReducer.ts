@@ -3,15 +3,18 @@ import bankReducer from './reducers/bank-reducer';
 import loaderReducer from './reducers/loader-reducer';
 // eslint-disable-next-line import/no-cycle
 import projectReducer from './reducers/project-reducer';
-import selectedProjectReducer from './reducers/selectedProject-reducer';
-import selectedCodeListReducer from './reducers/selectedCodelist-reducer';
-import userReducer from './reducers/userReducer';
+import responseReducer from './reducers/response-reducer';
+import selectedAlternativeReducer from './reducers/selectedAlternative-reducer';
 import selectedBankReducer from './reducers/selectedBank-reducer';
+import selectedCodeListReducer from './reducers/selectedCodelist-reducer';
 import selectedNeedReducer from './reducers/selectedNeed-reducer';
-import selectedRequirementReducer from './reducers/selectedRequirement-reducer';
 import selectedProductReducer from './reducers/selectedProduct-reducer';
-import specificationReducer from './reducers/spesification-reducer';
+import selectedProjectReducer from './reducers/selectedProject-reducer';
+import selectedRequirementReducer from './reducers/selectedRequirement-reducer';
+import selectedResponseProductReducer from './reducers/selectedResponseProduct-reducer';
 import selectedSpecProductReducer from './reducers/selectedSpecProduct-reducer';
+import specificationReducer from './reducers/spesification-reducer';
+import userReducer from './reducers/userReducer';
 
 const rootReducer = combineReducers({
   loader: loaderReducer,
@@ -25,7 +28,10 @@ const rootReducer = combineReducers({
   selectedRequirement: selectedRequirementReducer,
   selectedProduct: selectedProductReducer,
   specification: specificationReducer,
-  selectedSpecProduct: selectedSpecProductReducer
+  selectedSpecProduct: selectedSpecProductReducer,
+  selectedAlternative: selectedAlternativeReducer,
+  response: responseReducer,
+  selectedResponseProduct: selectedResponseProductReducer
 });
 
 export default rootReducer;

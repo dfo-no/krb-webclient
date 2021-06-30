@@ -8,6 +8,7 @@ import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import Joi from 'joi';
 import { joiResolver } from '@hookform/resolvers/joi';
+import { useTranslation } from 'react-i18next';
 import { Bank } from '../../models/Bank';
 
 import {
@@ -15,6 +16,7 @@ import {
   putProjectThunk
 } from '../../store/reducers/project-reducer';
 import { RootState } from '../../store/store';
+import ErrorSummary from '../../Form/ErrorSummary';
 
 interface IProps {
   project: Bank;
@@ -38,9 +40,18 @@ export default function EditProjectForm({
   const { id } = useSelector((state: RootState) => state.selectedProject);
   const dispatch = useDispatch();
   const [validated] = useState(false);
+  const { t } = useTranslation();
 
-  const { register, handleSubmit, errors } = useForm({
-    resolver: joiResolver(projectSchema)
+  const {
+    register,
+    handleSubmit,
+    formState: { errors }
+  } = useForm({
+    resolver: joiResolver(projectSchema),
+    defaultValues: {
+      title: project.title,
+      description: project.description
+    }
   });
 
   if (!id) {
@@ -70,15 +81,10 @@ export default function EditProjectForm({
         >
           <Form.Group as={Row}>
             <Form.Label column sm="2">
-              Title
+              {t('Title')}
             </Form.Label>
             <Col sm={10}>
-              <Form.Control
-                name="title"
-                ref={register}
-                isInvalid={!!errors.title}
-                defaultValue={project.title}
-              />
+              <Form.Control {...register('title')} isInvalid={!!errors.title} />
               {errors.title && (
                 <Form.Control.Feedback type="invalid">
                   {errors.title?.message}
@@ -88,14 +94,12 @@ export default function EditProjectForm({
           </Form.Group>
           <Form.Group as={Row}>
             <Form.Label column sm="2">
-              Description
+              {t('Description')}
             </Form.Label>
             <Col sm={10}>
               <Form.Control
-                name="description"
-                ref={register}
+                {...register('description')}
                 isInvalid={!!errors.description}
-                defaultValue={project.description}
               />
               {errors.description && (
                 <Form.Control.Feedback type="invalid">
@@ -106,15 +110,16 @@ export default function EditProjectForm({
           </Form.Group>
           <Row>
             <Button className="mt-2  ml-3" type="submit">
-              Save
+              {t('save')}
             </Button>
             <Button
               className="mt-2 ml-3 btn-warning"
               onClick={() => toggleShow(false)}
             >
-              Cancel
+              {t('cancel')}
             </Button>
           </Row>
+          <ErrorSummary errors={errors} />
         </Form>
       </Card.Body>
     </Card>

@@ -1,25 +1,25 @@
+import { joiResolver } from '@hookform/resolvers/joi';
+import Joi from 'joi';
 import React, { ReactElement, useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
-import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 import { useForm } from 'react-hook-form';
-import { joiResolver } from '@hookform/resolvers/joi';
+import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
-import Joi from 'joi';
-
 import { v4 as uuidv4 } from 'uuid';
+import ErrorSummary from '../../Form/ErrorSummary';
+import InputRow from '../../Form/InputRow';
+import ModelType from '../../models/ModelType';
+import { Need } from '../../models/Need';
+import { Requirement } from '../../models/Requirement';
+import RequirementType from '../../models/RequirementType';
 import {
   putProjectThunk,
   setRequirementListToNeed
 } from '../../store/reducers/project-reducer';
 import { RootState } from '../../store/store';
-
-import { Need } from '../../models/Need';
-import { Requirement } from '../../models/Requirement';
-import MODELTYPE from '../../models/ModelType';
-import RequirementType from '../../models/RequirementType';
 
 type FormValues = {
   title: string;
@@ -35,7 +35,7 @@ interface IProps {
 
 const requirementSchema = Joi.object().keys({
   title: Joi.string().required(),
-  description: Joi.string().required()
+  description: Joi.string().allow(null, '').required()
 });
 
 function NewRequirementForm({
@@ -47,8 +47,14 @@ function NewRequirementForm({
 }: IProps): ReactElement {
   const dispatch = useDispatch();
   const [validated] = useState(false);
+  const { t } = useTranslation();
 
-  const { register, handleSubmit, reset, errors } = useForm({
+  const {
+    control,
+    handleSubmit,
+    reset,
+    formState: { errors }
+  } = useForm({
     resolver: joiResolver(requirementSchema)
   });
 
@@ -64,9 +70,9 @@ function NewRequirementForm({
       title: post.title,
       description: post.description,
       needId: need.id,
-      layouts: [],
+      variants: [],
       kind: 'yes/no',
-      type: MODELTYPE.requirement,
+      type: ModelType.requirement,
       requirement_Type: type
     };
     const reqList = [...need.requirements];
@@ -95,51 +101,31 @@ function NewRequirementForm({
           noValidate
           validated={validated}
         >
-          <Form.Group as={Row}>
-            <Form.Label column sm="2">
-              Title
-            </Form.Label>
-            <Col sm={10}>
-              <Form.Control
-                name="title"
-                ref={register}
-                isInvalid={!!errors.title}
-              />
-              {errors.title && (
-                <Form.Control.Feedback type="invalid">
-                  {errors.title?.message}
-                </Form.Control.Feedback>
-              )}
-            </Col>
-          </Form.Group>
-          <Form.Group as={Row}>
-            <Form.Label column sm="2">
-              Description
-            </Form.Label>
-            <Col sm={10}>
-              <Form.Control
-                name="description"
-                ref={register}
-                isInvalid={!!errors.description}
-              />
-              {errors.description && (
-                <Form.Control.Feedback type="invalid">
-                  {errors.description.message}
-                </Form.Control.Feedback>
-              )}
-            </Col>
-          </Form.Group>
+          <InputRow
+            name="title"
+            control={control}
+            label={t('Title')}
+            errors={errors}
+          />
+          <InputRow
+            name="description"
+            control={control}
+            label={t('Description')}
+            errors={errors}
+          />
+
           <Row>
             <Button className="mt-2  ml-3" type="submit">
-              Save
+              {t('save')}
             </Button>
             <Button
               className="mt-2 ml-3 btn-warning"
               onClick={() => toggleShow(false)}
             >
-              Cancel
+              {t('cancel')}
             </Button>
           </Row>
+          <ErrorSummary errors={errors} />
         </Form>
       </Card.Body>
     </Card>

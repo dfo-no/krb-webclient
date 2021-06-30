@@ -2,24 +2,23 @@ import React, { ReactElement, useEffect } from 'react';
 import Col from 'react-bootstrap/Col';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
-import { Route, Switch, useRouteMatch } from 'react-router-dom';
-
 import { useDispatch, useSelector } from 'react-redux';
-import RequirementPage from './Requirement/RequirementPage';
-import RequirementEditor from './Requirement/RequirementEditor';
+import { Route, Switch, useRouteMatch } from 'react-router-dom';
+import NotFound from '../NotFound';
+import { getProjectsThunk } from '../store/reducers/project-reducer';
+import { selectProject } from '../store/reducers/selectedProject-reducer';
+import { RootState } from '../store/store';
 import CodeListEditor from './Codelist/CodeListEditor';
 import CodelistPage from './Codelist/CodelistPage';
 import NeedPage from './Need/NeedPage';
 import ProductPage from './Product/ProductPage';
-import ProjectPage from './Project/ProjectPage';
-import SideBar from './SideBar/SideBar';
-import WorkbenchPage from './WorkbenchPage';
-import { getProjectsThunk } from '../store/reducers/project-reducer';
-import { RootState } from '../store/store';
-import { selectProject } from '../store/reducers/selectedProject-reducer';
-import styles from './WorkBench.module.scss';
-import NotFound from '../NotFound';
 import ProductPreview from './Product/ProductPreview';
+import ProjectPage from './Project/ProjectPage';
+import RequirementEditor from './Requirement/RequirementEditor';
+import RequirementPage from './Requirement/RequirementPage';
+import SideBar from './SideBar/SideBar';
+import styles from './WorkBench.module.scss';
+import WorkbenchPage from './WorkbenchPage';
 
 interface RouteParams {
   projectId: string;
@@ -39,10 +38,9 @@ export default function WorkbenchModule(): ReactElement {
     possible to have a loading-indicator or some other nice stuff */
   useEffect(() => {
     async function fetchEverything() {
-      // TODO: remove delay after implementing spinner
       setTimeout(async () => {
-        dispatch(getProjectsThunk());
-      }, 0);
+        await dispatch(getProjectsThunk());
+      });
     }
     fetchEverything();
   }, [dispatch]);
