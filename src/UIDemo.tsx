@@ -347,7 +347,6 @@ export default function UIDemo(): JSX.Element {
       </h3>
       <form
         onSubmit={handleSubmit((data: ICart) => {
-          console.log(data);
           setResult(JSON.stringify(data, null, 2));
         })}
       >
