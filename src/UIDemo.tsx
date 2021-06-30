@@ -342,12 +342,11 @@ export default function UIDemo(): JSX.Element {
   return (
     <Container>
       <h3>
-        Demo for ALL used UI components in this project
+        Demo for ALL used UI components in this project!
         <Badge variant="info">{renderCount}</Badge>
       </h3>
       <form
         onSubmit={handleSubmit((data: ICart) => {
-          console.log(data);
           setResult(JSON.stringify(data, null, 2));
         })}
       >

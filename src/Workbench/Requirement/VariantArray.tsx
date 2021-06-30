@@ -1,7 +1,9 @@
+import { get, has } from 'lodash';
 import React, { ReactElement, useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import Form from 'react-bootstrap/Form';
+import Row from 'react-bootstrap/Row';
 import {
   Control,
   FieldError,
@@ -10,18 +12,14 @@ import {
   UseFormRegister
 } from 'react-hook-form';
 import { BsTrashFill } from 'react-icons/bs';
-import { has, get } from 'lodash';
-
 import { v4 as uuidv4 } from 'uuid';
-import Row from 'react-bootstrap/Row';
-import styles from './Variant.module.scss';
-
 import Utils from '../../common/Utils';
-import { Product } from '../../models/Product';
-import QuestionArray from './QuestionArray';
-import { Requirement } from '../../models/Requirement';
 import { Bank } from '../../models/Bank';
 import { Nestable } from '../../models/Nestable';
+import { Product } from '../../models/Product';
+import { Requirement } from '../../models/Requirement';
+import QuestionArray from './QuestionArray';
+import styles from './Variant.module.scss';
 
 type IProps = {
   control: Control<Requirement>;

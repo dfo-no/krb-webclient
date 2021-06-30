@@ -1,26 +1,25 @@
+import { joiResolver } from '@hookform/resolvers/joi';
+import Joi from 'joi';
 import React, { ReactElement, useContext, useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import { useForm } from 'react-hook-form';
-import { useDispatch, useSelector } from 'react-redux';
-import { joiResolver } from '@hookform/resolvers/joi';
-import Joi from 'joi';
-import { BsTrashFill } from 'react-icons/bs';
-
 import { useTranslation } from 'react-i18next';
+import { BsTrashFill } from 'react-icons/bs';
+import { useDispatch, useSelector } from 'react-redux';
+import AlertModal from '../../common/AlertModal';
+import Utils from '../../common/Utils';
+import ErrorSummary from '../../Form/ErrorSummary';
+import InputRow from '../../Form/InputRow';
+import { Bank } from '../../models/Bank';
 import { Need } from '../../models/Need';
+import { AccordionContext } from '../../NestableHierarchy/AccordionContext';
 import {
   deleteNeed,
   editNeed,
   putProjectThunk
 } from '../../store/reducers/project-reducer';
-import { AccordionContext } from '../../NestableHierarchy/AccordionContext';
 import { RootState } from '../../store/store';
-import Utils from '../../common/Utils';
-import { Bank } from '../../models/Bank';
-import InputRow from '../../Form/InputRow';
-import ErrorSummary from '../../Form/ErrorSummary';
-import AlertModal from '../../common/AlertModal';
 
 type FormValues = {
   id: string;

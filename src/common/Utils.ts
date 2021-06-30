@@ -1,8 +1,8 @@
 import { Bank } from '../models/Bank';
 import { BaseModel } from '../models/BaseModel';
-import { Nestable } from '../models/Nestable';
 import { IVariant } from '../models/IVariant';
 import { Need } from '../models/Need';
+import { Nestable } from '../models/Nestable';
 import { Product } from '../models/Product';
 import { Requirement } from '../models/Requirement';
 

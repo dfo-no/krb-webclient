@@ -1,32 +1,31 @@
+import { joiResolver } from '@hookform/resolvers/joi';
+import Joi from 'joi';
 import React, { ReactElement, useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 import { useForm } from 'react-hook-form';
-import { joiResolver } from '@hookform/resolvers/joi';
-import { useDispatch, useSelector } from 'react-redux';
-import Joi from 'joi';
-import { BsTrashFill } from 'react-icons/bs';
-
-import { useHistory } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import { BsTrashFill } from 'react-icons/bs';
+import { useDispatch, useSelector } from 'react-redux';
+import { useHistory } from 'react-router-dom';
+import AlertModal from '../../common/AlertModal';
+import Utils from '../../common/Utils';
+import ErrorSummary from '../../Form/ErrorSummary';
+import InputRow from '../../Form/InputRow';
+import { ICodelistQuestion } from '../../models/ICodelistQuestion';
+import { IVariant } from '../../models/IVariant';
+import { Need } from '../../models/Need';
+import { IAnswerBase, IConfigBase, IQuestionBase } from '../../models/Question';
+import QuestionEnum from '../../models/QuestionEnum';
+import { Requirement } from '../../models/Requirement';
 import {
   deleteCodelist,
   editCodelist,
   putProjectThunk
 } from '../../store/reducers/project-reducer';
 import { RootState } from '../../store/store';
-import Utils from '../../common/Utils';
-import { Need } from '../../models/Need';
-import { Requirement } from '../../models/Requirement';
-import { IVariant } from '../../models/IVariant';
-import { ICodelistQuestion } from '../../models/ICodelistQuestion';
-import InputRow from '../../Form/InputRow';
-import AlertModal from '../../common/AlertModal';
-import ErrorSummary from '../../Form/ErrorSummary';
-import QuestionEnum from '../../models/QuestionEnum';
-import { IAnswerBase, IConfigBase, IQuestionBase } from '../../models/Question';
 
 type FormValues = {
   title: string;

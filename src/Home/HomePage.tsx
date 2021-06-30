@@ -1,16 +1,15 @@
 import React, { ReactElement, useEffect } from 'react';
-import Container from 'react-bootstrap/Container';
-import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
+import Container from 'react-bootstrap/Container';
 import ListGroup from 'react-bootstrap/ListGroup';
+import Row from 'react-bootstrap/Row';
+import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-
-import { useTranslation } from 'react-i18next';
 import SearchBar from '../SearchBar/SearchBar';
-import FilteredList from './Components/FilteredList';
 import { getBanksThunk } from '../store/reducers/bank-reducer';
 import { RootState } from '../store/store';
+import FilteredList from './Components/FilteredList';
 
 export default function HomePage(): ReactElement {
   const dispatch = useDispatch();
@@ -52,6 +51,11 @@ export default function HomePage(): ReactElement {
             <ListGroup.Item className="mt-1 ">
               <Link to="/speceditor">
                 <h5>{t('create specification')}</h5>
+              </Link>
+            </ListGroup.Item>
+            <ListGroup.Item className="mt-1 ">
+              <Link to="/speceditor">
+                <h5>Create Spesification</h5>
               </Link>
             </ListGroup.Item>
           </ListGroup>

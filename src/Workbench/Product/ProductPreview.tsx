@@ -1,22 +1,21 @@
 import React, { ReactElement } from 'react';
-
-import { useDispatch, useSelector } from 'react-redux';
 import Badge from 'react-bootstrap/Badge';
 import ListGroup from 'react-bootstrap/ListGroup';
 import Row from 'react-bootstrap/Row';
 import { BsArrowReturnRight, BsPencil } from 'react-icons/bs';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { RootState } from '../../store/store';
 import Utils from '../../common/Utils';
 import { Bank } from '../../models/Bank';
-import { Product } from '../../models/Product';
-import { Need } from '../../models/Need';
-import { Requirement } from '../../models/Requirement';
 import { IVariant } from '../../models/IVariant';
-import styles from './ProductPreview.module.scss';
+import { Need } from '../../models/Need';
+import { Nestable } from '../../models/Nestable';
+import { Product } from '../../models/Product';
+import { Requirement } from '../../models/Requirement';
 import { selectNeed } from '../../store/reducers/selectedNeed-reducer';
 import { selectRequirement } from '../../store/reducers/selectedRequirement-reducer';
-import { Nestable } from '../../models/Nestable';
+import { RootState } from '../../store/store';
+import styles from './ProductPreview.module.scss';
 
 export default function ProductPreview(): ReactElement {
   const dispatch = useDispatch();
