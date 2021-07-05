@@ -66,26 +66,21 @@ export default function PeriodDateForm({
         <Form.Group as={Row}>
           <Col>
             <Controller
-              control={control}
               name={
                 `variants.${vIndex}.questions.${aIndex}.config.fromDate` as const
               }
-              render={({ field }) => (
+              control={control}
+              render={({ field: { ref, ...rest } }) => (
                 <KeyboardDatePicker
-                  {...field}
-                  disableToolbar
-                  variant="inline"
-                  format="MM/dd/yyyy"
                   margin="normal"
-                  id="date-picker-inline"
+                  id="date-picker-dialog"
+                  variant="inline"
+                  format="dd/MM/yyyy"
                   label={t('From date')}
-                  defaultValue={new Date(item.config.fromDate)}
                   KeyboardButtonProps={{
                     'aria-label': 'change date'
                   }}
-                  onChange={(_, value) => {
-                    field.onChange(value);
-                  }}
+                  {...rest}
                 />
               )}
             />
@@ -94,26 +89,21 @@ export default function PeriodDateForm({
         <Form.Group>
           <Col>
             <Controller
-              control={control}
               name={
                 `variants.${vIndex}.questions.${aIndex}.config.toDate` as const
               }
-              render={({ field }) => (
+              control={control}
+              render={({ field: { ref, ...rest } }) => (
                 <KeyboardDatePicker
-                  {...field}
-                  disableToolbar
-                  variant="inline"
-                  format="MM/dd/yyyy"
                   margin="normal"
-                  id="date-picker-inline"
+                  id="date-picker-dialog"
+                  variant="inline"
+                  format="dd/MM/yyyy"
                   label={t('To date')}
-                  defaultValue={new Date(item.config.toDate)}
                   KeyboardButtonProps={{
                     'aria-label': 'change date'
                   }}
-                  onChange={(_, value) => {
-                    field.onChange(value);
-                  }}
+                  {...rest}
                 />
               )}
             />
