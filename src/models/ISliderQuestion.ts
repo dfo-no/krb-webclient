@@ -7,7 +7,7 @@ export interface ISliderQuestion
 }
 
 export interface ISliderAnswer extends IAnswerBase {
-  value: number | null;
+  value: number;
 }
 export interface ISliderConfig extends IConfigBase {
   step: number;

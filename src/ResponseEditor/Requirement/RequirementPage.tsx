@@ -163,14 +163,12 @@ export default function RequirementPage(): ReactElement {
         children = childrenHierarchy(element.children, 1);
       }
       return (
-        <>
-          <ListGroup.Item key={element.id} className="mt-2 ml-0 pl-0">
-            <b>{element.title}</b>
-            {element.requirements.length > 0 &&
-              requirementsAnswers(element.requirements)}
-            {element.children && element.children.length > 0 && children}
-          </ListGroup.Item>
-        </>
+        <ListGroup.Item key={element.id} className="mt-2 ml-0 pl-0">
+          <b>{element.title}</b>
+          {element.requirements.length > 0 &&
+            requirementsAnswers(element.requirements)}
+          {element.children && element.children.length > 0 && children}
+        </ListGroup.Item>
       );
     });
     return (

@@ -1,5 +1,6 @@
 import { joiResolver } from '@hookform/resolvers/joi';
 import { KeyboardDatePicker } from '@material-ui/pickers';
+import Joi from 'joi';
 import React, { ReactElement } from 'react';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
@@ -13,16 +14,25 @@ import ErrorSummary from '../../../Form/ErrorSummary';
 import { IPeriodDateQuestion } from '../../../models/IPeriodDateQuestion';
 import { IRequirementAnswer } from '../../../models/IRequirementAnswer';
 import ModelType from '../../../models/ModelType';
+import QuestionEnum from '../../../models/QuestionEnum';
 import {
   addAnswer,
   addProductAnswer
 } from '../../../store/reducers/spesification-reducer';
 import { RootState } from '../../../store/store';
-import { PeriodDateSchema } from '../../../Workbench/Requirement/RequirementEditor';
 
 interface IProps {
   parentAnswer: IRequirementAnswer;
 }
+
+export const PeriodDateSchema = Joi.object().keys({
+  id: Joi.string().required(),
+  type: Joi.string().equal(QuestionEnum.Q_PERIOD_DATE).required(),
+  config: Joi.object().keys({
+    fromDate: Joi.date().raw().required(),
+    toDate: Joi.date().raw().required()
+  })
+});
 
 export default function PeriodDateForm({ parentAnswer }: IProps): ReactElement {
   const {
@@ -36,6 +46,8 @@ export default function PeriodDateForm({ parentAnswer }: IProps): ReactElement {
       ...(parentAnswer.alternative as IPeriodDateQuestion)
     }
   });
+
+  const item = parentAnswer.alternative as IPeriodDateQuestion;
   const { productId } = useSelector(
     (state: RootState) => state.selectedSpecProduct
   );
@@ -46,11 +58,18 @@ export default function PeriodDateForm({ parentAnswer }: IProps): ReactElement {
     return <p>No product selected</p>;
   }
 
-  const saveValues = (post: IPeriodDateQuestion) => {
+  const saveValues = (post: any) => {
     const newAnswer = {
       ...parentAnswer
     };
-    newAnswer.alternative = post;
+    const newAns = {
+      ...post
+    };
+    const newFromDate = post.config.fromDate.toISOString();
+    const newToDate = post.config.toDate.toISOString();
+    newAns.config.fromDate = newFromDate;
+    newAns.config.toDate = newToDate;
+    newAnswer.alternative = newAns;
     if (newAnswer.type === ModelType.requirement)
       dispatch(addAnswer({ answer: newAnswer }));
     if (newAnswer.type === ModelType.product && productId !== null)
@@ -78,23 +97,20 @@ export default function PeriodDateForm({ parentAnswer }: IProps): ReactElement {
           <Form.Group as={Row}>
             <Col sm="4">
               <Controller
-                control={control}
                 name={`config.fromDate` as const}
-                render={({ field }) => (
+                control={control}
+                defaultValue={item.config.fromDate}
+                render={({ field: { ref, ...rest } }) => (
                   <KeyboardDatePicker
-                    {...field}
-                    disableToolbar
-                    variant="inline"
-                    format="MM/dd/yyyy"
                     margin="normal"
-                    id="date-picker-inline"
-                    label={t('From date')}
+                    id="date-picker-dialog"
+                    variant="inline"
+                    format="dd/MM/yyyy"
+                    label={t('Select date')}
                     KeyboardButtonProps={{
                       'aria-label': 'change date'
                     }}
-                    onChange={(_, value) => {
-                      field.onChange(value);
-                    }}
+                    {...rest}
                   />
                 )}
               />
@@ -103,23 +119,20 @@ export default function PeriodDateForm({ parentAnswer }: IProps): ReactElement {
           <Form.Group>
             <Col>
               <Controller
-                control={control}
                 name={`config.toDate` as const}
-                render={({ field }) => (
+                control={control}
+                defaultValue={item.config.toDate}
+                render={({ field: { ref, ...rest } }) => (
                   <KeyboardDatePicker
-                    {...field}
-                    disableToolbar
-                    variant="inline"
-                    format="MM/dd/yyyy"
                     margin="normal"
-                    id="date-picker-inline"
-                    label={t('To date')}
+                    id="date-picker-dialog"
+                    variant="inline"
+                    format="dd/MM/yyyy"
+                    label={t('Select date')}
                     KeyboardButtonProps={{
                       'aria-label': 'change date'
                     }}
-                    onChange={(_, value) => {
-                      field.onChange(value);
-                    }}
+                    {...rest}
                   />
                 )}
               />
