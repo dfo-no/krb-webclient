@@ -1,23 +1,24 @@
-import React, { ReactElement } from 'react';
+import { joiResolver } from '@hookform/resolvers/joi';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Switch from '@material-ui/core/Switch';
+import Joi from 'joi';
+import React, { ReactElement, useState } from 'react';
+import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import Form from 'react-bootstrap/Form';
-import { joiResolver } from '@hookform/resolvers/joi';
-import { useForm, Controller } from 'react-hook-form';
-import { useDispatch, useSelector } from 'react-redux';
-import Button from 'react-bootstrap/Button';
+import { Controller, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import Joi from 'joi';
-import Switch from '@material-ui/core/Switch';
+import { useDispatch, useSelector } from 'react-redux';
+import ErrorSummary from '../../Form/ErrorSummary';
+import { ICheckboxQuestion } from '../../models/ICheckboxQuestion';
 import { IRequirementAnswer } from '../../models/IRequirementAnswer';
+import ModelType from '../../models/ModelType';
+import QuestionEnum from '../../models/QuestionEnum';
 import {
   addProductAnswer,
   addRequirementAnswer
 } from '../../store/reducers/response-reducer';
 import { RootState } from '../../store/store';
-import ErrorSummary from '../../Form/ErrorSummary';
-import QuestionEnum from '../../models/QuestionEnum';
-import { ICheckboxQuestion } from '../../models/ICheckboxQuestion';
-import ModelType from '../../models/ModelType';
 
 interface IProps {
   parentAnswer: IRequirementAnswer;
@@ -68,6 +69,7 @@ export default function ICheckBoxAnswer({
     register,
     control,
     handleSubmit,
+    getValues,
     formState: { errors }
   } = useForm<ICheckboxQuestion>({
     resolver: joiResolver(ResponseCheckBoxSchema),
@@ -75,9 +77,15 @@ export default function ICheckBoxAnswer({
       ...defaultVal
     }
   });
+
+  /* const [checked, setChecked] = useState(
+    defaultVal ? defaultVal.answer?.value : false
+  ); */
+
   const dispatch = useDispatch();
   const { t } = useTranslation();
   const saveValues = (post: ICheckboxQuestion) => {
+    console.log(post);
     const newAnswer = {
       ...parentAnswer
     };
@@ -108,18 +116,18 @@ export default function ICheckBoxAnswer({
             isInvalid={!!errors.type}
           />
           <Controller
-            control={control}
             name={`answer.value` as const}
+            control={control}
+            defaultValue={getValues(`answer.value`)}
             render={({ field }) => (
               <Switch
                 {...field}
-                checked={field.value}
-                onChange={(_, value) => {
-                  field.onChange(value);
-                }}
+                onChange={(e) => field.onChange(e.target.checked)}
+                checked={field.value ? field.value : false}
               />
             )}
           />
+
           <Button type="submit">{t('save')}</Button>
           <ErrorSummary errors={errors} />
         </Form>
