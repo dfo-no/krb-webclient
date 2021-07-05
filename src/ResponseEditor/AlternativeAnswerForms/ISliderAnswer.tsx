@@ -1,24 +1,24 @@
-import React, { ReactElement } from 'react';
-import Card from 'react-bootstrap/Card';
-import Form from 'react-bootstrap/Form';
 import { joiResolver } from '@hookform/resolvers/joi';
-import { useForm, Controller } from 'react-hook-form';
-import { useDispatch, useSelector } from 'react-redux';
-import Button from 'react-bootstrap/Button';
-import { useTranslation } from 'react-i18next';
 import Slider from '@material-ui/core/Slider';
 import Joi from 'joi';
-import { ISliderQuestion } from '../../models/ISliderQuestion';
+import React, { ReactElement, useState } from 'react';
+import Button from 'react-bootstrap/Button';
+import Card from 'react-bootstrap/Card';
+import Form from 'react-bootstrap/Form';
+import { Controller, useForm } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
+import { useDispatch, useSelector } from 'react-redux';
+import ErrorSummary from '../../Form/ErrorSummary';
+import { IOption } from '../../models/IOption';
 import { IRequirementAnswer } from '../../models/IRequirementAnswer';
+import { ISliderQuestion } from '../../models/ISliderQuestion';
+import ModelType from '../../models/ModelType';
+import QuestionEnum from '../../models/QuestionEnum';
 import {
-  addRequirementAnswer,
-  addProductAnswer
+  addProductAnswer,
+  addRequirementAnswer
 } from '../../store/reducers/response-reducer';
 import { RootState } from '../../store/store';
-import ErrorSummary from '../../Form/ErrorSummary';
-import QuestionEnum from '../../models/QuestionEnum';
-import { IOption } from '../../models/IOption';
-import ModelType from '../../models/ModelType';
 
 interface IProps {
   parentAnswer: IRequirementAnswer;
@@ -63,11 +63,17 @@ export default function ISliderAnswer({ parentAnswer }: IProps): ReactElement {
   const defaultVal =
     index === -1
       ? (parentAnswer.alternative as ISliderQuestion)
-      : (response.requirementAnswers[index].alternative as ISliderQuestion);
+      : (parentAnswer.type === ModelType.requirement &&
+          (response.requirementAnswers[index]
+            .alternative as ISliderQuestion)) ||
+        (parentAnswer.type === ModelType.product &&
+          (response.products[0].requirementAnswers[index]
+            .alternative as ISliderQuestion));
   const {
     register,
     control,
     handleSubmit,
+    getValues,
     formState: { errors }
   } = useForm<ISliderQuestion>({
     resolver: joiResolver(ResponseSliderSchema),
@@ -75,7 +81,9 @@ export default function ISliderAnswer({ parentAnswer }: IProps): ReactElement {
       ...defaultVal
     }
   });
+
   const sliderQuestion = parentAnswer.alternative as ISliderQuestion;
+
   const dispatch = useDispatch();
   const { t } = useTranslation();
 
@@ -102,9 +110,6 @@ export default function ISliderAnswer({ parentAnswer }: IProps): ReactElement {
     }
   ];
 
-  function valueText(input: number) {
-    return `${input}${sliderQuestion.config.unit}`;
-  }
   return (
     <Card className="m-3 ">
       <Card.Header>
@@ -151,20 +156,19 @@ export default function ISliderAnswer({ parentAnswer }: IProps): ReactElement {
           <Controller
             control={control}
             name={`answer.value` as const}
+            defaultValue={
+              getValues(`answer.value` as const) ? (`answer.value` as const) : 0
+            }
             render={({ field }) => (
               <Slider
-                className=""
                 {...field}
-                getAriaValueText={valueText}
-                aria-labelledby="discrete-slider-always"
+                onChange={(_, value) => {
+                  field.onChange(value);
+                }}
                 step={sliderQuestion.config.step}
                 min={sliderQuestion.config.min}
                 max={sliderQuestion.config.max}
                 marks={marks}
-                onChange={(_, value) => {
-                  field.onChange(value);
-                }}
-                valueLabelDisplay="auto"
               />
             )}
           />

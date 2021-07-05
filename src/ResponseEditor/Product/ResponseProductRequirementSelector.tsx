@@ -1,24 +1,25 @@
 import React, { ReactElement } from 'react';
+import Card from 'react-bootstrap/Card';
 import ListGroup from 'react-bootstrap/ListGroup';
 import Row from 'react-bootstrap/Row';
-import Card from 'react-bootstrap/Card';
 import { BsArrowReturnRight } from 'react-icons/bs';
 import { useSelector } from 'react-redux';
 import Utils from '../../common/Utils';
 import { Bank } from '../../models/Bank';
+import { IRequirementAnswer } from '../../models/IRequirementAnswer';
 import { Need } from '../../models/Need';
 import { Nestable } from '../../models/Nestable';
-import { Requirement } from '../../models/Requirement';
-import { RootState } from '../../store/store';
-import styles from '../Requirement/RequirementView.module.scss';
-import ISliderAnswer from '../AlternativeAnswerForms/ISliderAnswer';
-import { IRequirementAnswer } from '../../models/IRequirementAnswer';
-import ITextAnswer from '../AlternativeAnswerForms/TextAnswerForm';
-import ICheckBoxAnswer from '../AlternativeAnswerForms/ICheckBoxAnswer';
 import QuestionEnum from '../../models/QuestionEnum';
+import { Requirement } from '../../models/Requirement';
+import { ResponseProduct } from '../../models/ResponseProduct';
 import { SpecificationProduct } from '../../models/SpecificationProduct';
+import { RootState } from '../../store/store';
+import ICheckBoxAnswer from '../AlternativeAnswerForms/ICheckBoxAnswer';
 import ICodelistAnswer from '../AlternativeAnswerForms/ICodeListAnswer';
 import PeriodDateAnswer from '../AlternativeAnswerForms/IPeriodDateAnswer';
+import ISliderAnswer from '../AlternativeAnswerForms/ISliderAnswer';
+import ITextAnswer from '../AlternativeAnswerForms/TextAnswerForm';
+import styles from '../Requirement/RequirementView.module.scss';
 
 interface InputProps {
   product: SpecificationProduct;
@@ -38,6 +39,10 @@ export default function ResponseProductRequirementSelector({
     )
   );
 
+  const responseProductIndex = response.products.findIndex(
+    (responseProduct: ResponseProduct) =>
+      responseProduct.originProduct.id === product.id
+  );
   function checkIfNeedHasChildWithRequirements(
     listofneed: Nestable<Need>[]
   ): boolean {
@@ -90,13 +95,27 @@ export default function ResponseProductRequirementSelector({
           response.spesification.products[productIndex].requirementAnswers[0];
         req.variants.forEach((variant) => {
           if (
-            response.spesification.products[
-              productIndex
-            ].requirementAnswers.find(
+            response.products[responseProductIndex].requirementAnswers.find(
               (answer) => answer.reqTextId === variant.id
             )
           ) {
+            const index = response.products[
+              responseProductIndex
+            ].requirementAnswers.findIndex(
+              (answer) => answer.reqTextId === variant.id
+            );
+            selectedAnswer =
+              response.products[responseProductIndex].requirementAnswers[index];
             requirementText = variant.requirementText;
+          } else {
+            if (
+              response.spesification.products[
+                productIndex
+              ].requirementAnswers.find(
+                (answer) => answer.reqTextId === variant.id
+              )
+            )
+              requirementText = variant.requirementText;
             const index = response.spesification.products[
               productIndex
             ].requirementAnswers.findIndex(
@@ -156,7 +175,7 @@ export default function ResponseProductRequirementSelector({
         n += 1;
         children = childrenHierarchy(element.children, n);
       }
-      if (!checkNeed(element)) return <></>;
+      if (!checkNeed(element)) return <> </>;
       return (
         <div key={element.id} className={` ${styles[cssClass]} pt-0`}>
           <Row>
@@ -180,14 +199,12 @@ export default function ResponseProductRequirementSelector({
         children = childrenHierarchy(element.children, 1);
       }
       return (
-        <>
-          <ListGroup.Item key={element.id} className="mt-2 ml-0 pl-0">
-            <b>{element.title}</b>
-            {element.requirements.length > 0 &&
-              requirementsAnswers(element.requirements)}
-            {element.children && element.children.length > 0 && children}
-          </ListGroup.Item>
-        </>
+        <ListGroup.Item key={element.id} className="mt-2 ml-0 pl-0">
+          <b>{element.title}</b>
+          {element.requirements.length > 0 &&
+            requirementsAnswers(element.requirements)}
+          {element.children && element.children.length > 0 && children}
+        </ListGroup.Item>
       );
     });
     return (

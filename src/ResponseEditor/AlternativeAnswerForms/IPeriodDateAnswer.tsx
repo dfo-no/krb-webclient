@@ -29,8 +29,8 @@ export const PeriodDateSchema = Joi.object().keys({
   id: Joi.string().required(),
   type: Joi.string().equal(QuestionEnum.Q_PERIOD_DATE).required(),
   config: Joi.object().keys({
-    fromDate: Joi.string().trim().allow('').required(),
-    toDate: Joi.string().trim().allow('').required()
+    fromDate: Joi.date().raw().required(),
+    toDate: Joi.date().raw().required()
   }),
   answer: Joi.object().keys({
     date: Joi.date().raw().required()
