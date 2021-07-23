@@ -19,8 +19,10 @@ import PeriodDateAnswer from '../AlternativeAnswerForms/IPeriodDateAnswer';
 import ISliderAnswer from '../AlternativeAnswerForms/ISliderAnswer';
 import ITextAnswer from '../AlternativeAnswerForms/TextAnswerForm';
 import CheckBoxInfo from '../InfoanswerFields/CheckBoxInfo';
+import CodelistInfo from '../InfoanswerFields/CodelistInfo';
 import DateInfo from '../InfoanswerFields/DateInfo';
 import SliderInfo from '../InfoanswerFields/SliderInfo';
+import TextInfo from '../InfoanswerFields/TextInfo';
 import styles from './RequirementView.module.scss';
 
 export default function RequirementPage(): ReactElement {
@@ -155,6 +157,22 @@ export default function RequirementPage(): ReactElement {
             {req.requirement_Type === RequirementType.info &&
               req.variants[0].questions[0].type === QuestionEnum.Q_CHECKBOX && (
                 <CheckBoxInfo
+                  parent_requirement={req}
+                  answer={selectedAnswer}
+                  key={selectedAnswer.id}
+                />
+              )}
+            {req.requirement_Type === RequirementType.info &&
+              req.variants[0].questions[0].type === QuestionEnum.Q_CODELIST && (
+                <CodelistInfo
+                  parent_requirement={req}
+                  answer={selectedAnswer}
+                  key={selectedAnswer.id}
+                />
+              )}
+            {req.requirement_Type === RequirementType.info &&
+              req.variants[0].questions[0].type === QuestionEnum.Q_TEXT && (
+                <TextInfo
                   parent_requirement={req}
                   answer={selectedAnswer}
                   key={selectedAnswer.id}

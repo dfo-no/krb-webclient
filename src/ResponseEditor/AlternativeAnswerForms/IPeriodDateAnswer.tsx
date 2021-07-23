@@ -84,7 +84,7 @@ export default function PeriodDateAnswer({
   return (
     <Card className="mb-3">
       <Card.Body>
-        <h6>Alternative: Value</h6>
+        <h6>Question: Date </h6>
         <Form onSubmit={handleSubmit(saveValues)}>
           <Form.Control
             as="input"
