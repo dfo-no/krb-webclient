@@ -6,8 +6,8 @@ import { RootState } from '../../store/store';
 import FileInputForm from './AlternativeForms/FileInputForm';
 import CodelistForm from './AlternativeForms/ICodeListForm';
 import ValueForm from './AlternativeForms/ISliderForm';
-import PeriodDateForm from './AlternativeForms/PeriodTimeForm';
 import NoProperties from './AlternativeForms/NoProperties';
+import PeriodDateForm from './AlternativeForms/PeriodTimeForm';
 import TextAlternativeForm from './AlternativeForms/TextAlternativeForm';
 
 export default function EditAlternative(): ReactElement {
@@ -25,7 +25,6 @@ export default function EditAlternative(): ReactElement {
   );
 
   const item = spec.requirementAnswers[itemIndex];
-
   return (
     <Container fluid className="mt-4">
       <h4>Edit Alternative</h4>

@@ -1,23 +1,23 @@
+import { joiResolver } from '@hookform/resolvers/joi';
+import Switch from '@material-ui/core/Switch';
 import React, { ReactElement } from 'react';
+import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import Form from 'react-bootstrap/Form';
-import { joiResolver } from '@hookform/resolvers/joi';
 import { Controller, useForm } from 'react-hook-form';
-import { useDispatch, useSelector } from 'react-redux';
-import Button from 'react-bootstrap/Button';
 import { useTranslation } from 'react-i18next';
-import Switch from '@material-ui/core/Switch';
+import { useDispatch, useSelector } from 'react-redux';
+import ErrorSummary from '../../../Form/ErrorSummary';
+import { Codelist } from '../../../models/Codelist';
+import { ICodelistQuestion } from '../../../models/ICodelistQuestion';
 import { IRequirementAnswer } from '../../../models/IRequirementAnswer';
+import ModelType from '../../../models/ModelType';
 import {
   addAnswer,
   addProductAnswer
 } from '../../../store/reducers/spesification-reducer';
 import { RootState } from '../../../store/store';
-import ErrorSummary from '../../../Form/ErrorSummary';
 import { CodelistSchema } from '../../../Workbench/Requirement/RequirementEditor';
-import { ICodelistQuestion } from '../../../models/ICodelistQuestion';
-import { Codelist } from '../../../models/Codelist';
-import ModelType from '../../../models/ModelType';
 
 interface IProps {
   parentAnswer: IRequirementAnswer;

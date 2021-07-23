@@ -1,6 +1,6 @@
 import { joiResolver } from '@hookform/resolvers/joi';
 import { KeyboardDatePicker } from '@material-ui/pickers';
-import Joi from 'joi';
+import Joi, { string } from 'joi';
 import React, { ReactElement } from 'react';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
@@ -14,6 +14,11 @@ import ErrorSummary from '../../../Form/ErrorSummary';
 import { IPeriodDateQuestion } from '../../../models/IPeriodDateQuestion';
 import { IRequirementAnswer } from '../../../models/IRequirementAnswer';
 import ModelType from '../../../models/ModelType';
+import {
+  IAnswerBase,
+  IConfigBase,
+  IQuestionBase
+} from '../../../models/Question';
 import QuestionEnum from '../../../models/QuestionEnum';
 import {
   addAnswer,
@@ -29,8 +34,8 @@ export const PeriodDateSchema = Joi.object().keys({
   id: Joi.string().required(),
   type: Joi.string().equal(QuestionEnum.Q_PERIOD_DATE).required(),
   config: Joi.object().keys({
-    fromDate: Joi.date().raw().required(),
-    toDate: Joi.date().raw().required()
+    fromDate: Joi.string().trim().allow('').required(),
+    toDate: Joi.string().trim().allow('').required()
   })
 });
 
@@ -58,18 +63,11 @@ export default function PeriodDateForm({ parentAnswer }: IProps): ReactElement {
     return <p>No product selected</p>;
   }
 
-  const saveValues = (post: any) => {
+  const saveValues = (post: IPeriodDateQuestion) => {
     const newAnswer = {
       ...parentAnswer
     };
-    const newAns = {
-      ...post
-    };
-    const newFromDate = post.config.fromDate.toISOString();
-    const newToDate = post.config.toDate.toISOString();
-    newAns.config.fromDate = newFromDate;
-    newAns.config.toDate = newToDate;
-    newAnswer.alternative = newAns;
+    newAnswer.alternative = post;
     if (newAnswer.type === ModelType.requirement)
       dispatch(addAnswer({ answer: newAnswer }));
     if (newAnswer.type === ModelType.product && productId !== null)
@@ -99,7 +97,6 @@ export default function PeriodDateForm({ parentAnswer }: IProps): ReactElement {
               <Controller
                 name={`config.fromDate` as const}
                 control={control}
-                defaultValue={item.config.fromDate}
                 render={({ field: { ref, ...rest } }) => (
                   <KeyboardDatePicker
                     margin="normal"
@@ -121,7 +118,6 @@ export default function PeriodDateForm({ parentAnswer }: IProps): ReactElement {
               <Controller
                 name={`config.toDate` as const}
                 control={control}
-                defaultValue={item.config.toDate}
                 render={({ field: { ref, ...rest } }) => (
                   <KeyboardDatePicker
                     margin="normal"
