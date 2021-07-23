@@ -15,6 +15,7 @@ import ModelType from '../../models/ModelType';
 import { Need } from '../../models/Need';
 import QuestionEnum from '../../models/QuestionEnum';
 import { Requirement } from '../../models/Requirement';
+import RequirementType from '../../models/RequirementType';
 import {
   editRequirementInNeed,
   getProjectsThunk,
@@ -109,19 +110,38 @@ const variantSchema = Joi.object().keys({
       then: Joi.array().items(Joi.string()).min(1).required()
     })
     .required(),
-  questions: Joi.array().items(
-    Joi.alternatives().conditional('.type', {
-      switch: [
-        { is: QuestionEnum.Q_SLIDER, then: SliderSchema },
-        { is: QuestionEnum.Q_CODELIST, then: CodelistSchema },
-        { is: QuestionEnum.Q_TEXT, then: TextSchema },
-        { is: QuestionEnum.Q_PERIOD_DATE, then: PeriodDateSchema },
-        { is: QuestionEnum.Q_TIME, then: TimeSchema },
-        { is: QuestionEnum.Q_CHECKBOX, then: CheckboxSchema },
-        { is: QuestionEnum.Q_FILEUPLOAD, then: FileUploadSchema }
-      ]
+  questions: Joi.array()
+    .when('requirement_Type', {
+      is: RequirementType.info,
+      then: Joi.array()
+        .items(
+          Joi.alternatives().conditional('.type', {
+            switch: [
+              { is: QuestionEnum.Q_SLIDER, then: SliderSchema },
+              { is: QuestionEnum.Q_CODELIST, then: CodelistSchema },
+              { is: QuestionEnum.Q_TEXT, then: TextSchema },
+              { is: QuestionEnum.Q_PERIOD_DATE, then: PeriodDateSchema },
+              { is: QuestionEnum.Q_TIME, then: TimeSchema },
+              { is: QuestionEnum.Q_CHECKBOX, then: CheckboxSchema },
+              { is: QuestionEnum.Q_FILEUPLOAD, then: FileUploadSchema }
+            ]
+          })
+        )
+        .max(1)
     })
-  )
+    .items(
+      Joi.alternatives().conditional('.type', {
+        switch: [
+          { is: QuestionEnum.Q_SLIDER, then: SliderSchema },
+          { is: QuestionEnum.Q_CODELIST, then: CodelistSchema },
+          { is: QuestionEnum.Q_TEXT, then: TextSchema },
+          { is: QuestionEnum.Q_PERIOD_DATE, then: PeriodDateSchema },
+          { is: QuestionEnum.Q_TIME, then: TimeSchema },
+          { is: QuestionEnum.Q_CHECKBOX, then: CheckboxSchema },
+          { is: QuestionEnum.Q_FILEUPLOAD, then: FileUploadSchema }
+        ]
+      })
+    )
 });
 
 const requirementSchema = Joi.object().keys({
@@ -129,8 +149,14 @@ const requirementSchema = Joi.object().keys({
   title: Joi.string().max(100).required(),
   description: Joi.string().allow(null, '').required(),
   needId: Joi.string().required(),
-  variants: Joi.array().items(variantSchema),
   kind: Joi.string().required(),
+  variants: Joi.array()
+    .when('requirement_Type', {
+      is: RequirementType.info,
+      then: Joi.array().items(variantSchema).max(1)
+    })
+    .items(variantSchema)
+    .required(),
   requirement_Type: Joi.string().required(),
   type: Joi.string().equal(ModelType.requirement).required()
 });

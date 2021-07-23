@@ -1,18 +1,19 @@
 import React, { ReactElement, useState } from 'react';
 import { Card } from 'react-bootstrap';
 import Col from 'react-bootstrap/Col';
-import { useDispatch, useSelector } from 'react-redux';
-
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
+import { useDispatch, useSelector } from 'react-redux';
 import { Requirement } from '../../models/Requirement';
-import RequirementAnswer from './RequirementAnswer';
+import RequirementType from '../../models/RequirementType';
 import {
   addRequirement,
   deleteAnswer,
   removeRequirement
 } from '../../store/reducers/spesification-reducer';
 import { RootState } from '../../store/store';
+import InfoAnswer from './InfoAnswer';
+import RequirementAnswer from './RequirementAnswer';
 
 type InputProps = {
   requirement: Requirement;
@@ -63,7 +64,17 @@ export default function SpesificationRequirement({
         </Col>
         <Col>
           {!isSelected && <p>{requirement.title}</p>}
-          {isSelected && <RequirementAnswer requirement={requirement} />}
+          {isSelected &&
+            requirement.requirement_Type === RequirementType.info && (
+              <InfoAnswer key={requirement.id} requirement={requirement} />
+            )}
+          {isSelected &&
+            requirement.requirement_Type === RequirementType.requirement && (
+              <RequirementAnswer
+                key={requirement.id}
+                requirement={requirement}
+              />
+            )}
         </Col>
       </Row>
     </Card>

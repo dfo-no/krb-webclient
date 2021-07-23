@@ -11,12 +11,16 @@ import { Need } from '../../models/Need';
 import { Nestable } from '../../models/Nestable';
 import QuestionEnum from '../../models/QuestionEnum';
 import { Requirement } from '../../models/Requirement';
+import RequirementType from '../../models/RequirementType';
 import { RootState } from '../../store/store';
 import ICheckBoxAnswer from '../AlternativeAnswerForms/ICheckBoxAnswer';
 import ICodelistAnswer from '../AlternativeAnswerForms/ICodeListAnswer';
 import PeriodDateAnswer from '../AlternativeAnswerForms/IPeriodDateAnswer';
 import ISliderAnswer from '../AlternativeAnswerForms/ISliderAnswer';
 import ITextAnswer from '../AlternativeAnswerForms/TextAnswerForm';
+import CheckBoxInfo from '../InfoanswerFields/CheckBoxInfo';
+import DateInfo from '../InfoanswerFields/DateInfo';
+import SliderInfo from '../InfoanswerFields/SliderInfo';
 import styles from './RequirementView.module.scss';
 
 export default function RequirementPage(): ReactElement {
@@ -92,39 +96,71 @@ export default function RequirementPage(): ReactElement {
         });
 
         return (
-          <Card key={req.id} className="ml-3 mb-3">
-            <Card.Body>{requirementText}</Card.Body>
-            {selectedAnswer.alternative.type === QuestionEnum.Q_SLIDER && (
-              <ISliderAnswer
-                key={selectedAnswer.id}
-                parentAnswer={selectedAnswer}
-              />
+          <>
+            {req.requirement_Type === RequirementType.requirement && (
+              <Card key={req.id} className="ml-3 mb-3">
+                <Card.Body>{requirementText}</Card.Body>
+                {selectedAnswer.alternative.type === QuestionEnum.Q_SLIDER && (
+                  <ISliderAnswer
+                    key={selectedAnswer.id}
+                    parentAnswer={selectedAnswer}
+                  />
+                )}
+                {selectedAnswer.alternative.type === QuestionEnum.Q_TEXT && (
+                  <ITextAnswer
+                    key={selectedAnswer.id}
+                    parentAnswer={selectedAnswer}
+                  />
+                )}
+                {selectedAnswer.alternative.type ===
+                  QuestionEnum.Q_CHECKBOX && (
+                  <ICheckBoxAnswer
+                    key={selectedAnswer.id}
+                    parentAnswer={selectedAnswer}
+                  />
+                )}
+                {selectedAnswer.alternative.type ===
+                  QuestionEnum.Q_CODELIST && (
+                  <ICodelistAnswer
+                    key={selectedAnswer.id}
+                    parentAnswer={selectedAnswer}
+                  />
+                )}
+                {selectedAnswer.alternative.type ===
+                  QuestionEnum.Q_PERIOD_DATE && (
+                  <PeriodDateAnswer
+                    key={selectedAnswer.id}
+                    parentAnswer={selectedAnswer}
+                  />
+                )}
+              </Card>
             )}
-            {selectedAnswer.alternative.type === QuestionEnum.Q_TEXT && (
-              <ITextAnswer
-                key={selectedAnswer.id}
-                parentAnswer={selectedAnswer}
-              />
-            )}
-            {selectedAnswer.alternative.type === QuestionEnum.Q_CHECKBOX && (
-              <ICheckBoxAnswer
-                key={selectedAnswer.id}
-                parentAnswer={selectedAnswer}
-              />
-            )}
-            {selectedAnswer.alternative.type === QuestionEnum.Q_CODELIST && (
-              <ICodelistAnswer
-                key={selectedAnswer.id}
-                parentAnswer={selectedAnswer}
-              />
-            )}
-            {selectedAnswer.alternative.type === QuestionEnum.Q_PERIOD_DATE && (
-              <PeriodDateAnswer
-                key={selectedAnswer.id}
-                parentAnswer={selectedAnswer}
-              />
-            )}
-          </Card>
+            {req.requirement_Type === RequirementType.info &&
+              req.variants[0].questions[0].type === QuestionEnum.Q_SLIDER && (
+                <SliderInfo
+                  parent_requirement={req}
+                  answer={selectedAnswer}
+                  key={selectedAnswer.id}
+                />
+              )}
+            {req.requirement_Type === RequirementType.info &&
+              req.variants[0].questions[0].type ===
+                QuestionEnum.Q_PERIOD_DATE && (
+                <DateInfo
+                  parent_requirement={req}
+                  answer={selectedAnswer}
+                  key={selectedAnswer.id}
+                />
+              )}
+            {req.requirement_Type === RequirementType.info &&
+              req.variants[0].questions[0].type === QuestionEnum.Q_CHECKBOX && (
+                <CheckBoxInfo
+                  parent_requirement={req}
+                  answer={selectedAnswer}
+                  key={selectedAnswer.id}
+                />
+              )}
+          </>
         );
       }
       return null;

@@ -7,18 +7,20 @@ import Form from 'react-bootstrap/Form';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
-import ErrorSummary from '../../Form/ErrorSummary';
-import { ICodelistQuestion } from '../../models/ICodelistQuestion';
-import { IRequirementAnswer } from '../../models/IRequirementAnswer';
-import QuestionEnum from '../../models/QuestionEnum';
-import {
-  addProductAnswer,
-  addRequirementAnswer
-} from '../../store/reducers/response-reducer';
-import { RootState } from '../../store/store';
+import { v4 as uuidv4 } from 'uuid';
+import ErrorSummary from '../../../Form/ErrorSummary';
+import { ICodelistQuestion } from '../../../models/ICodelistQuestion';
+import { IRequirementAnswer } from '../../../models/IRequirementAnswer';
+import ModelType from '../../../models/ModelType';
+import QuestionEnum from '../../../models/QuestionEnum';
+import { QuestionType } from '../../../models/QuestionType';
+import { addAnswer } from '../../../store/reducers/spesification-reducer';
+import { RootState } from '../../../store/store';
 
 interface IProps {
-  parentAnswer: IRequirementAnswer;
+  question: QuestionType;
+  type: string;
+  reqTextId: string;
 }
 
 export const ResponseCodelistSchema = Joi.object().keys({
@@ -43,40 +45,45 @@ export const ResponseSingleCodelistSchema = Joi.object().keys({
     codes: Joi.array().items(Joi.string()).max(1).required()
   })
 });
-export default function ICodelistAnswer({
-  parentAnswer
-}: IProps): ReactElement {
-  const { response } = useSelector((state: RootState) => state.response);
-  let index: number;
-  const { productId } = useSelector(
-    (state: RootState) => state.selectedResponseProduct
-  );
-  const productIndex = response.products.findIndex((p) => p.id === productId);
-  const item = parentAnswer.alternative as ICodelistQuestion;
 
-  if (parentAnswer.type === 'requirement') {
-    index = response.requirementAnswers.findIndex(
-      (answer) => answer.reqTextId === parentAnswer.reqTextId
+export default function CodelistInfoAnswer({
+  question,
+  type,
+  reqTextId
+}: IProps): ReactElement {
+  const { spec } = useSelector((state: RootState) => state.specification);
+  const { productId } = useSelector(
+    (state: RootState) => state.selectedSpecProduct
+  );
+  let index: number;
+
+  const productIndex = spec.products.findIndex((p) => p.id === productId);
+
+  if (type === 'requirement') {
+    index = spec.requirementAnswers.findIndex(
+      (answer: IRequirementAnswer) => answer.alternative.id === question.id
     );
   } else {
     index =
-      response.products.length > 0
-        ? response.products[productIndex].requirementAnswers.findIndex(
-            (answer) => answer.reqTextId === parentAnswer.reqTextId
+      spec.products.length > 0
+        ? spec.products[productIndex].requirementAnswers.findIndex(
+            (answer: IRequirementAnswer) =>
+              answer.alternative.id === question.id
           )
         : -1;
   }
 
-  const defaultVal =
-    index === -1
-      ? (parentAnswer.alternative as ICodelistQuestion)
-      : (parentAnswer.type === 'requirement' &&
-          (response.requirementAnswers[index]
-            .alternative as ICodelistQuestion)) ||
-        (parentAnswer.type === 'product' &&
-          (response.products[0].requirementAnswers[index]
-            .alternative as ICodelistQuestion));
-  const resolver = item.config.multipleSelect
+  const setDefaultVal = () => {
+    if (index === -1) return question as ICodelistQuestion;
+    if (type === 'requirement')
+      return spec.requirementAnswers[index].alternative as ICodelistQuestion;
+    return spec.products[productIndex].requirementAnswers[index]
+      .alternative as ICodelistQuestion;
+  };
+
+  const defaultVal: ICodelistQuestion = setDefaultVal();
+
+  const resolver = defaultVal.config.multipleSelect
     ? ResponseCodelistSchema
     : ResponseSingleCodelistSchema;
 
@@ -90,25 +97,33 @@ export default function ICodelistAnswer({
       ...defaultVal
     }
   });
+
+  const codelistQuestion = question as ICodelistQuestion;
+
   const dispatch = useDispatch();
   const { t } = useTranslation();
-
   const saveValues = (post: ICodelistQuestion) => {
-    const newAnswer = {
-      ...parentAnswer
-    };
-    newAnswer.alternative = post;
-    if (newAnswer.type === 'requirement')
-      dispatch(addRequirementAnswer(newAnswer));
-    if (newAnswer.type === 'product' && productId !== null)
-      dispatch(addProductAnswer({ answer: newAnswer, productId }));
+    if (index === -1) {
+      const newAnswer: IRequirementAnswer = {
+        id: uuidv4(),
+        alternativeId: post.id,
+        weight: 1,
+        reqTextId,
+        alternative: post,
+        type: ModelType.requirement
+      };
+      dispatch(addAnswer({ answer: newAnswer }));
+    } else {
+      const answer = spec.requirementAnswers[index];
+      answer.alternative = post;
+      dispatch(addAnswer({ answer }));
+    }
   };
-
-  const codelistIndex = response.spesification.bank.codelist.findIndex(
-    (list) => list.id === item.config.codelist
+  const codelistIndex = spec.bank.codelist.findIndex(
+    (list) => list.id === codelistQuestion.config.codelist
   );
 
-  const codelist = response.spesification.bank.codelist[codelistIndex];
+  const codelist = spec.bank.codelist[codelistIndex];
   return (
     <Card className="m-3 ">
       <Card.Header>
