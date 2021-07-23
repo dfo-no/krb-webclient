@@ -24,6 +24,7 @@ import CheckBoxInfo from '../InfoanswerFields/CheckBoxInfo';
 import CodelistInfo from '../InfoanswerFields/CodelistInfo';
 import DateInfo from '../InfoanswerFields/DateInfo';
 import SliderInfo from '../InfoanswerFields/SliderInfo';
+import TextInfo from '../InfoanswerFields/TextInfo';
 import styles from '../Requirement/RequirementView.module.scss';
 
 interface InputProps {
@@ -200,6 +201,14 @@ export default function ResponseProductRequirementSelector({
             {req.requirement_Type === RequirementType.info &&
               req.variants[0].questions[0].type === QuestionEnum.Q_CODELIST && (
                 <CodelistInfo
+                  parent_requirement={req}
+                  answer={selectedAnswer}
+                  key={selectedAnswer.id}
+                />
+              )}
+            {req.requirement_Type === RequirementType.info &&
+              req.variants[0].questions[0].type === QuestionEnum.Q_TEXT && (
+                <TextInfo
                   parent_requirement={req}
                   answer={selectedAnswer}
                   key={selectedAnswer.id}
