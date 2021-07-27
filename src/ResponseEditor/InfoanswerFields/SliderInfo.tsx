@@ -17,8 +17,7 @@ export default function SliderInfo({
   const variant = parent_requirement.variants[0];
   return (
     <Container fluid className="mt-4">
-      <h5>Info</h5>
-      {`${variant.requirementText}: ${alternative.answer?.value} `}
+      {`${variant.requirementText}: ${alternative.answer?.value}  ${alternative.config.unit}`}
     </Container>
   );
 }

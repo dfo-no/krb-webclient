@@ -15,10 +15,11 @@ export default function CheckBoxInfo({
 }: IProps): ReactElement {
   const alternative = answer.alternative as ICheckboxQuestion;
   const variant = parent_requirement.variants[0];
+
+  const writtenValue = alternative.answer?.value === true ? 'Yes' : 'No';
   return (
     <Container fluid className="mt-4">
-      <h5>Info</h5>
-      {`${variant.requirementText}: ${alternative.answer?.value} `}
+      {`${variant.requirementText}: ${writtenValue} `}
     </Container>
   );
 }

@@ -43,7 +43,6 @@ export default function CodelistInfo({
   };
   return (
     <Container fluid className="mt-4">
-      <h5>Info</h5>
       {`${variant.requirementText}`}
       {codes()}
     </Container>
