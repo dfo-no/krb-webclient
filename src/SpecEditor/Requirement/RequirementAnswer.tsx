@@ -66,6 +66,8 @@ export default function RequirementAnswer({
   const [selectedAlternative, setSelectedAlternative] = useState<
     string | undefined
   >(savedAlternative !== undefined ? savedAlternative.id : undefined);
+
+  // MÅ settes til savedAlternatives weigth hvis det ikke er undefined, defaulter til standard
   const [weightType, setWeightType] = useState('standard');
   const { id } = useSelector((state: RootState) => state.selectedBank);
   const saveAnswer = (post: FormValue) => {
@@ -234,6 +236,9 @@ export default function RequirementAnswer({
           <b>Vektingstype: </b>
         </Row>
         <Row>
+          {
+            // Kan velge begge nå, må gjøres om så kun en kan velges, evt enum på type
+          }
           <Form.Check className="p-0" formNoValidate>
             <input
               type="radio"
