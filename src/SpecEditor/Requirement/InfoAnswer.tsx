@@ -14,7 +14,6 @@ export default function InfoAnswer({ requirement }: IProps): ReactElement {
   const question = requirement.variants[0].questions[0];
   return (
     <Container fluid className="mt-4">
-      <h6>Edit Info</h6>
       {question.type === QuestionEnum.Q_SLIDER && (
         <SliderInfoAnswer
           question={requirement.variants[0].questions[0]}

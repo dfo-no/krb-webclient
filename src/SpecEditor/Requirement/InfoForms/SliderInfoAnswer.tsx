@@ -4,6 +4,7 @@ import Joi from 'joi';
 import React, { ReactElement } from 'react';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
+import Col from 'react-bootstrap/esm/Col';
 import Form from 'react-bootstrap/Form';
 import { Controller, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
@@ -121,71 +122,71 @@ export default function ISliderInfoAnswer({
   ];
 
   return (
-    <Card className="m-3 ">
-      <Card.Header>
-        <h6>Question: Slider</h6>
-      </Card.Header>
-      <Card.Body>
-        <Form onSubmit={handleSubmit(saveValues)}>
-          <Form.Control
-            as="input"
-            type="hidden"
-            {...register('id')}
-            isInvalid={!!errors.id}
-          />
-          <Form.Control
-            as="input"
-            type="hidden"
-            {...register('type')}
-            isInvalid={!!errors.type}
-          />
-          <Form.Control
-            as="input"
-            type="hidden"
-            {...register('config.min')}
-            isInvalid={!!errors.config?.min}
-          />
-          <Form.Control
-            as="input"
-            type="hidden"
-            {...register('config.max')}
-            isInvalid={!!errors.config?.max}
-          />
-          <Form.Control
-            as="input"
-            type="hidden"
-            {...register('config.step')}
-            isInvalid={!!errors.config?.step}
-          />
-          <Form.Control
-            as="input"
-            type="hidden"
-            {...register('config.unit')}
-            isInvalid={!!errors.config?.unit}
-          />
-          <Controller
-            control={control}
-            name={`answer.value` as const}
-            defaultValue={
-              getValues(`answer.value` as const) ? (`answer.value` as const) : 0
-            }
-            render={({ field }) => (
-              <Slider
-                {...field}
-                onChange={(_, value) => {
-                  field.onChange(value);
-                }}
-                step={sliderQuestion.config.step}
-                min={sliderQuestion.config.min}
-                max={sliderQuestion.config.max}
-                marks={marks}
-              />
-            )}
-          />
-          <Button type="submit">{t('save')}</Button>
-          <ErrorSummary errors={errors} />
-        </Form>
-      </Card.Body>
-    </Card>
+    <Col className="p-0 m-0 w-50">
+      <p>Hvor langt unna kan lokalsjonen være? </p>
+      <Form className="mt-3" onSubmit={handleSubmit(saveValues)}>
+        <Form.Control
+          as="input"
+          type="hidden"
+          {...register('id')}
+          isInvalid={!!errors.id}
+        />
+        <Form.Control
+          as="input"
+          type="hidden"
+          {...register('type')}
+          isInvalid={!!errors.type}
+        />
+        <Form.Control
+          as="input"
+          type="hidden"
+          {...register('config.min')}
+          isInvalid={!!errors.config?.min}
+        />
+        <Form.Control
+          as="input"
+          type="hidden"
+          {...register('config.max')}
+          isInvalid={!!errors.config?.max}
+        />
+        <Form.Control
+          as="input"
+          type="hidden"
+          {...register('config.step')}
+          isInvalid={!!errors.config?.step}
+        />
+        <Form.Control
+          as="input"
+          type="hidden"
+          {...register('config.unit')}
+          isInvalid={!!errors.config?.unit}
+        />
+        <Controller
+          control={control}
+          name={`answer.value` as const}
+          defaultValue={
+            getValues(`answer.value` as const) ? (`answer.value` as const) : 0
+          }
+          render={({ field }) => (
+            <Slider
+              className="mt-4"
+              {...field}
+              onChange={(_, value) => {
+                field.onChange(value);
+              }}
+              step={sliderQuestion.config.step}
+              min={sliderQuestion.config.min}
+              max={sliderQuestion.config.max}
+              marks={marks}
+              valueLabelDisplay="auto"
+            />
+          )}
+        />
+        <Button className="mt-2" type="submit">
+          {t('save')}
+        </Button>
+        <ErrorSummary errors={errors} />
+      </Form>
+    </Col>
   );
 }

@@ -77,7 +77,7 @@ export default function PeriodDateForm({ parentAnswer }: IProps): ReactElement {
   return (
     <Card className="mb-3">
       <Card.Body>
-        <h6>Alternative: Value</h6>
+        <h6>Alternative: Date </h6>
         <Form onSubmit={handleSubmit(saveValues)}>
           <Form.Control
             as="input"
