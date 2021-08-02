@@ -25,15 +25,6 @@ const initialState: ProjectState = {
   status: 'idle'
 };
 
-export const getProjectThunk = createAsyncThunk(
-  'getProjectThunk',
-  async (id: string) => {
-    const api = new CosmosApi();
-    const result = await api.readBank(id);
-    return result.resource;
-  }
-);
-
 // this, this is the one
 export const getProjectsThunk = createAsyncThunk(
   'getProjectsThunk',
@@ -528,9 +519,6 @@ const projectSlice = createSlice({
     }
   },
   extraReducers: (builder) => {
-    builder.addCase(getProjectThunk.fulfilled, () => {});
-    builder.addCase(getProjectThunk.pending, () => {});
-    builder.addCase(getProjectThunk.rejected, () => {});
     builder.addCase(getProjectsThunk.pending, (state) => {
       state.status = 'pending';
     });
