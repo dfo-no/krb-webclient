@@ -1,17 +1,17 @@
 /* eslint-disable no-param-reassign */
-import { FeedResponse, ItemDefinition, ItemResponse } from '@azure/cosmos';
+import { ItemDefinition, ItemResponse } from '@azure/cosmos';
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { httpGet } from '../../api/http';
 import Utils from '../../common/Utils';
 import { CosmosApi } from '../../database/CosmosApi';
 import { Bank } from '../../models/Bank';
 import { Code } from '../../models/Code';
 import { Codelist } from '../../models/Codelist';
-import { Nestable } from '../../models/Nestable';
 import { Need } from '../../models/Need';
+import { Nestable } from '../../models/Nestable';
 import { Product } from '../../models/Product';
 import { Publication } from '../../models/Publication';
 import { Requirement } from '../../models/Requirement';
-
 // eslint-disable-next-line import/no-cycle
 import { AppDispatch, RootState } from '../store';
 
@@ -38,15 +38,8 @@ export const getProjectThunk = createAsyncThunk(
 export const getProjectsThunk = createAsyncThunk(
   'getProjectsThunk',
   async () => {
-    const api = new CosmosApi();
-    const result: FeedResponse<Bank[]> = await api.fetchAllProjects();
-    const banks: Bank[] = [];
-    for (let i = 0; i < result.resources.length; i += 1) {
-      // TODO: do not fetch inedxed
-      const element = result.resources[i] as unknown;
-      banks.push(element as Bank);
-    }
-    return banks;
+    const response = await httpGet<Bank[]>('/api/bank/projects');
+    return response.data;
   }
 );
 
