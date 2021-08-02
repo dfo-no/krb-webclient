@@ -1,6 +1,6 @@
 /* eslint-disable no-param-reassign */
-import { FeedResponse } from '@azure/cosmos';
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { httpGet } from '../../api/http';
 import { CosmosApi } from '../../database/CosmosApi';
 import { Bank } from '../../models/Bank';
 
@@ -15,16 +15,9 @@ const initialState: BankState = {
   status: 'idle'
 };
 
-export const getBanksThunk = createAsyncThunk('getBanks', async () => {
-  const api = new CosmosApi();
-  const result: FeedResponse<Bank[]> = await api.fetchAllBanks();
-  const banks: Bank[] = [];
-  for (let i = 0; i < result.resources.length; i += 1) {
-    // TODO: do not fetch inedxed
-    const element = result.resources[i] as unknown;
-    banks.push(element as Bank);
-  }
-  return banks;
+export const getBanksThunk = createAsyncThunk('getBanksThunk', async () => {
+  const response = await httpGet<Bank[]>('/api/bank/projects');
+  return response.data;
 });
 
 export const postBankThunk = createAsyncThunk(
