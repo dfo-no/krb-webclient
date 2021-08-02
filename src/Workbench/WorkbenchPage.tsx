@@ -1,28 +1,27 @@
+import { joiResolver } from '@hookform/resolvers/joi';
+import Joi from 'joi';
 import React, { ReactElement, useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import ListGroup from 'react-bootstrap/ListGroup';
 import Row from 'react-bootstrap/Row';
-import { useDispatch, useSelector } from 'react-redux';
-import { BsTrashFill } from 'react-icons/bs';
 import { useForm } from 'react-hook-form';
-import { v4 as uuidv4 } from 'uuid';
-import Joi from 'joi';
-import { joiResolver } from '@hookform/resolvers/joi';
 import { useTranslation } from 'react-i18next';
-import { RootState } from '../store/store';
+import { BsTrashFill } from 'react-icons/bs';
+import { useDispatch, useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
+import { v4 as uuidv4 } from 'uuid';
+import ErrorSummary from '../Form/ErrorSummary';
+import InputRow from '../Form/InputRow';
 import { Bank } from '../models/Bank';
+import ModelType from '../models/ModelType';
 import {
   deleteProjectThunk,
-  getProjectsThunk,
   postProjectThunk
 } from '../store/reducers/project-reducer';
 import { selectProject } from '../store/reducers/selectedProject-reducer';
+import { RootState } from '../store/store';
 import SuccessAlert from './SuccessAlert';
-import ModelType from '../models/ModelType';
-import InputRow from '../Form/InputRow';
-import ErrorSummary from '../Form/ErrorSummary';
 
 type FormValues = {
   title: string;
@@ -90,10 +89,7 @@ function WorkbenchPage(): ReactElement {
   }
 
   async function onDelete(project: Bank) {
-    // TODO: fix this logic
-    // must await here otherwise the 'getProjectsThunk will fetch before delete is complete.
-    await dispatch(deleteProjectThunk(project));
-    dispatch(getProjectsThunk());
+    dispatch(deleteProjectThunk(project));
   }
 
   const renderProjects = (projectList: Bank[]) => {

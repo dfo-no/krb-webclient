@@ -1,7 +1,7 @@
 /* eslint-disable no-param-reassign */
 import { ItemDefinition, ItemResponse } from '@azure/cosmos';
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { httpGet, httpPost } from '../../api/http';
+import { httpDelete, httpGet, httpPost } from '../../api/http';
 import Utils from '../../common/Utils';
 import { CosmosApi } from '../../database/CosmosApi';
 import { Bank } from '../../models/Bank';
@@ -75,9 +75,8 @@ export const putProjectThunk = createAsyncThunk<
 export const deleteProjectThunk = createAsyncThunk(
   'deleteProjectThunk',
   async (project: Bank) => {
-    const api = new CosmosApi();
-    const result = await api.deleteBank(project.id);
-    return result.resource;
+    await httpDelete<Bank>(`/api/bank/${project.id}`);
+    return project;
   }
 );
 
@@ -565,7 +564,8 @@ const projectSlice = createSlice({
     builder.addCase(putProjectThunk.rejected, (state) => {
       state.status = 'rejected';
     });
-    builder.addCase(deleteProjectThunk.fulfilled, (state) => {
+    builder.addCase(deleteProjectThunk.fulfilled, (state, { payload }) => {
+      state.list = state.list.filter((item) => item.id !== payload.id);
       state.status = 'fulfilled';
     });
     builder.addCase(deleteProjectThunk.pending, (state) => {
