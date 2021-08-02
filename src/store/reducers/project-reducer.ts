@@ -1,7 +1,7 @@
 /* eslint-disable no-param-reassign */
 import { ItemDefinition, ItemResponse } from '@azure/cosmos';
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { httpGet } from '../../api/http';
+import { httpGet, httpPost } from '../../api/http';
 import Utils from '../../common/Utils';
 import { CosmosApi } from '../../database/CosmosApi';
 import { Bank } from '../../models/Bank';
@@ -46,9 +46,8 @@ export const getProjectsThunk = createAsyncThunk(
 export const postProjectThunk = createAsyncThunk(
   'postProjectThunk',
   async (project: Bank) => {
-    const api = new CosmosApi();
-    const result = await api.createBank(project);
-    return result.resource as Bank;
+    const response = await httpPost<Bank>('/api/bank', project);
+    return response.data;
   }
 );
 
