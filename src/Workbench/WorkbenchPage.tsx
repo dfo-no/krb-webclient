@@ -10,7 +10,6 @@ import { useTranslation } from 'react-i18next';
 import { BsTrashFill } from 'react-icons/bs';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { v4 as uuidv4 } from 'uuid';
 import ErrorSummary from '../Form/ErrorSummary';
 import InputRow from '../Form/InputRow';
 import { Bank } from '../models/Bank';
@@ -68,7 +67,7 @@ function WorkbenchPage(): ReactElement {
   }, [showAlert]);
   const onSubmit = (post: FormValues) => {
     const project: Bank = {
-      id: uuidv4(),
+      id: '',
       title: post.title,
       description: post.description,
       needs: [],
