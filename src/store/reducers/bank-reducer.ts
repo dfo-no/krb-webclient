@@ -16,7 +16,7 @@ const initialState: BankState = {
 };
 
 export const getBanksThunk = createAsyncThunk('getBanksThunk', async () => {
-  const response = await httpGet<Bank[]>('/api/bank/projects');
+  const response = await httpGet<Bank[]>('/api/bank/banks');
   return response.data;
 });
 
