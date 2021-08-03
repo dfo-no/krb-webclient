@@ -53,11 +53,6 @@ export default function HomePage(): ReactElement {
                 <h5>{t('create specification')}</h5>
               </Link>
             </ListGroup.Item>
-            <ListGroup.Item className="mt-1 ">
-              <Link to="/speceditor">
-                <h5>Create Spesification</h5>
-              </Link>
-            </ListGroup.Item>
           </ListGroup>
         </Col>
       </Row>
