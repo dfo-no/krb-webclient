@@ -12,21 +12,17 @@ export default function SpecPage(): ReactElement {
   const { t } = useTranslation();
   const { spec } = useSelector((state: RootState) => state.specification);
   const onDownLoad = () => {
-    httpPost<Specification, AxiosResponse<File>>(
-      `${process.env.REACT_APP_JAVA_API_URL}/generatePdf`,
-      spec,
-      {
-        headers: {
-          'Content-Type': 'application/json',
-          Accept: 'application/pdf'
-        },
-        responseType: 'blob'
-      }
-    ).then((response) => {
+    httpPost<Specification, AxiosResponse<File>>('/java/generatePdf', spec, {
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: 'application/pdf'
+      },
+      responseType: 'blob'
+    }).then((response) => {
       const url = window.URL.createObjectURL(new Blob([response.data]));
       const link = document.createElement('a');
       link.href = url;
-      link.setAttribute('download', 'response.pdf');
+      link.setAttribute('download', 'specification.pdf');
       document.body.appendChild(link);
       link.click();
       setTimeout(() => {

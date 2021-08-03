@@ -27,16 +27,12 @@ export default function ResponsePage(): ReactElement {
       const file = files[index];
       formData.append('file', file);
     }
-    httpPost<FormData, AxiosResponse>(
-      `${process.env.REACT_APP_JAVA_API_URL}/uploadPdf`,
-      formData,
-      {
-        headers: {
-          'Content-Type': 'multipart/form-data'
-        },
-        responseType: 'json'
-      }
-    ).then((response) => {
+    httpPost<FormData, AxiosResponse>('/java/uploadPdf', formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      },
+      responseType: 'json'
+    }).then((response) => {
       dispatch(selectBank(response.data.bank.id));
       dispatch(setSpecification(response.data));
       history.push(`/response/${response.data.bank.id}`);
@@ -51,16 +47,12 @@ export default function ResponsePage(): ReactElement {
       const file = files[index];
       formData.append('file', file);
     }
-    httpPost<FormData, AxiosResponse>(
-      `${process.env.REACT_APP_JAVA_API_URL}/uploadPdf`,
-      formData,
-      {
-        headers: {
-          'Content-Type': 'multipart/form-data'
-        },
-        responseType: 'json'
-      }
-    ).then((response) => {
+    httpPost<FormData, AxiosResponse>('/java/uploadPdf', formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      },
+      responseType: 'json'
+    }).then((response) => {
       dispatch(selectBank(response.data.spesification.bank.id));
       dispatch(setResponse(response.data));
       history.push(`/response/${response.data.spesification.bank.id}`);
