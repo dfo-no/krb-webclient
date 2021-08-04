@@ -1,36 +1,36 @@
+import { joiResolver } from '@hookform/resolvers/joi';
+import formatISO from 'date-fns/formatISO';
+import Joi from 'joi';
 import React, { ReactElement, useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
-import formatISO from 'date-fns/formatISO';
 import { useForm } from 'react-hook-form';
-import { joiResolver } from '@hookform/resolvers/joi';
-import Joi from 'joi';
-
-import { BsPencil } from 'react-icons/bs';
-import { useRouteMatch } from 'react-router';
 import { useTranslation } from 'react-i18next';
-import { RootState } from '../../store/store';
-import { Publication, PublicationSchema } from '../../models/Publication';
-import {
-  putProjectThunk,
-  addPublication,
-  incrementProjectVersion,
-  deletePublication,
-  getProjectsThunk
-} from '../../store/reducers/project-reducer';
-import { postBankThunk } from '../../store/reducers/bank-reducer';
+import { BsPencil } from 'react-icons/bs';
+import { useSelector } from 'react-redux';
+import { useRouteMatch } from 'react-router';
 import Utils from '../../common/Utils';
-import EditProjectForm from './EditProjectForm';
-import SuccessAlert from '../SuccessAlert';
-import { Bank } from '../../models/Bank';
-import PublicationsFieldArray from './PublicationsFieldArray';
-import { ProjectPublicationForm } from './ProjectPublicationForm';
-import SuccessDeleteAlert from '../SuccessDeleteAlert';
 import ErrorSummary from '../../Form/ErrorSummary';
-import { selectProject } from '../../store/reducers/selectedProject-reducer';
+import { Bank } from '../../models/Bank';
 import ModelType from '../../models/ModelType';
+import { Publication, PublicationSchema } from '../../models/Publication';
+import { useAppDispatch } from '../../store/hooks';
+import { postBankThunk } from '../../store/reducers/bank-reducer';
+import {
+  addPublication,
+  deletePublication,
+  getProjectsThunk,
+  incrementProjectVersion,
+  putProjectThunk
+} from '../../store/reducers/project-reducer';
+import { selectProject } from '../../store/reducers/selectedProject-reducer';
+import { RootState } from '../../store/store';
+import SuccessAlert from '../SuccessAlert';
+import SuccessDeleteAlert from '../SuccessDeleteAlert';
+import EditProjectForm from './EditProjectForm';
+import { ProjectPublicationForm } from './ProjectPublicationForm';
+import PublicationsFieldArray from './PublicationsFieldArray';
 
 interface RouteParams {
   projectId?: string;
@@ -45,7 +45,7 @@ function ProjectPage(): ReactElement {
   const projectMatch = useRouteMatch<RouteParams>('/workbench/:projectId');
   const { list, status } = useSelector((state: RootState) => state.project);
   const { id } = useSelector((state: RootState) => state.selectedProject);
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   if (projectMatch?.params.projectId) {
     dispatch(selectProject(projectMatch?.params.projectId));
@@ -112,8 +112,9 @@ function ProjectPage(): ReactElement {
 
   const removePublication = async (publicationId: string) => {
     dispatch(deletePublication({ projectId: project.id, publicationId }));
-    await dispatch(putProjectThunk(project.id));
-    setDeleteAlert(true);
+    dispatch(putProjectThunk(project.id)).then(() => {
+      setDeleteAlert(true);
+    });
   };
 
   if (list.length === 0 || !id) {
@@ -132,10 +133,10 @@ function ProjectPage(): ReactElement {
     projectToBePublished.publications = [];
     projectToBePublished.version = publication.version;
 
-    // TODO: fix this any and figure out why we must use await
-    const result: any = await dispatch(postBankThunk(projectToBePublished));
+    // TODO: this logic should be in the reducers
+    const result = await dispatch(postBankThunk(projectToBePublished)).unwrap();
     // update root project with new values
-    publication.bankId = result.payload.id;
+    publication.bankId = result.id;
     publication.date = convertedDate;
 
     dispatch(addPublication({ projectId: project.id, publication }));
