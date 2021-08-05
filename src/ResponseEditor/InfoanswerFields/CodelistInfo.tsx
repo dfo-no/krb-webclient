@@ -1,8 +1,6 @@
-import { string } from 'joi';
 import React, { ReactElement } from 'react';
 import Container from 'react-bootstrap/Container';
 import { Code } from '../../models/Code';
-import { ICheckboxQuestion } from '../../models/ICheckboxQuestion';
 import { ICodelistQuestion } from '../../models/ICodelistQuestion';
 import { IRequirementAnswer } from '../../models/IRequirementAnswer';
 import { Requirement } from '../../models/Requirement';

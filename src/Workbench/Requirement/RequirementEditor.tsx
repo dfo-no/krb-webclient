@@ -88,13 +88,6 @@ export const FileUploadSchema = Joi.object().keys({
   })
 });
 
-const textSchema = Joi.object().keys({
-  id: Joi.string().required(),
-  type: Joi.string().equal('text').required(),
-  max: Joi.number().required(),
-  text: Joi.string().trim().max(Joi.ref('max')).required()
-});
-
 const variantSchema = Joi.object().keys({
   id: Joi.string().required(),
   requirementText: Joi.string().allow(null, '').required(),

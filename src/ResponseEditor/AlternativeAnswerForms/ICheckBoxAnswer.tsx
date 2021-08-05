@@ -1,8 +1,7 @@
 import { joiResolver } from '@hookform/resolvers/joi';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Switch from '@material-ui/core/Switch';
 import Joi from 'joi';
-import React, { ReactElement, useState } from 'react';
+import React, { ReactElement } from 'react';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import Form from 'react-bootstrap/Form';

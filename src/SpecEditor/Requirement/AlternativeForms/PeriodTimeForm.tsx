@@ -1,6 +1,6 @@
 import { joiResolver } from '@hookform/resolvers/joi';
 import { KeyboardDatePicker } from '@material-ui/pickers';
-import Joi, { string } from 'joi';
+import Joi from 'joi';
 import React, { ReactElement } from 'react';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
@@ -13,11 +13,6 @@ import ErrorSummary from '../../../Form/ErrorSummary';
 import { IPeriodDateQuestion } from '../../../models/IPeriodDateQuestion';
 import { IRequirementAnswer } from '../../../models/IRequirementAnswer';
 import ModelType from '../../../models/ModelType';
-import {
-  IAnswerBase,
-  IConfigBase,
-  IQuestionBase
-} from '../../../models/Question';
 import QuestionEnum from '../../../models/QuestionEnum';
 import { useAppDispatch, useAppSelector } from '../../../store/hooks';
 import {
@@ -51,7 +46,6 @@ export default function PeriodDateForm({ parentAnswer }: IProps): ReactElement {
     }
   });
 
-  const item = parentAnswer.alternative as IPeriodDateQuestion;
   const { productId } = useAppSelector((state) => state.selectedSpecProduct);
   const dispatch = useAppDispatch();
   const { t } = useTranslation();
