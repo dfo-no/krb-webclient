@@ -1,8 +1,7 @@
 import React, { ReactElement } from 'react';
 import Container from 'react-bootstrap/Container';
-import { useSelector } from 'react-redux';
 import QuestionEnum from '../../models/QuestionEnum';
-import { RootState } from '../../store/store';
+import { useAppSelector } from '../../store/hooks';
 import FileInputForm from './AlternativeForms/FileInputForm';
 import CodelistForm from './AlternativeForms/ICodeListForm';
 import ValueForm from './AlternativeForms/ISliderForm';
@@ -11,10 +10,10 @@ import PeriodDateForm from './AlternativeForms/PeriodTimeForm';
 import TextAlternativeForm from './AlternativeForms/TextAlternativeForm';
 
 export default function EditAlternative(): ReactElement {
-  const { alternativeId } = useSelector(
-    (state: RootState) => state.selectedAlternative
+  const { alternativeId } = useAppSelector(
+    (state) => state.selectedAlternative
   );
-  const { spec } = useSelector((state: RootState) => state.specification);
+  const { spec } = useAppSelector((state) => state.specification);
 
   if (!alternativeId) {
     return <p>No alternative selected</p>;

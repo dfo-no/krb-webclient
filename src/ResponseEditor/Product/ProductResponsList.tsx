@@ -3,13 +3,11 @@ import { ListGroup } from 'react-bootstrap';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import { BsPencil } from 'react-icons/bs';
-import { useDispatch, useSelector } from 'react-redux';
 import { Link, useRouteMatch } from 'react-router-dom';
-
 import Utils from '../../common/Utils';
 import { SpecificationProduct } from '../../models/SpecificationProduct';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { selectBank } from '../../store/reducers/selectedBank-reducer';
-import { RootState } from '../../store/store';
 import { selectSpecProduct } from '../../store/reducers/selectedSpecProduct-reducer';
 
 interface RouteParams {
@@ -18,10 +16,10 @@ interface RouteParams {
 
 export default function ProductResponseList(): ReactElement {
   const projectMatch = useRouteMatch<RouteParams>('/response/:bankId');
-  const { id } = useSelector((state: RootState) => state.selectedBank);
-  const { response } = useSelector((state: RootState) => state.response);
+  const { id } = useAppSelector((state) => state.selectedBank);
+  const { response } = useAppSelector((state) => state.response);
 
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   if (projectMatch?.params.bankId && !id) {
     dispatch(selectBank(projectMatch?.params.bankId));

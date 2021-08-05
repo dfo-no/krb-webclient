@@ -1,23 +1,22 @@
+import { joiResolver } from '@hookform/resolvers/joi';
 import React, { ReactElement } from 'react';
+import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
+import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
-import { joiResolver } from '@hookform/resolvers/joi';
 import { useForm } from 'react-hook-form';
-import { useDispatch, useSelector } from 'react-redux';
-import Button from 'react-bootstrap/Button';
 import { useTranslation } from 'react-i18next';
-import { IRequirementAnswer } from '../../../models/IRequirementAnswer';
+import ErrorSummary from '../../../Form/ErrorSummary';
 import { IFileUploadQuestion } from '../../../models/IFileUploadQuestion';
+import { IRequirementAnswer } from '../../../models/IRequirementAnswer';
+import ModelType from '../../../models/ModelType';
+import { useAppDispatch, useAppSelector } from '../../../store/hooks';
 import {
   editAnswer,
   editProductAnswer
 } from '../../../store/reducers/spesification-reducer';
-import { RootState } from '../../../store/store';
-import ErrorSummary from '../../../Form/ErrorSummary';
 import { FileUploadSchema } from '../../../Workbench/Requirement/RequirementEditor';
-import ModelType from '../../../models/ModelType';
 
 interface IProps {
   parentAnswer: IRequirementAnswer;
@@ -34,11 +33,9 @@ export default function FileInputForm({ parentAnswer }: IProps): ReactElement {
       ...(parentAnswer.alternative as IFileUploadQuestion)
     }
   });
-  const { productId } = useSelector(
-    (state: RootState) => state.selectedSpecProduct
-  );
+  const { productId } = useAppSelector((state) => state.selectedSpecProduct);
   const item = parentAnswer.alternative as IFileUploadQuestion;
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const { t } = useTranslation();
 
   if (!productId && parentAnswer.type === ModelType.product) {

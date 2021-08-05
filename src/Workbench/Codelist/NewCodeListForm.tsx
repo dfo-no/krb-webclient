@@ -1,24 +1,22 @@
+import { joiResolver } from '@hookform/resolvers/joi';
+import Joi from 'joi';
 import React, { ReactElement, useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 import { useForm } from 'react-hook-form';
-import { joiResolver } from '@hookform/resolvers/joi';
-import { useDispatch, useSelector } from 'react-redux';
-import Joi from 'joi';
-
-import { v4 as uuidv4 } from 'uuid';
 import { useTranslation } from 'react-i18next';
+import { v4 as uuidv4 } from 'uuid';
+import ErrorSummary from '../../Form/ErrorSummary';
+import InputRow from '../../Form/InputRow';
+import { Codelist } from '../../models/Codelist';
+import ModelType from '../../models/ModelType';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import {
   addCodelist,
   putProjectThunk
 } from '../../store/reducers/project-reducer';
-import { RootState } from '../../store/store';
-import { Codelist } from '../../models/Codelist';
-import ModelType from '../../models/ModelType';
-import InputRow from '../../Form/InputRow';
-import ErrorSummary from '../../Form/ErrorSummary';
 
 type FormValues = {
   title: string;
@@ -35,7 +33,7 @@ const codeListSchema = Joi.object().keys({
 });
 
 function NewCodeListForm({ toggleShow, toggleAlert }: IProps): ReactElement {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const [validated] = useState(false);
   const { t } = useTranslation();
 
@@ -48,7 +46,7 @@ function NewCodeListForm({ toggleShow, toggleAlert }: IProps): ReactElement {
     resolver: joiResolver(codeListSchema)
   });
 
-  const { id } = useSelector((state: RootState) => state.selectedProject);
+  const { id } = useAppSelector((state) => state.selectedProject);
 
   if (!id) {
     return <div>Loading Productform</div>;

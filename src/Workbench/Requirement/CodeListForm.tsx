@@ -1,24 +1,22 @@
+import Switch from '@material-ui/core/Switch';
 import React, { ReactElement } from 'react';
+import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
-import Switch from '@material-ui/core/Switch';
-import Button from 'react-bootstrap/Button';
-import { BsTrashFill } from 'react-icons/bs';
 import {
   Control,
   Controller,
   FormState,
   UseFormRegister
 } from 'react-hook-form';
-
-import { useSelector } from 'react-redux';
-import { Requirement } from '../../models/Requirement';
-import { ICodelistQuestion } from '../../models/ICodelistQuestion';
+import { BsTrashFill } from 'react-icons/bs';
+import Utils from '../../common/Utils';
 import { Bank } from '../../models/Bank';
 import { Codelist } from '../../models/Codelist';
-import { RootState } from '../../store/store';
-import Utils from '../../common/Utils';
+import { ICodelistQuestion } from '../../models/ICodelistQuestion';
+import { Requirement } from '../../models/Requirement';
+import { useAppSelector } from '../../store/hooks';
 
 type IProps = {
   control: Control<Requirement>;
@@ -39,8 +37,8 @@ export default function CodeListForm({
   aIndex,
   control
 }: IProps): ReactElement {
-  const { id } = useSelector((state: RootState) => state.selectedProject);
-  const { list } = useSelector((state: RootState) => state.project);
+  const { id } = useAppSelector((state) => state.selectedProject);
+  const { list } = useAppSelector((state) => state.project);
 
   const project = Utils.ensure(list.find((bank: Bank) => bank.id === id));
   const codelistOptions = () => {

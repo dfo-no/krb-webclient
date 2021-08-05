@@ -1,21 +1,20 @@
+import { joiResolver } from '@hookform/resolvers/joi';
 import React, { ReactElement } from 'react';
+import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import Form from 'react-bootstrap/Form';
-import { joiResolver } from '@hookform/resolvers/joi';
 import { useForm } from 'react-hook-form';
-import { useDispatch, useSelector } from 'react-redux';
-import Button from 'react-bootstrap/Button';
 import { useTranslation } from 'react-i18next';
-import { ISliderQuestion } from '../../../models/ISliderQuestion';
+import ErrorSummary from '../../../Form/ErrorSummary';
 import { IRequirementAnswer } from '../../../models/IRequirementAnswer';
+import { ISliderQuestion } from '../../../models/ISliderQuestion';
+import ModelType from '../../../models/ModelType';
+import { useAppDispatch, useAppSelector } from '../../../store/hooks';
 import {
   addAnswer,
   addProductAnswer
 } from '../../../store/reducers/spesification-reducer';
-import { RootState } from '../../../store/store';
-import ErrorSummary from '../../../Form/ErrorSummary';
 import { SliderSchema } from '../../../Workbench/Requirement/RequirementEditor';
-import ModelType from '../../../models/ModelType';
 
 interface IProps {
   parentAnswer: IRequirementAnswer;
@@ -32,10 +31,8 @@ export default function ValueForm({ parentAnswer }: IProps): ReactElement {
       ...(parentAnswer.alternative as ISliderQuestion)
     }
   });
-  const { productId } = useSelector(
-    (state: RootState) => state.selectedSpecProduct
-  );
-  const dispatch = useDispatch();
+  const { productId } = useAppSelector((state) => state.selectedSpecProduct);
+  const dispatch = useAppDispatch();
   const { t } = useTranslation();
 
   if (!productId && parentAnswer.type === ModelType.product) {

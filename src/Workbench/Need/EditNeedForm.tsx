@@ -6,7 +6,6 @@ import Form from 'react-bootstrap/Form';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { BsTrashFill } from 'react-icons/bs';
-import { useDispatch, useSelector } from 'react-redux';
 import AlertModal from '../../common/AlertModal';
 import Utils from '../../common/Utils';
 import ErrorSummary from '../../Form/ErrorSummary';
@@ -14,12 +13,12 @@ import InputRow from '../../Form/InputRow';
 import { Bank } from '../../models/Bank';
 import { Need } from '../../models/Need';
 import { AccordionContext } from '../../NestableHierarchy/AccordionContext';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import {
   deleteNeed,
   editNeed,
   putProjectThunk
 } from '../../store/reducers/project-reducer';
-import { RootState } from '../../store/store';
 
 type FormValues = {
   id: string;
@@ -37,9 +36,9 @@ const needSchema = Joi.object().keys({
 });
 
 function EditNeedForm({ element }: IProps): ReactElement {
-  const { id } = useSelector((state: RootState) => state.selectedProject);
-  const { list } = useSelector((state: RootState) => state.project);
-  const dispatch = useDispatch();
+  const { id } = useAppSelector((state) => state.selectedProject);
+  const { list } = useAppSelector((state) => state.project);
+  const dispatch = useAppDispatch();
   const { onOpenClose } = useContext(AccordionContext);
   const [validated] = useState(false);
   const { t } = useTranslation();

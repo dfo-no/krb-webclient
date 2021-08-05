@@ -5,9 +5,9 @@ import Col from 'react-bootstrap/Col';
 import Container from 'react-bootstrap/Container';
 import InputGroup from 'react-bootstrap/InputGroup';
 import Row from 'react-bootstrap/Row';
-import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router';
 import { httpPost } from '../api/http';
+import { useAppDispatch } from '../store/hooks';
 import {
   setResponse,
   setSpecification
@@ -15,7 +15,7 @@ import {
 import { selectBank } from '../store/reducers/selectedBank-reducer';
 
 export default function ResponsePage(): ReactElement {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const history = useHistory();
 
   const onUploadSpecification = (

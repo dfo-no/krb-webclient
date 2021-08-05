@@ -3,7 +3,6 @@ import Card from 'react-bootstrap/Card';
 import ListGroup from 'react-bootstrap/ListGroup';
 import Row from 'react-bootstrap/Row';
 import { BsArrowReturnRight } from 'react-icons/bs';
-import { useSelector } from 'react-redux';
 import Utils from '../../common/Utils';
 import { Bank } from '../../models/Bank';
 import { IRequirementAnswer } from '../../models/IRequirementAnswer';
@@ -12,7 +11,7 @@ import { Nestable } from '../../models/Nestable';
 import QuestionEnum from '../../models/QuestionEnum';
 import { Requirement } from '../../models/Requirement';
 import RequirementType from '../../models/RequirementType';
-import { RootState } from '../../store/store';
+import { useAppSelector } from '../../store/hooks';
 import ICheckBoxAnswer from '../AlternativeAnswerForms/ICheckBoxAnswer';
 import ICodelistAnswer from '../AlternativeAnswerForms/ICodeListAnswer';
 import PeriodDateAnswer from '../AlternativeAnswerForms/IPeriodDateAnswer';
@@ -26,9 +25,9 @@ import TextInfo from '../InfoanswerFields/TextInfo';
 import styles from './RequirementView.module.scss';
 
 export default function RequirementPage(): ReactElement {
-  const { response } = useSelector((state: RootState) => state.response);
-  const { list } = useSelector((state: RootState) => state.bank);
-  const { id } = useSelector((state: RootState) => state.selectedBank);
+  const { response } = useAppSelector((state) => state.response);
+  const { list } = useAppSelector((state) => state.bank);
+  const { id } = useAppSelector((state) => state.selectedBank);
 
   const selectedBank = Utils.ensure(list.find((bank: Bank) => bank.id === id));
 

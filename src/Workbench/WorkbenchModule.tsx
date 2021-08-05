@@ -2,12 +2,11 @@ import React, { ReactElement, useEffect } from 'react';
 import Col from 'react-bootstrap/Col';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
-import { useDispatch, useSelector } from 'react-redux';
 import { Route, Switch, useRouteMatch } from 'react-router-dom';
 import NotFound from '../NotFound';
+import { useAppDispatch, useAppSelector } from '../store/hooks';
 import { getProjectsThunk } from '../store/reducers/project-reducer';
 import { selectProject } from '../store/reducers/selectedProject-reducer';
-import { RootState } from '../store/store';
 import CodeListEditor from './Codelist/CodeListEditor';
 import CodelistPage from './Codelist/CodelistPage';
 import NeedPage from './Need/NeedPage';
@@ -26,8 +25,8 @@ interface RouteParams {
 
 export default function WorkbenchModule(): ReactElement {
   const projectMatch = useRouteMatch<RouteParams>('/workbench/:projectId');
-  const dispatch = useDispatch();
-  const { id } = useSelector((state: RootState) => state.selectedProject);
+  const dispatch = useAppDispatch();
+  const { id } = useAppSelector((state) => state.selectedProject);
   // Can set this safely, even if we got here directly by url or by clicks
   if (projectMatch?.params.projectId && !id) {
     dispatch(selectProject(projectMatch?.params.projectId));

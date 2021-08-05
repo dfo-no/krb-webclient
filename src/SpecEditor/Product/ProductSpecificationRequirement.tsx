@@ -1,20 +1,18 @@
 import React, { ReactElement, useState } from 'react';
 import { Card } from 'react-bootstrap';
 import Col from 'react-bootstrap/Col';
-import { useDispatch, useSelector } from 'react-redux';
-
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
+import Utils from '../../common/Utils';
 import { Requirement } from '../../models/Requirement';
+import { SpecificationProduct } from '../../models/SpecificationProduct';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import {
   addProductRequirement,
   deleteProductAnswer,
   removeProductRequirement
 } from '../../store/reducers/spesification-reducer';
 import ProductRequirementAnswer from './ProductRequirementAnswer';
-import { RootState } from '../../store/store';
-import { SpecificationProduct } from '../../models/SpecificationProduct';
-import Utils from '../../common/Utils';
 
 type InputProps = {
   requirement: Requirement;
@@ -27,9 +25,9 @@ export default function ProductSpesificationRequirement({
   selected,
   productId
 }: InputProps): ReactElement {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const [isSelected, setSelected] = useState(selected);
-  const { spec } = useSelector((state: RootState) => state.specification);
+  const { spec } = useAppSelector((state) => state.specification);
 
   const specProduct = Utils.ensure(
     spec.products.find(

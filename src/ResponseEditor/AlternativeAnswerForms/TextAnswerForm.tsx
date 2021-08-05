@@ -1,20 +1,19 @@
+import { joiResolver } from '@hookform/resolvers/joi';
+import Joi from 'joi';
 import React, { ReactElement } from 'react';
+import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import Form from 'react-bootstrap/Form';
-import { joiResolver } from '@hookform/resolvers/joi';
 import { useForm } from 'react-hook-form';
-import { useDispatch, useSelector } from 'react-redux';
-import Button from 'react-bootstrap/Button';
 import { useTranslation } from 'react-i18next';
-import Joi from 'joi';
-import { IRequirementAnswer } from '../../models/IRequirementAnswer';
-import { RootState } from '../../store/store';
-import { ITextQuestion } from '../../models/ITextQuestion';
 import ErrorSummary from '../../Form/ErrorSummary';
-import { addRequirementAnswer } from '../../store/reducers/response-reducer';
-import QuestionEnum from '../../models/QuestionEnum';
-import { addProductAnswer } from '../../store/reducers/spesification-reducer';
+import { IRequirementAnswer } from '../../models/IRequirementAnswer';
+import { ITextQuestion } from '../../models/ITextQuestion';
 import ModelType from '../../models/ModelType';
+import QuestionEnum from '../../models/QuestionEnum';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
+import { addRequirementAnswer } from '../../store/reducers/response-reducer';
+import { addProductAnswer } from '../../store/reducers/spesification-reducer';
 
 interface IProps {
   parentAnswer: IRequirementAnswer;
@@ -32,9 +31,9 @@ export const ResponseTextSchema = Joi.object().keys({
 });
 
 export default function ITextAnswer({ parentAnswer }: IProps): ReactElement {
-  const { response } = useSelector((state: RootState) => state.response);
-  const { productId } = useSelector(
-    (state: RootState) => state.selectedResponseProduct
+  const { response } = useAppSelector((state) => state.response);
+  const { productId } = useAppSelector(
+    (state) => state.selectedResponseProduct
   );
   let index: number;
 
@@ -72,7 +71,7 @@ export default function ITextAnswer({ parentAnswer }: IProps): ReactElement {
     }
   });
   const item = parentAnswer.alternative as ITextQuestion;
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const { t } = useTranslation();
 
   if (!productId && parentAnswer.type === ModelType.product) {

@@ -8,14 +8,13 @@ import Row from 'react-bootstrap/Row';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { BsPencil } from 'react-icons/bs';
-import { useSelector } from 'react-redux';
 import { useRouteMatch } from 'react-router';
 import Utils from '../../common/Utils';
 import ErrorSummary from '../../Form/ErrorSummary';
 import { Bank } from '../../models/Bank';
 import ModelType from '../../models/ModelType';
 import { Publication, PublicationSchema } from '../../models/Publication';
-import { useAppDispatch } from '../../store/hooks';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { postBankThunk } from '../../store/reducers/bank-reducer';
 import {
   addPublication,
@@ -25,7 +24,6 @@ import {
   putProjectThunk
 } from '../../store/reducers/project-reducer';
 import { selectProject } from '../../store/reducers/selectedProject-reducer';
-import { RootState } from '../../store/store';
 import SuccessAlert from '../SuccessAlert';
 import SuccessDeleteAlert from '../SuccessDeleteAlert';
 import EditProjectForm from './EditProjectForm';
@@ -43,8 +41,8 @@ interface IPublishPost {
 
 function ProjectPage(): ReactElement {
   const projectMatch = useRouteMatch<RouteParams>('/workbench/:projectId');
-  const { list, status } = useSelector((state: RootState) => state.project);
-  const { id } = useSelector((state: RootState) => state.selectedProject);
+  const { list, status } = useAppSelector((state) => state.project);
+  const { id } = useAppSelector((state) => state.selectedProject);
   const dispatch = useAppDispatch();
 
   if (projectMatch?.params.projectId) {

@@ -1,3 +1,5 @@
+import { joiResolver } from '@hookform/resolvers/joi';
+import Joi from 'joi';
 import React, { ReactElement, useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
@@ -5,18 +7,14 @@ import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 import { useForm } from 'react-hook-form';
-import { useDispatch, useSelector } from 'react-redux';
-import Joi from 'joi';
-import { joiResolver } from '@hookform/resolvers/joi';
 import { useTranslation } from 'react-i18next';
+import ErrorSummary from '../../Form/ErrorSummary';
 import { Bank } from '../../models/Bank';
-
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import {
   editProject,
   putProjectThunk
 } from '../../store/reducers/project-reducer';
-import { RootState } from '../../store/store';
-import ErrorSummary from '../../Form/ErrorSummary';
 
 interface IProps {
   project: Bank;
@@ -37,8 +35,8 @@ export default function EditProjectForm({
   project,
   toggleShow
 }: IProps): ReactElement {
-  const { id } = useSelector((state: RootState) => state.selectedProject);
-  const dispatch = useDispatch();
+  const { id } = useAppSelector((state) => state.selectedProject);
+  const dispatch = useAppDispatch();
   const [validated] = useState(false);
   const { t } = useTranslation();
 

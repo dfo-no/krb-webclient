@@ -1,10 +1,9 @@
 import React, { ReactElement } from 'react';
 import Container from 'react-bootstrap/Container';
-import { useSelector } from 'react-redux';
 import Utils from '../../common/Utils';
 import QuestionEnum from '../../models/QuestionEnum';
 import { SpecificationProduct } from '../../models/SpecificationProduct';
-import { RootState } from '../../store/store';
+import { useAppSelector } from '../../store/hooks';
 import FileInputForm from '../Requirement/AlternativeForms/FileInputForm';
 import CodelistForm from '../Requirement/AlternativeForms/ICodeListForm';
 import ValueForm from '../Requirement/AlternativeForms/ISliderForm';
@@ -13,13 +12,11 @@ import PeriodDateForm from '../Requirement/AlternativeForms/PeriodTimeForm';
 import TextAlternativeForm from '../Requirement/AlternativeForms/TextAlternativeForm';
 
 export default function EditAlternative(): ReactElement {
-  const { alternativeId } = useSelector(
-    (state: RootState) => state.selectedAlternative
+  const { alternativeId } = useAppSelector(
+    (state) => state.selectedAlternative
   );
-  const { spec } = useSelector((state: RootState) => state.specification);
-  const { productId } = useSelector(
-    (state: RootState) => state.selectedSpecProduct
-  );
+  const { spec } = useAppSelector((state) => state.specification);
+  const { productId } = useAppSelector((state) => state.selectedSpecProduct);
 
   if (!productId) {
     return <p>No selected product</p>;

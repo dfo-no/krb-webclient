@@ -7,7 +7,6 @@ import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, useRouteMatch } from 'react-router-dom';
 import Utils from '../../common/Utils';
 import ErrorSummary from '../../Form/ErrorSummary';
@@ -16,6 +15,7 @@ import { Need } from '../../models/Need';
 import QuestionEnum from '../../models/QuestionEnum';
 import { Requirement } from '../../models/Requirement';
 import RequirementType from '../../models/RequirementType';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import {
   editRequirementInNeed,
   getProjectsThunk,
@@ -24,7 +24,6 @@ import {
 import { selectNeed } from '../../store/reducers/selectedNeed-reducer';
 import { selectProject } from '../../store/reducers/selectedProject-reducer';
 import { selectRequirement } from '../../store/reducers/selectedRequirement-reducer';
-import { RootState } from '../../store/store';
 import VariantArray from './VariantArray';
 
 export const SliderSchema = Joi.object().keys({
@@ -169,7 +168,7 @@ interface RouteParams {
 
 export default function RequirementEditor(): ReactElement {
   const [validated] = useState(false);
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const history = useHistory();
   const { t } = useTranslation();
   const projectMatch = useRouteMatch<RouteParams>(
@@ -188,12 +187,10 @@ export default function RequirementEditor(): ReactElement {
     dispatch(selectRequirement(projectMatch?.params.requirementId));
   }
 
-  const { id } = useSelector((state: RootState) => state.selectedProject);
-  const { list } = useSelector((state: RootState) => state.project);
-  const { needId } = useSelector((state: RootState) => state.selectNeed);
-  const { reqId } = useSelector(
-    (state: RootState) => state.selectedRequirement
-  );
+  const { id } = useAppSelector((state) => state.selectedProject);
+  const { list } = useAppSelector((state) => state.project);
+  const { needId } = useAppSelector((state) => state.selectNeed);
+  const { reqId } = useAppSelector((state) => state.selectedRequirement);
 
   useEffect(() => {
     async function fetchEverything() {

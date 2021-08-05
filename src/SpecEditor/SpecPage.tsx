@@ -6,16 +6,15 @@ import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
 import Row from 'react-bootstrap/Row';
 import { useTranslation } from 'react-i18next';
-import { useDispatch, useSelector } from 'react-redux';
 import { Link, useHistory } from 'react-router-dom';
 import { httpPost } from '../api/http';
+import { useAppDispatch, useAppSelector } from '../store/hooks';
 import { selectBank } from '../store/reducers/selectedBank-reducer';
 import { setSpecification } from '../store/reducers/spesification-reducer';
-import { RootState } from '../store/store';
 
 export default function SpecPage(): ReactElement {
-  const { id } = useSelector((state: RootState) => state.selectedBank);
-  const dispatch = useDispatch();
+  const { id } = useAppSelector((state) => state.selectedBank);
+  const dispatch = useAppDispatch();
   const history = useHistory();
   const { t } = useTranslation();
 

@@ -1,22 +1,20 @@
-import React, { ReactElement, useState, useEffect } from 'react';
+import React, { ReactElement, useEffect, useState } from 'react';
 import Button from 'react-bootstrap/Button';
-import { useDispatch, useSelector } from 'react-redux';
-
-import { useRouteMatch } from 'react-router';
 import { useTranslation } from 'react-i18next';
+import { useRouteMatch } from 'react-router';
+import Utils from '../../common/Utils';
 import { Product } from '../../models/Product';
-import { RootState } from '../../store/store';
+import NestableHierarcy from '../../NestableHierarchy/Nestable';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import {
   getProjectsThunk,
   putProjectThunk,
   updateProductList
 } from '../../store/reducers/project-reducer';
-import Utils from '../../common/Utils';
-import NestableHierarcy from '../../NestableHierarchy/Nestable';
+import { selectProject } from '../../store/reducers/selectedProject-reducer';
+import SuccessAlert from '../SuccessAlert';
 import ProductForm from './EditProductForm';
 import NewProductForm from './NewProductForm';
-import SuccessAlert from '../SuccessAlert';
-import { selectProject } from '../../store/reducers/selectedProject-reducer';
 
 interface RouteParams {
   projectId?: string;
@@ -25,9 +23,9 @@ export default function ProductPage(): ReactElement {
   const projectMatch = useRouteMatch<RouteParams>(
     '/workbench/:projectId/product'
   );
-  const dispatch = useDispatch();
-  const { id } = useSelector((state: RootState) => state.selectedProject);
-  const { list } = useSelector((state: RootState) => state.project);
+  const dispatch = useAppDispatch();
+  const { id } = useAppSelector((state) => state.selectedProject);
+  const { list } = useAppSelector((state) => state.project);
   const [toggleEditor, setToggleEditor] = useState(false);
   const [showAlert, setShowAlert] = useState(false);
   const { t } = useTranslation();

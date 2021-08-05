@@ -2,9 +2,8 @@ import React, { ReactElement } from 'react';
 import Nav from 'react-bootstrap/Nav';
 import { withRouter } from 'react-router';
 import { NavLink, useRouteMatch } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useAppSelector } from '../../store/hooks';
 import css from './ResponseSideBar.module.scss';
-import { RootState } from '../../store/store';
 
 interface IRouteLink {
   link: string;
@@ -34,8 +33,8 @@ const renderRouteLinks = (routes: IRouteLink[], isProjectSelected: boolean) => {
 };
 
 function ResponseSideBar(): ReactElement {
-  const { id } = useSelector((state: RootState) => state.selectedBank);
-  const { response } = useSelector((state: RootState) => state.response);
+  const { id } = useAppSelector((state) => state.selectedBank);
+  const { response } = useAppSelector((state) => state.response);
 
   const match = useRouteMatch<RouteParams>('/response/:bankId');
   const currentUrl = match?.url ? match.url : `/response/${id}`;

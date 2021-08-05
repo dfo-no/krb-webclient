@@ -9,13 +9,12 @@ import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import { useDispatch, useSelector } from 'react-redux';
 import Utils from '../../common/Utils';
 import ErrorSummary from '../../Form/ErrorSummary';
 import InputRow from '../../Form/InputRow';
 import { SpecificationProduct } from '../../models/SpecificationProduct';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { editSpecProduct } from '../../store/reducers/spesification-reducer';
-import { RootState } from '../../store/store';
 import ProductRequirementSelectorList from './ProductRequirementSelectorList';
 
 type FormInput = {
@@ -31,14 +30,12 @@ const productSchema = Joi.object().keys({
 });
 
 export default function ProductSpecEditor(): ReactElement {
-  const { id } = useSelector((state: RootState) => state.selectedBank);
-  const { list } = useSelector((state: RootState) => state.bank);
-  const { spec } = useSelector((state: RootState) => state.specification);
+  const { id } = useAppSelector((state) => state.selectedBank);
+  const { list } = useAppSelector((state) => state.bank);
+  const { spec } = useAppSelector((state) => state.specification);
   const { t } = useTranslation();
-  const { productId } = useSelector(
-    (state: RootState) => state.selectedSpecProduct
-  );
-  const dispatch = useDispatch();
+  const { productId } = useAppSelector((state) => state.selectedSpecProduct);
+  const dispatch = useAppDispatch();
   const specProduct = Utils.ensure(
     spec.products.find(
       (product: SpecificationProduct) => product.id === productId

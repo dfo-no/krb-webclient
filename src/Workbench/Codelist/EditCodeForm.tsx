@@ -7,17 +7,16 @@ import Row from 'react-bootstrap/Row';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { BsTrashFill } from 'react-icons/bs';
-import { useDispatch, useSelector } from 'react-redux';
 import ErrorSummary from '../../Form/ErrorSummary';
 import InputRow from '../../Form/InputRow';
 import { Code } from '../../models/Code';
 import { AccordionContext } from '../../NestableHierarchy/AccordionContext';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import {
   deleteCodeInCodelist,
   editCodeInCodelist,
   putProjectThunk
 } from '../../store/reducers/project-reducer';
-import { RootState } from '../../store/store';
 
 interface IProps {
   element: Code;
@@ -34,10 +33,10 @@ const codeSchema = Joi.object().keys({
 });
 
 export default function EditCodeForm({ element }: IProps): ReactElement {
-  const { id } = useSelector((state: RootState) => state.selectedProject);
-  const { listId } = useSelector((state: RootState) => state.selectedCodeList);
+  const { id } = useAppSelector((state) => state.selectedProject);
+  const { listId } = useAppSelector((state) => state.selectedCodeList);
   const { onOpenClose } = useContext(AccordionContext);
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const [validated] = useState(false);
   const { t } = useTranslation();
 

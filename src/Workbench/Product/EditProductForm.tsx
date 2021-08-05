@@ -7,7 +7,6 @@ import Row from 'react-bootstrap/Row';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { BsTrashFill } from 'react-icons/bs';
-import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import AlertModal from '../../common/AlertModal';
 import Utils from '../../common/Utils';
@@ -18,13 +17,13 @@ import { Need } from '../../models/Need';
 import { Product } from '../../models/Product';
 import { Requirement } from '../../models/Requirement';
 import { AccordionContext } from '../../NestableHierarchy/AccordionContext';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import {
   deleteProduct,
   editProduct,
   putProjectThunk
 } from '../../store/reducers/project-reducer';
 import { selectProduct } from '../../store/reducers/selectedProduct-reducer';
-import { RootState } from '../../store/store';
 
 interface IProps {
   element: Product;
@@ -41,9 +40,9 @@ const productSchema = Joi.object().keys({
 });
 
 export default function ProductForm({ element }: IProps): ReactElement {
-  const { id } = useSelector((state: RootState) => state.selectedProject);
-  const { list } = useSelector((state: RootState) => state.project);
-  const dispatch = useDispatch();
+  const { id } = useAppSelector((state) => state.selectedProject);
+  const { list } = useAppSelector((state) => state.project);
+  const dispatch = useAppDispatch();
   const { onOpenClose } = useContext(AccordionContext);
   const [validated] = useState(false);
   const [modalShow, setModalShow] = useState(false);

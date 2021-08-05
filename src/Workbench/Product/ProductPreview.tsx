@@ -3,7 +3,6 @@ import Badge from 'react-bootstrap/Badge';
 import ListGroup from 'react-bootstrap/ListGroup';
 import Row from 'react-bootstrap/Row';
 import { BsArrowReturnRight, BsPencil } from 'react-icons/bs';
-import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import Utils from '../../common/Utils';
 import { Bank } from '../../models/Bank';
@@ -12,18 +11,16 @@ import { Need } from '../../models/Need';
 import { Nestable } from '../../models/Nestable';
 import { Product } from '../../models/Product';
 import { Requirement } from '../../models/Requirement';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { selectNeed } from '../../store/reducers/selectedNeed-reducer';
 import { selectRequirement } from '../../store/reducers/selectedRequirement-reducer';
-import { RootState } from '../../store/store';
 import styles from './ProductPreview.module.scss';
 
 export default function ProductPreview(): ReactElement {
-  const dispatch = useDispatch();
-  const { id } = useSelector((state: RootState) => state.selectedProject);
-  const { list } = useSelector((state: RootState) => state.project);
-  const { productId } = useSelector(
-    (state: RootState) => state.selectedProduct
-  );
+  const dispatch = useAppDispatch();
+  const { id } = useAppSelector((state) => state.selectedProject);
+  const { list } = useAppSelector((state) => state.project);
+  const { productId } = useAppSelector((state) => state.selectedProduct);
 
   if (!id) {
     return <p>No Project selected</p>;

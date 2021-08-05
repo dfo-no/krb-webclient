@@ -1,27 +1,24 @@
-import React, { ReactElement, useState, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React, { ReactElement, useEffect, useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Row from 'react-bootstrap/Row';
 import { BsPencil } from 'react-icons/bs';
-
 import { useRouteMatch } from 'react-router';
-import { RootState } from '../../store/store';
+import Utils from '../../common/Utils';
+import { Bank } from '../../models/Bank';
 import { Code } from '../../models/Code';
+import { Codelist } from '../../models/Codelist';
+import NestableHierarcy from '../../NestableHierarchy/Nestable';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import {
   putProjectThunk,
   updateCodeList
 } from '../../store/reducers/project-reducer';
-import Utils from '../../common/Utils';
-import { Codelist } from '../../models/Codelist';
-import { Bank } from '../../models/Bank';
-
-import NestableHierarcy from '../../NestableHierarchy/Nestable';
-import EditCodeForm from './EditCodeForm';
-import NewCodeForm from './NewCodeForm';
-import EditCodeListForm from './EditCodeListForm';
-import SuccessAlert from '../SuccessAlert';
-import { selectProject } from '../../store/reducers/selectedProject-reducer';
 import { selectCodeList } from '../../store/reducers/selectedCodelist-reducer';
+import { selectProject } from '../../store/reducers/selectedProject-reducer';
+import SuccessAlert from '../SuccessAlert';
+import EditCodeForm from './EditCodeForm';
+import EditCodeListForm from './EditCodeListForm';
+import NewCodeForm from './NewCodeForm';
 
 interface RouteParams {
   projectId: string;
@@ -32,15 +29,15 @@ export default function CodeListEditor(): ReactElement {
   const projectMatch = useRouteMatch<RouteParams>(
     '/workbench/:projectId/codelist/:codelistId'
   );
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   if (projectMatch?.params.projectId && projectMatch?.params.codelistId) {
     dispatch(selectProject(projectMatch?.params.projectId));
     dispatch(selectCodeList(projectMatch?.params.codelistId));
   }
-  const { list } = useSelector((state: RootState) => state.project);
-  const { id } = useSelector((state: RootState) => state.selectedProject);
-  const { listId } = useSelector((state: RootState) => state.selectedCodeList);
+  const { list } = useAppSelector((state) => state.project);
+  const { id } = useAppSelector((state) => state.selectedProject);
+  const { listId } = useAppSelector((state) => state.selectedCodeList);
   const [toggleEditor, setToggleEditor] = useState(false);
   const [editmode, setEditMode] = useState(false);
   const [showAlert, setShowAlert] = useState(false);

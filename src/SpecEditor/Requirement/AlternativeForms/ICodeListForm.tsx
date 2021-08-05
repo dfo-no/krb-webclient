@@ -6,17 +6,16 @@ import Card from 'react-bootstrap/Card';
 import Form from 'react-bootstrap/Form';
 import { Controller, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import { useDispatch, useSelector } from 'react-redux';
 import ErrorSummary from '../../../Form/ErrorSummary';
 import { Codelist } from '../../../models/Codelist';
 import { ICodelistQuestion } from '../../../models/ICodelistQuestion';
 import { IRequirementAnswer } from '../../../models/IRequirementAnswer';
 import ModelType from '../../../models/ModelType';
+import { useAppDispatch, useAppSelector } from '../../../store/hooks';
 import {
   addAnswer,
   addProductAnswer
 } from '../../../store/reducers/spesification-reducer';
-import { RootState } from '../../../store/store';
 import { CodelistSchema } from '../../../Workbench/Requirement/RequirementEditor';
 
 interface IProps {
@@ -24,7 +23,7 @@ interface IProps {
 }
 
 export default function CodelistForm({ parentAnswer }: IProps): ReactElement {
-  const { spec } = useSelector((state: RootState) => state.specification);
+  const { spec } = useAppSelector((state) => state.specification);
   const {
     register,
     handleSubmit,
@@ -36,11 +35,9 @@ export default function CodelistForm({ parentAnswer }: IProps): ReactElement {
       ...(parentAnswer.alternative as ICodelistQuestion)
     }
   });
-  const { productId } = useSelector(
-    (state: RootState) => state.selectedSpecProduct
-  );
+  const { productId } = useAppSelector((state) => state.selectedSpecProduct);
   const item = parentAnswer.alternative as ICodelistQuestion;
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const { t } = useTranslation();
 
   if (!productId && parentAnswer.type === 'product') {

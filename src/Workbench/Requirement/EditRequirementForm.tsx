@@ -7,20 +7,19 @@ import Row from 'react-bootstrap/Row';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { BsTrashFill } from 'react-icons/bs';
-import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import ErrorSummary from '../../Form/ErrorSummary';
 import InputRow from '../../Form/InputRow';
 import { Need } from '../../models/Need';
 import { Requirement } from '../../models/Requirement';
 import { AccordionContext } from '../../NestableHierarchy/AccordionContext';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import {
   deleteRequirement,
   editRequirementInNeed,
   putProjectThunk
 } from '../../store/reducers/project-reducer';
 import { selectRequirement } from '../../store/reducers/selectedRequirement-reducer';
-import { RootState } from '../../store/store';
 
 interface IProps {
   element: Requirement;
@@ -45,8 +44,8 @@ export default function EditRequirementForm({
   need,
   needList
 }: IProps): ReactElement {
-  const { id } = useSelector((state: RootState) => state.selectedProject);
-  const dispatch = useDispatch();
+  const { id } = useAppSelector((state) => state.selectedProject);
+  const dispatch = useAppDispatch();
   const { onOpenClose } = useContext(AccordionContext);
   const [validated] = useState(false);
   const { t } = useTranslation();

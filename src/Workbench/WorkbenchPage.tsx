@@ -8,18 +8,17 @@ import Row from 'react-bootstrap/Row';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { BsTrashFill } from 'react-icons/bs';
-import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import ErrorSummary from '../Form/ErrorSummary';
 import InputRow from '../Form/InputRow';
 import { Bank } from '../models/Bank';
 import ModelType from '../models/ModelType';
+import { useAppDispatch, useAppSelector } from '../store/hooks';
 import {
   deleteProjectThunk,
   postProjectThunk
 } from '../store/reducers/project-reducer';
 import { selectProject } from '../store/reducers/selectedProject-reducer';
-import { RootState } from '../store/store';
 import SuccessAlert from './SuccessAlert';
 
 type FormValues = {
@@ -28,8 +27,8 @@ type FormValues = {
 };
 
 function WorkbenchPage(): ReactElement {
-  const dispatch = useDispatch();
-  const { list } = useSelector((state: RootState) => state.project);
+  const dispatch = useAppDispatch();
+  const { list } = useAppSelector((state) => state.project);
   const [showEditor, setShowEditor] = useState(false);
   const [showAlert, setShowAlert] = useState(false);
   const [validated] = useState(false);

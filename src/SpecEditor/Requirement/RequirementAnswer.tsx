@@ -1,27 +1,26 @@
-import React, { ReactElement, useState } from 'react';
-import Card from 'react-bootstrap/Card';
-import Button from 'react-bootstrap/Button';
-import Row from 'react-bootstrap/Row';
-import Form from 'react-bootstrap/Form';
-import { useForm } from 'react-hook-form';
-import { useDispatch, useSelector } from 'react-redux';
-import { v4 as uuidv4 } from 'uuid';
-import Joi from 'joi';
 import { joiResolver } from '@hookform/resolvers/joi';
-import { Link } from 'react-router-dom';
+import Joi from 'joi';
+import React, { ReactElement, useState } from 'react';
+import Button from 'react-bootstrap/Button';
+import Card from 'react-bootstrap/Card';
+import Form from 'react-bootstrap/Form';
+import Row from 'react-bootstrap/Row';
+import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
+import { Link } from 'react-router-dom';
+import { v4 as uuidv4 } from 'uuid';
 import Utils from '../../common/Utils';
+import ErrorSummary from '../../Form/ErrorSummary';
+import { IRequirementAnswer } from '../../models/IRequirementAnswer';
 import { IVariant } from '../../models/IVariant';
+import ModelType from '../../models/ModelType';
 import { Requirement } from '../../models/Requirement';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
+import { selectAlternative } from '../../store/reducers/selectedAlternative-reducer';
 import {
   addAnswer,
   deleteAnswer
 } from '../../store/reducers/spesification-reducer';
-import { RootState } from '../../store/store';
-import { selectAlternative } from '../../store/reducers/selectedAlternative-reducer';
-import ErrorSummary from '../../Form/ErrorSummary';
-import { IRequirementAnswer } from '../../models/IRequirementAnswer';
-import ModelType from '../../models/ModelType';
 
 interface IProps {
   requirement: Requirement;
@@ -41,7 +40,7 @@ const alternativeSchema = Joi.object().keys({
 export default function RequirementAnswer({
   requirement
 }: IProps): ReactElement {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const { t } = useTranslation();
   const {
     register,
@@ -50,7 +49,7 @@ export default function RequirementAnswer({
   } = useForm({
     resolver: joiResolver(alternativeSchema)
   });
-  const { spec } = useSelector((state: RootState) => state.specification);
+  const { spec } = useAppSelector((state) => state.specification);
   const [selectedVariant, setSelectedVariant] = useState(
     requirement.variants[0]
   );
@@ -61,7 +60,7 @@ export default function RequirementAnswer({
     string | undefined
   >(savedAlternative !== undefined ? savedAlternative.id : undefined);
 
-  const { id } = useSelector((state: RootState) => state.selectedBank);
+  const { id } = useAppSelector((state) => state.selectedBank);
   const saveAnswer = (post: FormValue) => {
     const alternativeIndex = selectedVariant.questions.findIndex(
       (alt) => alt.id === post.alternative
