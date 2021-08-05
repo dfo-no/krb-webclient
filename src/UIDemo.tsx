@@ -134,7 +134,7 @@ function Variants({
   getValues
 }: IProps): ReactElement {
   const { errors } = formState;
-  const { fields, append, remove } = useFieldArray({
+  const { fields } = useFieldArray({
     control,
     name: `cart.variants` as 'cart.variants'
   });
