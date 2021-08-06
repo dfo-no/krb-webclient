@@ -33,7 +33,7 @@
   "new project": "Nytt prosjekt",
   "new need": "Nytt behov",
   "summarize changes": "Oppsummer endringene",
-  "publish": "Publisher",
+  "publish": "Publiser",
   "save": "Lagre",
   "delete": "Slett",
   "sign in": "Logg inn",
@@ -44,7 +44,7 @@
   "edit": "Rediger",
   "weighting": "vekting",
   "Q_SLIDER": "Q_SLIDER",
-  "From date" : "Fra dato",
-  "To date" : "Til dato", 
-  "Select date" : "Velg dato"
+  "From date": "Fra dato",
+  "To date": "Til dato",
+  "Select date": "Velg dato"
 }
