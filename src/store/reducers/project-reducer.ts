@@ -1,9 +1,7 @@
 /* eslint-disable no-param-reassign */
-import { ItemDefinition, ItemResponse } from '@azure/cosmos';
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { httpDelete, httpGet, httpPost } from '../../api/http';
+import { httpDelete, httpGet, httpPost, httpPut } from '../../api/http';
 import Utils from '../../common/Utils';
-import { CosmosApi } from '../../database/CosmosApi';
 import { Bank } from '../../models/Bank';
 import { Code } from '../../models/Code';
 import { Codelist } from '../../models/Codelist';
@@ -56,11 +54,8 @@ export const putProjectThunk = createAsyncThunk<
       .getState()
       .project.list.find((element: Bank) => element.id === projectId)
   );
-  const api = new CosmosApi();
-  const result: ItemResponse<ItemDefinition> = await api.replaceBank(project);
-  const res = result.resource as unknown;
-
-  return res as Bank;
+  const response = await httpPut<Bank>(`/api/bank/${project.id}`, project);
+  return response.data;
 });
 
 export const deleteProjectThunk = createAsyncThunk(
@@ -72,7 +67,7 @@ export const deleteProjectThunk = createAsyncThunk(
 );
 
 const projectSlice = createSlice({
-  name: 'Projects',
+  name: 'projects',
   initialState,
   reducers: {
     addProjects(state, { payload }: PayloadAction<Bank[]>) {
