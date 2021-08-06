@@ -91,22 +91,6 @@ const projectSlice = createSlice({
         state.list.splice(index, 1);
       }
     },
-    editProject(
-      state,
-      {
-        payload
-      }: PayloadAction<{
-        projectId: string;
-        title: string;
-        description: string;
-      }>
-    ) {
-      const projectIndex = state.list.findIndex(
-        (project) => project.id === payload.projectId
-      );
-      state.list[projectIndex].title = payload.title;
-      state.list[projectIndex].description = payload.description;
-    },
     incrementProjectVersion(state, { payload }: PayloadAction<string>) {
       const projectIndex = state.list.findIndex(
         (project) => project.id === payload
@@ -604,7 +588,6 @@ export const {
   editCode,
   editCodelist,
   publishProject,
-  editProject,
   setRequirementListToNeed,
   editRequirementInNeed,
   addRequirement,
