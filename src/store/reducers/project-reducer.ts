@@ -58,6 +58,14 @@ export const putProjectByIdThunk = createAsyncThunk<
   return response.data;
 });
 
+export const putProjectThunk = createAsyncThunk(
+  'putProjectThunk',
+  async (project: Bank) => {
+    const response = await httpPut<Bank>(`/api/bank/${project.id}`, project);
+    return response.data;
+  }
+);
+
 export const deleteProjectThunk = createAsyncThunk(
   'deleteProjectThunk',
   async (project: Bank) => {
@@ -545,6 +553,19 @@ const projectSlice = createSlice({
       state.status = 'pending';
     });
     builder.addCase(putProjectByIdThunk.rejected, (state) => {
+      state.status = 'rejected';
+    });
+    builder.addCase(putProjectThunk.fulfilled, (state, { payload }) => {
+      state.status = 'fulfilled';
+      const projectIndex = Utils.ensure(
+        state.list.findIndex((project) => project.id === payload.id)
+      );
+      state.list[projectIndex] = payload;
+    });
+    builder.addCase(putProjectThunk.pending, (state) => {
+      state.status = 'pending';
+    });
+    builder.addCase(putProjectThunk.rejected, (state) => {
       state.status = 'rejected';
     });
     builder.addCase(deleteProjectThunk.fulfilled, (state, { payload }) => {
