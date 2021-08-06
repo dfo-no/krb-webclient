@@ -14,7 +14,10 @@ import ModelType from '../../models/ModelType';
 import { Need } from '../../models/Need';
 import { Nestable } from '../../models/Nestable';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
-import { addNeed, putProjectThunk } from '../../store/reducers/project-reducer';
+import {
+  addNeed,
+  putProjectByIdThunk
+} from '../../store/reducers/project-reducer';
 
 type FormValues = {
   title: string;
@@ -61,7 +64,7 @@ function NewNeedForm({ toggleShow, toggleAlert }: IProps): ReactElement {
       parent: ''
     };
     dispatch(addNeed({ id, need }));
-    dispatch(putProjectThunk(id));
+    dispatch(putProjectByIdThunk(id));
 
     // reset the form
     reset();

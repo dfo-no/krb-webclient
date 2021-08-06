@@ -10,7 +10,7 @@ import { Codelist } from '../../models/Codelist';
 import NestableHierarcy from '../../NestableHierarchy/Nestable';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import {
-  putProjectThunk,
+  putProjectByIdThunk,
   updateCodeList
 } from '../../store/reducers/project-reducer';
 import { selectCodeList } from '../../store/reducers/selectedCodelist-reducer';
@@ -94,7 +94,7 @@ export default function CodeListEditor(): ReactElement {
     dispatch(
       updateCodeList({ id: projectId, codes: items, codelistId: listId })
     );
-    dispatch(putProjectThunk(projectId));
+    dispatch(putProjectByIdThunk(projectId));
   };
 
   return (

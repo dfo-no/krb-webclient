@@ -9,7 +9,7 @@ import NestableHierarcy from '../../NestableHierarchy/Nestable';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import {
   getProjectsThunk,
-  putProjectThunk,
+  putProjectByIdThunk,
   updateNeedList
 } from '../../store/reducers/project-reducer';
 import { selectProject } from '../../store/reducers/selectedProject-reducer';
@@ -68,7 +68,7 @@ function NeedPage(): ReactElement {
 
   const newNeedList = (projectId: string, items: Nestable<Need>[]) => {
     dispatch(updateNeedList({ id: projectId, needs: items }));
-    dispatch(putProjectThunk(projectId));
+    dispatch(putProjectByIdThunk(projectId));
   };
 
   return (

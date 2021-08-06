@@ -8,7 +8,7 @@ import NestableHierarcy from '../../NestableHierarchy/Nestable';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import {
   getProjectsThunk,
-  putProjectThunk,
+  putProjectByIdThunk,
   updateProductList
 } from '../../store/reducers/project-reducer';
 import { selectProject } from '../../store/reducers/selectedProject-reducer';
@@ -73,7 +73,7 @@ export default function ProductPage(): ReactElement {
   }
   const newProductList = (projectId: string, items: Product[]) => {
     dispatch(updateProductList({ id: projectId, products: items }));
-    dispatch(putProjectThunk(projectId));
+    dispatch(putProjectByIdThunk(projectId));
   };
   return (
     <div className="pb-4">

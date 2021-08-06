@@ -14,7 +14,7 @@ import { Product } from '../../models/Product';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import {
   addProduct,
-  putProjectThunk
+  putProjectByIdThunk
 } from '../../store/reducers/project-reducer';
 
 type FormValues = {
@@ -61,7 +61,7 @@ function NewProductForm({ toggleShow, toggleAlert }: IProps): ReactElement {
       type: ModelType.product
     };
     dispatch(addProduct({ id, product }));
-    dispatch(putProjectThunk(id));
+    dispatch(putProjectByIdThunk(id));
 
     // reset the form
     reset();

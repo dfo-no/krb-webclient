@@ -21,7 +21,7 @@ import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import {
   deleteProduct,
   editProduct,
-  putProjectThunk
+  putProjectByIdThunk
 } from '../../store/reducers/project-reducer';
 import { selectProduct } from '../../store/reducers/selectedProduct-reducer';
 
@@ -75,7 +75,7 @@ export default function ProductForm({ element }: IProps): ReactElement {
         product: newProduct
       })
     );
-    dispatch(putProjectThunk(id));
+    dispatch(putProjectByIdThunk(id));
     onOpenClose('');
   };
 
@@ -101,7 +101,7 @@ export default function ProductForm({ element }: IProps): ReactElement {
       setModalShow(true);
     } else {
       dispatch(deleteProduct({ projectId: id, productId: element.id }));
-      dispatch(putProjectThunk(id));
+      dispatch(putProjectByIdThunk(id));
     }
     onOpenClose('');
   };

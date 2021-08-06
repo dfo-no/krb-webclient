@@ -15,7 +15,7 @@ import ModelType from '../../models/ModelType';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import {
   addCodelist,
-  putProjectThunk
+  putProjectByIdThunk
 } from '../../store/reducers/project-reducer';
 
 type FormValues = {
@@ -61,7 +61,7 @@ function NewCodeListForm({ toggleShow, toggleAlert }: IProps): ReactElement {
       type: ModelType.codelist
     };
     dispatch(addCodelist({ id, codelist: codeList }));
-    dispatch(putProjectThunk(id));
+    dispatch(putProjectByIdThunk(id));
     reset();
     toggleShow(false);
     toggleAlert(true);

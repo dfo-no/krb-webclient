@@ -15,7 +15,7 @@ import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import {
   deleteCodeInCodelist,
   editCodeInCodelist,
-  putProjectThunk
+  putProjectByIdThunk
 } from '../../store/reducers/project-reducer';
 
 interface IProps {
@@ -70,7 +70,7 @@ export default function EditCodeForm({ element }: IProps): ReactElement {
         code: newCode
       })
     );
-    dispatch(putProjectThunk(id));
+    dispatch(putProjectByIdThunk(id));
     onOpenClose('');
   };
 
@@ -82,7 +82,7 @@ export default function EditCodeForm({ element }: IProps): ReactElement {
         codeId: element.id
       })
     );
-    dispatch(putProjectThunk(id));
+    dispatch(putProjectByIdThunk(id));
   };
 
   return (

@@ -23,7 +23,7 @@ import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import {
   deleteCodelist,
   editCodelist,
-  putProjectThunk
+  putProjectByIdThunk
 } from '../../store/reducers/project-reducer';
 
 type FormValues = {
@@ -82,7 +82,7 @@ function EditCodeListForm({ toggleShow, codelistId }: IProps): ReactElement {
         description: post.description
       })
     );
-    dispatch(putProjectThunk(id));
+    dispatch(putProjectByIdThunk(id));
     reset();
     toggleShow(false);
   };
@@ -115,7 +115,7 @@ function EditCodeListForm({ toggleShow, codelistId }: IProps): ReactElement {
       setModalShow(true);
     } else {
       dispatch(deleteCodelist({ projectId: id, codelistId }));
-      dispatch(putProjectThunk(id));
+      dispatch(putProjectByIdThunk(id));
       history.push(`/workbench/${project.id}/codelist`);
     }
   };

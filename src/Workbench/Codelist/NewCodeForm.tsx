@@ -15,7 +15,7 @@ import ModelType from '../../models/ModelType';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import {
   addCodeToCodelist,
-  putProjectThunk
+  putProjectByIdThunk
 } from '../../store/reducers/project-reducer';
 
 type FormValues = {
@@ -65,7 +65,7 @@ function NewCodeForm({
       type: ModelType.code
     };
     dispatch(addCodeToCodelist({ projectId: id, codelistId, code }));
-    dispatch(putProjectThunk(id));
+    dispatch(putProjectByIdThunk(id));
 
     // reset the form
     reset();

@@ -16,7 +16,7 @@ import { Requirement } from '../../models/Requirement';
 import RequirementType from '../../models/RequirementType';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import {
-  putProjectThunk,
+  putProjectByIdThunk,
   setRequirementListToNeed
 } from '../../store/reducers/project-reducer';
 
@@ -85,7 +85,7 @@ function NewRequirementForm({
         reqList
       })
     );
-    dispatch(putProjectThunk(id));
+    dispatch(putProjectByIdThunk(id));
     reset();
     toggleShow(false);
     toggleAlert(true);

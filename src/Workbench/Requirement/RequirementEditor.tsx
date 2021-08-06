@@ -19,7 +19,7 @@ import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import {
   editRequirementInNeed,
   getProjectsThunk,
-  putProjectThunk
+  putProjectByIdThunk
 } from '../../store/reducers/project-reducer';
 import { selectNeed } from '../../store/reducers/selectedNeed-reducer';
 import { selectProject } from '../../store/reducers/selectedProject-reducer';
@@ -227,7 +227,7 @@ export default function RequirementEditor(): ReactElement {
         requirementIndex: oldReqIndex
       })
     );
-    await dispatch(putProjectThunk(project.id));
+    await dispatch(putProjectByIdThunk(project.id));
     await dispatch(selectNeed(post.needId));
   };
 

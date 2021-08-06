@@ -17,7 +17,7 @@ import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import {
   deleteNeed,
   editNeed,
-  putProjectThunk
+  putProjectByIdThunk
 } from '../../store/reducers/project-reducer';
 
 type FormValues = {
@@ -73,7 +73,7 @@ function EditNeedForm({ element }: IProps): ReactElement {
         description: post.description
       })
     );
-    dispatch(putProjectThunk(id));
+    dispatch(putProjectByIdThunk(id));
 
     // Close accordion via useContext
     onOpenClose('');
@@ -87,7 +87,7 @@ function EditNeedForm({ element }: IProps): ReactElement {
       setModalShow(true);
     } else {
       dispatch(deleteNeed({ projectId: id, needId: element.id }));
-      dispatch(putProjectThunk(id));
+      dispatch(putProjectByIdThunk(id));
     }
     onOpenClose('');
   };

@@ -17,7 +17,7 @@ import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import {
   deleteRequirement,
   editRequirementInNeed,
-  putProjectThunk
+  putProjectByIdThunk
 } from '../../store/reducers/project-reducer';
 import { selectRequirement } from '../../store/reducers/selectedRequirement-reducer';
 
@@ -82,7 +82,7 @@ export default function EditRequirementForm({
         requirementIndex: index
       })
     );
-    dispatch(putProjectThunk(id));
+    dispatch(putProjectByIdThunk(id));
     onOpenClose('');
   };
 
@@ -97,7 +97,7 @@ export default function EditRequirementForm({
         requirementIndex: index
       })
     );
-    dispatch(putProjectThunk(id));
+    dispatch(putProjectByIdThunk(id));
   };
 
   return (

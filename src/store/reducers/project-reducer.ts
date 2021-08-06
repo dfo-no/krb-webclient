@@ -40,14 +40,14 @@ export const postProjectThunk = createAsyncThunk(
   }
 );
 
-export const putProjectThunk = createAsyncThunk<
+export const putProjectByIdThunk = createAsyncThunk<
   Bank,
   string,
   {
     dispatch: AppDispatch;
     state: RootState;
   }
->('putProjectThunk', async (projectId: string, thunkApi) => {
+>('putProjectByIdThunk', async (projectId: string, thunkApi) => {
   // get updated project from redux
   const project = Utils.ensure(
     thunkApi
@@ -534,17 +534,17 @@ const projectSlice = createSlice({
     builder.addCase(postProjectThunk.rejected, (state) => {
       state.status = 'rejected';
     });
-    builder.addCase(putProjectThunk.fulfilled, (state, { payload }) => {
+    builder.addCase(putProjectByIdThunk.fulfilled, (state, { payload }) => {
       state.status = 'fulfilled';
       const projectIndex = Utils.ensure(
         state.list.findIndex((project) => project.id === payload.id)
       );
       state.list[projectIndex] = payload;
     });
-    builder.addCase(putProjectThunk.pending, (state) => {
+    builder.addCase(putProjectByIdThunk.pending, (state) => {
       state.status = 'pending';
     });
-    builder.addCase(putProjectThunk.rejected, (state) => {
+    builder.addCase(putProjectByIdThunk.rejected, (state) => {
       state.status = 'rejected';
     });
     builder.addCase(deleteProjectThunk.fulfilled, (state, { payload }) => {
