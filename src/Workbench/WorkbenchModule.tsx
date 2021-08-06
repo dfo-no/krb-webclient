@@ -1,10 +1,10 @@
-import React, { ReactElement, useEffect } from 'react';
+import React, { ReactElement, useEffect, useState } from 'react';
 import Col from 'react-bootstrap/Col';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import { Route, Switch, useRouteMatch } from 'react-router-dom';
 import NotFound from '../NotFound';
-import { useAppDispatch, useAppSelector } from '../store/hooks';
+import { useAppDispatch } from '../store/hooks';
 import { getProjectsThunk } from '../store/reducers/project-reducer';
 import { selectProject } from '../store/reducers/selectedProject-reducer';
 import CodeListEditor from './Codelist/CodeListEditor';
@@ -26,10 +26,12 @@ interface RouteParams {
 export default function WorkbenchModule(): ReactElement {
   const projectMatch = useRouteMatch<RouteParams>('/workbench/:projectId');
   const dispatch = useAppDispatch();
-  const { id } = useAppSelector((state) => state.selectedProject);
-  // Can set this safely, even if we got here directly by url or by clicks
-  if (projectMatch?.params.projectId && !id) {
-    dispatch(selectProject(projectMatch?.params.projectId));
+
+  const [isLoading, setLoading] = useState(true);
+
+  let selectedProjectId = '';
+  if (projectMatch?.params.projectId) {
+    selectedProjectId = projectMatch.params.projectId;
   }
 
   /* Every child of this WorkbenchModule need the list of projects.
@@ -37,12 +39,21 @@ export default function WorkbenchModule(): ReactElement {
     possible to have a loading-indicator or some other nice stuff */
   useEffect(() => {
     async function fetchEverything() {
-      setTimeout(async () => {
-        await dispatch(getProjectsThunk());
-      });
+      await dispatch(getProjectsThunk())
+        .unwrap()
+        .then(() => {
+          if (selectedProjectId) {
+            dispatch(selectProject(selectedProjectId));
+          }
+          setLoading(false);
+        });
     }
     fetchEverything();
-  }, [dispatch]);
+  }, [dispatch, selectedProjectId, setLoading]);
+
+  if (isLoading) {
+    return <p>Loading...</p>;
+  }
 
   return (
     <Container fluid>
