@@ -110,6 +110,7 @@
       "project": "./tsconfig.json"
     },
     "rules": {
+      "spaced-comment": "warn",
       "linebreak-style": "off",
       "prettier/prettier": [
         "error",
