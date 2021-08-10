@@ -114,63 +114,63 @@ export default function DateInfoAnswer({
     }
   };
   return (
-    <Card className="mb-3">
-      <Card.Body>
-        <h6>Alternative: Date</h6>
-        <Form onSubmit={handleSubmit(saveValues)}>
-          <Form.Control
-            as="input"
-            type="hidden"
-            {...register('id')}
-            isInvalid={!!errors.id}
-          />
+    <Col className="p-0 m-0 w-50">
+      <p>Hvilekn dato skal varene leveres</p>
+      <Form onSubmit={handleSubmit(saveValues)}>
+        <Form.Control
+          as="input"
+          type="hidden"
+          {...register('id')}
+          isInvalid={!!errors.id}
+        />
 
-          <Form.Control
-            as="input"
-            type="hidden"
-            {...register('type')}
-            isInvalid={!!errors.type}
-          />
-          <Form.Control
-            as="input"
-            type="hidden"
-            {...register('config.fromDate')}
-            isInvalid={!!errors.type}
-          />
-          <Form.Control
-            as="input"
-            type="hidden"
-            {...register('config.toDate')}
-            isInvalid={!!errors.type}
-          />
-          <Form.Group as={Row}>
-            <Col sm="4">
-              <Controller
-                name={`answer.date` as const}
-                control={control}
-                defaultValue={dateQuestion.config.fromDate}
-                render={({ field: { ref, ...rest } }) => (
-                  <KeyboardDatePicker
-                    margin="normal"
-                    id="date-picker-dialog"
-                    variant="inline"
-                    minDate={dateQuestion.config.fromDate}
-                    maxDate={dateQuestion.config.toDate}
-                    format="dd/MM/yyyy"
-                    label={t('Select date')}
-                    KeyboardButtonProps={{
-                      'aria-label': 'change date'
-                    }}
-                    {...rest}
-                  />
-                )}
-              />
-            </Col>
-          </Form.Group>
-          <Button type="submit">{t('save')}</Button>
-          <ErrorSummary errors={errors} />
-        </Form>
-      </Card.Body>
-    </Card>
+        <Form.Control
+          as="input"
+          type="hidden"
+          {...register('type')}
+          isInvalid={!!errors.type}
+        />
+        <Form.Control
+          as="input"
+          type="hidden"
+          {...register('config.fromDate')}
+          isInvalid={!!errors.type}
+        />
+        <Form.Control
+          as="input"
+          type="hidden"
+          {...register('config.toDate')}
+          isInvalid={!!errors.type}
+        />
+        <Form.Group as={Row}>
+          <Col sm="4">
+            <Controller
+              name={`answer.date` as const}
+              control={control}
+              defaultValue={dateQuestion.config.fromDate}
+              render={({ field: { ref, ...rest } }) => (
+                <KeyboardDatePicker
+                  margin="normal"
+                  id="date-picker-dialog"
+                  variant="inline"
+                  minDate={dateQuestion.config.fromDate}
+                  maxDate={dateQuestion.config.toDate}
+                  format="dd/MM/yyyy"
+                  label={t('Select date')}
+                  KeyboardButtonProps={{
+                    'aria-label': 'change date'
+                  }}
+                  {...rest}
+                />
+              )}
+            />
+          </Col>
+        </Form.Group>
+        <Button className="mt-2" type="submit">
+          {t('save')}
+        </Button>
+        <ErrorSummary errors={errors} />
+      </Form>
+    </Col>
   );
 }

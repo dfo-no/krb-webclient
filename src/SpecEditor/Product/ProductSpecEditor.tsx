@@ -68,15 +68,6 @@ export default function ProductSpecEditor(): ReactElement {
     }
   });
 
-  /* TODO: wont' work due to defaultValues and form hook above */
-  /* if (!id) {
-    return <p>No selected bank</p>;
-  }
-
-  if (!productId) {
-    return <p>No selected product</p>;
-  } */
-
   return (
     <Container fluid>
       <Row className="m-4">

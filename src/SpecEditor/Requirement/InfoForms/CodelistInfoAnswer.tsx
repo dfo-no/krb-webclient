@@ -3,6 +3,7 @@ import Joi from 'joi';
 import React, { ReactElement } from 'react';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
+import Col from 'react-bootstrap/esm/Col';
 import Form from 'react-bootstrap/Form';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
@@ -125,34 +126,32 @@ export default function CodelistInfoAnswer({
 
   const codelist = spec.bank.codelist[codelistIndex];
   return (
-    <Card className="m-3 ">
-      <Card.Header>
-        <h6>Question: Codelist</h6>
-      </Card.Header>
-      <Card.Body>
-        <Form onSubmit={handleSubmit(saveValues)}>
-          <Form.Control as="input" type="hidden" {...register('id')} />
-          <Form.Control as="input" type="hidden" {...register('type')} />
-          <Form.Control type="hidden" {...register('config.codelist')} />
-          <Form.Control
-            type="hidden"
-            {...register(`config.multipleSelect` as const)}
-          />
-          <Form.Control
-            as="select"
-            multiple
-            {...register(`answer.codes` as const)}
-          >
-            {codelist.codes.map((element) => (
-              <option key={element.id} value={element.id}>
-                {element.title}
-              </option>
-            ))}
-          </Form.Control>
-          <Button type="submit">{t('save')}</Button>
-          <ErrorSummary errors={errors} />
-        </Form>
-      </Card.Body>
-    </Card>
+    <Col className="p-0 m-0 w-50">
+      <p>Hvilke koder skal kreves? </p>
+      <Form onSubmit={handleSubmit(saveValues)}>
+        <Form.Control as="input" type="hidden" {...register('id')} />
+        <Form.Control as="input" type="hidden" {...register('type')} />
+        <Form.Control type="hidden" {...register('config.codelist')} />
+        <Form.Control
+          type="hidden"
+          {...register(`config.multipleSelect` as const)}
+        />
+        <Form.Control
+          as="select"
+          multiple
+          {...register(`answer.codes` as const)}
+        >
+          {codelist.codes.map((element) => (
+            <option key={element.id} value={element.id}>
+              {element.title}
+            </option>
+          ))}
+        </Form.Control>
+        <Button className="mt-2" type="submit">
+          {t('save')}
+        </Button>
+        <ErrorSummary errors={errors} />
+      </Form>
+    </Col>
   );
 }
