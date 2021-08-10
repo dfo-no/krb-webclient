@@ -3,7 +3,6 @@ import Slider from '@material-ui/core/Slider';
 import Joi from 'joi';
 import React, { ReactElement, useState } from 'react';
 import Button from 'react-bootstrap/Button';
-import Card from 'react-bootstrap/Card';
 import Col from 'react-bootstrap/esm/Col';
 import Container from 'react-bootstrap/esm/Container';
 import Form from 'react-bootstrap/Form';
@@ -23,7 +22,8 @@ import { Requirement } from '../../models/Requirement';
 import { selectAlternative } from '../../store/reducers/selectedAlternative-reducer';
 import {
   addAnswer,
-  deleteAnswer
+  deleteAnswer,
+  editAnswer
 } from '../../store/reducers/spesification-reducer';
 import { RootState } from '../../store/store';
 
@@ -35,6 +35,28 @@ type FormValue = {
   alternative: string;
   weight: number;
 };
+const marks: IOption[] = [
+  {
+    value: 10,
+    label: `Lav`
+  },
+  {
+    value: 30,
+    label: ``
+  },
+  {
+    value: 50,
+    label: `Middels`
+  },
+  {
+    value: 70,
+    label: ``
+  },
+  {
+    value: 90,
+    label: `Høy`
+  }
+];
 
 const alternativeSchema = Joi.object().keys({
   alternative: Joi.string().required(),
@@ -50,7 +72,6 @@ export default function RequirementAnswer({
   const {
     register,
     handleSubmit,
-    getValues,
     control,
     formState: { errors }
   } = useForm({
@@ -67,24 +88,43 @@ export default function RequirementAnswer({
     string | undefined
   >(savedAlternative !== undefined ? savedAlternative.id : undefined);
 
-  // MÅ settes til savedAlternatives weigth hvis det ikke er undefined, defaulter til standard
-  const [weightType, setWeightType] = useState('standard');
   const { id } = useSelector((state: RootState) => state.selectedBank);
+
+  const checkWeightIsPredefined = (weight: number) => {
+    const predefinedValues = [10, 30, 50, 70, 90];
+    return predefinedValues.includes(weight);
+  };
+  const setWeightState = () => {
+    if (savedAlternative) {
+      if (checkWeightIsPredefined(savedAlternative.weight)) return 'standard';
+      return 'egendefinert';
+    }
+    return 'standard';
+  };
+  const [weightType, setWeightType] = useState(setWeightState());
   const saveAnswer = (post: FormValue) => {
     const alternativeIndex = selectedVariant.questions.findIndex(
       (alt) => alt.id === post.alternative
     );
-    const alternative = selectedVariant.questions[alternativeIndex];
-    const newAnswer: IRequirementAnswer = {
-      id: uuidv4(),
-      alternativeId: post.alternative,
-      weight: post.weight,
-      reqTextId: selectedVariant.id,
-      alternative,
-      type: ModelType.requirement
-    };
-    dispatch(addAnswer({ answer: newAnswer }));
-    setSelectedAlternative(newAnswer.id);
+    const savedWeight =
+      weightType === 'standard' && post.weight > 90 ? 90 : post.weight;
+    if (savedAlternative) {
+      const updatedAnswer: IRequirementAnswer = { ...savedAlternative };
+      updatedAnswer.weight = savedWeight;
+      dispatch(editAnswer({ answer: updatedAnswer }));
+    } else {
+      const alternative = selectedVariant.questions[alternativeIndex];
+      const newAnswer: IRequirementAnswer = {
+        id: uuidv4(),
+        alternativeId: post.alternative,
+        weight: savedWeight,
+        reqTextId: selectedVariant.id,
+        alternative,
+        type: ModelType.requirement
+      };
+      dispatch(addAnswer({ answer: newAnswer }));
+      setSelectedAlternative(newAnswer.id);
+    }
   };
 
   const selectAlt = () => {
@@ -178,29 +218,6 @@ export default function RequirementAnswer({
     );
   };
 
-  const marks: IOption[] = [
-    {
-      value: 0,
-      label: `Lav`
-    },
-    {
-      value: 25,
-      label: `Litt lav`
-    },
-    {
-      value: 50,
-      label: `Middels`
-    },
-    {
-      value: 75,
-      label: `Litt høy`
-    },
-    {
-      value: 100,
-      label: `Høy`
-    }
-  ];
-
   const answerOptions = (variant: IVariant) => {
     const answers = variant.questions.map((alternative) => {
       return (
@@ -244,7 +261,7 @@ export default function RequirementAnswer({
               type="radio"
               name="standard"
               id="standard"
-              value="standard"
+              checked={weightType === 'standard'}
               onChange={() => setWeightType('standard')}
             />
           </Form.Check>
@@ -254,6 +271,7 @@ export default function RequirementAnswer({
               type="radio"
               name="egendefinert"
               id="egendefinert"
+              checked={weightType === 'egendefinert'}
               onChange={() => setWeightType('egendefinert')}
             />
           </Form.Check>
@@ -265,8 +283,11 @@ export default function RequirementAnswer({
               <Form.Label>{t('weighting')}:</Form.Label>
               <Form.Control
                 type="number"
-                {...register('weight')}
-                defaultValue={findDefaultAnswerOption()[1]}
+                defaultValue={
+                  savedAlternative?.weight ? savedAlternative.weight : 100
+                }
+                min={0}
+                {...register('weight' as const)}
                 isInvalid={!!errors.weight}
               />
               {errors.weight && (
@@ -281,18 +302,18 @@ export default function RequirementAnswer({
               control={control}
               name={'weight' as const}
               defaultValue={
-                getValues(`weigth` as const) ? (`weigth` as const) : 0
+                savedAlternative?.weight ? savedAlternative.weight : 0
               }
               render={({ field }) => (
                 <Slider
-                  className="mt-4 w-25"
+                  className="mt-4 w-50"
                   {...field}
                   onChange={(_, value) => {
                     field.onChange(value);
                   }}
-                  step={25}
-                  min={0}
-                  max={100}
+                  step={20}
+                  min={10}
+                  max={90}
                   marks={marks}
                   valueLabelDisplay="auto"
                 />
