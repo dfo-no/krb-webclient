@@ -284,7 +284,7 @@ export default function RequirementAnswer({
               <Form.Control
                 type="number"
                 defaultValue={
-                  savedAlternative?.weight ? savedAlternative.weight : 100
+                  savedAlternative?.weight ? savedAlternative.weight : 0
                 }
                 min={0}
                 {...register('weight' as const)}
