@@ -70,7 +70,3 @@ describe('BankSchema should validate', () => {
     expect(report.error).toBeUndefined();
   });
 });
-
-/* const report = BaseBankSchema.validate(newBank, { abortEarly: false });
-  console.log(report.error);
-  expect(report.error?.details.length).toEqual(2); */

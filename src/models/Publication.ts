@@ -12,12 +12,21 @@ export const BasePublicationSchema = Joi.object().keys({
 });
 
 export const PostPublicationSchema = BasePublicationSchema.keys({
-  id: Joi.string().allow('').required(),
+  id: Joi.string().valid('').required(),
   date: Joi.string().valid('')
 });
 
 export const PutPublicationSchema = BasePublicationSchema.keys({
   id: Joi.string().min(36).max(36).required()
+});
+
+export const PutPublicationSchemaArray = Joi.object().keys({
+  publications: Joi.array()
+    .ordered(PostPublicationSchema)
+    .items(PutPublicationSchema)
+    .unique('id')
+    .unique('version')
+    .unique('date')
 });
 
 export interface Publication extends BaseModel {
