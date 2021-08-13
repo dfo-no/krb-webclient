@@ -33,13 +33,13 @@ export default function CodelistForm({ parentAnswer }: IProps): ReactElement {
   } = useForm<ICodelistQuestion>({
     resolver: joiResolver(CodelistSchema),
     defaultValues: {
-      ...(parentAnswer.alternative as ICodelistQuestion)
+      ...(parentAnswer.question as ICodelistQuestion)
     }
   });
   const { productId } = useSelector(
     (state: RootState) => state.selectedSpecProduct
   );
-  const item = parentAnswer.alternative as ICodelistQuestion;
+  const item = parentAnswer.question as ICodelistQuestion;
   const dispatch = useDispatch();
   const { t } = useTranslation();
 
@@ -55,7 +55,7 @@ export default function CodelistForm({ parentAnswer }: IProps): ReactElement {
       ...parentAnswer
     };
     newAlt = post;
-    newAnswer.alternative = newAlt;
+    newAnswer.question = newAlt;
     if (newAnswer.type === ModelType.requirement)
       dispatch(addAnswer({ answer: newAnswer }));
     if (newAnswer.type === ModelType.product && productId !== null)

@@ -1,10 +1,10 @@
 import React, { ReactElement } from 'react';
 import Nav from 'react-bootstrap/Nav';
+import { useSelector } from 'react-redux';
 import { withRouter } from 'react-router';
 import { NavLink, useRouteMatch } from 'react-router-dom';
-import { useSelector } from 'react-redux';
-import css from './ResponseSideBar.module.scss';
 import { RootState } from '../../store/store';
+import css from './ResponseSideBar.module.scss';
 
 interface IRouteLink {
   link: string;
@@ -48,7 +48,8 @@ function ResponseSideBar(): ReactElement {
     },
     { link: `${currentUrl}/requirement`, name: 'Requirements' },
     { link: `${currentUrl}/download`, name: 'Download' },
-    { link: `${currentUrl}/product`, name: 'Products' }
+    { link: `${currentUrl}/product`, name: 'Products' },
+    { link: `${currentUrl}/overview`, name: 'Overview' }
   ];
 
   return (

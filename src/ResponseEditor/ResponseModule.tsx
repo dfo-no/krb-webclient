@@ -7,12 +7,13 @@ import { Route, Switch, useRouteMatch } from 'react-router';
 import NotFound from '../NotFound';
 import { selectBank } from '../store/reducers/selectedBank-reducer';
 import { RootState } from '../store/store';
-import ResponseSideBar from './SideBar/ResponseSideBar';
+import ResponseDownLoad from './Download/ResponseDownLoad';
 import ResponseEditor from './Editor/ResponseEditor';
+import OverView from './Overview/Overview';
 import ProductResponseList from './Product/ProductResponsList';
 import ResponseProductEditor from './Product/ResponseProductEditor';
-import ResponseDownLoad from './Download/ResponseDownLoad';
 import RequirementPage from './Requirement/RequirementPage';
+import ResponseSideBar from './SideBar/ResponseSideBar';
 
 interface RouteParams {
   bankId: string;
@@ -49,6 +50,9 @@ export default function SpecModule(): ReactElement {
             </Route>
             <Route exact path="/response/:id/download">
               <ResponseDownLoad />
+            </Route>
+            <Route exact path="/response/:id/overview">
+              <OverView />
             </Route>
             <Route>
               <NotFound />

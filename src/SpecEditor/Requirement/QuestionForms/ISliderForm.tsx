@@ -1,35 +1,35 @@
+import { joiResolver } from '@hookform/resolvers/joi';
 import React, { ReactElement } from 'react';
+import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import Form from 'react-bootstrap/Form';
-import { joiResolver } from '@hookform/resolvers/joi';
 import { useForm } from 'react-hook-form';
-import { useDispatch, useSelector } from 'react-redux';
-import Button from 'react-bootstrap/Button';
 import { useTranslation } from 'react-i18next';
+import { useDispatch, useSelector } from 'react-redux';
+import ErrorSummary from '../../../Form/ErrorSummary';
 import { IRequirementAnswer } from '../../../models/IRequirementAnswer';
+import { ISliderQuestion } from '../../../models/ISliderQuestion';
+import ModelType from '../../../models/ModelType';
 import {
   addAnswer,
   addProductAnswer
 } from '../../../store/reducers/spesification-reducer';
 import { RootState } from '../../../store/store';
-import { ITextQuestion } from '../../../models/ITextQuestion';
-import ErrorSummary from '../../../Form/ErrorSummary';
-import { TextSchema } from '../../../Workbench/Requirement/RequirementEditor';
-import ModelType from '../../../models/ModelType';
+import { SliderSchema } from '../../../Workbench/Requirement/RequirementEditor';
 
 interface IProps {
   parentAnswer: IRequirementAnswer;
 }
 
-export default function TextForm({ parentAnswer }: IProps): ReactElement {
+export default function ValueForm({ parentAnswer }: IProps): ReactElement {
   const {
     register,
     handleSubmit,
     formState: { errors }
-  } = useForm<ITextQuestion>({
-    resolver: joiResolver(TextSchema),
+  } = useForm<ISliderQuestion>({
+    resolver: joiResolver(SliderSchema),
     defaultValues: {
-      ...(parentAnswer.alternative as ITextQuestion)
+      ...(parentAnswer.question as ISliderQuestion)
     }
   });
   const { productId } = useSelector(
@@ -42,11 +42,11 @@ export default function TextForm({ parentAnswer }: IProps): ReactElement {
     return <p>No product selected</p>;
   }
 
-  const saveValues = (post: ITextQuestion) => {
+  const saveValues = (post: ISliderQuestion) => {
     const newAnswer = {
       ...parentAnswer
     };
-    newAnswer.alternative = post;
+    newAnswer.question = post;
     if (newAnswer.type === ModelType.requirement)
       dispatch(addAnswer({ answer: newAnswer }));
     if (newAnswer.type === ModelType.product && productId !== null)
@@ -56,7 +56,7 @@ export default function TextForm({ parentAnswer }: IProps): ReactElement {
   return (
     <Card className="mb-3">
       <Card.Body>
-        <h6>Alternative: Text</h6>
+        <h6>Alternative: Value</h6>
         <Form onSubmit={handleSubmit(saveValues)}>
           <Form.Control
             as="input"
@@ -73,9 +73,29 @@ export default function TextForm({ parentAnswer }: IProps): ReactElement {
           />
           <Form.Control
             as="input"
+            {...register('config.min')}
+            isInvalid={!!errors.config?.min}
+            type="number"
+          />
+
+          <Form.Control
+            as="input"
             {...register('config.max')}
             isInvalid={!!errors.config?.max}
             type="number"
+          />
+
+          <Form.Control
+            as="input"
+            {...register('config.step')}
+            isInvalid={!!errors.config?.step}
+            type="number"
+          />
+
+          <Form.Control
+            as="input"
+            {...register('config.unit')}
+            isInvalid={!!errors.config?.unit}
           />
 
           <Button type="submit">{t('save')}</Button>

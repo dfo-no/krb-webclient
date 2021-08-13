@@ -1,5 +1,4 @@
 import React, { ReactElement } from 'react';
-import Card from 'react-bootstrap/Card';
 import ListGroup from 'react-bootstrap/ListGroup';
 import Row from 'react-bootstrap/Row';
 import { BsArrowReturnRight } from 'react-icons/bs';
@@ -9,20 +8,9 @@ import { Bank } from '../../models/Bank';
 import { IRequirementAnswer } from '../../models/IRequirementAnswer';
 import { Need } from '../../models/Need';
 import { Nestable } from '../../models/Nestable';
-import QuestionEnum from '../../models/QuestionEnum';
 import { Requirement } from '../../models/Requirement';
-import RequirementType from '../../models/RequirementType';
 import { RootState } from '../../store/store';
-import ICheckBoxAnswer from '../AlternativeAnswerForms/ICheckBoxAnswer';
-import ICodelistAnswer from '../AlternativeAnswerForms/ICodeListAnswer';
-import PeriodDateAnswer from '../AlternativeAnswerForms/IPeriodDateAnswer';
-import ISliderAnswer from '../AlternativeAnswerForms/ISliderAnswer';
-import ITextAnswer from '../AlternativeAnswerForms/TextAnswerForm';
-import CheckBoxInfo from '../InfoanswerFields/CheckBoxInfo';
-import CodelistInfo from '../InfoanswerFields/CodelistInfo';
-import DateInfo from '../InfoanswerFields/DateInfo';
-import SliderInfo from '../InfoanswerFields/SliderInfo';
-import TextInfo from '../InfoanswerFields/TextInfo';
+import QuestionFormSelector from './Components/QuestionFormSelector';
 import styles from './RequirementView.module.scss';
 
 export default function RequirementPage(): ReactElement {
@@ -66,120 +54,46 @@ export default function RequirementPage(): ReactElement {
     return used;
   }
   const requirementsAnswers = (requirementArray: Requirement[]) => {
+    if (response.spesification.requirementAnswers.length < 1) return null;
     return requirementArray.map((req) => {
       const selected = !!response.spesification.requirements.includes(req.id);
       if (selected) {
-        let requirementText;
+        let requirementText = '';
         let selectedAnswer: IRequirementAnswer =
           response.spesification.requirementAnswers[0];
         req.variants.forEach((variant) => {
           if (
             response.requirementAnswers.find(
-              (answer) => answer.reqTextId === variant.id
+              (answer) => answer.variantId === variant.id
             )
           ) {
             const index = response.requirementAnswers.findIndex(
-              (answer) => answer.reqTextId === variant.id
+              (answer) => answer.variantId === variant.id
             );
             selectedAnswer = response.requirementAnswers[index];
             requirementText = variant.requirementText;
-          } else {
-            if (
-              response.spesification.requirementAnswers.find(
-                (answer) => answer.reqTextId === variant.id
-              )
+          } else if (
+            response.spesification.requirementAnswers.find(
+              (answer) => answer.variantId === variant.id
             )
-              requirementText = variant.requirementText;
+          ) {
+            requirementText = variant.requirementText;
             const index = response.spesification.requirementAnswers.findIndex(
-              (answer) => answer.reqTextId === variant.id
+              (answer) => answer.variantId === variant.id
             );
             selectedAnswer = response.spesification.requirementAnswers[index];
           }
         });
-
-        return (
-          <>
-            {req.requirement_Type === RequirementType.requirement && (
-              <Card key={req.id} className="ml-3 mb-3">
-                <Card.Body>{requirementText}</Card.Body>
-                {selectedAnswer.alternative.type === QuestionEnum.Q_SLIDER && (
-                  <ISliderAnswer
-                    key={selectedAnswer.id}
-                    parentAnswer={selectedAnswer}
-                  />
-                )}
-                {selectedAnswer.alternative.type === QuestionEnum.Q_TEXT && (
-                  <ITextAnswer
-                    key={selectedAnswer.id}
-                    parentAnswer={selectedAnswer}
-                  />
-                )}
-                {selectedAnswer.alternative.type ===
-                  QuestionEnum.Q_CHECKBOX && (
-                  <ICheckBoxAnswer
-                    key={selectedAnswer.id}
-                    parentAnswer={selectedAnswer}
-                  />
-                )}
-                {selectedAnswer.alternative.type ===
-                  QuestionEnum.Q_CODELIST && (
-                  <ICodelistAnswer
-                    key={selectedAnswer.id}
-                    parentAnswer={selectedAnswer}
-                  />
-                )}
-                {selectedAnswer.alternative.type ===
-                  QuestionEnum.Q_PERIOD_DATE && (
-                  <PeriodDateAnswer
-                    key={selectedAnswer.id}
-                    parentAnswer={selectedAnswer}
-                  />
-                )}
-              </Card>
-            )}
-            {req.requirement_Type === RequirementType.info &&
-              req.variants[0].questions[0].type === QuestionEnum.Q_SLIDER && (
-                <SliderInfo
-                  parent_requirement={req}
-                  answer={selectedAnswer}
-                  key={selectedAnswer.id}
-                />
-              )}
-            {req.requirement_Type === RequirementType.info &&
-              req.variants[0].questions[0].type ===
-                QuestionEnum.Q_PERIOD_DATE && (
-                <DateInfo
-                  parent_requirement={req}
-                  answer={selectedAnswer}
-                  key={selectedAnswer.id}
-                />
-              )}
-            {req.requirement_Type === RequirementType.info &&
-              req.variants[0].questions[0].type === QuestionEnum.Q_CHECKBOX && (
-                <CheckBoxInfo
-                  parent_requirement={req}
-                  answer={selectedAnswer}
-                  key={selectedAnswer.id}
-                />
-              )}
-            {req.requirement_Type === RequirementType.info &&
-              req.variants[0].questions[0].type === QuestionEnum.Q_CODELIST && (
-                <CodelistInfo
-                  parent_requirement={req}
-                  answer={selectedAnswer}
-                  key={selectedAnswer.id}
-                />
-              )}
-            {req.requirement_Type === RequirementType.info &&
-              req.variants[0].questions[0].type === QuestionEnum.Q_TEXT && (
-                <TextInfo
-                  parent_requirement={req}
-                  answer={selectedAnswer}
-                  key={selectedAnswer.id}
-                />
-              )}
-          </>
-        );
+        if (selectedAnswer !== undefined) {
+          return (
+            <QuestionFormSelector
+              selectedAnswer={selectedAnswer}
+              requirementText={requirementText}
+              req={req}
+            />
+          );
+        }
+        return null;
       }
       return null;
     });

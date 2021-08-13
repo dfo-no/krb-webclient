@@ -48,11 +48,11 @@ export default function PeriodDateForm({ parentAnswer }: IProps): ReactElement {
   } = useForm<IPeriodDateQuestion>({
     resolver: joiResolver(PeriodDateSchema),
     defaultValues: {
-      ...(parentAnswer.alternative as IPeriodDateQuestion)
+      ...(parentAnswer.question as IPeriodDateQuestion)
     }
   });
 
-  const item = parentAnswer.alternative as IPeriodDateQuestion;
+  const item = parentAnswer.question as IPeriodDateQuestion;
   const { productId } = useSelector(
     (state: RootState) => state.selectedSpecProduct
   );
@@ -67,7 +67,7 @@ export default function PeriodDateForm({ parentAnswer }: IProps): ReactElement {
     const newAnswer = {
       ...parentAnswer
     };
-    newAnswer.alternative = post;
+    newAnswer.question = post;
     if (newAnswer.type === ModelType.requirement)
       dispatch(addAnswer({ answer: newAnswer }));
     if (newAnswer.type === ModelType.product && productId !== null)

@@ -5,12 +5,12 @@ import Utils from '../../common/Utils';
 import QuestionEnum from '../../models/QuestionEnum';
 import { SpecificationProduct } from '../../models/SpecificationProduct';
 import { RootState } from '../../store/store';
-import FileInputForm from '../Requirement/AlternativeForms/FileInputForm';
-import CodelistForm from '../Requirement/AlternativeForms/ICodeListForm';
-import ValueForm from '../Requirement/AlternativeForms/ISliderForm';
-import NoProperties from '../Requirement/AlternativeForms/NoProperties';
-import PeriodDateForm from '../Requirement/AlternativeForms/PeriodTimeForm';
-import TextAlternativeForm from '../Requirement/AlternativeForms/TextAlternativeForm';
+import FileInputForm from '../Requirement/QuestionForms/FileInputForm';
+import CodelistForm from '../Requirement/QuestionForms/ICodeListForm';
+import ValueForm from '../Requirement/QuestionForms/ISliderForm';
+import NoProperties from '../Requirement/QuestionForms/NoProperties';
+import PeriodDateForm from '../Requirement/QuestionForms/PeriodTimeForm';
+import TextAlternativeForm from '../Requirement/QuestionForms/TextAlternativeForm';
 
 export default function EditAlternative(): ReactElement {
   const { alternativeId } = useSelector(
@@ -41,22 +41,22 @@ export default function EditAlternative(): ReactElement {
   return (
     <Container fluid className="mt-4">
       <h4>Edit Alternative</h4>
-      {item.alternative.type === QuestionEnum.Q_SLIDER && (
+      {item.question.type === QuestionEnum.Q_SLIDER && (
         <ValueForm parentAnswer={item} />
       )}
-      {item.alternative.type === QuestionEnum.Q_FILEUPLOAD && (
+      {item.question.type === QuestionEnum.Q_FILEUPLOAD && (
         <FileInputForm parentAnswer={item} />
       )}
-      {item.alternative.type === QuestionEnum.Q_TEXT && (
+      {item.question.type === QuestionEnum.Q_TEXT && (
         <TextAlternativeForm parentAnswer={item} />
       )}
-      {item.alternative.type === QuestionEnum.Q_CODELIST && (
+      {item.question.type === QuestionEnum.Q_CODELIST && (
         <CodelistForm parentAnswer={item} />
       )}
-      {item.alternative.type === QuestionEnum.Q_PERIOD_DATE && (
+      {item.question.type === QuestionEnum.Q_PERIOD_DATE && (
         <PeriodDateForm parentAnswer={item} />
       )}
-      {item.alternative.type === QuestionEnum.Q_CHECKBOX && <NoProperties />}
+      {item.question.type === QuestionEnum.Q_CHECKBOX && <NoProperties />}
     </Container>
   );
 }

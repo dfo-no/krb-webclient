@@ -18,6 +18,7 @@ export default function InfoAnswer({ requirement }: IProps): ReactElement {
         <SliderInfoAnswer
           question={requirement.variants[0].questions[0]}
           type="requirement"
+          requirement={requirement}
           reqTextId={requirement.variants[0].id}
         />
       )}
@@ -25,6 +26,7 @@ export default function InfoAnswer({ requirement }: IProps): ReactElement {
         <CodelistInfoAnswer
           question={requirement.variants[0].questions[0]}
           type="requirement"
+          requirement={requirement}
           reqTextId={requirement.variants[0].id}
         />
       )}
@@ -32,6 +34,7 @@ export default function InfoAnswer({ requirement }: IProps): ReactElement {
         <TextInfoAnswer
           question={requirement.variants[0].questions[0]}
           type="requirement"
+          requirement={requirement}
           reqTextId={requirement.variants[0].id}
         />
       )}

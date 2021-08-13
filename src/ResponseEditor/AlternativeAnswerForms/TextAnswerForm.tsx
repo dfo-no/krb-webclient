@@ -1,20 +1,20 @@
+import { joiResolver } from '@hookform/resolvers/joi';
+import Joi from 'joi';
 import React, { ReactElement } from 'react';
+import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import Form from 'react-bootstrap/Form';
-import { joiResolver } from '@hookform/resolvers/joi';
 import { useForm } from 'react-hook-form';
-import { useDispatch, useSelector } from 'react-redux';
-import Button from 'react-bootstrap/Button';
 import { useTranslation } from 'react-i18next';
-import Joi from 'joi';
-import { IRequirementAnswer } from '../../models/IRequirementAnswer';
-import { RootState } from '../../store/store';
-import { ITextQuestion } from '../../models/ITextQuestion';
+import { useDispatch, useSelector } from 'react-redux';
 import ErrorSummary from '../../Form/ErrorSummary';
-import { addRequirementAnswer } from '../../store/reducers/response-reducer';
-import QuestionEnum from '../../models/QuestionEnum';
-import { addProductAnswer } from '../../store/reducers/spesification-reducer';
+import { IRequirementAnswer } from '../../models/IRequirementAnswer';
+import { ITextQuestion } from '../../models/ITextQuestion';
 import ModelType from '../../models/ModelType';
+import QuestionEnum from '../../models/QuestionEnum';
+import { addRequirementAnswer } from '../../store/reducers/response-reducer';
+import { addProductAnswer } from '../../store/reducers/spesification-reducer';
+import { RootState } from '../../store/store';
 
 interface IProps {
   parentAnswer: IRequirementAnswer;
@@ -42,24 +42,24 @@ export default function ITextAnswer({ parentAnswer }: IProps): ReactElement {
 
   if (parentAnswer.type === ModelType.requirement) {
     index = response.requirementAnswers.findIndex(
-      (answer) => answer.reqTextId === parentAnswer.reqTextId
+      (answer) => answer.variantId === parentAnswer.variantId
     );
   } else {
     index =
       response.products.length > 0
         ? response.products[productIndex].requirementAnswers.findIndex(
-            (answer) => answer.reqTextId === parentAnswer.reqTextId
+            (answer) => answer.variantId === parentAnswer.variantId
           )
         : -1;
   }
 
   const defaultVal =
     index === -1
-      ? (parentAnswer.alternative as ITextQuestion)
-      : (response.requirementAnswers[index].alternative as ITextQuestion) ||
+      ? (parentAnswer.question as ITextQuestion)
+      : (response.requirementAnswers[index].question as ITextQuestion) ||
         (parentAnswer.type === ModelType.product &&
           (response.products[0].requirementAnswers[index]
-            .alternative as ITextQuestion));
+            .question as ITextQuestion));
 
   const {
     register,
@@ -71,7 +71,7 @@ export default function ITextAnswer({ parentAnswer }: IProps): ReactElement {
       ...defaultVal
     }
   });
-  const item = parentAnswer.alternative as ITextQuestion;
+  const item = parentAnswer.question as ITextQuestion;
   const dispatch = useDispatch();
   const { t } = useTranslation();
 
@@ -83,7 +83,7 @@ export default function ITextAnswer({ parentAnswer }: IProps): ReactElement {
     const newAnswer = {
       ...parentAnswer
     };
-    newAnswer.alternative = post;
+    newAnswer.question = post;
 
     if (newAnswer.type === ModelType.requirement)
       dispatch(addRequirementAnswer(newAnswer));

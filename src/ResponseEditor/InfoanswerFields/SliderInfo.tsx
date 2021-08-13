@@ -13,7 +13,7 @@ export default function SliderInfo({
   answer,
   parent_requirement
 }: IProps): ReactElement {
-  const alternative = answer.alternative as ISliderQuestion;
+  const alternative = answer.question as ISliderQuestion;
   const variant = parent_requirement.variants[0];
   return (
     <Container fluid className="mt-4">
