@@ -103,7 +103,9 @@ export default function ProductRequirementAnswer({
   };
   const setWeightState = () => {
     if (savedQuestion) {
-      if (checkWeightIsPredefined(savedQuestion.weight)) return 'standard';
+      if (checkWeightIsPredefined(savedQuestion.weight)) {
+        return 'standard';
+      }
       return 'egendefinert';
     }
     return 'standard';

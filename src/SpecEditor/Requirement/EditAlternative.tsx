@@ -3,12 +3,12 @@ import Container from 'react-bootstrap/Container';
 import { useSelector } from 'react-redux';
 import QuestionEnum from '../../models/QuestionEnum';
 import { RootState } from '../../store/store';
-import FileInputForm from './AlternativeForms/FileInputForm';
-import CodelistForm from './AlternativeForms/ICodeListForm';
-import ValueForm from './AlternativeForms/ISliderForm';
-import NoProperties from './AlternativeForms/NoProperties';
-import PeriodDateForm from './AlternativeForms/PeriodTimeForm';
-import TextAlternativeForm from './AlternativeForms/TextAlternativeForm';
+import FileInputForm from './QuestionForms/FileInputForm';
+import CodelistForm from './QuestionForms/ICodeListForm';
+import ValueForm from './QuestionForms/ISliderForm';
+import NoProperties from './QuestionForms/NoProperties';
+import PeriodDateForm from './QuestionForms/PeriodTimeForm';
+import TextAlternativeForm from './QuestionForms/TextAlternativeForm';
 
 export default function EditAlternative(): ReactElement {
   const { alternativeId } = useSelector(

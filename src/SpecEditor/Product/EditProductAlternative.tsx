@@ -5,12 +5,12 @@ import Utils from '../../common/Utils';
 import QuestionEnum from '../../models/QuestionEnum';
 import { SpecificationProduct } from '../../models/SpecificationProduct';
 import { RootState } from '../../store/store';
-import FileInputForm from '../Requirement/AlternativeForms/FileInputForm';
-import CodelistForm from '../Requirement/AlternativeForms/ICodeListForm';
-import ValueForm from '../Requirement/AlternativeForms/ISliderForm';
-import NoProperties from '../Requirement/AlternativeForms/NoProperties';
-import PeriodDateForm from '../Requirement/AlternativeForms/PeriodTimeForm';
-import TextAlternativeForm from '../Requirement/AlternativeForms/TextAlternativeForm';
+import FileInputForm from '../Requirement/QuestionForms/FileInputForm';
+import CodelistForm from '../Requirement/QuestionForms/ICodeListForm';
+import ValueForm from '../Requirement/QuestionForms/ISliderForm';
+import NoProperties from '../Requirement/QuestionForms/NoProperties';
+import PeriodDateForm from '../Requirement/QuestionForms/PeriodTimeForm';
+import TextAlternativeForm from '../Requirement/QuestionForms/TextAlternativeForm';
 
 export default function EditAlternative(): ReactElement {
   const { alternativeId } = useSelector(
