@@ -211,6 +211,11 @@ class Utils {
 
     return false;
   }
+
+  static findRequirementText(id: string, variants: IVariant[]): string {
+    const variant = Utils.ensure(variants.find((v: IVariant) => v.id === id));
+    return variant.requirementText;
+  }
 }
 
 export default Utils;

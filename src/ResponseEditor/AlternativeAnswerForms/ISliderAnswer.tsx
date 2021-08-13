@@ -49,26 +49,25 @@ export default function ISliderAnswer({ parentAnswer }: IProps): ReactElement {
 
   if (parentAnswer.type === ModelType.requirement) {
     index = response.requirementAnswers.findIndex(
-      (answer) => answer.reqTextId === parentAnswer.reqTextId
+      (answer) => answer.variantId === parentAnswer.variantId
     );
   } else {
     index =
       response.products.length > 0
         ? response.products[productIndex].requirementAnswers.findIndex(
-            (answer) => answer.reqTextId === parentAnswer.reqTextId
+            (answer) => answer.variantId === parentAnswer.variantId
           )
         : -1;
   }
 
   const defaultVal =
     index === -1
-      ? (parentAnswer.alternative as ISliderQuestion)
+      ? (parentAnswer.question as ISliderQuestion)
       : (parentAnswer.type === ModelType.requirement &&
-          (response.requirementAnswers[index]
-            .alternative as ISliderQuestion)) ||
+          (response.requirementAnswers[index].question as ISliderQuestion)) ||
         (parentAnswer.type === ModelType.product &&
           (response.products[0].requirementAnswers[index]
-            .alternative as ISliderQuestion));
+            .question as ISliderQuestion));
   const {
     register,
     control,
@@ -82,7 +81,7 @@ export default function ISliderAnswer({ parentAnswer }: IProps): ReactElement {
     }
   });
 
-  const sliderQuestion = parentAnswer.alternative as ISliderQuestion;
+  const sliderQuestion = parentAnswer.question as ISliderQuestion;
 
   const dispatch = useDispatch();
   const { t } = useTranslation();
@@ -91,7 +90,7 @@ export default function ISliderAnswer({ parentAnswer }: IProps): ReactElement {
     const newAnswer = {
       ...parentAnswer
     };
-    newAnswer.alternative = post;
+    newAnswer.question = post;
 
     if (newAnswer.type === ModelType.requirement)
       dispatch(addRequirementAnswer(newAnswer));

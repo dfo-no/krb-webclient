@@ -1,23 +1,23 @@
+import { joiResolver } from '@hookform/resolvers/joi';
 import React, { ReactElement } from 'react';
+import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
+import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
-import { joiResolver } from '@hookform/resolvers/joi';
 import { useForm } from 'react-hook-form';
-import { useDispatch, useSelector } from 'react-redux';
-import Button from 'react-bootstrap/Button';
 import { useTranslation } from 'react-i18next';
-import { IRequirementAnswer } from '../../../models/IRequirementAnswer';
+import { useDispatch, useSelector } from 'react-redux';
+import ErrorSummary from '../../../Form/ErrorSummary';
 import { IFileUploadQuestion } from '../../../models/IFileUploadQuestion';
+import { IRequirementAnswer } from '../../../models/IRequirementAnswer';
+import ModelType from '../../../models/ModelType';
 import {
   editAnswer,
   editProductAnswer
 } from '../../../store/reducers/spesification-reducer';
 import { RootState } from '../../../store/store';
-import ErrorSummary from '../../../Form/ErrorSummary';
 import { FileUploadSchema } from '../../../Workbench/Requirement/RequirementEditor';
-import ModelType from '../../../models/ModelType';
 
 interface IProps {
   parentAnswer: IRequirementAnswer;
@@ -31,13 +31,13 @@ export default function FileInputForm({ parentAnswer }: IProps): ReactElement {
   } = useForm<IFileUploadQuestion>({
     resolver: joiResolver(FileUploadSchema),
     defaultValues: {
-      ...(parentAnswer.alternative as IFileUploadQuestion)
+      ...(parentAnswer.question as IFileUploadQuestion)
     }
   });
   const { productId } = useSelector(
     (state: RootState) => state.selectedSpecProduct
   );
-  const item = parentAnswer.alternative as IFileUploadQuestion;
+  const item = parentAnswer.question as IFileUploadQuestion;
   const dispatch = useDispatch();
   const { t } = useTranslation();
 
@@ -53,7 +53,7 @@ export default function FileInputForm({ parentAnswer }: IProps): ReactElement {
     const newAnswer = {
       ...parentAnswer
     };
-    newAnswer.alternative = newAlt;
+    newAnswer.question = newAlt;
 
     if (newAnswer.type === ModelType.requirement)
       dispatch(editAnswer({ answer: newAnswer }));

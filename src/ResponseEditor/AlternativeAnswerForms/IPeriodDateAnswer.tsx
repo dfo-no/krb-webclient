@@ -48,11 +48,11 @@ export default function PeriodDateAnswer({
   } = useForm<IPeriodDateQuestion>({
     resolver: joiResolver(PeriodDateSchema),
     defaultValues: {
-      ...(parentAnswer.alternative as IPeriodDateQuestion)
+      ...(parentAnswer.question as IPeriodDateQuestion)
     }
   });
 
-  const item = parentAnswer.alternative as IPeriodDateQuestion;
+  const item = parentAnswer.question as IPeriodDateQuestion;
   const { productId } = useSelector(
     (state: RootState) => state.selectedSpecProduct
   );
@@ -73,7 +73,7 @@ export default function PeriodDateAnswer({
     };
     const newDate = post.answer.date.toISOString();
     newAns.answer.date = newDate;
-    newAnswer.alternative = newAns;
+    newAnswer.question = newAns;
 
     if (newAnswer.type === ModelType.requirement)
       dispatch(addRequirementAnswer(newAnswer));

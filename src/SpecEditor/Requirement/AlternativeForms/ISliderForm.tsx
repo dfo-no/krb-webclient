@@ -29,7 +29,7 @@ export default function ValueForm({ parentAnswer }: IProps): ReactElement {
   } = useForm<ISliderQuestion>({
     resolver: joiResolver(SliderSchema),
     defaultValues: {
-      ...(parentAnswer.alternative as ISliderQuestion)
+      ...(parentAnswer.question as ISliderQuestion)
     }
   });
   const { productId } = useSelector(
@@ -46,7 +46,7 @@ export default function ValueForm({ parentAnswer }: IProps): ReactElement {
     const newAnswer = {
       ...parentAnswer
     };
-    newAnswer.alternative = post;
+    newAnswer.question = post;
     if (newAnswer.type === ModelType.requirement)
       dispatch(addAnswer({ answer: newAnswer }));
     if (newAnswer.type === ModelType.product && productId !== null)

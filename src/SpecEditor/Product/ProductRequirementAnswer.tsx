@@ -34,12 +34,12 @@ interface IProps {
 }
 
 type FormValue = {
-  alternative: string;
+  question: string;
   weight: number;
 };
 
-const alternativeSchema = Joi.object().keys({
-  alternative: Joi.string().required(),
+const questionSchema = Joi.object().keys({
+  question: Joi.string().required(),
   weight: Joi.number().integer().min(1).required(),
   variant: Joi.string()
 });
@@ -78,7 +78,7 @@ export default function ProductRequirementAnswer({
     control,
     formState: { errors }
   } = useForm({
-    resolver: joiResolver(alternativeSchema)
+    resolver: joiResolver(questionSchema)
   });
   const { spec } = useSelector((state: RootState) => state.specification);
   const { id } = useSelector((state: RootState) => state.selectedBank);
@@ -90,47 +90,48 @@ export default function ProductRequirementAnswer({
       (product: SpecificationProduct) => product.id === productId
     )
   );
-  const savedAlternative = specProduct.requirementAnswers.find(
-    (alt) => alt.reqTextId === selectedVariant.id
+  const savedQuestion = specProduct.requirementAnswers.find(
+    (alt) => alt.variantId === selectedVariant.id
   );
-  const [selectedAlternative, setSelectedAlternative] = useState<
-    string | undefined
-  >(savedAlternative !== undefined ? savedAlternative.id : undefined);
+  const [selectedQuestion, setSelectedQuestion] = useState<string | undefined>(
+    savedQuestion !== undefined ? savedQuestion.id : undefined
+  );
 
   const checkWeightIsPredefined = (weight: number) => {
     const predefinedValues = [10, 30, 50, 70, 90];
     return predefinedValues.includes(weight);
   };
   const setWeightState = () => {
-    if (savedAlternative) {
-      if (checkWeightIsPredefined(savedAlternative.weight)) return 'standard';
+    if (savedQuestion) {
+      if (checkWeightIsPredefined(savedQuestion.weight)) return 'standard';
       return 'egendefinert';
     }
     return 'standard';
   };
   const [weightType, setWeightType] = useState(setWeightState());
   const saveAnswer = (post: FormValue) => {
-    const alternativeIndex = selectedVariant.questions.findIndex(
-      (alt) => alt.id === post.alternative
+    const questionIndex = selectedVariant.questions.findIndex(
+      (alt) => alt.id === post.question
     );
-    const alternative = selectedVariant.questions[alternativeIndex];
+    const question = selectedVariant.questions[questionIndex];
     const savedWeight =
       weightType === 'standard' && post.weight > 90 ? 90 : post.weight;
-    if (savedAlternative) {
-      const updatedAnswer: IRequirementAnswer = { ...savedAlternative };
+    if (savedQuestion) {
+      const updatedAnswer: IRequirementAnswer = { ...savedQuestion };
       updatedAnswer.weight = savedWeight;
       dispatch(editProductAnswer({ answer: updatedAnswer, productId }));
     } else {
       const newAnswer = {
         id: uuidv4(),
-        alternativeId: post.alternative,
+        questionId: post.question,
         weight: post.weight,
-        reqTextId: selectedVariant.id,
-        alternative,
+        variantId: selectedVariant.id,
+        question,
+        requirement,
         type: ModelType.product
       };
       dispatch(addProductAnswer({ answer: newAnswer, productId }));
-      setSelectedAlternative(newAnswer.id);
+      setSelectedQuestion(newAnswer.id);
     }
   };
 
@@ -142,11 +143,11 @@ export default function ProductRequirementAnswer({
     selectedVariant.questions.forEach((alternative) => {
       if (
         specProduct.requirementAnswers.find(
-          (answer) => answer.alternativeId === alternative.id
+          (answer) => answer.questionId === alternative.id
         )
       ) {
         const index = specProduct.requirementAnswers.findIndex(
-          (answer) => answer.alternativeId === alternative.id
+          (answer) => answer.questionId === alternative.id
         );
         dispatch(
           deleteProductAnswer({
@@ -160,15 +161,15 @@ export default function ProductRequirementAnswer({
   }
 
   const selectAlt = () => {
-    if (selectedAlternative !== undefined)
-      dispatch(selectAlternative(selectedAlternative));
+    if (selectedQuestion !== undefined)
+      dispatch(selectAlternative(selectedQuestion));
   };
   function findDefaultRequirementText(): string {
     let defaultText = requirement.variants[0].id;
     requirement.variants.forEach((variant) => {
       if (
         specProduct.requirementAnswers.find(
-          (answer) => answer.reqTextId === variant.id
+          (answer) => answer.variantId === variant.id
         )
       ) {
         defaultText = variant.id;
@@ -183,12 +184,12 @@ export default function ProductRequirementAnswer({
     selectedVariant.questions.forEach((alternative) => {
       if (
         specProduct.requirementAnswers.find(
-          (answer) => answer.alternativeId === alternative.id
+          (answer) => answer.questionId === alternative.id
         )
       ) {
         defaultText = alternative.id;
         const index = specProduct.requirementAnswers.findIndex(
-          (answer) => answer.alternativeId === alternative.id
+          (answer) => answer.questionId === alternative.id
         );
         defaultWeight = specProduct.requirementAnswers[index].weight;
       }
@@ -244,19 +245,19 @@ export default function ProductRequirementAnswer({
           <Col className="p-0">
             <Form.Control
               as="select"
-              {...register('alternative')}
+              {...register('question')}
               defaultValue={findDefaultAnswerOption()[0]}
             >
               {answers}
             </Form.Control>
           </Col>
           <Col className="p-0">
-            {selectedAlternative !== undefined && (
+            {selectedQuestion !== undefined && (
               <Link
                 onClick={selectAlt}
-                to={`/speceditor/${id}/product/${productId}/alternative/${selectedAlternative}`}
+                to={`/speceditor/${id}/product/${productId}/alternative/${selectedQuestion}`}
               >
-                <Button className="ml-2">Edit Alternative</Button>
+                <Button className="ml-2">Edit Question</Button>
               </Link>
             )}
           </Col>
@@ -292,9 +293,7 @@ export default function ProductRequirementAnswer({
               <Form.Label>{t('weighting')}:</Form.Label>
               <Form.Control
                 type="number"
-                defaultValue={
-                  savedAlternative?.weight ? savedAlternative.weight : 0
-                }
+                defaultValue={savedQuestion?.weight ? savedQuestion.weight : 0}
                 min={0}
                 {...register('weight' as const)}
                 isInvalid={!!errors.weight}
@@ -310,9 +309,7 @@ export default function ProductRequirementAnswer({
             <Controller
               control={control}
               name={'weight' as const}
-              defaultValue={
-                savedAlternative?.weight ? savedAlternative.weight : 0
-              }
+              defaultValue={savedQuestion?.weight ? savedQuestion.weight : 0}
               render={({ field }) => (
                 <Slider
                   className="mt-4 w-50"

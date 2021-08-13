@@ -45,26 +45,25 @@ export default function ICheckBoxAnswer({
 
   if (parentAnswer.type === ModelType.requirement) {
     index = response.requirementAnswers.findIndex(
-      (answer) => answer.reqTextId === parentAnswer.reqTextId
+      (answer) => answer.variantId === parentAnswer.variantId
     );
   } else {
     index =
       response.products.length > 0
         ? response.products[productIndex].requirementAnswers.findIndex(
-            (answer) => answer.reqTextId === parentAnswer.reqTextId
+            (answer) => answer.variantId === parentAnswer.variantId
           )
         : -1;
   }
 
   const defaultVal =
     index === -1
-      ? (parentAnswer.alternative as ICheckboxQuestion)
+      ? (parentAnswer.question as ICheckboxQuestion)
       : (parentAnswer.type === ModelType.requirement &&
-          (response.requirementAnswers[index]
-            .alternative as ICheckboxQuestion)) ||
+          (response.requirementAnswers[index].question as ICheckboxQuestion)) ||
         (parentAnswer.type === ModelType.product &&
           (response.products[0].requirementAnswers[index]
-            .alternative as ICheckboxQuestion));
+            .question as ICheckboxQuestion));
   const {
     register,
     control,
@@ -89,7 +88,7 @@ export default function ICheckBoxAnswer({
     const newAnswer = {
       ...parentAnswer
     };
-    newAnswer.alternative = post;
+    newAnswer.question = post;
     if (newAnswer.type === ModelType.requirement)
       dispatch(addRequirementAnswer(newAnswer));
     if (newAnswer.type === ModelType.product && productId !== null)

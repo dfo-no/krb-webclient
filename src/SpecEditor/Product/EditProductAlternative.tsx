@@ -41,22 +41,22 @@ export default function EditAlternative(): ReactElement {
   return (
     <Container fluid className="mt-4">
       <h4>Edit Alternative</h4>
-      {item.alternative.type === QuestionEnum.Q_SLIDER && (
+      {item.question.type === QuestionEnum.Q_SLIDER && (
         <ValueForm parentAnswer={item} />
       )}
-      {item.alternative.type === QuestionEnum.Q_FILEUPLOAD && (
+      {item.question.type === QuestionEnum.Q_FILEUPLOAD && (
         <FileInputForm parentAnswer={item} />
       )}
-      {item.alternative.type === QuestionEnum.Q_TEXT && (
+      {item.question.type === QuestionEnum.Q_TEXT && (
         <TextAlternativeForm parentAnswer={item} />
       )}
-      {item.alternative.type === QuestionEnum.Q_CODELIST && (
+      {item.question.type === QuestionEnum.Q_CODELIST && (
         <CodelistForm parentAnswer={item} />
       )}
-      {item.alternative.type === QuestionEnum.Q_PERIOD_DATE && (
+      {item.question.type === QuestionEnum.Q_PERIOD_DATE && (
         <PeriodDateForm parentAnswer={item} />
       )}
-      {item.alternative.type === QuestionEnum.Q_CHECKBOX && <NoProperties />}
+      {item.question.type === QuestionEnum.Q_CHECKBOX && <NoProperties />}
     </Container>
   );
 }

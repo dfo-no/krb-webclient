@@ -1,21 +1,21 @@
+import { joiResolver } from '@hookform/resolvers/joi';
 import React, { ReactElement } from 'react';
+import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import Form from 'react-bootstrap/Form';
-import { joiResolver } from '@hookform/resolvers/joi';
 import { useForm } from 'react-hook-form';
-import { useDispatch, useSelector } from 'react-redux';
-import Button from 'react-bootstrap/Button';
 import { useTranslation } from 'react-i18next';
+import { useDispatch, useSelector } from 'react-redux';
+import ErrorSummary from '../../../Form/ErrorSummary';
 import { IRequirementAnswer } from '../../../models/IRequirementAnswer';
+import { ITextQuestion } from '../../../models/ITextQuestion';
+import ModelType from '../../../models/ModelType';
 import {
   addAnswer,
   addProductAnswer
 } from '../../../store/reducers/spesification-reducer';
 import { RootState } from '../../../store/store';
-import { ITextQuestion } from '../../../models/ITextQuestion';
-import ErrorSummary from '../../../Form/ErrorSummary';
 import { TextSchema } from '../../../Workbench/Requirement/RequirementEditor';
-import ModelType from '../../../models/ModelType';
 
 interface IProps {
   parentAnswer: IRequirementAnswer;
@@ -29,7 +29,7 @@ export default function TextForm({ parentAnswer }: IProps): ReactElement {
   } = useForm<ITextQuestion>({
     resolver: joiResolver(TextSchema),
     defaultValues: {
-      ...(parentAnswer.alternative as ITextQuestion)
+      ...(parentAnswer.question as ITextQuestion)
     }
   });
   const { productId } = useSelector(
@@ -46,7 +46,7 @@ export default function TextForm({ parentAnswer }: IProps): ReactElement {
     const newAnswer = {
       ...parentAnswer
     };
-    newAnswer.alternative = post;
+    newAnswer.question = post;
     if (newAnswer.type === ModelType.requirement)
       dispatch(addAnswer({ answer: newAnswer }));
     if (newAnswer.type === ModelType.product && productId !== null)

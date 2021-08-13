@@ -3,7 +3,6 @@ import Slider from '@material-ui/core/Slider';
 import Joi from 'joi';
 import React, { ReactElement } from 'react';
 import Button from 'react-bootstrap/Button';
-import Card from 'react-bootstrap/Card';
 import Col from 'react-bootstrap/esm/Col';
 import Form from 'react-bootstrap/Form';
 import { Controller, useForm } from 'react-hook-form';
@@ -17,6 +16,7 @@ import { ISliderQuestion } from '../../../models/ISliderQuestion';
 import ModelType from '../../../models/ModelType';
 import QuestionEnum from '../../../models/QuestionEnum';
 import { QuestionType } from '../../../models/QuestionType';
+import { Requirement } from '../../../models/Requirement';
 import { addAnswer } from '../../../store/reducers/spesification-reducer';
 import { RootState } from '../../../store/store';
 
@@ -24,6 +24,7 @@ interface IProps {
   question: QuestionType;
   type: string;
   reqTextId: string;
+  requirement: Requirement;
 }
 
 export const ResponseSliderSchema = Joi.object().keys({
@@ -43,7 +44,8 @@ export const ResponseSliderSchema = Joi.object().keys({
 export default function ISliderInfoAnswer({
   question,
   type,
-  reqTextId
+  reqTextId,
+  requirement
 }: IProps): ReactElement {
   const { spec } = useSelector((state: RootState) => state.specification);
   const { productId } = useSelector(
@@ -55,14 +57,13 @@ export default function ISliderInfoAnswer({
 
   if (type === 'requirement') {
     index = spec.requirementAnswers.findIndex(
-      (answer: IRequirementAnswer) => answer.alternative.id === question.id
+      (answer: IRequirementAnswer) => answer.question.id === question.id
     );
   } else {
     index =
       spec.products.length > 0
         ? spec.products[productIndex].requirementAnswers.findIndex(
-            (answer: IRequirementAnswer) =>
-              answer.alternative.id === question.id
+            (answer: IRequirementAnswer) => answer.question.id === question.id
           )
         : -1;
   }
@@ -71,10 +72,10 @@ export default function ISliderInfoAnswer({
     index === -1
       ? (question as ISliderQuestion)
       : (type === 'requirement' &&
-          (spec.requirementAnswers[index].alternative as ISliderQuestion)) ||
+          (spec.requirementAnswers[index].question as ISliderQuestion)) ||
         (type === 'info' &&
           (spec.products[productIndex].requirementAnswers[index]
-            .alternative as ISliderQuestion));
+            .question as ISliderQuestion));
   const {
     register,
     control,
@@ -96,16 +97,17 @@ export default function ISliderInfoAnswer({
     if (index === -1) {
       const newAnswer: IRequirementAnswer = {
         id: uuidv4(),
-        alternativeId: post.id,
+        questionId: post.id,
         weight: 1,
-        reqTextId,
-        alternative: post,
+        variantId: reqTextId,
+        requirement,
+        question: post,
         type: ModelType.requirement
       };
       dispatch(addAnswer({ answer: newAnswer }));
     } else {
       const answer = spec.requirementAnswers[index];
-      answer.alternative = post;
+      answer.question = post;
       dispatch(addAnswer({ answer }));
     }
   };

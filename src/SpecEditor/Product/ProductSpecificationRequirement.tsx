@@ -1,20 +1,19 @@
 import React, { ReactElement, useState } from 'react';
 import { Card } from 'react-bootstrap';
 import Col from 'react-bootstrap/Col';
-import { useDispatch, useSelector } from 'react-redux';
-
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
+import { useDispatch, useSelector } from 'react-redux';
+import Utils from '../../common/Utils';
 import { Requirement } from '../../models/Requirement';
+import { SpecificationProduct } from '../../models/SpecificationProduct';
 import {
   addProductRequirement,
   deleteProductAnswer,
   removeProductRequirement
 } from '../../store/reducers/spesification-reducer';
-import ProductRequirementAnswer from './ProductRequirementAnswer';
 import { RootState } from '../../store/store';
-import { SpecificationProduct } from '../../models/SpecificationProduct';
-import Utils from '../../common/Utils';
+import ProductRequirementAnswer from './ProductRequirementAnswer';
 
 type InputProps = {
   requirement: Requirement;
@@ -50,11 +49,11 @@ export default function ProductSpesificationRequirement({
       requirement.variants.forEach((variant) => {
         if (
           specProduct.requirementAnswers.find(
-            (answer) => answer.reqTextId === variant.id
+            (answer) => answer.variantId === variant.id
           )
         ) {
           const index = specProduct.requirementAnswers.findIndex(
-            (answer) => answer.reqTextId === variant.id
+            (answer) => answer.variantId === variant.id
           );
           dispatch(
             deleteProductAnswer({

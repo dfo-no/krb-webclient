@@ -14,6 +14,7 @@ import { ITextQuestion } from '../../../models/ITextQuestion';
 import ModelType from '../../../models/ModelType';
 import QuestionEnum from '../../../models/QuestionEnum';
 import { QuestionType } from '../../../models/QuestionType';
+import { Requirement } from '../../../models/Requirement';
 import { addAnswer } from '../../../store/reducers/spesification-reducer';
 import { RootState } from '../../../store/store';
 
@@ -21,6 +22,7 @@ interface IProps {
   question: QuestionType;
   type: string;
   reqTextId: string;
+  requirement: Requirement;
 }
 
 export const ResponseCodelistSchema = Joi.object().keys({
@@ -38,7 +40,8 @@ export const ResponseCodelistSchema = Joi.object().keys({
 export default function TextInfoAnswer({
   question,
   type,
-  reqTextId
+  reqTextId,
+  requirement
 }: IProps): ReactElement {
   const { spec } = useSelector((state: RootState) => state.specification);
   const { productId } = useSelector(
@@ -50,14 +53,13 @@ export default function TextInfoAnswer({
 
   if (type === 'requirement') {
     index = spec.requirementAnswers.findIndex(
-      (answer: IRequirementAnswer) => answer.alternative.id === question.id
+      (answer: IRequirementAnswer) => answer.question.id === question.id
     );
   } else {
     index =
       spec.products.length > 0
         ? spec.products[productIndex].requirementAnswers.findIndex(
-            (answer: IRequirementAnswer) =>
-              answer.alternative.id === question.id
+            (answer: IRequirementAnswer) => answer.question.id === question.id
           )
         : -1;
   }
@@ -66,10 +68,10 @@ export default function TextInfoAnswer({
     index === -1
       ? (question as ITextQuestion)
       : (type === 'requirement' &&
-          (spec.requirementAnswers[index].alternative as ITextQuestion)) ||
+          (spec.requirementAnswers[index].question as ITextQuestion)) ||
         (type === 'info' &&
           (spec.products[productIndex].requirementAnswers[index]
-            .alternative as ITextQuestion));
+            .question as ITextQuestion));
   const {
     register,
     handleSubmit,
@@ -89,16 +91,17 @@ export default function TextInfoAnswer({
     if (index === -1) {
       const newAnswer: IRequirementAnswer = {
         id: uuidv4(),
-        alternativeId: post.id,
+        questionId: post.id,
         weight: 1,
-        reqTextId,
-        alternative: post,
+        variantId: reqTextId,
+        requirement,
+        question: post,
         type: ModelType.requirement
       };
       dispatch(addAnswer({ answer: newAnswer }));
     } else {
       const answer = spec.requirementAnswers[index];
-      answer.alternative = post;
+      answer.question = post;
       dispatch(addAnswer({ answer }));
     }
   };

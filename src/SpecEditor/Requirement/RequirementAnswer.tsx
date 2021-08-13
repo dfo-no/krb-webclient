@@ -82,7 +82,7 @@ export default function RequirementAnswer({
     requirement.variants[0]
   );
   const savedAlternative = spec.requirementAnswers.find(
-    (alt) => alt.reqTextId === selectedVariant.id
+    (alt) => alt.variantId === selectedVariant.id
   );
   const [selectedAlternative, setSelectedAlternative] = useState<
     string | undefined
@@ -116,10 +116,11 @@ export default function RequirementAnswer({
       const alternative = selectedVariant.questions[alternativeIndex];
       const newAnswer: IRequirementAnswer = {
         id: uuidv4(),
-        alternativeId: post.alternative,
+        questionId: post.alternative,
         weight: savedWeight,
-        reqTextId: selectedVariant.id,
-        alternative,
+        variantId: selectedVariant.id,
+        question: alternative,
+        requirement,
         type: ModelType.requirement
       };
       dispatch(addAnswer({ answer: newAnswer }));
@@ -139,11 +140,11 @@ export default function RequirementAnswer({
     selectedVariant.questions.forEach((alternative) => {
       if (
         spec.requirementAnswers.find(
-          (answer) => answer.alternativeId === alternative.id
+          (answer) => answer.questionId === alternative.id
         )
       ) {
         const index = spec.requirementAnswers.findIndex(
-          (answer) => answer.alternativeId === alternative.id
+          (answer) => answer.questionId === alternative.id
         );
         dispatch(deleteAnswer({ answer: spec.requirementAnswers[index].id }));
       }
@@ -156,7 +157,7 @@ export default function RequirementAnswer({
     requirement.variants.forEach((variant) => {
       if (
         spec.requirementAnswers.find(
-          (answer) => answer.reqTextId === variant.id
+          (answer) => answer.variantId === variant.id
         )
       ) {
         defaultText = variant.id;
@@ -171,12 +172,12 @@ export default function RequirementAnswer({
     selectedVariant.questions.forEach((alternative) => {
       if (
         spec.requirementAnswers.find(
-          (answer) => answer.alternativeId === alternative.id
+          (answer) => answer.questionId === alternative.id
         )
       ) {
         defaultText = alternative.id;
         const index = spec.requirementAnswers.findIndex(
-          (answer) => answer.alternativeId === alternative.id
+          (answer) => answer.questionId === alternative.id
         );
         defaultWeight = spec.requirementAnswers[index].weight;
       }
