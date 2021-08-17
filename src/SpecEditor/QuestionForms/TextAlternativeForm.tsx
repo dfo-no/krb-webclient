@@ -6,30 +6,30 @@ import Form from 'react-bootstrap/Form';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
-import ErrorSummary from '../../../Form/ErrorSummary';
-import { IRequirementAnswer } from '../../../models/IRequirementAnswer';
-import { ISliderQuestion } from '../../../models/ISliderQuestion';
-import ModelType from '../../../models/ModelType';
+import ErrorSummary from '../../Form/ErrorSummary';
+import { IRequirementAnswer } from '../../models/IRequirementAnswer';
+import { ITextQuestion } from '../../models/ITextQuestion';
+import ModelType from '../../models/ModelType';
 import {
   addAnswer,
   addProductAnswer
-} from '../../../store/reducers/spesification-reducer';
-import { RootState } from '../../../store/store';
-import { SliderSchema } from '../../../Workbench/Requirement/RequirementEditor';
+} from '../../store/reducers/spesification-reducer';
+import { RootState } from '../../store/store';
+import { TextSchema } from '../../Workbench/Requirement/RequirementEditor';
 
 interface IProps {
   parentAnswer: IRequirementAnswer;
 }
 
-export default function ValueForm({ parentAnswer }: IProps): ReactElement {
+export default function TextForm({ parentAnswer }: IProps): ReactElement {
   const {
     register,
     handleSubmit,
     formState: { errors }
-  } = useForm<ISliderQuestion>({
-    resolver: joiResolver(SliderSchema),
+  } = useForm<ITextQuestion>({
+    resolver: joiResolver(TextSchema),
     defaultValues: {
-      ...(parentAnswer.question as ISliderQuestion)
+      ...(parentAnswer.question as ITextQuestion)
     }
   });
   const { productId } = useSelector(
@@ -42,7 +42,7 @@ export default function ValueForm({ parentAnswer }: IProps): ReactElement {
     return <p>No product selected</p>;
   }
 
-  const saveValues = (post: ISliderQuestion) => {
+  const saveValues = (post: ITextQuestion) => {
     const newAnswer = {
       ...parentAnswer
     };
@@ -56,7 +56,7 @@ export default function ValueForm({ parentAnswer }: IProps): ReactElement {
   return (
     <Card className="mb-3">
       <Card.Body>
-        <h6>Alternative: Value</h6>
+        <h6>Alternative: Text</h6>
         <Form onSubmit={handleSubmit(saveValues)}>
           <Form.Control
             as="input"
@@ -73,29 +73,9 @@ export default function ValueForm({ parentAnswer }: IProps): ReactElement {
           />
           <Form.Control
             as="input"
-            {...register('config.min')}
-            isInvalid={!!errors.config?.min}
-            type="number"
-          />
-
-          <Form.Control
-            as="input"
             {...register('config.max')}
             isInvalid={!!errors.config?.max}
             type="number"
-          />
-
-          <Form.Control
-            as="input"
-            {...register('config.step')}
-            isInvalid={!!errors.config?.step}
-            type="number"
-          />
-
-          <Form.Control
-            as="input"
-            {...register('config.unit')}
-            isInvalid={!!errors.config?.unit}
           />
 
           <Button type="submit">{t('save')}</Button>

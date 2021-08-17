@@ -2,9 +2,9 @@ import React, { ReactElement } from 'react';
 import Container from 'react-bootstrap/Container';
 import QuestionEnum from '../../models/QuestionEnum';
 import { Requirement } from '../../models/Requirement';
-import CodelistInfoAnswer from './InfoForms/CodelistInfoAnswer';
-import TextInfoAnswer from './InfoForms/ITextInfoAnswer';
-import SliderInfoAnswer from './InfoForms/SliderInfoAnswer';
+import CodelistInfoAnswer from '../InfoForms/CodelistInfoAnswer';
+import TextInfoAnswer from '../InfoForms/ITextInfoAnswer';
+import SliderInfoAnswer from '../InfoForms/SliderInfoAnswer';
 
 interface IProps {
   requirement: Requirement;

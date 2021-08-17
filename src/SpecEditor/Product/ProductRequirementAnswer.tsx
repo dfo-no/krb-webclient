@@ -162,7 +162,7 @@ export default function ProductRequirementAnswer({
     setSelectedVariant(variant);
   }
 
-  const selectAlt = () => {
+  const selectQuestion = () => {
     if (selectedQuestion !== undefined)
       dispatch(selectAlternative(selectedQuestion));
   };
@@ -183,15 +183,15 @@ export default function ProductRequirementAnswer({
   function findDefaultAnswerOption(): [string, number] {
     let defaultText = selectedVariant.questions[0].id;
     let defaultWeight = 0;
-    selectedVariant.questions.forEach((alternative) => {
+    selectedVariant.questions.forEach((question) => {
       if (
         specProduct.requirementAnswers.find(
-          (answer) => answer.questionId === alternative.id
+          (answer) => answer.questionId === question.id
         )
       ) {
-        defaultText = alternative.id;
+        defaultText = question.id;
         const index = specProduct.requirementAnswers.findIndex(
-          (answer) => answer.questionId === alternative.id
+          (answer) => answer.questionId === question.id
         );
         defaultWeight = specProduct.requirementAnswers[index].weight;
       }
@@ -234,10 +234,10 @@ export default function ProductRequirementAnswer({
   };
 
   const answerOptions = (variant: IVariant) => {
-    const answers = variant.questions.map((alternative) => {
+    const answers = variant.questions.map((question) => {
       return (
-        <option key={alternative.id} value={alternative.id}>
-          {alternative.type}
+        <option key={question.id} value={question.id}>
+          {question.type}
         </option>
       );
     });
@@ -256,10 +256,10 @@ export default function ProductRequirementAnswer({
           <Col className="p-0">
             {selectedQuestion !== undefined && (
               <Link
-                onClick={selectAlt}
-                to={`/speceditor/${id}/product/${productId}/alternative/${selectedQuestion}`}
+                onClick={selectQuestion}
+                to={`/speceditor/${id}/product/${productId}/question/${selectedQuestion}`}
               >
-                <Button className="ml-2">Edit Question</Button>
+                <Button className="ml-2">Configure Question</Button>
               </Link>
             )}
           </Col>

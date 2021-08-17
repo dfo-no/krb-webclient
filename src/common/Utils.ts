@@ -216,6 +216,48 @@ class Utils {
     const variant = Utils.ensure(variants.find((v: IVariant) => v.id === id));
     return variant.requirementText;
   }
+
+  static checkIfNeedHasChildWithRequirements(
+    listofneed: Nestable<Need>[],
+    requirementList: string[]
+  ): boolean {
+    let foundMatch = false;
+    listofneed.forEach((element) => {
+      if (element.requirements.length > 0) {
+        element.requirements.forEach((requirement) => {
+          if (requirementList.includes(requirement.id)) foundMatch = true;
+        });
+        return foundMatch;
+      }
+      if (element.children && element.children.length > 0) {
+        return Utils.checkIfNeedHasChildWithRequirements(
+          element.children,
+          requirementList
+        );
+      }
+      return foundMatch;
+    });
+    return foundMatch;
+  }
+
+  static checkNeed(
+    element: Nestable<Need>,
+    requirementList: string[]
+  ): boolean {
+    let used = false;
+    if (element.requirements.length > 0) {
+      element.requirements.forEach((requirement) => {
+        if (requirementList.includes(requirement.id)) used = true;
+      });
+    }
+    if (element.children && element.children.length > 0 && !used) {
+      used = Utils.checkIfNeedHasChildWithRequirements(
+        element.children,
+        requirementList
+      );
+    }
+    return used;
+  }
 }
 
 export default Utils;
