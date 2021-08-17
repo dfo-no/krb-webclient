@@ -10,8 +10,9 @@ import { BsTrashFill } from 'react-icons/bs';
 import { Link } from 'react-router-dom';
 import ErrorSummary from '../Form/ErrorSummary';
 import InputRow from '../Form/InputRow';
-import { Bank, PostBankSchema } from '../models/Bank';
+import { Bank } from '../models/Bank';
 import ModelType from '../models/ModelType';
+import { PostProjectSchema } from '../models/Project';
 import { useAppDispatch, useAppSelector } from '../store/hooks';
 import {
   deleteProjectThunk,
@@ -47,7 +48,7 @@ function WorkbenchPage(): ReactElement {
     control,
     formState: { errors }
   } = useForm<Bank>({
-    resolver: joiResolver(PostBankSchema),
+    resolver: joiResolver(PostProjectSchema),
     defaultValues
   });
 
