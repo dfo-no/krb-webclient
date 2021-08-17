@@ -23,17 +23,6 @@ export const BaseBankSchema = Joi.object().keys({
   ]).required()
 });
 
-export const PostBankSchema = BaseBankSchema.keys({
-  id: Joi.string().equal('').required(),
-  description: Joi.string().allow('').required(),
-  publishedDate: Joi.string().equal('').required()
-});
-
-export const PutBankSchema = BaseBankSchema.keys({
-  id: Joi.string().length(36).required(),
-  type: Joi.string().equal(ModelType.bank).required()
-});
-
 export interface Bank extends BaseModel {
   id: string;
   title: string;

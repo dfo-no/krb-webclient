@@ -96,7 +96,7 @@ const projectSlice = createSlice({
       );
       state.list[projectIndex].version += 1;
     },
-    addPublication(
+    prependPublication(
       state,
       {
         payload
@@ -109,7 +109,7 @@ const projectSlice = createSlice({
       if (!state.list[projectIndex].publications) {
         state.list[projectIndex].publications = [];
       }
-      state.list[projectIndex].publications?.push(payload.publication);
+      state.list[projectIndex].publications?.unshift(payload.publication);
     },
     publishProject(
       state,
@@ -579,7 +579,7 @@ export const {
   addCodeToCodelist,
   editCodeInCodelist,
   deleteCodeInCodelist,
-  addPublication,
+  prependPublication,
   incrementProjectVersion,
   addNeed,
   editNeed,
