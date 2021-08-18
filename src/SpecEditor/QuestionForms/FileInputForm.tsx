@@ -8,16 +8,16 @@ import Row from 'react-bootstrap/Row';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
-import ErrorSummary from '../../../Form/ErrorSummary';
-import { IFileUploadQuestion } from '../../../models/IFileUploadQuestion';
-import { IRequirementAnswer } from '../../../models/IRequirementAnswer';
-import ModelType from '../../../models/ModelType';
+import ErrorSummary from '../../Form/ErrorSummary';
+import { IFileUploadQuestion } from '../../models/IFileUploadQuestion';
+import { IRequirementAnswer } from '../../models/IRequirementAnswer';
+import ModelType from '../../models/ModelType';
 import {
   editAnswer,
   editProductAnswer
-} from '../../../store/reducers/spesification-reducer';
-import { RootState } from '../../../store/store';
-import { FileUploadSchema } from '../../../Workbench/Requirement/RequirementEditor';
+} from '../../store/reducers/spesification-reducer';
+import { RootState } from '../../store/store';
+import { FileUploadSchema } from '../../Workbench/Requirement/RequirementEditor';
 
 interface IProps {
   parentAnswer: IRequirementAnswer;

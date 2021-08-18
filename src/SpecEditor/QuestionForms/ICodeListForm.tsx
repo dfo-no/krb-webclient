@@ -7,17 +7,17 @@ import Form from 'react-bootstrap/Form';
 import { Controller, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
-import ErrorSummary from '../../../Form/ErrorSummary';
-import { Codelist } from '../../../models/Codelist';
-import { ICodelistQuestion } from '../../../models/ICodelistQuestion';
-import { IRequirementAnswer } from '../../../models/IRequirementAnswer';
-import ModelType from '../../../models/ModelType';
+import ErrorSummary from '../../Form/ErrorSummary';
+import { Codelist } from '../../models/Codelist';
+import { ICodelistQuestion } from '../../models/ICodelistQuestion';
+import { IRequirementAnswer } from '../../models/IRequirementAnswer';
+import ModelType from '../../models/ModelType';
 import {
   addAnswer,
   addProductAnswer
-} from '../../../store/reducers/spesification-reducer';
-import { RootState } from '../../../store/store';
-import { CodelistSchema } from '../../../Workbench/Requirement/RequirementEditor';
+} from '../../store/reducers/spesification-reducer';
+import { RootState } from '../../store/store';
+import { CodelistSchema } from '../../Workbench/Requirement/RequirementEditor';
 
 interface IProps {
   parentAnswer: IRequirementAnswer;

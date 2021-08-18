@@ -58,8 +58,8 @@ const marks: IOption[] = [
   }
 ];
 
-const alternativeSchema = Joi.object().keys({
-  alternative: Joi.string().required(),
+const questionSchema = Joi.object().keys({
+  question: Joi.string().required(),
   weight: Joi.number().integer().min(1).required(),
   variant: Joi.string()
 });
@@ -75,7 +75,7 @@ export default function RequirementAnswer({
     control,
     formState: { errors }
   } = useForm({
-    resolver: joiResolver(alternativeSchema)
+    resolver: joiResolver(questionSchema)
   });
   const { spec } = useSelector((state: RootState) => state.specification);
   const [selectedVariant, setSelectedVariant] = useState(
@@ -113,13 +113,13 @@ export default function RequirementAnswer({
       updatedAnswer.weight = savedWeight;
       dispatch(editAnswer({ answer: updatedAnswer }));
     } else {
-      const alternative = selectedVariant.questions[alternativeIndex];
+      const question = selectedVariant.questions[alternativeIndex];
       const newAnswer: IRequirementAnswer = {
         id: uuidv4(),
         questionId: post.alternative,
         weight: savedWeight,
         variantId: selectedVariant.id,
-        question: alternative,
+        question,
         requirement,
         type: ModelType.requirement
       };
@@ -233,7 +233,7 @@ export default function RequirementAnswer({
           <Col className="p-0">
             <Form.Control
               as="select"
-              {...register('alternative')}
+              {...register('question')}
               defaultValue={findDefaultAnswerOption()[0]}
             >
               {answers}
@@ -243,9 +243,9 @@ export default function RequirementAnswer({
             {selectedAlternative !== undefined && (
               <Link
                 onClick={selectAlt}
-                to={`/speceditor/${id}/requirement/alternative/${selectedAlternative}`}
+                to={`/speceditor/${id}/requirement/question/${selectedAlternative}`}
               >
-                <Button className="ml-4">Edit Alternative</Button>
+                <Button className="ml-4">Configure question</Button>
               </Link>
             )}
           </Col>

@@ -10,21 +10,17 @@ import Row from 'react-bootstrap/Row';
 import { Controller, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
-import ErrorSummary from '../../../Form/ErrorSummary';
-import { IPeriodDateQuestion } from '../../../models/IPeriodDateQuestion';
-import { IRequirementAnswer } from '../../../models/IRequirementAnswer';
-import ModelType from '../../../models/ModelType';
-import {
-  IAnswerBase,
-  IConfigBase,
-  IQuestionBase
-} from '../../../models/Question';
-import QuestionEnum from '../../../models/QuestionEnum';
+import ErrorSummary from '../../Form/ErrorSummary';
+import { IPeriodDateQuestion } from '../../models/IPeriodDateQuestion';
+import { IRequirementAnswer } from '../../models/IRequirementAnswer';
+import ModelType from '../../models/ModelType';
+import { IAnswerBase, IConfigBase, IQuestionBase } from '../../models/Question';
+import QuestionEnum from '../../models/QuestionEnum';
 import {
   addAnswer,
   addProductAnswer
-} from '../../../store/reducers/spesification-reducer';
-import { RootState } from '../../../store/store';
+} from '../../store/reducers/spesification-reducer';
+import { RootState } from '../../store/store';
 
 interface IProps {
   parentAnswer: IRequirementAnswer;

@@ -1,19 +1,19 @@
 import React, { ReactElement } from 'react';
 import Card from 'react-bootstrap/esm/Card';
-import { IRequirementAnswer } from '../../../models/IRequirementAnswer';
-import QuestionEnum from '../../../models/QuestionEnum';
-import { Requirement } from '../../../models/Requirement';
-import RequirementType from '../../../models/RequirementType';
-import ICheckBoxAnswer from '../../AlternativeAnswerForms/ICheckBoxAnswer';
-import ICodelistAnswer from '../../AlternativeAnswerForms/ICodeListAnswer';
-import PeriodDateAnswer from '../../AlternativeAnswerForms/IPeriodDateAnswer';
-import ISliderAnswer from '../../AlternativeAnswerForms/ISliderAnswer';
-import ITextAnswer from '../../AlternativeAnswerForms/TextAnswerForm';
-import CheckBoxInfo from '../../InfoanswerFields/CheckBoxInfo';
-import CodelistInfo from '../../InfoanswerFields/CodelistInfo';
-import DateInfo from '../../InfoanswerFields/DateInfo';
-import SliderInfo from '../../InfoanswerFields/SliderInfo';
-import TextInfo from '../../InfoanswerFields/TextInfo';
+import { IRequirementAnswer } from '../../models/IRequirementAnswer';
+import QuestionEnum from '../../models/QuestionEnum';
+import { Requirement } from '../../models/Requirement';
+import RequirementType from '../../models/RequirementType';
+import CheckBoxInfo from '../InfoanswerFields/CheckBoxInfo';
+import CodelistInfo from '../InfoanswerFields/CodelistInfo';
+import DateInfo from '../InfoanswerFields/DateInfo';
+import SliderInfo from '../InfoanswerFields/SliderInfo';
+import TextInfo from '../InfoanswerFields/TextInfo';
+import ICheckBoxAnswer from '../QuestionAnswerForms/ICheckBoxAnswer';
+import ICodelistAnswer from '../QuestionAnswerForms/ICodeListAnswer';
+import PeriodDateAnswer from '../QuestionAnswerForms/IPeriodDateAnswer';
+import ISliderAnswer from '../QuestionAnswerForms/ISliderAnswer';
+import ITextAnswer from '../QuestionAnswerForms/TextAnswerForm';
 
 interface IProps {
   selectedAnswer: IRequirementAnswer;
