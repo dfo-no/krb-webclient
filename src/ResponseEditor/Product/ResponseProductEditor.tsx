@@ -4,22 +4,22 @@ import React, { ReactElement } from 'react';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import Col from 'react-bootstrap/Col';
-import { v4 as uuidv4 } from 'uuid';
 import Container from 'react-bootstrap/Container';
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 import { useForm } from 'react-hook-form';
-import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
+import { useDispatch, useSelector } from 'react-redux';
+import { v4 as uuidv4 } from 'uuid';
 import Utils from '../../common/Utils';
+import ErrorSummary from '../../Form/ErrorSummary';
+import ModelType from '../../models/ModelType';
 import { ResponseProduct } from '../../models/ResponseProduct';
 import { SpecificationProduct } from '../../models/SpecificationProduct';
-import { RootState } from '../../store/store';
-import ModelType from '../../models/ModelType';
 import { addProduct, editProduct } from '../../store/reducers/response-reducer';
-import ErrorSummary from '../../Form/ErrorSummary';
-import ResponseProductRequirementSelector from './ResponseProductRequirementSelector';
 import { selectResponseProduct } from '../../store/reducers/selectedResponseProduct-reducer';
+import { RootState } from '../../store/store';
+import ResponseProductRequirementSelector from './ResponseProductRequirementSelector';
 
 interface IResponseProductForm {
   title: string;
@@ -60,12 +60,13 @@ export default function ResponseProductEditor(): ReactElement {
 
   const specProduct: SpecificationProduct = Utils.ensure(
     response.spesification.products.find(
-      (product: SpecificationProduct) => product.id === productId
+      (specificationProduct: SpecificationProduct) =>
+        specificationProduct.id === productId
     )
   );
 
   const productIndex = response.products.findIndex(
-    (product) => product.originProduct.id === specProduct.id
+    (responseProduct) => responseProduct.originProduct.id === specProduct.id
   );
 
   const newProduct: ResponseProduct = {

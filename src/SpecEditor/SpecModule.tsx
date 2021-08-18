@@ -8,10 +8,10 @@ import NotFound from '../NotFound';
 import { selectBank } from '../store/reducers/selectedBank-reducer';
 import { RootState } from '../store/store';
 import DownloadPage from './Download/DownloadPage';
-import EditProductAlternative from './Product/EditProductAlternative';
+import ConfigureProductQuestion from './Product/ConfigureProductQuestion';
 import ProductSpecEditor from './Product/ProductSpecEditor';
 import ProductSpecList from './Product/ProductSpecList';
-import EditAlternative from './Requirement/EditAlternative';
+import ConfigureQuestion from './Requirement/ConfigureQuestion';
 import RequirementSpecEditor from './Requirement/RequirementSpecEditor';
 import SpecSideBar from './SideBar/SpecSideBar';
 import SpecEditor from './SpecEditor/SpecEditor';
@@ -43,8 +43,11 @@ export default function SpecModule(): ReactElement {
             <Route exact path="/speceditor/:id/requirement">
               <RequirementSpecEditor />
             </Route>
-            <Route exact path="/speceditor/:id/requirement/alternative/:altid">
-              <EditAlternative />
+            <Route
+              exact
+              path="/speceditor/:id/requirement/question/:questionid"
+            >
+              <ConfigureQuestion />
             </Route>
             <Route exact path="/speceditor/:id/product">
               <ProductSpecList />
@@ -54,9 +57,9 @@ export default function SpecModule(): ReactElement {
             </Route>
             <Route
               exact
-              path="/speceditor/:id/product/:productid/alternative/:altid"
+              path="/speceditor/:id/product/:productid/question/:questionid"
             >
-              <EditProductAlternative />
+              <ConfigureProductQuestion />
             </Route>
             <Route exact path="/speceditor/:id/download">
               <DownloadPage />

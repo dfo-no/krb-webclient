@@ -10,15 +10,15 @@ import { Controller, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { v4 as uuidv4 } from 'uuid';
-import ErrorSummary from '../../../Form/ErrorSummary';
-import { IPeriodDateQuestion } from '../../../models/IPeriodDateQuestion';
-import { IRequirementAnswer } from '../../../models/IRequirementAnswer';
-import ModelType from '../../../models/ModelType';
-import QuestionEnum from '../../../models/QuestionEnum';
-import { QuestionType } from '../../../models/QuestionType';
-import { Requirement } from '../../../models/Requirement';
-import { addAnswer } from '../../../store/reducers/spesification-reducer';
-import { RootState } from '../../../store/store';
+import ErrorSummary from '../../Form/ErrorSummary';
+import { IPeriodDateQuestion } from '../../models/IPeriodDateQuestion';
+import { IRequirementAnswer } from '../../models/IRequirementAnswer';
+import ModelType from '../../models/ModelType';
+import QuestionEnum from '../../models/QuestionEnum';
+import { QuestionType } from '../../models/QuestionType';
+import { Requirement } from '../../models/Requirement';
+import { addAnswer } from '../../store/reducers/spesification-reducer';
+import { RootState } from '../../store/store';
 
 interface IProps {
   question: QuestionType;
