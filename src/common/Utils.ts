@@ -240,7 +240,7 @@ class Utils {
     return foundMatch;
   }
 
-  static checkNeed(
+  static checkIfNeedHasSelectedRequirements(
     element: Nestable<Need>,
     requirementList: string[]
   ): boolean {

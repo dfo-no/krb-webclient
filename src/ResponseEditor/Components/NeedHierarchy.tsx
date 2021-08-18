@@ -1,6 +1,6 @@
 import React, { ReactElement } from 'react';
-import ListGroup from 'react-bootstrap/esm/ListGroup';
-import Row from 'react-bootstrap/esm/Row';
+import ListGroup from 'react-bootstrap/ListGroup';
+import Row from 'react-bootstrap/Row';
 import { BsArrowReturnRight } from 'react-icons/bs';
 import Utils from '../../common/Utils';
 import { IRequirementAnswer } from '../../models/IRequirementAnswer';
@@ -34,7 +34,8 @@ export default function NeedHierarchy({
         n += 1;
         children = needChildrenHierarchy(element.children, n);
       }
-      if (!Utils.checkNeed(element, searchList)) return <></>;
+      if (!Utils.checkIfNeedHasSelectedRequirements(element, searchList))
+        return <></>;
       return (
         <div key={element.id} className={` ${styles[cssClass]} pt-0`}>
           <Row>
@@ -58,7 +59,8 @@ export default function NeedHierarchy({
   const newList = Utils.unflatten(needs)[0];
   let children: JSX.Element[];
   const hierarchy = newList.map((element) => {
-    if (!Utils.checkNeed(element, searchList)) return null;
+    if (!Utils.checkIfNeedHasSelectedRequirements(element, searchList))
+      return null;
     if (element.children && element.children.length > 0) {
       children = needChildrenHierarchy(element.children, 1);
     }
