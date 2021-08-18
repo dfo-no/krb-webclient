@@ -1,10 +1,9 @@
 import React, { ReactElement } from 'react';
-import { useSelector } from 'react-redux';
 import Utils from '../../common/Utils';
 import { Bank } from '../../models/Bank';
 import { ResponseProduct } from '../../models/ResponseProduct';
 import { SpecificationProduct } from '../../models/SpecificationProduct';
-import { RootState } from '../../store/store';
+import { useAppSelector } from '../../store/hooks';
 import NeedHierarchy from '../Components/NeedHierarchy';
 
 interface InputProps {
