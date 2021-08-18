@@ -3,12 +3,11 @@ import Container from 'react-bootstrap/Container';
 import ToggleButton from 'react-bootstrap/esm/ToggleButton';
 import ToggleButtonGroup from 'react-bootstrap/esm/ToggleButtonGroup';
 import Row from 'react-bootstrap/Row';
-import { useSelector } from 'react-redux';
-import { RootState } from '../../store/store';
+import { useAppSelector } from '../../store/hooks';
 import AnswerPreviewBox from './Components/AnswerPreviewBox';
 
 export default function OverView(): ReactElement {
-  const { response } = useSelector((state: RootState) => state.response);
+  const { response } = useAppSelector((state) => state.response);
   const [overviewType, setOverviewType] = useState('requirement');
 
   const handleViewType = (newOverviewType: string) => {

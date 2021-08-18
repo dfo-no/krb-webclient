@@ -8,7 +8,6 @@ import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 import { Controller, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import { useDispatch, useSelector } from 'react-redux';
 import { v4 as uuidv4 } from 'uuid';
 import ErrorSummary from '../../Form/ErrorSummary';
 import { IPeriodDateQuestion } from '../../models/IPeriodDateQuestion';
@@ -17,8 +16,8 @@ import ModelType from '../../models/ModelType';
 import QuestionEnum from '../../models/QuestionEnum';
 import { QuestionType } from '../../models/QuestionType';
 import { Requirement } from '../../models/Requirement';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { addAnswer } from '../../store/reducers/spesification-reducer';
-import { RootState } from '../../store/store';
 
 interface IProps {
   question: QuestionType;
@@ -45,10 +44,8 @@ export default function DateInfoAnswer({
   reqTextId,
   requirement
 }: IProps): ReactElement {
-  const { spec } = useSelector((state: RootState) => state.specification);
-  const { productId } = useSelector(
-    (state: RootState) => state.selectedSpecProduct
-  );
+  const { spec } = useAppSelector((state) => state.specification);
+  const { productId } = useAppSelector((state) => state.selectedSpecProduct);
   let index: number;
 
   const productIndex = spec.products.findIndex((p) => p.id === productId);
@@ -88,7 +85,7 @@ export default function DateInfoAnswer({
 
   const dateQuestion = question as IPeriodDateQuestion;
 
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const { t } = useTranslation();
   const saveValues = (post: any) => {
     const newAns = {

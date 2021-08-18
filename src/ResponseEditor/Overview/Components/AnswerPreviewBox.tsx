@@ -1,6 +1,5 @@
 import { Card } from '@material-ui/core';
 import React, { ReactElement } from 'react';
-import { useSelector } from 'react-redux';
 import Utils from '../../../common/Utils';
 import { Code } from '../../../models/Code';
 import { Codelist } from '../../../models/Codelist';
@@ -10,7 +9,7 @@ import { IRequirementAnswer } from '../../../models/IRequirementAnswer';
 import { ISliderQuestion } from '../../../models/ISliderQuestion';
 import { ITextQuestion } from '../../../models/ITextQuestion';
 import QuestionEnum from '../../../models/QuestionEnum';
-import { RootState } from '../../../store/store';
+import { useAppSelector } from '../../../store/hooks';
 import AnswerPreview from './AnswerPreview';
 
 interface IProps {
@@ -18,7 +17,7 @@ interface IProps {
 }
 
 export default function AnswerPreviewBox({ answerList }: IProps): ReactElement {
-  const { response } = useSelector((state: RootState) => state.response);
+  const { response } = useAppSelector((state) => state.response);
   const GenerateCodelist = (
     codes: string | string[],
     configCodelist: string
