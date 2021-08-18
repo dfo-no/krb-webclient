@@ -1,6 +1,4 @@
 import { joiResolver } from '@hookform/resolvers/joi';
-import formatISO from 'date-fns/formatISO';
-import Joi from 'joi';
 import React, { ReactElement, useEffect, useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
@@ -8,139 +6,91 @@ import Row from 'react-bootstrap/Row';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { BsPencil } from 'react-icons/bs';
-import { useRouteMatch } from 'react-router';
 import Utils from '../../common/Utils';
 import ErrorSummary from '../../Form/ErrorSummary';
+import InputRow from '../../Form/InputRow';
 import { Bank } from '../../models/Bank';
-import ModelType from '../../models/ModelType';
-import { Publication, PublicationSchema } from '../../models/Publication';
+import { PutProjectSchema } from '../../models/Project';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { postBankThunk } from '../../store/reducers/bank-reducer';
 import {
-  addPublication,
-  deletePublication,
-  getProjectsThunk,
-  incrementProjectVersion,
-  putProjectThunk
+  deleteProjectByIdThunk,
+  putProjectByIdThunk,
+  removePublicationFromProject,
+  updateCurrentProjectPublication
 } from '../../store/reducers/project-reducer';
-import { selectProject } from '../../store/reducers/selectedProject-reducer';
 import SuccessAlert from '../SuccessAlert';
 import SuccessDeleteAlert from '../SuccessDeleteAlert';
 import EditProjectForm from './EditProjectForm';
 import { ProjectPublicationForm } from './ProjectPublicationForm';
 import PublicationsFieldArray from './PublicationsFieldArray';
 
-interface RouteParams {
-  projectId?: string;
-}
-
-interface IPublishPost {
-  id: string;
-  publications: Publication[];
-}
-
 function ProjectPage(): ReactElement {
-  const projectMatch = useRouteMatch<RouteParams>('/workbench/:projectId');
-  const { list, status } = useAppSelector((state) => state.project);
+  const { list } = useAppSelector((state) => state.project);
   const { id } = useAppSelector((state) => state.selectedProject);
   const dispatch = useAppDispatch();
-
-  if (projectMatch?.params.projectId) {
-    dispatch(selectProject(projectMatch?.params.projectId));
-  }
-
-  useEffect(() => {
-    async function fetchEverything() {
-      setTimeout(async () => {
-        await dispatch(getProjectsThunk());
-      }, 10);
-    }
-    if (!list) {
-      fetchEverything();
-    }
-  }, [dispatch, list]);
 
   const [showAlert, setShowAlert] = useState(false);
   const [showDeleteAlert, setDeleteAlert] = useState(false);
   const [editMode, setEditMode] = useState(false);
   const [validated] = useState(false);
-  const bakcupProject: Bank = {
-    id: '',
-    title: '',
-    description: '',
-    needs: [],
-    products: [],
-    codelist: [],
-    version: 0,
-    type: ModelType.bank,
-    publications: []
-  };
-  const project =
-    status === 'fulfilled'
-      ? Utils.ensure(list.find((element) => element.id === id))
-      : bakcupProject;
 
-  const projectSchema = Joi.object().keys({
-    id: Joi.string().required(),
-    publications: Joi.array()
-      .items(PublicationSchema)
-      .unique('id')
-      .messages({
-        'array.unique': 'Id must be unique'
-      })
-      .unique('version')
-      .messages({
-        'array.unique': 'Version must be unique'
-      })
-      .unique('date')
-  });
+  const project = Utils.ensure(list.find((element) => element.id === id));
 
-  const { control, register, handleSubmit, formState } =
+  const { control, register, handleSubmit, reset, formState } =
     useForm<ProjectPublicationForm>({
       criteriaMode: 'all',
-      resolver: joiResolver(projectSchema),
-      defaultValues: {
-        id: project.id,
-        publications: project.publications
-      }
+      resolver: joiResolver(PutProjectSchema),
+      defaultValues: project
     });
 
-  const { errors } = formState;
+  useEffect(() => {
+    if (project) {
+      reset(JSON.parse(JSON.stringify(project)));
+    }
+  }, [project, reset]);
+
   const { t } = useTranslation();
 
   const removePublication = async (publicationId: string) => {
-    dispatch(deletePublication({ projectId: project.id, publicationId }));
-    dispatch(putProjectThunk(project.id)).then(() => {
-      setDeleteAlert(true);
+    dispatch(
+      removePublicationFromProject({ projectId: project.id, publicationId })
+    );
+    dispatch(deleteProjectByIdThunk(publicationId)).then(() => {
+      dispatch(putProjectByIdThunk(project.id)).then(() => {
+        setDeleteAlert(true);
+      });
     });
   };
 
-  if (list.length === 0 || !id) {
-    return <p>Loading project page ...</p>;
-  }
-  const publishProject = async (e: IPublishPost) => {
-    // Publication is always first in array because we prepend
-    const publication: Publication = e.publications[0];
+  const { errors } = formState;
 
-    const projectToBePublished: Bank = { ...project };
+  const generateBankFromProject = (item: Bank) => {
+    // clone shallow
+    const newBank: Bank = { ...project };
+    newBank.id = '';
+    newBank.publishedDate = new Date().toJSON();
+    newBank.publications = [];
+    newBank.version = item.publications[0].version;
+    return newBank;
+  };
 
-    // Date from form is may have been stale (i.e waiting before clicking), update to now
-    const convertedDate = formatISO(new Date());
-    projectToBePublished.publishedDate = convertedDate;
-    projectToBePublished.id = '';
-    projectToBePublished.publications = [];
-    projectToBePublished.version = publication.version;
+  const onSubmit = async (post: Bank) => {
+    const newBank = generateBankFromProject(post);
 
-    // TODO: this logic should be in the reducers
-    const result = await dispatch(postBankThunk(projectToBePublished)).unwrap();
-    // update root project with new values
-    publication.bankId = result.id;
-    publication.date = convertedDate;
-
-    dispatch(addPublication({ projectId: project.id, publication }));
-    dispatch(incrementProjectVersion(project.id));
-    await dispatch(putProjectThunk(project.id));
-    setShowAlert(true);
+    dispatch(postBankThunk(newBank))
+      .unwrap()
+      .then(async (result: Bank) => {
+        dispatch(
+          updateCurrentProjectPublication({
+            projectId: project.id,
+            publishedBank: result
+          })
+        );
+        dispatch(putProjectByIdThunk(project.id)).then(() => {
+          setShowAlert(true);
+        });
+      });
   };
 
   function editProjectForm(edit: boolean) {
@@ -170,12 +120,13 @@ function ProjectPage(): ReactElement {
       {showAlert && (
         <SuccessAlert toggleShow={setShowAlert} type="publication" />
       )}
-      <Form
-        onSubmit={handleSubmit((e) => publishProject(e))}
-        noValidate
-        validated={validated}
-      >
-        <Form.Control readOnly type="hidden" as="input" {...register('id')} />
+      <Form onSubmit={handleSubmit(onSubmit)} noValidate validated={validated}>
+        <InputRow
+          control={control}
+          name="title"
+          label="Comment"
+          errors={errors}
+        />
         <PublicationsFieldArray
           control={control}
           register={register}
@@ -183,8 +134,8 @@ function ProjectPage(): ReactElement {
           projectId={project.id}
           removePublication={removePublication}
         />
-        <ErrorSummary errors={errors} />
       </Form>
+      <ErrorSummary errors={errors} />
     </>
   );
 }

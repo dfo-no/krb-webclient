@@ -1,26 +1,26 @@
-import React, { ReactElement, useState, useRef } from 'react';
+import format from 'date-fns/format';
+import React, { ReactElement, useRef, useState } from 'react';
+import Button from 'react-bootstrap/Button';
+import Form from 'react-bootstrap/Form';
+import ListGroup from 'react-bootstrap/ListGroup';
+import Nav from 'react-bootstrap/Nav';
+import Row from 'react-bootstrap/Row';
 import {
   Control,
   FormState,
   useFieldArray,
   UseFormRegister
 } from 'react-hook-form';
-import Form from 'react-bootstrap/Form';
-import ListGroup from 'react-bootstrap/ListGroup';
-import Button from 'react-bootstrap/Button';
-import { BsTrashFill } from 'react-icons/bs';
-import Nav from 'react-bootstrap/Nav';
-import { v4 as uuidv4 } from 'uuid';
-import format from 'date-fns/format';
-import formatISO from 'date-fns/formatISO';
-
 import { useTranslation } from 'react-i18next';
-import { Publication } from '../../models/Publication';
-import ModelType from '../../models/ModelType';
-import SuccessAlert from '../SuccessAlert';
-import css from './PublicationList.module.scss';
+import { BsTrashFill } from 'react-icons/bs';
 import * as Constants from '../../common/Constants';
+import ModelType from '../../models/ModelType';
+import { Publication } from '../../models/Publication';
+import { useAppDispatch } from '../../store/hooks';
+import { prependPublication } from '../../store/reducers/project-reducer';
+import SuccessAlert from '../SuccessAlert';
 import { ProjectPublicationForm } from './ProjectPublicationForm';
+import css from './PublicationList.module.scss';
 
 type IProps = {
   register: UseFormRegister<ProjectPublicationForm>;
@@ -39,11 +39,12 @@ export default function PublicationsFieldArray({
 }: IProps): ReactElement {
   const { errors } = formState;
 
-  const { fields, remove, prepend } = useFieldArray({
+  const { fields, remove } = useFieldArray({
     name: 'publications',
-    keyName: 'guid',
     control
   });
+
+  const dispatch = useAppDispatch();
 
   const [showAlert, setShowAlert] = useState(false);
   const publishButtonRef = useRef(null);
@@ -56,18 +57,24 @@ export default function PublicationsFieldArray({
     return Math.max(...publications.map((p) => p.version)) + 1;
   };
 
+  const cancelPublish = () => {
+    remove(0);
+  };
+
   const addPublication = () => {
     if (!publishButtonRef.current) {
-      const convertedDate = formatISO(new Date());
       const nextVersion = getNextVersion(fields);
-      prepend({
-        id: uuidv4(),
+
+      const newPublication: Publication = {
+        id: '',
         comment: '',
-        date: convertedDate,
+        date: '',
         version: nextVersion,
         bankId: projectId,
         type: ModelType.publication
-      });
+      };
+
+      dispatch(prependPublication({ projectId, publication: newPublication }));
     }
   };
 
@@ -80,105 +87,61 @@ export default function PublicationsFieldArray({
 
       <ListGroup className="mt-4">
         {fields.map((field, index) => {
-          const formattedDate = format(
-            new Date(field.date),
-            Constants.DATE_FORMAT_SHORT
-          );
           return (
-            <ListGroup.Item
-              as="div"
-              key={field.guid}
-              className={css.listGroup__item}
-            >
-              <Nav.Link href={`/bank/${field.bankId}`}>
-                {` ${formattedDate} ${field.comment}`}
-              </Nav.Link>
-              <Form.Control
-                readOnly
-                as="input"
-                type="hidden"
-                {...register(`publications.${index}.id` as const)}
-                defaultValue={field.id}
-              />
-              <Form.Control
-                readOnly
-                as="input"
-                type="hidden"
-                {...register(`publications.${index}.bankId` as const)}
-                defaultValue={field.bankId}
-              />
-              <Form.Control
-                readOnly
-                as="input"
-                type="hidden"
-                {...register(`publications.${index}.type` as const)}
-                defaultValue={field.type}
-              />
-              {field.comment === '' ? (
+            <ListGroup.Item as="div" key={field.id}>
+              {field.id === '' ? (
                 <>
-                  <Form.Control
-                    as="input"
-                    type="text"
-                    {...register(`publications.${index}.comment` as const)}
-                    placeholder="Summarize the changes ..."
-                    defaultValue=""
-                    isInvalid={
-                      !!(
-                        errors.publications &&
-                        errors.publications[index] &&
-                        errors.publications[index]?.comment
-                      )
-                    }
-                  />
-                  {errors.publications &&
-                    errors.publications[index] &&
-                    errors.publications[index]?.comment && (
-                      <Form.Control.Feedback type="invalid">
-                        {errors.publications[index]?.comment?.message}
-                      </Form.Control.Feedback>
-                    )}
-                  <Button
-                    className="ml-1 mr-1"
-                    type="submit"
-                    ref={publishButtonRef}
-                  >
+                  <Form.Group>
+                    <Form.Control
+                      as="input"
+                      type="text"
+                      {...register(`publications.${index}.comment` as const)}
+                      placeholder="Summarize the changes ..."
+                      defaultValue=""
+                      isInvalid={
+                        !!(
+                          errors.publications &&
+                          errors.publications[index] &&
+                          errors.publications[index]?.comment
+                        )
+                      }
+                    />
+                    {errors.publications &&
+                      errors.publications[index] &&
+                      errors.publications[index]?.comment && (
+                        <Form.Control.Feedback type="invalid" as="div">
+                          {errors.publications[index]?.comment?.message}
+                        </Form.Control.Feedback>
+                      )}
+                  </Form.Group>
+                  <Button className="mr-1" type="submit" ref={publishButtonRef}>
                     {t('publish')}
+                  </Button>
+                  <Button variant="warning" onClick={() => cancelPublish()}>
+                    {t('cancel')}
                   </Button>
                 </>
               ) : (
-                <Form.Control
-                  readOnly
-                  as="input"
-                  type="hidden"
-                  {...register(`publications.${index}.comment` as const)}
-                  defaultValue={field.comment}
-                />
+                <Row>
+                  <Nav.Link href={`/bank/${field.bankId}`}>
+                    {` ${format(
+                      new Date(field.date),
+                      Constants.DATE_FORMAT_SHORT
+                    )} ${field.comment}`}
+                  </Nav.Link>
+                  <div className={css.listGroup__spacer} />
+                  <Button
+                    variant="danger"
+                    type="button"
+                    onClick={() => {
+                      // remove(index);
+                      removePublication(field.id);
+                    }}
+                  >
+                    <BsTrashFill />
+                  </Button>
+                </Row>
               )}
-              <div className={css.listGroup__spacer} />
-              <Button
-                variant="danger"
-                type="button"
-                onClick={() => {
-                  remove(index);
-                  removePublication(field.id);
-                }}
-              >
-                <BsTrashFill />
-              </Button>
-              <Form.Control
-                readOnly
-                as="input"
-                type="hidden"
-                {...register(`publications.${index}.date` as const)}
-                defaultValue={field.date}
-              />
-              <Form.Control
-                readOnly
-                as="input"
-                type="hidden"
-                {...register(`publications.${index}.version` as const)}
-                defaultValue={field.version}
-              />
             </ListGroup.Item>
           );
         })}

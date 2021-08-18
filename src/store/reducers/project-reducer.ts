@@ -73,6 +73,14 @@ export const deleteProjectThunk = createAsyncThunk(
   }
 );
 
+export const deleteProjectByIdThunk = createAsyncThunk(
+  'deleteProjectByIdThunk',
+  async (projectId: string) => {
+    await httpDelete<Bank>(`/api/bank/${projectId}`);
+    return projectId;
+  }
+);
+
 const projectSlice = createSlice({
   name: 'projects',
   initialState,
@@ -485,7 +493,7 @@ const projectSlice = createSlice({
         1
       );
     },
-    deletePublication(
+    removePublicationFromProject(
       state,
       {
         payload
@@ -502,6 +510,27 @@ const projectSlice = createSlice({
       );
 
       state.list[projectIndex].publications.splice(publicationIndex, 1);
+    },
+    updateCurrentProjectPublication(
+      state,
+      {
+        payload
+      }: PayloadAction<{
+        projectId: string;
+        publishedBank: Bank;
+      }>
+    ) {
+      const projectIndex = Utils.ensure(
+        state.list.findIndex((project) => project.id === payload.projectId)
+      );
+      state.list[projectIndex].publications[0].id = payload.publishedBank.id;
+      state.list[projectIndex].publications[0].bankId =
+        payload.publishedBank.id;
+
+      state.list[projectIndex].publications[0].date =
+        payload.publishedBank.publishedDate ?? '';
+
+      state.list[projectIndex].version += 1;
     }
   },
   extraReducers: (builder) => {
@@ -561,6 +590,16 @@ const projectSlice = createSlice({
     builder.addCase(deleteProjectThunk.rejected, (state) => {
       state.status = 'rejected';
     });
+    builder.addCase(deleteProjectByIdThunk.fulfilled, (state, { payload }) => {
+      state.list = state.list.filter((item) => item.id !== payload);
+      state.status = 'fulfilled';
+    });
+    builder.addCase(deleteProjectByIdThunk.pending, (state) => {
+      state.status = 'pending';
+    });
+    builder.addCase(deleteProjectByIdThunk.rejected, (state) => {
+      state.status = 'rejected';
+    });
   }
 });
 
@@ -591,7 +630,8 @@ export const {
   editRequirementInNeed,
   addRequirement,
   deleteRequirement,
-  deletePublication
+  removePublicationFromProject,
+  updateCurrentProjectPublication
 } = projectSlice.actions;
 
 export default projectSlice.reducer;
