@@ -48,11 +48,11 @@ export default function ProductSpesificationRequirement({
       requirement.variants.forEach((variant) => {
         if (
           specProduct.requirementAnswers.find(
-            (answer) => answer.reqTextId === variant.id
+            (answer) => answer.variantId === variant.id
           )
         ) {
           const index = specProduct.requirementAnswers.findIndex(
-            (answer) => answer.reqTextId === variant.id
+            (answer) => answer.variantId === variant.id
           );
           dispatch(
             deleteProductAnswer({

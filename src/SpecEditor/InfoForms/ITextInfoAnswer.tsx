@@ -1,29 +1,27 @@
 import { joiResolver } from '@hookform/resolvers/joi';
-import { KeyboardDatePicker } from '@material-ui/pickers/DatePicker';
 import Joi from 'joi';
 import React, { ReactElement } from 'react';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
-import Col from 'react-bootstrap/esm/Col';
 import Form from 'react-bootstrap/Form';
-import Row from 'react-bootstrap/Row';
-import { Controller, useForm } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { v4 as uuidv4 } from 'uuid';
-import ErrorSummary from '../../../Form/ErrorSummary';
-import { IPeriodDateQuestion } from '../../../models/IPeriodDateQuestion';
-import { IRequirementAnswer } from '../../../models/IRequirementAnswer';
-import { ITextQuestion } from '../../../models/ITextQuestion';
-import ModelType from '../../../models/ModelType';
-import QuestionEnum from '../../../models/QuestionEnum';
-import { QuestionType } from '../../../models/QuestionType';
-import { useAppDispatch, useAppSelector } from '../../../store/hooks';
-import { addAnswer } from '../../../store/reducers/spesification-reducer';
+import ErrorSummary from '../../Form/ErrorSummary';
+import { IRequirementAnswer } from '../../models/IRequirementAnswer';
+import { ITextQuestion } from '../../models/ITextQuestion';
+import ModelType from '../../models/ModelType';
+import QuestionEnum from '../../models/QuestionEnum';
+import { QuestionType } from '../../models/QuestionType';
+import { Requirement } from '../../models/Requirement';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
+import { addAnswer } from '../../store/reducers/spesification-reducer';
 
 interface IProps {
   question: QuestionType;
   type: string;
   reqTextId: string;
+  requirement: Requirement;
 }
 
 export const ResponseCodelistSchema = Joi.object().keys({
@@ -38,10 +36,11 @@ export const ResponseCodelistSchema = Joi.object().keys({
   })
 });
 
-export default function DateInfoAnswer({
+export default function TextInfoAnswer({
   question,
   type,
-  reqTextId
+  reqTextId,
+  requirement
 }: IProps): ReactElement {
   const { spec } = useAppSelector((state) => state.specification);
   const { productId } = useAppSelector((state) => state.selectedSpecProduct);
@@ -51,69 +50,62 @@ export default function DateInfoAnswer({
 
   if (type === 'requirement') {
     index = spec.requirementAnswers.findIndex(
-      (answer: IRequirementAnswer) => answer.alternative.id === question.id
+      (answer: IRequirementAnswer) => answer.question.id === question.id
     );
   } else {
     index =
       spec.products.length > 0
         ? spec.products[productIndex].requirementAnswers.findIndex(
-            (answer: IRequirementAnswer) =>
-              answer.alternative.id === question.id
+            (answer: IRequirementAnswer) => answer.question.id === question.id
           )
         : -1;
   }
 
   const defaultVal =
     index === -1
-      ? (question as IPeriodDateQuestion)
+      ? (question as ITextQuestion)
       : (type === 'requirement' &&
-          (spec.requirementAnswers[index]
-            .alternative as IPeriodDateQuestion)) ||
+          (spec.requirementAnswers[index].question as ITextQuestion)) ||
         (type === 'info' &&
           (spec.products[productIndex].requirementAnswers[index]
-            .alternative as IPeriodDateQuestion));
+            .question as ITextQuestion));
   const {
     register,
     handleSubmit,
-    control,
     formState: { errors }
-  } = useForm<IPeriodDateQuestion>({
+  } = useForm<ITextQuestion>({
     resolver: joiResolver(ResponseCodelistSchema),
     defaultValues: {
       ...defaultVal
     }
   });
 
-  const dateQuestion = question as IPeriodDateQuestion;
+  const textQuestion = question as ITextQuestion;
 
   const dispatch = useAppDispatch();
   const { t } = useTranslation();
-  const saveValues = (post: any) => {
-    const newAns = {
-      ...post
-    };
-    const newDate = post.answer.date.toISOString();
-    newAns.answer.date = newDate;
+  const saveValues = (post: ITextQuestion) => {
     if (index === -1) {
       const newAnswer: IRequirementAnswer = {
         id: uuidv4(),
-        alternativeId: post.id,
+        questionId: post.id,
         weight: 1,
-        reqTextId,
-        alternative: newAns,
+        variantId: reqTextId,
+        requirement,
+        question: post,
         type: ModelType.requirement
       };
       dispatch(addAnswer({ answer: newAnswer }));
     } else {
       const answer = spec.requirementAnswers[index];
-      answer.alternative = newAns;
+      answer.question = post;
       dispatch(addAnswer({ answer }));
     }
   };
   return (
     <Card className="mb-3">
       <Card.Body>
-        <h6>Alternative: Date</h6>
+        <h6>Alternative: Text</h6>
         <Form onSubmit={handleSubmit(saveValues)}>
           <Form.Control
             as="input"
@@ -131,39 +123,15 @@ export default function DateInfoAnswer({
           <Form.Control
             as="input"
             type="hidden"
-            {...register('config.fromDate')}
-            isInvalid={!!errors.type}
+            {...register('config.max')}
+            isInvalid={!!errors.config?.max}
           />
           <Form.Control
             as="input"
-            type="hidden"
-            {...register('config.toDate')}
-            isInvalid={!!errors.type}
+            {...register('answer.text')}
+            maxLength={textQuestion.config.max}
           />
-          <Form.Group as={Row}>
-            <Col sm="4">
-              <Controller
-                name={`answer.date` as const}
-                control={control}
-                defaultValue={dateQuestion.config.fromDate}
-                render={({ field: { ref, ...rest } }) => (
-                  <KeyboardDatePicker
-                    margin="normal"
-                    id="date-picker-dialog"
-                    variant="inline"
-                    minDate={dateQuestion.config.fromDate}
-                    maxDate={dateQuestion.config.toDate}
-                    format="dd/MM/yyyy"
-                    label={t('Select date')}
-                    KeyboardButtonProps={{
-                      'aria-label': 'change date'
-                    }}
-                    {...rest}
-                  />
-                )}
-              />
-            </Col>
-          </Form.Group>
+
           <Button type="submit">{t('save')}</Button>
           <ErrorSummary errors={errors} />
         </Form>

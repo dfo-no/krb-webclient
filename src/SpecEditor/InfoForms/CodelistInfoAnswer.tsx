@@ -2,24 +2,26 @@ import { joiResolver } from '@hookform/resolvers/joi';
 import Joi from 'joi';
 import React, { ReactElement } from 'react';
 import Button from 'react-bootstrap/Button';
-import Card from 'react-bootstrap/Card';
+import Col from 'react-bootstrap/esm/Col';
 import Form from 'react-bootstrap/Form';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { v4 as uuidv4 } from 'uuid';
-import ErrorSummary from '../../../Form/ErrorSummary';
-import { ICodelistQuestion } from '../../../models/ICodelistQuestion';
-import { IRequirementAnswer } from '../../../models/IRequirementAnswer';
-import ModelType from '../../../models/ModelType';
-import QuestionEnum from '../../../models/QuestionEnum';
-import { QuestionType } from '../../../models/QuestionType';
-import { useAppDispatch, useAppSelector } from '../../../store/hooks';
-import { addAnswer } from '../../../store/reducers/spesification-reducer';
+import ErrorSummary from '../../Form/ErrorSummary';
+import { ICodelistQuestion } from '../../models/ICodelistQuestion';
+import { IRequirementAnswer } from '../../models/IRequirementAnswer';
+import ModelType from '../../models/ModelType';
+import QuestionEnum from '../../models/QuestionEnum';
+import { QuestionType } from '../../models/QuestionType';
+import { Requirement } from '../../models/Requirement';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
+import { addAnswer } from '../../store/reducers/spesification-reducer';
 
 interface IProps {
   question: QuestionType;
   type: string;
   reqTextId: string;
+  requirement: Requirement;
 }
 
 export const ResponseCodelistSchema = Joi.object().keys({
@@ -48,7 +50,8 @@ export const ResponseSingleCodelistSchema = Joi.object().keys({
 export default function CodelistInfoAnswer({
   question,
   type,
-  reqTextId
+  reqTextId,
+  requirement
 }: IProps): ReactElement {
   const { spec } = useAppSelector((state) => state.specification);
   const { productId } = useAppSelector((state) => state.selectedSpecProduct);
@@ -58,14 +61,13 @@ export default function CodelistInfoAnswer({
 
   if (type === 'requirement') {
     index = spec.requirementAnswers.findIndex(
-      (answer: IRequirementAnswer) => answer.alternative.id === question.id
+      (answer: IRequirementAnswer) => answer.question.id === question.id
     );
   } else {
     index =
       spec.products.length > 0
         ? spec.products[productIndex].requirementAnswers.findIndex(
-            (answer: IRequirementAnswer) =>
-              answer.alternative.id === question.id
+            (answer: IRequirementAnswer) => answer.question.id === question.id
           )
         : -1;
   }
@@ -73,9 +75,9 @@ export default function CodelistInfoAnswer({
   const setDefaultVal = () => {
     if (index === -1) return question as ICodelistQuestion;
     if (type === 'requirement')
-      return spec.requirementAnswers[index].alternative as ICodelistQuestion;
+      return spec.requirementAnswers[index].question as ICodelistQuestion;
     return spec.products[productIndex].requirementAnswers[index]
-      .alternative as ICodelistQuestion;
+      .question as ICodelistQuestion;
   };
 
   const defaultVal: ICodelistQuestion = setDefaultVal();
@@ -103,16 +105,17 @@ export default function CodelistInfoAnswer({
     if (index === -1) {
       const newAnswer: IRequirementAnswer = {
         id: uuidv4(),
-        alternativeId: post.id,
+        questionId: post.id,
         weight: 1,
-        reqTextId,
-        alternative: post,
+        variantId: reqTextId,
+        requirement,
+        question: post,
         type: ModelType.requirement
       };
       dispatch(addAnswer({ answer: newAnswer }));
     } else {
       const answer = spec.requirementAnswers[index];
-      answer.alternative = post;
+      answer.question = post;
       dispatch(addAnswer({ answer }));
     }
   };
@@ -122,34 +125,32 @@ export default function CodelistInfoAnswer({
 
   const codelist = spec.bank.codelist[codelistIndex];
   return (
-    <Card className="m-3 ">
-      <Card.Header>
-        <h6>Question: Codelist</h6>
-      </Card.Header>
-      <Card.Body>
-        <Form onSubmit={handleSubmit(saveValues)}>
-          <Form.Control as="input" type="hidden" {...register('id')} />
-          <Form.Control as="input" type="hidden" {...register('type')} />
-          <Form.Control type="hidden" {...register('config.codelist')} />
-          <Form.Control
-            type="hidden"
-            {...register(`config.multipleSelect` as const)}
-          />
-          <Form.Control
-            as="select"
-            multiple
-            {...register(`answer.codes` as const)}
-          >
-            {codelist.codes.map((element) => (
-              <option key={element.id} value={element.id}>
-                {element.title}
-              </option>
-            ))}
-          </Form.Control>
-          <Button type="submit">{t('save')}</Button>
-          <ErrorSummary errors={errors} />
-        </Form>
-      </Card.Body>
-    </Card>
+    <Col className="p-0 m-0 w-50">
+      <p>Hvilke koder skal kreves? </p>
+      <Form onSubmit={handleSubmit(saveValues)}>
+        <Form.Control as="input" type="hidden" {...register('id')} />
+        <Form.Control as="input" type="hidden" {...register('type')} />
+        <Form.Control type="hidden" {...register('config.codelist')} />
+        <Form.Control
+          type="hidden"
+          {...register(`config.multipleSelect` as const)}
+        />
+        <Form.Control
+          as="select"
+          multiple
+          {...register(`answer.codes` as const)}
+        >
+          {codelist.codes.map((element) => (
+            <option key={element.id} value={element.id}>
+              {element.title}
+            </option>
+          ))}
+        </Form.Control>
+        <Button className="mt-2" type="submit">
+          {t('save')}
+        </Button>
+        <ErrorSummary errors={errors} />
+      </Form>
+    </Col>
   );
 }

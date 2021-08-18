@@ -1,17 +1,20 @@
 import { joiResolver } from '@hookform/resolvers/joi';
+import Slider from '@material-ui/core/Slider';
 import Joi from 'joi';
 import React, { ReactElement, useState } from 'react';
 import Button from 'react-bootstrap/Button';
-import Card from 'react-bootstrap/Card';
 import Col from 'react-bootstrap/Col';
+import Container from 'react-bootstrap/Container';
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
-import { useForm } from 'react-hook-form';
+import { Controller, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
 import Utils from '../../common/Utils';
 import ErrorSummary from '../../Form/ErrorSummary';
+import { IOption } from '../../models/IOption';
+import { IRequirementAnswer } from '../../models/IRequirementAnswer';
 import { IVariant } from '../../models/IVariant';
 import ModelType from '../../models/ModelType';
 import { Requirement } from '../../models/Requirement';
@@ -20,7 +23,8 @@ import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { selectAlternative } from '../../store/reducers/selectedAlternative-reducer';
 import {
   addProductAnswer,
-  deleteProductAnswer
+  deleteProductAnswer,
+  editProductAnswer
 } from '../../store/reducers/spesification-reducer';
 
 interface IProps {
@@ -29,15 +33,37 @@ interface IProps {
 }
 
 type FormValue = {
-  alternative: string;
+  question: string;
   weight: number;
 };
 
-const alternativeSchema = Joi.object().keys({
-  alternative: Joi.string().required(),
+const questionSchema = Joi.object().keys({
+  question: Joi.string().required(),
   weight: Joi.number().integer().min(1).required(),
   variant: Joi.string()
 });
+const marks: IOption[] = [
+  {
+    value: 10,
+    label: `Lav`
+  },
+  {
+    value: 30,
+    label: ``
+  },
+  {
+    value: 50,
+    label: `Middels`
+  },
+  {
+    value: 70,
+    label: ``
+  },
+  {
+    value: 90,
+    label: `Høy`
+  }
+];
 
 export default function ProductRequirementAnswer({
   requirement,
@@ -48,9 +74,10 @@ export default function ProductRequirementAnswer({
   const {
     register,
     handleSubmit,
+    control,
     formState: { errors }
   } = useForm({
-    resolver: joiResolver(alternativeSchema)
+    resolver: joiResolver(questionSchema)
   });
   const { spec } = useAppSelector((state) => state.specification);
   const { id } = useAppSelector((state) => state.selectedBank);
@@ -62,27 +89,51 @@ export default function ProductRequirementAnswer({
       (product: SpecificationProduct) => product.id === productId
     )
   );
-  const savedAlternative = specProduct.requirementAnswers.find(
-    (alt) => alt.reqTextId === selectedVariant.id
+  const savedQuestion = specProduct.requirementAnswers.find(
+    (alt) => alt.variantId === selectedVariant.id
   );
-  const [selectedAlternative, setSelectedAlternative] = useState<
-    string | undefined
-  >(savedAlternative !== undefined ? savedAlternative.id : undefined);
+  const [selectedQuestion, setSelectedQuestion] = useState<string | undefined>(
+    savedQuestion !== undefined ? savedQuestion.id : undefined
+  );
+
+  const checkWeightIsPredefined = (weight: number) => {
+    const predefinedValues = [10, 30, 50, 70, 90];
+    return predefinedValues.includes(weight);
+  };
+  const setWeightState = () => {
+    if (savedQuestion) {
+      if (checkWeightIsPredefined(savedQuestion.weight)) {
+        return 'standard';
+      }
+      return 'egendefinert';
+    }
+    return 'standard';
+  };
+  const [weightType, setWeightType] = useState(setWeightState());
   const saveAnswer = (post: FormValue) => {
-    const alternativeIndex = selectedVariant.questions.findIndex(
-      (alt) => alt.id === post.alternative
+    const questionIndex = selectedVariant.questions.findIndex(
+      (alt) => alt.id === post.question
     );
-    const alternative = selectedVariant.questions[alternativeIndex];
-    const newAnswer = {
-      id: uuidv4(),
-      alternativeId: post.alternative,
-      weight: post.weight,
-      reqTextId: selectedVariant.id,
-      alternative,
-      type: ModelType.product
-    };
-    dispatch(addProductAnswer({ answer: newAnswer, productId }));
-    setSelectedAlternative(newAnswer.id);
+    const question = selectedVariant.questions[questionIndex];
+    const savedWeight =
+      weightType === 'standard' && post.weight > 90 ? 90 : post.weight;
+    if (savedQuestion) {
+      const updatedAnswer: IRequirementAnswer = { ...savedQuestion };
+      updatedAnswer.weight = savedWeight;
+      dispatch(editProductAnswer({ answer: updatedAnswer, productId }));
+    } else {
+      const newAnswer = {
+        id: uuidv4(),
+        questionId: post.question,
+        weight: post.weight,
+        variantId: selectedVariant.id,
+        question,
+        requirement,
+        type: ModelType.product
+      };
+      dispatch(addProductAnswer({ answer: newAnswer, productId }));
+      setSelectedQuestion(newAnswer.id);
+    }
   };
 
   function handleChange(event: React.ChangeEvent<HTMLSelectElement>) {
@@ -93,11 +144,11 @@ export default function ProductRequirementAnswer({
     selectedVariant.questions.forEach((alternative) => {
       if (
         specProduct.requirementAnswers.find(
-          (answer) => answer.alternativeId === alternative.id
+          (answer) => answer.questionId === alternative.id
         )
       ) {
         const index = specProduct.requirementAnswers.findIndex(
-          (answer) => answer.alternativeId === alternative.id
+          (answer) => answer.questionId === alternative.id
         );
         dispatch(
           deleteProductAnswer({
@@ -110,16 +161,16 @@ export default function ProductRequirementAnswer({
     setSelectedVariant(variant);
   }
 
-  const selectAlt = () => {
-    if (selectedAlternative !== undefined)
-      dispatch(selectAlternative(selectedAlternative));
+  const selectQuestion = () => {
+    if (selectedQuestion !== undefined)
+      dispatch(selectAlternative(selectedQuestion));
   };
   function findDefaultRequirementText(): string {
     let defaultText = requirement.variants[0].id;
     requirement.variants.forEach((variant) => {
       if (
         specProduct.requirementAnswers.find(
-          (answer) => answer.reqTextId === variant.id
+          (answer) => answer.variantId === variant.id
         )
       ) {
         defaultText = variant.id;
@@ -131,15 +182,15 @@ export default function ProductRequirementAnswer({
   function findDefaultAnswerOption(): [string, number] {
     let defaultText = selectedVariant.questions[0].id;
     let defaultWeight = 0;
-    selectedVariant.questions.forEach((alternative) => {
+    selectedVariant.questions.forEach((question) => {
       if (
         specProduct.requirementAnswers.find(
-          (answer) => answer.alternativeId === alternative.id
+          (answer) => answer.questionId === question.id
         )
       ) {
-        defaultText = alternative.id;
+        defaultText = question.id;
         const index = specProduct.requirementAnswers.findIndex(
-          (answer) => answer.alternativeId === alternative.id
+          (answer) => answer.questionId === question.id
         );
         defaultWeight = specProduct.requirementAnswers[index].weight;
       }
@@ -163,7 +214,7 @@ export default function ProductRequirementAnswer({
     });
 
     return (
-      <Col>
+      <Row>
         {requirement.variants.length > 1 && (
           <Form.Control
             as="select"
@@ -177,71 +228,120 @@ export default function ProductRequirementAnswer({
         {requirement.variants.length <= 1 && (
           <p>{requirement.variants[0].requirementText}</p>
         )}
-      </Col>
+      </Row>
     );
   };
 
   const answerOptions = (variant: IVariant) => {
-    const answers = variant.questions.map((alternative) => {
+    const answers = variant.questions.map((question) => {
       return (
-        <option key={alternative.id} value={alternative.id}>
-          {alternative.type}
+        <option key={question.id} value={question.id}>
+          {question.type}
         </option>
       );
     });
     return (
       <Form onSubmit={handleSubmit(saveAnswer)} autoComplete="off">
-        <Col>
-          <Row>
+        <Row className="w-50">
+          <Col className="p-0">
             <Form.Control
               as="select"
-              {...register('alternative')}
+              {...register('question')}
               defaultValue={findDefaultAnswerOption()[0]}
             >
               {answers}
             </Form.Control>
-          </Row>
-          <Row>
-            <Form.Label>Weight:</Form.Label>
-            <Form.Control
-              type="number"
-              {...register('weight')}
-              defaultValue={findDefaultAnswerOption()[1]}
-              isInvalid={!!errors.weight}
-            />
-            {errors.weight && (
-              <Form.Control.Feedback type="invalid">
-                {errors.weight?.message}
-              </Form.Control.Feedback>
-            )}
-          </Row>
-          <Row>
-            <Button type="submit" className="mt-2">
-              {t('save')}
-            </Button>
-            {selectedAlternative !== undefined && (
+          </Col>
+          <Col className="p-0">
+            {selectedQuestion !== undefined && (
               <Link
-                onClick={selectAlt}
-                to={`/speceditor/${id}/product/${productId}/alternative/${selectedAlternative}`}
+                onClick={selectQuestion}
+                to={`/speceditor/${id}/product/${productId}/question/${selectedQuestion}`}
               >
-                <Button className="mt-2 ml-2">Edit Alternative</Button>
+                <Button className="ml-2">Configure Question</Button>
               </Link>
             )}
-          </Row>
-        </Col>
+          </Col>
+        </Row>
+        <Row>
+          <b>Vektingstype: </b>
+        </Row>
+        <Row>
+          <Form.Check className="p-0" formNoValidate>
+            <input
+              type="radio"
+              name="standard"
+              id="standard"
+              checked={weightType === 'standard'}
+              onChange={() => setWeightType('standard')}
+            />
+          </Form.Check>
+          <p className="ml-1">Standard</p>
+          <Form.Check formNoValidate>
+            <input
+              type="radio"
+              name="egendefinert"
+              id="egendefinert"
+              checked={weightType === 'egendefinert'}
+              onChange={() => setWeightType('egendefinert')}
+            />
+          </Form.Check>
+          <p className="ml-1">Egendefinert</p>
+        </Row>
+        <Row>
+          {weightType === 'egendefinert' && (
+            <Form.Group>
+              <Form.Label>{t('weighting')}:</Form.Label>
+              <Form.Control
+                type="number"
+                defaultValue={savedQuestion?.weight ? savedQuestion.weight : 0}
+                min={0}
+                {...register('weight' as const)}
+                isInvalid={!!errors.weight}
+              />
+              {errors.weight && (
+                <Form.Control.Feedback type="invalid">
+                  {errors.weight?.message}
+                </Form.Control.Feedback>
+              )}
+            </Form.Group>
+          )}
+          {weightType === 'standard' && (
+            <Controller
+              control={control}
+              name={'weight' as const}
+              defaultValue={savedQuestion?.weight ? savedQuestion.weight : 0}
+              render={({ field }) => (
+                <Slider
+                  className="mt-4 w-50"
+                  {...field}
+                  onChange={(_, value) => {
+                    field.onChange(value);
+                  }}
+                  step={20}
+                  min={10}
+                  max={90}
+                  marks={marks}
+                  valueLabelDisplay="auto"
+                />
+              )}
+            />
+          )}
+        </Row>
+        <Row>
+          <Button type="submit" className="mt-2">
+            {t('save')}
+          </Button>
+        </Row>
         <ErrorSummary errors={errors} />
       </Form>
     );
   };
 
   return (
-    <Card className="mb-3">
-      <Card.Body>
-        <Row>
-          {reqTextOptions(requirement)}
-          {answerOptions(selectedVariant)}
-        </Row>
-      </Card.Body>
-    </Card>
+    <Container fluid className="mt-4">
+      {reqTextOptions(requirement)}
+      {answerOptions(selectedVariant)}
+    </Container>
   );
 }

@@ -1,17 +1,19 @@
 import { joiResolver } from '@hookform/resolvers/joi';
+import Slider from '@material-ui/core/Slider';
 import Joi from 'joi';
-import React, { ReactElement } from 'react';
+import React, { ReactElement, useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import Col from 'react-bootstrap/Col';
 import Container from 'react-bootstrap/Container';
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
-import { useForm } from 'react-hook-form';
+import { Controller, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import Utils from '../../common/Utils';
 import ErrorSummary from '../../Form/ErrorSummary';
 import InputRow from '../../Form/InputRow';
+import { IOption } from '../../models/IOption';
 import { SpecificationProduct } from '../../models/SpecificationProduct';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { editSpecProduct } from '../../store/reducers/spesification-reducer';
@@ -21,12 +23,14 @@ type FormInput = {
   title: string;
   description: string;
   amount: number;
+  weight: number;
 };
 
 const productSchema = Joi.object().keys({
   title: Joi.string().required(),
   description: Joi.string().allow(null, '').required(),
-  amount: Joi.number().integer().min(1).required()
+  amount: Joi.number().integer().min(1).required(),
+  weight: Joi.number().integer().min(1).required()
 });
 
 export default function ProductSpecEditor(): ReactElement {
@@ -42,19 +46,11 @@ export default function ProductSpecEditor(): ReactElement {
     )
   );
   const bankSelected = Utils.ensure(list.find((bank) => bank.id === id));
-  const addProductToSpecification = (post: FormInput) => {
-    const newProduct: SpecificationProduct = {
-      ...specProduct
-    };
-    newProduct.title = post.title;
-    newProduct.description = post.description;
-    newProduct.amount = post.amount;
-    dispatch(editSpecProduct({ product: newProduct }));
-  };
 
   const {
     control,
     handleSubmit,
+    register,
     formState: { errors }
   } = useForm<FormInput>({
     resolver: joiResolver(productSchema),
@@ -64,15 +60,50 @@ export default function ProductSpecEditor(): ReactElement {
       description: specProduct.description
     }
   });
+  const checkWeightIsPredefined = (weight: number) => {
+    const predefinedValues = [10, 30, 50, 70, 90];
+    return predefinedValues.includes(weight);
+  };
+  const setWeightState = () => {
+    if (checkWeightIsPredefined(specProduct.weight)) return 'standard';
+    return 'egendefinert';
+  };
+  const [weightType, setWeightType] = useState(setWeightState());
+  const addProductToSpecification = (post: FormInput) => {
+    const newProduct: SpecificationProduct = {
+      ...specProduct
+    };
+    const savedWeight =
+      weightType === 'standard' && post.weight > 90 ? 90 : post.weight;
+    newProduct.title = post.title;
+    newProduct.description = post.description;
+    newProduct.weight = savedWeight;
+    newProduct.amount = post.amount;
+    dispatch(editSpecProduct({ product: newProduct }));
+  };
 
-  /* TODO: wont' work due to defaultValues and form hook above */
-  /* if (!id) {
-    return <p>No selected bank</p>;
-  }
-
-  if (!productId) {
-    return <p>No selected product</p>;
-  } */
+  const marks: IOption[] = [
+    {
+      value: 10,
+      label: `Lav`
+    },
+    {
+      value: 30,
+      label: ``
+    },
+    {
+      value: 50,
+      label: `Middels`
+    },
+    {
+      value: 70,
+      label: ``
+    },
+    {
+      value: 90,
+      label: `Høy`
+    }
+  ];
 
   return (
     <Container fluid>
@@ -104,6 +135,75 @@ export default function ProductSpecEditor(): ReactElement {
               name="description"
               label={t('Description')}
             />
+            <Form.Group as={Row}>
+              <Form.Label column sm={2}>
+                Vekting
+              </Form.Label>
+              <Col sm={10}>
+                <Row className="ml-1">
+                  <Form.Check className="p-0" formNoValidate>
+                    <input
+                      type="radio"
+                      name="standard"
+                      id="standard"
+                      checked={weightType === 'standard'}
+                      onChange={() => setWeightType('standard')}
+                    />
+                  </Form.Check>
+                  <p className="ml-1">Standard</p>
+                  <Form.Check formNoValidate>
+                    <input
+                      type="radio"
+                      name="egendefinert"
+                      id="egendefinert"
+                      checked={weightType === 'egendefinert'}
+                      onChange={() => setWeightType('egendefinert')}
+                    />
+                  </Form.Check>
+                  <p className="ml-1">Egendefinert</p>
+                </Row>
+                <Row className="ml-1">
+                  {weightType === 'egendefinert' && (
+                    <Form.Group>
+                      <Form.Label>{t('weighting')}:</Form.Label>
+                      <Form.Control
+                        type="number"
+                        defaultValue={specProduct.weight}
+                        min={0}
+                        {...register('weight' as const)}
+                        isInvalid={!!errors.weight}
+                      />
+                      {errors.weight && (
+                        <Form.Control.Feedback type="invalid">
+                          {errors.weight?.message}
+                        </Form.Control.Feedback>
+                      )}
+                    </Form.Group>
+                  )}
+                  {weightType === 'standard' && (
+                    <Controller
+                      control={control}
+                      name={'weight' as const}
+                      defaultValue={specProduct.weight}
+                      render={({ field }) => (
+                        <Slider
+                          className="mt-4 w-50"
+                          {...field}
+                          onChange={(_, value) => {
+                            field.onChange(value);
+                          }}
+                          step={20}
+                          min={10}
+                          max={90}
+                          marks={marks}
+                          valueLabelDisplay="auto"
+                        />
+                      )}
+                    />
+                  )}
+                </Row>
+              </Col>
+            </Form.Group>
             <Col className="p-0 d-flex justify-content-end">
               <Button type="submit">{t('save')}</Button>
             </Col>

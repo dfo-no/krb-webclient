@@ -1,92 +1,89 @@
 import { joiResolver } from '@hookform/resolvers/joi';
-import Switch from '@material-ui/core/Switch';
 import Joi from 'joi';
 import React, { ReactElement } from 'react';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import Form from 'react-bootstrap/Form';
-import { Controller, useForm } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import ErrorSummary from '../../Form/ErrorSummary';
-import { ICheckboxQuestion } from '../../models/ICheckboxQuestion';
 import { IRequirementAnswer } from '../../models/IRequirementAnswer';
+import { ITextQuestion } from '../../models/ITextQuestion';
 import ModelType from '../../models/ModelType';
 import QuestionEnum from '../../models/QuestionEnum';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
-import {
-  addProductAnswer,
-  addRequirementAnswer
-} from '../../store/reducers/response-reducer';
+import { addRequirementAnswer } from '../../store/reducers/response-reducer';
+import { addProductAnswer } from '../../store/reducers/spesification-reducer';
 
 interface IProps {
   parentAnswer: IRequirementAnswer;
 }
 
-export const ResponseCheckBoxSchema = Joi.object().keys({
+export const ResponseTextSchema = Joi.object().keys({
   id: Joi.string().required(),
-  type: Joi.string().equal(QuestionEnum.Q_CHECKBOX).required(),
+  type: Joi.string().equal(QuestionEnum.Q_TEXT).required(),
+  config: Joi.object().keys({
+    max: Joi.number().required().min(0)
+  }),
   answer: Joi.object().keys({
-    value: Joi.boolean().required()
+    text: Joi.string().disallow(null, '').required()
   })
 });
 
-export default function ICheckBoxAnswer({
-  parentAnswer
-}: IProps): ReactElement {
+export default function ITextAnswer({ parentAnswer }: IProps): ReactElement {
   const { response } = useAppSelector((state) => state.response);
-  let index: number;
   const { productId } = useAppSelector(
     (state) => state.selectedResponseProduct
   );
+  let index: number;
 
   const productIndex = response.products.findIndex((p) => p.id === productId);
 
   if (parentAnswer.type === ModelType.requirement) {
     index = response.requirementAnswers.findIndex(
-      (answer) => answer.reqTextId === parentAnswer.reqTextId
+      (answer) => answer.variantId === parentAnswer.variantId
     );
   } else {
     index =
       response.products.length > 0
         ? response.products[productIndex].requirementAnswers.findIndex(
-            (answer) => answer.reqTextId === parentAnswer.reqTextId
+            (answer) => answer.variantId === parentAnswer.variantId
           )
         : -1;
   }
 
   const defaultVal =
     index === -1
-      ? (parentAnswer.alternative as ICheckboxQuestion)
-      : (parentAnswer.type === ModelType.requirement &&
-          (response.requirementAnswers[index]
-            .alternative as ICheckboxQuestion)) ||
+      ? (parentAnswer.question as ITextQuestion)
+      : (response.requirementAnswers[index].question as ITextQuestion) ||
         (parentAnswer.type === ModelType.product &&
           (response.products[0].requirementAnswers[index]
-            .alternative as ICheckboxQuestion));
+            .question as ITextQuestion));
+
   const {
     register,
-    control,
     handleSubmit,
-    getValues,
     formState: { errors }
-  } = useForm<ICheckboxQuestion>({
-    resolver: joiResolver(ResponseCheckBoxSchema),
+  } = useForm<ITextQuestion>({
+    resolver: joiResolver(ResponseTextSchema),
     defaultValues: {
       ...defaultVal
     }
   });
-
-  /* const [checked, setChecked] = useState(
-    defaultVal ? defaultVal.answer?.value : false
-  ); */
-
+  const item = parentAnswer.question as ITextQuestion;
   const dispatch = useAppDispatch();
   const { t } = useTranslation();
-  const saveValues = (post: ICheckboxQuestion) => {
+
+  if (!productId && parentAnswer.type === ModelType.product) {
+    return <p>No product selected</p>;
+  }
+
+  const saveValues = (post: ITextQuestion) => {
     const newAnswer = {
       ...parentAnswer
     };
-    newAnswer.alternative = post;
+    newAnswer.question = post;
+
     if (newAnswer.type === ModelType.requirement)
       dispatch(addRequirementAnswer(newAnswer));
     if (newAnswer.type === ModelType.product && productId !== null)
@@ -94,11 +91,9 @@ export default function ICheckBoxAnswer({
   };
 
   return (
-    <Card className="m-3 ">
-      <Card.Header>
-        <h6>Question: Yes/No</h6>
-      </Card.Header>
+    <Card className="mb-3">
       <Card.Body>
+        <h6>Alternative: Text</h6>
         <Form onSubmit={handleSubmit(saveValues)}>
           <Form.Control
             as="input"
@@ -106,23 +101,23 @@ export default function ICheckBoxAnswer({
             {...register('id')}
             isInvalid={!!errors.id}
           />
+
           <Form.Control
             as="input"
             type="hidden"
             {...register('type')}
             isInvalid={!!errors.type}
           />
-          <Controller
-            name={`answer.value` as const}
-            control={control}
-            defaultValue={getValues(`answer.value`)}
-            render={({ field }) => (
-              <Switch
-                {...field}
-                onChange={(e) => field.onChange(e.target.checked)}
-                checked={field.value ? field.value : false}
-              />
-            )}
+          <Form.Control
+            as="input"
+            type="hidden"
+            {...register('config.max')}
+            isInvalid={!!errors.config?.max}
+          />
+          <Form.Control
+            as="input"
+            {...register('answer.text')}
+            maxLength={item.config.max}
           />
 
           <Button type="submit">{t('save')}</Button>

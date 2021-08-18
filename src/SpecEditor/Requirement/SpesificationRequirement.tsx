@@ -36,11 +36,11 @@ export default function SpesificationRequirement({
       requirement.variants.forEach((variant) => {
         if (
           spec.requirementAnswers.find(
-            (answer) => answer.reqTextId === variant.id
+            (answer) => answer.variantId === variant.id
           )
         ) {
           const index = spec.requirementAnswers.findIndex(
-            (answer) => answer.reqTextId === variant.id
+            (answer) => answer.variantId === variant.id
           );
           dispatch(
             deleteAnswer({

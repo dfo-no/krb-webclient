@@ -8,6 +8,7 @@ import { useAppDispatch, useAppSelector } from '../store/hooks';
 import { selectBank } from '../store/reducers/selectedBank-reducer';
 import ResponseDownLoad from './Download/ResponseDownLoad';
 import ResponseEditor from './Editor/ResponseEditor';
+import OverView from './Overview/Overview';
 import ProductResponseList from './Product/ProductResponsList';
 import ResponseProductEditor from './Product/ResponseProductEditor';
 import RequirementPage from './Requirement/RequirementPage';
@@ -48,6 +49,9 @@ export default function SpecModule(): ReactElement {
             </Route>
             <Route exact path="/response/:id/download">
               <ResponseDownLoad />
+            </Route>
+            <Route exact path="/response/:id/overview">
+              <OverView />
             </Route>
             <Route>
               <NotFound />

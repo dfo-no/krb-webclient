@@ -5,30 +5,30 @@ import Card from 'react-bootstrap/Card';
 import Form from 'react-bootstrap/Form';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import ErrorSummary from '../../../Form/ErrorSummary';
-import { IRequirementAnswer } from '../../../models/IRequirementAnswer';
-import { ISliderQuestion } from '../../../models/ISliderQuestion';
-import ModelType from '../../../models/ModelType';
-import { useAppDispatch, useAppSelector } from '../../../store/hooks';
+import ErrorSummary from '../../Form/ErrorSummary';
+import { IRequirementAnswer } from '../../models/IRequirementAnswer';
+import { ITextQuestion } from '../../models/ITextQuestion';
+import ModelType from '../../models/ModelType';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import {
   addAnswer,
   addProductAnswer
-} from '../../../store/reducers/spesification-reducer';
-import { SliderSchema } from '../../../Workbench/Requirement/RequirementEditor';
+} from '../../store/reducers/spesification-reducer';
+import { TextSchema } from '../../Workbench/Requirement/RequirementEditor';
 
 interface IProps {
   parentAnswer: IRequirementAnswer;
 }
 
-export default function ValueForm({ parentAnswer }: IProps): ReactElement {
+export default function TextForm({ parentAnswer }: IProps): ReactElement {
   const {
     register,
     handleSubmit,
     formState: { errors }
-  } = useForm<ISliderQuestion>({
-    resolver: joiResolver(SliderSchema),
+  } = useForm<ITextQuestion>({
+    resolver: joiResolver(TextSchema),
     defaultValues: {
-      ...(parentAnswer.alternative as ISliderQuestion)
+      ...(parentAnswer.question as ITextQuestion)
     }
   });
   const { productId } = useAppSelector((state) => state.selectedSpecProduct);
@@ -39,11 +39,11 @@ export default function ValueForm({ parentAnswer }: IProps): ReactElement {
     return <p>No product selected</p>;
   }
 
-  const saveValues = (post: ISliderQuestion) => {
+  const saveValues = (post: ITextQuestion) => {
     const newAnswer = {
       ...parentAnswer
     };
-    newAnswer.alternative = post;
+    newAnswer.question = post;
     if (newAnswer.type === ModelType.requirement)
       dispatch(addAnswer({ answer: newAnswer }));
     if (newAnswer.type === ModelType.product && productId !== null)
@@ -53,7 +53,7 @@ export default function ValueForm({ parentAnswer }: IProps): ReactElement {
   return (
     <Card className="mb-3">
       <Card.Body>
-        <h6>Alternative: Value</h6>
+        <h6>Alternative: Text</h6>
         <Form onSubmit={handleSubmit(saveValues)}>
           <Form.Control
             as="input"
@@ -70,29 +70,9 @@ export default function ValueForm({ parentAnswer }: IProps): ReactElement {
           />
           <Form.Control
             as="input"
-            {...register('config.min')}
-            isInvalid={!!errors.config?.min}
-            type="number"
-          />
-
-          <Form.Control
-            as="input"
             {...register('config.max')}
             isInvalid={!!errors.config?.max}
             type="number"
-          />
-
-          <Form.Control
-            as="input"
-            {...register('config.step')}
-            isInvalid={!!errors.config?.step}
-            type="number"
-          />
-
-          <Form.Control
-            as="input"
-            {...register('config.unit')}
-            isInvalid={!!errors.config?.unit}
           />
 
           <Button type="submit">{t('save')}</Button>

@@ -7,6 +7,7 @@ export interface SpecificationProduct extends BaseModel {
   title: string;
   description: string;
   originProduct: Product;
+  weight: number;
   amount: number;
   requirements: string[];
   requirementAnswers: IRequirementAnswer[];

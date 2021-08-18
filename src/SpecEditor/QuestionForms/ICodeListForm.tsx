@@ -6,17 +6,17 @@ import Card from 'react-bootstrap/Card';
 import Form from 'react-bootstrap/Form';
 import { Controller, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import ErrorSummary from '../../../Form/ErrorSummary';
-import { Codelist } from '../../../models/Codelist';
-import { ICodelistQuestion } from '../../../models/ICodelistQuestion';
-import { IRequirementAnswer } from '../../../models/IRequirementAnswer';
-import ModelType from '../../../models/ModelType';
-import { useAppDispatch, useAppSelector } from '../../../store/hooks';
+import ErrorSummary from '../../Form/ErrorSummary';
+import { Codelist } from '../../models/Codelist';
+import { ICodelistQuestion } from '../../models/ICodelistQuestion';
+import { IRequirementAnswer } from '../../models/IRequirementAnswer';
+import ModelType from '../../models/ModelType';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import {
   addAnswer,
   addProductAnswer
-} from '../../../store/reducers/spesification-reducer';
-import { CodelistSchema } from '../../../Workbench/Requirement/RequirementEditor';
+} from '../../store/reducers/spesification-reducer';
+import { CodelistSchema } from '../../Workbench/Requirement/RequirementEditor';
 
 interface IProps {
   parentAnswer: IRequirementAnswer;
@@ -32,11 +32,11 @@ export default function CodelistForm({ parentAnswer }: IProps): ReactElement {
   } = useForm<ICodelistQuestion>({
     resolver: joiResolver(CodelistSchema),
     defaultValues: {
-      ...(parentAnswer.alternative as ICodelistQuestion)
+      ...(parentAnswer.question as ICodelistQuestion)
     }
   });
   const { productId } = useAppSelector((state) => state.selectedSpecProduct);
-  const item = parentAnswer.alternative as ICodelistQuestion;
+  const item = parentAnswer.question as ICodelistQuestion;
   const dispatch = useAppDispatch();
   const { t } = useTranslation();
 
@@ -52,7 +52,7 @@ export default function CodelistForm({ parentAnswer }: IProps): ReactElement {
       ...parentAnswer
     };
     newAlt = post;
-    newAnswer.alternative = newAlt;
+    newAnswer.question = newAlt;
     if (newAnswer.type === ModelType.requirement)
       dispatch(addAnswer({ answer: newAnswer }));
     if (newAnswer.type === ModelType.product && productId !== null)

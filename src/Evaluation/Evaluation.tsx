@@ -1,20 +1,17 @@
-import React, { ReactElement, useState } from 'react';
-import Row from 'react-bootstrap/Row';
-import Button from 'react-bootstrap/Button';
-import Col from 'react-bootstrap/Col';
-import InputGroup from 'react-bootstrap/InputGroup';
-import Card from 'react-bootstrap/Card';
-import Form from 'react-bootstrap/Form';
-import Container from 'react-bootstrap/Container';
 import fileDownload from 'js-file-download';
+import React, { ReactElement, useState } from 'react';
+import Button from 'react-bootstrap/Button';
+import Card from 'react-bootstrap/Card';
+import Col from 'react-bootstrap/Col';
+import Container from 'react-bootstrap/Container';
+import Form from 'react-bootstrap/Form';
+import InputGroup from 'react-bootstrap/InputGroup';
+import Row from 'react-bootstrap/Row';
 import { useForm } from 'react-hook-form';
 import { Bank } from '../models/Bank';
-import { FileDownLoad } from '../models/FileDownLoad';
 
 export default function Evaluation(): ReactElement {
-  const { register } = useForm();
-  const [bankFileUploaded, setBankFileUploaded] = useState(false);
-  const [uploadedBank, setUploadedBank] = useState<Bank | null>(null);
+  /* 
   const [responses, setResponses] = useState<FileDownLoad[]>([]);
 
   const readFileContents = async (file: File) => {
@@ -153,16 +150,14 @@ export default function Evaluation(): ReactElement {
         </Card.Body>
       </Card>
     );
-  };
+  }; */
 
   return (
     <Container fluid>
       <Row className="m-4">
         <Col>
-          <h4>{uploadedBank.title}</h4>
-        </Col>
-        <Col>
           <h6>Upload Responses</h6>
+          {/* 
           <InputGroup className="mb-5">
             <form>
               <input
@@ -182,6 +177,8 @@ export default function Evaluation(): ReactElement {
       </Row>
       <Row className="m-4">
         <Col>{responses.length !== 0 && evaluations(responses)}</Col>
+          </Row> */}
+        </Col>
       </Row>
     </Container>
   );

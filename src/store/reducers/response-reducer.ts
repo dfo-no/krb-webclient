@@ -84,13 +84,13 @@ const responseSlice = createSlice({
       );
       if (
         state.response.products[index].requirementAnswers.find(
-          (answer) => answer.reqTextId === payload.answer.reqTextId
+          (answer) => answer.variantId === payload.answer.variantId
         )
       ) {
         const oldSelectIndex = state.response.products[
           index
         ].requirementAnswers.findIndex(
-          (answer) => answer.reqTextId === payload.answer.reqTextId
+          (answer) => answer.variantId === payload.answer.variantId
         );
         state.response.products[index].requirementAnswers.splice(
           oldSelectIndex,

@@ -16,7 +16,7 @@ export default function CodelistInfo({
   parent_requirement
 }: IProps): ReactElement {
   const { response } = useAppSelector((state) => state.response);
-  const alternative = answer.alternative as ICodelistQuestion;
+  const alternative = answer.question as ICodelistQuestion;
   const variant = parent_requirement.variants[0];
 
   const codelistIndex = response.spesification.bank.codelist.findIndex(
@@ -32,7 +32,7 @@ export default function CodelistInfo({
           (element: Code) => element.id === selectedCode
         );
         const code = codelist.codes[codeIndex];
-        return <li>{code.title}</li>;
+        return <li key={code.id}>{code.title}</li>;
       });
       return <ul>{list}</ul>;
     }

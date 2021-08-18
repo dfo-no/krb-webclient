@@ -13,7 +13,7 @@ export default function CheckBoxInfo({
   answer,
   parent_requirement
 }: IProps): ReactElement {
-  const alternative = answer.alternative as ICheckboxQuestion;
+  const alternative = answer.question as ICheckboxQuestion;
   const variant = parent_requirement.variants[0];
 
   const writtenValue = alternative.answer?.value === true ? 'Yes' : 'No';

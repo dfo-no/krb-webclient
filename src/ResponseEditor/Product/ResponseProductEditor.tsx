@@ -57,12 +57,13 @@ export default function ResponseProductEditor(): ReactElement {
 
   const specProduct: SpecificationProduct = Utils.ensure(
     response.spesification.products.find(
-      (product: SpecificationProduct) => product.id === productId
+      (specificationProduct: SpecificationProduct) =>
+        specificationProduct.id === productId
     )
   );
 
   const productIndex = response.products.findIndex(
-    (product) => product.originProduct.id === specProduct.id
+    (responseProduct) => responseProduct.originProduct.id === specProduct.id
   );
 
   const newProduct: ResponseProduct = {

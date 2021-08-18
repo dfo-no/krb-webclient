@@ -13,7 +13,7 @@ export default function DateInfo({
   answer,
   parent_requirement
 }: IProps): ReactElement {
-  const alternative = answer.alternative as IPeriodDateQuestion;
+  const alternative = answer.question as IPeriodDateQuestion;
   const variant = parent_requirement.variants[0];
   return (
     <Container fluid className="mt-4">

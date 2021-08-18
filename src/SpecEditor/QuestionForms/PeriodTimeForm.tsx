@@ -9,16 +9,17 @@ import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 import { Controller, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import ErrorSummary from '../../../Form/ErrorSummary';
-import { IPeriodDateQuestion } from '../../../models/IPeriodDateQuestion';
-import { IRequirementAnswer } from '../../../models/IRequirementAnswer';
-import ModelType from '../../../models/ModelType';
-import QuestionEnum from '../../../models/QuestionEnum';
-import { useAppDispatch, useAppSelector } from '../../../store/hooks';
+import ErrorSummary from '../../Form/ErrorSummary';
+import { IPeriodDateQuestion } from '../../models/IPeriodDateQuestion';
+import { IRequirementAnswer } from '../../models/IRequirementAnswer';
+import ModelType from '../../models/ModelType';
+import { IAnswerBase, IConfigBase, IQuestionBase } from '../../models/Question';
+import QuestionEnum from '../../models/QuestionEnum';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import {
   addAnswer,
   addProductAnswer
-} from '../../../store/reducers/spesification-reducer';
+} from '../../store/reducers/spesification-reducer';
 
 interface IProps {
   parentAnswer: IRequirementAnswer;
@@ -42,10 +43,11 @@ export default function PeriodDateForm({ parentAnswer }: IProps): ReactElement {
   } = useForm<IPeriodDateQuestion>({
     resolver: joiResolver(PeriodDateSchema),
     defaultValues: {
-      ...(parentAnswer.alternative as IPeriodDateQuestion)
+      ...(parentAnswer.question as IPeriodDateQuestion)
     }
   });
 
+  const item = parentAnswer.question as IPeriodDateQuestion;
   const { productId } = useAppSelector((state) => state.selectedSpecProduct);
   const dispatch = useAppDispatch();
   const { t } = useTranslation();
@@ -58,7 +60,7 @@ export default function PeriodDateForm({ parentAnswer }: IProps): ReactElement {
     const newAnswer = {
       ...parentAnswer
     };
-    newAnswer.alternative = post;
+    newAnswer.question = post;
     if (newAnswer.type === ModelType.requirement)
       dispatch(addAnswer({ answer: newAnswer }));
     if (newAnswer.type === ModelType.product && productId !== null)
@@ -68,7 +70,7 @@ export default function PeriodDateForm({ parentAnswer }: IProps): ReactElement {
   return (
     <Card className="mb-3">
       <Card.Body>
-        <h6>Alternative: Value</h6>
+        <h6>Alternative: Date </h6>
         <Form onSubmit={handleSubmit(saveValues)}>
           <Form.Control
             as="input"

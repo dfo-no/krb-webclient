@@ -51,30 +51,29 @@ export default function ICodelistAnswer({
     (state) => state.selectedResponseProduct
   );
   const productIndex = response.products.findIndex((p) => p.id === productId);
-  const item = parentAnswer.alternative as ICodelistQuestion;
+  const item = parentAnswer.question as ICodelistQuestion;
 
   if (parentAnswer.type === 'requirement') {
     index = response.requirementAnswers.findIndex(
-      (answer) => answer.reqTextId === parentAnswer.reqTextId
+      (answer) => answer.variantId === parentAnswer.variantId
     );
   } else {
     index =
       response.products.length > 0
         ? response.products[productIndex].requirementAnswers.findIndex(
-            (answer) => answer.reqTextId === parentAnswer.reqTextId
+            (answer) => answer.variantId === parentAnswer.variantId
           )
         : -1;
   }
 
   const defaultVal =
     index === -1
-      ? (parentAnswer.alternative as ICodelistQuestion)
+      ? (parentAnswer.question as ICodelistQuestion)
       : (parentAnswer.type === 'requirement' &&
-          (response.requirementAnswers[index]
-            .alternative as ICodelistQuestion)) ||
+          (response.requirementAnswers[index].question as ICodelistQuestion)) ||
         (parentAnswer.type === 'product' &&
           (response.products[0].requirementAnswers[index]
-            .alternative as ICodelistQuestion));
+            .question as ICodelistQuestion));
   const resolver = item.config.multipleSelect
     ? ResponseCodelistSchema
     : ResponseSingleCodelistSchema;
@@ -96,7 +95,7 @@ export default function ICodelistAnswer({
     const newAnswer = {
       ...parentAnswer
     };
-    newAnswer.alternative = post;
+    newAnswer.question = post;
     if (newAnswer.type === 'requirement')
       dispatch(addRequirementAnswer(newAnswer));
     if (newAnswer.type === 'product' && productId !== null)

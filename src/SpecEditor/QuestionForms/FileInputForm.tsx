@@ -7,16 +7,16 @@ import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import ErrorSummary from '../../../Form/ErrorSummary';
-import { IFileUploadQuestion } from '../../../models/IFileUploadQuestion';
-import { IRequirementAnswer } from '../../../models/IRequirementAnswer';
-import ModelType from '../../../models/ModelType';
-import { useAppDispatch, useAppSelector } from '../../../store/hooks';
+import ErrorSummary from '../../Form/ErrorSummary';
+import { IFileUploadQuestion } from '../../models/IFileUploadQuestion';
+import { IRequirementAnswer } from '../../models/IRequirementAnswer';
+import ModelType from '../../models/ModelType';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import {
   editAnswer,
   editProductAnswer
-} from '../../../store/reducers/spesification-reducer';
-import { FileUploadSchema } from '../../../Workbench/Requirement/RequirementEditor';
+} from '../../store/reducers/spesification-reducer';
+import { FileUploadSchema } from '../../Workbench/Requirement/RequirementEditor';
 
 interface IProps {
   parentAnswer: IRequirementAnswer;
@@ -30,11 +30,11 @@ export default function FileInputForm({ parentAnswer }: IProps): ReactElement {
   } = useForm<IFileUploadQuestion>({
     resolver: joiResolver(FileUploadSchema),
     defaultValues: {
-      ...(parentAnswer.alternative as IFileUploadQuestion)
+      ...(parentAnswer.question as IFileUploadQuestion)
     }
   });
   const { productId } = useAppSelector((state) => state.selectedSpecProduct);
-  const item = parentAnswer.alternative as IFileUploadQuestion;
+  const item = parentAnswer.question as IFileUploadQuestion;
   const dispatch = useAppDispatch();
   const { t } = useTranslation();
 
@@ -50,7 +50,7 @@ export default function FileInputForm({ parentAnswer }: IProps): ReactElement {
     const newAnswer = {
       ...parentAnswer
     };
-    newAnswer.alternative = newAlt;
+    newAnswer.question = newAlt;
 
     if (newAnswer.type === ModelType.requirement)
       dispatch(editAnswer({ answer: newAnswer }));

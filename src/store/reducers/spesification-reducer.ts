@@ -79,7 +79,7 @@ const specificationSlice = createSlice({
         const oldSelectIndex = state.spec.products[
           index
         ].requirementAnswers.findIndex(
-          (answer) => answer.reqTextId === payload.answer.reqTextId
+          (answer) => answer.variantId === payload.answer.variantId
         );
         state.spec.products[index].requirementAnswers.splice(oldSelectIndex, 1);
       }
@@ -151,7 +151,7 @@ const specificationSlice = createSlice({
         )
       ) {
         const oldSelectIndex = state.spec.requirementAnswers.findIndex(
-          (answer) => answer.reqTextId === payload.answer.reqTextId
+          (answer) => answer.variantId === payload.answer.variantId
         );
         state.spec.requirementAnswers.splice(oldSelectIndex, 1);
       }

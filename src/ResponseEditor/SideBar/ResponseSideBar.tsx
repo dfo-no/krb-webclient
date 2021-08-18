@@ -47,7 +47,8 @@ function ResponseSideBar(): ReactElement {
     },
     { link: `${currentUrl}/requirement`, name: 'Requirements' },
     { link: `${currentUrl}/download`, name: 'Download' },
-    { link: `${currentUrl}/product`, name: 'Products' }
+    { link: `${currentUrl}/product`, name: 'Products' },
+    { link: `${currentUrl}/overview`, name: 'Overview' }
   ];
 
   return (

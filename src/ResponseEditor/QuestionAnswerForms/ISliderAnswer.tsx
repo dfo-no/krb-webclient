@@ -7,21 +7,20 @@ import Card from 'react-bootstrap/Card';
 import Form from 'react-bootstrap/Form';
 import { Controller, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import { v4 as uuidv4 } from 'uuid';
-import ErrorSummary from '../../../Form/ErrorSummary';
-import { IOption } from '../../../models/IOption';
-import { IRequirementAnswer } from '../../../models/IRequirementAnswer';
-import { ISliderQuestion } from '../../../models/ISliderQuestion';
-import ModelType from '../../../models/ModelType';
-import QuestionEnum from '../../../models/QuestionEnum';
-import { QuestionType } from '../../../models/QuestionType';
-import { useAppDispatch, useAppSelector } from '../../../store/hooks';
-import { addAnswer } from '../../../store/reducers/spesification-reducer';
+import ErrorSummary from '../../Form/ErrorSummary';
+import { IOption } from '../../models/IOption';
+import { IRequirementAnswer } from '../../models/IRequirementAnswer';
+import { ISliderQuestion } from '../../models/ISliderQuestion';
+import ModelType from '../../models/ModelType';
+import QuestionEnum from '../../models/QuestionEnum';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
+import {
+  addProductAnswer,
+  addRequirementAnswer
+} from '../../store/reducers/response-reducer';
 
 interface IProps {
-  question: QuestionType;
-  type: string;
-  reqTextId: string;
+  parentAnswer: IRequirementAnswer;
 }
 
 export const ResponseSliderSchema = Joi.object().keys({
@@ -38,39 +37,36 @@ export const ResponseSliderSchema = Joi.object().keys({
   })
 });
 
-export default function ISliderInfoAnswer({
-  question,
-  type,
-  reqTextId
-}: IProps): ReactElement {
-  const { spec } = useAppSelector((state) => state.specification);
-  const { productId } = useAppSelector((state) => state.selectedSpecProduct);
+export default function ISliderAnswer({ parentAnswer }: IProps): ReactElement {
+  const { response } = useAppSelector((state) => state.response);
+  const { productId } = useAppSelector(
+    (state) => state.selectedResponseProduct
+  );
   let index: number;
 
-  const productIndex = spec.products.findIndex((p) => p.id === productId);
+  const productIndex = response.products.findIndex((p) => p.id === productId);
 
-  if (type === 'requirement') {
-    index = spec.requirementAnswers.findIndex(
-      (answer: IRequirementAnswer) => answer.alternative.id === question.id
+  if (parentAnswer.type === ModelType.requirement) {
+    index = response.requirementAnswers.findIndex(
+      (answer) => answer.variantId === parentAnswer.variantId
     );
   } else {
     index =
-      spec.products.length > 0
-        ? spec.products[productIndex].requirementAnswers.findIndex(
-            (answer: IRequirementAnswer) =>
-              answer.alternative.id === question.id
+      response.products.length > 0
+        ? response.products[productIndex].requirementAnswers.findIndex(
+            (answer) => answer.variantId === parentAnswer.variantId
           )
         : -1;
   }
 
   const defaultVal =
     index === -1
-      ? (question as ISliderQuestion)
-      : (type === 'requirement' &&
-          (spec.requirementAnswers[index].alternative as ISliderQuestion)) ||
-        (type === 'info' &&
-          (spec.products[productIndex].requirementAnswers[index]
-            .alternative as ISliderQuestion));
+      ? (parentAnswer.question as ISliderQuestion)
+      : (parentAnswer.type === ModelType.requirement &&
+          (response.requirementAnswers[index].question as ISliderQuestion)) ||
+        (parentAnswer.type === ModelType.product &&
+          (response.products[0].requirementAnswers[index]
+            .question as ISliderQuestion));
   const {
     register,
     control,
@@ -84,26 +80,21 @@ export default function ISliderInfoAnswer({
     }
   });
 
-  const sliderQuestion = question as ISliderQuestion;
+  const sliderQuestion = parentAnswer.question as ISliderQuestion;
 
   const dispatch = useAppDispatch();
   const { t } = useTranslation();
+
   const saveValues = (post: ISliderQuestion) => {
-    if (index === -1) {
-      const newAnswer: IRequirementAnswer = {
-        id: uuidv4(),
-        alternativeId: post.id,
-        weight: 1,
-        reqTextId,
-        alternative: post,
-        type: ModelType.requirement
-      };
-      dispatch(addAnswer({ answer: newAnswer }));
-    } else {
-      const answer = spec.requirementAnswers[index];
-      answer.alternative = post;
-      dispatch(addAnswer({ answer }));
-    }
+    const newAnswer = {
+      ...parentAnswer
+    };
+    newAnswer.question = post;
+
+    if (newAnswer.type === ModelType.requirement)
+      dispatch(addRequirementAnswer(newAnswer));
+    if (newAnswer.type === ModelType.product && productId !== null)
+      dispatch(addProductAnswer({ answer: newAnswer, productId }));
   };
 
   const marks: IOption[] = [
