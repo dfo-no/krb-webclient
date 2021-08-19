@@ -1,13 +1,12 @@
 import React, { ReactElement } from 'react';
+import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
-import Button from 'react-bootstrap/Button';
-import { BsTrashFill } from 'react-icons/bs';
 import { Control, FormState, UseFormRegister } from 'react-hook-form';
-import { Requirement } from '../../models/Requirement';
-
+import { BsTrashFill } from 'react-icons/bs';
 import { ICheckboxQuestion } from '../../models/ICheckboxQuestion';
+import { Requirement } from '../../models/Requirement';
 
 type IProps = {
   control: Control<Requirement>;

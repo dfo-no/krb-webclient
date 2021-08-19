@@ -1,5 +1,6 @@
 import { Bank } from '../models/Bank';
 import { BaseModel } from '../models/BaseModel';
+import { BooleanAsString } from '../models/ICheckboxQuestion';
 import { IVariant } from '../models/IVariant';
 import { Need } from '../models/Need';
 import { Nestable } from '../models/Nestable';
@@ -257,6 +258,16 @@ class Utils {
       );
     }
     return used;
+  }
+
+  static calculateCheckBoxPoints(
+    weight: Record<BooleanAsString, number>,
+    answer: boolean
+  ): number {
+    if (answer) {
+      return weight.true;
+    }
+    return weight.false;
   }
 }
 
