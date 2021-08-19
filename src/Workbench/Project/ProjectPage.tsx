@@ -8,7 +8,6 @@ import { useTranslation } from 'react-i18next';
 import { BsPencil } from 'react-icons/bs';
 import Utils from '../../common/Utils';
 import ErrorSummary from '../../Form/ErrorSummary';
-import InputRow from '../../Form/InputRow';
 import { Bank } from '../../models/Bank';
 import { PutProjectSchema } from '../../models/Project';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
@@ -121,12 +120,6 @@ function ProjectPage(): ReactElement {
         <SuccessAlert toggleShow={setShowAlert} type="publication" />
       )}
       <Form onSubmit={handleSubmit(onSubmit)} noValidate validated={validated}>
-        <InputRow
-          control={control}
-          name="title"
-          label="Comment"
-          errors={errors}
-        />
         <PublicationsFieldArray
           control={control}
           register={register}

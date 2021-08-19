@@ -134,7 +134,6 @@ export default function PublicationsFieldArray({
                     variant="danger"
                     type="button"
                     onClick={() => {
-                      // remove(index);
                       removePublication(field.id);
                     }}
                   >

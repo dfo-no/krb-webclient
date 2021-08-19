@@ -8,8 +8,7 @@ import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import ErrorSummary from '../../Form/ErrorSummary';
 import InputRow from '../../Form/InputRow';
-import { Bank } from '../../models/Bank';
-import { PutProjectSchema } from '../../models/Project';
+import { Bank, BaseBankSchema } from '../../models/Bank';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { putProjectThunk } from '../../store/reducers/project-reducer';
 
@@ -32,7 +31,7 @@ export default function EditProjectForm({
     handleSubmit,
     formState: { errors }
   } = useForm<Bank>({
-    resolver: joiResolver(PutProjectSchema),
+    resolver: joiResolver(BaseBankSchema),
     defaultValues: project
   });
 
