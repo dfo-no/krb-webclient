@@ -1,11 +1,10 @@
 import React, { ReactElement } from 'react';
 import Container from 'react-bootstrap/Container';
-import { useDispatch, useSelector } from 'react-redux';
 import { useRouteMatch } from 'react-router-dom';
 import Utils from '../../common/Utils';
 import { Bank } from '../../models/Bank';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { selectBank } from '../../store/reducers/selectedBank-reducer';
-import { RootState } from '../../store/store';
 import RequirementSelectorList from './RequirementSelectorList';
 
 interface RouteParams {
@@ -14,9 +13,9 @@ interface RouteParams {
 
 export default function RequirementSpecEditor(): ReactElement {
   const projectMatch = useRouteMatch<RouteParams>('/speceditor/:bankId');
-  const { id } = useSelector((state: RootState) => state.selectedBank);
-  const { list } = useSelector((state: RootState) => state.bank);
-  const dispatch = useDispatch();
+  const { id } = useAppSelector((state) => state.selectedBank);
+  const { list } = useAppSelector((state) => state.bank);
+  const dispatch = useAppDispatch();
 
   if (projectMatch?.params.bankId && !id) {
     dispatch(selectBank(projectMatch?.params.bankId));

@@ -9,16 +9,15 @@ import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import { useDispatch, useSelector } from 'react-redux';
 import { v4 as uuidv4 } from 'uuid';
 import Utils from '../../common/Utils';
 import ErrorSummary from '../../Form/ErrorSummary';
 import ModelType from '../../models/ModelType';
 import { ResponseProduct } from '../../models/ResponseProduct';
 import { SpecificationProduct } from '../../models/SpecificationProduct';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { addProduct, editProduct } from '../../store/reducers/response-reducer';
 import { selectResponseProduct } from '../../store/reducers/selectedResponseProduct-reducer';
-import { RootState } from '../../store/store';
 import ResponseProductRequirementSelector from './ResponseProductRequirementSelector';
 
 interface IResponseProductForm {
@@ -34,11 +33,9 @@ const productSchema = Joi.object().keys({
 });
 
 export default function ResponseProductEditor(): ReactElement {
-  const { id } = useSelector((state: RootState) => state.selectedBank);
-  const { response } = useSelector((state: RootState) => state.response);
-  const { productId } = useSelector(
-    (state: RootState) => state.selectedSpecProduct
-  );
+  const { id } = useAppSelector((state) => state.selectedBank);
+  const { response } = useAppSelector((state) => state.response);
+  const { productId } = useAppSelector((state) => state.selectedSpecProduct);
 
   const {
     register,
@@ -47,7 +44,7 @@ export default function ResponseProductEditor(): ReactElement {
   } = useForm({
     resolver: joiResolver(productSchema)
   });
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const { t } = useTranslation();
 
   if (!id) {

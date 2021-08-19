@@ -3,15 +3,14 @@ import { Card } from 'react-bootstrap';
 import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
-import { useDispatch, useSelector } from 'react-redux';
 import { Requirement } from '../../models/Requirement';
 import RequirementType from '../../models/RequirementType';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import {
   addRequirement,
   deleteAnswer,
   removeRequirement
 } from '../../store/reducers/spesification-reducer';
-import { RootState } from '../../store/store';
 import InfoAnswer from './InfoAnswer';
 import RequirementAnswer from './RequirementAnswer';
 
@@ -24,9 +23,9 @@ export default function SpesificationRequirement({
   requirement,
   selected
 }: InputProps): ReactElement {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const [isSelected, setSelected] = useState(selected);
-  const { spec } = useSelector((state: RootState) => state.specification);
+  const { spec } = useAppSelector((state) => state.specification);
 
   const changedCheckedValue = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSelected(!isSelected);

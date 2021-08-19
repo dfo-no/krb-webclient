@@ -1,13 +1,12 @@
 import React, { ReactElement } from 'react';
-import { useSelector } from 'react-redux';
-import { RootState } from '../../store/store';
+import { useAppSelector } from '../../store/hooks';
 import AnswerTypeSelector from '../Components/AnswerTypeSelector';
 
 export default function ConfigureQuestion(): ReactElement {
-  const { alternativeId } = useSelector(
-    (state: RootState) => state.selectedAlternative
+  const { alternativeId } = useAppSelector(
+    (state) => state.selectedAlternative
   );
-  const { spec } = useSelector((state: RootState) => state.specification);
+  const { spec } = useAppSelector((state) => state.specification);
 
   if (!alternativeId) {
     return <p>No alternative selected</p>;

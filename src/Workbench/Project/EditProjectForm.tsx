@@ -1,73 +1,48 @@
+import { joiResolver } from '@hookform/resolvers/joi';
 import React, { ReactElement, useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
-import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 import { useForm } from 'react-hook-form';
-import { useDispatch, useSelector } from 'react-redux';
-import Joi from 'joi';
-import { joiResolver } from '@hookform/resolvers/joi';
 import { useTranslation } from 'react-i18next';
-import { Bank } from '../../models/Bank';
-
-import {
-  editProject,
-  putProjectThunk
-} from '../../store/reducers/project-reducer';
-import { RootState } from '../../store/store';
 import ErrorSummary from '../../Form/ErrorSummary';
+import InputRow from '../../Form/InputRow';
+import { Bank, BaseBankSchema } from '../../models/Bank';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
+import { putProjectThunk } from '../../store/reducers/project-reducer';
 
 interface IProps {
   project: Bank;
   toggleShow: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-type FormInput = {
-  title: string;
-  description: string;
-};
-
-const projectSchema = Joi.object().keys({
-  title: Joi.string().required(),
-  description: Joi.string().allow(null, '').required()
-});
-
 export default function EditProjectForm({
   project,
   toggleShow
 }: IProps): ReactElement {
-  const { id } = useSelector((state: RootState) => state.selectedProject);
-  const dispatch = useDispatch();
+  const { id } = useAppSelector((state) => state.selectedProject);
+  const dispatch = useAppDispatch();
   const [validated] = useState(false);
   const { t } = useTranslation();
 
   const {
-    register,
+    control,
     handleSubmit,
     formState: { errors }
-  } = useForm({
-    resolver: joiResolver(projectSchema),
-    defaultValues: {
-      title: project.title,
-      description: project.description
-    }
+  } = useForm<Bank>({
+    resolver: joiResolver(BaseBankSchema),
+    defaultValues: project
   });
 
   if (!id) {
     return <p>No project selected</p>;
   }
 
-  const onEditProjectSubmit = (post: FormInput) => {
-    dispatch(
-      editProject({
-        projectId: project.id,
-        title: post.title,
-        description: post.description
-      })
-    );
-    dispatch(putProjectThunk(id));
-    toggleShow(false);
+  const onEditProjectSubmit = (post: Bank) => {
+    dispatch(putProjectThunk(post)).then(() => {
+      toggleShow(false);
+    });
   };
 
   return (
@@ -79,35 +54,18 @@ export default function EditProjectForm({
           noValidate
           validated={validated}
         >
-          <Form.Group as={Row}>
-            <Form.Label column sm="2">
-              {t('Title')}
-            </Form.Label>
-            <Col sm={10}>
-              <Form.Control {...register('title')} isInvalid={!!errors.title} />
-              {errors.title && (
-                <Form.Control.Feedback type="invalid">
-                  {errors.title?.message}
-                </Form.Control.Feedback>
-              )}
-            </Col>
-          </Form.Group>
-          <Form.Group as={Row}>
-            <Form.Label column sm="2">
-              {t('Description')}
-            </Form.Label>
-            <Col sm={10}>
-              <Form.Control
-                {...register('description')}
-                isInvalid={!!errors.description}
-              />
-              {errors.description && (
-                <Form.Control.Feedback type="invalid">
-                  {errors.description.message}
-                </Form.Control.Feedback>
-              )}
-            </Col>
-          </Form.Group>
+          <InputRow
+            control={control}
+            name="title"
+            errors={errors}
+            label={t('Title')}
+          />
+          <InputRow
+            control={control}
+            name="description"
+            errors={errors}
+            label={t('Description')}
+          />
           <Row>
             <Button className="mt-2  ml-3" type="submit">
               {t('save')}

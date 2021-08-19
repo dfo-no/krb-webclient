@@ -1,22 +1,19 @@
+import { joiResolver } from '@hookform/resolvers/joi';
+import Joi from 'joi';
 import React, { ReactElement } from 'react';
-
-import Container from 'react-bootstrap/Container';
 import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
+import Container from 'react-bootstrap/Container';
+import Form from 'react-bootstrap/Form';
 import FormControl from 'react-bootstrap/FormControl';
 import Row from 'react-bootstrap/Row';
-import { useDispatch, useSelector } from 'react-redux';
 import { useForm } from 'react-hook-form';
-import Form from 'react-bootstrap/Form';
-
-import Joi from 'joi';
-import { joiResolver } from '@hookform/resolvers/joi';
 import { useTranslation } from 'react-i18next';
-import { RootState } from '../../store/store';
-import { setBank, editSupplier } from '../../store/reducers/response-reducer';
 import Utils from '../../common/Utils';
-import { Bank } from '../../models/Bank';
 import ErrorSummary from '../../Form/ErrorSummary';
+import { Bank } from '../../models/Bank';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
+import { editSupplier, setBank } from '../../store/reducers/response-reducer';
 
 interface IResponseInfoForm {
   supplier: string;
@@ -27,9 +24,9 @@ const supplierSchema = Joi.object().keys({
 });
 
 export default function ResponseEditor(): ReactElement {
-  const { id } = useSelector((state: RootState) => state.selectedBank);
-  const { list } = useSelector((state: RootState) => state.bank);
-  const { response } = useSelector((state: RootState) => state.response);
+  const { id } = useAppSelector((state) => state.selectedBank);
+  const { list } = useAppSelector((state) => state.bank);
+  const { response } = useAppSelector((state) => state.response);
   const {
     register,
     handleSubmit,
@@ -37,7 +34,7 @@ export default function ResponseEditor(): ReactElement {
   } = useForm({
     resolver: joiResolver(supplierSchema)
   });
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const { t } = useTranslation();
 
   if (!id) {

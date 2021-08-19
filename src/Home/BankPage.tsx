@@ -1,16 +1,15 @@
 import React, { ReactElement } from 'react';
+import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
-import Button from 'react-bootstrap/Button';
-import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import Utils from '../common/Utils';
 import { Bank } from '../models/Bank';
-import { RootState } from '../store/store';
+import { useAppSelector } from '../store/hooks';
 
 export default function BankPage(): ReactElement {
-  const { id } = useSelector((state: RootState) => state.selectedBank);
-  const { list } = useSelector((state: RootState) => state.bank);
+  const { id } = useAppSelector((state) => state.selectedBank);
+  const { list } = useAppSelector((state) => state.bank);
 
   if (!id) {
     return <p>No selected bank</p>;

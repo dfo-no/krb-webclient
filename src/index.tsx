@@ -10,7 +10,7 @@ import './i18n';
 import './index.scss';
 import reportWebVitals from './reportWebVitals';
 import { getBanksThunk } from './store/reducers/bank-reducer';
-import store from './store/store';
+import { store } from './store/store';
 /* import UIDemo from './UIDemo'; */
 
 // fetch all banks here because they are published and will show on the front page.

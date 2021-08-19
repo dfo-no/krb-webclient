@@ -1,10 +1,9 @@
+import isBefore from 'date-fns/isBefore';
 import React, { ReactElement } from 'react';
 import ListGroup from 'react-bootstrap/ListGroup';
-import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
-import isBefore from 'date-fns/isBefore';
-
 import { Bank } from '../../models/Bank';
+import { useAppDispatch } from '../../store/hooks';
 import { selectBank } from '../../store/reducers/selectedBank-reducer';
 
 interface FilteredListProps {
@@ -18,7 +17,7 @@ export default function FilteredList({
   filterTitle,
   filterType
 }: FilteredListProps): ReactElement {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const handleSelectedBank = (bank: Bank) => () => {
     dispatch(selectBank(bank.id));

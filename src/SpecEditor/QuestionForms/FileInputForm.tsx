@@ -7,16 +7,15 @@ import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import { useDispatch, useSelector } from 'react-redux';
 import ErrorSummary from '../../Form/ErrorSummary';
 import { IFileUploadQuestion } from '../../models/IFileUploadQuestion';
 import { IRequirementAnswer } from '../../models/IRequirementAnswer';
 import ModelType from '../../models/ModelType';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import {
   editAnswer,
   editProductAnswer
 } from '../../store/reducers/spesification-reducer';
-import { RootState } from '../../store/store';
 import { FileUploadSchema } from '../../Workbench/Requirement/RequirementEditor';
 
 interface IProps {
@@ -34,11 +33,9 @@ export default function FileInputForm({ parentAnswer }: IProps): ReactElement {
       ...(parentAnswer.question as IFileUploadQuestion)
     }
   });
-  const { productId } = useSelector(
-    (state: RootState) => state.selectedSpecProduct
-  );
+  const { productId } = useAppSelector((state) => state.selectedSpecProduct);
   const item = parentAnswer.question as IFileUploadQuestion;
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const { t } = useTranslation();
 
   if (!productId && parentAnswer.type === ModelType.product) {

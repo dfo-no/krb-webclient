@@ -1,7 +1,5 @@
-/* eslint-disable no-param-reassign */
-import { FeedResponse } from '@azure/cosmos';
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { CosmosApi } from '../../database/CosmosApi';
+import { httpGet, httpPost } from '../../api/http';
 import { Bank } from '../../models/Bank';
 
 interface BankState {
@@ -15,24 +13,16 @@ const initialState: BankState = {
   status: 'idle'
 };
 
-export const getBanksThunk = createAsyncThunk('getBanks', async () => {
-  const api = new CosmosApi();
-  const result: FeedResponse<Bank[]> = await api.fetchAllBanks();
-  const banks: Bank[] = [];
-  for (let i = 0; i < result.resources.length; i += 1) {
-    // TODO: do not fetch inedxed
-    const element = result.resources[i] as unknown;
-    banks.push(element as Bank);
-  }
-  return banks;
+export const getBanksThunk = createAsyncThunk('getBanksThunk', async () => {
+  const response = await httpGet<Bank[]>('/api/bank/banks');
+  return response.data;
 });
 
 export const postBankThunk = createAsyncThunk(
-  'postBank',
+  'postBankThunk',
   async (bank: Bank) => {
-    const api = new CosmosApi();
-    const result = await api.createBank(bank);
-    return result.resource as Bank;
+    const response = await httpPost<Bank>('/api/bank', bank);
+    return response.data;
   }
 );
 
@@ -55,15 +45,18 @@ const bankSlice = createSlice({
     builder.addCase(getBanksThunk.rejected, (state) => {
       state.status = 'rejected';
     });
-    /* builder.addCase(postBankThunk.fulfilled, (state, { payload }) => {
+    builder.addCase(postBankThunk.fulfilled, (state, { payload }) => {
+      if (payload.publishedDate && payload.publishedDate !== '') {
+        state.list.push(payload);
+      }
       state.status = 'fulfilled';
     });
-    builder.addCase(postBankThunk.pending, (state, { payload }) => {
+    builder.addCase(postBankThunk.pending, (state) => {
       state.status = 'pending';
     });
-    builder.addCase(postBankThunk.rejected, (state, { payload }) => {
+    builder.addCase(postBankThunk.rejected, (state) => {
       state.status = 'rejected';
-    }); */
+    });
   }
 });
 

@@ -1,23 +1,21 @@
-import React, { ReactElement, useState, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React, { ReactElement, useEffect, useState } from 'react';
 import Button from 'react-bootstrap/Button';
-
-import { useRouteMatch } from 'react-router';
 import { useTranslation } from 'react-i18next';
-import { Need } from '../../models/Need';
-import { RootState } from '../../store/store';
+import { useRouteMatch } from 'react-router';
 import Utils from '../../common/Utils';
-import NewNeedForm from './NewNeedForm';
-import EditNeedForm from './EditNeedForm';
+import { Need } from '../../models/Need';
+import { Nestable } from '../../models/Nestable';
 import NestableHierarcy from '../../NestableHierarchy/Nestable';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import {
   getProjectsThunk,
-  putProjectThunk,
+  putProjectByIdThunk,
   updateNeedList
 } from '../../store/reducers/project-reducer';
-import SuccessAlert from '../SuccessAlert';
-import { Nestable } from '../../models/Nestable';
 import { selectProject } from '../../store/reducers/selectedProject-reducer';
+import SuccessAlert from '../SuccessAlert';
+import EditNeedForm from './EditNeedForm';
+import NewNeedForm from './NewNeedForm';
 
 interface RouteParams {
   projectId?: string;
@@ -25,11 +23,11 @@ interface RouteParams {
 
 function NeedPage(): ReactElement {
   const projectMatch = useRouteMatch<RouteParams>('/workbench/:projectId/need');
-  const { id } = useSelector((state: RootState) => state.selectedProject);
-  const { list } = useSelector((state: RootState) => state.project);
+  const { id } = useAppSelector((state) => state.selectedProject);
+  const { list } = useAppSelector((state) => state.project);
   const [showAlert, setShowAlert] = useState(false);
   const [toggleEditor, setToggleEditor] = useState(false);
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const { t } = useTranslation();
 
   useEffect(() => {
@@ -70,7 +68,7 @@ function NeedPage(): ReactElement {
 
   const newNeedList = (projectId: string, items: Nestable<Need>[]) => {
     dispatch(updateNeedList({ id: projectId, needs: items }));
-    dispatch(putProjectThunk(projectId));
+    dispatch(putProjectByIdThunk(projectId));
   };
 
   return (

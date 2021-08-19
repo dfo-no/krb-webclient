@@ -7,7 +7,6 @@ import Row from 'react-bootstrap/Row';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { BsPencil } from 'react-icons/bs';
-import { useDispatch, useSelector } from 'react-redux';
 import { Link, useRouteMatch } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
 import Utils from '../../common/Utils';
@@ -17,10 +16,10 @@ import ModelType from '../../models/ModelType';
 import { Nestable } from '../../models/Nestable';
 import { Product } from '../../models/Product';
 import { SpecificationProduct } from '../../models/SpecificationProduct';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { selectBank } from '../../store/reducers/selectedBank-reducer';
 import { selectSpecProduct } from '../../store/reducers/selectedSpecProduct-reducer';
 import { addProduct } from '../../store/reducers/spesification-reducer';
-import { RootState } from '../../store/store';
 import styles from './ProductSpecEditor.module.scss';
 
 type FormInput = {
@@ -39,16 +38,16 @@ interface IOption {
 
 export default function ProductSpecList(): ReactElement {
   const projectMatch = useRouteMatch<RouteParams>('/speceditor/:bankId');
-  const { id } = useSelector((state: RootState) => state.selectedBank);
-  const { list } = useSelector((state: RootState) => state.bank);
-  const { spec } = useSelector((state: RootState) => state.specification);
+  const { id } = useAppSelector((state) => state.selectedBank);
+  const { list } = useAppSelector((state) => state.bank);
+  const { spec } = useAppSelector((state) => state.specification);
   const { t } = useTranslation();
   const {
     register,
     handleSubmit,
     formState: { errors }
   } = useForm();
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   if (projectMatch?.params.bankId && !id) {
     dispatch(selectBank(projectMatch?.params.bankId));

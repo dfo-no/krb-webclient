@@ -1,6 +1,5 @@
 import React, { ReactElement } from 'react';
 import Container from 'react-bootstrap/Container';
-import { ICheckboxQuestion } from '../../models/ICheckboxQuestion';
 import { IRequirementAnswer } from '../../models/IRequirementAnswer';
 import { ITextQuestion } from '../../models/ITextQuestion';
 import { Requirement } from '../../models/Requirement';

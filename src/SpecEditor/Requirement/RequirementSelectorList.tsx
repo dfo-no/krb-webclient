@@ -2,12 +2,11 @@ import React, { ReactElement } from 'react';
 import ListGroup from 'react-bootstrap/ListGroup';
 import Row from 'react-bootstrap/Row';
 import { BsArrowReturnRight } from 'react-icons/bs';
-import { useSelector } from 'react-redux';
 import Utils from '../../common/Utils';
 import { Need } from '../../models/Need';
 import { Nestable } from '../../models/Nestable';
 import { Requirement } from '../../models/Requirement';
-import { RootState } from '../../store/store';
+import { useAppSelector } from '../../store/hooks';
 import styles from './RequirementSelectorList.module.scss';
 import SpesificationRequirement from './SpesificationRequirement';
 
@@ -18,7 +17,7 @@ interface InputProps {
 export default function RequirementSelectorList({
   needList
 }: InputProps): ReactElement {
-  const { spec } = useSelector((state: RootState) => state.specification);
+  const { spec } = useAppSelector((state) => state.specification);
   const checkIfReqHasVariantMatch = (req: Requirement): boolean => {
     let found = false;
     req.variants.forEach((variant) => {

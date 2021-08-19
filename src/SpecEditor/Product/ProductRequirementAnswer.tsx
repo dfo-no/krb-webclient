@@ -9,7 +9,6 @@ import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 import { Controller, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
 import Utils from '../../common/Utils';
@@ -20,13 +19,13 @@ import { IVariant } from '../../models/IVariant';
 import ModelType from '../../models/ModelType';
 import { Requirement } from '../../models/Requirement';
 import { SpecificationProduct } from '../../models/SpecificationProduct';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { selectAlternative } from '../../store/reducers/selectedAlternative-reducer';
 import {
   addProductAnswer,
   deleteProductAnswer,
   editProductAnswer
 } from '../../store/reducers/spesification-reducer';
-import { RootState } from '../../store/store';
 
 interface IProps {
   requirement: Requirement;
@@ -70,7 +69,7 @@ export default function ProductRequirementAnswer({
   requirement,
   productId
 }: IProps): ReactElement {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const { t } = useTranslation();
   const {
     register,
@@ -80,8 +79,8 @@ export default function ProductRequirementAnswer({
   } = useForm({
     resolver: joiResolver(questionSchema)
   });
-  const { spec } = useSelector((state: RootState) => state.specification);
-  const { id } = useSelector((state: RootState) => state.selectedBank);
+  const { spec } = useAppSelector((state) => state.specification);
+  const { id } = useAppSelector((state) => state.selectedBank);
   const [selectedVariant, setSelectedVariant] = useState(
     requirement.variants[0]
   );

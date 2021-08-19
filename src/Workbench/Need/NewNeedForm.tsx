@@ -1,22 +1,23 @@
+import { joiResolver } from '@hookform/resolvers/joi';
+import Joi from 'joi';
 import React, { ReactElement, useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 import { useForm } from 'react-hook-form';
-import { joiResolver } from '@hookform/resolvers/joi';
-import { useDispatch, useSelector } from 'react-redux';
-import Joi from 'joi';
-
-import { v4 as uuidv4 } from 'uuid';
 import { useTranslation } from 'react-i18next';
-import { Need } from '../../models/Need';
-import { addNeed, putProjectThunk } from '../../store/reducers/project-reducer';
-import { RootState } from '../../store/store';
-import ModelType from '../../models/ModelType';
-import { Nestable } from '../../models/Nestable';
-import InputRow from '../../Form/InputRow';
+import { v4 as uuidv4 } from 'uuid';
 import ErrorSummary from '../../Form/ErrorSummary';
+import InputRow from '../../Form/InputRow';
+import ModelType from '../../models/ModelType';
+import { Need } from '../../models/Need';
+import { Nestable } from '../../models/Nestable';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
+import {
+  addNeed,
+  putProjectByIdThunk
+} from '../../store/reducers/project-reducer';
 
 type FormValues = {
   title: string;
@@ -33,7 +34,7 @@ const needSchema = Joi.object().keys({
 });
 
 function NewNeedForm({ toggleShow, toggleAlert }: IProps): ReactElement {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const [validated] = useState(false);
   const { t } = useTranslation();
 
@@ -46,7 +47,7 @@ function NewNeedForm({ toggleShow, toggleAlert }: IProps): ReactElement {
     resolver: joiResolver(needSchema)
   });
 
-  const { id } = useSelector((state: RootState) => state.selectedProject);
+  const { id } = useAppSelector((state) => state.selectedProject);
 
   if (!id) {
     return <div>Loading NeedForm</div>;
@@ -63,7 +64,7 @@ function NewNeedForm({ toggleShow, toggleAlert }: IProps): ReactElement {
       parent: ''
     };
     dispatch(addNeed({ id, need }));
-    dispatch(putProjectThunk(id));
+    dispatch(putProjectByIdThunk(id));
 
     // reset the form
     reset();

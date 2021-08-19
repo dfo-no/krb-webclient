@@ -1,11 +1,10 @@
 import React, { ReactElement } from 'react';
 import Nav from 'react-bootstrap/Nav';
+import { useTranslation } from 'react-i18next';
 import { withRouter } from 'react-router';
 import { NavLink, useRouteMatch } from 'react-router-dom';
-import { useSelector } from 'react-redux';
-import { useTranslation } from 'react-i18next';
+import { useAppSelector } from '../../store/hooks';
 import css from './SpecSideBar.module.scss';
-import { RootState } from '../../store/store';
 
 interface IRouteLink {
   link: string;
@@ -38,8 +37,8 @@ function SpecSideBar(): ReactElement {
   const { t } = useTranslation();
   const match = useRouteMatch<RouteParams>('/speceditor/:bankId');
 
-  const { id } = useSelector((state: RootState) => state.selectedBank);
-  const { list } = useSelector((state: RootState) => state.bank);
+  const { id } = useAppSelector((state) => state.selectedBank);
+  const { list } = useAppSelector((state) => state.bank);
 
   const currentUrl = match?.url ? match.url : `/speceditor/${id}`;
   const isProjectSelected = !!id;

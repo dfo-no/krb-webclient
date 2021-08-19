@@ -1,11 +1,10 @@
 import React, { ReactElement } from 'react';
 import Container from 'react-bootstrap/Container';
-import { useSelector } from 'react-redux';
 import { Code } from '../../models/Code';
 import { ICodelistQuestion } from '../../models/ICodelistQuestion';
 import { IRequirementAnswer } from '../../models/IRequirementAnswer';
 import { Requirement } from '../../models/Requirement';
-import { RootState } from '../../store/store';
+import { useAppSelector } from '../../store/hooks';
 
 interface IProps {
   answer: IRequirementAnswer;
@@ -16,7 +15,7 @@ export default function CodelistInfo({
   answer,
   parent_requirement
 }: IProps): ReactElement {
-  const { response } = useSelector((state: RootState) => state.response);
+  const { response } = useAppSelector((state) => state.response);
   const alternative = answer.question as ICodelistQuestion;
   const variant = parent_requirement.variants[0];
 

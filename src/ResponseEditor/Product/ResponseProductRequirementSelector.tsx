@@ -1,10 +1,9 @@
 import React, { ReactElement } from 'react';
-import { useSelector } from 'react-redux';
 import Utils from '../../common/Utils';
 import { Bank } from '../../models/Bank';
 import { ResponseProduct } from '../../models/ResponseProduct';
 import { SpecificationProduct } from '../../models/SpecificationProduct';
-import { RootState } from '../../store/store';
+import { useAppSelector } from '../../store/hooks';
 import NeedHierarchy from '../Components/NeedHierarchy';
 
 interface InputProps {
@@ -14,9 +13,9 @@ interface InputProps {
 export default function ResponseProductRequirementSelector({
   product
 }: InputProps): ReactElement {
-  const { response } = useSelector((state: RootState) => state.response);
-  const { list } = useSelector((state: RootState) => state.bank);
-  const { id } = useSelector((state: RootState) => state.selectedBank);
+  const { response } = useAppSelector((state) => state.response);
+  const { list } = useAppSelector((state) => state.bank);
+  const { id } = useAppSelector((state) => state.selectedBank);
 
   const selectedBank = Utils.ensure(list.find((bank: Bank) => bank.id === id));
   const productIndex = Utils.ensure(

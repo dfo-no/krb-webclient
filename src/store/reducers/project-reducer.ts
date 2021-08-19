@@ -1,17 +1,14 @@
-/* eslint-disable no-param-reassign */
-import { FeedResponse, ItemDefinition, ItemResponse } from '@azure/cosmos';
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { httpDelete, httpGet, httpPost, httpPut } from '../../api/http';
 import Utils from '../../common/Utils';
-import { CosmosApi } from '../../database/CosmosApi';
 import { Bank } from '../../models/Bank';
 import { Code } from '../../models/Code';
 import { Codelist } from '../../models/Codelist';
-import { Nestable } from '../../models/Nestable';
 import { Need } from '../../models/Need';
+import { Nestable } from '../../models/Nestable';
 import { Product } from '../../models/Product';
 import { Publication } from '../../models/Publication';
 import { Requirement } from '../../models/Requirement';
-
 // eslint-disable-next-line import/no-cycle
 import { AppDispatch, RootState } from '../store';
 
@@ -25,72 +22,67 @@ const initialState: ProjectState = {
   status: 'idle'
 };
 
-export const getProjectThunk = createAsyncThunk(
-  'getProjectThunk',
-  async (id: string) => {
-    const api = new CosmosApi();
-    const result = await api.readBank(id);
-    return result.resource;
-  }
-);
-
 // this, this is the one
 export const getProjectsThunk = createAsyncThunk(
   'getProjectsThunk',
   async () => {
-    const api = new CosmosApi();
-    const result: FeedResponse<Bank[]> = await api.fetchAllProjects();
-    const banks: Bank[] = [];
-    for (let i = 0; i < result.resources.length; i += 1) {
-      // TODO: do not fetch inedxed
-      const element = result.resources[i] as unknown;
-      banks.push(element as Bank);
-    }
-    return banks;
+    const response = await httpGet<Bank[]>('/api/bank/projects');
+    return response.data;
   }
 );
 
 export const postProjectThunk = createAsyncThunk(
   'postProjectThunk',
   async (project: Bank) => {
-    const api = new CosmosApi();
-    const result = await api.createBank(project);
-    return result.resource as Bank;
+    const response = await httpPost<Bank>('/api/bank', project);
+    return response.data;
   }
 );
 
-export const putProjectThunk = createAsyncThunk<
+export const putProjectByIdThunk = createAsyncThunk<
   Bank,
   string,
   {
     dispatch: AppDispatch;
     state: RootState;
   }
->('putProjectThunk', async (projectId: string, thunkApi) => {
+>('putProjectByIdThunk', async (projectId: string, thunkApi) => {
   // get updated project from redux
   const project = Utils.ensure(
     thunkApi
       .getState()
       .project.list.find((element: Bank) => element.id === projectId)
   );
-  const api = new CosmosApi();
-  const result: ItemResponse<ItemDefinition> = await api.replaceBank(project);
-  const res = result.resource as unknown;
-
-  return res as Bank;
+  const response = await httpPut<Bank>(`/api/bank/${project.id}`, project);
+  return response.data;
 });
+
+export const putProjectThunk = createAsyncThunk(
+  'putProjectThunk',
+  async (project: Bank) => {
+    const response = await httpPut<Bank>(`/api/bank/${project.id}`, project);
+    return response.data;
+  }
+);
 
 export const deleteProjectThunk = createAsyncThunk(
   'deleteProjectThunk',
   async (project: Bank) => {
-    const api = new CosmosApi();
-    const result = await api.deleteBank(project.id);
-    return result.resource;
+    await httpDelete<Bank>(`/api/bank/${project.id}`);
+    return project;
+  }
+);
+
+export const deleteProjectByIdThunk = createAsyncThunk(
+  'deleteProjectByIdThunk',
+  async (projectId: string) => {
+    await httpDelete<Bank>(`/api/bank/${projectId}`);
+    return projectId;
   }
 );
 
 const projectSlice = createSlice({
-  name: 'Projects',
+  name: 'projects',
   initialState,
   reducers: {
     addProjects(state, { payload }: PayloadAction<Bank[]>) {
@@ -106,29 +98,13 @@ const projectSlice = createSlice({
         state.list.splice(index, 1);
       }
     },
-    editProject(
-      state,
-      {
-        payload
-      }: PayloadAction<{
-        projectId: string;
-        title: string;
-        description: string;
-      }>
-    ) {
-      const projectIndex = state.list.findIndex(
-        (project) => project.id === payload.projectId
-      );
-      state.list[projectIndex].title = payload.title;
-      state.list[projectIndex].description = payload.description;
-    },
     incrementProjectVersion(state, { payload }: PayloadAction<string>) {
       const projectIndex = state.list.findIndex(
         (project) => project.id === payload
       );
       state.list[projectIndex].version += 1;
     },
-    addPublication(
+    prependPublication(
       state,
       {
         payload
@@ -141,7 +117,7 @@ const projectSlice = createSlice({
       if (!state.list[projectIndex].publications) {
         state.list[projectIndex].publications = [];
       }
-      state.list[projectIndex].publications?.push(payload.publication);
+      state.list[projectIndex].publications?.unshift(payload.publication);
     },
     publishProject(
       state,
@@ -517,7 +493,7 @@ const projectSlice = createSlice({
         1
       );
     },
-    deletePublication(
+    removePublicationFromProject(
       state,
       {
         payload
@@ -534,12 +510,30 @@ const projectSlice = createSlice({
       );
 
       state.list[projectIndex].publications.splice(publicationIndex, 1);
+    },
+    updateCurrentProjectPublication(
+      state,
+      {
+        payload
+      }: PayloadAction<{
+        projectId: string;
+        publishedBank: Bank;
+      }>
+    ) {
+      const projectIndex = Utils.ensure(
+        state.list.findIndex((project) => project.id === payload.projectId)
+      );
+      state.list[projectIndex].publications[0].id = payload.publishedBank.id;
+      state.list[projectIndex].publications[0].bankId =
+        payload.publishedBank.id;
+
+      state.list[projectIndex].publications[0].date =
+        payload.publishedBank.publishedDate ?? '';
+
+      state.list[projectIndex].version += 1;
     }
   },
   extraReducers: (builder) => {
-    builder.addCase(getProjectThunk.fulfilled, () => {});
-    builder.addCase(getProjectThunk.pending, () => {});
-    builder.addCase(getProjectThunk.rejected, () => {});
     builder.addCase(getProjectsThunk.pending, (state) => {
       state.status = 'pending';
     });
@@ -560,6 +554,19 @@ const projectSlice = createSlice({
     builder.addCase(postProjectThunk.rejected, (state) => {
       state.status = 'rejected';
     });
+    builder.addCase(putProjectByIdThunk.fulfilled, (state, { payload }) => {
+      state.status = 'fulfilled';
+      const projectIndex = Utils.ensure(
+        state.list.findIndex((project) => project.id === payload.id)
+      );
+      state.list[projectIndex] = payload;
+    });
+    builder.addCase(putProjectByIdThunk.pending, (state) => {
+      state.status = 'pending';
+    });
+    builder.addCase(putProjectByIdThunk.rejected, (state) => {
+      state.status = 'rejected';
+    });
     builder.addCase(putProjectThunk.fulfilled, (state, { payload }) => {
       state.status = 'fulfilled';
       const projectIndex = Utils.ensure(
@@ -573,13 +580,24 @@ const projectSlice = createSlice({
     builder.addCase(putProjectThunk.rejected, (state) => {
       state.status = 'rejected';
     });
-    builder.addCase(deleteProjectThunk.fulfilled, (state) => {
+    builder.addCase(deleteProjectThunk.fulfilled, (state, { payload }) => {
+      state.list = state.list.filter((item) => item.id !== payload.id);
       state.status = 'fulfilled';
     });
     builder.addCase(deleteProjectThunk.pending, (state) => {
       state.status = 'pending';
     });
     builder.addCase(deleteProjectThunk.rejected, (state) => {
+      state.status = 'rejected';
+    });
+    builder.addCase(deleteProjectByIdThunk.fulfilled, (state, { payload }) => {
+      state.list = state.list.filter((item) => item.id !== payload);
+      state.status = 'fulfilled';
+    });
+    builder.addCase(deleteProjectByIdThunk.pending, (state) => {
+      state.status = 'pending';
+    });
+    builder.addCase(deleteProjectByIdThunk.rejected, (state) => {
       state.status = 'rejected';
     });
   }
@@ -600,7 +618,7 @@ export const {
   addCodeToCodelist,
   editCodeInCodelist,
   deleteCodeInCodelist,
-  addPublication,
+  prependPublication,
   incrementProjectVersion,
   addNeed,
   editNeed,
@@ -608,12 +626,12 @@ export const {
   editCode,
   editCodelist,
   publishProject,
-  editProject,
   setRequirementListToNeed,
   editRequirementInNeed,
   addRequirement,
   deleteRequirement,
-  deletePublication
+  removePublicationFromProject,
+  updateCurrentProjectPublication
 } = projectSlice.actions;
 
 export default projectSlice.reducer;

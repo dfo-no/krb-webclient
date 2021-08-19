@@ -1,50 +1,45 @@
+import { joiResolver } from '@hookform/resolvers/joi';
 import React, { ReactElement, useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import ListGroup from 'react-bootstrap/ListGroup';
 import Row from 'react-bootstrap/Row';
-import { useDispatch, useSelector } from 'react-redux';
-import { BsTrashFill } from 'react-icons/bs';
 import { useForm } from 'react-hook-form';
-import { v4 as uuidv4 } from 'uuid';
-import Joi from 'joi';
-import { joiResolver } from '@hookform/resolvers/joi';
 import { useTranslation } from 'react-i18next';
-import { RootState } from '../store/store';
+import { BsTrashFill } from 'react-icons/bs';
+import { Link } from 'react-router-dom';
+import ErrorSummary from '../Form/ErrorSummary';
+import InputRow from '../Form/InputRow';
 import { Bank } from '../models/Bank';
+import ModelType from '../models/ModelType';
+import { PostProjectSchema } from '../models/Project';
+import { useAppDispatch, useAppSelector } from '../store/hooks';
 import {
   deleteProjectThunk,
-  getProjectsThunk,
   postProjectThunk
 } from '../store/reducers/project-reducer';
 import { selectProject } from '../store/reducers/selectedProject-reducer';
 import SuccessAlert from './SuccessAlert';
-import ModelType from '../models/ModelType';
-import InputRow from '../Form/InputRow';
-import ErrorSummary from '../Form/ErrorSummary';
-
-type FormValues = {
-  title: string;
-  description: string;
-};
 
 function WorkbenchPage(): ReactElement {
-  const dispatch = useDispatch();
-  const { list } = useSelector((state: RootState) => state.project);
-  const [showEditor, setShowEditor] = useState(false);
+  const dispatch = useAppDispatch();
+  const { list } = useAppSelector((state) => state.project);
+  const [showNewProjectForm, setShowNewProjectForm] = useState(false);
   const [showAlert, setShowAlert] = useState(false);
   const [validated] = useState(false);
   const { t } = useTranslation();
 
-  const projectSchema = Joi.object().keys({
-    title: Joi.string().required(),
-    description: Joi.string().allow(null, '').required()
-  });
-
-  const defaultValues = {
+  const defaultValues: Bank = {
+    id: '',
     title: '',
-    description: ''
+    description: '',
+    needs: [],
+    codelist: [],
+    products: [],
+    publications: [],
+    version: 0,
+    publishedDate: '',
+    type: ModelType.bank
   };
 
   const {
@@ -52,13 +47,13 @@ function WorkbenchPage(): ReactElement {
     reset,
     control,
     formState: { errors }
-  } = useForm<FormValues>({
-    resolver: joiResolver(projectSchema),
+  } = useForm<Bank>({
+    resolver: joiResolver(PostProjectSchema),
     defaultValues
   });
 
   const handleShowEditor = () => {
-    setShowEditor(true);
+    setShowNewProjectForm(true);
   };
 
   useEffect(() => {
@@ -67,22 +62,12 @@ function WorkbenchPage(): ReactElement {
     }, 2000);
     return () => clearTimeout(timer);
   }, [showAlert]);
-  const onSubmit = (post: FormValues) => {
-    const project: Bank = {
-      id: uuidv4(),
-      title: post.title,
-      description: post.description,
-      needs: [],
-      products: [],
-      codelist: [],
-      version: 0,
-      type: ModelType.bank,
-      publications: []
-    };
-    dispatch(postProjectThunk(project));
-    reset();
-    setShowEditor(false);
-    setShowAlert(true);
+  const onSubmit = (post: Bank) => {
+    dispatch(postProjectThunk(post)).then(() => {
+      reset();
+      setShowNewProjectForm(false);
+      setShowAlert(true);
+    });
   };
 
   function onSelect(project: Bank) {
@@ -90,10 +75,7 @@ function WorkbenchPage(): ReactElement {
   }
 
   async function onDelete(project: Bank) {
-    // TODO: fix this logic
-    // must await here otherwise the 'getProjectsThunk will fetch before delete is complete.
-    await dispatch(deleteProjectThunk(project));
-    dispatch(getProjectsThunk());
+    dispatch(deleteProjectThunk(project));
   }
 
   const renderProjects = (projectList: Bank[]) => {
@@ -113,7 +95,7 @@ function WorkbenchPage(): ReactElement {
             </Link>
             <Button
               className="mr-2"
-              variant="warning"
+              variant="danger"
               onClick={() => onDelete(element)}
             >
               <BsTrashFill />
@@ -154,6 +136,12 @@ function WorkbenchPage(): ReactElement {
               <Button className="mt-2" type="submit">
                 {t('save')}
               </Button>
+              <Button
+                className="mt-2 ml-3 btn-warning"
+                onClick={() => setShowNewProjectForm(false)}
+              >
+                {t('cancel')}
+              </Button>
               <ErrorSummary errors={errors} />
             </Form>
           </ListGroup.Item>
@@ -170,7 +158,7 @@ function WorkbenchPage(): ReactElement {
         {t('new project')}
       </Button>
       {showAlert && <SuccessAlert toggleShow={setShowAlert} type="project" />}
-      {projectEditor(showEditor)}
+      {projectEditor(showNewProjectForm)}
       {renderProjects(list)}
     </>
   );

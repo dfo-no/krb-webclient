@@ -7,18 +7,17 @@ import Card from 'react-bootstrap/Card';
 import Form from 'react-bootstrap/Form';
 import { Controller, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import { useDispatch, useSelector } from 'react-redux';
 import ErrorSummary from '../../Form/ErrorSummary';
 import { IOption } from '../../models/IOption';
 import { IRequirementAnswer } from '../../models/IRequirementAnswer';
 import { ISliderQuestion } from '../../models/ISliderQuestion';
 import ModelType from '../../models/ModelType';
 import QuestionEnum from '../../models/QuestionEnum';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import {
   addProductAnswer,
   addRequirementAnswer
 } from '../../store/reducers/response-reducer';
-import { RootState } from '../../store/store';
 
 interface IProps {
   parentAnswer: IRequirementAnswer;
@@ -39,9 +38,9 @@ export const ResponseSliderSchema = Joi.object().keys({
 });
 
 export default function ISliderAnswer({ parentAnswer }: IProps): ReactElement {
-  const { response } = useSelector((state: RootState) => state.response);
-  const { productId } = useSelector(
-    (state: RootState) => state.selectedResponseProduct
+  const { response } = useAppSelector((state) => state.response);
+  const { productId } = useAppSelector(
+    (state) => state.selectedResponseProduct
   );
   let index: number;
 
@@ -83,7 +82,7 @@ export default function ISliderAnswer({ parentAnswer }: IProps): ReactElement {
 
   const sliderQuestion = parentAnswer.question as ISliderQuestion;
 
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const { t } = useTranslation();
 
   const saveValues = (post: ISliderQuestion) => {

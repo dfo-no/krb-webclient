@@ -4,17 +4,16 @@ import Container from 'react-bootstrap/Container';
 import ListGroup from 'react-bootstrap/ListGroup';
 import Row from 'react-bootstrap/Row';
 import { useTranslation } from 'react-i18next';
-import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import SearchBar from '../SearchBar/SearchBar';
+import { useAppDispatch, useAppSelector } from '../store/hooks';
 import { getBanksThunk } from '../store/reducers/bank-reducer';
-import { RootState } from '../store/store';
 import FilteredList from './Components/FilteredList';
 
 export default function HomePage(): ReactElement {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const { t } = useTranslation();
-  const { list, status } = useSelector((state: RootState) => state.bank);
+  const { list, status } = useAppSelector((state) => state.bank);
 
   useEffect(() => {
     async function fetchEverything() {

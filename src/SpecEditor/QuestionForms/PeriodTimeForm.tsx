@@ -1,6 +1,6 @@
 import { joiResolver } from '@hookform/resolvers/joi';
 import { KeyboardDatePicker } from '@material-ui/pickers';
-import Joi, { string } from 'joi';
+import Joi from 'joi';
 import React, { ReactElement } from 'react';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
@@ -9,18 +9,17 @@ import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 import { Controller, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import { useDispatch, useSelector } from 'react-redux';
 import ErrorSummary from '../../Form/ErrorSummary';
 import { IPeriodDateQuestion } from '../../models/IPeriodDateQuestion';
 import { IRequirementAnswer } from '../../models/IRequirementAnswer';
 import ModelType from '../../models/ModelType';
 import { IAnswerBase, IConfigBase, IQuestionBase } from '../../models/Question';
 import QuestionEnum from '../../models/QuestionEnum';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import {
   addAnswer,
   addProductAnswer
 } from '../../store/reducers/spesification-reducer';
-import { RootState } from '../../store/store';
 
 interface IProps {
   parentAnswer: IRequirementAnswer;
@@ -49,10 +48,8 @@ export default function PeriodDateForm({ parentAnswer }: IProps): ReactElement {
   });
 
   const item = parentAnswer.question as IPeriodDateQuestion;
-  const { productId } = useSelector(
-    (state: RootState) => state.selectedSpecProduct
-  );
-  const dispatch = useDispatch();
+  const { productId } = useAppSelector((state) => state.selectedSpecProduct);
+  const dispatch = useAppDispatch();
   const { t } = useTranslation();
 
   if (!productId && parentAnswer.type === ModelType.product) {

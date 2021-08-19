@@ -1,23 +1,21 @@
+import { joiResolver } from '@hookform/resolvers/joi';
+import Joi from 'joi';
 import React, { ReactElement, useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 import { useForm } from 'react-hook-form';
-import { joiResolver } from '@hookform/resolvers/joi';
-import { useDispatch, useSelector } from 'react-redux';
-import Joi from 'joi';
-
-import { v4 as uuidv4 } from 'uuid';
 import { useTranslation } from 'react-i18next';
+import { v4 as uuidv4 } from 'uuid';
+import InputRow from '../../Form/InputRow';
+import ModelType from '../../models/ModelType';
+import { Product } from '../../models/Product';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import {
   addProduct,
-  putProjectThunk
+  putProjectByIdThunk
 } from '../../store/reducers/project-reducer';
-import { RootState } from '../../store/store';
-import { Product } from '../../models/Product';
-import ModelType from '../../models/ModelType';
-import InputRow from '../../Form/InputRow';
 
 type FormValues = {
   title: string;
@@ -34,7 +32,7 @@ const productSchema = Joi.object().keys({
 });
 
 function NewProductForm({ toggleShow, toggleAlert }: IProps): ReactElement {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const [validated] = useState(false);
   const { t } = useTranslation();
 
@@ -47,7 +45,7 @@ function NewProductForm({ toggleShow, toggleAlert }: IProps): ReactElement {
     resolver: joiResolver(productSchema)
   });
 
-  const { id } = useSelector((state: RootState) => state.selectedProject);
+  const { id } = useAppSelector((state) => state.selectedProject);
 
   if (!id) {
     return <div>Loading Productform</div>;
@@ -63,7 +61,7 @@ function NewProductForm({ toggleShow, toggleAlert }: IProps): ReactElement {
       type: ModelType.product
     };
     dispatch(addProduct({ id, product }));
-    dispatch(putProjectThunk(id));
+    dispatch(putProjectByIdThunk(id));
 
     // reset the form
     reset();

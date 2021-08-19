@@ -1,24 +1,22 @@
 import { joiResolver } from '@hookform/resolvers/joi';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Switch from '@material-ui/core/Switch';
 import Joi from 'joi';
-import React, { ReactElement, useState } from 'react';
+import React, { ReactElement } from 'react';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import Form from 'react-bootstrap/Form';
 import { Controller, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import { useDispatch, useSelector } from 'react-redux';
 import ErrorSummary from '../../Form/ErrorSummary';
 import { ICheckboxQuestion } from '../../models/ICheckboxQuestion';
 import { IRequirementAnswer } from '../../models/IRequirementAnswer';
 import ModelType from '../../models/ModelType';
 import QuestionEnum from '../../models/QuestionEnum';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import {
   addProductAnswer,
   addRequirementAnswer
 } from '../../store/reducers/response-reducer';
-import { RootState } from '../../store/store';
 
 interface IProps {
   parentAnswer: IRequirementAnswer;
@@ -35,10 +33,10 @@ export const ResponseCheckBoxSchema = Joi.object().keys({
 export default function ICheckBoxAnswer({
   parentAnswer
 }: IProps): ReactElement {
-  const { response } = useSelector((state: RootState) => state.response);
+  const { response } = useAppSelector((state) => state.response);
   let index: number;
-  const { productId } = useSelector(
-    (state: RootState) => state.selectedResponseProduct
+  const { productId } = useAppSelector(
+    (state) => state.selectedResponseProduct
   );
 
   const productIndex = response.products.findIndex((p) => p.id === productId);
@@ -81,10 +79,9 @@ export default function ICheckBoxAnswer({
     defaultVal ? defaultVal.answer?.value : false
   ); */
 
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const { t } = useTranslation();
   const saveValues = (post: ICheckboxQuestion) => {
-    console.log(post);
     const newAnswer = {
       ...parentAnswer
     };

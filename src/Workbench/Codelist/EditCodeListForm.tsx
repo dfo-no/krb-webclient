@@ -8,7 +8,6 @@ import Row from 'react-bootstrap/Row';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { BsTrashFill } from 'react-icons/bs';
-import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import AlertModal from '../../common/AlertModal';
 import Utils from '../../common/Utils';
@@ -20,12 +19,12 @@ import { Need } from '../../models/Need';
 import { IAnswerBase, IConfigBase, IQuestionBase } from '../../models/Question';
 import QuestionEnum from '../../models/QuestionEnum';
 import { Requirement } from '../../models/Requirement';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import {
   deleteCodelist,
   editCodelist,
-  putProjectThunk
+  putProjectByIdThunk
 } from '../../store/reducers/project-reducer';
-import { RootState } from '../../store/store';
 
 type FormValues = {
   title: string;
@@ -42,13 +41,13 @@ const codeListSchema = Joi.object().keys({
 });
 
 function EditCodeListForm({ toggleShow, codelistId }: IProps): ReactElement {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const [validated] = useState(false);
   const [modalShow, setModalShow] = useState(false);
   const { t } = useTranslation();
 
-  const { id } = useSelector((state: RootState) => state.selectedProject);
-  const { list } = useSelector((state: RootState) => state.project);
+  const { id } = useAppSelector((state) => state.selectedProject);
+  const { list } = useAppSelector((state) => state.project);
   const history = useHistory();
 
   const project = Utils.ensure(list.find((bank) => bank.id === id));
@@ -83,7 +82,7 @@ function EditCodeListForm({ toggleShow, codelistId }: IProps): ReactElement {
         description: post.description
       })
     );
-    dispatch(putProjectThunk(id));
+    dispatch(putProjectByIdThunk(id));
     reset();
     toggleShow(false);
   };
@@ -116,7 +115,7 @@ function EditCodeListForm({ toggleShow, codelistId }: IProps): ReactElement {
       setModalShow(true);
     } else {
       dispatch(deleteCodelist({ projectId: id, codelistId }));
-      dispatch(putProjectThunk(id));
+      dispatch(putProjectByIdThunk(id));
       history.push(`/workbench/${project.id}/codelist`);
     }
   };

@@ -1,11 +1,10 @@
 import React, { ReactElement, useState } from 'react';
-import ListGroup from 'react-bootstrap/ListGroup';
 import FormControl from 'react-bootstrap/FormControl';
-import { useDispatch } from 'react-redux';
-import { Link } from 'react-router-dom';
-
+import ListGroup from 'react-bootstrap/ListGroup';
 import { useTranslation } from 'react-i18next';
+import { Link } from 'react-router-dom';
 import { Bank } from '../models/Bank';
+import { useAppDispatch } from '../store/hooks';
 import { selectBank } from '../store/reducers/selectedBank-reducer';
 import styles from './SearchBar.module.scss';
 
@@ -16,7 +15,7 @@ interface SearchBarProps {
 export default function SearchBar({ list }: SearchBarProps): ReactElement {
   const [input, setInput] = useState('');
   const [searchList, setSearchList] = useState<Bank[]>([]);
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const { t } = useTranslation();
 
   const updateSearchText = async (

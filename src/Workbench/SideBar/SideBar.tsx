@@ -1,11 +1,10 @@
 import React, { ReactElement } from 'react';
 import Nav from 'react-bootstrap/Nav';
+import { useTranslation } from 'react-i18next';
 import { withRouter } from 'react-router';
 import { NavLink, useRouteMatch } from 'react-router-dom';
-import { useSelector } from 'react-redux';
-import { useTranslation } from 'react-i18next';
+import { useAppSelector } from '../../store/hooks';
 import css from './SideBar.module.scss';
-import { RootState } from '../../store/store';
 
 interface IRouteLink {
   link: string;
@@ -35,8 +34,8 @@ const renderRouteLinks = (routes: IRouteLink[], isProjectSelected: boolean) => {
 };
 
 function SideBar(): ReactElement {
-  const { id } = useSelector((state: RootState) => state.selectedProject);
-  const { list } = useSelector((state: RootState) => state.project);
+  const { id } = useAppSelector((state) => state.selectedProject);
+  const { list } = useAppSelector((state) => state.project);
   const match = useRouteMatch<RouteParams>('/workbench/:projectId');
   const { t } = useTranslation();
 

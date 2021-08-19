@@ -2,26 +2,21 @@ import { AxiosResponse } from 'axios';
 import React, { ReactElement } from 'react';
 import Button from 'react-bootstrap/Button';
 import Row from 'react-bootstrap/Row';
-import { useSelector } from 'react-redux';
 import { httpPost } from '../../api/http';
 import { Response } from '../../models/Response';
-import { RootState } from '../../store/store';
+import { useAppSelector } from '../../store/hooks';
 
 export default function ResponseDownLoad(): ReactElement {
-  const { response } = useSelector((state: RootState) => state.response);
+  const { response } = useAppSelector((state) => state.response);
 
   const onDownLoad = () => {
-    httpPost<Response, AxiosResponse<File>>(
-      `${process.env.REACT_APP_JAVA_API_URL}/generatePdf`,
-      response,
-      {
-        headers: {
-          'Content-Type': 'application/json',
-          Accept: 'application/pdf'
-        },
-        responseType: 'blob'
-      }
-    ).then((res: { data: BlobPart }) => {
+    httpPost<Response, AxiosResponse<File>>('/java/generatePdf', response, {
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: 'application/pdf'
+      },
+      responseType: 'blob'
+    }).then((res: { data: BlobPart }) => {
       const url = window.URL.createObjectURL(new Blob([res.data]));
       const link = document.createElement('a');
       link.href = url;

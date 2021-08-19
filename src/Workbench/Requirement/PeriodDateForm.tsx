@@ -31,7 +31,6 @@ export default function PeriodDateForm({
   remove,
   register,
   control,
-  formState: { errors },
   item,
   vIndex,
   aIndex

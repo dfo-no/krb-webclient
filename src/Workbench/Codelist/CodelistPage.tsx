@@ -1,21 +1,19 @@
-import React, { ReactElement, useState, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { Link, useRouteMatch } from 'react-router-dom';
+import React, { ReactElement, useEffect, useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import Row from 'react-bootstrap/Row';
-import { BsPencil } from 'react-icons/bs';
-
 import { useTranslation } from 'react-i18next';
-import { RootState } from '../../store/store';
-import { Codelist } from '../../models/Codelist';
-import { selectCodeList } from '../../store/reducers/selectedCodelist-reducer';
+import { BsPencil } from 'react-icons/bs';
+import { Link, useRouteMatch } from 'react-router-dom';
 import Utils from '../../common/Utils';
 import { Bank } from '../../models/Bank';
-import NewCodeListForm from './NewCodeListForm';
-import SuccessAlert from '../SuccessAlert';
+import { Codelist } from '../../models/Codelist';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { getProjectsThunk } from '../../store/reducers/project-reducer';
+import { selectCodeList } from '../../store/reducers/selectedCodelist-reducer';
 import { selectProject } from '../../store/reducers/selectedProject-reducer';
+import SuccessAlert from '../SuccessAlert';
+import NewCodeListForm from './NewCodeListForm';
 
 interface RouteParams {
   projectId: string;
@@ -25,14 +23,14 @@ export default function CodelistPage(): ReactElement {
   const projectMatch = useRouteMatch<RouteParams>(
     '/workbench/:projectId/codelist'
   );
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   if (projectMatch?.params.projectId) {
     dispatch(selectProject(projectMatch?.params.projectId));
   }
 
-  const { list } = useSelector((state: RootState) => state.project);
-  const { id } = useSelector((state: RootState) => state.selectedProject);
+  const { list } = useAppSelector((state) => state.project);
+  const { id } = useAppSelector((state) => state.selectedProject);
   const [toggleEditor, setToggleEditor] = useState(false);
   const [showAlert, setShowAlert] = useState(false);
   const { t } = useTranslation();

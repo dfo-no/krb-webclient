@@ -1,26 +1,24 @@
-import React, { ReactElement, useState, useEffect } from 'react';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
+import React, { ReactElement, useEffect, useState } from 'react';
 import Accordion from 'react-bootstrap/Accordion';
-import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
-import { useRouteMatch } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux';
-
+import Card from 'react-bootstrap/Card';
+import Col from 'react-bootstrap/Col';
+import Row from 'react-bootstrap/Row';
 import { BsChevronDown } from 'react-icons/bs';
-import { RootState } from '../../store/store';
-import { Requirement } from '../../models/Requirement';
-import { Need } from '../../models/Need';
+import { useRouteMatch } from 'react-router-dom';
 import Utils from '../../common/Utils';
 import { Bank } from '../../models/Bank';
+import { Need } from '../../models/Need';
+import { Requirement } from '../../models/Requirement';
+import RequirementType from '../../models/RequirementType';
 import { AccordionContext } from '../../NestableHierarchy/AccordionContext';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
+import { getProjectsThunk } from '../../store/reducers/project-reducer';
+import { selectNeed } from '../../store/reducers/selectedNeed-reducer';
 import SuccessAlert from '../SuccessAlert';
-import NewRequirementForm from './NewRequirementForm';
 import EditRequirementForm from './EditRequirementForm';
 import NeedSideBar from './NeedSideBar/NeedSidebar';
-import RequirementType from '../../models/RequirementType';
-import { selectNeed } from '../../store/reducers/selectedNeed-reducer';
-import { getProjectsThunk } from '../../store/reducers/project-reducer';
+import NewRequirementForm from './NewRequirementForm';
 
 interface RouteParams {
   projectId: string;
@@ -28,7 +26,7 @@ interface RouteParams {
 }
 
 export default function RequirementPage(): ReactElement {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const projectMatch = useRouteMatch<RouteParams>(
     '/workbench/:projectId/need/:needId/requirement'
   );
@@ -37,9 +35,9 @@ export default function RequirementPage(): ReactElement {
     dispatch(selectNeed(projectMatch?.params.needId));
   }
 
-  const { id } = useSelector((state: RootState) => state.selectedProject);
-  const { list } = useSelector((state: RootState) => state.project);
-  const { needId } = useSelector((state: RootState) => state.selectNeed);
+  const { id } = useAppSelector((state) => state.selectedProject);
+  const { list } = useAppSelector((state) => state.project);
+  const { needId } = useAppSelector((state) => state.selectNeed);
   const [activeKey, setActiveKey] = useState('');
   const [toggleEditor, setToggleEditor] = useState(false);
   const [showAlert, setShowAlert] = useState(false);

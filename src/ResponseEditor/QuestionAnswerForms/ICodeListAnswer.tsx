@@ -6,16 +6,15 @@ import Card from 'react-bootstrap/Card';
 import Form from 'react-bootstrap/Form';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import { useDispatch, useSelector } from 'react-redux';
 import ErrorSummary from '../../Form/ErrorSummary';
 import { ICodelistQuestion } from '../../models/ICodelistQuestion';
 import { IRequirementAnswer } from '../../models/IRequirementAnswer';
 import QuestionEnum from '../../models/QuestionEnum';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import {
   addProductAnswer,
   addRequirementAnswer
 } from '../../store/reducers/response-reducer';
-import { RootState } from '../../store/store';
 
 interface IProps {
   parentAnswer: IRequirementAnswer;
@@ -46,10 +45,10 @@ export const ResponseSingleCodelistSchema = Joi.object().keys({
 export default function ICodelistAnswer({
   parentAnswer
 }: IProps): ReactElement {
-  const { response } = useSelector((state: RootState) => state.response);
+  const { response } = useAppSelector((state) => state.response);
   let index: number;
-  const { productId } = useSelector(
-    (state: RootState) => state.selectedResponseProduct
+  const { productId } = useAppSelector(
+    (state) => state.selectedResponseProduct
   );
   const productIndex = response.products.findIndex((p) => p.id === productId);
   const item = parentAnswer.question as ICodelistQuestion;
@@ -89,7 +88,7 @@ export default function ICodelistAnswer({
       ...defaultVal
     }
   });
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const { t } = useTranslation();
 
   const saveValues = (post: ICodelistQuestion) => {
