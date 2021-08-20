@@ -261,13 +261,14 @@ class Utils {
   }
 
   static calculateCheckBoxPoints(
-    weight: Record<BooleanAsString, number>,
+    weightTrue: number,
+    weightFalse: number,
     answer: boolean
   ): number {
     if (answer) {
-      return weight.true;
+      return weightTrue;
     }
-    return weight.false;
+    return weightFalse;
   }
 }
 

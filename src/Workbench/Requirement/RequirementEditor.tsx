@@ -77,7 +77,8 @@ export const CheckboxSchema = Joi.object().keys({
   id: Joi.string().required(),
   type: Joi.string().equal(QuestionEnum.Q_CHECKBOX).required(),
   config: Joi.object().keys({
-    value: Joi.boolean()
+    weightTrue: Joi.number().min(1).max(100),
+    weightFalse: Joi.number().min(0).max(100)
   })
 });
 

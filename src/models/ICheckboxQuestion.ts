@@ -13,5 +13,6 @@ export interface ICheckboxAnswer extends IAnswerBase {
 }
 
 export interface ICheckboxConfig extends IConfigBase {
-  weight: Record<BooleanAsString, number>;
+  weightTrue: number;
+  weightFalse: number;
 }
