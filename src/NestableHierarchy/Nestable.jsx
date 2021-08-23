@@ -8,6 +8,7 @@ import Card from 'react-bootstrap/Card';
 import Row from 'react-bootstrap/Row';
 import { BsChevronDown } from 'react-icons/bs';
 import Nestable from 'react-nestable';
+import 'react-nestable/dist/styles/index.css';
 import Utils from '../common/Utils';
 import { AccordionContext } from './AccordionContext';
 
@@ -40,7 +41,7 @@ export default function NestableHierarcy({
 
   const flatten = (list) => {
     const flattenedCollection = [];
-    list.forEach((element) => {
+    list.items.forEach((element) => {
       const copy = element;
       copy.parent = '';
       convertTreeToList(element, 'children', flattenedCollection);
