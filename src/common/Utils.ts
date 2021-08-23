@@ -72,7 +72,6 @@ class Utils {
   ): [Nestable<T>[], { [key: string]: Nestable<T> }] {
     const hierarchy: Nestable<T>[] = [];
     const mappedArr: { [key: string]: Nestable<T> } = {};
-
     items.forEach((item) => {
       const Id = item.id;
       if (!Object.prototype.hasOwnProperty.call(mappedArr, Id)) {

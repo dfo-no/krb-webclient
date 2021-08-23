@@ -2,14 +2,14 @@
 /* eslint-disable react/prop-types */
 
 import React, { useState } from 'react';
-import Nestable from 'react-nestable';
-import Card from 'react-bootstrap/Card';
 import Accordion from 'react-bootstrap/Accordion';
-import Row from 'react-bootstrap/Row';
 import Button from 'react-bootstrap/Button';
+import Card from 'react-bootstrap/Card';
+import Row from 'react-bootstrap/Row';
 import { BsChevronDown } from 'react-icons/bs';
-import { AccordionContext } from './AccordionContext';
+import Nestable from 'react-nestable';
 import Utils from '../common/Utils';
+import { AccordionContext } from './AccordionContext';
 
 export default function NestableHierarcy({
   dispatchfunc,
