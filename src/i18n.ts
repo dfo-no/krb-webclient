@@ -1,8 +1,21 @@
 import i18n from 'i18next';
-import { initReactI18next } from 'react-i18next';
-
-import Backend from 'i18next-http-backend';
 import LanguageDetector from 'i18next-browser-languagedetector';
+import Backend from 'i18next-http-backend';
+import { initReactI18next } from 'react-i18next';
+import translationEN from './locales/en/translation.json';
+import translationNO from './locales/nb/translation.json';
+
+const fallbackLng = ['nb'];
+const availableLanguages = ['en', 'nb'];
+
+const resources = {
+  en: {
+    translation: translationEN
+  },
+  nb: {
+    translation: translationNO
+  }
+};
 
 i18n
   .use(Backend)
@@ -10,10 +23,12 @@ i18n
 
   .use(initReactI18next)
   .init({
+    resources,
+    fallbackLng,
     ignoreJSONStructure: false,
-    fallbackLng: 'en',
     debug: true,
     defaultNS: 'common',
+    whitelist: availableLanguages,
     keySeparator: '.',
     lng: 'nb',
 
