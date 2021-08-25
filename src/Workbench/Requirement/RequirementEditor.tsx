@@ -58,8 +58,14 @@ export const PeriodDateSchema = Joi.object().keys({
   id: Joi.string().required(),
   type: Joi.string().equal(QuestionEnum.Q_PERIOD_DATE).required(),
   config: Joi.object().keys({
-    fromDate: Joi.string().trim().allow('').required(),
-    toDate: Joi.string().trim().allow('').required()
+    fromDate: Joi.alternatives([
+      Joi.date().iso(),
+      Joi.string().valid('')
+    ]).required(),
+    toDate: Joi.alternatives([
+      Joi.date().iso(),
+      Joi.string().valid('')
+    ]).required()
   })
 });
 
@@ -200,10 +206,17 @@ export default function RequirementEditor(): ReactElement {
     project.needs.find((element) => element.id === needId)
   );
   const requirement = need.requirements.find((element) => element.id === reqId);
-  const { control, register, handleSubmit, formState } = useForm<Requirement>({
-    resolver: joiResolver(requirementSchema),
-    defaultValues: requirement
-  });
+  const { control, register, handleSubmit, formState, reset } =
+    useForm<Requirement>({
+      resolver: joiResolver(requirementSchema),
+      defaultValues: requirement
+    });
+
+  /* useEffect(() => {
+    if (requirement) {
+      reset(JSON.parse(JSON.stringify(requirement)));
+    }
+  }, [requirement, reset]); */
 
   if (requirement === undefined) {
     history.push(`/workbench/${project.id}/requirement`);
@@ -215,10 +228,13 @@ export default function RequirementEditor(): ReactElement {
   }
 
   const saveRequirement = async (post: Requirement) => {
+    //const converted = JSON.parse(JSON.stringify(post));
+    //console.log(converted);
+    console.log(post);
     const oldReqIndex = Utils.ensure(
       need.requirements.findIndex((element) => element.id === reqId)
     );
-    await dispatch(
+    dispatch(
       editRequirementInNeed({
         projectId: project.id,
         requirement: post,
@@ -227,8 +243,9 @@ export default function RequirementEditor(): ReactElement {
         requirementIndex: oldReqIndex
       })
     );
-    await dispatch(putProjectByIdThunk(project.id));
-    await dispatch(selectNeed(post.needId));
+    /* dispatch(putProjectByIdThunk(project.id)).then(() => {
+      dispatch(selectNeed(converted.needId));
+    }); */
   };
 
   const needOptions = (needList: Need[]) => {
