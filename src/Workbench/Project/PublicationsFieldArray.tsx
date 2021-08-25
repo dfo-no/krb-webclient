@@ -19,7 +19,6 @@ import { Publication } from '../../models/Publication';
 import { useAppDispatch } from '../../store/hooks';
 import { prependPublication } from '../../store/reducers/project-reducer';
 import SuccessAlert from '../SuccessAlert';
-import { ProjectPublicationForm } from './ProjectPublicationForm';
 import css from './PublicationList.module.scss';
 
 type IProps = {
@@ -28,6 +27,11 @@ type IProps = {
   formState: FormState<ProjectPublicationForm>;
   projectId: string;
   removePublication: (publicationId: string) => Promise<void>;
+};
+
+export type ProjectPublicationForm = {
+  id: string;
+  publications: Publication[];
 };
 
 export default function PublicationsFieldArray({

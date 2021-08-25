@@ -4,6 +4,7 @@ import Utils from '../../common/Utils';
 import { Bank } from '../../models/Bank';
 import { Code } from '../../models/Code';
 import { Codelist } from '../../models/Codelist';
+import ModelType from '../../models/ModelType';
 import { Need } from '../../models/Need';
 import { Nestable } from '../../models/Nestable';
 import { Product } from '../../models/Product';
@@ -14,19 +15,41 @@ import { AppDispatch, RootState } from '../store';
 
 interface ProjectState {
   list: Bank[];
-  status: 'idle' | 'fulfilled' | 'rejected' | 'pending';
+  listLoading: 'idle' | 'fulfilled' | 'rejected' | 'pending';
+  project: Bank;
+  projectLoading: 'idle' | 'fulfilled' | 'rejected' | 'pending';
 }
 
 const initialState: ProjectState = {
   list: [],
-  status: 'idle'
+  project: {
+    id: '',
+    title: '',
+    description: '',
+    needs: [],
+    codelist: [],
+    products: [],
+    publications: [],
+    type: ModelType.bank,
+    version: 0
+  },
+  projectLoading: 'idle',
+  listLoading: 'idle'
 };
 
-// this, this is the one
 export const getProjectsThunk = createAsyncThunk(
   'getProjectsThunk',
   async () => {
     const response = await httpGet<Bank[]>('/api/bank/projects');
+
+    return response.data;
+  }
+);
+
+export const getProjectThunk = createAsyncThunk(
+  'getProjectThunk',
+  async (id: string) => {
+    const response = await httpGet<Bank>(`/api/bank/${id}`);
     return response.data;
   }
 );
@@ -88,7 +111,9 @@ const projectSlice = createSlice({
     addProjects(state, { payload }: PayloadAction<Bank[]>) {
       state.list = payload;
     },
-
+    selectProject(state, { payload }: PayloadAction<Bank>) {
+      state.project = payload;
+    },
     // Should not be needed, when removing, we reload the list
     deleteProject(state, { payload }: PayloadAction<Bank>) {
       const index = Utils.ensure(
@@ -535,70 +560,88 @@ const projectSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder.addCase(getProjectsThunk.pending, (state) => {
-      state.status = 'pending';
+      state.listLoading = 'pending';
     });
     builder.addCase(getProjectsThunk.fulfilled, (state, { payload }) => {
       state.list = payload;
-      state.status = 'fulfilled';
+      state.listLoading = 'fulfilled';
     });
     builder.addCase(getProjectsThunk.rejected, (state) => {
-      state.status = 'rejected';
+      state.listLoading = 'rejected';
+    });
+    builder.addCase(getProjectThunk.pending, (state) => {
+      state.projectLoading = 'pending';
+    });
+    builder.addCase(getProjectThunk.fulfilled, (state, { payload }) => {
+      state.project = payload;
+      state.projectLoading = 'fulfilled';
+    });
+    builder.addCase(getProjectThunk.rejected, (state) => {
+      state.projectLoading = 'rejected';
     });
     builder.addCase(postProjectThunk.fulfilled, (state, { payload }) => {
       state.list.push(payload);
-      state.status = 'fulfilled';
+      state.projectLoading = 'fulfilled';
     });
     builder.addCase(postProjectThunk.pending, (state) => {
-      state.status = 'pending';
+      state.projectLoading = 'pending';
     });
     builder.addCase(postProjectThunk.rejected, (state) => {
-      state.status = 'rejected';
+      state.projectLoading = 'rejected';
     });
     builder.addCase(putProjectByIdThunk.fulfilled, (state, { payload }) => {
-      state.status = 'fulfilled';
-      const projectIndex = Utils.ensure(
-        state.list.findIndex((project) => project.id === payload.id)
+      // update project in list if it exists there
+      const projectIndex = state.list.findIndex(
+        (project) => project.id === payload.id
       );
-      state.list[projectIndex] = payload;
+      if (projectIndex) {
+        state.list[projectIndex] = payload;
+      }
+      // ux-assume that since we update the project, it is selected. Update it.
+      state.project = payload;
+      state.projectLoading = 'fulfilled';
     });
     builder.addCase(putProjectByIdThunk.pending, (state) => {
-      state.status = 'pending';
+      state.projectLoading = 'pending';
     });
     builder.addCase(putProjectByIdThunk.rejected, (state) => {
-      state.status = 'rejected';
+      state.projectLoading = 'rejected';
     });
     builder.addCase(putProjectThunk.fulfilled, (state, { payload }) => {
-      state.status = 'fulfilled';
-      const projectIndex = Utils.ensure(
-        state.list.findIndex((project) => project.id === payload.id)
-      );
-      state.list[projectIndex] = payload;
+      state.project = payload;
+      state.projectLoading = 'fulfilled';
     });
     builder.addCase(putProjectThunk.pending, (state) => {
-      state.status = 'pending';
+      state.projectLoading = 'pending';
     });
     builder.addCase(putProjectThunk.rejected, (state) => {
-      state.status = 'rejected';
+      state.projectLoading = 'rejected';
     });
     builder.addCase(deleteProjectThunk.fulfilled, (state, { payload }) => {
       state.list = state.list.filter((item) => item.id !== payload.id);
-      state.status = 'fulfilled';
+
+      // if deleted project is the current selected, set project back to default
+      if (state.project.id === payload.id) {
+        state.project = initialState.project;
+      }
+
+      state.projectLoading = 'fulfilled';
     });
     builder.addCase(deleteProjectThunk.pending, (state) => {
-      state.status = 'pending';
+      state.projectLoading = 'pending';
     });
     builder.addCase(deleteProjectThunk.rejected, (state) => {
-      state.status = 'rejected';
+      state.projectLoading = 'rejected';
     });
     builder.addCase(deleteProjectByIdThunk.fulfilled, (state, { payload }) => {
       state.list = state.list.filter((item) => item.id !== payload);
-      state.status = 'fulfilled';
+      state.projectLoading = 'fulfilled';
     });
     builder.addCase(deleteProjectByIdThunk.pending, (state) => {
-      state.status = 'pending';
+      state.projectLoading = 'pending';
     });
     builder.addCase(deleteProjectByIdThunk.rejected, (state) => {
-      state.status = 'rejected';
+      state.projectLoading = 'rejected';
     });
   }
 });
@@ -631,7 +674,8 @@ export const {
   addRequirement,
   deleteRequirement,
   removePublicationFromProject,
-  updateCurrentProjectPublication
+  updateCurrentProjectPublication,
+  selectProject
 } = projectSlice.actions;
 
 export default projectSlice.reducer;

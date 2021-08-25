@@ -9,7 +9,7 @@ import { useTranslation } from 'react-i18next';
 import ErrorSummary from '../../Form/ErrorSummary';
 import InputRow from '../../Form/InputRow';
 import { Bank, BaseBankSchema } from '../../models/Bank';
-import { useAppDispatch, useAppSelector } from '../../store/hooks';
+import { useAppDispatch } from '../../store/hooks';
 import { putProjectThunk } from '../../store/reducers/project-reducer';
 
 interface IProps {
@@ -21,7 +21,6 @@ export default function EditProjectForm({
   project,
   toggleShow
 }: IProps): ReactElement {
-  const { id } = useAppSelector((state) => state.selectedProject);
   const dispatch = useAppDispatch();
   const [validated] = useState(false);
   const { t } = useTranslation();
@@ -34,10 +33,6 @@ export default function EditProjectForm({
     resolver: joiResolver(BaseBankSchema),
     defaultValues: project
   });
-
-  if (!id) {
-    return <p>No project selected</p>;
-  }
 
   const onEditProjectSubmit = (post: Bank) => {
     dispatch(putProjectThunk(post)).then(() => {

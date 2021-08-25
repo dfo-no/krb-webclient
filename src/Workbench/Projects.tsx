@@ -16,12 +16,12 @@ import { PostProjectSchema } from '../models/Project';
 import { useAppDispatch, useAppSelector } from '../store/hooks';
 import {
   deleteProjectThunk,
-  postProjectThunk
+  postProjectThunk,
+  selectProject
 } from '../store/reducers/project-reducer';
-import { selectProject } from '../store/reducers/selectedProject-reducer';
 import SuccessAlert from './SuccessAlert';
 
-function WorkbenchPage(): ReactElement {
+function Projects(): ReactElement {
   const dispatch = useAppDispatch();
   const { list } = useAppSelector((state) => state.project);
   const [showNewProjectForm, setShowNewProjectForm] = useState(false);
@@ -52,16 +52,13 @@ function WorkbenchPage(): ReactElement {
     defaultValues
   });
 
-  const handleShowEditor = () => {
-    setShowNewProjectForm(true);
-  };
-
   useEffect(() => {
     const timer = setTimeout(() => {
       setShowAlert(false);
     }, 2000);
     return () => clearTimeout(timer);
   }, [showAlert]);
+
   const onSubmit = (post: Bank) => {
     dispatch(postProjectThunk(post)).then(() => {
       reset();
@@ -69,10 +66,6 @@ function WorkbenchPage(): ReactElement {
       setShowAlert(true);
     });
   };
-
-  function onSelect(project: Bank) {
-    dispatch(selectProject(project.id));
-  }
 
   async function onDelete(project: Bank) {
     dispatch(deleteProjectThunk(project));
@@ -84,12 +77,12 @@ function WorkbenchPage(): ReactElement {
       .sort((a, b) => (a.title.toLowerCase() > b.title.toLowerCase() ? 1 : -1));
     const projects = projectList.map((element: Bank) => {
       return (
-        <ListGroup.Item key={element.id} onClick={() => onSelect(element)}>
+        <ListGroup.Item key={element.id}>
           {/* TODO: fix styling  */}
           <Row className="d-flex justify-content-between ml-1">
             <Link
               to={`/workbench/${element.id}`}
-              onClick={() => onSelect(element)}
+              onClick={() => dispatch(selectProject(element))}
             >
               <h5>{element.title}</h5>
             </Link>
@@ -110,8 +103,8 @@ function WorkbenchPage(): ReactElement {
     return <ListGroup className=" mt-5">{projects}</ListGroup>;
   };
 
-  function projectEditor(show: boolean): JSX.Element {
-    if (show) {
+  function projectEditor(): JSX.Element {
+    if (showNewProjectForm) {
       return (
         <ListGroup className="mt-3">
           <ListGroup.Item>
@@ -154,14 +147,14 @@ function WorkbenchPage(): ReactElement {
   return (
     <>
       <h3 className="mt-3 ">{t('Projects')} </h3>
-      <Button onClick={handleShowEditor} variant="primary">
+      <Button onClick={() => setShowNewProjectForm(true)} variant="primary">
         {t('new project')}
       </Button>
       {showAlert && <SuccessAlert toggleShow={setShowAlert} type="project" />}
-      {projectEditor(showNewProjectForm)}
+      {projectEditor()}
       {renderProjects(list)}
     </>
   );
 }
 
-export default WorkbenchPage;
+export default Projects;
