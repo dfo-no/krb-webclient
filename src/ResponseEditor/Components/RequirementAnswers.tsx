@@ -1,5 +1,4 @@
-import React, { ReactElement, useState } from 'react';
-import Container from 'react-bootstrap/Container';
+import React, { ReactElement } from 'react';
 import { IRequirementAnswer } from '../../models/IRequirementAnswer';
 import { Requirement } from '../../models/Requirement';
 import QuestionFormSelector from './QuestionFormSelector';

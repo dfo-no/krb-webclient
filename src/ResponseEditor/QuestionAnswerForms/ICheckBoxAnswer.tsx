@@ -25,6 +25,10 @@ interface IProps {
 export const ResponseCheckBoxSchema = Joi.object().keys({
   id: Joi.string().required(),
   type: Joi.string().equal(QuestionEnum.Q_CHECKBOX).required(),
+  config: Joi.object().keys({
+    weightTrue: Joi.number().min(1).max(100),
+    weightFalse: Joi.number().min(0).max(100)
+  }),
   answer: Joi.object().keys({
     value: Joi.boolean().required()
   })
@@ -110,6 +114,16 @@ export default function ICheckBoxAnswer({
             type="hidden"
             {...register('type')}
             isInvalid={!!errors.type}
+          />
+          <Form.Control
+            as="input"
+            type="hidden"
+            {...register('config.weightTrue')}
+          />
+          <Form.Control
+            as="input"
+            type="hidden"
+            {...register('config.weightFalse')}
           />
           <Controller
             name={`answer.value` as const}
