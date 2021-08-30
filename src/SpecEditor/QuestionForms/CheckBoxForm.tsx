@@ -54,7 +54,7 @@ export default function CheckBoxForm({ parentAnswer }: IProps): ReactElement {
         : -1;
   }
 
-  const defaultVal =
+  const defaultValues =
     index === -1
       ? (parentAnswer.question as ICheckboxQuestion)
       : (parentAnswer.type === ModelType.product &&
@@ -69,16 +69,16 @@ export default function CheckBoxForm({ parentAnswer }: IProps): ReactElement {
   } = useForm<ICheckboxQuestion>({
     resolver: joiResolver(CheckboxSchema),
     defaultValues: {
-      ...defaultVal
+      ...defaultValues
     }
   });
 
   const [pointsForNonPreferred, setPointsForNonPreffered] = useState(
-    defaultVal.config.weightFalse > 0 && defaultVal.config.weightTrue > 0
+    defaultValues.config.weightFalse > 0 && defaultValues.config.weightTrue > 0
   );
 
   const [preferedAlternative, setPreferedAlternative] = useState(
-    defaultVal.config.weightTrue > defaultVal.config.weightFalse
+    defaultValues.config.weightTrue > defaultValues.config.weightFalse
       ? 'true'
       : 'false'
   );

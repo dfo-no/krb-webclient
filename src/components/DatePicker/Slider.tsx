@@ -1,8 +1,6 @@
 import Slider from '@material-ui/core/Slider';
-import { KeyboardDatePicker } from '@material-ui/pickers';
 import { get, has, toPath } from 'lodash';
 import React, { ReactElement } from 'react';
-import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 import { Control, Controller, FieldErrors } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
@@ -56,7 +54,10 @@ export default function SliderSelect({
           control={control}
           render={({ field }) => (
             <Slider
-              {...field}
+              name={field.name}
+              value={field.value}
+              onBlur={field.onBlur}
+              ref={field.ref}
               onChange={(_, value) => {
                 field.onChange(value);
               }}
