@@ -13,7 +13,7 @@ export const BasePublicationSchema = Joi.object().keys({
 
 export const PostPublicationSchema = BasePublicationSchema.keys({
   id: Joi.string().valid('').required(),
-  date: Joi.string().valid('')
+  date: Joi.alternatives([Joi.date(), Joi.string().valid('')]).required()
 });
 
 export const PutPublicationSchema = BasePublicationSchema.keys({

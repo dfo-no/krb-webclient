@@ -10,8 +10,6 @@ import { Nestable } from '../../models/Nestable';
 import { Product } from '../../models/Product';
 import { Publication } from '../../models/Publication';
 import { Requirement } from '../../models/Requirement';
-// eslint-disable-next-line import/no-cycle
-import { AppDispatch, RootState } from '../store';
 
 interface ProjectState {
   list: Bank[];
@@ -66,8 +64,8 @@ export const putProjectByIdThunk = createAsyncThunk<
   Bank,
   string,
   {
-    dispatch: AppDispatch;
-    state: RootState;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    state: any;
   }
 >('putProjectByIdThunk', async (projectId: string, thunkApi) => {
   // get updated project from redux
@@ -76,6 +74,19 @@ export const putProjectByIdThunk = createAsyncThunk<
       .getState()
       .project.list.find((element: Bank) => element.id === projectId)
   );
+  const response = await httpPut<Bank>(`/api/bank/${project.id}`, project);
+  return response.data;
+});
+
+export const putSelectedProjectThunk = createAsyncThunk<
+  Bank,
+  string,
+  {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    state: any; // do not use : RootState here. Circular reference!!
+  }
+>('putSelectedProjectThunk', async (id: string, thunkApi) => {
+  const { project } = thunkApi.getState().project as ProjectState;
   const response = await httpPut<Bank>(`/api/bank/${project.id}`, project);
   return response.data;
 });
@@ -129,20 +140,8 @@ const projectSlice = createSlice({
       );
       state.list[projectIndex].version += 1;
     },
-    prependPublication(
-      state,
-      {
-        payload
-      }: PayloadAction<{ projectId: string; publication: Publication }>
-    ) {
-      const projectIndex = Utils.ensure(
-        state.list.findIndex((project) => project.id === payload.projectId)
-      );
-
-      if (!state.list[projectIndex].publications) {
-        state.list[projectIndex].publications = [];
-      }
-      state.list[projectIndex].publications?.unshift(payload.publication);
+    prependPublication(state, { payload }: PayloadAction<Publication>) {
+      state.project.publications.push(payload);
     },
     publishProject(
       state,
@@ -226,23 +225,31 @@ const projectSlice = createSlice({
       );
       state.list[index].codelist.push(payload.codelist);
     },
-    addProduct(
-      state,
-      { payload }: PayloadAction<{ id: string; product: Product }>
-    ) {
-      const index = Utils.ensure(
-        state.list.findIndex((project) => project.id === payload.id)
+    addProduct(state, { payload }: PayloadAction<Product>) {
+      state.project.products.push(payload);
+
+      // update project in list if it exists there
+      /* const projectIndex = state.list.findIndex(
+        (project) => project.id === state.project.id
       );
-      state.list[index].products.push(payload.product);
+      if (projectIndex) {
+        state.list[projectIndex].products.push(payload.product);
+      } */
+      return state;
     },
     updateProductList(
       state,
       { payload }: PayloadAction<{ id: string; products: Product[] }>
     ) {
-      const index = Utils.ensure(
-        state.list.findIndex((project) => project.id === payload.id)
+      state.project.products = payload.products;
+
+      // update project in list if it exists there
+      const projectIndex = state.list.findIndex(
+        (project) => project.id === payload.id
       );
-      state.list[index].products = payload.products;
+      if (projectIndex) {
+        state.list[projectIndex].products = payload.products;
+      }
     },
     editProduct(
       state,
@@ -518,44 +525,24 @@ const projectSlice = createSlice({
         1
       );
     },
-    removePublicationFromProject(
-      state,
-      {
-        payload
-      }: PayloadAction<{
-        projectId: string;
-        publicationId: string;
-      }>
-    ) {
-      const projectIndex = Utils.ensure(
-        state.list.findIndex((project) => project.id === payload.projectId)
+    editPublication(state, { payload }: PayloadAction<Publication>) {
+      const index = state.project.publications.findIndex(
+        (element) => payload.id === element.id
       );
-      const publicationIndex = state.list[projectIndex].publications.findIndex(
-        (p) => p.id === payload.publicationId
-      );
-
-      state.list[projectIndex].publications.splice(publicationIndex, 1);
+      if (index !== -1) {
+        state.project.publications[index].comment = payload.comment;
+      }
     },
-    updateCurrentProjectPublication(
-      state,
-      {
-        payload
-      }: PayloadAction<{
-        projectId: string;
-        publishedBank: Bank;
-      }>
-    ) {
-      const projectIndex = Utils.ensure(
-        state.list.findIndex((project) => project.id === payload.projectId)
+    removePublication(state, { payload }: PayloadAction<string>) {
+      const index = state.project.publications.findIndex(
+        (element) => payload === element.id
       );
-      state.list[projectIndex].publications[0].id = payload.publishedBank.id;
-      state.list[projectIndex].publications[0].bankId =
-        payload.publishedBank.id;
-
-      state.list[projectIndex].publications[0].date =
-        payload.publishedBank.publishedDate ?? '';
-
-      state.list[projectIndex].version += 1;
+      if (index !== -1) {
+        state.project.publications.splice(index, 1);
+      }
+    },
+    updateSelectedVersion(state, { payload }: PayloadAction<number>) {
+      state.project.version = payload;
     }
   },
   extraReducers: (builder) => {
@@ -673,9 +660,10 @@ export const {
   editRequirementInNeed,
   addRequirement,
   deleteRequirement,
-  removePublicationFromProject,
-  updateCurrentProjectPublication,
-  selectProject
+  removePublication,
+  updateSelectedVersion,
+  selectProject,
+  editPublication
 } = projectSlice.actions;
 
 export default projectSlice.reducer;
