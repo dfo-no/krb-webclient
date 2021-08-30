@@ -31,7 +31,7 @@ interface IProps {
 }
 
 type FormValue = {
-  alternative: string;
+  question: string;
   weight: number;
 };
 const marks: IOption[] = [
@@ -88,11 +88,11 @@ export default function RequirementAnswer({
   >(savedAlternative !== undefined ? savedAlternative.id : undefined);
 
   const { id } = useAppSelector((state) => state.selectedBank);
-
   const checkWeightIsPredefined = (weight: number) => {
     const predefinedValues = [10, 30, 50, 70, 90];
     return predefinedValues.includes(weight);
   };
+
   const setWeightState = () => {
     if (savedAlternative) {
       if (checkWeightIsPredefined(savedAlternative.weight)) return 'standard';
@@ -103,7 +103,7 @@ export default function RequirementAnswer({
   const [weightType, setWeightType] = useState(setWeightState());
   const saveAnswer = (post: FormValue) => {
     const alternativeIndex = selectedVariant.questions.findIndex(
-      (alt) => alt.id === post.alternative
+      (alt) => alt.id === post.question
     );
     const savedWeight =
       weightType === 'standard' && post.weight > 90 ? 90 : post.weight;
@@ -115,7 +115,7 @@ export default function RequirementAnswer({
       const question = selectedVariant.questions[alternativeIndex];
       const newAnswer: IRequirementAnswer = {
         id: uuidv4(),
-        questionId: post.alternative,
+        questionId: post.question,
         weight: savedWeight,
         variantId: selectedVariant.id,
         question,
