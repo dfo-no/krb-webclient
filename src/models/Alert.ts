@@ -1,5 +1,12 @@
 export interface Alert {
   text: string;
-  style: string;
+  style:
+    | 'primary'
+    | 'secondary'
+    | 'success'
+    | 'warning'
+    | 'danger'
+    | 'light'
+    | 'link';
   id: string;
 }

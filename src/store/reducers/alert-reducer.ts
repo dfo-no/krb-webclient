@@ -1,5 +1,4 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { v4 as uuidv4 } from 'uuid';
 import { Alert } from '../../models/Alert';
 
 interface AlertState {
@@ -12,22 +11,12 @@ const alertSlice = createSlice({
   name: 'alert',
   initialState,
   reducers: {
-    addAlert(
-      state,
-      { payload }: PayloadAction<{ text: string; style: string }>
-    ) {
-      state.list = [
-        ...state.list,
-        { text: payload.text, style: payload.style, id: uuidv4() }
-      ];
+    addAlert(state, { payload }: PayloadAction<{ alert: Alert }>) {
+      state.list.unshift(payload.alert);
     },
     removeAlert(state, { payload }: PayloadAction<{ id: string }>) {
-      state.list = state.list.filter((alert) => {
-        if (alert.id === payload.id) {
-          return false;
-        }
-        return true;
-      });
+      const index = state.list.findIndex((alert) => alert.id === payload.id);
+      state.list.splice(index, 1);
     }
   }
 });
