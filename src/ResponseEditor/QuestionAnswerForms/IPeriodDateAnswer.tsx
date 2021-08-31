@@ -52,13 +52,11 @@ export default function PeriodDateAnswer({
   });
 
   const item = parentAnswer.question as IPeriodDateQuestion;
-  const { productId } = useAppSelector((state) => state.selectedSpecProduct);
+  const { selectedSpecificationProduct } = useAppSelector(
+    (state) => state.selectedSpecProduct
+  );
   const dispatch = useAppDispatch();
   const { t } = useTranslation();
-
-  if (!productId && parentAnswer.type === ModelType.product) {
-    return <p>No product selected</p>;
-  }
 
   const saveValues = (post: any) => {
     const newAnswer = {
@@ -74,8 +72,13 @@ export default function PeriodDateAnswer({
 
     if (newAnswer.type === ModelType.requirement)
       dispatch(addRequirementAnswer(newAnswer));
-    if (newAnswer.type === ModelType.product && productId !== null)
-      dispatch(addProductAnswer({ answer: newAnswer, productId }));
+    if (newAnswer.type === ModelType.product && selectedSpecificationProduct)
+      dispatch(
+        addProductAnswer({
+          answer: newAnswer,
+          productId: selectedSpecificationProduct.id
+        })
+      );
   };
 
   return (
