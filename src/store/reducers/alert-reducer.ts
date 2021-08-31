@@ -1,21 +1,33 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { v4 as uuidv4 } from 'uuid';
+import { Alert } from '../../models/Alert';
 
 interface AlertState {
-  text: string;
-  id: string;
+  list: Alert[];
 }
 
-const initialState: AlertState = { text: 'hei', id: '2' };
+const initialState: AlertState = { list: [] };
 
 const alertSlice = createSlice({
   name: 'alert',
   initialState,
   reducers: {
-    addAlert(state, action: PayloadAction<AlertState>) {
-      state.text = action.payload.text;
+    addAlert(
+      state,
+      { payload }: PayloadAction<{ text: string; style: string }>
+    ) {
+      state.list = [
+        ...state.list,
+        { text: payload.text, style: payload.style, id: uuidv4() }
+      ];
     },
-    removeAlert(state, action: PayloadAction<AlertState>) {
-      state.text = action.payload.text;
+    removeAlert(state, { payload }: PayloadAction<{ id: string }>) {
+      state.list = state.list.filter((alert) => {
+        if (alert.id === payload.id) {
+          return false;
+        }
+        return true;
+      });
     }
   }
 });

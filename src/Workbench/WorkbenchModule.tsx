@@ -3,6 +3,7 @@ import Col from 'react-bootstrap/Col';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import { Route, Switch, useRouteMatch } from 'react-router-dom';
+import AlertList from '../components/Alert/AlertList';
 import NotFound from '../NotFound';
 import { useAppDispatch } from '../store/hooks';
 import { getProjectsThunk } from '../store/reducers/project-reducer';
@@ -62,6 +63,7 @@ export default function WorkbenchModule(): ReactElement {
           <SideBar /> {/* Sidebar outside Switch *may* be a very bad idea */}
         </Col>
         <Col className={styles.editor}>
+          <AlertList />
           <Switch>
             <Route exact path="/workbench">
               <WorkbenchPage />

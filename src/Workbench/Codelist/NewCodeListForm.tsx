@@ -13,6 +13,7 @@ import InputRow from '../../Form/InputRow';
 import { Codelist } from '../../models/Codelist';
 import ModelType from '../../models/ModelType';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
+// import { addAlert } from '../../store/reducers/alert-reducer';
 import {
   addCodelist,
   putProjectByIdThunk
@@ -61,6 +62,7 @@ function NewCodeListForm({ toggleShow, toggleAlert }: IProps): ReactElement {
       type: ModelType.codelist
     };
     dispatch(addCodelist({ id, codelist: codeList }));
+    // dispatch(addAlert({ style: 'success', text: 'new codelist added' }));
     dispatch(putProjectByIdThunk(id));
     reset();
     toggleShow(false);
