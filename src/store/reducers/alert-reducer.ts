@@ -16,7 +16,9 @@ const alertSlice = createSlice({
     },
     removeAlert(state, { payload }: PayloadAction<{ id: string }>) {
       const index = state.list.findIndex((alert) => alert.id === payload.id);
-      state.list.splice(index, 1);
+      if (index !== -1) {
+        state.list.splice(index, 1);
+      }
     }
   }
 });
