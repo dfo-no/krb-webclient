@@ -1,6 +1,5 @@
 import { joiResolver } from '@hookform/resolvers/joi';
 import Slider from '@material-ui/core/Slider';
-import Joi from 'joi';
 import React, { ReactElement, useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
