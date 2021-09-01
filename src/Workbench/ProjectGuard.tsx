@@ -6,8 +6,8 @@ import { getProjectThunk } from '../store/reducers/project-reducer';
 import CodelistGuard from './Codelist/CodelistGuard';
 import CodelistPage from './Codelist/CodelistPage';
 import NeedPage from './Need/NeedPage';
+import ProductGuard from './Product/ProductGuard';
 import ProductPage from './Product/ProductPage';
-import ProductPreview from './Product/ProductPreview';
 import ProjectPage from './Project/ProjectPage';
 import RequirementEditor from './Requirement/RequirementEditor';
 import RequirementPage from './Requirement/RequirementPage';
@@ -69,7 +69,7 @@ export default function ProjectGuard(): JSX.Element {
         <ProductPage />
       </Route>
       <Route exact path="/workbench/:projectId/:productId/product">
-        <ProductPreview />
+        <ProductGuard />
       </Route>
     </>
   );

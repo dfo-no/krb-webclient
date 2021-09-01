@@ -224,65 +224,25 @@ const projectSlice = createSlice({
     },
     addProduct(state, { payload }: PayloadAction<Product>) {
       state.project.products.push(payload);
-
-      // update project in list if it exists there
-      /* const projectIndex = state.list.findIndex(
-        (project) => project.id === state.project.id
-      );
-      if (projectIndex) {
-        state.list[projectIndex].products.push(payload.product);
-      } */
-      return state;
     },
-    updateProductList(
-      state,
-      { payload }: PayloadAction<{ id: string; products: Product[] }>
-    ) {
-      state.project.products = payload.products;
-
-      // update project in list if it exists there
-      const projectIndex = state.list.findIndex(
-        (project) => project.id === payload.id
+    updateProductList(state, { payload }: PayloadAction<Product[]>) {
+      state.project.products = payload;
+    },
+    editProduct(state, { payload }: PayloadAction<Product>) {
+      const productIndex = state.project.products.findIndex(
+        (elem) => elem.id === payload.id
       );
-      if (projectIndex) {
-        state.list[projectIndex].products = payload.products;
+      if (productIndex !== -1) {
+        state.project.products[productIndex] = payload;
       }
     },
-    editProduct(
-      state,
-      {
-        payload
-      }: PayloadAction<{
-        projectId: string;
-        product: Product;
-      }>
-    ) {
-      const projectIndex = Utils.ensure(
-        state.list.findIndex((project) => project.id === payload.projectId)
+    removeProduct(state, { payload }: PayloadAction<Product>) {
+      const productindex = state.project.products.findIndex(
+        (elem) => elem.id === payload.id
       );
-      const productindex = state.list[projectIndex].products.findIndex(
-        (product) => product.id === payload.product.id
-      );
-
-      state.list[projectIndex].products[productindex] = payload.product;
-    },
-    deleteProduct(
-      state,
-      {
-        payload
-      }: PayloadAction<{
-        projectId: string;
-        productId: string;
-      }>
-    ) {
-      const projectIndex = Utils.ensure(
-        state.list.findIndex((project) => project.id === payload.projectId)
-      );
-      const productindex = state.list[projectIndex].products.findIndex(
-        (product) => product.id === payload.productId
-      );
-
-      state.list[projectIndex].products.splice(productindex, 1);
+      if (productindex !== -1) {
+        state.project.products.splice(productindex, 1);
+      }
     },
     setCodes(
       state,
@@ -594,7 +554,7 @@ export const {
   updateProductList,
   updateNeedList,
   editProduct,
-  deleteProduct,
+  removeProduct,
   addCode,
   setCodes,
   deleteCodelist,
