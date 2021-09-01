@@ -113,25 +113,6 @@ export default function TextInfoAnswer({
         <Form onSubmit={handleSubmit(saveValues)}>
           <Form.Control
             as="input"
-            type="hidden"
-            {...register('id')}
-            isInvalid={!!errors.id}
-          />
-
-          <Form.Control
-            as="input"
-            type="hidden"
-            {...register('type')}
-            isInvalid={!!errors.type}
-          />
-          <Form.Control
-            as="input"
-            type="hidden"
-            {...register('config.max')}
-            isInvalid={!!errors.config?.max}
-          />
-          <Form.Control
-            as="input"
             {...register('answer.text')}
             maxLength={textQuestion.config.max}
           />

@@ -13,7 +13,6 @@ import ErrorSummary from '../../Form/ErrorSummary';
 import { IPeriodDateQuestion } from '../../models/IPeriodDateQuestion';
 import { IRequirementAnswer } from '../../models/IRequirementAnswer';
 import ModelType from '../../models/ModelType';
-import { IAnswerBase, IConfigBase, IQuestionBase } from '../../models/Question';
 import QuestionEnum from '../../models/QuestionEnum';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import {
@@ -36,7 +35,6 @@ export const PeriodDateSchema = Joi.object().keys({
 
 export default function PeriodDateForm({ parentAnswer }: IProps): ReactElement {
   const {
-    register,
     handleSubmit,
     control,
     formState: { errors }
@@ -47,7 +45,6 @@ export default function PeriodDateForm({ parentAnswer }: IProps): ReactElement {
     }
   });
 
-  const item = parentAnswer.question as IPeriodDateQuestion;
   const { selectedSpecificationProduct } = useAppSelector(
     (state) => state.selectedSpecProduct
   );
@@ -82,19 +79,6 @@ export default function PeriodDateForm({ parentAnswer }: IProps): ReactElement {
       <Card.Body>
         <h6>Alternative: Date </h6>
         <Form onSubmit={handleSubmit(saveValues)}>
-          <Form.Control
-            as="input"
-            type="hidden"
-            {...register('id')}
-            isInvalid={!!errors.id}
-          />
-
-          <Form.Control
-            as="input"
-            type="hidden"
-            {...register('type')}
-            isInvalid={!!errors.type}
-          />
           <Form.Group as={Row}>
             <Col sm="4">
               <Controller

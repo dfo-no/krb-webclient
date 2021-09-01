@@ -121,13 +121,6 @@ export default function ICodelistAnswer({
       </Card.Header>
       <Card.Body>
         <Form onSubmit={handleSubmit(saveValues)}>
-          <Form.Control as="input" type="hidden" {...register('id')} />
-          <Form.Control as="input" type="hidden" {...register('type')} />
-          <Form.Control type="hidden" {...register('config.codelist')} />
-          <Form.Control
-            type="hidden"
-            {...register(`config.multipleSelect` as const)}
-          />
           <Form.Control
             as="select"
             multiple

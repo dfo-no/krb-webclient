@@ -4,6 +4,7 @@ import React, { ReactElement } from 'react';
 import Form from 'react-bootstrap/Form';
 import { Control, Controller, FieldErrors } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
+import { IOption } from '../models/IOption';
 
 interface IProps {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -14,6 +15,7 @@ interface IProps {
   min: number;
   max: number;
   step: number;
+  marks: IOption[];
 }
 
 export default function SliderSelect({
@@ -23,7 +25,8 @@ export default function SliderSelect({
   label,
   min,
   max,
-  step
+  step,
+  marks
 }: IProps): ReactElement {
   const { t } = useTranslation();
 
@@ -64,6 +67,7 @@ export default function SliderSelect({
               min={min}
               max={max}
               step={step}
+              marks={marks}
             />
           )}
         />

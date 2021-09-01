@@ -67,19 +67,6 @@ export default function TextForm({ parentAnswer }: IProps): ReactElement {
         <Form onSubmit={handleSubmit(saveValues)}>
           <Form.Control
             as="input"
-            type="hidden"
-            {...register('id')}
-            isInvalid={!!errors.id}
-          />
-
-          <Form.Control
-            as="input"
-            type="hidden"
-            {...register('type')}
-            isInvalid={!!errors.type}
-          />
-          <Form.Control
-            as="input"
             {...register('config.max')}
             isInvalid={!!errors.config?.max}
             type="number"

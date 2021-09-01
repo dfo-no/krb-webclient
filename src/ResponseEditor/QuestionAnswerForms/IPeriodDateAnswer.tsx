@@ -40,7 +40,6 @@ export default function PeriodDateAnswer({
   parentAnswer
 }: IProps): ReactElement {
   const {
-    register,
     handleSubmit,
     control,
     formState: { errors }
@@ -86,31 +85,6 @@ export default function PeriodDateAnswer({
       <Card.Body>
         <h6>Question: Date </h6>
         <Form onSubmit={handleSubmit(saveValues)}>
-          <Form.Control
-            as="input"
-            type="hidden"
-            {...register('id')}
-            isInvalid={!!errors.id}
-          />
-
-          <Form.Control
-            as="input"
-            type="hidden"
-            {...register('type')}
-            isInvalid={!!errors.type}
-          />
-          <Form.Control
-            as="input"
-            type="hidden"
-            {...register('config.fromDate')}
-            isInvalid={!!errors.type}
-          />
-          <Form.Control
-            as="input"
-            type="hidden"
-            {...register('config.toDate')}
-            isInvalid={!!errors.type}
-          />
           <Form.Group as={Row}>
             <Col sm="4">
               <Controller

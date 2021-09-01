@@ -132,13 +132,6 @@ export default function CodelistInfoAnswer({
     <Col className="p-0 m-0 w-50">
       <p>Hvilke koder skal kreves? </p>
       <Form onSubmit={handleSubmit(saveValues)}>
-        <Form.Control as="input" type="hidden" {...register('id')} />
-        <Form.Control as="input" type="hidden" {...register('type')} />
-        <Form.Control type="hidden" {...register('config.codelist')} />
-        <Form.Control
-          type="hidden"
-          {...register(`config.multipleSelect` as const)}
-        />
         <Form.Control
           as="select"
           multiple

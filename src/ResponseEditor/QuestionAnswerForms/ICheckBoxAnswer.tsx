@@ -69,7 +69,6 @@ export default function ICheckBoxAnswer({
           (response.products[0].requirementAnswers[index]
             .question as ICheckboxQuestion));
   const {
-    register,
     control,
     handleSubmit,
     getValues,
@@ -80,10 +79,6 @@ export default function ICheckBoxAnswer({
       ...defaultVal
     }
   });
-
-  /* const [checked, setChecked] = useState(
-    defaultVal ? defaultVal.answer?.value : false
-  ); */
 
   const dispatch = useAppDispatch();
   const { t } = useTranslation();
@@ -110,28 +105,6 @@ export default function ICheckBoxAnswer({
       </Card.Header>
       <Card.Body>
         <Form onSubmit={handleSubmit(saveValues)}>
-          <Form.Control
-            as="input"
-            type="hidden"
-            {...register('id')}
-            isInvalid={!!errors.id}
-          />
-          <Form.Control
-            as="input"
-            type="hidden"
-            {...register('type')}
-            isInvalid={!!errors.type}
-          />
-          <Form.Control
-            as="input"
-            type="hidden"
-            {...register('config.weightTrue')}
-          />
-          <Form.Control
-            as="input"
-            type="hidden"
-            {...register('config.weightFalse')}
-          />
           <Controller
             name={`answer.value` as const}
             control={control}
