@@ -73,19 +73,6 @@ export default function FileInputForm({ parentAnswer }: IProps): ReactElement {
       <Card.Body>
         <h6>Alternative: Value</h6>
         <Form onSubmit={handleSubmit(saveValues)}>
-          <Form.Control
-            as="input"
-            type="hidden"
-            {...register('id')}
-            isInvalid={!!errors.id}
-          />
-
-          <Form.Control
-            as="input"
-            type="hidden"
-            {...register('type')}
-            isInvalid={!!errors.type}
-          />
           <Form.Group as={Row}>
             <Form.Label column sm="2">
               Text

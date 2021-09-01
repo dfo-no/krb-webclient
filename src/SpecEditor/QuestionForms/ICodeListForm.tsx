@@ -38,7 +38,6 @@ export default function CodelistForm({ parentAnswer }: IProps): ReactElement {
   const { selectedSpecificationProduct } = useAppSelector(
     (state) => state.selectedSpecProduct
   );
-  const item = parentAnswer.question as ICodelistQuestion;
   const dispatch = useAppDispatch();
   const { t } = useTranslation();
 
@@ -47,13 +46,10 @@ export default function CodelistForm({ parentAnswer }: IProps): ReactElement {
   }
 
   const saveValues = (post: ICodelistQuestion) => {
-    let newAlt = {
-      ...item
-    };
     const newAnswer = {
       ...parentAnswer
     };
-    newAlt = post;
+    const newAlt = post;
     newAnswer.question = newAlt;
     if (newAnswer.type === ModelType.requirement)
       dispatch(addAnswer({ answer: newAnswer }));
@@ -81,18 +77,6 @@ export default function CodelistForm({ parentAnswer }: IProps): ReactElement {
       <Card.Body>
         <h6>Alternative: Codelist</h6>
         <Form onSubmit={handleSubmit(saveValues)}>
-          <Form.Control
-            as="input"
-            type="hidden"
-            {...register('id')}
-            defaultValue={item.id}
-          />
-          <Form.Control
-            as="input"
-            type="hidden"
-            {...register('type')}
-            defaultValue={item.type}
-          />
           <Form.Control as="select" {...register('config.codelist')}>
             {codelistOptions()}
           </Form.Control>

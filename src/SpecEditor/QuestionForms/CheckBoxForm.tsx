@@ -150,6 +150,7 @@ export default function CheckBoxForm({ parentAnswer }: IProps): ReactElement {
               max={100}
               step={10}
               label="Oppgi poeng"
+              marks={[]}
             />
           )}
 
