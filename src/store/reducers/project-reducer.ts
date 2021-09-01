@@ -60,6 +60,9 @@ export const postProjectThunk = createAsyncThunk(
   }
 );
 
+/**
+ * @deprecated Use putSelectedProjectThunk instead
+ */
 export const putProjectByIdThunk = createAsyncThunk<
   Bank,
   string,
@@ -216,14 +219,8 @@ const projectSlice = createSlice({
 
       state.list[projectIndex].needs.splice(needindex, 1);
     },
-    addCodelist(
-      state,
-      { payload }: PayloadAction<{ id: string; codelist: Codelist }>
-    ) {
-      const index = Utils.ensure(
-        state.list.findIndex((project) => project.id === payload.id)
-      );
-      state.list[index].codelist.push(payload.codelist);
+    addCodelist(state, { payload }: PayloadAction<Codelist>) {
+      state.project.codelist.push(payload);
     },
     addProduct(state, { payload }: PayloadAction<Product>) {
       state.project.products.push(payload);
@@ -287,128 +284,84 @@ const projectSlice = createSlice({
 
       state.list[projectIndex].products.splice(productindex, 1);
     },
-    updateCodeList(
+    setCodes(
       state,
       {
         payload
       }: PayloadAction<{ id: string; codelistId: string; codes: Code[] }>
     ) {
-      const index = Utils.ensure(
-        state.list.findIndex((project) => project.id === payload.id)
+      const codelistIndex = state.project.codelist.findIndex(
+        (c) => c.id === payload.codelistId
       );
-      const codeListIndex = state.list[index].codelist.findIndex(
-        (codelist) => codelist.id === payload.codelistId
-      );
-      state.list[index].codelist[codeListIndex].codes = payload.codes;
+      if (codelistIndex !== -1) {
+        state.project.codelist[codelistIndex].codes = payload.codes;
+      }
     },
-    editCodelist(
-      state,
-      {
-        payload
-      }: PayloadAction<{
-        projectId: string;
-        codelistId: string;
-        title: string;
-        description: string;
-      }>
-    ) {
-      const projectIndex = Utils.ensure(
-        state.list.findIndex((project) => project.id === payload.projectId)
+    editSelectedCodelist(state, { payload }: PayloadAction<Codelist>) {
+      const index = state.project.codelist.findIndex(
+        (codelist) => codelist.id === payload.id
       );
-      const codeListIndex = state.list[projectIndex].codelist.findIndex(
-        (codelist) => codelist.id === payload.codelistId
-      );
-      state.list[projectIndex].codelist[codeListIndex].title = payload.title;
-      state.list[projectIndex].codelist[codeListIndex].description =
-        payload.description;
+      if (index !== -1) {
+        state.project.codelist[index] = payload;
+      }
     },
-    deleteCodelist(
-      state,
-      {
-        payload
-      }: PayloadAction<{
-        projectId: string;
-        codelistId: string;
-      }>
-    ) {
-      const projectIndex = Utils.ensure(
-        state.list.findIndex((project) => project.id === payload.projectId)
+    deleteCodelist(state, { payload }: PayloadAction<Codelist>) {
+      const index = state.project.codelist.findIndex(
+        (codelist) => codelist.id === payload.id
       );
-      const codeListIndex = state.list[projectIndex].codelist.findIndex(
-        (codelist) => codelist.id === payload.codelistId
-      );
-      state.list[projectIndex].codelist.splice(codeListIndex, 1);
+      if (index !== -1) {
+        state.project.codelist.splice(index, 1);
+      }
     },
 
     editCodeInCodelist(
       state,
-      {
-        payload
-      }: PayloadAction<{ projectId: string; codelistId: string; code: Code }>
+      { payload }: PayloadAction<{ codelistId: string; code: Code }>
     ) {
-      const projectIndex = Utils.ensure(
-        state.list.findIndex((project) => project.id === payload.projectId)
+      const codelistIndex = state.project.codelist.findIndex(
+        (codelist) => codelist.id === payload.codelistId
       );
-      const codelistIndex = Utils.ensure(
-        state.list[projectIndex].codelist.findIndex(
-          (codelist) => codelist.id === payload.codelistId
-        )
-      );
-      const codeIndex = Utils.ensure(
-        state.list[projectIndex].codelist[codelistIndex].codes.findIndex(
+      if (codelistIndex !== -1) {
+        const codeIndex = state.project.codelist[codelistIndex].codes.findIndex(
           (code) => code.id === payload.code.id
-        )
-      );
-      state.list[projectIndex].codelist[codelistIndex].codes[codeIndex].title =
-        payload.code.title;
-      state.list[projectIndex].codelist[codelistIndex].codes[
-        codeIndex
-      ].description = payload.code.description;
+        );
+        if (codeIndex !== -1) {
+          state.project.codelist[codelistIndex].codes[codeIndex] = payload.code;
+        }
+      }
     },
 
     addCodeToCodelist(
       state,
-      {
-        payload
-      }: PayloadAction<{ projectId: string; codelistId: string; code: Code }>
+      { payload }: PayloadAction<{ codelistId: string; code: Code }>
     ) {
-      const projectIndex = Utils.ensure(
-        state.list.findIndex((project) => project.id === payload.projectId)
+      const index = state.project.codelist.findIndex(
+        (codelist) => codelist.id === payload.codelistId
       );
-      const codelistIndex = Utils.ensure(
-        state.list[projectIndex].codelist.findIndex(
-          (codelist) => codelist.id === payload.codelistId
-        )
-      );
-      state.list[projectIndex].codelist[codelistIndex].codes.push(payload.code);
+      if (index !== -1) {
+        state.project.codelist[index].codes.push(payload.code);
+      }
     },
-    deleteCodeInCodelist(
+    removeCode(
       state,
       {
         payload
       }: PayloadAction<{
-        projectId: string;
         codelistId: string;
-        codeId: string;
+        code: Code;
       }>
     ) {
-      const projectIndex = Utils.ensure(
-        state.list.findIndex((project) => project.id === payload.projectId)
+      const codelistIndex = state.project.codelist.findIndex(
+        (elem) => elem.id === payload.codelistId
       );
-      const codelistIndex = Utils.ensure(
-        state.list[projectIndex].codelist.findIndex(
-          (codelist) => codelist.id === payload.codelistId
-        )
-      );
-      const codeIndex = Utils.ensure(
-        state.list[projectIndex].codelist[codelistIndex].codes.findIndex(
-          (code) => code.id === payload.codeId
-        )
-      );
-      state.list[projectIndex].codelist[codelistIndex].codes.splice(
-        codeIndex,
-        1
-      );
+      if (codelistIndex !== -1) {
+        const codeIndex = state.project.codelist[codelistIndex].codes.findIndex(
+          (elem) => elem.id === payload.code.id
+        );
+        if (codeIndex !== -1) {
+          state.project.codelist[codelistIndex].codes.splice(codeIndex, 1);
+        }
+      }
     },
     addCode(
       state,
@@ -643,18 +596,18 @@ export const {
   editProduct,
   deleteProduct,
   addCode,
-  updateCodeList,
+  setCodes,
   deleteCodelist,
   addCodeToCodelist,
   editCodeInCodelist,
-  deleteCodeInCodelist,
+  removeCode,
   prependPublication,
   incrementProjectVersion,
   addNeed,
   editNeed,
   deleteNeed,
   editCode,
-  editCodelist,
+  editSelectedCodelist,
   publishProject,
   setRequirementListToNeed,
   editRequirementInNeed,

@@ -1,5 +1,4 @@
 import { joiResolver } from '@hookform/resolvers/joi';
-import Joi from 'joi';
 import React, { ReactElement, useContext, useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
@@ -9,32 +8,25 @@ import { useTranslation } from 'react-i18next';
 import { BsTrashFill } from 'react-icons/bs';
 import ErrorSummary from '../../Form/ErrorSummary';
 import InputRow from '../../Form/InputRow';
-import { Code } from '../../models/Code';
+import { Code, EditCodeSchema } from '../../models/Code';
 import { AccordionContext } from '../../NestableHierarchy/AccordionContext';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import {
-  deleteCodeInCodelist,
   editCodeInCodelist,
-  putProjectByIdThunk
+  putSelectedProjectThunk,
+  removeCode
 } from '../../store/reducers/project-reducer';
+import {
+  editCodeInSelectedCodelist,
+  removeCodeInSelectedCodelist
+} from '../../store/reducers/selectedCodelist-reducer';
 
 interface IProps {
   element: Code;
 }
 
-type FormInput = {
-  title: string;
-  description: string;
-};
-
-const codeSchema = Joi.object().keys({
-  title: Joi.string().required(),
-  description: Joi.string().allow(null, '').required()
-});
-
 export default function EditCodeForm({ element }: IProps): ReactElement {
-  const { id } = useAppSelector((state) => state.selectedProject);
-  const { listId } = useAppSelector((state) => state.selectedCodeList);
+  const { codelist } = useAppSelector((state) => state.selectedCodeList);
   const { onOpenClose } = useContext(AccordionContext);
   const dispatch = useAppDispatch();
   const [validated] = useState(false);
@@ -44,50 +36,37 @@ export default function EditCodeForm({ element }: IProps): ReactElement {
     control,
     handleSubmit,
     formState: { errors }
-  } = useForm({
-    resolver: joiResolver(codeSchema),
-    defaultValues: {
-      title: element.title,
-      description: element.description
-    }
+  } = useForm<Code>({
+    resolver: joiResolver(EditCodeSchema),
+    defaultValues: element
   });
-  if (!id) {
-    return <p>No project selected</p>;
-  }
 
-  if (!listId) {
-    return <p>No codelist selected</p>;
-  }
-
-  const edit = (post: FormInput) => {
-    const newCode = { ...element };
-    newCode.title = post.title;
-    newCode.description = post.description;
+  const onSubmit = (code: Code) => {
     dispatch(
       editCodeInCodelist({
-        projectId: id,
-        codelistId: listId,
-        code: newCode
+        codelistId: codelist.id,
+        code
       })
     );
-    dispatch(putProjectByIdThunk(id));
+    dispatch(editCodeInSelectedCodelist(code));
+    dispatch(putSelectedProjectThunk('dummy'));
     onOpenClose('');
   };
 
-  const removeCode = () => {
+  const deleteCode = (code: Code) => {
     dispatch(
-      deleteCodeInCodelist({
-        projectId: id,
-        codelistId: listId,
-        codeId: element.id
+      removeCode({
+        codelistId: codelist.id,
+        code
       })
     );
-    dispatch(putProjectByIdThunk(id));
+    dispatch(removeCodeInSelectedCodelist(code));
+    dispatch(putSelectedProjectThunk('dummy'));
   };
 
   return (
     <Form
-      onSubmit={handleSubmit(edit)}
+      onSubmit={handleSubmit(onSubmit)}
       autoComplete="off"
       noValidate
       validated={validated}
@@ -103,7 +82,17 @@ export default function EditCodeForm({ element }: IProps): ReactElement {
         <Button className="mt-2  ml-3" type="submit">
           {t('save')}
         </Button>
-        <Button className="mt-2  ml-3" variant="warning" onClick={removeCode}>
+        <Button
+          className="mt-2 ml-3 btn-warning"
+          onClick={() => onOpenClose('')}
+        >
+          {t('cancel')}
+        </Button>
+        <Button
+          className="mt-2  ml-3"
+          variant="warning"
+          onClick={() => deleteCode(element)}
+        >
           {t('delete')} <BsTrashFill />
         </Button>
       </Row>

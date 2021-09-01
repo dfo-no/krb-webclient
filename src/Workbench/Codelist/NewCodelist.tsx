@@ -7,29 +7,27 @@ import Row from 'react-bootstrap/Row';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { v4 as uuidv4 } from 'uuid';
-import ErrorSummary from '../../Form/ErrorSummary';
 import InputRow from '../../Form/InputRow';
-import { Code, PostCodeSchema } from '../../models/Code';
+import { Codelist, PostCodelistSchema } from '../../models/Codelist';
 import ModelType from '../../models/ModelType';
-import { useAppDispatch, useAppSelector } from '../../store/hooks';
+import { useAppDispatch } from '../../store/hooks';
 import {
-  addCodeToCodelist,
+  addCodelist,
   putSelectedProjectThunk
 } from '../../store/reducers/project-reducer';
-import { addCodeToSelected } from '../../store/reducers/selectedCodelist-reducer';
 
-function NewCodeForm(): ReactElement {
-  const { codelist } = useAppSelector((state) => state.selectedCodeList);
+function NewCodelist(): ReactElement {
   const dispatch = useAppDispatch();
   const [validated] = useState(false);
-  const [show, setShow] = useState(false);
   const { t } = useTranslation();
+  const [show, setShow] = useState(false);
 
-  const defaultValues: Code = {
+  const defaultValues = {
     id: '',
     title: '',
     description: '',
-    type: ModelType.code
+    codes: [],
+    type: ModelType.codelist
   };
 
   const {
@@ -37,21 +35,15 @@ function NewCodeForm(): ReactElement {
     handleSubmit,
     reset,
     formState: { errors }
-  } = useForm<Code>({
-    resolver: joiResolver(PostCodeSchema),
+  } = useForm<Codelist>({
+    resolver: joiResolver(PostCodelistSchema),
     defaultValues
   });
 
-  const onSubmit = (post: Code) => {
-    const code = { ...post };
-    code.id = uuidv4();
-    dispatch(
-      addCodeToCodelist({
-        codelistId: codelist.id,
-        code
-      })
-    );
-    dispatch(addCodeToSelected(code));
+  const onNewCodeSubmit = (post: Codelist) => {
+    const newCodelist = { ...post };
+    newCodelist.id = uuidv4();
+    dispatch(addCodelist(newCodelist));
     dispatch(putSelectedProjectThunk('dummy')).then(() => {
       reset();
       setShow(false);
@@ -60,15 +52,14 @@ function NewCodeForm(): ReactElement {
 
   return (
     <>
-      <h5>Codes</h5>
-      <Button onClick={() => setShow(true)} className="mb-4">
-        New Code
+      <Button className="mb-4" onClick={() => setShow(true)}>
+        {t('new codelist')}
       </Button>
       {show && (
         <Card className="mb-4">
           <Card.Body>
             <Form
-              onSubmit={handleSubmit(onSubmit)}
+              onSubmit={handleSubmit(onNewCodeSubmit)}
               autoComplete="off"
               noValidate
               validated={validated}
@@ -96,7 +87,6 @@ function NewCodeForm(): ReactElement {
                   {t('cancel')}
                 </Button>
               </Row>
-              <ErrorSummary errors={errors} />
             </Form>
           </Card.Body>
         </Card>
@@ -105,4 +95,4 @@ function NewCodeForm(): ReactElement {
   );
 }
 
-export default NewCodeForm;
+export default NewCodelist;

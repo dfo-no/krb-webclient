@@ -3,7 +3,7 @@ import { Route, useParams } from 'react-router-dom';
 import LoaderSpinner from '../common/LoaderSpinner';
 import { useAppDispatch } from '../store/hooks';
 import { getProjectThunk } from '../store/reducers/project-reducer';
-import CodeListEditor from './Codelist/CodeListEditor';
+import CodelistGuard from './Codelist/CodelistGuard';
 import CodelistPage from './Codelist/CodelistPage';
 import NeedPage from './Need/NeedPage';
 import ProductPage from './Product/ProductPage';
@@ -63,7 +63,7 @@ export default function ProjectGuard(): JSX.Element {
         <CodelistPage />
       </Route>
       <Route exact path="/workbench/:projectId/codelist/:id">
-        <CodeListEditor />
+        <CodelistGuard />
       </Route>
       <Route exact path="/workbench/:projectId/product">
         <ProductPage />
