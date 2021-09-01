@@ -1,21 +1,46 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import ModelType from '../../models/ModelType';
+import { SpecificationProduct } from '../../models/SpecificationProduct';
 
 interface SelectedSpecProductState {
-  productId: string | null;
+  selectedSpecificationProduct: SpecificationProduct;
 }
 
-const initialState: SelectedSpecProductState = { productId: null };
+const initialProduct: SpecificationProduct = {
+  id: '',
+  title: ' ',
+  description: '',
+  originProduct: {
+    id: '',
+    title: '',
+    description: '',
+    parent: '',
+    type: ModelType.product
+  },
+  type: ModelType.specificationProduct,
+  weight: 0,
+  amount: 0,
+  requirements: [],
+  requirementAnswers: []
+};
+
+const initialState: SelectedSpecProductState = {
+  selectedSpecificationProduct: initialProduct
+};
 
 const selectedSpecProductState = createSlice({
   name: 'selectedSpecProduct',
   initialState,
   reducers: {
-    selectSpecProduct(state, { payload }: PayloadAction<string>) {
-      state.productId = payload;
+    selectSpecificationProduct(
+      state,
+      { payload }: PayloadAction<SpecificationProduct>
+    ) {
+      state.selectedSpecificationProduct = payload;
     }
   }
 });
 
-export const { selectSpecProduct } = selectedSpecProductState.actions;
+export const { selectSpecificationProduct } = selectedSpecProductState.actions;
 
 export default selectedSpecProductState.reducer;

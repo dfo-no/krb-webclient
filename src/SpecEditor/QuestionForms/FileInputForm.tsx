@@ -33,12 +33,17 @@ export default function FileInputForm({ parentAnswer }: IProps): ReactElement {
       ...(parentAnswer.question as IFileUploadQuestion)
     }
   });
-  const { productId } = useAppSelector((state) => state.selectedSpecProduct);
+  const { selectedSpecificationProduct } = useAppSelector(
+    (state) => state.selectedSpecProduct
+  );
   const item = parentAnswer.question as IFileUploadQuestion;
   const dispatch = useAppDispatch();
   const { t } = useTranslation();
 
-  if (!productId && parentAnswer.type === ModelType.product) {
+  if (
+    !selectedSpecificationProduct &&
+    parentAnswer.type === ModelType.product
+  ) {
     return <p>No product selected</p>;
   }
 
@@ -54,8 +59,13 @@ export default function FileInputForm({ parentAnswer }: IProps): ReactElement {
 
     if (newAnswer.type === ModelType.requirement)
       dispatch(editAnswer({ answer: newAnswer }));
-    if (newAnswer.type === ModelType.product && productId !== null)
-      dispatch(editProductAnswer({ answer: newAnswer, productId }));
+    if (newAnswer.type === ModelType.product && selectedSpecificationProduct)
+      dispatch(
+        editProductAnswer({
+          answer: newAnswer,
+          productId: selectedSpecificationProduct.id
+        })
+      );
   };
 
   return (

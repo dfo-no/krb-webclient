@@ -9,15 +9,14 @@ export default function ConfigureProductQuestion(): ReactElement {
     (state) => state.selectedAlternative
   );
   const { spec } = useAppSelector((state) => state.specification);
-  const { productId } = useAppSelector((state) => state.selectedSpecProduct);
-
-  if (!productId) {
-    return <p>No selected product</p>;
-  }
+  const { selectedSpecificationProduct } = useAppSelector(
+    (state) => state.selectedSpecProduct
+  );
 
   const productIndex = Utils.ensure(
     spec.products.findIndex(
-      (product: SpecificationProduct) => product.id === productId
+      (product: SpecificationProduct) =>
+        product.id === selectedSpecificationProduct.id
     )
   );
   if (!alternativeId) {

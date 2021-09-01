@@ -8,7 +8,7 @@ import Utils from '../../common/Utils';
 import { SpecificationProduct } from '../../models/SpecificationProduct';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { selectBank } from '../../store/reducers/selectedBank-reducer';
-import { selectSpecProduct } from '../../store/reducers/selectedSpecProduct-reducer';
+import { selectSpecificationProduct } from '../../store/reducers/selectedSpecProduct-reducer';
 
 interface RouteParams {
   bankId: string;
@@ -38,7 +38,7 @@ export default function ProductResponseList(): ReactElement {
               {Utils.capitalizeFirstLetter(product.title)}, {product.amount} stk
             </p>
             <Link
-              onClick={() => dispatch(selectSpecProduct(product.id))}
+              onClick={() => dispatch(selectSpecificationProduct(product))}
               to={`/response/${id}/product/${product.id}`}
             >
               <BsPencil className="ml-4  mt-1" />

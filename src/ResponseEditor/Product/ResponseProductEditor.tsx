@@ -35,7 +35,9 @@ const productSchema = Joi.object().keys({
 export default function ResponseProductEditor(): ReactElement {
   const { id } = useAppSelector((state) => state.selectedBank);
   const { response } = useAppSelector((state) => state.response);
-  const { productId } = useAppSelector((state) => state.selectedSpecProduct);
+  const { selectedSpecificationProduct } = useAppSelector(
+    (state) => state.selectedSpecProduct
+  );
 
   const {
     register,
@@ -51,26 +53,16 @@ export default function ResponseProductEditor(): ReactElement {
     return <p>No selected bank</p>;
   }
 
-  if (!productId) {
-    return <p>No selected product</p>;
-  }
-
-  const specProduct: SpecificationProduct = Utils.ensure(
-    response.spesification.products.find(
-      (specificationProduct: SpecificationProduct) =>
-        specificationProduct.id === productId
-    )
-  );
-
   const productIndex = response.products.findIndex(
-    (responseProduct) => responseProduct.originProduct.id === specProduct.id
+    (responseProduct) =>
+      responseProduct.originProduct.id === selectedSpecificationProduct.id
   );
 
   const newProduct: ResponseProduct = {
     id: uuidv4(),
     title: '',
     description: '',
-    originProduct: specProduct,
+    originProduct: selectedSpecificationProduct,
     price: 0,
     requirementAnswers: [],
     type: ModelType.responseProduct
@@ -100,14 +92,14 @@ export default function ResponseProductEditor(): ReactElement {
   return (
     <Container fluid>
       <Row className="m-4">
-        <h4>{specProduct.title}</h4>
+        <h4>{selectedSpecificationProduct.title}</h4>
       </Row>
       <Card className="m-4">
         <Card.Body>
           <Row className="mb-3">
             <Col sm="2"> Amount:</Col>
             <Col sm="10">
-              <p className="ml-3">{specProduct.amount} </p>
+              <p className="ml-3">{selectedSpecificationProduct.amount} </p>
             </Col>
           </Row>
           <Form
@@ -174,7 +166,9 @@ export default function ResponseProductEditor(): ReactElement {
         </Card.Body>
       </Card>
 
-      <ResponseProductRequirementSelector product={specProduct} />
+      <ResponseProductRequirementSelector
+        product={selectedSpecificationProduct}
+      />
     </Container>
   );
 }

@@ -47,10 +47,14 @@ export default function ISliderInfoAnswer({
   requirement
 }: IProps): ReactElement {
   const { spec } = useAppSelector((state) => state.specification);
-  const { productId } = useAppSelector((state) => state.selectedSpecProduct);
+  const { selectedSpecificationProduct } = useAppSelector(
+    (state) => state.selectedSpecProduct
+  );
   let index: number;
 
-  const productIndex = spec.products.findIndex((p) => p.id === productId);
+  const productIndex = spec.products.findIndex(
+    (p) => p.id === selectedSpecificationProduct.id
+  );
 
   if (type === 'requirement') {
     index = spec.requirementAnswers.findIndex(

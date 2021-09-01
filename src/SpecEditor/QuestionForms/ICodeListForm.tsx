@@ -35,12 +35,14 @@ export default function CodelistForm({ parentAnswer }: IProps): ReactElement {
       ...(parentAnswer.question as ICodelistQuestion)
     }
   });
-  const { productId } = useAppSelector((state) => state.selectedSpecProduct);
+  const { selectedSpecificationProduct } = useAppSelector(
+    (state) => state.selectedSpecProduct
+  );
   const item = parentAnswer.question as ICodelistQuestion;
   const dispatch = useAppDispatch();
   const { t } = useTranslation();
 
-  if (!productId && parentAnswer.type === 'product') {
+  if (!selectedSpecificationProduct && parentAnswer.type === 'product') {
     return <p>No product selected</p>;
   }
 
@@ -55,8 +57,13 @@ export default function CodelistForm({ parentAnswer }: IProps): ReactElement {
     newAnswer.question = newAlt;
     if (newAnswer.type === ModelType.requirement)
       dispatch(addAnswer({ answer: newAnswer }));
-    if (newAnswer.type === ModelType.product && productId !== null)
-      dispatch(addProductAnswer({ answer: newAnswer, productId }));
+    if (newAnswer.type === ModelType.product && selectedSpecificationProduct)
+      dispatch(
+        addProductAnswer({
+          answer: newAnswer,
+          productId: selectedSpecificationProduct.id
+        })
+      );
   };
 
   const codelistOptions = () => {
