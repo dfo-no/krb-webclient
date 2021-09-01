@@ -34,12 +34,14 @@ const CheckboxSchema = Joi.object().keys({
 export default function CheckBoxForm({ parentAnswer }: IProps): ReactElement {
   const { response } = useAppSelector((state) => state.response);
   const dispatch = useAppDispatch();
-  const { productId } = useAppSelector(
-    (state) => state.selectedResponseProduct
+  const { selectedSpecificationProduct } = useAppSelector(
+    (state) => state.selectedSpecProduct
   );
   let index: number;
 
-  const productIndex = response.products.findIndex((p) => p.id === productId);
+  const productIndex = response.products.findIndex(
+    (p) => p.id === selectedSpecificationProduct.id
+  );
 
   if (parentAnswer.type === ModelType.requirement) {
     index = response.requirementAnswers.findIndex(
@@ -98,8 +100,13 @@ export default function CheckBoxForm({ parentAnswer }: IProps): ReactElement {
 
     if (newAnswer.type === ModelType.requirement)
       dispatch(addAnswer({ answer: newAnswer }));
-    if (newAnswer.type === ModelType.product && productId !== null)
-      dispatch(addProductAnswer({ answer: newAnswer, productId }));
+    if (newAnswer.type === ModelType.product && selectedSpecificationProduct)
+      dispatch(
+        addProductAnswer({
+          answer: newAnswer,
+          productId: selectedSpecificationProduct.id
+        })
+      );
   };
 
   const { t } = useTranslation();

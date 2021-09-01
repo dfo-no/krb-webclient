@@ -39,11 +39,13 @@ export default function ICheckBoxAnswer({
 }: IProps): ReactElement {
   const { response } = useAppSelector((state) => state.response);
   let index: number;
-  const { productId } = useAppSelector(
+  const { selectedResponseProduct } = useAppSelector(
     (state) => state.selectedResponseProduct
   );
 
-  const productIndex = response.products.findIndex((p) => p.id === productId);
+  const productIndex = response.products.findIndex(
+    (p) => p.id === selectedResponseProduct.id
+  );
 
   if (parentAnswer.type === ModelType.requirement) {
     index = response.requirementAnswers.findIndex(
@@ -92,8 +94,13 @@ export default function ICheckBoxAnswer({
     newAnswer.question = post;
     if (newAnswer.type === ModelType.requirement)
       dispatch(addRequirementAnswer(newAnswer));
-    if (newAnswer.type === ModelType.product && productId !== null)
-      dispatch(addProductAnswer({ answer: newAnswer, productId }));
+    if (newAnswer.type === ModelType.product && selectedResponseProduct)
+      dispatch(
+        addProductAnswer({
+          answer: newAnswer,
+          productId: selectedResponseProduct.id
+        })
+      );
   };
 
   return (

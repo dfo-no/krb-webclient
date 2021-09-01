@@ -10,11 +10,9 @@ import Row from 'react-bootstrap/Row';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { v4 as uuidv4 } from 'uuid';
-import Utils from '../../common/Utils';
 import ErrorSummary from '../../Form/ErrorSummary';
 import ModelType from '../../models/ModelType';
 import { ResponseProduct } from '../../models/ResponseProduct';
-import { SpecificationProduct } from '../../models/SpecificationProduct';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { addProduct, editProduct } from '../../store/reducers/response-reducer';
 import { selectResponseProduct } from '../../store/reducers/selectedResponseProduct-reducer';
@@ -70,7 +68,7 @@ export default function ResponseProductEditor(): ReactElement {
 
   const product =
     productIndex === -1 ? newProduct : response.products[productIndex];
-  dispatch(selectResponseProduct(product.id));
+  dispatch(selectResponseProduct(product));
   if (productIndex === -1) {
     dispatch(addProduct(newProduct));
   }
