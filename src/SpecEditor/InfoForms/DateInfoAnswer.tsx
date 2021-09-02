@@ -122,7 +122,6 @@ export default function DateInfoAnswer({
             <Controller
               name={`answer.date` as const}
               control={control}
-              defaultValue={dateQuestion.config.fromDate}
               render={({ field: { ref, ...rest } }) => (
                 <KeyboardDatePicker
                   margin="normal"
