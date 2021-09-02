@@ -1,5 +1,4 @@
 import { joiResolver } from '@hookform/resolvers/joi';
-import Joi from 'joi';
 import React, { ReactElement, useContext, useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
@@ -10,34 +9,22 @@ import AlertModal from '../../common/AlertModal';
 import Utils from '../../common/Utils';
 import ErrorSummary from '../../Form/ErrorSummary';
 import InputRow from '../../Form/InputRow';
-import { Bank } from '../../models/Bank';
-import { Need } from '../../models/Need';
+import { Need, PutNeedSchema } from '../../models/Need';
+import { Nestable } from '../../models/Nestable';
 import { AccordionContext } from '../../NestableHierarchy/AccordionContext';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import {
   deleteNeed,
   editNeed,
-  putProjectByIdThunk
+  putSelectedProjectThunk
 } from '../../store/reducers/project-reducer';
 
-type FormValues = {
-  id: string;
-  title: string;
-  description: string;
-};
 interface IProps {
   element: Need;
 }
 
-const needSchema = Joi.object().keys({
-  id: Joi.string().required(),
-  title: Joi.string().required(),
-  description: Joi.string().allow(null, '').required()
-});
-
 function EditNeedForm({ element }: IProps): ReactElement {
-  const { id } = useAppSelector((state) => state.selectedProject);
-  const { list } = useAppSelector((state) => state.project);
+  const { project } = useAppSelector((state) => state.project);
   const dispatch = useAppDispatch();
   const { onOpenClose } = useContext(AccordionContext);
   const [validated] = useState(false);
@@ -48,53 +35,41 @@ function EditNeedForm({ element }: IProps): ReactElement {
     handleSubmit,
     control,
     formState: { errors }
-  } = useForm<FormValues>({
-    defaultValues: {
-      id: element.id,
-      title: element.title,
-      description: element.description
-    },
-    resolver: joiResolver(needSchema)
+  } = useForm({
+    defaultValues: element,
+    resolver: joiResolver(PutNeedSchema)
   });
 
   const [modalShow, setModalShow] = useState(false);
-  if (!id) {
-    return <p>No project selected</p>;
-  }
 
-  const project = Utils.ensure(list.find((bank: Bank) => bank.id === id));
-
-  const onEditNeedSubmit = (post: FormValues) => {
-    dispatch(
-      editNeed({
-        projectId: id,
-        needId: post.id,
-        title: post.title,
-        description: post.description
-      })
-    );
-    dispatch(putProjectByIdThunk(id));
-
-    // Close accordion via useContext
-    onOpenClose('');
+  const onSubmit = (post: Need) => {
+    const parentable = { ...post } as Nestable<Need>;
+    if (parentable.children) {
+      delete parentable.children;
+    }
+    dispatch(editNeed(parentable));
+    dispatch(putSelectedProjectThunk('dummy')).then(() => {
+      onOpenClose('');
+    });
   };
 
-  const removeNeed = () => {
+  const checkDeleteNeed = (need: Need) => {
     if (
       element.requirements.length > 0 ||
-      Utils.checkIfParent(project.needs, element.id)
+      Utils.checkIfParent(project.needs, need.id)
     ) {
       setModalShow(true);
     } else {
-      dispatch(deleteNeed({ projectId: id, needId: element.id }));
-      dispatch(putProjectByIdThunk(id));
+      dispatch(deleteNeed(need));
+      dispatch(putSelectedProjectThunk('dummy')).then(() => {
+        onOpenClose('');
+      });
     }
-    onOpenClose('');
   };
 
   return (
     <Form
-      onSubmit={handleSubmit((e) => onEditNeedSubmit(e))}
+      onSubmit={handleSubmit(onSubmit)}
       autoComplete="off"
       noValidate
       validated={validated}
@@ -117,8 +92,19 @@ function EditNeedForm({ element }: IProps): ReactElement {
       <Button className="mt-2" type="submit">
         {t('save')}
       </Button>
-      <Button className="mt-2  ml-3" variant="warning" onClick={removeNeed}>
-        {t('delete')} <BsTrashFill />
+      <Button
+        className="mt-2 ml-1"
+        variant="warning"
+        onClick={() => onOpenClose('')}
+      >
+        {t('cancel')}
+      </Button>
+      <Button
+        className="mt-2  ml-3"
+        variant="danger"
+        onClick={() => checkDeleteNeed(element)}
+      >
+        <BsTrashFill />
       </Button>
       <ErrorSummary errors={errors} />
       <AlertModal
