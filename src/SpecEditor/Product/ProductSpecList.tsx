@@ -18,7 +18,7 @@ import { Product } from '../../models/Product';
 import { SpecificationProduct } from '../../models/SpecificationProduct';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { selectBank } from '../../store/reducers/selectedBank-reducer';
-import { selectSpecProduct } from '../../store/reducers/selectedSpecProduct-reducer';
+import { selectSpecificationProduct } from '../../store/reducers/selectedSpecProduct-reducer';
 import { addProduct } from '../../store/reducers/spesification-reducer';
 import styles from './ProductSpecEditor.module.scss';
 
@@ -112,7 +112,7 @@ export default function ProductSpecList(): ReactElement {
               {Utils.capitalizeFirstLetter(product.originProduct.title)}
             </p>
             <Link
-              onClick={() => dispatch(selectSpecProduct(product.id))}
+              onClick={() => dispatch(selectSpecificationProduct(product))}
               to={`/speceditor/${id}/product/${product.id}`}
             >
               <BsPencil className="ml-2  mt-1" />

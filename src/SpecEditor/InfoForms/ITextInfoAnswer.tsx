@@ -43,10 +43,14 @@ export default function TextInfoAnswer({
   requirement
 }: IProps): ReactElement {
   const { spec } = useAppSelector((state) => state.specification);
-  const { productId } = useAppSelector((state) => state.selectedSpecProduct);
+  const { selectedSpecificationProduct } = useAppSelector(
+    (state) => state.selectedSpecProduct
+  );
   let index: number;
 
-  const productIndex = spec.products.findIndex((p) => p.id === productId);
+  const productIndex = spec.products.findIndex(
+    (p) => p.id === selectedSpecificationProduct.id
+  );
 
   if (type === 'requirement') {
     index = spec.requirementAnswers.findIndex(
@@ -107,25 +111,6 @@ export default function TextInfoAnswer({
       <Card.Body>
         <h6>Alternative: Text</h6>
         <Form onSubmit={handleSubmit(saveValues)}>
-          <Form.Control
-            as="input"
-            type="hidden"
-            {...register('id')}
-            isInvalid={!!errors.id}
-          />
-
-          <Form.Control
-            as="input"
-            type="hidden"
-            {...register('type')}
-            isInvalid={!!errors.type}
-          />
-          <Form.Control
-            as="input"
-            type="hidden"
-            {...register('config.max')}
-            isInvalid={!!errors.config?.max}
-          />
           <Form.Control
             as="input"
             {...register('answer.text')}

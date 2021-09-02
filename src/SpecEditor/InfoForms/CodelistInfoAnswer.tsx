@@ -54,10 +54,14 @@ export default function CodelistInfoAnswer({
   requirement
 }: IProps): ReactElement {
   const { spec } = useAppSelector((state) => state.specification);
-  const { productId } = useAppSelector((state) => state.selectedSpecProduct);
+  const { selectedSpecificationProduct } = useAppSelector(
+    (state) => state.selectedSpecProduct
+  );
   let index: number;
 
-  const productIndex = spec.products.findIndex((p) => p.id === productId);
+  const productIndex = spec.products.findIndex(
+    (p) => p.id === selectedSpecificationProduct.id
+  );
 
   if (type === 'requirement') {
     index = spec.requirementAnswers.findIndex(
@@ -128,13 +132,6 @@ export default function CodelistInfoAnswer({
     <Col className="p-0 m-0 w-50">
       <p>Hvilke koder skal kreves? </p>
       <Form onSubmit={handleSubmit(saveValues)}>
-        <Form.Control as="input" type="hidden" {...register('id')} />
-        <Form.Control as="input" type="hidden" {...register('type')} />
-        <Form.Control type="hidden" {...register('config.codelist')} />
-        <Form.Control
-          type="hidden"
-          {...register(`config.multipleSelect` as const)}
-        />
         <Form.Control
           as="select"
           multiple

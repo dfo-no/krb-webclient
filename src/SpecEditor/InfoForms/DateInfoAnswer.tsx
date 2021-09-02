@@ -45,10 +45,14 @@ export default function DateInfoAnswer({
   requirement
 }: IProps): ReactElement {
   const { spec } = useAppSelector((state) => state.specification);
-  const { productId } = useAppSelector((state) => state.selectedSpecProduct);
+  const { selectedSpecificationProduct } = useAppSelector(
+    (state) => state.selectedSpecProduct
+  );
   let index: number;
 
-  const productIndex = spec.products.findIndex((p) => p.id === productId);
+  const productIndex = spec.products.findIndex(
+    (p) => p.id === selectedSpecificationProduct.id
+  );
 
   if (type === 'requirement') {
     index = spec.requirementAnswers.findIndex(
@@ -72,7 +76,6 @@ export default function DateInfoAnswer({
           (spec.products[productIndex].requirementAnswers[index]
             .question as IPeriodDateQuestion));
   const {
-    register,
     handleSubmit,
     control,
     formState: { errors }
@@ -114,31 +117,6 @@ export default function DateInfoAnswer({
     <Col className="p-0 m-0 w-50">
       <p>Hvilekn dato skal varene leveres</p>
       <Form onSubmit={handleSubmit(saveValues)}>
-        <Form.Control
-          as="input"
-          type="hidden"
-          {...register('id')}
-          isInvalid={!!errors.id}
-        />
-
-        <Form.Control
-          as="input"
-          type="hidden"
-          {...register('type')}
-          isInvalid={!!errors.type}
-        />
-        <Form.Control
-          as="input"
-          type="hidden"
-          {...register('config.fromDate')}
-          isInvalid={!!errors.type}
-        />
-        <Form.Control
-          as="input"
-          type="hidden"
-          {...register('config.toDate')}
-          isInvalid={!!errors.type}
-        />
         <Form.Group as={Row}>
           <Col sm="4">
             <Controller

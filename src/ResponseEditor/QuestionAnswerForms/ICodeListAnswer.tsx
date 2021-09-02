@@ -47,10 +47,12 @@ export default function ICodelistAnswer({
 }: IProps): ReactElement {
   const { response } = useAppSelector((state) => state.response);
   let index: number;
-  const { productId } = useAppSelector(
+  const { selectedResponseProduct } = useAppSelector(
     (state) => state.selectedResponseProduct
   );
-  const productIndex = response.products.findIndex((p) => p.id === productId);
+  const productIndex = response.products.findIndex(
+    (p) => p.id === selectedResponseProduct.id
+  );
   const item = parentAnswer.question as ICodelistQuestion;
 
   if (parentAnswer.type === 'requirement') {
@@ -98,8 +100,13 @@ export default function ICodelistAnswer({
     newAnswer.question = post;
     if (newAnswer.type === 'requirement')
       dispatch(addRequirementAnswer(newAnswer));
-    if (newAnswer.type === 'product' && productId !== null)
-      dispatch(addProductAnswer({ answer: newAnswer, productId }));
+    if (newAnswer.type === 'product' && selectedResponseProduct)
+      dispatch(
+        addProductAnswer({
+          answer: newAnswer,
+          productId: selectedResponseProduct.id
+        })
+      );
   };
 
   const codelistIndex = response.spesification.bank.codelist.findIndex(
@@ -114,13 +121,6 @@ export default function ICodelistAnswer({
       </Card.Header>
       <Card.Body>
         <Form onSubmit={handleSubmit(saveValues)}>
-          <Form.Control as="input" type="hidden" {...register('id')} />
-          <Form.Control as="input" type="hidden" {...register('type')} />
-          <Form.Control type="hidden" {...register('config.codelist')} />
-          <Form.Control
-            type="hidden"
-            {...register(`config.multipleSelect` as const)}
-          />
           <Form.Control
             as="select"
             multiple

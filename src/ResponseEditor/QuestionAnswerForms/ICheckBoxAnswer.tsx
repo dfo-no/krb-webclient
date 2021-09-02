@@ -25,6 +25,10 @@ interface IProps {
 export const ResponseCheckBoxSchema = Joi.object().keys({
   id: Joi.string().required(),
   type: Joi.string().equal(QuestionEnum.Q_CHECKBOX).required(),
+  config: Joi.object().keys({
+    weightTrue: Joi.number().min(1).max(100),
+    weightFalse: Joi.number().min(0).max(100)
+  }),
   answer: Joi.object().keys({
     value: Joi.boolean().required()
   })
@@ -35,11 +39,13 @@ export default function ICheckBoxAnswer({
 }: IProps): ReactElement {
   const { response } = useAppSelector((state) => state.response);
   let index: number;
-  const { productId } = useAppSelector(
+  const { selectedResponseProduct } = useAppSelector(
     (state) => state.selectedResponseProduct
   );
 
-  const productIndex = response.products.findIndex((p) => p.id === productId);
+  const productIndex = response.products.findIndex(
+    (p) => p.id === selectedResponseProduct.id
+  );
 
   if (parentAnswer.type === ModelType.requirement) {
     index = response.requirementAnswers.findIndex(
@@ -63,7 +69,6 @@ export default function ICheckBoxAnswer({
           (response.products[0].requirementAnswers[index]
             .question as ICheckboxQuestion));
   const {
-    register,
     control,
     handleSubmit,
     getValues,
@@ -75,10 +80,6 @@ export default function ICheckBoxAnswer({
     }
   });
 
-  /* const [checked, setChecked] = useState(
-    defaultVal ? defaultVal.answer?.value : false
-  ); */
-
   const dispatch = useAppDispatch();
   const { t } = useTranslation();
   const saveValues = (post: ICheckboxQuestion) => {
@@ -88,8 +89,13 @@ export default function ICheckBoxAnswer({
     newAnswer.question = post;
     if (newAnswer.type === ModelType.requirement)
       dispatch(addRequirementAnswer(newAnswer));
-    if (newAnswer.type === ModelType.product && productId !== null)
-      dispatch(addProductAnswer({ answer: newAnswer, productId }));
+    if (newAnswer.type === ModelType.product && selectedResponseProduct)
+      dispatch(
+        addProductAnswer({
+          answer: newAnswer,
+          productId: selectedResponseProduct.id
+        })
+      );
   };
 
   return (
@@ -99,18 +105,6 @@ export default function ICheckBoxAnswer({
       </Card.Header>
       <Card.Body>
         <Form onSubmit={handleSubmit(saveValues)}>
-          <Form.Control
-            as="input"
-            type="hidden"
-            {...register('id')}
-            isInvalid={!!errors.id}
-          />
-          <Form.Control
-            as="input"
-            type="hidden"
-            {...register('type')}
-            isInvalid={!!errors.type}
-          />
           <Controller
             name={`answer.value` as const}
             control={control}

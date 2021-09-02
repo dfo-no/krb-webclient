@@ -35,28 +35,31 @@ export default function CodelistForm({ parentAnswer }: IProps): ReactElement {
       ...(parentAnswer.question as ICodelistQuestion)
     }
   });
-  const { productId } = useAppSelector((state) => state.selectedSpecProduct);
-  const item = parentAnswer.question as ICodelistQuestion;
+  const { selectedSpecificationProduct } = useAppSelector(
+    (state) => state.selectedSpecProduct
+  );
   const dispatch = useAppDispatch();
   const { t } = useTranslation();
 
-  if (!productId && parentAnswer.type === 'product') {
+  if (!selectedSpecificationProduct && parentAnswer.type === 'product') {
     return <p>No product selected</p>;
   }
 
   const saveValues = (post: ICodelistQuestion) => {
-    let newAlt = {
-      ...item
-    };
     const newAnswer = {
       ...parentAnswer
     };
-    newAlt = post;
+    const newAlt = post;
     newAnswer.question = newAlt;
     if (newAnswer.type === ModelType.requirement)
       dispatch(addAnswer({ answer: newAnswer }));
-    if (newAnswer.type === ModelType.product && productId !== null)
-      dispatch(addProductAnswer({ answer: newAnswer, productId }));
+    if (newAnswer.type === ModelType.product && selectedSpecificationProduct)
+      dispatch(
+        addProductAnswer({
+          answer: newAnswer,
+          productId: selectedSpecificationProduct.id
+        })
+      );
   };
 
   const codelistOptions = () => {
@@ -74,18 +77,6 @@ export default function CodelistForm({ parentAnswer }: IProps): ReactElement {
       <Card.Body>
         <h6>Alternative: Codelist</h6>
         <Form onSubmit={handleSubmit(saveValues)}>
-          <Form.Control
-            as="input"
-            type="hidden"
-            {...register('id')}
-            defaultValue={item.id}
-          />
-          <Form.Control
-            as="input"
-            type="hidden"
-            {...register('type')}
-            defaultValue={item.type}
-          />
           <Form.Control as="select" {...register('config.codelist')}>
             {codelistOptions()}
           </Form.Control>

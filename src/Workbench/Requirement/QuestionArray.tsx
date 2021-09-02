@@ -102,7 +102,11 @@ export default function QuestionArray({
     } else if (getAlternative === QuestionEnum.Q_CHECKBOX) {
       append({
         id: uuidv4(),
-        type: QuestionEnum.Q_CHECKBOX
+        type: QuestionEnum.Q_CHECKBOX,
+        config: {
+          weightTrue: 100,
+          weightFalse: 0
+        }
       } as ICheckboxQuestion);
     } else if (getAlternative === QuestionEnum.Q_FILEUPLOAD) {
       append({

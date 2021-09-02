@@ -4,6 +4,7 @@ import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import { Route, Switch } from 'react-router-dom';
 import LoaderSpinner from '../common/LoaderSpinner';
+import AlertList from '../components/Alert/AlertList';
 import { useAppDispatch } from '../store/hooks';
 import { getProjectsThunk } from '../store/reducers/project-reducer';
 import ProjectGuard from './ProjectGuard';
@@ -39,6 +40,7 @@ export default function WorkbenchModule(): ReactElement {
           <SideBar />
         </Col>
         <Col className={styles.editor}>
+          <AlertList />
           <Switch>
             <Route exact path="/workbench">
               <Projects />

@@ -32,12 +32,14 @@ export const ResponseTextSchema = Joi.object().keys({
 
 export default function ITextAnswer({ parentAnswer }: IProps): ReactElement {
   const { response } = useAppSelector((state) => state.response);
-  const { productId } = useAppSelector(
+  const { selectedResponseProduct } = useAppSelector(
     (state) => state.selectedResponseProduct
   );
   let index: number;
 
-  const productIndex = response.products.findIndex((p) => p.id === productId);
+  const productIndex = response.products.findIndex(
+    (p) => p.id === selectedResponseProduct.id
+  );
 
   if (parentAnswer.type === ModelType.requirement) {
     index = response.requirementAnswers.findIndex(
@@ -74,7 +76,7 @@ export default function ITextAnswer({ parentAnswer }: IProps): ReactElement {
   const dispatch = useAppDispatch();
   const { t } = useTranslation();
 
-  if (!productId && parentAnswer.type === ModelType.product) {
+  if (!selectedResponseProduct && parentAnswer.type === ModelType.product) {
     return <p>No product selected</p>;
   }
 
@@ -86,8 +88,13 @@ export default function ITextAnswer({ parentAnswer }: IProps): ReactElement {
 
     if (newAnswer.type === ModelType.requirement)
       dispatch(addRequirementAnswer(newAnswer));
-    if (newAnswer.type === ModelType.product && productId !== null)
-      dispatch(addProductAnswer({ answer: newAnswer, productId }));
+    if (newAnswer.type === ModelType.product && selectedResponseProduct)
+      dispatch(
+        addProductAnswer({
+          answer: newAnswer,
+          productId: selectedResponseProduct.id
+        })
+      );
   };
 
   return (
@@ -95,25 +102,6 @@ export default function ITextAnswer({ parentAnswer }: IProps): ReactElement {
       <Card.Body>
         <h6>Alternative: Text</h6>
         <Form onSubmit={handleSubmit(saveValues)}>
-          <Form.Control
-            as="input"
-            type="hidden"
-            {...register('id')}
-            isInvalid={!!errors.id}
-          />
-
-          <Form.Control
-            as="input"
-            type="hidden"
-            {...register('type')}
-            isInvalid={!!errors.type}
-          />
-          <Form.Control
-            as="input"
-            type="hidden"
-            {...register('config.max')}
-            isInvalid={!!errors.config?.max}
-          />
           <Form.Control
             as="input"
             {...register('answer.text')}

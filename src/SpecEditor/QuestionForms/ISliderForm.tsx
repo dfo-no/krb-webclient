@@ -31,11 +31,16 @@ export default function ValueForm({ parentAnswer }: IProps): ReactElement {
       ...(parentAnswer.question as ISliderQuestion)
     }
   });
-  const { productId } = useAppSelector((state) => state.selectedSpecProduct);
+  const { selectedSpecificationProduct } = useAppSelector(
+    (state) => state.selectedSpecProduct
+  );
   const dispatch = useAppDispatch();
   const { t } = useTranslation();
 
-  if (!productId && parentAnswer.type === ModelType.product) {
+  if (
+    !selectedSpecificationProduct &&
+    parentAnswer.type === ModelType.product
+  ) {
     return <p>No product selected</p>;
   }
 
@@ -46,8 +51,13 @@ export default function ValueForm({ parentAnswer }: IProps): ReactElement {
     newAnswer.question = post;
     if (newAnswer.type === ModelType.requirement)
       dispatch(addAnswer({ answer: newAnswer }));
-    if (newAnswer.type === ModelType.product && productId !== null)
-      dispatch(addProductAnswer({ answer: newAnswer, productId }));
+    if (newAnswer.type === ModelType.product && selectedSpecificationProduct)
+      dispatch(
+        addProductAnswer({
+          answer: newAnswer,
+          productId: selectedSpecificationProduct.id
+        })
+      );
   };
 
   return (
@@ -55,19 +65,6 @@ export default function ValueForm({ parentAnswer }: IProps): ReactElement {
       <Card.Body>
         <h6>Alternative: Value</h6>
         <Form onSubmit={handleSubmit(saveValues)}>
-          <Form.Control
-            as="input"
-            type="hidden"
-            {...register('id')}
-            isInvalid={!!errors.id}
-          />
-
-          <Form.Control
-            as="input"
-            type="hidden"
-            {...register('type')}
-            isInvalid={!!errors.type}
-          />
           <Form.Control
             as="input"
             {...register('config.min')}

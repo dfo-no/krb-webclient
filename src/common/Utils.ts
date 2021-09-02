@@ -1,5 +1,6 @@
 import { Bank } from '../models/Bank';
 import { BaseModel } from '../models/BaseModel';
+import { BooleanAsString } from '../models/ICheckboxQuestion';
 import { IVariant } from '../models/IVariant';
 import { Need } from '../models/Need';
 import { Nestable } from '../models/Nestable';
@@ -72,7 +73,6 @@ class Utils {
   ): [Nestable<T>[], { [key: string]: Nestable<T> }] {
     const hierarchy: Nestable<T>[] = [];
     const mappedArr: { [key: string]: Nestable<T> } = {};
-
     items.forEach((item) => {
       const Id = item.id;
       if (!Object.prototype.hasOwnProperty.call(mappedArr, Id)) {
@@ -257,6 +257,17 @@ class Utils {
       );
     }
     return used;
+  }
+
+  static calculateCheckBoxPoints(
+    weightTrue: number,
+    weightFalse: number,
+    answer: boolean
+  ): number {
+    if (answer) {
+      return weightTrue;
+    }
+    return weightFalse;
   }
 }
 

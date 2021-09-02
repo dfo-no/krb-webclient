@@ -12,8 +12,10 @@ export interface IConfigBase {
 export interface IQuestionBase<A extends IAnswerBase, C extends IConfigBase>
   extends BaseModel {
   id: string;
+
   type: QuestionEnum;
+
   answer: A | null;
+
   config: C;
-  getPoints(): number | null;
 }

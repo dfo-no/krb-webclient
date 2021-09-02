@@ -36,15 +36,11 @@ const productSchema = Joi.object().keys({
 export default function ProductSpecEditor(): ReactElement {
   const { id } = useAppSelector((state) => state.selectedBank);
   const { list } = useAppSelector((state) => state.bank);
-  const { spec } = useAppSelector((state) => state.specification);
   const { t } = useTranslation();
-  const { productId } = useAppSelector((state) => state.selectedSpecProduct);
-  const dispatch = useAppDispatch();
-  const specProduct = Utils.ensure(
-    spec.products.find(
-      (product: SpecificationProduct) => product.id === productId
-    )
+  const { selectedSpecificationProduct } = useAppSelector(
+    (state) => state.selectedSpecProduct
   );
+  const dispatch = useAppDispatch();
   const bankSelected = Utils.ensure(list.find((bank) => bank.id === id));
 
   const {
@@ -55,9 +51,9 @@ export default function ProductSpecEditor(): ReactElement {
   } = useForm<FormInput>({
     resolver: joiResolver(productSchema),
     defaultValues: {
-      amount: specProduct.amount,
-      title: specProduct.title,
-      description: specProduct.description
+      amount: selectedSpecificationProduct.amount,
+      title: selectedSpecificationProduct.title,
+      description: selectedSpecificationProduct.description
     }
   });
   const checkWeightIsPredefined = (weight: number) => {
@@ -65,13 +61,14 @@ export default function ProductSpecEditor(): ReactElement {
     return predefinedValues.includes(weight);
   };
   const setWeightState = () => {
-    if (checkWeightIsPredefined(specProduct.weight)) return 'standard';
+    if (checkWeightIsPredefined(selectedSpecificationProduct.weight))
+      return 'standard';
     return 'egendefinert';
   };
   const [weightType, setWeightType] = useState(setWeightState());
   const addProductToSpecification = (post: FormInput) => {
     const newProduct: SpecificationProduct = {
-      ...specProduct
+      ...selectedSpecificationProduct
     };
     const savedWeight =
       weightType === 'standard' && post.weight > 90 ? 90 : post.weight;
@@ -168,7 +165,7 @@ export default function ProductSpecEditor(): ReactElement {
                       <Form.Label>{t('weighting')}:</Form.Label>
                       <Form.Control
                         type="number"
-                        defaultValue={specProduct.weight}
+                        defaultValue={selectedSpecificationProduct.weight}
                         min={0}
                         {...register('weight' as const)}
                         isInvalid={!!errors.weight}
@@ -184,7 +181,7 @@ export default function ProductSpecEditor(): ReactElement {
                     <Controller
                       control={control}
                       name={'weight' as const}
-                      defaultValue={specProduct.weight}
+                      defaultValue={selectedSpecificationProduct.weight}
                       render={({ field }) => (
                         <Slider
                           className="mt-4 w-50"
@@ -213,7 +210,7 @@ export default function ProductSpecEditor(): ReactElement {
       </Card>
       <Row className="m-4">
         <ProductRequirementSelectorList
-          product={specProduct}
+          product={selectedSpecificationProduct}
           selectedBank={bankSelected}
         />
       </Row>

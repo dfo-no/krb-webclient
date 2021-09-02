@@ -1,13 +1,13 @@
 import React, { ReactElement } from 'react';
+import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
+import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
-import Button from 'react-bootstrap/Button';
-import { BsTrashFill } from 'react-icons/bs';
 import { Control, FormState, UseFormRegister } from 'react-hook-form';
-import { Requirement } from '../../models/Requirement';
-
+import { BsTrashFill } from 'react-icons/bs';
 import { ICheckboxQuestion } from '../../models/ICheckboxQuestion';
+import { Requirement } from '../../models/Requirement';
 
 type IProps = {
   control: Control<Requirement>;
@@ -52,6 +52,32 @@ export default function CheckboxForm({
           {...register(`variants.${vIndex}.questions.${aIndex}.type` as const)}
           defaultValue={item.type}
         />
+        <Row className="w-50">
+          <Col>
+            <Form.Label>Angi prosentvis poeng for ja</Form.Label>
+            <Form.Control
+              as="input"
+              type="number"
+              className="w-25"
+              {...register(
+                `variants.${vIndex}.questions.${aIndex}.config.weightTrue` as const
+              )}
+              defaultValue={item.config.weightTrue}
+            />
+          </Col>
+          <Col>
+            <Form.Label>Angi prosentvis poeng for nei</Form.Label>
+            <Form.Control
+              as="input"
+              type="number"
+              className="w-25"
+              {...register(
+                `variants.${vIndex}.questions.${aIndex}.config.weightFalse` as const
+              )}
+              defaultValue={item.config.weightFalse}
+            />
+          </Col>
+        </Row>
       </Card.Body>
     </Card>
   );
