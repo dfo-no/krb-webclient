@@ -113,13 +113,13 @@ export default function RequirementPage(): ReactElement {
           <Card key={element.id}>
             <Card.Header className="d-flex justify-content-between">
               <h6 className="mt-2">{element.title}</h6>
-              <Accordion.Toggle
+              <Accordion.Header
                 as={Button}
                 variant="link"
                 eventKey={element.id}
               >
                 <BsChevronDown />
-              </Accordion.Toggle>
+              </Accordion.Header>
             </Card.Header>
             <Accordion.Collapse eventKey={element.id}>
               <Card.Body>
@@ -158,13 +158,13 @@ export default function RequirementPage(): ReactElement {
           <Card key={element.id}>
             <Card.Header className="d-flex justify-content-between">
               <h6 className="mt-2">{element.title}</h6>
-              <Accordion.Toggle
+              <Accordion.Header
                 as={Button}
                 variant="link"
                 eventKey={element.id}
               >
                 <BsChevronDown />
-              </Accordion.Toggle>
+              </Accordion.Header>
             </Card.Header>
             <Accordion.Collapse eventKey={element.id}>
               <Card.Body>

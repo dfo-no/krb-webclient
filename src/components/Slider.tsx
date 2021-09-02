@@ -2,6 +2,7 @@ import Slider from '@material-ui/core/Slider';
 import { get, has, toPath } from 'lodash';
 import React, { ReactElement } from 'react';
 import Form from 'react-bootstrap/Form';
+import Row from 'react-bootstrap/Row';
 import { Control, Controller, FieldErrors } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { IOption } from '../models/IOption';
@@ -48,7 +49,7 @@ export default function SliderSelect({
   };
   return (
     <Form.Group>
-      <Form.Row className="is-invalid">
+      <Row className="is-invalid">
         <Form.Label column lg={4}>
           {t(label)}
         </Form.Label>
@@ -71,7 +72,7 @@ export default function SliderSelect({
             />
           )}
         />
-      </Form.Row>
+      </Row>
       {hasError(name) && (
         <Form.Control.Feedback type="invalid">
           {getError(name)}

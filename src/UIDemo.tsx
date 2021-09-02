@@ -343,7 +343,7 @@ export default function UIDemo(): JSX.Element {
     <Container>
       <h3>
         Demo for ALL used UI components in this project!
-        <Badge variant="info">{renderCount}</Badge>
+        <Badge bg="info">{renderCount}</Badge>
       </h3>
       <form
         onSubmit={handleSubmit((data: ICart) => {

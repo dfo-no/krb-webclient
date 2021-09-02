@@ -47,7 +47,8 @@ export default function SpecPage(): ReactElement {
           <Form>
             <h4>Upload specification</h4>
             <InputGroup>
-              <Form.File.Input
+              <Form.Control
+                type="file"
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                   onUploadSpecification(e)
                 }
