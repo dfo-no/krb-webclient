@@ -75,6 +75,8 @@ export default function ProductPage(): ReactElement {
     dispatch(updateProductList({ id: projectId, products: items }));
     dispatch(putProjectByIdThunk(projectId));
   };
+  console.log(selectedProject.products);
+
   return (
     <div className="pb-4">
       <>

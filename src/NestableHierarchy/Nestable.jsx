@@ -11,6 +11,7 @@ import Nestable from 'react-nestable';
 import 'react-nestable/dist/styles/index.css';
 import Utils from '../common/Utils';
 import { AccordionContext } from './AccordionContext';
+import css from './Nestable.scss';
 
 export default function NestableHierarcy({
   dispatchfunc,
@@ -61,28 +62,29 @@ export default function NestableHierarcy({
       setActiveKey('');
     }
   };
-
   const renderItem = ({ item, collapseIcon, handler }) => {
     return (
-      <Card key={item.id}>
-        <Card.Header>
-          <Row className="d-flex justify-content-between">
-            <h6 className="ml-2 mt-2">
-              {Utils.capitalizeFirstLetter(item.title)}
-              {collapseIcon}
-            </h6>
-            <Accordion.Toggle as={Button} variant="link" eventKey={item.id}>
-              <BsChevronDown />
-            </Accordion.Toggle>
-          </Row>
-        </Card.Header>
-        <Accordion.Collapse eventKey={item.id}>
-          <Card.Body>
-            {React.cloneElement(component, { element: item })}
-          </Card.Body>
-        </Accordion.Collapse>
-        {handler}
-      </Card>
+      <Accordion.Item eventKey={item.id}>
+        <Card key={item.id}>
+          <Card.Header>
+            <Row className="d-flex justify-content-between">
+              <h6 className="ml-2 mt-2">
+                {Utils.capitalizeFirstLetter(item.title)}
+                {collapseIcon}
+              </h6>
+              <Accordion.Header as={Button} variant="link">
+                <BsChevronDown />
+              </Accordion.Header>
+            </Row>
+          </Card.Header>
+          <Accordion.Body eventKey={item.id}>
+            <Card.Body>
+              {React.cloneElement(component, { element: item })}
+            </Card.Body>
+          </Accordion.Body>
+          {handler}
+        </Card>
+      </Accordion.Item>
     );
   };
 

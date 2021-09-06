@@ -70,7 +70,7 @@ export default function RequirementPage(): ReactElement {
   const selectedProject = Utils.ensure(
     list.find((project: Bank) => project.id === id)
   );
-
+  console.log(selectedProject);
   if (!selectedProject.needs) {
     return (
       <p>The project has no needs, add one to continue with requirements</p>
@@ -110,28 +110,26 @@ export default function RequirementPage(): ReactElement {
       );
       const jsx = filteredList.map((element: Requirement, index) => {
         return (
-          <Card key={element.id}>
-            <Card.Header className="d-flex justify-content-between">
-              <h6 className="mt-2">{element.title}</h6>
-              <Accordion.Header
-                as={Button}
-                variant="link"
-                eventKey={element.id}
-              >
-                <BsChevronDown />
-              </Accordion.Header>
-            </Card.Header>
-            <Accordion.Collapse eventKey={element.id}>
-              <Card.Body>
-                <EditRequirementForm
-                  index={index}
-                  element={element}
-                  needList={needs}
-                  need={selectedNeed}
-                />
-              </Card.Body>
-            </Accordion.Collapse>
-          </Card>
+          <Accordion.Item eventKey={element.id}>
+            <Card key={element.id} className="d-flex justify-content-between">
+              <Card.Header>
+                <h6 className="mt-2">{element.title}</h6>
+                <Accordion.Header>
+                  <BsChevronDown />
+                </Accordion.Header>
+              </Card.Header>
+              <Accordion.Collapse eventKey={element.id}>
+                <Card.Body>
+                  <EditRequirementForm
+                    index={index}
+                    element={element}
+                    needList={needs}
+                    need={selectedNeed}
+                  />
+                </Card.Body>
+              </Accordion.Collapse>
+            </Card>
+          </Accordion.Item>
         );
       });
       return (
