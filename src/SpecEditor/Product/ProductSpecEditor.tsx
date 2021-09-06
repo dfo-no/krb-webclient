@@ -38,9 +38,7 @@ export default function ProductSpecEditor(): ReactElement {
     formState: { errors }
   } = useForm<SpecificationProduct>({
     resolver: joiResolver(SpecificationProductSchema),
-    defaultValues: {
-      ...selectedSpecificationProduct
-    }
+    defaultValues: selectedSpecificationProduct
   });
   const checkWeightIsPredefined = (weight: number) => {
     const predefinedValues = [10, 30, 50, 70, 90];

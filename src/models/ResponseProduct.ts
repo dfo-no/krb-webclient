@@ -16,7 +16,7 @@ export interface ResponseProduct extends BaseModel {
   requirementAnswers: IRequirementAnswer[];
 }
 
-export const responseProductSchema = Joi.object().keys({
+export const ResponseProductSchema = Joi.object().keys({
   id: Joi.string().required(),
   title: Joi.string().required(),
   description: Joi.string().allow(null, '').required(),

@@ -13,7 +13,7 @@ import ErrorSummary from '../../Form/ErrorSummary';
 import ModelType from '../../models/ModelType';
 import {
   ResponseProduct,
-  responseProductSchema
+  ResponseProductSchema
 } from '../../models/ResponseProduct';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { addProduct, editProduct } from '../../store/reducers/response-reducer';
@@ -41,7 +41,7 @@ export default function ResponseProductEditor(): ReactElement {
     type: ModelType.responseProduct
   };
 
-  const product =
+  const product: ResponseProduct =
     productIndex === -1 ? newProduct : response.products[productIndex];
 
   const {
@@ -49,8 +49,8 @@ export default function ResponseProductEditor(): ReactElement {
     handleSubmit,
     formState: { errors }
   } = useForm<ResponseProduct>({
-    resolver: joiResolver(responseProductSchema),
-    defaultValues: product
+    resolver: joiResolver(ResponseProductSchema),
+    defaultValues: { ...product }
   });
   const dispatch = useAppDispatch();
   const { t } = useTranslation();
