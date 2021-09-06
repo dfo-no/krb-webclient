@@ -1,6 +1,5 @@
 import { joiResolver } from '@hookform/resolvers/joi';
 import Slider from '@material-ui/core/Slider';
-import Joi from 'joi';
 import React, { ReactElement, useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
@@ -14,24 +13,13 @@ import Utils from '../../common/Utils';
 import ErrorSummary from '../../Form/ErrorSummary';
 import InputRow from '../../Form/InputRow';
 import { IOption } from '../../models/IOption';
-import { SpecificationProduct } from '../../models/SpecificationProduct';
+import {
+  SpecificationProduct,
+  SpecificationProductSchema
+} from '../../models/SpecificationProduct';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { editSpecProduct } from '../../store/reducers/spesification-reducer';
 import ProductRequirementSelectorList from './ProductRequirementSelectorList';
-
-type FormInput = {
-  title: string;
-  description: string;
-  amount: number;
-  weight: number;
-};
-
-const productSchema = Joi.object().keys({
-  title: Joi.string().required(),
-  description: Joi.string().allow(null, '').required(),
-  amount: Joi.number().integer().min(1).required(),
-  weight: Joi.number().integer().min(1).required()
-});
 
 export default function ProductSpecEditor(): ReactElement {
   const { id } = useAppSelector((state) => state.selectedBank);
@@ -48,13 +36,9 @@ export default function ProductSpecEditor(): ReactElement {
     handleSubmit,
     register,
     formState: { errors }
-  } = useForm<FormInput>({
-    resolver: joiResolver(productSchema),
-    defaultValues: {
-      amount: selectedSpecificationProduct.amount,
-      title: selectedSpecificationProduct.title,
-      description: selectedSpecificationProduct.description
-    }
+  } = useForm<SpecificationProduct>({
+    resolver: joiResolver(SpecificationProductSchema),
+    defaultValues: selectedSpecificationProduct
   });
   const checkWeightIsPredefined = (weight: number) => {
     const predefinedValues = [10, 30, 50, 70, 90];
@@ -66,16 +50,13 @@ export default function ProductSpecEditor(): ReactElement {
     return 'egendefinert';
   };
   const [weightType, setWeightType] = useState(setWeightState());
-  const addProductToSpecification = (post: FormInput) => {
+  const addProductToSpecification = (post: SpecificationProduct) => {
     const newProduct: SpecificationProduct = {
-      ...selectedSpecificationProduct
+      ...post
     };
     const savedWeight =
       weightType === 'standard' && post.weight > 90 ? 90 : post.weight;
-    newProduct.title = post.title;
-    newProduct.description = post.description;
     newProduct.weight = savedWeight;
-    newProduct.amount = post.amount;
     dispatch(editSpecProduct({ product: newProduct }));
   };
 

@@ -1,6 +1,11 @@
+import Joi from 'joi';
 import { BaseModel } from './BaseModel';
 import { IRequirementAnswer } from './IRequirementAnswer';
-import { SpecificationProduct } from './SpecificationProduct';
+import ModelType from './ModelType';
+import {
+  SpecificationProduct,
+  SpecificationProductSchema
+} from './SpecificationProduct';
 
 export interface ResponseProduct extends BaseModel {
   id: string;
@@ -10,3 +15,13 @@ export interface ResponseProduct extends BaseModel {
   price: number;
   requirementAnswers: IRequirementAnswer[];
 }
+
+export const ResponseProductSchema = Joi.object().keys({
+  id: Joi.string().required(),
+  title: Joi.string().required(),
+  description: Joi.string().allow(null, '').required(),
+  originProduct: SpecificationProductSchema.required(),
+  type: Joi.string().equal(ModelType.responseProduct).required(),
+  requirementAnswers: Joi.array(),
+  price: Joi.number().integer().required()
+});

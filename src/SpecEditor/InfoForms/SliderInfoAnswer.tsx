@@ -134,6 +134,7 @@ export default function ISliderInfoAnswer({
           min={sliderQuestion.config.min}
           max={sliderQuestion.config.max}
           marks={marks}
+          key={sliderQuestion.id}
         />
 
         <Button className="mt-2" type="submit">
