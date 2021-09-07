@@ -50,15 +50,17 @@ export default function ProjectGuard(): JSX.Element {
       <Route exact path="/workbench/:projectId/need/:needId/requirement">
         <RequirementPage />
       </Route>
-      <Route exact path="/workbench/:projectId/requirement">
-        <RequirementPage />
-      </Route>
       <Route
         exact
         path="/workbench/:projectId/need/:needId/requirement/:requirementId/edit"
       >
         <RequirementEditor />
       </Route>
+
+      <Route exact path="/workbench/:projectId/need/requirement">
+        <RequirementPage />
+      </Route>
+
       <Route exact path="/workbench/:projectId/codelist">
         <CodelistPage />
       </Route>

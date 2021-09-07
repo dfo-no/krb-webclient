@@ -1,27 +1,15 @@
 import React, { ReactElement } from 'react';
 import Nav from 'react-bootstrap/Nav';
-import { NavLink, useRouteMatch } from 'react-router-dom';
-
+import { NavLink } from 'react-router-dom';
 import Utils from '../../../common/Utils';
-import { Nestable } from '../../../models/Nestable';
 import { Need } from '../../../models/Need';
+import { Nestable } from '../../../models/Nestable';
+import { useAppSelector } from '../../../store/hooks';
 import styles from './NeedSidebar.module.scss';
 
-interface IProps {
-  needs: Nestable<Need>[];
-}
-
-interface RouteParams {
-  projectId: string;
-  requirementId: string;
-}
-
-export default function NeedSideBar({ needs }: IProps): ReactElement {
-  const projectMatch = useRouteMatch<RouteParams>('/workbench/:projectId');
-
-  if (!projectMatch?.params.projectId) {
-    return <p>No project selected</p>;
-  }
+export default function NeedSideBar(): ReactElement {
+  const { project } = useAppSelector((state) => state.project);
+  const { needs } = project;
 
   const childrenHierarchy = (listOfNeed: Nestable<Need>[], level: number) => {
     let n = level;
@@ -39,7 +27,8 @@ export default function NeedSideBar({ needs }: IProps): ReactElement {
               as={NavLink}
               // TODO: activeClassName not reconized ny React
               // activeClassName={`${styles.sidebar__item__active}`}
-              to={`/workbench/${projectMatch?.params.projectId}/need/${element.id}/requirement`}
+
+              to={`/workbench/${project.id}/need/${element.id}/requirement`}
               role="link"
             >
               {element.title}
@@ -65,7 +54,7 @@ export default function NeedSideBar({ needs }: IProps): ReactElement {
               as={NavLink}
               // TODO: activeClassName not reconized ny React
               // activeClassName={`${styles.sidebar__item__active}`}
-              to={`/workbench/${projectMatch?.params.projectId}/need/${element.id}/requirement`}
+              to={`/workbench/${project.id}/need/${element.id}/requirement`}
               role="link"
             >
               {element.title}

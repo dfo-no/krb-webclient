@@ -48,7 +48,7 @@ function SideBar(): ReactElement {
   const routes: IRouteLink[] = [
     { link: `${currentUrl}`, name: `${t('Workbench')}: ${displayTitle}` },
     { link: `${currentUrl}/need`, name: t('Need') },
-    { link: `${currentUrl}/requirement`, name: t('Requirement') },
+    { link: `${currentUrl}/need/requirement`, name: t('Requirement') },
     { link: `${currentUrl}/codelist`, name: t('Codelist') },
     { link: `${currentUrl}/product`, name: t('Products') }
   ];

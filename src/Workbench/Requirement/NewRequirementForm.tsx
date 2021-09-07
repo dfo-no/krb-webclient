@@ -1,5 +1,4 @@
 import { joiResolver } from '@hookform/resolvers/joi';
-import Joi from 'joi';
 import React, { ReactElement, useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
@@ -11,123 +10,122 @@ import { v4 as uuidv4 } from 'uuid';
 import ErrorSummary from '../../Form/ErrorSummary';
 import InputRow from '../../Form/InputRow';
 import ModelType from '../../models/ModelType';
-import { Need } from '../../models/Need';
-import { Requirement } from '../../models/Requirement';
+import { PostRequirementSchema, Requirement } from '../../models/Requirement';
 import RequirementType from '../../models/RequirementType';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import {
-  putProjectByIdThunk,
-  setRequirementListToNeed
+  addRequirementToNeed,
+  putSelectedProjectThunk
 } from '../../store/reducers/project-reducer';
 
-type FormValues = {
-  title: string;
-  description: string;
-};
-interface IProps {
-  toggleShow: React.Dispatch<React.SetStateAction<boolean>>;
-  toggleAlert: React.Dispatch<React.SetStateAction<boolean>>;
-  need: Need;
-  needList: Need[];
-  type: RequirementType;
-}
-
-const requirementSchema = Joi.object().keys({
-  title: Joi.string().required(),
-  description: Joi.string().allow(null, '').required()
-});
-
-function NewRequirementForm({
-  toggleShow,
-  toggleAlert,
-  need,
-  needList,
-  type
-}: IProps): ReactElement {
+function NewRequirementForm(): ReactElement {
   const dispatch = useAppDispatch();
   const [validated] = useState(false);
   const { t } = useTranslation();
+
+  const { needId } = useAppSelector((state) => state.selectNeed);
+
+  const [show, setShow] = useState(false);
+
+  const defaultValues: Requirement = {
+    id: '',
+    title: '',
+    description: '',
+    needId,
+    variants: [],
+    kind: 'yes/no',
+    type: ModelType.requirement,
+    requirement_Type: RequirementType.requirement
+  };
 
   const {
     control,
     handleSubmit,
     reset,
+    register,
+    setValue,
     formState: { errors }
-  } = useForm({
-    resolver: joiResolver(requirementSchema)
+  } = useForm<Requirement>({
+    resolver: joiResolver(PostRequirementSchema),
+    defaultValues
   });
 
-  const { id } = useAppSelector((state) => state.selectedProject);
-
-  if (!id) {
-    return <div>Loading Requirementform</div>;
-  }
-
-  const onNewRequirementSubmit = (post: FormValues) => {
-    const requirement: Requirement = {
-      id: uuidv4(),
-      title: post.title,
-      description: post.description,
-      needId: need.id,
-      variants: [],
-      kind: 'yes/no',
-      type: ModelType.requirement,
-      requirement_Type: type
-    };
-    const reqList = [...need.requirements];
-    reqList.push(requirement);
-    const needIndex = needList.findIndex((element) => element.id === need.id);
-    reset();
+  const onNewRequirementSubmit = (post: Requirement) => {
+    const requirement = { ...post };
+    requirement.id = uuidv4();
     dispatch(
-      setRequirementListToNeed({
-        projectId: id,
-        needIndex,
-        reqList
+      addRequirementToNeed({
+        needId,
+        requirement
       })
     );
-    dispatch(putProjectByIdThunk(id));
-    reset();
-    toggleShow(false);
-    toggleAlert(true);
+    dispatch(putSelectedProjectThunk('dummy')).then(() => {
+      setShow(false);
+      reset();
+    });
   };
 
   return (
-    <Card className="mb-4">
-      <Card.Body>
-        <Form
-          onSubmit={handleSubmit(onNewRequirementSubmit)}
-          autoComplete="off"
-          noValidate
-          validated={validated}
+    <>
+      <Row className="flex justify-content-end">
+        <Button
+          onClick={() => {
+            setShow(true);
+            setValue('requirement_Type', RequirementType.requirement);
+          }}
+          className="mb-4 mr-3"
         >
-          <InputRow
-            name="title"
-            control={control}
-            label={t('Title')}
-            errors={errors}
-          />
-          <InputRow
-            name="description"
-            control={control}
-            label={t('Description')}
-            errors={errors}
-          />
-
-          <Row>
-            <Button className="mt-2  ml-3" type="submit">
-              {t('save')}
-            </Button>
-            <Button
-              className="mt-2 ml-3 btn-warning"
-              onClick={() => toggleShow(false)}
+          New Requirement
+        </Button>
+        <Button
+          onClick={() => {
+            setValue('requirement_Type', RequirementType.info);
+            setShow(true);
+          }}
+          className="mb-4 mr-3"
+        >
+          New Info field
+        </Button>
+      </Row>
+      {show && (
+        <Card className="mb-4">
+          <Card.Body>
+            <Form
+              onSubmit={handleSubmit(onNewRequirementSubmit)}
+              autoComplete="off"
+              noValidate
+              validated={validated}
             >
-              {t('cancel')}
-            </Button>
-          </Row>
-          <ErrorSummary errors={errors} />
-        </Form>
-      </Card.Body>
-    </Card>
+              <InputRow
+                name="title"
+                control={control}
+                label={t('Title')}
+                errors={errors}
+              />
+              <InputRow
+                name="description"
+                control={control}
+                label={t('Description')}
+                errors={errors}
+              />
+              <input {...register('requirement_Type')} />
+              <Row>
+                <Button className="mt-2  ml-3" type="submit">
+                  {t('save')}
+                </Button>
+                <Button
+                  className="mt-2 ml-3 btn-warning"
+                  onClick={() => setShow(false)}
+                >
+                  {t('cancel')}
+                </Button>
+              </Row>
+              <ErrorSummary errors={errors} />
+            </Form>
+          </Card.Body>
+        </Card>
+      )}
+    </>
   );
 }
 

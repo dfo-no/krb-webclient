@@ -315,90 +315,74 @@ const projectSlice = createSlice({
 
       state.list[index].codelist[codeListIndex].codes[codeIndex] = payload.code;
     },
-    setRequirementListToNeed(
-      state,
-      {
-        payload
-      }: PayloadAction<{
-        projectId: string;
-        needIndex: number;
-        reqList: Requirement[];
-      }>
-    ) {
-      const projectIndex = Utils.ensure(
-        state.list.findIndex((project) => project.id === payload.projectId)
+    editRequirementPublication(state, { payload }: PayloadAction<Publication>) {
+      const index = state.project.publications.findIndex(
+        (element) => payload.id === element.id
       );
-      state.list[projectIndex].needs[payload.needIndex].requirements =
-        payload.reqList;
+      if (index !== -1) {
+        state.project.publications[index].comment = payload.comment;
+      }
     },
     editRequirementInNeed(
       state,
       {
         payload
       }: PayloadAction<{
-        projectId: string;
-        requirement: Requirement;
-        oldNeedId: string;
         needId: string;
-        requirementIndex: number;
+        requirement: Requirement;
       }>
     ) {
-      const projectIndex = Utils.ensure(
-        state.list.findIndex((project) => project.id === payload.projectId)
+      const needIndex = state.project.needs.findIndex(
+        (need) => need.id === payload.needId
       );
-      const needIndex = Utils.ensure(
-        state.list[projectIndex].needs.findIndex(
-          (need) => need.id === payload.needId
-        )
-      );
-      const oldNeedIndex = Utils.ensure(
-        state.list[projectIndex].needs.findIndex(
-          (need) => need.id === payload.oldNeedId
-        )
-      );
-      state.list[projectIndex].needs[oldNeedIndex].requirements.splice(
-        payload.requirementIndex,
-        1
-      );
-
-      state.list[projectIndex].needs[needIndex].requirements.push(
-        payload.requirement
-      );
+      if (needIndex !== -1) {
+        const requirementIndex = state.project.needs[
+          needIndex
+        ].requirements.findIndex((elem) => elem.id === payload.requirement.id);
+        if (requirementIndex !== -1) {
+          state.project.needs[needIndex].requirements[requirementIndex] =
+            payload.requirement;
+        }
+      }
     },
-    addRequirement(
+    addRequirementToNeed(
       state,
       {
         payload
       }: PayloadAction<{
-        id: string;
+        needId: string;
         requirement: Requirement;
-        needIndex: number;
       }>
     ) {
-      const index = Utils.ensure(
-        state.list.findIndex((project) => project.id === payload.id)
+      const needIndex = state.project.needs.findIndex(
+        (elem) => elem.id === payload.needId
       );
-      state.list[index].needs[payload.needIndex].requirements.push(
-        payload.requirement
-      );
+      if (needIndex !== -1) {
+        state.project.needs[needIndex].requirements.unshift(
+          payload.requirement
+        );
+      }
     },
     deleteRequirement(
       state,
-      {
-        payload
-      }: PayloadAction<{
-        id: string;
-        needIndex: number;
-        requirementIndex: number;
-      }>
+      { payload }: PayloadAction<{ needId: string; requirement: Requirement }>
     ) {
-      const index = Utils.ensure(
-        state.list.findIndex((project) => project.id === payload.id)
+      const needIndex = state.project.needs.findIndex(
+        (elem) => elem.id === payload.needId
       );
-      state.list[index].needs[payload.needIndex].requirements.splice(
-        payload.requirementIndex,
-        1
-      );
+      if (needIndex !== -1) {
+        const requirementIndex = state.project.needs[
+          needIndex
+        ].requirements.findIndex(
+          (element) => element.id === payload.requirement.id
+        );
+        if (requirementIndex !== -1) {
+          state.project.needs[needIndex].requirements.splice(
+            requirementIndex,
+            1
+          );
+        }
+      }
     },
     editPublication(state, { payload }: PayloadAction<Publication>) {
       const index = state.project.publications.findIndex(
@@ -531,9 +515,8 @@ export const {
   editCode,
   editSelectedCodelist,
   publishProject,
-  setRequirementListToNeed,
   editRequirementInNeed,
-  addRequirement,
+  addRequirementToNeed,
   deleteRequirement,
   removePublication,
   updateSelectedVersion,
