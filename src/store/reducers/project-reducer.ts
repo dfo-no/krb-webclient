@@ -335,6 +335,7 @@ const projectSlice = createSlice({
       const needIndex = state.project.needs.findIndex(
         (need) => need.id === payload.needId
       );
+
       if (needIndex !== -1) {
         const requirementIndex = state.project.needs[
           needIndex

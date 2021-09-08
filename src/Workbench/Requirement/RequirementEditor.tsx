@@ -19,7 +19,7 @@ import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import {
   editRequirementInNeed,
   getProjectsThunk,
-  putProjectByIdThunk
+  putSelectedProjectThunk
 } from '../../store/reducers/project-reducer';
 import { selectNeed } from '../../store/reducers/selectedNeed-reducer';
 import { selectProject } from '../../store/reducers/selectedProject-reducer';
@@ -27,7 +27,7 @@ import { selectRequirement } from '../../store/reducers/selectedRequirement-redu
 import VariantArray from './VariantArray';
 
 export const SliderSchema = Joi.object().keys({
-  id: Joi.string().required(),
+  id: Joi.string().length(36).required(),
   type: Joi.string().equal(QuestionEnum.Q_SLIDER).required(),
   config: Joi.object().keys({
     step: Joi.number().min(0).max(1000000000).required(),
@@ -38,7 +38,7 @@ export const SliderSchema = Joi.object().keys({
 });
 
 export const CodelistSchema = Joi.object().keys({
-  id: Joi.string().required(),
+  id: Joi.string().length(36).required(),
   type: Joi.string().equal(QuestionEnum.Q_CODELIST).required(),
   config: Joi.object().keys({
     codelist: Joi.string().required(),
@@ -47,7 +47,7 @@ export const CodelistSchema = Joi.object().keys({
 });
 
 export const TextSchema = Joi.object().keys({
-  id: Joi.string().required(),
+  id: Joi.string().length(36).required(),
   type: Joi.string().equal(QuestionEnum.Q_TEXT).required(),
   config: Joi.object().keys({
     max: Joi.number().required().min(0)
@@ -55,7 +55,7 @@ export const TextSchema = Joi.object().keys({
 });
 
 export const PeriodDateSchema = Joi.object().keys({
-  id: Joi.string().required(),
+  id: Joi.string().length(36).required(),
   type: Joi.string().equal(QuestionEnum.Q_PERIOD_DATE).required(),
   config: Joi.object().keys({
     fromDate: Joi.alternatives([
@@ -70,7 +70,7 @@ export const PeriodDateSchema = Joi.object().keys({
 });
 
 export const TimeSchema = Joi.object().keys({
-  id: Joi.string().required(),
+  id: Joi.string().length(36).required(),
   type: Joi.string().equal(QuestionEnum.Q_TIME).required(),
   config: Joi.object().keys({
     fromTime: Joi.string().trim().allow('').required(),
@@ -79,7 +79,7 @@ export const TimeSchema = Joi.object().keys({
 });
 
 export const CheckboxSchema = Joi.object().keys({
-  id: Joi.string().required(),
+  id: Joi.string().length(36).required(),
   type: Joi.string().equal(QuestionEnum.Q_CHECKBOX).required(),
   config: Joi.object().keys({
     weightTrue: Joi.number().min(1).max(100),
@@ -88,7 +88,7 @@ export const CheckboxSchema = Joi.object().keys({
 });
 
 export const FileUploadSchema = Joi.object().keys({
-  id: Joi.string().required(),
+  id: Joi.string().length(36).required(),
   type: Joi.string().equal(QuestionEnum.Q_FILEUPLOAD).required(),
   config: Joi.object().keys({
     fileEndings: Joi.string().allow('')
@@ -96,7 +96,7 @@ export const FileUploadSchema = Joi.object().keys({
 });
 
 const variantSchema = Joi.object().keys({
-  id: Joi.string().required(),
+  id: Joi.string().length(36).required(),
   requirementText: Joi.string().allow(null, '').required(),
   instruction: Joi.string().allow(null, '').required(),
   useProduct: Joi.boolean().required(),
@@ -144,11 +144,11 @@ const variantSchema = Joi.object().keys({
 });
 
 const requirementSchema = Joi.object().keys({
-  id: Joi.string().required(),
+  id: Joi.string().length(36).required(),
   title: Joi.string().max(100).required(),
   description: Joi.string().allow(null, '').required(),
   needId: Joi.string().required(),
-  kind: Joi.string().required(),
+  kind: Joi.string(),
   variants: Joi.array()
     .when('requirement_Type', {
       is: RequirementType.info,
@@ -175,22 +175,19 @@ export default function RequirementEditor(): ReactElement {
     '/workbench/:projectId/need/:needId/requirement/:requirementId/edit'
   );
 
-  if (projectMatch?.params.projectId) {
-    dispatch(selectProject(projectMatch?.params.projectId));
-  }
-
   if (projectMatch?.params.needId) {
-    dispatch(selectNeed(projectMatch?.params.needId));
+    dispatch(selectNeed(projectMatch.params.needId));
   }
 
   if (projectMatch?.params.requirementId) {
-    dispatch(selectRequirement(projectMatch?.params.requirementId));
+    dispatch(selectRequirement(projectMatch.params.requirementId));
   }
 
   const { id } = useAppSelector((state) => state.selectedProject);
   const { list } = useAppSelector((state) => state.project);
   const { needId } = useAppSelector((state) => state.selectNeed);
   const { reqId } = useAppSelector((state) => state.selectedRequirement);
+  // const { project } = useAppSelector((state) => state.project);
 
   useEffect(() => {
     async function fetchEverything() {
@@ -213,7 +210,7 @@ export default function RequirementEditor(): ReactElement {
       defaultValues: requirement
     });
 
-  /* useEffect(() => {
+  /*   useEffect(() => {
     if (requirement) {
       reset(JSON.parse(JSON.stringify(requirement)));
     }
@@ -221,32 +218,16 @@ export default function RequirementEditor(): ReactElement {
 
   if (requirement === undefined) {
     history.push(`/workbench/${project.id}/requirement`);
-    return <p> Could not find requirement </p>;
+    return <p>{t('Requirement not found')} </p>;
   }
 
   if (list.length === 0 || !needId || !reqId) {
-    return <p>Loading requirement ...</p>;
+    return <p>{t('Loading...')}</p>;
   }
 
-  const saveRequirement = async (post: Requirement) => {
-    //const converted = JSON.parse(JSON.stringify(post));
-    //console.log(converted);
-    console.log(post);
-    const oldReqIndex = Utils.ensure(
-      need.requirements.findIndex((element) => element.id === reqId)
-    );
-    dispatch(
-      editRequirementInNeed({
-        projectId: project.id,
-        requirement: post,
-        oldNeedId: need.id,
-        needId: post.needId,
-        requirementIndex: oldReqIndex
-      })
-    );
-    /* dispatch(putProjectByIdThunk(project.id)).then(() => {
-      dispatch(selectNeed(converted.needId));
-    }); */
+  const onSubmit = async (post: Requirement) => {
+    dispatch(editRequirementInNeed({ needId, requirement: post }));
+    dispatch(putSelectedProjectThunk('dummy'));
   };
 
   const needOptions = (needList: Need[]) => {
@@ -260,13 +241,17 @@ export default function RequirementEditor(): ReactElement {
   };
   const { errors } = formState;
 
+  const changeNeed = (newNeedId: string) => {
+    // TODO: dispatch a change Need and switch URL
+  };
+
   return (
     <>
       <h3 className="mt-3">
-        {Utils.capitalizeFirstLetter(requirement.requirement_Type)} Page{' '}
+        {Utils.capitalizeFirstLetter(requirement.requirement_Type)} {t('Page')}{' '}
       </h3>
       <Form
-        onSubmit={handleSubmit((e) => saveRequirement(e))}
+        onSubmit={handleSubmit((e) => onSubmit(e))}
         noValidate
         validated={validated}
       >
@@ -316,7 +301,7 @@ export default function RequirementEditor(): ReactElement {
         </Form.Group>
         <Form.Group as={Row}>
           <Form.Label column sm={1}>
-            Need
+            {t('Need')}
           </Form.Label>
           <Col sm={8}>
             <Form.Control
@@ -324,6 +309,7 @@ export default function RequirementEditor(): ReactElement {
               {...register('needId')}
               defaultValue={requirement.needId}
               isInvalid={!!errors.needId}
+              onChange={(e) => changeNeed(e.target.value)}
             >
               {needOptions(project.needs)}
             </Form.Control>
