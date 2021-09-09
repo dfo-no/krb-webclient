@@ -6,13 +6,36 @@ interface BankState {
   // banks: Finished and published versions of banks
   list: Bank[];
   status: 'idle' | 'fulfilled' | 'rejected' | 'pending';
+  latest: Bank[];
+  alfabetic: Bank[];
 }
 
 const initialState: BankState = {
   list: [],
-  status: 'idle'
+  status: 'idle',
+  latest: [],
+  alfabetic: []
 };
 
+export const getAlbefaticalSortedBanksThunk = createAsyncThunk(
+  'getAlbefaticalSortedBanksThunk',
+  async () => {
+    const response = await httpGet<Bank[]>(
+      `/api/bank/sorted?fieldname=${'title'}&limit=${5}`
+    );
+    return response.data;
+  }
+);
+
+export const getDateSortedBanksThunk = createAsyncThunk(
+  'getDateSortedBanksThunk',
+  async () => {
+    const response = await httpGet<Bank[]>(
+      `/api/bank/sorted?fieldname=${'publishedDate'}&limit=${5}`
+    );
+    return response.data;
+  }
+);
 export const getBanksThunk = createAsyncThunk('getBanksThunk', async () => {
   const response = await httpGet<Bank[]>('/api/bank/banks');
   return response.data;
@@ -43,6 +66,29 @@ const bankSlice = createSlice({
       state.status = 'fulfilled';
     });
     builder.addCase(getBanksThunk.rejected, (state) => {
+      state.status = 'rejected';
+    });
+    builder.addCase(getDateSortedBanksThunk.pending, (state) => {
+      state.status = 'pending';
+    });
+    builder.addCase(getDateSortedBanksThunk.fulfilled, (state, { payload }) => {
+      state.latest = payload;
+      state.status = 'fulfilled';
+    });
+    builder.addCase(getDateSortedBanksThunk.rejected, (state) => {
+      state.status = 'rejected';
+    });
+    builder.addCase(getAlbefaticalSortedBanksThunk.pending, (state) => {
+      state.status = 'pending';
+    });
+    builder.addCase(
+      getAlbefaticalSortedBanksThunk.fulfilled,
+      (state, { payload }) => {
+        state.alfabetic = payload;
+        state.status = 'fulfilled';
+      }
+    );
+    builder.addCase(getAlbefaticalSortedBanksThunk.rejected, (state) => {
       state.status = 'rejected';
     });
     builder.addCase(postBankThunk.fulfilled, (state, { payload }) => {
