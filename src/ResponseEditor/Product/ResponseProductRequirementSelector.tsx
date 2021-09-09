@@ -1,6 +1,5 @@
 import React, { ReactElement } from 'react';
 import Utils from '../../common/Utils';
-import { Bank } from '../../models/Bank';
 import { ResponseProduct } from '../../models/ResponseProduct';
 import { SpecificationProduct } from '../../models/SpecificationProduct';
 import { useAppSelector } from '../../store/hooks';
@@ -14,10 +13,8 @@ export default function ResponseProductRequirementSelector({
   product
 }: InputProps): ReactElement {
   const { response } = useAppSelector((state) => state.response);
-  const { list } = useAppSelector((state) => state.bank);
-  const { id } = useAppSelector((state) => state.selectedBank);
 
-  const selectedBank = Utils.ensure(list.find((bank: Bank) => bank.id === id));
+  const selectedBank = response.spesification.bank;
   const productIndex = Utils.ensure(
     response.spesification.products.findIndex(
       (specProduct: SpecificationProduct) => specProduct.id === product.id

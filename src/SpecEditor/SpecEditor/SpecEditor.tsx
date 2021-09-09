@@ -9,9 +9,7 @@ import FormControl from 'react-bootstrap/FormControl';
 import Row from 'react-bootstrap/Row';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import Utils from '../../common/Utils';
 import ErrorSummary from '../../Form/ErrorSummary';
-import { Bank } from '../../models/Bank';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { editTitle, setBank } from '../../store/reducers/spesification-reducer';
 
@@ -25,7 +23,7 @@ const titleSchema = Joi.object().keys({
 
 export default function SpecEditor(): ReactElement {
   const { id } = useAppSelector((state) => state.selectedBank);
-  const { list } = useAppSelector((state) => state.bank);
+  const { normalizedList } = useAppSelector((state) => state.bank);
   const { spec } = useAppSelector((state) => state.specification);
   const { t } = useTranslation();
   const {
@@ -44,7 +42,7 @@ export default function SpecEditor(): ReactElement {
     return <p>No selected bank</p>;
   }
 
-  const selectedBank = Utils.ensure(list.find((bank: Bank) => bank.id === id));
+  const selectedBank = normalizedList[id];
 
   dispatch(setBank(selectedBank));
 

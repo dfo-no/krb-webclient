@@ -11,7 +11,6 @@ import { Link, useRouteMatch } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
 import Utils from '../../common/Utils';
 import ErrorSummary from '../../Form/ErrorSummary';
-import { Bank } from '../../models/Bank';
 import ModelType from '../../models/ModelType';
 import { Nestable } from '../../models/Nestable';
 import { Product } from '../../models/Product';
@@ -39,7 +38,7 @@ interface IOption {
 export default function ProductSpecList(): ReactElement {
   const projectMatch = useRouteMatch<RouteParams>('/speceditor/:bankId');
   const { id } = useAppSelector((state) => state.selectedBank);
-  const { list } = useAppSelector((state) => state.bank);
+  const { normalizedList } = useAppSelector((state) => state.bank);
   const { spec } = useAppSelector((state) => state.specification);
   const { t } = useTranslation();
   const {
@@ -57,7 +56,7 @@ export default function ProductSpecList(): ReactElement {
     return <p>No selected bank</p>;
   }
 
-  const bankSelected = Utils.ensure(list.find((bank: Bank) => bank.id === id));
+  const bankSelected = normalizedList[id];
 
   const levelOptions = (products: Nestable<Product>[]) => {
     const newList = Utils.unflatten(products)[0];

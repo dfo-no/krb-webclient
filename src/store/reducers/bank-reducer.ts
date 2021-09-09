@@ -4,11 +4,13 @@ import { Bank } from '../../models/Bank';
 
 interface BankState {
   // banks: Finished and published versions of banks
+  normalizedList: { [key: string]: Bank };
   list: Bank[];
   status: 'idle' | 'fulfilled' | 'rejected' | 'pending';
 }
 
 const initialState: BankState = {
+  normalizedList: {},
   list: [],
   status: 'idle'
 };
@@ -31,7 +33,7 @@ const bankSlice = createSlice({
   initialState,
   reducers: {
     addBanks(state, { payload }: PayloadAction<Bank[]>) {
-      state.list = payload;
+      return state;
     }
   },
   extraReducers: (builder) => {
@@ -39,6 +41,12 @@ const bankSlice = createSlice({
       state.status = 'pending';
     });
     builder.addCase(getBanksThunk.fulfilled, (state, { payload }) => {
+      let bankList: { [key: string]: Bank } = {};
+      bankList = payload.reduce((banks, bank) => {
+        bankList[bank.id] = bank;
+        return bankList;
+      }, {});
+      state.normalizedList = bankList;
       state.list = payload;
       state.status = 'fulfilled';
     });
@@ -47,7 +55,7 @@ const bankSlice = createSlice({
     });
     builder.addCase(postBankThunk.fulfilled, (state, { payload }) => {
       if (payload.publishedDate && payload.publishedDate !== '') {
-        state.list.push(payload);
+        state.normalizedList[payload.id] = payload;
       }
       state.status = 'fulfilled';
     });

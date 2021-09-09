@@ -35,14 +35,12 @@ const productSchema = Joi.object().keys({
 
 export default function ProductSpecEditor(): ReactElement {
   const { id } = useAppSelector((state) => state.selectedBank);
-  const { list } = useAppSelector((state) => state.bank);
+  const { normalizedList } = useAppSelector((state) => state.bank);
   const { t } = useTranslation();
   const { selectedSpecificationProduct } = useAppSelector(
     (state) => state.selectedSpecProduct
   );
   const dispatch = useAppDispatch();
-  const bankSelected = Utils.ensure(list.find((bank) => bank.id === id));
-
   const {
     control,
     handleSubmit,
@@ -56,6 +54,7 @@ export default function ProductSpecEditor(): ReactElement {
       description: selectedSpecificationProduct.description
     }
   });
+
   const checkWeightIsPredefined = (weight: number) => {
     const predefinedValues = [10, 30, 50, 70, 90];
     return predefinedValues.includes(weight);
@@ -66,6 +65,10 @@ export default function ProductSpecEditor(): ReactElement {
     return 'egendefinert';
   };
   const [weightType, setWeightType] = useState(setWeightState());
+
+  if (!id) return <p>No selected bank</p>;
+  const bankSelected = normalizedList[id];
+
   const addProductToSpecification = (post: FormInput) => {
     const newProduct: SpecificationProduct = {
       ...selectedSpecificationProduct
