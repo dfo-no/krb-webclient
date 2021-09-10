@@ -5,7 +5,7 @@ import {
   Publication
 } from './Publication';
 
-describe('BasePublicationSchema should validate', () => {
+describe('BasePublicationSchema works', () => {
   test('BasePublicationSchema validates', () => {
     const basePublication: Publication = {
       id: 'e56367af-d48d-422d-a4f6-ba52ee17af23',
@@ -57,9 +57,9 @@ describe('BasePublicationSchema should validate', () => {
 
   test('PostPublicationSchema invalidates', () => {
     const postPublication: Publication = {
-      id: 'e56367af-d48d-422d-a4f6-ba52ee17af23',
+      id: 'aaa',
       comment: '',
-      date: new Date().toISOString(),
+      date: 'aaa',
       version: 0,
       bankId: '',
       type: ModelType.bank
@@ -68,6 +68,7 @@ describe('BasePublicationSchema should validate', () => {
     const report = PostPublicationSchema.validate(postPublication, {
       abortEarly: false
     });
+
     expect(report.error?.details.length).toEqual(6);
   });
 });
