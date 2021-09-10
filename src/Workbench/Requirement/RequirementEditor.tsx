@@ -1,232 +1,51 @@
+import { DevTool } from '@hookform/devtools';
 import { joiResolver } from '@hookform/resolvers/joi';
-import Joi from 'joi';
-import React, { ReactElement, useEffect, useState } from 'react';
+import React, { ReactElement } from 'react';
 import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import { useHistory, useRouteMatch } from 'react-router-dom';
 import Utils from '../../common/Utils';
 import ErrorSummary from '../../Form/ErrorSummary';
-import ModelType from '../../models/ModelType';
 import { Need } from '../../models/Need';
-import QuestionEnum from '../../models/QuestionEnum';
-import { Requirement } from '../../models/Requirement';
-import RequirementType from '../../models/RequirementType';
+import { BaseRequirementSchema, Requirement } from '../../models/Requirement';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import {
   editRequirementInNeed,
-  getProjectsThunk,
   putSelectedProjectThunk
 } from '../../store/reducers/project-reducer';
-import { selectNeed } from '../../store/reducers/selectedNeed-reducer';
-import { selectProject } from '../../store/reducers/selectedProject-reducer';
-import { selectRequirement } from '../../store/reducers/selectedRequirement-reducer';
 import VariantArray from './VariantArray';
+import withProjectAndNeedAndRequirement from './withProjectAndNeedAndRequirement';
 
-export const SliderSchema = Joi.object().keys({
-  id: Joi.string().length(36).required(),
-  type: Joi.string().equal(QuestionEnum.Q_SLIDER).required(),
-  config: Joi.object().keys({
-    step: Joi.number().min(0).max(1000000000).required(),
-    min: Joi.number().min(0).max(1000000000).required(),
-    max: Joi.number().min(0).max(1000000000).required(),
-    unit: Joi.string().required()
-  })
-});
-
-export const CodelistSchema = Joi.object().keys({
-  id: Joi.string().length(36).required(),
-  type: Joi.string().equal(QuestionEnum.Q_CODELIST).required(),
-  config: Joi.object().keys({
-    codelist: Joi.string().required(),
-    multipleSelect: Joi.boolean().required()
-  })
-});
-
-export const TextSchema = Joi.object().keys({
-  id: Joi.string().length(36).required(),
-  type: Joi.string().equal(QuestionEnum.Q_TEXT).required(),
-  config: Joi.object().keys({
-    max: Joi.number().required().min(0)
-  })
-});
-
-export const PeriodDateSchema = Joi.object().keys({
-  id: Joi.string().length(36).required(),
-  type: Joi.string().equal(QuestionEnum.Q_PERIOD_DATE).required(),
-  config: Joi.object().keys({
-    fromDate: Joi.alternatives([
-      Joi.date().iso(),
-      Joi.string().valid('')
-    ]).required(),
-    toDate: Joi.alternatives([
-      Joi.date().iso(),
-      Joi.string().valid('')
-    ]).required()
-  })
-});
-
-export const TimeSchema = Joi.object().keys({
-  id: Joi.string().length(36).required(),
-  type: Joi.string().equal(QuestionEnum.Q_TIME).required(),
-  config: Joi.object().keys({
-    fromTime: Joi.string().trim().allow('').required(),
-    toTime: Joi.string().trim().allow('').required()
-  })
-});
-
-export const CheckboxSchema = Joi.object().keys({
-  id: Joi.string().length(36).required(),
-  type: Joi.string().equal(QuestionEnum.Q_CHECKBOX).required(),
-  config: Joi.object().keys({
-    weightTrue: Joi.number().min(1).max(100),
-    weightFalse: Joi.number().min(0).max(100)
-  })
-});
-
-export const FileUploadSchema = Joi.object().keys({
-  id: Joi.string().length(36).required(),
-  type: Joi.string().equal(QuestionEnum.Q_FILEUPLOAD).required(),
-  config: Joi.object().keys({
-    fileEndings: Joi.string().allow('')
-  })
-});
-
-const variantSchema = Joi.object().keys({
-  id: Joi.string().length(36).required(),
-  requirementText: Joi.string().allow(null, '').required(),
-  instruction: Joi.string().allow(null, '').required(),
-  useProduct: Joi.boolean().required(),
-  useSpesification: Joi.boolean().required(),
-  useQualification: Joi.boolean().required(),
-  products: Joi.array()
-    .items()
-    .when('useProduct', {
-      is: true,
-      then: Joi.array().items(Joi.string()).min(1).required()
-    })
-    .required(),
-  questions: Joi.array()
-    .when('requirement_Type', {
-      is: RequirementType.info,
-      then: Joi.array()
-        .items(
-          Joi.alternatives().conditional('.type', {
-            switch: [
-              { is: QuestionEnum.Q_SLIDER, then: SliderSchema },
-              { is: QuestionEnum.Q_CODELIST, then: CodelistSchema },
-              { is: QuestionEnum.Q_TEXT, then: TextSchema },
-              { is: QuestionEnum.Q_PERIOD_DATE, then: PeriodDateSchema },
-              { is: QuestionEnum.Q_TIME, then: TimeSchema },
-              { is: QuestionEnum.Q_CHECKBOX, then: CheckboxSchema },
-              { is: QuestionEnum.Q_FILEUPLOAD, then: FileUploadSchema }
-            ]
-          })
-        )
-        .max(1)
-    })
-    .items(
-      Joi.alternatives().conditional('.type', {
-        switch: [
-          { is: QuestionEnum.Q_SLIDER, then: SliderSchema },
-          { is: QuestionEnum.Q_CODELIST, then: CodelistSchema },
-          { is: QuestionEnum.Q_TEXT, then: TextSchema },
-          { is: QuestionEnum.Q_PERIOD_DATE, then: PeriodDateSchema },
-          { is: QuestionEnum.Q_TIME, then: TimeSchema },
-          { is: QuestionEnum.Q_CHECKBOX, then: CheckboxSchema },
-          { is: QuestionEnum.Q_FILEUPLOAD, then: FileUploadSchema }
-        ]
-      })
-    )
-});
-
-const requirementSchema = Joi.object().keys({
-  id: Joi.string().length(36).required(),
-  title: Joi.string().max(100).required(),
-  description: Joi.string().allow(null, '').required(),
-  needId: Joi.string().required(),
-  kind: Joi.string(),
-  variants: Joi.array()
-    .when('requirement_Type', {
-      is: RequirementType.info,
-      then: Joi.array().items(variantSchema).max(1)
-    })
-    .items(variantSchema)
-    .required(),
-  requirement_Type: Joi.string().required(),
-  type: Joi.string().equal(ModelType.requirement).required()
-});
-
-interface RouteParams {
-  projectId: string;
-  needId: string;
-  requirementId: string;
-}
-
-export default function RequirementEditor(): ReactElement {
-  const [validated] = useState(false);
+function RequirementEditor(): ReactElement {
   const dispatch = useAppDispatch();
-  const history = useHistory();
+
   const { t } = useTranslation();
-  const projectMatch = useRouteMatch<RouteParams>(
-    '/workbench/:projectId/need/:needId/requirement/:requirementId/edit'
-  );
 
-  if (projectMatch?.params.needId) {
-    dispatch(selectNeed(projectMatch.params.needId));
-  }
-
-  if (projectMatch?.params.requirementId) {
-    dispatch(selectRequirement(projectMatch.params.requirementId));
-  }
-
-  const { id } = useAppSelector((state) => state.selectedProject);
-  const { list } = useAppSelector((state) => state.project);
+  // HOC ensures that these 3 props will always be set
+  const { project } = useAppSelector((state) => state.project);
   const { needId } = useAppSelector((state) => state.selectNeed);
   const { reqId } = useAppSelector((state) => state.selectedRequirement);
-  // const { project } = useAppSelector((state) => state.project);
-
-  useEffect(() => {
-    async function fetchEverything() {
-      await dispatch(getProjectsThunk());
-    }
-    if (!list) {
-      fetchEverything();
-    }
-  }, [dispatch, list]);
-
-  const project = Utils.ensure(list.find((element) => element.id === id));
 
   const need = Utils.ensure(
     project.needs.find((element) => element.id === needId)
   );
-  const requirement = need.requirements.find((element) => element.id === reqId);
-  const { control, register, handleSubmit, formState, reset } =
-    useForm<Requirement>({
-      resolver: joiResolver(requirementSchema),
-      defaultValues: requirement
-    });
 
-  /*   useEffect(() => {
-    if (requirement) {
-      reset(JSON.parse(JSON.stringify(requirement)));
-    }
-  }, [requirement, reset]); */
+  const requirement = Utils.ensure(
+    need.requirements.find((element) => element.id === reqId)
+  );
 
-  if (requirement === undefined) {
-    history.push(`/workbench/${project.id}/requirement`);
-    return <p>{t('Requirement not found')} </p>;
-  }
-
-  if (list.length === 0 || !needId || !reqId) {
-    return <p>{t('Loading...')}</p>;
-  }
+  const { control, register, handleSubmit, formState } = useForm<Requirement>({
+    resolver: joiResolver(BaseRequirementSchema),
+    defaultValues: requirement
+  });
+  const { errors } = formState;
 
   const onSubmit = async (post: Requirement) => {
-    dispatch(editRequirementInNeed({ needId, requirement: post }));
+    const serialized: Requirement = JSON.parse(JSON.stringify(post));
+    dispatch(editRequirementInNeed({ needId, requirement: serialized }));
     dispatch(putSelectedProjectThunk('dummy'));
   };
 
@@ -239,7 +58,6 @@ export default function RequirementEditor(): ReactElement {
       );
     });
   };
-  const { errors } = formState;
 
   const changeNeed = (newNeedId: string) => {
     // TODO: dispatch a change Need and switch URL
@@ -250,39 +68,7 @@ export default function RequirementEditor(): ReactElement {
       <h3 className="mt-3">
         {Utils.capitalizeFirstLetter(requirement.requirement_Type)} {t('Page')}{' '}
       </h3>
-      <Form
-        onSubmit={handleSubmit((e) => onSubmit(e))}
-        noValidate
-        validated={validated}
-      >
-        <Form.Control readOnly as="input" type="hidden" {...register('id')} />
-        <Form.Control
-          readOnly
-          as="input"
-          type="hidden"
-          {...register('description')}
-        />
-        <Form.Control
-          readOnly
-          as="input"
-          type="hidden"
-          {...register('needId')}
-        />
-        <Form.Control readOnly as="input" type="hidden" {...register('kind')} />
-        <Form.Control
-          as="input"
-          type="hidden"
-          {...register('type')}
-          isInvalid={!!errors.type}
-        />
-        <Form.Control
-          readOnly
-          as="input"
-          type="hidden"
-          {...register('requirement_Type')}
-          isInvalid={!!errors.requirement_Type}
-        />
-
+      <Form onSubmit={handleSubmit((e) => onSubmit(e))} noValidate>
         <Form.Group as={Row}>
           <Form.Label column sm={1}>
             {t('Title')}
@@ -306,6 +92,7 @@ export default function RequirementEditor(): ReactElement {
           <Col sm={8}>
             <Form.Control
               as="select"
+              disabled
               {...register('needId')}
               defaultValue={requirement.needId}
               isInvalid={!!errors.needId}
@@ -328,7 +115,12 @@ export default function RequirementEditor(): ReactElement {
           project={project}
         />
         <ErrorSummary errors={errors} />
+        {process.env.NODE_ENV === 'development' && (
+          <DevTool control={control} />
+        )}
       </Form>
     </>
   );
 }
+
+export default withProjectAndNeedAndRequirement(RequirementEditor);

@@ -16,6 +16,7 @@ import { BsTrashFill } from 'react-icons/bs';
 import { v4 as uuidv4 } from 'uuid';
 import Utils from '../../common/Utils';
 import { Bank } from '../../models/Bank';
+import { IVariant } from '../../models/IVariant';
 import { Nestable } from '../../models/Nestable';
 import { Product } from '../../models/Product';
 import { Requirement } from '../../models/Requirement';
@@ -36,8 +37,11 @@ export default function VariantArray({
   project
 }: IProps): ReactElement {
   const { errors } = formState;
-  const { fields, append, remove } = useFieldArray({
-    keyName: 'id',
+  const { fields, append, remove } = useFieldArray<
+    Requirement,
+    'variants',
+    'id'
+  >({
     control,
     name: 'variants'
   });
@@ -101,7 +105,7 @@ export default function VariantArray({
         className="mb-3"
         type="button"
         onClick={() => {
-          append({
+          const newVariant: IVariant = {
             id: uuidv4(),
             requirementText: '',
             instruction: '',
@@ -110,14 +114,16 @@ export default function VariantArray({
             useQualification: false,
             products: [],
             questions: []
-          });
+          };
+          append(newVariant);
         }}
       >
         {t('Add Variant')}
       </Button>
       {fields.map((item, index) => {
         return (
-          <Card className="mb-3" key={item.id}>
+          // eslint-disable-next-line react/no-array-index-key
+          <Card className="mb-3" key={uuidv4()}>
             <Card.Body>
               <Row className="d-flex justify-content-between">
                 <h5>{t('Variant')}</h5>
@@ -132,14 +138,23 @@ export default function VariantArray({
                   <BsTrashFill />
                 </Button>
               </Row>
-
+              {/* <input
+                key={item.id} // important to include key with field's id
+                {...register(`variants.${index}.id` as const)}
+                defaultValue={item.id} // make sure to include defaultValue
+              /> */}
               <Form.Control
-                readOnly
                 as="input"
                 type="hidden"
                 {...register(`variants.${index}.id` as const)}
                 defaultValue={item.id}
               />
+              {/* <input
+                key={item.requirementText} // important to include key with field's id
+                {...register(`variants.${index}.requirementText` as const)}
+                defaultValue={item.requirementText} // make sure to include defaultValue
+              /> */}
+
               {/* TODO: check replacement with Input */}
               <Form.Group>
                 <Form.Label>{t('Requirement text')}</Form.Label>
@@ -209,7 +224,7 @@ export default function VariantArray({
                   type="checkbox"
                   label={t('Products')}
                   defaultChecked={item.useProduct}
-                  // TODO: should be false/readOnly if no products exists, or if products has been removed
+                  /* TODO: should be false/readOnly if no products exists, or if products has been removed */
                   onChange={(e) => {
                     toggleProductChecked(item.id, e.target.checked);
                   }}
@@ -239,7 +254,6 @@ export default function VariantArray({
                     </option>
                   ))}
                 </Form.Control>
-                {/* TODO: This Feedback do not show */}
                 <Form.Control.Feedback type="invalid">
                   {errors.variants &&
                     errors.variants[index] &&

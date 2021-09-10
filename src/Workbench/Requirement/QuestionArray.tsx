@@ -146,7 +146,7 @@ export default function QuestionArray({
 
       {fields.map((item: QuestionType, index) => {
         return (
-          <div key={item.id}>
+          <div key={uuidv4()}>
             {item.type === QuestionEnum.Q_SLIDER && (
               <SliderForm
                 control={control}
