@@ -7,29 +7,27 @@ import Row from 'react-bootstrap/Row';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { v4 as uuidv4 } from 'uuid';
-import ErrorSummary from '../../Form/ErrorSummary';
 import InputRow from '../../Form/InputRow';
+import { Codelist, PostCodelistSchema } from '../../models/Codelist';
 import ModelType from '../../models/ModelType';
-import { Need, PostNeedSchema } from '../../models/Need';
-import { Nestable } from '../../models/Nestable';
 import { useAppDispatch } from '../../store/hooks';
 import {
-  addNeed,
+  addCodelist,
   putSelectedProjectThunk
 } from '../../store/reducers/project-reducer';
 
-function NewNeedForm(): ReactElement {
+function NewCodelist(): ReactElement {
   const dispatch = useAppDispatch();
   const [validated] = useState(false);
-  const [show, setShow] = useState(false);
   const { t } = useTranslation();
+  const [show, setShow] = useState(false);
 
-  const defaultValues: Need = {
+  const defaultValues = {
     id: '',
     title: '',
     description: '',
-    requirements: [],
-    type: ModelType.need
+    codes: [],
+    type: ModelType.codelist
   };
 
   const {
@@ -37,39 +35,31 @@ function NewNeedForm(): ReactElement {
     handleSubmit,
     reset,
     formState: { errors }
-  } = useForm<Need>({
-    resolver: joiResolver(PostNeedSchema),
+  } = useForm<Codelist>({
+    resolver: joiResolver(PostCodelistSchema),
     defaultValues
   });
 
-  const onSubmit = (post: Nestable<Need>) => {
-    const need = { ...post };
-    need.id = uuidv4();
-    if (need.children) {
-      delete need.children;
-    }
-    dispatch(addNeed(need));
+  const onNewCodeSubmit = (post: Codelist) => {
+    const newCodelist = { ...post };
+    newCodelist.id = uuidv4();
+    dispatch(addCodelist(newCodelist));
     dispatch(putSelectedProjectThunk('dummy')).then(() => {
-      setShow(false);
       reset();
+      setShow(false);
     });
   };
 
   return (
     <>
-      <Button
-        onClick={() => {
-          setShow(true);
-        }}
-        className="mb-4"
-      >
-        {t('new need')}
+      <Button className="mb-4" onClick={() => setShow(true)}>
+        {t('new codelist')}
       </Button>
       {show && (
         <Card className="mb-4">
           <Card.Body>
             <Form
-              onSubmit={handleSubmit(onSubmit)}
+              onSubmit={handleSubmit(onNewCodeSubmit)}
               autoComplete="off"
               noValidate
               validated={validated}
@@ -77,14 +67,14 @@ function NewNeedForm(): ReactElement {
               <InputRow
                 control={control}
                 name="title"
-                label={t('Title')}
                 errors={errors}
+                label={t('Title')}
               />
               <InputRow
                 control={control}
                 name="description"
-                label={t('Description')}
                 errors={errors}
+                label={t('Description')}
               />
               <Row>
                 <Button className="mt-2  ml-3" type="submit">
@@ -94,10 +84,9 @@ function NewNeedForm(): ReactElement {
                   className="mt-2 ml-3 btn-warning"
                   onClick={() => setShow(false)}
                 >
-                  Avbryt
+                  {t('cancel')}
                 </Button>
               </Row>
-              <ErrorSummary errors={errors} />
             </Form>
           </Card.Body>
         </Card>
@@ -106,4 +95,4 @@ function NewNeedForm(): ReactElement {
   );
 }
 
-export default NewNeedForm;
+export default NewCodelist;

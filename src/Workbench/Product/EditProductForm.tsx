@@ -1,5 +1,4 @@
 import { joiResolver } from '@hookform/resolvers/joi';
-import Joi from 'joi';
 import React, { ReactElement, useContext, useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
@@ -14,14 +13,14 @@ import ErrorSummary from '../../Form/ErrorSummary';
 import InputRow from '../../Form/InputRow';
 import { IVariant } from '../../models/IVariant';
 import { Need } from '../../models/Need';
-import { Product } from '../../models/Product';
+import { Product, PutProductSchema } from '../../models/Product';
 import { Requirement } from '../../models/Requirement';
 import { AccordionContext } from '../../NestableHierarchy/AccordionContext';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import {
-  deleteProduct,
   editProduct,
-  putProjectByIdThunk
+  putSelectedProjectThunk,
+  removeProduct
 } from '../../store/reducers/project-reducer';
 import { selectProduct } from '../../store/reducers/selectedProduct-reducer';
 
@@ -29,19 +28,8 @@ interface IProps {
   element: Product;
 }
 
-type FormInput = {
-  title: string;
-  description: string;
-};
-
-const productSchema = Joi.object().keys({
-  title: Joi.string().required(),
-  description: Joi.string().allow(null, '').required()
-});
-
-export default function ProductForm({ element }: IProps): ReactElement {
-  const { id } = useAppSelector((state) => state.selectedProject);
-  const { list } = useAppSelector((state) => state.project);
+export default function EditProductForm({ element }: IProps): ReactElement {
+  const { project } = useAppSelector((state) => state.project);
   const dispatch = useAppDispatch();
   const { onOpenClose } = useContext(AccordionContext);
   const [validated] = useState(false);
@@ -52,31 +40,22 @@ export default function ProductForm({ element }: IProps): ReactElement {
     control,
     handleSubmit,
     formState: { errors }
-  } = useForm({
-    resolver: joiResolver(productSchema),
-    defaultValues: {
-      title: element.title,
-      description: element.description
-    }
+  } = useForm<Product>({
+    resolver: joiResolver(PutProductSchema),
+    defaultValues: element
   });
-  if (!id) {
-    return <p>No project selected</p>;
-  }
 
-  const project = Utils.ensure(list.find((bank) => bank.id === id));
-
-  const edit = (post: FormInput) => {
+  const onSubmit = (post: Product) => {
     const newProduct = { ...element };
     newProduct.title = post.title;
     newProduct.description = post.description;
-    dispatch(
-      editProduct({
-        projectId: id,
-        product: newProduct
-      })
-    );
-    dispatch(putProjectByIdThunk(id));
-    onOpenClose('');
+    if (newProduct.children) {
+      delete newProduct.children;
+    }
+    dispatch(editProduct(newProduct));
+    dispatch(putSelectedProjectThunk('dummy')).then(() => {
+      onOpenClose('');
+    });
   };
 
   const checkProductConnection = () => {
@@ -93,22 +72,22 @@ export default function ProductForm({ element }: IProps): ReactElement {
     return used;
   };
 
-  const removeProduct = () => () => {
+  const deleteProduct = (product: Product) => {
     if (
       Utils.checkIfParent(project.products, element.id) ||
       checkProductConnection()
     ) {
       setModalShow(true);
     } else {
-      dispatch(deleteProduct({ projectId: id, productId: element.id }));
-      dispatch(putProjectByIdThunk(id));
+      dispatch(removeProduct(product));
+      dispatch(putSelectedProjectThunk('dummy'));
     }
     onOpenClose('');
   };
 
   return (
     <Form
-      onSubmit={handleSubmit(edit)}
+      onSubmit={handleSubmit(onSubmit)}
       autoComplete="off"
       noValidate
       validated={validated}
@@ -130,15 +109,15 @@ export default function ProductForm({ element }: IProps): ReactElement {
           {t('save')}
         </Button>
         <Link
-          to={`/workbench/${id}/${element.id}/product`}
-          onClick={() => dispatch(selectProduct(element.id))}
+          to={`/workbench/${project.id}/${element.id}/product`}
+          onClick={() => dispatch(selectProduct(element))}
         >
           <Button className="mt-2  ml-3">Preview</Button>
         </Link>
         <Button
           className="mt-2  ml-3"
           variant="warning"
-          onClick={removeProduct()}
+          onClick={() => deleteProduct(element)}
         >
           {t('delete')} <BsTrashFill />
         </Button>

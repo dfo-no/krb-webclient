@@ -7,14 +7,16 @@ import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import ErrorSummary from '../../Form/ErrorSummary';
 import { IRequirementAnswer } from '../../models/IRequirementAnswer';
-import { ISliderQuestion } from '../../models/ISliderQuestion';
+import {
+  ISliderQuestion,
+  SliderQuestionSchema
+} from '../../models/ISliderQuestion';
 import ModelType from '../../models/ModelType';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import {
   addAnswer,
   addProductAnswer
 } from '../../store/reducers/spesification-reducer';
-import { SliderSchema } from '../../Workbench/Requirement/RequirementEditor';
 
 interface IProps {
   parentAnswer: IRequirementAnswer;
@@ -26,7 +28,7 @@ export default function ValueForm({ parentAnswer }: IProps): ReactElement {
     handleSubmit,
     formState: { errors }
   } = useForm<ISliderQuestion>({
-    resolver: joiResolver(SliderSchema),
+    resolver: joiResolver(SliderQuestionSchema),
     defaultValues: {
       ...(parentAnswer.question as ISliderQuestion)
     }

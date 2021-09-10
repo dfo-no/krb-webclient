@@ -7,14 +7,13 @@ import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import ErrorSummary from '../../Form/ErrorSummary';
 import { IRequirementAnswer } from '../../models/IRequirementAnswer';
-import { ITextQuestion } from '../../models/ITextQuestion';
+import { ITextQuestion, TextQuestionSchema } from '../../models/ITextQuestion';
 import ModelType from '../../models/ModelType';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import {
   addAnswer,
   addProductAnswer
 } from '../../store/reducers/spesification-reducer';
-import { TextSchema } from '../../Workbench/Requirement/RequirementEditor';
 
 interface IProps {
   parentAnswer: IRequirementAnswer;
@@ -26,7 +25,7 @@ export default function TextForm({ parentAnswer }: IProps): ReactElement {
     handleSubmit,
     formState: { errors }
   } = useForm<ITextQuestion>({
-    resolver: joiResolver(TextSchema),
+    resolver: joiResolver(TextQuestionSchema),
     defaultValues: {
       ...(parentAnswer.question as ITextQuestion)
     }

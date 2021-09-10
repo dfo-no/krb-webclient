@@ -1,5 +1,7 @@
 import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
 
+const msWaitTime = 500;
+
 const getAxiosInstance = () => {
   const instance = axios.create({
     baseURL: process.env.REACT_APP_API_URL,
@@ -30,17 +32,25 @@ const getAxiosInstance = () => {
   return instance;
 };
 
+const wait = <T>(value: T) => {
+  if (process.env.NODE_ENV === 'development') {
+    return new Promise<T>((resolve) => setTimeout(resolve, msWaitTime, value));
+  }
+  return Promise.resolve(value);
+};
+
 const httpGet = <T, R = AxiosResponse<T>>(
   url: string,
   config?: AxiosRequestConfig
 ): Promise<R> => {
-  return getAxiosInstance().get<T, R>(url, {
-    ...config,
-    headers: {
-      ...config?.headers
-      // Authorization: `Bearer ${authHandler.accessToken()}`
-    }
-  });
+  return getAxiosInstance()
+    .get<T, R>(url, {
+      ...config,
+      headers: {
+        ...config?.headers
+      }
+    })
+    .then((value) => wait(value));
 };
 
 const httpPost = <T, R = AxiosResponse<T>>(
@@ -48,13 +58,14 @@ const httpPost = <T, R = AxiosResponse<T>>(
   data?: T,
   config?: AxiosRequestConfig
 ): Promise<R> => {
-  return getAxiosInstance().post<T, R>(url, data, {
-    ...config,
-    headers: {
-      ...config?.headers
-      // Authorization: `Bearer ${authHandler.accessToken()}`
-    }
-  });
+  return getAxiosInstance()
+    .post<T, R>(url, data, {
+      ...config,
+      headers: {
+        ...config?.headers
+      }
+    })
+    .then((value) => wait(value));
 };
 
 const httpPut = <T, R = AxiosResponse<T>>(
@@ -62,26 +73,28 @@ const httpPut = <T, R = AxiosResponse<T>>(
   data?: T,
   config?: AxiosRequestConfig
 ): Promise<R> => {
-  return getAxiosInstance().put<T, R>(url, data, {
-    ...config,
-    headers: {
-      ...config?.headers
-      // Authorization: `Bearer ${authHandler.accessToken()}`
-    }
-  });
+  return getAxiosInstance()
+    .put<T, R>(url, data, {
+      ...config,
+      headers: {
+        ...config?.headers
+      }
+    })
+    .then((value) => wait(value));
 };
 
 const httpDelete = <T, R = AxiosResponse<T>>(
   url: string,
   config?: AxiosRequestConfig
 ): Promise<R> => {
-  return getAxiosInstance().delete<T, R>(url, {
-    ...config,
-    headers: {
-      ...config?.headers
-      // Authorization: `Bearer ${authHandler.accessToken()}`
-    }
-  });
+  return getAxiosInstance()
+    .delete<T, R>(url, {
+      ...config,
+      headers: {
+        ...config?.headers
+      }
+    })
+    .then((value) => wait(value));
 };
 
 export { httpGet, httpPost, httpPut, httpDelete };

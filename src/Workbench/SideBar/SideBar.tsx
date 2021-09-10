@@ -23,6 +23,7 @@ const renderRouteLinks = (routes: IRouteLink[], isProjectSelected: boolean) => {
           as={NavLink}
           to={route.link}
           role="link"
+          exact
           activeClassName={`${css.sidebar__item__active}`}
           disabled={!isProjectSelected}
         >
@@ -34,24 +35,20 @@ const renderRouteLinks = (routes: IRouteLink[], isProjectSelected: boolean) => {
 };
 
 function SideBar(): ReactElement {
-  const { id } = useAppSelector((state) => state.selectedProject);
-  const { list } = useAppSelector((state) => state.project);
   const match = useRouteMatch<RouteParams>('/workbench/:projectId');
   const { t } = useTranslation();
 
   const currentUrl = match?.url ? match.url : '/workbench';
-  const isProjectSelected = !!id;
-
-  const selectProject = list.find((bank) => bank.id === id);
-
-  const displayTitle = selectProject
+  const selectProject = useAppSelector((state) => state.project.project);
+  const isProjectSelected = !!selectProject.id;
+  const displayTitle = selectProject.id
     ? selectProject.title
     : `<${t('none selected')}>`;
 
-  const routes = [
+  const routes: IRouteLink[] = [
     { link: `${currentUrl}`, name: `${t('Workbench')}: ${displayTitle}` },
     { link: `${currentUrl}/need`, name: t('Need') },
-    { link: `${currentUrl}/requirement`, name: t('Requirement') },
+    { link: `${currentUrl}/need/requirement`, name: t('Requirement') },
     { link: `${currentUrl}/codelist`, name: t('Codelist') },
     { link: `${currentUrl}/product`, name: t('Products') }
   ];

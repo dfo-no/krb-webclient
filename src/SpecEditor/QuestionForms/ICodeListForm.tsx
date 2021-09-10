@@ -8,7 +8,10 @@ import { Controller, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import ErrorSummary from '../../Form/ErrorSummary';
 import { Codelist } from '../../models/Codelist';
-import { ICodelistQuestion } from '../../models/ICodelistQuestion';
+import {
+  CodelistQuestionSchema,
+  ICodelistQuestion
+} from '../../models/ICodelistQuestion';
 import { IRequirementAnswer } from '../../models/IRequirementAnswer';
 import ModelType from '../../models/ModelType';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
@@ -16,7 +19,6 @@ import {
   addAnswer,
   addProductAnswer
 } from '../../store/reducers/spesification-reducer';
-import { CodelistSchema } from '../../Workbench/Requirement/RequirementEditor';
 
 interface IProps {
   parentAnswer: IRequirementAnswer;
@@ -30,7 +32,7 @@ export default function CodelistForm({ parentAnswer }: IProps): ReactElement {
     control,
     formState: { errors }
   } = useForm<ICodelistQuestion>({
-    resolver: joiResolver(CodelistSchema),
+    resolver: joiResolver(CodelistQuestionSchema),
     defaultValues: {
       ...(parentAnswer.question as ICodelistQuestion)
     }

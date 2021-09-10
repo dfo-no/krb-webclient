@@ -1,3 +1,4 @@
+import Joi from 'joi';
 import { IAnswerBase, IConfigBase, IQuestionBase } from './Question';
 import QuestionEnum from './QuestionEnum';
 
@@ -15,3 +16,14 @@ export interface ISliderConfig extends IConfigBase {
   max: number;
   unit: string;
 }
+
+export const SliderQuestionSchema = Joi.object().keys({
+  id: Joi.string().length(36).required(),
+  type: Joi.string().equal(QuestionEnum.Q_SLIDER).required(),
+  config: Joi.object().keys({
+    step: Joi.number().min(0).max(1000000000).required(),
+    min: Joi.number().min(0).max(1000000000).required(),
+    max: Joi.number().min(0).max(1000000000).required(),
+    unit: Joi.string().required()
+  })
+});

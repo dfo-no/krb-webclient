@@ -1,15 +1,24 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
+/**
+ * @deprecated
+ */
 interface SelectedProjectState {
   id: string | null;
 }
 
 const initialState: SelectedProjectState = { id: null };
 
+/**
+ * @deprecated
+ */
 const selectedProjectSlice = createSlice({
   name: 'selectedProject',
   initialState,
   reducers: {
+    /**
+      @deprecated use selectProject from from project slice instead
+     * */
     selectProject(state, { payload }: PayloadAction<string>) {
       state.id = payload;
     }
