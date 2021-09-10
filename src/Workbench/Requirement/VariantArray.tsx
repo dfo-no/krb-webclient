@@ -1,5 +1,5 @@
 import { get, has } from 'lodash';
-import React, { ReactElement, useState } from 'react';
+import React, { ReactElement } from 'react';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import Form from 'react-bootstrap/Form';
@@ -46,19 +46,7 @@ export default function VariantArray({
     name: 'variants'
   });
 
-  const [productChecked, setProductChecked] = useState<string[]>([]);
   const { t } = useTranslation();
-  const toggleProductChecked = (id: string, checked: boolean) => {
-    if (checked) {
-      const newArr = [...productChecked, id];
-      setProductChecked(newArr);
-    } else {
-      const filteredArray = productChecked.filter((str) => {
-        return str !== id;
-      });
-      setProductChecked(filteredArray);
-    }
-  };
 
   const levelOptions = (productList: Nestable<Product>[]) => {
     const newList = Utils.unflatten(productList)[0];
@@ -224,10 +212,6 @@ export default function VariantArray({
                   type="checkbox"
                   label={t('Products')}
                   defaultChecked={item.useProduct}
-                  /* TODO: should be false/readOnly if no products exists, or if products has been removed */
-                  onChange={(e) => {
-                    toggleProductChecked(item.id, e.target.checked);
-                  }}
                   isInvalid={!!has(errors, `variants[${index}].useProduct`)}
                   feedback={get(
                     errors,
@@ -254,12 +238,11 @@ export default function VariantArray({
                     </option>
                   ))}
                 </Form.Control>
-                <Form.Control.Feedback type="invalid">
-                  {errors.variants &&
-                    errors.variants[index] &&
-                    errors.variants[index]?.products &&
-                    renderMultipleErrors(errors.variants[index]?.products)}
-                </Form.Control.Feedback>
+
+                {errors.variants &&
+                  errors.variants[index] &&
+                  errors.variants[index]?.products &&
+                  renderMultipleErrors(errors.variants[index]?.products)}
               </Form.Group>
 
               <QuestionArray

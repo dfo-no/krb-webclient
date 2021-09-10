@@ -32,7 +32,8 @@ export const VariantSchema = Joi.object().keys({
     .items()
     .when('useProduct', {
       is: true,
-      then: Joi.array().items(Joi.string()).min(1).required()
+      then: Joi.array().items(Joi.string()).min(1).required(),
+      otherwise: Joi.array().length(0).required()
     })
     .required(),
   questions: Joi.array()
