@@ -108,7 +108,6 @@ function NewRequirementForm(): ReactElement {
                 label={t('Description')}
                 errors={errors}
               />
-              <input {...register('requirement_Type')} />
               <Row>
                 <Button className="mt-2  ml-3" type="submit">
                   {t('save')}

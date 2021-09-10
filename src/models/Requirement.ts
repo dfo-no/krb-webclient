@@ -31,25 +31,8 @@ export const BaseRequirementSchema = Joi.object().keys({
   type: Joi.string().equal(ModelType.requirement).required()
 });
 
-export const PutRequirementSchema = BaseRequirementSchema.keys({});
+export const PutRequirementSchema = BaseRequirementSchema;
 
 export const PostRequirementSchema = BaseRequirementSchema.keys({
   id: Joi.string().equal('').required()
 });
-
-/* const requirementSchema = Joi.object().keys({
-   id: Joi.string().length(36).required(),
-   title: Joi.string().max(100).required(),
-   description: Joi.string().allow(null, '').required(),
-   needId: Joi.string().required(),
-  kind: Joi.string(),
-  variants: Joi.array()
-    .when('requirement_Type', {
-      is: RequirementType.info,
-      then: Joi.array().items(variantSchema).max(1)
-    })
-    .items(variantSchema)
-    .required()
-   requirement_Type: Joi.string().required(),
-   type: Joi.string().equal(ModelType.requirement).required()
-}); */
