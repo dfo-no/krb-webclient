@@ -4,6 +4,7 @@ import { Bank } from '../../models/Bank';
 
 interface BankState {
   // banks: Finished and published versions of banks
+  normalizedList: { [key: string]: Bank };
   list: Bank[];
   status: 'idle' | 'fulfilled' | 'rejected' | 'pending';
   latest: Bank[];
@@ -11,6 +12,7 @@ interface BankState {
 }
 
 const initialState: BankState = {
+  normalizedList: {},
   list: [],
   status: 'idle',
   latest: [],
@@ -21,7 +23,7 @@ export const getAlbefaticalSortedBanksThunk = createAsyncThunk(
   'getAlbefaticalSortedBanksThunk',
   async () => {
     const response = await httpGet<Bank[]>(
-      `/api/bank/sorted?fieldname=${'title'}&limit=${5}`
+      `/api/bank/sorted?fieldName=${'title'}&limit=${5}`
     );
     return response.data;
   }
@@ -31,7 +33,7 @@ export const getDateSortedBanksThunk = createAsyncThunk(
   'getDateSortedBanksThunk',
   async () => {
     const response = await httpGet<Bank[]>(
-      `/api/bank/sorted?fieldname=${'publishedDate'}&limit=${5}`
+      `/api/bank/sorted?fieldName=${'publishedDate'}&limit=${5}`
     );
     return response.data;
   }
@@ -54,7 +56,7 @@ const bankSlice = createSlice({
   initialState,
   reducers: {
     addBanks(state, { payload }: PayloadAction<Bank[]>) {
-      state.list = payload;
+      return state;
     }
   },
   extraReducers: (builder) => {
@@ -62,6 +64,12 @@ const bankSlice = createSlice({
       state.status = 'pending';
     });
     builder.addCase(getBanksThunk.fulfilled, (state, { payload }) => {
+      let bankList: { [key: string]: Bank } = {};
+      bankList = payload.reduce((banks, bank) => {
+        bankList[bank.id] = bank;
+        return bankList;
+      }, {});
+      state.normalizedList = bankList;
       state.list = payload;
       state.status = 'fulfilled';
     });
@@ -93,7 +101,7 @@ const bankSlice = createSlice({
     });
     builder.addCase(postBankThunk.fulfilled, (state, { payload }) => {
       if (payload.publishedDate && payload.publishedDate !== '') {
-        state.list.push(payload);
+        state.normalizedList[payload.id] = payload;
       }
       state.status = 'fulfilled';
     });

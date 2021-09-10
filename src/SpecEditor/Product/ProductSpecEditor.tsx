@@ -9,7 +9,6 @@ import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 import { Controller, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import Utils from '../../common/Utils';
 import ErrorSummary from '../../Form/ErrorSummary';
 import InputRow from '../../Form/InputRow';
 import { IOption } from '../../models/IOption';
@@ -23,14 +22,12 @@ import ProductRequirementSelectorList from './ProductRequirementSelectorList';
 
 export default function ProductSpecEditor(): ReactElement {
   const { id } = useAppSelector((state) => state.selectedBank);
-  const { list } = useAppSelector((state) => state.bank);
+  const { normalizedList } = useAppSelector((state) => state.bank);
   const { t } = useTranslation();
   const { selectedSpecificationProduct } = useAppSelector(
     (state) => state.selectedSpecProduct
   );
   const dispatch = useAppDispatch();
-  const bankSelected = Utils.ensure(list.find((bank) => bank.id === id));
-
   const {
     control,
     handleSubmit,
@@ -40,6 +37,7 @@ export default function ProductSpecEditor(): ReactElement {
     resolver: joiResolver(SpecificationProductSchema),
     defaultValues: selectedSpecificationProduct
   });
+
   const checkWeightIsPredefined = (weight: number) => {
     const predefinedValues = [10, 30, 50, 70, 90];
     return predefinedValues.includes(weight);
@@ -50,6 +48,10 @@ export default function ProductSpecEditor(): ReactElement {
     return 'egendefinert';
   };
   const [weightType, setWeightType] = useState(setWeightState());
+
+  if (!id) return <p>No selected bank</p>;
+  const bankSelected = normalizedList[id];
+
   const addProductToSpecification = (post: SpecificationProduct) => {
     const newProduct: SpecificationProduct = {
       ...post
