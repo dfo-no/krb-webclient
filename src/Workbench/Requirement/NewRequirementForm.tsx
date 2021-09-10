@@ -42,7 +42,6 @@ function NewRequirementForm(): ReactElement {
     control,
     handleSubmit,
     reset,
-    register,
     setValue,
     formState: { errors }
   } = useForm<Requirement>({
