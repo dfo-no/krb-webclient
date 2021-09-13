@@ -37,6 +37,7 @@ function Projects(): ReactElement {
     codelist: [],
     products: [],
     publications: [],
+    tags: [],
     version: 0,
     publishedDate: '',
     type: ModelType.bank

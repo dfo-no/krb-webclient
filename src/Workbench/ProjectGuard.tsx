@@ -11,6 +11,7 @@ import ProductPage from './Product/ProductPage';
 import ProjectPage from './Project/ProjectPage';
 import RequirementEditor from './Requirement/RequirementEditor';
 import RequirementPage from './Requirement/RequirementPage';
+import TagPage from './Tags/TagPage';
 
 interface RouteParams {
   projectId: string;
@@ -60,7 +61,9 @@ export default function ProjectGuard(): JSX.Element {
       <Route exact path="/workbench/:projectId/need/requirement">
         <RequirementPage />
       </Route>
-
+      <Route exact path="/workbench/:projectId/tags">
+        <TagPage />
+      </Route>
       <Route exact path="/workbench/:projectId/codelist">
         <CodelistPage />
       </Route>

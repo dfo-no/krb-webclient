@@ -19,6 +19,7 @@ const initialState: ResponseState = {
         title: '',
         description: '',
         needs: [],
+        tags: [],
         products: [],
         codelist: [],
         version: 0,

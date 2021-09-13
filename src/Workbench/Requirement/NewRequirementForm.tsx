@@ -32,6 +32,7 @@ function NewRequirementForm(): ReactElement {
     title: '',
     description: '',
     needId,
+    tags: [],
     variants: [],
     kind: 'yes/no',
     type: ModelType.requirement,

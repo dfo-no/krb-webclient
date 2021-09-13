@@ -10,6 +10,7 @@ import { Nestable } from '../../models/Nestable';
 import { Product } from '../../models/Product';
 import { Publication } from '../../models/Publication';
 import { Requirement } from '../../models/Requirement';
+import { Tag } from '../../models/Tag';
 
 interface ProjectState {
   list: Bank[];
@@ -27,6 +28,7 @@ const initialState: ProjectState = {
     needs: [],
     codelist: [],
     products: [],
+    tags: [],
     publications: [],
     type: ModelType.bank,
     version: 0
@@ -403,6 +405,24 @@ const projectSlice = createSlice({
     },
     updateSelectedVersion(state, { payload }: PayloadAction<number>) {
       state.project.version = payload;
+    },
+    addTag(state, { payload }: PayloadAction<Tag>) {
+      console.log(payload);
+      state.project.tags.push(payload);
+    },
+    editTag(state, { payload }: PayloadAction<Tag>) {
+      const index = state.project.tags.findIndex(
+        (element) => payload.id === element.id
+      );
+      state.project.tags[index] = payload;
+    },
+    removeTag(state, { payload }: PayloadAction<Tag>) {
+      const index = state.project.tags.findIndex(
+        (element) => payload.id === element.id
+      );
+      if (index !== -1) {
+        state.project.tags.splice(index, 1);
+      }
     }
   },
   extraReducers: (builder) => {
@@ -522,7 +542,10 @@ export const {
   removePublication,
   updateSelectedVersion,
   selectProject,
-  editPublication
+  editPublication,
+  addTag,
+  editTag,
+  removeTag
 } = projectSlice.actions;
 
 export default projectSlice.reducer;

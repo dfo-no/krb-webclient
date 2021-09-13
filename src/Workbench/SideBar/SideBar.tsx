@@ -50,7 +50,8 @@ function SideBar(): ReactElement {
     { link: `${currentUrl}/need`, name: t('Need') },
     { link: `${currentUrl}/need/requirement`, name: t('Requirement') },
     { link: `${currentUrl}/codelist`, name: t('Codelist') },
-    { link: `${currentUrl}/product`, name: t('Products') }
+    { link: `${currentUrl}/product`, name: t('Products') },
+    { link: `${currentUrl}/tags`, name: t('Tags') }
   ];
 
   return (
