@@ -34,7 +34,6 @@ function NewRequirementForm(): ReactElement {
     needId,
     tags: [],
     variants: [],
-    kind: 'yes/no',
     type: ModelType.requirement,
     requirement_Type: RequirementType.requirement
   };
@@ -43,7 +42,6 @@ function NewRequirementForm(): ReactElement {
     control,
     handleSubmit,
     reset,
-    register,
     setValue,
     formState: { errors }
   } = useForm<Requirement>({
@@ -109,7 +107,6 @@ function NewRequirementForm(): ReactElement {
                 label={t('Description')}
                 errors={errors}
               />
-              <input {...register('requirement_Type')} />
               <Row>
                 <Button className="mt-2  ml-3" type="submit">
                   {t('save')}
