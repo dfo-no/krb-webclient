@@ -33,7 +33,6 @@ function NewRequirementForm(): ReactElement {
     description: '',
     needId,
     variants: [],
-    kind: 'yes/no',
     type: ModelType.requirement,
     requirement_Type: RequirementType.requirement
   };
