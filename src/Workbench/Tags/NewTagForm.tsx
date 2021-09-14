@@ -24,7 +24,7 @@ export default function NewTagForm(): ReactElement {
 
   const defaultValues = {
     id: '',
-    title: 'test',
+    title: '',
     type: ModelType.tag
   };
 
