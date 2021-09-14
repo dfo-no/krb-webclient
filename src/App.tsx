@@ -16,7 +16,6 @@ import PageLayout from './PageLayout';
 import ResponseModule from './ResponseEditor/ResponseModule';
 import ResponsePage from './ResponseEditor/ResponsePage';
 import SpecModule from './SpecEditor/SpecModule';
-import SpecPage from './SpecEditor/SpecPage';
 import WorkbenchModule from './Workbench/WorkbenchModule';
 
 const msalInstance = new PublicClientApplication(msalConfig);
@@ -34,8 +33,7 @@ function App(): ReactElement {
         <PageLayout>
           <AuthenticatedTemplate>
             <Route path="/workbench" component={WorkbenchModule} />
-            <Route path="/speceditor/:id" component={SpecModule} />
-            <Route exact path="/speceditor" component={SpecPage} />
+            <Route path="/specification" component={SpecModule} />
             <Route path="/response/:id" component={ResponseModule} />
             <Route exact path="/response" component={ResponsePage} />
             <Route path="/evaluation" component={Evaluation} />

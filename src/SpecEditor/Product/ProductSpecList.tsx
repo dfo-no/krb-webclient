@@ -36,7 +36,7 @@ interface IOption {
 }
 
 export default function ProductSpecList(): ReactElement {
-  const projectMatch = useRouteMatch<RouteParams>('/speceditor/:bankId');
+  const projectMatch = useRouteMatch<RouteParams>('/specification/:bankId');
   const { id } = useAppSelector((state) => state.selectedBank);
   const { normalizedList } = useAppSelector((state) => state.bank);
   const { spec } = useAppSelector((state) => state.specification);
@@ -112,7 +112,7 @@ export default function ProductSpecList(): ReactElement {
             </p>
             <Link
               onClick={() => dispatch(selectSpecificationProduct(product))}
-              to={`/speceditor/${id}/product/${product.id}`}
+              to={`/specification/${id}/product/${product.id}`}
             >
               <BsPencil className="ml-2  mt-1" />
             </Link>
