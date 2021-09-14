@@ -19,6 +19,7 @@ const initialState: SpecificationState = {
       needs: [],
       products: [],
       codelist: [],
+      tags: [],
       version: 0,
       type: ModelType.bank,
       publications: []

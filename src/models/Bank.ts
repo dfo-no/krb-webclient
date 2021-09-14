@@ -6,6 +6,7 @@ import { Need } from './Need';
 import { Nestable } from './Nestable';
 import { Product } from './Product';
 import { Publication } from './Publication';
+import { Tag } from './Tag';
 
 export const BaseBankSchema = Joi.object().keys({
   id: Joi.string().length(36).required(),
@@ -14,6 +15,7 @@ export const BaseBankSchema = Joi.object().keys({
   needs: Joi.array().required(),
   products: Joi.array().required(),
   codelist: Joi.array().required(),
+  tags: Joi.array().required(),
   version: Joi.number().min(0).required(),
   type: Joi.string().equal(ModelType.bank).required(),
   publications: Joi.array().required(),
@@ -31,6 +33,7 @@ export interface Bank extends BaseModel {
   codelist: Codelist[];
   products: Product[];
   version: number;
+  tags: Tag[];
   publications: Publication[];
   publishedDate?: string;
 }

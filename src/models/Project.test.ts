@@ -13,6 +13,7 @@ describe('ProjectSchemas works', () => {
       publications: [],
       type: ModelType.bank,
       version: 1,
+      tags: [],
       needs: [],
       products: [],
       publishedDate: ''
@@ -32,6 +33,7 @@ describe('ProjectSchemas works', () => {
       type: ModelType.bank,
       version: 1,
       needs: [],
+      tags: [],
       products: [],
       publishedDate: ''
     };
@@ -66,6 +68,7 @@ describe('ProjectSchemas works', () => {
       ],
       type: ModelType.bank,
       version: 1,
+      tags: [],
       needs: [],
       products: [],
       publishedDate: ''
@@ -85,6 +88,7 @@ describe('ProjectSchemas works', () => {
       version: 1,
       needs: [],
       products: [],
+      tags: [],
       publishedDate: '',
       publications: [
         {

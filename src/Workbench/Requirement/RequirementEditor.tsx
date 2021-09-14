@@ -11,11 +11,13 @@ import Utils from '../../common/Utils';
 import ErrorSummary from '../../Form/ErrorSummary';
 import { Need } from '../../models/Need';
 import { BaseRequirementSchema, Requirement } from '../../models/Requirement';
+import { Tag } from '../../models/Tag';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import {
   editRequirementInNeed,
   putSelectedProjectThunk
 } from '../../store/reducers/project-reducer';
+import TagsAsChips from '../Tags/TagsAsChips';
 import VariantArray from './VariantArray';
 import withProjectAndNeedAndRequirement from './withProjectAndNeedAndRequirement';
 
@@ -45,7 +47,9 @@ function RequirementEditor(): ReactElement {
 
   const onSubmit = async (post: Requirement) => {
     const serialized: Requirement = JSON.parse(JSON.stringify(post));
-    dispatch(editRequirementInNeed({ needId, requirement: serialized }));
+    dispatch(
+      editRequirementInNeed({ needId: need.id, requirement: serialized })
+    );
     dispatch(putSelectedProjectThunk('dummy'));
   };
 
@@ -63,6 +67,15 @@ function RequirementEditor(): ReactElement {
     // TODO: dispatch a change Need and switch URL
   };
 
+  const tagOptions = (tags: Tag[]) => {
+    return tags.map((tag) => {
+      return (
+        <option key={tag.id} value={tag.id}>
+          {tag.title}
+        </option>
+      );
+    });
+  };
   return (
     <>
       <h3 className="mt-3">
@@ -85,6 +98,26 @@ function RequirementEditor(): ReactElement {
             <Button type="submit">{t('save')}</Button>
           </Col>
         </Form.Group>
+        <Row>
+          <Form.Label column sm={1}>
+            {t('Tags')}
+          </Form.Label>
+          <Col sm={8}>
+            <Form.Control
+              as="select"
+              multiple
+              {...register('tags')}
+              isInvalid={!!errors.tags}
+            >
+              {tagOptions(project.tags)}
+            </Form.Control>
+            {errors.needId && (
+              <Form.Control.Feedback as={Col} type="invalid">
+                {errors.needId?.message}
+              </Form.Control.Feedback>
+            )}
+          </Col>
+        </Row>
         <Form.Group as={Row}>
           <Form.Label column sm={1}>
             {t('Need')}
@@ -107,7 +140,12 @@ function RequirementEditor(): ReactElement {
             )}
           </Col>
         </Form.Group>
-
+        <Row>
+          <Col sm={1} />
+          <Col sm={8}>
+            <TagsAsChips tags={requirement.tags} />
+          </Col>
+        </Row>
         <VariantArray
           control={control}
           register={register}

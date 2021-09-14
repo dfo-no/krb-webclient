@@ -11,6 +11,7 @@ export interface Requirement extends BaseModel {
   needId: string;
   variants: IVariant[];
   requirement_Type: RequirementType;
+  tags: string[];
 }
 
 export const BaseRequirementSchema = Joi.object().keys({
@@ -25,6 +26,7 @@ export const BaseRequirementSchema = Joi.object().keys({
     })
     .items(VariantSchema)
     .required(),
+  tags: Joi.array().items(Joi.string()),
   requirement_Type: Joi.string().valid(...Object.values(RequirementType)),
   type: Joi.string().equal(ModelType.requirement).required()
 });
