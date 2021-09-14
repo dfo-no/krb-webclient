@@ -14,6 +14,7 @@ import ConfigureQuestion from './Requirement/ConfigureQuestion';
 import RequirementSpecEditor from './Requirement/RequirementSpecEditor';
 import SpecSideBar from './SideBar/SpecSideBar';
 import SpecEditor from './SpecEditor/SpecEditor';
+import SpecPage from './SpecPage';
 
 interface RouteParams {
   bankId: string;
@@ -30,37 +31,43 @@ export default function SpecModule(): ReactElement {
   return (
     <Container fluid>
       <Row>
-        <Col className="col-2 p-0">
-          <SpecSideBar />
-          {/* Sidebar outside Switch *may* be a very bad idea */}
-        </Col>
+        <Switch>
+          <Route path="/specification/:id">
+            <Col className="col-2 p-0">
+              <SpecSideBar />
+            </Col>
+          </Route>
+        </Switch>
         <Col>
           <Switch>
-            <Route exact path="/speceditor/:id">
+            <Route exact path="/specification">
+              <SpecPage />
+            </Route>
+            <Route exact path="/specification/:id">
               <SpecEditor />
             </Route>
-            <Route exact path="/speceditor/:id/requirement">
+            <Route exact path="/specification/:id/requirement">
               <RequirementSpecEditor />
             </Route>
             <Route
               exact
-              path="/speceditor/:id/requirement/question/:questionid"
+              path="/specification/:id/requirement/question/:questionid"
             >
               <ConfigureQuestion />
             </Route>
-            <Route exact path="/speceditor/:id/product">
+            <Route exact path="/specification/:id/product">
               <ProductSpecList />
             </Route>
-            <Route exact path="/speceditor/:id/product/:productid">
+            <Route exact path="/specification/:id/product/:productid">
               <ProductSpecEditor />
             </Route>
             <Route
               exact
-              path="/speceditor/:id/product/:productid/question/:questionid"
+              path="/specification/:id/product/:productid/question/:questionid"
             >
               <ConfigureProductQuestion />
             </Route>
-            <Route exact path="/speceditor/:id/download">
+            <Route exact path="/specification/:id/download">
               <DownloadPage />
             </Route>
             <Route>

@@ -242,7 +242,7 @@ export default function RequirementAnswer({
             {selectedAlternative !== undefined && (
               <Link
                 onClick={selectAlt}
-                to={`/speceditor/${id}/requirement/question/${selectedAlternative}`}
+                to={`/specification/${id}/requirement/question/${selectedAlternative}`}
               >
                 <Button className="ml-4">Configure question</Button>
               </Link>
