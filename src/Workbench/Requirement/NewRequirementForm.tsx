@@ -27,11 +27,13 @@ function NewRequirementForm(): ReactElement {
 
   const [show, setShow] = useState(false);
 
+  const need = needId !== null ? needId : '';
+
   const defaultValues: Requirement = {
     id: '',
     title: '',
     description: '',
-    needId,
+    needId: need,
     tags: [],
     variants: [],
     type: ModelType.requirement,
@@ -54,7 +56,7 @@ function NewRequirementForm(): ReactElement {
     requirement.id = uuidv4();
     dispatch(
       addRequirementToNeed({
-        needId,
+        needId: need,
         requirement
       })
     );

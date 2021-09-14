@@ -40,10 +40,12 @@ export default function EditRequirementForm({ element }: IProps): ReactElement {
     defaultValues: element
   });
 
+  const need = needId !== null ? needId : '';
+
   const onSubmit = (post: Requirement) => {
     dispatch(
       editRequirementInNeed({
-        needId,
+        needId: need,
         requirement: post
       })
     );
@@ -55,7 +57,7 @@ export default function EditRequirementForm({ element }: IProps): ReactElement {
   const removeRequirement = (req: Requirement) => {
     dispatch(
       deleteRequirement({
-        needId,
+        needId: need,
         requirement: req
       })
     );

@@ -3,7 +3,6 @@ import { BaseModel } from './BaseModel';
 import { IVariant, VariantSchema } from './IVariant';
 import ModelType from './ModelType';
 import RequirementType from './RequirementType';
-import { Tag } from './Tag';
 
 export interface Requirement extends BaseModel {
   id: string;
@@ -12,7 +11,7 @@ export interface Requirement extends BaseModel {
   needId: string;
   variants: IVariant[];
   requirement_Type: RequirementType;
-  tags: Tag[];
+  tags: string[];
 }
 
 export const BaseRequirementSchema = Joi.object().keys({

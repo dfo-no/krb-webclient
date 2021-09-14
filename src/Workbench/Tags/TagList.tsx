@@ -49,7 +49,7 @@ export default function TagList(): ReactElement {
   return (
     <AccordionContext.Provider value={{ onOpenClose }}>
       <Accordion activeKey={activeKey} onSelect={(e) => onOpenClose(e)}>
-        {renderList()}{' '}
+        {renderList()}
       </Accordion>
     </AccordionContext.Provider>
   );
