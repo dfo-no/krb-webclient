@@ -26,7 +26,7 @@ export default function FilteredList({
     return list.map((bank: Bank) => {
       return (
         <ListGroup.Item key={bank.id}>
-          <Link to="/speceditor" onClick={handleSelectedBank(bank)}>
+          <Link to="/specification" onClick={handleSelectedBank(bank)}>
             {bank.title}
           </Link>
         </ListGroup.Item>

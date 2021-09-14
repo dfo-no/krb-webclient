@@ -20,7 +20,7 @@ export default function BankPage(): ReactElement {
         <h1>{selectedBank.title}</h1>
       </Row>
       <Row>
-        <Link to={`/speceditor/${selectedBank.id}`}>
+        <Link to={`/specification/${selectedBank.id}`}>
           <Button>Create spec</Button>
         </Link>
       </Row>

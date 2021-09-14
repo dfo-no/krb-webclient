@@ -35,7 +35,7 @@ export default function SpecPage(): ReactElement {
     }).then((response) => {
       dispatch(selectBank(response.data.bank.id));
       dispatch(setSpecification(response.data));
-      history.push(`/speceditor/${response.data.bank.id}`);
+      history.push(`/specification/${response.data.bank.id}`);
       return response;
     });
   };
@@ -70,7 +70,7 @@ export default function SpecPage(): ReactElement {
   return (
     <Row className="mt-4">
       <Col sm={4}>
-        <Link to={`/speceditor/${id}`}>
+        <Link to={`/specification/${id}`}>
           <Button type="submit" className="mt-4">
             {t('create specification')}
           </Button>

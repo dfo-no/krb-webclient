@@ -10,7 +10,7 @@ interface RouteParams {
 }
 
 export default function RequirementSpecEditor(): ReactElement {
-  const projectMatch = useRouteMatch<RouteParams>('/speceditor/:bankId');
+  const projectMatch = useRouteMatch<RouteParams>('/specification/:bankId');
   const { id } = useAppSelector((state) => state.selectedBank);
   const { normalizedList } = useAppSelector((state) => state.bank);
   const dispatch = useAppDispatch();
