@@ -8,7 +8,10 @@ import Row from 'react-bootstrap/Row';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import ErrorSummary from '../../Form/ErrorSummary';
-import { IFileUploadQuestion } from '../../models/IFileUploadQuestion';
+import {
+  FileUploadQuestionSchema,
+  IFileUploadQuestion
+} from '../../models/IFileUploadQuestion';
 import { IRequirementAnswer } from '../../models/IRequirementAnswer';
 import ModelType from '../../models/ModelType';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
@@ -16,7 +19,6 @@ import {
   editAnswer,
   editProductAnswer
 } from '../../store/reducers/spesification-reducer';
-import { FileUploadSchema } from '../../Workbench/Requirement/RequirementEditor';
 
 interface IProps {
   parentAnswer: IRequirementAnswer;
@@ -28,7 +30,7 @@ export default function FileInputForm({ parentAnswer }: IProps): ReactElement {
     handleSubmit,
     formState: { errors }
   } = useForm<IFileUploadQuestion>({
-    resolver: joiResolver(FileUploadSchema),
+    resolver: joiResolver(FileUploadQuestionSchema),
     defaultValues: {
       ...(parentAnswer.question as IFileUploadQuestion)
     }

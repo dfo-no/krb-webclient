@@ -51,7 +51,7 @@ export default function DatePicker({
           <Controller
             name={name}
             control={control}
-            render={({ field: { ref, ...rest } }) => (
+            render={({ field: { onChange, onBlur, value } }) => (
               <KeyboardDatePicker
                 margin="none"
                 /* margin="normal" */
@@ -63,7 +63,9 @@ export default function DatePicker({
                 KeyboardButtonProps={{
                   'aria-label': 'change date'
                 }}
-                {...rest}
+                onChange={onChange}
+                onBlur={onBlur}
+                value={value}
               />
             )}
           />

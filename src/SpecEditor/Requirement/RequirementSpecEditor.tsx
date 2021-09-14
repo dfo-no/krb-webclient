@@ -1,8 +1,6 @@
 import React, { ReactElement } from 'react';
 import Container from 'react-bootstrap/Container';
 import { useRouteMatch } from 'react-router-dom';
-import Utils from '../../common/Utils';
-import { Bank } from '../../models/Bank';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { selectBank } from '../../store/reducers/selectedBank-reducer';
 import RequirementSelectorList from './RequirementSelectorList';
@@ -12,9 +10,9 @@ interface RouteParams {
 }
 
 export default function RequirementSpecEditor(): ReactElement {
-  const projectMatch = useRouteMatch<RouteParams>('/speceditor/:bankId');
+  const projectMatch = useRouteMatch<RouteParams>('/specification/:bankId');
   const { id } = useAppSelector((state) => state.selectedBank);
-  const { list } = useAppSelector((state) => state.bank);
+  const { normalizedList } = useAppSelector((state) => state.bank);
   const dispatch = useAppDispatch();
 
   if (projectMatch?.params.bankId && !id) {
@@ -24,7 +22,7 @@ export default function RequirementSpecEditor(): ReactElement {
   if (!id) {
     return <p>No selected bank</p>;
   }
-  const bankSelected = Utils.ensure(list.find((bank: Bank) => bank.id === id));
+  const bankSelected = normalizedList[id];
   return (
     <Container fluid>
       <RequirementSelectorList needList={bankSelected.needs} />

@@ -1,5 +1,4 @@
 import { joiResolver } from '@hookform/resolvers/joi';
-import Joi from 'joi';
 import React, { ReactElement, useContext, useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
@@ -10,41 +9,23 @@ import { BsTrashFill } from 'react-icons/bs';
 import { Link } from 'react-router-dom';
 import ErrorSummary from '../../Form/ErrorSummary';
 import InputRow from '../../Form/InputRow';
-import { Need } from '../../models/Need';
-import { Requirement } from '../../models/Requirement';
+import { PutRequirementSchema, Requirement } from '../../models/Requirement';
 import { AccordionContext } from '../../NestableHierarchy/AccordionContext';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import {
   deleteRequirement,
   editRequirementInNeed,
-  putProjectByIdThunk
+  putSelectedProjectThunk
 } from '../../store/reducers/project-reducer';
 import { selectRequirement } from '../../store/reducers/selectedRequirement-reducer';
 
 interface IProps {
   element: Requirement;
-  index: number;
-  need: Need;
-  needList: Need[];
 }
 
-type FormInput = {
-  title: string;
-  description: string;
-};
-
-const reqSchema = Joi.object().keys({
-  title: Joi.string().required(),
-  description: Joi.string().allow(null, '').required()
-});
-
-export default function EditRequirementForm({
-  element,
-  index,
-  need,
-  needList
-}: IProps): ReactElement {
-  const { id } = useAppSelector((state) => state.selectedProject);
+export default function EditRequirementForm({ element }: IProps): ReactElement {
+  const { project } = useAppSelector((state) => state.project);
+  const { needId } = useAppSelector((state) => state.selectNeed);
   const dispatch = useAppDispatch();
   const { onOpenClose } = useContext(AccordionContext);
   const [validated] = useState(false);
@@ -54,55 +35,38 @@ export default function EditRequirementForm({
     control,
     handleSubmit,
     formState: { errors }
-  } = useForm<FormInput>({
-    resolver: joiResolver(reqSchema),
-    defaultValues: {
-      title: element.title,
-      description: element.description
-    }
+  } = useForm<Requirement>({
+    resolver: joiResolver(PutRequirementSchema),
+    defaultValues: element
   });
-  if (!id) {
-    return <p>No project selected</p>;
-  }
 
-  const edit = (post: FormInput) => {
-    const reqList = [...need.requirements];
-    const requirement: Requirement = {
-      ...element
-    };
-    requirement.title = post.title;
-    requirement.description = post.description;
-    reqList[index] = requirement;
+  const need = needId !== null ? needId : '';
+
+  const onSubmit = (post: Requirement) => {
     dispatch(
       editRequirementInNeed({
-        projectId: id,
-        oldNeedId: need.id,
-        needId: need.id,
-        requirement,
-        requirementIndex: index
+        needId: need,
+        requirement: post
       })
     );
-    dispatch(putProjectByIdThunk(id));
-    onOpenClose('');
+    dispatch(putSelectedProjectThunk('dummy')).then(() => {
+      onOpenClose('');
+    });
   };
 
-  const removeRequirement = () => {
-    const needIndex = needList.findIndex(
-      (needElement) => needElement.id === need.id
-    );
+  const removeRequirement = (req: Requirement) => {
     dispatch(
       deleteRequirement({
-        id,
-        needIndex,
-        requirementIndex: index
+        needId: need,
+        requirement: req
       })
     );
-    dispatch(putProjectByIdThunk(id));
+    dispatch(putSelectedProjectThunk('dummy'));
   };
 
   return (
     <Form
-      onSubmit={handleSubmit(edit)}
+      onSubmit={handleSubmit(onSubmit)}
       autoComplete="off"
       noValidate
       validated={validated}
@@ -125,15 +89,15 @@ export default function EditRequirementForm({
           {t('save')}
         </Button>
         <Link
-          to={`/workbench/${id}/need/${need.id}/requirement/${element.id}/edit`}
+          to={`/workbench/${project.id}/need/${needId}/requirement/${element.id}/edit`}
           onClick={() => dispatch(selectRequirement(element.id))}
         >
           <Button className="ml-4 mt-2 ">{t('edit')}</Button>
         </Link>
         <Button
           className="mt-2  ml-3"
-          variant="warning"
-          onClick={removeRequirement}
+          variant="danger"
+          onClick={() => removeRequirement(element)}
         >
           {t('delete')} <BsTrashFill />
         </Button>

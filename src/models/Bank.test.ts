@@ -11,6 +11,7 @@ describe('BankSchema should validate', () => {
       publications: [],
       type: ModelType.bank,
       version: 1,
+      tags: [],
       needs: [],
       products: [],
       publishedDate: new Date().toJSON()

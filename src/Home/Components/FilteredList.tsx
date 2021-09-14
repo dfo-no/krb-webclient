@@ -1,4 +1,3 @@
-import isBefore from 'date-fns/isBefore';
 import React, { ReactElement } from 'react';
 import ListGroup from 'react-bootstrap/ListGroup';
 import { Link } from 'react-router-dom';
@@ -9,13 +8,11 @@ import { selectBank } from '../../store/reducers/selectedBank-reducer';
 interface FilteredListProps {
   list: Bank[];
   filterTitle: string;
-  filterType: string;
 }
 
 export default function FilteredList({
   list,
-  filterTitle,
-  filterType
+  filterTitle
 }: FilteredListProps): ReactElement {
   const dispatch = useAppDispatch();
 
@@ -23,38 +20,23 @@ export default function FilteredList({
     dispatch(selectBank(bank.id));
   };
 
-  let bankList: Bank[] = [];
-  if (filterType === 'date') {
-    bankList = list
-      .slice()
-      .sort((a, b) =>
-        a.publishedDate !== undefined &&
-        b.publishedDate !== undefined &&
-        isBefore(new Date(a.publishedDate), new Date(b.publishedDate))
-          ? 1
-          : -1
-      );
-  }
-  if (filterType === 'alphabetic') {
-    bankList = list
-      .slice()
-      .sort((a, b) => (a.title.toLowerCase() > b.title.toLowerCase() ? 1 : -1));
-  }
   // TODO: correct link to other page than workbench when site exist.
   // TODO: Discuss suitable amount of elements displayed
-  const filteredElements = bankList.slice(0, 5).map((bank: Bank) => {
-    return (
-      <ListGroup.Item key={bank.id}>
-        <Link to="/speceditor" onClick={handleSelectedBank(bank)}>
-          {bank.title}
-        </Link>
-      </ListGroup.Item>
-    );
-  });
+  const filteredElements = () => {
+    return list.map((bank: Bank) => {
+      return (
+        <ListGroup.Item key={bank.id}>
+          <Link to="/specification" onClick={handleSelectedBank(bank)}>
+            {bank.title}
+          </Link>
+        </ListGroup.Item>
+      );
+    });
+  };
   return (
     <ListGroup variant="flush">
       <h5>{filterTitle}</h5>
-      {filteredElements}
+      {filteredElements()}
     </ListGroup>
   );
 }

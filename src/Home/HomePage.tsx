@@ -13,8 +13,9 @@ import FilteredList from './Components/FilteredList';
 export default function HomePage(): ReactElement {
   const dispatch = useAppDispatch();
   const { t } = useTranslation();
-  const { list, status } = useAppSelector((state) => state.bank);
-
+  const { list, alfabetic, latest, status } = useAppSelector(
+    (state) => state.bank
+  );
   useEffect(() => {
     async function fetchEverything() {
       if (status === 'idle') {
@@ -48,7 +49,7 @@ export default function HomePage(): ReactElement {
               </Link>
             </ListGroup.Item>
             <ListGroup.Item className="mt-1 ">
-              <Link to="/speceditor">
+              <Link to="/specification">
                 <h5>{t('create specification')}</h5>
               </Link>
             </ListGroup.Item>
@@ -57,17 +58,12 @@ export default function HomePage(): ReactElement {
       </Row>
       <Row className="mt-5">
         <Col>
-          <FilteredList
-            list={list}
-            filterTitle={t('newest banks')}
-            filterType="date"
-          />
+          <FilteredList list={latest} filterTitle={t('newest banks')} />
         </Col>
         <Col>
           <FilteredList
-            list={list}
-            filterTitle={t('popular banks')}
-            filterType="alphabetic"
+            list={alfabetic}
+            filterTitle={t('Alfabetically sorted')}
           />
         </Col>
       </Row>

@@ -1,106 +1,28 @@
-import { joiResolver } from '@hookform/resolvers/joi';
-import React, { ReactElement, useEffect, useState } from 'react';
+import React, { ReactElement, useState } from 'react';
 import Button from 'react-bootstrap/Button';
-import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
-import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { BsPencil } from 'react-icons/bs';
-import Utils from '../../common/Utils';
-import ErrorSummary from '../../Form/ErrorSummary';
-import { Bank } from '../../models/Bank';
-import { PutProjectSchema } from '../../models/Project';
-import { useAppDispatch, useAppSelector } from '../../store/hooks';
-import { postBankThunk } from '../../store/reducers/bank-reducer';
-import {
-  deleteProjectByIdThunk,
-  putProjectByIdThunk,
-  removePublicationFromProject,
-  updateCurrentProjectPublication
-} from '../../store/reducers/project-reducer';
-import SuccessAlert from '../SuccessAlert';
-import SuccessDeleteAlert from '../SuccessDeleteAlert';
+import { useAppSelector } from '../../store/hooks';
 import EditProjectForm from './EditProjectForm';
-import { ProjectPublicationForm } from './ProjectPublicationForm';
-import PublicationsFieldArray from './PublicationsFieldArray';
+import NewPublication from './NewPublication';
+import PublicationList from './PublicationList';
 
 function ProjectPage(): ReactElement {
-  const { list } = useAppSelector((state) => state.project);
-  const { id } = useAppSelector((state) => state.selectedProject);
-  const dispatch = useAppDispatch();
-
-  const [showAlert, setShowAlert] = useState(false);
-  const [showDeleteAlert, setDeleteAlert] = useState(false);
+  const { project } = useAppSelector((state) => state.project);
   const [editMode, setEditMode] = useState(false);
-  const [validated] = useState(false);
-
-  const project = Utils.ensure(list.find((element) => element.id === id));
-
-  const { control, register, handleSubmit, reset, formState } =
-    useForm<ProjectPublicationForm>({
-      criteriaMode: 'all',
-      resolver: joiResolver(PutProjectSchema),
-      defaultValues: project
-    });
-
-  useEffect(() => {
-    if (project) {
-      reset(JSON.parse(JSON.stringify(project)));
-    }
-  }, [project, reset]);
 
   const { t } = useTranslation();
 
-  const removePublication = async (publicationId: string) => {
-    dispatch(
-      removePublicationFromProject({ projectId: project.id, publicationId })
-    );
-    dispatch(deleteProjectByIdThunk(publicationId)).then(() => {
-      dispatch(putProjectByIdThunk(project.id)).then(() => {
-        setDeleteAlert(true);
-      });
-    });
-  };
-
-  const { errors } = formState;
-
-  const generateBankFromProject = (item: Bank) => {
-    // clone shallow
-    const newBank: Bank = { ...project };
-    newBank.id = '';
-    newBank.publishedDate = new Date().toJSON();
-    newBank.publications = [];
-    newBank.version = item.publications[0].version;
-    return newBank;
-  };
-
-  const onSubmit = async (post: Bank) => {
-    const newBank = generateBankFromProject(post);
-
-    dispatch(postBankThunk(newBank))
-      .unwrap()
-      .then(async (result: Bank) => {
-        dispatch(
-          updateCurrentProjectPublication({
-            projectId: project.id,
-            publishedBank: result
-          })
-        );
-        dispatch(putProjectByIdThunk(project.id)).then(() => {
-          setShowAlert(true);
-        });
-      });
-  };
-
   function editProjectForm(edit: boolean) {
     if (edit) {
-      return <EditProjectForm toggleShow={setEditMode} project={project} />;
+      return <EditProjectForm toggleShow={setEditMode} />;
     }
     return <></>;
   }
 
   return (
-    <>
+    <div>
       <Row className="ml-1 mt-3">
         <h3> {project.title} </h3>
         <Button className="ml-3" onClick={() => setEditMode(true)}>
@@ -110,26 +32,10 @@ function ProjectPage(): ReactElement {
       <h6 className="ml-1 mb-3">{project.description}</h6>
       {editProjectForm(editMode)}
       <h4>{t('publications')}</h4>
-      {showDeleteAlert && (
-        <SuccessDeleteAlert
-          toggleShow={setDeleteAlert}
-          text="Publication was deleted"
-        />
-      )}
-      {showAlert && (
-        <SuccessAlert toggleShow={setShowAlert} type="publication" />
-      )}
-      <Form onSubmit={handleSubmit(onSubmit)} noValidate validated={validated}>
-        <PublicationsFieldArray
-          control={control}
-          register={register}
-          formState={formState}
-          projectId={project.id}
-          removePublication={removePublication}
-        />
-      </Form>
-      <ErrorSummary errors={errors} />
-    </>
+
+      <NewPublication />
+      <PublicationList />
+    </div>
   );
 }
 

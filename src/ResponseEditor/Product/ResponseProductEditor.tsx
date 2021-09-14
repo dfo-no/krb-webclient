@@ -1,5 +1,4 @@
 import { joiResolver } from '@hookform/resolvers/joi';
-import Joi from 'joi';
 import React, { ReactElement } from 'react';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
@@ -12,44 +11,20 @@ import { useTranslation } from 'react-i18next';
 import { v4 as uuidv4 } from 'uuid';
 import ErrorSummary from '../../Form/ErrorSummary';
 import ModelType from '../../models/ModelType';
-import { ResponseProduct } from '../../models/ResponseProduct';
+import {
+  ResponseProduct,
+  ResponseProductSchema
+} from '../../models/ResponseProduct';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { addProduct, editProduct } from '../../store/reducers/response-reducer';
 import { selectResponseProduct } from '../../store/reducers/selectedResponseProduct-reducer';
 import ResponseProductRequirementSelector from './ResponseProductRequirementSelector';
 
-interface IResponseProductForm {
-  title: string;
-  description: string;
-  price: number;
-}
-
-const productSchema = Joi.object().keys({
-  title: Joi.string(),
-  description: Joi.string(),
-  price: Joi.number().integer().min(1).required()
-});
-
 export default function ResponseProductEditor(): ReactElement {
-  const { id } = useAppSelector((state) => state.selectedBank);
   const { response } = useAppSelector((state) => state.response);
   const { selectedSpecificationProduct } = useAppSelector(
     (state) => state.selectedSpecProduct
   );
-
-  const {
-    register,
-    handleSubmit,
-    formState: { errors }
-  } = useForm({
-    resolver: joiResolver(productSchema)
-  });
-  const dispatch = useAppDispatch();
-  const { t } = useTranslation();
-
-  if (!id) {
-    return <p>No selected bank</p>;
-  }
 
   const productIndex = response.products.findIndex(
     (responseProduct) =>
@@ -66,19 +41,28 @@ export default function ResponseProductEditor(): ReactElement {
     type: ModelType.responseProduct
   };
 
-  const product =
+  const product: ResponseProduct =
     productIndex === -1 ? newProduct : response.products[productIndex];
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors }
+  } = useForm<ResponseProduct>({
+    resolver: joiResolver(ResponseProductSchema),
+    defaultValues: { ...product }
+  });
+  const dispatch = useAppDispatch();
+  const { t } = useTranslation();
+
   dispatch(selectResponseProduct(product));
   if (productIndex === -1) {
     dispatch(addProduct(newProduct));
   }
-  const addProductToResponse = (post: IResponseProductForm) => {
+  const addProductToResponse = (post: ResponseProduct) => {
     const newResponseProduct: ResponseProduct = {
-      ...product
+      ...post
     };
-    newResponseProduct.title = post.title;
-    newResponseProduct.description = post.description;
-    newResponseProduct.price = post.price;
 
     if (productIndex === -1) {
       dispatch(addProduct(newResponseProduct));
@@ -112,7 +96,6 @@ export default function ResponseProductEditor(): ReactElement {
                 <Form.Control
                   type="number"
                   {...register('price')}
-                  defaultValue={product.price}
                   isInvalid={!!errors.price}
                 />
                 {errors.price && (
@@ -129,7 +112,6 @@ export default function ResponseProductEditor(): ReactElement {
               <Col sm={10}>
                 <Form.Control
                   {...register('title')}
-                  defaultValue={product.title}
                   isInvalid={!!errors.title}
                 />
                 {errors.title && (
@@ -146,7 +128,6 @@ export default function ResponseProductEditor(): ReactElement {
               <Col sm={10}>
                 <Form.Control
                   {...register('description')}
-                  defaultValue={product.description}
                   isInvalid={!!errors.description}
                 />
                 {errors.description && (

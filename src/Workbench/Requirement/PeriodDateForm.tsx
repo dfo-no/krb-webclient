@@ -1,19 +1,11 @@
-import { KeyboardDatePicker } from '@material-ui/pickers';
-import 'date-fns';
 import React, { ReactElement } from 'react';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
-import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
-import {
-  Control,
-  Controller,
-  FormState,
-  UseFormRegister
-} from 'react-hook-form';
-import { useTranslation } from 'react-i18next';
+import { Control, FormState, UseFormRegister } from 'react-hook-form';
 import { BsTrashFill } from 'react-icons/bs';
+import DatePicker from '../../components/DatePicker/DatePicker';
 import { IPeriodDateQuestion } from '../../models/IPeriodDateQuestion';
 import { Requirement } from '../../models/Requirement';
 
@@ -33,9 +25,10 @@ export default function PeriodDateForm({
   control,
   item,
   vIndex,
-  aIndex
+  aIndex,
+  formState
 }: IProps): ReactElement {
-  const { t } = useTranslation();
+  const { errors } = formState;
   return (
     <Card className="mb-3">
       <Card.Body>
@@ -62,52 +55,18 @@ export default function PeriodDateForm({
           {...register(`variants.${vIndex}.questions.${aIndex}.type` as const)}
           defaultValue={item.type}
         />
-        <Form.Group as={Row}>
-          <Col>
-            <Controller
-              name={
-                `variants.${vIndex}.questions.${aIndex}.config.fromDate` as const
-              }
-              control={control}
-              render={({ field: { ref, ...rest } }) => (
-                <KeyboardDatePicker
-                  margin="normal"
-                  id="date-picker-dialog"
-                  variant="inline"
-                  format="dd/MM/yyyy"
-                  label={t('From date')}
-                  KeyboardButtonProps={{
-                    'aria-label': 'change date'
-                  }}
-                  {...rest}
-                />
-              )}
-            />
-          </Col>
-        </Form.Group>
-        <Form.Group>
-          <Col>
-            <Controller
-              name={
-                `variants.${vIndex}.questions.${aIndex}.config.toDate` as const
-              }
-              control={control}
-              render={({ field: { ref, ...rest } }) => (
-                <KeyboardDatePicker
-                  margin="normal"
-                  id="date-picker-dialog"
-                  variant="inline"
-                  format="dd/MM/yyyy"
-                  label={t('To date')}
-                  KeyboardButtonProps={{
-                    'aria-label': 'change date'
-                  }}
-                  {...rest}
-                />
-              )}
-            />
-          </Col>
-        </Form.Group>
+        <DatePicker
+          name={`variants.${vIndex}.questions.${aIndex}.config.fromDate`}
+          control={control}
+          errors={errors}
+          label="From date"
+        />
+        <DatePicker
+          name={`variants.${vIndex}.questions.${aIndex}.config.toDate`}
+          control={control}
+          errors={errors}
+          label="To date"
+        />
       </Card.Body>
     </Card>
   );

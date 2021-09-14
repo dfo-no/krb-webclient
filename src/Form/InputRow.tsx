@@ -1,9 +1,9 @@
+import { get, has } from 'lodash';
 import React, { ReactElement } from 'react';
-import { Control, Controller, FieldErrors } from 'react-hook-form';
-import Form from 'react-bootstrap/Form';
 import Col from 'react-bootstrap/Col';
+import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
-import { has, get } from 'lodash';
+import { Control, Controller, FieldErrors } from 'react-hook-form';
 
 interface IProps {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -32,7 +32,7 @@ function InputRow({
     <Controller
       name={name}
       control={control}
-      render={({ field: { ref, onBlur, onChange } }) => (
+      render={({ field: { ref, onBlur, onChange, value } }) => (
         <Form.Group as={Row}>
           <Form.Label column sm={labelWidth}>
             {label}
@@ -44,6 +44,7 @@ function InputRow({
               ref={ref}
               onBlur={onBlur}
               onChange={onChange}
+              value={value}
               name={name}
               isInvalid={has(errors, name)}
             />

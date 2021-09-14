@@ -5,11 +5,9 @@ import Row from 'react-bootstrap/Row';
 import { BsArrowReturnRight, BsPencil } from 'react-icons/bs';
 import { Link } from 'react-router-dom';
 import Utils from '../../common/Utils';
-import { Bank } from '../../models/Bank';
 import { IVariant } from '../../models/IVariant';
 import { Need } from '../../models/Need';
 import { Nestable } from '../../models/Nestable';
-import { Product } from '../../models/Product';
 import { Requirement } from '../../models/Requirement';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { selectNeed } from '../../store/reducers/selectedNeed-reducer';
@@ -18,30 +16,11 @@ import styles from './ProductPreview.module.scss';
 
 export default function ProductPreview(): ReactElement {
   const dispatch = useAppDispatch();
-  const { id } = useAppSelector((state) => state.selectedProject);
-  const { list } = useAppSelector((state) => state.project);
-  const { productId } = useAppSelector((state) => state.selectedProduct);
-
-  if (!id) {
-    return <p>No Project selected</p>;
-  }
-
-  if (!productId) {
-    return <p>No Product selected</p>;
-  }
-
-  const selectedProject = Utils.ensure(
-    list.find((bank: Bank) => bank.id === id)
-  );
-
-  const selectedProduct = Utils.ensure(
-    selectedProject.products.find(
-      (product: Product) => product.id === productId
-    )
-  );
+  const { project } = useAppSelector((state) => state.project);
+  const { product } = useAppSelector((state) => state.selectedProduct);
 
   const [associatedRequirements, associatedNeeds, associatedVariants] =
-    Utils.findAssociatedRequirements(selectedProduct, selectedProject);
+    Utils.findAssociatedRequirements(product, project);
 
   const findRequirementText = (variants: IVariant[]) => {
     const texts = variants.map((variant: IVariant) => {
@@ -84,7 +63,7 @@ export default function ProductPreview(): ReactElement {
               </Badge>
             </p>
             <Link
-              to={`/workbench/${id}/requirement/${element.id}/edit`}
+              to={`/workbench/${project.id}/requirement/${element.id}/edit`}
               onClick={() => {
                 dispatch(selectRequirement(element.id));
                 dispatch(selectNeed(need.id));
@@ -165,7 +144,7 @@ export default function ProductPreview(): ReactElement {
   return (
     <div className="pb-4 ml-3">
       <h3 className="mt-4 mb-4">
-        {Utils.capitalizeFirstLetter(selectedProduct.title)}
+        {Utils.capitalizeFirstLetter(product.title)}
       </h3>
       {needHierarchy(associatedNeeds)}
     </div>

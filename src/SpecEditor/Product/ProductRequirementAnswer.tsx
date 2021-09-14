@@ -256,7 +256,7 @@ export default function ProductRequirementAnswer({
             {selectedQuestion !== undefined && (
               <Link
                 onClick={selectQuestion}
-                to={`/speceditor/${id}/product/${productId}/question/${selectedQuestion}`}
+                to={`/specification/${id}/product/${productId}/question/${selectedQuestion}`}
               >
                 <Button className="ml-2">Configure Question</Button>
               </Link>

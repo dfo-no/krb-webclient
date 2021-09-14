@@ -10,6 +10,7 @@ import {
   useFieldArray,
   UseFormRegister
 } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
 import { v4 as uuidv4 } from 'uuid';
 import { Bank } from '../../models/Bank';
 import { ICheckboxQuestion } from '../../models/ICheckboxQuestion';
@@ -49,7 +50,7 @@ export default function QuestionArray({
     name: `variants.${variantIndex}.questions` as 'variants.0.questions',
     control
   });
-
+  const { t } = useTranslation();
   const [getAlternative, setAlternativeSelected] = useState('value');
 
   const addAlternative = () => {
@@ -118,10 +119,10 @@ export default function QuestionArray({
 
   return (
     <div>
-      <h6>Alternatives</h6>
+      <h6>{t('Alternatives')}</h6>
       <Form.Group as={Row}>
         <Form.Label column sm="3">
-          Select Alternative Type
+          {t('Select alternative type')}
         </Form.Label>
         <Col sm={5}>
           <Form.Control
@@ -145,7 +146,7 @@ export default function QuestionArray({
 
       {fields.map((item: QuestionType, index) => {
         return (
-          <div key={item.id}>
+          <div key={uuidv4()}>
             {item.type === QuestionEnum.Q_SLIDER && (
               <SliderForm
                 control={control}

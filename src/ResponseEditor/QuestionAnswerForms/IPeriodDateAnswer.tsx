@@ -90,7 +90,6 @@ export default function PeriodDateAnswer({
               <Controller
                 name={`answer.date` as const}
                 control={control}
-                defaultValue={item.config.fromDate}
                 render={({ field: { ref, ...rest } }) => (
                   <KeyboardDatePicker
                     margin="normal"

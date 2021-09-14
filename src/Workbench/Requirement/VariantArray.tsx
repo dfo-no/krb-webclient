@@ -1,5 +1,5 @@
 import { get, has } from 'lodash';
-import React, { ReactElement, useState } from 'react';
+import React, { ReactElement } from 'react';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import Form from 'react-bootstrap/Form';
@@ -11,10 +11,12 @@ import {
   useFieldArray,
   UseFormRegister
 } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
 import { BsTrashFill } from 'react-icons/bs';
 import { v4 as uuidv4 } from 'uuid';
 import Utils from '../../common/Utils';
 import { Bank } from '../../models/Bank';
+import { IVariant } from '../../models/IVariant';
 import { Nestable } from '../../models/Nestable';
 import { Product } from '../../models/Product';
 import { Requirement } from '../../models/Requirement';
@@ -35,25 +37,16 @@ export default function VariantArray({
   project
 }: IProps): ReactElement {
   const { errors } = formState;
-  const { fields, append, remove } = useFieldArray({
-    keyName: 'id',
+  const { fields, append, remove } = useFieldArray<
+    Requirement,
+    'variants',
+    'id'
+  >({
     control,
     name: 'variants'
   });
 
-  const [productChecked, setProductChecked] = useState<string[]>([]);
-
-  const toggleProductChecked = (id: string, checked: boolean) => {
-    if (checked) {
-      const newArr = [...productChecked, id];
-      setProductChecked(newArr);
-    } else {
-      const filteredArray = productChecked.filter((str) => {
-        return str !== id;
-      });
-      setProductChecked(filteredArray);
-    }
-  };
+  const { t } = useTranslation();
 
   const levelOptions = (productList: Nestable<Product>[]) => {
     const newList = Utils.unflatten(productList)[0];
@@ -100,7 +93,7 @@ export default function VariantArray({
         className="mb-3"
         type="button"
         onClick={() => {
-          append({
+          const newVariant: IVariant = {
             id: uuidv4(),
             requirementText: '',
             instruction: '',
@@ -109,17 +102,19 @@ export default function VariantArray({
             useQualification: false,
             products: [],
             questions: []
-          });
+          };
+          append(newVariant);
         }}
       >
-        Add Variant
+        {t('Add Variant')}
       </Button>
       {fields.map((item, index) => {
         return (
-          <Card className="mb-3" key={item.id}>
+          // eslint-disable-next-line react/no-array-index-key
+          <Card className="mb-3" key={uuidv4()}>
             <Card.Body>
               <Row className="d-flex justify-content-between">
-                <h5>Variant</h5>
+                <h5>{t('Variant')}</h5>
                 <Button
                   className="mb-3"
                   type="button"
@@ -131,17 +126,26 @@ export default function VariantArray({
                   <BsTrashFill />
                 </Button>
               </Row>
-
+              {/* <input
+                key={item.id} // important to include key with field's id
+                {...register(`variants.${index}.id` as const)}
+                defaultValue={item.id} // make sure to include defaultValue
+              /> */}
               <Form.Control
-                readOnly
                 as="input"
                 type="hidden"
                 {...register(`variants.${index}.id` as const)}
                 defaultValue={item.id}
               />
+              {/* <input
+                key={item.requirementText} // important to include key with field's id
+                {...register(`variants.${index}.requirementText` as const)}
+                defaultValue={item.requirementText} // make sure to include defaultValue
+              /> */}
+
               {/* TODO: check replacement with Input */}
               <Form.Group>
-                <Form.Label>Requirement Text</Form.Label>
+                <Form.Label>{t('Requirement text')}</Form.Label>
                 <Form.Control
                   as="textarea"
                   {...register(`variants.${index}.requirementText` as const)}
@@ -162,7 +166,7 @@ export default function VariantArray({
                   )}
               </Form.Group>
               <Form.Group>
-                <Form.Label>Instruction</Form.Label>
+                <Form.Label>{t('Instruction')}</Form.Label>
                 <Form.Control
                   as="textarea"
                   {...register(`variants.${index}.instruction` as const)}
@@ -175,11 +179,11 @@ export default function VariantArray({
                 </Form.Control.Feedback>
               </Form.Group>
               <Form.Group>
-                <Form.Label>Usage:</Form.Label>
+                <Form.Label>{t('Usage')}:</Form.Label>
 
                 <Form.Check
                   type="checkbox"
-                  label="Qualification"
+                  label={t('Qualification')}
                   {...register(`variants.${index}.useQualification` as const)}
                   defaultChecked={item.useQualification}
                   isInvalid={
@@ -192,7 +196,7 @@ export default function VariantArray({
                 />
                 <Form.Check
                   type="checkbox"
-                  label="Requirement Spesification"
+                  label={t('Requirement spesification')}
                   {...register(`variants.${index}.useSpesification` as const)}
                   defaultChecked={item.useSpesification}
                   isInvalid={
@@ -206,12 +210,8 @@ export default function VariantArray({
                 <Form.Check
                   {...register(`variants.${index}.useProduct` as const)}
                   type="checkbox"
-                  label="Products"
+                  label={t('Products')}
                   defaultChecked={item.useProduct}
-                  // TODO: should be false/readOnly if no products exists, or if products has been removed
-                  onChange={(e) => {
-                    toggleProductChecked(item.id, e.target.checked);
-                  }}
                   isInvalid={!!has(errors, `variants[${index}].useProduct`)}
                   feedback={get(
                     errors,
@@ -220,7 +220,7 @@ export default function VariantArray({
                 />
               </Form.Group>
               <Form.Group>
-                <Form.Label>Select Associated Products:</Form.Label>
+                <Form.Label>{t('Select associated products')}:</Form.Label>
                 <Form.Control
                   as="select"
                   multiple
@@ -238,13 +238,11 @@ export default function VariantArray({
                     </option>
                   ))}
                 </Form.Control>
-                {/* TODO: This Feedback do not show */}
-                <Form.Control.Feedback type="invalid">
-                  {errors.variants &&
-                    errors.variants[index] &&
-                    errors.variants[index]?.products &&
-                    renderMultipleErrors(errors.variants[index]?.products)}
-                </Form.Control.Feedback>
+
+                {errors.variants &&
+                  errors.variants[index] &&
+                  errors.variants[index]?.products &&
+                  renderMultipleErrors(errors.variants[index]?.products)}
               </Form.Group>
 
               <QuestionArray

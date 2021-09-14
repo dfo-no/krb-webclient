@@ -1,15 +1,15 @@
+import { get, has } from 'lodash';
 import React, { ReactElement } from 'react';
+import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
+import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
-import { has, get } from 'lodash';
-
-import Button from 'react-bootstrap/Button';
-import { BsTrashFill } from 'react-icons/bs';
 import { Control, FormState, UseFormRegister } from 'react-hook-form';
-import { Requirement } from '../../models/Requirement';
+import { useTranslation } from 'react-i18next';
+import { BsTrashFill } from 'react-icons/bs';
 import { ISliderQuestion } from '../../models/ISliderQuestion';
+import { Requirement } from '../../models/Requirement';
 
 type IProps = {
   control: Control<Requirement>;
@@ -29,11 +29,15 @@ export default function SliderForm({
   vIndex,
   aIndex
 }: IProps): ReactElement {
+  const { t } = useTranslation();
+
   return (
     <Card className="mb-3">
       <Card.Body>
         <Row className="m-1 d-flex justify-content-between">
-          <h6>Alternative: Value</h6>
+          <h6>
+            {t('Alternative')}: {t('Value')}
+          </h6>
           <Button
             className="mb-3"
             type="button"
@@ -58,7 +62,7 @@ export default function SliderForm({
         />
         <Form.Group as={Row}>
           <Form.Label column sm="2">
-            Minimum
+            {t('Minumum')}
           </Form.Label>
           <Col sm="4">
             <Form.Control
@@ -84,7 +88,7 @@ export default function SliderForm({
         </Form.Group>
         <Form.Group as={Row}>
           <Form.Label column sm="2">
-            Maximum
+            {t('Maximum')}
           </Form.Label>
           <Col sm="4">
             <Form.Control
@@ -110,7 +114,7 @@ export default function SliderForm({
         </Form.Group>
         <Form.Group as={Row}>
           <Form.Label column sm="2">
-            Step
+            {t('Step')}
           </Form.Label>
           <Col sm={4}>
             <Form.Control
@@ -137,7 +141,7 @@ export default function SliderForm({
 
         <Form.Group as={Row}>
           <Form.Label column sm="2">
-            Unit
+            {t('Unit')}
           </Form.Label>
           <Col sm="4">
             <Form.Control

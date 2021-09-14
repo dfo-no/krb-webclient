@@ -1,3 +1,4 @@
+import Joi from 'joi';
 import { IAnswerBase, IConfigBase, IQuestionBase } from './Question';
 import QuestionEnum from './QuestionEnum';
 
@@ -14,3 +15,12 @@ export interface ICodelistConfig extends IConfigBase {
 export interface ICodelistAnswer extends IAnswerBase {
   codes: string[] | string;
 }
+
+export const CodelistQuestionSchema = Joi.object().keys({
+  id: Joi.string().length(36).required(),
+  type: Joi.string().equal(QuestionEnum.Q_CODELIST).required(),
+  config: Joi.object().keys({
+    codelist: Joi.string().required(),
+    multipleSelect: Joi.boolean().required()
+  })
+});

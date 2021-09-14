@@ -1,5 +1,4 @@
 import { joiResolver } from '@hookform/resolvers/joi';
-import Joi from 'joi';
 import React, { ReactElement, useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
@@ -10,105 +9,99 @@ import { useTranslation } from 'react-i18next';
 import { v4 as uuidv4 } from 'uuid';
 import ErrorSummary from '../../Form/ErrorSummary';
 import InputRow from '../../Form/InputRow';
-import { Code } from '../../models/Code';
+import { Code, PostCodeSchema } from '../../models/Code';
 import ModelType from '../../models/ModelType';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import {
   addCodeToCodelist,
-  putProjectByIdThunk
+  putSelectedProjectThunk
 } from '../../store/reducers/project-reducer';
+import { addCodeToSelected } from '../../store/reducers/selectedCodelist-reducer';
 
-type FormValues = {
-  title: string;
-  description: string;
-};
-interface IProps {
-  toggleShow: React.Dispatch<React.SetStateAction<boolean>>;
-  toggleAlert: React.Dispatch<React.SetStateAction<boolean>>;
-  codelistId: string;
-}
-
-const codeSchema = Joi.object().keys({
-  title: Joi.string().required(),
-  description: Joi.string().allow(null, '').required()
-});
-
-function NewCodeForm({
-  toggleShow,
-  codelistId,
-  toggleAlert
-}: IProps): ReactElement {
+function NewCodeForm(): ReactElement {
+  const { codelist } = useAppSelector((state) => state.selectedCodeList);
   const dispatch = useAppDispatch();
   const [validated] = useState(false);
+  const [show, setShow] = useState(false);
   const { t } = useTranslation();
+
+  const defaultValues: Code = {
+    id: '',
+    title: '',
+    description: '',
+    type: ModelType.code
+  };
 
   const {
     control,
     handleSubmit,
     reset,
     formState: { errors }
-  } = useForm({
-    resolver: joiResolver(codeSchema)
+  } = useForm<Code>({
+    resolver: joiResolver(PostCodeSchema),
+    defaultValues
   });
 
-  const { id } = useAppSelector((state) => state.selectedProject);
-
-  if (!id) {
-    return <div>Loading Productform</div>;
-  }
-
-  const onNewCodeSubmit = (post: FormValues) => {
-    const code: Code = {
-      id: uuidv4(),
-      title: post.title,
-      description: post.description,
-      type: ModelType.code
-    };
-    dispatch(addCodeToCodelist({ projectId: id, codelistId, code }));
-    dispatch(putProjectByIdThunk(id));
-
-    // reset the form
-    reset();
-    toggleShow(false);
-    toggleAlert(true);
+  const onSubmit = (post: Code) => {
+    const code = { ...post };
+    code.id = uuidv4();
+    dispatch(
+      addCodeToCodelist({
+        codelistId: codelist.id,
+        code
+      })
+    );
+    dispatch(addCodeToSelected(code));
+    dispatch(putSelectedProjectThunk('dummy')).then(() => {
+      reset();
+      setShow(false);
+    });
   };
 
   return (
-    <Card className="mb-4">
-      <Card.Body>
-        <Form
-          onSubmit={handleSubmit(onNewCodeSubmit)}
-          autoComplete="off"
-          noValidate
-          validated={validated}
-        >
-          <InputRow
-            control={control}
-            name="title"
-            errors={errors}
-            label={t('Title')}
-          />
-          <InputRow
-            control={control}
-            name="description"
-            errors={errors}
-            label={t('Description')}
-          />
-          <Row>
-            <Button className="mt-2  ml-3" type="submit">
-              {t('save')}
-            </Button>
-            <Button
-              className="mt-2 ml-3 btn-warning"
-              onClick={() => toggleShow(false)}
+    <>
+      <h5>Codes</h5>
+      <Button onClick={() => setShow(true)} className="mb-4">
+        New Code
+      </Button>
+      {show && (
+        <Card className="mb-4">
+          <Card.Body>
+            <Form
+              onSubmit={handleSubmit(onSubmit)}
+              autoComplete="off"
+              noValidate
+              validated={validated}
             >
-              {t('cancel')}
-            </Button>
-          </Row>
-          <ErrorSummary errors={errors} />
-        </Form>
-      </Card.Body>
-    </Card>
+              <InputRow
+                control={control}
+                name="title"
+                errors={errors}
+                label={t('Title')}
+              />
+              <InputRow
+                control={control}
+                name="description"
+                errors={errors}
+                label={t('Description')}
+              />
+              <Row>
+                <Button className="mt-2  ml-3" type="submit">
+                  {t('save')}
+                </Button>
+                <Button
+                  className="mt-2 ml-3 btn-warning"
+                  onClick={() => setShow(false)}
+                >
+                  {t('cancel')}
+                </Button>
+              </Row>
+              <ErrorSummary errors={errors} />
+            </Form>
+          </Card.Body>
+        </Card>
+      )}
+    </>
   );
 }
 

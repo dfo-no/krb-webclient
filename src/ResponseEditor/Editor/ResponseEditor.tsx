@@ -9,9 +9,7 @@ import FormControl from 'react-bootstrap/FormControl';
 import Row from 'react-bootstrap/Row';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import Utils from '../../common/Utils';
 import ErrorSummary from '../../Form/ErrorSummary';
-import { Bank } from '../../models/Bank';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { editSupplier, setBank } from '../../store/reducers/response-reducer';
 
@@ -25,7 +23,7 @@ const supplierSchema = Joi.object().keys({
 
 export default function ResponseEditor(): ReactElement {
   const { id } = useAppSelector((state) => state.selectedBank);
-  const { list } = useAppSelector((state) => state.bank);
+  const { normalizedList } = useAppSelector((state) => state.bank);
   const { response } = useAppSelector((state) => state.response);
   const {
     register,
@@ -41,7 +39,7 @@ export default function ResponseEditor(): ReactElement {
     return <p>No selected bank</p>;
   }
 
-  const selectedBank = Utils.ensure(list.find((bank: Bank) => bank.id === id));
+  const selectedBank = normalizedList[id];
 
   dispatch(setBank(selectedBank));
 

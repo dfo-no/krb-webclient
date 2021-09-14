@@ -1,8 +1,8 @@
-import React, { ReactElement } from 'react';
+import React from 'react';
 import Nav from 'react-bootstrap/Nav';
 import { useTranslation } from 'react-i18next';
-import { withRouter } from 'react-router';
-import { NavLink, useRouteMatch } from 'react-router-dom';
+import { RouteComponentProps, withRouter } from 'react-router';
+import { NavLink } from 'react-router-dom';
 import { useAppSelector } from '../../store/hooks';
 import css from './SpecSideBar.module.scss';
 
@@ -11,9 +11,7 @@ interface IRouteLink {
   name: string;
 }
 
-interface RouteParams {
-  projectId: string;
-}
+type TParams = { id: string };
 
 const renderRouteLinks = (routes: IRouteLink[], isProjectSelected: boolean) => {
   return routes.map((route) => {
@@ -23,6 +21,7 @@ const renderRouteLinks = (routes: IRouteLink[], isProjectSelected: boolean) => {
           as={NavLink}
           to={route.link}
           role="link"
+          exact
           activeClassName={`${css.sidebar__item__active}`}
           disabled={!isProjectSelected}
         >
@@ -33,27 +32,23 @@ const renderRouteLinks = (routes: IRouteLink[], isProjectSelected: boolean) => {
   });
 };
 
-function SpecSideBar(): ReactElement {
+function SpecSideBar({
+  match
+}: RouteComponentProps<TParams>): React.ReactElement {
   const { t } = useTranslation();
-  const match = useRouteMatch<RouteParams>('/speceditor/:bankId');
 
-  const { id } = useAppSelector((state) => state.selectedBank);
-  const { list } = useAppSelector((state) => state.bank);
+  const { spec } = useAppSelector((state) => state.specification);
 
-  const currentUrl = match?.url ? match.url : `/speceditor/${id}`;
-  const isProjectSelected = !!id;
-
-  const selectProject = list.find((bank) => bank.id === id);
-
-  const displayTitle = selectProject
-    ? selectProject.title
+  const isProjectSelected = !!spec.bank.id;
+  const displayTitle = isProjectSelected
+    ? spec.bank.title
     : `<${t('none selected')}>`;
 
   const routes = [
-    { link: `${currentUrl}`, name: `${t('Specification')}: ${displayTitle}` },
-    { link: `${currentUrl}/requirement`, name: t('Requirements') },
-    { link: `${currentUrl}/download`, name: t('Download') },
-    { link: `${currentUrl}/product`, name: t('Products') }
+    { link: `${match.url}`, name: `${t('Specification')}: ${displayTitle}` },
+    { link: `${match.url}/requirement`, name: t('Requirements') },
+    { link: `${match.url}/download`, name: t('Download') },
+    { link: `${match.url}/product`, name: t('Products') }
   ];
 
   return (

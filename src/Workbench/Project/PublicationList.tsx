@@ -1,95 +1,81 @@
+import { joiResolver } from '@hookform/resolvers/joi';
 import format from 'date-fns/format';
-import React, { ReactElement, useRef, useState } from 'react';
+import React, { ReactElement, useEffect, useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import ListGroup from 'react-bootstrap/ListGroup';
 import Nav from 'react-bootstrap/Nav';
 import Row from 'react-bootstrap/Row';
-import {
-  Control,
-  FormState,
-  useFieldArray,
-  UseFormRegister
-} from 'react-hook-form';
+import { useFieldArray, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import { BsTrashFill } from 'react-icons/bs';
+import { BsPencilSquare, BsTrashFill } from 'react-icons/bs';
 import * as Constants from '../../common/Constants';
-import ModelType from '../../models/ModelType';
-import { Publication } from '../../models/Publication';
-import { useAppDispatch } from '../../store/hooks';
-import { prependPublication } from '../../store/reducers/project-reducer';
-import SuccessAlert from '../SuccessAlert';
-import { ProjectPublicationForm } from './ProjectPublicationForm';
+import ErrorSummary from '../../Form/ErrorSummary';
+import { Bank } from '../../models/Bank';
+import { PutProjectSchema } from '../../models/Project';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
+import {
+  deleteProjectByIdThunk,
+  editPublication,
+  putSelectedProjectThunk,
+  removePublication
+} from '../../store/reducers/project-reducer';
 import css from './PublicationList.module.scss';
 
-type IProps = {
-  register: UseFormRegister<ProjectPublicationForm>;
-  control: Control<ProjectPublicationForm>;
-  formState: FormState<ProjectPublicationForm>;
-  projectId: string;
-  removePublication: (publicationId: string) => Promise<void>;
-};
+export default function PublicationList(): ReactElement {
+  const dispatch = useAppDispatch();
+  const { project } = useAppSelector((state) => state.project);
+  const [editId, setEditId] = useState('');
 
-export default function PublicationsFieldArray({
-  control,
-  register,
-  formState,
-  projectId,
-  removePublication
-}: IProps): ReactElement {
+  const { control, register, reset, formState, handleSubmit } = useForm<
+    Omit<Bank, 'needs'>
+  >({
+    criteriaMode: 'all',
+    resolver: joiResolver(PutProjectSchema),
+    defaultValues: project
+  });
   const { errors } = formState;
 
-  const { fields, remove } = useFieldArray({
+  useEffect(() => {
+    if (project) {
+      reset(JSON.parse(JSON.stringify(project)));
+    }
+  }, [project, reset]);
+
+  const { fields } = useFieldArray({
     name: 'publications',
     control
   });
 
-  const dispatch = useAppDispatch();
-
-  const [showAlert, setShowAlert] = useState(false);
-  const publishButtonRef = useRef(null);
   const { t } = useTranslation();
 
-  const getNextVersion = (publications: Publication[]) => {
-    if (publications.length === 0) {
-      return 1;
-    }
-    return Math.max(...publications.map((p) => p.version)) + 1;
+  const deletePublication = async (publicationId: string) => {
+    dispatch(deleteProjectByIdThunk(publicationId)).then(() => {
+      dispatch(removePublication(publicationId));
+      dispatch(putSelectedProjectThunk('dummy'));
+    });
   };
 
-  const cancelPublish = () => {
-    remove(0);
-  };
-
-  const addPublication = () => {
-    if (!publishButtonRef.current) {
-      const nextVersion = getNextVersion(fields);
-
-      const newPublication: Publication = {
-        id: '',
-        comment: '',
-        date: '',
-        version: nextVersion,
-        bankId: projectId,
-        type: ModelType.publication
-      };
-
-      dispatch(prependPublication({ projectId, publication: newPublication }));
+  const onSubmit = (post: Bank) => {
+    const index = post.publications.findIndex(
+      (element) => element.id === editId
+    );
+    if (index !== -1) {
+      const pub = post.publications[index];
+      dispatch(editPublication(pub));
+      dispatch(putSelectedProjectThunk('dummy')).then(() => {
+        setEditId('');
+      });
     }
   };
 
   return (
-    <div>
-      <Button onClick={() => addPublication()}>{t('new publication')}</Button>
-      {showAlert && (
-        <SuccessAlert toggleShow={setShowAlert} type="publication" />
-      )}
-
+    <Form>
       <ListGroup className="mt-4">
         {fields.map((field, index) => {
           return (
             <ListGroup.Item as="div" key={field.id}>
-              {field.id === '' ? (
+              {field.id === editId ? (
                 <>
                   <Form.Group>
                     <Form.Control
@@ -114,10 +100,10 @@ export default function PublicationsFieldArray({
                         </Form.Control.Feedback>
                       )}
                   </Form.Group>
-                  <Button className="mr-1" type="submit" ref={publishButtonRef}>
-                    {t('publish')}
+                  <Button className="mr-1" onClick={handleSubmit(onSubmit)}>
+                    {t('save')}
                   </Button>
-                  <Button variant="warning" onClick={() => cancelPublish()}>
+                  <Button variant="warning" onClick={() => setEditId('')}>
                     {t('cancel')}
                   </Button>
                 </>
@@ -131,10 +117,20 @@ export default function PublicationsFieldArray({
                   </Nav.Link>
                   <div className={css.listGroup__spacer} />
                   <Button
+                    className="mr-1"
+                    variant="primary"
+                    type="button"
+                    onClick={() => {
+                      setEditId(field.id);
+                    }}
+                  >
+                    <BsPencilSquare />
+                  </Button>
+                  <Button
                     variant="danger"
                     type="button"
                     onClick={() => {
-                      removePublication(field.id);
+                      deletePublication(field.id);
                     }}
                   >
                     <BsTrashFill />
@@ -145,6 +141,7 @@ export default function PublicationsFieldArray({
           );
         })}
       </ListGroup>
-    </div>
+      <ErrorSummary errors={errors} />
+    </Form>
   );
 }
