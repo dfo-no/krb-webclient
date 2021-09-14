@@ -1,5 +1,5 @@
 import { AxiosResponse } from 'axios';
-import React, { ReactElement } from 'react';
+import React from 'react';
 import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
@@ -12,7 +12,7 @@ import { useAppDispatch, useAppSelector } from '../store/hooks';
 import { selectBank } from '../store/reducers/selectedBank-reducer';
 import { setSpecification } from '../store/reducers/spesification-reducer';
 
-export default function SpecPage(): ReactElement {
+export default function SpecPage(): React.ReactElement {
   const { id } = useAppSelector((state) => state.selectedBank);
   const dispatch = useAppDispatch();
   const history = useHistory();
@@ -43,7 +43,8 @@ export default function SpecPage(): ReactElement {
   if (!id) {
     return (
       <Row className="mt-4">
-        <Col sm={6}>
+        <Col sm={3} />
+        <Col sm={3}>
           <Form>
             <h4>Upload specification</h4>
             <InputGroup>
@@ -57,19 +58,23 @@ export default function SpecPage(): ReactElement {
           </Form>
         </Col>
 
-        <Col sm={6}>
+        <Col sm={3}>
           <h4>Select Bank from Hub</h4>
           <Link to="/">
             <Button>Go to Hub</Button>
           </Link>
         </Col>
+        <Col />
+
+        <Col sm={3} />
       </Row>
     );
   }
 
   return (
     <Row className="mt-4">
-      <Col sm={4}>
+      <Col sm={3} />
+      <Col sm={3}>
         <Link to={`/specification/${id}`}>
           <Button type="submit" className="mt-4">
             {t('create specification')}
@@ -77,11 +82,12 @@ export default function SpecPage(): ReactElement {
         </Link>
       </Col>
 
-      <Col sm={4}>
+      <Col sm={3}>
         <Button type="submit" className="mt-4">
           {t('create qualification')}
         </Button>
       </Col>
+      <Col sm={3} />
     </Row>
   );
 }
