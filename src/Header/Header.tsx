@@ -1,11 +1,11 @@
 import React, { ReactElement } from 'react';
-import { useHistory, useRouteMatch } from 'react-router-dom';
-import Navbar from 'react-bootstrap/Navbar';
-import Button from 'react-bootstrap/Button';
-import { useTranslation } from 'react-i18next';
 import Badge from 'react-bootstrap/Badge';
-import css from './Header.module.scss';
+import Button from 'react-bootstrap/Button';
+import Navbar from 'react-bootstrap/Navbar';
+import { useTranslation } from 'react-i18next';
+import { useHistory, useRouteMatch } from 'react-router-dom';
 import SignedButton from '../SignedButton/SignedButton';
+import css from './Header.module.scss';
 
 export default function Header(): ReactElement {
   const history = useHistory();
@@ -36,7 +36,7 @@ export default function Header(): ReactElement {
         </Button>
       )}
       {process.env.NODE_ENV === 'development' && (
-        <Badge variant="warning">dev</Badge>
+        <Badge bg="warning">dev</Badge>
       )}
       <div className={css.header__spacer} />
 

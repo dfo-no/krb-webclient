@@ -136,7 +136,7 @@ export default function ProductRequirementAnswer({
     }
   };
 
-  function handleChange(event: React.ChangeEvent<HTMLSelectElement>) {
+  function handleChange(event: React.ChangeEvent<HTMLFormElement>) {
     const variantId = event.target.value;
     const variant = Utils.ensure(
       requirement.variants.find((element: IVariant) => element.id === variantId)
@@ -219,7 +219,7 @@ export default function ProductRequirementAnswer({
           <Form.Control
             as="select"
             {...register('variant')}
-            onChange={handleChange}
+            onChange={() => handleChange}
             defaultValue={findDefaultRequirementText()}
           >
             {reqText}

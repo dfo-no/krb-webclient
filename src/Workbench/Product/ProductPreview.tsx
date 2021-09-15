@@ -53,7 +53,7 @@ export default function ProductPreview(): ReactElement {
               {element.title}
               <Badge
                 className="ml-2"
-                variant={
+                bg={
                   element.requirement_Type === 'requirement'
                     ? 'primary'
                     : 'info'

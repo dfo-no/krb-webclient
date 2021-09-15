@@ -11,6 +11,7 @@ test('Nexus', () => {
     type: ModelType.bank,
     description: '',
     needs: [],
+    tags: [],
     codelist: [],
     products: [],
     version: 0,

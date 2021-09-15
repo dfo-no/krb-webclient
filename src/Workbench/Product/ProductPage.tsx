@@ -19,6 +19,7 @@ export default function ProductPage(): ReactElement {
     dispatch(updateProductList(items));
     dispatch(putSelectedProjectThunk('dummy'));
   };
+
   return (
     <div className="pb-4">
       <>

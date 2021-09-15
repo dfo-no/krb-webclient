@@ -18,7 +18,7 @@ export default function TagsAsChips({ tags }: IProps): ReactElement {
     return sorted.map((item: Tag) => {
       if (tags.includes(item.id)) {
         return (
-          <Badge pill variant="info">
+          <Badge pill bg="info">
             {Utils.capitalizeFirstLetter(item.title)}
           </Badge>
         );

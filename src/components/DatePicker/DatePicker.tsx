@@ -3,6 +3,7 @@ import { get, has, toPath } from 'lodash';
 import React, { ReactElement } from 'react';
 import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
+import Row from 'react-bootstrap/Row';
 import { Control, Controller, FieldErrors } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
@@ -41,7 +42,7 @@ export default function DatePicker({
 
   return (
     <Form.Group>
-      <Form.Row className="is-invalid">
+      <Row className="is-invalid">
         <Form.Label column lg={2}>
           {t(label)}
         </Form.Label>
@@ -69,7 +70,7 @@ export default function DatePicker({
             )}
           />
         </Col>
-      </Form.Row>
+      </Row>
       {hasError(name) && (
         <Form.Control.Feedback type="invalid">
           {getError(name)}

@@ -71,23 +71,25 @@ export default function RequirementPage(): ReactElement {
       );
       const jsx = filteredList.map((element: Requirement) => {
         return (
-          <Card key={element.id}>
-            <Card.Header className="d-flex justify-content-between">
-              <h6 className="mt-2">{element.title}</h6>
-              <Accordion.Toggle
-                as={Button}
-                variant="link"
-                eventKey={element.id}
-              >
-                <BsChevronDown />
-              </Accordion.Toggle>
-            </Card.Header>
-            <Accordion.Collapse eventKey={element.id}>
-              <Card.Body>
-                <EditRequirementForm element={element} />
-              </Card.Body>
-            </Accordion.Collapse>
-          </Card>
+          <Accordion.Item eventKey={element.id}>
+            <Card key={element.id} className="d-flex justify-content-between">
+              <Card.Header>
+                <Row className="d-flex justify-content-between">
+                  <h6 className="ml-2 mt-2">
+                    {Utils.capitalizeFirstLetter(element.title)}
+                  </h6>
+                  <Accordion.Header as={Button} variant="link">
+                    <BsChevronDown />
+                  </Accordion.Header>
+                </Row>
+              </Card.Header>
+              <Accordion.Collapse eventKey={element.id}>
+                <Card.Body>
+                  <EditRequirementForm element={element} />
+                </Card.Body>
+              </Accordion.Collapse>
+            </Card>
+          </Accordion.Item>
         );
       });
       return (
@@ -114,13 +116,13 @@ export default function RequirementPage(): ReactElement {
           <Card key={element.id}>
             <Card.Header className="d-flex justify-content-between">
               <h6 className="mt-2">{element.title}</h6>
-              <Accordion.Toggle
+              <Accordion.Header
                 as={Button}
                 variant="link"
                 eventKey={element.id}
               >
                 <BsChevronDown />
-              </Accordion.Toggle>
+              </Accordion.Header>
             </Card.Header>
             <Accordion.Collapse eventKey={element.id}>
               <Card.Body>
