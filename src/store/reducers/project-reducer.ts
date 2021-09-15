@@ -62,27 +62,6 @@ export const postProjectThunk = createAsyncThunk(
   }
 );
 
-/**
- * @deprecated Use putSelectedProjectThunk instead
- */
-export const putProjectByIdThunk = createAsyncThunk<
-  Bank,
-  string,
-  {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    state: any;
-  }
->('putProjectByIdThunk', async (projectId: string, thunkApi) => {
-  // get updated project from redux
-  const project = Utils.ensure(
-    thunkApi
-      .getState()
-      .project.list.find((element: Bank) => element.id === projectId)
-  );
-  const response = await httpPut<Bank>(`/api/bank/${project.id}`, project);
-  return response.data;
-});
-
 export const putSelectedProjectThunk = createAsyncThunk<
   Bank,
   string,
@@ -407,7 +386,6 @@ const projectSlice = createSlice({
       state.project.version = payload;
     },
     addTag(state, { payload }: PayloadAction<Tag>) {
-      console.log(payload);
       state.project.tags.push(payload);
     },
     editTag(state, { payload }: PayloadAction<Tag>) {
@@ -454,24 +432,6 @@ const projectSlice = createSlice({
       state.projectLoading = 'pending';
     });
     builder.addCase(postProjectThunk.rejected, (state) => {
-      state.projectLoading = 'rejected';
-    });
-    builder.addCase(putProjectByIdThunk.fulfilled, (state, { payload }) => {
-      // update project in list if it exists there
-      const projectIndex = state.list.findIndex(
-        (project) => project.id === payload.id
-      );
-      if (projectIndex) {
-        state.list[projectIndex] = payload;
-      }
-      // ux-assume that since we update the project, it is selected. Update it.
-      state.project = payload;
-      state.projectLoading = 'fulfilled';
-    });
-    builder.addCase(putProjectByIdThunk.pending, (state) => {
-      state.projectLoading = 'pending';
-    });
-    builder.addCase(putProjectByIdThunk.rejected, (state) => {
       state.projectLoading = 'rejected';
     });
     builder.addCase(putProjectThunk.fulfilled, (state, { payload }) => {
