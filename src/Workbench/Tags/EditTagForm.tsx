@@ -1,12 +1,12 @@
 import { joiResolver } from '@hookform/resolvers/joi';
-import React, { ReactElement, useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import { BsPencil, BsTrashFill } from 'react-icons/bs';
+import { BsTrashFill } from 'react-icons/bs';
 import { useHistory } from 'react-router-dom';
 import ErrorSummary from '../../Form/ErrorSummary';
 import InputRow from '../../Form/InputRow';
@@ -22,15 +22,13 @@ interface IProps {
   tag: Tag;
 }
 
-export default function EditTagForm({ tag }: IProps): ReactElement {
+export default function EditTagForm({ tag }: IProps): React.ReactElement {
   const dispatch = useAppDispatch();
   const [validated] = useState(false);
   const { t } = useTranslation();
 
   const { project } = useAppSelector((state) => state.project);
   const history = useHistory();
-
-  const { codelist } = useAppSelector((state) => state.selectedCodeList);
 
   const {
     control,

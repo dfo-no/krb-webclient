@@ -1,12 +1,11 @@
 import { joiResolver } from '@hookform/resolvers/joi';
 import Joi from 'joi';
-import React, { ReactElement } from 'react';
+import React from 'react';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import Form from 'react-bootstrap/Form';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import { v4 as uuidv4 } from 'uuid';
 import SliderSelect from '../../components/Slider';
 import ErrorSummary from '../../Form/ErrorSummary';
 import { IOption } from '../../models/IOption';
@@ -38,7 +37,9 @@ export const ResponseSliderSchema = Joi.object().keys({
   })
 });
 
-export default function ISliderAnswer({ parentAnswer }: IProps): ReactElement {
+export default function ISliderAnswer({
+  parentAnswer
+}: IProps): React.ReactElement {
   const { response } = useAppSelector((state) => state.response);
   const { selectedResponseProduct } = useAppSelector(
     (state) => state.selectedResponseProduct
