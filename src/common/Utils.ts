@@ -3,6 +3,7 @@ import { BaseModel } from '../models/BaseModel';
 import { IVariant } from '../models/IVariant';
 import { Need } from '../models/Need';
 import { Nestable } from '../models/Nestable';
+import { Parentable } from '../models/Parentable';
 import { Product } from '../models/Product';
 import { Requirement } from '../models/Requirement';
 
@@ -66,6 +67,36 @@ class Utils {
     });
     return [hierarchy, mappedArr];
   } */
+
+  static toNestable<T extends BaseModel>(
+    items: Parentable<T>[]
+  ): Nestable<T>[] {
+    const hierarchy: Nestable<T>[] = [];
+    const mappedArr: { [key: string]: Nestable<T> } = {};
+    items.forEach((item) => {
+      const Id = item.id;
+      if (!Object.prototype.hasOwnProperty.call(mappedArr, Id)) {
+        mappedArr[Id] = { ...item };
+      }
+    });
+    Object.keys(mappedArr).forEach((key) => {
+      if (Object.prototype.hasOwnProperty.call(mappedArr, key)) {
+        const mappedElem = mappedArr[key];
+
+        if (mappedElem.parent) {
+          const parentId = mappedElem.parent;
+          const parent = mappedArr[parentId];
+          if (!parent.children) {
+            parent.children = [];
+          }
+          parent.children.push(mappedElem);
+        } else {
+          hierarchy.push(mappedElem);
+        }
+      }
+    });
+    return hierarchy;
+  }
 
   static unflatten<T extends BaseModel>(
     items: Nestable<T>[]

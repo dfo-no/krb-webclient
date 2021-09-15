@@ -14,7 +14,8 @@ test('Nexus', () => {
     codelist: [],
     products: [],
     version: 0,
-    publications: []
+    publications: [],
+    tags: []
   };
 
   const app = Nexus.getInstance();
