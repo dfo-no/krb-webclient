@@ -13,6 +13,7 @@ import Header from './Header/Header';
 import BankPage from './Home/BankPage';
 import HomePage from './Home/HomePage';
 import PageLayout from './PageLayout';
+import PrefilledResponseModule from './PrefilledResponseEditor/PrefilledResponseModule';
 import ResponseModule from './ResponseEditor/ResponseModule';
 import ResponsePage from './ResponseEditor/ResponsePage';
 import SpecModule from './SpecEditor/SpecModule';
@@ -37,6 +38,10 @@ function App(): ReactElement {
             <Route path="/response/:id" component={ResponseModule} />
             <Route exact path="/response" component={ResponsePage} />
             <Route path="/evaluation" component={Evaluation} />
+            <Route
+              path="/prefilledresponse/:id"
+              component={PrefilledResponseModule}
+            />
           </AuthenticatedTemplate>
           <UnauthenticatedTemplate>
             <h5 className="card-title">Please sign-in to access this page</h5>
