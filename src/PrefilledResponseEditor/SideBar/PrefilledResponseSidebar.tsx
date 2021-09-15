@@ -3,7 +3,7 @@ import Nav from 'react-bootstrap/Nav';
 import { withRouter } from 'react-router';
 import { NavLink, useRouteMatch } from 'react-router-dom';
 import { useAppSelector } from '../../store/hooks';
-import css from './ResponseSideBar.module.scss';
+import css from './PrefilledResponseSideBar.module.scss';
 
 interface IRouteLink {
   link: string;
@@ -38,8 +38,8 @@ function PrefilledResponseSideBar(): ReactElement {
     (state) => state.prefilledResponse
   );
 
-  const match = useRouteMatch<RouteParams>('/response/:bankId');
-  const currentUrl = match?.url ? match.url : `/response/${id}`;
+  const match = useRouteMatch<RouteParams>('/prefilledresponse/:bankId');
+  const currentUrl = match?.url ? match.url : `/prefilledresponse/${id}`;
   const isProjectSelected = !!prefilledResponse.bank.id;
 
   const routes = [

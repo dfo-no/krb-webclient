@@ -12,7 +12,7 @@ import PrefilledResponseSidebar from './SideBar/PrefilledResponseSidebar';
 interface RouteParams {
   bankId: string;
 }
-export default function SpecModule(): ReactElement {
+export default function PrefilledResponseModule(): ReactElement {
   const projectMatch = useRouteMatch<RouteParams>('/responseeditor/:bankId');
   const dispatch = useAppDispatch();
   const { id } = useAppSelector((state) => state.selectedBank);

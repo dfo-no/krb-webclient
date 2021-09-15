@@ -83,9 +83,11 @@ export default function SpecPage(): React.ReactElement {
       </Col>
 
       <Col sm={3}>
-        <Button type="submit" className="mt-4">
-          {t('create qualification')}
-        </Button>
+        <Link to={`/prefilledresponse/${id}`}>
+          <Button type="submit" className="mt-4">
+            {t('create prefilled response')}
+          </Button>
+        </Link>
       </Col>
       <Col sm={3} />
     </Row>
