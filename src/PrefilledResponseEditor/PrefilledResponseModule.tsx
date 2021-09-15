@@ -6,6 +6,7 @@ import { Route, Switch, useRouteMatch } from 'react-router';
 import NotFound from '../NotFound';
 import { useAppDispatch, useAppSelector } from '../store/hooks';
 import { selectBank } from '../store/reducers/selectedBank-reducer';
+import PrefilledResponseDownLoad from './Download/PrefilledResponseDownload';
 import PrefilledResponseEditor from './Editor/PrefilledResponseEditor';
 import PrefilledResponseSidebar from './SideBar/PrefilledResponseSidebar';
 
@@ -43,7 +44,7 @@ export default function PrefilledResponseModule(): ReactElement {
               <PrefilledResponseEditor />
             </Route>
             <Route exact path="/prefilledresponse/:id/download">
-              <PrefilledResponseEditor />
+              <PrefilledResponseDownLoad />
             </Route>
             <Route exact path="/prefilledresponse/:id/overview">
               <PrefilledResponseEditor />
