@@ -12,7 +12,7 @@ import EditTagForm from './EditTagForm';
 export default function TagList(): ReactElement {
   const { project } = useAppSelector((state) => state.project);
   const [activeKey, setActiveKey] = useState('');
-  const onOpenClose = (e: any) => {
+  const onOpenClose = (e: string | null) => {
     if (e) {
       setActiveKey(e);
     } else {
@@ -25,7 +25,7 @@ export default function TagList(): ReactElement {
       .sort((a, b) => (a.title.toLowerCase() < b.title.toLowerCase() ? -1 : 1));
     return sorted.map((item: Tag) => {
       return (
-        <Accordion.Item eventKey={item.id}>
+        <Accordion.Item eventKey={item.id} key={item.id}>
           <Card key={item.id} className="d-flex justify-content-between">
             <Card.Header>
               <Row className="d-flex justify-content-between">
