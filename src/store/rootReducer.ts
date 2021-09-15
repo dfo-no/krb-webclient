@@ -2,6 +2,7 @@ import { combineReducers } from '@reduxjs/toolkit';
 import alertReducer from './reducers/alert-reducer';
 import bankReducer from './reducers/bank-reducer';
 import loaderReducer from './reducers/loader-reducer';
+import PrefilledResponseReducer from './reducers/PrefilledResponseReducer';
 // eslint-disable-next-line import/no-cycle
 import projectReducer from './reducers/project-reducer';
 import responseReducer from './reducers/response-reducer';
@@ -33,7 +34,8 @@ const rootReducer = combineReducers({
   selectedAlternative: selectedAlternativeReducer,
   response: responseReducer,
   selectedResponseProduct: selectedResponseProductReducer,
-  alert: alertReducer
+  alert: alertReducer,
+  prefilledResponse: PrefilledResponseReducer
 });
 
 export default rootReducer;
