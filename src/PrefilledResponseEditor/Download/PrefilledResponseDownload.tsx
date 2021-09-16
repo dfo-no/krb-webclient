@@ -13,7 +13,7 @@ export default function PrefilledResponseDownLoad(): ReactElement {
 
   const onDownLoad = () => {
     httpPost<PrefilledResponse, AxiosResponse<File>>(
-      '/java/generatePdf',
+      '/java/generatePrefilledResponse',
       prefilledResponse,
       {
         headers: {

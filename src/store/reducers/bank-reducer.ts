@@ -23,7 +23,7 @@ export const getAlbefaticalSortedBanksThunk = createAsyncThunk(
   'getAlbefaticalSortedBanksThunk',
   async () => {
     const response = await httpGet<Bank[]>(
-      `/api/bank/sorted?fieldName=${'title'}&limit=${5}`
+      `/api/bank/sorted?fieldName=${'title'}&limit=${5}&order=${'ASC'}`
     );
     return response.data;
   }
@@ -33,7 +33,7 @@ export const getDateSortedBanksThunk = createAsyncThunk(
   'getDateSortedBanksThunk',
   async () => {
     const response = await httpGet<Bank[]>(
-      `/api/bank/sorted?fieldName=${'publishedDate'}&limit=${5}`
+      `/api/bank/sorted?fieldName=${'publishedDate'}&limit=${5}&order=${'DESC'}`
     );
     return response.data;
   }
