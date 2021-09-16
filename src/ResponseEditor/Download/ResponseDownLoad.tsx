@@ -10,13 +10,17 @@ export default function ResponseDownLoad(): ReactElement {
   const { response } = useAppSelector((state) => state.response);
 
   const onDownLoad = () => {
-    httpPost<Response, AxiosResponse<File>>('/java/generatePdf', response, {
-      headers: {
-        'Content-Type': 'application/json',
-        Accept: 'application/pdf'
-      },
-      responseType: 'blob'
-    }).then((res: { data: BlobPart }) => {
+    httpPost<Response, AxiosResponse<File>>(
+      '/java/generateResponse',
+      response,
+      {
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/pdf'
+        },
+        responseType: 'blob'
+      }
+    ).then((res: { data: BlobPart }) => {
       const url = window.URL.createObjectURL(new Blob([res.data]));
       const link = document.createElement('a');
       link.href = url;
