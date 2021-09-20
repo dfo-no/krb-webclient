@@ -71,7 +71,7 @@ export default function RequirementPage(): ReactElement {
       );
       const jsx = filteredList.map((element: Requirement) => {
         return (
-          <Accordion.Item eventKey={element.id}>
+          <Accordion.Item eventKey={element.id} key={element.id}>
             <Card key={element.id} className="d-flex justify-content-between">
               <Card.Header>
                 <Row className="d-flex justify-content-between">
@@ -113,7 +113,7 @@ export default function RequirementPage(): ReactElement {
       );
       const jsx = filteredList.map((element: Requirement) => {
         return (
-          <Accordion.Item eventKey={element.id}>
+          <Accordion.Item eventKey={element.id} key={element.id}>
             <Card key={element.id} className="d-flex justify-content-between">
               <Card.Header>
                 <Row className="d-flex justify-content-between">

@@ -7,7 +7,7 @@ import Row from 'react-bootstrap/Row';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { BsPencil } from 'react-icons/bs';
-import { Link, useRouteMatch } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
 import Utils from '../../common/Utils';
 import ErrorSummary from '../../Form/ErrorSummary';
@@ -20,15 +20,10 @@ import {
   addProduct,
   selectProduct
 } from '../../store/reducers/PrefilledResponseReducer';
-import { selectBank } from '../../store/reducers/selectedBank-reducer';
 import styles from './ProductList.module.scss';
 
-type FormInput = {
+interface IFormInput {
   product: string;
-};
-
-interface RouteParams {
-  bankId: string;
 }
 
 interface IOption {
@@ -38,7 +33,6 @@ interface IOption {
 }
 
 export default function ProductSpecList(): ReactElement {
-  const projectMatch = useRouteMatch<RouteParams>('/prefilledresponse/:bankId');
   const { id } = useAppSelector((state) => state.selectedBank);
   const { normalizedList } = useAppSelector((state) => state.bank);
   const { prefilledResponse } = useAppSelector(
@@ -49,12 +43,8 @@ export default function ProductSpecList(): ReactElement {
     register,
     handleSubmit,
     formState: { errors }
-  } = useForm();
+  } = useForm<IFormInput>();
   const dispatch = useAppDispatch();
-
-  if (projectMatch?.params.bankId && !id) {
-    dispatch(selectBank(projectMatch?.params.bankId));
-  }
 
   if (!id) {
     return <p>No selected bank</p>;
@@ -86,7 +76,7 @@ export default function ProductSpecList(): ReactElement {
     return options;
   };
 
-  const addProductToPrefilledResponse = (post: FormInput) => {
+  const addProductToPrefilledResponse = (post: IFormInput) => {
     const selectedProduct = Utils.ensure(
       bankSelected.products.find(
         (product: Product) => product.id === post.product
