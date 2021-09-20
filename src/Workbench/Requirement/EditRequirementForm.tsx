@@ -84,24 +84,22 @@ export default function EditRequirementForm({ element }: IProps): ReactElement {
         name="description"
         label="Requirement text"
       />
-      <Row>
-        <Button className="mt-2  ml-3" type="submit">
-          {t('save')}
-        </Button>
-        <Link
-          to={`/workbench/${project.id}/need/${needId}/requirement/${element.id}/edit`}
-          onClick={() => dispatch(selectRequirement(element.id))}
-        >
-          <Button className="ml-4 mt-2 ">{t('edit')}</Button>
-        </Link>
-        <Button
-          className="mt-2  ml-3"
-          variant="danger"
-          onClick={() => removeRequirement(element)}
-        >
-          {t('delete')} <BsTrashFill />
-        </Button>
-      </Row>
+      <Button className="mt-2  ml-3" type="submit">
+        {t('save')}
+      </Button>
+      <Link
+        to={`/workbench/${project.id}/need/${needId}/requirement/${element.id}/edit`}
+        onClick={() => dispatch(selectRequirement(element.id))}
+      >
+        <Button className="ml-4 mt-2 ">{t('edit')}</Button>
+      </Link>
+      <Button
+        className="mt-2  ml-3"
+        variant="danger"
+        onClick={() => removeRequirement(element)}
+      >
+        {t('delete')} <BsTrashFill />
+      </Button>
       <ErrorSummary errors={errors} />
     </Form>
   );

@@ -34,10 +34,8 @@ export default function ResponseDownLoad(): ReactElement {
   };
 
   return (
-    <Row className="justify-content-md-center">
-      <Button type="submit" className="mt-4" onClick={onDownLoad}>
-        Download Response
-      </Button>
-    </Row>
+    <Button type="submit" className="mt-4" onClick={onDownLoad}>
+      Download Response
+    </Button>
   );
 }

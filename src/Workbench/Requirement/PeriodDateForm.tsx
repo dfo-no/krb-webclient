@@ -32,8 +32,8 @@ export default function PeriodDateForm({
   return (
     <Card className="mb-3">
       <Card.Body>
-        <Row className="m-1 d-flex justify-content-between">
-          <h6>Alternative: Period Date</h6>
+        <h6>
+          Alternative: Period Date
           <Button
             className="mb-3"
             type="button"
@@ -42,7 +42,7 @@ export default function PeriodDateForm({
           >
             <BsTrashFill />
           </Button>
-        </Row>
+        </h6>
         <Form.Control
           as="input"
           type="hidden"

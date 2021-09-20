@@ -1,4 +1,5 @@
 import React, { ReactElement } from 'react';
+import Col from 'react-bootstrap/Col';
 import ListGroup from 'react-bootstrap/ListGroup';
 import Row from 'react-bootstrap/Row';
 import { BsArrowReturnRight } from 'react-icons/bs';
@@ -39,11 +40,14 @@ export default function NeedHierarchy({
       return (
         <div key={element.id} className={` ${styles[cssClass]} pt-0`}>
           <Row>
-            <BsArrowReturnRight className="ml-2 mt-1 mr-2" />
-            <p>{element.title}</p>
+            <Col className="d-flex justify-content-start">
+              <BsArrowReturnRight className="ml-2 mt-1 mr-2" />
+              <p>{element.title}</p>
+            </Col>
           </Row>
           {element.requirements.length > 0 && (
             <RequirementAnswers
+              key={element.id}
               specificationSearchList={specificationSearchList}
               responseSearchList={responseSearchList}
               requirementSearchList={searchList}
@@ -69,6 +73,7 @@ export default function NeedHierarchy({
         <b>{element.title}</b>
         {element.requirements.length > 0 && (
           <RequirementAnswers
+            key={element.id}
             specificationSearchList={specificationSearchList}
             responseSearchList={responseSearchList}
             requirementSearchList={searchList}

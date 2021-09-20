@@ -100,12 +100,12 @@ function EditCodeListForm(): ReactElement {
 
   return (
     <>
-      <Row className="m-1">
-        <h3>Codelist: {codelist.title}</h3>
-        <Button className="ml-3" onClick={() => setEdit(true)}>
+      <h3 className="m-2">
+        Codelist: {codelist.title}
+        <Button className="m-2" onClick={() => setEdit(true)}>
           <BsPencil />
         </Button>
-      </Row>
+      </h3>
       <p className="ml-1 mb-4">{codelist.description}</p>
       {edit && (
         <Card className="mb-4">
@@ -128,30 +128,29 @@ function EditCodeListForm(): ReactElement {
                 errors={errors}
                 label={t('Description')}
               />
-              <Row>
-                <Button className="mt-2  ml-3" type="submit">
-                  {t('save')}
-                </Button>
-                <Button
-                  className="mt-2 ml-3 btn-warning"
-                  onClick={() => setEdit(false)}
-                >
-                  {t('cancel')}
-                </Button>
-                <Button
-                  className="mt-2  ml-3"
-                  variant="warning"
-                  onClick={removeCodelist}
-                >
-                  {t('delete')} <BsTrashFill />
-                </Button>
-                <AlertModal
-                  modalShow={modalShow}
-                  setModalShow={setModalShow}
-                  title="Attention"
-                  text="The codelist is associated to one or more requirement variant, please remove the connection to be able to delete"
-                />
-              </Row>
+              <Button className="mt-2  ml-3" type="submit">
+                {t('save')}
+              </Button>
+              <Button
+                className="mt-2 ml-3 btn-warning"
+                onClick={() => setEdit(false)}
+              >
+                {t('cancel')}
+              </Button>
+              <Button
+                className="mt-2  ml-3"
+                variant="warning"
+                onClick={removeCodelist}
+              >
+                {t('delete')} <BsTrashFill />
+              </Button>
+              <AlertModal
+                modalShow={modalShow}
+                setModalShow={setModalShow}
+                title="Attention"
+                text="The codelist is associated to one or more requirement variant, please remove the connection to be able to delete"
+              />
+
               <ErrorSummary errors={errors} />
             </Form>
           </Card.Body>
