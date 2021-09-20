@@ -113,9 +113,7 @@ export default function CheckBoxForm({ parentAnswer }: IProps): ReactElement {
   return (
     <Card className="mb-3">
       <Card.Body>
-        <Row className="m-1 d-flex justify-content-between">
-          <h6>Question: Yes/No</h6>
-        </Row>
+        <h6>Question: Yes/No</h6>
         <Form onSubmit={handleSubmit(saveValues)}>
           <Row>
             <Col>
@@ -137,23 +135,24 @@ export default function CheckBoxForm({ parentAnswer }: IProps): ReactElement {
             onChange={(e) => setPointsForNonPreffered(e.target.checked)}
             label="Gi poeng for ikke-foretrukket alternativ"
           />
-          {pointsForNonPreferred && (
-            <SliderSelect
-              name={
-                preferedAlternative === 'true'
-                  ? (`config.weightFalse` as const)
-                  : (`config.weightTrue` as const)
-              }
-              control={control}
-              errors={errors}
-              min={0}
-              max={100}
-              step={10}
-              label="Oppgi poeng"
-              marks={[]}
-            />
-          )}
-
+          <Row className=" ml-3 w-50">
+            {pointsForNonPreferred && (
+              <SliderSelect
+                name={
+                  preferedAlternative === 'true'
+                    ? (`config.weightFalse` as const)
+                    : (`config.weightTrue` as const)
+                }
+                control={control}
+                errors={errors}
+                min={0}
+                max={100}
+                step={10}
+                label="Oppgi poeng"
+                marks={[]}
+              />
+            )}
+          </Row>
           <Button type="submit">{t('save')}</Button>
         </Form>
       </Card.Body>

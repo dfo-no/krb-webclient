@@ -1,4 +1,5 @@
 import React, { ReactElement } from 'react';
+import Col from 'react-bootstrap/Col';
 import ListGroup from 'react-bootstrap/ListGroup';
 import Row from 'react-bootstrap/Row';
 import { BsArrowReturnRight } from 'react-icons/bs';
@@ -54,8 +55,10 @@ export default function ProductRequirementSelectorList({
       return (
         <div className={` ${styles[cssClass]} pt-0`} key={element.id}>
           <Row>
-            <BsArrowReturnRight className="ml-2 mt-1 mr-2" />
-            <p>{element.title}</p>
+            <Col className="d-flex justify-content-start">
+              <BsArrowReturnRight className="ml-2 mt-1 mr-2" />
+              <p>{element.title}</p>
+            </Col>
           </Row>
           {requirementsArray.length > 0 &&
             requirementsAnswers(requirementsArray)}

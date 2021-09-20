@@ -1,7 +1,8 @@
+import { Button } from '@material-ui/core';
 import React, { ReactElement, useState } from 'react';
+import Col from 'react-bootstrap/Col';
 import Container from 'react-bootstrap/Container';
-import ToggleButton from 'react-bootstrap/esm/ToggleButton';
-import ToggleButtonGroup from 'react-bootstrap/esm/ToggleButtonGroup';
+import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 import { useAppSelector } from '../../store/hooks';
 import AnswerPreviewBox from './Components/AnswerPreviewBox';
@@ -9,10 +10,6 @@ import AnswerPreviewBox from './Components/AnswerPreviewBox';
 export default function OverView(): ReactElement {
   const { response } = useAppSelector((state) => state.response);
   const [overviewType, setOverviewType] = useState('requirement');
-
-  const handleViewType = (newOverviewType: string) => {
-    setOverviewType(newOverviewType);
-  };
 
   const productAnswerList = () => {
     return response.products.map((product) => {
@@ -26,23 +23,32 @@ export default function OverView(): ReactElement {
         <h3>Registered answers</h3>
       </Row>
       <Row>
-        <ToggleButtonGroup
-          type="radio"
-          name="toogleButton"
-          value={overviewType}
-          onChange={handleViewType}
-        >
-          <ToggleButton
-            value="requirement"
-            aria-label="left aligned"
-            type="radio"
-          >
-            Requirement
-          </ToggleButton>
-          <ToggleButton value="product" aria-label="centered" type="radio">
-            Product
-          </ToggleButton>
-        </ToggleButtonGroup>
+        <Col sm={2}>
+          <Form.Check className="p-0" formNoValidate>
+            <input
+              type="radio"
+              name="requirement"
+              id="requirement"
+              className="m-3"
+              checked={overviewType === 'requirement'}
+              onChange={() => setOverviewType('requirement')}
+            />
+            <Form.Check.Label>Requirement</Form.Check.Label>
+          </Form.Check>
+        </Col>
+        <Col sm={2}>
+          <Form.Check formNoValidate>
+            <input
+              type="radio"
+              name="product"
+              id="product"
+              className="m-3"
+              checked={overviewType === 'product'}
+              onChange={() => setOverviewType('product')}
+            />
+            <Form.Check.Label>Product</Form.Check.Label>
+          </Form.Check>
+        </Col>
       </Row>
 
       {overviewType === 'requirement' && (
