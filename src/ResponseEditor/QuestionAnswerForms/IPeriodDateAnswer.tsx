@@ -57,24 +57,22 @@ export default function PeriodDateAnswer({
   const dispatch = useAppDispatch();
   const { t } = useTranslation();
 
-  const saveValues = (post: any) => {
+  const saveValues = (post: IPeriodDateQuestion) => {
     const newAnswer = {
       ...parentAnswer
     };
 
-    const newAns = {
-      ...post
-    };
-    const newDate = post.answer.date.toISOString();
-    newAns.answer.date = newDate;
-    newAnswer.question = newAns;
+    newAnswer.question = post;
+    const serialized: IRequirementAnswer = JSON.parse(
+      JSON.stringify(newAnswer)
+    );
 
     if (newAnswer.type === ModelType.requirement)
-      dispatch(addRequirementAnswer(newAnswer));
+      dispatch(addRequirementAnswer(serialized));
     if (newAnswer.type === ModelType.product && selectedSpecificationProduct)
       dispatch(
         addProductAnswer({
-          answer: newAnswer,
+          answer: serialized,
           productId: selectedSpecificationProduct.id
         })
       );

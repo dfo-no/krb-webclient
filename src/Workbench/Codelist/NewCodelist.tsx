@@ -76,17 +76,16 @@ function NewCodelist(): ReactElement {
                 errors={errors}
                 label={t('Description')}
               />
-              <Row>
-                <Button className="mt-2  ml-3" type="submit">
-                  {t('save')}
-                </Button>
-                <Button
-                  className="mt-2 ml-3 btn-warning"
-                  onClick={() => setShow(false)}
-                >
-                  {t('cancel')}
-                </Button>
-              </Row>
+
+              <Button className="mt-2  ml-3" type="submit">
+                {t('save')}
+              </Button>
+              <Button
+                className="mt-2 ml-3 btn-warning"
+                onClick={() => setShow(false)}
+              >
+                {t('cancel')}
+              </Button>
             </Form>
           </Card.Body>
         </Card>

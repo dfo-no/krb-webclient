@@ -120,29 +120,29 @@ export default function QuestionArray({
   return (
     <div>
       <h6>{t('Alternatives')}</h6>
-      <Form.Group as={Row}>
-        <Form.Label column sm="3">
-          {t('Select alternative type')}
-        </Form.Label>
-        <Col sm={5}>
-          <Form.Control
-            as="select"
-            onChange={(e) => setAlternativeSelected(e.currentTarget.value)}
-          >
-            <option value="">...</option>
-            <option value={QuestionEnum.Q_SLIDER}>Value</option>
-            {project.codelist && project.codelist.length > 0 && (
-              <option value={QuestionEnum.Q_CODELIST}>Codelist</option>
-            )}
-            <option value={QuestionEnum.Q_TEXT}>Text</option>
-            <option value={QuestionEnum.Q_PERIOD_DATE}>Period</option>
-            <option value={QuestionEnum.Q_TIME}>Time</option>
-            <option value={QuestionEnum.Q_CHECKBOX}>Yes/No </option>
-            <option value={QuestionEnum.Q_FILEUPLOAD}>File upload </option>
-          </Form.Control>
-        </Col>
+      <Form.Label column sm="3">
+        {t('Select alternative type')}
+      </Form.Label>
+      <Col sm={6}>
+        <Form.Control
+          as="select"
+          onChange={(e) => setAlternativeSelected(e.currentTarget.value)}
+        >
+          <option value="">...</option>
+          <option value={QuestionEnum.Q_SLIDER}>Value</option>
+          {project.codelist && project.codelist.length > 0 && (
+            <option value={QuestionEnum.Q_CODELIST}>Codelist</option>
+          )}
+          <option value={QuestionEnum.Q_TEXT}>Text</option>
+          <option value={QuestionEnum.Q_PERIOD_DATE}>Period</option>
+          <option value={QuestionEnum.Q_TIME}>Time</option>
+          <option value={QuestionEnum.Q_CHECKBOX}>Yes/No </option>
+          <option value={QuestionEnum.Q_FILEUPLOAD}>File upload </option>
+        </Form.Control>
+      </Col>
+      <Col sm={1}>
         <Button onClick={() => addAlternative()}>Add</Button>
-      </Form.Group>
+      </Col>
 
       {fields.map((item: QuestionType, index) => {
         return (

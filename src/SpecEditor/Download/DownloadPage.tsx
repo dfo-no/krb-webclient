@@ -1,7 +1,6 @@
 import { AxiosResponse } from 'axios';
 import React, { ReactElement } from 'react';
 import Button from 'react-bootstrap/Button';
-import Row from 'react-bootstrap/Row';
 import { useTranslation } from 'react-i18next';
 import { httpPost } from '../../api/http';
 import { Specification } from '../../models/Specification';
@@ -35,10 +34,8 @@ export default function SpecPage(): ReactElement {
   };
 
   return (
-    <Row className="justify-content-md-center">
-      <Button type="submit" className="mt-4" onClick={onDownLoad}>
-        {t('download specification')}
-      </Button>
-    </Row>
+    <Button type="submit" className="mt-4" onClick={onDownLoad}>
+      {t('download specification')}
+    </Button>
   );
 }

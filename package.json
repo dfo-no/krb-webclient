@@ -31,7 +31,7 @@
     "@typescript-eslint/eslint-plugin": "^4.29.3",
     "@typescript-eslint/parser": "^4.29.3",
     "axios": "^0.21.2",
-    "bootstrap": "^4.6.0",
+    "bootstrap": "^5.1.0",
     "date-fns": "^2.23.0",
     "env-cmd": "^10.1.0",
     "eslint": "^7.32.0",

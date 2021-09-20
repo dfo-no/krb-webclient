@@ -52,10 +52,8 @@ export default function CodeListForm({
   return (
     <Card className="mb-3">
       <Card.Body>
-        <Row className=" m-1 d-flex justify-content-between">
-          <h6>
-            {t('Alternative')}: {t('Codelist')}
-          </h6>
+        <h6>
+          {t('Alternative')}: {t('Codelist')}
           <Button
             className="mb-3"
             type="button"
@@ -64,7 +62,7 @@ export default function CodeListForm({
           >
             <BsTrashFill />
           </Button>
-        </Row>
+        </h6>
         <Form.Control
           as="input"
           type="hidden"

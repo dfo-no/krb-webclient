@@ -84,9 +84,6 @@ export default function SpecEditor(): ReactElement {
           {t('Bank')} {selectedBank.title}
         </h4>
       </Row>
-      <Row className=" m-4 d-flex justify-content-md-end">
-        <Button>{t('update')}</Button>
-      </Row>
     </Container>
   );
 }

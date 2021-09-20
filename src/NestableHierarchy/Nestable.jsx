@@ -62,28 +62,20 @@ export default function NestableHierarcy({
       setActiveKey('');
     }
   };
-  const renderItem = ({ item, collapseIcon, handler }) => {
+  const renderItem = ({ item, handler }) => {
     return (
       <Accordion.Item eventKey={item.id}>
-        <Card key={item.id}>
-          <Card.Header>
-            <Row className="d-flex justify-content-between">
-              <h6 className="ml-2 mt-2">
-                {Utils.capitalizeFirstLetter(item.title)}
-                {collapseIcon}
-              </h6>
-              <Accordion.Header as={Button} variant="link">
-                <BsChevronDown />
-              </Accordion.Header>
-            </Row>
-          </Card.Header>
-          <Accordion.Body eventKey={item.id}>
-            <Card.Body>
-              {React.cloneElement(component, { element: item })}
-            </Card.Body>
+        <h2 className="accordion-header">
+          <Accordion.Button>
+            {Utils.capitalizeFirstLetter(item.title)}
+          </Accordion.Button>
+        </h2>
+        <Accordion.Collapse eventKey={item.id}>
+          <Accordion.Body>
+            {React.cloneElement(component, { element: item })}
           </Accordion.Body>
-          {handler}
-        </Card>
+        </Accordion.Collapse>
+        {handler}
       </Accordion.Item>
     );
   };

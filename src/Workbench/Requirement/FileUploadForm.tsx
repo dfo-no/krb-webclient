@@ -1,14 +1,14 @@
+import { get, has } from 'lodash';
 import React, { ReactElement } from 'react';
+import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
+import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
-import Button from 'react-bootstrap/Button';
 import { Control, FormState, UseFormRegister } from 'react-hook-form';
-import { get, has } from 'lodash';
 import { BsTrashFill } from 'react-icons/bs';
-import { Requirement } from '../../models/Requirement';
 import { IFileUploadQuestion } from '../../models/IFileUploadQuestion';
+import { Requirement } from '../../models/Requirement';
 
 type IProps = {
   control: Control<Requirement>;
@@ -31,8 +31,8 @@ export default function FileUploadForm({
   return (
     <Card className="mb-3">
       <Card.Body>
-        <Row className="m-1 d-flex justify-content-between">
-          <h6>Alternative: File Upload</h6>
+        <h6>
+          Alternative: File Upload
           <Button
             className="mb-3"
             type="button"
@@ -41,7 +41,7 @@ export default function FileUploadForm({
           >
             <BsTrashFill />
           </Button>
-        </Row>
+        </h6>
         <Form.Control
           as="input"
           type="hidden"
