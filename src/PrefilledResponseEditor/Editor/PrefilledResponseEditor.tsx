@@ -71,6 +71,7 @@ export default function PrefilledResponseEditor(): ReactElement {
               <Col sm={8}>
                 <FormControl
                   {...register('supplier')}
+                  defaultValue={prefilledResponse.supplier}
                   isInvalid={!!errors.supplier}
                 />
                 {errors.supplier && (
