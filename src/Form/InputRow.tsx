@@ -33,7 +33,7 @@ function InputRow({
       name={name}
       control={control}
       render={({ field: { ref, onBlur, onChange, value } }) => (
-        <Form.Group as={Row}>
+        <Form.Group as={Row} controlId={name}>
           <Form.Label column sm={labelWidth}>
             {label}
           </Form.Label>
