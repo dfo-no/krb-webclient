@@ -34,10 +34,8 @@ export default function SliderForm({
   return (
     <Card className="mb-3">
       <Card.Body>
-        <Row className="m-1 d-flex justify-content-between">
-          <h6>
-            {t('Alternative')}: {t('Value')}
-          </h6>
+        <h6>
+          {t('Alternative')}: {t('Value')}{' '}
           <Button
             className="mb-3"
             type="button"
@@ -46,7 +44,8 @@ export default function SliderForm({
           >
             <BsTrashFill />
           </Button>
-        </Row>
+        </h6>
+
         <Form.Control
           as="input"
           type="hidden"

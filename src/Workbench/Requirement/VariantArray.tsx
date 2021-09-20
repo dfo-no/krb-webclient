@@ -113,8 +113,8 @@ export default function VariantArray({
           // eslint-disable-next-line react/no-array-index-key
           <Card className="mb-3" key={uuidv4()}>
             <Card.Body>
-              <Row className="d-flex justify-content-between">
-                <h5>{t('Variant')}</h5>
+              <h5>
+                {t('Variant')}{' '}
                 <Button
                   className="mb-3"
                   type="button"
@@ -125,7 +125,8 @@ export default function VariantArray({
                 >
                   <BsTrashFill />
                 </Button>
-              </Row>
+              </h5>
+
               {/* <input
                 key={item.id} // important to include key with field's id
                 {...register(`variants.${index}.id` as const)}

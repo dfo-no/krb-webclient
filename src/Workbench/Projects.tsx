@@ -1,6 +1,7 @@
 import { joiResolver } from '@hookform/resolvers/joi';
 import React, { ReactElement, useEffect, useState } from 'react';
 import Button from 'react-bootstrap/Button';
+import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 import ListGroup from 'react-bootstrap/ListGroup';
 import Row from 'react-bootstrap/Row';
@@ -81,19 +82,23 @@ function Projects(): ReactElement {
         <ListGroup.Item key={element.id}>
           {/* TODO: fix styling  */}
           <Row className="d-flex justify-content-between ml-1">
-            <Link
-              to={`/workbench/${element.id}`}
-              onClick={() => dispatch(selectProject(element))}
-            >
-              <h5>{element.title}</h5>
-            </Link>
-            <Button
-              className="mr-2"
-              variant="danger"
-              onClick={() => onDelete(element)}
-            >
-              <BsTrashFill />
-            </Button>
+            <Col>
+              <Link
+                to={`/workbench/${element.id}`}
+                onClick={() => dispatch(selectProject(element))}
+              >
+                <h5>{element.title}</h5>
+              </Link>
+            </Col>
+            <Col sm={1} className="p-0">
+              <Button
+                className="mr-2"
+                variant="danger"
+                onClick={() => onDelete(element)}
+              >
+                <BsTrashFill />
+              </Button>
+            </Col>
           </Row>
           <Row className="ml-1">
             <p>{element.description}</p>

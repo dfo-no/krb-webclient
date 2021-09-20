@@ -104,30 +104,28 @@ export default function EditProductForm({ element }: IProps): ReactElement {
         errors={errors}
         label={t('Description')}
       />
-      <Row>
-        <Button className="mt-2  ml-3" type="submit">
-          {t('save')}
-        </Button>
-        <Link
-          to={`/workbench/${project.id}/${element.id}/product`}
-          onClick={() => dispatch(selectProduct(element))}
-        >
-          <Button className="mt-2  ml-3">Preview</Button>
-        </Link>
-        <Button
-          className="mt-2  ml-3"
-          variant="warning"
-          onClick={() => deleteProduct(element)}
-        >
-          {t('delete')} <BsTrashFill />
-        </Button>
-        <AlertModal
-          modalShow={modalShow}
-          setModalShow={setModalShow}
-          title="Attention"
-          text="This product is associated to one or more requirement variants, please remove the connection to be able to delete"
-        />
-      </Row>
+      <Button className="mt-2  ml-3" type="submit">
+        {t('save')}
+      </Button>
+      <Link
+        to={`/workbench/${project.id}/${element.id}/product`}
+        onClick={() => dispatch(selectProduct(element))}
+      >
+        <Button className="mt-2  ml-3">Preview</Button>
+      </Link>
+      <Button
+        className="mt-2  ml-3"
+        variant="warning"
+        onClick={() => deleteProduct(element)}
+      >
+        {t('delete')} <BsTrashFill />
+      </Button>
+      <AlertModal
+        modalShow={modalShow}
+        setModalShow={setModalShow}
+        title="Attention"
+        text="This product is associated to one or more requirement variants, please remove the connection to be able to delete"
+      />
       <ErrorSummary errors={errors} />
     </Form>
   );
