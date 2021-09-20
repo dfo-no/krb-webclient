@@ -39,10 +39,8 @@ export default function PrefilledResponseDownLoad(): ReactElement {
   };
 
   return (
-    <Row className="justify-content-md-center">
-      <Button type="submit" className="mt-4" onClick={onDownLoad}>
-        Download Prefilled Response
-      </Button>
-    </Row>
+    <Button type="submit" className="mt-4" onClick={onDownLoad}>
+      Download Prefilled Response
+    </Button>
   );
 }
