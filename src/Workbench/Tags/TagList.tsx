@@ -1,5 +1,5 @@
 import React, { ReactElement, useState } from 'react';
-import { Accordion } from 'react-bootstrap';
+import Accordion from 'react-bootstrap/Accordion';
 import Utils from '../../common/Utils';
 import { Tag } from '../../models/Tag';
 import { AccordionContext } from '../../NestableHierarchy/AccordionContext';
@@ -22,7 +22,7 @@ export default function TagList(): ReactElement {
       .sort((a, b) => (a.title.toLowerCase() < b.title.toLowerCase() ? -1 : 1));
     return sorted.map((item: Tag) => {
       return (
-        <Accordion.Item eventKey={item.id}>
+        <Accordion.Item eventKey={item.id} key={item.id}>
           <h2 className="accordion-header">
             <Accordion.Button>
               {Utils.capitalizeFirstLetter(item.title)}
