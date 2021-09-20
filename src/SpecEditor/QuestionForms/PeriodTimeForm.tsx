@@ -28,8 +28,14 @@ export const PeriodDateSchema = Joi.object().keys({
   id: Joi.string().required(),
   type: Joi.string().equal(QuestionEnum.Q_PERIOD_DATE).required(),
   config: Joi.object().keys({
-    fromDate: Joi.string().trim().allow('').required(),
-    toDate: Joi.string().trim().allow('').required()
+    fromDate: Joi.alternatives([
+      Joi.date().iso(),
+      Joi.string().valid('')
+    ]).required(),
+    toDate: Joi.alternatives([
+      Joi.date().iso(),
+      Joi.string().valid('')
+    ]).required()
   })
 });
 
@@ -63,12 +69,15 @@ export default function PeriodDateForm({ parentAnswer }: IProps): ReactElement {
       ...parentAnswer
     };
     newAnswer.question = post;
+    const serialized: IRequirementAnswer = JSON.parse(
+      JSON.stringify(newAnswer)
+    );
     if (newAnswer.type === ModelType.requirement)
-      dispatch(addAnswer({ answer: newAnswer }));
+      dispatch(addAnswer({ answer: serialized }));
     if (newAnswer.type === ModelType.product && selectedSpecificationProduct)
       dispatch(
         addProductAnswer({
-          answer: newAnswer,
+          answer: serialized,
           productId: selectedSpecificationProduct.id
         })
       );
