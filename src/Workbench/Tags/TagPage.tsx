@@ -1,16 +1,38 @@
 import React, { ReactElement } from 'react';
 import { useTranslation } from 'react-i18next';
+import { Tag } from '../../models/Tag';
+import NestableHierarcy from '../../NestableHierarchy/Nestable';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
+import {
+  putSelectedProjectThunk,
+  setTags
+} from '../../store/reducers/project-reducer';
+import EditTagForm from './EditTagForm';
 import NewTagForm from './NewTagForm';
-import TagList from './TagList';
 
 export default function TagPage(): ReactElement {
   const { t } = useTranslation();
+  const dispatch = useAppDispatch();
+  const { project } = useAppSelector((state) => state.project);
+
+  const newTagList = (projectId: string, items: Tag[]) => {
+    dispatch(setTags(items));
+    dispatch(putSelectedProjectThunk('dummy'));
+  };
 
   return (
     <>
       <h3 className="mt-3">{t('Tags')}</h3>
       <NewTagForm />
-      <TagList />
+      <NestableHierarcy
+        dispatchfunc={(projectId: string, items: Tag[]) =>
+          newTagList(projectId, items)
+        }
+        inputlist={project.tags}
+        projectId={project.id}
+        component={<EditTagForm element={project.tags[0]} />}
+        depth={5}
+      />
     </>
   );
 }
