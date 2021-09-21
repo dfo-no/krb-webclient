@@ -6,7 +6,7 @@ import { Code } from '../../models/Code';
 import { Codelist } from '../../models/Codelist';
 import ModelType from '../../models/ModelType';
 import { Need } from '../../models/Need';
-import { Nestable } from '../../models/Nestable';
+import { Parentable } from '../../models/Parentable';
 import { Product } from '../../models/Product';
 import { Publication } from '../../models/Publication';
 import { Requirement } from '../../models/Requirement';
@@ -140,13 +140,13 @@ const projectSlice = createSlice({
 
       state.list[index].publications?.push(payload.publication);
     },
-    setNeeds(state, { payload }: PayloadAction<Nestable<Need>[]>) {
+    setNeeds(state, { payload }: PayloadAction<Parentable<Need>[]>) {
       state.project.needs = payload;
     },
-    addNeed(state, { payload }: PayloadAction<Nestable<Need>>) {
+    addNeed(state, { payload }: PayloadAction<Parentable<Need>>) {
       state.project.needs.push(payload);
     },
-    editNeed(state, { payload }: PayloadAction<Nestable<Need>>) {
+    editNeed(state, { payload }: PayloadAction<Parentable<Need>>) {
       const needIndex = state.project.needs.findIndex(
         (elem) => elem.id === payload.id
       );
