@@ -30,3 +30,13 @@ export const PeriodDateQuestionSchema = Joi.object().keys({
     ]).required()
   })
 });
+
+export const PeriodDateQuestionAnswerSchema = PeriodDateQuestionSchema.keys({
+  answer: Joi.object().keys({
+    date: Joi.alternatives([
+      Joi.date().iso(),
+      Joi.string().valid('')
+    ]).required(),
+    point: Joi.number().required()
+  })
+});

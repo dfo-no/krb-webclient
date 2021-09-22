@@ -24,3 +24,13 @@ export const CodelistQuestionSchema = Joi.object().keys({
     multipleSelect: Joi.boolean().required()
   })
 });
+
+export const CodelistQuestionAnswerSchema = CodelistQuestionSchema.keys({
+  answer: Joi.object().keys({
+    codes: Joi.alternatives([
+      Joi.array().items(Joi.string().length(36)),
+      Joi.string().length(36)
+    ]),
+    point: Joi.number().required()
+  })
+});

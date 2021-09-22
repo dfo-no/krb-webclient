@@ -21,3 +21,10 @@ export const TextQuestionSchema = Joi.object().keys({
     max: Joi.number().required().min(0)
   })
 });
+
+export const TextQuestionAnswerSchema = TextQuestionSchema.keys({
+  answer: Joi.object().keys({
+    text: Joi.string().required(),
+    point: Joi.number().required()
+  })
+});

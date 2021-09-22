@@ -22,3 +22,10 @@ export const TimeQuestionSchema = Joi.object().keys({
     toTime: Joi.string().trim().allow('').required()
   })
 });
+
+export const TimeQuestionAnswerSchema = TimeQuestionSchema.keys({
+  answer: Joi.object().keys({
+    time: Joi.string().required(),
+    point: Joi.number().required()
+  })
+});
