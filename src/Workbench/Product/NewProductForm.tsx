@@ -37,7 +37,7 @@ function NewProductForm(): ReactElement {
     handleSubmit,
     reset,
     formState: { errors }
-  } = useForm({
+  } = useForm<Product>({
     resolver: joiResolver(PostProductSchema),
     defaultValues: product
   });

@@ -11,6 +11,7 @@ import ErrorSummary from '../../Form/ErrorSummary';
 import InputRow from '../../Form/InputRow';
 import { Need, PutNeedSchema } from '../../models/Need';
 import { Nestable } from '../../models/Nestable';
+import { Parentable } from '../../models/Parentable';
 import { AccordionContext } from '../../NestableHierarchy/AccordionContext';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import {
@@ -35,19 +36,19 @@ function EditNeedForm({ element }: IProps): ReactElement {
     handleSubmit,
     control,
     formState: { errors }
-  } = useForm({
+  } = useForm<Parentable<Need>>({
     defaultValues: element,
     resolver: joiResolver(PutNeedSchema)
   });
 
   const [modalShow, setModalShow] = useState(false);
 
-  const onSubmit = (post: Need) => {
-    const parentable = { ...post } as Nestable<Need>;
-    if (parentable.children) {
-      delete parentable.children;
+  const onSubmit = (post: Nestable<Need>) => {
+    const toParentable = { ...post };
+    if (toParentable.children) {
+      delete toParentable.children;
     }
-    dispatch(editNeed(parentable));
+    dispatch(editNeed(toParentable as Parentable<Need>));
     dispatch(putSelectedProjectThunk('dummy')).then(() => {
       onOpenClose('');
     });

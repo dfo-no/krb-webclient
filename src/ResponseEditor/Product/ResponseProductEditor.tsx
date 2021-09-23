@@ -44,13 +44,14 @@ export default function ResponseProductEditor(): ReactElement {
   const product: ResponseProduct =
     productIndex === -1 ? newProduct : response.products[productIndex];
 
+  // TODO: remove any.
   const {
     register,
     handleSubmit,
     formState: { errors }
-  } = useForm<ResponseProduct>({
+  } = useForm<any>({
     resolver: joiResolver(ResponseProductSchema),
-    defaultValues: { ...product }
+    defaultValues: product
   });
   const dispatch = useAppDispatch();
   const { t } = useTranslation();

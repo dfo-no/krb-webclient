@@ -1,4 +1,4 @@
-import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { httpGet, httpPost } from '../../api/http';
 import { Bank } from '../../models/Bank';
 
@@ -54,11 +54,7 @@ export const postBankThunk = createAsyncThunk(
 const bankSlice = createSlice({
   name: 'banks',
   initialState,
-  reducers: {
-    addBanks(state, { payload }: PayloadAction<Bank[]>) {
-      return state;
-    }
-  },
+  reducers: {},
   extraReducers: (builder) => {
     builder.addCase(getBanksThunk.pending, (state) => {
       state.status = 'pending';
@@ -113,7 +109,5 @@ const bankSlice = createSlice({
     });
   }
 });
-
-export const { addBanks } = bankSlice.actions;
 
 export default bankSlice.reducer;

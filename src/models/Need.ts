@@ -18,10 +18,10 @@ export const BaseNeedSchema = Joi.object().keys({
 });
 
 export const PostNeedSchema = BaseNeedSchema.keys({
-  id: Joi.string().equal('').required()
+  id: Joi.string().equal('').required(),
+  parent: Joi.alternatives([Joi.string().length(36), Joi.string().valid('')])
 });
 
 export const PutNeedSchema = BaseNeedSchema.keys({
-  children: Joi.array(),
   parent: Joi.alternatives([Joi.string().length(36), Joi.string().valid('')])
 });

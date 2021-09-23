@@ -10,6 +10,7 @@ enum ModelType {
   responseProduct = 'responseProduct',
   tag = 'tag',
   prefilledResponse = 'prefilledResponse',
+  requirementAnswer = 'requirementAnswer',
   prefilledResponseProduct = 'prefilledResponseProduct'
 }
 

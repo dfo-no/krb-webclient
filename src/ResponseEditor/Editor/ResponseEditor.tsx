@@ -27,7 +27,7 @@ export default function ResponseEditor(): ReactElement {
     register,
     handleSubmit,
     formState: { errors }
-  } = useForm({
+  } = useForm<IResponseInfoForm>({
     resolver: joiResolver(supplierSchema)
   });
   const dispatch = useAppDispatch();

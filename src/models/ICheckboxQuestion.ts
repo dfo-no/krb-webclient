@@ -26,3 +26,10 @@ export const CheckboxQuestionSchema = Joi.object().keys({
     weightFalse: Joi.number().min(0).max(100)
   })
 });
+
+export const CheckboxQuestionAnswerSchema = CheckboxQuestionSchema.keys({
+  answer: Joi.object().keys({
+    value: Joi.boolean().required(),
+    point: Joi.number().required()
+  })
+});

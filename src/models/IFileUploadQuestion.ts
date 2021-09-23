@@ -21,3 +21,10 @@ export const FileUploadQuestionSchema = Joi.object().keys({
     fileEndings: Joi.string().allow('')
   })
 });
+
+export const FileUploadQuestionAnswerSchema = FileUploadQuestionSchema.keys({
+  answer: Joi.object().keys({
+    file: Joi.string().required(),
+    point: Joi.number().required()
+  })
+});

@@ -1,5 +1,5 @@
+import { useAccount, useMsal } from '@azure/msal-react';
 import React, { ReactElement, useState } from 'react';
-import { useMsal, useAccount } from '@azure/msal-react';
 import Button from 'react-bootstrap/Button';
 import { loginRequest } from '../authentication/authConfig';
 import { callMsGraph, ProfileData } from './GraphProfileData';
@@ -30,7 +30,7 @@ export default function ProfileContent(): ReactElement {
       {graphData ? (
         <ProfileData graphData={graphData} />
       ) : (
-        <Button variant="secondary" onClick={RequestProfileData}>
+        <Button variant="secondary" onClick={() => RequestProfileData()}>
           Request Profile Information
         </Button>
       )}
