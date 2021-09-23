@@ -401,6 +401,9 @@ const projectSlice = createSlice({
       if (index !== -1) {
         state.project.tags.splice(index, 1);
       }
+    },
+    setTags(state, { payload }: PayloadAction<Tag[]>) {
+      state.project.tags = payload;
     }
   },
   extraReducers: (builder) => {
@@ -505,7 +508,8 @@ export const {
   editPublication,
   addTag,
   editTag,
-  removeTag
+  removeTag,
+  setTags
 } = projectSlice.actions;
 
 export default projectSlice.reducer;
