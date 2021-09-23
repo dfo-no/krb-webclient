@@ -4,6 +4,7 @@ import Utils from '../../common/Utils';
 import { Bank } from '../../models/Bank';
 import { Code } from '../../models/Code';
 import { Codelist } from '../../models/Codelist';
+import { InheritedBank } from '../../models/InheritedBank';
 import ModelType from '../../models/ModelType';
 import { Need } from '../../models/Need';
 import { Parentable } from '../../models/Parentable';
@@ -31,7 +32,8 @@ const initialState: ProjectState = {
     tags: [],
     publications: [],
     type: ModelType.bank,
-    version: 0
+    version: 0,
+    inheritedBanks: []
   },
   projectLoading: 'idle',
   listLoading: 'idle'
@@ -402,6 +404,9 @@ const projectSlice = createSlice({
         state.project.tags.splice(index, 1);
       }
     },
+    addInheritedBank(state, { payload }: PayloadAction<InheritedBank>) {
+      state.project.inheritedBanks.push(payload);
+    },
     setTags(state, { payload }: PayloadAction<Tag[]>) {
       state.project.tags = payload;
     }
@@ -509,6 +514,7 @@ export const {
   addTag,
   editTag,
   removeTag,
+  addInheritedBank,
   setTags
 } = projectSlice.actions;
 

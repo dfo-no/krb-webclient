@@ -1,6 +1,7 @@
 import Joi from 'joi';
 import { BaseModel } from './BaseModel';
 import { Codelist } from './Codelist';
+import { InheritedBank } from './InheritedBank';
 import ModelType from './ModelType';
 import { Need } from './Need';
 import { Parentable } from './Parentable';
@@ -22,7 +23,8 @@ export const BaseBankSchema = Joi.object().keys({
   publishedDate: Joi.alternatives([
     Joi.date(),
     Joi.string().valid('')
-  ]).required()
+  ]).required(),
+  inheritedBanks: Joi.array().required()
 });
 
 export interface Bank extends BaseModel {
@@ -36,4 +38,5 @@ export interface Bank extends BaseModel {
   tags: Tag[];
   publications: Publication[];
   publishedDate?: string;
+  inheritedBanks: InheritedBank[];
 }
