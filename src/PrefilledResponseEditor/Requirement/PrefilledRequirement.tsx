@@ -1,11 +1,10 @@
-import { DevTool } from '@hookform/devtools';
+// import { DevTool } from '@hookform/devtools';
 import React from 'react';
-import { Button, Card, ListGroup } from 'react-bootstrap';
+import { Button, Card, Col, ListGroup, Row } from 'react-bootstrap';
 import Container from 'react-bootstrap/Container';
 import Form from 'react-bootstrap/Form';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import { v4 as uuidv4 } from 'uuid';
 import Utils from '../../common/Utils';
 import ControlledCheckbox from '../../Form/ControlledCheckbox';
 import ControlledCodelistSelect from '../../Form/ControlledCodelistSelect';
@@ -28,16 +27,15 @@ import {
 import { ISliderAnswer, ISliderQuestion } from '../../models/ISliderQuestion';
 import { ITextAnswer, ITextQuestion } from '../../models/ITextQuestion';
 import { ITimeAnswer, ITimeQuestion } from '../../models/ITimeQuestion';
+import { Levelable } from '../../models/Levelable';
 import ModelType from '../../models/ModelType';
 import { Need } from '../../models/Need';
 import QuestionEnum from '../../models/QuestionEnum';
 import { Requirement } from '../../models/Requirement';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
-import {
-  addRequirementAnswer,
-  setRequirementAnswers
-} from '../../store/reducers/PrefilledResponseReducer';
+import { setRequirementAnswers } from '../../store/reducers/PrefilledResponseReducer';
 
+// TODO: SPlit this in lesser components to support nice UX flow.
 export default function PrefilledRequirement(): React.ReactElement {
   const { prefilledResponse } = useAppSelector(
     (state) => state.prefilledResponse
@@ -91,7 +89,7 @@ export default function PrefilledRequirement(): React.ReactElement {
             }
 
             const value = {
-              id: uuidv4(),
+              id: requirement.id,
               questionId: question.id,
               weight: 0,
               variantId: variant.id,
@@ -221,12 +219,16 @@ export default function PrefilledRequirement(): React.ReactElement {
     });
   };
 
-  const renderNeeds = (needs: Need[]) => {
+  const renderNeeds = (needs: Levelable<Need>[]) => {
     return needs.map((need) => {
       return (
         <ListGroup.Item key={need.id}>
-          <b>{need.title}</b>
-          {renderRequirements(need.requirements)}
+          <Row>
+            <Col xs={{ span: 12 - (need.level - 1), offset: need.level - 1 }}>
+              <b>{need.title}</b>
+              {renderRequirements(need.requirements)}
+            </Col>
+          </Row>
         </ListGroup.Item>
       );
     });
@@ -240,7 +242,7 @@ export default function PrefilledRequirement(): React.ReactElement {
         <ErrorSummary errors={errors} />
         <Button type="submit">{t('save')}</Button>
       </Form>
-      <DevTool control={control} />
+      {/* <DevTool control={control} /> */}
     </Container>
   );
 }

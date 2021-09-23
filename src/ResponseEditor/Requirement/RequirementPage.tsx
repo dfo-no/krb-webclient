@@ -9,6 +9,7 @@ export default function RequirementPage(): ReactElement {
 
   return (
     <NeedHierarchy
+      key={selectedBank.id}
       needs={selectedBank.needs}
       searchList={response.spesification.requirements}
       specificationSearchList={response.spesification.requirementAnswers}
