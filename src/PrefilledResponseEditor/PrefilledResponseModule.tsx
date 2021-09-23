@@ -8,6 +8,7 @@ import { useAppDispatch, useAppSelector } from '../store/hooks';
 import { selectBank } from '../store/reducers/selectedBank-reducer';
 import PrefilledResponseDownLoad from './Download/PrefilledResponseDownload';
 import PrefilledResponseEditor from './Editor/PrefilledResponseEditor';
+import PrefilledRequirement from './Requirement/PrefilledRequirement';
 import PrefilledResponseSidebar from './SideBar/PrefilledResponseSidebar';
 
 interface RouteParams {
@@ -41,7 +42,7 @@ export default function PrefilledResponseModule(): ReactElement {
               <PrefilledResponseEditor />
             </Route>
             <Route exact path="/prefilledresponse/:id/requirement">
-              <PrefilledResponseEditor />
+              <PrefilledRequirement />
             </Route>
             <Route exact path="/prefilledresponse/:id/download">
               <PrefilledResponseDownLoad />

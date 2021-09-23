@@ -8,7 +8,7 @@ export interface IPeriodDateQuestion
 }
 
 export interface IPeriodDateAnswer extends IAnswerBase {
-  date: string;
+  date: string | null;
 }
 
 export interface IPeriodDateConfig extends IConfigBase {

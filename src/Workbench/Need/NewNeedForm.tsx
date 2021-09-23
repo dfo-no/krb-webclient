@@ -11,7 +11,7 @@ import ErrorSummary from '../../Form/ErrorSummary';
 import InputRow from '../../Form/InputRow';
 import ModelType from '../../models/ModelType';
 import { Need, PostNeedSchema } from '../../models/Need';
-import { Nestable } from '../../models/Nestable';
+import { Parentable } from '../../models/Parentable';
 import { useAppDispatch } from '../../store/hooks';
 import {
   addNeed,
@@ -24,12 +24,13 @@ function NewNeedForm(): ReactElement {
   const [show, setShow] = useState(false);
   const { t } = useTranslation();
 
-  const defaultValues: Need = {
+  const defaultValues: Parentable<Need> = {
     id: '',
     title: '',
     description: '',
     requirements: [],
-    type: ModelType.need
+    type: ModelType.need,
+    parent: ''
   };
 
   const {
@@ -37,17 +38,14 @@ function NewNeedForm(): ReactElement {
     handleSubmit,
     reset,
     formState: { errors }
-  } = useForm<Need>({
+  } = useForm<Parentable<Need>>({
     resolver: joiResolver(PostNeedSchema),
     defaultValues
   });
 
-  const onSubmit = (post: Nestable<Need>) => {
+  const onSubmit = (post: Parentable<Need>) => {
     const need = { ...post };
     need.id = uuidv4();
-    if (need.children) {
-      delete need.children;
-    }
     dispatch(addNeed(need));
     dispatch(putSelectedProjectThunk('dummy')).then(() => {
       setShow(false);

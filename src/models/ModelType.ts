@@ -9,7 +9,8 @@ enum ModelType {
   specificationProduct = 'specificationProduct',
   responseProduct = 'responseProduct',
   tag = 'tag',
-  prefilledResponse = 'prefilledResponse'
+  prefilledResponse = 'prefilledResponse',
+  requirementAnswer = 'requirementAnswer'
 }
 
 export default ModelType;

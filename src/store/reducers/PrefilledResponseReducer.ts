@@ -1,10 +1,12 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { cloneDeep } from 'lodash';
 import Utils from '../../common/Utils';
 import { Bank } from '../../models/Bank';
 import { IRequirementAnswer } from '../../models/IRequirementAnswer';
 import ModelType from '../../models/ModelType';
 import { PrefilledResponse } from '../../models/PrefilledResponse';
 import { PrefilledResponseProduct } from '../../models/PrefilledResponseProduct';
+// import RequirementAnswer from '../../SpecEditor/Requirement/RequirementAnswer';
 
 interface PrefilledResponseState {
   prefilledResponse: PrefilledResponse;
@@ -24,10 +26,11 @@ const initialState: PrefilledResponseState = {
       type: ModelType.bank,
       publications: []
     },
-    answeredVariants: [],
+    // answeredVariants: [], // list over string med id som er besvart, uavhengig questiontype, drit i denne
     supplier: '',
     products: [],
-    requirementAnswers: []
+    requirementAnswers: [], // RequirementAnswer[]
+    type: ModelType.prefilledResponse
   }
 };
 
@@ -40,6 +43,14 @@ const responseSlice = createSlice({
     },
     editSupplier(state, { payload }: PayloadAction<string>) {
       state.prefilledResponse.supplier = payload;
+    },
+    setRequirementAnswers(
+      state,
+      { payload }: PayloadAction<{ cart: IRequirementAnswer[] }>
+    ) {
+      // TODO: Why is cloneDeep nesccecary here???
+      const cloned = cloneDeep(payload.cart);
+      state.prefilledResponse.requirementAnswers = cloned;
     },
     addRequirementAnswer(
       state,
@@ -107,9 +118,9 @@ const responseSlice = createSlice({
         payload.requirement
       );
     },
-    addVariant(state, { payload }: PayloadAction<string>) {
+    /* addVariant(state, { payload }: PayloadAction<string>) {
       state.prefilledResponse.answeredVariants.push(payload);
-    },
+    }, */
     editProduct(
       state,
       {
@@ -131,7 +142,8 @@ export const {
   editProduct,
   setResponse,
   addRequirementAnswer,
-  addProductAnswer
+  addProductAnswer,
+  setRequirementAnswers
 } = responseSlice.actions;
 
 export default responseSlice.reducer;
