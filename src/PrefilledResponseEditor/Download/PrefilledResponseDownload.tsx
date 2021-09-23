@@ -1,12 +1,11 @@
 import { AxiosResponse } from 'axios';
-import React, { ReactElement } from 'react';
+import React from 'react';
 import Button from 'react-bootstrap/Button';
-import Row from 'react-bootstrap/Row';
 import { httpPost } from '../../api/http';
 import { PrefilledResponse } from '../../models/PrefilledResponse';
 import { useAppSelector } from '../../store/hooks';
 
-export default function PrefilledResponseDownLoad(): ReactElement {
+export default function PrefilledResponseDownLoad(): React.ReactElement {
   const { prefilledResponse } = useAppSelector(
     (state) => state.prefilledResponse
   );
@@ -39,7 +38,7 @@ export default function PrefilledResponseDownLoad(): ReactElement {
   };
 
   return (
-    <Button type="submit" className="mt-4" onClick={onDownLoad}>
+    <Button type="button" className="mt-4" onClick={onDownLoad}>
       Download Prefilled Response
     </Button>
   );
