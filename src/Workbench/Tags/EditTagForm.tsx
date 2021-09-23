@@ -8,10 +8,13 @@ import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { BsPencil, BsTrashFill } from 'react-icons/bs';
 import { useHistory } from 'react-router-dom';
+import { v4 as uuidv4 } from 'uuid';
 import ErrorSummary from '../../Form/ErrorSummary';
 import InputRow from '../../Form/InputRow';
+import { Alert } from '../../models/Alert';
 import { BaseTagSchema, Tag } from '../../models/Tag';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
+import { addAlert } from '../../store/reducers/alert-reducer';
 import {
   editTag,
   putSelectedProjectThunk,
@@ -30,8 +33,6 @@ export default function EditTagForm({ tag }: IProps): ReactElement {
   const { project } = useAppSelector((state) => state.project);
   const history = useHistory();
 
-  const { codelist } = useAppSelector((state) => state.selectedCodeList);
-
   const {
     control,
     handleSubmit,
@@ -47,6 +48,13 @@ export default function EditTagForm({ tag }: IProps): ReactElement {
     dispatch(putSelectedProjectThunk('dummy')).then(() => {
       reset();
     });
+
+    const alert: Alert = {
+      id: uuidv4(),
+      style: 'success',
+      text: 'Successfully edited tag'
+    };
+    dispatch(addAlert({ alert }));
   };
 
   const deleteTag = () => {
@@ -54,6 +62,13 @@ export default function EditTagForm({ tag }: IProps): ReactElement {
     dispatch(putSelectedProjectThunk('dummy')).then(() => {
       history.push(`/workbench/${project.id}/codelist`);
     });
+
+    const alert: Alert = {
+      id: uuidv4(),
+      style: 'success',
+      text: 'Successfully edited tag'
+    };
+    dispatch(addAlert({ alert }));
   };
 
   return (
