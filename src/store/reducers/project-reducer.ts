@@ -407,7 +407,6 @@ const projectSlice = createSlice({
       state.project.version = payload;
     },
     addTag(state, { payload }: PayloadAction<Tag>) {
-      console.log(payload);
       state.project.tags.push(payload);
     },
     editTag(state, { payload }: PayloadAction<Tag>) {
@@ -423,6 +422,9 @@ const projectSlice = createSlice({
       if (index !== -1) {
         state.project.tags.splice(index, 1);
       }
+    },
+    setTags(state, { payload }: PayloadAction<Tag[]>) {
+      state.project.tags = payload;
     }
   },
   extraReducers: (builder) => {
@@ -545,7 +547,8 @@ export const {
   editPublication,
   addTag,
   editTag,
-  removeTag
+  removeTag,
+  setTags
 } = projectSlice.actions;
 
 export default projectSlice.reducer;

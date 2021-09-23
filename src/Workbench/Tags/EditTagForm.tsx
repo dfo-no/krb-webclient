@@ -1,17 +1,15 @@
 import { joiResolver } from '@hookform/resolvers/joi';
-import React, { ReactElement, useEffect, useState } from 'react';
+import React, { ReactElement, useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import Form from 'react-bootstrap/Form';
-import Row from 'react-bootstrap/Row';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import { BsPencil, BsTrashFill } from 'react-icons/bs';
-import { useHistory } from 'react-router-dom';
+import { BsTrashFill } from 'react-icons/bs';
 import ErrorSummary from '../../Form/ErrorSummary';
 import InputRow from '../../Form/InputRow';
 import { BaseTagSchema, Tag } from '../../models/Tag';
-import { useAppDispatch, useAppSelector } from '../../store/hooks';
+import { useAppDispatch } from '../../store/hooks';
 import {
   editTag,
   putSelectedProjectThunk,
@@ -19,18 +17,13 @@ import {
 } from '../../store/reducers/project-reducer';
 
 interface IProps {
-  tag: Tag;
+  element: Tag;
 }
 
-export default function EditTagForm({ tag }: IProps): ReactElement {
+export default function EditTagForm({ element }: IProps): ReactElement {
   const dispatch = useAppDispatch();
   const [validated] = useState(false);
   const { t } = useTranslation();
-
-  const { project } = useAppSelector((state) => state.project);
-  const history = useHistory();
-
-  const { codelist } = useAppSelector((state) => state.selectedCodeList);
 
   const {
     control,
@@ -39,20 +32,28 @@ export default function EditTagForm({ tag }: IProps): ReactElement {
     formState: { errors }
   } = useForm<Tag>({
     resolver: joiResolver(BaseTagSchema),
-    defaultValues: tag
+    defaultValues: element
   });
 
   const onEditTagSubmit = (post: Tag) => {
-    dispatch(editTag(post));
+    const newTag = { ...post };
+    if (newTag.children) {
+      delete newTag.children;
+    }
+    dispatch(editTag(newTag));
     dispatch(putSelectedProjectThunk('dummy')).then(() => {
       reset();
     });
   };
 
   const deleteTag = () => {
-    dispatch(removeTag(tag));
+    const deletableTag = { ...element };
+    if (deletableTag.children) {
+      delete deletableTag.children;
+    }
+    dispatch(removeTag(deletableTag));
     dispatch(putSelectedProjectThunk('dummy')).then(() => {
-      history.push(`/workbench/${project.id}/codelist`);
+      reset();
     });
   };
 
