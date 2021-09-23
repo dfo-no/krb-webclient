@@ -7,7 +7,7 @@ import { Codelist } from '../../models/Codelist';
 import { InheritedBank } from '../../models/InheritedBank';
 import ModelType from '../../models/ModelType';
 import { Need } from '../../models/Need';
-import { Nestable } from '../../models/Nestable';
+import { Parentable } from '../../models/Parentable';
 import { Product } from '../../models/Product';
 import { Publication } from '../../models/Publication';
 import { Requirement } from '../../models/Requirement';
@@ -63,27 +63,6 @@ export const postProjectThunk = createAsyncThunk(
     return response.data;
   }
 );
-
-/**
- * @deprecated Use putSelectedProjectThunk instead
- */
-export const putProjectByIdThunk = createAsyncThunk<
-  Bank,
-  string,
-  {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    state: any;
-  }
->('putProjectByIdThunk', async (projectId: string, thunkApi) => {
-  // get updated project from redux
-  const project = Utils.ensure(
-    thunkApi
-      .getState()
-      .project.list.find((element: Bank) => element.id === projectId)
-  );
-  const response = await httpPut<Bank>(`/api/bank/${project.id}`, project);
-  return response.data;
-});
 
 export const putSelectedProjectThunk = createAsyncThunk<
   Bank,
@@ -163,13 +142,13 @@ const projectSlice = createSlice({
 
       state.list[index].publications?.push(payload.publication);
     },
-    setNeeds(state, { payload }: PayloadAction<Nestable<Need>[]>) {
+    setNeeds(state, { payload }: PayloadAction<Parentable<Need>[]>) {
       state.project.needs = payload;
     },
-    addNeed(state, { payload }: PayloadAction<Nestable<Need>>) {
+    addNeed(state, { payload }: PayloadAction<Parentable<Need>>) {
       state.project.needs.push(payload);
     },
-    editNeed(state, { payload }: PayloadAction<Nestable<Need>>) {
+    editNeed(state, { payload }: PayloadAction<Parentable<Need>>) {
       const needIndex = state.project.needs.findIndex(
         (elem) => elem.id === payload.id
       );
@@ -427,6 +406,9 @@ const projectSlice = createSlice({
     },
     addInheritedBank(state, { payload }: PayloadAction<InheritedBank>) {
       state.project.inheritedBanks.push(payload);
+    },
+    setTags(state, { payload }: PayloadAction<Tag[]>) {
+      state.project.tags = payload;
     }
   },
   extraReducers: (builder) => {
@@ -458,24 +440,6 @@ const projectSlice = createSlice({
       state.projectLoading = 'pending';
     });
     builder.addCase(postProjectThunk.rejected, (state) => {
-      state.projectLoading = 'rejected';
-    });
-    builder.addCase(putProjectByIdThunk.fulfilled, (state, { payload }) => {
-      // update project in list if it exists there
-      const projectIndex = state.list.findIndex(
-        (project) => project.id === payload.id
-      );
-      if (projectIndex) {
-        state.list[projectIndex] = payload;
-      }
-      // ux-assume that since we update the project, it is selected. Update it.
-      state.project = payload;
-      state.projectLoading = 'fulfilled';
-    });
-    builder.addCase(putProjectByIdThunk.pending, (state) => {
-      state.projectLoading = 'pending';
-    });
-    builder.addCase(putProjectByIdThunk.rejected, (state) => {
       state.projectLoading = 'rejected';
     });
     builder.addCase(putProjectThunk.fulfilled, (state, { payload }) => {
@@ -550,7 +514,8 @@ export const {
   addTag,
   editTag,
   removeTag,
-  addInheritedBank
+  addInheritedBank,
+  setTags
 } = projectSlice.actions;
 
 export default projectSlice.reducer;

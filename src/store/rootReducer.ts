@@ -3,7 +3,6 @@ import alertReducer from './reducers/alert-reducer';
 import bankReducer from './reducers/bank-reducer';
 import loaderReducer from './reducers/loader-reducer';
 import PrefilledResponseReducer from './reducers/PrefilledResponseReducer';
-// eslint-disable-next-line import/no-cycle
 import projectReducer from './reducers/project-reducer';
 import responseReducer from './reducers/response-reducer';
 import selectedAlternativeReducer from './reducers/selectedAlternative-reducer';

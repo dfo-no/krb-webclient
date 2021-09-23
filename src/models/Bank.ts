@@ -4,7 +4,7 @@ import { Codelist } from './Codelist';
 import { InheritedBank } from './InheritedBank';
 import ModelType from './ModelType';
 import { Need } from './Need';
-import { Nestable } from './Nestable';
+import { Parentable } from './Parentable';
 import { Product } from './Product';
 import { Publication } from './Publication';
 import { Tag } from './Tag';
@@ -31,7 +31,7 @@ export interface Bank extends BaseModel {
   id: string;
   title: string;
   description: string;
-  needs: Nestable<Need>[];
+  needs: Parentable<Need>[];
   codelist: Codelist[];
   products: Product[];
   version: number;

@@ -2,6 +2,7 @@ import React, { ReactElement } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Need } from '../../models/Need';
 import { Nestable } from '../../models/Nestable';
+import { Parentable } from '../../models/Parentable';
 import NestableHierarcy from '../../NestableHierarchy/Nestable';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import {
@@ -17,7 +18,7 @@ function NeedPage(): ReactElement {
   const dispatch = useAppDispatch();
   const { t } = useTranslation();
 
-  const newNeedList = (projectId: string, needs: Nestable<Need>[]) => {
+  const newNeedList = (projectId: string, needs: Parentable<Need>[]) => {
     dispatch(setNeeds(needs));
     dispatch(putSelectedProjectThunk('dummy'));
   };

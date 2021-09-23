@@ -1,17 +1,17 @@
-import fileDownload from 'js-file-download';
-import React, { ReactElement, useState } from 'react';
-import Button from 'react-bootstrap/Button';
-import Card from 'react-bootstrap/Card';
+import React from 'react';
 import Col from 'react-bootstrap/Col';
 import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row';
+/* import { useForm } from 'react-hook-form';
+import { Bank } from '../models/Bank';
 import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
-import Row from 'react-bootstrap/Row';
-import { useForm } from 'react-hook-form';
-import { Bank } from '../models/Bank';
+import Button from 'react-bootstrap/Button';
+import Card from 'react-bootstrap/Card';
+import fileDownload from 'js-file-download'; */
 
-export default function Evaluation(): ReactElement {
-  /* 
+export default function Evaluation(): React.ReactElement {
+  /*
   const [responses, setResponses] = useState<FileDownLoad[]>([]);
 
   const readFileContents = async (file: File) => {
@@ -157,7 +157,7 @@ export default function Evaluation(): ReactElement {
       <Row className="m-4">
         <Col>
           <h6>Upload Responses</h6>
-          {/* 
+          {/*
           <InputGroup className="mb-5">
             <form>
               <input

@@ -1,8 +1,10 @@
 import { Bank } from '../models/Bank';
 import { BaseModel } from '../models/BaseModel';
 import { IVariant } from '../models/IVariant';
+import { Levelable } from '../models/Levelable';
 import { Need } from '../models/Need';
 import { Nestable } from '../models/Nestable';
+import { Parentable } from '../models/Parentable';
 import { Product } from '../models/Product';
 import { Requirement } from '../models/Requirement';
 
@@ -35,17 +37,73 @@ class Utils {
     return string.charAt(0).toUpperCase() + string.slice(1);
   }
 
-  /* static unflatten<T extends Hierarchical>(
-    items: T[]
-  ): [T[], { [key: string]: T }] {
-    const hierarchy: T[] = [];
-    const mappedArr: { [key: string]: T } = {};
+  private static flattenNestable<T extends BaseModel>(
+    items: Nestable<T>[]
+  ): Nestable<T>[] {
+    return items.reduce((result: Nestable<T>[], current) => {
+      if (current.children) {
+        const children = Utils.flattenNestable(current.children);
+        // eslint-disable-next-line no-param-reassign
+        delete current.children;
+        result.push(current);
+        result.push(...children);
+      } else {
+        result.push(current);
+      }
+      return result;
+    }, []);
+  }
 
+  static nestable2Levelable<T extends BaseModel>(
+    items: Nestable<T>[]
+  ): Levelable<T>[] {
+    const result = Utils.flattenNestable(items);
+    return result as Levelable<T>[];
+  }
+
+  static parentable2Levelable<T extends BaseModel>(
+    items: Parentable<T>[]
+  ): Levelable<T>[] {
+    const nestable = Utils.parentable2Nestable(items);
+    return Utils.nestable2Levelable(nestable);
+  }
+
+  static parentable2Nestable<T extends BaseModel>(
+    items: Parentable<T>[],
+    parent = '',
+    level = 1
+  ): Nestable<T>[] {
+    const out: Nestable<T>[] = [];
+    items.forEach((node) => {
+      const levelNode = { ...node } as Nestable<T>;
+      if (levelNode.parent === parent) {
+        levelNode.level = level;
+        const children = Utils.parentable2Nestable(
+          items,
+          levelNode.id,
+          level + 1
+        );
+        if (children.length) {
+          levelNode.children = children;
+        }
+        out.push(levelNode);
+      }
+    });
+    return out;
+  }
+
+  /**
+   * @@deprecated use parentable2Nestable instead
+   */
+  static toNestable<T extends BaseModel>(
+    items: Parentable<T>[]
+  ): Nestable<T>[] {
+    const hierarchy: Nestable<T>[] = [];
+    const mappedArr: { [key: string]: Nestable<T> } = {};
     items.forEach((item) => {
       const Id = item.id;
       if (!Object.prototype.hasOwnProperty.call(mappedArr, Id)) {
         mappedArr[Id] = { ...item };
-        mappedArr[Id].children = [];
       }
     });
     Object.keys(mappedArr).forEach((key) => {
@@ -64,9 +122,13 @@ class Utils {
         }
       }
     });
-    return [hierarchy, mappedArr];
-  } */
+    return hierarchy;
+  }
 
+  /**
+   *
+   * @deprecated use nestable2Levelable instead
+   */
   static unflatten<T extends BaseModel>(
     items: Nestable<T>[]
   ): [Nestable<T>[], { [key: string]: Nestable<T> }] {

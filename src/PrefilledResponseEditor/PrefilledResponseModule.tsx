@@ -10,6 +10,7 @@ import PrefilledResponseDownLoad from './Download/PrefilledResponseDownload';
 import PrefilledResponseEditor from './Editor/PrefilledResponseEditor';
 import PrefilledResponseProductEditor from './Product/PrefilledResponseProductEditor';
 import PrefilledResponseProductList from './Product/PrefilledResponseProductList';
+import PrefilledRequirement from './Requirement/PrefilledRequirement';
 import PrefilledResponseSidebar from './SideBar/PrefilledResponseSidebar';
 
 interface RouteParams {
@@ -43,7 +44,7 @@ export default function PrefilledResponseModule(): ReactElement {
               <PrefilledResponseProductEditor />
             </Route>
             <Route exact path="/prefilledresponse/:id/requirement">
-              <PrefilledResponseEditor />
+              <PrefilledRequirement />
             </Route>
             <Route exact path="/prefilledresponse/:id/download">
               <PrefilledResponseDownLoad />
