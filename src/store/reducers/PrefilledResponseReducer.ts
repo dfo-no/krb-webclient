@@ -23,7 +23,8 @@ const initialState: PrefilledResponseState = {
       codelist: [],
       version: 0,
       type: ModelType.bank,
-      publications: []
+      publications: [],
+      inheritedBanks: []
     },
     answeredVariants: [],
     supplier: '',

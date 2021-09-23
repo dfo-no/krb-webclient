@@ -24,7 +24,8 @@ const initialState: ResponseState = {
         codelist: [],
         version: 0,
         type: ModelType.bank,
-        publications: []
+        publications: [],
+        inheritedBanks: []
       },
       title: '',
       products: [],

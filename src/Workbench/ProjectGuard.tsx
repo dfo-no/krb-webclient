@@ -5,6 +5,8 @@ import { useAppDispatch } from '../store/hooks';
 import { getProjectThunk } from '../store/reducers/project-reducer';
 import CodelistGuard from './Codelist/CodelistGuard';
 import CodelistPage from './Codelist/CodelistPage';
+import InheritancePage from './Inheritance/InheritancePage';
+import InheritanceSearch from './Inheritance/InheritanceSearch';
 import NeedPage from './Need/NeedPage';
 import ProductGuard from './Product/ProductGuard';
 import ProductPage from './Product/ProductPage';
@@ -75,6 +77,12 @@ export default function ProjectGuard(): JSX.Element {
       </Route>
       <Route exact path="/workbench/:projectId/:productId/product">
         <ProductGuard />
+      </Route>
+      <Route exact path="/workbench/:projectId/inheritance">
+        <InheritancePage />
+      </Route>
+      <Route exact path="/workbench/:projectId/inheritance/search">
+        <InheritanceSearch />
       </Route>
     </>
   );

@@ -4,6 +4,7 @@ import Utils from '../../common/Utils';
 import { Bank } from '../../models/Bank';
 import { Code } from '../../models/Code';
 import { Codelist } from '../../models/Codelist';
+import { InheritedBank } from '../../models/InheritedBank';
 import ModelType from '../../models/ModelType';
 import { Need } from '../../models/Need';
 import { Nestable } from '../../models/Nestable';
@@ -31,7 +32,8 @@ const initialState: ProjectState = {
     tags: [],
     publications: [],
     type: ModelType.bank,
-    version: 0
+    version: 0,
+    inheritedBanks: []
   },
   projectLoading: 'idle',
   listLoading: 'idle'
@@ -407,7 +409,6 @@ const projectSlice = createSlice({
       state.project.version = payload;
     },
     addTag(state, { payload }: PayloadAction<Tag>) {
-      console.log(payload);
       state.project.tags.push(payload);
     },
     editTag(state, { payload }: PayloadAction<Tag>) {
@@ -423,6 +424,9 @@ const projectSlice = createSlice({
       if (index !== -1) {
         state.project.tags.splice(index, 1);
       }
+    },
+    addInheritedBank(state, { payload }: PayloadAction<InheritedBank>) {
+      state.project.inheritedBanks.push(payload);
     }
   },
   extraReducers: (builder) => {
@@ -545,7 +549,8 @@ export const {
   editPublication,
   addTag,
   editTag,
-  removeTag
+  removeTag,
+  addInheritedBank
 } = projectSlice.actions;
 
 export default projectSlice.reducer;

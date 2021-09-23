@@ -30,8 +30,6 @@ export default function EditTagForm({ tag }: IProps): ReactElement {
   const { project } = useAppSelector((state) => state.project);
   const history = useHistory();
 
-  const { codelist } = useAppSelector((state) => state.selectedCodeList);
-
   const {
     control,
     handleSubmit,
@@ -51,9 +49,7 @@ export default function EditTagForm({ tag }: IProps): ReactElement {
 
   const deleteTag = () => {
     dispatch(removeTag(tag));
-    dispatch(putSelectedProjectThunk('dummy')).then(() => {
-      history.push(`/workbench/${project.id}/codelist`);
-    });
+    dispatch(putSelectedProjectThunk('dummy'));
   };
 
   return (
