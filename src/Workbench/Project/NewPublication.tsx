@@ -103,17 +103,15 @@ export default function NewPublication(): ReactElement {
                 errors={errors}
                 label={t('Comment')}
               />
-              <Row>
-                <Button className="mt-2  ml-3" type="submit">
-                  {t('save')}
-                </Button>
-                <Button
-                  className="mt-2 ml-3 btn-warning"
-                  onClick={() => setShow(false)}
-                >
-                  {t('cancel')}
-                </Button>
-              </Row>
+              <Button className="mt-2  ml-3" type="submit">
+                {t('save')}
+              </Button>
+              <Button
+                className="mt-2 ml-3 btn-warning"
+                onClick={() => setShow(false)}
+              >
+                {t('cancel')}
+              </Button>
               <ErrorSummary errors={errors} />
             </Form>
           </Card.Body>

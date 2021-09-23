@@ -10,6 +10,7 @@ import { PrefilledResponseProduct } from '../../models/PrefilledResponseProduct'
 
 interface PrefilledResponseState {
   prefilledResponse: PrefilledResponse;
+  selectedProduct: PrefilledResponseProduct;
 }
 
 const initialState: PrefilledResponseState = {
@@ -31,6 +32,22 @@ const initialState: PrefilledResponseState = {
     products: [],
     requirementAnswers: [], // RequirementAnswer[]
     type: ModelType.prefilledResponse
+  },
+  selectedProduct: {
+    id: '',
+    title: '',
+    description: '',
+    originProduct: {
+      id: '',
+      type: ModelType.product,
+      title: '',
+      description: '',
+      parent: '',
+      children: []
+    },
+    type: ModelType.prefilledResponseProduct,
+    answeredVariants: [],
+    requirementAnswers: []
   }
 };
 
@@ -131,6 +148,9 @@ const responseSlice = createSlice({
       }>
     ) {
       state.prefilledResponse.products[payload.productIndex] = payload.product;
+    },
+    selectProduct(state, { payload }: PayloadAction<PrefilledResponseProduct>) {
+      state.selectedProduct = payload;
     }
   }
 });
@@ -143,7 +163,8 @@ export const {
   setResponse,
   addRequirementAnswer,
   addProductAnswer,
-  setRequirementAnswers
+  setRequirementAnswers,
+  selectProduct
 } = responseSlice.actions;
 
 export default responseSlice.reducer;

@@ -29,8 +29,8 @@ export default function CheckboxForm({
   return (
     <Card className="mb-3">
       <Card.Body>
-        <Row className="m-1 d-flex justify-content-between">
-          <h6>Alternative: Yes/No</h6>
+        <h6>
+          Alternative: Yes/No{' '}
           <Button
             className="mb-3"
             type="button"
@@ -39,7 +39,8 @@ export default function CheckboxForm({
           >
             <BsTrashFill />
           </Button>
-        </Row>
+        </h6>
+
         <Form.Control
           as="input"
           type="hidden"

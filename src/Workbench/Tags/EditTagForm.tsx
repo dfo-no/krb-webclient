@@ -69,18 +69,14 @@ export default function EditTagForm({ tag }: IProps): React.ReactElement {
             errors={errors}
             label={t('Title')}
           />
-          <Row>
-            <Button className="mt-2  ml-3" type="submit">
-              {t('save')}
-            </Button>
-            <Button
-              className="mt-2  ml-3"
-              variant="warning"
-              onClick={deleteTag}
-            >
-              {t('delete')} <BsTrashFill />
-            </Button>
-          </Row>
+
+          <Button className="mt-2  ml-3" type="submit">
+            {t('save')}
+          </Button>
+          <Button className="mt-2  ml-3" variant="warning" onClick={deleteTag}>
+            {t('delete')} <BsTrashFill />
+          </Button>
+
           <ErrorSummary errors={errors} />
         </Form>
       </Card.Body>

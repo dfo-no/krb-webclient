@@ -1,14 +1,14 @@
+import { get, has } from 'lodash';
 import React, { ReactElement } from 'react';
+import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
+import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
-import Button from 'react-bootstrap/Button';
-import { BsTrashFill } from 'react-icons/bs';
 import { Control, FormState, UseFormRegister } from 'react-hook-form';
-import { get, has } from 'lodash';
-import { Requirement } from '../../models/Requirement';
+import { BsTrashFill } from 'react-icons/bs';
 import { ITextQuestion } from '../../models/ITextQuestion';
+import { Requirement } from '../../models/Requirement';
 
 type IProps = {
   control: Control<Requirement>;
@@ -31,8 +31,8 @@ export default function TextForm({
   return (
     <Card className="mb-3">
       <Card.Body>
-        <Row className="m-1 d-flex justify-content-between">
-          <h6>Alternative: Text</h6>
+        <h6>
+          Alternative: Text
           <Button
             className="mb-3"
             type="button"
@@ -41,7 +41,8 @@ export default function TextForm({
           >
             <BsTrashFill />
           </Button>
-        </Row>
+        </h6>
+
         <Form.Control
           as="input"
           type="hidden"

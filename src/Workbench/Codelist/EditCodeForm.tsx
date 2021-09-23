@@ -78,24 +78,19 @@ export default function EditCodeForm({ element }: IProps): ReactElement {
         errors={errors}
         label={t('Description')}
       />
-      <Row>
-        <Button className="mt-2  ml-3" type="submit">
-          {t('save')}
-        </Button>
-        <Button
-          className="mt-2 ml-3 btn-warning"
-          onClick={() => onOpenClose('')}
-        >
-          {t('cancel')}
-        </Button>
-        <Button
-          className="mt-2  ml-3"
-          variant="warning"
-          onClick={() => deleteCode(element)}
-        >
-          {t('delete')} <BsTrashFill />
-        </Button>
-      </Row>
+      <Button className="mt-2  ml-3" type="submit">
+        {t('save')}
+      </Button>
+      <Button className="mt-2 ml-3 btn-warning" onClick={() => onOpenClose('')}>
+        {t('cancel')}
+      </Button>
+      <Button
+        className="mt-2  ml-3"
+        variant="warning"
+        onClick={() => deleteCode(element)}
+      >
+        {t('delete')} <BsTrashFill />
+      </Button>
       <ErrorSummary errors={errors} />
     </Form>
   );

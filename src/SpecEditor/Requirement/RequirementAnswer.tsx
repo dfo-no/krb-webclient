@@ -228,8 +228,8 @@ export default function RequirementAnswer({
     });
     return (
       <Form onSubmit={handleSubmit(saveAnswer)} autoComplete="off">
-        <Row className="w-50">
-          <Col className="p-0">
+        <Row>
+          <Col sm={3}>
             <Form.Control
               as="select"
               {...register('question')}
@@ -238,7 +238,7 @@ export default function RequirementAnswer({
               {answers}
             </Form.Control>
           </Col>
-          <Col className="p-0">
+          <Col sm={3}>
             {selectedAlternative !== undefined && (
               <Link
                 onClick={selectAlt}
@@ -253,29 +253,32 @@ export default function RequirementAnswer({
           <b>Vektingstype: </b>
         </Row>
         <Row>
-          {
-            // Kan velge begge nå, må gjøres om så kun en kan velges, evt enum på type
-          }
-          <Form.Check className="p-0" formNoValidate>
-            <input
-              type="radio"
-              name="standard"
-              id="standard"
-              checked={weightType === 'standard'}
-              onChange={() => setWeightType('standard')}
-            />
-          </Form.Check>
-          <p className="ml-1">Standard</p>
-          <Form.Check formNoValidate>
-            <input
-              type="radio"
-              name="egendefinert"
-              id="egendefinert"
-              checked={weightType === 'egendefinert'}
-              onChange={() => setWeightType('egendefinert')}
-            />
-          </Form.Check>
-          <p className="ml-1">Egendefinert</p>
+          <Col sm={2}>
+            <Form.Check className="p-0" formNoValidate>
+              <input
+                type="radio"
+                name="standard"
+                id="standard"
+                className="m-3"
+                checked={weightType === 'standard'}
+                onChange={() => setWeightType('standard')}
+              />
+              <Form.Check.Label>Standard</Form.Check.Label>
+            </Form.Check>
+          </Col>
+          <Col sm={2}>
+            <Form.Check formNoValidate>
+              <input
+                type="radio"
+                name="egendefinert"
+                id="egendefinert"
+                className="m-3"
+                checked={weightType === 'egendefinert'}
+                onChange={() => setWeightType('egendefinert')}
+              />
+              <Form.Check.Label>Egendefinert</Form.Check.Label>
+            </Form.Check>
+          </Col>
         </Row>
         <Row>
           {weightType === 'egendefinert' && (
@@ -287,6 +290,7 @@ export default function RequirementAnswer({
                   savedAlternative?.weight ? savedAlternative.weight : 0
                 }
                 min={0}
+                className="w-25"
                 {...register('weight' as const)}
                 isInvalid={!!errors.weight}
               />
@@ -306,7 +310,7 @@ export default function RequirementAnswer({
               }
               render={({ field }) => (
                 <Slider
-                  className="mt-4 w-50"
+                  className="mt-4 mb-4 w-25"
                   {...field}
                   onChange={(_, value) => {
                     field.onChange(value);
@@ -321,11 +325,9 @@ export default function RequirementAnswer({
             />
           )}
         </Row>
-        <Row>
-          <Button type="submit" className="mt-2">
-            {t('save')}
-          </Button>
-        </Row>
+        <Col className="p-0 d-flex justify-content-end">
+          <Button type="submit">{t('save')}</Button>
+        </Col>
 
         <ErrorSummary errors={errors} />
       </Form>

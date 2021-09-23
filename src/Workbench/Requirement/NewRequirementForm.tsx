@@ -68,26 +68,24 @@ function NewRequirementForm(): ReactElement {
 
   return (
     <>
-      <Row className="flex justify-content-end">
-        <Button
-          onClick={() => {
-            setShow(true);
-            setValue('requirement_Type', RequirementType.requirement);
-          }}
-          className="mb-4 mr-3"
-        >
-          New Requirement
-        </Button>
-        <Button
-          onClick={() => {
-            setValue('requirement_Type', RequirementType.info);
-            setShow(true);
-          }}
-          className="mb-4 mr-3"
-        >
-          New Info field
-        </Button>
-      </Row>
+      <Button
+        onClick={() => {
+          setShow(true);
+          setValue('requirement_Type', RequirementType.requirement);
+        }}
+        className="mb-4 mr-3"
+      >
+        New Requirement
+      </Button>
+      <Button
+        onClick={() => {
+          setValue('requirement_Type', RequirementType.info);
+          setShow(true);
+        }}
+        className="mb-4 mr-3"
+      >
+        New Info field
+      </Button>
       {show && (
         <Card className="mb-4">
           <Card.Body>
@@ -109,17 +107,15 @@ function NewRequirementForm(): ReactElement {
                 label={t('Description')}
                 errors={errors}
               />
-              <Row>
-                <Button className="mt-2  ml-3" type="submit">
-                  {t('save')}
-                </Button>
-                <Button
-                  className="mt-2 ml-3 btn-warning"
-                  onClick={() => setShow(false)}
-                >
-                  {t('cancel')}
-                </Button>
-              </Row>
+              <Button className="mt-2  ml-3" type="submit">
+                {t('save')}
+              </Button>
+              <Button
+                className="mt-2 ml-3 btn-warning"
+                onClick={() => setShow(false)}
+              >
+                {t('cancel')}
+              </Button>
               <ErrorSummary errors={errors} />
             </Form>
           </Card.Body>

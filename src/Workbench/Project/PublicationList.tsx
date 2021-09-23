@@ -2,6 +2,7 @@ import { joiResolver } from '@hookform/resolvers/joi';
 import format from 'date-fns/format';
 import React, { ReactElement, useEffect, useState } from 'react';
 import Button from 'react-bootstrap/Button';
+import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 import ListGroup from 'react-bootstrap/ListGroup';
 import Nav from 'react-bootstrap/Nav';
@@ -100,41 +101,47 @@ export default function PublicationList(): ReactElement {
                         </Form.Control.Feedback>
                       )}
                   </Form.Group>
-                  <Button className="mr-1" onClick={handleSubmit(onSubmit)}>
-                    {t('save')}
-                  </Button>
-                  <Button variant="warning" onClick={() => setEditId('')}>
-                    {t('cancel')}
-                  </Button>
+                  <Col sm={1}>
+                    <Button className="mr-1" onClick={handleSubmit(onSubmit)}>
+                      {t('save')}
+                    </Button>
+                    <Button variant="warning" onClick={() => setEditId('')}>
+                      {t('cancel')}
+                    </Button>
+                  </Col>
                 </>
               ) : (
                 <Row>
-                  <Nav.Link href={`/bank/${field.bankId}`}>
-                    {` ${format(
-                      new Date(field.date),
-                      Constants.DATE_FORMAT_SHORT
-                    )} ${field.comment}`}
-                  </Nav.Link>
-                  <div className={css.listGroup__spacer} />
-                  <Button
-                    className="mr-1"
-                    variant="primary"
-                    type="button"
-                    onClick={() => {
-                      setEditId(field.id);
-                    }}
-                  >
-                    <BsPencilSquare />
-                  </Button>
-                  <Button
-                    variant="danger"
-                    type="button"
-                    onClick={() => {
-                      deletePublication(field.id);
-                    }}
-                  >
-                    <BsTrashFill />
-                  </Button>
+                  <Col>
+                    <Nav.Link href={`/bank/${field.bankId}`}>
+                      {` ${format(
+                        new Date(field.date),
+                        Constants.DATE_FORMAT_SHORT
+                      )} ${field.comment}`}
+                    </Nav.Link>
+                    <div className={css.listGroup__spacer} />
+                  </Col>
+                  <Col sm={1} className="m-0 p-0">
+                    <Button
+                      className="mr-1"
+                      variant="primary"
+                      type="button"
+                      onClick={() => {
+                        setEditId(field.id);
+                      }}
+                    >
+                      <BsPencilSquare />
+                    </Button>
+                    <Button
+                      variant="danger"
+                      type="button"
+                      onClick={() => {
+                        deletePublication(field.id);
+                      }}
+                    >
+                      <BsTrashFill />
+                    </Button>
+                  </Col>
                 </Row>
               )}
             </ListGroup.Item>

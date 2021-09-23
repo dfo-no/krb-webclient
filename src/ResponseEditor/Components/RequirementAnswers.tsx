@@ -50,6 +50,7 @@ export default function RequirementAnswers({
               selectedAnswer={selectedAnswer}
               requirementText={requirementText}
               req={req}
+              key={req.id}
             />
           );
         }

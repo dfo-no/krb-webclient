@@ -4,6 +4,7 @@ import React from 'react';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import Form from 'react-bootstrap/Form';
+import Row from 'react-bootstrap/Row';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import SliderSelect from '../../components/Slider';
@@ -122,17 +123,19 @@ export default function ISliderAnswer({
       </Card.Header>
       <Card.Body>
         <Form onSubmit={handleSubmit(saveValues)}>
-          <SliderSelect
-            name={`answer.value` as const}
-            label=""
-            step={sliderQuestion.config.step}
-            min={sliderQuestion.config.min}
-            max={sliderQuestion.config.max}
-            marks={marks}
-            control={control}
-            errors={errors}
-            key={sliderQuestion.id}
-          />
+          <Row className="w-50 m-3">
+            <SliderSelect
+              name={`answer.value` as const}
+              label=""
+              step={sliderQuestion.config.step}
+              min={sliderQuestion.config.min}
+              max={sliderQuestion.config.max}
+              marks={marks}
+              control={control}
+              errors={errors}
+              key={sliderQuestion.id}
+            />
+          </Row>
           <Button type="submit">{t('save')}</Button>
           <ErrorSummary errors={errors} />
         </Form>

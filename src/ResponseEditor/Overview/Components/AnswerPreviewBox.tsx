@@ -3,6 +3,7 @@ import React, { ReactElement } from 'react';
 import Utils from '../../../common/Utils';
 import { Code } from '../../../models/Code';
 import { Codelist } from '../../../models/Codelist';
+import { ICheckboxQuestion } from '../../../models/ICheckboxQuestion';
 import { ICodelistQuestion } from '../../../models/ICodelistQuestion';
 import { IPeriodDateQuestion } from '../../../models/IPeriodDateQuestion';
 import { IRequirementAnswer } from '../../../models/IRequirementAnswer';
@@ -71,6 +72,10 @@ export default function AnswerPreviewBox({ answerList }: IProps): ReactElement {
       case QuestionEnum.Q_PERIOD_DATE:
         question = answer.question as IPeriodDateQuestion;
         textToBeDisplayed = `${question.answer?.date} `;
+        break;
+      case QuestionEnum.Q_CHECKBOX:
+        question = answer.question as ICheckboxQuestion;
+        textToBeDisplayed = `${question.answer?.value} `;
         break;
       default:
         textToBeDisplayed = ' ';

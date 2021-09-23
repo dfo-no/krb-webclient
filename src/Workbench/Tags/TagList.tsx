@@ -1,8 +1,5 @@
 import React, { ReactElement, useState } from 'react';
-import { Accordion, Button } from 'react-bootstrap';
-import Card from 'react-bootstrap/Card';
-import Row from 'react-bootstrap/Row';
-import { BsChevronDown } from 'react-icons/bs';
+import Accordion from 'react-bootstrap/Accordion';
 import Utils from '../../common/Utils';
 import { Tag } from '../../models/Tag';
 import { AccordionContext } from '../../NestableHierarchy/AccordionContext';
@@ -26,23 +23,16 @@ export default function TagList(): ReactElement {
     return sorted.map((item: Tag) => {
       return (
         <Accordion.Item eventKey={item.id} key={item.id}>
-          <Card key={item.id} className="d-flex justify-content-between">
-            <Card.Header>
-              <Row className="d-flex justify-content-between">
-                <h6 className="ml-2 mt-2">
-                  {Utils.capitalizeFirstLetter(item.title)}
-                </h6>
-                <Accordion.Header as={Button} variant="link">
-                  <BsChevronDown />
-                </Accordion.Header>
-              </Row>
-            </Card.Header>
-            <Accordion.Collapse eventKey={item.id}>
-              <Card.Body>
-                <EditTagForm tag={item} />
-              </Card.Body>
-            </Accordion.Collapse>
-          </Card>
+          <h2 className="accordion-header">
+            <Accordion.Button>
+              {Utils.capitalizeFirstLetter(item.title)}
+            </Accordion.Button>
+          </h2>
+          <Accordion.Collapse eventKey={item.id}>
+            <Accordion.Body>
+              <EditTagForm tag={item} />
+            </Accordion.Body>
+          </Accordion.Collapse>
         </Accordion.Item>
       );
     });

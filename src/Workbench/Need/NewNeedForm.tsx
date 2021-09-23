@@ -84,17 +84,15 @@ function NewNeedForm(): ReactElement {
                 label={t('Description')}
                 errors={errors}
               />
-              <Row>
-                <Button className="mt-2  ml-3" type="submit">
-                  {t('save')}
-                </Button>
-                <Button
-                  className="mt-2 ml-3 btn-warning"
-                  onClick={() => setShow(false)}
-                >
-                  Avbryt
-                </Button>
-              </Row>
+              <Button className="mt-2  ml-3" type="submit">
+                {t('save')}
+              </Button>
+              <Button
+                className="mt-2 ml-3 btn-warning"
+                onClick={() => setShow(false)}
+              >
+                Avbryt
+              </Button>
               <ErrorSummary errors={errors} />
             </Form>
           </Card.Body>

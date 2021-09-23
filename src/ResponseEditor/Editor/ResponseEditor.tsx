@@ -22,8 +22,6 @@ const supplierSchema = Joi.object().keys({
 });
 
 export default function ResponseEditor(): ReactElement {
-  const { id } = useAppSelector((state) => state.selectedBank);
-  const { normalizedList } = useAppSelector((state) => state.bank);
   const { response } = useAppSelector((state) => state.response);
   const {
     register,
@@ -34,14 +32,6 @@ export default function ResponseEditor(): ReactElement {
   });
   const dispatch = useAppDispatch();
   const { t } = useTranslation();
-
-  if (!id) {
-    return <p>No selected bank</p>;
-  }
-
-  const selectedBank = normalizedList[id];
-
-  dispatch(setBank(selectedBank));
 
   const saveSupplier = (post: IResponseInfoForm) => {
     dispatch(editSupplier(post.supplier));
@@ -58,7 +48,7 @@ export default function ResponseEditor(): ReactElement {
             <h5>Specification {response.spesification.title}</h5>
           </Row>
           <Row>
-            <h6>Kravbank {selectedBank.title}</h6>
+            <h6>Kravbank {response.spesification.bank.title}</h6>
           </Row>
           <Form onSubmit={handleSubmit(saveSupplier)}>
             <Form.Group as={Row}>

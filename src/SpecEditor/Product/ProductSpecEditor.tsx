@@ -121,67 +121,72 @@ export default function ProductSpecEditor(): ReactElement {
               </Form.Label>
               <Col sm={10}>
                 <Row className="ml-1">
-                  <Form.Check className="p-0" formNoValidate>
-                    <input
-                      type="radio"
-                      name="standard"
-                      id="standard"
-                      checked={weightType === 'standard'}
-                      onChange={() => setWeightType('standard')}
-                    />
-                  </Form.Check>
-                  <p className="ml-1">Standard</p>
-                  <Form.Check formNoValidate>
-                    <input
-                      type="radio"
-                      name="egendefinert"
-                      id="egendefinert"
-                      checked={weightType === 'egendefinert'}
-                      onChange={() => setWeightType('egendefinert')}
-                    />
-                  </Form.Check>
-                  <p className="ml-1">Egendefinert</p>
-                </Row>
-                <Row className="ml-1">
-                  {weightType === 'egendefinert' && (
-                    <Form.Group>
-                      <Form.Label>{t('weighting')}:</Form.Label>
-                      <Form.Control
-                        type="number"
-                        defaultValue={selectedSpecificationProduct.weight}
-                        min={0}
-                        {...register('weight' as const)}
-                        isInvalid={!!errors.weight}
+                  <Col sm={2}>
+                    <Form.Check className="p-0" formNoValidate>
+                      <input
+                        type="radio"
+                        name="standard"
+                        id="standard"
+                        className="m-3"
+                        checked={weightType === 'standard'}
+                        onChange={() => setWeightType('standard')}
                       />
-                      {errors.weight && (
-                        <Form.Control.Feedback type="invalid">
-                          {errors.weight?.message}
-                        </Form.Control.Feedback>
-                      )}
-                    </Form.Group>
-                  )}
-                  {weightType === 'standard' && (
-                    <Controller
-                      control={control}
-                      name={'weight' as const}
-                      defaultValue={selectedSpecificationProduct.weight}
-                      render={({ field }) => (
-                        <Slider
-                          className="mt-4 w-50"
-                          {...field}
-                          onChange={(_, value) => {
-                            field.onChange(value);
-                          }}
-                          step={20}
-                          min={10}
-                          max={90}
-                          marks={marks}
-                          valueLabelDisplay="auto"
-                        />
-                      )}
-                    />
-                  )}
+                      <Form.Check.Label>Standard</Form.Check.Label>
+                    </Form.Check>
+                  </Col>
+                  <Col sm={2}>
+                    <Form.Check formNoValidate>
+                      <input
+                        type="radio"
+                        name="egendefinert"
+                        id="egendefinert"
+                        className="m-3"
+                        checked={weightType === 'egendefinert'}
+                        onChange={() => setWeightType('egendefinert')}
+                      />
+                      <Form.Check.Label>Egendefinert</Form.Check.Label>
+                    </Form.Check>
+                  </Col>
                 </Row>
+                {weightType === 'egendefinert' && (
+                  <Form.Group>
+                    <Form.Label>{t('weighting')}:</Form.Label>
+                    <Form.Control
+                      type="number"
+                      defaultValue={selectedSpecificationProduct.weight}
+                      min={0}
+                      className="w-25"
+                      {...register('weight' as const)}
+                      isInvalid={!!errors.weight}
+                    />
+                    {errors.weight && (
+                      <Form.Control.Feedback type="invalid">
+                        {errors.weight?.message}
+                      </Form.Control.Feedback>
+                    )}
+                  </Form.Group>
+                )}
+                {weightType === 'standard' && (
+                  <Controller
+                    control={control}
+                    name={'weight' as const}
+                    defaultValue={selectedSpecificationProduct.weight}
+                    render={({ field }) => (
+                      <Slider
+                        className="mt-4 w-25"
+                        {...field}
+                        onChange={(_, value) => {
+                          field.onChange(value);
+                        }}
+                        step={20}
+                        min={10}
+                        max={90}
+                        marks={marks}
+                        valueLabelDisplay="auto"
+                      />
+                    )}
+                  />
+                )}
               </Col>
             </Form.Group>
             <Col className="p-0 d-flex justify-content-end">
