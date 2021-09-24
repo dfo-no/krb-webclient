@@ -33,6 +33,7 @@ interface IProps {
 type FormValue = {
   question: string;
   weight: number;
+  variant: string;
 };
 const marks: IOption[] = [
   {
@@ -73,7 +74,7 @@ export default function RequirementAnswer({
     handleSubmit,
     control,
     formState: { errors }
-  } = useForm({
+  } = useForm<FormValue>({
     resolver: joiResolver(questionSchema)
   });
   const { spec } = useAppSelector((state) => state.specification);

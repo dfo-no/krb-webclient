@@ -1,9 +1,8 @@
 import { joiResolver } from '@hookform/resolvers/joi';
-import React, { ReactElement, useEffect, useState } from 'react';
+import React, { ReactElement, useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import Form from 'react-bootstrap/Form';
-import Row from 'react-bootstrap/Row';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { BsPencil, BsTrashFill } from 'react-icons/bs';
@@ -22,16 +21,13 @@ import {
 } from '../../store/reducers/project-reducer';
 
 interface IProps {
-  tag: Tag;
+  element: Tag;
 }
 
-export default function EditTagForm({ tag }: IProps): ReactElement {
+export default function EditTagForm({ element }: IProps): ReactElement {
   const dispatch = useAppDispatch();
   const [validated] = useState(false);
   const { t } = useTranslation();
-
-  const { project } = useAppSelector((state) => state.project);
-  const history = useHistory();
 
   const {
     control,
@@ -40,11 +36,15 @@ export default function EditTagForm({ tag }: IProps): ReactElement {
     formState: { errors }
   } = useForm<Tag>({
     resolver: joiResolver(BaseTagSchema),
-    defaultValues: tag
+    defaultValues: element
   });
 
   const onEditTagSubmit = (post: Tag) => {
-    dispatch(editTag(post));
+    const newTag = { ...post };
+    if (newTag.children) {
+      delete newTag.children;
+    }
+    dispatch(editTag(newTag));
     dispatch(putSelectedProjectThunk('dummy')).then(() => {
       reset();
     });
@@ -58,9 +58,13 @@ export default function EditTagForm({ tag }: IProps): ReactElement {
   };
 
   const deleteTag = () => {
-    dispatch(removeTag(tag));
+    const deletableTag = { ...element };
+    if (deletableTag.children) {
+      delete deletableTag.children;
+    }
+    dispatch(removeTag(deletableTag));
     dispatch(putSelectedProjectThunk('dummy')).then(() => {
-      history.push(`/workbench/${project.id}/codelist`);
+      reset();
     });
 
     const alert: Alert = {

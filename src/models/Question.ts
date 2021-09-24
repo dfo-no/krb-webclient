@@ -1,3 +1,4 @@
+import Joi from 'joi';
 import { BaseModel } from './BaseModel';
 import QuestionEnum from './QuestionEnum';
 
@@ -19,3 +20,10 @@ export interface IQuestionBase<A extends IAnswerBase, C extends IConfigBase>
 
   config: C;
 }
+
+export const QuestionBaseSchema = Joi.object().keys({
+  id: Joi.string().length(36).required(),
+  type: Joi.string().valid(QuestionEnum).required(),
+  answer: Joi.any(),
+  config: Joi.any()
+});

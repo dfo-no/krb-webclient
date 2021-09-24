@@ -35,6 +35,7 @@ interface IProps {
 type FormValue = {
   question: string;
   weight: number;
+  variant: string;
 };
 
 const questionSchema = Joi.object().keys({
@@ -76,7 +77,7 @@ export default function ProductRequirementAnswer({
     handleSubmit,
     control,
     formState: { errors }
-  } = useForm({
+  } = useForm<FormValue>({
     resolver: joiResolver(questionSchema)
   });
   const { spec } = useAppSelector((state) => state.specification);

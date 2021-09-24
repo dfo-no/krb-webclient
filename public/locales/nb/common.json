@@ -24,6 +24,7 @@
   "create evaluation": "Lag Evaluering",
   "create specification": "Lag Spesifikasjon",
   "create qualification": "Lag Kvalifikasjon",
+  "create prefilled response": "Lag forhåndsutfyllt svar",
   "download specification": "Last ned Spesifikasjon",
   "popular banks": "Populære kravbanker",
   "product selection": "Velg produkter",
@@ -47,7 +48,13 @@
   "add": "Legg til",
   "edit": "Rediger",
   "weighting": "vekting",
-  "Q_SLIDER": "Q_SLIDER",
+  "Q_SLIDER": "Verdi",
+  "Q_CHECKBOX": "Ja/Nei",
+  "Q_CODELIST": "Kodeliste",
+  "Q_FILEUPLOAD": "Filopplasting",
+  "Q_PERIOD_DATE": "Periode",
+  "Q_TEXT": "Tekst",
+  "Q_TIME": "Tidspunkt",
   "From date": "Fra dato",
   "To date": "Til dato",
   "Select date": "Velg dato",
@@ -69,5 +76,6 @@
   "Maximum": "Maximum",
   "Step": "Steg",
   "Unit": "Enhet",
-  "Allow multiple selected codes": "Tillat flere valgte koder"
+  "Allow multiple selected codes": "Tillat flere valgte koder",
+  "Inheritance": "Arv og Avhengigheter"
 }

@@ -8,7 +8,7 @@ export interface IPeriodDateQuestion
 }
 
 export interface IPeriodDateAnswer extends IAnswerBase {
-  date: string;
+  date: string | null;
 }
 
 export interface IPeriodDateConfig extends IConfigBase {
@@ -28,5 +28,15 @@ export const PeriodDateQuestionSchema = Joi.object().keys({
       Joi.date().iso(),
       Joi.string().valid('')
     ]).required()
+  })
+});
+
+export const PeriodDateQuestionAnswerSchema = PeriodDateQuestionSchema.keys({
+  answer: Joi.object().keys({
+    date: Joi.alternatives([
+      Joi.date().iso(),
+      Joi.string().valid('')
+    ]).required(),
+    point: Joi.number().required()
   })
 });

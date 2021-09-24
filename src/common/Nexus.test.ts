@@ -15,6 +15,7 @@ test('Nexus', () => {
     codelist: [],
     products: [],
     version: 0,
+    inheritedBanks: [],
     publications: []
   };
 

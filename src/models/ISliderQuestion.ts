@@ -27,3 +27,10 @@ export const SliderQuestionSchema = Joi.object().keys({
     unit: Joi.string().required()
   })
 });
+
+export const SliderQuestionAnswerSchema = SliderQuestionSchema.keys({
+  answer: Joi.object().keys({
+    value: Joi.number().required(),
+    point: Joi.number().required()
+  })
+});

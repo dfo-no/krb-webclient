@@ -16,7 +16,8 @@ describe('ProjectSchemas works', () => {
       tags: [],
       needs: [],
       products: [],
-      publishedDate: ''
+      publishedDate: '',
+      inheritedBanks: []
     };
     const report = PostProjectSchema.validate(bank);
 
@@ -35,7 +36,8 @@ describe('ProjectSchemas works', () => {
       needs: [],
       tags: [],
       products: [],
-      publishedDate: ''
+      publishedDate: '',
+      inheritedBanks: []
     };
     const report = PutProjectSchema.validate(bank);
 
@@ -71,7 +73,8 @@ describe('ProjectSchemas works', () => {
       tags: [],
       needs: [],
       products: [],
-      publishedDate: ''
+      publishedDate: '',
+      inheritedBanks: []
     };
 
     const report = PutProjectSchema.validate(bank, { abortEarly: false });
@@ -107,7 +110,8 @@ describe('ProjectSchemas works', () => {
           bankId: 'e56367af-d48d-422d-a4f6-ba52ee17af23',
           type: ModelType.publication
         }
-      ]
+      ],
+      inheritedBanks: []
     };
     const report = PutProjectSchema.validate(bank, {
       abortEarly: false
