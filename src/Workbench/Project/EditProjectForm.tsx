@@ -3,14 +3,16 @@ import React, { ReactElement, useEffect } from 'react';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import Form from 'react-bootstrap/Form';
-import Row from 'react-bootstrap/Row';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
+import { v4 as uuidv4 } from 'uuid';
 import ErrorSummary from '../../Form/ErrorSummary';
 import InputRow from '../../Form/InputRow';
+import { Alert } from '../../models/Alert';
 import { Bank } from '../../models/Bank';
 import { EditProjectSchema } from '../../models/Project';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
+import { addAlert } from '../../store/reducers/alert-reducer';
 import { putProjectThunk } from '../../store/reducers/project-reducer';
 
 interface IProps {
@@ -44,6 +46,12 @@ export default function EditProjectForm({ toggleShow }: IProps): ReactElement {
     dispatch(putProjectThunk(post)).then(() => {
       toggleShow(false);
     });
+    const alert: Alert = {
+      id: uuidv4(),
+      style: 'success',
+      text: 'Successfully updated projectt'
+    };
+    dispatch(addAlert({ alert }));
   };
 
   return (

@@ -2,7 +2,6 @@ import { joiResolver } from '@hookform/resolvers/joi';
 import React, { ReactElement, useContext, useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
-import Row from 'react-bootstrap/Row';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { BsTrashFill } from 'react-icons/bs';
@@ -59,6 +58,12 @@ export default function EditProductForm({ element }: IProps): ReactElement {
     dispatch(putSelectedProjectThunk('dummy')).then(() => {
       onOpenClose('');
     });
+    const alert: Alert = {
+      id: uuidv4(),
+      style: 'success',
+      text: 'Successfully updated product'
+    };
+    dispatch(addAlert({ alert }));
   };
 
   const checkProductConnection = () => {

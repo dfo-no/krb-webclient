@@ -5,14 +5,13 @@ import Card from 'react-bootstrap/Card';
 import Form from 'react-bootstrap/Form';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import { BsPencil, BsTrashFill } from 'react-icons/bs';
-import { useHistory } from 'react-router-dom';
+import { BsTrashFill } from 'react-icons/bs';
 import { v4 as uuidv4 } from 'uuid';
 import ErrorSummary from '../../Form/ErrorSummary';
 import InputRow from '../../Form/InputRow';
 import { Alert } from '../../models/Alert';
 import { BaseTagSchema, Tag } from '../../models/Tag';
-import { useAppDispatch, useAppSelector } from '../../store/hooks';
+import { useAppDispatch } from '../../store/hooks';
 import { addAlert } from '../../store/reducers/alert-reducer';
 import {
   editTag,

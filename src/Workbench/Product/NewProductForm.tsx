@@ -3,15 +3,16 @@ import React, { ReactElement, useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import Form from 'react-bootstrap/Form';
-import Row from 'react-bootstrap/Row';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { v4 as uuidv4 } from 'uuid';
 import ErrorSummary from '../../Form/ErrorSummary';
 import InputRow from '../../Form/InputRow';
+import { Alert } from '../../models/Alert';
 import ModelType from '../../models/ModelType';
 import { PostProductSchema, Product } from '../../models/Product';
 import { useAppDispatch } from '../../store/hooks';
+import { addAlert } from '../../store/reducers/alert-reducer';
 import {
   addProduct,
   putSelectedProjectThunk
@@ -50,6 +51,12 @@ function NewProductForm(): ReactElement {
       setShow(false);
       reset();
     });
+    const alert: Alert = {
+      id: uuidv4(),
+      style: 'success',
+      text: 'successfully added a new product'
+    };
+    dispatch(addAlert({ alert }));
   };
 
   return (
