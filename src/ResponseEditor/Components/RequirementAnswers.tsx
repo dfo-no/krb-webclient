@@ -54,9 +54,9 @@ export default function RequirementAnswers({
             />
           );
         }
-        return <></>;
+        return null;
       }
-      return <></>;
+      return null;
     });
   };
   return <>{answers()}</>;
