@@ -26,7 +26,8 @@ const initialState: PrefilledResponseState = {
       version: 0,
       type: ModelType.bank,
       publications: [],
-      inheritedBanks: []
+      inheritedBanks: [],
+      publishedDate: null
     },
     // answeredVariants: [], // list over string med id som er besvart, uavhengig questiontype, drit i denne
     supplier: '',

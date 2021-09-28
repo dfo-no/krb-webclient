@@ -122,12 +122,12 @@ describe('Validation', () => {
           question: {
             type: 'Q_PERIOD_DATE',
             config: {
-              fromDate: '2021-09-20T08:03:57.093Z',
-              toDate: '2021-09-30T08:03:00.000Z'
+              fromDate: '2021-09-20T08:03:57.0930000Z',
+              toDate: '2021-09-30T08:03:00.0000000Z'
             },
             id: 'aa7e6a82-361a-4775-95e6-440ba9b60dbc',
             answer: {
-              date: '',
+              date: null,
               point: 0
             }
           },
@@ -149,8 +149,8 @@ describe('Validation', () => {
                   {
                     type: 'Q_PERIOD_DATE',
                     config: {
-                      fromDate: '2021-09-20T08:03:57.093Z',
-                      toDate: '2021-09-30T08:03:00.000Z'
+                      fromDate: '2021-09-20T08:03:57.0930000Z',
+                      toDate: '2021-09-30T08:03:00.0000000Z'
                     },
                     id: 'aa7e6a82-361a-4775-95e6-440ba9b60dbc'
                   }

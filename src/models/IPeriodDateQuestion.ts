@@ -12,8 +12,8 @@ export interface IPeriodDateAnswer extends IAnswerBase {
 }
 
 export interface IPeriodDateConfig extends IConfigBase {
-  fromDate: string;
-  toDate: string;
+  fromDate: string | null;
+  toDate: string | null;
 }
 
 export const PeriodDateQuestionSchema = Joi.object().keys({
@@ -21,12 +21,12 @@ export const PeriodDateQuestionSchema = Joi.object().keys({
   type: Joi.string().equal(QuestionEnum.Q_PERIOD_DATE).required(),
   config: Joi.object().keys({
     fromDate: Joi.alternatives([
-      Joi.date().iso(),
-      Joi.string().valid('')
+      Joi.date().iso().raw(),
+      Joi.string().valid(null)
     ]).required(),
     toDate: Joi.alternatives([
-      Joi.date().iso(),
-      Joi.string().valid('')
+      Joi.date().iso().raw(),
+      Joi.string().valid(null)
     ]).required()
   })
 });
@@ -34,8 +34,8 @@ export const PeriodDateQuestionSchema = Joi.object().keys({
 export const PeriodDateQuestionAnswerSchema = PeriodDateQuestionSchema.keys({
   answer: Joi.object().keys({
     date: Joi.alternatives([
-      Joi.date().iso(),
-      Joi.string().valid('')
+      Joi.date().iso().raw(),
+      Joi.string().valid(null)
     ]).required(),
     point: Joi.number().required()
   })

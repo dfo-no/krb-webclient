@@ -9,6 +9,7 @@ import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 import { Controller, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
+import { DATETIME_ISO8601UTC } from '../../common/Constants';
 import ErrorSummary from '../../Form/ErrorSummary';
 import { IPeriodDateQuestion } from '../../models/IPeriodDateQuestion';
 import { IRequirementAnswer } from '../../models/IRequirementAnswer';
@@ -98,7 +99,7 @@ export default function PeriodDateForm({ parentAnswer }: IProps): ReactElement {
                     margin="normal"
                     id="date-picker-dialog"
                     variant="inline"
-                    format="dd/MM/yyyy"
+                    format={DATETIME_ISO8601UTC}
                     label={t('Select date')}
                     KeyboardButtonProps={{
                       'aria-label': 'change date'
@@ -119,7 +120,7 @@ export default function PeriodDateForm({ parentAnswer }: IProps): ReactElement {
                     margin="normal"
                     id="date-picker-dialog"
                     variant="inline"
-                    format="dd/MM/yyyy"
+                    format={DATETIME_ISO8601UTC}
                     label={t('Select date')}
                     KeyboardButtonProps={{
                       'aria-label': 'change date'

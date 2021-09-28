@@ -9,6 +9,7 @@ import Row from 'react-bootstrap/Row';
 import { Controller, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { v4 as uuidv4 } from 'uuid';
+import { DATETIME_ISO8601UTC } from '../../common/Constants';
 import ErrorSummary from '../../Form/ErrorSummary';
 import { IPeriodDateQuestion } from '../../models/IPeriodDateQuestion';
 import { IRequirementAnswer } from '../../models/IRequirementAnswer';
@@ -129,7 +130,7 @@ export default function DateInfoAnswer({
                   variant="inline"
                   minDate={dateQuestion.config.fromDate}
                   maxDate={dateQuestion.config.toDate}
-                  format="dd/MM/yyyy"
+                  format={DATETIME_ISO8601UTC}
                   label={t('Select date')}
                   KeyboardButtonProps={{
                     'aria-label': 'change date'

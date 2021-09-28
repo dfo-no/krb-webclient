@@ -6,9 +6,9 @@ describe('Joi date should validate', () => {
   const now = new Date();
   test('Date formats works', () => {
     const dateSchema = Joi.object().keys({
-      date1: Joi.date().iso().required(),
-      date2: Joi.date().iso().required(),
-      date3: Joi.date().iso().required()
+      date1: Joi.date().iso().raw().required(),
+      date2: Joi.date().iso().raw().required(),
+      date3: Joi.date().iso().raw().required()
     });
     const bank = {
       date1: now.toISOString(),
@@ -23,7 +23,7 @@ describe('Joi date should validate', () => {
   test('Empty string date should validate', () => {
     const dateSchema = Joi.object().keys({
       publishedDate: Joi.alternatives([
-        Joi.date().iso(),
+        Joi.date().iso().raw(),
         Joi.string().valid('')
       ]).required()
     });
@@ -36,10 +36,26 @@ describe('Joi date should validate', () => {
     expect(report.error).toBeUndefined();
   });
 
+  test('Null date should validate', () => {
+    const dateSchema = Joi.object().keys({
+      publishedDate: Joi.alternatives([
+        Joi.date().iso().raw(),
+        Joi.string().valid(null)
+      ]).required()
+    });
+
+    const entity = {
+      publishedDate: null
+    };
+
+    const report = dateSchema.validate(entity);
+    expect(report.error).toBeUndefined();
+  });
+
   test('Date.toJSON() string should validate', () => {
     const dateSchema = Joi.object().keys({
       publishedDate: Joi.alternatives([
-        Joi.date().iso(),
+        Joi.date().iso().raw(),
         Joi.string().valid('')
       ]).required()
     });
@@ -54,7 +70,7 @@ describe('Joi date should validate', () => {
 
   test('Date format for day-fns should validate', () => {
     const dateSchema = Joi.object().keys({
-      publishedDate: Joi.date().iso().required()
+      publishedDate: Joi.date().iso().raw().required()
     });
     // target : 2021-09-23T05:11:53.747Z
     const post = {

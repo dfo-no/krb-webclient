@@ -87,8 +87,8 @@ export default function QuestionArray({
         id: uuidv4(),
         type: QuestionEnum.Q_PERIOD_DATE,
         config: {
-          fromDate: new Date().toISOString(),
-          toDate: new Date().toISOString()
+          fromDate: null,
+          toDate: null
         }
       } as IPeriodDateQuestion);
     } else if (getAlternative === QuestionEnum.Q_TIME) {

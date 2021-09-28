@@ -27,5 +27,5 @@ export const PutProjectSchema = BaseBankSchema.keys({
 export const PostProjectSchema = BaseBankSchema.keys({
   id: Joi.string().equal('').required(),
   description: Joi.string().allow('').required(),
-  publishedDate: Joi.string().equal('').required()
+  publishedDate: Joi.string().equal(null).required()
 });
