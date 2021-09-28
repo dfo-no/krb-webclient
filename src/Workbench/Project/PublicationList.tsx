@@ -1,6 +1,5 @@
 import { joiResolver } from '@hookform/resolvers/joi';
-import format from 'date-fns/format';
-import React, { ReactElement, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
@@ -10,7 +9,6 @@ import Row from 'react-bootstrap/Row';
 import { useFieldArray, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { BsPencilSquare, BsTrashFill } from 'react-icons/bs';
-import * as Constants from '../../common/Constants';
 import ErrorSummary from '../../Form/ErrorSummary';
 import { Bank } from '../../models/Bank';
 import { PutProjectSchema } from '../../models/Project';
@@ -23,7 +21,7 @@ import {
 } from '../../store/reducers/project-reducer';
 import css from './PublicationList.module.scss';
 
-export default function PublicationList(): ReactElement {
+export default function PublicationList(): React.ReactElement {
   const dispatch = useAppDispatch();
   const { project } = useAppSelector((state) => state.project);
   const [editId, setEditId] = useState('');
@@ -114,10 +112,8 @@ export default function PublicationList(): ReactElement {
                 <Row>
                   <Col>
                     <Nav.Link href={`/bank/${field.bankId}`}>
-                      {` ${format(
-                        new Date(field.date),
-                        Constants.DATE_FORMAT_SHORT
-                      )} ${field.comment}`}
+                      {t('date.PP', { date: new Date(field.date) })}
+                      {` ${field.comment}`}
                     </Nav.Link>
                     <div className={css.listGroup__spacer} />
                   </Col>

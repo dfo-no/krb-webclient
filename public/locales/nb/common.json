@@ -77,5 +77,25 @@
   "Step": "Steg",
   "Unit": "Enhet",
   "Allow multiple selected codes": "Tillat flere valgte koder",
-  "Inheritance": "Arv og Avhengigheter"
+  "Inheritance": "Arv og Avhengigheter",
+  "date": {
+    "P": "{{date, P}}",
+    "PP": "{{date, PP}}",
+    "PPP": "{{date, PPP}}",
+    "PPPP": "{{date, PPPP}}",
+    "relative": "{{ date, relative }}",
+    "ago": "{{ date, ago }}"
+  },
+  "time": {
+    "p": "{{date, p}}",
+    "pp": "{{date, pp}}",
+    "ppp": "{{date, ppp}}",
+    "pppp": "{{date, pppp}}"
+  },
+  "datetime": {
+    "Pp": "{{date, Pp}}",
+    "PPpp": "{{date, PPpp}}",
+    "PPPppp": "{{date, PPPppp}}",
+    "PPPPpppp": "{{date, PPPPpppp}}"
+  }
 }
