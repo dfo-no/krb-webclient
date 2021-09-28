@@ -1,10 +1,7 @@
-import React, { ReactElement, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Accordion from 'react-bootstrap/Accordion';
-import Button from 'react-bootstrap/Button';
-import Card from 'react-bootstrap/Card';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
-import { BsChevronDown } from 'react-icons/bs';
 import { useParams } from 'react-router-dom';
 import Utils from '../../common/Utils';
 import { Requirement } from '../../models/Requirement';
@@ -20,7 +17,7 @@ interface RouteParams {
   needId?: string;
 }
 
-export default function RequirementPage(): ReactElement {
+export default function RequirementPage(): React.ReactElement {
   const dispatch = useAppDispatch();
 
   const { needId } = useParams<RouteParams>();
@@ -64,27 +61,31 @@ export default function RequirementPage(): ReactElement {
     }
   };
 
+  const renderAccordion = (element: Requirement) => {
+    return (
+      <Accordion.Item eventKey={element.id} key={element.id}>
+        <h2 className="accordion-header">
+          <Accordion.Button>
+            {Utils.capitalizeFirstLetter(element.title)}
+          </Accordion.Button>
+        </h2>
+        <Accordion.Collapse eventKey={element.id}>
+          <Accordion.Body>
+            <EditRequirementForm element={element} />
+          </Accordion.Body>
+        </Accordion.Collapse>
+      </Accordion.Item>
+    );
+  };
+
   const requirements = (reqs: Requirement[]) => {
     if (reqs.length > 0) {
       const filteredList = reqs.filter(
         (element) => element.requirement_Type === 'requirement'
       );
-      const jsx = filteredList.map((element: Requirement) => {
-        return (
-          <Accordion.Item eventKey={element.id}>
-            <h2 className="accordion-header">
-              <Accordion.Button>
-                {Utils.capitalizeFirstLetter(element.title)}
-              </Accordion.Button>
-            </h2>
-            <Accordion.Collapse eventKey={element.id}>
-              <Accordion.Body>
-                <EditRequirementForm element={element} />
-              </Accordion.Body>
-            </Accordion.Collapse>
-          </Accordion.Item>
-        );
-      });
+      const jsx = filteredList.map((element: Requirement) =>
+        renderAccordion(element)
+      );
       return (
         <>
           {filteredList.length > 0 && <h5 className="mt-4">Requirements: </h5>}
@@ -104,22 +105,9 @@ export default function RequirementPage(): ReactElement {
       const filteredList = reqs.filter(
         (element) => element.requirement_Type === 'info'
       );
-      const jsx = filteredList.map((element: Requirement) => {
-        return (
-          <Accordion.Item eventKey={element.id}>
-            <h2 className="accordion-header">
-              <Accordion.Button>
-                {Utils.capitalizeFirstLetter(element.title)}
-              </Accordion.Button>
-            </h2>
-            <Accordion.Collapse eventKey={element.id}>
-              <Accordion.Body>
-                <EditRequirementForm element={element} />
-              </Accordion.Body>
-            </Accordion.Collapse>
-          </Accordion.Item>
-        );
-      });
+      const jsx = filteredList.map((element: Requirement) =>
+        renderAccordion(element)
+      );
       return (
         <>
           {filteredList.length > 0 && <h5 className="mt-4">Info fields:</h5>}
