@@ -43,15 +43,15 @@ export default function EditProjectForm({ toggleShow }: IProps): ReactElement {
   }, [project, reset]);
 
   const onEditProjectSubmit = (post: Bank) => {
-    dispatch(putProjectThunk(post)).then(() => {
-      toggleShow(false);
-    });
     const alert: Alert = {
       id: uuidv4(),
       style: 'success',
       text: 'Successfully updated projectt'
     };
-    dispatch(addAlert({ alert }));
+    dispatch(putProjectThunk(post)).then(() => {
+      dispatch(addAlert({ alert }));
+      toggleShow(false);
+    });
   };
 
   return (

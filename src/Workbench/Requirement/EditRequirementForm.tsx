@@ -51,15 +51,15 @@ export default function EditRequirementForm({ element }: IProps): ReactElement {
         requirement: post
       })
     );
-    dispatch(putSelectedProjectThunk('dummy')).then(() => {
-      onOpenClose('');
-    });
     const alert: Alert = {
       id: uuidv4(),
       style: 'success',
       text: 'successfully updated requirement'
     };
-    dispatch(addAlert({ alert }));
+    dispatch(putSelectedProjectThunk('dummy')).then(() => {
+      dispatch(addAlert({ alert }));
+      onOpenClose('');
+    });
   };
 
   const removeRequirement = (req: Requirement) => {

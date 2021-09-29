@@ -44,18 +44,17 @@ export default function NewTagForm(): ReactElement {
   const onNewTagSubmit = (post: Tag) => {
     const newTag = { ...post };
     newTag.id = uuidv4();
-    dispatch(addTag(newTag));
-    dispatch(putSelectedProjectThunk('dummy')).then(() => {
-      reset();
-      setShow(false);
-    });
-
     const alert: Alert = {
       id: uuidv4(),
       style: 'success',
       text: 'Successfully added tag'
     };
-    dispatch(addAlert({ alert }));
+    dispatch(addTag(newTag));
+    dispatch(putSelectedProjectThunk('dummy')).then(() => {
+      dispatch(addAlert({ alert }));
+      reset();
+      setShow(false);
+    });
   };
 
   return (

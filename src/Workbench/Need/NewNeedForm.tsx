@@ -47,18 +47,18 @@ function NewNeedForm(): ReactElement {
 
   const onSubmit = (post: Parentable<Need>) => {
     const need = { ...post };
-    need.id = uuidv4();
-    dispatch(addNeed(need));
-    dispatch(putSelectedProjectThunk('dummy')).then(() => {
-      setShow(false);
-      reset();
-    });
     const alert: Alert = {
       id: uuidv4(),
       style: 'success',
       text: 'Successfully added new need'
     };
-    dispatch(addAlert({ alert }));
+    need.id = uuidv4();
+    dispatch(addNeed(need));
+    dispatch(putSelectedProjectThunk('dummy')).then(() => {
+      dispatch(addAlert({ alert }));
+      setShow(false);
+      reset();
+    });
   };
 
   return (

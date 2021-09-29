@@ -44,6 +44,11 @@ function NewCodeForm(): ReactElement {
   });
 
   const onSubmit = (post: Code) => {
+    const alert: Alert = {
+      id: uuidv4(),
+      style: 'success',
+      text: 'Successfully added code'
+    };
     const code = { ...post };
     code.id = uuidv4();
     dispatch(
@@ -54,15 +59,10 @@ function NewCodeForm(): ReactElement {
     );
     dispatch(addCodeToSelected(code));
     dispatch(putSelectedProjectThunk('dummy')).then(() => {
+      dispatch(addAlert({ alert }));
       reset();
       setShow(false);
     });
-    const alert: Alert = {
-      id: uuidv4(),
-      style: 'success',
-      text: 'Successfully added code'
-    };
-    dispatch(addAlert({ alert }));
   };
 
   return (

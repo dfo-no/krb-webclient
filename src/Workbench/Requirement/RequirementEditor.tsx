@@ -53,13 +53,14 @@ function RequirementEditor(): ReactElement {
     dispatch(
       editRequirementInNeed({ needId: need.id, requirement: serialized })
     );
-    dispatch(putSelectedProjectThunk('dummy'));
     const alert: Alert = {
       id: uuidv4(),
       style: 'success',
       text: 'successfully updated requirement'
     };
-    dispatch(addAlert({ alert }));
+    dispatch(putSelectedProjectThunk('dummy')).then(() => {
+      dispatch(addAlert({ alert }));
+    });
   };
 
   const needOptions = (needList: Need[]) => {

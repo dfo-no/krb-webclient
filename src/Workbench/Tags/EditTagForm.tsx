@@ -43,17 +43,16 @@ export default function EditTagForm({ element }: IProps): ReactElement {
     if (newTag.children) {
       delete newTag.children;
     }
-    dispatch(editTag(newTag));
-    dispatch(putSelectedProjectThunk('dummy')).then(() => {
-      reset();
-    });
-
     const alert: Alert = {
       id: uuidv4(),
       style: 'success',
       text: 'Successfully edited tag'
     };
-    dispatch(addAlert({ alert }));
+    dispatch(editTag(newTag));
+    dispatch(putSelectedProjectThunk('dummy')).then(() => {
+      dispatch(addAlert({ alert }));
+      reset();
+    });
   };
 
   const deleteTag = () => {

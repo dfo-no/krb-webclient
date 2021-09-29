@@ -51,17 +51,16 @@ function EditNeedForm({ element }: IProps): ReactElement {
     if (toParentable.children) {
       delete toParentable.children;
     }
-    dispatch(editNeed(toParentable as Parentable<Need>));
-    dispatch(putSelectedProjectThunk('dummy')).then(() => {
-      onOpenClose('');
-    });
-
     const alert: Alert = {
       id: uuidv4(),
       style: 'success',
       text: 'Successfully edited need'
     };
-    dispatch(addAlert({ alert }));
+    dispatch(editNeed(toParentable as Parentable<Need>));
+    dispatch(putSelectedProjectThunk('dummy')).then(() => {
+      dispatch(addAlert({ alert }));
+      onOpenClose('');
+    });
   };
 
   const checkDeleteNeed = (need: Need) => {

@@ -54,16 +54,16 @@ export default function EditProductForm({ element }: IProps): ReactElement {
     if (newProduct.children) {
       delete newProduct.children;
     }
-    dispatch(editProduct(newProduct));
-    dispatch(putSelectedProjectThunk('dummy')).then(() => {
-      onOpenClose('');
-    });
     const alert: Alert = {
       id: uuidv4(),
       style: 'success',
       text: 'Successfully updated product'
     };
-    dispatch(addAlert({ alert }));
+    dispatch(editProduct(newProduct));
+    dispatch(putSelectedProjectThunk('dummy')).then(() => {
+      dispatch(addAlert({ alert }));
+      onOpenClose('');
+    });
   };
 
   const checkProductConnection = () => {

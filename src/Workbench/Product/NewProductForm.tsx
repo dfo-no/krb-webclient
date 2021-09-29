@@ -46,17 +46,17 @@ function NewProductForm(): ReactElement {
   const onSubmit = async (post: Product) => {
     const newProduct = { ...post };
     newProduct.id = uuidv4();
-    dispatch(addProduct(newProduct));
-    dispatch(putSelectedProjectThunk('dummy')).then(() => {
-      setShow(false);
-      reset();
-    });
     const alert: Alert = {
       id: uuidv4(),
       style: 'success',
       text: 'successfully added a new product'
     };
-    dispatch(addAlert({ alert }));
+    dispatch(addProduct(newProduct));
+    dispatch(putSelectedProjectThunk('dummy')).then(() => {
+      dispatch(addAlert({ alert }));
+      setShow(false);
+      reset();
+    });
   };
 
   return (

@@ -44,6 +44,11 @@ export default function EditCodeForm({ element }: IProps): ReactElement {
   });
 
   const onSubmit = (code: Code) => {
+    const alert: Alert = {
+      id: uuidv4(),
+      style: 'success',
+      text: 'Successfully edited code'
+    };
     dispatch(
       editCodeInCodelist({
         codelistId: codelist.id,
@@ -51,14 +56,11 @@ export default function EditCodeForm({ element }: IProps): ReactElement {
       })
     );
     dispatch(editCodeInSelectedCodelist(code));
-    dispatch(putSelectedProjectThunk('dummy'));
+    dispatch(putSelectedProjectThunk('dummy')).then(() => {
+      dispatch(addAlert({ alert }));
+    });
+
     onOpenClose('');
-    const alert: Alert = {
-      id: uuidv4(),
-      style: 'success',
-      text: 'Successfully edited code'
-    };
-    dispatch(addAlert({ alert }));
   };
 
   const deleteCode = (code: Code) => {

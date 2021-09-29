@@ -51,18 +51,18 @@ function EditCodeListForm(): ReactElement {
   });
 
   const onEditCodeSubmit = (post: Codelist) => {
-    dispatch(editSelectedCodelist(post));
-    dispatch(editCodelist(post));
-    dispatch(putSelectedProjectThunk('dummy')).then(() => {
-      reset();
-      setEdit(false);
-    });
     const alert: Alert = {
       id: uuidv4(),
       style: 'success',
       text: 'Successfully edited codelist'
     };
-    dispatch(addAlert({ alert }));
+    dispatch(editSelectedCodelist(post));
+    dispatch(editCodelist(post));
+    dispatch(putSelectedProjectThunk('dummy')).then(() => {
+      dispatch(addAlert({ alert }));
+      reset();
+      setEdit(false);
+    });
   };
 
   useEffect(() => {

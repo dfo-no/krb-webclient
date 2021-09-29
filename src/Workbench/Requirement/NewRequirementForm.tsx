@@ -61,16 +61,16 @@ function NewRequirementForm(): ReactElement {
         requirement
       })
     );
-    dispatch(putSelectedProjectThunk('dummy')).then(() => {
-      setShow(false);
-      reset();
-    });
     const alert: Alert = {
       id: uuidv4(),
       style: 'success',
       text: 'Successfully created new requirement'
     };
-    dispatch(addAlert({ alert }));
+    dispatch(putSelectedProjectThunk('dummy')).then(() => {
+      dispatch(addAlert({ alert }));
+      setShow(false);
+      reset();
+    });
   };
 
   return (

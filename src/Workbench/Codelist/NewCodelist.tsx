@@ -42,19 +42,19 @@ function NewCodelist(): ReactElement {
   });
 
   const onNewCodeSubmit = (post: Codelist) => {
-    const newCodelist = { ...post };
-    newCodelist.id = uuidv4();
-    dispatch(addCodelist(newCodelist));
-    dispatch(putSelectedProjectThunk('dummy')).then(() => {
-      reset();
-      setShow(false);
-    });
     const alert: Alert = {
       id: uuidv4(),
       style: 'success',
       text: 'Successfully added codelist'
     };
-    dispatch(addAlert({ alert }));
+    const newCodelist = { ...post };
+    newCodelist.id = uuidv4();
+    dispatch(addCodelist(newCodelist));
+    dispatch(putSelectedProjectThunk('dummy')).then(() => {
+      dispatch(addAlert({ alert }));
+      reset();
+      setShow(false);
+    });
   };
 
   return (
