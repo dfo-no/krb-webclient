@@ -1,9 +1,8 @@
-import { get, has } from 'lodash';
-import React, { ReactElement } from 'react';
+import { get, has, toPath } from 'lodash';
+import React from 'react';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import Form from 'react-bootstrap/Form';
-import Row from 'react-bootstrap/Row';
 import {
   Control,
   FieldError,
@@ -35,7 +34,7 @@ export default function VariantArray({
   register,
   formState,
   project
-}: IProps): ReactElement {
+}: IProps): React.ReactElement {
   const { errors } = formState;
   const { fields, append, remove } = useFieldArray<
     Requirement,
@@ -85,6 +84,23 @@ export default function VariantArray({
         {value?.message}
       </Form.Control.Feedback>
     );
+  };
+
+  /* const getError = (str: string) => {
+    const path = toPath(str);
+    path.push('message');
+    return get(errors, path);
+  }; */
+
+  const hasError = (str: string) => {
+    let retVal = null;
+    const path = toPath(str);
+    if (has(errors, path)) {
+      retVal = true;
+    } else {
+      retVal = false;
+    }
+    return retVal;
   };
 
   return (
@@ -155,16 +171,11 @@ export default function VariantArray({
                     !!has(errors, `variants[${index}].requirementText`)
                   }
                 />
-                {errors.variants &&
-                  errors.variants[index] &&
-                  errors.variants[index]?.requirementText && (
-                    <Form.Control.Feedback type="invalid">
-                      {get(
-                        errors,
-                        `variants[${index}].requirementText.message`
-                      )}
-                    </Form.Control.Feedback>
-                  )}
+                {!!hasError(`variants[${index}].requirementText`) && (
+                  <Form.Control.Feedback type="invalid">
+                    {get(errors, `variants[${index}].requirementText.message`)}
+                  </Form.Control.Feedback>
+                )}
               </Form.Group>
               <Form.Group>
                 <Form.Label>{t('Instruction')}</Form.Label>
@@ -240,10 +251,8 @@ export default function VariantArray({
                   ))}
                 </Form.Control>
 
-                {errors.variants &&
-                  errors.variants[index] &&
-                  errors.variants[index]?.products &&
-                  renderMultipleErrors(errors.variants[index]?.products)}
+                {!!has(errors, `variants[${index}].products`) &&
+                  renderMultipleErrors(`variants[${index}].products`)}
               </Form.Group>
 
               <QuestionArray

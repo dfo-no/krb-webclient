@@ -1,6 +1,6 @@
 import { joiResolver } from '@hookform/resolvers/joi';
 import Joi from 'joi';
-import React, { ReactElement } from 'react';
+import React from 'react';
 import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
 import Container from 'react-bootstrap/Container';
@@ -11,7 +11,7 @@ import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import ErrorSummary from '../../Form/ErrorSummary';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
-import { editSupplier, setBank } from '../../store/reducers/response-reducer';
+import { editSupplier } from '../../store/reducers/response-reducer';
 
 interface IResponseInfoForm {
   supplier: string;
@@ -21,7 +21,7 @@ const supplierSchema = Joi.object().keys({
   supplier: Joi.string().required()
 });
 
-export default function ResponseEditor(): ReactElement {
+export default function ResponseEditor(): React.ReactElement {
   const { response } = useAppSelector((state) => state.response);
   const {
     register,

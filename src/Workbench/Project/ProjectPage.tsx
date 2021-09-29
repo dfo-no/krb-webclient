@@ -1,4 +1,4 @@
-import React, { ReactElement, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
 import { useTranslation } from 'react-i18next';
@@ -14,7 +14,7 @@ import EditProjectForm from './EditProjectForm';
 import NewPublication from './NewPublication';
 import PublicationList from './PublicationList';
 
-function ProjectPage(): ReactElement {
+function ProjectPage(): React.ReactElement {
   const { project } = useAppSelector((state) => state.project);
   const [editMode, setEditMode] = useState(false);
 
@@ -26,6 +26,7 @@ function ProjectPage(): ReactElement {
     }
     return <></>;
   }
+
   useEffect(() => {
     store.dispatch(getBanksThunk());
     store.dispatch(getAlbefaticalSortedBanksThunk());

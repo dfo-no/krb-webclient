@@ -1,9 +1,8 @@
 import { joiResolver } from '@hookform/resolvers/joi';
-import React, { ReactElement, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import Form from 'react-bootstrap/Form';
-import Row from 'react-bootstrap/Row';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import ErrorSummary from '../../Form/ErrorSummary';
@@ -17,7 +16,9 @@ interface IProps {
   toggleShow: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-export default function EditProjectForm({ toggleShow }: IProps): ReactElement {
+export default function EditProjectForm({
+  toggleShow
+}: IProps): React.ReactElement {
   const dispatch = useAppDispatch();
   const { project } = useAppSelector((state) => state.project);
   const { t } = useTranslation();
