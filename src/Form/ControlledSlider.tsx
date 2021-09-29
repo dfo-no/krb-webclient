@@ -1,4 +1,4 @@
-import Slider from '@material-ui/core/Slider';
+import Slider from '@mui/material/Slider';
 import React from 'react';
 import Form from 'react-bootstrap/Form';
 import {
@@ -11,8 +11,8 @@ import { IOption } from '../models/IOption';
 import { ISliderQuestion } from '../models/ISliderQuestion';
 
 interface Props<T> extends UseControllerProps<T> {
-  question: ISliderQuestion;
   error: FieldError | undefined;
+  question: ISliderQuestion;
 }
 
 const ControlledSlider = <T extends FieldValues>({
