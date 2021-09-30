@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 /* eslint-disable react/prop-types */
-import { AnyPtrRecord } from 'dns';
 import React, { useState } from 'react';
 import Accordion from 'react-bootstrap/Accordion';
 import Nestable from 'react-nestable';
@@ -9,10 +8,10 @@ import Utils from '../common/Utils';
 import { AccordionContext } from './AccordionContext';
 
 interface IProps {
-  dispatchfunc: any;
-  inputlist: any;
+  dispatchfunc: (projectId: string, itemlist: any) => void;
+  inputlist: any[];
   projectId: string;
-  component: any;
+  component: React.ReactElement;
   depth: number;
 }
 
@@ -24,7 +23,7 @@ export default function NestableHierarcy({
   depth
 }: IProps) {
   const [activeKey, setActiveKey] = useState('');
-  const convertTreeToList = (tree: any, key: any, collection: any) => {
+  const convertTreeToList = (tree: any, key: string, collection: any[]) => {
     if ((!tree[key] || tree[key].length === 0) && collection.includes(tree)) {
       const copiedTree = { ...tree };
       delete copiedTree.children;
@@ -53,19 +52,20 @@ export default function NestableHierarcy({
     return flattenedCollection;
   };
   const hierarchyList = Utils.unflatten(inputlist)[0];
+
   const saveOrder = (items: any) => {
     const itemList = flatten(items);
     dispatchfunc(projectId, itemList);
   };
 
-  const onOpenClose = (e: any) => {
+  const onOpenClose = (e: string | null) => {
     if (e) {
       setActiveKey(e);
     } else {
       setActiveKey('');
     }
   };
-  const renderItem = ({ item, handler }: any) => {
+  const renderItem = ({ item }: any) => {
     return (
       <Accordion.Item eventKey={item.id}>
         <h2 className="accordion-header">
@@ -78,7 +78,6 @@ export default function NestableHierarcy({
             {React.cloneElement(component, { element: item })}
           </Accordion.Body>
         </Accordion.Collapse>
-        {handler}
       </Accordion.Item>
     );
   };
