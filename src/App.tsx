@@ -4,7 +4,7 @@ import {
   MsalProvider,
   UnauthenticatedTemplate
 } from '@azure/msal-react';
-import React, { ReactElement } from 'react';
+import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 import styles from './App.module.scss';
 import { msalConfig } from './authentication/authConfig';
@@ -21,7 +21,7 @@ import WorkbenchModule from './Workbench/WorkbenchModule';
 
 const msalInstance = new PublicClientApplication(msalConfig);
 
-function App(): ReactElement {
+function App(): React.ReactElement {
   function renderContent() {
     return (
       <Switch>

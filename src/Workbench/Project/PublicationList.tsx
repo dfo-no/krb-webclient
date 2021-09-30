@@ -1,5 +1,6 @@
 import { joiResolver } from '@hookform/resolvers/joi';
-import React, { useEffect, useState } from 'react';
+import { get, has, toPath } from 'lodash';
+import React, { useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
@@ -26,7 +27,7 @@ export default function PublicationList(): React.ReactElement {
   const { project } = useAppSelector((state) => state.project);
   const [editId, setEditId] = useState('');
 
-  const { control, register, reset, formState, handleSubmit } = useForm<
+  const { control, register, formState, handleSubmit } = useForm<
     Omit<Bank, 'needs'>
   >({
     criteriaMode: 'all',
@@ -34,12 +35,6 @@ export default function PublicationList(): React.ReactElement {
     defaultValues: project
   });
   const { errors } = formState;
-
-  useEffect(() => {
-    if (project) {
-      reset(JSON.parse(JSON.stringify(project)));
-    }
-  }, [project, reset]);
 
   const { fields } = useFieldArray({
     name: 'publications',
@@ -68,6 +63,23 @@ export default function PublicationList(): React.ReactElement {
     }
   };
 
+  const hasError = (str: string) => {
+    let retVal = null;
+    const path = toPath(str);
+    if (has(errors, path)) {
+      retVal = true;
+    } else {
+      retVal = false;
+    }
+    return retVal;
+  };
+
+  const getError = (str: string) => {
+    const path = toPath(str);
+    path.push('message');
+    return get(errors, path);
+  };
+
   return (
     <Form>
       <ListGroup className="mt-4">
@@ -83,21 +95,13 @@ export default function PublicationList(): React.ReactElement {
                       {...register(`publications.${index}.comment` as const)}
                       placeholder="Summarize the changes ..."
                       defaultValue=""
-                      isInvalid={
-                        !!(
-                          errors.publications &&
-                          errors.publications[index] &&
-                          errors.publications[index]?.comment
-                        )
-                      }
+                      isInvalid={!!hasError(`publications[${index}].comment`)}
                     />
-                    {errors.publications &&
-                      errors.publications[index] &&
-                      errors.publications[index]?.comment && (
-                        <Form.Control.Feedback type="invalid" as="div">
-                          {errors.publications[index]?.comment?.message}
-                        </Form.Control.Feedback>
-                      )}
+                    {hasError(`publications[${index}].comment`) && (
+                      <Form.Control.Feedback type="invalid" as="div">
+                        {getError(`publications[${index}].comment.message`)}
+                      </Form.Control.Feedback>
+                    )}
                   </Form.Group>
                   <Col sm={1}>
                     <Button className="mr-1" onClick={handleSubmit(onSubmit)}>

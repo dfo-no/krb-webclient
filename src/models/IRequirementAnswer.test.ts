@@ -4,6 +4,7 @@ import {
   IRequirementAnswer,
   RequirementAnswersSchema
 } from './IRequirementAnswer';
+import { ITextQuestion } from './ITextQuestion';
 import ModelType from './ModelType';
 import QuestionEnum from './QuestionEnum';
 import RequirementType from './RequirementType';
@@ -220,7 +221,12 @@ describe('Validation', () => {
   });
 
   test('Updated a Requirement in the reducer', () => {
-    // let state = store.getState().prefilledResponse;
+    const question: ITextQuestion = {
+      id: 'questionId1',
+      type: QuestionEnum.Q_TEXT,
+      answer: { point: 0, text: 'answer' },
+      config: { defaultPoint: 10, max: 500 }
+    };
 
     const post: IRequirementAnswer[] = [
       {
@@ -238,12 +244,7 @@ describe('Validation', () => {
           tags: [],
           type: ModelType.requirement
         },
-        question: {
-          id: 'questionId1',
-          type: QuestionEnum.Q_TEXT,
-          answer: { point: 0 },
-          config: { defaultPoint: 10 }
-        },
+        question,
         type: ModelType.prefilledResponse
       }
     ];
