@@ -36,7 +36,7 @@ export default function NeedHierarchy({
         children = needChildrenHierarchy(element.children, n);
       }
       if (!Utils.checkIfNeedHasSelectedRequirements(element, searchList))
-        return <></>;
+        return <div key={element.id} />;
       return (
         <div key={element.id} className={` ${styles[cssClass]} pt-0`}>
           <Row>
