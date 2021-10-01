@@ -1,5 +1,5 @@
 import { joiResolver } from '@hookform/resolvers/joi';
-import React, { ReactElement, useState } from 'react';
+import React, { useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import Form from 'react-bootstrap/Form';
@@ -21,7 +21,7 @@ import {
   updateSelectedVersion
 } from '../../store/reducers/project-reducer';
 
-export default function NewPublication(): ReactElement {
+export default function NewPublication(): React.ReactElement {
   const { project } = useAppSelector((state) => state.project);
   const dispatch = useAppDispatch();
   const { t } = useTranslation();

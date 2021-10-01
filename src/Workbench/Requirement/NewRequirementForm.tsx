@@ -1,5 +1,5 @@
 import { joiResolver } from '@hookform/resolvers/joi';
-import React, { ReactElement, useState } from 'react';
+import React, { useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import Form from 'react-bootstrap/Form';
@@ -19,7 +19,7 @@ import {
   putSelectedProjectThunk
 } from '../../store/reducers/project-reducer';
 
-function NewRequirementForm(): ReactElement {
+function NewRequirementForm(): React.ReactElement {
   const dispatch = useAppDispatch();
   const [validated] = useState(false);
   const { t } = useTranslation();

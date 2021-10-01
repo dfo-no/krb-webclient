@@ -1,5 +1,5 @@
-import { Card } from '@material-ui/core';
-import React, { ReactElement } from 'react';
+import Card from '@mui/material/Card';
+import React from 'react';
 import Utils from '../../../common/Utils';
 import { Code } from '../../../models/Code';
 import { Codelist } from '../../../models/Codelist';
@@ -17,7 +17,9 @@ interface IProps {
   answerList: IRequirementAnswer[];
 }
 
-export default function AnswerPreviewBox({ answerList }: IProps): ReactElement {
+export default function AnswerPreviewBox({
+  answerList
+}: IProps): React.ReactElement {
   const { response } = useAppSelector((state) => state.response);
   const GenerateCodelist = (
     codes: string | string[],

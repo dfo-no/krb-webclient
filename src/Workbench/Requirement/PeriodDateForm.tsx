@@ -1,11 +1,16 @@
-import React, { ReactElement } from 'react';
+import { get } from 'lodash';
+import React from 'react';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import Form from 'react-bootstrap/Form';
-import Row from 'react-bootstrap/Row';
-import { Control, FormState, UseFormRegister } from 'react-hook-form';
+import {
+  Control,
+  FieldError,
+  FormState,
+  UseFormRegister
+} from 'react-hook-form';
 import { BsTrashFill } from 'react-icons/bs';
-import DatePicker from '../../components/DatePicker/DatePicker';
+import ControlledDate from '../../Form/ControlledDate';
 import { IPeriodDateQuestion } from '../../models/IPeriodDateQuestion';
 import { Requirement } from '../../models/Requirement';
 
@@ -27,8 +32,9 @@ export default function PeriodDateForm({
   vIndex,
   aIndex,
   formState
-}: IProps): ReactElement {
+}: IProps): React.ReactElement {
   const { errors } = formState;
+
   return (
     <Card className="mb-3">
       <Card.Body>
@@ -55,17 +61,27 @@ export default function PeriodDateForm({
           {...register(`variants.${vIndex}.questions.${aIndex}.type` as const)}
           defaultValue={item.type}
         />
-        <DatePicker
+        <ControlledDate
+          control={control}
           name={`variants.${vIndex}.questions.${aIndex}.config.fromDate`}
-          control={control}
-          errors={errors}
-          label="From date"
+          error={
+            get(
+              errors,
+              `variants.${vIndex}.questions.${aIndex}.config.fromDate`
+            ) as FieldError
+          }
+          label=""
         />
-        <DatePicker
-          name={`variants.${vIndex}.questions.${aIndex}.config.toDate`}
+        <ControlledDate
           control={control}
-          errors={errors}
-          label="To date"
+          name={`variants.${vIndex}.questions.${aIndex}.config.toDate`}
+          error={
+            get(
+              errors,
+              `variants.${vIndex}.questions.${aIndex}.config.toDate`
+            ) as FieldError
+          }
+          label=""
         />
       </Card.Body>
     </Card>

@@ -1,6 +1,6 @@
 import { joiResolver } from '@hookform/resolvers/joi';
-import Switch from '@material-ui/core/Switch';
-import React, { ReactElement } from 'react';
+import Switch from '@mui/material/Switch';
+import React from 'react';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import Form from 'react-bootstrap/Form';
@@ -24,7 +24,9 @@ interface IProps {
   parentAnswer: IRequirementAnswer;
 }
 
-export default function CodelistForm({ parentAnswer }: IProps): ReactElement {
+export default function CodelistForm({
+  parentAnswer
+}: IProps): React.ReactElement {
   const { spec } = useAppSelector((state) => state.specification);
   const {
     register,

@@ -1,7 +1,7 @@
 import { joiResolver } from '@hookform/resolvers/joi';
-import Slider from '@material-ui/core/Slider';
+import Slider from '@mui/material/Slider';
 import Joi from 'joi';
-import React, { ReactElement, useState } from 'react';
+import React, { useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/esm/Col';
 import Container from 'react-bootstrap/esm/Container';
@@ -66,7 +66,7 @@ const questionSchema = Joi.object().keys({
 
 export default function RequirementAnswer({
   requirement
-}: IProps): ReactElement {
+}: IProps): React.ReactElement {
   const dispatch = useAppDispatch();
   const { t } = useTranslation();
   const {

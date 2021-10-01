@@ -23,7 +23,8 @@ const initialState: SpecificationState = {
       version: 0,
       type: ModelType.bank,
       publications: [],
-      inheritedBanks: []
+      inheritedBanks: [],
+      publishedDate: null
     },
     title: '',
     products: [],

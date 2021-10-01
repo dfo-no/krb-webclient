@@ -1,6 +1,6 @@
-import Slider from '@material-ui/core/Slider';
+import Slider from '@mui/material/Slider';
 import { get, has, toPath } from 'lodash';
-import React, { ReactElement } from 'react';
+import React from 'react';
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 import { Control, Controller, FieldErrors } from 'react-hook-form';
@@ -28,7 +28,7 @@ export default function SliderSelect({
   max,
   step,
   marks
-}: IProps): ReactElement {
+}: IProps): React.ReactElement {
   const { t } = useTranslation();
 
   const hasError = (str: string) => {

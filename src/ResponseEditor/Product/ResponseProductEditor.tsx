@@ -1,5 +1,5 @@
 import { joiResolver } from '@hookform/resolvers/joi';
-import React, { ReactElement } from 'react';
+import React from 'react';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import Col from 'react-bootstrap/Col';
@@ -8,81 +8,57 @@ import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import { v4 as uuidv4 } from 'uuid';
 import ErrorSummary from '../../Form/ErrorSummary';
-import ModelType from '../../models/ModelType';
 import {
   ResponseProduct,
   ResponseProductSchema
 } from '../../models/ResponseProduct';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
-import { addProduct, editProduct } from '../../store/reducers/response-reducer';
-import { selectResponseProduct } from '../../store/reducers/selectedResponseProduct-reducer';
+import { editProduct } from '../../store/reducers/response-reducer';
 import ResponseProductRequirementSelector from './ResponseProductRequirementSelector';
 
-export default function ResponseProductEditor(): ReactElement {
+export default function ResponseProductEditor(): React.ReactElement {
+  const dispatch = useAppDispatch();
+  const { t } = useTranslation();
   const { response } = useAppSelector((state) => state.response);
-  const { selectedSpecificationProduct } = useAppSelector(
-    (state) => state.selectedSpecProduct
-  );
+  const { selectedResponseSpecificationProduct, selectedResponseProduct } =
+    useAppSelector((state) => state.selectedResponseProduct);
 
   const productIndex = response.products.findIndex(
-    (responseProduct) =>
-      responseProduct.originProduct.id === selectedSpecificationProduct.id
+    (responseProduct) => responseProduct.id === selectedResponseProduct.id
   );
 
-  const newProduct: ResponseProduct = {
-    id: uuidv4(),
-    title: '',
-    description: '',
-    originProduct: selectedSpecificationProduct,
-    price: 0,
-    requirementAnswers: [],
-    type: ModelType.responseProduct
-  };
-
-  const product: ResponseProduct =
-    productIndex === -1 ? newProduct : response.products[productIndex];
-
-  // TODO: remove any.
+  // TODO:remove any in useForm.
   const {
     register,
     handleSubmit,
     formState: { errors }
   } = useForm<any>({
     resolver: joiResolver(ResponseProductSchema),
-    defaultValues: product
+    defaultValues: selectedResponseProduct
   });
-  const dispatch = useAppDispatch();
-  const { t } = useTranslation();
 
-  dispatch(selectResponseProduct(product));
-  if (productIndex === -1) {
-    dispatch(addProduct(newProduct));
-  }
   const addProductToResponse = (post: ResponseProduct) => {
     const newResponseProduct: ResponseProduct = {
       ...post
     };
 
-    if (productIndex === -1) {
-      dispatch(addProduct(newResponseProduct));
-    } else {
-      dispatch(editProduct({ product: newResponseProduct, productIndex }));
-    }
+    dispatch(editProduct({ product: newResponseProduct, productIndex }));
   };
 
   return (
     <Container fluid>
       <Row className="m-4">
-        <h4>{selectedSpecificationProduct.title}</h4>
+        <h4>{selectedResponseSpecificationProduct.title}</h4>
       </Row>
       <Card className="m-4">
         <Card.Body>
           <Row className="mb-3">
             <Col sm="2"> Amount:</Col>
             <Col sm="10">
-              <p className="ml-3">{selectedSpecificationProduct.amount} </p>
+              <p className="ml-3">
+                {selectedResponseSpecificationProduct.amount}{' '}
+              </p>
             </Col>
           </Row>
           <Form
@@ -147,7 +123,7 @@ export default function ResponseProductEditor(): ReactElement {
       </Card>
 
       <ResponseProductRequirementSelector
-        product={selectedSpecificationProduct}
+        product={selectedResponseSpecificationProduct}
       />
     </Container>
   );

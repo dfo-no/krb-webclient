@@ -1,5 +1,3 @@
-import DateFnsUtils from '@date-io/date-fns';
-import { MuiPickersUtilsProvider } from '@material-ui/pickers';
 import React, { Suspense } from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
@@ -15,7 +13,6 @@ import {
   getDateSortedBanksThunk
 } from './store/reducers/bank-reducer';
 import { store } from './store/store';
-/* import UIDemo from './UIDemo'; */
 
 // fetch all banks here because they are published and will show on the front page.
 store.dispatch(getBanksThunk());
@@ -29,10 +26,7 @@ const render = () => {
       <Suspense fallback="">
         <Provider store={store}>
           <BrowserRouter>
-            <MuiPickersUtilsProvider utils={DateFnsUtils}>
-              {/* <UIDemo/> */}
-              <App />
-            </MuiPickersUtilsProvider>
+            <App />
           </BrowserRouter>
         </Provider>
       </Suspense>
@@ -44,7 +38,7 @@ const render = () => {
 render();
 
 if (process.env.NODE_ENV === 'development' && module.hot) {
-  module.hot.accept(['./UIDemo', './App'], render);
+  module.hot.accept(['./App'], render);
 }
 
 // If you want to start measuring performance in your app, pass a function

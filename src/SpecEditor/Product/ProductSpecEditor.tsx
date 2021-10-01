@@ -1,6 +1,6 @@
 import { joiResolver } from '@hookform/resolvers/joi';
-import Slider from '@material-ui/core/Slider';
-import React, { ReactElement, useState } from 'react';
+import Slider from '@mui/material/Slider';
+import React, { useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import Col from 'react-bootstrap/Col';
@@ -20,7 +20,7 @@ import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { editSpecProduct } from '../../store/reducers/spesification-reducer';
 import ProductRequirementSelectorList from './ProductRequirementSelectorList';
 
-export default function ProductSpecEditor(): ReactElement {
+export default function ProductSpecEditor(): React.ReactElement {
   const { id } = useAppSelector((state) => state.selectedBank);
   const { normalizedList } = useAppSelector((state) => state.bank);
   const { t } = useTranslation();

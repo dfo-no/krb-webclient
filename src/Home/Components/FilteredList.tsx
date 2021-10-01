@@ -1,5 +1,6 @@
-import React, { ReactElement } from 'react';
+import React from 'react';
 import ListGroup from 'react-bootstrap/ListGroup';
+import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import { Bank } from '../../models/Bank';
 import { useAppDispatch } from '../../store/hooks';
@@ -13,8 +14,9 @@ interface FilteredListProps {
 export default function FilteredList({
   list,
   filterTitle
-}: FilteredListProps): ReactElement {
+}: FilteredListProps): React.ReactElement {
   const dispatch = useAppDispatch();
+  const { t } = useTranslation();
 
   const handleSelectedBank = (bank: Bank) => () => {
     dispatch(selectBank(bank.id));
@@ -29,6 +31,11 @@ export default function FilteredList({
           <Link to="/specification" onClick={handleSelectedBank(bank)}>
             {bank.title}
           </Link>
+          {bank.publishedDate && (
+            <small className="text-muted">
+              {t('date.ago', { date: new Date(bank.publishedDate) })}
+            </small>
+          )}
         </ListGroup.Item>
       );
     });

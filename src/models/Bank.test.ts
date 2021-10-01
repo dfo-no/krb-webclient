@@ -1,3 +1,5 @@
+import { format } from 'date-fns';
+import { DATETIME_ISO8601UTC } from '../common/Constants';
 import { Bank, BaseBankSchema } from './Bank';
 import ModelType from './ModelType';
 
@@ -19,10 +21,9 @@ describe('BankSchema should validate', () => {
     };
 
     const report = BaseBankSchema.validate(bank);
-
     expect(report.error).toBeUndefined();
 
-    bank.publishedDate = '';
+    bank.publishedDate = null;
 
     const report2 = BaseBankSchema.validate(bank);
     expect(report2.error).toBeUndefined();
@@ -31,7 +32,7 @@ describe('BankSchema should validate', () => {
     const report3 = BaseBankSchema.validate(bank);
     expect(report3.error).toBeUndefined();
 
-    bank.publishedDate = new Date().toUTCString();
+    bank.publishedDate = format(new Date(), DATETIME_ISO8601UTC);
     const report4 = BaseBankSchema.validate(bank);
     expect(report4.error).toBeUndefined();
   });

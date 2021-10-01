@@ -1,5 +1,5 @@
 import { joiResolver } from '@hookform/resolvers/joi';
-import React, { ReactElement, useState } from 'react';
+import React, { useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import Form from 'react-bootstrap/Form';
@@ -19,7 +19,7 @@ import {
 } from '../../store/reducers/project-reducer';
 import { addCodeToSelected } from '../../store/reducers/selectedCodelist-reducer';
 
-function NewCodeForm(): ReactElement {
+function NewCodeForm(): React.ReactElement {
   const { codelist } = useAppSelector((state) => state.selectedCodeList);
   const dispatch = useAppDispatch();
   const [validated] = useState(false);

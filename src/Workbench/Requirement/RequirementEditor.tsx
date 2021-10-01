@@ -1,6 +1,6 @@
 import { DevTool } from '@hookform/devtools';
 import { joiResolver } from '@hookform/resolvers/joi';
-import React, { ReactElement } from 'react';
+import React from 'react';
 import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
@@ -24,7 +24,7 @@ import TagsAsChips from '../Tags/TagsAsChips';
 import VariantArray from './VariantArray';
 import withProjectAndNeedAndRequirement from './withProjectAndNeedAndRequirement';
 
-function RequirementEditor(): ReactElement {
+function RequirementEditor(): React.ReactElement {
   const dispatch = useAppDispatch();
 
   const { t } = useTranslation();
@@ -49,15 +49,12 @@ function RequirementEditor(): ReactElement {
   const { errors } = formState;
 
   const onSubmit = async (post: Requirement) => {
-    const serialized: Requirement = JSON.parse(JSON.stringify(post));
-    dispatch(
-      editRequirementInNeed({ needId: need.id, requirement: serialized })
-    );
     const alert: Alert = {
       id: uuidv4(),
       style: 'success',
       text: 'successfully updated requirement'
     };
+    dispatch(editRequirementInNeed({ needId: need.id, requirement: post }));
     dispatch(putSelectedProjectThunk('dummy')).then(() => {
       dispatch(addAlert({ alert }));
     });
@@ -73,6 +70,7 @@ function RequirementEditor(): ReactElement {
     });
   };
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const changeNeed = (newNeedId: string) => {
     // TODO: dispatch a change Need and switch URL
   };
