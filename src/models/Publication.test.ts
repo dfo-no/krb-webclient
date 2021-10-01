@@ -47,7 +47,7 @@ describe('BasePublicationSchema works', () => {
     const postPublication: Publication = {
       id: '',
       comment: 'A comment',
-      date: '',
+      date: null,
       version: 1,
       bankId: 'e56367af-d48d-422d-a4f6-ba52ee17af23',
       type: ModelType.publication,
@@ -63,12 +63,12 @@ describe('BasePublicationSchema works', () => {
 
   test('PostPublicationSchema invalidates', () => {
     const postPublication: Publication = {
-      id: 'aaa',
-      comment: '',
-      date: 'aaa',
-      version: 0,
-      bankId: '',
-      type: ModelType.bank,
+      id: 'aaa', // error
+      comment: '', // error
+      date: '', // error
+      version: 0, // error
+      bankId: '', // error
+      type: ModelType.bank, // error
       sourceOriginal: null,
       sourceRel: null
     };
