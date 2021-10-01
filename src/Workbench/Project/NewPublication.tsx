@@ -12,6 +12,7 @@ import { Alert } from '../../models/Alert';
 import { Bank } from '../../models/Bank';
 import ModelType from '../../models/ModelType';
 import { PostPublicationSchema, Publication } from '../../models/Publication';
+import Nexus from '../../Nexus/Nexus';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { addAlert } from '../../store/reducers/alert-reducer';
 import { postBankThunk } from '../../store/reducers/bank-reducer';
@@ -48,27 +49,13 @@ export default function NewPublication(): React.ReactElement {
     defaultValues
   });
 
-  const getNextVersion = (publications: Publication[]) => {
-    if (publications.length === 0) {
-      return 1;
-    }
-    return Math.max(...publications.map((p) => p.version)) + 1;
-  };
-
-  const generateBankFromProject = (item: Bank) => {
-    // Shallow clone, deep not needed for now as we don't create anything here other than desciption and title
-    const newBank: Bank = { ...project };
-    newBank.id = '';
-    newBank.publishedDate = new Date().toISOString();
-    newBank.publications = [];
-    newBank.version = getNextVersion(item.publications);
-    return newBank;
-  };
-
   const onSubmit = async (post: Publication) => {
     const publication = { ...post };
-    const newBank = generateBankFromProject(project);
-    const nextVersion = getNextVersion(project.publications);
+    const nexus = Nexus.getInstance();
+    const publicationService = nexus.getPublicationService();
+
+    const newBank = publicationService.generateBankFromProject(project);
+    const nextVersion = publicationService.getNextVersion(project.publications);
 
     // save the new published Bank
     dispatch(postBankThunk(newBank))
