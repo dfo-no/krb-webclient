@@ -24,7 +24,9 @@ const initialState: SpecificationState = {
       type: ModelType.bank,
       publications: [],
       inheritedBanks: [],
-      publishedDate: null
+      publishedDate: null,
+      source_original: null,
+      source_rel: null
     },
     title: '',
     products: [],

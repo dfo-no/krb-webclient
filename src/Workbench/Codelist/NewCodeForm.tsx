@@ -19,6 +19,7 @@ import { addCodeToSelected } from '../../store/reducers/selectedCodelist-reducer
 
 function NewCodeForm(): React.ReactElement {
   const { codelist } = useAppSelector((state) => state.selectedCodeList);
+  const { project } = useAppSelector((state) => state.project);
   const dispatch = useAppDispatch();
   const [validated] = useState(false);
   const [show, setShow] = useState(false);
@@ -28,7 +29,9 @@ function NewCodeForm(): React.ReactElement {
     id: '',
     title: '',
     description: '',
-    type: ModelType.code
+    type: ModelType.code,
+    source_original: project.id,
+    source_rel: null
   };
 
   const {

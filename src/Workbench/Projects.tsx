@@ -42,7 +42,9 @@ function Projects(): ReactElement {
     version: 0,
     publishedDate: '',
     type: ModelType.bank,
-    inheritedBanks: []
+    inheritedBanks: [],
+    source_original: null,
+    source_rel: null
   };
 
   const {

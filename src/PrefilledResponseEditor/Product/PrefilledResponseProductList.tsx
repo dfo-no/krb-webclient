@@ -87,7 +87,6 @@ export default function ProductSpecList(): ReactElement {
       originProduct: selectedProduct,
       title: selectedProduct.title,
       description: selectedProduct.description,
-      type: ModelType.prefilledResponseProduct,
       answeredVariants: [],
       requirementAnswers: []
     };

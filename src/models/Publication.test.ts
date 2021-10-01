@@ -13,7 +13,9 @@ describe('BasePublicationSchema works', () => {
       date: new Date().toISOString(),
       version: 1,
       bankId: 'e56367af-d48d-422d-a4f6-ba52ee17af23',
-      type: ModelType.publication
+      type: ModelType.publication,
+      source_original: null,
+      source_rel: null
     };
 
     const report = BasePublicationSchema.validate(basePublication, {
@@ -30,7 +32,9 @@ describe('BasePublicationSchema works', () => {
       date: '',
       version: 0,
       bankId: '',
-      type: ModelType.bank
+      type: ModelType.bank,
+      source_original: null,
+      source_rel: null
     };
 
     const report = BasePublicationSchema.validate(basePublication, {
@@ -46,7 +50,9 @@ describe('BasePublicationSchema works', () => {
       date: '',
       version: 1,
       bankId: 'e56367af-d48d-422d-a4f6-ba52ee17af23',
-      type: ModelType.publication
+      type: ModelType.publication,
+      source_original: null,
+      source_rel: null
     };
 
     const report = PostPublicationSchema.validate(postPublication, {
@@ -62,7 +68,9 @@ describe('BasePublicationSchema works', () => {
       date: 'aaa',
       version: 0,
       bankId: '',
-      type: ModelType.bank
+      type: ModelType.bank,
+      source_original: null,
+      source_rel: null
     };
 
     const report = PostPublicationSchema.validate(postPublication, {

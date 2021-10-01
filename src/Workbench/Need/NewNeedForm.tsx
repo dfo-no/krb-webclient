@@ -11,7 +11,7 @@ import InputRow from '../../Form/InputRow';
 import ModelType from '../../models/ModelType';
 import { Need, PostNeedSchema } from '../../models/Need';
 import { Parentable } from '../../models/Parentable';
-import { useAppDispatch } from '../../store/hooks';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import {
   addNeed,
   putSelectedProjectThunk
@@ -20,6 +20,7 @@ import {
 function NewNeedForm(): React.ReactElement {
   const dispatch = useAppDispatch();
   const [validated] = useState(false);
+  const { project } = useAppSelector((state) => state.project);
   const [show, setShow] = useState(false);
   const { t } = useTranslation();
 
@@ -29,7 +30,9 @@ function NewNeedForm(): React.ReactElement {
     description: '',
     requirements: [],
     type: ModelType.need,
-    parent: ''
+    parent: '',
+    source_original: project.id,
+    source_rel: null
   };
 
   const {

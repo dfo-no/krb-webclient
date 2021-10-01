@@ -27,7 +27,9 @@ const initialState: PrefilledResponseState = {
       type: ModelType.bank,
       publications: [],
       inheritedBanks: [],
-      publishedDate: null
+      publishedDate: null,
+      source_original: null,
+      source_rel: null
     },
     // answeredVariants: [], // list over string med id som er besvart, uavhengig questiontype, drit i denne
     supplier: '',
@@ -41,13 +43,14 @@ const initialState: PrefilledResponseState = {
     description: '',
     originProduct: {
       id: '',
-      type: ModelType.product,
       title: '',
       description: '',
       parent: '',
-      children: []
+      children: [],
+      type: ModelType.product,
+      source_original: null,
+      source_rel: null
     },
-    type: ModelType.prefilledResponseProduct,
     answeredVariants: [],
     requirementAnswers: []
   }

@@ -13,7 +13,9 @@ const initialState: SelectedCodeListState = {
     title: '',
     description: '',
     codes: [],
-    type: ModelType.codelist
+    type: ModelType.codelist,
+    source_original: null,
+    source_rel: null
   }
 };
 

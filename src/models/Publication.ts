@@ -8,7 +8,9 @@ export const BasePublicationSchema = Joi.object().keys({
   date: Joi.date().iso().required(),
   version: Joi.number().min(1).required(),
   bankId: Joi.string().length(36).required(),
-  type: Joi.string().equal(ModelType.publication).required()
+  type: Joi.string().equal(ModelType.publication).required(),
+  source_original: Joi.string().allow(null).required(),
+  source_rel: Joi.string().allow(null).required()
 });
 
 export const PostPublicationSchema = BasePublicationSchema.keys({

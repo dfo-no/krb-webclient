@@ -225,7 +225,9 @@ describe('Validation', () => {
       id: 'questionId1',
       type: QuestionEnum.Q_TEXT,
       answer: { point: 0, text: 'answer' },
-      config: { defaultPoint: 10, max: 500 }
+      config: { defaultPoint: 10, max: 500 },
+      source_original: null,
+      source_rel: null
     };
 
     const post: IRequirementAnswer[] = [
@@ -242,7 +244,9 @@ describe('Validation', () => {
           requirement_Type: RequirementType.requirement,
           variants: [],
           tags: [],
-          type: ModelType.requirement
+          type: ModelType.requirement,
+          source_original: 'A',
+          source_rel: null
         },
         question,
         type: ModelType.prefilledResponse

@@ -34,7 +34,9 @@ const initialState: ProjectState = {
     type: ModelType.bank,
     version: 0,
     inheritedBanks: [],
-    publishedDate: null
+    publishedDate: null,
+    source_original: null,
+    source_rel: null
   },
   projectLoading: 'idle',
   listLoading: 'idle'

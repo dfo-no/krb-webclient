@@ -15,9 +15,10 @@ const initialProduct: SpecificationProduct = {
     title: '',
     description: '',
     parent: '',
-    type: ModelType.product
+    type: ModelType.product,
+    source_original: null,
+    source_rel: null
   },
-  type: ModelType.specificationProduct,
   weight: 0,
   amount: 0,
   requirements: [],

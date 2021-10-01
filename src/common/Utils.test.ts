@@ -17,44 +17,58 @@ describe('Utils functions should work', () => {
         id: 'aa28e225-7a76-4c57-bb22-ec87b3131762',
         title: 'Maserati',
         parent: '',
-        type: ModelType.need
+        type: ModelType.need,
+        source_original: null,
+        source_rel: null
       },
       {
         id: 'bb60be0f-44e9-4ea9-a755-476fbc6dd85d',
         title: 'Porche',
         parent: 'aa28e225-7a76-4c57-bb22-ec87b3131762',
-        type: ModelType.need
+        type: ModelType.need,
+        source_original: null,
+        source_rel: null
       },
       {
         id: 'cc60be0f-44e9-4ea9-a755-476fbc6dd855',
         title: 'Ferrari',
         parent: 'aa28e225-7a76-4c57-bb22-ec87b3131762',
-        type: ModelType.need
+        type: ModelType.need,
+        source_original: null,
+        source_rel: null
       },
       {
         id: 'dd029ba3-aa01-4150-bd43-8d754bcfd890',
         title: 'Lamborgini',
         parent: 'cc60be0f-44e9-4ea9-a755-476fbc6dd855',
-        type: ModelType.need
+        type: ModelType.need,
+        source_original: null,
+        source_rel: null
       },
       {
         id: '0e998bb7-bc0f-41d8-9199-800b46145ba9',
         title: 'Moskovich',
         parent: 'ee7d9375-aee7-42c2-a6d7-9fa1541d56ef',
-        type: ModelType.need
+        type: ModelType.need,
+        source_original: null,
+        source_rel: null
       },
       {
         id: 'ee7d9375-aee7-42c2-a6d7-9fa1541d56ef',
         title: 'Fiat',
         parent: 'dd029ba3-aa01-4150-bd43-8d754bcfd890',
-        type: ModelType.need
+        type: ModelType.need,
+        source_original: null,
+        source_rel: null
       },
 
       {
         id: 'ffb9bfe0-0b87-4e2d-95c8-9b703e655e61',
         title: 'Volvo',
         parent: '',
-        type: ModelType.need
+        type: ModelType.need,
+        source_original: null,
+        source_rel: null
       }
     ];
 
@@ -102,13 +116,17 @@ describe('Utils functions should work', () => {
         parent: '',
         type: ModelType.need,
         level: 1,
+        source_original: null,
+        source_rel: null,
         children: [
           {
             id: 'bb60be0f-44e9-4ea9-a755-476fbc6dd85d',
             title: 'Porche',
             parent: 'aa28e225-7a76-4c57-bb22-ec87b3131762',
             type: ModelType.need,
-            level: 2
+            level: 2,
+            source_original: null,
+            source_rel: null
           },
           {
             id: 'cc60be0f-44e9-4ea9-a755-476fbc6dd855',
@@ -116,6 +134,8 @@ describe('Utils functions should work', () => {
             parent: 'aa28e225-7a76-4c57-bb22-ec87b3131762',
             type: ModelType.need,
             level: 2,
+            source_original: null,
+            source_rel: null,
             children: [
               {
                 id: 'dd029ba3-aa01-4150-bd43-8d754bcfd890',
@@ -123,6 +143,8 @@ describe('Utils functions should work', () => {
                 parent: 'cc60be0f-44e9-4ea9-a755-476fbc6dd855',
                 type: ModelType.need,
                 level: 3,
+                source_original: null,
+                source_rel: null,
                 children: [
                   {
                     id: 'ee7d9375-aee7-42c2-a6d7-9fa1541d56ef',
@@ -136,9 +158,13 @@ describe('Utils functions should work', () => {
                         title: 'Moskovich',
                         parent: 'ee7d9375-aee7-42c2-a6d7-9fa1541d56ef',
                         type: ModelType.need,
-                        level: 5
+                        level: 5,
+                        source_original: null,
+                        source_rel: null
                       }
-                    ]
+                    ],
+                    source_original: null,
+                    source_rel: null
                   }
                 ]
               }
@@ -151,7 +177,9 @@ describe('Utils functions should work', () => {
         title: 'Volvo',
         parent: '',
         type: ModelType.need,
-        level: 1
+        level: 1,
+        source_original: null,
+        source_rel: null
       }
     ];
 

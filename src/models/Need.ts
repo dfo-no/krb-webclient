@@ -14,7 +14,9 @@ export const BaseNeedSchema = Joi.object().keys({
   title: Joi.string().required(),
   description: Joi.string().allow(null, '').required(),
   requirements: Joi.array().required(),
-  type: Joi.string().equal(ModelType.need).required()
+  type: Joi.string().equal(ModelType.need).required(),
+  source_original: Joi.string().required(),
+  source_rel: Joi.string().allow(null).required()
 });
 
 export const PostNeedSchema = BaseNeedSchema.keys({
