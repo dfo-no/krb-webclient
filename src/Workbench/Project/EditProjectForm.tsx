@@ -5,11 +5,14 @@ import Card from 'react-bootstrap/Card';
 import Form from 'react-bootstrap/Form';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
+import { v4 as uuidv4 } from 'uuid';
 import ErrorSummary from '../../Form/ErrorSummary';
 import InputRow from '../../Form/InputRow';
+import { Alert } from '../../models/Alert';
 import { Bank } from '../../models/Bank';
 import { EditProjectSchema } from '../../models/Project';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
+import { addAlert } from '../../store/reducers/alert-reducer';
 import { putProjectThunk } from '../../store/reducers/project-reducer';
 
 interface IProps {
@@ -42,7 +45,13 @@ export default function EditProjectForm({
   }, [project, reset]);
 
   const onEditProjectSubmit = (post: Bank) => {
+    const alert: Alert = {
+      id: uuidv4(),
+      style: 'success',
+      text: 'Successfully updated projectt'
+    };
     dispatch(putProjectThunk(post)).then(() => {
+      dispatch(addAlert({ alert }));
       toggleShow(false);
     });
   };

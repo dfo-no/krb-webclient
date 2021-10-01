@@ -8,10 +8,12 @@ import { useTranslation } from 'react-i18next';
 import { v4 as uuidv4 } from 'uuid';
 import ErrorSummary from '../../Form/ErrorSummary';
 import InputRow from '../../Form/InputRow';
+import { Alert } from '../../models/Alert';
 import ModelType from '../../models/ModelType';
 import { Need, PostNeedSchema } from '../../models/Need';
 import { Parentable } from '../../models/Parentable';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
+import { addAlert } from '../../store/reducers/alert-reducer';
 import {
   addNeed,
   putSelectedProjectThunk
@@ -47,9 +49,15 @@ function NewNeedForm(): React.ReactElement {
 
   const onSubmit = (post: Parentable<Need>) => {
     const need = { ...post };
+    const alert: Alert = {
+      id: uuidv4(),
+      style: 'success',
+      text: 'Successfully added new need'
+    };
     need.id = uuidv4();
     dispatch(addNeed(need));
     dispatch(putSelectedProjectThunk('dummy')).then(() => {
+      dispatch(addAlert({ alert }));
       setShow(false);
       reset();
     });

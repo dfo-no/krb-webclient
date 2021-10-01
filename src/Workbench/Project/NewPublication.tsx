@@ -5,12 +5,15 @@ import Card from 'react-bootstrap/Card';
 import Form from 'react-bootstrap/Form';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
+import { v4 as uuidv4 } from 'uuid';
 import ErrorSummary from '../../Form/ErrorSummary';
 import InputRow from '../../Form/InputRow';
+import { Alert } from '../../models/Alert';
 import { Bank } from '../../models/Bank';
 import ModelType from '../../models/ModelType';
 import { PostPublicationSchema, Publication } from '../../models/Publication';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
+import { addAlert } from '../../store/reducers/alert-reducer';
 import { postBankThunk } from '../../store/reducers/bank-reducer';
 import {
   prependPublication,
@@ -89,6 +92,12 @@ export default function NewPublication(): React.ReactElement {
           reset();
         });
       });
+    const alert: Alert = {
+      id: uuidv4(),
+      style: 'success',
+      text: 'successfully published bank'
+    };
+    dispatch(addAlert({ alert }));
   };
 
   return (

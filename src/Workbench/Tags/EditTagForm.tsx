@@ -6,10 +6,13 @@ import Form from 'react-bootstrap/Form';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { BsTrashFill } from 'react-icons/bs';
+import { v4 as uuidv4 } from 'uuid';
 import ErrorSummary from '../../Form/ErrorSummary';
 import InputRow from '../../Form/InputRow';
+import { Alert } from '../../models/Alert';
 import { BaseTagSchema, Tag } from '../../models/Tag';
 import { useAppDispatch } from '../../store/hooks';
+import { addAlert } from '../../store/reducers/alert-reducer';
 import {
   editTag,
   putSelectedProjectThunk,
@@ -40,8 +43,14 @@ export default function EditTagForm({ element }: IProps): ReactElement {
     if (newTag.children) {
       delete newTag.children;
     }
+    const alert: Alert = {
+      id: uuidv4(),
+      style: 'success',
+      text: 'Successfully edited tag'
+    };
     dispatch(editTag(newTag));
     dispatch(putSelectedProjectThunk('dummy')).then(() => {
+      dispatch(addAlert({ alert }));
       reset();
     });
   };
@@ -55,6 +64,13 @@ export default function EditTagForm({ element }: IProps): ReactElement {
     dispatch(putSelectedProjectThunk('dummy')).then(() => {
       reset();
     });
+
+    const alert: Alert = {
+      id: uuidv4(),
+      style: 'success',
+      text: 'Successfully edited tag'
+    };
+    dispatch(addAlert({ alert }));
   };
 
   return (

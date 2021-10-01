@@ -28,7 +28,7 @@ export default function ResponseProductEditor(): React.ReactElement {
     (responseProduct) => responseProduct.id === selectedResponseProduct.id
   );
 
-  // TODO: remove any.
+  // TODO:remove any in useForm.
   const {
     register,
     handleSubmit,

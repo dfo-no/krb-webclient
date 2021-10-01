@@ -5,15 +5,18 @@ import Form from 'react-bootstrap/Form';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { BsTrashFill } from 'react-icons/bs';
+import { v4 as uuidv4 } from 'uuid';
 import AlertModal from '../../common/AlertModal';
 import Utils from '../../common/Utils';
 import ErrorSummary from '../../Form/ErrorSummary';
 import InputRow from '../../Form/InputRow';
+import { Alert } from '../../models/Alert';
 import { Need, PutNeedSchema } from '../../models/Need';
 import { Nestable } from '../../models/Nestable';
 import { Parentable } from '../../models/Parentable';
 import { AccordionContext } from '../../NestableHierarchy/AccordionContext';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
+import { addAlert } from '../../store/reducers/alert-reducer';
 import {
   deleteNeed,
   editNeed,
@@ -48,8 +51,14 @@ function EditNeedForm({ element }: IProps): ReactElement {
     if (toParentable.children) {
       delete toParentable.children;
     }
+    const alert: Alert = {
+      id: uuidv4(),
+      style: 'success',
+      text: 'Successfully edited need'
+    };
     dispatch(editNeed(toParentable as Parentable<Need>));
     dispatch(putSelectedProjectThunk('dummy')).then(() => {
+      dispatch(addAlert({ alert }));
       onOpenClose('');
     });
   };
@@ -89,7 +98,6 @@ function EditNeedForm({ element }: IProps): ReactElement {
         label={t('Description')}
       />
 
-      <Form.Control type="hidden" {...register('id')} />
       <Button className="mt-2" type="submit">
         {t('save')}
       </Button>
