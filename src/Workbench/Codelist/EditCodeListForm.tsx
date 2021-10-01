@@ -1,9 +1,8 @@
 import { joiResolver } from '@hookform/resolvers/joi';
-import React, { ReactElement, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import Form from 'react-bootstrap/Form';
-import Row from 'react-bootstrap/Row';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { BsPencil, BsTrashFill } from 'react-icons/bs';
@@ -26,7 +25,7 @@ import {
 } from '../../store/reducers/project-reducer';
 import { editCodelist } from '../../store/reducers/selectedCodelist-reducer';
 
-function EditCodeListForm(): ReactElement {
+function EditCodeListForm(): React.ReactElement {
   const dispatch = useAppDispatch();
   const [validated] = useState(false);
   const [modalShow, setModalShow] = useState(false);

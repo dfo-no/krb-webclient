@@ -1,5 +1,6 @@
 import { joiResolver } from '@hookform/resolvers/joi';
-import React, { ReactElement } from 'react';
+import { has, toPath } from 'lodash';
+import React from 'react';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import Form from 'react-bootstrap/Form';
@@ -22,17 +23,17 @@ interface IProps {
   parentAnswer: IRequirementAnswer;
 }
 
-export default function ValueForm({ parentAnswer }: IProps): ReactElement {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors }
-  } = useForm<ISliderQuestion>({
+export default function ValueForm({
+  parentAnswer
+}: IProps): React.ReactElement {
+  const { register, handleSubmit, formState } = useForm<ISliderQuestion>({
     resolver: joiResolver(SliderQuestionSchema),
     defaultValues: {
       ...(parentAnswer.question as ISliderQuestion)
     }
   });
+
+  const { errors } = formState;
   const { selectedSpecificationProduct } = useAppSelector(
     (state) => state.selectedSpecProduct
   );
@@ -45,6 +46,17 @@ export default function ValueForm({ parentAnswer }: IProps): ReactElement {
   ) {
     return <p>No product selected</p>;
   }
+
+  const hasError = (str: string) => {
+    let retVal = null;
+    const path = toPath(str);
+    if (has(errors, path)) {
+      retVal = true;
+    } else {
+      retVal = false;
+    }
+    return retVal;
+  };
 
   const saveValues = (post: ISliderQuestion) => {
     const newAnswer = {
@@ -70,28 +82,28 @@ export default function ValueForm({ parentAnswer }: IProps): ReactElement {
           <Form.Control
             as="input"
             {...register('config.min')}
-            isInvalid={!!errors.config?.min}
+            isInvalid={hasError('config.min')}
             type="number"
           />
 
           <Form.Control
             as="input"
             {...register('config.max')}
-            isInvalid={!!errors.config?.max}
+            isInvalid={hasError('config.max')}
             type="number"
           />
 
           <Form.Control
             as="input"
             {...register('config.step')}
-            isInvalid={!!errors.config?.step}
+            isInvalid={hasError('config.step')}
             type="number"
           />
 
           <Form.Control
             as="input"
             {...register('config.unit')}
-            isInvalid={!!errors.config?.unit}
+            isInvalid={hasError('config.unit')}
           />
 
           <Button type="submit">{t('save')}</Button>

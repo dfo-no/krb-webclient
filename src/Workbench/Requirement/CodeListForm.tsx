@@ -1,9 +1,8 @@
-import Switch from '@material-ui/core/Switch';
-import React, { ReactElement } from 'react';
+import Switch from '@mui/material/Switch';
+import React from 'react';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import Form from 'react-bootstrap/Form';
-import Row from 'react-bootstrap/Row';
 import {
   Control,
   Controller,
@@ -36,7 +35,7 @@ export default function CodeListForm({
   vIndex,
   aIndex,
   control
-}: IProps): ReactElement {
+}: IProps): React.ReactElement {
   const { project } = useAppSelector((state) => state.project);
   const { t } = useTranslation();
   const codelistOptions = () => {

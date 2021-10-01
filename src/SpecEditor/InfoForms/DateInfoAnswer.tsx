@@ -1,14 +1,15 @@
 import { joiResolver } from '@hookform/resolvers/joi';
-import { KeyboardDatePicker } from '@material-ui/pickers/DatePicker';
 import Joi from 'joi';
-import React, { ReactElement } from 'react';
+import { get } from 'lodash';
+import React from 'react';
 import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/esm/Col';
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
-import { Controller, useForm } from 'react-hook-form';
+import { FieldError, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { v4 as uuidv4 } from 'uuid';
+import ControlledDate from '../../Form/ControlledDate';
 import ErrorSummary from '../../Form/ErrorSummary';
 import { IPeriodDateQuestion } from '../../models/IPeriodDateQuestion';
 import { IRequirementAnswer } from '../../models/IRequirementAnswer';
@@ -43,7 +44,7 @@ export default function DateInfoAnswer({
   type,
   reqTextId,
   requirement
-}: IProps): ReactElement {
+}: IProps): React.ReactElement {
   const { spec } = useAppSelector((state) => state.specification);
   const { selectedSpecificationProduct } = useAppSelector(
     (state) => state.selectedSpecProduct
@@ -119,7 +120,7 @@ export default function DateInfoAnswer({
       <Form onSubmit={handleSubmit(saveValues)}>
         <Form.Group as={Row}>
           <Col sm="4">
-            <Controller
+            {/*             <Controller
               name={`answer.date` as const}
               control={control}
               render={({ field: { ref, ...rest } }) => (
@@ -129,7 +130,7 @@ export default function DateInfoAnswer({
                   variant="inline"
                   minDate={dateQuestion.config.fromDate}
                   maxDate={dateQuestion.config.toDate}
-                  format="dd/MM/yyyy"
+                  format={DATETIME_ISO8601UTC}
                   label={t('Select date')}
                   KeyboardButtonProps={{
                     'aria-label': 'change date'
@@ -137,6 +138,14 @@ export default function DateInfoAnswer({
                   {...rest}
                 />
               )}
+            /> */}
+
+            {/* // TODO: missing support for minDate and maxDate */}
+            <ControlledDate
+              control={control}
+              name={`answer.date` as const}
+              error={get(errors, `answer.date`) as FieldError}
+              label={t('Select date')}
             />
           </Col>
         </Form.Group>

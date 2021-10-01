@@ -1,6 +1,4 @@
-import Switch from '@material-ui/core/Switch';
 import React from 'react';
-import { FormControl } from 'react-bootstrap';
 import Form from 'react-bootstrap/Form';
 import {
   Controller,
@@ -19,10 +17,9 @@ interface Props<T> extends UseControllerProps<T> {
 const ControlledCodelistSelect = <T extends FieldValues>({
   codelist,
   name,
-  control,
-  error
+  control
 }: Props<T>): React.ReactElement => {
-  const renderOptions = (codes: Code[]): any => {
+  const renderOptions = (codes: Code[]) => {
     return codes.map((code) => {
       return (
         <option value={code.id} key={code.id}>

@@ -1,14 +1,15 @@
 import { joiResolver } from '@hookform/resolvers/joi';
-import { KeyboardDatePicker } from '@material-ui/pickers';
 import Joi from 'joi';
-import React, { ReactElement } from 'react';
+import { get } from 'lodash';
+import React from 'react';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
-import { Controller, useForm } from 'react-hook-form';
+import { FieldError, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
+import ControlledDate from '../../Form/ControlledDate';
 import ErrorSummary from '../../Form/ErrorSummary';
 import { IPeriodDateQuestion } from '../../models/IPeriodDateQuestion';
 import { IRequirementAnswer } from '../../models/IRequirementAnswer';
@@ -39,7 +40,9 @@ export const PeriodDateSchema = Joi.object().keys({
   })
 });
 
-export default function PeriodDateForm({ parentAnswer }: IProps): ReactElement {
+export default function PeriodDateForm({
+  parentAnswer
+}: IProps): React.ReactElement {
   const {
     handleSubmit,
     control,
@@ -90,43 +93,21 @@ export default function PeriodDateForm({ parentAnswer }: IProps): ReactElement {
         <Form onSubmit={handleSubmit(saveValues)}>
           <Form.Group as={Row}>
             <Col sm="4">
-              <Controller
-                name={`config.fromDate` as const}
+              <ControlledDate
                 control={control}
-                render={({ field: { ref, ...rest } }) => (
-                  <KeyboardDatePicker
-                    margin="normal"
-                    id="date-picker-dialog"
-                    variant="inline"
-                    format="dd/MM/yyyy"
-                    label={t('Select date')}
-                    KeyboardButtonProps={{
-                      'aria-label': 'change date'
-                    }}
-                    {...rest}
-                  />
-                )}
+                name={`config.fromDate` as const}
+                error={get(errors, `config.fromDate`) as FieldError}
+                label={t('Select date')}
               />
             </Col>
           </Form.Group>
           <Form.Group>
             <Col>
-              <Controller
-                name={`config.toDate` as const}
+              <ControlledDate
                 control={control}
-                render={({ field: { ref, ...rest } }) => (
-                  <KeyboardDatePicker
-                    margin="normal"
-                    id="date-picker-dialog"
-                    variant="inline"
-                    format="dd/MM/yyyy"
-                    label={t('Select date')}
-                    KeyboardButtonProps={{
-                      'aria-label': 'change date'
-                    }}
-                    {...rest}
-                  />
-                )}
+                name={`config.toDate` as const}
+                error={get(errors, `config.toDate`) as FieldError}
+                label={t('Select date')}
               />
             </Col>
           </Form.Group>

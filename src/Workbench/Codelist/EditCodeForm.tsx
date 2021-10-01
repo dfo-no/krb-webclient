@@ -1,8 +1,7 @@
 import { joiResolver } from '@hookform/resolvers/joi';
-import React, { ReactElement, useContext, useState } from 'react';
+import React, { useContext, useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
-import Row from 'react-bootstrap/Row';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { BsTrashFill } from 'react-icons/bs';
@@ -25,7 +24,7 @@ interface IProps {
   element: Code;
 }
 
-export default function EditCodeForm({ element }: IProps): ReactElement {
+export default function EditCodeForm({ element }: IProps): React.ReactElement {
   const { codelist } = useAppSelector((state) => state.selectedCodeList);
   const { onOpenClose } = useContext(AccordionContext);
   const dispatch = useAppDispatch();

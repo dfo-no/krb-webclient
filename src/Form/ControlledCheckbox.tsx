@@ -1,4 +1,4 @@
-import Switch from '@material-ui/core/Switch';
+import Switch from '@mui/material/Switch';
 import React from 'react';
 import Form from 'react-bootstrap/Form';
 import {
@@ -14,8 +14,7 @@ interface Props<T> extends UseControllerProps<T> {
 
 const ControlledCheckbox = <T extends FieldValues>({
   name,
-  control,
-  error
+  control
 }: Props<T>): React.ReactElement => {
   return (
     <Form.Group controlId={name}>

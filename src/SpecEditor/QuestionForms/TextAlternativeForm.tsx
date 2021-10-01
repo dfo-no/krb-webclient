@@ -1,5 +1,6 @@
 import { joiResolver } from '@hookform/resolvers/joi';
-import React, { ReactElement } from 'react';
+import { has, toPath } from 'lodash';
+import React from 'react';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import Form from 'react-bootstrap/Form';
@@ -19,17 +20,14 @@ interface IProps {
   parentAnswer: IRequirementAnswer;
 }
 
-export default function TextForm({ parentAnswer }: IProps): ReactElement {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors }
-  } = useForm<ITextQuestion>({
+export default function TextForm({ parentAnswer }: IProps): React.ReactElement {
+  const { register, handleSubmit, formState } = useForm<ITextQuestion>({
     resolver: joiResolver(TextQuestionSchema),
     defaultValues: {
       ...(parentAnswer.question as ITextQuestion)
     }
   });
+  const { errors } = formState;
   const { selectedSpecificationProduct } = useAppSelector(
     (state) => state.selectedSpecProduct
   );
@@ -59,6 +57,17 @@ export default function TextForm({ parentAnswer }: IProps): ReactElement {
       );
   };
 
+  const hasError = (str: string) => {
+    let retVal = null;
+    const path = toPath(str);
+    if (has(errors, path)) {
+      retVal = true;
+    } else {
+      retVal = false;
+    }
+    return retVal;
+  };
+
   return (
     <Card className="mb-3">
       <Card.Body>
@@ -67,7 +76,7 @@ export default function TextForm({ parentAnswer }: IProps): ReactElement {
           <Form.Control
             as="input"
             {...register('config.max')}
-            isInvalid={!!errors.config?.max}
+            isInvalid={!!hasError('config.max')}
             type="number"
           />
 

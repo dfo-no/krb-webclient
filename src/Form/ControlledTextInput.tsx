@@ -13,8 +13,7 @@ interface Props<T> extends UseControllerProps<T> {
 
 const ControlledTextInput = <T extends FieldValues>({
   name,
-  control,
-  error
+  control
 }: Props<T>): React.ReactElement => {
   return (
     <Form.Group controlId={name}>

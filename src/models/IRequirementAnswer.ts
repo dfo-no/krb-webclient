@@ -7,8 +7,8 @@ import { SliderQuestionAnswerSchema } from './ISliderQuestion';
 import { TextQuestionAnswerSchema } from './ITextQuestion';
 import { TimeQuestionAnswerSchema } from './ITimeQuestion';
 import ModelType from './ModelType';
-import { IAnswerBase, IConfigBase, IQuestionBase } from './Question';
 import QuestionEnum from './QuestionEnum';
+import { QuestionType } from './QuestionType';
 import { BaseRequirementSchema, Requirement } from './Requirement';
 
 export interface IRequirementAnswer {
@@ -16,7 +16,7 @@ export interface IRequirementAnswer {
   questionId: string;
   weight: number;
   variantId: string;
-  question: IQuestionBase<IAnswerBase, IConfigBase>;
+  question: QuestionType;
   type: ModelType;
   requirement: Requirement;
 }
