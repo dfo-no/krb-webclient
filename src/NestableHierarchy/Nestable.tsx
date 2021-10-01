@@ -1,17 +1,19 @@
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 /* eslint-disable react/prop-types */
-
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Accordion from 'react-bootstrap/Accordion';
-import Button from 'react-bootstrap/Button';
-import Card from 'react-bootstrap/Card';
-import Row from 'react-bootstrap/Row';
-import { BsChevronDown } from 'react-icons/bs';
 import Nestable from 'react-nestable';
 import 'react-nestable/dist/styles/index.css';
 import Utils from '../common/Utils';
 import { AccordionContext } from './AccordionContext';
-import css from './Nestable.scss';
+
+interface IProps {
+  dispatchfunc: (projectId: string, itemlist: any) => void;
+  inputlist: any[];
+  projectId: string;
+  component: React.ReactElement;
+  depth: number;
+}
 
 export default function NestableHierarcy({
   dispatchfunc,
@@ -19,9 +21,10 @@ export default function NestableHierarcy({
   projectId,
   component,
   depth
-}) {
+}: IProps) {
+  useEffect(() => {}, [inputlist]);
   const [activeKey, setActiveKey] = useState('');
-  const convertTreeToList = (tree, key, collection) => {
+  const convertTreeToList = (tree: any, key: string, collection: any[]) => {
     if ((!tree[key] || tree[key].length === 0) && collection.includes(tree)) {
       const copiedTree = { ...tree };
       delete copiedTree.children;
@@ -40,9 +43,9 @@ export default function NestableHierarcy({
     }
   };
 
-  const flatten = (list) => {
-    const flattenedCollection = [];
-    list.items.forEach((element) => {
+  const flatten = (list: any) => {
+    const flattenedCollection: any[] = [];
+    list.items.forEach((element: any) => {
       const copy = element;
       copy.parent = '';
       convertTreeToList(element, 'children', flattenedCollection);
@@ -50,19 +53,20 @@ export default function NestableHierarcy({
     return flattenedCollection;
   };
   const hierarchyList = Utils.unflatten(inputlist)[0];
-  const saveOrder = (items) => {
+
+  const saveOrder = (items: any) => {
     const itemList = flatten(items);
     dispatchfunc(projectId, itemList);
   };
 
-  const onOpenClose = (e) => {
+  const onOpenClose = (e: string | null) => {
     if (e) {
       setActiveKey(e);
     } else {
       setActiveKey('');
     }
   };
-  const renderItem = ({ item, handler }) => {
+  const renderItem = ({ item }: any) => {
     return (
       <Accordion.Item eventKey={item.id}>
         <h2 className="accordion-header">
@@ -75,7 +79,6 @@ export default function NestableHierarcy({
             {React.cloneElement(component, { element: item })}
           </Accordion.Body>
         </Accordion.Collapse>
-        {handler}
       </Accordion.Item>
     );
   };
