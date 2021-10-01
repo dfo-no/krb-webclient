@@ -17,7 +17,9 @@ test('Nexus', () => {
     version: 0,
     inheritedBanks: [],
     publications: [],
-    publishedDate: null
+    publishedDate: null,
+    sourceOriginal: null,
+    sourceRel: null
   };
 
   const app = Nexus.getInstance();

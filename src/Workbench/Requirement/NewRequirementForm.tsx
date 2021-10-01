@@ -21,6 +21,7 @@ import {
 
 function NewRequirementForm(): React.ReactElement {
   const dispatch = useAppDispatch();
+  const { project } = useAppSelector((state) => state.project);
   const [validated] = useState(false);
   const { t } = useTranslation();
 
@@ -38,7 +39,9 @@ function NewRequirementForm(): React.ReactElement {
     tags: [],
     variants: [],
     type: ModelType.requirement,
-    requirement_Type: RequirementType.requirement
+    requirement_Type: RequirementType.requirement,
+    sourceOriginal: project.id,
+    sourceRel: null
   };
 
   const {

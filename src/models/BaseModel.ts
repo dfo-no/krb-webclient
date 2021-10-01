@@ -9,4 +9,6 @@ import QuestionEnum from './QuestionEnum';
 export interface BaseModel {
   id: string;
   type: ModelType | QuestionEnum;
+  sourceRel: string | null;
+  sourceOriginal: string | null;
 }

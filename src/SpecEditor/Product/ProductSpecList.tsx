@@ -95,7 +95,6 @@ export default function ProductSpecList(): ReactElement {
       description: selectedProduct.description,
       amount: 0,
       weight: 10,
-      type: ModelType.specificationProduct,
       requirements: [],
       requirementAnswers: []
     };

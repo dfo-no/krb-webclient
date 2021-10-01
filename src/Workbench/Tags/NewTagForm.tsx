@@ -11,7 +11,7 @@ import InputRow from '../../Form/InputRow';
 import { Alert } from '../../models/Alert';
 import ModelType from '../../models/ModelType';
 import { PostTagSchema, Tag } from '../../models/Tag';
-import { useAppDispatch } from '../../store/hooks';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { addAlert } from '../../store/reducers/alert-reducer';
 import {
   addTag,
@@ -20,6 +20,7 @@ import {
 
 export default function NewTagForm(): React.ReactElement {
   const dispatch = useAppDispatch();
+  const { project } = useAppSelector((state) => state.project);
   const { t } = useTranslation();
   const [show, setShow] = useState(false);
 
@@ -27,7 +28,9 @@ export default function NewTagForm(): React.ReactElement {
     id: '',
     title: '',
     type: ModelType.tag,
-    parent: ''
+    parent: '',
+    source_original: project.id,
+    source_rel: null
   };
 
   const {

@@ -28,7 +28,9 @@ export const BaseRequirementSchema = Joi.object().keys({
     .required(),
   tags: Joi.array().items(Joi.string()),
   requirement_Type: Joi.string().valid(...Object.values(RequirementType)),
-  type: Joi.string().equal(ModelType.requirement).required()
+  type: Joi.string().equal(ModelType.requirement).required(),
+  source_original: Joi.string().required(),
+  source_rel: Joi.string().allow(null).required()
 });
 
 export const PutRequirementSchema = BaseRequirementSchema;

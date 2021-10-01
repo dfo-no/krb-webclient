@@ -14,7 +14,9 @@ export const BaseTagSchema = Joi.object().keys({
   title: Joi.string().required(),
   type: Joi.string().equal(ModelType.tag).required(),
   parent: Joi.string().allow(null, '').required(),
-  children: Joi.array()
+  children: Joi.array(),
+  source_original: Joi.string().required(),
+  source_rel: Joi.string().allow(null).required()
 });
 
 export const PostTagSchema = BaseTagSchema.keys({

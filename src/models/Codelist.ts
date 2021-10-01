@@ -15,7 +15,9 @@ export const CodelistSchema = Joi.object().keys({
   title: Joi.string().required(),
   description: Joi.string().allow(null, '').required(),
   codes: Joi.array().items(BaseCodeSchema).required(),
-  type: Joi.string().equal(ModelType.codelist).required()
+  type: Joi.string().equal(ModelType.codelist).required(),
+  source_original: Joi.string().required(),
+  source_rel: Joi.string().allow(null).required()
 });
 
 export const PostCodelistSchema = CodelistSchema.keys({

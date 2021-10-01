@@ -11,7 +11,7 @@ import InputRow from '../../Form/InputRow';
 import { Alert } from '../../models/Alert';
 import ModelType from '../../models/ModelType';
 import { PostProductSchema, Product } from '../../models/Product';
-import { useAppDispatch } from '../../store/hooks';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { addAlert } from '../../store/reducers/alert-reducer';
 import {
   addProduct,
@@ -20,6 +20,7 @@ import {
 
 function NewProductForm(): React.ReactElement {
   const dispatch = useAppDispatch();
+  const { project } = useAppSelector((state) => state.project);
   const [validated] = useState(false);
   const { t } = useTranslation();
 
@@ -30,7 +31,9 @@ function NewProductForm(): React.ReactElement {
     title: '',
     description: '',
     parent: '',
-    type: ModelType.product
+    type: ModelType.product,
+    sourceOriginal: project.id,
+    sourceRel: null
   };
 
   const {
