@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 /* eslint-disable react/prop-types */
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Accordion from 'react-bootstrap/Accordion';
 import Nestable from 'react-nestable';
 import 'react-nestable/dist/styles/index.css';
@@ -22,6 +22,7 @@ export default function NestableHierarcy({
   component,
   depth
 }: IProps) {
+  useEffect(() => {}, [inputlist]);
   const [activeKey, setActiveKey] = useState('');
   const convertTreeToList = (tree: any, key: string, collection: any[]) => {
     if ((!tree[key] || tree[key].length === 0) && collection.includes(tree)) {

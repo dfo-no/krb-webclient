@@ -89,7 +89,6 @@ function EditNeedForm({ element }: IProps): ReactElement {
         label={t('Description')}
       />
 
-      <Form.Control type="hidden" {...register('id')} />
       <Button className="mt-2" type="submit">
         {t('save')}
       </Button>
