@@ -32,8 +32,7 @@ const initialState: PrefilledResponseState = {
     // answeredVariants: [], // list over string med id som er besvart, uavhengig questiontype, drit i denne
     supplier: '',
     products: [],
-    requirementAnswers: [], // RequirementAnswer[]
-    type: ModelType.prefilledResponse
+    requirementAnswers: [] // RequirementAnswer[]
   },
   selectedProduct: {
     id: '',
