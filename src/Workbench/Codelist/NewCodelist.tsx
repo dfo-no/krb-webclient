@@ -7,9 +7,11 @@ import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { v4 as uuidv4 } from 'uuid';
 import InputRow from '../../Form/InputRow';
+import { Alert } from '../../models/Alert';
 import { Codelist, PostCodelistSchema } from '../../models/Codelist';
 import ModelType from '../../models/ModelType';
 import { useAppDispatch } from '../../store/hooks';
+import { addAlert } from '../../store/reducers/alert-reducer';
 import {
   addCodelist,
   putSelectedProjectThunk
@@ -40,10 +42,16 @@ function NewCodelist(): React.ReactElement {
   });
 
   const onNewCodeSubmit = (post: Codelist) => {
+    const alert: Alert = {
+      id: uuidv4(),
+      style: 'success',
+      text: 'Successfully added codelist'
+    };
     const newCodelist = { ...post };
     newCodelist.id = uuidv4();
     dispatch(addCodelist(newCodelist));
     dispatch(putSelectedProjectThunk('dummy')).then(() => {
+      dispatch(addAlert({ alert }));
       reset();
       setShow(false);
     });

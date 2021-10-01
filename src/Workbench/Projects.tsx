@@ -1,5 +1,5 @@
 import { joiResolver } from '@hookform/resolvers/joi';
-import React, { ReactElement, useEffect, useState } from 'react';
+import React, { ReactElement, useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
@@ -9,24 +9,25 @@ import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { BsTrashFill } from 'react-icons/bs';
 import { Link } from 'react-router-dom';
+import { v4 as uuidv4 } from 'uuid';
 import ErrorSummary from '../Form/ErrorSummary';
 import InputRow from '../Form/InputRow';
+import { Alert } from '../models/Alert';
 import { Bank } from '../models/Bank';
 import ModelType from '../models/ModelType';
 import { PostProjectSchema } from '../models/Project';
 import { useAppDispatch, useAppSelector } from '../store/hooks';
+import { addAlert } from '../store/reducers/alert-reducer';
 import {
   deleteProjectThunk,
   postProjectThunk,
   selectProject
 } from '../store/reducers/project-reducer';
-import SuccessAlert from './SuccessAlert';
 
 function Projects(): ReactElement {
   const dispatch = useAppDispatch();
   const { list } = useAppSelector((state) => state.project);
   const [showNewProjectForm, setShowNewProjectForm] = useState(false);
-  const [showAlert, setShowAlert] = useState(false);
   const [validated] = useState(false);
   const { t } = useTranslation();
 
@@ -55,19 +56,17 @@ function Projects(): ReactElement {
     defaultValues
   });
 
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setShowAlert(false);
-    }, 2000);
-    return () => clearTimeout(timer);
-  }, [showAlert]);
-
   const onSubmit = (post: Bank) => {
     dispatch(postProjectThunk(post)).then(() => {
       reset();
       setShowNewProjectForm(false);
-      setShowAlert(true);
     });
+    const alert: Alert = {
+      id: uuidv4(),
+      style: 'success',
+      text: 'Successfully updated product'
+    };
+    dispatch(addAlert({ alert }));
   };
 
   async function onDelete(project: Bank) {
@@ -157,7 +156,6 @@ function Projects(): ReactElement {
       <Button onClick={() => setShowNewProjectForm(true)} variant="primary">
         {t('new project')}
       </Button>
-      {showAlert && <SuccessAlert toggleShow={setShowAlert} type="project" />}
       {projectEditor()}
       {renderProjects(list)}
     </>

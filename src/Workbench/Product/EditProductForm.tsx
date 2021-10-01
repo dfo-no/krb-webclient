@@ -6,16 +6,19 @@ import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { BsTrashFill } from 'react-icons/bs';
 import { Link } from 'react-router-dom';
+import { v4 as uuidv4 } from 'uuid';
 import AlertModal from '../../common/AlertModal';
 import Utils from '../../common/Utils';
 import ErrorSummary from '../../Form/ErrorSummary';
 import InputRow from '../../Form/InputRow';
+import { Alert } from '../../models/Alert';
 import { IVariant } from '../../models/IVariant';
 import { Need } from '../../models/Need';
 import { Product, PutProductSchema } from '../../models/Product';
 import { Requirement } from '../../models/Requirement';
 import { AccordionContext } from '../../NestableHierarchy/AccordionContext';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
+import { addAlert } from '../../store/reducers/alert-reducer';
 import {
   editProduct,
   putSelectedProjectThunk,
@@ -53,8 +56,14 @@ export default function EditProductForm({
     if (newProduct.children) {
       delete newProduct.children;
     }
+    const alert: Alert = {
+      id: uuidv4(),
+      style: 'success',
+      text: 'Successfully updated product'
+    };
     dispatch(editProduct(newProduct));
     dispatch(putSelectedProjectThunk('dummy')).then(() => {
+      dispatch(addAlert({ alert }));
       onOpenClose('');
     });
   };
@@ -82,6 +91,13 @@ export default function EditProductForm({
     } else {
       dispatch(removeProduct(product));
       dispatch(putSelectedProjectThunk('dummy'));
+
+      const alert: Alert = {
+        id: uuidv4(),
+        style: 'success',
+        text: 'Successfully deleted product'
+      };
+      dispatch(addAlert({ alert }));
     }
     onOpenClose('');
   };

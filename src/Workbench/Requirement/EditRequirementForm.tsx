@@ -6,11 +6,14 @@ import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { BsTrashFill } from 'react-icons/bs';
 import { Link } from 'react-router-dom';
+import { v4 as uuidv4 } from 'uuid';
 import ErrorSummary from '../../Form/ErrorSummary';
 import InputRow from '../../Form/InputRow';
+import { Alert } from '../../models/Alert';
 import { PutRequirementSchema, Requirement } from '../../models/Requirement';
 import { AccordionContext } from '../../NestableHierarchy/AccordionContext';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
+import { addAlert } from '../../store/reducers/alert-reducer';
 import {
   deleteRequirement,
   editRequirementInNeed,
@@ -50,7 +53,13 @@ export default function EditRequirementForm({
         requirement: post
       })
     );
+    const alert: Alert = {
+      id: uuidv4(),
+      style: 'success',
+      text: 'successfully updated requirement'
+    };
     dispatch(putSelectedProjectThunk('dummy')).then(() => {
+      dispatch(addAlert({ alert }));
       onOpenClose('');
     });
   };
