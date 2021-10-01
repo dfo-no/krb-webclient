@@ -32,8 +32,8 @@ function NewCodeForm(): React.ReactElement {
     title: '',
     description: '',
     type: ModelType.code,
-    source_original: project.id,
-    source_rel: null
+    sourceOriginal: project.id,
+    sourceRel: null
   };
 
   const {

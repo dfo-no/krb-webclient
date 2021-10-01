@@ -34,8 +34,8 @@ export default function NewPublication(): React.ReactElement {
     date: '',
     type: ModelType.publication,
     version: 1,
-    source_original: null,
-    source_rel: null
+    sourceOriginal: null,
+    sourceRel: null
   };
 
   const {

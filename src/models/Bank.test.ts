@@ -18,8 +18,8 @@ describe('BankSchema should validate', () => {
       products: [],
       publishedDate: new Date().toJSON(),
       inheritedBanks: [],
-      source_original: null,
-      source_rel: null
+      sourceOriginal: null,
+      sourceRel: null
     };
 
     const report = BaseBankSchema.validate(bank);

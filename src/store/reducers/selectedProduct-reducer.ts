@@ -13,8 +13,8 @@ const initialState: SelectedProductState = {
     description: '',
     parent: '',
     type: ModelType.product,
-    source_original: null,
-    source_rel: null
+    sourceOriginal: null,
+    sourceRel: null
   }
 };
 

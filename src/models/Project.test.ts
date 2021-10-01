@@ -19,8 +19,8 @@ describe('ProjectSchemas works', () => {
       products: [],
       publishedDate: null,
       inheritedBanks: [],
-      source_original: null,
-      source_rel: null
+      sourceOriginal: null,
+      sourceRel: null
     };
     const report = PostProjectSchema.validate(bank);
 
@@ -41,8 +41,8 @@ describe('ProjectSchemas works', () => {
       products: [],
       publishedDate: null,
       inheritedBanks: [],
-      source_original: null,
-      source_rel: null
+      sourceOriginal: null,
+      sourceRel: null
     };
     const report = PutProjectSchema.validate(bank);
 
@@ -66,8 +66,8 @@ describe('ProjectSchemas works', () => {
           version: 1,
           bankId: 'e56367af-d48d-422d-a4f6-ba52ee17af23',
           type: ModelType.publication,
-          source_original: null,
-          source_rel: null
+          sourceOriginal: null,
+          sourceRel: null
         },
         {
           id: 'e56367af-d48d-422d-a4f6-ba52ee17af23',
@@ -79,8 +79,8 @@ describe('ProjectSchemas works', () => {
           version: 2,
           bankId: 'e56367af-d48d-422d-a4f6-,ba52ee17af24',
           type: ModelType.publication,
-          source_original: null,
-          source_rel: null
+          sourceOriginal: null,
+          sourceRel: null
         }
       ],
       type: ModelType.bank,
@@ -90,8 +90,8 @@ describe('ProjectSchemas works', () => {
       products: [],
       publishedDate: null,
       inheritedBanks: [],
-      source_original: null,
-      source_rel: null
+      sourceOriginal: null,
+      sourceRel: null
     };
     const report = PutProjectSchema.validate(bank, { abortEarly: false });
     expect(report.error).toBeUndefined();
@@ -118,8 +118,8 @@ describe('ProjectSchemas works', () => {
           version: 2,
           bankId: 'e56367af-d48d-422d-a4f6-ba52ee17af23',
           type: ModelType.publication,
-          source_original: null,
-          source_rel: null
+          sourceOriginal: null,
+          sourceRel: null
         },
         {
           id: 'e56367af-d48d-422d-a4f6-ba52ee17af24', // duplicate
@@ -128,13 +128,13 @@ describe('ProjectSchemas works', () => {
           version: 2, // duplicate
           bankId: 'e56367af-d48d-422d-a4f6-ba52ee17af23',
           type: ModelType.publication,
-          source_original: null,
-          source_rel: null
+          sourceOriginal: null,
+          sourceRel: null
         }
       ],
       inheritedBanks: [],
-      source_original: null,
-      source_rel: null
+      sourceOriginal: null,
+      sourceRel: null
     };
     const report = PutProjectSchema.validate(bank, {
       abortEarly: false

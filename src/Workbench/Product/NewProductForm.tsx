@@ -32,8 +32,8 @@ function NewProductForm(): React.ReactElement {
     description: '',
     parent: '',
     type: ModelType.product,
-    source_original: project.id,
-    source_rel: null
+    sourceOriginal: project.id,
+    sourceRel: null
   };
 
   const {

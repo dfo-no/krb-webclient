@@ -25,8 +25,8 @@ const initialState: SpecificationState = {
       publications: [],
       inheritedBanks: [],
       publishedDate: null,
-      source_original: null,
-      source_rel: null
+      sourceOriginal: null,
+      sourceRel: null
     },
     title: '',
     products: [],

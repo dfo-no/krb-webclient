@@ -30,8 +30,8 @@ function NewCodelist(): React.ReactElement {
     description: '',
     codes: [],
     type: ModelType.codelist,
-    source_original: project.id,
-    source_rel: null
+    sourceOriginal: project.id,
+    sourceRel: null
   };
 
   const {

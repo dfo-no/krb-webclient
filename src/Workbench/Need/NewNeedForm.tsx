@@ -33,8 +33,8 @@ function NewNeedForm(): React.ReactElement {
     requirements: [],
     type: ModelType.need,
     parent: '',
-    source_original: project.id,
-    source_rel: null
+    sourceOriginal: project.id,
+    sourceRel: null
   };
 
   const {

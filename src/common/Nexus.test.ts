@@ -18,8 +18,8 @@ test('Nexus', () => {
     inheritedBanks: [],
     publications: [],
     publishedDate: null,
-    source_original: null,
-    source_rel: null
+    sourceOriginal: null,
+    sourceRel: null
   };
 
   const app = Nexus.getInstance();

@@ -39,8 +39,8 @@ describe('EditNeedForm', () => {
       requirements: [],
       type: ModelType.need,
       parent: '',
-      source_original: null,
-      source_rel: null
+      sourceOriginal: null,
+      sourceRel: null
     };
 
     render(

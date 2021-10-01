@@ -28,8 +28,8 @@ const initialState: PrefilledResponseState = {
       publications: [],
       inheritedBanks: [],
       publishedDate: null,
-      source_original: null,
-      source_rel: null
+      sourceOriginal: null,
+      sourceRel: null
     },
     // answeredVariants: [], // list over string med id som er besvart, uavhengig questiontype, drit i denne
     supplier: '',
@@ -47,8 +47,8 @@ const initialState: PrefilledResponseState = {
       parent: '',
       children: [],
       type: ModelType.product,
-      source_original: null,
-      source_rel: null
+      sourceOriginal: null,
+      sourceRel: null
     },
     answeredVariants: [],
     requirementAnswers: []

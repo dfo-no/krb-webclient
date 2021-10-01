@@ -40,8 +40,8 @@ function NewRequirementForm(): React.ReactElement {
     variants: [],
     type: ModelType.requirement,
     requirement_Type: RequirementType.requirement,
-    source_original: project.id,
-    source_rel: null
+    sourceOriginal: project.id,
+    sourceRel: null
   };
 
   const {
