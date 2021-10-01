@@ -1,6 +1,10 @@
-import { KeyboardDatePicker } from '@material-ui/pickers';
-import { MaterialUiPickersDate } from '@material-ui/pickers/typings/date';
-import { format } from 'date-fns';
+import AdapterDateFns from '@mui/lab/AdapterDateFns';
+import DatePicker from '@mui/lab/DatePicker';
+import LocalizationProvider from '@mui/lab/LocalizationProvider';
+import TextField from '@mui/material/TextField';
+import { format, isDate, isValid } from 'date-fns';
+import enLocale from 'date-fns/locale/en-US';
+import nbLocale from 'date-fns/locale/nb';
 import React from 'react';
 import Form from 'react-bootstrap/Form';
 import {
@@ -9,44 +13,75 @@ import {
   FieldValues,
   UseControllerProps
 } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
 import { DATETIME_ISO8601UTC } from '../common/Constants';
 
 interface Props<T> extends UseControllerProps<T> {
   error: FieldError | undefined;
+  label: string;
 }
+
+const localeMap: { [key: string]: Locale } = {
+  en: enLocale,
+  nb: nbLocale
+};
+
+const maskMap: { [key: string]: string } = {
+  en: '__/__/____',
+  nb: '__.__.____'
+};
 
 const ControlledDate = <T extends FieldValues>({
   name,
   control,
-  error
+  error,
+  label
 }: Props<T>): React.ReactElement => {
-  const renderLabel = (date: MaterialUiPickersDate | null) =>
-    date === null ? '' : format(date, 'dd.MM.yyyy');
+  const { i18n } = useTranslation();
 
   return (
-    <Form.Group controlId={name}>
-      <Controller
-        name={name}
-        control={control}
-        render={({ field, fieldState, formState }) => (
-          <KeyboardDatePicker
-            margin="normal"
-            id="date-picker"
-            format={DATETIME_ISO8601UTC}
-            labelFunc={renderLabel}
-            label="Date picker dialog"
-            KeyboardButtonProps={{
-              'aria-label': 'change date'
-            }}
-            onChange={(_, value) => {
-              field.onChange(value);
-            }}
-            variant="dialog"
-            value={field.value}
-          />
-        )}
-      />
-    </Form.Group>
+    <LocalizationProvider
+      dateAdapter={AdapterDateFns}
+      locale={localeMap[i18n.language]}
+    >
+      <Form.Group controlId={name}>
+        <Controller
+          name={name}
+          control={control}
+          render={({ field }) => (
+            <DatePicker
+              label={label}
+              // onBlur={field.onBlur}
+              mask={maskMap[i18n.language]}
+              ref={field.ref}
+              value={field.value}
+              // inputFormat="dd.MM.yyyy"
+              clearable
+              clearText="Clear"
+              onChange={(e: Date | null) => {
+                if (e) {
+                  if (isDate(e) && isValid(e)) {
+                    const newValue = format(e, DATETIME_ISO8601UTC);
+                    field.onChange(newValue);
+                  } else {
+                    field.onChange(e);
+                  }
+                } else {
+                  field.onChange(null);
+                }
+              }}
+              renderInput={(params) => (
+                <TextField
+                  {...params}
+                  error={!!error}
+                  helperText={!!error && error.message}
+                />
+              )}
+            />
+          )}
+        />
+      </Form.Group>
+    </LocalizationProvider>
   );
 };
 

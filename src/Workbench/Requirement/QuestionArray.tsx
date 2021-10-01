@@ -1,9 +1,8 @@
 import 'date-fns';
-import React, { ReactElement, useState } from 'react';
+import React, { useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
-import Row from 'react-bootstrap/Row';
 import {
   Control,
   FormState,
@@ -45,7 +44,7 @@ export default function QuestionArray({
   formState,
   variantIndex,
   project
-}: IProps): ReactElement {
+}: IProps): React.ReactElement {
   const { fields, append, remove } = useFieldArray({
     name: `variants.${variantIndex}.questions` as 'variants.0.questions',
     control
@@ -87,8 +86,8 @@ export default function QuestionArray({
         id: uuidv4(),
         type: QuestionEnum.Q_PERIOD_DATE,
         config: {
-          fromDate: new Date().toISOString(),
-          toDate: new Date().toISOString()
+          fromDate: null,
+          toDate: null
         }
       } as IPeriodDateQuestion);
     } else if (getAlternative === QuestionEnum.Q_TIME) {

@@ -1,5 +1,6 @@
 import { joiResolver } from '@hookform/resolvers/joi';
-import React, { ReactElement } from 'react';
+import { get, has, toPath } from 'lodash';
+import React from 'react';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import Col from 'react-bootstrap/Col';
@@ -24,17 +25,17 @@ interface IProps {
   parentAnswer: IRequirementAnswer;
 }
 
-export default function FileInputForm({ parentAnswer }: IProps): ReactElement {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors }
-  } = useForm<IFileUploadQuestion>({
+export default function FileInputForm({
+  parentAnswer
+}: IProps): React.ReactElement {
+  const { register, handleSubmit, formState } = useForm<IFileUploadQuestion>({
     resolver: joiResolver(FileUploadQuestionSchema),
     defaultValues: {
       ...(parentAnswer.question as IFileUploadQuestion)
     }
   });
+
+  const { errors } = formState;
   const { selectedSpecificationProduct } = useAppSelector(
     (state) => state.selectedSpecProduct
   );
@@ -70,6 +71,23 @@ export default function FileInputForm({ parentAnswer }: IProps): ReactElement {
       );
   };
 
+  const hasError = (str: string) => {
+    let retVal = null;
+    const path = toPath(str);
+    if (has(errors, path)) {
+      retVal = true;
+    } else {
+      retVal = false;
+    }
+    return retVal;
+  };
+
+  const getError = (str: string) => {
+    const path = toPath(str);
+    path.push('message');
+    return get(errors, path);
+  };
+
   return (
     <Card className="mb-3">
       <Card.Body>
@@ -83,11 +101,11 @@ export default function FileInputForm({ parentAnswer }: IProps): ReactElement {
               <Form.Control
                 type="input"
                 {...register('config.fileEndings')}
-                isInvalid={!!errors?.config?.fileEndings}
+                isInvalid={!!hasError('config.fileEndings')}
               />
-              {errors?.config?.fileEndings && (
+              {hasError('config.fileEndings') && (
                 <Form.Control.Feedback type="invalid">
-                  {errors.config.fileEndings.message}
+                  {getError('config.fileEndings.message')}
                 </Form.Control.Feedback>
               )}
             </Col>

@@ -1,9 +1,10 @@
 // import { DevTool } from '@hookform/devtools';
+import { get } from 'lodash';
 import React from 'react';
 import { Button, Card, Col, ListGroup, Row } from 'react-bootstrap';
 import Container from 'react-bootstrap/Container';
 import Form from 'react-bootstrap/Form';
-import { useForm } from 'react-hook-form';
+import { FieldError, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import Utils from '../../common/Utils';
 import ControlledCheckbox from '../../Form/ControlledCheckbox';
@@ -21,9 +22,14 @@ import {
   ICodelistQuestion
 } from '../../models/ICodelistQuestion';
 import {
+  IFileUploadAnswer,
+  IFileUploadQuestion
+} from '../../models/IFileUploadQuestion';
+import {
   IPeriodDateAnswer,
   IPeriodDateQuestion
 } from '../../models/IPeriodDateQuestion';
+import { IRequirementAnswer } from '../../models/IRequirementAnswer';
 import { ISliderAnswer, ISliderQuestion } from '../../models/ISliderQuestion';
 import { ITextAnswer, ITextQuestion } from '../../models/ITextQuestion';
 import { ITimeAnswer, ITimeQuestion } from '../../models/ITimeQuestion';
@@ -31,9 +37,14 @@ import { Levelable } from '../../models/Levelable';
 import ModelType from '../../models/ModelType';
 import { Need } from '../../models/Need';
 import QuestionEnum from '../../models/QuestionEnum';
+import { QuestionType } from '../../models/QuestionType';
 import { Requirement } from '../../models/Requirement';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { setRequirementAnswers } from '../../store/reducers/PrefilledResponseReducer';
+
+interface FormProps {
+  cart: IRequirementAnswer[];
+}
 
 // TODO: SPlit this in lesser components to support nice UX flow.
 export default function PrefilledRequirement(): React.ReactElement {
@@ -41,15 +52,15 @@ export default function PrefilledRequirement(): React.ReactElement {
     (state) => state.prefilledResponse
   );
 
-  const generateDefaultValues = () => {
+  const generateDefaultValues = (): FormProps => {
     const needs = Utils.parentable2Levelable(prefilledResponse.bank.needs);
-    const cartAry: any[] = [];
-    const result = { cart: cartAry };
+    const cartAry: IRequirementAnswer[] = [];
+    const result: FormProps = { cart: cartAry };
     needs.forEach((need) => {
       need.requirements.forEach((requirement) => {
         requirement.variants.forEach((variant) => {
           variant.questions.forEach((question) => {
-            let questionResult = { ...question };
+            let questionResult: QuestionType = { ...question };
 
             if (question.type === QuestionEnum.Q_CHECKBOX) {
               const answer = {
@@ -87,8 +98,15 @@ export default function PrefilledRequirement(): React.ReactElement {
               };
               questionResult = { ...question, answer } as ITimeQuestion;
             }
+            if (question.type === QuestionEnum.Q_FILEUPLOAD) {
+              const answer: IFileUploadAnswer = {
+                file: '',
+                point: 0
+              };
+              questionResult = { ...question, answer } as IFileUploadQuestion;
+            }
 
-            const value = {
+            const value: IRequirementAnswer = {
               id: requirement.id,
               questionId: question.id,
               weight: 0,
@@ -112,23 +130,25 @@ export default function PrefilledRequirement(): React.ReactElement {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
   const defaultValues = generateDefaultValues();
-  const { handleSubmit, formState, control } = useForm({
+  const { handleSubmit, formState, control } = useForm<FormProps>({
     defaultValues
   });
 
   const { errors } = formState;
-  const onSubmit = (post: any) => {
+  const onSubmit = (post: FormProps) => {
     dispatch(setRequirementAnswers(post));
   };
 
-  const renderQuestion = (question: any, ix: number) => {
+  const renderQuestion = (question: QuestionType, ix: number) => {
     switch (question.type) {
       case QuestionEnum.Q_CHECKBOX: {
         return (
           <ControlledCheckbox
             name={`cart.${ix}.question.answer.value`}
             control={control}
-            error={undefined}
+            error={
+              get(errors, `cart.${ix}.question.answer.value`) as FieldError
+            }
           />
         );
       }
@@ -143,7 +163,9 @@ export default function PrefilledRequirement(): React.ReactElement {
               name={`cart.${ix}.question.answer.codes`}
               codelist={prefilledResponse.bank.codelist[codelistIndex]}
               control={control}
-              error={undefined}
+              error={
+                get(errors, `cart.${ix}.question.answer.codes`) as FieldError
+              }
             />
           );
         }
@@ -155,7 +177,7 @@ export default function PrefilledRequirement(): React.ReactElement {
           <ControlledTextInput
             control={control}
             name={`cart.${ix}.question.answer.file`}
-            error={undefined}
+            error={get(errors, `cart.${ix}.question.answer.file`) as FieldError}
           />
         );
       }
@@ -164,7 +186,8 @@ export default function PrefilledRequirement(): React.ReactElement {
           <ControlledDate
             control={control}
             name={`cart.${ix}.question.answer.date`}
-            error={undefined}
+            error={get(errors, `cart.${ix}.question.answer.date`) as FieldError}
+            label=""
           />
         );
       }
@@ -174,7 +197,9 @@ export default function PrefilledRequirement(): React.ReactElement {
             question={question}
             control={control}
             name={`cart.${ix}.question.answer.value`}
-            error={undefined}
+            error={
+              get(errors, `cart.${ix}.question.answer.value`) as FieldError
+            }
           />
         );
       }
@@ -183,7 +208,7 @@ export default function PrefilledRequirement(): React.ReactElement {
           <ControlledTextInput
             control={control}
             name={`cart.${ix}.question.answer.text`}
-            error={undefined}
+            error={get(errors, `cart.${ix}.question.answer.text`) as FieldError}
           />
         );
       }
@@ -192,7 +217,7 @@ export default function PrefilledRequirement(): React.ReactElement {
           <ControlledTextInput
             control={control}
             name={`cart.${ix}.question.answer.time`}
-            error={undefined}
+            error={get(errors, `cart.${ix}.question.answer.time`) as FieldError}
           />
         );
       }

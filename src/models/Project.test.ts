@@ -1,4 +1,5 @@
-import { formatISO } from 'date-fns';
+import { format } from 'date-fns';
+import { DATETIME_ISO8601UTC } from '../common/Constants';
 import { Bank } from './Bank';
 import ModelType from './ModelType';
 import { PostProjectSchema, PutProjectSchema } from './Project';
@@ -16,7 +17,7 @@ describe('ProjectSchemas works', () => {
       tags: [],
       needs: [],
       products: [],
-      publishedDate: '',
+      publishedDate: null,
       inheritedBanks: []
     };
     const report = PostProjectSchema.validate(bank);
@@ -36,7 +37,7 @@ describe('ProjectSchemas works', () => {
       needs: [],
       tags: [],
       products: [],
-      publishedDate: '',
+      publishedDate: null,
       inheritedBanks: []
     };
     const report = PutProjectSchema.validate(bank);
@@ -54,7 +55,10 @@ describe('ProjectSchemas works', () => {
         {
           id: 'e56367af-d48d-422d-a4f6-ba52ee17af24',
           comment: 'A comment',
-          date: formatISO(new Date(2020, 8, 18, 19, 0, 53)),
+          date: format(
+            new Date(2020, 8, 18, 19, 0, 52, 998),
+            DATETIME_ISO8601UTC
+          ),
           version: 1,
           bankId: 'e56367af-d48d-422d-a4f6-ba52ee17af23',
           type: ModelType.publication
@@ -62,7 +66,10 @@ describe('ProjectSchemas works', () => {
         {
           id: 'e56367af-d48d-422d-a4f6-ba52ee17af23',
           comment: 'A comment',
-          date: formatISO(new Date(2020, 8, 18, 19, 0, 52)),
+          date: format(
+            new Date(2020, 8, 18, 19, 0, 52, 999),
+            DATETIME_ISO8601UTC
+          ),
           version: 2,
           bankId: 'e56367af-d48d-422d-a4f6-ba52ee17af24',
           type: ModelType.publication
@@ -73,15 +80,15 @@ describe('ProjectSchemas works', () => {
       tags: [],
       needs: [],
       products: [],
-      publishedDate: '',
+      publishedDate: null,
       inheritedBanks: []
     };
-
     const report = PutProjectSchema.validate(bank, { abortEarly: false });
     expect(report.error).toBeUndefined();
   });
 
   test('PutProjectSchema invalidates on duplicate publications', () => {
+    const duplicate = format(new Date(), DATETIME_ISO8601UTC);
     const bank: Bank = {
       id: 'e56367af-d48d-422d-a4f6-ba52ee17af23',
       title: 'Test',
@@ -92,12 +99,12 @@ describe('ProjectSchemas works', () => {
       needs: [],
       products: [],
       tags: [],
-      publishedDate: '',
+      publishedDate: format(new Date(), DATETIME_ISO8601UTC),
       publications: [
         {
           id: 'e56367af-d48d-422d-a4f6-ba52ee17af24',
           comment: 'A comment',
-          date: formatISO(new Date(2020, 8, 18, 19, 0, 52)),
+          date: duplicate,
           version: 2,
           bankId: 'e56367af-d48d-422d-a4f6-ba52ee17af23',
           type: ModelType.publication
@@ -105,7 +112,7 @@ describe('ProjectSchemas works', () => {
         {
           id: 'e56367af-d48d-422d-a4f6-ba52ee17af24', // duplicate
           comment: 'A comment',
-          date: formatISO(new Date(2020, 8, 18, 19, 0, 52)), // duplicate
+          date: duplicate, // duplicate
           version: 2, // duplicate
           bankId: 'e56367af-d48d-422d-a4f6-ba52ee17af23',
           type: ModelType.publication
@@ -116,6 +123,7 @@ describe('ProjectSchemas works', () => {
     const report = PutProjectSchema.validate(bank, {
       abortEarly: false
     });
+
     expect(report.error?.details.length).toEqual(3);
   });
 });

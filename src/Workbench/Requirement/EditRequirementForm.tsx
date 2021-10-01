@@ -1,8 +1,7 @@
 import { joiResolver } from '@hookform/resolvers/joi';
-import React, { ReactElement, useContext, useState } from 'react';
+import React, { useContext, useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
-import Row from 'react-bootstrap/Row';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { BsTrashFill } from 'react-icons/bs';
@@ -23,7 +22,9 @@ interface IProps {
   element: Requirement;
 }
 
-export default function EditRequirementForm({ element }: IProps): ReactElement {
+export default function EditRequirementForm({
+  element
+}: IProps): React.ReactElement {
   const { project } = useAppSelector((state) => state.project);
   const { needId } = useAppSelector((state) => state.selectNeed);
   const dispatch = useAppDispatch();

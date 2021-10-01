@@ -4,6 +4,7 @@ import {
   IRequirementAnswer,
   RequirementAnswersSchema
 } from './IRequirementAnswer';
+import { ITextQuestion } from './ITextQuestion';
 import ModelType from './ModelType';
 import QuestionEnum from './QuestionEnum';
 import RequirementType from './RequirementType';
@@ -122,12 +123,12 @@ describe('Validation', () => {
           question: {
             type: 'Q_PERIOD_DATE',
             config: {
-              fromDate: '2021-09-20T08:03:57.093Z',
-              toDate: '2021-09-30T08:03:00.000Z'
+              fromDate: '2021-09-20T08:03:57.0930000Z',
+              toDate: '2021-09-30T08:03:00.0000000Z'
             },
             id: 'aa7e6a82-361a-4775-95e6-440ba9b60dbc',
             answer: {
-              date: '',
+              date: null,
               point: 0
             }
           },
@@ -149,8 +150,8 @@ describe('Validation', () => {
                   {
                     type: 'Q_PERIOD_DATE',
                     config: {
-                      fromDate: '2021-09-20T08:03:57.093Z',
-                      toDate: '2021-09-30T08:03:00.000Z'
+                      fromDate: '2021-09-20T08:03:57.0930000Z',
+                      toDate: '2021-09-30T08:03:00.0000000Z'
                     },
                     id: 'aa7e6a82-361a-4775-95e6-440ba9b60dbc'
                   }
@@ -220,7 +221,12 @@ describe('Validation', () => {
   });
 
   test('Updated a Requirement in the reducer', () => {
-    // let state = store.getState().prefilledResponse;
+    const question: ITextQuestion = {
+      id: 'questionId1',
+      type: QuestionEnum.Q_TEXT,
+      answer: { point: 0, text: 'answer' },
+      config: { defaultPoint: 10, max: 500 }
+    };
 
     const post: IRequirementAnswer[] = [
       {
@@ -238,12 +244,7 @@ describe('Validation', () => {
           tags: [],
           type: ModelType.requirement
         },
-        question: {
-          id: 'questionId1',
-          type: QuestionEnum.Q_TEXT,
-          answer: { point: 0 },
-          config: { defaultPoint: 10 }
-        },
+        question,
         type: ModelType.prefilledResponse
       }
     ];

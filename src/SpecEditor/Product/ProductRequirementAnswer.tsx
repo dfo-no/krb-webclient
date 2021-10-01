@@ -1,7 +1,7 @@
 import { joiResolver } from '@hookform/resolvers/joi';
-import Slider from '@material-ui/core/Slider';
+import Slider from '@mui/material/Slider';
 import Joi from 'joi';
-import React, { ReactElement, useState } from 'react';
+import React, { useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
 import Container from 'react-bootstrap/Container';
@@ -69,7 +69,7 @@ const marks: IOption[] = [
 export default function ProductRequirementAnswer({
   requirement,
   productId
-}: IProps): ReactElement {
+}: IProps): React.ReactElement {
   const dispatch = useAppDispatch();
   const { t } = useTranslation();
   const {

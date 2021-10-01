@@ -1,7 +1,7 @@
 import { joiResolver } from '@hookform/resolvers/joi';
-import Switch from '@material-ui/core/Switch';
+import Switch from '@mui/material/Switch';
 import Joi from 'joi';
-import React, { ReactElement } from 'react';
+import React from 'react';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import Form from 'react-bootstrap/Form';
@@ -36,7 +36,7 @@ export const ResponseCheckBoxSchema = Joi.object().keys({
 
 export default function ICheckBoxAnswer({
   parentAnswer
-}: IProps): ReactElement {
+}: IProps): React.ReactElement {
   const { response } = useAppSelector((state) => state.response);
   let index: number;
   const { selectedResponseProduct } = useAppSelector(

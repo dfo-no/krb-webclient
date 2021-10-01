@@ -1,6 +1,6 @@
 import { joiResolver } from '@hookform/resolvers/joi';
-import format from 'date-fns/format';
-import React, { ReactElement, useEffect, useState } from 'react';
+import { get, has, toPath } from 'lodash';
+import React, { useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
@@ -10,7 +10,6 @@ import Row from 'react-bootstrap/Row';
 import { useFieldArray, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { BsPencilSquare, BsTrashFill } from 'react-icons/bs';
-import * as Constants from '../../common/Constants';
 import ErrorSummary from '../../Form/ErrorSummary';
 import { Bank } from '../../models/Bank';
 import { PutProjectSchema } from '../../models/Project';
@@ -23,12 +22,12 @@ import {
 } from '../../store/reducers/project-reducer';
 import css from './PublicationList.module.scss';
 
-export default function PublicationList(): ReactElement {
+export default function PublicationList(): React.ReactElement {
   const dispatch = useAppDispatch();
   const { project } = useAppSelector((state) => state.project);
   const [editId, setEditId] = useState('');
 
-  const { control, register, reset, formState, handleSubmit } = useForm<
+  const { control, register, formState, handleSubmit } = useForm<
     Omit<Bank, 'needs'>
   >({
     criteriaMode: 'all',
@@ -36,12 +35,6 @@ export default function PublicationList(): ReactElement {
     defaultValues: project
   });
   const { errors } = formState;
-
-  useEffect(() => {
-    if (project) {
-      reset(JSON.parse(JSON.stringify(project)));
-    }
-  }, [project, reset]);
 
   const { fields } = useFieldArray({
     name: 'publications',
@@ -70,6 +63,23 @@ export default function PublicationList(): ReactElement {
     }
   };
 
+  const hasError = (str: string) => {
+    let retVal = null;
+    const path = toPath(str);
+    if (has(errors, path)) {
+      retVal = true;
+    } else {
+      retVal = false;
+    }
+    return retVal;
+  };
+
+  const getError = (str: string) => {
+    const path = toPath(str);
+    path.push('message');
+    return get(errors, path);
+  };
+
   return (
     <Form>
       <ListGroup className="mt-4">
@@ -85,21 +95,13 @@ export default function PublicationList(): ReactElement {
                       {...register(`publications.${index}.comment` as const)}
                       placeholder="Summarize the changes ..."
                       defaultValue=""
-                      isInvalid={
-                        !!(
-                          errors.publications &&
-                          errors.publications[index] &&
-                          errors.publications[index]?.comment
-                        )
-                      }
+                      isInvalid={!!hasError(`publications[${index}].comment`)}
                     />
-                    {errors.publications &&
-                      errors.publications[index] &&
-                      errors.publications[index]?.comment && (
-                        <Form.Control.Feedback type="invalid" as="div">
-                          {errors.publications[index]?.comment?.message}
-                        </Form.Control.Feedback>
-                      )}
+                    {hasError(`publications[${index}].comment`) && (
+                      <Form.Control.Feedback type="invalid" as="div">
+                        {getError(`publications[${index}].comment.message`)}
+                      </Form.Control.Feedback>
+                    )}
                   </Form.Group>
                   <Col sm={1}>
                     <Button className="mr-1" onClick={handleSubmit(onSubmit)}>
@@ -114,10 +116,8 @@ export default function PublicationList(): ReactElement {
                 <Row>
                   <Col>
                     <Nav.Link href={`/bank/${field.bankId}`}>
-                      {` ${format(
-                        new Date(field.date),
-                        Constants.DATE_FORMAT_SHORT
-                      )} ${field.comment}`}
+                      {t('date.PP', { date: new Date(field.date) })}
+                      {` ${field.comment}`}
                     </Nav.Link>
                     <div className={css.listGroup__spacer} />
                   </Col>

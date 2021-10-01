@@ -1,5 +1,5 @@
 import { joiResolver } from '@hookform/resolvers/joi';
-import React, { ReactElement } from 'react';
+import React from 'react';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import Col from 'react-bootstrap/Col';
@@ -17,7 +17,7 @@ import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { editProduct } from '../../store/reducers/response-reducer';
 import ResponseProductRequirementSelector from './ResponseProductRequirementSelector';
 
-export default function ResponseProductEditor(): ReactElement {
+export default function ResponseProductEditor(): React.ReactElement {
   const dispatch = useAppDispatch();
   const { t } = useTranslation();
   const { response } = useAppSelector((state) => state.response);

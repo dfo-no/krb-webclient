@@ -1,12 +1,11 @@
 import { AxiosResponse } from 'axios';
-import React, { ReactElement } from 'react';
+import React from 'react';
 import Button from 'react-bootstrap/Button';
-import Row from 'react-bootstrap/Row';
 import { httpPost } from '../../api/http';
 import { Response } from '../../models/Response';
 import { useAppSelector } from '../../store/hooks';
 
-export default function ResponseDownLoad(): ReactElement {
+export default function ResponseDownLoad(): React.ReactElement {
   const { response } = useAppSelector((state) => state.response);
 
   const onDownLoad = () => {
