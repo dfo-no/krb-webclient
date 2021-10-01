@@ -16,6 +16,9 @@ interface IProps {
   controlWidth?: number;
 }
 
+/**
+ * @deprecated use ControlledTextInput instead
+ */
 function InputRow({
   control,
   errors,
