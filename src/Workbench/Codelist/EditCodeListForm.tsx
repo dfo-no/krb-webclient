@@ -7,9 +7,11 @@ import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { BsPencil, BsTrashFill } from 'react-icons/bs';
 import { useHistory } from 'react-router-dom';
+import { v4 as uuidv4 } from 'uuid';
 import AlertModal from '../../common/AlertModal';
 import ErrorSummary from '../../Form/ErrorSummary';
 import InputRow from '../../Form/InputRow';
+import { Alert } from '../../models/Alert';
 import { Codelist, CodelistSchema } from '../../models/Codelist';
 import { ICodelistQuestion } from '../../models/ICodelistQuestion';
 import { IVariant } from '../../models/IVariant';
@@ -18,6 +20,7 @@ import { IAnswerBase, IConfigBase, IQuestionBase } from '../../models/Question';
 import QuestionEnum from '../../models/QuestionEnum';
 import { Requirement } from '../../models/Requirement';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
+import { addAlert } from '../../store/reducers/alert-reducer';
 import {
   deleteCodelist,
   editSelectedCodelist,
@@ -48,9 +51,15 @@ function EditCodeListForm(): React.ReactElement {
   });
 
   const onEditCodeSubmit = (post: Codelist) => {
+    const alert: Alert = {
+      id: uuidv4(),
+      style: 'success',
+      text: 'Successfully edited codelist'
+    };
     dispatch(editSelectedCodelist(post));
     dispatch(editCodelist(post));
     dispatch(putSelectedProjectThunk('dummy')).then(() => {
+      dispatch(addAlert({ alert }));
       reset();
       setEdit(false);
     });

@@ -8,9 +8,11 @@ import { useTranslation } from 'react-i18next';
 import { v4 as uuidv4 } from 'uuid';
 import ErrorSummary from '../../Form/ErrorSummary';
 import InputRow from '../../Form/InputRow';
+import { Alert } from '../../models/Alert';
 import ModelType from '../../models/ModelType';
 import { PostTagSchema, Tag } from '../../models/Tag';
-import { useAppDispatch } from '../../store/hooks';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
+import { addAlert } from '../../store/reducers/alert-reducer';
 import {
   addTag,
   putSelectedProjectThunk
@@ -18,6 +20,7 @@ import {
 
 export default function NewTagForm(): React.ReactElement {
   const dispatch = useAppDispatch();
+  const { project } = useAppSelector((state) => state.project);
   const { t } = useTranslation();
   const [show, setShow] = useState(false);
 
@@ -25,7 +28,9 @@ export default function NewTagForm(): React.ReactElement {
     id: '',
     title: '',
     type: ModelType.tag,
-    parent: ''
+    parent: '',
+    source_original: project.id,
+    source_rel: null
   };
 
   const {
@@ -41,8 +46,14 @@ export default function NewTagForm(): React.ReactElement {
   const onNewTagSubmit = (post: Tag) => {
     const newTag = { ...post };
     newTag.id = uuidv4();
+    const alert: Alert = {
+      id: uuidv4(),
+      style: 'success',
+      text: 'Successfully added tag'
+    };
     dispatch(addTag(newTag));
     dispatch(putSelectedProjectThunk('dummy')).then(() => {
+      dispatch(addAlert({ alert }));
       reset();
       setShow(false);
     });

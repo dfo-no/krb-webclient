@@ -26,7 +26,9 @@ const initialState: ResponseState = {
         type: ModelType.bank,
         publications: [],
         inheritedBanks: [],
-        publishedDate: null
+        publishedDate: null,
+        sourceOriginal: null,
+        sourceRel: null
       },
       title: '',
       products: [],

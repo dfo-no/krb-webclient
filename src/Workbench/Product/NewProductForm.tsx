@@ -8,9 +8,11 @@ import { useTranslation } from 'react-i18next';
 import { v4 as uuidv4 } from 'uuid';
 import ErrorSummary from '../../Form/ErrorSummary';
 import InputRow from '../../Form/InputRow';
+import { Alert } from '../../models/Alert';
 import ModelType from '../../models/ModelType';
 import { PostProductSchema, Product } from '../../models/Product';
-import { useAppDispatch } from '../../store/hooks';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
+import { addAlert } from '../../store/reducers/alert-reducer';
 import {
   addProduct,
   putSelectedProjectThunk
@@ -18,6 +20,7 @@ import {
 
 function NewProductForm(): React.ReactElement {
   const dispatch = useAppDispatch();
+  const { project } = useAppSelector((state) => state.project);
   const [validated] = useState(false);
   const { t } = useTranslation();
 
@@ -28,7 +31,9 @@ function NewProductForm(): React.ReactElement {
     title: '',
     description: '',
     parent: '',
-    type: ModelType.product
+    type: ModelType.product,
+    sourceOriginal: project.id,
+    sourceRel: null
   };
 
   const {
@@ -44,8 +49,14 @@ function NewProductForm(): React.ReactElement {
   const onSubmit = async (post: Product) => {
     const newProduct = { ...post };
     newProduct.id = uuidv4();
+    const alert: Alert = {
+      id: uuidv4(),
+      style: 'success',
+      text: 'successfully added a new product'
+    };
     dispatch(addProduct(newProduct));
     dispatch(putSelectedProjectThunk('dummy')).then(() => {
+      dispatch(addAlert({ alert }));
       setShow(false);
       reset();
     });

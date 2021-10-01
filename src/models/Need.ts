@@ -14,14 +14,18 @@ export const BaseNeedSchema = Joi.object().keys({
   title: Joi.string().required(),
   description: Joi.string().allow(null, '').required(),
   requirements: Joi.array().required(),
-  type: Joi.string().equal(ModelType.need).required()
+  type: Joi.string().equal(ModelType.need).required(),
+  source_original: Joi.string().required(),
+  source_rel: Joi.string().allow(null).required()
 });
 
 export const PostNeedSchema = BaseNeedSchema.keys({
   id: Joi.string().equal('').required(),
-  parent: Joi.alternatives([Joi.string().length(36), Joi.string().valid('')])
+  parent: Joi.alternatives([Joi.string().length(36), Joi.string().valid('')]),
+  children: Joi.array()
 });
 
 export const PutNeedSchema = BaseNeedSchema.keys({
-  parent: Joi.alternatives([Joi.string().length(36), Joi.string().valid('')])
+  parent: Joi.alternatives([Joi.string().length(36), Joi.string().valid('')]),
+  children: Joi.array()
 });

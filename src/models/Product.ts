@@ -15,7 +15,9 @@ export const BaseProductSchema = Joi.object().keys({
   title: Joi.string().required(),
   description: Joi.string().allow(null, '').required(),
   parent: Joi.string().allow(null, '').required(),
-  type: Joi.string().equal(ModelType.product).required()
+  type: Joi.string().equal(ModelType.product).required(),
+  source_original: Joi.string().required(),
+  source_rel: Joi.string().allow(null).required()
 });
 
 export const PostProductSchema = BaseProductSchema.keys({

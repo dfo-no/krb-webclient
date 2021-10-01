@@ -12,7 +12,9 @@ const initialState: SelectedProductState = {
     title: '',
     description: '',
     parent: '',
-    type: ModelType.product
+    type: ModelType.product,
+    sourceOriginal: null,
+    sourceRel: null
   }
 };
 

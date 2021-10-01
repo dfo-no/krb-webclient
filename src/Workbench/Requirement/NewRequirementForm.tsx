@@ -8,10 +8,12 @@ import { useTranslation } from 'react-i18next';
 import { v4 as uuidv4 } from 'uuid';
 import ErrorSummary from '../../Form/ErrorSummary';
 import InputRow from '../../Form/InputRow';
+import { Alert } from '../../models/Alert';
 import ModelType from '../../models/ModelType';
 import { PostRequirementSchema, Requirement } from '../../models/Requirement';
 import RequirementType from '../../models/RequirementType';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
+import { addAlert } from '../../store/reducers/alert-reducer';
 import {
   addRequirementToNeed,
   putSelectedProjectThunk
@@ -19,6 +21,7 @@ import {
 
 function NewRequirementForm(): React.ReactElement {
   const dispatch = useAppDispatch();
+  const { project } = useAppSelector((state) => state.project);
   const [validated] = useState(false);
   const { t } = useTranslation();
 
@@ -36,7 +39,9 @@ function NewRequirementForm(): React.ReactElement {
     tags: [],
     variants: [],
     type: ModelType.requirement,
-    requirement_Type: RequirementType.requirement
+    requirement_Type: RequirementType.requirement,
+    sourceOriginal: project.id,
+    sourceRel: null
   };
 
   const {
@@ -59,7 +64,13 @@ function NewRequirementForm(): React.ReactElement {
         requirement
       })
     );
+    const alert: Alert = {
+      id: uuidv4(),
+      style: 'success',
+      text: 'Successfully created new requirement'
+    };
     dispatch(putSelectedProjectThunk('dummy')).then(() => {
+      dispatch(addAlert({ alert }));
       setShow(false);
       reset();
     });

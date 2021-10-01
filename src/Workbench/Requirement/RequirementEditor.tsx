@@ -7,12 +7,15 @@ import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
+import { v4 as uuidv4 } from 'uuid';
 import Utils from '../../common/Utils';
 import ErrorSummary from '../../Form/ErrorSummary';
+import { Alert } from '../../models/Alert';
 import { Need } from '../../models/Need';
 import { BaseRequirementSchema, Requirement } from '../../models/Requirement';
 import { Tag } from '../../models/Tag';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
+import { addAlert } from '../../store/reducers/alert-reducer';
 import {
   editRequirementInNeed,
   putSelectedProjectThunk
@@ -46,8 +49,15 @@ function RequirementEditor(): React.ReactElement {
   const { errors } = formState;
 
   const onSubmit = async (post: Requirement) => {
+    const alert: Alert = {
+      id: uuidv4(),
+      style: 'success',
+      text: 'successfully updated requirement'
+    };
     dispatch(editRequirementInNeed({ needId: need.id, requirement: post }));
-    dispatch(putSelectedProjectThunk('dummy'));
+    dispatch(putSelectedProjectThunk('dummy')).then(() => {
+      dispatch(addAlert({ alert }));
+    });
   };
 
   const needOptions = (needList: Need[]) => {

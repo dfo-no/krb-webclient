@@ -8,9 +8,11 @@ import { useTranslation } from 'react-i18next';
 import { v4 as uuidv4 } from 'uuid';
 import ErrorSummary from '../../Form/ErrorSummary';
 import InputRow from '../../Form/InputRow';
+import { Alert } from '../../models/Alert';
 import { Code, PostCodeSchema } from '../../models/Code';
 import ModelType from '../../models/ModelType';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
+import { addAlert } from '../../store/reducers/alert-reducer';
 import {
   addCodeToCodelist,
   putSelectedProjectThunk
@@ -19,6 +21,7 @@ import { addCodeToSelected } from '../../store/reducers/selectedCodelist-reducer
 
 function NewCodeForm(): React.ReactElement {
   const { codelist } = useAppSelector((state) => state.selectedCodeList);
+  const { project } = useAppSelector((state) => state.project);
   const dispatch = useAppDispatch();
   const [validated] = useState(false);
   const [show, setShow] = useState(false);
@@ -28,7 +31,9 @@ function NewCodeForm(): React.ReactElement {
     id: '',
     title: '',
     description: '',
-    type: ModelType.code
+    type: ModelType.code,
+    sourceOriginal: project.id,
+    sourceRel: null
   };
 
   const {
@@ -42,6 +47,11 @@ function NewCodeForm(): React.ReactElement {
   });
 
   const onSubmit = (post: Code) => {
+    const alert: Alert = {
+      id: uuidv4(),
+      style: 'success',
+      text: 'Successfully added code'
+    };
     const code = { ...post };
     code.id = uuidv4();
     dispatch(
@@ -52,6 +62,7 @@ function NewCodeForm(): React.ReactElement {
     );
     dispatch(addCodeToSelected(code));
     dispatch(putSelectedProjectThunk('dummy')).then(() => {
+      dispatch(addAlert({ alert }));
       reset();
       setShow(false);
     });

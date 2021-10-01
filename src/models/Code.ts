@@ -14,7 +14,9 @@ export const BaseCodeSchema = Joi.object().keys({
   description: Joi.string().allow(null, '').required(),
   type: Joi.string().equal(ModelType.code).required(),
   parent: Joi.alternatives([Joi.string().length(36), Joi.string().valid('')]),
-  children: Joi.array()
+  children: Joi.array(),
+  source_original: Joi.string().required(),
+  source_rel: Joi.string().allow(null).required()
 });
 
 export const PostCodeSchema = BaseCodeSchema.keys({

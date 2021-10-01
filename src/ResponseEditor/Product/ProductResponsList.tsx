@@ -50,8 +50,7 @@ export default function ProductResponseList(): ReactElement {
       description: '',
       originProduct: specificationProduct,
       price: 0,
-      requirementAnswers: [],
-      type: ModelType.responseProduct
+      requirementAnswers: []
     };
     const product: ResponseProduct =
       productIndex !== -1 ? response.products[productIndex] : newProduct;

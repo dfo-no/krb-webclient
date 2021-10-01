@@ -17,7 +17,6 @@ const initialResponseProduct: ResponseProduct = {
   description: '',
   requirementAnswers: [],
   price: 0,
-  type: ModelType.responseProduct,
   originProduct: {
     id: '',
     title: ' ',
@@ -27,9 +26,10 @@ const initialResponseProduct: ResponseProduct = {
       title: '',
       description: '',
       parent: '',
-      type: ModelType.product
+      type: ModelType.product,
+      sourceOriginal: null,
+      sourceRel: null
     },
-    type: ModelType.specificationProduct,
     weight: 0,
     amount: 0,
     requirements: [],
@@ -45,9 +45,10 @@ const initialResponseSpecificationProduct: SpecificationProduct = {
     title: '',
     description: '',
     parent: '',
-    type: ModelType.product
+    type: ModelType.product,
+    sourceOriginal: null,
+    sourceRel: null
   },
-  type: ModelType.specificationProduct,
   weight: 0,
   amount: 0,
   requirements: [],
