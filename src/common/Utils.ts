@@ -330,6 +330,50 @@ class Utils {
     }
     return weightFalse;
   }
+
+  static addRelativeProperty<T extends BaseModel>(
+    element: T,
+    bankId: string
+  ): T {
+    const newElement = { ...element };
+    newElement.sourceRel = bankId;
+    return newElement;
+  }
+
+  static inheritList<T extends BaseModel>(list: T[], bankId: string) {
+    return list.map((element: T) => {
+      return this.addRelativeProperty(element, bankId);
+    });
+  }
+
+  static inheritBank(project: Bank, inheritedBank: Bank) {
+    const newProject = { ...project };
+
+    const newProductList = [
+      ...project.products,
+      ...this.inheritList(inheritedBank.products, inheritedBank.id)
+    ];
+    const newCodelistList = [
+      ...project.codelist,
+      ...this.inheritList(inheritedBank.codelist, inheritedBank.id)
+    ];
+
+    const newNeedList = [
+      ...project.needs,
+      ...this.inheritList(inheritedBank.needs, inheritedBank.id)
+    ];
+    newProject.needs = newNeedList;
+    newProject.products = newProductList;
+    newProject.codelist = newCodelistList;
+
+    const newInheritance = {
+      title: inheritedBank.title,
+      description: inheritedBank.description,
+      id: inheritedBank.id
+    };
+    newProject.inheritedBanks.push(newInheritance);
+    return newProject;
+  }
 }
 
 export default Utils;

@@ -5,19 +5,19 @@ import FormControl from 'react-bootstrap/FormControl';
 import Row from 'react-bootstrap/Row';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
+import Utils from '../../common/Utils';
 import { Bank } from '../../models/Bank';
 import { useAppDispatch } from '../../store/hooks';
-import {
-  addInheritedBank,
-  putSelectedProjectThunk
-} from '../../store/reducers/project-reducer';
+import { putProjectThunk } from '../../store/reducers/project-reducer';
 
 interface SearchBarProps {
   list: Bank[];
+  project: Bank;
 }
 
 export default function InheritanceSearchBar({
-  list
+  list,
+  project
 }: SearchBarProps): ReactElement {
   const [input, setInput] = useState('');
   const [searchList, setSearchList] = useState<Bank[]>([]);
@@ -43,13 +43,8 @@ export default function InheritanceSearchBar({
   };
 
   const selectInheritance = (bank: Bank) => {
-    const newInheritance = {
-      title: bank.title,
-      description: bank.description,
-      id: bank.id
-    };
-    dispatch(addInheritedBank(newInheritance));
-    dispatch(putSelectedProjectThunk('dummy'));
+    const updatedProject = Utils.inheritBank(project, bank);
+    dispatch(putProjectThunk(updatedProject));
     history.push('/workbench/:projectId/inheritance');
   };
   const displaylist = (bankList: Bank[]) => {
