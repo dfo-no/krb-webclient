@@ -41,7 +41,7 @@ function Projects(): ReactElement {
     publications: [],
     tags: [],
     version: 0,
-    publishedDate: '',
+    publishedDate: null,
     type: ModelType.bank,
     inheritedBanks: [],
     sourceOriginal: null,

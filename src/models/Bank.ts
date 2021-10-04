@@ -25,8 +25,14 @@ export const BaseBankSchema = Joi.object().keys({
     Joi.string().valid(null)
   ]).required(),
   inheritedBanks: Joi.array().required(),
-  sourceOriginal: Joi.string().equal(null).required(),
-  sourceRel: Joi.string().equal(null).required()
+  sourceOriginal: Joi.alternatives([
+    Joi.string().length(36),
+    Joi.string().allow(null)
+  ]).required(),
+  sourceRel: Joi.alternatives([
+    Joi.string().length(36),
+    Joi.string().allow(null)
+  ]).required()
 });
 
 export interface Bank extends BaseModel {

@@ -116,7 +116,9 @@ export default function PublicationList(): React.ReactElement {
                 <Row>
                   <Col>
                     <Nav.Link href={`/bank/${field.bankId}`}>
-                      {t('date.PP', { date: new Date(field.date) })}
+                      {t('date.PP', {
+                        date: new Date(field.date ? field.date : '')
+                      })}
                       {` ${field.comment}`}
                     </Nav.Link>
                     <div className={css.listGroup__spacer} />

@@ -1,17 +1,19 @@
 import { joiResolver } from '@hookform/resolvers/joi';
+import { get } from 'lodash';
 import React, { useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import Form from 'react-bootstrap/Form';
-import { useForm } from 'react-hook-form';
+import { FieldError, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { v4 as uuidv4 } from 'uuid';
+import ControlledTextInput from '../../Form/ControlledTextInput';
 import ErrorSummary from '../../Form/ErrorSummary';
-import InputRow from '../../Form/InputRow';
 import { Alert } from '../../models/Alert';
 import { Bank } from '../../models/Bank';
 import ModelType from '../../models/ModelType';
 import { PostPublicationSchema, Publication } from '../../models/Publication';
+import Nexus from '../../Nexus/Nexus';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { addAlert } from '../../store/reducers/alert-reducer';
 import { postBankThunk } from '../../store/reducers/bank-reducer';
@@ -31,44 +33,27 @@ export default function NewPublication(): React.ReactElement {
     id: '',
     bankId: project.id,
     comment: '',
-    date: '',
+    date: null,
     type: ModelType.publication,
     version: 1,
     sourceOriginal: null,
     sourceRel: null
   };
 
-  const {
-    control,
-    handleSubmit,
-    reset,
-    formState: { errors }
-  } = useForm<Publication>({
+  const { control, handleSubmit, reset, formState } = useForm<Publication>({
     resolver: joiResolver(PostPublicationSchema),
     defaultValues
   });
 
-  const getNextVersion = (publications: Publication[]) => {
-    if (publications.length === 0) {
-      return 1;
-    }
-    return Math.max(...publications.map((p) => p.version)) + 1;
-  };
-
-  const generateBankFromProject = (item: Bank) => {
-    // Shallow clone, deep not needed for now as we don't create anything here other than desciption and title
-    const newBank: Bank = { ...project };
-    newBank.id = '';
-    newBank.publishedDate = new Date().toISOString();
-    newBank.publications = [];
-    newBank.version = getNextVersion(item.publications);
-    return newBank;
-  };
+  const { errors } = formState;
 
   const onSubmit = async (post: Publication) => {
     const publication = { ...post };
-    const newBank = generateBankFromProject(project);
-    const nextVersion = getNextVersion(project.publications);
+    const nexus = Nexus.getInstance();
+    const publicationService = nexus.getPublicationService();
+
+    const newBank = publicationService.generateBankFromProject(project);
+    const nextVersion = publicationService.getNextVersion(project.publications);
 
     // save the new published Bank
     dispatch(postBankThunk(newBank))
@@ -78,7 +63,7 @@ export default function NewPublication(): React.ReactElement {
         publication.id = result.id;
         publication.bankId = result.id;
         publication.version = result.version;
-        publication.date = result.publishedDate ?? '';
+        publication.date = result.publishedDate ?? null;
 
         // add publication to selected Bank
         dispatch(prependPublication(publication));
@@ -90,14 +75,14 @@ export default function NewPublication(): React.ReactElement {
         dispatch(putSelectedProjectThunk('dummy')).then(() => {
           setShow(false);
           reset();
+          const alert: Alert = {
+            id: uuidv4(),
+            style: 'success',
+            text: 'successfully published bank'
+          };
+          dispatch(addAlert({ alert }));
         });
       });
-    const alert: Alert = {
-      id: uuidv4(),
-      style: 'success',
-      text: 'successfully published bank'
-    };
-    dispatch(addAlert({ alert }));
   };
 
   return (
@@ -107,11 +92,10 @@ export default function NewPublication(): React.ReactElement {
         <Card className="mb-4 mt-4">
           <Card.Body>
             <Form onSubmit={handleSubmit(onSubmit)}>
-              <InputRow
+              <ControlledTextInput
                 control={control}
+                error={get(errors, `comment`) as FieldError}
                 name="comment"
-                errors={errors}
-                label={t('Comment')}
               />
               <Button className="mt-2  ml-3" type="submit">
                 {t('save')}
