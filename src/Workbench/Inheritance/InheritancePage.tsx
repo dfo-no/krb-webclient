@@ -26,7 +26,7 @@ export default function InheritancePage(): ReactElement {
       .sort((a, b) => (a.title.toLowerCase() > b.title.toLowerCase() ? 1 : -1));
     const projects = inheritanceList.map((element: InheritedBank) => {
       return (
-        <>
+        <div key={element.id}>
           <Row className="d-flex justify-content-between ml-1">
             <Col>
               <h5>{element.title}</h5>
@@ -40,7 +40,7 @@ export default function InheritancePage(): ReactElement {
           <Row className="ml-1">
             <p>{element.description}</p>
           </Row>
-        </>
+        </div>
       );
     });
     return <div className=" mt-5">{projects}</div>;

@@ -20,7 +20,8 @@ describe('ProjectSchemas works', () => {
       publishedDate: null,
       inheritedBanks: [],
       sourceOriginal: null,
-      sourceRel: null
+      sourceRel: null,
+      projectId: null
     };
     const report = PostProjectSchema.validate(bank);
 
@@ -42,7 +43,8 @@ describe('ProjectSchemas works', () => {
       publishedDate: null,
       inheritedBanks: [],
       sourceOriginal: null,
-      sourceRel: null
+      sourceRel: null,
+      projectId: null
     };
     const report = PutProjectSchema.validate(bank);
 
@@ -77,7 +79,7 @@ describe('ProjectSchemas works', () => {
             DATETIME_ISO8601UTC
           ),
           version: 2,
-          bankId: 'e56367af-d48d-422d-a4f6-,ba52ee17af24',
+          bankId: 'e56367af-d48d-422d-a4f6-ba52ee17af23',
           type: ModelType.publication,
           sourceOriginal: null,
           sourceRel: null
@@ -91,7 +93,8 @@ describe('ProjectSchemas works', () => {
       publishedDate: null,
       inheritedBanks: [],
       sourceOriginal: null,
-      sourceRel: null
+      sourceRel: null,
+      projectId: null
     };
     const report = PutProjectSchema.validate(bank, { abortEarly: false });
     expect(report.error).toBeUndefined();
@@ -134,7 +137,8 @@ describe('ProjectSchemas works', () => {
       ],
       inheritedBanks: [],
       sourceOriginal: null,
-      sourceRel: null
+      sourceRel: null,
+      projectId: null
     };
     const report = PutProjectSchema.validate(bank, {
       abortEarly: false

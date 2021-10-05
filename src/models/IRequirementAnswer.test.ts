@@ -59,7 +59,9 @@ describe('Validation', () => {
             id: 'd7a5fbd1-e44e-4bb1-aea9-a64260a5af85',
             description: '',
             type: 'requirement',
-            requirement_Type: 'requirement'
+            requirement_Type: 'requirement',
+            sourceOriginal: '7fd741aa-742b-4f96-a24a-a6280ff389f4',
+            sourceRel: null
           }
         },
         {
@@ -112,7 +114,9 @@ describe('Validation', () => {
             id: 'd39d79c5-42b8-4a0a-a57a-6253a374bf1a',
             description: 'middag hver kveld',
             type: 'requirement',
-            requirement_Type: 'requirement'
+            requirement_Type: 'requirement',
+            sourceOriginal: '7fd741aa-742b-4f96-a24a-a6280ff389f4',
+            sourceRel: null
           }
         },
         {
@@ -161,7 +165,9 @@ describe('Validation', () => {
             id: 'c8424cae-9920-4bbc-891a-b3ee46d44966',
             description: '',
             type: 'requirement',
-            requirement_Type: 'requirement'
+            requirement_Type: 'requirement',
+            sourceOriginal: '7fd741aa-742b-4f96-a24a-a6280ff389f4',
+            sourceRel: null
           }
         },
         {
@@ -210,7 +216,9 @@ describe('Validation', () => {
             id: '259d3430-5934-4459-b329-81e2cee8cc23',
             description: '',
             type: 'requirement',
-            requirement_Type: 'requirement'
+            requirement_Type: 'requirement',
+            sourceOriginal: '7fd741aa-742b-4f96-a24a-a6280ff389f4',
+            sourceRel: null
           }
         }
       ]

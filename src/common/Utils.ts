@@ -365,18 +365,27 @@ class Utils {
 
     const newProductList = [
       ...project.products,
-      ...this.inheritList(inheritedBank.products, inheritedBank.id)
+      ...this.inheritList(
+        inheritedBank.products,
+        this.ensure(inheritedBank.projectId)
+      )
     ];
     const newCodelistList = [
       ...project.codelist,
-      ...this.inheritList(inheritedBank.codelist, inheritedBank.id)
+      ...this.inheritList(
+        inheritedBank.codelist,
+        this.ensure(inheritedBank.projectId)
+      )
     ];
 
     const newNeedList = [
       ...project.needs,
       ...this.inheritList(
-        this.inheritListwithSublist(inheritedBank.needs, inheritedBank.id),
-        inheritedBank.id
+        this.inheritListwithSublist(
+          inheritedBank.needs,
+          this.ensure(inheritedBank.projectId)
+        ),
+        this.ensure(inheritedBank.projectId)
       )
     ];
     newProject.needs = newNeedList;
@@ -386,7 +395,9 @@ class Utils {
     const newInheritance = {
       title: inheritedBank.title,
       description: inheritedBank.description,
-      id: inheritedBank.id
+      id: inheritedBank.id,
+      projectId: this.ensure(inheritedBank.projectId),
+      date: this.ensure(inheritedBank.publishedDate)
     };
     const inheritedBanks = [...project.inheritedBanks, newInheritance];
     newProject.inheritedBanks = inheritedBanks;

@@ -36,7 +36,8 @@ const initialState: ProjectState = {
     inheritedBanks: [],
     publishedDate: null,
     sourceOriginal: null,
-    sourceRel: null
+    sourceRel: null,
+    projectId: null
   },
   projectLoading: 'idle',
   listLoading: 'idle'
