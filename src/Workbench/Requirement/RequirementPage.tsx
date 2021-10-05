@@ -71,7 +71,15 @@ export default function RequirementPage(): React.ReactElement {
         </h2>
         <Accordion.Collapse eventKey={element.id}>
           <Accordion.Body>
-            <EditRequirementForm element={element} />
+            {element.sourceRel === null && (
+              <EditRequirementForm element={element} />
+            )}
+            {element.sourceRel !== null && (
+              <>
+                <p>{element.description}</p>
+                <p>This item is inherited and readonly </p>
+              </>
+            )}
           </Accordion.Body>
         </Accordion.Collapse>
       </Accordion.Item>

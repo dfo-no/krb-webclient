@@ -3,13 +3,22 @@ import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 import { useTranslation } from 'react-i18next';
+import { BsTrash } from 'react-icons/bs';
 import { Link } from 'react-router-dom';
+import Utils from '../../common/Utils';
 import { InheritedBank } from '../../models/InheritedBank';
-import { useAppSelector } from '../../store/hooks';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
+import { putProjectThunk } from '../../store/reducers/project-reducer';
 
 export default function InheritancePage(): ReactElement {
   const { project } = useAppSelector((state) => state.project);
   const { t } = useTranslation();
+  const dispatch = useAppDispatch();
+
+  const removeInheritance = (id: string) => {
+    const updatedProject = Utils.removeInheritedBank(project, id);
+    dispatch(putProjectThunk(updatedProject));
+  };
 
   const renderInheritedBanks = (inheritanceList: InheritedBank[]) => {
     inheritanceList
@@ -21,6 +30,11 @@ export default function InheritancePage(): ReactElement {
           <Row className="d-flex justify-content-between ml-1">
             <Col>
               <h5>{element.title}</h5>
+            </Col>
+            <Col className="d-flex justify-content-end">
+              <Button onClick={() => removeInheritance(element.id)}>
+                <BsTrash />
+              </Button>
             </Col>
           </Row>
           <Row className="ml-1">
