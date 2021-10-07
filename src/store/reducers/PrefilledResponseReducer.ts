@@ -6,7 +6,6 @@ import { IRequirementAnswer } from '../../models/IRequirementAnswer';
 import ModelType from '../../models/ModelType';
 import { PrefilledResponse } from '../../models/PrefilledResponse';
 import { PrefilledResponseProduct } from '../../models/PrefilledResponseProduct';
-// import RequirementAnswer from '../../SpecEditor/Requirement/RequirementAnswer';
 
 interface PrefilledResponseState {
   prefilledResponse: PrefilledResponse;
@@ -29,7 +28,8 @@ const initialState: PrefilledResponseState = {
       inheritedBanks: [],
       publishedDate: null,
       sourceOriginal: null,
-      sourceRel: null
+      sourceRel: null,
+      projectId: null
     },
     // answeredVariants: [], // list over string med id som er besvart, uavhengig questiontype, drit i denne
     supplier: '',

@@ -18,6 +18,7 @@ export default class PublicationService {
     const newBank: Bank = { ...item };
     newBank.id = '';
     newBank.publishedDate = dateService.getDate();
+    newBank.projectId = item.id;
     newBank.publications = [];
     newBank.version = this.getNextVersion(item.publications);
 
