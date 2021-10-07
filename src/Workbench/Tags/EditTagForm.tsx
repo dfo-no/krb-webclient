@@ -10,7 +10,9 @@ import { v4 as uuidv4 } from 'uuid';
 import ErrorSummary from '../../Form/ErrorSummary';
 import InputRow from '../../Form/InputRow';
 import { Alert } from '../../models/Alert';
-import { BaseTagSchema, Tag } from '../../models/Tag';
+import { Nestable } from '../../models/Nestable';
+import { Parentable } from '../../models/Parentable';
+import { PutTagSchema, Tag } from '../../models/Tag';
 import { useAppDispatch } from '../../store/hooks';
 import { addAlert } from '../../store/reducers/alert-reducer';
 import {
@@ -20,7 +22,7 @@ import {
 } from '../../store/reducers/project-reducer';
 
 interface IProps {
-  element: Tag;
+  element: Parentable<Tag>;
 }
 
 export default function EditTagForm({ element }: IProps): ReactElement {
@@ -33,12 +35,12 @@ export default function EditTagForm({ element }: IProps): ReactElement {
     handleSubmit,
     reset,
     formState: { errors }
-  } = useForm<Tag>({
-    resolver: joiResolver(BaseTagSchema),
+  } = useForm<Parentable<Tag>>({
+    resolver: joiResolver(PutTagSchema),
     defaultValues: element
   });
 
-  const onEditTagSubmit = (post: Tag) => {
+  const onEditTagSubmit = (post: Nestable<Tag>) => {
     const newTag = { ...post };
     if (newTag.children) {
       delete newTag.children;
@@ -48,7 +50,7 @@ export default function EditTagForm({ element }: IProps): ReactElement {
       style: 'success',
       text: 'Successfully edited tag'
     };
-    dispatch(editTag(newTag));
+    dispatch(editTag(newTag as Parentable<Tag>));
     dispatch(putSelectedProjectThunk('dummy')).then(() => {
       dispatch(addAlert({ alert }));
       reset();
@@ -57,9 +59,6 @@ export default function EditTagForm({ element }: IProps): ReactElement {
 
   const deleteTag = () => {
     const deletableTag = { ...element };
-    if (deletableTag.children) {
-      delete deletableTag.children;
-    }
     dispatch(removeTag(deletableTag));
     dispatch(putSelectedProjectThunk('dummy')).then(() => {
       reset();

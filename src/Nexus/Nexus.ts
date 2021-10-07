@@ -1,5 +1,6 @@
 import CodelistService from './services/CodelistService';
 import PublicationService from './services/PublicationService';
+import TagService from './services/TagService';
 
 export default class Nexus {
   private static instance: Nexus;
@@ -30,5 +31,10 @@ export default class Nexus {
   // eslint-disable-next-line class-methods-use-this
   public getCodelistService(): CodelistService {
     return new CodelistService();
+  }
+
+  // eslint-disable-next-line class-methods-use-this
+  public getTagService(): TagService {
+    return new TagService();
   }
 }
