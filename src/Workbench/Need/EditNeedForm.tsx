@@ -123,7 +123,6 @@ function EditNeedForm({ element }: IProps): ReactElement {
         <BsTrashFill />
       </Button>
       <ErrorSummary errors={errors} />
-      <p>{element.title}</p>
       <AlertModal
         modalShow={modalShow}
         setModalShow={setModalShow}
