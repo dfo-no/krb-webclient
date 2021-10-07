@@ -25,8 +25,8 @@ export const BaseBankSchema = Joi.object().keys({
     Joi.string().valid(null)
   ]).required(),
   projectId: Joi.alternatives([
-    Joi.date().iso().raw(),
-    Joi.string().valid(null)
+    Joi.string().length(36),
+    Joi.string().allow(null)
   ]).required(),
   inheritedBanks: Joi.array().required(),
   sourceOriginal: Joi.alternatives([
