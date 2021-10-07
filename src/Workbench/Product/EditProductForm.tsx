@@ -1,5 +1,5 @@
 import { joiResolver } from '@hookform/resolvers/joi';
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import { useForm } from 'react-hook-form';
@@ -43,11 +43,18 @@ export default function EditProductForm({
   const {
     control,
     handleSubmit,
+    reset,
     formState: { errors }
   } = useForm<Product>({
     resolver: joiResolver(PutProductSchema),
     defaultValues: element
   });
+
+  useEffect(() => {
+    if (element) {
+      reset(JSON.parse(JSON.stringify(element)));
+    }
+  }, [element, reset]);
 
   const onSubmit = (post: Product) => {
     const newProduct = { ...element };

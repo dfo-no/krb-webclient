@@ -1,5 +1,5 @@
 import { joiResolver } from '@hookform/resolvers/joi';
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import { useForm } from 'react-hook-form';
@@ -36,12 +36,19 @@ export default function EditCodeForm({ element }: IProps): React.ReactElement {
 
   const {
     control,
+    reset,
     handleSubmit,
     formState: { errors }
   } = useForm<Code>({
     resolver: joiResolver(EditCodeSchema),
     defaultValues: element
   });
+
+  useEffect(() => {
+    if (element) {
+      reset(JSON.parse(JSON.stringify(element)));
+    }
+  }, [element, reset]);
 
   const onSubmit = (code: Code) => {
     const alert: Alert = {
