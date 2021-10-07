@@ -81,7 +81,7 @@ export default function ProjectGuard(): JSX.Element {
       <Route exact path="/workbench/:projectId/inheritance">
         <InheritancePage />
       </Route>
-      <Route exact path="/workbench/:projectId/inheritance/search">
+      <Route exact path="/workbench/:projectId/inheritance/explore">
         <InheritanceSearch />
       </Route>
     </>

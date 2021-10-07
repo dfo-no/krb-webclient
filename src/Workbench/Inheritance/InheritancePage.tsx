@@ -51,7 +51,7 @@ export default function InheritancePage(): ReactElement {
       <h3 className="m-3 ">{t('Avhengigheter')} </h3>
       <Row>
         <Col className="d-flex justify-content-end">
-          <Link to="/workbench/:projectId/inheritance/search">
+          <Link to={`/workbench/${project.id}/inheritance/explore`}>
             <Button>Utforsk</Button>
           </Link>
         </Col>
