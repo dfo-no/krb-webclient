@@ -9,8 +9,9 @@ import { v4 as uuidv4 } from 'uuid';
 import ErrorSummary from '../../Form/ErrorSummary';
 import InputRow from '../../Form/InputRow';
 import { Alert } from '../../models/Alert';
-import ModelType from '../../models/ModelType';
+import { Parentable } from '../../models/Parentable';
 import { PostTagSchema, Tag } from '../../models/Tag';
+import Nexus from '../../Nexus/Nexus';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { addAlert } from '../../store/reducers/alert-reducer';
 import {
@@ -23,29 +24,23 @@ export default function NewTagForm(): React.ReactElement {
   const { project } = useAppSelector((state) => state.project);
   const { t } = useTranslation();
   const [show, setShow] = useState(false);
+  const nexus = Nexus.getInstance();
+  const tagService = nexus.getTagService();
 
-  const defaultValues = {
-    id: '',
-    title: '',
-    type: ModelType.tag,
-    parent: '',
-    source_original: project.id,
-    source_rel: null
-  };
+  const defaultValues = tagService.generateDefaultTaglistValues(project.id);
 
   const {
     control,
     handleSubmit,
     reset,
     formState: { errors }
-  } = useForm<Tag>({
+  } = useForm<Parentable<Tag>>({
     resolver: joiResolver(PostTagSchema),
     defaultValues
   });
 
-  const onNewTagSubmit = (post: Tag) => {
-    const newTag = { ...post };
-    newTag.id = uuidv4();
+  const onNewTagSubmit = (post: Parentable<Tag>) => {
+    const newTag = tagService.generateTag(post);
     const alert: Alert = {
       id: uuidv4(),
       style: 'success',

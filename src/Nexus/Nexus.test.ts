@@ -1,3 +1,4 @@
+import { PutTagSchema } from '../models/Tag';
 import Nexus from './Nexus';
 import PublicationService from './services/PublicationService';
 
@@ -13,5 +14,18 @@ describe('Nexus', () => {
     const nexus = Nexus.getInstance();
     const service = nexus.getPublicationService();
     expect(service).toBeInstanceOf(PublicationService);
+  });
+
+  it('Nexus can generate tag in tagService based on self-generated defaultValues', () => {
+    const nexus = Nexus.getInstance();
+    const service = nexus.getTagService();
+    const tag = service.generateTag(
+      service.generateDefaultTaglistValues(
+        '123456789123456789123456789012345678'
+      )
+    );
+    const report = PutTagSchema.validate(tag);
+
+    expect(report.error).toBeUndefined();
   });
 });

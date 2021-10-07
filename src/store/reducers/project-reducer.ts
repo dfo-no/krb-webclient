@@ -390,16 +390,16 @@ const projectSlice = createSlice({
     updateSelectedVersion(state, { payload }: PayloadAction<number>) {
       state.project.version = payload;
     },
-    addTag(state, { payload }: PayloadAction<Tag>) {
+    addTag(state, { payload }: PayloadAction<Parentable<Tag>>) {
       state.project.tags.push(payload);
     },
-    editTag(state, { payload }: PayloadAction<Tag>) {
+    editTag(state, { payload }: PayloadAction<Parentable<Tag>>) {
       const index = state.project.tags.findIndex(
         (element) => payload.id === element.id
       );
       state.project.tags[index] = payload;
     },
-    removeTag(state, { payload }: PayloadAction<Tag>) {
+    removeTag(state, { payload }: PayloadAction<Parentable<Tag>>) {
       const index = state.project.tags.findIndex(
         (element) => payload.id === element.id
       );
@@ -410,7 +410,7 @@ const projectSlice = createSlice({
     addInheritedBank(state, { payload }: PayloadAction<InheritedBank>) {
       state.project.inheritedBanks.push(payload);
     },
-    setTags(state, { payload }: PayloadAction<Tag[]>) {
+    setTags(state, { payload }: PayloadAction<Parentable<Tag>[]>) {
       state.project.tags = payload;
     }
   },

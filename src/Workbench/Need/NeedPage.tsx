@@ -29,7 +29,7 @@ function NeedPage(): ReactElement {
 
       <NewNeedForm />
       <NestableHierarcy
-        dispatchfunc={(projectId: string, items: Nestable<Need>[]) =>
+        dispatchfunc={(projectId: string, items: Parentable<Need>[]) =>
           newNeedList(projectId, items)
         }
         inputlist={project.needs}
