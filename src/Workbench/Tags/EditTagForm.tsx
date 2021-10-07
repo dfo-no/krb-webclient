@@ -1,5 +1,5 @@
 import { joiResolver } from '@hookform/resolvers/joi';
-import React, { ReactElement, useState } from 'react';
+import React, { ReactElement, useEffect, useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import Form from 'react-bootstrap/Form';
@@ -39,6 +39,12 @@ export default function EditTagForm({ element }: IProps): ReactElement {
     resolver: joiResolver(PutTagSchema),
     defaultValues: element
   });
+
+  useEffect(() => {
+    if (element) {
+      reset(JSON.parse(JSON.stringify(element)));
+    }
+  }, [element, reset]);
 
   const onEditTagSubmit = (post: Nestable<Tag>) => {
     const newTag = { ...post };
