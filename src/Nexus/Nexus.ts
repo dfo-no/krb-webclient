@@ -1,3 +1,4 @@
+import CodelistService from './services/CodelistService';
 import PublicationService from './services/PublicationService';
 
 export default class Nexus {
@@ -24,5 +25,10 @@ export default class Nexus {
   // eslint-disable-next-line class-methods-use-this
   public getPublicationService(): PublicationService {
     return new PublicationService();
+  }
+
+  // eslint-disable-next-line class-methods-use-this
+  public getCodelistService(): CodelistService {
+    return new CodelistService();
   }
 }
