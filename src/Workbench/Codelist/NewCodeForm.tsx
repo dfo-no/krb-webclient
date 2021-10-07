@@ -49,7 +49,7 @@ function NewCodeForm(): React.ReactElement {
       style: 'success',
       text: 'Successfully added code'
     };
-    const code = codelistService.generateCode(post);
+    const code = codelistService.createCodeWithId(post);
     dispatch(
       addCodeToCodelist({
         codelistId: codelist.id,

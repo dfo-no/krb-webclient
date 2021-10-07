@@ -24,12 +24,14 @@ function CodelistList(): ReactElement {
               <h6 className="ml-2">
                 {Utils.capitalizeFirstLetter(element.title)}
               </h6>
-              <Link
-                onClick={() => dispatch(selectCodeList(element))}
-                to={`/workbench/${project.id}/codelist/${element.id}`}
-              >
-                <BsPencilSquare />
-              </Link>
+              {element.sourceRel === null && (
+                <Link
+                  onClick={() => dispatch(selectCodeList(element))}
+                  to={`/workbench/${project.id}/codelist/${element.id}`}
+                >
+                  <BsPencilSquare />
+                </Link>
+              )}
             </Row>
             <Row>
               <p className="ml-2 p-0">{element.description}</p>

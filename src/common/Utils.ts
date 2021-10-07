@@ -1,5 +1,6 @@
 import { Bank } from '../models/Bank';
 import { BaseModel } from '../models/BaseModel';
+import { InheritedBank } from '../models/InheritedBank';
 import { IVariant } from '../models/IVariant';
 import { Levelable } from '../models/Levelable';
 import { Need } from '../models/Need';
@@ -329,6 +330,113 @@ class Utils {
       return weightTrue;
     }
     return weightFalse;
+  }
+
+  static addRelativeProperty<T extends BaseModel>(
+    element: T,
+    bankId: string
+  ): T {
+    const newElement = { ...element };
+    newElement.sourceRel = bankId;
+    return newElement;
+  }
+
+  static inheritList<T extends BaseModel>(list: T[], bankId: string): T[] {
+    return list.map((element: T) => {
+      return this.addRelativeProperty(element, bankId);
+    });
+  }
+
+  static inheritListwithSublist(
+    list: Parentable<Need>[],
+    bankId: string
+  ): Parentable<Need>[] {
+    return list.map((element: Parentable<Need>) => {
+      const newElement = { ...element };
+      const newRequirementList = this.inheritList(element.requirements, bankId);
+
+      newElement.requirements = newRequirementList;
+      return newElement;
+    });
+  }
+
+  static inheritBank(project: Bank, inheritedBank: Bank): Bank {
+    const newProject = { ...project };
+
+    const newProductList = [
+      ...project.products,
+      ...this.inheritList(
+        inheritedBank.products,
+        this.ensure(inheritedBank.projectId)
+      )
+    ];
+    const newCodelistList = [
+      ...project.codelist,
+      ...this.inheritList(
+        inheritedBank.codelist,
+        this.ensure(inheritedBank.projectId)
+      )
+    ];
+
+    const newNeedList = [
+      ...project.needs,
+      ...this.inheritList(
+        this.inheritListwithSublist(
+          inheritedBank.needs,
+          this.ensure(inheritedBank.projectId)
+        ),
+        this.ensure(inheritedBank.projectId)
+      )
+    ];
+    newProject.needs = newNeedList;
+    newProject.products = newProductList;
+    newProject.codelist = newCodelistList;
+
+    const newInheritance = {
+      title: inheritedBank.title,
+      description: inheritedBank.description,
+      id: inheritedBank.id,
+      projectId: this.ensure(inheritedBank.projectId),
+      date: this.ensure(inheritedBank.publishedDate)
+    };
+    const inheritedBanks = [...project.inheritedBanks, newInheritance];
+    newProject.inheritedBanks = inheritedBanks;
+    return newProject;
+  }
+
+  static filterRelativeSourceList<T extends BaseModel>(
+    list: T[],
+    bankId: string
+  ): T[] {
+    return list.filter((element) => element.sourceRel !== bankId);
+  }
+
+  static removeInheritedBank(project: Bank, inheritedBank: string): Bank {
+    const newProject = { ...project };
+
+    const newProductList = this.filterRelativeSourceList(
+      project.products,
+      inheritedBank
+    );
+
+    const newCodelistList = this.filterRelativeSourceList(
+      project.codelist,
+      inheritedBank
+    );
+
+    const newNeedList = this.filterRelativeSourceList(
+      project.needs,
+      inheritedBank
+    );
+    newProject.needs = newNeedList;
+    newProject.products = newProductList;
+    newProject.codelist = newCodelistList;
+
+    const inheritedBanks = project.inheritedBanks.filter(
+      (element: InheritedBank) => element.id !== inheritedBank
+    );
+    newProject.inheritedBanks = inheritedBanks;
+    return newProject;
   }
 }
 

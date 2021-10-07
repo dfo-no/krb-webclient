@@ -76,7 +76,14 @@ export default function NestableHierarcy({
         </h2>
         <Accordion.Collapse eventKey={item.id}>
           <Accordion.Body>
-            {React.cloneElement(component, { element: item })}
+            {item.sourceRel === null &&
+              React.cloneElement(component, { element: item })}
+            {item.sourceRel !== null && (
+              <>
+                <p>{item.description}</p>
+                <p>This item is inherited and readonly </p>
+              </>
+            )}
           </Accordion.Body>
         </Accordion.Collapse>
       </Accordion.Item>

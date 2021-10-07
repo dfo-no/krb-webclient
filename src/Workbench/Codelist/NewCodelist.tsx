@@ -47,7 +47,7 @@ function NewCodelist(): React.ReactElement {
       style: 'success',
       text: 'Successfully added codelist'
     };
-    const newCodelist = codelistService.generateCodelist(post);
+    const newCodelist = codelistService.createCodelistWithId(post);
     dispatch(addCodelist(newCodelist));
     dispatch(putSelectedProjectThunk('dummy')).then(() => {
       dispatch(addAlert({ alert }));

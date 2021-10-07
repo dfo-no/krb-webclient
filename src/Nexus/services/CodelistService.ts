@@ -31,13 +31,13 @@ export default class CodelistService {
     return defaultValues;
   };
 
-  generateCodelist = (item: Codelist): Codelist => {
+  createCodelistWithId = (item: Codelist): Codelist => {
     const codelist = { ...item };
     codelist.id = this.UuidService.generateId();
     return codelist;
   };
 
-  generateCode = (item: Code): Code => {
+  createCodeWithId = (item: Code): Code => {
     const code = { ...item };
     code.id = this.UuidService.generateId();
     return code;
