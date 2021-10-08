@@ -35,7 +35,6 @@ function EditNeedForm({ element }: IProps): ReactElement {
   const { t } = useTranslation();
 
   const {
-    register,
     handleSubmit,
     control,
     formState: { errors }
