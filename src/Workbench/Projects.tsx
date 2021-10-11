@@ -14,8 +14,8 @@ import ErrorSummary from '../Form/ErrorSummary';
 import InputRow from '../Form/InputRow';
 import { Alert } from '../models/Alert';
 import { Bank } from '../models/Bank';
-import ModelType from '../models/ModelType';
 import { PostProjectSchema } from '../models/Project';
+import Nexus from '../Nexus/Nexus';
 import { useAppDispatch, useAppSelector } from '../store/hooks';
 import { addAlert } from '../store/reducers/alert-reducer';
 import {
@@ -30,24 +30,10 @@ function Projects(): ReactElement {
   const [showNewProjectForm, setShowNewProjectForm] = useState(false);
   const [validated] = useState(false);
   const { t } = useTranslation();
+  const nexus = Nexus.getInstance();
+  const projectService = nexus.getProjectService();
 
-  const defaultValues: Bank = {
-    id: '',
-    title: '',
-    description: '',
-    needs: [],
-    codelist: [],
-    products: [],
-    publications: [],
-    tags: [],
-    version: 0,
-    publishedDate: null,
-    type: ModelType.bank,
-    inheritedBanks: [],
-    sourceOriginal: null,
-    sourceRel: null,
-    projectId: null
-  };
+  const defaultValues: Bank = projectService.generateDefaultProjectValues();
 
   const {
     handleSubmit,

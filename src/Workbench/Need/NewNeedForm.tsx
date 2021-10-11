@@ -9,9 +9,9 @@ import { v4 as uuidv4 } from 'uuid';
 import ErrorSummary from '../../Form/ErrorSummary';
 import InputRow from '../../Form/InputRow';
 import { Alert } from '../../models/Alert';
-import ModelType from '../../models/ModelType';
 import { Need, PostNeedSchema } from '../../models/Need';
 import { Parentable } from '../../models/Parentable';
+import Nexus from '../../Nexus/Nexus';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { addAlert } from '../../store/reducers/alert-reducer';
 import {
@@ -25,17 +25,12 @@ function NewNeedForm(): React.ReactElement {
   const { project } = useAppSelector((state) => state.project);
   const [show, setShow] = useState(false);
   const { t } = useTranslation();
+  const nexus = Nexus.getInstance();
+  const needService = nexus.getNeedService();
 
-  const defaultValues: Parentable<Need> = {
-    id: '',
-    title: '',
-    description: '',
-    requirements: [],
-    type: ModelType.need,
-    parent: '',
-    sourceOriginal: project.id,
-    sourceRel: null
-  };
+  const defaultValues: Parentable<Need> = needService.generateDefaultNeedValues(
+    project.id
+  );
 
   const {
     control,
@@ -48,13 +43,12 @@ function NewNeedForm(): React.ReactElement {
   });
 
   const onSubmit = (post: Parentable<Need>) => {
-    const need = { ...post };
+    const need = needService.createNeedWithId(post);
     const alert: Alert = {
       id: uuidv4(),
       style: 'success',
       text: 'Successfully added new need'
     };
-    need.id = uuidv4();
     dispatch(addNeed(need));
     dispatch(putSelectedProjectThunk('dummy')).then(() => {
       dispatch(addAlert({ alert }));
