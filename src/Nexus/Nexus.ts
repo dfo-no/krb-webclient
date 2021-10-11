@@ -1,6 +1,7 @@
 import CodelistService from './services/CodelistService';
 import NeedService from './services/NeedService';
 import ProductService from './services/ProductService';
+import ProjectService from './services/ProjectService';
 import PublicationService from './services/PublicationService';
 import TagService from './services/TagService';
 
@@ -48,5 +49,10 @@ export default class Nexus {
   // eslint-disable-next-line class-methods-use-this
   public getProductService(): ProductService {
     return new ProductService();
+  }
+
+  // eslint-disable-next-line class-methods-use-this
+  public getProjectService(): ProjectService {
+    return new ProjectService();
   }
 }
