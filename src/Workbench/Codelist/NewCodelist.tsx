@@ -6,10 +6,11 @@ import Form from 'react-bootstrap/Form';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { v4 as uuidv4 } from 'uuid';
+import ErrorSummary from '../../Form/ErrorSummary';
 import InputRow from '../../Form/InputRow';
 import { Alert } from '../../models/Alert';
 import { Codelist, PostCodelistSchema } from '../../models/Codelist';
-import ModelType from '../../models/ModelType';
+import Nexus from '../../Nexus/Nexus';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { addAlert } from '../../store/reducers/alert-reducer';
 import {
@@ -23,16 +24,12 @@ function NewCodelist(): React.ReactElement {
   const { project } = useAppSelector((state) => state.project);
   const { t } = useTranslation();
   const [show, setShow] = useState(false);
+  const nexus = Nexus.getInstance();
+  const codelistService = nexus.getCodelistService();
 
-  const defaultValues: Codelist = {
-    id: '',
-    title: '',
-    description: '',
-    codes: [],
-    type: ModelType.codelist,
-    sourceOriginal: project.id,
-    sourceRel: null
-  };
+  const defaultValues: Codelist = codelistService.generateDefaultCodelistValues(
+    project.id
+  );
 
   const {
     control,
@@ -50,8 +47,7 @@ function NewCodelist(): React.ReactElement {
       style: 'success',
       text: 'Successfully added codelist'
     };
-    const newCodelist = { ...post };
-    newCodelist.id = uuidv4();
+    const newCodelist = codelistService.createCodelistWithId(post);
     dispatch(addCodelist(newCodelist));
     dispatch(putSelectedProjectThunk('dummy')).then(() => {
       dispatch(addAlert({ alert }));
@@ -96,6 +92,7 @@ function NewCodelist(): React.ReactElement {
               >
                 {t('cancel')}
               </Button>
+              <ErrorSummary errors={errors} />
             </Form>
           </Card.Body>
         </Card>

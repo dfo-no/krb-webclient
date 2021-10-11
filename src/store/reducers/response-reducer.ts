@@ -28,7 +28,8 @@ const initialState: ResponseState = {
         inheritedBanks: [],
         publishedDate: null,
         sourceOriginal: null,
-        sourceRel: null
+        sourceRel: null,
+        projectId: null
       },
       title: '',
       products: [],

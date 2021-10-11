@@ -1,5 +1,5 @@
 import { joiResolver } from '@hookform/resolvers/joi';
-import React, { ReactElement, useContext, useState } from 'react';
+import React, { ReactElement, useContext, useEffect, useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import { useForm } from 'react-hook-form';
@@ -35,14 +35,20 @@ function EditNeedForm({ element }: IProps): ReactElement {
   const { t } = useTranslation();
 
   const {
-    register,
     handleSubmit,
     control,
+    reset,
     formState: { errors }
   } = useForm<Parentable<Need>>({
     defaultValues: element,
     resolver: joiResolver(PutNeedSchema)
   });
+
+  useEffect(() => {
+    if (element) {
+      reset(JSON.parse(JSON.stringify(element)));
+    }
+  }, [element, reset]);
 
   const [modalShow, setModalShow] = useState(false);
 
@@ -116,6 +122,7 @@ function EditNeedForm({ element }: IProps): ReactElement {
         <BsTrashFill />
       </Button>
       <ErrorSummary errors={errors} />
+      <p>{element.title}</p>
       <AlertModal
         modalShow={modalShow}
         setModalShow={setModalShow}

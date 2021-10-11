@@ -1,7 +1,6 @@
-import React, { ReactElement } from 'react';
+import React, { ReactElement, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Need } from '../../models/Need';
-import { Nestable } from '../../models/Nestable';
 import { Parentable } from '../../models/Parentable';
 import NestableHierarcy from '../../NestableHierarchy/Nestable';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
@@ -29,7 +28,7 @@ function NeedPage(): ReactElement {
 
       <NewNeedForm />
       <NestableHierarcy
-        dispatchfunc={(projectId: string, items: Nestable<Need>[]) =>
+        dispatchfunc={(projectId: string, items: Parentable<Need>[]) =>
           newNeedList(projectId, items)
         }
         inputlist={project.needs}

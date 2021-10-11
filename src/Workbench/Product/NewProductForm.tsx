@@ -9,8 +9,8 @@ import { v4 as uuidv4 } from 'uuid';
 import ErrorSummary from '../../Form/ErrorSummary';
 import InputRow from '../../Form/InputRow';
 import { Alert } from '../../models/Alert';
-import ModelType from '../../models/ModelType';
 import { PostProductSchema, Product } from '../../models/Product';
+import Nexus from '../../Nexus/Nexus';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { addAlert } from '../../store/reducers/alert-reducer';
 import {
@@ -23,18 +23,14 @@ function NewProductForm(): React.ReactElement {
   const { project } = useAppSelector((state) => state.project);
   const [validated] = useState(false);
   const { t } = useTranslation();
+  const nexus = Nexus.getInstance();
+  const productService = nexus.getProductService();
 
   const [show, setShow] = useState(false);
 
-  const product: Product = {
-    id: '',
-    title: '',
-    description: '',
-    parent: '',
-    type: ModelType.product,
-    sourceOriginal: project.id,
-    sourceRel: null
-  };
+  const product: Product = productService.generateDefaultProductValues(
+    project.id
+  );
 
   const {
     control,
@@ -47,8 +43,7 @@ function NewProductForm(): React.ReactElement {
   });
 
   const onSubmit = async (post: Product) => {
-    const newProduct = { ...post };
-    newProduct.id = uuidv4();
+    const newProduct = productService.createProductWithId(post);
     const alert: Alert = {
       id: uuidv4(),
       style: 'success',

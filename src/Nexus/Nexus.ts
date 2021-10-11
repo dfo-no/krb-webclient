@@ -1,4 +1,9 @@
+import CodelistService from './services/CodelistService';
+import NeedService from './services/NeedService';
+import ProductService from './services/ProductService';
+import ProjectService from './services/ProjectService';
 import PublicationService from './services/PublicationService';
+import TagService from './services/TagService';
 
 export default class Nexus {
   private static instance: Nexus;
@@ -24,5 +29,30 @@ export default class Nexus {
   // eslint-disable-next-line class-methods-use-this
   public getPublicationService(): PublicationService {
     return new PublicationService();
+  }
+
+  // eslint-disable-next-line class-methods-use-this
+  public getCodelistService(): CodelistService {
+    return new CodelistService();
+  }
+
+  // eslint-disable-next-line class-methods-use-this
+  public getTagService(): TagService {
+    return new TagService();
+  }
+
+  // eslint-disable-next-line class-methods-use-this
+  public getNeedService(): NeedService {
+    return new NeedService();
+  }
+
+  // eslint-disable-next-line class-methods-use-this
+  public getProductService(): ProductService {
+    return new ProductService();
+  }
+
+  // eslint-disable-next-line class-methods-use-this
+  public getProjectService(): ProjectService {
+    return new ProjectService();
   }
 }
