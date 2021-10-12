@@ -3,17 +3,15 @@ import { useAppSelector } from '../../store/hooks';
 import AnswerTypeSelector from '../Components/AnswerTypeSelector';
 
 export default function ConfigureQuestion(): ReactElement {
-  const { alternativeId } = useAppSelector(
-    (state) => state.selectedAlternative
-  );
+  const { questionId } = useAppSelector((state) => state.selectedAlternative);
   const { spec } = useAppSelector((state) => state.specification);
 
-  if (!alternativeId) {
+  if (!questionId) {
     return <p>No alternative selected</p>;
   }
 
   const itemIndex = spec.requirementAnswers.findIndex(
-    (alt) => alt.id === alternativeId
+    (alt) => alt.id === questionId
   );
 
   const item = spec.requirementAnswers[itemIndex];
