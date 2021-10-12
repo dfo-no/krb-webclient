@@ -19,7 +19,7 @@ import { IVariant } from '../../models/IVariant';
 import ModelType from '../../models/ModelType';
 import { Requirement } from '../../models/Requirement';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
-import { selectAlternative } from '../../store/reducers/selectedAlternative-reducer';
+import { selectQuestion } from '../../store/reducers/selectedQuestion-reducer';
 import {
   addAnswer,
   deleteAnswer,
@@ -130,7 +130,7 @@ export default function RequirementAnswer({
 
   const selectAlt = () => {
     if (selectedAlternative !== undefined)
-      dispatch(selectAlternative(selectedAlternative));
+      dispatch(selectQuestion(selectedAlternative));
   };
   function handleChange(event: React.ChangeEvent<HTMLFormElement>) {
     const variantId = event.target.value;

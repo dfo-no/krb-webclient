@@ -3,7 +3,7 @@ import { useAppSelector } from '../../store/hooks';
 import AnswerTypeSelector from '../Components/AnswerTypeSelector';
 
 export default function ConfigureQuestion(): ReactElement {
-  const { questionId } = useAppSelector((state) => state.selectedAlternative);
+  const { questionId } = useAppSelector((state) => state.selectedQuestion);
   const { spec } = useAppSelector((state) => state.specification);
 
   if (!questionId) {

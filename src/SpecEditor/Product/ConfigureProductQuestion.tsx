@@ -5,7 +5,7 @@ import { useAppSelector } from '../../store/hooks';
 import AnswerTypeSelector from '../Components/AnswerTypeSelector';
 
 export default function ConfigureProductQuestion(): ReactElement {
-  const { questionId } = useAppSelector((state) => state.selectedAlternative);
+  const { questionId } = useAppSelector((state) => state.selectedQuestion);
   const { spec } = useAppSelector((state) => state.specification);
   const { selectedSpecificationProduct } = useAppSelector(
     (state) => state.selectedSpecProduct

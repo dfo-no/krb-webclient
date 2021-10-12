@@ -5,12 +5,12 @@ import loaderReducer from './reducers/loader-reducer';
 import PrefilledResponseReducer from './reducers/PrefilledResponseReducer';
 import projectReducer from './reducers/project-reducer';
 import responseReducer from './reducers/response-reducer';
-import selectedAlternativeReducer from './reducers/selectedAlternative-reducer';
 import selectedBankReducer from './reducers/selectedBank-reducer';
 import selectedCodeListReducer from './reducers/selectedCodelist-reducer';
 import selectedNeedReducer from './reducers/selectedNeed-reducer';
 import selectedProductReducer from './reducers/selectedProduct-reducer';
 import selectedProjectReducer from './reducers/selectedProject-reducer';
+import selectedQuestionReducer from './reducers/selectedQuestion-reducer';
 import selectedRequirementReducer from './reducers/selectedRequirement-reducer';
 import selectedResponseProductReducer from './reducers/selectedResponseProduct-reducer';
 import selectedSpecProductReducer from './reducers/selectedSpecProduct-reducer';
@@ -30,7 +30,7 @@ const rootReducer = combineReducers({
   selectedProduct: selectedProductReducer,
   specification: specificationReducer,
   selectedSpecProduct: selectedSpecProductReducer,
-  selectedAlternative: selectedAlternativeReducer,
+  selectedQuestion: selectedQuestionReducer,
   response: responseReducer,
   selectedResponseProduct: selectedResponseProductReducer,
   alert: alertReducer,
