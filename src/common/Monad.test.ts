@@ -1,4 +1,3 @@
-import { lookup } from 'dns';
 import Utils from './Utils';
 
 describe('Utils functions should work', () => {
@@ -100,10 +99,33 @@ describe('Utils functions should work', () => {
     expect(paths1.length).toBe(3);
 
     const paths2 = search2(8, tree);
+    expect(paths2.length).toBe(3);
+
+    // console.log(paths2);
+    // console.log(paths2.map((path) => path.map((node) => node.id)));
+
+    expect(true).toBeTruthy();
+    /**
+ * [
+        [
+          { id: 1, parentId: null, children: [Array] },
+          { id: 3, parentId: 1, children: [Array] }
+        ],
+        [
+          { id: 1, parentId: null, children: [Array] },
+          { id: 10, parentId: 1, children: [Array] },
+          { id: 11, parentId: 10, children: [Array] }
+        ],
+        [
+          { id: 1, parentId: null, children: [Array] },
+          { id: 10, parentId: 1, children: [Array] }
+        ]
+      ]
+
+ *
+ */
 
     // console.log(paths.map((path: any) => path.map((node: any) => node.id)));
-
-    expect(paths2.length).toBe(3);
   });
 
   it('Search polytree', () => {
@@ -182,7 +204,7 @@ describe('Utils functions should work', () => {
           {
             id: 61,
             parentId: 60,
-            children: []
+            children: [{ id: 88, parentId: 61, children: [] }]
           },
           {
             id: 8,
@@ -190,10 +212,17 @@ describe('Utils functions should work', () => {
             children: []
           }
         ]
+      },
+      {
+        id: 70,
+        parentId: null,
+        children: []
       }
     ];
 
-    /*     const search = (id: number, tree2: Node) => {
+    //interface Paths =
+
+    const searchPolyTree = (id: number, tree2: PolyTree) => {
       const loop = (path: Node[], node: Node): Node[][] => {
         const newLocal =
           node.id === id
@@ -203,11 +232,37 @@ describe('Utils functions should work', () => {
               }, [] as Node[][]);
         return newLocal;
       };
-      return loop([], tree2);
+      const result = [];
+
+      tree2.forEach((n) => {
+        const nodeResult = loop([], n);
+        // console.log(nodeResult);
+        if (nodeResult.length === 0) {
+          //console.log('Not found in this root node');
+        } else {
+          result.push(nodeResult);
+        }
+      });
+      return result;
     };
     const paths = searchPolyTree(8, polyTree);
-    console.log(paths); */
-    /*  expect(paths.length).toBeTruthy();
-    console.log(JSON.stringify(polyTree, null, 2)); */
+    // console.log(paths);
+    expect(paths.length).toBe(2);
+    expect(paths[0].length).toBe(3);
+    expect(paths[1].length).toBe(1);
+    /* paths.forEach((v) => {
+      v.forEach((r) => {
+        r.forEach((g) => {
+          //console.log(g.id);
+        });
+      });
+    }); */
+    // expect(paths[0])
+    // console.log(paths);
+    // console.log(paths);
+    // console.log(paths.map((path) => path.map((node) => node.id)));
+
+    // console.log(JSON.stringify(paths, null, 2));
+    // console.log(paths);
   });
 });
