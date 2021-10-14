@@ -39,4 +39,24 @@ describe('Nexus', () => {
     const result = nexus.getProject();
     expect(result.needs).toContain(need);
   });
+
+  it('Nexus can create project, set bank in store and add a codelist with a code', () => {
+    const nexus = Nexus.getInstance();
+    const projectservice = nexus.getProjectService();
+    const codelistservice = nexus.getCodelistService();
+    const projectDefaultValues = projectservice.generateDefaultProjectValues();
+    nexus.setProject(projectDefaultValues);
+    const codelist = codelistservice.createCodelistWithId(
+      codelistservice.generateDefaultCodelistValues(projectDefaultValues.id)
+    );
+    codelistservice.addCodelist(codelist);
+    const code = codelistservice.createCodeWithId(
+      codelistservice.generateDefaultCodeValues(projectDefaultValues.id)
+    );
+    codelistservice.addCode(code, codelist.id);
+    const result = nexus.getProject();
+    expect(result.codelist).toContain(codelist);
+
+    // expect(result.codelist.codes).toContain(codelist);
+  });
 });

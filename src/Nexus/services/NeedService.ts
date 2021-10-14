@@ -41,4 +41,8 @@ export default class NeedService {
   editNeed(item: Parentable<Need>): void {
     this.storeService.editNeed(item);
   }
+
+  deleteNeed(item: Parentable<Need>): void {
+    this.storeService.deleteNeed(item);
+  }
 }

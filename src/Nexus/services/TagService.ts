@@ -30,4 +30,16 @@ export default class TagService {
     tag.id = this.UuidService.generateId();
     return tag;
   };
+
+  addTag(item: Parentable<Tag>): void {
+    this.storeService.addTag(item);
+  }
+
+  editTag(item: Parentable<Tag>): void {
+    this.storeService.editTag(item);
+  }
+
+  deleteTag(item: Parentable<Tag>): void {
+    this.storeService.deleteTag(item);
+  }
 }

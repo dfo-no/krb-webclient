@@ -49,4 +49,28 @@ export default class CodelistService {
     code.id = this.UuidService.generateId();
     return code;
   };
+
+  addCodelist(item: Codelist): void {
+    this.storeService.addCodelist(item);
+  }
+
+  editCodelist(item: Codelist): void {
+    this.storeService.editCodelist(item);
+  }
+
+  deleteCodelist(item: Codelist): void {
+    this.storeService.deleteCodelist(item);
+  }
+
+  addCode(item: Code, codelistId: string): void {
+    this.storeService.addCode(item, codelistId);
+  }
+
+  editCode(item: Code, codelistId: string): void {
+    this.storeService.editCode(item, codelistId);
+  }
+
+  deleteCode(item: Code, codelistId: string): void {
+    this.storeService.deleteCode(item, codelistId);
+  }
 }
