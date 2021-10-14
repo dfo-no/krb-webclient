@@ -1,10 +1,17 @@
 import { Code } from '../../models/Code';
 import { Codelist } from '../../models/Codelist';
 import ModelType from '../../models/ModelType';
+import StoreService from './StoreService';
 import UuidService from './UuidService';
 
 export default class CodelistService {
   UuidService = new UuidService();
+
+  private storeService: StoreService;
+
+  public constructor(store: StoreService) {
+    this.storeService = store;
+  }
 
   generateDefaultCodelistValues = (projectId: string): Codelist => {
     const defaultValues: Codelist = {

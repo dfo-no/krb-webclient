@@ -1,9 +1,16 @@
 import { Bank } from '../../models/Bank';
 import ModelType from '../../models/ModelType';
+import StoreService from './StoreService';
 import UuidService from './UuidService';
 
-export default class NeedService {
+export default class ProjectService {
   UuidService = new UuidService();
+
+  private storeService: StoreService;
+
+  public constructor(store: StoreService) {
+    this.storeService = store;
+  }
 
   generateDefaultProjectValues = (): Bank => {
     const defaultValues: Bank = {
