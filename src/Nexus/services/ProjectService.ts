@@ -32,8 +32,4 @@ export default class ProjectService {
     };
     return defaultValues;
   };
-
-  editProjectTitle(title: string) {}
-
-  editProjectDescription(title: string) {}
 }
