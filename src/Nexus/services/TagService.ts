@@ -1,10 +1,17 @@
 import ModelType from '../../models/ModelType';
 import { Parentable } from '../../models/Parentable';
 import { Tag } from '../../models/Tag';
+import StoreService from './StoreService';
 import UuidService from './UuidService';
 
 export default class TagService {
   UuidService = new UuidService();
+
+  private storeService: StoreService;
+
+  public constructor(store: StoreService) {
+    this.storeService = store;
+  }
 
   generateDefaultTaglistValues = (projectId: string): Parentable<Tag> => {
     const defaultValues: Parentable<Tag> = {

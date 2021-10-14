@@ -28,4 +28,15 @@ describe('Nexus', () => {
 
     expect(report.error).toBeUndefined();
   });
+  it('Nexus can create project, set bank in store and add a need', () => {
+    const nexus = Nexus.getInstance();
+    const projectservice = nexus.getProjectService();
+    const needservice = nexus.getNeedService();
+    const projectDefaultValues = projectservice.generateDefaultProjectValues();
+    nexus.setProject(projectDefaultValues);
+    const need = needservice.generateDefaultNeedValues(projectDefaultValues.id);
+    needservice.addNeed(need);
+    const result = nexus.getProject();
+    expect(result.needs).toContain(need);
+  });
 });
