@@ -55,8 +55,6 @@ describe('Nexus', () => {
     );
     codelistservice.addCode(code, codelist.id);
     const result = nexus.getProject();
-    expect(result.codelist).toContain(codelist);
-
-    // expect(result.codelist.codes).toContain(codelist);
+    expect(result.codelist[0].codes).toContain(code);
   });
 });
