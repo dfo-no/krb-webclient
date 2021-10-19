@@ -34,15 +34,15 @@ export default class NeedService {
     return tag;
   };
 
-  addNeed(item: Parentable<Need>): void {
+  add(item: Parentable<Need>): void {
     this.storeService.addNeed(item);
   }
 
-  editNeed(item: Parentable<Need>): void {
+  edit(item: Parentable<Need>): void {
     this.storeService.editNeed(item);
   }
 
-  deleteNeed(item: Parentable<Need>): void {
+  delete(item: Parentable<Need>): void {
     this.storeService.deleteNeed(item);
   }
 }

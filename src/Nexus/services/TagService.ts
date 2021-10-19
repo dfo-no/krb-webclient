@@ -31,15 +31,15 @@ export default class TagService {
     return tag;
   };
 
-  addTag(item: Parentable<Tag>): void {
+  add(item: Parentable<Tag>): void {
     this.storeService.addTag(item);
   }
 
-  editTag(item: Parentable<Tag>): void {
+  edit(item: Parentable<Tag>): void {
     this.storeService.editTag(item);
   }
 
-  deleteTag(item: Parentable<Tag>): void {
+  delete(item: Parentable<Tag>): void {
     this.storeService.deleteTag(item);
   }
 }

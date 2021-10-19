@@ -31,15 +31,15 @@ export default class ProductService {
     return tag;
   };
 
-  addProduct(item: Product): void {
+  add(item: Product): void {
     this.storeService.addProduct(item);
   }
 
-  editProduct(item: Product): void {
+  edit(item: Product): void {
     this.storeService.editProduct(item);
   }
 
-  deleteProduct(item: Product): void {
+  delete(item: Product): void {
     this.storeService.deleteProduct(item);
   }
 }
