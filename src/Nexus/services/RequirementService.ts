@@ -35,15 +35,15 @@ export default class RequirementService {
     return requirement;
   };
 
-  addRequirement(item: Requirement): void {
+  add(item: Requirement): void {
     this.storeService.addRequirement(item.needId, item);
   }
 
-  editRequirement(item: Requirement): void {
+  edit(item: Requirement): void {
     this.storeService.editRequirement(item.needId, item);
   }
 
-  deleteRequirement(item: Requirement): void {
+  delete(item: Requirement): void {
     this.storeService.deleteRequirement(item.needId, item);
   }
 }
