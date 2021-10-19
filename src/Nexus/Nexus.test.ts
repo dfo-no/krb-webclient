@@ -1,4 +1,5 @@
 import { PutTagSchema } from '../models/Tag';
+import { editNeed } from '../store/reducers/project-reducer';
 import Nexus from './Nexus';
 import PublicationService from './services/PublicationService';
 
@@ -56,5 +57,21 @@ describe('Nexus', () => {
     codelistservice.addCode(code, codelist.id);
     const result = nexus.getProject();
     expect(result.codelist[0].codes).toContain(code);
+  });
+
+  it('Nexus can save and load bank using adapter', () => {
+    const nexus = Nexus.getInstance();
+    const projectservice = nexus.getProjectService();
+    const needservice = nexus.getNeedService();
+    const projectDefaultValues = projectservice.generateDefaultProjectValues();
+    nexus.setProject(projectDefaultValues);
+    const need = needservice.generateDefaultNeedValues(projectDefaultValues.id);
+    needservice.addNeed(need);
+    nexus.save();
+    return nexus.load().then((result) => {
+      const storageBank = nexus.getProject();
+
+      expect(result).toEqual(storageBank);
+    });
   });
 });
