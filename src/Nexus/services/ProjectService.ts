@@ -32,4 +32,12 @@ export default class ProjectService {
     };
     return defaultValues;
   };
+
+  editTitle = (title: string): void => {
+    this.storeService.editProjectTitle(title);
+  };
+
+  editDescription = (description: string): void => {
+    this.storeService.editProjectTitle(description);
+  };
 }
