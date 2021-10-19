@@ -3,7 +3,7 @@ import { Product } from '../../models/Product';
 import StoreService from './StoreService';
 import UuidService from './UuidService';
 
-export default class NeedService {
+export default class ProductService {
   UuidService = new UuidService();
 
   private storeService: StoreService;
@@ -30,4 +30,16 @@ export default class NeedService {
     tag.id = this.UuidService.generateId();
     return tag;
   };
+
+  add(item: Product): void {
+    this.storeService.addProduct(item);
+  }
+
+  edit(item: Product): void {
+    this.storeService.editProduct(item);
+  }
+
+  delete(item: Product): void {
+    this.storeService.deleteProduct(item);
+  }
 }
