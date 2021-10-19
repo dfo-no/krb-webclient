@@ -1,4 +1,4 @@
-import { BaseModel2, createTree, Parentable2 } from './Tree';
+import { BaseModel2, createTree, Parentable2, searchTree } from './Tree';
 
 describe('Tree', () => {
   it('Should be nodeable', () => {
@@ -11,7 +11,7 @@ describe('Tree', () => {
       { id: '81', parent: '80', name: '81' },
       { id: '74', parent: null, name: '74' },
       { id: '76', parent: '80', name: '76' },
-      { id: '63', parent: '62', name: '63' },
+      { id: '80', parent: '62', name: '80' },
       { id: '80', parent: '86', name: '80' },
       { id: '87', parent: '86', name: '87' },
       { id: '62', parent: '74', name: '62' },
@@ -19,7 +19,10 @@ describe('Tree', () => {
     ];
 
     const tree = createTree(data);
+    console.log(JSON.stringify(tree, null, 2));
 
+    const result = searchTree('1', tree);
+    console.log(result);
     expect(true).toBeTruthy();
   });
 });

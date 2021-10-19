@@ -1,7 +1,6 @@
-/* eslint-disable no-param-reassign */
 export type Nestable2<T extends BaseModel2> = T & {
   parent: string;
-  children?: Nestable2<T>[];
+  children: Nestable2<T>[];
 };
 
 export type Parentable2<T extends BaseModel2> = T & {
@@ -20,13 +19,15 @@ export function createTree<T extends BaseModel2>(
   data: Parentable2<T>[]
 ): Nestable2<T> {
   const idMapping = data.reduce((acc: Acc, el, i) => {
+    // eslint-disable-next-line no-param-reassign
     acc[el.id] = i;
     return acc;
   }, {});
 
   let root: Nestable2<BaseModel2> = {
     id: 'gurba',
-    parent: 'A'
+    parent: 'A',
+    children: []
   };
 
   data.forEach((el) => {
@@ -51,3 +52,25 @@ export function createTree<T extends BaseModel2>(
   });
   return root as Nestable2<T>;
 }
+
+export function searchTree<T extends BaseModel2>(
+  id: string,
+  tree2: Nestable2<T>
+): Nestable2<T>[] | Nestable2<T>[][] {
+  const loop = (
+    path: Array<typeof node>,
+    node: Nestable2<T>
+  ): Nestable2<T>[] | Nestable2<T>[][] => {
+    return node.id === id
+      ? [node]
+      : node.children.reduce((acc: Nestable2<T>[][], child: Nestable2<T>) => {
+          return acc.concat(loop([...path, node], child));
+        }, []);
+  };
+
+  return loop([], tree2);
+}
+
+// export function searchPolyTree<T extends BaseModel2(id: string, tree3, Nestable2<T>) {
+
+//}
