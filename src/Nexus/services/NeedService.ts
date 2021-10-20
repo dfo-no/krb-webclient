@@ -1,10 +1,18 @@
+/* eslint-disable class-methods-use-this */
 import ModelType from '../../models/ModelType';
 import { Need } from '../../models/Need';
 import { Parentable } from '../../models/Parentable';
+import StoreService from './StoreService';
 import UuidService from './UuidService';
 
 export default class NeedService {
   UuidService = new UuidService();
+
+  private storeService: StoreService;
+
+  public constructor(store: StoreService) {
+    this.storeService = store;
+  }
 
   generateDefaultNeedValues = (projectId: string): Parentable<Need> => {
     const defaultValues: Parentable<Need> = {
@@ -25,4 +33,16 @@ export default class NeedService {
     tag.id = this.UuidService.generateId();
     return tag;
   };
+
+  add(item: Parentable<Need>): void {
+    this.storeService.addNeed(item);
+  }
+
+  edit(item: Parentable<Need>): void {
+    this.storeService.editNeed(item);
+  }
+
+  delete(item: Parentable<Need>): void {
+    this.storeService.deleteNeed(item);
+  }
 }

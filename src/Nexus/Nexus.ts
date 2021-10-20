@@ -1,12 +1,19 @@
+/* eslint-disable class-methods-use-this */
+import { Bank } from '../models/Bank';
 import CodelistService from './services/CodelistService';
 import NeedService from './services/NeedService';
 import ProductService from './services/ProductService';
 import ProjectService from './services/ProjectService';
 import PublicationService from './services/PublicationService';
+import StoreService from './services/StoreService';
 import TagService from './services/TagService';
 
 export default class Nexus {
   private static instance: Nexus;
+
+  private static bank: Bank;
+
+  public store = new StoreService();
 
   private constructor() {
     // intensional private constructor
@@ -18,6 +25,14 @@ export default class Nexus {
     }
 
     return Nexus.instance;
+  }
+
+  public setProject(bank: Bank): void {
+    this.store.setBank(bank);
+  }
+
+  public getProject(): Bank {
+    return this.store.getBank();
   }
 
   /**
@@ -33,26 +48,26 @@ export default class Nexus {
 
   // eslint-disable-next-line class-methods-use-this
   public getCodelistService(): CodelistService {
-    return new CodelistService();
+    return new CodelistService(this.store);
   }
 
   // eslint-disable-next-line class-methods-use-this
   public getTagService(): TagService {
-    return new TagService();
+    return new TagService(this.store);
   }
 
   // eslint-disable-next-line class-methods-use-this
   public getNeedService(): NeedService {
-    return new NeedService();
+    return new NeedService(this.store);
   }
 
   // eslint-disable-next-line class-methods-use-this
   public getProductService(): ProductService {
-    return new ProductService();
+    return new ProductService(this.store);
   }
 
   // eslint-disable-next-line class-methods-use-this
   public getProjectService(): ProjectService {
-    return new ProjectService();
+    return new ProjectService(this.store);
   }
 }

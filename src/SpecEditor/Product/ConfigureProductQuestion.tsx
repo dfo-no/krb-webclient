@@ -5,9 +5,7 @@ import { useAppSelector } from '../../store/hooks';
 import AnswerTypeSelector from '../Components/AnswerTypeSelector';
 
 export default function ConfigureProductQuestion(): ReactElement {
-  const { alternativeId } = useAppSelector(
-    (state) => state.selectedAlternative
-  );
+  const { questionId } = useAppSelector((state) => state.selectedQuestion);
   const { spec } = useAppSelector((state) => state.specification);
   const { selectedSpecificationProduct } = useAppSelector(
     (state) => state.selectedSpecProduct
@@ -19,12 +17,12 @@ export default function ConfigureProductQuestion(): ReactElement {
         product.id === selectedSpecificationProduct.id
     )
   );
-  if (!alternativeId) {
+  if (!questionId) {
     return <p>No question selected</p>;
   }
 
   const itemIndex = spec.products[productIndex].requirementAnswers.findIndex(
-    (alt) => alt.id === alternativeId
+    (alt) => alt.id === questionId
   );
   const item = spec.products[productIndex].requirementAnswers[itemIndex];
   return <AnswerTypeSelector answer={item} />;

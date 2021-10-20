@@ -20,7 +20,7 @@ import ModelType from '../../models/ModelType';
 import { Requirement } from '../../models/Requirement';
 import { SpecificationProduct } from '../../models/SpecificationProduct';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
-import { selectAlternative } from '../../store/reducers/selectedAlternative-reducer';
+import { selectQuestion } from '../../store/reducers/selectedQuestion-reducer';
 import {
   addProductAnswer,
   deleteProductAnswer,
@@ -162,9 +162,9 @@ export default function ProductRequirementAnswer({
     setSelectedVariant(variant);
   }
 
-  const selectQuestion = () => {
+  const selectQuestionType = () => {
     if (selectedQuestion !== undefined)
-      dispatch(selectAlternative(selectedQuestion));
+      dispatch(selectQuestion(selectedQuestion));
   };
   function findDefaultRequirementText(): string {
     let defaultText = requirement.variants[0].id;
@@ -256,7 +256,7 @@ export default function ProductRequirementAnswer({
           <Col sm={3}>
             {selectedQuestion !== undefined && (
               <Link
-                onClick={selectQuestion}
+                onClick={selectQuestionType}
                 to={`/specification/${id}/product/${productId}/question/${selectedQuestion}`}
               >
                 <Button className="ml-2">Configure Question</Button>
