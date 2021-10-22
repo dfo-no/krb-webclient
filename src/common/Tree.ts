@@ -1,10 +1,19 @@
+import { cloneDeep } from 'lodash';
 import { BaseModel } from '../models/BaseModel';
+import { Levelable } from '../models/Levelable';
 import ModelType from '../models/ModelType';
 import { Nestable } from '../models/Nestable';
 import { Parentable } from '../models/Parentable';
+import Utils from './Utils';
 
 interface Acc {
   [key: string]: number;
+}
+
+export interface TreePath {
+  id: string;
+  title: string;
+  parent: string;
 }
 
 /**
@@ -95,9 +104,9 @@ const makePaths = <T extends BaseModel>(
 ) => {
   tags.forEach((tag) => {
     const values = [...prefix, tag.id];
-
     if (res[tag.id]) {
       const existing = res[tag.id];
+
       Object.assign(res, { [tag.id]: [existing, values] });
     } else {
       Object.assign(res, { [tag.id]: values });
@@ -114,9 +123,10 @@ export const getPathsArray = <T extends BaseModel>(
   id: string,
   data: Parentable<T>[]
 ): string[][] | string[] => {
-  const tree = createPolyTree(data);
-  const paths = makePaths(tree);
+  const clone = cloneDeep(data);
+  const tree = createPolyTree(clone);
 
+  const paths = makePaths(tree);
   return paths[id] ? paths[id] : [];
 };
 
@@ -137,7 +147,7 @@ export const normalize2DArray = (data: string[] | string[][]): string[][] => {
   return result;
 };
 
-export const filterDuplicateArray = (data: string[][]): string[][] => {
+export const filterDuplicateArray = (data: string[][]): string[] => {
   const stringArrays = data.map((e) => JSON.stringify(e));
   const uniqueStringArray = new Set(stringArrays);
   const uniqueArray = Array.from(uniqueStringArray, (x) => JSON.parse(x));
@@ -145,11 +155,28 @@ export const filterDuplicateArray = (data: string[][]): string[][] => {
 };
 
 export const getPaths = <T extends BaseModel>(
-  id: string,
+  ids: string[],
   data: Parentable<T>[]
-): string[][] => {
-  const paths = getPathsArray(id, data);
-  const normalizedArray = normalize2DArray(paths);
-  const uniqueArray = filterDuplicateArray(normalizedArray);
-  return uniqueArray;
+): Levelable<T>[] => {
+  const result: Parentable<T>[] = [];
+
+  ids.forEach((id) => {
+    const paths = getPathsArray(id, data);
+
+    // TODO: line 165 to 175 is shit an can possibly be removed og refactored
+    const normalizedArray = normalize2DArray(paths);
+    const uniqueArray = filterDuplicateArray(normalizedArray);
+    uniqueArray.forEach((res) => {
+      const need = data.find((n) => n.id === res);
+      if (need) {
+        const clone = { ...need, children: [] } as Parentable<T>;
+        result.push(clone);
+      }
+    });
+  });
+
+  const foo = result.filter(
+    (v, i, a) => a.findIndex((t) => t.id === v.id) === i
+  );
+  return Utils.parentable2Levelable(foo);
 };
