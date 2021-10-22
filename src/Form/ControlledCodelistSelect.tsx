@@ -1,4 +1,5 @@
 import React from 'react';
+import { FormControl } from 'react-bootstrap';
 import Form from 'react-bootstrap/Form';
 import {
   Controller,
@@ -17,7 +18,8 @@ interface Props<T> extends UseControllerProps<T> {
 const ControlledCodelistSelect = <T extends FieldValues>({
   codelist,
   name,
-  control
+  control,
+  error
 }: Props<T>): React.ReactElement => {
   const renderOptions = (codes: Code[]) => {
     return codes.map((code) => {
@@ -35,12 +37,15 @@ const ControlledCodelistSelect = <T extends FieldValues>({
         control={control}
         name={name}
         render={({ field }) => (
-          <Form.Select {...field}>
+          <Form.Select {...field} isInvalid={!!error}>
             <option value="">Ingen valgt</option>
             {renderOptions(codelist.codes)}
           </Form.Select>
         )}
       />
+      <FormControl.Feedback type="invalid">
+        {error?.message}
+      </FormControl.Feedback>
     </Form.Group>
   );
 };
