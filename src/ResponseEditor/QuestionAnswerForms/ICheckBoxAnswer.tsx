@@ -1,13 +1,13 @@
 import { joiResolver } from '@hookform/resolvers/joi';
-import Switch from '@mui/material/Switch';
 import Joi from 'joi';
+import { get } from 'lodash';
 import React from 'react';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import Form from 'react-bootstrap/Form';
-import { Controller, useForm } from 'react-hook-form';
+import { FieldError, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import ErrorSummary from '../../Form/ErrorSummary';
+import ControlledCheckbox from '../../Form/ControlledCheckbox';
 import { ICheckboxQuestion } from '../../models/ICheckboxQuestion';
 import { IRequirementAnswer } from '../../models/IRequirementAnswer';
 import ModelType from '../../models/ModelType';
@@ -71,7 +71,6 @@ export default function ICheckBoxAnswer({
   const {
     control,
     handleSubmit,
-    getValues,
     formState: { errors }
   } = useForm<ICheckboxQuestion>({
     resolver: joiResolver(ResponseCheckBoxSchema),
@@ -105,21 +104,13 @@ export default function ICheckBoxAnswer({
       </Card.Header>
       <Card.Body>
         <Form onSubmit={handleSubmit(saveValues)}>
-          <Controller
-            name={`answer.value` as const}
+          <ControlledCheckbox
+            name="answer.value"
             control={control}
-            defaultValue={getValues(`answer.value`)}
-            render={({ field }) => (
-              <Switch
-                {...field}
-                onChange={(e) => field.onChange(e.target.checked)}
-                checked={field.value ? field.value : false}
-              />
-            )}
+            error={get(errors, `answer.value`) as FieldError}
           />
 
           <Button type="submit">{t('save')}</Button>
-          <ErrorSummary errors={errors} />
         </Form>
       </Card.Body>
     </Card>

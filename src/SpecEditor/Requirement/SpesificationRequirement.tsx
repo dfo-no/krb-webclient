@@ -1,4 +1,4 @@
-import React, { ReactElement, useState } from 'react';
+import React, { useState } from 'react';
 import { Card } from 'react-bootstrap';
 import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
@@ -22,7 +22,7 @@ type InputProps = {
 export default function SpesificationRequirement({
   requirement,
   selected
-}: InputProps): ReactElement {
+}: InputProps): React.ReactElement {
   const dispatch = useAppDispatch();
   const [isSelected, setSelected] = useState(selected);
   const { spec } = useAppSelector((state) => state.specification);

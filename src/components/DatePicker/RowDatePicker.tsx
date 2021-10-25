@@ -74,7 +74,7 @@ export default function RowDatePicker<T extends FieldValues>({
             <Controller
               name={name}
               control={control}
-              render={({ field, fieldState, formState }) => (
+              render={({ field }) => (
                 <DatePicker
                   label={label}
                   mask={maskMap[i18n.language]}

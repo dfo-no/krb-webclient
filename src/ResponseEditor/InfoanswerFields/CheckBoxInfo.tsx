@@ -1,4 +1,4 @@
-import React, { ReactElement } from 'react';
+import React from 'react';
 import Container from 'react-bootstrap/Container';
 import { ICheckboxQuestion } from '../../models/ICheckboxQuestion';
 import { IRequirementAnswer } from '../../models/IRequirementAnswer';
@@ -12,7 +12,7 @@ interface IProps {
 export default function CheckBoxInfo({
   answer,
   parent_requirement
-}: IProps): ReactElement {
+}: IProps): React.ReactElement {
   const alternative = answer.question as ICheckboxQuestion;
   const variant = parent_requirement.variants[0];
 

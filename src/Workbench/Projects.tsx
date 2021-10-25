@@ -1,5 +1,5 @@
 import { joiResolver } from '@hookform/resolvers/joi';
-import React, { ReactElement, useState } from 'react';
+import React, { useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
@@ -24,7 +24,7 @@ import {
   selectProject
 } from '../store/reducers/project-reducer';
 
-function Projects(): ReactElement {
+function Projects(): React.ReactElement {
   const dispatch = useAppDispatch();
   const { list } = useAppSelector((state) => state.project);
   const [showNewProjectForm, setShowNewProjectForm] = useState(false);

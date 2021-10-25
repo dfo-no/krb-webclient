@@ -1,4 +1,4 @@
-import React, { ReactElement } from 'react';
+import React from 'react';
 import Container from 'react-bootstrap/Container';
 import { useRouteMatch } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
@@ -9,7 +9,7 @@ interface RouteParams {
   bankId: string;
 }
 
-export default function RequirementSpecEditor(): ReactElement {
+export default function RequirementSpecEditor(): React.ReactElement {
   const projectMatch = useRouteMatch<RouteParams>('/specification/:bankId');
   const { id } = useAppSelector((state) => state.selectedBank);
   const { normalizedList } = useAppSelector((state) => state.bank);

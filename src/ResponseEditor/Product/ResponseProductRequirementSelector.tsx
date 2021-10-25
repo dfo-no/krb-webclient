@@ -1,4 +1,4 @@
-import React, { ReactElement } from 'react';
+import React from 'react';
 import Utils from '../../common/Utils';
 import { ResponseProduct } from '../../models/ResponseProduct';
 import { SpecificationProduct } from '../../models/SpecificationProduct';
@@ -11,7 +11,7 @@ interface InputProps {
 
 export default function ResponseProductRequirementSelector({
   product
-}: InputProps): ReactElement {
+}: InputProps): React.ReactElement {
   const { response } = useAppSelector((state) => state.response);
 
   const selectedBank = response.spesification.bank;

@@ -1,14 +1,14 @@
-import React, { ReactElement } from 'react';
-import Button from 'react-bootstrap/Button';
 import {
   AuthenticatedTemplate,
   UnauthenticatedTemplate,
   useMsal
 } from '@azure/msal-react';
+import React from 'react';
+import Button from 'react-bootstrap/Button';
 import { useTranslation } from 'react-i18next';
 import { loginRequest } from '../authentication/authConfig';
 
-export default function SignedButton(): ReactElement {
+export default function SignedButton(): React.ReactElement {
   const { instance } = useMsal();
   const { t } = useTranslation();
   return (

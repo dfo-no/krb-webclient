@@ -1,4 +1,4 @@
-import React, { ReactElement } from 'react';
+import React from 'react';
 import Badge from 'react-bootstrap/Badge';
 import Card from 'react-bootstrap/Card';
 import Utils from '../../common/Utils';
@@ -9,7 +9,7 @@ interface IProps {
   tags: string[];
 }
 
-export default function TagsAsChips({ tags }: IProps): ReactElement {
+export default function TagsAsChips({ tags }: IProps): React.ReactElement {
   const { project } = useAppSelector((state) => state.project);
   const renderList = () => {
     const sorted = project.tags

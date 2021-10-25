@@ -1,5 +1,5 @@
 import { joiResolver } from '@hookform/resolvers/joi';
-import React, { ReactElement, useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import { useForm } from 'react-hook-form';
@@ -15,7 +15,6 @@ import { Need, PutNeedSchema } from '../../models/Need';
 import { Nestable } from '../../models/Nestable';
 import { Parentable } from '../../models/Parentable';
 import { AccordionContext } from '../../NestableHierarchy/AccordionContext';
-import Nexus from '../../Nexus/Nexus';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { addAlert } from '../../store/reducers/alert-reducer';
 import {
@@ -28,7 +27,7 @@ interface IProps {
   element: Need;
 }
 
-function EditNeedForm({ element }: IProps): ReactElement {
+function EditNeedForm({ element }: IProps): React.ReactElement {
   const { project } = useAppSelector((state) => state.project);
   const dispatch = useAppDispatch();
   const { onOpenClose } = useContext(AccordionContext);

@@ -1,9 +1,9 @@
-import React, { ReactElement } from 'react';
+import React from 'react';
 import { useTranslation } from 'react-i18next';
 import CodelistList from './CodelistList';
 import NewCodelist from './NewCodelist';
 
-export default function CodelistPage(): ReactElement {
+export default function CodelistPage(): React.ReactElement {
   const { t } = useTranslation();
 
   return (

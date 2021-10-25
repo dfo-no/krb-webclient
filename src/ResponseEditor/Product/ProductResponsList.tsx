@@ -1,4 +1,4 @@
-import React, { ReactElement } from 'react';
+import React from 'react';
 import { ListGroup } from 'react-bootstrap';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
@@ -6,7 +6,6 @@ import { BsPencil } from 'react-icons/bs';
 import { Link, useRouteMatch } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
 import Utils from '../../common/Utils';
-import ModelType from '../../models/ModelType';
 import { ResponseProduct } from '../../models/ResponseProduct';
 import { SpecificationProduct } from '../../models/SpecificationProduct';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
@@ -21,7 +20,7 @@ interface RouteParams {
   bankId: string;
 }
 
-export default function ProductResponseList(): ReactElement {
+export default function ProductResponseList(): React.ReactElement {
   const projectMatch = useRouteMatch<RouteParams>('/response/:bankId');
   const { id } = useAppSelector((state) => state.selectedBank);
   const { response } = useAppSelector((state) => state.response);

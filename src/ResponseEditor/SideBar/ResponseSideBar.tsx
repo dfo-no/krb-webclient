@@ -1,7 +1,7 @@
-import React, { ReactElement } from 'react';
+import React from 'react';
 import Nav from 'react-bootstrap/Nav';
 import { RouteComponentProps, withRouter } from 'react-router';
-import { NavLink, useRouteMatch } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import { useAppSelector } from '../../store/hooks';
 import css from './ResponseSideBar.module.scss';
 
@@ -31,7 +31,7 @@ const renderRouteLinks = (routes: IRouteLink[]) => {
 
 function ResponseSideBar({
   match
-}: RouteComponentProps<TParams>): ReactElement {
+}: RouteComponentProps<TParams>): React.ReactElement {
   const { response } = useAppSelector((state) => state.response);
 
   const routes = [

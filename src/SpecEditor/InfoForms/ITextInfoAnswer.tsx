@@ -1,6 +1,6 @@
 import { joiResolver } from '@hookform/resolvers/joi';
 import Joi from 'joi';
-import React, { ReactElement } from 'react';
+import React from 'react';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import Form from 'react-bootstrap/Form';
@@ -41,7 +41,7 @@ export default function TextInfoAnswer({
   type,
   reqTextId,
   requirement
-}: IProps): ReactElement {
+}: IProps): React.ReactElement {
   const { spec } = useAppSelector((state) => state.specification);
   const { selectedSpecificationProduct } = useAppSelector(
     (state) => state.selectedSpecProduct

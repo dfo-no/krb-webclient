@@ -1,10 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import ModelType from '../../models/ModelType';
 import { ResponseProduct } from '../../models/ResponseProduct';
-import {
-  SpecificationProduct,
-  SpecificationProductSchema
-} from '../../models/SpecificationProduct';
+import { SpecificationProduct } from '../../models/SpecificationProduct';
 
 interface SelectedResponseProductState {
   selectedResponseProduct: ResponseProduct;

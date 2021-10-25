@@ -1,7 +1,7 @@
-import React, { ReactElement } from 'react';
+import React from 'react';
 import Card from 'react-bootstrap/Card';
 
-export default function NoProperties(): ReactElement {
+export default function NoProperties(): React.ReactElement {
   return (
     <Card>
       <Card.Body>

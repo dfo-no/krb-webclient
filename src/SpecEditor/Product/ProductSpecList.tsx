@@ -1,4 +1,4 @@
-import React, { ReactElement } from 'react';
+import React from 'react';
 import { Button, ListGroup } from 'react-bootstrap';
 import Col from 'react-bootstrap/Col';
 import Container from 'react-bootstrap/Container';
@@ -11,7 +11,6 @@ import { Link, useRouteMatch } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
 import Utils from '../../common/Utils';
 import ErrorSummary from '../../Form/ErrorSummary';
-import ModelType from '../../models/ModelType';
 import { Nestable } from '../../models/Nestable';
 import { Product } from '../../models/Product';
 import { SpecificationProduct } from '../../models/SpecificationProduct';
@@ -35,7 +34,7 @@ interface IOption {
   level: number;
 }
 
-export default function ProductSpecList(): ReactElement {
+export default function ProductSpecList(): React.ReactElement {
   const projectMatch = useRouteMatch<RouteParams>('/specification/:bankId');
   const { id } = useAppSelector((state) => state.selectedBank);
   const { normalizedList } = useAppSelector((state) => state.bank);

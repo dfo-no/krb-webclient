@@ -1,8 +1,8 @@
-import React, { ReactElement } from 'react';
+import React from 'react';
 import { useAppSelector } from '../../store/hooks';
 import NeedHierarchy from '../Components/NeedHierarchy';
 
-export default function RequirementPage(): ReactElement {
+export default function RequirementPage(): React.ReactElement {
   const { response } = useAppSelector((state) => state.response);
 
   const selectedBank = response.spesification.bank;

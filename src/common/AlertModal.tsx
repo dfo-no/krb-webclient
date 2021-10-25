@@ -1,4 +1,4 @@
-import React, { ReactElement } from 'react';
+import React from 'react';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import styles from './AlertModal.module.scss';
@@ -15,7 +15,7 @@ export default function AlertModal({
   setModalShow,
   text,
   title
-}: IProps): ReactElement {
+}: IProps): React.ReactElement {
   const clsName = `modal__header--warning`;
 
   return (

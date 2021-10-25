@@ -1,4 +1,4 @@
-import React, { ReactElement } from 'react';
+import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Parentable } from '../../models/Parentable';
 import { Tag } from '../../models/Tag';
@@ -11,7 +11,7 @@ import {
 import EditTagForm from './EditTagForm';
 import NewTagForm from './NewTagForm';
 
-export default function TagPage(): ReactElement {
+export default function TagPage(): React.ReactElement {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
   const { project } = useAppSelector((state) => state.project);

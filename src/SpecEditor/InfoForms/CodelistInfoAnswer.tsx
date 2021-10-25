@@ -1,6 +1,6 @@
 import { joiResolver } from '@hookform/resolvers/joi';
 import Joi from 'joi';
-import React, { ReactElement } from 'react';
+import React from 'react';
 import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/esm/Col';
 import Form from 'react-bootstrap/Form';
@@ -52,7 +52,7 @@ export default function CodelistInfoAnswer({
   type,
   reqTextId,
   requirement
-}: IProps): ReactElement {
+}: IProps): React.ReactElement {
   const { spec } = useAppSelector((state) => state.specification);
   const { selectedSpecificationProduct } = useAppSelector(
     (state) => state.selectedSpecProduct

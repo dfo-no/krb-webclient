@@ -1,4 +1,4 @@
-import React, { ReactElement } from 'react';
+import React from 'react';
 import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
@@ -10,7 +10,7 @@ import { InheritedBank } from '../../models/InheritedBank';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { putProjectThunk } from '../../store/reducers/project-reducer';
 
-export default function InheritancePage(): ReactElement {
+export default function InheritancePage(): React.ReactElement {
   const { project } = useAppSelector((state) => state.project);
   const { t } = useTranslation();
   const dispatch = useAppDispatch();

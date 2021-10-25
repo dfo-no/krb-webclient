@@ -1,4 +1,4 @@
-import React, { ReactElement } from 'react';
+import React from 'react';
 import Container from 'react-bootstrap/Container';
 import { IRequirementAnswer } from '../../models/IRequirementAnswer';
 import QuestionEnum from '../../models/QuestionEnum';
@@ -13,7 +13,9 @@ interface IProps {
   answer: IRequirementAnswer;
 }
 
-export default function AnswerTypeSelector({ answer }: IProps): ReactElement {
+export default function AnswerTypeSelector({
+  answer
+}: IProps): React.ReactElement {
   const item = answer;
   return (
     <Container fluid className="mt-4">

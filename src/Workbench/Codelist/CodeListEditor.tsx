@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-shadow */
-import React, { ReactElement } from 'react';
+import React from 'react';
 import { Code } from '../../models/Code';
 import NestableHierarcy from '../../NestableHierarchy/NestableHierarcy';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
@@ -12,7 +12,7 @@ import EditCodeForm from './EditCodeForm';
 import EditCodeListForm from './EditCodeListForm';
 import NewCodeForm from './NewCodeForm';
 
-export default function CodeListEditor(): ReactElement {
+export default function CodeListEditor(): React.ReactElement {
   const dispatch = useAppDispatch();
   const { project } = useAppSelector((state) => state.project);
   const { codelist } = useAppSelector((state) => state.selectedCodeList);

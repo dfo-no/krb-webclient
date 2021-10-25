@@ -1,6 +1,6 @@
 import { joiResolver } from '@hookform/resolvers/joi';
 import Joi from 'joi';
-import React, { ReactElement } from 'react';
+import React from 'react';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import Form from 'react-bootstrap/Form';
@@ -44,7 +44,7 @@ export const ResponseSingleCodelistSchema = Joi.object().keys({
 });
 export default function ICodelistAnswer({
   parentAnswer
-}: IProps): ReactElement {
+}: IProps): React.ReactElement {
   const { response } = useAppSelector((state) => state.response);
   let index: number;
   const { selectedResponseProduct } = useAppSelector(

@@ -1,4 +1,4 @@
-import React, { ReactElement, useEffect } from 'react';
+import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Need } from '../../models/Need';
 import { Parentable } from '../../models/Parentable';
@@ -11,7 +11,7 @@ import {
 import EditNeedForm from './EditNeedForm';
 import NewNeedForm from './NewNeedForm';
 
-function NeedPage(): ReactElement {
+function NeedPage(): React.ReactElement {
   const { project } = useAppSelector((state) => state.project);
 
   const dispatch = useAppDispatch();

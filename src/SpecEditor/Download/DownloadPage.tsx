@@ -1,12 +1,12 @@
 import { AxiosResponse } from 'axios';
-import React, { ReactElement } from 'react';
+import React from 'react';
 import Button from 'react-bootstrap/Button';
 import { useTranslation } from 'react-i18next';
 import { httpPost } from '../../api/http';
 import { Specification } from '../../models/Specification';
 import { useAppSelector } from '../../store/hooks';
 
-export default function SpecPage(): ReactElement {
+export default function SpecPage(): React.ReactElement {
   const { t } = useTranslation();
   const { spec } = useAppSelector((state) => state.specification);
   const onDownLoad = () => {

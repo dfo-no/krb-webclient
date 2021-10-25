@@ -1,4 +1,4 @@
-import React, { ReactElement, useState } from 'react';
+import React, { useState } from 'react';
 import Col from 'react-bootstrap/Col';
 import Container from 'react-bootstrap/Container';
 import Form from 'react-bootstrap/Form';
@@ -6,7 +6,7 @@ import Row from 'react-bootstrap/Row';
 import { useAppSelector } from '../../store/hooks';
 import AnswerPreviewBox from './Components/AnswerPreviewBox';
 
-export default function OverView(): ReactElement {
+export default function OverView(): React.ReactElement {
   const { response } = useAppSelector((state) => state.response);
   const [overviewType, setOverviewType] = useState('requirement');
 

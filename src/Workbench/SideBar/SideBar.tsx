@@ -1,4 +1,4 @@
-import React, { ReactElement } from 'react';
+import React from 'react';
 import Nav from 'react-bootstrap/Nav';
 import { useTranslation } from 'react-i18next';
 import { withRouter } from 'react-router';
@@ -34,7 +34,7 @@ const renderRouteLinks = (routes: IRouteLink[], isProjectSelected: boolean) => {
   });
 };
 
-function SideBar(): ReactElement {
+function SideBar(): React.ReactElement {
   const match = useRouteMatch<RouteParams>('/workbench/:projectId');
   const { t } = useTranslation();
 

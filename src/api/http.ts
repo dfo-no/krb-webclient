@@ -39,62 +39,56 @@ const wait = <T>(value: T) => {
   return Promise.resolve(value);
 };
 
-const httpGet = <T, R = AxiosResponse<T>>(
+export const httpGet = async <T, R = AxiosResponse<T>>(
   url: string,
   config?: AxiosRequestConfig
 ): Promise<R> => {
-  return getAxiosInstance()
-    .get<T, R>(url, {
-      ...config,
-      headers: {
-        ...config?.headers
-      }
-    })
-    .then((value) => wait(value));
+  const value = await getAxiosInstance().get<T, R>(url, {
+    ...config,
+    headers: {
+      ...config?.headers
+    }
+  });
+  return wait(value);
 };
 
-const httpPost = <T, R = AxiosResponse<T>>(
-  url: string,
-  data?: T,
-  config?: AxiosRequestConfig
-): Promise<R> => {
-  return getAxiosInstance()
-    .post<T, R>(url, data, {
-      ...config,
-      headers: {
-        ...config?.headers
-      }
-    })
-    .then((value) => wait(value));
-};
-
-const httpPut = <T, R = AxiosResponse<T>>(
+export const httpPost = async <T, R = AxiosResponse<T>>(
   url: string,
   data?: T,
   config?: AxiosRequestConfig
 ): Promise<R> => {
-  return getAxiosInstance()
-    .put<T, R>(url, data, {
-      ...config,
-      headers: {
-        ...config?.headers
-      }
-    })
-    .then((value) => wait(value));
+  const value = await getAxiosInstance().post<T, R>(url, data, {
+    ...config,
+    headers: {
+      ...config?.headers
+    }
+  });
+  return wait(value);
 };
 
-const httpDelete = <T, R = AxiosResponse<T>>(
+export const httpPut = async <T, R = AxiosResponse<T>>(
+  url: string,
+  data?: T,
+  config?: AxiosRequestConfig
+): Promise<R> => {
+  const value = await getAxiosInstance().put<T, R>(url, data, {
+    ...config,
+    headers: {
+      ...config?.headers
+    }
+  });
+  return wait(value);
+};
+
+export const httpDelete = async <T, R = AxiosResponse<T>>(
   url: string,
   config?: AxiosRequestConfig
 ): Promise<R> => {
-  return getAxiosInstance()
-    .delete<T, R>(url, {
-      ...config,
-      headers: {
-        ...config?.headers
-      }
-    })
-    .then((value) => wait(value));
+  const value = await getAxiosInstance().delete<T, R>(url, {
+    ...config,
+    headers: {
+      ...config?.headers
+    }
+  });
+  return wait(value);
 };
-
-export { httpGet, httpPost, httpPut, httpDelete };

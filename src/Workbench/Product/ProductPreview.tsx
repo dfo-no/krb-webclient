@@ -1,4 +1,4 @@
-import React, { ReactElement } from 'react';
+import React from 'react';
 import Badge from 'react-bootstrap/Badge';
 import ListGroup from 'react-bootstrap/ListGroup';
 import Row from 'react-bootstrap/Row';
@@ -14,7 +14,7 @@ import { selectNeed } from '../../store/reducers/selectedNeed-reducer';
 import { selectRequirement } from '../../store/reducers/selectedRequirement-reducer';
 import styles from './ProductPreview.module.scss';
 
-export default function ProductPreview(): ReactElement {
+export default function ProductPreview(): React.ReactElement {
   const dispatch = useAppDispatch();
   const { project } = useAppSelector((state) => state.project);
   const { product } = useAppSelector((state) => state.selectedProduct);
