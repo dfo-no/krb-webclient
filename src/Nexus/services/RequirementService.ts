@@ -1,3 +1,4 @@
+import { IVariant } from '../../models/IVariant';
 import ModelType from '../../models/ModelType';
 import { Requirement } from '../../models/Requirement';
 import RequirementType from '../../models/RequirementType';
@@ -45,5 +46,29 @@ export default class RequirementService {
 
   async delete(item: Requirement): Promise<void> {
     return this.storeService.deleteRequirement(item.needId, item);
+  }
+
+  async addVariant(
+    item: IVariant,
+    requirementId: string,
+    needId: string
+  ): Promise<void> {
+    return this.storeService.addVariant(needId, requirementId, item);
+  }
+
+  async editVariant(
+    item: IVariant,
+    requirementId: string,
+    needId: string
+  ): Promise<void> {
+    return this.storeService.editVariant(needId, requirementId, item);
+  }
+
+  async deleteVariant(
+    item: IVariant,
+    requirementId: string,
+    needId: string
+  ): Promise<void> {
+    return this.storeService.deleteVariant(needId, requirementId, item);
   }
 }
