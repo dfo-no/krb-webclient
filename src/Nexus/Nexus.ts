@@ -7,6 +7,7 @@ import NeedService from './services/NeedService';
 import ProductService from './services/ProductService';
 import ProjectService from './services/ProjectService';
 import PublicationService from './services/PublicationService';
+import RequirementService from './services/RequirementService';
 import StoreService from './services/StoreService';
 import TagService from './services/TagService';
 
@@ -18,6 +19,20 @@ export default class Nexus {
   private static bank: Bank;
 
   public store = new StoreService();
+
+  public needService = new NeedService(this.store);
+
+  public requirementService = new RequirementService(this.store);
+
+  public tagService = new TagService(this.store);
+
+  public productService = new ProductService(this.store);
+
+  public publicationService = new PublicationService();
+
+  public codelistService = new CodelistService(this.store);
+
+  public projectService = new ProjectService(this.store);
 
   private constructor(adapter: Adapter) {
     this.adapter = adapter;
@@ -54,32 +69,4 @@ export default class Nexus {
    */
 
   // eslint-disable-next-line class-methods-use-this
-  public getPublicationService(): PublicationService {
-    return new PublicationService();
-  }
-
-  // eslint-disable-next-line class-methods-use-this
-  public getCodelistService(): CodelistService {
-    return new CodelistService(this.store);
-  }
-
-  // eslint-disable-next-line class-methods-use-this
-  public getTagService(): TagService {
-    return new TagService(this.store);
-  }
-
-  // eslint-disable-next-line class-methods-use-this
-  public getNeedService(): NeedService {
-    return new NeedService(this.store);
-  }
-
-  // eslint-disable-next-line class-methods-use-this
-  public getProductService(): ProductService {
-    return new ProductService(this.store);
-  }
-
-  // eslint-disable-next-line class-methods-use-this
-  public getProjectService(): ProjectService {
-    return new ProjectService(this.store);
-  }
 }
