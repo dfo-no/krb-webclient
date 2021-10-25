@@ -50,27 +50,27 @@ export default class CodelistService {
     return code;
   };
 
-  addCodelist(item: Codelist): void {
-    this.storeService.addCodelist(item);
+  async addCodelist(item: Codelist): Promise<void> {
+    return this.storeService.addCodelist(item);
   }
 
-  editCodelist(item: Codelist): void {
-    this.storeService.editCodelist(item);
+  async editCodelist(item: Codelist): Promise<void> {
+    return this.storeService.editCodelist(item);
   }
 
-  deleteCodelist(item: Codelist): void {
-    this.storeService.deleteCodelist(item);
+  async deleteCodelist(item: Codelist): Promise<void> {
+    return this.storeService.deleteCodelist(item);
   }
 
-  addCode(item: Code, codelistId: string): void {
-    this.storeService.addCode(item, codelistId);
+  async addCode(item: Code, codelistId: string): Promise<void> {
+    return this.storeService.addCode(item, codelistId);
   }
 
-  editCode(item: Code, codelistId: string): void {
-    this.storeService.editCode(item, codelistId);
+  async editCode(item: Code, codelistId: string): Promise<void> {
+    return this.storeService.editCode(item, codelistId);
   }
 
-  deleteCode(item: Code, codelistId: string): void {
-    this.storeService.deleteCode(item, codelistId);
+  async deleteCode(item: Code, codelistId: string): Promise<void> {
+    return this.storeService.deleteCode(item, codelistId);
   }
 }
