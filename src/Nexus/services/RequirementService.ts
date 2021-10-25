@@ -35,15 +35,15 @@ export default class RequirementService {
     return requirement;
   };
 
-  async addRequirement(item: Requirement): Promise<void> {
+  async add(item: Requirement): Promise<void> {
     return this.storeService.addRequirement(item.needId, item);
   }
 
-  async editRequirement(item: Requirement): Promise<void> {
+  async edit(item: Requirement): Promise<void> {
     return this.storeService.editRequirement(item.needId, item);
   }
 
-  async deleteRequirement(item: Requirement): Promise<void> {
+  async delete(item: Requirement): Promise<void> {
     return this.storeService.deleteRequirement(item.needId, item);
   }
 }

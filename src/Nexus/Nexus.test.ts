@@ -36,7 +36,7 @@ describe('Nexus', () => {
     const projectDefaultValues = projectservice.generateDefaultProjectValues();
     nexus.setProject(projectDefaultValues);
     const need = needservice.generateDefaultNeedValues(projectDefaultValues.id);
-    needservice.addNeed(need);
+    needservice.add(need);
     const result = nexus.getProject();
     expect(result.needs).toContain(need);
   });
@@ -66,7 +66,7 @@ describe('Nexus', () => {
     const projectDefaultValues = projectservice.generateDefaultProjectValues();
     nexus.setProject(projectDefaultValues);
     const need = needservice.generateDefaultNeedValues(projectDefaultValues.id);
-    needservice.addNeed(need);
+    needservice.add(need);
     nexus.save();
     return nexus.load().then((result) => {
       const storageBank = nexus.getProject();

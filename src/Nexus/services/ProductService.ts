@@ -31,15 +31,15 @@ export default class ProductService {
     return tag;
   };
 
-  async addProduct(item: Product): Promise<void> {
+  async add(item: Product): Promise<void> {
     return this.storeService.addProduct(item);
   }
 
-  async editProduct(item: Product): Promise<void> {
+  async edit(item: Product): Promise<void> {
     return this.storeService.editProduct(item);
   }
 
-  async deleteProduct(item: Product): Promise<void> {
+  async delete(item: Product): Promise<void> {
     return this.storeService.deleteProduct(item);
   }
 }

@@ -34,15 +34,15 @@ export default class NeedService {
     return tag;
   };
 
-  async addNeed(item: Parentable<Need>): Promise<void> {
+  async add(item: Parentable<Need>): Promise<void> {
     return this.storeService.addNeed(item);
   }
 
-  async editNeed(item: Parentable<Need>): Promise<void> {
+  async edit(item: Parentable<Need>): Promise<void> {
     return this.storeService.editNeed(item);
   }
 
-  async deleteNeed(item: Parentable<Need>): Promise<void> {
+  async delete(item: Parentable<Need>): Promise<void> {
     return this.storeService.deleteNeed(item);
   }
 }

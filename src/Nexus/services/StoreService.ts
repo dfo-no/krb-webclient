@@ -190,4 +190,16 @@ export default class StoreService {
       }
     }
   }
+
+  public editProjectTitle(title: string): void {
+    StoreService.bank = produce(StoreService.bank, (draft) => {
+      draft.title = title;
+    });
+  }
+
+  public editProjectDescription(description: string): void {
+    StoreService.bank = produce(StoreService.bank, (draft) => {
+      draft.description = description;
+    });
+  }
 }
