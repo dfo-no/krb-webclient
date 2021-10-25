@@ -4,6 +4,7 @@ import produce from 'immer';
 import { Bank } from '../../models/Bank';
 import { Code } from '../../models/Code';
 import { Codelist } from '../../models/Codelist';
+import { IVariant } from '../../models/IVariant';
 import { Need } from '../../models/Need';
 import { Parentable } from '../../models/Parentable';
 import { Product } from '../../models/Product';
@@ -201,5 +202,69 @@ export default class StoreService {
     StoreService.bank = produce(StoreService.bank, (draft) => {
       draft.description = description;
     });
+  }
+
+  public addVariant(
+    needId: string,
+    requirementId: string,
+    variant: IVariant
+  ): void {
+    const needIndex = StoreService.bank.needs.findIndex(
+      (need) => need.id === needId
+    );
+    const requirementIndex = StoreService.bank.needs[
+      needIndex
+    ].requirements.findIndex((elem) => elem.id === requirementId);
+    if (needIndex !== -1) {
+      StoreService.bank.needs[needIndex].requirements[
+        requirementIndex
+      ].variants.push(variant);
+    }
+  }
+
+  public editVariant(
+    needId: string,
+    requirementId: string,
+    variant: IVariant
+  ): void {
+    const needIndex = StoreService.bank.needs.findIndex(
+      (need) => need.id === needId
+    );
+
+    const requirementIndex = StoreService.bank.needs[
+      needIndex
+    ].requirements.findIndex((elem) => elem.id === requirementId);
+
+    const variantIndex = StoreService.bank.needs[needIndex].requirements[
+      requirementIndex
+    ].variants.findIndex((elem) => elem.id === variant.id);
+    if (requirementIndex !== -1) {
+      StoreService.bank.needs[needIndex].requirements[
+        requirementIndex
+      ].variants[variantIndex] = variant;
+    }
+  }
+
+  public deleteVariant(
+    needId: string,
+    requirementId: string,
+    variant: IVariant
+  ): void {
+    const needIndex = StoreService.bank.needs.findIndex(
+      (need) => need.id === needId
+    );
+
+    const requirementIndex = StoreService.bank.needs[
+      needIndex
+    ].requirements.findIndex((elem) => elem.id === requirementId);
+
+    const variantIndex = StoreService.bank.needs[needIndex].requirements[
+      requirementIndex
+    ].variants.findIndex((elem) => elem.id === variant.id);
+    if (requirementIndex !== -1) {
+      StoreService.bank.needs[needIndex].requirements[
+        requirementIndex
+      ].variants.splice(variantIndex, 1);
+    }
   }
 }
