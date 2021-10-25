@@ -50,10 +50,11 @@ export default function NewPublication(): React.ReactElement {
   const onSubmit = async (post: Publication) => {
     const publication = { ...post };
     const nexus = Nexus.getInstance();
-    const publicationService = nexus.getPublicationService();
 
-    const newBank = publicationService.generateBankFromProject(project);
-    const nextVersion = publicationService.getNextVersion(project.publications);
+    const newBank = nexus.publicationService.generateBankFromProject(project);
+    const nextVersion = nexus.publicationService.getNextVersion(
+      project.publications
+    );
 
     // save the new published Bank
     dispatch(postBankThunk(newBank))
@@ -64,7 +65,6 @@ export default function NewPublication(): React.ReactElement {
         publication.bankId = result.id;
         publication.version = result.version;
         publication.date = result.publishedDate ?? null;
-
         // add publication to selected Bank
         dispatch(prependPublication(publication));
 

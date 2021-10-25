@@ -24,11 +24,10 @@ function NewProductForm(): React.ReactElement {
   const [validated] = useState(false);
   const { t } = useTranslation();
   const nexus = Nexus.getInstance();
-  const productService = nexus.getProductService();
 
   const [show, setShow] = useState(false);
 
-  const product: Product = productService.generateDefaultProductValues(
+  const product: Product = nexus.productService.generateDefaultProductValues(
     project.id
   );
 
@@ -43,7 +42,7 @@ function NewProductForm(): React.ReactElement {
   });
 
   const onSubmit = async (post: Product) => {
-    const newProduct = productService.createProductWithId(post);
+    const newProduct = nexus.productService.createProductWithId(post);
     const alert: Alert = {
       id: uuidv4(),
       style: 'success',

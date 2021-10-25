@@ -31,9 +31,9 @@ function Projects(): ReactElement {
   const [validated] = useState(false);
   const { t } = useTranslation();
   const nexus = Nexus.getInstance();
-  const projectService = nexus.getProjectService();
 
-  const defaultValues: Bank = projectService.generateDefaultProjectValues();
+  const defaultValues: Bank =
+    nexus.projectService.generateDefaultProjectValues();
 
   const {
     handleSubmit,
