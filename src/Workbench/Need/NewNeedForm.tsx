@@ -26,11 +26,9 @@ function NewNeedForm(): React.ReactElement {
   const [show, setShow] = useState(false);
   const { t } = useTranslation();
   const nexus = Nexus.getInstance();
-  const needService = nexus.getNeedService();
 
-  const defaultValues: Parentable<Need> = needService.generateDefaultNeedValues(
-    project.id
-  );
+  const defaultValues: Parentable<Need> =
+    nexus.needService.generateDefaultNeedValues(project.id);
 
   const {
     control,
@@ -43,7 +41,7 @@ function NewNeedForm(): React.ReactElement {
   });
 
   const onSubmit = (post: Parentable<Need>) => {
-    const need = needService.createNeedWithId(post);
+    const need = nexus.needService.createNeedWithId(post);
     const alert: Alert = {
       id: uuidv4(),
       style: 'success',
