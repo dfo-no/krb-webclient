@@ -8,6 +8,7 @@ import { IVariant } from '../../models/IVariant';
 import { Need } from '../../models/Need';
 import { Parentable } from '../../models/Parentable';
 import { Product } from '../../models/Product';
+import { QuestionType } from '../../models/QuestionType';
 import { Requirement } from '../../models/Requirement';
 import { Tag } from '../../models/Tag';
 
@@ -266,5 +267,85 @@ export default class StoreService {
         requirementIndex
       ].variants.splice(variantIndex, 1);
     }
+  }
+
+  public addQuestion(
+    needId: string,
+    requirementId: string,
+    variantId: string,
+    question: QuestionType
+  ): void {
+    const needIndex = StoreService.bank.needs.findIndex(
+      (need) => need.id === needId
+    );
+    const requirementIndex = StoreService.bank.needs[
+      needIndex
+    ].requirements.findIndex((elem) => elem.id === requirementId);
+
+    const variantIndex = StoreService.bank.needs[needIndex].requirements[
+      requirementIndex
+    ].variants.findIndex((elem) => elem.id === variantId);
+
+    StoreService.bank.needs[needIndex].requirements[requirementIndex].variants[
+      variantIndex
+    ].questions.push(question);
+  }
+
+  public editQuestion(
+    needId: string,
+    requirementId: string,
+    variantId: string,
+    question: QuestionType
+  ): void {
+    const needIndex = StoreService.bank.needs.findIndex(
+      (need) => need.id === needId
+    );
+
+    const requirementIndex = StoreService.bank.needs[
+      needIndex
+    ].requirements.findIndex((elem) => elem.id === requirementId);
+
+    const variantIndex = StoreService.bank.needs[needIndex].requirements[
+      requirementIndex
+    ].variants.findIndex((elem) => elem.id === variantId);
+
+    const questionIndex = StoreService.bank.needs[needIndex].requirements[
+      requirementIndex
+    ].variants[variantIndex].questions.findIndex(
+      (elem) => elem.id === question.id
+    );
+
+    StoreService.bank.needs[needIndex].requirements[requirementIndex].variants[
+      variantIndex
+    ].questions[questionIndex] = question;
+  }
+
+  public deleteQuestion(
+    needId: string,
+    requirementId: string,
+    variantId: string,
+    question: QuestionType
+  ): void {
+    const needIndex = StoreService.bank.needs.findIndex(
+      (need) => need.id === needId
+    );
+
+    const requirementIndex = StoreService.bank.needs[
+      needIndex
+    ].requirements.findIndex((elem) => elem.id === requirementId);
+
+    const variantIndex = StoreService.bank.needs[needIndex].requirements[
+      requirementIndex
+    ].variants.findIndex((elem) => elem.id === variantId);
+
+    const questionIndex = StoreService.bank.needs[needIndex].requirements[
+      requirementIndex
+    ].variants[variantIndex].questions.findIndex(
+      (elem) => elem.id === question.id
+    );
+
+    StoreService.bank.needs[needIndex].requirements[requirementIndex].variants[
+      variantIndex
+    ].questions.splice(questionIndex, 1);
   }
 }

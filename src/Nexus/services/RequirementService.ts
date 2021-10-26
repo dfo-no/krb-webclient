@@ -71,4 +71,28 @@ export default class RequirementService {
   ): Promise<void> {
     return this.storeService.deleteVariant(needId, requirementId, item);
   }
+
+  async addQuesion(
+    item: IVariant,
+    requirementId: string,
+    needId: string
+  ): Promise<void> {
+    return this.storeService.addVariant(needId, requirementId, item);
+  }
+
+  async editQuesion(
+    item: IVariant,
+    requirementId: string,
+    needId: string
+  ): Promise<void> {
+    return this.storeService.editVariant(needId, requirementId, item);
+  }
+
+  async deleteQuesion(
+    item: IVariant,
+    requirementId: string,
+    needId: string
+  ): Promise<void> {
+    return this.storeService.deleteVariant(needId, requirementId, item);
+  }
 }
