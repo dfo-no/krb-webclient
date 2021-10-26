@@ -1,12 +1,12 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-interface SelectedAlternativeState {
+interface SelectedQuestionState {
   questionId: string | null;
 }
 
-const initialState: SelectedAlternativeState = { questionId: null };
+const initialState: SelectedQuestionState = { questionId: null };
 
-const selectedAlternativeState = createSlice({
+const selectedQuestionState = createSlice({
   name: 'selectedQuestion',
   initialState,
   reducers: {
@@ -16,6 +16,6 @@ const selectedAlternativeState = createSlice({
   }
 });
 
-export const { selectQuestion } = selectedAlternativeState.actions;
+export const { selectQuestion } = selectedQuestionState.actions;
 
-export default selectedAlternativeState.reducer;
+export default selectedQuestionState.reducer;

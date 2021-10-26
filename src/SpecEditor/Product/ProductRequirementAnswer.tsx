@@ -142,14 +142,14 @@ export default function ProductRequirementAnswer({
     const variant = Utils.ensure(
       requirement.variants.find((element: IVariant) => element.id === variantId)
     );
-    selectedVariant.questions.forEach((alternative) => {
+    selectedVariant.questions.forEach((question) => {
       if (
         specProduct.requirementAnswers.find(
-          (answer) => answer.questionId === alternative.id
+          (answer) => answer.questionId === question.id
         )
       ) {
         const index = specProduct.requirementAnswers.findIndex(
-          (answer) => answer.questionId === alternative.id
+          (answer) => answer.questionId === question.id
         );
         dispatch(
           deleteProductAnswer({
