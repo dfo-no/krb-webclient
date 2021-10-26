@@ -38,9 +38,13 @@ export default class Nexus {
     this.adapter = adapter;
   }
 
-  public static getInstance(): Nexus {
+  public static getInstance(adapter?: Adapter): Nexus {
     if (!Nexus.instance) {
-      Nexus.instance = new this(new LocalStorageAdapter());
+      if (!adapter) {
+        Nexus.instance = new this(new LocalStorageAdapter());
+      } else {
+        Nexus.instance = new this(adapter);
+      }
     }
 
     return Nexus.instance;
