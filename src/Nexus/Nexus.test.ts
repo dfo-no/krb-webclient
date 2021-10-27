@@ -30,12 +30,12 @@ describe('Nexus', () => {
     const nexus = Nexus.getInstance();
     const projectDefaultValues =
       nexus.projectService.generateDefaultProjectValues();
-    nexus.setProject(projectDefaultValues);
+    nexus.projectService.setProject(projectDefaultValues);
     const need = nexus.needService.generateDefaultNeedValues(
       projectDefaultValues.id
     );
     nexus.needService.add(need);
-    const result = nexus.getProject();
+    const result = nexus.projectService.getProject();
     expect(result.needs).toContain(need);
   });
 
@@ -43,7 +43,7 @@ describe('Nexus', () => {
     const nexus = Nexus.getInstance();
     const projectDefaultValues =
       nexus.projectService.generateDefaultProjectValues();
-    nexus.setProject(projectDefaultValues);
+    nexus.projectService.setProject(projectDefaultValues);
     const codelist = nexus.codelistService.createCodelistWithId(
       nexus.codelistService.generateDefaultCodelistValues(
         projectDefaultValues.id
@@ -54,7 +54,7 @@ describe('Nexus', () => {
       nexus.codelistService.generateDefaultCodeValues(projectDefaultValues.id)
     );
     nexus.codelistService.addCode(code, codelist.id);
-    const result = nexus.getProject();
+    const result = nexus.projectService.getProject();
     expect(result.codelist[0].codes).toContain(code);
   });
 
@@ -62,14 +62,14 @@ describe('Nexus', () => {
     const nexus = Nexus.getInstance();
     const projectDefaultValues =
       nexus.projectService.generateDefaultProjectValues();
-    nexus.setProject(projectDefaultValues);
+    nexus.projectService.setProject(projectDefaultValues);
     const need = nexus.needService.generateDefaultNeedValues(
       projectDefaultValues.id
     );
     nexus.needService.add(need);
     nexus.save();
     return nexus.load().then((result) => {
-      const storageBank = nexus.getProject();
+      const storageBank = nexus.projectService.getProject();
 
       expect(result).toEqual(storageBank);
     });
