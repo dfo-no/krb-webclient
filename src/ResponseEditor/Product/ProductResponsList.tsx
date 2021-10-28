@@ -1,6 +1,6 @@
 import React from 'react';
-import { ListGroup } from 'react-bootstrap';
 import Container from 'react-bootstrap/Container';
+import ListGroup from 'react-bootstrap/ListGroup';
 import Row from 'react-bootstrap/Row';
 import { BsPencil } from 'react-icons/bs';
 import { Link, useRouteMatch } from 'react-router-dom';

@@ -1,5 +1,5 @@
 import React from 'react';
-import Card from 'react-bootstrap/esm/Card';
+import Card from 'react-bootstrap/Card';
 import { IRequirementAnswer } from '../../models/IRequirementAnswer';
 import QuestionEnum from '../../models/QuestionEnum';
 import { Requirement } from '../../models/Requirement';

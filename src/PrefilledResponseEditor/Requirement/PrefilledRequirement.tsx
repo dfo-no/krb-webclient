@@ -1,9 +1,13 @@
 // import { DevTool } from '@hookform/devtools';
 import { get } from 'lodash';
 import React from 'react';
-import { Button, Card, Col, ListGroup, Row } from 'react-bootstrap';
+import Button from 'react-bootstrap/Button';
+import Card from 'react-bootstrap/Card';
+import Col from 'react-bootstrap/Col';
 import Container from 'react-bootstrap/Container';
 import Form from 'react-bootstrap/Form';
+import ListGroup from 'react-bootstrap/ListGroup';
+import Row from 'react-bootstrap/Row';
 import { FieldError, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import Utils from '../../common/Utils';

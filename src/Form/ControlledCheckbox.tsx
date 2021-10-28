@@ -1,7 +1,7 @@
 import Switch from '@mui/material/Switch';
 import React from 'react';
-import { FormControl } from 'react-bootstrap';
 import Form from 'react-bootstrap/Form';
+import FormControl from 'react-bootstrap/FormControl';
 import {
   Controller,
   FieldError,
