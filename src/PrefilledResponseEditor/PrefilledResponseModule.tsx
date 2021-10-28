@@ -1,4 +1,4 @@
-import React, { ReactElement } from 'react';
+import React from 'react';
 import Col from 'react-bootstrap/Col';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
@@ -16,7 +16,7 @@ import PrefilledResponseSidebar from './SideBar/PrefilledResponseSidebar';
 interface RouteParams {
   bankId: string;
 }
-export default function PrefilledResponseModule(): ReactElement {
+export default function PrefilledResponseModule(): React.ReactElement {
   const projectMatch = useRouteMatch<RouteParams>('/responseeditor/:bankId');
   const dispatch = useAppDispatch();
   const { id } = useAppSelector((state) => state.selectedBank);

@@ -1,10 +1,10 @@
 import { useAccount, useMsal } from '@azure/msal-react';
-import React, { ReactElement, useState } from 'react';
+import React, { useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import { loginRequest } from '../authentication/authConfig';
 import { callMsGraph, ProfileData } from './GraphProfileData';
 
-export default function ProfileContent(): ReactElement {
+export default function ProfileContent(): React.ReactElement {
   const { instance, accounts } = useMsal();
   const account = useAccount(accounts[0] || {});
   const [graphData, setGraphData] = useState(null);

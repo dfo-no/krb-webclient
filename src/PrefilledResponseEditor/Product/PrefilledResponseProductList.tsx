@@ -1,8 +1,9 @@
-import React, { ReactElement } from 'react';
-import { Button, ListGroup } from 'react-bootstrap';
+import React from 'react';
+import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
 import Container from 'react-bootstrap/Container';
 import Form from 'react-bootstrap/Form';
+import ListGroup from 'react-bootstrap/ListGroup';
 import Row from 'react-bootstrap/Row';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
@@ -11,7 +12,6 @@ import { Link } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
 import Utils from '../../common/Utils';
 import ErrorSummary from '../../Form/ErrorSummary';
-import ModelType from '../../models/ModelType';
 import { Nestable } from '../../models/Nestable';
 import { PrefilledResponseProduct } from '../../models/PrefilledResponseProduct';
 import { Product } from '../../models/Product';
@@ -32,7 +32,7 @@ interface IOption {
   level: number;
 }
 
-export default function ProductSpecList(): ReactElement {
+export default function ProductSpecList(): React.ReactElement {
   const { id } = useAppSelector((state) => state.selectedBank);
   const { normalizedList } = useAppSelector((state) => state.bank);
   const { prefilledResponse } = useAppSelector(

@@ -1,4 +1,4 @@
-import React, { ReactElement } from 'react';
+import React from 'react';
 import Alert from 'react-bootstrap/Alert';
 import { FieldError, FieldErrors } from 'react-hook-form';
 
@@ -15,7 +15,7 @@ type ErrorSummaryProps<T> = {
 };
 export default function ErrorSummary<T>({
   errors
-}: ErrorSummaryProps<T>): ReactElement | null {
+}: ErrorSummaryProps<T>): React.ReactElement | null {
   if (process.env.NODE_ENV !== 'development') {
     return null;
   }
