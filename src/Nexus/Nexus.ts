@@ -8,6 +8,8 @@ import ProductService from './services/ProductService';
 import ProjectService from './services/ProjectService';
 import PublicationService from './services/PublicationService';
 import RequirementService from './services/RequirementService';
+import ResponseService from './services/ResponseService';
+import ResponseStoreService from './services/ResponseStoreService';
 import SpecificationService from './services/SpecificationService';
 import SpecificationStoreService from './services/SpecificationStoreService';
 import StoreService from './services/StoreService';
@@ -21,6 +23,8 @@ export default class Nexus {
   public store = new StoreService();
 
   public specificationStore = new SpecificationStoreService();
+
+  public responseStore = new ResponseStoreService();
 
   // investigate Inversify.js to get rid of this code and remove use of new
   public needService = new NeedService(this.store);
@@ -40,6 +44,8 @@ export default class Nexus {
   public specificationService = new SpecificationService(
     this.specificationStore
   );
+
+  public responseService = new ResponseService(this.responseStore);
 
   private constructor(adapter: Adapter) {
     this.adapter = adapter;

@@ -122,7 +122,7 @@ export default class SpecificationStoreService {
     ].requirements.splice(index, 1);
   }
 
-  addProductAnswer(answer: IRequirementAnswer, productId: string) {
+  addProductAnswer(answer: IRequirementAnswer, productId: string): void {
     const index = SpecificationStoreService.specification.products.findIndex(
       (product) => product.id === productId
     );
@@ -131,7 +131,7 @@ export default class SpecificationStoreService {
     ].requirementAnswers.push(answer);
   }
 
-  editProductAnswer(answer: IRequirementAnswer, productId: string) {
+  editProductAnswer(answer: IRequirementAnswer, productId: string): void {
     const index = SpecificationStoreService.specification.products.findIndex(
       (product) => product.id === productId
     );
