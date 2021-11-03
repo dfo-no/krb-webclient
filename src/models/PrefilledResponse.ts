@@ -1,11 +1,9 @@
 import Joi from 'joi';
 import { Bank, BaseBankSchema } from './Bank';
-import { BaseModel } from './BaseModel';
 import {
   IRequirementAnswer,
   RequirementAnswerSchema
 } from './IRequirementAnswer';
-import ModelType from './ModelType';
 import { PrefilledResponseProduct } from './PrefilledResponseProduct';
 
 export interface PrefilledResponse {

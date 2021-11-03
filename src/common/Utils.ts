@@ -38,6 +38,13 @@ class Utils {
     return string.charAt(0).toUpperCase() + string.slice(1);
   }
 
+  static generatePaddingChars(level: number): string {
+    if (level === 0) {
+      return '';
+    }
+    return unescape('  '.replace(/ /g, '%A0').repeat(level - 1));
+  }
+
   private static flattenNestable<T extends BaseModel>(
     items: Nestable<T>[]
   ): Nestable<T>[] {
