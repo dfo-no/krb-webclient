@@ -56,7 +56,7 @@ const initialState: PrefilledResponseState = {
 };
 
 const responseSlice = createSlice({
-  name: 'response',
+  name: 'prefilledResponse',
   initialState,
   reducers: {
     setResponse(state, { payload }: PayloadAction<PrefilledResponse>) {
@@ -96,35 +96,62 @@ const responseSlice = createSlice({
     addProduct(state, { payload }: PayloadAction<PrefilledResponseProduct>) {
       state.prefilledResponse.products.push(payload);
     },
+    removeProduct(state, { payload }: PayloadAction<string>) {
+      const index = state.prefilledResponse.products.findIndex(
+        (product) => product.id === payload
+      );
+      if (index !== -1) {
+        state.prefilledResponse.products.splice(index, 1);
+      }
+    },
     addProductAnswer(
       state,
       {
         payload
       }: PayloadAction<{ answer: IRequirementAnswer; productId: string }>
     ) {
-      const index = Utils.ensure(
-        state.prefilledResponse.products.findIndex(
-          (product) => product.id === payload.productId
-        )
+      const index = state.prefilledResponse.products.findIndex(
+        (product) => product.id === payload.productId
       );
-      if (
-        state.prefilledResponse.products[index].requirementAnswers.find(
-          (answer) => answer.variantId === payload.answer.variantId
-        )
-      ) {
-        const oldSelectIndex = state.prefilledResponse.products[
+
+      if (index !== -1) {
+        const variantIndex = state.prefilledResponse.products[
           index
         ].requirementAnswers.findIndex(
           (answer) => answer.variantId === payload.answer.variantId
         );
-        state.prefilledResponse.products[index].requirementAnswers.splice(
-          oldSelectIndex,
-          1
+        if (variantIndex !== -1) {
+          // variant exists already, remove it
+          state.prefilledResponse.products[index].requirementAnswers.splice(
+            variantIndex,
+            1
+          );
+        }
+        state.prefilledResponse.products[index].requirementAnswers.push(
+          payload.answer
         );
       }
-      state.prefilledResponse.products[index].requirementAnswers.push(
-        payload.answer
+    },
+    removeProductAnswer(
+      state,
+      { payload }: PayloadAction<{ answerId: string; productId: string }>
+    ) {
+      const index = state.prefilledResponse.products.findIndex(
+        (product) => product.id === payload.productId
       );
+      if (index !== -1) {
+        const reqAnswerIndex = state.prefilledResponse.products[
+          index
+        ].requirementAnswers.findIndex(
+          (element) => element.id === payload.answerId
+        );
+        if (reqAnswerIndex !== -1) {
+          state.prefilledResponse.products[index].requirementAnswers.splice(
+            reqAnswerIndex,
+            1
+          );
+        }
+      }
     },
     addProductVariant(
       state,
@@ -163,10 +190,12 @@ export const {
   editSupplier,
   setBank,
   addProduct,
+  removeProduct,
   editProduct,
   setResponse,
   addRequirementAnswer,
   addProductAnswer,
+  removeProductAnswer,
   setRequirementAnswers,
   selectProduct
 } = responseSlice.actions;

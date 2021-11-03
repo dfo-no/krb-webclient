@@ -7,20 +7,20 @@ import ListGroup from 'react-bootstrap/ListGroup';
 import Row from 'react-bootstrap/Row';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import { BsPencil } from 'react-icons/bs';
+import { BsPencil, BsTrashFill } from 'react-icons/bs';
 import { Link } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
 import Utils from '../../common/Utils';
 import ErrorSummary from '../../Form/ErrorSummary';
-import { Nestable } from '../../models/Nestable';
+import { Parentable } from '../../models/Parentable';
 import { PrefilledResponseProduct } from '../../models/PrefilledResponseProduct';
 import { Product } from '../../models/Product';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import {
   addProduct,
+  removeProduct,
   selectProduct
 } from '../../store/reducers/PrefilledResponseReducer';
-import styles from './ProductList.module.scss';
 
 interface IFormInput {
   product: string;
@@ -52,26 +52,16 @@ export default function ProductSpecList(): React.ReactElement {
 
   const bankSelected = normalizedList[id];
 
-  const levelOptions = (products: Nestable<Product>[]) => {
-    const newList = Utils.unflatten(products)[0];
+  const levelOptions = (products: Parentable<Product>[]) => {
+    const newList = Utils.parentable2Levelable(products);
     const options: IOption[] = [];
 
-    const getAllItemsPerChildren = (item: Nestable<Product>, level = 0) => {
+    newList.forEach((item) => {
       options.push({
         id: item.id,
         title: item.title,
-        level
+        level: item.level
       });
-      if (item.children) {
-        const iteration = level + 1;
-        item.children.forEach((i: Nestable<Product>) =>
-          getAllItemsPerChildren(i, iteration)
-        );
-      }
-    };
-
-    newList.forEach((element) => {
-      return getAllItemsPerChildren(element);
     });
     return options;
   };
@@ -93,26 +83,40 @@ export default function ProductSpecList(): React.ReactElement {
     dispatch(addProduct(newProduct));
   };
 
+  const removeProductFromPrefilledResponse = (productId: string) => {
+    dispatch(removeProduct(productId));
+  };
+
   const productList = (productArray: PrefilledResponseProduct[]) => {
     const items = productArray.map((product: PrefilledResponseProduct) => {
       return (
-        <ListGroup.Item key={product.id}>
-          <Row className="d-flex justify-content-end">
-            <p className="ml-2 mr-4  mt-1">
-              {Utils.capitalizeFirstLetter(product.originProduct.title)}
-            </p>
-            <Link
-              onClick={() => dispatch(selectProduct(product))}
-              to={`/prefilledresponse/${id}/product/${product.id}`}
-            >
-              <BsPencil className="ml-2  mt-1" />
-            </Link>
-          </Row>
+        <ListGroup.Item key={product.id} className="d-flex align-items-center">
+          <div className="">
+            {Utils.capitalizeFirstLetter(product.originProduct.title)}
+          </div>
+
+          <div className="flex-grow-1">&nbsp;</div>
+          <Link
+            onClick={() => dispatch(selectProduct(product))}
+            to={`/prefilledresponse/${id}/product/${product.id}`}
+          >
+            <Button>
+              <BsPencil />
+            </Button>
+          </Link>
+          <Button
+            variant="warning"
+            className="ms-1"
+            onClick={() => removeProductFromPrefilledResponse(product.id)}
+          >
+            <BsTrashFill />
+          </Button>
         </ListGroup.Item>
       );
     });
     return <ListGroup>{items}</ListGroup>;
   };
+
   return (
     <Container fluid>
       <Form
@@ -126,11 +130,8 @@ export default function ProductSpecList(): React.ReactElement {
           <Col>
             <Form.Control as="select" {...register('product')}>
               {levelOptions(bankSelected.products).map((element) => (
-                <option
-                  key={element.id}
-                  value={element.id}
-                  className={` ${styles[`level${element.level}`]}`}
-                >
+                <option key={element.id} value={element.id}>
+                  {Utils.generatePaddingChars(element.level)}
                   {element.title}
                 </option>
               ))}
