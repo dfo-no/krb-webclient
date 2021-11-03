@@ -113,7 +113,10 @@ export default function ISliderAnswer({
         <Form onSubmit={handleSubmit(saveValues)}>
           <Row className="w-50 m-3">
             <ControlledSlider
-              question={sliderQuestion}
+              min={sliderQuestion.config.min}
+              max={sliderQuestion.config.max}
+              unit={sliderQuestion.config.unit}
+              step={sliderQuestion.config.step}
               control={control}
               name="answer.value"
               error={get(errors, `answer.value`) as FieldError}

@@ -198,7 +198,10 @@ export default function PrefilledRequirement(): React.ReactElement {
       case QuestionEnum.Q_SLIDER: {
         return (
           <ControlledSlider
-            question={question}
+            min={question.config.min}
+            max={question.config.max}
+            unit={question.config.unit}
+            step={question.config.step}
             control={control}
             name={`cart.${ix}.question.answer.value`}
             error={
