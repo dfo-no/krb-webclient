@@ -23,7 +23,7 @@ export const SliderQuestionSchema = Joi.object().keys({
   config: Joi.object().keys({
     step: Joi.number().min(0).max(1000000000).required(),
     min: Joi.number().min(0).max(1000000000).required(),
-    max: Joi.number().min(0).max(1000000000).required(),
+    max: Joi.number().min(1).max(1000000000).required().greater(Joi.ref('min')),
     unit: Joi.string().required()
   })
 });

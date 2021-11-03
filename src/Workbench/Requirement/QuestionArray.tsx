@@ -59,7 +59,7 @@ export default function QuestionArray({
         type: QuestionEnum.Q_SLIDER,
         config: {
           min: 0,
-          max: 0,
+          max: 10,
           step: 1,
           unit: 'GB'
         }
