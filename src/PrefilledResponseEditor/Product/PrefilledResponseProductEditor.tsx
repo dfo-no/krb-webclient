@@ -1,6 +1,7 @@
 import { joiResolver } from '@hookform/resolvers/joi';
 import { get } from 'lodash';
 import React from 'react';
+import Accordion from 'react-bootstrap/Accordion';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import Col from 'react-bootstrap/Col';
@@ -12,13 +13,12 @@ import { useTranslation } from 'react-i18next';
 import { getPaths } from '../../common/Tree';
 import ControlledTextInput from '../../Form/ControlledTextInput';
 import ErrorSummary from '../../Form/ErrorSummary';
+import { Levelable } from '../../models/Levelable';
 import { Need } from '../../models/Need';
-import { Parentable } from '../../models/Parentable';
 import {
   PrefilledResponseProduct,
   PrefilledResponseProductSchema
 } from '../../models/PrefilledResponseProduct';
-import NestableHierarcy from '../../NestableHierarchy/NestableHierarcy';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { editProduct } from '../../store/reducers/PrefilledResponseReducer';
 import AnswerForm from './AnswerForm';
@@ -65,19 +65,28 @@ export default function PrefilledResponseProductEditor(): React.ReactElement {
     return result;
   };
 
-  const newNeedList = (_projectId: string, _needs: Parentable<Need>[]) => {
-    // Should not be able to rearrange the needs on this page
-    // console.log('save');
-    // dispatch(setNeeds(needs));
-    // dispatch(putSelectedProjectThunk('dummy'));
-  };
-
   const needIds = findNeedIdsForProduct(
     selectedProduct.originProduct.id,
     prefilledResponse.bank.needs
   );
 
   const needs = getPaths(needIds, prefilledResponse.bank.needs);
+
+  const renderNeedsList = (list: Levelable<Need>[]) => {
+    return list.map((need) => {
+      const margin = need.level === 1 ? '0rem' : `${need.level - 1}rem`;
+      return (
+        <Accordion style={{ marginLeft: margin }} key={need.id}>
+          <Accordion.Item eventKey={need.id}>
+            <Accordion.Header>{need.title}</Accordion.Header>
+            <Accordion.Body>
+              <AnswerForm element={need} product={selectedProduct} />
+            </Accordion.Body>
+          </Accordion.Item>
+        </Accordion>
+      );
+    });
+  };
 
   return (
     <Container fluid>
@@ -108,17 +117,7 @@ export default function PrefilledResponseProductEditor(): React.ReactElement {
             </Col>
             <ErrorSummary errors={errors} />
           </Form>
-          <NestableHierarcy
-            dispatchfunc={(projectId: string, items: Parentable<Need>[]) =>
-              newNeedList(projectId, items)
-            }
-            inputlist={needs}
-            projectId=""
-            component={
-              <AnswerForm element={needs[0]} product={selectedProduct} />
-            }
-            depth={10}
-          />
+          {renderNeedsList(needs)}
         </Card.Body>
       </Card>
       <Row className="m-4" />
