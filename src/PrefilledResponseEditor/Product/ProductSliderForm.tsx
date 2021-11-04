@@ -73,7 +73,7 @@ const ProductSliderForm = ({ elem, product }: IProps): React.ReactElement => {
     resolver: joiResolver(ProductSliderSchema)
   });
 
-  const onSubmit2 = (post: IRequirementAnswer) => {
+  const onSubmit = (post: IRequirementAnswer) => {
     // dispatch(fooAction({ answer: post, productId: product.id }));
     dispatch(addProductAnswer({ answer: post, productId: product.id }));
   };
@@ -105,7 +105,7 @@ const ProductSliderForm = ({ elem, product }: IProps): React.ReactElement => {
         </small>
       </h6>
       <Form
-        onSubmit={handleSubmit(onSubmit2)}
+        onSubmit={handleSubmit(onSubmit)}
         key={question.id}
         className="mt-4"
       >
