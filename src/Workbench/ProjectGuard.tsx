@@ -19,7 +19,7 @@ interface RouteParams {
   projectId: string;
 }
 
-export default function ProjectGuard(): JSX.Element {
+export default function ProjectGuard(): React.ReactElement {
   const dispatch = useAppDispatch();
 
   const [isLoading, setLoading] = useState(false);

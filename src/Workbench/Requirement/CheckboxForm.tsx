@@ -1,4 +1,4 @@
-import React, { ReactElement } from 'react';
+import React from 'react';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import Col from 'react-bootstrap/Col';
@@ -25,7 +25,7 @@ export default function CheckboxForm({
   item,
   vIndex,
   aIndex
-}: IProps): ReactElement {
+}: IProps): React.ReactElement {
   return (
     <Card className="mb-3">
       <Card.Body>

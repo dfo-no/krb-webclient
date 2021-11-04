@@ -1,4 +1,4 @@
-import React, { ReactElement } from 'react';
+import React from 'react';
 import Container from 'react-bootstrap/Container';
 import { IRequirementAnswer } from '../../models/IRequirementAnswer';
 import { ISliderQuestion } from '../../models/ISliderQuestion';
@@ -12,7 +12,7 @@ interface IProps {
 export default function SliderInfo({
   answer,
   parent_requirement
-}: IProps): ReactElement {
+}: IProps): React.ReactElement {
   const alternative = answer.question as ISliderQuestion;
   const variant = parent_requirement.variants[0];
   return (

@@ -1,8 +1,8 @@
-import React, { ReactElement } from 'react';
+import React from 'react';
 import { useAppSelector } from '../../store/hooks';
 import InheritanceSearchBar from './InheritanceSearchBar';
 
-export default function InheritanceSearch(): ReactElement {
+export default function InheritanceSearch(): React.ReactElement {
   const { list } = useAppSelector((state) => state.bank);
   const { project } = useAppSelector((state) => state.project);
   return (

@@ -1,4 +1,4 @@
-import React, { ReactElement } from 'react';
+import React from 'react';
 import Container from 'react-bootstrap/Container';
 import { Code } from '../../models/Code';
 import { ICodelistQuestion } from '../../models/ICodelistQuestion';
@@ -14,7 +14,7 @@ interface IProps {
 export default function CodelistInfo({
   answer,
   parent_requirement
-}: IProps): ReactElement {
+}: IProps): React.ReactElement {
   const { response } = useAppSelector((state) => state.response);
   const alternative = answer.question as ICodelistQuestion;
   const variant = parent_requirement.variants[0];

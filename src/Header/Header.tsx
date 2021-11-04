@@ -1,4 +1,4 @@
-import React, { ReactElement } from 'react';
+import React from 'react';
 import Badge from 'react-bootstrap/Badge';
 import Button from 'react-bootstrap/Button';
 import Navbar from 'react-bootstrap/Navbar';
@@ -7,7 +7,7 @@ import { useHistory, useRouteMatch } from 'react-router-dom';
 import SignedButton from '../SignedButton/SignedButton';
 import css from './Header.module.scss';
 
-export default function Header(): ReactElement {
+export default function Header(): React.ReactElement {
   const history = useHistory();
   const { t } = useTranslation();
   const home = (): void => {

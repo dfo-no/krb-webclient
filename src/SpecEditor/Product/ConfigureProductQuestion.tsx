@@ -1,10 +1,10 @@
-import React, { ReactElement } from 'react';
+import React from 'react';
 import Utils from '../../common/Utils';
 import { SpecificationProduct } from '../../models/SpecificationProduct';
 import { useAppSelector } from '../../store/hooks';
 import AnswerTypeSelector from '../Components/AnswerTypeSelector';
 
-export default function ConfigureProductQuestion(): ReactElement {
+export default function ConfigureProductQuestion(): React.ReactElement {
   const { questionId } = useAppSelector((state) => state.selectedQuestion);
   const { spec } = useAppSelector((state) => state.specification);
   const { selectedSpecificationProduct } = useAppSelector(

@@ -1,13 +1,13 @@
 import { joiResolver } from '@hookform/resolvers/joi';
 import Joi from 'joi';
-import React, { ReactElement } from 'react';
+import React from 'react';
 import Button from 'react-bootstrap/Button';
-import Col from 'react-bootstrap/esm/Col';
+import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { v4 as uuidv4 } from 'uuid';
-import SliderSelect from '../../components/Slider';
+import SliderSelect from '../../components/SliderSelect';
 import ErrorSummary from '../../Form/ErrorSummary';
 import { IOption } from '../../models/IOption';
 import { IRequirementAnswer } from '../../models/IRequirementAnswer';
@@ -45,7 +45,7 @@ export default function ISliderInfoAnswer({
   type,
   reqTextId,
   requirement
-}: IProps): ReactElement {
+}: IProps): React.ReactElement {
   const { spec } = useAppSelector((state) => state.specification);
   const { selectedSpecificationProduct } = useAppSelector(
     (state) => state.selectedSpecProduct

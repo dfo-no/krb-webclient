@@ -1,5 +1,5 @@
 import { get, has } from 'lodash';
-import React, { ReactElement } from 'react';
+import React from 'react';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import Col from 'react-bootstrap/Col';
@@ -28,7 +28,7 @@ export default function SliderForm({
   item,
   vIndex,
   aIndex
-}: IProps): ReactElement {
+}: IProps): React.ReactElement {
   const { t } = useTranslation();
 
   return (

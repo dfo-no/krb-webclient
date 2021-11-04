@@ -1,4 +1,4 @@
-import React, { ReactElement, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Col from 'react-bootstrap/Col';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
@@ -12,7 +12,7 @@ import Projects from './Projects';
 import SideBar from './SideBar/SideBar';
 import styles from './WorkBench.module.scss';
 
-export default function WorkbenchModule(): ReactElement {
+export default function WorkbenchModule(): React.ReactElement {
   const dispatch = useAppDispatch();
 
   const [isLoading, setLoading] = useState(true);

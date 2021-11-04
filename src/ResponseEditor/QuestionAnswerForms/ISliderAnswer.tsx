@@ -1,15 +1,14 @@
 import { joiResolver } from '@hookform/resolvers/joi';
 import Joi from 'joi';
+import { get } from 'lodash';
 import React from 'react';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
-import { useForm } from 'react-hook-form';
+import { FieldError, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import SliderSelect from '../../components/Slider';
-import ErrorSummary from '../../Form/ErrorSummary';
-import { IOption } from '../../models/IOption';
+import ControlledSlider from '../../Form/ControlledSlider';
 import { IRequirementAnswer } from '../../models/IRequirementAnswer';
 import { ISliderQuestion } from '../../models/ISliderQuestion';
 import ModelType from '../../models/ModelType';
@@ -105,17 +104,6 @@ export default function ISliderAnswer({
       );
   };
 
-  const marks: IOption[] = [
-    {
-      value: sliderQuestion.config.min,
-      label: `${sliderQuestion.config.min} ${sliderQuestion.config.unit}`
-    },
-    {
-      value: sliderQuestion.config.max,
-      label: `${sliderQuestion.config.max} ${sliderQuestion.config.unit}`
-    }
-  ];
-
   return (
     <Card className="m-3 ">
       <Card.Header>
@@ -124,20 +112,18 @@ export default function ISliderAnswer({
       <Card.Body>
         <Form onSubmit={handleSubmit(saveValues)}>
           <Row className="w-50 m-3">
-            <SliderSelect
-              name={`answer.value` as const}
-              label=""
-              step={sliderQuestion.config.step}
+            <ControlledSlider
               min={sliderQuestion.config.min}
               max={sliderQuestion.config.max}
-              marks={marks}
+              unit={sliderQuestion.config.unit}
+              step={sliderQuestion.config.step}
+              marks={[]}
               control={control}
-              errors={errors}
-              key={sliderQuestion.id}
+              name="answer.value"
+              error={get(errors, `answer.value`) as FieldError}
             />
           </Row>
           <Button type="submit">{t('save')}</Button>
-          <ErrorSummary errors={errors} />
         </Form>
       </Card.Body>
     </Card>

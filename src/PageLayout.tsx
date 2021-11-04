@@ -1,8 +1,8 @@
-import React, { ReactElement } from 'react';
 import {
   AuthenticatedTemplate,
   UnauthenticatedTemplate
 } from '@azure/msal-react';
+import React from 'react';
 import Col from 'react-bootstrap/Col';
 import SignedButton from './SignedButton/SignedButton';
 
@@ -10,7 +10,7 @@ interface Iprops {
   children: JSX.Element | JSX.Element[];
 }
 
-export default function PageLayout({ children }: Iprops): ReactElement {
+export default function PageLayout({ children }: Iprops): React.ReactElement {
   return (
     <>
       <AuthenticatedTemplate>{children}</AuthenticatedTemplate>

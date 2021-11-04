@@ -1,4 +1,4 @@
-import React, { ReactElement } from 'react';
+import React from 'react';
 import Container from 'react-bootstrap/Container';
 import QuestionEnum from '../../models/QuestionEnum';
 import { Requirement } from '../../models/Requirement';
@@ -10,7 +10,9 @@ interface IProps {
   requirement: Requirement;
 }
 
-export default function InfoAnswer({ requirement }: IProps): ReactElement {
+export default function InfoAnswer({
+  requirement
+}: IProps): React.ReactElement {
   const question = requirement.variants[0].questions[0];
   return (
     <Container fluid className="mt-4">

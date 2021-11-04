@@ -1,32 +1,39 @@
 import Slider from '@mui/material/Slider';
 import React from 'react';
-import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 import FormControl from 'react-bootstrap/FormControl';
-import Row from 'react-bootstrap/Row';
 import {
   Controller,
   FieldError,
   FieldValues,
   UseControllerProps
 } from 'react-hook-form';
-import { ISliderQuestion } from '../models/ISliderQuestion';
+import { IOption } from '../models/IOption';
 
 interface Props<T> extends UseControllerProps<T> {
   error: FieldError | undefined;
-  question: ISliderQuestion;
+  min: number;
+  max: number;
+  step: number;
+  unit: string;
+  marks: IOption[];
 }
 
 const ControlledSlider = <T extends FieldValues>({
-  question,
   name,
   control,
-  error
+  error,
+  min,
+  max,
+  step,
+  unit,
+  marks
 }: Props<T>): React.ReactElement => {
   return (
-    <Row>
-      <Col xs={2}>{`${question.config.min} ${question.config.unit}`}</Col>
-      <Col xs={8}>
+    <div className="d-flex align-items-center">
+      {marks.length === 0 && <div className="px-2">{`${min} ${unit}`}</div>}
+
+      <span className="mx-3 flex-grow-1">
         <Form.Group controlId={name}>
           <Controller
             control={control}
@@ -40,9 +47,10 @@ const ControlledSlider = <T extends FieldValues>({
                 onChange={(_, value) => {
                   field.onChange(value);
                 }}
-                min={question.config.min}
-                max={question.config.max}
-                step={question.config.step}
+                min={min}
+                max={max}
+                step={step}
+                marks={marks}
               />
             )}
           />
@@ -51,9 +59,9 @@ const ControlledSlider = <T extends FieldValues>({
             {error?.message}
           </FormControl.Feedback>
         </Form.Group>
-      </Col>
-      <Col xs={2}>{`${question.config.max} ${question.config.unit}`}</Col>
-    </Row>
+      </span>
+      {marks.length === 0 && <span className="px-2">{`${max} ${unit}`}</span>}
+    </div>
   );
 };
 

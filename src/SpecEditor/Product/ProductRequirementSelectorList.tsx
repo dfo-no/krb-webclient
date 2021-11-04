@@ -1,4 +1,4 @@
-import React, { ReactElement } from 'react';
+import React from 'react';
 import Col from 'react-bootstrap/Col';
 import ListGroup from 'react-bootstrap/ListGroup';
 import Row from 'react-bootstrap/Row';
@@ -20,7 +20,7 @@ interface InputProps {
 export default function ProductRequirementSelectorList({
   selectedBank,
   product
-}: InputProps): ReactElement {
+}: InputProps): React.ReactElement {
   const requirementsAnswers = (requirementArray: Requirement[]) => {
     return requirementArray.map((req) => {
       const selected = !!product.requirements.includes(req.id);

@@ -1,4 +1,4 @@
-import React, { ReactElement } from 'react';
+import React from 'react';
 import Alert from 'react-bootstrap/Alert';
 import Fade from 'react-bootstrap/Fade';
 
@@ -10,7 +10,7 @@ interface IProps {
 export default function ErrorAlert({
   toggleShow,
   alertText
-}: IProps): ReactElement {
+}: IProps): React.ReactElement {
   return (
     <Alert
       variant="error"

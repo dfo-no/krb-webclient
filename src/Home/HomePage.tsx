@@ -1,4 +1,4 @@
-import React, { ReactElement, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import Col from 'react-bootstrap/Col';
 import Container from 'react-bootstrap/Container';
 import ListGroup from 'react-bootstrap/ListGroup';
@@ -10,7 +10,7 @@ import { useAppDispatch, useAppSelector } from '../store/hooks';
 import { getBanksThunk } from '../store/reducers/bank-reducer';
 import FilteredList from './Components/FilteredList';
 
-export default function HomePage(): ReactElement {
+export default function HomePage(): React.ReactElement {
   const dispatch = useAppDispatch();
   const { t } = useTranslation();
   const { list, alfabetic, latest, status } = useAppSelector(

@@ -1,4 +1,4 @@
-import React, { ReactElement } from 'react';
+import React from 'react';
 import Col from 'react-bootstrap/Col';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
@@ -19,7 +19,7 @@ import SpecPage from './SpecPage';
 interface RouteParams {
   bankId: string;
 }
-export default function SpecModule(): ReactElement {
+export default function SpecModule(): React.ReactElement {
   const projectMatch = useRouteMatch<RouteParams>('/speceditor/:bankId');
   const dispatch = useAppDispatch();
   const { id } = useAppSelector((state) => state.selectedBank);

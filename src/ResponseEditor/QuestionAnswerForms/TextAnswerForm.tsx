@@ -1,6 +1,6 @@
 import { joiResolver } from '@hookform/resolvers/joi';
 import Joi from 'joi';
-import React, { ReactElement } from 'react';
+import React from 'react';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import Form from 'react-bootstrap/Form';
@@ -30,7 +30,9 @@ export const ResponseTextSchema = Joi.object().keys({
   })
 });
 
-export default function ITextAnswer({ parentAnswer }: IProps): ReactElement {
+export default function ITextAnswer({
+  parentAnswer
+}: IProps): React.ReactElement {
   const { response } = useAppSelector((state) => state.response);
   const { selectedResponseProduct } = useAppSelector(
     (state) => state.selectedResponseProduct

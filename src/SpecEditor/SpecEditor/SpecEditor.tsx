@@ -1,6 +1,6 @@
 import { joiResolver } from '@hookform/resolvers/joi';
 import Joi from 'joi';
-import React, { ReactElement } from 'react';
+import React from 'react';
 import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
 import Container from 'react-bootstrap/Container';
@@ -21,7 +21,7 @@ const titleSchema = Joi.object().keys({
   title: Joi.string().required()
 });
 
-export default function SpecEditor(): ReactElement {
+export default function SpecEditor(): React.ReactElement {
   const { id } = useAppSelector((state) => state.selectedBank);
   const { normalizedList } = useAppSelector((state) => state.bank);
   const { spec } = useAppSelector((state) => state.specification);

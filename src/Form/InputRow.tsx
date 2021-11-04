@@ -1,5 +1,5 @@
 import { get, has } from 'lodash';
-import React, { ReactElement } from 'react';
+import React from 'react';
 import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
@@ -27,7 +27,7 @@ function InputRow({
   type,
   labelWidth,
   controlWidth
-}: IProps): ReactElement {
+}: IProps): React.ReactElement {
   const errorTmp = `${name}.message`;
   const errorArrayPath = errorTmp.split('.');
 

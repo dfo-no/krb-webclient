@@ -1,4 +1,4 @@
-import React, { ReactElement } from 'react';
+import React from 'react';
 import Card from 'react-bootstrap/Card';
 import Row from 'react-bootstrap/Row';
 import { BsPencilSquare } from 'react-icons/bs';
@@ -8,7 +8,7 @@ import { Codelist } from '../../models/Codelist';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { selectCodeList } from '../../store/reducers/selectedCodelist-reducer';
 
-function CodelistList(): ReactElement {
+function CodelistList(): React.ReactElement {
   const { project } = useAppSelector((state) => state.project);
   const dispatch = useAppDispatch();
 

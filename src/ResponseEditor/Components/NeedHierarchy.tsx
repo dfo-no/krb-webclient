@@ -1,4 +1,4 @@
-import React, { ReactElement } from 'react';
+import React from 'react';
 import Col from 'react-bootstrap/Col';
 import ListGroup from 'react-bootstrap/ListGroup';
 import Row from 'react-bootstrap/Row';
@@ -22,7 +22,7 @@ export default function NeedHierarchy({
   searchList,
   specificationSearchList,
   responseSearchList
-}: IProps): ReactElement {
+}: IProps): React.ReactElement {
   const needChildrenHierarchy = (
     listofneed: Nestable<Need>[],
     level: number

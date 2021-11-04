@@ -9,7 +9,7 @@ interface RouteParams {
   id: string;
 }
 
-export default function CodelistGuard(): JSX.Element {
+export default function CodelistGuard(): React.ReactElement {
   const dispatch = useAppDispatch();
   const { project } = useAppSelector((state) => state.project);
   const { codelist } = useAppSelector((state) => state.selectedCodeList);

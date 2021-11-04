@@ -1,4 +1,4 @@
-import React, { ReactElement } from 'react';
+import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Product } from '../../models/Product';
 import NestableHierarcy from '../../NestableHierarchy/NestableHierarcy';
@@ -10,7 +10,7 @@ import {
 import EditProductForm from './EditProductForm';
 import NewProductForm from './NewProductForm';
 
-export default function ProductPage(): ReactElement {
+export default function ProductPage(): React.ReactElement {
   const { project } = useAppSelector((state) => state.project);
   const dispatch = useAppDispatch();
   const { t } = useTranslation();

@@ -9,7 +9,7 @@ interface RouteParams {
   productId: string;
 }
 
-export default function ProductGuard(): JSX.Element {
+export default function ProductGuard(): React.ReactElement {
   const dispatch = useAppDispatch();
   const { project } = useAppSelector((state) => state.project);
   const { product } = useAppSelector((state) => state.selectedProduct);

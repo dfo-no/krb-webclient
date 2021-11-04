@@ -1,4 +1,4 @@
-import React, { ReactElement, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import AlertComponent from 'react-bootstrap/Alert';
 import Fade from 'react-bootstrap/Fade';
 import { Alert } from '../../models/Alert';
@@ -8,7 +8,7 @@ import { removeAlert } from '../../store/reducers/alert-reducer';
 interface IProps {
   alert: Alert;
 }
-export default function AlertElement({ alert }: IProps): ReactElement {
+export default function AlertElement({ alert }: IProps): React.ReactElement {
   const dispatch = useAppDispatch();
   useEffect(() => {
     const timer = setTimeout(() => {

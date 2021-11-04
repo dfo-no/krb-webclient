@@ -1,4 +1,4 @@
-import React, { ReactElement } from 'react';
+import React from 'react';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 
@@ -10,7 +10,7 @@ interface IProps {
 export default function AnswerPreview({
   displayText,
   displayValue
-}: IProps): ReactElement {
+}: IProps): React.ReactElement {
   return (
     <Container className="m-3 w-50" fluid>
       <Row>

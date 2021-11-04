@@ -1,4 +1,4 @@
-import React, { ReactElement } from 'react';
+import React from 'react';
 import Container from 'react-bootstrap/Container';
 import { IRequirementAnswer } from '../../models/IRequirementAnswer';
 import { ITextQuestion } from '../../models/ITextQuestion';
@@ -12,7 +12,7 @@ interface IProps {
 export default function TextInfo({
   answer,
   parent_requirement
-}: IProps): ReactElement {
+}: IProps): React.ReactElement {
   const alternative = answer.question as ITextQuestion;
   const variant = parent_requirement.variants[0];
   return (

@@ -1,6 +1,6 @@
 import { joiResolver } from '@hookform/resolvers/joi';
 import Joi from 'joi';
-import React, { ReactElement, useState } from 'react';
+import React, { useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import Col from 'react-bootstrap/Col';
@@ -8,7 +8,7 @@ import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import SliderSelect from '../../components/Slider';
+import SliderSelect from '../../components/SliderSelect';
 import { ICheckboxQuestion } from '../../models/ICheckboxQuestion';
 import { IRequirementAnswer } from '../../models/IRequirementAnswer';
 import ModelType from '../../models/ModelType';
@@ -31,7 +31,9 @@ const CheckboxSchema = Joi.object().keys({
   })
 });
 
-export default function CheckBoxForm({ parentAnswer }: IProps): ReactElement {
+export default function CheckBoxForm({
+  parentAnswer
+}: IProps): React.ReactElement {
   const { response } = useAppSelector((state) => state.response);
   const dispatch = useAppDispatch();
   const { selectedSpecificationProduct } = useAppSelector(

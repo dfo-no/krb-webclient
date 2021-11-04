@@ -1,4 +1,4 @@
-import React, { ReactElement, useState } from 'react';
+import React, { useState } from 'react';
 import FormControl from 'react-bootstrap/FormControl';
 import ListGroup from 'react-bootstrap/ListGroup';
 import { useTranslation } from 'react-i18next';
@@ -12,7 +12,9 @@ interface SearchBarProps {
   list: Bank[];
 }
 
-export default function SearchBar({ list }: SearchBarProps): ReactElement {
+export default function SearchBar({
+  list
+}: SearchBarProps): React.ReactElement {
   const [input, setInput] = useState('');
   const [searchList, setSearchList] = useState<Bank[]>([]);
   const dispatch = useAppDispatch();

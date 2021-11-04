@@ -1,4 +1,4 @@
-import React, { ReactElement, useState } from 'react';
+import React, { useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
 import FormControl from 'react-bootstrap/FormControl';
@@ -18,7 +18,7 @@ interface SearchBarProps {
 export default function InheritanceSearchBar({
   list,
   project
-}: SearchBarProps): ReactElement {
+}: SearchBarProps): React.ReactElement {
   const [input, setInput] = useState('');
   const [searchList, setSearchList] = useState<Bank[]>([]);
   const dispatch = useAppDispatch();

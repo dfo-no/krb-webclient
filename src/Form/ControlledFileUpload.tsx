@@ -1,4 +1,3 @@
-import Switch from '@mui/material/Switch';
 import React from 'react';
 import Form from 'react-bootstrap/Form';
 import FormControl from 'react-bootstrap/FormControl';
@@ -13,7 +12,7 @@ interface Props<T> extends UseControllerProps<T> {
   error: FieldError | undefined;
 }
 
-const ControlledCheckbox = <T extends FieldValues>({
+const ControlledFileUpload = <T extends FieldValues>({
   name,
   control,
   error
@@ -24,14 +23,9 @@ const ControlledCheckbox = <T extends FieldValues>({
         control={control}
         name={name}
         render={({ field }) => (
-          <Switch
-            {...field}
-            onChange={(e) => field.onChange(e.target.checked)}
-            checked={field.value ? field.value : false}
-          />
+          <Form.Control type="text" {...field} isInvalid={!!error} />
         )}
       />
-      <Form.Control type="hidden" isInvalid={!!error} />
       <FormControl.Feedback type="invalid">
         {error?.message}
       </FormControl.Feedback>
@@ -39,4 +33,4 @@ const ControlledCheckbox = <T extends FieldValues>({
   );
 };
 
-export default ControlledCheckbox;
+export default ControlledFileUpload;

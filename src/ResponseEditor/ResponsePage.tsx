@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import { AxiosResponse } from 'axios';
-import React, { ReactElement } from 'react';
+import React from 'react';
 import Col from 'react-bootstrap/Col';
 import Container from 'react-bootstrap/Container';
 import InputGroup from 'react-bootstrap/InputGroup';
@@ -14,7 +14,7 @@ import {
 } from '../store/reducers/response-reducer';
 import { selectBank } from '../store/reducers/selectedBank-reducer';
 
-export default function ResponsePage(): ReactElement {
+export default function ResponsePage(): React.ReactElement {
   const dispatch = useAppDispatch();
   const history = useHistory();
 

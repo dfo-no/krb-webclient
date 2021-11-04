@@ -1,4 +1,4 @@
-import React, { ReactElement } from 'react';
+import React from 'react';
 import Col from 'react-bootstrap/Col';
 import ListGroup from 'react-bootstrap/ListGroup';
 import Row from 'react-bootstrap/Row';
@@ -17,7 +17,7 @@ interface InputProps {
 
 export default function RequirementSelectorList({
   needList
-}: InputProps): ReactElement {
+}: InputProps): React.ReactElement {
   const { spec } = useAppSelector((state) => state.specification);
   const checkIfReqHasVariantMatch = (req: Requirement): boolean => {
     let found = false;

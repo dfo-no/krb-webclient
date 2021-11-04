@@ -1,4 +1,4 @@
-import React, { ReactElement } from 'react';
+import React from 'react';
 import { IRequirementAnswer } from '../../models/IRequirementAnswer';
 import { Requirement } from '../../models/Requirement';
 import QuestionFormSelector from './QuestionFormSelector';
@@ -15,7 +15,7 @@ export default function RequirementAnswers({
   requirementSearchList,
   specificationSearchList,
   responseSearchList
-}: IProps): ReactElement {
+}: IProps): React.ReactElement {
   const answers = () => {
     return requirementArray.map((req) => {
       const selected = !!requirementSearchList.includes(req.id);

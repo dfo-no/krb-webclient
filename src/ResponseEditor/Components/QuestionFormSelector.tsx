@@ -1,5 +1,5 @@
-import React, { ReactElement } from 'react';
-import Card from 'react-bootstrap/esm/Card';
+import React from 'react';
+import Card from 'react-bootstrap/Card';
 import { IRequirementAnswer } from '../../models/IRequirementAnswer';
 import QuestionEnum from '../../models/QuestionEnum';
 import { Requirement } from '../../models/Requirement';
@@ -25,7 +25,7 @@ export default function QuestionFormSelector({
   selectedAnswer,
   req,
   requirementText
-}: IProps): ReactElement {
+}: IProps): React.ReactElement {
   return (
     <div key={selectedAnswer.id}>
       {req.requirement_Type === RequirementType.requirement && (

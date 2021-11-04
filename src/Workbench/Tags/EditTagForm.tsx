@@ -1,5 +1,5 @@
 import { joiResolver } from '@hookform/resolvers/joi';
-import React, { ReactElement, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import Form from 'react-bootstrap/Form';
@@ -25,7 +25,7 @@ interface IProps {
   element: Parentable<Tag>;
 }
 
-export default function EditTagForm({ element }: IProps): ReactElement {
+export default function EditTagForm({ element }: IProps): React.ReactElement {
   const dispatch = useAppDispatch();
   const [validated] = useState(false);
   const { t } = useTranslation();

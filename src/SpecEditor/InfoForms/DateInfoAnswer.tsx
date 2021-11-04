@@ -3,7 +3,7 @@ import Joi from 'joi';
 import { get } from 'lodash';
 import React from 'react';
 import Button from 'react-bootstrap/Button';
-import Col from 'react-bootstrap/esm/Col';
+import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 import { FieldError, useForm } from 'react-hook-form';

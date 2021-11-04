@@ -1,4 +1,4 @@
-import React, { ReactElement } from 'react';
+import React from 'react';
 import Nav from 'react-bootstrap/Nav';
 import { withRouter } from 'react-router';
 import { NavLink, useRouteMatch } from 'react-router-dom';
@@ -32,7 +32,7 @@ const renderRouteLinks = (routes: IRouteLink[], isProjectSelected: boolean) => {
   });
 };
 
-function PrefilledResponseSideBar(): ReactElement {
+function PrefilledResponseSideBar(): React.ReactElement {
   const { id } = useAppSelector((state) => state.selectedBank);
   const { prefilledResponse } = useAppSelector(
     (state) => state.prefilledResponse

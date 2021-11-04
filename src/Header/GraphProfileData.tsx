@@ -1,9 +1,8 @@
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
-/* eslint-disable react/destructuring-assignment */
 import React from 'react';
 import { graphConfig } from '../authentication/authConfig';
+import { GraphData } from '../models/GraphData';
 
-// TODO find appropriate interface for props for graph data
 export async function callMsGraph(accessToken: string) {
   const headers = new Headers();
   const bearer = `Bearer ${accessToken}`;
@@ -20,14 +19,14 @@ export async function callMsGraph(accessToken: string) {
     .catch((error) => console.error(error));
 }
 
-export const ProfileData = (props: any) => {
+export const ProfileData = ({ graphData }: GraphData): React.ReactElement => {
   return (
     <div id="profile-div">
       <p>
-        <strong>Title: </strong> {props.graphData.jobTitle}
+        <strong>Title: </strong> {graphData.jobTitle}
       </p>
       <p>
-        <strong>Mail: </strong> {props.graphData.mail}
+        <strong>Mail: </strong> {graphData.mail}
       </p>
     </div>
   );
