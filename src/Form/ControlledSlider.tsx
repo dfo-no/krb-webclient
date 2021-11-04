@@ -8,6 +8,7 @@ import {
   FieldValues,
   UseControllerProps
 } from 'react-hook-form';
+import { IOption } from '../models/IOption';
 
 interface Props<T> extends UseControllerProps<T> {
   error: FieldError | undefined;
@@ -15,6 +16,7 @@ interface Props<T> extends UseControllerProps<T> {
   max: number;
   step: number;
   unit: string;
+  marks: IOption[];
 }
 
 const ControlledSlider = <T extends FieldValues>({
@@ -24,11 +26,13 @@ const ControlledSlider = <T extends FieldValues>({
   min,
   max,
   step,
-  unit
+  unit,
+  marks
 }: Props<T>): React.ReactElement => {
   return (
     <div className="d-flex align-items-center">
-      <div className="px-2">{`${min} ${unit}`}</div>
+      {marks.length === 0 && <div className="px-2">{`${min} ${unit}`}</div>}
+
       <span className="mx-3 flex-grow-1">
         <Form.Group controlId={name}>
           <Controller
@@ -46,6 +50,7 @@ const ControlledSlider = <T extends FieldValues>({
                 min={min}
                 max={max}
                 step={step}
+                marks={marks}
               />
             )}
           />
@@ -55,7 +60,7 @@ const ControlledSlider = <T extends FieldValues>({
           </FormControl.Feedback>
         </Form.Group>
       </span>
-      <span className="px-2">{`${max} ${unit}`}</span>
+      {marks.length === 0 && <span className="px-2">{`${max} ${unit}`}</span>}
     </div>
   );
 };

@@ -202,6 +202,7 @@ export default function PrefilledRequirement(): React.ReactElement {
             max={question.config.max}
             unit={question.config.unit}
             step={question.config.step}
+            marks={[]}
             control={control}
             name={`cart.${ix}.question.answer.value`}
             error={

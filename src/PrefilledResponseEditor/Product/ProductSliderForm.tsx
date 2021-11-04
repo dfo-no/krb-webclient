@@ -114,6 +114,7 @@ const ProductSliderForm = ({ elem, product }: IProps): React.ReactElement => {
           max={question.config.max}
           unit={question.config.unit}
           step={question.config.step}
+          marks={[]}
           control={control}
           name={`question.answer.value` as const}
           error={get(errors, `question.answer.value`) as FieldError}

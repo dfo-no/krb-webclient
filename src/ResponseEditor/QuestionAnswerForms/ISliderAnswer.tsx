@@ -117,6 +117,7 @@ export default function ISliderAnswer({
               max={sliderQuestion.config.max}
               unit={sliderQuestion.config.unit}
               step={sliderQuestion.config.step}
+              marks={[]}
               control={control}
               name="answer.value"
               error={get(errors, `answer.value`) as FieldError}
