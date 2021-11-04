@@ -84,9 +84,9 @@ class Utils {
           levelNode.id,
           level + 1
         );
-        if (children.length) {
-          levelNode.children = children;
-        }
+        // if (children.length) {
+        levelNode.children = children;
+        // }
         out.push(levelNode);
       }
     });

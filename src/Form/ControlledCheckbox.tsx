@@ -1,5 +1,6 @@
 import Switch from '@mui/material/Switch';
 import React from 'react';
+import { FormControl } from 'react-bootstrap';
 import Form from 'react-bootstrap/Form';
 import {
   Controller,
@@ -14,7 +15,8 @@ interface Props<T> extends UseControllerProps<T> {
 
 const ControlledCheckbox = <T extends FieldValues>({
   name,
-  control
+  control,
+  error
 }: Props<T>): React.ReactElement => {
   return (
     <Form.Group controlId={name}>
@@ -29,6 +31,10 @@ const ControlledCheckbox = <T extends FieldValues>({
           />
         )}
       />
+      <Form.Control type="hidden" isInvalid={!!error} />
+      <FormControl.Feedback type="invalid">
+        {error?.message}
+      </FormControl.Feedback>
     </Form.Group>
   );
 };

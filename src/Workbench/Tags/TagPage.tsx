@@ -2,7 +2,7 @@ import React, { ReactElement } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Parentable } from '../../models/Parentable';
 import { Tag } from '../../models/Tag';
-import NestableHierarcy from '../../NestableHierarchy/Nestable';
+import NestableHierarcy from '../../NestableHierarchy/NestableHierarcy';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import {
   putSelectedProjectThunk,

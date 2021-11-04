@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-shadow */
 import React, { ReactElement } from 'react';
 import { Code } from '../../models/Code';
-import NestableHierarcy from '../../NestableHierarchy/Nestable';
+import NestableHierarcy from '../../NestableHierarchy/NestableHierarcy';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import {
   putSelectedProjectThunk,

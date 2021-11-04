@@ -24,6 +24,7 @@ export default function NestableHierarcy({
 }: IProps) {
   useEffect(() => {}, [inputlist]);
   const [activeKey, setActiveKey] = useState('');
+
   const convertTreeToList = (tree: any, key: string, collection: any[]) => {
     if ((!tree[key] || tree[key].length === 0) && collection.includes(tree)) {
       const copiedTree = { ...tree };

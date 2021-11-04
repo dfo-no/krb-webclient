@@ -1,7 +1,7 @@
 import React, { ReactElement } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Product } from '../../models/Product';
-import NestableHierarcy from '../../NestableHierarchy/Nestable';
+import NestableHierarcy from '../../NestableHierarchy/NestableHierarcy';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import {
   putSelectedProjectThunk,
