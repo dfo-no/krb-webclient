@@ -25,9 +25,10 @@ export default function NewTagForm(): React.ReactElement {
   const { t } = useTranslation();
   const [show, setShow] = useState(false);
   const nexus = Nexus.getInstance();
-  const tagService = nexus.getTagService();
 
-  const defaultValues = tagService.generateDefaultTaglistValues(project.id);
+  const defaultValues = nexus.tagService.generateDefaultTaglistValues(
+    project.id
+  );
 
   const {
     control,
@@ -40,7 +41,7 @@ export default function NewTagForm(): React.ReactElement {
   });
 
   const onNewTagSubmit = (post: Parentable<Tag>) => {
-    const newTag = tagService.generateTag(post);
+    const newTag = nexus.tagService.generateTag(post);
     const alert: Alert = {
       id: uuidv4(),
       style: 'success',

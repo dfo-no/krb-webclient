@@ -31,15 +31,15 @@ export default class TagService {
     return tag;
   };
 
-  add(item: Parentable<Tag>): void {
-    this.storeService.addTag(item);
+  async add(item: Parentable<Tag>): Promise<void> {
+    return this.storeService.addTag(item);
   }
 
-  edit(item: Parentable<Tag>): void {
-    this.storeService.editTag(item);
+  async edit(item: Parentable<Tag>): Promise<void> {
+    return this.storeService.editTag(item);
   }
 
-  delete(item: Parentable<Tag>): void {
-    this.storeService.deleteTag(item);
+  async delete(item: Parentable<Tag>): Promise<void> {
+    return this.storeService.deleteTag(item);
   }
 }

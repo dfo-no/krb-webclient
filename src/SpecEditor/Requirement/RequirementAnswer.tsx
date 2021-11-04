@@ -81,12 +81,12 @@ export default function RequirementAnswer({
   const [selectedVariant, setSelectedVariant] = useState(
     requirement.variants[0]
   );
-  const savedAlternative = spec.requirementAnswers.find(
-    (alt) => alt.variantId === selectedVariant.id
+  const savedQuestion = spec.requirementAnswers.find(
+    (question) => question.variantId === selectedVariant.id
   );
-  const [selectedAlternative, setSelectedAlternative] = useState<
-    string | undefined
-  >(savedAlternative !== undefined ? savedAlternative.id : undefined);
+  const [selectedQuestion, setSelectedQuestion] = useState<string | undefined>(
+    savedQuestion !== undefined ? savedQuestion.id : undefined
+  );
 
   const { id } = useAppSelector((state) => state.selectedBank);
   const checkWeightIsPredefined = (weight: number) => {
@@ -95,25 +95,25 @@ export default function RequirementAnswer({
   };
 
   const setWeightState = () => {
-    if (savedAlternative) {
-      if (checkWeightIsPredefined(savedAlternative.weight)) return 'standard';
+    if (savedQuestion) {
+      if (checkWeightIsPredefined(savedQuestion.weight)) return 'standard';
       return 'egendefinert';
     }
     return 'standard';
   };
   const [weightType, setWeightType] = useState(setWeightState());
   const saveAnswer = (post: FormValue) => {
-    const alternativeIndex = selectedVariant.questions.findIndex(
-      (alt) => alt.id === post.question
+    const questionIndex = selectedVariant.questions.findIndex(
+      (question) => question.id === post.question
     );
     const savedWeight =
       weightType === 'standard' && post.weight > 90 ? 90 : post.weight;
-    if (savedAlternative) {
-      const updatedAnswer: IRequirementAnswer = { ...savedAlternative };
+    if (savedQuestion) {
+      const updatedAnswer: IRequirementAnswer = { ...savedQuestion };
       updatedAnswer.weight = savedWeight;
       dispatch(editAnswer({ answer: updatedAnswer }));
     } else {
-      const question = selectedVariant.questions[alternativeIndex];
+      const question = selectedVariant.questions[questionIndex];
       const newAnswer: IRequirementAnswer = {
         id: uuidv4(),
         questionId: post.question,
@@ -124,27 +124,27 @@ export default function RequirementAnswer({
         type: ModelType.requirement
       };
       dispatch(addAnswer({ answer: newAnswer }));
-      setSelectedAlternative(newAnswer.id);
+      setSelectedQuestion(newAnswer.id);
     }
   };
 
-  const selectAlt = () => {
-    if (selectedAlternative !== undefined)
-      dispatch(selectQuestion(selectedAlternative));
+  const selectQuestionType = () => {
+    if (selectedQuestion !== undefined)
+      dispatch(selectQuestion(selectedQuestion));
   };
   function handleChange(event: React.ChangeEvent<HTMLFormElement>) {
     const variantId = event.target.value;
     const variant = Utils.ensure(
       requirement.variants.find((element: IVariant) => element.id === variantId)
     );
-    selectedVariant.questions.forEach((alternative) => {
+    selectedVariant.questions.forEach((question) => {
       if (
         spec.requirementAnswers.find(
-          (answer) => answer.questionId === alternative.id
+          (answer) => answer.questionId === question.id
         )
       ) {
         const index = spec.requirementAnswers.findIndex(
-          (answer) => answer.questionId === alternative.id
+          (answer) => answer.questionId === question.id
         );
         dispatch(deleteAnswer({ answer: spec.requirementAnswers[index].id }));
       }
@@ -169,15 +169,15 @@ export default function RequirementAnswer({
   function findDefaultAnswerOption(): [string, number] {
     let defaultText = selectedVariant.questions[0].id;
     let defaultWeight = 0;
-    selectedVariant.questions.forEach((alternative) => {
+    selectedVariant.questions.forEach((question) => {
       if (
         spec.requirementAnswers.find(
-          (answer) => answer.questionId === alternative.id
+          (answer) => answer.questionId === question.id
         )
       ) {
-        defaultText = alternative.id;
+        defaultText = question.id;
         const index = spec.requirementAnswers.findIndex(
-          (answer) => answer.questionId === alternative.id
+          (answer) => answer.questionId === question.id
         );
         defaultWeight = spec.requirementAnswers[index].weight;
       }
@@ -185,7 +185,7 @@ export default function RequirementAnswer({
     return [defaultText, defaultWeight];
   }
 
-  const reqTextOptions = (req: Requirement) => {
+  const requirementTextOptions = (req: Requirement) => {
     const reqText = req.variants.map((variant) => {
       if (req.variants.length === 1) {
         return <p key={variant.id}>{variant.requirementText}</p>;
@@ -220,10 +220,10 @@ export default function RequirementAnswer({
   };
 
   const answerOptions = (variant: IVariant) => {
-    const answers = variant.questions.map((alternative) => {
+    const answers = variant.questions.map((question) => {
       return (
-        <option key={alternative.id} value={alternative.id}>
-          {alternative.type}
+        <option key={question.id} value={question.id}>
+          {question.type}
         </option>
       );
     });
@@ -240,10 +240,10 @@ export default function RequirementAnswer({
             </Form.Control>
           </Col>
           <Col sm={3}>
-            {selectedAlternative !== undefined && (
+            {selectedQuestion !== undefined && (
               <Link
-                onClick={selectAlt}
-                to={`/specification/${id}/requirement/question/${selectedAlternative}`}
+                onClick={selectQuestionType}
+                to={`/specification/${id}/requirement/question/${selectedQuestion}`}
               >
                 <Button className="ml-4">Configure question</Button>
               </Link>
@@ -287,9 +287,7 @@ export default function RequirementAnswer({
               <Form.Label>{t('weighting')}:</Form.Label>
               <Form.Control
                 type="number"
-                defaultValue={
-                  savedAlternative?.weight ? savedAlternative.weight : 0
-                }
+                defaultValue={savedQuestion?.weight ? savedQuestion.weight : 0}
                 min={0}
                 className="w-25"
                 {...register('weight' as const)}
@@ -306,9 +304,7 @@ export default function RequirementAnswer({
             <Controller
               control={control}
               name={'weight' as const}
-              defaultValue={
-                savedAlternative?.weight ? savedAlternative.weight : 0
-              }
+              defaultValue={savedQuestion?.weight ? savedQuestion.weight : 0}
               render={({ field }) => (
                 <Slider
                   className="mt-4 mb-4 w-25"
@@ -337,7 +333,7 @@ export default function RequirementAnswer({
 
   return (
     <Container fluid className="mt-4">
-      {reqTextOptions(requirement)}
+      {requirementTextOptions(requirement)}
       {answerOptions(selectedVariant)}
     </Container>
   );

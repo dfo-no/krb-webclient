@@ -25,11 +25,9 @@ function NewCodelist(): React.ReactElement {
   const { t } = useTranslation();
   const [show, setShow] = useState(false);
   const nexus = Nexus.getInstance();
-  const codelistService = nexus.getCodelistService();
 
-  const defaultValues: Codelist = codelistService.generateDefaultCodelistValues(
-    project.id
-  );
+  const defaultValues: Codelist =
+    nexus.codelistService.generateDefaultCodelistValues(project.id);
 
   const {
     control,
@@ -47,7 +45,7 @@ function NewCodelist(): React.ReactElement {
       style: 'success',
       text: 'Successfully added codelist'
     };
-    const newCodelist = codelistService.createCodelistWithId(post);
+    const newCodelist = nexus.codelistService.createCodelistWithId(post);
     dispatch(addCodelist(newCodelist));
     dispatch(putSelectedProjectThunk('dummy')).then(() => {
       dispatch(addAlert({ alert }));

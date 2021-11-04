@@ -27,9 +27,8 @@ function NewCodeForm(): React.ReactElement {
   const [show, setShow] = useState(false);
   const { t } = useTranslation();
   const nexus = Nexus.getInstance();
-  const codelistService = nexus.getCodelistService();
 
-  const defaultValues: Code = codelistService.generateDefaultCodeValues(
+  const defaultValues: Code = nexus.codelistService.generateDefaultCodeValues(
     project.id
   );
 
@@ -49,7 +48,7 @@ function NewCodeForm(): React.ReactElement {
       style: 'success',
       text: 'Successfully added code'
     };
-    const code = codelistService.createCodeWithId(post);
+    const code = nexus.codelistService.createCodeWithId(post);
     dispatch(
       addCodeToCodelist({
         codelistId: codelist.id,

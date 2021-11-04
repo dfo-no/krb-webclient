@@ -1,73 +1,77 @@
 /* eslint-disable class-methods-use-this */
 import { Bank } from '../models/Bank';
+import Adapter from './Adapters/Adapter';
+import LocalStorageAdapter from './Adapters/LocalStorageAdapter';
 import CodelistService from './services/CodelistService';
 import NeedService from './services/NeedService';
 import ProductService from './services/ProductService';
 import ProjectService from './services/ProjectService';
 import PublicationService from './services/PublicationService';
+import RequirementService from './services/RequirementService';
+import ResponseService from './services/ResponseService';
+import ResponseStoreService from './services/ResponseStoreService';
+import SpecificationService from './services/SpecificationService';
+import SpecificationStoreService from './services/SpecificationStoreService';
 import StoreService from './services/StoreService';
 import TagService from './services/TagService';
 
 export default class Nexus {
   private static instance: Nexus;
 
-  private static bank: Bank;
+  private adapter: Adapter;
 
   public store = new StoreService();
 
-  private constructor() {
-    // intensional private constructor
+  public specificationStore = new SpecificationStoreService();
+
+  public responseStore = new ResponseStoreService();
+
+  // investigate Inversify.js to get rid of this code and remove use of new
+  public needService = new NeedService(this.store);
+
+  public requirementService = new RequirementService(this.store);
+
+  public tagService = new TagService(this.store);
+
+  public productService = new ProductService(this.store);
+
+  public publicationService = new PublicationService();
+
+  public codelistService = new CodelistService(this.store);
+
+  public projectService = new ProjectService(this.store);
+
+  public specificationService = new SpecificationService(
+    this.specificationStore
+  );
+
+  public responseService = new ResponseService(this.responseStore);
+
+  private constructor(adapter: Adapter) {
+    this.adapter = adapter;
   }
 
-  public static getInstance(): Nexus {
+  public static getInstance(adapter?: Adapter): Nexus {
     if (!Nexus.instance) {
-      Nexus.instance = new this();
+      if (!adapter) {
+        Nexus.instance = new this(new LocalStorageAdapter());
+      } else {
+        Nexus.instance = new this(adapter);
+      }
     }
 
     return Nexus.instance;
   }
 
-  public setProject(bank: Bank): void {
-    this.store.setBank(bank);
+  // find out how to handle potential save of specification as well as bank
+  async save(): Promise<void> {
+    return this.adapter.save(this.store.getBank());
   }
 
-  public getProject(): Bank {
-    return this.store.getBank();
-  }
-
-  /**
-   * We will probably get the services in another way than this eventually.
-   * Possibly by using Dependency Injection of some sort.
-   * The important part is that the business logic *inside* the services are good for now.
-   */
-
-  // eslint-disable-next-line class-methods-use-this
-  public getPublicationService(): PublicationService {
-    return new PublicationService();
+  // find out how to handle potential load of specification as well as bank
+  async load(): Promise<Bank> {
+    return this.adapter.load();
   }
 
   // eslint-disable-next-line class-methods-use-this
-  public getCodelistService(): CodelistService {
-    return new CodelistService(this.store);
-  }
-
-  // eslint-disable-next-line class-methods-use-this
-  public getTagService(): TagService {
-    return new TagService(this.store);
-  }
-
-  // eslint-disable-next-line class-methods-use-this
-  public getNeedService(): NeedService {
-    return new NeedService(this.store);
-  }
-
-  // eslint-disable-next-line class-methods-use-this
-  public getProductService(): ProductService {
-    return new ProductService(this.store);
-  }
-
-  // eslint-disable-next-line class-methods-use-this
-  public getProjectService(): ProjectService {
-    return new ProjectService(this.store);
-  }
 }

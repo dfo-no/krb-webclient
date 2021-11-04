@@ -50,21 +50,21 @@ export default function QuestionArray({
     control
   });
   const { t } = useTranslation();
-  const [getAlternative, setAlternativeSelected] = useState('value');
+  const [question, setSelectedQuestion] = useState('value');
 
-  const addAlternative = () => {
-    if (getAlternative === QuestionEnum.Q_SLIDER) {
+  const addQuestion = () => {
+    if (question === QuestionEnum.Q_SLIDER) {
       append({
         id: uuidv4(),
         type: QuestionEnum.Q_SLIDER,
         config: {
           min: 0,
-          max: 0,
+          max: 10,
           step: 1,
           unit: 'GB'
         }
       } as ISliderQuestion);
-    } else if (getAlternative === QuestionEnum.Q_CODELIST) {
+    } else if (question === QuestionEnum.Q_CODELIST) {
       append({
         id: uuidv4(),
         type: QuestionEnum.Q_CODELIST,
@@ -73,7 +73,7 @@ export default function QuestionArray({
           codelist: project.codelist[0].id
         }
       } as ICodelistQuestion);
-    } else if (getAlternative === QuestionEnum.Q_TEXT) {
+    } else if (question === QuestionEnum.Q_TEXT) {
       append({
         id: uuidv4(),
         type: QuestionEnum.Q_TEXT,
@@ -81,7 +81,7 @@ export default function QuestionArray({
           max: 0
         }
       } as ITextQuestion);
-    } else if (getAlternative === QuestionEnum.Q_PERIOD_DATE) {
+    } else if (question === QuestionEnum.Q_PERIOD_DATE) {
       append({
         id: uuidv4(),
         type: QuestionEnum.Q_PERIOD_DATE,
@@ -90,7 +90,7 @@ export default function QuestionArray({
           toDate: null
         }
       } as IPeriodDateQuestion);
-    } else if (getAlternative === QuestionEnum.Q_TIME) {
+    } else if (question === QuestionEnum.Q_TIME) {
       append({
         id: uuidv4(),
         type: QuestionEnum.Q_TIME,
@@ -99,7 +99,7 @@ export default function QuestionArray({
           toTime: ''
         }
       } as ITimeQuestion);
-    } else if (getAlternative === QuestionEnum.Q_CHECKBOX) {
+    } else if (question === QuestionEnum.Q_CHECKBOX) {
       append({
         id: uuidv4(),
         type: QuestionEnum.Q_CHECKBOX,
@@ -108,7 +108,7 @@ export default function QuestionArray({
           weightFalse: 0
         }
       } as ICheckboxQuestion);
-    } else if (getAlternative === QuestionEnum.Q_FILEUPLOAD) {
+    } else if (question === QuestionEnum.Q_FILEUPLOAD) {
       append({
         id: uuidv4(),
         type: QuestionEnum.Q_FILEUPLOAD
@@ -118,14 +118,14 @@ export default function QuestionArray({
 
   return (
     <div>
-      <h6>{t('Alternatives')}</h6>
+      <h6>{t('Questions')}</h6>
       <Form.Label column sm="3">
-        {t('Select alternative type')}
+        {t('Select question type')}
       </Form.Label>
       <Col sm={6}>
         <Form.Control
           as="select"
-          onChange={(e) => setAlternativeSelected(e.currentTarget.value)}
+          onChange={(e) => setSelectedQuestion(e.currentTarget.value)}
         >
           <option value="">...</option>
           <option value={QuestionEnum.Q_SLIDER}>Value</option>
@@ -140,7 +140,7 @@ export default function QuestionArray({
         </Form.Control>
       </Col>
       <Col sm={1}>
-        <Button onClick={() => addAlternative()}>Add</Button>
+        <Button onClick={() => addQuestion()}>Add</Button>
       </Col>
 
       {fields.map((item: QuestionType, index) => {

@@ -7,11 +7,11 @@ export default function ConfigureQuestion(): React.ReactElement {
   const { spec } = useAppSelector((state) => state.specification);
 
   if (!questionId) {
-    return <p>No alternative selected</p>;
+    return <p>No Question selected</p>;
   }
 
   const itemIndex = spec.requirementAnswers.findIndex(
-    (alt) => alt.id === questionId
+    (question) => question.id === questionId
   );
 
   const item = spec.requirementAnswers[itemIndex];

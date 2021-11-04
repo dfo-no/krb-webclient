@@ -1,3 +1,4 @@
+import { IVariant } from '../../models/IVariant';
 import ModelType from '../../models/ModelType';
 import { Requirement } from '../../models/Requirement';
 import RequirementType from '../../models/RequirementType';
@@ -35,15 +36,63 @@ export default class RequirementService {
     return requirement;
   };
 
-  add(item: Requirement): void {
-    this.storeService.addRequirement(item.needId, item);
+  async add(item: Requirement): Promise<void> {
+    return this.storeService.addRequirement(item.needId, item);
   }
 
-  edit(item: Requirement): void {
-    this.storeService.editRequirement(item.needId, item);
+  async edit(item: Requirement): Promise<void> {
+    return this.storeService.editRequirement(item.needId, item);
   }
 
-  delete(item: Requirement): void {
-    this.storeService.deleteRequirement(item.needId, item);
+  async delete(item: Requirement): Promise<void> {
+    return this.storeService.deleteRequirement(item.needId, item);
+  }
+
+  async addVariant(
+    item: IVariant,
+    requirementId: string,
+    needId: string
+  ): Promise<void> {
+    return this.storeService.addVariant(needId, requirementId, item);
+  }
+
+  async editVariant(
+    item: IVariant,
+    requirementId: string,
+    needId: string
+  ): Promise<void> {
+    return this.storeService.editVariant(needId, requirementId, item);
+  }
+
+  async deleteVariant(
+    item: IVariant,
+    requirementId: string,
+    needId: string
+  ): Promise<void> {
+    return this.storeService.deleteVariant(needId, requirementId, item);
+  }
+
+  async addQuesion(
+    item: IVariant,
+    requirementId: string,
+    needId: string
+  ): Promise<void> {
+    return this.storeService.addVariant(needId, requirementId, item);
+  }
+
+  async editQuesion(
+    item: IVariant,
+    requirementId: string,
+    needId: string
+  ): Promise<void> {
+    return this.storeService.editVariant(needId, requirementId, item);
+  }
+
+  async deleteQuesion(
+    item: IVariant,
+    requirementId: string,
+    needId: string
+  ): Promise<void> {
+    return this.storeService.deleteVariant(needId, requirementId, item);
   }
 }

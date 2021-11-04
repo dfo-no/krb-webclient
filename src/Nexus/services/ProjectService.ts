@@ -12,6 +12,14 @@ export default class ProjectService {
     this.storeService = store;
   }
 
+  public setProject(bank: Bank): void {
+    this.storeService.setBank(bank);
+  }
+
+  public getProject(): Bank {
+    return this.storeService.getBank();
+  }
+
   generateDefaultProjectValues = (): Bank => {
     const defaultValues: Bank = {
       id: '',
