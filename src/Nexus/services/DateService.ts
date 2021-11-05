@@ -17,4 +17,8 @@ export default class DateService {
     const now = new Date();
     return now.toISOString();
   }
+
+  static getDateString(date: Date): string {
+    return date.toISOString();
+  }
 }
