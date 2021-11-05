@@ -32,7 +32,7 @@ export default function FilteredList({
             {bank.title}
           </Link>
           {bank.publishedDate && (
-            <small className="text-muted">
+            <small className="mx-2 text-muted">
               {t('date.ago', { date: new Date(bank.publishedDate) })}
             </small>
           )}
