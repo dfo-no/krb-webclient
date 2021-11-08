@@ -1,14 +1,15 @@
 import { joiResolver } from '@hookform/resolvers/joi';
+import { get } from 'lodash';
 import React, { useEffect, useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import Form from 'react-bootstrap/Form';
-import { useForm } from 'react-hook-form';
+import { FieldError, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { BsTrashFill } from 'react-icons/bs';
 import { v4 as uuidv4 } from 'uuid';
+import ControlledTextInput from '../../Form/ControlledTextInput';
 import ErrorSummary from '../../Form/ErrorSummary';
-import InputRow from '../../Form/InputRow';
 import { Alert } from '../../models/Alert';
 import { Nestable } from '../../models/Nestable';
 import { Parentable } from '../../models/Parentable';
@@ -87,13 +88,12 @@ export default function EditTagForm({ element }: IProps): React.ReactElement {
           noValidate
           validated={validated}
         >
-          <InputRow
+          <ControlledTextInput
             control={control}
             name="title"
-            errors={errors}
             label={t('Title')}
+            error={get(errors, `description`) as FieldError}
           />
-
           <Button className="mt-2  ml-3" type="submit">
             {t('save')}
           </Button>

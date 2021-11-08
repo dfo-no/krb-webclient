@@ -10,8 +10,8 @@ import { useTranslation } from 'react-i18next';
 import { BsTrashFill } from 'react-icons/bs';
 import { Link } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
+import ControlledTextInput from '../Form/ControlledTextInput';
 import ErrorSummary from '../Form/ErrorSummary';
-import InputRow from '../Form/InputRow';
 import { Alert } from '../models/Alert';
 import { Bank } from '../models/Bank';
 import { PostProjectSchema } from '../models/Project';
@@ -40,7 +40,7 @@ function Projects(): React.ReactElement {
     reset,
     control,
     formState: { errors }
-  } = useForm<Bank>({
+  } = useForm<Omit<Bank, 'needs'>>({
     resolver: joiResolver(PostProjectSchema),
     defaultValues
   });
@@ -109,16 +109,16 @@ function Projects(): React.ReactElement {
               noValidate
               validated={validated}
             >
-              <InputRow
+              <ControlledTextInput
                 control={control}
                 name="title"
-                errors={errors}
+                error={errors.title}
                 label={t('Title')}
               />
-              <InputRow
+              <ControlledTextInput
                 control={control}
                 name="description"
-                errors={errors}
+                error={errors.description}
                 label={t('Description')}
               />
               <Button className="mt-2" type="submit">

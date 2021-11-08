@@ -13,13 +13,15 @@ import {
 interface Props<T> extends UseControllerProps<T> {
   error: FieldError | undefined;
   label?: string;
+  type?: 'text' | 'number' | 'select' | 'textarea';
 }
 
 const ControlledTextInput = <T extends FieldValues>({
   name,
   control,
   error,
-  label
+  label,
+  type
 }: Props<T>): React.ReactElement => {
   if (!label) {
     return (
@@ -28,7 +30,7 @@ const ControlledTextInput = <T extends FieldValues>({
           control={control}
           name={name}
           render={({ field }) => (
-            <Form.Control type="text" {...field} isInvalid={!!error} />
+            <Form.Control type={type} {...field} isInvalid={!!error} />
           )}
         />
         <FormControl.Feedback type="invalid">
@@ -48,7 +50,7 @@ const ControlledTextInput = <T extends FieldValues>({
           control={control}
           name={name}
           render={({ field }) => (
-            <Form.Control type="text" {...field} isInvalid={!!error} />
+            <Form.Control type={type} {...field} isInvalid={!!error} />
           )}
         />
         <FormControl.Feedback type="invalid">
@@ -62,5 +64,6 @@ const ControlledTextInput = <T extends FieldValues>({
 export default ControlledTextInput;
 
 ControlledTextInput.defaultProps = {
-  label: ''
+  label: '',
+  type: 'text'
 };

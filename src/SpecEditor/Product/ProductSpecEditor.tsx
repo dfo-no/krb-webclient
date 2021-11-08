@@ -1,5 +1,6 @@
 import { joiResolver } from '@hookform/resolvers/joi';
 import Slider from '@mui/material/Slider';
+import { get } from 'lodash';
 import React, { useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
@@ -7,10 +8,10 @@ import Col from 'react-bootstrap/Col';
 import Container from 'react-bootstrap/Container';
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
-import { Controller, useForm } from 'react-hook-form';
+import { Controller, FieldError, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
+import ControlledTextInput from '../../Form/ControlledTextInput';
 import ErrorSummary from '../../Form/ErrorSummary';
-import InputRow from '../../Form/InputRow';
 import { IOption } from '../../models/IOption';
 import {
   SpecificationProduct,
@@ -96,23 +97,23 @@ export default function ProductSpecEditor(): React.ReactElement {
             onSubmit={handleSubmit(addProductToSpecification)}
             autoComplete="off"
           >
-            <InputRow
+            <ControlledTextInput
               control={control}
-              errors={errors}
               name="amount"
+              error={get(errors, `amount`) as FieldError}
+              label={t('Amount')}
               type="number"
-              label="Amount"
             />
-            <InputRow
+            <ControlledTextInput
               control={control}
-              errors={errors}
               name="title"
+              error={get(errors, `title`) as FieldError}
               label={t('Title')}
             />
-            <InputRow
+            <ControlledTextInput
               control={control}
-              errors={errors}
               name="description"
+              error={get(errors, `description`) as FieldError}
               label={t('Description')}
             />
             <Form.Group as={Row}>

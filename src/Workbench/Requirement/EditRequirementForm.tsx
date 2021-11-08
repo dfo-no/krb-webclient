@@ -1,14 +1,15 @@
 import { joiResolver } from '@hookform/resolvers/joi';
+import { get } from 'lodash';
 import React, { useContext, useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
-import { useForm } from 'react-hook-form';
+import { FieldError, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { BsTrashFill } from 'react-icons/bs';
 import { Link } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
+import ControlledTextInput from '../../Form/ControlledTextInput';
 import ErrorSummary from '../../Form/ErrorSummary';
-import InputRow from '../../Form/InputRow';
 import { Alert } from '../../models/Alert';
 import { PutRequirementSchema, Requirement } from '../../models/Requirement';
 import { AccordionContext } from '../../NestableHierarchy/AccordionContext';
@@ -81,16 +82,15 @@ export default function EditRequirementForm({
       noValidate
       validated={validated}
     >
-      <InputRow
+      <ControlledTextInput
         name="title"
         control={control}
-        errors={errors}
+        error={get(errors, `title`) as FieldError}
         label={t('Title')}
       />
-
-      <InputRow
+      <ControlledTextInput
         control={control}
-        errors={errors}
+        error={get(errors, `description`) as FieldError}
         name="description"
         label="Requirement text"
       />
