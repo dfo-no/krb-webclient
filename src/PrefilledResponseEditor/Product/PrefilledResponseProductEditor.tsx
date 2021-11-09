@@ -51,6 +51,7 @@ export default function PrefilledResponseProductEditor(): React.ReactElement {
   };
 
   const findNeedIdsForProduct = (productId: string, needArray: Need[]) => {
+    console.log(needArray);
     const result: string[] = [];
     needArray.forEach((need) => {
       need.requirements.forEach((req) => {
@@ -71,15 +72,38 @@ export default function PrefilledResponseProductEditor(): React.ReactElement {
 
   const needs = getPaths(needIds, prefilledResponse.bank.needs);
 
+  const checkIfNeedHasRenderedAnswer = (
+    need: Levelable<Need>,
+    productId: string
+  ) => {
+    need.requirements.forEach((req) => {
+      // eslint-disable-next-line consistent-return
+      req.variants.forEach((variant) => {
+        if (
+          variant.products.includes(productId) &&
+          variant.questions.length > 0
+        ) {
+          return true;
+        }
+      });
+    });
+    return false;
+  };
+
   const renderNeedsList = (list: Levelable<Need>[]) => {
     return list.map((need) => {
       const margin = need.level === 1 ? '0rem' : `${need.level - 1}rem`;
       return (
         <Card style={{ marginLeft: margin }} key={need.id}>
           <Card.Header>{need.title}</Card.Header>
-          <Card.Body>
-            <AnswerForm element={need} product={selectedProduct} />
-          </Card.Body>
+          {checkIfNeedHasRenderedAnswer(
+            need,
+            selectedProduct.originProduct.id
+          ) && (
+            <Card.Body>
+              <AnswerForm element={need} product={selectedProduct} />
+            </Card.Body>
+          )}
         </Card>
       );
     });
