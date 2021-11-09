@@ -51,7 +51,6 @@ export default function PrefilledResponseProductEditor(): React.ReactElement {
   };
 
   const findNeedIdsForProduct = (productId: string, needArray: Need[]) => {
-    console.log(needArray);
     const result: string[] = [];
     needArray.forEach((need) => {
       need.requirements.forEach((req) => {
