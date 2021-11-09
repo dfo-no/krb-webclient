@@ -9,10 +9,15 @@ import { FieldError, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import ControlledDate from '../../../Form/ControlledDate';
 import ErrorSummary from '../../../Form/ErrorSummary';
-import { IPeriodDateQuestion } from '../../../models/IPeriodDateQuestion';
-import { IRequirementAnswer } from '../../../models/IRequirementAnswer';
+import {
+  IPeriodDateQuestion,
+  PeriodDateQuestionAnswerSchema
+} from '../../../models/IPeriodDateQuestion';
+import {
+  IRequirementAnswer,
+  RequirementAnswerSchema
+} from '../../../models/IRequirementAnswer';
 import { PrefilledResponseProduct } from '../../../models/PrefilledResponseProduct';
-import QuestionEnum from '../../../models/QuestionEnum';
 import { Requirement } from '../../../models/Requirement';
 import { useAppDispatch, useAppSelector } from '../../../store/hooks';
 import {
@@ -25,15 +30,11 @@ interface IProps {
   product: PrefilledResponseProduct;
 }
 
-export const PeriodDateSchema = Joi.object().keys({
-  id: Joi.string().required(),
-  type: Joi.string().equal(QuestionEnum.Q_PERIOD_DATE).required(),
-  config: Joi.object().keys({
-    fromDate: Joi.date().iso().raw().required(),
-    toDate: Joi.date().iso().raw().required()
-  }),
-  answer: Joi.object().keys({
-    date: Joi.date().iso().raw().required()
+export const PeriodDateSchema = RequirementAnswerSchema.keys({
+  question: PeriodDateQuestionAnswerSchema.keys({
+    answer: Joi.object().keys({
+      date: Joi.date().iso().raw().required()
+    })
   })
 });
 

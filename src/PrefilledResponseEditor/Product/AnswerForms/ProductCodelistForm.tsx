@@ -8,10 +8,15 @@ import Form from 'react-bootstrap/Form';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import ErrorSummary from '../../../Form/ErrorSummary';
-import { ICodelistQuestion } from '../../../models/ICodelistQuestion';
-import { IRequirementAnswer } from '../../../models/IRequirementAnswer';
+import {
+  CodelistQuestionAnswerSchema,
+  ICodelistQuestion
+} from '../../../models/ICodelistQuestion';
+import {
+  IRequirementAnswer,
+  RequirementAnswerSchema
+} from '../../../models/IRequirementAnswer';
 import { PrefilledResponseProduct } from '../../../models/PrefilledResponseProduct';
-import QuestionEnum from '../../../models/QuestionEnum';
 import { Requirement } from '../../../models/Requirement';
 import { useAppDispatch, useAppSelector } from '../../../store/hooks';
 import {
@@ -23,29 +28,22 @@ interface IProps {
   answer: IRequirementAnswer;
   product: PrefilledResponseProduct;
 }
-export const ResponseCodelistSchema = Joi.object().keys({
-  id: Joi.string().required(),
-  type: Joi.string().equal(QuestionEnum.Q_CODELIST).required(),
-  config: Joi.object().keys({
-    codelist: Joi.string().required(),
-    multipleSelect: Joi.boolean().required()
-  }),
-  answer: Joi.object().keys({
-    codes: Joi.array().items(Joi.string()).min(1).required()
+export const ResponseCodelistSchema = RequirementAnswerSchema.keys({
+  question: CodelistQuestionAnswerSchema.keys({
+    answer: Joi.object().keys({
+      codes: Joi.array().items(Joi.string()).min(1).required()
+    })
   })
 });
-export const ResponseSingleCodelistSchema = Joi.object().keys({
-  id: Joi.string().required(),
-  type: Joi.string().equal(QuestionEnum.Q_CODELIST).required(),
-  config: Joi.object().keys({
-    codelist: Joi.string().required(),
-    multipleSelect: Joi.boolean().required()
-  }),
-  answer: Joi.object().keys({
-    codes: Joi.array().items(Joi.string()).max(1).required()
+
+export const ResponseSingleCodelistSchema = RequirementAnswerSchema.keys({
+  question: CodelistQuestionAnswerSchema.keys({
+    answer: Joi.object().keys({
+      codes: Joi.array().items(Joi.string()).max(1).required()
+    })
   })
 });
-export default function ProductCodelistAnswer({
+export default function ProductCodelistForm({
   answer,
   product
 }: IProps): React.ReactElement {

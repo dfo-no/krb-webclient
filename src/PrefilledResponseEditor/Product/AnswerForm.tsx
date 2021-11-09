@@ -26,7 +26,7 @@ import { Need } from '../../models/Need';
 import { PrefilledResponseProduct } from '../../models/PrefilledResponseProduct';
 import QuestionEnum from '../../models/QuestionEnum';
 import { QuestionType } from '../../models/QuestionType';
-import ProductCodelistAnswer from './AnswerForms/CodelistAnswerForm';
+import ProductCodelistForm from './AnswerForms/ProductCodelistForm';
 import ProductDateForm from './AnswerForms/ProductDateForm';
 import ProductSliderForm from './AnswerForms/ProductSliderForm';
 import ProductTextForm from './AnswerForms/ProductTextForm';
@@ -141,7 +141,7 @@ export default function AnswerForm({
       }
       case QuestionEnum.Q_CODELIST: {
         return (
-          <ProductCodelistAnswer
+          <ProductCodelistForm
             answer={elem}
             product={product}
             key={elem.question.id}
