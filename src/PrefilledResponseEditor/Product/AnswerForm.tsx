@@ -26,7 +26,10 @@ import { Need } from '../../models/Need';
 import { PrefilledResponseProduct } from '../../models/PrefilledResponseProduct';
 import QuestionEnum from '../../models/QuestionEnum';
 import { QuestionType } from '../../models/QuestionType';
-import ProductSliderForm from './ProductSliderForm';
+import ProductCodelistForm from './AnswerForms/ProductCodelistForm';
+import ProductDateForm from './AnswerForms/ProductDateForm';
+import ProductSliderForm from './AnswerForms/ProductSliderForm';
+import ProductTextForm from './AnswerForms/ProductTextForm';
 
 interface IProps {
   element: Levelable<Need>;
@@ -116,13 +119,34 @@ export default function AnswerForm({
         );
       }
       case QuestionEnum.Q_PERIOD_DATE: {
-        return <div key={elem.question.id}>Q_PERIOD_DATE</div>;
+        return (
+          <ProductDateForm
+            answer={elem}
+            product={product}
+            key={elem.question.id}
+          />
+        );
       }
       case QuestionEnum.Q_FILEUPLOAD: {
         return <div key={elem.question.id}>Q_FILEUPLOAD</div>;
       }
       case QuestionEnum.Q_TEXT: {
-        return <div key={elem.question.id}>Q_TEXT</div>;
+        return (
+          <ProductTextForm
+            answer={elem}
+            product={product}
+            key={elem.question.id}
+          />
+        );
+      }
+      case QuestionEnum.Q_CODELIST: {
+        return (
+          <ProductCodelistForm
+            answer={elem}
+            product={product}
+            key={elem.question.id}
+          />
+        );
       }
       default: {
         return (

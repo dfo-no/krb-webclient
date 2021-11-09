@@ -1,7 +1,6 @@
 import { joiResolver } from '@hookform/resolvers/joi';
 import { get } from 'lodash';
 import React from 'react';
-import Accordion from 'react-bootstrap/Accordion';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import Col from 'react-bootstrap/Col';
@@ -76,14 +75,12 @@ export default function PrefilledResponseProductEditor(): React.ReactElement {
     return list.map((need) => {
       const margin = need.level === 1 ? '0rem' : `${need.level - 1}rem`;
       return (
-        <Accordion style={{ marginLeft: margin }} key={need.id}>
-          <Accordion.Item eventKey={need.id}>
-            <Accordion.Header>{need.title}</Accordion.Header>
-            <Accordion.Body>
-              <AnswerForm element={need} product={selectedProduct} />
-            </Accordion.Body>
-          </Accordion.Item>
-        </Accordion>
+        <Card style={{ marginLeft: margin }} key={need.id}>
+          <Card.Header>{need.title}</Card.Header>
+          <Card.Body>
+            <AnswerForm element={need} product={selectedProduct} />
+          </Card.Body>
+        </Card>
       );
     });
   };
@@ -91,7 +88,7 @@ export default function PrefilledResponseProductEditor(): React.ReactElement {
   return (
     <Container fluid>
       <Row className="m-4">
-        <h4>Nytt produkt (PrefilledResponseProductEditor)</h4>
+        <h4>Nytt produkt</h4>
       </Row>
       <Card className="m-4">
         <Card.Body>
@@ -117,10 +114,10 @@ export default function PrefilledResponseProductEditor(): React.ReactElement {
             </Col>
             <ErrorSummary errors={errors} />
           </Form>
-          {renderNeedsList(needs)}
         </Card.Body>
       </Card>
       <Row className="m-4" />
+      {renderNeedsList(needs)}
     </Container>
   );
 }
