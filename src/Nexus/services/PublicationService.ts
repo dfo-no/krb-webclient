@@ -11,13 +11,11 @@ export default class PublicationService {
   };
 
   generateBankFromProject = (item: Bank): Bank => {
-    const dateService = new DateService();
-
     // Shallow clone, deep not needed for now as we don't create anything here
     // other than desciption and title
     const newBank: Bank = { ...item };
     newBank.id = '';
-    newBank.publishedDate = dateService.getDate();
+    newBank.publishedDate = DateService.getNowString();
     newBank.projectId = item.id;
     newBank.publications = [];
     newBank.version = this.getNextVersion(item.publications);

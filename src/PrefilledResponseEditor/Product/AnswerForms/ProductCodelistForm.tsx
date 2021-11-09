@@ -5,14 +5,13 @@ import React from 'react';
 import Badge from 'react-bootstrap/Badge';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
-import { FieldError, useForm } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import ControlledDate from '../../../Form/ControlledDate';
 import ErrorSummary from '../../../Form/ErrorSummary';
 import {
-  IPeriodDateQuestion,
-  PeriodDateQuestionAnswerSchema
-} from '../../../models/IPeriodDateQuestion';
+  CodelistQuestionAnswerSchema,
+  ICodelistQuestion
+} from '../../../models/ICodelistQuestion';
 import {
   IRequirementAnswer,
   RequirementAnswerSchema
@@ -29,35 +28,44 @@ interface IProps {
   answer: IRequirementAnswer;
   product: PrefilledResponseProduct;
 }
-
-export const PeriodDateSchema = RequirementAnswerSchema.keys({
-  question: PeriodDateQuestionAnswerSchema.keys({
+export const ResponseCodelistSchema = RequirementAnswerSchema.keys({
+  question: CodelistQuestionAnswerSchema.keys({
     answer: Joi.object().keys({
-      date: Joi.date().iso().raw().required()
+      codes: Joi.array().items(Joi.string()).min(1).required()
     })
   })
 });
 
-export default function ProductDateForm({
+export const ResponseSingleCodelistSchema = RequirementAnswerSchema.keys({
+  question: CodelistQuestionAnswerSchema.keys({
+    answer: Joi.object().keys({
+      codes: Joi.array().items(Joi.string()).max(1).required()
+    })
+  })
+});
+export default function ProductCodelistForm({
   answer,
   product
 }: IProps): React.ReactElement {
-  const {
-    handleSubmit,
-    control,
-    formState: { errors }
-  } = useForm<IRequirementAnswer>({
-    resolver: joiResolver(PeriodDateSchema),
-    defaultValues: answer
-  });
-
-  const dispatch = useAppDispatch();
   const { t } = useTranslation();
-
-  const question = answer.question as IPeriodDateQuestion;
+  const dispatch = useAppDispatch();
+  const question = answer.question as ICodelistQuestion;
   const { prefilledResponse } = useAppSelector(
     (state) => state.prefilledResponse
   );
+
+  const resolver = question.config.multipleSelect
+    ? ResponseCodelistSchema
+    : ResponseSingleCodelistSchema;
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors }
+  } = useForm<IRequirementAnswer>({
+    resolver: joiResolver(resolver),
+    defaultValues: answer
+  });
 
   const onSubmit = (post: IRequirementAnswer) => {
     dispatch(addProductAnswer({ answer: post, productId: product.id }));
@@ -80,6 +88,9 @@ export default function ProductDateForm({
     }
     return tuple;
   };
+  const codelistIndex = prefilledResponse.bank.codelist.findIndex(
+    (list) => list.id === question.config.codelist
+  );
 
   const isValueSet = (productId: string, answerId: string) => {
     let value = false;
@@ -98,6 +109,7 @@ export default function ProductDateForm({
     return value;
   };
 
+  const codelist = prefilledResponse.bank.codelist[codelistIndex];
   return (
     <div>
       <h5>{getVariantText(answer.requirement, answer.variantId)[0]}</h5>
@@ -111,12 +123,17 @@ export default function ProductDateForm({
         key={question.id}
         className="mt-4"
       >
-        <ControlledDate
-          control={control}
-          name={`question.answer.date` as const}
-          error={get(errors, `answer.date`) as FieldError}
-          label={t('Select date')}
-        />
+        <Form.Control
+          as="select"
+          multiple
+          {...register(`question.answer.codes` as const)}
+        >
+          {codelist.codes.map((element) => (
+            <option key={element.id} value={element.id}>
+              {element.title}
+            </option>
+          ))}
+        </Form.Control>
         <div className="d-flex justify-content-end">
           {isValueSet(product.id, answer.id) ? (
             <Badge bg="success" className="mx-2">
