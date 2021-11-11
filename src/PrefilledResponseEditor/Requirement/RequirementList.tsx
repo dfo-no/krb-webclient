@@ -35,15 +35,15 @@ export default function RequirementList(): React.ReactElement {
   const needs = getPaths(needIds, prefilledResponse.bank.needs);
 
   const checkIfNeedHasRenderedAnswer = (need: Levelable<Need>) => {
+    let used = false;
     need.requirements.forEach((req) => {
-      // eslint-disable-next-line consistent-return
       req.variants.forEach((variant) => {
         if (variant.useSpesification && variant.questions.length > 0) {
-          return true;
+          used = true;
         }
       });
     });
-    return false;
+    return used;
   };
 
   const renderNeedsList = (list: Levelable<Need>[]) => {

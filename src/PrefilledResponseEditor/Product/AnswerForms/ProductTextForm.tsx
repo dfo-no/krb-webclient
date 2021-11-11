@@ -131,7 +131,7 @@ const ProductTextForm = ({ answer, product }: IProps): React.ReactElement => {
             {t('Reset')}
           </Button>
         </div>
-        <ErrorSummary errors={get(errors, `question.answer.value`)} />
+        <ErrorSummary errors={errors} />
       </Form>
     </div>
   );

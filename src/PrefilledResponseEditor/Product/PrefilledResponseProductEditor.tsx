@@ -75,18 +75,18 @@ export default function PrefilledResponseProductEditor(): React.ReactElement {
     need: Levelable<Need>,
     productId: string
   ) => {
+    let used = false;
     need.requirements.forEach((req) => {
-      // eslint-disable-next-line consistent-return
       req.variants.forEach((variant) => {
         if (
           variant.products.includes(productId) &&
           variant.questions.length > 0
         ) {
-          return true;
+          used = true;
         }
       });
     });
-    return false;
+    return used;
   };
 
   const renderNeedsList = (list: Levelable<Need>[]) => {

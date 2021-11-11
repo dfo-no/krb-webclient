@@ -7,61 +7,51 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import { FieldError, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import ControlledSlider from '../../../Form/ControlledSlider';
+import ErrorSummary from '../../../Form/ErrorSummary';
 import {
   IRequirementAnswer,
   RequirementAnswerSchema
 } from '../../../models/IRequirementAnswer';
 import {
-  ISliderQuestion,
-  SliderQuestionAnswerSchema
-} from '../../../models/ISliderQuestion';
-import { PrefilledResponseProduct } from '../../../models/PrefilledResponseProduct';
+  ITextQuestion,
+  TextQuestionAnswerSchema
+} from '../../../models/ITextQuestion';
 import { Requirement } from '../../../models/Requirement';
 import { useAppDispatch, useAppSelector } from '../../../store/hooks';
 import {
-  addProductAnswer,
-  removeProductAnswer
+  addAnswer,
+  removeAnswer
 } from '../../../store/reducers/PrefilledResponseReducer';
 
 interface IProps {
-  elem: IRequirementAnswer;
-  product: PrefilledResponseProduct;
+  answer: IRequirementAnswer;
 }
 
-const ProductSliderForm = ({ elem, product }: IProps): React.ReactElement => {
+export default function TextForm({ answer }: IProps): React.ReactElement {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
-  const question = elem.question as ISliderQuestion;
+  const question = answer.question as ITextQuestion;
   const { prefilledResponse } = useAppSelector(
     (state) => state.prefilledResponse
   );
 
-  const isValueSet = (productId: string, answerId: string) => {
+  const isValueSet = (answerId: string) => {
     let value = false;
 
-    const productIndex = prefilledResponse.products.findIndex(
-      (entity) => entity.id === productId
+    const index = prefilledResponse.requirementAnswers.findIndex(
+      (e) => e.id === answerId
     );
-    if (productIndex !== -1) {
-      const reqIndex = prefilledResponse.products[
-        productIndex
-      ].requirementAnswers.findIndex((e) => e.id === answerId);
-      if (reqIndex !== -1) {
-        value = true;
-      }
+    if (index !== -1) {
+      value = true;
     }
     return value;
   };
 
   // Override default schema with values set in config.
-  const ProductSliderSchema = RequirementAnswerSchema.keys({
-    question: SliderQuestionAnswerSchema.keys({
+  const ProductTextSchema = RequirementAnswerSchema.keys({
+    question: TextQuestionAnswerSchema.keys({
       answer: Joi.object().keys({
-        value: Joi.number()
-          .min(question.config.min)
-          .max(question.config.max)
-          .required(),
+        text: Joi.string().required(),
         point: Joi.number().required()
       })
     })
@@ -70,18 +60,18 @@ const ProductSliderForm = ({ elem, product }: IProps): React.ReactElement => {
   const {
     handleSubmit,
     formState: { errors },
-    control
+    register
   } = useForm<IRequirementAnswer>({
-    defaultValues: elem,
-    resolver: joiResolver(ProductSliderSchema)
+    defaultValues: answer,
+    resolver: joiResolver(ProductTextSchema)
   });
 
   const onSubmit = (post: IRequirementAnswer) => {
-    dispatch(addProductAnswer({ answer: post, productId: product.id }));
+    dispatch(addAnswer(post));
   };
 
-  const handleResetQuestion = (elemId: string, productId: string) => {
-    dispatch(removeProductAnswer({ answerId: elemId, productId }));
+  const handleResetQuestion = (elemId: string) => {
+    dispatch(removeAnswer(elemId));
   };
 
   const getVariantText = (requirement: Requirement, variantId: string) => {
@@ -100,10 +90,10 @@ const ProductSliderForm = ({ elem, product }: IProps): React.ReactElement => {
 
   return (
     <div>
-      <h5>{getVariantText(elem.requirement, elem.variantId)[0]}</h5>
+      <h5>{getVariantText(answer.requirement, answer.variantId)[0]}</h5>
       <h6>
         <small className="text-muted">
-          {getVariantText(elem.requirement, elem.variantId)[1]}
+          {getVariantText(answer.requirement, answer.variantId)[1]}
         </small>
       </h6>
       <Form
@@ -111,18 +101,9 @@ const ProductSliderForm = ({ elem, product }: IProps): React.ReactElement => {
         key={question.id}
         className="mt-4"
       >
-        <ControlledSlider
-          min={question.config.min}
-          max={question.config.max}
-          unit={question.config.unit}
-          step={question.config.step}
-          marks={[]}
-          control={control}
-          name={`question.answer.value` as const}
-          error={get(errors, `question.answer.value`) as FieldError}
-        />
+        <Form.Control as="textarea" {...register('question.answer.text')} />
         <div className="d-flex justify-content-end">
-          {isValueSet(product.id, elem.id) ? (
+          {isValueSet(answer.id) ? (
             <Badge bg="success" className="mx-2">
               Set
             </Badge>
@@ -138,14 +119,13 @@ const ProductSliderForm = ({ elem, product }: IProps): React.ReactElement => {
           <Button
             type="button"
             variant="warning"
-            onClick={() => handleResetQuestion(elem.id, product.id)}
+            onClick={() => handleResetQuestion(answer.id)}
           >
             {t('Reset')}
           </Button>
         </div>
       </Form>
+      <ErrorSummary errors={errors} />
     </div>
   );
-};
-
-export default ProductSliderForm;
+}

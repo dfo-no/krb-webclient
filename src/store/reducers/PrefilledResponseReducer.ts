@@ -73,10 +73,7 @@ const responseSlice = createSlice({
       const cloned = cloneDeep(payload.cart);
       state.prefilledResponse.requirementAnswers = cloned;
     },
-    addRequirementAnswer(
-      state,
-      { payload }: PayloadAction<IRequirementAnswer>
-    ) {
+    addAnswer(state, { payload }: PayloadAction<IRequirementAnswer>) {
       if (
         state.prefilledResponse.requirementAnswers.find(
           (answer) => answer.id === payload.id
@@ -90,6 +87,15 @@ const responseSlice = createSlice({
       }
       state.prefilledResponse.requirementAnswers.push(payload);
     },
+    removeAnswer(state, { payload }: PayloadAction<string>) {
+      const index = state.prefilledResponse.requirementAnswers.findIndex(
+        (element) => element.id === payload
+      );
+      if (index !== -1) {
+        state.prefilledResponse.requirementAnswers.splice(index, 1);
+      }
+    },
+
     setBank(state, { payload }: PayloadAction<Bank>) {
       state.prefilledResponse.bank = payload;
     },
@@ -193,7 +199,8 @@ export const {
   removeProduct,
   editProduct,
   setResponse,
-  addRequirementAnswer,
+  addAnswer,
+  removeAnswer,
   addProductAnswer,
   removeProductAnswer,
   setRequirementAnswers,

@@ -17,17 +17,15 @@ import {
   IRequirementAnswer,
   RequirementAnswerSchema
 } from '../../../models/IRequirementAnswer';
-import { PrefilledResponseProduct } from '../../../models/PrefilledResponseProduct';
 import { Requirement } from '../../../models/Requirement';
 import { useAppDispatch, useAppSelector } from '../../../store/hooks';
 import {
-  addProductAnswer,
-  removeProductAnswer
+  addAnswer,
+  removeAnswer
 } from '../../../store/reducers/PrefilledResponseReducer';
 
 interface IProps {
   answer: IRequirementAnswer;
-  product: PrefilledResponseProduct;
 }
 
 export const PeriodDateSchema = RequirementAnswerSchema.keys({
@@ -39,10 +37,7 @@ export const PeriodDateSchema = RequirementAnswerSchema.keys({
   })
 });
 
-export default function ProductDateForm({
-  answer,
-  product
-}: IProps): React.ReactElement {
+export default function DateForm({ answer }: IProps): React.ReactElement {
   const {
     handleSubmit,
     control,
@@ -61,11 +56,11 @@ export default function ProductDateForm({
   );
 
   const onSubmit = (post: IRequirementAnswer) => {
-    dispatch(addProductAnswer({ answer: post, productId: product.id }));
+    dispatch(addAnswer(post));
   };
 
-  const handleResetQuestion = (elemId: string, productId: string) => {
-    dispatch(removeProductAnswer({ answerId: elemId, productId }));
+  const handleResetQuestion = (elemId: string) => {
+    dispatch(removeAnswer(elemId));
   };
 
   const getVariantText = (requirement: Requirement, variantId: string) => {
@@ -82,19 +77,13 @@ export default function ProductDateForm({
     return tuple;
   };
 
-  const isValueSet = (productId: string, answerId: string) => {
+  const isValueSet = (answerId: string) => {
     let value = false;
-
-    const productIndex = prefilledResponse.products.findIndex(
-      (entity) => entity.id === productId
+    const reqIndex = prefilledResponse.requirementAnswers.findIndex(
+      (e) => e.id === answerId
     );
-    if (productIndex !== -1) {
-      const reqIndex = prefilledResponse.products[
-        productIndex
-      ].requirementAnswers.findIndex((e) => e.id === answerId);
-      if (reqIndex !== -1) {
-        value = true;
-      }
+    if (reqIndex !== -1) {
+      value = true;
     }
     return value;
   };
@@ -115,11 +104,11 @@ export default function ProductDateForm({
         <ControlledDate
           control={control}
           name={`question.answer.date` as const}
-          error={get(errors, `question.answer`) as FieldError}
+          error={get(errors, `answer.date`) as FieldError}
           label={t('Select date')}
         />
         <div className="d-flex justify-content-end">
-          {isValueSet(product.id, answer.id) ? (
+          {isValueSet(answer.id) ? (
             <Badge bg="success" className="mx-2">
               Set
             </Badge>
@@ -135,12 +124,13 @@ export default function ProductDateForm({
           <Button
             type="button"
             variant="warning"
-            onClick={() => handleResetQuestion(answer.id, product.id)}
+            onClick={() => handleResetQuestion(answer.id)}
           >
             {t('Reset')}
           </Button>
         </div>
       </Form>
+      <ErrorSummary errors={errors} />
     </div>
   );
 }

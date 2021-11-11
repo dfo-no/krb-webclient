@@ -16,20 +16,18 @@ import {
   ISliderQuestion,
   SliderQuestionAnswerSchema
 } from '../../../models/ISliderQuestion';
-import { PrefilledResponseProduct } from '../../../models/PrefilledResponseProduct';
 import { Requirement } from '../../../models/Requirement';
 import { useAppDispatch, useAppSelector } from '../../../store/hooks';
 import {
-  addProductAnswer,
-  removeProductAnswer
+  addAnswer,
+  removeAnswer
 } from '../../../store/reducers/PrefilledResponseReducer';
 
 interface IProps {
   elem: IRequirementAnswer;
-  product: PrefilledResponseProduct;
 }
 
-const ProductSliderForm = ({ elem, product }: IProps): React.ReactElement => {
+export default function SliderForm({ elem }: IProps): React.ReactElement {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
   const question = elem.question as ISliderQuestion;
@@ -37,19 +35,14 @@ const ProductSliderForm = ({ elem, product }: IProps): React.ReactElement => {
     (state) => state.prefilledResponse
   );
 
-  const isValueSet = (productId: string, answerId: string) => {
+  const isValueSet = (answerId: string) => {
     let value = false;
 
-    const productIndex = prefilledResponse.products.findIndex(
-      (entity) => entity.id === productId
+    const index = prefilledResponse.requirementAnswers.findIndex(
+      (e) => e.id === answerId
     );
-    if (productIndex !== -1) {
-      const reqIndex = prefilledResponse.products[
-        productIndex
-      ].requirementAnswers.findIndex((e) => e.id === answerId);
-      if (reqIndex !== -1) {
-        value = true;
-      }
+    if (index !== -1) {
+      value = true;
     }
     return value;
   };
@@ -77,11 +70,11 @@ const ProductSliderForm = ({ elem, product }: IProps): React.ReactElement => {
   });
 
   const onSubmit = (post: IRequirementAnswer) => {
-    dispatch(addProductAnswer({ answer: post, productId: product.id }));
+    dispatch(addAnswer(post));
   };
 
-  const handleResetQuestion = (elemId: string, productId: string) => {
-    dispatch(removeProductAnswer({ answerId: elemId, productId }));
+  const handleResetQuestion = (elemId: string) => {
+    dispatch(removeAnswer(elemId));
   };
 
   const getVariantText = (requirement: Requirement, variantId: string) => {
@@ -122,7 +115,7 @@ const ProductSliderForm = ({ elem, product }: IProps): React.ReactElement => {
           error={get(errors, `question.answer.value`) as FieldError}
         />
         <div className="d-flex justify-content-end">
-          {isValueSet(product.id, elem.id) ? (
+          {isValueSet(elem.id) ? (
             <Badge bg="success" className="mx-2">
               Set
             </Badge>
@@ -138,7 +131,7 @@ const ProductSliderForm = ({ elem, product }: IProps): React.ReactElement => {
           <Button
             type="button"
             variant="warning"
-            onClick={() => handleResetQuestion(elem.id, product.id)}
+            onClick={() => handleResetQuestion(elem.id)}
           >
             {t('Reset')}
           </Button>
@@ -146,6 +139,4 @@ const ProductSliderForm = ({ elem, product }: IProps): React.ReactElement => {
       </Form>
     </div>
   );
-};
-
-export default ProductSliderForm;
+}
