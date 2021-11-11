@@ -52,12 +52,16 @@ export default function ResponsePage(): React.ReactElement {
         'Content-Type': 'multipart/form-data'
       },
       responseType: 'json'
-    }).then((response) => {
-      dispatch(selectBank(response.data.spesification.bank.id));
-      dispatch(setResponse(response.data));
-      history.push(`/response/${response.data.spesification.bank.id}`);
-      return response;
-    });
+    })
+      .then((response) => {
+        dispatch(selectBank(response.data.spesification.bank.id));
+        dispatch(setResponse(response.data));
+        history.push(`/response/${response.data.spesification.bank.id}`);
+        return response;
+      })
+      .catch((error) => {
+        return error;
+      });
   };
 
   return (
