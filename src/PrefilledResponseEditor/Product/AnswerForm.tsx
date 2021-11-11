@@ -1,3 +1,4 @@
+import { config } from 'process';
 import React from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import {
@@ -56,11 +57,14 @@ export default function AnswerForm({
             questionResult = { ...question, answer } as ICheckboxQuestion;
           }
           if (question.type === QuestionEnum.Q_CODELIST) {
-            const answer: ICodelistAnswer = { codes: '', point: 0 };
+            const answer: ICodelistAnswer = { codes: [], point: 0 };
             questionResult = { ...question, answer } as ICodelistQuestion;
           }
           if (question.type === QuestionEnum.Q_PERIOD_DATE) {
-            const answer: IPeriodDateAnswer = { date: null, point: 0 };
+            const answer: IPeriodDateAnswer = {
+              date: question.config.fromDate,
+              point: 0
+            };
             questionResult = { ...question, answer } as IPeriodDateQuestion;
           }
           if (question.type === QuestionEnum.Q_SLIDER) {
@@ -76,13 +80,6 @@ export default function AnswerForm({
               point: 0
             };
             questionResult = { ...question, answer } as ITextQuestion;
-          }
-          if (question.type === QuestionEnum.Q_TIME) {
-            const answer: ITimeAnswer = {
-              time: '',
-              point: 0
-            };
-            questionResult = { ...question, answer } as ITimeQuestion;
           }
           if (question.type === QuestionEnum.Q_FILEUPLOAD) {
             const answer: IFileUploadAnswer = {

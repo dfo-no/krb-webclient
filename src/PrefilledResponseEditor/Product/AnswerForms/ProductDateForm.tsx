@@ -33,7 +33,8 @@ interface IProps {
 export const PeriodDateSchema = RequirementAnswerSchema.keys({
   question: PeriodDateQuestionAnswerSchema.keys({
     answer: Joi.object().keys({
-      date: Joi.date().iso().raw().required()
+      date: Joi.date().iso().raw().required(),
+      point: Joi.number().required()
     })
   })
 });
@@ -114,7 +115,7 @@ export default function ProductDateForm({
         <ControlledDate
           control={control}
           name={`question.answer.date` as const}
-          error={get(errors, `answer.date`) as FieldError}
+          error={get(errors, `question.answer`) as FieldError}
           label={t('Select date')}
         />
         <div className="d-flex justify-content-end">
@@ -139,7 +140,6 @@ export default function ProductDateForm({
             {t('Reset')}
           </Button>
         </div>
-        <ErrorSummary errors={get(errors, `question.answer.value`)} />
       </Form>
     </div>
   );

@@ -5,7 +5,7 @@ import React from 'react';
 import Badge from 'react-bootstrap/Badge';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
-import { useForm } from 'react-hook-form';
+import { FieldError, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import ErrorSummary from '../../../Form/ErrorSummary';
 import {
@@ -27,9 +27,7 @@ interface IProps {
   answer: IRequirementAnswer;
 }
 
-export default function ProductTextForm({
-  answer
-}: IProps): React.ReactElement {
+export default function TextForm({ answer }: IProps): React.ReactElement {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
   const question = answer.question as ITextQuestion;
@@ -53,7 +51,7 @@ export default function ProductTextForm({
   const ProductTextSchema = RequirementAnswerSchema.keys({
     question: TextQuestionAnswerSchema.keys({
       answer: Joi.object().keys({
-        value: Joi.number().min(6).max(question.config.max).required(),
+        text: Joi.string().required(),
         point: Joi.number().required()
       })
     })
@@ -126,8 +124,8 @@ export default function ProductTextForm({
             {t('Reset')}
           </Button>
         </div>
-        <ErrorSummary errors={get(errors, `question.answer.value`)} />
       </Form>
+      <ErrorSummary errors={errors} />
     </div>
   );
 }

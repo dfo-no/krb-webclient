@@ -38,7 +38,6 @@ const ControlledDate = <T extends FieldValues>({
   label
 }: Props<T>): React.ReactElement => {
   const { i18n } = useTranslation();
-
   return (
     <LocalizationProvider
       dateAdapter={AdapterDateFns}

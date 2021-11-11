@@ -19,12 +19,15 @@ import {
 import { IRequirementAnswer } from '../../models/IRequirementAnswer';
 import { ISliderAnswer, ISliderQuestion } from '../../models/ISliderQuestion';
 import { ITextAnswer, ITextQuestion } from '../../models/ITextQuestion';
-import { ITimeAnswer, ITimeQuestion } from '../../models/ITimeQuestion';
 import { Levelable } from '../../models/Levelable';
 import ModelType from '../../models/ModelType';
 import { Need } from '../../models/Need';
 import QuestionEnum from '../../models/QuestionEnum';
 import { QuestionType } from '../../models/QuestionType';
+import CodelistForm from './AnswerForms/CodelistForm';
+import DateForm from './AnswerForms/DateForm';
+import SliderForm from './AnswerForms/SliderForm';
+import TextForm from './AnswerForms/TextForm';
 
 interface IProps {
   element: Levelable<Need>;
@@ -47,11 +50,14 @@ export default function AnswerForm({ element }: IProps): React.ReactElement {
             questionResult = { ...question, answer } as ICheckboxQuestion;
           }
           if (question.type === QuestionEnum.Q_CODELIST) {
-            const answer: ICodelistAnswer = { codes: '', point: 0 };
+            const answer: ICodelistAnswer = { codes: [], point: 0 };
             questionResult = { ...question, answer } as ICodelistQuestion;
           }
           if (question.type === QuestionEnum.Q_PERIOD_DATE) {
-            const answer: IPeriodDateAnswer = { date: null, point: 0 };
+            const answer: IPeriodDateAnswer = {
+              date: question.config.fromDate,
+              point: 0
+            };
             questionResult = { ...question, answer } as IPeriodDateQuestion;
           }
           if (question.type === QuestionEnum.Q_SLIDER) {
@@ -67,13 +73,6 @@ export default function AnswerForm({ element }: IProps): React.ReactElement {
               point: 0
             };
             questionResult = { ...question, answer } as ITextQuestion;
-          }
-          if (question.type === QuestionEnum.Q_TIME) {
-            const answer: ITimeAnswer = {
-              time: '',
-              point: 0
-            };
-            questionResult = { ...question, answer } as ITimeQuestion;
           }
           if (question.type === QuestionEnum.Q_FILEUPLOAD) {
             const answer: IFileUploadAnswer = {
@@ -100,6 +99,25 @@ export default function AnswerForm({ element }: IProps): React.ReactElement {
 
   const renderQuestions = (elem: IRequirementAnswer) => {
     switch (elem.question.type) {
+      case QuestionEnum.Q_SLIDER: {
+        return <SliderForm elem={elem} key={elem.question.id} />;
+      }
+
+      case QuestionEnum.Q_PERIOD_DATE: {
+        return <DateForm answer={elem} key={elem.question.id} />;
+      }
+
+      case QuestionEnum.Q_FILEUPLOAD: {
+        return <div key={elem.question.id}>Q_FILEUPLOAD</div>;
+      }
+
+      case QuestionEnum.Q_TEXT: {
+        return <TextForm answer={elem} key={elem.question.id} />;
+      }
+
+      case QuestionEnum.Q_CODELIST: {
+        return <CodelistForm answer={elem} key={elem.question.id} />;
+      }
       default: {
         return (
           <div key={uuidv4()}>

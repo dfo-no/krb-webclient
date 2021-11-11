@@ -51,7 +51,10 @@ export default function SliderForm({ elem }: IProps): React.ReactElement {
   const ProductSliderSchema = RequirementAnswerSchema.keys({
     question: SliderQuestionAnswerSchema.keys({
       answer: Joi.object().keys({
-        value: Joi.number().min(6).max(question.config.max).required(),
+        value: Joi.number()
+          .min(question.config.min)
+          .max(question.config.max)
+          .required(),
         point: Joi.number().required()
       })
     })
@@ -102,7 +105,7 @@ export default function SliderForm({ elem }: IProps): React.ReactElement {
         className="mt-4"
       >
         <ControlledSlider
-          min={5}
+          min={question.config.min}
           max={question.config.max}
           unit={question.config.unit}
           step={question.config.step}
