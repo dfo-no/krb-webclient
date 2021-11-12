@@ -8,7 +8,6 @@ import Form from 'react-bootstrap/Form';
 import { FieldError, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import ControlledDate from '../../../Form/ControlledDate';
-import ErrorSummary from '../../../Form/ErrorSummary';
 import {
   IPeriodDateQuestion,
   PeriodDateQuestionAnswerSchema

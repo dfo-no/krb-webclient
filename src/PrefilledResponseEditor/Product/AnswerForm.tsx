@@ -20,7 +20,6 @@ import {
 import { IRequirementAnswer } from '../../models/IRequirementAnswer';
 import { ISliderAnswer, ISliderQuestion } from '../../models/ISliderQuestion';
 import { ITextAnswer, ITextQuestion } from '../../models/ITextQuestion';
-import { ITimeAnswer, ITimeQuestion } from '../../models/ITimeQuestion';
 import { Levelable } from '../../models/Levelable';
 import ModelType from '../../models/ModelType';
 import { Need } from '../../models/Need';
