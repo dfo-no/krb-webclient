@@ -8,7 +8,7 @@ import { useTranslation } from 'react-i18next';
 import { v4 as uuidv4 } from 'uuid';
 import ErrorSummary from '../../Form/ErrorSummary';
 import InputRow from '../../Form/InputRow';
-import { Alert } from '../../models/Alert';
+import { IAlert } from '../../models/IAlert';
 import { PostProductSchema, Product } from '../../models/Product';
 import Nexus from '../../Nexus/Nexus';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
@@ -43,7 +43,7 @@ function NewProductForm(): React.ReactElement {
 
   const onSubmit = async (post: Product) => {
     const newProduct = nexus.productService.createProductWithId(post);
-    const alert: Alert = {
+    const alert: IAlert = {
       id: uuidv4(),
       style: 'success',
       text: 'successfully added a new product'

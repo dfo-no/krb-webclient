@@ -10,7 +10,7 @@ import { useTranslation } from 'react-i18next';
 import { v4 as uuidv4 } from 'uuid';
 import Utils from '../../common/Utils';
 import ErrorSummary from '../../Form/ErrorSummary';
-import { Alert } from '../../models/Alert';
+import { IAlert } from '../../models/IAlert';
 import { Need } from '../../models/Need';
 import { BaseRequirementSchema, Requirement } from '../../models/Requirement';
 import { Tag } from '../../models/Tag';
@@ -49,7 +49,7 @@ function RequirementEditor(): React.ReactElement {
   const { errors } = formState;
 
   const onSubmit = async (post: Requirement) => {
-    const alert: Alert = {
+    const alert: IAlert = {
       id: uuidv4(),
       style: 'success',
       text: 'successfully updated requirement'

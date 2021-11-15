@@ -10,7 +10,7 @@ import AlertModal from '../../common/AlertModal';
 import Utils from '../../common/Utils';
 import ErrorSummary from '../../Form/ErrorSummary';
 import InputRow from '../../Form/InputRow';
-import { Alert } from '../../models/Alert';
+import { IAlert } from '../../models/IAlert';
 import { Need, PutNeedSchema } from '../../models/Need';
 import { Nestable } from '../../models/Nestable';
 import { Parentable } from '../../models/Parentable';
@@ -57,7 +57,7 @@ function EditNeedForm({ element }: IProps): React.ReactElement {
     if (toParentable.children) {
       delete toParentable.children;
     }
-    const alert: Alert = {
+    const alert: IAlert = {
       id: uuidv4(),
       style: 'success',
       text: 'Successfully edited need'

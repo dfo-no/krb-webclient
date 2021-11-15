@@ -8,8 +8,8 @@ import { useTranslation } from 'react-i18next';
 import { v4 as uuidv4 } from 'uuid';
 import ErrorSummary from '../../Form/ErrorSummary';
 import InputRow from '../../Form/InputRow';
-import { Alert } from '../../models/Alert';
 import { Codelist, PostCodelistSchema } from '../../models/Codelist';
+import { IAlert } from '../../models/IAlert';
 import Nexus from '../../Nexus/Nexus';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { addAlert } from '../../store/reducers/alert-reducer';
@@ -40,7 +40,7 @@ function NewCodelist(): React.ReactElement {
   });
 
   const onNewCodeSubmit = (post: Codelist) => {
-    const alert: Alert = {
+    const alert: IAlert = {
       id: uuidv4(),
       style: 'success',
       text: 'Successfully added codelist'

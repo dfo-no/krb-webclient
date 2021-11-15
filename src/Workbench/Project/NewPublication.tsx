@@ -9,8 +9,8 @@ import { useTranslation } from 'react-i18next';
 import { v4 as uuidv4 } from 'uuid';
 import ControlledTextInput from '../../Form/ControlledTextInput';
 import ErrorSummary from '../../Form/ErrorSummary';
-import { Alert } from '../../models/Alert';
 import { Bank } from '../../models/Bank';
+import { IAlert } from '../../models/IAlert';
 import ModelType from '../../models/ModelType';
 import { PostPublicationSchema, Publication } from '../../models/Publication';
 import Nexus from '../../Nexus/Nexus';
@@ -75,7 +75,7 @@ export default function NewPublication(): React.ReactElement {
         dispatch(putSelectedProjectThunk('dummy')).then(() => {
           setShow(false);
           reset();
-          const alert: Alert = {
+          const alert: IAlert = {
             id: uuidv4(),
             style: 'success',
             text: 'successfully published bank'

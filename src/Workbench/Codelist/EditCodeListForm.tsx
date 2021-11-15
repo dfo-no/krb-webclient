@@ -11,8 +11,8 @@ import { v4 as uuidv4 } from 'uuid';
 import AlertModal from '../../common/AlertModal';
 import ErrorSummary from '../../Form/ErrorSummary';
 import InputRow from '../../Form/InputRow';
-import { Alert } from '../../models/Alert';
 import { Codelist, CodelistSchema } from '../../models/Codelist';
+import { IAlert } from '../../models/IAlert';
 import { ICodelistQuestion } from '../../models/ICodelistQuestion';
 import { IVariant } from '../../models/IVariant';
 import { Need } from '../../models/Need';
@@ -51,7 +51,7 @@ function EditCodeListForm(): React.ReactElement {
   });
 
   const onEditCodeSubmit = (post: Codelist) => {
-    const alert: Alert = {
+    const alert: IAlert = {
       id: uuidv4(),
       style: 'success',
       text: 'Successfully edited codelist'

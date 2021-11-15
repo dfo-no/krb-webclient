@@ -11,7 +11,7 @@ import AlertModal from '../../common/AlertModal';
 import Utils from '../../common/Utils';
 import ErrorSummary from '../../Form/ErrorSummary';
 import InputRow from '../../Form/InputRow';
-import { Alert } from '../../models/Alert';
+import { IAlert } from '../../models/IAlert';
 import { IVariant } from '../../models/IVariant';
 import { Need } from '../../models/Need';
 import { Product, PutProductSchema } from '../../models/Product';
@@ -63,7 +63,7 @@ export default function EditProductForm({
     if (newProduct.children) {
       delete newProduct.children;
     }
-    const alert: Alert = {
+    const alert: IAlert = {
       id: uuidv4(),
       style: 'success',
       text: 'Successfully updated product'
@@ -99,7 +99,7 @@ export default function EditProductForm({
       dispatch(removeProduct(product));
       dispatch(putSelectedProjectThunk('dummy'));
 
-      const alert: Alert = {
+      const alert: IAlert = {
         id: uuidv4(),
         style: 'success',
         text: 'Successfully deleted product'

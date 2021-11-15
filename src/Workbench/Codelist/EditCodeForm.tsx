@@ -8,8 +8,8 @@ import { BsTrashFill } from 'react-icons/bs';
 import { v4 as uuidv4 } from 'uuid';
 import ErrorSummary from '../../Form/ErrorSummary';
 import InputRow from '../../Form/InputRow';
-import { Alert } from '../../models/Alert';
 import { Code, EditCodeSchema } from '../../models/Code';
+import { IAlert } from '../../models/IAlert';
 import { AccordionContext } from '../../NestableHierarchy/AccordionContext';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { addAlert } from '../../store/reducers/alert-reducer';
@@ -51,7 +51,7 @@ export default function EditCodeForm({ element }: IProps): React.ReactElement {
   }, [element, reset]);
 
   const onSubmit = (code: Code) => {
-    const alert: Alert = {
+    const alert: IAlert = {
       id: uuidv4(),
       style: 'success',
       text: 'Successfully edited code'

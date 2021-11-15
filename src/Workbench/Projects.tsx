@@ -12,8 +12,8 @@ import { Link } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
 import ErrorSummary from '../Form/ErrorSummary';
 import InputRow from '../Form/InputRow';
-import { Alert } from '../models/Alert';
 import { Bank } from '../models/Bank';
+import { IAlert } from '../models/IAlert';
 import { PostProjectSchema } from '../models/Project';
 import Nexus from '../Nexus/Nexus';
 import { useAppDispatch, useAppSelector } from '../store/hooks';
@@ -50,7 +50,7 @@ function Projects(): React.ReactElement {
       reset();
       setShowNewProjectForm(false);
     });
-    const alert: Alert = {
+    const alert: IAlert = {
       id: uuidv4(),
       style: 'success',
       text: 'Successfully updated product'

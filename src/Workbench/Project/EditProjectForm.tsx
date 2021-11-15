@@ -8,8 +8,8 @@ import { useTranslation } from 'react-i18next';
 import { v4 as uuidv4 } from 'uuid';
 import ErrorSummary from '../../Form/ErrorSummary';
 import InputRow from '../../Form/InputRow';
-import { Alert } from '../../models/Alert';
 import { Bank } from '../../models/Bank';
+import { IAlert } from '../../models/IAlert';
 import { EditProjectSchema } from '../../models/Project';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { addAlert } from '../../store/reducers/alert-reducer';
@@ -45,7 +45,7 @@ export default function EditProjectForm({
   }, [project, reset]);
 
   const onEditProjectSubmit = (post: Bank) => {
-    const alert: Alert = {
+    const alert: IAlert = {
       id: uuidv4(),
       style: 'success',
       text: 'Successfully updated projectt'

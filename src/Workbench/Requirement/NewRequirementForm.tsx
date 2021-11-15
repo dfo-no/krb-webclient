@@ -8,7 +8,7 @@ import { useTranslation } from 'react-i18next';
 import { v4 as uuidv4 } from 'uuid';
 import ErrorSummary from '../../Form/ErrorSummary';
 import InputRow from '../../Form/InputRow';
-import { Alert } from '../../models/Alert';
+import { IAlert } from '../../models/IAlert';
 import ModelType from '../../models/ModelType';
 import { PostRequirementSchema, Requirement } from '../../models/Requirement';
 import RequirementType from '../../models/RequirementType';
@@ -64,7 +64,7 @@ function NewRequirementForm(): React.ReactElement {
         requirement
       })
     );
-    const alert: Alert = {
+    const alert: IAlert = {
       id: uuidv4(),
       style: 'success',
       text: 'Successfully created new requirement'

@@ -9,7 +9,7 @@ import { BsTrashFill } from 'react-icons/bs';
 import { v4 as uuidv4 } from 'uuid';
 import ErrorSummary from '../../Form/ErrorSummary';
 import InputRow from '../../Form/InputRow';
-import { Alert } from '../../models/Alert';
+import { IAlert } from '../../models/IAlert';
 import { Nestable } from '../../models/Nestable';
 import { Parentable } from '../../models/Parentable';
 import { PutTagSchema, Tag } from '../../models/Tag';
@@ -51,7 +51,7 @@ export default function EditTagForm({ element }: IProps): React.ReactElement {
     if (newTag.children) {
       delete newTag.children;
     }
-    const alert: Alert = {
+    const alert: IAlert = {
       id: uuidv4(),
       style: 'success',
       text: 'Successfully edited tag'
@@ -70,7 +70,7 @@ export default function EditTagForm({ element }: IProps): React.ReactElement {
       reset();
     });
 
-    const alert: Alert = {
+    const alert: IAlert = {
       id: uuidv4(),
       style: 'success',
       text: 'Successfully edited tag'
