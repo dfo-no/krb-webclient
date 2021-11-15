@@ -3,11 +3,11 @@ import { IBaseModel } from './IBaseModel';
 import { ICodelist } from './ICodelist';
 import { INeed } from './INeed';
 import { InheritedBank } from './InheritedBank';
+import { IProduct } from './IProduct';
 import { IPublication } from './IPublication';
+import { ITag } from './ITag';
 import ModelType from './ModelType';
 import { Parentable } from './Parentable';
-import { IProduct } from './Product';
-import { Tag } from './Tag';
 
 export const BaseBankSchema = Joi.object().keys({
   id: Joi.string().length(36).required(),
@@ -47,7 +47,7 @@ export interface IBank extends IBaseModel {
   codelist: ICodelist[];
   products: IProduct[];
   version: number;
-  tags: Parentable<Tag>[];
+  tags: Parentable<ITag>[];
   publications: IPublication[];
   publishedDate: string | null;
   projectId: string | null;

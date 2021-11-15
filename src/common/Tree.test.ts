@@ -1,15 +1,15 @@
 import { get } from 'lodash';
 import { INeed } from '../models/INeed';
+import { ITag } from '../models/ITag';
 import ModelType from '../models/ModelType';
 import { Parentable } from '../models/Parentable';
 import QuestionEnum from '../models/QuestionEnum';
 import RequirementType from '../models/RequirementType';
-import { Tag } from '../models/Tag';
 import { createPolyTree, createTree, getPaths } from './Tree';
 
 describe('Tree', () => {
   it('createTree', () => {
-    const data: Parentable<Tag>[] = [
+    const data: Parentable<ITag>[] = [
       {
         id: '76',
         parent: '80',
@@ -97,7 +97,7 @@ describe('Tree', () => {
   });
 
   it('createPolyTree', () => {
-    const data: Parentable<Tag>[] = [
+    const data: Parentable<ITag>[] = [
       {
         id: '74',
         parent: '',

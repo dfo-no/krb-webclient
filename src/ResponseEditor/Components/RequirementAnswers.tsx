@@ -1,6 +1,6 @@
 import React from 'react';
+import { IRequirement } from '../../models/IRequirement';
 import { IRequirementAnswer } from '../../models/IRequirementAnswer';
-import { IRequirement } from '../../models/Requirement';
 import QuestionFormSelector from './QuestionFormSelector';
 
 interface IProps {

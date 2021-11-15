@@ -3,13 +3,13 @@ import { CheckboxQuestionAnswerSchema } from './ICheckboxQuestion';
 import { CodelistQuestionAnswerSchema } from './ICodelistQuestion';
 import { FileUploadQuestionAnswerSchema } from './IFileUploadQuestion';
 import { PeriodDateQuestionAnswerSchema } from './IPeriodDateQuestion';
+import { BaseRequirementSchema, IRequirement } from './IRequirement';
 import { SliderQuestionAnswerSchema } from './ISliderQuestion';
 import { TextQuestionAnswerSchema } from './ITextQuestion';
 import { TimeQuestionAnswerSchema } from './ITimeQuestion';
 import ModelType from './ModelType';
 import QuestionEnum from './QuestionEnum';
 import { QuestionType } from './QuestionType';
-import { BaseRequirementSchema, IRequirement } from './Requirement';
 
 export interface IRequirementAnswer {
   id: string;

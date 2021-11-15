@@ -14,7 +14,7 @@ import { BsTrashFill } from 'react-icons/bs';
 import { IBank } from '../../models/IBank';
 import { ICodelist } from '../../models/ICodelist';
 import { ICodelistQuestion } from '../../models/ICodelistQuestion';
-import { IRequirement } from '../../models/Requirement';
+import { IRequirement } from '../../models/IRequirement';
 import { useAppSelector } from '../../store/hooks';
 
 type IProps = {

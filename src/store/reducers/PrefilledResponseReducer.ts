@@ -2,14 +2,14 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { cloneDeep } from 'lodash';
 import Utils from '../../common/Utils';
 import { IBank } from '../../models/IBank';
+import { IPrefilledResponse } from '../../models/IPrefilledResponse';
+import { IPrefilledResponseProduct } from '../../models/IPrefilledResponseProduct';
 import { IRequirementAnswer } from '../../models/IRequirementAnswer';
 import ModelType from '../../models/ModelType';
-import { PrefilledResponse } from '../../models/PrefilledResponse';
-import { PrefilledResponseProduct } from '../../models/PrefilledResponseProduct';
 
 interface PrefilledResponseState {
-  prefilledResponse: PrefilledResponse;
-  selectedProduct: PrefilledResponseProduct;
+  prefilledResponse: IPrefilledResponse;
+  selectedProduct: IPrefilledResponseProduct;
 }
 
 const initialState: PrefilledResponseState = {
@@ -59,7 +59,7 @@ const responseSlice = createSlice({
   name: 'prefilledResponse',
   initialState,
   reducers: {
-    setResponse(state, { payload }: PayloadAction<PrefilledResponse>) {
+    setResponse(state, { payload }: PayloadAction<IPrefilledResponse>) {
       state.prefilledResponse = payload;
     },
     editSupplier(state, { payload }: PayloadAction<string>) {
@@ -99,7 +99,7 @@ const responseSlice = createSlice({
     setBank(state, { payload }: PayloadAction<IBank>) {
       state.prefilledResponse.bank = payload;
     },
-    addProduct(state, { payload }: PayloadAction<PrefilledResponseProduct>) {
+    addProduct(state, { payload }: PayloadAction<IPrefilledResponseProduct>) {
       state.prefilledResponse.products.push(payload);
     },
     removeProduct(state, { payload }: PayloadAction<string>) {
@@ -180,13 +180,16 @@ const responseSlice = createSlice({
       {
         payload
       }: PayloadAction<{
-        product: PrefilledResponseProduct;
+        product: IPrefilledResponseProduct;
         productIndex: number;
       }>
     ) {
       state.prefilledResponse.products[payload.productIndex] = payload.product;
     },
-    selectProduct(state, { payload }: PayloadAction<PrefilledResponseProduct>) {
+    selectProduct(
+      state,
+      { payload }: PayloadAction<IPrefilledResponseProduct>
+    ) {
       state.selectedProduct = payload;
     }
   }

@@ -6,8 +6,8 @@ import { BsPencil } from 'react-icons/bs';
 import { Link, useRouteMatch } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
 import Utils from '../../common/Utils';
-import { ResponseProduct } from '../../models/ResponseProduct';
-import { SpecificationProduct } from '../../models/SpecificationProduct';
+import { IResponseProduct } from '../../models/IResponseProduct';
+import { ISpecificationProduct } from '../../models/ISpecificationProduct';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { addProduct } from '../../store/reducers/response-reducer';
 import { selectBank } from '../../store/reducers/selectedBank-reducer';
@@ -35,7 +35,7 @@ export default function ProductResponseList(): React.ReactElement {
     return <p>No selected bank</p>;
   }
   const generateResponseProduct = (
-    specificationProduct: SpecificationProduct
+    specificationProduct: ISpecificationProduct
   ) => {
     dispatch(selectResponseSpecificationProduct(specificationProduct));
     const productIndex = response.products.findIndex(
@@ -43,7 +43,7 @@ export default function ProductResponseList(): React.ReactElement {
         responseProduct.originProduct.id === specificationProduct.id
     );
 
-    const newProduct: ResponseProduct = {
+    const newProduct: IResponseProduct = {
       id: uuidv4(),
       title: '',
       description: '',
@@ -51,7 +51,7 @@ export default function ProductResponseList(): React.ReactElement {
       price: 0,
       requirementAnswers: []
     };
-    const product: ResponseProduct =
+    const product: IResponseProduct =
       productIndex !== -1 ? response.products[productIndex] : newProduct;
     if (productIndex === -1) {
       dispatch(addProduct(newProduct));
@@ -60,8 +60,8 @@ export default function ProductResponseList(): React.ReactElement {
     dispatch(selectResponseProduct(product));
   };
 
-  const productList = (productArray: SpecificationProduct[]) => {
-    const items = productArray.map((product: SpecificationProduct) => {
+  const productList = (productArray: ISpecificationProduct[]) => {
+    const items = productArray.map((product: ISpecificationProduct) => {
       return (
         <ListGroup.Item key={product.id + 1}>
           <Row>

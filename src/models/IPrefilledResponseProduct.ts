@@ -1,8 +1,8 @@
 import Joi from 'joi';
+import { IProduct } from './IProduct';
 import { IRequirementAnswer } from './IRequirementAnswer';
-import { IProduct } from './Product';
 
-export interface PrefilledResponseProduct {
+export interface IPrefilledResponseProduct {
   id: string;
   title: string;
   description: string;

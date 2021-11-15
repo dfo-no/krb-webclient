@@ -2,13 +2,13 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import Utils from '../../common/Utils';
 import { IBank } from '../../models/IBank';
 import { IRequirementAnswer } from '../../models/IRequirementAnswer';
+import { IResponse } from '../../models/IResponse';
+import { IResponseProduct } from '../../models/IResponseProduct';
+import { ISpecification } from '../../models/ISpecification';
 import ModelType from '../../models/ModelType';
-import { Response } from '../../models/Response';
-import { ResponseProduct } from '../../models/ResponseProduct';
-import { Specification } from '../../models/Specification';
 
 interface ResponseState {
-  response: Response;
+  response: IResponse;
 }
 
 const initialState: ResponseState = {
@@ -46,10 +46,10 @@ const responseSlice = createSlice({
   name: 'response',
   initialState,
   reducers: {
-    setResponse(state, { payload }: PayloadAction<Response>) {
+    setResponse(state, { payload }: PayloadAction<IResponse>) {
       state.response = payload;
     },
-    setSpecification(state, { payload }: PayloadAction<Specification>) {
+    setSpecification(state, { payload }: PayloadAction<ISpecification>) {
       state.response.spesification = payload;
     },
     editSupplier(state, { payload }: PayloadAction<string>) {
@@ -74,7 +74,7 @@ const responseSlice = createSlice({
     setBank(state, { payload }: PayloadAction<IBank>) {
       state.response.spesification.bank = payload;
     },
-    addProduct(state, { payload }: PayloadAction<ResponseProduct>) {
+    addProduct(state, { payload }: PayloadAction<IResponseProduct>) {
       state.response.products.push(payload);
     },
     addProductAnswer(
@@ -109,7 +109,7 @@ const responseSlice = createSlice({
       state,
       {
         payload
-      }: PayloadAction<{ product: ResponseProduct; productIndex: number }>
+      }: PayloadAction<{ product: IResponseProduct; productIndex: number }>
     ) {
       state.response.products[payload.productIndex] = payload.product;
     }

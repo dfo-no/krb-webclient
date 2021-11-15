@@ -1,12 +1,12 @@
 import React from 'react';
 import Utils from '../../common/Utils';
-import { ResponseProduct } from '../../models/ResponseProduct';
-import { SpecificationProduct } from '../../models/SpecificationProduct';
+import { IResponseProduct } from '../../models/IResponseProduct';
+import { ISpecificationProduct } from '../../models/ISpecificationProduct';
 import { useAppSelector } from '../../store/hooks';
 import NeedHierarchy from '../Components/NeedHierarchy';
 
 interface InputProps {
-  product: SpecificationProduct;
+  product: ISpecificationProduct;
 }
 
 export default function ResponseProductRequirementSelector({
@@ -17,12 +17,12 @@ export default function ResponseProductRequirementSelector({
   const selectedBank = response.spesification.bank;
   const productIndex = Utils.ensure(
     response.spesification.products.findIndex(
-      (specProduct: SpecificationProduct) => specProduct.id === product.id
+      (specProduct: ISpecificationProduct) => specProduct.id === product.id
     )
   );
 
   const responseProductIndex = response.products.findIndex(
-    (responseProduct: ResponseProduct) =>
+    (responseProduct: IResponseProduct) =>
       responseProduct.originProduct.id === product.id
   );
 

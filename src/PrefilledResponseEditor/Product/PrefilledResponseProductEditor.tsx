@@ -13,11 +13,11 @@ import { getPaths } from '../../common/Tree';
 import ControlledTextInput from '../../Form/ControlledTextInput';
 import ErrorSummary from '../../Form/ErrorSummary';
 import { INeed } from '../../models/INeed';
-import { Levelable } from '../../models/Levelable';
 import {
-  PrefilledResponseProduct,
+  IPrefilledResponseProduct,
   PrefilledResponseProductSchema
-} from '../../models/PrefilledResponseProduct';
+} from '../../models/IPrefilledResponseProduct';
+import { Levelable } from '../../models/Levelable';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { editProduct } from '../../store/reducers/PrefilledResponseReducer';
 import AnswerForm from './AnswerForm';
@@ -33,14 +33,14 @@ export default function PrefilledResponseProductEditor(): React.ReactElement {
     control,
     handleSubmit,
     formState: { errors }
-  } = useForm<PrefilledResponseProduct>({
+  } = useForm<IPrefilledResponseProduct>({
     resolver: joiResolver(PrefilledResponseProductSchema),
     defaultValues: selectedProduct
   });
 
   if (!id) return <p>No selected bank</p>;
 
-  const addProductToSpecification = (post: PrefilledResponseProduct) => {
+  const addProductToSpecification = (post: IPrefilledResponseProduct) => {
     const newProduct = {
       ...post
     };

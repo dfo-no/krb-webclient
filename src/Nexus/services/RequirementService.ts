@@ -1,6 +1,6 @@
+import { IRequirement } from '../../models/IRequirement';
 import { IVariant } from '../../models/IVariant';
 import ModelType from '../../models/ModelType';
-import { IRequirement } from '../../models/Requirement';
 import RequirementType from '../../models/RequirementType';
 import StoreService from './StoreService';
 import UuidService from './UuidService';

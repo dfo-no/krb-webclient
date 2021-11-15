@@ -12,9 +12,9 @@ import { Link, useRouteMatch } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
 import Utils from '../../common/Utils';
 import ErrorSummary from '../../Form/ErrorSummary';
+import { IProduct } from '../../models/IProduct';
+import { ISpecificationProduct } from '../../models/ISpecificationProduct';
 import { Nestable } from '../../models/Nestable';
-import { IProduct } from '../../models/Product';
-import { SpecificationProduct } from '../../models/SpecificationProduct';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { selectBank } from '../../store/reducers/selectedBank-reducer';
 import { selectSpecificationProduct } from '../../store/reducers/selectedSpecProduct-reducer';
@@ -88,7 +88,7 @@ export default function ProductSpecList(): React.ReactElement {
         (product: IProduct) => product.id === post.product
       )
     );
-    const newProduct: SpecificationProduct = {
+    const newProduct: ISpecificationProduct = {
       id: uuidv4(),
       originProduct: selectedProduct,
       title: selectedProduct.title,
@@ -101,8 +101,8 @@ export default function ProductSpecList(): React.ReactElement {
     dispatch(addProduct({ product: newProduct }));
   };
 
-  const productList = (productArray: SpecificationProduct[]) => {
-    const items = productArray.map((product: SpecificationProduct) => {
+  const productList = (productArray: ISpecificationProduct[]) => {
+    const items = productArray.map((product: ISpecificationProduct) => {
       return (
         <ListGroup.Item key={product.id}>
           <Row className="d-flex justify-content-end">

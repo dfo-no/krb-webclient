@@ -8,6 +8,8 @@ import Form from 'react-bootstrap/Form';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import ErrorSummary from '../../../Form/ErrorSummary';
+import { IPrefilledResponseProduct } from '../../../models/IPrefilledResponseProduct';
+import { IRequirement } from '../../../models/IRequirement';
 import {
   IRequirementAnswer,
   RequirementAnswerSchema
@@ -16,8 +18,6 @@ import {
   ITextQuestion,
   TextQuestionAnswerSchema
 } from '../../../models/ITextQuestion';
-import { PrefilledResponseProduct } from '../../../models/PrefilledResponseProduct';
-import { IRequirement } from '../../../models/Requirement';
 import { useAppDispatch, useAppSelector } from '../../../store/hooks';
 import {
   addProductAnswer,
@@ -26,7 +26,7 @@ import {
 
 interface IProps {
   answer: IRequirementAnswer;
-  product: PrefilledResponseProduct;
+  product: IPrefilledResponseProduct;
 }
 
 const ProductTextForm = ({ answer, product }: IProps): React.ReactElement => {

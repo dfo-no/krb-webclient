@@ -3,7 +3,7 @@ import Card from 'react-bootstrap/Card';
 import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
-import { IRequirement } from '../../models/Requirement';
+import { IRequirement } from '../../models/IRequirement';
 import RequirementType from '../../models/RequirementType';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import {

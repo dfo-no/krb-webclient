@@ -15,10 +15,14 @@ import { IAlert } from '../../models/IAlert';
 import { CodelistSchema, ICodelist } from '../../models/ICodelist';
 import { ICodelistQuestion } from '../../models/ICodelistQuestion';
 import { INeed } from '../../models/INeed';
+import {
+  IAnswerBase,
+  IConfigBase,
+  IQuestionBase
+} from '../../models/IQuestionBase';
+import { IRequirement } from '../../models/IRequirement';
 import { IVariant } from '../../models/IVariant';
-import { IAnswerBase, IConfigBase, IQuestionBase } from '../../models/Question';
 import QuestionEnum from '../../models/QuestionEnum';
-import { IRequirement } from '../../models/Requirement';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { addAlert } from '../../store/reducers/alert-reducer';
 import {

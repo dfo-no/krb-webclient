@@ -12,8 +12,8 @@ import Utils from '../../common/Utils';
 import ErrorSummary from '../../Form/ErrorSummary';
 import { IAlert } from '../../models/IAlert';
 import { INeed } from '../../models/INeed';
-import { BaseRequirementSchema, IRequirement } from '../../models/Requirement';
-import { Tag } from '../../models/Tag';
+import { BaseRequirementSchema, IRequirement } from '../../models/IRequirement';
+import { ITag } from '../../models/ITag';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { addAlert } from '../../store/reducers/alert-reducer';
 import {
@@ -75,7 +75,7 @@ function RequirementEditor(): React.ReactElement {
     // TODO: dispatch a change Need and switch URL
   };
 
-  const tagOptions = (tags: Tag[]) => {
+  const tagOptions = (tags: ITag[]) => {
     return tags.map((tag) => {
       return (
         <option key={tag.id} value={tag.id}>

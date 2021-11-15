@@ -2,12 +2,12 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import Utils from '../../common/Utils';
 import { IBank } from '../../models/IBank';
 import { IRequirementAnswer } from '../../models/IRequirementAnswer';
+import { ISpecification } from '../../models/ISpecification';
+import { ISpecificationProduct } from '../../models/ISpecificationProduct';
 import ModelType from '../../models/ModelType';
-import { Specification } from '../../models/Specification';
-import { SpecificationProduct } from '../../models/SpecificationProduct';
 
 interface SpecificationState {
-  spec: Specification;
+  spec: ISpecification;
 }
 
 const initialState: SpecificationState = {
@@ -40,7 +40,7 @@ const specificationSlice = createSlice({
   name: 'specification',
   initialState,
   reducers: {
-    setSpecification(state, { payload }: PayloadAction<Specification>) {
+    setSpecification(state, { payload }: PayloadAction<ISpecification>) {
       state.spec = payload;
     },
     editTitle(state, { payload }: PayloadAction<string>) {
@@ -51,13 +51,13 @@ const specificationSlice = createSlice({
     },
     addProduct(
       state,
-      { payload }: PayloadAction<{ product: SpecificationProduct }>
+      { payload }: PayloadAction<{ product: ISpecificationProduct }>
     ) {
       state.spec.products.push(payload.product);
     },
     editSpecProduct(
       state,
-      { payload }: PayloadAction<{ product: SpecificationProduct }>
+      { payload }: PayloadAction<{ product: ISpecificationProduct }>
     ) {
       const index = Utils.ensure(
         state.spec.products.findIndex(

@@ -1,8 +1,8 @@
 import React from 'react';
 import Container from 'react-bootstrap/Container';
 import { ICheckboxQuestion } from '../../models/ICheckboxQuestion';
+import { IRequirement } from '../../models/IRequirement';
 import { IRequirementAnswer } from '../../models/IRequirementAnswer';
-import { IRequirement } from '../../models/Requirement';
 
 interface IProps {
   answer: IRequirementAnswer;

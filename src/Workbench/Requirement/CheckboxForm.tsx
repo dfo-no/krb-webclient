@@ -7,7 +7,7 @@ import Row from 'react-bootstrap/Row';
 import { Control, FormState, UseFormRegister } from 'react-hook-form';
 import { BsTrashFill } from 'react-icons/bs';
 import { ICheckboxQuestion } from '../../models/ICheckboxQuestion';
-import { IRequirement } from '../../models/Requirement';
+import { IRequirement } from '../../models/IRequirement';
 
 type IProps = {
   control: Control<IRequirement>;

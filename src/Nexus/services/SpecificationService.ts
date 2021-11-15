@@ -1,8 +1,8 @@
 /* eslint-disable class-methods-use-this */
 import { IBank } from '../../models/IBank';
 import { IRequirementAnswer } from '../../models/IRequirementAnswer';
-import { Specification } from '../../models/Specification';
-import { SpecificationProduct } from '../../models/SpecificationProduct';
+import { ISpecification } from '../../models/ISpecification';
+import { ISpecificationProduct } from '../../models/ISpecificationProduct';
 import SpecificationStoreService from './SpecificationStoreService';
 import UuidService from './UuidService';
 
@@ -15,11 +15,11 @@ export default class SpecificationService {
     this.store = store;
   }
 
-  async setSpecification(specification: Specification): Promise<void> {
+  async setSpecification(specification: ISpecification): Promise<void> {
     return this.store.setSpecification(specification);
   }
 
-  async getSpecification(): Promise<Specification> {
+  async getSpecification(): Promise<ISpecification> {
     return this.store.getSpecification();
   }
 
@@ -31,16 +31,18 @@ export default class SpecificationService {
     return this.store.createSpecificationFromBank(bank);
   }
 
-  async addSpecificationProduct(product: SpecificationProduct): Promise<void> {
+  async addSpecificationProduct(product: ISpecificationProduct): Promise<void> {
     return this.store.addSpesificationProduct(product);
   }
 
-  async editSpecificationProduct(product: SpecificationProduct): Promise<void> {
+  async editSpecificationProduct(
+    product: ISpecificationProduct
+  ): Promise<void> {
     return this.store.editSpesificationProduct(product);
   }
 
   async deleteSpecificationProduct(
-    product: SpecificationProduct
+    product: ISpecificationProduct
   ): Promise<void> {
     return this.store.deleteSpesificationProduct(product);
   }

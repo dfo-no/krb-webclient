@@ -5,12 +5,12 @@ import { IBank } from '../../models/IBank';
 import { ICode } from '../../models/ICode';
 import { ICodelist } from '../../models/ICodelist';
 import { INeed } from '../../models/INeed';
+import { IProduct } from '../../models/IProduct';
+import { IRequirement } from '../../models/IRequirement';
+import { ITag } from '../../models/ITag';
 import { IVariant } from '../../models/IVariant';
 import { Parentable } from '../../models/Parentable';
-import { IProduct } from '../../models/Product';
 import { QuestionType } from '../../models/QuestionType';
-import { IRequirement } from '../../models/Requirement';
-import { Tag } from '../../models/Tag';
 
 export default class StoreService {
   private static bank: IBank;
@@ -72,24 +72,24 @@ export default class StoreService {
     });
   }
 
-  public addTag(item: Parentable<Tag>): void {
+  public addTag(item: Parentable<ITag>): void {
     StoreService.bank = produce(StoreService.bank, (draft) => {
       draft.tags.push(item);
     });
   }
 
-  public editTag(item: Parentable<Tag>): void {
+  public editTag(item: Parentable<ITag>): void {
     const index = StoreService.bank.tags.findIndex(
-      (tag: Parentable<Tag>) => tag.id === item.id
+      (tag: Parentable<ITag>) => tag.id === item.id
     );
     StoreService.bank = produce(StoreService.bank, (draft) => {
       draft.tags[index] = item;
     });
   }
 
-  public deleteTag(item: Parentable<Tag>): void {
+  public deleteTag(item: Parentable<ITag>): void {
     const index = StoreService.bank.tags.findIndex(
-      (tag: Parentable<Tag>) => tag.id === item.id
+      (tag: Parentable<ITag>) => tag.id === item.id
     );
     StoreService.bank = produce(StoreService.bank, (draft) => {
       draft.tags.splice(index, 1);

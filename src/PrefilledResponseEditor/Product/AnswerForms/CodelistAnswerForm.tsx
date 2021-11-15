@@ -9,10 +9,10 @@ import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import ErrorSummary from '../../../Form/ErrorSummary';
 import { ICodelistQuestion } from '../../../models/ICodelistQuestion';
+import { IPrefilledResponseProduct } from '../../../models/IPrefilledResponseProduct';
+import { IRequirement } from '../../../models/IRequirement';
 import { IRequirementAnswer } from '../../../models/IRequirementAnswer';
-import { PrefilledResponseProduct } from '../../../models/PrefilledResponseProduct';
 import QuestionEnum from '../../../models/QuestionEnum';
-import { IRequirement } from '../../../models/Requirement';
 import { useAppDispatch, useAppSelector } from '../../../store/hooks';
 import {
   addProductAnswer,
@@ -21,7 +21,7 @@ import {
 
 interface IProps {
   answer: IRequirementAnswer;
-  product: PrefilledResponseProduct;
+  product: IPrefilledResponseProduct;
 }
 export const ResponseCodelistSchema = Joi.object().keys({
   id: Joi.string().required(),

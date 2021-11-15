@@ -1,5 +1,5 @@
 import Joi from 'joi';
-import { IAnswerBase, IConfigBase, IQuestionBase } from './Question';
+import { IAnswerBase, IConfigBase, IQuestionBase } from './IQuestionBase';
 import QuestionEnum from './QuestionEnum';
 
 export interface ITimeQuestion extends IQuestionBase<ITimeAnswer, ITimeConfig> {

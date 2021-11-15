@@ -2,7 +2,7 @@ import Joi from 'joi';
 import { IBaseModel } from './IBaseModel';
 import ModelType from './ModelType';
 
-export interface Tag extends IBaseModel {
+export interface ITag extends IBaseModel {
   title: string;
   id: string;
 }

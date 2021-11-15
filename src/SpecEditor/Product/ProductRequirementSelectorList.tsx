@@ -6,15 +6,15 @@ import { BsArrowReturnRight } from 'react-icons/bs';
 import Utils from '../../common/Utils';
 import { IBank } from '../../models/IBank';
 import { INeed } from '../../models/INeed';
+import { IRequirement } from '../../models/IRequirement';
+import { ISpecificationProduct } from '../../models/ISpecificationProduct';
 import { Nestable } from '../../models/Nestable';
-import { IRequirement } from '../../models/Requirement';
-import { SpecificationProduct } from '../../models/SpecificationProduct';
 import styles from './ProductSpecEditor.module.scss';
 import ProductSpesificationRequirement from './ProductSpecificationRequirement';
 
 interface InputProps {
   selectedBank: IBank;
-  product: SpecificationProduct;
+  product: ISpecificationProduct;
 }
 
 export default function ProductRequirementSelectorList({

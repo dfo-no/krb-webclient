@@ -1,7 +1,7 @@
 import Joi from 'joi';
 import { IBaseModel } from './IBaseModel';
+import { IRequirement } from './IRequirement';
 import ModelType from './ModelType';
-import { IRequirement } from './Requirement';
 
 export interface INeed extends IBaseModel {
   title: string;

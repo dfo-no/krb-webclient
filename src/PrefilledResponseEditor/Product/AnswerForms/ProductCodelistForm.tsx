@@ -12,12 +12,12 @@ import {
   CodelistQuestionAnswerSchema,
   ICodelistQuestion
 } from '../../../models/ICodelistQuestion';
+import { IPrefilledResponseProduct } from '../../../models/IPrefilledResponseProduct';
+import { IRequirement } from '../../../models/IRequirement';
 import {
   IRequirementAnswer,
   RequirementAnswerSchema
 } from '../../../models/IRequirementAnswer';
-import { PrefilledResponseProduct } from '../../../models/PrefilledResponseProduct';
-import { IRequirement } from '../../../models/Requirement';
 import { useAppDispatch, useAppSelector } from '../../../store/hooks';
 import {
   addProductAnswer,
@@ -26,7 +26,7 @@ import {
 
 interface IProps {
   answer: IRequirementAnswer;
-  product: PrefilledResponseProduct;
+  product: IPrefilledResponseProduct;
 }
 export const ResponseCodelistSchema = RequirementAnswerSchema.keys({
   question: CodelistQuestionAnswerSchema.keys({

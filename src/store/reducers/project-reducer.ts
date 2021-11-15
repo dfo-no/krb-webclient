@@ -6,12 +6,12 @@ import { ICode } from '../../models/ICode';
 import { ICodelist } from '../../models/ICodelist';
 import { INeed } from '../../models/INeed';
 import { InheritedBank } from '../../models/InheritedBank';
+import { IProduct } from '../../models/IProduct';
 import { IPublication } from '../../models/IPublication';
+import { IRequirement } from '../../models/IRequirement';
+import { ITag } from '../../models/ITag';
 import ModelType from '../../models/ModelType';
 import { Parentable } from '../../models/Parentable';
-import { IProduct } from '../../models/Product';
-import { IRequirement } from '../../models/Requirement';
-import { Tag } from '../../models/Tag';
 
 interface ProjectState {
   list: IBank[];
@@ -398,16 +398,16 @@ const projectSlice = createSlice({
     updateSelectedVersion(state, { payload }: PayloadAction<number>) {
       state.project.version = payload;
     },
-    addTag(state, { payload }: PayloadAction<Parentable<Tag>>) {
+    addTag(state, { payload }: PayloadAction<Parentable<ITag>>) {
       state.project.tags.push(payload);
     },
-    editTag(state, { payload }: PayloadAction<Parentable<Tag>>) {
+    editTag(state, { payload }: PayloadAction<Parentable<ITag>>) {
       const index = state.project.tags.findIndex(
         (element) => payload.id === element.id
       );
       state.project.tags[index] = payload;
     },
-    removeTag(state, { payload }: PayloadAction<Parentable<Tag>>) {
+    removeTag(state, { payload }: PayloadAction<Parentable<ITag>>) {
       const index = state.project.tags.findIndex(
         (element) => payload.id === element.id
       );
@@ -418,7 +418,7 @@ const projectSlice = createSlice({
     addInheritedBank(state, { payload }: PayloadAction<InheritedBank>) {
       state.project.inheritedBanks.push(payload);
     },
-    setTags(state, { payload }: PayloadAction<Parentable<Tag>[]>) {
+    setTags(state, { payload }: PayloadAction<Parentable<ITag>[]>) {
       state.project.tags = payload;
     }
   },

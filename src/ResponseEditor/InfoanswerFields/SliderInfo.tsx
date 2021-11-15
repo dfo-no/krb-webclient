@@ -1,8 +1,8 @@
 import React from 'react';
 import Container from 'react-bootstrap/Container';
+import { IRequirement } from '../../models/IRequirement';
 import { IRequirementAnswer } from '../../models/IRequirementAnswer';
 import { ISliderQuestion } from '../../models/ISliderQuestion';
-import { IRequirement } from '../../models/Requirement';
 
 interface IProps {
   answer: IRequirementAnswer;

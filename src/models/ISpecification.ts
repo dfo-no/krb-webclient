@@ -1,11 +1,11 @@
 import { IBank } from './IBank';
 import { IRequirementAnswer } from './IRequirementAnswer';
-import { SpecificationProduct } from './SpecificationProduct';
+import { ISpecificationProduct } from './ISpecificationProduct';
 
-export interface Specification {
+export interface ISpecification {
   bank: IBank;
   title: string;
-  products: SpecificationProduct[];
+  products: ISpecificationProduct[];
   requirements: string[];
   requirementAnswers: IRequirementAnswer[];
 }

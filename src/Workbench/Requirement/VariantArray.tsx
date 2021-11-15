@@ -15,10 +15,10 @@ import { BsTrashFill } from 'react-icons/bs';
 import { v4 as uuidv4 } from 'uuid';
 import Utils from '../../common/Utils';
 import { IBank } from '../../models/IBank';
+import { IProduct } from '../../models/IProduct';
+import { IRequirement } from '../../models/IRequirement';
 import { IVariant } from '../../models/IVariant';
 import { Nestable } from '../../models/Nestable';
-import { IProduct } from '../../models/Product';
-import { IRequirement } from '../../models/Requirement';
 import QuestionArray from './QuestionArray';
 import styles from './Variant.module.scss';
 

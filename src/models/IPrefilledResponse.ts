@@ -1,15 +1,15 @@
 import Joi from 'joi';
 import { BaseBankSchema, IBank } from './IBank';
+import { IPrefilledResponseProduct } from './IPrefilledResponseProduct';
 import {
   IRequirementAnswer,
   RequirementAnswerSchema
 } from './IRequirementAnswer';
-import { PrefilledResponseProduct } from './PrefilledResponseProduct';
 
-export interface PrefilledResponse {
+export interface IPrefilledResponse {
   bank: IBank;
   supplier: string;
-  products: PrefilledResponseProduct[];
+  products: IPrefilledResponseProduct[];
   // answeredVariants: string[];
   requirementAnswers: IRequirementAnswer[];
 }

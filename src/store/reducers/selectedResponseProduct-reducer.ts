@@ -1,14 +1,14 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { IResponseProduct } from '../../models/IResponseProduct';
+import { ISpecificationProduct } from '../../models/ISpecificationProduct';
 import ModelType from '../../models/ModelType';
-import { ResponseProduct } from '../../models/ResponseProduct';
-import { SpecificationProduct } from '../../models/SpecificationProduct';
 
 interface SelectedResponseProductState {
-  selectedResponseProduct: ResponseProduct;
-  selectedResponseSpecificationProduct: SpecificationProduct;
+  selectedResponseProduct: IResponseProduct;
+  selectedResponseSpecificationProduct: ISpecificationProduct;
 }
 
-const initialResponseProduct: ResponseProduct = {
+const initialResponseProduct: IResponseProduct = {
   id: '',
   title: '',
   description: '',
@@ -33,7 +33,7 @@ const initialResponseProduct: ResponseProduct = {
     requirementAnswers: []
   }
 };
-const initialResponseSpecificationProduct: SpecificationProduct = {
+const initialResponseSpecificationProduct: ISpecificationProduct = {
   id: '',
   title: ' ',
   description: '',
@@ -61,12 +61,12 @@ const selectedResponseProductState = createSlice({
   name: 'selectedResponseProduct',
   initialState,
   reducers: {
-    selectResponseProduct(state, { payload }: PayloadAction<ResponseProduct>) {
+    selectResponseProduct(state, { payload }: PayloadAction<IResponseProduct>) {
       state.selectedResponseProduct = payload;
     },
     selectResponseSpecificationProduct(
       state,
-      { payload }: PayloadAction<SpecificationProduct>
+      { payload }: PayloadAction<ISpecificationProduct>
     ) {
       state.selectedResponseSpecificationProduct = payload;
     }

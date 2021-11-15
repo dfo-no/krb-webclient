@@ -1,7 +1,7 @@
 import React from 'react';
 import Container from 'react-bootstrap/Container';
+import { IRequirement } from '../../models/IRequirement';
 import QuestionEnum from '../../models/QuestionEnum';
-import { IRequirement } from '../../models/Requirement';
 import CodelistInfoAnswer from '../InfoForms/CodelistInfoAnswer';
 import TextInfoAnswer from '../InfoForms/ITextInfoAnswer';
 import SliderInfoAnswer from '../InfoForms/SliderInfoAnswer';

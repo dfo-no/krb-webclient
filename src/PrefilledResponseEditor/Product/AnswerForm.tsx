@@ -18,13 +18,13 @@ import {
   IPeriodDateAnswer,
   IPeriodDateQuestion
 } from '../../models/IPeriodDateQuestion';
+import { IPrefilledResponseProduct } from '../../models/IPrefilledResponseProduct';
 import { IRequirementAnswer } from '../../models/IRequirementAnswer';
 import { ISliderAnswer, ISliderQuestion } from '../../models/ISliderQuestion';
 import { ITextAnswer, ITextQuestion } from '../../models/ITextQuestion';
 import { ITimeAnswer, ITimeQuestion } from '../../models/ITimeQuestion';
 import { Levelable } from '../../models/Levelable';
 import ModelType from '../../models/ModelType';
-import { PrefilledResponseProduct } from '../../models/PrefilledResponseProduct';
 import QuestionEnum from '../../models/QuestionEnum';
 import { QuestionType } from '../../models/QuestionType';
 import ProductCodelistForm from './AnswerForms/ProductCodelistForm';
@@ -34,7 +34,7 @@ import ProductTextForm from './AnswerForms/ProductTextForm';
 
 interface IProps {
   element: Levelable<INeed>;
-  product: PrefilledResponseProduct;
+  product: IPrefilledResponseProduct;
 }
 
 export default function AnswerForm({

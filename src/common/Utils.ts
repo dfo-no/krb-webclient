@@ -2,12 +2,12 @@ import { IBank } from '../models/IBank';
 import { IBaseModel } from '../models/IBaseModel';
 import { INeed } from '../models/INeed';
 import { InheritedBank } from '../models/InheritedBank';
+import { IProduct } from '../models/IProduct';
+import { IRequirement } from '../models/IRequirement';
 import { IVariant } from '../models/IVariant';
 import { Levelable } from '../models/Levelable';
 import { Nestable } from '../models/Nestable';
 import { Parentable } from '../models/Parentable';
-import { IProduct } from '../models/Product';
-import { IRequirement } from '../models/Requirement';
 
 class Utils {
   static ensure<T>(

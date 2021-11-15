@@ -12,9 +12,9 @@ import { Link } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
 import Utils from '../../common/Utils';
 import ErrorSummary from '../../Form/ErrorSummary';
+import { IPrefilledResponseProduct } from '../../models/IPrefilledResponseProduct';
+import { IProduct } from '../../models/IProduct';
 import { Parentable } from '../../models/Parentable';
-import { PrefilledResponseProduct } from '../../models/PrefilledResponseProduct';
-import { IProduct } from '../../models/Product';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import {
   addProduct,
@@ -72,7 +72,7 @@ export default function ProductSpecList(): React.ReactElement {
         (product: IProduct) => product.id === post.product
       )
     );
-    const newProduct: PrefilledResponseProduct = {
+    const newProduct: IPrefilledResponseProduct = {
       id: uuidv4(),
       originProduct: selectedProduct,
       title: selectedProduct.title,
@@ -87,8 +87,8 @@ export default function ProductSpecList(): React.ReactElement {
     dispatch(removeProduct(productId));
   };
 
-  const productList = (productArray: PrefilledResponseProduct[]) => {
-    const items = productArray.map((product: PrefilledResponseProduct) => {
+  const productList = (productArray: IPrefilledResponseProduct[]) => {
+    const items = productArray.map((product: IPrefilledResponseProduct) => {
       return (
         <ListGroup.Item key={product.id} className="d-flex align-items-center">
           <div className="">

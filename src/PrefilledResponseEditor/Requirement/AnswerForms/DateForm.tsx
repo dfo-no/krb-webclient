@@ -13,11 +13,11 @@ import {
   IPeriodDateQuestion,
   PeriodDateQuestionAnswerSchema
 } from '../../../models/IPeriodDateQuestion';
+import { IRequirement } from '../../../models/IRequirement';
 import {
   IRequirementAnswer,
   RequirementAnswerSchema
 } from '../../../models/IRequirementAnswer';
-import { IRequirement } from '../../../models/Requirement';
 import { useAppDispatch, useAppSelector } from '../../../store/hooks';
 import {
   addAnswer,

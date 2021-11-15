@@ -12,7 +12,7 @@ import {
 import { BsTrashFill } from 'react-icons/bs';
 import ControlledDate from '../../Form/ControlledDate';
 import { IPeriodDateQuestion } from '../../models/IPeriodDateQuestion';
-import { IRequirement } from '../../models/Requirement';
+import { IRequirement } from '../../models/IRequirement';
 
 type IProps = {
   control: Control<IRequirement>;

@@ -4,8 +4,8 @@ import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 import Utils from '../../common/Utils';
-import { IRequirement } from '../../models/Requirement';
-import { SpecificationProduct } from '../../models/SpecificationProduct';
+import { IRequirement } from '../../models/IRequirement';
+import { ISpecificationProduct } from '../../models/ISpecificationProduct';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import {
   addProductRequirement,
@@ -31,7 +31,7 @@ export default function ProductSpesificationRequirement({
 
   const specProduct = Utils.ensure(
     spec.products.find(
-      (product: SpecificationProduct) => product.id === productId
+      (product: ISpecificationProduct) => product.id === productId
     )
   );
 
