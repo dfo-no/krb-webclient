@@ -12,7 +12,7 @@ import {
 import { useTranslation } from 'react-i18next';
 import { BsTrashFill } from 'react-icons/bs';
 import { Bank } from '../../models/Bank';
-import { Codelist } from '../../models/Codelist';
+import { ICodelist } from '../../models/ICodelist';
 import { ICodelistQuestion } from '../../models/ICodelistQuestion';
 import { Requirement } from '../../models/Requirement';
 import { useAppSelector } from '../../store/hooks';
@@ -39,7 +39,7 @@ export default function CodeListForm({
   const { project } = useAppSelector((state) => state.project);
   const { t } = useTranslation();
   const codelistOptions = () => {
-    return project.codelist.map((codelist: Codelist) => {
+    return project.codelist.map((codelist: ICodelist) => {
       return (
         <option value={codelist.id} key={codelist.id}>
           {codelist.title}

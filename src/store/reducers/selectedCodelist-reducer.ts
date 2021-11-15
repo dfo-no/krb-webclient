@@ -1,10 +1,10 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { Code } from '../../models/Code';
-import { Codelist } from '../../models/Codelist';
+import { ICode } from '../../models/ICode';
+import { ICodelist } from '../../models/ICodelist';
 import ModelType from '../../models/ModelType';
 
 interface SelectedCodeListState {
-  codelist: Codelist;
+  codelist: ICodelist;
 }
 
 const initialState: SelectedCodeListState = {
@@ -23,13 +23,13 @@ const selectedCodeListState = createSlice({
   name: 'selectedCodeList',
   initialState,
   reducers: {
-    selectCodeList(state, { payload }: PayloadAction<Codelist>) {
+    selectCodeList(state, { payload }: PayloadAction<ICodelist>) {
       state.codelist = payload;
     },
-    editCodelist(state, { payload }: PayloadAction<Codelist>) {
+    editCodelist(state, { payload }: PayloadAction<ICodelist>) {
       state.codelist = payload;
     },
-    editCodeInSelectedCodelist(state, { payload }: PayloadAction<Code>) {
+    editCodeInSelectedCodelist(state, { payload }: PayloadAction<ICode>) {
       const codeIndex = state.codelist.codes.findIndex(
         (elem) => elem.id === payload.id
       );
@@ -37,7 +37,7 @@ const selectedCodeListState = createSlice({
         state.codelist.codes[codeIndex] = payload;
       }
     },
-    removeCodeInSelectedCodelist(state, { payload }: PayloadAction<Code>) {
+    removeCodeInSelectedCodelist(state, { payload }: PayloadAction<ICode>) {
       const codeIndex = state.codelist.codes.findIndex(
         (elem) => elem.id === payload.id
       );
@@ -45,10 +45,10 @@ const selectedCodeListState = createSlice({
         state.codelist.codes.splice(codeIndex, 1);
       }
     },
-    addCodeToSelected(state, { payload }: PayloadAction<Code>) {
+    addCodeToSelected(state, { payload }: PayloadAction<ICode>) {
       state.codelist.codes.push(payload);
     },
-    setCodesToSelected(state, { payload }: PayloadAction<Code[]>) {
+    setCodesToSelected(state, { payload }: PayloadAction<ICode[]>) {
       state.codelist.codes = payload;
     }
   }

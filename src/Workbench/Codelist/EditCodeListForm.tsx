@@ -11,11 +11,11 @@ import { v4 as uuidv4 } from 'uuid';
 import AlertModal from '../../common/AlertModal';
 import ErrorSummary from '../../Form/ErrorSummary';
 import InputRow from '../../Form/InputRow';
-import { Codelist, CodelistSchema } from '../../models/Codelist';
 import { IAlert } from '../../models/IAlert';
+import { CodelistSchema, ICodelist } from '../../models/ICodelist';
 import { ICodelistQuestion } from '../../models/ICodelistQuestion';
+import { INeed } from '../../models/INeed';
 import { IVariant } from '../../models/IVariant';
-import { Need } from '../../models/Need';
 import { IAnswerBase, IConfigBase, IQuestionBase } from '../../models/Question';
 import QuestionEnum from '../../models/QuestionEnum';
 import { Requirement } from '../../models/Requirement';
@@ -45,12 +45,12 @@ function EditCodeListForm(): React.ReactElement {
     handleSubmit,
     reset,
     formState: { errors }
-  } = useForm<Codelist>({
+  } = useForm<ICodelist>({
     resolver: joiResolver(CodelistSchema),
     defaultValues: codelist
   });
 
-  const onEditCodeSubmit = (post: Codelist) => {
+  const onEditCodeSubmit = (post: ICodelist) => {
     const alert: IAlert = {
       id: uuidv4(),
       style: 'success',
@@ -73,7 +73,7 @@ function EditCodeListForm(): React.ReactElement {
 
   const checkCodelistConnection = () => {
     let used = false;
-    project.needs.forEach((need: Need) => {
+    project.needs.forEach((need: INeed) => {
       need.requirements.forEach((requirement: Requirement) => {
         requirement.variants.forEach((variant: IVariant) => {
           variant.questions.forEach(

@@ -9,7 +9,7 @@ import { v4 as uuidv4 } from 'uuid';
 import ErrorSummary from '../../Form/ErrorSummary';
 import InputRow from '../../Form/InputRow';
 import { IAlert } from '../../models/IAlert';
-import { Need, PostNeedSchema } from '../../models/Need';
+import { INeed, PostNeedSchema } from '../../models/INeed';
 import { Parentable } from '../../models/Parentable';
 import Nexus from '../../Nexus/Nexus';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
@@ -27,7 +27,7 @@ function NewNeedForm(): React.ReactElement {
   const { t } = useTranslation();
   const nexus = Nexus.getInstance();
 
-  const defaultValues: Parentable<Need> =
+  const defaultValues: Parentable<INeed> =
     nexus.needService.generateDefaultNeedValues(project.id);
 
   const {
@@ -35,12 +35,12 @@ function NewNeedForm(): React.ReactElement {
     handleSubmit,
     reset,
     formState: { errors }
-  } = useForm<Parentable<Need>>({
+  } = useForm<Parentable<INeed>>({
     resolver: joiResolver(PostNeedSchema),
     defaultValues
   });
 
-  const onSubmit = (post: Parentable<Need>) => {
+  const onSubmit = (post: Parentable<INeed>) => {
     const need = nexus.needService.createNeedWithId(post);
     const alert: IAlert = {
       id: uuidv4(),

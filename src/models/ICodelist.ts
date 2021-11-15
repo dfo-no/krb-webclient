@@ -1,28 +1,25 @@
 import Joi from 'joi';
 import { IBaseModel } from './IBaseModel';
+import { BaseCodeSchema, ICode } from './ICode';
 import ModelType from './ModelType';
 
-export interface Code extends IBaseModel {
+export interface ICodelist extends IBaseModel {
   id: string;
   title: string;
   description: string;
+  codes: ICode[];
 }
 
-export const BaseCodeSchema = Joi.object().keys({
+export const CodelistSchema = Joi.object().keys({
   id: Joi.string().length(36).required(),
   title: Joi.string().required(),
   description: Joi.string().allow(null, '').required(),
-  type: Joi.string().equal(ModelType.code).required(),
-  parent: Joi.alternatives([Joi.string().length(36), Joi.string().valid('')]),
-  children: Joi.array(),
+  codes: Joi.array().items(BaseCodeSchema).required(),
+  type: Joi.string().equal(ModelType.codelist).required(),
   sourceOriginal: Joi.string().required(),
   sourceRel: Joi.string().allow(null).required()
 });
 
-export const PostCodeSchema = BaseCodeSchema.keys({
+export const PostCodelistSchema = CodelistSchema.keys({
   id: Joi.string().equal('').required()
-});
-
-export const EditCodeSchema = BaseCodeSchema.keys({
-  id: Joi.string().length(36).required()
 });

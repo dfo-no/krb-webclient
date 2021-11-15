@@ -12,6 +12,7 @@ import {
   IFileUploadAnswer,
   IFileUploadQuestion
 } from '../../models/IFileUploadQuestion';
+import { INeed } from '../../models/INeed';
 import {
   IPeriodDateAnswer,
   IPeriodDateQuestion
@@ -21,7 +22,6 @@ import { ISliderAnswer, ISliderQuestion } from '../../models/ISliderQuestion';
 import { ITextAnswer, ITextQuestion } from '../../models/ITextQuestion';
 import { Levelable } from '../../models/Levelable';
 import ModelType from '../../models/ModelType';
-import { Need } from '../../models/Need';
 import QuestionEnum from '../../models/QuestionEnum';
 import { QuestionType } from '../../models/QuestionType';
 import CodelistForm from './AnswerForms/CodelistForm';
@@ -30,7 +30,7 @@ import SliderForm from './AnswerForms/SliderForm';
 import TextForm from './AnswerForms/TextForm';
 
 interface IProps {
-  element: Levelable<Need>;
+  element: Levelable<INeed>;
 }
 
 export default function AnswerForm({ element }: IProps): React.ReactElement {

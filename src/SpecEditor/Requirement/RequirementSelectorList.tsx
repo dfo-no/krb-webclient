@@ -4,7 +4,7 @@ import ListGroup from 'react-bootstrap/ListGroup';
 import Row from 'react-bootstrap/Row';
 import { BsArrowReturnRight } from 'react-icons/bs';
 import Utils from '../../common/Utils';
-import { Need } from '../../models/Need';
+import { INeed } from '../../models/INeed';
 import { Nestable } from '../../models/Nestable';
 import { Requirement } from '../../models/Requirement';
 import { useAppSelector } from '../../store/hooks';
@@ -12,7 +12,7 @@ import styles from './RequirementSelectorList.module.scss';
 import SpesificationRequirement from './SpesificationRequirement';
 
 interface InputProps {
-  needList: Nestable<Need>[];
+  needList: Nestable<INeed>[];
 }
 
 export default function RequirementSelectorList({
@@ -31,7 +31,7 @@ export default function RequirementSelectorList({
   };
 
   function checkIfNeedHasChildWithRequirements(
-    listofneed: Nestable<Need>[]
+    listofneed: Nestable<INeed>[]
   ): boolean {
     let foundMatch = false;
     listofneed.forEach((element) => {
@@ -50,7 +50,7 @@ export default function RequirementSelectorList({
     return foundMatch;
   }
 
-  function checkNeed(element: Nestable<Need>): boolean {
+  function checkNeed(element: Nestable<INeed>): boolean {
     let found = false;
     if (element.requirements.length > 0) {
       element.requirements.forEach((requirement) => {
@@ -80,7 +80,7 @@ export default function RequirementSelectorList({
       return null;
     });
   };
-  const childrenHierarchy = (listofneed: Nestable<Need>[], level: number) => {
+  const childrenHierarchy = (listofneed: Nestable<INeed>[], level: number) => {
     let n = level;
     let children: JSX.Element[];
     const cssClass = `level${n}`;
@@ -106,7 +106,7 @@ export default function RequirementSelectorList({
     });
   };
 
-  const needHierarchy = (needsList: Nestable<Need>[]) => {
+  const needHierarchy = (needsList: Nestable<INeed>[]) => {
     const newList = Utils.unflatten(needsList)[0];
     let children: JSX.Element[];
     return newList.map((element) => {

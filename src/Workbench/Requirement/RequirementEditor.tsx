@@ -11,7 +11,7 @@ import { v4 as uuidv4 } from 'uuid';
 import Utils from '../../common/Utils';
 import ErrorSummary from '../../Form/ErrorSummary';
 import { IAlert } from '../../models/IAlert';
-import { Need } from '../../models/Need';
+import { INeed } from '../../models/INeed';
 import { BaseRequirementSchema, Requirement } from '../../models/Requirement';
 import { Tag } from '../../models/Tag';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
@@ -60,7 +60,7 @@ function RequirementEditor(): React.ReactElement {
     });
   };
 
-  const needOptions = (needList: Need[]) => {
+  const needOptions = (needList: INeed[]) => {
     return needList.map((element) => {
       return (
         <option key={element.id} value={element.id}>

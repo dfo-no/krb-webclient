@@ -4,14 +4,14 @@ import ListGroup from 'react-bootstrap/ListGroup';
 import Row from 'react-bootstrap/Row';
 import { BsArrowReturnRight } from 'react-icons/bs';
 import Utils from '../../common/Utils';
+import { INeed } from '../../models/INeed';
 import { IRequirementAnswer } from '../../models/IRequirementAnswer';
-import { Need } from '../../models/Need';
 import { Nestable } from '../../models/Nestable';
 import styles from '../Requirement/RequirementView.module.scss';
 import RequirementAnswers from './RequirementAnswers';
 
 interface IProps {
-  needs: Nestable<Need>[];
+  needs: Nestable<INeed>[];
   searchList: string[];
   specificationSearchList: IRequirementAnswer[];
   responseSearchList: IRequirementAnswer[];
@@ -24,7 +24,7 @@ export default function NeedHierarchy({
   responseSearchList
 }: IProps): React.ReactElement {
   const needChildrenHierarchy = (
-    listofneed: Nestable<Need>[],
+    listofneed: Nestable<INeed>[],
     level: number
   ) => {
     let n = level;

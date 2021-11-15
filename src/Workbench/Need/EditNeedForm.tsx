@@ -11,7 +11,7 @@ import Utils from '../../common/Utils';
 import ErrorSummary from '../../Form/ErrorSummary';
 import InputRow from '../../Form/InputRow';
 import { IAlert } from '../../models/IAlert';
-import { Need, PutNeedSchema } from '../../models/Need';
+import { INeed, PutNeedSchema } from '../../models/INeed';
 import { Nestable } from '../../models/Nestable';
 import { Parentable } from '../../models/Parentable';
 import { AccordionContext } from '../../NestableHierarchy/AccordionContext';
@@ -24,7 +24,7 @@ import {
 } from '../../store/reducers/project-reducer';
 
 interface IProps {
-  element: Need;
+  element: INeed;
 }
 
 function EditNeedForm({ element }: IProps): React.ReactElement {
@@ -39,7 +39,7 @@ function EditNeedForm({ element }: IProps): React.ReactElement {
     control,
     reset,
     formState: { errors }
-  } = useForm<Parentable<Need>>({
+  } = useForm<Parentable<INeed>>({
     defaultValues: element,
     resolver: joiResolver(PutNeedSchema)
   });
@@ -52,7 +52,7 @@ function EditNeedForm({ element }: IProps): React.ReactElement {
 
   const [modalShow, setModalShow] = useState(false);
 
-  const onSubmit = (post: Nestable<Need>) => {
+  const onSubmit = (post: Nestable<INeed>) => {
     const toParentable = { ...post };
     if (toParentable.children) {
       delete toParentable.children;
@@ -62,14 +62,14 @@ function EditNeedForm({ element }: IProps): React.ReactElement {
       style: 'success',
       text: 'Successfully edited need'
     };
-    dispatch(editNeed(toParentable as Parentable<Need>));
+    dispatch(editNeed(toParentable as Parentable<INeed>));
     dispatch(putSelectedProjectThunk('dummy')).then(() => {
       dispatch(addAlert({ alert }));
       onOpenClose('');
     });
   };
 
-  const checkDeleteNeed = (need: Need) => {
+  const checkDeleteNeed = (need: INeed) => {
     if (
       element.requirements.length > 0 ||
       Utils.checkIfParent(project.needs, need.id)

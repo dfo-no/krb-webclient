@@ -5,7 +5,7 @@ import Row from 'react-bootstrap/Row';
 import { BsArrowReturnRight } from 'react-icons/bs';
 import Utils from '../../common/Utils';
 import { Bank } from '../../models/Bank';
-import { Need } from '../../models/Need';
+import { INeed } from '../../models/INeed';
 import { Nestable } from '../../models/Nestable';
 import { Requirement } from '../../models/Requirement';
 import { SpecificationProduct } from '../../models/SpecificationProduct';
@@ -37,7 +37,7 @@ export default function ProductRequirementSelectorList({
 
   const [associatedRequirements, associatedNeeds] =
     Utils.findAssociatedRequirements(product.originProduct, selectedBank);
-  const childrenHierarchy = (listOfNeed: Nestable<Need>[], level: number) => {
+  const childrenHierarchy = (listOfNeed: Nestable<INeed>[], level: number) => {
     let n = level;
     let children: JSX.Element[];
     const cssClass = `level${n}`;
@@ -68,7 +68,7 @@ export default function ProductRequirementSelectorList({
     });
   };
 
-  const needHierarchy = (needsList: Nestable<Need>[]) => {
+  const needHierarchy = (needsList: Nestable<INeed>[]) => {
     const newList = Utils.unflatten(needsList)[0];
     let children: JSX.Element[];
     let requirementsArray: Requirement[] = [];

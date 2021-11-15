@@ -31,7 +31,7 @@ export const PutPublicationSchemaArray = Joi.object().keys({
     .unique('date')
 });
 
-export interface Publication extends IBaseModel {
+export interface IPublication extends IBaseModel {
   id: string;
   comment: string;
   date: string | null;

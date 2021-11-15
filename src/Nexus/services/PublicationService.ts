@@ -1,9 +1,9 @@
 import { Bank } from '../../models/Bank';
-import { Publication } from '../../models/Publication';
+import { IPublication } from '../../models/IPublication';
 import DateService from './DateService';
 
 export default class PublicationService {
-  getNextVersion = (publications: Publication[]): number => {
+  getNextVersion = (publications: IPublication[]): number => {
     if (publications.length === 0) {
       return 1;
     }

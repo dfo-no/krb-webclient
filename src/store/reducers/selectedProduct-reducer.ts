@@ -1,9 +1,9 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { IProduct } from '../../models/IProduct';
 import ModelType from '../../models/ModelType';
-import { Product } from '../../models/Product';
 
 interface SelectedProductState {
-  product: Product;
+  product: IProduct;
 }
 
 const initialState: SelectedProductState = {
@@ -22,7 +22,7 @@ const selectedProductState = createSlice({
   name: 'selectedProduct',
   initialState,
   reducers: {
-    selectProduct(state, { payload }: PayloadAction<Product>) {
+    selectProduct(state, { payload }: PayloadAction<IProduct>) {
       state.product = payload;
     }
   }

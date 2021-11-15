@@ -13,6 +13,7 @@ import {
   IFileUploadAnswer,
   IFileUploadQuestion
 } from '../../models/IFileUploadQuestion';
+import { INeed } from '../../models/INeed';
 import {
   IPeriodDateAnswer,
   IPeriodDateQuestion
@@ -23,7 +24,6 @@ import { ITextAnswer, ITextQuestion } from '../../models/ITextQuestion';
 import { ITimeAnswer, ITimeQuestion } from '../../models/ITimeQuestion';
 import { Levelable } from '../../models/Levelable';
 import ModelType from '../../models/ModelType';
-import { Need } from '../../models/Need';
 import { PrefilledResponseProduct } from '../../models/PrefilledResponseProduct';
 import QuestionEnum from '../../models/QuestionEnum';
 import { QuestionType } from '../../models/QuestionType';
@@ -33,7 +33,7 @@ import ProductSliderForm from './AnswerForms/ProductSliderForm';
 import ProductTextForm from './AnswerForms/ProductTextForm';
 
 interface IProps {
-  element: Levelable<Need>;
+  element: Levelable<INeed>;
   product: PrefilledResponseProduct;
 }
 

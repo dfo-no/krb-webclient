@@ -1,6 +1,6 @@
 /* eslint-disable class-methods-use-this */
+import { INeed } from '../../models/INeed';
 import ModelType from '../../models/ModelType';
-import { Need } from '../../models/Need';
 import { Parentable } from '../../models/Parentable';
 import StoreService from './StoreService';
 import UuidService from './UuidService';
@@ -14,8 +14,8 @@ export default class NeedService {
     this.storeService = store;
   }
 
-  generateDefaultNeedValues = (projectId: string): Parentable<Need> => {
-    const defaultValues: Parentable<Need> = {
+  generateDefaultNeedValues = (projectId: string): Parentable<INeed> => {
+    const defaultValues: Parentable<INeed> = {
       id: '',
       title: '',
       description: '',
@@ -28,21 +28,21 @@ export default class NeedService {
     return defaultValues;
   };
 
-  createNeedWithId = (item: Parentable<Need>): Parentable<Need> => {
+  createNeedWithId = (item: Parentable<INeed>): Parentable<INeed> => {
     const tag = { ...item };
     tag.id = this.UuidService.generateId();
     return tag;
   };
 
-  async add(item: Parentable<Need>): Promise<void> {
+  async add(item: Parentable<INeed>): Promise<void> {
     return this.storeService.addNeed(item);
   }
 
-  async edit(item: Parentable<Need>): Promise<void> {
+  async edit(item: Parentable<INeed>): Promise<void> {
     return this.storeService.editNeed(item);
   }
 
-  async delete(item: Parentable<Need>): Promise<void> {
+  async delete(item: Parentable<INeed>): Promise<void> {
     return this.storeService.deleteNeed(item);
   }
 }

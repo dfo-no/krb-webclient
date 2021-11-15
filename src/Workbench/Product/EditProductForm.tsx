@@ -12,9 +12,9 @@ import Utils from '../../common/Utils';
 import ErrorSummary from '../../Form/ErrorSummary';
 import InputRow from '../../Form/InputRow';
 import { IAlert } from '../../models/IAlert';
+import { INeed } from '../../models/INeed';
+import { IProduct, PutProductSchema } from '../../models/IProduct';
 import { IVariant } from '../../models/IVariant';
-import { Need } from '../../models/Need';
-import { Product, PutProductSchema } from '../../models/Product';
 import { Requirement } from '../../models/Requirement';
 import { AccordionContext } from '../../NestableHierarchy/AccordionContext';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
@@ -27,7 +27,7 @@ import {
 import { selectProduct } from '../../store/reducers/selectedProduct-reducer';
 
 interface IProps {
-  element: Product;
+  element: IProduct;
 }
 
 export default function EditProductForm({
@@ -45,7 +45,7 @@ export default function EditProductForm({
     handleSubmit,
     reset,
     formState: { errors }
-  } = useForm<Product>({
+  } = useForm<IProduct>({
     resolver: joiResolver(PutProductSchema),
     defaultValues: element
   });
@@ -56,7 +56,7 @@ export default function EditProductForm({
     }
   }, [element, reset]);
 
-  const onSubmit = (post: Product) => {
+  const onSubmit = (post: IProduct) => {
     const newProduct = { ...element };
     newProduct.title = post.title;
     newProduct.description = post.description;
@@ -77,7 +77,7 @@ export default function EditProductForm({
 
   const checkProductConnection = () => {
     let used = false;
-    project.needs.forEach((need: Need) => {
+    project.needs.forEach((need: INeed) => {
       need.requirements.forEach((requirement: Requirement) => {
         requirement.variants.forEach((variant: IVariant) => {
           if (variant.products.includes(element.id)) {
@@ -89,7 +89,7 @@ export default function EditProductForm({
     return used;
   };
 
-  const deleteProduct = (product: Product) => {
+  const deleteProduct = (product: IProduct) => {
     if (
       Utils.checkIfParent(project.products, element.id) ||
       checkProductConnection()

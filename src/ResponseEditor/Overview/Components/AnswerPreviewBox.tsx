@@ -1,9 +1,9 @@
 import Card from '@mui/material/Card';
 import React from 'react';
 import Utils from '../../../common/Utils';
-import { Code } from '../../../models/Code';
-import { Codelist } from '../../../models/Codelist';
 import { ICheckboxQuestion } from '../../../models/ICheckboxQuestion';
+import { ICode } from '../../../models/ICode';
+import { ICodelist } from '../../../models/ICodelist';
 import { ICodelistQuestion } from '../../../models/ICodelistQuestion';
 import { IPeriodDateQuestion } from '../../../models/IPeriodDateQuestion';
 import { IRequirementAnswer } from '../../../models/IRequirementAnswer';
@@ -26,7 +26,7 @@ export default function AnswerPreviewBox({
     configCodelist: string
   ) => {
     const codelistIndex = response.spesification.bank.codelist.findIndex(
-      (list: Codelist) => list.id === configCodelist
+      (list: ICodelist) => list.id === configCodelist
     );
 
     const codelist = response.spesification.bank.codelist[codelistIndex];
@@ -34,7 +34,7 @@ export default function AnswerPreviewBox({
     if (Array.isArray(codes)) {
       codes.forEach((selectedCode: string) => {
         const codeIndex = codelist.codes.findIndex(
-          (element: Code) => element.id === selectedCode
+          (element: ICode) => element.id === selectedCode
         );
         const code = codelist.codes[codeIndex];
         usedCodes.push(code.title);

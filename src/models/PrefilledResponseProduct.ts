@@ -1,12 +1,12 @@
 import Joi from 'joi';
+import { IProduct } from './IProduct';
 import { IRequirementAnswer } from './IRequirementAnswer';
-import { Product } from './Product';
 
 export interface PrefilledResponseProduct {
   id: string;
   title: string;
   description: string;
-  originProduct: Product;
+  originProduct: IProduct;
   answeredVariants: string[];
   requirementAnswers: IRequirementAnswer[];
 }

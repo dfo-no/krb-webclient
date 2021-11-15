@@ -15,9 +15,9 @@ import { BsTrashFill } from 'react-icons/bs';
 import { v4 as uuidv4 } from 'uuid';
 import Utils from '../../common/Utils';
 import { Bank } from '../../models/Bank';
+import { IProduct } from '../../models/IProduct';
 import { IVariant } from '../../models/IVariant';
 import { Nestable } from '../../models/Nestable';
-import { Product } from '../../models/Product';
 import { Requirement } from '../../models/Requirement';
 import QuestionArray from './QuestionArray';
 import styles from './Variant.module.scss';
@@ -47,11 +47,11 @@ export default function VariantArray({
 
   const { t } = useTranslation();
 
-  const levelOptions = (productList: Nestable<Product>[]) => {
+  const levelOptions = (productList: Nestable<IProduct>[]) => {
     const newList = Utils.unflatten(productList)[0];
     const options: IOption[] = [];
 
-    const getAllItemsPerChildren = (item: Nestable<Product>, level = 0) => {
+    const getAllItemsPerChildren = (item: Nestable<IProduct>, level = 0) => {
       options.push({
         id: item.id,
         title: item.title,
@@ -59,7 +59,7 @@ export default function VariantArray({
       });
       if (item.children) {
         const iteration = level + 1;
-        item.children.forEach((i: Nestable<Product>) =>
+        item.children.forEach((i: Nestable<IProduct>) =>
           getAllItemsPerChildren(i, iteration)
         );
       }

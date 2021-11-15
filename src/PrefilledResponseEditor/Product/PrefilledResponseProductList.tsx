@@ -12,9 +12,9 @@ import { Link } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
 import Utils from '../../common/Utils';
 import ErrorSummary from '../../Form/ErrorSummary';
+import { IProduct } from '../../models/IProduct';
 import { Parentable } from '../../models/Parentable';
 import { PrefilledResponseProduct } from '../../models/PrefilledResponseProduct';
-import { Product } from '../../models/Product';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import {
   addProduct,
@@ -52,7 +52,7 @@ export default function ProductSpecList(): React.ReactElement {
 
   const bankSelected = normalizedList[id];
 
-  const levelOptions = (products: Parentable<Product>[]) => {
+  const levelOptions = (products: Parentable<IProduct>[]) => {
     const newList = Utils.parentable2Levelable(products);
     const options: IOption[] = [];
 
@@ -69,7 +69,7 @@ export default function ProductSpecList(): React.ReactElement {
   const addProductToPrefilledResponse = (post: IFormInput) => {
     const selectedProduct = Utils.ensure(
       bankSelected.products.find(
-        (product: Product) => product.id === post.product
+        (product: IProduct) => product.id === post.product
       )
     );
     const newProduct: PrefilledResponseProduct = {

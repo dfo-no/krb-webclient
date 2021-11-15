@@ -5,8 +5,8 @@ import Row from 'react-bootstrap/Row';
 import { BsArrowReturnRight, BsPencil } from 'react-icons/bs';
 import { Link } from 'react-router-dom';
 import Utils from '../../common/Utils';
+import { INeed } from '../../models/INeed';
 import { IVariant } from '../../models/IVariant';
-import { Need } from '../../models/Need';
 import { Nestable } from '../../models/Nestable';
 import { Requirement } from '../../models/Requirement';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
@@ -44,7 +44,7 @@ export default function ProductPreview(): React.ReactElement {
     return returnText;
   };
 
-  const requirementList = (requirements: Requirement[], need: Need) => {
+  const requirementList = (requirements: Requirement[], need: INeed) => {
     const reqList = requirements.map((element: Requirement) => {
       return (
         <ListGroup.Item key={element.id + 1}>
@@ -83,7 +83,7 @@ export default function ProductPreview(): React.ReactElement {
     );
   };
 
-  const childrenHierarchy = (listofneed: Nestable<Need>[], level: number) => {
+  const childrenHierarchy = (listofneed: Nestable<INeed>[], level: number) => {
     let n = level;
     let children: JSX.Element[];
     const cssClass = `level${n}`;
@@ -111,7 +111,7 @@ export default function ProductPreview(): React.ReactElement {
     });
   };
 
-  const needHierarchy = (needsList: Nestable<Need>[]) => {
+  const needHierarchy = (needsList: Nestable<INeed>[]) => {
     const newList = Utils.unflatten(needsList)[0];
     let children: JSX.Element[];
     let requirements: Requirement[] = [];

@@ -4,8 +4,8 @@ import React from 'react';
 import { I18nextProvider } from 'react-i18next';
 import { Provider } from 'react-redux';
 import i18n from '../../i18nForTests';
+import { INeed } from '../../models/INeed';
 import ModelType from '../../models/ModelType';
-import { Need } from '../../models/Need';
 import { Parentable } from '../../models/Parentable';
 import projectReducer from '../../store/reducers/project-reducer';
 import EditNeedForm from './EditNeedForm';
@@ -32,7 +32,7 @@ describe('EditNeedForm', () => {
       }
     });
 
-    const need: Parentable<Need> = {
+    const need: Parentable<INeed> = {
       id: '5f9dd5b0-0bd8-4e11-bf28-128b16d10dae',
       title: 'A title',
       description: 'A description',

@@ -12,8 +12,8 @@ import { Link, useRouteMatch } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
 import Utils from '../../common/Utils';
 import ErrorSummary from '../../Form/ErrorSummary';
+import { IProduct } from '../../models/IProduct';
 import { Nestable } from '../../models/Nestable';
-import { Product } from '../../models/Product';
 import { SpecificationProduct } from '../../models/SpecificationProduct';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { selectBank } from '../../store/reducers/selectedBank-reducer';
@@ -58,11 +58,11 @@ export default function ProductSpecList(): React.ReactElement {
 
   const bankSelected = normalizedList[id];
 
-  const levelOptions = (products: Nestable<Product>[]) => {
+  const levelOptions = (products: Nestable<IProduct>[]) => {
     const newList = Utils.unflatten(products)[0];
     const options: IOption[] = [];
 
-    const getAllItemsPerChildren = (item: Nestable<Product>, level = 0) => {
+    const getAllItemsPerChildren = (item: Nestable<IProduct>, level = 0) => {
       options.push({
         id: item.id,
         title: item.title,
@@ -70,7 +70,7 @@ export default function ProductSpecList(): React.ReactElement {
       });
       if (item.children) {
         const iteration = level + 1;
-        item.children.forEach((i: Nestable<Product>) =>
+        item.children.forEach((i: Nestable<IProduct>) =>
           getAllItemsPerChildren(i, iteration)
         );
       }
@@ -85,7 +85,7 @@ export default function ProductSpecList(): React.ReactElement {
   const addProductToSpecification = (post: FormInput) => {
     const selectedProduct = Utils.ensure(
       bankSelected.products.find(
-        (product: Product) => product.id === post.product
+        (product: IProduct) => product.id === post.product
       )
     );
     const newProduct: SpecificationProduct = {

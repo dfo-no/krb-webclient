@@ -2,8 +2,8 @@
 import Utils from '../../common/Utils';
 import { Bank } from '../../models/Bank';
 import { IBaseModel } from '../../models/IBaseModel';
+import { INeed } from '../../models/INeed';
 import { InheritedBank } from '../../models/InheritedBank';
-import { Need } from '../../models/Need';
 import { Parentable } from '../../models/Parentable';
 import StoreService from './StoreService';
 import UuidService from './UuidService';
@@ -43,10 +43,10 @@ export default class InheritanceService {
   }
 
   private inheritListwithSublist(
-    list: Parentable<Need>[],
+    list: Parentable<INeed>[],
     bankId: string
-  ): Parentable<Need>[] {
-    return list.map((element: Parentable<Need>) => {
+  ): Parentable<INeed>[] {
+    return list.map((element: Parentable<INeed>) => {
       const newElement = { ...element };
       const newRequirementList = this.inheritList(element.requirements, bankId);
 

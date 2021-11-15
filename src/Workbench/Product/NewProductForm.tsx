@@ -9,7 +9,7 @@ import { v4 as uuidv4 } from 'uuid';
 import ErrorSummary from '../../Form/ErrorSummary';
 import InputRow from '../../Form/InputRow';
 import { IAlert } from '../../models/IAlert';
-import { PostProductSchema, Product } from '../../models/Product';
+import { IProduct, PostProductSchema } from '../../models/IProduct';
 import Nexus from '../../Nexus/Nexus';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { addAlert } from '../../store/reducers/alert-reducer';
@@ -27,7 +27,7 @@ function NewProductForm(): React.ReactElement {
 
   const [show, setShow] = useState(false);
 
-  const product: Product = nexus.productService.generateDefaultProductValues(
+  const product: IProduct = nexus.productService.generateDefaultProductValues(
     project.id
   );
 
@@ -36,12 +36,12 @@ function NewProductForm(): React.ReactElement {
     handleSubmit,
     reset,
     formState: { errors }
-  } = useForm<Product>({
+  } = useForm<IProduct>({
     resolver: joiResolver(PostProductSchema),
     defaultValues: product
   });
 
-  const onSubmit = async (post: Product) => {
+  const onSubmit = async (post: IProduct) => {
     const newProduct = nexus.productService.createProductWithId(post);
     const alert: IAlert = {
       id: uuidv4(),

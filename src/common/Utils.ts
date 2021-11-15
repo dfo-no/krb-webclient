@@ -1,12 +1,12 @@
 import { Bank } from '../models/Bank';
 import { IBaseModel } from '../models/IBaseModel';
+import { INeed } from '../models/INeed';
 import { InheritedBank } from '../models/InheritedBank';
+import { IProduct } from '../models/IProduct';
 import { IVariant } from '../models/IVariant';
 import { Levelable } from '../models/Levelable';
-import { Need } from '../models/Need';
 import { Nestable } from '../models/Nestable';
 import { Parentable } from '../models/Parentable';
-import { Product } from '../models/Product';
 import { Requirement } from '../models/Requirement';
 
 class Utils {
@@ -169,13 +169,13 @@ class Utils {
   }
 
   static findNeedParents(
-    element: Nestable<Need>,
-    parents: Nestable<Need>[],
+    element: Nestable<INeed>,
+    parents: Nestable<INeed>[],
     selectedProject: Bank
-  ): Nestable<Need>[] {
+  ): Nestable<INeed>[] {
     const parentList = parents;
     const parentNeed = Utils.ensure(
-      selectedProject.needs.find((need: Need) => need.id === element.parent)
+      selectedProject.needs.find((need: INeed) => need.id === element.parent)
     );
     parentList.push(parentNeed);
     if (parentNeed.parent !== '') {
@@ -192,7 +192,7 @@ class Utils {
     if (parentId === '') return false;
     const parentProduct = Utils.ensure(
       selectedProject.products.find(
-        (product: Product) => product.id === parentId
+        (product: IProduct) => product.id === parentId
       )
     );
     if (products.includes(parentId)) {
@@ -211,11 +211,11 @@ class Utils {
   }
 
   static findAssociatedRequirements(
-    selectedProduct: Product,
+    selectedProduct: IProduct,
     selectedProject: Bank
-  ): [{ [key: string]: Requirement[] }, Nestable<Need>[], IVariant[]] {
+  ): [{ [key: string]: Requirement[] }, Nestable<INeed>[], IVariant[]] {
     const relevantRequirements: { [key: string]: Requirement[] } = {};
-    let needList: Nestable<Need>[] = [];
+    let needList: Nestable<INeed>[] = [];
     const variantList: IVariant[] = [];
     selectedProject.needs.forEach((element) => {
       element.requirements.forEach((req: Requirement) => {
@@ -287,7 +287,7 @@ class Utils {
   }
 
   static checkIfNeedHasChildWithRequirements(
-    listofneed: Nestable<Need>[],
+    listofneed: Nestable<INeed>[],
     requirementList: string[]
   ): boolean {
     let foundMatch = false;
@@ -310,7 +310,7 @@ class Utils {
   }
 
   static checkIfNeedHasSelectedRequirements(
-    element: Nestable<Need>,
+    element: Nestable<INeed>,
     requirementList: string[]
   ): boolean {
     let used = false;
@@ -355,10 +355,10 @@ class Utils {
   }
 
   static inheritListwithSublist(
-    list: Parentable<Need>[],
+    list: Parentable<INeed>[],
     bankId: string
-  ): Parentable<Need>[] {
-    return list.map((element: Parentable<Need>) => {
+  ): Parentable<INeed>[] {
+    return list.map((element: Parentable<INeed>) => {
       const newElement = { ...element };
       const newRequirementList = this.inheritList(element.requirements, bankId);
 

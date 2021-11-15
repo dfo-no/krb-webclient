@@ -1,12 +1,12 @@
 import Joi from 'joi';
-import { Codelist } from './Codelist';
 import { IBaseModel } from './IBaseModel';
+import { ICodelist } from './ICodelist';
+import { INeed } from './INeed';
 import { InheritedBank } from './InheritedBank';
+import { IProduct } from './IProduct';
+import { IPublication } from './IPublication';
 import ModelType from './ModelType';
-import { Need } from './Need';
 import { Parentable } from './Parentable';
-import { Product } from './Product';
-import { Publication } from './Publication';
 import { Tag } from './Tag';
 
 export const BaseBankSchema = Joi.object().keys({
@@ -43,12 +43,12 @@ export interface Bank extends IBaseModel {
   id: string;
   title: string;
   description: string;
-  needs: Parentable<Need>[];
-  codelist: Codelist[];
-  products: Product[];
+  needs: Parentable<INeed>[];
+  codelist: ICodelist[];
+  products: IProduct[];
   version: number;
   tags: Parentable<Tag>[];
-  publications: Publication[];
+  publications: IPublication[];
   publishedDate: string | null;
   projectId: string | null;
   inheritedBanks: InheritedBank[];

@@ -8,8 +8,8 @@ import { useTranslation } from 'react-i18next';
 import { v4 as uuidv4 } from 'uuid';
 import ErrorSummary from '../../Form/ErrorSummary';
 import InputRow from '../../Form/InputRow';
-import { Code, PostCodeSchema } from '../../models/Code';
 import { IAlert } from '../../models/IAlert';
+import { ICode, PostCodeSchema } from '../../models/ICode';
 import Nexus from '../../Nexus/Nexus';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { addAlert } from '../../store/reducers/alert-reducer';
@@ -28,7 +28,7 @@ function NewCodeForm(): React.ReactElement {
   const { t } = useTranslation();
   const nexus = Nexus.getInstance();
 
-  const defaultValues: Code = nexus.codelistService.generateDefaultCodeValues(
+  const defaultValues: ICode = nexus.codelistService.generateDefaultCodeValues(
     project.id
   );
 
@@ -37,12 +37,12 @@ function NewCodeForm(): React.ReactElement {
     handleSubmit,
     reset,
     formState: { errors }
-  } = useForm<Code>({
+  } = useForm<ICode>({
     resolver: joiResolver(PostCodeSchema),
     defaultValues
   });
 
-  const onSubmit = (post: Code) => {
+  const onSubmit = (post: ICode) => {
     const alert: IAlert = {
       id: uuidv4(),
       style: 'success',

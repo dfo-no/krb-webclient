@@ -1,13 +1,13 @@
-import ModelType from './ModelType';
 import {
   BasePublicationSchema,
-  PostPublicationSchema,
-  Publication
-} from './Publication';
+  IPublication,
+  PostPublicationSchema
+} from './IPublication';
+import ModelType from './ModelType';
 
 describe('BasePublicationSchema works', () => {
   test('BasePublicationSchema validates', () => {
-    const basePublication: Publication = {
+    const basePublication: IPublication = {
       id: 'e56367af-d48d-422d-a4f6-ba52ee17af23',
       comment: 'A comment',
       date: new Date().toISOString(),
@@ -26,7 +26,7 @@ describe('BasePublicationSchema works', () => {
   });
 
   test('BasePublicationSchema invalidates', () => {
-    const basePublication: Publication = {
+    const basePublication: IPublication = {
       id: '',
       comment: '',
       date: '',
@@ -44,7 +44,7 @@ describe('BasePublicationSchema works', () => {
   });
 
   test('PostPublicationSchema validates', () => {
-    const postPublication: Publication = {
+    const postPublication: IPublication = {
       id: '',
       comment: 'A comment',
       date: null,
@@ -62,7 +62,7 @@ describe('BasePublicationSchema works', () => {
   });
 
   test('PostPublicationSchema invalidates', () => {
-    const postPublication: Publication = {
+    const postPublication: IPublication = {
       id: 'aaa', // error
       comment: '', // error
       date: '', // error
