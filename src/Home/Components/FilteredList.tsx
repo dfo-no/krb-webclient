@@ -6,7 +6,7 @@ import { IBank } from '../../models/IBank';
 import { useAppDispatch } from '../../store/hooks';
 import { selectBank } from '../../store/reducers/selectedBank-reducer';
 
-interface FilteredListProps {
+interface IFilteredListProps {
   list: IBank[];
   filterTitle: string;
 }
@@ -14,7 +14,7 @@ interface FilteredListProps {
 export default function FilteredList({
   list,
   filterTitle
-}: FilteredListProps): React.ReactElement {
+}: IFilteredListProps): React.ReactElement {
   const dispatch = useAppDispatch();
   const { t } = useTranslation();
 

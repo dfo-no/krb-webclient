@@ -10,7 +10,7 @@ import {
 } from 'react-hook-form';
 import { IOption } from '../models/IOption';
 
-interface Props<T> extends UseControllerProps<T> {
+interface IProps<T> extends UseControllerProps<T> {
   error: FieldError | undefined;
   min: number;
   max: number;
@@ -28,7 +28,7 @@ const ControlledSlider = <T extends FieldValues>({
   step,
   unit,
   marks
-}: Props<T>): React.ReactElement => {
+}: IProps<T>): React.ReactElement => {
   return (
     <div className="d-flex align-items-center">
       {marks.length === 0 && <div className="px-2">{`${min} ${unit}`}</div>}

@@ -12,7 +12,7 @@ import EditRequirementForm from './EditRequirementForm';
 import NeedSideBar from './NeedSideBar/NeedSidebar';
 import NewRequirementForm from './NewRequirementForm';
 
-interface RouteParams {
+interface IRouteParams {
   projectId: string;
   needId?: string;
 }
@@ -20,7 +20,7 @@ interface RouteParams {
 export default function RequirementPage(): React.ReactElement {
   const dispatch = useAppDispatch();
 
-  const { needId } = useParams<RouteParams>();
+  const { needId } = useParams<IRouteParams>();
   const { needId: selectedNeedId } = useAppSelector(
     (state) => state.selectNeed
   );

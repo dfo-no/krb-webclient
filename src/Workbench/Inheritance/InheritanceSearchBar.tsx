@@ -10,7 +10,7 @@ import { IBank } from '../../models/IBank';
 import { useAppDispatch } from '../../store/hooks';
 import { putProjectThunk } from '../../store/reducers/project-reducer';
 
-interface SearchBarProps {
+interface ISearchBarProps {
   list: IBank[];
   project: IBank;
 }
@@ -18,7 +18,7 @@ interface SearchBarProps {
 export default function InheritanceSearchBar({
   list,
   project
-}: SearchBarProps): React.ReactElement {
+}: ISearchBarProps): React.ReactElement {
   const [input, setInput] = useState('');
   const [searchList, setSearchList] = useState<IBank[]>([]);
   const dispatch = useAppDispatch();

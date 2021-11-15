@@ -6,11 +6,11 @@ import { ISpecification } from '../../models/ISpecification';
 import { ISpecificationProduct } from '../../models/ISpecificationProduct';
 import ModelType from '../../models/ModelType';
 
-interface SpecificationState {
+interface ISpecificationState {
   spec: ISpecification;
 }
 
-const initialState: SpecificationState = {
+const initialState: ISpecificationState = {
   spec: {
     bank: {
       id: '',

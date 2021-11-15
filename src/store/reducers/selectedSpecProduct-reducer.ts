@@ -2,7 +2,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { ISpecificationProduct } from '../../models/ISpecificationProduct';
 import ModelType from '../../models/ModelType';
 
-interface SelectedSpecProductState {
+interface ISelectedSpecProductState {
   selectedSpecificationProduct: ISpecificationProduct;
 }
 
@@ -25,7 +25,7 @@ const initialProduct: ISpecificationProduct = {
   requirementAnswers: []
 };
 
-const initialState: SelectedSpecProductState = {
+const initialState: ISelectedSpecProductState = {
   selectedSpecificationProduct: initialProduct
 };
 

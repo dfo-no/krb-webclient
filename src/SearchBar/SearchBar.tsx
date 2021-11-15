@@ -8,13 +8,13 @@ import { useAppDispatch } from '../store/hooks';
 import { selectBank } from '../store/reducers/selectedBank-reducer';
 import styles from './SearchBar.module.scss';
 
-interface SearchBarProps {
+interface ISearchBarProps {
   list: IBank[];
 }
 
 export default function SearchBar({
   list
-}: SearchBarProps): React.ReactElement {
+}: ISearchBarProps): React.ReactElement {
   const [input, setInput] = useState('');
   const [searchList, setSearchList] = useState<IBank[]>([]);
   const dispatch = useAppDispatch();

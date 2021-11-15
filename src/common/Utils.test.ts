@@ -5,14 +5,15 @@ import { Nestable } from '../models/Nestable';
 import { Parentable } from '../models/Parentable';
 import Utils from './Utils';
 
-interface Car extends IBaseModel {
+interface ICar extends IBaseModel {
   id: string;
   title: string;
   type: ModelType.need;
 }
+
 describe('Utils functions should work', () => {
   test('Utils.parentable2Nestable', () => {
-    const cars: Parentable<Car>[] = [
+    const cars: Parentable<ICar>[] = [
       {
         id: 'aa28e225-7a76-4c57-bb22-ec87b3131762',
         title: 'A',
@@ -104,7 +105,7 @@ describe('Utils functions should work', () => {
       }
     ];
 
-    const items = Utils.parentable2Nestable<Car>(cars);
+    const items = Utils.parentable2Nestable<ICar>(cars);
 
     // Check that the props are correct
     expect(items[1].title).toEqual('K');
@@ -141,7 +142,7 @@ describe('Utils functions should work', () => {
   });
 
   test('Utils.nestable2Levelable', () => {
-    const cars: Nestable<Car>[] = [
+    const cars: Nestable<ICar>[] = [
       {
         id: 'aa28e225-7a76-4c57-bb22-ec87b3131762',
         title: 'A',

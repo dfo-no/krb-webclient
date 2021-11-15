@@ -6,11 +6,11 @@ import { Nestable } from '../models/Nestable';
 import { Parentable } from '../models/Parentable';
 import Utils from './Utils';
 
-interface Acc {
+interface IAcc {
   [key: string]: number;
 }
 
-export interface TreePath {
+export interface ITreePath {
   id: string;
   title: string;
   parent: string;
@@ -22,7 +22,7 @@ export interface TreePath {
 export function createTree<T extends IBaseModel>(
   data: Parentable<T>[]
 ): Nestable<T> {
-  const idMapping = data.reduce((acc: Acc, el, i) => {
+  const idMapping = data.reduce((acc: IAcc, el, i) => {
     // eslint-disable-next-line no-param-reassign
     acc[el.id] = i;
     return acc;
@@ -66,7 +66,7 @@ export function createTree<T extends IBaseModel>(
 export function createPolyTree<T extends IBaseModel>(
   data: Parentable<T>[]
 ): Nestable<T>[] {
-  const idMapping = data.reduce((acc: Acc, el, i) => {
+  const idMapping = data.reduce((acc: IAcc, el, i) => {
     // eslint-disable-next-line no-param-reassign
     acc[el.id] = i;
     return acc;

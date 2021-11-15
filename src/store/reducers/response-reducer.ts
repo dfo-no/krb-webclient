@@ -7,11 +7,11 @@ import { IResponseProduct } from '../../models/IResponseProduct';
 import { ISpecification } from '../../models/ISpecification';
 import ModelType from '../../models/ModelType';
 
-interface ResponseState {
+interface IResponseState {
   response: IResponse;
 }
 
-const initialState: ResponseState = {
+const initialState: IResponseState = {
   response: {
     spesification: {
       bank: {

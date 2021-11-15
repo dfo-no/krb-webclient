@@ -25,7 +25,7 @@ type FormInput = {
   product: string;
 };
 
-interface RouteParams {
+interface IRouteParams {
   bankId: string;
 }
 
@@ -36,7 +36,7 @@ interface IOption {
 }
 
 export default function ProductSpecList(): React.ReactElement {
-  const projectMatch = useRouteMatch<RouteParams>('/specification/:bankId');
+  const projectMatch = useRouteMatch<IRouteParams>('/specification/:bankId');
   const { id } = useAppSelector((state) => state.selectedBank);
   const { normalizedList } = useAppSelector((state) => state.bank);
   const { spec } = useAppSelector((state) => state.specification);

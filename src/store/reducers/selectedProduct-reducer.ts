@@ -2,11 +2,11 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { IProduct } from '../../models/IProduct';
 import ModelType from '../../models/ModelType';
 
-interface SelectedProductState {
+interface ISelectedProductState {
   product: IProduct;
 }
 
-const initialState: SelectedProductState = {
+const initialState: ISelectedProductState = {
   product: {
     id: '',
     title: '',

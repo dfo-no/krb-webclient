@@ -5,13 +5,13 @@ import { ISpecificationProduct } from '../../models/ISpecificationProduct';
 import { useAppSelector } from '../../store/hooks';
 import NeedHierarchy from '../Components/NeedHierarchy';
 
-interface InputProps {
+interface IInputProps {
   product: ISpecificationProduct;
 }
 
 export default function ResponseProductRequirementSelector({
   product
-}: InputProps): React.ReactElement {
+}: IInputProps): React.ReactElement {
   const { response } = useAppSelector((state) => state.response);
 
   const selectedBank = response.spesification.bank;

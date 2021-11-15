@@ -13,14 +13,14 @@ import { ITag } from '../../models/ITag';
 import ModelType from '../../models/ModelType';
 import { Parentable } from '../../models/Parentable';
 
-interface ProjectState {
+interface IProjectState {
   list: IBank[];
   listLoading: 'idle' | 'fulfilled' | 'rejected' | 'pending';
   project: IBank;
   projectLoading: 'idle' | 'fulfilled' | 'rejected' | 'pending';
 }
 
-const initialState: ProjectState = {
+const initialState: IProjectState = {
   list: [],
   project: {
     id: '',
@@ -76,7 +76,7 @@ export const putSelectedProjectThunk = createAsyncThunk<
     state: any; // do not use : RootState here. Circular reference!!
   }
 >('putSelectedProjectThunk', async (id: string, thunkApi) => {
-  const { project } = thunkApi.getState().project as ProjectState;
+  const { project } = thunkApi.getState().project as IProjectState;
   const response = await httpPut<IBank>(`/api/bank/${project.id}`, project);
   return response.data;
 });

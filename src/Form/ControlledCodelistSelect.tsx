@@ -10,7 +10,7 @@ import {
 import { ICode } from '../models/ICode';
 import { ICodelist } from '../models/ICodelist';
 
-interface Props<T> extends UseControllerProps<T> {
+interface IProps<T> extends UseControllerProps<T> {
   error: FieldError | undefined;
   codelist: ICodelist;
 }
@@ -20,7 +20,7 @@ const ControlledCodelistSelect = <T extends FieldValues>({
   name,
   control,
   error
-}: Props<T>): React.ReactElement => {
+}: IProps<T>): React.ReactElement => {
   const renderOptions = (codes: ICode[]) => {
     return codes.map((code) => {
       return (

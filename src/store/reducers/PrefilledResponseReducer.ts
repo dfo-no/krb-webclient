@@ -7,12 +7,12 @@ import { IPrefilledResponseProduct } from '../../models/IPrefilledResponseProduc
 import { IRequirementAnswer } from '../../models/IRequirementAnswer';
 import ModelType from '../../models/ModelType';
 
-interface PrefilledResponseState {
+interface IPrefilledResponseState {
   prefilledResponse: IPrefilledResponse;
   selectedProduct: IPrefilledResponseProduct;
 }
 
-const initialState: PrefilledResponseState = {
+const initialState: IPrefilledResponseState = {
   prefilledResponse: {
     bank: {
       id: '',

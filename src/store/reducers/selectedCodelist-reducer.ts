@@ -3,11 +3,11 @@ import { ICode } from '../../models/ICode';
 import { ICodelist } from '../../models/ICodelist';
 import ModelType from '../../models/ModelType';
 
-interface SelectedCodeListState {
+interface ISelectedCodeListState {
   codelist: ICodelist;
 }
 
-const initialState: SelectedCodeListState = {
+const initialState: ISelectedCodeListState = {
   codelist: {
     id: '',
     title: '',

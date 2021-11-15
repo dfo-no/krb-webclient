@@ -16,12 +16,12 @@ import {
   selectResponseSpecificationProduct
 } from '../../store/reducers/selectedResponseProduct-reducer';
 
-interface RouteParams {
+interface IRouteParams {
   bankId: string;
 }
 
 export default function ProductResponseList(): React.ReactElement {
-  const projectMatch = useRouteMatch<RouteParams>('/response/:bankId');
+  const projectMatch = useRouteMatch<IRouteParams>('/response/:bankId');
   const { id } = useAppSelector((state) => state.selectedBank);
   const { response } = useAppSelector((state) => state.response);
 

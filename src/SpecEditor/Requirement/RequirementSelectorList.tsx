@@ -11,13 +11,13 @@ import { useAppSelector } from '../../store/hooks';
 import styles from './RequirementSelectorList.module.scss';
 import SpesificationRequirement from './SpesificationRequirement';
 
-interface InputProps {
+interface IInputProps {
   needList: Nestable<INeed>[];
 }
 
 export default function RequirementSelectorList({
   needList
-}: InputProps): React.ReactElement {
+}: IInputProps): React.ReactElement {
   const { spec } = useAppSelector((state) => state.specification);
   const checkIfReqHasVariantMatch = (req: IRequirement): boolean => {
     let found = false;

@@ -3,7 +3,7 @@ import { IResponseProduct } from '../../models/IResponseProduct';
 import { ISpecificationProduct } from '../../models/ISpecificationProduct';
 import ModelType from '../../models/ModelType';
 
-interface SelectedResponseProductState {
+interface ISelectedResponseProductState {
   selectedResponseProduct: IResponseProduct;
   selectedResponseSpecificationProduct: ISpecificationProduct;
 }
@@ -52,7 +52,7 @@ const initialResponseSpecificationProduct: ISpecificationProduct = {
   requirementAnswers: []
 };
 
-const initialState: SelectedResponseProductState = {
+const initialState: ISelectedResponseProductState = {
   selectedResponseProduct: initialResponseProduct,
   selectedResponseSpecificationProduct: initialResponseSpecificationProduct
 };

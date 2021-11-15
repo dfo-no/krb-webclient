@@ -2,7 +2,7 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { httpGet, httpPost } from '../../api/http';
 import { IBank } from '../../models/IBank';
 
-interface BankState {
+interface IBankState {
   // banks: Finished and published versions of banks
   normalizedList: { [key: string]: IBank };
   list: IBank[];
@@ -11,7 +11,7 @@ interface BankState {
   alfabetic: IBank[];
 }
 
-const initialState: BankState = {
+const initialState: IBankState = {
   normalizedList: {},
   list: [],
   status: 'idle',
