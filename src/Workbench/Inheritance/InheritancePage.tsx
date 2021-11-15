@@ -6,7 +6,7 @@ import { useTranslation } from 'react-i18next';
 import { BsTrash } from 'react-icons/bs';
 import { Link } from 'react-router-dom';
 import Utils from '../../common/Utils';
-import { InheritedBank } from '../../models/InheritedBank';
+import { IInheritedBank } from '../../models/IInheritedBank';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { putProjectThunk } from '../../store/reducers/project-reducer';
 
@@ -20,11 +20,11 @@ export default function InheritancePage(): React.ReactElement {
     dispatch(putProjectThunk(updatedProject));
   };
 
-  const renderInheritedBanks = (inheritanceList: InheritedBank[]) => {
+  const renderInheritedBanks = (inheritanceList: IInheritedBank[]) => {
     inheritanceList
       .slice()
       .sort((a, b) => (a.title.toLowerCase() > b.title.toLowerCase() ? 1 : -1));
-    const projects = inheritanceList.map((element: InheritedBank) => {
+    const projects = inheritanceList.map((element: IInheritedBank) => {
       return (
         <div key={element.id}>
           <Row className="d-flex justify-content-between ml-1">

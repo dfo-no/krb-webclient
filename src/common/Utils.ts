@@ -1,7 +1,7 @@
 import { IBank } from '../models/IBank';
 import { IBaseModel } from '../models/IBaseModel';
+import { IInheritedBank } from '../models/IInheritedBank';
 import { INeed } from '../models/INeed';
-import { InheritedBank } from '../models/InheritedBank';
 import { IProduct } from '../models/IProduct';
 import { IRequirement } from '../models/IRequirement';
 import { IVariant } from '../models/IVariant';
@@ -440,7 +440,7 @@ class Utils {
     newProject.codelist = newCodelistList;
 
     const inheritedBanks = project.inheritedBanks.filter(
-      (element: InheritedBank) => element.id !== inheritedBank
+      (element: IInheritedBank) => element.id !== inheritedBank
     );
     newProject.inheritedBanks = inheritedBanks;
     return newProject;

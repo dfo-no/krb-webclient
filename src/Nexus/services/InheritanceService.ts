@@ -2,8 +2,8 @@
 import Utils from '../../common/Utils';
 import { IBank } from '../../models/IBank';
 import { IBaseModel } from '../../models/IBaseModel';
+import { IInheritedBank } from '../../models/IInheritedBank';
 import { INeed } from '../../models/INeed';
-import { InheritedBank } from '../../models/InheritedBank';
 import { Parentable } from '../../models/Parentable';
 import StoreService from './StoreService';
 import UuidService from './UuidService';
@@ -17,7 +17,7 @@ export default class InheritanceService {
     this.storeService = store;
   }
 
-  generateInheritance = (inheritedBank: IBank): InheritedBank => {
+  generateInheritance = (inheritedBank: IBank): IInheritedBank => {
     return {
       title: inheritedBank.title,
       description: inheritedBank.description,
@@ -126,7 +126,7 @@ export default class InheritanceService {
     newProject.codelist = newCodelistList;
 
     const inheritedBanks = project.inheritedBanks.filter(
-      (element: InheritedBank) => element.id !== inheritedBank
+      (element: IInheritedBank) => element.id !== inheritedBank
     );
     newProject.inheritedBanks = inheritedBanks;
     return this.storeService.setBank(newProject);

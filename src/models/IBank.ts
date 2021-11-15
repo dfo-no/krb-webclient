@@ -1,8 +1,8 @@
 import Joi from 'joi';
 import { IBaseModel } from './IBaseModel';
 import { ICodelist } from './ICodelist';
+import { IInheritedBank } from './IInheritedBank';
 import { INeed } from './INeed';
-import { InheritedBank } from './InheritedBank';
 import { IProduct } from './IProduct';
 import { IPublication } from './IPublication';
 import { ITag } from './ITag';
@@ -51,5 +51,5 @@ export interface IBank extends IBaseModel {
   publications: IPublication[];
   publishedDate: string | null;
   projectId: string | null;
-  inheritedBanks: InheritedBank[];
+  inheritedBanks: IInheritedBank[];
 }

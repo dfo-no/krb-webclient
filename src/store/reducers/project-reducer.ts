@@ -4,8 +4,8 @@ import Utils from '../../common/Utils';
 import { IBank } from '../../models/IBank';
 import { ICode } from '../../models/ICode';
 import { ICodelist } from '../../models/ICodelist';
+import { IInheritedBank } from '../../models/IInheritedBank';
 import { INeed } from '../../models/INeed';
-import { InheritedBank } from '../../models/InheritedBank';
 import { IProduct } from '../../models/IProduct';
 import { IPublication } from '../../models/IPublication';
 import { IRequirement } from '../../models/IRequirement';
@@ -415,7 +415,7 @@ const projectSlice = createSlice({
         state.project.tags.splice(index, 1);
       }
     },
-    addInheritedBank(state, { payload }: PayloadAction<InheritedBank>) {
+    addInheritedBank(state, { payload }: PayloadAction<IInheritedBank>) {
       state.project.inheritedBanks.push(payload);
     },
     setTags(state, { payload }: PayloadAction<Parentable<ITag>[]>) {
