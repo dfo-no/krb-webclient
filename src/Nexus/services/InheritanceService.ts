@@ -1,7 +1,7 @@
 /* eslint-disable class-methods-use-this */
 import Utils from '../../common/Utils';
 import { Bank } from '../../models/Bank';
-import { BaseModel } from '../../models/BaseModel';
+import { IBaseModel } from '../../models/IBaseModel';
 import { InheritedBank } from '../../models/InheritedBank';
 import { Need } from '../../models/Need';
 import { Parentable } from '../../models/Parentable';
@@ -27,7 +27,7 @@ export default class InheritanceService {
     };
   };
 
-  private addRelativeProperty<T extends BaseModel>(
+  private addRelativeProperty<T extends IBaseModel>(
     element: T,
     bankId: string
   ): T {
@@ -36,7 +36,7 @@ export default class InheritanceService {
     return newElement;
   }
 
-  private inheritList<T extends BaseModel>(list: T[], bankId: string): T[] {
+  private inheritList<T extends IBaseModel>(list: T[], bankId: string): T[] {
     return list.map((element: T) => {
       return this.addRelativeProperty(element, bankId);
     });
@@ -94,7 +94,7 @@ export default class InheritanceService {
     return this.storeService.setBank(newProject);
   }
 
-  private filterRelativeSourceList<T extends BaseModel>(
+  private filterRelativeSourceList<T extends IBaseModel>(
     list: T[],
     bankId: string
   ): T[] {

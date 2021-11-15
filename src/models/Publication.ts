@@ -1,5 +1,5 @@
 import Joi from 'joi';
-import { BaseModel } from './BaseModel';
+import { IBaseModel } from './IBaseModel';
 import ModelType from './ModelType';
 
 export const BasePublicationSchema = Joi.object().keys({
@@ -31,7 +31,7 @@ export const PutPublicationSchemaArray = Joi.object().keys({
     .unique('date')
 });
 
-export interface Publication extends BaseModel {
+export interface Publication extends IBaseModel {
   id: string;
   comment: string;
   date: string | null;

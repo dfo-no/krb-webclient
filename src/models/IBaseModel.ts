@@ -6,7 +6,7 @@ import QuestionEnum from './QuestionEnum';
  * CosmosDB item, and will showhow trigger a seperate CRUD operation.
  */
 
-export interface BaseModel {
+export interface IBaseModel {
   id: string;
   type: ModelType | QuestionEnum;
   sourceRel: string | null;

@@ -1,9 +1,9 @@
 import Joi from 'joi';
-import { BaseModel } from './BaseModel';
 import { BaseCodeSchema, Code } from './Code';
+import { IBaseModel } from './IBaseModel';
 import ModelType from './ModelType';
 
-export interface Codelist extends BaseModel {
+export interface Codelist extends IBaseModel {
   id: string;
   title: string;
   description: string;

@@ -1,5 +1,5 @@
 import { cloneDeep } from 'lodash';
-import { BaseModel } from '../models/BaseModel';
+import { IBaseModel } from '../models/IBaseModel';
 import { Levelable } from '../models/Levelable';
 import ModelType from '../models/ModelType';
 import { Nestable } from '../models/Nestable';
@@ -19,7 +19,7 @@ export interface TreePath {
 /**
  *  A tree will only contain a single root, and be in object form
  */
-export function createTree<T extends BaseModel>(
+export function createTree<T extends IBaseModel>(
   data: Parentable<T>[]
 ): Nestable<T> {
   const idMapping = data.reduce((acc: Acc, el, i) => {
@@ -28,7 +28,7 @@ export function createTree<T extends BaseModel>(
     return acc;
   }, {});
 
-  let root: Nestable<BaseModel> = {
+  let root: Nestable<IBaseModel> = {
     id: 'gurba',
     parent: 'A',
     children: [],
@@ -63,7 +63,7 @@ export function createTree<T extends BaseModel>(
 /**
  * A PolyTree can contain more than one root, and is always in Array form
  */
-export function createPolyTree<T extends BaseModel>(
+export function createPolyTree<T extends IBaseModel>(
   data: Parentable<T>[]
 ): Nestable<T>[] {
   const idMapping = data.reduce((acc: Acc, el, i) => {
@@ -72,7 +72,7 @@ export function createPolyTree<T extends BaseModel>(
     return acc;
   }, {});
 
-  const root: Nestable<BaseModel>[] = [];
+  const root: Nestable<IBaseModel>[] = [];
 
   data.forEach((el) => {
     const element = el as Nestable<T>;
@@ -97,7 +97,7 @@ export function createPolyTree<T extends BaseModel>(
   return root as Nestable<T>[];
 }
 
-const makePaths = <T extends BaseModel>(
+const makePaths = <T extends IBaseModel>(
   tags: Nestable<T>[],
   res: { [key: string]: [] } = {},
   prefix: string[] = []
@@ -119,7 +119,7 @@ const makePaths = <T extends BaseModel>(
   return res;
 };
 
-export const getPathsArray = <T extends BaseModel>(
+export const getPathsArray = <T extends IBaseModel>(
   id: string,
   data: Parentable<T>[]
 ): string[][] | string[] => {
@@ -154,7 +154,7 @@ export const filterDuplicateArray = (data: string[][]): string[] => {
   return uniqueArray;
 };
 
-export const getPaths = <T extends BaseModel>(
+export const getPaths = <T extends IBaseModel>(
   ids: string[],
   data: Parentable<T>[]
 ): Levelable<T>[] => {

@@ -1,6 +1,6 @@
-import { BaseModel } from './BaseModel';
+import { IBaseModel } from './IBaseModel';
 
-export type Levelable<T extends BaseModel> = T & {
+export type Levelable<T extends IBaseModel> = T & {
   parent: string;
   level: number;
 };

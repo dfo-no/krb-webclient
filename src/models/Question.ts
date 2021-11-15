@@ -1,5 +1,5 @@
 import Joi from 'joi';
-import { BaseModel } from './BaseModel';
+import { IBaseModel } from './IBaseModel';
 import QuestionEnum from './QuestionEnum';
 
 export interface IAnswerBase {
@@ -11,7 +11,7 @@ export interface IConfigBase {
 }
 
 export interface IQuestionBase<A extends IAnswerBase, C extends IConfigBase>
-  extends BaseModel {
+  extends IBaseModel {
   id: string;
 
   type: QuestionEnum;

@@ -1,6 +1,6 @@
 import Joi from 'joi';
-import { BaseModel } from './BaseModel';
 import { Codelist } from './Codelist';
+import { IBaseModel } from './IBaseModel';
 import { InheritedBank } from './InheritedBank';
 import ModelType from './ModelType';
 import { Need } from './Need';
@@ -39,7 +39,7 @@ export const BaseBankSchema = Joi.object().keys({
   ]).required()
 });
 
-export interface Bank extends BaseModel {
+export interface Bank extends IBaseModel {
   id: string;
   title: string;
   description: string;

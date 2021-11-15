@@ -1,5 +1,5 @@
 import { Bank } from '../models/Bank';
-import { BaseModel } from '../models/BaseModel';
+import { IBaseModel } from '../models/IBaseModel';
 import { InheritedBank } from '../models/InheritedBank';
 import { IVariant } from '../models/IVariant';
 import { Levelable } from '../models/Levelable';
@@ -45,7 +45,7 @@ class Utils {
     return unescape('  '.replace(/ /g, '%A0').repeat(level - 1));
   }
 
-  private static flattenNestable<T extends BaseModel>(
+  private static flattenNestable<T extends IBaseModel>(
     items: Nestable<T>[]
   ): Nestable<T>[] {
     return items.reduce((result: Nestable<T>[], current) => {
@@ -62,21 +62,21 @@ class Utils {
     }, []);
   }
 
-  static nestable2Levelable<T extends BaseModel>(
+  static nestable2Levelable<T extends IBaseModel>(
     items: Nestable<T>[]
   ): Levelable<T>[] {
     const result = Utils.flattenNestable(items);
     return result as Levelable<T>[];
   }
 
-  static parentable2Levelable<T extends BaseModel>(
+  static parentable2Levelable<T extends IBaseModel>(
     items: Parentable<T>[]
   ): Levelable<T>[] {
     const nestable = Utils.parentable2Nestable(items);
     return Utils.nestable2Levelable(nestable);
   }
 
-  static parentable2Nestable<T extends BaseModel>(
+  static parentable2Nestable<T extends IBaseModel>(
     items: Parentable<T>[],
     parent = '',
     level = 1
@@ -103,7 +103,7 @@ class Utils {
   /**
    * @@deprecated use parentable2Nestable instead
    */
-  static toNestable<T extends BaseModel>(
+  static toNestable<T extends IBaseModel>(
     items: Parentable<T>[]
   ): Nestable<T>[] {
     const hierarchy: Nestable<T>[] = [];
@@ -137,7 +137,7 @@ class Utils {
    *
    * @deprecated use nestable2Levelable instead
    */
-  static unflatten<T extends BaseModel>(
+  static unflatten<T extends IBaseModel>(
     items: Nestable<T>[]
   ): [Nestable<T>[], { [key: string]: Nestable<T> }] {
     const hierarchy: Nestable<T>[] = [];
@@ -267,7 +267,7 @@ class Utils {
     return [relevantRequirements, needList, variantList];
   }
 
-  static checkIfParent<T extends BaseModel>(
+  static checkIfParent<T extends IBaseModel>(
     items: Nestable<T>[],
     id: string
   ): boolean {
@@ -339,7 +339,7 @@ class Utils {
     return weightFalse;
   }
 
-  static addRelativeProperty<T extends BaseModel>(
+  static addRelativeProperty<T extends IBaseModel>(
     element: T,
     bankId: string
   ): T {
@@ -348,7 +348,7 @@ class Utils {
     return newElement;
   }
 
-  static inheritList<T extends BaseModel>(list: T[], bankId: string): T[] {
+  static inheritList<T extends IBaseModel>(list: T[], bankId: string): T[] {
     return list.map((element: T) => {
       return this.addRelativeProperty(element, bankId);
     });
@@ -411,7 +411,7 @@ class Utils {
     return newProject;
   }
 
-  static filterRelativeSourceList<T extends BaseModel>(
+  static filterRelativeSourceList<T extends IBaseModel>(
     list: T[],
     bankId: string
   ): T[] {

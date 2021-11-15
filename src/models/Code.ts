@@ -1,8 +1,8 @@
 import Joi from 'joi';
-import { BaseModel } from './BaseModel';
+import { IBaseModel } from './IBaseModel';
 import ModelType from './ModelType';
 
-export interface Code extends BaseModel {
+export interface Code extends IBaseModel {
   id: string;
   title: string;
   description: string;

@@ -1,9 +1,9 @@
 import Joi from 'joi';
-import { BaseModel } from './BaseModel';
+import { IBaseModel } from './IBaseModel';
 import ModelType from './ModelType';
 import { Requirement } from './Requirement';
 
-export interface Need extends BaseModel {
+export interface Need extends IBaseModel {
   title: string;
   description: string;
   requirements: Requirement[];

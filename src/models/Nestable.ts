@@ -1,6 +1,6 @@
-import { BaseModel } from './BaseModel';
+import { IBaseModel } from './IBaseModel';
 
-export type Nestable<T extends BaseModel> = T & {
+export type Nestable<T extends IBaseModel> = T & {
   parent: string;
   children?: Nestable<T>[];
   // TODO: make level mandatory when all Utils functions has been fixed

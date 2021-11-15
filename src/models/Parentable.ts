@@ -1,5 +1,5 @@
-import { BaseModel } from './BaseModel';
+import { IBaseModel } from './IBaseModel';
 
-export type Parentable<T extends BaseModel> = T & {
+export type Parentable<T extends IBaseModel> = T & {
   parent: string;
 };

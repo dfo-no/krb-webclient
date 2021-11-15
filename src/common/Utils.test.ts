@@ -1,11 +1,11 @@
 import { get } from 'lodash';
-import { BaseModel } from '../models/BaseModel';
+import { IBaseModel } from '../models/IBaseModel';
 import ModelType from '../models/ModelType';
 import { Nestable } from '../models/Nestable';
 import { Parentable } from '../models/Parentable';
 import Utils from './Utils';
 
-interface Car extends BaseModel {
+interface Car extends IBaseModel {
   id: string;
   title: string;
   type: ModelType.need;
