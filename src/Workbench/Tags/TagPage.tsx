@@ -1,8 +1,8 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { ITag } from '../../models/ITag';
 import { Parentable } from '../../models/Parentable';
 import NestableHierarcy from '../../NestableHierarchy/NestableHierarcy';
+import { ITag } from '../../Nexus/entities/ITag';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import {
   putSelectedProjectThunk,

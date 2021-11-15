@@ -1,13 +1,13 @@
 import Joi from 'joi';
+import { IInheritedBank } from '../../models/IInheritedBank';
+import ModelType from '../../models/ModelType';
+import { Parentable } from '../../models/Parentable';
 import { IBaseModel } from './IBaseModel';
 import { ICodelist } from './ICodelist';
-import { IInheritedBank } from './IInheritedBank';
 import { INeed } from './INeed';
 import { IProduct } from './IProduct';
 import { IPublication } from './IPublication';
 import { ITag } from './ITag';
-import ModelType from './ModelType';
-import { Parentable } from './Parentable';
 
 export const BaseBankSchema = Joi.object().keys({
   id: Joi.string().length(36).required(),

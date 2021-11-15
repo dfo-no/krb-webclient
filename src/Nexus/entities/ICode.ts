@@ -1,6 +1,6 @@
 import Joi from 'joi';
+import ModelType from '../../models/ModelType';
 import { IBaseModel } from './IBaseModel';
-import ModelType from './ModelType';
 
 export interface ICode extends IBaseModel {
   id: string;

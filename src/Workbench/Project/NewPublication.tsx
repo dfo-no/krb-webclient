@@ -10,9 +10,12 @@ import { v4 as uuidv4 } from 'uuid';
 import ControlledTextInput from '../../Form/ControlledTextInput';
 import ErrorSummary from '../../Form/ErrorSummary';
 import { IAlert } from '../../models/IAlert';
-import { IBank } from '../../models/IBank';
-import { IPublication, PostPublicationSchema } from '../../models/IPublication';
 import ModelType from '../../models/ModelType';
+import { IBank } from '../../Nexus/entities/IBank';
+import {
+  IPublication,
+  PostPublicationSchema
+} from '../../Nexus/entities/IPublication';
 import Nexus from '../../Nexus/Nexus';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { addAlert } from '../../store/reducers/alert-reducer';

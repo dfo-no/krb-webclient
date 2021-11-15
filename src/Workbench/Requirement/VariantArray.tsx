@@ -14,11 +14,11 @@ import { useTranslation } from 'react-i18next';
 import { BsTrashFill } from 'react-icons/bs';
 import { v4 as uuidv4 } from 'uuid';
 import Utils from '../../common/Utils';
-import { IBank } from '../../models/IBank';
-import { IProduct } from '../../models/IProduct';
-import { IRequirement } from '../../models/IRequirement';
-import { IVariant } from '../../models/IVariant';
 import { Nestable } from '../../models/Nestable';
+import { IBank } from '../../Nexus/entities/IBank';
+import { IProduct } from '../../Nexus/entities/IProduct';
+import { IRequirement } from '../../Nexus/entities/IRequirement';
+import { IVariant } from '../../Nexus/entities/IVariant';
 import QuestionArray from './QuestionArray';
 import styles from './Variant.module.scss';
 

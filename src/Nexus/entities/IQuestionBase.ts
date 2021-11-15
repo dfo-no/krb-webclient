@@ -1,6 +1,6 @@
 import Joi from 'joi';
+import QuestionEnum from '../../models/QuestionEnum';
 import { IBaseModel } from './IBaseModel';
-import QuestionEnum from './QuestionEnum';
 
 export interface IAnswerBase {
   point: number | null;

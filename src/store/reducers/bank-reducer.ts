@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { httpGet, httpPost } from '../../api/http';
-import { IBank } from '../../models/IBank';
+import { IBank } from '../../Nexus/entities/IBank';
 
 interface IBankState {
   // banks: Finished and published versions of banks

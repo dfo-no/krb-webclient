@@ -6,7 +6,7 @@ import Row from 'react-bootstrap/Row';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
 import Utils from '../../common/Utils';
-import { IBank } from '../../models/IBank';
+import { IBank } from '../../Nexus/entities/IBank';
 import { useAppDispatch } from '../../store/hooks';
 import { putProjectThunk } from '../../store/reducers/project-reducer';
 

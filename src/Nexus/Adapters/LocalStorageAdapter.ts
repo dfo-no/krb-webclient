@@ -1,7 +1,7 @@
 /* eslint-disable class-methods-use-this */
 import Utils from '../../common/Utils';
-import { IBank } from '../../models/IBank';
 import ModelType from '../../models/ModelType';
+import { IBank } from '../entities/IBank';
 import Adapter from './Adapter';
 
 export default class LocalStorageAdapter extends Adapter {

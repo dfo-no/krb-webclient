@@ -11,10 +11,10 @@ import {
 } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { BsTrashFill } from 'react-icons/bs';
-import { IBank } from '../../models/IBank';
-import { ICodelist } from '../../models/ICodelist';
-import { ICodelistQuestion } from '../../models/ICodelistQuestion';
-import { IRequirement } from '../../models/IRequirement';
+import { IBank } from '../../Nexus/entities/IBank';
+import { ICodelist } from '../../Nexus/entities/ICodelist';
+import { ICodelistQuestion } from '../../Nexus/entities/ICodelistQuestion';
+import { IRequirement } from '../../Nexus/entities/IRequirement';
 import { useAppSelector } from '../../store/hooks';
 
 type IProps = {

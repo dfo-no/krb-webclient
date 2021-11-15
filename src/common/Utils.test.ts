@@ -1,8 +1,8 @@
 import { get } from 'lodash';
-import { IBaseModel } from '../models/IBaseModel';
 import ModelType from '../models/ModelType';
 import { Nestable } from '../models/Nestable';
 import { Parentable } from '../models/Parentable';
+import { IBaseModel } from '../Nexus/entities/IBaseModel';
 import Utils from './Utils';
 
 interface ICar extends IBaseModel {

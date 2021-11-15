@@ -1,9 +1,9 @@
 import React from 'react';
 import Container from 'react-bootstrap/Container';
-import { ICode } from '../../models/ICode';
-import { ICodelistQuestion } from '../../models/ICodelistQuestion';
-import { IRequirement } from '../../models/IRequirement';
 import { IRequirementAnswer } from '../../models/IRequirementAnswer';
+import { ICode } from '../../Nexus/entities/ICode';
+import { ICodelistQuestion } from '../../Nexus/entities/ICodelistQuestion';
+import { IRequirement } from '../../Nexus/entities/IRequirement';
 import { useAppSelector } from '../../store/hooks';
 
 interface IProps {

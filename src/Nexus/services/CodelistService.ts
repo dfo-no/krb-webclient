@@ -1,6 +1,6 @@
-import { ICode } from '../../models/ICode';
-import { ICodelist } from '../../models/ICodelist';
 import ModelType from '../../models/ModelType';
+import { ICode } from '../entities/ICode';
+import { ICodelist } from '../entities/ICodelist';
 import StoreService from './StoreService';
 import UuidService from './UuidService';
 

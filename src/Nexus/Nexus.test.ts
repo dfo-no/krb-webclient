@@ -1,4 +1,4 @@
-import { PutTagSchema } from '../models/ITag';
+import { PutTagSchema } from './entities/ITag';
 import Nexus from './Nexus';
 import PublicationService from './services/PublicationService';
 

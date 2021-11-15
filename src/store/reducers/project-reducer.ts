@@ -1,17 +1,17 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { httpDelete, httpGet, httpPost, httpPut } from '../../api/http';
 import Utils from '../../common/Utils';
-import { IBank } from '../../models/IBank';
-import { ICode } from '../../models/ICode';
-import { ICodelist } from '../../models/ICodelist';
 import { IInheritedBank } from '../../models/IInheritedBank';
-import { INeed } from '../../models/INeed';
-import { IProduct } from '../../models/IProduct';
-import { IPublication } from '../../models/IPublication';
-import { IRequirement } from '../../models/IRequirement';
-import { ITag } from '../../models/ITag';
 import ModelType from '../../models/ModelType';
 import { Parentable } from '../../models/Parentable';
+import { IBank } from '../../Nexus/entities/IBank';
+import { ICode } from '../../Nexus/entities/ICode';
+import { ICodelist } from '../../Nexus/entities/ICodelist';
+import { INeed } from '../../Nexus/entities/INeed';
+import { IProduct } from '../../Nexus/entities/IProduct';
+import { IPublication } from '../../Nexus/entities/IPublication';
+import { IRequirement } from '../../Nexus/entities/IRequirement';
+import { ITag } from '../../Nexus/entities/ITag';
 
 interface IProjectState {
   list: IBank[];

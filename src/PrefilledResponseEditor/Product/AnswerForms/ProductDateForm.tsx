@@ -9,16 +9,16 @@ import { FieldError, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import ControlledDate from '../../../Form/ControlledDate';
 import ErrorSummary from '../../../Form/ErrorSummary';
-import {
-  IPeriodDateQuestion,
-  PeriodDateQuestionAnswerSchema
-} from '../../../models/IPeriodDateQuestion';
 import { IPrefilledResponseProduct } from '../../../models/IPrefilledResponseProduct';
-import { IRequirement } from '../../../models/IRequirement';
 import {
   IRequirementAnswer,
   RequirementAnswerSchema
 } from '../../../models/IRequirementAnswer';
+import {
+  IPeriodDateQuestion,
+  PeriodDateQuestionAnswerSchema
+} from '../../../Nexus/entities/IPeriodDateQuestion';
+import { IRequirement } from '../../../Nexus/entities/IRequirement';
 import { useAppDispatch, useAppSelector } from '../../../store/hooks';
 import {
   addProductAnswer,

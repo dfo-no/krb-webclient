@@ -6,8 +6,8 @@ import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 import { Control, FormState, UseFormRegister } from 'react-hook-form';
 import { BsTrashFill } from 'react-icons/bs';
-import { ICheckboxQuestion } from '../../models/ICheckboxQuestion';
-import { IRequirement } from '../../models/IRequirement';
+import { ICheckboxQuestion } from '../../Nexus/entities/ICheckboxQuestion';
+import { IRequirement } from '../../Nexus/entities/IRequirement';
 
 type IProps = {
   control: Control<IRequirement>;

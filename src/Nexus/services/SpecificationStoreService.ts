@@ -1,10 +1,10 @@
 /* eslint-disable no-param-reassign */
 /* eslint-disable class-methods-use-this */
 import produce from 'immer';
-import { IBank } from '../../models/IBank';
 import { IRequirementAnswer } from '../../models/IRequirementAnswer';
 import { ISpecification } from '../../models/ISpecification';
 import { ISpecificationProduct } from '../../models/ISpecificationProduct';
+import { IBank } from '../entities/IBank';
 
 export default class SpecificationStoreService {
   private static specification: ISpecification;

@@ -2,8 +2,8 @@ import React from 'react';
 import Nav from 'react-bootstrap/Nav';
 import { NavLink } from 'react-router-dom';
 import Utils from '../../../common/Utils';
-import { INeed } from '../../../models/INeed';
 import { Parentable } from '../../../models/Parentable';
+import { INeed } from '../../../Nexus/entities/INeed';
 import { useAppSelector } from '../../../store/hooks';
 import styles from './NeedSidebar.module.scss';
 

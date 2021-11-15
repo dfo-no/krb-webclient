@@ -11,9 +11,12 @@ import { v4 as uuidv4 } from 'uuid';
 import Utils from '../../common/Utils';
 import ErrorSummary from '../../Form/ErrorSummary';
 import { IAlert } from '../../models/IAlert';
-import { INeed } from '../../models/INeed';
-import { BaseRequirementSchema, IRequirement } from '../../models/IRequirement';
-import { ITag } from '../../models/ITag';
+import { INeed } from '../../Nexus/entities/INeed';
+import {
+  BaseRequirementSchema,
+  IRequirement
+} from '../../Nexus/entities/IRequirement';
+import { ITag } from '../../Nexus/entities/ITag';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { addAlert } from '../../store/reducers/alert-reducer';
 import {

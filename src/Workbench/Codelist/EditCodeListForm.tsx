@@ -12,17 +12,17 @@ import AlertModal from '../../common/AlertModal';
 import ErrorSummary from '../../Form/ErrorSummary';
 import InputRow from '../../Form/InputRow';
 import { IAlert } from '../../models/IAlert';
-import { CodelistSchema, ICodelist } from '../../models/ICodelist';
-import { ICodelistQuestion } from '../../models/ICodelistQuestion';
-import { INeed } from '../../models/INeed';
+import QuestionEnum from '../../models/QuestionEnum';
+import { CodelistSchema, ICodelist } from '../../Nexus/entities/ICodelist';
+import { ICodelistQuestion } from '../../Nexus/entities/ICodelistQuestion';
+import { INeed } from '../../Nexus/entities/INeed';
 import {
   IAnswerBase,
   IConfigBase,
   IQuestionBase
-} from '../../models/IQuestionBase';
-import { IRequirement } from '../../models/IRequirement';
-import { IVariant } from '../../models/IVariant';
-import QuestionEnum from '../../models/QuestionEnum';
+} from '../../Nexus/entities/IQuestionBase';
+import { IRequirement } from '../../Nexus/entities/IRequirement';
+import { IVariant } from '../../Nexus/entities/IVariant';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { addAlert } from '../../store/reducers/alert-reducer';
 import {

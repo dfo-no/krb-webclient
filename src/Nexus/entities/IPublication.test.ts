@@ -1,9 +1,9 @@
+import ModelType from '../../models/ModelType';
 import {
   BasePublicationSchema,
   IPublication,
   PostPublicationSchema
 } from './IPublication';
-import ModelType from './ModelType';
 
 describe('BasePublicationSchema works', () => {
   test('BasePublicationSchema validates', () => {

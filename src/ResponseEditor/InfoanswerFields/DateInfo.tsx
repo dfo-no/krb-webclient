@@ -1,8 +1,8 @@
 import React from 'react';
 import Container from 'react-bootstrap/Container';
-import { IPeriodDateQuestion } from '../../models/IPeriodDateQuestion';
-import { IRequirement } from '../../models/IRequirement';
 import { IRequirementAnswer } from '../../models/IRequirementAnswer';
+import { IPeriodDateQuestion } from '../../Nexus/entities/IPeriodDateQuestion';
+import { IRequirement } from '../../Nexus/entities/IRequirement';
 
 interface IProps {
   answer: IRequirementAnswer;

@@ -4,9 +4,9 @@ import React from 'react';
 import { I18nextProvider } from 'react-i18next';
 import { Provider } from 'react-redux';
 import i18n from '../../i18nForTests';
-import { INeed } from '../../models/INeed';
 import ModelType from '../../models/ModelType';
 import { Parentable } from '../../models/Parentable';
+import { INeed } from '../../Nexus/entities/INeed';
 import projectReducer from '../../store/reducers/project-reducer';
 import EditNeedForm from './EditNeedForm';
 

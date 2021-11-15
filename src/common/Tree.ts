@@ -1,9 +1,9 @@
 import { cloneDeep } from 'lodash';
-import { IBaseModel } from '../models/IBaseModel';
 import { Levelable } from '../models/Levelable';
 import ModelType from '../models/ModelType';
 import { Nestable } from '../models/Nestable';
 import { Parentable } from '../models/Parentable';
+import { IBaseModel } from '../Nexus/entities/IBaseModel';
 import Utils from './Utils';
 
 interface IAcc {

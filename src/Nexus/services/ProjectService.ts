@@ -1,5 +1,5 @@
-import { IBank } from '../../models/IBank';
 import ModelType from '../../models/ModelType';
+import { IBank } from '../entities/IBank';
 import StoreService from './StoreService';
 import UuidService from './UuidService';
 

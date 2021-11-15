@@ -11,8 +11,8 @@ import { useFieldArray, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { BsPencilSquare, BsTrashFill } from 'react-icons/bs';
 import ErrorSummary from '../../Form/ErrorSummary';
-import { IBank } from '../../models/IBank';
 import { PutProjectSchema } from '../../models/Project';
+import { IBank } from '../../Nexus/entities/IBank';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import {
   deleteProjectByIdThunk,

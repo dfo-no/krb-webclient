@@ -8,15 +8,15 @@ import Form from 'react-bootstrap/Form';
 import { FieldError, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import ErrorSummary from '../../../Form/ErrorSummary';
-import { IRequirement } from '../../../models/IRequirement';
 import {
   IRequirementAnswer,
   RequirementAnswerSchema
 } from '../../../models/IRequirementAnswer';
+import { IRequirement } from '../../../Nexus/entities/IRequirement';
 import {
   ITextQuestion,
   TextQuestionAnswerSchema
-} from '../../../models/ITextQuestion';
+} from '../../../Nexus/entities/ITextQuestion';
 import { useAppDispatch, useAppSelector } from '../../../store/hooks';
 import {
   addAnswer,

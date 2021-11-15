@@ -1,10 +1,10 @@
 /* eslint-disable class-methods-use-this */
 import Utils from '../../common/Utils';
-import { IBank } from '../../models/IBank';
-import { IBaseModel } from '../../models/IBaseModel';
 import { IInheritedBank } from '../../models/IInheritedBank';
-import { INeed } from '../../models/INeed';
 import { Parentable } from '../../models/Parentable';
+import { IBank } from '../entities/IBank';
+import { IBaseModel } from '../entities/IBaseModel';
+import { INeed } from '../entities/INeed';
 import StoreService from './StoreService';
 import UuidService from './UuidService';
 

@@ -1,13 +1,13 @@
-import { IBank } from '../models/IBank';
-import { IBaseModel } from '../models/IBaseModel';
 import { IInheritedBank } from '../models/IInheritedBank';
-import { INeed } from '../models/INeed';
-import { IProduct } from '../models/IProduct';
-import { IRequirement } from '../models/IRequirement';
-import { IVariant } from '../models/IVariant';
 import { Levelable } from '../models/Levelable';
 import { Nestable } from '../models/Nestable';
 import { Parentable } from '../models/Parentable';
+import { IBank } from '../Nexus/entities/IBank';
+import { IBaseModel } from '../Nexus/entities/IBaseModel';
+import { INeed } from '../Nexus/entities/INeed';
+import { IProduct } from '../Nexus/entities/IProduct';
+import { IRequirement } from '../Nexus/entities/IRequirement';
+import { IVariant } from '../Nexus/entities/IVariant';
 
 class Utils {
   static ensure<T>(

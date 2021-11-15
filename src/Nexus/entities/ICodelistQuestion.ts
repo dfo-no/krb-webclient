@@ -1,6 +1,6 @@
 import Joi from 'joi';
+import QuestionEnum from '../../models/QuestionEnum';
 import { IAnswerBase, IConfigBase, IQuestionBase } from './IQuestionBase';
-import QuestionEnum from './QuestionEnum';
 
 export interface ICodelistQuestion
   extends IQuestionBase<ICodelistAnswer, ICodelistConfig> {

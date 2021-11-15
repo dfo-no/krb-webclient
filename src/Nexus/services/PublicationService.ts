@@ -1,5 +1,5 @@
-import { IBank } from '../../models/IBank';
-import { IPublication } from '../../models/IPublication';
+import { IBank } from '../entities/IBank';
+import { IPublication } from '../entities/IPublication';
 import DateService from './DateService';
 
 export default class PublicationService {

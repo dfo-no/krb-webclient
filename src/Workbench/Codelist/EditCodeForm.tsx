@@ -9,8 +9,8 @@ import { v4 as uuidv4 } from 'uuid';
 import ErrorSummary from '../../Form/ErrorSummary';
 import InputRow from '../../Form/InputRow';
 import { IAlert } from '../../models/IAlert';
-import { EditCodeSchema, ICode } from '../../models/ICode';
 import { AccordionContext } from '../../NestableHierarchy/AccordionContext';
+import { EditCodeSchema, ICode } from '../../Nexus/entities/ICode';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { addAlert } from '../../store/reducers/alert-reducer';
 import {

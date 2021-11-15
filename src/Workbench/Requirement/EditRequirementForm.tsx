@@ -10,8 +10,11 @@ import { v4 as uuidv4 } from 'uuid';
 import ErrorSummary from '../../Form/ErrorSummary';
 import InputRow from '../../Form/InputRow';
 import { IAlert } from '../../models/IAlert';
-import { IRequirement, PutRequirementSchema } from '../../models/IRequirement';
 import { AccordionContext } from '../../NestableHierarchy/AccordionContext';
+import {
+  IRequirement,
+  PutRequirementSchema
+} from '../../Nexus/entities/IRequirement';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { addAlert } from '../../store/reducers/alert-reducer';
 import {

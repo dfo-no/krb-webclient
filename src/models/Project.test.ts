@@ -1,6 +1,6 @@
 import { format } from 'date-fns';
 import { DATETIME_ISO8601UTC } from '../common/Constants';
-import { IBank } from './IBank';
+import { IBank } from '../Nexus/entities/IBank';
 import ModelType from './ModelType';
 import { PostProjectSchema, PutProjectSchema } from './Project';
 

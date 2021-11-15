@@ -12,12 +12,12 @@ import { useTranslation } from 'react-i18next';
 import { getPaths } from '../../common/Tree';
 import ControlledTextInput from '../../Form/ControlledTextInput';
 import ErrorSummary from '../../Form/ErrorSummary';
-import { INeed } from '../../models/INeed';
 import {
   IPrefilledResponseProduct,
   PrefilledResponseProductSchema
 } from '../../models/IPrefilledResponseProduct';
 import { Levelable } from '../../models/Levelable';
+import { INeed } from '../../Nexus/entities/INeed';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { editProduct } from '../../store/reducers/PrefilledResponseReducer';
 import AnswerForm from './AnswerForm';

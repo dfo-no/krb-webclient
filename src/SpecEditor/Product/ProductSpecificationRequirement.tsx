@@ -4,8 +4,8 @@ import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 import Utils from '../../common/Utils';
-import { IRequirement } from '../../models/IRequirement';
 import { ISpecificationProduct } from '../../models/ISpecificationProduct';
+import { IRequirement } from '../../Nexus/entities/IRequirement';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import {
   addProductRequirement,

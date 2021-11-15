@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { ICode } from '../../models/ICode';
-import { ICodelist } from '../../models/ICodelist';
 import ModelType from '../../models/ModelType';
+import { ICode } from '../../Nexus/entities/ICode';
+import { ICodelist } from '../../Nexus/entities/ICodelist';
 
 interface ISelectedCodeListState {
   codelist: ICodelist;

@@ -1,5 +1,5 @@
 import Joi from 'joi';
-import { IProduct } from './IProduct';
+import { IProduct } from '../Nexus/entities/IProduct';
 import { IRequirementAnswer } from './IRequirementAnswer';
 
 export interface ISpecificationProduct {

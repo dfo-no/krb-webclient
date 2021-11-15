@@ -8,11 +8,11 @@ import Form from 'react-bootstrap/Form';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import ErrorSummary from '../../../Form/ErrorSummary';
-import { ICodelistQuestion } from '../../../models/ICodelistQuestion';
 import { IPrefilledResponseProduct } from '../../../models/IPrefilledResponseProduct';
-import { IRequirement } from '../../../models/IRequirement';
 import { IRequirementAnswer } from '../../../models/IRequirementAnswer';
 import QuestionEnum from '../../../models/QuestionEnum';
+import { ICodelistQuestion } from '../../../Nexus/entities/ICodelistQuestion';
+import { IRequirement } from '../../../Nexus/entities/IRequirement';
 import { useAppDispatch, useAppSelector } from '../../../store/hooks';
 import {
   addProductAnswer,

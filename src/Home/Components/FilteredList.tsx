@@ -2,7 +2,7 @@ import React from 'react';
 import ListGroup from 'react-bootstrap/ListGroup';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
-import { IBank } from '../../models/IBank';
+import { IBank } from '../../Nexus/entities/IBank';
 import { useAppDispatch } from '../../store/hooks';
 import { selectBank } from '../../store/reducers/selectedBank-reducer';
 

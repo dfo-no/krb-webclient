@@ -1,7 +1,7 @@
 /* eslint-disable class-methods-use-this */
-import { IBank } from '../models/IBank';
 import Adapter from './Adapters/Adapter';
 import LocalStorageAdapter from './Adapters/LocalStorageAdapter';
+import { IBank } from './entities/IBank';
 import CodelistService from './services/CodelistService';
 import NeedService from './services/NeedService';
 import ProductService from './services/ProductService';

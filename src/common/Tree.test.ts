@@ -1,10 +1,10 @@
 import { get } from 'lodash';
-import { INeed } from '../models/INeed';
-import { ITag } from '../models/ITag';
 import ModelType from '../models/ModelType';
 import { Parentable } from '../models/Parentable';
 import QuestionEnum from '../models/QuestionEnum';
 import RequirementType from '../models/RequirementType';
+import { INeed } from '../Nexus/entities/INeed';
+import { ITag } from '../Nexus/entities/ITag';
 import { createPolyTree, createTree, getPaths } from './Tree';
 
 describe('Tree', () => {

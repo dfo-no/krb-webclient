@@ -1,8 +1,8 @@
 /* eslint-disable class-methods-use-this */
-import { IBank } from '../../models/IBank';
 import { IRequirementAnswer } from '../../models/IRequirementAnswer';
 import { ISpecification } from '../../models/ISpecification';
 import { ISpecificationProduct } from '../../models/ISpecificationProduct';
+import { IBank } from '../entities/IBank';
 import SpecificationStoreService from './SpecificationStoreService';
 import UuidService from './UuidService';
 

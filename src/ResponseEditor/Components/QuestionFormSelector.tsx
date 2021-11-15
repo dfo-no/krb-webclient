@@ -1,9 +1,9 @@
 import React from 'react';
 import Card from 'react-bootstrap/Card';
-import { IRequirement } from '../../models/IRequirement';
 import { IRequirementAnswer } from '../../models/IRequirementAnswer';
 import QuestionEnum from '../../models/QuestionEnum';
 import RequirementType from '../../models/RequirementType';
+import { IRequirement } from '../../Nexus/entities/IRequirement';
 import CheckBoxInfo from '../InfoanswerFields/CheckBoxInfo';
 import CodelistInfo from '../InfoanswerFields/CodelistInfo';
 import DateInfo from '../InfoanswerFields/DateInfo';

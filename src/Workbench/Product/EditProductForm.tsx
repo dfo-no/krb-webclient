@@ -12,11 +12,11 @@ import Utils from '../../common/Utils';
 import ErrorSummary from '../../Form/ErrorSummary';
 import InputRow from '../../Form/InputRow';
 import { IAlert } from '../../models/IAlert';
-import { INeed } from '../../models/INeed';
-import { IProduct, PutProductSchema } from '../../models/IProduct';
-import { IRequirement } from '../../models/IRequirement';
-import { IVariant } from '../../models/IVariant';
 import { AccordionContext } from '../../NestableHierarchy/AccordionContext';
+import { INeed } from '../../Nexus/entities/INeed';
+import { IProduct, PutProductSchema } from '../../Nexus/entities/IProduct';
+import { IRequirement } from '../../Nexus/entities/IRequirement';
+import { IVariant } from '../../Nexus/entities/IVariant';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { addAlert } from '../../store/reducers/alert-reducer';
 import {

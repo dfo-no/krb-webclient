@@ -1,7 +1,7 @@
 /* eslint-disable class-methods-use-this */
-import { INeed } from '../../models/INeed';
 import ModelType from '../../models/ModelType';
 import { Parentable } from '../../models/Parentable';
+import { INeed } from '../entities/INeed';
 import StoreService from './StoreService';
 import UuidService from './UuidService';
 

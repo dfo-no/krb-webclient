@@ -1,15 +1,15 @@
 import Card from '@mui/material/Card';
 import React from 'react';
 import Utils from '../../../common/Utils';
-import { ICheckboxQuestion } from '../../../models/ICheckboxQuestion';
-import { ICode } from '../../../models/ICode';
-import { ICodelist } from '../../../models/ICodelist';
-import { ICodelistQuestion } from '../../../models/ICodelistQuestion';
-import { IPeriodDateQuestion } from '../../../models/IPeriodDateQuestion';
 import { IRequirementAnswer } from '../../../models/IRequirementAnswer';
-import { ISliderQuestion } from '../../../models/ISliderQuestion';
-import { ITextQuestion } from '../../../models/ITextQuestion';
 import QuestionEnum from '../../../models/QuestionEnum';
+import { ICheckboxQuestion } from '../../../Nexus/entities/ICheckboxQuestion';
+import { ICode } from '../../../Nexus/entities/ICode';
+import { ICodelist } from '../../../Nexus/entities/ICodelist';
+import { ICodelistQuestion } from '../../../Nexus/entities/ICodelistQuestion';
+import { IPeriodDateQuestion } from '../../../Nexus/entities/IPeriodDateQuestion';
+import { ISliderQuestion } from '../../../Nexus/entities/ISliderQuestion';
+import { ITextQuestion } from '../../../Nexus/entities/ITextQuestion';
 import { useAppSelector } from '../../../store/hooks';
 import AnswerPreview from './AnswerPreview';
 

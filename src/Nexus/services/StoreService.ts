@@ -1,16 +1,16 @@
 /* eslint-disable no-param-reassign */
 /* eslint-disable class-methods-use-this */
 import produce from 'immer';
-import { IBank } from '../../models/IBank';
-import { ICode } from '../../models/ICode';
-import { ICodelist } from '../../models/ICodelist';
-import { INeed } from '../../models/INeed';
-import { IProduct } from '../../models/IProduct';
-import { IRequirement } from '../../models/IRequirement';
-import { ITag } from '../../models/ITag';
-import { IVariant } from '../../models/IVariant';
 import { Parentable } from '../../models/Parentable';
 import { QuestionType } from '../../models/QuestionType';
+import { IBank } from '../entities/IBank';
+import { ICode } from '../entities/ICode';
+import { ICodelist } from '../entities/ICodelist';
+import { INeed } from '../entities/INeed';
+import { IProduct } from '../entities/IProduct';
+import { IRequirement } from '../entities/IRequirement';
+import { ITag } from '../entities/ITag';
+import { IVariant } from '../entities/IVariant';
 
 export default class StoreService {
   private static bank: IBank;

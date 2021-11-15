@@ -11,12 +11,12 @@ import { useTranslation } from 'react-i18next';
 import { v4 as uuidv4 } from 'uuid';
 import ControlledDate from '../../Form/ControlledDate';
 import ErrorSummary from '../../Form/ErrorSummary';
-import { IPeriodDateQuestion } from '../../models/IPeriodDateQuestion';
-import { IRequirement } from '../../models/IRequirement';
 import { IRequirementAnswer } from '../../models/IRequirementAnswer';
 import ModelType from '../../models/ModelType';
 import QuestionEnum from '../../models/QuestionEnum';
 import { QuestionType } from '../../models/QuestionType';
+import { IPeriodDateQuestion } from '../../Nexus/entities/IPeriodDateQuestion';
+import { IRequirement } from '../../Nexus/entities/IRequirement';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { addAnswer } from '../../store/reducers/spesification-reducer';
 

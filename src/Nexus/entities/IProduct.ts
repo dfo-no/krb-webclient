@@ -1,31 +1,33 @@
 import Joi from 'joi';
+import ModelType from '../../models/ModelType';
 import { IBaseModel } from './IBaseModel';
-import { IRequirement } from './IRequirement';
-import ModelType from './ModelType';
 
-export interface INeed extends IBaseModel {
+export interface IProduct extends IBaseModel {
+  id: string;
   title: string;
   description: string;
-  requirements: IRequirement[];
+  parent: string;
+  children?: [];
 }
 
-export const BaseNeedSchema = Joi.object().keys({
+export const BaseProductSchema = Joi.object().keys({
   id: Joi.string().length(36).required(),
   title: Joi.string().required(),
   description: Joi.string().allow(null, '').required(),
-  requirements: Joi.array().required(),
-  type: Joi.string().equal(ModelType.need).required(),
+  parent: Joi.string().allow(null, '').required(),
+  type: Joi.string().equal(ModelType.product).required(),
   sourceOriginal: Joi.string().required(),
   sourceRel: Joi.string().allow(null).required()
 });
 
-export const PostNeedSchema = BaseNeedSchema.keys({
+export const PostProductSchema = BaseProductSchema.keys({
   id: Joi.string().equal('').required(),
   parent: Joi.alternatives([Joi.string().length(36), Joi.string().valid('')]),
   children: Joi.array()
 });
 
-export const PutNeedSchema = BaseNeedSchema.keys({
+export const PutProductSchema = BaseProductSchema.keys({
+  id: Joi.string().length(36).required(),
   parent: Joi.alternatives([Joi.string().length(36), Joi.string().valid('')]),
   children: Joi.array()
 });

@@ -1,8 +1,8 @@
 import Joi from 'joi';
+import ModelType from '../../models/ModelType';
+import RequirementType from '../../models/RequirementType';
 import { IBaseModel } from './IBaseModel';
 import { IVariant, VariantSchema } from './IVariant';
-import ModelType from './ModelType';
-import RequirementType from './RequirementType';
 
 export interface IRequirement extends IBaseModel {
   id: string;

@@ -7,8 +7,8 @@ import {
   FieldValues,
   UseControllerProps
 } from 'react-hook-form';
-import { ICode } from '../models/ICode';
-import { ICodelist } from '../models/ICodelist';
+import { ICode } from '../Nexus/entities/ICode';
+import { ICodelist } from '../Nexus/entities/ICodelist';
 
 interface IProps<T> extends UseControllerProps<T> {
   error: FieldError | undefined;

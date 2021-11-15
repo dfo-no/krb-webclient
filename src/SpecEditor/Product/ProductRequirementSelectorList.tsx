@@ -4,11 +4,11 @@ import ListGroup from 'react-bootstrap/ListGroup';
 import Row from 'react-bootstrap/Row';
 import { BsArrowReturnRight } from 'react-icons/bs';
 import Utils from '../../common/Utils';
-import { IBank } from '../../models/IBank';
-import { INeed } from '../../models/INeed';
-import { IRequirement } from '../../models/IRequirement';
 import { ISpecificationProduct } from '../../models/ISpecificationProduct';
 import { Nestable } from '../../models/Nestable';
+import { IBank } from '../../Nexus/entities/IBank';
+import { INeed } from '../../Nexus/entities/INeed';
+import { IRequirement } from '../../Nexus/entities/IRequirement';
 import styles from './ProductSpecEditor.module.scss';
 import ProductSpesificationRequirement from './ProductSpecificationRequirement';
 

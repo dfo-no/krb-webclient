@@ -11,10 +11,10 @@ import Utils from '../../common/Utils';
 import ErrorSummary from '../../Form/ErrorSummary';
 import InputRow from '../../Form/InputRow';
 import { IAlert } from '../../models/IAlert';
-import { INeed, PutNeedSchema } from '../../models/INeed';
 import { Nestable } from '../../models/Nestable';
 import { Parentable } from '../../models/Parentable';
 import { AccordionContext } from '../../NestableHierarchy/AccordionContext';
+import { INeed, PutNeedSchema } from '../../Nexus/entities/INeed';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { addAlert } from '../../store/reducers/alert-reducer';
 import {

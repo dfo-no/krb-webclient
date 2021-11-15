@@ -1,7 +1,7 @@
-import { IRequirement } from '../../models/IRequirement';
-import { IVariant } from '../../models/IVariant';
 import ModelType from '../../models/ModelType';
 import RequirementType from '../../models/RequirementType';
+import { IRequirement } from '../entities/IRequirement';
+import { IVariant } from '../entities/IVariant';
 import StoreService from './StoreService';
 import UuidService from './UuidService';
 

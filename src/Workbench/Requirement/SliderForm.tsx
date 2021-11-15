@@ -8,8 +8,8 @@ import Row from 'react-bootstrap/Row';
 import { Control, FormState, UseFormRegister } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { BsTrashFill } from 'react-icons/bs';
-import { IRequirement } from '../../models/IRequirement';
-import { ISliderQuestion } from '../../models/ISliderQuestion';
+import { IRequirement } from '../../Nexus/entities/IRequirement';
+import { ISliderQuestion } from '../../Nexus/entities/ISliderQuestion';
 
 type IProps = {
   control: Control<IRequirement>;

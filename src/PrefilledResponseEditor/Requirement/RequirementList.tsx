@@ -3,8 +3,8 @@ import Card from 'react-bootstrap/Card';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import { getPaths } from '../../common/Tree';
-import { INeed } from '../../models/INeed';
 import { Levelable } from '../../models/Levelable';
+import { INeed } from '../../Nexus/entities/INeed';
 import { useAppSelector } from '../../store/hooks';
 import AnswerForm from './AnswerForm';
 

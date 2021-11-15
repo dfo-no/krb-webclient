@@ -9,14 +9,14 @@ import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import ErrorSummary from '../../../Form/ErrorSummary';
 import {
-  CodelistQuestionAnswerSchema,
-  ICodelistQuestion
-} from '../../../models/ICodelistQuestion';
-import { IRequirement } from '../../../models/IRequirement';
-import {
   IRequirementAnswer,
   RequirementAnswerSchema
 } from '../../../models/IRequirementAnswer';
+import {
+  CodelistQuestionAnswerSchema,
+  ICodelistQuestion
+} from '../../../Nexus/entities/ICodelistQuestion';
+import { IRequirement } from '../../../Nexus/entities/IRequirement';
 import { useAppDispatch, useAppSelector } from '../../../store/hooks';
 import {
   addAnswer,

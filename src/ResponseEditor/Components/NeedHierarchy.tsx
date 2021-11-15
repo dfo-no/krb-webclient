@@ -4,9 +4,9 @@ import ListGroup from 'react-bootstrap/ListGroup';
 import Row from 'react-bootstrap/Row';
 import { BsArrowReturnRight } from 'react-icons/bs';
 import Utils from '../../common/Utils';
-import { INeed } from '../../models/INeed';
 import { IRequirementAnswer } from '../../models/IRequirementAnswer';
 import { Nestable } from '../../models/Nestable';
+import { INeed } from '../../Nexus/entities/INeed';
 import styles from '../Requirement/RequirementView.module.scss';
 import RequirementAnswers from './RequirementAnswers';
 

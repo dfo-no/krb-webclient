@@ -8,15 +8,15 @@ import Form from 'react-bootstrap/Form';
 import { FieldError, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import ControlledSlider from '../../../Form/ControlledSlider';
-import { IRequirement } from '../../../models/IRequirement';
 import {
   IRequirementAnswer,
   RequirementAnswerSchema
 } from '../../../models/IRequirementAnswer';
+import { IRequirement } from '../../../Nexus/entities/IRequirement';
 import {
   ISliderQuestion,
   SliderQuestionAnswerSchema
-} from '../../../models/ISliderQuestion';
+} from '../../../Nexus/entities/ISliderQuestion';
 import { useAppDispatch, useAppSelector } from '../../../store/hooks';
 import {
   addAnswer,

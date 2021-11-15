@@ -1,4 +1,4 @@
-import { IBank } from './IBank';
+import { IBank } from '../Nexus/entities/IBank';
 import { IRequirementAnswer } from './IRequirementAnswer';
 import { ISpecificationProduct } from './ISpecificationProduct';
 

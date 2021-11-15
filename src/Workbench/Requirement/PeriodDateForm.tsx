@@ -11,8 +11,8 @@ import {
 } from 'react-hook-form';
 import { BsTrashFill } from 'react-icons/bs';
 import ControlledDate from '../../Form/ControlledDate';
-import { IPeriodDateQuestion } from '../../models/IPeriodDateQuestion';
-import { IRequirement } from '../../models/IRequirement';
+import { IPeriodDateQuestion } from '../../Nexus/entities/IPeriodDateQuestion';
+import { IRequirement } from '../../Nexus/entities/IRequirement';
 
 type IProps = {
   control: Control<IRequirement>;

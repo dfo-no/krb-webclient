@@ -2,7 +2,7 @@ import React from 'react';
 import Badge from 'react-bootstrap/Badge';
 import Card from 'react-bootstrap/Card';
 import Utils from '../../common/Utils';
-import { ITag } from '../../models/ITag';
+import { ITag } from '../../Nexus/entities/ITag';
 import { useAppSelector } from '../../store/hooks';
 
 interface IProps {

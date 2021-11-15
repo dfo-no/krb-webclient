@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-shadow */
 import React from 'react';
-import { ICode } from '../../models/ICode';
 import NestableHierarcy from '../../NestableHierarchy/NestableHierarcy';
+import { ICode } from '../../Nexus/entities/ICode';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import {
   putSelectedProjectThunk,

@@ -1,10 +1,10 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import Utils from '../../common/Utils';
-import { IBank } from '../../models/IBank';
 import { IRequirementAnswer } from '../../models/IRequirementAnswer';
 import { ISpecification } from '../../models/ISpecification';
 import { ISpecificationProduct } from '../../models/ISpecificationProduct';
 import ModelType from '../../models/ModelType';
+import { IBank } from '../../Nexus/entities/IBank';
 
 interface ISpecificationState {
   spec: ISpecification;

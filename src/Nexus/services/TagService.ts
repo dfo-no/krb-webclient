@@ -1,6 +1,6 @@
-import { ITag } from '../../models/ITag';
 import ModelType from '../../models/ModelType';
 import { Parentable } from '../../models/Parentable';
+import { ITag } from '../entities/ITag';
 import StoreService from './StoreService';
 import UuidService from './UuidService';
 

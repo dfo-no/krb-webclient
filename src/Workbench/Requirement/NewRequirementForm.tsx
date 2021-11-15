@@ -9,9 +9,12 @@ import { v4 as uuidv4 } from 'uuid';
 import ErrorSummary from '../../Form/ErrorSummary';
 import InputRow from '../../Form/InputRow';
 import { IAlert } from '../../models/IAlert';
-import { IRequirement, PostRequirementSchema } from '../../models/IRequirement';
 import ModelType from '../../models/ModelType';
 import RequirementType from '../../models/RequirementType';
+import {
+  IRequirement,
+  PostRequirementSchema
+} from '../../Nexus/entities/IRequirement';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { addAlert } from '../../store/reducers/alert-reducer';
 import {

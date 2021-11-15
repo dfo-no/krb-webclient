@@ -10,12 +10,12 @@ import { v4 as uuidv4 } from 'uuid';
 import SliderSelect from '../../components/SliderSelect';
 import ErrorSummary from '../../Form/ErrorSummary';
 import { IOption } from '../../models/IOption';
-import { IRequirement } from '../../models/IRequirement';
 import { IRequirementAnswer } from '../../models/IRequirementAnswer';
-import { ISliderQuestion } from '../../models/ISliderQuestion';
 import ModelType from '../../models/ModelType';
 import QuestionEnum from '../../models/QuestionEnum';
 import { QuestionType } from '../../models/QuestionType';
+import { IRequirement } from '../../Nexus/entities/IRequirement';
+import { ISliderQuestion } from '../../Nexus/entities/ISliderQuestion';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { addAnswer } from '../../store/reducers/spesification-reducer';
 

@@ -14,11 +14,11 @@ import { v4 as uuidv4 } from 'uuid';
 import Utils from '../../common/Utils';
 import ErrorSummary from '../../Form/ErrorSummary';
 import { IOption } from '../../models/IOption';
-import { IRequirement } from '../../models/IRequirement';
 import { IRequirementAnswer } from '../../models/IRequirementAnswer';
 import { ISpecificationProduct } from '../../models/ISpecificationProduct';
-import { IVariant } from '../../models/IVariant';
 import ModelType from '../../models/ModelType';
+import { IRequirement } from '../../Nexus/entities/IRequirement';
+import { IVariant } from '../../Nexus/entities/IVariant';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { selectQuestion } from '../../store/reducers/selectedQuestion-reducer';
 import {

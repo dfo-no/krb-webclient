@@ -7,8 +7,8 @@ import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 import { Control, FormState, UseFormRegister } from 'react-hook-form';
 import { BsTrashFill } from 'react-icons/bs';
-import { IRequirement } from '../../models/IRequirement';
-import { ITextQuestion } from '../../models/ITextQuestion';
+import { IRequirement } from '../../Nexus/entities/IRequirement';
+import { ITextQuestion } from '../../Nexus/entities/ITextQuestion';
 
 type IProps = {
   control: Control<IRequirement>;
