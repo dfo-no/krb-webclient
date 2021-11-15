@@ -10,7 +10,7 @@ import { v4 as uuidv4 } from 'uuid';
 import ErrorSummary from '../../Form/ErrorSummary';
 import InputRow from '../../Form/InputRow';
 import { IAlert } from '../../models/IAlert';
-import { PutRequirementSchema, Requirement } from '../../models/Requirement';
+import { IRequirement, PutRequirementSchema } from '../../models/Requirement';
 import { AccordionContext } from '../../NestableHierarchy/AccordionContext';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { addAlert } from '../../store/reducers/alert-reducer';
@@ -22,7 +22,7 @@ import {
 import { selectRequirement } from '../../store/reducers/selectedRequirement-reducer';
 
 interface IProps {
-  element: Requirement;
+  element: IRequirement;
 }
 
 export default function EditRequirementForm({
@@ -39,14 +39,14 @@ export default function EditRequirementForm({
     control,
     handleSubmit,
     formState: { errors }
-  } = useForm<Requirement>({
+  } = useForm<IRequirement>({
     resolver: joiResolver(PutRequirementSchema),
     defaultValues: element
   });
 
   const need = needId !== null ? needId : '';
 
-  const onSubmit = (post: Requirement) => {
+  const onSubmit = (post: IRequirement) => {
     dispatch(
       editRequirementInNeed({
         needId: need,
@@ -64,7 +64,7 @@ export default function EditRequirementForm({
     });
   };
 
-  const removeRequirement = (req: Requirement) => {
+  const removeRequirement = (req: IRequirement) => {
     dispatch(
       deleteRequirement({
         needId: need,

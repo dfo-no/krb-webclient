@@ -8,8 +8,8 @@ import { useTranslation } from 'react-i18next';
 import { v4 as uuidv4 } from 'uuid';
 import ErrorSummary from '../../Form/ErrorSummary';
 import InputRow from '../../Form/InputRow';
-import { Bank } from '../../models/Bank';
 import { IAlert } from '../../models/IAlert';
+import { IBank } from '../../models/IBank';
 import { EditProjectSchema } from '../../models/Project';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { addAlert } from '../../store/reducers/alert-reducer';
@@ -32,7 +32,7 @@ export default function EditProjectForm({
     reset,
     formState: { errors }
     // TODO: Check if Omit still posts needs, and Joi catches the potensial error
-  } = useForm<Omit<Bank, 'needs'>>({
+  } = useForm<Omit<IBank, 'needs'>>({
     resolver: joiResolver(EditProjectSchema),
     defaultValues: project
   });
@@ -44,7 +44,7 @@ export default function EditProjectForm({
     }
   }, [project, reset]);
 
-  const onEditProjectSubmit = (post: Bank) => {
+  const onEditProjectSubmit = (post: IBank) => {
     const alert: IAlert = {
       id: uuidv4(),
       style: 'success',

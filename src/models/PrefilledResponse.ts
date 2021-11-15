@@ -1,5 +1,5 @@
 import Joi from 'joi';
-import { Bank, BaseBankSchema } from './Bank';
+import { BaseBankSchema, IBank } from './IBank';
 import {
   IRequirementAnswer,
   RequirementAnswerSchema
@@ -7,7 +7,7 @@ import {
 import { PrefilledResponseProduct } from './PrefilledResponseProduct';
 
 export interface PrefilledResponse {
-  bank: Bank;
+  bank: IBank;
   supplier: string;
   products: PrefilledResponseProduct[];
   // answeredVariants: string[];

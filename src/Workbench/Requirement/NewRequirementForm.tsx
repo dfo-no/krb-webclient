@@ -10,7 +10,7 @@ import ErrorSummary from '../../Form/ErrorSummary';
 import InputRow from '../../Form/InputRow';
 import { IAlert } from '../../models/IAlert';
 import ModelType from '../../models/ModelType';
-import { PostRequirementSchema, Requirement } from '../../models/Requirement';
+import { IRequirement, PostRequirementSchema } from '../../models/Requirement';
 import RequirementType from '../../models/RequirementType';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { addAlert } from '../../store/reducers/alert-reducer';
@@ -31,7 +31,7 @@ function NewRequirementForm(): React.ReactElement {
 
   const need = needId !== null ? needId : '';
 
-  const defaultValues: Requirement = {
+  const defaultValues: IRequirement = {
     id: '',
     title: '',
     description: '',
@@ -50,12 +50,12 @@ function NewRequirementForm(): React.ReactElement {
     reset,
     setValue,
     formState: { errors }
-  } = useForm<Requirement>({
+  } = useForm<IRequirement>({
     resolver: joiResolver(PostRequirementSchema),
     defaultValues
   });
 
-  const onNewRequirementSubmit = (post: Requirement) => {
+  const onNewRequirementSubmit = (post: IRequirement) => {
     const requirement = { ...post };
     requirement.id = uuidv4();
     dispatch(

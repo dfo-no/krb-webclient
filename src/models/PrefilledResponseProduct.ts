@@ -1,6 +1,6 @@
 import Joi from 'joi';
-import { IProduct } from './IProduct';
 import { IRequirementAnswer } from './IRequirementAnswer';
+import { IProduct } from './Product';
 
 export interface PrefilledResponseProduct {
   id: string;

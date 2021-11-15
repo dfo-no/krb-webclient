@@ -14,19 +14,19 @@ import { useTranslation } from 'react-i18next';
 import { BsTrashFill } from 'react-icons/bs';
 import { v4 as uuidv4 } from 'uuid';
 import Utils from '../../common/Utils';
-import { Bank } from '../../models/Bank';
-import { IProduct } from '../../models/IProduct';
+import { IBank } from '../../models/IBank';
 import { IVariant } from '../../models/IVariant';
 import { Nestable } from '../../models/Nestable';
-import { Requirement } from '../../models/Requirement';
+import { IProduct } from '../../models/Product';
+import { IRequirement } from '../../models/Requirement';
 import QuestionArray from './QuestionArray';
 import styles from './Variant.module.scss';
 
 type IProps = {
-  control: Control<Requirement>;
-  register: UseFormRegister<Requirement>;
-  formState: FormState<Requirement>;
-  project: Bank;
+  control: Control<IRequirement>;
+  register: UseFormRegister<IRequirement>;
+  formState: FormState<IRequirement>;
+  project: IBank;
 };
 
 export default function VariantArray({
@@ -37,7 +37,7 @@ export default function VariantArray({
 }: IProps): React.ReactElement {
   const { errors } = formState;
   const { fields, append, remove } = useFieldArray<
-    Requirement,
+    IRequirement,
     'variants',
     'id'
   >({

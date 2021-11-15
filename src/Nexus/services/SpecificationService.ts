@@ -1,5 +1,5 @@
 /* eslint-disable class-methods-use-this */
-import { Bank } from '../../models/Bank';
+import { IBank } from '../../models/IBank';
 import { IRequirementAnswer } from '../../models/IRequirementAnswer';
 import { Specification } from '../../models/Specification';
 import { SpecificationProduct } from '../../models/SpecificationProduct';
@@ -27,7 +27,7 @@ export default class SpecificationService {
     return this.store.editTitle(title);
   }
 
-  async createSpecificationFromBank(bank: Bank): Promise<void> {
+  async createSpecificationFromBank(bank: IBank): Promise<void> {
     return this.store.createSpecificationFromBank(bank);
   }
 

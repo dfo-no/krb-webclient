@@ -3,12 +3,12 @@ import Container from 'react-bootstrap/Container';
 import { ICode } from '../../models/ICode';
 import { ICodelistQuestion } from '../../models/ICodelistQuestion';
 import { IRequirementAnswer } from '../../models/IRequirementAnswer';
-import { Requirement } from '../../models/Requirement';
+import { IRequirement } from '../../models/Requirement';
 import { useAppSelector } from '../../store/hooks';
 
 interface IProps {
   answer: IRequirementAnswer;
-  parent_requirement: Requirement;
+  parent_requirement: IRequirement;
 }
 
 export default function CodelistInfo({

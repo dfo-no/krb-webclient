@@ -1,5 +1,5 @@
-import { IProduct } from '../../models/IProduct';
 import ModelType from '../../models/ModelType';
+import { IProduct } from '../../models/Product';
 import StoreService from './StoreService';
 import UuidService from './UuidService';
 

@@ -9,8 +9,8 @@ import { useTranslation } from 'react-i18next';
 import { v4 as uuidv4 } from 'uuid';
 import ControlledTextInput from '../../Form/ControlledTextInput';
 import ErrorSummary from '../../Form/ErrorSummary';
-import { Bank } from '../../models/Bank';
 import { IAlert } from '../../models/IAlert';
+import { IBank } from '../../models/IBank';
 import { IPublication, PostPublicationSchema } from '../../models/IPublication';
 import ModelType from '../../models/ModelType';
 import Nexus from '../../Nexus/Nexus';
@@ -59,7 +59,7 @@ export default function NewPublication(): React.ReactElement {
     // save the new published Bank
     dispatch(postBankThunk(newBank))
       .unwrap()
-      .then(async (result: Bank) => {
+      .then(async (result: IBank) => {
         // Update Publication with new data
         publication.id = result.id;
         publication.bankId = result.id;

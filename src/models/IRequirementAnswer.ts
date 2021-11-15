@@ -9,7 +9,7 @@ import { TimeQuestionAnswerSchema } from './ITimeQuestion';
 import ModelType from './ModelType';
 import QuestionEnum from './QuestionEnum';
 import { QuestionType } from './QuestionType';
-import { BaseRequirementSchema, Requirement } from './Requirement';
+import { BaseRequirementSchema, IRequirement } from './Requirement';
 
 export interface IRequirementAnswer {
   id: string;
@@ -18,7 +18,7 @@ export interface IRequirementAnswer {
   variantId: string;
   question: QuestionType;
   type: ModelType;
-  requirement: Requirement;
+  requirement: IRequirement;
 }
 
 export const RequirementAnswerSchema = Joi.object().keys({

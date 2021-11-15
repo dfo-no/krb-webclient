@@ -13,7 +13,7 @@ import { ITextQuestion } from '../../models/ITextQuestion';
 import ModelType from '../../models/ModelType';
 import QuestionEnum from '../../models/QuestionEnum';
 import { QuestionType } from '../../models/QuestionType';
-import { Requirement } from '../../models/Requirement';
+import { IRequirement } from '../../models/Requirement';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { addAnswer } from '../../store/reducers/spesification-reducer';
 
@@ -21,7 +21,7 @@ interface IProps {
   question: QuestionType;
   type: string;
   reqTextId: string;
-  requirement: Requirement;
+  requirement: IRequirement;
 }
 
 export const ResponseCodelistSchema = Joi.object().keys({

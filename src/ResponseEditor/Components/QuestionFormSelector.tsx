@@ -2,7 +2,7 @@ import React from 'react';
 import Card from 'react-bootstrap/Card';
 import { IRequirementAnswer } from '../../models/IRequirementAnswer';
 import QuestionEnum from '../../models/QuestionEnum';
-import { Requirement } from '../../models/Requirement';
+import { IRequirement } from '../../models/Requirement';
 import RequirementType from '../../models/RequirementType';
 import CheckBoxInfo from '../InfoanswerFields/CheckBoxInfo';
 import CodelistInfo from '../InfoanswerFields/CodelistInfo';
@@ -17,7 +17,7 @@ import ITextAnswer from '../QuestionAnswerForms/TextAnswerForm';
 
 interface IProps {
   selectedAnswer: IRequirementAnswer;
-  req: Requirement;
+  req: IRequirement;
   requirementText: string;
 }
 

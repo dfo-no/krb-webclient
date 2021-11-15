@@ -16,7 +16,7 @@ import {
   ISliderQuestion,
   SliderQuestionAnswerSchema
 } from '../../../models/ISliderQuestion';
-import { Requirement } from '../../../models/Requirement';
+import { IRequirement } from '../../../models/Requirement';
 import { useAppDispatch, useAppSelector } from '../../../store/hooks';
 import {
   addAnswer,
@@ -77,7 +77,7 @@ export default function SliderForm({ elem }: IProps): React.ReactElement {
     dispatch(removeAnswer(elemId));
   };
 
-  const getVariantText = (requirement: Requirement, variantId: string) => {
+  const getVariantText = (requirement: IRequirement, variantId: string) => {
     const variantIndex = requirement.variants.findIndex(
       (v) => v.id === variantId
     );

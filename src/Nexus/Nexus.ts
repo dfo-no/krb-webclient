@@ -1,5 +1,5 @@
 /* eslint-disable class-methods-use-this */
-import { Bank } from '../models/Bank';
+import { IBank } from '../models/IBank';
 import Adapter from './Adapters/Adapter';
 import LocalStorageAdapter from './Adapters/LocalStorageAdapter';
 import CodelistService from './services/CodelistService';
@@ -69,7 +69,7 @@ export default class Nexus {
   }
 
   // find out how to handle potential load of specification as well as bank
-  async load(): Promise<Bank> {
+  async load(): Promise<IBank> {
     return this.adapter.load();
   }
 

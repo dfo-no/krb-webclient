@@ -1,14 +1,14 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { httpGet, httpPost } from '../../api/http';
-import { Bank } from '../../models/Bank';
+import { IBank } from '../../models/IBank';
 
 interface BankState {
   // banks: Finished and published versions of banks
-  normalizedList: { [key: string]: Bank };
-  list: Bank[];
+  normalizedList: { [key: string]: IBank };
+  list: IBank[];
   status: 'idle' | 'fulfilled' | 'rejected' | 'pending';
-  latest: Bank[];
-  alfabetic: Bank[];
+  latest: IBank[];
+  alfabetic: IBank[];
 }
 
 const initialState: BankState = {
@@ -22,7 +22,7 @@ const initialState: BankState = {
 export const getAlbefaticalSortedBanksThunk = createAsyncThunk(
   'getAlbefaticalSortedBanksThunk',
   async () => {
-    const response = await httpGet<Bank[]>(
+    const response = await httpGet<IBank[]>(
       `/api/bank/sorted?fieldName=${'title'}&limit=${5}&order=${'ASC'}`
     );
     return response.data;
@@ -32,21 +32,21 @@ export const getAlbefaticalSortedBanksThunk = createAsyncThunk(
 export const getDateSortedBanksThunk = createAsyncThunk(
   'getDateSortedBanksThunk',
   async () => {
-    const response = await httpGet<Bank[]>(
+    const response = await httpGet<IBank[]>(
       `/api/bank/sorted?fieldName=${'publishedDate'}&limit=${5}&order=${'DESC'}`
     );
     return response.data;
   }
 );
 export const getBanksThunk = createAsyncThunk('getBanksThunk', async () => {
-  const response = await httpGet<Bank[]>('/api/bank/banks');
+  const response = await httpGet<IBank[]>('/api/bank/banks');
   return response.data;
 });
 
 export const postBankThunk = createAsyncThunk(
   'postBankThunk',
-  async (bank: Bank) => {
-    const response = await httpPost<Bank>('/api/bank', bank);
+  async (bank: IBank) => {
+    const response = await httpPost<IBank>('/api/bank', bank);
     return response.data;
   }
 );
@@ -60,7 +60,7 @@ const bankSlice = createSlice({
       state.status = 'pending';
     });
     builder.addCase(getBanksThunk.fulfilled, (state, { payload }) => {
-      let bankList: { [key: string]: Bank } = {};
+      let bankList: { [key: string]: IBank } = {};
       bankList = payload.reduce((banks, bank) => {
         bankList[bank.id] = bank;
         return bankList;

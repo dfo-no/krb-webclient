@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import Utils from '../../common/Utils';
-import { Bank } from '../../models/Bank';
+import { IBank } from '../../models/IBank';
 import { IRequirementAnswer } from '../../models/IRequirementAnswer';
 import ModelType from '../../models/ModelType';
 import { Specification } from '../../models/Specification';
@@ -46,7 +46,7 @@ const specificationSlice = createSlice({
     editTitle(state, { payload }: PayloadAction<string>) {
       state.spec.title = payload;
     },
-    setBank(state, { payload }: PayloadAction<Bank>) {
+    setBank(state, { payload }: PayloadAction<IBank>) {
       state.spec.bank = payload;
     },
     addProduct(

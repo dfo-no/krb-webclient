@@ -1,12 +1,12 @@
 import Joi from 'joi';
 import { IBaseModel } from './IBaseModel';
 import ModelType from './ModelType';
-import { Requirement } from './Requirement';
+import { IRequirement } from './Requirement';
 
 export interface INeed extends IBaseModel {
   title: string;
   description: string;
-  requirements: Requirement[];
+  requirements: IRequirement[];
 }
 
 export const BaseNeedSchema = Joi.object().keys({

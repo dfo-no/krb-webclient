@@ -11,7 +11,7 @@ import { useFieldArray, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { BsPencilSquare, BsTrashFill } from 'react-icons/bs';
 import ErrorSummary from '../../Form/ErrorSummary';
-import { Bank } from '../../models/Bank';
+import { IBank } from '../../models/IBank';
 import { PutProjectSchema } from '../../models/Project';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import {
@@ -28,7 +28,7 @@ export default function PublicationList(): React.ReactElement {
   const [editId, setEditId] = useState('');
 
   const { control, register, formState, handleSubmit } = useForm<
-    Omit<Bank, 'needs'>
+    Omit<IBank, 'needs'>
   >({
     criteriaMode: 'all',
     resolver: joiResolver(PutProjectSchema),
@@ -50,7 +50,7 @@ export default function PublicationList(): React.ReactElement {
     });
   };
 
-  const onSubmit = (post: Bank) => {
+  const onSubmit = (post: IBank) => {
     const index = post.publications.findIndex(
       (element) => element.id === editId
     );

@@ -4,7 +4,7 @@ import { IVariant, VariantSchema } from './IVariant';
 import ModelType from './ModelType';
 import RequirementType from './RequirementType';
 
-export interface Requirement extends IBaseModel {
+export interface IRequirement extends IBaseModel {
   id: string;
   title: string;
   description: string;

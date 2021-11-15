@@ -1,5 +1,5 @@
 import Joi from 'joi';
-import { BaseBankSchema } from './Bank';
+import { BaseBankSchema } from './IBank';
 import { PutPublicationSchema } from './IPublication';
 import ModelType from './ModelType';
 

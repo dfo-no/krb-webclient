@@ -1,6 +1,6 @@
 /* eslint-disable class-methods-use-this */
 import Utils from '../../common/Utils';
-import { Bank } from '../../models/Bank';
+import { IBank } from '../../models/IBank';
 import { IBaseModel } from '../../models/IBaseModel';
 import { INeed } from '../../models/INeed';
 import { InheritedBank } from '../../models/InheritedBank';
@@ -17,7 +17,7 @@ export default class InheritanceService {
     this.storeService = store;
   }
 
-  generateInheritance = (inheritedBank: Bank): InheritedBank => {
+  generateInheritance = (inheritedBank: IBank): InheritedBank => {
     return {
       title: inheritedBank.title,
       description: inheritedBank.description,
@@ -55,7 +55,7 @@ export default class InheritanceService {
     });
   }
 
-  async inheritBank(project: Bank, inheritedBank: Bank): Promise<void> {
+  async inheritBank(project: IBank, inheritedBank: IBank): Promise<void> {
     const newProject = { ...project };
 
     const newProductList = [
@@ -102,7 +102,7 @@ export default class InheritanceService {
   }
 
   async removeInheritedBank(
-    project: Bank,
+    project: IBank,
     inheritedBank: string
   ): Promise<void> {
     const newProject = { ...project };

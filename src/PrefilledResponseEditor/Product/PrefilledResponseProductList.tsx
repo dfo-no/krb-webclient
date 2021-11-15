@@ -12,9 +12,9 @@ import { Link } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
 import Utils from '../../common/Utils';
 import ErrorSummary from '../../Form/ErrorSummary';
-import { IProduct } from '../../models/IProduct';
 import { Parentable } from '../../models/Parentable';
 import { PrefilledResponseProduct } from '../../models/PrefilledResponseProduct';
+import { IProduct } from '../../models/Product';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import {
   addProduct,

@@ -18,7 +18,7 @@ import { INeed } from '../../models/INeed';
 import { IVariant } from '../../models/IVariant';
 import { IAnswerBase, IConfigBase, IQuestionBase } from '../../models/Question';
 import QuestionEnum from '../../models/QuestionEnum';
-import { Requirement } from '../../models/Requirement';
+import { IRequirement } from '../../models/Requirement';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { addAlert } from '../../store/reducers/alert-reducer';
 import {
@@ -74,7 +74,7 @@ function EditCodeListForm(): React.ReactElement {
   const checkCodelistConnection = () => {
     let used = false;
     project.needs.forEach((need: INeed) => {
-      need.requirements.forEach((requirement: Requirement) => {
+      need.requirements.forEach((requirement: IRequirement) => {
         requirement.variants.forEach((variant: IVariant) => {
           variant.questions.forEach(
             (alternative: IQuestionBase<IAnswerBase, IConfigBase>) => {

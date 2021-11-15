@@ -4,16 +4,16 @@ import ListGroup from 'react-bootstrap/ListGroup';
 import Row from 'react-bootstrap/Row';
 import { BsArrowReturnRight } from 'react-icons/bs';
 import Utils from '../../common/Utils';
-import { Bank } from '../../models/Bank';
+import { IBank } from '../../models/IBank';
 import { INeed } from '../../models/INeed';
 import { Nestable } from '../../models/Nestable';
-import { Requirement } from '../../models/Requirement';
+import { IRequirement } from '../../models/Requirement';
 import { SpecificationProduct } from '../../models/SpecificationProduct';
 import styles from './ProductSpecEditor.module.scss';
 import ProductSpesificationRequirement from './ProductSpecificationRequirement';
 
 interface InputProps {
-  selectedBank: Bank;
+  selectedBank: IBank;
   product: SpecificationProduct;
 }
 
@@ -21,7 +21,7 @@ export default function ProductRequirementSelectorList({
   selectedBank,
   product
 }: InputProps): React.ReactElement {
-  const requirementsAnswers = (requirementArray: Requirement[]) => {
+  const requirementsAnswers = (requirementArray: IRequirement[]) => {
     return requirementArray.map((req) => {
       const selected = !!product.requirements.includes(req.id);
       return (
@@ -41,7 +41,7 @@ export default function ProductRequirementSelectorList({
     let n = level;
     let children: JSX.Element[];
     const cssClass = `level${n}`;
-    let requirementsArray: Requirement[] = [];
+    let requirementsArray: IRequirement[] = [];
     return listOfNeed.map((element) => {
       if (element.children && element.children.length > 0) {
         n += 1;
@@ -71,7 +71,7 @@ export default function ProductRequirementSelectorList({
   const needHierarchy = (needsList: Nestable<INeed>[]) => {
     const newList = Utils.unflatten(needsList)[0];
     let children: JSX.Element[];
-    let requirementsArray: Requirement[] = [];
+    let requirementsArray: IRequirement[] = [];
     const hierarchy = newList.map((element) => {
       if (
         element.id in associatedRequirements &&

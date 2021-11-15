@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { cloneDeep } from 'lodash';
 import Utils from '../../common/Utils';
-import { Bank } from '../../models/Bank';
+import { IBank } from '../../models/IBank';
 import { IRequirementAnswer } from '../../models/IRequirementAnswer';
 import ModelType from '../../models/ModelType';
 import { PrefilledResponse } from '../../models/PrefilledResponse';
@@ -96,7 +96,7 @@ const responseSlice = createSlice({
       }
     },
 
-    setBank(state, { payload }: PayloadAction<Bank>) {
+    setBank(state, { payload }: PayloadAction<IBank>) {
       state.prefilledResponse.bank = payload;
     },
     addProduct(state, { payload }: PayloadAction<PrefilledResponseProduct>) {

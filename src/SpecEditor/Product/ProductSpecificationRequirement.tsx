@@ -4,7 +4,7 @@ import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 import Utils from '../../common/Utils';
-import { Requirement } from '../../models/Requirement';
+import { IRequirement } from '../../models/Requirement';
 import { SpecificationProduct } from '../../models/SpecificationProduct';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import {
@@ -15,7 +15,7 @@ import {
 import ProductRequirementAnswer from './ProductRequirementAnswer';
 
 type InputProps = {
-  requirement: Requirement;
+  requirement: IRequirement;
   selected: boolean;
   productId: string;
 };

@@ -1,7 +1,7 @@
 /* eslint-disable no-param-reassign */
 /* eslint-disable class-methods-use-this */
 import produce from 'immer';
-import { Bank } from '../../models/Bank';
+import { IBank } from '../../models/IBank';
 import { IRequirementAnswer } from '../../models/IRequirementAnswer';
 import { Specification } from '../../models/Specification';
 import { SpecificationProduct } from '../../models/SpecificationProduct';
@@ -18,7 +18,7 @@ export default class SpecificationStoreService {
     return SpecificationStoreService.specification;
   }
 
-  public createSpecificationFromBank(bank: Bank): void {
+  public createSpecificationFromBank(bank: IBank): void {
     SpecificationStoreService.specification = {
       bank,
       title: '',

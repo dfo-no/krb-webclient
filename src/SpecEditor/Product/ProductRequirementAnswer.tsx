@@ -17,7 +17,7 @@ import { IOption } from '../../models/IOption';
 import { IRequirementAnswer } from '../../models/IRequirementAnswer';
 import { IVariant } from '../../models/IVariant';
 import ModelType from '../../models/ModelType';
-import { Requirement } from '../../models/Requirement';
+import { IRequirement } from '../../models/Requirement';
 import { SpecificationProduct } from '../../models/SpecificationProduct';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { selectQuestion } from '../../store/reducers/selectedQuestion-reducer';
@@ -28,7 +28,7 @@ import {
 } from '../../store/reducers/spesification-reducer';
 
 interface IProps {
-  requirement: Requirement;
+  requirement: IRequirement;
   productId: string;
 }
 
@@ -199,7 +199,7 @@ export default function ProductRequirementAnswer({
     return [defaultText, defaultWeight];
   }
 
-  const reqTextOptions = (req: Requirement) => {
+  const reqTextOptions = (req: IRequirement) => {
     const reqText = req.variants.map((variant) => {
       if (req.variants.length === 1) {
         return <p>{variant.requirementText}</p>;

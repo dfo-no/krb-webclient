@@ -17,7 +17,7 @@ import {
   RequirementAnswerSchema
 } from '../../../models/IRequirementAnswer';
 import { PrefilledResponseProduct } from '../../../models/PrefilledResponseProduct';
-import { Requirement } from '../../../models/Requirement';
+import { IRequirement } from '../../../models/Requirement';
 import { useAppDispatch, useAppSelector } from '../../../store/hooks';
 import {
   addProductAnswer,
@@ -75,7 +75,7 @@ export default function ProductCodelistForm({
     dispatch(removeProductAnswer({ answerId: elemId, productId }));
   };
 
-  const getVariantText = (requirement: Requirement, variantId: string) => {
+  const getVariantText = (requirement: IRequirement, variantId: string) => {
     const variantIndex = requirement.variants.findIndex(
       (v) => v.id === variantId
     );

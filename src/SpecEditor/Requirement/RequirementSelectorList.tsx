@@ -6,7 +6,7 @@ import { BsArrowReturnRight } from 'react-icons/bs';
 import Utils from '../../common/Utils';
 import { INeed } from '../../models/INeed';
 import { Nestable } from '../../models/Nestable';
-import { Requirement } from '../../models/Requirement';
+import { IRequirement } from '../../models/Requirement';
 import { useAppSelector } from '../../store/hooks';
 import styles from './RequirementSelectorList.module.scss';
 import SpesificationRequirement from './SpesificationRequirement';
@@ -19,7 +19,7 @@ export default function RequirementSelectorList({
   needList
 }: InputProps): React.ReactElement {
   const { spec } = useAppSelector((state) => state.specification);
-  const checkIfReqHasVariantMatch = (req: Requirement): boolean => {
+  const checkIfReqHasVariantMatch = (req: IRequirement): boolean => {
     let found = false;
     req.variants.forEach((variant) => {
       if (variant.useSpesification === true) {
@@ -65,7 +65,7 @@ export default function RequirementSelectorList({
     return found;
   }
 
-  const requirementsAnswers = (requirementArray: Requirement[]) => {
+  const requirementsAnswers = (requirementArray: IRequirement[]) => {
     return requirementArray.map((req) => {
       const selected = !!spec.requirements.includes(req.id);
       if (checkIfReqHasVariantMatch(req)) {

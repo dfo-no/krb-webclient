@@ -1,4 +1,4 @@
-import { Bank } from '../../models/Bank';
+import { IBank } from '../../models/IBank';
 import ModelType from '../../models/ModelType';
 import StoreService from './StoreService';
 import UuidService from './UuidService';
@@ -12,16 +12,16 @@ export default class ProjectService {
     this.storeService = store;
   }
 
-  public setProject(bank: Bank): void {
+  public setProject(bank: IBank): void {
     this.storeService.setBank(bank);
   }
 
-  public getProject(): Bank {
+  public getProject(): IBank {
     return this.storeService.getBank();
   }
 
-  generateDefaultProjectValues = (): Bank => {
-    const defaultValues: Bank = {
+  generateDefaultProjectValues = (): IBank => {
+    const defaultValues: IBank = {
       id: '',
       title: '',
       description: '',

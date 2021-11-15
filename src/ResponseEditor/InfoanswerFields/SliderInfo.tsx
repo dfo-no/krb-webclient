@@ -2,11 +2,11 @@ import React from 'react';
 import Container from 'react-bootstrap/Container';
 import { IRequirementAnswer } from '../../models/IRequirementAnswer';
 import { ISliderQuestion } from '../../models/ISliderQuestion';
-import { Requirement } from '../../models/Requirement';
+import { IRequirement } from '../../models/Requirement';
 
 interface IProps {
   answer: IRequirementAnswer;
-  parent_requirement: Requirement;
+  parent_requirement: IRequirement;
 }
 
 export default function SliderInfo({

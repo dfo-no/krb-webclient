@@ -1,26 +1,26 @@
 /* eslint-disable no-param-reassign */
 /* eslint-disable class-methods-use-this */
 import produce from 'immer';
-import { Bank } from '../../models/Bank';
+import { IBank } from '../../models/IBank';
 import { ICode } from '../../models/ICode';
 import { ICodelist } from '../../models/ICodelist';
 import { INeed } from '../../models/INeed';
-import { IProduct } from '../../models/IProduct';
 import { IVariant } from '../../models/IVariant';
 import { Parentable } from '../../models/Parentable';
+import { IProduct } from '../../models/Product';
 import { QuestionType } from '../../models/QuestionType';
-import { Requirement } from '../../models/Requirement';
+import { IRequirement } from '../../models/Requirement';
 import { Tag } from '../../models/Tag';
 
 export default class StoreService {
-  private static bank: Bank;
+  private static bank: IBank;
 
-  public setBank(bank: Bank): void {
+  public setBank(bank: IBank): void {
     StoreService.bank = bank;
   }
 
   // eslint-disable-next-line class-methods-use-this
-  public getBank(): Bank {
+  public getBank(): IBank {
     return StoreService.bank;
   }
 
@@ -153,7 +153,7 @@ export default class StoreService {
     });
   }
 
-  public addRequirement(needId: string, requirement: Requirement): void {
+  public addRequirement(needId: string, requirement: IRequirement): void {
     const needIndex = StoreService.bank.needs.findIndex(
       (need) => need.id === needId
     );
@@ -162,7 +162,7 @@ export default class StoreService {
     }
   }
 
-  public editRequirement(needId: string, requirement: Requirement): void {
+  public editRequirement(needId: string, requirement: IRequirement): void {
     const needIndex = StoreService.bank.needs.findIndex(
       (need) => need.id === needId
     );
@@ -176,7 +176,7 @@ export default class StoreService {
     }
   }
 
-  public deleteRequirement(needId: string, requirement: Requirement): void {
+  public deleteRequirement(needId: string, requirement: IRequirement): void {
     const needIndex = StoreService.bank.needs.findIndex(
       (need) => need.id === needId
     );

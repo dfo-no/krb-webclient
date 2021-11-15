@@ -1,13 +1,13 @@
-import { Bank } from '../models/Bank';
+import { IBank } from '../models/IBank';
 import { IBaseModel } from '../models/IBaseModel';
 import { INeed } from '../models/INeed';
 import { InheritedBank } from '../models/InheritedBank';
-import { IProduct } from '../models/IProduct';
 import { IVariant } from '../models/IVariant';
 import { Levelable } from '../models/Levelable';
 import { Nestable } from '../models/Nestable';
 import { Parentable } from '../models/Parentable';
-import { Requirement } from '../models/Requirement';
+import { IProduct } from '../models/Product';
+import { IRequirement } from '../models/Requirement';
 
 class Utils {
   static ensure<T>(
@@ -171,7 +171,7 @@ class Utils {
   static findNeedParents(
     element: Nestable<INeed>,
     parents: Nestable<INeed>[],
-    selectedProject: Bank
+    selectedProject: IBank
   ): Nestable<INeed>[] {
     const parentList = parents;
     const parentNeed = Utils.ensure(
@@ -187,7 +187,7 @@ class Utils {
   static checkParentInProductList(
     products: string[],
     parentId: string,
-    selectedProject: Bank
+    selectedProject: IBank
   ): boolean {
     if (parentId === '') return false;
     const parentProduct = Utils.ensure(
@@ -212,13 +212,13 @@ class Utils {
 
   static findAssociatedRequirements(
     selectedProduct: IProduct,
-    selectedProject: Bank
-  ): [{ [key: string]: Requirement[] }, Nestable<INeed>[], IVariant[]] {
-    const relevantRequirements: { [key: string]: Requirement[] } = {};
+    selectedProject: IBank
+  ): [{ [key: string]: IRequirement[] }, Nestable<INeed>[], IVariant[]] {
+    const relevantRequirements: { [key: string]: IRequirement[] } = {};
     let needList: Nestable<INeed>[] = [];
     const variantList: IVariant[] = [];
     selectedProject.needs.forEach((element) => {
-      element.requirements.forEach((req: Requirement) => {
+      element.requirements.forEach((req: IRequirement) => {
         req.variants.forEach((variant: IVariant) => {
           if (
             variant.products.includes(selectedProduct.id) ||
@@ -367,7 +367,7 @@ class Utils {
     });
   }
 
-  static inheritBank(project: Bank, inheritedBank: Bank): Bank {
+  static inheritBank(project: IBank, inheritedBank: IBank): IBank {
     const newProject = { ...project };
 
     const newProductList = [
@@ -418,7 +418,7 @@ class Utils {
     return list.filter((element) => element.sourceRel !== bankId);
   }
 
-  static removeInheritedBank(project: Bank, inheritedBank: string): Bank {
+  static removeInheritedBank(project: IBank, inheritedBank: string): IBank {
     const newProject = { ...project };
 
     const newProductList = this.filterRelativeSourceList(

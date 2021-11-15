@@ -13,9 +13,9 @@ import ErrorSummary from '../../Form/ErrorSummary';
 import InputRow from '../../Form/InputRow';
 import { IAlert } from '../../models/IAlert';
 import { INeed } from '../../models/INeed';
-import { IProduct, PutProductSchema } from '../../models/IProduct';
 import { IVariant } from '../../models/IVariant';
-import { Requirement } from '../../models/Requirement';
+import { IProduct, PutProductSchema } from '../../models/Product';
+import { IRequirement } from '../../models/Requirement';
 import { AccordionContext } from '../../NestableHierarchy/AccordionContext';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { addAlert } from '../../store/reducers/alert-reducer';
@@ -78,7 +78,7 @@ export default function EditProductForm({
   const checkProductConnection = () => {
     let used = false;
     project.needs.forEach((need: INeed) => {
-      need.requirements.forEach((requirement: Requirement) => {
+      need.requirements.forEach((requirement: IRequirement) => {
         requirement.variants.forEach((variant: IVariant) => {
           if (variant.products.includes(element.id)) {
             used = true;

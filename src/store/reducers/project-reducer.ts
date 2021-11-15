@@ -1,22 +1,22 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { httpDelete, httpGet, httpPost, httpPut } from '../../api/http';
 import Utils from '../../common/Utils';
-import { Bank } from '../../models/Bank';
+import { IBank } from '../../models/IBank';
 import { ICode } from '../../models/ICode';
 import { ICodelist } from '../../models/ICodelist';
 import { INeed } from '../../models/INeed';
 import { InheritedBank } from '../../models/InheritedBank';
-import { IProduct } from '../../models/IProduct';
 import { IPublication } from '../../models/IPublication';
 import ModelType from '../../models/ModelType';
 import { Parentable } from '../../models/Parentable';
-import { Requirement } from '../../models/Requirement';
+import { IProduct } from '../../models/Product';
+import { IRequirement } from '../../models/Requirement';
 import { Tag } from '../../models/Tag';
 
 interface ProjectState {
-  list: Bank[];
+  list: IBank[];
   listLoading: 'idle' | 'fulfilled' | 'rejected' | 'pending';
-  project: Bank;
+  project: IBank;
   projectLoading: 'idle' | 'fulfilled' | 'rejected' | 'pending';
 }
 
@@ -46,7 +46,7 @@ const initialState: ProjectState = {
 export const getProjectsThunk = createAsyncThunk(
   'getProjectsThunk',
   async () => {
-    const response = await httpGet<Bank[]>('/api/bank/projects');
+    const response = await httpGet<IBank[]>('/api/bank/projects');
 
     return response.data;
   }
@@ -55,21 +55,21 @@ export const getProjectsThunk = createAsyncThunk(
 export const getProjectThunk = createAsyncThunk(
   'getProjectThunk',
   async (id: string) => {
-    const response = await httpGet<Bank>(`/api/bank/${id}`);
+    const response = await httpGet<IBank>(`/api/bank/${id}`);
     return response.data;
   }
 );
 
 export const postProjectThunk = createAsyncThunk(
   'postProjectThunk',
-  async (project: Bank) => {
-    const response = await httpPost<Bank>('/api/bank', project);
+  async (project: IBank) => {
+    const response = await httpPost<IBank>('/api/bank', project);
     return response.data;
   }
 );
 
 export const putSelectedProjectThunk = createAsyncThunk<
-  Bank,
+  IBank,
   string,
   {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -77,22 +77,22 @@ export const putSelectedProjectThunk = createAsyncThunk<
   }
 >('putSelectedProjectThunk', async (id: string, thunkApi) => {
   const { project } = thunkApi.getState().project as ProjectState;
-  const response = await httpPut<Bank>(`/api/bank/${project.id}`, project);
+  const response = await httpPut<IBank>(`/api/bank/${project.id}`, project);
   return response.data;
 });
 
 export const putProjectThunk = createAsyncThunk(
   'putProjectThunk',
-  async (project: Bank) => {
-    const response = await httpPut<Bank>(`/api/bank/${project.id}`, project);
+  async (project: IBank) => {
+    const response = await httpPut<IBank>(`/api/bank/${project.id}`, project);
     return response.data;
   }
 );
 
 export const deleteProjectThunk = createAsyncThunk(
   'deleteProjectThunk',
-  async (project: Bank) => {
-    await httpDelete<Bank>(`/api/bank/${project.id}`);
+  async (project: IBank) => {
+    await httpDelete<IBank>(`/api/bank/${project.id}`);
     return project;
   }
 );
@@ -100,7 +100,7 @@ export const deleteProjectThunk = createAsyncThunk(
 export const deleteProjectByIdThunk = createAsyncThunk(
   'deleteProjectByIdThunk',
   async (projectId: string) => {
-    await httpDelete<Bank>(`/api/bank/${projectId}`);
+    await httpDelete<IBank>(`/api/bank/${projectId}`);
     return projectId;
   }
 );
@@ -109,14 +109,14 @@ const projectSlice = createSlice({
   name: 'projects',
   initialState,
   reducers: {
-    addProjects(state, { payload }: PayloadAction<Bank[]>) {
+    addProjects(state, { payload }: PayloadAction<IBank[]>) {
       state.list = payload;
     },
-    selectProject(state, { payload }: PayloadAction<Bank>) {
+    selectProject(state, { payload }: PayloadAction<IBank>) {
       state.project = payload;
     },
     // Should not be needed, when removing, we reload the list
-    deleteProject(state, { payload }: PayloadAction<Bank>) {
+    deleteProject(state, { payload }: PayloadAction<IBank>) {
       const index = Utils.ensure(
         state.list.findIndex((project) => project.id === payload.id)
       );
@@ -323,7 +323,7 @@ const projectSlice = createSlice({
         payload
       }: PayloadAction<{
         needId: string;
-        requirement: Requirement;
+        requirement: IRequirement;
       }>
     ) {
       const needIndex = state.project.needs.findIndex(
@@ -346,7 +346,7 @@ const projectSlice = createSlice({
         payload
       }: PayloadAction<{
         needId: string;
-        requirement: Requirement;
+        requirement: IRequirement;
       }>
     ) {
       const needIndex = state.project.needs.findIndex(
@@ -360,7 +360,7 @@ const projectSlice = createSlice({
     },
     deleteRequirement(
       state,
-      { payload }: PayloadAction<{ needId: string; requirement: Requirement }>
+      { payload }: PayloadAction<{ needId: string; requirement: IRequirement }>
     ) {
       const needIndex = state.project.needs.findIndex(
         (elem) => elem.id === payload.needId

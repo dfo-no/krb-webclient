@@ -12,8 +12,8 @@ import { Link } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
 import ErrorSummary from '../Form/ErrorSummary';
 import InputRow from '../Form/InputRow';
-import { Bank } from '../models/Bank';
 import { IAlert } from '../models/IAlert';
+import { IBank } from '../models/IBank';
 import { PostProjectSchema } from '../models/Project';
 import Nexus from '../Nexus/Nexus';
 import { useAppDispatch, useAppSelector } from '../store/hooks';
@@ -32,7 +32,7 @@ function Projects(): React.ReactElement {
   const { t } = useTranslation();
   const nexus = Nexus.getInstance();
 
-  const defaultValues: Bank =
+  const defaultValues: IBank =
     nexus.projectService.generateDefaultProjectValues();
 
   const {
@@ -40,12 +40,12 @@ function Projects(): React.ReactElement {
     reset,
     control,
     formState: { errors }
-  } = useForm<Bank>({
+  } = useForm<IBank>({
     resolver: joiResolver(PostProjectSchema),
     defaultValues
   });
 
-  const onSubmit = (post: Bank) => {
+  const onSubmit = (post: IBank) => {
     dispatch(postProjectThunk(post)).then(() => {
       reset();
       setShowNewProjectForm(false);
@@ -58,15 +58,15 @@ function Projects(): React.ReactElement {
     dispatch(addAlert({ alert }));
   };
 
-  async function onDelete(project: Bank) {
+  async function onDelete(project: IBank) {
     dispatch(deleteProjectThunk(project));
   }
 
-  const renderProjects = (projectList: Bank[]) => {
+  const renderProjects = (projectList: IBank[]) => {
     projectList
       .slice()
       .sort((a, b) => (a.title.toLowerCase() > b.title.toLowerCase() ? 1 : -1));
-    const projects = projectList.map((element: Bank) => {
+    const projects = projectList.map((element: IBank) => {
       return (
         <ListGroup.Item key={element.id}>
           {/* TODO: fix styling  */}

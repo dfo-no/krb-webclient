@@ -12,12 +12,12 @@ import {
 import { BsTrashFill } from 'react-icons/bs';
 import ControlledDate from '../../Form/ControlledDate';
 import { IPeriodDateQuestion } from '../../models/IPeriodDateQuestion';
-import { Requirement } from '../../models/Requirement';
+import { IRequirement } from '../../models/Requirement';
 
 type IProps = {
-  control: Control<Requirement>;
-  register: UseFormRegister<Requirement>;
-  formState: FormState<Requirement>;
+  control: Control<IRequirement>;
+  register: UseFormRegister<IRequirement>;
+  formState: FormState<IRequirement>;
   item: IPeriodDateQuestion;
   vIndex: number;
   aIndex: number;

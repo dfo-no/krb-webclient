@@ -6,13 +6,13 @@ import Row from 'react-bootstrap/Row';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
 import Utils from '../../common/Utils';
-import { Bank } from '../../models/Bank';
+import { IBank } from '../../models/IBank';
 import { useAppDispatch } from '../../store/hooks';
 import { putProjectThunk } from '../../store/reducers/project-reducer';
 
 interface SearchBarProps {
-  list: Bank[];
-  project: Bank;
+  list: IBank[];
+  project: IBank;
 }
 
 export default function InheritanceSearchBar({
@@ -20,7 +20,7 @@ export default function InheritanceSearchBar({
   project
 }: SearchBarProps): React.ReactElement {
   const [input, setInput] = useState('');
-  const [searchList, setSearchList] = useState<Bank[]>([]);
+  const [searchList, setSearchList] = useState<IBank[]>([]);
   const dispatch = useAppDispatch();
   const { t } = useTranslation();
   const history = useHistory();
@@ -42,13 +42,13 @@ export default function InheritanceSearchBar({
     setInput(value);
   };
 
-  const selectInheritance = (bank: Bank) => {
+  const selectInheritance = (bank: IBank) => {
     const updatedProject = Utils.inheritBank(project, bank);
     dispatch(putProjectThunk(updatedProject));
     history.push('/workbench/:projectId/inheritance');
   };
-  const displaylist = (bankList: Bank[]) => {
-    const resultList = bankList.map((bank: Bank) => {
+  const displaylist = (bankList: IBank[]) => {
+    const resultList = bankList.map((bank: IBank) => {
       return (
         <Row>
           <Col>

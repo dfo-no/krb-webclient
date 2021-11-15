@@ -16,7 +16,7 @@ import {
   ITextQuestion,
   TextQuestionAnswerSchema
 } from '../../../models/ITextQuestion';
-import { Requirement } from '../../../models/Requirement';
+import { IRequirement } from '../../../models/Requirement';
 import { useAppDispatch, useAppSelector } from '../../../store/hooks';
 import {
   addAnswer,
@@ -74,7 +74,7 @@ export default function TextForm({ answer }: IProps): React.ReactElement {
     dispatch(removeAnswer(elemId));
   };
 
-  const getVariantText = (requirement: Requirement, variantId: string) => {
+  const getVariantText = (requirement: IRequirement, variantId: string) => {
     const variantIndex = requirement.variants.findIndex(
       (v) => v.id === variantId
     );

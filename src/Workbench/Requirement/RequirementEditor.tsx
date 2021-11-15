@@ -12,7 +12,7 @@ import Utils from '../../common/Utils';
 import ErrorSummary from '../../Form/ErrorSummary';
 import { IAlert } from '../../models/IAlert';
 import { INeed } from '../../models/INeed';
-import { BaseRequirementSchema, Requirement } from '../../models/Requirement';
+import { BaseRequirementSchema, IRequirement } from '../../models/Requirement';
 import { Tag } from '../../models/Tag';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { addAlert } from '../../store/reducers/alert-reducer';
@@ -42,13 +42,13 @@ function RequirementEditor(): React.ReactElement {
     need.requirements.find((element) => element.id === reqId)
   );
 
-  const { control, register, handleSubmit, formState } = useForm<Requirement>({
+  const { control, register, handleSubmit, formState } = useForm<IRequirement>({
     resolver: joiResolver(BaseRequirementSchema),
     defaultValues: requirement
   });
   const { errors } = formState;
 
-  const onSubmit = async (post: Requirement) => {
+  const onSubmit = async (post: IRequirement) => {
     const alert: IAlert = {
       id: uuidv4(),
       style: 'success',
