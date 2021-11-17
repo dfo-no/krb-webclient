@@ -24,5 +24,6 @@ export const PostCodeSchema = BaseCodeSchema.keys({
 });
 
 export const EditCodeSchema = BaseCodeSchema.keys({
-  id: Joi.string().length(36).required()
+  id: Joi.string().length(36).required(),
+  level: Joi.number()
 });

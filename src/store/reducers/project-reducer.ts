@@ -197,7 +197,11 @@ const projectSlice = createSlice({
       state,
       {
         payload
-      }: PayloadAction<{ id: string; codelistId: string; codes: ICode[] }>
+      }: PayloadAction<{
+        id: string;
+        codelistId: string;
+        codes: Parentable<ICode>[];
+      }>
     ) {
       const codelistIndex = state.project.codelist.findIndex(
         (c) => c.id === payload.codelistId
@@ -225,7 +229,9 @@ const projectSlice = createSlice({
 
     editCodeInCodelist(
       state,
-      { payload }: PayloadAction<{ codelistId: string; code: ICode }>
+      {
+        payload
+      }: PayloadAction<{ codelistId: string; code: Parentable<ICode> }>
     ) {
       const codelistIndex = state.project.codelist.findIndex(
         (codelist) => codelist.id === payload.codelistId
@@ -242,7 +248,9 @@ const projectSlice = createSlice({
 
     addCodeToCodelist(
       state,
-      { payload }: PayloadAction<{ codelistId: string; code: ICode }>
+      {
+        payload
+      }: PayloadAction<{ codelistId: string; code: Parentable<ICode> }>
     ) {
       const index = state.project.codelist.findIndex(
         (codelist) => codelist.id === payload.codelistId
@@ -276,7 +284,11 @@ const projectSlice = createSlice({
       state,
       {
         payload
-      }: PayloadAction<{ id: string; code: ICode; codeListId: string }>
+      }: PayloadAction<{
+        id: string;
+        code: Parentable<ICode>;
+        codeListId: string;
+      }>
     ) {
       const index = Utils.ensure(
         state.list.findIndex((project) => project.id === payload.id)
@@ -291,7 +303,11 @@ const projectSlice = createSlice({
       state,
       {
         payload
-      }: PayloadAction<{ id: string; code: ICode; codeListId: string }>
+      }: PayloadAction<{
+        id: string;
+        code: Parentable<ICode>;
+        codeListId: string;
+      }>
     ) {
       // todo: move to more suitable and less repetetive place
       const index = Utils.ensure(

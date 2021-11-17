@@ -1,6 +1,6 @@
-/* eslint-disable @typescript-eslint/no-shadow */
 import React from 'react';
-import NestableHierarcy from '../../NestableHierarchy/NestableHierarcy';
+import { Parentable } from '../../models/Parentable';
+import NestableHierarcy2 from '../../NestableHierarchy/NestableHierarcy2';
 import { ICode } from '../../Nexus/entities/ICode';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import {
@@ -17,8 +17,10 @@ export default function CodeListEditor(): React.ReactElement {
   const { project } = useAppSelector((state) => state.project);
   const { codelist } = useAppSelector((state) => state.selectedCodeList);
 
-  const newListofCodes = (pId: string, items: ICode[]) => {
-    dispatch(setCodes({ id: pId, codes: items, codelistId: codelist.id }));
+  const newListofCodes = (items: Parentable<ICode>[]) => {
+    dispatch(
+      setCodes({ id: project.id, codes: items, codelistId: codelist.id })
+    );
     dispatch(setCodesToSelected(items));
     dispatch(putSelectedProjectThunk('dummy'));
   };
@@ -27,12 +29,9 @@ export default function CodeListEditor(): React.ReactElement {
     <>
       <EditCodeListForm />
       <NewCodeForm />
-      <NestableHierarcy
-        dispatchfunc={(projectId: string, items: ICode[]) =>
-          newListofCodes(projectId, items)
-        }
+      <NestableHierarcy2
+        dispatchfunc={(items: Parentable<ICode>[]) => newListofCodes(items)}
         inputlist={codelist.codes}
-        projectId={project.id}
         component={<EditCodeForm element={codelist.codes[0]} />}
         depth={1}
       />

@@ -120,7 +120,7 @@ export default class StoreService {
     });
   }
 
-  public addCode(item: ICode, codelistId: string): void {
+  public addCode(item: Parentable<ICode>, codelistId: string): void {
     const codelistIndex = StoreService.bank.codelist.findIndex(
       (codelist: ICodelist) => codelist.id === codelistId
     );
@@ -129,7 +129,7 @@ export default class StoreService {
     });
   }
 
-  public editCode(item: ICode, codelistId: string): void {
+  public editCode(item: Parentable<ICode>, codelistId: string): void {
     const codelistIndex = StoreService.bank.codelist.findIndex(
       (codelist: ICodelist) => codelist.id === codelistId
     );

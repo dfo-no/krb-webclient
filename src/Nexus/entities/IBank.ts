@@ -45,7 +45,7 @@ export interface IBank extends IBaseModel {
   description: string;
   needs: Parentable<INeed>[];
   codelist: ICodelist[];
-  products: IProduct[];
+  products: Parentable<IProduct>[];
   version: number;
   tags: Parentable<ITag>[];
   publications: IPublication[];

@@ -27,5 +27,6 @@ export const PostNeedSchema = BaseNeedSchema.keys({
 
 export const PutNeedSchema = BaseNeedSchema.keys({
   parent: Joi.alternatives([Joi.string().length(36), Joi.string().valid('')]),
-  children: Joi.array()
+  children: Joi.array(),
+  level: Joi.number()
 });

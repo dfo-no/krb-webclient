@@ -10,6 +10,7 @@ import { v4 as uuidv4 } from 'uuid';
 import ControlledTextInput from '../../Form/ControlledTextInput';
 import ErrorSummary from '../../Form/ErrorSummary';
 import { IAlert } from '../../models/IAlert';
+import { Parentable } from '../../models/Parentable';
 import { ICode, PostCodeSchema } from '../../Nexus/entities/ICode';
 import Nexus from '../../Nexus/Nexus';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
@@ -43,12 +44,7 @@ function NewCodeForm(): React.ReactElement {
     defaultValues
   });
 
-  const onSubmit = (post: ICode) => {
-    const alert: IAlert = {
-      id: uuidv4(),
-      style: 'success',
-      text: 'Successfully added code'
-    };
+  const onSubmit = (post: Parentable<ICode>) => {
     const code = nexus.codelistService.createCodeWithId(post);
     dispatch(
       addCodeToCodelist({
@@ -58,6 +54,11 @@ function NewCodeForm(): React.ReactElement {
     );
     dispatch(addCodeToSelected(code));
     dispatch(putSelectedProjectThunk('dummy')).then(() => {
+      const alert: IAlert = {
+        id: uuidv4(),
+        style: 'success',
+        text: 'Successfully added code'
+      };
       dispatch(addAlert({ alert }));
       reset();
       setShow(false);

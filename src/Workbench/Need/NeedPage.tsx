@@ -1,7 +1,7 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Parentable } from '../../models/Parentable';
-import NestableHierarcy from '../../NestableHierarchy/NestableHierarcy';
+import NestableHierarcy2 from '../../NestableHierarchy/NestableHierarcy2';
 import { INeed } from '../../Nexus/entities/INeed';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import {
@@ -17,7 +17,7 @@ function NeedPage(): React.ReactElement {
   const dispatch = useAppDispatch();
   const { t } = useTranslation();
 
-  const newNeedList = (projectId: string, needs: Parentable<INeed>[]) => {
+  const newNeedList = (needs: Parentable<INeed>[]) => {
     dispatch(setNeeds(needs));
     dispatch(putSelectedProjectThunk('dummy'));
   };
@@ -27,12 +27,9 @@ function NeedPage(): React.ReactElement {
       <h3 className="mt-3">{t('Needs')}</h3>
 
       <NewNeedForm />
-      <NestableHierarcy
-        dispatchfunc={(projectId: string, items: Parentable<INeed>[]) =>
-          newNeedList(projectId, items)
-        }
+      <NestableHierarcy2
+        dispatchfunc={(items: Parentable<INeed>[]) => newNeedList(items)}
         inputlist={project.needs}
-        projectId={project.id}
         component={<EditNeedForm element={project.needs[0]} />}
         depth={10}
       />

@@ -13,6 +13,8 @@ import Utils from '../../common/Utils';
 import ControlledTextInput from '../../Form/ControlledTextInput';
 import ErrorSummary from '../../Form/ErrorSummary';
 import { IAlert } from '../../models/IAlert';
+import { Nestable } from '../../models/Nestable';
+import { Parentable } from '../../models/Parentable';
 import { AccordionContext } from '../../NestableHierarchy/AccordionContext';
 import { INeed } from '../../Nexus/entities/INeed';
 import { IProduct, PutProductSchema } from '../../Nexus/entities/IProduct';
@@ -28,7 +30,7 @@ import {
 import { selectProduct } from '../../store/reducers/selectedProduct-reducer';
 
 interface IProps {
-  element: IProduct;
+  element: Parentable<IProduct>;
 }
 
 export default function EditProductForm({
@@ -46,7 +48,7 @@ export default function EditProductForm({
     handleSubmit,
     reset,
     formState: { errors }
-  } = useForm<IProduct>({
+  } = useForm<Parentable<IProduct>>({
     resolver: joiResolver(PutProductSchema),
     defaultValues: element
   });
@@ -57,20 +59,24 @@ export default function EditProductForm({
     }
   }, [element, reset]);
 
-  const onSubmit = (post: IProduct) => {
-    const newProduct = { ...element };
-    newProduct.title = post.title;
-    newProduct.description = post.description;
+  const onEditProductSubmit = (data: Nestable<IProduct>) => {
+    const newProduct = { ...data };
     if (newProduct.children) {
       delete newProduct.children;
     }
-    const alert: IAlert = {
-      id: uuidv4(),
-      style: 'success',
-      text: 'Successfully updated product'
-    };
+    if (newProduct.level) {
+      delete newProduct.level;
+    }
+    newProduct.title = data.title;
+    newProduct.description = data.description;
+
     dispatch(editProduct(newProduct));
     dispatch(putSelectedProjectThunk('dummy')).then(() => {
+      const alert: IAlert = {
+        id: uuidv4(),
+        style: 'success',
+        text: 'Successfully updated product'
+      };
       dispatch(addAlert({ alert }));
       onOpenClose('');
     });
@@ -112,7 +118,7 @@ export default function EditProductForm({
 
   return (
     <Form
-      onSubmit={handleSubmit(onSubmit)}
+      onSubmit={handleSubmit((post) => onEditProductSubmit(post))}
       autoComplete="off"
       noValidate
       validated={validated}
