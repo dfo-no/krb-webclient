@@ -1,5 +1,5 @@
 import ModelType from '../../models/ModelType';
-import { Product } from '../../models/Product';
+import { IProduct } from '../entities/IProduct';
 import StoreService from './StoreService';
 import UuidService from './UuidService';
 
@@ -12,8 +12,8 @@ export default class ProductService {
     this.storeService = store;
   }
 
-  generateDefaultProductValues = (projectId: string): Product => {
-    const defaultValues: Product = {
+  generateDefaultProductValues = (projectId: string): IProduct => {
+    const defaultValues: IProduct = {
       id: '',
       title: '',
       description: '',
@@ -25,21 +25,21 @@ export default class ProductService {
     return defaultValues;
   };
 
-  createProductWithId = (item: Product): Product => {
+  createProductWithId = (item: IProduct): IProduct => {
     const tag = { ...item };
     tag.id = this.UuidService.generateId();
     return tag;
   };
 
-  async add(item: Product): Promise<void> {
+  async add(item: IProduct): Promise<void> {
     return this.storeService.addProduct(item);
   }
 
-  async edit(item: Product): Promise<void> {
+  async edit(item: IProduct): Promise<void> {
     return this.storeService.editProduct(item);
   }
 
-  async delete(item: Product): Promise<void> {
+  async delete(item: IProduct): Promise<void> {
     return this.storeService.deleteProduct(item);
   }
 }

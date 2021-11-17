@@ -1,7 +1,7 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { Product } from '../../models/Product';
 import NestableHierarcy from '../../NestableHierarchy/NestableHierarcy';
+import { IProduct } from '../../Nexus/entities/IProduct';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import {
   putSelectedProjectThunk,
@@ -15,7 +15,7 @@ export default function ProductPage(): React.ReactElement {
   const dispatch = useAppDispatch();
   const { t } = useTranslation();
 
-  const newProductList = (projectId: string, items: Product[]) => {
+  const newProductList = (projectId: string, items: IProduct[]) => {
     dispatch(updateProductList(items));
     dispatch(putSelectedProjectThunk('dummy'));
   };
@@ -28,7 +28,7 @@ export default function ProductPage(): React.ReactElement {
         <NewProductForm />
 
         <NestableHierarcy
-          dispatchfunc={(projectId: string, items: Product[]) =>
+          dispatchfunc={(projectId: string, items: IProduct[]) =>
             newProductList(projectId, items)
           }
           inputlist={project.products}

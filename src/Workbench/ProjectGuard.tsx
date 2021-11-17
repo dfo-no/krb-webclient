@@ -15,7 +15,7 @@ import RequirementEditor from './Requirement/RequirementEditor';
 import RequirementPage from './Requirement/RequirementPage';
 import TagPage from './Tags/TagPage';
 
-interface RouteParams {
+interface IRouteParams {
   projectId: string;
 }
 
@@ -24,7 +24,7 @@ export default function ProjectGuard(): React.ReactElement {
 
   const [isLoading, setLoading] = useState(false);
 
-  const { projectId } = useParams<RouteParams>();
+  const { projectId } = useParams<IRouteParams>();
 
   useEffect(() => {
     async function doAsyncWork() {

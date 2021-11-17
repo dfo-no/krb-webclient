@@ -10,9 +10,12 @@ import { Link } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
 import ControlledTextInput from '../../Form/ControlledTextInput';
 import ErrorSummary from '../../Form/ErrorSummary';
-import { Alert } from '../../models/Alert';
-import { PutRequirementSchema, Requirement } from '../../models/Requirement';
+import { IAlert } from '../../models/IAlert';
 import { AccordionContext } from '../../NestableHierarchy/AccordionContext';
+import {
+  IRequirement,
+  PutRequirementSchema
+} from '../../Nexus/entities/IRequirement';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { addAlert } from '../../store/reducers/alert-reducer';
 import {
@@ -23,7 +26,7 @@ import {
 import { selectRequirement } from '../../store/reducers/selectedRequirement-reducer';
 
 interface IProps {
-  element: Requirement;
+  element: IRequirement;
 }
 
 export default function EditRequirementForm({
@@ -40,21 +43,21 @@ export default function EditRequirementForm({
     control,
     handleSubmit,
     formState: { errors }
-  } = useForm<Requirement>({
+  } = useForm<IRequirement>({
     resolver: joiResolver(PutRequirementSchema),
     defaultValues: element
   });
 
   const need = needId !== null ? needId : '';
 
-  const onSubmit = (post: Requirement) => {
+  const onSubmit = (post: IRequirement) => {
     dispatch(
       editRequirementInNeed({
         needId: need,
         requirement: post
       })
     );
-    const alert: Alert = {
+    const alert: IAlert = {
       id: uuidv4(),
       style: 'success',
       text: 'successfully updated requirement'
@@ -65,7 +68,7 @@ export default function EditRequirementForm({
     });
   };
 
-  const removeRequirement = (req: Requirement) => {
+  const removeRequirement = (req: IRequirement) => {
     dispatch(
       deleteRequirement({
         needId: need,

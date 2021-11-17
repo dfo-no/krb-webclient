@@ -10,7 +10,7 @@ import {
   UseControllerProps
 } from 'react-hook-form';
 
-interface Props<T> extends UseControllerProps<T> {
+interface IProps<T> extends UseControllerProps<T> {
   error: FieldError | undefined;
   label?: string;
   type?: 'text' | 'number' | 'select' | 'textarea';
@@ -22,7 +22,7 @@ const ControlledTextInput = <T extends FieldValues>({
   error,
   label,
   type
-}: Props<T>): React.ReactElement => {
+}: IProps<T>): React.ReactElement => {
   if (!label) {
     return (
       <Form.Group controlId={name}>

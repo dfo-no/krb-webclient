@@ -1,7 +1,7 @@
-import { Bank } from '../../models/Bank';
+import { IBank } from '../entities/IBank';
 
 export default abstract class Adapter {
-  abstract save(bank: Bank): void;
+  abstract save(bank: IBank): void;
 
-  abstract load(): Bank;
+  abstract load(): IBank;
 }

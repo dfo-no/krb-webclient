@@ -14,9 +14,9 @@ import ControlledTextInput from '../../Form/ControlledTextInput';
 import ErrorSummary from '../../Form/ErrorSummary';
 import { IOption } from '../../models/IOption';
 import {
-  SpecificationProduct,
+  ISpecificationProduct,
   SpecificationProductSchema
-} from '../../models/SpecificationProduct';
+} from '../../models/ISpecificationProduct';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { editSpecProduct } from '../../store/reducers/spesification-reducer';
 import ProductRequirementSelectorList from './ProductRequirementSelectorList';
@@ -34,7 +34,7 @@ export default function ProductSpecEditor(): React.ReactElement {
     handleSubmit,
     register,
     formState: { errors }
-  } = useForm<SpecificationProduct>({
+  } = useForm<ISpecificationProduct>({
     resolver: joiResolver(SpecificationProductSchema),
     defaultValues: selectedSpecificationProduct
   });
@@ -53,8 +53,8 @@ export default function ProductSpecEditor(): React.ReactElement {
   if (!id) return <p>No selected bank</p>;
   const bankSelected = normalizedList[id];
 
-  const addProductToSpecification = (post: SpecificationProduct) => {
-    const newProduct: SpecificationProduct = {
+  const addProductToSpecification = (post: ISpecificationProduct) => {
+    const newProduct: ISpecificationProduct = {
       ...post
     };
     const savedWeight =

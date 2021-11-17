@@ -4,7 +4,7 @@ import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { selectProduct } from '../../store/reducers/selectedProduct-reducer';
 import ProductPreview from './ProductPreview';
 
-interface RouteParams {
+interface IRouteParams {
   projectId: string;
   productId: string;
 }
@@ -13,7 +13,7 @@ export default function ProductGuard(): React.ReactElement {
   const dispatch = useAppDispatch();
   const { project } = useAppSelector((state) => state.project);
   const { product } = useAppSelector((state) => state.selectedProduct);
-  const { productId } = useParams<RouteParams>();
+  const { productId } = useParams<IRouteParams>();
   const history = useHistory();
 
   useEffect(() => {

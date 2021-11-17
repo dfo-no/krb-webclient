@@ -1,10 +1,10 @@
 /* eslint-disable class-methods-use-this */
 import Utils from '../../common/Utils';
-import { Bank } from '../../models/Bank';
-import { BaseModel } from '../../models/BaseModel';
-import { InheritedBank } from '../../models/InheritedBank';
-import { Need } from '../../models/Need';
+import { IInheritedBank } from '../../models/IInheritedBank';
 import { Parentable } from '../../models/Parentable';
+import { IBank } from '../entities/IBank';
+import { IBaseModel } from '../entities/IBaseModel';
+import { INeed } from '../entities/INeed';
 import StoreService from './StoreService';
 import UuidService from './UuidService';
 
@@ -17,7 +17,7 @@ export default class InheritanceService {
     this.storeService = store;
   }
 
-  generateInheritance = (inheritedBank: Bank): InheritedBank => {
+  generateInheritance = (inheritedBank: IBank): IInheritedBank => {
     return {
       title: inheritedBank.title,
       description: inheritedBank.description,
@@ -27,7 +27,7 @@ export default class InheritanceService {
     };
   };
 
-  private addRelativeProperty<T extends BaseModel>(
+  private addRelativeProperty<T extends IBaseModel>(
     element: T,
     bankId: string
   ): T {
@@ -36,17 +36,17 @@ export default class InheritanceService {
     return newElement;
   }
 
-  private inheritList<T extends BaseModel>(list: T[], bankId: string): T[] {
+  private inheritList<T extends IBaseModel>(list: T[], bankId: string): T[] {
     return list.map((element: T) => {
       return this.addRelativeProperty(element, bankId);
     });
   }
 
   private inheritListwithSublist(
-    list: Parentable<Need>[],
+    list: Parentable<INeed>[],
     bankId: string
-  ): Parentable<Need>[] {
-    return list.map((element: Parentable<Need>) => {
+  ): Parentable<INeed>[] {
+    return list.map((element: Parentable<INeed>) => {
       const newElement = { ...element };
       const newRequirementList = this.inheritList(element.requirements, bankId);
 
@@ -55,7 +55,7 @@ export default class InheritanceService {
     });
   }
 
-  async inheritBank(project: Bank, inheritedBank: Bank): Promise<void> {
+  async inheritBank(project: IBank, inheritedBank: IBank): Promise<void> {
     const newProject = { ...project };
 
     const newProductList = [
@@ -94,7 +94,7 @@ export default class InheritanceService {
     return this.storeService.setBank(newProject);
   }
 
-  private filterRelativeSourceList<T extends BaseModel>(
+  private filterRelativeSourceList<T extends IBaseModel>(
     list: T[],
     bankId: string
   ): T[] {
@@ -102,7 +102,7 @@ export default class InheritanceService {
   }
 
   async removeInheritedBank(
-    project: Bank,
+    project: IBank,
     inheritedBank: string
   ): Promise<void> {
     const newProject = { ...project };
@@ -126,7 +126,7 @@ export default class InheritanceService {
     newProject.codelist = newCodelistList;
 
     const inheritedBanks = project.inheritedBanks.filter(
-      (element: InheritedBank) => element.id !== inheritedBank
+      (element: IInheritedBank) => element.id !== inheritedBank
     );
     newProject.inheritedBanks = inheritedBanks;
     return this.storeService.setBank(newProject);

@@ -6,13 +6,13 @@ import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 import { Control, FormState, UseFormRegister } from 'react-hook-form';
 import { BsTrashFill } from 'react-icons/bs';
-import { ICheckboxQuestion } from '../../models/ICheckboxQuestion';
-import { Requirement } from '../../models/Requirement';
+import { ICheckboxQuestion } from '../../Nexus/entities/ICheckboxQuestion';
+import { IRequirement } from '../../Nexus/entities/IRequirement';
 
 type IProps = {
-  control: Control<Requirement>;
-  register: UseFormRegister<Requirement>;
-  formState: FormState<Requirement>;
+  control: Control<IRequirement>;
+  register: UseFormRegister<IRequirement>;
+  formState: FormState<IRequirement>;
   item: ICheckboxQuestion;
   vIndex: number;
   aIndex: number;

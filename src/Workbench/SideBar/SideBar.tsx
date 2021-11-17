@@ -11,7 +11,7 @@ interface IRouteLink {
   name: string;
 }
 
-interface RouteParams {
+interface IRouteParams {
   projectId: string;
 }
 
@@ -35,7 +35,7 @@ const renderRouteLinks = (routes: IRouteLink[], isProjectSelected: boolean) => {
 };
 
 function SideBar(): React.ReactElement {
-  const match = useRouteMatch<RouteParams>('/workbench/:projectId');
+  const match = useRouteMatch<IRouteParams>('/workbench/:projectId');
   const { t } = useTranslation();
 
   const currentUrl = match?.url ? match.url : '/workbench';

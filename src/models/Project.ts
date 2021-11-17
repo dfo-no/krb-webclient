@@ -1,7 +1,7 @@
 import Joi from 'joi';
-import { BaseBankSchema } from './Bank';
+import { BaseBankSchema } from '../Nexus/entities/IBank';
+import { PutPublicationSchema } from '../Nexus/entities/IPublication';
 import ModelType from './ModelType';
-import { PutPublicationSchema } from './Publication';
 
 export const EditProjectSchema = BaseBankSchema.keys({
   id: Joi.string().length(36).required(),

@@ -12,9 +12,9 @@ import { Link, useRouteMatch } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
 import Utils from '../../common/Utils';
 import ErrorSummary from '../../Form/ErrorSummary';
+import { ISpecificationProduct } from '../../models/ISpecificationProduct';
 import { Nestable } from '../../models/Nestable';
-import { Product } from '../../models/Product';
-import { SpecificationProduct } from '../../models/SpecificationProduct';
+import { IProduct } from '../../Nexus/entities/IProduct';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { selectBank } from '../../store/reducers/selectedBank-reducer';
 import { selectSpecificationProduct } from '../../store/reducers/selectedSpecProduct-reducer';
@@ -25,7 +25,7 @@ type FormInput = {
   product: string;
 };
 
-interface RouteParams {
+interface IRouteParams {
   bankId: string;
 }
 
@@ -36,7 +36,7 @@ interface IOption {
 }
 
 export default function ProductSpecList(): React.ReactElement {
-  const projectMatch = useRouteMatch<RouteParams>('/specification/:bankId');
+  const projectMatch = useRouteMatch<IRouteParams>('/specification/:bankId');
   const { id } = useAppSelector((state) => state.selectedBank);
   const { normalizedList } = useAppSelector((state) => state.bank);
   const { spec } = useAppSelector((state) => state.specification);
@@ -58,11 +58,11 @@ export default function ProductSpecList(): React.ReactElement {
 
   const bankSelected = normalizedList[id];
 
-  const levelOptions = (products: Nestable<Product>[]) => {
+  const levelOptions = (products: Nestable<IProduct>[]) => {
     const newList = Utils.unflatten(products)[0];
     const options: IOption[] = [];
 
-    const getAllItemsPerChildren = (item: Nestable<Product>, level = 0) => {
+    const getAllItemsPerChildren = (item: Nestable<IProduct>, level = 0) => {
       options.push({
         id: item.id,
         title: item.title,
@@ -70,7 +70,7 @@ export default function ProductSpecList(): React.ReactElement {
       });
       if (item.children) {
         const iteration = level + 1;
-        item.children.forEach((i: Nestable<Product>) =>
+        item.children.forEach((i: Nestable<IProduct>) =>
           getAllItemsPerChildren(i, iteration)
         );
       }
@@ -85,10 +85,10 @@ export default function ProductSpecList(): React.ReactElement {
   const addProductToSpecification = (post: FormInput) => {
     const selectedProduct = Utils.ensure(
       bankSelected.products.find(
-        (product: Product) => product.id === post.product
+        (product: IProduct) => product.id === post.product
       )
     );
-    const newProduct: SpecificationProduct = {
+    const newProduct: ISpecificationProduct = {
       id: uuidv4(),
       originProduct: selectedProduct,
       title: selectedProduct.title,
@@ -101,8 +101,8 @@ export default function ProductSpecList(): React.ReactElement {
     dispatch(addProduct({ product: newProduct }));
   };
 
-  const productList = (productArray: SpecificationProduct[]) => {
-    const items = productArray.map((product: SpecificationProduct) => {
+  const productList = (productArray: ISpecificationProduct[]) => {
+    const items = productArray.map((product: ISpecificationProduct) => {
       return (
         <ListGroup.Item key={product.id}>
           <Row className="d-flex justify-content-end">

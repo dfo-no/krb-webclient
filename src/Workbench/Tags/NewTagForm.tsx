@@ -9,9 +9,9 @@ import { useTranslation } from 'react-i18next';
 import { v4 as uuidv4 } from 'uuid';
 import ControlledTextInput from '../../Form/ControlledTextInput';
 import ErrorSummary from '../../Form/ErrorSummary';
-import { Alert } from '../../models/Alert';
+import { IAlert } from '../../models/IAlert';
 import { Parentable } from '../../models/Parentable';
-import { PostTagSchema, Tag } from '../../models/Tag';
+import { ITag, PostTagSchema } from '../../Nexus/entities/ITag';
 import Nexus from '../../Nexus/Nexus';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { addAlert } from '../../store/reducers/alert-reducer';
@@ -36,14 +36,14 @@ export default function NewTagForm(): React.ReactElement {
     handleSubmit,
     reset,
     formState: { errors }
-  } = useForm<Parentable<Tag>>({
+  } = useForm<Parentable<ITag>>({
     resolver: joiResolver(PostTagSchema),
     defaultValues
   });
 
-  const onNewTagSubmit = (post: Parentable<Tag>) => {
+  const onNewTagSubmit = (post: Parentable<ITag>) => {
     const newTag = nexus.tagService.generateTag(post);
-    const alert: Alert = {
+    const alert: IAlert = {
       id: uuidv4(),
       style: 'success',
       text: 'Successfully added tag'

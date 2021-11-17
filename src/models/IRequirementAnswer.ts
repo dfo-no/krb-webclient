@@ -1,15 +1,18 @@
 import Joi from 'joi';
-import { CheckboxQuestionAnswerSchema } from './ICheckboxQuestion';
-import { CodelistQuestionAnswerSchema } from './ICodelistQuestion';
-import { FileUploadQuestionAnswerSchema } from './IFileUploadQuestion';
-import { PeriodDateQuestionAnswerSchema } from './IPeriodDateQuestion';
-import { SliderQuestionAnswerSchema } from './ISliderQuestion';
-import { TextQuestionAnswerSchema } from './ITextQuestion';
-import { TimeQuestionAnswerSchema } from './ITimeQuestion';
+import { CheckboxQuestionAnswerSchema } from '../Nexus/entities/ICheckboxQuestion';
+import { CodelistQuestionAnswerSchema } from '../Nexus/entities/ICodelistQuestion';
+import { FileUploadQuestionAnswerSchema } from '../Nexus/entities/IFileUploadQuestion';
+import { PeriodDateQuestionAnswerSchema } from '../Nexus/entities/IPeriodDateQuestion';
+import {
+  BaseRequirementSchema,
+  IRequirement
+} from '../Nexus/entities/IRequirement';
+import { SliderQuestionAnswerSchema } from '../Nexus/entities/ISliderQuestion';
+import { TextQuestionAnswerSchema } from '../Nexus/entities/ITextQuestion';
+import { TimeQuestionAnswerSchema } from '../Nexus/entities/ITimeQuestion';
 import ModelType from './ModelType';
 import QuestionEnum from './QuestionEnum';
 import { QuestionType } from './QuestionType';
-import { BaseRequirementSchema, Requirement } from './Requirement';
 
 export interface IRequirementAnswer {
   id: string;
@@ -18,7 +21,7 @@ export interface IRequirementAnswer {
   variantId: string;
   question: QuestionType;
   type: ModelType;
-  requirement: Requirement;
+  requirement: IRequirement;
 }
 
 export const RequirementAnswerSchema = Joi.object().keys({

@@ -12,14 +12,18 @@ import { v4 as uuidv4 } from 'uuid';
 import AlertModal from '../../common/AlertModal';
 import ControlledTextInput from '../../Form/ControlledTextInput';
 import ErrorSummary from '../../Form/ErrorSummary';
-import { Alert } from '../../models/Alert';
-import { Codelist, CodelistSchema } from '../../models/Codelist';
-import { ICodelistQuestion } from '../../models/ICodelistQuestion';
-import { IVariant } from '../../models/IVariant';
-import { Need } from '../../models/Need';
-import { IAnswerBase, IConfigBase, IQuestionBase } from '../../models/Question';
+import { IAlert } from '../../models/IAlert';
 import QuestionEnum from '../../models/QuestionEnum';
-import { Requirement } from '../../models/Requirement';
+import { CodelistSchema, ICodelist } from '../../Nexus/entities/ICodelist';
+import { ICodelistQuestion } from '../../Nexus/entities/ICodelistQuestion';
+import { INeed } from '../../Nexus/entities/INeed';
+import {
+  IAnswerBase,
+  IConfigBase,
+  IQuestionBase
+} from '../../Nexus/entities/IQuestionBase';
+import { IRequirement } from '../../Nexus/entities/IRequirement';
+import { IVariant } from '../../Nexus/entities/IVariant';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { addAlert } from '../../store/reducers/alert-reducer';
 import {
@@ -46,13 +50,13 @@ function EditCodeListForm(): React.ReactElement {
     handleSubmit,
     reset,
     formState: { errors }
-  } = useForm<Codelist>({
+  } = useForm<ICodelist>({
     resolver: joiResolver(CodelistSchema),
     defaultValues: codelist
   });
 
-  const onEditCodeSubmit = (post: Codelist) => {
-    const alert: Alert = {
+  const onEditCodeSubmit = (post: ICodelist) => {
+    const alert: IAlert = {
       id: uuidv4(),
       style: 'success',
       text: 'Successfully edited codelist'
@@ -74,8 +78,8 @@ function EditCodeListForm(): React.ReactElement {
 
   const checkCodelistConnection = () => {
     let used = false;
-    project.needs.forEach((need: Need) => {
-      need.requirements.forEach((requirement: Requirement) => {
+    project.needs.forEach((need: INeed) => {
+      need.requirements.forEach((requirement: IRequirement) => {
         requirement.variants.forEach((variant: IVariant) => {
           variant.questions.forEach(
             (alternative: IQuestionBase<IAnswerBase, IConfigBase>) => {

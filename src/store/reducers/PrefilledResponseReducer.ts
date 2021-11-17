@@ -1,18 +1,18 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { cloneDeep } from 'lodash';
 import Utils from '../../common/Utils';
-import { Bank } from '../../models/Bank';
+import { IPrefilledResponse } from '../../models/IPrefilledResponse';
+import { IPrefilledResponseProduct } from '../../models/IPrefilledResponseProduct';
 import { IRequirementAnswer } from '../../models/IRequirementAnswer';
 import ModelType from '../../models/ModelType';
-import { PrefilledResponse } from '../../models/PrefilledResponse';
-import { PrefilledResponseProduct } from '../../models/PrefilledResponseProduct';
+import { IBank } from '../../Nexus/entities/IBank';
 
-interface PrefilledResponseState {
-  prefilledResponse: PrefilledResponse;
-  selectedProduct: PrefilledResponseProduct;
+interface IPrefilledResponseState {
+  prefilledResponse: IPrefilledResponse;
+  selectedProduct: IPrefilledResponseProduct;
 }
 
-const initialState: PrefilledResponseState = {
+const initialState: IPrefilledResponseState = {
   prefilledResponse: {
     bank: {
       id: '',
@@ -59,7 +59,7 @@ const responseSlice = createSlice({
   name: 'prefilledResponse',
   initialState,
   reducers: {
-    setResponse(state, { payload }: PayloadAction<PrefilledResponse>) {
+    setResponse(state, { payload }: PayloadAction<IPrefilledResponse>) {
       state.prefilledResponse = payload;
     },
     editSupplier(state, { payload }: PayloadAction<string>) {
@@ -73,10 +73,7 @@ const responseSlice = createSlice({
       const cloned = cloneDeep(payload.cart);
       state.prefilledResponse.requirementAnswers = cloned;
     },
-    addRequirementAnswer(
-      state,
-      { payload }: PayloadAction<IRequirementAnswer>
-    ) {
+    addAnswer(state, { payload }: PayloadAction<IRequirementAnswer>) {
       if (
         state.prefilledResponse.requirementAnswers.find(
           (answer) => answer.id === payload.id
@@ -90,10 +87,19 @@ const responseSlice = createSlice({
       }
       state.prefilledResponse.requirementAnswers.push(payload);
     },
-    setBank(state, { payload }: PayloadAction<Bank>) {
+    removeAnswer(state, { payload }: PayloadAction<string>) {
+      const index = state.prefilledResponse.requirementAnswers.findIndex(
+        (element) => element.id === payload
+      );
+      if (index !== -1) {
+        state.prefilledResponse.requirementAnswers.splice(index, 1);
+      }
+    },
+
+    setBank(state, { payload }: PayloadAction<IBank>) {
       state.prefilledResponse.bank = payload;
     },
-    addProduct(state, { payload }: PayloadAction<PrefilledResponseProduct>) {
+    addProduct(state, { payload }: PayloadAction<IPrefilledResponseProduct>) {
       state.prefilledResponse.products.push(payload);
     },
     removeProduct(state, { payload }: PayloadAction<string>) {
@@ -174,13 +180,16 @@ const responseSlice = createSlice({
       {
         payload
       }: PayloadAction<{
-        product: PrefilledResponseProduct;
+        product: IPrefilledResponseProduct;
         productIndex: number;
       }>
     ) {
       state.prefilledResponse.products[payload.productIndex] = payload.product;
     },
-    selectProduct(state, { payload }: PayloadAction<PrefilledResponseProduct>) {
+    selectProduct(
+      state,
+      { payload }: PayloadAction<IPrefilledResponseProduct>
+    ) {
       state.selectedProduct = payload;
     }
   }
@@ -193,7 +202,8 @@ export const {
   removeProduct,
   editProduct,
   setResponse,
-  addRequirementAnswer,
+  addAnswer,
+  removeAnswer,
   addProductAnswer,
   removeProductAnswer,
   setRequirementAnswers,

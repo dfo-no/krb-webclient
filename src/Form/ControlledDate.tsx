@@ -16,7 +16,7 @@ import {
 import { useTranslation } from 'react-i18next';
 import { DATETIME_ISO8601UTC } from '../common/Constants';
 
-interface Props<T> extends UseControllerProps<T> {
+interface IProps<T> extends UseControllerProps<T> {
   error: FieldError | undefined;
   label: string;
 }
@@ -36,9 +36,8 @@ const ControlledDate = <T extends FieldValues>({
   control,
   error,
   label
-}: Props<T>): React.ReactElement => {
+}: IProps<T>): React.ReactElement => {
   const { i18n } = useTranslation();
-
   return (
     <LocalizationProvider
       dateAdapter={AdapterDateFns}

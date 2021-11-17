@@ -7,13 +7,13 @@ import Form from 'react-bootstrap/Form';
 import { Controller, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import ErrorSummary from '../../Form/ErrorSummary';
-import { Codelist } from '../../models/Codelist';
+import { IRequirementAnswer } from '../../models/IRequirementAnswer';
+import ModelType from '../../models/ModelType';
+import { ICodelist } from '../../Nexus/entities/ICodelist';
 import {
   CodelistQuestionSchema,
   ICodelistQuestion
-} from '../../models/ICodelistQuestion';
-import { IRequirementAnswer } from '../../models/IRequirementAnswer';
-import ModelType from '../../models/ModelType';
+} from '../../Nexus/entities/ICodelistQuestion';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import {
   addAnswer,
@@ -67,7 +67,7 @@ export default function CodelistForm({
   };
 
   const codelistOptions = () => {
-    return spec.bank.codelist.map((codelist: Codelist) => {
+    return spec.bank.codelist.map((codelist: ICodelist) => {
       return (
         <option value={codelist.id} key={codelist.id}>
           {codelist.title}

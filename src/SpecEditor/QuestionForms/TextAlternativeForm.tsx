@@ -8,8 +8,11 @@ import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import ErrorSummary from '../../Form/ErrorSummary';
 import { IRequirementAnswer } from '../../models/IRequirementAnswer';
-import { ITextQuestion, TextQuestionSchema } from '../../models/ITextQuestion';
 import ModelType from '../../models/ModelType';
+import {
+  ITextQuestion,
+  TextQuestionSchema
+} from '../../Nexus/entities/ITextQuestion';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import {
   addAnswer,

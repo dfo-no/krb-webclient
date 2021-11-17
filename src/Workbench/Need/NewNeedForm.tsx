@@ -9,9 +9,9 @@ import { useTranslation } from 'react-i18next';
 import { v4 as uuidv4 } from 'uuid';
 import ControlledTextInput from '../../Form/ControlledTextInput';
 import ErrorSummary from '../../Form/ErrorSummary';
-import { Alert } from '../../models/Alert';
-import { Need, PostNeedSchema } from '../../models/Need';
+import { IAlert } from '../../models/IAlert';
 import { Parentable } from '../../models/Parentable';
+import { INeed, PostNeedSchema } from '../../Nexus/entities/INeed';
 import Nexus from '../../Nexus/Nexus';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { addAlert } from '../../store/reducers/alert-reducer';
@@ -28,7 +28,7 @@ function NewNeedForm(): React.ReactElement {
   const { t } = useTranslation();
   const nexus = Nexus.getInstance();
 
-  const defaultValues: Parentable<Need> =
+  const defaultValues: Parentable<INeed> =
     nexus.needService.generateDefaultNeedValues(project.id);
 
   const {
@@ -36,14 +36,14 @@ function NewNeedForm(): React.ReactElement {
     handleSubmit,
     reset,
     formState: { errors }
-  } = useForm<Parentable<Need>>({
+  } = useForm<Parentable<INeed>>({
     resolver: joiResolver(PostNeedSchema),
     defaultValues
   });
 
-  const onSubmit = (post: Parentable<Need>) => {
+  const onSubmit = (post: Parentable<INeed>) => {
     const need = nexus.needService.createNeedWithId(post);
-    const alert: Alert = {
+    const alert: IAlert = {
       id: uuidv4(),
       style: 'success',
       text: 'Successfully added new need'

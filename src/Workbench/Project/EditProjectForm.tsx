@@ -1,6 +1,6 @@
 import { joiResolver } from '@hookform/resolvers/joi';
 import { get } from 'lodash';
-import React from 'react';
+import React, { useEffect } from 'react';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import Form from 'react-bootstrap/Form';
@@ -9,9 +9,9 @@ import { useTranslation } from 'react-i18next';
 import { v4 as uuidv4 } from 'uuid';
 import ControlledTextInput from '../../Form/ControlledTextInput';
 import ErrorSummary from '../../Form/ErrorSummary';
-import { Alert } from '../../models/Alert';
-import { Bank } from '../../models/Bank';
+import { IAlert } from '../../models/IAlert';
 import { EditProjectSchema } from '../../models/Project';
+import { IBank } from '../../Nexus/entities/IBank';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { addAlert } from '../../store/reducers/alert-reducer';
 import { putProjectThunk } from '../../store/reducers/project-reducer';
@@ -33,14 +33,21 @@ export default function EditProjectForm({
     reset,
     formState: { errors }
     // TODO: Check if Omit still posts needs, and Joi catches the potensial error
-  } = useForm<Omit<Bank, 'needs'>>({
+  } = useForm<Omit<IBank, 'needs'>>({
     resolver: joiResolver(EditProjectSchema),
     defaultValues: project
   });
 
-  const onSubmit = (post: Bank) => {
+  // Spread object so RHF can register all properties
+  useEffect(() => {
+    if (project) {
+      reset(JSON.parse(JSON.stringify(project)));
+    }
+  }, [project, reset]);
+
+  const onSubmit = (post: IBank) => {
     dispatch(putProjectThunk(post)).then(() => {
-      const alert: Alert = {
+      const alert: IAlert = {
         id: uuidv4(),
         style: 'success',
         text: 'Successfully updated projectt'

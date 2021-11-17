@@ -1,10 +1,10 @@
+import { ITextQuestion } from '../Nexus/entities/ITextQuestion';
 import { setRequirementAnswers } from '../store/reducers/PrefilledResponseReducer';
 import { store } from '../store/store';
 import {
   IRequirementAnswer,
   RequirementAnswersSchema
 } from './IRequirementAnswer';
-import { ITextQuestion } from './ITextQuestion';
 import ModelType from './ModelType';
 import QuestionEnum from './QuestionEnum';
 import RequirementType from './RequirementType';

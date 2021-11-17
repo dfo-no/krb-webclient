@@ -1,36 +1,43 @@
+import { config } from 'process';
 import React from 'react';
 import { v4 as uuidv4 } from 'uuid';
+import { IPrefilledResponseProduct } from '../../models/IPrefilledResponseProduct';
+import { IRequirementAnswer } from '../../models/IRequirementAnswer';
+import { Levelable } from '../../models/Levelable';
+import ModelType from '../../models/ModelType';
+import QuestionEnum from '../../models/QuestionEnum';
+import { QuestionType } from '../../models/QuestionType';
 import {
   ICheckboxAnswer,
   ICheckboxQuestion
-} from '../../models/ICheckboxQuestion';
+} from '../../Nexus/entities/ICheckboxQuestion';
 import {
   ICodelistAnswer,
   ICodelistQuestion
-} from '../../models/ICodelistQuestion';
+} from '../../Nexus/entities/ICodelistQuestion';
 import {
   IFileUploadAnswer,
   IFileUploadQuestion
-} from '../../models/IFileUploadQuestion';
+} from '../../Nexus/entities/IFileUploadQuestion';
+import { INeed } from '../../Nexus/entities/INeed';
 import {
   IPeriodDateAnswer,
   IPeriodDateQuestion
-} from '../../models/IPeriodDateQuestion';
-import { IRequirementAnswer } from '../../models/IRequirementAnswer';
-import { ISliderAnswer, ISliderQuestion } from '../../models/ISliderQuestion';
-import { ITextAnswer, ITextQuestion } from '../../models/ITextQuestion';
-import { ITimeAnswer, ITimeQuestion } from '../../models/ITimeQuestion';
-import { Levelable } from '../../models/Levelable';
-import ModelType from '../../models/ModelType';
-import { Need } from '../../models/Need';
-import { PrefilledResponseProduct } from '../../models/PrefilledResponseProduct';
-import QuestionEnum from '../../models/QuestionEnum';
-import { QuestionType } from '../../models/QuestionType';
-import ProductSliderForm from './ProductSliderForm';
+} from '../../Nexus/entities/IPeriodDateQuestion';
+import {
+  ISliderAnswer,
+  ISliderQuestion
+} from '../../Nexus/entities/ISliderQuestion';
+import { ITextAnswer, ITextQuestion } from '../../Nexus/entities/ITextQuestion';
+import { ITimeAnswer, ITimeQuestion } from '../../Nexus/entities/ITimeQuestion';
+import ProductCodelistForm from './AnswerForms/ProductCodelistForm';
+import ProductDateForm from './AnswerForms/ProductDateForm';
+import ProductSliderForm from './AnswerForms/ProductSliderForm';
+import ProductTextForm from './AnswerForms/ProductTextForm';
 
 interface IProps {
-  element: Levelable<Need>;
-  product: PrefilledResponseProduct;
+  element: Levelable<INeed>;
+  product: IPrefilledResponseProduct;
 }
 
 export default function AnswerForm({
@@ -53,11 +60,14 @@ export default function AnswerForm({
             questionResult = { ...question, answer } as ICheckboxQuestion;
           }
           if (question.type === QuestionEnum.Q_CODELIST) {
-            const answer: ICodelistAnswer = { codes: '', point: 0 };
+            const answer: ICodelistAnswer = { codes: [], point: 0 };
             questionResult = { ...question, answer } as ICodelistQuestion;
           }
           if (question.type === QuestionEnum.Q_PERIOD_DATE) {
-            const answer: IPeriodDateAnswer = { date: null, point: 0 };
+            const answer: IPeriodDateAnswer = {
+              date: question.config.fromDate,
+              point: 0
+            };
             questionResult = { ...question, answer } as IPeriodDateQuestion;
           }
           if (question.type === QuestionEnum.Q_SLIDER) {
@@ -73,13 +83,6 @@ export default function AnswerForm({
               point: 0
             };
             questionResult = { ...question, answer } as ITextQuestion;
-          }
-          if (question.type === QuestionEnum.Q_TIME) {
-            const answer: ITimeAnswer = {
-              time: '',
-              point: 0
-            };
-            questionResult = { ...question, answer } as ITimeQuestion;
           }
           if (question.type === QuestionEnum.Q_FILEUPLOAD) {
             const answer: IFileUploadAnswer = {
@@ -116,13 +119,34 @@ export default function AnswerForm({
         );
       }
       case QuestionEnum.Q_PERIOD_DATE: {
-        return <div key={elem.question.id}>Q_PERIOD_DATE</div>;
+        return (
+          <ProductDateForm
+            answer={elem}
+            product={product}
+            key={elem.question.id}
+          />
+        );
       }
       case QuestionEnum.Q_FILEUPLOAD: {
         return <div key={elem.question.id}>Q_FILEUPLOAD</div>;
       }
       case QuestionEnum.Q_TEXT: {
-        return <div key={elem.question.id}>Q_TEXT</div>;
+        return (
+          <ProductTextForm
+            answer={elem}
+            product={product}
+            key={elem.question.id}
+          />
+        );
+      }
+      case QuestionEnum.Q_CODELIST: {
+        return (
+          <ProductCodelistForm
+            answer={elem}
+            product={product}
+            key={elem.question.id}
+          />
+        );
       }
       default: {
         return (

@@ -10,14 +10,14 @@ import PrefilledResponseDownLoad from './Download/PrefilledResponseDownload';
 import PrefilledResponseEditor from './Editor/PrefilledResponseEditor';
 import PrefilledResponseProductEditor from './Product/PrefilledResponseProductEditor';
 import PrefilledResponseProductList from './Product/PrefilledResponseProductList';
-import PrefilledRequirement from './Requirement/PrefilledRequirement';
+import RequirementList from './Requirement/RequirementList';
 import PrefilledResponseSidebar from './SideBar/PrefilledResponseSidebar';
 
-interface RouteParams {
+interface IRouteParams {
   bankId: string;
 }
 export default function PrefilledResponseModule(): React.ReactElement {
-  const projectMatch = useRouteMatch<RouteParams>('/responseeditor/:bankId');
+  const projectMatch = useRouteMatch<IRouteParams>('/responseeditor/:bankId');
   const dispatch = useAppDispatch();
   const { id } = useAppSelector((state) => state.selectedBank);
   // Can set this safely, even if we got here directly by url or by clicks
@@ -44,7 +44,7 @@ export default function PrefilledResponseModule(): React.ReactElement {
               <PrefilledResponseProductEditor />
             </Route>
             <Route exact path="/prefilledresponse/:id/requirement">
-              <PrefilledRequirement />
+              <RequirementList />
             </Route>
             <Route exact path="/prefilledresponse/:id/download">
               <PrefilledResponseDownLoad />

@@ -11,17 +11,17 @@ import {
 } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { v4 as uuidv4 } from 'uuid';
-import { Bank } from '../../models/Bank';
-import { ICheckboxQuestion } from '../../models/ICheckboxQuestion';
-import { ICodelistQuestion } from '../../models/ICodelistQuestion';
-import { IFileUploadQuestion } from '../../models/IFileUploadQuestion';
-import { IPeriodDateQuestion } from '../../models/IPeriodDateQuestion';
-import { ISliderQuestion } from '../../models/ISliderQuestion';
-import { ITextQuestion } from '../../models/ITextQuestion';
-import { ITimeQuestion } from '../../models/ITimeQuestion';
 import QuestionEnum from '../../models/QuestionEnum';
 import { QuestionType } from '../../models/QuestionType';
-import { Requirement } from '../../models/Requirement';
+import { IBank } from '../../Nexus/entities/IBank';
+import { ICheckboxQuestion } from '../../Nexus/entities/ICheckboxQuestion';
+import { ICodelistQuestion } from '../../Nexus/entities/ICodelistQuestion';
+import { IFileUploadQuestion } from '../../Nexus/entities/IFileUploadQuestion';
+import { IPeriodDateQuestion } from '../../Nexus/entities/IPeriodDateQuestion';
+import { IRequirement } from '../../Nexus/entities/IRequirement';
+import { ISliderQuestion } from '../../Nexus/entities/ISliderQuestion';
+import { ITextQuestion } from '../../Nexus/entities/ITextQuestion';
+import { ITimeQuestion } from '../../Nexus/entities/ITimeQuestion';
 import CheckboxForm from './CheckboxForm';
 import CodeListForm from './CodeListForm';
 import FileUploadForm from './FileUploadForm';
@@ -31,11 +31,11 @@ import TextForm from './TextForm';
 import TimeForm from './TimeForm';
 
 type IProps = {
-  control: Control<Requirement>;
-  register: UseFormRegister<Requirement>;
-  formState: FormState<Requirement>;
+  control: Control<IRequirement>;
+  register: UseFormRegister<IRequirement>;
+  formState: FormState<IRequirement>;
   variantIndex: number;
-  project: Bank;
+  project: IBank;
 };
 
 export default function QuestionArray({

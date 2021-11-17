@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-shadow */
 import React from 'react';
-import { Code } from '../../models/Code';
 import NestableHierarcy from '../../NestableHierarchy/NestableHierarcy';
+import { ICode } from '../../Nexus/entities/ICode';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import {
   putSelectedProjectThunk,
@@ -17,7 +17,7 @@ export default function CodeListEditor(): React.ReactElement {
   const { project } = useAppSelector((state) => state.project);
   const { codelist } = useAppSelector((state) => state.selectedCodeList);
 
-  const newListofCodes = (pId: string, items: Code[]) => {
+  const newListofCodes = (pId: string, items: ICode[]) => {
     dispatch(setCodes({ id: pId, codes: items, codelistId: codelist.id }));
     dispatch(setCodesToSelected(items));
     dispatch(putSelectedProjectThunk('dummy'));
@@ -28,7 +28,7 @@ export default function CodeListEditor(): React.ReactElement {
       <EditCodeListForm />
       <NewCodeForm />
       <NestableHierarcy
-        dispatchfunc={(projectId: string, items: Code[]) =>
+        dispatchfunc={(projectId: string, items: ICode[]) =>
           newListofCodes(projectId, items)
         }
         inputlist={codelist.codes}
