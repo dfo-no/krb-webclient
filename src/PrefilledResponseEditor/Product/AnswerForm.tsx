@@ -1,4 +1,3 @@
-import { config } from 'process';
 import React from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import { IPrefilledResponseProduct } from '../../models/IPrefilledResponseProduct';
@@ -29,7 +28,6 @@ import {
   ISliderQuestion
 } from '../../Nexus/entities/ISliderQuestion';
 import { ITextAnswer, ITextQuestion } from '../../Nexus/entities/ITextQuestion';
-import { ITimeAnswer, ITimeQuestion } from '../../Nexus/entities/ITimeQuestion';
 import ProductCodelistForm from './AnswerForms/ProductCodelistForm';
 import ProductDateForm from './AnswerForms/ProductDateForm';
 import ProductSliderForm from './AnswerForms/ProductSliderForm';

@@ -75,7 +75,7 @@
     "build": "react-scripts build",
     "build:ci": "react-scripts build",
     "test": "react-scripts test",
-    "lint": "tsc --noEmit && eslint src/**/*.ts{,x}",
+    "lint": "tsc --noEmit && eslint ./ --ignore-path .gitignore",
     "prettier": "prettier  --write \"src/**/*.{js,jsx,ts,tsx,json,css,scss,md}\"",
     "git-info": "echo \"{\\\"sha\\\": \\\"$(git show -s --format='%h')\\\", \\\"msg\\\": \\\"$(git show -s --format='%s')\\\"}\"  > public/version.json",
     "analyse": "node analyse.js"
@@ -131,7 +131,8 @@
         }
       ],
       "react/jsx-props-no-spreading": 0
-    }
+    },
+    "ignorePatterns": "analyse.js"
   },
   "browserslist": {
     "production": [
