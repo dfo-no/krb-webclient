@@ -1,15 +1,16 @@
 import { joiResolver } from '@hookform/resolvers/joi';
+import { get } from 'lodash';
 import React, { useContext, useEffect, useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
-import { useForm } from 'react-hook-form';
+import { FieldError, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { BsTrashFill } from 'react-icons/bs';
 import { v4 as uuidv4 } from 'uuid';
 import AlertModal from '../../common/AlertModal';
 import Utils from '../../common/Utils';
+import ControlledTextInput from '../../Form/ControlledTextInput';
 import ErrorSummary from '../../Form/ErrorSummary';
-import InputRow from '../../Form/InputRow';
 import { IAlert } from '../../models/IAlert';
 import { Nestable } from '../../models/Nestable';
 import { Parentable } from '../../models/Parentable';
@@ -90,17 +91,17 @@ function EditNeedForm({ element }: IProps): React.ReactElement {
       noValidate
       validated={validated}
     >
-      <InputRow
+      <ControlledTextInput
         control={control}
         name="title"
-        errors={errors}
+        error={get(errors, `title`) as FieldError}
         label={t('Title')}
       />
 
-      <InputRow
+      <ControlledTextInput
         control={control}
         name="description"
-        errors={errors}
+        error={get(errors, `description`) as FieldError}
         label={t('Description')}
       />
 

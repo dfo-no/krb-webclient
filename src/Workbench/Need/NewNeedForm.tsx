@@ -1,13 +1,14 @@
 import { joiResolver } from '@hookform/resolvers/joi';
+import { get } from 'lodash';
 import React, { useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import Form from 'react-bootstrap/Form';
-import { useForm } from 'react-hook-form';
+import { FieldError, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { v4 as uuidv4 } from 'uuid';
+import ControlledTextInput from '../../Form/ControlledTextInput';
 import ErrorSummary from '../../Form/ErrorSummary';
-import InputRow from '../../Form/InputRow';
 import { IAlert } from '../../models/IAlert';
 import { Parentable } from '../../models/Parentable';
 import { INeed, PostNeedSchema } from '../../Nexus/entities/INeed';
@@ -74,17 +75,17 @@ function NewNeedForm(): React.ReactElement {
               noValidate
               validated={validated}
             >
-              <InputRow
+              <ControlledTextInput
                 control={control}
                 name="title"
                 label={t('Title')}
-                errors={errors}
+                error={get(errors, `title`) as FieldError}
               />
-              <InputRow
+              <ControlledTextInput
                 control={control}
                 name="description"
                 label={t('Description')}
-                errors={errors}
+                error={get(errors, `description`) as FieldError}
               />
               <Button className="mt-2  ml-3" type="submit">
                 {t('save')}

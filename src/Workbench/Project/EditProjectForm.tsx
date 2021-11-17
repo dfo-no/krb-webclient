@@ -1,13 +1,14 @@
 import { joiResolver } from '@hookform/resolvers/joi';
+import { get } from 'lodash';
 import React, { useEffect } from 'react';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import Form from 'react-bootstrap/Form';
-import { useForm } from 'react-hook-form';
+import { FieldError, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { v4 as uuidv4 } from 'uuid';
+import ControlledTextInput from '../../Form/ControlledTextInput';
 import ErrorSummary from '../../Form/ErrorSummary';
-import InputRow from '../../Form/InputRow';
 import { IAlert } from '../../models/IAlert';
 import { EditProjectSchema } from '../../models/Project';
 import { IBank } from '../../Nexus/entities/IBank';
@@ -44,41 +45,43 @@ export default function EditProjectForm({
     }
   }, [project, reset]);
 
-  const onEditProjectSubmit = (post: IBank) => {
-    const alert: IAlert = {
-      id: uuidv4(),
-      style: 'success',
-      text: 'Successfully updated projectt'
-    };
+  const onSubmit = (post: IBank) => {
     dispatch(putProjectThunk(post)).then(() => {
+      const alert: IAlert = {
+        id: uuidv4(),
+        style: 'success',
+        text: 'Successfully updated projectt'
+      };
       dispatch(addAlert({ alert }));
       toggleShow(false);
     });
   };
 
+  const onReset = () => {
+    reset();
+    toggleShow(false);
+  };
+
   return (
     <Card className="mb-4">
       <Card.Body>
-        <Form onSubmit={handleSubmit(onEditProjectSubmit)}>
-          <InputRow
+        <Form onSubmit={handleSubmit(onSubmit)}>
+          <ControlledTextInput
             control={control}
             name="title"
-            errors={errors}
+            error={get(errors, `title`) as FieldError}
             label={t('Title')}
           />
-          <InputRow
+          <ControlledTextInput
             control={control}
             name="description"
-            errors={errors}
+            error={get(errors, `description`) as FieldError}
             label={t('Description')}
           />
           <Button className="mt-2  ml-3" type="submit">
             {t('save')}
           </Button>
-          <Button
-            className="mt-2 ml-3 btn-warning"
-            onClick={() => toggleShow(false)}
-          >
+          <Button className="mt-2 ml-3 btn-warning" onClick={() => onReset()}>
             {t('cancel')}
           </Button>
           <ErrorSummary errors={errors} />
