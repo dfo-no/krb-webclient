@@ -1,13 +1,13 @@
 import Joi from 'joi';
-import { BaseModel } from './BaseModel';
-import { Codelist } from './Codelist';
-import { InheritedBank } from './InheritedBank';
-import ModelType from './ModelType';
-import { Need } from './Need';
-import { Parentable } from './Parentable';
-import { Product } from './Product';
-import { Publication } from './Publication';
-import { Tag } from './Tag';
+import { IInheritedBank } from '../../models/IInheritedBank';
+import ModelType from '../../models/ModelType';
+import { Parentable } from '../../models/Parentable';
+import { IBaseModel } from './IBaseModel';
+import { ICodelist } from './ICodelist';
+import { INeed } from './INeed';
+import { IProduct } from './IProduct';
+import { IPublication } from './IPublication';
+import { ITag } from './ITag';
 
 export const BaseBankSchema = Joi.object().keys({
   id: Joi.string().length(36).required(),
@@ -39,17 +39,17 @@ export const BaseBankSchema = Joi.object().keys({
   ]).required()
 });
 
-export interface Bank extends BaseModel {
+export interface IBank extends IBaseModel {
   id: string;
   title: string;
   description: string;
-  needs: Parentable<Need>[];
-  codelist: Codelist[];
-  products: Product[];
+  needs: Parentable<INeed>[];
+  codelist: ICodelist[];
+  products: IProduct[];
   version: number;
-  tags: Parentable<Tag>[];
-  publications: Publication[];
+  tags: Parentable<ITag>[];
+  publications: IPublication[];
   publishedDate: string | null;
   projectId: string | null;
-  inheritedBanks: InheritedBank[];
+  inheritedBanks: IInheritedBank[];
 }

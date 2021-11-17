@@ -14,11 +14,11 @@ import ResponseProductEditor from './Product/ResponseProductEditor';
 import RequirementPage from './Requirement/RequirementPage';
 import ResponseSideBar from './SideBar/ResponseSideBar';
 
-interface RouteParams {
+interface IRouteParams {
   bankId: string;
 }
 export default function SpecModule(): React.ReactElement {
-  const projectMatch = useRouteMatch<RouteParams>('/responseeditor/:bankId');
+  const projectMatch = useRouteMatch<IRouteParams>('/responseeditor/:bankId');
   const dispatch = useAppDispatch();
   const { id } = useAppSelector((state) => state.selectedBank);
   // Can set this safely, even if we got here directly by url or by clicks

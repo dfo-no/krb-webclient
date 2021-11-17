@@ -1,10 +1,10 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-interface SelectedQuestionState {
+interface ISelectedQuestionState {
   questionId: string | null;
 }
 
-const initialState: SelectedQuestionState = { questionId: null };
+const initialState: ISelectedQuestionState = { questionId: null };
 
 const selectedQuestionState = createSlice({
   name: 'selectedQuestion',

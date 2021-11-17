@@ -1,12 +1,12 @@
 import { format } from 'date-fns';
 import { DATETIME_ISO8601UTC } from '../common/Constants';
-import { Bank } from './Bank';
+import { IBank } from '../Nexus/entities/IBank';
 import ModelType from './ModelType';
 import { PostProjectSchema, PutProjectSchema } from './Project';
 
 describe('ProjectSchemas works', () => {
   test('PostProjectSchema should validate', () => {
-    const bank: Bank = {
+    const bank: IBank = {
       id: '',
       title: 'Test',
       description: '',
@@ -29,7 +29,7 @@ describe('ProjectSchemas works', () => {
   });
 
   test('PutProjectSchema should validate both iso date and empty string', () => {
-    const bank: Bank = {
+    const bank: IBank = {
       id: 'e56367af-d48d-422d-a4f6-ba52ee17af23',
       title: 'Test',
       description: '',
@@ -52,7 +52,7 @@ describe('ProjectSchemas works', () => {
   });
 
   test('PutProjectSchema with publications should validate', () => {
-    const bank: Bank = {
+    const bank: IBank = {
       id: 'e56367af-d48d-422d-a4f6-ba52ee17af23',
       title: 'Test',
       description: '',
@@ -102,7 +102,7 @@ describe('ProjectSchemas works', () => {
 
   test('PutProjectSchema invalidates on duplicate publications', () => {
     const duplicate = format(new Date(), DATETIME_ISO8601UTC);
-    const bank: Bank = {
+    const bank: IBank = {
       id: 'e56367af-d48d-422d-a4f6-ba52ee17af23',
       title: 'Test',
       description: '',

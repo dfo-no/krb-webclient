@@ -3,11 +3,11 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 /**
  * @deprecated
  */
-interface SelectedProjectState {
+interface ISelectedProjectState {
   id: string | null;
 }
 
-const initialState: SelectedProjectState = { id: null };
+const initialState: ISelectedProjectState = { id: null };
 
 /**
  * @deprecated

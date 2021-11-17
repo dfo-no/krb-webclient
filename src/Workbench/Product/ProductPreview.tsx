@@ -5,10 +5,10 @@ import Row from 'react-bootstrap/Row';
 import { BsArrowReturnRight, BsPencil } from 'react-icons/bs';
 import { Link } from 'react-router-dom';
 import Utils from '../../common/Utils';
-import { IVariant } from '../../models/IVariant';
-import { Need } from '../../models/Need';
 import { Nestable } from '../../models/Nestable';
-import { Requirement } from '../../models/Requirement';
+import { INeed } from '../../Nexus/entities/INeed';
+import { IRequirement } from '../../Nexus/entities/IRequirement';
+import { IVariant } from '../../Nexus/entities/IVariant';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { selectNeed } from '../../store/reducers/selectedNeed-reducer';
 import { selectRequirement } from '../../store/reducers/selectedRequirement-reducer';
@@ -44,8 +44,8 @@ export default function ProductPreview(): React.ReactElement {
     return returnText;
   };
 
-  const requirementList = (requirements: Requirement[], need: Need) => {
-    const reqList = requirements.map((element: Requirement) => {
+  const requirementList = (requirements: IRequirement[], need: INeed) => {
+    const reqList = requirements.map((element: IRequirement) => {
       return (
         <ListGroup.Item key={element.id + 1}>
           <Row className="d-flex justify-content-between mr-2">
@@ -83,11 +83,11 @@ export default function ProductPreview(): React.ReactElement {
     );
   };
 
-  const childrenHierarchy = (listofneed: Nestable<Need>[], level: number) => {
+  const childrenHierarchy = (listofneed: Nestable<INeed>[], level: number) => {
     let n = level;
     let children: JSX.Element[];
     const cssClass = `level${n}`;
-    let requirements: Requirement[] = [];
+    let requirements: IRequirement[] = [];
     return listofneed.map((element) => {
       if (element.children && element.children.length > 0) {
         n += 1;
@@ -111,10 +111,10 @@ export default function ProductPreview(): React.ReactElement {
     });
   };
 
-  const needHierarchy = (needsList: Nestable<Need>[]) => {
+  const needHierarchy = (needsList: Nestable<INeed>[]) => {
     const newList = Utils.unflatten(needsList)[0];
     let children: JSX.Element[];
-    let requirements: Requirement[] = [];
+    let requirements: IRequirement[] = [];
     const hierarchy = newList.map((element) => {
       if (
         element.id in associatedRequirements &&

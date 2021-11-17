@@ -1,8 +1,8 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Parentable } from '../../models/Parentable';
-import { Tag } from '../../models/Tag';
 import NestableHierarcy from '../../NestableHierarchy/NestableHierarcy';
+import { ITag } from '../../Nexus/entities/ITag';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import {
   putSelectedProjectThunk,
@@ -16,7 +16,7 @@ export default function TagPage(): React.ReactElement {
   const dispatch = useAppDispatch();
   const { project } = useAppSelector((state) => state.project);
 
-  const newTagList = (projectId: string, items: Parentable<Tag>[]) => {
+  const newTagList = (projectId: string, items: Parentable<ITag>[]) => {
     dispatch(setTags(items));
     dispatch(putSelectedProjectThunk('dummy'));
   };
@@ -26,7 +26,7 @@ export default function TagPage(): React.ReactElement {
       <h3 className="mt-3">{t('Tags')}</h3>
       <NewTagForm />
       <NestableHierarcy
-        dispatchfunc={(projectId: string, items: Parentable<Tag>[]) =>
+        dispatchfunc={(projectId: string, items: Parentable<ITag>[]) =>
           newTagList(projectId, items)
         }
         inputlist={project.tags}

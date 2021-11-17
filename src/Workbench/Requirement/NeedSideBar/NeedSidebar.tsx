@@ -2,8 +2,8 @@ import React from 'react';
 import Nav from 'react-bootstrap/Nav';
 import { NavLink } from 'react-router-dom';
 import Utils from '../../../common/Utils';
-import { Need } from '../../../models/Need';
 import { Parentable } from '../../../models/Parentable';
+import { INeed } from '../../../Nexus/entities/INeed';
 import { useAppSelector } from '../../../store/hooks';
 import styles from './NeedSidebar.module.scss';
 
@@ -11,7 +11,7 @@ export default function NeedSideBar(): React.ReactElement {
   const { project } = useAppSelector((state) => state.project);
   const { needs } = project;
 
-  const needLevels = (elements: Parentable<Need>[]) => {
+  const needLevels = (elements: Parentable<INeed>[]) => {
     const displayNeeds = Utils.parentable2Levelable(elements);
     return displayNeeds.map((element) => {
       const cssClass = `level${element.level - 1}`;

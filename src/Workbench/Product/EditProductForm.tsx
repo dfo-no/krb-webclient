@@ -11,12 +11,12 @@ import AlertModal from '../../common/AlertModal';
 import Utils from '../../common/Utils';
 import ErrorSummary from '../../Form/ErrorSummary';
 import InputRow from '../../Form/InputRow';
-import { Alert } from '../../models/Alert';
-import { IVariant } from '../../models/IVariant';
-import { Need } from '../../models/Need';
-import { Product, PutProductSchema } from '../../models/Product';
-import { Requirement } from '../../models/Requirement';
+import { IAlert } from '../../models/IAlert';
 import { AccordionContext } from '../../NestableHierarchy/AccordionContext';
+import { INeed } from '../../Nexus/entities/INeed';
+import { IProduct, PutProductSchema } from '../../Nexus/entities/IProduct';
+import { IRequirement } from '../../Nexus/entities/IRequirement';
+import { IVariant } from '../../Nexus/entities/IVariant';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { addAlert } from '../../store/reducers/alert-reducer';
 import {
@@ -27,7 +27,7 @@ import {
 import { selectProduct } from '../../store/reducers/selectedProduct-reducer';
 
 interface IProps {
-  element: Product;
+  element: IProduct;
 }
 
 export default function EditProductForm({
@@ -45,7 +45,7 @@ export default function EditProductForm({
     handleSubmit,
     reset,
     formState: { errors }
-  } = useForm<Product>({
+  } = useForm<IProduct>({
     resolver: joiResolver(PutProductSchema),
     defaultValues: element
   });
@@ -56,14 +56,14 @@ export default function EditProductForm({
     }
   }, [element, reset]);
 
-  const onSubmit = (post: Product) => {
+  const onSubmit = (post: IProduct) => {
     const newProduct = { ...element };
     newProduct.title = post.title;
     newProduct.description = post.description;
     if (newProduct.children) {
       delete newProduct.children;
     }
-    const alert: Alert = {
+    const alert: IAlert = {
       id: uuidv4(),
       style: 'success',
       text: 'Successfully updated product'
@@ -77,8 +77,8 @@ export default function EditProductForm({
 
   const checkProductConnection = () => {
     let used = false;
-    project.needs.forEach((need: Need) => {
-      need.requirements.forEach((requirement: Requirement) => {
+    project.needs.forEach((need: INeed) => {
+      need.requirements.forEach((requirement: IRequirement) => {
         requirement.variants.forEach((variant: IVariant) => {
           if (variant.products.includes(element.id)) {
             used = true;
@@ -89,7 +89,7 @@ export default function EditProductForm({
     return used;
   };
 
-  const deleteProduct = (product: Product) => {
+  const deleteProduct = (product: IProduct) => {
     if (
       Utils.checkIfParent(project.products, element.id) ||
       checkProductConnection()
@@ -99,7 +99,7 @@ export default function EditProductForm({
       dispatch(removeProduct(product));
       dispatch(putSelectedProjectThunk('dummy'));
 
-      const alert: Alert = {
+      const alert: IAlert = {
         id: uuidv4(),
         style: 'success',
         text: 'Successfully deleted product'

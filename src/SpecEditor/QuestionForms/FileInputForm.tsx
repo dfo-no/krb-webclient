@@ -9,12 +9,12 @@ import Row from 'react-bootstrap/Row';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import ErrorSummary from '../../Form/ErrorSummary';
+import { IRequirementAnswer } from '../../models/IRequirementAnswer';
+import ModelType from '../../models/ModelType';
 import {
   FileUploadQuestionSchema,
   IFileUploadQuestion
-} from '../../models/IFileUploadQuestion';
-import { IRequirementAnswer } from '../../models/IRequirementAnswer';
-import ModelType from '../../models/ModelType';
+} from '../../Nexus/entities/IFileUploadQuestion';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import {
   editAnswer,

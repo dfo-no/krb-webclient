@@ -10,7 +10,7 @@ interface IRouteLink {
   name: string;
 }
 
-interface RouteParams {
+interface IRouteParams {
   projectId: string;
 }
 
@@ -38,7 +38,7 @@ function PrefilledResponseSideBar(): React.ReactElement {
     (state) => state.prefilledResponse
   );
 
-  const match = useRouteMatch<RouteParams>('/prefilledresponse/:bankId');
+  const match = useRouteMatch<IRouteParams>('/prefilledresponse/:bankId');
   const currentUrl = match?.url ? match.url : `/prefilledresponse/${id}`;
   const isProjectSelected = !!prefilledResponse.bank.id;
 

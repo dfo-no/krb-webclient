@@ -8,16 +8,16 @@ import Form from 'react-bootstrap/Form';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import ErrorSummary from '../../../Form/ErrorSummary';
-import {
-  CodelistQuestionAnswerSchema,
-  ICodelistQuestion
-} from '../../../models/ICodelistQuestion';
+import { IPrefilledResponseProduct } from '../../../models/IPrefilledResponseProduct';
 import {
   IRequirementAnswer,
   RequirementAnswerSchema
 } from '../../../models/IRequirementAnswer';
-import { PrefilledResponseProduct } from '../../../models/PrefilledResponseProduct';
-import { Requirement } from '../../../models/Requirement';
+import {
+  CodelistQuestionAnswerSchema,
+  ICodelistQuestion
+} from '../../../Nexus/entities/ICodelistQuestion';
+import { IRequirement } from '../../../Nexus/entities/IRequirement';
 import { useAppDispatch, useAppSelector } from '../../../store/hooks';
 import {
   addProductAnswer,
@@ -26,7 +26,7 @@ import {
 
 interface IProps {
   answer: IRequirementAnswer;
-  product: PrefilledResponseProduct;
+  product: IPrefilledResponseProduct;
 }
 export const ResponseCodelistSchema = RequirementAnswerSchema.keys({
   question: CodelistQuestionAnswerSchema.keys({
@@ -75,7 +75,7 @@ export default function ProductCodelistForm({
     dispatch(removeProductAnswer({ answerId: elemId, productId }));
   };
 
-  const getVariantText = (requirement: Requirement, variantId: string) => {
+  const getVariantText = (requirement: IRequirement, variantId: string) => {
     const variantIndex = requirement.variants.findIndex(
       (v) => v.id === variantId
     );

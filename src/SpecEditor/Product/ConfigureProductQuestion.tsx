@@ -1,6 +1,6 @@
 import React from 'react';
 import Utils from '../../common/Utils';
-import { SpecificationProduct } from '../../models/SpecificationProduct';
+import { ISpecificationProduct } from '../../models/ISpecificationProduct';
 import { useAppSelector } from '../../store/hooks';
 import AnswerTypeSelector from '../Components/AnswerTypeSelector';
 
@@ -13,7 +13,7 @@ export default function ConfigureProductQuestion(): React.ReactElement {
 
   const productIndex = Utils.ensure(
     spec.products.findIndex(
-      (product: SpecificationProduct) =>
+      (product: ISpecificationProduct) =>
         product.id === selectedSpecificationProduct.id
     )
   );

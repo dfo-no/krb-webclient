@@ -9,10 +9,10 @@ import { BsTrashFill } from 'react-icons/bs';
 import { v4 as uuidv4 } from 'uuid';
 import ErrorSummary from '../../Form/ErrorSummary';
 import InputRow from '../../Form/InputRow';
-import { Alert } from '../../models/Alert';
+import { IAlert } from '../../models/IAlert';
 import { Nestable } from '../../models/Nestable';
 import { Parentable } from '../../models/Parentable';
-import { PutTagSchema, Tag } from '../../models/Tag';
+import { ITag, PutTagSchema } from '../../Nexus/entities/ITag';
 import { useAppDispatch } from '../../store/hooks';
 import { addAlert } from '../../store/reducers/alert-reducer';
 import {
@@ -22,7 +22,7 @@ import {
 } from '../../store/reducers/project-reducer';
 
 interface IProps {
-  element: Parentable<Tag>;
+  element: Parentable<ITag>;
 }
 
 export default function EditTagForm({ element }: IProps): React.ReactElement {
@@ -35,7 +35,7 @@ export default function EditTagForm({ element }: IProps): React.ReactElement {
     handleSubmit,
     reset,
     formState: { errors }
-  } = useForm<Parentable<Tag>>({
+  } = useForm<Parentable<ITag>>({
     resolver: joiResolver(PutTagSchema),
     defaultValues: element
   });
@@ -46,17 +46,17 @@ export default function EditTagForm({ element }: IProps): React.ReactElement {
     }
   }, [element, reset]);
 
-  const onEditTagSubmit = (post: Nestable<Tag>) => {
+  const onEditTagSubmit = (post: Nestable<ITag>) => {
     const newTag = { ...post };
     if (newTag.children) {
       delete newTag.children;
     }
-    const alert: Alert = {
+    const alert: IAlert = {
       id: uuidv4(),
       style: 'success',
       text: 'Successfully edited tag'
     };
-    dispatch(editTag(newTag as Parentable<Tag>));
+    dispatch(editTag(newTag as Parentable<ITag>));
     dispatch(putSelectedProjectThunk('dummy')).then(() => {
       dispatch(addAlert({ alert }));
       reset();
@@ -70,7 +70,7 @@ export default function EditTagForm({ element }: IProps): React.ReactElement {
       reset();
     });
 
-    const alert: Alert = {
+    const alert: IAlert = {
       id: uuidv4(),
       style: 'success',
       text: 'Successfully edited tag'

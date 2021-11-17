@@ -1,10 +1,10 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-interface LoaderState {
+interface ILoaderState {
   isLoading: boolean;
 }
 
-const initialState: LoaderState = { isLoading: false };
+const initialState: ILoaderState = { isLoading: false };
 
 const loaderSlice = createSlice({
   name: 'loader',

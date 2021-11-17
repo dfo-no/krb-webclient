@@ -3,20 +3,20 @@ import FormControl from 'react-bootstrap/FormControl';
 import ListGroup from 'react-bootstrap/ListGroup';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
-import { Bank } from '../models/Bank';
+import { IBank } from '../Nexus/entities/IBank';
 import { useAppDispatch } from '../store/hooks';
 import { selectBank } from '../store/reducers/selectedBank-reducer';
 import styles from './SearchBar.module.scss';
 
-interface SearchBarProps {
-  list: Bank[];
+interface ISearchBarProps {
+  list: IBank[];
 }
 
 export default function SearchBar({
   list
-}: SearchBarProps): React.ReactElement {
+}: ISearchBarProps): React.ReactElement {
   const [input, setInput] = useState('');
-  const [searchList, setSearchList] = useState<Bank[]>([]);
+  const [searchList, setSearchList] = useState<IBank[]>([]);
   const dispatch = useAppDispatch();
   const { t } = useTranslation();
 
@@ -37,12 +37,12 @@ export default function SearchBar({
     setInput(value);
   };
 
-  const handleEdit = (bank: Bank) => () => {
+  const handleEdit = (bank: IBank) => () => {
     dispatch(selectBank(bank.id));
   };
 
-  const displaylist = (bankList: Bank[]) => {
-    const resultList = bankList.map((bank: Bank) => {
+  const displaylist = (bankList: IBank[]) => {
+    const resultList = bankList.map((bank: IBank) => {
       return (
         <ListGroup.Item key={bank.id} className={styles.katalogitem}>
           <Link to={`/bank/${bank.id}`} onClick={handleEdit(bank)}>

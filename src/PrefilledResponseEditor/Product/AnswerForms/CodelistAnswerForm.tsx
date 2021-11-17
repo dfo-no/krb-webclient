@@ -8,11 +8,11 @@ import Form from 'react-bootstrap/Form';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import ErrorSummary from '../../../Form/ErrorSummary';
-import { ICodelistQuestion } from '../../../models/ICodelistQuestion';
+import { IPrefilledResponseProduct } from '../../../models/IPrefilledResponseProduct';
 import { IRequirementAnswer } from '../../../models/IRequirementAnswer';
-import { PrefilledResponseProduct } from '../../../models/PrefilledResponseProduct';
 import QuestionEnum from '../../../models/QuestionEnum';
-import { Requirement } from '../../../models/Requirement';
+import { ICodelistQuestion } from '../../../Nexus/entities/ICodelistQuestion';
+import { IRequirement } from '../../../Nexus/entities/IRequirement';
 import { useAppDispatch, useAppSelector } from '../../../store/hooks';
 import {
   addProductAnswer,
@@ -21,7 +21,7 @@ import {
 
 interface IProps {
   answer: IRequirementAnswer;
-  product: PrefilledResponseProduct;
+  product: IPrefilledResponseProduct;
 }
 export const ResponseCodelistSchema = Joi.object().keys({
   id: Joi.string().required(),
@@ -77,7 +77,7 @@ export default function ProductCodelistAnswer({
     dispatch(removeProductAnswer({ answerId: elemId, productId }));
   };
 
-  const getVariantText = (requirement: Requirement, variantId: string) => {
+  const getVariantText = (requirement: IRequirement, variantId: string) => {
     const variantIndex = requirement.variants.findIndex(
       (v) => v.id === variantId
     );

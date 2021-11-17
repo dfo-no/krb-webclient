@@ -1,17 +1,17 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { Alert } from '../../models/Alert';
+import { IAlert } from '../../models/IAlert';
 
-interface AlertState {
-  list: Alert[];
+interface IAlertState {
+  list: IAlert[];
 }
 
-const initialState: AlertState = { list: [] };
+const initialState: IAlertState = { list: [] };
 
 const alertSlice = createSlice({
   name: 'alert',
   initialState,
   reducers: {
-    addAlert(state, { payload }: PayloadAction<{ alert: Alert }>) {
+    addAlert(state, { payload }: PayloadAction<{ alert: IAlert }>) {
       state.list.unshift(payload.alert);
     },
     removeAlert(state, { payload }: PayloadAction<{ id: string }>) {

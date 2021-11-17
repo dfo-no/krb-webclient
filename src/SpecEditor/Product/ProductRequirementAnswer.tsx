@@ -15,10 +15,10 @@ import Utils from '../../common/Utils';
 import ErrorSummary from '../../Form/ErrorSummary';
 import { IOption } from '../../models/IOption';
 import { IRequirementAnswer } from '../../models/IRequirementAnswer';
-import { IVariant } from '../../models/IVariant';
+import { ISpecificationProduct } from '../../models/ISpecificationProduct';
 import ModelType from '../../models/ModelType';
-import { Requirement } from '../../models/Requirement';
-import { SpecificationProduct } from '../../models/SpecificationProduct';
+import { IRequirement } from '../../Nexus/entities/IRequirement';
+import { IVariant } from '../../Nexus/entities/IVariant';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { selectQuestion } from '../../store/reducers/selectedQuestion-reducer';
 import {
@@ -28,7 +28,7 @@ import {
 } from '../../store/reducers/spesification-reducer';
 
 interface IProps {
-  requirement: Requirement;
+  requirement: IRequirement;
   productId: string;
 }
 
@@ -87,7 +87,7 @@ export default function ProductRequirementAnswer({
   );
   const specProduct = Utils.ensure(
     spec.products.find(
-      (product: SpecificationProduct) => product.id === productId
+      (product: ISpecificationProduct) => product.id === productId
     )
   );
   const savedQuestion = specProduct.requirementAnswers.find(
@@ -199,7 +199,7 @@ export default function ProductRequirementAnswer({
     return [defaultText, defaultWeight];
   }
 
-  const reqTextOptions = (req: Requirement) => {
+  const reqTextOptions = (req: IRequirement) => {
     const reqText = req.variants.map((variant) => {
       if (req.variants.length === 1) {
         return <p>{variant.requirementText}</p>;
