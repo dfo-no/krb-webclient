@@ -1,12 +1,12 @@
 import Joi from 'joi';
-import { BaseModel } from './BaseModel';
-import ModelType from './ModelType';
-import { Requirement } from './Requirement';
+import ModelType from '../../models/ModelType';
+import { IBaseModel } from './IBaseModel';
+import { IRequirement } from './IRequirement';
 
-export interface Need extends BaseModel {
+export interface INeed extends IBaseModel {
   title: string;
   description: string;
-  requirements: Requirement[];
+  requirements: IRequirement[];
 }
 
 export const BaseNeedSchema = Joi.object().keys({

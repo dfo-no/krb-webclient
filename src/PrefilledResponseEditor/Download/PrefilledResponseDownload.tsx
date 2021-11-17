@@ -2,7 +2,7 @@ import { AxiosResponse } from 'axios';
 import React from 'react';
 import Button from 'react-bootstrap/Button';
 import { httpPost } from '../../api/http';
-import { PrefilledResponse } from '../../models/PrefilledResponse';
+import { IPrefilledResponse } from '../../models/IPrefilledResponse';
 import { useAppSelector } from '../../store/hooks';
 
 export default function PrefilledResponseDownLoad(): React.ReactElement {
@@ -11,7 +11,7 @@ export default function PrefilledResponseDownLoad(): React.ReactElement {
   );
 
   const onDownLoad = () => {
-    httpPost<PrefilledResponse, AxiosResponse<File>>(
+    httpPost<IPrefilledResponse, AxiosResponse<File>>(
       '/java/generatePrefilledResponse',
       prefilledResponse,
       {

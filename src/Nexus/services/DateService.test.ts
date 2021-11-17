@@ -12,12 +12,12 @@ describe('DateService', () => {
       now: DateService.getDateString(date)
     };
 
-    interface DateTest {
+    interface IDateTest {
       now: string;
     }
     // Prove JSONIFY does not change the date timezone
     const stringResult = JSON.stringify(obj);
-    const objectResult = JSON.parse(stringResult) as DateTest;
+    const objectResult = JSON.parse(stringResult) as IDateTest;
 
     expect(objectResult.now).toEqual(isoString);
   });

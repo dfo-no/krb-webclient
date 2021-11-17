@@ -9,14 +9,14 @@ import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import ErrorSummary from '../../../Form/ErrorSummary';
 import {
-  CodelistQuestionAnswerSchema,
-  ICodelistQuestion
-} from '../../../models/ICodelistQuestion';
-import {
   IRequirementAnswer,
   RequirementAnswerSchema
 } from '../../../models/IRequirementAnswer';
-import { Requirement } from '../../../models/Requirement';
+import {
+  CodelistQuestionAnswerSchema,
+  ICodelistQuestion
+} from '../../../Nexus/entities/ICodelistQuestion';
+import { IRequirement } from '../../../Nexus/entities/IRequirement';
 import { useAppDispatch, useAppSelector } from '../../../store/hooks';
 import {
   addAnswer,
@@ -70,7 +70,7 @@ export default function CodelistForm({ answer }: IProps): React.ReactElement {
     dispatch(removeAnswer(elemId));
   };
 
-  const getVariantText = (requirement: Requirement, variantId: string) => {
+  const getVariantText = (requirement: IRequirement, variantId: string) => {
     const variantIndex = requirement.variants.findIndex(
       (v) => v.id === variantId
     );

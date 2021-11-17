@@ -1,14 +1,14 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { Code } from '../../models/Code';
-import { Codelist } from '../../models/Codelist';
 import ModelType from '../../models/ModelType';
 import { Parentable } from '../../models/Parentable';
+import { ICode } from '../../Nexus/entities/ICode';
+import { ICodelist } from '../../Nexus/entities/ICodelist';
 
-interface SelectedCodeListState {
-  codelist: Codelist;
+interface ISelectedCodeListState {
+  codelist: ICodelist;
 }
 
-const initialState: SelectedCodeListState = {
+const initialState: ISelectedCodeListState = {
   codelist: {
     id: '',
     title: '',
@@ -24,15 +24,15 @@ const selectedCodeListState = createSlice({
   name: 'selectedCodeList',
   initialState,
   reducers: {
-    selectCodeList(state, { payload }: PayloadAction<Codelist>) {
+    selectCodeList(state, { payload }: PayloadAction<ICodelist>) {
       state.codelist = payload;
     },
-    editCodelist(state, { payload }: PayloadAction<Codelist>) {
+    editCodelist(state, { payload }: PayloadAction<ICodelist>) {
       state.codelist = payload;
     },
     editCodeInSelectedCodelist(
       state,
-      { payload }: PayloadAction<Parentable<Code>>
+      { payload }: PayloadAction<Parentable<ICode>>
     ) {
       const codeIndex = state.codelist.codes.findIndex(
         (elem) => elem.id === payload.id
@@ -41,7 +41,7 @@ const selectedCodeListState = createSlice({
         state.codelist.codes[codeIndex] = payload;
       }
     },
-    removeCodeInSelectedCodelist(state, { payload }: PayloadAction<Code>) {
+    removeCodeInSelectedCodelist(state, { payload }: PayloadAction<ICode>) {
       const codeIndex = state.codelist.codes.findIndex(
         (elem) => elem.id === payload.id
       );
@@ -49,10 +49,10 @@ const selectedCodeListState = createSlice({
         state.codelist.codes.splice(codeIndex, 1);
       }
     },
-    addCodeToSelected(state, { payload }: PayloadAction<Parentable<Code>>) {
+    addCodeToSelected(state, { payload }: PayloadAction<Parentable<ICode>>) {
       state.codelist.codes.push(payload);
     },
-    setCodesToSelected(state, { payload }: PayloadAction<Parentable<Code>[]>) {
+    setCodesToSelected(state, { payload }: PayloadAction<Parentable<ICode>[]>) {
       state.codelist.codes = payload;
     }
   }

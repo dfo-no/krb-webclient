@@ -1,14 +1,14 @@
 import React from 'react';
 import Container from 'react-bootstrap/Container';
-import { Code } from '../../models/Code';
-import { ICodelistQuestion } from '../../models/ICodelistQuestion';
 import { IRequirementAnswer } from '../../models/IRequirementAnswer';
-import { Requirement } from '../../models/Requirement';
+import { ICode } from '../../Nexus/entities/ICode';
+import { ICodelistQuestion } from '../../Nexus/entities/ICodelistQuestion';
+import { IRequirement } from '../../Nexus/entities/IRequirement';
 import { useAppSelector } from '../../store/hooks';
 
 interface IProps {
   answer: IRequirementAnswer;
-  parent_requirement: Requirement;
+  parent_requirement: IRequirement;
 }
 
 export default function CodelistInfo({
@@ -29,7 +29,7 @@ export default function CodelistInfo({
     if (Array.isArray(alternative.answer?.codes)) {
       const list = alternative.answer?.codes.map((selectedCode: string) => {
         const codeIndex = codelist.codes.findIndex(
-          (element: Code) => element.id === selectedCode
+          (element: ICode) => element.id === selectedCode
         );
         const code = codelist.codes[codeIndex];
         return <li key={code.id}>{code.title}</li>;

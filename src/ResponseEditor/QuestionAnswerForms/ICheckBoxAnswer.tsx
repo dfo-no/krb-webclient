@@ -8,10 +8,10 @@ import Form from 'react-bootstrap/Form';
 import { FieldError, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import ControlledCheckbox from '../../Form/ControlledCheckbox';
-import { ICheckboxQuestion } from '../../models/ICheckboxQuestion';
 import { IRequirementAnswer } from '../../models/IRequirementAnswer';
 import ModelType from '../../models/ModelType';
 import QuestionEnum from '../../models/QuestionEnum';
+import { ICheckboxQuestion } from '../../Nexus/entities/ICheckboxQuestion';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import {
   addProductAnswer,

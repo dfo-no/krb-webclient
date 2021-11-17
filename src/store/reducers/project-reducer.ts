@@ -1,26 +1,26 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { httpDelete, httpGet, httpPost, httpPut } from '../../api/http';
 import Utils from '../../common/Utils';
-import { Bank } from '../../models/Bank';
-import { Code } from '../../models/Code';
-import { Codelist } from '../../models/Codelist';
-import { InheritedBank } from '../../models/InheritedBank';
+import { IInheritedBank } from '../../models/IInheritedBank';
 import ModelType from '../../models/ModelType';
-import { Need } from '../../models/Need';
 import { Parentable } from '../../models/Parentable';
-import { Product } from '../../models/Product';
-import { Publication } from '../../models/Publication';
-import { Requirement } from '../../models/Requirement';
-import { Tag } from '../../models/Tag';
+import { IBank } from '../../Nexus/entities/IBank';
+import { ICode } from '../../Nexus/entities/ICode';
+import { ICodelist } from '../../Nexus/entities/ICodelist';
+import { INeed } from '../../Nexus/entities/INeed';
+import { IProduct } from '../../Nexus/entities/IProduct';
+import { IPublication } from '../../Nexus/entities/IPublication';
+import { IRequirement } from '../../Nexus/entities/IRequirement';
+import { ITag } from '../../Nexus/entities/ITag';
 
-interface ProjectState {
-  list: Bank[];
+interface IProjectState {
+  list: IBank[];
   listLoading: 'idle' | 'fulfilled' | 'rejected' | 'pending';
-  project: Bank;
+  project: IBank;
   projectLoading: 'idle' | 'fulfilled' | 'rejected' | 'pending';
 }
 
-const initialState: ProjectState = {
+const initialState: IProjectState = {
   list: [],
   project: {
     id: '',
@@ -46,7 +46,7 @@ const initialState: ProjectState = {
 export const getProjectsThunk = createAsyncThunk(
   'getProjectsThunk',
   async () => {
-    const response = await httpGet<Bank[]>('/api/bank/projects');
+    const response = await httpGet<IBank[]>('/api/bank/projects');
 
     return response.data;
   }
@@ -55,44 +55,44 @@ export const getProjectsThunk = createAsyncThunk(
 export const getProjectThunk = createAsyncThunk(
   'getProjectThunk',
   async (id: string) => {
-    const response = await httpGet<Bank>(`/api/bank/${id}`);
+    const response = await httpGet<IBank>(`/api/bank/${id}`);
     return response.data;
   }
 );
 
 export const postProjectThunk = createAsyncThunk(
   'postProjectThunk',
-  async (project: Bank) => {
-    const response = await httpPost<Bank>('/api/bank', project);
+  async (project: IBank) => {
+    const response = await httpPost<IBank>('/api/bank', project);
     return response.data;
   }
 );
 
 export const putSelectedProjectThunk = createAsyncThunk<
-  Bank,
+  IBank,
   string,
   {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     state: any; // do not use : RootState here. Circular reference!!
   }
 >('putSelectedProjectThunk', async (id: string, thunkApi) => {
-  const { project } = thunkApi.getState().project as ProjectState;
-  const response = await httpPut<Bank>(`/api/bank/${project.id}`, project);
+  const { project } = thunkApi.getState().project as IProjectState;
+  const response = await httpPut<IBank>(`/api/bank/${project.id}`, project);
   return response.data;
 });
 
 export const putProjectThunk = createAsyncThunk(
   'putProjectThunk',
-  async (project: Bank) => {
-    const response = await httpPut<Bank>(`/api/bank/${project.id}`, project);
+  async (project: IBank) => {
+    const response = await httpPut<IBank>(`/api/bank/${project.id}`, project);
     return response.data;
   }
 );
 
 export const deleteProjectThunk = createAsyncThunk(
   'deleteProjectThunk',
-  async (project: Bank) => {
-    await httpDelete<Bank>(`/api/bank/${project.id}`);
+  async (project: IBank) => {
+    await httpDelete<IBank>(`/api/bank/${project.id}`);
     return project;
   }
 );
@@ -100,7 +100,7 @@ export const deleteProjectThunk = createAsyncThunk(
 export const deleteProjectByIdThunk = createAsyncThunk(
   'deleteProjectByIdThunk',
   async (projectId: string) => {
-    await httpDelete<Bank>(`/api/bank/${projectId}`);
+    await httpDelete<IBank>(`/api/bank/${projectId}`);
     return projectId;
   }
 );
@@ -109,14 +109,14 @@ const projectSlice = createSlice({
   name: 'projects',
   initialState,
   reducers: {
-    addProjects(state, { payload }: PayloadAction<Bank[]>) {
+    addProjects(state, { payload }: PayloadAction<IBank[]>) {
       state.list = payload;
     },
-    selectProject(state, { payload }: PayloadAction<Bank>) {
+    selectProject(state, { payload }: PayloadAction<IBank>) {
       state.project = payload;
     },
     // Should not be needed, when removing, we reload the list
-    deleteProject(state, { payload }: PayloadAction<Bank>) {
+    deleteProject(state, { payload }: PayloadAction<IBank>) {
       const index = Utils.ensure(
         state.list.findIndex((project) => project.id === payload.id)
       );
@@ -130,12 +130,12 @@ const projectSlice = createSlice({
       );
       state.list[projectIndex].version += 1;
     },
-    prependPublication(state, { payload }: PayloadAction<Publication>) {
+    prependPublication(state, { payload }: PayloadAction<IPublication>) {
       state.project.publications.push(payload);
     },
     publishProject(
       state,
-      { payload }: PayloadAction<{ id: string; publication: Publication }>
+      { payload }: PayloadAction<{ id: string; publication: IPublication }>
     ) {
       const index = state.list.findIndex(
         (project) => project.id === payload.id
@@ -146,13 +146,13 @@ const projectSlice = createSlice({
 
       state.list[index].publications?.push(payload.publication);
     },
-    setNeeds(state, { payload }: PayloadAction<Parentable<Need>[]>) {
+    setNeeds(state, { payload }: PayloadAction<Parentable<INeed>[]>) {
       state.project.needs = payload;
     },
-    addNeed(state, { payload }: PayloadAction<Parentable<Need>>) {
+    addNeed(state, { payload }: PayloadAction<Parentable<INeed>>) {
       state.project.needs.push(payload);
     },
-    editNeed(state, { payload }: PayloadAction<Parentable<Need>>) {
+    editNeed(state, { payload }: PayloadAction<Parentable<INeed>>) {
       const needIndex = state.project.needs.findIndex(
         (elem) => elem.id === payload.id
       );
@@ -160,7 +160,7 @@ const projectSlice = createSlice({
         state.project.needs[needIndex] = payload;
       }
     },
-    deleteNeed(state, { payload }: PayloadAction<Need>) {
+    deleteNeed(state, { payload }: PayloadAction<INeed>) {
       const needIndex = state.project.needs.findIndex(
         (need) => need.id === payload.id
       );
@@ -168,16 +168,16 @@ const projectSlice = createSlice({
         state.project.needs.splice(needIndex, 1);
       }
     },
-    addCodelist(state, { payload }: PayloadAction<Codelist>) {
+    addCodelist(state, { payload }: PayloadAction<ICodelist>) {
       state.project.codelist.push(payload);
     },
-    addProduct(state, { payload }: PayloadAction<Product>) {
+    addProduct(state, { payload }: PayloadAction<IProduct>) {
       state.project.products.push(payload);
     },
-    updateProductList(state, { payload }: PayloadAction<Product[]>) {
+    updateProductList(state, { payload }: PayloadAction<IProduct[]>) {
       state.project.products = payload;
     },
-    editProduct(state, { payload }: PayloadAction<Product>) {
+    editProduct(state, { payload }: PayloadAction<IProduct>) {
       const productIndex = state.project.products.findIndex(
         (elem) => elem.id === payload.id
       );
@@ -185,7 +185,7 @@ const projectSlice = createSlice({
         state.project.products[productIndex] = payload;
       }
     },
-    removeProduct(state, { payload }: PayloadAction<Product>) {
+    removeProduct(state, { payload }: PayloadAction<IProduct>) {
       const productindex = state.project.products.findIndex(
         (elem) => elem.id === payload.id
       );
@@ -200,7 +200,7 @@ const projectSlice = createSlice({
       }: PayloadAction<{
         id: string;
         codelistId: string;
-        codes: Parentable<Code>[];
+        codes: Parentable<ICode>[];
       }>
     ) {
       const codelistIndex = state.project.codelist.findIndex(
@@ -210,7 +210,7 @@ const projectSlice = createSlice({
         state.project.codelist[codelistIndex].codes = payload.codes;
       }
     },
-    editSelectedCodelist(state, { payload }: PayloadAction<Codelist>) {
+    editSelectedCodelist(state, { payload }: PayloadAction<ICodelist>) {
       const index = state.project.codelist.findIndex(
         (codelist) => codelist.id === payload.id
       );
@@ -218,7 +218,7 @@ const projectSlice = createSlice({
         state.project.codelist[index] = payload;
       }
     },
-    deleteCodelist(state, { payload }: PayloadAction<Codelist>) {
+    deleteCodelist(state, { payload }: PayloadAction<ICodelist>) {
       const index = state.project.codelist.findIndex(
         (codelist) => codelist.id === payload.id
       );
@@ -229,7 +229,9 @@ const projectSlice = createSlice({
 
     editCodeInCodelist(
       state,
-      { payload }: PayloadAction<{ codelistId: string; code: Parentable<Code> }>
+      {
+        payload
+      }: PayloadAction<{ codelistId: string; code: Parentable<ICode> }>
     ) {
       const codelistIndex = state.project.codelist.findIndex(
         (codelist) => codelist.id === payload.codelistId
@@ -246,7 +248,9 @@ const projectSlice = createSlice({
 
     addCodeToCodelist(
       state,
-      { payload }: PayloadAction<{ codelistId: string; code: Parentable<Code> }>
+      {
+        payload
+      }: PayloadAction<{ codelistId: string; code: Parentable<ICode> }>
     ) {
       const index = state.project.codelist.findIndex(
         (codelist) => codelist.id === payload.codelistId
@@ -261,7 +265,7 @@ const projectSlice = createSlice({
         payload
       }: PayloadAction<{
         codelistId: string;
-        code: Code;
+        code: ICode;
       }>
     ) {
       const codelistIndex = state.project.codelist.findIndex(
@@ -282,7 +286,7 @@ const projectSlice = createSlice({
         payload
       }: PayloadAction<{
         id: string;
-        code: Parentable<Code>;
+        code: Parentable<ICode>;
         codeListId: string;
       }>
     ) {
@@ -301,7 +305,7 @@ const projectSlice = createSlice({
         payload
       }: PayloadAction<{
         id: string;
-        code: Parentable<Code>;
+        code: Parentable<ICode>;
         codeListId: string;
       }>
     ) {
@@ -318,7 +322,10 @@ const projectSlice = createSlice({
 
       state.list[index].codelist[codeListIndex].codes[codeIndex] = payload.code;
     },
-    editRequirementPublication(state, { payload }: PayloadAction<Publication>) {
+    editRequirementPublication(
+      state,
+      { payload }: PayloadAction<IPublication>
+    ) {
       const index = state.project.publications.findIndex(
         (element) => payload.id === element.id
       );
@@ -332,7 +339,7 @@ const projectSlice = createSlice({
         payload
       }: PayloadAction<{
         needId: string;
-        requirement: Requirement;
+        requirement: IRequirement;
       }>
     ) {
       const needIndex = state.project.needs.findIndex(
@@ -355,7 +362,7 @@ const projectSlice = createSlice({
         payload
       }: PayloadAction<{
         needId: string;
-        requirement: Requirement;
+        requirement: IRequirement;
       }>
     ) {
       const needIndex = state.project.needs.findIndex(
@@ -369,7 +376,7 @@ const projectSlice = createSlice({
     },
     deleteRequirement(
       state,
-      { payload }: PayloadAction<{ needId: string; requirement: Requirement }>
+      { payload }: PayloadAction<{ needId: string; requirement: IRequirement }>
     ) {
       const needIndex = state.project.needs.findIndex(
         (elem) => elem.id === payload.needId
@@ -388,7 +395,7 @@ const projectSlice = createSlice({
         }
       }
     },
-    editPublication(state, { payload }: PayloadAction<Publication>) {
+    editPublication(state, { payload }: PayloadAction<IPublication>) {
       const index = state.project.publications.findIndex(
         (element) => payload.id === element.id
       );
@@ -407,16 +414,16 @@ const projectSlice = createSlice({
     updateSelectedVersion(state, { payload }: PayloadAction<number>) {
       state.project.version = payload;
     },
-    addTag(state, { payload }: PayloadAction<Parentable<Tag>>) {
+    addTag(state, { payload }: PayloadAction<Parentable<ITag>>) {
       state.project.tags.push(payload);
     },
-    editTag(state, { payload }: PayloadAction<Parentable<Tag>>) {
+    editTag(state, { payload }: PayloadAction<Parentable<ITag>>) {
       const index = state.project.tags.findIndex(
         (element) => payload.id === element.id
       );
       state.project.tags[index] = payload;
     },
-    removeTag(state, { payload }: PayloadAction<Parentable<Tag>>) {
+    removeTag(state, { payload }: PayloadAction<Parentable<ITag>>) {
       const index = state.project.tags.findIndex(
         (element) => payload.id === element.id
       );
@@ -424,10 +431,10 @@ const projectSlice = createSlice({
         state.project.tags.splice(index, 1);
       }
     },
-    addInheritedBank(state, { payload }: PayloadAction<InheritedBank>) {
+    addInheritedBank(state, { payload }: PayloadAction<IInheritedBank>) {
       state.project.inheritedBanks.push(payload);
     },
-    setTags(state, { payload }: PayloadAction<Parentable<Tag>[]>) {
+    setTags(state, { payload }: PayloadAction<Parentable<ITag>[]>) {
       state.project.tags = payload;
     }
   },

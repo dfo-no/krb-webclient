@@ -1,18 +1,18 @@
 /* eslint-disable class-methods-use-this */
 import Utils from '../../common/Utils';
-import { Bank } from '../../models/Bank';
 import ModelType from '../../models/ModelType';
+import { IBank } from '../entities/IBank';
 import Adapter from './Adapter';
 
 export default class LocalStorageAdapter extends Adapter {
-  save(bank: Bank): void {
+  save(bank: IBank): void {
     localStorage.setItem('bank', JSON.stringify(bank));
   }
 
-  load(): Bank {
+  load(): IBank {
     if (localStorage.getItem('bank') !== null)
-      return JSON.parse(Utils.ensure(localStorage.getItem('bank'))) as Bank;
-    const defaultValues: Bank = {
+      return JSON.parse(Utils.ensure(localStorage.getItem('bank'))) as IBank;
+    const defaultValues: IBank = {
       id: '',
       title: '',
       description: '',

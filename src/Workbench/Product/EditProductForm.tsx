@@ -11,14 +11,14 @@ import AlertModal from '../../common/AlertModal';
 import Utils from '../../common/Utils';
 import ErrorSummary from '../../Form/ErrorSummary';
 import InputRow from '../../Form/InputRow';
-import { Alert } from '../../models/Alert';
-import { IVariant } from '../../models/IVariant';
-import { Need } from '../../models/Need';
+import { IAlert } from '../../models/IAlert';
 import { Nestable } from '../../models/Nestable';
 import { Parentable } from '../../models/Parentable';
-import { Product, PutProductSchema } from '../../models/Product';
-import { Requirement } from '../../models/Requirement';
 import { AccordionContext } from '../../NestableHierarchy/AccordionContext';
+import { INeed } from '../../Nexus/entities/INeed';
+import { IProduct, PutProductSchema } from '../../Nexus/entities/IProduct';
+import { IRequirement } from '../../Nexus/entities/IRequirement';
+import { IVariant } from '../../Nexus/entities/IVariant';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { addAlert } from '../../store/reducers/alert-reducer';
 import {
@@ -29,7 +29,7 @@ import {
 import { selectProduct } from '../../store/reducers/selectedProduct-reducer';
 
 interface IProps {
-  element: Parentable<Product>;
+  element: Parentable<IProduct>;
 }
 
 export default function EditProductForm({
@@ -47,7 +47,7 @@ export default function EditProductForm({
     handleSubmit,
     reset,
     formState: { errors }
-  } = useForm<Parentable<Product>>({
+  } = useForm<Parentable<IProduct>>({
     resolver: joiResolver(PutProductSchema),
     defaultValues: element
   });
@@ -58,7 +58,7 @@ export default function EditProductForm({
     }
   }, [element, reset]);
 
-  const onEditProductSubmit = (data: Nestable<Product>) => {
+  const onEditProductSubmit = (data: Nestable<IProduct>) => {
     const newProduct = { ...data };
     if (newProduct.children) {
       delete newProduct.children;
@@ -69,13 +69,13 @@ export default function EditProductForm({
     newProduct.title = data.title;
     newProduct.description = data.description;
 
-    const alert: Alert = {
-      id: uuidv4(),
-      style: 'success',
-      text: 'Successfully updated product'
-    };
     dispatch(editProduct(newProduct));
     dispatch(putSelectedProjectThunk('dummy')).then(() => {
+      const alert: IAlert = {
+        id: uuidv4(),
+        style: 'success',
+        text: 'Successfully updated product'
+      };
       dispatch(addAlert({ alert }));
       onOpenClose('');
     });
@@ -83,8 +83,8 @@ export default function EditProductForm({
 
   const checkProductConnection = () => {
     let used = false;
-    project.needs.forEach((need: Need) => {
-      need.requirements.forEach((requirement: Requirement) => {
+    project.needs.forEach((need: INeed) => {
+      need.requirements.forEach((requirement: IRequirement) => {
         requirement.variants.forEach((variant: IVariant) => {
           if (variant.products.includes(element.id)) {
             used = true;
@@ -95,7 +95,7 @@ export default function EditProductForm({
     return used;
   };
 
-  const deleteProduct = (product: Product) => {
+  const deleteProduct = (product: IProduct) => {
     if (
       Utils.checkIfParent(project.products, element.id) ||
       checkProductConnection()
@@ -105,7 +105,7 @@ export default function EditProductForm({
       dispatch(removeProduct(product));
       dispatch(putSelectedProjectThunk('dummy'));
 
-      const alert: Alert = {
+      const alert: IAlert = {
         id: uuidv4(),
         style: 'success',
         text: 'Successfully deleted product'

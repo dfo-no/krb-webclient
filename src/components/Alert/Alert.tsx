@@ -1,12 +1,12 @@
 import React, { useEffect } from 'react';
 import AlertComponent from 'react-bootstrap/Alert';
 import Fade from 'react-bootstrap/Fade';
-import { Alert } from '../../models/Alert';
+import { IAlert } from '../../models/IAlert';
 import { useAppDispatch } from '../../store/hooks';
 import { removeAlert } from '../../store/reducers/alert-reducer';
 
 interface IProps {
-  alert: Alert;
+  alert: IAlert;
 }
 export default function AlertElement({ alert }: IProps): React.ReactElement {
   const dispatch = useAppDispatch();

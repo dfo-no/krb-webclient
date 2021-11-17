@@ -1,6 +1,6 @@
 import Joi from 'joi';
-import { IAnswerBase, IConfigBase, IQuestionBase } from './Question';
-import QuestionEnum from './QuestionEnum';
+import QuestionEnum from '../../models/QuestionEnum';
+import { IAnswerBase, IConfigBase, IQuestionBase } from './IQuestionBase';
 
 export interface IFileUploadQuestion
   extends IQuestionBase<IFileUploadAnswer, IFileUploadConfig> {

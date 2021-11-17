@@ -1,6 +1,6 @@
 import ModelType from '../../models/ModelType';
 import { Parentable } from '../../models/Parentable';
-import { Tag } from '../../models/Tag';
+import { ITag } from '../entities/ITag';
 import StoreService from './StoreService';
 import UuidService from './UuidService';
 
@@ -13,8 +13,8 @@ export default class TagService {
     this.storeService = store;
   }
 
-  generateDefaultTaglistValues = (projectId: string): Parentable<Tag> => {
-    const defaultValues: Parentable<Tag> = {
+  generateDefaultTaglistValues = (projectId: string): Parentable<ITag> => {
+    const defaultValues: Parentable<ITag> = {
       id: '',
       title: '',
       type: ModelType.tag,
@@ -25,21 +25,21 @@ export default class TagService {
     return defaultValues;
   };
 
-  generateTag = (item: Parentable<Tag>): Parentable<Tag> => {
+  generateTag = (item: Parentable<ITag>): Parentable<ITag> => {
     const tag = { ...item };
     tag.id = this.UuidService.generateId();
     return tag;
   };
 
-  async add(item: Parentable<Tag>): Promise<void> {
+  async add(item: Parentable<ITag>): Promise<void> {
     return this.storeService.addTag(item);
   }
 
-  async edit(item: Parentable<Tag>): Promise<void> {
+  async edit(item: Parentable<ITag>): Promise<void> {
     return this.storeService.editTag(item);
   }
 
-  async delete(item: Parentable<Tag>): Promise<void> {
+  async delete(item: Parentable<ITag>): Promise<void> {
     return this.storeService.deleteTag(item);
   }
 }

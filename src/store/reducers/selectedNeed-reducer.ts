@@ -1,10 +1,10 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-interface SelectedNeedState {
+interface ISelectedNeedState {
   needId: string;
 }
 
-const initialState: SelectedNeedState = { needId: '' };
+const initialState: ISelectedNeedState = { needId: '' };
 
 const selectedNeedState = createSlice({
   name: 'selectedNeed',

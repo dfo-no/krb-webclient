@@ -3,18 +3,18 @@ import Accordion from 'react-bootstrap/Accordion';
 import Nestable, { Item } from 'react-nestable';
 import 'react-nestable/dist/styles/index.css';
 import Utils from '../common/Utils';
-import { BaseModel } from '../models/BaseModel';
 import { Parentable } from '../models/Parentable';
+import { IBaseModel } from '../Nexus/entities/IBaseModel';
 import { AccordionContext } from './AccordionContext';
 
-interface IProps<T extends BaseModel> {
+interface IProps<T extends IBaseModel> {
   dispatchfunc: (itemlist: Parentable<T>[]) => void;
   inputlist: Parentable<T>[];
   component: React.ReactElement;
   depth: number;
 }
 
-const NestableHierarcy2 = <T extends BaseModel>({
+const NestableHierarcy2 = <T extends IBaseModel>({
   dispatchfunc,
   inputlist,
   component,

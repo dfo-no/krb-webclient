@@ -10,11 +10,11 @@ import AlertModal from '../../common/AlertModal';
 import Utils from '../../common/Utils';
 import ErrorSummary from '../../Form/ErrorSummary';
 import InputRow from '../../Form/InputRow';
-import { Alert } from '../../models/Alert';
-import { Need, PutNeedSchema } from '../../models/Need';
+import { IAlert } from '../../models/IAlert';
 import { Nestable } from '../../models/Nestable';
 import { Parentable } from '../../models/Parentable';
 import { AccordionContext } from '../../NestableHierarchy/AccordionContext';
+import { INeed, PutNeedSchema } from '../../Nexus/entities/INeed';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { addAlert } from '../../store/reducers/alert-reducer';
 import {
@@ -24,7 +24,7 @@ import {
 } from '../../store/reducers/project-reducer';
 
 interface IProps {
-  element: Parentable<Need>;
+  element: Parentable<INeed>;
 }
 
 function EditNeedForm({ element }: IProps): React.ReactElement {
@@ -39,7 +39,7 @@ function EditNeedForm({ element }: IProps): React.ReactElement {
     control,
     reset,
     formState: { errors }
-  } = useForm<Parentable<Need>>({
+  } = useForm<Parentable<INeed>>({
     defaultValues: element,
     resolver: joiResolver(PutNeedSchema)
   });
@@ -52,7 +52,7 @@ function EditNeedForm({ element }: IProps): React.ReactElement {
 
   const [modalShow, setModalShow] = useState(false);
 
-  const onEditNeedSubmit = (post: Nestable<Need>) => {
+  const onEditNeedSubmit = (post: Nestable<INeed>) => {
     const postNeed = { ...post };
     if (postNeed.children) {
       delete postNeed.children;
@@ -60,9 +60,9 @@ function EditNeedForm({ element }: IProps): React.ReactElement {
     if (postNeed.level) {
       delete postNeed.level;
     }
-    dispatch(editNeed(postNeed as Parentable<Need>));
+    dispatch(editNeed(postNeed as Parentable<INeed>));
     dispatch(putSelectedProjectThunk('dummy')).then(() => {
-      const alert: Alert = {
+      const alert: IAlert = {
         id: uuidv4(),
         style: 'success',
         text: 'Successfully edited need'
@@ -72,7 +72,7 @@ function EditNeedForm({ element }: IProps): React.ReactElement {
     });
   };
 
-  const checkDeleteNeed = (need: Need) => {
+  const checkDeleteNeed = (need: INeed) => {
     if (
       element.requirements.length > 0 ||
       Utils.checkIfParent(project.needs, need.id)

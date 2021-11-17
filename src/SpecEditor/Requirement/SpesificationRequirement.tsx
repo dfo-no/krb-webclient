@@ -3,8 +3,8 @@ import Card from 'react-bootstrap/Card';
 import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
-import { Requirement } from '../../models/Requirement';
 import RequirementType from '../../models/RequirementType';
+import { IRequirement } from '../../Nexus/entities/IRequirement';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import {
   addRequirement,
@@ -15,7 +15,7 @@ import InfoAnswer from './InfoAnswer';
 import RequirementAnswer from './RequirementAnswer';
 
 type InputProps = {
-  requirement: Requirement;
+  requirement: IRequirement;
   selected: boolean;
 };
 

@@ -8,16 +8,16 @@ import Form from 'react-bootstrap/Form';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import ErrorSummary from '../../../Form/ErrorSummary';
+import { IPrefilledResponseProduct } from '../../../models/IPrefilledResponseProduct';
 import {
   IRequirementAnswer,
   RequirementAnswerSchema
 } from '../../../models/IRequirementAnswer';
+import { IRequirement } from '../../../Nexus/entities/IRequirement';
 import {
   ITextQuestion,
   TextQuestionAnswerSchema
-} from '../../../models/ITextQuestion';
-import { PrefilledResponseProduct } from '../../../models/PrefilledResponseProduct';
-import { Requirement } from '../../../models/Requirement';
+} from '../../../Nexus/entities/ITextQuestion';
 import { useAppDispatch, useAppSelector } from '../../../store/hooks';
 import {
   addProductAnswer,
@@ -26,7 +26,7 @@ import {
 
 interface IProps {
   answer: IRequirementAnswer;
-  product: PrefilledResponseProduct;
+  product: IPrefilledResponseProduct;
 }
 
 const ProductTextForm = ({ answer, product }: IProps): React.ReactElement => {
@@ -81,7 +81,7 @@ const ProductTextForm = ({ answer, product }: IProps): React.ReactElement => {
     dispatch(removeProductAnswer({ answerId: elemId, productId }));
   };
 
-  const getVariantText = (requirement: Requirement, variantId: string) => {
+  const getVariantText = (requirement: IRequirement, variantId: string) => {
     const variantIndex = requirement.variants.findIndex(
       (v) => v.id === variantId
     );

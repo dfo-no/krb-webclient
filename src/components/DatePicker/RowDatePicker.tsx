@@ -19,7 +19,7 @@ import {
 import { useTranslation } from 'react-i18next';
 import { DATETIME_ISO8601UTC } from '../../common/Constants';
 
-interface Props<T> extends UseControllerProps<T> {
+interface IProps<T> extends UseControllerProps<T> {
   error: FieldError | undefined;
   label: string;
 }
@@ -39,7 +39,7 @@ export default function RowDatePicker<T extends FieldValues>({
   name,
   error,
   label
-}: Props<T>): React.ReactElement {
+}: IProps<T>): React.ReactElement {
   const { t, i18n } = useTranslation();
 
   /* const hasError = (str: string) => {

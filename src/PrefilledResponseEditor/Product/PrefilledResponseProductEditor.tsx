@@ -12,12 +12,12 @@ import { useTranslation } from 'react-i18next';
 import { getPaths } from '../../common/Tree';
 import ControlledTextInput from '../../Form/ControlledTextInput';
 import ErrorSummary from '../../Form/ErrorSummary';
-import { Levelable } from '../../models/Levelable';
-import { Need } from '../../models/Need';
 import {
-  PrefilledResponseProduct,
+  IPrefilledResponseProduct,
   PrefilledResponseProductSchema
-} from '../../models/PrefilledResponseProduct';
+} from '../../models/IPrefilledResponseProduct';
+import { Levelable } from '../../models/Levelable';
+import { INeed } from '../../Nexus/entities/INeed';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { editProduct } from '../../store/reducers/PrefilledResponseReducer';
 import AnswerForm from './AnswerForm';
@@ -33,14 +33,14 @@ export default function PrefilledResponseProductEditor(): React.ReactElement {
     control,
     handleSubmit,
     formState: { errors }
-  } = useForm<PrefilledResponseProduct>({
+  } = useForm<IPrefilledResponseProduct>({
     resolver: joiResolver(PrefilledResponseProductSchema),
     defaultValues: selectedProduct
   });
 
   if (!id) return <p>No selected bank</p>;
 
-  const addProductToSpecification = (post: PrefilledResponseProduct) => {
+  const addProductToSpecification = (post: IPrefilledResponseProduct) => {
     const newProduct = {
       ...post
     };
@@ -50,7 +50,7 @@ export default function PrefilledResponseProductEditor(): React.ReactElement {
     dispatch(editProduct({ product: newProduct, productIndex }));
   };
 
-  const findNeedIdsForProduct = (productId: string, needArray: Need[]) => {
+  const findNeedIdsForProduct = (productId: string, needArray: INeed[]) => {
     const result: string[] = [];
     needArray.forEach((need) => {
       need.requirements.forEach((req) => {
@@ -72,7 +72,7 @@ export default function PrefilledResponseProductEditor(): React.ReactElement {
   const needs = getPaths(needIds, prefilledResponse.bank.needs);
 
   const checkIfNeedHasRenderedAnswer = (
-    need: Levelable<Need>,
+    need: Levelable<INeed>,
     productId: string
   ) => {
     let used = false;
@@ -89,7 +89,7 @@ export default function PrefilledResponseProductEditor(): React.ReactElement {
     return used;
   };
 
-  const renderNeedsList = (list: Levelable<Need>[]) => {
+  const renderNeedsList = (list: Levelable<INeed>[]) => {
     return list.map((need) => {
       const margin = need.level === 1 ? '0rem' : `${need.level - 1}rem`;
       return (

@@ -1,12 +1,12 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import ModelType from '../../models/ModelType';
-import { Product } from '../../models/Product';
+import { IProduct } from '../../Nexus/entities/IProduct';
 
-interface SelectedProductState {
-  product: Product;
+interface ISelectedProductState {
+  product: IProduct;
 }
 
-const initialState: SelectedProductState = {
+const initialState: ISelectedProductState = {
   product: {
     id: '',
     title: '',
@@ -22,7 +22,7 @@ const selectedProductState = createSlice({
   name: 'selectedProduct',
   initialState,
   reducers: {
-    selectProduct(state, { payload }: PayloadAction<Product>) {
+    selectProduct(state, { payload }: PayloadAction<IProduct>) {
       state.product = payload;
     }
   }

@@ -10,9 +10,9 @@ import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import ErrorSummary from '../../Form/ErrorSummary';
 import {
-  ResponseProduct,
+  IResponseProduct,
   ResponseProductSchema
-} from '../../models/ResponseProduct';
+} from '../../models/IResponseProduct';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { editProduct } from '../../store/reducers/response-reducer';
 import ResponseProductRequirementSelector from './ResponseProductRequirementSelector';
@@ -38,8 +38,8 @@ export default function ResponseProductEditor(): React.ReactElement {
     defaultValues: selectedResponseProduct
   });
 
-  const addProductToResponse = (post: ResponseProduct) => {
-    const newResponseProduct: ResponseProduct = {
+  const addProductToResponse = (post: IResponseProduct) => {
+    const newResponseProduct: IResponseProduct = {
       ...post
     };
 

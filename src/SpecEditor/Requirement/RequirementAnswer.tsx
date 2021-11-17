@@ -15,9 +15,9 @@ import Utils from '../../common/Utils';
 import ErrorSummary from '../../Form/ErrorSummary';
 import { IOption } from '../../models/IOption';
 import { IRequirementAnswer } from '../../models/IRequirementAnswer';
-import { IVariant } from '../../models/IVariant';
 import ModelType from '../../models/ModelType';
-import { Requirement } from '../../models/Requirement';
+import { IRequirement } from '../../Nexus/entities/IRequirement';
+import { IVariant } from '../../Nexus/entities/IVariant';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { selectQuestion } from '../../store/reducers/selectedQuestion-reducer';
 import {
@@ -27,7 +27,7 @@ import {
 } from '../../store/reducers/spesification-reducer';
 
 interface IProps {
-  requirement: Requirement;
+  requirement: IRequirement;
 }
 
 type FormValue = {
@@ -185,7 +185,7 @@ export default function RequirementAnswer({
     return [defaultText, defaultWeight];
   }
 
-  const requirementTextOptions = (req: Requirement) => {
+  const requirementTextOptions = (req: IRequirement) => {
     const reqText = req.variants.map((variant) => {
       if (req.variants.length === 1) {
         return <p key={variant.id}>{variant.requirementText}</p>;

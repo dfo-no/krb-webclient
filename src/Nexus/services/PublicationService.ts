@@ -1,19 +1,19 @@
-import { Bank } from '../../models/Bank';
-import { Publication } from '../../models/Publication';
+import { IBank } from '../entities/IBank';
+import { IPublication } from '../entities/IPublication';
 import DateService from './DateService';
 
 export default class PublicationService {
-  getNextVersion = (publications: Publication[]): number => {
+  getNextVersion = (publications: IPublication[]): number => {
     if (publications.length === 0) {
       return 1;
     }
     return Math.max(...publications.map((p) => p.version)) + 1;
   };
 
-  generateBankFromProject = (item: Bank): Bank => {
+  generateBankFromProject = (item: IBank): IBank => {
     // Shallow clone, deep not needed for now as we don't create anything here
     // other than desciption and title
-    const newBank: Bank = { ...item };
+    const newBank: IBank = { ...item };
     newBank.id = '';
     newBank.publishedDate = DateService.getNowString();
     newBank.projectId = item.id;
