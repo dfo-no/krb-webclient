@@ -8,9 +8,9 @@ import { BsTrashFill } from 'react-icons/bs';
 import { v4 as uuidv4 } from 'uuid';
 import ErrorSummary from '../../Form/ErrorSummary';
 import InputRow from '../../Form/InputRow';
-import { Alert } from '../../models/Alert';
-import { Code, EditCodeSchema } from '../../models/Code';
+import { IAlert } from '../../models/IAlert';
 import { AccordionContext } from '../../NestableHierarchy/AccordionContext';
+import { EditCodeSchema, ICode } from '../../Nexus/entities/ICode';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { addAlert } from '../../store/reducers/alert-reducer';
 import {
@@ -24,7 +24,7 @@ import {
 } from '../../store/reducers/selectedCodelist-reducer';
 
 interface IProps {
-  element: Code;
+  element: ICode;
 }
 
 export default function EditCodeForm({ element }: IProps): React.ReactElement {
@@ -39,7 +39,7 @@ export default function EditCodeForm({ element }: IProps): React.ReactElement {
     reset,
     handleSubmit,
     formState: { errors }
-  } = useForm<Code>({
+  } = useForm<ICode>({
     resolver: joiResolver(EditCodeSchema),
     defaultValues: element
   });
@@ -50,8 +50,8 @@ export default function EditCodeForm({ element }: IProps): React.ReactElement {
     }
   }, [element, reset]);
 
-  const onSubmit = (code: Code) => {
-    const alert: Alert = {
+  const onSubmit = (code: ICode) => {
+    const alert: IAlert = {
       id: uuidv4(),
       style: 'success',
       text: 'Successfully edited code'
@@ -70,7 +70,7 @@ export default function EditCodeForm({ element }: IProps): React.ReactElement {
     onOpenClose('');
   };
 
-  const deleteCode = (code: Code) => {
+  const deleteCode = (code: ICode) => {
     dispatch(
       removeCode({
         codelistId: codelist.id,

@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 import React from 'react';
 import { graphConfig } from '../authentication/authConfig';
-import { GraphData } from '../models/GraphData';
+import { IGraphData } from '../models/IGraphData';
 
 export async function callMsGraph(accessToken: string) {
   const headers = new Headers();
@@ -19,7 +19,7 @@ export async function callMsGraph(accessToken: string) {
     .catch((error) => console.error(error));
 }
 
-export const ProfileData = ({ graphData }: GraphData): React.ReactElement => {
+export const ProfileData = ({ graphData }: IGraphData): React.ReactElement => {
   return (
     <div id="profile-div">
       <p>

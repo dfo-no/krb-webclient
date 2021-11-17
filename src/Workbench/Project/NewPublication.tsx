@@ -9,10 +9,13 @@ import { useTranslation } from 'react-i18next';
 import { v4 as uuidv4 } from 'uuid';
 import ControlledTextInput from '../../Form/ControlledTextInput';
 import ErrorSummary from '../../Form/ErrorSummary';
-import { Alert } from '../../models/Alert';
-import { Bank } from '../../models/Bank';
+import { IAlert } from '../../models/IAlert';
 import ModelType from '../../models/ModelType';
-import { PostPublicationSchema, Publication } from '../../models/Publication';
+import { IBank } from '../../Nexus/entities/IBank';
+import {
+  IPublication,
+  PostPublicationSchema
+} from '../../Nexus/entities/IPublication';
 import Nexus from '../../Nexus/Nexus';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { addAlert } from '../../store/reducers/alert-reducer';
@@ -29,7 +32,7 @@ export default function NewPublication(): React.ReactElement {
   const { t } = useTranslation();
   const [show, setShow] = useState(false);
 
-  const defaultValues: Publication = {
+  const defaultValues: IPublication = {
     id: '',
     bankId: project.id,
     comment: '',
@@ -40,14 +43,14 @@ export default function NewPublication(): React.ReactElement {
     sourceRel: null
   };
 
-  const { control, handleSubmit, reset, formState } = useForm<Publication>({
+  const { control, handleSubmit, reset, formState } = useForm<IPublication>({
     resolver: joiResolver(PostPublicationSchema),
     defaultValues
   });
 
   const { errors } = formState;
 
-  const onSubmit = async (post: Publication) => {
+  const onSubmit = async (post: IPublication) => {
     const publication = { ...post };
     const nexus = Nexus.getInstance();
 
@@ -59,7 +62,7 @@ export default function NewPublication(): React.ReactElement {
     // save the new published Bank
     dispatch(postBankThunk(newBank))
       .unwrap()
-      .then(async (result: Bank) => {
+      .then(async (result: IBank) => {
         // Update Publication with new data
         publication.id = result.id;
         publication.bankId = result.id;
@@ -75,7 +78,7 @@ export default function NewPublication(): React.ReactElement {
         dispatch(putSelectedProjectThunk('dummy')).then(() => {
           setShow(false);
           reset();
-          const alert: Alert = {
+          const alert: IAlert = {
             id: uuidv4(),
             style: 'success',
             text: 'successfully published bank'

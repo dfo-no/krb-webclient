@@ -4,15 +4,15 @@ import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 import { useParams } from 'react-router-dom';
 import Utils from '../../common/Utils';
-import { Requirement } from '../../models/Requirement';
 import { AccordionContext } from '../../NestableHierarchy/AccordionContext';
+import { IRequirement } from '../../Nexus/entities/IRequirement';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { selectNeed } from '../../store/reducers/selectedNeed-reducer';
 import EditRequirementForm from './EditRequirementForm';
 import NeedSideBar from './NeedSideBar/NeedSidebar';
 import NewRequirementForm from './NewRequirementForm';
 
-interface RouteParams {
+interface IRouteParams {
   projectId: string;
   needId?: string;
 }
@@ -20,7 +20,7 @@ interface RouteParams {
 export default function RequirementPage(): React.ReactElement {
   const dispatch = useAppDispatch();
 
-  const { needId } = useParams<RouteParams>();
+  const { needId } = useParams<IRouteParams>();
   const { needId: selectedNeedId } = useAppSelector(
     (state) => state.selectNeed
   );
@@ -61,7 +61,7 @@ export default function RequirementPage(): React.ReactElement {
     }
   };
 
-  const renderAccordion = (element: Requirement) => {
+  const renderAccordion = (element: IRequirement) => {
     return (
       <Accordion.Item eventKey={element.id} key={element.id}>
         <h2 className="accordion-header">
@@ -86,12 +86,12 @@ export default function RequirementPage(): React.ReactElement {
     );
   };
 
-  const requirements = (reqs: Requirement[]) => {
+  const requirements = (reqs: IRequirement[]) => {
     if (reqs.length > 0) {
       const filteredList = reqs.filter(
         (element) => element.requirement_Type === 'requirement'
       );
-      const jsx = filteredList.map((element: Requirement) =>
+      const jsx = filteredList.map((element: IRequirement) =>
         renderAccordion(element)
       );
       return (
@@ -108,12 +108,12 @@ export default function RequirementPage(): React.ReactElement {
     return <p>This need has no requirements, add one</p>;
   };
 
-  const info = (reqs: Requirement[]) => {
+  const info = (reqs: IRequirement[]) => {
     if (reqs.length > 0) {
       const filteredList = reqs.filter(
         (element) => element.requirement_Type === 'info'
       );
-      const jsx = filteredList.map((element: Requirement) =>
+      const jsx = filteredList.map((element: IRequirement) =>
         renderAccordion(element)
       );
       return (

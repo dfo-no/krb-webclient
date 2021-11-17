@@ -1,13 +1,13 @@
 import Joi from 'joi';
-import { BaseModel } from './BaseModel';
-import { BaseCodeSchema, Code } from './Code';
-import ModelType from './ModelType';
+import ModelType from '../../models/ModelType';
+import { IBaseModel } from './IBaseModel';
+import { BaseCodeSchema, ICode } from './ICode';
 
-export interface Codelist extends BaseModel {
+export interface ICodelist extends IBaseModel {
   id: string;
   title: string;
   description: string;
-  codes: Code[];
+  codes: ICode[];
 }
 
 export const CodelistSchema = Joi.object().keys({

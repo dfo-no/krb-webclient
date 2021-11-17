@@ -2,23 +2,23 @@
 /* eslint-disable class-methods-use-this */
 import produce from 'immer';
 import { IRequirementAnswer } from '../../models/IRequirementAnswer';
-import { Response } from '../../models/Response';
-import { ResponseProduct } from '../../models/ResponseProduct';
-import { Specification } from '../../models/Specification';
+import { IResponse } from '../../models/IResponse';
+import { IResponseProduct } from '../../models/IResponseProduct';
+import { ISpecification } from '../../models/ISpecification';
 
 export default class ResponseStoreService {
-  private static response: Response;
+  private static response: IResponse;
 
-  public setResponse(response: Response): void {
+  public setResponse(response: IResponse): void {
     ResponseStoreService.response = response;
   }
 
   // eslint-disable-next-line class-methods-use-this
-  public getResponse(): Response {
+  public getResponse(): IResponse {
     return ResponseStoreService.response;
   }
 
-  public createResponseFromSpecification(specification: Specification): void {
+  public createResponseFromSpecification(specification: ISpecification): void {
     ResponseStoreService.response = {
       spesification: specification,
       supplier: '',
@@ -36,7 +36,7 @@ export default class ResponseStoreService {
     );
   }
 
-  public addResponseProduct(product: ResponseProduct): void {
+  public addResponseProduct(product: IResponseProduct): void {
     ResponseStoreService.response = produce(
       ResponseStoreService.response,
       (draft) => {
@@ -45,9 +45,9 @@ export default class ResponseStoreService {
     );
   }
 
-  public editResponseProduct(product: ResponseProduct): void {
+  public editResponseProduct(product: IResponseProduct): void {
     const index = ResponseStoreService.response.products.findIndex(
-      (responseProduct: ResponseProduct) => responseProduct.id === product.id
+      (responseProduct: IResponseProduct) => responseProduct.id === product.id
     );
     ResponseStoreService.response = produce(
       ResponseStoreService.response,
@@ -57,9 +57,9 @@ export default class ResponseStoreService {
     );
   }
 
-  public deleteResponseProduct(product: ResponseProduct): void {
+  public deleteResponseProduct(product: IResponseProduct): void {
     const index = ResponseStoreService.response.products.findIndex(
-      (responseProduct: ResponseProduct) => responseProduct.id === product.id
+      (responseProduct: IResponseProduct) => responseProduct.id === product.id
     );
     ResponseStoreService.response = produce(
       ResponseStoreService.response,

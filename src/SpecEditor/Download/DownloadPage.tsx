@@ -3,14 +3,14 @@ import React from 'react';
 import Button from 'react-bootstrap/Button';
 import { useTranslation } from 'react-i18next';
 import { httpPost } from '../../api/http';
-import { Specification } from '../../models/Specification';
+import { ISpecification } from '../../models/ISpecification';
 import { useAppSelector } from '../../store/hooks';
 
 export default function SpecPage(): React.ReactElement {
   const { t } = useTranslation();
   const { spec } = useAppSelector((state) => state.specification);
   const onDownLoad = () => {
-    httpPost<Specification, AxiosResponse<File>>(
+    httpPost<ISpecification, AxiosResponse<File>>(
       '/java/generateSpecification',
       spec,
       {

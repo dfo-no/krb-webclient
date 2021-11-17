@@ -8,13 +8,13 @@ import Row from 'react-bootstrap/Row';
 import { Control, FormState, UseFormRegister } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { BsTrashFill } from 'react-icons/bs';
-import { ISliderQuestion } from '../../models/ISliderQuestion';
-import { Requirement } from '../../models/Requirement';
+import { IRequirement } from '../../Nexus/entities/IRequirement';
+import { ISliderQuestion } from '../../Nexus/entities/ISliderQuestion';
 
 type IProps = {
-  control: Control<Requirement>;
-  register: UseFormRegister<Requirement>;
-  formState: FormState<Requirement>;
+  control: Control<IRequirement>;
+  register: UseFormRegister<IRequirement>;
+  formState: FormState<IRequirement>;
   item: ISliderQuestion;
   vIndex: number;
   aIndex: number;

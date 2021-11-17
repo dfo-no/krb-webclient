@@ -8,10 +8,13 @@ import { useTranslation } from 'react-i18next';
 import { v4 as uuidv4 } from 'uuid';
 import ErrorSummary from '../../Form/ErrorSummary';
 import InputRow from '../../Form/InputRow';
-import { Alert } from '../../models/Alert';
+import { IAlert } from '../../models/IAlert';
 import ModelType from '../../models/ModelType';
-import { PostRequirementSchema, Requirement } from '../../models/Requirement';
 import RequirementType from '../../models/RequirementType';
+import {
+  IRequirement,
+  PostRequirementSchema
+} from '../../Nexus/entities/IRequirement';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { addAlert } from '../../store/reducers/alert-reducer';
 import {
@@ -31,7 +34,7 @@ function NewRequirementForm(): React.ReactElement {
 
   const need = needId !== null ? needId : '';
 
-  const defaultValues: Requirement = {
+  const defaultValues: IRequirement = {
     id: '',
     title: '',
     description: '',
@@ -50,12 +53,12 @@ function NewRequirementForm(): React.ReactElement {
     reset,
     setValue,
     formState: { errors }
-  } = useForm<Requirement>({
+  } = useForm<IRequirement>({
     resolver: joiResolver(PostRequirementSchema),
     defaultValues
   });
 
-  const onNewRequirementSubmit = (post: Requirement) => {
+  const onNewRequirementSubmit = (post: IRequirement) => {
     const requirement = { ...post };
     requirement.id = uuidv4();
     dispatch(
@@ -64,7 +67,7 @@ function NewRequirementForm(): React.ReactElement {
         requirement
       })
     );
-    const alert: Alert = {
+    const alert: IAlert = {
       id: uuidv4(),
       style: 'success',
       text: 'Successfully created new requirement'

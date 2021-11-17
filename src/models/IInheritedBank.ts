@@ -1,4 +1,4 @@
-export interface InheritedBank {
+export interface IInheritedBank {
   id: string;
   title: string;
   description: string;

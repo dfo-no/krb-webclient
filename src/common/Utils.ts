@@ -1,13 +1,13 @@
-import { Bank } from '../models/Bank';
-import { BaseModel } from '../models/BaseModel';
-import { InheritedBank } from '../models/InheritedBank';
-import { IVariant } from '../models/IVariant';
+import { IInheritedBank } from '../models/IInheritedBank';
 import { Levelable } from '../models/Levelable';
-import { Need } from '../models/Need';
 import { Nestable } from '../models/Nestable';
 import { Parentable } from '../models/Parentable';
-import { Product } from '../models/Product';
-import { Requirement } from '../models/Requirement';
+import { IBank } from '../Nexus/entities/IBank';
+import { IBaseModel } from '../Nexus/entities/IBaseModel';
+import { INeed } from '../Nexus/entities/INeed';
+import { IProduct } from '../Nexus/entities/IProduct';
+import { IRequirement } from '../Nexus/entities/IRequirement';
+import { IVariant } from '../Nexus/entities/IVariant';
 
 class Utils {
   static ensure<T>(
@@ -45,7 +45,7 @@ class Utils {
     return unescape('  '.replace(/ /g, '%A0').repeat(level - 1));
   }
 
-  private static flattenNestable<T extends BaseModel>(
+  private static flattenNestable<T extends IBaseModel>(
     items: Nestable<T>[]
   ): Nestable<T>[] {
     return items.reduce((result: Nestable<T>[], current) => {
@@ -62,21 +62,21 @@ class Utils {
     }, []);
   }
 
-  static nestable2Levelable<T extends BaseModel>(
+  static nestable2Levelable<T extends IBaseModel>(
     items: Nestable<T>[]
   ): Levelable<T>[] {
     const result = Utils.flattenNestable(items);
     return result as Levelable<T>[];
   }
 
-  static parentable2Levelable<T extends BaseModel>(
+  static parentable2Levelable<T extends IBaseModel>(
     items: Parentable<T>[]
   ): Levelable<T>[] {
     const nestable = Utils.parentable2Nestable(items);
     return Utils.nestable2Levelable(nestable);
   }
 
-  static parentable2Nestable<T extends BaseModel>(
+  static parentable2Nestable<T extends IBaseModel>(
     items: Parentable<T>[],
     parent = '',
     level = 1
@@ -103,7 +103,7 @@ class Utils {
   /**
    * @@deprecated use parentable2Nestable instead
    */
-  static toNestable<T extends BaseModel>(
+  static toNestable<T extends IBaseModel>(
     items: Parentable<T>[]
   ): Nestable<T>[] {
     const hierarchy: Nestable<T>[] = [];
@@ -137,7 +137,7 @@ class Utils {
    *
    * @deprecated use nestable2Levelable instead
    */
-  static unflatten<T extends BaseModel>(
+  static unflatten<T extends IBaseModel>(
     items: Nestable<T>[]
   ): [Nestable<T>[], { [key: string]: Nestable<T> }] {
     const hierarchy: Nestable<T>[] = [];
@@ -169,13 +169,13 @@ class Utils {
   }
 
   static findNeedParents(
-    element: Nestable<Need>,
-    parents: Nestable<Need>[],
-    selectedProject: Bank
-  ): Nestable<Need>[] {
+    element: Nestable<INeed>,
+    parents: Nestable<INeed>[],
+    selectedProject: IBank
+  ): Nestable<INeed>[] {
     const parentList = parents;
     const parentNeed = Utils.ensure(
-      selectedProject.needs.find((need: Need) => need.id === element.parent)
+      selectedProject.needs.find((need: INeed) => need.id === element.parent)
     );
     parentList.push(parentNeed);
     if (parentNeed.parent !== '') {
@@ -187,12 +187,12 @@ class Utils {
   static checkParentInProductList(
     products: string[],
     parentId: string,
-    selectedProject: Bank
+    selectedProject: IBank
   ): boolean {
     if (parentId === '') return false;
     const parentProduct = Utils.ensure(
       selectedProject.products.find(
-        (product: Product) => product.id === parentId
+        (product: IProduct) => product.id === parentId
       )
     );
     if (products.includes(parentId)) {
@@ -211,14 +211,14 @@ class Utils {
   }
 
   static findAssociatedRequirements(
-    selectedProduct: Product,
-    selectedProject: Bank
-  ): [{ [key: string]: Requirement[] }, Nestable<Need>[], IVariant[]] {
-    const relevantRequirements: { [key: string]: Requirement[] } = {};
-    let needList: Nestable<Need>[] = [];
+    selectedProduct: IProduct,
+    selectedProject: IBank
+  ): [{ [key: string]: IRequirement[] }, Nestable<INeed>[], IVariant[]] {
+    const relevantRequirements: { [key: string]: IRequirement[] } = {};
+    let needList: Nestable<INeed>[] = [];
     const variantList: IVariant[] = [];
     selectedProject.needs.forEach((element) => {
-      element.requirements.forEach((req: Requirement) => {
+      element.requirements.forEach((req: IRequirement) => {
         req.variants.forEach((variant: IVariant) => {
           if (
             variant.products.includes(selectedProduct.id) ||
@@ -267,7 +267,7 @@ class Utils {
     return [relevantRequirements, needList, variantList];
   }
 
-  static checkIfParent<T extends BaseModel>(
+  static checkIfParent<T extends IBaseModel>(
     items: Nestable<T>[],
     id: string
   ): boolean {
@@ -287,7 +287,7 @@ class Utils {
   }
 
   static checkIfNeedHasChildWithRequirements(
-    listofneed: Nestable<Need>[],
+    listofneed: Nestable<INeed>[],
     requirementList: string[]
   ): boolean {
     let foundMatch = false;
@@ -310,7 +310,7 @@ class Utils {
   }
 
   static checkIfNeedHasSelectedRequirements(
-    element: Nestable<Need>,
+    element: Nestable<INeed>,
     requirementList: string[]
   ): boolean {
     let used = false;
@@ -339,7 +339,7 @@ class Utils {
     return weightFalse;
   }
 
-  static addRelativeProperty<T extends BaseModel>(
+  static addRelativeProperty<T extends IBaseModel>(
     element: T,
     bankId: string
   ): T {
@@ -348,17 +348,17 @@ class Utils {
     return newElement;
   }
 
-  static inheritList<T extends BaseModel>(list: T[], bankId: string): T[] {
+  static inheritList<T extends IBaseModel>(list: T[], bankId: string): T[] {
     return list.map((element: T) => {
       return this.addRelativeProperty(element, bankId);
     });
   }
 
   static inheritListwithSublist(
-    list: Parentable<Need>[],
+    list: Parentable<INeed>[],
     bankId: string
-  ): Parentable<Need>[] {
-    return list.map((element: Parentable<Need>) => {
+  ): Parentable<INeed>[] {
+    return list.map((element: Parentable<INeed>) => {
       const newElement = { ...element };
       const newRequirementList = this.inheritList(element.requirements, bankId);
 
@@ -367,7 +367,7 @@ class Utils {
     });
   }
 
-  static inheritBank(project: Bank, inheritedBank: Bank): Bank {
+  static inheritBank(project: IBank, inheritedBank: IBank): IBank {
     const newProject = { ...project };
 
     const newProductList = [
@@ -411,14 +411,14 @@ class Utils {
     return newProject;
   }
 
-  static filterRelativeSourceList<T extends BaseModel>(
+  static filterRelativeSourceList<T extends IBaseModel>(
     list: T[],
     bankId: string
   ): T[] {
     return list.filter((element) => element.sourceRel !== bankId);
   }
 
-  static removeInheritedBank(project: Bank, inheritedBank: string): Bank {
+  static removeInheritedBank(project: IBank, inheritedBank: string): IBank {
     const newProject = { ...project };
 
     const newProductList = this.filterRelativeSourceList(
@@ -440,7 +440,7 @@ class Utils {
     newProject.codelist = newCodelistList;
 
     const inheritedBanks = project.inheritedBanks.filter(
-      (element: InheritedBank) => element.id !== inheritedBank
+      (element: IInheritedBank) => element.id !== inheritedBank
     );
     newProject.inheritedBanks = inheritedBanks;
     return newProject;

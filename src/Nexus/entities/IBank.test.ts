@@ -1,11 +1,11 @@
 import { format } from 'date-fns';
-import { DATETIME_ISO8601UTC } from '../common/Constants';
-import { Bank, BaseBankSchema } from './Bank';
-import ModelType from './ModelType';
+import { DATETIME_ISO8601UTC } from '../../common/Constants';
+import ModelType from '../../models/ModelType';
+import { BaseBankSchema, IBank } from './IBank';
 
 describe('BankSchema should validate', () => {
   test('basebankSchema works', () => {
-    const bank: Bank = {
+    const bank: IBank = {
       id: 'e56367af-d48d-422d-a4f6-ba52ee17af23',
       title: 'Test',
       description: '',

@@ -2,14 +2,14 @@ import { AxiosResponse } from 'axios';
 import React from 'react';
 import Button from 'react-bootstrap/Button';
 import { httpPost } from '../../api/http';
-import { Response } from '../../models/Response';
+import { IResponse } from '../../models/IResponse';
 import { useAppSelector } from '../../store/hooks';
 
 export default function ResponseDownLoad(): React.ReactElement {
   const { response } = useAppSelector((state) => state.response);
 
   const onDownLoad = () => {
-    httpPost<Response, AxiosResponse<File>>(
+    httpPost<IResponse, AxiosResponse<File>>(
       '/java/generateResponse',
       response,
       {

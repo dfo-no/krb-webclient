@@ -1,40 +1,43 @@
 import { config } from 'process';
 import React from 'react';
 import { v4 as uuidv4 } from 'uuid';
+import { IPrefilledResponseProduct } from '../../models/IPrefilledResponseProduct';
+import { IRequirementAnswer } from '../../models/IRequirementAnswer';
+import { Levelable } from '../../models/Levelable';
+import ModelType from '../../models/ModelType';
+import QuestionEnum from '../../models/QuestionEnum';
+import { QuestionType } from '../../models/QuestionType';
 import {
   ICheckboxAnswer,
   ICheckboxQuestion
-} from '../../models/ICheckboxQuestion';
+} from '../../Nexus/entities/ICheckboxQuestion';
 import {
   ICodelistAnswer,
   ICodelistQuestion
-} from '../../models/ICodelistQuestion';
+} from '../../Nexus/entities/ICodelistQuestion';
 import {
   IFileUploadAnswer,
   IFileUploadQuestion
-} from '../../models/IFileUploadQuestion';
+} from '../../Nexus/entities/IFileUploadQuestion';
+import { INeed } from '../../Nexus/entities/INeed';
 import {
   IPeriodDateAnswer,
   IPeriodDateQuestion
-} from '../../models/IPeriodDateQuestion';
-import { IRequirementAnswer } from '../../models/IRequirementAnswer';
-import { ISliderAnswer, ISliderQuestion } from '../../models/ISliderQuestion';
-import { ITextAnswer, ITextQuestion } from '../../models/ITextQuestion';
-import { ITimeAnswer, ITimeQuestion } from '../../models/ITimeQuestion';
-import { Levelable } from '../../models/Levelable';
-import ModelType from '../../models/ModelType';
-import { Need } from '../../models/Need';
-import { PrefilledResponseProduct } from '../../models/PrefilledResponseProduct';
-import QuestionEnum from '../../models/QuestionEnum';
-import { QuestionType } from '../../models/QuestionType';
+} from '../../Nexus/entities/IPeriodDateQuestion';
+import {
+  ISliderAnswer,
+  ISliderQuestion
+} from '../../Nexus/entities/ISliderQuestion';
+import { ITextAnswer, ITextQuestion } from '../../Nexus/entities/ITextQuestion';
+import { ITimeAnswer, ITimeQuestion } from '../../Nexus/entities/ITimeQuestion';
 import ProductCodelistForm from './AnswerForms/ProductCodelistForm';
 import ProductDateForm from './AnswerForms/ProductDateForm';
 import ProductSliderForm from './AnswerForms/ProductSliderForm';
 import ProductTextForm from './AnswerForms/ProductTextForm';
 
 interface IProps {
-  element: Levelable<Need>;
-  product: PrefilledResponseProduct;
+  element: Levelable<INeed>;
+  product: IPrefilledResponseProduct;
 }
 
 export default function AnswerForm({

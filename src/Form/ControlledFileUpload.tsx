@@ -8,7 +8,7 @@ import {
   UseControllerProps
 } from 'react-hook-form';
 
-interface Props<T> extends UseControllerProps<T> {
+interface IProps<T> extends UseControllerProps<T> {
   error: FieldError | undefined;
 }
 
@@ -16,7 +16,7 @@ const ControlledFileUpload = <T extends FieldValues>({
   name,
   control,
   error
-}: Props<T>): React.ReactElement => {
+}: IProps<T>): React.ReactElement => {
   return (
     <Form.Group controlId={name}>
       <Controller

@@ -9,10 +9,10 @@ import Row from 'react-bootstrap/Row';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import SliderSelect from '../../components/SliderSelect';
-import { ICheckboxQuestion } from '../../models/ICheckboxQuestion';
 import { IRequirementAnswer } from '../../models/IRequirementAnswer';
 import ModelType from '../../models/ModelType';
 import QuestionEnum from '../../models/QuestionEnum';
+import { ICheckboxQuestion } from '../../Nexus/entities/ICheckboxQuestion';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import {
   addAnswer,

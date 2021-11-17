@@ -5,7 +5,7 @@ import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { selectNeed } from '../../store/reducers/selectedNeed-reducer';
 import { selectRequirement } from '../../store/reducers/selectedRequirement-reducer';
 
-interface RouteParams {
+interface IRouteParams {
   projectId: string;
   needId: string;
   requirementId: string;
@@ -18,7 +18,7 @@ const withProjectAndNeedAndRequirement =
   ({ ...props }: P) => {
     const dispatch = useAppDispatch();
     const { needId: routeNeedId, requirementId: routeRequirementId } =
-      useParams<RouteParams>();
+      useParams<IRouteParams>();
 
     const { project } = useAppSelector((state) => state.project);
     const { needId } = useAppSelector((state) => state.selectNeed);

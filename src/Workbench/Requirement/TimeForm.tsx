@@ -7,13 +7,13 @@ import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 import { Control, FormState, UseFormRegister } from 'react-hook-form';
 import { BsTrashFill } from 'react-icons/bs';
-import { ITimeQuestion } from '../../models/ITimeQuestion';
-import { Requirement } from '../../models/Requirement';
+import { IRequirement } from '../../Nexus/entities/IRequirement';
+import { ITimeQuestion } from '../../Nexus/entities/ITimeQuestion';
 
 type IProps = {
-  control: Control<Requirement>;
-  register: UseFormRegister<Requirement>;
-  formState: FormState<Requirement>;
+  control: Control<IRequirement>;
+  register: UseFormRegister<IRequirement>;
+  formState: FormState<IRequirement>;
   item: ITimeQuestion;
   vIndex: number;
   aIndex: number;

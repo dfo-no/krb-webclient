@@ -1,4 +1,7 @@
 import Joi from 'joi';
+import QuestionEnum from '../../models/QuestionEnum';
+import { QuestionTypes } from '../../models/QuestionTypes';
+import RequirementType from '../../models/RequirementType';
 import { CheckboxQuestionSchema } from './ICheckboxQuestion';
 import { CodelistQuestionSchema } from './ICodelistQuestion';
 import { FileUploadQuestionSchema } from './IFileUploadQuestion';
@@ -6,9 +9,6 @@ import { PeriodDateQuestionSchema } from './IPeriodDateQuestion';
 import { SliderQuestionSchema } from './ISliderQuestion';
 import { TextQuestionSchema } from './ITextQuestion';
 import { TimeQuestionSchema } from './ITimeQuestion';
-import QuestionEnum from './QuestionEnum';
-import { QuestionTypes } from './QuestionTypes';
-import RequirementType from './RequirementType';
 
 export interface IVariant {
   id: string;

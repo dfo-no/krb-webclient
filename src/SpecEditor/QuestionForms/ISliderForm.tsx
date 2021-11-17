@@ -8,11 +8,11 @@ import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import ErrorSummary from '../../Form/ErrorSummary';
 import { IRequirementAnswer } from '../../models/IRequirementAnswer';
+import ModelType from '../../models/ModelType';
 import {
   ISliderQuestion,
   SliderQuestionSchema
-} from '../../models/ISliderQuestion';
-import ModelType from '../../models/ModelType';
+} from '../../Nexus/entities/ISliderQuestion';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import {
   addAnswer,

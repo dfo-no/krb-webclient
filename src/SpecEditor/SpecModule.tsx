@@ -16,11 +16,11 @@ import SpecSideBar from './SideBar/SpecSideBar';
 import SpecEditor from './SpecEditor/SpecEditor';
 import SpecPage from './SpecPage';
 
-interface RouteParams {
+interface IRouteParams {
   bankId: string;
 }
 export default function SpecModule(): React.ReactElement {
-  const projectMatch = useRouteMatch<RouteParams>('/speceditor/:bankId');
+  const projectMatch = useRouteMatch<IRouteParams>('/speceditor/:bankId');
   const dispatch = useAppDispatch();
   const { id } = useAppSelector((state) => state.selectedBank);
   // Can set this safely, even if we got here directly by url or by clicks

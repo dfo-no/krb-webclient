@@ -1,12 +1,12 @@
 import React from 'react';
 import Container from 'react-bootstrap/Container';
 import { IRequirementAnswer } from '../../models/IRequirementAnswer';
-import { ITextQuestion } from '../../models/ITextQuestion';
-import { Requirement } from '../../models/Requirement';
+import { IRequirement } from '../../Nexus/entities/IRequirement';
+import { ITextQuestion } from '../../Nexus/entities/ITextQuestion';
 
 interface IProps {
   answer: IRequirementAnswer;
-  parent_requirement: Requirement;
+  parent_requirement: IRequirement;
 }
 
 export default function TextInfo({

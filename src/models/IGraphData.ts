@@ -2,7 +2,7 @@
  * @see https://graph.microsoft.com/v1.0/$metadata#users/$entity
  * */
 
-export interface GraphData {
+export interface IGraphData {
   graphData: {
     businessPhones: string[];
     displayName: string;

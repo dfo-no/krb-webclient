@@ -10,10 +10,13 @@ import { useTranslation } from 'react-i18next';
 import { v4 as uuidv4 } from 'uuid';
 import Utils from '../../common/Utils';
 import ErrorSummary from '../../Form/ErrorSummary';
-import { Alert } from '../../models/Alert';
-import { Need } from '../../models/Need';
-import { BaseRequirementSchema, Requirement } from '../../models/Requirement';
-import { Tag } from '../../models/Tag';
+import { IAlert } from '../../models/IAlert';
+import { INeed } from '../../Nexus/entities/INeed';
+import {
+  BaseRequirementSchema,
+  IRequirement
+} from '../../Nexus/entities/IRequirement';
+import { ITag } from '../../Nexus/entities/ITag';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { addAlert } from '../../store/reducers/alert-reducer';
 import {
@@ -42,14 +45,14 @@ function RequirementEditor(): React.ReactElement {
     need.requirements.find((element) => element.id === reqId)
   );
 
-  const { control, register, handleSubmit, formState } = useForm<Requirement>({
+  const { control, register, handleSubmit, formState } = useForm<IRequirement>({
     resolver: joiResolver(BaseRequirementSchema),
     defaultValues: requirement
   });
   const { errors } = formState;
 
-  const onSubmit = async (post: Requirement) => {
-    const alert: Alert = {
+  const onSubmit = async (post: IRequirement) => {
+    const alert: IAlert = {
       id: uuidv4(),
       style: 'success',
       text: 'successfully updated requirement'
@@ -60,7 +63,7 @@ function RequirementEditor(): React.ReactElement {
     });
   };
 
-  const needOptions = (needList: Need[]) => {
+  const needOptions = (needList: INeed[]) => {
     return needList.map((element) => {
       return (
         <option key={element.id} value={element.id}>
@@ -75,7 +78,7 @@ function RequirementEditor(): React.ReactElement {
     // TODO: dispatch a change Need and switch URL
   };
 
-  const tagOptions = (tags: Tag[]) => {
+  const tagOptions = (tags: ITag[]) => {
     return tags.map((tag) => {
       return (
         <option key={tag.id} value={tag.id}>

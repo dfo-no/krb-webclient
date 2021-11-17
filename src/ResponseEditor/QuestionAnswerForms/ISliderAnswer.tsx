@@ -10,9 +10,9 @@ import { FieldError, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import ControlledSlider from '../../Form/ControlledSlider';
 import { IRequirementAnswer } from '../../models/IRequirementAnswer';
-import { ISliderQuestion } from '../../models/ISliderQuestion';
 import ModelType from '../../models/ModelType';
 import QuestionEnum from '../../models/QuestionEnum';
+import { ISliderQuestion } from '../../Nexus/entities/ISliderQuestion';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import {
   addProductAnswer,
