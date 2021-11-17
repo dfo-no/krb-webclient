@@ -24,7 +24,7 @@ import {
 } from '../../store/reducers/project-reducer';
 
 interface IProps {
-  element: Need;
+  element: Parentable<Need>;
 }
 
 function EditNeedForm({ element }: IProps): React.ReactElement {
@@ -52,18 +52,21 @@ function EditNeedForm({ element }: IProps): React.ReactElement {
 
   const [modalShow, setModalShow] = useState(false);
 
-  const onSubmit = (post: Nestable<Need>) => {
-    const toParentable = { ...post };
-    if (toParentable.children) {
-      delete toParentable.children;
+  const onEditNeedSubmit = (post: Nestable<Need>) => {
+    const postNeed = { ...post };
+    if (postNeed.children) {
+      delete postNeed.children;
     }
-    const alert: Alert = {
-      id: uuidv4(),
-      style: 'success',
-      text: 'Successfully edited need'
-    };
-    dispatch(editNeed(toParentable as Parentable<Need>));
+    if (postNeed.level) {
+      delete postNeed.level;
+    }
+    dispatch(editNeed(postNeed as Parentable<Need>));
     dispatch(putSelectedProjectThunk('dummy')).then(() => {
+      const alert: Alert = {
+        id: uuidv4(),
+        style: 'success',
+        text: 'Successfully edited need'
+      };
       dispatch(addAlert({ alert }));
       onOpenClose('');
     });
@@ -85,7 +88,7 @@ function EditNeedForm({ element }: IProps): React.ReactElement {
 
   return (
     <Form
-      onSubmit={handleSubmit(onSubmit)}
+      onSubmit={handleSubmit(onEditNeedSubmit)}
       autoComplete="off"
       noValidate
       validated={validated}
@@ -122,7 +125,6 @@ function EditNeedForm({ element }: IProps): React.ReactElement {
         <BsTrashFill />
       </Button>
       <ErrorSummary errors={errors} />
-      <p>{element.title}</p>
       <AlertModal
         modalShow={modalShow}
         setModalShow={setModalShow}

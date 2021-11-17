@@ -10,6 +10,8 @@ import ErrorSummary from '../../Form/ErrorSummary';
 import InputRow from '../../Form/InputRow';
 import { Alert } from '../../models/Alert';
 import { Code, EditCodeSchema } from '../../models/Code';
+import { Nestable } from '../../models/Nestable';
+import { Parentable } from '../../models/Parentable';
 import { AccordionContext } from '../../NestableHierarchy/AccordionContext';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { addAlert } from '../../store/reducers/alert-reducer';
@@ -50,24 +52,31 @@ export default function EditCodeForm({ element }: IProps): React.ReactElement {
     }
   }, [element, reset]);
 
-  const onSubmit = (code: Code) => {
-    const alert: Alert = {
-      id: uuidv4(),
-      style: 'success',
-      text: 'Successfully edited code'
-    };
+  const onEditCodeSubmit = (data: Nestable<Code>) => {
+    const editCode = { ...data };
+    if (editCode.children) {
+      delete editCode.children;
+    }
+    if (editCode.level) {
+      delete editCode.level;
+    }
+
     dispatch(
       editCodeInCodelist({
         codelistId: codelist.id,
-        code
+        code: editCode
       })
     );
-    dispatch(editCodeInSelectedCodelist(code));
+    dispatch(editCodeInSelectedCodelist(editCode));
     dispatch(putSelectedProjectThunk('dummy')).then(() => {
+      const alert: Alert = {
+        id: uuidv4(),
+        style: 'success',
+        text: 'Successfully edited code'
+      };
       dispatch(addAlert({ alert }));
+      onOpenClose('');
     });
-
-    onOpenClose('');
   };
 
   const deleteCode = (code: Code) => {
@@ -83,7 +92,7 @@ export default function EditCodeForm({ element }: IProps): React.ReactElement {
 
   return (
     <Form
-      onSubmit={handleSubmit(onSubmit)}
+      onSubmit={handleSubmit(onEditCodeSubmit)}
       autoComplete="off"
       noValidate
       validated={validated}

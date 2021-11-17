@@ -1,7 +1,8 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
+import { Parentable } from '../../models/Parentable';
 import { Product } from '../../models/Product';
-import NestableHierarcy from '../../NestableHierarchy/NestableHierarcy';
+import NestableHierarcy2 from '../../NestableHierarchy/NestableHierarcy2';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import {
   putSelectedProjectThunk,
@@ -15,28 +16,23 @@ export default function ProductPage(): React.ReactElement {
   const dispatch = useAppDispatch();
   const { t } = useTranslation();
 
-  const newProductList = (projectId: string, items: Product[]) => {
+  const newProductList = (items: Parentable<Product>[]) => {
     dispatch(updateProductList(items));
     dispatch(putSelectedProjectThunk('dummy'));
   };
 
   return (
     <div className="pb-4">
-      <>
-        <h3 className="mt-3">{t('Products')}</h3>
+      <h3 className="mt-3">{t('Products')}</h3>
 
-        <NewProductForm />
+      <NewProductForm />
 
-        <NestableHierarcy
-          dispatchfunc={(projectId: string, items: Product[]) =>
-            newProductList(projectId, items)
-          }
-          inputlist={project.products}
-          projectId={project.id}
-          component={<EditProductForm element={project.products[0]} />}
-          depth={5}
-        />
-      </>
+      <NestableHierarcy2
+        dispatchfunc={(items: Parentable<Product>[]) => newProductList(items)}
+        inputlist={project.products}
+        component={<EditProductForm element={project.products[0]} />}
+        depth={5}
+      />
     </div>
   );
 }

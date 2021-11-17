@@ -4,12 +4,11 @@ import Nestable, { Item } from 'react-nestable';
 import 'react-nestable/dist/styles/index.css';
 import Utils from '../common/Utils';
 import { BaseModel } from '../models/BaseModel';
-import { Levelable } from '../models/Levelable';
 import { Parentable } from '../models/Parentable';
 import { AccordionContext } from './AccordionContext';
 
 interface IProps<T extends BaseModel> {
-  dispatchfunc: (itemlist: Levelable<T>[]) => void;
+  dispatchfunc: (itemlist: Parentable<T>[]) => void;
   inputlist: Parentable<T>[];
   component: React.ReactElement;
   depth: number;
@@ -71,8 +70,14 @@ const NestableHierarcy2 = <T extends BaseModel>({
     dragItem: Item;
     targetPath: number[];
   }) => {
-    const itemList = flatten(items) as Levelable<T>[];
-    dispatchfunc(itemList);
+    const itemList = flatten(items);
+    const returnList: Parentable<T>[] = [];
+    itemList.forEach((elem) => {
+      const clone = { ...elem };
+      delete clone.level;
+      returnList.push(clone as Parentable<T>);
+    });
+    dispatchfunc(returnList);
   };
 
   const renderItem = (item: Item) => {

@@ -14,6 +14,8 @@ import InputRow from '../../Form/InputRow';
 import { Alert } from '../../models/Alert';
 import { IVariant } from '../../models/IVariant';
 import { Need } from '../../models/Need';
+import { Nestable } from '../../models/Nestable';
+import { Parentable } from '../../models/Parentable';
 import { Product, PutProductSchema } from '../../models/Product';
 import { Requirement } from '../../models/Requirement';
 import { AccordionContext } from '../../NestableHierarchy/AccordionContext';
@@ -27,7 +29,7 @@ import {
 import { selectProduct } from '../../store/reducers/selectedProduct-reducer';
 
 interface IProps {
-  element: Product;
+  element: Parentable<Product>;
 }
 
 export default function EditProductForm({
@@ -45,7 +47,7 @@ export default function EditProductForm({
     handleSubmit,
     reset,
     formState: { errors }
-  } = useForm<Product>({
+  } = useForm<Parentable<Product>>({
     resolver: joiResolver(PutProductSchema),
     defaultValues: element
   });
@@ -56,13 +58,17 @@ export default function EditProductForm({
     }
   }, [element, reset]);
 
-  const onSubmit = (post: Product) => {
-    const newProduct = { ...element };
-    newProduct.title = post.title;
-    newProduct.description = post.description;
+  const onEditProductSubmit = (data: Nestable<Product>) => {
+    const newProduct = { ...data };
     if (newProduct.children) {
       delete newProduct.children;
     }
+    if (newProduct.level) {
+      delete newProduct.level;
+    }
+    newProduct.title = data.title;
+    newProduct.description = data.description;
+
     const alert: Alert = {
       id: uuidv4(),
       style: 'success',
@@ -111,7 +117,7 @@ export default function EditProductForm({
 
   return (
     <Form
-      onSubmit={handleSubmit(onSubmit)}
+      onSubmit={handleSubmit((post) => onEditProductSubmit(post))}
       autoComplete="off"
       noValidate
       validated={validated}

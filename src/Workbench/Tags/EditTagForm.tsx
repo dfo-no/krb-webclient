@@ -47,16 +47,19 @@ export default function EditTagForm({ element }: IProps): React.ReactElement {
   }, [element, reset]);
 
   const onEditTagSubmit = (post: Nestable<Tag>) => {
-    const newTag = { ...post };
-    if (newTag.children) {
-      delete newTag.children;
+    const postTag = { ...post };
+    if (postTag.children) {
+      delete postTag.children;
+    }
+    if (postTag.level) {
+      delete postTag.level;
     }
     const alert: Alert = {
       id: uuidv4(),
       style: 'success',
       text: 'Successfully edited tag'
     };
-    dispatch(editTag(newTag as Parentable<Tag>));
+    dispatch(editTag(postTag as Parentable<Tag>));
     dispatch(putSelectedProjectThunk('dummy')).then(() => {
       dispatch(addAlert({ alert }));
       reset();
@@ -82,7 +85,7 @@ export default function EditTagForm({ element }: IProps): React.ReactElement {
     <Card className="mb-4">
       <Card.Body>
         <Form
-          onSubmit={handleSubmit(onEditTagSubmit)}
+          onSubmit={handleSubmit((post) => onEditTagSubmit(post))}
           autoComplete="off"
           noValidate
           validated={validated}

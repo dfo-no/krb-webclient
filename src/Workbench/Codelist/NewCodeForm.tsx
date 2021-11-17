@@ -10,6 +10,7 @@ import ErrorSummary from '../../Form/ErrorSummary';
 import InputRow from '../../Form/InputRow';
 import { Alert } from '../../models/Alert';
 import { Code, PostCodeSchema } from '../../models/Code';
+import { Parentable } from '../../models/Parentable';
 import Nexus from '../../Nexus/Nexus';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { addAlert } from '../../store/reducers/alert-reducer';
@@ -42,7 +43,7 @@ function NewCodeForm(): React.ReactElement {
     defaultValues
   });
 
-  const onSubmit = (post: Code) => {
+  const onSubmit = (post: Parentable<Code>) => {
     const alert: Alert = {
       id: uuidv4(),
       style: 'success',

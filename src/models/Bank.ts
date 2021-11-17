@@ -45,7 +45,7 @@ export interface Bank extends BaseModel {
   description: string;
   needs: Parentable<Need>[];
   codelist: Codelist[];
-  products: Product[];
+  products: Parentable<Product>[];
   version: number;
   tags: Parentable<Tag>[];
   publications: Publication[];

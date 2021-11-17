@@ -23,11 +23,13 @@ export const BaseProductSchema = Joi.object().keys({
 export const PostProductSchema = BaseProductSchema.keys({
   id: Joi.string().equal('').required(),
   parent: Joi.alternatives([Joi.string().length(36), Joi.string().valid('')]),
-  children: Joi.array()
+  children: Joi.array(),
+  level: Joi.number()
 });
 
 export const PutProductSchema = BaseProductSchema.keys({
   id: Joi.string().length(36).required(),
   parent: Joi.alternatives([Joi.string().length(36), Joi.string().valid('')]),
-  children: Joi.array()
+  children: Joi.array(),
+  level: Joi.number()
 });

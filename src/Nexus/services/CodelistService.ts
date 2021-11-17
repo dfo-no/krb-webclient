@@ -1,6 +1,7 @@
 import { Code } from '../../models/Code';
 import { Codelist } from '../../models/Codelist';
 import ModelType from '../../models/ModelType';
+import { Parentable } from '../../models/Parentable';
 import StoreService from './StoreService';
 import UuidService from './UuidService';
 
@@ -26,14 +27,15 @@ export default class CodelistService {
     return defaultValues;
   };
 
-  generateDefaultCodeValues = (projectId: string): Code => {
-    const defaultValues: Code = {
+  generateDefaultCodeValues = (projectId: string): Parentable<Code> => {
+    const defaultValues: Parentable<Code> = {
       id: '',
       title: '',
       description: '',
       type: ModelType.code,
       sourceOriginal: projectId,
-      sourceRel: null
+      sourceRel: null,
+      parent: ''
     };
     return defaultValues;
   };
@@ -44,7 +46,7 @@ export default class CodelistService {
     return codelist;
   };
 
-  createCodeWithId = (item: Code): Code => {
+  createCodeWithId = (item: Parentable<Code>): Parentable<Code> => {
     const code = { ...item };
     code.id = this.UuidService.generateId();
     return code;
@@ -62,15 +64,15 @@ export default class CodelistService {
     return this.storeService.deleteCodelist(item);
   }
 
-  async addCode(item: Code, codelistId: string): Promise<void> {
+  async addCode(item: Parentable<Code>, codelistId: string): Promise<void> {
     return this.storeService.addCode(item, codelistId);
   }
 
-  async editCode(item: Code, codelistId: string): Promise<void> {
+  async editCode(item: Parentable<Code>, codelistId: string): Promise<void> {
     return this.storeService.editCode(item, codelistId);
   }
 
-  async deleteCode(item: Code, codelistId: string): Promise<void> {
+  async deleteCode(item: Parentable<Code>, codelistId: string): Promise<void> {
     return this.storeService.deleteCode(item, codelistId);
   }
 }

@@ -2,6 +2,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { Code } from '../../models/Code';
 import { Codelist } from '../../models/Codelist';
 import ModelType from '../../models/ModelType';
+import { Parentable } from '../../models/Parentable';
 
 interface SelectedCodeListState {
   codelist: Codelist;
@@ -29,7 +30,10 @@ const selectedCodeListState = createSlice({
     editCodelist(state, { payload }: PayloadAction<Codelist>) {
       state.codelist = payload;
     },
-    editCodeInSelectedCodelist(state, { payload }: PayloadAction<Code>) {
+    editCodeInSelectedCodelist(
+      state,
+      { payload }: PayloadAction<Parentable<Code>>
+    ) {
       const codeIndex = state.codelist.codes.findIndex(
         (elem) => elem.id === payload.id
       );
@@ -45,10 +49,10 @@ const selectedCodeListState = createSlice({
         state.codelist.codes.splice(codeIndex, 1);
       }
     },
-    addCodeToSelected(state, { payload }: PayloadAction<Code>) {
+    addCodeToSelected(state, { payload }: PayloadAction<Parentable<Code>>) {
       state.codelist.codes.push(payload);
     },
-    setCodesToSelected(state, { payload }: PayloadAction<Code[]>) {
+    setCodesToSelected(state, { payload }: PayloadAction<Parentable<Code>[]>) {
       state.codelist.codes = payload;
     }
   }
