@@ -9,10 +9,15 @@ import Row from 'react-bootstrap/Row';
 import { FieldError, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import ControlledSlider from '../../Form/ControlledSlider';
-import { IRequirementAnswer } from '../../models/IRequirementAnswer';
+import {
+  IRequirementAnswer,
+  RequirementAnswerSchema
+} from '../../models/IRequirementAnswer';
 import ModelType from '../../models/ModelType';
-import QuestionEnum from '../../models/QuestionEnum';
-import { ISliderQuestion } from '../../Nexus/entities/ISliderQuestion';
+import {
+  ISliderQuestion,
+  SliderQuestionAnswerSchema
+} from '../../Nexus/entities/ISliderQuestion';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import {
   addProductAnswer,
@@ -23,20 +28,6 @@ interface IProps {
   parentAnswer: IRequirementAnswer;
 }
 
-export const ResponseSliderSchema = Joi.object().keys({
-  id: Joi.string().required(),
-  type: Joi.string().equal(QuestionEnum.Q_SLIDER).required(),
-  config: Joi.object().keys({
-    step: Joi.number().min(0).max(1000000000).required(),
-    min: Joi.number().min(0).max(1000000000).required(),
-    max: Joi.number().min(0).max(1000000000).required(),
-    unit: Joi.string().disallow(null, '').required()
-  }),
-  answer: Joi.object().keys({
-    value: Joi.number().min(0).max(1000000000).required()
-  })
-});
-
 export default function ISliderAnswer({
   parentAnswer
 }: IProps): React.ReactElement {
@@ -45,6 +36,20 @@ export default function ISliderAnswer({
     (state) => state.selectedResponseProduct
   );
   let index: number;
+
+  const question = parentAnswer.question as ISliderQuestion;
+
+  const ResponseSliderSchema = RequirementAnswerSchema.keys({
+    question: SliderQuestionAnswerSchema.keys({
+      answer: Joi.object().keys({
+        value: Joi.number()
+          .min(question.config.min)
+          .max(question.config.max)
+          .required(),
+        point: Joi.number().required()
+      })
+    })
+  });
 
   const productIndex = response.products.findIndex(
     (p) => p.id === selectedResponseProduct.id
@@ -63,23 +68,13 @@ export default function ISliderAnswer({
         : -1;
   }
 
-  const defaultVal =
-    index === -1
-      ? (parentAnswer.question as ISliderQuestion)
-      : (parentAnswer.type === ModelType.requirement &&
-          (response.requirementAnswers[index].question as ISliderQuestion)) ||
-        (parentAnswer.type === ModelType.product &&
-          (response.products[0].requirementAnswers[index]
-            .question as ISliderQuestion));
   const {
     control,
     handleSubmit,
     formState: { errors }
-  } = useForm<ISliderQuestion>({
+  } = useForm<IRequirementAnswer>({
     resolver: joiResolver(ResponseSliderSchema),
-    defaultValues: {
-      ...defaultVal
-    }
+    defaultValues: parentAnswer
   });
 
   const sliderQuestion = parentAnswer.question as ISliderQuestion;
@@ -87,18 +82,13 @@ export default function ISliderAnswer({
   const dispatch = useAppDispatch();
   const { t } = useTranslation();
 
-  const saveValues = (post: ISliderQuestion) => {
-    const newAnswer = {
-      ...parentAnswer
-    };
-    newAnswer.question = post;
-
-    if (newAnswer.type === ModelType.requirement)
-      dispatch(addRequirementAnswer(newAnswer));
-    if (newAnswer.type === ModelType.product && selectedResponseProduct)
+  const saveValues = (post: IRequirementAnswer) => {
+    if (post.type === ModelType.requirement)
+      dispatch(addRequirementAnswer(post));
+    if (post.type === ModelType.product && selectedResponseProduct)
       dispatch(
         addProductAnswer({
-          answer: newAnswer,
+          answer: post,
           productId: selectedResponseProduct.id
         })
       );
@@ -119,7 +109,7 @@ export default function ISliderAnswer({
               step={sliderQuestion.config.step}
               marks={[]}
               control={control}
-              name="answer.value"
+              name={`question.answer.value` as const}
               error={get(errors, `answer.value`) as FieldError}
             />
           </Row>

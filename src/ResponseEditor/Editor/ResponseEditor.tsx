@@ -79,8 +79,8 @@ export default function ResponseEditor(): React.ReactElement {
         dispatch(setPrefilledResponse(result.data));
         const [requirementAnswers, markedQuestions] =
           nexus.responseService.matchPreAnsweredQuestions(
-            result.data.specification.requirementAnswers,
-            response.requirementAnswers
+            response.spesification.requirementAnswers,
+            result.data.requirementAnswers
           );
         dispatch(setRequirementAnswers(requirementAnswers));
         dispatch(setMarkedRequirements(markedQuestions));
