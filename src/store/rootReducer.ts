@@ -16,6 +16,7 @@ import selectedResponseProductReducer from './reducers/selectedResponseProduct-r
 import selectedSpecProductReducer from './reducers/selectedSpecProduct-reducer';
 import specificationReducer from './reducers/spesification-reducer';
 import userReducer from './reducers/userReducer';
+import uploadedPrefilledResponseReducer from './uploadedPrefilledResponseReducer';
 
 const rootReducer = combineReducers({
   loader: loaderReducer,
@@ -34,7 +35,8 @@ const rootReducer = combineReducers({
   response: responseReducer,
   selectedResponseProduct: selectedResponseProductReducer,
   alert: alertReducer,
-  prefilledResponse: PrefilledResponseReducer
+  prefilledResponse: PrefilledResponseReducer,
+  uploadedResponse: uploadedPrefilledResponseReducer
 });
 
 export default rootReducer;

@@ -71,6 +71,12 @@ const responseSlice = createSlice({
       }
       state.response.requirementAnswers.push(payload);
     },
+    setRequirementAnswers(
+      state,
+      { payload }: PayloadAction<IRequirementAnswer[]>
+    ) {
+      state.response.requirementAnswers = payload;
+    },
     setBank(state, { payload }: PayloadAction<Bank>) {
       state.response.spesification.bank = payload;
     },
@@ -124,7 +130,8 @@ export const {
   editProduct,
   setResponse,
   addRequirementAnswer,
-  addProductAnswer
+  addProductAnswer,
+  setRequirementAnswers
 } = responseSlice.actions;
 
 export default responseSlice.reducer;

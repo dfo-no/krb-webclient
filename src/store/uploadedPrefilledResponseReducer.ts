@@ -24,6 +24,7 @@ const uploadedResponseState = createSlice({
   }
 });
 
-export const { setPrefilledResponse } = uploadedResponseState.actions;
+export const { setPrefilledResponse, setMarkedRequirements } =
+  uploadedResponseState.actions;
 
 export default uploadedResponseState.reducer;

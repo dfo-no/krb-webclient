@@ -1,3 +1,4 @@
+/* eslint-disable class-methods-use-this */
 import { IRequirementAnswer } from '../../models/IRequirementAnswer';
 import { Response } from '../../models/Response';
 import { ResponseProduct } from '../../models/ResponseProduct';
@@ -75,5 +76,37 @@ export default class ResponseService {
 
   async deleteAnswer(answer: IRequirementAnswer): Promise<void> {
     return this.store.deleteAnswer(answer);
+  }
+
+  matchPreAnsweredQuestions(
+    specifiationRequirements: IRequirementAnswer[],
+    answeredRequirements: IRequirementAnswer[]
+  ): [IRequirementAnswer[], string[]] {
+    const matchedRequirements: IRequirementAnswer[] = [];
+    const changedRequirements: string[] = [];
+
+    answeredRequirements.forEach((answer) => {
+      const index = specifiationRequirements.findIndex(
+        (element) => element.questionId === answer.questionId
+      );
+      if (index !== -1) {
+        const specAnswer = specifiationRequirements[index];
+        if (specAnswer.question.config !== answer.question.config) {
+          changedRequirements.push(answer.questionId);
+        } else {
+          matchedRequirements.push(answer);
+        }
+      }
+    });
+    const newAnswers = [...specifiationRequirements];
+    specifiationRequirements.forEach((element, index) => {
+      const matchedIndex = matchedRequirements.findIndex(
+        (answer) => answer.questionId === element.questionId
+      );
+      if (matchedIndex !== -1) {
+        newAnswers[index] = matchedRequirements[matchedIndex];
+      }
+    });
+    return [newAnswers, changedRequirements];
   }
 }
