@@ -11,21 +11,21 @@ import {
 } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { BsTrashFill } from 'react-icons/bs';
-import { Bank } from '../../models/Bank';
-import { Codelist } from '../../models/Codelist';
-import { ICodelistQuestion } from '../../models/ICodelistQuestion';
-import { Requirement } from '../../models/Requirement';
+import { IBank } from '../../Nexus/entities/IBank';
+import { ICodelist } from '../../Nexus/entities/ICodelist';
+import { ICodelistQuestion } from '../../Nexus/entities/ICodelistQuestion';
+import { IRequirement } from '../../Nexus/entities/IRequirement';
 import { useAppSelector } from '../../store/hooks';
 
 type IProps = {
-  control: Control<Requirement>;
-  register: UseFormRegister<Requirement>;
-  formState: FormState<Requirement>;
+  control: Control<IRequirement>;
+  register: UseFormRegister<IRequirement>;
+  formState: FormState<IRequirement>;
   item: ICodelistQuestion;
   vIndex: number;
   aIndex: number;
   remove: (i: number) => void;
-  project: Bank;
+  project: IBank;
 };
 
 export default function CodeListForm({
@@ -39,7 +39,7 @@ export default function CodeListForm({
   const { project } = useAppSelector((state) => state.project);
   const { t } = useTranslation();
   const codelistOptions = () => {
-    return project.codelist.map((codelist: Codelist) => {
+    return project.codelist.map((codelist: ICodelist) => {
       return (
         <option value={codelist.id} key={codelist.id}>
           {codelist.title}

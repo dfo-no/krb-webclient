@@ -1,22 +1,21 @@
 import { joiResolver } from '@hookform/resolvers/joi';
 import Joi from 'joi';
-import { get } from 'lodash';
 import React from 'react';
 import Badge from 'react-bootstrap/Badge';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
-import { FieldError, useForm } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import ErrorSummary from '../../../Form/ErrorSummary';
 import {
   IRequirementAnswer,
   RequirementAnswerSchema
 } from '../../../models/IRequirementAnswer';
+import { IRequirement } from '../../../Nexus/entities/IRequirement';
 import {
   ITextQuestion,
   TextQuestionAnswerSchema
-} from '../../../models/ITextQuestion';
-import { Requirement } from '../../../models/Requirement';
+} from '../../../Nexus/entities/ITextQuestion';
 import { useAppDispatch, useAppSelector } from '../../../store/hooks';
 import {
   addAnswer,
@@ -74,7 +73,7 @@ export default function TextForm({ answer }: IProps): React.ReactElement {
     dispatch(removeAnswer(elemId));
   };
 
-  const getVariantText = (requirement: Requirement, variantId: string) => {
+  const getVariantText = (requirement: IRequirement, variantId: string) => {
     const variantIndex = requirement.variants.findIndex(
       (v) => v.id === variantId
     );

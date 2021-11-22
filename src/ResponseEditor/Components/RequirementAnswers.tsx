@@ -1,10 +1,10 @@
 import React from 'react';
 import { IRequirementAnswer } from '../../models/IRequirementAnswer';
-import { Requirement } from '../../models/Requirement';
+import { IRequirement } from '../../Nexus/entities/IRequirement';
 import QuestionFormSelector from './QuestionFormSelector';
 
 interface IProps {
-  requirementArray: Requirement[];
+  requirementArray: IRequirement[];
   requirementSearchList: string[];
   specificationSearchList: IRequirementAnswer[];
   responseSearchList: IRequirementAnswer[];

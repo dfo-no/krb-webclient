@@ -1,24 +1,24 @@
 /* eslint-disable no-param-reassign */
 /* eslint-disable class-methods-use-this */
 import produce from 'immer';
-import { Bank } from '../../models/Bank';
 import { IRequirementAnswer } from '../../models/IRequirementAnswer';
-import { Specification } from '../../models/Specification';
-import { SpecificationProduct } from '../../models/SpecificationProduct';
+import { ISpecification } from '../../models/ISpecification';
+import { ISpecificationProduct } from '../../models/ISpecificationProduct';
+import { IBank } from '../entities/IBank';
 
 export default class SpecificationStoreService {
-  private static specification: Specification;
+  private static specification: ISpecification;
 
-  public setSpecification(specification: Specification): void {
+  public setSpecification(specification: ISpecification): void {
     SpecificationStoreService.specification = specification;
   }
 
   // eslint-disable-next-line class-methods-use-this
-  public getSpecification(): Specification {
+  public getSpecification(): ISpecification {
     return SpecificationStoreService.specification;
   }
 
-  public createSpecificationFromBank(bank: Bank): void {
+  public createSpecificationFromBank(bank: IBank): void {
     SpecificationStoreService.specification = {
       bank,
       title: '',
@@ -37,7 +37,7 @@ export default class SpecificationStoreService {
     );
   }
 
-  public addSpesificationProduct(product: SpecificationProduct): void {
+  public addSpesificationProduct(product: ISpecificationProduct): void {
     SpecificationStoreService.specification = produce(
       SpecificationStoreService.specification,
       (draft) => {
@@ -46,9 +46,9 @@ export default class SpecificationStoreService {
     );
   }
 
-  public editSpesificationProduct(product: SpecificationProduct): void {
+  public editSpesificationProduct(product: ISpecificationProduct): void {
     const index = SpecificationStoreService.specification.products.findIndex(
-      (specificationproduct: SpecificationProduct) =>
+      (specificationproduct: ISpecificationProduct) =>
         specificationproduct.id === product.id
     );
     SpecificationStoreService.specification = produce(
@@ -59,9 +59,9 @@ export default class SpecificationStoreService {
     );
   }
 
-  public deleteSpesificationProduct(product: SpecificationProduct): void {
+  public deleteSpesificationProduct(product: ISpecificationProduct): void {
     const index = SpecificationStoreService.specification.products.findIndex(
-      (specificationproduct: SpecificationProduct) =>
+      (specificationproduct: ISpecificationProduct) =>
         specificationproduct.id === product.id
     );
     SpecificationStoreService.specification = produce(

@@ -1,12 +1,12 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { ISpecificationProduct } from '../../models/ISpecificationProduct';
 import ModelType from '../../models/ModelType';
-import { SpecificationProduct } from '../../models/SpecificationProduct';
 
-interface SelectedSpecProductState {
-  selectedSpecificationProduct: SpecificationProduct;
+interface ISelectedSpecProductState {
+  selectedSpecificationProduct: ISpecificationProduct;
 }
 
-const initialProduct: SpecificationProduct = {
+const initialProduct: ISpecificationProduct = {
   id: '',
   title: ' ',
   description: '',
@@ -25,7 +25,7 @@ const initialProduct: SpecificationProduct = {
   requirementAnswers: []
 };
 
-const initialState: SelectedSpecProductState = {
+const initialState: ISelectedSpecProductState = {
   selectedSpecificationProduct: initialProduct
 };
 
@@ -35,7 +35,7 @@ const selectedSpecProductState = createSlice({
   reducers: {
     selectSpecificationProduct(
       state,
-      { payload }: PayloadAction<SpecificationProduct>
+      { payload }: PayloadAction<ISpecificationProduct>
     ) {
       state.selectedSpecificationProduct = payload;
     }

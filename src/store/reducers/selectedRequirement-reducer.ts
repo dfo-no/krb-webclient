@@ -1,9 +1,9 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-interface SelectedRequirementState {
+interface ISelectedRequirementState {
   reqId: string | null;
 }
-const initialState: SelectedRequirementState = { reqId: null };
+const initialState: ISelectedRequirementState = { reqId: null };
 
 const selectedRequirementSlice = createSlice({
   name: 'selectedRequirement',

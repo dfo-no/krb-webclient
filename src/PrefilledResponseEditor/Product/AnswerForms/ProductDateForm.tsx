@@ -8,17 +8,16 @@ import Form from 'react-bootstrap/Form';
 import { FieldError, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import ControlledDate from '../../../Form/ControlledDate';
-import ErrorSummary from '../../../Form/ErrorSummary';
-import {
-  IPeriodDateQuestion,
-  PeriodDateQuestionAnswerSchema
-} from '../../../models/IPeriodDateQuestion';
+import { IPrefilledResponseProduct } from '../../../models/IPrefilledResponseProduct';
 import {
   IRequirementAnswer,
   RequirementAnswerSchema
 } from '../../../models/IRequirementAnswer';
-import { PrefilledResponseProduct } from '../../../models/PrefilledResponseProduct';
-import { Requirement } from '../../../models/Requirement';
+import {
+  IPeriodDateQuestion,
+  PeriodDateQuestionAnswerSchema
+} from '../../../Nexus/entities/IPeriodDateQuestion';
+import { IRequirement } from '../../../Nexus/entities/IRequirement';
 import { useAppDispatch, useAppSelector } from '../../../store/hooks';
 import {
   addProductAnswer,
@@ -27,7 +26,7 @@ import {
 
 interface IProps {
   answer: IRequirementAnswer;
-  product: PrefilledResponseProduct;
+  product: IPrefilledResponseProduct;
 }
 
 export const PeriodDateSchema = RequirementAnswerSchema.keys({
@@ -68,7 +67,7 @@ export default function ProductDateForm({
     dispatch(removeProductAnswer({ answerId: elemId, productId }));
   };
 
-  const getVariantText = (requirement: Requirement, variantId: string) => {
+  const getVariantText = (requirement: IRequirement, variantId: string) => {
     const variantIndex = requirement.variants.findIndex(
       (v) => v.id === variantId
     );

@@ -1,7 +1,7 @@
-import { IVariant } from '../../models/IVariant';
 import ModelType from '../../models/ModelType';
-import { Requirement } from '../../models/Requirement';
 import RequirementType from '../../models/RequirementType';
+import { IRequirement } from '../entities/IRequirement';
+import { IVariant } from '../entities/IVariant';
 import StoreService from './StoreService';
 import UuidService from './UuidService';
 
@@ -14,8 +14,8 @@ export default class RequirementService {
     this.storeService = store;
   }
 
-  generateDefaultRequirementValues = (projectId: string): Requirement => {
-    const defaultValues: Requirement = {
+  generateDefaultRequirementValues = (projectId: string): IRequirement => {
+    const defaultValues: IRequirement = {
       id: '',
       title: '',
       description: '',
@@ -30,21 +30,21 @@ export default class RequirementService {
     return defaultValues;
   };
 
-  createRequirementWithId = (item: Requirement): Requirement => {
+  createRequirementWithId = (item: IRequirement): IRequirement => {
     const requirement = { ...item };
     requirement.id = this.UuidService.generateId();
     return requirement;
   };
 
-  async add(item: Requirement): Promise<void> {
+  async add(item: IRequirement): Promise<void> {
     return this.storeService.addRequirement(item.needId, item);
   }
 
-  async edit(item: Requirement): Promise<void> {
+  async edit(item: IRequirement): Promise<void> {
     return this.storeService.editRequirement(item.needId, item);
   }
 
-  async delete(item: Requirement): Promise<void> {
+  async delete(item: IRequirement): Promise<void> {
     return this.storeService.deleteRequirement(item.needId, item);
   }
 

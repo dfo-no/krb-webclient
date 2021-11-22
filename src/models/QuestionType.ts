@@ -1,10 +1,10 @@
-import { ICodelistQuestion } from './ICodelistQuestion';
-import { IFileUploadQuestion } from './IFileUploadQuestion';
-import { IPeriodDateQuestion } from './IPeriodDateQuestion';
-import { ITextQuestion } from './ITextQuestion';
-import { ITimeQuestion } from './ITimeQuestion';
-import { ISliderQuestion } from './ISliderQuestion';
-import { ICheckboxQuestion } from './ICheckboxQuestion';
+import { ICheckboxQuestion } from '../Nexus/entities/ICheckboxQuestion';
+import { ICodelistQuestion } from '../Nexus/entities/ICodelistQuestion';
+import { IFileUploadQuestion } from '../Nexus/entities/IFileUploadQuestion';
+import { IPeriodDateQuestion } from '../Nexus/entities/IPeriodDateQuestion';
+import { ISliderQuestion } from '../Nexus/entities/ISliderQuestion';
+import { ITextQuestion } from '../Nexus/entities/ITextQuestion';
+import { ITimeQuestion } from '../Nexus/entities/ITimeQuestion';
 
 export type QuestionType =
   | ICodelistQuestion

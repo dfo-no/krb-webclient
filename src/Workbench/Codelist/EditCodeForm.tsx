@@ -1,16 +1,18 @@
 import { joiResolver } from '@hookform/resolvers/joi';
+import { get } from 'lodash';
 import React, { useContext, useEffect, useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
-import { useForm } from 'react-hook-form';
+import { FieldError, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { BsTrashFill } from 'react-icons/bs';
 import { v4 as uuidv4 } from 'uuid';
+import ControlledTextInput from '../../Form/ControlledTextInput';
 import ErrorSummary from '../../Form/ErrorSummary';
-import InputRow from '../../Form/InputRow';
-import { Alert } from '../../models/Alert';
-import { Code, EditCodeSchema } from '../../models/Code';
+import { IAlert } from '../../models/IAlert';
+import { Nestable } from '../../models/Nestable';
 import { AccordionContext } from '../../NestableHierarchy/AccordionContext';
+import { EditCodeSchema, ICode } from '../../Nexus/entities/ICode';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { addAlert } from '../../store/reducers/alert-reducer';
 import {
@@ -24,7 +26,7 @@ import {
 } from '../../store/reducers/selectedCodelist-reducer';
 
 interface IProps {
-  element: Code;
+  element: ICode;
 }
 
 export default function EditCodeForm({ element }: IProps): React.ReactElement {
@@ -39,7 +41,7 @@ export default function EditCodeForm({ element }: IProps): React.ReactElement {
     reset,
     handleSubmit,
     formState: { errors }
-  } = useForm<Code>({
+  } = useForm<ICode>({
     resolver: joiResolver(EditCodeSchema),
     defaultValues: element
   });
@@ -50,27 +52,34 @@ export default function EditCodeForm({ element }: IProps): React.ReactElement {
     }
   }, [element, reset]);
 
-  const onSubmit = (code: Code) => {
-    const alert: Alert = {
-      id: uuidv4(),
-      style: 'success',
-      text: 'Successfully edited code'
-    };
+  const onEditCodeSubmit = (data: Nestable<ICode>) => {
+    const editCode = { ...data };
+    if (editCode.children) {
+      delete editCode.children;
+    }
+    if (editCode.level) {
+      delete editCode.level;
+    }
+
     dispatch(
       editCodeInCodelist({
         codelistId: codelist.id,
-        code
+        code: editCode
       })
     );
-    dispatch(editCodeInSelectedCodelist(code));
+    dispatch(editCodeInSelectedCodelist(editCode));
     dispatch(putSelectedProjectThunk('dummy')).then(() => {
+      const alert: IAlert = {
+        id: uuidv4(),
+        style: 'success',
+        text: 'Successfully edited code'
+      };
       dispatch(addAlert({ alert }));
+      onOpenClose('');
     });
-
-    onOpenClose('');
   };
 
-  const deleteCode = (code: Code) => {
+  const deleteCode = (code: ICode) => {
     dispatch(
       removeCode({
         codelistId: codelist.id,
@@ -83,16 +92,21 @@ export default function EditCodeForm({ element }: IProps): React.ReactElement {
 
   return (
     <Form
-      onSubmit={handleSubmit(onSubmit)}
+      onSubmit={handleSubmit(onEditCodeSubmit)}
       autoComplete="off"
       noValidate
       validated={validated}
     >
-      <InputRow control={control} name="title" errors={errors} label="Title" />
-      <InputRow
+      <ControlledTextInput
+        control={control}
+        name="title"
+        error={get(errors, `title`) as FieldError}
+        label="Title"
+      />
+      <ControlledTextInput
         control={control}
         name="description"
-        errors={errors}
+        error={get(errors, `description`) as FieldError}
         label={t('Description')}
       />
       <Button className="mt-2  ml-3" type="submit">

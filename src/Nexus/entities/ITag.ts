@@ -1,8 +1,8 @@
 import Joi from 'joi';
-import { BaseModel } from './BaseModel';
-import ModelType from './ModelType';
+import ModelType from '../../models/ModelType';
+import { IBaseModel } from './IBaseModel';
 
-export interface Tag extends BaseModel {
+export interface ITag extends IBaseModel {
   title: string;
   id: string;
 }
@@ -18,10 +18,12 @@ export const BaseTagSchema = Joi.object().keys({
 export const PostTagSchema = BaseTagSchema.keys({
   id: Joi.string().equal('').required(),
   parent: Joi.alternatives([Joi.string().length(36), Joi.string().valid('')]),
-  children: Joi.array()
+  children: Joi.array(),
+  level: Joi.number()
 });
 
 export const PutTagSchema = BaseTagSchema.keys({
   parent: Joi.alternatives([Joi.string().length(36), Joi.string().valid('')]),
-  children: Joi.array()
+  children: Joi.array(),
+  level: Joi.number()
 });

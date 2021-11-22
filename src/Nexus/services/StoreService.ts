@@ -1,159 +1,159 @@
 /* eslint-disable no-param-reassign */
 /* eslint-disable class-methods-use-this */
 import produce from 'immer';
-import { Bank } from '../../models/Bank';
-import { Code } from '../../models/Code';
-import { Codelist } from '../../models/Codelist';
-import { IVariant } from '../../models/IVariant';
-import { Need } from '../../models/Need';
 import { Parentable } from '../../models/Parentable';
-import { Product } from '../../models/Product';
 import { QuestionType } from '../../models/QuestionType';
-import { Requirement } from '../../models/Requirement';
-import { Tag } from '../../models/Tag';
+import { IBank } from '../entities/IBank';
+import { ICode } from '../entities/ICode';
+import { ICodelist } from '../entities/ICodelist';
+import { INeed } from '../entities/INeed';
+import { IProduct } from '../entities/IProduct';
+import { IRequirement } from '../entities/IRequirement';
+import { ITag } from '../entities/ITag';
+import { IVariant } from '../entities/IVariant';
 
 export default class StoreService {
-  private static bank: Bank;
+  private static bank: IBank;
 
-  public setBank(bank: Bank): void {
+  public setBank(bank: IBank): void {
     StoreService.bank = bank;
   }
 
   // eslint-disable-next-line class-methods-use-this
-  public getBank(): Bank {
+  public getBank(): IBank {
     return StoreService.bank;
   }
 
-  public addNeed(item: Parentable<Need>): void {
+  public addNeed(item: Parentable<INeed>): void {
     StoreService.bank = produce(StoreService.bank, (draft) => {
       draft.needs.push(item);
     });
   }
 
-  public editNeed(item: Parentable<Need>): void {
+  public editNeed(item: Parentable<INeed>): void {
     const index = StoreService.bank.needs.findIndex(
-      (need: Need) => need.id === item.id
+      (need: INeed) => need.id === item.id
     );
     StoreService.bank = produce(StoreService.bank, (draft) => {
       draft.needs[index] = item;
     });
   }
 
-  public deleteNeed(item: Parentable<Need>): void {
+  public deleteNeed(item: Parentable<INeed>): void {
     const index = StoreService.bank.needs.findIndex(
-      (need: Need) => need.id === item.id
+      (need: INeed) => need.id === item.id
     );
     StoreService.bank = produce(StoreService.bank, (draft) => {
       draft.needs.splice(index, 1);
     });
   }
 
-  public addProduct(item: Product): void {
+  public addProduct(item: IProduct): void {
     StoreService.bank = produce(StoreService.bank, (draft) => {
       draft.products.push(item);
     });
   }
 
-  public editProduct(item: Product): void {
+  public editProduct(item: IProduct): void {
     const index = StoreService.bank.products.findIndex(
-      (product: Product) => product.id === item.id
+      (product: IProduct) => product.id === item.id
     );
     StoreService.bank = produce(StoreService.bank, (draft) => {
       draft.products[index] = item;
     });
   }
 
-  public deleteProduct(item: Product): void {
+  public deleteProduct(item: IProduct): void {
     const index = StoreService.bank.products.findIndex(
-      (product: Product) => product.id === item.id
+      (product: IProduct) => product.id === item.id
     );
     StoreService.bank = produce(StoreService.bank, (draft) => {
       draft.products.splice(index, 1);
     });
   }
 
-  public addTag(item: Parentable<Tag>): void {
+  public addTag(item: Parentable<ITag>): void {
     StoreService.bank = produce(StoreService.bank, (draft) => {
       draft.tags.push(item);
     });
   }
 
-  public editTag(item: Parentable<Tag>): void {
+  public editTag(item: Parentable<ITag>): void {
     const index = StoreService.bank.tags.findIndex(
-      (tag: Parentable<Tag>) => tag.id === item.id
+      (tag: Parentable<ITag>) => tag.id === item.id
     );
     StoreService.bank = produce(StoreService.bank, (draft) => {
       draft.tags[index] = item;
     });
   }
 
-  public deleteTag(item: Parentable<Tag>): void {
+  public deleteTag(item: Parentable<ITag>): void {
     const index = StoreService.bank.tags.findIndex(
-      (tag: Parentable<Tag>) => tag.id === item.id
+      (tag: Parentable<ITag>) => tag.id === item.id
     );
     StoreService.bank = produce(StoreService.bank, (draft) => {
       draft.tags.splice(index, 1);
     });
   }
 
-  public addCodelist(item: Codelist): void {
+  public addCodelist(item: ICodelist): void {
     StoreService.bank = produce(StoreService.bank, (draft) => {
       draft.codelist.push(item);
     });
   }
 
-  public editCodelist(item: Codelist): void {
+  public editCodelist(item: ICodelist): void {
     const index = StoreService.bank.codelist.findIndex(
-      (codelist: Codelist) => codelist.id === item.id
+      (codelist: ICodelist) => codelist.id === item.id
     );
     StoreService.bank = produce(StoreService.bank, (draft) => {
       draft.codelist[index] = item;
     });
   }
 
-  public deleteCodelist(item: Codelist): void {
+  public deleteCodelist(item: ICodelist): void {
     const index = StoreService.bank.codelist.findIndex(
-      (codelist: Codelist) => codelist.id === item.id
+      (codelist: ICodelist) => codelist.id === item.id
     );
     StoreService.bank = produce(StoreService.bank, (draft) => {
       draft.codelist.splice(index, 1);
     });
   }
 
-  public addCode(item: Code, codelistId: string): void {
+  public addCode(item: Parentable<ICode>, codelistId: string): void {
     const codelistIndex = StoreService.bank.codelist.findIndex(
-      (codelist: Codelist) => codelist.id === codelistId
+      (codelist: ICodelist) => codelist.id === codelistId
     );
     StoreService.bank = produce(StoreService.bank, (draft) => {
       draft.codelist[codelistIndex].codes.push(item);
     });
   }
 
-  public editCode(item: Code, codelistId: string): void {
+  public editCode(item: Parentable<ICode>, codelistId: string): void {
     const codelistIndex = StoreService.bank.codelist.findIndex(
-      (codelist: Codelist) => codelist.id === codelistId
+      (codelist: ICodelist) => codelist.id === codelistId
     );
     const codeIndex = StoreService.bank.codelist[codelistIndex].codes.findIndex(
-      (code: Code) => code.id === item.id
+      (code: ICode) => code.id === item.id
     );
     StoreService.bank = produce(StoreService.bank, (draft) => {
       draft.codelist[codeIndex].codes[codeIndex] = item;
     });
   }
 
-  public deleteCode(item: Code, codelistId: string): void {
+  public deleteCode(item: ICode, codelistId: string): void {
     const codelistIndex = StoreService.bank.codelist.findIndex(
-      (codelist: Codelist) => codelist.id === codelistId
+      (codelist: ICodelist) => codelist.id === codelistId
     );
     const codeIndex = StoreService.bank.codelist[codelistIndex].codes.findIndex(
-      (code: Code) => code.id === item.id
+      (code: ICode) => code.id === item.id
     );
     StoreService.bank = produce(StoreService.bank, (draft) => {
       draft.codelist[codelistIndex].codes.splice(codeIndex, 1);
     });
   }
 
-  public addRequirement(needId: string, requirement: Requirement): void {
+  public addRequirement(needId: string, requirement: IRequirement): void {
     const needIndex = StoreService.bank.needs.findIndex(
       (need) => need.id === needId
     );
@@ -162,7 +162,7 @@ export default class StoreService {
     }
   }
 
-  public editRequirement(needId: string, requirement: Requirement): void {
+  public editRequirement(needId: string, requirement: IRequirement): void {
     const needIndex = StoreService.bank.needs.findIndex(
       (need) => need.id === needId
     );
@@ -176,7 +176,7 @@ export default class StoreService {
     }
   }
 
-  public deleteRequirement(needId: string, requirement: Requirement): void {
+  public deleteRequirement(needId: string, requirement: IRequirement): void {
     const needIndex = StoreService.bank.needs.findIndex(
       (need) => need.id === needId
     );

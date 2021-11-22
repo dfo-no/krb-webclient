@@ -1,8 +1,8 @@
 /* eslint-disable class-methods-use-this */
 import { IRequirementAnswer } from '../../models/IRequirementAnswer';
-import { Response } from '../../models/Response';
-import { ResponseProduct } from '../../models/ResponseProduct';
-import { Specification } from '../../models/Specification';
+import { IResponse } from '../../models/IResponse';
+import { IResponseProduct } from '../../models/IResponseProduct';
+import { ISpecification } from '../../models/ISpecification';
 import ResponseStoreService from './ResponseStoreService';
 import UuidService from './UuidService';
 
@@ -15,11 +15,11 @@ export default class ResponseService {
     this.store = store;
   }
 
-  async setResponse(response: Response): Promise<void> {
+  async setResponse(response: IResponse): Promise<void> {
     return this.store.setResponse(response);
   }
 
-  async getSpecification(): Promise<Response> {
+  async getSpecification(): Promise<IResponse> {
     return this.store.getResponse();
   }
 
@@ -28,20 +28,20 @@ export default class ResponseService {
   }
 
   async createSpecificationFromBank(
-    specification: Specification
+    specification: ISpecification
   ): Promise<void> {
     return this.store.createResponseFromSpecification(specification);
   }
 
-  async addResponseProduct(product: ResponseProduct): Promise<void> {
+  async addResponseProduct(product: IResponseProduct): Promise<void> {
     return this.store.addResponseProduct(product);
   }
 
-  async editResponseProduct(product: ResponseProduct): Promise<void> {
+  async editResponseProduct(product: IResponseProduct): Promise<void> {
     return this.store.editResponseProduct(product);
   }
 
-  async deleteResponseProduct(product: ResponseProduct): Promise<void> {
+  async deleteResponseProduct(product: IResponseProduct): Promise<void> {
     return this.store.deleteResponseProduct(product);
   }
 

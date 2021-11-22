@@ -1,12 +1,12 @@
 import Joi from 'joi';
+import { IProduct } from '../Nexus/entities/IProduct';
 import { IRequirementAnswer } from './IRequirementAnswer';
-import { Product } from './Product';
 
-export interface SpecificationProduct {
+export interface ISpecificationProduct {
   id: string;
   title: string;
   description: string;
-  originProduct: Product;
+  originProduct: IProduct;
   weight: number;
   amount: number;
   requirements: string[];

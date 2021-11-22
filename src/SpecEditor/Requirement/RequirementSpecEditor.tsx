@@ -5,12 +5,12 @@ import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { selectBank } from '../../store/reducers/selectedBank-reducer';
 import RequirementSelectorList from './RequirementSelectorList';
 
-interface RouteParams {
+interface IRouteParams {
   bankId: string;
 }
 
 export default function RequirementSpecEditor(): React.ReactElement {
-  const projectMatch = useRouteMatch<RouteParams>('/specification/:bankId');
+  const projectMatch = useRouteMatch<IRouteParams>('/specification/:bankId');
   const { id } = useAppSelector((state) => state.selectedBank);
   const { normalizedList } = useAppSelector((state) => state.bank);
   const dispatch = useAppDispatch();

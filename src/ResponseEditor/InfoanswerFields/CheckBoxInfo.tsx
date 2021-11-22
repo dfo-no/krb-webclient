@@ -1,12 +1,12 @@
 import React from 'react';
 import Container from 'react-bootstrap/Container';
-import { ICheckboxQuestion } from '../../models/ICheckboxQuestion';
 import { IRequirementAnswer } from '../../models/IRequirementAnswer';
-import { Requirement } from '../../models/Requirement';
+import { ICheckboxQuestion } from '../../Nexus/entities/ICheckboxQuestion';
+import { IRequirement } from '../../Nexus/entities/IRequirement';
 
 interface IProps {
   answer: IRequirementAnswer;
-  parent_requirement: Requirement;
+  parent_requirement: IRequirement;
 }
 
 export default function CheckBoxInfo({

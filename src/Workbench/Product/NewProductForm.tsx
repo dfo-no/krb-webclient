@@ -1,15 +1,16 @@
 import { joiResolver } from '@hookform/resolvers/joi';
+import { get } from 'lodash';
 import React, { useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import Form from 'react-bootstrap/Form';
-import { useForm } from 'react-hook-form';
+import { FieldError, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { v4 as uuidv4 } from 'uuid';
+import ControlledTextInput from '../../Form/ControlledTextInput';
 import ErrorSummary from '../../Form/ErrorSummary';
-import InputRow from '../../Form/InputRow';
-import { Alert } from '../../models/Alert';
-import { PostProductSchema, Product } from '../../models/Product';
+import { IAlert } from '../../models/IAlert';
+import { IProduct, PostProductSchema } from '../../Nexus/entities/IProduct';
 import Nexus from '../../Nexus/Nexus';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { addAlert } from '../../store/reducers/alert-reducer';
@@ -27,7 +28,7 @@ function NewProductForm(): React.ReactElement {
 
   const [show, setShow] = useState(false);
 
-  const product: Product = nexus.productService.generateDefaultProductValues(
+  const product: IProduct = nexus.productService.generateDefaultProductValues(
     project.id
   );
 
@@ -36,14 +37,14 @@ function NewProductForm(): React.ReactElement {
     handleSubmit,
     reset,
     formState: { errors }
-  } = useForm<Product>({
+  } = useForm<IProduct>({
     resolver: joiResolver(PostProductSchema),
     defaultValues: product
   });
 
-  const onSubmit = async (post: Product) => {
+  const onSubmit = async (post: IProduct) => {
     const newProduct = nexus.productService.createProductWithId(post);
-    const alert: Alert = {
+    const alert: IAlert = {
       id: uuidv4(),
       style: 'success',
       text: 'successfully added a new product'
@@ -75,16 +76,16 @@ function NewProductForm(): React.ReactElement {
               noValidate
               validated={validated}
             >
-              <InputRow
+              <ControlledTextInput
                 control={control}
                 name="title"
-                errors={errors}
+                error={get(errors, `title`) as FieldError}
                 label={t('Title')}
               />
-              <InputRow
+              <ControlledTextInput
                 control={control}
                 name="description"
-                errors={errors}
+                error={get(errors, `description`) as FieldError}
                 label={t('Description')}
               />
               <Button className="mt-2  ml-3" type="submit">

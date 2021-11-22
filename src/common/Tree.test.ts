@@ -1,15 +1,15 @@
 import { get } from 'lodash';
 import ModelType from '../models/ModelType';
-import { Need } from '../models/Need';
 import { Parentable } from '../models/Parentable';
 import QuestionEnum from '../models/QuestionEnum';
 import RequirementType from '../models/RequirementType';
-import { Tag } from '../models/Tag';
+import { INeed } from '../Nexus/entities/INeed';
+import { ITag } from '../Nexus/entities/ITag';
 import { createPolyTree, createTree, getPaths } from './Tree';
 
 describe('Tree', () => {
   it('createTree', () => {
-    const data: Parentable<Tag>[] = [
+    const data: Parentable<ITag>[] = [
       {
         id: '76',
         parent: '80',
@@ -97,7 +97,7 @@ describe('Tree', () => {
   });
 
   it('createPolyTree', () => {
-    const data: Parentable<Tag>[] = [
+    const data: Parentable<ITag>[] = [
       {
         id: '74',
         parent: '',
@@ -169,7 +169,7 @@ describe('Tree', () => {
   });
 
   it('searchTree', () => {
-    const data: Parentable<Need>[] = [
+    const data: Parentable<INeed>[] = [
       {
         id: 'e7db8799-a9fb-419c-8691-0a39cfa2ad8b',
         title: 'Behov 1 nivå 1',
@@ -522,7 +522,7 @@ describe('Tree', () => {
       }
     ];
 
-    const findNeedIdsForProduct = (productId: string, needs: Need[]) => {
+    const findNeedIdsForProduct = (productId: string, needs: INeed[]) => {
       const result: string[] = [];
       needs.forEach((need) => {
         need.requirements.forEach((req) => {

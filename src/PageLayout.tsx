@@ -6,11 +6,11 @@ import React from 'react';
 import Col from 'react-bootstrap/Col';
 import SignedButton from './SignedButton/SignedButton';
 
-interface Iprops {
+interface IProps {
   children: JSX.Element | JSX.Element[];
 }
 
-export default function PageLayout({ children }: Iprops): React.ReactElement {
+export default function PageLayout({ children }: IProps): React.ReactElement {
   return (
     <>
       <AuthenticatedTemplate>{children}</AuthenticatedTemplate>

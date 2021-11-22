@@ -60,7 +60,7 @@ export default function ResponsePage(): React.ReactElement {
         return response;
       })
       .catch((error) => {
-        return error; // Logs a string: Error: Request failed with status code 404
+        return error;
       });
   };
 

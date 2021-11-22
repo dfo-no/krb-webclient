@@ -1,17 +1,21 @@
 import { joiResolver } from '@hookform/resolvers/joi';
+import { get } from 'lodash';
 import React, { useContext, useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
-import { useForm } from 'react-hook-form';
+import { FieldError, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { BsTrashFill } from 'react-icons/bs';
 import { Link } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
+import ControlledTextInput from '../../Form/ControlledTextInput';
 import ErrorSummary from '../../Form/ErrorSummary';
-import InputRow from '../../Form/InputRow';
-import { Alert } from '../../models/Alert';
-import { PutRequirementSchema, Requirement } from '../../models/Requirement';
+import { IAlert } from '../../models/IAlert';
 import { AccordionContext } from '../../NestableHierarchy/AccordionContext';
+import {
+  IRequirement,
+  PutRequirementSchema
+} from '../../Nexus/entities/IRequirement';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { addAlert } from '../../store/reducers/alert-reducer';
 import {
@@ -22,7 +26,7 @@ import {
 import { selectRequirement } from '../../store/reducers/selectedRequirement-reducer';
 
 interface IProps {
-  element: Requirement;
+  element: IRequirement;
 }
 
 export default function EditRequirementForm({
@@ -39,21 +43,21 @@ export default function EditRequirementForm({
     control,
     handleSubmit,
     formState: { errors }
-  } = useForm<Requirement>({
+  } = useForm<IRequirement>({
     resolver: joiResolver(PutRequirementSchema),
     defaultValues: element
   });
 
   const need = needId !== null ? needId : '';
 
-  const onSubmit = (post: Requirement) => {
+  const onSubmit = (post: IRequirement) => {
     dispatch(
       editRequirementInNeed({
         needId: need,
         requirement: post
       })
     );
-    const alert: Alert = {
+    const alert: IAlert = {
       id: uuidv4(),
       style: 'success',
       text: 'successfully updated requirement'
@@ -64,7 +68,7 @@ export default function EditRequirementForm({
     });
   };
 
-  const removeRequirement = (req: Requirement) => {
+  const removeRequirement = (req: IRequirement) => {
     dispatch(
       deleteRequirement({
         needId: need,
@@ -81,16 +85,15 @@ export default function EditRequirementForm({
       noValidate
       validated={validated}
     >
-      <InputRow
+      <ControlledTextInput
         name="title"
         control={control}
-        errors={errors}
+        error={get(errors, `title`) as FieldError}
         label={t('Title')}
       />
-
-      <InputRow
+      <ControlledTextInput
         control={control}
-        errors={errors}
+        error={get(errors, `description`) as FieldError}
         name="description"
         label="Requirement text"
       />

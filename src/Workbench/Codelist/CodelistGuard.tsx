@@ -4,7 +4,7 @@ import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { selectCodeList } from '../../store/reducers/selectedCodelist-reducer';
 import CodeListEditor from './CodeListEditor';
 
-interface RouteParams {
+interface IRouteParams {
   projectId: string;
   id: string;
 }
@@ -13,7 +13,7 @@ export default function CodelistGuard(): React.ReactElement {
   const dispatch = useAppDispatch();
   const { project } = useAppSelector((state) => state.project);
   const { codelist } = useAppSelector((state) => state.selectedCodeList);
-  const { id } = useParams<RouteParams>();
+  const { id } = useParams<IRouteParams>();
   const history = useHistory();
 
   useEffect(() => {

@@ -1,6 +1,7 @@
-import { Code } from '../../models/Code';
-import { Codelist } from '../../models/Codelist';
 import ModelType from '../../models/ModelType';
+import { Parentable } from '../../models/Parentable';
+import { ICode } from '../entities/ICode';
+import { ICodelist } from '../entities/ICodelist';
 import StoreService from './StoreService';
 import UuidService from './UuidService';
 
@@ -13,8 +14,8 @@ export default class CodelistService {
     this.storeService = store;
   }
 
-  generateDefaultCodelistValues = (projectId: string): Codelist => {
-    const defaultValues: Codelist = {
+  generateDefaultCodelistValues = (projectId: string): ICodelist => {
+    const defaultValues: ICodelist = {
       id: '',
       title: '',
       description: '',
@@ -26,51 +27,52 @@ export default class CodelistService {
     return defaultValues;
   };
 
-  generateDefaultCodeValues = (projectId: string): Code => {
-    const defaultValues: Code = {
+  generateDefaultCodeValues = (projectId: string): Parentable<ICode> => {
+    const defaultValues: Parentable<ICode> = {
       id: '',
       title: '',
       description: '',
       type: ModelType.code,
       sourceOriginal: projectId,
-      sourceRel: null
+      sourceRel: null,
+      parent: ''
     };
     return defaultValues;
   };
 
-  createCodelistWithId = (item: Codelist): Codelist => {
+  createCodelistWithId = (item: ICodelist): ICodelist => {
     const codelist = { ...item };
     codelist.id = this.UuidService.generateId();
     return codelist;
   };
 
-  createCodeWithId = (item: Code): Code => {
+  createCodeWithId = (item: Parentable<ICode>): Parentable<ICode> => {
     const code = { ...item };
     code.id = this.UuidService.generateId();
     return code;
   };
 
-  async addCodelist(item: Codelist): Promise<void> {
+  async addCodelist(item: ICodelist): Promise<void> {
     return this.storeService.addCodelist(item);
   }
 
-  async editCodelist(item: Codelist): Promise<void> {
+  async editCodelist(item: ICodelist): Promise<void> {
     return this.storeService.editCodelist(item);
   }
 
-  async deleteCodelist(item: Codelist): Promise<void> {
+  async deleteCodelist(item: ICodelist): Promise<void> {
     return this.storeService.deleteCodelist(item);
   }
 
-  async addCode(item: Code, codelistId: string): Promise<void> {
+  async addCode(item: Parentable<ICode>, codelistId: string): Promise<void> {
     return this.storeService.addCode(item, codelistId);
   }
 
-  async editCode(item: Code, codelistId: string): Promise<void> {
+  async editCode(item: Parentable<ICode>, codelistId: string): Promise<void> {
     return this.storeService.editCode(item, codelistId);
   }
 
-  async deleteCode(item: Code, codelistId: string): Promise<void> {
+  async deleteCode(item: Parentable<ICode>, codelistId: string): Promise<void> {
     return this.storeService.deleteCode(item, codelistId);
   }
 }

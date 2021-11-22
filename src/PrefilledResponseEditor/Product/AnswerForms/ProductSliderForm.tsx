@@ -8,16 +8,16 @@ import Form from 'react-bootstrap/Form';
 import { FieldError, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import ControlledSlider from '../../../Form/ControlledSlider';
+import { IPrefilledResponseProduct } from '../../../models/IPrefilledResponseProduct';
 import {
   IRequirementAnswer,
   RequirementAnswerSchema
 } from '../../../models/IRequirementAnswer';
+import { IRequirement } from '../../../Nexus/entities/IRequirement';
 import {
   ISliderQuestion,
   SliderQuestionAnswerSchema
-} from '../../../models/ISliderQuestion';
-import { PrefilledResponseProduct } from '../../../models/PrefilledResponseProduct';
-import { Requirement } from '../../../models/Requirement';
+} from '../../../Nexus/entities/ISliderQuestion';
 import { useAppDispatch, useAppSelector } from '../../../store/hooks';
 import {
   addProductAnswer,
@@ -26,7 +26,7 @@ import {
 
 interface IProps {
   elem: IRequirementAnswer;
-  product: PrefilledResponseProduct;
+  product: IPrefilledResponseProduct;
 }
 
 const ProductSliderForm = ({ elem, product }: IProps): React.ReactElement => {
@@ -84,7 +84,7 @@ const ProductSliderForm = ({ elem, product }: IProps): React.ReactElement => {
     dispatch(removeProductAnswer({ answerId: elemId, productId }));
   };
 
-  const getVariantText = (requirement: Requirement, variantId: string) => {
+  const getVariantText = (requirement: IRequirement, variantId: string) => {
     const variantIndex = requirement.variants.findIndex(
       (v) => v.id === variantId
     );

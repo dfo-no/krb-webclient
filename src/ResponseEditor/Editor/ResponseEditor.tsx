@@ -15,7 +15,7 @@ import { useHistory } from 'react-router';
 import { v4 as uuidv4 } from 'uuid';
 import { httpPost } from '../../api/http';
 import ErrorSummary from '../../Form/ErrorSummary';
-import { Alert } from '../../models/Alert';
+import { IAlert } from '../../models/IAlert';
 import Nexus from '../../Nexus/Nexus';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { addAlert } from '../../store/reducers/alert-reducer';
@@ -69,7 +69,7 @@ export default function ResponseEditor(): React.ReactElement {
       responseType: 'json'
     }).then((result) => {
       if (result.data.bank.id !== response.spesification.bank.id) {
-        const alert: Alert = {
+        const alert: IAlert = {
           id: uuidv4(),
           style: 'danger',
           text: ' bank used in prefilledResponse does not match the bank in the uploaded specification '

@@ -4,22 +4,22 @@ import ListGroup from 'react-bootstrap/ListGroup';
 import Row from 'react-bootstrap/Row';
 import { BsArrowReturnRight } from 'react-icons/bs';
 import Utils from '../../common/Utils';
-import { Need } from '../../models/Need';
 import { Nestable } from '../../models/Nestable';
-import { Requirement } from '../../models/Requirement';
+import { INeed } from '../../Nexus/entities/INeed';
+import { IRequirement } from '../../Nexus/entities/IRequirement';
 import { useAppSelector } from '../../store/hooks';
 import styles from './RequirementSelectorList.module.scss';
 import SpesificationRequirement from './SpesificationRequirement';
 
-interface InputProps {
-  needList: Nestable<Need>[];
+interface IInputProps {
+  needList: Nestable<INeed>[];
 }
 
 export default function RequirementSelectorList({
   needList
-}: InputProps): React.ReactElement {
+}: IInputProps): React.ReactElement {
   const { spec } = useAppSelector((state) => state.specification);
-  const checkIfReqHasVariantMatch = (req: Requirement): boolean => {
+  const checkIfReqHasVariantMatch = (req: IRequirement): boolean => {
     let found = false;
     req.variants.forEach((variant) => {
       if (variant.useSpesification === true) {
@@ -31,7 +31,7 @@ export default function RequirementSelectorList({
   };
 
   function checkIfNeedHasChildWithRequirements(
-    listofneed: Nestable<Need>[]
+    listofneed: Nestable<INeed>[]
   ): boolean {
     let foundMatch = false;
     listofneed.forEach((element) => {
@@ -50,7 +50,7 @@ export default function RequirementSelectorList({
     return foundMatch;
   }
 
-  function checkNeed(element: Nestable<Need>): boolean {
+  function checkNeed(element: Nestable<INeed>): boolean {
     let found = false;
     if (element.requirements.length > 0) {
       element.requirements.forEach((requirement) => {
@@ -65,7 +65,7 @@ export default function RequirementSelectorList({
     return found;
   }
 
-  const requirementsAnswers = (requirementArray: Requirement[]) => {
+  const requirementsAnswers = (requirementArray: IRequirement[]) => {
     return requirementArray.map((req) => {
       const selected = !!spec.requirements.includes(req.id);
       if (checkIfReqHasVariantMatch(req)) {
@@ -80,7 +80,7 @@ export default function RequirementSelectorList({
       return null;
     });
   };
-  const childrenHierarchy = (listofneed: Nestable<Need>[], level: number) => {
+  const childrenHierarchy = (listofneed: Nestable<INeed>[], level: number) => {
     let n = level;
     let children: JSX.Element[];
     const cssClass = `level${n}`;
@@ -106,7 +106,7 @@ export default function RequirementSelectorList({
     });
   };
 
-  const needHierarchy = (needsList: Nestable<Need>[]) => {
+  const needHierarchy = (needsList: Nestable<INeed>[]) => {
     const newList = Utils.unflatten(needsList)[0];
     let children: JSX.Element[];
     return newList.map((element) => {

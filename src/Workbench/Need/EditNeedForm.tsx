@@ -1,20 +1,21 @@
 import { joiResolver } from '@hookform/resolvers/joi';
+import { get } from 'lodash';
 import React, { useContext, useEffect, useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
-import { useForm } from 'react-hook-form';
+import { FieldError, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { BsTrashFill } from 'react-icons/bs';
 import { v4 as uuidv4 } from 'uuid';
 import AlertModal from '../../common/AlertModal';
 import Utils from '../../common/Utils';
+import ControlledTextInput from '../../Form/ControlledTextInput';
 import ErrorSummary from '../../Form/ErrorSummary';
-import InputRow from '../../Form/InputRow';
-import { Alert } from '../../models/Alert';
-import { Need, PutNeedSchema } from '../../models/Need';
+import { IAlert } from '../../models/IAlert';
 import { Nestable } from '../../models/Nestable';
 import { Parentable } from '../../models/Parentable';
 import { AccordionContext } from '../../NestableHierarchy/AccordionContext';
+import { INeed, PutNeedSchema } from '../../Nexus/entities/INeed';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { addAlert } from '../../store/reducers/alert-reducer';
 import {
@@ -24,7 +25,7 @@ import {
 } from '../../store/reducers/project-reducer';
 
 interface IProps {
-  element: Need;
+  element: Parentable<INeed>;
 }
 
 function EditNeedForm({ element }: IProps): React.ReactElement {
@@ -39,7 +40,7 @@ function EditNeedForm({ element }: IProps): React.ReactElement {
     control,
     reset,
     formState: { errors }
-  } = useForm<Parentable<Need>>({
+  } = useForm<Parentable<INeed>>({
     defaultValues: element,
     resolver: joiResolver(PutNeedSchema)
   });
@@ -52,24 +53,27 @@ function EditNeedForm({ element }: IProps): React.ReactElement {
 
   const [modalShow, setModalShow] = useState(false);
 
-  const onSubmit = (post: Nestable<Need>) => {
-    const toParentable = { ...post };
-    if (toParentable.children) {
-      delete toParentable.children;
+  const onEditNeedSubmit = (post: Nestable<INeed>) => {
+    const postNeed = { ...post };
+    if (postNeed.children) {
+      delete postNeed.children;
     }
-    const alert: Alert = {
-      id: uuidv4(),
-      style: 'success',
-      text: 'Successfully edited need'
-    };
-    dispatch(editNeed(toParentable as Parentable<Need>));
+    if (postNeed.level) {
+      delete postNeed.level;
+    }
+    dispatch(editNeed(postNeed as Parentable<INeed>));
     dispatch(putSelectedProjectThunk('dummy')).then(() => {
+      const alert: IAlert = {
+        id: uuidv4(),
+        style: 'success',
+        text: 'Successfully edited need'
+      };
       dispatch(addAlert({ alert }));
       onOpenClose('');
     });
   };
 
-  const checkDeleteNeed = (need: Need) => {
+  const checkDeleteNeed = (need: INeed) => {
     if (
       element.requirements.length > 0 ||
       Utils.checkIfParent(project.needs, need.id)
@@ -85,22 +89,22 @@ function EditNeedForm({ element }: IProps): React.ReactElement {
 
   return (
     <Form
-      onSubmit={handleSubmit(onSubmit)}
+      onSubmit={handleSubmit(onEditNeedSubmit)}
       autoComplete="off"
       noValidate
       validated={validated}
     >
-      <InputRow
+      <ControlledTextInput
         control={control}
         name="title"
-        errors={errors}
+        error={get(errors, `title`) as FieldError}
         label={t('Title')}
       />
 
-      <InputRow
+      <ControlledTextInput
         control={control}
         name="description"
-        errors={errors}
+        error={get(errors, `description`) as FieldError}
         label={t('Description')}
       />
 
@@ -122,7 +126,6 @@ function EditNeedForm({ element }: IProps): React.ReactElement {
         <BsTrashFill />
       </Button>
       <ErrorSummary errors={errors} />
-      <p>{element.title}</p>
       <AlertModal
         modalShow={modalShow}
         setModalShow={setModalShow}

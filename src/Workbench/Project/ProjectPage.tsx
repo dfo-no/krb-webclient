@@ -38,7 +38,7 @@ function ProjectPage(): React.ReactElement {
       <Col sm={8}>
         <h3>
           {project.title}
-          <Button className="ml-3" onClick={() => setEditMode(true)}>
+          <Button className="mx-3" onClick={() => setEditMode(true)}>
             <BsPencil />
           </Button>
         </h3>

@@ -1,15 +1,15 @@
 import Joi from 'joi';
 import { IRequirementAnswer } from './IRequirementAnswer';
 import {
-  SpecificationProduct,
+  ISpecificationProduct,
   SpecificationProductSchema
-} from './SpecificationProduct';
+} from './ISpecificationProduct';
 
-export interface ResponseProduct {
+export interface IResponseProduct {
   id: string;
   title: string;
   description: string;
-  originProduct: SpecificationProduct;
+  originProduct: ISpecificationProduct;
   price: number;
   requirementAnswers: IRequirementAnswer[];
 }

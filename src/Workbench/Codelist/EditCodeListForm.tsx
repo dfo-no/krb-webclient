@@ -1,24 +1,29 @@
 import { joiResolver } from '@hookform/resolvers/joi';
+import { get } from 'lodash';
 import React, { useEffect, useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import Form from 'react-bootstrap/Form';
-import { useForm } from 'react-hook-form';
+import { FieldError, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { BsPencil, BsTrashFill } from 'react-icons/bs';
 import { useHistory } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
 import AlertModal from '../../common/AlertModal';
+import ControlledTextInput from '../../Form/ControlledTextInput';
 import ErrorSummary from '../../Form/ErrorSummary';
-import InputRow from '../../Form/InputRow';
-import { Alert } from '../../models/Alert';
-import { Codelist, CodelistSchema } from '../../models/Codelist';
-import { ICodelistQuestion } from '../../models/ICodelistQuestion';
-import { IVariant } from '../../models/IVariant';
-import { Need } from '../../models/Need';
-import { IAnswerBase, IConfigBase, IQuestionBase } from '../../models/Question';
+import { IAlert } from '../../models/IAlert';
 import QuestionEnum from '../../models/QuestionEnum';
-import { Requirement } from '../../models/Requirement';
+import { CodelistSchema, ICodelist } from '../../Nexus/entities/ICodelist';
+import { ICodelistQuestion } from '../../Nexus/entities/ICodelistQuestion';
+import { INeed } from '../../Nexus/entities/INeed';
+import {
+  IAnswerBase,
+  IConfigBase,
+  IQuestionBase
+} from '../../Nexus/entities/IQuestionBase';
+import { IRequirement } from '../../Nexus/entities/IRequirement';
+import { IVariant } from '../../Nexus/entities/IVariant';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { addAlert } from '../../store/reducers/alert-reducer';
 import {
@@ -45,13 +50,13 @@ function EditCodeListForm(): React.ReactElement {
     handleSubmit,
     reset,
     formState: { errors }
-  } = useForm<Codelist>({
+  } = useForm<ICodelist>({
     resolver: joiResolver(CodelistSchema),
     defaultValues: codelist
   });
 
-  const onEditCodeSubmit = (post: Codelist) => {
-    const alert: Alert = {
+  const onEditCodeSubmit = (post: ICodelist) => {
+    const alert: IAlert = {
       id: uuidv4(),
       style: 'success',
       text: 'Successfully edited codelist'
@@ -73,8 +78,8 @@ function EditCodeListForm(): React.ReactElement {
 
   const checkCodelistConnection = () => {
     let used = false;
-    project.needs.forEach((need: Need) => {
-      need.requirements.forEach((requirement: Requirement) => {
+    project.needs.forEach((need: INeed) => {
+      need.requirements.forEach((requirement: IRequirement) => {
         requirement.variants.forEach((variant: IVariant) => {
           variant.questions.forEach(
             (alternative: IQuestionBase<IAnswerBase, IConfigBase>) => {
@@ -124,16 +129,16 @@ function EditCodeListForm(): React.ReactElement {
               noValidate
               validated={validated}
             >
-              <InputRow
+              <ControlledTextInput
                 control={control}
                 name="title"
-                errors={errors}
+                error={get(errors, `title`) as FieldError}
                 label={t('Title')}
               />
-              <InputRow
+              <ControlledTextInput
                 control={control}
                 name="description"
-                errors={errors}
+                error={get(errors, `description`) as FieldError}
                 label={t('Description')}
               />
               <Button className="mt-2  ml-3" type="submit">

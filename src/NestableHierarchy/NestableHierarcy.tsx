@@ -15,6 +15,9 @@ interface IProps {
   depth: number;
 }
 
+/**
+ * @deprecated Use NestableHierarcy2 instead. This is kept only as a reference for future bugs
+ */
 export default function NestableHierarcy({
   dispatchfunc,
   inputlist,

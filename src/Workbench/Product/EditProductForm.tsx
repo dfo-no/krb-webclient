@@ -1,22 +1,25 @@
 import { joiResolver } from '@hookform/resolvers/joi';
+import { get } from 'lodash';
 import React, { useContext, useEffect, useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
-import { useForm } from 'react-hook-form';
+import { FieldError, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { BsTrashFill } from 'react-icons/bs';
 import { Link } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
 import AlertModal from '../../common/AlertModal';
 import Utils from '../../common/Utils';
+import ControlledTextInput from '../../Form/ControlledTextInput';
 import ErrorSummary from '../../Form/ErrorSummary';
-import InputRow from '../../Form/InputRow';
-import { Alert } from '../../models/Alert';
-import { IVariant } from '../../models/IVariant';
-import { Need } from '../../models/Need';
-import { Product, PutProductSchema } from '../../models/Product';
-import { Requirement } from '../../models/Requirement';
+import { IAlert } from '../../models/IAlert';
+import { Nestable } from '../../models/Nestable';
+import { Parentable } from '../../models/Parentable';
 import { AccordionContext } from '../../NestableHierarchy/AccordionContext';
+import { INeed } from '../../Nexus/entities/INeed';
+import { IProduct, PutProductSchema } from '../../Nexus/entities/IProduct';
+import { IRequirement } from '../../Nexus/entities/IRequirement';
+import { IVariant } from '../../Nexus/entities/IVariant';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { addAlert } from '../../store/reducers/alert-reducer';
 import {
@@ -27,7 +30,7 @@ import {
 import { selectProduct } from '../../store/reducers/selectedProduct-reducer';
 
 interface IProps {
-  element: Product;
+  element: Parentable<IProduct>;
 }
 
 export default function EditProductForm({
@@ -45,7 +48,7 @@ export default function EditProductForm({
     handleSubmit,
     reset,
     formState: { errors }
-  } = useForm<Product>({
+  } = useForm<Parentable<IProduct>>({
     resolver: joiResolver(PutProductSchema),
     defaultValues: element
   });
@@ -56,20 +59,24 @@ export default function EditProductForm({
     }
   }, [element, reset]);
 
-  const onSubmit = (post: Product) => {
-    const newProduct = { ...element };
-    newProduct.title = post.title;
-    newProduct.description = post.description;
+  const onEditProductSubmit = (data: Nestable<IProduct>) => {
+    const newProduct = { ...data };
     if (newProduct.children) {
       delete newProduct.children;
     }
-    const alert: Alert = {
-      id: uuidv4(),
-      style: 'success',
-      text: 'Successfully updated product'
-    };
+    if (newProduct.level) {
+      delete newProduct.level;
+    }
+    newProduct.title = data.title;
+    newProduct.description = data.description;
+
     dispatch(editProduct(newProduct));
     dispatch(putSelectedProjectThunk('dummy')).then(() => {
+      const alert: IAlert = {
+        id: uuidv4(),
+        style: 'success',
+        text: 'Successfully updated product'
+      };
       dispatch(addAlert({ alert }));
       onOpenClose('');
     });
@@ -77,8 +84,8 @@ export default function EditProductForm({
 
   const checkProductConnection = () => {
     let used = false;
-    project.needs.forEach((need: Need) => {
-      need.requirements.forEach((requirement: Requirement) => {
+    project.needs.forEach((need: INeed) => {
+      need.requirements.forEach((requirement: IRequirement) => {
         requirement.variants.forEach((variant: IVariant) => {
           if (variant.products.includes(element.id)) {
             used = true;
@@ -89,7 +96,7 @@ export default function EditProductForm({
     return used;
   };
 
-  const deleteProduct = (product: Product) => {
+  const deleteProduct = (product: IProduct) => {
     if (
       Utils.checkIfParent(project.products, element.id) ||
       checkProductConnection()
@@ -99,7 +106,7 @@ export default function EditProductForm({
       dispatch(removeProduct(product));
       dispatch(putSelectedProjectThunk('dummy'));
 
-      const alert: Alert = {
+      const alert: IAlert = {
         id: uuidv4(),
         style: 'success',
         text: 'Successfully deleted product'
@@ -111,21 +118,21 @@ export default function EditProductForm({
 
   return (
     <Form
-      onSubmit={handleSubmit(onSubmit)}
+      onSubmit={handleSubmit((post) => onEditProductSubmit(post))}
       autoComplete="off"
       noValidate
       validated={validated}
     >
-      <InputRow
+      <ControlledTextInput
         control={control}
         name="title"
-        errors={errors}
+        error={get(errors, `title`) as FieldError}
         label={t('Title')}
       />
-      <InputRow
+      <ControlledTextInput
         control={control}
         name="description"
-        errors={errors}
+        error={get(errors, `description`) as FieldError}
         label={t('Description')}
       />
       <Button className="mt-2  ml-3" type="submit">

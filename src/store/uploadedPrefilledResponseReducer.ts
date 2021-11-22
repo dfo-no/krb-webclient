@@ -1,8 +1,8 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { PrefilledResponse } from '../models/PrefilledResponse';
+import { IPrefilledResponse } from '../models/IPrefilledResponse';
 
 interface UploadedResponseState {
-  prefilledResponse: PrefilledResponse | null;
+  prefilledResponse: IPrefilledResponse | null;
   markedRequirements: string[];
 }
 
@@ -15,7 +15,10 @@ const uploadedResponseState = createSlice({
   name: 'uploadedResponse',
   initialState,
   reducers: {
-    setPrefilledResponse(state, { payload }: PayloadAction<PrefilledResponse>) {
+    setPrefilledResponse(
+      state,
+      { payload }: PayloadAction<IPrefilledResponse>
+    ) {
       state.prefilledResponse = payload;
     },
     setMarkedRequirements(state, { payload }: PayloadAction<string[]>) {

@@ -7,12 +7,12 @@ import {
   FieldValues,
   UseControllerProps
 } from 'react-hook-form';
-import { Code } from '../models/Code';
-import { Codelist } from '../models/Codelist';
+import { ICode } from '../Nexus/entities/ICode';
+import { ICodelist } from '../Nexus/entities/ICodelist';
 
-interface Props<T> extends UseControllerProps<T> {
+interface IProps<T> extends UseControllerProps<T> {
   error: FieldError | undefined;
-  codelist: Codelist;
+  codelist: ICodelist;
 }
 
 const ControlledCodelistSelect = <T extends FieldValues>({
@@ -20,8 +20,8 @@ const ControlledCodelistSelect = <T extends FieldValues>({
   name,
   control,
   error
-}: Props<T>): React.ReactElement => {
-  const renderOptions = (codes: Code[]) => {
+}: IProps<T>): React.ReactElement => {
+  const renderOptions = (codes: ICode[]) => {
     return codes.map((code) => {
       return (
         <option value={code.id} key={code.id}>

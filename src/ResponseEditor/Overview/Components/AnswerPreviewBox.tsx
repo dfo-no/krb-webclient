@@ -1,15 +1,15 @@
 import Card from '@mui/material/Card';
 import React from 'react';
 import Utils from '../../../common/Utils';
-import { Code } from '../../../models/Code';
-import { Codelist } from '../../../models/Codelist';
-import { ICheckboxQuestion } from '../../../models/ICheckboxQuestion';
-import { ICodelistQuestion } from '../../../models/ICodelistQuestion';
-import { IPeriodDateQuestion } from '../../../models/IPeriodDateQuestion';
 import { IRequirementAnswer } from '../../../models/IRequirementAnswer';
-import { ISliderQuestion } from '../../../models/ISliderQuestion';
-import { ITextQuestion } from '../../../models/ITextQuestion';
 import QuestionEnum from '../../../models/QuestionEnum';
+import { ICheckboxQuestion } from '../../../Nexus/entities/ICheckboxQuestion';
+import { ICode } from '../../../Nexus/entities/ICode';
+import { ICodelist } from '../../../Nexus/entities/ICodelist';
+import { ICodelistQuestion } from '../../../Nexus/entities/ICodelistQuestion';
+import { IPeriodDateQuestion } from '../../../Nexus/entities/IPeriodDateQuestion';
+import { ISliderQuestion } from '../../../Nexus/entities/ISliderQuestion';
+import { ITextQuestion } from '../../../Nexus/entities/ITextQuestion';
 import { useAppSelector } from '../../../store/hooks';
 import AnswerPreview from './AnswerPreview';
 
@@ -26,7 +26,7 @@ export default function AnswerPreviewBox({
     configCodelist: string
   ) => {
     const codelistIndex = response.spesification.bank.codelist.findIndex(
-      (list: Codelist) => list.id === configCodelist
+      (list: ICodelist) => list.id === configCodelist
     );
 
     const codelist = response.spesification.bank.codelist[codelistIndex];
@@ -34,7 +34,7 @@ export default function AnswerPreviewBox({
     if (Array.isArray(codes)) {
       codes.forEach((selectedCode: string) => {
         const codeIndex = codelist.codes.findIndex(
-          (element: Code) => element.id === selectedCode
+          (element: ICode) => element.id === selectedCode
         );
         const code = codelist.codes[codeIndex];
         usedCodes.push(code.title);
