@@ -1,9 +1,11 @@
 import React from 'react';
 import Card from 'react-bootstrap/Card';
+import { BsFillExclamationTriangleFill } from 'react-icons/bs';
 import { IRequirementAnswer } from '../../models/IRequirementAnswer';
 import QuestionEnum from '../../models/QuestionEnum';
 import RequirementType from '../../models/RequirementType';
 import { IRequirement } from '../../Nexus/entities/IRequirement';
+import { useAppSelector } from '../../store/hooks';
 import CheckBoxInfo from '../InfoanswerFields/CheckBoxInfo';
 import CodelistInfo from '../InfoanswerFields/CodelistInfo';
 import DateInfo from '../InfoanswerFields/DateInfo';
@@ -26,11 +28,19 @@ export default function QuestionFormSelector({
   req,
   requirementText
 }: IProps): React.ReactElement {
+  const { markedRequirements } = useAppSelector(
+    (state) => state.uploadedResponse
+  );
   return (
     <div key={selectedAnswer.id}>
       {req.requirement_Type === RequirementType.requirement && (
         <Card key={req.id} className="ml-3 mb-3">
-          <Card.Body>{requirementText}</Card.Body>
+          <Card.Body>
+            {requirementText}{' '}
+            {markedRequirements.includes(selectedAnswer.questionId) && (
+              <BsFillExclamationTriangleFill />
+            )}
+          </Card.Body>
           {selectedAnswer.question.type === QuestionEnum.Q_SLIDER && (
             <ISliderAnswer
               key={selectedAnswer.id}

@@ -1,3 +1,7 @@
+/* eslint-disable class-methods-use-this */
+import { isEqual } from 'lodash';
+import { IPrefilledResponse } from '../../models/IPrefilledResponse';
+import { IPrefilledResponseProduct } from '../../models/IPrefilledResponseProduct';
 import { IRequirementAnswer } from '../../models/IRequirementAnswer';
 import { IResponse } from '../../models/IResponse';
 import { IResponseProduct } from '../../models/IResponseProduct';
@@ -75,5 +79,47 @@ export default class ResponseService {
 
   async deleteAnswer(answer: IRequirementAnswer): Promise<void> {
     return this.store.deleteAnswer(answer);
+  }
+
+  matchPreAnsweredQuestions(
+    specifiationRequirements: IRequirementAnswer[],
+    answeredRequirements: IRequirementAnswer[]
+  ): [IRequirementAnswer[], string[]] {
+    const matchedRequirements: IRequirementAnswer[] = [];
+    const changedRequirements: string[] = [];
+    answeredRequirements.forEach((answer) => {
+      const index = specifiationRequirements.findIndex(
+        (element) => element.questionId === answer.questionId
+      );
+      if (index !== -1) {
+        const specAnswer = specifiationRequirements[index];
+        if (isEqual(specAnswer.question.config, answer.question.config)) {
+          matchedRequirements.push(answer);
+        } else {
+          changedRequirements.push(answer.questionId);
+        }
+      }
+    });
+    const newAnswers = [...specifiationRequirements];
+    specifiationRequirements.forEach((element, index) => {
+      const matchedIndex = matchedRequirements.findIndex(
+        (answer) => answer.questionId === element.questionId
+      );
+      if (matchedIndex !== -1) {
+        newAnswers[index] = matchedRequirements[matchedIndex];
+      }
+    });
+    return [newAnswers, changedRequirements];
+  }
+
+  // TODO add productAnswers and changed productQuestions when finished with functionality
+  async matchPrefilledReponseWithSpecification(
+    prefilledResponse: IPrefilledResponse,
+    specification: ISpecification
+  ): Promise<[IRequirementAnswer[], string[]]> {
+    return this.matchPreAnsweredQuestions(
+      specification.requirementAnswers,
+      prefilledResponse.requirementAnswers
+    );
   }
 }
