@@ -36,17 +36,19 @@ import ProductTextForm from './AnswerForms/ProductTextForm';
 interface IProps {
   element: Levelable<INeed>;
   product: IPrefilledResponseProduct;
+  searchProductId: string;
 }
 
 export default function AnswerForm({
   element,
-  product
+  product,
+  searchProductId
 }: IProps): React.ReactElement {
   const answers: IRequirementAnswer[] = [];
 
   element.requirements.forEach((requirement) => {
     requirement.variants.forEach((v) => {
-      if (v.products.includes(product.originProduct.id)) {
+      if (v.products.includes(searchProductId)) {
         v.questions.forEach((question) => {
           let questionResult: QuestionType = { ...question };
 

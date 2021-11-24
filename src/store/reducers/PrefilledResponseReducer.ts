@@ -51,7 +51,8 @@ const initialState: IPrefilledResponseState = {
       sourceRel: null
     },
     answeredVariants: [],
-    requirementAnswers: []
+    requirementAnswers: [],
+    relatedProducts: []
   }
 };
 
