@@ -16,9 +16,17 @@ import { v4 as uuidv4 } from 'uuid';
 import { httpPost } from '../../api/http';
 import ErrorSummary from '../../Form/ErrorSummary';
 import { IAlert } from '../../models/IAlert';
+import Nexus from '../../Nexus/Nexus';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { addAlert } from '../../store/reducers/alert-reducer';
-import { editSupplier } from '../../store/reducers/response-reducer';
+import {
+  editSupplier,
+  setRequirementAnswers
+} from '../../store/reducers/response-reducer';
+import {
+  setMarkedRequirements,
+  setPrefilledResponse
+} from '../../store/uploadedPrefilledResponseReducer';
 
 interface IResponseInfoForm {
   supplier: string;
@@ -30,6 +38,7 @@ const supplierSchema = Joi.object().keys({
 
 export default function ResponseEditor(): React.ReactElement {
   const { response } = useAppSelector((state) => state.response);
+  const nexus = Nexus.getInstance();
   const {
     register,
     handleSubmit,
@@ -67,6 +76,15 @@ export default function ResponseEditor(): React.ReactElement {
         };
         dispatch(addAlert({ alert }));
       } else {
+        dispatch(setPrefilledResponse(result.data));
+        const [requirementAnswers, markedQuestions] =
+          nexus.responseService.matchPreAnsweredQuestions(
+            response.spesification.requirementAnswers,
+            result.data.requirementAnswers
+          );
+        dispatch(setRequirementAnswers(requirementAnswers));
+        dispatch(setMarkedRequirements(markedQuestions));
+
         history.push(`/response/${response.spesification.bank.id}/requirement`);
       }
     });
