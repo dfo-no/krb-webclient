@@ -1,6 +1,12 @@
 import Joi from 'joi';
 import QuestionEnum from '../../models/QuestionEnum';
-import { IAnswerBase, IConfigBase, IQuestionBase } from './IQuestionBase';
+import {
+  ConfigBaseSchema,
+  IAnswerBase,
+  IConfigBase,
+  IQuestionBase,
+  QuestionBaseSchema
+} from './IQuestionBase';
 
 export type BooleanAsString = 'true' | 'false';
 
@@ -18,10 +24,9 @@ export interface ICheckboxConfig extends IConfigBase {
   weightFalse: number;
 }
 
-export const CheckboxQuestionSchema = Joi.object().keys({
-  id: Joi.string().length(36).required(),
+export const CheckboxQuestionSchema = QuestionBaseSchema.keys({
   type: Joi.string().equal(QuestionEnum.Q_CHECKBOX).required(),
-  config: Joi.object().keys({
+  config: ConfigBaseSchema.keys({
     weightTrue: Joi.number().min(1).max(100),
     weightFalse: Joi.number().min(0).max(100)
   })
