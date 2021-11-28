@@ -20,7 +20,7 @@ interface IProps {
   parentAnswer: IRequirementAnswer;
 }
 
-export default function ITextAnswer({
+export default function ITextAnswerForm({
   parentAnswer
 }: IProps): React.ReactElement {
   const { response } = useAppSelector((state) => state.response);

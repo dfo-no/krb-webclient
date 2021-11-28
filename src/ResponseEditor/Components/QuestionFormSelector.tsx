@@ -11,11 +11,11 @@ import CodelistInfo from '../InfoanswerFields/CodelistInfo';
 import DateInfo from '../InfoanswerFields/DateInfo';
 import SliderInfo from '../InfoanswerFields/SliderInfo';
 import TextInfo from '../InfoanswerFields/TextInfo';
-import ICheckBoxAnswer from '../QuestionAnswerForms/ICheckBoxAnswer';
-import ICodelistAnswer from '../QuestionAnswerForms/ICodeListAnswer';
-import PeriodDateAnswer from '../QuestionAnswerForms/IPeriodDateAnswer';
-import ISliderAnswer from '../QuestionAnswerForms/ISliderAnswer';
-import ITextAnswer from '../QuestionAnswerForms/TextAnswerForm';
+import ICheckBoxAnswerForm from '../QuestionAnswerForms/ICheckBoxAnswerForm';
+import ICodelistAnswerForm from '../QuestionAnswerForms/ICodeListAnswerForm';
+import PeriodDateAnswerForm from '../QuestionAnswerForms/IPeriodDateAnswerForm';
+import ISliderAnswerForm from '../QuestionAnswerForms/ISliderAnswerForm';
+import ITextAnswerForm from '../QuestionAnswerForms/TextAnswerForm';
 
 interface IProps {
   selectedAnswer: IRequirementAnswer;
@@ -42,31 +42,31 @@ export default function QuestionFormSelector({
             )}
           </Card.Body>
           {selectedAnswer.question.type === QuestionEnum.Q_SLIDER && (
-            <ISliderAnswer
+            <ISliderAnswerForm
               key={selectedAnswer.id}
               parentAnswer={selectedAnswer}
             />
           )}
           {selectedAnswer.question.type === QuestionEnum.Q_TEXT && (
-            <ITextAnswer
+            <ITextAnswerForm
               key={selectedAnswer.id}
               parentAnswer={selectedAnswer}
             />
           )}
           {selectedAnswer.question.type === QuestionEnum.Q_CHECKBOX && (
-            <ICheckBoxAnswer
+            <ICheckBoxAnswerForm
               key={selectedAnswer.id}
               parentAnswer={selectedAnswer}
             />
           )}
           {selectedAnswer.question.type === QuestionEnum.Q_CODELIST && (
-            <ICodelistAnswer
+            <ICodelistAnswerForm
               key={selectedAnswer.id}
               parentAnswer={selectedAnswer}
             />
           )}
           {selectedAnswer.question.type === QuestionEnum.Q_PERIOD_DATE && (
-            <PeriodDateAnswer
+            <PeriodDateAnswerForm
               key={selectedAnswer.id}
               parentAnswer={selectedAnswer}
             />

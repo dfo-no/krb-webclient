@@ -21,7 +21,7 @@ interface IProps {
   parentAnswer: IRequirementAnswer;
 }
 
-export default function ICodelistAnswer({
+export default function ICodelistAnswerForm({
   parentAnswer
 }: IProps): React.ReactElement {
   const { response } = useAppSelector((state) => state.response);

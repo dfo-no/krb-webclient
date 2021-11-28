@@ -25,7 +25,7 @@ interface IProps {
   parentAnswer: IRequirementAnswer;
 }
 
-export default function ISliderAnswer({
+export default function ISliderAnswerForm({
   parentAnswer
 }: IProps): React.ReactElement {
   const { selectedResponseProduct } = useAppSelector(

@@ -26,7 +26,7 @@ interface IProps {
   parentAnswer: IRequirementAnswer;
 }
 
-export default function PeriodDateAnswer({
+export default function PeriodDateAnswerForm({
   parentAnswer
 }: IProps): React.ReactElement {
   const {

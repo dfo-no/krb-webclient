@@ -23,7 +23,7 @@ interface IProps {
   parentAnswer: IRequirementAnswer;
 }
 
-export default function ICheckBoxAnswer({
+export default function ICheckBoxAnswerForm({
   parentAnswer
 }: IProps): React.ReactElement {
   const { response } = useAppSelector((state) => state.response);
