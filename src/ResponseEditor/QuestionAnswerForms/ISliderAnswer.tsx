@@ -1,5 +1,4 @@
 import { joiResolver } from '@hookform/resolvers/joi';
-import Joi from 'joi';
 import { get } from 'lodash';
 import React from 'react';
 import Button from 'react-bootstrap/Button';
@@ -9,15 +8,13 @@ import Row from 'react-bootstrap/Row';
 import { FieldError, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import ControlledSlider from '../../Form/ControlledSlider';
+import ErrorSummary from '../../Form/ErrorSummary';
 import {
   IRequirementAnswer,
   RequirementAnswerSchema
 } from '../../models/IRequirementAnswer';
 import ModelType from '../../models/ModelType';
-import {
-  ISliderQuestion,
-  SliderQuestionAnswerSchema
-} from '../../Nexus/entities/ISliderQuestion';
+import { ISliderQuestion } from '../../Nexus/entities/ISliderQuestion';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import {
   addProductAnswer,
@@ -31,49 +28,17 @@ interface IProps {
 export default function ISliderAnswer({
   parentAnswer
 }: IProps): React.ReactElement {
-  const { response } = useAppSelector((state) => state.response);
   const { selectedResponseProduct } = useAppSelector(
     (state) => state.selectedResponseProduct
   );
-  let index: number;
-
-  const question = parentAnswer.question as ISliderQuestion;
-
-  const ResponseSliderSchema = RequirementAnswerSchema.keys({
-    question: SliderQuestionAnswerSchema.keys({
-      answer: Joi.object().keys({
-        value: Joi.number()
-          .min(question.config.min)
-          .max(question.config.max)
-          .required(),
-        point: Joi.number().required()
-      })
-    })
-  });
-
-  const productIndex = response.products.findIndex(
-    (p) => p.id === selectedResponseProduct.id
-  );
-
-  if (parentAnswer.type === ModelType.requirement) {
-    index = response.requirementAnswers.findIndex(
-      (answer) => answer.variantId === parentAnswer.variantId
-    );
-  } else {
-    index =
-      response.products.length > 0
-        ? response.products[productIndex].requirementAnswers.findIndex(
-            (answer) => answer.variantId === parentAnswer.variantId
-          )
-        : -1;
-  }
 
   const {
     control,
     handleSubmit,
+    register,
     formState: { errors }
   } = useForm<IRequirementAnswer>({
-    resolver: joiResolver(ResponseSliderSchema),
+    resolver: joiResolver(RequirementAnswerSchema),
     defaultValues: parentAnswer
   });
 
@@ -110,10 +75,15 @@ export default function ISliderAnswer({
               marks={[]}
               control={control}
               name={`question.answer.value` as const}
-              error={get(errors, `answer.value`) as FieldError}
+              error={get(errors, `question.answer.value`) as FieldError}
             />
           </Row>
+          {/* TODO: This is a terrible hack! .point is not set by defaultValues, and does not even exist in the reducer
+          Replace during FormProvider change */}
+          <input type="text" {...register('question.answer.point')} value={0} />
+
           <Button type="submit">{t('save')}</Button>
+          <ErrorSummary errors={errors} />
         </Form>
       </Card.Body>
     </Card>
