@@ -9,6 +9,7 @@ export interface IPrefilledResponseProduct {
   originProduct: IProduct;
   answeredVariants: string[];
   requirementAnswers: IRequirementAnswer[];
+  relatedProducts: string[];
 }
 
 export const PrefilledResponseProductSchema = Joi.object().keys({
@@ -17,5 +18,6 @@ export const PrefilledResponseProductSchema = Joi.object().keys({
   originProduct: Joi.object(),
   description: Joi.string().allow(null, '').required(),
   answeredVariants: Joi.array().items(Joi.string()),
-  requirementAnswers: Joi.array()
+  requirementAnswers: Joi.array(),
+  relatedProducts: Joi.array().items(Joi.string())
 });

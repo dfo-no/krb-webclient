@@ -133,10 +133,6 @@ class Utils {
     return hierarchy;
   }
 
-  /**
-   *
-   * @deprecated use nestable2Levelable instead
-   */
   static unflatten<T extends IBaseModel>(
     items: Nestable<T>[]
   ): [Nestable<T>[], { [key: string]: Nestable<T> }] {

@@ -78,7 +78,8 @@ export default function ProductSpecList(): React.ReactElement {
       title: selectedProduct.title,
       description: selectedProduct.description,
       answeredVariants: [],
-      requirementAnswers: []
+      requirementAnswers: [],
+      relatedProducts: []
     };
     dispatch(addProduct(newProduct));
   };

@@ -1,3 +1,4 @@
+/* eslint-disable no-plusplus */
 import { joiResolver } from '@hookform/resolvers/joi';
 import { get } from 'lodash';
 import React from 'react';
@@ -9,7 +10,6 @@ import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 import { FieldError, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import { getPaths } from '../../common/Tree';
 import ControlledTextInput from '../../Form/ControlledTextInput';
 import ErrorSummary from '../../Form/ErrorSummary';
 import {
@@ -18,9 +18,13 @@ import {
 } from '../../models/IPrefilledResponseProduct';
 import { Levelable } from '../../models/Levelable';
 import { INeed } from '../../Nexus/entities/INeed';
+import { IProduct } from '../../Nexus/entities/IProduct';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
-import { editProduct } from '../../store/reducers/PrefilledResponseReducer';
-import AnswerForm from './AnswerForm';
+import {
+  editProduct,
+  selectProduct
+} from '../../store/reducers/PrefilledResponseReducer';
+import NeedsList from './NeedsList';
 
 export default function PrefilledResponseProductEditor(): React.ReactElement {
   const { id } = useAppSelector((state) => state.selectedBank);
@@ -28,48 +32,28 @@ export default function PrefilledResponseProductEditor(): React.ReactElement {
   const { selectedProduct, prefilledResponse } = useAppSelector(
     (state) => state.prefilledResponse
   );
+
   const dispatch = useAppDispatch();
   const {
     control,
     handleSubmit,
+    register,
     formState: { errors }
   } = useForm<IPrefilledResponseProduct>({
     resolver: joiResolver(PrefilledResponseProductSchema),
     defaultValues: selectedProduct
   });
 
-  if (!id) return <p>No selected bank</p>;
-
   const addProductToSpecification = (post: IPrefilledResponseProduct) => {
     const newProduct = {
       ...post
     };
     const productIndex = prefilledResponse.products.findIndex(
-      (product) => product.id === selectedProduct.id
+      (product: IPrefilledResponseProduct) => product.id === selectedProduct.id
     );
+    dispatch(selectProduct(newProduct));
     dispatch(editProduct({ product: newProduct, productIndex }));
   };
-
-  const findNeedIdsForProduct = (productId: string, needArray: INeed[]) => {
-    const result: string[] = [];
-    needArray.forEach((need) => {
-      need.requirements.forEach((req) => {
-        req.variants.forEach((variant) => {
-          if (variant.products.includes(productId)) {
-            result.push(need.id);
-          }
-        });
-      });
-    });
-    return result;
-  };
-
-  const needIds = findNeedIdsForProduct(
-    selectedProduct.originProduct.id,
-    prefilledResponse.bank.needs
-  );
-
-  const needs = getPaths(needIds, prefilledResponse.bank.needs);
 
   const checkIfNeedHasRenderedAnswer = (
     need: Levelable<INeed>,
@@ -89,24 +73,32 @@ export default function PrefilledResponseProductEditor(): React.ReactElement {
     return used;
   };
 
-  const renderNeedsList = (list: Levelable<INeed>[]) => {
-    return list.map((need) => {
-      const margin = need.level === 1 ? '0rem' : `${need.level - 1}rem`;
-      return (
-        <Card style={{ marginLeft: margin }} key={need.id}>
-          <Card.Header>{need.title}</Card.Header>
-          {checkIfNeedHasRenderedAnswer(
-            need,
-            selectedProduct.originProduct.id
-          ) && (
-            <Card.Body>
-              <AnswerForm element={need} product={selectedProduct} />
-            </Card.Body>
-          )}
-        </Card>
-      );
-    });
-  };
+  function checkIfNeedHasRenderedAnswerInRelatedProduct(
+    relatedProducts: string[],
+    need: Levelable<INeed>,
+    selectedOriginProductId: string
+  ): [boolean, string] {
+    let productIsUsed: boolean = checkIfNeedHasRenderedAnswer(
+      need,
+      selectedOriginProductId
+    );
+
+    let matchedProductId: string = selectedOriginProductId;
+
+    if (productIsUsed) {
+      return [productIsUsed, matchedProductId];
+    }
+
+    for (let i = 0; i < relatedProducts.length; i++) {
+      productIsUsed = checkIfNeedHasRenderedAnswer(need, relatedProducts[i]);
+
+      if (productIsUsed) {
+        matchedProductId = relatedProducts[i];
+        break;
+      }
+    }
+    return [productIsUsed, matchedProductId];
+  }
 
   return (
     <Container fluid>
@@ -132,6 +124,23 @@ export default function PrefilledResponseProductEditor(): React.ReactElement {
               name="description"
               error={get(errors, `description`) as FieldError}
             />
+
+            {prefilledResponse.bank.products.length > 1 && (
+              <>
+                <Form.Label>Tilsvarende produkter</Form.Label>
+                <Form.Control
+                  as="select"
+                  multiple
+                  {...register(`relatedProducts` as const)}
+                >
+                  {prefilledResponse.bank.products.map((element: IProduct) => (
+                    <option key={element.id} value={element.id}>
+                      {element.title}
+                    </option>
+                  ))}
+                </Form.Control>
+              </>
+            )}
             <Col className="p-0 d-flex justify-content-end">
               <Button type="submit">{t('save')}</Button>
             </Col>
@@ -140,7 +149,12 @@ export default function PrefilledResponseProductEditor(): React.ReactElement {
         </Card.Body>
       </Card>
       <Row className="m-4" />
-      {renderNeedsList(needs)}
+      <NeedsList
+        prefilledResponse={prefilledResponse}
+        selectedProduct={selectedProduct}
+        // eslint-disable-next-line react/jsx-no-bind
+        checkNeeds={checkIfNeedHasRenderedAnswerInRelatedProduct}
+      />
     </Container>
   );
 }
