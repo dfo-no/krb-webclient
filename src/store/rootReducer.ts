@@ -15,8 +15,8 @@ import selectedRequirementReducer from './reducers/selectedRequirement-reducer';
 import selectedResponseProductReducer from './reducers/selectedResponseProduct-reducer';
 import selectedSpecProductReducer from './reducers/selectedSpecProduct-reducer';
 import specificationReducer from './reducers/spesification-reducer';
+import uploadedPrefilledResponseReducer from './reducers/uploadedPrefilledResponseReducer';
 import userReducer from './reducers/userReducer';
-import uploadedPrefilledResponseReducer from './uploadedPrefilledResponseReducer';
 
 const rootReducer = combineReducers({
   loader: loaderReducer,
