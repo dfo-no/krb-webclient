@@ -20,7 +20,16 @@ export default class EvaluationService {
       supplier: response.supplier,
       points: 0
     };
+
     response.requirementAnswers.forEach((requirementAnswer) => {
+      // check if answer also exist in specification
+      const ix = response.spesification.requirementAnswers.findIndex(
+        (elem) => elem.id === requirementAnswer.id
+      );
+      if (ix === -1) {
+        throw Error('Answer does not exist in specification');
+      }
+
       if (requirementAnswer.question.type !== QuestionEnum.Q_CHECKBOX) {
         evaluation.points += 1;
       }
