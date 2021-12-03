@@ -15,10 +15,9 @@ export default function ResponseProductRequirementSelector({
   const { response } = useAppSelector((state) => state.response);
 
   const selectedBank = response.spesification.bank;
-  const productIndex = Utils.ensure(
-    response.spesification.products.findIndex(
-      (specProduct: ISpecificationProduct) => specProduct.id === product.id
-    )
+
+  const productIndex = response.spesification.products.findIndex(
+    (specProduct: ISpecificationProduct) => specProduct.id === product.id
   );
 
   const responseProductIndex = response.products.findIndex(
