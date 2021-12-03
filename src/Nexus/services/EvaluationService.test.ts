@@ -3,6 +3,7 @@ import { ISpecification } from '../../models/ISpecification';
 import ModelType from '../../models/ModelType';
 import QuestionEnum from '../../models/QuestionEnum';
 import RequirementType from '../../models/RequirementType';
+import Nexus from '../Nexus';
 import EvaluationService from './EvaluationService';
 
 describe('EvaluationService', () => {
@@ -2061,8 +2062,11 @@ describe('EvaluationService', () => {
 
     // Is all 3 specifications the same?
     // Can i only use the REquirementAnswers array?
-    const result = EvaluationService.evaluateAll([response1, response2]);
-
-    expect(result.length).toBe(2);
+    const nexus = Nexus.getInstance();
+    return nexus.evaluationService
+      .evaluateAll([response1, response2])
+      .then((result) => {
+        expect(result.length).toBe(2);
+      });
   });
 });
