@@ -1,5 +1,4 @@
 import { joiResolver } from '@hookform/resolvers/joi';
-import Joi from 'joi';
 import { get } from 'lodash';
 import React from 'react';
 import Button from 'react-bootstrap/Button';
@@ -13,8 +12,10 @@ import ControlledDate from '../../Form/ControlledDate';
 import ErrorSummary from '../../Form/ErrorSummary';
 import { IRequirementAnswer } from '../../models/IRequirementAnswer';
 import ModelType from '../../models/ModelType';
-import QuestionEnum from '../../models/QuestionEnum';
-import { IPeriodDateQuestion } from '../../Nexus/entities/IPeriodDateQuestion';
+import {
+  IPeriodDateQuestion,
+  PeriodDateQuestionAnswerSchema
+} from '../../Nexus/entities/IPeriodDateQuestion';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import {
   addProductAnswer,
@@ -25,32 +26,21 @@ interface IProps {
   parentAnswer: IRequirementAnswer;
 }
 
-export const PeriodDateSchema = Joi.object().keys({
-  id: Joi.string().required(),
-  type: Joi.string().equal(QuestionEnum.Q_PERIOD_DATE).required(),
-  config: Joi.object().keys({
-    fromDate: Joi.date().iso().raw().required(),
-    toDate: Joi.date().iso().raw().required()
-  }),
-  answer: Joi.object().keys({
-    date: Joi.date().iso().raw().required()
-  })
-});
-
-export default function PeriodDateAnswer({
+export default function PeriodDateAnswerForm({
   parentAnswer
 }: IProps): React.ReactElement {
   const {
     handleSubmit,
     control,
+    register,
     formState: { errors }
   } = useForm<IPeriodDateQuestion>({
-    resolver: joiResolver(PeriodDateSchema),
+    resolver: joiResolver(PeriodDateQuestionAnswerSchema),
     defaultValues: {
       ...(parentAnswer.question as IPeriodDateQuestion)
     }
   });
-  const item = parentAnswer.question as IPeriodDateQuestion;
+
   const { selectedSpecificationProduct } = useAppSelector(
     (state) => state.selectedSpecProduct
   );
@@ -110,6 +100,10 @@ export default function PeriodDateAnswer({
               />
             </Col>
           </Form.Group>
+          {/* TODO: This input is a terrible RHF hack! .point is not set by defaultValues, and does not even exist in the reducer
+          Replace during FormProvider change */}
+          <input type="text" {...register('answer.point')} value={0} />
+
           <Button type="submit">{t('save')}</Button>
           <ErrorSummary errors={errors} />
         </Form>

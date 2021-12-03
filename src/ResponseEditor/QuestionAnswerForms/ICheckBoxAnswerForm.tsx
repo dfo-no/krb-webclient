@@ -1,5 +1,4 @@
 import { joiResolver } from '@hookform/resolvers/joi';
-import Joi from 'joi';
 import { get } from 'lodash';
 import React from 'react';
 import Button from 'react-bootstrap/Button';
@@ -10,8 +9,10 @@ import { useTranslation } from 'react-i18next';
 import ControlledCheckbox from '../../Form/ControlledCheckbox';
 import { IRequirementAnswer } from '../../models/IRequirementAnswer';
 import ModelType from '../../models/ModelType';
-import QuestionEnum from '../../models/QuestionEnum';
-import { ICheckboxQuestion } from '../../Nexus/entities/ICheckboxQuestion';
+import {
+  CheckboxQuestionAnswerSchema,
+  ICheckboxQuestion
+} from '../../Nexus/entities/ICheckboxQuestion';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import {
   addProductAnswer,
@@ -22,19 +23,7 @@ interface IProps {
   parentAnswer: IRequirementAnswer;
 }
 
-export const ResponseCheckBoxSchema = Joi.object().keys({
-  id: Joi.string().required(),
-  type: Joi.string().equal(QuestionEnum.Q_CHECKBOX).required(),
-  config: Joi.object().keys({
-    weightTrue: Joi.number().min(1).max(100),
-    weightFalse: Joi.number().min(0).max(100)
-  }),
-  answer: Joi.object().keys({
-    value: Joi.boolean().required()
-  })
-});
-
-export default function ICheckBoxAnswer({
+export default function ICheckBoxAnswerForm({
   parentAnswer
 }: IProps): React.ReactElement {
   const { response } = useAppSelector((state) => state.response);
@@ -70,10 +59,11 @@ export default function ICheckBoxAnswer({
             .question as ICheckboxQuestion));
   const {
     control,
+    register,
     handleSubmit,
     formState: { errors }
   } = useForm<ICheckboxQuestion>({
-    resolver: joiResolver(ResponseCheckBoxSchema),
+    resolver: joiResolver(CheckboxQuestionAnswerSchema),
     defaultValues: {
       ...defaultVal
     }
@@ -105,10 +95,13 @@ export default function ICheckBoxAnswer({
       <Card.Body>
         <Form onSubmit={handleSubmit(saveValues)}>
           <ControlledCheckbox
-            name="answer.value"
+            name={`answer.value` as const}
             control={control}
             error={get(errors, `answer.value`) as FieldError}
           />
+          {/* TODO: This input is a terrible RHF hack! .point is not set by defaultValues, and does not even exist in the reducer
+          Replace during FormProvider change */}
+          <input type="text" {...register('answer.point')} value={0} />
 
           <Button type="submit">{t('save')}</Button>
         </Form>
