@@ -32,11 +32,11 @@ export const CodelistQuestionSchema = QuestionBaseSchema.keys({
 
 export const CodelistQuestionAnswerSchema = CodelistQuestionSchema.keys({
   answer: Joi.object().keys({
-    /* codes: Joi.alternatives([
-      Joi.array().items(Joi.string().length(36)),
-      Joi.string().length(36)
-    ]), */
-    codes: Joi.string().length(36).required(),
+    codes: Joi.when('/config.multipleSelect', {
+      is: true,
+      then: Joi.array().items(Joi.string().length(36)).min(1).required(),
+      otherwise: Joi.string().length(36).required()
+    }).required(),
     point: Joi.number().required()
   })
 });
