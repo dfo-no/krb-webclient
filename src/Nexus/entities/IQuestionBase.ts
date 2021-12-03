@@ -21,9 +21,15 @@ export interface IQuestionBase<A extends IAnswerBase, C extends IConfigBase>
   config: C;
 }
 
+export const ConfigBaseSchema = Joi.object().keys({
+  defaultPoint: Joi.number().required()
+});
+
 export const QuestionBaseSchema = Joi.object().keys({
   id: Joi.string().length(36).required(),
   type: Joi.string().valid(QuestionEnum).required(),
-  answer: Joi.any(),
-  config: Joi.any()
+  answer: Joi.any().required(),
+  config: Joi.any().required(),
+  sourceOriginal: Joi.string().length(36).allow(null).required(),
+  sourceRel: Joi.string().length(36).allow(null).required()
 });

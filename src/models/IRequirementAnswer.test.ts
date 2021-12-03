@@ -22,13 +22,16 @@ describe('Validation', () => {
             type: 'Q_CHECKBOX',
             config: {
               weightTrue: 100,
-              weightFalse: 0
+              weightFalse: 0,
+              defaultPoint: 1
             },
             id: '89a251dc-de54-4012-a54b-8aa7170614b6',
             answer: {
               value: true,
               point: 11
-            }
+            },
+            sourceOriginal: null,
+            sourceRel: null
           },
           type: 'prefilledResponse',
           requirement: {
@@ -48,9 +51,13 @@ describe('Validation', () => {
                     type: 'Q_CHECKBOX',
                     config: {
                       weightTrue: 100,
-                      weightFalse: 0
+                      weightFalse: 0,
+                      defaultPoint: 1
                     },
-                    id: '89a251dc-de54-4012-a54b-8aa7170614b6'
+                    id: '89a251dc-de54-4012-a54b-8aa7170614b6',
+                    answer: null,
+                    sourceOriginal: null,
+                    sourceRel: null
                   }
                 ],
                 id: 'f7f87130-409f-4521-94d6-99924b21b858'
@@ -75,13 +82,16 @@ describe('Validation', () => {
               min: 100,
               max: 500,
               step: 10,
-              unit: 'Kr'
+              unit: 'Kr',
+              defaultPoint: 5
             },
             id: '30591f15-6b7f-4c1f-aeb5-784c647aaa19',
             answer: {
               value: 10,
               point: 11
-            }
+            },
+            sourceOriginal: null,
+            sourceRel: null
           },
           type: 'prefilledResponse',
           requirement: {
@@ -103,9 +113,13 @@ describe('Validation', () => {
                       min: 100,
                       max: 500,
                       step: 10,
-                      unit: 'Kr'
+                      unit: 'Kr',
+                      defaultPoint: 60
                     },
-                    id: '30591f15-6b7f-4c1f-aeb5-784c647aaa19'
+                    id: '30591f15-6b7f-4c1f-aeb5-784c647aaa19',
+                    answer: null,
+                    sourceOriginal: null,
+                    sourceRel: null
                   }
                 ],
                 id: 'e74fb538-e421-40a9-91bc-71a174a41e38'
@@ -128,13 +142,16 @@ describe('Validation', () => {
             type: 'Q_PERIOD_DATE',
             config: {
               fromDate: '2021-09-20T08:03:57.0930000Z',
-              toDate: '2021-09-30T08:03:00.0000000Z'
+              toDate: '2021-09-30T08:03:00.0000000Z',
+              defaultPoint: 60
             },
             id: 'aa7e6a82-361a-4775-95e6-440ba9b60dbc',
             answer: {
               date: null,
               point: 0
-            }
+            },
+            sourceOriginal: null,
+            sourceRel: null
           },
           type: 'prefilledResponse',
           requirement: {
@@ -155,9 +172,13 @@ describe('Validation', () => {
                     type: 'Q_PERIOD_DATE',
                     config: {
                       fromDate: '2021-09-20T08:03:57.0930000Z',
-                      toDate: '2021-09-30T08:03:00.0000000Z'
+                      toDate: '2021-09-30T08:03:00.0000000Z',
+                      defaultPoint: 80
                     },
-                    id: 'aa7e6a82-361a-4775-95e6-440ba9b60dbc'
+                    id: 'aa7e6a82-361a-4775-95e6-440ba9b60dbc',
+                    answer: null,
+                    sourceOriginal: null,
+                    sourceRel: null
                   }
                 ]
               }
@@ -179,13 +200,16 @@ describe('Validation', () => {
             type: 'Q_CODELIST',
             config: {
               multipleSelect: true,
-              codelist: 'dec9ffb5-70c3-4c3f-8250-dbd9e5b66cf2'
+              codelist: 'dec9ffb5-70c3-4c3f-8250-dbd9e5b66cf2',
+              defaultPoint: 30
             },
             id: 'e503a651-dde2-4d5b-87f0-342f3406fad6',
             answer: {
               codes: 'e503a651-dde2-4d5b-87f0-342f3406fad6',
               point: 0
-            }
+            },
+            sourceOriginal: null,
+            sourceRel: null
           },
           type: 'prefilledResponse',
           requirement: {
@@ -205,9 +229,13 @@ describe('Validation', () => {
                     type: 'Q_CODELIST',
                     config: {
                       multipleSelect: true,
-                      codelist: 'dec9ffb5-70c3-4c3f-8250-dbd9e5b66cf2'
+                      codelist: 'dec9ffb5-70c3-4c3f-8250-dbd9e5b66cf2',
+                      defaultPoint: 14
                     },
-                    id: 'e503a651-dde2-4d5b-87f0-342f3406fad6'
+                    id: 'e503a651-dde2-4d5b-87f0-342f3406fad6',
+                    answer: null,
+                    sourceOriginal: null,
+                    sourceRel: null
                   }
                 ],
                 id: '87bce9dd-4574-48d6-85f3-964c21f0cc98'

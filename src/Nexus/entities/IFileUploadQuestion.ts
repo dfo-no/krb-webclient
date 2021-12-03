@@ -1,6 +1,12 @@
 import Joi from 'joi';
 import QuestionEnum from '../../models/QuestionEnum';
-import { IAnswerBase, IConfigBase, IQuestionBase } from './IQuestionBase';
+import {
+  ConfigBaseSchema,
+  IAnswerBase,
+  IConfigBase,
+  IQuestionBase,
+  QuestionBaseSchema
+} from './IQuestionBase';
 
 export interface IFileUploadQuestion
   extends IQuestionBase<IFileUploadAnswer, IFileUploadConfig> {
@@ -14,10 +20,9 @@ export interface IFileUploadConfig extends IConfigBase {
   fileEndings: string;
 }
 
-export const FileUploadQuestionSchema = Joi.object().keys({
-  id: Joi.string().length(36).required(),
+export const FileUploadQuestionSchema = QuestionBaseSchema.keys({
   type: Joi.string().equal(QuestionEnum.Q_FILEUPLOAD).required(),
-  config: Joi.object().keys({
+  config: ConfigBaseSchema.keys({
     fileEndings: Joi.string().allow('')
   })
 });

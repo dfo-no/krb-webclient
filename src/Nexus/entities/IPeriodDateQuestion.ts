@@ -1,6 +1,12 @@
 import Joi from 'joi';
 import QuestionEnum from '../../models/QuestionEnum';
-import { IAnswerBase, IConfigBase, IQuestionBase } from './IQuestionBase';
+import {
+  ConfigBaseSchema,
+  IAnswerBase,
+  IConfigBase,
+  IQuestionBase,
+  QuestionBaseSchema
+} from './IQuestionBase';
 
 export interface IPeriodDateQuestion
   extends IQuestionBase<IPeriodDateAnswer, IPeriodDateConfig> {
@@ -16,10 +22,9 @@ export interface IPeriodDateConfig extends IConfigBase {
   toDate: string | null;
 }
 
-export const PeriodDateQuestionSchema = Joi.object().keys({
-  id: Joi.string().length(36).required(),
+export const PeriodDateQuestionSchema = QuestionBaseSchema.keys({
   type: Joi.string().equal(QuestionEnum.Q_PERIOD_DATE).required(),
-  config: Joi.object().keys({
+  config: ConfigBaseSchema.keys({
     fromDate: Joi.alternatives([
       Joi.date().iso().raw(),
       Joi.string().valid(null)

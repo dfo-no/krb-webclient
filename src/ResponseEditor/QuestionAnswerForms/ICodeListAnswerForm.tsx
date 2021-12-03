@@ -1,5 +1,4 @@
 import { joiResolver } from '@hookform/resolvers/joi';
-import Joi from 'joi';
 import React from 'react';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
@@ -8,8 +7,10 @@ import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import ErrorSummary from '../../Form/ErrorSummary';
 import { IRequirementAnswer } from '../../models/IRequirementAnswer';
-import QuestionEnum from '../../models/QuestionEnum';
-import { ICodelistQuestion } from '../../Nexus/entities/ICodelistQuestion';
+import {
+  CodelistQuestionAnswerSchema,
+  ICodelistQuestion
+} from '../../Nexus/entities/ICodelistQuestion';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import {
   addProductAnswer,
@@ -20,29 +21,7 @@ interface IProps {
   parentAnswer: IRequirementAnswer;
 }
 
-export const ResponseCodelistSchema = Joi.object().keys({
-  id: Joi.string().required(),
-  type: Joi.string().equal(QuestionEnum.Q_CODELIST).required(),
-  config: Joi.object().keys({
-    codelist: Joi.string().required(),
-    multipleSelect: Joi.boolean().required()
-  }),
-  answer: Joi.object().keys({
-    codes: Joi.array().items(Joi.string()).min(1).required()
-  })
-});
-export const ResponseSingleCodelistSchema = Joi.object().keys({
-  id: Joi.string().required(),
-  type: Joi.string().equal(QuestionEnum.Q_CODELIST).required(),
-  config: Joi.object().keys({
-    codelist: Joi.string().required(),
-    multipleSelect: Joi.boolean().required()
-  }),
-  answer: Joi.object().keys({
-    codes: Joi.array().items(Joi.string()).max(1).required()
-  })
-});
-export default function ICodelistAnswer({
+export default function ICodelistAnswerForm({
   parentAnswer
 }: IProps): React.ReactElement {
   const { response } = useAppSelector((state) => state.response);
@@ -76,20 +55,18 @@ export default function ICodelistAnswer({
         (parentAnswer.type === 'product' &&
           (response.products[0].requirementAnswers[index]
             .question as ICodelistQuestion));
-  const resolver = item.config.multipleSelect
-    ? ResponseCodelistSchema
-    : ResponseSingleCodelistSchema;
 
   const {
     register,
     handleSubmit,
     formState: { errors }
   } = useForm<ICodelistQuestion>({
-    resolver: joiResolver(resolver),
+    resolver: joiResolver(CodelistQuestionAnswerSchema),
     defaultValues: {
       ...defaultVal
     }
   });
+
   const dispatch = useAppDispatch();
   const { t } = useTranslation();
 
@@ -123,8 +100,8 @@ export default function ICodelistAnswer({
         <Form onSubmit={handleSubmit(saveValues)}>
           <Form.Control
             as="select"
-            multiple
             {...register(`answer.codes` as const)}
+            multiple={item.config.multipleSelect}
           >
             {codelist.codes.map((element) => (
               <option key={element.id} value={element.id}>
@@ -132,6 +109,10 @@ export default function ICodelistAnswer({
               </option>
             ))}
           </Form.Control>
+          {/* TODO: This input is a terrible RHF hack! .point is not set by defaultValues, and does not even exist in the reducer
+          Replace during FormProvider change */}
+          <input type="text" {...register('answer.point')} value={0} />
+
           <Button type="submit">{t('save')}</Button>
           <ErrorSummary errors={errors} />
         </Form>

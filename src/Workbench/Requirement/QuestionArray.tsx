@@ -54,65 +54,103 @@ export default function QuestionArray({
 
   const addQuestion = () => {
     if (question === QuestionEnum.Q_SLIDER) {
-      append({
+      const q: ISliderQuestion = {
         id: uuidv4(),
         type: QuestionEnum.Q_SLIDER,
         config: {
           min: 0,
           max: 10,
           step: 1,
-          unit: 'GB'
-        }
-      } as ISliderQuestion);
+          unit: 'GB',
+          defaultPoint: 1
+        },
+        answer: null,
+        sourceRel: null,
+        sourceOriginal: null
+      };
+      append(q);
     } else if (question === QuestionEnum.Q_CODELIST) {
-      append({
+      const q: ICodelistQuestion = {
         id: uuidv4(),
         type: QuestionEnum.Q_CODELIST,
         config: {
           multipleSelect: false,
-          codelist: project.codelist[0].id
-        }
-      } as ICodelistQuestion);
+          codelist: project.codelist[0].id,
+          defaultPoint: 1
+        },
+        answer: null,
+        sourceRel: null,
+        sourceOriginal: null
+      };
+      append(q);
     } else if (question === QuestionEnum.Q_TEXT) {
-      append({
+      const q: ITextQuestion = {
         id: uuidv4(),
         type: QuestionEnum.Q_TEXT,
         config: {
-          max: 0
-        }
-      } as ITextQuestion);
+          max: 0,
+          defaultPoint: 1
+        },
+        answer: null,
+        sourceRel: null,
+        sourceOriginal: null
+      };
+      append(q);
     } else if (question === QuestionEnum.Q_PERIOD_DATE) {
-      append({
+      const q: IPeriodDateQuestion = {
         id: uuidv4(),
         type: QuestionEnum.Q_PERIOD_DATE,
         config: {
           fromDate: null,
-          toDate: null
-        }
-      } as IPeriodDateQuestion);
+          toDate: null,
+          defaultPoint: 1
+        },
+        answer: null,
+        sourceRel: null,
+        sourceOriginal: null
+      };
+      append(q);
     } else if (question === QuestionEnum.Q_TIME) {
-      append({
+      const q: ITimeQuestion = {
         id: uuidv4(),
         type: QuestionEnum.Q_TIME,
         config: {
           fromTime: '',
-          toTime: ''
-        }
-      } as ITimeQuestion);
+          toTime: '',
+          defaultPoint: 1
+        },
+        answer: null,
+        sourceRel: null,
+        sourceOriginal: null
+      };
+      append(q);
     } else if (question === QuestionEnum.Q_CHECKBOX) {
-      append({
+      const q: ICheckboxQuestion = {
         id: uuidv4(),
         type: QuestionEnum.Q_CHECKBOX,
         config: {
           weightTrue: 100,
-          weightFalse: 0
-        }
-      } as ICheckboxQuestion);
+          weightFalse: 0,
+          defaultPoint: 1
+        },
+        answer: null,
+        sourceRel: null,
+        sourceOriginal: null
+      };
+      append(q);
     } else if (question === QuestionEnum.Q_FILEUPLOAD) {
-      append({
+      const q: IFileUploadQuestion = {
         id: uuidv4(),
-        type: QuestionEnum.Q_FILEUPLOAD
-      } as IFileUploadQuestion);
+        type: QuestionEnum.Q_FILEUPLOAD,
+        config: {
+          fileEndings: '',
+          defaultPoint: 1
+        },
+        answer: null,
+        sourceRel: null,
+        sourceOriginal: null
+      };
+      append(q);
     }
   };
 
