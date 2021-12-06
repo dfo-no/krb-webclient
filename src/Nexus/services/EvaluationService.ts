@@ -1,6 +1,7 @@
 /* eslint-disable class-methods-use-this */
 import { IResponse } from '../../models/IResponse';
 import QuestionEnum from '../../models/QuestionEnum';
+import { ICheckboxQuestion } from '../entities/ICheckboxQuestion';
 import { IEvaluation } from '../entities/IEvaluation';
 
 export default class EvaluationService {
@@ -14,6 +15,18 @@ export default class EvaluationService {
       evaluations.push(result);
     });
     return evaluations;
+  }
+
+  evaluateCheckBox(question: ICheckboxQuestion): number {
+    if (question.answer?.value === true) {
+      return question.config.weightTrue / 100;
+    }
+
+    if (question.answer?.value === false) {
+      return question.config.weightFalse / 100;
+    }
+
+    return 0;
   }
 
   evaluate(response: IResponse): IEvaluation {
@@ -33,6 +46,9 @@ export default class EvaluationService {
 
       if (requirementAnswer.question.type !== QuestionEnum.Q_CHECKBOX) {
         evaluation.points += 1;
+      }
+      if (requirementAnswer.question.type === QuestionEnum.Q_CHECKBOX) {
+        evaluation.points += this.evaluateCheckBox(requirementAnswer.question);
       }
     });
 
