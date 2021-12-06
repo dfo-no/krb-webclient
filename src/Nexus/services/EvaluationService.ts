@@ -61,6 +61,15 @@ export default class EvaluationService {
       });
     });
 
+    // TODO, if check of answer exisiting in corresponding product is necessary, add this
+    response.products.forEach((product) => {
+      product.requirementAnswers.forEach((answer) => {
+        if (answer.question.type !== QuestionEnum.Q_CHECKBOX) {
+          evaluation.points += 1;
+        }
+      });
+    });
+
     return evaluation;
   }
 }

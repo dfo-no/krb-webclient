@@ -118,6 +118,15 @@ const responseSlice = createSlice({
       }: PayloadAction<{ product: IResponseProduct; productIndex: number }>
     ) {
       state.response.products[payload.productIndex] = payload.product;
+    },
+    setProductRequirementAnswers(
+      state,
+      {
+        payload
+      }: PayloadAction<{ answers: IRequirementAnswer[]; productIndex: number }>
+    ) {
+      state.response.products[payload.productIndex].requirementAnswers =
+        payload.answers;
     }
   }
 });
@@ -131,7 +140,8 @@ export const {
   setResponse,
   addRequirementAnswer,
   addProductAnswer,
-  setRequirementAnswers
+  setRequirementAnswers,
+  setProductRequirementAnswers
 } = responseSlice.actions;
 
 export default responseSlice.reducer;

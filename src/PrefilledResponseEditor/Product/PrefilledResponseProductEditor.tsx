@@ -27,7 +27,6 @@ import {
 import NeedsList from './NeedsList';
 
 export default function PrefilledResponseProductEditor(): React.ReactElement {
-  const { id } = useAppSelector((state) => state.selectedBank);
   const { t } = useTranslation();
   const { selectedProduct, prefilledResponse } = useAppSelector(
     (state) => state.prefilledResponse
