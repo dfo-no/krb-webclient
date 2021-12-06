@@ -1,6 +1,9 @@
 import Joi from 'joi';
 import { IProduct } from '../Nexus/entities/IProduct';
-import { IRequirementAnswer } from './IRequirementAnswer';
+import {
+  IRequirementAnswer,
+  RequirementAnswerSchema
+} from './IRequirementAnswer';
 
 export interface IPrefilledResponseProduct {
   id: string;
@@ -18,6 +21,6 @@ export const PrefilledResponseProductSchema = Joi.object().keys({
   originProduct: Joi.object(),
   description: Joi.string().allow(null, '').required(),
   answeredVariants: Joi.array().items(Joi.string()),
-  requirementAnswers: Joi.array(),
-  relatedProducts: Joi.array().items(Joi.string())
+  requirementAnswers: Joi.array().items(RequirementAnswerSchema),
+  relatedProducts: Joi.array().items(Joi.string().length(36))
 });

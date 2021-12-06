@@ -26,7 +26,7 @@ import {
 import {
   setMarkedRequirements,
   setPrefilledResponse
-} from '../../store/uploadedPrefilledResponseReducer';
+} from '../../store/reducers/uploadedPrefilledResponseReducer';
 
 interface IResponseInfoForm {
   supplier: string;
