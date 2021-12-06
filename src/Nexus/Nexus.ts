@@ -3,6 +3,7 @@ import Adapter from './Adapters/Adapter';
 import LocalStorageAdapter from './Adapters/LocalStorageAdapter';
 import { IBank } from './entities/IBank';
 import CodelistService from './services/CodelistService';
+import EvaluationService from './services/EvaluationService';
 import NeedService from './services/NeedService';
 import ProductService from './services/ProductService';
 import ProjectService from './services/ProjectService';
@@ -46,6 +47,8 @@ export default class Nexus {
   );
 
   public responseService = new ResponseService(this.responseStore);
+
+  public evaluationService = new EvaluationService();
 
   private constructor(adapter: Adapter) {
     this.adapter = adapter;
