@@ -18,7 +18,7 @@ This README is written for Mac users.
 1. Make sure you have added a SSH key to your GitHub settings to be able to clone the repository securely.
 2. Clone the repository:
 
-> git clone git@github.com:dfo-no/krb-webclient.git
+   > git clone git@github.com:dfo-no/krb-webclient.git
 
 3. Install Node 14 with Homebrew.
 4. Navigate to the project root directory, and install packages:
