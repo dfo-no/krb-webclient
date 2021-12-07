@@ -9,7 +9,10 @@ describe('CheckboxQuestionSchema should validate', () => {
     const question = {
       id: 'e56367af-d48d-422d-a4f6-ba52ee17af23',
       type: QuestionEnum.Q_CHECKBOX,
-      answer: null,
+      answer: {
+        point: 0,
+        value: false
+      },
       config: {
         weightTrue: 100,
         weightFalse: 100,

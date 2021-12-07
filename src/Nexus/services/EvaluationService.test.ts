@@ -43,7 +43,10 @@ describe('EvaluationService', () => {
                           unit: 'TB',
                           defaultPoint: 1
                         },
-                        answer: null,
+                        answer: {
+                          point: 0,
+                          value: 0
+                        },
                         sourceRel: null,
                         sourceOriginal: null,
                         id: '50bf8a0a-e435-4c8f-b7d3-0048810b4491'
@@ -207,7 +210,10 @@ describe('EvaluationService', () => {
                       unit: 'TB',
                       defaultPoint: 1
                     },
-                    answer: null,
+                    answer: {
+                      point: 0,
+                      value: 0
+                    },
                     sourceRel: null,
                     sourceOriginal: null,
                     id: '50bf8a0a-e435-4c8f-b7d3-0048810b4491'
@@ -262,7 +268,10 @@ describe('EvaluationService', () => {
                             unit: 'TB',
                             defaultPoint: 1
                           },
-                          answer: null,
+                          answer: {
+                            point: 0,
+                            value: 0
+                          },
                           sourceRel: null,
                           sourceOriginal: null,
                           id: '50bf8a0a-e435-4c8f-b7d3-0048810b4491'
@@ -309,7 +318,10 @@ describe('EvaluationService', () => {
                             toDate: '2021-11-30T15:09:09.0000000Z',
                             defaultPoint: 1
                           },
-                          answer: null,
+                          answer: {
+                            point: 0,
+                            date: null
+                          },
                           sourceRel: null,
                           sourceOriginal: null,
                           id: 'fa9ad612-2ab3-4877-8850-c65986347ece'
@@ -356,7 +368,10 @@ describe('EvaluationService', () => {
                             weightFalse: 10,
                             defaultPoint: 1
                           },
-                          answer: null,
+                          answer: {
+                            point: 0,
+                            value: false
+                          },
                           sourceRel: null,
                           sourceOriginal: null,
                           id: '14b047d9-20f1-4681-83c4-519904352027'
@@ -403,7 +418,10 @@ describe('EvaluationService', () => {
                             codelist: 'dedfefcc-6839-4b44-abb1-ced9759a375d',
                             defaultPoint: 1
                           },
-                          answer: null,
+                          answer: {
+                            point: 0,
+                            codes: []
+                          },
                           sourceRel: null,
                           sourceOriginal: null,
                           id: '01c570c3-f591-47f3-9d0b-6cc6bb881509'
@@ -580,7 +598,10 @@ describe('EvaluationService', () => {
                 unit: 'TB',
                 defaultPoint: 1
               },
-              answer: null,
+              answer: {
+                point: 0,
+                value: 0
+              },
               sourceRel: null,
               sourceOriginal: null,
               id: '50bf8a0a-e435-4c8f-b7d3-0048810b4491'
@@ -609,7 +630,10 @@ describe('EvaluationService', () => {
                         unit: 'TB',
                         defaultPoint: 1
                       },
-                      answer: null,
+                      answer: {
+                        point: 0,
+                        value: 0
+                      },
                       sourceRel: null,
                       sourceOriginal: null,
                       id: '50bf8a0a-e435-4c8f-b7d3-0048810b4491'
@@ -637,7 +661,10 @@ describe('EvaluationService', () => {
                 toDate: '2021-11-30T15:09:09.0000000Z',
                 defaultPoint: 1
               },
-              answer: null,
+              answer: {
+                point: 0,
+                date: null
+              },
               sourceRel: null,
               sourceOriginal: null,
               id: 'fa9ad612-2ab3-4877-8850-c65986347ece'
@@ -664,7 +691,10 @@ describe('EvaluationService', () => {
                         toDate: '2021-11-30T15:09:09.0000000Z',
                         defaultPoint: 1
                       },
-                      answer: null,
+                      answer: {
+                        point: 0,
+                        date: null
+                      },
                       sourceRel: null,
                       sourceOriginal: null,
                       id: 'fa9ad612-2ab3-4877-8850-c65986347ece'
@@ -692,7 +722,10 @@ describe('EvaluationService', () => {
                 weightFalse: 10,
                 defaultPoint: 1
               },
-              answer: null,
+              answer: {
+                point: 0,
+                value: false
+              },
               sourceRel: null,
               sourceOriginal: null,
               id: '14b047d9-20f1-4681-83c4-519904352027'
@@ -719,7 +752,10 @@ describe('EvaluationService', () => {
                         weightFalse: 10,
                         defaultPoint: 1
                       },
-                      answer: null,
+                      answer: {
+                        point: 0,
+                        value: false
+                      },
                       sourceRel: null,
                       sourceOriginal: null,
                       id: '14b047d9-20f1-4681-83c4-519904352027'
@@ -774,7 +810,10 @@ describe('EvaluationService', () => {
                         codelist: 'dedfefcc-6839-4b44-abb1-ced9759a375d',
                         defaultPoint: 1
                       },
-                      answer: null,
+                      answer: {
+                        point: 0,
+                        codes: []
+                      },
                       sourceRel: null,
                       sourceOriginal: null,
                       id: '01c570c3-f591-47f3-9d0b-6cc6bb881509'
@@ -801,7 +840,10 @@ describe('EvaluationService', () => {
                 max: 1000,
                 defaultPoint: 1
               },
-              answer: null,
+              answer: {
+                point: 0,
+                text: ''
+              },
               sourceRel: null,
               sourceOriginal: null,
               id: '087fd637-2ae9-4ccf-87e5-f61599078255'
@@ -827,7 +869,10 @@ describe('EvaluationService', () => {
                         max: 1000,
                         defaultPoint: 1
                       },
-                      answer: null,
+                      answer: {
+                        point: 0,
+                        text: ''
+                      },
                       sourceRel: null,
                       sourceOriginal: null,
                       id: '087fd637-2ae9-4ccf-87e5-f61599078255'

@@ -64,7 +64,7 @@ export default function QuestionArray({
           unit: 'GB',
           defaultPoint: 1
         },
-        answer: null,
+        answer: { point: null, value: 0 },
         sourceRel: null,
         sourceOriginal: null
       };
@@ -78,7 +78,10 @@ export default function QuestionArray({
           codelist: project.codelist[0].id,
           defaultPoint: 1
         },
-        answer: null,
+        answer: {
+          point: 0,
+          codes: []
+        },
         sourceRel: null,
         sourceOriginal: null
       };
@@ -91,7 +94,10 @@ export default function QuestionArray({
           max: 0,
           defaultPoint: 1
         },
-        answer: null,
+        answer: {
+          point: 0,
+          text: ''
+        },
         sourceRel: null,
         sourceOriginal: null
       };
@@ -105,7 +111,10 @@ export default function QuestionArray({
           toDate: null,
           defaultPoint: 1
         },
-        answer: null,
+        answer: {
+          point: 0,
+          date: null
+        },
         sourceRel: null,
         sourceOriginal: null
       };
@@ -119,7 +128,10 @@ export default function QuestionArray({
           toTime: '',
           defaultPoint: 1
         },
-        answer: null,
+        answer: {
+          point: 0,
+          time: ''
+        },
         sourceRel: null,
         sourceOriginal: null
       };
@@ -133,7 +145,10 @@ export default function QuestionArray({
           weightFalse: 0,
           defaultPoint: 1
         },
-        answer: null,
+        answer: {
+          point: 0,
+          value: false
+        },
         sourceRel: null,
         sourceOriginal: null
       };
@@ -146,7 +161,10 @@ export default function QuestionArray({
           fileEndings: '',
           defaultPoint: 1
         },
-        answer: null,
+        answer: {
+          point: 0,
+          file: ''
+        },
         sourceRel: null,
         sourceOriginal: null
       };
