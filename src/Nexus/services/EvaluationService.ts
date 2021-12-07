@@ -72,4 +72,8 @@ export default class EvaluationService {
 
     return evaluation;
   }
+
+  checkIfEligbleForEvaluation(responses: IResponse[]): boolean {
+    return true;
+  }
 }
