@@ -21,6 +21,9 @@ This README is written for Mac users.
    > git clone git@github.com:dfo-no/krb-webclient.git
 
 3. Install Node 14 with Homebrew.
+
+   > brew install node@14
+
 4. Navigate to the project root directory, and install packages:
 
    > npm install
