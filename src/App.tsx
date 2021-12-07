@@ -20,7 +20,6 @@ import SpecModule from './SpecEditor/SpecModule';
 import WorkbenchModule from './Workbench/WorkbenchModule';
 
 const msalInstance = new PublicClientApplication(msalConfig);
-
 function App(): React.ReactElement {
   function renderContent() {
     return (
