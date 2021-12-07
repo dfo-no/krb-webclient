@@ -1,6 +1,6 @@
 # Kravbank webclient README
 
-This README is written for MAC users.
+This README is written for Mac users.
 
 ## Installation
 
