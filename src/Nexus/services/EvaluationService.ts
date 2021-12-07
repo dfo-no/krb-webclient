@@ -2,14 +2,14 @@
 import { IResponse } from '../../models/IResponse';
 import QuestionEnum from '../../models/QuestionEnum';
 import { ICheckboxQuestion } from '../entities/ICheckboxQuestion';
-import { IEvaluation } from '../entities/IEvaluation';
+import { IEvaluatedResponse } from '../entities/IEvaluatedResponse';
 
 export default class EvaluationService {
   /**
    * We assume the specification has already been met
    */
-  async evaluateAll(responses: IResponse[]): Promise<IEvaluation[]> {
-    const evaluations: IEvaluation[] = [];
+  async evaluateAll(responses: IResponse[]): Promise<IEvaluatedResponse[]> {
+    const evaluations: IEvaluatedResponse[] = [];
     responses.forEach((response) => {
       const result = this.evaluate(response);
       evaluations.push(result);
@@ -29,8 +29,8 @@ export default class EvaluationService {
     return 0;
   }
 
-  evaluate(response: IResponse): IEvaluation {
-    const evaluation: IEvaluation = {
+  evaluate(response: IResponse): IEvaluatedResponse {
+    const evaluation: IEvaluatedResponse = {
       supplier: response.supplier,
       points: 0
     };

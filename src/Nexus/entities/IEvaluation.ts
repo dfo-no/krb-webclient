@@ -1,4 +1,7 @@
+import { ISpecification } from '../../models/ISpecification';
+import { IEvaluatedResponse } from './IEvaluatedResponse';
+
 export interface IEvaluation {
-  supplier: string;
-  points: number;
+  responses: IEvaluatedResponse[];
+  specification: ISpecification;
 }

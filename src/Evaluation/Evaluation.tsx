@@ -1,5 +1,4 @@
 import { AxiosResponse } from 'axios';
-import fileDownload from 'js-file-download';
 import React from 'react';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
@@ -9,6 +8,7 @@ import InputGroup from 'react-bootstrap/InputGroup';
 import Row from 'react-bootstrap/Row';
 import { httpPost } from '../api/http';
 import { IResponse } from '../models/IResponse';
+import { IEvaluation } from '../Nexus/entities/IEvaluation';
 import { useAppDispatch, useAppSelector } from '../store/hooks';
 import {
   setResponses,
@@ -17,7 +17,7 @@ import {
 
 export default function Evaluation(): React.ReactElement {
   const dispatch = useAppDispatch();
-  const { responses, specification } = useAppSelector(
+  const { responses, specification, evaluations } = useAppSelector(
     (state) => state.evaluation
   );
 
@@ -110,14 +110,34 @@ export default function Evaluation(): React.ReactElement {
   }
 
   const onDownLoad = () => {
-    const newFile = {
-      spec: specification,
-      responses
+    const evaluation: IEvaluation = {
+      specification,
+      responses: evaluations
     };
-    fileDownload(JSON.stringify(newFile), `evaluations.json`);
+    httpPost<IEvaluation, AxiosResponse<File>>(
+      '/java/generateResponse',
+      evaluation,
+      {
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/pdf'
+        },
+        responseType: 'blob'
+      }
+    ).then((response) => {
+      const url = window.URL.createObjectURL(new Blob([response.data]));
+      const link = document.createElement('a');
+      link.href = url;
+      link.setAttribute('download', 'evaluation.pdf');
+      document.body.appendChild(link);
+      link.click();
+      setTimeout(() => {
+        window.URL.revokeObjectURL(link.toString());
+      }, 200);
+    });
   };
 
-  const evaluations = (iResponses: IResponse[]) => {
+  const evaluationlist = (iResponses: IResponse[]) => {
     const list = iResponses.map((response: IResponse) => {
       return (
         <Row key={response.supplier}>
@@ -172,7 +192,7 @@ export default function Evaluation(): React.ReactElement {
       </Row>
 
       <Row className="m-4">
-        <Col>{responses.length !== 0 && evaluations(responses)}</Col>
+        <Col>{responses.length !== 0 && evaluationlist(responses)}</Col>
       </Row>
     </Container>
   );
