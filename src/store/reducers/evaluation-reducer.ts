@@ -2,10 +2,12 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { IResponse } from '../../models/IResponse';
 import { ISpecification } from '../../models/ISpecification';
 import ModelType from '../../models/ModelType';
+import { IEvaluatedResponse } from '../../Nexus/entities/IEvaluatedResponse';
 
 interface ISelectedBankState {
   specification: ISpecification;
   responses: IResponse[];
+  evaluations: IEvaluatedResponse[];
 }
 
 const initialState: ISelectedBankState = {
@@ -32,7 +34,8 @@ const initialState: ISelectedBankState = {
     requirements: [],
     requirementAnswers: []
   },
-  responses: []
+  responses: [],
+  evaluations: []
 };
 
 const evaluationSlice = createSlice({
@@ -44,10 +47,14 @@ const evaluationSlice = createSlice({
     },
     setResponses(state, { payload }: PayloadAction<IResponse[]>) {
       state.responses = payload;
+    },
+    setEvaluations(state, { payload }: PayloadAction<IEvaluatedResponse[]>) {
+      state.evaluations = payload;
     }
   }
 });
 
-export const { setSpecification, setResponses } = evaluationSlice.actions;
+export const { setSpecification, setResponses, setEvaluations } =
+  evaluationSlice.actions;
 
 export default evaluationSlice.reducer;
