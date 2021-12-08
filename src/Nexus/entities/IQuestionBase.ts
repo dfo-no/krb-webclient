@@ -16,7 +16,7 @@ export interface IQuestionBase<A extends IAnswerBase, C extends IConfigBase>
 
   type: QuestionEnum;
 
-  answer: A | null;
+  answer: A;
 
   config: C;
 }
