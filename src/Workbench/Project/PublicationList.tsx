@@ -20,6 +20,7 @@ import {
   putSelectedProjectThunk,
   removePublication
 } from '../../store/reducers/project-reducer';
+import { selectBank } from '../../store/reducers/selectedBank-reducer';
 import css from './PublicationList.module.scss';
 
 export default function PublicationList(): React.ReactElement {
@@ -79,6 +80,9 @@ export default function PublicationList(): React.ReactElement {
     path.push('message');
     return get(errors, path);
   };
+  const handleSelectedBank = (bankId: string) => () => {
+    dispatch(selectBank(bankId));
+  };
 
   return (
     <Form>
@@ -115,7 +119,10 @@ export default function PublicationList(): React.ReactElement {
               ) : (
                 <Row>
                   <Col>
-                    <Nav.Link href={`/bank/${field.bankId}`}>
+                    <Nav.Link
+                      href={`/specification/${field.bankId}`}
+                      onClick={handleSelectedBank(field.bankId)}
+                    >
                       {t('date.PP', {
                         date: new Date(field.date ? field.date : '')
                       })}
