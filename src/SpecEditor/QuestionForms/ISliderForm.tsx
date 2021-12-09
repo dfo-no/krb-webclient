@@ -81,6 +81,7 @@ export default function ValueForm({
         <Form onSubmit={handleSubmit(saveValues)}>
           <Form.Control
             as="input"
+            step="0.01"
             {...register('config.min')}
             isInvalid={hasError('config.min')}
             type="number"
@@ -88,6 +89,7 @@ export default function ValueForm({
 
           <Form.Control
             as="input"
+            step="0.01"
             {...register('config.max')}
             isInvalid={hasError('config.max')}
             type="number"
@@ -95,6 +97,7 @@ export default function ValueForm({
 
           <Form.Control
             as="input"
+            step="0.01"
             {...register('config.step')}
             isInvalid={hasError('config.step')}
             type="number"
