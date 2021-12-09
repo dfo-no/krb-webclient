@@ -1,5 +1,16 @@
 import { createTheme } from '@material-ui/core/styles';
 
+declare module '@material-ui/core/styles/createPalette' {
+  interface Palette {
+    dfoBlue?: Palette['primary'];
+    dfoInputBackground?: Palette['primary'];
+  }
+  interface PaletteOptions {
+    dfoBlue?: PaletteOptions['primary'];
+    dfoInputBackground?: PaletteOptions['primary'];
+  }
+}
+
 const theme = createTheme({
   spacing: [
     2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30, 32, 34, 36, 38, 40,
@@ -7,11 +18,11 @@ const theme = createTheme({
     80, 82, 84, 86, 88, 90, 92, 94, 96, 98, 100
   ],
   palette: {
-    primary: {
-      main: '#eb345b'
+    dfoBlue: {
+      main: '#005b91'
     },
-    secondary: {
-      main: '#ffffff'
+    dfoInputBackground: {
+      main: '#f2f1f9'
     }
   }
 });

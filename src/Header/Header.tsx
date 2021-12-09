@@ -18,6 +18,9 @@ const useStyles = makeStyles(() =>
   createStyles({
     headerContainer: {
       marginBottom: theme.spacing(36)
+    },
+    appBar: {
+      backgroundColor: theme?.palette?.dfoBlue?.main
     }
   })
 );
@@ -31,7 +34,7 @@ export default function Header(): React.ReactElement {
         <Container className={classes.headerContainer} maxWidth="md">
           <AppBar>
             <Toolbar>
-              <Grid container justifyContent="space-between">
+              <Grid container wrap="nowrap" justifyContent="space-between">
                 <Grid item>
                   <img alt="DFØ Logo" src="/logo-blue.svg" />
                 </Grid>
