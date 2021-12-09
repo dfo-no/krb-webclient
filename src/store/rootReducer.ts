@@ -1,6 +1,7 @@
 import { combineReducers } from '@reduxjs/toolkit';
 import alertReducer from './reducers/alert-reducer';
 import bankReducer from './reducers/bank-reducer';
+import evaluationReducer from './reducers/evaluation-reducer';
 import loaderReducer from './reducers/loader-reducer';
 import PrefilledResponseReducer from './reducers/PrefilledResponseReducer';
 import projectReducer from './reducers/project-reducer';
@@ -15,8 +16,8 @@ import selectedRequirementReducer from './reducers/selectedRequirement-reducer';
 import selectedResponseProductReducer from './reducers/selectedResponseProduct-reducer';
 import selectedSpecProductReducer from './reducers/selectedSpecProduct-reducer';
 import specificationReducer from './reducers/spesification-reducer';
+import uploadedPrefilledResponseReducer from './reducers/uploadedPrefilledResponseReducer';
 import userReducer from './reducers/userReducer';
-import uploadedPrefilledResponseReducer from './uploadedPrefilledResponseReducer';
 
 const rootReducer = combineReducers({
   loader: loaderReducer,
@@ -36,7 +37,8 @@ const rootReducer = combineReducers({
   selectedResponseProduct: selectedResponseProductReducer,
   alert: alertReducer,
   prefilledResponse: PrefilledResponseReducer,
-  uploadedResponse: uploadedPrefilledResponseReducer
+  uploadedResponse: uploadedPrefilledResponseReducer,
+  evaluation: evaluationReducer
 });
 
 export default rootReducer;

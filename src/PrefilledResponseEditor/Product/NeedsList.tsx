@@ -7,11 +7,7 @@ import { Levelable } from '../../models/Levelable';
 import { INeed } from '../../Nexus/entities/INeed';
 import AnswerForm from './AnswerForm';
 
-export default function NeedsList({
-  prefilledResponse,
-  selectedProduct,
-  checkNeeds
-}: {
+interface IProps {
   prefilledResponse: IPrefilledResponse;
   selectedProduct: IPrefilledResponseProduct;
   checkNeeds(
@@ -19,7 +15,13 @@ export default function NeedsList({
     need: Levelable<INeed>,
     productId: string
   ): [boolean, string];
-}): React.ReactElement {
+}
+
+export default function NeedsList({
+  prefilledResponse,
+  selectedProduct,
+  checkNeeds
+}: IProps): React.ReactElement {
   const findNeedIdsForProduct = (productId: string, needArray: INeed[]) => {
     const result: string[] = [];
     needArray.forEach((need) => {

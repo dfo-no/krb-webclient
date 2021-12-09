@@ -15,6 +15,7 @@ import {
 } from '../../models/IResponseProduct';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { editProduct } from '../../store/reducers/response-reducer';
+import ProductAutoFillSelector from './ProductAutoFillSelector';
 import ResponseProductRequirementSelector from './ResponseProductRequirementSelector';
 
 export default function ResponseProductEditor(): React.ReactElement {
@@ -119,6 +120,7 @@ export default function ResponseProductEditor(): React.ReactElement {
             </Col>
             <ErrorSummary errors={errors} />
           </Form>
+          <ProductAutoFillSelector />
         </Card.Body>
       </Card>
 
