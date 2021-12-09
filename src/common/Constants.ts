@@ -12,3 +12,5 @@ export const DATETIME_FORMAT = 'dd.MM.yyyy H:s';
  * as a property in the JSON and the client can use the offset to compute
  * the UTC DateTime value. */
 export const DATETIME_ISO8601UTC = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSS'Z'";
+
+export const DATETIME_ISO8601 = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSS";
