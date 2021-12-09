@@ -12,6 +12,7 @@ import Evaluation from './Evaluation/Evaluation';
 import Header from './Header/Header';
 import BankPage from './Home/BankPage';
 import HomePage from './Home/HomePage';
+import KitchenSink from './KitchenSink';
 import PageLayout from './PageLayout';
 import PrefilledResponseModule from './PrefilledResponseEditor/PrefilledResponseModule';
 import ResponseModule from './ResponseEditor/ResponseModule';
@@ -42,6 +43,7 @@ function App(): React.ReactElement {
               path="/prefilledresponse/:id"
               component={PrefilledResponseModule}
             />
+            <Route path="/kitchensink" component={KitchenSink} />
           </AuthenticatedTemplate>
           <UnauthenticatedTemplate>
             <h5 className="card-title">Please sign-in to access this page</h5>
