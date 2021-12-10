@@ -16,6 +16,7 @@ import theme from '../theme';
 
 export default function Header(): React.ReactElement {
   const badgeText = 'DEV';
+
   return (
     <>
       <ThemeProvider theme={theme}>
@@ -25,17 +26,17 @@ export default function Header(): React.ReactElement {
               marginBottom: 70
             }}
           >
-            <AppBar>
+            <AppBar elevation={0}>
               <CssBaseline />
               <Toolbar>
-                <Grid container wrap="nowrap" justifyContent="space-between">
-                  <Grid item>
+                <Grid container wrap="nowrap">
+                  <Grid container item>
                     <img alt="DFØ Logo" src="/logo-blue.svg" />
                   </Grid>
-                  <Grid item>
-                    <Badge badgeContent={badgeText} color="secondary" />
+                  <Grid item xs={9}>
+                    <Badge badgeContent={badgeText} color="primary" />
                   </Grid>
-                  <Grid item>
+                  <Grid container item justify="flex-end">
                     <SignedButton />
                   </Grid>
                 </Grid>
