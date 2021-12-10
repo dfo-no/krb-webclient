@@ -1,4 +1,4 @@
-import Joi from 'joi';
+import Joi, { equal } from 'joi';
 import QuestionEnum from '../../models/QuestionEnum';
 import {
   ConfigBaseSchema,
@@ -21,6 +21,8 @@ export interface ISliderConfig extends IConfigBase {
   min: number;
   max: number;
   unit: string;
+  valueNumbers: number[];
+  scores: number[];
 }
 
 export const SliderQuestionSchema = QuestionBaseSchema.keys({
@@ -29,8 +31,10 @@ export const SliderQuestionSchema = QuestionBaseSchema.keys({
     step: Joi.number().min(0).max(1000000000).required(),
     min: Joi.number().min(0).max(1000000000).required(),
     max: Joi.number().min(1).max(1000000000).required().greater(Joi.ref('min')),
-    unit: Joi.string().required()
-  })
+    unit: Joi.string().required(),
+    valueNumbers: Joi.array().items(Joi.number()).required(),
+    scores: Joi.array().items(Joi.number()).required()
+  }).assert('valueNumbers.length', Joi.ref('scores.length'))
 });
 
 export const SliderQuestionAnswerSchema = SliderQuestionSchema.keys({
