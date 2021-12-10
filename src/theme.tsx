@@ -127,12 +127,12 @@ const theme = createTheme(
     overrides: {
       MuiButton: {
         root: {
-          backgroundColor: palette.palette.dfoInputBackground.main
+          backgroundColor: palette.palette.yellow.main
         }
       },
       MuiAppBar: {
         colorPrimary: {
-          backgroundColor: palette.palette.teal.main
+          backgroundColor: palette.palette.gray100.main
         }
       }
     }
