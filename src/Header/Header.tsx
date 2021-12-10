@@ -11,9 +11,7 @@ import { ThemeProvider } from '@material-ui/core/styles';
 
 import theme from '../theme';
 
-console.log(theme);
-
-function Header() {
+export default function Header(): React.ReactElement {
   return (
     <ThemeProvider theme={theme}>
       <Container maxWidth="md">
@@ -33,5 +31,3 @@ function Header() {
     </ThemeProvider>
   );
 }
-
-export default Header;
