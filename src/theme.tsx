@@ -132,9 +132,7 @@ const theme = createTheme(
       },
       MuiAppBar: {
         root: {
-          borderBottom: '1px solid #e6e6e6',
-          borderBottomLeftRadius: '6px',
-          borderBottomRightRadius: '6px'
+          borderBottom: '1px solid #e6e6e6'
         },
         colorPrimary: {
           backgroundColor: palette.palette.gray100.main
