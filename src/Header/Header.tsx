@@ -46,18 +46,20 @@ export default function Header(): React.ReactElement {
         <Container maxWidth="md">
           <AppBar elevation={0}>
             <Toolbar>
-              <Grid container wrap="nowrap">
-                <Grid container wrap="nowrap">
-                  <Grid container item xs={3}>
-                    <Link component={RouterLink} to="/home">
-                      <img src="/logo-blue.svg" alt="DFØ logo" />
-                    </Link>
-                  </Grid>
-                  <Grid container item justifyContent="flex-end" xs={1}>
-                    <Badge badgeContent={badgeText} color="primary" />
+              <Grid container wrap="nowrap" spacing={5}>
+                <Grid item>
+                  <Grid container wrap="nowrap" spacing={4}>
+                    <Grid item>
+                      <Link component={RouterLink} to="/home">
+                        <img src="/logo-blue.svg" alt="DFØ logo" />
+                      </Link>
+                    </Grid>
+                    <Grid item>
+                      <Badge badgeContent={badgeText} color="primary" />
+                    </Grid>
                   </Grid>
                 </Grid>
-                <Grid container item justifyContent="flex-end" xs={7}>
+                <Grid container item justifyContent="flex-end">
                   <SignedButton />
                 </Grid>
               </Grid>

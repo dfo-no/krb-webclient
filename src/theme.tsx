@@ -125,11 +125,6 @@ const palette = createTheme({
 const theme = createTheme(
   {
     overrides: {
-      MuiButton: {
-        root: {
-          backgroundColor: palette.palette.yellow.main
-        }
-      },
       MuiAppBar: {
         root: {
           borderBottom: '1px solid #e6e6e6'
