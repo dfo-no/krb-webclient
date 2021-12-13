@@ -58,17 +58,9 @@ const KitchenSink = (): React.ReactElement => {
     >
       <FormProvider {...methods}>
         <form onSubmit={methods.handleSubmit(saveValues)}>
-          <DateInput
-            name="person.birthDay"
-            label="birthDay"
-            defaultValue={null}
-          />
-          <DateInput
-            name="person.weddingDay"
-            label="weddingDay"
-            defaultValue={null}
-          />
-          <HiddenNumberInput name="person.point" />
+          <DateInput name="person.birthDay" label="birthDay" />
+          <DateInput name="person.weddingDay" label="weddingDay" />
+          {/* <HiddenNumberInput name="person.point" /> */}
           <SwitchInput label="isDeveloper" name="person.isDeveloper" />
           <br />
           <button type="submit">Save</button>
