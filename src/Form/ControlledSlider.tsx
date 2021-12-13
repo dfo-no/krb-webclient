@@ -51,6 +51,7 @@ const ControlledSlider = <T extends FieldValues>({
                 max={max}
                 step={step}
                 marks={marks}
+                value={field.value}
               />
             )}
           />

@@ -4,15 +4,20 @@ import Paper from '@mui/material/Paper';
 import Joi from 'joi';
 import React from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
-import DateInput from './FormProvider/DateInput';
-import HiddenNumberInput from './FormProvider/HiddenTextInput';
-import SwitchInput from './FormProvider/SwitchInput';
+import CheckboxCtrl from './FormProvider/CheckboxCtrl';
+import DateCtrl from './FormProvider/DateCtrl';
+import SliderCtrl from './FormProvider/SliderCtrl';
+import SwitchCtrl from './FormProvider/SwitchCtrl';
+import TextCtrl from './FormProvider/TextCtrl';
 
 interface IFormValues {
   person: {
     birthDay: string | null;
     weddingDay?: string | null;
     isDeveloper?: boolean;
+    range: number;
+    name: string;
+    isSexy: boolean;
   };
 }
 
@@ -27,7 +32,10 @@ const FormSchema = Joi.object().keys({
       Joi.string().valid(null)
     ]).required(),
     point: Joi.number().required(),
-    isDeveloper: Joi.boolean().required()
+    isDeveloper: Joi.boolean().valid(true).required(),
+    range: Joi.number().min(0).max(100).required(),
+    name: Joi.string().min(5).max(20).required(),
+    isSexy: Joi.boolean().valid(true).required()
   })
 });
 
@@ -37,7 +45,10 @@ const KitchenSink = (): React.ReactElement => {
       birthDay: null,
       weddingDay: '2023-12-24T14:00:00.123Z',
       point: 50,
-      isDeveloper: true
+      isDeveloper: false,
+      range: 20,
+      name: '',
+      isSexy: false
     }
   };
 
@@ -58,10 +69,12 @@ const KitchenSink = (): React.ReactElement => {
     >
       <FormProvider {...methods}>
         <form onSubmit={methods.handleSubmit(saveValues)}>
-          <DateInput name="person.birthDay" label="birthDay" />
-          <DateInput name="person.weddingDay" label="weddingDay" />
-          {/* <HiddenNumberInput name="person.point" /> */}
-          <SwitchInput label="isDeveloper" name="person.isDeveloper" />
+          <DateCtrl name="person.birthDay" label="birthDay" />
+          <DateCtrl name="person.weddingDay" label="weddingDay" />
+          <SwitchCtrl label="isDeveloper" name="person.isDeveloper" />
+          <SliderCtrl name="person.range" />
+          <TextCtrl name="person.name" label="Name" />
+          <CheckboxCtrl label="isSexy" name="person.isSexy" />
           <br />
           <button type="submit">Save</button>
         </form>
