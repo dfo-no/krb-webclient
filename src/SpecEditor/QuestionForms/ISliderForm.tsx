@@ -18,6 +18,7 @@ import {
   addAnswer,
   addProductAnswer
 } from '../../store/reducers/spesification-reducer';
+import SliderPointArray from './SliderPoints';
 
 interface IProps {
   parentAnswer: IRequirementAnswer;
@@ -26,12 +27,15 @@ interface IProps {
 export default function ValueForm({
   parentAnswer
 }: IProps): React.ReactElement {
-  const { register, handleSubmit, formState } = useForm<ISliderQuestion>({
-    resolver: joiResolver(SliderQuestionSchema),
-    defaultValues: {
-      ...(parentAnswer.question as ISliderQuestion)
-    }
-  });
+  const { register, handleSubmit, formState, control } =
+    useForm<ISliderQuestion>({
+      resolver: joiResolver(SliderQuestionSchema),
+      defaultValues: {
+        ...(parentAnswer.question as ISliderQuestion)
+      }
+    });
+
+  const q = parentAnswer.question as ISliderQuestion;
 
   const { errors } = formState;
   const { selectedSpecificationProduct } = useAppSelector(
@@ -107,6 +111,12 @@ export default function ValueForm({
             as="input"
             {...register('config.unit')}
             isInvalid={hasError('config.unit')}
+          />
+
+          <SliderPointArray
+            question={q}
+            control={control}
+            register={register}
           />
 
           <Button type="submit">{t('save')}</Button>
