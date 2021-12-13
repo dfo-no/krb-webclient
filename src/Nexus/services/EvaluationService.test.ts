@@ -41,7 +41,11 @@ describe('EvaluationService', () => {
                           max: 50,
                           step: 5,
                           unit: 'TB',
-                          defaultPoint: 1
+                          defaultPoint: 1,
+                          scoreValues: [
+                            { score: 0, value: 0 },
+                            { value: 10, score: 100 }
+                          ]
                         },
                         answer: {
                           point: 0,
@@ -179,7 +183,11 @@ describe('EvaluationService', () => {
               max: 50,
               step: 5,
               unit: 'TB2',
-              defaultPoint: 1
+              defaultPoint: 1,
+              scoreValues: [
+                { score: 0, value: 0 },
+                { value: 10, score: 100 }
+              ]
             },
             answer: {
               point: 0,
@@ -211,7 +219,11 @@ describe('EvaluationService', () => {
                       max: 50,
                       step: 5,
                       unit: 'TB',
-                      defaultPoint: 1
+                      defaultPoint: 1,
+                      scoreValues: [
+                        { score: 0, value: 0 },
+                        { value: 10, score: 100 }
+                      ]
                     },
                     answer: {
                       point: 0,
@@ -269,7 +281,11 @@ describe('EvaluationService', () => {
                             max: 50,
                             step: 5,
                             unit: 'TB',
-                            defaultPoint: 1
+                            defaultPoint: 1,
+                            scoreValues: [
+                              { score: 0, value: 0 },
+                              { value: 10, score: 100 }
+                            ]
                           },
                           answer: {
                             point: 0,
@@ -602,7 +618,11 @@ describe('EvaluationService', () => {
                 max: 50,
                 step: 5,
                 unit: 'TB',
-                defaultPoint: 1
+                defaultPoint: 1,
+                scoreValues: [
+                  { score: 0, value: 0 },
+                  { value: 10, score: 100 }
+                ]
               },
               answer: {
                 point: 0,
@@ -634,7 +654,11 @@ describe('EvaluationService', () => {
                         max: 50,
                         step: 5,
                         unit: 'TB',
-                        defaultPoint: 1
+                        defaultPoint: 1,
+                        scoreValues: [
+                          { score: 0, value: 0 },
+                          { value: 10, score: 100 }
+                        ]
                       },
                       answer: {
                         point: 0,
@@ -914,7 +938,11 @@ describe('EvaluationService', () => {
               max: 50,
               step: 5,
               unit: 'TB',
-              defaultPoint: 1
+              defaultPoint: 1,
+              scoreValues: [
+                { score: 0, value: 0 },
+                { value: 10, score: 100 }
+              ]
             },
             answer: {
               point: 0,
@@ -946,7 +974,11 @@ describe('EvaluationService', () => {
                       max: 50,
                       step: 5,
                       unit: 'TB',
-                      defaultPoint: 1
+                      defaultPoint: 1,
+                      scoreValues: [
+                        { score: 0, value: 0 },
+                        { value: 10, score: 100 }
+                      ]
                     },
                     answer: {
                       point: 0,
@@ -1246,7 +1278,11 @@ describe('EvaluationService', () => {
                             max: 50,
                             step: 5,
                             unit: 'TB',
-                            defaultPoint: 1
+                            defaultPoint: 1,
+                            scoreValues: [
+                              { score: 0, value: 0 },
+                              { value: 10, score: 100 }
+                            ]
                           },
                           answer: {
                             point: 0,
@@ -1579,7 +1615,11 @@ describe('EvaluationService', () => {
                 max: 50,
                 step: 5,
                 unit: 'TB',
-                defaultPoint: 1
+                defaultPoint: 1,
+                scoreValues: [
+                  { score: 0, value: 0 },
+                  { value: 10, score: 100 }
+                ]
               },
               answer: {
                 point: 0,
@@ -1611,7 +1651,11 @@ describe('EvaluationService', () => {
                         max: 50,
                         step: 5,
                         unit: 'TB',
-                        defaultPoint: 1
+                        defaultPoint: 1,
+                        scoreValues: [
+                          { score: 0, value: 0 },
+                          { value: 10, score: 100 }
+                        ]
                       },
                       answer: {
                         point: 0,
@@ -1891,7 +1935,11 @@ describe('EvaluationService', () => {
               max: 50,
               step: 5,
               unit: 'TB',
-              defaultPoint: 1
+              defaultPoint: 1,
+              scoreValues: [
+                { score: 0, value: 0 },
+                { value: 10, score: 100 }
+              ]
             },
             answer: {
               point: 0,
@@ -1923,7 +1971,11 @@ describe('EvaluationService', () => {
                       max: 50,
                       step: 5,
                       unit: 'TB',
-                      defaultPoint: 1
+                      defaultPoint: 1,
+                      scoreValues: [
+                        { score: 0, value: 0 },
+                        { value: 10, score: 100 }
+                      ]
                     },
                     answer: {
                       point: 0,

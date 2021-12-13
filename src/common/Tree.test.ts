@@ -201,7 +201,11 @@ describe('Tree', () => {
                       max: 0,
                       step: 1,
                       unit: 'GB',
-                      defaultPoint: 0
+                      defaultPoint: 0,
+                      scoreValues: [
+                        { score: 0, value: 0 },
+                        { value: 10, score: 100 }
+                      ]
                     },
                     sourceOriginal: '',
                     sourceRel: '',
@@ -249,7 +253,11 @@ describe('Tree', () => {
                       max: 100,
                       step: 5,
                       unit: 'TB',
-                      defaultPoint: 0
+                      defaultPoint: 0,
+                      scoreValues: [
+                        { score: 0, value: 0 },
+                        { value: 10, score: 100 }
+                      ]
                     },
                     answer: { point: 0, value: 0 },
                     sourceOriginal: '',
@@ -310,7 +318,11 @@ describe('Tree', () => {
                       max: 0,
                       step: 1,
                       unit: 'GB',
-                      defaultPoint: 0
+                      defaultPoint: 0,
+                      scoreValues: [
+                        { score: 0, value: 0 },
+                        { value: 10, score: 100 }
+                      ]
                     },
                     answer: { point: 0, value: 0 },
                     sourceOriginal: '',
@@ -478,7 +490,11 @@ describe('Tree', () => {
                       max: 2000,
                       step: 100,
                       unit: 'ts',
-                      defaultPoint: 0
+                      defaultPoint: 0,
+                      scoreValues: [
+                        { score: 0, value: 0 },
+                        { value: 10, score: 100 }
+                      ]
                     },
                     answer: { point: 0, value: 0 },
                     sourceOriginal: '',

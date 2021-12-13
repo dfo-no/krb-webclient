@@ -63,8 +63,10 @@ export default function QuestionArray({
           step: 1,
           unit: 'GB',
           defaultPoint: 1,
-          valueNumbers: [0, 100],
-          scores: [0, 10]
+          scoreValues: [
+            { score: 0, value: 0 },
+            { value: 10, score: 100 }
+          ]
         },
         answer: { point: null, value: 0 },
         sourceRel: null,

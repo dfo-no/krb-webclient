@@ -15,33 +15,11 @@ export default function SliderPointArray({
   control,
   register
 }: IProps): React.ReactElement {
-  const {
-    fields: valueFields,
-    append: valueNumberAppend,
-    remove: valueNumberRemove
-  } = useFieldArray({
+  const { fields, append, remove } = useFieldArray({
     control,
-    name: 'config.valueNumbers'
-  });
-  const {
-    fields: scoresFields,
-    append: scoresAppend,
-    remove: scoresRemove
-  } = useFieldArray({
-    control,
-    name: 'config.scores'
+    name: 'config.scoreValues'
   });
 
-  const addValueScorePair = () => {
-    const number = 0;
-    const score = 0;
-    valueNumberAppend(number);
-    scoresAppend(score);
-  };
-  const removeItems = (index: number) => {
-    scoresRemove(index);
-    valueNumberRemove(index);
-  };
   return (
     <div className="mt-3">
       <Row>
@@ -58,40 +36,37 @@ export default function SliderPointArray({
         </Col>
       </Row>
       <Row>
-        <Col sm={4}>
-          {valueFields.map((item, index) => {
-            return (
-              <Form.Control
-                as="input"
-                {...register(`config.valueNumbers.${index}` as const)}
-                // isInvalid={hasError(`config.valueNumbers.${index}` as const)}
-                type="number"
-                key={item.id}
-              />
-            );
-          })}
-        </Col>
-        <Col sm={6}>
-          {scoresFields.map((item, index) => {
+        <Col sm={10}>
+          {fields.map((item, index) => {
             return (
               <Row key={item.id}>
-                <Col sm={6}>
+                <Col sm={4}>
                   <Form.Control
                     as="input"
-                    {...register(`config.scores.${index}` as const)}
-                    // isInvalid={hasError(`config.scores.${index}` as const)}
+                    {...register(`config.scoreValues.${index}.value` as const)}
+                    type="number"
+                    key={item.id}
+                  />
+                </Col>
+
+                <Col sm={4}>
+                  <Form.Control
+                    as="input"
+                    {...register(`config.scoreValues.${index}.score` as const)}
                     type="number"
                   />
                 </Col>
                 <Col sm={1}>
-                  <Button onClick={() => removeItems(index)}>Fjern</Button>
+                  <Button onClick={() => remove(index)}>Fjern</Button>
                 </Col>
               </Row>
             );
           })}
         </Col>
         <Col sm={2}>
-          <Button onClick={() => addValueScorePair()}>Ny poengrad</Button>
+          <Button onClick={() => append({ score: 0, value: 0 })}>
+            Ny poengrad
+          </Button>
         </Col>
       </Row>
     </div>
