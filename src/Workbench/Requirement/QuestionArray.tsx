@@ -91,7 +91,7 @@ export default function QuestionArray({
         id: uuidv4(),
         type: QuestionEnum.Q_TEXT,
         config: {
-          max: 0,
+          max: 10000,
           defaultPoint: 1
         },
         answer: {

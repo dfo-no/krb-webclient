@@ -45,20 +45,6 @@ export default function SliderForm({
             <BsTrashFill />
           </Button>
         </h6>
-
-        <Form.Control
-          as="input"
-          type="hidden"
-          {...register(`variants.${vIndex}.questions.${aIndex}.id` as const)}
-          defaultValue={item.id}
-        />
-
-        <Form.Control
-          as="input"
-          type="hidden"
-          {...register(`variants.${vIndex}.questions.${aIndex}.type` as const)}
-          defaultValue={item.type}
-        />
         <Form.Group as={Row}>
           <Form.Label column sm="2">
             {t('Minumum')}
@@ -66,6 +52,7 @@ export default function SliderForm({
           <Col sm="4">
             <Form.Control
               type="number"
+              step="0.01"
               {...register(
                 `variants.${vIndex}.questions.${aIndex}.config.min` as const
               )}
@@ -91,6 +78,7 @@ export default function SliderForm({
           </Form.Label>
           <Col sm="4">
             <Form.Control
+              step="0.01"
               type="number"
               {...register(
                 `variants.${vIndex}.questions.${aIndex}.config.max` as const
@@ -118,6 +106,7 @@ export default function SliderForm({
           <Col sm={4}>
             <Form.Control
               type="number"
+              step="0.01"
               {...register(
                 `variants.${vIndex}.questions.${aIndex}.config.step` as const
               )}
