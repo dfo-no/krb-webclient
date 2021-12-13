@@ -44,27 +44,33 @@ export default function Header(): React.ReactElement {
       <ThemeProvider theme={theme}>
         <CssBaseline />
         <Container maxWidth="md">
-          <AppBar elevation={0}>
-            <Toolbar>
-              <Grid container wrap="nowrap" spacing={5}>
-                <Grid item>
-                  <Grid container wrap="nowrap" spacing={4}>
-                    <Grid item>
-                      <Link component={RouterLink} to="/home">
-                        <img src="/logo-blue.svg" alt="DFØ logo" />
-                      </Link>
-                    </Grid>
-                    <Grid item>
-                      <Badge badgeContent={badgeText} color="primary" />
+          <Box
+            sx={{
+              marginBottom: 70
+            }}
+          >
+            <AppBar elevation={0}>
+              <Toolbar>
+                <Grid container wrap="nowrap" spacing={5}>
+                  <Grid item>
+                    <Grid container wrap="nowrap" spacing={4}>
+                      <Grid item>
+                        <Link component={RouterLink} to="/home">
+                          <img src="/logo-blue.svg" alt="DFØ logo" />
+                        </Link>
+                      </Grid>
+                      <Grid item>
+                        <Badge badgeContent={badgeText} color="primary" />
+                      </Grid>
                     </Grid>
                   </Grid>
+                  <Grid container item justifyContent="flex-end">
+                    <SignedButton />
+                  </Grid>
                 </Grid>
-                <Grid container item justifyContent="flex-end">
-                  <SignedButton />
-                </Grid>
-              </Grid>
-            </Toolbar>
-          </AppBar>
+              </Toolbar>
+            </AppBar>
+          </Box>
         </Container>
       </ThemeProvider>
     </>
