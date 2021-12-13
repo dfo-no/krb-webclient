@@ -36,7 +36,12 @@ export const SliderQuestionSchema = QuestionBaseSchema.keys({
     min: Joi.number().min(0).max(1000000000).required(),
     max: Joi.number().min(1).max(1000000000).required().greater(Joi.ref('min')),
     unit: Joi.string().required(),
-    scoreValues: Joi.array()
+    scoreValues: Joi.array().items(
+      Joi.object().keys({
+        score: Joi.number().required().min(0).max(100),
+        value: Joi.number().required()
+      })
+    )
   })
 });
 

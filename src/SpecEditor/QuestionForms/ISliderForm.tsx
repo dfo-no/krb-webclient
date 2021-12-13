@@ -35,6 +35,8 @@ export default function ValueForm({
       }
     });
 
+  const q = parentAnswer.question as ISliderQuestion;
+
   const { errors } = formState;
   const { selectedSpecificationProduct } = useAppSelector(
     (state) => state.selectedSpecProduct
@@ -111,7 +113,11 @@ export default function ValueForm({
             isInvalid={hasError('config.unit')}
           />
 
-          <SliderPointArray control={control} register={register} />
+          <SliderPointArray
+            question={q}
+            control={control}
+            register={register}
+          />
 
           <Button type="submit">{t('save')}</Button>
           <ErrorSummary errors={errors} />

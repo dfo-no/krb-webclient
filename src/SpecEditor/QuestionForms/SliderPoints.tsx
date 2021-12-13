@@ -9,11 +9,13 @@ import { ISliderQuestion } from '../../Nexus/entities/ISliderQuestion';
 type IProps = {
   control: Control<ISliderQuestion>;
   register: UseFormRegister<ISliderQuestion>;
+  question: ISliderQuestion;
 };
 
 export default function SliderPointArray({
   control,
-  register
+  register,
+  question
 }: IProps): React.ReactElement {
   const { fields, append, remove } = useFieldArray({
     control,
@@ -46,6 +48,8 @@ export default function SliderPointArray({
                     {...register(`config.scoreValues.${index}.value` as const)}
                     type="number"
                     key={item.id}
+                    min={question.config.min}
+                    max={question.config.max}
                   />
                 </Col>
 
