@@ -10,7 +10,6 @@ import styles from './App.module.scss';
 import { msalConfig } from './authentication/authConfig';
 import Evaluation from './Evaluation/Evaluation';
 import Header from './Header/Header';
-import BankPage from './Home/BankPage';
 import HomePage from './Home/HomePage';
 import KitchenSink from './KitchenSink';
 import PageLayout from './PageLayout';
@@ -28,9 +27,6 @@ function App(): React.ReactElement {
       <Switch>
         <Route exact path="/">
           <HomePage />
-        </Route>
-        <Route exact path="/bank/:bankId">
-          <BankPage />
         </Route>
         <PageLayout>
           <AuthenticatedTemplate>

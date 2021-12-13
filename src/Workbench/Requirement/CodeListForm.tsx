@@ -3,12 +3,7 @@ import React from 'react';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import Form from 'react-bootstrap/Form';
-import {
-  Control,
-  Controller,
-  FormState,
-  UseFormRegister
-} from 'react-hook-form';
+import { Control, FormState, UseFormRegister } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { BsTrashFill } from 'react-icons/bs';
 import { IBank } from '../../Nexus/entities/IBank';
@@ -33,8 +28,7 @@ export default function CodeListForm({
   register,
   item,
   vIndex,
-  aIndex,
-  control
+  aIndex
 }: IProps): React.ReactElement {
   const { project } = useAppSelector((state) => state.project);
   const { t } = useTranslation();
@@ -82,22 +76,6 @@ export default function CodeListForm({
         >
           {codelistOptions()}
         </Form.Control>
-        <Form.Label>{t('Allow multiple selected codes')}</Form.Label>
-        <Controller
-          control={control}
-          name={
-            `variants.${vIndex}.questions.${aIndex}.config.multipleSelect` as const
-          }
-          render={({ field }) => (
-            <Switch
-              {...field}
-              checked={field.value}
-              onChange={(_, value) => {
-                field.onChange(value);
-              }}
-            />
-          )}
-        />
       </Card.Body>
     </Card>
   );
