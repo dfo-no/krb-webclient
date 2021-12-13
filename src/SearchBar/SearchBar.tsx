@@ -45,7 +45,7 @@ export default function SearchBar({
     const resultList = bankList.map((bank: IBank) => {
       return (
         <ListGroup.Item key={bank.id} className={styles.katalogitem}>
-          <Link to={`/bank/${bank.id}`} onClick={handleEdit(bank)}>
+          <Link to={`/specification/${bank.id}`} onClick={handleEdit(bank)}>
             {bank.title}
           </Link>
         </ListGroup.Item>

@@ -45,20 +45,6 @@ export default function SliderForm({
             <BsTrashFill />
           </Button>
         </h6>
-
-        <Form.Control
-          as="input"
-          type="hidden"
-          {...register(`variants.${vIndex}.questions.${aIndex}.id` as const)}
-          defaultValue={item.id}
-        />
-
-        <Form.Control
-          as="input"
-          type="hidden"
-          {...register(`variants.${vIndex}.questions.${aIndex}.type` as const)}
-          defaultValue={item.type}
-        />
         <Form.Group as={Row}>
           <Form.Label column sm="2">
             {t('Minumum')}
