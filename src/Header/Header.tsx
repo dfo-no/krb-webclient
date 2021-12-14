@@ -4,7 +4,6 @@ import Container from '@mui/material/Container';
 import Toolbar from '@material-ui/core/Toolbar';
 import * as React from 'react';
 import { ThemeProvider } from '@mui/material/styles';
-import Button from '@mui/material/Button';
 import { makeStyles } from '@material-ui/core';
 import Grid from '@material-ui/core/Grid';
 import {
@@ -16,6 +15,7 @@ import Link from '@mui/material/Link';
 import { CssBaseline } from '@mui/material';
 
 import { useTranslation } from 'react-i18next';
+import SignedButton from '../SignedButton/SignedButton';
 
 import theme from '../theme';
 
@@ -80,7 +80,7 @@ export default function Header(): React.ReactElement {
                   </Grid>
                 </Grid>
                 <Grid container item justifyContent="flex-end">
-                  <Button variant="contained">Logg inn</Button>
+                  <SignedButton />
                 </Grid>
               </Grid>
             </Toolbar>
