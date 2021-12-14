@@ -14,15 +14,10 @@ export default function SignedButton(): React.ReactElement {
   return (
     <>
       <AuthenticatedTemplate>
-        <Button onClick={() => instance.logout()} className="ml-auto">
-          {t('sign out')}
-        </Button>
+        <Button onClick={() => instance.logout()}>{t('sign out')}</Button>
       </AuthenticatedTemplate>
       <UnauthenticatedTemplate>
-        <Button
-          className="ml-auto"
-          onClick={() => instance.loginPopup(loginRequest)}
-        >
+        <Button onClick={() => instance.loginPopup(loginRequest)}>
           {t('sign in')}
         </Button>
       </UnauthenticatedTemplate>

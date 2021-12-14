@@ -1,6 +1,12 @@
-import { createTheme } from '@material-ui/core/styles';
+import { createTheme } from '@mui/material/styles';
 
-declare module '@material-ui/core/styles/createPalette' {
+declare module '@mui/material/Button' {
+  interface ButtonPropsVariantOverrides {
+    dashed: true;
+  }
+}
+
+declare module '@mui/material/styles/createPalette' {
   interface Palette {
     primary: PaletteColor;
     secondary: PaletteColor;
@@ -25,6 +31,7 @@ declare module '@material-ui/core/styles/createPalette' {
     linkHoverColor: PaletteColor;
     success: PaletteColor;
   }
+
   interface PaletteOptions {
     primary?: PaletteColorOptions;
     secondary?: PaletteColorOptions;
@@ -51,91 +58,98 @@ declare module '@material-ui/core/styles/createPalette' {
   }
 }
 
-const palette = createTheme({
-  palette: {
-    primary: {
-      main: '#012a4c'
-    },
-    secondary: {
-      main: '#009fe3'
-    },
-    dfoBlue: {
-      main: '#005b91'
-    },
-    dfoInputBackground: {
-      main: '#f2f1f9'
-    },
-    gray100: {
-      main: '#f7f7f7'
-    },
-    gray200: {
-      main: '#efefef'
-    },
-    gray300: {
-      main: '#e6e6e6'
-    },
-    gray400: {
-      main: '#d1d1d1'
-    },
-    gray500: {
-      main: '#828282'
-    },
-    gray900: {
-      main: '#333333'
-    },
-    blue: {
-      main: '#012a4c'
-    },
-    indigo: {
-      main: '#005b91'
-    },
-    purple: {
-      main: '#009fe3'
-    },
-    pink: {
-      main: '#e83f53'
-    },
-    red: {
-      main: '#e52036'
-    },
-    yellow: {
-      main: '#f7b715'
-    },
-    brandPrimary: {
-      main: '#012a4c'
-    },
-    green: {
-      main: '#018566'
-    },
-    teal: {
-      main: '#00ab84'
-    },
-    cyan: {
-      main: '#008ea6'
-    },
-    linkHoverColor: {
-      main: '#009fe3'
-    },
-    success: {
-      main: '#018566'
-    }
+const palette = {
+  primary: {
+    main: '#fffffff'
+  },
+  secondary: {
+    main: '#009fe3'
+  },
+  dfoBlue: {
+    main: '#005b91'
+  },
+  dfoInputBackground: {
+    main: '#f2f1f9'
+  },
+  gray100: {
+    main: '#f7f7f7'
+  },
+  gray200: {
+    main: '#efefef'
+  },
+  gray300: {
+    main: '#e6e6e6'
+  },
+  gray400: {
+    main: '#d1d1d1'
+  },
+  gray500: {
+    main: '#828282'
+  },
+  gray900: {
+    main: '#333333'
+  },
+  blue: {
+    main: '#012a4c'
+  },
+  indigo: {
+    main: '#005b91'
+  },
+  purple: {
+    main: '#009fe3'
+  },
+  pink: {
+    main: '#e83f53'
+  },
+  red: {
+    main: '#e52036'
+  },
+  yellow: {
+    main: '#f7b715'
+  },
+  brandPrimary: {
+    main: '#012a4c'
+  },
+  green: {
+    main: '#018566'
+  },
+  teal: {
+    main: '#00ab84'
+  },
+  cyan: {
+    main: '#008ea6'
+  },
+  linkHoverColor: {
+    main: '#009fe3'
+  },
+  success: {
+    main: '#018566'
   }
-});
+};
 
-const theme = createTheme(
-  {
-    overrides: {
-      MuiAppBar: {
+const theme = createTheme({
+  components: {
+    MuiButton: {
+      variants: [
+        {
+          props: { variant: 'contained' },
+          style: {
+            backgroundColor: palette.gray400.main,
+            whiteSpace: 'nowrap'
+          }
+        }
+      ]
+    },
+    MuiAppBar: {
+      styleOverrides: {
         root: {
-          borderBottom: '1px solid #e6e6e6'
-        },
-        colorPrimary: {
-          backgroundColor: palette.palette.gray100.main
+          backgroundColor: palette.gray100.main,
+          borderBottom: `1px solid ${palette.gray300.main}`
         }
       }
     }
   },
   palette
-);
+});
 
 export default theme;
