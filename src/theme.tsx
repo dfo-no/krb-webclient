@@ -2,7 +2,7 @@ import { createTheme } from '@mui/material/styles';
 
 declare module '@mui/material/Button' {
   interface ButtonPropsVariantOverrides {
-    contained: true;
+    ordinary: true;
   }
 }
 
@@ -133,7 +133,14 @@ theme.components = {
   MuiButton: {
     variants: [
       {
-        props: { variant: 'contained' },
+        props: { variant: 'ordinary' },
+        style: {
+          backgroundColor: theme.palette.gray400.main,
+          whiteSpace: 'nowrap'
+        }
+      },
+      {
+        props: { variant: 'ordinary' },
         style: {
           backgroundColor: theme.palette.gray400.main,
           whiteSpace: 'nowrap'

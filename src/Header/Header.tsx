@@ -1,5 +1,6 @@
 import AppBar from '@mui/material/AppBar';
 import Box from '@material-ui/core/Box';
+import Button from '@mui/material/Button';
 import Container from '@mui/material/Container';
 import Toolbar from '@material-ui/core/Toolbar';
 import * as React from 'react';
@@ -79,8 +80,22 @@ export default function Header(): React.ReactElement {
                     </Grid>
                   </Grid>
                 </Grid>
-                <Grid container item justifyContent="flex-end">
-                  <SignedButton />
+                <Grid container item justifyContent="flex-end" spacing={1}>
+                  {match && (
+                    <Grid item>
+                      <Button
+                        variant="ordinary"
+                        onClick={() => {
+                          history.push('/workbench');
+                        }}
+                      >
+                        {t('all projects')}
+                      </Button>
+                    </Grid>
+                  )}
+                  <Grid item>
+                    <SignedButton />
+                  </Grid>
                 </Grid>
               </Grid>
             </Toolbar>
