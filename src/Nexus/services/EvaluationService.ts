@@ -31,18 +31,26 @@ export default class EvaluationService {
     return 0;
   }
 
-  findClosestScore(
+  /* When we have found the value our answer is closest to, we have to find the range our answer is
+  placed between
+  */
+  findValueRange(
     list: ScoreValuePair[],
     element: ScoreValuePair,
     answer: number
   ): [number, number] {
+    // Distance to the closest value mark that besides the one we already sent in
     let distance: number =
       list[0].value !== element.value
         ? Math.abs(list[0].value - element.value)
         : Math.abs(list[1].value - element.value);
+    // The score of the top or bottom of the range
     let closestScore =
       list[0].value !== element.value ? list[0].score : list[1].score;
     list.forEach((e) => {
+      /* checks that e is not the element we already has passsed in, and that if our answer is below the element we 
+      have passed as an argument, the other element we found also has to be below it for it to be the range our value is placed in
+      */
       if (
         e !== element &&
         ((answer > element.value && e.value > element.value) ||
@@ -59,9 +67,8 @@ export default class EvaluationService {
   }
 
   evaluateSlider(question: ISliderQuestion): number {
-    // eslint-disable-next-line consistent-return
-    let closestValue = question.config.scoreValues[0];
-    let distance = Math.abs(
+    let closestValueMark = question.config.scoreValues[0];
+    let distanceFromValueMark = Math.abs(
       question.config.scoreValues[1].value - question.answer.value
     );
     for (let i = 0; i < question.config.scoreValues.length; i += 1) {
@@ -71,27 +78,27 @@ export default class EvaluationService {
       const tempDistance = Math.abs(
         question.config.scoreValues[i].value - question.answer.value
       );
-      if (tempDistance < distance) {
-        distance = tempDistance;
-        closestValue = question.config.scoreValues[i];
+      if (tempDistance < distanceFromValueMark) {
+        distanceFromValueMark = tempDistance;
+        closestValueMark = question.config.scoreValues[i];
       }
     }
 
-    const [step, closestScore] = this.findClosestScore(
+    const [rangeLength, closestScore] = this.findValueRange(
       question.config.scoreValues,
-      closestValue,
+      closestValueMark,
       question.answer.value
     );
 
     const scoreMultiple =
-      question.answer.value < closestValue.value
-        ? distance / step
-        : (step - distance) / step;
+      question.answer.value < closestValueMark.value
+        ? distanceFromValueMark / rangeLength
+        : (rangeLength - distanceFromValueMark) / rangeLength;
 
     let score;
 
-    if (closestValue.score > closestScore) {
-      score = closestValue.score * scoreMultiple;
+    if (closestValueMark.score > closestScore) {
+      score = closestValueMark.score * scoreMultiple;
     } else {
       score = closestScore * scoreMultiple;
     }
