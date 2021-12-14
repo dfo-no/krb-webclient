@@ -13,6 +13,9 @@ interface IProps<T> extends UseControllerProps<T> {
   error: FieldError | undefined;
 }
 
+/**
+ * @deprecated
+ */
 const ControlledCheckbox = <T extends FieldValues>({
   name,
   control,
