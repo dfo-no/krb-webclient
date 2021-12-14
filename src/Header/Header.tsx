@@ -36,9 +36,6 @@ const useStyles = makeStyles({
 export default function Header(): React.ReactElement {
   const history = useHistory();
   const { t } = useTranslation();
-  const home = (): void => {
-    history.push('/');
-  };
 
   const match = useRouteMatch({
     path: '/workbench/:projectId',
