@@ -6,34 +6,45 @@ import * as React from 'react';
 import { ThemeProvider } from '@mui/material/styles';
 import Button from '@mui/material/Button';
 import { makeStyles } from '@material-ui/core';
-
 import Grid from '@material-ui/core/Grid';
-
-import { Link as RouterLink } from 'react-router-dom';
-
+import {
+  Link as RouterLink,
+  useHistory,
+  useRouteMatch
+} from 'react-router-dom';
 import Link from '@mui/material/Link';
-
 import { CssBaseline } from '@mui/material';
+
+import { useTranslation } from 'react-i18next';
 
 import theme from '../theme';
 
 const useStyles = makeStyles({
   logoBig: {
-    [theme.breakpoints.between('xs', 'sm')]: {
+    [theme.breakpoints.down('md')]: {
       display: 'none'
     }
   },
   logoSmall: {
-    [theme.breakpoints.between('xs', 'sm')]: {
-      display: 'block'
-    },
-    [theme.breakpoints.between('sm', 'xl')]: {
+    [theme.breakpoints.up('md')]: {
       display: 'none'
     }
   }
 });
 
 export default function Header(): React.ReactElement {
+  const history = useHistory();
+  const { t } = useTranslation();
+  const home = (): void => {
+    history.push('/');
+  };
+
+  const match = useRouteMatch({
+    path: '/workbench/:projectId',
+    strict: false,
+    sensitive: true
+  });
+
   const classes = useStyles();
 
   return (
