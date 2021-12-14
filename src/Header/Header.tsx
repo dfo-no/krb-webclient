@@ -77,7 +77,13 @@ export default function Header(): React.ReactElement {
                     </Grid>
                   </Grid>
                 </Grid>
-                <Grid container item justifyContent="flex-end" spacing={1}>
+                <Grid
+                  container
+                  item
+                  justifyContent="flex-end"
+                  spacing={1}
+                  wrap="nowrap"
+                >
                   {match && (
                     <Grid item>
                       <Button
