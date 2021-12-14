@@ -1,11 +1,11 @@
 import AppBar from '@mui/material/AppBar';
 import Box from '@material-ui/core/Box';
-import { CssBaseline } from '@material-ui/core';
 import Container from '@mui/material/Container';
 import Toolbar from '@material-ui/core/Toolbar';
 import * as React from 'react';
 import { ThemeProvider } from '@mui/material/styles';
 import Button from '@mui/material/Button';
+import { makeStyles } from '@material-ui/core';
 
 import Grid from '@material-ui/core/Grid';
 
@@ -13,26 +13,57 @@ import { Link as RouterLink } from 'react-router-dom';
 
 import Link from '@mui/material/Link';
 
+import { CssBaseline } from '@mui/material';
+
 import theme from '../theme';
 
+const useStyles = makeStyles({
+  logoBig: {
+    [theme.breakpoints.between('xs', 'sm')]: {
+      display: 'none'
+    }
+  },
+  logoSmall: {
+    [theme.breakpoints.between('xs', 'sm')]: {
+      display: 'block'
+    },
+    [theme.breakpoints.between('sm', 'xl')]: {
+      display: 'none'
+    }
+  }
+});
+
 export default function Header(): React.ReactElement {
+  const classes = useStyles();
+
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <Container maxWidth="md">
+      <Container>
         <Box
           sx={{
             marginBottom: 70
           }}
         >
-          <AppBar variant="outlined" elevation={0}>
+          <AppBar elevation={0}>
             <Toolbar>
-              <Grid container wrap="nowrap" spacing={5}>
+              <Grid container wrap="nowrap">
                 <Grid item>
-                  <Grid container wrap="nowrap" spacing={4}>
+                  <Grid container>
                     <Grid item>
-                      <Link component={RouterLink} to="/">
+                      <Link
+                        className={classes.logoBig}
+                        component={RouterLink}
+                        to="/"
+                      >
                         <img src="/logo-blue.svg" alt="DFØ logo" />
+                      </Link>
+                      <Link
+                        className={classes.logoSmall}
+                        component={RouterLink}
+                        to="/"
+                      >
+                        <img src="/logo-blue-small.svg" alt="DFØ logo" />
                       </Link>
                     </Grid>
                   </Grid>
