@@ -1,18 +1,49 @@
-import React from 'react';
-import Badge from 'react-bootstrap/Badge';
-import Button from 'react-bootstrap/Button';
-import Navbar from 'react-bootstrap/Navbar';
+import AppBar from '@mui/material/AppBar';
+import Box from '@material-ui/core/Box';
+import Button from '@mui/material/Button';
+import Container from '@mui/material/Container';
+import Toolbar from '@material-ui/core/Toolbar';
+import * as React from 'react';
+import { ThemeProvider } from '@mui/material/styles';
+import { makeStyles } from '@material-ui/core';
+import Grid from '@material-ui/core/Grid';
+import {
+  Link as RouterLink,
+  useHistory,
+  useRouteMatch
+} from 'react-router-dom';
+import Link from '@mui/material/Link';
+import { CssBaseline } from '@mui/material';
+
 import { useTranslation } from 'react-i18next';
-import { useHistory, useRouteMatch } from 'react-router-dom';
 import SignedButton from '../SignedButton/SignedButton';
-import css from './Header.module.scss';
+
+import theme from '../theme';
+
+const useStyles = makeStyles({
+  logoBig: {
+    [theme.breakpoints.down('sm')]: {
+      display: 'none'
+    }
+  },
+  logoSmall: {
+    [theme.breakpoints.up('sm')]: {
+      display: 'none'
+    }
+  },
+  hideSignedButton: {
+    [theme.breakpoints.down('sm')]: {
+      display: 'none'
+    }
+  },
+  showSignedButton: {
+    display: 'block'
+  }
+});
 
 export default function Header(): React.ReactElement {
   const history = useHistory();
   const { t } = useTranslation();
-  const home = (): void => {
-    history.push('/');
-  };
 
   const match = useRouteMatch({
     path: '/workbench/:projectId',
@@ -20,27 +51,69 @@ export default function Header(): React.ReactElement {
     sensitive: true
   });
 
+  const classes = useStyles();
+
   return (
-    <Navbar bg="light" variant="dark" className={css.header}>
-      <Navbar.Brand onClick={home} role="link" className={css.header__brand}>
-        <img alt="DFØ Logo" src="/logo-blue.svg" />
-      </Navbar.Brand>
-      {match && (
-        <Button
-          variant="outline-primary"
-          onClick={() => {
-            history.push('/workbench');
+    <ThemeProvider theme={theme}>
+      <CssBaseline />
+      <Container>
+        <Box
+          sx={{
+            marginBottom: 70
           }}
         >
-          {t('all projects')}
-        </Button>
-      )}
-      {process.env.NODE_ENV === 'development' && (
-        <Badge bg="warning">dev</Badge>
-      )}
-      <div className={css.header__spacer} />
-
-      <SignedButton />
-    </Navbar>
+          <AppBar elevation={0}>
+            <Toolbar>
+              <Grid container wrap="nowrap">
+                <Grid item>
+                  <Grid container>
+                    <Grid item>
+                      <Link
+                        className={classes.logoBig}
+                        component={RouterLink}
+                        to="/"
+                      >
+                        <img src="/logo-blue.svg" alt="DFØ logo" />
+                      </Link>
+                      <Link
+                        className={classes.logoSmall}
+                        component={RouterLink}
+                        to="/"
+                      >
+                        <img src="/logo-blue-small.svg" alt="DFØ logo" />
+                      </Link>
+                    </Grid>
+                  </Grid>
+                </Grid>
+                <Grid item container justifyContent="flex-end" spacing={1}>
+                  {match && (
+                    <Grid item>
+                      <Button
+                        variant="ordinary"
+                        onClick={() => {
+                          history.push('/workbench');
+                        }}
+                      >
+                        {t('all projects')}
+                      </Button>
+                    </Grid>
+                  )}
+                  <Grid
+                    item
+                    className={`${
+                      match
+                        ? classes.hideSignedButton
+                        : classes.showSignedButton
+                    }`}
+                  >
+                    <SignedButton />
+                  </Grid>
+                </Grid>
+              </Grid>
+            </Toolbar>
+          </AppBar>
+        </Box>
+      </Container>
+    </ThemeProvider>
   );
 }
