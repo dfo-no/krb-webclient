@@ -145,9 +145,9 @@ export default function QuestionArray({
         id: uuidv4(),
         type: QuestionEnum.Q_CHECKBOX,
         config: {
-          weightTrue: 100,
-          weightFalse: 0,
-          defaultPoint: 1
+          pointsNonPrefered: 0,
+          defaultPoint: 1,
+          preferedAlternative: true
         },
         answer: {
           point: 0,

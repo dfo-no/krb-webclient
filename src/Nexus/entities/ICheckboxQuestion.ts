@@ -20,15 +20,15 @@ export interface ICheckboxAnswer extends IAnswerBase {
 }
 
 export interface ICheckboxConfig extends IConfigBase {
-  weightTrue: number;
-  weightFalse: number;
+  preferedAlternative: boolean;
+  pointsNonPrefered: number;
 }
 
 export const CheckboxQuestionSchema = QuestionBaseSchema.keys({
   type: Joi.string().equal(QuestionEnum.Q_CHECKBOX).required(),
   config: ConfigBaseSchema.keys({
-    weightTrue: Joi.number().min(1).max(100),
-    weightFalse: Joi.number().min(0).max(100)
+    preferedAlternative: Joi.boolean(),
+    pointsNonPrefered: Joi.number().min(0).max(100)
   })
 });
 
