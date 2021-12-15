@@ -30,6 +30,16 @@ const useStyles = makeStyles({
     [theme.breakpoints.up('sm')]: {
       display: 'none'
     }
+  },
+  grid: {
+    [theme.breakpoints.down('sm')]: {
+      flexDirection: 'column'
+    }
+  },
+  buttonGrid: {
+    [theme.breakpoints.down('sm')]: {
+      justifyContent: 'flex-start'
+    }
   }
 });
 
@@ -56,7 +66,12 @@ export default function Header(): React.ReactElement {
         >
           <AppBar elevation={0}>
             <Toolbar>
-              <Grid container wrap="nowrap" spacing={2}>
+              <Grid
+                container
+                wrap="nowrap"
+                spacing={2}
+                className={classes.grid}
+              >
                 <Grid item>
                   <Grid container>
                     <Grid item>
@@ -80,6 +95,7 @@ export default function Header(): React.ReactElement {
                 <Grid
                   item
                   container
+                  className={classes.buttonGrid}
                   justifyContent="flex-end"
                   wrap="nowrap"
                   spacing={1}
