@@ -64,7 +64,7 @@ export default function Header(): React.ReactElement {
         >
           <AppBar elevation={0}>
             <Toolbar>
-              <Grid container wrap="nowrap" spacing={2}>
+              <Grid container wrap="nowrap">
                 <Grid item>
                   <Grid container>
                     <Grid item>
@@ -85,13 +85,7 @@ export default function Header(): React.ReactElement {
                     </Grid>
                   </Grid>
                 </Grid>
-                <Grid
-                  item
-                  container
-                  justifyContent="flex-end"
-                  wrap="nowrap"
-                  spacing={1}
-                >
+                <Grid item container justifyContent="flex-end" spacing={1}>
                   {match && (
                     <Grid item>
                       <Button
