@@ -6,6 +6,12 @@ declare module '@mui/material/Button' {
   }
 }
 
+declare module '@mui/material/styles' {
+  interface BreakpointOverrides {
+    test: true;
+  }
+}
+
 declare module '@mui/material/styles/createPalette' {
   interface Palette {
     primary: PaletteColor;

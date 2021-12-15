@@ -30,6 +30,11 @@ const useStyles = makeStyles({
     [theme.breakpoints.up('md')]: {
       display: 'none'
     }
+  },
+  grid: {
+    [theme.breakpoints.down('xs')]: {
+      flexDirection: 'column'
+    }
   }
 });
 
@@ -56,7 +61,12 @@ export default function Header(): React.ReactElement {
         >
           <AppBar elevation={0}>
             <Toolbar>
-              <Grid container wrap="nowrap">
+              <Grid
+                container
+                className={classes.grid}
+                wrap="nowrap"
+                spacing={2}
+              >
                 <Grid item>
                   <Grid container>
                     <Grid item>
@@ -78,11 +88,11 @@ export default function Header(): React.ReactElement {
                   </Grid>
                 </Grid>
                 <Grid
-                  container
                   item
+                  container
                   justifyContent="flex-end"
-                  spacing={1}
                   wrap="nowrap"
+                  spacing={1}
                 >
                   {match && (
                     <Grid item>
