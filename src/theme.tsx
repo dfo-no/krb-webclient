@@ -137,6 +137,12 @@ const theme = createTheme({
 
 theme.components = {
   MuiButton: {
+    styleOverrides: {
+      root: {
+        backgroundColor: theme.palette.gray100.main,
+        borderBottom: `1px solid ${theme.palette.gray300.main}`
+      }
+    },
     variants: [
       {
         props: { variant: 'ordinary' },

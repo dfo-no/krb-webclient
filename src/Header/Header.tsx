@@ -22,18 +22,13 @@ import theme from '../theme';
 
 const useStyles = makeStyles({
   logoBig: {
-    [theme.breakpoints.down('md')]: {
+    [theme.breakpoints.down('sm')]: {
       display: 'none'
     }
   },
   logoSmall: {
-    [theme.breakpoints.up('md')]: {
+    [theme.breakpoints.up('sm')]: {
       display: 'none'
-    }
-  },
-  grid: {
-    [theme.breakpoints.down('xs')]: {
-      flexDirection: 'column'
     }
   }
 });
@@ -61,12 +56,7 @@ export default function Header(): React.ReactElement {
         >
           <AppBar elevation={0}>
             <Toolbar>
-              <Grid
-                container
-                className={classes.grid}
-                wrap="nowrap"
-                spacing={2}
-              >
+              <Grid container wrap="nowrap" spacing={2}>
                 <Grid item>
                   <Grid container>
                     <Grid item>
