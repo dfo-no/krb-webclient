@@ -158,11 +158,7 @@ theme.components = {
     styleOverrides: {
       root: {
         backgroundColor: theme.palette.gray100.main,
-        borderBottom: `1px solid ${theme.palette.gray300.main}`,
-        [theme.breakpoints.down('sm')]: {
-          paddingBottom: '10px',
-          paddingTop: '10px'
-        }
+        borderBottom: `1px solid ${theme.palette.gray300.main}`
       }
     }
   }

@@ -31,15 +31,13 @@ const useStyles = makeStyles({
       display: 'none'
     }
   },
-  grid: {
+  hideSignedButton: {
     [theme.breakpoints.down('sm')]: {
-      flexDirection: 'column'
+      display: 'none'
     }
   },
-  buttonGrid: {
-    [theme.breakpoints.down('sm')]: {
-      justifyContent: 'flex-start'
-    }
+  showSignedButton: {
+    display: 'block'
   }
 });
 
@@ -66,12 +64,7 @@ export default function Header(): React.ReactElement {
         >
           <AppBar elevation={0}>
             <Toolbar>
-              <Grid
-                container
-                wrap="nowrap"
-                spacing={2}
-                className={classes.grid}
-              >
+              <Grid container wrap="nowrap" spacing={2}>
                 <Grid item>
                   <Grid container>
                     <Grid item>
@@ -95,7 +88,6 @@ export default function Header(): React.ReactElement {
                 <Grid
                   item
                   container
-                  className={classes.buttonGrid}
                   justifyContent="flex-end"
                   wrap="nowrap"
                   spacing={1}
@@ -112,7 +104,14 @@ export default function Header(): React.ReactElement {
                       </Button>
                     </Grid>
                   )}
-                  <Grid item>
+                  <Grid
+                    item
+                    className={`${
+                      match
+                        ? classes.hideSignedButton
+                        : classes.showSignedButton
+                    }`}
+                  >
                     <SignedButton />
                   </Grid>
                 </Grid>
