@@ -1,10 +1,10 @@
 import * as React from 'react';
 
-import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
 import { makeStyles } from '@material-ui/core';
 import { CssBaseline } from '@mui/material';
 import { ThemeProvider } from '@mui/material/styles';
+import Typography from '@material-ui/core/Typography';
 
 import theme from '../theme';
 
@@ -20,18 +20,18 @@ export default function Footer(): React.ReactElement {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <Grid container className={classes.footerContainer}>
+      <Grid container component="div" className={classes.footerContainer}>
         <Grid item xs={8}>
-          Kontakt
+          <Typography>Kontakt</Typography>
         </Grid>
         <Grid item xs={8}>
-          English
+          <Typography>English</Typography>
         </Grid>
         <Grid item xs={8}>
-          Personvern
+          <Typography>Personvern</Typography>
         </Grid>
         <Grid item xs={8}>
-          Offentlig postjournal
+          <Typography>Offentlig postjournal</Typography>
         </Grid>
       </Grid>
     </ThemeProvider>
