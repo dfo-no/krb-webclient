@@ -178,9 +178,9 @@ export default function QuestionArray({
 
   return (
     <div>
-      <h6>{t('Questions')}</h6>
+      <h6>{t('Answer types')}</h6>
       <Form.Label column sm="3">
-        {t('Select question type')}
+        {t('Select answer type')}
       </Form.Label>
       <Col sm={6}>
         <Form.Control
