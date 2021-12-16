@@ -75,7 +75,7 @@ theme.components = {
   MuiButton: {
     variants: [
       {
-        props: { variant: 'ordinary' },
+        props: { variant: 'regularMuiButton' },
         style: {
           backgroundColor: theme.palette.gray400.main,
           whiteSpace: 'nowrap'
@@ -90,6 +90,12 @@ theme.components = {
         borderBottom: `1px solid ${theme.palette.gray300.main}`
       }
     }
+  }
+};
+
+theme.typography = {
+  whiteMuiTypography: {
+    fontSize: '23'
   }
 };
 
