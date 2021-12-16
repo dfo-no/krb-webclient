@@ -82,6 +82,8 @@
   "Inheritance": "Arv og Avhengigheter",
   "Select question type": "Velg spørsmålstype",
   "Questions": "Spørsmål",
+  "Answer types": "Svartyper",
+  "Select answer type": "Velg svartype",
   "date": {
     "P": "{{date, P}}",
     "PP": "{{date, PP}}",
