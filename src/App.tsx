@@ -17,6 +17,7 @@ import ResponseModule from './ResponseEditor/ResponseModule';
 import ResponsePage from './ResponseEditor/ResponsePage';
 import SpecModule from './SpecEditor/SpecModule';
 import WorkbenchModule from './Workbench/WorkbenchModule';
+import Footer from './Footer/Footer';
 
 const msalInstance = new PublicClientApplication(msalConfig);
 
@@ -52,6 +53,7 @@ function App(): React.ReactElement {
       <MsalProvider instance={msalInstance}>
         <Header />
         {renderContent()}
+        <Footer />
       </MsalProvider>
     </div>
   );
