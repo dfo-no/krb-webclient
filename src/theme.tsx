@@ -93,10 +93,4 @@ theme.components = {
   }
 };
 
-theme.typography = {
-  whiteMuiTypography: {
-    fontSize: '23'
-  }
-};
-
 export default theme;
