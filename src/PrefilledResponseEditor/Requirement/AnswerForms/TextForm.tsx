@@ -24,12 +24,17 @@ import {
 
 interface IProps {
   answer: IRequirementAnswer;
+  existingAnswer: IRequirementAnswer | null;
 }
 
-export default function TextForm({ answer }: IProps): React.ReactElement {
+export default function TextForm({
+  answer,
+  existingAnswer
+}: IProps): React.ReactElement {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
-  const question = answer.question as ITextQuestion;
+  const determinedAnswer = existingAnswer || answer;
+  const question = determinedAnswer.question as ITextQuestion;
   const { prefilledResponse } = useAppSelector(
     (state) => state.prefilledResponse
   );
@@ -61,7 +66,7 @@ export default function TextForm({ answer }: IProps): React.ReactElement {
     formState: { errors },
     register
   } = useForm<IRequirementAnswer>({
-    defaultValues: answer,
+    defaultValues: determinedAnswer,
     resolver: joiResolver(ProductTextSchema)
   });
 
@@ -89,10 +94,22 @@ export default function TextForm({ answer }: IProps): React.ReactElement {
 
   return (
     <div>
-      <h5>{getVariantText(answer.requirement, answer.variantId)[0]}</h5>
+      <h5>
+        {
+          getVariantText(
+            determinedAnswer.requirement,
+            determinedAnswer.variantId
+          )[0]
+        }
+      </h5>
       <h6>
         <small className="text-muted">
-          {getVariantText(answer.requirement, answer.variantId)[1]}
+          {
+            getVariantText(
+              determinedAnswer.requirement,
+              determinedAnswer.variantId
+            )[1]
+          }
         </small>
       </h6>
       <Form
@@ -102,7 +119,7 @@ export default function TextForm({ answer }: IProps): React.ReactElement {
       >
         <Form.Control as="textarea" {...register('question.answer.text')} />
         <div className="d-flex justify-content-end">
-          {isValueSet(answer.id) ? (
+          {isValueSet(determinedAnswer.id) ? (
             <Badge bg="success" className="mx-2">
               Set
             </Badge>
@@ -118,7 +135,7 @@ export default function TextForm({ answer }: IProps): React.ReactElement {
           <Button
             type="button"
             variant="warning"
-            onClick={() => handleResetQuestion(answer.id)}
+            onClick={() => handleResetQuestion(determinedAnswer.id)}
           >
             {t('Reset')}
           </Button>

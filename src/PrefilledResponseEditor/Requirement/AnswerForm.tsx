@@ -4,29 +4,8 @@ import { IRequirementAnswer } from '../../models/IRequirementAnswer';
 import { Levelable } from '../../models/Levelable';
 import ModelType from '../../models/ModelType';
 import QuestionEnum from '../../models/QuestionEnum';
-import { QuestionType } from '../../models/QuestionType';
-import {
-  ICheckboxAnswer,
-  ICheckboxQuestion
-} from '../../Nexus/entities/ICheckboxQuestion';
-import {
-  ICodelistAnswer,
-  ICodelistQuestion
-} from '../../Nexus/entities/ICodelistQuestion';
-import {
-  IFileUploadAnswer,
-  IFileUploadQuestion
-} from '../../Nexus/entities/IFileUploadQuestion';
 import { INeed } from '../../Nexus/entities/INeed';
-import {
-  IPeriodDateAnswer,
-  IPeriodDateQuestion
-} from '../../Nexus/entities/IPeriodDateQuestion';
-import {
-  ISliderAnswer,
-  ISliderQuestion
-} from '../../Nexus/entities/ISliderQuestion';
-import { ITextAnswer, ITextQuestion } from '../../Nexus/entities/ITextQuestion';
+import { useAppSelector } from '../../store/hooks';
 import CodelistForm from './AnswerForms/CodelistForm';
 import DateForm from './AnswerForms/DateForm';
 import SliderForm from './AnswerForms/SliderForm';
@@ -38,59 +17,20 @@ interface IProps {
 
 export default function AnswerForm({ element }: IProps): React.ReactElement {
   const answers: IRequirementAnswer[] = [];
+  const { requirementAnswers } = useAppSelector(
+    (state) => state.prefilledResponse.prefilledResponse
+  );
 
   element.requirements.forEach((requirement) => {
     requirement.variants.forEach((v) => {
       if (v.useSpesification) {
         v.questions.forEach((question) => {
-          let questionResult: QuestionType = { ...question };
-
-          if (question.type === QuestionEnum.Q_CHECKBOX) {
-            const answer = {
-              value: false,
-              point: 0
-            } as ICheckboxAnswer;
-            questionResult = { ...question, answer } as ICheckboxQuestion;
-          }
-          if (question.type === QuestionEnum.Q_CODELIST) {
-            const answer: ICodelistAnswer = { codes: [], point: 0 };
-            questionResult = { ...question, answer } as ICodelistQuestion;
-          }
-          if (question.type === QuestionEnum.Q_PERIOD_DATE) {
-            const answer: IPeriodDateAnswer = {
-              date: question.config.fromDate,
-              point: 0
-            };
-            questionResult = { ...question, answer } as IPeriodDateQuestion;
-          }
-          if (question.type === QuestionEnum.Q_SLIDER) {
-            const answer: ISliderAnswer = {
-              value: question.config.min,
-              point: 0
-            };
-            questionResult = { ...question, answer } as ISliderQuestion;
-          }
-          if (question.type === QuestionEnum.Q_TEXT) {
-            const answer: ITextAnswer = {
-              text: '',
-              point: 0
-            };
-            questionResult = { ...question, answer } as ITextQuestion;
-          }
-          if (question.type === QuestionEnum.Q_FILEUPLOAD) {
-            const answer: IFileUploadAnswer = {
-              file: '',
-              point: 0
-            };
-            questionResult = { ...question, answer } as IFileUploadQuestion;
-          }
-
           const newAnswer: IRequirementAnswer = {
             id: question.id,
             questionId: question.id,
             weight: 0,
             variantId: v.id,
-            question: questionResult,
+            question,
             type: ModelType.prefilledResponse,
             requirement
           };
@@ -101,32 +41,63 @@ export default function AnswerForm({ element }: IProps): React.ReactElement {
   });
 
   const renderQuestions = (elem: IRequirementAnswer) => {
+    /** the user can start a blank form, or fill in some fields and switch pages. This logic makes sure that
+     * already filled fields still preserves state
+     */
+    const foundIndex = requirementAnswers.findIndex((e) => e.id === elem.id);
+    let existingAnswer: IRequirementAnswer | null = null;
+    if (foundIndex !== -1) {
+      existingAnswer = requirementAnswers[foundIndex];
+    }
+
     switch (elem.question.type) {
       case QuestionEnum.Q_SLIDER: {
-        return <SliderForm elem={elem} key={elem.question.id} />;
+        return (
+          <SliderForm
+            answer={elem}
+            existingAnswer={existingAnswer}
+            key={elem.question.id}
+          />
+        );
       }
-
       case QuestionEnum.Q_PERIOD_DATE: {
-        return <DateForm answer={elem} key={elem.question.id} />;
+        return (
+          <DateForm
+            answer={elem}
+            existingAnswer={existingAnswer}
+            key={elem.question.id}
+          />
+        );
       }
-
       case QuestionEnum.Q_FILEUPLOAD: {
-        return <div key={elem.question.id}>Q_FILEUPLOAD</div>;
+        return <p key={elem.question.id}>Not Implemented</p>;
       }
-
       case QuestionEnum.Q_TEXT: {
-        return <TextForm answer={elem} key={elem.question.id} />;
+        return (
+          <TextForm
+            answer={elem}
+            existingAnswer={existingAnswer}
+            key={elem.question.id}
+          />
+        );
       }
-
       case QuestionEnum.Q_CODELIST: {
-        return <CodelistForm answer={elem} key={elem.question.id} />;
+        return (
+          <CodelistForm
+            answer={elem}
+            existingAnswer={existingAnswer}
+            key={elem.question.id}
+          />
+        );
+      }
+      case QuestionEnum.Q_TIME: {
+        return <p key={elem.question.id}>Not Implemented</p>;
+      }
+      case QuestionEnum.Q_CHECKBOX: {
+        return <p key={elem.question.id}>Not Implemented</p>;
       }
       default: {
-        return (
-          <div key={uuidv4()}>
-            Error, not question type matches: {elem.question.type}
-          </div>
-        );
+        return <div key={uuidv4()}>Error, not question type matches</div>;
       }
     }
   };
