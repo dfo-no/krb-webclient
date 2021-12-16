@@ -59,51 +59,45 @@ export default function Header(): React.ReactElement {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <Container>
-        <Box
-          sx={{
-            marginBottom: 8
-          }}
-        >
-          <AppBar elevation={0}>
-            <Toolbar>
-              <Box sx={{ flexGrow: 1 }}>
-                <Link className={classes.logoBig} component={RouterLink} to="/">
-                  <img src="/logo-blue.svg" alt="DFØ logo" />
-                </Link>
-                <Link
-                  className={classes.logoSmall}
-                  component={RouterLink}
-                  to="/"
+      <Box
+        sx={{
+          marginBottom: 8
+        }}
+      >
+        <AppBar elevation={0}>
+          <Toolbar>
+            <Box sx={{ flexGrow: 1 }}>
+              <Link className={classes.logoBig} component={RouterLink} to="/">
+                <img src="/logo-blue.svg" alt="DFØ logo" />
+              </Link>
+              <Link className={classes.logoSmall} component={RouterLink} to="/">
+                <img src="/logo-blue-small.svg" alt="DFØ logo" />
+              </Link>
+            </Box>
+
+            {match && (
+              <Box mx={1}>
+                <Button
+                  variant="ordinary"
+                  onClick={() => {
+                    history.push('/workbench');
+                  }}
                 >
-                  <img src="/logo-blue-small.svg" alt="DFØ logo" />
-                </Link>
+                  {t('all projects')}
+                </Button>
               </Box>
+            )}
 
-              {match && (
-                <Box mx={1}>
-                  <Button
-                    variant="ordinary"
-                    onClick={() => {
-                      history.push('/workbench');
-                    }}
-                  >
-                    {t('all projects')}
-                  </Button>
-                </Box>
-              )}
-
-              <Box
-                className={`${
-                  match ? classes.hideSignedButton : classes.showSignedButton
-                }`}
-              >
-                <SignedButton />
-              </Box>
-            </Toolbar>
-          </AppBar>
-        </Box>
-      </Container>
+            <Box
+              className={`${
+                match ? classes.hideSignedButton : classes.showSignedButton
+              }`}
+            >
+              <SignedButton />
+            </Box>
+          </Toolbar>
+        </AppBar>
+      </Box>
     </ThemeProvider>
   );
 }
