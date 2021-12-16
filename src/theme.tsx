@@ -144,13 +144,6 @@ theme.components = {
           backgroundColor: theme.palette.gray400.main,
           whiteSpace: 'nowrap'
         }
-      },
-      {
-        props: { variant: 'ordinary' },
-        style: {
-          backgroundColor: theme.palette.gray400.main,
-          whiteSpace: 'nowrap'
-        }
       }
     ]
   },
