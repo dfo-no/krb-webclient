@@ -4,7 +4,7 @@ import Grid from '@mui/material/Grid';
 import { makeStyles } from '@material-ui/core';
 import { CssBaseline } from '@mui/material';
 import { ThemeProvider } from '@mui/material/styles';
-import Typography from '@material-ui/core/Typography';
+import Typography from '@mui/material/Typography';
 
 import theme from '../theme';
 
@@ -22,7 +22,7 @@ export default function Footer(): React.ReactElement {
       <CssBaseline />
       <Grid container component="div" className={classes.footerContainer}>
         <Grid item xs={8}>
-          <Typography>Kontakt</Typography>
+          <Typography variant="footerTypography">Kontakt</Typography>
         </Grid>
         <Grid item xs={8}>
           <Typography>English</Typography>

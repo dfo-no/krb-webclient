@@ -1,7 +1,19 @@
-import '@mui/material/styles';
+import '@mui/material';
 
-declare module '@material-ui/core/Typography' {
+declare module '@mui/material/styles' {
+  interface TypographyVariants {
+    footerTypography: React.CSSProperties;
+  }
+
+  // allow configuration using `createTheme`
+  interface TypographyVariantsOptions {
+    footerTypography?: React.CSSProperties;
+  }
+}
+
+// Update the Typography's variant prop options
+declare module '@mui/material/Typography' {
   interface TypographyPropsVariantOverrides {
-    whiteMuiTypography: true;
+    footerTypography: true;
   }
 }

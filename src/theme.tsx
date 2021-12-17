@@ -68,10 +68,23 @@ const theme = createTheme({
     success: {
       main: '#018566'
     }
+  },
+  typography: {
+    footerTypography: {
+      color: 'red'
+    }
   }
 });
 
 theme.components = {
+  MuiAppBar: {
+    styleOverrides: {
+      root: {
+        backgroundColor: theme.palette.gray100.main,
+        borderBottom: `1px solid ${theme.palette.gray300.main}`
+      }
+    }
+  },
   MuiButton: {
     variants: [
       {
@@ -82,14 +95,6 @@ theme.components = {
         }
       }
     ]
-  },
-  MuiAppBar: {
-    styleOverrides: {
-      root: {
-        backgroundColor: theme.palette.gray100.main,
-        borderBottom: `1px solid ${theme.palette.gray300.main}`
-      }
-    }
   }
 };
 
