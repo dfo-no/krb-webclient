@@ -1,5 +1,8 @@
 import React, { useState } from 'react';
 import Accordion from 'react-bootstrap/Accordion';
+import Col from 'react-bootstrap/Col';
+import Row from 'react-bootstrap/Row';
+import { BsThreeDotsVertical } from 'react-icons/bs';
 import Nestable, { Item } from 'react-nestable';
 import 'react-nestable/dist/styles/index.css';
 import Utils from '../common/Utils';
@@ -80,12 +83,15 @@ const NestableHierarcy2 = <T extends IBaseModel>({
     dispatchfunc(returnList);
   };
 
-  const renderItem = (item: Item) => {
+  const renderItem = (item: Item, handler: React.ReactNode) => {
     return (
       <Accordion.Item eventKey={item.id}>
         <h2 className="accordion-header">
           <Accordion.Button>
-            {Utils.capitalizeFirstLetter(item.title)}
+            <Row>
+              <Col sm={8}>{Utils.capitalizeFirstLetter(item.title)}</Col>
+              <Col sm={1}>{handler}</Col>
+            </Row>
           </Accordion.Button>
         </h2>
         <Accordion.Collapse eventKey={item.id}>
@@ -109,9 +115,10 @@ const NestableHierarcy2 = <T extends IBaseModel>({
       <Accordion activeKey={activeKey} onSelect={(e) => onOpenClose(e)}>
         <Nestable
           items={hierarchyList2}
-          renderItem={({ item }) => renderItem(item)}
+          renderItem={({ item, handler }) => renderItem(item, handler)}
           onChange={(items) => onChange(items)}
           maxDepth={depth}
+          handler={<BsThreeDotsVertical />}
         />
       </Accordion>
     </AccordionContext.Provider>
