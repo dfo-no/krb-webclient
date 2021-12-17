@@ -9,7 +9,6 @@ import { useFormContext } from 'react-hook-form';
 interface IProps {
   name: string;
   label?: string;
-  type?: 'text' | 'number' | 'select' | 'textarea';
 }
 
 const TextCtrl = ({ name, label }: IProps): React.ReactElement => {
@@ -35,6 +34,5 @@ const TextCtrl = ({ name, label }: IProps): React.ReactElement => {
 export default TextCtrl;
 
 TextCtrl.defaultProps = {
-  label: '',
-  type: 'text'
+  label: ''
 };

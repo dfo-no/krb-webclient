@@ -55,7 +55,10 @@ export default function SliderForm({
   const ProductSliderSchema = RequirementAnswerSchema.keys({
     question: SliderQuestionAnswerSchema.keys({
       answer: Joi.object().keys({
-        value: Joi.number().min(question.config.min).max(5).required(),
+        value: Joi.number()
+          .min(question.config.min)
+          .max(question.config.max)
+          .required(),
         point: Joi.number().required()
       })
     })

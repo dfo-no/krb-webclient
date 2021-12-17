@@ -39,7 +39,9 @@ function App(): React.ReactElement {
               path="/prefilledresponse/:id"
               component={PrefilledResponseModule}
             />
-            <Route path="/kitchensink" component={KitchenSink} />
+            {process.env.NODE_ENV === 'development' && (
+              <Route path="/kitchensink" component={KitchenSink} />
+            )}
           </AuthenticatedTemplate>
           <UnauthenticatedTemplate>
             <h5 className="card-title">Please sign-in to access this page</h5>
