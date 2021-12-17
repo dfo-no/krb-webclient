@@ -393,9 +393,9 @@ describe('Tree', () => {
                   {
                     type: QuestionEnum.Q_CHECKBOX,
                     config: {
-                      weightTrue: 100,
-                      weightFalse: 0,
-                      defaultPoint: 0
+                      pointsNonPrefered: 0,
+                      defaultPoint: 1,
+                      preferedAlternative: true
                     },
                     answer: { point: 0, value: false },
                     sourceOriginal: '',

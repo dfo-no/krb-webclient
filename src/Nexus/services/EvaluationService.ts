@@ -20,15 +20,11 @@ export default class EvaluationService {
   }
 
   evaluateCheckBox(question: ICheckboxQuestion): number {
-    if (question.answer.value === true) {
-      return question.config.weightTrue / 100;
+    if (question.answer.value === question.config.preferedAlternative) {
+      return 1;
     }
 
-    if (question.answer.value === false) {
-      return question.config.weightFalse / 100;
-    }
-
-    return 0;
+    return question.config.pointsNonPrefered / 100;
   }
 
   /* When we have found the value our answer is closest to, we have to find the range our answer is

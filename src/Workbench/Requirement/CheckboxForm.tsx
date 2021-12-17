@@ -53,30 +53,28 @@ export default function CheckboxForm({
           {...register(`variants.${vIndex}.questions.${aIndex}.type` as const)}
           defaultValue={item.type}
         />
+        <Form.Control
+          as="input"
+          type="hidden"
+          {...register(
+            `variants.${vIndex}.questions.${aIndex}.config.pointsNonPrefered` as const
+          )}
+          defaultValue={item.config.pointsNonPrefered}
+        />
         <Row className="w-50">
           <Col>
-            <Form.Label>Angi prosentvis poeng for ja</Form.Label>
-            <Form.Control
-              as="input"
-              type="number"
-              className="w-25"
-              {...register(
-                `variants.${vIndex}.questions.${aIndex}.config.weightTrue` as const
-              )}
-              defaultValue={item.config.weightTrue}
-            />
+            <Form.Label>Foretrukket alternativ</Form.Label>
           </Col>
           <Col>
-            <Form.Label>Angi prosentvis poeng for nei</Form.Label>
             <Form.Control
-              as="input"
-              type="number"
-              className="w-25"
+              as="select"
               {...register(
-                `variants.${vIndex}.questions.${aIndex}.config.weightFalse` as const
+                `variants.${vIndex}.questions.${aIndex}.config.preferedAlternative` as const
               )}
-              defaultValue={item.config.weightFalse}
-            />
+            >
+              <option value="true">Yes</option>
+              <option value="false">No</option>
+            </Form.Control>
           </Col>
         </Row>
       </Card.Body>

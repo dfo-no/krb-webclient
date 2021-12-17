@@ -4,7 +4,6 @@ import LoaderSpinner from '../common/LoaderSpinner';
 import { useAppDispatch } from '../store/hooks';
 import { getBanksThunk } from '../store/reducers/bank-reducer';
 import { selectBank } from '../store/reducers/selectedBank-reducer';
-import RequirementSpecEditor from './Requirement/RequirementSpecEditor';
 import SpecEditor from './SpecEditor/SpecEditor';
 
 interface IRouteParams {
@@ -39,9 +38,6 @@ export default function SpecificationGuard(): React.ReactElement {
     <>
       <Route exact path="/specification/:id">
         <SpecEditor />
-      </Route>
-      <Route exact path="/specification/:id/requirement">
-        <RequirementSpecEditor />
       </Route>
     </>
   );
