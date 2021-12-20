@@ -49,16 +49,12 @@ export default function CodelistForm({ answer }: IProps): React.ReactElement {
     (state) => state.prefilledResponse
   );
 
-  const resolver = question.config.multipleSelect
-    ? ResponseCodelistSchema
-    : ResponseSingleCodelistSchema;
-
   const {
     register,
     handleSubmit,
     formState: { errors }
   } = useForm<IRequirementAnswer>({
-    resolver: joiResolver(resolver),
+    resolver: joiResolver(ResponseCodelistSchema),
     defaultValues: answer
   });
 

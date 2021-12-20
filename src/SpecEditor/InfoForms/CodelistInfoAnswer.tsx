@@ -86,16 +86,12 @@ export default function CodelistInfoAnswer({
 
   const defaultVal: ICodelistQuestion = setDefaultVal();
 
-  const resolver = defaultVal.config.multipleSelect
-    ? ResponseCodelistSchema
-    : ResponseSingleCodelistSchema;
-
   const {
     register,
     handleSubmit,
     formState: { errors }
   } = useForm<ICodelistQuestion>({
-    resolver: joiResolver(resolver),
+    resolver: joiResolver(ResponseCodelistSchema),
     defaultValues: {
       ...defaultVal
     }

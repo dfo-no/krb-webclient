@@ -78,9 +78,12 @@ export default function QuestionArray({
         id: uuidv4(),
         type: QuestionEnum.Q_CODELIST,
         config: {
-          multipleSelect: false,
+          mandatoryCodes: [],
+          optionalCodes: [],
           codelist: project.codelist[0].id,
-          defaultPoint: 1
+          defaultPoint: 1,
+          optionalCodeMinAmount: 0,
+          optionalCodeMaxAmount: 1
         },
         answer: {
           point: 0,
