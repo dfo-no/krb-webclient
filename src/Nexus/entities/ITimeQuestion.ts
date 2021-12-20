@@ -4,7 +4,8 @@ import {
   ConfigBaseSchema,
   IAnswerBase,
   IConfigBase,
-  IQuestionBase
+  IQuestionBase,
+  QuestionBaseSchema
 } from './IQuestionBase';
 
 export interface ITimeQuestion extends IQuestionBase<ITimeAnswer, ITimeConfig> {
@@ -19,7 +20,7 @@ export interface ITimeConfig extends IConfigBase {
   toTime?: string;
 }
 
-export const TimeQuestionSchema = Joi.object().keys({
+export const TimeQuestionSchema = QuestionBaseSchema.keys({
   id: Joi.string().length(36).required(),
   type: Joi.string().equal(QuestionEnum.Q_TIME).required(),
   config: ConfigBaseSchema.keys({

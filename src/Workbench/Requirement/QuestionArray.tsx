@@ -53,9 +53,10 @@ export default function QuestionArray({
   const [question, setSelectedQuestion] = useState('value');
 
   const addQuestion = () => {
+    const uuid = uuidv4();
     if (question === QuestionEnum.Q_SLIDER) {
       const q: ISliderQuestion = {
-        id: uuidv4(),
+        id: uuid,
         type: QuestionEnum.Q_SLIDER,
         config: {
           min: 0,
@@ -68,14 +69,17 @@ export default function QuestionArray({
             { value: 10, score: 100 }
           ]
         },
-        answer: { point: null, value: 0 },
+        answer: {
+          point: 0,
+          value: 0
+        },
         sourceRel: null,
         sourceOriginal: null
       };
       append(q);
     } else if (question === QuestionEnum.Q_CODELIST) {
       const q: ICodelistQuestion = {
-        id: uuidv4(),
+        id: uuid,
         type: QuestionEnum.Q_CODELIST,
         config: {
           mandatoryCodes: [],
@@ -95,7 +99,7 @@ export default function QuestionArray({
       append(q);
     } else if (question === QuestionEnum.Q_TEXT) {
       const q: ITextQuestion = {
-        id: uuidv4(),
+        id: uuid,
         type: QuestionEnum.Q_TEXT,
         config: {
           max: 10000,
@@ -111,7 +115,7 @@ export default function QuestionArray({
       append(q);
     } else if (question === QuestionEnum.Q_PERIOD_DATE) {
       const q: IPeriodDateQuestion = {
-        id: uuidv4(),
+        id: uuid,
         type: QuestionEnum.Q_PERIOD_DATE,
         config: {
           fromDate: null,
@@ -128,7 +132,7 @@ export default function QuestionArray({
       append(q);
     } else if (question === QuestionEnum.Q_TIME) {
       const q: ITimeQuestion = {
-        id: uuidv4(),
+        id: uuid,
         type: QuestionEnum.Q_TIME,
         config: {
           fromTime: '',
@@ -145,12 +149,12 @@ export default function QuestionArray({
       append(q);
     } else if (question === QuestionEnum.Q_CHECKBOX) {
       const q: ICheckboxQuestion = {
-        id: uuidv4(),
+        id: uuid,
         type: QuestionEnum.Q_CHECKBOX,
         config: {
-          weightTrue: 100,
-          weightFalse: 0,
-          defaultPoint: 1
+          pointsNonPrefered: 0,
+          defaultPoint: 1,
+          preferedAlternative: true
         },
         answer: {
           point: 0,
@@ -162,7 +166,7 @@ export default function QuestionArray({
       append(q);
     } else if (question === QuestionEnum.Q_FILEUPLOAD) {
       const q: IFileUploadQuestion = {
-        id: uuidv4(),
+        id: uuid,
         type: QuestionEnum.Q_FILEUPLOAD,
         config: {
           fileEndings: '',
@@ -181,9 +185,9 @@ export default function QuestionArray({
 
   return (
     <div>
-      <h6>{t('Questions')}</h6>
+      <h6>{t('Answer types')}</h6>
       <Form.Label column sm="3">
-        {t('Select question type')}
+        {t('Select answer type')}
       </Form.Label>
       <Col sm={6}>
         <Form.Control

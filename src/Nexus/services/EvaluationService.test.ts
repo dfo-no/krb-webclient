@@ -2388,9 +2388,9 @@ describe('EvaluationService', () => {
                         {
                           type: QuestionEnum.Q_CHECKBOX,
                           config: {
-                            weightTrue: 90,
-                            weightFalse: 10,
-                            defaultPoint: 1
+                            pointsNonPrefered: 0,
+                            defaultPoint: 1,
+                            preferedAlternative: true
                           },
                           answer: {
                             point: 0,
@@ -2756,9 +2756,9 @@ describe('EvaluationService', () => {
             question: {
               type: QuestionEnum.Q_CHECKBOX,
               config: {
-                weightTrue: 90,
-                weightFalse: 10,
-                defaultPoint: 1
+                pointsNonPrefered: 0,
+                defaultPoint: 1,
+                preferedAlternative: true
               },
               answer: {
                 point: 0,
@@ -2786,9 +2786,9 @@ describe('EvaluationService', () => {
                     {
                       type: QuestionEnum.Q_CHECKBOX,
                       config: {
-                        weightTrue: 90,
-                        weightFalse: 10,
-                        defaultPoint: 1
+                        pointsNonPrefered: 0,
+                        defaultPoint: 1,
+                        preferedAlternative: true
                       },
                       answer: {
                         point: 0,

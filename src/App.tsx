@@ -11,6 +11,7 @@ import { msalConfig } from './authentication/authConfig';
 import Evaluation from './Evaluation/Evaluation';
 import Header from './Header/Header';
 import HomePage from './Home/HomePage';
+import KitchenSink from './KitchenSink';
 import PageLayout from './PageLayout';
 import PrefilledResponseModule from './PrefilledResponseEditor/PrefilledResponseModule';
 import ResponseModule from './ResponseEditor/ResponseModule';
@@ -38,6 +39,9 @@ function App(): React.ReactElement {
               path="/prefilledresponse/:id"
               component={PrefilledResponseModule}
             />
+            {process.env.NODE_ENV === 'development' && (
+              <Route path="/kitchensink" component={KitchenSink} />
+            )}
           </AuthenticatedTemplate>
           <UnauthenticatedTemplate>
             <h5 className="card-title">Please sign-in to access this page</h5>

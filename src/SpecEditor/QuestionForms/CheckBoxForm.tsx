@@ -1,5 +1,4 @@
 import { joiResolver } from '@hookform/resolvers/joi';
-import Joi from 'joi';
 import React, { useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
@@ -11,8 +10,10 @@ import { useTranslation } from 'react-i18next';
 import SliderSelect from '../../components/SliderSelect';
 import { IRequirementAnswer } from '../../models/IRequirementAnswer';
 import ModelType from '../../models/ModelType';
-import QuestionEnum from '../../models/QuestionEnum';
-import { ICheckboxQuestion } from '../../Nexus/entities/ICheckboxQuestion';
+import {
+  CheckboxQuestionSchema,
+  ICheckboxQuestion
+} from '../../Nexus/entities/ICheckboxQuestion';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import {
   addAnswer,
@@ -22,14 +23,6 @@ import {
 interface IProps {
   parentAnswer: IRequirementAnswer;
 }
-const CheckboxSchema = Joi.object().keys({
-  id: Joi.string().required(),
-  type: Joi.string().equal(QuestionEnum.Q_CHECKBOX).required(),
-  config: Joi.object().keys({
-    weightTrue: Joi.number().min(1).max(100),
-    weightFalse: Joi.number().min(0).max(100)
-  })
-});
 
 export default function CheckBoxForm({
   parentAnswer
@@ -69,36 +62,24 @@ export default function CheckBoxForm({
   const {
     control,
     handleSubmit,
+    register,
     formState: { errors }
   } = useForm<ICheckboxQuestion>({
-    resolver: joiResolver(CheckboxSchema),
+    resolver: joiResolver(CheckboxQuestionSchema),
     defaultValues: {
       ...defaultValues
     }
   });
 
   const [pointsForNonPreferred, setPointsForNonPreffered] = useState(
-    defaultValues.config.weightFalse > 0 && defaultValues.config.weightTrue > 0
+    defaultValues.config.pointsNonPrefered > 0
   );
 
-  const [preferedAlternative, setPreferedAlternative] = useState(
-    defaultValues.config.weightTrue > defaultValues.config.weightFalse
-      ? 'true'
-      : 'false'
-  );
   const saveValues = (post: ICheckboxQuestion) => {
     const newAnswer = {
       ...parentAnswer
     };
-    if (preferedAlternative === 'false') {
-      const newQuestion = {
-        ...post
-      };
-      newQuestion.config.weightFalse = 100;
-      newAnswer.question = newQuestion;
-    } else {
-      newAnswer.question = post;
-    }
+    newAnswer.question = post;
 
     if (newAnswer.type === ModelType.requirement)
       dispatch(addAnswer({ answer: newAnswer }));
@@ -123,9 +104,8 @@ export default function CheckBoxForm({
             </Col>
             <Col>
               <Form.Control
-                onChange={(e) => setPreferedAlternative(e.target.value)}
                 as="select"
-                defaultValue={preferedAlternative}
+                {...register(`config.preferedAlternative` as const)}
               >
                 <option value="true">Yes</option>
                 <option value="false">No</option>
@@ -135,25 +115,34 @@ export default function CheckBoxForm({
           <Form.Check
             checked={pointsForNonPreferred}
             onChange={(e) => setPointsForNonPreffered(e.target.checked)}
-            label="Gi poeng for ikke-foretrukket alternativ"
+            label="Gi prosentandel poeng for ikke-foretrukket alternativ"
           />
-          <Row className=" ml-3 w-50">
-            {pointsForNonPreferred && (
-              <SliderSelect
-                name={
-                  preferedAlternative === 'true'
-                    ? (`config.weightFalse` as const)
-                    : (`config.weightTrue` as const)
-                }
-                control={control}
-                errors={errors}
-                min={0}
-                max={100}
-                step={10}
-                label="Oppgi poeng"
-                marks={[]}
-              />
-            )}
+          <Row className="ml-3">
+            <Col sm={4}>
+              {pointsForNonPreferred && (
+                <SliderSelect
+                  name={`config.pointsNonPrefered` as const}
+                  control={control}
+                  errors={errors}
+                  min={0}
+                  max={100}
+                  step={10}
+                  label="Oppgi poeng"
+                  marks={[
+                    {
+                      value: 1,
+
+                      label: '1'
+                    },
+                    {
+                      value: 100,
+
+                      label: '100'
+                    }
+                  ]}
+                />
+              )}
+            </Col>
           </Row>
           <Button type="submit">{t('save')}</Button>
         </Form>

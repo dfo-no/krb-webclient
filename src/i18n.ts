@@ -20,7 +20,7 @@ i18n
   .init({
     ignoreJSONStructure: false,
     fallbackLng: 'en',
-    debug: true,
+    debug: process.env.NODE_ENV === 'development',
     defaultNS: 'common',
     keySeparator: '.',
     lng: 'nb',

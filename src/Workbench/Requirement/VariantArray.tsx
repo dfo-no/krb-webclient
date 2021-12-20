@@ -86,12 +86,6 @@ export default function VariantArray({
     );
   };
 
-  /* const getError = (str: string) => {
-    const path = toPath(str);
-    path.push('message');
-    return get(errors, path);
-  }; */
-
   const hasError = (str: string) => {
     let retVal = null;
     const path = toPath(str);
@@ -142,25 +136,12 @@ export default function VariantArray({
                   <BsTrashFill />
                 </Button>
               </h5>
-
-              {/* <input
-                key={item.id} // important to include key with field's id
-                {...register(`variants.${index}.id` as const)}
-                defaultValue={item.id} // make sure to include defaultValue
-              /> */}
               <Form.Control
                 as="input"
                 type="hidden"
                 {...register(`variants.${index}.id` as const)}
                 defaultValue={item.id}
               />
-              {/* <input
-                key={item.requirementText} // important to include key with field's id
-                {...register(`variants.${index}.requirementText` as const)}
-                defaultValue={item.requirementText} // make sure to include defaultValue
-              /> */}
-
-              {/* TODO: check replacement with Input */}
               <Form.Group>
                 <Form.Label>{t('Requirement text')}</Form.Label>
                 <Form.Control

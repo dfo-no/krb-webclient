@@ -1,17 +1,13 @@
 import Slider from '@mui/material/Slider';
+import { get } from 'lodash';
 import React from 'react';
 import Form from 'react-bootstrap/Form';
 import FormControl from 'react-bootstrap/FormControl';
-import {
-  Controller,
-  FieldError,
-  FieldValues,
-  UseControllerProps
-} from 'react-hook-form';
+import { Controller, useFormContext } from 'react-hook-form';
 import { IOption } from '../models/IOption';
 
-interface IProps<T> extends UseControllerProps<T> {
-  error: FieldError | undefined;
+interface IProps {
+  name: string;
   min: number;
   max: number;
   step: number;
@@ -19,19 +15,18 @@ interface IProps<T> extends UseControllerProps<T> {
   marks: IOption[];
 }
 
-/**
- * @deprecated
- */
-const ControlledSlider = <T extends FieldValues>({
+const SliderCtrl = ({
   name,
-  control,
-  error,
   min,
   max,
   step,
   unit,
   marks
-}: IProps<T>): React.ReactElement => {
+}: IProps): React.ReactElement => {
+  const {
+    formState: { errors }
+  } = useFormContext();
+
   return (
     <div className="d-flex align-items-center">
       {marks.length === 0 && <div className="px-2">{`${min} ${unit}`}</div>}
@@ -39,7 +34,6 @@ const ControlledSlider = <T extends FieldValues>({
       <span className="mx-3 flex-grow-1">
         <Form.Group controlId={name}>
           <Controller
-            control={control}
             name={name}
             render={({ field }) => (
               <Slider
@@ -58,9 +52,9 @@ const ControlledSlider = <T extends FieldValues>({
               />
             )}
           />
-          <Form.Control type="hidden" isInvalid={!!error} />
+          <Form.Control type="hidden" isInvalid={!!get(errors, name)} />
           <FormControl.Feedback type="invalid">
-            {error?.message}
+            {get(errors, name)?.message ?? ''}
           </FormControl.Feedback>
         </Form.Group>
       </span>
@@ -69,4 +63,4 @@ const ControlledSlider = <T extends FieldValues>({
   );
 };
 
-export default ControlledSlider;
+export default SliderCtrl;

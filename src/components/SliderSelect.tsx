@@ -48,36 +48,32 @@ export default function SliderSelect({
     return get(errors, path);
   };
   return (
-    <Form.Group>
-      <Row className="is-invalid">
-        <Form.Label column lg={4}>
-          {t(label)}
-        </Form.Label>
-        <Controller
-          name={name}
-          control={control}
-          render={({ field }) => (
-            <Slider
-              name={field.name}
-              value={field.value}
-              onBlur={field.onBlur}
-              ref={field.ref}
-              onChange={(_, value) => {
-                field.onChange(value);
-              }}
-              min={min}
-              max={max}
-              step={step}
-              marks={marks}
-            />
-          )}
-        />
-      </Row>
+    <div className="m-4">
+      <Controller
+        name={name}
+        control={control}
+        render={({ field }) => (
+          <Slider
+            name={field.name}
+            value={field.value}
+            onBlur={field.onBlur}
+            ref={field.ref}
+            onChange={(_, value) => {
+              field.onChange(value);
+            }}
+            min={min}
+            max={max}
+            step={step}
+            marks={marks}
+          />
+        )}
+      />
+
       {hasError(name) && (
         <Form.Control.Feedback type="invalid">
           {getError(name)}
         </Form.Control.Feedback>
       )}
-    </Form.Group>
+    </div>
   );
 }

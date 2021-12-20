@@ -31,6 +31,9 @@ const maskMap: { [key: string]: string } = {
   nb: '__.__.____'
 };
 
+/**
+ * @deprecated
+ */
 const ControlledDate = <T extends FieldValues>({
   name,
   control,

@@ -16,6 +16,9 @@ interface IProps<T> extends UseControllerProps<T> {
   type?: 'text' | 'number' | 'select' | 'textarea';
 }
 
+/**
+ * @deprecated
+ */
 const ControlledTextInput = <T extends FieldValues>({
   name,
   control,
