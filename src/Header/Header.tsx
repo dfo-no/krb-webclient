@@ -27,18 +27,15 @@ const useStyles = makeStyles({
   logoSmall: {
     [theme.breakpoints.up('sm')]: {
       display: 'none'
-    },
-    [theme.breakpoints.down('sm')]: {
-      padding: 10
     }
+  },
+  showSignedButton: {
+    display: 'block'
   },
   hideSignedButton: {
     [theme.breakpoints.down('sm')]: {
       display: 'none'
     }
-  },
-  showSignedButton: {
-    display: 'block'
   }
 });
 
@@ -59,7 +56,7 @@ export default function Header(): React.ReactElement {
       <CssBaseline />
       <Box
         sx={{
-          marginBottom: 8
+          marginBottom: 11
         }}
       >
         <AppBar elevation={0}>

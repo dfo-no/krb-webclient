@@ -3,7 +3,7 @@ import { createTheme } from '@mui/material/styles';
 const theme = createTheme({
   palette: {
     primary: {
-      main: '#fffffff'
+      main: '#012a4c'
     },
     secondary: {
       main: '#009fe3'
@@ -67,14 +67,19 @@ const theme = createTheme({
     },
     success: {
       main: '#018566'
-    }
-  },
-  typography: {
-    footerTypography: {
-      color: 'red'
+    },
+    white: {
+      main: '#ffff'
+    },
+    lightBlue: {
+      main: '#009EE1'
     }
   }
 });
+
+theme.typography.footer = {
+  color: theme.palette.white.main
+};
 
 theme.components = {
   MuiAppBar: {
@@ -90,8 +95,11 @@ theme.components = {
       {
         props: { variant: 'regularMuiButton' },
         style: {
-          backgroundColor: theme.palette.gray400.main,
-          whiteSpace: 'nowrap'
+          backgroundColor: theme.palette.blue.main,
+          whiteSpace: 'nowrap',
+          '&:hover': {
+            background: '#0a4678'
+          }
         }
       }
     ]

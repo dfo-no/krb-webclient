@@ -1,19 +1,18 @@
 import '@mui/material';
+import React from 'react';
 
 declare module '@mui/material/styles' {
   interface TypographyVariants {
-    footerTypography: React.CSSProperties;
+    footer: React.CSSProperties;
   }
 
-  // allow configuration using `createTheme`
   interface TypographyVariantsOptions {
-    footerTypography?: React.CSSProperties;
+    footer?: React.CSSProperties;
   }
 }
 
-// Update the Typography's variant prop options
 declare module '@mui/material/Typography' {
   interface TypographyPropsVariantOverrides {
-    footerTypography: true;
+    footer: true;
   }
 }
