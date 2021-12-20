@@ -101,7 +101,7 @@ export default function ICodelistAnswerForm({
           <Form.Control
             as="select"
             {...register(`answer.codes` as const)}
-            multiple={item.config.multipleSelect}
+            multiple
           >
             {codelist.codes.map((element) => (
               <option key={element.id} value={element.id}>

@@ -57,12 +57,8 @@ export default function CodelistForm({
     (state) => state.prefilledResponse
   );
 
-  const resolver = question.config.multipleSelect
-    ? ResponseCodelistSchema
-    : ResponseSingleCodelistSchema;
-
   const methods = useForm<IRequirementAnswer>({
-    resolver: joiResolver(resolver),
+    resolver: joiResolver(ResponseCodelistSchema),
     defaultValues: determinedAnswer
   });
 

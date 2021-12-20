@@ -2438,9 +2438,12 @@ describe('EvaluationService', () => {
                         {
                           type: QuestionEnum.Q_CODELIST,
                           config: {
-                            multipleSelect: false,
+                            mandatoryCodes: [],
+                            optionalCodes: [],
                             codelist: 'dedfefcc-6839-4b44-abb1-ced9759a375d',
-                            defaultPoint: 1
+                            defaultPoint: 1,
+                            optionalCodeMinAmount: 0,
+                            optionalCodeMaxAmount: 1
                           },
                           answer: {
                             point: 0,
@@ -2814,9 +2817,12 @@ describe('EvaluationService', () => {
             question: {
               type: QuestionEnum.Q_CODELIST,
               config: {
-                multipleSelect: false,
+                mandatoryCodes: [],
+                optionalCodes: [],
                 codelist: 'dedfefcc-6839-4b44-abb1-ced9759a375d',
-                defaultPoint: 1
+                defaultPoint: 1,
+                optionalCodeMinAmount: 0,
+                optionalCodeMaxAmount: 1
               },
               answer: {
                 point: 0,
@@ -2844,9 +2850,12 @@ describe('EvaluationService', () => {
                     {
                       type: QuestionEnum.Q_CODELIST,
                       config: {
-                        multipleSelect: false,
+                        mandatoryCodes: [],
+                        optionalCodes: [],
                         codelist: 'dedfefcc-6839-4b44-abb1-ced9759a375d',
-                        defaultPoint: 1
+                        defaultPoint: 1,
+                        optionalCodeMinAmount: 0,
+                        optionalCodeMaxAmount: 1
                       },
                       answer: {
                         point: 0,
