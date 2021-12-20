@@ -20,6 +20,31 @@ describe('Joi date should validate', () => {
     expect(report.error).toBeUndefined();
   });
 
+  test('Min date validation should trigger message', () => {
+    const dateSchema = Joi.object().keys({
+      date1: Joi.date().iso().raw().max('11-25-2021').required()
+    });
+    const bank = {
+      date1: new Date().toISOString()
+    };
+
+    const report = dateSchema.validate(bank);
+    // "date1" must be less than or equal to "2021-11-24T23:00:00.000Z"
+    expect(report?.error?.details[0].message).toContain('must be less than');
+  });
+
+  test('Format should be OK', () => {
+    const dateSchema = Joi.object().keys({
+      date1: Joi.date().iso().raw().max('11-25-2021').required()
+    });
+    const bank = {
+      date1: '2021-11-24T10:20:53.000Z'
+    };
+
+    const report = dateSchema.validate(bank);
+    expect(report.error).toBeUndefined();
+  });
+
   test('Empty string date should validate', () => {
     const dateSchema = Joi.object().keys({
       publishedDate: Joi.alternatives([
