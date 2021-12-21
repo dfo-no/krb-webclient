@@ -76,6 +76,7 @@ export default function TextForm({ parentAnswer }: IProps): React.ReactElement {
       <Card.Body>
         <h6>Alternative: Text</h6>
         <Form onSubmit={handleSubmit(saveValues)}>
+          <Form.Label>Maks lengde</Form.Label>
           <Form.Control
             as="input"
             disabled
@@ -84,7 +85,6 @@ export default function TextForm({ parentAnswer }: IProps): React.ReactElement {
             type="number"
           />
 
-          <Button type="submit">{t('save')}</Button>
           <ErrorSummary errors={errors} />
         </Form>
       </Card.Body>
