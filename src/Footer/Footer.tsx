@@ -20,6 +20,10 @@ const useStyles = makeStyles({
     paddingBottom: '10px',
     paddingTop: '10px',
     paddingRight: '8px'
+  },
+  footerLogo: {
+    maxWidth: '100%',
+    height: '100%'
   }
 });
 
@@ -37,45 +41,47 @@ export default function Footer(): React.ReactElement {
         columnSpacing={8}
       >
         <Grid container xs={4}>
-          <Box sx={{ flexGrow: 1 }}>
-            <Grid container item className={classes.footerLink}>
-              <Box>
-                <Typography variant="footer">Kontakt</Typography>
-              </Box>
-              <Box>
-                <img src="/arrow.svg" alt="DFØ footer link arrow" />
-              </Box>
-            </Grid>
-            <Grid container item className={classes.footerLink}>
-              <Box>
-                <Typography variant="footer">English</Typography>
-              </Box>
-              <Box>
-                <img src="/arrow.svg" alt="DFØ footer link arrow" />
-              </Box>
-            </Grid>
-            <Grid container item className={classes.footerLink}>
-              <Box>
-                <Typography variant="footer">Personvern</Typography>
-              </Box>
-              <Box>
-                <img src="/arrow.svg" alt="DFØ footer link arrow" />
-              </Box>
-            </Grid>
-            <Grid container item className={classes.footerLink}>
-              <Box>
-                <Typography variant="footer">Offentlig postjournal</Typography>
-              </Box>
-              <Box>
-                <img src="/arrow.svg" alt="DFØ footer link arrow" />
-              </Box>
-            </Grid>
-          </Box>
+          <Grid container item className={classes.footerLink}>
+            <Box sx={{ flexGrow: 1 }}>
+              <Typography variant="footer">Kontakt</Typography>
+            </Box>
+            <Box>
+              <img src="/arrow.svg" alt="DFØ footer link arrow" />
+            </Box>
+          </Grid>
+          <Grid container item className={classes.footerLink}>
+            <Box sx={{ flexGrow: 1 }}>
+              <Typography variant="footer">English</Typography>
+            </Box>
+            <Box>
+              <img src="/arrow.svg" alt="DFØ footer link arrow" />
+            </Box>
+          </Grid>
+          <Grid container item className={classes.footerLink}>
+            <Box sx={{ flexGrow: 1 }}>
+              <Typography variant="footer">Personvern</Typography>
+            </Box>
+            <Box>
+              <img src="/arrow.svg" alt="DFØ footer link arrow" />
+            </Box>
+          </Grid>
+          <Grid container item className={classes.footerLink}>
+            <Box sx={{ flexGrow: 1 }}>
+              <Typography variant="footer">Offentlig postjournal</Typography>
+            </Box>
+            <Box>
+              <img src="/arrow.svg" alt="DFØ footer link arrow" />
+            </Box>
+          </Grid>
         </Grid>
 
         <Grid item container xs={4} direction="column" spacing={2}>
           <Grid item>
-            <img src="/logo-white.svg" alt="DFØ logo footer" />
+            <img
+              className="footerLogo"
+              src="/logo-white.svg"
+              alt="DFØ logo footer"
+            />
           </Grid>
           <Grid item>
             <Grid item>
