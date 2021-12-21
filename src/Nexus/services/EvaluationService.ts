@@ -3,6 +3,7 @@
 import { IResponse } from '../../models/IResponse';
 import QuestionEnum from '../../models/QuestionEnum';
 import { ICheckboxQuestion } from '../entities/ICheckboxQuestion';
+import { ICodelistQuestion } from '../entities/ICodelistQuestion';
 import { IEvaluatedResponse } from '../entities/IEvaluatedResponse';
 import { ISliderQuestion, ScoreValuePair } from '../entities/ISliderQuestion';
 
@@ -17,6 +18,28 @@ export default class EvaluationService {
       evaluations.push(result);
     });
     return evaluations;
+  }
+
+  evaluateCodelist(question: ICodelistQuestion): number {
+    const answeredAmount = question.answer.codes.length;
+    const min = question.config.optionalCodeMinAmount;
+    const max = question.config.optionalCodeMaxAmount;
+    let score = 0;
+    if (answeredAmount < min) {
+      return score;
+    }
+    if (answeredAmount === min) {
+      return score;
+    }
+    for (let i = min; i < max; i += 1) {
+      if (min === 0) {
+        score += 1 / max;
+      } else {
+        score += 1 / (max - min + 1);
+      }
+      if (i === answeredAmount) break;
+    }
+    return score;
   }
 
   evaluateCheckBox(question: ICheckboxQuestion): number {
@@ -117,17 +140,23 @@ export default class EvaluationService {
         throw Error('Answer does not exist in specification');
       }
 
-      if (
-        requirementAnswer.question.type !== QuestionEnum.Q_CHECKBOX &&
-        requirementAnswer.question.type !== QuestionEnum.Q_SLIDER
-      ) {
-        evaluation.points += 1;
-      }
       if (requirementAnswer.question.type === QuestionEnum.Q_CHECKBOX) {
         evaluation.points += this.evaluateCheckBox(requirementAnswer.question);
       }
       if (requirementAnswer.question.type === QuestionEnum.Q_SLIDER) {
         evaluation.points += this.evaluateSlider(requirementAnswer.question);
+      }
+
+      if (requirementAnswer.question.type === QuestionEnum.Q_CODELIST) {
+        evaluation.points += this.evaluateCodelist(requirementAnswer.question);
+      }
+
+      if (
+        requirementAnswer.question.type !== QuestionEnum.Q_CODELIST &&
+        requirementAnswer.question.type !== QuestionEnum.Q_SLIDER &&
+        requirementAnswer.question.type !== QuestionEnum.Q_CHECKBOX
+      ) {
+        evaluation.points += 1;
       }
     });
 
