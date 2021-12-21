@@ -149,7 +149,13 @@ export default class EvaluationService {
 
       if (requirementAnswer.question.type === QuestionEnum.Q_CODELIST) {
         evaluation.points += this.evaluateCodelist(requirementAnswer.question);
-      } else {
+      }
+
+      if (
+        requirementAnswer.question.type !== QuestionEnum.Q_CODELIST &&
+        requirementAnswer.question.type !== QuestionEnum.Q_SLIDER &&
+        requirementAnswer.question.type !== QuestionEnum.Q_CHECKBOX
+      ) {
         evaluation.points += 1;
       }
     });

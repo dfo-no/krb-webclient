@@ -21,9 +21,9 @@ describe('Validation', () => {
           question: {
             type: 'Q_CHECKBOX',
             config: {
-              weightTrue: 100,
-              weightFalse: 0,
-              defaultPoint: 1
+              pointsNonPrefered: 0,
+              defaultPoint: 1,
+              preferedAlternative: true
             },
             id: '89a251dc-de54-4012-a54b-8aa7170614b6',
             answer: {
@@ -50,9 +50,9 @@ describe('Validation', () => {
                   {
                     type: 'Q_CHECKBOX',
                     config: {
-                      weightTrue: 100,
-                      weightFalse: 0,
-                      defaultPoint: 1
+                      pointsNonPrefered: 0,
+                      defaultPoint: 1,
+                      preferedAlternative: true
                     },
                     id: '89a251dc-de54-4012-a54b-8aa7170614b6',
                     answer: null,
@@ -184,64 +184,6 @@ describe('Validation', () => {
               }
             ],
             id: 'c8424cae-9920-4bbc-891a-b3ee46d44966',
-            description: '',
-            type: 'requirement',
-            requirement_Type: 'requirement',
-            sourceOriginal: '7fd741aa-742b-4f96-a24a-a6280ff389f4',
-            sourceRel: null
-          }
-        },
-        {
-          id: '7fd741aa-742b-4f96-a24a-a6280ff389f4',
-          questionId: 'e503a651-dde2-4d5b-87f0-342f3406fad6',
-          weight: 0,
-          variantId: '87bce9dd-4574-48d6-85f3-964c21f0cc98',
-          question: {
-            type: 'Q_CODELIST',
-            config: {
-              multipleSelect: true,
-              codelist: 'dec9ffb5-70c3-4c3f-8250-dbd9e5b66cf2',
-              defaultPoint: 30
-            },
-            id: 'e503a651-dde2-4d5b-87f0-342f3406fad6',
-            answer: {
-              codes: 'e503a651-dde2-4d5b-87f0-342f3406fad6',
-              point: 0
-            },
-            sourceOriginal: null,
-            sourceRel: null
-          },
-          type: 'prefilledResponse',
-          requirement: {
-            title: 'Enkeltrom til alle',
-            tags: ['62998851-c43d-4569-825d-eef75f6d3894'],
-            needId: '09f6b08c-d908-4072-8ed0-0c31128af258',
-            variants: [
-              {
-                requirementText: 'Enkeltrom til alle ',
-                instruction: '',
-                useProduct: true,
-                useSpesification: true,
-                useQualification: false,
-                products: ['73e7a8c9-7d40-4315-aa9d-4279825f7fac'],
-                questions: [
-                  {
-                    type: 'Q_CODELIST',
-                    config: {
-                      multipleSelect: true,
-                      codelist: 'dec9ffb5-70c3-4c3f-8250-dbd9e5b66cf2',
-                      defaultPoint: 14
-                    },
-                    id: 'e503a651-dde2-4d5b-87f0-342f3406fad6',
-                    answer: null,
-                    sourceOriginal: null,
-                    sourceRel: null
-                  }
-                ],
-                id: '87bce9dd-4574-48d6-85f3-964c21f0cc98'
-              }
-            ],
-            id: '259d3430-5934-4459-b329-81e2cee8cc23',
             description: '',
             type: 'requirement',
             requirement_Type: 'requirement',
