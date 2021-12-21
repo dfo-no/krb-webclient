@@ -78,7 +78,8 @@ const theme = createTheme({
 });
 
 theme.typography.footer = {
-  color: theme.palette.white.main
+  color: theme.palette.white.main,
+  wordWrap: 'break-word'
 };
 
 theme.components = {

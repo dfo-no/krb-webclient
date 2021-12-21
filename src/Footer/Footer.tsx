@@ -6,24 +6,34 @@ import { CssBaseline } from '@mui/material';
 import { ThemeProvider } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
+import Link from '@mui/material/Link';
+import {
+  Link as RouterLink,
+  useHistory,
+  useRouteMatch
+} from 'react-router-dom';
 import theme from '../theme';
 
 const useStyles = makeStyles({
   footerContainer: {
     backgroundColor: theme.palette.blue.main,
     height: '50vh',
-    marginTop: '90px',
-    paddingLeft: '100px'
+    marginTop: '90px'
   },
   footerLink: {
     borderBottom: `1px solid ${theme.palette.lightBlue.main}`,
     paddingBottom: '10px',
     paddingTop: '10px',
-    paddingRight: '8px'
+    paddingRight: '8px',
+    minWidth: '185px',
+    '&:hover': {
+      backgroundColor: '#0a4678'
+    },
+    paddingLeft: '10px'
   },
-  footerLogo: {
+  logoFooter: {
     maxWidth: '100%',
-    height: '100%'
+    height: 'auto'
   }
 });
 
@@ -39,11 +49,14 @@ export default function Footer(): React.ReactElement {
         justifyContent="center"
         alignItems="center"
         columnSpacing={8}
+        direction="row"
       >
         <Grid container xs={4}>
           <Grid container item className={classes.footerLink}>
             <Box sx={{ flexGrow: 1 }}>
-              <Typography variant="footer">Kontakt</Typography>
+              <Link component={RouterLink} to="/">
+                <Typography variant="footer">Kontakt</Typography>
+              </Link>
             </Box>
             <Box>
               <img src="/arrow.svg" alt="DFØ footer link arrow" />
@@ -51,7 +64,9 @@ export default function Footer(): React.ReactElement {
           </Grid>
           <Grid container item className={classes.footerLink}>
             <Box sx={{ flexGrow: 1 }}>
-              <Typography variant="footer">English</Typography>
+              <Link component={RouterLink} to="/">
+                <Typography variant="footer">English</Typography>
+              </Link>
             </Box>
             <Box>
               <img src="/arrow.svg" alt="DFØ footer link arrow" />
@@ -59,7 +74,9 @@ export default function Footer(): React.ReactElement {
           </Grid>
           <Grid container item className={classes.footerLink}>
             <Box sx={{ flexGrow: 1 }}>
-              <Typography variant="footer">Personvern</Typography>
+              <Link component={RouterLink} to="/">
+                <Typography variant="footer">Personvern</Typography>
+              </Link>
             </Box>
             <Box>
               <img src="/arrow.svg" alt="DFØ footer link arrow" />
@@ -67,7 +84,9 @@ export default function Footer(): React.ReactElement {
           </Grid>
           <Grid container item className={classes.footerLink}>
             <Box sx={{ flexGrow: 1 }}>
-              <Typography variant="footer">Offentlig postjournal</Typography>
+              <Link component={RouterLink} to="/">
+                <Typography variant="footer">Offentlig postjournal</Typography>
+              </Link>
             </Box>
             <Box>
               <img src="/arrow.svg" alt="DFØ footer link arrow" />
@@ -78,7 +97,7 @@ export default function Footer(): React.ReactElement {
         <Grid item container xs={4} direction="column" spacing={2}>
           <Grid item>
             <img
-              className="footerLogo"
+              className={classes.logoFooter}
               src="/logo-white.svg"
               alt="DFØ logo footer"
             />
