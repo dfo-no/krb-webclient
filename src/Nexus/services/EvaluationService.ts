@@ -140,17 +140,17 @@ export default class EvaluationService {
         throw Error('Answer does not exist in specification');
       }
 
-      if (
-        requirementAnswer.question.type !== QuestionEnum.Q_CHECKBOX &&
-        requirementAnswer.question.type !== QuestionEnum.Q_SLIDER
-      ) {
-        evaluation.points += 1;
-      }
       if (requirementAnswer.question.type === QuestionEnum.Q_CHECKBOX) {
         evaluation.points += this.evaluateCheckBox(requirementAnswer.question);
       }
       if (requirementAnswer.question.type === QuestionEnum.Q_SLIDER) {
         evaluation.points += this.evaluateSlider(requirementAnswer.question);
+      }
+
+      if (requirementAnswer.question.type === QuestionEnum.Q_CODELIST) {
+        evaluation.points += this.evaluateCodelist(requirementAnswer.question);
+      } else {
+        evaluation.points += 1;
       }
     });
 
