@@ -76,14 +76,15 @@ export default function TextForm({ parentAnswer }: IProps): React.ReactElement {
       <Card.Body>
         <h6>Alternative: Text</h6>
         <Form onSubmit={handleSubmit(saveValues)}>
+          <Form.Label>Maks lengde</Form.Label>
           <Form.Control
             as="input"
+            disabled
             {...register('config.max')}
             isInvalid={!!hasError('config.max')}
             type="number"
           />
 
-          <Button type="submit">{t('save')}</Button>
           <ErrorSummary errors={errors} />
         </Form>
       </Card.Body>
