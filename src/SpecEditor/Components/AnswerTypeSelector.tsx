@@ -7,7 +7,6 @@ import FileInputForm from '../QuestionForms/FileInputForm';
 import CodelistForm from '../QuestionForms/ICodeListForm';
 import ValueForm from '../QuestionForms/ISliderForm';
 import PeriodDateForm from '../QuestionForms/PeriodTimeForm';
-import TextAlternativeForm from '../QuestionForms/TextAlternativeForm';
 
 interface IProps {
   answer: IRequirementAnswer;
@@ -26,9 +25,7 @@ export default function AnswerTypeSelector({
       {item.question.type === QuestionEnum.Q_FILEUPLOAD && (
         <FileInputForm parentAnswer={item} />
       )}
-      {item.question.type === QuestionEnum.Q_TEXT && (
-        <TextAlternativeForm parentAnswer={item} />
-      )}
+
       {item.question.type === QuestionEnum.Q_CODELIST && (
         <CodelistForm parentAnswer={item} />
       )}
