@@ -120,27 +120,16 @@ export default function CheckBoxForm({
           <Row className="ml-3">
             <Col sm={4}>
               {pointsForNonPreferred && (
-                <SliderSelect
-                  name={`config.pointsNonPrefered` as const}
-                  control={control}
-                  errors={errors}
-                  min={0}
-                  max={100}
-                  step={10}
-                  label="Oppgi poeng"
-                  marks={[
-                    {
-                      value: 1,
-
-                      label: '1'
-                    },
-                    {
-                      value: 100,
-
-                      label: '100'
-                    }
-                  ]}
-                />
+                <>
+                  <Form.Control
+                    as="input"
+                    type="number"
+                    min={0}
+                    max={100}
+                    {...register(`config.pointsNonPrefered` as const)}
+                  />
+                  <Form.Label>Angi tall mellom 0 og 100</Form.Label>
+                </>
               )}
             </Col>
           </Row>
