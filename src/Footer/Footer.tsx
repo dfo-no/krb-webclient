@@ -7,35 +7,47 @@ import { ThemeProvider } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import Link from '@mui/material/Link';
-import {
-  Link as RouterLink,
-  useHistory,
-  useRouteMatch
-} from 'react-router-dom';
+import { Link as RouterLink } from 'react-router-dom';
 import theme from '../theme';
 
 const useStyles = makeStyles({
   footerContainer: {
     backgroundColor: theme.palette.blue.main,
     height: '50vh',
-    marginTop: '90px'
+    marginTop: '90px',
+    [theme.breakpoints.down('sm')]: {
+      paddingLeft: '20px',
+      paddingRight: '20px',
+      paddingBottom: '24px',
+      height: '70vh'
+    }
   },
   footerLink: {
     borderBottom: `1px solid ${theme.palette.lightBlue.main}`,
-    paddingBottom: '10px',
-    paddingTop: '10px',
+    paddingBottom: '12px',
+    paddingTop: '12px',
     paddingRight: '8px',
-    minWidth: '185px',
+    paddingLeft: '20px',
+    minWidth: '200px',
     '&:hover': {
-      backgroundColor: '#0a4678'
-    },
-    paddingLeft: '10px'
+      '& $footerLinkText': {
+        color: theme.palette.lightBlue.main
+      }
+    }
   },
+  footerLinkText: {},
   logoFooter: {
     maxWidth: '100%',
     height: 'auto'
   }
 });
+
+const footerLinks = [
+  'Kontakt',
+  'English',
+  'Personvern',
+  'Offentlig postjournal'
+];
 
 export default function Footer(): React.ReactElement {
   const classes = useStyles();
@@ -49,52 +61,30 @@ export default function Footer(): React.ReactElement {
         justifyContent="center"
         alignItems="center"
         columnSpacing={8}
-        direction="row"
       >
-        <Grid container xs={4}>
-          <Grid container item className={classes.footerLink}>
-            <Box sx={{ flexGrow: 1 }}>
+        <Grid item sm={4}>
+          {footerLinks.map((value) => {
+            return (
               <Link component={RouterLink} to="/">
-                <Typography variant="footer">Kontakt</Typography>
+                <Grid container item className={classes.footerLink}>
+                  <Box sx={{ flexGrow: 1 }}>
+                    <Typography
+                      className={classes.footerLinkText}
+                      variant="footer"
+                    >
+                      {value}
+                    </Typography>
+                  </Box>
+                  <Box>
+                    <img src="/arrow.svg" alt="DFØ footer link arrow" />
+                  </Box>
+                </Grid>
               </Link>
-            </Box>
-            <Box>
-              <img src="/arrow.svg" alt="DFØ footer link arrow" />
-            </Box>
-          </Grid>
-          <Grid container item className={classes.footerLink}>
-            <Box sx={{ flexGrow: 1 }}>
-              <Link component={RouterLink} to="/">
-                <Typography variant="footer">English</Typography>
-              </Link>
-            </Box>
-            <Box>
-              <img src="/arrow.svg" alt="DFØ footer link arrow" />
-            </Box>
-          </Grid>
-          <Grid container item className={classes.footerLink}>
-            <Box sx={{ flexGrow: 1 }}>
-              <Link component={RouterLink} to="/">
-                <Typography variant="footer">Personvern</Typography>
-              </Link>
-            </Box>
-            <Box>
-              <img src="/arrow.svg" alt="DFØ footer link arrow" />
-            </Box>
-          </Grid>
-          <Grid container item className={classes.footerLink}>
-            <Box sx={{ flexGrow: 1 }}>
-              <Link component={RouterLink} to="/">
-                <Typography variant="footer">Offentlig postjournal</Typography>
-              </Link>
-            </Box>
-            <Box>
-              <img src="/arrow.svg" alt="DFØ footer link arrow" />
-            </Box>
-          </Grid>
+            );
+          })}
         </Grid>
 
-        <Grid item container xs={4} direction="column" spacing={2}>
+        <Grid item sm={4} direction="column" spacing={3}>
           <Grid item>
             <img
               className={classes.logoFooter}

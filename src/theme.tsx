@@ -79,6 +79,7 @@ const theme = createTheme({
 
 theme.typography.footer = {
   color: theme.palette.white.main,
+  fontSize: '1.1rem',
   wordWrap: 'break-word'
 };
 
@@ -104,6 +105,14 @@ theme.components = {
         }
       }
     ]
+  },
+  MuiLink: {
+    styleOverrides: {
+      root: {
+        width: '100%',
+        textDecoration: 'none'
+      }
+    }
   }
 };
 
