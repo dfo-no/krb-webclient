@@ -28,7 +28,7 @@ const useStyles = makeStyles({
     paddingTop: '12px',
     paddingRight: '8px',
     paddingLeft: '20px',
-    minWidth: '200px',
+    minWidth: '230px',
     '&:hover': {
       '& $footerLinkText': {
         color: theme.palette.lightBlue.main
