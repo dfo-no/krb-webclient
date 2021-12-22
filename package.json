@@ -14,6 +14,7 @@
     "@hookform/resolvers": "^2.8.0",
     "@material-ui/core": "^4.12.3",
     "@microsoft/microsoft-graph-types": "^1.41.0",
+    "@mui/icons-material": "^5.2.5",
     "@mui/lab": "^5.0.0-alpha.59",
     "@mui/material": "^5.0.4",
     "@reduxjs/toolkit": "^1.6.1",

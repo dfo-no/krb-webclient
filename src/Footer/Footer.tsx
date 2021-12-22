@@ -5,9 +5,12 @@ import { makeStyles } from '@material-ui/core';
 import { CssBaseline } from '@mui/material';
 import { ThemeProvider } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
+import ListItemText from '@mui/material/ListItemText';
 import Box from '@mui/material/Box';
-import Link from '@mui/material/Link';
-import { Link as RouterLink } from 'react-router-dom';
+
+import ArrowForward from '@mui/icons-material/ArrowForward';
 import theme from '../theme';
 
 const useStyles = makeStyles({
@@ -22,23 +25,13 @@ const useStyles = makeStyles({
       height: '70vh'
     }
   },
-  footerLink: {
-    borderBottom: `1px solid ${theme.palette.lightBlue.main}`,
-    paddingBottom: '12px',
-    paddingTop: '12px',
-    paddingRight: '8px',
-    paddingLeft: '20px',
-    minWidth: '230px',
-    '&:hover': {
-      '& $footerLinkText': {
-        color: theme.palette.lightBlue.main
-      }
-    }
-  },
-  footerLinkText: {},
   logoFooter: {
     maxWidth: '100%',
     height: 'auto'
+  },
+  listItem: {
+    borderBottom: `1px solid ${theme.palette.lightBlue.main}`,
+    color: `${theme.palette.white.main}`
   }
 });
 
@@ -63,25 +56,18 @@ export default function Footer(): React.ReactElement {
         columnSpacing={8}
       >
         <Grid item sm={4}>
-          {footerLinks.map((value) => {
-            return (
-              <Link component={RouterLink} to="/">
-                <Grid container item className={classes.footerLink}>
-                  <Box sx={{ flexGrow: 1 }}>
-                    <Typography
-                      className={classes.footerLinkText}
-                      variant="footer"
-                    >
-                      {value}
-                    </Typography>
-                  </Box>
-                  <Box>
-                    <img src="/arrow.svg" alt="DFØ footer link arrow" />
-                  </Box>
-                </Grid>
-              </Link>
-            );
-          })}
+          <List component="nav" aria-label="link list">
+            {footerLinks.map((link) => {
+              return (
+                <Box component="div" className={classes.listItem}>
+                  <ListItem button>
+                    <ListItemText primary={link} />
+                    <ArrowForward />
+                  </ListItem>
+                </Box>
+              );
+            })}
+          </List>
         </Grid>
 
         <Grid item sm={4} direction="column" spacing={3}>

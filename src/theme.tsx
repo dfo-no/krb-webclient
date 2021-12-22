@@ -113,6 +113,13 @@ theme.components = {
         textDecoration: 'none'
       }
     }
+  },
+  MuiDivider: {
+    styleOverrides: {
+      root: {
+        borderBottom: `2px solid #eb3486`
+      }
+    }
   }
 };
 
