@@ -14,9 +14,9 @@ describe('CheckboxQuestionSchema should validate', () => {
         value: false
       },
       config: {
-        weightTrue: 100,
-        weightFalse: 100,
-        defaultPoint: 1
+        pointsNonPrefered: 0,
+        defaultPoint: 1,
+        preferedAlternative: true
       },
       sourceRel: null,
       sourceOriginal: null
@@ -35,9 +35,9 @@ describe('CheckboxQuestionSchema should validate', () => {
         point: 5
       },
       config: {
-        weightTrue: 100,
-        weightFalse: 100,
-        defaultPoint: 1
+        pointsNonPrefered: 0,
+        defaultPoint: 1,
+        preferedAlternative: true
       },
       sourceRel: null,
       sourceOriginal: null
