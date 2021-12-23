@@ -29,11 +29,13 @@ const useStyles = makeStyles({
       display: 'none'
     }
   },
-  signedButton: {
-    display: 'block',
+  hideSignedButton: {
     [theme.breakpoints.down('sm')]: {
       display: 'none'
     }
+  },
+  showSignedButton: {
+    display: 'block'
   }
 });
 
@@ -91,7 +93,11 @@ export default function Header(): React.ReactElement {
               </Box>
             )}
 
-            <Box className={classes.signedButton}>
+            <Box
+              className={`${
+                match ? classes.hideSignedButton : classes.showSignedButton
+              }`}
+            >
               <SignedButton />
             </Box>
           </Toolbar>
