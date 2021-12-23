@@ -16,7 +16,7 @@
     "@microsoft/microsoft-graph-types": "^1.41.0",
     "@mui/icons-material": "^5.2.5",
     "@mui/lab": "^5.0.0-alpha.59",
-    "@mui/material": "^5.0.4",
+    "@mui/material": "^5.2.5",
     "@reduxjs/toolkit": "^1.6.1",
     "@testing-library/jest-dom": "^5.14.1",
     "@testing-library/react": "^11.2.7",

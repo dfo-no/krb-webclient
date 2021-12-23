@@ -1,9 +1,13 @@
 import { createTheme } from '@mui/material/styles';
 
+const colors = {
+  dfoDarkBlue: '#012a4c'
+};
+
 const theme = createTheme({
   palette: {
     primary: {
-      main: '#012a4c'
+      main: colors.dfoDarkBlue
     },
     secondary: {
       main: '#009fe3'
@@ -79,8 +83,7 @@ const theme = createTheme({
 
 theme.typography.footer = {
   color: theme.palette.white.main,
-  fontSize: '1.1rem',
-  wordWrap: 'break-word'
+  fontSize: '1rem'
 };
 
 theme.components = {

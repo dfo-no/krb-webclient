@@ -29,9 +29,15 @@ const useStyles = makeStyles({
     maxWidth: '100%',
     height: 'auto'
   },
-  listItem: {
+  linkListItem: {
     borderBottom: `1px solid ${theme.palette.lightBlue.main}`,
     color: `${theme.palette.white.main}`
+  },
+  linkList: {
+    width: '100%'
+  },
+  test: {
+    maxHeight: '200px'
   }
 });
 
@@ -55,11 +61,11 @@ export default function Footer(): React.ReactElement {
         alignItems="center"
         columnSpacing={8}
       >
-        <Grid item sm={4}>
+        <Grid item sm={4} className={classes.linkList}>
           <List component="nav" aria-label="link list">
             {footerLinks.map((link) => {
               return (
-                <Box component="div" className={classes.listItem}>
+                <Box component="div" className={classes.linkListItem}>
                   <ListItem button>
                     <ListItemText primary={link} />
                     <ArrowForward />
@@ -70,7 +76,7 @@ export default function Footer(): React.ReactElement {
           </List>
         </Grid>
 
-        <Grid item sm={4} direction="column" spacing={3}>
+        <Grid container item sm={4} direction="column" spacing={4}>
           <Grid item>
             <img
               className={classes.logoFooter}
@@ -78,7 +84,7 @@ export default function Footer(): React.ReactElement {
               alt="DFØ logo footer"
             />
           </Grid>
-          <Grid item>
+          <Grid item className={classes.test}>
             <Grid item>
               <Typography variant="footer">Karl Johans gate 37B</Typography>
             </Grid>

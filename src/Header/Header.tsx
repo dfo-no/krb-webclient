@@ -61,10 +61,20 @@ export default function Header(): React.ReactElement {
           <Toolbar>
             <Box sx={{ flexGrow: 1 }}>
               <Link className={classes.logoBig} component={RouterLink} to="/">
-                <img src="/logo-blue.svg" alt="DFØ logo" />
+                <img
+                  src="/logo-blue.svg"
+                  alt="DFØ logo big"
+                  width="263.06"
+                  height="38"
+                />
               </Link>
               <Link className={classes.logoSmall} component={RouterLink} to="/">
-                <img src="/logo-blue-small.svg" alt="DFØ logo" />
+                <img
+                  src="/logo-blue-small.svg"
+                  alt="DFØ logo small"
+                  width="61.408165"
+                  height="30.729862"
+                />
               </Link>
             </Box>
 
