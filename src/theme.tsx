@@ -81,9 +81,15 @@ const theme = createTheme({
   }
 });
 
-theme.typography.footer = {
+theme.typography.footerLinkText = {
+  color: 'theme.palette.white.main',
+  fontFamily: 'Source Sans Pro,sans-serif,helvetica,arial',
+  fontWeight: 'bold'
+};
+
+theme.typography.footerAddressText = {
   color: theme.palette.white.main,
-  fontSize: '1rem'
+  fontFamily: 'Source Sans Pro,sans-serif,helvetica,arial'
 };
 
 theme.components = {
@@ -117,10 +123,12 @@ theme.components = {
       }
     }
   },
-  MuiDivider: {
+  MuiListItem: {
     styleOverrides: {
       root: {
-        borderBottom: `2px solid #eb3486`
+        '&:hover': {
+          color: theme.palette.lightBlue.main
+        }
       }
     }
   }

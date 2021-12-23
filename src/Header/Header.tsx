@@ -63,7 +63,7 @@ export default function Header(): React.ReactElement {
               <Link className={classes.logoBig} component={RouterLink} to="/">
                 <img
                   src="/logo-blue.svg"
-                  alt="DFØ logo big"
+                  alt="DFØ logo header big"
                   width="263.06"
                   height="38"
                 />
@@ -71,7 +71,7 @@ export default function Header(): React.ReactElement {
               <Link className={classes.logoSmall} component={RouterLink} to="/">
                 <img
                   src="/logo-blue-small.svg"
-                  alt="DFØ logo small"
+                  alt="DFØ logo header small"
                   width="61.408165"
                   height="30.729862"
                 />
