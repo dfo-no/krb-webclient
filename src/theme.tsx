@@ -1,4 +1,5 @@
 import { createTheme } from '@mui/material/styles';
+import dfoThemeScss from './dfo-theme.module.scss';
 
 const theme = createTheme({
   palette: {

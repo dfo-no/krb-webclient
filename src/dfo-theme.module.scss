@@ -45,3 +45,7 @@ $h3-font-size: $font-size-base * 1.8;
 /* import bootstrap to set changes */
 
 @import '~bootstrap/scss/bootstrap';
+
+:export {
+  red: $red;
+}
