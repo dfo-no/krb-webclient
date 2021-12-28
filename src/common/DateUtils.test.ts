@@ -6,6 +6,6 @@ describe('DateUtils', () => {
 
     const result = formatDate(d);
 
-    expect(result).toEqual('2021-12-02T16:00:00.0Z');
+    expect(result).toEqual('2021-12-02T16:00:00.000Z');
   });
 });
