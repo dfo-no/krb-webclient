@@ -2,7 +2,7 @@ name: Continuous Deployment
 
 on:
   push:
-    branches: [deployy]
+    branches: [develop]
 
 env:
   AZURE_WEBAPP_NAME: krb-webclient # set this to your application's name
