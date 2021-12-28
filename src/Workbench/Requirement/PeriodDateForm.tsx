@@ -9,8 +9,9 @@ import {
   FormState,
   UseFormRegister
 } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
 import { BsTrashFill } from 'react-icons/bs';
-import ControlledDate from '../../Form/ControlledDate';
+import ControlledCheckbox from '../../Form/ControlledCheckbox';
 import { IPeriodDateQuestion } from '../../Nexus/entities/IPeriodDateQuestion';
 import { IRequirement } from '../../Nexus/entities/IRequirement';
 
@@ -34,7 +35,7 @@ export default function PeriodDateForm({
   formState
 }: IProps): React.ReactElement {
   const { errors } = formState;
-
+  const { t } = useTranslation();
   return (
     <Card className="mb-3">
       <Card.Body>
@@ -61,27 +62,15 @@ export default function PeriodDateForm({
           {...register(`variants.${vIndex}.questions.${aIndex}.type` as const)}
           defaultValue={item.type}
         />
-        <ControlledDate
+        <ControlledCheckbox
           control={control}
-          name={`variants.${vIndex}.questions.${aIndex}.config.fromDate`}
+          name={`variants.${vIndex}.questions.${aIndex}.config.hasToDate`}
           error={
             get(
               errors,
-              `variants.${vIndex}.questions.${aIndex}.config.fromDate`
+              `variants.${vIndex}.questions.${aIndex}.config.hasToDate`
             ) as FieldError
           }
-          label=""
-        />
-        <ControlledDate
-          control={control}
-          name={`variants.${vIndex}.questions.${aIndex}.config.toDate`}
-          error={
-            get(
-              errors,
-              `variants.${vIndex}.questions.${aIndex}.config.toDate`
-            ) as FieldError
-          }
-          label=""
         />
       </Card.Body>
     </Card>

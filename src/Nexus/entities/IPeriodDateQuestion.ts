@@ -14,34 +14,61 @@ export interface IPeriodDateQuestion
 }
 
 export interface IPeriodDateAnswer extends IAnswerBase {
-  date: string | null;
-}
-
-export interface IPeriodDateConfig extends IConfigBase {
   fromDate: string | null;
   toDate: string | null;
 }
 
-export const PeriodDateQuestionSchema = QuestionBaseSchema.keys({
+export interface IPeriodDateConfig extends IConfigBase {
+  hasToDate: boolean;
+  fromBoundary: string | null;
+  toBoundary: string | null;
+}
+
+export const PeriodDateWorkbenchSchema = QuestionBaseSchema.keys({
   type: Joi.string().equal(QuestionEnum.Q_PERIOD_DATE).required(),
   config: ConfigBaseSchema.keys({
-    fromDate: Joi.alternatives([
-      Joi.date().iso().raw(),
-      Joi.string().valid(null)
-    ]).required(),
-    toDate: Joi.alternatives([
-      Joi.date().iso().raw(),
-      Joi.string().valid(null)
-    ]).required()
+    hasToDate: Joi.boolean().required(),
+    fromBoundary: Joi.string().allow(null).required(),
+    toBoundary: Joi.string().allow(null).required()
+  }),
+  answer: Joi.object().keys({
+    fromDate: Joi.string().allow(null).required(),
+    toDate: Joi.string().allow(null).required(),
+    point: Joi.number().required()
   })
 });
 
-export const PeriodDateQuestionAnswerSchema = PeriodDateQuestionSchema.keys({
+export const PeriodDateSpecSchema = QuestionBaseSchema.keys({
+  type: Joi.string().equal(QuestionEnum.Q_PERIOD_DATE).required(),
+  config: ConfigBaseSchema.keys({
+    hasToDate: Joi.boolean().required(),
+    fromBoundary: Joi.date().iso().raw().required(),
+    toBoundary: Joi.date().iso().raw().required()
+  }),
   answer: Joi.object().keys({
-    date: Joi.alternatives([
-      Joi.date().iso().raw(),
-      Joi.string().valid(null)
-    ]).required(),
+    fromDate: Joi.string().allow(null).required(),
+    toDate: Joi.string().allow(null).required(),
+    point: Joi.number().required()
+  })
+});
+
+export const PeriodDateAnswerSchema = PeriodDateSpecSchema.keys({
+  answer: Joi.object().keys({
+    fromDate: Joi.date()
+      .iso()
+      .raw()
+      .min(Joi.ref('/config.fromBoundary'))
+      .required(),
+    toDate: Joi.when('/config.hasToDate', {
+      is: true,
+      then: Joi.date()
+        .iso()
+        .raw()
+        .greater(Joi.ref('fromDate'))
+        .max(Joi.ref('/config.toBoundary'))
+        .required(),
+      otherwise: Joi.string().valid(null)
+    }),
     point: Joi.number().required()
   })
 });
