@@ -92,13 +92,15 @@ describe('EvaluationService', () => {
                         {
                           type: QuestionEnum.Q_PERIOD_DATE,
                           config: {
-                            fromDate: '2021-11-01T15:09:05.0000000Z',
-                            toDate: '2021-11-30T15:09:09.0000000Z',
-                            defaultPoint: 1
+                            hasToDate: true,
+                            defaultPoint: 1,
+                            fromBoundary: '2021-10-01T15:09:05.0000000Z',
+                            toBoundary: '2021-12-30T15:09:09.0000000Z'
                           },
                           answer: {
                             point: 0,
-                            date: null
+                            fromDate: '2021-11-01T15:09:05.0000000Z',
+                            toDate: '2021-11-30T15:09:09.0000000Z'
                           },
                           sourceRel: null,
                           sourceOriginal: null,
@@ -449,13 +451,15 @@ describe('EvaluationService', () => {
             question: {
               type: QuestionEnum.Q_PERIOD_DATE,
               config: {
-                fromDate: '2021-11-01T15:09:05.0000000Z',
-                toDate: '2021-11-30T15:09:09.0000000Z',
-                defaultPoint: 1
+                hasToDate: true,
+                defaultPoint: 1,
+                fromBoundary: '2021-10-01T15:09:05.0000000Z',
+                toBoundary: '2021-12-30T15:09:09.0000000Z'
               },
               answer: {
                 point: 0,
-                date: null
+                fromDate: '2021-11-01T15:09:05.0000000Z',
+                toDate: '2021-11-30T15:09:09.0000000Z'
               },
               sourceRel: null,
               sourceOriginal: null,
@@ -479,13 +483,15 @@ describe('EvaluationService', () => {
                     {
                       type: QuestionEnum.Q_PERIOD_DATE,
                       config: {
-                        fromDate: '2021-11-01T15:09:05.0000000Z',
-                        toDate: '2021-11-30T15:09:09.0000000Z',
-                        defaultPoint: 1
+                        hasToDate: true,
+                        defaultPoint: 1,
+                        fromBoundary: '2021-10-01T15:09:05.0000000Z',
+                        toBoundary: '2021-12-30T15:09:09.0000000Z'
                       },
                       answer: {
                         point: 0,
-                        date: null
+                        fromDate: '2021-11-01T15:09:05.0000000Z',
+                        toDate: '2021-11-30T15:09:09.0000000Z'
                       },
                       sourceRel: null,
                       sourceOriginal: null,
