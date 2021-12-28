@@ -67,7 +67,7 @@ export default class EvaluationService {
     let closestScore =
       list[0].value !== element.value ? list[0].score : list[1].score;
     list.forEach((e) => {
-      /* checks that e is not the element we already has passsed in, and that if our answer is below the element we 
+      /* checks that e is not the element we already has passsed in, and that if our answer is below the element we
       have passed as an argument, the other element we found also has to be below it for it to be the range our value is placed in
       */
       if (
@@ -181,6 +181,7 @@ export default class EvaluationService {
     return evaluation;
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   checkIfEligbleForEvaluation(responses: IResponse[]): boolean {
     return true;
   }

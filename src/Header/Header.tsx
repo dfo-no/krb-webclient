@@ -1,23 +1,19 @@
-import * as React from 'react';
+import { makeStyles } from '@material-ui/core';
+import { CssBaseline } from '@mui/material';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
-import Container from '@mui/material/Container';
-import Toolbar from '@mui/material/Toolbar';
-import { CssBaseline } from '@mui/material';
+import Link from '@mui/material/Link';
 import { ThemeProvider } from '@mui/material/styles';
-import { makeStyles } from '@material-ui/core';
+import Toolbar from '@mui/material/Toolbar';
+import * as React from 'react';
 import { useTranslation } from 'react-i18next';
-
 import {
   Link as RouterLink,
   useHistory,
   useRouteMatch
 } from 'react-router-dom';
-import Link from '@mui/material/Link';
-
 import SignedButton from '../SignedButton/SignedButton';
-
 import theme from '../theme';
 
 const useStyles = makeStyles({

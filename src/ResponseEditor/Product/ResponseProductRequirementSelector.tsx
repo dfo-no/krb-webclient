@@ -1,5 +1,4 @@
 import React from 'react';
-import Utils from '../../common/Utils';
 import { IResponseProduct } from '../../models/IResponseProduct';
 import { ISpecificationProduct } from '../../models/ISpecificationProduct';
 import { useAppSelector } from '../../store/hooks';

@@ -87,8 +87,6 @@ export default function DateInfoAnswer({
     }
   });
 
-  const dateQuestion = question as IPeriodDateQuestion;
-
   const dispatch = useAppDispatch();
   const { t } = useTranslation();
   const saveValues = (post: any) => {

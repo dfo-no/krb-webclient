@@ -29,12 +29,11 @@ export default function ResponseProductEditor(): React.ReactElement {
     (responseProduct) => responseProduct.id === selectedResponseProduct.id
   );
 
-  // TODO:remove any in useForm.
   const {
     register,
     handleSubmit,
     formState: { errors }
-  } = useForm<any>({
+  } = useForm<IResponseProduct>({
     resolver: joiResolver(ResponseProductSchema),
     defaultValues: selectedResponseProduct
   });

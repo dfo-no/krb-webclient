@@ -7,7 +7,6 @@ import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import SliderSelect from '../../components/SliderSelect';
 import { IRequirementAnswer } from '../../models/IRequirementAnswer';
 import ModelType from '../../models/ModelType';
 import {
@@ -59,12 +58,7 @@ export default function CheckBoxForm({
             .question as ICheckboxQuestion)) ||
         (response.requirementAnswers[index].question as ICheckboxQuestion);
 
-  const {
-    control,
-    handleSubmit,
-    register,
-    formState: { errors }
-  } = useForm<ICheckboxQuestion>({
+  const { handleSubmit, register } = useForm<ICheckboxQuestion>({
     resolver: joiResolver(CheckboxQuestionSchema),
     defaultValues: {
       ...defaultValues

@@ -1,4 +1,4 @@
-import Joi, { equal } from 'joi';
+import Joi from 'joi';
 import QuestionEnum from '../../models/QuestionEnum';
 import {
   ConfigBaseSchema,
