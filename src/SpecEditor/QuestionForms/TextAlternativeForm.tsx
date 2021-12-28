@@ -1,11 +1,9 @@
 import { joiResolver } from '@hookform/resolvers/joi';
 import { has, toPath } from 'lodash';
 import React from 'react';
-import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import Form from 'react-bootstrap/Form';
 import { useForm } from 'react-hook-form';
-import { useTranslation } from 'react-i18next';
 import ErrorSummary from '../../Form/ErrorSummary';
 import { IRequirementAnswer } from '../../models/IRequirementAnswer';
 import ModelType from '../../models/ModelType';
@@ -35,7 +33,6 @@ export default function TextForm({ parentAnswer }: IProps): React.ReactElement {
     (state) => state.selectedSpecProduct
   );
   const dispatch = useAppDispatch();
-  const { t } = useTranslation();
 
   if (
     !selectedSpecificationProduct &&

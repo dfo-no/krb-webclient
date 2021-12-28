@@ -87,10 +87,9 @@ export default function DateInfoAnswer({
     }
   });
 
-  const dateQuestion = question as IPeriodDateQuestion;
-
   const dispatch = useAppDispatch();
   const { t } = useTranslation();
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const saveValues = (post: any) => {
     const newAns = {
       ...post
@@ -127,7 +126,7 @@ export default function DateInfoAnswer({
               error={get(errors, `answer.toDate`) as FieldError}
               label={t('Select date')}
             />
-            {dateQuestion.config.hasToDate && (
+            {defaultVal && defaultVal.config.hasToDate && (
               <ControlledDate
                 disabled
                 control={control}
