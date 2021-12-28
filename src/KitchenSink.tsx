@@ -9,6 +9,7 @@ import DateCtrl from './FormProvider/DateCtrl';
 import SliderCtrl from './FormProvider/SliderCtrl';
 import SwitchCtrl from './FormProvider/SwitchCtrl';
 import TextCtrl from './FormProvider/TextCtrl';
+import useConfirmTabClose from './hooks/useConfirmTabClose';
 
 interface IFormValues {
   person: {
@@ -37,6 +38,8 @@ const FormSchema = Joi.object().keys({
 });
 
 const KitchenSink = (): React.ReactElement => {
+  useConfirmTabClose();
+
   const defaultValues = {
     person: {
       birthDay: null,
