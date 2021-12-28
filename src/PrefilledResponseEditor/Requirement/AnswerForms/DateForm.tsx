@@ -13,7 +13,7 @@ import {
 } from '../../../models/IRequirementAnswer';
 import {
   IPeriodDateQuestion,
-  PeriodDateQuestionAnswerSchema
+  PeriodDateAnswerSchema
 } from '../../../Nexus/entities/IPeriodDateQuestion';
 import { IRequirement } from '../../../Nexus/entities/IRequirement';
 import { useAppDispatch, useAppSelector } from '../../../store/hooks';
@@ -28,7 +28,7 @@ interface IProps {
 }
 
 export const PeriodDateSchema = RequirementAnswerSchema.keys({
-  question: PeriodDateQuestionAnswerSchema.keys({
+  question: PeriodDateAnswerSchema.keys({
     answer: Joi.object().keys({
       date: Joi.date().iso().raw().required(),
       point: Joi.number().required()
