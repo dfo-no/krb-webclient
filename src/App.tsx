@@ -11,6 +11,7 @@ import { msalConfig } from './authentication/authConfig';
 import Evaluation from './Evaluation/Evaluation';
 import Header from './Header/Header';
 import HomePage from './Home/HomePage';
+import useConfirmTabClose from './hooks/useConfirmTabClose';
 import KitchenSink from './KitchenSink';
 import PageLayout from './PageLayout';
 import PrefilledResponseModule from './PrefilledResponseEditor/PrefilledResponseModule';
@@ -22,6 +23,8 @@ import WorkbenchModule from './Workbench/WorkbenchModule';
 const msalInstance = new PublicClientApplication(msalConfig);
 
 function App(): React.ReactElement {
+  useConfirmTabClose();
+
   function renderContent() {
     return (
       <Switch>
@@ -39,10 +42,12 @@ function App(): React.ReactElement {
               path="/prefilledresponse/:id"
               component={PrefilledResponseModule}
             />
-            {process.env.NODE_ENV === 'development' && (
-              <Route path="/kitchensink" component={KitchenSink} />
-            )}
           </AuthenticatedTemplate>
+          {process.env.NODE_ENV === 'development' ? (
+            <Route path="/kitchensink" component={KitchenSink} />
+          ) : (
+            <></>
+          )}
           <UnauthenticatedTemplate>
             <h5 className="card-title">Please sign-in to access this page</h5>
           </UnauthenticatedTemplate>
