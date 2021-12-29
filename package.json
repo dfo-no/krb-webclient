@@ -41,6 +41,7 @@
     "joi": "^17.4.2",
     "js-file-download": "^0.4.12",
     "lodash": "^4.17.21",
+    "material-icons": "^1.10.4",
     "node-sass": "^7.0.1",
     "react": "^17.0.2",
     "react-bootstrap": "^2.0.4",

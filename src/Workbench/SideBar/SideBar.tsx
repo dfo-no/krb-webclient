@@ -1,10 +1,11 @@
 import React from 'react';
-import Nav from 'react-bootstrap/Nav';
+
 import { useTranslation } from 'react-i18next';
 import { withRouter } from 'react-router';
 import { NavLink, useRouteMatch } from 'react-router-dom';
 import { useAppSelector } from '../../store/hooks';
-import css from './SideBar.module.scss';
+import List from '@mui/material/List';
+import ListItemButton from '@mui/material/ListItemButton';
 
 interface IRouteLink {
   link: string;
@@ -17,20 +18,7 @@ interface IRouteParams {
 
 const renderRouteLinks = (routes: IRouteLink[], isProjectSelected: boolean) => {
   return routes.map((route) => {
-    return (
-      <Nav.Item key={route.name} className={`${css.sidebar__item}`}>
-        <Nav.Link
-          as={NavLink}
-          to={route.link}
-          role="link"
-          exact
-          activeClassName={`${css.sidebar__item__active}`}
-          disabled={!isProjectSelected}
-        >
-          {route.name}
-        </Nav.Link>
-      </Nav.Item>
-    );
+    return <ListItemButton>{route.name}</ListItemButton>;
   });
 };
 
@@ -55,11 +43,7 @@ function SideBar(): React.ReactElement {
     { link: `${currentUrl}/inheritance`, name: t('Inheritance') }
   ];
 
-  return (
-    <Nav className={`sidebar col-md-12 flex-column ${css.sidebar}`}>
-      {renderRouteLinks(routes, isProjectSelected)}
-    </Nav>
-  );
+  return <List>{renderRouteLinks(routes, isProjectSelected)}</List>;
 }
 
 export default withRouter(SideBar);
