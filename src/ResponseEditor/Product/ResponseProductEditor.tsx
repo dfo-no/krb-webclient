@@ -72,7 +72,7 @@ export default function ResponseProductEditor(): React.ReactElement {
               <Col sm={10}>
                 <Form.Control
                   type="number"
-                  {...register('price')}
+                  /*                   {...register('price')} */
                   isInvalid={!!errors.price}
                 />
                 {errors.price && (
