@@ -56,6 +56,8 @@ export default function Header(): React.ReactElement {
 
   const classes = useStyles();
 
+  console.log(theme);
+
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />

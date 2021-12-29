@@ -4,70 +4,70 @@ import dfoThemeScss from './dfo-theme.module.scss';
 const theme = createTheme({
   palette: {
     primary: {
-      main: '#fffffff'
+      main: dfoThemeScss.primary
     },
     secondary: {
-      main: '#009fe3'
+      main: dfoThemeScss.secondary
     },
     dfoBlue: {
-      main: '#005b91'
+      main: dfoThemeScss.dfoBlue
     },
     dfoInputBackground: {
-      main: '#f2f1f9'
+      main: dfoThemeScss.dfoInputBackground
     },
     gray100: {
-      main: '#f7f7f7'
+      main: dfoThemeScss.gray100
     },
     gray200: {
-      main: '#efefef'
+      main: dfoThemeScss.gray200
     },
     gray300: {
-      main: '#e6e6e6'
+      main: dfoThemeScss.gray300
     },
     gray400: {
-      main: '#d1d1d1'
+      main: dfoThemeScss.gray400
     },
     gray500: {
-      main: '#828282'
+      main: dfoThemeScss.gray500
     },
     gray900: {
-      main: '#333333'
+      main: dfoThemeScss.gray900
     },
     blue: {
-      main: '#012a4c'
+      main: dfoThemeScss.blue
     },
     indigo: {
-      main: '#005b91'
+      main: dfoThemeScss.indigo
     },
     purple: {
-      main: '#009fe3'
+      main: dfoThemeScss.purple
     },
     pink: {
-      main: '#e83f53'
+      main: dfoThemeScss.pink
     },
     red: {
-      main: '#e52036'
+      main: dfoThemeScss.red
     },
     yellow: {
-      main: '#f7b715'
+      main: dfoThemeScss.yellow
     },
     brandPrimary: {
-      main: '#012a4c'
+      main: dfoThemeScss.brandPrimary
     },
     green: {
-      main: '#018566'
+      main: dfoThemeScss.green
     },
     teal: {
-      main: '#00ab84'
+      main: dfoThemeScss.teal
     },
     cyan: {
-      main: '#008ea6'
+      main: dfoThemeScss.cyan
     },
     linkHoverColor: {
-      main: '#009fe3'
+      main: dfoThemeScss.linkHoverColor
     },
     success: {
-      main: '#018566'
+      main: dfoThemeScss.success
     }
   }
 });

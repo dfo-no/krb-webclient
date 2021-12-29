@@ -47,5 +47,34 @@ $h3-font-size: $font-size-base * 1.8;
 @import '~bootstrap/scss/bootstrap';
 
 :export {
+  dfoBlue: $dfo-blue;
+  dfoInputBackground: $dfo-input-background;
+  dfoLightBorder: $dfo-light-border;
+  font-family-sans-serif: $font-family-sans-serif;
+  font-family-serif: $font-family-serif;
+  gray100: $gray-100;
+  gray200: $gray-200;
+  gray300: $gray-300;
+  gray400: $gray-400;
+  gray500: $gray-500;
+  gray900: $gray-900;
+  blue: $blue;
+  indigo: $indigo;
+  purple: $purple;
+  pink: $pink;
   red: $red;
+  yellow: $yellow;
+  secondary: $secondary;
+  primary: $primary;
+  brand-primary: $brand-primary;
+  green: $green;
+  teal: $teal;
+  cyan: $cyan;
+  link-hover-color: $link-hover-color;
+  link-decoration: $link-decoration;
+  success: $success;
+  info: $info;
+  font-size-base: $font-size-base;
+  h1-font-size: $h1-font-size;
+  h3-font-size: $h3-font-size;
 }
