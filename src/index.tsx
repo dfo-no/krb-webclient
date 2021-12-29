@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
 import App from './App';
-import './dfo-theme.scss';
+import './dfo-theme.module.scss';
 import './i18n';
 import './index.scss';
 import reportWebVitals from './reportWebVitals';
