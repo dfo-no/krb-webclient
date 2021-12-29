@@ -54,7 +54,6 @@ export default function Footer(): React.ReactElement {
 
   return (
     <ThemeProvider theme={theme}>
-      <CssBaseline />
       <Grid
         container
         className={classes.footerContainer}
@@ -63,7 +62,6 @@ export default function Footer(): React.ReactElement {
         direction="row"
         columnSpacing={12}
       >
-        +++++++++
         <Grid item xs={12} sm={5}>
           <List
             className={classes.footerLinkList}
