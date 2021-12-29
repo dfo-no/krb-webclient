@@ -75,7 +75,7 @@ const theme = createTheme({
     white: {
       main: '#ffff'
     },
-    lightBlue: {
+    dfoLightBlue: {
       main: '#009EE1'
     }
   }
@@ -127,7 +127,7 @@ theme.components = {
     styleOverrides: {
       root: {
         '&:hover': {
-          color: theme.palette.lightBlue.main
+          color: theme.palette.dfoLightBlue.main
         }
       }
     }

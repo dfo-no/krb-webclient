@@ -24,11 +24,11 @@ const useStyles = makeStyles({
   },
   footerLinkList: {
     '&>:nth-child(1)': {
-      borderTop: `1px solid ${theme.palette.lightBlue.main}`
+      borderTop: `1px solid ${theme.palette.dfoLightBlue.main}`
     }
   },
   footerLinkListItem: {
-    borderBottom: `1px solid ${theme.palette.lightBlue.main}`,
+    borderBottom: `1px solid ${theme.palette.dfoLightBlue.main}`,
     color: `${theme.palette.white.main}`
   }
 });
