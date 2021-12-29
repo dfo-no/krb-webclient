@@ -24,6 +24,8 @@ declare module '@mui/material/styles/createPalette' {
     cyan: PaletteColor;
     linkHoverColor: PaletteColor;
     success: PaletteColor;
+    white: PaletteColor;
+    dfoLightBlue: PaletteColor;
   }
 
   interface PaletteOptions {
@@ -49,5 +51,7 @@ declare module '@mui/material/styles/createPalette' {
     cyan: PaletteColorOptions;
     linkHoverColor: PaletteColorOptions;
     success?: PaletteColorOptions;
+    white: PaletteColorOptions;
+    dfoLightBlue: PaletteColorOptions;
   }
 }

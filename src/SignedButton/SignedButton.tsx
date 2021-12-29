@@ -17,13 +17,13 @@ export default function SignedButton(): React.ReactElement {
     <>
       <ThemeProvider theme={theme}>
         <AuthenticatedTemplate>
-          <Button variant="ordinary" onClick={() => instance.logout()}>
+          <Button variant="primary" onClick={() => instance.logout()}>
             {t('sign out')}
           </Button>
         </AuthenticatedTemplate>
         <UnauthenticatedTemplate>
           <Button
-            variant="ordinary"
+            variant="primary"
             onClick={() => instance.loginPopup(loginRequest)}
           >
             {t('sign in')}
