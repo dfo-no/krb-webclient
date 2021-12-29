@@ -115,7 +115,15 @@ theme.components = {
     styleOverrides: {
       root: {
         width: '100%',
-        textDecoration: 'none'
+        textDecoration: 'none',
+        color: theme.palette.white.main
+      }
+    }
+  },
+  MuiList: {
+    styleOverrides: {
+      root: {
+        color: 'red'
       }
     }
   },

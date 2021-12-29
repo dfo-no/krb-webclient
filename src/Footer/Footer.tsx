@@ -7,7 +7,6 @@ import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
 import ArrowForward from '@mui/icons-material/ArrowForward';
 import Link from '@mui/material/Link';
-import { Link as RouterLink } from 'react-router-dom';
 import theme from '../theme';
 
 const useStyles = makeStyles({
@@ -67,14 +66,16 @@ export default function Footer(): React.ReactElement {
         >
           {footerLinks.map((link) => {
             return (
-              <Link component={RouterLink} to="/">
-                <ListItem className={classes.footerLinkListItem}>
-                  <ListItemText>
-                    <Typography variant="footerLinkText">{link}</Typography>
-                  </ListItemText>
-                  <ArrowForward />
-                </ListItem>
-              </Link>
+              <ListItem
+                component={Link}
+                href="/"
+                className={classes.footerLinkListItem}
+              >
+                <ListItemText>
+                  <Typography variant="footerLinkText">{link}</Typography>
+                </ListItemText>
+                <ArrowForward />
+              </ListItem>
             );
           })}
         </List>
