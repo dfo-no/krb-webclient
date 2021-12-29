@@ -1,13 +1,9 @@
 import { createTheme } from '@mui/material/styles';
 
-const colors = {
-  dfoDarkBlue: '#012a4c'
-};
-
 const theme = createTheme({
   palette: {
     primary: {
-      main: colors.dfoDarkBlue
+      main: '#012a4c'
     },
     secondary: {
       main: '#009fe3'
