@@ -1,5 +1,4 @@
 import * as React from 'react';
-
 import Grid from '@mui/material/Grid';
 import { makeStyles } from '@material-ui/core';
 import { CssBaseline } from '@mui/material';
@@ -8,11 +7,8 @@ import Typography from '@mui/material/Typography';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
-
 import ArrowForward from '@mui/icons-material/ArrowForward';
-
 import Link from '@mui/material/Link';
-
 import { Link as RouterLink } from 'react-router-dom';
 import theme from '../theme';
 
@@ -67,6 +63,7 @@ export default function Footer(): React.ReactElement {
         direction="row"
         columnSpacing={12}
       >
+        +++++++++
         <Grid item xs={12} sm={5}>
           <List
             className={classes.footerLinkList}
@@ -87,7 +84,6 @@ export default function Footer(): React.ReactElement {
             })}
           </List>
         </Grid>
-
         <Grid container item xs={12} sm={4} direction="column" spacing={3}>
           <Grid item>
             <img
