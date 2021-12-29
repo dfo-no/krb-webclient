@@ -11,14 +11,14 @@ import theme from '../theme';
 
 const useStyles = makeStyles({
   footerContainer: {
+    marginTop: 110,
+    height: 300,
     backgroundColor: theme.palette.blue.main,
-    height: '300px',
-    marginTop: '100px',
     [theme.breakpoints.down('sm')]: {
-      paddingLeft: '20px',
-      paddingRight: '20px',
-      paddingBottom: '24px',
-      height: '480px'
+      paddingLeft: 20,
+      paddingRight: 20,
+      paddingBottom: 24,
+      height: 480
     }
   },
   footerLinkList: {
