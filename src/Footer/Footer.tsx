@@ -82,12 +82,14 @@ export default function Footer(): React.ReactElement {
       </Grid>
       <Grid container item xs={12} sm={4} direction="column" spacing={3}>
         <Grid item>
-          <img
-            src="/logo-white.svg"
-            alt="DFØ logo footer"
-            width="137"
-            height="38"
-          />
+          <Link href="https://www.dfo.no">
+            <img
+              src="/logo-white.svg"
+              alt="DFØ logo footer"
+              width="137"
+              height="38"
+            />
+          </Link>
         </Grid>
         <Grid item>
           {footerAddressTexts.map((text) => {
