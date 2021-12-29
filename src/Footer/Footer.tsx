@@ -1,8 +1,6 @@
 import * as React from 'react';
 import Grid from '@mui/material/Grid';
 import { makeStyles } from '@material-ui/core';
-import { CssBaseline } from '@mui/material';
-import { ThemeProvider } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
@@ -53,55 +51,53 @@ export default function Footer(): React.ReactElement {
   ];
 
   return (
-    <ThemeProvider theme={theme}>
-      <Grid
-        container
-        className={classes.footerContainer}
-        justifyContent="center"
-        alignItems="center"
-        direction="row"
-        columnSpacing={12}
-      >
-        <Grid item xs={12} sm={5}>
-          <List
-            className={classes.footerLinkList}
-            component="nav"
-            aria-label="footer link list"
-          >
-            {footerLinks.map((link) => {
-              return (
-                <Link component={RouterLink} to="/">
-                  <ListItem className={classes.footerLinkListItem}>
-                    <ListItemText>
-                      <Typography variant="footerLinkText">{link}</Typography>
-                    </ListItemText>
-                    <ArrowForward />
-                  </ListItem>
-                </Link>
-              );
-            })}
-          </List>
+    <Grid
+      container
+      className={classes.footerContainer}
+      justifyContent="center"
+      alignItems="center"
+      direction="row"
+      columnSpacing={12}
+    >
+      <Grid item xs={12} sm={5}>
+        <List
+          className={classes.footerLinkList}
+          component="nav"
+          aria-label="footerlist"
+        >
+          {footerLinks.map((link) => {
+            return (
+              <Link component={RouterLink} to="/">
+                <ListItem className={classes.footerLinkListItem}>
+                  <ListItemText>
+                    <Typography variant="footerLinkText">{link}</Typography>
+                  </ListItemText>
+                  <ArrowForward />
+                </ListItem>
+              </Link>
+            );
+          })}
+        </List>
+      </Grid>
+      <Grid container item xs={12} sm={4} direction="column" spacing={3}>
+        <Grid item>
+          <img
+            src="/logo-white.svg"
+            alt="DFØ logo footer"
+            width="137"
+            height="38"
+          />
         </Grid>
-        <Grid container item xs={12} sm={4} direction="column" spacing={3}>
-          <Grid item>
-            <img
-              src="/logo-white.svg"
-              alt="DFØ logo footer"
-              width="137"
-              height="38"
-            />
-          </Grid>
-          <Grid item>
-            {footerAddressTexts.map((text) => {
-              return (
-                <Grid item>
-                  <Typography variant="footerAddressText">{text}</Typography>
-                </Grid>
-              );
-            })}
-          </Grid>
+        <Grid item>
+          {footerAddressTexts.map((text) => {
+            return (
+              <Grid item>
+                <Typography variant="footerAddressText">{text}</Typography>
+              </Grid>
+            );
+          })}
         </Grid>
       </Grid>
-    </ThemeProvider>
+    </Grid>
   );
 }

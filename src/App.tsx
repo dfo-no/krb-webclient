@@ -6,6 +6,9 @@ import {
 } from '@azure/msal-react';
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
+import { ThemeProvider } from '@mui/material/styles';
+import { CssBaseline } from '@mui/material';
+import theme from './theme';
 import styles from './App.module.scss';
 import { msalConfig } from './authentication/authConfig';
 import Evaluation from './Evaluation/Evaluation';
@@ -51,9 +54,12 @@ function App(): React.ReactElement {
   return (
     <div className={styles.App}>
       <MsalProvider instance={msalInstance}>
-        <Header />
-        {renderContent()}
-        <Footer />
+        <ThemeProvider theme={theme}>
+          <CssBaseline />
+          <Header />
+          {renderContent()}
+          <Footer />
+        </ThemeProvider>
       </MsalProvider>
     </div>
   );
