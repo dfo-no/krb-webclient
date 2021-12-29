@@ -1,10 +1,9 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import { Link, useParams } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../store/hooks';
-import { getBanksThunk } from '../store/reducers/bank-reducer';
 import { selectBank } from '../store/reducers/selectedBank-reducer';
 
 interface IRouteParams {

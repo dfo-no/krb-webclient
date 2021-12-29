@@ -3,13 +3,8 @@ import React from 'react';
 import Utils from '../../../common/Utils';
 import { IRequirementAnswer } from '../../../models/IRequirementAnswer';
 import QuestionEnum from '../../../models/QuestionEnum';
-import { ICheckboxQuestion } from '../../../Nexus/entities/ICheckboxQuestion';
 import { ICode } from '../../../Nexus/entities/ICode';
 import { ICodelist } from '../../../Nexus/entities/ICodelist';
-import { ICodelistQuestion } from '../../../Nexus/entities/ICodelistQuestion';
-import { IPeriodDateQuestion } from '../../../Nexus/entities/IPeriodDateQuestion';
-import { ISliderQuestion } from '../../../Nexus/entities/ISliderQuestion';
-import { ITextQuestion } from '../../../Nexus/entities/ITextQuestion';
 import { useAppSelector } from '../../../store/hooks';
 import AnswerPreview from './AnswerPreview';
 
@@ -53,11 +48,11 @@ export default function AnswerPreviewBox({
     let question;
     switch (answer.question.type) {
       case QuestionEnum.Q_SLIDER:
-        question = answer.question as ISliderQuestion;
+        question = answer.question;
         textToBeDisplayed = `${question.answer?.value} `;
         break;
       case QuestionEnum.Q_CODELIST:
-        question = answer.question as ICodelistQuestion;
+        question = answer.question;
         if (question.answer?.codes) {
           textToBeDisplayed = `${CodelistToString(
             question.answer?.codes,
@@ -68,15 +63,15 @@ export default function AnswerPreviewBox({
         }
         break;
       case QuestionEnum.Q_TEXT:
-        question = answer.question as ITextQuestion;
+        question = answer.question;
         textToBeDisplayed = `${question.answer?.text} `;
         break;
       case QuestionEnum.Q_PERIOD_DATE:
-        question = answer.question as IPeriodDateQuestion;
-        textToBeDisplayed = `${question.answer?.date} `;
+        question = answer.question;
+        textToBeDisplayed = `${question.answer?.fromDate} `;
         break;
       case QuestionEnum.Q_CHECKBOX:
-        question = answer.question as ICheckboxQuestion;
+        question = answer.question;
         textToBeDisplayed = `${question.answer?.value} `;
         break;
       default:

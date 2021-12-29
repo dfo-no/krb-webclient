@@ -118,13 +118,15 @@ export default function QuestionArray({
         id: uuid,
         type: QuestionEnum.Q_PERIOD_DATE,
         config: {
-          fromDate: null,
-          toDate: null,
+          fromBoundary: null,
+          toBoundary: null,
+          hasToDate: false,
           defaultPoint: 1
         },
         answer: {
           point: 0,
-          date: null
+          fromDate: null,
+          toDate: null
         },
         sourceRel: null,
         sourceOriginal: null

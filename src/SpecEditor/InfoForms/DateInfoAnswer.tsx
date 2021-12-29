@@ -87,10 +87,9 @@ export default function DateInfoAnswer({
     }
   });
 
-  const dateQuestion = question as IPeriodDateQuestion;
-
   const dispatch = useAppDispatch();
   const { t } = useTranslation();
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const saveValues = (post: any) => {
     const newAns = {
       ...post
@@ -120,33 +119,22 @@ export default function DateInfoAnswer({
       <Form onSubmit={handleSubmit(saveValues)}>
         <Form.Group as={Row}>
           <Col sm="4">
-            {/*             <Controller
-              name={`answer.date` as const}
-              control={control}
-              render={({ field: { ref, ...rest } }) => (
-                <KeyboardDatePicker
-                  margin="normal"
-                  id="date-picker-dialog"
-                  variant="inline"
-                  minDate={dateQuestion.config.fromDate}
-                  maxDate={dateQuestion.config.toDate}
-                  format={DATETIME_ISO8601UTC}
-                  label={t('Select date')}
-                  KeyboardButtonProps={{
-                    'aria-label': 'change date'
-                  }}
-                  {...rest}
-                />
-              )}
-            /> */}
-
-            {/* // TODO: missing support for minDate and maxDate */}
             <ControlledDate
+              disabled
               control={control}
-              name={`answer.date` as const}
-              error={get(errors, `answer.date`) as FieldError}
+              name={`answer.toDate` as const}
+              error={get(errors, `answer.toDate`) as FieldError}
               label={t('Select date')}
             />
+            {defaultVal && defaultVal.config.hasToDate && (
+              <ControlledDate
+                disabled
+                control={control}
+                name={`answer.fromDate` as const}
+                error={get(errors, `answer.fromDate`) as FieldError}
+                label={t('Select date')}
+              />
+            )}
           </Col>
         </Form.Group>
         <Button className="mt-2" type="submit">

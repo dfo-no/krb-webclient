@@ -2,9 +2,7 @@ import Slider from '@mui/material/Slider';
 import { get, has, toPath } from 'lodash';
 import React from 'react';
 import Form from 'react-bootstrap/Form';
-import Row from 'react-bootstrap/Row';
 import { Control, Controller, FieldErrors } from 'react-hook-form';
-import { useTranslation } from 'react-i18next';
 import { IOption } from '../models/IOption';
 
 interface IProps {
@@ -23,14 +21,11 @@ export default function SliderSelect({
   control,
   name,
   errors,
-  label,
   min,
   max,
   step,
   marks
 }: IProps): React.ReactElement {
-  const { t } = useTranslation();
-
   const hasError = (str: string) => {
     let retVal = null;
     const path = toPath(str);

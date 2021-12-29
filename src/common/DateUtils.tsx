@@ -3,17 +3,17 @@ const padToTwo = (nr: number) => {
 };
 
 const formatDate = (date: Date): string => {
-  const year = date.getUTCFullYear();
+  const dateStr = date.toISOString();
 
-  const month = padToTwo(date.getUTCMonth() + 1); // Date provides month index; not month number
-  const day = padToTwo(date.getUTCDate());
+  const year = dateStr.substring(0, 4);
+  const month = dateStr.substring(5, 7);
+  const day = dateStr.substring(8, 10);
+  const hour = dateStr.substring(11, 13);
+  const minutes = dateStr.substring(14, 16);
+  const seconds = dateStr.substring(17, 19);
+  const milli = dateStr.substring(20, 23);
 
-  const hours = padToTwo(date.getHours() - 1);
-  const minutes = padToTwo(date.getMinutes());
-  const seconds = padToTwo(date.getSeconds());
-  const milliseconds = date.getMilliseconds();
-
-  return `${year}-${month}-${day}T${hours}:${minutes}:${seconds}.${milliseconds}Z`;
+  return `${year}-${month}-${day}T${hour}:${minutes}:${seconds}.${milli}Z`;
 };
 
 export default formatDate;

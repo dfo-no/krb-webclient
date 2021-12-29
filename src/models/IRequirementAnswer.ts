@@ -2,7 +2,7 @@ import Joi from 'joi';
 import { CheckboxQuestionAnswerSchema } from '../Nexus/entities/ICheckboxQuestion';
 import { CodelistQuestionAnswerSchema } from '../Nexus/entities/ICodelistQuestion';
 import { FileUploadQuestionAnswerSchema } from '../Nexus/entities/IFileUploadQuestion';
-import { PeriodDateQuestionAnswerSchema } from '../Nexus/entities/IPeriodDateQuestion';
+import { PeriodDateAnswerSchema } from '../Nexus/entities/IPeriodDateQuestion';
 import {
   BaseRequirementSchema,
   IRequirement
@@ -34,7 +34,7 @@ export const RequirementAnswerSchema = Joi.object().keys({
       { is: QuestionEnum.Q_SLIDER, then: SliderQuestionAnswerSchema },
       { is: QuestionEnum.Q_CODELIST, then: CodelistQuestionAnswerSchema },
       { is: QuestionEnum.Q_TEXT, then: TextQuestionAnswerSchema },
-      { is: QuestionEnum.Q_PERIOD_DATE, then: PeriodDateQuestionAnswerSchema },
+      { is: QuestionEnum.Q_PERIOD_DATE, then: PeriodDateAnswerSchema },
       { is: QuestionEnum.Q_TIME, then: TimeQuestionAnswerSchema },
       { is: QuestionEnum.Q_CHECKBOX, then: CheckboxQuestionAnswerSchema },
       { is: QuestionEnum.Q_FILEUPLOAD, then: FileUploadQuestionAnswerSchema }

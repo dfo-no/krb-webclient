@@ -17,7 +17,8 @@ export default function DateInfo({
   const variant = parent_requirement.variants[0];
   return (
     <Container fluid className="mt-4">
-      {`${variant.requirementText}: ${alternative.answer?.date} `}
+      {`${variant.requirementText}: ${alternative.answer?.fromDate} `}
+      {alternative.config.hasToDate && ` -> ${alternative.answer.toDate}`}
     </Container>
   );
 }
