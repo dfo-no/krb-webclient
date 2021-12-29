@@ -1,20 +1,19 @@
 import { joiResolver } from '@hookform/resolvers/joi';
-import { get } from 'lodash';
 import React from 'react';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
-import { FieldError, useForm } from 'react-hook-form';
+import { FormProvider, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import ControlledDate from '../../Form/ControlledDate';
 import ErrorSummary from '../../Form/ErrorSummary';
+import DateCtrl from '../../FormProvider/DateCtrl';
 import { IRequirementAnswer } from '../../models/IRequirementAnswer';
 import ModelType from '../../models/ModelType';
 import {
   IPeriodDateQuestion,
-  PeriodDateQuestionAnswerSchema
+  PeriodDateAnswerSchema
 } from '../../Nexus/entities/IPeriodDateQuestion';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import {
@@ -29,16 +28,10 @@ interface IProps {
 export default function PeriodDateAnswerForm({
   parentAnswer
 }: IProps): React.ReactElement {
-  const {
-    handleSubmit,
-    control,
-    register,
-    formState: { errors }
-  } = useForm<IPeriodDateQuestion>({
-    resolver: joiResolver(PeriodDateQuestionAnswerSchema),
-    defaultValues: {
-      ...(parentAnswer.question as IPeriodDateQuestion)
-    }
+  const question = parentAnswer.question as IPeriodDateQuestion;
+  const methods = useForm<IPeriodDateQuestion>({
+    resolver: joiResolver(PeriodDateAnswerSchema),
+    defaultValues: question
   });
 
   const { selectedSpecificationProduct } = useAppSelector(
@@ -69,44 +62,33 @@ export default function PeriodDateAnswerForm({
     <Card className="mb-3">
       <Card.Body>
         <h6>Question: Date </h6>
-        <Form onSubmit={handleSubmit(saveValues)}>
-          <Form.Group as={Row}>
-            <Col sm="4">
-              {/* <Controller
-                name={`answer.date` as const}
-                control={control}
-                render={({ field: { ref, ...rest } }) => (
-                  <KeyboardDatePicker
-                    margin="normal"
-                    id="date-picker-dialog"
-                    variant="inline"
-                    minDate={item.config.fromDate}
-                    maxDate={item.config.toDate}
-                    format={DATETIME_ISO8601UTC}
-                    label={t('Select date')}
-                    KeyboardButtonProps={{
-                      'aria-label': 'change date'
-                    }}
-                    {...rest}
-                  />
-                )}
-              /> */}
-              {/*  TODO: missing support for potensial minDate and maxDate */}
-              <ControlledDate
-                control={control}
-                name={`answer.date` as const}
-                error={get(errors, `answer.date`) as FieldError}
-                label={t('Select date')}
-              />
-            </Col>
-          </Form.Group>
-          {/* TODO: This input is a terrible RHF hack! .point is not set by defaultValues, and does not even exist in the reducer
-          Replace during FormProvider change */}
-          <input type="text" {...register('answer.point')} value={0} />
+        <FormProvider {...methods}>
+          <Form onSubmit={methods.handleSubmit(saveValues)}>
+            <Form.Group as={Row}>
+              <Form.Label>Boundary from - to</Form.Label>
+              <Col sm="6">
+                <DateCtrl name={`config.fromBoundary` as const} />
+              </Col>
+              <Col sm="6">
+                <DateCtrl name={`config.toBoundary` as const} />
+              </Col>
+            </Form.Group>
+            <Form.Group as={Row}>
+              <Form.Label>Periode from - to</Form.Label>
+              <Col sm="6">
+                <DateCtrl name={`answer.fromDate` as const} />
+              </Col>
+              {question.config.hasToDate && (
+                <Col sm="6">
+                  <DateCtrl name={`answer.toDate` as const} />
+                </Col>
+              )}
+            </Form.Group>
 
-          <Button type="submit">{t('save')}</Button>
-          <ErrorSummary errors={errors} />
-        </Form>
+            <Button type="submit">{t('save')}</Button>
+            <ErrorSummary errors={methods.formState.errors} />
+          </Form>
+        </FormProvider>
       </Card.Body>
     </Card>
   );

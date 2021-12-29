@@ -1,12 +1,12 @@
-import * as React from 'react';
-import Grid from '@mui/material/Grid';
 import { makeStyles } from '@material-ui/core';
-import Typography from '@mui/material/Typography';
+import ArrowForwardIos from '@mui/icons-material/ArrowForwardIos';
+import Grid from '@mui/material/Grid';
+import Link from '@mui/material/Link';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
-import ArrowForward from '@mui/icons-material/ArrowForward';
-import Link from '@mui/material/Link';
+import Typography from '@mui/material/Typography';
+import * as React from 'react';
 import theme from '../theme';
 
 const useStyles = makeStyles({
@@ -74,7 +74,7 @@ export default function Footer(): React.ReactElement {
                 <ListItemText>
                   <Typography variant="footerLinkText">{link}</Typography>
                 </ListItemText>
-                <ArrowForward />
+                <ArrowForwardIos />
               </ListItem>
             );
           })}

@@ -1,11 +1,9 @@
 import { joiResolver } from '@hookform/resolvers/joi';
 import { has, toPath } from 'lodash';
 import React from 'react';
-import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import Form from 'react-bootstrap/Form';
 import { useForm } from 'react-hook-form';
-import { useTranslation } from 'react-i18next';
 import ErrorSummary from '../../Form/ErrorSummary';
 import { IRequirementAnswer } from '../../models/IRequirementAnswer';
 import ModelType from '../../models/ModelType';
@@ -35,7 +33,6 @@ export default function TextForm({ parentAnswer }: IProps): React.ReactElement {
     (state) => state.selectedSpecProduct
   );
   const dispatch = useAppDispatch();
-  const { t } = useTranslation();
 
   if (
     !selectedSpecificationProduct &&
@@ -76,14 +73,15 @@ export default function TextForm({ parentAnswer }: IProps): React.ReactElement {
       <Card.Body>
         <h6>Alternative: Text</h6>
         <Form onSubmit={handleSubmit(saveValues)}>
+          <Form.Label>Maks lengde</Form.Label>
           <Form.Control
             as="input"
+            disabled
             {...register('config.max')}
             isInvalid={!!hasError('config.max')}
             type="number"
           />
 
-          <Button type="submit">{t('save')}</Button>
           <ErrorSummary errors={errors} />
         </Form>
       </Card.Body>

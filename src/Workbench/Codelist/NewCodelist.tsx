@@ -1,14 +1,13 @@
+import { DevTool } from '@hookform/devtools';
 import { joiResolver } from '@hookform/resolvers/joi';
-import { get } from 'lodash';
 import React, { useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import Form from 'react-bootstrap/Form';
-import { FieldError, useForm } from 'react-hook-form';
+import { FormProvider, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { v4 as uuidv4 } from 'uuid';
-import ControlledTextInput from '../../Form/ControlledTextInput';
-import ErrorSummary from '../../Form/ErrorSummary';
+import TextCtrl from '../../FormProvider/TextCtrl';
 import { IAlert } from '../../models/IAlert';
 import { ICodelist, PostCodelistSchema } from '../../Nexus/entities/ICodelist';
 import Nexus from '../../Nexus/Nexus';
@@ -30,28 +29,27 @@ function NewCodelist(): React.ReactElement {
   const defaultValues: ICodelist =
     nexus.codelistService.generateDefaultCodelistValues(project.id);
 
-  const {
-    control,
-    handleSubmit,
-    reset,
-    formState: { errors }
-  } = useForm<ICodelist>({
+  const methods = useForm<ICodelist>({
     resolver: joiResolver(PostCodelistSchema),
     defaultValues
   });
 
+  const reset = () => {
+    methods.reset();
+    setShow(false);
+  };
+
   const onNewCodeSubmit = (post: ICodelist) => {
-    const alert: IAlert = {
-      id: uuidv4(),
-      style: 'success',
-      text: 'Successfully added codelist'
-    };
     const newCodelist = nexus.codelistService.createCodelistWithId(post);
     dispatch(addCodelist(newCodelist));
     dispatch(putSelectedProjectThunk('dummy')).then(() => {
+      const alert: IAlert = {
+        id: uuidv4(),
+        style: 'success',
+        text: 'Successfully added codelist'
+      };
       dispatch(addAlert({ alert }));
       reset();
-      setShow(false);
     });
   };
 
@@ -63,37 +61,30 @@ function NewCodelist(): React.ReactElement {
       {show && (
         <Card className="mb-4">
           <Card.Body>
-            <Form
-              onSubmit={handleSubmit(onNewCodeSubmit)}
-              autoComplete="off"
-              noValidate
-              validated={validated}
-            >
-              <ControlledTextInput
-                control={control}
-                name="title"
-                error={get(errors, `title`) as FieldError}
-                label={t('Title')}
-              />
-              <ControlledTextInput
-                control={control}
-                name="description"
-                error={get(errors, `description`) as FieldError}
-                label={t('Description')}
-              />
-
-              <Button className="mt-2  ml-3" type="submit">
-                {t('save')}
-              </Button>
-              <Button
-                className="mt-2 ml-3 btn-warning"
-                onClick={() => setShow(false)}
+            <FormProvider {...methods}>
+              <Form
+                onSubmit={methods.handleSubmit(onNewCodeSubmit)}
+                autoComplete="off"
+                noValidate
+                validated={validated}
               >
-                {t('cancel')}
-              </Button>
-              <ErrorSummary errors={errors} />
-            </Form>
+                <TextCtrl name="title" label={t('Title')} />
+                <TextCtrl name="description" label={t('Description')} />
+                <Button className="mt-2  ml-3" type="submit">
+                  {t('save')}
+                </Button>
+                <Button
+                  className="mt-2 ml-3 btn-warning"
+                  onClick={() => reset()}
+                >
+                  {t('cancel')}
+                </Button>
+              </Form>
+            </FormProvider>
           </Card.Body>
+          {process.env.NODE_ENV === 'development' && (
+            <DevTool control={methods.control} />
+          )}
         </Card>
       )}
     </>

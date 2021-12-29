@@ -1,7 +1,5 @@
-/* eslint-disable class-methods-use-this */
 import { isEqual } from 'lodash';
 import { IPrefilledResponse } from '../../models/IPrefilledResponse';
-import { IPrefilledResponseProduct } from '../../models/IPrefilledResponseProduct';
 import { IRequirementAnswer } from '../../models/IRequirementAnswer';
 import { IResponse } from '../../models/IResponse';
 import { IResponseProduct } from '../../models/IResponseProduct';

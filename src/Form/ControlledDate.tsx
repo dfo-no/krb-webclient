@@ -19,6 +19,7 @@ import { DATETIME_ISO8601UTC } from '../common/Constants';
 interface IProps<T> extends UseControllerProps<T> {
   error: FieldError | undefined;
   label: string;
+  disabled?: boolean;
 }
 
 const localeMap: { [key: string]: Locale } = {
@@ -31,11 +32,15 @@ const maskMap: { [key: string]: string } = {
   nb: '__.__.____'
 };
 
+/**
+ * @deprecated
+ */
 const ControlledDate = <T extends FieldValues>({
   name,
   control,
   error,
-  label
+  label,
+  disabled
 }: IProps<T>): React.ReactElement => {
   const { i18n } = useTranslation();
   return (
@@ -49,6 +54,7 @@ const ControlledDate = <T extends FieldValues>({
           control={control}
           render={({ field }) => (
             <DatePicker
+              disabled={disabled}
               label={label}
               // onBlur={field.onBlur}
               mask={maskMap[i18n.language]}
@@ -85,3 +91,7 @@ const ControlledDate = <T extends FieldValues>({
 };
 
 export default ControlledDate;
+
+ControlledDate.defaultProps = {
+  disabled: false
+};

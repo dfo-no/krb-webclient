@@ -65,7 +65,8 @@ export default function AnswerForm({
           }
           if (question.type === QuestionEnum.Q_PERIOD_DATE) {
             const answer: IPeriodDateAnswer = {
-              date: question.config.fromDate,
+              fromDate: question.config.fromBoundary,
+              toDate: question.config.toBoundary,
               point: 0
             };
             questionResult = { ...question, answer } as IPeriodDateQuestion;

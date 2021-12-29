@@ -19,6 +19,9 @@ interface IProps<T> extends UseControllerProps<T> {
   marks: IOption[];
 }
 
+/**
+ * @deprecated
+ */
 const ControlledSlider = <T extends FieldValues>({
   name,
   control,
@@ -51,6 +54,7 @@ const ControlledSlider = <T extends FieldValues>({
                 max={max}
                 step={step}
                 marks={marks}
+                value={field.value}
               />
             )}
           />

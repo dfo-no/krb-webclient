@@ -3,6 +3,7 @@
 import { IResponse } from '../../models/IResponse';
 import QuestionEnum from '../../models/QuestionEnum';
 import { ICheckboxQuestion } from '../entities/ICheckboxQuestion';
+import { ICodelistQuestion } from '../entities/ICodelistQuestion';
 import { IEvaluatedResponse } from '../entities/IEvaluatedResponse';
 import { ISliderQuestion, ScoreValuePair } from '../entities/ISliderQuestion';
 
@@ -19,16 +20,34 @@ export default class EvaluationService {
     return evaluations;
   }
 
+  evaluateCodelist(question: ICodelistQuestion): number {
+    const answeredAmount = question.answer.codes.length;
+    const min = question.config.optionalCodeMinAmount;
+    const max = question.config.optionalCodeMaxAmount;
+    let score = 0;
+    if (answeredAmount < min) {
+      return score;
+    }
+    if (answeredAmount === min) {
+      return score;
+    }
+    for (let i = min; i < max; i += 1) {
+      if (min === 0) {
+        score += 1 / max;
+      } else {
+        score += 1 / (max - min + 1);
+      }
+      if (i === answeredAmount) break;
+    }
+    return score;
+  }
+
   evaluateCheckBox(question: ICheckboxQuestion): number {
-    if (question.answer.value === true) {
-      return question.config.weightTrue / 100;
+    if (question.answer.value === question.config.preferedAlternative) {
+      return 1;
     }
 
-    if (question.answer.value === false) {
-      return question.config.weightFalse / 100;
-    }
-
-    return 0;
+    return question.config.pointsNonPrefered / 100;
   }
 
   /* When we have found the value our answer is closest to, we have to find the range our answer is
@@ -48,7 +67,7 @@ export default class EvaluationService {
     let closestScore =
       list[0].value !== element.value ? list[0].score : list[1].score;
     list.forEach((e) => {
-      /* checks that e is not the element we already has passsed in, and that if our answer is below the element we 
+      /* checks that e is not the element we already has passsed in, and that if our answer is below the element we
       have passed as an argument, the other element we found also has to be below it for it to be the range our value is placed in
       */
       if (
@@ -121,17 +140,23 @@ export default class EvaluationService {
         throw Error('Answer does not exist in specification');
       }
 
-      if (
-        requirementAnswer.question.type !== QuestionEnum.Q_CHECKBOX &&
-        requirementAnswer.question.type !== QuestionEnum.Q_SLIDER
-      ) {
-        evaluation.points += 1;
-      }
       if (requirementAnswer.question.type === QuestionEnum.Q_CHECKBOX) {
         evaluation.points += this.evaluateCheckBox(requirementAnswer.question);
       }
       if (requirementAnswer.question.type === QuestionEnum.Q_SLIDER) {
         evaluation.points += this.evaluateSlider(requirementAnswer.question);
+      }
+
+      if (requirementAnswer.question.type === QuestionEnum.Q_CODELIST) {
+        evaluation.points += this.evaluateCodelist(requirementAnswer.question);
+      }
+
+      if (
+        requirementAnswer.question.type !== QuestionEnum.Q_CODELIST &&
+        requirementAnswer.question.type !== QuestionEnum.Q_SLIDER &&
+        requirementAnswer.question.type !== QuestionEnum.Q_CHECKBOX
+      ) {
+        evaluation.points += 1;
       }
     });
 
@@ -156,6 +181,7 @@ export default class EvaluationService {
     return evaluation;
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   checkIfEligbleForEvaluation(responses: IResponse[]): boolean {
     return true;
   }

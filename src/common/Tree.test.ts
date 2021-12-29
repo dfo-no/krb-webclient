@@ -267,11 +267,16 @@ describe('Tree', () => {
                   {
                     type: QuestionEnum.Q_PERIOD_DATE,
                     config: {
+                      hasToDate: true,
+                      defaultPoint: 0,
+                      fromBoundary: '2021-09-01T13:25:59.0000000Z',
+                      toBoundary: '2021-11-01T13:25:59.0000000Z'
+                    },
+                    answer: {
                       fromDate: '2021-10-01T13:25:59.0000000Z',
                       toDate: '2021-10-31T13:26:02.0000000Z',
-                      defaultPoint: 0
+                      point: 0
                     },
-                    answer: { date: null, point: 0 },
                     sourceOriginal: '',
                     sourceRel: '',
                     id: '61479271-47cc-47dd-a614-15a88418f107'
@@ -393,9 +398,9 @@ describe('Tree', () => {
                   {
                     type: QuestionEnum.Q_CHECKBOX,
                     config: {
-                      weightTrue: 100,
-                      weightFalse: 0,
-                      defaultPoint: 0
+                      pointsNonPrefered: 0,
+                      defaultPoint: 1,
+                      preferedAlternative: true
                     },
                     answer: { point: 0, value: false },
                     sourceOriginal: '',

@@ -1,18 +1,18 @@
-import * as React from 'react';
-import {
-  Link as RouterLink,
-  useHistory,
-  useRouteMatch
-} from 'react-router-dom';
+import { makeStyles } from '@material-ui/core';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Link from '@mui/material/Link';
 import Toolbar from '@mui/material/Toolbar';
-import { makeStyles } from '@material-ui/core';
+import * as React from 'react';
 import { useTranslation } from 'react-i18next';
-import theme from '../theme';
+import {
+  Link as RouterLink,
+  useHistory,
+  useRouteMatch
+} from 'react-router-dom';
 import SignedButton from '../SignedButton/SignedButton';
+import theme from '../theme';
 
 const useStyles = makeStyles({
   logoBig: {

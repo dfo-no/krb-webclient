@@ -1,21 +1,16 @@
 import { joiResolver } from '@hookform/resolvers/joi';
-import Joi from 'joi';
-import { get } from 'lodash';
 import React from 'react';
 import Badge from 'react-bootstrap/Badge';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
-import { FieldError, useForm } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import ControlledDate from '../../../Form/ControlledDate';
+import DateCtrl from '../../../FormProvider/DateCtrl';
 import { IPrefilledResponseProduct } from '../../../models/IPrefilledResponseProduct';
-import {
-  IRequirementAnswer,
-  RequirementAnswerSchema
-} from '../../../models/IRequirementAnswer';
+import { IRequirementAnswer } from '../../../models/IRequirementAnswer';
 import {
   IPeriodDateQuestion,
-  PeriodDateQuestionAnswerSchema
+  PeriodDateAnswerSchema
 } from '../../../Nexus/entities/IPeriodDateQuestion';
 import { IRequirement } from '../../../Nexus/entities/IRequirement';
 import { useAppDispatch, useAppSelector } from '../../../store/hooks';
@@ -29,25 +24,12 @@ interface IProps {
   product: IPrefilledResponseProduct;
 }
 
-export const PeriodDateSchema = RequirementAnswerSchema.keys({
-  question: PeriodDateQuestionAnswerSchema.keys({
-    answer: Joi.object().keys({
-      date: Joi.date().iso().raw().required(),
-      point: Joi.number().required()
-    })
-  })
-});
-
 export default function ProductDateForm({
   answer,
   product
 }: IProps): React.ReactElement {
-  const {
-    handleSubmit,
-    control,
-    formState: { errors }
-  } = useForm<IRequirementAnswer>({
-    resolver: joiResolver(PeriodDateSchema),
+  const methods = useForm<IRequirementAnswer>({
+    resolver: joiResolver(PeriodDateAnswerSchema),
     defaultValues: answer
   });
 
@@ -107,16 +89,18 @@ export default function ProductDateForm({
         </small>
       </h6>
       <Form
-        onSubmit={handleSubmit(onSubmit)}
+        onSubmit={methods.handleSubmit(onSubmit)}
         key={question.id}
         className="mt-4"
       >
-        <ControlledDate
-          control={control}
-          name={`question.answer.date` as const}
-          error={get(errors, `question.answer`) as FieldError}
+        <DateCtrl
+          name={`question.answer.fromDate` as const}
           label={t('Select date')}
         />
+        {question.config.hasToDate && (
+          <DateCtrl name={`question.answer.toDate` as const} />
+        )}
+
         <div className="d-flex justify-content-end">
           {isValueSet(product.id, answer.id) ? (
             <Badge bg="success" className="mx-2">
