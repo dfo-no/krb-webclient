@@ -35,22 +35,22 @@ const useStyles = makeStyles({
   }
 });
 
-const footerLinks = [
-  'Kontakt',
-  'English',
-  'Personvern',
-  'Offentlig postjournal'
-];
-
-const footerAddressTexts = [
-  'Karl Johans gate 37B',
-  'Pb 7154 St. Olavs plass, 0130 Oslo',
-  'Tlf: 400 07 997',
-  'Org. nr. 986 252 932'
-];
-
 export default function Footer(): React.ReactElement {
   const classes = useStyles();
+
+  const footerLinks = [
+    'Kontakt',
+    'English',
+    'Personvern',
+    'Offentlig postjournal'
+  ];
+
+  const footerAddressTexts = [
+    'Karl Johans gate 37B',
+    'Pb 7154 St. Olavs plass, 0130 Oslo',
+    'Tlf: 400 07 997',
+    'Org. nr. 986 252 932'
+  ];
 
   return (
     <ThemeProvider theme={theme}>
