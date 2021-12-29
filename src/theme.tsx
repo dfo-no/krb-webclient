@@ -104,7 +104,7 @@ theme.components = {
   MuiButton: {
     variants: [
       {
-        props: { variant: 'regularMuiButton' },
+        props: { variant: 'primary' },
         style: {
           backgroundColor: theme.palette.blue.main,
           whiteSpace: 'nowrap',

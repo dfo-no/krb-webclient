@@ -77,7 +77,7 @@ export default function Header(): React.ReactElement {
           {match && (
             <Box mx={1}>
               <Button
-                variant="regularMuiButton"
+                variant="primary"
                 onClick={() => {
                   history.push('/workbench');
                 }}
