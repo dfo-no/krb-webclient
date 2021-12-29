@@ -2,7 +2,7 @@ import React from 'react';
 
 import { useTranslation } from 'react-i18next';
 import { withRouter } from 'react-router';
-import { NavLink, useRouteMatch } from 'react-router-dom';
+import { useRouteMatch } from 'react-router-dom';
 import { useAppSelector } from '../../store/hooks';
 import List from '@mui/material/List';
 import ListItemButton from '@mui/material/ListItemButton';
