@@ -28,7 +28,6 @@ const useStyles = makeStyles({
   },
   footerLinkListItem: {
     borderBottom: `1px solid ${theme.palette.dfoLightBlue.main}`,
-    width: '100%',
     '&:hover': {
       '& $footerLinkText': {
         color: theme.palette.dfoLightBlue.main
