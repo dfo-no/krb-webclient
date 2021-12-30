@@ -6,6 +6,8 @@ declare module '@mui/material/styles/createPalette' {
     secondary: PaletteColor;
     dfoBlue: PaletteColor;
     dfoInputBackground: PaletteColor;
+    dfoWhite: PaletteColor;
+    dfoLightBlue: PaletteColor;
     gray100: PaletteColor;
     gray200: PaletteColor;
     gray300: PaletteColor;
@@ -24,8 +26,6 @@ declare module '@mui/material/styles/createPalette' {
     cyan: PaletteColor;
     linkHoverColor: PaletteColor;
     success: PaletteColor;
-    white: PaletteColor;
-    dfoLightBlue: PaletteColor;
   }
 
   interface PaletteOptions {
@@ -33,6 +33,8 @@ declare module '@mui/material/styles/createPalette' {
     secondary?: PaletteColorOptions;
     dfoBlue: PaletteColorOptions;
     dfoInputBackground: PaletteColorOptions;
+    dfoWhite: PaletteColorOptions;
+    dfoLightBlue: PaletteColorOptions;
     gray100: PaletteColorOptions;
     gray200: PaletteColorOptions;
     gray300: PaletteColorOptions;
@@ -51,7 +53,5 @@ declare module '@mui/material/styles/createPalette' {
     cyan: PaletteColorOptions;
     linkHoverColor: PaletteColorOptions;
     success?: PaletteColorOptions;
-    white: PaletteColorOptions;
-    dfoLightBlue: PaletteColorOptions;
   }
 }

@@ -1,6 +1,8 @@
 $dfo-blue: #005b91;
 $dfo-input-background: #f2f1f9;
 $dfo-light-border: 1px solid rgba(0, 0, 0, 0.125);
+$dfo-white: #ffff;
+$dfo-light-blue: #039fe3;
 
 $font-family-sans-serif: Roboto;
 $font-family-serif: Roboto;
@@ -50,6 +52,8 @@ $h3-font-size: $font-size-base * 1.8;
   dfoBlue: $dfo-blue;
   dfoInputBackground: $dfo-input-background;
   dfoLightBorder: $dfo-light-border;
+  dfoWhite: $dfo-white;
+  dfoLightBlue: $dfo-light-blue;
   font-family-sans-serif: $font-family-sans-serif;
   font-family-serif: $font-family-serif;
   gray100: $gray-100;
