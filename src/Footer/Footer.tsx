@@ -28,7 +28,19 @@ const useStyles = makeStyles({
   },
   footerLinkListItem: {
     borderBottom: `1px solid ${theme.palette.dfoLightBlue.main}`,
-    color: `${theme.palette.white.main}`
+    width: '100%',
+    '&:hover': {
+      '& $footerLinkText': {
+        color: theme.palette.dfoLightBlue.main
+      },
+      '& $footerLinkArrow': {
+        color: theme.palette.dfoLightBlue.main
+      }
+    }
+  },
+  footerLinkText: {},
+  footerLinkArrow: {
+    color: theme.palette.dfoWhite.main
   }
 });
 
@@ -72,9 +84,14 @@ export default function Footer(): React.ReactElement {
                 className={classes.footerLinkListItem}
               >
                 <ListItemText>
-                  <Typography variant="footerLinkText">{link}</Typography>
+                  <Typography
+                    className={classes.footerLinkText}
+                    variant="footerLinkText"
+                  >
+                    {link}
+                  </Typography>
                 </ListItemText>
-                <ArrowForwardIos />
+                <ArrowForwardIos className={classes.footerLinkArrow} />
               </ListItem>
             );
           })}

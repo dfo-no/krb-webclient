@@ -5,6 +5,8 @@ import { withRouter } from 'react-router';
 import { useRouteMatch } from 'react-router-dom';
 import { useAppSelector } from '../../store/hooks';
 import List from '@mui/material/List';
+import Link from '@mui/material/Link';
+import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 
 interface IRouteLink {
@@ -18,7 +20,11 @@ interface IRouteParams {
 
 const renderRouteLinks = (routes: IRouteLink[], isProjectSelected: boolean) => {
   return routes.map((route) => {
-    return <ListItemButton>{route.name}</ListItemButton>;
+    return (
+      <ListItem component={Link} href="/">
+        <ListItemButton>{route.name}</ListItemButton>
+      </ListItem>
+    );
   });
 };
 

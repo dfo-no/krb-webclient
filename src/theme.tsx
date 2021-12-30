@@ -15,6 +15,12 @@ const theme = createTheme({
     dfoInputBackground: {
       main: dfoThemeScss.dfoInputBackground
     },
+    dfoWhite: {
+      main: dfoThemeScss.dfoWhite
+    },
+    dfoLightBlue: {
+      main: dfoThemeScss.dfoLightBlue
+    },
     gray100: {
       main: dfoThemeScss.gray100
     },
@@ -35,6 +41,9 @@ const theme = createTheme({
     },
     blue: {
       main: dfoThemeScss.blue
+    },
+    lightBlue: {
+      main: dfoThemeScss.lightBlue
     },
     indigo: {
       main: dfoThemeScss.indigo
@@ -67,25 +76,20 @@ const theme = createTheme({
       main: dfoThemeScss.linkHoverColor
     },
     success: {
-      main: '#018566'
-    },
-    white: {
-      main: '#ffff'
-    },
-    dfoLightBlue: {
       main: dfoThemeScss.success
     }
   }
 });
 
 theme.typography.footerLinkText = {
-  color: 'theme.palette.white.main',
   fontFamily: 'Source Sans Pro,sans-serif,helvetica,arial',
-  fontWeight: 'bold'
+  fontWeight: 'bold',
+  color: theme.palette.dfoWhite.main,
+  textDecoration: 'none'
 };
 
 theme.typography.footerAddressText = {
-  color: theme.palette.white.main,
+  color: theme.palette.dfoWhite.main,
   fontFamily: 'Source Sans Pro,sans-serif,helvetica,arial'
 };
 
@@ -106,36 +110,11 @@ theme.components = {
           backgroundColor: theme.palette.blue.main,
           whiteSpace: 'nowrap',
           '&:hover': {
-            background: '#0a4678'
+            background: theme.palette.lightBlue.main
           }
         }
       }
     ]
-  },
-  MuiLink: {
-    styleOverrides: {
-      root: {
-        width: '100%',
-        textDecoration: 'none',
-        color: theme.palette.white.main
-      }
-    }
-  },
-  MuiList: {
-    styleOverrides: {
-      root: {
-        color: 'red'
-      }
-    }
-  },
-  MuiListItem: {
-    styleOverrides: {
-      root: {
-        '&:hover': {
-          color: theme.palette.dfoLightBlue.main
-        }
-      }
-    }
   }
 };
 
