@@ -81,6 +81,7 @@ export default function Footer(): React.ReactElement {
                 component={Link}
                 href="/"
                 className={classes.footerLinkListItem}
+                key={link}
               >
                 <ListItemText>
                   <Typography
@@ -110,7 +111,7 @@ export default function Footer(): React.ReactElement {
         <Grid item>
           {footerAddressTexts.map((text) => {
             return (
-              <Grid item>
+              <Grid item key={text}>
                 <Typography variant="footerAddressText">{text}</Typography>
               </Grid>
             );

@@ -1,7 +1,11 @@
+import '@fontsource/source-sans-pro';
 import { createTheme } from '@mui/material/styles';
 import dfoThemeScss from './dfo-theme.module.scss';
 
 const theme = createTheme({
+  typography: {
+    fontFamily: ['Source Sans Pro', 'Helvetica', 'Arial'].join(',')
+  },
   palette: {
     primary: {
       main: dfoThemeScss.primary
@@ -89,8 +93,7 @@ theme.typography.footerLinkText = {
 };
 
 theme.typography.footerAddressText = {
-  color: theme.palette.dfoWhite.main,
-  fontFamily: 'Source Sans Pro,sans-serif,helvetica,arial'
+  color: theme.palette.dfoWhite.main
 };
 
 theme.components = {
