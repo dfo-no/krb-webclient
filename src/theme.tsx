@@ -42,6 +42,9 @@ const theme = createTheme({
     blue: {
       main: dfoThemeScss.blue
     },
+    lightBlue: {
+      main: dfoThemeScss.lightBlue
+    },
     indigo: {
       main: dfoThemeScss.indigo
     },
@@ -105,7 +108,7 @@ theme.components = {
           backgroundColor: theme.palette.blue.main,
           whiteSpace: 'nowrap',
           '&:hover': {
-            background: '#02467e'
+            background: theme.palette.lightBlue.main
           }
         }
       }

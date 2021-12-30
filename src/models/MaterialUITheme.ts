@@ -15,6 +15,7 @@ declare module '@mui/material/styles/createPalette' {
     gray500: PaletteColor;
     gray900: PaletteColor;
     blue: PaletteColor;
+    lightBlue: PaletteColor;
     indigo: PaletteColor;
     purple: PaletteColor;
     pink: PaletteColor;
@@ -42,6 +43,7 @@ declare module '@mui/material/styles/createPalette' {
     gray500: PaletteColorOptions;
     gray900: PaletteColorOptions;
     blue: PaletteColorOptions;
+    lightBlue: PaletteColorOptions;
     indigo: PaletteColorOptions;
     purple: PaletteColorOptions;
     pink: PaletteColorOptions;
