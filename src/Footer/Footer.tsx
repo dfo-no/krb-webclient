@@ -28,7 +28,7 @@ const useStyles = makeStyles({
   },
   footerLinkListItem: {
     borderBottom: `1px solid ${theme.palette.dfoLightBlue.main}`,
-    color: `${theme.palette.white.main}`
+    color: theme.palette.dfoLightBlue.main
   }
 });
 

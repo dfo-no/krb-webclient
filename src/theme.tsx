@@ -19,6 +19,12 @@ const theme = createTheme({
     dfoInputBackground: {
       main: dfoThemeScss.dfoInputBackground
     },
+    dfoWhite: {
+      main: dfoThemeScss.dfoWhite
+    },
+    dfoLightBlue: {
+      main: dfoThemeScss.dfoLightBlue
+    },
     gray100: {
       main: dfoThemeScss.gray100
     },
@@ -39,6 +45,9 @@ const theme = createTheme({
     },
     blue: {
       main: dfoThemeScss.blue
+    },
+    lightBlue: {
+      main: dfoThemeScss.lightBlue
     },
     indigo: {
       main: dfoThemeScss.indigo
@@ -71,12 +80,6 @@ const theme = createTheme({
       main: dfoThemeScss.linkHoverColor
     },
     success: {
-      main: '#018566'
-    },
-    white: {
-      main: '#ffff'
-    },
-    dfoLightBlue: {
       main: dfoThemeScss.success
     }
   }
@@ -88,7 +91,7 @@ theme.typography.footerLinkText = {
 };
 
 theme.typography.footerAddressText = {
-  color: theme.palette.white.main
+  color: theme.palette.dfoWhite.main
 };
 
 theme.components = {
@@ -108,7 +111,7 @@ theme.components = {
           backgroundColor: theme.palette.blue.main,
           whiteSpace: 'nowrap',
           '&:hover': {
-            background: '#0a4678'
+            background: theme.palette.lightBlue.main
           }
         }
       }
@@ -119,7 +122,7 @@ theme.components = {
       root: {
         width: '100%',
         textDecoration: 'none',
-        color: theme.palette.white.main
+        color: theme.palette.dfoWhite.main
       }
     }
   },
