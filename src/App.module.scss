@@ -1,17 +1,17 @@
 .App {
   display: flex;
   flex-direction: column;
-  height: 100vh;
+  min-height: 100vh;
 
   &__header {
-    flex: 1 0 auto;
   }
 
   &__content {
-    flex: 1 0 auto;
+    flex-basis: 100%;
   }
 
   &__footer {
+    flex: 0;
   }
 }
 

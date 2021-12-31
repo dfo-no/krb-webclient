@@ -48,49 +48,48 @@ export default function Header(): React.ReactElement {
   const classes = useStyles();
 
   return (
-    <Box>
-      <AppBar elevation={0}>
-        <Toolbar>
-          <Box sx={{ flexGrow: 1 }}>
-            <Link className={classes.logoBig} component={RouterLink} to="/">
-              <img
-                src="/logo-blue.svg"
-                alt="DFØ logo header big"
-                width="263.06"
-                height="38"
-              />
-            </Link>
-            <Link className={classes.logoSmall} component={RouterLink} to="/">
-              <img
-                src="/logo-blue-small.svg"
-                alt="DFØ logo header small"
-                width="61.408165"
-                height="30.729862"
-              />
-            </Link>
-          </Box>
+    <AppBar elevation={0} position="sticky">
+      <Toolbar>
+        <Box sx={{ flexGrow: 1 }}>
+          <Link className={classes.logoBig} component={RouterLink} to="/">
+            <img
+              src="/logo-blue.svg"
+              alt="DFØ logo header big"
+              width="263.06"
+              height="38"
+            />
+          </Link>
+          <Link className={classes.logoSmall} component={RouterLink} to="/">
+            <img
+              src="/logo-blue-small.svg"
+              alt="DFØ logo header small"
+              width="61.408165"
+              height="30.729862"
+            />
+          </Link>
+        </Box>
 
-          {match && (
-            <Box mx={1}>
-              <Button
-                onClick={() => {
-                  history.push('/workbench');
-                }}
-              >
-                {t('all projects')}
-              </Button>
-            </Box>
-          )}
-
-          <Box
-            className={`${
-              match ? classes.hideSignedButton : classes.showSignedButton
-            }`}
-          >
-            <SignedButton />
+        {match && (
+          <Box mx={1}>
+            <Button
+              variant="primary"
+              onClick={() => {
+                history.push('/workbench');
+              }}
+            >
+              {t('all projects')}
+            </Button>
           </Box>
-        </Toolbar>
-      </AppBar>
-    </Box>
+        )}
+
+        <Box
+          className={`${
+            match ? classes.hideSignedButton : classes.showSignedButton
+          }`}
+        >
+          <SignedButton />
+        </Box>
+      </Toolbar>
+    </AppBar>
   );
 }

@@ -2,7 +2,7 @@ import React from 'react';
 
 import { useTranslation } from 'react-i18next';
 import { withRouter } from 'react-router';
-import { useRouteMatch } from 'react-router-dom';
+import { useRouteMatch, Link } from 'react-router-dom';
 import { useAppSelector } from '../../store/hooks';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
@@ -22,7 +22,8 @@ interface IRouteParams {
 const useStyles = makeStyles({
   sideBarLinkList: {
     backgroundColor: theme.palette.gray100.main,
-    height: 1200,
+    width: '100%',
+    height: 'auto',
     minWidth: 200
   },
   linkListItem: {
@@ -30,10 +31,16 @@ const useStyles = makeStyles({
     borderBottom: `2px solid ${theme.palette.dfoWhite.main}`,
     '&:hover': {
       background: theme.palette.lightBlue.main,
-      color: 'white'
+      color: 'white',
+
+      '& $linkListItemText': {
+        color: 'white'
+      }
     }
   },
-  linkListItemText: {}
+  linkListItemText: {
+    color: 'black'
+  }
 });
 
 function SideBar(): React.ReactElement {
@@ -63,7 +70,11 @@ function SideBar(): React.ReactElement {
     <List className={classes.sideBarLinkList}>
       {routes.map((route) => {
         return (
-          <ListItem className={classes.linkListItem}>
+          <ListItem
+            component={Link}
+            to={route.link}
+            className={classes.linkListItem}
+          >
             <ListItemText className={classes.linkListItemText}>
               {route.name}
             </ListItemText>

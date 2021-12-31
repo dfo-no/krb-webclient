@@ -34,8 +34,8 @@ export default function WorkbenchModule(): React.ReactElement {
   }
 
   return (
-    <Container fluid className={styles.container}>
-      <Row>
+    <Container fluid>
+      <Row className="mt-2">
         <Col className="col-2 p-0">
           <SideBar />
         </Col>
