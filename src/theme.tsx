@@ -111,10 +111,18 @@ theme.components = {
         props: { variant: 'primary' },
         style: {
           backgroundColor: theme.palette.blue.main,
+          color: theme.palette.dfoWhite.main,
           whiteSpace: 'nowrap',
           '&:hover': {
             background: theme.palette.lightBlue.main
           }
+        }
+      },
+      {
+        props: { variant: 'listButton' },
+        style: {
+          backgroundColor: theme.palette.dfoWhite.main,
+          width: 300
         }
       }
     ]

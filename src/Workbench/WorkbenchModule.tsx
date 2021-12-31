@@ -34,7 +34,7 @@ export default function WorkbenchModule(): React.ReactElement {
   }
 
   return (
-    <Container fluid>
+    <Container fluid className={styles.container}>
       <Row>
         <Col className="col-2 p-0">
           <SideBar />

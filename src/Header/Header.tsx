@@ -48,11 +48,7 @@ export default function Header(): React.ReactElement {
   const classes = useStyles();
 
   return (
-    <Box
-      sx={{
-        marginBottom: 11
-      }}
-    >
+    <Box>
       <AppBar elevation={0}>
         <Toolbar>
           <Box sx={{ flexGrow: 1 }}>
@@ -77,7 +73,6 @@ export default function Header(): React.ReactElement {
           {match && (
             <Box mx={1}>
               <Button
-                variant="primary"
                 onClick={() => {
                   history.push('/workbench');
                 }}

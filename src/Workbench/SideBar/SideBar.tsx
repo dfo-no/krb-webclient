@@ -5,9 +5,10 @@ import { withRouter } from 'react-router';
 import { useRouteMatch } from 'react-router-dom';
 import { useAppSelector } from '../../store/hooks';
 import List from '@mui/material/List';
-import Link from '@mui/material/Link';
 import ListItem from '@mui/material/ListItem';
-import ListItemButton from '@mui/material/ListItemButton';
+import { makeStyles } from '@material-ui/core';
+import ListItemText from '@mui/material/ListItemText';
+import theme from '../../theme';
 
 interface IRouteLink {
   link: string;
@@ -18,15 +19,22 @@ interface IRouteParams {
   projectId: string;
 }
 
-const renderRouteLinks = (routes: IRouteLink[], isProjectSelected: boolean) => {
-  return routes.map((route) => {
-    return (
-      <ListItem component={Link} href="/">
-        <ListItemButton>{route.name}</ListItemButton>
-      </ListItem>
-    );
-  });
-};
+const useStyles = makeStyles({
+  sideBarLinkList: {
+    backgroundColor: theme.palette.gray100.main,
+    height: 1200,
+    minWidth: 200
+  },
+  linkListItem: {
+    cursor: 'pointer',
+    borderBottom: `2px solid ${theme.palette.dfoWhite.main}`,
+    '&:hover': {
+      background: theme.palette.lightBlue.main,
+      color: 'white'
+    }
+  },
+  linkListItemText: {}
+});
 
 function SideBar(): React.ReactElement {
   const match = useRouteMatch<IRouteParams>('/workbench/:projectId');
@@ -49,7 +57,21 @@ function SideBar(): React.ReactElement {
     { link: `${currentUrl}/inheritance`, name: t('Inheritance') }
   ];
 
-  return <List>{renderRouteLinks(routes, isProjectSelected)}</List>;
+  const classes = useStyles();
+
+  return (
+    <List className={classes.sideBarLinkList}>
+      {routes.map((route) => {
+        return (
+          <ListItem className={classes.linkListItem}>
+            <ListItemText className={classes.linkListItemText}>
+              {route.name}
+            </ListItemText>
+          </ListItem>
+        );
+      })}
+    </List>
+  );
 }
 
 export default withRouter(SideBar);
