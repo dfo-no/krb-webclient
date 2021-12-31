@@ -11,7 +11,7 @@ import theme from '../theme';
 
 const useStyles = makeStyles({
   footerContainer: {
-    height: 300,
+    height: '350px',
     backgroundColor: theme.palette.blue.main,
     [theme.breakpoints.down('sm')]: {
       paddingLeft: 20,

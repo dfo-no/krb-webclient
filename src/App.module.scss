@@ -1,19 +1,17 @@
 .App {
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  height: 100vh;
 
   &__header {
-    height: 100px;
+    flex: 1 0 auto;
   }
 
   &__content {
-    height: 100%;
+    flex: 1 0 auto;
   }
 
   &__footer {
-    position: absolute;
-    width: 100%;
   }
 }
 

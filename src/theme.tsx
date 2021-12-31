@@ -88,12 +88,14 @@ const theme = createTheme({
 theme.typography.footerLinkText = {
   fontFamily: 'Source Sans Pro,sans-serif,helvetica,arial',
   fontWeight: 'bold',
+  fontSize: '18px',
   color: theme.palette.dfoWhite.main,
   textDecoration: 'none'
 };
 
 theme.typography.footerAddressText = {
-  color: theme.palette.dfoWhite.main
+  color: theme.palette.dfoWhite.main,
+  fontSize: '18px'
 };
 
 theme.components = {
