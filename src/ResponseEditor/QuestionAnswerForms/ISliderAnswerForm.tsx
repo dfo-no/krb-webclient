@@ -59,29 +59,41 @@ export default function ISliderAnswerForm({
       );
   };
 
+  // if step amount is greater than 10, slider is converted to inputfield
+  const stepAmount =
+    (sliderQuestion.config.max - sliderQuestion.config.min) /
+    sliderQuestion.config.step;
+
   return (
     <Card className="m-3 ">
       <Card.Header>
-        <h6>Question: Slider</h6>
+        <h6>Question: Value</h6>
       </Card.Header>
       <Card.Body>
         <Form onSubmit={handleSubmit(saveValues)}>
           <Row className="w-50 m-3">
-            <ControlledSlider
-              min={sliderQuestion.config.min}
-              max={sliderQuestion.config.max}
-              unit={sliderQuestion.config.unit}
-              step={sliderQuestion.config.step}
-              marks={[]}
-              control={control}
-              name={`question.answer.value` as const}
-              error={get(errors, `question.answer.value`) as FieldError}
-            />
+            <Form.Label>Angi verdi ({sliderQuestion.config.unit})</Form.Label>
+            {stepAmount <= 10 && (
+              <ControlledSlider
+                min={sliderQuestion.config.min}
+                max={sliderQuestion.config.max}
+                unit={sliderQuestion.config.unit}
+                step={sliderQuestion.config.step}
+                marks={[]}
+                control={control}
+                name={`question.answer.value` as const}
+                error={get(errors, `question.answer.value`) as FieldError}
+              />
+            )}
+            {stepAmount > 10 && (
+              <Form.Control
+                type="number"
+                min={sliderQuestion.config.min}
+                max={sliderQuestion.config.max}
+                {...register(`question.answer.value`)}
+              />
+            )}
           </Row>
-          {/* TODO: This is a terrible hack! .point is not set by defaultValues, and does not even exist in the reducer
-          Replace during FormProvider change */}
-          <input type="text" {...register('question.answer.point')} value={0} />
-
           <Button type="submit">{t('save')}</Button>
           <ErrorSummary errors={errors} />
         </Form>

@@ -69,6 +69,7 @@ const ProductSliderForm = ({ elem, product }: IProps): React.ReactElement => {
 
   const {
     handleSubmit,
+    register,
     formState: { errors },
     control
   } = useForm<IRequirementAnswer>({
@@ -98,6 +99,10 @@ const ProductSliderForm = ({ elem, product }: IProps): React.ReactElement => {
     return tuple;
   };
 
+  // if step amount is greater than 10, slider is converted to inputfield
+  const stepAmount =
+    (question.config.max - question.config.min) / question.config.step;
+
   return (
     <div>
       <h5>{getVariantText(elem.requirement, elem.variantId)[0]}</h5>
@@ -111,16 +116,27 @@ const ProductSliderForm = ({ elem, product }: IProps): React.ReactElement => {
         key={question.id}
         className="mt-4"
       >
-        <ControlledSlider
-          min={question.config.min}
-          max={question.config.max}
-          unit={question.config.unit}
-          step={question.config.step}
-          marks={[]}
-          control={control}
-          name={`question.answer.value` as const}
-          error={get(errors, `question.answer.value`) as FieldError}
-        />
+        <Form.Label>Angi verdi ({question.config.unit})</Form.Label>
+        {stepAmount <= 10 && (
+          <ControlledSlider
+            min={question.config.min}
+            max={question.config.max}
+            unit={question.config.unit}
+            step={question.config.step}
+            marks={[]}
+            control={control}
+            name={`question.answer.value` as const}
+            error={get(errors, `question.answer.value`) as FieldError}
+          />
+        )}
+        {stepAmount > 10 && (
+          <Form.Control
+            type="number"
+            min={question.config.min}
+            max={question.config.max}
+            {...register(`question.answer.value`)}
+          />
+        )}
         <div className="d-flex justify-content-end">
           {isValueSet(product.id, elem.id) ? (
             <Badge bg="success" className="mx-2">
