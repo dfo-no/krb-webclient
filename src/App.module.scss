@@ -1,17 +1,11 @@
 .App {
   display: flex;
   flex-direction: column;
-  min-height: 100vh;
-
-  &__header {
-  }
+  height: 100vh;
 
   &__content {
-    flex-basis: 100%;
-  }
-
-  &__footer {
-    flex: 0;
+    flex: 1 0 auto;
+    padding-bottom: 50px;
   }
 }
 

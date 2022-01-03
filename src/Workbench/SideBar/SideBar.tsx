@@ -23,7 +23,7 @@ const useStyles = makeStyles({
   sideBarLinkList: {
     backgroundColor: theme.palette.gray100.main,
     width: '100%',
-    height: 'auto',
+    height: '100vh',
     minWidth: 200
   },
   linkListItem: {

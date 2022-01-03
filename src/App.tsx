@@ -64,12 +64,14 @@ function App(): React.ReactElement {
     <div>
       <MsalProvider instance={msalInstance}>
         <ThemeProvider theme={theme}>
-          <div className={styles.App__header}>
-            <Header />
-          </div>
-          <div className={styles.App__content}>{renderContent()}</div>
-          <div className={styles.App__footer}>
-            <Footer />
+          <div className={styles.App}>
+            <div className={styles.App__header}>
+              <Header />
+            </div>
+            <div className={styles.App__content}>{renderContent()}</div>
+            <div className={styles.App__footer}>
+              <Footer />
+            </div>
           </div>
         </ThemeProvider>
       </MsalProvider>
