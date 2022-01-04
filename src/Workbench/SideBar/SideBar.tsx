@@ -26,6 +26,7 @@ const useStyles = makeStyles({
     minWidth: 250,
     height: '100vh',
     [theme.breakpoints.down('sm')]: {
+      height: 'auto',
       width: '100vw'
     }
   },
