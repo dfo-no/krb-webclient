@@ -70,7 +70,7 @@ export default function Header(): React.ReactElement {
   };
 
   return (
-    <AppBar elevation={0}>
+    <AppBar elevation={0} position="sticky">
       <Toolbar>
         <Box sx={{ flexGrow: 1 }}>
           <Link
@@ -111,6 +111,7 @@ export default function Header(): React.ReactElement {
               variant="primary"
               onClick={() => {
                 history.push('/workbench');
+
                 dispatch(selectProject(emptyProject));
               }}
             >
@@ -118,6 +119,7 @@ export default function Header(): React.ReactElement {
             </Button>
           </Box>
         )}
+
         <Box
           className={`${
             match ? classes.hideSignedButton : classes.showSignedButton
