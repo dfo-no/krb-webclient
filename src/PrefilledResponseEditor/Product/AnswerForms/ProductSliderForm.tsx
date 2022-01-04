@@ -27,12 +27,18 @@ import {
 interface IProps {
   elem: IRequirementAnswer;
   product: IPrefilledResponseProduct;
+  existingAnswer: IRequirementAnswer | null;
 }
 
-const ProductSliderForm = ({ elem, product }: IProps): React.ReactElement => {
+const ProductSliderForm = ({
+  elem,
+  product,
+  existingAnswer
+}: IProps): React.ReactElement => {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
-  const question = elem.question as ISliderQuestion;
+  const determinedAnswer = existingAnswer || elem;
+  const question = determinedAnswer.question as ISliderQuestion;
   const { prefilledResponse } = useAppSelector(
     (state) => state.prefilledResponse
   );

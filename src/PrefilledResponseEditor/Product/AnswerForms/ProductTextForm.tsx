@@ -26,12 +26,18 @@ import {
 interface IProps {
   answer: IRequirementAnswer;
   product: IPrefilledResponseProduct;
+  existingAnswer: IRequirementAnswer | null;
 }
 
-const ProductTextForm = ({ answer, product }: IProps): React.ReactElement => {
+const ProductTextForm = ({
+  answer,
+  product,
+  existingAnswer
+}: IProps): React.ReactElement => {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
-  const question = answer.question as ITextQuestion;
+  const determinedAnswer = existingAnswer || answer;
+  const question = determinedAnswer.question as ITextQuestion;
   const { prefilledResponse } = useAppSelector(
     (state) => state.prefilledResponse
   );
