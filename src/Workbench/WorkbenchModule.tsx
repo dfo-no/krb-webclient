@@ -14,7 +14,11 @@ import theme from '../theme';
 const useStyles = makeStyles({
   workbenchContainer: {
     display: 'flex',
-    gap: 50
+    gap: 50,
+
+    [theme.breakpoints.down('sm')]: {
+      flexWrap: 'wrap'
+    }
   },
   sideBarContainer: {
     flex: '1',

@@ -24,11 +24,14 @@ const useStyles = makeStyles({
     backgroundColor: theme.palette.gray100.main,
     width: '17vw',
     minWidth: 250,
-    height: '100vh'
+    height: 'auto',
+    [theme.breakpoints.down('sm')]: {
+      width: '100vw'
+    }
   },
   sideBarListItem: {
     cursor: 'pointer',
-    borderBottom: `2px solid ${theme.palette.dfoWhite.main}`,
+    borderBottom: `1px solid ${theme.palette.gray300.main}`,
     '&:hover': {
       background: theme.palette.lightBlue.main,
       color: theme.palette.dfoWhite.main,
@@ -39,11 +42,14 @@ const useStyles = makeStyles({
     }
   },
   sideBarListItemDisabled: {
-    borderBottom: `2px solid ${theme.palette.dfoWhite.main}`,
+    borderBottom: `1px solid ${theme.palette.gray300.main}`,
     pointerEvents: 'none'
   },
   sideBarListItemText: {
-    color: theme.palette.primary.main
+    color: theme.palette.primary.main,
+    [theme.breakpoints.down('sm')]: {
+      textAlign: 'center'
+    }
   }
 });
 
