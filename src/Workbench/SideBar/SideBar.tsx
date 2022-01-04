@@ -24,7 +24,7 @@ const useStyles = makeStyles({
     backgroundColor: theme.palette.gray100.main,
     width: '17vw',
     minWidth: 250,
-    height: 'auto',
+    height: '100vh',
     [theme.breakpoints.down('sm')]: {
       width: '100vw'
     }
