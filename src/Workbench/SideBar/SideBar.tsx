@@ -40,7 +40,8 @@ const useStyles = makeStyles({
   },
   sideBarListItemDisabled: {
     cursor: 'pointer',
-    borderBottom: `2px solid ${theme.palette.dfoWhite.main}`
+    borderBottom: `2px solid ${theme.palette.dfoWhite.main}`,
+    pointerEvents: 'none'
   },
   sideBarListItemText: {
     color: theme.palette.primary.main
@@ -77,12 +78,14 @@ function SideBar(): React.ReactElement {
       {routes.map((route) => {
         return (
           <ListItem
-            disabled={!isProjectSelected}
             className={`${
               isProjectSelected
                 ? classes.sideBarListItem
                 : classes.sideBarListItemDisabled
             }`}
+            component={Link}
+            to={route.link}
+            disabled={!isProjectSelected}
           >
             <ListItemText className={classes.sideBarListItemText}>
               {route.name}
