@@ -70,69 +70,62 @@ export default function Header(): React.ReactElement {
   };
 
   return (
-    <Box
-      sx={{
-        marginBottom: 11
-      }}
-    >
-      <AppBar elevation={0}>
-        <Toolbar>
-          <Box sx={{ flexGrow: 1 }}>
-            <Link
-              className={classes.logoBig}
-              component={RouterLink}
-              to="/"
-              onClick={() => {
-                dispatch(selectProject(emptyProject));
-              }}
-            >
-              <img
-                src="/logo-blue.svg"
-                alt="DFØ logo header big"
-                width="263.06"
-                height="38"
-              />
-            </Link>
-            <Link
-              className={classes.logoSmall}
-              component={RouterLink}
-              to="/"
-              onClick={() => {
-                dispatch(selectProject(emptyProject));
-              }}
-            >
-              <img
-                src="/logo-blue-small.svg"
-                alt="DFØ logo header small"
-                width="61.408165"
-                height="30.729862"
-              />
-            </Link>
-          </Box>
-
-          {match && (
-            <Box mx={1}>
-              <Button
-                variant="primary"
-                onClick={() => {
-                  history.push('/workbench');
-                  dispatch(selectProject(emptyProject));
-                }}
-              >
-                {t('all projects')}
-              </Button>
-            </Box>
-          )}
-
-          <Box
-            className={`${
-              match ? classes.hideSignedButton : classes.showSignedButton
-            }`}
+    <AppBar elevation={0}>
+      <Toolbar>
+        <Box sx={{ flexGrow: 1 }}>
+          <Link
+            className={classes.logoBig}
+            component={RouterLink}
+            to="/"
+            onClick={() => {
+              dispatch(selectProject(emptyProject));
+            }}
           >
-            <SignedButton />
+            <img
+              src="/logo-blue.svg"
+              alt="DFØ logo header big"
+              width="263.06"
+              height="38"
+            />
+          </Link>
+          <Link
+            className={classes.logoSmall}
+            component={RouterLink}
+            to="/"
+            onClick={() => {
+              dispatch(selectProject(emptyProject));
+            }}
+          >
+            <img
+              src="/logo-blue-small.svg"
+              alt="DFØ logo header small"
+              width="61.408165"
+              height="30.729862"
+            />
+          </Link>
+        </Box>
+
+        {match && (
+          <Box mx={1}>
+            <Button
+              variant="primary"
+              onClick={() => {
+                history.push('/workbench');
+                dispatch(selectProject(emptyProject));
+              }}
+            >
+              {t('all projects')}
+            </Button>
           </Box>
-        </Toolbar>
-      </AppBar>
-    </Box>
+        )}
+        <Box
+          className={`${
+            match ? classes.hideSignedButton : classes.showSignedButton
+          }`}
+        >
+          <SignedButton />
+        </Box>
+      </Toolbar>
+    </AppBar>
   );
 }

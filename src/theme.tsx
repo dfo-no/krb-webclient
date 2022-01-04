@@ -86,12 +86,14 @@ const theme = createTheme({
 });
 
 theme.typography.footerLinkText = {
-  color: 'theme.palette.white.main',
-  fontWeight: 'bold'
+  fontSize: '16px',
+  color: theme.palette.dfoWhite.main,
+  textDecoration: 'none'
 };
 
 theme.typography.footerAddressText = {
-  color: theme.palette.dfoWhite.main
+  color: theme.palette.dfoWhite.main,
+  fontSize: '15px'
 };
 
 theme.components = {
@@ -109,6 +111,7 @@ theme.components = {
         props: { variant: 'primary' },
         style: {
           backgroundColor: theme.palette.blue.main,
+          color: theme.palette.dfoWhite.main,
           whiteSpace: 'nowrap',
           '&:hover': {
             background: theme.palette.lightBlue.main
@@ -116,31 +119,6 @@ theme.components = {
         }
       }
     ]
-  },
-  MuiLink: {
-    styleOverrides: {
-      root: {
-        width: '100%',
-        textDecoration: 'none',
-        color: theme.palette.dfoWhite.main
-      }
-    }
-  },
-  MuiList: {
-    styleOverrides: {
-      root: {
-        color: 'red'
-      }
-    }
-  },
-  MuiListItem: {
-    styleOverrides: {
-      root: {
-        '&:hover': {
-          color: theme.palette.dfoLightBlue.main
-        }
-      }
-    }
   }
 };
 

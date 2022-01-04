@@ -9,7 +9,6 @@ import { Route, Switch } from 'react-router-dom';
 import { ThemeProvider } from '@mui/material/styles';
 import { CssBaseline } from '@mui/material';
 import theme from './theme';
-import styles from './App.module.scss';
 import { msalConfig } from './authentication/authConfig';
 import Evaluation from './Evaluation/Evaluation';
 import Header from './Header/Header';
@@ -23,6 +22,7 @@ import ResponsePage from './ResponseEditor/ResponsePage';
 import SpecModule from './SpecEditor/SpecModule';
 import WorkbenchModule from './Workbench/WorkbenchModule';
 import Footer from './Footer/Footer';
+import styles from './App.module.scss';
 
 const msalInstance = new PublicClientApplication(msalConfig);
 
@@ -61,13 +61,19 @@ function App(): React.ReactElement {
   }
 
   return (
-    <div className={styles.App}>
+    <div>
       <MsalProvider instance={msalInstance}>
         <ThemeProvider theme={theme}>
           <CssBaseline />
-          <Header />
-          {renderContent()}
-          <Footer />
+          <div className={styles.App}>
+            <div className={styles.App__header}>
+              <Header />
+            </div>
+            <div className={styles.App__content}>{renderContent()}</div>
+            <div className={styles.App__footer}>
+              <Footer />
+            </div>
+          </div>
         </ThemeProvider>
       </MsalProvider>
     </div>
