@@ -23,6 +23,7 @@ import SpecModule from './SpecEditor/SpecModule';
 import WorkbenchModule from './Workbench/WorkbenchModule';
 import Footer from './Footer/Footer';
 import styles from './App.module.scss';
+import { ClassNames } from '@emotion/react';
 
 const msalInstance = new PublicClientApplication(msalConfig);
 

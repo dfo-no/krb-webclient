@@ -70,7 +70,7 @@ function Projects(): React.ReactElement {
       return (
         <ListGroup.Item key={element.id}>
           {/* TODO: fix styling  */}
-          <Row className="d-flex justify-content-between ml-1">
+          <Row>
             <Col>
               <Link
                 to={`/workbench/${element.id}`}

@@ -9,6 +9,7 @@ import ListItem from '@mui/material/ListItem';
 import { makeStyles } from '@material-ui/core';
 import ListItemText from '@mui/material/ListItemText';
 import theme from '../../theme';
+import Box from '@mui/material/Box';
 
 interface IRouteLink {
   link: string;
@@ -20,11 +21,14 @@ interface IRouteParams {
 }
 
 const useStyles = makeStyles({
-  sideBarLinkList: {
+  listContainer: {
     backgroundColor: theme.palette.gray100.main,
-    width: '100%',
-    height: '100vh',
-    minWidth: 200
+    height: '100vh'
+  },
+  list: {
+    backgroundColor: theme.palette.gray100.main,
+    width: '17vw',
+    minWidth: 250
   },
   linkListItem: {
     cursor: 'pointer',
@@ -67,21 +71,23 @@ function SideBar(): React.ReactElement {
   const classes = useStyles();
 
   return (
-    <List className={classes.sideBarLinkList}>
-      {routes.map((route) => {
-        return (
-          <ListItem
-            component={Link}
-            to={route.link}
-            className={classes.linkListItem}
-          >
-            <ListItemText className={classes.linkListItemText}>
-              {route.name}
-            </ListItemText>
-          </ListItem>
-        );
-      })}
-    </List>
+    <div className={classes.listContainer}>
+      <List className={classes.list}>
+        {routes.map((route) => {
+          return (
+            <ListItem
+              component={Link}
+              to={route.link}
+              className={classes.linkListItem}
+            >
+              <ListItemText className={classes.linkListItemText}>
+                {route.name}
+              </ListItemText>
+            </ListItem>
+          );
+        })}
+      </List>
+    </div>
   );
 }
 
