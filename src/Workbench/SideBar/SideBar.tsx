@@ -20,14 +20,11 @@ interface IRouteParams {
 }
 
 const useStyles = makeStyles({
-  sideBarContainer: {
-    backgroundColor: theme.palette.gray100.main,
-    height: '100vh'
-  },
   sideBarList: {
     backgroundColor: theme.palette.gray100.main,
     width: '17vw',
-    minWidth: 250
+    minWidth: 250,
+    height: '100vh'
   },
   sideBarListItem: {
     cursor: 'pointer',
@@ -70,33 +67,31 @@ function SideBar(): React.ReactElement {
   const classes = useStyles();
 
   return (
-    <div className={classes.sideBarContainer}>
-      <List className={classes.sideBarList}>
-        {routes.map((route) => {
-          if (!isProjectSelected) {
-            return (
-              <ListItem className={classes.sideBarListItem} disabled>
-                <ListItemText className={classes.sideBarListItemText}>
-                  {route.name}
-                </ListItemText>
-              </ListItem>
-            );
-          }
-
+    <List className={classes.sideBarList}>
+      {routes.map((route) => {
+        if (!isProjectSelected) {
           return (
-            <ListItem
-              component={Link}
-              to={route.link}
-              className={classes.sideBarListItem}
-            >
+            <ListItem className={classes.sideBarListItem} disabled>
               <ListItemText className={classes.sideBarListItemText}>
                 {route.name}
               </ListItemText>
             </ListItem>
           );
-        })}
-      </List>
-    </div>
+        }
+
+        return (
+          <ListItem
+            component={Link}
+            to={route.link}
+            className={classes.sideBarListItem}
+          >
+            <ListItemText className={classes.sideBarListItemText}>
+              {route.name}
+            </ListItemText>
+          </ListItem>
+        );
+      })}
+    </List>
   );
 }
 
