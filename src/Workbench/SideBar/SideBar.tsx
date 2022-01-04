@@ -77,13 +77,12 @@ function SideBar(): React.ReactElement {
 
   const classes = useStyles();
 
-  console.log(isProjectSelected);
-
   return (
     <List className={classes.sideBarList}>
       {routes.map((route) => {
         return (
           <ListItem
+            key={route.name}
             className={`${
               isProjectSelected
                 ? classes.sideBarListItem
