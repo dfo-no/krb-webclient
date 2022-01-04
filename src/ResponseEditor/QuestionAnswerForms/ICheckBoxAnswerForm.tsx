@@ -1,12 +1,10 @@
 import { joiResolver } from '@hookform/resolvers/joi';
-import { get } from 'lodash';
 import React from 'react';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import Form from 'react-bootstrap/Form';
-import { FieldError, useForm } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import ControlledCheckbox from '../../Form/ControlledCheckbox';
 import ErrorSummary from '../../Form/ErrorSummary';
 import { IRequirementAnswer } from '../../models/IRequirementAnswer';
 import ModelType from '../../models/ModelType';
