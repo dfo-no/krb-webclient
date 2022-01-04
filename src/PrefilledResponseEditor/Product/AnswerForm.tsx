@@ -6,6 +6,7 @@ import { Levelable } from '../../models/Levelable';
 import ModelType from '../../models/ModelType';
 import QuestionEnum from '../../models/QuestionEnum';
 import { INeed } from '../../Nexus/entities/INeed';
+import ProductCheckBoxForm from './AnswerForms/ProductCheckBoxForm';
 import ProductCodelistForm from './AnswerForms/ProductCodelistForm';
 import ProductDateForm from './AnswerForms/ProductDateForm';
 import ProductSliderForm from './AnswerForms/ProductSliderForm';
@@ -73,6 +74,16 @@ export default function AnswerForm({
       }
       case QuestionEnum.Q_FILEUPLOAD: {
         return <div key={elem.question.id}>Q_FILEUPLOAD</div>;
+      }
+      case QuestionEnum.Q_CHECKBOX: {
+        return (
+          <ProductCheckBoxForm
+            answer={elem}
+            product={product}
+            existingAnswer={existingAnswer}
+            key={elem.question.id}
+          />
+        );
       }
       case QuestionEnum.Q_TEXT: {
         return (
