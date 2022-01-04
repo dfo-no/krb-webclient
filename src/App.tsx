@@ -23,7 +23,6 @@ import SpecModule from './SpecEditor/SpecModule';
 import WorkbenchModule from './Workbench/WorkbenchModule';
 import Footer from './Footer/Footer';
 import styles from './App.module.scss';
-import { ClassNames } from '@emotion/react';
 
 const msalInstance = new PublicClientApplication(msalConfig);
 
@@ -65,6 +64,7 @@ function App(): React.ReactElement {
     <div>
       <MsalProvider instance={msalInstance}>
         <ThemeProvider theme={theme}>
+          <CssBaseline />
           <div className={styles.App}>
             <div className={styles.App__header}>
               <Header />
