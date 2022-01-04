@@ -12,7 +12,7 @@ import { makeStyles } from '@material-ui/core';
 import theme from '../theme';
 
 const useStyles = makeStyles({
-  container: {
+  workbenchContainer: {
     display: 'flex',
     gap: 50
   },
@@ -20,7 +20,7 @@ const useStyles = makeStyles({
     flex: '1',
     backgroundColor: theme.palette.gray100.main
   },
-  contentContainer: {
+  editorContainer: {
     width: '100vw',
     paddingBottom: 30
   }
@@ -49,11 +49,11 @@ export default function WorkbenchModule(): React.ReactElement {
   }
 
   return (
-    <Box className={classes.container}>
+    <Box className={classes.workbenchContainer}>
       <Box className={classes.sideBarContainer}>
         <SideBar />
       </Box>
-      <Box className={classes.contentContainer}>
+      <Box className={classes.editorContainer}>
         <AlertList />
         <Switch>
           <Route exact path="/workbench">

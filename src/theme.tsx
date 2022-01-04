@@ -86,9 +86,7 @@ const theme = createTheme({
 });
 
 theme.typography.footerLinkText = {
-  fontFamily: 'Source Sans Pro,sans-serif,helvetica,arial',
-  fontWeight: 'bold',
-  fontSize: '17px',
+  fontSize: '16px',
   color: theme.palette.dfoWhite.main,
   textDecoration: 'none'
 };
@@ -118,13 +116,6 @@ theme.components = {
           '&:hover': {
             background: theme.palette.lightBlue.main
           }
-        }
-      },
-      {
-        props: { variant: 'listButton' },
-        style: {
-          backgroundColor: theme.palette.dfoWhite.main,
-          width: 300
         }
       }
     ]

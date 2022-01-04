@@ -9,7 +9,6 @@ import ListItem from '@mui/material/ListItem';
 import { makeStyles } from '@material-ui/core';
 import ListItemText from '@mui/material/ListItemText';
 import theme from '../../theme';
-import Box from '@mui/material/Box';
 
 interface IRouteLink {
   link: string;
@@ -21,29 +20,29 @@ interface IRouteParams {
 }
 
 const useStyles = makeStyles({
-  listContainer: {
+  sideBarContainer: {
     backgroundColor: theme.palette.gray100.main,
     height: '100vh'
   },
-  list: {
+  sideBarList: {
     backgroundColor: theme.palette.gray100.main,
     width: '17vw',
     minWidth: 250
   },
-  linkListItem: {
+  sideBarListItem: {
     cursor: 'pointer',
     borderBottom: `2px solid ${theme.palette.dfoWhite.main}`,
     '&:hover': {
       background: theme.palette.lightBlue.main,
-      color: 'white',
+      color: theme.palette.dfoWhite.main,
 
-      '& $linkListItemText': {
-        color: 'white'
+      '& $sideBarListItemText': {
+        color: theme.palette.dfoWhite.main
       }
     }
   },
-  linkListItemText: {
-    color: 'black'
+  sideBarListItemText: {
+    color: theme.palette.primary.main
   }
 });
 
@@ -71,16 +70,26 @@ function SideBar(): React.ReactElement {
   const classes = useStyles();
 
   return (
-    <div className={classes.listContainer}>
-      <List className={classes.list}>
+    <div className={classes.sideBarContainer}>
+      <List className={classes.sideBarList}>
         {routes.map((route) => {
+          if (!isProjectSelected) {
+            return (
+              <ListItem className={classes.sideBarListItem} disabled>
+                <ListItemText className={classes.sideBarListItemText}>
+                  {route.name}
+                </ListItemText>
+              </ListItem>
+            );
+          }
+
           return (
             <ListItem
               component={Link}
               to={route.link}
-              className={classes.linkListItem}
+              className={classes.sideBarListItem}
             >
-              <ListItemText className={classes.linkListItemText}>
+              <ListItemText className={classes.sideBarListItemText}>
                 {route.name}
               </ListItemText>
             </ListItem>
