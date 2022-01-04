@@ -39,7 +39,6 @@ const useStyles = makeStyles({
     }
   },
   sideBarListItemDisabled: {
-    cursor: 'pointer',
     borderBottom: `2px solid ${theme.palette.dfoWhite.main}`,
     pointerEvents: 'none'
   },
