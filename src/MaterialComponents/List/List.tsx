@@ -10,7 +10,13 @@ import * as React from 'react';
 import theme from '../../theme';
 
 interface IListProps {
-  list?: string[];
+  list: string[];
+  icon?: string;
+  iconColor?: string;
+  backgroundColor?: string;
+  fontColor?: string;
+  borderColor?: string;
+  hoverColor?: string;
 }
 
 const useStyles = makeStyles({
@@ -36,17 +42,16 @@ const useStyles = makeStyles({
   }
 });
 
-export default function List({ list }: IListProps): React.ReactElement {
+export default function List({
+  list,
+  icon,
+  iconColor,
+  backgroundColor,
+  fontColor,
+  borderColor,
+  hoverColor
+}: IListProps): React.ReactElement {
   const classes = useStyles();
-
-  console.log(list);
-
-  const footerLinks = [
-    'Kontakt',
-    'English',
-    'Personvern',
-    'Offentlig postjournal'
-  ];
 
   return (
     <MaterialList
@@ -54,7 +59,7 @@ export default function List({ list }: IListProps): React.ReactElement {
       component="nav"
       aria-label="footerlist"
     >
-      {footerLinks.map((link) => {
+      {list.map((link) => {
         return (
           <ListItem
             component={Link}
