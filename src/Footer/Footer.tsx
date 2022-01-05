@@ -2,12 +2,13 @@ import { makeStyles } from '@material-ui/core';
 import ArrowForwardIos from '@mui/icons-material/ArrowForwardIos';
 import Grid from '@mui/material/Grid';
 import Link from '@mui/material/Link';
-import List from '@mui/material/List';
+import MaterialList from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
 import Typography from '@mui/material/Typography';
 import * as React from 'react';
 import theme from '../theme';
+import List from '../MaterialComponents/List/List';
 
 const useStyles = makeStyles({
   footerContainer: {
@@ -46,12 +47,7 @@ const useStyles = makeStyles({
 export default function Footer(): React.ReactElement {
   const classes = useStyles();
 
-  const footerLinks = [
-    'Kontakt',
-    'English',
-    'Personvern',
-    'Offentlig postjournal'
-  ];
+  const list = ['Kontakt', 'English', 'Personvern', 'Offentlig postjournal'];
 
   const footerAddressTexts = [
     'Karl Johans gate 37B',
@@ -70,32 +66,7 @@ export default function Footer(): React.ReactElement {
       columnSpacing={12}
     >
       <Grid item xs={12} sm={5}>
-        <List
-          className={classes.footerLinkList}
-          component="nav"
-          aria-label="footerlist"
-        >
-          {footerLinks.map((link) => {
-            return (
-              <ListItem
-                component={Link}
-                href="/"
-                className={classes.footerLinkListItem}
-                key={link}
-              >
-                <ListItemText>
-                  <Typography
-                    className={classes.footerLinkText}
-                    variant="footerLinkText"
-                  >
-                    {link}
-                  </Typography>
-                </ListItemText>
-                <ArrowForwardIos className={classes.footerLinkArrow} />
-              </ListItem>
-            );
-          })}
-        </List>
+        <List list={list} />
       </Grid>
       <Grid container item xs={12} sm={4} direction="column" spacing={3}>
         <Grid item>
