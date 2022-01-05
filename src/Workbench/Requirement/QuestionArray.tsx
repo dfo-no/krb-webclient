@@ -24,8 +24,8 @@ import { ITextQuestion } from '../../Nexus/entities/ITextQuestion';
 import { ITimeQuestion } from '../../Nexus/entities/ITimeQuestion';
 import CheckboxForm from './CheckboxForm';
 import CodeListForm from './CodeListForm';
+import DateForm from './DateForm';
 import FileUploadForm from './FileUploadForm';
-import PeriodDateForm from './PeriodDateForm';
 import SliderForm from './SliderForm';
 import TextForm from './TextForm';
 import TimeForm from './TimeForm';
@@ -120,7 +120,9 @@ export default function QuestionArray({
         config: {
           fromBoundary: null,
           toBoundary: null,
-          hasToDate: false,
+          isPeriod: false,
+          periodMin: 0,
+          periodMax: 0,
           defaultPoint: 1
         },
         answer: {
@@ -251,7 +253,7 @@ export default function QuestionArray({
               />
             )}
             {item.type === QuestionEnum.Q_PERIOD_DATE && (
-              <PeriodDateForm
+              <DateForm
                 control={control}
                 register={register}
                 formState={formState}

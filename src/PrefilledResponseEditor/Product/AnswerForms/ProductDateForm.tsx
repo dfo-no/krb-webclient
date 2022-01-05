@@ -97,7 +97,7 @@ export default function ProductDateForm({
           name={`question.answer.fromDate` as const}
           label={t('Select date')}
         />
-        {question.config.hasToDate && (
+        {question.config.isPeriod && (
           <DateCtrl name={`question.answer.toDate` as const} />
         )}
 

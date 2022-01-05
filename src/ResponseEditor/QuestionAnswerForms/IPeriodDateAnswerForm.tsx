@@ -78,7 +78,7 @@ export default function PeriodDateAnswerForm({
               <Col sm="6">
                 <DateCtrl name={`answer.fromDate` as const} />
               </Col>
-              {question.config.hasToDate && (
+              {question.config.isPeriod && (
                 <Col sm="6">
                   <DateCtrl name={`answer.toDate` as const} />
                 </Col>

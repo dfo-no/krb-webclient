@@ -19,9 +19,11 @@ export interface IPeriodDateAnswer extends IAnswerBase {
 }
 
 export interface IPeriodDateConfig extends IConfigBase {
-  hasToDate: boolean;
+  isPeriod: boolean;
   fromBoundary: string | null;
   toBoundary: string | null;
+  periodMin: number;
+  periodMax: number;
 }
 
 export const PeriodDateWorkbenchSchema = QuestionBaseSchema.keys({
@@ -29,7 +31,15 @@ export const PeriodDateWorkbenchSchema = QuestionBaseSchema.keys({
   config: ConfigBaseSchema.keys({
     hasToDate: Joi.boolean().required(),
     fromBoundary: Joi.string().allow(null).required(),
-    toBoundary: Joi.string().allow(null).required()
+    toBoundary: Joi.string().allow(null).required(),
+    periodMin: Joi.alternatives().conditional('hasToDate', {
+      is: true,
+      then: Joi.number().required().min(1)
+    }),
+    periodMax: Joi.alternatives().conditional('hasToDate', {
+      is: true,
+      then: Joi.number().greater(Joi.ref('periodMin')).required()
+    })
   }),
   answer: Joi.object().keys({
     fromDate: Joi.string().allow(null).required(),

@@ -92,7 +92,9 @@ describe('EvaluationService', () => {
                         {
                           type: QuestionEnum.Q_PERIOD_DATE,
                           config: {
-                            hasToDate: true,
+                            isPeriod: false,
+                            periodMax: 0,
+                            periodMin: 0,
                             defaultPoint: 1,
                             fromBoundary: '2021-10-01T15:09:05.0000000Z',
                             toBoundary: '2021-12-30T15:09:09.0000000Z'
@@ -451,7 +453,9 @@ describe('EvaluationService', () => {
             question: {
               type: QuestionEnum.Q_PERIOD_DATE,
               config: {
-                hasToDate: true,
+                isPeriod: false,
+                periodMax: 0,
+                periodMin: 0,
                 defaultPoint: 1,
                 fromBoundary: '2021-10-01T15:09:05.0000000Z',
                 toBoundary: '2021-12-30T15:09:09.0000000Z'
@@ -483,7 +487,9 @@ describe('EvaluationService', () => {
                     {
                       type: QuestionEnum.Q_PERIOD_DATE,
                       config: {
-                        hasToDate: true,
+                        isPeriod: false,
+                        periodMax: 0,
+                        periodMin: 0,
                         defaultPoint: 1,
                         fromBoundary: '2021-10-01T15:09:05.0000000Z',
                         toBoundary: '2021-12-30T15:09:09.0000000Z'

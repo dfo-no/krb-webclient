@@ -2,7 +2,9 @@ import { get } from 'lodash';
 import React from 'react';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
+import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
+import Row from 'react-bootstrap/Row';
 import {
   Control,
   FieldError,
@@ -25,7 +27,7 @@ type IProps = {
   remove: (i: number) => void;
 };
 
-export default function PeriodDateForm({
+export default function DateForm({
   remove,
   register,
   control,
@@ -40,7 +42,7 @@ export default function PeriodDateForm({
     <Card className="mb-3">
       <Card.Body>
         <h6>
-          Alternative: Period Date
+          Alternative: Date
           <Button
             className="mb-3"
             type="button"
@@ -62,16 +64,23 @@ export default function PeriodDateForm({
           {...register(`variants.${vIndex}.questions.${aIndex}.type` as const)}
           defaultValue={item.type}
         />
-        <ControlledCheckbox
-          control={control}
-          name={`variants.${vIndex}.questions.${aIndex}.config.hasToDate`}
-          error={
-            get(
-              errors,
-              `variants.${vIndex}.questions.${aIndex}.config.hasToDate`
-            ) as FieldError
-          }
-        />
+        <Row>
+          <Col>
+            <Form.Label>Inkluder Periode</Form.Label>
+          </Col>
+          <Col>
+            <ControlledCheckbox
+              control={control}
+              name={`variants.${vIndex}.questions.${aIndex}.config.isPeriod`}
+              error={
+                get(
+                  errors,
+                  `variants.${vIndex}.questions.${aIndex}.config.isPeriod`
+                ) as FieldError
+              }
+            />
+          </Col>
+        </Row>
       </Card.Body>
     </Card>
   );

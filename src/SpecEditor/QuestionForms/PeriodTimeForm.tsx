@@ -75,7 +75,7 @@ export default function PeriodDateForm({
                 <DateCtrl name={`config.fromBoundary` as const} />
               </Col>
             </Form.Group>
-            {question.config.hasToDate && (
+            {question.config.isPeriod && (
               <Form.Group>
                 <Col>
                   <DateCtrl name={`config.toBoundary` as const} />
