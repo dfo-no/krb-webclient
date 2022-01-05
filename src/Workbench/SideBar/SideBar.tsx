@@ -27,7 +27,8 @@ const useStyles = makeStyles({
     height: '100vh',
     [theme.breakpoints.down('sm')]: {
       height: 'auto',
-      width: '100vw'
+      width: '100vw',
+      backgroundColor: theme.palette.dfoWhite.main
     }
   },
   sideBarListItem: {
@@ -40,6 +41,10 @@ const useStyles = makeStyles({
       '& $sideBarListItemText': {
         color: theme.palette.dfoWhite.main
       }
+    },
+
+    [theme.breakpoints.down('sm')]: {
+      backgroundColor: theme.palette.gray100.main
     }
   },
   sideBarListItemDisabled: {
