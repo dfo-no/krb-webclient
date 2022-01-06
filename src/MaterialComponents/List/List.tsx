@@ -75,7 +75,7 @@ export default function List({
   };
 
   const classes = useStyles(styles);
-  const useIcon = iconType == 'arrow' ? Object(ArrowForwardIos) : '';
+  const useIcon = iconType == 'arrow' ? Object(ArrowForwardIos) : ''; // Can add different icons here if needed later.
 
   return (
     <MaterialList className={classes.list} component="nav" aria-label="list">
