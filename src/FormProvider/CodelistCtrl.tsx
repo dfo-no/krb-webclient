@@ -1,9 +1,7 @@
-import MenuItem from '@mui/material/MenuItem';
-import Select from '@mui/material/Select';
+import TextField from '@material-ui/core/TextField';
+import { Autocomplete } from '@mui/material';
 import { get } from 'lodash';
 import React from 'react';
-import { Form, FormControl } from 'react-bootstrap';
-import Col from 'react-bootstrap/Col';
 import { Controller, useFormContext } from 'react-hook-form';
 import { ICodelist } from '../Nexus/entities/ICodelist';
 
@@ -23,6 +21,33 @@ const CodelistCtrl = ({
   } = useFormContext<ICodelist>();
 
   return (
+    <Controller
+      name={name}
+      render={({ field }) => (
+        <Autocomplete
+          options={codelists}
+          value={field.value}
+          getOptionLabel={(option) => option.title}
+          isOptionEqualToValue={(option, value) => {
+            if (option.title === value.title) {
+              return true;
+            }
+            return false;
+          }}
+          renderInput={(params) => (
+            <TextField
+              label={label}
+              {...params}
+              error={!!get(errors, name)}
+              helperText={get(errors, name)?.message ?? ''}
+            />
+          )}
+        />
+      )}
+    />
+  );
+
+  /*   return (
     <Form.Group controlId={name}>
       <Form.Label column sm={2}>
         {label}
@@ -32,10 +57,16 @@ const CodelistCtrl = ({
           name={name}
           render={({ field }) => (
             <Select
-              multiple
-              sx={{ m: 1, minWidth: 120 }}
-              {...field}
-              onChange={(e) => field.onChange(e.target.value)}
+              sx={{ minWidth: '100%' }}
+              onBlur={field.onBlur}
+              value={field.value}
+              onChange={(e) => {
+                // console.log(e.target.value);
+                const i = codelists.findIndex((c) => c.id === e.target.value);
+                if (i !== -1) {
+                  field.onChange(codelists[i]);
+                }
+              }}
             >
               {codelists.map((option) => (
                 <MenuItem key={option.id} value={option.id}>
@@ -50,7 +81,7 @@ const CodelistCtrl = ({
         </FormControl.Feedback>
       </Col>
     </Form.Group>
-  );
+  ); */
 };
 
 export default CodelistCtrl;
