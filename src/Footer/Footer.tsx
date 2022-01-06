@@ -4,7 +4,7 @@ import Link from '@mui/material/Link';
 import Typography from '@mui/material/Typography';
 import * as React from 'react';
 import theme from '../theme';
-import List from '../MaterialComponents/List/List';
+import LinkList from '../MaterialComponents/LinkList/LinkList';
 
 const useStyles = makeStyles({
   footerContainer: {
@@ -67,7 +67,7 @@ export default function Footer(): React.ReactElement {
       columnSpacing={12}
     >
       <Grid item xs={12} sm={5}>
-        <List list={list} iconType="arrow" />
+        <LinkList list={list} iconType="arrow" />
       </Grid>
       <Grid container item xs={12} sm={4} direction="column" spacing={3}>
         <Grid item>
