@@ -78,11 +78,7 @@ export default function List({
   const useIcon = iconType == 'arrow' ? Object(ArrowForwardIos) : '';
 
   return (
-    <MaterialList
-      className={classes.list}
-      component="nav"
-      aria-label="linkList"
-    >
+    <MaterialList className={classes.list} component="nav" aria-label="list">
       {list.map((link) => {
         return (
           <ListItem
