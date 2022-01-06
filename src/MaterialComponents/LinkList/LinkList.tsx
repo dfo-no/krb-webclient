@@ -8,27 +8,8 @@ import * as React from 'react';
 import ArrowForwardIos from '@mui/icons-material/ArrowForwardIos';
 import Icon from '@material-ui/core/Icon';
 import theme from '../../theme';
-
-interface LinkListProps {
-  list: {
-    title: string;
-    href: string;
-  }[];
-  iconType?: string;
-  iconColor?: string;
-  textColor?: string;
-  borderColor?: string;
-  borderThickness?: string;
-  hoverColor?: string;
-}
-
-interface LinkListStyleProps {
-  iconColor?: string;
-  textColor?: string;
-  borderColor?: string;
-  borderThickness?: string;
-  hoverColor?: string;
-}
+import { LinkListProps } from './LinkListProps';
+import { LinkListStyleProps } from './LinkListStyleProps';
 
 const useStyles = makeStyles<Theme, LinkListStyleProps>({
   linkList: {
