@@ -1,4 +1,4 @@
-import { makeStyles } from '@material-ui/core';
+import { makeStyles, Theme } from '@material-ui/core';
 import Link from '@mui/material/Link';
 import MaterialList from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
@@ -7,7 +7,6 @@ import Typography from '@mui/material/Typography';
 import * as React from 'react';
 import ArrowForwardIos from '@mui/icons-material/ArrowForwardIos';
 import Icon from '@material-ui/core/Icon';
-import { Theme } from '@material-ui/core';
 
 interface IListProps {
   list: {
