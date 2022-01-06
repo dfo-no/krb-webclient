@@ -1,13 +1,10 @@
 import { makeStyles } from '@material-ui/core';
-import ArrowForwardIos from '@mui/icons-material/ArrowForwardIos';
 import Grid from '@mui/material/Grid';
 import Link from '@mui/material/Link';
-import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
-import ListItemText from '@mui/material/ListItemText';
 import Typography from '@mui/material/Typography';
 import * as React from 'react';
 import theme from '../theme';
+import LinkList from '../MaterialComponents/LinkList/LinkList';
 
 const useStyles = makeStyles({
   footerContainer: {
@@ -46,11 +43,11 @@ const useStyles = makeStyles({
 export default function Footer(): React.ReactElement {
   const classes = useStyles();
 
-  const footerLinks = [
-    'Kontakt',
-    'English',
-    'Personvern',
-    'Offentlig postjournal'
+  const list = [
+    { title: 'Kontakt', href: '/' },
+    { title: 'English', href: '/' },
+    { title: 'Personvern', href: '/' },
+    { title: 'Offentlig postjournal', href: '/' }
   ];
 
   const footerAddressTexts = [
@@ -70,32 +67,7 @@ export default function Footer(): React.ReactElement {
       columnSpacing={12}
     >
       <Grid item xs={12} sm={5}>
-        <List
-          className={classes.footerLinkList}
-          component="nav"
-          aria-label="footerlist"
-        >
-          {footerLinks.map((link) => {
-            return (
-              <ListItem
-                component={Link}
-                href="/"
-                className={classes.footerLinkListItem}
-                key={link}
-              >
-                <ListItemText>
-                  <Typography
-                    className={classes.footerLinkText}
-                    variant="footerLinkText"
-                  >
-                    {link}
-                  </Typography>
-                </ListItemText>
-                <ArrowForwardIos className={classes.footerLinkArrow} />
-              </ListItem>
-            );
-          })}
-        </List>
+        <LinkList list={list} iconType="arrow" />
       </Grid>
       <Grid container item xs={12} sm={4} direction="column" spacing={3}>
         <Grid item>
