@@ -65,7 +65,7 @@ export default function List({
   borderThickness,
   hoverColor
 }: IListProps): React.ReactElement {
-  // Not sure of this. Maybe it could be passed/destructed in a different way!
+  // Not sure of this. Maybe it could be passed/destructured in a different way!
   const styles: IStyleProps = {
     iconColor: iconColor || 'gray',
     textColor: textColor || 'gray',
