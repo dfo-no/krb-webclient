@@ -23,11 +23,16 @@ const useStyles = makeStyles({
     backgroundColor: theme.palette.gray100.main,
     width: '17vw',
     minWidth: 250,
-    height: '100vh'
+    height: '100vh',
+    [theme.breakpoints.down('sm')]: {
+      height: 'auto',
+      width: '100vw',
+      backgroundColor: theme.palette.dfoWhite.main
+    }
   },
   sideBarListItem: {
     cursor: 'pointer',
-    borderBottom: `2px solid ${theme.palette.dfoWhite.main}`,
+    borderBottom: `1px solid ${theme.palette.gray300.main}`,
     '&:hover': {
       background: theme.palette.lightBlue.main,
       color: theme.palette.dfoWhite.main,
@@ -35,14 +40,21 @@ const useStyles = makeStyles({
       '& $sideBarListItemText': {
         color: theme.palette.dfoWhite.main
       }
+    },
+
+    [theme.breakpoints.down('sm')]: {
+      backgroundColor: theme.palette.gray100.main
     }
   },
   sideBarListItemDisabled: {
-    borderBottom: `2px solid ${theme.palette.dfoWhite.main}`,
+    borderBottom: `1px solid ${theme.palette.gray300.main}`,
     pointerEvents: 'none'
   },
   sideBarListItemText: {
-    color: theme.palette.primary.main
+    color: theme.palette.primary.main,
+    [theme.breakpoints.down('sm')]: {
+      textAlign: 'center'
+    }
   }
 });
 
@@ -74,6 +86,7 @@ function SideBar(): React.ReactElement {
       {routes.map((route) => {
         return (
           <ListItem
+            key={route.name}
             className={`${
               isProjectSelected
                 ? classes.sideBarListItem

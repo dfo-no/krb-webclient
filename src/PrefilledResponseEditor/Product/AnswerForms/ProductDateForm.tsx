@@ -23,11 +23,13 @@ import {
 interface IProps {
   answer: IRequirementAnswer;
   product: IPrefilledResponseProduct;
+  existingAnswer: IRequirementAnswer | null;
 }
 
 export default function ProductDateForm({
   answer,
-  product
+  product,
+  existingAnswer
 }: IProps): React.ReactElement {
   const methods = useForm<IRequirementAnswer>({
     resolver: joiResolver(PeriodDateAnswerSchema),
@@ -36,8 +38,9 @@ export default function ProductDateForm({
 
   const dispatch = useAppDispatch();
   const { t } = useTranslation();
+  const determinedAnswer = existingAnswer || answer;
 
-  const question = answer.question as IPeriodDateQuestion;
+  const question = determinedAnswer.question as IPeriodDateQuestion;
   const { prefilledResponse } = useAppSelector(
     (state) => state.prefilledResponse
   );

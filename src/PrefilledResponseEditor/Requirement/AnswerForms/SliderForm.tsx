@@ -90,6 +90,8 @@ export default function SliderForm({
     }
     return tuple;
   };
+  const stepAmount =
+    (question.config.max - question.config.min) / question.config.step;
 
   return (
     <div>
@@ -117,14 +119,25 @@ export default function SliderForm({
           key={question.id}
           className="mt-4"
         >
-          <SliderCtrl
-            name="question.answer.value"
-            min={question.config.min}
-            max={question.config.max}
-            unit={question.config.unit}
-            step={question.config.step}
-            marks={[]}
-          />
+          <Form.Label>Angi verdi ({question.config.unit})</Form.Label>
+          {stepAmount <= 10 && (
+            <SliderCtrl
+              name="question.answer.value"
+              min={question.config.min}
+              max={question.config.max}
+              unit={question.config.unit}
+              step={question.config.step}
+              marks={[]}
+            />
+          )}
+          {stepAmount > 10 && (
+            <Form.Control
+              type="number"
+              min={question.config.min}
+              max={question.config.max}
+              name="question.answer.value"
+            />
+          )}
           <div className="d-flex justify-content-end">
             {isValueSet(determinedAnswer.id) ? (
               <Badge bg="success" className="mx-2">
