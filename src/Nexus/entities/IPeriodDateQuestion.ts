@@ -49,14 +49,34 @@ export const PeriodDateSpecSchema = QuestionBaseSchema.keys({
     isPeriod: Joi.boolean().required(),
     fromBoundary: Joi.string().allow(null).required(),
     toBoundary: Joi.string().allow(null).required(),
-    periodMin: Joi.alternatives().conditional('isPeriod', {
+    periodMin: Joi.when('isPeriod', {
       is: true,
-      then: Joi.number().required().min(0)
+      then: Joi.number().required().min(0),
+      otherwise: Joi.number()
     }),
-    periodMax: Joi.alternatives().conditional('isPeriod', {
+    periodMax: Joi.when('isPeriod', {
       is: true,
-      then: Joi.number().greater(Joi.ref('periodMin')).required()
+      then: Joi.number().greater(Joi.ref('periodMin')).required(),
+      otherwise: Joi.number()
     })
+  }),
+  answer: Joi.object().keys({
+    fromDate: Joi.date()
+      .iso()
+      .raw()
+      .min(Joi.ref('/config.fromBoundary'))
+      .required(),
+    toDate: Joi.when('/config.isPeriod', {
+      is: true,
+      then: Joi.date()
+        .iso()
+        .raw()
+        .greater(Joi.ref('fromDate'))
+        .max(Joi.ref('/config.toBoundary'))
+        .required(),
+      otherwise: Joi.string().allow(null)
+    }),
+    point: Joi.number().required()
   })
 });
 
@@ -75,7 +95,7 @@ export const PeriodDateAnswerSchema = PeriodDateSpecSchema.keys({
         .greater(Joi.ref('fromDate'))
         .max(Joi.ref('/config.toBoundary'))
         .required(),
-      otherwise: Joi.string().valid(null)
+      otherwise: Joi.string().allow(null)
     }),
     point: Joi.number().required()
   })

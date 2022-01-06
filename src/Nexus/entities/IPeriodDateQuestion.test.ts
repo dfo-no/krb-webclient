@@ -17,8 +17,8 @@ describe('IPeriodDateQuestion should validate', () => {
       config: {
         defaultPoint: 1,
         isPeriod: false,
-        periodMax: 0,
-        periodMin: 0,
+        periodMax: 2,
+        periodMin: 1,
         fromBoundary: '2021-11-24T23:00:00.000Z',
         toBoundary: '2021-11-24T23:00:00.000Z'
       },
@@ -42,8 +42,8 @@ describe('IPeriodDateQuestion should validate', () => {
       config: {
         defaultPoint: 1,
         isPeriod: false,
-        periodMax: 0,
-        periodMin: 0,
+        periodMax: 2,
+        periodMin: 1,
         fromBoundary: '2021-11-24T23:00:00.000Z',
         toBoundary: '2021-11-24T23:00:00.000Z'
       },
@@ -67,8 +67,8 @@ describe('IPeriodDateQuestion should validate', () => {
       config: {
         defaultPoint: 1,
         isPeriod: false,
-        periodMax: 0,
-        periodMin: 0,
+        periodMax: 2,
+        periodMin: 1,
         fromBoundary: '2021-11-24T23:00:00.000Z',
         toBoundary: '2021-11-26T23:00:00.000Z'
       },
@@ -91,9 +91,9 @@ describe('IPeriodDateQuestion should validate', () => {
       },
       config: {
         defaultPoint: 1,
-        isPeriod: false,
-        periodMax: 0,
-        periodMin: 0,
+        isPeriod: true,
+        periodMax: 2,
+        periodMin: 1,
         fromBoundary: '2021-11-24T23:00:00.000Z',
         toBoundary: '2021-11-24T23:00:00.000Z'
       },
