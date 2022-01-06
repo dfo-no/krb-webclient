@@ -69,9 +69,9 @@ export default function Footer(): React.ReactElement {
       <Grid item xs={12} sm={5}>
         <List
           list={list}
-          icon="arrow"
+          iconType="arrow"
           iconColor={theme.palette.dfoWhite.main}
-          fontColor={theme.palette.dfoWhite.main}
+          textColor={theme.palette.dfoWhite.main}
           borderColor={theme.palette.dfoLightBlue.main}
           hoverColor={theme.palette.dfoLightBlue.main}
         />

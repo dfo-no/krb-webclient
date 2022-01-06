@@ -13,9 +13,9 @@ interface IListProps {
     title: string;
     href: string;
   }[];
-  icon?: string;
+  iconType?: string;
   iconColor?: string;
-  fontColor?: string;
+  textColor?: string;
   borderColor?: string;
   borderThickness?: string;
   hoverColor?: string;
@@ -23,7 +23,7 @@ interface IListProps {
 
 interface IStyleProps {
   iconColor?: string;
-  fontColor?: string;
+  textColor?: string;
   borderColor?: string;
   borderThickness?: string;
   hoverColor?: string;
@@ -49,7 +49,7 @@ const useStyles = makeStyles<Theme, IStyleProps>({
     }
   },
   listLinkText: {
-    color: ({ fontColor }) => fontColor
+    color: ({ textColor }) => textColor
   },
   listIcon: {
     color: ({ iconColor }) => iconColor
@@ -58,9 +58,9 @@ const useStyles = makeStyles<Theme, IStyleProps>({
 
 export default function List({
   list,
-  icon,
+  iconType,
   iconColor,
-  fontColor,
+  textColor,
   borderColor,
   borderThickness,
   hoverColor
@@ -68,14 +68,14 @@ export default function List({
   // Not sure of this. Maybe it could be passed/destructed in a different way!
   const styles: IStyleProps = {
     iconColor: iconColor || 'gray',
-    fontColor: fontColor || 'gray',
+    textColor: textColor || 'gray',
     borderColor: borderColor || 'gray',
     borderThickness: borderThickness || '1px',
     hoverColor: hoverColor || 'gray'
   };
 
   const classes = useStyles(styles);
-  const useIcon = icon == 'arrow' ? Object(ArrowForwardIos) : '';
+  const useIcon = iconType == 'arrow' ? Object(ArrowForwardIos) : '';
 
   return (
     <MaterialList
