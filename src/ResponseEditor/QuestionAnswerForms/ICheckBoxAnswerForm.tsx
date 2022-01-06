@@ -1,12 +1,11 @@
 import { joiResolver } from '@hookform/resolvers/joi';
-import { get } from 'lodash';
 import React from 'react';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import Form from 'react-bootstrap/Form';
-import { FieldError, useForm } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import ControlledCheckbox from '../../Form/ControlledCheckbox';
+import ErrorSummary from '../../Form/ErrorSummary';
 import { IRequirementAnswer } from '../../models/IRequirementAnswer';
 import ModelType from '../../models/ModelType';
 import {
@@ -58,7 +57,6 @@ export default function ICheckBoxAnswerForm({
           (response.products[0].requirementAnswers[index]
             .question as ICheckboxQuestion));
   const {
-    control,
     register,
     handleSubmit,
     formState: { errors }
@@ -68,6 +66,8 @@ export default function ICheckBoxAnswerForm({
       ...defaultVal
     }
   });
+
+  const q = defaultVal as ICheckboxQuestion;
 
   const dispatch = useAppDispatch();
   const { t } = useTranslation();
@@ -87,6 +87,15 @@ export default function ICheckBoxAnswerForm({
       );
   };
 
+  const checkIfPreferedAlternative = (value: string) => {
+    if (value === 'Yes' && q.config.preferedAlternative === true) {
+      return <b>Yes</b>;
+    } else if (value === 'No' && q.config.preferedAlternative === false) {
+      return <b>No</b>;
+    }
+    return <>{value}</>;
+  };
+
   return (
     <Card className="m-3 ">
       <Card.Header>
@@ -94,16 +103,30 @@ export default function ICheckBoxAnswerForm({
       </Card.Header>
       <Card.Body>
         <Form onSubmit={handleSubmit(saveValues)}>
-          <ControlledCheckbox
-            name={`answer.value` as const}
-            control={control}
-            error={get(errors, `answer.value`) as FieldError}
-          />
-          {/* TODO: This input is a terrible RHF hack! .point is not set by defaultValues, and does not even exist in the reducer
-          Replace during FormProvider change */}
-          <input type="text" {...register('answer.point')} value={0} />
-
+          <Form.Group>
+            <Form.Label>
+              <input
+                {...register('answer.value')}
+                type="radio"
+                value="true"
+                id="true"
+                className="m-3"
+              />
+              {checkIfPreferedAlternative('Yes')}
+            </Form.Label>
+            <Form.Label>
+              <input
+                {...register('answer.value')}
+                type="radio"
+                value="false"
+                id="false"
+                className="m-3"
+              />
+              {checkIfPreferedAlternative('No')}
+            </Form.Label>
+          </Form.Group>
           <Button type="submit">{t('save')}</Button>
+          <ErrorSummary errors={errors} />
         </Form>
       </Card.Body>
     </Card>
