@@ -19,36 +19,44 @@ export interface IPeriodDateAnswer extends IAnswerBase {
 }
 
 export interface IPeriodDateConfig extends IConfigBase {
-  hasToDate: boolean;
+  isPeriod: boolean;
   fromBoundary: string | null;
   toBoundary: string | null;
+  periodMin: number;
+  periodMax: number;
 }
 
 export const PeriodDateWorkbenchSchema = QuestionBaseSchema.keys({
   type: Joi.string().equal(QuestionEnum.Q_PERIOD_DATE).required(),
   config: ConfigBaseSchema.keys({
-    hasToDate: Joi.boolean().required(),
+    isPeriod: Joi.boolean().required(),
     fromBoundary: Joi.string().allow(null).required(),
-    toBoundary: Joi.string().allow(null).required()
-  }),
-  answer: Joi.object().keys({
-    fromDate: Joi.string().allow(null).required(),
-    toDate: Joi.string().allow(null).required(),
-    point: Joi.number().required()
+    toBoundary: Joi.string().allow(null).required(),
+    periodMin: Joi.alternatives().conditional('isPeriod', {
+      is: true,
+      then: Joi.number().required().min(0)
+    }),
+    periodMax: Joi.alternatives().conditional('isPeriod', {
+      is: true,
+      then: Joi.number().greater(Joi.ref('periodMin')).required()
+    })
   })
 });
 
 export const PeriodDateSpecSchema = QuestionBaseSchema.keys({
   type: Joi.string().equal(QuestionEnum.Q_PERIOD_DATE).required(),
   config: ConfigBaseSchema.keys({
-    hasToDate: Joi.boolean().required(),
-    fromBoundary: Joi.date().iso().raw().required(),
-    toBoundary: Joi.date().iso().raw().required()
-  }),
-  answer: Joi.object().keys({
-    fromDate: Joi.string().allow(null).required(),
-    toDate: Joi.string().allow(null).required(),
-    point: Joi.number().required()
+    isPeriod: Joi.boolean().required(),
+    fromBoundary: Joi.string().allow(null).required(),
+    toBoundary: Joi.string().allow(null).required(),
+    periodMin: Joi.alternatives().conditional('isPeriod', {
+      is: true,
+      then: Joi.number().required().min(0)
+    }),
+    periodMax: Joi.alternatives().conditional('isPeriod', {
+      is: true,
+      then: Joi.number().greater(Joi.ref('periodMin')).required()
+    })
   })
 });
 
@@ -59,7 +67,7 @@ export const PeriodDateAnswerSchema = PeriodDateSpecSchema.keys({
       .raw()
       .min(Joi.ref('/config.fromBoundary'))
       .required(),
-    toDate: Joi.when('/config.hasToDate', {
+    toDate: Joi.when('/config.isPeriod', {
       is: true,
       then: Joi.date()
         .iso()

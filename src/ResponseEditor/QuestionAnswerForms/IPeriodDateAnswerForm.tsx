@@ -65,22 +65,46 @@ export default function PeriodDateAnswerForm({
         <FormProvider {...methods}>
           <Form onSubmit={methods.handleSubmit(saveValues)}>
             <Form.Group as={Row}>
-              <Form.Label>Boundary from - to</Form.Label>
-              <Col sm="6">
-                <DateCtrl name={`config.fromBoundary` as const} />
+              {question.config.isPeriod && (
+                <Form.Label>
+                  Select period of length {question.config.periodMin} -
+                  {question.config.periodMax} days
+                </Form.Label>
+              )}
+              {!question.config.isPeriod && (
+                <Form.Label>Select a date within the boundaries</Form.Label>
+              )}
+
+              <Col sm="2">
+                <DateCtrl
+                  name={`answer.fromDate` as const}
+                  minDate={
+                    question.config.fromBoundary !== null
+                      ? question.config.fromBoundary
+                      : ''
+                  }
+                  maxDate={
+                    question.config.toBoundary !== null
+                      ? question.config.toBoundary
+                      : ''
+                  }
+                />
               </Col>
-              <Col sm="6">
-                <DateCtrl name={`config.toBoundary` as const} />
-              </Col>
-            </Form.Group>
-            <Form.Group as={Row}>
-              <Form.Label>Periode from - to</Form.Label>
-              <Col sm="6">
-                <DateCtrl name={`answer.fromDate` as const} />
-              </Col>
-              {question.config.hasToDate && (
-                <Col sm="6">
-                  <DateCtrl name={`answer.toDate` as const} />
+              {question.config.isPeriod && (
+                <Col sm="2">
+                  <DateCtrl
+                    name={`answer.toDate` as const}
+                    minDate={
+                      question.config.fromBoundary !== null
+                        ? question.config.fromBoundary
+                        : ''
+                    }
+                    maxDate={
+                      question.config.toBoundary !== null
+                        ? question.config.toBoundary
+                        : ''
+                    }
+                  />
                 </Col>
               )}
             </Form.Group>

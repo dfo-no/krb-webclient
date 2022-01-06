@@ -14,9 +14,16 @@ import formatDate from '../common/DateUtils';
 interface IProps {
   name: string;
   label?: string;
+  minDate?: string;
+  maxDate?: string;
 }
 
-const DateCtrl = ({ name, label }: IProps): React.ReactElement => {
+const DateCtrl = ({
+  name,
+  label,
+  minDate,
+  maxDate
+}: IProps): React.ReactElement => {
   const {
     formState: { errors }
   } = useFormContext();
@@ -32,6 +39,9 @@ const DateCtrl = ({ name, label }: IProps): React.ReactElement => {
     nb: '__.__.____'
   };
 
+  const min = minDate !== undefined ? new Date(minDate) : minDate;
+  const max = maxDate !== undefined ? new Date(maxDate) : maxDate;
+
   return (
     <LocalizationProvider
       dateAdapter={AdapterDateFns}
@@ -44,6 +54,8 @@ const DateCtrl = ({ name, label }: IProps): React.ReactElement => {
             label={label}
             mask={maskMap[i18n.language]}
             ref={field.ref}
+            minDate={min}
+            maxDate={max}
             value={field.value}
             clearable
             clearText="Clear"
@@ -76,5 +88,7 @@ const DateCtrl = ({ name, label }: IProps): React.ReactElement => {
 export default DateCtrl;
 
 DateCtrl.defaultProps = {
-  label: ''
+  label: '',
+  minDate: undefined,
+  maxDate: undefined
 };
