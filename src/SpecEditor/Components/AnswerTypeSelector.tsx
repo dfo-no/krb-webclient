@@ -3,10 +3,10 @@ import Container from 'react-bootstrap/Container';
 import { IRequirementAnswer } from '../../models/IRequirementAnswer';
 import QuestionEnum from '../../models/QuestionEnum';
 import CheckBoxForm from '../QuestionForms/CheckBoxForm';
+import DateForm from '../QuestionForms/DateForm';
 import FileInputForm from '../QuestionForms/FileInputForm';
 import CodelistForm from '../QuestionForms/ICodeListForm';
 import ValueForm from '../QuestionForms/ISliderForm';
-import PeriodDateForm from '../QuestionForms/PeriodTimeForm';
 import TextAlternativeForm from '../QuestionForms/TextAlternativeForm';
 
 interface IProps {
@@ -33,7 +33,7 @@ export default function AnswerTypeSelector({
         <CodelistForm parentAnswer={item} />
       )}
       {item.question.type === QuestionEnum.Q_PERIOD_DATE && (
-        <PeriodDateForm parentAnswer={item} />
+        <DateForm parentAnswer={item} />
       )}
       {item.question.type === QuestionEnum.Q_CHECKBOX && (
         <CheckBoxForm parentAnswer={item} />

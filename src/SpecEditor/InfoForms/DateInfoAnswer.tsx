@@ -126,7 +126,7 @@ export default function DateInfoAnswer({
               error={get(errors, `answer.toDate`) as FieldError}
               label={t('Select date')}
             />
-            {defaultVal && defaultVal.config.hasToDate && (
+            {defaultVal && defaultVal.config.isPeriod && (
               <ControlledDate
                 disabled
                 control={control}

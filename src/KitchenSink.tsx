@@ -30,7 +30,7 @@ const FormSchema = Joi.object().keys({
   person: Joi.object().keys({
     birthDay: Joi.date().iso().raw().required(),
     weddingDay: Joi.alternatives([
-      Joi.date().iso().max('12-13-2021').raw(),
+      Joi.date().iso().max('12/13/2021').raw(),
       Joi.string().valid(null)
     ]).required(),
     point: Joi.number().required(),
@@ -68,8 +68,8 @@ const KitchenSink = (): React.ReactElement => {
 
   const defaultValues = {
     person: {
-      birthDay: '2021-12-14T14:00:00.123Z',
-      weddingDay: '2021-12-10T14:00:00.123Z',
+      birthDay: null,
+      weddingDay: '2021/12/14T14:00:00.123Z',
       point: 50,
       isDeveloper: true,
       range: 20,

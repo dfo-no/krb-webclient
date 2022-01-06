@@ -5,29 +5,8 @@ import { IRequirementAnswer } from '../../models/IRequirementAnswer';
 import { Levelable } from '../../models/Levelable';
 import ModelType from '../../models/ModelType';
 import QuestionEnum from '../../models/QuestionEnum';
-import { QuestionType } from '../../models/QuestionType';
-import {
-  ICheckboxAnswer,
-  ICheckboxQuestion
-} from '../../Nexus/entities/ICheckboxQuestion';
-import {
-  ICodelistAnswer,
-  ICodelistQuestion
-} from '../../Nexus/entities/ICodelistQuestion';
-import {
-  IFileUploadAnswer,
-  IFileUploadQuestion
-} from '../../Nexus/entities/IFileUploadQuestion';
 import { INeed } from '../../Nexus/entities/INeed';
-import {
-  IPeriodDateAnswer,
-  IPeriodDateQuestion
-} from '../../Nexus/entities/IPeriodDateQuestion';
-import {
-  ISliderAnswer,
-  ISliderQuestion
-} from '../../Nexus/entities/ISliderQuestion';
-import { ITextAnswer, ITextQuestion } from '../../Nexus/entities/ITextQuestion';
+import ProductCheckBoxForm from './AnswerForms/ProductCheckBoxForm';
 import ProductCodelistForm from './AnswerForms/ProductCodelistForm';
 import ProductDateForm from './AnswerForms/ProductDateForm';
 import ProductSliderForm from './AnswerForms/ProductSliderForm';
@@ -46,59 +25,17 @@ export default function AnswerForm({
 }: IProps): React.ReactElement {
   const answers: IRequirementAnswer[] = [];
 
+  const requirementAnswers = product.requirementAnswers;
   element.requirements.forEach((requirement) => {
     requirement.variants.forEach((v) => {
       if (v.products.includes(searchProductId)) {
         v.questions.forEach((question) => {
-          let questionResult: QuestionType = { ...question };
-
-          if (question.type === QuestionEnum.Q_CHECKBOX) {
-            const answer = {
-              value: false,
-              point: 0
-            } as ICheckboxAnswer;
-            questionResult = { ...question, answer } as ICheckboxQuestion;
-          }
-          if (question.type === QuestionEnum.Q_CODELIST) {
-            const answer: ICodelistAnswer = { codes: [], point: 0 };
-            questionResult = { ...question, answer } as ICodelistQuestion;
-          }
-          if (question.type === QuestionEnum.Q_PERIOD_DATE) {
-            const answer: IPeriodDateAnswer = {
-              fromDate: question.config.fromBoundary,
-              toDate: question.config.toBoundary,
-              point: 0
-            };
-            questionResult = { ...question, answer } as IPeriodDateQuestion;
-          }
-          if (question.type === QuestionEnum.Q_SLIDER) {
-            const answer: ISliderAnswer = {
-              value: question.config.min,
-              point: 0
-            };
-            questionResult = { ...question, answer } as ISliderQuestion;
-          }
-          if (question.type === QuestionEnum.Q_TEXT) {
-            const answer: ITextAnswer = {
-              text: '',
-              point: 0
-            };
-            questionResult = { ...question, answer } as ITextQuestion;
-          }
-          if (question.type === QuestionEnum.Q_FILEUPLOAD) {
-            const answer: IFileUploadAnswer = {
-              file: '',
-              point: 0
-            };
-            questionResult = { ...question, answer } as IFileUploadQuestion;
-          }
-
           const newAnswer: IRequirementAnswer = {
             id: question.id,
             questionId: question.id,
             weight: 0,
             variantId: v.id,
-            question: questionResult,
+            question,
             type: ModelType.prefilledResponse,
             requirement
           };
@@ -109,10 +46,16 @@ export default function AnswerForm({
   });
 
   const renderQuestions = (elem: IRequirementAnswer) => {
+    const foundIndex = requirementAnswers.findIndex((e) => e.id === elem.id);
+    let existingAnswer: IRequirementAnswer | null = null;
+    if (foundIndex !== -1) {
+      existingAnswer = requirementAnswers[foundIndex];
+    }
     switch (elem.question.type) {
       case QuestionEnum.Q_SLIDER: {
         return (
           <ProductSliderForm
+            existingAnswer={existingAnswer}
             elem={elem}
             product={product}
             key={elem.question.id}
@@ -122,6 +65,7 @@ export default function AnswerForm({
       case QuestionEnum.Q_PERIOD_DATE: {
         return (
           <ProductDateForm
+            existingAnswer={existingAnswer}
             answer={elem}
             product={product}
             key={elem.question.id}
@@ -131,9 +75,20 @@ export default function AnswerForm({
       case QuestionEnum.Q_FILEUPLOAD: {
         return <div key={elem.question.id}>Q_FILEUPLOAD</div>;
       }
+      case QuestionEnum.Q_CHECKBOX: {
+        return (
+          <ProductCheckBoxForm
+            answer={elem}
+            product={product}
+            existingAnswer={existingAnswer}
+            key={elem.question.id}
+          />
+        );
+      }
       case QuestionEnum.Q_TEXT: {
         return (
           <ProductTextForm
+            existingAnswer={existingAnswer}
             answer={elem}
             product={product}
             key={elem.question.id}
@@ -143,6 +98,7 @@ export default function AnswerForm({
       case QuestionEnum.Q_CODELIST: {
         return (
           <ProductCodelistForm
+            existingAnswer={existingAnswer}
             answer={elem}
             product={product}
             key={elem.question.id}

@@ -6,6 +6,7 @@ import ModelType from '../../models/ModelType';
 import QuestionEnum from '../../models/QuestionEnum';
 import { INeed } from '../../Nexus/entities/INeed';
 import { useAppSelector } from '../../store/hooks';
+import CheckBoxForm from './AnswerForms/CheckBoxForm';
 import CodelistForm from './AnswerForms/CodelistForm';
 import DateForm from './AnswerForms/DateForm';
 import SliderForm from './AnswerForms/SliderForm';
@@ -94,7 +95,13 @@ export default function AnswerForm({ element }: IProps): React.ReactElement {
         return <p key={elem.question.id}>Not Implemented</p>;
       }
       case QuestionEnum.Q_CHECKBOX: {
-        return <p key={elem.question.id}>Not Implemented</p>;
+        return (
+          <CheckBoxForm
+            answer={elem}
+            existingAnswer={existingAnswer}
+            key={elem.question.id}
+          />
+        );
       }
       default: {
         return <div key={uuidv4()}>Error, not question type matches</div>;

@@ -27,6 +27,7 @@ import {
 interface IProps {
   answer: IRequirementAnswer;
   product: IPrefilledResponseProduct;
+  existingAnswer: IRequirementAnswer | null;
 }
 export const ResponseCodelistSchema = RequirementAnswerSchema.keys({
   question: CodelistQuestionAnswerSchema.keys({
@@ -45,11 +46,13 @@ export const ResponseSingleCodelistSchema = RequirementAnswerSchema.keys({
 });
 export default function ProductCodelistForm({
   answer,
-  product
+  product,
+  existingAnswer
 }: IProps): React.ReactElement {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
-  const question = answer.question as ICodelistQuestion;
+  const determinedAnswer = existingAnswer || answer;
+  const question = determinedAnswer.question as ICodelistQuestion;
   const { prefilledResponse } = useAppSelector(
     (state) => state.prefilledResponse
   );

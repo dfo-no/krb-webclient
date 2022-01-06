@@ -7,6 +7,7 @@ import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
+import ErrorSummary from '../../Form/ErrorSummary';
 import DateCtrl from '../../FormProvider/DateCtrl';
 import { IRequirementAnswer } from '../../models/IRequirementAnswer';
 import ModelType from '../../models/ModelType';
@@ -24,9 +25,7 @@ interface IProps {
   parentAnswer: IRequirementAnswer;
 }
 
-export default function PeriodDateForm({
-  parentAnswer
-}: IProps): React.ReactElement {
+export default function DateForm({ parentAnswer }: IProps): React.ReactElement {
   const question = parentAnswer.question as IPeriodDateQuestion;
 
   const methods = useForm<IPeriodDateQuestion>({
@@ -75,13 +74,32 @@ export default function PeriodDateForm({
                 <DateCtrl name={`config.fromBoundary` as const} />
               </Col>
             </Form.Group>
-            {question.config.hasToDate && (
-              <Form.Group>
-                <Col>
-                  <DateCtrl name={`config.toBoundary` as const} />
+            <Form.Group>
+              <Col>
+                <DateCtrl name={`config.toBoundary` as const} />
+              </Col>
+            </Form.Group>
+            {question.config.isPeriod && (
+              <Row>
+                <Col sm={2}>
+                  <Form.Label>Minimum lengde: </Form.Label>
+                  <Form.Control
+                    as="input"
+                    type="number"
+                    {...methods.register(`config.periodMin`)}
+                  />
                 </Col>
-              </Form.Group>
+                <Col sm={2}>
+                  <Form.Label>Maximum lengde: </Form.Label>
+                  <Form.Control
+                    as="input"
+                    type="number"
+                    {...methods.register(`config.periodMax`)}
+                  />
+                </Col>
+              </Row>
             )}
+            <ErrorSummary errors={methods.formState.errors} />
             <Button type="submit">{t('save')}</Button>
           </Form>
         </FormProvider>

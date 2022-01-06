@@ -2,6 +2,7 @@ import { joiResolver } from '@hookform/resolvers/joi';
 import React from 'react';
 import Badge from 'react-bootstrap/Badge';
 import Button from 'react-bootstrap/Button';
+import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
@@ -22,11 +23,13 @@ import {
 interface IProps {
   answer: IRequirementAnswer;
   product: IPrefilledResponseProduct;
+  existingAnswer: IRequirementAnswer | null;
 }
 
 export default function ProductDateForm({
   answer,
-  product
+  product,
+  existingAnswer
 }: IProps): React.ReactElement {
   const methods = useForm<IRequirementAnswer>({
     resolver: joiResolver(PeriodDateAnswerSchema),
@@ -35,8 +38,9 @@ export default function ProductDateForm({
 
   const dispatch = useAppDispatch();
   const { t } = useTranslation();
+  const determinedAnswer = existingAnswer || answer;
 
-  const question = answer.question as IPeriodDateQuestion;
+  const question = determinedAnswer.question as IPeriodDateQuestion;
   const { prefilledResponse } = useAppSelector(
     (state) => state.prefilledResponse
   );
@@ -93,14 +97,18 @@ export default function ProductDateForm({
         key={question.id}
         className="mt-4"
       >
-        <DateCtrl
-          name={`question.answer.fromDate` as const}
-          label={t('Select date')}
-        />
-        {question.config.hasToDate && (
-          <DateCtrl name={`question.answer.toDate` as const} />
+        {!question.config.isPeriod && (
+          <Form.Label>Select a date within the boundaries</Form.Label>
         )}
 
+        <Col sm="2">
+          <DateCtrl name={`question.answer.fromDate` as const} />
+        </Col>
+        {question.config.isPeriod && (
+          <Col sm="2">
+            <DateCtrl name={`question.answer.toDate` as const} />
+          </Col>
+        )}
         <div className="d-flex justify-content-end">
           {isValueSet(product.id, answer.id) ? (
             <Badge bg="success" className="mx-2">

@@ -11,7 +11,7 @@ import theme from '../theme';
 
 const useStyles = makeStyles({
   footerContainer: {
-    marginTop: 110,
+    width: '100%',
     height: 300,
     backgroundColor: theme.palette.blue.main,
     [theme.breakpoints.down('sm')]: {
@@ -28,7 +28,18 @@ const useStyles = makeStyles({
   },
   footerLinkListItem: {
     borderBottom: `1px solid ${theme.palette.dfoLightBlue.main}`,
-    color: theme.palette.dfoLightBlue.main
+    '&:hover': {
+      '& $footerLinkText': {
+        color: theme.palette.dfoLightBlue.main
+      },
+      '& $footerLinkArrow': {
+        color: theme.palette.dfoLightBlue.main
+      }
+    }
+  },
+  footerLinkText: {},
+  footerLinkArrow: {
+    color: theme.palette.dfoWhite.main
   }
 });
 
@@ -70,11 +81,17 @@ export default function Footer(): React.ReactElement {
                 component={Link}
                 href="/"
                 className={classes.footerLinkListItem}
+                key={link}
               >
                 <ListItemText>
-                  <Typography variant="footerLinkText">{link}</Typography>
+                  <Typography
+                    className={classes.footerLinkText}
+                    variant="footerLinkText"
+                  >
+                    {link}
+                  </Typography>
                 </ListItemText>
-                <ArrowForwardIos />
+                <ArrowForwardIos className={classes.footerLinkArrow} />
               </ListItem>
             );
           })}
@@ -94,7 +111,7 @@ export default function Footer(): React.ReactElement {
         <Grid item>
           {footerAddressTexts.map((text) => {
             return (
-              <Grid item>
+              <Grid item key={text}>
                 <Typography variant="footerAddressText">{text}</Typography>
               </Grid>
             );

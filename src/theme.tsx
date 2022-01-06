@@ -1,7 +1,11 @@
+import '@fontsource/source-sans-pro';
 import { createTheme } from '@mui/material/styles';
 import dfoThemeScss from './dfo-theme.module.scss';
 
 const theme = createTheme({
+  typography: {
+    fontFamily: ['Source Sans Pro', 'Helvetica', 'Arial'].join(',')
+  },
   palette: {
     primary: {
       main: dfoThemeScss.primary
@@ -82,13 +86,14 @@ const theme = createTheme({
 });
 
 theme.typography.footerLinkText = {
-  fontFamily: 'Source Sans Pro,sans-serif,helvetica,arial',
-  fontWeight: 'bold'
+  fontSize: '16px',
+  color: theme.palette.dfoWhite.main,
+  textDecoration: 'none'
 };
 
 theme.typography.footerAddressText = {
   color: theme.palette.dfoWhite.main,
-  fontFamily: 'Source Sans Pro,sans-serif,helvetica,arial'
+  fontSize: '15px'
 };
 
 theme.components = {
@@ -106,6 +111,7 @@ theme.components = {
         props: { variant: 'primary' },
         style: {
           backgroundColor: theme.palette.blue.main,
+          color: theme.palette.dfoWhite.main,
           whiteSpace: 'nowrap',
           '&:hover': {
             background: theme.palette.lightBlue.main
@@ -114,28 +120,11 @@ theme.components = {
       }
     ]
   },
-  MuiLink: {
-    styleOverrides: {
-      root: {
-        width: '100%',
-        textDecoration: 'none',
-        color: theme.palette.dfoWhite.main
-      }
-    }
-  },
   MuiList: {
     styleOverrides: {
       root: {
-        color: 'red'
-      }
-    }
-  },
-  MuiListItem: {
-    styleOverrides: {
-      root: {
-        '&:hover': {
-          color: theme.palette.dfoLightBlue.main
-        }
+        paddingTop: '0',
+        paddingBottom: '0'
       }
     }
   }

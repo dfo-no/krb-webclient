@@ -18,7 +18,7 @@ export default function DateInfo({
   return (
     <Container fluid className="mt-4">
       {`${variant.requirementText}: ${alternative.answer?.fromDate} `}
-      {alternative.config.hasToDate && ` -> ${alternative.answer.toDate}`}
+      {alternative.config.isPeriod && ` -> ${alternative.answer.toDate}`}
     </Container>
   );
 }
