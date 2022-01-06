@@ -1,6 +1,5 @@
 import { joiResolver } from '@hookform/resolvers/joi';
 import Joi from 'joi';
-import { get } from 'lodash';
 import React from 'react';
 import Badge from 'react-bootstrap/Badge';
 import Button from 'react-bootstrap/Button';
@@ -9,9 +8,14 @@ import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import ErrorSummary from '../../../Form/ErrorSummary';
 import { IPrefilledResponseProduct } from '../../../models/IPrefilledResponseProduct';
-import { IRequirementAnswer } from '../../../models/IRequirementAnswer';
-import QuestionEnum from '../../../models/QuestionEnum';
-import { ICodelistQuestion } from '../../../Nexus/entities/ICodelistQuestion';
+import {
+  IRequirementAnswer,
+  RequirementAnswerSchema
+} from '../../../models/IRequirementAnswer';
+import {
+  CheckboxQuestionAnswerSchema,
+  ICheckboxQuestion
+} from '../../../Nexus/entities/ICheckboxQuestion';
 import { IRequirement } from '../../../Nexus/entities/IRequirement';
 import { useAppDispatch, useAppSelector } from '../../../store/hooks';
 import {
@@ -22,47 +26,56 @@ import {
 interface IProps {
   answer: IRequirementAnswer;
   product: IPrefilledResponseProduct;
+  existingAnswer: IRequirementAnswer | null;
 }
-export const ResponseCodelistSchema = Joi.object().keys({
-  id: Joi.string().required(),
-  type: Joi.string().equal(QuestionEnum.Q_CODELIST).required(),
-  config: Joi.object().keys({
-    codelist: Joi.string().required(),
-    multipleSelect: Joi.boolean().required()
-  }),
-  answer: Joi.object().keys({
-    codes: Joi.array().items(Joi.string()).min(1).required()
-  })
-});
-export const ResponseSingleCodelistSchema = Joi.object().keys({
-  id: Joi.string().required(),
-  type: Joi.string().equal(QuestionEnum.Q_CODELIST).required(),
-  config: Joi.object().keys({
-    codelist: Joi.string().required(),
-    multipleSelect: Joi.boolean().required()
-  }),
-  answer: Joi.object().keys({
-    codes: Joi.array().items(Joi.string()).max(1).required()
-  })
-});
-export default function ProductCodelistAnswer({
+
+const ProductCheckBoxForm = ({
   answer,
-  product
-}: IProps): React.ReactElement {
+  product,
+  existingAnswer
+}: IProps): React.ReactElement => {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
-  const question = answer.question as ICodelistQuestion;
+  const determinedAnswer = existingAnswer || answer;
+  const question = determinedAnswer.question as ICheckboxQuestion;
   const { prefilledResponse } = useAppSelector(
     (state) => state.prefilledResponse
   );
 
+  const isValueSet = (productId: string, answerId: string) => {
+    let value = false;
+
+    const productIndex = prefilledResponse.products.findIndex(
+      (entity) => entity.id === productId
+    );
+    if (productIndex !== -1) {
+      const reqIndex = prefilledResponse.products[
+        productIndex
+      ].requirementAnswers.findIndex((e) => e.id === answerId);
+      if (reqIndex !== -1) {
+        value = true;
+      }
+    }
+    return value;
+  };
+
+  // Override default schema with values set in config.
+  const ProductCheckboxSchema = RequirementAnswerSchema.keys({
+    question: CheckboxQuestionAnswerSchema.keys({
+      answer: Joi.object().keys({
+        value: Joi.boolean().required(),
+        point: Joi.number().required()
+      })
+    })
+  });
+
   const {
-    register,
     handleSubmit,
-    formState: { errors }
+    formState: { errors },
+    register
   } = useForm<IRequirementAnswer>({
-    resolver: joiResolver(ResponseCodelistSchema),
-    defaultValues: answer
+    defaultValues: answer,
+    resolver: joiResolver(ProductCheckboxSchema)
   });
 
   const onSubmit = (post: IRequirementAnswer) => {
@@ -86,28 +99,18 @@ export default function ProductCodelistAnswer({
     }
     return tuple;
   };
-  const codelistIndex = prefilledResponse.bank.codelist.findIndex(
-    (list) => list.id === question.config.codelist
-  );
-
-  const isValueSet = (productId: string, answerId: string) => {
-    let value = false;
-
-    const productIndex = prefilledResponse.products.findIndex(
-      (entity) => entity.id === productId
-    );
-    if (productIndex !== -1) {
-      const reqIndex = prefilledResponse.products[
-        productIndex
-      ].requirementAnswers.findIndex((e) => e.id === answerId);
-      if (reqIndex !== -1) {
-        value = true;
-      }
+  const checkIfPreferedAlternative = (value: string) => {
+    if (value === 'Yes' && question.config.preferedAlternative === true) {
+      return <b>Yes</b>;
+    } else if (
+      value === 'No' &&
+      question.config.preferedAlternative === false
+    ) {
+      return <b>No</b>;
     }
-    return value;
+    return <>{value}</>;
   };
 
-  const codelist = prefilledResponse.bank.codelist[codelistIndex];
   return (
     <div>
       <h5>{getVariantText(answer.requirement, answer.variantId)[0]}</h5>
@@ -121,17 +124,28 @@ export default function ProductCodelistAnswer({
         key={question.id}
         className="mt-4"
       >
-        <Form.Control
-          as="select"
-          multiple
-          {...register(`question.answer.codes` as const)}
-        >
-          {codelist.codes.map((element) => (
-            <option key={element.id} value={element.id}>
-              {element.title}
-            </option>
-          ))}
-        </Form.Control>
+        <Form.Group>
+          <Form.Label>
+            <input
+              {...register('question.answer.value')}
+              type="radio"
+              value="true"
+              id="true"
+              className="m-3"
+            />
+            {checkIfPreferedAlternative('Yes')}
+          </Form.Label>
+          <Form.Label>
+            <input
+              {...register('question.answer.value')}
+              type="radio"
+              value="false"
+              id="false"
+              className="m-3"
+            />
+            {checkIfPreferedAlternative('No')}
+          </Form.Label>
+        </Form.Group>
         <div className="d-flex justify-content-end">
           {isValueSet(product.id, answer.id) ? (
             <Badge bg="success" className="mx-2">
@@ -154,8 +168,10 @@ export default function ProductCodelistAnswer({
             {t('Reset')}
           </Button>
         </div>
-        <ErrorSummary errors={get(errors, `question.answer.value`)} />
+        <ErrorSummary errors={errors} />
       </Form>
     </div>
   );
-}
+};
+
+export default ProductCheckBoxForm;
