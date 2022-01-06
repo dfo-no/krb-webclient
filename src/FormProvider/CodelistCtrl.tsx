@@ -46,42 +46,6 @@ const CodelistCtrl = ({
       )}
     />
   );
-
-  /*   return (
-    <Form.Group controlId={name}>
-      <Form.Label column sm={2}>
-        {label}
-      </Form.Label>
-      <Col sm={10}>
-        <Controller
-          name={name}
-          render={({ field }) => (
-            <Select
-              sx={{ minWidth: '100%' }}
-              onBlur={field.onBlur}
-              value={field.value}
-              onChange={(e) => {
-                // console.log(e.target.value);
-                const i = codelists.findIndex((c) => c.id === e.target.value);
-                if (i !== -1) {
-                  field.onChange(codelists[i]);
-                }
-              }}
-            >
-              {codelists.map((option) => (
-                <MenuItem key={option.id} value={option.id}>
-                  {option.title}
-                </MenuItem>
-              ))}
-            </Select>
-          )}
-        />
-        <FormControl.Feedback type="invalid">
-          {get(errors, name)?.message ?? ''}
-        </FormControl.Feedback>
-      </Col>
-    </Form.Group>
-  ); */
 };
 
 export default CodelistCtrl;
