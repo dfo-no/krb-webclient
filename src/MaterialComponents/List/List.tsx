@@ -1,44 +1,59 @@
 import { makeStyles } from '@material-ui/core';
-import ArrowForwardIos from '@mui/icons-material/ArrowForwardIos';
-import Grid from '@mui/material/Grid';
 import Link from '@mui/material/Link';
 import MaterialList from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
 import Typography from '@mui/material/Typography';
 import * as React from 'react';
-import theme from '../../theme';
+import ArrowForwardIos from '@mui/icons-material/ArrowForwardIos';
+import Icon from '@material-ui/core/Icon';
+import { Theme } from '@material-ui/core';
 
 interface IListProps {
-  list: string[];
+  list: {
+    title: string;
+    href: string;
+  }[];
   icon?: string;
   iconColor?: string;
-  backgroundColor?: string;
   fontColor?: string;
   borderColor?: string;
+  borderThickness?: string;
   hoverColor?: string;
 }
 
-const useStyles = makeStyles({
+interface IStyleProps {
+  iconColor?: string;
+  fontColor?: string;
+  borderColor?: string;
+  borderThickness?: string;
+  hoverColor?: string;
+}
+
+const useStyles = makeStyles<Theme, IStyleProps>({
   footerLinkList: {
     '&>:nth-child(1)': {
-      borderTop: `1px solid ${theme.palette.dfoLightBlue.main}`
+      borderTop: ({ borderThickness, borderColor }) =>
+        `${borderThickness} solid ${borderColor}`
     }
   },
   footerLinkListItem: {
-    borderBottom: `1px solid ${theme.palette.dfoLightBlue.main}`,
+    borderBottom: ({ borderThickness, borderColor }) =>
+      `${borderThickness} solid ${borderColor}`,
     '&:hover': {
       '& $footerLinkText': {
-        color: theme.palette.dfoLightBlue.main
+        color: ({ hoverColor }) => hoverColor
       },
-      '& $footerLinkArrow': {
-        color: theme.palette.dfoLightBlue.main
+      '& $listIcon': {
+        color: ({ hoverColor }) => hoverColor
       }
     }
   },
-  footerLinkText: {},
-  footerLinkArrow: {
-    color: theme.palette.dfoWhite.main
+  footerLinkText: {
+    color: ({ fontColor }) => fontColor
+  },
+  listIcon: {
+    color: ({ iconColor }) => iconColor
   }
 });
 
@@ -46,12 +61,22 @@ export default function List({
   list,
   icon,
   iconColor,
-  backgroundColor,
   fontColor,
   borderColor,
+  borderThickness,
   hoverColor
 }: IListProps): React.ReactElement {
-  const classes = useStyles();
+  // Not sure of this. Maybe it could be passed/destructed in a different way!
+  const styles: IStyleProps = {
+    iconColor: iconColor || 'gray',
+    fontColor: fontColor || 'gray',
+    borderColor: borderColor || 'gray',
+    borderThickness: borderThickness || '1px',
+    hoverColor: hoverColor || 'gray'
+  };
+
+  const classes = useStyles(styles);
+  const useIcon = icon == 'arrow' ? Object(ArrowForwardIos) : '';
 
   return (
     <MaterialList
@@ -63,19 +88,16 @@ export default function List({
         return (
           <ListItem
             component={Link}
-            href="/"
+            href={link.href}
             className={classes.footerLinkListItem}
-            key={link}
+            key={link.title}
           >
             <ListItemText>
-              <Typography
-                className={classes.footerLinkText}
-                variant="footerLinkText"
-              >
-                {link}
+              <Typography className={classes.footerLinkText}>
+                {link.title}
               </Typography>
             </ListItemText>
-            <ArrowForwardIos className={classes.footerLinkArrow} />
+            <Icon component={useIcon} className={classes.listIcon}></Icon>
           </ListItem>
         );
       })}

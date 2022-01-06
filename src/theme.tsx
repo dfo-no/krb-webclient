@@ -85,12 +85,6 @@ const theme = createTheme({
   }
 });
 
-theme.typography.footerLinkText = {
-  fontSize: '16px',
-  color: theme.palette.dfoWhite.main,
-  textDecoration: 'none'
-};
-
 theme.typography.footerAddressText = {
   color: theme.palette.dfoWhite.main,
   fontSize: '15px'

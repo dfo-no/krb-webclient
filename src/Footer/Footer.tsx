@@ -1,10 +1,6 @@
 import { makeStyles } from '@material-ui/core';
-import ArrowForwardIos from '@mui/icons-material/ArrowForwardIos';
 import Grid from '@mui/material/Grid';
 import Link from '@mui/material/Link';
-import MaterialList from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
-import ListItemText from '@mui/material/ListItemText';
 import Typography from '@mui/material/Typography';
 import * as React from 'react';
 import theme from '../theme';
@@ -47,7 +43,12 @@ const useStyles = makeStyles({
 export default function Footer(): React.ReactElement {
   const classes = useStyles();
 
-  const list = ['Kontakt', 'English', 'Personvern', 'Offentlig postjournal'];
+  const list = [
+    { title: 'Kontakt', href: '/' },
+    { title: 'English', href: '/' },
+    { title: 'Personvern', href: '/' },
+    { title: 'Offentlig postjournal', href: '/' }
+  ];
 
   const footerAddressTexts = [
     'Karl Johans gate 37B',
@@ -66,7 +67,14 @@ export default function Footer(): React.ReactElement {
       columnSpacing={12}
     >
       <Grid item xs={12} sm={5}>
-        <List list={list} />
+        <List
+          list={list}
+          icon="arrow"
+          iconColor={theme.palette.dfoWhite.main}
+          fontColor={theme.palette.dfoWhite.main}
+          borderColor={theme.palette.dfoLightBlue.main}
+          hoverColor={theme.palette.dfoLightBlue.main}
+        />
       </Grid>
       <Grid container item xs={12} sm={4} direction="column" spacing={3}>
         <Grid item>
