@@ -31,17 +31,17 @@ interface IStyleProps {
 }
 
 const useStyles = makeStyles<Theme, IStyleProps>({
-  footerLinkList: {
+  list: {
     '&>:nth-child(1)': {
       borderTop: ({ borderThickness, borderColor }) =>
         `${borderThickness} solid ${borderColor}`
     }
   },
-  footerLinkListItem: {
+  listItem: {
     borderBottom: ({ borderThickness, borderColor }) =>
       `${borderThickness} solid ${borderColor}`,
     '&:hover': {
-      '& $footerLinkText': {
+      '& $listLinkText': {
         color: ({ hoverColor }) => hoverColor
       },
       '& $listIcon': {
@@ -49,7 +49,7 @@ const useStyles = makeStyles<Theme, IStyleProps>({
       }
     }
   },
-  footerLinkText: {
+  listLinkText: {
     color: ({ fontColor }) => fontColor
   },
   listIcon: {
@@ -80,24 +80,26 @@ export default function List({
 
   return (
     <MaterialList
-      className={classes.footerLinkList}
+      className={classes.list}
       component="nav"
-      aria-label="footerlist"
+      aria-label="linkList"
     >
       {list.map((link) => {
         return (
           <ListItem
             component={Link}
             href={link.href}
-            className={classes.footerLinkListItem}
+            className={classes.listItem}
             key={link.title}
           >
             <ListItemText>
-              <Typography className={classes.footerLinkText}>
+              <Typography className={classes.listLinkText}>
                 {link.title}
               </Typography>
             </ListItemText>
-            <Icon component={useIcon} className={classes.listIcon}></Icon>
+            {useIcon && (
+              <Icon component={useIcon} className={classes.listIcon}></Icon>
+            )}
           </ListItem>
         );
       })}
