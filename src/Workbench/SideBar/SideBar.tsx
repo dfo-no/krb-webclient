@@ -1,13 +1,12 @@
-import React from 'react';
-
-import { useTranslation } from 'react-i18next';
-import { withRouter } from 'react-router';
-import { useRouteMatch, Link } from 'react-router-dom';
-import { useAppSelector } from '../../store/hooks';
+import { makeStyles } from '@material-ui/core';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
-import { makeStyles } from '@material-ui/core';
 import ListItemText from '@mui/material/ListItemText';
+import React from 'react';
+import { useTranslation } from 'react-i18next';
+import { withRouter } from 'react-router';
+import { Link, useRouteMatch } from 'react-router-dom';
+import { useAppSelector } from '../../store/hooks';
 import theme from '../../theme';
 
 interface IRouteLink {
@@ -69,8 +68,6 @@ function SideBar(): React.ReactElement {
   ];
 
   const classes = useStyles();
-
-  console.log(isProjectSelected);
 
   return (
     <List className={classes.sideBarList}>

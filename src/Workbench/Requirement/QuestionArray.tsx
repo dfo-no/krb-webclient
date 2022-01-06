@@ -122,7 +122,7 @@ export default function QuestionArray({
           toBoundary: null,
           isPeriod: false,
           periodMin: 0,
-          periodMax: 0,
+          periodMax: 1,
           defaultPoint: 1
         },
         answer: {
@@ -204,7 +204,7 @@ export default function QuestionArray({
             <option value={QuestionEnum.Q_CODELIST}>Codelist</option>
           )}
           <option value={QuestionEnum.Q_TEXT}>Text</option>
-          <option value={QuestionEnum.Q_PERIOD_DATE}>Period</option>
+          <option value={QuestionEnum.Q_PERIOD_DATE}>Date</option>
           <option value={QuestionEnum.Q_TIME}>Time</option>
           <option value={QuestionEnum.Q_CHECKBOX}>Yes/No </option>
           <option value={QuestionEnum.Q_FILEUPLOAD}>File upload </option>

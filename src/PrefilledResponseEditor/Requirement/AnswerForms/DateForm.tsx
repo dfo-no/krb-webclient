@@ -3,9 +3,11 @@ import Joi from 'joi';
 import React from 'react';
 import Badge from 'react-bootstrap/Badge';
 import Button from 'react-bootstrap/Button';
+import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
+import ErrorSummary from '../../../Form/ErrorSummary';
 import DateCtrl from '../../../FormProvider/DateCtrl';
 import {
   IRequirementAnswer,
@@ -30,7 +32,8 @@ interface IProps {
 export const PeriodDateSchema = RequirementAnswerSchema.keys({
   question: PeriodDateAnswerSchema.keys({
     answer: Joi.object().keys({
-      date: Joi.date().iso().raw().required(),
+      fromDate: Joi.string().allow(null).required(),
+      toDate: Joi.string().allow(null).required(),
       point: Joi.number().required()
     })
   })
@@ -113,7 +116,18 @@ export default function DateForm({
           key={question.id}
           className="mt-4"
         >
-          <DateCtrl name="question.answer.date" label={t('Select date')} />
+          {!question.config.isPeriod && (
+            <Form.Label>Select a date within the boundaries</Form.Label>
+          )}
+
+          <Col sm="2">
+            <DateCtrl name={`question.answer.fromDate` as const} />
+          </Col>
+          {question.config.isPeriod && (
+            <Col sm="2">
+              <DateCtrl name={`question.answer.toDate` as const} />
+            </Col>
+          )}
           <div className="d-flex justify-content-end">
             {isValueSet(answer.id) ? (
               <Badge bg="success" className="mx-2">
@@ -136,6 +150,7 @@ export default function DateForm({
               {t('Reset')}
             </Button>
           </div>
+          <ErrorSummary errors={methods.formState.errors} />
         </Form>
       </FormProvider>
     </div>

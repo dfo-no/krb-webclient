@@ -38,6 +38,7 @@ export default function DateForm({
 }: IProps): React.ReactElement {
   const { errors } = formState;
   const { t } = useTranslation();
+
   return (
     <Card className="mb-3">
       <Card.Body>
@@ -65,7 +66,7 @@ export default function DateForm({
           defaultValue={item.type}
         />
         <Row>
-          <Col>
+          <Col sm={1}>
             <Form.Label>Inkluder Periode</Form.Label>
           </Col>
           <Col>
