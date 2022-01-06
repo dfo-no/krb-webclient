@@ -7,6 +7,7 @@ import Typography from '@mui/material/Typography';
 import * as React from 'react';
 import ArrowForwardIos from '@mui/icons-material/ArrowForwardIos';
 import Icon from '@material-ui/core/Icon';
+import theme from '../../theme';
 
 interface IListProps {
   list: {
@@ -65,17 +66,20 @@ export default function List({
   borderThickness,
   hoverColor
 }: IListProps): React.ReactElement {
-  // Not sure of this. Maybe it could be passed/destructured in a different way!
+  // Standard DFO theme. Props can be passed to change theme.
   const styles: IStyleProps = {
-    iconColor: iconColor || 'gray',
-    textColor: textColor || 'gray',
-    borderColor: borderColor || 'gray',
+    iconColor: iconColor || theme.palette.dfoWhite.main,
+    textColor: textColor || theme.palette.dfoWhite.main,
+    borderColor: borderColor || theme.palette.dfoLightBlue.main,
     borderThickness: borderThickness || '1px',
-    hoverColor: hoverColor || 'gray'
+    hoverColor: hoverColor || theme.palette.dfoLightBlue.main
   };
 
   const classes = useStyles(styles);
-  const useIcon = iconType == 'arrow' ? Object(ArrowForwardIos) : ''; // Can add different icons here if needed later.
+
+  // Can add more icons here if needed.
+  const icons = [{ name: 'arrow', object: Object(ArrowForwardIos) }];
+  const useIcon = icons.find((icon) => icon.name === iconType)?.object;
 
   return (
     <MaterialList className={classes.list} component="nav" aria-label="list">

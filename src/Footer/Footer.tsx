@@ -67,14 +67,7 @@ export default function Footer(): React.ReactElement {
       columnSpacing={12}
     >
       <Grid item xs={12} sm={5}>
-        <List
-          list={list}
-          iconType="arrow"
-          iconColor={theme.palette.dfoWhite.main}
-          textColor={theme.palette.dfoWhite.main}
-          borderColor={theme.palette.dfoLightBlue.main}
-          hoverColor={theme.palette.dfoLightBlue.main}
-        />
+        <List list={list} iconType="arrow" />
       </Grid>
       <Grid container item xs={12} sm={4} direction="column" spacing={3}>
         <Grid item>
