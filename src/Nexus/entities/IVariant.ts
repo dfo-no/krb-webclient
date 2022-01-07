@@ -8,7 +8,7 @@ import { FileUploadQuestionSchema } from './IFileUploadQuestion';
 import { PeriodDateWorkbenchSchema } from './IPeriodDateQuestion';
 import { SliderQuestionSchema } from './ISliderQuestion';
 import { TextQuestionSchema } from './ITextQuestion';
-import { TimeQuestionSchema } from './ITimeQuestion';
+import { TimeWorkbenchSchema } from './ITimeQuestion';
 
 export interface IVariant {
   id: string;
@@ -50,7 +50,7 @@ export const VariantSchema = Joi.object().keys({
                 is: QuestionEnum.Q_PERIOD_DATE,
                 then: PeriodDateWorkbenchSchema
               },
-              { is: QuestionEnum.Q_TIME, then: TimeQuestionSchema },
+              { is: QuestionEnum.Q_TIME, then: TimeWorkbenchSchema },
               { is: QuestionEnum.Q_CHECKBOX, then: CheckboxQuestionSchema },
               { is: QuestionEnum.Q_FILEUPLOAD, then: FileUploadQuestionSchema }
             ]
@@ -65,7 +65,7 @@ export const VariantSchema = Joi.object().keys({
           { is: QuestionEnum.Q_CODELIST, then: CodelistQuestionSchema },
           { is: QuestionEnum.Q_TEXT, then: TextQuestionSchema },
           { is: QuestionEnum.Q_PERIOD_DATE, then: PeriodDateWorkbenchSchema },
-          { is: QuestionEnum.Q_TIME, then: TimeQuestionSchema },
+          { is: QuestionEnum.Q_TIME, then: TimeWorkbenchSchema },
           { is: QuestionEnum.Q_CHECKBOX, then: CheckboxQuestionSchema },
           { is: QuestionEnum.Q_FILEUPLOAD, then: FileUploadQuestionSchema }
         ]

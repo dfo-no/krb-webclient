@@ -139,13 +139,17 @@ export default function QuestionArray({
         id: uuid,
         type: QuestionEnum.Q_TIME,
         config: {
-          fromTime: '',
-          toTime: '',
+          fromBoundary: null,
+          toBoundary: null,
+          isPeriod: false,
+          periodMinutes: 0,
+          periodHours: 0,
           defaultPoint: 1
         },
         answer: {
           point: 0,
-          time: ''
+          fromTime: null,
+          toTime: null
         },
         sourceRel: null,
         sourceOriginal: null

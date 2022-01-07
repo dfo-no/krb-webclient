@@ -5,8 +5,14 @@ import Card from 'react-bootstrap/Card';
 import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
-import { Control, FormState, UseFormRegister } from 'react-hook-form';
+import {
+  Control,
+  FieldError,
+  FormState,
+  UseFormRegister
+} from 'react-hook-form';
 import { BsTrashFill } from 'react-icons/bs';
+import ControlledCheckbox from '../../Form/ControlledCheckbox';
 import { IRequirement } from '../../Nexus/entities/IRequirement';
 import { ITimeQuestion } from '../../Nexus/entities/ITimeQuestion';
 
@@ -23,6 +29,7 @@ type IProps = {
 export default function TimeForm({
   remove,
   register,
+  control,
   formState: { errors },
   item,
   vIndex,
@@ -55,60 +62,23 @@ export default function TimeForm({
           {...register(`variants.${vIndex}.questions.${aIndex}.type` as const)}
           defaultValue={item.type}
         />
-        <Form.Group as={Row}>
-          <Form.Label column sm="2">
-            From time
-          </Form.Label>
-          <Col sm="4">
-            <Form.Control
-              type="input"
-              {...register(
-                `variants.${vIndex}.questions.${aIndex}.config.fromTime` as const
-              )}
-              defaultValue={item.config.fromTime}
-              isInvalid={
-                !!has(
+        <Row>
+          <Col sm={1}>
+            <Form.Label>Inkluder Periode</Form.Label>
+          </Col>
+          <Col>
+            <ControlledCheckbox
+              control={control}
+              name={`variants.${vIndex}.questions.${aIndex}.config.isPeriod`}
+              error={
+                get(
                   errors,
-                  `variants[${vIndex}].questions[${aIndex}].config.fromTime` as const
-                )
+                  `variants.${vIndex}.questions.${aIndex}.config.isPeriod`
+                ) as FieldError
               }
             />
-
-            <Form.Control.Feedback type="invalid">
-              {get(
-                errors,
-                `variants[${vIndex}].questions.[${aIndex}].config.fromTime.message`
-              )}
-            </Form.Control.Feedback>
           </Col>
-        </Form.Group>
-        <Form.Group as={Row}>
-          <Form.Label column sm="2">
-            To time
-          </Form.Label>
-          <Col sm="4">
-            <Form.Control
-              type="input"
-              {...register(
-                `variants.${vIndex}.questions.${aIndex}.config.toTime` as const
-              )}
-              defaultValue={item.config.toTime}
-              isInvalid={
-                !!has(
-                  errors,
-                  `variants[${vIndex}].questions[${aIndex}].config.toTime` as const
-                )
-              }
-            />
-
-            <Form.Control.Feedback type="invalid">
-              {get(
-                errors,
-                `variants[${vIndex}].questions.[${aIndex}].config.toTime.message`
-              )}
-            </Form.Control.Feedback>
-          </Col>
-        </Form.Group>
+        </Row>
       </Card.Body>
     </Card>
   );

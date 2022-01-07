@@ -8,6 +8,7 @@ import FileInputForm from '../QuestionForms/FileInputForm';
 import CodelistForm from '../QuestionForms/ICodeListForm';
 import ValueForm from '../QuestionForms/ISliderForm';
 import TextAlternativeForm from '../QuestionForms/TextAlternativeForm';
+import TimeForm from '../QuestionForms/TimeForm';
 
 interface IProps {
   answer: IRequirementAnswer;
@@ -37,6 +38,9 @@ export default function AnswerTypeSelector({
       )}
       {item.question.type === QuestionEnum.Q_CHECKBOX && (
         <CheckBoxForm parentAnswer={item} />
+      )}
+      {item.question.type === QuestionEnum.Q_TIME && (
+        <TimeForm parentAnswer={item} />
       )}
     </Container>
   );
