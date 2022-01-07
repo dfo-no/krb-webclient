@@ -1,20 +1,14 @@
 import React from 'react';
+import { FormControl } from '@material-ui/core';
 import { useFormContext } from 'react-hook-form';
 import Box from '@mui/material/Box';
-import TextField from '@mui/material/TextField';
-import theme from '../theme';
-import { makeStyles } from '@material-ui/core';
+import { DFOTextField } from '../MaterialComponents/StyledComponents/DFOTextField/DFOTextField';
+import { get } from 'lodash';
 
 interface IProps {
   name: string;
   label?: string;
 }
-
-const useStyles = makeStyles({
-  textCtrlField: {
-    border: '1px solid red'
-  }
-});
 
 const TextCtrl = ({ name, label }: IProps): React.ReactElement => {
   const {
@@ -22,17 +16,20 @@ const TextCtrl = ({ name, label }: IProps): React.ReactElement => {
     formState: { errors }
   } = useFormContext();
 
-  const classes = useStyles();
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    console.log(event);
+  };
 
   return (
-    <Box component="form">
-      <TextField
-        required
-        id="outlined-required"
-        label="Required"
-        defaultValue="Hello World"
-        className={classes.textCtrlField}
-      />
+    <Box component="form" noValidate autoComplete="off">
+      <FormControl error variant="standard">
+        <DFOTextField
+          onChange={handleChange}
+          aria-describedby="component-helper-text"
+          label={label}
+        />
+        {get(errors, name)?.message}
+      </FormControl>
     </Box>
   );
 };
