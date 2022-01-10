@@ -1,38 +1,36 @@
 import { joiResolver } from '@hookform/resolvers/joi';
 import Joi from 'joi';
-import { get } from 'lodash';
 import React from 'react';
 import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
-import { FieldError, useForm } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { v4 as uuidv4 } from 'uuid';
-import ControlledDate from '../../Form/ControlledDate';
 import ErrorSummary from '../../Form/ErrorSummary';
-import DateCtrl from '../../FormProvider/DateCtrl';
+import TimeCtrl from '../../FormProvider/TimeCtrl';
 import { IRequirementAnswer } from '../../models/IRequirementAnswer';
 import ModelType from '../../models/ModelType';
 import QuestionEnum from '../../models/QuestionEnum';
 import { QuestionType } from '../../models/QuestionType';
-import {
-  IPeriodDateQuestion,
-  PeriodDateAnswerSchema
-} from '../../Nexus/entities/IPeriodDateQuestion';
 import { IRequirement } from '../../Nexus/entities/IRequirement';
+import {
+  ITimeQuestion,
+  TimeAnswerSchema
+} from '../../Nexus/entities/ITimeQuestion';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { addAnswer } from '../../store/reducers/spesification-reducer';
 
 interface IProps {
-  question: QuestionType;
+  q: QuestionType;
   type: string;
   reqTextId: string;
   requirement: IRequirement;
 }
 
-export default function DateInfoAnswer({
-  question,
+export default function TimeInfoAnswer({
+  q,
   type,
   reqTextId,
   requirement
@@ -49,45 +47,39 @@ export default function DateInfoAnswer({
 
   if (type === 'requirement') {
     index = spec.requirementAnswers.findIndex(
-      (answer: IRequirementAnswer) => answer.question.id === question.id
+      (answer: IRequirementAnswer) => answer.question.id === q.id
     );
   } else {
     index =
       spec.products.length > 0
         ? spec.products[productIndex].requirementAnswers.findIndex(
-            (answer: IRequirementAnswer) => answer.question.id === question.id
+            (answer: IRequirementAnswer) => answer.question.id === q.id
           )
         : -1;
   }
 
   const defaultVal =
     index === -1
-      ? (question as IPeriodDateQuestion)
+      ? (q as ITimeQuestion)
       : (type === 'requirement' &&
-          (spec.requirementAnswers[index].question as IPeriodDateQuestion)) ||
-        (type === 'info' &&
-          (spec.products[productIndex].requirementAnswers[index]
-            .question as IPeriodDateQuestion));
+          (spec.requirementAnswers[index].question as ITimeQuestion)) ||
+        (spec.products[productIndex].requirementAnswers[index]
+          .question as ITimeQuestion);
   const {
     handleSubmit,
-    control,
     formState: { errors }
-  } = useForm<IPeriodDateQuestion>({
-    resolver: joiResolver(PeriodDateAnswerSchema),
+  } = useForm<ITimeQuestion>({
+    resolver: joiResolver(TimeAnswerSchema),
     defaultValues: {
       ...defaultVal
     }
   });
-  const q = question as IPeriodDateQuestion;
+
+  const question = q as ITimeQuestion;
+
   const dispatch = useAppDispatch();
   const { t } = useTranslation();
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const saveValues = (post: any) => {
-    const newAns = {
-      ...post
-    };
-    const newDate = post.answer.date.toISOString();
-    newAns.answer.date = newDate;
+  const saveValues = (post: ITimeQuestion) => {
     if (index === -1) {
       const newAnswer: IRequirementAnswer = {
         id: uuidv4(),
@@ -95,54 +87,65 @@ export default function DateInfoAnswer({
         weight: 1,
         variantId: reqTextId,
         requirement,
-        question: newAns,
+        question: post,
         type: ModelType.requirement
       };
       dispatch(addAnswer({ answer: newAnswer }));
     } else {
       const answer = spec.requirementAnswers[index];
-      answer.question = newAns;
+      answer.question = post;
       dispatch(addAnswer({ answer }));
     }
   };
+
   return (
     <Col className="p-0 m-0 w-50">
-      <p>Hvilekn dato skal varene leveres</p>
-      <Form onSubmit={handleSubmit(saveValues)}>
+      <Form className="mt-3" onSubmit={handleSubmit(saveValues)}>
         <Form.Group as={Row}>
-          {q.config.isPeriod && (
+          {question.config.isPeriod && (
             <Form.Label>
-              Select period of length {q.config.periodMin} -{q.config.periodMax}{' '}
-              days
+              Select period of maximum length {question.config.periodHours}
+              hours -{question.config.periodMinutes} minutes
             </Form.Label>
           )}
-          {!q.config.isPeriod && (
+          {!question.config.isPeriod && (
             <Form.Label>Select a date within the boundaries</Form.Label>
           )}
 
           <Col sm="2">
-            <DateCtrl
-              name={`answer.fromDate` as const}
-              minDate={
-                q.config.fromBoundary !== null ? q.config.fromBoundary : ''
+            <TimeCtrl
+              name={`answer.fromTime` as const}
+              minTime={
+                question.config.fromBoundary !== null
+                  ? question.config.fromBoundary
+                  : ''
               }
-              maxDate={q.config.toBoundary !== null ? q.config.toBoundary : ''}
+              maxTime={
+                question.config.toBoundary !== null
+                  ? question.config.toBoundary
+                  : ''
+              }
             />
           </Col>
-          {q.config.isPeriod && (
+          {question.config.isPeriod && (
             <Col sm="2">
-              <DateCtrl
-                name={`answer.toDate` as const}
-                minDate={
-                  q.config.fromBoundary !== null ? q.config.fromBoundary : ''
+              <TimeCtrl
+                name={`answer.toTime` as const}
+                minTime={
+                  question.config.fromBoundary !== null
+                    ? question.config.fromBoundary
+                    : ''
                 }
-                maxDate={
-                  q.config.toBoundary !== null ? q.config.toBoundary : ''
+                maxTime={
+                  question.config.toBoundary !== null
+                    ? question.config.toBoundary
+                    : ''
                 }
               />
             </Col>
           )}
         </Form.Group>
+
         <Button className="mt-2" type="submit">
           {t('save')}
         </Button>
