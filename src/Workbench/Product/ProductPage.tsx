@@ -1,7 +1,7 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Parentable } from '../../models/Parentable';
-import NestableHierarcy2 from '../../NestableHierarchy/NestableHierarcy2';
+import NestableHierarcy from '../../NestableHierarchy/NestableHierarcy';
 import { IProduct } from '../../Nexus/entities/IProduct';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import {
@@ -27,7 +27,7 @@ export default function ProductPage(): React.ReactElement {
 
       <NewProductForm />
 
-      <NestableHierarcy2
+      <NestableHierarcy
         dispatchfunc={(items: Parentable<IProduct>[]) => newProductList(items)}
         inputlist={project.products}
         component={<EditProductForm element={project.products[0]} />}
