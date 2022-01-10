@@ -1,0 +1,88 @@
+import { makeStyles, Theme } from '@material-ui/core';
+import Link from '@mui/material/Link';
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
+import ListItemText from '@mui/material/ListItemText';
+import Typography from '@mui/material/Typography';
+import * as React from 'react';
+import ArrowForwardIos from '@mui/icons-material/ArrowForwardIos';
+import Icon from '@material-ui/core/Icon';
+import theme from '../../theme';
+import { LinkListProps } from './LinkListProps';
+import { LinkListStyleProps } from './LinkListStyleProps';
+
+const useStyles = makeStyles<Theme, LinkListStyleProps>({
+  linkList: {
+    '&>:nth-child(1)': {
+      borderTop: ({ borderThickness, borderColor }) =>
+        `${borderThickness} solid ${borderColor}`
+    }
+  },
+  linkListItem: {
+    borderBottom: ({ borderThickness, borderColor }) =>
+      `${borderThickness} solid ${borderColor}`,
+    '&:hover': {
+      '& $linkListText': {
+        color: ({ hoverColor }) => hoverColor
+      },
+      '& $linkListIcon': {
+        color: ({ hoverColor }) => hoverColor
+      }
+    }
+  },
+  linkListText: {
+    color: ({ textColor }) => textColor
+  },
+  linkListIcon: {
+    color: ({ iconColor }) => iconColor
+  }
+});
+
+export default function LinkList({
+  list,
+  iconType,
+  iconColor,
+  textColor,
+  borderColor,
+  borderThickness,
+  hoverColor
+}: LinkListProps): React.ReactElement {
+  // Standard DFO theme. Props can be passed to change theme.
+  const styles: LinkListStyleProps = {
+    iconColor: iconColor || theme.palette.dfoWhite.main,
+    textColor: textColor || theme.palette.dfoWhite.main,
+    borderColor: borderColor || theme.palette.dfoLightBlue.main,
+    borderThickness: borderThickness || '1px',
+    hoverColor: hoverColor || theme.palette.dfoLightBlue.main
+  };
+
+  const classes = useStyles(styles);
+
+  // Can add more icons here if needed.
+  const icons = [{ name: 'arrow', object: Object(ArrowForwardIos) }];
+  const useIcon = icons.find((icon) => icon.name === iconType)?.object;
+
+  return (
+    <List className={classes.linkList} component="nav" aria-label="linklist">
+      {list.map((link) => {
+        return (
+          <ListItem
+            component={Link}
+            href={link.href}
+            className={classes.linkListItem}
+            key={link.title}
+          >
+            <ListItemText>
+              <Typography className={classes.linkListText}>
+                {link.title}
+              </Typography>
+            </ListItemText>
+            {useIcon && (
+              <Icon component={useIcon} className={classes.linkListIcon}></Icon>
+            )}
+          </ListItem>
+        );
+      })}
+    </List>
+  );
+}
