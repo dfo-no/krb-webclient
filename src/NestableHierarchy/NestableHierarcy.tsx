@@ -58,7 +58,7 @@ const NestableHierarcy = <T extends IBaseModel>({
     return flattenedCollection;
   };
 
-  const hierarchyList2 = Utils.parentable2Nestable(inputlist);
+  const hierarchyList = Utils.parentable2Nestable(inputlist);
 
   const onOpenClose = (e: string | null) => {
     if (e) {
@@ -114,7 +114,7 @@ const NestableHierarcy = <T extends IBaseModel>({
     <AccordionContext.Provider value={{ onOpenClose }}>
       <Accordion activeKey={activeKey} onSelect={(e) => onOpenClose(e)}>
         <Nestable
-          items={hierarchyList2}
+          items={hierarchyList}
           renderItem={({ item, handler }) => renderItem(item, handler)}
           onChange={(items) => onChange(items)}
           maxDepth={depth}
