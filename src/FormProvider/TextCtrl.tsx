@@ -1,40 +1,28 @@
-import React from 'react';
-import { FormControl } from '@material-ui/core';
-import { useFormContext } from 'react-hook-form';
-import Box from '@mui/material/Box';
+import { Controller, useFormContext } from 'react-hook-form';
 import { DFOTextField } from '../MaterialComponents/StyledComponents/DFOTextField/DFOTextField';
-import { get } from 'lodash';
+import { useForm } from 'react-hook-form';
 
 interface IProps {
   name: string;
+  control: any;
   label?: string;
+  required?: boolean;
 }
 
-const TextCtrl = ({ name, label }: IProps): React.ReactElement => {
-  const {
-    register,
-    formState: { errors }
-  } = useFormContext();
-
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    console.log(event);
-  };
-
+const TextCtrl = ({
+  name,
+  control,
+  label,
+  required
+}: IProps): React.ReactElement => {
   return (
-    <Box component="form" noValidate autoComplete="off">
-      <FormControl error variant="standard">
-        <DFOTextField
-          onChange={handleChange}
-          aria-describedby="component-helper-text"
-          label={label}
-        />
-        {get(errors, name)?.message}
-      </FormControl>
-    </Box>
+    <Controller
+      name={name}
+      control={control}
+      rules={{ required: required !== undefined ? required : 'false' }}
+      render={({ field }) => <DFOTextField {...field} label={label} />}
+    />
   );
 };
-export default TextCtrl;
 
-TextCtrl.defaultProps = {
-  label: ''
-};
+export default TextCtrl;

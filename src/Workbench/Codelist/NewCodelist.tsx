@@ -68,8 +68,6 @@ function NewCodelist(): React.ReactElement {
                 noValidate
                 validated={validated}
               >
-                <TextCtrl name="title" label={t('Title')} />
-                <TextCtrl name="description" label={t('Description')} />
                 <Button className="mt-2  ml-3" type="submit">
                   {t('save')}
                 </Button>
