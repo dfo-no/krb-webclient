@@ -173,12 +173,15 @@ export default function QuestionArray({
         id: uuid,
         type: QuestionEnum.Q_FILEUPLOAD,
         config: {
-          fileEndings: '',
+          template: null,
+          uploadInSpec: false,
+          allowMultipleFiles: false,
+          fileEndings: [],
           defaultPoint: 1
         },
         answer: {
           point: 0,
-          file: ''
+          files: ['']
         },
         sourceRel: null,
         sourceOriginal: null

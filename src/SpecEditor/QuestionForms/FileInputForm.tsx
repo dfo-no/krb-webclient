@@ -12,7 +12,7 @@ import ErrorSummary from '../../Form/ErrorSummary';
 import { IRequirementAnswer } from '../../models/IRequirementAnswer';
 import ModelType from '../../models/ModelType';
 import {
-  FileUploadQuestionSchema,
+  FileUploadWorkbenchSchema,
   IFileUploadQuestion
 } from '../../Nexus/entities/IFileUploadQuestion';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
@@ -29,7 +29,7 @@ export default function FileInputForm({
   parentAnswer
 }: IProps): React.ReactElement {
   const { register, handleSubmit, formState } = useForm<IFileUploadQuestion>({
-    resolver: joiResolver(FileUploadQuestionSchema),
+    resolver: joiResolver(FileUploadWorkbenchSchema),
     defaultValues: {
       ...(parentAnswer.question as IFileUploadQuestion)
     }

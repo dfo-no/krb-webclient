@@ -1,7 +1,7 @@
 import Joi from 'joi';
 import { CheckboxQuestionAnswerSchema } from '../Nexus/entities/ICheckboxQuestion';
 import { CodelistQuestionAnswerSchema } from '../Nexus/entities/ICodelistQuestion';
-import { FileUploadQuestionAnswerSchema } from '../Nexus/entities/IFileUploadQuestion';
+import { FileUploadAnswerSchema } from '../Nexus/entities/IFileUploadQuestion';
 import { PeriodDateAnswerSchema } from '../Nexus/entities/IPeriodDateQuestion';
 import {
   BaseRequirementSchema,
@@ -37,7 +37,7 @@ export const RequirementAnswerSchema = Joi.object().keys({
       { is: QuestionEnum.Q_PERIOD_DATE, then: PeriodDateAnswerSchema },
       { is: QuestionEnum.Q_TIME, then: TimeQuestionAnswerSchema },
       { is: QuestionEnum.Q_CHECKBOX, then: CheckboxQuestionAnswerSchema },
-      { is: QuestionEnum.Q_FILEUPLOAD, then: FileUploadQuestionAnswerSchema }
+      { is: QuestionEnum.Q_FILEUPLOAD, then: FileUploadAnswerSchema }
     ]
   }),
   type: Joi.string()
