@@ -8,6 +8,7 @@ import ErrorSummary from './Form/ErrorSummary';
 import CheckboxCtrl from './FormProvider/CheckboxCtrl';
 import CodelistCtrl from './FormProvider/CodelistCtrl';
 import DateCtrl from './FormProvider/DateCtrl';
+import FileUploadCtrl from './FormProvider/FileUploadCtrl';
 import SliderCtrl from './FormProvider/SliderCtrl';
 import SwitchCtrl from './FormProvider/SwitchCtrl';
 import TextCtrl from './FormProvider/TextCtrl';
@@ -23,6 +24,7 @@ interface IFormValues {
     name: string;
     isSexy: boolean;
     codelist: ICodelist | null;
+    fileEndings: string[];
   };
 }
 
@@ -38,7 +40,8 @@ const FormSchema = Joi.object().keys({
     range: Joi.number().min(20).max(100).required(),
     name: Joi.string().min(5).max(20).required(),
     isSexy: Joi.boolean().valid(true).required(),
-    codelist: CodelistSchema
+    codelist: CodelistSchema,
+    fileEndings: Joi.array().items(Joi.string()).min(1).required()
   })
 });
 
@@ -75,7 +78,8 @@ const KitchenSink = (): React.ReactElement => {
       range: 20,
       name: 'Bobbo',
       isSexy: true,
-      codelist: null
+      codelist: null,
+      fileEndings: ['doc']
     }
   };
 
@@ -115,6 +119,7 @@ const KitchenSink = (): React.ReactElement => {
             codelists={codelists}
             label="Codelist"
           />
+          <FileUploadCtrl name="person.fileEndings" />
           <br />
           <button type="submit">Save</button>
         </form>
