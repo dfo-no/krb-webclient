@@ -120,7 +120,10 @@ export default function ProductRequirementAnswer({
       weightType === 'standard' && post.weight > 90 ? 90 : post.weight;
     if (savedQuestion) {
       const updatedAnswer: IRequirementAnswer = { ...savedQuestion };
+      updatedAnswer.questionId = post.question;
       updatedAnswer.weight = savedWeight;
+      //ensures that the correct question is used if selectedquestion is updated
+      updatedAnswer.question = selectedVariant.questions[questionIndex];
       dispatch(editProductAnswer({ answer: updatedAnswer, productId }));
     } else {
       const newAnswer = {
