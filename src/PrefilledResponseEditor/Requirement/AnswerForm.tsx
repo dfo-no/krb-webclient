@@ -9,6 +9,7 @@ import { useAppSelector } from '../../store/hooks';
 import CheckBoxForm from './AnswerForms/CheckBoxForm';
 import CodelistForm from './AnswerForms/CodelistForm';
 import DateForm from './AnswerForms/DateForm';
+import FileUploadForm from './AnswerForms/FileUploadForm';
 import SliderForm from './AnswerForms/SliderForm';
 import TextForm from './AnswerForms/TextForm';
 
@@ -71,7 +72,13 @@ export default function AnswerForm({ element }: IProps): React.ReactElement {
         );
       }
       case QuestionEnum.Q_FILEUPLOAD: {
-        return <p key={elem.question.id}>Not Implemented</p>;
+        return (
+          <FileUploadForm
+            answer={elem}
+            existingAnswer={existingAnswer}
+            key={elem.question.id}
+          />
+        );
       }
       case QuestionEnum.Q_TEXT: {
         return (
