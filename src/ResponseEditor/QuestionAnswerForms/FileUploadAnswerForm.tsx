@@ -96,10 +96,6 @@ export default function FileUploadAnswerForm({
         <h6>Alternative: FileUpload</h6>
         <Form onSubmit={handleSubmit(saveValues)}>
           <Alert severity="error">Not implemented yet!</Alert>
-          {/* TODO: This is a terrible hack! .point is not set by defaultValues, and does not even exist in the reducer
-          Replace during FormProvider change */}
-          <input type="hidden" {...register('answer.point')} value={0} />
-
           <Button disabled type="submit">
             {t('save')}
           </Button>
