@@ -5,6 +5,7 @@ import QuestionEnum from '../../models/QuestionEnum';
 import { ICheckboxQuestion } from '../entities/ICheckboxQuestion';
 import { ICodelistQuestion } from '../entities/ICodelistQuestion';
 import { IEvaluatedResponse } from '../entities/IEvaluatedResponse';
+import { IPeriodDateQuestion } from '../entities/IPeriodDateQuestion';
 import { ISliderQuestion, ScoreValuePair } from '../entities/ISliderQuestion';
 
 export default class EvaluationService {
@@ -125,6 +126,29 @@ export default class EvaluationService {
     return score / 100;
   }
 
+  evaluateDate(question: IPeriodDateQuestion): number {
+    // if date/ fromDate exist in the dateScores array, that scores is given, else, max point is given.
+    let score = 1;
+    const dateScores = question.config.dateScores;
+    let date = new Date();
+
+    if (question.answer.fromDate !== null) {
+      date = new Date(question.answer.fromDate);
+    }
+
+    for (let i = 0; i < dateScores.length; i++) {
+      const dateScoreDate = dateScores[i].date;
+      if (!!dateScoreDate) {
+        const compareDate = new Date(dateScoreDate);
+
+        if (date.getDate() === compareDate.getDate()) {
+          score = dateScores[i].score;
+        }
+      }
+    }
+    return score;
+  }
+
   evaluate(response: IResponse): IEvaluatedResponse {
     const evaluation: IEvaluatedResponse = {
       supplier: response.supplier,
@@ -150,11 +174,15 @@ export default class EvaluationService {
       if (requirementAnswer.question.type === QuestionEnum.Q_CODELIST) {
         evaluation.points += this.evaluateCodelist(requirementAnswer.question);
       }
+      if (requirementAnswer.question.type === QuestionEnum.Q_PERIOD_DATE) {
+        evaluation.points += this.evaluateDate(requirementAnswer.question);
+      }
 
       if (
         requirementAnswer.question.type !== QuestionEnum.Q_CODELIST &&
         requirementAnswer.question.type !== QuestionEnum.Q_SLIDER &&
-        requirementAnswer.question.type !== QuestionEnum.Q_CHECKBOX
+        requirementAnswer.question.type !== QuestionEnum.Q_CHECKBOX &&
+        requirementAnswer.question.type !== QuestionEnum.Q_PERIOD_DATE
       ) {
         evaluation.points += 1;
       }
