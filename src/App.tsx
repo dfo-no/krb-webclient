@@ -4,13 +4,14 @@ import {
   MsalProvider,
   UnauthenticatedTemplate
 } from '@azure/msal-react';
+import { CssBaseline } from '@mui/material';
+import { ThemeProvider } from '@mui/material/styles';
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
-import { ThemeProvider } from '@mui/material/styles';
-import { CssBaseline } from '@mui/material';
-import theme from './theme';
+import styles from './App.module.scss';
 import { msalConfig } from './authentication/authConfig';
 import Evaluation from './Evaluation/Evaluation';
+import Footer from './Footer/Footer';
 import Header from './Header/Header';
 import HomePage from './Home/HomePage';
 import useConfirmTabClose from './hooks/useConfirmTabClose';
@@ -20,9 +21,8 @@ import PrefilledResponseModule from './PrefilledResponseEditor/PrefilledResponse
 import ResponseModule from './ResponseEditor/ResponseModule';
 import ResponsePage from './ResponseEditor/ResponsePage';
 import SpecModule from './SpecEditor/SpecModule';
+import theme from './theme';
 import WorkbenchModule from './Workbench/WorkbenchModule';
-import Footer from './Footer/Footer';
-import styles from './App.module.scss';
 
 const msalInstance = new PublicClientApplication(msalConfig);
 

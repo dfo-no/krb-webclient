@@ -20,6 +20,7 @@ import {
   addAnswer,
   addProductAnswer
 } from '../../store/reducers/spesification-reducer';
+import TimeScoreArray from './TimeScoreArray';
 
 interface IProps {
   parentAnswer: IRequirementAnswer;
@@ -99,6 +100,10 @@ export default function DateForm({ parentAnswer }: IProps): React.ReactElement {
                 </Col>
               </Row>
             )}
+            <TimeScoreArray
+              control={methods.control}
+              register={methods.register}
+            />
             <ErrorSummary errors={methods.formState.errors} />
             <Button type="submit">{t('save')}</Button>
           </Form>

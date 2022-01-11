@@ -23,6 +23,12 @@ export interface ITimeConfig extends IConfigBase {
   toBoundary: string | null;
   periodMinutes: number;
   periodHours: number;
+  timeScores: TimeScorePair[];
+}
+
+export interface TimeScorePair {
+  time: string | null;
+  score: number;
 }
 
 export const TimeWorkbenchSchema = QuestionBaseSchema.keys({
@@ -33,12 +39,20 @@ export const TimeWorkbenchSchema = QuestionBaseSchema.keys({
     toBoundary: Joi.string().allow(null).required(),
     periodMinutes: Joi.alternatives().conditional('isPeriod', {
       is: true,
-      then: Joi.number().required().min(0).max(60)
+      then: Joi.number().required().min(0).max(60),
+      otherwise: Joi.number()
     }),
     periodHours: Joi.alternatives().conditional('isPeriod', {
       is: true,
-      then: Joi.number().required().min(0).max(24)
-    })
+      then: Joi.number().required().min(0).max(24),
+      otherwise: Joi.number()
+    }),
+    timeScores: Joi.array().items(
+      Joi.object().keys({
+        score: Joi.number().required().min(0).max(100),
+        time: Joi.string().required()
+      })
+    )
   })
 });
 
@@ -50,12 +64,20 @@ export const TimeSpecSchema = QuestionBaseSchema.keys({
     toBoundary: Joi.string().allow(null).required(),
     periodMinutes: Joi.alternatives().conditional('isPeriod', {
       is: true,
-      then: Joi.number().required().min(0).max(60)
+      then: Joi.number().required().min(0).max(60),
+      otherwise: Joi.number()
     }),
     periodHours: Joi.alternatives().conditional('isPeriod', {
       is: true,
-      then: Joi.number().required().min(0).max(24)
-    })
+      then: Joi.number().required().min(0).max(24),
+      otherwise: Joi.number()
+    }),
+    timeScores: Joi.array().items(
+      Joi.object().keys({
+        score: Joi.number().required().min(0).max(100),
+        time: Joi.string().required()
+      })
+    )
   })
 });
 
