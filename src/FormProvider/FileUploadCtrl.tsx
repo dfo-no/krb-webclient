@@ -6,7 +6,6 @@ import Select from '@mui/material/Select/Select';
 import { get } from 'lodash';
 import React from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
-import { ICodelist } from '../Nexus/entities/ICodelist';
 
 interface IProps {
   name: string;
@@ -21,7 +20,7 @@ export interface IOptionsString {
 const FileUploadCtrl = ({ name, label }: IProps): React.ReactElement => {
   const {
     formState: { errors }
-  } = useFormContext<ICodelist>();
+  } = useFormContext();
 
   const fileTypes: IOptionsString[] = [
     { value: 'pdf', label: 'PDF' },

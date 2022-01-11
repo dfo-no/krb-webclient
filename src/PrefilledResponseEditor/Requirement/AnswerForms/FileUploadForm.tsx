@@ -8,7 +8,6 @@ import Form from 'react-bootstrap/Form';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import ErrorSummary from '../../../Form/ErrorSummary';
-import TextCtrl from '../../../FormProvider/TextCtrl';
 import {
   IRequirementAnswer,
   RequirementAnswerSchema
@@ -112,7 +111,6 @@ export default function FileUploadForm({
       <FormProvider {...methods}>
         <Form onSubmit={methods.handleSubmit(onSubmit)} key={question.id}>
           <Alert severity="error">Not implemented yet!</Alert>
-          <TextCtrl name="question.answer.fileTypes" label="Filer" />
           <div className="d-flex justify-content-end">
             {isValueSet(answer.id) ? (
               <Badge bg="success" className="mx-2">
