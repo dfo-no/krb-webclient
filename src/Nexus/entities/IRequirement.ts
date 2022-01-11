@@ -19,13 +19,11 @@ export const BaseRequirementSchema = Joi.object().keys({
   title: Joi.string().required(),
   description: Joi.string().allow(null, '').required(),
   needId: Joi.string().length(36).required(),
-  variants: Joi.array()
-    .when('requirement_Type', {
-      is: RequirementType.info,
-      then: Joi.array().items(VariantSchema).max(1)
-    })
-    .items(VariantSchema)
-    .required(),
+  variants: Joi.array().when('requirement_Type', {
+    is: RequirementType.info,
+    then: Joi.array().items(VariantSchema).max(1),
+    otherwise: Joi.array().items(VariantSchema)
+  }),
   tags: Joi.array().items(Joi.string()),
   requirement_Type: Joi.string().valid(...Object.values(RequirementType)),
   type: Joi.string().equal(ModelType.requirement).required(),

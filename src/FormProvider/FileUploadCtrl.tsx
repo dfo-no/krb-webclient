@@ -3,31 +3,25 @@ import FormHelperText from '@mui/material/FormHelperText/FormHelperText';
 import InputLabel from '@mui/material/InputLabel/InputLabel';
 import MenuItem from '@mui/material/MenuItem/MenuItem';
 import Select from '@mui/material/Select/Select';
+import { get } from 'lodash';
 import React from 'react';
-import {
-  Controller,
-  FieldError,
-  FieldValues,
-  UseControllerProps
-} from 'react-hook-form';
+import { Controller, useFormContext } from 'react-hook-form';
 
-interface IProps<T> extends UseControllerProps<T> {
-  error: FieldError | undefined;
-  label: string;
-  disabled: boolean;
+interface IProps {
+  name: string;
+  label?: string;
 }
 
-interface IOptionsString {
+export interface IOptionsString {
   value: string;
   label: string;
 }
-const ControlledFileUpload = <T extends FieldValues>({
-  name,
-  control,
-  error,
-  label,
-  disabled
-}: IProps<T>): React.ReactElement => {
+
+const FileUploadCtrl = ({ name, label }: IProps): React.ReactElement => {
+  const {
+    formState: { errors }
+  } = useFormContext();
+
   const fileTypes: IOptionsString[] = [
     { value: 'pdf', label: 'PDF' },
     { value: 'doc', label: 'DOC' },
@@ -40,38 +34,26 @@ const ControlledFileUpload = <T extends FieldValues>({
 
   return (
     <Controller
-      control={control}
       name={name}
       render={({ field }) => (
-        <FormControl
-          sx={{ m: 1, minWidth: 120 }}
-          disabled={disabled}
-          error={!!error}
-        >
+        <FormControl sx={{ m: 1, minWidth: 120 }} error={!!get(errors, name)}>
           <InputLabel id={name}>{label}</InputLabel>
-          <Select
-            label={label}
-            {...field}
-            multiple
-            variant="outlined"
-            autoWidth
-          >
+          <Select label={label} {...field} multiple variant="outlined">
             {fileTypes.map((fileType) => (
               <MenuItem key={fileType.value} value={fileType.value}>
                 {fileType.label}
               </MenuItem>
             ))}
           </Select>
-          <FormHelperText>{!!error ? error.message : ''}</FormHelperText>
+          <FormHelperText>{get(errors, name)?.message ?? ''}</FormHelperText>
         </FormControl>
       )}
     />
   );
 };
 
-export default ControlledFileUpload;
+export default FileUploadCtrl;
 
-ControlledFileUpload.defaultProps = {
-  label: '',
-  disabled: false
+FileUploadCtrl.defaultProps = {
+  label: ''
 };

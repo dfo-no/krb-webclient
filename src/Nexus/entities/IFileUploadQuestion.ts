@@ -14,22 +14,45 @@ export interface IFileUploadQuestion
 }
 
 export interface IFileUploadAnswer extends IAnswerBase {
-  file: string;
+  files: string[];
 }
 export interface IFileUploadConfig extends IConfigBase {
-  fileEndings: string;
+  fileEndings: string[];
+  template: string | null;
+  uploadInSpec: boolean;
+  allowMultipleFiles: boolean;
 }
 
-export const FileUploadQuestionSchema = QuestionBaseSchema.keys({
+export const FileUploadWorkbenchSchema = QuestionBaseSchema.keys({
   type: Joi.string().equal(QuestionEnum.Q_FILEUPLOAD).required(),
   config: ConfigBaseSchema.keys({
-    fileEndings: Joi.string().allow('')
+    fileEndings: Joi.array().items(Joi.string()).min(1).required(),
+    template: Joi.string().allow(null, '').required(),
+    uploadInSpec: Joi.boolean().required(),
+    allowMultipleFiles: Joi.boolean().required()
   })
 });
 
-export const FileUploadQuestionAnswerSchema = FileUploadQuestionSchema.keys({
+export const FileUploadWorkbenchInfoSchema = QuestionBaseSchema.keys({
+  type: Joi.string().equal(QuestionEnum.Q_FILEUPLOAD).required(),
+  config: ConfigBaseSchema.keys({
+    fileEndings: Joi.array().items(Joi.string()).min(1).required(),
+    template: Joi.string().allow(null, '').required(),
+    uploadInSpec: Joi.boolean().valid(false).required(),
+    allowMultipleFiles: Joi.boolean().required()
+  })
+});
+
+export const FileUploadAnswerSchema = FileUploadWorkbenchSchema.keys({
   answer: Joi.object().keys({
-    file: Joi.string().required(),
+    file: Joi.array().items(Joi.string()).required(),
+    point: Joi.number().required()
+  })
+});
+
+export const FileUploadInfoAnswerSchema = FileUploadWorkbenchInfoSchema.keys({
+  answer: Joi.object().keys({
+    file: Joi.array().items(Joi.string()).required(),
     point: Joi.number().required()
   })
 });
