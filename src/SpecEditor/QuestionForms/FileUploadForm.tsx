@@ -81,10 +81,6 @@ export default function FileUploadForm({
             />
             <TextCtrl name="config.template" label="Mal" />
             <SwitchCtrl
-              name="config.uploadInSpec"
-              label="Opplasting i spesifikasjon"
-            />
-            <SwitchCtrl
               name="config.allowMultipleFiles"
               label="Tillat flere vedlegg"
             />
