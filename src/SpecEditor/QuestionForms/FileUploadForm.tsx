@@ -1,4 +1,5 @@
 import { joiResolver } from '@hookform/resolvers/joi';
+import Alert from '@mui/lab/Alert/Alert';
 import Button from '@mui/material/Button/Button';
 import React from 'react';
 import Card from 'react-bootstrap/Card';
@@ -7,7 +8,6 @@ import { useTranslation } from 'react-i18next';
 import ErrorSummary from '../../Form/ErrorSummary';
 import FileUploadCtrl from '../../FormProvider/FileUploadCtrl';
 import SwitchCtrl from '../../FormProvider/SwitchCtrl';
-import TextCtrl from '../../FormProvider/TextCtrl';
 import { IRequirementAnswer } from '../../models/IRequirementAnswer';
 import ModelType from '../../models/ModelType';
 import {
@@ -27,11 +27,11 @@ interface IProps {
 export default function FileUploadForm({
   parentAnswer
 }: IProps): React.ReactElement {
+  const question = parentAnswer.question as IFileUploadQuestion;
+
   const methods = useForm<IFileUploadQuestion>({
     resolver: joiResolver(FileUploadWorkbenchSchema),
-    defaultValues: {
-      ...(parentAnswer.question as IFileUploadQuestion)
-    }
+    defaultValues: question
   });
 
   const { selectedSpecificationProduct } = useAppSelector(
@@ -79,7 +79,9 @@ export default function FileUploadForm({
               name="config.fileEndings"
               label="Tilatte filtyper"
             />
-            <TextCtrl name="config.template" label="Mal" />
+            {question.config.uploadInSpec && (
+              <Alert>Upload not implemented</Alert>
+            )}
             <SwitchCtrl
               name="config.allowMultipleFiles"
               label="Tillat flere vedlegg"
