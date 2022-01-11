@@ -1,20 +1,16 @@
 import { joiResolver } from '@hookform/resolvers/joi';
-import Joi from 'joi';
-import { get } from 'lodash';
 import React from 'react';
 import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
-import { FieldError, useForm } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { v4 as uuidv4 } from 'uuid';
-import ControlledDate from '../../Form/ControlledDate';
 import ErrorSummary from '../../Form/ErrorSummary';
 import DateCtrl from '../../FormProvider/DateCtrl';
 import { IRequirementAnswer } from '../../models/IRequirementAnswer';
 import ModelType from '../../models/ModelType';
-import QuestionEnum from '../../models/QuestionEnum';
 import { QuestionType } from '../../models/QuestionType';
 import {
   IPeriodDateQuestion,
@@ -70,7 +66,6 @@ export default function DateInfoAnswer({
             .question as IPeriodDateQuestion));
   const {
     handleSubmit,
-    control,
     formState: { errors }
   } = useForm<IPeriodDateQuestion>({
     resolver: joiResolver(PeriodDateAnswerSchema),
