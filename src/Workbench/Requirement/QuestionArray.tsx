@@ -123,7 +123,8 @@ export default function QuestionArray({
           isPeriod: false,
           periodMin: 0,
           periodMax: 1,
-          defaultPoint: 1
+          defaultPoint: 1,
+          dateScores: []
         },
         answer: {
           point: 0,

@@ -24,6 +24,12 @@ export interface IPeriodDateConfig extends IConfigBase {
   toBoundary: string | null;
   periodMin: number;
   periodMax: number;
+  dateScores: DateScorePair[];
+}
+
+export interface DateScorePair {
+  date: string | null;
+  score: number;
 }
 
 export const PeriodDateWorkbenchSchema = QuestionBaseSchema.keys({
@@ -41,7 +47,13 @@ export const PeriodDateWorkbenchSchema = QuestionBaseSchema.keys({
       is: true,
       then: Joi.number().greater(Joi.ref('periodMin')).required(),
       otherwise: Joi.number()
-    })
+    }),
+    dateScores: Joi.array().items(
+      Joi.object().keys({
+        score: Joi.number().required().min(0).max(100),
+        date: Joi.string().required()
+      })
+    )
   })
 });
 
@@ -60,7 +72,13 @@ export const PeriodDateSpecSchema = QuestionBaseSchema.keys({
       is: true,
       then: Joi.number().greater(Joi.ref('periodMin')).required(),
       otherwise: Joi.number()
-    })
+    }),
+    dateScores: Joi.array().items(
+      Joi.object().keys({
+        score: Joi.number().required().min(0).max(100),
+        date: Joi.string().required()
+      })
+    )
   })
 });
 

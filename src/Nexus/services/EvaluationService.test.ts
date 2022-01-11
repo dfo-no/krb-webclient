@@ -97,7 +97,8 @@ describe('EvaluationService', () => {
                             periodMin: 0,
                             defaultPoint: 1,
                             fromBoundary: '2021-10-01T15:09:05.0000000Z',
-                            toBoundary: '2021-12-30T15:09:09.0000000Z'
+                            toBoundary: '2021-12-30T15:09:09.0000000Z',
+                            dateScores: []
                           },
                           answer: {
                             point: 0,
@@ -458,7 +459,8 @@ describe('EvaluationService', () => {
                 periodMin: 0,
                 defaultPoint: 1,
                 fromBoundary: '2021-10-01T15:09:05.0000000Z',
-                toBoundary: '2021-12-30T15:09:09.0000000Z'
+                toBoundary: '2021-12-30T15:09:09.0000000Z',
+                dateScores: []
               },
               answer: {
                 point: 0,
@@ -492,7 +494,8 @@ describe('EvaluationService', () => {
                         periodMin: 0,
                         defaultPoint: 1,
                         fromBoundary: '2021-10-01T15:09:05.0000000Z',
-                        toBoundary: '2021-12-30T15:09:09.0000000Z'
+                        toBoundary: '2021-12-30T15:09:09.0000000Z',
+                        dateScores: []
                       },
                       answer: {
                         point: 0,
