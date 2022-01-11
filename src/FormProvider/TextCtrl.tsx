@@ -1,26 +1,30 @@
 import { Controller, useFormContext } from 'react-hook-form';
+import { get } from 'lodash';
 import { DFOTextField } from '../MaterialComponents/StyledComponents/DFOTextField/DFOTextField';
-import { useForm } from 'react-hook-form';
 
 interface IProps {
   name: string;
   control: any;
   label?: string;
-  required?: boolean;
 }
 
-const TextCtrl = ({
-  name,
-  control,
-  label,
-  required
-}: IProps): React.ReactElement => {
+const TextCtrl = ({ name, control, label }: IProps): React.ReactElement => {
+  const {
+    formState: { errors }
+  } = useFormContext();
   return (
     <Controller
       name={name}
       control={control}
-      rules={{ required: required !== undefined ? required : 'false' }}
-      render={({ field }) => <DFOTextField {...field} label={label} />}
+      render={({ field }) => (
+        <DFOTextField
+          {...field}
+          label={label}
+          autoComplete="off"
+          error={get(errors, name)?.message}
+          helperText={get(errors, name)?.message ?? ''}
+        />
+      )}
     />
   );
 };
