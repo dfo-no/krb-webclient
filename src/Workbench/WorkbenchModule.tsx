@@ -1,15 +1,15 @@
+import { makeStyles } from '@material-ui/core';
+import Box from '@mui/material/Box';
 import React, { useEffect, useState } from 'react';
 import { Route, Switch } from 'react-router-dom';
 import LoaderSpinner from '../common/LoaderSpinner';
 import AlertList from '../components/Alert/AlertList';
 import { useAppDispatch } from '../store/hooks';
 import { getProjectsThunk } from '../store/reducers/project-reducer';
+import theme from '../theme';
 import ProjectGuard from './ProjectGuard';
 import Projects from './Projects';
 import SideBar from './SideBar/SideBar';
-import Box from '@mui/material/Box';
-import { makeStyles } from '@material-ui/core';
-import theme from '../theme';
 
 const useStyles = makeStyles({
   workbenchContainer: {

@@ -7,6 +7,7 @@ import { ICodelistQuestion } from '../entities/ICodelistQuestion';
 import { IEvaluatedResponse } from '../entities/IEvaluatedResponse';
 import { IPeriodDateQuestion } from '../entities/IPeriodDateQuestion';
 import { ISliderQuestion, ScoreValuePair } from '../entities/ISliderQuestion';
+import { ITimeQuestion } from '../entities/ITimeQuestion';
 
 export default class EvaluationService {
   /**
@@ -126,6 +127,29 @@ export default class EvaluationService {
     return score / 100;
   }
 
+  evaluateTime(question: ITimeQuestion): number {
+    // if fromTime exist in the timeScores array, that scores is given, else, max point is given.
+    let score = 1;
+    const dateScores = question.config.timeScores;
+    let date = new Date();
+
+    if (question.answer.fromTime !== null) {
+      date = new Date(question.answer.fromTime);
+    }
+
+    for (let i = 0; i < dateScores.length; i++) {
+      const dateScoreDate = dateScores[i].time;
+      if (!!dateScoreDate) {
+        const compareDate = new Date(dateScoreDate);
+
+        if (date.getDate() === compareDate.getDate()) {
+          score = dateScores[i].score;
+        }
+      }
+    }
+    return score;
+  }
+
   evaluateDate(question: IPeriodDateQuestion): number {
     // if date/ fromDate exist in the dateScores array, that scores is given, else, max point is given.
     let score = 1;
@@ -174,6 +198,9 @@ export default class EvaluationService {
       if (requirementAnswer.question.type === QuestionEnum.Q_CODELIST) {
         evaluation.points += this.evaluateCodelist(requirementAnswer.question);
       }
+      if (requirementAnswer.question.type === QuestionEnum.Q_TIME) {
+        evaluation.points += this.evaluateTime(requirementAnswer.question);
+      }
       if (requirementAnswer.question.type === QuestionEnum.Q_PERIOD_DATE) {
         evaluation.points += this.evaluateDate(requirementAnswer.question);
       }
@@ -182,6 +209,7 @@ export default class EvaluationService {
         requirementAnswer.question.type !== QuestionEnum.Q_CODELIST &&
         requirementAnswer.question.type !== QuestionEnum.Q_SLIDER &&
         requirementAnswer.question.type !== QuestionEnum.Q_CHECKBOX &&
+        requirementAnswer.question.type !== QuestionEnum.Q_TIME &&
         requirementAnswer.question.type !== QuestionEnum.Q_PERIOD_DATE
       ) {
         evaluation.points += 1;
@@ -196,16 +224,6 @@ export default class EvaluationService {
         }
       });
     });
-
-    // TODO, if check of answer exisiting in corresponding product is necessary, add this
-    response.products.forEach((product) => {
-      product.requirementAnswers.forEach((answer) => {
-        if (answer.question.type !== QuestionEnum.Q_CHECKBOX) {
-          evaluation.points += 1;
-        }
-      });
-    });
-
     return evaluation;
   }
 

@@ -40,11 +40,13 @@ export const PeriodDateWorkbenchSchema = QuestionBaseSchema.keys({
     toBoundary: Joi.string().allow(null).required(),
     periodMin: Joi.alternatives().conditional('isPeriod', {
       is: true,
-      then: Joi.number().required().min(0)
+      then: Joi.number().required().min(0),
+      otherwise: Joi.number()
     }),
     periodMax: Joi.alternatives().conditional('isPeriod', {
       is: true,
-      then: Joi.number().greater(Joi.ref('periodMin')).required()
+      then: Joi.number().greater(Joi.ref('periodMin')).required(),
+      otherwise: Joi.number()
     }),
     dateScores: Joi.array().items(
       Joi.object().keys({

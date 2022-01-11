@@ -145,7 +145,8 @@ export default function QuestionArray({
           isPeriod: false,
           periodMinutes: 0,
           periodHours: 0,
-          defaultPoint: 1
+          defaultPoint: 1,
+          timeScores: []
         },
         answer: {
           point: 0,
