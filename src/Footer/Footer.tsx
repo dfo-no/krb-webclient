@@ -4,7 +4,7 @@ import Link from '@mui/material/Link';
 import Typography from '@mui/material/Typography';
 import * as React from 'react';
 import theme from '../theme';
-import LinkList from '../MaterialComponents/LinkList/LinkList';
+import LinkList from '../MaterialUIComponents/LinkList/LinkList';
 
 const useStyles = makeStyles({
   footerContainer: {

@@ -20,12 +20,13 @@ interface IFormValues {
   person: {
     firstName: string | null;
     lastName: string | null;
+    adress: string | null;
+    areaCode: string | null;
     birthDay: string | null;
     weddingDay?: string | null;
     isDeveloper?: boolean;
     range: number;
     isSexy: boolean;
-    codelist: ICodelist | null;
   };
 }
 
@@ -33,6 +34,8 @@ const FormSchema = Joi.object().keys({
   person: Joi.object().keys({
     firstName: Joi.string().max(20).required(),
     lastName: Joi.string().min(5).max(20).required(),
+    adress: Joi.string().min(5).max(20).required(),
+    areaCode: Joi.string().min(4).max(4).required(),
     birthDay: Joi.date().iso().raw().required(),
     weddingDay: Joi.alternatives([
       Joi.date().iso().max('12/13/2021').raw(),
@@ -41,8 +44,7 @@ const FormSchema = Joi.object().keys({
     point: Joi.number().required(),
     isDeveloper: Joi.boolean().valid(true).required(),
     range: Joi.number().min(20).max(100).required(),
-    isSexy: Joi.boolean().valid(true).required(),
-    codelist: CodelistSchema
+    isSexy: Joi.boolean().valid(true).required()
   })
 });
 
@@ -79,8 +81,7 @@ const KitchenSink = (): React.ReactElement => {
       point: 50,
       isDeveloper: true,
       range: 20,
-      isSexy: true,
-      codelist: null
+      isSexy: true
     }
   };
 
@@ -104,8 +105,8 @@ const KitchenSink = (): React.ReactElement => {
         elevation={3}
         variant="elevation"
         sx={{
-          width: '600px',
-          height: '90vh',
+          width: '1000px',
+          height: '1250px',
           padding: '20px',
           margin: 'auto'
         }}
@@ -117,7 +118,7 @@ const KitchenSink = (): React.ReactElement => {
               sx={{
                 display: 'flex',
                 flexDirection: 'column',
-                gap: '10px',
+                gap: '20px',
                 justifyContent: 'center'
               }}
             >
@@ -131,6 +132,18 @@ const KitchenSink = (): React.ReactElement => {
                 control={methods.control}
                 label="Last name"
               />
+              <Box sx={{ display: 'flex', gap: 2 }}>
+                <TextCtrl
+                  name="person.adress"
+                  control={methods.control}
+                  label="Adress"
+                />
+                <TextCtrl
+                  name="person.areaCode"
+                  control={methods.control}
+                  label="Post code"
+                />
+              </Box>
               <DateCtrl name="person.birthDay" label="birthDay" />
               <DateCtrl name="person.weddingDay" label="weddingDay" />
               <SwitchCtrl label="isDeveloper" name="person.isDeveloper" />
@@ -143,22 +156,11 @@ const KitchenSink = (): React.ReactElement => {
                 marks={[]}
               />
               <CheckboxCtrl name="person.isSexy" label="isSexy" />
-              <CodelistCtrl
-                name="person.codelist"
-                codelists={codelists}
-                label="Codelist"
-              />
               <br />
-              <Button
-                type="submit"
-                sx={{ marginTop: '10px', height: '40px' }}
-                variant="primary"
-              >
-                Save
-              </Button>
+              <button type="submit">Save</button>
             </Box>
           </form>
-          <Box sx={{ marginTop: '50px' }}>
+          <Box sx={{ marginTop: '20px' }}>
             <DevTool control={methods.control} />
             <ErrorSummary errors={methods.formState.errors} />
           </Box>
