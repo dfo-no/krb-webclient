@@ -1,87 +1,88 @@
 import TextField from '@mui/material/TextField';
+import { ControllerRenderProps, FieldValues } from 'react-hook-form';
 import theme from '../../../theme';
-import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
-import { makeStyles } from '@material-ui/core';
+import { Box, Typography } from '@mui/material/';
+import { createStyles, makeStyles } from '@material-ui/core';
+import { DFOTextFieldStyleProps } from './DFOTextFieldStyleProps';
 
 interface IProps {
-  textField?: any;
+  textField?: ControllerRenderProps<FieldValues, string>;
+  value?: string;
   label?: string;
   error?: boolean;
   errorMessage?: string;
 }
 
-const useStyles = makeStyles({
-  textFieldContainer: {
-    display: 'flex',
-    flexDirection: 'column',
-    gap: 10
-  },
-  textField: {
-    width: 300
-  }
-});
+const useStyles = makeStyles(() =>
+  createStyles({
+    root: {
+      '& .MuiInputLabel-root': {
+        color: (props: DFOTextFieldStyleProps) => `${props.fontColor}`,
+        lineHeight: '1.626rem'
+      },
+      '& .MuiInputLabel-root.Mui-focused': {
+        color: (props: DFOTextFieldStyleProps) => `${props.fontColor}`,
+        fontSize: '1.063rem'
+      },
+      '& .MuiOutlinedInput-root': {
+        '& fieldset': {
+          border: (props: DFOTextFieldStyleProps) =>
+            `2px solid ${props.borderColor}`,
+          height: 67
+        },
+        '&:hover fieldset': {
+          border: (props: DFOTextFieldStyleProps) =>
+            `3px solid ${props.borderColor}`
+        },
+        '&.Mui-focused fieldset': {
+          border: (props: DFOTextFieldStyleProps) =>
+            `3px solid ${props.borderColor}`
+        }
+      }
+    },
+    dfoTextFieldContainer: {
+      display: 'flex',
+      flexDirection: 'column',
+      gap: 11,
+      width: '100%'
+    }
+  })
+);
 
 export const DFOTextField = ({
   textField,
+  value,
   label,
   error,
   errorMessage
 }: IProps): React.ReactElement => {
-  const classes = useStyles();
-
   const borderColor = error
     ? theme.palette.dfoErrorRed.main
     : theme.palette.indigo.main;
 
+  const fontColor = error
+    ? theme.palette.dfoErrorRed.main
+    : theme.palette.black.main;
+
+  const styles = {
+    borderColor: borderColor,
+    fontColor: fontColor
+  };
+
+  const classes = useStyles(styles);
+
   return (
-    <div className={classes.textFieldContainer}>
-      <Box
-        component="form"
-        sx={{
-          // Normal
-          '& .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline': {
-            border: `2px solid ${borderColor}`,
-            height: '67px'
-          },
-          // Border hover
-          '&:hover .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline': {
-            border: `3px solid ${borderColor}`
-          },
-          // Border focus
-          '& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline':
-            {
-              border: `3px solid ${borderColor}`
-            },
-          // Label color no hover or focus
-          '& .MuiInputLabel-root': {
-            color: theme.palette.black.main,
-            lineHeight: '1.626rem',
-            fontSize: '1.125rem'
-          },
-          // Label color hover
-          '&:hover .MuiInputLabel-root': {
-            color: 'red'
-          },
-          // Label color focus
-          '& .MuiInputLabel-root.Mui-focused': {
-            color: theme.palette.black.main,
-            fontSize: '1.063rem'
-          }
-        }}
-        autoComplete="off"
-      >
+    <div>
+      <Box className={classes.dfoTextFieldContainer}>
         <TextField
           {...textField}
-          InputProps={{
-            className: classes.textField
-          }}
-          error={error}
-          value=""
+          className={classes.root}
           label={label}
+          autoComplete="off"
+          value={value || ''}
         />
+        <Typography variant="textCtrlErrorMessage">{errorMessage}</Typography>
       </Box>
-      <Typography variant="textCtrlErrorMessage">{errorMessage}</Typography>
     </div>
   );
 };

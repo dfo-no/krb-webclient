@@ -7,6 +7,7 @@ import { FormProvider, useForm } from 'react-hook-form';
 import ErrorSummary from './Form/ErrorSummary';
 import CheckboxCtrl from './FormProvider/CheckboxCtrl';
 import CodelistCtrl from './FormProvider/CodelistCtrl';
+import Button from '@mui/material/Button';
 import DateCtrl from './FormProvider/DateCtrl';
 import SliderCtrl from './FormProvider/SliderCtrl';
 import SwitchCtrl from './FormProvider/SwitchCtrl';
@@ -14,18 +15,16 @@ import TextCtrl from './FormProvider/TextCtrl';
 import ModelType from './models/ModelType';
 import { CodelistSchema, ICodelist } from './Nexus/entities/ICodelist';
 import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
 
 interface IFormValues {
   person: {
     firstName: string | null;
     lastName: string | null;
-    adress: string | null;
-    areaCode: string | null;
     birthDay: string | null;
     weddingDay?: string | null;
     isDeveloper?: boolean;
     range: number;
+    codelist: ICodelist | null;
     isSexy: boolean;
   };
 }
@@ -33,9 +32,7 @@ interface IFormValues {
 const FormSchema = Joi.object().keys({
   person: Joi.object().keys({
     firstName: Joi.string().max(20).required(),
-    lastName: Joi.string().min(5).max(20).required(),
-    adress: Joi.string().min(5).max(20).required(),
-    areaCode: Joi.string().min(4).max(4).required(),
+    lastName: Joi.string().max(20).required(),
     birthDay: Joi.date().iso().raw().required(),
     weddingDay: Joi.alternatives([
       Joi.date().iso().max('12/13/2021').raw(),
@@ -44,7 +41,8 @@ const FormSchema = Joi.object().keys({
     point: Joi.number().required(),
     isDeveloper: Joi.boolean().valid(true).required(),
     range: Joi.number().min(20).max(100).required(),
-    isSexy: Joi.boolean().valid(true).required()
+    isSexy: Joi.boolean().valid(true).required(),
+    codelist: CodelistSchema
   })
 });
 
@@ -114,14 +112,7 @@ const KitchenSink = (): React.ReactElement => {
         {/* <pre>{JSON.stringify(defaultValues, null, 2)}</pre> */}
         <FormProvider {...methods}>
           <form onSubmit={methods.handleSubmit(saveValues)}>
-            <Box
-              sx={{
-                display: 'flex',
-                flexDirection: 'column',
-                gap: '20px',
-                justifyContent: 'center'
-              }}
-            >
+            <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
               <TextCtrl
                 name="person.firstName"
                 control={methods.control}
@@ -132,18 +123,6 @@ const KitchenSink = (): React.ReactElement => {
                 control={methods.control}
                 label="Last name"
               />
-              <Box sx={{ display: 'flex', gap: 2 }}>
-                <TextCtrl
-                  name="person.adress"
-                  control={methods.control}
-                  label="Adress"
-                />
-                <TextCtrl
-                  name="person.areaCode"
-                  control={methods.control}
-                  label="Post code"
-                />
-              </Box>
               <DateCtrl name="person.birthDay" label="birthDay" />
               <DateCtrl name="person.weddingDay" label="weddingDay" />
               <SwitchCtrl label="isDeveloper" name="person.isDeveloper" />
@@ -156,8 +135,15 @@ const KitchenSink = (): React.ReactElement => {
                 marks={[]}
               />
               <CheckboxCtrl name="person.isSexy" label="isSexy" />
+              <CodelistCtrl
+                name="person.codelist"
+                codelists={codelists}
+                label="Codelist"
+              />
               <br />
-              <button type="submit">Save</button>
+              <Button variant="primary" type="submit">
+                Save
+              </Button>
             </Box>
           </form>
           <Box sx={{ marginTop: '20px' }}>

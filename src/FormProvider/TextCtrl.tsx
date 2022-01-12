@@ -21,6 +21,7 @@ const TextCtrl = ({ name, control, label }: IProps): React.ReactElement => {
         <DFOTextField
           textField={field}
           label={label}
+          value={field.value}
           error={get(errors, name)}
           errorMessage={get(errors, name)?.message}
         />
