@@ -1,6 +1,6 @@
 import TextField from '@mui/material/TextField';
 import { ControllerRenderProps, FieldValues } from 'react-hook-form';
-import theme from '../../../theme';
+import theme from '../../theme';
 import { Box, Typography } from '@mui/material/';
 import { createStyles, makeStyles } from '@material-ui/core';
 import { DFOTextFieldStyleProps } from './DFOTextFieldStyleProps';
