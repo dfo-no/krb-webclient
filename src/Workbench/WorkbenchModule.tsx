@@ -7,6 +7,7 @@ import AlertList from '../components/Alert/AlertList';
 import { useAppDispatch } from '../store/hooks';
 import { getProjectsThunk } from '../store/reducers/project-reducer';
 import theme from '../theme';
+import NewProjectPage from './Project/NewProjectPage';
 import ProjectGuard from './ProjectGuard';
 import Projects from './Projects';
 import SideBar from './SideBar/SideBar';
@@ -62,6 +63,9 @@ export default function WorkbenchModule(): React.ReactElement {
         <Switch>
           <Route exact path="/workbench">
             <Projects />
+          </Route>
+          <Route exact path="/workbench/project/new">
+            <NewProjectPage />
           </Route>
           <Route path="/workbench/:projectId">
             <ProjectGuard />
