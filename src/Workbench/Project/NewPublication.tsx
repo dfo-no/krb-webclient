@@ -49,10 +49,10 @@ export default function NewPublication(): React.ReactElement {
   });
 
   const { errors } = formState;
+  const nexus = Nexus.getInstance();
 
-  const onSubmit = async (post: IPublication) => {
+  const onSubmit = (post: IPublication) => {
     const publication = { ...post };
-    const nexus = Nexus.getInstance();
 
     const newBank = nexus.publicationService.generateBankFromProject(project);
     const nextVersion = nexus.publicationService.getNextVersion(
@@ -62,7 +62,7 @@ export default function NewPublication(): React.ReactElement {
     // save the new published Bank
     dispatch(postBankThunk(newBank))
       .unwrap()
-      .then(async (result: IBank) => {
+      .then((result: IBank) => {
         // Update Publication with new data
         publication.id = result.id;
         publication.bankId = result.id;
@@ -77,7 +77,6 @@ export default function NewPublication(): React.ReactElement {
         // save selected bank to db
         dispatch(putSelectedProjectThunk('dummy')).then(() => {
           setShow(false);
-          reset();
           const alert: IAlert = {
             id: uuidv4(),
             style: 'success',
@@ -85,6 +84,7 @@ export default function NewPublication(): React.ReactElement {
           };
           dispatch(addAlert({ alert }));
         });
+        reset();
       });
   };
 
