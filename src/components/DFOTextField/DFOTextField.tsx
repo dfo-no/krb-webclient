@@ -14,6 +14,7 @@ interface IProps {
 }
 
 const useStyles = makeStyles(() =>
+  // Styles could have been overridden in theme.tsx, but here we have variable colors.
   createStyles({
     root: {
       '& .MuiInputLabel-root': {
