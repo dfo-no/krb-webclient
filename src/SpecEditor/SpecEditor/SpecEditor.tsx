@@ -11,7 +11,7 @@ import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import ErrorSummary from '../../Form/ErrorSummary';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
-import { editTitle, setBank } from '../../store/reducers/spesification-reducer';
+import { editTitle } from '../../store/reducers/spesification-reducer';
 
 type FormInput = {
   title: string;
@@ -22,8 +22,6 @@ const titleSchema = Joi.object().keys({
 });
 
 export default function SpecEditor(): React.ReactElement {
-  const { id } = useAppSelector((state) => state.selectedBank);
-  const { normalizedList } = useAppSelector((state) => state.bank);
   const { spec } = useAppSelector((state) => state.specification);
   const { t } = useTranslation();
   const {
@@ -38,13 +36,7 @@ export default function SpecEditor(): React.ReactElement {
   });
   const dispatch = useAppDispatch();
 
-  if (!id) {
-    return <p>No selected bank</p>;
-  }
-
-  const selectedBank = normalizedList[id];
-
-  dispatch(setBank(selectedBank));
+  const selectedBank = spec.bank;
 
   const saveTitle = (post: FormInput) => {
     dispatch(editTitle(post.title));

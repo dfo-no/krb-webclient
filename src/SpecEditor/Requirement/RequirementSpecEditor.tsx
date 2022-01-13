@@ -10,22 +10,11 @@ interface IRouteParams {
 }
 
 export default function RequirementSpecEditor(): React.ReactElement {
-  const projectMatch = useRouteMatch<IRouteParams>('/specification/:bankId');
-  const { id } = useAppSelector((state) => state.selectedBank);
-  const { normalizedList } = useAppSelector((state) => state.bank);
-  const dispatch = useAppDispatch();
+  const { spec } = useAppSelector((state) => state.specification);
 
-  if (projectMatch?.params.bankId && !id) {
-    dispatch(selectBank(projectMatch?.params.bankId));
-  }
-
-  if (!id) {
-    return <p>No selected bank</p>;
-  }
-  const bankSelected = normalizedList[id];
   return (
     <Container fluid>
-      <RequirementSelectorList needList={bankSelected.needs} />
+      <RequirementSelectorList needList={spec.bank.needs} />
     </Container>
   );
 }
