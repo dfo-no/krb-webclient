@@ -1,6 +1,6 @@
 import { Controller, useFormContext } from 'react-hook-form';
 import { get } from 'lodash';
-import { DFOTextField } from '../MaterialUIComponents/DFOTextField/DFOTextField';
+import { DFOTextField } from '../components/DFOTextField/DFOTextField';
 
 interface IProps {
   name: string;
