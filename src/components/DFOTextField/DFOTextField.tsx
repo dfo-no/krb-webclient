@@ -18,7 +18,7 @@ const useStyles = makeStyles(() =>
     root: {
       '& .MuiInputLabel-root': {
         color: (props: DFOTextFieldStyleProps) => `${props.fontColor}`,
-        lineHeight: '1.626rem'
+        lineHeight: '1.7rem'
       },
       '& .MuiInputLabel-root.Mui-focused': {
         color: (props: DFOTextFieldStyleProps) => `${props.fontColor}`,
