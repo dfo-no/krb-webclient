@@ -1,17 +1,9 @@
 import TextField from '@mui/material/TextField';
-import { ControllerRenderProps, FieldValues } from 'react-hook-form';
 import theme from '../../theme';
 import { Box, Typography } from '@mui/material/';
 import { createStyles, makeStyles } from '@material-ui/core';
 import { DFOTextFieldStyleProps } from './DFOTextFieldStyleProps';
-
-interface IProps {
-  textField?: ControllerRenderProps<FieldValues, string>;
-  value?: string;
-  label?: string;
-  error?: boolean;
-  errorMessage?: string;
-}
+import { DFOTextFieldProps } from './DFOTextFieldProps';
 
 const useStyles = makeStyles(() =>
   // Styles could have been overridden in theme.tsx, but here we have variable colors.
@@ -56,7 +48,7 @@ export const DFOTextField = ({
   label,
   error,
   errorMessage
-}: IProps): React.ReactElement => {
+}: DFOTextFieldProps): React.ReactElement => {
   const borderColor = error
     ? theme.palette.dfoErrorRed.main
     : theme.palette.indigo.main;
