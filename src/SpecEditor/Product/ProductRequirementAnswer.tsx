@@ -81,7 +81,6 @@ export default function ProductRequirementAnswer({
     resolver: joiResolver(questionSchema)
   });
   const { spec } = useAppSelector((state) => state.specification);
-  const { id } = useAppSelector((state) => state.selectedBank);
   const [selectedVariant, setSelectedVariant] = useState(
     requirement.variants[0]
   );
@@ -90,9 +89,13 @@ export default function ProductRequirementAnswer({
       (product: ISpecificationProduct) => product.id === productId
     )
   );
+
+  //QuestionAnswer saved in state
   const savedQuestion = specProduct.requirementAnswers.find(
     (alt) => alt.variantId === selectedVariant.id
   );
+
+  //The selected question from the dropdown of possible question types for this variant
   const [selectedQuestion, setSelectedQuestion] = useState<string | undefined>(
     savedQuestion !== undefined ? savedQuestion.id : undefined
   );
@@ -260,7 +263,7 @@ export default function ProductRequirementAnswer({
             {selectedQuestion !== undefined && (
               <Link
                 onClick={selectQuestionType}
-                to={`/specification/${id}/product/${productId}/question/${selectedQuestion}`}
+                to={`/specification/${spec.bank.id}/product/${productId}/question/${selectedQuestion}`}
               >
                 <Button className="ml-2">Configure Question</Button>
               </Link>

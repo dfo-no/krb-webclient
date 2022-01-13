@@ -81,19 +81,24 @@ export default function RequirementAnswer({
   const [selectedVariant, setSelectedVariant] = useState(
     requirement.variants[0]
   );
+
+  //QuestionAnswer saved in state
   const savedQuestion = spec.requirementAnswers.find(
     (question) => question.variantId === selectedVariant.id
   );
+
+  //The selected question from the dropdown of possible question types for this variant
   const [selectedQuestion, setSelectedQuestion] = useState<string | undefined>(
     savedQuestion !== undefined ? savedQuestion.id : undefined
   );
 
-  const { id } = useAppSelector((state) => state.selectedBank);
+  //check if weight value matches any of the marks on the slider
   const checkWeightIsPredefined = (weight: number) => {
     const predefinedValues = [10, 30, 50, 70, 90];
     return predefinedValues.includes(weight);
   };
 
+  //decide wheter slider or number field should be rendered
   const setWeightState = () => {
     if (savedQuestion) {
       if (checkWeightIsPredefined(savedQuestion.weight)) return 'standard';
@@ -101,7 +106,9 @@ export default function RequirementAnswer({
     }
     return 'standard';
   };
+
   const [weightType, setWeightType] = useState(setWeightState());
+
   const saveAnswer = (post: FormValue) => {
     const questionIndex = selectedVariant.questions.findIndex(
       (question) => question.id === post.question
@@ -110,7 +117,10 @@ export default function RequirementAnswer({
       weightType === 'standard' && post.weight > 90 ? 90 : post.weight;
     if (savedQuestion) {
       const updatedAnswer: IRequirementAnswer = { ...savedQuestion };
+      updatedAnswer.questionId = post.question;
       updatedAnswer.weight = savedWeight;
+      //ensures that the correct question is used if selectedquestion is updated
+      updatedAnswer.question = selectedVariant.questions[questionIndex];
       dispatch(editAnswer({ answer: updatedAnswer }));
     } else {
       const question = selectedVariant.questions[questionIndex];
@@ -132,7 +142,7 @@ export default function RequirementAnswer({
     if (selectedQuestion !== undefined)
       dispatch(selectQuestion(selectedQuestion));
   };
-  function handleChange(event: React.ChangeEvent<HTMLFormElement>) {
+  function handleVariantChange(event: React.ChangeEvent<HTMLFormElement>) {
     const variantId = event.target.value;
     const variant = Utils.ensure(
       requirement.variants.find((element: IVariant) => element.id === variantId)
@@ -152,6 +162,7 @@ export default function RequirementAnswer({
     setSelectedVariant(variant);
   }
 
+  //fubd the requirementText from the correct variant
   function findDefaultRequirementText(): string {
     let defaultText = requirement.variants[0].id;
     requirement.variants.forEach((variant) => {
@@ -166,7 +177,7 @@ export default function RequirementAnswer({
     return defaultText;
   }
 
-  function findDefaultAnswerOption(): [string, number] {
+  function findDefaultQuestionOption(): [string, number] {
     let defaultText = selectedVariant.questions[0].id;
     let defaultWeight = 0;
     selectedVariant.questions.forEach((question) => {
@@ -206,7 +217,7 @@ export default function RequirementAnswer({
           <Form.Control
             as="select"
             {...register('variant')}
-            onChange={() => handleChange}
+            onChange={() => handleVariantChange}
             defaultValue={findDefaultRequirementText()}
           >
             {reqText}
@@ -234,7 +245,7 @@ export default function RequirementAnswer({
             <Form.Control
               as="select"
               {...register('question')}
-              defaultValue={findDefaultAnswerOption()[0]}
+              defaultValue={findDefaultQuestionOption()[0]}
             >
               {answers}
             </Form.Control>
@@ -243,7 +254,7 @@ export default function RequirementAnswer({
             {selectedQuestion !== undefined && (
               <Link
                 onClick={selectQuestionType}
-                to={`/specification/${id}/requirement/question/${selectedQuestion}`}
+                to={`/specification/${spec.bank.id}/requirement/question/${selectedQuestion}`}
               >
                 <Button className="ml-4">Configure question</Button>
               </Link>
