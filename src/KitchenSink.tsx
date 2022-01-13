@@ -113,16 +113,8 @@ const KitchenSink = (): React.ReactElement => {
         <FormProvider {...methods}>
           <form onSubmit={methods.handleSubmit(saveValues)}>
             <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
-              <TextCtrl
-                name="person.firstName"
-                control={methods.control}
-                label="First name"
-              />
-              <TextCtrl
-                name="person.lastName"
-                control={methods.control}
-                label="Last name"
-              />
+              <TextCtrl name="person.firstName" label="First name" />
+              <TextCtrl name="person.lastName" label="Last name" />
               <DateCtrl name="person.birthDay" label="birthDay" />
               <DateCtrl name="person.weddingDay" label="weddingDay" />
               <SwitchCtrl label="isDeveloper" name="person.isDeveloper" />

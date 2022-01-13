@@ -72,17 +72,15 @@ export const DFOTextField = ({
   const classes = useStyles(styles);
 
   return (
-    <div>
-      <Box className={classes.dfoTextFieldContainer}>
-        <TextField
-          {...textField}
-          className={classes.root}
-          label={label}
-          autoComplete="off"
-          value={value || ''}
-        />
-        <Typography variant="textCtrlErrorMessage">{errorMessage}</Typography>
-      </Box>
-    </div>
+    <Box className={classes.dfoTextFieldContainer}>
+      <TextField
+        {...textField}
+        className={classes.root}
+        label={label}
+        autoComplete="off"
+        value={value || ''}
+      />
+      <Typography variant="textCtrlErrorMessage">{errorMessage}</Typography>
+    </Box>
   );
 };

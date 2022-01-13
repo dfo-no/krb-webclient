@@ -77,16 +77,8 @@ function NewCodelist(): React.ReactElement {
                     width: 400
                   }}
                 >
-                  <TextCtrl
-                    name="title"
-                    control={methods.control}
-                    label={t('Title')}
-                  />
-                  <TextCtrl
-                    name="description"
-                    control={methods.control}
-                    label={t('Description')}
-                  />
+                  <TextCtrl name="title" label={t('Title')} />
+                  <TextCtrl name="description" label={t('Description')} />
                 </Box>
                 <Button className="mt-2  ml-3" type="submit">
                   {t('save')}

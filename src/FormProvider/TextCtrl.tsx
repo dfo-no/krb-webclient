@@ -1,22 +1,26 @@
+import React, { useEffect } from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
 import { get } from 'lodash';
 import { DFOTextField } from '../components/DFOTextField/DFOTextField';
 
 interface IProps {
   name: string;
-  control: any;
   label?: string;
 }
 
-const TextCtrl = ({ name, control, label }: IProps): React.ReactElement => {
+const TextCtrl = ({ name, label }: IProps): React.ReactElement => {
   const {
+    register,
     formState: { errors }
   } = useFormContext();
+
+  useEffect(() => {
+    register(name);
+  });
 
   return (
     <Controller
       name={name}
-      control={control}
       render={({ field }) => (
         <DFOTextField
           textField={field}
