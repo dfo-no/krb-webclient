@@ -25,6 +25,9 @@ const theme = createTheme({
     dfoLightBlue: {
       main: dfoThemeScss.dfoLightBlue
     },
+    dfoErrorRed: {
+      main: dfoThemeScss.dfoErrorRed
+    },
     gray100: {
       main: dfoThemeScss.gray100
     },
@@ -45,6 +48,9 @@ const theme = createTheme({
     },
     blue: {
       main: dfoThemeScss.blue
+    },
+    black: {
+      main: dfoThemeScss.black
     },
     lightBlue: {
       main: dfoThemeScss.lightBlue
@@ -88,6 +94,10 @@ const theme = createTheme({
 theme.typography.footerAddressText = {
   color: theme.palette.dfoWhite.main,
   fontSize: '15px'
+};
+
+theme.typography.textCtrlErrorMessage = {
+  color: theme.palette.dfoErrorRed.main
 };
 
 theme.components = {

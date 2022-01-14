@@ -17,6 +17,7 @@ import {
   addCodelist,
   putSelectedProjectThunk
 } from '../../store/reducers/project-reducer';
+import Box from '@mui/material/Box';
 
 function NewCodelist(): React.ReactElement {
   const dispatch = useAppDispatch();
@@ -68,8 +69,17 @@ function NewCodelist(): React.ReactElement {
                 noValidate
                 validated={validated}
               >
-                <TextCtrl name="title" label={t('Title')} />
-                <TextCtrl name="description" label={t('Description')} />
+                <Box
+                  sx={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    gap: 1,
+                    width: 400
+                  }}
+                >
+                  <TextCtrl name="title" label={t('Title')} />
+                  <TextCtrl name="description" label={t('Description')} />
+                </Box>
                 <Button className="mt-2  ml-3" type="submit">
                   {t('save')}
                 </Button>
