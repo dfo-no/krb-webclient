@@ -248,7 +248,7 @@ export default function RequirementAnswer({
                 onClick={selectQuestionType}
                 to={`/specification/${id}/requirement/question/${selectedQuestion}`}
               >
-                <Button>Configure question</Button>
+                <Button variant="primary">Configure question</Button>
               </Link>
             )}
           </Col>
