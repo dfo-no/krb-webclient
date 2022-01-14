@@ -2,7 +2,7 @@ import { joiResolver } from '@hookform/resolvers/joi';
 import Slider from '@mui/material/Slider';
 import Joi from 'joi';
 import React, { useState } from 'react';
-import Button from 'react-bootstrap/Button';
+import Button from '@mui/material/Button';
 import Col from 'react-bootstrap/Col';
 import Container from 'react-bootstrap/Container';
 import Form from 'react-bootstrap/Form';
@@ -248,7 +248,7 @@ export default function RequirementAnswer({
                 onClick={selectQuestionType}
                 to={`/specification/${id}/requirement/question/${selectedQuestion}`}
               >
-                <Button className="ml-4">Configure question</Button>
+                <Button variant="primary">Configure question</Button>
               </Link>
             )}
           </Col>

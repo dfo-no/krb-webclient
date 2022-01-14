@@ -28,6 +28,9 @@ const theme = createTheme({
     dfoErrorRed: {
       main: dfoThemeScss.dfoErrorRed
     },
+    dfoErrorRedHover: {
+      main: dfoThemeScss.dfoErrorRedHover
+    },
     gray100: {
       main: dfoThemeScss.gray100
     },
@@ -119,6 +122,17 @@ theme.components = {
           whiteSpace: 'nowrap',
           '&:hover': {
             background: theme.palette.lightBlue.main
+          }
+        }
+      },
+      {
+        props: { variant: 'warning' },
+        style: {
+          backgroundColor: theme.palette.dfoErrorRed.main,
+          color: theme.palette.dfoWhite.main,
+          whiteSpace: 'nowrap',
+          '&:hover': {
+            background: theme.palette.dfoErrorRedHover.main
           }
         }
       }

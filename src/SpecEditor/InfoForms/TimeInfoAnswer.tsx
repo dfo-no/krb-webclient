@@ -1,6 +1,6 @@
 import { joiResolver } from '@hookform/resolvers/joi';
 import React from 'react';
-import Button from 'react-bootstrap/Button';
+import Button from '@mui/material/Button';
 import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
@@ -144,7 +144,7 @@ export default function TimeInfoAnswer({
           )}
         </Form.Group>
 
-        <Button className="mt-2" type="submit">
+        <Button variant="primary" type="submit">
           {t('save')}
         </Button>
         <ErrorSummary errors={errors} />

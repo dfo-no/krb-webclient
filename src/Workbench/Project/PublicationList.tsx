@@ -1,7 +1,7 @@
 import { joiResolver } from '@hookform/resolvers/joi';
 import { get, has, toPath } from 'lodash';
 import React, { useState } from 'react';
-import Button from 'react-bootstrap/Button';
+import Button from '@mui/material/Button';
 import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 import ListGroup from 'react-bootstrap/ListGroup';
@@ -108,7 +108,7 @@ export default function PublicationList(): React.ReactElement {
                     )}
                   </Form.Group>
                   <Col sm={1}>
-                    <Button className="mr-1" onClick={handleSubmit(onSubmit)}>
+                    <Button variant="primary" onClick={handleSubmit(onSubmit)}>
                       {t('save')}
                     </Button>
                     <Button variant="warning" onClick={() => setEditId('')}>
@@ -132,9 +132,7 @@ export default function PublicationList(): React.ReactElement {
                   </Col>
                   <Col sm={1} className="m-0 p-0">
                     <Button
-                      className="mr-1"
                       variant="primary"
-                      type="button"
                       onClick={() => {
                         setEditId(field.id);
                       }}
@@ -142,8 +140,7 @@ export default function PublicationList(): React.ReactElement {
                       <BsPencilSquare />
                     </Button>
                     <Button
-                      variant="danger"
-                      type="button"
+                      variant="warning"
                       onClick={() => {
                         deletePublication(field.id);
                       }}

@@ -1,7 +1,7 @@
 import { joiResolver } from '@hookform/resolvers/joi';
 import { get } from 'lodash';
 import React, { useContext, useState } from 'react';
-import Button from 'react-bootstrap/Button';
+import Button from '@mui/material/Button';
 import Form from 'react-bootstrap/Form';
 import { FieldError, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
@@ -97,7 +97,7 @@ export default function EditRequirementForm({
         name="description"
         label="Requirement text"
       />
-      <Button className="mt-2  ml-3" type="submit">
+      <Button variant="primary" type="submit">
         {t('save')}
       </Button>
       <Link
@@ -106,11 +106,7 @@ export default function EditRequirementForm({
       >
         <Button className="ml-4 mt-2 ">{t('edit')}</Button>
       </Link>
-      <Button
-        className="mt-2  ml-3"
-        variant="danger"
-        onClick={() => removeRequirement(element)}
-      >
+      <Button variant="warning" onClick={() => removeRequirement(element)}>
         {t('delete')} <BsTrashFill />
       </Button>
       <ErrorSummary errors={errors} />

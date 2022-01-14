@@ -1,7 +1,7 @@
 import { DevTool } from '@hookform/devtools';
 import { joiResolver } from '@hookform/resolvers/joi';
 import React, { useState } from 'react';
-import Button from 'react-bootstrap/Button';
+import Button from '@mui/material/Button';
 import Card from 'react-bootstrap/Card';
 import Form from 'react-bootstrap/Form';
 import { FormProvider, useForm } from 'react-hook-form';
@@ -56,7 +56,7 @@ function NewCodelist(): React.ReactElement {
 
   return (
     <>
-      <Button className="mb-4" onClick={() => setShow(true)}>
+      <Button variant="primary" onClick={() => setShow(true)}>
         {t('new codelist')}
       </Button>
       {show && (
@@ -80,13 +80,10 @@ function NewCodelist(): React.ReactElement {
                   <TextCtrl name="title" label={t('Title')} />
                   <TextCtrl name="description" label={t('Description')} />
                 </Box>
-                <Button className="mt-2  ml-3" type="submit">
+                <Button variant="primary" type="submit">
                   {t('save')}
                 </Button>
-                <Button
-                  className="mt-2 ml-3 btn-warning"
-                  onClick={() => reset()}
-                >
+                <Button variant="warning" onClick={() => reset()}>
                   {t('cancel')}
                 </Button>
               </Form>

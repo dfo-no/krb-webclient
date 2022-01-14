@@ -9,6 +9,7 @@ declare module '@mui/material/styles/createPalette' {
     dfoWhite: PaletteColor;
     dfoLightBlue: PaletteColor;
     dfoErrorRed: PaletteColor;
+    dfoErrorRedHover: PaletteColor;
     gray100: PaletteColor;
     gray200: PaletteColor;
     gray300: PaletteColor;
@@ -39,6 +40,7 @@ declare module '@mui/material/styles/createPalette' {
     dfoWhite: PaletteColorOptions;
     dfoLightBlue: PaletteColorOptions;
     dfoErrorRed: PaletteColorOptions;
+    dfoErrorRedHover: PaletteColorOptions;
     gray100: PaletteColorOptions;
     gray200: PaletteColorOptions;
     gray300: PaletteColorOptions;

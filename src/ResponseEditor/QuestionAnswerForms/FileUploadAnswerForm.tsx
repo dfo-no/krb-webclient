@@ -1,7 +1,7 @@
 import { joiResolver } from '@hookform/resolvers/joi';
 import Alert from '@mui/material/Alert/Alert';
 import React from 'react';
-import Button from 'react-bootstrap/Button';
+import Button from '@mui/material/Button';
 import Card from 'react-bootstrap/Card';
 import Form from 'react-bootstrap/Form';
 import { useForm } from 'react-hook-form';
@@ -96,7 +96,7 @@ export default function FileUploadAnswerForm({
         <h6>Alternative: FileUpload</h6>
         <Form onSubmit={handleSubmit(saveValues)}>
           <Alert severity="error">Not implemented yet!</Alert>
-          <Button disabled type="submit">
+          <Button variant="primary" disabled type="submit">
             {t('save')}
           </Button>
           <ErrorSummary errors={errors} />

@@ -1,7 +1,7 @@
 import { joiResolver } from '@hookform/resolvers/joi';
 import { get } from 'lodash';
 import React, { useEffect, useState } from 'react';
-import Button from 'react-bootstrap/Button';
+import Button from '@mui/material/Button';
 import Card from 'react-bootstrap/Card';
 import Form from 'react-bootstrap/Form';
 import { FieldError, useForm } from 'react-hook-form';
@@ -97,10 +97,8 @@ export default function EditTagForm({ element }: IProps): React.ReactElement {
             label={t('Title')}
             error={get(errors, `description`) as FieldError}
           />
-          <Button className="mt-2  ml-3" type="submit">
-            {t('save')}
-          </Button>
-          <Button className="mt-2  ml-3" variant="warning" onClick={deleteTag}>
+          <Button variant="primary">{t('save')}</Button>
+          <Button variant="warning" onClick={deleteTag}>
             {t('delete')} <BsTrashFill />
           </Button>
 

@@ -1,6 +1,6 @@
 import { AxiosResponse } from 'axios';
 import React from 'react';
-import Button from 'react-bootstrap/Button';
+import Button from '@mui/material/Button';
 import { httpPost } from '../api/http';
 import { IEvaluation } from '../Nexus/entities/IEvaluation';
 import { useAppSelector } from '../store/hooks';

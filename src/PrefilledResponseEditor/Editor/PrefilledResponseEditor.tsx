@@ -1,7 +1,7 @@
 import { joiResolver } from '@hookform/resolvers/joi';
 import Joi from 'joi';
 import React from 'react';
-import Button from 'react-bootstrap/Button';
+import Button from '@mui/material/Button';
 import Col from 'react-bootstrap/Col';
 import Container from 'react-bootstrap/Container';
 import Form from 'react-bootstrap/Form';
