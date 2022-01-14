@@ -1,6 +1,6 @@
 import { AxiosResponse } from 'axios';
 import React from 'react';
-import Button from 'react-bootstrap/Button';
+import Button from '@mui/material/Button';
 import { useTranslation } from 'react-i18next';
 import { httpPost } from '../../api/http';
 import { ISpecification } from '../../models/ISpecification';
@@ -34,7 +34,7 @@ export default function SpecPage(): React.ReactElement {
   };
 
   return (
-    <Button type="submit" className="mt-4" onClick={onDownLoad}>
+    <Button variant="primary" type="submit" onClick={onDownLoad}>
       {t('download specification')}
     </Button>
   );

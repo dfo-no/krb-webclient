@@ -1,6 +1,6 @@
 import { joiResolver } from '@hookform/resolvers/joi';
 import React, { useState } from 'react';
-import Button from 'react-bootstrap/Button';
+import Button from '@mui/material/Button';
 import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 import ListGroup from 'react-bootstrap/ListGroup';
@@ -80,11 +80,7 @@ function Projects(): React.ReactElement {
               </Link>
             </Col>
             <Col sm={1} className="p-0">
-              <Button
-                className="mr-2"
-                variant="danger"
-                onClick={() => onDelete(element)}
-              >
+              <Button variant="warning" onClick={() => onDelete(element)}>
                 <BsTrashFill />
               </Button>
             </Col>
@@ -121,11 +117,11 @@ function Projects(): React.ReactElement {
                 error={errors.description}
                 label={t('Description')}
               />
-              <Button className="mt-2" type="submit">
+              <Button variant="primary" type="submit">
                 {t('save')}
               </Button>
               <Button
-                className="mt-2 ml-3 btn-warning"
+                variant="warning"
                 onClick={() => setShowNewProjectForm(false)}
               >
                 {t('cancel')}

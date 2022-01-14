@@ -121,6 +121,17 @@ theme.components = {
             background: theme.palette.lightBlue.main
           }
         }
+      },
+      {
+        props: { variant: 'warning' },
+        style: {
+          backgroundColor: theme.palette.dfoErrorRed.main,
+          color: theme.palette.dfoWhite.main,
+          whiteSpace: 'nowrap',
+          '&:hover': {
+            background: theme.palette.dfoErrorRed.main
+          }
+        }
       }
     ]
   },

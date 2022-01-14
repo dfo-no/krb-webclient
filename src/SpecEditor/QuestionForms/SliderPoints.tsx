@@ -1,5 +1,5 @@
 import React from 'react';
-import Button from 'react-bootstrap/Button';
+import Button from '@mui/material/Button';
 import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
@@ -68,7 +68,10 @@ export default function SliderPointArray({
           })}
         </Col>
         <Col sm={2}>
-          <Button onClick={() => append({ score: 0, value: 0 })}>
+          <Button
+            variant="primary"
+            onClick={() => append({ score: 0, value: 0 })}
+          >
             Ny poengrad
           </Button>
         </Col>

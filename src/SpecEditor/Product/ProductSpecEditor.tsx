@@ -2,7 +2,7 @@ import { joiResolver } from '@hookform/resolvers/joi';
 import Slider from '@mui/material/Slider';
 import { get } from 'lodash';
 import React, { useState } from 'react';
-import Button from 'react-bootstrap/Button';
+import Button from '@mui/material/Button';
 import Card from 'react-bootstrap/Card';
 import Col from 'react-bootstrap/Col';
 import Container from 'react-bootstrap/Container';
@@ -191,7 +191,9 @@ export default function ProductSpecEditor(): React.ReactElement {
               </Col>
             </Form.Group>
             <Col className="p-0 d-flex justify-content-end">
-              <Button type="submit">{t('save')}</Button>
+              <Button variant="primary" type="submit">
+                {t('save')}
+              </Button>
             </Col>
             <ErrorSummary errors={errors} />
           </Form>

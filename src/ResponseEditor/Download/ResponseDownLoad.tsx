@@ -1,6 +1,6 @@
 import { AxiosResponse } from 'axios';
 import React from 'react';
-import Button from 'react-bootstrap/Button';
+import Button from '@mui/material/Button';
 import { httpPost } from '../../api/http';
 import { IResponse } from '../../models/IResponse';
 import { useAppSelector } from '../../store/hooks';
@@ -33,7 +33,7 @@ export default function ResponseDownLoad(): React.ReactElement {
   };
 
   return (
-    <Button type="submit" className="mt-4" onClick={onDownLoad}>
+    <Button type="submit" onClick={onDownLoad}>
       Download Response
     </Button>
   );

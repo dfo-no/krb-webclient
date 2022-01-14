@@ -1,7 +1,7 @@
 import { joiResolver } from '@hookform/resolvers/joi';
 import Joi from 'joi';
 import React from 'react';
-import Button from 'react-bootstrap/Button';
+import Button from '@mui/material/Button';
 import Col from 'react-bootstrap/Col';
 import Container from 'react-bootstrap/Container';
 import Form from 'react-bootstrap/Form';
@@ -72,7 +72,9 @@ export default function SpecEditor(): React.ReactElement {
                 )}
               </Col>
               <Col sm={4}>
-                <Button type="submit">{t('save')}</Button>
+                <Button variant="primary" type="submit">
+                  {t('save')}
+                </Button>
               </Col>
             </Form.Group>
             <ErrorSummary errors={errors} />

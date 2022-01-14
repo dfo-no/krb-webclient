@@ -1,7 +1,7 @@
 import { joiResolver } from '@hookform/resolvers/joi';
 import { get } from 'lodash';
 import React, { useContext, useEffect, useState } from 'react';
-import Button from 'react-bootstrap/Button';
+import Button from '@mui/material/Button';
 import Form from 'react-bootstrap/Form';
 import { FieldError, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
@@ -108,21 +108,13 @@ function EditNeedForm({ element }: IProps): React.ReactElement {
         label={t('Description')}
       />
 
-      <Button className="mt-2" type="submit">
+      <Button variant="primary" type="submit">
         {t('save')}
       </Button>
-      <Button
-        className="mt-2 ml-1"
-        variant="warning"
-        onClick={() => onOpenClose('')}
-      >
+      <Button variant="warning" onClick={() => onOpenClose('')}>
         {t('cancel')}
       </Button>
-      <Button
-        className="mt-2  ml-3"
-        variant="danger"
-        onClick={() => checkDeleteNeed(element)}
-      >
+      <Button variant="warning" onClick={() => checkDeleteNeed(element)}>
         <BsTrashFill />
       </Button>
       <ErrorSummary errors={errors} />

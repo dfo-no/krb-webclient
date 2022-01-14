@@ -1,6 +1,6 @@
 import 'date-fns';
 import React, { useState } from 'react';
-import Button from 'react-bootstrap/Button';
+import Button from '@mui/material/Button';
 import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 import {
@@ -220,7 +220,9 @@ export default function QuestionArray({
         </Form.Control>
       </Col>
       <Col sm={1}>
-        <Button onClick={() => addQuestion()}>Add</Button>
+        <Button variant="primary" onClick={() => addQuestion()}>
+          Add
+        </Button>
       </Col>
 
       {fields.map((item: QuestionType, index) => {

@@ -1,7 +1,7 @@
 import { joiResolver } from '@hookform/resolvers/joi';
 import { get } from 'lodash';
 import React, { useState } from 'react';
-import Button from 'react-bootstrap/Button';
+import Button from '@mui/material/Button';
 import Card from 'react-bootstrap/Card';
 import Form from 'react-bootstrap/Form';
 import { FieldError, useForm } from 'react-hook-form';
@@ -90,7 +90,9 @@ export default function NewPublication(): React.ReactElement {
 
   return (
     <>
-      <Button onClick={() => setShow(true)}>{t('new publication')}</Button>
+      <Button variant="primary" onClick={() => setShow(true)}>
+        {t('new publication')}
+      </Button>
       {show && (
         <Card className="mb-4 mt-4">
           <Card.Body>
@@ -100,13 +102,10 @@ export default function NewPublication(): React.ReactElement {
                 error={get(errors, `comment`) as FieldError}
                 name="comment"
               />
-              <Button className="mt-2  ml-3" type="submit">
+              <Button variant="primary" type="submit">
                 {t('save')}
               </Button>
-              <Button
-                className="mt-2 ml-3 btn-warning"
-                onClick={() => setShow(false)}
-              >
+              <Button variant="warning" onClick={() => setShow(false)}>
                 {t('cancel')}
               </Button>
               <ErrorSummary errors={errors} />
