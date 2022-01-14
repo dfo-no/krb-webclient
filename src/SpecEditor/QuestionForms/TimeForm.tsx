@@ -8,29 +8,29 @@ import Row from 'react-bootstrap/Row';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import ErrorSummary from '../../Form/ErrorSummary';
-import DateCtrl from '../../FormProvider/DateCtrl';
+import TimeCtrl from '../../FormProvider/TimeCtrl';
 import { IRequirementAnswer } from '../../models/IRequirementAnswer';
 import ModelType from '../../models/ModelType';
 import {
-  IPeriodDateQuestion,
-  PeriodDateSpecSchema
-} from '../../Nexus/entities/IPeriodDateQuestion';
+  ITimeQuestion,
+  TimeSpecSchema
+} from '../../Nexus/entities/ITimeQuestion';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import {
   addAnswer,
   addProductAnswer
 } from '../../store/reducers/spesification-reducer';
-import DateScoreArray from './DateScores';
+import TimeScoreArray from './TimeScoreArray';
 
 interface IProps {
   parentAnswer: IRequirementAnswer;
 }
 
 export default function DateForm({ parentAnswer }: IProps): React.ReactElement {
-  const question = parentAnswer.question as IPeriodDateQuestion;
+  const question = parentAnswer.question as ITimeQuestion;
 
-  const methods = useForm<IPeriodDateQuestion>({
-    resolver: joiResolver(PeriodDateSpecSchema),
+  const methods = useForm<ITimeQuestion>({
+    resolver: joiResolver(TimeSpecSchema),
     defaultValues: question
   });
 
@@ -47,7 +47,7 @@ export default function DateForm({ parentAnswer }: IProps): React.ReactElement {
     return <p>No product selected</p>;
   }
 
-  const saveValues = (post: IPeriodDateQuestion) => {
+  const saveValues = (post: ITimeQuestion) => {
     const newAnswer = {
       ...parentAnswer
     };
@@ -67,40 +67,40 @@ export default function DateForm({ parentAnswer }: IProps): React.ReactElement {
   return (
     <Card className="mb-3">
       <Card.Body>
-        <h6>Alternative: Date </h6>
+        <h6>Alternative: Time </h6>
         <FormProvider {...methods}>
           <Form onSubmit={methods.handleSubmit(saveValues)}>
             <Form.Group as={Row}>
               <Col sm="4">
-                <DateCtrl name={`config.fromBoundary` as const} />
+                <TimeCtrl name={`config.fromBoundary` as const} />
               </Col>
             </Form.Group>
             <Form.Group>
               <Col>
-                <DateCtrl name={`config.toBoundary` as const} />
+                <TimeCtrl name={`config.toBoundary` as const} />
               </Col>
             </Form.Group>
             {question.config.isPeriod && (
               <Row>
                 <Col sm={2}>
-                  <Form.Label>Minimum lengde: </Form.Label>
+                  <Form.Label>Period Length hours </Form.Label>
                   <Form.Control
                     as="input"
                     type="number"
-                    {...methods.register(`config.periodMin`)}
+                    {...methods.register(`config.periodHours`)}
                   />
                 </Col>
                 <Col sm={2}>
-                  <Form.Label>Maximum lengde: </Form.Label>
+                  <Form.Label>Period Length minutes </Form.Label>
                   <Form.Control
                     as="input"
                     type="number"
-                    {...methods.register(`config.periodMax`)}
+                    {...methods.register(`config.periodMinutes`)}
                   />
                 </Col>
               </Row>
             )}
-            <DateScoreArray
+            <TimeScoreArray
               control={methods.control}
               register={methods.register}
             />

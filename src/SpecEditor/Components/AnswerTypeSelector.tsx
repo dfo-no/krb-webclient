@@ -4,10 +4,11 @@ import { IRequirementAnswer } from '../../models/IRequirementAnswer';
 import QuestionEnum from '../../models/QuestionEnum';
 import CheckBoxForm from '../QuestionForms/CheckBoxForm';
 import DateForm from '../QuestionForms/DateForm';
-import FileInputForm from '../QuestionForms/FileInputForm';
+import FileUploadForm from '../QuestionForms/FileUploadForm';
 import CodelistForm from '../QuestionForms/ICodeListForm';
 import ValueForm from '../QuestionForms/ISliderForm';
 import TextAlternativeForm from '../QuestionForms/TextAlternativeForm';
+import TimeForm from '../QuestionForms/TimeForm';
 
 interface IProps {
   answer: IRequirementAnswer;
@@ -24,7 +25,7 @@ export default function AnswerTypeSelector({
         <ValueForm parentAnswer={item} />
       )}
       {item.question.type === QuestionEnum.Q_FILEUPLOAD && (
-        <FileInputForm parentAnswer={item} />
+        <FileUploadForm parentAnswer={item} />
       )}
       {item.question.type === QuestionEnum.Q_TEXT && (
         <TextAlternativeForm parentAnswer={item} />
@@ -37,6 +38,9 @@ export default function AnswerTypeSelector({
       )}
       {item.question.type === QuestionEnum.Q_CHECKBOX && (
         <CheckBoxForm parentAnswer={item} />
+      )}
+      {item.question.type === QuestionEnum.Q_TIME && (
+        <TimeForm parentAnswer={item} />
       )}
     </Container>
   );

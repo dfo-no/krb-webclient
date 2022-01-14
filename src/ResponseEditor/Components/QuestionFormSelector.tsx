@@ -9,13 +9,17 @@ import { useAppSelector } from '../../store/hooks';
 import CheckBoxInfo from '../InfoanswerFields/CheckBoxInfo';
 import CodelistInfo from '../InfoanswerFields/CodelistInfo';
 import DateInfo from '../InfoanswerFields/DateInfo';
+import FileUploadInfo from '../InfoanswerFields/FileUploadInfo';
 import SliderInfo from '../InfoanswerFields/SliderInfo';
 import TextInfo from '../InfoanswerFields/TextInfo';
+import TimeInfo from '../InfoanswerFields/TimeInfo';
+import FileUploadAnswerForm from '../QuestionAnswerForms/FileUploadAnswerForm';
 import ICheckBoxAnswerForm from '../QuestionAnswerForms/ICheckBoxAnswerForm';
 import ICodelistAnswerForm from '../QuestionAnswerForms/ICodeListAnswerForm';
 import PeriodDateAnswerForm from '../QuestionAnswerForms/IPeriodDateAnswerForm';
 import ISliderAnswerForm from '../QuestionAnswerForms/ISliderAnswerForm';
 import ITextAnswerForm from '../QuestionAnswerForms/TextAnswerForm';
+import TimeAnswerForm from '../QuestionAnswerForms/TimeForm';
 
 interface IProps {
   selectedAnswer: IRequirementAnswer;
@@ -71,6 +75,18 @@ export default function QuestionFormSelector({
               parentAnswer={selectedAnswer}
             />
           )}
+          {selectedAnswer.question.type === QuestionEnum.Q_TIME && (
+            <TimeAnswerForm
+              key={selectedAnswer.id}
+              parentAnswer={selectedAnswer}
+            />
+          )}
+          {selectedAnswer.question.type === QuestionEnum.Q_FILEUPLOAD && (
+            <FileUploadAnswerForm
+              key={selectedAnswer.id}
+              parentAnswer={selectedAnswer}
+            />
+          )}
         </Card>
       )}
       {req.requirement_Type === RequirementType.info &&
@@ -108,6 +124,22 @@ export default function QuestionFormSelector({
       {req.requirement_Type === RequirementType.info &&
         req.variants[0].questions[0].type === QuestionEnum.Q_TEXT && (
           <TextInfo
+            parent_requirement={req}
+            answer={selectedAnswer}
+            key={selectedAnswer.id}
+          />
+        )}
+      {req.requirement_Type === RequirementType.info &&
+        req.variants[0].questions[0].type === QuestionEnum.Q_TIME && (
+          <TimeInfo
+            parent_requirement={req}
+            answer={selectedAnswer}
+            key={selectedAnswer.id}
+          />
+        )}
+      {req.requirement_Type === RequirementType.info &&
+        req.variants[0].questions[0].type === QuestionEnum.Q_FILEUPLOAD && (
+          <FileUploadInfo
             parent_requirement={req}
             answer={selectedAnswer}
             key={selectedAnswer.id}

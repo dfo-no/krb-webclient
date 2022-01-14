@@ -20,7 +20,8 @@ describe('IPeriodDateQuestion should validate', () => {
         periodMax: 2,
         periodMin: 1,
         fromBoundary: '2021-11-24T23:00:00.000Z',
-        toBoundary: '2021-11-24T23:00:00.000Z'
+        toBoundary: '2021-11-24T23:00:00.000Z',
+        dateScores: []
       },
       sourceRel: null,
       sourceOriginal: null
@@ -45,7 +46,8 @@ describe('IPeriodDateQuestion should validate', () => {
         periodMax: 2,
         periodMin: 1,
         fromBoundary: '2021-11-24T23:00:00.000Z',
-        toBoundary: '2021-11-24T23:00:00.000Z'
+        toBoundary: '2021-11-24T23:00:00.000Z',
+        dateScores: []
       },
       sourceRel: null,
       sourceOriginal: null
@@ -70,7 +72,8 @@ describe('IPeriodDateQuestion should validate', () => {
         periodMax: 2,
         periodMin: 1,
         fromBoundary: '2021-11-24T23:00:00.000Z',
-        toBoundary: '2021-11-26T23:00:00.000Z'
+        toBoundary: '2021-11-26T23:00:00.000Z',
+        dateScores: []
       },
       sourceRel: null,
       sourceOriginal: null
@@ -95,7 +98,8 @@ describe('IPeriodDateQuestion should validate', () => {
         periodMax: 2,
         periodMin: 1,
         fromBoundary: '2021-11-24T23:00:00.000Z',
-        toBoundary: '2021-11-24T23:00:00.000Z'
+        toBoundary: '2021-11-24T23:00:00.000Z',
+        dateScores: []
       },
       sourceRel: null,
       sourceOriginal: null

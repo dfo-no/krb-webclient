@@ -24,6 +24,12 @@ export interface IPeriodDateConfig extends IConfigBase {
   toBoundary: string | null;
   periodMin: number;
   periodMax: number;
+  dateScores: DateScorePair[];
+}
+
+export interface DateScorePair {
+  date: string | null;
+  score: number;
 }
 
 export const PeriodDateWorkbenchSchema = QuestionBaseSchema.keys({
@@ -34,12 +40,20 @@ export const PeriodDateWorkbenchSchema = QuestionBaseSchema.keys({
     toBoundary: Joi.string().allow(null).required(),
     periodMin: Joi.alternatives().conditional('isPeriod', {
       is: true,
-      then: Joi.number().required().min(0)
+      then: Joi.number().required().min(0),
+      otherwise: Joi.number()
     }),
     periodMax: Joi.alternatives().conditional('isPeriod', {
       is: true,
-      then: Joi.number().greater(Joi.ref('periodMin')).required()
-    })
+      then: Joi.number().greater(Joi.ref('periodMin')).required(),
+      otherwise: Joi.number()
+    }),
+    dateScores: Joi.array().items(
+      Joi.object().keys({
+        score: Joi.number().required().min(0).max(100),
+        date: Joi.string().required()
+      })
+    )
   })
 });
 
@@ -58,25 +72,13 @@ export const PeriodDateSpecSchema = QuestionBaseSchema.keys({
       is: true,
       then: Joi.number().greater(Joi.ref('periodMin')).required(),
       otherwise: Joi.number()
-    })
-  }),
-  answer: Joi.object().keys({
-    fromDate: Joi.date()
-      .iso()
-      .raw()
-      .min(Joi.ref('/config.fromBoundary'))
-      .required(),
-    toDate: Joi.when('/config.isPeriod', {
-      is: true,
-      then: Joi.date()
-        .iso()
-        .raw()
-        .greater(Joi.ref('fromDate'))
-        .max(Joi.ref('/config.toBoundary'))
-        .required(),
-      otherwise: Joi.string().allow(null)
     }),
-    point: Joi.number().required()
+    dateScores: Joi.array().items(
+      Joi.object().keys({
+        score: Joi.number().required().min(0).max(100),
+        date: Joi.string().required()
+      })
+    )
   })
 });
 

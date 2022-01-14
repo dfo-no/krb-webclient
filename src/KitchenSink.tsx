@@ -9,6 +9,7 @@ import CheckboxCtrl from './FormProvider/CheckboxCtrl';
 import CodelistCtrl from './FormProvider/CodelistCtrl';
 import Button from '@mui/material/Button';
 import DateCtrl from './FormProvider/DateCtrl';
+import FileUploadCtrl from './FormProvider/FileUploadCtrl';
 import SliderCtrl from './FormProvider/SliderCtrl';
 import SwitchCtrl from './FormProvider/SwitchCtrl';
 import TextCtrl from './FormProvider/TextCtrl';
@@ -26,6 +27,7 @@ interface IFormValues {
     range: number;
     codelist: ICodelist | null;
     isSexy: boolean;
+    fileEndings: string[];
   };
 }
 
@@ -42,7 +44,8 @@ const FormSchema = Joi.object().keys({
     isDeveloper: Joi.boolean().valid(true).required(),
     range: Joi.number().min(20).max(100).required(),
     isSexy: Joi.boolean().valid(true).required(),
-    codelist: CodelistSchema
+    codelist: CodelistSchema,
+    fileEndings: Joi.array().items(Joi.string()).min(1).required()
   })
 });
 
@@ -72,14 +75,16 @@ const KitchenSink = (): React.ReactElement => {
 
   const defaultValues = {
     person: {
-      firstName: null,
-      lastName: null,
       birthDay: null,
       weddingDay: '2021/12/14T14:00:00.123Z',
       point: 50,
       isDeveloper: true,
       range: 20,
-      isSexy: true
+      firstName: null,
+      lastName: null,
+      isSexy: true,
+      codelist: null,
+      fileEndings: ['doc']
     }
   };
 
@@ -132,6 +137,7 @@ const KitchenSink = (): React.ReactElement => {
                 codelists={codelists}
                 label="Codelist"
               />
+              <FileUploadCtrl name="person.fileEndings" />
               <br />
               <Button variant="primary" type="submit">
                 Save

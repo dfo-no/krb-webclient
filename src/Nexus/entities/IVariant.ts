@@ -4,11 +4,14 @@ import { QuestionTypes } from '../../models/QuestionTypes';
 import RequirementType from '../../models/RequirementType';
 import { CheckboxQuestionSchema } from './ICheckboxQuestion';
 import { CodelistQuestionSchema } from './ICodelistQuestion';
-import { FileUploadQuestionSchema } from './IFileUploadQuestion';
+import {
+  FileUploadWorkbenchInfoSchema,
+  FileUploadWorkbenchSchema
+} from './IFileUploadQuestion';
 import { PeriodDateWorkbenchSchema } from './IPeriodDateQuestion';
 import { SliderQuestionSchema } from './ISliderQuestion';
 import { TextQuestionSchema } from './ITextQuestion';
-import { TimeQuestionSchema } from './ITimeQuestion';
+import { TimeWorkbenchSchema } from './ITimeQuestion';
 
 export interface IVariant {
   id: string;
@@ -36,39 +39,41 @@ export const VariantSchema = Joi.object().keys({
       otherwise: Joi.array().length(0).required()
     })
     .required(),
-  questions: Joi.array()
-    .when('requirement_Type', {
-      is: RequirementType.info,
-      then: Joi.array()
-        .items(
-          Joi.alternatives().conditional('.type', {
-            switch: [
-              { is: QuestionEnum.Q_SLIDER, then: SliderQuestionSchema },
-              { is: QuestionEnum.Q_CODELIST, then: CodelistQuestionSchema },
-              { is: QuestionEnum.Q_TEXT, then: TextQuestionSchema },
-              {
-                is: QuestionEnum.Q_PERIOD_DATE,
-                then: PeriodDateWorkbenchSchema
-              },
-              { is: QuestionEnum.Q_TIME, then: TimeQuestionSchema },
-              { is: QuestionEnum.Q_CHECKBOX, then: CheckboxQuestionSchema },
-              { is: QuestionEnum.Q_FILEUPLOAD, then: FileUploadQuestionSchema }
-            ]
-          })
-        )
-        .max(1)
-    })
-    .items(
+  questions: Joi.array().when('/requirement_Type', {
+    is: RequirementType.info,
+    then: Joi.array()
+      .items(
+        Joi.alternatives().conditional('.type', {
+          switch: [
+            { is: QuestionEnum.Q_SLIDER, then: SliderQuestionSchema },
+            { is: QuestionEnum.Q_CODELIST, then: CodelistQuestionSchema },
+            { is: QuestionEnum.Q_TEXT, then: TextQuestionSchema },
+            {
+              is: QuestionEnum.Q_PERIOD_DATE,
+              then: PeriodDateWorkbenchSchema
+            },
+            { is: QuestionEnum.Q_TIME, then: TimeWorkbenchSchema },
+            { is: QuestionEnum.Q_CHECKBOX, then: CheckboxQuestionSchema },
+            {
+              is: QuestionEnum.Q_FILEUPLOAD,
+              then: FileUploadWorkbenchInfoSchema
+            }
+          ]
+        })
+      )
+      .max(1),
+    otherwise: Joi.array().items(
       Joi.alternatives().conditional('.type', {
         switch: [
           { is: QuestionEnum.Q_SLIDER, then: SliderQuestionSchema },
           { is: QuestionEnum.Q_CODELIST, then: CodelistQuestionSchema },
           { is: QuestionEnum.Q_TEXT, then: TextQuestionSchema },
           { is: QuestionEnum.Q_PERIOD_DATE, then: PeriodDateWorkbenchSchema },
-          { is: QuestionEnum.Q_TIME, then: TimeQuestionSchema },
+          { is: QuestionEnum.Q_TIME, then: TimeWorkbenchSchema },
           { is: QuestionEnum.Q_CHECKBOX, then: CheckboxQuestionSchema },
-          { is: QuestionEnum.Q_FILEUPLOAD, then: FileUploadQuestionSchema }
+          { is: QuestionEnum.Q_FILEUPLOAD, then: FileUploadWorkbenchSchema }
         ]
       })
     )
+  })
 });

@@ -1,34 +1,31 @@
-/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
-/* eslint-disable react/prop-types */
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import Accordion from 'react-bootstrap/Accordion';
-import Nestable from 'react-nestable';
+import Col from 'react-bootstrap/Col';
+import Row from 'react-bootstrap/Row';
+import { BsThreeDotsVertical } from 'react-icons/bs';
+import Nestable, { Item } from 'react-nestable';
 import 'react-nestable/dist/styles/index.css';
 import Utils from '../common/Utils';
+import { Parentable } from '../models/Parentable';
+import { IBaseModel } from '../Nexus/entities/IBaseModel';
 import { AccordionContext } from './AccordionContext';
 
-interface IProps {
-  dispatchfunc: (projectId: string, itemlist: any) => void;
-  inputlist: any[];
-  projectId: string;
+interface IProps<T extends IBaseModel> {
+  dispatchfunc: (itemlist: Parentable<T>[]) => void;
+  inputlist: Parentable<T>[];
   component: React.ReactElement;
   depth: number;
 }
 
-/**
- * @deprecated Use NestableHierarcy2 instead. This is kept only as a reference for future bugs
- */
-export default function NestableHierarcy({
+const NestableHierarcy = <T extends IBaseModel>({
   dispatchfunc,
   inputlist,
-  projectId,
   component,
   depth
-}: IProps) {
-  useEffect(() => {}, [inputlist]);
+}: IProps<T>): React.ReactElement => {
   const [activeKey, setActiveKey] = useState('');
 
-  const convertTreeToList = (tree: any, key: string, collection: any[]) => {
+  const convertTreeToList = (tree: Item, key: string, collection: Item[]) => {
     if ((!tree[key] || tree[key].length === 0) && collection.includes(tree)) {
       const copiedTree = { ...tree };
       delete copiedTree.children;
@@ -47,21 +44,21 @@ export default function NestableHierarcy({
     }
   };
 
-  const flatten = (list: any) => {
-    const flattenedCollection: any[] = [];
-    list.items.forEach((element: any) => {
+  const flatten = (list: {
+    items: Item[];
+    dragItem?: Item;
+    targetPath?: number[];
+  }) => {
+    const flattenedCollection: Item[] = [];
+    list.items.forEach((element) => {
       const copy = element;
       copy.parent = '';
       convertTreeToList(element, 'children', flattenedCollection);
     });
     return flattenedCollection;
   };
-  const hierarchyList = Utils.unflatten(inputlist)[0];
 
-  const saveOrder = (items: any) => {
-    const itemList = flatten(items);
-    dispatchfunc(projectId, itemList);
-  };
+  const hierarchyList = Utils.parentable2Nestable(inputlist);
 
   const onOpenClose = (e: string | null) => {
     if (e) {
@@ -70,12 +67,31 @@ export default function NestableHierarcy({
       setActiveKey('');
     }
   };
-  const renderItem = ({ item }: any) => {
+
+  const onChange = (items: {
+    items: Item[];
+    dragItem: Item;
+    targetPath: number[];
+  }) => {
+    const itemList = flatten(items);
+    const returnList: Parentable<T>[] = [];
+    itemList.forEach((elem) => {
+      const clone = { ...elem };
+      delete clone.level;
+      returnList.push(clone as Parentable<T>);
+    });
+    dispatchfunc(returnList);
+  };
+
+  const renderItem = (item: Item, handler: React.ReactNode) => {
     return (
       <Accordion.Item eventKey={item.id}>
         <h2 className="accordion-header">
           <Accordion.Button>
-            {Utils.capitalizeFirstLetter(item.title)}
+            <Row>
+              <Col sm={8}>{Utils.capitalizeFirstLetter(item.title)}</Col>
+              <Col sm={1}>{handler}</Col>
+            </Row>
           </Accordion.Button>
         </h2>
         <Accordion.Collapse eventKey={item.id}>
@@ -84,7 +100,7 @@ export default function NestableHierarcy({
               React.cloneElement(component, { element: item })}
             {item.sourceRel !== null && (
               <>
-                <p>{item.description}</p>
+                <p>{item?.description}</p>
                 <p>This item is inherited and readonly </p>
               </>
             )}
@@ -99,11 +115,14 @@ export default function NestableHierarcy({
       <Accordion activeKey={activeKey} onSelect={(e) => onOpenClose(e)}>
         <Nestable
           items={hierarchyList}
-          renderItem={renderItem}
-          onChange={saveOrder}
+          renderItem={({ item, handler }) => renderItem(item, handler)}
+          onChange={(items) => onChange(items)}
           maxDepth={depth}
+          handler={<BsThreeDotsVertical />}
         />
       </Accordion>
     </AccordionContext.Provider>
   );
-}
+};
+
+export default NestableHierarcy;

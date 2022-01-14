@@ -3,8 +3,10 @@ import Container from 'react-bootstrap/Container';
 import QuestionEnum from '../../models/QuestionEnum';
 import { IRequirement } from '../../Nexus/entities/IRequirement';
 import CodelistInfoAnswer from '../InfoForms/CodelistInfoAnswer';
+import DateInfoAnswer from '../InfoForms/DateInfoAnswer';
 import TextInfoAnswer from '../InfoForms/ITextInfoAnswer';
 import SliderInfoAnswer from '../InfoForms/SliderInfoAnswer';
+import TimeInfoAnswer from '../InfoForms/TimeInfoAnswer';
 
 interface IProps {
   requirement: IRequirement;
@@ -34,6 +36,22 @@ export default function InfoAnswer({
       )}
       {question.type === QuestionEnum.Q_TEXT && (
         <TextInfoAnswer
+          question={requirement.variants[0].questions[0]}
+          type="requirement"
+          requirement={requirement}
+          reqTextId={requirement.variants[0].id}
+        />
+      )}
+      {question.type === QuestionEnum.Q_TIME && (
+        <TimeInfoAnswer
+          q={requirement.variants[0].questions[0]}
+          type="requirement"
+          requirement={requirement}
+          reqTextId={requirement.variants[0].id}
+        />
+      )}
+      {question.type === QuestionEnum.Q_PERIOD_DATE && (
+        <DateInfoAnswer
           question={requirement.variants[0].questions[0]}
           type="requirement"
           requirement={requirement}
