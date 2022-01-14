@@ -4,6 +4,7 @@ $dfo-light-border: 1px solid rgba(0, 0, 0, 0.125);
 $dfo-white: #ffff;
 $dfo-light-blue: #039fe3;
 $dfo-error-red: #d32f2e;
+$dfo-error-red-hover: #e65655;
 
 $font-family-sans-serif: Source Sans Pro;
 $font-family-serif: Source Sans Pro;
@@ -58,6 +59,7 @@ $h3-font-size: $font-size-base * 1.8;
   dfoWhite: $dfo-white;
   dfoLightBlue: $dfo-light-blue;
   dfoErrorRed: $dfo-error-red;
+  dfoErrorRedHover: $dfo-error-red-hover;
   font-family-sans-serif: $font-family-sans-serif;
   font-family-serif: $font-family-serif;
   gray100: $gray-100;

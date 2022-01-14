@@ -28,6 +28,9 @@ const theme = createTheme({
     dfoErrorRed: {
       main: dfoThemeScss.dfoErrorRed
     },
+    dfoErrorRedHover: {
+      main: dfoThemeScss.dfoErrorRedHover
+    },
     gray100: {
       main: dfoThemeScss.gray100
     },
@@ -129,7 +132,7 @@ theme.components = {
           color: theme.palette.dfoWhite.main,
           whiteSpace: 'nowrap',
           '&:hover': {
-            background: theme.palette.dfoErrorRed.main
+            background: theme.palette.dfoErrorRedHover.main
           }
         }
       }
