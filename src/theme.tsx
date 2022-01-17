@@ -99,8 +99,10 @@ theme.typography.footerAddressText = {
   fontSize: '15px'
 };
 
-theme.typography.textCtrlErrorMessage = {
-  color: theme.palette.dfoErrorRed.main
+theme.typography.formCtrlErrorMessage = {
+  color: theme.palette.dfoErrorRed.main,
+  paddingLeft: 10,
+  fontSize: 14
 };
 
 theme.components = {

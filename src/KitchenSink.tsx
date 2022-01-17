@@ -14,7 +14,6 @@ import SliderCtrl from './FormProvider/SliderCtrl';
 import SwitchCtrl from './FormProvider/SwitchCtrl';
 import TextCtrl from './FormProvider/TextCtrl';
 import ModelType from './models/ModelType';
-import { CodelistSchema, ICodelist } from './Nexus/entities/ICodelist';
 import Box from '@mui/material/Box';
 
 interface IFormValues {
@@ -23,7 +22,7 @@ interface IFormValues {
     lastName: string | null;
     birthDay: string | null;
     weddingDay?: string | null;
-    isDeveloper?: boolean;
+    isDeveloper: boolean;
     range: number;
     isSexy: boolean;
     fileEndings: string[];
@@ -40,7 +39,7 @@ const FormSchema = Joi.object().keys({
       Joi.string().valid(null)
     ]).required(),
     point: Joi.number().required(),
-    isDeveloper: Joi.boolean().required(),
+    isDeveloper: Joi.boolean().valid(true).required(),
     range: Joi.number().min(20).max(100).required(),
     isSexy: Joi.boolean().valid(true).required(),
     fileEndings: Joi.array().items(Joi.string()).min(1).required()
@@ -76,7 +75,7 @@ const KitchenSink = (): React.ReactElement => {
       birthDay: null,
       weddingDay: '2021/12/14T14:00:00.123Z',
       point: 50,
-      isDeveloper: true,
+      isDeveloper: false,
       range: 20,
       firstName: null,
       lastName: null,

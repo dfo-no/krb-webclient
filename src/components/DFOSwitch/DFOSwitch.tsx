@@ -5,11 +5,8 @@ import { DFOSwitchProps } from './DFOSwitchProps';
 
 const useStyles = makeStyles(() =>
   createStyles({
-    dfoSwitchContainer: {
-      display: 'flex',
-      gap: 30,
-      alignItems: 'center'
-    },
+    dfoSwitchContainer: {},
+    dfoSwitch: { display: 'flex', gap: 10, alignItems: 'center' },
     hideLabel: {
       display: 'none'
     },
@@ -21,16 +18,22 @@ const useStyles = makeStyles(() =>
 
 export const DFOSwitch = ({
   element,
-  label
+  label,
+  errorMessage
 }: DFOSwitchProps): React.ReactElement => {
   const classes = useStyles();
   return (
     <Box className={classes.dfoSwitchContainer}>
-      <Box className={`${label ? classes.showLabel : classes.hideLabel}`}>
-        <Typography>{label}</Typography>
+      <Box className={classes.dfoSwitch}>
+        <Typography
+          className={`${label ? classes.showLabel : classes.hideLabel}`}
+        >
+          {label}
+        </Typography>
+        <Switch {...element} />
       </Box>
       <Box>
-        <Switch {...element} />
+        <Typography variant="formCtrlErrorMessage">{errorMessage}</Typography>
       </Box>
     </Box>
   );

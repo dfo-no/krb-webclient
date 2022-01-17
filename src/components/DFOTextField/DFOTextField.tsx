@@ -73,7 +73,7 @@ export const DFOTextField = ({
         autoComplete="off"
         value={value || ''}
       />
-      <Typography variant="textCtrlErrorMessage">{errorMessage}</Typography>
+      <Typography variant="formCtrlErrorMessage">{errorMessage}</Typography>
     </Box>
   );
 };
