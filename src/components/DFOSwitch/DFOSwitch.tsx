@@ -32,9 +32,7 @@ export const DFOSwitch = ({
         </Typography>
         <Switch {...element} />
       </Box>
-      <Box>
-        <Typography variant="formCtrlErrorMessage">{errorMessage}</Typography>
-      </Box>
+      <Box></Box>
     </Box>
   );
 };
