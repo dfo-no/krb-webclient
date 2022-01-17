@@ -25,7 +25,6 @@ interface IFormValues {
     weddingDay?: string | null;
     isDeveloper?: boolean;
     range: number;
-    codelist: ICodelist | null;
     isSexy: boolean;
     fileEndings: string[];
   };
@@ -41,10 +40,9 @@ const FormSchema = Joi.object().keys({
       Joi.string().valid(null)
     ]).required(),
     point: Joi.number().required(),
-    isDeveloper: Joi.boolean().valid(true).required(),
+    isDeveloper: Joi.boolean().required(),
     range: Joi.number().min(20).max(100).required(),
     isSexy: Joi.boolean().valid(true).required(),
-    codelist: CodelistSchema,
     fileEndings: Joi.array().items(Joi.string()).min(1).required()
   })
 });
@@ -83,7 +81,6 @@ const KitchenSink = (): React.ReactElement => {
       firstName: null,
       lastName: null,
       isSexy: true,
-      codelist: null,
       fileEndings: ['doc']
     }
   };
@@ -122,7 +119,6 @@ const KitchenSink = (): React.ReactElement => {
               <TextCtrl name="person.lastName" label="Last name" />
               <DateCtrl name="person.birthDay" label="birthDay" />
               <DateCtrl name="person.weddingDay" label="weddingDay" />
-              <SwitchCtrl label="isDeveloper" name="person.isDeveloper" />
               <SliderCtrl
                 name="person.range"
                 min={0}
@@ -131,12 +127,8 @@ const KitchenSink = (): React.ReactElement => {
                 unit="Marsipan"
                 marks={[]}
               />
+              <SwitchCtrl name="person.isDeveloper" label="Developer" />
               <CheckboxCtrl name="person.isSexy" label="isSexy" />
-              <CodelistCtrl
-                name="person.codelist"
-                codelists={codelists}
-                label="Codelist"
-              />
               <FileUploadCtrl name="person.fileEndings" />
               <br />
               <Button variant="primary" type="submit">
