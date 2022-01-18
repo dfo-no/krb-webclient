@@ -1,6 +1,6 @@
 import { get, has, toPath } from 'lodash';
 import React from 'react';
-import Button from 'react-bootstrap/Button';
+import Button from '@mui/material/Button';
 import Card from 'react-bootstrap/Card';
 import Form from 'react-bootstrap/Form';
 import {
@@ -100,8 +100,7 @@ export default function VariantArray({
   return (
     <>
       <Button
-        className="mb-3"
-        type="button"
+        variant="primary"
         onClick={() => {
           const newVariant: IVariant = {
             id: uuidv4(),
@@ -126,9 +125,7 @@ export default function VariantArray({
               <h5>
                 {t('Variant')}{' '}
                 <Button
-                  className="mb-3"
-                  type="button"
-                  variant="danger"
+                  variant="primary"
                   onClick={() => {
                     remove(index);
                   }}

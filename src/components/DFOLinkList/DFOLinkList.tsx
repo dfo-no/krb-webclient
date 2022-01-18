@@ -8,10 +8,10 @@ import * as React from 'react';
 import ArrowForwardIos from '@mui/icons-material/ArrowForwardIos';
 import Icon from '@material-ui/core/Icon';
 import theme from '../../theme';
-import { LinkListProps } from './LinkListProps';
-import { LinkListStyleProps } from './LinkListStyleProps';
+import { DFOLinkListProps } from './DFOLinkListProps';
+import { DFOLinkListStyleProps } from './DFOLinkListStyleProps';
 
-const useStyles = makeStyles<Theme, LinkListStyleProps>({
+const useStyles = makeStyles<Theme, DFOLinkListStyleProps>({
   linkList: {
     '&>:nth-child(1)': {
       borderTop: ({ borderThickness, borderColor }) =>
@@ -38,7 +38,7 @@ const useStyles = makeStyles<Theme, LinkListStyleProps>({
   }
 });
 
-export default function LinkList({
+export default function DFOLinkList({
   list,
   iconType,
   iconColor,
@@ -46,9 +46,9 @@ export default function LinkList({
   borderColor,
   borderThickness,
   hoverColor
-}: LinkListProps): React.ReactElement {
+}: DFOLinkListProps): React.ReactElement {
   // Standard DFO theme. Props can be passed to change theme.
-  const styles: LinkListStyleProps = {
+  const styles: DFOLinkListStyleProps = {
     iconColor: iconColor || theme.palette.dfoWhite.main,
     textColor: textColor || theme.palette.dfoWhite.main,
     borderColor: borderColor || theme.palette.dfoLightBlue.main,

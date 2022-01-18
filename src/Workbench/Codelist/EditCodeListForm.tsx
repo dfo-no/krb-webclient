@@ -1,7 +1,7 @@
 import { joiResolver } from '@hookform/resolvers/joi';
 import { get } from 'lodash';
 import React, { useEffect, useState } from 'react';
-import Button from 'react-bootstrap/Button';
+import Button from '@mui/material/Button';
 import Card from 'react-bootstrap/Card';
 import Form from 'react-bootstrap/Form';
 import { FieldError, useForm } from 'react-hook-form';
@@ -115,7 +115,7 @@ function EditCodeListForm(): React.ReactElement {
     <>
       <h3 className="m-2">
         Codelist: {codelist.title}
-        <Button className="m-2" onClick={() => setEdit(true)}>
+        <Button variant="primary" onClick={() => setEdit(true)}>
           <BsPencil />
         </Button>
       </h3>
@@ -141,20 +141,13 @@ function EditCodeListForm(): React.ReactElement {
                 error={get(errors, `description`) as FieldError}
                 label={t('Description')}
               />
-              <Button className="mt-2  ml-3" type="submit">
+              <Button variant="primary" type="submit">
                 {t('save')}
               </Button>
-              <Button
-                className="mt-2 ml-3 btn-warning"
-                onClick={() => setEdit(false)}
-              >
+              <Button variant="warning" onClick={() => setEdit(false)}>
                 {t('cancel')}
               </Button>
-              <Button
-                className="mt-2  ml-3"
-                variant="warning"
-                onClick={removeCodelist}
-              >
+              <Button variant="warning" onClick={removeCodelist}>
                 {t('delete')} <BsTrashFill />
               </Button>
               <AlertModal

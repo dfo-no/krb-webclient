@@ -1,6 +1,6 @@
 import { joiResolver } from '@hookform/resolvers/joi';
 import React from 'react';
-import Button from 'react-bootstrap/Button';
+import Button from '@mui/material/Button';
 import Card from 'react-bootstrap/Card';
 import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
@@ -109,7 +109,9 @@ export default function PeriodDateAnswerForm({
               )}
             </Form.Group>
 
-            <Button type="submit">{t('save')}</Button>
+            <Button variant="primary" type="submit">
+              {t('save')}
+            </Button>
             <ErrorSummary errors={methods.formState.errors} />
           </Form>
         </FormProvider>

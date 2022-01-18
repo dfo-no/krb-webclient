@@ -1,6 +1,6 @@
 import { AxiosResponse } from 'axios';
 import React from 'react';
-import Button from 'react-bootstrap/Button';
+import Button from '@mui/material/Button';
 import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
@@ -62,7 +62,7 @@ export default function SpecPage(): React.ReactElement {
         <Col sm={3}>
           <h4>Select Bank from Hub</h4>
           <Link to="/">
-            <Button>Go to Hub</Button>
+            <Button variant="primary">Go to Hub</Button>
           </Link>
         </Col>
         <Col />

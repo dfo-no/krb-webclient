@@ -1,10 +1,7 @@
+import React, { useEffect } from 'react';
+import { Controller, useFormContext } from 'react-hook-form';
 import { get } from 'lodash';
-import React from 'react';
-import Col from 'react-bootstrap/Col';
-import Form from 'react-bootstrap/Form';
-import FormControl from 'react-bootstrap/FormControl';
-import Row from 'react-bootstrap/Row';
-import { useFormContext } from 'react-hook-form';
+import { DFOTextField } from '../components/DFOTextField/DFOTextField';
 
 interface IProps {
   name: string;
@@ -17,22 +14,24 @@ const TextCtrl = ({ name, label }: IProps): React.ReactElement => {
     formState: { errors }
   } = useFormContext();
 
+  useEffect(() => {
+    register(name);
+  });
+
   return (
-    <Form.Group controlId={name} as={Row}>
-      <Form.Label column sm={2}>
-        {label}
-      </Form.Label>
-      <Col sm={10}>
-        <Form.Control {...register(name)} isInvalid={!!get(errors, name)} />
-        <FormControl.Feedback type="invalid">
-          {get(errors, name)?.message ?? ''}
-        </FormControl.Feedback>
-      </Col>
-    </Form.Group>
+    <Controller
+      name={name}
+      render={({ field }) => (
+        <DFOTextField
+          textField={field}
+          label={label}
+          value={field.value}
+          error={get(errors, name)}
+          errorMessage={get(errors, name)?.message}
+        />
+      )}
+    />
   );
 };
-export default TextCtrl;
 
-TextCtrl.defaultProps = {
-  label: ''
-};
+export default TextCtrl;

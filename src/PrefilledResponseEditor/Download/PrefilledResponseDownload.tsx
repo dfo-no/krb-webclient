@@ -1,6 +1,6 @@
 import { AxiosResponse } from 'axios';
 import React from 'react';
-import Button from 'react-bootstrap/Button';
+import Button from '@mui/material/Button';
 import { httpPost } from '../../api/http';
 import { IPrefilledResponse } from '../../models/IPrefilledResponse';
 import { useAppSelector } from '../../store/hooks';
@@ -38,7 +38,7 @@ export default function PrefilledResponseDownLoad(): React.ReactElement {
   };
 
   return (
-    <Button type="button" className="mt-4" onClick={onDownLoad}>
+    <Button type="button" onClick={onDownLoad}>
       Download Prefilled Response
     </Button>
   );

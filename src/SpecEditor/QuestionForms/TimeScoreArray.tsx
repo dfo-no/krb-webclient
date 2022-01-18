@@ -1,5 +1,5 @@
 import React from 'react';
-import Button from 'react-bootstrap/Button';
+import Button from '@mui/material/Button';
 import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
@@ -57,7 +57,9 @@ export default function TimeScoreArray({
                   />
                 </Col>
                 <Col sm={1}>
-                  <Button onClick={() => remove(index)}>Fjern</Button>
+                  <Button variant="primary" onClick={() => remove(index)}>
+                    Fjern
+                  </Button>
                 </Col>
               </Row>
             );

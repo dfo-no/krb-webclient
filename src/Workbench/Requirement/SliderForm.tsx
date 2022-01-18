@@ -1,6 +1,6 @@
 import { get, has } from 'lodash';
 import React from 'react';
-import Button from 'react-bootstrap/Button';
+import Button from '@mui/material/Button';
 import Card from 'react-bootstrap/Card';
 import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
@@ -36,12 +36,7 @@ export default function SliderForm({
       <Card.Body>
         <h6>
           {t('Alternative')}: {t('Value')}{' '}
-          <Button
-            className="mb-3"
-            type="button"
-            variant="danger"
-            onClick={() => remove(aIndex)}
-          >
+          <Button variant="warning" onClick={() => remove(aIndex)}>
             <BsTrashFill />
           </Button>
         </h6>
