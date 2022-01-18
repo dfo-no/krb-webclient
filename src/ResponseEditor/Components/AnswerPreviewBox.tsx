@@ -1,11 +1,11 @@
 import Card from '@mui/material/Card';
 import React from 'react';
-import Utils from '../../../common/Utils';
-import { IRequirementAnswer } from '../../../models/IRequirementAnswer';
-import QuestionEnum from '../../../models/QuestionEnum';
-import { ICode } from '../../../Nexus/entities/ICode';
-import { ICodelist } from '../../../Nexus/entities/ICodelist';
-import { useAppSelector } from '../../../store/hooks';
+import Utils from '../../common/Utils';
+import { IRequirementAnswer } from '../../models/IRequirementAnswer';
+import QuestionEnum from '../../models/QuestionEnum';
+import { ICode } from '../../Nexus/entities/ICode';
+import { ICodelist } from '../../Nexus/entities/ICodelist';
+import { useAppSelector } from '../../store/hooks';
 import AnswerPreview from './AnswerPreview';
 
 interface IProps {
