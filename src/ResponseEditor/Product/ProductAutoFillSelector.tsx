@@ -1,7 +1,7 @@
 import { joiResolver } from '@hookform/resolvers/joi';
 import Joi from 'joi';
 import React from 'react';
-import Button from 'react-bootstrap/Button';
+import Button from '@mui/material/Button';
 import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 import { useForm } from 'react-hook-form';
@@ -100,7 +100,9 @@ export default function ProductAutoFillSelector(): React.ReactElement {
         </Form.Control>
       </Col>
       <Col className="p-0 d-flex justify-content-end">
-        <Button type="submit">Autofyll</Button>
+        <Button variant="primary" type="submit">
+          Autofyll
+        </Button>
       </Col>
       <ErrorSummary errors={errors} />
     </Form>

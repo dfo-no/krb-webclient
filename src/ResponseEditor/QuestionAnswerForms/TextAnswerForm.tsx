@@ -1,6 +1,6 @@
 import { joiResolver } from '@hookform/resolvers/joi';
 import React from 'react';
-import Button from 'react-bootstrap/Button';
+import Button from '@mui/material/Button';
 import Card from 'react-bootstrap/Card';
 import Form from 'react-bootstrap/Form';
 import { useForm } from 'react-hook-form';
@@ -103,7 +103,9 @@ export default function ITextAnswerForm({
           Replace during FormProvider change */}
           <input type="text" {...register('answer.point')} value={0} />
 
-          <Button type="submit">{t('save')}</Button>
+          <Button variant="primary" type="submit">
+            {t('save')}
+          </Button>
           <ErrorSummary errors={errors} />
         </Form>
       </Card.Body>

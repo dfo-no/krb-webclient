@@ -1,7 +1,7 @@
 import { joiResolver } from '@hookform/resolvers/joi';
 import { get } from 'lodash';
 import React, { useState } from 'react';
-import Button from 'react-bootstrap/Button';
+import Button from '@mui/material/Button';
 import Card from 'react-bootstrap/Card';
 import Form from 'react-bootstrap/Form';
 import { FieldError, useForm } from 'react-hook-form';
@@ -68,7 +68,7 @@ function NewCodeForm(): React.ReactElement {
   return (
     <>
       <h5>Codes</h5>
-      <Button onClick={() => setShow(true)} className="mb-4">
+      <Button variant="primary" onClick={() => setShow(true)}>
         New Code
       </Button>
       {show && (
@@ -92,13 +92,10 @@ function NewCodeForm(): React.ReactElement {
                 error={get(errors, `description`) as FieldError}
                 label={t('Description')}
               />
-              <Button className="mt-2  ml-3" type="submit">
+              <Button variant="primary" type="submit">
                 {t('save')}
               </Button>
-              <Button
-                className="mt-2 ml-3 btn-warning"
-                onClick={() => setShow(false)}
-              >
+              <Button variant="warning" onClick={() => setShow(false)}>
                 {t('cancel')}
               </Button>
               <ErrorSummary errors={errors} />

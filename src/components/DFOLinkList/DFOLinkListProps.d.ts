@@ -1,4 +1,9 @@
-export interface LinkListStyleProps {
+export interface DFOLinkListProps {
+  list: {
+    title: string;
+    href: string;
+  }[];
+  iconType?: string;
   iconColor?: string;
   textColor?: string;
   borderColor?: string;

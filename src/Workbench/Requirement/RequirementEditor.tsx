@@ -1,7 +1,7 @@
 import { DevTool } from '@hookform/devtools';
 import { joiResolver } from '@hookform/resolvers/joi';
 import React from 'react';
-import Button from 'react-bootstrap/Button';
+import Button from '@mui/material/Button';
 import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
@@ -106,7 +106,9 @@ function RequirementEditor(): React.ReactElement {
             )}
           </Col>
           <Col sm={3}>
-            <Button type="submit">{t('save')}</Button>
+            <Button variant="primary" type="submit">
+              {t('save')}
+            </Button>
           </Col>
         </Form.Group>
         <Row>

@@ -1,5 +1,5 @@
 import React from 'react';
-import Button from 'react-bootstrap/Button';
+import Button from '@mui/material/Button';
 import Col from 'react-bootstrap/Col';
 import Container from 'react-bootstrap/Container';
 import Form from 'react-bootstrap/Form';
@@ -107,7 +107,6 @@ export default function ProductSpecList(): React.ReactElement {
           </Link>
           <Button
             variant="warning"
-            className="ms-1"
             onClick={() => removeProductFromPrefilledResponse(product.id)}
           >
             <BsTrashFill />

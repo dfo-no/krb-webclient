@@ -1,7 +1,7 @@
 import { joiResolver } from '@hookform/resolvers/joi';
 import { get } from 'lodash';
 import React, { useContext, useEffect, useState } from 'react';
-import Button from 'react-bootstrap/Button';
+import Button from '@mui/material/Button';
 import Form from 'react-bootstrap/Form';
 import { FieldError, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
@@ -109,17 +109,13 @@ export default function EditCodeForm({ element }: IProps): React.ReactElement {
         error={get(errors, `description`) as FieldError}
         label={t('Description')}
       />
-      <Button className="mt-2  ml-3" type="submit">
+      <Button variant="primary" type="submit">
         {t('save')}
       </Button>
       <Button className="mt-2 ml-3 btn-warning" onClick={() => onOpenClose('')}>
         {t('cancel')}
       </Button>
-      <Button
-        className="mt-2  ml-3"
-        variant="warning"
-        onClick={() => deleteCode(element)}
-      >
+      <Button variant="warning" onClick={() => deleteCode(element)}>
         {t('delete')} <BsTrashFill />
       </Button>
       <ErrorSummary errors={errors} />

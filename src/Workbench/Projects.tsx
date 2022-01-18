@@ -42,11 +42,7 @@ function Projects(): React.ReactElement {
               </Link>
             </Col>
             <Col sm={1} className="p-0">
-              <Button
-                className="mr-2"
-                variant="danger"
-                onClick={() => onDelete(element)}
-              >
+              <Button variant="warning" onClick={() => onDelete(element)}>
                 <BsTrashFill />
               </Button>
             </Col>

@@ -1,7 +1,7 @@
 import { joiResolver } from '@hookform/resolvers/joi';
 import { get } from 'lodash';
 import React, { useState } from 'react';
-import Button from 'react-bootstrap/Button';
+import Button from '@mui/material/Button';
 import Card from 'react-bootstrap/Card';
 import Form from 'react-bootstrap/Form';
 import { FieldError, useForm } from 'react-hook-form';
@@ -59,10 +59,10 @@ function NewNeedForm(): React.ReactElement {
   return (
     <>
       <Button
+        variant="primary"
         onClick={() => {
           setShow(true);
         }}
-        className="mb-4"
       >
         {t('new need')}
       </Button>
@@ -87,13 +87,10 @@ function NewNeedForm(): React.ReactElement {
                 label={t('Description')}
                 error={get(errors, `description`) as FieldError}
               />
-              <Button className="mt-2  ml-3" type="submit">
+              <Button variant="primary" type="submit">
                 {t('save')}
               </Button>
-              <Button
-                className="mt-2 ml-3 btn-warning"
-                onClick={() => setShow(false)}
-              >
+              <Button variant="warning" onClick={() => setShow(false)}>
                 Avbryt
               </Button>
               <ErrorSummary errors={errors} />

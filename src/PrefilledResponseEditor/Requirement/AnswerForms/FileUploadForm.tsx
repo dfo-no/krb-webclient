@@ -1,6 +1,6 @@
 import { joiResolver } from '@hookform/resolvers/joi';
 import Alert from '@mui/material/Alert';
-import Button from '@mui/material/Button/Button';
+import Button from '@mui/material/Button';
 import Joi from 'joi';
 import React from 'react';
 import Badge from 'react-bootstrap/Badge';
