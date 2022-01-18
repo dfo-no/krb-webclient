@@ -22,8 +22,7 @@ import { editSpecProduct } from '../../store/reducers/spesification-reducer';
 import ProductRequirementSelectorList from './ProductRequirementSelectorList';
 
 export default function ProductSpecEditor(): React.ReactElement {
-  const { id } = useAppSelector((state) => state.selectedBank);
-  const { normalizedList } = useAppSelector((state) => state.bank);
+  const { spec } = useAppSelector((state) => state.specification);
   const { t } = useTranslation();
   const { selectedSpecificationProduct } = useAppSelector(
     (state) => state.selectedSpecProduct
@@ -50,8 +49,7 @@ export default function ProductSpecEditor(): React.ReactElement {
   };
   const [weightType, setWeightType] = useState(setWeightState());
 
-  if (!id) return <p>No selected bank</p>;
-  const bankSelected = normalizedList[id];
+  const bankSelected = spec.bank;
 
   const addProductToSpecification = (post: ISpecificationProduct) => {
     const newProduct: ISpecificationProduct = {
