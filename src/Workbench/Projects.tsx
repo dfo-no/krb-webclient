@@ -35,7 +35,7 @@ function Projects(): React.ReactElement {
           <Row>
             <Col>
               <Link
-                to={`/workbench/${element.id}`}
+                to={`/workbench/${element.id}/admin`}
                 onClick={() => dispatch(selectProject(element))}
               >
                 <h5>{element.title}</h5>

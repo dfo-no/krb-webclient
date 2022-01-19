@@ -59,7 +59,7 @@ const useStyles = makeStyles({
 });
 
 function SideBar(): React.ReactElement {
-  const match = useRouteMatch<IRouteParams>('/workbench/:projectId');
+  const match = useRouteMatch<IRouteParams>('/workbench/:projectId/admin');
   const { t } = useTranslation();
 
   const currentUrl = match?.url ? match.url : '/workbench';
