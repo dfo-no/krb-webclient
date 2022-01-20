@@ -9,8 +9,8 @@ import Header from '../Header/Header';
 import { useAppDispatch } from '../store/hooks';
 import { getProjectsThunk } from '../store/reducers/project-reducer';
 import theme from '../theme';
+import NewProjectPage from './Admin/Project/NewProjectPage';
 import SideBar from './Components/SideBar';
-import NewProjectPage from './Project/NewProjectPage';
 import ProjectGuard from './ProjectGuard';
 import Projects from './Projects';
 

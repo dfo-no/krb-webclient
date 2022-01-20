@@ -1,0 +1,19 @@
+@import '../../../../dfo-theme.module.scss';
+
+.sidebar {
+  border-right: $dfo-light-border;
+  background-color: $light;
+  min-height: 100vh;
+  &__item {
+    &__active {
+      color: $purple;
+    }
+  }
+}
+
+@for $i from 1 through 9 {
+  $margin: 1rem * $i;
+  .level#{$i} {
+    margin-left: $margin;
+  }
+}
