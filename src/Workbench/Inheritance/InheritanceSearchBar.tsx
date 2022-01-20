@@ -11,7 +11,7 @@ import { useAppDispatch } from '../../store/hooks';
 import { putProjectThunk } from '../../store/reducers/project-reducer';
 
 interface ISearchBarProps {
-  list: IBank[];
+  list: Record<string, IBank>;
   project: IBank;
 }
 
@@ -34,7 +34,7 @@ export default function InheritanceSearchBar({
     if (value === '' || value === ' ') {
       setSearchList([]);
     } else {
-      const filtered = list.filter((element) => {
+      const filtered = Object.values(list).filter((element) => {
         return element.title.toLowerCase().includes(value.toLowerCase());
       });
       setSearchList(filtered.slice(0, 5));

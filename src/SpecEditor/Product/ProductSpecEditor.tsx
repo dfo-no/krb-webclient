@@ -17,13 +17,15 @@ import {
   ISpecificationProduct,
   SpecificationProductSchema
 } from '../../models/ISpecificationProduct';
+import { useGetBankQuery } from '../../store/api/bankApi';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { editSpecProduct } from '../../store/reducers/spesification-reducer';
 import ProductRequirementSelectorList from './ProductRequirementSelectorList';
 
 export default function ProductSpecEditor(): React.ReactElement {
   const { id } = useAppSelector((state) => state.selectedBank);
-  const { normalizedList } = useAppSelector((state) => state.bank);
+
+  const { data: bankSelected } = useGetBankQuery(id ?? '');
   const { t } = useTranslation();
   const { selectedSpecificationProduct } = useAppSelector(
     (state) => state.selectedSpecProduct
@@ -51,7 +53,6 @@ export default function ProductSpecEditor(): React.ReactElement {
   const [weightType, setWeightType] = useState(setWeightState());
 
   if (!id) return <p>No selected bank</p>;
-  const bankSelected = normalizedList[id];
 
   const addProductToSpecification = (post: ISpecificationProduct) => {
     const newProduct: ISpecificationProduct = {
@@ -198,10 +199,12 @@ export default function ProductSpecEditor(): React.ReactElement {
         </Card.Body>
       </Card>
       <Row className="m-4">
-        <ProductRequirementSelectorList
-          product={selectedSpecificationProduct}
-          selectedBank={bankSelected}
-        />
+        {bankSelected && (
+          <ProductRequirementSelectorList
+            product={selectedSpecificationProduct}
+            selectedBank={bankSelected}
+          />
+        )}
       </Row>
     </Container>
   );

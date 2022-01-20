@@ -1,6 +1,6 @@
 import { joiResolver } from '@hookform/resolvers/joi';
 import Joi from 'joi';
-import React from 'react';
+import React, { useEffect } from 'react';
 import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
 import Container from 'react-bootstrap/Container';
@@ -9,22 +9,42 @@ import FormControl from 'react-bootstrap/FormControl';
 import Row from 'react-bootstrap/Row';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
+import { useParams } from 'react-router-dom';
+import LoaderSpinner from '../../common/LoaderSpinner';
 import ErrorSummary from '../../Form/ErrorSummary';
+import { useGetBankQuery } from '../../store/api/bankApi';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
+import { selectBank } from '../../store/reducers/selectedBank-reducer';
 import { editTitle, setBank } from '../../store/reducers/spesification-reducer';
 
 type FormInput = {
   title: string;
 };
 
+interface IRouteParams {
+  id: string;
+}
+
 const titleSchema = Joi.object().keys({
   title: Joi.string().required()
 });
 
 export default function SpecEditor(): React.ReactElement {
-  const { id } = useAppSelector((state) => state.selectedBank);
-  const { normalizedList } = useAppSelector((state) => state.bank);
+  const { id } = useParams<IRouteParams>();
   const { spec } = useAppSelector((state) => state.specification);
+  const dispatch = useAppDispatch();
+
+  const { data: selectedBank, isLoading } = useGetBankQuery(id ?? '');
+
+  useEffect(() => {
+    if (id) {
+      dispatch(selectBank(id));
+    }
+    if (selectedBank) {
+      dispatch(setBank(selectedBank));
+    }
+  }, [dispatch, id, selectedBank]);
+
   const { t } = useTranslation();
   const {
     register,
@@ -36,15 +56,14 @@ export default function SpecEditor(): React.ReactElement {
       title: spec.title
     }
   });
-  const dispatch = useAppDispatch();
 
   if (!id) {
     return <p>No selected bank</p>;
   }
 
-  const selectedBank = normalizedList[id];
-
-  dispatch(setBank(selectedBank));
+  if (isLoading || !selectedBank) {
+    return <LoaderSpinner />;
+  }
 
   const saveTitle = (post: FormInput) => {
     dispatch(editTitle(post.title));

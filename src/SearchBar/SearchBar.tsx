@@ -9,7 +9,7 @@ import { selectBank } from '../store/reducers/selectedBank-reducer';
 import styles from './SearchBar.module.scss';
 
 interface ISearchBarProps {
-  list: IBank[];
+  list: Record<string, IBank>;
 }
 
 export default function SearchBar({
@@ -29,7 +29,7 @@ export default function SearchBar({
     if (value === '' || value === ' ') {
       setSearchList([]);
     } else {
-      const filtered = list.filter((element) => {
+      const filtered = Object.values(list).filter((element) => {
         return element.title.toLowerCase().includes(value.toLowerCase());
       });
       setSearchList(filtered.slice(0, 5));
