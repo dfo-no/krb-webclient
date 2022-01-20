@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
 import Button from '@mui/material/Button';
+import React, { useState } from 'react';
 import Col from 'react-bootstrap/Col';
 import FormControl from 'react-bootstrap/FormControl';
 import Row from 'react-bootstrap/Row';
@@ -45,12 +45,12 @@ export default function InheritanceSearchBar({
   const selectInheritance = (bank: IBank) => {
     const updatedProject = Utils.inheritBank(project, bank);
     dispatch(putProjectThunk(updatedProject));
-    history.push('/workbench/:projectId/inheritance');
+    history.push(`/workbench/${project.id}/admin/inheritance`);
   };
   const displaylist = (bankList: IBank[]) => {
     const resultList = bankList.map((bank: IBank) => {
       return (
-        <Row>
+        <Row key={bank.publishedDate + bank.id}>
           <Col>
             <Row>
               <b>{bank.title}</b>

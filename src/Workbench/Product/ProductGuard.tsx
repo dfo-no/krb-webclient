@@ -24,13 +24,13 @@ export default function ProductGuard(): React.ReactElement {
       if (index !== -1) {
         dispatch(selectProduct(project.products[index]));
       } else {
-        history.push(`/workbench/${project.id}/codelist`);
+        history.push(`/workbench/${project.id}/admin/product`);
       }
     }
   }, [dispatch, productId, project.products, product.id, history, project.id]);
 
   return (
-    <Route exact path="/workbench/:projectId/:productId/product">
+    <Route exact path="/workbench/:projectId/admin/:productId/product">
       <ProductPreview />
     </Route>
   );

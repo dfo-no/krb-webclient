@@ -1,5 +1,5 @@
-import React from 'react';
 import Button from '@mui/material/Button';
+import React from 'react';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 import { useTranslation } from 'react-i18next';
@@ -54,7 +54,7 @@ export default function InheritancePage(): React.ReactElement {
       <h3 className="m-3 ">{t('Avhengigheter')} </h3>
       <Row>
         <Col className="d-flex justify-content-end">
-          <Link to={`/workbench/${project.id}/inheritance/explore`}>
+          <Link to={`/workbench/${project.id}/admin/inheritance/explore`}>
             <Button variant="primary">Utforsk</Button>
           </Link>
         </Col>

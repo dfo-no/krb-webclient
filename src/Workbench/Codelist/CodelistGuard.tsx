@@ -22,13 +22,13 @@ export default function CodelistGuard(): React.ReactElement {
       if (index !== -1) {
         dispatch(selectCodeList(project.codelist[index]));
       } else {
-        history.push(`/workbench/${project.id}/codelist`);
+        history.push(`/workbench/${project.id}/admin/codelist`);
       }
     }
   }, [dispatch, id, project.codelist, codelist.id, history, project.id]);
 
   return (
-    <Route exact path="/workbench/:projectId/codelist/:id">
+    <Route exact path="/workbench/:projectId/admin/codelist/:id">
       <CodeListEditor />
     </Route>
   );
