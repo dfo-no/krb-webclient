@@ -1,7 +1,7 @@
 import { DevTool } from '@hookform/devtools';
 import { joiResolver } from '@hookform/resolvers/joi';
 import React, { useState } from 'react';
-import Button from 'react-bootstrap/Button';
+import Button from '@mui/material/Button';
 import Card from 'react-bootstrap/Card';
 import Form from 'react-bootstrap/Form';
 import { FormProvider, useForm } from 'react-hook-form';
@@ -17,6 +17,7 @@ import {
   addCodelist,
   putSelectedProjectThunk
 } from '../../store/reducers/project-reducer';
+import Box from '@mui/material/Box';
 
 function NewCodelist(): React.ReactElement {
   const dispatch = useAppDispatch();
@@ -55,7 +56,7 @@ function NewCodelist(): React.ReactElement {
 
   return (
     <>
-      <Button className="mb-4" onClick={() => setShow(true)}>
+      <Button variant="primary" onClick={() => setShow(true)}>
         {t('new codelist')}
       </Button>
       {show && (
@@ -68,15 +69,21 @@ function NewCodelist(): React.ReactElement {
                 noValidate
                 validated={validated}
               >
-                <TextCtrl name="title" label={t('Title')} />
-                <TextCtrl name="description" label={t('Description')} />
-                <Button className="mt-2  ml-3" type="submit">
+                <Box
+                  sx={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    gap: 1,
+                    width: 400
+                  }}
+                >
+                  <TextCtrl name="title" label={t('Title')} />
+                  <TextCtrl name="description" label={t('Description')} />
+                </Box>
+                <Button variant="primary" type="submit">
                   {t('save')}
                 </Button>
-                <Button
-                  className="mt-2 ml-3 btn-warning"
-                  onClick={() => reset()}
-                >
+                <Button variant="warning" onClick={() => reset()}>
                   {t('cancel')}
                 </Button>
               </Form>

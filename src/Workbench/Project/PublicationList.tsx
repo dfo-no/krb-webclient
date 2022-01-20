@@ -1,7 +1,7 @@
 import { joiResolver } from '@hookform/resolvers/joi';
 import { get, has, toPath } from 'lodash';
 import React, { useState } from 'react';
-import Button from 'react-bootstrap/Button';
+import Button from '@mui/material/Button';
 import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 import ListGroup from 'react-bootstrap/ListGroup';
@@ -28,24 +28,17 @@ export default function PublicationList(): React.ReactElement {
   const { project } = useAppSelector((state) => state.project);
   const [editId, setEditId] = useState('');
 
-  const { control, register, formState, handleSubmit } = useForm<
-    Omit<IBank, 'needs'>
-  >({
+  const { register, formState, handleSubmit } = useForm<Omit<IBank, 'needs'>>({
     criteriaMode: 'all',
     resolver: joiResolver(PutProjectSchema),
     defaultValues: project
   });
   const { errors } = formState;
 
-  const { fields } = useFieldArray({
-    name: 'publications',
-    control
-  });
-
   const { t } = useTranslation();
 
-  const deletePublication = async (publicationId: string) => {
-    dispatch(deleteProjectByIdThunk(publicationId)).then(() => {
+  const deletePublication = async (publicationId: string, bankId: string) => {
+    dispatch(deleteProjectByIdThunk(bankId)).then(() => {
       dispatch(removePublication(publicationId));
       dispatch(putSelectedProjectThunk('dummy'));
     });
@@ -87,7 +80,7 @@ export default function PublicationList(): React.ReactElement {
   return (
     <Form>
       <ListGroup className="mt-4">
-        {fields.map((field, index) => {
+        {project.publications.map((field, index) => {
           return (
             <ListGroup.Item as="div" key={field.id}>
               {field.id === editId ? (
@@ -108,7 +101,7 @@ export default function PublicationList(): React.ReactElement {
                     )}
                   </Form.Group>
                   <Col sm={1}>
-                    <Button className="mr-1" onClick={handleSubmit(onSubmit)}>
+                    <Button variant="primary" onClick={handleSubmit(onSubmit)}>
                       {t('save')}
                     </Button>
                     <Button variant="warning" onClick={() => setEditId('')}>
@@ -132,9 +125,7 @@ export default function PublicationList(): React.ReactElement {
                   </Col>
                   <Col sm={1} className="m-0 p-0">
                     <Button
-                      className="mr-1"
                       variant="primary"
-                      type="button"
                       onClick={() => {
                         setEditId(field.id);
                       }}
@@ -142,10 +133,9 @@ export default function PublicationList(): React.ReactElement {
                       <BsPencilSquare />
                     </Button>
                     <Button
-                      variant="danger"
-                      type="button"
+                      variant="warning"
                       onClick={() => {
-                        deletePublication(field.id);
+                        deletePublication(field.id, field.bankId);
                       }}
                     >
                       <BsTrashFill />

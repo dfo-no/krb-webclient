@@ -25,6 +25,12 @@ const theme = createTheme({
     dfoLightBlue: {
       main: dfoThemeScss.dfoLightBlue
     },
+    dfoErrorRed: {
+      main: dfoThemeScss.dfoErrorRed
+    },
+    dfoErrorRedHover: {
+      main: dfoThemeScss.dfoErrorRedHover
+    },
     gray100: {
       main: dfoThemeScss.gray100
     },
@@ -45,6 +51,9 @@ const theme = createTheme({
     },
     blue: {
       main: dfoThemeScss.blue
+    },
+    black: {
+      main: dfoThemeScss.black
     },
     lightBlue: {
       main: dfoThemeScss.lightBlue
@@ -90,6 +99,10 @@ theme.typography.footerAddressText = {
   fontSize: '15px'
 };
 
+theme.typography.textCtrlErrorMessage = {
+  color: theme.palette.dfoErrorRed.main
+};
+
 theme.components = {
   MuiAppBar: {
     styleOverrides: {
@@ -109,6 +122,17 @@ theme.components = {
           whiteSpace: 'nowrap',
           '&:hover': {
             background: theme.palette.lightBlue.main
+          }
+        }
+      },
+      {
+        props: { variant: 'warning' },
+        style: {
+          backgroundColor: theme.palette.dfoErrorRed.main,
+          color: theme.palette.dfoWhite.main,
+          whiteSpace: 'nowrap',
+          '&:hover': {
+            background: theme.palette.dfoErrorRedHover.main
           }
         }
       }

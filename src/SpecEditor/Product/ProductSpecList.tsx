@@ -1,5 +1,5 @@
+import Button from '@mui/material/Button';
 import React, { useEffect } from 'react';
-import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
 import Container from 'react-bootstrap/Container';
 import Form from 'react-bootstrap/Form';
@@ -152,27 +152,26 @@ export default function ProductSpecList(): React.ReactElement {
         <Row>
           <h2 className="m-4">{t('product selection')}</h2>
         </Row>
-        {bankSelected && (
-          <Row className="ml-2 mt-4">
-            <Col>
-              <Form.Control as="select" {...register('product')}>
-                {levelOptions(bankSelected.products).map((element) => (
-                  <option
-                    key={element.id}
-                    value={element.id}
-                    className={` ${styles[`level${element.level}`]}`}
-                  >
-                    {element.title}
-                  </option>
-                ))}
-              </Form.Control>
-            </Col>
-            <Col>
-              <Button type="submit">{t('add')}</Button>
-            </Col>
-          </Row>
-        )}
-
+        <Row className="ml-2 mt-4">
+          <Col>
+            <Form.Control as="select" {...register('product')}>
+              {levelOptions(bankSelected.products).map((element) => (
+                <option
+                  key={element.id}
+                  value={element.id}
+                  className={` ${styles[`level${element.level}`]}`}
+                >
+                  {element.title}
+                </option>
+              ))}
+            </Form.Control>
+          </Col>
+          <Col>
+            <Button variant="primary" type="submit">
+              {t('add')}
+            </Button>
+          </Col>
+        </Row>
         <Row className="m-4">
           <h4>{t('Products')}</h4>
         </Row>

@@ -1,8 +1,8 @@
 import { joiResolver } from '@hookform/resolvers/joi';
+import Button from '@mui/material/Button';
 import Slider from '@mui/material/Slider';
 import { get } from 'lodash';
 import React, { useState } from 'react';
-import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import Col from 'react-bootstrap/Col';
 import Container from 'react-bootstrap/Container';
@@ -17,15 +17,12 @@ import {
   ISpecificationProduct,
   SpecificationProductSchema
 } from '../../models/ISpecificationProduct';
-import { useGetBankQuery } from '../../store/api/bankApi';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { editSpecProduct } from '../../store/reducers/spesification-reducer';
 import ProductRequirementSelectorList from './ProductRequirementSelectorList';
 
 export default function ProductSpecEditor(): React.ReactElement {
-  const { id } = useAppSelector((state) => state.selectedBank);
-
-  const { data: bankSelected } = useGetBankQuery(id ?? '');
+  const { spec } = useAppSelector((state) => state.specification);
   const { t } = useTranslation();
   const { selectedSpecificationProduct } = useAppSelector(
     (state) => state.selectedSpecProduct
@@ -52,7 +49,7 @@ export default function ProductSpecEditor(): React.ReactElement {
   };
   const [weightType, setWeightType] = useState(setWeightState());
 
-  if (!id) return <p>No selected bank</p>;
+  const bankSelected = spec.bank;
 
   const addProductToSpecification = (post: ISpecificationProduct) => {
     const newProduct: ISpecificationProduct = {
@@ -192,7 +189,9 @@ export default function ProductSpecEditor(): React.ReactElement {
               </Col>
             </Form.Group>
             <Col className="p-0 d-flex justify-content-end">
-              <Button type="submit">{t('save')}</Button>
+              <Button variant="primary" type="submit">
+                {t('save')}
+              </Button>
             </Col>
             <ErrorSummary errors={errors} />
           </Form>

@@ -1,7 +1,7 @@
 import { joiResolver } from '@hookform/resolvers/joi';
+import Button from '@mui/material/Button';
 import Joi from 'joi';
-import React, { useEffect } from 'react';
-import Button from 'react-bootstrap/Button';
+import React from 'react';
 import Col from 'react-bootstrap/Col';
 import Container from 'react-bootstrap/Container';
 import Form from 'react-bootstrap/Form';
@@ -9,41 +9,21 @@ import FormControl from 'react-bootstrap/FormControl';
 import Row from 'react-bootstrap/Row';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import { useParams } from 'react-router-dom';
-import LoaderSpinner from '../../common/LoaderSpinner';
 import ErrorSummary from '../../Form/ErrorSummary';
-import { useGetBankQuery } from '../../store/api/bankApi';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
-import { selectBank } from '../../store/reducers/selectedBank-reducer';
-import { editTitle, setBank } from '../../store/reducers/spesification-reducer';
+import { editTitle } from '../../store/reducers/spesification-reducer';
 
 type FormInput = {
   title: string;
 };
-
-interface IRouteParams {
-  id: string;
-}
 
 const titleSchema = Joi.object().keys({
   title: Joi.string().required()
 });
 
 export default function SpecEditor(): React.ReactElement {
-  const { id } = useParams<IRouteParams>();
   const { spec } = useAppSelector((state) => state.specification);
   const dispatch = useAppDispatch();
-
-  const { data: selectedBank, isLoading } = useGetBankQuery(id ?? '');
-
-  useEffect(() => {
-    if (id) {
-      dispatch(selectBank(id));
-    }
-    if (selectedBank) {
-      dispatch(setBank(selectedBank));
-    }
-  }, [dispatch, id, selectedBank]);
 
   const { t } = useTranslation();
   const {
@@ -57,13 +37,7 @@ export default function SpecEditor(): React.ReactElement {
     }
   });
 
-  if (!id) {
-    return <p>No selected bank</p>;
-  }
-
-  if (isLoading || !selectedBank) {
-    return <LoaderSpinner />;
-  }
+  const selectedBank = spec.bank;
 
   const saveTitle = (post: FormInput) => {
     dispatch(editTitle(post.title));
@@ -91,7 +65,9 @@ export default function SpecEditor(): React.ReactElement {
                 )}
               </Col>
               <Col sm={4}>
-                <Button type="submit">{t('save')}</Button>
+                <Button variant="primary" type="submit">
+                  {t('save')}
+                </Button>
               </Col>
             </Form.Group>
             <ErrorSummary errors={errors} />

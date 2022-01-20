@@ -8,6 +8,8 @@ declare module '@mui/material/styles/createPalette' {
     dfoInputBackground: PaletteColor;
     dfoWhite: PaletteColor;
     dfoLightBlue: PaletteColor;
+    dfoErrorRed: PaletteColor;
+    dfoErrorRedHover: PaletteColor;
     gray100: PaletteColor;
     gray200: PaletteColor;
     gray300: PaletteColor;
@@ -15,6 +17,7 @@ declare module '@mui/material/styles/createPalette' {
     gray500: PaletteColor;
     gray900: PaletteColor;
     blue: PaletteColor;
+    black: PaletteColor;
     lightBlue: PaletteColor;
     indigo: PaletteColor;
     purple: PaletteColor;
@@ -36,6 +39,8 @@ declare module '@mui/material/styles/createPalette' {
     dfoInputBackground: PaletteColorOptions;
     dfoWhite: PaletteColorOptions;
     dfoLightBlue: PaletteColorOptions;
+    dfoErrorRed: PaletteColorOptions;
+    dfoErrorRedHover: PaletteColorOptions;
     gray100: PaletteColorOptions;
     gray200: PaletteColorOptions;
     gray300: PaletteColorOptions;
@@ -43,6 +48,7 @@ declare module '@mui/material/styles/createPalette' {
     gray500: PaletteColorOptions;
     gray900: PaletteColorOptions;
     blue: PaletteColorOptions;
+    black: PaletteColorOptions;
     lightBlue: PaletteColorOptions;
     indigo: PaletteColorOptions;
     purple: PaletteColorOptions;

@@ -2,7 +2,7 @@ import { joiResolver } from '@hookform/resolvers/joi';
 import Joi from 'joi';
 import React from 'react';
 import Badge from 'react-bootstrap/Badge';
-import Button from 'react-bootstrap/Button';
+import Button from '@mui/material/Button';
 import Form from 'react-bootstrap/Form';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';

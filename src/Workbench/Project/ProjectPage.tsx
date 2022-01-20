@@ -1,5 +1,5 @@
+import Button from '@mui/material/Button';
 import React, { useState } from 'react';
-import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
 import { useTranslation } from 'react-i18next';
 import { BsPencil } from 'react-icons/bs';
@@ -26,7 +26,7 @@ function ProjectPage(): React.ReactElement {
       <Col sm={8}>
         <h3>
           {project.title}
-          <Button className="mx-3" onClick={() => setEditMode(true)}>
+          <Button variant="primary" onClick={() => setEditMode(true)}>
             <BsPencil />
           </Button>
         </h3>

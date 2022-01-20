@@ -1,7 +1,7 @@
 import { joiResolver } from '@hookform/resolvers/joi';
 import { get } from 'lodash';
 import React, { useState } from 'react';
-import Button from 'react-bootstrap/Button';
+import Button from '@mui/material/Button';
 import Card from 'react-bootstrap/Card';
 import Form from 'react-bootstrap/Form';
 import { FieldError, useForm } from 'react-hook-form';
@@ -50,10 +50,10 @@ export default function NewPublication(): React.ReactElement {
   });
 
   const { errors } = formState;
+  const nexus = Nexus.getInstance();
 
-  const onSubmit = async (post: IPublication) => {
+  const onSubmit = (post: IPublication) => {
     const publication = { ...post };
-    const nexus = Nexus.getInstance();
 
     const newBank = nexus.publicationService.generateBankFromProject(project);
     const nextVersion = nexus.publicationService.getNextVersion(
@@ -63,7 +63,7 @@ export default function NewPublication(): React.ReactElement {
     // save the new published Bank
     addBank(newBank)
       .unwrap()
-      .then(async (result: IBank) => {
+      .then((result: IBank) => {
         // Update Publication with new data
         publication.id = result.id;
         publication.bankId = result.id;
@@ -78,7 +78,6 @@ export default function NewPublication(): React.ReactElement {
         // save selected bank to db
         dispatch(putSelectedProjectThunk('dummy')).then(() => {
           setShow(false);
-          reset();
           const alert: IAlert = {
             id: uuidv4(),
             style: 'success',
@@ -86,12 +85,15 @@ export default function NewPublication(): React.ReactElement {
           };
           dispatch(addAlert({ alert }));
         });
+        reset();
       });
   };
 
   return (
     <>
-      <Button onClick={() => setShow(true)}>{t('new publication')}</Button>
+      <Button variant="primary" onClick={() => setShow(true)}>
+        {t('new publication')}
+      </Button>
       {show && (
         <Card className="mb-4 mt-4">
           <Card.Body>
@@ -101,13 +103,10 @@ export default function NewPublication(): React.ReactElement {
                 error={get(errors, `comment`) as FieldError}
                 name="comment"
               />
-              <Button className="mt-2  ml-3" type="submit">
+              <Button variant="primary" type="submit">
                 {t('save')}
               </Button>
-              <Button
-                className="mt-2 ml-3 btn-warning"
-                onClick={() => setShow(false)}
-              >
+              <Button variant="warning" onClick={() => setShow(false)}>
                 {t('cancel')}
               </Button>
               <ErrorSummary errors={errors} />

@@ -1,7 +1,7 @@
 import { joiResolver } from '@hookform/resolvers/joi';
 import Joi from 'joi';
 import React from 'react';
-import Button from 'react-bootstrap/Button';
+import Button from '@mui/material/Button';
 import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 import { useForm } from 'react-hook-form';
@@ -137,7 +137,7 @@ export default function ISliderInfoAnswer({
           key={sliderQuestion.id}
         />
 
-        <Button className="mt-2" type="submit">
+        <Button variant="primary" type="submit">
           {t('save')}
         </Button>
         <ErrorSummary errors={errors} />
