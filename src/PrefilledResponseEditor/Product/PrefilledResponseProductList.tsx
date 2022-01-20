@@ -15,6 +15,7 @@ import ErrorSummary from '../../Form/ErrorSummary';
 import { IPrefilledResponseProduct } from '../../models/IPrefilledResponseProduct';
 import { Parentable } from '../../models/Parentable';
 import { IProduct } from '../../Nexus/entities/IProduct';
+import { useGetBankQuery } from '../../store/api/bankApi';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import {
   addProduct,
@@ -34,7 +35,7 @@ interface IOption {
 
 export default function ProductSpecList(): React.ReactElement {
   const { id } = useAppSelector((state) => state.selectedBank);
-  const { normalizedList } = useAppSelector((state) => state.bank);
+  const { data: bankSelected } = useGetBankQuery(id ?? '');
   const { prefilledResponse } = useAppSelector(
     (state) => state.prefilledResponse
   );
@@ -46,11 +47,9 @@ export default function ProductSpecList(): React.ReactElement {
   } = useForm<IFormInput>();
   const dispatch = useAppDispatch();
 
-  if (!id) {
+  if (!id || !bankSelected) {
     return <p>No selected bank</p>;
   }
-
-  const bankSelected = normalizedList[id];
 
   const levelOptions = (products: Parentable<IProduct>[]) => {
     const newList = Utils.parentable2Levelable(products);
@@ -119,34 +118,36 @@ export default function ProductSpecList(): React.ReactElement {
 
   return (
     <Container fluid>
-      <Form
-        onSubmit={handleSubmit(addProductToPrefilledResponse)}
-        autoComplete="off"
-      >
-        <Row>
-          <h2 className="m-4">{t('product selection')}</h2>
-        </Row>
-        <Row className="ml-2 mt-4">
-          <Col>
-            <Form.Control as="select" {...register('product')}>
-              {levelOptions(bankSelected.products).map((element) => (
-                <option key={element.id} value={element.id}>
-                  {Utils.generatePaddingChars(element.level)}
-                  {element.title}
-                </option>
-              ))}
-            </Form.Control>
-          </Col>
-          <Col>
-            <Button type="submit">{t('add')}</Button>
-          </Col>
-        </Row>
-        <Row className="m-4">
-          <h4>{t('Products')}</h4>
-        </Row>
-        <Row className=" ml-4">{productList(prefilledResponse.products)}</Row>
-        <ErrorSummary errors={errors} />
-      </Form>
+      {bankSelected && (
+        <Form
+          onSubmit={handleSubmit(addProductToPrefilledResponse)}
+          autoComplete="off"
+        >
+          <Row>
+            <h2 className="m-4">{t('product selection')}</h2>
+          </Row>
+          <Row className="ml-2 mt-4">
+            <Col>
+              <Form.Control as="select" {...register('product')}>
+                {levelOptions(bankSelected.products).map((element) => (
+                  <option key={element.id} value={element.id}>
+                    {Utils.generatePaddingChars(element.level)}
+                    {element.title}
+                  </option>
+                ))}
+              </Form.Control>
+            </Col>
+            <Col>
+              <Button type="submit">{t('add')}</Button>
+            </Col>
+          </Row>
+          <Row className="m-4">
+            <h4>{t('Products')}</h4>
+          </Row>
+          <Row className=" ml-4">{productList(prefilledResponse.products)}</Row>
+          <ErrorSummary errors={errors} />
+        </Form>
+      )}
     </Container>
   );
 }

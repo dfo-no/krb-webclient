@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import Col from 'react-bootstrap/Col';
 import Container from 'react-bootstrap/Container';
 import ListGroup from 'react-bootstrap/ListGroup';
@@ -6,31 +6,24 @@ import Row from 'react-bootstrap/Row';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import SearchBar from '../SearchBar/SearchBar';
-import { useAppDispatch, useAppSelector } from '../store/hooks';
-import { getBanksThunk } from '../store/reducers/bank-reducer';
+import {
+  useGetAlbefaticalSortedBanksQuery,
+  useGetAllBanksQuery,
+  useGetDateSortedBanksQuery
+} from '../store/api/bankApi';
 import FilteredList from './Components/FilteredList';
 
 export default function HomePage(): React.ReactElement {
-  const dispatch = useAppDispatch();
   const { t } = useTranslation();
-  const { list, alfabetic, latest, status } = useAppSelector(
-    (state) => state.bank
-  );
-  useEffect(() => {
-    async function fetchEverything() {
-      if (status === 'idle') {
-        dispatch(getBanksThunk());
-      }
-    }
-    fetchEverything();
-  }, [status, dispatch]);
+
+  const { data: latest } = useGetDateSortedBanksQuery();
+  const { data: alfabetic } = useGetAlbefaticalSortedBanksQuery();
+  const { data: list } = useGetAllBanksQuery();
 
   return (
     <Container fluid>
       <Row className="mt-2">
-        <Col>
-          <SearchBar list={list} />
-        </Col>
+        <Col>{list && <SearchBar list={list} />}</Col>
         <Col>
           <ListGroup variant="flush">
             <ListGroup.Item className="mt-1 ">
@@ -58,13 +51,17 @@ export default function HomePage(): React.ReactElement {
       </Row>
       <Row className="mt-5">
         <Col>
-          <FilteredList list={latest} filterTitle={t('newest banks')} />
+          {latest && (
+            <FilteredList list={latest} filterTitle={t('newest banks')} />
+          )}
         </Col>
         <Col>
-          <FilteredList
-            list={alfabetic}
-            filterTitle={t('Alfabetically sorted')}
-          />
+          {alfabetic && (
+            <FilteredList
+              list={alfabetic}
+              filterTitle={t('Alfabetically sorted')}
+            />
+          )}
         </Col>
       </Row>
     </Container>

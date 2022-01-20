@@ -1,6 +1,6 @@
 import { combineReducers } from '@reduxjs/toolkit';
+import { bankApi } from './api/bankApi';
 import alertReducer from './reducers/alert-reducer';
-import bankReducer from './reducers/bank-reducer';
 import evaluationReducer from './reducers/evaluation-reducer';
 import loaderReducer from './reducers/loader-reducer';
 import PrefilledResponseReducer from './reducers/PrefilledResponseReducer';
@@ -22,7 +22,7 @@ import userReducer from './reducers/userReducer';
 const rootReducer = combineReducers({
   loader: loaderReducer,
   user: userReducer,
-  bank: bankReducer,
+  [bankApi.reducerPath]: bankApi.reducer,
   project: projectReducer,
   selectedProject: selectedProjectReducer,
   selectedCodeList: selectedCodeListReducer,

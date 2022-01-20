@@ -1,15 +1,9 @@
-import React, { useEffect, useState } from 'react';
 import Button from '@mui/material/Button';
+import React, { useState } from 'react';
 import Col from 'react-bootstrap/Col';
 import { useTranslation } from 'react-i18next';
 import { BsPencil } from 'react-icons/bs';
 import { useAppSelector } from '../../store/hooks';
-import {
-  getAlbefaticalSortedBanksThunk,
-  getBanksThunk,
-  getDateSortedBanksThunk
-} from '../../store/reducers/bank-reducer';
-import { store } from '../../store/store';
 import EditProjectForm from './EditProjectForm';
 import NewPublication from './NewPublication';
 import PublicationList from './PublicationList';
@@ -26,12 +20,6 @@ function ProjectPage(): React.ReactElement {
     }
     return <></>;
   }
-
-  useEffect(() => {
-    store.dispatch(getBanksThunk());
-    store.dispatch(getAlbefaticalSortedBanksThunk());
-    store.dispatch(getDateSortedBanksThunk());
-  }, [project.publications]);
 
   return (
     <div>
