@@ -28,8 +28,7 @@ const useStyles = makeStyles({
     backgroundColor: theme.palette.gray100.main
   },
   editorContainer: {
-    width: '100vw',
-    paddingBottom: 30
+    width: '100vw'
   }
 });
 

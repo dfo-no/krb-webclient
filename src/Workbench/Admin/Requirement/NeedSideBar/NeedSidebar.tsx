@@ -24,7 +24,7 @@ export default function NeedSideBar(): React.ReactElement {
             as={NavLink}
             // TODO: activeClassName not reconized ny React
             // activeClassName={`${styles.sidebar__item__active}`}
-            to={`/workbench/${project.id}/need/${element.id}/requirement`}
+            to={`/workbench/${project.id}/admin/need/${element.id}/requirement`}
             role="link"
           >
             {element.title}

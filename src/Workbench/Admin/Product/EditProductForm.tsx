@@ -139,7 +139,7 @@ export default function EditProductForm({
         {t('save')}
       </Button>
       <Link
-        to={`/workbench/${project.id}/${element.id}/product`}
+        to={`/workbench/${project.id}/admin/${element.id}/product`}
         onClick={() => dispatch(selectProduct(element))}
       >
         <Button className="mt-2  ml-3">Preview</Button>

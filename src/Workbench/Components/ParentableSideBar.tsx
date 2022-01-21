@@ -1,3 +1,8 @@
+import { makeStyles } from '@material-ui/core';
+import Button from '@material-ui/core/Button';
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
+import ListItemText from '@mui/material/ListItemText';
 import React from 'react';
 import Nav from 'react-bootstrap/Nav';
 import { NavLink } from 'react-router-dom';
@@ -6,32 +11,77 @@ import { Levelable } from '../../models/Levelable';
 import { Parentable } from '../../models/Parentable';
 import { INeed } from '../../Nexus/entities/INeed';
 import { IProduct } from '../../Nexus/entities/IProduct';
-import styles from './NeedSidebar.module.scss';
+import theme from '../../theme';
+import styles from '../Admin/Requirement/NeedSideBar/NeedSidebar.module.scss';
 
 interface IProps {
   parentableArray: Parentable<INeed | IProduct>[];
   updateSelectedFunction: (item: Levelable<INeed | IProduct>) => void;
 }
 
-export default function ParentableSideBar(): React.ReactElement {
-  const needLevels = (elements: Parentable<INeed>[]) => {
+const useStyles = makeStyles({
+  sideBarList: {
+    backgroundColor: theme.palette.gray100.main,
+    width: '17vw',
+    minWidth: 250,
+    minHeight: '100vh',
+    [theme.breakpoints.down('sm')]: {
+      height: 'auto',
+      width: '100vw',
+      backgroundColor: theme.palette.dfoWhite.main
+    }
+  },
+  sideBarListItem: {
+    cursor: 'pointer',
+    borderBottom: `1px solid ${theme.palette.gray300.main}`,
+    '&:hover': {
+      background: theme.palette.lightBlue.main,
+      color: theme.palette.dfoWhite.main,
+
+      '& $sideBarListItemText': {
+        color: theme.palette.dfoWhite.main
+      }
+    },
+
+    [theme.breakpoints.down('sm')]: {
+      backgroundColor: theme.palette.gray100.main
+    }
+  },
+
+  sideBarListItemText: {
+    color: theme.palette.primary.main,
+    [theme.breakpoints.down('sm')]: {
+      textAlign: 'center'
+    }
+  }
+});
+
+export default function ParentableSideBar({
+  parentableArray,
+  updateSelectedFunction
+}: IProps): React.ReactElement {
+  const classes = useStyles();
+  const levels = (elements: Parentable<INeed | IProduct>[]) => {
     const displayNeeds = Utils.parentable2Levelable(elements);
     return displayNeeds.map((element) => {
       const cssClass = `level${element.level - 1}`;
       return (
-        <Button
-          className={`${styles.sidebar__item} ${styles[cssClass]}`}
+        <ListItem
           key={element.id}
+          className={`${styles.sidebar__item} ${styles[cssClass]} ${classes.sideBarListItem}`}
+          onClick={() => updateSelectedFunction(element)}
         >
-          {element.title}
-        </Button>
+          <ListItemText className={classes.sideBarListItemText}>
+            {element.title}
+          </ListItemText>
+        </ListItem>
       );
     });
   };
 
   return (
     <Nav className={`sidebar flex-column p-0 ${styles.sidebar}`}>
-      {needLevels(needs)}
+      <List className={classes.sideBarList}>{levels(parentableArray)}</List>
     </Nav>
   );
 }
