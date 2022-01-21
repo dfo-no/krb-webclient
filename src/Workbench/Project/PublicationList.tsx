@@ -1,19 +1,22 @@
 import { joiResolver } from '@hookform/resolvers/joi';
+import Button from '@mui/material/Button';
 import { get, has, toPath } from 'lodash';
 import React, { useState } from 'react';
-import Button from '@mui/material/Button';
 import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 import ListGroup from 'react-bootstrap/ListGroup';
 import Nav from 'react-bootstrap/Nav';
 import Row from 'react-bootstrap/Row';
-import { useFieldArray, useForm } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { BsPencilSquare, BsTrashFill } from 'react-icons/bs';
+import { v4 as uuidv4 } from 'uuid';
 import ErrorSummary from '../../Form/ErrorSummary';
+import { IAlert } from '../../models/IAlert';
 import { PutProjectSchema } from '../../models/Project';
 import { IBank } from '../../Nexus/entities/IBank';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
+import { addAlert } from '../../store/reducers/alert-reducer';
 import {
   deleteProjectByIdThunk,
   editPublication,
@@ -40,7 +43,14 @@ export default function PublicationList(): React.ReactElement {
   const deletePublication = async (publicationId: string, bankId: string) => {
     dispatch(deleteProjectByIdThunk(bankId)).then(() => {
       dispatch(removePublication(publicationId));
-      dispatch(putSelectedProjectThunk('dummy'));
+      dispatch(putSelectedProjectThunk('dummy')).then(() => {
+        const alert: IAlert = {
+          id: uuidv4(),
+          style: 'success',
+          text: 'Successfully deleted published bank'
+        };
+        dispatch(addAlert({ alert }));
+      });
     });
   };
 

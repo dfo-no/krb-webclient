@@ -4,7 +4,6 @@ import Box from '@mui/material/Box';
 import React, { useEffect, useState } from 'react';
 import { Route, Switch } from 'react-router-dom';
 import LoaderSpinner from '../common/LoaderSpinner';
-import AlertList from '../components/Alert/AlertList';
 import Header from '../Header/Header';
 import { useAppDispatch } from '../store/hooks';
 import { getProjectsThunk } from '../store/reducers/project-reducer';
@@ -58,7 +57,6 @@ export default function WorkbenchModule(): React.ReactElement {
   return (
     <Box className={classes.workbenchContainer}>
       <Box className={classes.editorContainer}>
-        <AlertList />
         <Switch>
           <Route exact path="/workbench">
             <Projects />

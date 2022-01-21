@@ -1,8 +1,8 @@
 import { joiResolver } from '@hookform/resolvers/joi';
+import Button from '@mui/material/Button';
 import { AxiosResponse } from 'axios';
 import Joi from 'joi';
 import React from 'react';
-import Button from '@mui/material/Button';
 import Col from 'react-bootstrap/Col';
 import Container from 'react-bootstrap/Container';
 import Form from 'react-bootstrap/Form';
@@ -71,7 +71,7 @@ export default function ResponseEditor(): React.ReactElement {
       if (result.data.bank.id !== response.spesification.bank.id) {
         const alert: IAlert = {
           id: uuidv4(),
-          style: 'danger',
+          style: 'error',
           text: ' bank used in prefilledResponse does not match the bank in the uploaded specification '
         };
         dispatch(addAlert({ alert }));

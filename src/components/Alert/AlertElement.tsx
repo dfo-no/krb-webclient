@@ -1,6 +1,6 @@
+import Alert from '@mui/material/Alert/Alert';
+import Snackbar from '@mui/material/Snackbar/Snackbar';
 import React, { useEffect } from 'react';
-import AlertComponent from 'react-bootstrap/Alert';
-import Fade from 'react-bootstrap/Fade';
 import { IAlert } from '../../models/IAlert';
 import { useAppDispatch } from '../../store/hooks';
 import { removeAlert } from '../../store/reducers/alert-reducer';
@@ -10,6 +10,8 @@ interface IProps {
 }
 export default function AlertElement({ alert }: IProps): React.ReactElement {
   const dispatch = useAppDispatch();
+  const [open, setOpen] = React.useState(true);
+
   useEffect(() => {
     const timer = setTimeout(() => {
       dispatch(removeAlert({ id: alert.id }));
@@ -18,14 +20,12 @@ export default function AlertElement({ alert }: IProps): React.ReactElement {
   });
 
   return (
-    <AlertComponent
-      variant={alert.style}
+    <Snackbar
+      anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+      open={open}
       onClose={() => dispatch(removeAlert({ id: alert.id }))}
-      dismissible
-      className="mt-2 mb-2"
-      transition={Fade}
     >
-      <p>{alert.text}</p>
-    </AlertComponent>
+      <Alert severity={alert.style}>{alert.text}</Alert>
+    </Snackbar>
   );
 }
