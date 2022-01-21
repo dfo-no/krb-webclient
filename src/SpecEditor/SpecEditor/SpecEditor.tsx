@@ -1,7 +1,7 @@
 import { joiResolver } from '@hookform/resolvers/joi';
+import Button from '@mui/material/Button';
 import Joi from 'joi';
 import React from 'react';
-import Button from '@mui/material/Button';
 import Col from 'react-bootstrap/Col';
 import Container from 'react-bootstrap/Container';
 import Form from 'react-bootstrap/Form';
@@ -23,6 +23,8 @@ const titleSchema = Joi.object().keys({
 
 export default function SpecEditor(): React.ReactElement {
   const { spec } = useAppSelector((state) => state.specification);
+  const dispatch = useAppDispatch();
+
   const { t } = useTranslation();
   const {
     register,
@@ -34,7 +36,6 @@ export default function SpecEditor(): React.ReactElement {
       title: spec.title
     }
   });
-  const dispatch = useAppDispatch();
 
   const selectedBank = spec.bank;
 

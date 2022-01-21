@@ -13,7 +13,7 @@ import ProductSpecList from './Product/ProductSpecList';
 import ConfigureQuestion from './Requirement/ConfigureQuestion';
 import RequirementSpecEditor from './Requirement/RequirementSpecEditor';
 import SpecSideBar from './SideBar/SpecSideBar';
-import SpecificationGuard from './SpecificationGuard';
+import SpecEditor from './SpecEditor/SpecEditor';
 import SpecPage from './SpecPage';
 
 interface IRouteParams {
@@ -44,7 +44,7 @@ export default function SpecModule(): React.ReactElement {
               <SpecPage />
             </Route>
             <Route exact path="/specification/:id">
-              <SpecificationGuard />
+              <SpecEditor />
             </Route>
             <Route exact path="/specification/:id/requirement">
               <RequirementSpecEditor />

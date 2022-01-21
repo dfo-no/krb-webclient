@@ -1,8 +1,8 @@
 import { joiResolver } from '@hookform/resolvers/joi';
+import Button from '@mui/material/Button';
 import Slider from '@mui/material/Slider';
 import { get } from 'lodash';
 import React, { useState } from 'react';
-import Button from '@mui/material/Button';
 import Card from 'react-bootstrap/Card';
 import Col from 'react-bootstrap/Col';
 import Container from 'react-bootstrap/Container';
@@ -198,10 +198,12 @@ export default function ProductSpecEditor(): React.ReactElement {
         </Card.Body>
       </Card>
       <Row className="m-4">
-        <ProductRequirementSelectorList
-          product={selectedSpecificationProduct}
-          selectedBank={bankSelected}
-        />
+        {bankSelected && (
+          <ProductRequirementSelectorList
+            product={selectedSpecificationProduct}
+            selectedBank={bankSelected}
+          />
+        )}
       </Row>
     </Container>
   );

@@ -17,9 +17,9 @@ import {
   PostPublicationSchema
 } from '../../../Nexus/entities/IPublication';
 import Nexus from '../../../Nexus/Nexus';
+import { bankApi } from '../../../store/api/bankApi';
 import { useAppDispatch, useAppSelector } from '../../../store/hooks';
 import { addAlert } from '../../../store/reducers/alert-reducer';
-import { postBankThunk } from '../../../store/reducers/bank-reducer';
 import {
   prependPublication,
   putSelectedProjectThunk,
@@ -31,6 +31,7 @@ export default function NewPublication(): React.ReactElement {
   const dispatch = useAppDispatch();
   const { t } = useTranslation();
   const [show, setShow] = useState(false);
+  const [addBank] = bankApi.useAddBankMutation();
 
   const defaultValues: IPublication = {
     id: '',
@@ -60,7 +61,7 @@ export default function NewPublication(): React.ReactElement {
     );
 
     // save the new published Bank
-    dispatch(postBankThunk(newBank))
+    addBank(newBank)
       .unwrap()
       .then((result: IBank) => {
         // Update Publication with new data

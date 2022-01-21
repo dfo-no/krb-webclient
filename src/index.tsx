@@ -7,17 +7,7 @@ import './dfo-theme.module.scss';
 import './i18n';
 import './index.scss';
 import reportWebVitals from './reportWebVitals';
-import {
-  getAlbefaticalSortedBanksThunk,
-  getBanksThunk,
-  getDateSortedBanksThunk
-} from './store/reducers/bank-reducer';
 import { store } from './store/store';
-
-// fetch all banks here because they are published and will show on the front page.
-store.dispatch(getBanksThunk());
-store.dispatch(getAlbefaticalSortedBanksThunk());
-store.dispatch(getDateSortedBanksThunk());
 
 // Hot reload the component tree whenever a component file changes
 const render = () => {
