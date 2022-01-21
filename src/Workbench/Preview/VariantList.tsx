@@ -24,8 +24,7 @@ import theme from '../../theme';
 import ParentableSideBar from '../Components/ParentableSideBar';
 
 interface IProps {
-  selectedProduct: Levelable<IProduct> | null;
-  updateSelectedFunction: (item: IRequirement) => void;
+  selectedRequirement: IRequirement;
 }
 
 const useStyles = makeStyles({
@@ -50,28 +49,17 @@ const useStyles = makeStyles({
   }
 });
 
-export default function RequirementsPerNeed({
-  selectedProduct,
-  updateSelectedFunction
+export default function VariantList({
+  selectedRequirement
 }: IProps): React.ReactElement {
   const { project } = useAppSelector((state) => state.project);
 
   const classes = useStyles();
 
-  const [associatedRequirements, associatedNeeds] =
-    selectedProduct !== null
-      ? Utils.findAssociatedRequirements(selectedProduct, project)
-      : [{}, []];
-
-  const requirementList = (requirements: IRequirement[], need: INeed) => {
+  const List = (requirements: IRequirement[]) => {
     const reqList = requirements.map((element: IRequirement) => {
       return (
-        <Button
-          onClick={() => updateSelectedFunction(element)}
-          className={classes.requirementButton}
-        >
-          {element.title}
-        </Button>
+        <Button className={classes.requirementButton}>{element.title}</Button>
       );
     });
     return (
@@ -81,15 +69,8 @@ export default function RequirementsPerNeed({
     );
   };
 
-  const needHierarchy = (needsList: Nestable<INeed>[]) => {
-    let requirements: IRequirement[] = [];
-    const hierarchy = needsList.map((element) => {
-      if (
-        element.id in associatedRequirements &&
-        associatedRequirements[element.id].length > 0
-      )
-        requirements = associatedRequirements[element.id];
-
+  const variants = (variantList: IVariant[]) => {
+    const list = variantList.map((element) => {
       return (
         <Accordion>
           <AccordionSummary
@@ -98,18 +79,16 @@ export default function RequirementsPerNeed({
             id="panel1a-header"
           >
             <Typography>
-              <b>{element.title}</b>
+              <b>{element.requirementText}</b>
             </Typography>
           </AccordionSummary>
 
-          <AccordionDetails>
-            {requirements.length > 0 && requirementList(requirements, element)}
-          </AccordionDetails>
+          <AccordionDetails></AccordionDetails>
         </Accordion>
       );
     });
-    return <>{hierarchy}</>;
+    return <>{list}</>;
   };
 
-  return needHierarchy(associatedNeeds);
+  return variants(selectedRequirement.variants);
 }
