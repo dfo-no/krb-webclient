@@ -1,4 +1,4 @@
-import { Box, Button, makeStyles } from '@material-ui/core';
+import { Box, Button, ListItem, makeStyles } from '@material-ui/core';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import Accordion from '@mui/material/Accordion';
 import AccordionDetails from '@mui/material/AccordionDetails';
@@ -13,6 +13,8 @@ import { Link } from 'react-router-dom';
 import Utils from '../../common/Utils';
 import { Levelable } from '../../models/Levelable';
 import { Nestable } from '../../models/Nestable';
+import { QuestionType } from '../../models/QuestionType';
+import { QuestionTypes } from '../../models/QuestionTypes';
 import { INeed } from '../../Nexus/entities/INeed';
 import { IProduct } from '../../Nexus/entities/IProduct';
 import { IRequirement } from '../../Nexus/entities/IRequirement';
@@ -24,47 +26,31 @@ import theme from '../../theme';
 import ParentableSideBar from '../Components/ParentableSideBar';
 
 interface IProps {
-  selectedRequirement: IRequirement;
+  selectedRequirement: IRequirement | null;
 }
 
 const useStyles = makeStyles({
-  requirementButton: {
-    cursor: 'pointer',
-    display: 'flex',
-    flexDirection: 'row',
-    alignItems: 'space-between',
-    border: `1px solid ${theme.palette.lightBlue.main}`,
-    '&:hover': {
-      background: theme.palette.lightBlue.main,
-      color: theme.palette.dfoWhite.main,
-
-      '& $sideBarListItemText': {
-        color: theme.palette.dfoWhite.main
-      }
-    },
-
-    [theme.breakpoints.down('sm')]: {
-      backgroundColor: theme.palette.gray100.main
-    }
+  h6: {
+    color: theme.palette.lightBlue.main
   }
 });
 
 export default function VariantList({
   selectedRequirement
 }: IProps): React.ReactElement {
-  const { project } = useAppSelector((state) => state.project);
-
   const classes = useStyles();
 
-  const List = (requirements: IRequirement[]) => {
-    const reqList = requirements.map((element: IRequirement) => {
+  const Questions = (questions: QuestionTypes) => {
+    const questionList = questions.map((element: QuestionType) => {
       return (
-        <Button className={classes.requirementButton}>{element.title}</Button>
+        <ListItem>
+          <h6>{element.type}</h6>
+        </ListItem>
       );
     });
     return (
       <>
-        <ListGroup className="ml-3 mt-3 mb-4">{reqList}</ListGroup>
+        <ListGroup className="ml-3 mt-3 mb-4">{questionList}</ListGroup>
       </>
     );
   };
@@ -83,12 +69,21 @@ export default function VariantList({
             </Typography>
           </AccordionSummary>
 
-          <AccordionDetails></AccordionDetails>
+          <AccordionDetails>
+            <h6 className={classes.h6}>Kravtekst</h6>
+            <p>{element.requirementText}</p>
+            <h6 className={classes.h6}>Vedledning til oppdragsgiver</h6>
+            <p>{element.instruction}</p>
+            <h6 className={classes.h6}>
+              Hvordan skal leverandør svare på spørsmål
+            </h6>
+            {Questions(element.questions)}
+          </AccordionDetails>
         </Accordion>
       );
     });
     return <>{list}</>;
   };
 
-  return variants(selectedRequirement.variants);
+  return <>{selectedRequirement && variants(selectedRequirement.variants)}</>;
 }
