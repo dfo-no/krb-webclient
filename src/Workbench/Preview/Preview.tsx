@@ -66,7 +66,10 @@ export default function Preview(): React.ReactElement {
         </Box>
         <Box className={classes.requirement}>
           <h6 className={classes.headerText}>Krav</h6>
-          <RequirementsPerNeed selectedProduct={selectedProduct} />
+          <RequirementsPerNeed
+            selectedProduct={selectedProduct}
+            updateSelectedFunction={setSelectedRequirement}
+          />
         </Box>
         <Box className={classes.variant}>
           <h6 className={classes.headerText}>Variant</h6>

@@ -20,10 +20,12 @@ import ParentableSideBar from '../Components/ParentableSideBar';
 
 interface IProps {
   selectedProduct: Levelable<IProduct> | null;
+  updateSelectedFunction: (item: IRequirement) => void;
 }
 
 export default function RequirementsPerNeed({
-  selectedProduct
+  selectedProduct,
+  updateSelectedFunction
 }: IProps): React.ReactElement {
   const { project } = useAppSelector((state) => state.project);
 
