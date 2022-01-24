@@ -14,24 +14,27 @@ interface IRouteParams {
 }
 
 const useStyles = makeStyles({
-  sideBarItem: {
-    cursor: 'pointer',
-    color: theme.palette.primary.main,
-    margin: '0 10px 0 0',
-
-    '&:hover': {
-      fontWeight: 'bold'
+  projectHeader: { display: 'flex', height: 50 },
+  projectHeaderLinks: {
+    display: 'flex',
+    gap: 3,
+    marginLeft: 20,
+    '&>:nth-child(1)': {
+      borderLeft: '1px solid #E5E5E5'
     },
     [theme.breakpoints.down('sm')]: {
-      textAlign: 'center'
+      margin: 'auto'
     }
   },
-  sideBarItemBold: {
+  projectHeaderLinkItem: {
+    margin: 'auto',
+    borderRight: '1px solid #E5E5E5',
+    paddingLeft: 20,
+    paddingRight: 20,
     cursor: 'pointer',
-    margin: '0 10px 0 0',
-    color: theme.palette.primary.main,
-
-    fontWeight: 'bold'
+    '&:hover': {
+      color: '#005b91'
+    }
   }
 });
 
@@ -66,23 +69,15 @@ function ProjectHeader(): React.ReactElement {
   const classes = useStyles();
 
   return (
-    <Toolbar>
-      {routes.map((route) => {
-        return (
-          <Link key={route.name} to={route.link}>
-            <p
-              className={
-                currentUrl === route.link
-                  ? classes.sideBarItemBold
-                  : classes.sideBarItem
-              }
-            >
-              {route.name}
-            </p>
-          </Link>
-        );
-      })}
-    </Toolbar>
+    <div className={classes.projectHeader}>
+      <div className={classes.projectHeaderLinks}>
+        {routes.map((route) => {
+          return (
+            <div className={classes.projectHeaderLinkItem}>{route.name}</div>
+          );
+        })}
+      </div>
+    </div>
   );
 }
 
