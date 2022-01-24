@@ -94,6 +94,17 @@ const theme = createTheme({
   }
 });
 
+theme.typography.headerText = {
+  color: theme.palette.black.main,
+  fontSize: '15px'
+};
+
+theme.typography.headerProjectText = {
+  color: theme.palette.black.main,
+  fontSize: '36px',
+  fontWeight: 700
+};
+
 theme.typography.footerAddressText = {
   color: theme.palette.dfoWhite.main,
   fontSize: '15px'
@@ -107,8 +118,8 @@ theme.components = {
   MuiAppBar: {
     styleOverrides: {
       root: {
-        backgroundColor: theme.palette.gray100.main,
-        borderBottom: `1px solid ${theme.palette.gray300.main}`
+        backgroundColor: theme.palette.dfoWhite.main,
+        borderBottom: `2px solid ${theme.palette.gray300.main}`
       }
     }
   },

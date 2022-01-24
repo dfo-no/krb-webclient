@@ -1,131 +1,72 @@
 import { makeStyles } from '@material-ui/core';
 import AppBar from '@mui/material/AppBar';
-import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
-import Link from '@mui/material/Link';
+import { Box, Typography } from '@mui/material/';
 import Toolbar from '@mui/material/Toolbar';
-import * as React from 'react';
-import { useTranslation } from 'react-i18next';
-import {
-  Link as RouterLink,
-  useHistory,
-  useRouteMatch
-} from 'react-router-dom';
-import ModelType from '../models/ModelType';
-import SignedButton from '../SignedButton/SignedButton';
-import { useAppDispatch } from '../store/hooks';
-import { selectProject } from '../store/reducers/project-reducer';
+import React from 'react';
 import theme from '../theme';
 
 const useStyles = makeStyles({
-  logoBig: {
-    [theme.breakpoints.down('sm')]: {
-      display: 'none'
-    }
+  header: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    width: '100%'
   },
-  logoSmall: {
-    [theme.breakpoints.up('sm')]: {
-      display: 'none'
-    }
+  headerText: {
+    display: 'flex',
+    gap: 3,
+    flexDirection: 'column',
+    marginLeft: 60,
+    paddingTop: 10
   },
-  hideSignedButton: {
-    [theme.breakpoints.down('sm')]: {
-      display: 'none'
-    }
+  headerProjectData: {
+    display: 'flex',
+    alignContent: 'baseline',
+    backgroundColor: 'red'
   },
-  showSignedButton: {
-    display: 'block'
+  projectPublishedStatus: {
+    backgroundColor: theme.palette.gray200.main,
+    color: theme.palette.black.main
+  },
+  headerLogo: {
+    alignSelf: 'center'
   }
 });
 
 export default function Header(): React.ReactElement {
-  const history = useHistory();
-  const { t } = useTranslation();
-  const dispatch = useAppDispatch();
-
-  const match = useRouteMatch({
-    path: '/workbench/:projectId',
-    strict: false,
-    sensitive: true
-  });
-
   const classes = useStyles();
-
-  const emptyProject = {
-    id: '',
-    title: '',
-    description: '',
-    needs: [],
-    codelist: [],
-    products: [],
-    tags: [],
-    publications: [],
-    type: ModelType.bank,
-    version: 0,
-    inheritedBanks: [],
-    publishedDate: null,
-    sourceOriginal: null,
-    sourceRel: null,
-    projectId: null
-  };
 
   return (
     <AppBar elevation={0} position="sticky">
       <Toolbar>
-        <Box sx={{ flexGrow: 1 }}>
-          <Link
-            className={classes.logoBig}
-            component={RouterLink}
-            to="/"
-            onClick={() => {
-              dispatch(selectProject(emptyProject));
-            }}
-          >
+        <Box className={classes.header}>
+          <Box>
+            <Box className={classes.headerText}>
+              <Typography variant="headerText">
+                Anskaffelser.no / Kravbank / IT-konsulenter
+              </Typography>
+              <Box className={classes.headerProjectData}>
+                <Typography variant="headerProjectText">
+                  IT-konsulenter
+                </Typography>
+                <Box>
+                  <Typography variant="headerText">
+                    VERSJON 12. OKT 2021
+                  </Typography>
+                  <Box className={classes.projectPublishedStatus}>
+                    Ikke publisert
+                  </Box>
+                </Box>
+              </Box>
+            </Box>
+          </Box>
+          <Box className={classes.headerLogo}>
             <img
               src="/logo-blue.svg"
               alt="DFØ logo header big"
               width="263.06"
               height="38"
             />
-          </Link>
-          <Link
-            className={classes.logoSmall}
-            component={RouterLink}
-            to="/"
-            onClick={() => {
-              dispatch(selectProject(emptyProject));
-            }}
-          >
-            <img
-              src="/logo-blue-small.svg"
-              alt="DFØ logo header small"
-              width="61.408165"
-              height="30.729862"
-            />
-          </Link>
-        </Box>
-
-        {match && (
-          <Box mx={1}>
-            <Button
-              variant="primary"
-              onClick={() => {
-                history.push('/workbench');
-
-                dispatch(selectProject(emptyProject));
-              }}
-            >
-              {t('all projects')}
-            </Button>
           </Box>
-        )}
-
-        <Box
-          className={`${
-            match ? classes.hideSignedButton : classes.showSignedButton
-          }`}
-        >
-          <SignedButton />
         </Box>
       </Toolbar>
     </AppBar>
