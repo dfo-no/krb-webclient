@@ -1,4 +1,4 @@
-import { makeStyles, Toolbar } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core';
 import React from 'react';
 import { withRouter } from 'react-router';
 import { Link, useRouteMatch } from 'react-router-dom';
