@@ -14,27 +14,47 @@ interface IRouteParams {
 }
 
 const useStyles = makeStyles({
-  projectHeader: { display: 'flex', height: 50 },
+  projectHeader: {
+    display: 'flex',
+    height: 40,
+    marginLeft: 10,
+    [theme.breakpoints.down('sm')]: {
+      justifyContent: 'center',
+      marginLeft: 0,
+      marginRight: 16
+    }
+  },
   projectHeaderLinks: {
     display: 'flex',
-    gap: 3,
-    marginLeft: 20,
     '&>:nth-child(1)': {
-      borderLeft: '1px solid #E5E5E5'
+      borderLeft: `1px solid ${theme.palette.gray300.main}`
     },
-    [theme.breakpoints.down('sm')]: {
-      margin: 'auto'
+    '&>:nth-child(2)': {
+      borderLeft: `1px solid ${theme.palette.gray300.main}`,
+      borderRight: `1px solid ${theme.palette.gray300.main}`
+    },
+    '&>:nth-child(3)': {
+      borderRight: `1px solid ${theme.palette.gray300.main}`
     }
   },
   projectHeaderLinkItem: {
     margin: 'auto',
-    borderRight: '1px solid #E5E5E5',
-    paddingLeft: 20,
-    paddingRight: 20,
+    width: 145,
     cursor: 'pointer',
+    textAlign: 'center',
+    color: theme.palette.black.main,
     '&:hover': {
-      color: '#005b91'
+      color: theme.palette.lightBlue.main
+    },
+    [theme.breakpoints.down('sm')]: {
+      width: '30vw'
     }
+  },
+  currentRoute: {
+    fontWeight: 'bold'
+  },
+  otherRoute: {
+    textDecoration: 'none'
   }
 });
 
@@ -61,7 +81,7 @@ function ProjectHeader(): React.ReactElement {
   const currentUrl = findCurrentUrl();
 
   const routes: IRouteLink[] = [
-    { link: `${baseUrl?.url}/admin`, name: 'Adminstrasjon' },
+    { link: `${baseUrl?.url}/admin`, name: 'Administrere' },
     { link: `${baseUrl?.url}/create`, name: 'Lage' },
     { link: `${baseUrl?.url}/preview`, name: 'Forhåndsvisning' }
   ];
@@ -73,7 +93,17 @@ function ProjectHeader(): React.ReactElement {
       <div className={classes.projectHeaderLinks}>
         {routes.map((route) => {
           return (
-            <div className={classes.projectHeaderLinkItem}>{route.name}</div>
+            <Link
+              key={route.name}
+              to={route.link}
+              className={`${classes.projectHeaderLinkItem} ${
+                currentUrl === route.link
+                  ? classes.currentRoute
+                  : classes.otherRoute
+              }`}
+            >
+              {route.name}
+            </Link>
           );
         })}
       </div>
