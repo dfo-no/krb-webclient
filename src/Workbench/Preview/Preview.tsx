@@ -21,13 +21,13 @@ const useStyles = makeStyles({
     minHeight: '100vh'
   },
   product: {
-    flexGrow: 1
+    width: '20%'
   },
   requirement: {
-    flexGrow: 3
+    width: '30%'
   },
   variant: {
-    flexGrow: 3
+    width: '50%'
   }
 });
 
@@ -41,27 +41,25 @@ export default function Preview(): React.ReactElement {
     useState<null | IRequirement>(null);
 
   return (
-    <>
-      <Box className={classes.editorContainer}>
-        <Box className={classes.product}>
-          <h6 className={classes.headerText}>Produkt</h6>
-          <ParentableSideBar
-            parentableArray={project.products}
-            updateSelectedFunction={setSelectedProduct}
-          />
-        </Box>
-        <Box className={classes.requirement}>
-          <h6 className={classes.headerText}>Krav</h6>
-          <RequirementsPerNeed
-            selectedProduct={selectedProduct}
-            updateSelectedFunction={setSelectedRequirement}
-          />
-        </Box>
-        <Box className={classes.variant}>
-          <h6 className={classes.headerText}>Variant</h6>
-          <VariantList selectedRequirement={selectedRequirement} />
-        </Box>
+    <Box className={classes.editorContainer}>
+      <Box className={classes.product}>
+        <h6 className={classes.headerText}>Produkt</h6>
+        <ParentableSideBar
+          parentableArray={project.products}
+          updateSelectedFunction={setSelectedProduct}
+        />
       </Box>
-    </>
+      <Box className={classes.requirement}>
+        <h6 className={classes.headerText}>Krav</h6>
+        <RequirementsPerNeed
+          selectedProduct={selectedProduct}
+          updateSelectedFunction={setSelectedRequirement}
+        />
+      </Box>
+      <Box className={classes.variant}>
+        <h6 className={classes.headerText}>Variant</h6>
+        <VariantList selectedRequirement={selectedRequirement} />
+      </Box>
+    </Box>
   );
 }
