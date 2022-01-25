@@ -6,6 +6,16 @@ const theme = createTheme({
   typography: {
     fontFamily: ['Source Sans Pro', 'Helvetica', 'Arial'].join(',')
   },
+  breakpoints: {
+    values: {
+      xs: 0,
+      sm: 600,
+      header: 815,
+      md: 900,
+      lg: 1200,
+      xl: 1536
+    }
+  },
   palette: {
     primary: {
       main: dfoThemeScss.primary
@@ -94,15 +104,18 @@ const theme = createTheme({
   }
 });
 
-theme.typography.headerText = {
+theme.typography.small = {
   color: theme.palette.black.main,
-  fontSize: '15px'
+  fontSize: '14px'
 };
 
-theme.typography.headerProjectText = {
+theme.typography.big = {
   color: theme.palette.black.main,
   fontSize: '36px',
-  fontWeight: 700
+  fontWeight: 700,
+  [theme.breakpoints.down('header')]: {
+    fontSize: '20px'
+  }
 };
 
 theme.typography.footerAddressText = {
