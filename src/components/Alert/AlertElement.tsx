@@ -1,6 +1,6 @@
 import Alert from '@mui/material/Alert/Alert';
 import Snackbar from '@mui/material/Snackbar/Snackbar';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { IAlert } from '../../models/IAlert';
 import { useAppDispatch } from '../../store/hooks';
 import { removeAlert } from '../../store/reducers/alert-reducer';
@@ -10,7 +10,7 @@ interface IProps {
 }
 export default function AlertElement({ alert }: IProps): React.ReactElement {
   const dispatch = useAppDispatch();
-  const [open, setOpen] = React.useState(true);
+  const [open, setOpen] = useState(true);
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -19,13 +19,21 @@ export default function AlertElement({ alert }: IProps): React.ReactElement {
     return () => clearTimeout(timer);
   });
 
+  const handleClose = (event?: React.SyntheticEvent | Event, id?: string) => {
+    if (id) {
+      dispatch(removeAlert({ id: id }));
+    }
+    setOpen(false);
+  };
+
   return (
     <Snackbar
       anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
       open={open}
-      onClose={() => dispatch(removeAlert({ id: alert.id }))}
     >
-      <Alert severity={alert.style}>{alert.text}</Alert>
+      <Alert onClose={(e) => handleClose(e, alert.id)} severity={alert.style}>
+        {alert.text}
+      </Alert>
     </Snackbar>
   );
 }
