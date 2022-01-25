@@ -1,4 +1,4 @@
-import { makeStyles, Toolbar } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core';
 import React from 'react';
 import { withRouter } from 'react-router';
 import { Link, useRouteMatch } from 'react-router-dom';
@@ -14,24 +14,47 @@ interface IRouteParams {
 }
 
 const useStyles = makeStyles({
-  sideBarItem: {
-    cursor: 'pointer',
-    color: theme.palette.primary.main,
-    margin: '0 10px 0 0',
-
-    '&:hover': {
-      fontWeight: 'bold'
-    },
+  projectHeader: {
+    display: 'flex',
+    height: 40,
+    marginLeft: 10,
     [theme.breakpoints.down('sm')]: {
-      textAlign: 'center'
+      justifyContent: 'center',
+      marginLeft: 0,
+      marginRight: 16
     }
   },
-  sideBarItemBold: {
+  projectHeaderLinks: {
+    display: 'flex',
+    '&>:nth-child(1)': {
+      borderLeft: `1px solid ${theme.palette.gray300.main}`
+    },
+    '&>:nth-child(2)': {
+      borderLeft: `1px solid ${theme.palette.gray300.main}`,
+      borderRight: `1px solid ${theme.palette.gray300.main}`
+    },
+    '&>:nth-child(3)': {
+      borderRight: `1px solid ${theme.palette.gray300.main}`
+    }
+  },
+  projectHeaderLinkItem: {
+    margin: 'auto',
+    width: 145,
     cursor: 'pointer',
-    margin: '0 10px 0 0',
-    color: theme.palette.primary.main,
-
+    textAlign: 'center',
+    color: theme.palette.black.main,
+    '&:hover': {
+      color: theme.palette.lightBlue.main
+    },
+    [theme.breakpoints.down('sm')]: {
+      width: '30vw'
+    }
+  },
+  currentRoute: {
     fontWeight: 'bold'
+  },
+  otherRoute: {
+    textDecoration: 'none'
   }
 });
 
@@ -58,7 +81,7 @@ function ProjectHeader(): React.ReactElement {
   const currentUrl = findCurrentUrl();
 
   const routes: IRouteLink[] = [
-    { link: `${baseUrl?.url}/admin`, name: 'Adminstrasjon' },
+    { link: `${baseUrl?.url}/admin`, name: 'Administrere' },
     { link: `${baseUrl?.url}/create`, name: 'Lage' },
     { link: `${baseUrl?.url}/preview`, name: 'Forhåndsvisning' }
   ];
@@ -66,23 +89,25 @@ function ProjectHeader(): React.ReactElement {
   const classes = useStyles();
 
   return (
-    <Toolbar>
-      {routes.map((route) => {
-        return (
-          <Link key={route.name} to={route.link}>
-            <p
-              className={
+    <div className={classes.projectHeader}>
+      <div className={classes.projectHeaderLinks}>
+        {routes.map((route) => {
+          return (
+            <Link
+              key={route.name}
+              to={route.link}
+              className={`${classes.projectHeaderLinkItem} ${
                 currentUrl === route.link
-                  ? classes.sideBarItemBold
-                  : classes.sideBarItem
-              }
+                  ? classes.currentRoute
+                  : classes.otherRoute
+              }`}
             >
               {route.name}
-            </p>
-          </Link>
-        );
-      })}
-    </Toolbar>
+            </Link>
+          );
+        })}
+      </div>
+    </div>
   );
 }
 
