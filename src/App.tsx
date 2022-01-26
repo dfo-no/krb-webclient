@@ -10,6 +10,7 @@ import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 import styles from './App.module.scss';
 import { msalConfig } from './authentication/authConfig';
+import AlertList from './components/Alert/AlertList';
 import Evaluation from './Evaluation/Evaluation';
 import Footer from './Footer/Footer';
 import Header from './Header/Header';
@@ -65,6 +66,7 @@ function App(): React.ReactElement {
       <MsalProvider instance={msalInstance}>
         <ThemeProvider theme={theme}>
           <CssBaseline />
+          <AlertList />
           <div className={styles.App}>
             <div className={styles.App__header}>
               <Header />
