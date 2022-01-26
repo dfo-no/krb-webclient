@@ -4,6 +4,9 @@ import React from 'react';
 import theme from '../theme';
 import { useAppSelector } from '../store/hooks';
 import { useTranslation } from 'react-i18next';
+import SettingsIcon from '@mui/icons-material/Settings';
+import CreateIcon from '@mui/icons-material/Create';
+import VisibilityIcon from '@mui/icons-material/Visibility';
 
 const useStyles = makeStyles({
   header: {
@@ -16,7 +19,9 @@ const useStyles = makeStyles({
     whiteSpace: 'nowrap'
   },
   projectDisplay: {
+    display: 'flex',
     paddingBottom: 3,
+    width: '90vw',
     [theme.breakpoints.down('header')]: {
       paddingBottom: 0
     }
@@ -27,17 +32,15 @@ const useStyles = makeStyles({
       marginLeft: 1
     }
   },
-  projectData: {
+  icons: {
     display: 'flex',
-    flexDirection: 'row',
-    gap: 20,
-
-    [theme.breakpoints.down('header')]: {
-      flexDirection: 'column',
-      gap: 0
-    }
+    alignSelf: 'center',
+    justifySelf: 'flex-end'
   },
-  projectStatus: {
+  icon: {
+    color: 'red'
+  },
+  projectVersion: {
     display: 'flex',
     gap: 10,
     alignItems: 'center',
@@ -50,6 +53,59 @@ const useStyles = makeStyles({
   },
   noProjectDisplay: {
     paddingBottom: 3
+  },
+  projectTitleVersion: {
+    display: 'flex',
+    flexDirection: 'row',
+    gap: 20,
+    [theme.breakpoints.down('header')]: {
+      flexDirection: 'column',
+      gap: 0
+    }
+  },
+  projectData: {
+    display: 'flex',
+    flexGrow: 1,
+    gap: 20,
+    alignItems: 'center',
+
+    [theme.breakpoints.down('header')]: {
+      flexGrow: 1,
+      flexDirection: 'column',
+      alignItems: 'flex-start',
+      gap: 0
+    }
+  },
+  projectIcons: {
+    display: 'flex',
+    gap: 50,
+    alignItems: 'center',
+    color: theme.palette.dfoBlue.main,
+    height: '100%',
+
+    [theme.breakpoints.down('header')]: {
+      paddingRight: 13,
+      gap: 8,
+      marginTop: 20
+    }
+  },
+  settingsIcon: {
+    cursor: 'pointer',
+    '&:hover': {
+      color: theme.palette.dfoLightBlue.main
+    }
+  },
+  createIcon: {
+    cursor: 'pointer',
+    '&:hover': {
+      color: theme.palette.dfoLightBlue.main
+    }
+  },
+  visibilityIcon: {
+    cursor: 'pointer',
+    '&:hover': {
+      color: theme.palette.dfoLightBlue.main
+    }
   }
 });
 
@@ -78,7 +134,7 @@ export default function Header(): React.ReactElement {
                 <Box className={classes.projectDisplay}>
                   <Box className={classes.projectData}>
                     <Typography variant="bigScale">{project.title}</Typography>
-                    <Box className={classes.projectStatus}>
+                    <Box className={classes.projectVersion}>
                       <Typography variant="smallUnderline">
                         {'Versjon' +
                           ' ' +
@@ -91,6 +147,11 @@ export default function Header(): React.ReactElement {
                           })}
                       </Typography>
                     </Box>
+                  </Box>
+                  <Box className={classes.projectIcons}>
+                    <SettingsIcon className={classes.settingsIcon} />
+                    <CreateIcon className={classes.createIcon} />
+                    <VisibilityIcon className={classes.visibilityIcon} />
                   </Box>
                 </Box>
               </Box>
