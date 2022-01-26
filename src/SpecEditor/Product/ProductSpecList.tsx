@@ -119,11 +119,7 @@ export default function ProductSpecList(): React.ReactElement {
   };
 
   if (isLoading) {
-    return (
-      <div className="loaderSpinner">
-        <LoaderSpinner />
-      </div>
-    );
+    return <LoaderSpinner />;
   }
 
   const productList = (productArray: ISpecificationProduct[]) => {
