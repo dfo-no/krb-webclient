@@ -61,6 +61,10 @@ export default function Header(): React.ReactElement {
   const lastProjectPublication =
     project.publications[project.publications.length - 1];
 
+  const projectPath = project.title
+    ? `Anskaffelser.no / Kravbank / ${project.title}`
+    : 'Anskaffelser.no / Kravbank';
+
   return (
     <AppBar elevation={0} position="sticky">
       <Toolbar>
@@ -69,9 +73,7 @@ export default function Header(): React.ReactElement {
             {project.title && (
               <Box>
                 <Box className={classes.projectPath}>
-                  <Typography variant="small">
-                    Anskaffelser.no / Kravbank / {project.title}
-                  </Typography>
+                  <Typography variant="small">{projectPath}</Typography>
                 </Box>
                 <Box className={classes.projectDisplay}>
                   <Box className={classes.projectData}>
@@ -97,9 +99,7 @@ export default function Header(): React.ReactElement {
             {!project.title && (
               <Box>
                 <Box className={classes.projectPath}>
-                  <Typography variant="small">
-                    Anskaffelser.no / Kravbank
-                  </Typography>
+                  <Typography variant="small">{projectPath}</Typography>
                 </Box>
                 <Box className={classes.noProjectDisplay}>
                   <Typography variant="big">Kravbank</Typography>
