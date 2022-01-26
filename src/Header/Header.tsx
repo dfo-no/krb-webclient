@@ -10,13 +10,14 @@ import VisibilityIcon from '@mui/icons-material/Visibility';
 
 const useStyles = makeStyles({
   header: {
-    display: 'flex',
-    alignItems: 'center',
-    gap: 3,
-    flexDirection: 'column',
     paddingTop: 10,
-    marginLeft: '5%',
-    whiteSpace: 'nowrap'
+    paddingBottom: 6,
+    marginLeft: '5%'
+  },
+  headerContent: {
+    display: 'flex',
+    flexDirection: 'column',
+    gap: 3
   },
   projectDisplay: {
     display: 'flex',
@@ -127,7 +128,7 @@ export default function Header(): React.ReactElement {
         <Box className={classes.header}>
           <Box>
             {project.title && (
-              <Box>
+              <Box className={classes.headerContent}>
                 <Box className={classes.projectPath}>
                   <Typography variant="small">{projectPath}</Typography>
                 </Box>
@@ -158,7 +159,7 @@ export default function Header(): React.ReactElement {
             )}
 
             {!project.title && (
-              <Box>
+              <Box className={classes.headerContent}>
                 <Box className={classes.projectPath}>
                   <Typography variant="small">{projectPath}</Typography>
                 </Box>

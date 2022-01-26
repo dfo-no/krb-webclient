@@ -123,20 +123,20 @@ theme.typography.smallUnderline = {
 
 theme.typography.smallUnderlineBlue = {
   color: theme.palette.dfoDarkBlue.main,
-  fontSize: '15px',
+  fontSize: '36px',
   textDecoration: 'underline',
   fontWeight: 'bold'
 };
 
 theme.typography.big = {
   color: theme.palette.black.main,
-  fontSize: '36px',
+  fontSize: '28px',
   fontWeight: 700
 };
 
 theme.typography.bigScale = {
   color: theme.palette.black.main,
-  fontSize: '36px',
+  fontSize: '28px',
   fontWeight: 700,
   [theme.breakpoints.down('header')]: {
     fontSize: '20px'
