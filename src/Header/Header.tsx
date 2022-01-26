@@ -8,6 +8,7 @@ import { useTranslation } from 'react-i18next';
 const useStyles = makeStyles({
   header: {
     display: 'flex',
+    alignItems: 'center',
     gap: 3,
     flexDirection: 'column',
     paddingTop: 10,
@@ -15,13 +16,13 @@ const useStyles = makeStyles({
     whiteSpace: 'nowrap'
   },
   projectDisplay: {
-    paddingBottom: 10,
+    paddingBottom: 3,
     [theme.breakpoints.down('header')]: {
       paddingBottom: 0
     }
   },
   projectPath: {
-    marginLeft: 3,
+    marginLeft: 2.5,
     [theme.breakpoints.down('header')]: {
       marginLeft: 1
     }
@@ -48,7 +49,7 @@ const useStyles = makeStyles({
     }
   },
   noProjectDisplay: {
-    paddingBottom: 10
+    paddingBottom: 3
   }
 });
 
@@ -64,47 +65,43 @@ export default function Header(): React.ReactElement {
     <AppBar elevation={0} position="sticky">
       <Toolbar>
         <Box className={classes.header}>
-          {project.title && (
-            <Box className={classes.projectDisplay}>
-              <Box className={classes.projectPath}>
-                <Typography variant="small">
-                  Anskaffelser.no / Kravbank /{' '}
-                  <Typography variant="smallUnderlineBlue">
-                    {project.title}
-                  </Typography>
+          <Box>
+            <Box className={classes.projectPath}>
+              <Typography variant="small">
+                Anskaffelser.no / Kravbank /{' '}
+                <Typography variant="smallUnderlineBlue">
+                  {project.title}
                 </Typography>
-              </Box>
-              <Box className={classes.projectData}>
-                <Typography variant="bigScale">{project.title}</Typography>
-                <Box className={classes.projectStatus}>
-                  <Typography variant="smallUnderline">
-                    {'Versjon' +
-                      ' ' +
-                      t('date.PP', {
-                        date: new Date(
-                          lastProjectPublication.date
-                            ? lastProjectPublication.date
-                            : ''
-                        )
-                      })}
-                  </Typography>
+              </Typography>
+            </Box>
+
+            {project.title && (
+              <Box className={classes.projectDisplay}>
+                <Box className={classes.projectData}>
+                  <Typography variant="bigScale">{project.title}</Typography>
+                  <Box className={classes.projectStatus}>
+                    <Typography variant="smallUnderline">
+                      {'Versjon' +
+                        ' ' +
+                        t('date.PP', {
+                          date: new Date(
+                            lastProjectPublication.date
+                              ? lastProjectPublication.date
+                              : ''
+                          )
+                        })}
+                    </Typography>
+                  </Box>
                 </Box>
               </Box>
-            </Box>
-          )}
+            )}
 
-          {!project.title && (
-            <Box className={classes.noProjectDisplay}>
-              <Box className={classes.projectPath}>
-                <Typography variant="small">
-                  Anskaffelser.no / Kravbank
-                </Typography>
-              </Box>
-              <Box>
+            {!project.title && (
+              <Box className={classes.noProjectDisplay}>
                 <Typography variant="big">Kravbank</Typography>
               </Box>
-            </Box>
-          )}
+            )}
+          </Box>
         </Box>
       </Toolbar>
     </AppBar>
