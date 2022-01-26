@@ -136,7 +136,7 @@ export default function Header(): React.ReactElement {
                     <Typography variant="bigScale">{project.title}</Typography>
                     <Box className={classes.projectVersion}>
                       <Typography variant="smallUnderline">
-                        {'Versjon' +
+                        {t('Version') +
                           ' ' +
                           t('date.PP', {
                             date: new Date(
