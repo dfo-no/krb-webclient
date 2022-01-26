@@ -33,7 +33,7 @@ const useStyles = makeStyles({
 
     [theme.breakpoints.down('header')]: {
       flexDirection: 'column',
-      gap: 2
+      gap: 0
     }
   },
   projectStatus: {
