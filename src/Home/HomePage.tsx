@@ -6,16 +6,24 @@ import Row from 'react-bootstrap/Row';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import SearchBar from '../SearchBar/SearchBar';
-
+import {
+  useGetAlbefaticalSortedBanksQuery,
+  useGetAllBanksQuery,
+  useGetDateSortedBanksQuery
+} from '../store/api/bankApi';
 import FilteredList from './Components/FilteredList';
 
 export default function HomePage(): React.ReactElement {
   const { t } = useTranslation();
 
+  const { data: latest } = useGetDateSortedBanksQuery();
+  const { data: alfabetic } = useGetAlbefaticalSortedBanksQuery();
+  const { data: list } = useGetAllBanksQuery();
+
   return (
     <Container fluid>
       <Row className="mt-2">
-        <Col></Col>
+        <Col>{list && <SearchBar list={list} />}</Col>
         <Col>
           <ListGroup variant="flush">
             <ListGroup.Item className="mt-1 ">
@@ -42,8 +50,19 @@ export default function HomePage(): React.ReactElement {
         </Col>
       </Row>
       <Row className="mt-5">
-        <Col></Col>
-        <Col></Col>
+        <Col>
+          {latest && (
+            <FilteredList list={latest} filterTitle={t('newest banks')} />
+          )}
+        </Col>
+        <Col>
+          {alfabetic && (
+            <FilteredList
+              list={alfabetic}
+              filterTitle={t('Alfabetically sorted')}
+            />
+          )}
+        </Col>
       </Row>
     </Container>
   );
