@@ -19,7 +19,13 @@ const useStyles = makeStyles({
     flexDirection: 'column',
     gap: 3
   },
-  projectDisplay: {
+  projectPath: {
+    marginLeft: 2.5,
+    [theme.breakpoints.down('header')]: {
+      marginLeft: 1
+    }
+  },
+  viewingProjectTitle: {
     display: 'flex',
     paddingBottom: 3,
     width: '90vw',
@@ -27,42 +33,8 @@ const useStyles = makeStyles({
       paddingBottom: 0
     }
   },
-  projectPath: {
-    marginLeft: 2.5,
-    [theme.breakpoints.down('header')]: {
-      marginLeft: 1
-    }
-  },
-  icons: {
-    display: 'flex',
-    alignSelf: 'center',
-    justifySelf: 'flex-end'
-  },
-  icon: {
-    color: 'red'
-  },
-  projectVersion: {
-    display: 'flex',
-    gap: 10,
-    alignItems: 'center',
-    paddingTop: 6,
-
-    [theme.breakpoints.down('header')]: {
-      paddingTop: 0,
-      paddingBottom: 8
-    }
-  },
-  noProjectDisplay: {
+  notViewingProjectTitle: {
     paddingBottom: 3
-  },
-  projectTitleVersion: {
-    display: 'flex',
-    flexDirection: 'row',
-    gap: 20,
-    [theme.breakpoints.down('header')]: {
-      flexDirection: 'column',
-      gap: 0
-    }
   },
   projectData: {
     display: 'flex',
@@ -75,6 +47,17 @@ const useStyles = makeStyles({
       flexDirection: 'column',
       alignItems: 'flex-start',
       gap: 0
+    }
+  },
+  projectVersion: {
+    display: 'flex',
+    gap: 10,
+    alignItems: 'center',
+    paddingTop: 6,
+
+    [theme.breakpoints.down('header')]: {
+      paddingTop: 0,
+      paddingBottom: 8
     }
   },
   projectIcons: {
@@ -90,22 +73,30 @@ const useStyles = makeStyles({
       marginTop: 20
     }
   },
+  icons: {
+    display: 'flex',
+    alignSelf: 'center',
+    justifySelf: 'flex-end'
+  },
   settingsIcon: {
     cursor: 'pointer',
     '&:hover': {
       color: theme.palette.dfoLightBlue.main
     }
   },
-  createIcon: {
+  icon: {
     cursor: 'pointer',
     '&:hover': {
       color: theme.palette.dfoLightBlue.main
     }
   },
-  visibilityIcon: {
-    cursor: 'pointer',
-    '&:hover': {
-      color: theme.palette.dfoLightBlue.main
+  projectTitleVersion: {
+    display: 'flex',
+    flexDirection: 'row',
+    gap: 20,
+    [theme.breakpoints.down('header')]: {
+      flexDirection: 'column',
+      gap: 0
     }
   }
 });
@@ -132,7 +123,7 @@ export default function Header(): React.ReactElement {
                 <Box className={classes.projectPath}>
                   <Typography variant="small">{projectPath}</Typography>
                 </Box>
-                <Box className={classes.projectDisplay}>
+                <Box className={classes.viewingProjectTitle}>
                   <Box className={classes.projectData}>
                     <Typography variant="bigScale">{project.title}</Typography>
                     <Box className={classes.projectVersion}>
@@ -150,9 +141,9 @@ export default function Header(): React.ReactElement {
                     </Box>
                   </Box>
                   <Box className={classes.projectIcons}>
-                    <SettingsIcon className={classes.settingsIcon} />
-                    <CreateIcon className={classes.createIcon} />
-                    <VisibilityIcon className={classes.visibilityIcon} />
+                    <SettingsIcon className={classes.icon} />
+                    <CreateIcon className={classes.icon} />
+                    <VisibilityIcon className={classes.icon} />
                   </Box>
                 </Box>
               </Box>
@@ -163,7 +154,7 @@ export default function Header(): React.ReactElement {
                 <Box className={classes.projectPath}>
                   <Typography variant="small">{projectPath}</Typography>
                 </Box>
-                <Box className={classes.noProjectDisplay}>
+                <Box className={classes.notViewingProjectTitle}>
                   <Typography variant="big">Kravbank</Typography>
                 </Box>
               </Box>
