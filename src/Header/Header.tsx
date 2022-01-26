@@ -29,7 +29,7 @@ const useStyles = makeStyles({
   projectData: {
     display: 'flex',
     flexDirection: 'row',
-    gap: 18,
+    gap: 20,
 
     [theme.breakpoints.down('header')]: {
       flexDirection: 'column',
