@@ -56,6 +56,9 @@ const theme = createTheme({
     gray500: {
       main: dfoThemeScss.gray500
     },
+    gray600: {
+      main: dfoThemeScss.gray600
+    },
     gray900: {
       main: dfoThemeScss.gray900
     },
@@ -107,6 +110,12 @@ const theme = createTheme({
 theme.typography.small = {
   color: theme.palette.black.main,
   fontSize: '14px'
+};
+
+theme.typography.smallUnderline = {
+  color: theme.palette.black.main,
+  fontSize: '15px',
+  textDecoration: 'underline'
 };
 
 theme.typography.big = {
