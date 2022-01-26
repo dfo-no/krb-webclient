@@ -66,39 +66,44 @@ export default function Header(): React.ReactElement {
       <Toolbar>
         <Box className={classes.header}>
           <Box>
-            <Box className={classes.projectPath}>
-              <Typography variant="small">
-                Anskaffelser.no / Kravbank /{' '}
-                <Typography variant="smallUnderlineBlue">
-                  {project.title}
-                </Typography>
-              </Typography>
-            </Box>
-
             {project.title && (
-              <Box className={classes.projectDisplay}>
-                <Box className={classes.projectData}>
-                  <Typography variant="bigScale">{project.title}</Typography>
-                  <Box className={classes.projectStatus}>
-                    <Typography variant="smallUnderline">
-                      {'Versjon' +
-                        ' ' +
-                        t('date.PP', {
-                          date: new Date(
-                            lastProjectPublication.date
-                              ? lastProjectPublication.date
-                              : ''
-                          )
-                        })}
-                    </Typography>
+              <Box>
+                <Box className={classes.projectPath}>
+                  <Typography variant="small">
+                    Anskaffelser.no / Kravbank / {project.title}
+                  </Typography>
+                </Box>
+                <Box className={classes.projectDisplay}>
+                  <Box className={classes.projectData}>
+                    <Typography variant="bigScale">{project.title}</Typography>
+                    <Box className={classes.projectStatus}>
+                      <Typography variant="smallUnderline">
+                        {'Versjon' +
+                          ' ' +
+                          t('date.PP', {
+                            date: new Date(
+                              lastProjectPublication.date
+                                ? lastProjectPublication.date
+                                : ''
+                            )
+                          })}
+                      </Typography>
+                    </Box>
                   </Box>
                 </Box>
               </Box>
             )}
 
             {!project.title && (
-              <Box className={classes.noProjectDisplay}>
-                <Typography variant="big">Kravbank</Typography>
+              <Box>
+                <Box className={classes.projectPath}>
+                  <Typography variant="small">
+                    Anskaffelser.no / Kravbank
+                  </Typography>
+                </Box>
+                <Box className={classes.noProjectDisplay}>
+                  <Typography variant="big">Kravbank</Typography>
+                </Box>
               </Box>
             )}
           </Box>
