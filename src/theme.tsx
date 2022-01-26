@@ -26,6 +26,9 @@ const theme = createTheme({
     dfoBlue: {
       main: dfoThemeScss.dfoBlue
     },
+    dfoDarkBlue: {
+      main: dfoThemeScss.dfoDarkBlue
+    },
     dfoInputBackground: {
       main: dfoThemeScss.dfoInputBackground
     },
@@ -118,7 +121,20 @@ theme.typography.smallUnderline = {
   textDecoration: 'underline'
 };
 
+theme.typography.smallUnderlineBlue = {
+  color: theme.palette.dfoDarkBlue.main,
+  fontSize: '15px',
+  textDecoration: 'underline',
+  fontWeight: 'bold'
+};
+
 theme.typography.big = {
+  color: theme.palette.black.main,
+  fontSize: '36px',
+  fontWeight: 700
+};
+
+theme.typography.bigScale = {
   color: theme.palette.black.main,
   fontSize: '36px',
   fontWeight: 700,

@@ -5,6 +5,7 @@ declare module '@mui/material/styles/createPalette' {
     primary: PaletteColor;
     secondary: PaletteColor;
     dfoBlue: PaletteColor;
+    dfoDarkBlue: PaletteColor;
     dfoInputBackground: PaletteColor;
     dfoWhite: PaletteColor;
     dfoLightBlue: PaletteColor;
@@ -37,6 +38,7 @@ declare module '@mui/material/styles/createPalette' {
     primary?: PaletteColorOptions;
     secondary?: PaletteColorOptions;
     dfoBlue: PaletteColorOptions;
+    dfoDarkBlue: PaletteColorOptions;
     dfoInputBackground: PaletteColorOptions;
     dfoWhite: PaletteColorOptions;
     dfoLightBlue: PaletteColorOptions;

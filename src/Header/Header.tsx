@@ -1,7 +1,5 @@
 import { makeStyles } from '@material-ui/core';
-import AppBar from '@mui/material/AppBar';
-import { Box, Typography } from '@mui/material/';
-import Toolbar from '@mui/material/Toolbar';
+import { AppBar, Toolbar, Box, Typography } from '@mui/material/';
 import React from 'react';
 import theme from '../theme';
 import { useAppSelector } from '../store/hooks';
@@ -13,9 +11,11 @@ const useStyles = makeStyles({
     gap: 3,
     flexDirection: 'column',
     paddingTop: 10,
-    paddingBottom: 10,
     marginLeft: '5%',
-    whiteSpace: 'nowrap',
+    whiteSpace: 'nowrap'
+  },
+  projectDisplay: {
+    paddingBottom: 10,
     [theme.breakpoints.down('header')]: {
       paddingBottom: 0
     }
@@ -46,6 +46,9 @@ const useStyles = makeStyles({
       paddingTop: 0,
       paddingBottom: 8
     }
+  },
+  noProjectDisplay: {
+    paddingBottom: 10
   }
 });
 
@@ -62,14 +65,17 @@ export default function Header(): React.ReactElement {
       <Toolbar>
         <Box className={classes.header}>
           {project.title && (
-            <Box>
+            <Box className={classes.projectDisplay}>
               <Box className={classes.projectPath}>
                 <Typography variant="small">
-                  Anskaffelser.no / Kravbank / {project.title}
+                  Anskaffelser.no / Kravbank /{' '}
+                  <Typography variant="smallUnderlineBlue">
+                    {project.title}
+                  </Typography>
                 </Typography>
               </Box>
               <Box className={classes.projectData}>
-                <Typography variant="big">{project.title}</Typography>
+                <Typography variant="bigScale">{project.title}</Typography>
                 <Box className={classes.projectStatus}>
                   <Typography variant="smallUnderline">
                     {'Versjon' +
@@ -88,7 +94,7 @@ export default function Header(): React.ReactElement {
           )}
 
           {!project.title && (
-            <Box>
+            <Box className={classes.noProjectDisplay}>
               <Box className={classes.projectPath}>
                 <Typography variant="small">
                   Anskaffelser.no / Kravbank
