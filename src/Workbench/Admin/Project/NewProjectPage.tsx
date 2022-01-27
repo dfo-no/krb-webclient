@@ -32,7 +32,6 @@ export default function NewProjectPage(): React.ReactElement {
     nexus.projectService.generateDefaultProjectValues();
   const {
     handleSubmit,
-    reset,
     control,
     formState: { errors }
   } = useForm<Omit<IBank, 'needs'>>({
