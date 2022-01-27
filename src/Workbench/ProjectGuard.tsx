@@ -1,4 +1,4 @@
-import { Box, makeStyles, Toolbar } from '@material-ui/core';
+import { Box, makeStyles } from '@material-ui/core';
 import React, { useEffect, useState } from 'react';
 import { Route, useParams } from 'react-router-dom';
 import LoaderSpinner from '../common/LoaderSpinner';
@@ -66,7 +66,7 @@ export default function ProjectGuard(): React.ReactElement {
         <Route path="/workbench/:projectId/admin">
           <AdminGuard />
         </Route>
-        {/* TODO: Create pages for these */}
+        {/* TODO: Create pages for these*/}
         <Route path="/workbench/:projectId/create">Create</Route>
         <Route path="/workbench/:projectId/preview">
           <Preview />

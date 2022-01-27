@@ -17,6 +17,7 @@ import theme from '../../theme';
 
 interface IProps {
   selectedProduct: Levelable<IProduct> | null;
+  isRequirement: boolean;
   updateSelectedFunction: (item: IRequirement) => void;
 }
 
@@ -44,18 +45,37 @@ const useStyles = makeStyles({
 
 export default function RequirementsPerNeed({
   selectedProduct,
-  updateSelectedFunction
+  updateSelectedFunction,
+  isRequirement
 }: IProps): React.ReactElement {
   const { project } = useAppSelector((state) => state.project);
 
   const classes = useStyles();
 
-  const [associatedRequirements, associatedNeeds] =
-    selectedProduct !== null
-      ? Utils.findAssociatedRequirements(selectedProduct, project)
-      : [{}, []];
+  const findAssociatedReqsAndNeeds = (): [
+    { [key: string]: IRequirement[] },
+    Nestable<INeed>[]
+  ] => {
+    let requirements: { [key: string]: IRequirement[] } = {};
+    let needs: Nestable<INeed>[] = [];
+    if (selectedProduct !== null) {
+      const [associatedRequirements, associatedNeeds] =
+        Utils.findAssociatedRequirements(selectedProduct, project);
+      requirements = associatedRequirements;
+      needs = associatedNeeds;
+    }
+    if (isRequirement) {
+      needs = project.needs;
+    }
 
-  const requirementList = (requirements: IRequirement[], need: INeed) => {
+    return [requirements, needs];
+  };
+
+  const associatedValues = findAssociatedReqsAndNeeds();
+  const relatedRequirements = associatedValues[0];
+  const relatedNeeds = associatedValues[1];
+
+  const requirementList = (requirements: IRequirement[]) => {
     const reqList = requirements.map((element: IRequirement) => {
       return (
         <Button
@@ -76,32 +96,37 @@ export default function RequirementsPerNeed({
   const needHierarchy = (needsList: Nestable<INeed>[]) => {
     let requirements: IRequirement[] = [];
     const hierarchy = needsList.map((element) => {
-      if (
-        element.id in associatedRequirements &&
-        associatedRequirements[element.id].length > 0
-      )
-        requirements = associatedRequirements[element.id];
-
+      if (isRequirement) {
+        requirements = element.requirements;
+      }
+      if (selectedProduct !== null && relatedRequirements !== {}) {
+        if (element.id in relatedRequirements)
+          requirements = relatedRequirements[element.id];
+      }
       return (
-        <Accordion>
-          <AccordionSummary
-            expandIcon={<ExpandMoreIcon />}
-            aria-controls="panel1a-content"
-            id="panel1a-header"
-          >
-            <Typography>
-              <b>{element.title}</b>
-            </Typography>
-          </AccordionSummary>
+        <>
+          {requirements.length > 0 && (
+            <Accordion>
+              <AccordionSummary
+                expandIcon={<ExpandMoreIcon />}
+                aria-controls="panel1a-content"
+                id="panel1a-header"
+              >
+                <Typography>
+                  <b>{element.title}</b>
+                </Typography>
+              </AccordionSummary>
 
-          <AccordionDetails>
-            {requirements.length > 0 && requirementList(requirements, element)}
-          </AccordionDetails>
-        </Accordion>
+              <AccordionDetails>
+                {requirements.length > 0 && requirementList(requirements)}
+              </AccordionDetails>
+            </Accordion>
+          )}
+        </>
       );
     });
     return <>{hierarchy}</>;
   };
 
-  return needHierarchy(associatedNeeds);
+  return needHierarchy(relatedNeeds);
 }
