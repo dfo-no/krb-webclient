@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import { IBank } from '../../Nexus/entities/IBank';
 import { useAppDispatch } from '../../store/hooks';
 import { selectBank } from '../../store/reducers/selectedBank-reducer';
+import { setBank } from '../../store/reducers/spesification-reducer';
 
 interface IFilteredListProps {
   list: IBank[];
@@ -20,6 +21,7 @@ export default function FilteredList({
 
   const handleSelectedBank = (bank: IBank) => () => {
     dispatch(selectBank(bank.id));
+    dispatch(setBank(bank));
   };
 
   // TODO: correct link to other page than workbench when site exist.

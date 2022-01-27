@@ -1,28 +1,43 @@
+import { Box, makeStyles, Toolbar } from '@material-ui/core';
 import React, { useEffect, useState } from 'react';
 import { Route, useParams } from 'react-router-dom';
 import LoaderSpinner from '../common/LoaderSpinner';
 import { useAppDispatch } from '../store/hooks';
 import { getProjectThunk } from '../store/reducers/project-reducer';
-import CodelistGuard from './Codelist/CodelistGuard';
-import CodelistPage from './Codelist/CodelistPage';
-import InheritancePage from './Inheritance/InheritancePage';
-import InheritanceSearch from './Inheritance/InheritanceSearch';
-import NeedPage from './Need/NeedPage';
-import ProductGuard from './Product/ProductGuard';
-import ProductPage from './Product/ProductPage';
-import ProjectPage from './Project/ProjectPage';
-import RequirementEditor from './Requirement/RequirementEditor';
-import RequirementPage from './Requirement/RequirementPage';
-import TagPage from './Tags/TagPage';
+import theme from '../theme';
+import AdminGuard from './Admin/AdminGuard';
+import ProjectHeader from './Components/ProjectHeader';
+import Preview from './Preview/Preview';
 
 interface IRouteParams {
   projectId: string;
 }
 
+const useStyles = makeStyles({
+  projectContainer: {
+    display: 'flex',
+    flexDirection: 'column',
+    width: '100%',
+
+    [theme.breakpoints.down('sm')]: {
+      flexWrap: 'wrap'
+    }
+  },
+  wrapperContainer: {
+    display: 'flex',
+    flexDirection: 'row',
+
+    [theme.breakpoints.down('sm')]: {
+      flexWrap: 'wrap'
+    }
+  }
+});
+
 export default function ProjectGuard(): React.ReactElement {
   const dispatch = useAppDispatch();
 
   const [isLoading, setLoading] = useState(false);
+  const classes = useStyles();
 
   const { projectId } = useParams<IRouteParams>();
 
@@ -43,47 +58,20 @@ export default function ProjectGuard(): React.ReactElement {
   }
 
   return (
-    <>
-      <Route exact path="/workbench/:projectId">
-        <ProjectPage />
-      </Route>
-      <Route exact path="/workbench/:projectId/need">
-        <NeedPage />
-      </Route>
-      <Route exact path="/workbench/:projectId/need/:needId/requirement">
-        <RequirementPage />
-      </Route>
-      <Route
-        exact
-        path="/workbench/:projectId/need/:needId/requirement/:requirementId/edit"
-      >
-        <RequirementEditor />
-      </Route>
-
-      <Route exact path="/workbench/:projectId/need/requirement">
-        <RequirementPage />
-      </Route>
-      <Route exact path="/workbench/:projectId/tags">
-        <TagPage />
-      </Route>
-      <Route exact path="/workbench/:projectId/codelist">
-        <CodelistPage />
-      </Route>
-      <Route exact path="/workbench/:projectId/codelist/:id">
-        <CodelistGuard />
-      </Route>
-      <Route exact path="/workbench/:projectId/product">
-        <ProductPage />
-      </Route>
-      <Route exact path="/workbench/:projectId/:productId/product">
-        <ProductGuard />
-      </Route>
-      <Route exact path="/workbench/:projectId/inheritance">
-        <InheritancePage />
-      </Route>
-      <Route exact path="/workbench/:projectId/inheritance/explore">
-        <InheritanceSearch />
-      </Route>
-    </>
+    <Box className={classes.projectContainer}>
+      <Box>
+        <ProjectHeader />
+      </Box>
+      <Box className={classes.wrapperContainer}>
+        <Route path="/workbench/:projectId/admin">
+          <AdminGuard />
+        </Route>
+        {/* TODO: Create pages for these*/}
+        <Route path="/workbench/:projectId/create">Create</Route>
+        <Route path="/workbench/:projectId/preview">
+          <Preview />
+        </Route>
+      </Box>
+    </Box>
   );
 }

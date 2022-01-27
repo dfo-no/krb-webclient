@@ -1,0 +1,110 @@
+import { joiResolver } from '@hookform/resolvers/joi';
+import Button from '@mui/material/Button';
+import { get } from 'lodash';
+import React, { useState } from 'react';
+import Card from 'react-bootstrap/Card';
+import Form from 'react-bootstrap/Form';
+import { FieldError, useForm } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
+import { v4 as uuidv4 } from 'uuid';
+import ControlledTextInput from '../../../Form/ControlledTextInput';
+import ErrorSummary from '../../../Form/ErrorSummary';
+import { IAlert } from '../../../models/IAlert';
+import { Parentable } from '../../../models/Parentable';
+import { ICode, PostCodeSchema } from '../../../Nexus/entities/ICode';
+import Nexus from '../../../Nexus/Nexus';
+import { useAppDispatch, useAppSelector } from '../../../store/hooks';
+import { addAlert } from '../../../store/reducers/alert-reducer';
+import {
+  addCodeToCodelist,
+  putSelectedProjectThunk
+} from '../../../store/reducers/project-reducer';
+import { addCodeToSelected } from '../../../store/reducers/selectedCodelist-reducer';
+
+function NewCodeForm(): React.ReactElement {
+  const { codelist } = useAppSelector((state) => state.selectedCodeList);
+  const { project } = useAppSelector((state) => state.project);
+  const dispatch = useAppDispatch();
+  const [validated] = useState(false);
+  const [show, setShow] = useState(false);
+  const { t } = useTranslation();
+  const nexus = Nexus.getInstance();
+
+  const defaultValues: ICode = nexus.codelistService.generateDefaultCodeValues(
+    project.id
+  );
+
+  const {
+    control,
+    handleSubmit,
+    reset,
+    formState: { errors }
+  } = useForm<ICode>({
+    resolver: joiResolver(PostCodeSchema),
+    defaultValues
+  });
+
+  const onSubmit = (post: Parentable<ICode>) => {
+    const code = nexus.codelistService.createCodeWithId(post);
+    dispatch(
+      addCodeToCodelist({
+        codelistId: codelist.id,
+        code
+      })
+    );
+    dispatch(addCodeToSelected(code));
+    dispatch(putSelectedProjectThunk('dummy')).then(() => {
+      const alert: IAlert = {
+        id: uuidv4(),
+        style: 'success',
+        text: 'Successfully added code'
+      };
+      dispatch(addAlert({ alert }));
+      reset();
+      setShow(false);
+    });
+  };
+
+  return (
+    <>
+      <h5>Codes</h5>
+      <Button variant="primary" onClick={() => setShow(true)}>
+        New Code
+      </Button>
+      {show && (
+        <Card className="mb-4">
+          <Card.Body>
+            <Form
+              onSubmit={handleSubmit(onSubmit)}
+              autoComplete="off"
+              noValidate
+              validated={validated}
+            >
+              <ControlledTextInput
+                control={control}
+                name="title"
+                error={get(errors, `title`) as FieldError}
+                label={t('Title')}
+              />
+              <ControlledTextInput
+                control={control}
+                name="description"
+                error={get(errors, `description`) as FieldError}
+                label={t('Description')}
+              />
+              <Button variant="primary" type="submit">
+                {t('save')}
+              </Button>
+              <Button variant="warning" onClick={() => setShow(false)}>
+                {t('cancel')}
+              </Button>
+              <ErrorSummary errors={errors} />
+            </Form>
+          </Card.Body>
+        </Card>
+      )}
+    </>
+  );
+}
+
+export default NewCodeForm;

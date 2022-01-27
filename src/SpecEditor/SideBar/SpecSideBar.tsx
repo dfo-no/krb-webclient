@@ -13,7 +13,7 @@ interface IRouteLink {
 
 type TParams = { id: string };
 
-const renderRouteLinks = (routes: IRouteLink[], isProjectSelected: boolean) => {
+const renderRouteLinks = (routes: IRouteLink[]) => {
   return routes.map((route) => {
     return (
       <Nav.Item key={route.name} className={`${css.sidebar__item}`}>
@@ -23,7 +23,6 @@ const renderRouteLinks = (routes: IRouteLink[], isProjectSelected: boolean) => {
           role="link"
           exact
           activeClassName={`${css.sidebar__item__active}`}
-          disabled={!isProjectSelected}
         >
           {route.name}
         </Nav.Link>
@@ -39,13 +38,8 @@ function SpecSideBar({
 
   const { spec } = useAppSelector((state) => state.specification);
 
-  const isProjectSelected = !!spec.bank.id;
-  const displayTitle = isProjectSelected
-    ? spec.bank.title
-    : `<${t('none selected')}>`;
-
   const routes = [
-    { link: `${match.url}`, name: `${t('Specification')}: ${displayTitle}` },
+    { link: `${match.url}`, name: `${t('Specification')}: ${spec.bank.title}` },
     { link: `${match.url}/requirement`, name: t('Requirements') },
     { link: `${match.url}/download`, name: t('Download') },
     { link: `${match.url}/product`, name: t('Products') }
@@ -53,7 +47,7 @@ function SpecSideBar({
 
   return (
     <Nav className={`sidebar col-md-12 flex-column ${css.sidebar}`}>
-      {renderRouteLinks(routes, isProjectSelected)}
+      {renderRouteLinks(routes)}
     </Nav>
   );
 }

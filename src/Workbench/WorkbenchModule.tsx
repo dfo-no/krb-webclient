@@ -3,13 +3,12 @@ import Box from '@mui/material/Box';
 import React, { useEffect, useState } from 'react';
 import { Route, Switch } from 'react-router-dom';
 import LoaderSpinner from '../common/LoaderSpinner';
-import AlertList from '../components/Alert/AlertList';
 import { useAppDispatch } from '../store/hooks';
 import { getProjectsThunk } from '../store/reducers/project-reducer';
 import theme from '../theme';
+import NewProjectPage from './Admin/Project/NewProjectPage';
 import ProjectGuard from './ProjectGuard';
 import Projects from './Projects';
-import SideBar from './SideBar/SideBar';
 
 const useStyles = makeStyles({
   workbenchContainer: {
@@ -20,13 +19,8 @@ const useStyles = makeStyles({
       flexWrap: 'wrap'
     }
   },
-  sideBarContainer: {
-    flex: '1',
-    backgroundColor: theme.palette.gray100.main
-  },
   editorContainer: {
-    width: '100vw',
-    paddingBottom: 30
+    width: '100vw'
   }
 });
 
@@ -54,14 +48,13 @@ export default function WorkbenchModule(): React.ReactElement {
 
   return (
     <Box className={classes.workbenchContainer}>
-      <Box className={classes.sideBarContainer}>
-        <SideBar />
-      </Box>
       <Box className={classes.editorContainer}>
-        <AlertList />
         <Switch>
           <Route exact path="/workbench">
             <Projects />
+          </Route>
+          <Route exact path="/workbench/project/new">
+            <NewProjectPage />
           </Route>
           <Route path="/workbench/:projectId">
             <ProjectGuard />

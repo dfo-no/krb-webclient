@@ -1,7 +1,7 @@
 import { joiResolver } from '@hookform/resolvers/joi';
+import Button from '@mui/material/Button';
 import Joi from 'joi';
 import React from 'react';
-import Button from '@mui/material/Button';
 import Col from 'react-bootstrap/Col';
 import Container from 'react-bootstrap/Container';
 import Form from 'react-bootstrap/Form';
@@ -11,7 +11,7 @@ import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import ErrorSummary from '../../Form/ErrorSummary';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
-import { editTitle, setBank } from '../../store/reducers/spesification-reducer';
+import { editTitle } from '../../store/reducers/spesification-reducer';
 
 type FormInput = {
   title: string;
@@ -22,9 +22,9 @@ const titleSchema = Joi.object().keys({
 });
 
 export default function SpecEditor(): React.ReactElement {
-  const { id } = useAppSelector((state) => state.selectedBank);
-  const { normalizedList } = useAppSelector((state) => state.bank);
   const { spec } = useAppSelector((state) => state.specification);
+  const dispatch = useAppDispatch();
+
   const { t } = useTranslation();
   const {
     register,
@@ -36,15 +36,8 @@ export default function SpecEditor(): React.ReactElement {
       title: spec.title
     }
   });
-  const dispatch = useAppDispatch();
 
-  if (!id) {
-    return <p>No selected bank</p>;
-  }
-
-  const selectedBank = normalizedList[id];
-
-  dispatch(setBank(selectedBank));
+  const selectedBank = spec.bank;
 
   const saveTitle = (post: FormInput) => {
     dispatch(editTitle(post.title));

@@ -1,8 +1,8 @@
 import { joiResolver } from '@hookform/resolvers/joi';
+import Button from '@mui/material/Button';
 import Slider from '@mui/material/Slider';
 import { get } from 'lodash';
 import React, { useState } from 'react';
-import Button from '@mui/material/Button';
 import Card from 'react-bootstrap/Card';
 import Col from 'react-bootstrap/Col';
 import Container from 'react-bootstrap/Container';
@@ -22,8 +22,7 @@ import { editSpecProduct } from '../../store/reducers/spesification-reducer';
 import ProductRequirementSelectorList from './ProductRequirementSelectorList';
 
 export default function ProductSpecEditor(): React.ReactElement {
-  const { id } = useAppSelector((state) => state.selectedBank);
-  const { normalizedList } = useAppSelector((state) => state.bank);
+  const { spec } = useAppSelector((state) => state.specification);
   const { t } = useTranslation();
   const { selectedSpecificationProduct } = useAppSelector(
     (state) => state.selectedSpecProduct
@@ -50,8 +49,7 @@ export default function ProductSpecEditor(): React.ReactElement {
   };
   const [weightType, setWeightType] = useState(setWeightState());
 
-  if (!id) return <p>No selected bank</p>;
-  const bankSelected = normalizedList[id];
+  const bankSelected = spec.bank;
 
   const addProductToSpecification = (post: ISpecificationProduct) => {
     const newProduct: ISpecificationProduct = {
@@ -200,10 +198,12 @@ export default function ProductSpecEditor(): React.ReactElement {
         </Card.Body>
       </Card>
       <Row className="m-4">
-        <ProductRequirementSelectorList
-          product={selectedSpecificationProduct}
-          selectedBank={bankSelected}
-        />
+        {bankSelected && (
+          <ProductRequirementSelectorList
+            product={selectedSpecificationProduct}
+            selectedBank={bankSelected}
+          />
+        )}
       </Row>
     </Container>
   );

@@ -19,6 +19,7 @@ export default function RequirementSelectorList({
   needList
 }: IInputProps): React.ReactElement {
   const { spec } = useAppSelector((state) => state.specification);
+
   const checkIfReqHasVariantMatch = (req: IRequirement): boolean => {
     let found = false;
     req.variants.forEach((variant) => {
