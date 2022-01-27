@@ -62,6 +62,9 @@ const theme = createTheme({
     gray600: {
       main: dfoThemeScss.gray600
     },
+    gray700: {
+      main: dfoThemeScss.gray700
+    },
     gray900: {
       main: dfoThemeScss.gray900
     },
@@ -123,7 +126,7 @@ theme.typography.smallUnderline = {
 
 theme.typography.smallUnderlineBlue = {
   color: theme.palette.dfoDarkBlue.main,
-  fontSize: '14px',
+  fontSize: '15px',
   textDecoration: 'underline',
   fontWeight: 'bold',
   cursor: 'pointer'

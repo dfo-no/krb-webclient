@@ -1,12 +1,10 @@
 import { makeStyles } from '@material-ui/core';
-import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
-import ListItemText from '@mui/material/ListItemText';
+import { List, ListItem, ListItemText, Box } from '@mui/material';
+import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { withRouter } from 'react-router';
 import { Link, useRouteMatch } from 'react-router-dom';
-import { useAppSelector } from '../../store/hooks';
 import theme from '../../theme';
 
 interface IRouteLink {
@@ -19,9 +17,15 @@ interface IRouteParams {
 }
 
 const useStyles = makeStyles({
+  sideBar: {
+    paddingTop: 45,
+    [theme.breakpoints.down('sm')]: {
+      paddingTop: 0
+    }
+  },
   sideBarList: {
     backgroundColor: theme.palette.gray100.main,
-    width: '17vw',
+    width: '15vw',
     minWidth: 250,
     height: '100vh',
     [theme.breakpoints.down('sm')]: {
@@ -32,12 +36,21 @@ const useStyles = makeStyles({
   },
   sideBarListItem: {
     cursor: 'pointer',
-    borderBottom: `1px solid ${theme.palette.gray300.main}`,
+    width: 200,
+    textAlign: 'center',
     '&:hover': {
       background: theme.palette.lightBlue.main,
       color: theme.palette.dfoWhite.main,
 
       '& $sideBarListItemText': {
+        color: theme.palette.dfoWhite.main
+      },
+
+      '& $selectedSideBarListItemText': {
+        color: theme.palette.dfoWhite.main
+      },
+
+      '& $selectedListItemArrow': {
         color: theme.palette.dfoWhite.main
       }
     },
@@ -46,63 +59,117 @@ const useStyles = makeStyles({
       backgroundColor: theme.palette.gray100.main
     }
   },
-  sideBarListItemDisabled: {
-    borderBottom: `1px solid ${theme.palette.gray300.main}`,
-    pointerEvents: 'none'
-  },
   sideBarListItemText: {
-    color: theme.palette.primary.main,
+    color: '#636060',
+    fontWeight: 1200,
+    marginLeft: 35
+  },
+  selectedSideBarListItemText: {
+    color: '#172c49',
+    marginLeft: 35
+  },
+  sideBarListItemPicked: {
+    cursor: 'pointer',
+    '&:hover': {
+      background: theme.palette.lightBlue.main,
+      color: theme.palette.dfoWhite.main
+    },
+
     [theme.breakpoints.down('sm')]: {
-      textAlign: 'center'
+      backgroundColor: theme.palette.gray100.main
     }
+  },
+  selectedListItemArrow: {
+    color: '#172c49'
   }
 });
 
 function SideBar(): React.ReactElement {
-  const match = useRouteMatch<IRouteParams>('/workbench/:projectId/admin');
   const { t } = useTranslation();
 
-  const currentUrl = match?.url ? match.url : '/workbench';
-  const selectProject = useAppSelector((state) => state.project.project);
-  const isProjectSelected = !!selectProject.id;
-  const displayTitle = selectProject.id
-    ? selectProject.title
-    : `<${t('none selected')}>`;
+  const baseUrl = useRouteMatch<IRouteParams>('/workbench/:projectId');
+  const productMatch = useRouteMatch<IRouteParams>(
+    '/workbench/:projectId/admin/products'
+  );
+  const codelistMatch = useRouteMatch<IRouteParams>(
+    '/workbench/:projectId/admin/codelist'
+  );
+  const inheritanceMatch = useRouteMatch<IRouteParams>(
+    '/workbench/:projectId/admin/inheritance'
+  );
+
+  const tagsMatch = useRouteMatch<IRouteParams>(
+    '/workbench/:projectId/admin/tags'
+  );
+
+  const getCurrentRoute = () => {
+    let url;
+
+    if (productMatch) {
+      url = productMatch?.url;
+    }
+
+    if (codelistMatch) {
+      url = codelistMatch?.url;
+    }
+
+    if (inheritanceMatch) {
+      url = inheritanceMatch?.url;
+    }
+
+    if (tagsMatch) {
+      url = tagsMatch?.url;
+    }
+
+    if (!url) return t('Versions');
+
+    const shortenedPath = url?.substring(url?.lastIndexOf('/') + 1);
+    const shortenedPathCapitalized =
+      shortenedPath[0].toUpperCase() + shortenedPath.slice(1);
+
+    return t(shortenedPathCapitalized);
+  };
+
+  const currentRoute = getCurrentRoute();
 
   const routes: IRouteLink[] = [
-    { link: `${currentUrl}`, name: `${t('Workbench')}: ${displayTitle}` },
-    { link: `${currentUrl}/need`, name: t('Need') },
-    { link: `${currentUrl}/need/requirement`, name: t('Requirement') },
-    { link: `${currentUrl}/codelist`, name: t('Codelist') },
-    { link: `${currentUrl}/product`, name: t('Products') },
-    { link: `${currentUrl}/tags`, name: t('Tags') },
-    { link: `${currentUrl}/inheritance`, name: t('Inheritance') }
+    { link: `${baseUrl?.url}/admin`, name: t('Versions') },
+    { link: `${baseUrl?.url}/admin/products`, name: t('Products') },
+    { link: `${baseUrl?.url}/admin/codelist`, name: t('Codelist') },
+    { link: `${baseUrl?.url}/admin/inheritance`, name: t('Inheritance') },
+    { link: `${baseUrl?.url}/admin/tags`, name: t('Tags') }
   ];
 
   const classes = useStyles();
 
   return (
-    <List className={classes.sideBarList}>
-      {routes.map((route) => {
-        return (
-          <ListItem
-            key={route.name}
-            className={`${
-              isProjectSelected
-                ? classes.sideBarListItem
-                : classes.sideBarListItemDisabled
-            }`}
-            component={Link}
-            to={route.link}
-            disabled={!isProjectSelected}
-          >
-            <ListItemText className={classes.sideBarListItemText}>
-              {route.name}
-            </ListItemText>
-          </ListItem>
-        );
-      })}
-    </List>
+    <Box className={classes.sideBar}>
+      <List className={classes.sideBarList}>
+        {routes.map((route) => {
+          return (
+            <ListItem
+              key={route.name}
+              component={Link}
+              to={route.link}
+              className={classes.sideBarListItem}
+            >
+              <ListItemText
+                className={`${
+                  route.name == currentRoute
+                    ? classes.selectedSideBarListItemText
+                    : classes.sideBarListItemText
+                }`}
+              >
+                {route.name}
+              </ListItemText>
+              {route.name == currentRoute && (
+                <ArrowForwardIcon className={classes.selectedListItemArrow} />
+              )}
+            </ListItem>
+          );
+        })}
+      </List>
+    </Box>
   );
 }
 
