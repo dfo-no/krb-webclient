@@ -32,7 +32,7 @@ export default function PublicationList(): React.ReactElement {
   const { project } = useAppSelector((state) => state.project);
   const [editId, setEditId] = useState('');
 
-  const { register, formState, handleSubmit } = useForm<Omit<IBank, 'needs'>>({
+  const { register, formState, handleSubmit } = useForm<IBank>({
     criteriaMode: 'all',
     resolver: joiResolver(PutProjectSchema),
     defaultValues: project

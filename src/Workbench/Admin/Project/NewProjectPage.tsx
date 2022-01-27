@@ -34,7 +34,7 @@ export default function NewProjectPage(): React.ReactElement {
     handleSubmit,
     control,
     formState: { errors }
-  } = useForm<Omit<IBank, 'needs'>>({
+  } = useForm<IBank>({
     resolver: joiResolver(PostProjectSchema),
     defaultValues
   });

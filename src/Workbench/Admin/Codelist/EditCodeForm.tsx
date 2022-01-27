@@ -52,8 +52,8 @@ export default function EditCodeForm({ element }: IProps): React.ReactElement {
     }
   }, [element, reset]);
 
-  const onEditCodeSubmit = (data: Nestable<ICode>) => {
-    const editCode = { ...data };
+  const onEditCodeSubmit = (data: ICode) => {
+    const editCode = { ...data } as Nestable<ICode>;
     if (editCode.children) {
       delete editCode.children;
     }
