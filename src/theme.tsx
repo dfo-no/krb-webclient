@@ -123,9 +123,10 @@ theme.typography.smallUnderline = {
 
 theme.typography.smallUnderlineBlue = {
   color: theme.palette.dfoDarkBlue.main,
-  fontSize: '36px',
+  fontSize: '14px',
   textDecoration: 'underline',
-  fontWeight: 'bold'
+  fontWeight: 'bold',
+  cursor: 'pointer'
 };
 
 theme.typography.big = {
