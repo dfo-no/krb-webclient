@@ -1,8 +1,8 @@
+import MoreVertIcon from '@mui/icons-material/MoreVert';
 import React, { useState } from 'react';
 import Accordion from 'react-bootstrap/Accordion';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
-import { BsThreeDotsVertical } from 'react-icons/bs';
 import Nestable, { Item } from 'react-nestable';
 import 'react-nestable/dist/styles/index.css';
 import Utils from '../common/Utils';
@@ -118,7 +118,7 @@ const NestableHierarcy = <T extends IBaseModel>({
           renderItem={({ item, handler }) => renderItem(item, handler)}
           onChange={(items) => onChange(items)}
           maxDepth={depth}
-          handler={<BsThreeDotsVertical />}
+          handler={<MoreVertIcon />}
         />
       </Accordion>
     </AccordionContext.Provider>

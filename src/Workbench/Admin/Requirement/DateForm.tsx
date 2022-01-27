@@ -1,3 +1,4 @@
+import DeleteIcon from '@mui/icons-material/Delete';
 import Button from '@mui/material/Button';
 import { get } from 'lodash';
 import React from 'react';
@@ -12,7 +13,6 @@ import {
   UseFormRegister
 } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import { BsTrashFill } from 'react-icons/bs';
 import ControlledCheckbox from '../../../Form/ControlledCheckbox';
 import { IPeriodDateQuestion } from '../../../Nexus/entities/IPeriodDateQuestion';
 import { IRequirement } from '../../../Nexus/entities/IRequirement';
@@ -45,7 +45,7 @@ export default function DateForm({
         <h6>
           Alternative: Date
           <Button variant="warning" onClick={() => remove(aIndex)}>
-            <BsTrashFill />
+            <DeleteIcon />
           </Button>
         </h6>
         <Form.Control

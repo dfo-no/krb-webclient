@@ -1,3 +1,4 @@
+import DeleteIcon from '@mui/icons-material/Delete';
 import Button from '@mui/material/Button';
 import { get, has } from 'lodash';
 import React from 'react';
@@ -6,7 +7,6 @@ import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 import { Control, FormState, UseFormRegister } from 'react-hook-form';
-import { BsTrashFill } from 'react-icons/bs';
 import { IRequirement } from '../../../Nexus/entities/IRequirement';
 import { ITextQuestion } from '../../../Nexus/entities/ITextQuestion';
 
@@ -34,7 +34,7 @@ export default function TextForm({
         <h6>
           Alternative: Text
           <Button variant="warning" onClick={() => remove(aIndex)}>
-            <BsTrashFill />
+            <DeleteIcon />
           </Button>
         </h6>
 

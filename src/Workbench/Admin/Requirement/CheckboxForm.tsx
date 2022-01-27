@@ -1,3 +1,4 @@
+import DeleteIcon from '@mui/icons-material/Delete';
 import Button from '@mui/material/Button';
 import React from 'react';
 import Card from 'react-bootstrap/Card';
@@ -5,7 +6,6 @@ import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 import { Control, FormState, UseFormRegister } from 'react-hook-form';
-import { BsTrashFill } from 'react-icons/bs';
 import { ICheckboxQuestion } from '../../..//Nexus/entities/ICheckboxQuestion';
 import { IRequirement } from '../../../Nexus/entities/IRequirement';
 
@@ -32,7 +32,7 @@ export default function CheckboxForm({
         <h6>
           Alternative: Yes/No{' '}
           <Button variant="warning" onClick={() => remove(aIndex)}>
-            <BsTrashFill />
+            <DeleteIcon />
           </Button>
         </h6>
 

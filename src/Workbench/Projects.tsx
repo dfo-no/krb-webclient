@@ -1,10 +1,10 @@
+import DeleteIcon from '@mui/icons-material/Delete';
 import React from 'react';
 import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
 import ListGroup from 'react-bootstrap/ListGroup';
 import Row from 'react-bootstrap/Row';
 import { useTranslation } from 'react-i18next';
-import { BsTrashFill } from 'react-icons/bs';
 import { Link, useHistory } from 'react-router-dom';
 import { IBank } from '../Nexus/entities/IBank';
 import Nexus from '../Nexus/Nexus';
@@ -43,7 +43,7 @@ function Projects(): React.ReactElement {
             </Col>
             <Col sm={1} className="p-0">
               <Button variant="warning" onClick={() => onDelete(element)}>
-                <BsTrashFill />
+                <DeleteIcon />
               </Button>
             </Col>
           </Row>
