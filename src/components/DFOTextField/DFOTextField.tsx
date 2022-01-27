@@ -43,7 +43,7 @@ const useStyles = makeStyles(() =>
 );
 
 export const DFOTextField = ({
-  textField,
+  element,
   value,
   label,
   error,
@@ -67,13 +67,13 @@ export const DFOTextField = ({
   return (
     <Box className={classes.dfoTextFieldContainer}>
       <TextField
-        {...textField}
+        {...element}
         className={classes.root}
         label={label}
         autoComplete="off"
         value={value || ''}
       />
-      <Typography variant="textCtrlErrorMessage">{errorMessage}</Typography>
+      <Typography variant="formCtrlErrorMessage">{errorMessage}</Typography>
     </Box>
   );
 };

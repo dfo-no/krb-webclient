@@ -9,7 +9,8 @@ declare module '@mui/material/styles' {
     big: React.CSSProperties;
     bigScale: React.CSSProperties;
     footerAddressText: React.CSSProperties;
-    textCtrlErrorMessage: React.CSSProperties;
+    footerLinkText: React.CSSProperties;
+    formCtrlErrorMessage: React.CSSProperties;
   }
 
   interface TypographyVariantsOptions {
@@ -19,7 +20,8 @@ declare module '@mui/material/styles' {
     big?: React.CSSProperties;
     bigScale?: React.CSSProperties;
     footerAddressText?: React.CSSProperties;
-    textCtrlErrorMessage?: React.CSSProperties;
+    footerLinkText?: React.CSSProperties;
+    formCtrlErrorMessage?: React.CSSProperties;
   }
 }
 
@@ -31,6 +33,7 @@ declare module '@mui/material/Typography' {
     big: true;
     bigScale: true;
     footerAddressText: true;
-    textCtrlErrorMessage: true;
+    footerLinkText: true;
+    formCtrlErrorMessage: true;
   }
 }
