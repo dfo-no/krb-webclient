@@ -53,8 +53,8 @@ export default function RequirementPage(): React.ReactElement {
     );
   }
 
-  const onOpenClose = (e: string | null) => {
-    if (e) {
+  const onOpenClose = (e: string | string[] | null | undefined) => {
+    if (typeof e === 'string') {
       setActiveKey(e);
     } else {
       setActiveKey('');

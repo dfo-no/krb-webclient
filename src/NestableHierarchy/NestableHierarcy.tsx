@@ -60,8 +60,8 @@ const NestableHierarcy = <T extends IBaseModel>({
 
   const hierarchyList = Utils.parentable2Nestable(inputlist);
 
-  const onOpenClose = (e: string | null) => {
-    if (e) {
+  const onOpenClose = (e: string | string[] | null | undefined) => {
+    if (typeof e === 'string') {
       setActiveKey(e);
     } else {
       setActiveKey('');
@@ -112,7 +112,7 @@ const NestableHierarcy = <T extends IBaseModel>({
 
   return (
     <AccordionContext.Provider value={{ onOpenClose }}>
-      <Accordion activeKey={activeKey} onSelect={(e) => onOpenClose(e)}>
+      <Accordion activeKey={activeKey} onSelect={onOpenClose}>
         <Nestable
           items={hierarchyList}
           renderItem={({ item, handler }) => renderItem(item, handler)}

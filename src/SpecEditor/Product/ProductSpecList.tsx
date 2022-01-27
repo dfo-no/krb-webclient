@@ -63,7 +63,7 @@ export default function ProductSpecList(): React.ReactElement {
     register,
     handleSubmit,
     formState: { errors }
-  } = useForm();
+  } = useForm<FormInput>();
 
   /* if (projectMatch?.params.bankId && !id) {
     dispatch(selectBank(projectMatch?.params.bankId));
