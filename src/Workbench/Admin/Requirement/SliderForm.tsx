@@ -1,3 +1,4 @@
+import DeleteIcon from '@mui/icons-material/Delete';
 import Button from '@mui/material/Button';
 import { get, has } from 'lodash';
 import React from 'react';
@@ -7,7 +8,6 @@ import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 import { Control, FormState, UseFormRegister } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import { BsTrashFill } from 'react-icons/bs';
 import { IRequirement } from '../../../Nexus/entities/IRequirement';
 import { ISliderQuestion } from '../../../Nexus/entities/ISliderQuestion';
 
@@ -37,7 +37,7 @@ export default function SliderForm({
         <h6>
           {t('Alternative')}: {t('Value')}{' '}
           <Button variant="warning" onClick={() => remove(aIndex)}>
-            <BsTrashFill />
+            <DeleteIcon />
           </Button>
         </h6>
         <Form.Control

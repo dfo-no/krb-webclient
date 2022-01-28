@@ -1,8 +1,8 @@
 import { joiResolver } from '@hookform/resolvers/joi';
+import Button from '@mui/material/Button';
 import Slider from '@mui/material/Slider';
 import Joi from 'joi';
 import React, { useState } from 'react';
-import Button from '@mui/material/Button';
 import Col from 'react-bootstrap/Col';
 import Container from 'react-bootstrap/Container';
 import Form from 'react-bootstrap/Form';
@@ -90,12 +90,12 @@ export default function ProductRequirementAnswer({
     )
   );
 
-  //QuestionAnswer saved in state
+  // QuestionAnswer saved in state
   const savedQuestion = specProduct.requirementAnswers.find(
     (alt) => alt.variantId === selectedVariant.id
   );
 
-  //The selected question from the dropdown of possible question types for this variant
+  // The selected question from the dropdown of possible question types for this variant
   const [selectedQuestion, setSelectedQuestion] = useState<string | undefined>(
     savedQuestion !== undefined ? savedQuestion.id : undefined
   );

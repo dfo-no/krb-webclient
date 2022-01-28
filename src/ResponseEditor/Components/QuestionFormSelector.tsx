@@ -1,6 +1,6 @@
+import WarningAmberIcon from '@mui/icons-material/WarningAmber';
 import React from 'react';
 import Card from 'react-bootstrap/Card';
-import { BsFillExclamationTriangleFill } from 'react-icons/bs';
 import { IRequirementAnswer } from '../../models/IRequirementAnswer';
 import QuestionEnum from '../../models/QuestionEnum';
 import RequirementType from '../../models/RequirementType';
@@ -42,7 +42,7 @@ export default function QuestionFormSelector({
           <Card.Body>
             {requirementText}{' '}
             {markedRequirements.includes(selectedAnswer.questionId) && (
-              <BsFillExclamationTriangleFill />
+              <WarningAmberIcon />
             )}
           </Card.Body>
           {selectedAnswer.question.type === QuestionEnum.Q_SLIDER && (

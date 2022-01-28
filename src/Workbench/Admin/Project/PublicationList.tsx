@@ -1,4 +1,6 @@
 import { joiResolver } from '@hookform/resolvers/joi';
+import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit';
 import Button from '@mui/material/Button';
 import { get, has, toPath } from 'lodash';
 import React, { useState } from 'react';
@@ -9,7 +11,6 @@ import Nav from 'react-bootstrap/Nav';
 import Row from 'react-bootstrap/Row';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import { BsPencilSquare, BsTrashFill } from 'react-icons/bs';
 import { v4 as uuidv4 } from 'uuid';
 import ErrorSummary from '../../../Form/ErrorSummary';
 import { IAlert } from '../../../models/IAlert';
@@ -31,7 +32,7 @@ export default function PublicationList(): React.ReactElement {
   const { project } = useAppSelector((state) => state.project);
   const [editId, setEditId] = useState('');
 
-  const { register, formState, handleSubmit } = useForm<Omit<IBank, 'needs'>>({
+  const { register, formState, handleSubmit } = useForm<IBank>({
     criteriaMode: 'all',
     resolver: joiResolver(PutProjectSchema),
     defaultValues: project
@@ -140,7 +141,7 @@ export default function PublicationList(): React.ReactElement {
                         setEditId(field.id);
                       }}
                     >
-                      <BsPencilSquare />
+                      <EditIcon />
                     </Button>
                     <Button
                       variant="warning"
@@ -148,7 +149,7 @@ export default function PublicationList(): React.ReactElement {
                         deletePublication(field.id, field.bankId);
                       }}
                     >
-                      <BsTrashFill />
+                      <DeleteIcon />
                     </Button>
                   </Col>
                 </Row>

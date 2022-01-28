@@ -1,8 +1,9 @@
+import EditIcon from '@mui/icons-material/Edit';
+import SubdirectoryArrowRightIcon from '@mui/icons-material/SubdirectoryArrowRight';
 import React from 'react';
 import Badge from 'react-bootstrap/Badge';
 import ListGroup from 'react-bootstrap/ListGroup';
 import Row from 'react-bootstrap/Row';
-import { BsArrowReturnRight, BsPencil } from 'react-icons/bs';
 import { Link } from 'react-router-dom';
 import Utils from '../../../common/Utils';
 import { Nestable } from '../../../models/Nestable';
@@ -69,7 +70,7 @@ export default function ProductPreview(): React.ReactElement {
                 dispatch(selectNeed(need.id));
               }}
             >
-              <BsPencil />
+              <EditIcon />
             </Link>
           </Row>
           <p>{findRequirementText(element.variants)}</p>
@@ -101,7 +102,7 @@ export default function ProductPreview(): React.ReactElement {
       return (
         <div className={` ${styles[cssClass]} pt-0`}>
           <Row>
-            <BsArrowReturnRight className="ml-2 mt-1 mr-2" />
+            <SubdirectoryArrowRightIcon className="ml-2 mt-1 mr-2" />
             <p>{element.title}</p>
           </Row>
           {requirements.length > 0 && requirementList(requirements, element)}
