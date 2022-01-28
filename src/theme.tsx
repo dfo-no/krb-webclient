@@ -135,6 +135,11 @@ theme.typography.big = {
   fontWeight: 700
 };
 
+theme.typography.mediumBlue = {
+  color: theme.palette.primary.main,
+  fontSize: '18px'
+};
+
 theme.typography.bigScale = {
   color: theme.palette.black.main,
   fontSize: '28px',
@@ -195,6 +200,25 @@ theme.components = {
       root: {
         paddingTop: '0',
         paddingBottom: '0'
+      }
+    }
+  },
+  MuiCheckbox: {
+    styleOverrides: {
+      root: {
+        width: '40px',
+        height: '40px',
+        paddingTop: '0',
+        paddingBottom: '0'
+      }
+    }
+  },
+  MuiSvgIcon: {
+    styleOverrides: {
+      root: {
+        width: '40px',
+        height: '40px',
+        color: theme.palette.dfoBlue.main
       }
     }
   }
