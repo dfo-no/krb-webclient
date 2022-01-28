@@ -41,6 +41,7 @@ export default function RequirementList({
     const reqList = requirements.map((element: IRequirement) => {
       return (
         <Button
+          key={element.id}
           onClick={() => updateSelectedFunction(element)}
           className={classes.requirementButton}
         >
