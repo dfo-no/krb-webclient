@@ -7,6 +7,7 @@ import { getProjectThunk } from '../store/reducers/project-reducer';
 import theme from '../theme';
 import AdminGuard from './Admin/AdminGuard';
 import ProjectHeader from './Components/ProjectHeader';
+import Create from './Create/Create';
 import Preview from './Preview/Preview';
 
 interface IRouteParams {
@@ -66,8 +67,9 @@ export default function ProjectGuard(): React.ReactElement {
         <Route path="/workbench/:projectId/admin">
           <AdminGuard />
         </Route>
-        {/* TODO: Create pages for these*/}
-        <Route path="/workbench/:projectId/create">Create</Route>
+        <Route path="/workbench/:projectId/create">
+          <Create />
+        </Route>
         <Route path="/workbench/:projectId/preview">
           <Preview />
         </Route>

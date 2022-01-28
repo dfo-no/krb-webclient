@@ -2,7 +2,6 @@ import { combineReducers } from '@reduxjs/toolkit';
 import { bankApi } from './api/bankApi';
 import alertReducer from './reducers/alert-reducer';
 import evaluationReducer from './reducers/evaluation-reducer';
-import loaderReducer from './reducers/loader-reducer';
 import PrefilledResponseReducer from './reducers/PrefilledResponseReducer';
 import projectReducer from './reducers/project-reducer';
 import responseReducer from './reducers/response-reducer';
@@ -17,11 +16,8 @@ import selectedResponseProductReducer from './reducers/selectedResponseProduct-r
 import selectedSpecProductReducer from './reducers/selectedSpecProduct-reducer';
 import specificationReducer from './reducers/spesification-reducer';
 import uploadedPrefilledResponseReducer from './reducers/uploadedPrefilledResponseReducer';
-import userReducer from './reducers/userReducer';
 
 const rootReducer = combineReducers({
-  loader: loaderReducer,
-  user: userReducer,
   [bankApi.reducerPath]: bankApi.reducer,
   project: projectReducer,
   selectedProject: selectedProjectReducer,
