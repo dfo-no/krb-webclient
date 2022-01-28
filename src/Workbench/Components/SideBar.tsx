@@ -24,7 +24,7 @@ const useStyles = makeStyles({
     }
   },
   sideBarList: {
-    backgroundColor: '#F7F7F7',
+    backgroundColor: theme.palette.gray100.main,
     width: '15vw',
     minWidth: 230,
     height: '100vh',
