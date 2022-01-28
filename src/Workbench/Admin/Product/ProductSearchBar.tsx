@@ -7,6 +7,6 @@ const useStyles = makeStyles({});
 
 export default function Header(): React.ReactElement {
   const classes = useStyles();
-
+  console.log('KEK');
   return <Box>Hei</Box>;
 }
