@@ -19,13 +19,18 @@ const useStyles = makeStyles({
   productsContainer: {
     display: 'flex',
     flexDirection: 'column',
+    marginTop: 40,
     gap: 20,
     margin: 'auto',
     width: '60vw'
   },
   productOptions: {
     display: 'flex',
-    justifyContent: 'space-between'
+    justifyContent: 'space-between',
+    backgroundColor: 'red'
+  },
+  searchBar: {
+    height: 60
   }
 });
 
@@ -44,8 +49,13 @@ export default function ProductPage(): React.ReactElement {
   return (
     <Box className={classes.productsContainer}>
       <Box className={classes.productOptions}>
-        <ProductsSearchBar />
-        <NewProductForm />
+        <Box className={classes.searchBar}>
+          {' '}
+          <ProductsSearchBar />
+        </Box>
+        <Box>
+          <NewProductForm />
+        </Box>
       </Box>
 
       <Box>

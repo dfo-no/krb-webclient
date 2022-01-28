@@ -37,7 +37,8 @@ const useStyles = makeStyles(() =>
       display: 'flex',
       flexDirection: 'column',
       gap: 11,
-      width: '100%'
+      width: '100%',
+      height: '100%'
     }
   })
 );
@@ -68,7 +69,6 @@ export const DFOTextField = ({
     <Box className={classes.dfoTextFieldContainer}>
       <TextField
         {...element}
-        className={classes.root}
         label={label}
         autoComplete="off"
         value={value || ''}
