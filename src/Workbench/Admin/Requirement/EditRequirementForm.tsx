@@ -1,11 +1,11 @@
 import { joiResolver } from '@hookform/resolvers/joi';
+import DeleteIcon from '@mui/icons-material/Delete';
 import Button from '@mui/material/Button';
 import { get } from 'lodash';
 import React, { useContext, useState } from 'react';
 import Form from 'react-bootstrap/Form';
 import { FieldError, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import { BsTrashFill } from 'react-icons/bs';
 import { Link } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
 import ControlledTextInput from '../../../Form/ControlledTextInput';
@@ -107,7 +107,7 @@ export default function EditRequirementForm({
         <Button className="ml-4 mt-2 ">{t('edit')}</Button>
       </Link>
       <Button variant="warning" onClick={() => removeRequirement(element)}>
-        {t('delete')} <BsTrashFill />
+        {t('delete')} <DeleteIcon />
       </Button>
       <ErrorSummary errors={errors} />
     </Form>

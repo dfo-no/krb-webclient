@@ -1,4 +1,6 @@
 import { joiResolver } from '@hookform/resolvers/joi';
+import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit';
 import Button from '@mui/material/Button';
 import { get } from 'lodash';
 import React, { useEffect, useState } from 'react';
@@ -6,7 +8,6 @@ import Card from 'react-bootstrap/Card';
 import Form from 'react-bootstrap/Form';
 import { FieldError, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import { BsPencil, BsTrashFill } from 'react-icons/bs';
 import { useHistory } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
 import AlertModal from '../../../common/AlertModal';
@@ -116,7 +117,7 @@ function EditCodeListForm(): React.ReactElement {
       <h3 className="m-2">
         Codelist: {codelist.title}
         <Button variant="primary" onClick={() => setEdit(true)}>
-          <BsPencil />
+          <EditIcon />
         </Button>
       </h3>
       <p className="ml-1 mb-4">{codelist.description}</p>
@@ -148,7 +149,7 @@ function EditCodeListForm(): React.ReactElement {
                 {t('cancel')}
               </Button>
               <Button variant="warning" onClick={removeCodelist}>
-                {t('delete')} <BsTrashFill />
+                {t('delete')} <DeleteIcon />
               </Button>
               <AlertModal
                 modalShow={modalShow}

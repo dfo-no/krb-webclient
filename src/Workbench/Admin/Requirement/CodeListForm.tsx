@@ -1,10 +1,10 @@
+import DeleteIcon from '@mui/icons-material/Delete';
 import Button from '@mui/material/Button';
 import React from 'react';
 import Card from 'react-bootstrap/Card';
 import Form from 'react-bootstrap/Form';
 import { Control, FormState, UseFormRegister } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import { BsTrashFill } from 'react-icons/bs';
 import { IBank } from '../../../Nexus/entities/IBank';
 import { ICodelist } from '../../../Nexus/entities/ICodelist';
 import { ICodelistQuestion } from '../../../Nexus/entities/ICodelistQuestion';
@@ -47,7 +47,7 @@ export default function CodeListForm({
         <h6>
           {t('Alternative')}: {t('Codelist')}
           <Button variant="warning" onClick={() => remove(aIndex)}>
-            <BsTrashFill />
+            <DeleteIcon />
           </Button>
         </h6>
         <Form.Control
