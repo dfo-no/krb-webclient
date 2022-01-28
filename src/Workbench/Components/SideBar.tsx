@@ -26,7 +26,7 @@ const useStyles = makeStyles({
   sideBarList: {
     backgroundColor: '#F7F7F7',
     width: '15vw',
-    minWidth: 250,
+    minWidth: 230,
     height: '100vh',
     [theme.breakpoints.down('sm')]: {
       height: 'auto',
