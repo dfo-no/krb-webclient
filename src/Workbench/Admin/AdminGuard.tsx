@@ -62,7 +62,7 @@ export default function AdminGuard(): React.ReactElement {
         <Route exact path="/workbench/:projectId/admin/codelist/:id">
           <CodelistGuard />
         </Route>
-        <Route exact path="/workbench/:projectId/admin/product">
+        <Route exact path="/workbench/:projectId/admin/products">
           <ProductPage />
         </Route>
         <Route exact path="/workbench/:projectId/admin/:productId/product">

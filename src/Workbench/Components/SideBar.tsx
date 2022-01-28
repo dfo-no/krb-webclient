@@ -24,7 +24,7 @@ const useStyles = makeStyles({
     }
   },
   sideBarList: {
-    backgroundColor: theme.palette.gray100.main,
+    backgroundColor: '#F7F7F7',
     width: '15vw',
     minWidth: 250,
     height: '100vh',
@@ -60,13 +60,12 @@ const useStyles = makeStyles({
     }
   },
   sideBarListItemText: {
-    color: '#636060',
-    fontWeight: 1200,
-    marginLeft: 35
+    color: theme.palette.gray700.main,
+    marginLeft: 40
   },
   selectedSideBarListItemText: {
-    color: '#172c49',
-    marginLeft: 35
+    color: theme.palette.dfoDarkBlue.main,
+    marginLeft: 40
   },
   sideBarListItemPicked: {
     cursor: 'pointer',
@@ -80,7 +79,7 @@ const useStyles = makeStyles({
     }
   },
   selectedListItemArrow: {
-    color: '#172c49'
+    color: theme.palette.dfoDarkBlue.main
   }
 });
 
