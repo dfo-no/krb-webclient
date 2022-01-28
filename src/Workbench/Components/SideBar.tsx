@@ -69,6 +69,7 @@ const useStyles = makeStyles({
   },
   sideBarListItemPicked: {
     cursor: 'pointer',
+    fontWeight: 'bold',
     '&:hover': {
       background: theme.palette.lightBlue.main,
       color: theme.palette.dfoWhite.main
@@ -163,7 +164,7 @@ function SideBar(): React.ReactElement {
                     : classes.sideBarListItemText
                 }`}
               >
-                {route.name}
+                <Box sx={{ fontWeight: 'bold' }}>{route.name}</Box>
               </ListItemText>
               {route.name == currentRoute && (
                 <ArrowForwardIcon className={classes.selectedListItemArrow} />
