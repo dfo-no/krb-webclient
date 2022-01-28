@@ -1,11 +1,9 @@
 import { makeStyles } from '@material-ui/core';
-import Button from '@material-ui/core/Button';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
 import React from 'react';
 import Nav from 'react-bootstrap/Nav';
-import { NavLink } from 'react-router-dom';
 import Utils from '../../common/Utils';
 import { Levelable } from '../../models/Levelable';
 import { Parentable } from '../../models/Parentable';
@@ -63,11 +61,12 @@ export default function ParentableSideBar({
   const classes = useStyles();
   const levels = (elements: Parentable<INeed | IProduct>[]) => {
     const displayNeeds = Utils.parentable2Levelable(elements);
-    return displayNeeds.map((element) => {
+
+    return displayNeeds.map((element, index) => {
       const cssClass = `level${element.level - 1}`;
       return (
         <ListItem
-          key={element.id}
+          key={`${index}-${element.id}`}
           className={`${styles.sidebar__item} ${styles[cssClass]} ${classes.sideBarListItem}`}
           onClick={() => updateSelectedFunction(element)}
         >
