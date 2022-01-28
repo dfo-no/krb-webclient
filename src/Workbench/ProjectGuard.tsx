@@ -66,7 +66,7 @@ export default function ProjectGuard(): React.ReactElement {
         <Route path="/workbench/:projectId/admin">
           <AdminGuard />
         </Route>
-        {/*TODO: Create pages for these*/}
+        {/* TODO: Create pages for these*/}
         <Route path="/workbench/:projectId/create">Create</Route>
         <Route path="/workbench/:projectId/preview">
           <Preview />

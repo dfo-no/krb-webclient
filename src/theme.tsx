@@ -6,6 +6,16 @@ const theme = createTheme({
   typography: {
     fontFamily: ['Source Sans Pro', 'Helvetica', 'Arial'].join(',')
   },
+  breakpoints: {
+    values: {
+      xs: 0,
+      sm: 600,
+      md: 900,
+      header: 906,
+      lg: 1200,
+      xl: 1536
+    }
+  },
   palette: {
     primary: {
       main: dfoThemeScss.primary
@@ -15,6 +25,9 @@ const theme = createTheme({
     },
     dfoBlue: {
       main: dfoThemeScss.dfoBlue
+    },
+    dfoDarkBlue: {
+      main: dfoThemeScss.dfoDarkBlue
     },
     dfoInputBackground: {
       main: dfoThemeScss.dfoInputBackground
@@ -45,6 +58,9 @@ const theme = createTheme({
     },
     gray500: {
       main: dfoThemeScss.gray500
+    },
+    gray600: {
+      main: dfoThemeScss.gray600
     },
     gray900: {
       main: dfoThemeScss.gray900
@@ -94,21 +110,57 @@ const theme = createTheme({
   }
 });
 
+theme.typography.small = {
+  color: theme.palette.black.main,
+  fontSize: '14px'
+};
+
+theme.typography.smallUnderline = {
+  color: theme.palette.black.main,
+  fontSize: '15px',
+  textDecoration: 'underline'
+};
+
+theme.typography.smallUnderlineBlue = {
+  color: theme.palette.dfoDarkBlue.main,
+  fontSize: '14px',
+  textDecoration: 'underline',
+  fontWeight: 'bold',
+  cursor: 'pointer'
+};
+
+theme.typography.big = {
+  color: theme.palette.black.main,
+  fontSize: '28px',
+  fontWeight: 700
+};
+
+theme.typography.bigScale = {
+  color: theme.palette.black.main,
+  fontSize: '28px',
+  fontWeight: 700,
+  [theme.breakpoints.down('header')]: {
+    fontSize: '20px'
+  }
+};
+
 theme.typography.footerAddressText = {
   color: theme.palette.dfoWhite.main,
   fontSize: '15px'
 };
 
-theme.typography.textCtrlErrorMessage = {
-  color: theme.palette.dfoErrorRed.main
+theme.typography.formCtrlErrorMessage = {
+  color: theme.palette.dfoErrorRed.main,
+  paddingLeft: 10,
+  fontSize: 14
 };
 
 theme.components = {
   MuiAppBar: {
     styleOverrides: {
       root: {
-        backgroundColor: theme.palette.gray100.main,
-        borderBottom: `1px solid ${theme.palette.gray300.main}`
+        backgroundColor: theme.palette.dfoWhite.main,
+        borderBottom: `2px solid ${theme.palette.gray300.main}`
       }
     }
   },
