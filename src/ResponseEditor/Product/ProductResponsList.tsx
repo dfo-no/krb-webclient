@@ -1,8 +1,8 @@
+import EditIcon from '@mui/icons-material/Edit';
 import React from 'react';
 import Container from 'react-bootstrap/Container';
 import ListGroup from 'react-bootstrap/ListGroup';
 import Row from 'react-bootstrap/Row';
-import { BsPencil } from 'react-icons/bs';
 import { Link, useRouteMatch } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
 import Utils from '../../common/Utils';
@@ -72,7 +72,7 @@ export default function ProductResponseList(): React.ReactElement {
               onClick={() => generateResponseProduct(product)}
               to={`/response/${id}/product/${product.id}`}
             >
-              <BsPencil className="ml-4  mt-1" />
+              <EditIcon className="ml-4  mt-1" />
             </Link>
           </Row>
           <Row>

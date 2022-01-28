@@ -1,8 +1,8 @@
+import EditIcon from '@mui/icons-material/Edit';
 import Button from '@mui/material/Button';
 import React, { useState } from 'react';
 import Col from 'react-bootstrap/Col';
 import { useTranslation } from 'react-i18next';
-import { BsPencil } from 'react-icons/bs';
 import { useAppSelector } from '../../../store/hooks';
 import EditProjectForm from './EditProjectForm';
 import NewPublication from './NewPublication';
@@ -27,7 +27,7 @@ function ProjectPage(): React.ReactElement {
         <h3>
           {project.title}
           <Button variant="primary" onClick={() => setEditMode(true)}>
-            <BsPencil />
+            <EditIcon />
           </Button>
         </h3>
       </Col>

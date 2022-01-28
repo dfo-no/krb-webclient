@@ -1,3 +1,4 @@
+import DeleteIcon from '@mui/icons-material/Delete';
 import Button from '@mui/material/Button';
 import { get, has, toPath } from 'lodash';
 import React from 'react';
@@ -11,7 +12,6 @@ import {
   UseFormRegister
 } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import { BsTrashFill } from 'react-icons/bs';
 import { v4 as uuidv4 } from 'uuid';
 import Utils from '../../../common/Utils';
 import { Nestable } from '../../../models/Nestable';
@@ -130,7 +130,7 @@ export default function VariantArray({
                     remove(index);
                   }}
                 >
-                  <BsTrashFill />
+                  <DeleteIcon />
                 </Button>
               </h5>
               <Form.Control

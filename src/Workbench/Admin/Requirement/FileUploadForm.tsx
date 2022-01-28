@@ -1,3 +1,4 @@
+import DeleteIcon from '@mui/icons-material/Delete';
 import Button from '@mui/material/Button';
 import { get, has } from 'lodash';
 import React from 'react';
@@ -11,7 +12,6 @@ import {
   FormState,
   UseFormRegister
 } from 'react-hook-form';
-import { BsTrashFill } from 'react-icons/bs';
 import ControlledFileUpload from '../../../Form/ControlledFileUpload';
 import RequirementType from '../../../models/RequirementType';
 import { IFileUploadQuestion } from '../../../Nexus/entities/IFileUploadQuestion';
@@ -47,7 +47,7 @@ export default function FileUploadForm({
         <h6>
           Alternative: File Upload
           <Button variant="warning" onClick={() => remove(aIndex)}>
-            <BsTrashFill />
+            <DeleteIcon />
           </Button>
         </h6>
         <Form.Control

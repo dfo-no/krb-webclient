@@ -33,7 +33,7 @@ export default function EditProjectForm({
     reset,
     formState: { errors }
     // TODO: Check if Omit still posts needs, and Joi catches the potensial error
-  } = useForm<Omit<IBank, 'needs'>>({
+  } = useForm<IBank>({
     resolver: joiResolver(EditProjectSchema),
     defaultValues: project
   });

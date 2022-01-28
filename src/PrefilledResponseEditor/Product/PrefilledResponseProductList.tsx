@@ -1,5 +1,7 @@
-import React from 'react';
+import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit';
 import Button from '@mui/material/Button';
+import React from 'react';
 import Col from 'react-bootstrap/Col';
 import Container from 'react-bootstrap/Container';
 import Form from 'react-bootstrap/Form';
@@ -7,7 +9,6 @@ import ListGroup from 'react-bootstrap/ListGroup';
 import Row from 'react-bootstrap/Row';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import { BsPencil, BsTrashFill } from 'react-icons/bs';
 import { Link } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
 import Utils from '../../common/Utils';
@@ -101,14 +102,14 @@ export default function ProductSpecList(): React.ReactElement {
             to={`/prefilledresponse/${id}/product/${product.id}`}
           >
             <Button>
-              <BsPencil />
+              <EditIcon />
             </Button>
           </Link>
           <Button
             variant="warning"
             onClick={() => removeProductFromPrefilledResponse(product.id)}
           >
-            <BsTrashFill />
+            <DeleteIcon />
           </Button>
         </ListGroup.Item>
       );

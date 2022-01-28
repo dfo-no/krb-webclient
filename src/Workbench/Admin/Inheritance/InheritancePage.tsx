@@ -1,9 +1,9 @@
+import DeleteIcon from '@mui/icons-material/Delete';
 import Button from '@mui/material/Button';
 import React from 'react';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 import { useTranslation } from 'react-i18next';
-import { BsTrash } from 'react-icons/bs';
 import { Link } from 'react-router-dom';
 import Utils from '../../../common/Utils';
 import { IInheritedBank } from '../../../models/IInheritedBank';
@@ -36,7 +36,7 @@ export default function InheritancePage(): React.ReactElement {
                 variant="primary"
                 onClick={() => removeInheritance(element.id)}
               >
-                <BsTrash />
+                <DeleteIcon />
               </Button>
             </Col>
           </Row>
