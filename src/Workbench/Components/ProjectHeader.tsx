@@ -18,7 +18,7 @@ const useStyles = makeStyles({
     display: 'flex',
     height: 40,
     marginLeft: 10,
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down('header')]: {
       justifyContent: 'center',
       marginLeft: 0,
       marginRight: 16
@@ -46,7 +46,7 @@ const useStyles = makeStyles({
     '&:hover': {
       color: theme.palette.lightBlue.main
     },
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down('header')]: {
       width: '30vw'
     }
   },
