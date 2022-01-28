@@ -127,7 +127,37 @@ const KitchenSink = (): React.ReactElement => {
                 marks={[]}
               />
               <SwitchCtrl name="person.isDeveloper" label="Developer" />
-              <CheckboxCtrl name="person.isSexy" label="isSexy" />
+              <Box
+                sx={{
+                  display: 'grid',
+                  gridTemplateColumns: 'repeat(4, 1fr)',
+                  gridTemplateRows: '40px',
+                  gap: '10px'
+                }}
+              >
+                <CheckboxCtrl name="person.tekstfelt" label="Tekstfelt" />
+                <CheckboxCtrl
+                  name="person.kodeliste"
+                  label="Kodeliste"
+                  defaultValue={true}
+                />
+                <CheckboxCtrl name="person.periode" label="Periode" />
+                <CheckboxCtrl name="person.verdi" label="Verdi" />
+                <CheckboxCtrl name="person.tid" label="Tid" />
+                <CheckboxCtrl name="person.janei" label="Ja/Nei" />
+                <CheckboxCtrl name="person.filoppl" label="Filopplastning" />
+              </Box>
+              <CheckboxCtrl name="person.kvalifikasjon" label="Kvalifikasjon" />
+              <CheckboxCtrl
+                name="person.kravspesifikasjon"
+                label="Kravspesifikasjon"
+                defaultValue={true}
+              />
+              <CodelistCtrl
+                name="person.codelist"
+                codelists={codelists}
+                label="Codelist"
+              />
               <FileUploadCtrl name="person.fileEndings" />
               <br />
               <Button variant="primary" type="submit">
