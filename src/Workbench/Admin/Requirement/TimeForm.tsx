@@ -1,3 +1,4 @@
+import DeleteIcon from '@mui/icons-material/Delete';
 import Button from '@mui/material/Button';
 import { get } from 'lodash';
 import React from 'react';
@@ -11,7 +12,6 @@ import {
   FormState,
   UseFormRegister
 } from 'react-hook-form';
-import { BsTrashFill } from 'react-icons/bs';
 import ControlledCheckbox from '../../../Form/ControlledCheckbox';
 import { IRequirement } from '../../../Nexus/entities/IRequirement';
 import { ITimeQuestion } from '../../../Nexus/entities/ITimeQuestion';
@@ -41,7 +41,7 @@ export default function TimeForm({
         <h6>
           Alternative: Time
           <Button variant="warning" onClick={() => remove(aIndex)}>
-            <BsTrashFill />
+            <DeleteIcon />
           </Button>
         </h6>
 

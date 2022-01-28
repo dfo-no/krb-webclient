@@ -39,7 +39,7 @@ function NewCodeForm(): React.ReactElement {
     handleSubmit,
     reset,
     formState: { errors }
-  } = useForm<ICode>({
+  } = useForm<Parentable<ICode>>({
     resolver: joiResolver(PostCodeSchema),
     defaultValues
   });

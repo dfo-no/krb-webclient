@@ -1,3 +1,4 @@
+import EditIcon from '@mui/icons-material/Edit';
 import Button from '@mui/material/Button';
 import React, { useEffect } from 'react';
 import Col from 'react-bootstrap/Col';
@@ -7,7 +8,6 @@ import ListGroup from 'react-bootstrap/ListGroup';
 import Row from 'react-bootstrap/Row';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import { BsPencil } from 'react-icons/bs';
 import { Link, useParams } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
 import LoaderSpinner from '../../common/LoaderSpinner';
@@ -63,7 +63,7 @@ export default function ProductSpecList(): React.ReactElement {
     register,
     handleSubmit,
     formState: { errors }
-  } = useForm();
+  } = useForm<FormInput>();
 
   /* if (projectMatch?.params.bankId && !id) {
     dispatch(selectBank(projectMatch?.params.bankId));
@@ -134,7 +134,7 @@ export default function ProductSpecList(): React.ReactElement {
               onClick={() => dispatch(selectSpecificationProduct(product))}
               to={`/specification/${id}/product/${product.id}`}
             >
-              <BsPencil className="ml-2  mt-1" />
+              <EditIcon className="ml-2  mt-1" />
             </Link>
           </Row>
         </ListGroup.Item>

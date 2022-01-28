@@ -1,131 +1,169 @@
 import { makeStyles } from '@material-ui/core';
-import AppBar from '@mui/material/AppBar';
-import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
-import Link from '@mui/material/Link';
-import Toolbar from '@mui/material/Toolbar';
-import * as React from 'react';
-import { useTranslation } from 'react-i18next';
-import {
-  Link as RouterLink,
-  useHistory,
-  useRouteMatch
-} from 'react-router-dom';
-import ModelType from '../models/ModelType';
-import SignedButton from '../SignedButton/SignedButton';
-import { useAppDispatch } from '../store/hooks';
-import { selectProject } from '../store/reducers/project-reducer';
+import { AppBar, Toolbar, Box, Typography } from '@mui/material/';
+import React from 'react';
 import theme from '../theme';
+import { useAppSelector } from '../store/hooks';
+import { useTranslation } from 'react-i18next';
+import SettingsIcon from '@mui/icons-material/Settings';
+import CreateIcon from '@mui/icons-material/Create';
+import VisibilityIcon from '@mui/icons-material/Visibility';
 
 const useStyles = makeStyles({
-  logoBig: {
-    [theme.breakpoints.down('sm')]: {
-      display: 'none'
+  header: {
+    paddingTop: 10,
+    paddingBottom: 6,
+    marginLeft: '5%'
+  },
+  headerContent: {
+    display: 'flex',
+    flexDirection: 'column',
+    gap: 3
+  },
+  projectPath: {
+    marginLeft: 2.5,
+    [theme.breakpoints.down('header')]: {
+      marginLeft: 1
     }
   },
-  logoSmall: {
-    [theme.breakpoints.up('sm')]: {
-      display: 'none'
+  viewingProjectTitle: {
+    display: 'flex',
+    paddingBottom: 3,
+    width: '90vw',
+    [theme.breakpoints.down('header')]: {
+      paddingBottom: 0
     }
   },
-  hideSignedButton: {
-    [theme.breakpoints.down('sm')]: {
-      display: 'none'
+  notViewingProjectTitle: {
+    paddingBottom: 3
+  },
+  projectData: {
+    display: 'flex',
+    flexGrow: 1,
+    gap: 20,
+    alignItems: 'center',
+
+    [theme.breakpoints.down('header')]: {
+      flexGrow: 1,
+      flexDirection: 'column',
+      alignItems: 'flex-start',
+      gap: 0
     }
   },
-  showSignedButton: {
-    display: 'block'
+  projectVersion: {
+    display: 'flex',
+    gap: 10,
+    alignItems: 'center',
+    paddingTop: 6,
+
+    [theme.breakpoints.down('header')]: {
+      paddingTop: 0,
+      paddingBottom: 8
+    }
+  },
+  projectIcons: {
+    display: 'flex',
+    gap: 50,
+    alignItems: 'center',
+    color: theme.palette.dfoBlue.main,
+    height: '100%',
+
+    [theme.breakpoints.down('header')]: {
+      paddingRight: 13,
+      gap: 8,
+      marginTop: 20
+    }
+  },
+  icons: {
+    display: 'flex',
+    alignSelf: 'center',
+    justifySelf: 'flex-end'
+  },
+  settingsIcon: {
+    cursor: 'pointer',
+    '&:hover': {
+      color: theme.palette.dfoLightBlue.main
+    }
+  },
+  icon: {
+    cursor: 'pointer',
+    '&:hover': {
+      color: theme.palette.dfoLightBlue.main
+    }
+  },
+  projectTitleVersion: {
+    display: 'flex',
+    flexDirection: 'row',
+    gap: 20,
+    [theme.breakpoints.down('header')]: {
+      flexDirection: 'column',
+      gap: 0
+    }
   }
 });
 
 export default function Header(): React.ReactElement {
-  const history = useHistory();
-  const { t } = useTranslation();
-  const dispatch = useAppDispatch();
-
-  const match = useRouteMatch({
-    path: '/workbench/:projectId',
-    strict: false,
-    sensitive: true
-  });
-
   const classes = useStyles();
+  const { t } = useTranslation();
 
-  const emptyProject = {
-    id: '',
-    title: '',
-    description: '',
-    needs: [],
-    codelist: [],
-    products: [],
-    tags: [],
-    publications: [],
-    type: ModelType.bank,
-    version: 0,
-    inheritedBanks: [],
-    publishedDate: null,
-    sourceOriginal: null,
-    sourceRel: null,
-    projectId: null
-  };
+  const project = useAppSelector((state) => state.project.project);
+  const lastProjectPublication =
+    project.publications[project.publications.length - 1];
+
+  const projectTitle = project.title;
+  const projectPath = 'Ansettelser.no / Kravbank';
 
   return (
     <AppBar elevation={0} position="sticky">
       <Toolbar>
-        <Box sx={{ flexGrow: 1 }}>
-          <Link
-            className={classes.logoBig}
-            component={RouterLink}
-            to="/"
-            onClick={() => {
-              dispatch(selectProject(emptyProject));
-            }}
-          >
-            <img
-              src="/logo-blue.svg"
-              alt="DFØ logo header big"
-              width="263.06"
-              height="38"
-            />
-          </Link>
-          <Link
-            className={classes.logoSmall}
-            component={RouterLink}
-            to="/"
-            onClick={() => {
-              dispatch(selectProject(emptyProject));
-            }}
-          >
-            <img
-              src="/logo-blue-small.svg"
-              alt="DFØ logo header small"
-              width="61.408165"
-              height="30.729862"
-            />
-          </Link>
-        </Box>
+        <Box className={classes.header}>
+          <Box>
+            {project.title && (
+              <Box className={classes.headerContent}>
+                <Box className={classes.projectPath}>
+                  <Typography variant="small">
+                    {projectPath + ' / '}
+                    <Typography variant="smallUnderlineBlue">
+                      {projectTitle}
+                    </Typography>
+                  </Typography>
+                </Box>
+                <Box className={classes.viewingProjectTitle}>
+                  <Box className={classes.projectData}>
+                    <Typography variant="bigScale">{project.title}</Typography>
+                    <Box className={classes.projectVersion}>
+                      <Typography variant="smallUnderline">
+                        {t('Version') +
+                          ' ' +
+                          t('date.PP', {
+                            date: new Date(
+                              lastProjectPublication.date
+                                ? lastProjectPublication.date
+                                : ''
+                            )
+                          })}
+                      </Typography>
+                    </Box>
+                  </Box>
+                  <Box className={classes.projectIcons}>
+                    <SettingsIcon className={classes.icon} />
+                    <CreateIcon className={classes.icon} />
+                    <VisibilityIcon className={classes.icon} />
+                  </Box>
+                </Box>
+              </Box>
+            )}
 
-        {match && (
-          <Box mx={1}>
-            <Button
-              variant="primary"
-              onClick={() => {
-                history.push('/workbench');
-
-                dispatch(selectProject(emptyProject));
-              }}
-            >
-              {t('all projects')}
-            </Button>
+            {!project.title && (
+              <Box className={classes.headerContent}>
+                <Box className={classes.projectPath}>
+                  <Typography variant="small">{projectPath}</Typography>
+                </Box>
+                <Box className={classes.notViewingProjectTitle}>
+                  <Typography variant="big">Kravbank</Typography>
+                </Box>
+              </Box>
+            )}
           </Box>
-        )}
-
-        <Box
-          className={`${
-            match ? classes.hideSignedButton : classes.showSignedButton
-          }`}
-        >
-          <SignedButton />
         </Box>
       </Toolbar>
     </AppBar>

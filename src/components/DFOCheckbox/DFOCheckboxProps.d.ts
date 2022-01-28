@@ -1,8 +1,8 @@
 import { ControllerRenderProps, FieldValues } from 'react-hook-form';
 
-interface DFOTextFieldProps {
+interface DFOCheckboxProps {
   element?: ControllerRenderProps<FieldValues, string>;
-  value?: string;
+  defaultValue?: boolean;
   label?: string;
   error?: boolean;
   errorMessage?: string;

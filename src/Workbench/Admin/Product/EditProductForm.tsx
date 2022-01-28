@@ -1,11 +1,11 @@
 import { joiResolver } from '@hookform/resolvers/joi';
+import DeleteIcon from '@mui/icons-material/Delete';
 import { get } from 'lodash';
 import React, { useContext, useEffect, useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import { FieldError, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import { BsTrashFill } from 'react-icons/bs';
 import { Link } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
 import AlertModal from '../../../common/AlertModal';
@@ -149,7 +149,7 @@ export default function EditProductForm({
         variant="warning"
         onClick={() => deleteProduct(element)}
       >
-        {t('delete')} <BsTrashFill />
+        {t('delete')} <DeleteIcon />
       </Button>
       <AlertModal
         modalShow={modalShow}

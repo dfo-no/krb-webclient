@@ -1,11 +1,11 @@
 import { joiResolver } from '@hookform/resolvers/joi';
+import DeleteIcon from '@mui/icons-material/Delete';
 import Button from '@mui/material/Button';
 import { get } from 'lodash';
 import React, { useContext, useEffect, useState } from 'react';
 import Form from 'react-bootstrap/Form';
 import { FieldError, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import { BsTrashFill } from 'react-icons/bs';
 import { v4 as uuidv4 } from 'uuid';
 import ControlledTextInput from '../../../Form/ControlledTextInput';
 import ErrorSummary from '../../../Form/ErrorSummary';
@@ -52,8 +52,8 @@ export default function EditCodeForm({ element }: IProps): React.ReactElement {
     }
   }, [element, reset]);
 
-  const onEditCodeSubmit = (data: Nestable<ICode>) => {
-    const editCode = { ...data };
+  const onEditCodeSubmit = (data: ICode) => {
+    const editCode = { ...data } as Nestable<ICode>;
     if (editCode.children) {
       delete editCode.children;
     }
@@ -116,7 +116,7 @@ export default function EditCodeForm({ element }: IProps): React.ReactElement {
         {t('cancel')}
       </Button>
       <Button variant="warning" onClick={() => deleteCode(element)}>
-        {t('delete')} <BsTrashFill />
+        {t('delete')} <DeleteIcon />
       </Button>
       <ErrorSummary errors={errors} />
     </Form>

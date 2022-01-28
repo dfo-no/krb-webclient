@@ -1,8 +1,8 @@
 import { joiResolver } from '@hookform/resolvers/joi';
+import Button from '@mui/material/Button';
 import Slider from '@mui/material/Slider';
 import Joi from 'joi';
 import React, { useState } from 'react';
-import Button from '@mui/material/Button';
 import Col from 'react-bootstrap/Col';
 import Container from 'react-bootstrap/Container';
 import Form from 'react-bootstrap/Form';
@@ -82,23 +82,23 @@ export default function RequirementAnswer({
     requirement.variants[0]
   );
 
-  //QuestionAnswer saved in state
+  // QuestionAnswer saved in state
   const savedQuestion = spec.requirementAnswers.find(
     (question) => question.variantId === selectedVariant.id
   );
 
-  //The selected question from the dropdown of possible question types for this variant
+  // The selected question from the dropdown of possible question types for this variant
   const [selectedQuestion, setSelectedQuestion] = useState<string | undefined>(
     savedQuestion !== undefined ? savedQuestion.id : undefined
   );
 
-  //check if weight value matches any of the marks on the slider
+  // check if weight value matches any of the marks on the slider
   const checkWeightIsPredefined = (weight: number) => {
     const predefinedValues = [10, 30, 50, 70, 90];
     return predefinedValues.includes(weight);
   };
 
-  //decide wheter slider or number field should be rendered
+  // decide wheter slider or number field should be rendered
   const setWeightState = () => {
     if (savedQuestion) {
       if (checkWeightIsPredefined(savedQuestion.weight)) return 'standard';
@@ -119,7 +119,7 @@ export default function RequirementAnswer({
       const updatedAnswer: IRequirementAnswer = { ...savedQuestion };
       updatedAnswer.questionId = post.question;
       updatedAnswer.weight = savedWeight;
-      //ensures that the correct question is used if selectedquestion is updated
+      // ensures that the correct question is used if selectedquestion is updated
       updatedAnswer.question = selectedVariant.questions[questionIndex];
       dispatch(editAnswer({ answer: updatedAnswer }));
     } else {
@@ -162,7 +162,7 @@ export default function RequirementAnswer({
     setSelectedVariant(variant);
   }
 
-  //fubd the requirementText from the correct variant
+  // find the requirementText from the correct variant
   function findDefaultRequirementText(): string {
     let defaultText = requirement.variants[0].id;
     requirement.variants.forEach((variant) => {

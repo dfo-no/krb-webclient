@@ -1,8 +1,8 @@
+import SubdirectoryArrowRightIcon from '@mui/icons-material/SubdirectoryArrowRight';
 import React from 'react';
 import Col from 'react-bootstrap/Col';
 import ListGroup from 'react-bootstrap/ListGroup';
 import Row from 'react-bootstrap/Row';
-import { BsArrowReturnRight } from 'react-icons/bs';
 import Utils from '../../common/Utils';
 import { ISpecificationProduct } from '../../models/ISpecificationProduct';
 import { Nestable } from '../../models/Nestable';
@@ -56,7 +56,7 @@ export default function ProductRequirementSelectorList({
         <div className={` ${styles[cssClass]} pt-0`} key={element.id}>
           <Row>
             <Col className="d-flex justify-content-start">
-              <BsArrowReturnRight className="ml-2 mt-1 mr-2" />
+              <SubdirectoryArrowRightIcon className="ml-2 mt-1 mr-2" />
               <p>{element.title}</p>
             </Col>
           </Row>

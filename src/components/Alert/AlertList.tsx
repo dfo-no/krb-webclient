@@ -1,6 +1,6 @@
 import React from 'react';
 import { useAppSelector } from '../../store/hooks';
-import AlertElement from './Alert';
+import AlertElement from './AlertElement';
 
 export default function AlertList(): React.ReactElement {
   const { list } = useAppSelector((state) => state.alert);
