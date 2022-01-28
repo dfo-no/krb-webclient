@@ -79,7 +79,11 @@ const useStyles = makeStyles({
     }
   },
   selectedListItemArrow: {
-    color: theme.palette.dfoDarkBlue.main
+    color: theme.palette.dfoDarkBlue.main,
+
+    [theme.breakpoints.down('sm')]: {
+      marginRight: 50
+    }
   }
 });
 
