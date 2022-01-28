@@ -10,6 +10,24 @@ import {
 } from '../../../store/reducers/project-reducer';
 import EditProductForm from './EditProductForm';
 import NewProductForm from './NewProductForm';
+import ProductsSearchBar from './ProductSearchBar';
+
+import { Box, Typography } from '@mui/material/';
+import { createStyles, makeStyles } from '@material-ui/core';
+
+const useStyles = makeStyles({
+  productsContainer: {
+    display: 'flex',
+    flexDirection: 'column',
+    gap: 20,
+    margin: 'auto',
+    width: '60vw'
+  },
+  productOptions: {
+    display: 'flex',
+    justifyContent: 'space-between'
+  }
+});
 
 export default function ProductPage(): React.ReactElement {
   const { project } = useAppSelector((state) => state.project);
@@ -21,18 +39,25 @@ export default function ProductPage(): React.ReactElement {
     dispatch(putSelectedProjectThunk('dummy'));
   };
 
+  const classes = useStyles();
+
   return (
-    <div className="pb-4">
-      <h3 className="mt-3">{t('Products')}</h3>
+    <Box className={classes.productsContainer}>
+      <Box className={classes.productOptions}>
+        <ProductsSearchBar />
+        <NewProductForm />
+      </Box>
 
-      <NewProductForm />
-
-      <NestableHierarcy
-        dispatchfunc={(items: Parentable<IProduct>[]) => newProductList(items)}
-        inputlist={project.products}
-        component={<EditProductForm element={project.products[0]} />}
-        depth={5}
-      />
-    </div>
+      <Box>
+        <NestableHierarcy
+          dispatchfunc={(items: Parentable<IProduct>[]) =>
+            newProductList(items)
+          }
+          inputlist={project.products}
+          component={<EditProductForm element={project.products[0]} />}
+          depth={5}
+        />
+      </Box>
+    </Box>
   );
 }
