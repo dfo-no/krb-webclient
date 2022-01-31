@@ -4,9 +4,10 @@ import React from 'react';
 import theme from '../theme';
 import { useAppSelector } from '../store/hooks';
 import { useTranslation } from 'react-i18next';
-import SettingsIcon from '@mui/icons-material/Settings';
-import CreateIcon from '@mui/icons-material/Create';
-import VisibilityIcon from '@mui/icons-material/Visibility';
+import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
+import ConstructionOutlinedIcon from '@mui/icons-material/ConstructionOutlined';
+import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
+import { useRouteMatch, Link, useLocation } from 'react-router-dom';
 
 const useStyles = makeStyles({
   header: {
@@ -86,9 +87,22 @@ const useStyles = makeStyles({
   },
   icon: {
     cursor: 'pointer',
+    color: theme.palette.black.main,
+    width: '24px !important',
+    height: '40px !important',
+    paddingBottom: '8px',
+    paddingTop: '8px',
     '&:hover': {
       color: theme.palette.dfoLightBlue.main
     }
+  },
+  selectedIcon: {
+    color: theme.palette.dfoBlue.main,
+    width: '24px !important',
+    height: '40px !important',
+    paddingTop: '8px',
+    paddingBottom: '4px',
+    borderBottom: '4px solid'
   },
   projectTitleVersion: {
     display: 'flex',
@@ -112,12 +126,20 @@ export default function Header(): React.ReactElement {
   const projectTitle = project.title;
   const projectPath = 'Ansettelser.no / Kravbank';
 
+  const location = useLocation();
+  const isLocationAdmin = location.pathname.split('/').pop() === 'admin';
+  const isLocationCreate = location.pathname.split('/').pop() === 'create';
+  const isLocationPreview = location.pathname.split('/').pop() === 'preview';
+
+  const baseUrl = useRouteMatch<{ projectId: string }>('/workbench/:projectId');
+  const showProjectHeader = project.title && baseUrl;
+
   return (
     <AppBar elevation={0} position="sticky">
       <Toolbar>
         <Box className={classes.header}>
           <Box>
-            {project.title && (
+            {showProjectHeader && (
               <Box className={classes.headerContent}>
                 <Box className={classes.projectPath}>
                   <Typography variant="small">
@@ -145,15 +167,35 @@ export default function Header(): React.ReactElement {
                     </Box>
                   </Box>
                   <Box className={classes.projectIcons}>
-                    <SettingsIcon className={classes.icon} />
-                    <CreateIcon className={classes.icon} />
-                    <VisibilityIcon className={classes.icon} />
+                    <Link to={`${baseUrl?.url}/admin`}>
+                      <SettingsOutlinedIcon
+                        className={
+                          isLocationAdmin ? classes.selectedIcon : classes.icon
+                        }
+                      />
+                    </Link>
+                    <Link to={`${baseUrl?.url}/create`}>
+                      <ConstructionOutlinedIcon
+                        className={
+                          isLocationCreate ? classes.selectedIcon : classes.icon
+                        }
+                      />
+                    </Link>
+                    <Link to={`${baseUrl?.url}/preview`}>
+                      <VisibilityOutlinedIcon
+                        className={
+                          isLocationPreview
+                            ? classes.selectedIcon
+                            : classes.icon
+                        }
+                      />
+                    </Link>
                   </Box>
                 </Box>
               </Box>
             )}
 
-            {!project.title && (
+            {!showProjectHeader && (
               <Box className={classes.headerContent}>
                 <Box className={classes.projectPath}>
                   <Typography variant="small">{projectPath}</Typography>
