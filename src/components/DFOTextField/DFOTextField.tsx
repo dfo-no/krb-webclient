@@ -68,6 +68,7 @@ export const DFOTextField = ({
   return (
     <Box className={classes.dfoTextFieldContainer}>
       <TextField
+        variant="outlined"
         {...element}
         label={label}
         autoComplete="off"

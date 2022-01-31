@@ -26,11 +26,14 @@ const useStyles = makeStyles({
   },
   productOptions: {
     display: 'flex',
-    justifyContent: 'space-between',
-    backgroundColor: 'red'
+    justifyContent: 'space-between'
   },
   searchBar: {
-    height: 60
+    width: 500,
+    alignSelf: 'center'
+  },
+  newProductForm: {
+    alignSelf: 'center'
   }
 });
 
@@ -53,7 +56,7 @@ export default function ProductPage(): React.ReactElement {
           {' '}
           <ProductsSearchBar />
         </Box>
-        <Box>
+        <Box className={classes.newProductForm}>
           <NewProductForm />
         </Box>
       </Box>
