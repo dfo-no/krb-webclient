@@ -11,11 +11,11 @@ const useStyles = makeStyles(() =>
     root: {
       '& .MuiInputLabel-root': {
         color: (props: DFOTextFieldStyleProps) => `${props.fontColor}`,
-        lineHeight: '1.7rem'
+        lineHeight: '1.6rem'
       },
       '& .MuiInputLabel-root.Mui-focused': {
         color: (props: DFOTextFieldStyleProps) => `${props.fontColor}`,
-        fontSize: '1.063rem'
+        textAlign: 'center'
       },
       '& .MuiOutlinedInput-root': {
         '& fieldset': {
@@ -37,8 +37,7 @@ const useStyles = makeStyles(() =>
       display: 'flex',
       flexDirection: 'column',
       gap: 11,
-      width: '100%',
-      height: '100%'
+      width: '100%'
     }
   })
 );
@@ -70,6 +69,7 @@ export const DFOTextField = ({
       <TextField
         variant="outlined"
         {...element}
+        className={classes.root}
         label={label}
         autoComplete="off"
         value={value || ''}

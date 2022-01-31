@@ -1,5 +1,4 @@
-import React from 'react';
-import { useTranslation } from 'react-i18next';
+import React, { useState } from 'react';
 import { Parentable } from '../../../models/Parentable';
 import NestableHierarcy from '../../../NestableHierarchy/NestableHierarcy';
 import { IProduct } from '../../../Nexus/entities/IProduct';
@@ -12,8 +11,8 @@ import EditProductForm from './EditProductForm';
 import NewProductForm from './NewProductForm';
 import ProductsSearchBar from './ProductSearchBar';
 
-import { Box, Typography } from '@mui/material/';
-import { createStyles, makeStyles } from '@material-ui/core';
+import { Box } from '@mui/material/';
+import { makeStyles } from '@material-ui/core';
 
 const useStyles = makeStyles({
   productsContainer: {
@@ -29,7 +28,7 @@ const useStyles = makeStyles({
     justifyContent: 'space-between'
   },
   searchBar: {
-    width: 500,
+    width: 700,
     alignSelf: 'center'
   },
   newProductForm: {
@@ -40,37 +39,43 @@ const useStyles = makeStyles({
 export default function ProductPage(): React.ReactElement {
   const { project } = useAppSelector((state) => state.project);
   const dispatch = useAppDispatch();
-  const { t } = useTranslation();
+  const [products, setProducts] = useState(project.products);
 
   const newProductList = (items: Parentable<IProduct>[]) => {
     dispatch(updateProductList(items));
     dispatch(putSelectedProjectThunk('dummy'));
   };
 
+  const searchFieldCallback = (result: any) => {
+    console.log(result);
+    setProducts(result);
+  };
+
   const classes = useStyles();
+
+  console.log(products);
 
   return (
     <Box className={classes.productsContainer}>
       <Box className={classes.productOptions}>
         <Box className={classes.searchBar}>
           {' '}
-          <ProductsSearchBar />
+          <ProductsSearchBar
+            list={project.products}
+            callback={searchFieldCallback}
+          />
         </Box>
         <Box className={classes.newProductForm}>
           <NewProductForm />
         </Box>
       </Box>
 
-      <Box>
-        <NestableHierarcy
-          dispatchfunc={(items: Parentable<IProduct>[]) =>
-            newProductList(items)
-          }
-          inputlist={project.products}
-          component={<EditProductForm element={project.products[0]} />}
-          depth={5}
-        />
-      </Box>
+      <NestableHierarcy
+        dispatchfunc={(items: Parentable<IProduct>[]) => newProductList(items)}
+        inputlist={products}
+        component={<EditProductForm element={project.products[0]} />}
+        depth={5}
+      />
     </Box>
   );
 }
