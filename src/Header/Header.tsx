@@ -1,12 +1,12 @@
 import { makeStyles } from '@material-ui/core';
-import { AppBar, Toolbar, Box, Typography } from '@mui/material/';
-import React from 'react';
-import theme from '../theme';
-import { useAppSelector } from '../store/hooks';
-import { useTranslation } from 'react-i18next';
-import SettingsIcon from '@mui/icons-material/Settings';
 import CreateIcon from '@mui/icons-material/Create';
+import SettingsIcon from '@mui/icons-material/Settings';
 import VisibilityIcon from '@mui/icons-material/Visibility';
+import { AppBar, Box, Toolbar, Typography } from '@mui/material/';
+import React from 'react';
+import { useTranslation } from 'react-i18next';
+import { useAppSelector } from '../store/hooks';
+import theme from '../theme';
 
 const useStyles = makeStyles({
   header: {
@@ -110,7 +110,7 @@ export default function Header(): React.ReactElement {
     project.publications[project.publications.length - 1];
 
   const projectTitle = project.title;
-  const projectPath = 'Ansettelser.no / Kravbank';
+  const projectPath = 'Anskaffelser.no / Kravbank';
 
   return (
     <AppBar elevation={0} position="sticky">

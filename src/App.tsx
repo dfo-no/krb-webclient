@@ -12,7 +12,6 @@ import styles from './App.module.scss';
 import { msalConfig } from './authentication/authConfig';
 import AlertList from './components/Alert/AlertList';
 import Evaluation from './Evaluation/Evaluation';
-import Footer from './Footer/Footer';
 import Header from './Header/Header';
 import HomePage from './Home/HomePage';
 import useConfirmTabClose from './hooks/useConfirmTabClose';
@@ -72,9 +71,6 @@ function App(): React.ReactElement {
               <Header />
             </div>
             <div className={styles.App__content}>{renderContent()}</div>
-            <div className={styles.App__footer}>
-              <Footer />
-            </div>
           </div>
         </ThemeProvider>
       </MsalProvider>
