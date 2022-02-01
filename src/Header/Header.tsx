@@ -126,12 +126,17 @@ export default function Header(): React.ReactElement {
   const projectTitle = project.title;
   const projectPath = 'Ansettelser.no / Kravbank';
 
-  const location = useLocation();
-  const isLocationAdmin = location.pathname.split('/').pop() === 'admin';
-  const isLocationCreate = location.pathname.split('/').pop() === 'create';
-  const isLocationPreview = location.pathname.split('/').pop() === 'preview';
-
   const baseUrl = useRouteMatch<{ projectId: string }>('/workbench/:projectId');
+  const location = useLocation();
+  const tabName = location.pathname
+    .replace(baseUrl ? baseUrl.url : '', '')
+    .split('/')
+    .filter((elem) => elem !== '')
+    .shift();
+  const isLocationAdmin = tabName === 'admin';
+  const isLocationCreate = tabName === 'create';
+  const isLocationPreview = tabName === 'preview';
+
   const showProjectHeader = project.title && baseUrl;
 
   return (
