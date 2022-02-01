@@ -2,10 +2,12 @@ import React, { useEffect, useState } from 'react';
 import { makeStyles } from '@material-ui/core';
 import theme from '../../../theme';
 import TextField from '@mui/material/TextField';
-import { ListTwoTone } from '@mui/icons-material';
+import Utils from '../../../common/Utils';
+import { IProduct } from '../../../Nexus/entities/IProduct';
+import { Parentable } from '../../../models/Parentable';
 
 interface IProps {
-  list: any;
+  list: Parentable<IProduct>[];
   callback: any;
 }
 
@@ -40,52 +42,40 @@ export default function ProductsSearchBar({
   callback
 }: IProps): React.ReactElement {
   const [searchFieldValue, setSearchFieldValue] = useState('');
-  const newProductsHierarchy: object[] = [];
+  let newProductsHierarchy: Parentable<IProduct>[] = [];
 
-  const findListItemChildren = (listItemId: string) => {
-    for (const listItem of list) {
-      if (listItem.parent === listItemId) {
-        newProductsHierarchy.push(listItem);
-      }
+  const findListItemParent = (listItem: IProduct) => {
+    newProductsHierarchy.push(listItem);
+
+    if (listItem.parent === '') {
+      return;
     }
 
-    console.log('List item childrne');
-    console.log(newProductsHierarchy);
+    const parent: Parentable<IProduct> = Utils.ensure(
+      list.find((product: IProduct) => product.id === listItem.parent)
+    );
+
+    if (parent.parent !== '') {
+      findListItemParent(parent);
+    } else {
+      newProductsHierarchy.push(parent);
+    }
   };
 
-  const findListItemTree = (listItemId: string) => {
-    for (const listItem of list) {
-      if (listItem.id === listItemId) {
-        if (listItem.parent === '') {
-          console.log('Is a parent');
-
-          newProductsHierarchy.push(listItem);
-          for (let i = 0; i < list.length; i++) {
-            if (list[i].parent === listItemId) {
-              newProductsHierarchy.push(list[i]);
-            }
-          }
-        } else {
-          console.log('Its not a parent');
-          console.log(listItemId);
-          for (let i = 0; i < list.length; i++) {
-            if (listItemId === listItem.parent) {
-              // ?????
-            }
-          }
-        }
-      }
-    }
-    console.log(newProductsHierarchy);
+  const findListItemTree = (item: IProduct) => {
+    findListItemParent(item);
   };
 
   const performSearch = () => {
+    newProductsHierarchy = [];
+
     for (const listItem of list) {
       const listItemTitleLowerCase = listItem.title.toLowerCase();
       const searchFieldValueLowerCase = searchFieldValue.toLowerCase();
 
       if (listItemTitleLowerCase.includes(searchFieldValueLowerCase)) {
-        findListItemTree(listItem.id);
+        findListItemTree(listItem);
+        callback(newProductsHierarchy);
       }
     }
   };
