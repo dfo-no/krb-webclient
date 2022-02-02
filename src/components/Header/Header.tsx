@@ -1,10 +1,10 @@
 import { makeStyles } from '@material-ui/core';
-import CreateIcon from '@mui/icons-material/Create';
-import SettingsIcon from '@mui/icons-material/Settings';
-import VisibilityIcon from '@mui/icons-material/Visibility';
+import ConstructionOutlinedIcon from '@mui/icons-material/ConstructionOutlined';
+import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
+import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
 import { AppBar, Box, Toolbar, Typography } from '@mui/material/';
 import React from 'react';
-import { useTranslation } from 'react-i18next';
+import { Link, useLocation, useRouteMatch } from 'react-router-dom';
 import { useAppSelector } from '../../store/hooks';
 import theme from '../../theme';
 
@@ -86,9 +86,22 @@ const useStyles = makeStyles({
   },
   icon: {
     cursor: 'pointer',
+    color: theme.palette.black.main,
+    width: '24px !important',
+    height: '40px !important',
+    paddingBottom: '8px',
+    paddingTop: '8px',
     '&:hover': {
       color: theme.palette.dfoLightBlue.main
     }
+  },
+  selectedIcon: {
+    color: theme.palette.dfoBlue.main,
+    width: '24px !important',
+    height: '40px !important',
+    paddingTop: '8px',
+    paddingBottom: '4px',
+    borderBottom: '4px solid'
   },
   projectTitleVersion: {
     display: 'flex',
@@ -103,21 +116,31 @@ const useStyles = makeStyles({
 
 export default function Header(): React.ReactElement {
   const classes = useStyles();
-  const { t } = useTranslation();
 
   const project = useAppSelector((state) => state.project.project);
-  const lastProjectPublication =
-    project.publications[project.publications.length - 1];
 
   const projectTitle = project.title;
-  const projectPath = 'Ansettelser.no / Kravbank';
+  const projectPath = 'Anskaffelser.no / Kravbank';
+
+  const baseUrl = useRouteMatch<{ projectId: string }>('/workbench/:projectId');
+  const location = useLocation();
+  const tabName = location.pathname
+    .replace(baseUrl ? baseUrl.url : '', '')
+    .split('/')
+    .filter((elem) => elem !== '')
+    .shift();
+  const isLocationAdmin = tabName === 'admin';
+  const isLocationCreate = tabName === 'create';
+  const isLocationPreview = tabName === 'preview';
+
+  const showProjectHeader = project.title && baseUrl;
 
   return (
     <AppBar elevation={0} position="sticky">
       <Toolbar>
         <Box className={classes.header}>
           <Box>
-            {project.title && (
+            {showProjectHeader && (
               <Box className={classes.headerContent}>
                 <Box className={classes.projectPath}>
                   <Typography variant="small">
@@ -130,30 +153,37 @@ export default function Header(): React.ReactElement {
                 <Box className={classes.viewingProjectTitle}>
                   <Box className={classes.projectData}>
                     <Typography variant="bigScale">{project.title}</Typography>
-                    <Box className={classes.projectVersion}>
-                      <Typography variant="smallUnderline">
-                        {t('Version') +
-                          ' ' +
-                          t('date.PP', {
-                            date: new Date(
-                              lastProjectPublication.date
-                                ? lastProjectPublication.date
-                                : ''
-                            )
-                          })}
-                      </Typography>
-                    </Box>
                   </Box>
                   <Box className={classes.projectIcons}>
-                    <SettingsIcon className={classes.icon} />
-                    <CreateIcon className={classes.icon} />
-                    <VisibilityIcon className={classes.icon} />
+                    <Link to={`${baseUrl?.url}/admin`}>
+                      <SettingsOutlinedIcon
+                        className={
+                          isLocationAdmin ? classes.selectedIcon : classes.icon
+                        }
+                      />
+                    </Link>
+                    <Link to={`${baseUrl?.url}/create`}>
+                      <ConstructionOutlinedIcon
+                        className={
+                          isLocationCreate ? classes.selectedIcon : classes.icon
+                        }
+                      />
+                    </Link>
+                    <Link to={`${baseUrl?.url}/preview`}>
+                      <VisibilityOutlinedIcon
+                        className={
+                          isLocationPreview
+                            ? classes.selectedIcon
+                            : classes.icon
+                        }
+                      />
+                    </Link>
                   </Box>
                 </Box>
               </Box>
             )}
 
-            {!project.title && (
+            {!showProjectHeader && (
               <Box className={classes.headerContent}>
                 <Box className={classes.projectPath}>
                   <Typography variant="small">{projectPath}</Typography>

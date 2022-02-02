@@ -103,7 +103,8 @@ export default class InheritanceService {
 
   async removeInheritedBank(
     project: IBank,
-    inheritedBank: string
+    inheritedBank: string,
+    inheritedId: string
   ): Promise<void> {
     const newProject = { ...project };
 
@@ -126,7 +127,7 @@ export default class InheritanceService {
     newProject.codelist = newCodelistList;
 
     const inheritedBanks = project.inheritedBanks.filter(
-      (element: IInheritedBank) => element.id !== inheritedBank
+      (element: IInheritedBank) => element.id !== inheritedId
     );
     newProject.inheritedBanks = inheritedBanks;
     return this.storeService.setBank(newProject);
