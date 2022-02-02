@@ -15,8 +15,12 @@ export default function InheritancePage(): React.ReactElement {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
 
-  const removeInheritance = (id: string) => {
-    const updatedProject = Utils.removeInheritedBank(project, id);
+  const removeInheritance = (projectId: string, inheritedId: string) => {
+    const updatedProject = Utils.removeInheritedBank(
+      project,
+      projectId,
+      inheritedId
+    );
     dispatch(putProjectThunk(updatedProject));
   };
 
@@ -34,7 +38,7 @@ export default function InheritancePage(): React.ReactElement {
             <Col className="d-flex justify-content-end">
               <Button
                 variant="primary"
-                onClick={() => removeInheritance(element.id)}
+                onClick={() => removeInheritance(element.projectId, element.id)}
               >
                 <DeleteIcon />
               </Button>

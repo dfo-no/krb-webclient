@@ -414,7 +414,11 @@ class Utils {
     return list.filter((element) => element.sourceRel !== bankId);
   }
 
-  static removeInheritedBank(project: IBank, inheritedBank: string): IBank {
+  static removeInheritedBank(
+    project: IBank,
+    inheritedBank: string,
+    inheritedId: string
+  ): IBank {
     const newProject = { ...project };
 
     const newProductList = this.filterRelativeSourceList(
@@ -436,7 +440,7 @@ class Utils {
     newProject.codelist = newCodelistList;
 
     const inheritedBanks = project.inheritedBanks.filter(
-      (element: IInheritedBank) => element.id !== inheritedBank
+      (element: IInheritedBank) => element.id !== inheritedId
     );
     newProject.inheritedBanks = inheritedBanks;
     return newProject;
