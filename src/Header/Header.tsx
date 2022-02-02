@@ -5,7 +5,6 @@ import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
 import { useRouteMatch, Link, useLocation } from 'react-router-dom';
 import { AppBar, Box, Toolbar, Typography } from '@mui/material/';
 import React from 'react';
-import { useTranslation } from 'react-i18next';
 import { useAppSelector } from '../store/hooks';
 import theme from '../theme';
 
@@ -117,11 +116,8 @@ const useStyles = makeStyles({
 
 export default function Header(): React.ReactElement {
   const classes = useStyles();
-  const { t } = useTranslation();
 
   const project = useAppSelector((state) => state.project.project);
-  const lastProjectPublication =
-    project.publications[project.publications.length - 1];
 
   const projectTitle = project.title;
   const projectPath = 'Anskaffelser.no / Kravbank';
