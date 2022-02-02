@@ -110,7 +110,7 @@ export default function Header(): React.ReactElement {
     project.publications[project.publications.length - 1];
 
   const projectTitle = project.title;
-  const projectPath = 'Ansettelser.no / Kravbank';
+  const projectPath = 'Anskaffelser.no / Kravbank';
 
   return (
     <AppBar elevation={0} position="sticky">
