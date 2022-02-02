@@ -1,13 +1,13 @@
 import { makeStyles } from '@material-ui/core';
-import { AppBar, Toolbar, Box, Typography } from '@mui/material/';
-import React from 'react';
-import theme from '../theme';
-import { useAppSelector } from '../store/hooks';
-import { useTranslation } from 'react-i18next';
 import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
 import ConstructionOutlinedIcon from '@mui/icons-material/ConstructionOutlined';
 import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
 import { useRouteMatch, Link, useLocation } from 'react-router-dom';
+import { AppBar, Box, Toolbar, Typography } from '@mui/material/';
+import React from 'react';
+import { useTranslation } from 'react-i18next';
+import { useAppSelector } from '../store/hooks';
+import theme from '../theme';
 
 const useStyles = makeStyles({
   header: {
@@ -124,7 +124,7 @@ export default function Header(): React.ReactElement {
     project.publications[project.publications.length - 1];
 
   const projectTitle = project.title;
-  const projectPath = 'Ansettelser.no / Kravbank';
+  const projectPath = 'Anskaffelser.no / Kravbank';
 
   const baseUrl = useRouteMatch<{ projectId: string }>('/workbench/:projectId');
   const location = useLocation();
@@ -157,19 +157,6 @@ export default function Header(): React.ReactElement {
                 <Box className={classes.viewingProjectTitle}>
                   <Box className={classes.projectData}>
                     <Typography variant="bigScale">{project.title}</Typography>
-                    <Box className={classes.projectVersion}>
-                      <Typography variant="smallUnderline">
-                        {t('Version') +
-                          ' ' +
-                          t('date.PP', {
-                            date: new Date(
-                              lastProjectPublication.date
-                                ? lastProjectPublication.date
-                                : ''
-                            )
-                          })}
-                      </Typography>
-                    </Box>
                   </Box>
                   <Box className={classes.projectIcons}>
                     <Link to={`${baseUrl?.url}/admin`}>
