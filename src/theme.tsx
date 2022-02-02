@@ -219,7 +219,8 @@ theme.components = {
   MuiSvgIcon: {
     styleOverrides: {
       root: {
-        fontSize: '1.2rem',
+        width: '40px',
+        height: '40px',
         color: theme.palette.dfoBlue.main
       }
     }
