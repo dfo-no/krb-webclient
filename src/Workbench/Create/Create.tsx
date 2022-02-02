@@ -1,12 +1,13 @@
 import { Box, makeStyles } from '@material-ui/core';
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Levelable } from '../../models/Levelable';
 import { INeed } from '../../Nexus/entities/INeed';
 import { IProduct } from '../../Nexus/entities/IProduct';
 import { IRequirement } from '../../Nexus/entities/IRequirement';
 import { useAppSelector } from '../../store/hooks';
 import theme from '../../theme';
-import ParentableSideBar from '../Components/ParentableSideBar';
+import NeedList from './NeedList';
 import Requirements from './Requirements';
 import VariantList from './VariantList';
 
@@ -22,21 +23,19 @@ const useStyles = makeStyles({
     minHeight: '100vh'
   },
   needs: {
-    width: '20%',
-    border: `1px solid ${theme.palette.lightBlue.main}`
+    width: '20%'
   },
   requirements: {
-    width: '30%',
-    border: `1px solid ${theme.palette.lightBlue.main}`
+    width: '30%'
   },
   variants: {
-    width: '50%',
-    border: `1px solid ${theme.palette.lightBlue.main}`
+    width: '50%'
   }
 });
 
 export default function Create(): React.ReactElement {
   const { project } = useAppSelector((state) => state.project);
+  const { t } = useTranslation();
   const classes = useStyles();
 
   const [selectedNeed, setSelectedNeed] = useState<null | Levelable<
@@ -53,9 +52,9 @@ export default function Create(): React.ReactElement {
   return (
     <Box className={classes.editorContainer}>
       <Box className={classes.needs}>
-        <h6 className={classes.headerText}>Behov</h6>
-        <ParentableSideBar
-          parentableArray={project.needs}
+        <h6 className={classes.headerText}>{t('Needs')}</h6>
+        <NeedList
+          parentables={project.needs}
           updateSelectedFunction={updateSelectedNeed}
         />
       </Box>

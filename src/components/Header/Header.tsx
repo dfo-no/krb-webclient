@@ -1,12 +1,12 @@
 import { makeStyles } from '@material-ui/core';
-import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
 import ConstructionOutlinedIcon from '@mui/icons-material/ConstructionOutlined';
+import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
 import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
-import { useRouteMatch, Link, useLocation } from 'react-router-dom';
 import { AppBar, Box, Toolbar, Typography } from '@mui/material/';
 import React from 'react';
-import { useAppSelector } from '../store/hooks';
-import theme from '../theme';
+import { Link, useLocation, useRouteMatch } from 'react-router-dom';
+import { useAppSelector } from '../../store/hooks';
+import theme from '../../theme';
 
 const useStyles = makeStyles({
   header: {

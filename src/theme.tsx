@@ -215,6 +215,15 @@ theme.components = {
         paddingBottom: '0'
       }
     }
+  },
+  MuiSvgIcon: {
+    styleOverrides: {
+      root: {
+        width: '40px',
+        height: '40px',
+        color: theme.palette.dfoBlue.main
+      }
+    }
   }
 };
 

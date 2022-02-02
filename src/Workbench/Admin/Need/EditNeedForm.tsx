@@ -28,6 +28,9 @@ interface IProps {
   element: Parentable<INeed>;
 }
 
+/**
+ * @deprecated use Admin/Create/EditNeedForm instead
+ */
 function EditNeedForm({ element }: IProps): React.ReactElement {
   const { project } = useAppSelector((state) => state.project);
   const dispatch = useAppDispatch();
