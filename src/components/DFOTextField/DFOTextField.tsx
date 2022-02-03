@@ -11,11 +11,11 @@ const useStyles = makeStyles(() =>
     root: {
       '& .MuiInputLabel-root': {
         color: (props: DFOTextFieldStyleProps) => `${props.fontColor}`,
-        lineHeight: '1.7rem'
+        lineHeight: '1.6rem'
       },
       '& .MuiInputLabel-root.Mui-focused': {
         color: (props: DFOTextFieldStyleProps) => `${props.fontColor}`,
-        fontSize: '1.063rem'
+        textAlign: 'center'
       },
       '& .MuiOutlinedInput-root': {
         '& fieldset': {
@@ -67,6 +67,7 @@ export const DFOTextField = ({
   return (
     <Box className={classes.dfoTextFieldContainer}>
       <TextField
+        variant="outlined"
         {...element}
         className={classes.root}
         label={label}

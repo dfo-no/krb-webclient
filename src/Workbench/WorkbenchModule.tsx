@@ -14,6 +14,7 @@ const useStyles = makeStyles({
   workbenchContainer: {
     display: 'flex',
     gap: 50,
+    backgroundColor: theme.palette.dfoBackgroundBlue.main,
 
     [theme.breakpoints.down('sm')]: {
       flexWrap: 'wrap'

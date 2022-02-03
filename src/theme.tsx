@@ -44,6 +44,9 @@ const theme = createTheme({
     dfoErrorRedHover: {
       main: dfoThemeScss.dfoErrorRedHover
     },
+    dfoBackgroundBlue: {
+      main: dfoThemeScss.dfoBackgroundBlue
+    },
     gray100: {
       main: dfoThemeScss.gray100
     },
