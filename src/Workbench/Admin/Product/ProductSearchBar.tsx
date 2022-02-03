@@ -81,7 +81,7 @@ export default function ProductsSearchBar({
     }
   };
 
-  const onChange = (e: any) => {
+  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchFieldValue(e.target.value);
   };
 
