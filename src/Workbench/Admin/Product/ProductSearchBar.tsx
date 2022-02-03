@@ -85,7 +85,7 @@ export default function ProductsSearchBar({
     setSearchFieldValue(e.target.value);
   };
 
-  const onKeyUp = (e: any) => {
+  const onKeyUp = (e: React.KeyboardEvent) => {
     if (e.key === 'Enter') {
       if (searchFieldValue.length !== 0) {
         performSearch();
