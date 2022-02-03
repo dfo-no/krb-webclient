@@ -26,12 +26,13 @@ const useStyles = makeStyles({
     flexDirection: 'column',
     gap: 10
   },
-  productFormTextField: {
+  productFormTextFields: {
     display: 'flex',
     margin: 'auto',
     flexDirection: 'column',
     gap: 10,
-    width: '20vw'
+    width: '30vw',
+    minWidth: '350px'
   },
   productFormButtons: {
     display: 'flex',
@@ -79,7 +80,7 @@ export default function ProductPage({
       <FormProvider {...methods}>
         <form onSubmit={methods.handleSubmit(saveValues)}>
           <Box className={classes.productFormContainer}>
-            <Box className={classes.productFormTextField}>
+            <Box className={classes.productFormTextFields}>
               <TextCtrl name="title" label={t('Title')} />
               <TextCtrl name="description" label={t('Description')} />
             </Box>
