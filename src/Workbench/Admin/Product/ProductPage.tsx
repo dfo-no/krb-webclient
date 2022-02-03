@@ -119,7 +119,7 @@ export default function ProductPage(): React.ReactElement {
     dispatch(putSelectedProjectThunk('dummy'));
   };
 
-  const searchFieldCallback = (result: any) => {
+  const searchFieldCallback = (result: []) => {
     setProducts(result);
   };
 
