@@ -1,10 +1,12 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core';
 import theme from '../../../theme';
-import TextField from '@mui/material/TextField';
+import { TextField, InputAdornment } from '@mui/material/';
 import Utils from '../../../common/Utils';
 import { IProduct } from '../../../Nexus/entities/IProduct';
 import { Parentable } from '../../../models/Parentable';
+import SearchIcon from '@mui/icons-material/Search';
+import { Box } from '@mui/material/';
 
 interface IProps {
   list: Parentable<IProduct>[];
@@ -15,8 +17,7 @@ const useStyles = makeStyles({
   searchBar: {
     width: '100%',
     '& .MuiInputLabel-root': {
-      color: theme.palette.black.main,
-      lineHeight: '1.7rem'
+      color: theme.palette.black.main
     },
     '& .MuiInputLabel-root.Mui-focused': {
       color: theme.palette.black.main,
@@ -25,7 +26,9 @@ const useStyles = makeStyles({
     '& .MuiOutlinedInput-root': {
       '& fieldset': {
         border: `2px solid ${theme.palette.indigo.main}`,
-        height: 67
+        height: 67,
+        color: 'black',
+        backgroundColor: 'white'
       },
       '&:hover fieldset': {
         border: `3px solid ${theme.palette.indigo.main}`
@@ -34,7 +37,8 @@ const useStyles = makeStyles({
         border: `3px solid ${theme.palette.indigo.main}`
       }
     }
-  }
+  },
+  searchFieldIcon: {}
 });
 
 export default function ProductsSearchBar({
@@ -95,13 +99,22 @@ export default function ProductsSearchBar({
   const classes = useStyles();
 
   return (
-    <TextField
-      variant="outlined"
-      className={classes.searchBar}
-      label="Søk etter produkt"
-      autoComplete="off"
-      onChange={onChange}
-      onKeyUp={onKeyUp}
-    />
+    <Box>
+      <TextField
+        variant="outlined"
+        className={classes.searchBar}
+        label="Søk etter produkt"
+        autoComplete="off"
+        onChange={onChange}
+        onKeyUp={onKeyUp}
+        InputProps={{
+          endAdornment: (
+            <InputAdornment position="end">
+              <SearchIcon className={classes.searchFieldIcon} />
+            </InputAdornment>
+          )
+        }}
+      />
+    </Box>
   );
 }

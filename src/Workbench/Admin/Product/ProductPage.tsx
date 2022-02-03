@@ -73,7 +73,7 @@ const useStyles = makeStyles({
     paddingRight: 20,
     paddingTop: 30,
     paddingBottom: 30,
-    width: '35vw',
+    width: '34.5vw',
     minWidth: 300,
 
     [theme.breakpoints.down('md')]: {
@@ -89,7 +89,8 @@ const useStyles = makeStyles({
     display: 'flex',
     margin: 'auto',
     flexDirection: 'column',
-    gap: 10
+    gap: 10,
+    width: '20vw'
   },
   cardButtons: {
     display: 'flex',
@@ -172,9 +173,9 @@ export default function ProductPage(): React.ReactElement {
 
         {show && (
           <Card variant="outlined" className={classes.addProductFormCard}>
-            <Box className={classes.cardComponents}>
-              <FormProvider {...methods}>
-                <form onSubmit={methods.handleSubmit(saveValues)}>
+            <FormProvider {...methods}>
+              <form onSubmit={methods.handleSubmit(saveValues)}>
+                <Box className={classes.cardComponents}>
                   <Box className={classes.cardTextFields}>
                     <TextCtrl name="title" label="Title" />
                     <TextCtrl name="description" label="Description" />
@@ -188,9 +189,9 @@ export default function ProductPage(): React.ReactElement {
                       {t('cancel')}
                     </Button>
                   </Box>
-                </form>
-              </FormProvider>
-            </Box>
+                </Box>
+              </form>
+            </FormProvider>
           </Card>
         )}
 
