@@ -6,7 +6,6 @@ import Utils from '../../../common/Utils';
 import { IProduct } from '../../../Nexus/entities/IProduct';
 import { Parentable } from '../../../models/Parentable';
 import SearchIcon from '@mui/icons-material/Search';
-import { Box } from '@mui/material/';
 
 interface IProps {
   list: Parentable<IProduct>[];
