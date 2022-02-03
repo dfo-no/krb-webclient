@@ -1,18 +1,13 @@
-import React, { useState } from 'react';
-import { Parentable } from '../../../models/Parentable';
+import React from 'react';
 import Card from '@mui/material/Card';
-import NestableHierarcy from '../../../NestableHierarchy/NestableHierarcy';
 import { IProduct, PostProductSchema } from '../../../Nexus/entities/IProduct';
 import { v4 as uuidv4 } from 'uuid';
 import { IAlert } from '../../../models/IAlert';
 import { useAppDispatch, useAppSelector } from '../../../store/hooks';
 import {
   addProduct,
-  putSelectedProjectThunk,
-  updateProductList
+  putSelectedProjectThunk
 } from '../../../store/reducers/project-reducer';
-import EditProductForm from './EditProductForm';
-import ProductsSearchBar from './ProductSearchBar';
 
 import { Box } from '@mui/material/';
 import Button from '@mui/material/Button';
@@ -24,8 +19,10 @@ import { joiResolver } from '@hookform/resolvers/joi';
 import Nexus from '../../../Nexus/Nexus';
 import { addAlert } from '../../../store/reducers/alert-reducer';
 import theme from '../../../theme';
-import AddNewProductForm from './AddNewProductForm';
-import Dialog from '../../../components/DFODialog/DFODialog';
+
+interface IProps {
+  handleClose: () => void;
+}
 
 const useStyles = makeStyles({
   productsContainer: {
@@ -107,67 +104,63 @@ const useStyles = makeStyles({
   }
 });
 
-export default function ProductPage(): React.ReactElement {
+export default function ProductPage({
+  handleClose
+}: IProps): React.ReactElement {
   const { project } = useAppSelector((state) => state.project);
   const dispatch = useAppDispatch();
-  const [products, setProducts] = useState<IProduct[]>([]);
-
-  const [show, setShow] = useState(false);
 
   const nexus = Nexus.getInstance();
-
-  const newProductList = (items: Parentable<IProduct>[]) => {
-    dispatch(updateProductList(items));
-    dispatch(putSelectedProjectThunk('dummy'));
-  };
-
-  const searchFieldCallback = (result: IProduct[]) => {
-    setProducts(result);
-  };
 
   const classes = useStyles();
   const { t } = useTranslation();
 
+  const product: IProduct = nexus.productService.generateDefaultProductValues(
+    project.id
+  );
+
+  const methods = useForm<IProduct>({
+    resolver: joiResolver(PostProductSchema),
+    defaultValues: product
+  });
+
+  const saveValues = (post: IProduct) => {
+    const newProduct = nexus.productService.createProductWithId(post);
+    const alert: IAlert = {
+      id: uuidv4(),
+      style: 'success',
+      text: 'successfully added a new product'
+    };
+    dispatch(addProduct(newProduct));
+    dispatch(putSelectedProjectThunk('dummy')).then(() => {
+      dispatch(addAlert({ alert }));
+      handleClose();
+    });
+  };
+
   return (
     <>
-      <Box className={classes.productsContainer}>
-        <Box className={classes.searchFieldButtonContainer}>
-          <Box className={classes.searchField}>
-            <ProductsSearchBar
-              list={project.products}
-              callback={searchFieldCallback}
-            />
-          </Box>
-          <Box className={classes.addButton}>
-            <Button
-              variant="primary"
-              onClick={() => {
-                setShow(true);
-              }}
-            >
-              {t('add new product')}
-            </Button>
-          </Box>
-        </Box>
+      <Card variant="outlined" className={classes.addProductFormCard}>
+        <FormProvider {...methods}>
+          <form onSubmit={methods.handleSubmit(saveValues)}>
+            <Box className={classes.cardComponents}>
+              <Box className={classes.cardTextFields}>
+                <TextCtrl name="title" label={t('Title')} />
+                <TextCtrl name="description" label={t('Description')} />
+              </Box>
 
-        <Dialog
-          title={t('add new product')}
-          isOpen={show}
-          handleClose={() => setShow(false)}
-          children={<AddNewProductForm handleClose={() => setShow(false)} />}
-        />
-
-        <Box className={classes.hierarcy}>
-          <NestableHierarcy
-            dispatchfunc={(items: Parentable<IProduct>[]) =>
-              newProductList(items)
-            }
-            inputlist={products.length > 0 ? products : project.products}
-            component={<EditProductForm element={project.products[0]} />}
-            depth={5}
-          />
-        </Box>
-      </Box>
+              <Box className={classes.cardButtons}>
+                <Button variant="primary" type="submit">
+                  {t('save')}
+                </Button>
+                <Button variant="primary" onClick={handleClose}>
+                  {t('cancel')}
+                </Button>
+              </Box>
+            </Box>
+          </form>
+        </FormProvider>
+      </Card>
     </>
   );
 }
