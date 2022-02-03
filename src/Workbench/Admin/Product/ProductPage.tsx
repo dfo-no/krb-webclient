@@ -1,13 +1,9 @@
 import React, { useState } from 'react';
 import { Parentable } from '../../../models/Parentable';
-import Card from '@mui/material/Card';
 import NestableHierarcy from '../../../NestableHierarchy/NestableHierarcy';
-import { IProduct, PostProductSchema } from '../../../Nexus/entities/IProduct';
-import { v4 as uuidv4 } from 'uuid';
-import { IAlert } from '../../../models/IAlert';
+import { IProduct } from '../../../Nexus/entities/IProduct';
 import { useAppDispatch, useAppSelector } from '../../../store/hooks';
 import {
-  addProduct,
   putSelectedProjectThunk,
   updateProductList
 } from '../../../store/reducers/project-reducer';
@@ -17,12 +13,7 @@ import ProductsSearchBar from './ProductSearchBar';
 import { Box } from '@mui/material/';
 import Button from '@mui/material/Button';
 import { makeStyles } from '@material-ui/core';
-import TextCtrl from '../../../FormProvider/TextCtrl';
 import { useTranslation } from 'react-i18next';
-import { FormProvider, useForm } from 'react-hook-form';
-import { joiResolver } from '@hookform/resolvers/joi';
-import Nexus from '../../../Nexus/Nexus';
-import { addAlert } from '../../../store/reducers/alert-reducer';
 import theme from '../../../theme';
 import AddNewProductForm from './AddNewProductForm';
 import Dialog from '../../../components/DFODialog/DFODialog';
@@ -113,8 +104,6 @@ export default function ProductPage(): React.ReactElement {
   const [products, setProducts] = useState<IProduct[]>([]);
 
   const [show, setShow] = useState(false);
-
-  const nexus = Nexus.getInstance();
 
   const newProductList = (items: Parentable<IProduct>[]) => {
     dispatch(updateProductList(items));

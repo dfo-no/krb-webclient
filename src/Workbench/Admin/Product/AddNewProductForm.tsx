@@ -1,5 +1,4 @@
 import React from 'react';
-import Card from '@mui/material/Card';
 import { IProduct, PostProductSchema } from '../../../Nexus/entities/IProduct';
 import { v4 as uuidv4 } from 'uuid';
 import { IAlert } from '../../../models/IAlert';
@@ -25,44 +24,6 @@ interface IProps {
 }
 
 const useStyles = makeStyles({
-  productsContainer: {
-    display: 'flex',
-    flexDirection: 'column',
-    marginTop: 40,
-    gap: 30,
-    margin: 'auto',
-    width: '60vw',
-    paddingLeft: 40,
-    paddingRight: 40,
-    paddingBottom: 30
-  },
-  searchFieldButtonContainer: {
-    display: 'flex',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-
-    [theme.breakpoints.down('header')]: {
-      flexDirection: 'column',
-      gap: 20
-    }
-  },
-  searchField: {
-    width: '35vw',
-    minWidth: 300,
-    paddingRight: 10,
-    [theme.breakpoints.down('xs')]: {
-      alignSelf: 'center',
-      minWidth: 400
-    }
-  },
-  addButton: {
-    alignContent: 'flex-end',
-    backgroundColor: 'red',
-
-    [theme.breakpoints.down('md')]: {
-      alignSelf: 'center'
-    }
-  },
   addProductFormCard: {
     display: 'flex',
     gap: 10,
@@ -95,12 +56,6 @@ const useStyles = makeStyles({
     display: 'flex',
     justifyContent: 'center',
     gap: 10
-  },
-  hierarcy: {
-    [theme.breakpoints.down('sm')]: {
-      alignSelf: 'center',
-      width: 400
-    }
   }
 });
 
