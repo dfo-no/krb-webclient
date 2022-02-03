@@ -14,8 +14,9 @@ interface IProps {
 }
 
 const useStyles = makeStyles({
-  searchBar: {
+  root: {
     width: '100%',
+    backgroundColor: 'white',
     '& .MuiInputLabel-root': {
       color: theme.palette.black.main
     },
@@ -25,10 +26,7 @@ const useStyles = makeStyles({
     },
     '& .MuiOutlinedInput-root': {
       '& fieldset': {
-        border: `2px solid ${theme.palette.indigo.main}`,
-        height: 67,
-        color: 'black',
-        backgroundColor: 'white'
+        border: `2px solid ${theme.palette.indigo.main}`
       },
       '&:hover fieldset': {
         border: `3px solid ${theme.palette.indigo.main}`
@@ -102,8 +100,8 @@ export default function ProductsSearchBar({
     <Box>
       <TextField
         variant="outlined"
-        className={classes.searchBar}
         label="Søk etter produkt"
+        className={classes.root}
         autoComplete="off"
         onChange={onChange}
         onKeyUp={onKeyUp}
