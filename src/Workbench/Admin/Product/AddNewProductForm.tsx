@@ -140,27 +140,25 @@ export default function ProductPage({
 
   return (
     <>
-      <Card variant="outlined" className={classes.addProductFormCard}>
-        <FormProvider {...methods}>
-          <form onSubmit={methods.handleSubmit(saveValues)}>
-            <Box className={classes.cardComponents}>
-              <Box className={classes.cardTextFields}>
-                <TextCtrl name="title" label={t('Title')} />
-                <TextCtrl name="description" label={t('Description')} />
-              </Box>
-
-              <Box className={classes.cardButtons}>
-                <Button variant="primary" type="submit">
-                  {t('save')}
-                </Button>
-                <Button variant="primary" onClick={handleClose}>
-                  {t('cancel')}
-                </Button>
-              </Box>
+      <FormProvider {...methods}>
+        <form onSubmit={methods.handleSubmit(saveValues)}>
+          <Box className={classes.cardComponents}>
+            <Box className={classes.cardTextFields}>
+              <TextCtrl name="title" label={t('Title')} />
+              <TextCtrl name="description" label={t('Description')} />
             </Box>
-          </form>
-        </FormProvider>
-      </Card>
+
+            <Box className={classes.cardButtons}>
+              <Button variant="primary" type="submit">
+                {t('save')}
+              </Button>
+              <Button variant="primary" onClick={handleClose}>
+                {t('cancel')}
+              </Button>
+            </Box>
+          </Box>
+        </form>
+      </FormProvider>
     </>
   );
 }
