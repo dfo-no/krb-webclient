@@ -97,22 +97,20 @@ export default function ProductsSearchBar({
   const classes = useStyles();
 
   return (
-    <Box>
-      <TextField
-        variant="outlined"
-        label="Søk etter produkt"
-        className={classes.root}
-        autoComplete="off"
-        onChange={onChange}
-        onKeyUp={onKeyUp}
-        InputProps={{
-          endAdornment: (
-            <InputAdornment position="end">
-              <SearchIcon className={classes.searchFieldIcon} />
-            </InputAdornment>
-          )
-        }}
-      />
-    </Box>
+    <TextField
+      variant="outlined"
+      label="Søk etter produkt"
+      className={classes.root}
+      autoComplete="off"
+      onChange={onChange}
+      onKeyUp={onKeyUp}
+      InputProps={{
+        endAdornment: (
+          <InputAdornment position="end">
+            <SearchIcon className={classes.searchFieldIcon} />
+          </InputAdornment>
+        )
+      }}
+    />
   );
 }
