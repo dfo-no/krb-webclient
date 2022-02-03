@@ -1,4 +1,5 @@
 import { joiResolver } from '@hookform/resolvers/joi';
+import { Mark } from '@material-ui/core/Slider/Slider';
 import Button from '@mui/material/Button';
 import Slider from '@mui/material/Slider';
 import { get } from 'lodash';
@@ -12,7 +13,6 @@ import { Controller, FieldError, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import ControlledTextInput from '../../Form/ControlledTextInput';
 import ErrorSummary from '../../Form/ErrorSummary';
-import { IOption } from '../../models/IOption';
 import {
   ISpecificationProduct,
   SpecificationProductSchema
@@ -61,7 +61,7 @@ export default function ProductSpecEditor(): React.ReactElement {
     dispatch(editSpecProduct({ product: newProduct }));
   };
 
-  const marks: IOption[] = [
+  const marks: Mark[] = [
     {
       value: 10,
       label: `Lav`
