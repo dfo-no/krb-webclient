@@ -9,7 +9,7 @@ import SearchIcon from '@mui/icons-material/Search';
 
 interface IProps {
   list: Parentable<IProduct>[];
-  callback: any;
+  callback: (result: IProduct[]) => void;
 }
 
 const useStyles = makeStyles({

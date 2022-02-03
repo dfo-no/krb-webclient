@@ -108,7 +108,7 @@ const useStyles = makeStyles({
 export default function ProductPage(): React.ReactElement {
   const { project } = useAppSelector((state) => state.project);
   const dispatch = useAppDispatch();
-  const [products, setProducts] = useState([]);
+  const [products, setProducts] = useState<IProduct[]>([]);
 
   const [show, setShow] = useState(false);
 
@@ -119,7 +119,7 @@ export default function ProductPage(): React.ReactElement {
     dispatch(putSelectedProjectThunk('dummy'));
   };
 
-  const searchFieldCallback = (result: []) => {
+  const searchFieldCallback = (result: IProduct[]) => {
     setProducts(result);
   };
 
