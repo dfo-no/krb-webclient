@@ -1,15 +1,24 @@
 import { Box, makeStyles } from '@material-ui/core';
+import { Button } from '@mui/material';
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Levelable } from '../../models/Levelable';
 import { INeed } from '../../Nexus/entities/INeed';
-import { IProduct } from '../../Nexus/entities/IProduct';
 import { IRequirement } from '../../Nexus/entities/IRequirement';
-import { useAppSelector } from '../../store/hooks';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import theme from '../../theme';
-import NeedList from './NeedList';
 import Requirements from './Requirements';
 import VariantList from './VariantList';
+import { Parentable } from '../../models/Parentable';
+import {
+  putSelectedProjectThunk,
+  setNeeds
+} from '../../store/reducers/project-reducer';
+import NestableHierarcySideBar from '../Components/NestableHiarchySideBar';
+import Utils from '../../common/Utils';
+import Dialog from '../../components/DFODialog/DFODialog';
+import NewNeedForm from './NewNeedForm';
+import EditNeedForm from './EditNeedForm';
 
 const useStyles = makeStyles({
   headerText: {
@@ -20,42 +29,82 @@ const useStyles = makeStyles({
   editorContainer: {
     flex: '1',
     display: 'flex',
-    minHeight: '100vh'
+    minHeight: '100vh',
+    backgroundColor: theme.palette.gray100.main
+  },
+  newButton: {
+    display: 'flex',
+    justifySelf: 'flex-end',
+    paddingTop: '5%',
+    paddingRight: '5%',
+    marginLeft: 'auto'
   },
   needs: {
-    width: '20%'
-  },
-  requirements: {
+    display: 'flex',
+    flexDirection: 'column',
     width: '30%'
   },
+  requirements: {
+    width: '25%'
+  },
   variants: {
-    width: '50%'
+    width: '45%'
   }
 });
 
 export default function Create(): React.ReactElement {
   const { project } = useAppSelector((state) => state.project);
   const { t } = useTranslation();
+  const dispatch = useAppDispatch();
   const classes = useStyles();
 
-  const [selectedNeed, setSelectedNeed] = useState<null | Levelable<
-    INeed | IProduct
-  >>(null);
+  const [isNewOpen, setNewOpen] = useState(false);
+  const [isEditOpen, setEditOpen] = useState(false);
+  const [selectedNeed, setSelectedNeed] = useState<null | Levelable<INeed>>(
+    null
+  );
   const [selectedRequirement, setSelectedRequirement] =
     useState<null | IRequirement>(null);
 
-  const updateSelectedNeed = (item: Levelable<INeed | IProduct>) => {
+  const updateSelectedNeed = (item: Parentable<INeed>) => {
+    const levelableNeeds = Utils.parentable2Levelable(project.needs);
+    const levelableItem =
+      levelableNeeds.find((need) => need.id === item.id) || null;
     setSelectedRequirement(null);
-    setSelectedNeed(item);
+    setSelectedNeed(levelableItem);
+  };
+
+  const updateNeeds = (needs: Parentable<INeed>[]) => {
+    dispatch(setNeeds(needs));
+    dispatch(putSelectedProjectThunk('dummy'));
   };
 
   return (
     <Box className={classes.editorContainer}>
       <Box className={classes.needs}>
-        <h6 className={classes.headerText}>{t('Needs')}</h6>
-        <NeedList
-          parentables={project.needs}
-          updateSelectedFunction={updateSelectedNeed}
+        <Box className={classes.newButton}>
+          <Button variant={'primary'} onClick={() => setNewOpen(true)}>
+            Legg til nytt behov
+          </Button>
+        </Box>
+        <Box className={classes.newButton}>
+          // TODO: Move this functionality to new component
+          <Button
+            variant={'primary'}
+            onClick={() => {
+              if (selectedNeed) {
+                setEditOpen(true);
+              }
+            }}
+          >
+            Endre valgte behov
+          </Button>
+        </Box>
+        <NestableHierarcySideBar
+          listOrderFunc={(items: Parentable<INeed>[]) => updateNeeds(items)}
+          selectFunc={(item: Parentable<INeed>) => updateSelectedNeed(item)}
+          inputlist={project.needs}
+          depth={10}
         />
       </Box>
       <Box className={classes.requirements}>
@@ -69,6 +118,25 @@ export default function Create(): React.ReactElement {
         <h6 className={classes.headerText}>Variant</h6>
         <VariantList selectedRequirement={selectedRequirement} />
       </Box>
+      <Dialog
+        title="Nytt behov til kravet"
+        isOpen={isNewOpen}
+        handleClose={() => setNewOpen(false)}
+        children={<NewNeedForm handleClose={() => setNewOpen(false)} />}
+      />
+      {selectedNeed && (
+        <Dialog
+          title="Rediger behov"
+          isOpen={isEditOpen}
+          handleClose={() => setEditOpen(false)}
+          children={
+            <EditNeedForm
+              element={selectedNeed}
+              handleClose={() => setEditOpen(false)}
+            />
+          }
+        />
+      )}
     </Box>
   );
 }
