@@ -1,13 +1,9 @@
 import React, { useState } from 'react';
 import { Parentable } from '../../../models/Parentable';
-import Card from '@mui/material/Card';
 import NestableHierarcy from '../../../NestableHierarchy/NestableHierarcy';
-import { IProduct, PostProductSchema } from '../../../Nexus/entities/IProduct';
-import { v4 as uuidv4 } from 'uuid';
-import { IAlert } from '../../../models/IAlert';
+import { IProduct } from '../../../Nexus/entities/IProduct';
 import { useAppDispatch, useAppSelector } from '../../../store/hooks';
 import {
-  addProduct,
   putSelectedProjectThunk,
   updateProductList
 } from '../../../store/reducers/project-reducer';
@@ -17,13 +13,10 @@ import ProductsSearchBar from './ProductSearchBar';
 import { Box } from '@mui/material/';
 import Button from '@mui/material/Button';
 import { makeStyles } from '@material-ui/core';
-import TextCtrl from '../../../FormProvider/TextCtrl';
 import { useTranslation } from 'react-i18next';
-import { FormProvider, useForm } from 'react-hook-form';
-import { joiResolver } from '@hookform/resolvers/joi';
-import Nexus from '../../../Nexus/Nexus';
-import { addAlert } from '../../../store/reducers/alert-reducer';
 import theme from '../../../theme';
+import NewProductForm from './NewProductForm';
+import Dialog from '../../../components/DFODialog/DFODialog';
 
 const useStyles = makeStyles({
   productsContainer: {
@@ -112,8 +105,6 @@ export default function ProductPage(): React.ReactElement {
 
   const [show, setShow] = useState(false);
 
-  const nexus = Nexus.getInstance();
-
   const newProductList = (items: Parentable<IProduct>[]) => {
     dispatch(updateProductList(items));
     dispatch(putSelectedProjectThunk('dummy'));
@@ -125,29 +116,6 @@ export default function ProductPage(): React.ReactElement {
 
   const classes = useStyles();
   const { t } = useTranslation();
-
-  const product: IProduct = nexus.productService.generateDefaultProductValues(
-    project.id
-  );
-
-  const methods = useForm<IProduct>({
-    resolver: joiResolver(PostProductSchema),
-    defaultValues: product
-  });
-
-  const saveValues = (post: IProduct) => {
-    const newProduct = nexus.productService.createProductWithId(post);
-    const alert: IAlert = {
-      id: uuidv4(),
-      style: 'success',
-      text: 'successfully added a new product'
-    };
-    dispatch(addProduct(newProduct));
-    dispatch(putSelectedProjectThunk('dummy')).then(() => {
-      dispatch(addAlert({ alert }));
-      setShow(false);
-    });
-  };
 
   return (
     <>
@@ -171,29 +139,12 @@ export default function ProductPage(): React.ReactElement {
           </Box>
         </Box>
 
-        {show && (
-          <Card variant="outlined" className={classes.addProductFormCard}>
-            <FormProvider {...methods}>
-              <form onSubmit={methods.handleSubmit(saveValues)}>
-                <Box className={classes.cardComponents}>
-                  <Box className={classes.cardTextFields}>
-                    <TextCtrl name="title" label="Title" />
-                    <TextCtrl name="description" label="Description" />
-                  </Box>
-
-                  <Box className={classes.cardButtons}>
-                    <Button variant="primary" type="submit">
-                      {t('save')}
-                    </Button>
-                    <Button variant="primary" onClick={() => setShow(false)}>
-                      {t('cancel')}
-                    </Button>
-                  </Box>
-                </Box>
-              </form>
-            </FormProvider>
-          </Card>
-        )}
+        <Dialog
+          title={t('add new product')}
+          isOpen={show}
+          handleClose={() => setShow(false)}
+          children={<NewProductForm handleClose={() => setShow(false)} />}
+        />
 
         <Box className={classes.hierarcy}>
           <NestableHierarcy
