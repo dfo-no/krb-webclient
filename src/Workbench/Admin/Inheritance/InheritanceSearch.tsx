@@ -9,7 +9,7 @@ export default function InheritanceSearch(): React.ReactElement {
 
   return (
     <>
-      <h5 className="mt-5 ml-2 mb-5">Søk og legg til avhengigheter</h5>
+      <h5 className="mt-5 mb-5">Finn kravbanker du vil arve fra </h5>
       {list && <InheritanceSearchBar list={list} project={project} />}
     </>
   );
