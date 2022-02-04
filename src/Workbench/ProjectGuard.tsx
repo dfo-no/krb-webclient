@@ -6,7 +6,6 @@ import { useAppDispatch } from '../store/hooks';
 import { getProjectThunk } from '../store/reducers/project-reducer';
 import theme from '../theme';
 import AdminGuard from './Admin/AdminGuard';
-import ProjectHeader from './Components/ProjectHeader';
 import Create from './Create/Create';
 import Preview from './Preview/Preview';
 
@@ -60,9 +59,6 @@ export default function ProjectGuard(): React.ReactElement {
 
   return (
     <Box className={classes.projectContainer}>
-      <Box>
-        <ProjectHeader />
-      </Box>
       <Box className={classes.wrapperContainer}>
         <Route path="/workbench/:projectId/admin">
           <AdminGuard />

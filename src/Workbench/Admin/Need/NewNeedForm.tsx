@@ -20,6 +20,9 @@ import {
   putSelectedProjectThunk
 } from '../../../store/reducers/project-reducer';
 
+/**
+ * @deprecated use Admin/Create/NewNeedForm instead
+ */
 function NewNeedForm(): React.ReactElement {
   const dispatch = useAppDispatch();
   const [validated] = useState(false);

@@ -44,6 +44,9 @@ const theme = createTheme({
     dfoErrorRedHover: {
       main: dfoThemeScss.dfoErrorRedHover
     },
+    dfoBackgroundBlue: {
+      main: dfoThemeScss.dfoBackgroundBlue
+    },
     gray100: {
       main: dfoThemeScss.gray100
     },
@@ -213,6 +216,15 @@ theme.components = {
         height: '40px',
         paddingTop: '0',
         paddingBottom: '0'
+      }
+    }
+  },
+  MuiSvgIcon: {
+    styleOverrides: {
+      root: {
+        width: '40px',
+        height: '40px',
+        color: theme.palette.dfoBlue.main
       }
     }
   }

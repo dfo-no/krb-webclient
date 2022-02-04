@@ -1,6 +1,6 @@
 import { useAccount, useMsal } from '@azure/msal-react';
-import React, { useState } from 'react';
 import Button from '@mui/material/Button';
+import React, { useState } from 'react';
 import { loginRequest } from '../authentication/authConfig';
 import { callMsGraph, ProfileData } from './GraphProfileData';
 

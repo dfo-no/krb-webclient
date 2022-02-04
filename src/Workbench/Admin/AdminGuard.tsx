@@ -1,5 +1,5 @@
 import { Box, makeStyles } from '@material-ui/core';
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { Route } from 'react-router';
 import theme from '../../theme';
 import SideBar from '../Components/SideBar';
