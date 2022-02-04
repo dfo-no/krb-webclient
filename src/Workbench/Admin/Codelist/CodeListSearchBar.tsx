@@ -100,7 +100,7 @@ export default function ProductsSearchBar({
   return (
     <TextField
       variant="outlined"
-      label={t('search for product')}
+      label={t('search for codelist')}
       className={classes.root}
       autoComplete="off"
       onChange={onChange}

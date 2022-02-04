@@ -1,170 +1,163 @@
 import { joiResolver } from '@hookform/resolvers/joi';
 import DeleteIcon from '@mui/icons-material/Delete';
-import EditIcon from '@mui/icons-material/Edit';
-import Button from '@mui/material/Button';
 import { get } from 'lodash';
-import React, { useEffect, useState } from 'react';
-import Card from 'react-bootstrap/Card';
+import React, { useContext, useEffect, useState } from 'react';
+import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import { FieldError, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import { useHistory } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
 import AlertModal from '../../../common/AlertModal';
+import Utils from '../../../common/Utils';
 import ControlledTextInput from '../../../Form/ControlledTextInput';
 import ErrorSummary from '../../../Form/ErrorSummary';
 import { IAlert } from '../../../models/IAlert';
-import QuestionEnum from '../../../models/QuestionEnum';
-import { CodelistSchema, ICodelist } from '../../../Nexus/entities/ICodelist';
-import { ICodelistQuestion } from '../../../Nexus/entities/ICodelistQuestion';
+import { Nestable } from '../../../models/Nestable';
+import { Parentable } from '../../../models/Parentable';
+import { AccordionContext } from '../../../NestableHierarchy/AccordionContext';
 import { INeed } from '../../../Nexus/entities/INeed';
-import {
-  IAnswerBase,
-  IConfigBase,
-  IQuestionBase
-} from '../../../Nexus/entities/IQuestionBase';
+import { IProduct, PutProductSchema } from '../../../Nexus/entities/IProduct';
 import { IRequirement } from '../../../Nexus/entities/IRequirement';
 import { IVariant } from '../../../Nexus/entities/IVariant';
 import { useAppDispatch, useAppSelector } from '../../../store/hooks';
 import { addAlert } from '../../../store/reducers/alert-reducer';
 import {
-  deleteCodelist,
-  editSelectedCodelist,
-  putSelectedProjectThunk
+  editProduct,
+  putSelectedProjectThunk,
+  removeProduct
 } from '../../../store/reducers/project-reducer';
-import { editCodelist } from '../../../store/reducers/selectedCodelist-reducer';
+import { selectProduct } from '../../../store/reducers/selectedProduct-reducer';
 
-function EditCodeListForm(): React.ReactElement {
+interface IProps {
+  element: Parentable<IProduct>;
+}
+
+export default function EditProductForm({
+  element
+}: IProps): React.ReactElement {
+  const { project } = useAppSelector((state) => state.project);
   const dispatch = useAppDispatch();
+  const { onOpenClose } = useContext(AccordionContext);
   const [validated] = useState(false);
   const [modalShow, setModalShow] = useState(false);
-  const [edit, setEdit] = useState(false);
   const { t } = useTranslation();
-
-  const { project } = useAppSelector((state) => state.project);
-  const history = useHistory();
-
-  const { codelist } = useAppSelector((state) => state.selectedCodeList);
 
   const {
     control,
     handleSubmit,
     reset,
     formState: { errors }
-  } = useForm<ICodelist>({
-    resolver: joiResolver(CodelistSchema),
-    defaultValues: codelist
+  } = useForm<Parentable<IProduct>>({
+    resolver: joiResolver(PutProductSchema),
+    defaultValues: element
   });
 
-  const onEditCodeSubmit = (post: ICodelist) => {
-    const alert: IAlert = {
-      id: uuidv4(),
-      style: 'success',
-      text: 'Successfully edited codelist'
-    };
-    dispatch(editSelectedCodelist(post));
-    dispatch(editCodelist(post));
+  useEffect(() => {
+    if (element) {
+      reset(JSON.parse(JSON.stringify(element)));
+    }
+  }, [element, reset]);
+
+  const onEditProductSubmit = (data: Nestable<IProduct>) => {
+    const newProduct = { ...data };
+    if (newProduct.children) {
+      delete newProduct.children;
+    }
+    if (newProduct.level) {
+      delete newProduct.level;
+    }
+    newProduct.title = data.title;
+    newProduct.description = data.description;
+
+    dispatch(editProduct(newProduct));
     dispatch(putSelectedProjectThunk('dummy')).then(() => {
+      const alert: IAlert = {
+        id: uuidv4(),
+        style: 'success',
+        text: 'Successfully updated product'
+      };
       dispatch(addAlert({ alert }));
-      reset();
-      setEdit(false);
+      onOpenClose('');
     });
   };
 
-  useEffect(() => {
-    if (codelist) {
-      reset(JSON.parse(JSON.stringify(codelist)));
-    }
-  }, [codelist, reset]);
-
-  const checkCodelistConnection = () => {
+  const checkProductConnection = () => {
     let used = false;
     project.needs.forEach((need: INeed) => {
       need.requirements.forEach((requirement: IRequirement) => {
         requirement.variants.forEach((variant: IVariant) => {
-          variant.questions.forEach(
-            (alternative: IQuestionBase<IAnswerBase, IConfigBase>) => {
-              if (alternative.type === QuestionEnum.Q_CODELIST) {
-                const alt = alternative as ICodelistQuestion;
-                if (
-                  alt.config &&
-                  alt.config.codelist &&
-                  alt.config.codelist === codelist.id
-                )
-                  used = true;
-              }
-            }
-          );
+          if (variant.products.includes(element.id)) {
+            used = true;
+          }
         });
       });
     });
     return used;
   };
 
-  const removeCodelist = () => {
-    if (checkCodelistConnection()) {
+  const deleteProduct = (product: IProduct) => {
+    if (
+      Utils.checkIfParent(project.products, element.id) ||
+      checkProductConnection()
+    ) {
       setModalShow(true);
     } else {
-      dispatch(deleteCodelist(codelist));
-      dispatch(putSelectedProjectThunk('dummy')).then(() => {
-        history.push(`/workbench/${project.id}/codelist`);
-      });
+      dispatch(removeProduct(product));
+      dispatch(putSelectedProjectThunk('dummy'));
+
+      const alert: IAlert = {
+        id: uuidv4(),
+        style: 'success',
+        text: 'Successfully deleted product'
+      };
+      dispatch(addAlert({ alert }));
     }
+    onOpenClose('');
   };
 
   return (
-    <>
-      <h3 className="m-2">
-        Codelist: {codelist.title}
-        <Button variant="primary" onClick={() => setEdit(true)}>
-          <EditIcon />
-        </Button>
-      </h3>
-      <p className="ml-1 mb-4">{codelist.description}</p>
-      {edit && (
-        <Card className="mb-4">
-          <Card.Body>
-            <Form
-              onSubmit={handleSubmit(onEditCodeSubmit)}
-              autoComplete="off"
-              noValidate
-              validated={validated}
-            >
-              <ControlledTextInput
-                control={control}
-                name="title"
-                error={get(errors, `title`) as FieldError}
-                label={t('Title')}
-              />
-              <ControlledTextInput
-                control={control}
-                name="description"
-                error={get(errors, `description`) as FieldError}
-                label={t('Description')}
-              />
-              <Button variant="primary" type="submit">
-                {t('save')}
-              </Button>
-              <Button variant="warning" onClick={() => setEdit(false)}>
-                {t('cancel')}
-              </Button>
-              <Button variant="warning" onClick={removeCodelist}>
-                {t('delete')} <DeleteIcon />
-              </Button>
-              <AlertModal
-                modalShow={modalShow}
-                setModalShow={setModalShow}
-                title="Attention"
-                text="The codelist is associated to one or more requirement variant, please remove the connection to be able to delete"
-              />
-
-              <ErrorSummary errors={errors} />
-            </Form>
-          </Card.Body>
-        </Card>
-      )}
-    </>
+    <Form
+      onSubmit={handleSubmit((post) => onEditProductSubmit(post))}
+      autoComplete="off"
+      noValidate
+      validated={validated}
+    >
+      <ControlledTextInput
+        control={control}
+        name="title"
+        error={get(errors, `title`) as FieldError}
+        label={t('Title')}
+      />
+      <ControlledTextInput
+        control={control}
+        name="description"
+        error={get(errors, `description`) as FieldError}
+        label={t('Description')}
+      />
+      <Button className="mt-2  ml-3" type="submit">
+        {t('save')}
+      </Button>
+      <Link
+        to={`/workbench/${project.id}/admin/${element.id}/product`}
+        onClick={() => dispatch(selectProduct(element))}
+      >
+        <Button className="mt-2  ml-3">Preview</Button>
+      </Link>
+      <Button
+        className="mt-2  ml-3"
+        variant="warning"
+        onClick={() => deleteProduct(element)}
+      >
+        {t('delete')} <DeleteIcon />
+      </Button>
+      <AlertModal
+        modalShow={modalShow}
+        setModalShow={setModalShow}
+        title="Attention"
+        text="This product is associated to one or more requirement variants, please remove the connection to be able to delete"
+      />
+      <ErrorSummary errors={errors} />
+    </Form>
   );
 }
-
-export default EditCodeListForm;

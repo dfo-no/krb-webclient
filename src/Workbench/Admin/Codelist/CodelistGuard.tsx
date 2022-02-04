@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { Route, useHistory, useParams } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../../store/hooks';
 import { selectCodeList } from '../../../store/reducers/selectedCodelist-reducer';
-import CodeListEditor from './CodeListEditor';
+import CodeListPage from './CodeListPage';
 
 interface IRouteParams {
   projectId: string;
@@ -29,7 +29,7 @@ export default function CodelistGuard(): React.ReactElement {
 
   return (
     <Route exact path="/workbench/:projectId/admin/codelist/:id">
-      <CodeListEditor />
+      <CodeListPage />
     </Route>
   );
 }
