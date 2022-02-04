@@ -15,7 +15,7 @@ import Button from '@mui/material/Button';
 import { makeStyles } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
 import theme from '../../../theme';
-import AddNewProductForm from './AddNewProductForm';
+import NewProductForm from './NewProductForm';
 import Dialog from '../../../components/DFODialog/DFODialog';
 
 const useStyles = makeStyles({
@@ -143,7 +143,7 @@ export default function ProductPage(): React.ReactElement {
           title={t('add new product')}
           isOpen={show}
           handleClose={() => setShow(false)}
-          children={<AddNewProductForm handleClose={() => setShow(false)} />}
+          children={<NewProductForm handleClose={() => setShow(false)} />}
         />
 
         <Box className={classes.hierarcy}>
