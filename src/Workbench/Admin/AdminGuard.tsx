@@ -4,7 +4,7 @@ import { Route } from 'react-router';
 import theme from '../../theme';
 import SideBar from '../Components/SideBar';
 import CodeListGuard from './Codelist/CodeListGuard';
-import CodelistPage from './Codelist/CodeListPage';
+import CodeListPage from './Codelist/CodeListPage';
 import InheritancePage from './Inheritance/InheritancePage';
 import InheritanceSearch from './Inheritance/InheritanceSearch';
 import NeedPage from './Need/NeedPage';
@@ -57,7 +57,7 @@ export default function AdminGuard(): React.ReactElement {
           <TagPage />
         </Route>
         <Route exact path="/workbench/:projectId/admin/codelist">
-          <CodelistPage />
+          <CodeListPage />
         </Route>
         <Route exact path="/workbench/:projectId/admin/codelist/:id">
           <CodeListGuard />
