@@ -36,51 +36,17 @@ const useStyles = makeStyles({
       }
     }
   },
-  searchFieldIcon: {}
+  searchFieldIcon: {
+    display: 'flex',
+    alignSelf: 'center'
+  }
 });
 
-export default function ProductsSearchBar({
+export default function CodeListSearchBar({
   list,
   callback
 }: IProps): React.ReactElement {
   const [searchFieldValue, setSearchFieldValue] = useState('');
-  let newProductsHierarchy: Parentable<IProduct>[] = [];
-
-  const findListItemParent = (listItem: IProduct) => {
-    newProductsHierarchy.push(listItem);
-
-    if (listItem.parent === '') {
-      return;
-    }
-
-    const parent: Parentable<IProduct> = Utils.ensure(
-      list.find((product: IProduct) => product.id === listItem.parent)
-    );
-
-    if (parent.parent !== '') {
-      findListItemParent(parent);
-    } else {
-      newProductsHierarchy.push(parent);
-    }
-  };
-
-  const findListItemTree = (item: IProduct) => {
-    findListItemParent(item);
-  };
-
-  const performSearch = () => {
-    newProductsHierarchy = [];
-
-    for (const listItem of list) {
-      const listItemTitleLowerCase = listItem.title.toLowerCase();
-      const searchFieldValueLowerCase = searchFieldValue.toLowerCase();
-
-      if (listItemTitleLowerCase.includes(searchFieldValueLowerCase)) {
-        findListItemTree(listItem);
-        callback(newProductsHierarchy);
-      }
-    }
-  };
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchFieldValue(e.target.value);
@@ -89,7 +55,6 @@ export default function ProductsSearchBar({
   const onKeyUp = (e: React.KeyboardEvent) => {
     if (e.key === 'Enter') {
       if (searchFieldValue.length !== 0) {
-        performSearch();
       }
     }
   };

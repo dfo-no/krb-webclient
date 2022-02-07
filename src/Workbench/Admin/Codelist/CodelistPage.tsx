@@ -1,14 +1,7 @@
 import React, { useState } from 'react';
-import { Parentable } from '../../../models/Parentable';
-import NestableHierarcy from '../../../NestableHierarchy/NestableHierarcy';
 import { IProduct } from '../../../Nexus/entities/IProduct';
 import { useAppDispatch, useAppSelector } from '../../../store/hooks';
-import {
-  putSelectedProjectThunk,
-  updateProductList
-} from '../../../store/reducers/project-reducer';
-import EditCodeListForm from './EditCodeListForm';
-import ProductsSearchBar from './CodeListSearchBar';
+import CodeListSearchBar from './CodeListSearchBar';
 
 import { Box } from '@mui/material/';
 import Button from '@mui/material/Button';
@@ -19,7 +12,7 @@ import NewCodeListForm from './NewCodeListForm';
 import Dialog from '../../../components/DFODialog/DFODialog';
 
 const useStyles = makeStyles({
-  productsContainer: {
+  codelistsContainer: {
     display: 'flex',
     flexDirection: 'column',
     marginTop: 40,
@@ -49,7 +42,7 @@ const useStyles = makeStyles({
       minWidth: 400
     }
   },
-  addButton: {
+  addCodelistButton: {
     alignContent: 'flex-end',
     backgroundColor: 'red',
 
@@ -57,54 +50,13 @@ const useStyles = makeStyles({
       alignSelf: 'center'
     }
   },
-  addProductFormCard: {
-    display: 'flex',
-    gap: 10,
-    flexDirection: 'column',
-    justifyContent: 'center',
-    paddingLeft: 20,
-    paddingRight: 20,
-    paddingTop: 30,
-    paddingBottom: 30,
-    width: '34.5vw',
-    minWidth: 300,
-
-    [theme.breakpoints.down('md')]: {
-      alignSelf: 'center'
-    }
-  },
-  cardComponents: {
-    display: 'flex',
-    flexDirection: 'column',
-    gap: 10
-  },
-  cardTextFields: {
-    display: 'flex',
-    margin: 'auto',
-    flexDirection: 'column',
-    gap: 10,
-    width: '20vw'
-  },
-  cardButtons: {
-    display: 'flex',
-    justifyContent: 'center',
-    gap: 10
-  },
-  hierarcy: {
-    [theme.breakpoints.down('sm')]: {
-      alignSelf: 'center',
-      width: 400
-    }
-  }
+  codelists: {}
 });
 
 export default function CodeListPage(): React.ReactElement {
   const { project } = useAppSelector((state) => state.project);
   const dispatch = useAppDispatch();
   const [codelists, setCodelists] = useState<IProduct[]>([]);
-
-  console.log(project.codelist);
-
   const [show, setShow] = useState(false);
 
   const searchFieldCallback = (result: IProduct[]) => {
@@ -114,17 +66,19 @@ export default function CodeListPage(): React.ReactElement {
   const classes = useStyles();
   const { t } = useTranslation();
 
+  console.log(codelists);
+
   return (
     <>
-      <Box className={classes.productsContainer}>
+      <Box className={classes.codelistsContainer}>
         <Box className={classes.searchFieldButtonContainer}>
           <Box className={classes.searchField}>
-            <ProductsSearchBar
+            <CodeListSearchBar
               list={project.products}
               callback={searchFieldCallback}
             />
           </Box>
-          <Box className={classes.addButton}>
+          <Box className={classes.addCodelistButton}>
             <Button
               variant="primary"
               onClick={() => {
@@ -143,7 +97,7 @@ export default function CodeListPage(): React.ReactElement {
           children={<NewCodeListForm handleClose={() => setShow(false)} />}
         />
 
-        <Box className={classes.hierarcy}>{codelists}</Box>
+        <Box className={classes.codelists}>{codelists}</Box>
       </Box>
     </>
   );
