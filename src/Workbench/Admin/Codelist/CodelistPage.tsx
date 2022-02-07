@@ -14,7 +14,6 @@ import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
 import Typography from '@mui/material/Typography';
-import { ja } from 'date-fns/locale';
 
 const useStyles = makeStyles({
   codelistsContainer: {
@@ -55,11 +54,10 @@ const useStyles = makeStyles({
       alignSelf: 'center'
     }
   },
-  codelists: {},
+  codelists: { width: 100 },
   list: {
     display: 'flex',
     flexDirection: 'column',
-    alignCo: 'center',
     listStyle: 'none',
     width: 874
   },
@@ -68,27 +66,39 @@ const useStyles = makeStyles({
     flexDirection: 'column',
     padding: '0 !important'
   },
-  code: {},
+  code: {
+    display: 'flex',
+    alignItems: 'center',
+    paddingLeft: 25,
+    height: 55,
+    border: '1px solid #BBBBBB',
+    backgroundColor: theme.palette.dfoWhite.main,
+    borderTop: 'none'
+  },
   codeListItemParent: {
     display: 'flex',
+    flexDirection: 'row',
     alignItems: 'center',
     paddingLeft: 25,
     width: '100%',
     height: 55,
     border: '1px solid #BBBBBB',
-    backgroundColor: theme.palette.dfoWhite.main
+    backgroundColor: theme.palette.dfoWhite.main,
+    paddingRight: 10
   },
   codeListItemChildren: {
-    height: 55,
     width: 850,
-    alignSelf: 'flex-end',
-    borderLeft: '1px solid #BBBBBB',
-    borderRight: '1px solid #BBBBBB',
-    backgroundColor: theme.palette.dfoWhite.main
+    alignSelf: 'flex-end'
   },
-  codeListTitle: {
-    color: 'red',
-    justifySelf: 'center'
+  codeListItemParentTitle: {
+    flex: 1
+  },
+  codeListItemParentDescription: {
+    flex: 1,
+    borderLeft: '1px solid #BBBBBB',
+    paddingLeft: 10,
+    color: '#B5B5B5',
+    fontSize: 1
   }
 });
 
@@ -101,73 +111,8 @@ export default function CodeListPage(): React.ReactElement {
     setCodelists(result);
   };
 
-  console.log(project.codelist);
-
   const classes = useStyles();
   const { t } = useTranslation();
-
-  // We dont get the correct data structure from the backend according to the flow, so here im creating some dummy data.
-  const codeLists = [
-    {
-      id: 1,
-      title: 'Kodeliste 1',
-      codes: [
-        { id: 1, name: 'Kode 1' },
-        { id: 2, name: 'Kode 2' }
-      ],
-      sourceOriginal: '1',
-      sourceRel: null,
-      description: 'Kodelisten over alle kodelister'
-    },
-    {
-      id: 2,
-      title: 'Kodeliste 2',
-      codes: [
-        { id: 1, name: 'Kode 2' },
-        { id: 2, name: 'Kode 3' }
-      ],
-      sourceOriginal: '2',
-      sourceRel: null,
-      description: 'Kodelisten over alle kodelister'
-    },
-    {
-      id: 3,
-      title: 'Kodeliste 3',
-      codes: [
-        { id: 1, name: 'Kode 4' },
-        { id: 2, name: 'Kode 5' }
-      ],
-      sourceOriginal: '3',
-      sourceRel: null,
-      description: 'Kodelisten over alle kodelister'
-    },
-    {
-      id: 4,
-      title: 'Kodeliste 4',
-      codes: [
-        { id: 1, name: 'Kode 6' },
-        { id: 2, name: 'Kode 7' }
-      ],
-      sourceOriginal: '4',
-      sourceRel: null,
-      description: 'Kodelisten over alle kodelister'
-    },
-    {
-      id: 5,
-      title: 'Kodeliste 5',
-      codes: [
-        { id: 1, name: 'Kode 8' },
-        { id: 2, name: 'Kode 9' }
-      ],
-      sourceOriginal: '5',
-      sourceRel: null,
-      description: 'Kodelisten over alle kodelister'
-    }
-  ];
-
-  const sorted = codeLists
-    .slice()
-    .sort((a, b) => (a.title.toLowerCase() < b.title.toLowerCase() ? -1 : 1));
 
   return (
     <>
@@ -191,40 +136,46 @@ export default function CodeListPage(): React.ReactElement {
           </Box>
         </Box>
 
+        <Box className={classes.codelists}>
+          <List className={classes.list} aria-label="codelist">
+            {project.codelist.map(function (codelist, i) {
+              const isLastItem =
+                project.codelist.length - 1 === i ? 'true' : 'false';
+
+              return (
+                <ListItem className={classes.codeListItem} key={i}>
+                  <Box className={classes.codeListItemParent}>
+                    <Box className={classes.codeListItemParentTitle}>
+                      <Typography variant="smallBold">
+                        {codelist.title}
+                      </Typography>
+                    </Box>
+                    <Box className={classes.codeListItemParentDescription}>
+                      <Typography>En kort beskrivelse av kodelisten</Typography>
+                    </Box>
+                  </Box>
+
+                  <List className={classes.codeListItemChildren}>
+                    {Object.keys(codelist.codes).map((item, j) => (
+                      <Box className={classes.code} key={j}>
+                        <Typography variant="smallBold">
+                          {codelist.codes[j].title}
+                        </Typography>
+                      </Box>
+                    ))}
+                  </List>
+                </ListItem>
+              );
+            })}
+          </List>
+        </Box>
+
         <Dialog
           title={t('add new code')}
           isOpen={show}
           handleClose={() => setShow(false)}
           children={<NewCodeListForm handleClose={() => setShow(false)} />}
         />
-
-        <Box className={classes.codelists}>
-          <List className={classes.list} aria-label="codelist">
-            {sorted.map(function (codelist, i) {
-              return (
-                <ListItem className={classes.codeListItem} key={i}>
-                  <Box className={classes.codeListItemParent}>
-                    <Typography>{codelist.title}</Typography>
-                  </Box>
-
-                  <Box className={classes.codeListItemChildren}>
-                    <List className={classes.list} aria-label="codelist">
-                      {codelist.codes.map(function (code, j) {
-                        return (
-                          <ListItem className={classes.code} key={j}>
-                            <ListItemText>
-                              <Typography>{code.name}</Typography>
-                            </ListItemText>
-                          </ListItem>
-                        );
-                      })}
-                    </List>
-                  </Box>
-                </ListItem>
-              );
-            })}
-          </List>
-        </Box>
       </Box>
     </>
   );

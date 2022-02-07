@@ -121,6 +121,12 @@ theme.typography.small = {
   fontSize: '14px'
 };
 
+theme.typography.smallBold = {
+  color: theme.palette.black.main,
+  fontSize: '14px',
+  fontWeight: 700
+};
+
 theme.typography.smallUnderline = {
   color: theme.palette.black.main,
   fontSize: '15px',
