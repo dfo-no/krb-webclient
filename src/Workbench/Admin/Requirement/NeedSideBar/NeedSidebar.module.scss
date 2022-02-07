@@ -11,6 +11,7 @@
 @for $i from 1 through 9 {
   $margin: 10% * $i;
   .level#{$i} {
+    margin-top: -1px;
     margin-left: $margin;
     width: 95% - $margin !important;
   }

@@ -31,13 +31,7 @@ const useStyles = makeStyles({
         color: theme.palette.dfoWhite.main
       }
     },
-    paddingRight: '8px !important'
-  },
-  noTopBorder: {
-    borderTop: '0 transparent'
-  },
-  noBotBorder: {
-    borderBottom: '0 transparent'
+    paddingRight: '4px !important'
   },
   sideBarListItemText: {
     color: theme.palette.primary.main
@@ -90,24 +84,13 @@ export default function PreviewSideBar({
   const levels = (elements: Parentable<INeed | IProduct>[]) => {
     const displayNeeds = Utils.parentable2Levelable(elements);
     return displayNeeds.map((element, index) => {
-      const prevLevel = index !== 0 ? displayNeeds[index - 1].level : 1;
-      const nextLevel =
-        index !== displayNeeds.length - 1 ? displayNeeds[index + 1].level : 1;
-      const topBorder = prevLevel < element.level ? classes.noTopBorder : '';
-      const botBorder =
-        nextLevel <= element.level && nextLevel !== 1
-          ? classes.noBotBorder
-          : '';
       const isSelected = selected && selected.id === element.id;
-
       const cssClass = `level${element.level - 1}`;
 
       return (
         <ListItem
           key={`${index}-${element.id}`}
-          className={`${styles.sidebar__item} ${styles[cssClass]} ${
-            classes.sideBarListItem
-          } ${topBorder} ${botBorder} ${
+          className={`${styles[cssClass]} ${classes.sideBarListItem} ${
             isSelected ? classes.selectedItem : ''
           }`}
           onClick={() => itemClicked(element)}

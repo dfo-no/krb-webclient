@@ -57,13 +57,13 @@ const useStyles = makeStyles({
   itemNameText: {
     display: 'flex',
     alignSelf: 'center',
-    width: '90%'
+    width: '95%'
   },
   collapseIcon: {
     display: 'flex',
     alignSelf: 'center',
+    paddingRight: '4px',
     justifySelf: 'flex-end',
-    paddingRight: '8px',
     marginLeft: 'auto'
   },
   handlerIcon: {
