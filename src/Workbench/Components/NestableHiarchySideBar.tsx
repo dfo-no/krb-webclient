@@ -35,7 +35,7 @@ const useStyles = makeStyles({
   },
   nestableCustom: {
     '& .nestable-item': {
-      marginTop: '40px',
+      marginTop: '16px',
       '& .nestable-item-name': {
         borderTop: `1px solid ${theme.palette.gray500.main}`,
         borderBottom: `1px solid ${theme.palette.gray500.main}`

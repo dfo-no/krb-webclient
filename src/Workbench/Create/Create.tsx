@@ -84,11 +84,13 @@ export default function Create(): React.ReactElement {
       <Box className={classes.needs}>
         <Box className={classes.newButton}>
           <Button variant={'primary'} onClick={() => setNewOpen(true)}>
-            Legg til nytt behov
+            {t('new need button')}
           </Button>
         </Box>
         <Box className={classes.newButton}>
-          // TODO: Move this functionality to new component
+          {
+            // TODO: Move this functionality to new component
+          }
           <Button
             variant={'primary'}
             onClick={() => {
@@ -119,7 +121,7 @@ export default function Create(): React.ReactElement {
         <VariantList selectedRequirement={selectedRequirement} />
       </Box>
       <Dialog
-        title="Nytt behov til kravet"
+        title={t('new need dialog')}
         isOpen={isNewOpen}
         handleClose={() => setNewOpen(false)}
         children={<NewNeedForm handleClose={() => setNewOpen(false)} />}
