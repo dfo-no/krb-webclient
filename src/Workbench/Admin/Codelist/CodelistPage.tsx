@@ -103,6 +103,8 @@ export default function CodeListPage(): React.ReactElement {
   const dispatch = useAppDispatch();
   const [codelists, setCodelists] = useState<IProduct[]>([]);
 
+  console.log(project.codelist);
+
   const [show, setShow] = useState(false);
 
   const searchFieldCallback = (result: IProduct[]) => {
