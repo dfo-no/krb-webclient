@@ -36,19 +36,17 @@ const useStyles = makeStyles({
   nestableCustom: {
     '& .nestable-item': {
       marginTop: '40px',
-      borderTop: `1px solid ${theme.palette.gray500.main}`,
-      borderBottom: `1px solid ${theme.palette.gray500.main}`
+      '& .nestable-item-name': {
+        borderTop: `1px solid ${theme.palette.gray500.main}`,
+        borderBottom: `1px solid ${theme.palette.gray500.main}`
+      }
     },
     '& .nestable-list > .nestable-item > .nestable-list': {
       margin: '0',
-      borderTop: `1px solid ${theme.palette.gray500.main}`,
-      borderBottom: '0px transparent',
       '& .nestable-item': {
         margin: '0',
-        borderTop: '0px transparent',
-        borderBottom: '0px transparent',
-        '&:not(:first-child)': {
-          borderTop: `1px solid ${theme.palette.gray500.main}`
+        '& .nestable-item-name': {
+          marginTop: '-1px'
         }
       }
     },
