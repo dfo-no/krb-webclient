@@ -69,8 +69,7 @@ const useStyles = makeStyles({
 
     [theme.breakpoints.down('header')]: {
       paddingRight: 13,
-      gap: 8,
-      marginTop: 20
+      gap: 20
     }
   },
   icons: {
@@ -152,7 +151,7 @@ export default function Header(): React.ReactElement {
                 </Box>
                 <Box className={classes.viewingProjectTitle}>
                   <Box className={classes.projectData}>
-                    <Typography variant="bigScale">{project.title}</Typography>
+                    <Typography variant="big">{project.title}</Typography>
                   </Box>
                   <Box className={classes.projectIcons}>
                     <Link to={`${baseUrl?.url}/admin`}>

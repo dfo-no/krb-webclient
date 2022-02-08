@@ -1,19 +1,11 @@
-import {
-  Box,
-  List,
-  ListItem,
-  ListItemText,
-  makeStyles
-} from '@material-ui/core';
+import { Box, makeStyles } from '@material-ui/core';
 import React, { useState } from 'react';
-import Nav from 'react-bootstrap/Nav';
 import { Levelable } from '../../models/Levelable';
 import { IProduct } from '../../Nexus/entities/IProduct';
 import { IRequirement } from '../../Nexus/entities/IRequirement';
 import { useAppSelector } from '../../store/hooks';
 import theme from '../../theme';
-import ParentableSideBar from '../Components/ParentableSideBar';
-import GenericRequirementTile from './GenericRequirementTile';
+import PreviewSideBar from './PreviewSideBar';
 import RequirementsPerNeed from './RequirementsPerNeed';
 import VariantList from './VariantList';
 
@@ -26,16 +18,17 @@ const useStyles = makeStyles({
   editorContainer: {
     flex: '1',
     display: 'flex',
-    minHeight: '100vh'
+    minHeight: '100vh',
+    backgroundColor: theme.palette.gray100.main
   },
   product: {
-    width: '20%'
-  },
-  requirement: {
     width: '30%'
   },
+  requirement: {
+    width: '25%'
+  },
   variant: {
-    width: '50%'
+    width: '45%'
   }
 });
 
@@ -50,27 +43,22 @@ export default function Preview(): React.ReactElement {
   const [selectedRequirement, setSelectedRequirement] =
     useState<null | IRequirement>(null);
 
-  const updateSelectedProduct = (item: Levelable<IProduct>) => {
-    setIsRequirement(false);
-    setSelectedRequirement(null);
-    setSelectedProduct(item);
+  const updateSelected = (
+    isRequirementUpdate: boolean,
+    selectedRequirementUpdate: null | IRequirement,
+    selectedProductUpdate: null | Levelable<IProduct>
+  ) => {
+    setIsRequirement(isRequirementUpdate);
+    setSelectedRequirement(selectedRequirementUpdate);
+    setSelectedProduct(selectedProductUpdate);
   };
 
-  const updateRequirementSelected = () => {
-    setIsRequirement(true);
-    setSelectedRequirement(null);
-    setSelectedProduct(null);
-  };
   return (
     <Box className={classes.editorContainer}>
       <Box className={classes.product}>
-        <h6 className={classes.headerText}>Produkt</h6>
-        <GenericRequirementTile
-          updateSelectedFunction={updateRequirementSelected}
-        />
-        <ParentableSideBar
+        <PreviewSideBar
           parentableArray={project.products}
-          updateSelectedFunction={updateSelectedProduct}
+          updateSelectedFunction={updateSelected}
         />
       </Box>
       <Box className={classes.requirement}>
