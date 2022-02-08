@@ -18,11 +18,13 @@ const useStyles = makeStyles({
     width: '100%',
     backgroundColor: 'white',
     '& .MuiInputLabel-root': {
-      color: theme.palette.black.main
+      color: '#BBBBBB',
+      paddingLeft: 10
     },
     '& .MuiInputLabel-root.Mui-focused': {
       color: theme.palette.black.main,
-      textAlign: 'center'
+      textAlign: 'center',
+      paddingLeft: 0
     },
     '& .MuiOutlinedInput-root': {
       '& fieldset': {
@@ -36,14 +38,18 @@ const useStyles = makeStyles({
       }
     }
   },
-  searchFieldIcon: {}
+  searchFieldIcon: {
+    marginBottom: 2,
+    color: '#009FE3',
+    fontSize: '30px !important'
+  }
 });
 
 export default function ProductsSearchBar({
   list,
   callback
 }: IProps): React.ReactElement {
-  const [searchFieldValue, setSearchFieldValue] = useState('');
+  const [searchFieldValue] = useState('');
   let newProductsHierarchy: Parentable<IProduct>[] = [];
 
   const findListItemParent = (listItem: IProduct) => {
@@ -64,33 +70,25 @@ export default function ProductsSearchBar({
     }
   };
 
-  const findListItemTree = (item: IProduct) => {
-    findListItemParent(item);
-  };
-
-  const performSearch = () => {
+  const performSearch = (searchString: string) => {
     newProductsHierarchy = [];
-
     for (const listItem of list) {
       const listItemTitleLowerCase = listItem.title.toLowerCase();
-      const searchFieldValueLowerCase = searchFieldValue.toLowerCase();
+      const searchStringLowerCase = searchString.toLowerCase();
 
-      if (listItemTitleLowerCase.includes(searchFieldValueLowerCase)) {
-        findListItemTree(listItem);
+      if (listItemTitleLowerCase.includes(searchStringLowerCase)) {
+        findListItemParent(listItem);
         callback(newProductsHierarchy);
       }
     }
   };
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchFieldValue(e.target.value);
-  };
-
-  const onKeyUp = (e: React.KeyboardEvent) => {
-    if (e.key === 'Enter') {
-      if (searchFieldValue.length !== 0) {
-        performSearch();
-      }
+    newProductsHierarchy = [];
+    if (e.target.value.length !== 0) {
+      performSearch(e.target.value);
+    } else {
+      callback([]);
     }
   };
 
@@ -104,7 +102,6 @@ export default function ProductsSearchBar({
       className={classes.root}
       autoComplete="off"
       onChange={onChange}
-      onKeyUp={onKeyUp}
       InputProps={{
         endAdornment: (
           <InputAdornment position="end">

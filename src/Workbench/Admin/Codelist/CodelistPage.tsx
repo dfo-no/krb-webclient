@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
-import { IProduct } from '../../../Nexus/entities/IProduct';
-import { useAppDispatch, useAppSelector } from '../../../store/hooks';
+import { useAppSelector } from '../../../store/hooks';
 import CodeListSearchBar from './CodeListSearchBar';
-
+import CodeList from './CodeList';
 import { Box } from '@mui/material/';
 import Button from '@mui/material/Button';
 import { makeStyles } from '@material-ui/core';
@@ -10,10 +9,7 @@ import { useTranslation } from 'react-i18next';
 import theme from '../../../theme';
 import NewCodeListForm from './NewCodeListForm';
 import Dialog from '../../../components/DFODialog/DFODialog';
-import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
-import ListItemText from '@mui/material/ListItemText';
-import Typography from '@mui/material/Typography';
+import { ICodelist } from '../../../Nexus/entities/ICodelist';
 
 const useStyles = makeStyles({
   codelistsContainer: {
@@ -22,44 +18,29 @@ const useStyles = makeStyles({
     marginTop: 40,
     gap: 30,
     margin: 'auto',
-    width: '60vw',
+    width: '55.5vw',
     paddingLeft: 40,
     paddingRight: 40,
     paddingBottom: 30
   },
-  searchFieldButtonContainer: {
-    display: 'flex',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-
-    [theme.breakpoints.down('header')]: {
-      flexDirection: 'column',
-      gap: 20
+  codelists: {
+    width: '100%',
+    alignSelf: 'center',
+    [theme.breakpoints.down('sm')]: {
+      width: 400
     }
   },
-  searchField: {
-    width: '35vw',
-    minWidth: 300,
-    paddingRight: 10,
-    [theme.breakpoints.down('xs')]: {
-      alignSelf: 'center',
-      minWidth: 400
-    }
-  },
-  addCodelistButton: {
-    alignContent: 'flex-end',
-    backgroundColor: 'red',
-
-    [theme.breakpoints.down('md')]: {
-      alignSelf: 'center'
-    }
-  },
-  codelists: { width: 100 },
   list: {
     display: 'flex',
     flexDirection: 'column',
     listStyle: 'none',
-    width: 874
+    '&>:last-child': {
+      '& $codeListItemChildren': {
+        '&>:last-child': {
+          borderBottom: '1px solid #BBBBBB'
+        }
+      }
+    }
   },
   codeListItem: {
     display: 'flex',
@@ -87,8 +68,12 @@ const useStyles = makeStyles({
     paddingRight: 10
   },
   codeListItemChildren: {
-    width: 850,
-    alignSelf: 'flex-end'
+    width: '95%',
+    alignSelf: 'flex-end',
+
+    '&>:last-child': {
+      borderBottom: 'none'
+    }
   },
   codeListItemParentTitle: {
     flex: 1
@@ -99,16 +84,40 @@ const useStyles = makeStyles({
     paddingLeft: 10,
     color: '#B5B5B5',
     fontSize: 1
+  },
+  topContainer: {
+    display: 'flex',
+    flexDirection: 'row',
+    gap: 5,
+    [theme.breakpoints.down('gg')]: {
+      flexDirection: 'column',
+      gap: 15
+    }
+  },
+  searchBarContainer: {
+    flex: 1,
+    minWidth: 300,
+    alignSelf: 'center'
+  },
+  addCodeButtonContainer: {
+    flex: 1,
+    alignSelf: 'center'
+  },
+  addCodeButton: {
+    float: 'right',
+    alignSelf: 'center'
   }
 });
 
 export default function CodeListPage(): React.ReactElement {
   const { project } = useAppSelector((state) => state.project);
-  const [codelists, setCodelists] = useState([]);
+  const [codelist, setCodelist] = useState<ICodelist[]>([]);
   const [show, setShow] = useState(false);
 
-  const searchFieldCallback = (result: any) => {
-    setCodelists(result);
+  const searchFieldCallback = (result: ICodelist[]) => {
+    console.log('RESULT');
+    console.log(result);
+    setCodelist(result);
   };
 
   const classes = useStyles();
@@ -117,15 +126,17 @@ export default function CodeListPage(): React.ReactElement {
   return (
     <>
       <Box className={classes.codelistsContainer}>
-        <Box className={classes.searchFieldButtonContainer}>
-          <Box className={classes.searchField}>
+        <Box className={classes.topContainer}>
+          <Box className={classes.searchBarContainer}>
+            {' '}
             <CodeListSearchBar
-              list={project.products}
+              list={project.codelist}
               callback={searchFieldCallback}
             />
           </Box>
-          <Box className={classes.addCodelistButton}>
+          <Box className={classes.addCodeButtonContainer}>
             <Button
+              className={classes.addCodeButton}
               variant="primary"
               onClick={() => {
                 setShow(true);
@@ -136,46 +147,16 @@ export default function CodeListPage(): React.ReactElement {
           </Box>
         </Box>
 
-        <Box className={classes.codelists}>
-          <List className={classes.list} aria-label="codelist">
-            {project.codelist.map(function (codelist, i) {
-              const isLastItem =
-                project.codelist.length - 1 === i ? 'true' : 'false';
-
-              return (
-                <ListItem className={classes.codeListItem} key={i}>
-                  <Box className={classes.codeListItemParent}>
-                    <Box className={classes.codeListItemParentTitle}>
-                      <Typography variant="smallBold">
-                        {codelist.title}
-                      </Typography>
-                    </Box>
-                    <Box className={classes.codeListItemParentDescription}>
-                      <Typography>En kort beskrivelse av kodelisten</Typography>
-                    </Box>
-                  </Box>
-
-                  <List className={classes.codeListItemChildren}>
-                    {Object.keys(codelist.codes).map((item, j) => (
-                      <Box className={classes.code} key={j}>
-                        <Typography variant="smallBold">
-                          {codelist.codes[j].title}
-                        </Typography>
-                      </Box>
-                    ))}
-                  </List>
-                </ListItem>
-              );
-            })}
-          </List>
-        </Box>
-
         <Dialog
           title={t('add new code')}
           isOpen={show}
           handleClose={() => setShow(false)}
           children={<NewCodeListForm handleClose={() => setShow(false)} />}
         />
+
+        <Box className={classes.codelists}>
+          <CodeList list={codelist.length > 0 ? codelist : project.codelist} />
+        </Box>
       </Box>
     </>
   );

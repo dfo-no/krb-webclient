@@ -25,38 +25,12 @@ const useStyles = makeStyles({
     marginTop: 40,
     gap: 30,
     margin: 'auto',
-    width: '60vw',
+    width: '55.5vw',
     paddingLeft: 40,
     paddingRight: 40,
     paddingBottom: 30
   },
-  searchFieldButtonContainer: {
-    display: 'flex',
-    justifyContent: 'space-between',
-    alignItems: 'center',
 
-    [theme.breakpoints.down('header')]: {
-      flexDirection: 'column',
-      gap: 20
-    }
-  },
-  searchField: {
-    width: '35vw',
-    minWidth: 300,
-    paddingRight: 10,
-    [theme.breakpoints.down('xs')]: {
-      alignSelf: 'center',
-      minWidth: 400
-    }
-  },
-  addButton: {
-    alignContent: 'flex-end',
-    backgroundColor: 'red',
-
-    [theme.breakpoints.down('md')]: {
-      alignSelf: 'center'
-    }
-  },
   addProductFormCard: {
     display: 'flex',
     gap: 10,
@@ -95,7 +69,26 @@ const useStyles = makeStyles({
       alignSelf: 'center',
       width: 400
     }
-  }
+  },
+  topContainer: {
+    display: 'flex',
+    flexDirection: 'row',
+    gap: 5,
+    [theme.breakpoints.down('gg')]: {
+      flexDirection: 'column',
+      gap: 15
+    }
+  },
+  searchBarContainer: {
+    flex: 1,
+    minWidth: 300,
+    alignSelf: 'center'
+  },
+  addCodeButtonContainer: {
+    flex: 1,
+    alignSelf: 'center'
+  },
+  addCodeButton: { float: 'right', alignSelf: 'center' }
 });
 
 export default function ProductPage(): React.ReactElement {
@@ -120,15 +113,17 @@ export default function ProductPage(): React.ReactElement {
   return (
     <>
       <Box className={classes.productsContainer}>
-        <Box className={classes.searchFieldButtonContainer}>
-          <Box className={classes.searchField}>
+        <Box className={classes.topContainer}>
+          <Box className={classes.searchBarContainer}>
+            {' '}
             <ProductsSearchBar
               list={project.products}
               callback={searchFieldCallback}
             />
           </Box>
-          <Box className={classes.addButton}>
+          <Box className={classes.addCodeButtonContainer}>
             <Button
+              className={classes.addCodeButton}
               variant="primary"
               onClick={() => {
                 setShow(true);

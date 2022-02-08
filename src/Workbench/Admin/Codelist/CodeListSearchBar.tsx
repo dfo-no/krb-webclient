@@ -2,15 +2,13 @@ import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core';
 import theme from '../../../theme';
 import { TextField, InputAdornment } from '@mui/material/';
-import Utils from '../../../common/Utils';
-import { IProduct } from '../../../Nexus/entities/IProduct';
-import { Parentable } from '../../../models/Parentable';
+import { ICodelist } from '../../../Nexus/entities/ICodelist';
 import SearchIcon from '@mui/icons-material/Search';
 import { useTranslation } from 'react-i18next';
 
 interface IProps {
-  list: Parentable<IProduct>[];
-  callback: (result: IProduct[]) => void;
+  list: ICodelist[];
+  callback: (result: ICodelist[]) => void;
 }
 
 const useStyles = makeStyles({
@@ -18,11 +16,13 @@ const useStyles = makeStyles({
     width: '100%',
     backgroundColor: 'white',
     '& .MuiInputLabel-root': {
-      color: theme.palette.black.main
+      color: '#BBBBBB',
+      paddingLeft: 10
     },
     '& .MuiInputLabel-root.Mui-focused': {
       color: theme.palette.black.main,
-      textAlign: 'center'
+      textAlign: 'center',
+      paddingLeft: 0
     },
     '& .MuiOutlinedInput-root': {
       '& fieldset': {
@@ -37,8 +37,9 @@ const useStyles = makeStyles({
     }
   },
   searchFieldIcon: {
-    display: 'flex',
-    alignSelf: 'center'
+    marginBottom: 2,
+    color: '#009FE3',
+    fontSize: '30px !important'
   }
 });
 
@@ -46,16 +47,43 @@ export default function CodeListSearchBar({
   list,
   callback
 }: IProps): React.ReactElement {
-  const [searchFieldValue, setSearchFieldValue] = useState('');
+  let newCodeListHierarchy: ICodelist[] = [];
 
-  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchFieldValue(e.target.value);
+  const performSearch = (searchString: string) => {
+    for (let i = 0; i < list.length; i++) {
+      if (list[i].title.toLowerCase().includes(searchString.toLowerCase())) {
+        newCodeListHierarchy.push(list[i]);
+        callback(newCodeListHierarchy);
+      }
+
+      for (let j = 0; j < list[i].codes.length; j++) {
+        if (
+          list[i].codes[j].title
+            .toLowerCase()
+            .includes(searchString.toLowerCase())
+        ) {
+          const parent = {
+            description: list[i].description,
+            codes: [list[i].codes[j]],
+            id: list[i].id,
+            title: list[i].title,
+            sourceOriginal: list[i].sourceOriginal,
+            sourceRel: list[i].sourceOriginal,
+            type: list[i].type
+          };
+          newCodeListHierarchy.push(parent);
+          callback(newCodeListHierarchy);
+        }
+      }
+    }
   };
 
-  const onKeyUp = (e: React.KeyboardEvent) => {
-    if (e.key === 'Enter') {
-      if (searchFieldValue.length !== 0) {
-      }
+  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    newCodeListHierarchy = [];
+    if (e.target.value.length !== 0) {
+      performSearch(e.target.value);
+    } else {
+      callback([]);
     }
   };
 
@@ -69,7 +97,6 @@ export default function CodeListSearchBar({
       className={classes.root}
       autoComplete="off"
       onChange={onChange}
-      onKeyUp={onKeyUp}
       InputProps={{
         endAdornment: (
           <InputAdornment position="end">

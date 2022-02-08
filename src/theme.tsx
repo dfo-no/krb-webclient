@@ -12,6 +12,7 @@ const theme = createTheme({
       sm: 600,
       md: 900,
       header: 906,
+      gg: 956,
       lg: 1200,
       xl: 1536
     }
@@ -124,7 +125,8 @@ theme.typography.small = {
 theme.typography.smallBold = {
   color: theme.palette.black.main,
   fontSize: '14px',
-  fontWeight: 700
+  fontWeight: 700,
+  whiteSpace: 'nowrap'
 };
 
 theme.typography.smallUnderline = {
