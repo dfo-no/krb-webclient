@@ -17,6 +17,8 @@ import { useTranslation } from 'react-i18next';
 import theme from '../../../theme';
 import NewProductForm from './NewProductForm';
 import Dialog from '../../../components/DFODialog/DFODialog';
+import Utils from '../../../common/Utils';
+import DFOSearchBar from '../../../components/DFOSearchBar/DFOSearchBar';
 
 const useStyles = makeStyles({
   productsContainer: {
@@ -107,6 +109,11 @@ export default function ProductPage(): React.ReactElement {
     setProducts(result);
   };
 
+  const productSearch = (searchString: string, list: IProduct[]) => {
+    console.log(searchString);
+    console.log(list);
+  };
+
   const classes = useStyles();
   const { t } = useTranslation();
 
@@ -116,9 +123,10 @@ export default function ProductPage(): React.ReactElement {
         <Box className={classes.topContainer}>
           <Box className={classes.searchBarContainer}>
             {' '}
-            <ProductsSearchBar
-              list={project.products}
+            <DFOSearchBar
+              list={project.codelist}
               callback={searchFieldCallback}
+              searchFunction={productSearch}
             />
           </Box>
           <Box className={classes.addCodeButtonContainer}>

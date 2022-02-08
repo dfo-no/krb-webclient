@@ -52,8 +52,8 @@ export default function CodeListSearchBar({
   const performSearch = (searchString: string) => {
     for (let i = 0; i < list.length; i++) {
       if (list[i].title.toLowerCase().includes(searchString.toLowerCase())) {
-        newCodeListHierarchy.push(list[i]);
         callback(newCodeListHierarchy);
+        return list[i];
       }
 
       for (let j = 0; j < list[i].codes.length; j++) {
@@ -71,8 +71,8 @@ export default function CodeListSearchBar({
             sourceRel: list[i].sourceOriginal,
             type: list[i].type
           };
-          newCodeListHierarchy.push(parent);
           callback(newCodeListHierarchy);
+          return list[i];
         }
       }
     }

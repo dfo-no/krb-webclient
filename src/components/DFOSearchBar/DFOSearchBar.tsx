@@ -1,17 +1,11 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { makeStyles } from '@material-ui/core';
-import theme from '../../../theme';
+import theme from '../../theme';
 import { TextField, InputAdornment } from '@mui/material/';
-import Utils from '../../../common/Utils';
-import { IProduct } from '../../../Nexus/entities/IProduct';
-import { Parentable } from '../../../models/Parentable';
 import SearchIcon from '@mui/icons-material/Search';
 import { useTranslation } from 'react-i18next';
-
-interface IProps {
-  list: Parentable<IProduct>[];
-  callback: (result: IProduct[]) => void;
-}
+import { DFOSearchBarProps } from './DFOSearchBarProps';
+import Utils from '../../common/Utils';
 
 const useStyles = makeStyles({
   root: {
@@ -45,52 +39,14 @@ const useStyles = makeStyles({
   }
 });
 
-export default function ProductsSearchBar({
+export default function DFOSearchBar({
   list,
-  callback
-}: IProps): React.ReactElement {
-  let newProductsHierarchy: Parentable<IProduct>[] = [];
-
-  const performSearch = (searchString: string) => {
-    newProductsHierarchy = [];
-
-    const findListItemParent = (listItem: IProduct) => {
-      newProductsHierarchy.push(listItem);
-
-      if (listItem.parent === '') {
-        return;
-      }
-
-      const parent: Parentable<IProduct> | undefined = list.find(
-        (product: IProduct) => product.id === listItem.parent
-      );
-
-      console.log(parent);
-
-      if (parent) {
-        if (parent.parent !== '') {
-          findListItemParent(parent);
-        } else {
-          newProductsHierarchy.push(parent);
-        }
-      }
-    };
-
-    for (const listItem of list) {
-      const listItemTitleLowerCase = listItem.title.toLowerCase();
-      const searchStringLowerCase = searchString.toLowerCase();
-
-      if (listItemTitleLowerCase.includes(searchStringLowerCase)) {
-        findListItemParent(listItem);
-        callback(newProductsHierarchy);
-      }
-    }
-  };
-
+  callback,
+  searchFunction
+}: DFOSearchBarProps): React.ReactElement {
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    newProductsHierarchy = [];
     if (e.target.value.length !== 0) {
-      performSearch(e.target.value);
+      callback(searchFunction(e.target.value, list));
     } else {
       callback([]);
     }
@@ -102,7 +58,7 @@ export default function ProductsSearchBar({
   return (
     <TextField
       variant="outlined"
-      label={t('search for product')}
+      label={t('search for codelist')}
       className={classes.root}
       autoComplete="off"
       onChange={onChange}

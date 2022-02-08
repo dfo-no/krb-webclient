@@ -10,6 +10,7 @@ import theme from '../../../theme';
 import NewCodeListForm from './NewCodeListForm';
 import Dialog from '../../../components/DFODialog/DFODialog';
 import { ICodelist } from '../../../Nexus/entities/ICodelist';
+import DFOSearchBar from '../../../components/DFOSearchBar/DFOSearchBar';
 
 const useStyles = makeStyles({
   codelistsContainer: {
@@ -115,13 +116,41 @@ export default function CodeListPage(): React.ReactElement {
   const [show, setShow] = useState(false);
 
   const searchFieldCallback = (result: ICodelist[]) => {
-    console.log('RESULT');
-    console.log(result);
     setCodelist(result);
   };
 
   const classes = useStyles();
   const { t } = useTranslation();
+
+  const codelistSearch = (searchString: string, list: ICodelist[]) => {
+    const searchResultCodelist: ICodelist[] = [];
+
+    for (let i = 0; i < list.length; i++) {
+      if (list[i].title.toLowerCase().includes(searchString.toLowerCase())) {
+        searchResultCodelist.push(list[i]);
+      }
+
+      for (let j = 0; j < list[i].codes.length; j++) {
+        if (
+          list[i].codes[j].title
+            .toLowerCase()
+            .includes(searchString.toLowerCase())
+        ) {
+          const parent = {
+            description: list[i].description,
+            codes: [list[i].codes[j]],
+            id: list[i].id,
+            title: list[i].title,
+            sourceOriginal: list[i].sourceOriginal,
+            sourceRel: list[i].sourceOriginal,
+            type: list[i].type
+          };
+          searchResultCodelist.push(parent);
+        }
+      }
+    }
+    return searchResultCodelist;
+  };
 
   return (
     <>
@@ -129,9 +158,10 @@ export default function CodeListPage(): React.ReactElement {
         <Box className={classes.topContainer}>
           <Box className={classes.searchBarContainer}>
             {' '}
-            <CodeListSearchBar
+            <DFOSearchBar
               list={project.codelist}
               callback={searchFieldCallback}
+              searchFunction={codelistSearch}
             />
           </Box>
           <Box className={classes.addCodeButtonContainer}>
@@ -147,16 +177,16 @@ export default function CodeListPage(): React.ReactElement {
           </Box>
         </Box>
 
+        <Box className={classes.codelists}>
+          <CodeList list={codelist.length > 0 ? codelist : project.codelist} />
+        </Box>
+
         <Dialog
           title={t('add new code')}
           isOpen={show}
           handleClose={() => setShow(false)}
           children={<NewCodeListForm handleClose={() => setShow(false)} />}
         />
-
-        <Box className={classes.codelists}>
-          <CodeList list={codelist.length > 0 ? codelist : project.codelist} />
-        </Box>
       </Box>
     </>
   );
