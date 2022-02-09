@@ -27,10 +27,10 @@ const useStyles = makeStyles({
     display: 'flex',
     flexDirection: 'row',
     backgroundColor: '#80ADC8',
+    height: '100%',
 
     [theme.breakpoints.down('sm')]: {
-      flexWrap: 'wrap',
-      height: '100% !important'
+      flexWrap: 'wrap'
     }
   }
 });

@@ -45,6 +45,7 @@ const useStyles = makeStyles({
   codelists: {
     width: '100%',
     alignSelf: 'center',
+    height: '100vh',
     [theme.breakpoints.down('sm')]: {
       width: 400
     }

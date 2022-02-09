@@ -21,17 +21,6 @@ const useStyles = makeStyles({
   },
   editorContainer: {
     flex: '1'
-  },
-  test: {
-    display: 'flex',
-    gap: 10,
-    height: '100%',
-
-    [theme.breakpoints.down('mddd')]: {
-      height: '100vh',
-      flexDirection: 'column',
-      gap: 15
-    }
   }
 });
 export default function AdminGuard(): React.ReactElement {
