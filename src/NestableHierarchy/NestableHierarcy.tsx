@@ -1,6 +1,5 @@
 import MoreVertIcon from '@mui/icons-material/MoreVert';
-import React, { useState } from 'react';
-import Accordion from 'react-bootstrap/Accordion';
+import React from 'react';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 import Nestable, { Item } from 'react-nestable';
@@ -8,7 +7,10 @@ import 'react-nestable/dist/styles/index.css';
 import Utils from '../common/Utils';
 import { Parentable } from '../models/Parentable';
 import { IBaseModel } from '../Nexus/entities/IBaseModel';
-import { AccordionContext } from './AccordionContext';
+import {
+  DFOAccordionElement,
+  DFOAccordionProvider
+} from '../components/DFOAccordion/DFOAccordion';
 
 interface IProps<T extends IBaseModel> {
   dispatchfunc: (itemlist: Parentable<T>[]) => void;
@@ -23,8 +25,6 @@ const NestableHierarcy = <T extends IBaseModel>({
   component,
   depth
 }: IProps<T>): React.ReactElement => {
-  const [activeKey, setActiveKey] = useState('');
-
   const convertTreeToList = (tree: Item, key: string, collection: Item[]) => {
     if ((!tree[key] || tree[key].length === 0) && collection.includes(tree)) {
       const copiedTree = { ...tree };
@@ -60,14 +60,6 @@ const NestableHierarcy = <T extends IBaseModel>({
 
   const hierarchyList = Utils.parentable2Nestable(inputlist);
 
-  const onOpenClose = (e: string | string[] | null | undefined) => {
-    if (typeof e === 'string') {
-      setActiveKey(e);
-    } else {
-      setActiveKey('');
-    }
-  };
-
   const onChange = (items: {
     items: Item[];
     dragItem: Item;
@@ -85,17 +77,17 @@ const NestableHierarcy = <T extends IBaseModel>({
 
   const renderItem = (item: Item, handler: React.ReactNode) => {
     return (
-      <Accordion.Item eventKey={item.id}>
-        <h2 className="accordion-header">
-          <Accordion.Button>
-            <Row>
-              <Col sm={8}>{Utils.capitalizeFirstLetter(item.title)}</Col>
-              <Col sm={1}>{handler}</Col>
-            </Row>
-          </Accordion.Button>
-        </h2>
-        <Accordion.Collapse eventKey={item.id}>
-          <Accordion.Body>
+      <DFOAccordionElement
+        key={item.id}
+        eventKey={item.id}
+        header={
+          <Row>
+            <Col sm={8}>{Utils.capitalizeFirstLetter(item.title)}</Col>
+            <Col sm={1}>{handler}</Col>
+          </Row>
+        }
+        body={
+          <div>
             {item.sourceRel === null &&
               React.cloneElement(component, { element: item })}
             {item.sourceRel !== null && (
@@ -104,15 +96,15 @@ const NestableHierarcy = <T extends IBaseModel>({
                 <p>This item is inherited and readonly </p>
               </>
             )}
-          </Accordion.Body>
-        </Accordion.Collapse>
-      </Accordion.Item>
+          </div>
+        }
+      />
     );
   };
 
   return (
-    <AccordionContext.Provider value={{ onOpenClose }}>
-      <Accordion activeKey={activeKey} onSelect={onOpenClose}>
+    <DFOAccordionProvider
+      body={
         <Nestable
           items={hierarchyList}
           renderItem={({ item, handler }) => renderItem(item, handler)}
@@ -120,8 +112,8 @@ const NestableHierarcy = <T extends IBaseModel>({
           maxDepth={depth}
           handler={<MoreVertIcon />}
         />
-      </Accordion>
-    </AccordionContext.Provider>
+      }
+    />
   );
 };
 
