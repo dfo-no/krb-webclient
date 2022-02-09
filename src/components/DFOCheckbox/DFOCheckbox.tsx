@@ -2,36 +2,34 @@ import Checkbox from '@mui/material/Checkbox';
 import CheckBoxIcon from '@mui/icons-material/CheckBox';
 import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
 import { Box, Typography } from '@mui/material/';
-import { createStyles, makeStyles } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core';
 import { DFOCheckboxProps } from './DFOCheckboxProps';
 import theme from '../../theme';
 
-const useStyles = makeStyles(() =>
-  createStyles({
-    root: {
-      padding: 0
-    },
-    dfoCheckboxContainer: {
-      display: 'flex',
-      alignItems: 'center'
-    },
-    dfoCheckbox: {
-      position: 'relative',
-      paddingRight: '6px'
-    },
-    dfoCheckboxIcon: {
-      width: '40px !important',
-      height: '40px !important',
+const useStyles = makeStyles({
+  root: {
+    padding: 0,
+    '& .MuiSvgIcon-root': {
+      width: '40px',
+      height: '40px',
       color: theme.palette.dfoDarkBlue.main
-    },
-    hideLabel: {
-      display: 'none'
-    },
-    showLabel: {
-      display: 'inline-flex'
     }
-  })
-);
+  },
+  dfoCheckboxContainer: {
+    display: 'flex',
+    alignItems: 'center'
+  },
+  dfoCheckbox: {
+    position: 'relative',
+    paddingRight: '6px'
+  },
+  hideLabel: {
+    display: 'none'
+  },
+  showLabel: {
+    display: 'inline-flex'
+  }
+});
 
 export const DFOCheckbox = ({
   element,
@@ -46,11 +44,10 @@ export const DFOCheckbox = ({
       <Box className={classes.dfoCheckbox}>
         <Checkbox
           {...element}
+          className={classes.root}
           defaultChecked={defaultValue}
-          icon={
-            <CheckBoxOutlineBlankIcon className={classes.dfoCheckboxIcon} />
-          }
-          checkedIcon={<CheckBoxIcon className={classes.dfoCheckboxIcon} />}
+          icon={<CheckBoxOutlineBlankIcon />}
+          checkedIcon={<CheckBoxIcon />}
         />
       </Box>
       <Box className={`${label ? classes.showLabel : classes.hideLabel}`}>
