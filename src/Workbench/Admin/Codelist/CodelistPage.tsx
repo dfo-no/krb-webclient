@@ -18,8 +18,7 @@ const useStyles = makeStyles({
     gap: 30,
     margin: 'auto',
     width: '55.5vw',
-    paddingBottom: 40,
-    overflow: 'hidden'
+    paddingBottom: 40
   },
   topContainer: {
     display: 'flex',
