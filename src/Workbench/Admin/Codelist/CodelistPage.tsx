@@ -1,16 +1,14 @@
 import React, { useState } from 'react';
 import { useAppSelector } from '../../../store/hooks';
-import CodeListSearchBar from './CodeListSearchBar';
-import CodeList from './CodeList';
-import { Box } from '@mui/material/';
-import Button from '@mui/material/Button';
-import { makeStyles } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
 import theme from '../../../theme';
-import NewCodeListForm from './NewCodeListForm';
 import Dialog from '../../../components/DFODialog/DFODialog';
-import { ICodelist } from '../../../Nexus/entities/ICodelist';
 import DFOSearchBar from '../../../components/DFOSearchBar/DFOSearchBar';
+import CodeList from './CodeList';
+import { ICodelist } from '../../../Nexus/entities/ICodelist';
+import NewCodeListForm from './NewCodeListForm';
+import { Box, Button } from '@mui/material/';
+import { makeStyles } from '@material-ui/core';
 
 const useStyles = makeStyles({
   codelistsContainer: {
@@ -20,77 +18,14 @@ const useStyles = makeStyles({
     gap: 30,
     margin: 'auto',
     width: '55.5vw',
-    paddingLeft: 40,
-    paddingRight: 40,
-    paddingBottom: 30
-  },
-  codelists: {
-    width: '100%',
-    alignSelf: 'center',
-    [theme.breakpoints.down('sm')]: {
-      width: 400
-    }
-  },
-  list: {
-    display: 'flex',
-    flexDirection: 'column',
-    listStyle: 'none',
-    '&>:last-child': {
-      '& $codeListItemChildren': {
-        '&>:last-child': {
-          borderBottom: '1px solid #BBBBBB'
-        }
-      }
-    }
-  },
-  codeListItem: {
-    display: 'flex',
-    flexDirection: 'column',
-    padding: '0 !important'
-  },
-  code: {
-    display: 'flex',
-    alignItems: 'center',
-    paddingLeft: 25,
-    height: 55,
-    border: '1px solid #BBBBBB',
-    backgroundColor: theme.palette.dfoWhite.main,
-    borderTop: 'none'
-  },
-  codeListItemParent: {
-    display: 'flex',
-    flexDirection: 'row',
-    alignItems: 'center',
-    paddingLeft: 25,
-    width: '100%',
-    height: 55,
-    border: '1px solid #BBBBBB',
-    backgroundColor: theme.palette.dfoWhite.main,
-    paddingRight: 10
-  },
-  codeListItemChildren: {
-    width: '95%',
-    alignSelf: 'flex-end',
-
-    '&>:last-child': {
-      borderBottom: 'none'
-    }
-  },
-  codeListItemParentTitle: {
-    flex: 1
-  },
-  codeListItemParentDescription: {
-    flex: 1,
-    borderLeft: '1px solid #BBBBBB',
-    paddingLeft: 10,
-    color: '#B5B5B5',
-    fontSize: 1
+    paddingBottom: 40,
+    overflow: 'hidden'
   },
   topContainer: {
     display: 'flex',
     flexDirection: 'row',
     gap: 5,
-    [theme.breakpoints.down('gg')]: {
+    [theme.breakpoints.down('mddd')]: {
       flexDirection: 'column',
       gap: 15
     }
@@ -107,11 +42,19 @@ const useStyles = makeStyles({
   addCodeButton: {
     float: 'right',
     alignSelf: 'center'
+  },
+  codelists: {
+    width: '100%',
+    alignSelf: 'center',
+    [theme.breakpoints.down('sm')]: {
+      width: 400
+    }
   }
 });
 
 export default function CodeListPage(): React.ReactElement {
   const { project } = useAppSelector((state) => state.project);
+
   const [codelist, setCodelist] = useState<ICodelist[]>([]);
   const [show, setShow] = useState(false);
 
@@ -136,7 +79,7 @@ export default function CodeListPage(): React.ReactElement {
             .toLowerCase()
             .includes(searchString.toLowerCase())
         ) {
-          const parent = {
+          searchResultCodelist.push({
             description: list[i].description,
             codes: [list[i].codes[j]],
             id: list[i].id,
@@ -144,8 +87,7 @@ export default function CodeListPage(): React.ReactElement {
             sourceOriginal: list[i].sourceOriginal,
             sourceRel: list[i].sourceOriginal,
             type: list[i].type
-          };
-          searchResultCodelist.push(parent);
+          });
         }
       }
     }

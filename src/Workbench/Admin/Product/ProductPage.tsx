@@ -8,16 +8,12 @@ import {
   updateProductList
 } from '../../../store/reducers/project-reducer';
 import EditProductForm from './EditProductForm';
-import ProductsSearchBar from './ProductSearchBar';
-
-import { Box } from '@mui/material/';
-import Button from '@mui/material/Button';
+import { Box, Button } from '@mui/material/';
 import { makeStyles } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
 import theme from '../../../theme';
 import NewProductForm from './NewProductForm';
 import Dialog from '../../../components/DFODialog/DFODialog';
-import Utils from '../../../common/Utils';
 import DFOSearchBar from '../../../components/DFOSearchBar/DFOSearchBar';
 
 const useStyles = makeStyles({
@@ -28,55 +24,13 @@ const useStyles = makeStyles({
     gap: 30,
     margin: 'auto',
     width: '55.5vw',
-    paddingLeft: 40,
-    paddingRight: 40,
-    paddingBottom: 30
-  },
-
-  addProductFormCard: {
-    display: 'flex',
-    gap: 10,
-    flexDirection: 'column',
-    justifyContent: 'center',
-    paddingLeft: 20,
-    paddingRight: 20,
-    paddingTop: 30,
-    paddingBottom: 30,
-    width: '34.5vw',
-    minWidth: 300,
-
-    [theme.breakpoints.down('md')]: {
-      alignSelf: 'center'
-    }
-  },
-  cardComponents: {
-    display: 'flex',
-    flexDirection: 'column',
-    gap: 10
-  },
-  cardTextFields: {
-    display: 'flex',
-    margin: 'auto',
-    flexDirection: 'column',
-    gap: 10,
-    width: '20vw'
-  },
-  cardButtons: {
-    display: 'flex',
-    justifyContent: 'center',
-    gap: 10
-  },
-  hierarcy: {
-    [theme.breakpoints.down('sm')]: {
-      alignSelf: 'center',
-      width: 400
-    }
+    paddingBottom: 40
   },
   topContainer: {
     display: 'flex',
     flexDirection: 'row',
     gap: 5,
-    [theme.breakpoints.down('gg')]: {
+    [theme.breakpoints.down('mddd')]: {
       flexDirection: 'column',
       gap: 15
     }
@@ -90,14 +44,23 @@ const useStyles = makeStyles({
     flex: 1,
     alignSelf: 'center'
   },
-  addCodeButton: { float: 'right', alignSelf: 'center' }
+  addCodeButton: {
+    float: 'right',
+    alignSelf: 'center'
+  },
+  products: {
+    [theme.breakpoints.down('sm')]: {
+      alignSelf: 'center',
+      width: 400
+    }
+  }
 });
 
 export default function ProductPage(): React.ReactElement {
   const { project } = useAppSelector((state) => state.project);
   const dispatch = useAppDispatch();
-  const [products, setProducts] = useState<IProduct[]>([]);
 
+  const [products, setProducts] = useState<IProduct[]>([]);
   const [show, setShow] = useState(false);
 
   const newProductList = (items: Parentable<IProduct>[]) => {
@@ -109,13 +72,42 @@ export default function ProductPage(): React.ReactElement {
     setProducts(result);
   };
 
-  const productSearch = (searchString: string, list: IProduct[]) => {
-    console.log(searchString);
-    console.log(list);
-  };
-
   const classes = useStyles();
   const { t } = useTranslation();
+
+  const productsSearch = (searchString: string, list: IProduct[]) => {
+    const searchResultProducts: Parentable<IProduct>[] = [];
+
+    const findListItemParent = (listItem: IProduct) => {
+      if (listItem.parent === '') {
+        return;
+      }
+
+      const parent: Parentable<IProduct> | undefined = list.find(
+        (product: IProduct) => product.id === listItem.parent
+      );
+
+      if (parent?.parent !== '') {
+        if (parent) {
+          findListItemParent(parent);
+        }
+      } else {
+        searchResultProducts.push(parent);
+      }
+    };
+
+    for (const listItem of list) {
+      const listItemTitleLowerCase = listItem.title.toLowerCase();
+      const searchStringLowerCase = searchString.toLowerCase();
+
+      if (listItemTitleLowerCase.includes(searchStringLowerCase)) {
+        findListItemParent(listItem);
+        searchResultProducts.push(listItem);
+      }
+    }
+
+    return searchResultProducts;
+  };
 
   return (
     <>
@@ -124,9 +116,9 @@ export default function ProductPage(): React.ReactElement {
           <Box className={classes.searchBarContainer}>
             {' '}
             <DFOSearchBar
-              list={project.codelist}
+              list={project.products}
               callback={searchFieldCallback}
-              searchFunction={productSearch}
+              searchFunction={productsSearch}
             />
           </Box>
           <Box className={classes.addCodeButtonContainer}>
@@ -149,7 +141,7 @@ export default function ProductPage(): React.ReactElement {
           children={<NewProductForm handleClose={() => setShow(false)} />}
         />
 
-        <Box className={classes.hierarcy}>
+        <Box className={classes.products}>
           <NestableHierarcy
             dispatchfunc={(items: Parentable<IProduct>[]) =>
               newProductList(items)

@@ -11,8 +11,8 @@ const theme = createTheme({
       xs: 0,
       sm: 600,
       md: 900,
-      header: 906,
-      gg: 956,
+      mdd: 906,
+      mddd: 956,
       lg: 1200,
       xl: 1536
     }
@@ -69,6 +69,9 @@ const theme = createTheme({
     gray700: {
       main: dfoThemeScss.gray700
     },
+    gray800: {
+      main: dfoThemeScss.gray800
+    },
     gray900: {
       main: dfoThemeScss.gray900
     },
@@ -113,6 +116,9 @@ const theme = createTheme({
     },
     success: {
       main: dfoThemeScss.success
+    },
+    silver: {
+      main: dfoThemeScss.silver
     }
   }
 });
@@ -158,7 +164,7 @@ theme.typography.bigScale = {
   color: theme.palette.black.main,
   fontSize: '28px',
   fontWeight: 700,
-  [theme.breakpoints.down('header')]: {
+  [theme.breakpoints.down('mdd')]: {
     fontSize: '20px'
   }
 };

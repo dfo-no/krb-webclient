@@ -13,7 +13,6 @@ import { IVariant } from '../../../Nexus/entities/IVariant';
 import { useAppDispatch, useAppSelector } from '../../../store/hooks';
 import { selectNeed } from '../../../store/reducers/selectedNeed-reducer';
 import { selectRequirement } from '../../../store/reducers/selectedRequirement-reducer';
-import styles from './ProductPreview.module.scss';
 
 export default function ProductPreview(): React.ReactElement {
   const dispatch = useAppDispatch();
@@ -100,7 +99,7 @@ export default function ProductPreview(): React.ReactElement {
       )
         requirements = associatedRequirements[element.id];
       return (
-        <div className={` ${styles[cssClass]} pt-0`}>
+        <div>
           <Row>
             <SubdirectoryArrowRightIcon className="ml-2 mt-1 mr-2" />
             <p>{element.title}</p>

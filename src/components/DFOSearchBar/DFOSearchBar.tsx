@@ -1,18 +1,17 @@
 import React from 'react';
-import { makeStyles } from '@material-ui/core';
-import theme from '../../theme';
 import { TextField, InputAdornment } from '@mui/material/';
 import SearchIcon from '@mui/icons-material/Search';
+import { makeStyles } from '@material-ui/core';
+import theme from '../../theme';
 import { useTranslation } from 'react-i18next';
 import { DFOSearchBarProps } from './DFOSearchBarProps';
-import Utils from '../../common/Utils';
 
 const useStyles = makeStyles({
   root: {
     width: '100%',
-    backgroundColor: 'white',
+    backgroundColor: theme.palette.dfoWhite.main,
     '& .MuiInputLabel-root': {
-      color: '#BBBBBB',
+      color: theme.palette.silver.main,
       paddingLeft: 10
     },
     '& .MuiInputLabel-root.Mui-focused': {
@@ -34,7 +33,7 @@ const useStyles = makeStyles({
   },
   searchFieldIcon: {
     marginBottom: 2,
-    color: '#009FE3',
+    color: theme.palette.purple.main,
     fontSize: '30px !important'
   }
 });
