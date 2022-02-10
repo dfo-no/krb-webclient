@@ -72,35 +72,28 @@ const useStyles = makeStyles({
       gap: 20
     }
   },
-  icons: {
-    display: 'flex',
-    alignSelf: 'center',
-    justifySelf: 'flex-end'
-  },
-  settingsIcon: {
-    cursor: 'pointer',
-    '&:hover': {
-      color: theme.palette.dfoLightBlue.main
-    }
-  },
   icon: {
-    cursor: 'pointer',
-    color: theme.palette.black.main,
-    width: '24px !important',
-    height: '40px !important',
-    paddingBottom: '8px',
-    paddingTop: '8px',
-    '&:hover': {
-      color: theme.palette.dfoLightBlue.main
+    '& .MuiSvgIcon-root': {
+      cursor: 'pointer',
+      color: theme.palette.black.main,
+      width: '24px',
+      height: '40px',
+      paddingBottom: '8px',
+      paddingTop: '8px',
+      '&:hover': {
+        color: theme.palette.dfoLightBlue.main
+      }
     }
   },
   selectedIcon: {
-    color: theme.palette.dfoBlue.main,
-    width: '24px !important',
-    height: '40px !important',
-    paddingTop: '8px',
-    paddingBottom: '4px',
-    borderBottom: '4px solid'
+    '& .MuiSvgIcon-root': {
+      color: theme.palette.dfoBlue.main,
+      width: '24px',
+      height: '40px',
+      paddingTop: '8px',
+      paddingBottom: '4px',
+      borderBottom: '4px solid'
+    }
   },
   projectTitleVersion: {
     display: 'flex',
@@ -154,28 +147,29 @@ export default function Header(): React.ReactElement {
                     <Typography variant="big">{project.title}</Typography>
                   </Box>
                   <Box className={classes.projectIcons}>
-                    <Link to={`${baseUrl?.url}/admin`}>
-                      <SettingsOutlinedIcon
-                        className={
-                          isLocationAdmin ? classes.selectedIcon : classes.icon
-                        }
-                      />
+                    <Link
+                      to={`${baseUrl?.url}/admin`}
+                      className={
+                        isLocationAdmin ? classes.selectedIcon : classes.icon
+                      }
+                    >
+                      <SettingsOutlinedIcon />
                     </Link>
-                    <Link to={`${baseUrl?.url}/create`}>
-                      <ConstructionOutlinedIcon
-                        className={
-                          isLocationCreate ? classes.selectedIcon : classes.icon
-                        }
-                      />
+                    <Link
+                      to={`${baseUrl?.url}/create`}
+                      className={
+                        isLocationCreate ? classes.selectedIcon : classes.icon
+                      }
+                    >
+                      <ConstructionOutlinedIcon />
                     </Link>
-                    <Link to={`${baseUrl?.url}/preview`}>
-                      <VisibilityOutlinedIcon
-                        className={
-                          isLocationPreview
-                            ? classes.selectedIcon
-                            : classes.icon
-                        }
-                      />
+                    <Link
+                      to={`${baseUrl?.url}/preview`}
+                      className={
+                        isLocationPreview ? classes.selectedIcon : classes.icon
+                      }
+                    >
+                      <VisibilityOutlinedIcon />
                     </Link>
                   </Box>
                 </Box>
