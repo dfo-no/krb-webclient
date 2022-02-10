@@ -41,7 +41,8 @@ const useStyles = makeStyles({
 export default function DFOSearchBar({
   list,
   callback,
-  searchFunction
+  searchFunction,
+  label
 }: DFOSearchBarProps): React.ReactElement {
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.value.length !== 0) {
@@ -57,7 +58,7 @@ export default function DFOSearchBar({
   return (
     <TextField
       variant="outlined"
-      label={t('search for codelist')}
+      label={label}
       className={classes.root}
       autoComplete="off"
       onChange={onChange}
