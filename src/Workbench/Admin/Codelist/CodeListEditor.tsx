@@ -1,6 +1,6 @@
 import React from 'react';
 import { Parentable } from '../../../models/Parentable';
-import NestableHierarcy from '../../../NestableHierarchy/NestableHierarcy';
+import NestableHierarcyWithAccordion from '../../../NestableHierarchy/NestableHierarcyWithAccordion';
 import { ICode } from '../../../Nexus/entities/ICode';
 import { useAppDispatch, useAppSelector } from '../../../store/hooks';
 import {
@@ -29,7 +29,7 @@ export default function CodeListEditor(): React.ReactElement {
     <>
       <EditCodeListForm />
       <NewCodeForm />
-      <NestableHierarcy
+      <NestableHierarcyWithAccordion
         dispatchfunc={(items: Parentable<ICode>[]) => newListofCodes(items)}
         inputlist={codelist.codes}
         component={<EditCodeForm element={codelist.codes[0]} />}

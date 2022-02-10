@@ -1,7 +1,7 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Parentable } from '../../../models/Parentable';
-import NestableHierarcy from '../../../NestableHierarchy/NestableHierarcy';
+import NestableHierarcyWithAccordion from '../../../NestableHierarchy/NestableHierarcyWithAccordion';
 import { ITag } from '../../../Nexus/entities/ITag';
 import { useAppDispatch, useAppSelector } from '../../../store/hooks';
 import {
@@ -25,7 +25,7 @@ export default function TagPage(): React.ReactElement {
     <>
       <h3 className="mt-3">{t('Tags')}</h3>
       <NewTagForm />
-      <NestableHierarcy
+      <NestableHierarcyWithAccordion
         dispatchfunc={(items: Parentable<ITag>[]) => newTagList(items)}
         inputlist={project.tags}
         component={<EditTagForm element={project.tags[0]} />}
