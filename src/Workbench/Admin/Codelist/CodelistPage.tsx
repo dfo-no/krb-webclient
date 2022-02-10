@@ -66,32 +66,20 @@ export default function CodeListPage(): React.ReactElement {
   const { t } = useTranslation();
 
   const codelistSearch = (searchString: string, list: ICodelist[]) => {
-    const searchResultCodelist: ICodelist[] = [];
-
-    for (let i = 0; i < list.length; i++) {
-      if (list[i].title.toLowerCase().includes(searchString.toLowerCase())) {
-        searchResultCodelist.push(list[i]);
-      }
-
-      for (let j = 0; j < list[i].codes.length; j++) {
-        if (
-          list[i].codes[j].title
-            .toLowerCase()
-            .includes(searchString.toLowerCase())
-        ) {
-          searchResultCodelist.push({
-            description: list[i].description,
-            codes: [list[i].codes[j]],
-            id: list[i].id,
-            title: list[i].title,
-            sourceOriginal: list[i].sourceOriginal,
-            sourceRel: list[i].sourceOriginal,
-            type: list[i].type
-          });
+    return list
+      .map((cl) => {
+        if (cl.title.toLowerCase().includes(searchString.toLowerCase())) {
+          return cl;
         }
-      }
-    }
-    return searchResultCodelist;
+
+        const newCodes = cl.codes.filter((c) => {
+          return c.title.toLowerCase().includes(searchString.toLowerCase());
+        });
+        return { ...cl, codes: newCodes };
+      })
+      .filter((cl) => {
+        return cl.codes.length !== 0;
+      });
   };
 
   return (

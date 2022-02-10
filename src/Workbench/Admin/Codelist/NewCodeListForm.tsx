@@ -4,6 +4,9 @@ import { makeStyles } from '@material-ui/core';
 import TextCtrl from '../../../FormProvider/TextCtrl';
 import { useTranslation } from 'react-i18next';
 
+import Nexus from '../../../Nexus/Nexus';
+import { useAppDispatch } from '../../../store/hooks';
+
 interface IProps {
   handleClose: () => void;
 }
@@ -35,12 +38,15 @@ export default function NewCodeListForm({
   const classes = useStyles();
   const { t } = useTranslation();
 
+  const nexus = Nexus.getInstance();
+  const dispatch = useAppDispatch();
+
   return (
     <>
       <Box className={classes.productFormContainer}>
         <Box className={classes.productFormTextFields}>
-          <TextCtrl name="title" label={t('Title')} />
-          <TextCtrl name="description" label={t('Description')} />
+          {/*           <TextCtrl name="title" label={t('Title')} />
+          <TextCtrl name="description" label={t('Description')} /> */}
         </Box>
 
         <Box className={classes.productFormButtons}>
