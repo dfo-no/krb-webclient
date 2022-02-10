@@ -16,7 +16,12 @@ import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 
 const useStyles = makeStyles({
   sideBarList: {
-    paddingLeft: '5%'
+    paddingLeft: '5%',
+    '& .MuiList-root': {
+      '& .MuiListItem-root': {
+        paddingRight: '4px'
+      }
+    }
   },
   sideBarListItem: {
     cursor: 'pointer',
@@ -26,19 +31,16 @@ const useStyles = makeStyles({
     '&:hover': {
       background: theme.palette.lightBlue.main,
       color: theme.palette.dfoWhite.main,
-
       '& $sideBarListItemText': {
         color: theme.palette.dfoWhite.main
       }
-    },
-    paddingRight: '4px !important'
+    }
   },
   sideBarListItemText: {
     color: theme.palette.primary.main
   },
   selectedItem: {
     background: theme.palette.dfoDarkBlue.main,
-
     '& $sideBarListItemText': {
       color: theme.palette.dfoWhite.main
     }
