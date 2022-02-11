@@ -9,33 +9,16 @@ import { DFOSearchBarProps } from './DFOSearchBarProps';
 const useStyles = makeStyles({
   root: {
     width: '100%',
-    '& .MuiInputLabel-root': {
-      color: theme.palette.silver.main,
-      paddingLeft: 10
-    },
-    '& .MuiInputLabel-root.Mui-focused': {
-      color: theme.palette.black.main,
-      paddingLeft: 0,
-      paddingRight: 0
-    },
-    '& .MuiOutlinedInput-root': {
-      '& fieldset': {
-        border: `2px solid ${theme.palette.indigo.main}`,
-        backgroundColor: theme.palette.dfoWhite.main
-      },
-      '&:hover fieldset': {
-        border: `3px solid ${theme.palette.indigo.main}`
-      },
-      '&.Mui-focused fieldset': {
-        border: `3px solid ${theme.palette.indigo.main}`
-      }
-    }
+    backgroundColor: theme.palette.dfoWhite.main
   },
   searchFieldIcon: {
     marginBottom: 2,
     color: theme.palette.purple.main,
     fontSize: '30px !important',
     zIndex: 1
+  },
+  noBorder: {
+    border: 'none'
   }
 });
 
@@ -53,17 +36,18 @@ export default function DFOSearchBar({
     }
   };
 
-  const { t } = useTranslation();
   const classes = useStyles();
 
   return (
     <TextField
-      variant="outlined"
+      variant="filled"
       label={label}
       className={classes.root}
       autoComplete="off"
       onChange={onChange}
+      style={{ border: `2px solid ${theme.palette.indigo.main}` }}
       InputProps={{
+        disableUnderline: true,
         endAdornment: (
           <InputAdornment position="end">
             <SearchIcon className={classes.searchFieldIcon} />

@@ -60,7 +60,7 @@ export default function ProductPage(): React.ReactElement {
   const { project } = useAppSelector((state) => state.project);
   const dispatch = useAppDispatch();
 
-  const [products, setProducts] = useState<IProduct[]>([]);
+  const [products, setProducts] = useState<IProduct[]>(project.products);
   const [show, setShow] = useState(false);
 
   const newProductList = (items: Parentable<IProduct>[]) => {
@@ -147,7 +147,7 @@ export default function ProductPage(): React.ReactElement {
             dispatchfunc={(items: Parentable<IProduct>[]) =>
               newProductList(items)
             }
-            inputlist={products.length > 0 ? products : project.products}
+            inputlist={products}
             component={<EditProductForm element={project.products[0]} />}
             depth={5}
           />
