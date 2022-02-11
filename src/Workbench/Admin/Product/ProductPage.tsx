@@ -147,7 +147,7 @@ export default function ProductPage(): React.ReactElement {
             dispatchfunc={(items: Parentable<IProduct>[]) =>
               newProductList(items)
             }
-            inputlist={products}
+            inputlist={products.length > 0 ? products : project.products}
             component={<EditProductForm element={project.products[0]} />}
             depth={5}
           />
