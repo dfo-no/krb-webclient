@@ -1,8 +1,6 @@
 import { joiResolver } from '@hookform/resolvers/joi';
 import Button from '@mui/material/Button';
 import React from 'react';
-import Card from 'react-bootstrap/Card';
-import Form from 'react-bootstrap/Form';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { v4 as uuidv4 } from 'uuid';
@@ -53,24 +51,20 @@ function NewNeedForm({ handleClose }: IProps): React.ReactElement {
 
   return (
     <FormProvider {...methods}>
-      <Card className="mb-4">
-        <Card.Body>
-          <Form
-            onSubmit={methods.handleSubmit(onSubmit)}
-            autoComplete="off"
-            noValidate
-          >
-            <TextCtrl name="title" label={t('Title')} />
-            <TextCtrl name="description" label={t('Description')} />
-            <Button variant="primary" type="submit">
-              {t('save')}
-            </Button>
-            <Button variant="warning" onClick={handleClose}>
-              {t('cancel')}
-            </Button>
-          </Form>
-        </Card.Body>
-      </Card>
+      <form
+        onSubmit={methods.handleSubmit(onSubmit)}
+        autoComplete="off"
+        noValidate
+      >
+        <TextCtrl name="title" label={t('Title')} />
+        <TextCtrl name="description" label={t('Description')} />
+        <Button variant="primary" type="submit">
+          {t('save')}
+        </Button>
+        <Button variant="warning" onClick={handleClose}>
+          {t('cancel')}
+        </Button>
+      </form>
     </FormProvider>
   );
 }

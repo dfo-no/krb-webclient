@@ -1,74 +1,38 @@
-import { Box, makeStyles } from '@material-ui/core';
-import React, { useState } from 'react';
-import { useTranslation } from 'react-i18next';
-import { Levelable } from '../../models/Levelable';
-import { INeed } from '../../Nexus/entities/INeed';
-import { IProduct } from '../../Nexus/entities/IProduct';
-import { IRequirement } from '../../Nexus/entities/IRequirement';
+import Grid from '@mui/material/Grid/Grid';
+import React from 'react';
 import { useAppSelector } from '../../store/hooks';
 import theme from '../../theme';
 import NeedList from './NeedList';
+import NewNeed from './NewNeed';
+import NewRequirement from './NewRequirement';
 import Requirements from './Requirements';
-import VariantList from './VariantList';
-
-const useStyles = makeStyles({
-  headerText: {
-    margin: '0 0 0 30px',
-    fontWeight: 'bold',
-    color: theme.palette.primary.main
-  },
-  editorContainer: {
-    flex: '1',
-    display: 'flex',
-    minHeight: '100vh'
-  },
-  needs: {
-    width: '20%'
-  },
-  requirements: {
-    width: '30%'
-  },
-  variants: {
-    width: '50%'
-  }
-});
+import { useSelectState } from './SelectContext';
 
 export default function Create(): React.ReactElement {
   const { project } = useAppSelector((state) => state.project);
-  const { t } = useTranslation();
-  const classes = useStyles();
 
-  const [selectedNeed, setSelectedNeed] = useState<null | Levelable<
-    INeed | IProduct
-  >>(null);
-  const [selectedRequirement, setSelectedRequirement] =
-    useState<null | IRequirement>(null);
-
-  const updateSelectedNeed = (item: Levelable<INeed | IProduct>) => {
-    setSelectedRequirement(null);
-    setSelectedNeed(item);
-  };
+  const { need } = useSelectState();
 
   return (
-    <Box className={classes.editorContainer}>
-      <Box className={classes.needs}>
-        <h6 className={classes.headerText}>{t('Needs')}</h6>
-        <NeedList
-          parentables={project.needs}
-          updateSelectedFunction={updateSelectedNeed}
-        />
-      </Box>
-      <Box className={classes.requirements}>
-        <h6 className={classes.headerText}>Krav</h6>
-        <Requirements
-          selectedNeed={selectedNeed as Levelable<INeed> | null}
-          updateSelectedFunction={setSelectedRequirement}
-        />
-      </Box>
-      <Box className={classes.variants}>
-        <h6 className={classes.headerText}>Variant</h6>
-        <VariantList selectedRequirement={selectedRequirement} />
-      </Box>
-    </Box>
+    <Grid
+      container
+      spacing={2}
+      sx={{ minHeight: '100vh', backgroundColor: theme.palette.gray100.main }}
+    >
+      <Grid item xs={2}>
+        <NewNeed />
+        <NeedList parentables={project.needs} />
+      </Grid>
+      <Grid item xs={10}>
+        {need ? (
+          <>
+            <NewRequirement />
+            <Requirements />
+          </>
+        ) : (
+          <p>Ingen behov valgt</p>
+        )}
+      </Grid>
+    </Grid>
   );
 }

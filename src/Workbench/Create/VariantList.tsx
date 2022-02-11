@@ -8,13 +8,9 @@ import React from 'react';
 import ListGroup from 'react-bootstrap/ListGroup';
 import { QuestionType } from '../../models/QuestionType';
 import { QuestionTypes } from '../../models/QuestionTypes';
-import { IRequirement } from '../../Nexus/entities/IRequirement';
 import { IVariant } from '../../Nexus/entities/IVariant';
 import theme from '../../theme';
-
-interface IProps {
-  selectedRequirement: IRequirement | null;
-}
+import { useSelectState } from './SelectContext';
 
 const useStyles = makeStyles({
   h6: {
@@ -22,9 +18,7 @@ const useStyles = makeStyles({
   }
 });
 
-export default function VariantList({
-  selectedRequirement
-}: IProps): React.ReactElement {
+export default function VariantList(): React.ReactElement {
   const classes = useStyles();
 
   const renderQuestions = (questions: QuestionTypes) => {
@@ -42,7 +36,9 @@ export default function VariantList({
     );
   };
 
-  const variants = (variantList: IVariant[]) => {
+  const { need, requirement, variant } = useSelectState();
+
+  const renderVariants = (variantList: IVariant[]) => {
     const list = variantList.map((element) => {
       return (
         <Accordion key={element.id}>
@@ -72,5 +68,5 @@ export default function VariantList({
     return <>{list}</>;
   };
 
-  return <>{selectedRequirement && variants(selectedRequirement.variants)}</>;
+  return <>{need && requirement && renderVariants(requirement.variants)}</>;
 }

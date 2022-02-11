@@ -8,9 +8,9 @@ import { AccordionContext } from '../../../NestableHierarchy/AccordionContext';
 import { IRequirement } from '../../../Nexus/entities/IRequirement';
 import { useAppDispatch, useAppSelector } from '../../../store/hooks';
 import { selectNeed } from '../../../store/reducers/selectedNeed-reducer';
+import NewRequirementForm from '../../Create/NewRequirementForm';
 import EditRequirementForm from './EditRequirementForm';
 import NeedSideBar from './NeedSideBar/NeedSidebar';
-import NewRequirementForm from './NewRequirementForm';
 
 interface IRouteParams {
   projectId: string;
@@ -141,7 +141,7 @@ export default function RequirementPage(): React.ReactElement {
         </h4>
         <h5>{selectedNeed.description}</h5>
 
-        <NewRequirementForm />
+        {/* <NewRequirementForm /> */}
         {info(selectedNeed.requirements)}
         {requirements(selectedNeed.requirements)}
       </Col>
