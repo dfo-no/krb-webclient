@@ -160,15 +160,6 @@ theme.typography.mediumBlue = {
   fontSize: '18px'
 };
 
-theme.typography.bigScale = {
-  color: theme.palette.black.main,
-  fontSize: '28px',
-  fontWeight: 700,
-  [theme.breakpoints.down('mdd')]: {
-    fontSize: '20px'
-  }
-};
-
 theme.typography.footerAddressText = {
   color: theme.palette.dfoWhite.main,
   fontSize: '15px'
@@ -194,11 +185,11 @@ theme.components = {
       {
         props: { variant: 'primary' },
         style: {
-          backgroundColor: theme.palette.blue.main,
+          backgroundColor: theme.palette.lightBlue.main,
           color: theme.palette.dfoWhite.main,
           whiteSpace: 'nowrap',
           '&:hover': {
-            background: theme.palette.lightBlue.main
+            background: theme.palette.blue.main
           }
         }
       },

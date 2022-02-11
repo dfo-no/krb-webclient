@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Parentable } from '../../../models/Parentable';
-import NestableHierarcy from '../../../NestableHierarchy/NestableHierarcy';
+import NestableHierarcyWithAccordion from '../../../NestableHierarchy/NestableHierarcyWithAccordion';
 import { IProduct } from '../../../Nexus/entities/IProduct';
 import { useAppDispatch, useAppSelector } from '../../../store/hooks';
 import {
@@ -143,7 +143,7 @@ export default function ProductPage(): React.ReactElement {
         />
 
         <Box className={classes.products}>
-          <NestableHierarcy
+          <NestableHierarcyWithAccordion
             dispatchfunc={(items: Parentable<IProduct>[]) =>
               newProductList(items)
             }

@@ -1,16 +1,18 @@
-import React, { useEffect, useState } from 'react';
-import Accordion from 'react-bootstrap/Accordion';
+import React, { useEffect } from 'react';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 import { useParams } from 'react-router-dom';
 import Utils from '../../../common/Utils';
-import { AccordionContext } from '../../../NestableHierarchy/AccordionContext';
 import { IRequirement } from '../../../Nexus/entities/IRequirement';
 import { useAppDispatch, useAppSelector } from '../../../store/hooks';
 import { selectNeed } from '../../../store/reducers/selectedNeed-reducer';
 import EditRequirementForm from './EditRequirementForm';
 import NeedSideBar from './NeedSideBar/NeedSidebar';
 import NewRequirementForm from './NewRequirementForm';
+import {
+  DFOAccordionElement,
+  DFOAccordionProvider
+} from '../../../components/DFOAccordion/DFOAccordion';
 
 interface IRouteParams {
   projectId: string;
@@ -32,7 +34,6 @@ export default function RequirementPage(): React.ReactElement {
 
   const { project } = useAppSelector((state) => state.project);
   const selectedNeed = project.needs.find((elem) => elem.id === selectedNeedId);
-  const [activeKey, setActiveKey] = useState('');
 
   if (!project.needs) {
     return (
@@ -53,24 +54,14 @@ export default function RequirementPage(): React.ReactElement {
     );
   }
 
-  const onOpenClose = (e: string | string[] | null | undefined) => {
-    if (typeof e === 'string') {
-      setActiveKey(e);
-    } else {
-      setActiveKey('');
-    }
-  };
-
   const renderAccordion = (element: IRequirement) => {
     return (
-      <Accordion.Item eventKey={element.id} key={element.id}>
-        <h2 className="accordion-header">
-          <Accordion.Button>
-            {Utils.capitalizeFirstLetter(element.title)}
-          </Accordion.Button>
-        </h2>
-        <Accordion.Collapse eventKey={element.id}>
-          <Accordion.Body>
+      <DFOAccordionElement
+        key={element.id}
+        eventKey={element.id}
+        header={<div>{Utils.capitalizeFirstLetter(element.title)} </div>}
+        body={
+          <div>
             {element.sourceRel === null && (
               <EditRequirementForm element={element} />
             )}
@@ -80,9 +71,9 @@ export default function RequirementPage(): React.ReactElement {
                 <p>This item is inherited and readonly </p>
               </>
             )}
-          </Accordion.Body>
-        </Accordion.Collapse>
-      </Accordion.Item>
+          </div>
+        }
+      />
     );
   };
 
@@ -91,17 +82,14 @@ export default function RequirementPage(): React.ReactElement {
       const filteredList = reqs.filter(
         (element) => element.requirement_Type === 'requirement'
       );
-      const jsx = filteredList.map((element: IRequirement) =>
-        renderAccordion(element)
-      );
       return (
         <>
           {filteredList.length > 0 && <h5 className="mt-4">Requirements: </h5>}
-          <AccordionContext.Provider value={{ onOpenClose }}>
-            <Accordion activeKey={activeKey} onSelect={(e) => onOpenClose(e)}>
-              {jsx}
-            </Accordion>
-          </AccordionContext.Provider>
+          <div>
+            {filteredList.map((element: IRequirement) =>
+              renderAccordion(element)
+            )}
+          </div>
         </>
       );
     }
@@ -113,17 +101,14 @@ export default function RequirementPage(): React.ReactElement {
       const filteredList = reqs.filter(
         (element) => element.requirement_Type === 'info'
       );
-      const jsx = filteredList.map((element: IRequirement) =>
-        renderAccordion(element)
-      );
       return (
         <>
           {filteredList.length > 0 && <h5 className="mt-4">Info fields:</h5>}
-          <AccordionContext.Provider value={{ onOpenClose }}>
-            <Accordion activeKey={activeKey} onSelect={(e) => onOpenClose(e)}>
-              {jsx}
-            </Accordion>
-          </AccordionContext.Provider>
+          <div>
+            {filteredList.map((element: IRequirement) =>
+              renderAccordion(element)
+            )}
+          </div>
         </>
       );
     }
@@ -142,8 +127,14 @@ export default function RequirementPage(): React.ReactElement {
         <h5>{selectedNeed.description}</h5>
 
         <NewRequirementForm />
-        {info(selectedNeed.requirements)}
-        {requirements(selectedNeed.requirements)}
+        <DFOAccordionProvider
+          body={
+            <>
+              {info(selectedNeed.requirements)}
+              {requirements(selectedNeed.requirements)}
+            </>
+          }
+        />
       </Col>
     </Row>
   );

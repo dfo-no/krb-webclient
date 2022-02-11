@@ -1,30 +1,14 @@
-import MoreVertIcon from '@mui/icons-material/MoreVert';
-import React, { useState } from 'react';
-import Accordion from 'react-bootstrap/Accordion';
-import Col from 'react-bootstrap/Col';
-import Row from 'react-bootstrap/Row';
-import Nestable, { Item } from 'react-nestable';
+import React from 'react';
+import { Item } from 'react-nestable';
 import 'react-nestable/dist/styles/index.css';
 import Utils from '../common/Utils';
 import { Parentable } from '../models/Parentable';
 import { IBaseModel } from '../Nexus/entities/IBaseModel';
-import { AccordionContext } from './AccordionContext';
 
-interface IProps<T extends IBaseModel> {
-  dispatchfunc: (itemlist: Parentable<T>[]) => void;
-  inputlist: Parentable<T>[];
-  component: React.ReactElement;
-  depth: number;
-}
-
-const NestableHierarcy = <T extends IBaseModel>({
-  dispatchfunc,
-  inputlist,
-  component,
-  depth
-}: IProps<T>): React.ReactElement => {
-  const [activeKey, setActiveKey] = useState('');
-
+const NestableHierarcy = <T extends IBaseModel>(
+  dispatch: (itemlist: Parentable<T>[]) => void,
+  inputlist: Parentable<T>[]
+) => {
   const convertTreeToList = (tree: Item, key: string, collection: Item[]) => {
     if ((!tree[key] || tree[key].length === 0) && collection.includes(tree)) {
       const copiedTree = { ...tree };
@@ -60,14 +44,6 @@ const NestableHierarcy = <T extends IBaseModel>({
 
   const hierarchyList = Utils.parentable2Nestable(inputlist);
 
-  const onOpenClose = (e: string | string[] | null | undefined) => {
-    if (typeof e === 'string') {
-      setActiveKey(e);
-    } else {
-      setActiveKey('');
-    }
-  };
-
   const onChange = (items: {
     items: Item[];
     dragItem: Item;
@@ -80,49 +56,10 @@ const NestableHierarcy = <T extends IBaseModel>({
       delete clone.level;
       returnList.push(clone as Parentable<T>);
     });
-    dispatchfunc(returnList);
+    dispatch(returnList);
   };
 
-  const renderItem = (item: Item, handler: React.ReactNode) => {
-    return (
-      <Accordion.Item eventKey={item.id}>
-        <h2 className="accordion-header">
-          <Accordion.Button>
-            <Row>
-              <Col sm={8}>{Utils.capitalizeFirstLetter(item.title)}</Col>
-              <Col sm={1}>{handler}</Col>
-            </Row>
-          </Accordion.Button>
-        </h2>
-        <Accordion.Collapse eventKey={item.id}>
-          <Accordion.Body>
-            {item.sourceRel === null &&
-              React.cloneElement(component, { element: item })}
-            {item.sourceRel !== null && (
-              <>
-                <p>{item?.description}</p>
-                <p>This item is inherited and readonly </p>
-              </>
-            )}
-          </Accordion.Body>
-        </Accordion.Collapse>
-      </Accordion.Item>
-    );
-  };
-
-  return (
-    <AccordionContext.Provider value={{ onOpenClose }}>
-      <Accordion activeKey={activeKey} onSelect={onOpenClose}>
-        <Nestable
-          items={hierarchyList}
-          renderItem={({ item, handler }) => renderItem(item, handler)}
-          onChange={(items) => onChange(items)}
-          maxDepth={depth}
-          handler={<MoreVertIcon />}
-        />
-      </Accordion>
-    </AccordionContext.Provider>
-  );
+  return { hierarchyList, onChange };
 };
 
 export default NestableHierarcy;
