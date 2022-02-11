@@ -9,19 +9,19 @@ import { DFOSearchBarProps } from './DFOSearchBarProps';
 const useStyles = makeStyles({
   root: {
     width: '100%',
-    backgroundColor: theme.palette.dfoWhite.main,
     '& .MuiInputLabel-root': {
       color: theme.palette.silver.main,
       paddingLeft: 10
     },
     '& .MuiInputLabel-root.Mui-focused': {
       color: theme.palette.black.main,
-      textAlign: 'center',
-      paddingLeft: 0
+      paddingLeft: 0,
+      paddingRight: 0
     },
     '& .MuiOutlinedInput-root': {
       '& fieldset': {
-        border: `2px solid ${theme.palette.indigo.main}`
+        border: `2px solid ${theme.palette.indigo.main}`,
+        backgroundColor: theme.palette.dfoWhite.main
       },
       '&:hover fieldset': {
         border: `3px solid ${theme.palette.indigo.main}`
@@ -34,7 +34,8 @@ const useStyles = makeStyles({
   searchFieldIcon: {
     marginBottom: 2,
     color: theme.palette.purple.main,
-    fontSize: '30px !important'
+    fontSize: '30px !important',
+    zIndex: 1
   }
 });
 
