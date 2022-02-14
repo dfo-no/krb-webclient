@@ -1,5 +1,7 @@
 import { DevTool } from '@hookform/devtools';
 import { joiResolver } from '@hookform/resolvers/joi';
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
 import Paper from '@mui/material/Paper';
 import Joi from 'joi';
 import React from 'react';
@@ -7,14 +9,15 @@ import { FormProvider, useForm } from 'react-hook-form';
 import ErrorSummary from './Form/ErrorSummary';
 import CheckboxCtrl from './FormProvider/CheckboxCtrl';
 import CodelistCtrl from './FormProvider/CodelistCtrl';
-import Button from '@mui/material/Button';
 import DateCtrl from './FormProvider/DateCtrl';
 import FileUploadCtrl from './FormProvider/FileUploadCtrl';
+import RadioCtrl from './FormProvider/RadioCtrl';
 import SliderCtrl from './FormProvider/SliderCtrl';
 import SwitchCtrl from './FormProvider/SwitchCtrl';
 import TextCtrl from './FormProvider/TextCtrl';
 import ModelType from './models/ModelType';
-import Box from '@mui/material/Box';
+import RequirementType from './models/RequirementType';
+import { ICodelist } from './Nexus/entities/ICodelist';
 
 interface IFormValues {
   person: {
@@ -22,10 +25,13 @@ interface IFormValues {
     lastName: string | null;
     birthDay: string | null;
     weddingDay?: string | null;
+    point: number;
     isDeveloper: boolean;
     range: number;
     isSexy: boolean;
     fileEndings: string[];
+    codelist: ICodelist;
+    gender: string;
   };
 }
 
@@ -42,7 +48,9 @@ const FormSchema = Joi.object().keys({
     isDeveloper: Joi.boolean().valid(true).required(),
     range: Joi.number().min(20).max(100).required(),
     isSexy: Joi.boolean().valid(true).required(),
-    fileEndings: Joi.array().items(Joi.string()).min(1).required()
+    fileEndings: Joi.array().items(Joi.string()).min(1).required(),
+    codelist: Joi.any().required(),
+    gender: Joi.string().valid(RequirementType.info).required()
   })
 });
 
@@ -70,17 +78,20 @@ const KitchenSink = (): React.ReactElement => {
     }
   ];
 
-  const defaultValues = {
+  const defaultValues: IFormValues = {
     person: {
+      firstName: null,
       birthDay: null,
       weddingDay: '2021/12/14T14:00:00.123Z',
       point: 50,
       isDeveloper: false,
       range: 20,
-      firstName: null,
+
       lastName: null,
       isSexy: true,
-      fileEndings: ['doc']
+      fileEndings: ['doc'],
+      codelist: codelists[0],
+      gender: RequirementType.requirement
     }
   };
 
@@ -134,30 +145,38 @@ const KitchenSink = (): React.ReactElement => {
                   gap: '10px'
                 }}
               >
-                <CheckboxCtrl name="person.tekstfelt" label="Tekstfelt" />
-                <CheckboxCtrl
+                <CheckboxCtrl name="person.isSexy" label="Er sexy?" />
+                {/* <CheckboxCtrl
                   name="person.kodeliste"
                   label="Kodeliste"
                   defaultValue={true}
                 />
-                <CheckboxCtrl name="person.periode" label="Periode" />
+                 <CheckboxCtrl name="person.periode" label="Periode" />
                 <CheckboxCtrl name="person.verdi" label="Verdi" />
                 <CheckboxCtrl name="person.tid" label="Tid" />
                 <CheckboxCtrl name="person.janei" label="Ja/Nei" />
-                <CheckboxCtrl name="person.filoppl" label="Filopplastning" />
+                <CheckboxCtrl name="person.filoppl" label="Filopplastning" /> */}
               </Box>
-              <CheckboxCtrl name="person.kvalifikasjon" label="Kvalifikasjon" />
+              {/* <CheckboxCtrl name="person.kvalifikasjon" label="Kvalifikasjon" />
               <CheckboxCtrl
                 name="person.kravspesifikasjon"
                 label="Kravspesifikasjon"
                 defaultValue={true}
-              />
+              /> */}
               <CodelistCtrl
                 name="person.codelist"
                 codelists={codelists}
                 label="Codelist"
               />
               <FileUploadCtrl name="person.fileEndings" />
+              <RadioCtrl
+                name="person.gender"
+                label="Gender"
+                options={[
+                  { value: RequirementType.requirement, label: 'Krav' },
+                  { value: RequirementType.info, label: 'Info' }
+                ]}
+              />
               <br />
               <Button variant="primary" type="submit">
                 Save

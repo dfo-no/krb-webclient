@@ -206,11 +206,30 @@ theme.components = {
       }
     ]
   },
-  MuiList: {
+  MuiListItemButton: {
     styleOverrides: {
       root: {
-        paddingTop: '0',
-        paddingBottom: '0'
+        '&.Mui-selected, &.Mui-selected:hover': {
+          backgroundColor: theme.palette.dfoDarkBlue.main,
+          color: theme.palette.dfoWhite.main,
+          '& .MuiListItemIcon-root': {
+            display: 'block',
+            textAlign: 'right',
+            color: theme.palette.dfoWhite.main
+          }
+        },
+        '&:hover': {
+          backgroundColor: theme.palette.dfoDarkBlue.main,
+          color: theme.palette.dfoWhite.main,
+          '& .MuiListItemIcon-root': {
+            display: 'block',
+            textAlign: 'right',
+            color: theme.palette.dfoWhite.main
+          }
+        },
+        '& .MuiListItemIcon-root': {
+          display: 'none'
+        }
       }
     }
   },

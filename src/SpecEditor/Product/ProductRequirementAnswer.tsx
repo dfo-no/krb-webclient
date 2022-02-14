@@ -1,4 +1,5 @@
 import { joiResolver } from '@hookform/resolvers/joi';
+import { Mark } from '@material-ui/core/Slider/Slider';
 import Button from '@mui/material/Button';
 import Slider from '@mui/material/Slider';
 import Joi from 'joi';
@@ -13,7 +14,6 @@ import { Link } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
 import Utils from '../../common/Utils';
 import ErrorSummary from '../../Form/ErrorSummary';
-import { IOption } from '../../models/IOption';
 import { IRequirementAnswer } from '../../models/IRequirementAnswer';
 import { ISpecificationProduct } from '../../models/ISpecificationProduct';
 import ModelType from '../../models/ModelType';
@@ -43,7 +43,7 @@ const questionSchema = Joi.object().keys({
   weight: Joi.number().integer().min(1).required(),
   variant: Joi.string()
 });
-const marks: IOption[] = [
+const marks: Mark[] = [
   {
     value: 10,
     label: `Lav`

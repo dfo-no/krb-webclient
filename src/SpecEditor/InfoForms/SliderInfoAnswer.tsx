@@ -1,7 +1,8 @@
 import { joiResolver } from '@hookform/resolvers/joi';
+import { Mark } from '@material-ui/core/Slider/Slider';
+import Button from '@mui/material/Button';
 import Joi from 'joi';
 import React from 'react';
-import Button from '@mui/material/Button';
 import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 import { useForm } from 'react-hook-form';
@@ -9,7 +10,6 @@ import { useTranslation } from 'react-i18next';
 import { v4 as uuidv4 } from 'uuid';
 import SliderSelect from '../../components/SliderSelect';
 import ErrorSummary from '../../Form/ErrorSummary';
-import { IOption } from '../../models/IOption';
 import { IRequirementAnswer } from '../../models/IRequirementAnswer';
 import ModelType from '../../models/ModelType';
 import QuestionEnum from '../../models/QuestionEnum';
@@ -110,7 +110,7 @@ export default function ISliderInfoAnswer({
     }
   };
 
-  const marks: IOption[] = [
+  const marks: Mark[] = [
     {
       value: sliderQuestion.config.min,
       label: `${sliderQuestion.config.min} ${sliderQuestion.config.unit}`

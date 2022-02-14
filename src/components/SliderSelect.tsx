@@ -1,9 +1,9 @@
+import { Mark } from '@material-ui/core/Slider/Slider';
 import Slider from '@mui/material/Slider';
 import { get, has, toPath } from 'lodash';
 import React from 'react';
 import Form from 'react-bootstrap/Form';
 import { Control, Controller, FieldErrors } from 'react-hook-form';
-import { IOption } from '../models/IOption';
 
 interface IProps {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -14,7 +14,7 @@ interface IProps {
   min: number;
   max: number;
   step: number;
-  marks: IOption[];
+  marks: Mark[];
 }
 
 export default function SliderSelect({

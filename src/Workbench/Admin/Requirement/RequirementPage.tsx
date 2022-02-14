@@ -3,16 +3,16 @@ import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 import { useParams } from 'react-router-dom';
 import Utils from '../../../common/Utils';
-import { IRequirement } from '../../../Nexus/entities/IRequirement';
-import { useAppDispatch, useAppSelector } from '../../../store/hooks';
-import { selectNeed } from '../../../store/reducers/selectedNeed-reducer';
-import EditRequirementForm from './EditRequirementForm';
-import NeedSideBar from './NeedSideBar/NeedSidebar';
-import NewRequirementForm from './NewRequirementForm';
 import {
   DFOAccordionElement,
   DFOAccordionProvider
 } from '../../../components/DFOAccordion/DFOAccordion';
+import { IRequirement } from '../../../Nexus/entities/IRequirement';
+import { useAppDispatch, useAppSelector } from '../../../store/hooks';
+import { selectNeed } from '../../../store/reducers/selectedNeed-reducer';
+/* import NewRequirementForm from '../../Create/NewRequirementForm'; */
+import EditRequirementForm from './EditRequirementForm';
+import NeedSideBar from './NeedSideBar/NeedSidebar';
 
 interface IRouteParams {
   projectId: string;
@@ -126,7 +126,7 @@ export default function RequirementPage(): React.ReactElement {
         </h4>
         <h5>{selectedNeed.description}</h5>
 
-        <NewRequirementForm />
+        {/*  <NewRequirementForm /> */}
         <DFOAccordionProvider
           body={
             <>

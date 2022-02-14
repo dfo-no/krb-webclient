@@ -2,15 +2,15 @@ import { ListItem, makeStyles } from '@material-ui/core';
 import Typography from '@mui/material/Typography';
 import React from 'react';
 import ListGroup from 'react-bootstrap/ListGroup';
+import {
+  DFOAccordionElement,
+  DFOAccordionProvider
+} from '../../components/DFOAccordion/DFOAccordion';
 import { QuestionType } from '../../models/QuestionType';
 import { QuestionTypes } from '../../models/QuestionTypes';
 import { IRequirement } from '../../Nexus/entities/IRequirement';
 import { IVariant } from '../../Nexus/entities/IVariant';
 import theme from '../../theme';
-import {
-  DFOAccordionElement,
-  DFOAccordionProvider
-} from '../../components/DFOAccordion/DFOAccordion';
 
 interface IProps {
   selectedRequirement: IRequirement | null;
