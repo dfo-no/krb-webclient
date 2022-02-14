@@ -3,6 +3,7 @@ import React from 'react';
 import { useAppSelector } from '../../store/hooks';
 import theme from '../../theme';
 import NeedList from './NeedList';
+import NeedToolbar from './NeedToolbar';
 import NewNeed from './NewNeed';
 import NewRequirement from './NewRequirement';
 import Requirements from './Requirements';
@@ -26,6 +27,7 @@ export default function Create(): React.ReactElement {
       <Grid item xs={10}>
         {need ? (
           <>
+            <NeedToolbar />
             <NewRequirement />
             <Requirements />
           </>

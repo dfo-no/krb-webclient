@@ -23,14 +23,14 @@ import {
 } from '../../store/reducers/project-reducer';
 
 interface IProps {
-  element: Parentable<INeed>;
+  element: INeed;
   handleClose: () => void;
 }
 
 function EditNeedForm({ element, handleClose }: IProps): React.ReactElement {
   const dispatch = useAppDispatch();
-  const [validated] = useState(false);
-  const { project } = useAppSelector((state) => state.project);
+  // const [validated] = useState(false);
+  // const { project } = useAppSelector((state) => state.project);
 
   const { t } = useTranslation();
 
@@ -39,17 +39,11 @@ function EditNeedForm({ element, handleClose }: IProps): React.ReactElement {
     resolver: joiResolver(PutNeedSchema)
   });
 
-  const [modalShow, setModalShow] = useState(false);
+  // const [modalShow, setModalShow] = useState(false);
 
   const onEditNeedSubmit = (post: Nestable<INeed>) => {
-    const postNeed = { ...post };
-    if (postNeed.children) {
-      delete postNeed.children;
-    }
-    if (postNeed.level) {
-      delete postNeed.level;
-    }
-    dispatch(editNeed(postNeed as Parentable<INeed>));
+    const postNeed = Utils.nestable2Parentable(post);
+    dispatch(editNeed(postNeed));
     dispatch(putSelectedProjectThunk('dummy')).then(() => {
       const alert: IAlert = {
         id: uuidv4(),
@@ -61,14 +55,14 @@ function EditNeedForm({ element, handleClose }: IProps): React.ReactElement {
     });
   };
 
-  const checkDeleteNeed = (need: INeed) => {
+  /* const checkDeleteNeed = (n: INeed) => {
     if (
       element.requirements.length > 0 ||
-      Utils.checkIfParent(project.needs, need.id)
+      Utils.checkIfParent(project.needs, n.id)
     ) {
       setModalShow(true);
     } else {
-      dispatch(deleteNeed(need));
+      dispatch(deleteNeed(n));
       dispatch(putSelectedProjectThunk('dummy')).then(() => {
         const alert: IAlert = {
           id: uuidv4(),
@@ -79,39 +73,34 @@ function EditNeedForm({ element, handleClose }: IProps): React.ReactElement {
         handleClose();
       });
     }
-  };
+  }; */
 
   return (
     <FormProvider {...methods}>
-      <Card className="mb-4">
-        <Card.Body>
-          <Form
-            onSubmit={methods.handleSubmit(onEditNeedSubmit)}
-            autoComplete="off"
-            noValidate
-            validated={validated}
-          >
-            <TextCtrl name="title" label={t('Title')} />
-            <TextCtrl name="description" label={t('Description')} />
+      <form
+        onSubmit={methods.handleSubmit(onEditNeedSubmit)}
+        autoComplete="off"
+        noValidate
+      >
+        <TextCtrl name="title" label={t('Title')} />
+        <TextCtrl name="description" label={t('Description')} />
 
-            <Button variant="primary" type="submit">
-              {t('save')}
-            </Button>
-            <Button variant="warning" onClick={handleClose}>
-              {t('cancel')}
-            </Button>
-            <Button variant="warning" onClick={() => checkDeleteNeed(element)}>
+        <Button variant="primary" type="submit">
+          {t('save')}
+        </Button>
+        <Button variant="warning" onClick={handleClose}>
+          {t('cancel')}
+        </Button>
+        {/*  <Button variant="warning" onClick={() => checkDeleteNeed(element)}>
               <DeleteIcon />
             </Button>
-            <AlertModal
-              modalShow={modalShow}
-              setModalShow={setModalShow}
-              title="Attention"
-              text="This need has one or more connected requirements or has subneeds, please remove them to be able to delete"
-            />
-          </Form>
-        </Card.Body>
-      </Card>
+        <AlertModal
+          modalShow={modalShow}
+          setModalShow={setModalShow}
+          title="Attention"
+          text="This need has one or more connected requirements or has subneeds, please remove them to be able to delete"
+        /> */}
+      </form>
     </FormProvider>
   );
 }
