@@ -21,7 +21,7 @@ const useStyles = makeStyles({
   },
   projectPath: {
     marginLeft: 2.5,
-    [theme.breakpoints.down('header')]: {
+    [theme.breakpoints.down('mdd')]: {
       marginLeft: 1
     }
   },
@@ -29,7 +29,7 @@ const useStyles = makeStyles({
     display: 'flex',
     paddingBottom: 3,
     width: '90vw',
-    [theme.breakpoints.down('header')]: {
+    [theme.breakpoints.down('mdd')]: {
       paddingBottom: 0
     }
   },
@@ -42,7 +42,7 @@ const useStyles = makeStyles({
     gap: 20,
     alignItems: 'center',
 
-    [theme.breakpoints.down('header')]: {
+    [theme.breakpoints.down('mdd')]: {
       flexGrow: 1,
       flexDirection: 'column',
       alignItems: 'flex-start',
@@ -55,7 +55,7 @@ const useStyles = makeStyles({
     alignItems: 'center',
     paddingTop: 6,
 
-    [theme.breakpoints.down('header')]: {
+    [theme.breakpoints.down('mdd')]: {
       paddingTop: 0,
       paddingBottom: 8
     }
@@ -67,47 +67,39 @@ const useStyles = makeStyles({
     color: theme.palette.dfoBlue.main,
     height: '100%',
 
-    [theme.breakpoints.down('header')]: {
+    [theme.breakpoints.down('mdd')]: {
       paddingRight: 13,
-      gap: 8,
-      marginTop: 20
-    }
-  },
-  icons: {
-    display: 'flex',
-    alignSelf: 'center',
-    justifySelf: 'flex-end'
-  },
-  settingsIcon: {
-    cursor: 'pointer',
-    '&:hover': {
-      color: theme.palette.dfoLightBlue.main
+      gap: 20
     }
   },
   icon: {
-    cursor: 'pointer',
-    color: theme.palette.black.main,
-    width: '24px !important',
-    height: '40px !important',
-    paddingBottom: '8px',
-    paddingTop: '8px',
-    '&:hover': {
-      color: theme.palette.dfoLightBlue.main
+    '& .MuiSvgIcon-root': {
+      cursor: 'pointer',
+      color: theme.palette.black.main,
+      width: '24px',
+      height: '40px',
+      paddingBottom: '8px',
+      paddingTop: '8px',
+      '&:hover': {
+        color: theme.palette.dfoLightBlue.main
+      }
     }
   },
   selectedIcon: {
-    color: theme.palette.dfoBlue.main,
-    width: '24px !important',
-    height: '40px !important',
-    paddingTop: '8px',
-    paddingBottom: '4px',
-    borderBottom: '4px solid'
+    '& .MuiSvgIcon-root': {
+      color: theme.palette.dfoBlue.main,
+      width: '24px',
+      height: '40px',
+      paddingTop: '8px',
+      paddingBottom: '4px',
+      borderBottom: '4px solid'
+    }
   },
   projectTitleVersion: {
     display: 'flex',
     flexDirection: 'row',
     gap: 20,
-    [theme.breakpoints.down('header')]: {
+    [theme.breakpoints.down('mdd')]: {
       flexDirection: 'column',
       gap: 0
     }
@@ -152,31 +144,32 @@ export default function Header(): React.ReactElement {
                 </Box>
                 <Box className={classes.viewingProjectTitle}>
                   <Box className={classes.projectData}>
-                    <Typography variant="bigScale">{project.title}</Typography>
+                    <Typography variant="big">{project.title}</Typography>
                   </Box>
                   <Box className={classes.projectIcons}>
-                    <Link to={`${baseUrl?.url}/admin`}>
-                      <SettingsOutlinedIcon
-                        className={
-                          isLocationAdmin ? classes.selectedIcon : classes.icon
-                        }
-                      />
+                    <Link
+                      to={`${baseUrl?.url}/admin`}
+                      className={
+                        isLocationAdmin ? classes.selectedIcon : classes.icon
+                      }
+                    >
+                      <SettingsOutlinedIcon />
                     </Link>
-                    <Link to={`${baseUrl?.url}/create`}>
-                      <ConstructionOutlinedIcon
-                        className={
-                          isLocationCreate ? classes.selectedIcon : classes.icon
-                        }
-                      />
+                    <Link
+                      to={`${baseUrl?.url}/create`}
+                      className={
+                        isLocationCreate ? classes.selectedIcon : classes.icon
+                      }
+                    >
+                      <ConstructionOutlinedIcon />
                     </Link>
-                    <Link to={`${baseUrl?.url}/preview`}>
-                      <VisibilityOutlinedIcon
-                        className={
-                          isLocationPreview
-                            ? classes.selectedIcon
-                            : classes.icon
-                        }
-                      />
+                    <Link
+                      to={`${baseUrl?.url}/preview`}
+                      className={
+                        isLocationPreview ? classes.selectedIcon : classes.icon
+                      }
+                    >
+                      <VisibilityOutlinedIcon />
                     </Link>
                   </Box>
                 </Box>

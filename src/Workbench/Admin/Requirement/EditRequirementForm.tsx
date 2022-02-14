@@ -11,7 +11,7 @@ import { v4 as uuidv4 } from 'uuid';
 import ControlledTextInput from '../../../Form/ControlledTextInput';
 import ErrorSummary from '../../../Form/ErrorSummary';
 import { IAlert } from '../../../models/IAlert';
-import { AccordionContext } from '../../../NestableHierarchy/AccordionContext';
+import { AccordionContext } from '../../../components/DFOAccordion/AccordionContext';
 import {
   IRequirement,
   PutRequirementSchema

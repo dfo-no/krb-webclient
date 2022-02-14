@@ -46,7 +46,7 @@ export default function RequirementsPerNeed({
 
   const needHierarchy = (needsList: Nestable<INeed>[]) => {
     let requirements: IRequirement[] = [];
-    const hierarchy = needsList.map((element) => {
+    const hierarchy = needsList.map((element, idx) => {
       if (isRequirement) {
         requirements = element.requirements;
       }
@@ -55,14 +55,14 @@ export default function RequirementsPerNeed({
           requirements = relatedRequirements[element.id];
       }
       return (
-        <>
+        <div key={`needlist ${idx}`}>
           {requirements.length > 0 && (
             <RequirementList
               requirements={requirements}
               updateSelectedFunction={updateSelectedFunction}
             />
           )}
-        </>
+        </div>
       );
     });
     return <>{hierarchy}</>;

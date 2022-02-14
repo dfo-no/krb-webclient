@@ -11,7 +11,8 @@ const theme = createTheme({
       xs: 0,
       sm: 600,
       md: 900,
-      header: 906,
+      mdd: 906,
+      mddd: 956,
       lg: 1200,
       xl: 1536
     }
@@ -44,6 +45,9 @@ const theme = createTheme({
     dfoErrorRedHover: {
       main: dfoThemeScss.dfoErrorRedHover
     },
+    dfoBackgroundBlue: {
+      main: dfoThemeScss.dfoBackgroundBlue
+    },
     gray100: {
       main: dfoThemeScss.gray100
     },
@@ -64,6 +68,9 @@ const theme = createTheme({
     },
     gray700: {
       main: dfoThemeScss.gray700
+    },
+    gray800: {
+      main: dfoThemeScss.gray800
     },
     gray900: {
       main: dfoThemeScss.gray900
@@ -109,6 +116,9 @@ const theme = createTheme({
     },
     success: {
       main: dfoThemeScss.success
+    },
+    silver: {
+      main: dfoThemeScss.silver
     }
   }
 });
@@ -116,6 +126,13 @@ const theme = createTheme({
 theme.typography.small = {
   color: theme.palette.black.main,
   fontSize: '14px'
+};
+
+theme.typography.smallBold = {
+  color: theme.palette.black.main,
+  fontSize: '14px',
+  fontWeight: 700,
+  whiteSpace: 'nowrap'
 };
 
 theme.typography.smallUnderline = {
@@ -143,15 +160,6 @@ theme.typography.mediumBlue = {
   fontSize: '18px'
 };
 
-theme.typography.bigScale = {
-  color: theme.palette.black.main,
-  fontSize: '28px',
-  fontWeight: 700,
-  [theme.breakpoints.down('header')]: {
-    fontSize: '20px'
-  }
-};
-
 theme.typography.footerAddressText = {
   color: theme.palette.dfoWhite.main,
   fontSize: '15px'
@@ -177,11 +185,11 @@ theme.components = {
       {
         props: { variant: 'primary' },
         style: {
-          backgroundColor: theme.palette.blue.main,
+          backgroundColor: theme.palette.lightBlue.main,
           color: theme.palette.dfoWhite.main,
           whiteSpace: 'nowrap',
           '&:hover': {
-            background: theme.palette.lightBlue.main
+            background: theme.palette.blue.main
           }
         }
       },
@@ -232,15 +240,6 @@ theme.components = {
         height: '40px',
         paddingTop: '0',
         paddingBottom: '0'
-      }
-    }
-  },
-  MuiSvgIcon: {
-    styleOverrides: {
-      root: {
-        width: '40px',
-        height: '40px',
-        color: theme.palette.dfoBlue.main
       }
     }
   }

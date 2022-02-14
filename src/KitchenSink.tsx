@@ -115,7 +115,6 @@ const KitchenSink = (): React.ReactElement => {
         elevation={3}
         variant="elevation"
         sx={{
-          width: '1000px',
           height: '1250px',
           padding: '20px',
           margin: 'auto'

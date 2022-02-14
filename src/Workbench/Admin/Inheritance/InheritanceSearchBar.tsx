@@ -1,8 +1,7 @@
+import { Box, makeStyles } from '@material-ui/core';
 import Button from '@mui/material/Button';
 import React, { useState } from 'react';
-import Col from 'react-bootstrap/Col';
 import FormControl from 'react-bootstrap/FormControl';
-import Row from 'react-bootstrap/Row';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
 import Utils from '../../../common/Utils';
@@ -15,6 +14,12 @@ interface ISearchBarProps {
   project: IBank;
 }
 
+const useStyles = makeStyles({
+  SearchResultHeader: {
+    display: 'flex',
+    justifyContent: 'space-between'
+  }
+});
 export default function InheritanceSearchBar({
   list,
   project
@@ -24,6 +29,7 @@ export default function InheritanceSearchBar({
   const dispatch = useAppDispatch();
   const { t } = useTranslation();
   const history = useHistory();
+  const styles = useStyles();
 
   const updateSearchText = async (
     event: React.ChangeEvent<
@@ -50,38 +56,30 @@ export default function InheritanceSearchBar({
   const displaylist = (bankList: IBank[]) => {
     const resultList = bankList.map((bank: IBank) => {
       return (
-        <Row key={bank.publishedDate + bank.id}>
-          <Col>
-            <Row>
-              <b>{bank.title}</b>
-            </Row>
-            <Row>
-              <Col>{bank.description}</Col>{' '}
-              <Col className="d-flex justify-content-end">
-                <Button
-                  variant="primary"
-                  onClick={() => selectInheritance(bank)}
-                >
-                  Velg
-                </Button>
-              </Col>
-            </Row>
-          </Col>
-        </Row>
+        <div key={bank.publishedDate + bank.id}>
+          <Box className={styles.SearchResultHeader}>
+            <b>{bank.title}</b>
+            <Button variant="primary" onClick={() => selectInheritance(bank)}>
+              Velg
+            </Button>
+          </Box>
+          <Box>{bank.description} </Box>
+        </div>
       );
     });
     return <div className="mt-5">{resultList}</div>;
   };
 
   return (
-    <>
+    <Box>
       <FormControl
+        className="m-4"
         value={input}
         type="text"
         placeholder={t('search banks')}
         onChange={(e) => updateSearchText(e)}
       />
       {displaylist(searchList)}
-    </>
+    </Box>
   );
 }

@@ -1,3 +1,4 @@
+import { Box, makeStyles } from '@material-ui/core';
 import DeleteIcon from '@mui/icons-material/Delete';
 import Button from '@mui/material/Button';
 import React from 'react';
@@ -7,13 +8,27 @@ import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import Utils from '../../../common/Utils';
 import { IInheritedBank } from '../../../models/IInheritedBank';
+import { useGetAllBanksQuery } from '../../../store/api/bankApi';
 import { useAppDispatch, useAppSelector } from '../../../store/hooks';
 import { putProjectThunk } from '../../../store/reducers/project-reducer';
+import InheritanceSearch from './InheritanceSearch';
+
+const useStyles = makeStyles({
+  SearchResultHeader: {
+    display: 'flex',
+    justifyContent: 'space-between'
+  },
+  searchWrapper: {
+    width: '50%',
+    marginLeft: '2%'
+  }
+});
 
 export default function InheritancePage(): React.ReactElement {
   const { project } = useAppSelector((state) => state.project);
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
+  const classes = useStyles();
 
   const removeInheritance = (projectId: string, inheritedId: string) => {
     const updatedProject = Utils.removeInheritedBank(
@@ -30,45 +45,32 @@ export default function InheritancePage(): React.ReactElement {
       .sort((a, b) => (a.title.toLowerCase() > b.title.toLowerCase() ? 1 : -1));
     const projects = inheritanceList.map((element: IInheritedBank) => {
       return (
-        <div key={element.id}>
-          <Row className="d-flex justify-content-between ml-1">
-            <Col>
-              <h5>{element.title}</h5>
-            </Col>
-            <Col className="d-flex justify-content-end">
-              <Button
-                variant="primary"
-                onClick={() => removeInheritance(element.projectId, element.id)}
-              >
-                <DeleteIcon />
-              </Button>
-            </Col>
-          </Row>
-          <Row className="ml-1">
-            <p>{element.description}</p>
-          </Row>
-        </div>
+        <Box key={element.id}>
+          <Box className={classes.SearchResultHeader}>
+            <h5>{element.title}</h5>{' '}
+            <Button
+              variant="primary"
+              onClick={() => removeInheritance(element.projectId, element.id)}
+            >
+              <DeleteIcon />
+            </Button>
+          </Box>
+
+          <p>{element.description}</p>
+        </Box>
       );
     });
-    return <div className=" mt-5">{projects}</div>;
+    return <Box className=" mt-5">{projects}</Box>;
   };
 
   return (
-    <>
-      <h3 className="m-3 ">{t('Avhengigheter')} </h3>
-      <Row>
-        <Col className="d-flex justify-content-end">
-          <Link to={`/workbench/${project.id}/admin/inheritance/explore`}>
-            <Button variant="primary">Utforsk</Button>
-          </Link>
-        </Col>
-      </Row>
-      {project.inheritedBanks.length === 0 && (
-        <Row>
-          <p>Ingen Avhengigheter</p>
-        </Row>
-      )}
-      {renderInheritedBanks(project.inheritedBanks)}
-    </>
+    <Box className={classes.searchWrapper}>
+      <Box>{<InheritanceSearch />}</Box>
+      <Box>
+        {project.inheritedBanks.length === 0 && <p>Ingen Avhengigheter</p>}
+        {project.inheritedBanks.length > 0 && <p>Avhengigheter:</p>}
+        {renderInheritedBanks(project.inheritedBanks)}
+      </Box>
+    </Box>
   );
 }

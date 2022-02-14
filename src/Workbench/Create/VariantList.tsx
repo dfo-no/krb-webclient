@@ -1,16 +1,20 @@
 import { ListItem, makeStyles } from '@material-ui/core';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import Accordion from '@mui/material/Accordion';
-import AccordionDetails from '@mui/material/AccordionDetails';
-import AccordionSummary from '@mui/material/AccordionSummary';
 import Typography from '@mui/material/Typography';
 import React from 'react';
 import ListGroup from 'react-bootstrap/ListGroup';
+import {
+  DFOAccordionElement,
+  DFOAccordionProvider
+} from '../../components/DFOAccordion/DFOAccordion';
 import { QuestionType } from '../../models/QuestionType';
 import { QuestionTypes } from '../../models/QuestionTypes';
+import { IRequirement } from '../../Nexus/entities/IRequirement';
 import { IVariant } from '../../Nexus/entities/IVariant';
 import theme from '../../theme';
-import { useSelectState } from './SelectContext';
+
+interface IProps {
+  selectedRequirement: IRequirement | null;
+}
 
 const useStyles = makeStyles({
   h6: {
@@ -18,9 +22,12 @@ const useStyles = makeStyles({
   }
 });
 
-export default function VariantList(): React.ReactElement {
+export default function VariantList({
+  selectedRequirement
+}: IProps): React.ReactElement {
   const classes = useStyles();
 
+  /*
   const renderQuestions = (questions: QuestionTypes) => {
     const questionList = questions.map((element: QuestionType) => {
       return (
@@ -35,38 +42,43 @@ export default function VariantList(): React.ReactElement {
       </>
     );
   };
+  */
 
-  const { need, requirement, variant } = useSelectState();
-
-  const renderVariants = (variantList: IVariant[]) => {
-    const list = variantList.map((element) => {
+  const variants = (variantList: IVariant[]) => {
+    return variantList.map((element) => {
       return (
-        <Accordion key={element.id}>
-          <AccordionSummary
-            expandIcon={<ExpandMoreIcon />}
-            aria-controls="panel1a-content"
-            id="panel1a-header"
-          >
+        <DFOAccordionElement
+          key={element.id}
+          eventKey={element.id}
+          header={
             <Typography>
               <b>{element.requirementText}</b>
             </Typography>
-          </AccordionSummary>
-
-          <AccordionDetails>
-            <h6 className={classes.h6}>Kravtekst</h6>
-            <p>{element.requirementText}</p>
-            <h6 className={classes.h6}>Vedledning til oppdragsgiver</h6>
-            <p>{element.instruction}</p>
-            <h6 className={classes.h6}>
-              Hvordan skal leverandør svare på spørsmål
-            </h6>
-            {/*  {renderQuestions(element.questions)} */}
-          </AccordionDetails>
-        </Accordion>
+          }
+          body={
+            <div>
+              <h6 className={classes.h6}>Kravtekst</h6>
+              <p>{element.requirementText}</p>
+              <h6 className={classes.h6}>Vedledning til oppdragsgiver</h6>
+              <p>{element.instruction}</p>
+              <h6 className={classes.h6}>
+                Hvordan skal leverandør svare på spørsmål
+              </h6>
+              {/*  {renderQuestions(element.questions)} */}
+            </div>
+          }
+        />
       );
     });
-    return <>{list}</>;
   };
 
-  return <>{need && requirement && renderVariants(requirement.variants)}</>;
+  return (
+    <>
+      {selectedRequirement && (
+        <DFOAccordionProvider
+          body={<>{variants(selectedRequirement.variants)}</>}
+        />
+      )}
+    </>
+  );
 }
