@@ -41,7 +41,7 @@ const useStyles = makeStyles({
   }
 });
 
-export default function ProductPage({
+export default function NewProductForm({
   handleClose
 }: IProps): React.ReactElement {
   const { project } = useAppSelector((state) => state.project);

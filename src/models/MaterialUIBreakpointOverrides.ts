@@ -5,7 +5,8 @@ declare module '@mui/material/styles' {
     xs: true;
     sm: true;
     md: true;
-    header: true;
+    mdd: true;
+    mddd: true;
     lg: true;
     xl: true;
   }
