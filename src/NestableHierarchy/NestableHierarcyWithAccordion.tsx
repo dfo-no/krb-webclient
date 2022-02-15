@@ -4,6 +4,7 @@ import DragIndicatorIcon from '@mui/icons-material/DragIndicator';
 import Nestable, { Item } from 'react-nestable';
 import 'react-nestable/dist/styles/index.css';
 import { Parentable } from '../models/Parentable';
+import { Nestable as NestableModel } from '../models/Nestable';
 import { IBaseModel } from '../Nexus/entities/IBaseModel';
 import {
   DFOAccordionElement,
@@ -13,8 +14,8 @@ import NestableHierarcy from './NestableHierarcy';
 import Utils from '../common/Utils';
 
 interface IProps<T extends IBaseModel> {
-  dispatchfunc: (itemlist: Parentable<T>[]) => void;
-  inputlist: Parentable<T>[];
+  dispatchfunc: (item: Parentable<T>, index: number) => void;
+  inputlist: NestableModel<T>[];
   component: React.ReactElement;
   depth: number;
 }
@@ -25,7 +26,7 @@ const NestableHierarcyWithAccordion = <T extends IBaseModel>({
   component,
   depth
 }: IProps<T>): React.ReactElement => {
-  const { hierarchyList, onChange } = NestableHierarcy(dispatchfunc, inputlist);
+  const { onChange } = NestableHierarcy(dispatchfunc);
 
   const renderItem = (item: Item, handler: React.ReactNode) => {
     return (
@@ -62,7 +63,7 @@ const NestableHierarcyWithAccordion = <T extends IBaseModel>({
     <DFOAccordionProvider
       body={
         <Nestable
-          items={hierarchyList}
+          items={inputlist}
           renderItem={({ item, handler }) => renderItem(item, handler)}
           onChange={(items) => onChange(items)}
           maxDepth={depth}

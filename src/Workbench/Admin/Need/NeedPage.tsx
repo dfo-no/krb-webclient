@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Parentable } from '../../../models/Parentable';
 import NestableHierarcyWithAccordion from '../../../NestableHierarchy/NestableHierarcyWithAccordion';
 import { INeed } from '../../../Nexus/entities/INeed';
+import { Nestable } from '../../../models/Nestable';
 import { useAppDispatch, useAppSelector } from '../../../store/hooks';
 import {
   putSelectedProjectThunk,
@@ -10,15 +11,29 @@ import {
 } from '../../../store/reducers/project-reducer';
 import EditNeedForm from './EditNeedForm';
 import NewNeedForm from './NewNeedForm';
+import Utils from '../../../common/Utils';
 
 function NeedPage(): React.ReactElement {
   const { project } = useAppSelector((state) => state.project);
+  const [needlist, setNeedlist] = useState<Nestable<INeed>[]>([]);
 
   const dispatch = useAppDispatch();
   const { t } = useTranslation();
 
-  const newNeedList = (needs: Parentable<INeed>[]) => {
-    dispatch(setNeeds(needs));
+  useEffect(() => {
+    const nestedList = Utils.parentable2Nestable(project.needs);
+    setNeedlist(nestedList);
+  }, [project.needs]);
+
+  const updateNeedList = (movedItem: Parentable<INeed>) => {
+    const newNeedList = [...project.needs];
+    const indexOfMoved = newNeedList.findIndex(
+      (oldItem) => oldItem.id === movedItem.id
+    );
+    newNeedList.splice(indexOfMoved, 1);
+    newNeedList.push(movedItem);
+
+    dispatch(setNeeds(newNeedList));
     dispatch(putSelectedProjectThunk('dummy'));
   };
 
@@ -28,9 +43,9 @@ function NeedPage(): React.ReactElement {
 
       <NewNeedForm />
       <NestableHierarcyWithAccordion
-        dispatchfunc={(items: Parentable<INeed>[]) => newNeedList(items)}
-        inputlist={project.needs}
-        component={<EditNeedForm element={project.needs[0]} />}
+        dispatchfunc={(item: Parentable<INeed>) => updateNeedList(item)}
+        inputlist={needlist}
+        component={<EditNeedForm element={needlist[0]} />}
         depth={10}
       />
     </>
