@@ -1,7 +1,6 @@
-import Joi from 'joi';
+import CustomJoi from '../../common/CustomJoi';
 import ModelType from '../../models/ModelType';
 import { IBaseModel } from './IBaseModel';
-
 export interface IProduct extends IBaseModel {
   id: string;
   title: string;
@@ -10,26 +9,32 @@ export interface IProduct extends IBaseModel {
   children?: [];
 }
 
-export const BaseProductSchema = Joi.object().keys({
-  id: Joi.string().length(36).required(),
-  title: Joi.string().required(),
-  description: Joi.string().allow(null, '').required(),
-  parent: Joi.string().allow(null, '').required(),
-  type: Joi.string().equal(ModelType.product).required(),
-  sourceOriginal: Joi.string().required(),
-  sourceRel: Joi.string().allow(null).required()
+export const BaseProductSchema = CustomJoi.object().keys({
+  id: CustomJoi.string().length(36).required(),
+  title: CustomJoi.string().required(),
+  description: CustomJoi.string().allow(null, '').required(),
+  parent: CustomJoi.string().allow(null, '').required(),
+  type: CustomJoi.string().equal(ModelType.product).required(),
+  sourceOriginal: CustomJoi.string().required(),
+  sourceRel: CustomJoi.string().allow(null).required()
 });
 
 export const PostProductSchema = BaseProductSchema.keys({
-  id: Joi.string().equal('').required(),
-  parent: Joi.alternatives([Joi.string().length(36), Joi.string().valid('')]),
-  children: Joi.array(),
-  level: Joi.number()
+  id: CustomJoi.string().equal('').required(),
+  parent: CustomJoi.alternatives([
+    CustomJoi.string().length(36),
+    CustomJoi.string().valid('')
+  ]),
+  children: CustomJoi.array(),
+  level: CustomJoi.number()
 });
 
 export const PutProductSchema = BaseProductSchema.keys({
-  id: Joi.string().length(36).required(),
-  parent: Joi.alternatives([Joi.string().length(36), Joi.string().valid('')]),
-  children: Joi.array(),
-  level: Joi.number()
+  id: CustomJoi.string().length(36).required(),
+  parent: CustomJoi.alternatives([
+    CustomJoi.string().length(36),
+    CustomJoi.string().valid('')
+  ]),
+  children: CustomJoi.array(),
+  level: CustomJoi.number()
 });

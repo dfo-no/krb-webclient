@@ -1,11 +1,11 @@
 import { joiResolver } from '@hookform/resolvers/joi';
-import Joi from 'joi';
+import Button from '@mui/material/Button';
 import React from 'react';
 import Badge from 'react-bootstrap/Badge';
-import Button from '@mui/material/Button';
 import Form from 'react-bootstrap/Form';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
+import CustomJoi from '../../../common/CustomJoi';
 import ErrorSummary from '../../../Form/ErrorSummary';
 import CodelistCtrl from '../../../FormProvider/CodelistCtrl';
 import {
@@ -29,18 +29,18 @@ interface IProps {
 }
 export const ResponseCodelistSchema = RequirementAnswerSchema.keys({
   question: CodelistQuestionAnswerSchema.keys({
-    answer: Joi.object().keys({
-      codes: Joi.array().items(Joi.string()).min(1).required(),
-      point: Joi.number().required()
+    answer: CustomJoi.object().keys({
+      codes: CustomJoi.array().items(CustomJoi.string()).min(1).required(),
+      point: CustomJoi.number().required()
     })
   })
 });
 
 export const ResponseSingleCodelistSchema = RequirementAnswerSchema.keys({
   question: CodelistQuestionAnswerSchema.keys({
-    answer: Joi.object().keys({
-      codes: Joi.array().items(Joi.string()).max(1).required(),
-      point: Joi.number().required()
+    answer: CustomJoi.object().keys({
+      codes: CustomJoi.array().items(CustomJoi.string()).max(1).required(),
+      point: CustomJoi.number().required()
     })
   })
 });

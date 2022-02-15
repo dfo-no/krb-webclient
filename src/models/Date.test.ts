@@ -1,14 +1,14 @@
 import { format, formatISO } from 'date-fns';
-import Joi from 'joi';
 import { DATETIME_ISO8601UTC } from '../common/Constants';
+import CustomJoi from '../common/CustomJoi';
 
 describe('Joi date should validate', () => {
   const now = new Date();
   test('Date formats works', () => {
-    const dateSchema = Joi.object().keys({
-      date1: Joi.date().iso().raw().required(),
-      date2: Joi.date().iso().raw().required(),
-      date3: Joi.date().iso().raw().required()
+    const dateSchema = CustomJoi.object().keys({
+      date1: CustomJoi.date().iso().raw().required(),
+      date2: CustomJoi.date().iso().raw().required(),
+      date3: CustomJoi.date().iso().raw().required()
     });
     const bank = {
       date1: now.toISOString(),
@@ -21,8 +21,8 @@ describe('Joi date should validate', () => {
   });
 
   test('Min date validation should trigger message', () => {
-    const dateSchema = Joi.object().keys({
-      date1: Joi.date().iso().raw().max('11-25-2021').required()
+    const dateSchema = CustomJoi.object().keys({
+      date1: CustomJoi.date().iso().raw().max('11-25-2021').required()
     });
     const bank = {
       date1: new Date().toISOString()
@@ -34,8 +34,8 @@ describe('Joi date should validate', () => {
   });
 
   test('Format should be OK', () => {
-    const dateSchema = Joi.object().keys({
-      date1: Joi.date().iso().raw().max('11-25-2021').required()
+    const dateSchema = CustomJoi.object().keys({
+      date1: CustomJoi.date().iso().raw().max('11-25-2021').required()
     });
     const bank = {
       date1: '2021-11-24T10:20:53.000Z'
@@ -46,10 +46,10 @@ describe('Joi date should validate', () => {
   });
 
   test('Empty string date should validate', () => {
-    const dateSchema = Joi.object().keys({
-      publishedDate: Joi.alternatives([
-        Joi.date().iso().raw(),
-        Joi.string().valid('')
+    const dateSchema = CustomJoi.object().keys({
+      publishedDate: CustomJoi.alternatives([
+        CustomJoi.date().iso().raw(),
+        CustomJoi.string().valid('')
       ]).required()
     });
 
@@ -62,10 +62,10 @@ describe('Joi date should validate', () => {
   });
 
   test('Null date should validate', () => {
-    const dateSchema = Joi.object().keys({
-      publishedDate: Joi.alternatives([
-        Joi.date().iso().raw(),
-        Joi.string().valid(null)
+    const dateSchema = CustomJoi.object().keys({
+      publishedDate: CustomJoi.alternatives([
+        CustomJoi.date().iso().raw(),
+        CustomJoi.string().valid(null)
       ]).required()
     });
 
@@ -78,10 +78,10 @@ describe('Joi date should validate', () => {
   });
 
   test('Date.toJSON() string should validate', () => {
-    const dateSchema = Joi.object().keys({
-      publishedDate: Joi.alternatives([
-        Joi.date().iso().raw(),
-        Joi.string().valid('')
+    const dateSchema = CustomJoi.object().keys({
+      publishedDate: CustomJoi.alternatives([
+        CustomJoi.date().iso().raw(),
+        CustomJoi.string().valid('')
       ]).required()
     });
 
@@ -94,8 +94,8 @@ describe('Joi date should validate', () => {
   });
 
   test('Date format for day-fns should validate', () => {
-    const dateSchema = Joi.object().keys({
-      publishedDate: Joi.date().iso().raw().required()
+    const dateSchema = CustomJoi.object().keys({
+      publishedDate: CustomJoi.date().iso().raw().required()
     });
     // target : 2021-09-23T05:11:53.747Z
     const post = {

@@ -1,13 +1,12 @@
-import Joi from 'joi';
+import CustomJoi from '../common/CustomJoi';
 import { BaseBankSchema } from '../Nexus/entities/IBank';
 import { PutPublicationSchema } from '../Nexus/entities/IPublication';
 import ModelType from './ModelType';
-
 export const EditProjectSchema = BaseBankSchema.keys({
-  id: Joi.string().length(36).required(),
-  type: Joi.string().equal(ModelType.bank).required(),
-  needs: Joi.array(),
-  publications: Joi.array()
+  id: CustomJoi.string().length(36).required(),
+  type: CustomJoi.string().equal(ModelType.bank).required(),
+  needs: CustomJoi.array(),
+  publications: CustomJoi.array()
     .items(PutPublicationSchema)
     .unique('id')
     .unique('version')
@@ -15,9 +14,9 @@ export const EditProjectSchema = BaseBankSchema.keys({
 });
 
 export const PutProjectSchema = BaseBankSchema.keys({
-  id: Joi.string().length(36).required(),
-  type: Joi.string().equal(ModelType.bank).required(),
-  publications: Joi.array()
+  id: CustomJoi.string().length(36).required(),
+  type: CustomJoi.string().equal(ModelType.bank).required(),
+  publications: CustomJoi.array()
     .items(PutPublicationSchema)
     .unique('id')
     .unique('version')
@@ -25,7 +24,7 @@ export const PutProjectSchema = BaseBankSchema.keys({
 });
 
 export const PostProjectSchema = BaseBankSchema.keys({
-  id: Joi.string().equal('').required(),
-  description: Joi.string().allow('').required(),
-  publishedDate: Joi.string().equal(null).required()
+  id: CustomJoi.string().equal('').required(),
+  description: CustomJoi.string().allow('').required(),
+  publishedDate: CustomJoi.string().equal(null).required()
 });

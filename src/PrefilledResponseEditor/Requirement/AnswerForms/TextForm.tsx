@@ -1,11 +1,11 @@
 import { joiResolver } from '@hookform/resolvers/joi';
-import Joi from 'joi';
+import Button from '@mui/material/Button';
 import React from 'react';
 import Badge from 'react-bootstrap/Badge';
-import Button from '@mui/material/Button';
 import Form from 'react-bootstrap/Form';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
+import CustomJoi from '../../../common/CustomJoi';
 import ErrorSummary from '../../../Form/ErrorSummary';
 import {
   IRequirementAnswer,
@@ -54,9 +54,9 @@ export default function TextForm({
   // Override default schema with values set in config.
   const ProductTextSchema = RequirementAnswerSchema.keys({
     question: TextQuestionAnswerSchema.keys({
-      answer: Joi.object().keys({
-        text: Joi.string().required(),
-        point: Joi.number().required()
+      answer: CustomJoi.object().keys({
+        text: CustomJoi.string().required(),
+        point: CustomJoi.number().required()
       })
     })
   });

@@ -1,4 +1,4 @@
-import Joi from 'joi';
+import CustomJoi from '../../common/CustomJoi';
 import ModelType from '../../models/ModelType';
 import { IBaseModel } from './IBaseModel';
 import { IRequirement } from './IRequirement';
@@ -9,24 +9,30 @@ export interface INeed extends IBaseModel {
   requirements: IRequirement[];
 }
 
-export const BaseNeedSchema = Joi.object().keys({
-  id: Joi.string().length(36).required(),
-  title: Joi.string().required(),
-  description: Joi.string().allow(null, '').required(),
-  requirements: Joi.array().required(),
-  type: Joi.string().equal(ModelType.need).required(),
-  sourceOriginal: Joi.string().required(),
-  sourceRel: Joi.string().allow(null).required()
+export const BaseNeedSchema = CustomJoi.object().keys({
+  id: CustomJoi.string().length(36).required(),
+  title: CustomJoi.string().required(),
+  description: CustomJoi.string().allow(null, '').required(),
+  requirements: CustomJoi.array().required(),
+  type: CustomJoi.string().equal(ModelType.need).required(),
+  sourceOriginal: CustomJoi.string().required(),
+  sourceRel: CustomJoi.string().allow(null).required()
 });
 
 export const PostNeedSchema = BaseNeedSchema.keys({
-  id: Joi.string().equal('').required(),
-  parent: Joi.alternatives([Joi.string().length(36), Joi.string().valid('')]),
-  children: Joi.array()
+  id: CustomJoi.string().equal('').required(),
+  parent: CustomJoi.alternatives([
+    CustomJoi.string().length(36),
+    CustomJoi.string().valid('')
+  ]),
+  children: CustomJoi.array()
 });
 
 export const PutNeedSchema = BaseNeedSchema.keys({
-  parent: Joi.alternatives([Joi.string().length(36), Joi.string().valid('')]),
-  children: Joi.array(),
-  level: Joi.number()
+  parent: CustomJoi.alternatives([
+    CustomJoi.string().length(36),
+    CustomJoi.string().valid('')
+  ]),
+  children: CustomJoi.array(),
+  level: CustomJoi.number()
 });

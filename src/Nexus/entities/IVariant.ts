@@ -1,4 +1,4 @@
-import Joi from 'joi';
+import CustomJoi from '../../common/CustomJoi';
 import QuestionEnum from '../../models/QuestionEnum';
 import { QuestionTypes } from '../../models/QuestionTypes';
 import RequirementType from '../../models/RequirementType';
@@ -24,26 +24,26 @@ export interface IVariant {
   questions: QuestionTypes;
 }
 
-export const VariantSchema = Joi.object().keys({
-  id: Joi.string().max(36).required(),
-  requirementText: Joi.string().allow(null, '').required(),
-  instruction: Joi.string().allow(null, '').required(),
-  useProduct: Joi.boolean().required(),
-  useSpesification: Joi.boolean().required(),
-  useQualification: Joi.boolean().required(),
-  products: Joi.array()
+export const VariantSchema = CustomJoi.object().keys({
+  id: CustomJoi.string().max(36).required(),
+  requirementText: CustomJoi.string().allow(null, '').required(),
+  instruction: CustomJoi.string().allow(null, '').required(),
+  useProduct: CustomJoi.boolean().required(),
+  useSpesification: CustomJoi.boolean().required(),
+  useQualification: CustomJoi.boolean().required(),
+  products: CustomJoi.array()
     .items()
     .when('useProduct', {
       is: true,
-      then: Joi.array().items(Joi.string()).min(1).required(),
-      otherwise: Joi.array().length(0).required()
+      then: CustomJoi.array().items(CustomJoi.string()).min(1).required(),
+      otherwise: CustomJoi.array().length(0).required()
     })
     .required(),
-  questions: Joi.array().when('/requirement_Type', {
+  questions: CustomJoi.array().when('/requirement_Type', {
     is: RequirementType.info,
-    then: Joi.array()
+    then: CustomJoi.array()
       .items(
-        Joi.alternatives().conditional('.type', {
+        CustomJoi.alternatives().conditional('.type', {
           switch: [
             { is: QuestionEnum.Q_SLIDER, then: SliderQuestionSchema },
             { is: QuestionEnum.Q_CODELIST, then: CodelistQuestionSchema },
@@ -62,8 +62,8 @@ export const VariantSchema = Joi.object().keys({
         })
       )
       .max(1),
-    otherwise: Joi.array().items(
-      Joi.alternatives().conditional('.type', {
+    otherwise: CustomJoi.array().items(
+      CustomJoi.alternatives().conditional('.type', {
         switch: [
           { is: QuestionEnum.Q_SLIDER, then: SliderQuestionSchema },
           { is: QuestionEnum.Q_CODELIST, then: CodelistQuestionSchema },

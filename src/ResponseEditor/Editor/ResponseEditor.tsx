@@ -1,7 +1,6 @@
 import { joiResolver } from '@hookform/resolvers/joi';
 import Button from '@mui/material/Button';
 import { AxiosResponse } from 'axios';
-import Joi from 'joi';
 import React from 'react';
 import Col from 'react-bootstrap/Col';
 import Container from 'react-bootstrap/Container';
@@ -14,6 +13,7 @@ import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router';
 import { v4 as uuidv4 } from 'uuid';
 import { httpPost } from '../../api/http';
+import CustomJoi from '../../common/CustomJoi';
 import ErrorSummary from '../../Form/ErrorSummary';
 import { IAlert } from '../../models/IAlert';
 import Nexus from '../../Nexus/Nexus';
@@ -32,8 +32,8 @@ interface IResponseInfoForm {
   supplier: string;
 }
 
-const supplierSchema = Joi.object().keys({
-  supplier: Joi.string().required()
+const supplierSchema = CustomJoi.object().keys({
+  supplier: CustomJoi.string().required()
 });
 
 export default function ResponseEditor(): React.ReactElement {

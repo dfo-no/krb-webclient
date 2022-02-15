@@ -1,4 +1,4 @@
-import Joi from 'joi';
+import CustomJoi from '../common/CustomJoi';
 import { CheckboxQuestionAnswerSchema } from '../Nexus/entities/ICheckboxQuestion';
 import { CodelistQuestionAnswerSchema } from '../Nexus/entities/ICodelistQuestion';
 import { FileUploadAnswerSchema } from '../Nexus/entities/IFileUploadQuestion';
@@ -13,7 +13,6 @@ import { TimeAnswerSchema } from '../Nexus/entities/ITimeQuestion';
 import ModelType from './ModelType';
 import QuestionEnum from './QuestionEnum';
 import { QuestionType } from './QuestionType';
-
 export interface IRequirementAnswer {
   id: string;
   questionId: string;
@@ -24,12 +23,12 @@ export interface IRequirementAnswer {
   requirement: IRequirement;
 }
 
-export const RequirementAnswerSchema = Joi.object().keys({
-  id: Joi.string().length(36).required(),
-  questionId: Joi.string().length(36).required(),
-  weight: Joi.number().required(),
-  variantId: Joi.string().length(36).required(),
-  question: Joi.alternatives().conditional('.type', {
+export const RequirementAnswerSchema = CustomJoi.object().keys({
+  id: CustomJoi.string().length(36).required(),
+  questionId: CustomJoi.string().length(36).required(),
+  weight: CustomJoi.number().required(),
+  variantId: CustomJoi.string().length(36).required(),
+  question: CustomJoi.alternatives().conditional('.type', {
     switch: [
       { is: QuestionEnum.Q_SLIDER, then: SliderQuestionAnswerSchema },
       { is: QuestionEnum.Q_CODELIST, then: CodelistQuestionAnswerSchema },
@@ -40,12 +39,12 @@ export const RequirementAnswerSchema = Joi.object().keys({
       { is: QuestionEnum.Q_FILEUPLOAD, then: FileUploadAnswerSchema }
     ]
   }),
-  type: Joi.string()
+  type: CustomJoi.string()
     .valid(...Object.values(ModelType))
     .required(),
   requirement: BaseRequirementSchema
 });
 
-export const RequirementAnswersSchema = Joi.object().keys({
-  cart: Joi.array().items(RequirementAnswerSchema)
+export const RequirementAnswersSchema = CustomJoi.object().keys({
+  cart: CustomJoi.array().items(RequirementAnswerSchema)
 });
