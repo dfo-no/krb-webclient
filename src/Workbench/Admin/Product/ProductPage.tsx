@@ -60,6 +60,8 @@ export default function ProductPage(): React.ReactElement {
   const { project } = useAppSelector((state) => state.project);
   const dispatch = useAppDispatch();
 
+  console.log(project);
+
   const [products, setProducts] = useState<IProduct[]>(project.products);
   const [show, setShow] = useState(false);
 

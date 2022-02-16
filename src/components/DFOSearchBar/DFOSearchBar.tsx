@@ -3,7 +3,6 @@ import { TextField, InputAdornment } from '@mui/material/';
 import SearchIcon from '@mui/icons-material/Search';
 import { makeStyles } from '@material-ui/core';
 import theme from '../../theme';
-import { useTranslation } from 'react-i18next';
 import { DFOSearchBarProps } from './DFOSearchBarProps';
 
 const useStyles = makeStyles({
@@ -16,9 +15,6 @@ const useStyles = makeStyles({
     color: theme.palette.purple.main,
     fontSize: '30px !important',
     zIndex: 1
-  },
-  noBorder: {
-    border: 'none'
   }
 });
 
@@ -26,7 +22,8 @@ export default function DFOSearchBar({
   list,
   callback,
   searchFunction,
-  label
+  label,
+  showBorder
 }: DFOSearchBarProps): React.ReactElement {
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.value.length !== 0) {
@@ -45,7 +42,9 @@ export default function DFOSearchBar({
       className={classes.root}
       autoComplete="off"
       onChange={onChange}
-      style={{ border: `2px solid ${theme.palette.indigo.main}` }}
+      style={{
+        border: `2px solid ${theme.palette.indigo.main}`
+      }}
       InputProps={{
         disableUnderline: true,
         endAdornment: (

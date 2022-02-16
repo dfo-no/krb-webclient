@@ -34,6 +34,8 @@ declare module '@mui/material/styles/createPalette' {
     teal: PaletteColor;
     cyan: PaletteColor;
     linkHoverColor: PaletteColor;
+    saveGreen: PaletteColor;
+    saveGreenHover: PaletteColor;
     success: PaletteColor;
     silver: PaletteColor;
   }
@@ -71,6 +73,8 @@ declare module '@mui/material/styles/createPalette' {
     teal: PaletteColorOptions;
     cyan: PaletteColorOptions;
     linkHoverColor: PaletteColorOptions;
+    saveGreen: PaletteColorOptions;
+    saveGreenHover: PaletteColorOptions;
     success?: PaletteColorOptions;
     silver?: PaletteColorOptions;
   }
