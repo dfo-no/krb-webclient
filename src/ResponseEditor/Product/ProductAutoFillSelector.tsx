@@ -1,10 +1,10 @@
 import { joiResolver } from '@hookform/resolvers/joi';
-import Joi from 'joi';
-import React from 'react';
 import Button from '@mui/material/Button';
+import React from 'react';
 import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 import { useForm } from 'react-hook-form';
+import CustomJoi from '../../common/CustomJoi';
 import ErrorSummary from '../../Form/ErrorSummary';
 import { IPrefilledResponseProduct } from '../../models/IPrefilledResponseProduct';
 import Nexus from '../../Nexus/Nexus';
@@ -13,9 +13,10 @@ import { setProductRequirementAnswers } from '../../store/reducers/response-redu
 import { selectResponseProduct } from '../../store/reducers/selectedResponseProduct-reducer';
 import { setMarkedProductRequirements } from '../../store/reducers/uploadedPrefilledResponseReducer';
 
-const AutofilledProductSchema = Joi.object().keys({
-  productId: Joi.string().required()
+const AutofilledProductSchema = CustomJoi.object().keys({
+  productId: CustomJoi.string().required()
 });
+
 interface IProps {
   productId: string;
 }

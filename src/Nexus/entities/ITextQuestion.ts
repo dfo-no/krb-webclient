@@ -1,4 +1,4 @@
-import Joi from 'joi';
+import CustomJoi from '../../common/CustomJoi';
 import QuestionEnum from '../../models/QuestionEnum';
 import {
   ConfigBaseSchema,
@@ -7,7 +7,6 @@ import {
   IQuestionBase,
   QuestionBaseSchema
 } from './IQuestionBase';
-
 export interface ITextQuestion extends IQuestionBase<ITextAnswer, ITextConfig> {
   type: QuestionEnum.Q_TEXT;
 }
@@ -21,15 +20,15 @@ export interface ITextAnswer extends IAnswerBase {
 }
 
 export const TextQuestionSchema = QuestionBaseSchema.keys({
-  type: Joi.string().equal(QuestionEnum.Q_TEXT).required(),
+  type: CustomJoi.string().equal(QuestionEnum.Q_TEXT).required(),
   config: ConfigBaseSchema.keys({
-    max: Joi.number().required().min(0)
+    max: CustomJoi.number().required().min(0)
   })
 });
 
 export const TextQuestionAnswerSchema = TextQuestionSchema.keys({
-  answer: Joi.object().keys({
-    text: Joi.string().required(),
-    point: Joi.number().required()
+  answer: CustomJoi.object().keys({
+    text: CustomJoi.string().required(),
+    point: CustomJoi.number().required()
   })
 });

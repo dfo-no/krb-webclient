@@ -1,9 +1,8 @@
-import Joi from 'joi';
+import CustomJoi from '../../common/CustomJoi';
 import ModelType from '../../models/ModelType';
 import RequirementType from '../../models/RequirementType';
 import { IBaseModel } from './IBaseModel';
 import { IVariant, VariantSchema } from './IVariant';
-
 export interface IRequirement extends IBaseModel {
   id: string;
   title: string;
@@ -14,25 +13,25 @@ export interface IRequirement extends IBaseModel {
   tags: string[];
 }
 
-export const BaseRequirementSchema = Joi.object().keys({
-  id: Joi.string().length(36).required(),
-  title: Joi.string().required(),
-  description: Joi.string().allow(null, '').required(),
-  needId: Joi.string().length(36).required(),
-  variants: Joi.array().when('requirement_Type', {
+export const BaseRequirementSchema = CustomJoi.object().keys({
+  id: CustomJoi.string().length(36).required(),
+  title: CustomJoi.string().required(),
+  description: CustomJoi.string().allow(null, '').required(),
+  needId: CustomJoi.string().length(36).required(),
+  variants: CustomJoi.array().when('requirement_Type', {
     is: RequirementType.info,
-    then: Joi.array().items(VariantSchema).max(1),
-    otherwise: Joi.array().items(VariantSchema)
+    then: CustomJoi.array().items(VariantSchema).max(1),
+    otherwise: CustomJoi.array().items(VariantSchema)
   }),
-  tags: Joi.array().items(Joi.string()),
-  requirement_Type: Joi.string().valid(...Object.values(RequirementType)),
-  type: Joi.string().equal(ModelType.requirement).required(),
-  sourceOriginal: Joi.string().required(),
-  sourceRel: Joi.string().allow(null).required()
+  tags: CustomJoi.array().items(CustomJoi.string()),
+  requirement_Type: CustomJoi.string().valid(...Object.values(RequirementType)),
+  type: CustomJoi.string().equal(ModelType.requirement).required(),
+  sourceOriginal: CustomJoi.string().required(),
+  sourceRel: CustomJoi.string().allow(null).required()
 });
 
 export const PutRequirementSchema = BaseRequirementSchema;
 
 export const PostRequirementSchema = BaseRequirementSchema.keys({
-  id: Joi.string().equal('').required()
+  id: CustomJoi.string().equal('').required()
 });

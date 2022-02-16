@@ -1,11 +1,11 @@
 import { joiResolver } from '@hookform/resolvers/joi';
-import Joi from 'joi';
+import Button from '@mui/material/Button';
 import React from 'react';
 import Badge from 'react-bootstrap/Badge';
-import Button from '@mui/material/Button';
 import Form from 'react-bootstrap/Form';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
+import CustomJoi from '../../../common/CustomJoi';
 import SliderCtrl from '../../../FormProvider/SliderCtrl';
 import {
   IRequirementAnswer,
@@ -54,12 +54,12 @@ export default function SliderForm({
   // Override default schema with values set in config.
   const ProductSliderSchema = RequirementAnswerSchema.keys({
     question: SliderQuestionAnswerSchema.keys({
-      answer: Joi.object().keys({
-        value: Joi.number()
+      answer: CustomJoi.object().keys({
+        value: CustomJoi.number()
           .min(question.config.min)
           .max(question.config.max)
           .required(),
-        point: Joi.number().required()
+        point: CustomJoi.number().required()
       })
     })
   });

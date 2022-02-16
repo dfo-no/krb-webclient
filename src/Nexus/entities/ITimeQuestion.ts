@@ -1,4 +1,4 @@
-import Joi from 'joi';
+import CustomJoi from '../../common/CustomJoi';
 import QuestionEnum from '../../models/QuestionEnum';
 import {
   ConfigBaseSchema,
@@ -7,7 +7,6 @@ import {
   IQuestionBase,
   QuestionBaseSchema
 } from './IQuestionBase';
-
 export interface ITimeQuestion extends IQuestionBase<ITimeAnswer, ITimeConfig> {
   type: QuestionEnum.Q_TIME;
 }
@@ -32,72 +31,72 @@ export interface TimeScorePair {
 }
 
 export const TimeWorkbenchSchema = QuestionBaseSchema.keys({
-  type: Joi.string().equal(QuestionEnum.Q_TIME).required(),
+  type: CustomJoi.string().equal(QuestionEnum.Q_TIME).required(),
   config: ConfigBaseSchema.keys({
-    isPeriod: Joi.boolean().required(),
-    fromBoundary: Joi.string().allow(null).required(),
-    toBoundary: Joi.string().allow(null).required(),
-    periodMinutes: Joi.alternatives().conditional('isPeriod', {
+    isPeriod: CustomJoi.boolean().required(),
+    fromBoundary: CustomJoi.string().allow(null).required(),
+    toBoundary: CustomJoi.string().allow(null).required(),
+    periodMinutes: CustomJoi.alternatives().conditional('isPeriod', {
       is: true,
-      then: Joi.number().required().min(0).max(60),
-      otherwise: Joi.number()
+      then: CustomJoi.number().required().min(0).max(60),
+      otherwise: CustomJoi.number()
     }),
-    periodHours: Joi.alternatives().conditional('isPeriod', {
+    periodHours: CustomJoi.alternatives().conditional('isPeriod', {
       is: true,
-      then: Joi.number().required().min(0).max(24),
-      otherwise: Joi.number()
+      then: CustomJoi.number().required().min(0).max(24),
+      otherwise: CustomJoi.number()
     }),
-    timeScores: Joi.array().items(
-      Joi.object().keys({
-        score: Joi.number().required().min(0).max(100),
-        time: Joi.string().required()
+    timeScores: CustomJoi.array().items(
+      CustomJoi.object().keys({
+        score: CustomJoi.number().required().min(0).max(100),
+        time: CustomJoi.string().required()
       })
     )
   })
 });
 
 export const TimeSpecSchema = QuestionBaseSchema.keys({
-  type: Joi.string().equal(QuestionEnum.Q_TIME).required(),
+  type: CustomJoi.string().equal(QuestionEnum.Q_TIME).required(),
   config: ConfigBaseSchema.keys({
-    isPeriod: Joi.boolean().required(),
-    fromBoundary: Joi.string().allow(null).required(),
-    toBoundary: Joi.string().allow(null).required(),
-    periodMinutes: Joi.alternatives().conditional('isPeriod', {
+    isPeriod: CustomJoi.boolean().required(),
+    fromBoundary: CustomJoi.string().allow(null).required(),
+    toBoundary: CustomJoi.string().allow(null).required(),
+    periodMinutes: CustomJoi.alternatives().conditional('isPeriod', {
       is: true,
-      then: Joi.number().required().min(0).max(60),
-      otherwise: Joi.number()
+      then: CustomJoi.number().required().min(0).max(60),
+      otherwise: CustomJoi.number()
     }),
-    periodHours: Joi.alternatives().conditional('isPeriod', {
+    periodHours: CustomJoi.alternatives().conditional('isPeriod', {
       is: true,
-      then: Joi.number().required().min(0).max(24),
-      otherwise: Joi.number()
+      then: CustomJoi.number().required().min(0).max(24),
+      otherwise: CustomJoi.number()
     }),
-    timeScores: Joi.array().items(
-      Joi.object().keys({
-        score: Joi.number().required().min(0).max(100),
-        time: Joi.string().required()
+    timeScores: CustomJoi.array().items(
+      CustomJoi.object().keys({
+        score: CustomJoi.number().required().min(0).max(100),
+        time: CustomJoi.string().required()
       })
     )
   })
 });
 
 export const TimeAnswerSchema = TimeSpecSchema.keys({
-  answer: Joi.object().keys({
-    fromTime: Joi.date()
+  answer: CustomJoi.object().keys({
+    fromTime: CustomJoi.date()
       .iso()
       .raw()
-      .min(Joi.ref('/config.fromBoundary'))
+      .min(CustomJoi.ref('/config.fromBoundary'))
       .required(),
-    toTime: Joi.when('/config.isPeriod', {
+    toTime: CustomJoi.when('/config.isPeriod', {
       is: true,
-      then: Joi.date()
+      then: CustomJoi.date()
         .iso()
         .raw()
-        .greater(Joi.ref('fromTime'))
-        .max(Joi.ref('/config.toBoundary'))
+        .greater(CustomJoi.ref('fromTime'))
+        .max(CustomJoi.ref('/config.toBoundary'))
         .required(),
-      otherwise: Joi.string().allow(null)
+      otherwise: CustomJoi.string().allow(null)
     }),
-    point: Joi.number().required()
+    point: CustomJoi.number().required()
   })
 });

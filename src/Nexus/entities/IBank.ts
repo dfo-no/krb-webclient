@@ -1,4 +1,4 @@
-import Joi from 'joi';
+import CustomJoi from '../../common/CustomJoi';
 import { IInheritedBank } from '../../models/IInheritedBank';
 import ModelType from '../../models/ModelType';
 import { Parentable } from '../../models/Parentable';
@@ -9,33 +9,33 @@ import { IProduct } from './IProduct';
 import { IPublication } from './IPublication';
 import { ITag } from './ITag';
 
-export const BaseBankSchema = Joi.object().keys({
-  id: Joi.string().length(36).required(),
-  title: Joi.string().min(3).required(),
-  description: Joi.string().allow('').required(),
-  needs: Joi.array().required(),
-  products: Joi.array().required(),
-  codelist: Joi.array().required(),
-  tags: Joi.array().required(),
-  version: Joi.number().min(0).required(),
-  type: Joi.string().equal(ModelType.bank).required(),
-  publications: Joi.array().required(),
-  publishedDate: Joi.alternatives([
-    Joi.date().iso().raw(),
-    Joi.string().valid(null)
+export const BaseBankSchema = CustomJoi.object().keys({
+  id: CustomJoi.string().length(36).required(),
+  title: CustomJoi.string().min(3).required(),
+  description: CustomJoi.string().allow('').required(),
+  needs: CustomJoi.array().required(),
+  products: CustomJoi.array().required(),
+  codelist: CustomJoi.array().required(),
+  tags: CustomJoi.array().required(),
+  version: CustomJoi.number().min(0).required(),
+  type: CustomJoi.string().equal(ModelType.bank).required(),
+  publications: CustomJoi.array().required(),
+  publishedDate: CustomJoi.alternatives([
+    CustomJoi.date().iso().raw(),
+    CustomJoi.string().valid(null)
   ]).required(),
-  projectId: Joi.alternatives([
-    Joi.string().length(36),
-    Joi.string().allow(null)
+  projectId: CustomJoi.alternatives([
+    CustomJoi.string().length(36),
+    CustomJoi.string().allow(null)
   ]).required(),
-  inheritedBanks: Joi.array().required(),
-  sourceOriginal: Joi.alternatives([
-    Joi.string().length(36),
-    Joi.string().allow(null)
+  inheritedBanks: CustomJoi.array().required(),
+  sourceOriginal: CustomJoi.alternatives([
+    CustomJoi.string().length(36),
+    CustomJoi.string().allow(null)
   ]).required(),
-  sourceRel: Joi.alternatives([
-    Joi.string().length(36),
-    Joi.string().allow(null)
+  sourceRel: CustomJoi.alternatives([
+    CustomJoi.string().length(36),
+    CustomJoi.string().allow(null)
   ]).required()
 });
 

@@ -1,10 +1,9 @@
-import Joi from 'joi';
+import CustomJoi from '../common/CustomJoi';
 import { IProduct } from '../Nexus/entities/IProduct';
 import {
   IRequirementAnswer,
   RequirementAnswerSchema
 } from './IRequirementAnswer';
-
 export interface IPrefilledResponseProduct {
   id: string;
   title: string;
@@ -15,12 +14,12 @@ export interface IPrefilledResponseProduct {
   relatedProducts: string[];
 }
 
-export const PrefilledResponseProductSchema = Joi.object().keys({
-  id: Joi.string().required(),
-  title: Joi.string().required(),
-  originProduct: Joi.object(),
-  description: Joi.string().allow(null, '').required(),
-  answeredVariants: Joi.array().items(Joi.string()),
-  requirementAnswers: Joi.array().items(RequirementAnswerSchema),
-  relatedProducts: Joi.array().items(Joi.string().length(36))
+export const PrefilledResponseProductSchema = CustomJoi.object().keys({
+  id: CustomJoi.string().required(),
+  title: CustomJoi.string().required(),
+  originProduct: CustomJoi.object(),
+  description: CustomJoi.string().allow(null, '').required(),
+  answeredVariants: CustomJoi.array().items(CustomJoi.string()),
+  requirementAnswers: CustomJoi.array().items(RequirementAnswerSchema),
+  relatedProducts: CustomJoi.array().items(CustomJoi.string().length(36))
 });

@@ -1,11 +1,11 @@
 import { joiResolver } from '@hookform/resolvers/joi';
-import Joi from 'joi';
+import Button from '@mui/material/Button';
 import React from 'react';
 import Badge from 'react-bootstrap/Badge';
-import Button from '@mui/material/Button';
 import Form from 'react-bootstrap/Form';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
+import CustomJoi from '../../../common/CustomJoi';
 import ErrorSummary from '../../../Form/ErrorSummary';
 import { IPrefilledResponseProduct } from '../../../models/IPrefilledResponseProduct';
 import {
@@ -62,9 +62,9 @@ const ProductCheckBoxForm = ({
   // Override default schema with values set in config.
   const ProductCheckboxSchema = RequirementAnswerSchema.keys({
     question: CheckboxQuestionAnswerSchema.keys({
-      answer: Joi.object().keys({
-        value: Joi.boolean().required(),
-        point: Joi.number().required()
+      answer: CustomJoi.object().keys({
+        value: CustomJoi.boolean().required(),
+        point: CustomJoi.number().required()
       })
     })
   });
