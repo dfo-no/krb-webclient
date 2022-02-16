@@ -1,9 +1,9 @@
-import DfoJoi from './CustomJoi';
+import CustomJoi from './CustomJoi';
 
 describe('Joi Customization', () => {
   test('Joi string max should show i18n error message', () => {
-    const schema = DfoJoi.object().keys({
-      id: DfoJoi.string().max(36).required()
+    const schema = CustomJoi.object().keys({
+      id: CustomJoi.string().max(36).required()
     });
     const obj = {
       id: 'abea4419-3e99-4040-b667-9d1191b1d87aTTT'
@@ -14,8 +14,8 @@ describe('Joi Customization', () => {
   });
 
   test('Joi can use custom validation method "million"', () => {
-    const schema = DfoJoi.object().keys({
-      aNumber: DfoJoi.million()
+    const schema = CustomJoi.object().keys({
+      aNumber: CustomJoi.million()
     });
 
     const obj = {
