@@ -2,8 +2,6 @@ import { joiResolver } from '@hookform/resolvers/joi';
 import DeleteIcon from '@mui/icons-material/Delete';
 import Button from '@mui/material/Button';
 import React, { useState } from 'react';
-import Card from 'react-bootstrap/Card';
-import Form from 'react-bootstrap/Form';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { v4 as uuidv4 } from 'uuid';
@@ -41,7 +39,7 @@ function EditNeedForm({ element, handleClose }: IProps): React.ReactElement {
 
   // const [modalShow, setModalShow] = useState(false);
 
-  const onEditNeedSubmit = (post: Nestable<INeed>) => {
+  const onSubmit = (post: Nestable<INeed>) => {
     const postNeed = Utils.nestable2Parentable(post);
     dispatch(editNeed(postNeed));
     dispatch(putSelectedProjectThunk('dummy')).then(() => {
@@ -78,7 +76,7 @@ function EditNeedForm({ element, handleClose }: IProps): React.ReactElement {
   return (
     <FormProvider {...methods}>
       <form
-        onSubmit={methods.handleSubmit(onEditNeedSubmit)}
+        onSubmit={methods.handleSubmit(onSubmit)}
         autoComplete="off"
         noValidate
       >
