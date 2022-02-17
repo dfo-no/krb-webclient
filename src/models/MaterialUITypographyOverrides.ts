@@ -9,6 +9,8 @@ declare module '@mui/material/styles' {
     smallUnderline: React.CSSProperties;
     smallUnderlineBlue: React.CSSProperties;
     big: React.CSSProperties;
+    medium: React.CSSProperties;
+    mediumBold: React.CSSProperties;
     mediumBlue: React.CSSProperties;
     footerAddressText: React.CSSProperties;
     footerLinkText: React.CSSProperties;
@@ -22,6 +24,8 @@ declare module '@mui/material/styles' {
     smallUnderline?: React.CSSProperties;
     smallUnderlineBlue?: React.CSSProperties;
     big?: React.CSSProperties;
+    medium?: React.CSSProperties;
+    mediumBold?: React.CSSProperties;
     mediumBlue?: React.CSSProperties;
     footerAddressText?: React.CSSProperties;
     footerLinkText?: React.CSSProperties;
@@ -37,6 +41,8 @@ declare module '@mui/material/Typography' {
     smallUnderline: true;
     smallUnderlineBlue: true;
     big: true;
+    medium: true;
+    mediumBold: true;
     mediumBlue: true;
     footerAddressText: true;
     footerLinkText: true;

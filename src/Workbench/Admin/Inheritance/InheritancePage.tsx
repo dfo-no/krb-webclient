@@ -1,5 +1,5 @@
 import { Box, makeStyles } from '@material-ui/core';
-import DeleteIcon from '@mui/icons-material/Delete';
+import CloseIcon from '@mui/icons-material/Close';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import DFOSearchBar from '../../../components/DFOSearchBar/DFOSearchBar';
@@ -82,46 +82,60 @@ const useStyles = makeStyles({
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'baseline',
-    borderBottom: `1px solid ${theme.palette.gray300.main}`,
-    marginRight: 30,
-    height: 54
+    borderBottom: `1px solid ${theme.palette.black.main}`,
+    paddingBottom: 6,
+    marginRight: 30
+  },
+  titleVersion: {
+    display: 'flex',
+    gap: 5
   },
   bankItem: {
-    width: '100%'
+    width: '100%',
+    height: 70
   },
   endContainer: {
     display: 'flex'
   },
-  dfoSwitch: { marginTop: 10 },
-  deleteIcon: { marginTop: 15 },
+  closeIcon: {
+    color: theme.palette.gray700.main,
+    fontSize: '28px !important'
+  },
   element: {
     marginBottom: 18
   },
   accordionElement: {
-    marginBottom: 17
+    marginBottom: 14
   },
-  description: {
-    marginTop: 12
-  },
+  description: { paddingTop: 5 },
   bankBodyContainer: {
     display: 'flex',
     flexDirection: 'column',
     gap: 30,
-    backgroundColor: theme.palette.gray100.main,
-    paddingTop: 30
+    backgroundColor: theme.palette.dfoWhite.main,
+    paddingTop: 30,
+    paddingBottom: 30
   },
-  subContainer: {
+  inheritVersionContainer: {
+    display: 'flex',
+    gap: 12,
+    flexDirection: 'column',
+    margin: 'auto',
+    width: '50vw'
+  },
+  inheritPartsContainer: {
     display: 'flex',
     flexDirection: 'column',
-    gap: 10,
-    paddingLeft: 20
+    margin: 'auto',
+    width: '50vw'
   },
   selectContainer: {
     width: '70%'
   },
   checkboxButtonContainer: {
     display: 'flex',
-    justifyContent: 'space-between'
+    justifyContent: 'space-between',
+    paddingLeft: 12
   }
 });
 
@@ -159,20 +173,16 @@ export default function InheritancePage(): React.ReactElement {
     return (
       <Box className={classes.bankItem}>
         <Box className={classes.titleOptions}>
-          <Box>
-            <Typography variant="mediumBlue">{title}</Typography>
+          <Box className={classes.titleVersion}>
+            <Typography variant="mediumBold">{title};</Typography>
+            <Typography variant="medium">versjon</Typography>
           </Box>
           <Box className={classes.endContainer}>
-            <Box className={classes.dfoSwitch}>
-              <DFOSwitch />
-            </Box>
-            <Box className={classes.deleteIcon}>
-              <DeleteIcon />
-            </Box>
+            <CloseIcon className={classes.closeIcon} />
           </Box>
         </Box>
         <Box className={classes.description}>
-          <Typography variant="smallGray">
+          <Typography variant="small">
             En kort beskrivelse av kravsettet som det arves fra
           </Typography>
         </Box>
@@ -185,7 +195,7 @@ export default function InheritancePage(): React.ReactElement {
       <FormProvider {...methods}>
         <form onSubmit={methods.handleSubmit(saveValues)}>
           <Box className={classes.bankBodyContainer}>
-            <Box className={classes.subContainer}>
+            <Box className={classes.inheritVersionContainer}>
               <Typography variant="smallBold">
                 Hvilken versjon av kravsettet arves?
               </Typography>
@@ -193,7 +203,7 @@ export default function InheritancePage(): React.ReactElement {
                 <DFOSelect options={versions} />
               </Box>
             </Box>
-            <Box className={classes.subContainer}>
+            <Box className={classes.inheritPartsContainer}>
               <Typography variant="smallBold">
                 Hvilke deler av kravsettet arves?
               </Typography>

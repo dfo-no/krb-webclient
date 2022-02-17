@@ -1,6 +1,5 @@
 import { makeStyles } from '@material-ui/core';
 import DFOSearchBar from '../../../components/DFOSearchBar/DFOSearchBar';
-import SwitchCtrl from '../../../FormProvider/SwitchCtrl';
 import { useAppSelector } from '../../../store/hooks';
 import List from '@mui/material/List';
 import theme from '../../../theme';
@@ -9,8 +8,13 @@ import { DFOCheckbox } from '../../../components/DFOCheckbox/DFOCheckbox';
 
 const useStyles = makeStyles({
   inheritanceTagList: {
+    display: 'flex',
+    flexDirection: 'column',
+    gap: 12,
+    margin: 'auto',
     border: '2px solid #005B91',
-    backgroundColor: '#EFEFEF',
+    backgroundColor: '#F9F9F9',
+    width: '50vw',
     padding: 30
   },
   topContainer: {
@@ -24,8 +28,9 @@ const useStyles = makeStyles({
   tagsList: {},
   tagListItem: {
     display: 'flex',
-    borderBottom: `1px solid ${theme.palette.silver.main}`,
-    backgroundColor: theme.palette.dfoWhite.main
+    border: `1px solid ${theme.palette.silver.main}`,
+    backgroundColor: theme.palette.dfoWhite.main,
+    height: '42px'
   },
   tagListItemTitle: { width: '40%' },
   tagListItemDescription: {

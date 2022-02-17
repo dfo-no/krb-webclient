@@ -160,15 +160,27 @@ theme.typography.smallUnderlineBlue = {
   cursor: 'pointer'
 };
 
-theme.typography.big = {
+theme.typography.medium = {
   color: theme.palette.black.main,
-  fontSize: '28px',
+  fontSize: '20px',
+  fontWeight: 100
+};
+
+theme.typography.mediumBold = {
+  color: theme.palette.black.main,
+  fontSize: '20px',
   fontWeight: 700
 };
 
 theme.typography.mediumBlue = {
   color: theme.palette.primary.main,
-  fontSize: '18px'
+  fontSize: '20px'
+};
+
+theme.typography.big = {
+  color: theme.palette.black.main,
+  fontSize: '28px',
+  fontWeight: 700
 };
 
 theme.typography.footerAddressText = {

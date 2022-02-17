@@ -8,13 +8,22 @@ import { DFOSearchBarProps } from './DFOSearchBarProps';
 const useStyles = makeStyles({
   root: {
     width: '100%',
-    backgroundColor: theme.palette.dfoWhite.main
+    backgroundColor: 'white',
+    '& .MuiInputBase-adornedEnd': {
+      backgroundColor: 'white',
+      '&:hover': {
+        background: theme.palette.dfoWhite.main
+      }
+    }
   },
   searchFieldIcon: {
     marginBottom: 2,
     color: theme.palette.purple.main,
     fontSize: '30px !important',
     zIndex: 1
+  },
+  adornedEnd: {
+    backgroundColor: 'white'
   }
 });
 
@@ -22,8 +31,7 @@ export default function DFOSearchBar({
   list,
   callback,
   searchFunction,
-  label,
-  showBorder
+  label
 }: DFOSearchBarProps): React.ReactElement {
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.value.length !== 0) {
@@ -38,6 +46,7 @@ export default function DFOSearchBar({
   return (
     <TextField
       variant="filled"
+      size="small"
       label={label}
       className={classes.root}
       autoComplete="off"
@@ -47,6 +56,9 @@ export default function DFOSearchBar({
       }}
       InputProps={{
         disableUnderline: true,
+        classes: {
+          adornedEnd: classes.adornedEnd
+        },
         endAdornment: (
           <InputAdornment position="end">
             <SearchIcon className={classes.searchFieldIcon} />

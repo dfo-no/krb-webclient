@@ -13,13 +13,14 @@ import theme from '../../theme';
 
 const useStyles = makeStyles({
   root: {
-    '& .Mui-expanded': {
-      backgroundColor: theme.palette.dfoLightBlue.main,
-      color: theme.palette.dfoWhite.main
-    }
+    borderTop: '12px solid #009FE3'
   },
   accordionBody: {
-    backgroundColor: theme.palette.gray100.main
+    borderTop: `2px solid ${theme.palette.gray300.main}`
+  },
+  expandIcon: {
+    color: theme.palette.gray700.main,
+    fontSize: '40px !important'
   }
 });
 
@@ -48,7 +49,7 @@ export const DFOAccordionElement = ({
       onChange={handleAccordionChange(eventKey)}
     >
       <AccordionSummary
-        expandIcon={<ExpandMoreIcon />}
+        expandIcon={<ExpandMoreIcon className={classes.expandIcon} />}
         aria-controls="panel1a-content"
         id="panel1a-header"
       >
