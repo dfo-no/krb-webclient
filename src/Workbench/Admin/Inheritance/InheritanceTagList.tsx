@@ -10,10 +10,10 @@ const useStyles = makeStyles({
   inheritanceTagList: {
     display: 'flex',
     flexDirection: 'column',
-    gap: 12,
+    gap: 20,
     margin: 'auto',
     border: '2px solid #005B91',
-    backgroundColor: '#F9F9F9',
+    backgroundColor: '#efefef',
     width: '50vw',
     padding: 30
   },
@@ -25,18 +25,30 @@ const useStyles = makeStyles({
   searchContainer: {
     width: '50%'
   },
-  tagsList: {},
+  tagsList: {
+    border: `1px solid ${theme.palette.silver.main}`,
+    '&:last-child': {
+      borderBottom: 'none'
+    },
+    '& .MuiList-root': {
+      paddingTop: 0,
+      paddingBottom: 0
+    }
+  },
   tagListItem: {
     display: 'flex',
-    border: `1px solid ${theme.palette.silver.main}`,
     backgroundColor: theme.palette.dfoWhite.main,
+    borderBottom: `1px solid ${theme.palette.silver.main}`,
     height: '42px'
   },
   tagListItemTitle: { width: '40%' },
   tagListItemDescription: {
+    display: 'flex',
+    alignItems: 'center',
     borderLeft: `1px solid ${theme.palette.silver.main}`,
     paddingLeft: 10,
-    width: '90%'
+    width: '90%',
+    height: '42px'
   },
   tagListCheckbox: {},
   showTagsText: {}
@@ -50,18 +62,18 @@ export default function InheritancePage(): React.ReactElement {
   const tagsSearchFunction = () => {};
 
   const tags = [
-    { title: 'Merkelapp', description: 'En finfin merkelapp' },
-    { title: 'Merkelapp to', description: 'En finfin tag' },
-    { title: 'Merkelapp tre', description: 'En finfin tag' },
-    { title: 'Merkelapp fire', description: 'En finfin tag' },
-    { title: 'Merkelapp fem', description: 'En finfin tag' },
-    { title: 'Merkelapp seks', description: 'En finfin tag' },
-    { title: 'Merkelapp sju', description: 'En finfin tag' },
-    { title: 'Merkelapp åtte', description: 'En finfin tag' },
-    { title: 'Merkelapp ni', description: 'En finfin tag' },
-    { title: 'Merkelapp ti', description: 'En finfin tag' },
-    { title: 'Merkelapp elleve', description: 'En finfin tag' },
-    { title: 'Merkelapp tolv', description: 'En finfin tag' }
+    { title: 'Merkelapp 1', description: 'Merkelapp beskrivelse' },
+    { title: 'Merkelapp 2', description: 'Merkelapp beskrivelse' },
+    { title: 'Merkelapp 3', description: 'Merkelapp beskrivelse' },
+    { title: 'Merkelapp 4', description: 'Merkelapp beskrivelse' },
+    { title: 'Merkelapp 5', description: 'Merkelapp beskrivelse' },
+    { title: 'Merkelapp 6', description: 'Merkelapp beskrivelse' },
+    { title: 'Merkelapp 7', description: 'Merkelapp beskrivelse' },
+    { title: 'Merkelapp 8', description: 'Merkelapp beskrivelse' },
+    { title: 'Merkelapp 9', description: 'Merkelapp beskrivelse' },
+    { title: 'Merkelapp 10', description: 'Merkelapp beskrivelse' },
+    { title: 'Merkelapp 11', description: 'Merkelapp beskrivelse' },
+    { title: 'Merkelapp 12', description: 'Merkelapp beskrivelse' }
   ];
 
   return (

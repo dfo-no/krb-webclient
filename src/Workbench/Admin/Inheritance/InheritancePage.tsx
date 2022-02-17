@@ -1,16 +1,16 @@
-import { Box, makeStyles } from '@material-ui/core';
+import { Box, Grid, makeStyles } from '@material-ui/core';
+import Button from '@mui/material/Button';
+import Typography from '@mui/material/Typography';
 import CloseIcon from '@mui/icons-material/Close';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import DFOSearchBar from '../../../components/DFOSearchBar/DFOSearchBar';
-import { useAppDispatch, useAppSelector } from '../../../store/hooks';
+import { useAppSelector } from '../../../store/hooks';
 import theme from '../../../theme';
 import {
   DFOAccordionElement,
   DFOAccordionProvider
 } from '../../../components/DFOAccordion/DFOAccordion';
-import Typography from '@mui/material/Typography';
-import { DFOSwitch } from '../../../components/DFOSwitch/DFOSwitch';
 import { FormProvider, useForm } from 'react-hook-form';
 import { joiResolver } from '@hookform/resolvers/joi';
 import Joi from 'joi';
@@ -18,7 +18,6 @@ import RequirementType from '../../../models/RequirementType';
 import CheckboxCtrl from '../../../FormProvider/CheckboxCtrl';
 import InheritanceTagList from './InheritanceTagList';
 import DFOSelect from '../../../components/DFOSelect/DFOSelect';
-import Button from '@mui/material/Button';
 
 interface IFormValues {
   person: {
@@ -67,7 +66,7 @@ const useStyles = makeStyles({
   topContainer: {
     display: 'flex',
     flexDirection: 'row',
-    gap: 5
+    gap: 100
   },
   searchBarContainer: {
     flex: 1,
@@ -132,9 +131,10 @@ const useStyles = makeStyles({
   selectContainer: {
     width: '70%'
   },
-  checkboxButtonContainer: {
+  partsCheckBoxSaveButtonContainer: {
     display: 'flex',
     justifyContent: 'space-between',
+    alignItems: 'center',
     paddingLeft: 12
   }
 });
@@ -142,12 +142,20 @@ const useStyles = makeStyles({
 export default function InheritancePage(): React.ReactElement {
   const { project } = useAppSelector((state) => state.project);
   const { t } = useTranslation();
-  const dispatch = useAppDispatch();
   const classes = useStyles();
 
   const versions = [
     { name: 'Tronds versjon; 1. des. 2021' },
     { name: 'Oslo kommune; 1. des. 2021' }
+  ];
+
+  const parts = [
+    { name: 'arvHeleKravSettet', label: 'Arv hele kravsettet' },
+    { name: 'arvDelEn', label: 'Arv del en' },
+    { name: 'arvDelTo', label: 'Arv del to' },
+    { name: 'arvDelTre', label: 'Arv del tre' },
+    { name: 'arvDelFire', label: 'Arv del fire' },
+    { name: 'arvDelFem', label: 'Arv del fem' }
   ];
 
   const defaultValues: IFormValues = {
@@ -207,8 +215,16 @@ export default function InheritancePage(): React.ReactElement {
               <Typography variant="smallBold">
                 Hvilke deler av kravsettet arves?
               </Typography>
-              <Box className={classes.checkboxButtonContainer}>
-                <CheckboxCtrl name="test" label="Arv hele kravsett" />
+              <Box className={classes.partsCheckBoxSaveButtonContainer}>
+                <Grid container direction="row">
+                  {parts.map((part) => {
+                    return (
+                      <Grid item xs={4}>
+                        <CheckboxCtrl name={part.name} label={part.label} />
+                      </Grid>
+                    );
+                  })}
+                </Grid>
                 <Button variant="save">Lagre endringer</Button>
               </Box>
             </Box>

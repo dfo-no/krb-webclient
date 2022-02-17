@@ -211,6 +211,7 @@ theme.components = {
           backgroundColor: theme.palette.lightBlue.main,
           color: theme.palette.dfoWhite.main,
           whiteSpace: 'nowrap',
+          height: 40,
           '&:hover': {
             background: theme.palette.blue.main
           }
@@ -222,6 +223,7 @@ theme.components = {
           backgroundColor: theme.palette.dfoErrorRed.main,
           color: theme.palette.dfoWhite.main,
           whiteSpace: 'nowrap',
+          height: 40,
           '&:hover': {
             background: theme.palette.dfoErrorRedHover.main
           }
@@ -233,6 +235,7 @@ theme.components = {
           backgroundColor: theme.palette.saveGreen.main,
           color: theme.palette.dfoWhite.main,
           whiteSpace: 'nowrap',
+          height: 40,
           '&:hover': {
             background: theme.palette.saveGreenHover.main
           }

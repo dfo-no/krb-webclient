@@ -8,7 +8,7 @@ const useStyles = makeStyles({
   select: {
     width: '100%',
     border: `2px solid ${theme.palette.indigo.main}`,
-    height: 48,
+    height: 60,
     paddingLeft: 20,
     '& .MuiInputBase-input': {
       backgroundColor: theme.palette.dfoWhite.main
@@ -16,6 +16,7 @@ const useStyles = makeStyles({
   },
   selectIcon: {
     color: theme.palette.gray700.main,
+    marginRight: 8,
     fontSize: '38px !important'
   }
 });
