@@ -1,22 +1,23 @@
 import React, { useEffect, useState } from 'react';
 import { Parentable } from '../../../models/Parentable';
-import NestableHierarcyWithAccordion from '../../../NestableHierarchy/NestableHierarcyWithAccordion';
+import { Nestable } from '../../../models/Nestable';
 import { IProduct } from '../../../Nexus/entities/IProduct';
+import SearchUtils from '../../../common/SearchUtils';
+import Utils from '../../../common/Utils';
 import { useAppDispatch, useAppSelector } from '../../../store/hooks';
 import {
   putSelectedProjectThunk,
   updateProductList
 } from '../../../store/reducers/project-reducer';
-import EditProductForm from './EditProductForm';
 import { Box, Button } from '@mui/material/';
 import { makeStyles } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
-import theme from '../../../theme';
+import NestableHierarcyWithAccordion from '../../../NestableHierarchy/NestableHierarcyWithAccordion';
 import NewProductForm from './NewProductForm';
+import EditProductForm from './EditProductForm';
 import Dialog from '../../../components/DFODialog/DFODialog';
 import DFOSearchBar from '../../../components/DFOSearchBar/DFOSearchBar';
-import { Nestable } from '../../../models/Nestable';
-import Utils from '../../../common/Utils';
+import theme from '../../../theme';
 
 const useStyles = makeStyles({
   productsContainer: {
@@ -58,10 +59,6 @@ const useStyles = makeStyles({
   }
 });
 
-interface IProductInSearch extends IProduct {
-  inSearch: boolean;
-}
-
 export default function ProductPage(): React.ReactElement {
   const { project } = useAppSelector((state) => state.project);
   const dispatch = useAppDispatch();
@@ -96,31 +93,11 @@ export default function ProductPage(): React.ReactElement {
     setProducts(result);
   };
 
-  const mapProduct = (topProduct: Nestable<IProduct>, searchString: string) => {
-    if (topProduct.title.toLowerCase().includes(searchString.toLowerCase())) {
-      return { ...topProduct, inSearch: true } as IProductInSearch;
-    }
-    if (!topProduct.children) {
-      return { ...topProduct, inSearch: false } as IProductInSearch;
-    }
-    const newChilds: IProductInSearch[] = topProduct.children
-      .map((childProduct) => mapProduct(childProduct, searchString))
-      .filter((childProduct) => childProduct.inSearch);
-
-    if (newChilds.length === 0) {
-      return { ...topProduct, inSearch: false } as IProductInSearch;
-    }
-    return {
-      ...topProduct,
-      children: newChilds,
-      inSearch: true
-    } as IProductInSearch;
-  };
-
   const productsSearch = (searchString: string, list: Nestable<IProduct>[]) => {
     return list
-      .map((product) => mapProduct(product, searchString))
-      .filter((product) => product.inSearch);
+      .map((product) => SearchUtils.search(product, searchString))
+      .filter((product) => product.inSearch)
+      .map((product) => product as IProduct);
   };
 
   return (
