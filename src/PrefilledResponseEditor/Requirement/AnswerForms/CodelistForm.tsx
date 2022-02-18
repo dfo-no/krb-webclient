@@ -2,7 +2,6 @@ import { joiResolver } from '@hookform/resolvers/joi';
 import Button from '@mui/material/Button';
 import React from 'react';
 import Badge from 'react-bootstrap/Badge';
-import Form from 'react-bootstrap/Form';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import CustomJoi from '../../../common/CustomJoi';
@@ -105,7 +104,7 @@ export default function CodelistForm({
         </small>
       </h6>
       <FormProvider {...methods}>
-        <Form
+        <form
           onSubmit={methods.handleSubmit(onSubmit)}
           key={question.id}
           className="mt-4"
@@ -136,7 +135,7 @@ export default function CodelistForm({
               {t('Reset')}
             </Button>
           </div>
-        </Form>
+        </form>
         <ErrorSummary errors={methods.formState.errors} />
       </FormProvider>
     </div>

@@ -3,7 +3,6 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import { get } from 'lodash';
 import React, { useContext, useEffect, useState } from 'react';
 import Button from 'react-bootstrap/Button';
-import Form from 'react-bootstrap/Form';
 import { FieldError, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
@@ -39,7 +38,6 @@ export default function EditProductForm({
   const { project } = useAppSelector((state) => state.project);
   const dispatch = useAppDispatch();
   const { onOpenClose } = useContext(AccordionContext);
-  const [validated] = useState(false);
   const [modalShow, setModalShow] = useState(false);
   const { t } = useTranslation();
 
@@ -117,11 +115,10 @@ export default function EditProductForm({
   };
 
   return (
-    <Form
+    <form
       onSubmit={handleSubmit((post) => onEditProductSubmit(post))}
       autoComplete="off"
       noValidate
-      validated={validated}
     >
       <ControlledTextInput
         control={control}
@@ -158,6 +155,6 @@ export default function EditProductForm({
         text="This product is associated to one or more requirement variants, please remove the connection to be able to delete"
       />
       <ErrorSummary errors={errors} />
-    </Form>
+    </form>
   );
 }

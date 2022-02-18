@@ -3,18 +3,17 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import Button from '@mui/material/Button';
 import { get } from 'lodash';
 import React, { useContext, useEffect, useState } from 'react';
-import Form from 'react-bootstrap/Form';
 import { FieldError, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { v4 as uuidv4 } from 'uuid';
 import AlertModal from '../../../common/AlertModal';
 import Utils from '../../../common/Utils';
+import { AccordionContext } from '../../../components/DFOAccordion/AccordionContext';
 import ControlledTextInput from '../../../Form/ControlledTextInput';
 import ErrorSummary from '../../../Form/ErrorSummary';
 import { IAlert } from '../../../models/IAlert';
 import { Nestable } from '../../../models/Nestable';
 import { Parentable } from '../../../models/Parentable';
-import { AccordionContext } from '../../../components/DFOAccordion/AccordionContext';
 import { INeed, PutNeedSchema } from '../../../Nexus/entities/INeed';
 import { useAppDispatch, useAppSelector } from '../../../store/hooks';
 import { addAlert } from '../../../store/reducers/alert-reducer';
@@ -35,7 +34,6 @@ function EditNeedForm({ element }: IProps): React.ReactElement {
   const { project } = useAppSelector((state) => state.project);
   const dispatch = useAppDispatch();
   const { onOpenClose } = useContext(AccordionContext);
-  const [validated] = useState(false);
   const { t } = useTranslation();
 
   const {
@@ -91,11 +89,10 @@ function EditNeedForm({ element }: IProps): React.ReactElement {
   };
 
   return (
-    <Form
+    <form
       onSubmit={handleSubmit(onEditNeedSubmit)}
       autoComplete="off"
       noValidate
-      validated={validated}
     >
       <ControlledTextInput
         control={control}
@@ -127,7 +124,7 @@ function EditNeedForm({ element }: IProps): React.ReactElement {
         title="Attention"
         text="This product has one or more connected requirements or has subneeds, please remove them to be able to delete"
       />
-    </Form>
+    </form>
   );
 }
 

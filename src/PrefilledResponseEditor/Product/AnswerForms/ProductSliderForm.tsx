@@ -117,7 +117,7 @@ const ProductSliderForm = ({
           {getVariantText(elem.requirement, elem.variantId)[1]}
         </small>
       </h6>
-      <Form
+      <form
         onSubmit={handleSubmit(onSubmit)}
         key={question.id}
         className="mt-4"
@@ -165,7 +165,7 @@ const ProductSliderForm = ({
             {t('Reset')}
           </Button>
         </div>
-      </Form>
+      </form>
     </div>
   );
 };

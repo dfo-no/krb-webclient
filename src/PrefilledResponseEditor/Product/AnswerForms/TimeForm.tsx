@@ -92,7 +92,7 @@ export default function ProductTimeForm({
           {getVariantText(answer.requirement, answer.variantId)[1]}
         </small>
       </h6>
-      <Form
+      <form
         onSubmit={methods.handleSubmit(onSubmit)}
         key={question.id}
         className="mt-4"
@@ -131,7 +131,7 @@ export default function ProductTimeForm({
             {t('Reset')}
           </Button>
         </div>
-      </Form>
+      </form>
     </div>
   );
 }
