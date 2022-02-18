@@ -1,6 +1,5 @@
 import { Box, Grid, makeStyles } from '@material-ui/core';
-import Button from '@mui/material/Button';
-import Typography from '@mui/material/Typography';
+import { Button, Typography } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
@@ -14,47 +13,89 @@ import {
 import { FormProvider, useForm } from 'react-hook-form';
 import { joiResolver } from '@hookform/resolvers/joi';
 import Joi from 'joi';
-import RequirementType from '../../../models/RequirementType';
 import CheckboxCtrl from '../../../FormProvider/CheckboxCtrl';
 import InheritanceTagList from './InheritanceTagList';
 import DFOSelect from '../../../components/DFOSelect/DFOSelect';
+import { IInheritedBank } from '../../../models/IInheritedBank';
 
 interface IFormValues {
-  person: {
-    firstName: string | null;
-    lastName: string | null;
+  inherit: {
+    version: string | null;
+    part: string | null;
   };
 }
 
 const FormSchema = Joi.object().keys({
-  person: Joi.object().keys({
-    firstName: Joi.string().max(20).required(),
-    lastName: Joi.string().max(20).required(),
-    birthDay: Joi.date().iso().raw().required(),
-    weddingDay: Joi.alternatives([
-      Joi.date().iso().max('12/13/2021').raw(),
-      Joi.string().valid(null)
-    ]).required(),
-    point: Joi.number().required(),
-    isDeveloper: Joi.boolean().valid(true).required(),
-    range: Joi.number().min(20).max(100).required(),
-    isSexy: Joi.boolean().valid(true).required(),
-    fileEndings: Joi.array().items(Joi.string()).min(1).required(),
-    codelist: Joi.any().required(),
-    gender: Joi.string().valid(RequirementType.info).required()
+  inherit: Joi.object().keys({
+    version: Joi.string().max(20).required(),
+    part: Joi.number().required()
   })
 });
 
 const useStyles = makeStyles({
-  SearchResultHeader: {
+  bankItem: {
+    width: '100%',
+    height: 70
+  },
+  titleOptions: {
     display: 'flex',
-    justifyContent: 'space-between'
+    justifyContent: 'space-between',
+    alignItems: 'baseline',
+    borderBottom: `1px solid ${theme.palette.black.main}`,
+    paddingBottom: 6,
+    marginRight: 30
   },
-  searchWrapper: {
-    width: '50%',
-    marginLeft: '2%'
+  titleVersion: {
+    display: 'flex',
+    gap: 5
   },
-  productsContainer: {
+  endContainer: {
+    display: 'flex'
+  },
+  closeIcon: {
+    color: theme.palette.gray700.main,
+    fontSize: '28px !important'
+  },
+  description: { paddingTop: 5 },
+  bankBodyContainer: {
+    display: 'flex',
+    flexDirection: 'column',
+    gap: 30,
+    backgroundColor: theme.palette.dfoWhite.main,
+    paddingTop: 30,
+    paddingBottom: 30
+  },
+  inheritVersionContainer: {
+    display: 'flex',
+    gap: 12,
+    flexDirection: 'column',
+    margin: 'auto',
+    width: '50vw'
+  },
+  selectContainer: {
+    width: '70%'
+  },
+  inheritPartsContainer: {
+    display: 'flex',
+    flexDirection: 'column',
+    margin: 'auto',
+    width: '50vw'
+  },
+  partsCheckBoxSaveButtonContainer: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingLeft: 12,
+
+    [theme.breakpoints.down('mdd')]: {
+      flexDirection: 'column',
+      gap: 10
+    }
+  },
+  accordionElement: {
+    marginBottom: 14
+  },
+  inheritanceContainer: {
     display: 'flex',
     flexDirection: 'column',
     marginTop: 40,
@@ -77,65 +118,10 @@ const useStyles = makeStyles({
     flex: 1,
     alignSelf: 'center'
   },
-  titleOptions: {
+  partsContainer: {
     display: 'flex',
-    justifyContent: 'space-between',
-    alignItems: 'baseline',
-    borderBottom: `1px solid ${theme.palette.black.main}`,
-    paddingBottom: 6,
-    marginRight: 30
-  },
-  titleVersion: {
-    display: 'flex',
-    gap: 5
-  },
-  bankItem: {
-    width: '100%',
-    height: 70
-  },
-  endContainer: {
-    display: 'flex'
-  },
-  closeIcon: {
-    color: theme.palette.gray700.main,
-    fontSize: '28px !important'
-  },
-  element: {
-    marginBottom: 18
-  },
-  accordionElement: {
-    marginBottom: 14
-  },
-  description: { paddingTop: 5 },
-  bankBodyContainer: {
-    display: 'flex',
-    flexDirection: 'column',
-    gap: 30,
-    backgroundColor: theme.palette.dfoWhite.main,
-    paddingTop: 30,
-    paddingBottom: 30
-  },
-  inheritVersionContainer: {
-    display: 'flex',
-    gap: 12,
-    flexDirection: 'column',
-    margin: 'auto',
-    width: '50vw'
-  },
-  inheritPartsContainer: {
-    display: 'flex',
-    flexDirection: 'column',
-    margin: 'auto',
-    width: '50vw'
-  },
-  selectContainer: {
-    width: '70%'
-  },
-  partsCheckBoxSaveButtonContainer: {
-    display: 'flex',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    paddingLeft: 12
+    flexDirection: 'row',
+    flexWrap: 'wrap'
   }
 });
 
@@ -144,13 +130,14 @@ export default function InheritancePage(): React.ReactElement {
   const { t } = useTranslation();
   const classes = useStyles();
 
+  // This is dummy data. Replace with real data.
   const versions = [
     { name: 'Tronds versjon; 1. des. 2021' },
     { name: 'Oslo kommune; 1. des. 2021' }
   ];
 
   const parts = [
-    { name: 'arvHeleKravSettet', label: 'Arv hele kravsettet' },
+    { name: 'arvHele', label: 'Arv hele kravsettet' },
     { name: 'arvDelEn', label: 'Arv del en' },
     { name: 'arvDelTo', label: 'Arv del to' },
     { name: 'arvDelTre', label: 'Arv del tre' },
@@ -159,9 +146,9 @@ export default function InheritancePage(): React.ReactElement {
   ];
 
   const defaultValues: IFormValues = {
-    person: {
-      firstName: null,
-      lastName: null
+    inherit: {
+      version: null,
+      part: null
     }
   };
 
@@ -171,41 +158,39 @@ export default function InheritancePage(): React.ReactElement {
   });
 
   const saveValues = (data: IFormValues) => {
-    console.log(data.person);
+    console.log(data);
   };
 
   const inheritanceSearch = () => {};
   const searchFieldCallback = () => {};
 
-  const bankHeader = (title: any) => {
+  const renderBankHeader = (bank: IInheritedBank) => {
     return (
       <Box className={classes.bankItem}>
         <Box className={classes.titleOptions}>
           <Box className={classes.titleVersion}>
-            <Typography variant="mediumBold">{title};</Typography>
-            <Typography variant="medium">versjon</Typography>
+            <Typography variant="mediumBold">{bank.title}; </Typography>
+            <Typography variant="medium">{t('versjon')}</Typography>
           </Box>
           <Box className={classes.endContainer}>
             <CloseIcon className={classes.closeIcon} />
           </Box>
         </Box>
         <Box className={classes.description}>
-          <Typography variant="small">
-            En kort beskrivelse av kravsettet som det arves fra
-          </Typography>
+          <Typography variant="small">{bank.description}</Typography>
         </Box>
       </Box>
     );
   };
 
-  const bankBody = () => {
+  const renderBankBody = () => {
     return (
       <FormProvider {...methods}>
         <form onSubmit={methods.handleSubmit(saveValues)}>
           <Box className={classes.bankBodyContainer}>
             <Box className={classes.inheritVersionContainer}>
               <Typography variant="smallBold">
-                Hvilken versjon av kravsettet arves?
+                {t('Which version of the bank to inherit')}
               </Typography>
               <Box className={classes.selectContainer}>
                 <DFOSelect options={versions} />
@@ -213,22 +198,23 @@ export default function InheritancePage(): React.ReactElement {
             </Box>
             <Box className={classes.inheritPartsContainer}>
               <Typography variant="smallBold">
-                Hvilke deler av kravsettet arves?
+                {t('Which parts of the bank to inherit')}
               </Typography>
               <Box className={classes.partsCheckBoxSaveButtonContainer}>
-                <Grid container direction="row">
+                <Box className={classes.partsContainer}>
                   {parts.map((part) => {
                     return (
-                      <Grid item xs={4}>
-                        <CheckboxCtrl name={part.name} label={part.label} />
-                      </Grid>
+                      <CheckboxCtrl
+                        variant="blue"
+                        name={part.name}
+                        label={part.label}
+                      />
                     );
                   })}
-                </Grid>
-                <Button variant="save">Lagre endringer</Button>
+                </Box>
+                <Button variant="save">{t('save changes')}</Button>
               </Box>
             </Box>
-
             <Box>
               <InheritanceTagList />
             </Box>
@@ -238,15 +224,14 @@ export default function InheritancePage(): React.ReactElement {
     );
   };
 
-  const renderInheritedBanks = (inheritedBanksList: any) => {
-    return inheritedBanksList.map((element: any) => {
+  const renderInheritedBanks = (inheritedBanksList: IInheritedBank[]) => {
+    return inheritedBanksList.map((element: IInheritedBank) => {
       return (
-        <Box className={classes.accordionElement}>
+        <Box className={classes.accordionElement} key={element.id}>
           <DFOAccordionElement
-            key={element.id}
             eventKey={element.id}
-            header={bankHeader(element.title)}
-            body={bankBody()}
+            header={renderBankHeader(element)}
+            body={renderBankBody()}
           />
         </Box>
       );
@@ -255,12 +240,12 @@ export default function InheritancePage(): React.ReactElement {
 
   return (
     <>
-      <Box className={classes.productsContainer}>
+      <Box className={classes.inheritanceContainer}>
         <Box className={classes.topContainer}>
           <Box className={classes.searchBarContainer}>
             {' '}
             <DFOSearchBar
-              list={project.products}
+              list={project.inheritedBanks}
               label={t('Find banks to inherit from')}
               callback={searchFieldCallback}
               searchFunction={inheritanceSearch}

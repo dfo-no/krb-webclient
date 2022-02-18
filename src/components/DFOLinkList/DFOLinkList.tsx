@@ -47,7 +47,6 @@ export default function DFOLinkList({
   borderThickness,
   hoverColor
 }: DFOLinkListProps): React.ReactElement {
-  // Standard DFO theme. Props can be passed to change theme.
   const styles: DFOLinkListStyleProps = {
     iconColor: iconColor || theme.palette.dfoWhite.main,
     textColor: textColor || theme.palette.dfoWhite.main,
@@ -58,7 +57,6 @@ export default function DFOLinkList({
 
   const classes = useStyles(styles);
 
-  // Can add more icons here if needed.
   const icons = [{ name: 'arrow', object: Object(ArrowForwardIos) }];
   const useIcon = icons.find((icon) => icon.name === iconType)?.object;
 

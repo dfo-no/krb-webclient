@@ -1,30 +1,83 @@
 import Checkbox from '@mui/material/Checkbox';
-import CheckBoxIcon from '@mui/icons-material/CheckBox';
-import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
-import { makeStyles } from '@material-ui/core';
+import CheckIcon from '@mui/icons-material/Check';
+import { Box, makeStyles } from '@material-ui/core';
 import { DFOCheckboxProps } from './DFOCheckboxProps';
+import theme from '../../theme';
 
 const useStyles = makeStyles({
-  root: {
-    padding: 0,
+  checkbox: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: '22px',
+    height: '22px'
+  },
+  whiteCheckbox: {
+    border: `2px solid ${theme.palette.dfoLightBlue.main}`,
     '& .MuiSvgIcon-root': {
-      width: '30px',
-      height: '30px',
-      color: '#005B91'
+      color: theme.palette.dfoLightBlue.main
+    }
+  },
+  blueCheckbox: {
+    border: `2px solid ${theme.palette.dfoBlue.main}`,
+    '& .MuiSvgIcon-root': {
+      color: 'white',
+      backgroundColor: theme.palette.dfoBlue.main
     }
   }
 });
 
 export const DFOCheckbox = ({
-  element
+  element,
+  checked,
+  variant
 }: DFOCheckboxProps): React.ReactElement => {
   const classes = useStyles();
+
+  const CheckboxWhiteBackgroundIcon = () => {
+    return (
+      <Box className={`${classes.checkbox} ${classes.whiteCheckbox}`}></Box>
+    );
+  };
+
+  const CheckboxWhiteBackgroundCheckedIcon = () => {
+    return (
+      <Box className={`${classes.checkbox} ${classes.whiteCheckbox}`}>
+        <CheckIcon />
+      </Box>
+    );
+  };
+
+  const CheckboxBlueBackgroundIcon = () => {
+    return (
+      <Box className={`${classes.checkbox} ${classes.blueCheckbox}`}></Box>
+    );
+  };
+
+  const CheckboxBlueBackgroundCheckedIcon = () => {
+    return (
+      <Box className={`${classes.checkbox} ${classes.blueCheckbox}`}>
+        <CheckIcon />
+      </Box>
+    );
+  };
+
+  const useCheckmarkBackground =
+    variant === 'white'
+      ? Object(<CheckboxWhiteBackgroundIcon />)
+      : Object(<CheckboxBlueBackgroundIcon />);
+
+  const useCheckmarkCheck =
+    variant === 'white'
+      ? Object(<CheckboxWhiteBackgroundCheckedIcon />)
+      : Object(<CheckboxBlueBackgroundCheckedIcon />);
+
   return (
     <Checkbox
       {...element}
-      className={classes.root}
-      icon={<CheckBoxOutlineBlankIcon />}
-      checkedIcon={<CheckBoxIcon />}
+      icon={useCheckmarkBackground}
+      checkedIcon={useCheckmarkCheck}
+      checked={checked}
     />
   );
 };
