@@ -85,12 +85,7 @@ const useStyles = makeStyles({
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'center',
-    paddingLeft: 12,
-
-    [theme.breakpoints.down('mdd')]: {
-      flexDirection: 'column',
-      gap: 10
-    }
+    paddingLeft: 12
   },
   accordionElement: {
     marginBottom: 14
@@ -117,11 +112,6 @@ const useStyles = makeStyles({
   fill: {
     flex: 1,
     alignSelf: 'center'
-  },
-  partsContainer: {
-    display: 'flex',
-    flexDirection: 'row',
-    flexWrap: 'wrap'
   }
 });
 
@@ -134,15 +124,6 @@ export default function InheritancePage(): React.ReactElement {
   const versions = [
     { name: 'Tronds versjon; 1. des. 2021' },
     { name: 'Oslo kommune; 1. des. 2021' }
-  ];
-
-  const parts = [
-    { name: 'arvHele', label: 'Arv hele kravsettet' },
-    { name: 'arvDelEn', label: 'Arv del en' },
-    { name: 'arvDelTo', label: 'Arv del to' },
-    { name: 'arvDelTre', label: 'Arv del tre' },
-    { name: 'arvDelFire', label: 'Arv del fire' },
-    { name: 'arvDelFem', label: 'Arv del fem' }
   ];
 
   const defaultValues: IFormValues = {
@@ -201,23 +182,17 @@ export default function InheritancePage(): React.ReactElement {
                 {t('Which parts of the bank to inherit')}
               </Typography>
               <Box className={classes.partsCheckBoxSaveButtonContainer}>
-                <Box className={classes.partsContainer}>
-                  {parts.map((part) => {
-                    return (
-                      <CheckboxCtrl
-                        variant="blue"
-                        name={part.name}
-                        label={part.label}
-                      />
-                    );
-                  })}
-                </Box>
+                <CheckboxCtrl
+                  variant="blue"
+                  name="name"
+                  label="Arv hele kravsettet"
+                />
                 <Button variant="save">{t('save changes')}</Button>
               </Box>
             </Box>
-            <Box>
-              <InheritanceTagList />
-            </Box>
+          </Box>
+          <Box>
+            <InheritanceTagList />
           </Box>
         </form>
       </FormProvider>

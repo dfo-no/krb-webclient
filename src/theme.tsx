@@ -143,7 +143,8 @@ theme.typography.smallBold = {
 
 theme.typography.smallGray = {
   color: theme.palette.gray700.main,
-  fontSize: '14px'
+  fontSize: '14px',
+  whiteSpace: 'nowrap'
 };
 
 theme.typography.smallUnderline = {

@@ -26,7 +26,7 @@ const useStyles = makeStyles({
       }
     }
   },
-  tagListItemTitle: { width: '40%' },
+  tagListItemTitle: { width: '40%', paddingRight: 10 },
   tagListItemText: {
     color: theme.palette.gray700.main
   },

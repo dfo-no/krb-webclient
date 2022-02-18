@@ -1,4 +1,3 @@
-import { makeStyles } from '@material-ui/core';
 import FormControl from '@mui/material/FormControl';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import FormLabel from '@mui/material/FormLabel';
@@ -14,19 +13,10 @@ interface IProps {
   variant?: string;
 }
 
-const useStyles = makeStyles({
-  label: {
-    marginTop: 13,
-    whiteSpace: 'nowrap'
-  }
-});
-
 const CheckboxCtrl = ({ name, label, variant }: IProps): React.ReactElement => {
   const {
     formState: { errors }
   } = useFormContext();
-
-  const classes = useStyles();
 
   return (
     <FormControl error={!!get(errors, name)}>
@@ -36,7 +26,7 @@ const CheckboxCtrl = ({ name, label, variant }: IProps): React.ReactElement => {
           <RadioGroup row={true} {...field}>
             <FormControlLabel
               control={<DFOCheckbox variant={variant} />}
-              label={<p className={classes.label}>{label}</p>}
+              label={label}
             />
           </RadioGroup>
         )}
