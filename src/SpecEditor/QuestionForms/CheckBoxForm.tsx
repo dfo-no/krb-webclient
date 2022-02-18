@@ -1,6 +1,6 @@
 import { joiResolver } from '@hookform/resolvers/joi';
-import React, { useState } from 'react';
 import Button from '@mui/material/Button';
+import React, { useState } from 'react';
 import Card from 'react-bootstrap/Card';
 import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
@@ -91,7 +91,7 @@ export default function CheckBoxForm({
     <Card className="mb-3">
       <Card.Body>
         <h6>Question: Yes/No</h6>
-        <Form onSubmit={handleSubmit(saveValues)}>
+        <form onSubmit={handleSubmit(saveValues)}>
           <Row>
             <Col>
               <Form.Label>Foretrukket alternativ</Form.Label>
@@ -130,7 +130,7 @@ export default function CheckBoxForm({
           <Button variant="primary" type="submit">
             {t('save')}
           </Button>
-        </Form>
+        </form>
       </Card.Body>
     </Card>
   );

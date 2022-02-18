@@ -1,9 +1,8 @@
 import { joiResolver } from '@hookform/resolvers/joi';
 import Alert from '@mui/material/Alert/Alert';
-import React from 'react';
 import Button from '@mui/material/Button';
+import React from 'react';
 import Card from 'react-bootstrap/Card';
-import Form from 'react-bootstrap/Form';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import ErrorSummary from '../../Form/ErrorSummary';
@@ -56,7 +55,6 @@ export default function FileUploadAnswerForm({
             .question as IFileUploadQuestion));
 
   const {
-    register,
     handleSubmit,
     formState: { errors }
   } = useForm<IFileUploadQuestion>({
@@ -94,13 +92,13 @@ export default function FileUploadAnswerForm({
     <Card className="mb-3">
       <Card.Body>
         <h6>Alternative: FileUpload</h6>
-        <Form onSubmit={handleSubmit(saveValues)}>
+        <form onSubmit={handleSubmit(saveValues)}>
           <Alert severity="error">Not implemented yet!</Alert>
           <Button variant="primary" disabled type="submit">
             {t('save')}
           </Button>
           <ErrorSummary errors={errors} />
-        </Form>
+        </form>
       </Card.Body>
     </Card>
   );

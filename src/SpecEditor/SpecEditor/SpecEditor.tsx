@@ -47,7 +47,7 @@ export default function SpecEditor(): React.ReactElement {
     <Container fluid>
       <Row className="m-4">
         <Col>
-          <Form onSubmit={handleSubmit(saveTitle)}>
+          <form onSubmit={handleSubmit(saveTitle)}>
             <Form.Group as={Row}>
               <Form.Label column sm={2}>
                 {t('Title')}
@@ -71,7 +71,7 @@ export default function SpecEditor(): React.ReactElement {
               </Col>
             </Form.Group>
             <ErrorSummary errors={errors} />
-          </Form>
+          </form>
         </Col>
       </Row>
       <Row className="m-4">

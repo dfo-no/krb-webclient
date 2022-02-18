@@ -110,7 +110,7 @@ export default function TextInfoAnswer({
     <Card className="mb-3">
       <Card.Body>
         <h6>Alternative: Text</h6>
-        <Form onSubmit={handleSubmit(saveValues)}>
+        <form onSubmit={handleSubmit(saveValues)}>
           <Form.Control
             as="input"
             {...register('answer.text')}
@@ -121,7 +121,7 @@ export default function TextInfoAnswer({
             {t('save')}
           </Button>
           <ErrorSummary errors={errors} />
-        </Form>
+        </form>
       </Card.Body>
     </Card>
   );

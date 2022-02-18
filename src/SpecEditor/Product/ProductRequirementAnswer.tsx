@@ -248,7 +248,7 @@ export default function ProductRequirementAnswer({
       );
     });
     return (
-      <Form onSubmit={handleSubmit(saveAnswer)} autoComplete="off">
+      <form onSubmit={handleSubmit(saveAnswer)} autoComplete="off">
         <Row>
           <Col sm={3}>
             <Form.Control
@@ -347,7 +347,7 @@ export default function ProductRequirementAnswer({
           </Button>
         </Col>
         <ErrorSummary errors={errors} />
-      </Form>
+      </form>
     );
   };
 
