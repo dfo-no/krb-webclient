@@ -1,8 +1,8 @@
 import { joiResolver } from '@hookform/resolvers/joi';
 import DeleteIcon from '@mui/icons-material/Delete';
+import Button from '@mui/material/Button';
 import { get } from 'lodash';
 import React, { useContext, useEffect, useState } from 'react';
-import Button from 'react-bootstrap/Button';
 import { FieldError, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
