@@ -1,7 +1,6 @@
 import FormControl from '@mui/material/FormControl';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import FormLabel from '@mui/material/FormLabel';
-import RadioGroup from '@mui/material/RadioGroup/RadioGroup';
 import { get } from 'lodash';
 import React, { JSXElementConstructor, ReactElement } from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
@@ -32,12 +31,10 @@ const CheckboxCtrl = ({
       <Controller
         name={name}
         render={({ field }) => (
-          <RadioGroup row={true} {...field}>
-            <FormControlLabel
-              control={<DFOCheckbox variant={variant} value={value} />}
-              label={label}
-            />
-          </RadioGroup>
+          <FormControlLabel
+            control={<DFOCheckbox {...field} variant={variant} value={value} />}
+            label={label}
+          />
         )}
       />
       {!!get(errors, name) && (
