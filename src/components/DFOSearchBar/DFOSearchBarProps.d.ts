@@ -3,5 +3,4 @@ export interface DFOSearchBarProps {
   searchFunction: any;
   callback: any;
   label: string;
-  showBorder?: boolean;
 }
