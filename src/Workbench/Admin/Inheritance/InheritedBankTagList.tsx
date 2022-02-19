@@ -43,7 +43,7 @@ const useStyles = makeStyles({
       }
     }
   },
-  tagListItemTitle: {
+  tagListItemCheckbox: {
     width: '40%',
     paddingRight: 10
   },
@@ -146,7 +146,7 @@ export default function InheritancePage(): React.ReactElement {
         key={tag.title}
         onClick={toggleCheckbox}
       >
-        <Box className={classes.tagListItemTitle}>
+        <Box className={classes.tagListItemCheckbox}>
           <CheckboxCtrl
             variant="white"
             value={checkCheckbox}
