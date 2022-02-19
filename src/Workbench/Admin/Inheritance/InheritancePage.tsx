@@ -3,7 +3,6 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import DFOSearchBar from '../../../components/DFOSearchBar/DFOSearchBar';
 import { useAppSelector } from '../../../store/hooks';
-import theme from '../../../theme';
 import {
   DFOAccordionElement,
   DFOAccordionProvider

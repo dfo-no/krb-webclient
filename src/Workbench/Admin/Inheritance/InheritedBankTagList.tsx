@@ -33,12 +33,7 @@ const useStyles = makeStyles({
     cursor: 'pointer',
     '&:hover': {
       background: theme.palette.lightBlue.main,
-
       '& $tagListItemText': {
-        color: theme.palette.dfoWhite.main
-      },
-
-      '& .MuiSvgIcon-root': {
         color: theme.palette.dfoWhite.main
       }
     }
@@ -131,6 +126,7 @@ export default function InheritancePage(): React.ReactElement {
   const TagListItem = (tag: any) => {
     // ^ Using any here because we dont really know the data type yet
     const [checkCheckbox, setCheckCheckbox] = useState(false);
+    const [checkboxVariant, setCheckboxVariant] = useState('blueBorder');
 
     const toggleCheckbox = () => {
       if (checkCheckbox) {
@@ -140,15 +136,25 @@ export default function InheritancePage(): React.ReactElement {
       }
     };
 
+    const listItemOnMouseEnter = () => {
+      setCheckboxVariant('white');
+    };
+
+    const listItemOnMouseLeave = () => {
+      setCheckboxVariant('blueBorder');
+    };
+
     return (
       <ListItem
         className={classes.tagListItem}
         key={tag.title}
         onClick={toggleCheckbox}
+        onMouseEnter={listItemOnMouseEnter}
+        onMouseLeave={listItemOnMouseLeave}
       >
         <Box className={classes.tagListItemCheckbox}>
           <CheckboxCtrl
-            variant="white"
+            variant={checkboxVariant}
             value={checkCheckbox}
             name="name"
             label={

@@ -103,11 +103,7 @@ export default function InheritancePage(): React.ReactElement {
               {t('Which parts of the bank to inherit')}
             </Typography>
             <Box className={classes.partsCheckBoxSaveButtonContainer}>
-              <CheckboxCtrl
-                variant="blue"
-                name="name"
-                label="Arv hele kravsettet"
-              />
+              <CheckboxCtrl name="name" label="Arv hele kravsettet" />
               <Button variant="save">{t('save changes')}</Button>
             </Box>
           </Box>
