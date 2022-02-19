@@ -10,7 +10,7 @@ const useStyles = makeStyles({
     width: '100%',
     backgroundColor: theme.palette.dfoWhite.main,
     '& .MuiInputBase-adornedEnd': {
-      backgroundColor: 'white',
+      backgroundColor: theme.palette.dfoWhite.main,
       '&:hover': {
         background: theme.palette.dfoWhite.main
       }

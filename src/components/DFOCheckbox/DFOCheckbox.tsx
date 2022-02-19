@@ -29,7 +29,7 @@ const useStyles = makeStyles({
 
 export const DFOCheckbox = ({
   element,
-  checked,
+  value,
   variant
 }: DFOCheckboxProps): React.ReactElement => {
   const classes = useStyles();
@@ -77,7 +77,7 @@ export const DFOCheckbox = ({
       {...element}
       icon={useCheckmarkBackground}
       checkedIcon={useCheckmarkCheck}
-      checked={checked}
+      checked={value}
     />
   );
 };

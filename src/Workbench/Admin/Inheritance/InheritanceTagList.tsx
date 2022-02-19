@@ -3,9 +3,26 @@ import DFOSearchBar from '../../../components/DFOSearchBar/DFOSearchBar';
 import { useAppSelector } from '../../../store/hooks';
 import theme from '../../../theme';
 import { Typography, Box, ListItem, ListItemText, List } from '@mui/material/';
-import { DFOCheckbox } from '../../../components/DFOCheckbox/DFOCheckbox';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import CheckboxCtrl from '../../../FormProvider/CheckboxCtrl';
+import { joiResolver } from '@hookform/resolvers/joi';
+import Joi from 'joi';
+import { FormProvider, useForm } from 'react-hook-form';
+
+interface IFormValues {
+  data: {
+    dataOne: string | null;
+    dataTwo: string | null;
+  };
+}
+
+const FormSchema = Joi.object().keys({
+  data: Joi.object().keys({
+    dataOne: Joi.string().max(20).required(),
+    dataTwo: Joi.number().required()
+  })
+});
 
 const useStyles = makeStyles({
   tagListItem: {
@@ -54,7 +71,7 @@ const useStyles = makeStyles({
     alignItems: 'center'
   },
   searchContainer: {
-    width: '50%'
+    width: '25vw'
   },
   tagsList: {
     border: `1px solid ${theme.palette.silver.main}`,
@@ -75,6 +92,22 @@ export default function InheritancePage(): React.ReactElement {
 
   const tagsCallback = () => {};
   const tagsSearchFunction = () => {};
+
+  const defaultValues: IFormValues = {
+    data: {
+      dataOne: null,
+      dataTwo: null
+    }
+  };
+
+  const methods = useForm<IFormValues>({
+    resolver: joiResolver(FormSchema),
+    defaultValues
+  });
+
+  const saveValues = (data: IFormValues) => {
+    console.log(data);
+  };
 
   // This is dummy data. Replace with real data.
   const tags = [
@@ -110,13 +143,20 @@ export default function InheritancePage(): React.ReactElement {
         key={tag.title}
         onClick={toggleCheckbox}
       >
-        <DFOCheckbox checked={checkCheckbox} variant="white" />
         <Box className={classes.tagListItemTitle}>
-          <ListItemText>
-            <Typography className={classes.tagListItemText} variant="smallGray">
-              {tag.title}
-            </Typography>
-          </ListItemText>
+          <CheckboxCtrl
+            variant="white"
+            value={checkCheckbox}
+            name="name"
+            label={
+              <Typography
+                className={classes.tagListItemText}
+                variant="smallGray"
+              >
+                {tag.title}
+              </Typography>
+            }
+          />
         </Box>
         <Box className={classes.tagListItemDescription}>
           <ListItemText>
@@ -131,30 +171,34 @@ export default function InheritancePage(): React.ReactElement {
 
   return (
     <>
-      <Box className={classes.inheritanceTagList}>
-        <Box className={classes.topContainer}>
-          <Box className={classes.searchContainer}>
-            <DFOSearchBar
-              label="Søk etter merkelapper"
-              list={project.tags}
-              searchFunction={tagsSearchFunction}
-              callback={tagsCallback}
-            />
+      <FormProvider {...methods}>
+        <form onSubmit={methods.handleSubmit(saveValues)}>
+          <Box className={classes.inheritanceTagList}>
+            <Box className={classes.topContainer}>
+              <Box className={classes.searchContainer}>
+                <DFOSearchBar
+                  label={t('search for tags')}
+                  list={project.tags}
+                  searchFunction={tagsSearchFunction}
+                  callback={tagsCallback}
+                />
+              </Box>
+              <Typography variant="smallUnderline">
+                {t('show selected tags')}
+              </Typography>
+            </Box>
+            <Box className={classes.tagsList}>
+              <List>
+                {tags.map((tag) => {
+                  {
+                    return TagListItem(tag);
+                  }
+                })}
+              </List>
+            </Box>
           </Box>
-          <Typography variant="smallUnderline">
-            {t('show selected tags')}
-          </Typography>
-        </Box>
-        <Box className={classes.tagsList}>
-          <List>
-            {tags.map((tag) => {
-              {
-                return TagListItem(tag);
-              }
-            })}
-          </List>
-        </Box>
-      </Box>
+        </form>
+      </FormProvider>
     </>
   );
 }

@@ -3,17 +3,26 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import FormLabel from '@mui/material/FormLabel';
 import RadioGroup from '@mui/material/RadioGroup/RadioGroup';
 import { get } from 'lodash';
-import React from 'react';
+import React, { JSXElementConstructor, ReactElement } from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
 import { DFOCheckbox } from '../components/DFOCheckbox/DFOCheckbox';
 
 interface IProps {
   name: string;
-  label: string;
+  label:
+    | string
+    | number
+    | ReactElement<any, string | JSXElementConstructor<any>>;
   variant?: string;
+  value?: boolean;
 }
 
-const CheckboxCtrl = ({ name, label, variant }: IProps): React.ReactElement => {
+const CheckboxCtrl = ({
+  name,
+  label,
+  variant,
+  value
+}: IProps): React.ReactElement => {
   const {
     formState: { errors }
   } = useFormContext();
@@ -25,7 +34,7 @@ const CheckboxCtrl = ({ name, label, variant }: IProps): React.ReactElement => {
         render={({ field }) => (
           <RadioGroup row={true} {...field}>
             <FormControlLabel
-              control={<DFOCheckbox variant={variant} />}
+              control={<DFOCheckbox variant={variant} value={value} />}
               label={label}
             />
           </RadioGroup>

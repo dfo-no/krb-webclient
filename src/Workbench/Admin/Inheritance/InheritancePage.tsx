@@ -87,6 +87,9 @@ const useStyles = makeStyles({
     alignItems: 'center',
     paddingLeft: 12
   },
+  tagList: {
+    paddingBottom: 30
+  },
   accordionElement: {
     marginBottom: 14
   },
@@ -96,8 +99,7 @@ const useStyles = makeStyles({
     marginTop: 40,
     gap: 30,
     margin: 'auto',
-    width: '55.5vw',
-    paddingBottom: 30
+    width: '55.5vw'
   },
   topContainer: {
     display: 'flex',
@@ -105,13 +107,7 @@ const useStyles = makeStyles({
     gap: 100
   },
   searchBarContainer: {
-    flex: 1,
-    minWidth: 300,
-    alignSelf: 'center'
-  },
-  fill: {
-    flex: 1,
-    alignSelf: 'center'
+    width: '25vw'
   }
 });
 
@@ -191,7 +187,7 @@ export default function InheritancePage(): React.ReactElement {
               </Box>
             </Box>
           </Box>
-          <Box>
+          <Box className={classes.tagList}>
             <InheritanceTagList />
           </Box>
         </form>
@@ -226,7 +222,6 @@ export default function InheritancePage(): React.ReactElement {
               searchFunction={inheritanceSearch}
             />
           </Box>
-          <Box className={classes.fill}></Box>
         </Box>
 
         <Box>

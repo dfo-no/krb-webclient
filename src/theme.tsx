@@ -270,15 +270,6 @@ theme.components = {
         }
       }
     }
-  },
-  MuiRadio: {
-    styleOverrides: {
-      root: {
-        '&.Mui-checked': {
-          color: '#005B91'
-        }
-      }
-    }
   }
 };
 

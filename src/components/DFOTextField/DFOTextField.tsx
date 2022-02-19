@@ -7,27 +7,12 @@ import { DFOTextFieldProps } from './DFOTextFieldProps';
 
 const useStyles = makeStyles({
   root: {
-    '& .MuiInputLabel-root': {
-      color: (props: DFOTextFieldStyleProps) => `${props.fontColor}`,
-      lineHeight: '1.6rem'
-    },
-    '& .MuiInputLabel-root.Mui-focused': {
-      color: (props: DFOTextFieldStyleProps) => `${props.fontColor}`,
-      textAlign: 'center'
-    },
-    '& .MuiOutlinedInput-root': {
-      '& fieldset': {
-        border: (props: DFOTextFieldStyleProps) =>
-          `2px solid ${props.borderColor}`,
-        height: 67
-      },
-      '&:hover fieldset': {
-        border: (props: DFOTextFieldStyleProps) =>
-          `3px solid ${props.borderColor}`
-      },
-      '&.Mui-focused fieldset': {
-        border: (props: DFOTextFieldStyleProps) =>
-          `3px solid ${props.borderColor}`
+    width: '100%',
+    backgroundColor: theme.palette.dfoWhite.main,
+    '& .MuiInputBase-adornedEnd': {
+      backgroundColor: theme.palette.dfoWhite.main,
+      '&:hover': {
+        background: theme.palette.dfoWhite.main
       }
     }
   },
