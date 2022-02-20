@@ -2,13 +2,12 @@ import { makeStyles } from '@material-ui/core';
 import DFOSearchBar from '../../../components/DFOSearchBar/DFOSearchBar';
 import { useAppSelector } from '../../../store/hooks';
 import theme from '../../../theme';
-import { Typography, Box, ListItem, ListItemText, List } from '@mui/material/';
-import { useState } from 'react';
+import { Typography, Box, List } from '@mui/material/';
 import { useTranslation } from 'react-i18next';
-import CheckboxCtrl from '../../../FormProvider/CheckboxCtrl';
 import { joiResolver } from '@hookform/resolvers/joi';
 import Joi from 'joi';
 import { FormProvider, useForm } from 'react-hook-form';
+import InheritedTagListItem from './InheritanceTagListItem';
 
 interface IFormValues {
   data: {
@@ -83,7 +82,7 @@ const useStyles = makeStyles({
   }
 });
 
-export default function InheritancePage(): React.ReactElement {
+export default function InheritedBankTagList(): React.ReactElement {
   const { project } = useAppSelector((state) => state.project);
   const classes = useStyles();
   const { t } = useTranslation();
@@ -125,57 +124,6 @@ export default function InheritancePage(): React.ReactElement {
 
   const TagListItem = (tag: any) => {
     // ^ Using any here because we dont really know the data type yet
-    const [checkCheckbox, setCheckCheckbox] = useState(false);
-    const [checkboxVariant, setCheckboxVariant] = useState('blueBorder');
-
-    const toggleCheckbox = () => {
-      if (checkCheckbox) {
-        setCheckCheckbox(false);
-      } else {
-        setCheckCheckbox(true);
-      }
-    };
-
-    const listItemOnMouseEnter = () => {
-      setCheckboxVariant('white');
-    };
-
-    const listItemOnMouseLeave = () => {
-      setCheckboxVariant('blueBorder');
-    };
-
-    return (
-      <ListItem
-        className={classes.tagListItem}
-        key={tag.title}
-        onClick={toggleCheckbox}
-        onMouseEnter={listItemOnMouseEnter}
-        onMouseLeave={listItemOnMouseLeave}
-      >
-        <Box className={classes.tagListItemCheckbox}>
-          <CheckboxCtrl
-            variant={checkboxVariant}
-            value={checkCheckbox}
-            name="name"
-            label={
-              <Typography
-                className={classes.tagListItemText}
-                variant="smallGray"
-              >
-                {tag.title}
-              </Typography>
-            }
-          />
-        </Box>
-        <Box className={classes.tagListItemDescription}>
-          <ListItemText>
-            <Typography variant="smallGray" className={classes.tagListItemText}>
-              {tag.description}
-            </Typography>
-          </ListItemText>
-        </Box>
-      </ListItem>
-    );
   };
 
   return (
@@ -200,7 +148,7 @@ export default function InheritancePage(): React.ReactElement {
               <List>
                 {tags.map((tag) => {
                   {
-                    return TagListItem(tag);
+                    return <InheritedTagListItem tagListItem={tag} />;
                   }
                 })}
               </List>
