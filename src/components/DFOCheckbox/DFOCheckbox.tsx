@@ -21,7 +21,7 @@ const useStyles = makeStyles({
   blueCheckbox: {
     border: `2px solid ${theme.palette.dfoBlue.main}`,
     '& .MuiSvgIcon-root': {
-      color: 'white',
+      color: theme.palette.dfoWhite.main,
       backgroundColor: theme.palette.dfoBlue.main
     }
   },

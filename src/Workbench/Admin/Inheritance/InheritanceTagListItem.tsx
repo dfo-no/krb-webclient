@@ -14,7 +14,6 @@ const useStyles = makeStyles({
     backgroundColor: theme.palette.dfoWhite.main,
     borderBottom: `1px solid ${theme.palette.silver.main}`,
     height: '42px',
-    cursor: 'pointer',
     '&:hover': {
       background: theme.palette.lightBlue.main,
       '& $tagListItemText': {
@@ -36,48 +35,20 @@ const useStyles = makeStyles({
     paddingLeft: 10,
     width: '90%',
     height: '42px'
-  },
-  inheritanceTagList: {
-    display: 'flex',
-    flexDirection: 'column',
-    gap: 20,
-    margin: 'auto',
-    border: `2px solid ${theme.palette.dfoBlue.main}`,
-    backgroundColor: theme.palette.gray200.main,
-    width: '50vw',
-    padding: 30
-  },
-  topContainer: {
-    display: 'flex',
-    justifyContent: 'space-between',
-    alignItems: 'center'
-  },
-  searchContainer: {
-    width: '25vw'
-  },
-  tagsList: {
-    border: `1px solid ${theme.palette.silver.main}`,
-    '&:last-child': {
-      borderBottom: 'none'
-    },
-    '& .MuiList-root': {
-      paddingTop: 0,
-      paddingBottom: 0
-    }
   }
 });
 
 export default function InheritedTagListItem({
   tagListItem
 }: IProps): React.ReactElement {
-  const [checkCheckbox, setCheckCheckbox] = useState(false);
   const [checkboxVariant, setCheckboxVariant] = useState('blueBorder');
+  const [checkboxState, setCheckboxState] = useState(false);
 
   const toggleCheckbox = () => {
-    if (checkCheckbox) {
-      setCheckCheckbox(false);
+    if (checkboxState) {
+      setCheckboxState(false);
     } else {
-      setCheckCheckbox(true);
+      setCheckboxState(true);
     }
   };
 
@@ -95,17 +66,21 @@ export default function InheritedTagListItem({
     <ListItem
       className={classes.tagListItem}
       key={tagListItem.title}
-      onClick={toggleCheckbox}
       onMouseEnter={listItemOnMouseEnter}
       onMouseLeave={listItemOnMouseLeave}
+      onClick={toggleCheckbox}
     >
-      <Box className={classes.tagListItemCheckbox} onClick={toggleCheckbox}>
+      <Box className={classes.tagListItemCheckbox}>
         <CheckboxCtrl
           variant={checkboxVariant}
-          value={checkCheckbox}
           name="name"
+          value={checkboxState}
           label={
-            <Typography className={classes.tagListItemText} variant="smallGray">
+            <Typography
+              className={classes.tagListItemText}
+              variant="smallGray"
+              onClick={toggleCheckbox}
+            >
               {tagListItem.title}
             </Typography>
           }

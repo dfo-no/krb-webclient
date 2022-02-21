@@ -1,6 +1,6 @@
 import { Box, makeStyles } from '@material-ui/core';
 import { Button, Typography } from '@mui/material';
-import React from 'react';
+import React, { useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import theme from '../../../theme';
 import { FormProvider, useForm } from 'react-hook-form';
@@ -103,7 +103,15 @@ export default function InheritancePage(): React.ReactElement {
               {t('Which parts of the bank to inherit')}
             </Typography>
             <Box className={classes.partsCheckBoxSaveButtonContainer}>
-              <CheckboxCtrl name="name" label="Arv hele kravsettet" />
+              <CheckboxCtrl
+                variant="blueborder"
+                name="name"
+                label={
+                  <Typography variant="smallGray">
+                    Arv hele kravsettet
+                  </Typography>
+                }
+              />
               <Button variant="save">{t('save changes')}</Button>
             </Box>
           </Box>

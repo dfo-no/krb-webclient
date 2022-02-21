@@ -4,9 +4,7 @@ import { useAppSelector } from '../../../store/hooks';
 import theme from '../../../theme';
 import { Typography, Box, List } from '@mui/material/';
 import { useTranslation } from 'react-i18next';
-import { joiResolver } from '@hookform/resolvers/joi';
 import Joi from 'joi';
-import { FormProvider, useForm } from 'react-hook-form';
 import InheritedTagListItem from './InheritanceTagListItem';
 
 interface IFormValues {
@@ -24,34 +22,6 @@ const FormSchema = Joi.object().keys({
 });
 
 const useStyles = makeStyles({
-  tagListItem: {
-    display: 'flex',
-    backgroundColor: theme.palette.dfoWhite.main,
-    borderBottom: `1px solid ${theme.palette.silver.main}`,
-    height: '42px',
-    cursor: 'pointer',
-    '&:hover': {
-      background: theme.palette.lightBlue.main,
-      '& $tagListItemText': {
-        color: theme.palette.dfoWhite.main
-      }
-    }
-  },
-  tagListItemCheckbox: {
-    width: '40%',
-    paddingRight: 10
-  },
-  tagListItemText: {
-    color: theme.palette.gray700.main
-  },
-  tagListItemDescription: {
-    display: 'flex',
-    alignItems: 'center',
-    borderLeft: `1px solid ${theme.palette.silver.main}`,
-    paddingLeft: 10,
-    width: '90%',
-    height: '42px'
-  },
   inheritanceTagList: {
     display: 'flex',
     flexDirection: 'column',
@@ -90,22 +60,6 @@ export default function InheritedBankTagList(): React.ReactElement {
   const tagsCallback = () => {};
   const tagsSearchFunction = () => {};
 
-  const defaultValues: IFormValues = {
-    data: {
-      dataOne: null,
-      dataTwo: null
-    }
-  };
-
-  const methods = useForm<IFormValues>({
-    resolver: joiResolver(FormSchema),
-    defaultValues
-  });
-
-  const saveValues = (data: IFormValues) => {
-    console.log(data);
-  };
-
   // This is dummy data. Replace with real data.
   const tags = [
     { title: 'Merkelapp 1', description: 'Merkelapp beskrivelse' },
@@ -122,40 +76,34 @@ export default function InheritedBankTagList(): React.ReactElement {
     { title: 'Merkelapp 12', description: 'Merkelapp beskrivelse' }
   ];
 
-  const TagListItem = (tag: any) => {
-    // ^ Using any here because we dont really know the data type yet
-  };
-
   return (
     <>
-      <FormProvider {...methods}>
-        <form onSubmit={methods.handleSubmit(saveValues)}>
-          <Box className={classes.inheritanceTagList}>
-            <Box className={classes.topContainer}>
-              <Box className={classes.searchContainer}>
-                <DFOSearchBar
-                  label={t('search for tags')}
-                  list={project.tags}
-                  searchFunction={tagsSearchFunction}
-                  callback={tagsCallback}
-                />
-              </Box>
-              <Typography variant="smallUnderline">
-                {t('show selected tags')}
-              </Typography>
-            </Box>
-            <Box className={classes.tagsList}>
-              <List>
-                {tags.map((tag) => {
-                  {
-                    return <InheritedTagListItem tagListItem={tag} />;
-                  }
-                })}
-              </List>
-            </Box>
+      <Box className={classes.inheritanceTagList}>
+        <Box className={classes.topContainer}>
+          <Box className={classes.searchContainer}>
+            <DFOSearchBar
+              label={t('search for tags')}
+              list={project.tags}
+              searchFunction={tagsSearchFunction}
+              callback={tagsCallback}
+            />
           </Box>
-        </form>
-      </FormProvider>
+          <Typography variant="smallUnderline">
+            {t('show selected tags')}
+          </Typography>
+        </Box>
+        <Box className={classes.tagsList}>
+          <List>
+            {tags.map((tag) => {
+              {
+                return (
+                  <InheritedTagListItem tagListItem={tag} key={tag.title} />
+                );
+              }
+            })}
+          </List>
+        </Box>
+      </Box>
     </>
   );
 }

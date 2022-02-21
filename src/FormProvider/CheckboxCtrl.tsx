@@ -1,19 +1,14 @@
-import FormControl from '@mui/material/FormControl';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import FormLabel from '@mui/material/FormLabel';
+import { Box, FormControl, FormLabel } from '@mui/material';
 import { get } from 'lodash';
-import React, { JSXElementConstructor, ReactElement } from 'react';
+import React, { useState } from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
 import { DFOCheckbox } from '../components/DFOCheckbox/DFOCheckbox';
 
 interface IProps {
   name: string;
-  label:
-    | string
-    | number
-    | ReactElement<any, string | JSXElementConstructor<any>>;
-  variant?: string;
-  value?: boolean;
+  label?: any;
+  variant?: any;
+  value?: any;
 }
 
 const CheckboxCtrl = ({
@@ -25,18 +20,17 @@ const CheckboxCtrl = ({
   const {
     formState: { errors }
   } = useFormContext();
-
   return (
     <FormControl error={!!get(errors, name)}>
-      <Controller
-        name={name}
-        render={({ field }) => (
-          <FormControlLabel
-            control={<DFOCheckbox {...field} variant={variant} value={value} />}
-            label={label}
-          />
-        )}
-      />
+      <Box sx={{ display: 'flex', alignItems: 'center' }}>
+        <Controller
+          name={name}
+          render={({ field }) => (
+            <DFOCheckbox element={field} variant={variant} value={value} />
+          )}
+        />
+        {label && <FormLabel id={name}>{label}</FormLabel>}
+      </Box>
       {!!get(errors, name) && (
         <FormLabel>{get(errors, name)?.message ?? ''}</FormLabel>
       )}
