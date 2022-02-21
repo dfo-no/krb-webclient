@@ -7,6 +7,9 @@ const theme = createTheme(
     typography: {
       fontFamily: ['Source Sans Pro', 'Helvetica', 'Arial'].join(',')
     },
+
+    // TODO: Out of sync with mui@5's breakpoints
+    // @see https://mui.com/guides/migration-v4/#theme
     breakpoints: {
       values: {
         xs: 0,
