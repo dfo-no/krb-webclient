@@ -1,4 +1,5 @@
-import { Button, Chip, makeStyles } from '@material-ui/core';
+import { Button, Chip } from '@mui/material';
+import makeStyles from '@mui/styles/makeStyles';
 import React from 'react';
 import { ListGroup } from 'react-bootstrap';
 import { IRequirement } from '../../Nexus/entities/IRequirement';

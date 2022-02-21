@@ -1,8 +1,8 @@
-import { makeStyles } from '@material-ui/core';
 import ConstructionOutlinedIcon from '@mui/icons-material/ConstructionOutlined';
 import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
 import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
 import { AppBar, Box, Toolbar, Typography } from '@mui/material/';
+import makeStyles from '@mui/styles/makeStyles';
 import React from 'react';
 import { Link, useLocation, useRouteMatch } from 'react-router-dom';
 import { useAppSelector } from '../../store/hooks';

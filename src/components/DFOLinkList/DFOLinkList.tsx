@@ -1,4 +1,5 @@
-import { makeStyles, Theme } from '@material-ui/core';
+import { Theme } from '@mui/material';
+import makeStyles from '@mui/styles/makeStyles';
 import Link from '@mui/material/Link';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
@@ -6,7 +7,7 @@ import ListItemText from '@mui/material/ListItemText';
 import Typography from '@mui/material/Typography';
 import * as React from 'react';
 import ArrowForwardIos from '@mui/icons-material/ArrowForwardIos';
-import Icon from '@material-ui/core/Icon';
+import Icon from '@mui/material/Icon';
 import theme from '../../theme';
 import { DFOLinkListProps } from './DFOLinkListProps';
 import { DFOLinkListStyleProps } from './DFOLinkListStyleProps';

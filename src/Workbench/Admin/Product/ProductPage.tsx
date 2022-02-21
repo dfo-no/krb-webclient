@@ -1,23 +1,23 @@
+import { Box, Button } from '@mui/material/';
+import makeStyles from '@mui/styles/makeStyles';
 import React, { useEffect, useState } from 'react';
-import { Parentable } from '../../../models/Parentable';
-import { Nestable } from '../../../models/Nestable';
-import { IProduct } from '../../../Nexus/entities/IProduct';
+import { useTranslation } from 'react-i18next';
 import SearchUtils from '../../../common/SearchUtils';
 import Utils from '../../../common/Utils';
+import Dialog from '../../../components/DFODialog/DFODialog';
+import DFOSearchBar from '../../../components/DFOSearchBar/DFOSearchBar';
+import { Nestable } from '../../../models/Nestable';
+import { Parentable } from '../../../models/Parentable';
+import NestableHierarcyWithAccordion from '../../../NestableHierarchy/NestableHierarcyWithAccordion';
+import { IProduct } from '../../../Nexus/entities/IProduct';
 import { useAppDispatch, useAppSelector } from '../../../store/hooks';
 import {
   putSelectedProjectThunk,
   updateProductList
 } from '../../../store/reducers/project-reducer';
-import { Box, Button } from '@mui/material/';
-import { makeStyles } from '@material-ui/core';
-import { useTranslation } from 'react-i18next';
-import NestableHierarcyWithAccordion from '../../../NestableHierarchy/NestableHierarcyWithAccordion';
-import NewProductForm from './NewProductForm';
-import EditProductForm from './EditProductForm';
-import Dialog from '../../../components/DFODialog/DFODialog';
-import DFOSearchBar from '../../../components/DFOSearchBar/DFOSearchBar';
 import theme from '../../../theme';
+import EditProductForm from './EditProductForm';
+import NewProductForm from './NewProductForm';
 
 const useStyles = makeStyles({
   productsContainer: {

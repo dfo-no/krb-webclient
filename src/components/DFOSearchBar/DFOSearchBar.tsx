@@ -1,7 +1,7 @@
 import React from 'react';
 import { TextField, InputAdornment } from '@mui/material/';
 import SearchIcon from '@mui/icons-material/Search';
-import { makeStyles } from '@material-ui/core';
+import makeStyles from '@mui/styles/makeStyles';
 import theme from '../../theme';
 import { DFOSearchBarProps } from './DFOSearchBarProps';
 

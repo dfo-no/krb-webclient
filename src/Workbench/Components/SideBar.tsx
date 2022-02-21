@@ -1,6 +1,6 @@
-import { makeStyles } from '@material-ui/core';
-import { List, ListItem, ListItemText, Box } from '@mui/material';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
+import { Box, List, ListItem, ListItemText } from '@mui/material';
+import makeStyles from '@mui/styles/makeStyles';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { withRouter } from 'react-router';

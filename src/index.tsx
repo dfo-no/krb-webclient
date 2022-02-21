@@ -1,4 +1,8 @@
-import { ThemeProvider } from '@mui/material/styles';
+import {
+  StyledEngineProvider,
+  Theme,
+  ThemeProvider
+} from '@mui/material/styles';
 import React, { Suspense } from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
@@ -11,6 +15,11 @@ import reportWebVitals from './reportWebVitals';
 import { store } from './store/store';
 import theme from './theme';
 
+declare module '@mui/styles/defaultTheme' {
+  // eslint-disable-next-line @typescript-eslint/no-empty-interface
+  interface DefaultTheme extends Theme {}
+}
+
 // Hot reload the component tree whenever a component file changes
 const render = () => {
   ReactDOM.render(
@@ -18,9 +27,11 @@ const render = () => {
       <Suspense fallback="">
         <Provider store={store}>
           <BrowserRouter>
-            <ThemeProvider theme={theme}>
-              <App />
-            </ThemeProvider>
+            <StyledEngineProvider injectFirst>
+              <ThemeProvider theme={theme}>
+                <App />
+              </ThemeProvider>
+            </StyledEngineProvider>
           </BrowserRouter>
         </Provider>
       </Suspense>

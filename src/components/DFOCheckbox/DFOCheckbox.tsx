@@ -2,7 +2,7 @@ import Checkbox from '@mui/material/Checkbox';
 import CheckBoxIcon from '@mui/icons-material/CheckBox';
 import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
 import { Box, Typography } from '@mui/material/';
-import { makeStyles } from '@material-ui/core';
+import makeStyles from '@mui/styles/makeStyles';
 import { DFOCheckboxProps } from './DFOCheckboxProps';
 import theme from '../../theme';
 
