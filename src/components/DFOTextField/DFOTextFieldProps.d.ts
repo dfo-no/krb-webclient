@@ -6,5 +6,5 @@ interface DFOTextFieldProps {
   label?: string;
   error?: boolean;
   errorMessage?: string;
-  callback?: function;
+  callback?: () => void;
 }
