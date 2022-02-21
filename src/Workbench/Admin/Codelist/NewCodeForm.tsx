@@ -1,31 +1,32 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { FormProvider, useForm } from 'react-hook-form';
 import { joiResolver } from '@hookform/resolvers/joi';
 import { Box, IconButton } from '@mui/material/';
 import CheckIcon from '@mui/icons-material/Check';
 import CloseIcon from '@mui/icons-material/Close';
 import { v4 as uuidv4 } from 'uuid';
-import TextCtrl from '../../../FormProvider/TextCtrl';
-import { useTranslation } from 'react-i18next';
 import { useAppDispatch, useAppSelector } from '../../../store/hooks';
 import {
-  addCodelist,
+  addCodeToCodelist,
   putSelectedProjectThunk
 } from '../../../store/reducers/project-reducer';
 import { addAlert } from '../../../store/reducers/alert-reducer';
+import TextCtrl from '../../../FormProvider/TextCtrl';
 import Nexus from '../../../Nexus/Nexus';
-import {
-  ICodelist,
-  PostCodelistSchema
-} from '../../../Nexus/entities/ICodelist';
+import { ICode, PostCodeSchema } from '../../../Nexus/entities/ICode';
+import { ICodelist } from '../../../Nexus/entities/ICodelist';
+import { Parentable } from '../../../models/Parentable';
 import { IAlert } from '../../../models/IAlert';
 import { useFormStyles } from './CodelistStyles';
 
 interface IProps {
-  handleClose: (newCodelist: ICodelist | null) => void;
+  parent: ICodelist;
+  handleClose: (newCode: Parentable<ICode> | null) => void;
 }
 
-export default function NewCodelistForm({
+export default function NewCodeForm({
+  parent,
   handleClose
 }: IProps): React.ReactElement {
   const dispatch = useAppDispatch();
@@ -34,26 +35,26 @@ export default function NewCodelistForm({
   const { t } = useTranslation();
   const nexus = Nexus.getInstance();
 
-  const defaultValues: ICodelist =
-    nexus.codelistService.generateDefaultCodelistValues(project.id);
+  const defaultValues: Parentable<ICode> =
+    nexus.codelistService.generateDefaultCodeValues(project.id);
 
-  const methods = useForm<ICodelist>({
-    resolver: joiResolver(PostCodelistSchema),
+  const methods = useForm<Parentable<ICode>>({
+    resolver: joiResolver(PostCodeSchema),
     defaultValues
   });
 
-  const onSubmit = (post: ICodelist) => {
-    const newCodelist = nexus.codelistService.createCodelistWithId(post);
-    dispatch(addCodelist(newCodelist));
+  const onSubmit = (post: Parentable<ICode>) => {
+    const newCode = nexus.codelistService.createCodeWithId(post);
+    dispatch(addCodeToCodelist({ codelistId: parent.id, code: newCode }));
     dispatch(putSelectedProjectThunk('dummy')).then(() => {
       const alert: IAlert = {
         id: uuidv4(),
         style: 'success',
-        text: 'Successfully created codelist'
+        text: 'Successfully created code'
       };
       dispatch(addAlert({ alert }));
       methods.reset();
-      handleClose(newCodelist);
+      handleClose(newCode);
     });
   };
 

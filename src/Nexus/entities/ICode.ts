@@ -25,7 +25,7 @@ export const PostCodeSchema = BaseCodeSchema.keys({
   id: CustomJoi.string().equal('').required()
 });
 
-export const EditCodeSchema = BaseCodeSchema.keys({
+export const PutCodeSchema = BaseCodeSchema.keys({
   id: CustomJoi.string().length(36).required(),
   level: CustomJoi.number()
 });

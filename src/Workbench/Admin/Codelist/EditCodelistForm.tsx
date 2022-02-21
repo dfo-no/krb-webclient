@@ -1,59 +1,81 @@
+import { joiResolver } from '@hookform/resolvers/joi';
 import React from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
-import { joiResolver } from '@hookform/resolvers/joi';
-import { Box, IconButton } from '@mui/material/';
-import CheckIcon from '@mui/icons-material/Check';
-import CloseIcon from '@mui/icons-material/Close';
+import { useTranslation } from 'react-i18next';
 import { v4 as uuidv4 } from 'uuid';
 import TextCtrl from '../../../FormProvider/TextCtrl';
-import { useTranslation } from 'react-i18next';
-import { useAppDispatch, useAppSelector } from '../../../store/hooks';
+import { IAlert } from '../../../models/IAlert';
+import { useAppDispatch } from '../../../store/hooks';
+import { addAlert } from '../../../store/reducers/alert-reducer';
 import {
-  addCodelist,
+  editSelectedCodelist,
   putSelectedProjectThunk
 } from '../../../store/reducers/project-reducer';
-import { addAlert } from '../../../store/reducers/alert-reducer';
-import Nexus from '../../../Nexus/Nexus';
 import {
   ICodelist,
-  PostCodelistSchema
+  PutCodelistSchema
 } from '../../../Nexus/entities/ICodelist';
-import { IAlert } from '../../../models/IAlert';
-import { useFormStyles } from './CodelistStyles';
+import { Box, IconButton } from '@mui/material/';
+import { makeStyles } from '@material-ui/core';
+import CheckIcon from '@mui/icons-material/Check';
+import CloseIcon from '@mui/icons-material/Close';
+import theme from '../../../theme';
+
+const useStyles = makeStyles({
+  codeItem: {
+    display: 'flex',
+    flexDirection: 'row',
+    paddingTop: 8
+  },
+  inputBox: {
+    display: 'flex',
+    paddingRight: 8
+  },
+  iconButton: {
+    display: 'flex',
+    marginLeft: 'auto',
+    justifySelf: 'flex-end',
+    alignSelf: 'center',
+    '& .MuiSvgIcon-root': {
+      cursor: 'pointer',
+      color: theme.palette.gray500.main,
+      width: 32,
+      height: 32,
+      '&:hover': {
+        color: theme.palette.dfoLightBlue.main
+      }
+    }
+  }
+});
 
 interface IProps {
+  element: ICodelist;
   handleClose: (newCodelist: ICodelist | null) => void;
 }
 
-export default function NewCodelistForm({
+function EditCodelistForm({
+  element,
   handleClose
 }: IProps): React.ReactElement {
   const dispatch = useAppDispatch();
-  const { project } = useAppSelector((state) => state.project);
-  const classes = useFormStyles();
+  const classes = useStyles();
   const { t } = useTranslation();
-  const nexus = Nexus.getInstance();
-
-  const defaultValues: ICodelist =
-    nexus.codelistService.generateDefaultCodelistValues(project.id);
 
   const methods = useForm<ICodelist>({
-    resolver: joiResolver(PostCodelistSchema),
-    defaultValues
+    defaultValues: element,
+    resolver: joiResolver(PutCodelistSchema)
   });
 
-  const onSubmit = (post: ICodelist) => {
-    const newCodelist = nexus.codelistService.createCodelistWithId(post);
-    dispatch(addCodelist(newCodelist));
+  const onSubmit = (put: ICodelist) => {
+    dispatch(editSelectedCodelist(put));
     dispatch(putSelectedProjectThunk('dummy')).then(() => {
       const alert: IAlert = {
         id: uuidv4(),
         style: 'success',
-        text: 'Successfully created codelist'
+        text: 'Successfully edited codelist'
       };
       dispatch(addAlert({ alert }));
-      methods.reset();
-      handleClose(newCodelist);
+      handleClose(put);
     });
   };
 
@@ -64,7 +86,7 @@ export default function NewCodelistForm({
         autoComplete="off"
         noValidate
       >
-        <Box className={classes.formItem}>
+        <Box className={classes.codeItem}>
           <Box className={classes.inputBox}>
             <TextCtrl name="title" label={t('Title')} />
           </Box>
@@ -86,3 +108,5 @@ export default function NewCodelistForm({
     </FormProvider>
   );
 }
+
+export default EditCodelistForm;

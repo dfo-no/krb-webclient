@@ -129,7 +129,6 @@ theme.typography.small = {
 };
 
 theme.typography.smallBold = {
-  color: theme.palette.black.main,
   fontSize: '14px',
   fontWeight: 700,
   whiteSpace: 'nowrap'
@@ -230,6 +229,13 @@ theme.components = {
         '& .MuiListItemIcon-root': {
           display: 'none'
         }
+      }
+    }
+  },
+  MuiList: {
+    styleOverrides: {
+      root: {
+        padding: 0
       }
     }
   },

@@ -1,59 +1,54 @@
+import { joiResolver } from '@hookform/resolvers/joi';
 import React from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
-import { joiResolver } from '@hookform/resolvers/joi';
+import { useTranslation } from 'react-i18next';
+import { v4 as uuidv4 } from 'uuid';
 import { Box, IconButton } from '@mui/material/';
 import CheckIcon from '@mui/icons-material/Check';
 import CloseIcon from '@mui/icons-material/Close';
-import { v4 as uuidv4 } from 'uuid';
 import TextCtrl from '../../../FormProvider/TextCtrl';
-import { useTranslation } from 'react-i18next';
-import { useAppDispatch, useAppSelector } from '../../../store/hooks';
+import { useAppDispatch } from '../../../store/hooks';
+import { addAlert } from '../../../store/reducers/alert-reducer';
 import {
-  addCodelist,
+  editCodeInCodelist,
   putSelectedProjectThunk
 } from '../../../store/reducers/project-reducer';
-import { addAlert } from '../../../store/reducers/alert-reducer';
-import Nexus from '../../../Nexus/Nexus';
-import {
-  ICodelist,
-  PostCodelistSchema
-} from '../../../Nexus/entities/ICodelist';
 import { IAlert } from '../../../models/IAlert';
+import { Parentable } from '../../../models/Parentable';
+import { ICode, PutCodeSchema } from '../../../Nexus/entities/ICode';
+import { ICodelist } from '../../../Nexus/entities/ICodelist';
 import { useFormStyles } from './CodelistStyles';
 
 interface IProps {
-  handleClose: (newCodelist: ICodelist | null) => void;
+  parent: ICodelist;
+  element: ICode;
+  handleClose: (newCode: Parentable<ICode> | null) => void;
 }
 
-export default function NewCodelistForm({
+function EditCodeForm({
+  parent,
+  element,
   handleClose
 }: IProps): React.ReactElement {
   const dispatch = useAppDispatch();
-  const { project } = useAppSelector((state) => state.project);
   const classes = useFormStyles();
   const { t } = useTranslation();
-  const nexus = Nexus.getInstance();
 
-  const defaultValues: ICodelist =
-    nexus.codelistService.generateDefaultCodelistValues(project.id);
-
-  const methods = useForm<ICodelist>({
-    resolver: joiResolver(PostCodelistSchema),
-    defaultValues
+  const methods = useForm<Parentable<ICode>>({
+    defaultValues: element,
+    resolver: joiResolver(PutCodeSchema)
   });
 
-  const onSubmit = (post: ICodelist) => {
-    const newCodelist = nexus.codelistService.createCodelistWithId(post);
-    dispatch(addCodelist(newCodelist));
+  const onSubmit = (put: Parentable<ICode>) => {
+    dispatch(editCodeInCodelist({ codelistId: parent.id, code: put }));
     dispatch(putSelectedProjectThunk('dummy')).then(() => {
       const alert: IAlert = {
         id: uuidv4(),
         style: 'success',
-        text: 'Successfully created codelist'
+        text: 'Successfully edited code'
       };
       dispatch(addAlert({ alert }));
-      methods.reset();
-      handleClose(newCodelist);
+      handleClose(put);
     });
   };
 
@@ -86,3 +81,5 @@ export default function NewCodelistForm({
     </FormProvider>
   );
 }
+
+export default EditCodeForm;

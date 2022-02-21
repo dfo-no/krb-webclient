@@ -198,7 +198,6 @@ const projectSlice = createSlice({
       {
         payload
       }: PayloadAction<{
-        id: string;
         codelistId: string;
         codes: Parentable<ICode>[];
       }>
