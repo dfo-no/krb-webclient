@@ -5,7 +5,6 @@ import React, { useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { v4 as uuidv4 } from 'uuid';
-import ErrorSummary from '../../../Form/ErrorSummary';
 import TextCtrl from '../../../FormProvider/TextCtrl';
 import { IAlert } from '../../../models/IAlert';
 import { ITag, PostTagSchema } from '../../../Nexus/entities/ITag';
