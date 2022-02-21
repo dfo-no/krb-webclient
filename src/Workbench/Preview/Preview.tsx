@@ -1,4 +1,5 @@
-import { Box, makeStyles } from '@material-ui/core';
+import { Box } from '@mui/material';
+import makeStyles from '@mui/styles/makeStyles';
 import React, { useState } from 'react';
 import { Levelable } from '../../models/Levelable';
 import { IProduct } from '../../Nexus/entities/IProduct';

@@ -1,7 +1,7 @@
 import TextField from '@mui/material/TextField';
 import theme from '../../theme';
 import { Box, Typography } from '@mui/material/';
-import { makeStyles } from '@material-ui/core';
+import makeStyles from '@mui/styles/makeStyles';
 import { DFOTextFieldStyleProps } from './DFOTextFieldStyleProps';
 import { DFOTextFieldProps } from './DFOTextFieldProps';
 
