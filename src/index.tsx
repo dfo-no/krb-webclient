@@ -1,3 +1,4 @@
+import { ThemeProvider } from '@mui/material/styles';
 import React, { Suspense } from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
@@ -8,6 +9,7 @@ import './i18n';
 import './index.scss';
 import reportWebVitals from './reportWebVitals';
 import { store } from './store/store';
+import theme from './theme';
 
 // Hot reload the component tree whenever a component file changes
 const render = () => {
@@ -16,7 +18,9 @@ const render = () => {
       <Suspense fallback="">
         <Provider store={store}>
           <BrowserRouter>
-            <App />
+            <ThemeProvider theme={theme}>
+              <App />
+            </ThemeProvider>
           </BrowserRouter>
         </Provider>
       </Suspense>
