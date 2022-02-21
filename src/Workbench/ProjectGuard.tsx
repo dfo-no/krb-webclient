@@ -21,7 +21,7 @@ const useStyles = makeStyles({
     flexDirection: 'column',
     width: '100%',
 
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down('md')]: {
       flexWrap: 'wrap'
     }
   },
@@ -31,7 +31,7 @@ const useStyles = makeStyles({
     backgroundColor: '#80ADC8',
     height: '100%',
 
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down('md')]: {
       flexWrap: 'wrap'
     }
   }

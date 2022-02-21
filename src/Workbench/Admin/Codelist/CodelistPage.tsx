@@ -24,7 +24,7 @@ const useStyles = makeStyles({
     display: 'flex',
     flexDirection: 'row',
     gap: 5,
-    [theme.breakpoints.down('mddd')]: {
+    [theme.breakpoints.down('lg')]: {
       flexDirection: 'column',
       gap: 15
     }
@@ -46,7 +46,7 @@ const useStyles = makeStyles({
     width: '100%',
     alignSelf: 'center',
     height: '100vh',
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down('md')]: {
       width: 400
     }
   }

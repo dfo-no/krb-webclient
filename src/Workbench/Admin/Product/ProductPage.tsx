@@ -33,7 +33,7 @@ const useStyles = makeStyles({
     display: 'flex',
     flexDirection: 'row',
     gap: 5,
-    [theme.breakpoints.down('mddd')]: {
+    [theme.breakpoints.down('lg')]: {
       flexDirection: 'column',
       gap: 15
     }
@@ -52,7 +52,7 @@ const useStyles = makeStyles({
     alignSelf: 'center'
   },
   products: {
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down('md')]: {
       alignSelf: 'center',
       width: 400
     }

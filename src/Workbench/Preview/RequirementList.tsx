@@ -26,7 +26,7 @@ const useStyles = makeStyles({
       }
     },
 
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down('md')]: {
       backgroundColor: theme.palette.gray100.main
     }
   }

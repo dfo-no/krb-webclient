@@ -21,7 +21,7 @@ const useStyles = makeStyles({
   },
   projectPath: {
     marginLeft: 2.5,
-    [theme.breakpoints.down('mdd')]: {
+    [theme.breakpoints.down('mddd')]: {
       marginLeft: 1
     }
   },
@@ -29,7 +29,7 @@ const useStyles = makeStyles({
     display: 'flex',
     paddingBottom: 3,
     width: '90vw',
-    [theme.breakpoints.down('mdd')]: {
+    [theme.breakpoints.down('mddd')]: {
       paddingBottom: 0
     }
   },
@@ -42,7 +42,7 @@ const useStyles = makeStyles({
     gap: 20,
     alignItems: 'center',
 
-    [theme.breakpoints.down('mdd')]: {
+    [theme.breakpoints.down('mddd')]: {
       flexGrow: 1,
       flexDirection: 'column',
       alignItems: 'flex-start',
@@ -55,7 +55,7 @@ const useStyles = makeStyles({
     alignItems: 'center',
     paddingTop: 6,
 
-    [theme.breakpoints.down('mdd')]: {
+    [theme.breakpoints.down('mddd')]: {
       paddingTop: 0,
       paddingBottom: 8
     }
@@ -67,7 +67,7 @@ const useStyles = makeStyles({
     color: theme.palette.dfoBlue.main,
     height: '100%',
 
-    [theme.breakpoints.down('mdd')]: {
+    [theme.breakpoints.down('mddd')]: {
       paddingRight: 13,
       gap: 20
     }
@@ -99,7 +99,7 @@ const useStyles = makeStyles({
     display: 'flex',
     flexDirection: 'row',
     gap: 20,
-    [theme.breakpoints.down('mdd')]: {
+    [theme.breakpoints.down('mddd')]: {
       flexDirection: 'column',
       gap: 0
     }
