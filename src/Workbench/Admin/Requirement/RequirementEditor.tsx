@@ -23,7 +23,6 @@ import {
   editRequirementInNeed,
   putSelectedProjectThunk
 } from '../../../store/reducers/project-reducer';
-import TagsAsChips from '../Tags/TagsAsChips';
 import VariantArray from './VariantArray';
 import withProjectAndNeedAndRequirement from './withProjectAndNeedAndRequirement';
 
@@ -155,9 +154,7 @@ function RequirementEditor(): React.ReactElement {
         </Form.Group>
         <Row>
           <Col sm={1} />
-          <Col sm={8}>
-            <TagsAsChips tags={requirement.tags} />
-          </Col>
+          <Col sm={8}></Col>
         </Row>
         <VariantArray
           control={control}

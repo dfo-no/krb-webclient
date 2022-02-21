@@ -2,14 +2,14 @@ import React, { useEffect } from 'react';
 import { Route, useHistory, useParams } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../../store/hooks';
 import { selectCodeList } from '../../../store/reducers/selectedCodelist-reducer';
-import CodelistPage from './CodelistPage';
+import CodelistPage from './CodeListPage';
 
 interface IRouteParams {
   projectId: string;
   id: string;
 }
 
-export default function CodelistGuard(): React.ReactElement {
+export default function CodeListGuard(): React.ReactElement {
   const dispatch = useAppDispatch();
   const { project } = useAppSelector((state) => state.project);
   const { codelist } = useAppSelector((state) => state.selectedCodeList);

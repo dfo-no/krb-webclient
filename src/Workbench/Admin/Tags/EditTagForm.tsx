@@ -1,15 +1,8 @@
 import { joiResolver } from '@hookform/resolvers/joi';
-import DeleteIcon from '@mui/icons-material/Delete';
-import Button from '@mui/material/Button';
-import { get } from 'lodash';
 import React, { useEffect, useState } from 'react';
-import Card from 'react-bootstrap/Card';
-import Form from 'react-bootstrap/Form';
 import { FieldError, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { v4 as uuidv4 } from 'uuid';
-import ControlledTextInput from '../../../Form/ControlledTextInput';
-import ErrorSummary from '../../../Form/ErrorSummary';
 import { IAlert } from '../../../models/IAlert';
 import { Nestable } from '../../../models/Nestable';
 import { Parentable } from '../../../models/Parentable';
@@ -82,29 +75,5 @@ export default function EditTagForm({ element }: IProps): React.ReactElement {
     dispatch(addAlert({ alert }));
   };
 
-  return (
-    <Card className="mb-4">
-      <Card.Body>
-        <Form
-          onSubmit={handleSubmit((post) => onEditTagSubmit(post))}
-          autoComplete="off"
-          noValidate
-          validated={validated}
-        >
-          <ControlledTextInput
-            control={control}
-            name="title"
-            label={t('Title')}
-            error={get(errors, `description`) as FieldError}
-          />
-          <Button variant="primary">{t('save')}</Button>
-          <Button variant="warning" onClick={deleteTag}>
-            {t('delete')} <DeleteIcon />
-          </Button>
-
-          <ErrorSummary errors={errors} />
-        </Form>
-      </Card.Body>
-    </Card>
-  );
+  return <p>Hello world</p>;
 }

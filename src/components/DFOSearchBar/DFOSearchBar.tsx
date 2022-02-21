@@ -15,9 +15,6 @@ const useStyles = makeStyles({
     color: theme.palette.purple.main,
     fontSize: '30px !important',
     zIndex: 1
-  },
-  noBorder: {
-    border: 'none'
   }
 });
 
