@@ -1,14 +1,17 @@
 import { Box, FormControl, FormLabel } from '@mui/material';
 import { get } from 'lodash';
-import React, { useState } from 'react';
+import React, { JSXElementConstructor, ReactElement, useState } from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
 import { DFOCheckbox } from '../components/DFOCheckbox/DFOCheckbox';
 
 interface IProps {
   name: string;
-  label?: any;
-  variant?: any;
-  value?: any;
+  label:
+    | string
+    | number
+    | ReactElement<any, string | JSXElementConstructor<any>>;
+  variant?: string;
+  value?: boolean;
 }
 
 const CheckboxCtrl = ({
