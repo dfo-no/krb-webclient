@@ -1,4 +1,5 @@
-import { Box, makeStyles } from '@material-ui/core';
+import { Box } from '@mui/material';
+import makeStyles from '@mui/styles/makeStyles';
 import Button from '@mui/material/Button';
 import React, { useState } from 'react';
 import FormControl from 'react-bootstrap/FormControl';

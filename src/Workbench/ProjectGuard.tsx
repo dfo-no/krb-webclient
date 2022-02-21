@@ -1,4 +1,5 @@
-import { Box, makeStyles } from '@material-ui/core';
+import { Box } from '@mui/material';
+import makeStyles from '@mui/styles/makeStyles';
 import React, { useEffect, useState } from 'react';
 import { Route, useParams } from 'react-router-dom';
 import LoaderSpinner from '../common/LoaderSpinner';
@@ -20,7 +21,7 @@ const useStyles = makeStyles({
     flexDirection: 'column',
     width: '100%',
 
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down('md')]: {
       flexWrap: 'wrap'
     }
   },
@@ -30,7 +31,7 @@ const useStyles = makeStyles({
     backgroundColor: '#80ADC8',
     height: '100%',
 
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down('md')]: {
       flexWrap: 'wrap'
     }
   }

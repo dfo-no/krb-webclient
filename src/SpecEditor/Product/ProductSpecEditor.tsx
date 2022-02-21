@@ -1,5 +1,4 @@
 import { joiResolver } from '@hookform/resolvers/joi';
-import { Mark } from '@material-ui/core/Slider/Slider';
 import Button from '@mui/material/Button';
 import Slider from '@mui/material/Slider';
 import { get } from 'lodash';
@@ -17,6 +16,7 @@ import {
   ISpecificationProduct,
   SpecificationProductSchema
 } from '../../models/ISpecificationProduct';
+import { IMark } from '../../Nexus/entities/IMark';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { editSpecProduct } from '../../store/reducers/spesification-reducer';
 import ProductRequirementSelectorList from './ProductRequirementSelectorList';
@@ -61,7 +61,7 @@ export default function ProductSpecEditor(): React.ReactElement {
     dispatch(editSpecProduct({ product: newProduct }));
   };
 
-  const marks: Mark[] = [
+  const marks: IMark[] = [
     {
       value: 10,
       label: `Lav`

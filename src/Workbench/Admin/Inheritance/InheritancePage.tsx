@@ -1,9 +1,8 @@
-import { Box, makeStyles } from '@material-ui/core';
 import DeleteIcon from '@mui/icons-material/Delete';
+import { Box } from '@mui/material';
 import Button from '@mui/material/Button';
+import makeStyles from '@mui/styles/makeStyles';
 import React from 'react';
-import Col from 'react-bootstrap/Col';
-import Row from 'react-bootstrap/Row';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import Utils from '../../../common/Utils';

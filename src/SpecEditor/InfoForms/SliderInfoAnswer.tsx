@@ -1,5 +1,4 @@
 import { joiResolver } from '@hookform/resolvers/joi';
-import { Mark } from '@material-ui/core/Slider/Slider';
 import Button from '@mui/material/Button';
 import React from 'react';
 import Col from 'react-bootstrap/Col';
@@ -14,6 +13,7 @@ import { IRequirementAnswer } from '../../models/IRequirementAnswer';
 import ModelType from '../../models/ModelType';
 import QuestionEnum from '../../models/QuestionEnum';
 import { QuestionType } from '../../models/QuestionType';
+import { IMark } from '../../Nexus/entities/IMark';
 import { IRequirement } from '../../Nexus/entities/IRequirement';
 import { ISliderQuestion } from '../../Nexus/entities/ISliderQuestion';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
@@ -110,7 +110,7 @@ export default function ISliderInfoAnswer({
     }
   };
 
-  const marks: Mark[] = [
+  const marks: IMark[] = [
     {
       value: sliderQuestion.config.min,
       label: `${sliderQuestion.config.min} ${sliderQuestion.config.unit}`

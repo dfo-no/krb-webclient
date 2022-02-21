@@ -1,17 +1,17 @@
-import { makeStyles } from '@material-ui/core';
 import Grid from '@mui/material/Grid';
 import Link from '@mui/material/Link';
 import Typography from '@mui/material/Typography';
+import makeStyles from '@mui/styles/makeStyles';
 import * as React from 'react';
-import theme from '../theme';
 import DFOLinkList from '../components/DFOLinkList/DFOLinkList';
+import theme from '../theme';
 
 const useStyles = makeStyles({
   footerContainer: {
     width: '100%',
     height: 300,
     backgroundColor: theme.palette.blue.main,
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down('md')]: {
       paddingLeft: 20,
       paddingRight: 20,
       paddingBottom: 24,

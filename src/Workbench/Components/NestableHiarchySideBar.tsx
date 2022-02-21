@@ -3,20 +3,22 @@ import Nestable, { Item } from 'react-nestable';
 import 'react-nestable/dist/styles/index.css';
 import Utils from '../../common/Utils';
 import { Parentable } from '../../models/Parentable';
+import { Nestable as NestableModel } from '../../models/Nestable';
 import { IBaseModel } from '../../Nexus/entities/IBaseModel';
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import DragIndicatorIcon from '@mui/icons-material/DragIndicator';
-import { makeStyles, Box } from '@material-ui/core';
+import { Box } from '@mui/material';
+import makeStyles from '@mui/styles/makeStyles';
 import { Typography } from '@mui/material';
 import theme from '../../theme';
 import NestableHierarcy from '../../NestableHierarchy/NestableHierarcy';
 
 interface IProps<T extends IBaseModel> {
-  listOrderFunc: (itemlist: Parentable<T>[]) => void;
+  dispatch: (item: Parentable<T>, index: number) => void;
   selectFunc: (item: Parentable<T>) => void;
-  inputlist: Parentable<T>[];
+  inputlist: NestableModel<T>[];
   depth: number;
 }
 
@@ -79,7 +81,7 @@ const useStyles = makeStyles({
 });
 
 const NestableHierarcySideBar = <T extends IBaseModel>({
-  listOrderFunc,
+  dispatch,
   selectFunc,
   inputlist,
   depth
@@ -87,10 +89,7 @@ const NestableHierarcySideBar = <T extends IBaseModel>({
   const classes = useStyles();
   const [selected, setSelected] = useState<Parentable<T> | null>(null);
 
-  const { hierarchyList, onChange } = NestableHierarcy(
-    listOrderFunc,
-    inputlist
-  );
+  const { onChange } = NestableHierarcy(dispatch);
 
   const itemClicked = (item: Item) => {
     const selectedParentable = item as Parentable<T>;
@@ -126,7 +125,7 @@ const NestableHierarcySideBar = <T extends IBaseModel>({
 
   return (
     <Nestable
-      items={hierarchyList}
+      items={inputlist}
       className={classes.nestableCustom}
       renderItem={({ item, collapseIcon, handler }) =>
         renderItem(item, handler, collapseIcon)
