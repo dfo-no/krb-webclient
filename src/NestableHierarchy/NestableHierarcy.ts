@@ -1,13 +1,11 @@
 import React from 'react';
 import { Item } from 'react-nestable';
 import 'react-nestable/dist/styles/index.css';
-import Utils from '../common/Utils';
 import { Parentable } from '../models/Parentable';
 import { IBaseModel } from '../Nexus/entities/IBaseModel';
 
 const NestableHierarcy = <T extends IBaseModel>(
-  dispatch: (itemlist: Parentable<T>[]) => void,
-  inputlist: Parentable<T>[]
+  dispatch: (item: Parentable<T>, index: number) => void
 ) => {
   const convertTreeToList = (tree: Item, key: string, collection: Item[]) => {
     if ((!tree[key] || tree[key].length === 0) && collection.includes(tree)) {
@@ -42,13 +40,12 @@ const NestableHierarcy = <T extends IBaseModel>(
     return flattenedCollection;
   };
 
-  const hierarchyList = Utils.parentable2Nestable(inputlist);
-
   const onChange = (items: {
     items: Item[];
     dragItem: Item;
     targetPath: number[];
   }) => {
+    // Nestable til Parentable
     const itemList = flatten(items);
     const returnList: Parentable<T>[] = [];
     itemList.forEach((elem) => {
@@ -56,10 +53,14 @@ const NestableHierarcy = <T extends IBaseModel>(
       delete clone.level;
       returnList.push(clone as Parentable<T>);
     });
-    dispatch(returnList);
+    const positionOfReturn = returnList.findIndex(
+      (item) => item.id === items.dragItem.id
+    );
+
+    dispatch(returnList[positionOfReturn], positionOfReturn);
   };
 
-  return { hierarchyList, onChange };
+  return { onChange };
 };
 
 export default NestableHierarcy;

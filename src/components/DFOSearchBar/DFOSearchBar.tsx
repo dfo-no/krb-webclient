@@ -3,7 +3,6 @@ import { TextField, InputAdornment } from '@mui/material/';
 import SearchIcon from '@mui/icons-material/Search';
 import { makeStyles } from '@material-ui/core';
 import theme from '../../theme';
-import { useTranslation } from 'react-i18next';
 import { DFOSearchBarProps } from './DFOSearchBarProps';
 
 const useStyles = makeStyles({
@@ -32,7 +31,7 @@ export default function DFOSearchBar({
     if (e.target.value.length !== 0) {
       callback(searchFunction(e.target.value, list));
     } else {
-      callback([]);
+      callback(list);
     }
   };
 
