@@ -94,6 +94,14 @@ const CodePanel = (): React.ReactElement => {
     setCreating(true);
   };
 
+  const itemToParentable = (item: NestableModel<ICode>): Parentable<ICode> => {
+    // As ICode is not yet implemented nestable, we can simply remove level and chilren
+    const parentableItem = { ...item };
+    delete parentableItem.level;
+    delete parentableItem.children;
+    return parentableItem;
+  };
+
   const renderItem = (item: Item, handler: React.ReactNode) => {
     if (isEditingItem(item)) {
       return (
@@ -101,7 +109,7 @@ const CodePanel = (): React.ReactElement => {
           <Box className={classes.codeItem}>
             <EditCodeForm
               parent={codelist}
-              element={item as ICode}
+              element={itemToParentable(item as NestableModel<ICode>)}
               handleClose={handleCloseEdit}
             />
           </Box>

@@ -66,10 +66,7 @@ describe('SearchUtils functions should work', () => {
       }
     ];
 
-    const result = tags
-      .map((item) => SearchUtils.search(item, 'match'))
-      .filter((product) => product.inSearch)
-      .map((product) => product as Nestable<ITag>);
+    const result = SearchUtils.search(tags, 'match');
 
     // Check that the props are correct
     expect(result[0].title).toEqual('A');

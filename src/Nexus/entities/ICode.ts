@@ -16,7 +16,6 @@ export const BaseCodeSchema = CustomJoi.object().keys({
     CustomJoi.string().length(36),
     CustomJoi.string().valid('')
   ]),
-  children: CustomJoi.array(),
   sourceOriginal: CustomJoi.string().required(),
   sourceRel: CustomJoi.string().allow(null).required()
 });
@@ -26,6 +25,5 @@ export const PostCodeSchema = BaseCodeSchema.keys({
 });
 
 export const PutCodeSchema = BaseCodeSchema.keys({
-  id: CustomJoi.string().length(36).required(),
-  level: CustomJoi.number()
+  id: CustomJoi.string().length(36).required()
 });

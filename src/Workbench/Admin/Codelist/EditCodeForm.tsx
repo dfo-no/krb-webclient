@@ -21,7 +21,7 @@ import { useFormStyles } from './CodelistStyles';
 
 interface IProps {
   parent: ICodelist;
-  element: ICode;
+  element: Parentable<ICode>;
   handleClose: (newCode: Parentable<ICode> | null) => void;
 }
 

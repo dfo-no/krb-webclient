@@ -3,14 +3,17 @@ import { IProduct } from '../Nexus/entities/IProduct';
 import { ITag } from '../Nexus/entities/ITag';
 
 interface SearchableParams {
-  inSearch: boolean;
+  inSearch?: boolean;
 }
 
 type SeacrhableTypes = Nestable<IProduct | ITag>;
 type Searchable = SearchableParams & SeacrhableTypes;
 
 class SearchUtils {
-  static search(topItem: SeacrhableTypes, searchString: string): Searchable {
+  private static searchRecursive(
+    topItem: SeacrhableTypes,
+    searchString: string
+  ): Searchable {
     // Returns item as match if searchtext is in the title
     if (topItem.title.toLowerCase().includes(searchString.toLowerCase())) {
       return { ...topItem, inSearch: true };
@@ -21,8 +24,13 @@ class SearchUtils {
     }
     // Recursivly search through children to find matches
     const newChilds = topItem.children
-      .map((childItem) => SearchUtils.search(childItem, searchString))
-      .filter((childItem) => childItem.inSearch);
+      .map((childItem) => this.searchRecursive(childItem, searchString))
+      .filter((childItem) => childItem.inSearch)
+      .map((childItem) => {
+        const seacrhableTypeItem = { ...childItem };
+        delete seacrhableTypeItem.inSearch;
+        return seacrhableTypeItem as SeacrhableTypes;
+      });
 
     // Returns item as no-match if no children has match
     if (newChilds.length === 0) {
@@ -34,6 +42,20 @@ class SearchUtils {
       children: newChilds,
       inSearch: true
     };
+  }
+
+  static search(
+    items: SeacrhableTypes[],
+    searchString: string
+  ): SeacrhableTypes[] {
+    return items
+      .map((item) => this.searchRecursive(item, searchString))
+      .filter((item) => item.inSearch)
+      .map((item) => {
+        const seacrhableTypeItem = { ...item };
+        delete seacrhableTypeItem.inSearch;
+        return seacrhableTypeItem as SeacrhableTypes;
+      });
   }
 }
 
