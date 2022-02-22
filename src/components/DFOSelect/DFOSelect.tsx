@@ -1,8 +1,11 @@
 import React from 'react';
 import { makeStyles, MenuItem, Select } from '@material-ui/core';
-import { DFOSelectProps } from './DFOSelectProps';
 import theme from '../../theme';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
+
+export interface DFOSelectProps {
+  options: any;
+}
 
 const useStyles = makeStyles({
   select: {

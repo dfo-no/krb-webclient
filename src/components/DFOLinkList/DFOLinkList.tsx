@@ -8,8 +8,27 @@ import * as React from 'react';
 import ArrowForwardIos from '@mui/icons-material/ArrowForwardIos';
 import Icon from '@material-ui/core/Icon';
 import theme from '../../theme';
-import { DFOLinkListProps } from './DFOLinkListProps';
-import { DFOLinkListStyleProps } from './DFOLinkListStyleProps';
+
+export interface DFOLinkListProps {
+  list: {
+    title: string;
+    href: string;
+  }[];
+  iconType?: string;
+  iconColor?: string;
+  textColor?: string;
+  borderColor?: string;
+  borderThickness?: string;
+  hoverColor?: string;
+}
+
+export interface DFOLinkListStyleProps {
+  iconColor?: string;
+  textColor?: string;
+  borderColor?: string;
+  borderThickness?: string;
+  hoverColor?: string;
+}
 
 const useStyles = makeStyles<Theme, DFOLinkListStyleProps>({
   linkList: {

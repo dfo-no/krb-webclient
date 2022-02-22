@@ -1,8 +1,14 @@
 import Checkbox from '@mui/material/Checkbox';
 import CheckIcon from '@mui/icons-material/Check';
 import { Box, makeStyles } from '@material-ui/core';
-import { DFOCheckboxProps } from './DFOCheckboxProps';
 import theme from '../../theme';
+import { ControllerRenderProps, FieldValues } from 'react-hook-form';
+
+interface DFOCheckboxProps {
+  element?: ControllerRenderProps<FieldValues, string>;
+  variant?: string;
+  value?: boolean;
+}
 
 const useStyles = makeStyles({
   checkbox: {

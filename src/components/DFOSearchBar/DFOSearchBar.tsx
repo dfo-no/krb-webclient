@@ -3,7 +3,13 @@ import { TextField, InputAdornment } from '@mui/material/';
 import SearchIcon from '@mui/icons-material/Search';
 import { makeStyles } from '@material-ui/core';
 import theme from '../../theme';
-import { DFOSearchBarProps } from './DFOSearchBarProps';
+
+export interface DFOSearchBarProps {
+  list: any;
+  searchFunction: any;
+  callback: any;
+  label: string;
+}
 
 const useStyles = makeStyles({
   root: {

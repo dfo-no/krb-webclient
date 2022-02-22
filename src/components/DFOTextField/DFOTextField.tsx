@@ -2,8 +2,16 @@ import TextField from '@mui/material/TextField';
 import theme from '../../theme';
 import { Box, Typography } from '@mui/material/';
 import { makeStyles } from '@material-ui/core';
-import { DFOTextFieldStyleProps } from './DFOTextFieldStyleProps';
-import { DFOTextFieldProps } from './DFOTextFieldProps';
+import { ControllerRenderProps, FieldValues } from 'react-hook-form';
+
+interface DFOTextFieldProps {
+  element?: ControllerRenderProps<FieldValues, string>;
+  value?: string;
+  label?: string;
+  error?: boolean;
+  errorMessage?: string;
+  callback?: any;
+}
 
 const useStyles = makeStyles({
   root: {
