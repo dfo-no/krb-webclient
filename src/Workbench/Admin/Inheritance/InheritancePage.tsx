@@ -1,75 +1,82 @@
-import DeleteIcon from '@mui/icons-material/Delete';
 import { Box } from '@mui/material';
-import Button from '@mui/material/Button';
 import makeStyles from '@mui/styles/makeStyles';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { Link } from 'react-router-dom';
-import Utils from '../../../common/Utils';
+import DFOSearchBar from '../../../components/DFOSearchBar/DFOSearchBar';
+import { useAppSelector } from '../../../store/hooks';
+import {
+  DFOAccordionElement,
+  DFOAccordionProvider
+} from '../../../components/DFOAccordion/DFOAccordion';
 import { IInheritedBank } from '../../../models/IInheritedBank';
-import { useGetAllBanksQuery } from '../../../store/api/bankApi';
-import { useAppDispatch, useAppSelector } from '../../../store/hooks';
-import { putProjectThunk } from '../../../store/reducers/project-reducer';
-import InheritanceSearch from './InheritanceSearch';
+import InheritanceBankBody from './InheritedBankAccordionBody';
+import InheritanceBankHeader from './InheritedBankAccordionHeader';
 
 const useStyles = makeStyles({
-  SearchResultHeader: {
-    display: 'flex',
-    justifyContent: 'space-between'
+  accordionElement: {
+    marginBottom: 14
   },
-  searchWrapper: {
-    width: '50%',
-    marginLeft: '2%'
+  inheritanceContainer: {
+    display: 'flex',
+    flexDirection: 'column',
+    marginTop: 40,
+    gap: 30,
+    margin: 'auto',
+    width: '55.5vw'
+  },
+  topContainer: {
+    display: 'flex',
+    flexDirection: 'row',
+    gap: 100
+  },
+  searchBarContainer: {
+    width: '25vw'
   }
 });
 
 export default function InheritancePage(): React.ReactElement {
   const { project } = useAppSelector((state) => state.project);
   const { t } = useTranslation();
-  const dispatch = useAppDispatch();
   const classes = useStyles();
 
-  const removeInheritance = (projectId: string, inheritedId: string) => {
-    const updatedProject = Utils.removeInheritedBank(
-      project,
-      projectId,
-      inheritedId
-    );
-    dispatch(putProjectThunk(updatedProject));
-  };
+  const inheritanceSearch = () => {};
+  const searchFieldCallback = () => {};
 
-  const renderInheritedBanks = (inheritanceList: IInheritedBank[]) => {
-    inheritanceList
-      .slice()
-      .sort((a, b) => (a.title.toLowerCase() > b.title.toLowerCase() ? 1 : -1));
-    const projects = inheritanceList.map((element: IInheritedBank) => {
+  const renderInheritedBanks = (inheritedBanksList: IInheritedBank[]) => {
+    return inheritedBanksList.map((bank: IInheritedBank) => {
       return (
-        <Box key={element.id}>
-          <Box className={classes.SearchResultHeader}>
-            <h5>{element.title}</h5>{' '}
-            <Button
-              variant="primary"
-              onClick={() => removeInheritance(element.projectId, element.id)}
-            >
-              <DeleteIcon />
-            </Button>
-          </Box>
-
-          <p>{element.description}</p>
+        <Box className={classes.accordionElement} key={bank.id}>
+          <DFOAccordionElement
+            eventKey={bank.id}
+            header={<InheritanceBankHeader bank={bank} />}
+            body={<InheritanceBankBody />}
+          />
         </Box>
       );
     });
-    return <Box className=" mt-5">{projects}</Box>;
   };
 
   return (
-    <Box className={classes.searchWrapper}>
-      <Box>{<InheritanceSearch />}</Box>
-      <Box>
-        {project.inheritedBanks.length === 0 && <p>Ingen Avhengigheter</p>}
-        {project.inheritedBanks.length > 0 && <p>Avhengigheter:</p>}
-        {renderInheritedBanks(project.inheritedBanks)}
+    <>
+      <Box className={classes.inheritanceContainer}>
+        <Box className={classes.topContainer}>
+          <Box className={classes.searchBarContainer}>
+            {' '}
+            <DFOSearchBar
+              list={project.inheritedBanks}
+              label={t('Find banks to inherit from')}
+              callback={searchFieldCallback}
+              searchFunction={inheritanceSearch}
+            />
+          </Box>
+        </Box>
+
+        <Box>
+          <DFOAccordionProvider
+            body={<>{renderInheritedBanks(project.inheritedBanks)}</>}
+          />
+        </Box>
       </Box>
-    </Box>
+    </>
   );
 }

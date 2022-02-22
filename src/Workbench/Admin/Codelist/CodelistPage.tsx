@@ -7,8 +7,8 @@ import DFOSearchBar from '../../../components/DFOSearchBar/DFOSearchBar';
 import { ICodelist } from '../../../Nexus/entities/ICodelist';
 import { useAppSelector } from '../../../store/hooks';
 import theme from '../../../theme';
-import CodeList from './CodeList';
-import NewCodeListForm from './NewCodeListForm';
+import Codelist from './CodeList';
+import NewCodelistForm from './NewCodeListForm';
 
 const useStyles = makeStyles({
   codelistsContainer: {
@@ -52,7 +52,7 @@ const useStyles = makeStyles({
   }
 });
 
-export default function CodeListPage(): React.ReactElement {
+export default function CodelistPage(): React.ReactElement {
   const { project } = useAppSelector((state) => state.project);
 
   const [codelist, setCodelist] = useState<ICodelist[]>([]);
@@ -109,14 +109,14 @@ export default function CodeListPage(): React.ReactElement {
         </Box>
 
         <Box className={classes.codelists}>
-          <CodeList list={codelist.length > 0 ? codelist : project.codelist} />
+          <Codelist list={codelist.length > 0 ? codelist : project.codelist} />
         </Box>
 
         <Dialog
           title={t('add new code')}
           isOpen={show}
           handleClose={() => setShow(false)}
-          children={<NewCodeListForm handleClose={() => setShow(false)} />}
+          children={<NewCodelistForm handleClose={() => setShow(false)} />}
         />
       </Box>
     </>

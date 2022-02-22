@@ -68,7 +68,7 @@ const useStyles = makeStyles({
   }
 });
 
-export default function CodeList({ list }: IProps): React.ReactElement {
+export default function Codelist({ list }: IProps): React.ReactElement {
   const classes = useStyles();
 
   return (

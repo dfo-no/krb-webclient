@@ -7,7 +7,6 @@ import SideBar from '../Components/SideBar';
 import CodelistGuard from './Codelist/CodelistGuard';
 import CodelistPage from './Codelist/CodelistPage';
 import InheritancePage from './Inheritance/InheritancePage';
-import InheritanceSearch from './Inheritance/InheritanceSearch';
 import NeedPage from './Need/NeedPage';
 import ProductGuard from './Product/ProductGuard';
 import ProductPage from './Product/ProductPage';
@@ -71,9 +70,6 @@ export default function AdminGuard(): React.ReactElement {
         </Route>
         <Route exact path="/workbench/:projectId/admin/inheritance">
           <InheritancePage />
-        </Route>
-        <Route exact path="/workbench/:projectId/admin/inheritance/explore">
-          <InheritanceSearch />
         </Route>
       </Box>
     </>

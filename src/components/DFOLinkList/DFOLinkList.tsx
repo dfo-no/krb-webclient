@@ -9,8 +9,27 @@ import * as React from 'react';
 import ArrowForwardIos from '@mui/icons-material/ArrowForwardIos';
 import Icon from '@mui/material/Icon';
 import theme from '../../theme';
-import { DFOLinkListProps } from './DFOLinkListProps';
-import { DFOLinkListStyleProps } from './DFOLinkListStyleProps';
+
+export interface DFOLinkListProps {
+  list: {
+    title: string;
+    href: string;
+  }[];
+  iconType?: string;
+  iconColor?: string;
+  textColor?: string;
+  borderColor?: string;
+  borderThickness?: string;
+  hoverColor?: string;
+}
+
+export interface DFOLinkListStyleProps {
+  iconColor?: string;
+  textColor?: string;
+  borderColor?: string;
+  borderThickness?: string;
+  hoverColor?: string;
+}
 
 const useStyles = makeStyles<Theme, DFOLinkListStyleProps>({
   linkList: {
@@ -48,7 +67,6 @@ export default function DFOLinkList({
   borderThickness,
   hoverColor
 }: DFOLinkListProps): React.ReactElement {
-  // Standard DFO theme. Props can be passed to change theme.
   const styles: DFOLinkListStyleProps = {
     iconColor: iconColor || theme.palette.dfoWhite.main,
     textColor: textColor || theme.palette.dfoWhite.main,
@@ -59,7 +77,6 @@ export default function DFOLinkList({
 
   const classes = useStyles(styles);
 
-  // Can add more icons here if needed.
   const icons = [{ name: 'arrow', object: Object(ArrowForwardIos) }];
   const useIcon = icons.find((icon) => icon.name === iconType)?.object;
 

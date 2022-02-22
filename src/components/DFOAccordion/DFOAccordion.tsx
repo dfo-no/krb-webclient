@@ -1,8 +1,4 @@
 import makeStyles from '@mui/styles/makeStyles';
-import {
-  DFOAccordionElementProps,
-  DFOAccordionProviderProps
-} from './DFOAccordionProps';
 import { AccordionContext } from './AccordionContext';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import Accordion from '@mui/material/Accordion';
@@ -10,16 +6,30 @@ import AccordionDetails from '@mui/material/AccordionDetails';
 import AccordionSummary from '@mui/material/AccordionSummary';
 import React, { SyntheticEvent, useContext, useState } from 'react';
 import theme from '../../theme';
+import Box from '@mui/material/Box';
+
+interface DFOAccordionElementProps {
+  eventKey: string;
+  header: React.ReactElement;
+  body: React.ReactElement;
+}
+
+interface DFOAccordionProviderProps {
+  body: React.ReactElement;
+}
 
 const useStyles = makeStyles({
   root: {
-    '& .Mui-expanded': {
-      backgroundColor: theme.palette.dfoLightBlue.main,
-      color: theme.palette.dfoWhite.main
-    }
+    borderTop: `12px solid ${theme.palette.purple.main}`
   },
   accordionBody: {
-    backgroundColor: theme.palette.gray100.main
+    borderTop: `2px solid ${theme.palette.gray300.main}`
+  },
+  expandIcon: {
+    '& .MuiSvgIcon-root': {
+      color: theme.palette.gray700.main,
+      fontSize: '40px'
+    }
   }
 });
 
@@ -48,7 +58,11 @@ export const DFOAccordionElement = ({
       onChange={handleAccordionChange(eventKey)}
     >
       <AccordionSummary
-        expandIcon={<ExpandMoreIcon />}
+        expandIcon={
+          <Box className={classes.expandIcon}>
+            <ExpandMoreIcon />
+          </Box>
+        }
         aria-controls="panel1a-content"
         id="panel1a-header"
       >
