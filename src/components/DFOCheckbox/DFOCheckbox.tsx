@@ -1,6 +1,7 @@
 import Checkbox from '@mui/material/Checkbox';
-import CheckIcon from '@mui/icons-material/Check';
-import { Box, makeStyles } from '@material-ui/core';
+import CheckBoxIcon from '@mui/icons-material/CheckBox';
+import { Box } from '@mui/material/';
+import makeStyles from '@mui/styles/makeStyles';
 import theme from '../../theme';
 import { ControllerRenderProps, FieldValues } from 'react-hook-form';
 
@@ -58,7 +59,7 @@ export const DFOCheckbox = ({
       checkedIcon: () => {
         return Object(
           <Box className={`${classes.checkbox} ${classes.allWhiteCheckbox}`}>
-            <CheckIcon />
+            <CheckBoxIcon />
           </Box>
         );
       }
@@ -72,7 +73,7 @@ export const DFOCheckbox = ({
       checkedIcon: () => {
         return (
           <Box className={`${classes.checkbox} ${classes.blueCheckbox}`}>
-            <CheckIcon />
+            <CheckBoxIcon />
           </Box>
         );
       }
@@ -88,7 +89,7 @@ export const DFOCheckbox = ({
       checkedIcon: () => {
         return Object(
           <Box className={`${classes.checkbox} ${classes.blueBorderCheckbox}`}>
-            <CheckIcon />
+            <CheckBoxIcon />
           </Box>
         );
       }

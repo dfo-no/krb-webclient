@@ -1,7 +1,9 @@
 import React from 'react';
-import { makeStyles, MenuItem, Select } from '@material-ui/core';
 import theme from '../../theme';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
+import makeStyles from '@mui/styles/makeStyles';
+import Select from '@mui/material/Select';
+import MenuItem from '@mui/material/MenuItem';
 
 export interface DFOSelectProps {
   options: any;

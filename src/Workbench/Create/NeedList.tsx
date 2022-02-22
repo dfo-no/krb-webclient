@@ -1,4 +1,4 @@
-import { ListItemIcon } from '@material-ui/core';
+import { ListItemIcon } from '@mui/material';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import List from '@mui/material/List';
 import ListItemButton from '@mui/material/ListItemButton/ListItemButton';

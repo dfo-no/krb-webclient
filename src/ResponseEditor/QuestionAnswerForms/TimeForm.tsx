@@ -1,6 +1,6 @@
 import { joiResolver } from '@hookform/resolvers/joi';
-import React from 'react';
 import Button from '@mui/material/Button';
+import React from 'react';
 import Card from 'react-bootstrap/Card';
 import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
@@ -63,7 +63,7 @@ export default function TimeAnswerForm({
       <Card.Body>
         <h6>Question: Date </h6>
         <FormProvider {...methods}>
-          <Form onSubmit={methods.handleSubmit(saveValues)}>
+          <form onSubmit={methods.handleSubmit(saveValues)}>
             <Form.Group as={Row}>
               {question.config.isPeriod && (
                 <Form.Label>
@@ -113,7 +113,7 @@ export default function TimeAnswerForm({
               {t('save')}
             </Button>
             <ErrorSummary errors={methods.formState.errors} />
-          </Form>
+          </form>
         </FormProvider>
       </Card.Body>
     </Card>

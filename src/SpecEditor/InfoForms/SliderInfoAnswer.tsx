@@ -1,19 +1,18 @@
 import { joiResolver } from '@hookform/resolvers/joi';
-import { Mark } from '@material-ui/core/Slider/Slider';
 import Button from '@mui/material/Button';
-import Joi from 'joi';
 import React from 'react';
 import Col from 'react-bootstrap/Col';
-import Form from 'react-bootstrap/Form';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { v4 as uuidv4 } from 'uuid';
+import CustomJoi from '../../common/CustomJoi';
 import SliderSelect from '../../components/SliderSelect';
 import ErrorSummary from '../../Form/ErrorSummary';
 import { IRequirementAnswer } from '../../models/IRequirementAnswer';
 import ModelType from '../../models/ModelType';
 import QuestionEnum from '../../models/QuestionEnum';
 import { QuestionType } from '../../models/QuestionType';
+import { IMark } from '../../Nexus/entities/IMark';
 import { IRequirement } from '../../Nexus/entities/IRequirement';
 import { ISliderQuestion } from '../../Nexus/entities/ISliderQuestion';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
@@ -26,17 +25,17 @@ interface IProps {
   requirement: IRequirement;
 }
 
-export const ResponseSliderSchema = Joi.object().keys({
-  id: Joi.string().required(),
-  type: Joi.string().equal(QuestionEnum.Q_SLIDER).required(),
-  config: Joi.object().keys({
-    step: Joi.number().min(0).max(1000000000).required(),
-    min: Joi.number().min(0).max(1000000000).required(),
-    max: Joi.number().min(0).max(1000000000).required(),
-    unit: Joi.string().disallow(null, '').required()
+export const ResponseSliderSchema = CustomJoi.object().keys({
+  id: CustomJoi.string().required(),
+  type: CustomJoi.string().equal(QuestionEnum.Q_SLIDER).required(),
+  config: CustomJoi.object().keys({
+    step: CustomJoi.number().min(0).max(1000000000).required(),
+    min: CustomJoi.number().min(0).max(1000000000).required(),
+    max: CustomJoi.number().min(0).max(1000000000).required(),
+    unit: CustomJoi.string().disallow(null, '').required()
   }),
-  answer: Joi.object().keys({
-    value: Joi.number().min(0).max(1000000000).required()
+  answer: CustomJoi.object().keys({
+    value: CustomJoi.number().min(0).max(1000000000).required()
   })
 });
 
@@ -110,7 +109,7 @@ export default function ISliderInfoAnswer({
     }
   };
 
-  const marks: Mark[] = [
+  const marks: IMark[] = [
     {
       value: sliderQuestion.config.min,
       label: `${sliderQuestion.config.min} ${sliderQuestion.config.unit}`
@@ -124,7 +123,7 @@ export default function ISliderInfoAnswer({
   return (
     <Col className="p-0 m-0 w-50">
       <p>Hvor langt unna kan lokalsjonen være? </p>
-      <Form className="mt-3" onSubmit={handleSubmit(saveValues)}>
+      <form className="mt-3" onSubmit={handleSubmit(saveValues)}>
         <SliderSelect
           label=""
           control={control}
@@ -141,7 +140,7 @@ export default function ISliderInfoAnswer({
           {t('save')}
         </Button>
         <ErrorSummary errors={errors} />
-      </Form>
+      </form>
     </Col>
   );
 }

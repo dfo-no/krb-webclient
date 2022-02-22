@@ -1,6 +1,6 @@
 import React from 'react';
 import { Box, Button } from '@mui/material/';
-import { makeStyles } from '@material-ui/core';
+import makeStyles from '@mui/styles/makeStyles';
 import { useTranslation } from 'react-i18next';
 
 interface IProps {

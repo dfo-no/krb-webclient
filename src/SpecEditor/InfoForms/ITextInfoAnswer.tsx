@@ -1,12 +1,12 @@
 import { joiResolver } from '@hookform/resolvers/joi';
-import Joi from 'joi';
-import React from 'react';
 import Button from '@mui/material/Button';
+import React from 'react';
 import Card from 'react-bootstrap/Card';
 import Form from 'react-bootstrap/Form';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { v4 as uuidv4 } from 'uuid';
+import CustomJoi from '../../common/CustomJoi';
 import ErrorSummary from '../../Form/ErrorSummary';
 import { IRequirementAnswer } from '../../models/IRequirementAnswer';
 import ModelType from '../../models/ModelType';
@@ -24,15 +24,15 @@ interface IProps {
   requirement: IRequirement;
 }
 
-export const ResponseCodelistSchema = Joi.object().keys({
-  id: Joi.string().required(),
-  type: Joi.string().equal(QuestionEnum.Q_TEXT).required(),
-  config: Joi.object().keys({
-    codelist: Joi.string().required(),
-    multipleSelect: Joi.boolean().required()
+export const ResponseCodelistSchema = CustomJoi.object().keys({
+  id: CustomJoi.string().required(),
+  type: CustomJoi.string().equal(QuestionEnum.Q_TEXT).required(),
+  config: CustomJoi.object().keys({
+    codelist: CustomJoi.string().required(),
+    multipleSelect: CustomJoi.boolean().required()
   }),
-  answer: Joi.object().keys({
-    codes: Joi.array().items(Joi.string()).required()
+  answer: CustomJoi.object().keys({
+    codes: CustomJoi.array().items(CustomJoi.string()).required()
   })
 });
 
@@ -110,7 +110,7 @@ export default function TextInfoAnswer({
     <Card className="mb-3">
       <Card.Body>
         <h6>Alternative: Text</h6>
-        <Form onSubmit={handleSubmit(saveValues)}>
+        <form onSubmit={handleSubmit(saveValues)}>
           <Form.Control
             as="input"
             {...register('answer.text')}
@@ -121,7 +121,7 @@ export default function TextInfoAnswer({
             {t('save')}
           </Button>
           <ErrorSummary errors={errors} />
-        </Form>
+        </form>
       </Card.Body>
     </Card>
   );

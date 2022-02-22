@@ -1,10 +1,10 @@
-import { Box, makeStyles } from '@material-ui/core';
-import { Typography } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 import React from 'react';
 import theme from '../../../theme';
 import CloseIcon from '@mui/icons-material/Close';
 import { useTranslation } from 'react-i18next';
 import { IInheritedBank } from '../../../models/IInheritedBank';
+import makeStyles from '@mui/styles/makeStyles';
 
 export interface IProps {
   bank: IInheritedBank;

@@ -1,4 +1,4 @@
-import Joi from 'joi';
+import CustomJoi from '../../common/CustomJoi';
 import QuestionEnum from '../../models/QuestionEnum';
 import {
   ConfigBaseSchema,
@@ -7,7 +7,6 @@ import {
   IQuestionBase,
   QuestionBaseSchema
 } from './IQuestionBase';
-
 export interface ISliderQuestion
   extends IQuestionBase<ISliderAnswer, ISliderConfig> {
   type: QuestionEnum.Q_SLIDER;
@@ -30,24 +29,28 @@ export interface ScoreValuePair {
 }
 
 export const SliderQuestionSchema = QuestionBaseSchema.keys({
-  type: Joi.string().equal(QuestionEnum.Q_SLIDER).required(),
+  type: CustomJoi.string().equal(QuestionEnum.Q_SLIDER).required(),
   config: ConfigBaseSchema.keys({
-    step: Joi.number().min(0).max(1000000000).required(),
-    min: Joi.number().min(0).max(1000000000).required(),
-    max: Joi.number().min(1).max(1000000000).required().greater(Joi.ref('min')),
-    unit: Joi.string().required(),
-    scoreValues: Joi.array().items(
-      Joi.object().keys({
-        score: Joi.number().required().min(0).max(100),
-        value: Joi.number().required()
+    step: CustomJoi.number().min(0).max(1000000000).required(),
+    min: CustomJoi.number().min(0).max(1000000000).required(),
+    max: CustomJoi.number()
+      .min(1)
+      .max(1000000000)
+      .required()
+      .greater(CustomJoi.ref('min')),
+    unit: CustomJoi.string().required(),
+    scoreValues: CustomJoi.array().items(
+      CustomJoi.object().keys({
+        score: CustomJoi.number().required().min(0).max(100),
+        value: CustomJoi.number().required()
       })
     )
   })
 });
 
 export const SliderQuestionAnswerSchema = SliderQuestionSchema.keys({
-  answer: Joi.object().keys({
-    value: Joi.number().required(),
-    point: Joi.number().required()
+  answer: CustomJoi.object().keys({
+    value: CustomJoi.number().required(),
+    point: CustomJoi.number().required()
   })
 });

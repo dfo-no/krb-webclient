@@ -1,5 +1,5 @@
 import { Box, ListItem, ListItemText, Typography } from '@mui/material';
-import { makeStyles } from '@material-ui/core';
+import makeStyles from '@mui/styles/makeStyles';
 import React, { useState } from 'react';
 import CheckboxCtrl from '../../../FormProvider/CheckboxCtrl';
 import theme from '../../../theme';

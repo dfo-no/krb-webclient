@@ -89,7 +89,7 @@ export default function PublicationList(): React.ReactElement {
   };
 
   return (
-    <Form>
+    <form>
       <ListGroup className="mt-4">
         {project.publications.map((field, index) => {
           return (
@@ -159,6 +159,6 @@ export default function PublicationList(): React.ReactElement {
         })}
       </ListGroup>
       <ErrorSummary errors={errors} />
-    </Form>
+    </form>
   );
 }

@@ -1,8 +1,8 @@
 /* eslint-disable no-plusplus */
 import { joiResolver } from '@hookform/resolvers/joi';
+import Button from '@mui/material/Button';
 import { get } from 'lodash';
 import React from 'react';
-import Button from '@mui/material/Button';
 import Card from 'react-bootstrap/Card';
 import Col from 'react-bootstrap/Col';
 import Container from 'react-bootstrap/Container';
@@ -106,7 +106,7 @@ export default function PrefilledResponseProductEditor(): React.ReactElement {
       </Row>
       <Card className="m-4">
         <Card.Body>
-          <Form
+          <form
             onSubmit={handleSubmit(addProductToSpecification)}
             autoComplete="off"
             className="mb-2"
@@ -144,7 +144,7 @@ export default function PrefilledResponseProductEditor(): React.ReactElement {
               <Button type="submit">{t('save')}</Button>
             </Col>
             <ErrorSummary errors={errors} />
-          </Form>
+          </form>
         </Card.Body>
       </Card>
       <Row className="m-4" />

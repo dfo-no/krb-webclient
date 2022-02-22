@@ -1,12 +1,11 @@
 import { joiResolver } from '@hookform/resolvers/joi';
 import Alert from '@mui/material/Alert';
 import Button from '@mui/material/Button';
-import Joi from 'joi';
 import React from 'react';
 import Badge from 'react-bootstrap/Badge';
-import Form from 'react-bootstrap/Form';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
+import CustomJoi from '../../../common/CustomJoi';
 import ErrorSummary from '../../../Form/ErrorSummary';
 import {
   IRequirementAnswer,
@@ -30,9 +29,9 @@ interface IProps {
 
 const FileUploadSchema = RequirementAnswerSchema.keys({
   question: FileUploadAnswerSchema.keys({
-    answer: Joi.object().keys({
-      files: Joi.array().items(Joi.string()).min(1).required(),
-      point: Joi.number().required()
+    answer: CustomJoi.object().keys({
+      files: CustomJoi.array().items(CustomJoi.string()).min(1).required(),
+      point: CustomJoi.number().required()
     })
   })
 });
@@ -109,7 +108,7 @@ export default function FileUploadForm({
         </small>
       </h6>
       <FormProvider {...methods}>
-        <Form onSubmit={methods.handleSubmit(onSubmit)} key={question.id}>
+        <form onSubmit={methods.handleSubmit(onSubmit)} key={question.id}>
           <Alert severity="error">Not implemented yet!</Alert>
           <div className="d-flex justify-content-end">
             {isValueSet(answer.id) ? (
@@ -134,7 +133,7 @@ export default function FileUploadForm({
             </Button>
           </div>
           <ErrorSummary errors={methods.formState.errors} />
-        </Form>
+        </form>
       </FormProvider>
     </div>
   );

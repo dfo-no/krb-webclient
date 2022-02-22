@@ -1,7 +1,7 @@
 import TextField from '@mui/material/TextField';
 import theme from '../../theme';
 import { Box, Typography } from '@mui/material/';
-import { makeStyles } from '@material-ui/core';
+import makeStyles from '@mui/styles/makeStyles';
 import { ControllerRenderProps, FieldValues } from 'react-hook-form';
 
 interface DFOTextFieldProps {
@@ -10,7 +10,7 @@ interface DFOTextFieldProps {
   label?: string;
   error?: boolean;
   errorMessage?: string;
-  callback?: any;
+  callback?: () => void;
 }
 
 const useStyles = makeStyles({

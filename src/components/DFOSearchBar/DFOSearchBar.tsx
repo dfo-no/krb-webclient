@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { TextField, InputAdornment } from '@mui/material/';
 import SearchIcon from '@mui/icons-material/Search';
-import { makeStyles } from '@material-ui/core';
+import makeStyles from '@mui/styles/makeStyles';
 import theme from '../../theme';
 
-export interface DFOSearchBarProps {
+interface DFOSearchBarProps {
   list: any;
   searchFunction: any;
   callback: any;
@@ -47,7 +47,7 @@ export default function DFOSearchBar({
     if (e.target.value.length !== 0) {
       callback(searchFunction(e.target.value, list));
     } else {
-      callback([]);
+      callback(list);
     }
   };
 

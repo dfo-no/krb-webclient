@@ -1,8 +1,6 @@
 import { joiResolver } from '@hookform/resolvers/joi';
-import { Mark } from '@material-ui/core/Slider/Slider';
 import Button from '@mui/material/Button';
 import Slider from '@mui/material/Slider';
-import Joi from 'joi';
 import React, { useState } from 'react';
 import Col from 'react-bootstrap/Col';
 import Container from 'react-bootstrap/Container';
@@ -12,11 +10,13 @@ import { Controller, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
+import CustomJoi from '../../common/CustomJoi';
 import Utils from '../../common/Utils';
 import ErrorSummary from '../../Form/ErrorSummary';
 import { IRequirementAnswer } from '../../models/IRequirementAnswer';
 import { ISpecificationProduct } from '../../models/ISpecificationProduct';
 import ModelType from '../../models/ModelType';
+import { IMark } from '../../Nexus/entities/IMark';
 import { IRequirement } from '../../Nexus/entities/IRequirement';
 import { IVariant } from '../../Nexus/entities/IVariant';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
@@ -38,12 +38,12 @@ type FormValue = {
   variant: string;
 };
 
-const questionSchema = Joi.object().keys({
-  question: Joi.string().required(),
-  weight: Joi.number().integer().min(1).required(),
-  variant: Joi.string()
+const questionSchema = CustomJoi.object().keys({
+  question: CustomJoi.string().required(),
+  weight: CustomJoi.number().integer().min(1).required(),
+  variant: CustomJoi.string()
 });
-const marks: Mark[] = [
+const marks: IMark[] = [
   {
     value: 10,
     label: `Lav`
@@ -248,7 +248,7 @@ export default function ProductRequirementAnswer({
       );
     });
     return (
-      <Form onSubmit={handleSubmit(saveAnswer)} autoComplete="off">
+      <form onSubmit={handleSubmit(saveAnswer)} autoComplete="off">
         <Row>
           <Col sm={3}>
             <Form.Control
@@ -347,7 +347,7 @@ export default function ProductRequirementAnswer({
           </Button>
         </Col>
         <ErrorSummary errors={errors} />
-      </Form>
+      </form>
     );
   };
 

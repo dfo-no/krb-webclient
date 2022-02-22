@@ -1,7 +1,7 @@
 import { joiResolver } from '@hookform/resolvers/joi';
+import Button from '@mui/material/Button';
 import React from 'react';
 import Badge from 'react-bootstrap/Badge';
-import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 import { useForm } from 'react-hook-form';
@@ -92,7 +92,7 @@ export default function ProductTimeForm({
           {getVariantText(answer.requirement, answer.variantId)[1]}
         </small>
       </h6>
-      <Form
+      <form
         onSubmit={methods.handleSubmit(onSubmit)}
         key={question.id}
         className="mt-4"
@@ -131,7 +131,7 @@ export default function ProductTimeForm({
             {t('Reset')}
           </Button>
         </div>
-      </Form>
+      </form>
     </div>
   );
 }

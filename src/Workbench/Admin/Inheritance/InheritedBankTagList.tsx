@@ -1,25 +1,10 @@
-import { makeStyles } from '@material-ui/core';
 import DFOSearchBar from '../../../components/DFOSearchBar/DFOSearchBar';
 import { useAppSelector } from '../../../store/hooks';
 import theme from '../../../theme';
 import { Typography, Box, List } from '@mui/material/';
 import { useTranslation } from 'react-i18next';
-import Joi from 'joi';
 import InheritedTagListItem from './InheritanceTagListItem';
-
-interface IFormValues {
-  data: {
-    dataOne: string | null;
-    dataTwo: string | null;
-  };
-}
-
-const FormSchema = Joi.object().keys({
-  data: Joi.object().keys({
-    dataOne: Joi.string().max(20).required(),
-    dataTwo: Joi.number().required()
-  })
-});
+import makeStyles from '@mui/styles/makeStyles';
 
 const useStyles = makeStyles({
   inheritanceTagList: {
