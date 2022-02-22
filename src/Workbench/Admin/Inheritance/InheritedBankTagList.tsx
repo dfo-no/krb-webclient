@@ -60,7 +60,7 @@ export default function InheritedBankTagList(): React.ReactElement {
   const tagsCallback = () => {};
   const tagsSearchFunction = () => {};
 
-  // This is dummy data. Replace with real data.
+  // TODO: This is dummy data. Replace with real data.
   const tags = [
     { title: 'Merkelapp 1', description: 'Merkelapp beskrivelse' },
     { title: 'Merkelapp 2', description: 'Merkelapp beskrivelse' },
