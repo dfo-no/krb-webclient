@@ -23,7 +23,3 @@ export const BaseCodeSchema = CustomJoi.object().keys({
 export const PostCodeSchema = BaseCodeSchema.keys({
   id: CustomJoi.string().equal('').required()
 });
-
-export const PutCodeSchema = BaseCodeSchema.keys({
-  id: CustomJoi.string().length(36).required()
-});

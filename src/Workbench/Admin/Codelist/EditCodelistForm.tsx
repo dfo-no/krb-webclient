@@ -14,10 +14,7 @@ import {
 } from '../../../store/reducers/project-reducer';
 import TextCtrl from '../../../FormProvider/TextCtrl';
 import { IAlert } from '../../../models/IAlert';
-import {
-  ICodelist,
-  PutCodelistSchema
-} from '../../../Nexus/entities/ICodelist';
+import { CodelistSchema, ICodelist } from '../../../Nexus/entities/ICodelist';
 import { useFormStyles } from './CodelistStyles';
 
 interface IProps {
@@ -35,7 +32,7 @@ function EditCodelistForm({
 
   const methods = useForm<ICodelist>({
     defaultValues: element,
-    resolver: joiResolver(PutCodelistSchema)
+    resolver: joiResolver(CodelistSchema)
   });
 
   const onSubmit = (put: ICodelist) => {

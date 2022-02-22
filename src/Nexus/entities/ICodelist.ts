@@ -21,10 +21,6 @@ export const CodelistSchema = CustomJoi.object().keys({
   sourceRel: CustomJoi.string().allow(null).required()
 });
 
-export const PutCodelistSchema = CodelistSchema.keys({
-  id: CustomJoi.string().length(36).required()
-});
-
 export const PostCodelistSchema = CodelistSchema.keys({
   id: CustomJoi.string().equal('').required()
 });

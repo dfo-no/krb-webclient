@@ -15,7 +15,7 @@ import {
 } from '../../../store/reducers/project-reducer';
 import { IAlert } from '../../../models/IAlert';
 import { Parentable } from '../../../models/Parentable';
-import { ICode, PutCodeSchema } from '../../../Nexus/entities/ICode';
+import { BaseCodeSchema, ICode } from '../../../Nexus/entities/ICode';
 import { ICodelist } from '../../../Nexus/entities/ICodelist';
 import { useFormStyles } from './CodelistStyles';
 
@@ -36,7 +36,7 @@ function EditCodeForm({
 
   const methods = useForm<Parentable<ICode>>({
     defaultValues: element,
-    resolver: joiResolver(PutCodeSchema)
+    resolver: joiResolver(BaseCodeSchema)
   });
 
   const onSubmit = (put: Parentable<ICode>) => {
