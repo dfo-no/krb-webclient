@@ -7,8 +7,8 @@ import DFOSearchBar from '../../../components/DFOSearchBar/DFOSearchBar';
 import { ICodelist } from '../../../Nexus/entities/ICodelist';
 import { Box, Button } from '@mui/material/';
 import { makeStyles } from '@material-ui/core';
-import NewCodelistForm from './NewCodelistForm';
 import Codelist from './Codelist';
+import NewCodelistForm from './NewCodelistForm';
 
 const useStyles = makeStyles({
   codelistsContainer: {
@@ -52,7 +52,7 @@ const useStyles = makeStyles({
   }
 });
 
-export default function CodeListPage(): React.ReactElement {
+export default function CodelistPage(): React.ReactElement {
   const { project } = useAppSelector((state) => state.project);
 
   const [codelist, setCodelist] = useState<ICodelist[]>([]);
