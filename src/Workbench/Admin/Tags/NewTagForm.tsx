@@ -88,7 +88,7 @@ export default function NewTagForm({
               <Button variant="primary" type="submit">
                 {t('save')}
               </Button>
-              <Button variant="primary" onClick={handleClose}>
+              <Button variant="warning" onClick={handleClose}>
                 {t('cancel')}
               </Button>
             </Box>
