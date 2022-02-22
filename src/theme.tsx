@@ -118,6 +118,12 @@ const theme = createTheme(
       linkHoverColor: {
         main: dfoThemeScss.linkHoverColor
       },
+      saveGreen: {
+        main: dfoThemeScss.saveGreen
+      },
+      saveGreenHover: {
+        main: dfoThemeScss.saveGreenHover
+      },
       success: {
         main: dfoThemeScss.success
       },
@@ -135,7 +141,13 @@ theme.typography.small = {
 
 theme.typography.smallBold = {
   fontSize: '14px',
-  fontWeight: 700,
+  fontWeight: 'bold',
+  whiteSpace: 'nowrap'
+};
+
+theme.typography.smallGray = {
+  color: theme.palette.gray700.main,
+  fontSize: '14px',
   whiteSpace: 'nowrap'
 };
 
@@ -153,15 +165,27 @@ theme.typography.smallUnderlineBlue = {
   cursor: 'pointer'
 };
 
-theme.typography.big = {
+theme.typography.medium = {
   color: theme.palette.black.main,
-  fontSize: '28px',
+  fontSize: '20px',
+  fontWeight: 100
+};
+
+theme.typography.mediumBold = {
+  color: theme.palette.black.main,
+  fontSize: '20px',
   fontWeight: 700
 };
 
 theme.typography.mediumBlue = {
   color: theme.palette.primary.main,
-  fontSize: '18px'
+  fontSize: '20px'
+};
+
+theme.typography.big = {
+  color: theme.palette.black.main,
+  fontSize: '28px',
+  fontWeight: 700
 };
 
 theme.typography.footerAddressText = {
@@ -192,6 +216,7 @@ theme.components = {
           backgroundColor: theme.palette.lightBlue.main,
           color: theme.palette.dfoWhite.main,
           whiteSpace: 'nowrap',
+          height: 40,
           '&:hover': {
             background: theme.palette.blue.main
           }
@@ -203,8 +228,21 @@ theme.components = {
           backgroundColor: theme.palette.dfoErrorRed.main,
           color: theme.palette.dfoWhite.main,
           whiteSpace: 'nowrap',
+          height: 40,
           '&:hover': {
             background: theme.palette.dfoErrorRedHover.main
+          }
+        }
+      },
+      {
+        props: { variant: 'save' },
+        style: {
+          backgroundColor: theme.palette.saveGreen.main,
+          color: theme.palette.dfoWhite.main,
+          whiteSpace: 'nowrap',
+          height: 40,
+          '&:hover': {
+            background: theme.palette.saveGreenHover.main
           }
         }
       }
