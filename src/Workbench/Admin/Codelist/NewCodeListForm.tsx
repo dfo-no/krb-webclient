@@ -1,11 +1,7 @@
 import React from 'react';
 import { Box, Button } from '@mui/material/';
-import { makeStyles } from '@material-ui/core';
-import TextCtrl from '../../../FormProvider/TextCtrl';
+import makeStyles from '@mui/styles/makeStyles';
 import { useTranslation } from 'react-i18next';
-
-import Nexus from '../../../Nexus/Nexus';
-import { useAppDispatch } from '../../../store/hooks';
 
 interface IProps {
   handleClose: () => void;
@@ -37,9 +33,6 @@ export default function NewCodelistForm({
 }: IProps): React.ReactElement {
   const classes = useStyles();
   const { t } = useTranslation();
-
-  const nexus = Nexus.getInstance();
-  const dispatch = useAppDispatch();
 
   return (
     <>

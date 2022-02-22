@@ -1,21 +1,21 @@
 import { joiResolver } from '@hookform/resolvers/joi';
-import React, { useEffect, useState } from 'react';
-import { FieldError, FormProvider, useForm } from 'react-hook-form';
+import React from 'react';
+import { FormProvider, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { v4 as uuidv4 } from 'uuid';
 import { IAlert } from '../../../models/IAlert';
 import { Nestable } from '../../../models/Nestable';
 import { Parentable } from '../../../models/Parentable';
 import { ITag, PutTagSchema } from '../../../Nexus/entities/ITag';
-import { useAppDispatch, useAppSelector } from '../../../store/hooks';
+import { useAppDispatch } from '../../../store/hooks';
 import { addAlert } from '../../../store/reducers/alert-reducer';
 import {
   editTag,
   putSelectedProjectThunk,
   removeTag
 } from '../../../store/reducers/project-reducer';
-import { Box, makeStyles } from '@material-ui/core';
-import { Button } from '@mui/material';
+import { Box, Button } from '@mui/material';
+import makeStyles from '@mui/styles/makeStyles';
 import TextCtrl from '../../../FormProvider/TextCtrl';
 
 interface IProps {

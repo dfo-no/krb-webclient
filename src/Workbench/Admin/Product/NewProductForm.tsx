@@ -8,7 +8,7 @@ import {
   putSelectedProjectThunk
 } from '../../../store/reducers/project-reducer';
 import { Box, Button } from '@mui/material/';
-import { makeStyles } from '@material-ui/core';
+import makeStyles from '@mui/styles/makeStyles';
 import TextCtrl from '../../../FormProvider/TextCtrl';
 import { useTranslation } from 'react-i18next';
 import { FormProvider, useForm } from 'react-hook-form';

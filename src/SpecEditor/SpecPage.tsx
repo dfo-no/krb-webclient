@@ -1,6 +1,6 @@
+import Button from '@mui/material/Button';
 import { AxiosResponse } from 'axios';
 import React from 'react';
-import Button from '@mui/material/Button';
 import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
@@ -45,7 +45,7 @@ export default function SpecPage(): React.ReactElement {
       <Row className="mt-4">
         <Col sm={3} />
         <Col sm={3}>
-          <Form>
+          <form>
             <h4>Upload specification</h4>
             <InputGroup>
               <Form.Control
@@ -56,7 +56,7 @@ export default function SpecPage(): React.ReactElement {
                 accept="application/pdf"
               />
             </InputGroup>
-          </Form>
+          </form>
         </Col>
 
         <Col sm={3}>

@@ -13,10 +13,10 @@ import EditTagForm from './EditTagForm';
 import NewTagForm from './NewTagForm';
 import Utils from '../../../common/Utils';
 import { Box, Button } from '@mui/material';
-import { makeStyles } from '@material-ui/core';
 import theme from '../../../theme';
 import DFOSearchBar from '../../../components/DFOSearchBar/DFOSearchBar';
 import Dialog from '../../../components/DFODialog/DFODialog';
+import { makeStyles } from '@mui/styles';
 
 const useStyles = makeStyles({
   tagListContainer: {

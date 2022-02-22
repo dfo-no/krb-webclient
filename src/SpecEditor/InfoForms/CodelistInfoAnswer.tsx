@@ -127,7 +127,7 @@ export default function CodelistInfoAnswer({
   return (
     <Col className="p-0 m-0 w-50">
       <p>Hvilke koder skal kreves? </p>
-      <Form onSubmit={handleSubmit(saveValues)}>
+      <form onSubmit={handleSubmit(saveValues)}>
         <Form.Control
           as="select"
           multiple
@@ -143,7 +143,7 @@ export default function CodelistInfoAnswer({
           {t('save')}
         </Button>
         <ErrorSummary errors={errors} />
-      </Form>
+      </form>
     </Col>
   );
 }

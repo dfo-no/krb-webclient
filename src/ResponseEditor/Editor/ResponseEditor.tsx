@@ -115,7 +115,7 @@ export default function ResponseEditor(): React.ReactElement {
           <Row>
             <h6>Kravbank: {response.spesification.bank.title}</h6>
           </Row>
-          <Form onSubmit={handleSubmit(saveSupplier)}>
+          <form onSubmit={handleSubmit(saveSupplier)}>
             <Form.Group as={Row}>
               <Form.Label>Supplier</Form.Label>
               <Col sm={4}>
@@ -135,7 +135,7 @@ export default function ResponseEditor(): React.ReactElement {
               </Col>
             </Form.Group>
             <ErrorSummary errors={errors} />
-          </Form>
+          </form>
         </Col>
       </Row>
     </Container>

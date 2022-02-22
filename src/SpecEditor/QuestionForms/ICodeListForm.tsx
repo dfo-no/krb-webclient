@@ -1,6 +1,6 @@
 import { joiResolver } from '@hookform/resolvers/joi';
-import React, { useState } from 'react';
 import Button from '@mui/material/Button';
+import React, { useState } from 'react';
 import Card from 'react-bootstrap/Card';
 import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
@@ -163,7 +163,7 @@ export default function CodelistForm({
     <Card className="mb-3">
       <Card.Body>
         <h6>Alternative: Codelist</h6>
-        <Form onSubmit={handleSubmit(saveValues)}>
+        <form onSubmit={handleSubmit(saveValues)}>
           <Row>
             <Col>
               <Row>
@@ -260,7 +260,7 @@ export default function CodelistForm({
             {t('save')}
           </Button>
           <ErrorSummary errors={errors} />
-        </Form>
+        </form>
       </Card.Body>
     </Card>
   );

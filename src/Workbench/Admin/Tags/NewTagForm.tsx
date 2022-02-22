@@ -1,11 +1,11 @@
 import { joiResolver } from '@hookform/resolvers/joi';
-import { Box, makeStyles } from '@material-ui/core';
+import { Box } from '@mui/material';
 import Button from '@mui/material/Button';
-import React, { useState } from 'react';
+import { makeStyles } from '@mui/styles';
+import React from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { v4 as uuidv4 } from 'uuid';
-import ErrorSummary from '../../../Form/ErrorSummary';
 import TextCtrl from '../../../FormProvider/TextCtrl';
 import { IAlert } from '../../../models/IAlert';
 import { ITag, PostTagSchema } from '../../../Nexus/entities/ITag';

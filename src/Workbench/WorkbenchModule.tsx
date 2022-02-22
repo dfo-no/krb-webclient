@@ -1,5 +1,5 @@
-import { makeStyles } from '@material-ui/core';
 import Box from '@mui/material/Box';
+import makeStyles from '@mui/styles/makeStyles';
 import React, { useEffect, useState } from 'react';
 import { Route, Switch } from 'react-router-dom';
 import LoaderSpinner from '../common/LoaderSpinner';
@@ -16,7 +16,7 @@ const useStyles = makeStyles({
     gap: 50,
     backgroundColor: theme.palette.dfoBackgroundBlue.main,
 
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down('md')]: {
       flexWrap: 'wrap'
     }
   },

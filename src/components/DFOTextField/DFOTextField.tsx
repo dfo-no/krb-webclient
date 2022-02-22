@@ -1,33 +1,26 @@
 import TextField from '@mui/material/TextField';
 import theme from '../../theme';
 import { Box, Typography } from '@mui/material/';
-import { makeStyles } from '@material-ui/core';
-import { DFOTextFieldStyleProps } from './DFOTextFieldStyleProps';
-import { DFOTextFieldProps } from './DFOTextFieldProps';
+import makeStyles from '@mui/styles/makeStyles';
+import { ControllerRenderProps, FieldValues } from 'react-hook-form';
+
+interface DFOTextFieldProps {
+  element?: ControllerRenderProps<FieldValues, string>;
+  value?: string;
+  label?: string;
+  error?: boolean;
+  errorMessage?: string;
+  callback?: () => void;
+}
 
 const useStyles = makeStyles({
   root: {
-    '& .MuiInputLabel-root': {
-      color: (props: DFOTextFieldStyleProps) => `${props.fontColor}`,
-      lineHeight: '1.6rem'
-    },
-    '& .MuiInputLabel-root.Mui-focused': {
-      color: (props: DFOTextFieldStyleProps) => `${props.fontColor}`,
-      textAlign: 'center'
-    },
-    '& .MuiOutlinedInput-root': {
-      '& fieldset': {
-        border: (props: DFOTextFieldStyleProps) =>
-          `2px solid ${props.borderColor}`,
-        height: 67
-      },
-      '&:hover fieldset': {
-        border: (props: DFOTextFieldStyleProps) =>
-          `3px solid ${props.borderColor}`
-      },
-      '&.Mui-focused fieldset': {
-        border: (props: DFOTextFieldStyleProps) =>
-          `3px solid ${props.borderColor}`
+    width: '100%',
+    backgroundColor: theme.palette.dfoWhite.main,
+    '& .MuiInputBase-adornedEnd': {
+      backgroundColor: theme.palette.dfoWhite.main,
+      '&:hover': {
+        background: theme.palette.dfoWhite.main
       }
     }
   },

@@ -1,4 +1,5 @@
-import { ListItem, makeStyles } from '@material-ui/core';
+import { ListItem } from '@mui/material';
+import makeStyles from '@mui/styles/makeStyles';
 import Typography from '@mui/material/Typography';
 import React from 'react';
 import ListGroup from 'react-bootstrap/ListGroup';

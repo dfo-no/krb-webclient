@@ -72,7 +72,7 @@ export default function TextForm({ parentAnswer }: IProps): React.ReactElement {
     <Card className="mb-3">
       <Card.Body>
         <h6>Alternative: Text</h6>
-        <Form onSubmit={handleSubmit(saveValues)}>
+        <form onSubmit={handleSubmit(saveValues)}>
           <Form.Label>Maks lengde</Form.Label>
           <Form.Control
             as="input"
@@ -83,7 +83,7 @@ export default function TextForm({ parentAnswer }: IProps): React.ReactElement {
           />
 
           <ErrorSummary errors={errors} />
-        </Form>
+        </form>
       </Card.Body>
     </Card>
   );

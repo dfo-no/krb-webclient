@@ -1,14 +1,14 @@
+import { Box, Button } from '@mui/material/';
+import makeStyles from '@mui/styles/makeStyles';
 import React, { useState } from 'react';
-import { useAppSelector } from '../../../store/hooks';
 import { useTranslation } from 'react-i18next';
-import theme from '../../../theme';
 import Dialog from '../../../components/DFODialog/DFODialog';
 import DFOSearchBar from '../../../components/DFOSearchBar/DFOSearchBar';
-import CodeList from './Codelist';
 import { ICodelist } from '../../../Nexus/entities/ICodelist';
-import NewCodeListForm from './NewCodelistForm';
-import { Box, Button } from '@mui/material/';
-import { makeStyles } from '@material-ui/core';
+import { useAppSelector } from '../../../store/hooks';
+import theme from '../../../theme';
+import Codelist from './CodeList';
+import NewCodelistForm from './NewCodeListForm';
 
 const useStyles = makeStyles({
   codelistsContainer: {
@@ -24,7 +24,7 @@ const useStyles = makeStyles({
     display: 'flex',
     flexDirection: 'row',
     gap: 5,
-    [theme.breakpoints.down('mddd')]: {
+    [theme.breakpoints.down('lg')]: {
       flexDirection: 'column',
       gap: 15
     }
@@ -46,7 +46,7 @@ const useStyles = makeStyles({
     width: '100%',
     alignSelf: 'center',
     height: '100vh',
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down('md')]: {
       width: 400
     }
   }
@@ -109,14 +109,14 @@ export default function CodelistPage(): React.ReactElement {
         </Box>
 
         <Box className={classes.codelists}>
-          <CodeList list={codelist.length > 0 ? codelist : project.codelist} />
+          <Codelist list={codelist.length > 0 ? codelist : project.codelist} />
         </Box>
 
         <Dialog
           title={t('add new code')}
           isOpen={show}
           handleClose={() => setShow(false)}
-          children={<NewCodeListForm handleClose={() => setShow(false)} />}
+          children={<NewCodelistForm handleClose={() => setShow(false)} />}
         />
       </Box>
     </>

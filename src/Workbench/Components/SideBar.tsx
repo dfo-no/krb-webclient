@@ -1,6 +1,6 @@
-import { makeStyles } from '@material-ui/core';
-import { List, ListItem, ListItemText, Box } from '@mui/material';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
+import { Box, List, ListItem, ListItemText } from '@mui/material';
+import makeStyles from '@mui/styles/makeStyles';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { withRouter } from 'react-router';
@@ -20,7 +20,7 @@ const useStyles = makeStyles({
   sideBar: {
     height: '100%',
     paddingTop: 45,
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down('md')]: {
       paddingTop: 0
     }
   },
@@ -29,7 +29,7 @@ const useStyles = makeStyles({
     width: '15vw',
     minWidth: 230,
     height: '100vh',
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down('md')]: {
       height: 'auto',
       width: '100vw',
       backgroundColor: theme.palette.dfoWhite.main
@@ -56,7 +56,7 @@ const useStyles = makeStyles({
       }
     },
 
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down('md')]: {
       backgroundColor: theme.palette.gray100.main
     }
   },
@@ -76,14 +76,14 @@ const useStyles = makeStyles({
       color: theme.palette.dfoWhite.main
     },
 
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down('md')]: {
       backgroundColor: theme.palette.gray100.main
     }
   },
   selectedListItemArrow: {
     color: theme.palette.dfoDarkBlue.main,
 
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down('md')]: {
       marginRight: 50
     }
   }

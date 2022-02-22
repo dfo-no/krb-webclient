@@ -1,7 +1,7 @@
 import { joiResolver } from '@hookform/resolvers/joi';
+import Button from '@mui/material/Button';
 import { has, toPath } from 'lodash';
 import React from 'react';
-import Button from '@mui/material/Button';
 import Card from 'react-bootstrap/Card';
 import Form from 'react-bootstrap/Form';
 import { useForm } from 'react-hook-form';
@@ -82,7 +82,7 @@ export default function ValueForm({
     <Card className="mb-3">
       <Card.Body>
         <h6>Alternative: Value</h6>
-        <Form onSubmit={handleSubmit(saveValues)}>
+        <form onSubmit={handleSubmit(saveValues)}>
           <Form.Control
             as="input"
             step="0.01"
@@ -123,7 +123,7 @@ export default function ValueForm({
             {t('save')}
           </Button>
           <ErrorSummary errors={errors} />
-        </Form>
+        </form>
       </Card.Body>
     </Card>
   );

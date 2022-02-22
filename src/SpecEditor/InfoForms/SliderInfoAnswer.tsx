@@ -1,9 +1,7 @@
 import { joiResolver } from '@hookform/resolvers/joi';
-import { Mark } from '@material-ui/core/Slider/Slider';
 import Button from '@mui/material/Button';
 import React from 'react';
 import Col from 'react-bootstrap/Col';
-import Form from 'react-bootstrap/Form';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { v4 as uuidv4 } from 'uuid';
@@ -14,6 +12,7 @@ import { IRequirementAnswer } from '../../models/IRequirementAnswer';
 import ModelType from '../../models/ModelType';
 import QuestionEnum from '../../models/QuestionEnum';
 import { QuestionType } from '../../models/QuestionType';
+import { IMark } from '../../Nexus/entities/IMark';
 import { IRequirement } from '../../Nexus/entities/IRequirement';
 import { ISliderQuestion } from '../../Nexus/entities/ISliderQuestion';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
@@ -110,7 +109,7 @@ export default function ISliderInfoAnswer({
     }
   };
 
-  const marks: Mark[] = [
+  const marks: IMark[] = [
     {
       value: sliderQuestion.config.min,
       label: `${sliderQuestion.config.min} ${sliderQuestion.config.unit}`
@@ -124,7 +123,7 @@ export default function ISliderInfoAnswer({
   return (
     <Col className="p-0 m-0 w-50">
       <p>Hvor langt unna kan lokalsjonen være? </p>
-      <Form className="mt-3" onSubmit={handleSubmit(saveValues)}>
+      <form className="mt-3" onSubmit={handleSubmit(saveValues)}>
         <SliderSelect
           label=""
           control={control}
@@ -141,7 +140,7 @@ export default function ISliderInfoAnswer({
           {t('save')}
         </Button>
         <ErrorSummary errors={errors} />
-      </Form>
+      </form>
     </Col>
   );
 }
