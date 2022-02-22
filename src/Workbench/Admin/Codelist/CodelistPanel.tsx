@@ -9,8 +9,6 @@ import { useSelectState } from './SelectContext';
 import EditCodelistForm from './EditCodelistForm';
 import NewCodelistForm from './NewCodelistForm';
 import { usePanelStyles } from './CodelistStyles';
-import { ICode } from '../../../Nexus/entities/ICode';
-import { Parentable } from '../../../models/Parentable';
 
 const CodelistPanel = (): React.ReactElement => {
   const classes = usePanelStyles();
@@ -18,14 +16,10 @@ const CodelistPanel = (): React.ReactElement => {
   const [editMode, setEditMode] = useState('');
   const [isCreating, setCreating] = useState(false);
 
-  console.log(codelists);
-
   const itemClicked = (item: ICodelist) => {
     if (editMode !== '') {
       setEditMode('');
     }
-    const parentableCodes = item.codes.map((code) => code as Parentable<ICode>);
-    console.log(parentableCodes);
     setCodelist(item);
   };
 
