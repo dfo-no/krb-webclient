@@ -1,6 +1,6 @@
 import { joiResolver } from '@hookform/resolvers/joi';
-import React from 'react';
 import Button from '@mui/material/Button';
+import React from 'react';
 import Card from 'react-bootstrap/Card';
 import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
@@ -69,7 +69,7 @@ export default function DateForm({ parentAnswer }: IProps): React.ReactElement {
       <Card.Body>
         <h6>Alternative: Time </h6>
         <FormProvider {...methods}>
-          <Form onSubmit={methods.handleSubmit(saveValues)}>
+          <form onSubmit={methods.handleSubmit(saveValues)}>
             <Form.Group as={Row}>
               <Col sm="4">
                 <TimeCtrl name={`config.fromBoundary` as const} />
@@ -108,7 +108,7 @@ export default function DateForm({ parentAnswer }: IProps): React.ReactElement {
             <Button variant="primary" type="submit">
               {t('save')}
             </Button>
-          </Form>
+          </form>
         </FormProvider>
       </Card.Body>
     </Card>

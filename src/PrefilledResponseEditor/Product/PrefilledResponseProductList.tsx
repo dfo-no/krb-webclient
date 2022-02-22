@@ -120,7 +120,7 @@ export default function ProductSpecList(): React.ReactElement {
   return (
     <Container fluid>
       {bankSelected && (
-        <Form
+        <form
           onSubmit={handleSubmit(addProductToPrefilledResponse)}
           autoComplete="off"
         >
@@ -147,7 +147,7 @@ export default function ProductSpecList(): React.ReactElement {
           </Row>
           <Row className=" ml-4">{productList(prefilledResponse.products)}</Row>
           <ErrorSummary errors={errors} />
-        </Form>
+        </form>
       )}
     </Container>
   );

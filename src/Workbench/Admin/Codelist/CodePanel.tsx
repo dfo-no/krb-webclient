@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Box } from '@mui/material/';
-import Typography from '@mui/material/Typography';
+import { Box, Typography } from '@mui/material/';
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
 import DragIndicatorIcon from '@mui/icons-material/DragIndicator';
 import Nestable, { Item } from 'react-nestable';

@@ -3,7 +3,6 @@ import Button from '@mui/material/Button';
 import { get } from 'lodash';
 import React, { useState } from 'react';
 import Card from 'react-bootstrap/Card';
-import Form from 'react-bootstrap/Form';
 import { FieldError, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { v4 as uuidv4 } from 'uuid';
@@ -25,7 +24,6 @@ import {
  */
 function NewNeedForm(): React.ReactElement {
   const dispatch = useAppDispatch();
-  const [validated] = useState(false);
   const { project } = useAppSelector((state) => state.project);
   const [show, setShow] = useState(false);
   const { t } = useTranslation();
@@ -72,11 +70,10 @@ function NewNeedForm(): React.ReactElement {
       {show && (
         <Card className="mb-4">
           <Card.Body>
-            <Form
+            <form
               onSubmit={handleSubmit(onSubmit)}
               autoComplete="off"
               noValidate
-              validated={validated}
             >
               <ControlledTextInput
                 control={control}
@@ -97,7 +94,7 @@ function NewNeedForm(): React.ReactElement {
                 Avbryt
               </Button>
               <ErrorSummary errors={errors} />
-            </Form>
+            </form>
           </Card.Body>
         </Card>
       )}

@@ -3,7 +3,6 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import Button from '@mui/material/Button';
 import React, { useState } from 'react';
 import Card from 'react-bootstrap/Card';
-import Form from 'react-bootstrap/Form';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { v4 as uuidv4 } from 'uuid';
@@ -29,7 +28,6 @@ interface IProps {
 
 function EditNeedForm({ element, handleClose }: IProps): React.ReactElement {
   const dispatch = useAppDispatch();
-  const [validated] = useState(false);
   const { project } = useAppSelector((state) => state.project);
 
   const { t } = useTranslation();
@@ -85,11 +83,10 @@ function EditNeedForm({ element, handleClose }: IProps): React.ReactElement {
     <FormProvider {...methods}>
       <Card className="mb-4">
         <Card.Body>
-          <Form
+          <form
             onSubmit={methods.handleSubmit(onEditNeedSubmit)}
             autoComplete="off"
             noValidate
-            validated={validated}
           >
             <TextCtrl name="title" label={t('Title')} />
             <TextCtrl name="description" label={t('Description')} />
@@ -109,7 +106,7 @@ function EditNeedForm({ element, handleClose }: IProps): React.ReactElement {
               title="Attention"
               text="This need has one or more connected requirements or has subneeds, please remove them to be able to delete"
             />
-          </Form>
+          </form>
         </Card.Body>
       </Card>
     </FormProvider>

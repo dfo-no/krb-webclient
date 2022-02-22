@@ -145,7 +145,7 @@ export default function ProductSpecList(): React.ReactElement {
 
   return (
     <Container fluid>
-      <Form
+      <form
         onSubmit={handleSubmit(addProductToSpecification)}
         autoComplete="off"
       >
@@ -177,7 +177,7 @@ export default function ProductSpecList(): React.ReactElement {
         </Row>
         <Row className=" ml-4">{productList(spec.products)}</Row>
         <ErrorSummary errors={errors} />
-      </Form>
+      </form>
     </Container>
   );
 }

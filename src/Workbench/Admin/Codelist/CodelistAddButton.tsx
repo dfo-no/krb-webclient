@@ -1,7 +1,6 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { Box, Button } from '@mui/material/';
-import Typography from '@mui/material/Typography';
+import { Box, Button, Typography } from '@mui/material/';
 import { useButtonStyles } from './CodelistStyles';
 
 interface IProps {

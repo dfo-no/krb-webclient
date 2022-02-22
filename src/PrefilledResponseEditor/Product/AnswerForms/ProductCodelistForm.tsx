@@ -117,7 +117,7 @@ export default function ProductCodelistForm({
           {getVariantText(answer.requirement, answer.variantId)[1]}
         </small>
       </h6>
-      <Form
+      <form
         onSubmit={handleSubmit(onSubmit)}
         key={question.id}
         className="mt-4"
@@ -156,7 +156,7 @@ export default function ProductCodelistForm({
           </Button>
         </div>
         <ErrorSummary errors={get(errors, `question.answer.value`)} />
-      </Form>
+      </form>
     </div>
   );
 }

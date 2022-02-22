@@ -1,5 +1,4 @@
 import { joiResolver } from '@hookform/resolvers/joi';
-import { Mark } from '@material-ui/core/Slider/Slider';
 import Button from '@mui/material/Button';
 import Slider from '@mui/material/Slider';
 import React, { useState } from 'react';
@@ -16,6 +15,7 @@ import Utils from '../../common/Utils';
 import ErrorSummary from '../../Form/ErrorSummary';
 import { IRequirementAnswer } from '../../models/IRequirementAnswer';
 import ModelType from '../../models/ModelType';
+import { IMark } from '../../Nexus/entities/IMark';
 import { IRequirement } from '../../Nexus/entities/IRequirement';
 import { IVariant } from '../../Nexus/entities/IVariant';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
@@ -35,7 +35,7 @@ type FormValue = {
   weight: number;
   variant: string;
 };
-const marks: Mark[] = [
+const marks: IMark[] = [
   {
     value: 10,
     label: `Lav`
@@ -239,7 +239,7 @@ export default function RequirementAnswer({
       );
     });
     return (
-      <Form onSubmit={handleSubmit(saveAnswer)} autoComplete="off">
+      <form onSubmit={handleSubmit(saveAnswer)} autoComplete="off">
         <Row>
           <Col sm={3}>
             <Form.Control
@@ -338,7 +338,7 @@ export default function RequirementAnswer({
         </Col>
 
         <ErrorSummary errors={errors} />
-      </Form>
+      </form>
     );
   };
 

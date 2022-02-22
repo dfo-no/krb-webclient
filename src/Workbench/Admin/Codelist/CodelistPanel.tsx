@@ -1,10 +1,8 @@
 import React, { useState } from 'react';
 import 'react-nestable/dist/styles/index.css';
-import { Box } from '@material-ui/core';
-import { Typography } from '@mui/material';
+import { Typography, Box, List } from '@mui/material';
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
-import List from '@mui/material/List';
 import { ICodelist } from '../../../Nexus/entities/ICodelist';
 import CodelistAddButton from './CodelistAddButton';
 import { useSelectState } from './SelectContext';

@@ -112,7 +112,7 @@ export default function TextForm({
           }
         </small>
       </h6>
-      <Form
+      <form
         onSubmit={handleSubmit(onSubmit)}
         key={question.id}
         className="mt-4"
@@ -140,7 +140,7 @@ export default function TextForm({
             {t('Reset')}
           </Button>
         </div>
-      </Form>
+      </form>
       <ErrorSummary errors={errors} />
     </div>
   );

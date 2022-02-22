@@ -1,10 +1,10 @@
-import { Mark } from '@material-ui/core/Slider/Slider';
 import Slider from '@mui/material/Slider';
 import { get } from 'lodash';
 import React from 'react';
 import Form from 'react-bootstrap/Form';
 import FormControl from 'react-bootstrap/FormControl';
 import { Controller, useFormContext } from 'react-hook-form';
+import { IMark } from '../Nexus/entities/IMark';
 
 interface IProps {
   name: string;
@@ -12,7 +12,7 @@ interface IProps {
   max: number;
   step: number;
   unit: string;
-  marks: Mark[];
+  marks: IMark[];
 }
 
 const SliderCtrl = ({

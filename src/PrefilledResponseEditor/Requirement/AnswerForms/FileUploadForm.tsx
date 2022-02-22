@@ -3,7 +3,6 @@ import Alert from '@mui/material/Alert';
 import Button from '@mui/material/Button';
 import React from 'react';
 import Badge from 'react-bootstrap/Badge';
-import Form from 'react-bootstrap/Form';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import CustomJoi from '../../../common/CustomJoi';
@@ -109,7 +108,7 @@ export default function FileUploadForm({
         </small>
       </h6>
       <FormProvider {...methods}>
-        <Form onSubmit={methods.handleSubmit(onSubmit)} key={question.id}>
+        <form onSubmit={methods.handleSubmit(onSubmit)} key={question.id}>
           <Alert severity="error">Not implemented yet!</Alert>
           <div className="d-flex justify-content-end">
             {isValueSet(answer.id) ? (
@@ -134,7 +133,7 @@ export default function FileUploadForm({
             </Button>
           </div>
           <ErrorSummary errors={methods.formState.errors} />
-        </Form>
+        </form>
       </FormProvider>
     </div>
   );

@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Box } from '@mui/material/';
-import { makeStyles } from '@material-ui/core';
+import makeStyles from '@mui/styles/makeStyles';
 import { useAppSelector } from '../../../store/hooks';
 import { ICodelist } from '../../../Nexus/entities/ICodelist';
 import DFOSearchBar from '../../../components/DFOSearchBar/DFOSearchBar';
