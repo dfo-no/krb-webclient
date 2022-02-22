@@ -4,11 +4,11 @@ import { useTranslation } from 'react-i18next';
 import theme from '../../../theme';
 import Dialog from '../../../components/DFODialog/DFODialog';
 import DFOSearchBar from '../../../components/DFOSearchBar/DFOSearchBar';
-import CodeList from './CodeList';
 import { ICodelist } from '../../../Nexus/entities/ICodelist';
-import NewCodeListForm from './NewCodeListForm';
 import { Box, Button } from '@mui/material/';
 import { makeStyles } from '@material-ui/core';
+import NewCodelistForm from './NewCodelistForm';
+import Codelist from './Codelist';
 
 const useStyles = makeStyles({
   codelistsContainer: {
@@ -109,14 +109,14 @@ export default function CodeListPage(): React.ReactElement {
         </Box>
 
         <Box className={classes.codelists}>
-          <CodeList list={codelist.length > 0 ? codelist : project.codelist} />
+          <Codelist list={codelist.length > 0 ? codelist : project.codelist} />
         </Box>
 
         <Dialog
           title={t('add new code')}
           isOpen={show}
           handleClose={() => setShow(false)}
-          children={<NewCodeListForm handleClose={() => setShow(false)} />}
+          children={<NewCodelistForm handleClose={() => setShow(false)} />}
         />
       </Box>
     </>

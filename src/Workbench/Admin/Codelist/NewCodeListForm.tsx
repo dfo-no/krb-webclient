@@ -32,7 +32,7 @@ const useStyles = makeStyles({
   }
 });
 
-export default function NewCodeListForm({
+export default function NewCodelistForm({
   handleClose
 }: IProps): React.ReactElement {
   const classes = useStyles();

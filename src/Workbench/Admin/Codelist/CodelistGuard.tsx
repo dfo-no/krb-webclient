@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { Route, useHistory, useParams } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../../store/hooks';
 import { selectCodeList } from '../../../store/reducers/selectedCodelist-reducer';
-import CodelistPage from './CodeListPage';
+import CodelistPage from './CodelistPage';
 
 interface IRouteParams {
   projectId: string;

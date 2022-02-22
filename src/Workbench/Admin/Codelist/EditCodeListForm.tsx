@@ -33,7 +33,7 @@ interface IProps {
   element: Parentable<IProduct>;
 }
 
-export default function EditProductForm({
+export default function EditCodelistForm({
   element
 }: IProps): React.ReactElement {
   const { project } = useAppSelector((state) => state.project);

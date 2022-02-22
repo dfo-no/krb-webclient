@@ -14,7 +14,7 @@ import { useAppDispatch, useAppSelector } from '../../../store/hooks';
 import { selectNeed } from '../../../store/reducers/selectedNeed-reducer';
 import { selectRequirement } from '../../../store/reducers/selectedRequirement-reducer';
 
-export default function ProductPreview(): React.ReactElement {
+export default function CodelistPreview(): React.ReactElement {
   const dispatch = useAppDispatch();
   const { project } = useAppSelector((state) => state.project);
   const { product } = useAppSelector((state) => state.selectedProduct);
