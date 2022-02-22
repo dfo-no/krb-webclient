@@ -80,7 +80,7 @@ export default function EditTagForm({ element }: IProps): React.ReactElement {
   const deleteTag = () => {
     const deletableTag = { ...element };
     dispatch(removeTag(deletableTag));
-    dispatch(putSelectedProjectThunk('dummy')).then(() => {});
+    dispatch(putSelectedProjectThunk('dummy'));
 
     const alert: IAlert = {
       id: uuidv4(),
