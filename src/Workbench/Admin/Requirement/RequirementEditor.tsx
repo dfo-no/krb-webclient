@@ -23,6 +23,7 @@ import {
   editRequirementInNeed,
   putSelectedProjectThunk
 } from '../../../store/reducers/project-reducer';
+import TagsAsChips from '../Tags/TagsAsChips';
 import VariantArray from './VariantArray';
 import withProjectAndNeedAndRequirement from './withProjectAndNeedAndRequirement';
 
@@ -91,7 +92,7 @@ function RequirementEditor(): React.ReactElement {
       <h3 className="mt-3">
         {Utils.capitalizeFirstLetter(requirement.requirement_Type)} {t('Page')}{' '}
       </h3>
-      <Form onSubmit={handleSubmit((e) => onSubmit(e))} noValidate>
+      <form onSubmit={handleSubmit((e) => onSubmit(e))} noValidate>
         <Form.Group as={Row}>
           <Form.Label column sm={1}>
             {t('Title')}
@@ -154,7 +155,9 @@ function RequirementEditor(): React.ReactElement {
         </Form.Group>
         <Row>
           <Col sm={1} />
-          <Col sm={8}></Col>
+          <Col sm={8}>
+            <TagsAsChips tags={requirement.tags} />
+          </Col>
         </Row>
         <VariantArray
           control={control}
@@ -166,7 +169,7 @@ function RequirementEditor(): React.ReactElement {
         {process.env.NODE_ENV === 'development' && (
           <DevTool control={control} />
         )}
-      </Form>
+      </form>
     </>
   );
 }
