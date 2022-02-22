@@ -1,7 +1,7 @@
 import { joiResolver } from '@hookform/resolvers/joi';
+import Button from '@mui/material/Button';
 import { get } from 'lodash';
 import React from 'react';
-import Button from '@mui/material/Button';
 import Card from 'react-bootstrap/Card';
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
@@ -70,7 +70,7 @@ export default function ISliderAnswerForm({
         <h6>Question: Value</h6>
       </Card.Header>
       <Card.Body>
-        <Form onSubmit={handleSubmit(saveValues)}>
+        <form onSubmit={handleSubmit(saveValues)}>
           <Row className="w-50 m-3">
             <Form.Label>Angi verdi ({sliderQuestion.config.unit})</Form.Label>
             {stepAmount <= 10 && (
@@ -98,7 +98,7 @@ export default function ISliderAnswerForm({
             {t('save')}
           </Button>
           <ErrorSummary errors={errors} />
-        </Form>
+        </form>
       </Card.Body>
     </Card>
   );

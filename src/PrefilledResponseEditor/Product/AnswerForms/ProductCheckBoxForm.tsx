@@ -119,7 +119,7 @@ const ProductCheckBoxForm = ({
           {getVariantText(answer.requirement, answer.variantId)[1]}
         </small>
       </h6>
-      <Form
+      <form
         onSubmit={handleSubmit(onSubmit)}
         key={question.id}
         className="mt-4"
@@ -169,7 +169,7 @@ const ProductCheckBoxForm = ({
           </Button>
         </div>
         <ErrorSummary errors={errors} />
-      </Form>
+      </form>
     </div>
   );
 };

@@ -114,7 +114,7 @@ export default function SliderForm({
         </small>
       </h6>
       <FormProvider {...methods}>
-        <Form
+        <form
           onSubmit={methods.handleSubmit(onSubmit)}
           key={question.id}
           className="mt-4"
@@ -163,7 +163,7 @@ export default function SliderForm({
               {t('Reset')}
             </Button>
           </div>
-        </Form>
+        </form>
       </FormProvider>
     </div>
   );

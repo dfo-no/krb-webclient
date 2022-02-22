@@ -2,7 +2,6 @@ import { joiResolver } from '@hookform/resolvers/joi';
 import Button from '@mui/material/Button';
 import React from 'react';
 import Col from 'react-bootstrap/Col';
-import Form from 'react-bootstrap/Form';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { v4 as uuidv4 } from 'uuid';
@@ -124,7 +123,7 @@ export default function ISliderInfoAnswer({
   return (
     <Col className="p-0 m-0 w-50">
       <p>Hvor langt unna kan lokalsjonen være? </p>
-      <Form className="mt-3" onSubmit={handleSubmit(saveValues)}>
+      <form className="mt-3" onSubmit={handleSubmit(saveValues)}>
         <SliderSelect
           label=""
           control={control}
@@ -141,7 +140,7 @@ export default function ISliderInfoAnswer({
           {t('save')}
         </Button>
         <ErrorSummary errors={errors} />
-      </Form>
+      </form>
     </Col>
   );
 }

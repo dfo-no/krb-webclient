@@ -88,7 +88,7 @@ export default function ProductAutoFillSelector(): React.ReactElement {
     return products;
   };
   return (
-    <Form onSubmit={handleSubmit(connectProduct)} autoComplete="off">
+    <form onSubmit={handleSubmit(connectProduct)} autoComplete="off">
       <Col sm={10}>
         <Form.Control as="select" {...register('productId')}>
           {findMatchingPrefilledProducts().map(
@@ -106,6 +106,6 @@ export default function ProductAutoFillSelector(): React.ReactElement {
         </Button>
       </Col>
       <ErrorSummary errors={errors} />
-    </Form>
+    </form>
   );
 }

@@ -3,7 +3,6 @@ import Button from '@mui/material/Button';
 import { get } from 'lodash';
 import React, { useState } from 'react';
 import Card from 'react-bootstrap/Card';
-import Form from 'react-bootstrap/Form';
 import { FieldError, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { v4 as uuidv4 } from 'uuid';
@@ -97,7 +96,7 @@ export default function NewPublication(): React.ReactElement {
       {show && (
         <Card className="mb-4 mt-4">
           <Card.Body>
-            <Form onSubmit={handleSubmit(onSubmit)}>
+            <form onSubmit={handleSubmit(onSubmit)}>
               <ControlledTextInput
                 control={control}
                 error={get(errors, `comment`) as FieldError}
@@ -110,7 +109,7 @@ export default function NewPublication(): React.ReactElement {
                 {t('cancel')}
               </Button>
               <ErrorSummary errors={errors} />
-            </Form>
+            </form>
           </Card.Body>
         </Card>
       )}
