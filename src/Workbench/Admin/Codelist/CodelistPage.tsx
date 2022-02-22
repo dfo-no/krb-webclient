@@ -48,6 +48,7 @@ export default function CodeListPage(): React.ReactElement {
   const classes = useStyles();
   const { t } = useTranslation();
 
+  // TODO: Hack som kan løses med RTK Query
   useEffect(() => {
     setCodelists(project.codelist);
   }, [setCodelists, project.codelist]);
@@ -57,27 +58,16 @@ export default function CodeListPage(): React.ReactElement {
   };
 
   const codelistSearch = (searchString: string, list: ICodelist[]) => {
-    return list
-      .map((cl) => {
-        if (cl.title.toLowerCase().includes(searchString.toLowerCase())) {
-          return { ...cl, inSearch: true };
-        }
+    // Filters only codelist with match in title or with code with match in title
+    return list.filter((aCodelist) => {
+      if (aCodelist.title.toLowerCase().includes(searchString.toLowerCase())) {
+        return true;
+      }
 
-        const newCodes = cl.codes.filter((c) => {
-          return c.title.toLowerCase().includes(searchString.toLowerCase());
-        });
-
-        if (newCodes.length === 0) {
-          return { ...cl, inSearch: false };
-        }
-        return { ...cl, codes: newCodes, inSearch: true };
-      })
-      .filter((cl) => {
-        return cl.inSearch;
-      })
-      .map((cl) => {
-        return cl as ICodelist;
+      return aCodelist.codes.some((code) => {
+        return code.title.toLowerCase().includes(searchString.toLowerCase());
       });
+    });
   };
 
   const showCodeContainer = () => {

@@ -9,6 +9,7 @@ interface SearchableParams {
 type SeacrhableTypes = Nestable<IProduct | ITag>;
 type Searchable = SearchableParams & SeacrhableTypes;
 
+// TODO: rewrite to Generic
 class SearchUtils {
   private static searchRecursive(
     topItem: SeacrhableTypes,
