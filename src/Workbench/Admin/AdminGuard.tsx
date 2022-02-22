@@ -3,8 +3,8 @@ import React from 'react';
 import { Route } from 'react-router';
 import theme from '../../theme';
 import SideBar from '../Components/SideBar';
-import CodeListGuard from './Codelist/CodeListGuard';
-import CodeListPage from './Codelist/CodeListPage';
+import CodelistGuard from './Codelist/CodelistGuard';
+import CodelistPage from './Codelist/CodelistPage';
 import InheritancePage from './Inheritance/InheritancePage';
 import InheritanceSearch from './Inheritance/InheritanceSearch';
 import NeedPage from './Need/NeedPage';
@@ -49,7 +49,6 @@ export default function AdminGuard(): React.ReactElement {
         >
           <RequirementEditor />
         </Route>
-
         <Route exact path="/workbench/:projectId/admin/need/requirement">
           <RequirementPage />
         </Route>
@@ -57,10 +56,10 @@ export default function AdminGuard(): React.ReactElement {
           <TagPage />
         </Route>
         <Route exact path="/workbench/:projectId/admin/codelist">
-          <CodeListPage />
+          <CodelistPage />
         </Route>
         <Route exact path="/workbench/:projectId/admin/codelist/:id">
-          <CodeListGuard />
+          <CodelistGuard />
         </Route>
         <Route exact path="/workbench/:projectId/admin/products">
           <ProductPage />

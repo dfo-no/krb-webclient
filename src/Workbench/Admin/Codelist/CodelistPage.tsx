@@ -4,9 +4,9 @@ import { useTranslation } from 'react-i18next';
 import theme from '../../../theme';
 import Dialog from '../../../components/DFODialog/DFODialog';
 import DFOSearchBar from '../../../components/DFOSearchBar/DFOSearchBar';
-import CodeList from './CodeList';
+import CodeList from './Codelist';
 import { ICodelist } from '../../../Nexus/entities/ICodelist';
-import NewCodeListForm from './NewCodeListForm';
+import NewCodeListForm from './NewCodelistForm';
 import { Box, Button } from '@mui/material/';
 import { makeStyles } from '@material-ui/core';
 
@@ -52,7 +52,7 @@ const useStyles = makeStyles({
   }
 });
 
-export default function CodeListPage(): React.ReactElement {
+export default function CodelistPage(): React.ReactElement {
   const { project } = useAppSelector((state) => state.project);
 
   const [codelist, setCodelist] = useState<ICodelist[]>([]);
