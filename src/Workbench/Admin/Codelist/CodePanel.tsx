@@ -97,8 +97,8 @@ const CodePanel = (): React.ReactElement => {
   const renderItem = (item: Item, handler: React.ReactNode) => {
     if (isEditingItem(item)) {
       return (
-        <Box className={classes.nestableItemEdited}>
-          <Box className={classes.codeItem}>
+        <Box className={classes.editableListItem}>
+          <Box className={classes.textItem}>
             <EditCodeForm
               parent={codelist}
               element={Utils.nestable2Parentable(item as NestableModel<ICode>)}
@@ -109,14 +109,14 @@ const CodePanel = (): React.ReactElement => {
       );
     }
     return (
-      <Box className={classes.nestableItemCustom}>
+      <Box className={classes.listItem}>
         {!isEditing() && <Box className={classes.handlerIcon}>{handler}</Box>}
-        <Box className={classes.codeItem}>
-          <Box>
+        <Box className={classes.textItem}>
+          <Box className={classes.textItemTitle}>
             <Typography variant="smallBold">{item.title}</Typography>
           </Box>
-          <Box className={classes.codeItemDescription}>
-            <Typography>{item.description}</Typography>
+          <Box className={classes.textItemDescription}>
+            <Typography variant="small">{item.description}</Typography>
           </Box>
         </Box>
         <Box className={classes.editIcon} onClick={() => enterEditMode(item)}>
@@ -130,8 +130,8 @@ const CodePanel = (): React.ReactElement => {
     <Box className={classes.topContainer}>
       <CodeAddButton onClick={() => enterCreateMode()} />
       {isCreating && (
-        <Box className={classes.nestableItemEdited}>
-          <Box className={classes.codeItem}>
+        <Box className={classes.editableListItem}>
+          <Box className={classes.textItem}>
             <NewCodeForm parent={codelist} handleClose={handleCloseCreate} />
           </Box>
         </Box>

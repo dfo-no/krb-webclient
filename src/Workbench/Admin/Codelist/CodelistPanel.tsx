@@ -60,8 +60,8 @@ const CodelistPanel = (): React.ReactElement => {
   const renderItem = (item: ICodelist, i: number) => {
     if (isEditingItem(item)) {
       return (
-        <Box className={classes.codelistItemRootEditing} key={i}>
-          <Box className={classes.codelistItem}>
+        <Box className={classes.editableListItem} key={i}>
+          <Box className={classes.textItem}>
             <EditCodelistForm element={item} handleClose={handleCloseEdit} />
           </Box>
         </Box>
@@ -70,16 +70,17 @@ const CodelistPanel = (): React.ReactElement => {
     return (
       <Box key={i}>
         {!isEditingItem(item) && (
-          <Box className={`${classes.codelistItemRoot} ${selectedClass(item)}`}>
-            <Box
-              className={classes.codelistItem}
-              onClick={() => itemClicked(item)}
-            >
-              <Box>
+          <Box
+            className={`${classes.listItem} ${
+              classes.withHover
+            } ${selectedClass(item)}`}
+          >
+            <Box className={classes.textItem} onClick={() => itemClicked(item)}>
+              <Box className={classes.textItemTitle}>
                 <Typography variant="smallBold">{item.title}</Typography>
               </Box>
-              <Box className={classes.codelistItemDescription}>
-                <Typography>{item.description}</Typography>
+              <Box className={classes.textItemDescription}>
+                <Typography variant="small">{item.description}</Typography>
               </Box>
             </Box>
             <Box
@@ -103,8 +104,8 @@ const CodelistPanel = (): React.ReactElement => {
     <Box className={classes.topContainer}>
       <CodelistAddButton onClick={() => enterCreateMode()} />
       {isCreating && (
-        <Box className={classes.codelistItemRootEditing}>
-          <Box className={classes.codelistItem}>
+        <Box className={classes.editableListItem}>
+          <Box className={classes.textItem}>
             <NewCodelistForm handleClose={handleCloseCreate} />
           </Box>
         </Box>

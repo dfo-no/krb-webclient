@@ -129,8 +129,8 @@ const theme = createTheme(
 );
 
 theme.typography.small = {
-  color: theme.palette.black.main,
-  fontSize: '14px'
+  fontSize: '14px',
+  fontWeight: 400
 };
 
 theme.typography.smallBold = {

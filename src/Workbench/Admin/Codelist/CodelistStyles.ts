@@ -50,54 +50,34 @@ export const usePanelStyles = makeStyles({
     flexDirection: 'column',
     gap: 10
   },
-  nestableItemCustom: {
+  listItem: {
     display: 'flex',
     flexDirection: 'row',
+    height: 70,
     width: '100%',
-    backgroundColor: theme.palette.dfoWhite.main,
-    height: 55
-  },
-  codelistItemRoot: {
-    display: 'flex',
-    flexDirection: 'row',
+    marginBottom: 10,
     border: `1px solid ${theme.palette.gray500.main}`,
-    marginTop: -1,
-    width: '100%',
-    height: 55,
-    backgroundColor: theme.palette.dfoWhite.main,
+    backgroundColor: theme.palette.dfoWhite.main
+  },
+  withHover: {
     cursor: 'pointer',
     '&:hover': {
       background: theme.palette.lightBlue.main,
       color: theme.palette.dfoWhite.main
-    },
-    '& .MuiListItem-root': {
-      padding: 0
     }
   },
-  nestableItemEdited: {
+  editableListItem: {
     display: 'flex',
     flexDirection: 'row',
+    height: 90,
     width: '100%',
-    backgroundColor: theme.palette.dfoWhite.main,
-    height: 85
-  },
-  codelistItemRootEditing: {
-    display: 'flex',
-    flexDirection: 'row',
+    marginBottom: 10,
     border: `1px solid ${theme.palette.gray500.main}`,
-    marginTop: -1,
-    width: '100%',
-    height: 85,
-    backgroundColor: theme.palette.dfoWhite.main,
-    '& .MuiListItem-root': {
-      padding: 0
-    }
+    backgroundColor: theme.palette.dfoWhite.main
   },
   nestableCustom: {
     '& .nestable-item': {
-      margin: 0,
-      border: `1px solid ${theme.palette.gray500.main}`,
-      marginTop: -1
+      margin: 0
     }
   },
   list: {
@@ -129,29 +109,29 @@ export const usePanelStyles = makeStyles({
     paddingRight: '8px',
     justifySelf: 'flex-end'
   },
-  codeItem: {
+  textItem: {
     display: 'flex',
     flexDirection: 'column',
-    paddingTop: 4,
-    paddingBottom: 4,
-    paddingLeft: 25
-  },
-  codelistItem: {
-    display: 'flex',
-    flexDirection: 'column',
+    height: '100%',
     width: '100%',
     paddingTop: 4,
     paddingBottom: 4,
-    paddingLeft: 25
+    paddingLeft: 25,
+    paddingRight: 15
   },
-  codeItemDescription: {
-    color: theme.palette.gray600.main
+  textItemTitle: {
+    flexGrow: 1,
+    height: 30,
+    paddingTop: 5,
+    borderBottom: '1px solid'
+  },
+  textItemDescription: {
+    flexGrow: 1,
+    height: 30,
+    paddingTop: 5
   },
   selectedItem: {
     background: theme.palette.dfoDarkBlue.main,
     color: theme.palette.dfoWhite.main
-  },
-  codelistItemDescription: {
-    color: `${theme.palette.gray600.main}`
   }
 });
