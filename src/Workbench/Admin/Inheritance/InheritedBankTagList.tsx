@@ -76,6 +76,18 @@ export default function InheritedBankTagList(): React.ReactElement {
     { title: 'Merkelapp 12', description: 'Merkelapp beskrivelse' }
   ];
 
+  const renderList = () => {
+    return (
+      <List>
+        {tags.map((tag: any, index: number) => {
+          {
+            return <InheritedTagListItem tagListItem={tag} key={index} />;
+          }
+        })}
+      </List>
+    );
+  };
+
   return (
     <>
       <Box className={classes.inheritanceTagList}>
@@ -92,17 +104,7 @@ export default function InheritedBankTagList(): React.ReactElement {
             {t('show selected tags')}
           </Typography>
         </Box>
-        <Box className={classes.tagsList}>
-          <List>
-            {tags.map((tag) => {
-              {
-                return (
-                  <InheritedTagListItem tagListItem={tag} key={tag.title} />
-                );
-              }
-            })}
-          </List>
-        </Box>
+        <Box className={classes.tagsList}>{renderList()}</Box>
       </Box>
     </>
   );
