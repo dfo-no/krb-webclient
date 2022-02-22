@@ -1,11 +1,15 @@
+import FormControl from '@mui/material/FormControl';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import FormLabel from '@mui/material/FormLabel';
+import RadioGroup from '@mui/material/RadioGroup/RadioGroup';
+import { get } from 'lodash';
 import React from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
 import { DFOSwitch } from '../components/DFOSwitch/DFOSwitch';
-import { get } from 'lodash';
 
 interface IProps {
   name: string;
-  label?: string;
+  label: string;
 }
 
 const SwitchCtrl = ({ name, label }: IProps): React.ReactElement => {
@@ -14,17 +18,19 @@ const SwitchCtrl = ({ name, label }: IProps): React.ReactElement => {
   } = useFormContext();
 
   return (
-    <Controller
-      name={name}
-      render={({ field }) => (
-        <DFOSwitch
-          element={field}
-          label={label}
-          error={get(errors, name)}
-          errorMessage={get(errors, name)?.message}
-        />
+    <FormControl error={!!get(errors, name)}>
+      <Controller
+        name={name}
+        render={({ field }) => (
+          <RadioGroup row={true} {...field}>
+            <FormControlLabel control={<DFOSwitch />} label={label} />
+          </RadioGroup>
+        )}
+      />
+      {!!get(errors, name) && (
+        <FormLabel>{get(errors, name)?.message ?? ''}</FormLabel>
       )}
-    />
+    </FormControl>
   );
 };
 
