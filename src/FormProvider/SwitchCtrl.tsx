@@ -16,7 +16,14 @@ const SwitchCtrl = ({ name, label }: IProps): React.ReactElement => {
   return (
     <Controller
       name={name}
-      render={({ field }) => <DFOSwitch element={field} />}
+      render={({ field }) => (
+        <DFOSwitch
+          element={field}
+          label={label}
+          error={get(errors, name)}
+          errorMessage={get(errors, name)?.message}
+        />
+      )}
     />
   );
 };
