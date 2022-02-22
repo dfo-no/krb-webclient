@@ -3,50 +3,22 @@ import React from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { v4 as uuidv4 } from 'uuid';
-import TextCtrl from '../../../FormProvider/TextCtrl';
-import { IAlert } from '../../../models/IAlert';
+import { Box, IconButton } from '@mui/material/';
+import CheckIcon from '@mui/icons-material/Check';
+import CloseIcon from '@mui/icons-material/Close';
 import { useAppDispatch } from '../../../store/hooks';
 import { addAlert } from '../../../store/reducers/alert-reducer';
 import {
   editSelectedCodelist,
   putSelectedProjectThunk
 } from '../../../store/reducers/project-reducer';
+import TextCtrl from '../../../FormProvider/TextCtrl';
+import { IAlert } from '../../../models/IAlert';
 import {
   ICodelist,
   PutCodelistSchema
 } from '../../../Nexus/entities/ICodelist';
-import { Box, IconButton } from '@mui/material/';
-import { makeStyles } from '@material-ui/core';
-import CheckIcon from '@mui/icons-material/Check';
-import CloseIcon from '@mui/icons-material/Close';
-import theme from '../../../theme';
-
-const useStyles = makeStyles({
-  codeItem: {
-    display: 'flex',
-    flexDirection: 'row',
-    paddingTop: 8
-  },
-  inputBox: {
-    display: 'flex',
-    paddingRight: 8
-  },
-  iconButton: {
-    display: 'flex',
-    marginLeft: 'auto',
-    justifySelf: 'flex-end',
-    alignSelf: 'center',
-    '& .MuiSvgIcon-root': {
-      cursor: 'pointer',
-      color: theme.palette.gray500.main,
-      width: 32,
-      height: 32,
-      '&:hover': {
-        color: theme.palette.dfoLightBlue.main
-      }
-    }
-  }
-});
+import { useFormStyles } from './CodelistStyles';
 
 interface IProps {
   element: ICodelist;
@@ -58,7 +30,7 @@ function EditCodelistForm({
   handleClose
 }: IProps): React.ReactElement {
   const dispatch = useAppDispatch();
-  const classes = useStyles();
+  const classes = useFormStyles();
   const { t } = useTranslation();
 
   const methods = useForm<ICodelist>({
@@ -86,7 +58,7 @@ function EditCodelistForm({
         autoComplete="off"
         noValidate
       >
-        <Box className={classes.codeItem}>
+        <Box className={classes.formItem}>
           <Box className={classes.inputBox}>
             <TextCtrl name="title" label={t('Title')} />
           </Box>
