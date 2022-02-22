@@ -5,9 +5,9 @@ import React, { useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { v4 as uuidv4 } from 'uuid';
+import ErrorSummary from '../../../Form/ErrorSummary';
 import TextCtrl from '../../../FormProvider/TextCtrl';
 import { IAlert } from '../../../models/IAlert';
-import { Parentable } from '../../../models/Parentable';
 import { ITag, PostTagSchema } from '../../../Nexus/entities/ITag';
 import Nexus from '../../../Nexus/Nexus';
 import { useAppDispatch, useAppSelector } from '../../../store/hooks';
@@ -48,7 +48,6 @@ export default function NewTagForm({
   const dispatch = useAppDispatch();
   const { project } = useAppSelector((state) => state.project);
   const { t } = useTranslation();
-  const [show, setShow] = useState(false);
   const nexus = Nexus.getInstance();
 
   const classes = useStyles();
@@ -57,16 +56,12 @@ export default function NewTagForm({
     project.id
   );
 
-  console.log(defaultValues);
-
   const methods = useForm<ITag>({
     resolver: joiResolver(PostTagSchema),
     defaultValues: defaultValues
   });
 
   const saveValues = (post: any) => {
-    console.log(typeof post);
-
     const newTag = nexus.tagService.generateTag(post);
     const alert: IAlert = {
       id: uuidv4(),
@@ -76,7 +71,7 @@ export default function NewTagForm({
     dispatch(addTag(newTag));
     dispatch(putSelectedProjectThunk('dummy')).then(() => {
       dispatch(addAlert({ alert }));
-      setShow(false);
+      handleClose();
     });
   };
 

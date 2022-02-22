@@ -96,7 +96,7 @@ export default function TagPage(): React.ReactElement {
           <Box className={classes.searchBarContainer}>
             {' '}
             <DFOSearchBar
-              list={project.codelist}
+              list={project.tags}
               label={t('search for tag')}
               callback={searchFieldCallback}
               searchFunction={tagPageSearch}
