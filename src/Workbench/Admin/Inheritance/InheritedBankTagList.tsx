@@ -5,6 +5,13 @@ import { Typography, Box, List } from '@mui/material/';
 import { useTranslation } from 'react-i18next';
 import InheritedTagListItem from './InheritanceTagListItem';
 import makeStyles from '@mui/styles/makeStyles';
+import { IInheritedBank } from '../../../models/IInheritedBank';
+import { useGetAllBanksQuery } from '../../../store/api/bankApi';
+import React, { useState } from 'react';
+
+export interface IProps {
+  bank: IInheritedBank;
+}
 
 const useStyles = makeStyles({
   inheritanceTagList: {
@@ -37,34 +44,26 @@ const useStyles = makeStyles({
   }
 });
 
-export default function InheritedBankTagList(): React.ReactElement {
+export default function InheritedBankTagList({
+  bank
+}: IProps): React.ReactElement {
   const { project } = useAppSelector((state) => state.project);
   const classes = useStyles();
   const { t } = useTranslation();
+  const { data } = useGetAllBanksQuery();
+  let tags: Array<object> = [];
+
+  if (data) {
+    tags = data[bank.id].tags;
+  }
 
   const tagsCallback = () => {};
   const tagsSearchFunction = () => {};
 
-  // TODO: This is dummy data. Replace with real data.
-  const tags = [
-    { title: 'Merkelapp 1', description: 'Merkelapp beskrivelse' },
-    { title: 'Merkelapp 2', description: 'Merkelapp beskrivelse' },
-    { title: 'Merkelapp 3', description: 'Merkelapp beskrivelse' },
-    { title: 'Merkelapp 4', description: 'Merkelapp beskrivelse' },
-    { title: 'Merkelapp 5', description: 'Merkelapp beskrivelse' },
-    { title: 'Merkelapp 6', description: 'Merkelapp beskrivelse' },
-    { title: 'Merkelapp 7', description: 'Merkelapp beskrivelse' },
-    { title: 'Merkelapp 8', description: 'Merkelapp beskrivelse' },
-    { title: 'Merkelapp 9', description: 'Merkelapp beskrivelse' },
-    { title: 'Merkelapp 10', description: 'Merkelapp beskrivelse' },
-    { title: 'Merkelapp 11', description: 'Merkelapp beskrivelse' },
-    { title: 'Merkelapp 12', description: 'Merkelapp beskrivelse' }
-  ];
-
   const renderList = () => {
     return (
       <List>
-        {tags.map((tag: any, index: number) => {
+        {tags.map((tag: object, index: number) => {
           {
             return <InheritedTagListItem tagListItem={tag} key={index} />;
           }
@@ -73,7 +72,7 @@ export default function InheritedBankTagList(): React.ReactElement {
     );
   };
 
-  return (
+  return tags.length > 0 ? (
     <>
       <Box className={classes.inheritanceTagList}>
         <Box className={classes.topContainer}>
@@ -92,5 +91,7 @@ export default function InheritedBankTagList(): React.ReactElement {
         <Box className={classes.tagsList}>{renderList()}</Box>
       </Box>
     </>
+  ) : (
+    <div></div>
   );
 }

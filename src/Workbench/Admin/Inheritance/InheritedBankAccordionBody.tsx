@@ -9,6 +9,11 @@ import Joi from 'joi';
 import CheckboxCtrl from '../../../FormProvider/CheckboxCtrl';
 import InheritanceTagList from './InheritedBankTagList';
 import DFOSelect from '../../../components/DFOSelect/DFOSelect';
+import { IInheritedBank } from '../../../models/IInheritedBank';
+
+export interface IProps {
+  bank: IInheritedBank;
+}
 
 interface IFormValues {
   inherit: {
@@ -60,7 +65,9 @@ const useStyles = makeStyles({
   }
 });
 
-export default function InheritancePage(): React.ReactElement {
+export default function InheritedBankAccordionBody({
+  bank
+}: IProps): React.ReactElement {
   const { t } = useTranslation();
   const classes = useStyles();
 
@@ -117,7 +124,7 @@ export default function InheritancePage(): React.ReactElement {
           </Box>
         </Box>
         <Box className={classes.tagList}>
-          <InheritanceTagList />
+          <InheritanceTagList bank={bank} />
         </Box>
       </form>
     </FormProvider>
