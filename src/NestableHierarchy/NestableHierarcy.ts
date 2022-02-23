@@ -1,4 +1,3 @@
-import React from 'react';
 import { Item } from 'react-nestable';
 import 'react-nestable/dist/styles/index.css';
 import { Parentable } from '../models/Parentable';

@@ -21,6 +21,7 @@ const useStyles = makeStyles({
   },
   projectPath: {
     marginLeft: 2.5,
+    color: theme.palette.black.main,
     [theme.breakpoints.down('mddd')]: {
       marginLeft: 1
     }
