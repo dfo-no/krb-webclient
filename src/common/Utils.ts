@@ -274,6 +274,9 @@ class Utils {
     return [relevantRequirements, needList, variantList];
   }
 
+  /*
+    Checks if this object has any subneeds
+  */
   static checkIfParent<T extends IBaseModel>(
     items: Nestable<T>[],
     id: string
@@ -283,9 +286,7 @@ class Utils {
     if (childArray === undefined) {
       return false;
     }
-    if (childArray.length > 0) return true;
-
-    return false;
+    return childArray.length > 0;
   }
 
   static findRequirementText(id: string, variants: IVariant[]): string {
