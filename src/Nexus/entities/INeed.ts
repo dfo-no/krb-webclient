@@ -36,3 +36,20 @@ export const PutNeedSchema = BaseNeedSchema.keys({
   children: CustomJoi.array(),
   level: CustomJoi.number()
 });
+
+export const DeleteNeedSchema = BaseNeedSchema.keys({
+  id: CustomJoi.string().length(36).required(),
+  parent: CustomJoi.alternatives([
+    CustomJoi.string().length(36),
+    CustomJoi.string().valid('')
+  ]),
+  level: CustomJoi.number(),
+  requirements: CustomJoi.array().max(0).required()
+  // requirements: CustomJoi.assertEmptyRequirements()
+});
+
+// BaseNeedSchema.options({});
+/* export const DeleteNeedProjectSchema = BaseBankSchema.keys({
+  id: CustomJoi.string().length(36).required(),
+  requirements: CustomJoi.assertEmptyRequirements().required()
+}); */
