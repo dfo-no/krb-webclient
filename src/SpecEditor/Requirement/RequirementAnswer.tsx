@@ -239,7 +239,7 @@ export default function RequirementAnswer({
       );
     });
     return (
-      <Form onSubmit={handleSubmit(saveAnswer)} autoComplete="off">
+      <form onSubmit={handleSubmit(saveAnswer)} autoComplete="off">
         <Row>
           <Col sm={3}>
             <Form.Control
@@ -338,7 +338,7 @@ export default function RequirementAnswer({
         </Col>
 
         <ErrorSummary errors={errors} />
-      </Form>
+      </form>
     );
   };
 

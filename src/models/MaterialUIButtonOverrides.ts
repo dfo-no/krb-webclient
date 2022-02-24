@@ -4,5 +4,6 @@ declare module '@mui/material/Button' {
   interface ButtonPropsVariantOverrides {
     primary: true;
     warning: true;
+    save: true;
   }
 }

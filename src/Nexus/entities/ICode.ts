@@ -16,16 +16,10 @@ export const BaseCodeSchema = CustomJoi.object().keys({
     CustomJoi.string().length(36),
     CustomJoi.string().valid('')
   ]),
-  children: CustomJoi.array(),
   sourceOriginal: CustomJoi.string().required(),
   sourceRel: CustomJoi.string().allow(null).required()
 });
 
 export const PostCodeSchema = BaseCodeSchema.keys({
   id: CustomJoi.string().equal('').required()
-});
-
-export const EditCodeSchema = BaseCodeSchema.keys({
-  id: CustomJoi.string().length(36).required(),
-  level: CustomJoi.number()
 });

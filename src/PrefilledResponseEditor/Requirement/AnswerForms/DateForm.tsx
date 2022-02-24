@@ -111,7 +111,7 @@ export default function DateForm({
         </small>
       </h6>
       <FormProvider {...methods}>
-        <Form
+        <form
           onSubmit={methods.handleSubmit(onSubmit)}
           key={question.id}
           className="mt-4"
@@ -151,7 +151,7 @@ export default function DateForm({
             </Button>
           </div>
           <ErrorSummary errors={methods.formState.errors} />
-        </Form>
+        </form>
       </FormProvider>
     </div>
   );

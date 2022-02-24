@@ -1,6 +1,6 @@
 import { joiResolver } from '@hookform/resolvers/joi';
-import React from 'react';
 import Button from '@mui/material/Button';
+import React from 'react';
 import Card from 'react-bootstrap/Card';
 import Form from 'react-bootstrap/Form';
 import { useForm } from 'react-hook-form';
@@ -97,7 +97,7 @@ export default function ICodelistAnswerForm({
         <h6>Question: Codelist</h6>
       </Card.Header>
       <Card.Body>
-        <Form onSubmit={handleSubmit(saveValues)}>
+        <form onSubmit={handleSubmit(saveValues)}>
           <Form.Control
             as="select"
             {...register(`answer.codes` as const)}
@@ -117,7 +117,7 @@ export default function ICodelistAnswerForm({
             {t('save')}
           </Button>
           <ErrorSummary errors={errors} />
-        </Form>
+        </form>
       </Card.Body>
     </Card>
   );

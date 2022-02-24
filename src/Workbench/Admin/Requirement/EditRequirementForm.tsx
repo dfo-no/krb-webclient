@@ -2,16 +2,15 @@ import { joiResolver } from '@hookform/resolvers/joi';
 import DeleteIcon from '@mui/icons-material/Delete';
 import Button from '@mui/material/Button';
 import { get } from 'lodash';
-import React, { useContext, useState } from 'react';
-import Form from 'react-bootstrap/Form';
+import React, { useContext } from 'react';
 import { FieldError, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
+import { AccordionContext } from '../../../components/DFOAccordion/AccordionContext';
 import ControlledTextInput from '../../../Form/ControlledTextInput';
 import ErrorSummary from '../../../Form/ErrorSummary';
 import { IAlert } from '../../../models/IAlert';
-import { AccordionContext } from '../../../components/DFOAccordion/AccordionContext';
 import {
   IRequirement,
   PutRequirementSchema
@@ -36,7 +35,6 @@ export default function EditRequirementForm({
   const { needId } = useAppSelector((state) => state.selectNeed);
   const dispatch = useAppDispatch();
   const { onOpenClose } = useContext(AccordionContext);
-  const [validated] = useState(false);
   const { t } = useTranslation();
 
   const {
@@ -79,12 +77,7 @@ export default function EditRequirementForm({
   };
 
   return (
-    <Form
-      onSubmit={handleSubmit(onSubmit)}
-      autoComplete="off"
-      noValidate
-      validated={validated}
-    >
+    <form onSubmit={handleSubmit(onSubmit)} autoComplete="off" noValidate>
       <ControlledTextInput
         name="title"
         control={control}
@@ -110,6 +103,6 @@ export default function EditRequirementForm({
         {t('delete')} <DeleteIcon />
       </Button>
       <ErrorSummary errors={errors} />
-    </Form>
+    </form>
   );
 }

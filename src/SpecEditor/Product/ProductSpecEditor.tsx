@@ -91,7 +91,7 @@ export default function ProductSpecEditor(): React.ReactElement {
       </Row>
       <Card className="m-4">
         <Card.Body>
-          <Form
+          <form
             onSubmit={handleSubmit(addProductToSpecification)}
             autoComplete="off"
           >
@@ -194,7 +194,7 @@ export default function ProductSpecEditor(): React.ReactElement {
               </Button>
             </Col>
             <ErrorSummary errors={errors} />
-          </Form>
+          </form>
         </Card.Body>
       </Card>
       <Row className="m-4">

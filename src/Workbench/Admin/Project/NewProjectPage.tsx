@@ -1,8 +1,7 @@
 import { joiResolver } from '@hookform/resolvers/joi';
-import React, { useState } from 'react';
-import Button from 'react-bootstrap/Button';
+import Button from '@mui/material/Button';
+import React from 'react';
 import Col from 'react-bootstrap/Col';
-import Form from 'react-bootstrap/Form';
 import ListGroup from 'react-bootstrap/ListGroup';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
@@ -23,7 +22,6 @@ import {
 
 export default function NewProjectPage(): React.ReactElement {
   const dispatch = useAppDispatch();
-  const [validated] = useState(false);
   const { t } = useTranslation();
   const history = useHistory();
   const nexus = Nexus.getInstance();
@@ -58,12 +56,7 @@ export default function NewProjectPage(): React.ReactElement {
       <h4>Nytt prosjekt</h4>
       <ListGroup className="mt-3">
         <ListGroup.Item>
-          <Form
-            onSubmit={handleSubmit(onSubmit)}
-            autoComplete="off"
-            noValidate
-            validated={validated}
-          >
+          <form onSubmit={handleSubmit(onSubmit)} autoComplete="off" noValidate>
             <ControlledTextInput
               control={control}
               name="title"
@@ -81,7 +74,7 @@ export default function NewProjectPage(): React.ReactElement {
             </Button>
 
             <ErrorSummary errors={errors} />
-          </Form>
+          </form>
         </ListGroup.Item>
       </ListGroup>
     </Col>

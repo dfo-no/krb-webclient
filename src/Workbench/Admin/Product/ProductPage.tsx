@@ -94,10 +94,7 @@ export default function ProductPage(): React.ReactElement {
   };
 
   const productsSearch = (searchString: string, list: Nestable<IProduct>[]) => {
-    return list
-      .map((product) => SearchUtils.search(product, searchString))
-      .filter((product) => product.inSearch)
-      .map((product) => product as IProduct);
+    return SearchUtils.search(list, searchString);
   };
 
   return (
