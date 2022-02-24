@@ -135,12 +135,11 @@ const theme = createTheme(
 );
 
 theme.typography.small = {
-  color: theme.palette.black.main,
-  fontSize: '14px'
+  fontSize: '14px',
+  fontWeight: 400
 };
 
 theme.typography.smallBold = {
-  color: theme.palette.black.main,
   fontSize: '14px',
   fontWeight: 'bold',
   whiteSpace: 'nowrap'
@@ -273,6 +272,23 @@ theme.components = {
         '& .MuiListItemIcon-root': {
           display: 'none'
         }
+      }
+    }
+  },
+  MuiList: {
+    styleOverrides: {
+      root: {
+        padding: 0
+      }
+    }
+  },
+  MuiCheckbox: {
+    styleOverrides: {
+      root: {
+        width: '40px',
+        height: '40px',
+        paddingTop: '0',
+        paddingBottom: '0'
       }
     }
   }
