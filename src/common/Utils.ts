@@ -62,22 +62,20 @@ class Utils {
     }, []);
   }
 
+  static nestable2Parentable<T extends IBaseModel>(
+    item: Nestable<T>
+  ): Parentable<T> {
+    const parentableItem = { ...item };
+    delete parentableItem.level;
+    delete parentableItem.children;
+    return parentableItem as Parentable<T>;
+  }
+
   static nestable2Levelable<T extends IBaseModel>(
     items: Nestable<T>[]
   ): Levelable<T>[] {
     const result = Utils.flattenNestable(items);
     return result as Levelable<T>[];
-  }
-
-  static nestable2Parentable<T extends IBaseModel>(item: Nestable<T>) {
-    const tmp = { ...item };
-    if (tmp.children) {
-      delete tmp.children;
-    }
-    if (tmp.level) {
-      delete tmp.level;
-    }
-    return item as Parentable<T>;
   }
 
   static parentable2Levelable<T extends IBaseModel>(
