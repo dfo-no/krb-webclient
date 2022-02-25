@@ -2,7 +2,7 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { FormProvider, useForm } from 'react-hook-form';
 import { joiResolver } from '@hookform/resolvers/joi';
-import { Box, IconButton } from '@mui/material/';
+import { Box } from '@mui/material/';
 import CheckIcon from '@mui/icons-material/Check';
 import CloseIcon from '@mui/icons-material/Close';
 import { v4 as uuidv4 } from 'uuid';
@@ -18,7 +18,8 @@ import { ICode, PostCodeSchema } from '../../../Nexus/entities/ICode';
 import { ICodelist } from '../../../Nexus/entities/ICodelist';
 import { Parentable } from '../../../models/Parentable';
 import { IAlert } from '../../../models/IAlert';
-import { useFormStyles } from './CodelistStyles';
+import { FormIconButton } from '../../Components/Form/FormIconButton';
+import { FormItemBox } from '../../Components/Form/FormItemBox';
 
 interface IProps {
   parent: ICodelist;
@@ -31,7 +32,6 @@ export default function NewCodeForm({
 }: IProps): React.ReactElement {
   const dispatch = useAppDispatch();
   const { project } = useAppSelector((state) => state.project);
-  const classes = useFormStyles();
   const { t } = useTranslation();
   const nexus = Nexus.getInstance();
 
@@ -65,24 +65,24 @@ export default function NewCodeForm({
         autoComplete="off"
         noValidate
       >
-        <Box className={classes.formItem}>
-          <Box className={classes.inputBox}>
+        <FormItemBox>
+          <Box sx={{ alignSelf: 'center', paddingLeft: 1 }}>
             <TextCtrl name="title" label={t('Title')} />
           </Box>
-          <Box className={classes.inputBox}>
+          <Box sx={{ alignSelf: 'center', paddingLeft: 1, paddingRight: 1 }}>
             <TextCtrl name="description" label={t('Description')} />
           </Box>
-          <Box className={classes.iconButton}>
-            <IconButton type="submit" aria-label="save">
-              <CheckIcon />
-            </IconButton>
-          </Box>
-          <Box className={classes.iconButton} aria-label="close">
-            <IconButton onClick={() => handleClose(null)} aria-label="close">
-              <CloseIcon />
-            </IconButton>
-          </Box>
-        </Box>
+          <FormIconButton type="submit" aria-label="save">
+            <CheckIcon />
+          </FormIconButton>
+          <FormIconButton
+            onClick={() => handleClose(null)}
+            aria-label="close"
+            sx={{ paddingRight: 1 }}
+          >
+            <CloseIcon />
+          </FormIconButton>
+        </FormItemBox>
       </form>
     </FormProvider>
   );

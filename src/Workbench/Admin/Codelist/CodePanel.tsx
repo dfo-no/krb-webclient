@@ -1,14 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { Box, Typography } from '@mui/material/';
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
-import DragIndicatorIcon from '@mui/icons-material/DragIndicator';
-import Nestable, { Item } from 'react-nestable';
 import {
   putSelectedProjectThunk,
   setCodes
 } from '../../../store/reducers/project-reducer';
 import { useAppDispatch } from '../../../store/hooks';
-import { Nestable as NestableModel } from '../../../models/Nestable';
+import { Nestable } from '../../../models/Nestable';
 import { Parentable } from '../../../models/Parentable';
 import { ICode } from '../../../Nexus/entities/ICode';
 import NestableHierarcy from '../../../NestableHierarchy/NestableHierarcy';
@@ -18,50 +16,47 @@ import EditCodeForm from './EditCodeForm';
 import CodeAddButton from './CodeAddButton';
 import NewCodeForm from './NewCodeForm';
 import { usePanelStyles } from './CodelistStyles';
+import { useEditableState } from '../../Components/EditableContext';
+import { FormContainerBox } from '../../Components/Form/FormContainerBox';
 
 const CodePanel = (): React.ReactElement => {
   const classes = usePanelStyles();
   const dispatch = useAppDispatch();
   const { codelist, setCodelist } = useSelectState();
-  const [editMode, setEditMode] = useState('');
-  const [isCreating, setCreating] = useState(false);
-  const [nestableCodes, setNestableCodes] = useState<NestableModel<ICode>[]>(
-    []
-  );
+  const { editMode, setEditMode, isCreating, setCreating } = useEditableState();
+  const [nestableCodes, setNestableCodes] = useState<Nestable<ICode>[]>([]);
 
   useEffect(() => {
-    setEditMode('');
-    setCreating(false);
     if (codelist) {
+      setEditMode('');
+      setCreating(false);
       setNestableCodes(Utils.parentable2Nestable(codelist.codes));
     }
-  }, [codelist]);
+  }, [codelist, setEditMode, setCreating]);
 
   // If no codelist is selected, we cant create the component
   if (!codelist) {
     return <></>;
   }
 
-  const { onChange } = NestableHierarcy(
-    (item: Parentable<ICode>, index: number) => {
-      const newCodes = [...codelist.codes];
-      const indexOfMoved = newCodes.findIndex(
-        (oldItem) => oldItem.id === item.id
-      );
-      newCodes.splice(indexOfMoved, 1);
-      newCodes.splice(index, 0, item);
+  const dispatchfunc = (item: Parentable<ICode>, index: number) => {
+    const newCodes = [...codelist.codes];
+    const indexOfMoved = newCodes.findIndex(
+      (oldItem) => oldItem.id === item.id
+    );
+    newCodes.splice(indexOfMoved, 1);
+    newCodes.splice(index, 0, item);
 
-      dispatch(setCodes({ codelistId: codelist.id, codes: newCodes }));
-      dispatch(putSelectedProjectThunk('dummy'));
+    dispatch(setCodes({ codelistId: codelist.id, codes: newCodes }));
+    dispatch(putSelectedProjectThunk('dummy'));
 
-      setCodelist({ ...codelist, codes: newCodes });
-    }
-  );
+    setCodelist({ ...codelist, codes: newCodes });
+  };
 
   const isEditing = () => {
     return editMode !== '';
   };
-  const isEditingItem = (item: Item) => {
+  const isEditingItem = (item: Nestable<ICode>) => {
     return item && item.id === editMode;
   };
 
@@ -84,28 +79,16 @@ const CodePanel = (): React.ReactElement => {
     setCreating(false);
   };
 
-  const enterEditMode = (item: Item) => {
-    setEditMode(item.id);
-    setCreating(false);
-  };
-
-  const enterCreateMode = () => {
-    setEditMode('');
-    setCreating(true);
-  };
-
-  const renderItem = (item: Item, handler: React.ReactNode) => {
+  const renderItem = (item: Nestable<ICode>, handler: React.ReactNode) => {
     if (isEditingItem(item)) {
       return (
-        <Box className={classes.editableListItem}>
-          <Box className={classes.textItem}>
-            <EditCodeForm
-              parent={codelist}
-              element={Utils.nestable2Parentable(item as NestableModel<ICode>)}
-              handleClose={handleCloseEdit}
-            />
-          </Box>
-        </Box>
+        <FormContainerBox className={classes.editableListItem}>
+          <EditCodeForm
+            parent={codelist}
+            element={Utils.nestable2Parentable(item)}
+            handleClose={handleCloseEdit}
+          />
+        </FormContainerBox>
       );
     }
     return (
@@ -119,7 +102,7 @@ const CodePanel = (): React.ReactElement => {
             <Typography variant="small">{item.description}</Typography>
           </Box>
         </Box>
-        <Box className={classes.editIcon} onClick={() => enterEditMode(item)}>
+        <Box className={classes.editIcon} onClick={() => setEditMode(item.id)}>
           <EditOutlinedIcon />
         </Box>
       </Box>
@@ -128,21 +111,18 @@ const CodePanel = (): React.ReactElement => {
 
   return (
     <Box className={classes.topContainer}>
-      <CodeAddButton onClick={() => enterCreateMode()} />
+      <CodeAddButton onClick={() => setCreating(true)} />
       {isCreating && (
-        <Box className={classes.editableListItem}>
-          <Box className={classes.textItem}>
-            <NewCodeForm parent={codelist} handleClose={handleCloseCreate} />
-          </Box>
-        </Box>
+        <FormContainerBox className={classes.editableListItem}>
+          <NewCodeForm parent={codelist} handleClose={handleCloseCreate} />
+        </FormContainerBox>
       )}
-      <Nestable
-        items={nestableCodes}
+      <NestableHierarcy
         className={classes.nestableCustom}
-        renderItem={({ item, handler }) => renderItem(item, handler)}
-        onChange={(items) => onChange(items)}
-        maxDepth={1}
-        handler={<DragIndicatorIcon />}
+        inputlist={nestableCodes}
+        renderItem={renderItem}
+        dispatchfunc={dispatchfunc}
+        depth={1}
       />
     </Box>
   );

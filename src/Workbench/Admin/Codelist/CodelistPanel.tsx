@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import 'react-nestable/dist/styles/index.css';
 import { Typography, Box, List } from '@mui/material';
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
@@ -9,12 +9,13 @@ import { useSelectState } from './SelectContext';
 import EditCodelistForm from './EditCodelistForm';
 import NewCodelistForm from './NewCodelistForm';
 import { usePanelStyles } from './CodelistStyles';
+import { useEditableState } from '../../Components/EditableContext';
+import { FormContainerBox } from '../../Components/Form/FormContainerBox';
 
 const CodelistPanel = (): React.ReactElement => {
   const classes = usePanelStyles();
   const { codelist, setCodelist, codelists, setCodelists } = useSelectState();
-  const [editMode, setEditMode] = useState('');
-  const [isCreating, setCreating] = useState(false);
+  const { editMode, setEditMode, isCreating, setCreating } = useEditableState();
 
   const itemClicked = (item: ICodelist) => {
     if (editMode !== '') {
@@ -49,22 +50,14 @@ const CodelistPanel = (): React.ReactElement => {
   const enterEditMode = (item: ICodelist) => {
     setCodelist(item);
     setEditMode(item.id);
-    setCreating(false);
-  };
-
-  const enterCreateMode = () => {
-    setEditMode('');
-    setCreating(true);
   };
 
   const renderItem = (item: ICodelist, i: number) => {
     if (isEditingItem(item)) {
       return (
-        <Box className={classes.editableListItem} key={i}>
-          <Box className={classes.textItem}>
-            <EditCodelistForm element={item} handleClose={handleCloseEdit} />
-          </Box>
-        </Box>
+        <FormContainerBox className={classes.editableListItem} key={i}>
+          <EditCodelistForm element={item} handleClose={handleCloseEdit} />
+        </FormContainerBox>
       );
     }
     return (
@@ -102,13 +95,11 @@ const CodelistPanel = (): React.ReactElement => {
 
   return (
     <Box className={classes.topContainer}>
-      <CodelistAddButton onClick={() => enterCreateMode()} />
+      <CodelistAddButton onClick={() => setCreating(true)} />
       {isCreating && (
-        <Box className={classes.editableListItem}>
-          <Box className={classes.textItem}>
-            <NewCodelistForm handleClose={handleCloseCreate} />
-          </Box>
-        </Box>
+        <FormContainerBox className={classes.editableListItem}>
+          <NewCodelistForm handleClose={handleCloseCreate} />
+        </FormContainerBox>
       )}
       <List className={classes.list} aria-label="codelist">
         {codelists && codelists.map(renderItem)}

@@ -8,7 +8,6 @@ import Dialog from '../../../components/DFODialog/DFODialog';
 import DFOSearchBar from '../../../components/DFOSearchBar/DFOSearchBar';
 import { Nestable } from '../../../models/Nestable';
 import { Parentable } from '../../../models/Parentable';
-import NestableHierarcyWithAccordion from '../../../NestableHierarchy/NestableHierarcyWithAccordion';
 import { IProduct } from '../../../Nexus/entities/IProduct';
 import { useAppDispatch, useAppSelector } from '../../../store/hooks';
 import {
@@ -18,6 +17,11 @@ import {
 import theme from '../../../theme';
 import EditProductForm from './EditProductForm';
 import NewProductForm from './NewProductForm';
+import NestableHierarcyEditableComponent from '../../Components/NestableHiarchyEditableComponents';
+import {
+  EditableProvider,
+  useEditableState
+} from '../../Components/EditableContext';
 
 const useStyles = makeStyles({
   productsContainer: {
@@ -64,9 +68,8 @@ export default function ProductPage(): React.ReactElement {
   const dispatch = useAppDispatch();
 
   const [allProducts, setAllProducts] = useState<Nestable<IProduct>[]>([]);
-
   const [products, setProducts] = useState<Nestable<IProduct>[]>([]);
-  const [show, setShow] = useState(false);
+  const { setEditMode, setCreating } = useEditableState();
 
   const classes = useStyles();
   const { t } = useTranslation();
@@ -114,29 +117,28 @@ export default function ProductPage(): React.ReactElement {
             <Button
               className={classes.addCodeButton}
               variant="primary"
-              onClick={() => {
-                setShow(true);
-              }}
+              onClick={() => setCreating(true)}
             >
               {t('add new product')}
             </Button>
           </Box>
         </Box>
 
-        <Dialog
-          title={t('add new product')}
-          isOpen={show}
-          handleClose={() => setShow(false)}
-          children={<NewProductForm handleClose={() => setShow(false)} />}
-        />
-
         <Box className={classes.products}>
-          <NestableHierarcyWithAccordion
+          <NestableHierarcyEditableComponent
             dispatchfunc={(item: Parentable<IProduct>, index: number) =>
               moveProduct(item, index)
             }
             inputlist={products}
-            component={<EditProductForm element={products[0]} />}
+            CreateComponent={
+              <NewProductForm handleClose={() => setCreating(false)} />
+            }
+            EditComponent={(item: Parentable<IProduct>) => (
+              <EditProductForm
+                element={item}
+                handleClose={() => setEditMode('')}
+              />
+            )}
             depth={5}
           />
         </Box>

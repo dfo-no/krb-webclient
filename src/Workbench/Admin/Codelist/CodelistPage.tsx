@@ -8,6 +8,7 @@ import DFOSearchBar from '../../../components/DFOSearchBar/DFOSearchBar';
 import CodePanel from './CodePanel';
 import CodelistPanel from './CodelistPanel';
 import { useSelectState } from './SelectContext';
+import { EditableProvider } from '../../Components/EditableContext';
 
 const useStyles = makeStyles({
   root: {
@@ -90,11 +91,15 @@ export default function CodeListPage(): React.ReactElement {
       </Box>
       <Box className={classes.tableContainer}>
         <Box className={classes.codelistContainer}>
-          <CodelistPanel />
+          <EditableProvider>
+            <CodelistPanel />
+          </EditableProvider>
         </Box>
         {showCodeContainer() && (
           <Box className={classes.codeContainer}>
-            <CodePanel />
+            <EditableProvider>
+              <CodePanel />
+            </EditableProvider>
           </Box>
         )}
       </Box>
