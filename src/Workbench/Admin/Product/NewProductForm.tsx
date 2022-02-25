@@ -7,7 +7,6 @@ import {
   addProduct,
   putSelectedProjectThunk
 } from '../../../store/reducers/project-reducer';
-import { Box } from '@mui/material/';
 import TextCtrl from '../../../FormProvider/TextCtrl';
 import { useTranslation } from 'react-i18next';
 import { FormProvider, useForm } from 'react-hook-form';
@@ -19,6 +18,8 @@ import { FormIconButton } from '../../Components/Form/FormIconButton';
 import CheckIcon from '@mui/icons-material/Check';
 import CloseIcon from '@mui/icons-material/Close';
 import { Parentable } from '../../../models/Parentable';
+import { useFormStyles } from '../../Components/Form/FormStyles';
+import { FormFlexBox } from '../../Components/Form/FormFlexBox';
 
 interface IProps {
   handleClose: (newProduct: Parentable<IProduct> | null) => void;
@@ -31,6 +32,7 @@ export default function NewProductForm({
   const { project } = useAppSelector((state) => state.project);
   const { t } = useTranslation();
   const nexus = Nexus.getInstance();
+  const classes = useFormStyles();
 
   const defaultValues: Parentable<IProduct> =
     nexus.productService.generateDefaultProductValues(project.id);
@@ -58,29 +60,22 @@ export default function NewProductForm({
   return (
     <FormProvider {...methods}>
       <form
+        className={classes.form}
         onSubmit={methods.handleSubmit(onSubmit)}
         autoComplete="off"
         noValidate
       >
         <FormItemBox>
-          <Box sx={{ alignSelf: 'center', paddingLeft: 1 }}>
+          <FormFlexBox sx={{ paddingLeft: 1 }}>
             <TextCtrl name="title" label={t('Title')} />
-          </Box>
-          <Box sx={{ alignSelf: 'center', paddingLeft: 1, paddingRight: 1 }}>
+          </FormFlexBox>
+          <FormFlexBox sx={{ paddingLeft: 1, paddingRight: 1 }}>
             <TextCtrl name="description" label={t('Description')} />
-          </Box>
-          <FormIconButton
-            type="submit"
-            aria-label="save"
-            sx={{ marginLeft: 'auto' }}
-          >
+          </FormFlexBox>
+          <FormIconButton type="submit" aria-label="save">
             <CheckIcon />
           </FormIconButton>
-          <FormIconButton
-            onClick={() => handleClose(null)}
-            aria-label="close"
-            sx={{ paddingRight: 1 }}
-          >
+          <FormIconButton onClick={() => handleClose(null)} aria-label="close">
             <CloseIcon />
           </FormIconButton>
         </FormItemBox>

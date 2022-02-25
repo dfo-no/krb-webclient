@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import 'react-nestable/dist/styles/index.css';
 import { Parentable } from '../../models/Parentable';
 import { Nestable, Nestable as NestableModel } from '../../models/Nestable';
@@ -15,21 +15,13 @@ import Utils from '../../common/Utils';
 const useStyles = makeStyles({
   nestableItemCustom: {
     display: 'flex',
-    flexDirection: 'row',
     minHeight: 50,
-    backgroundColor: theme.palette.dfoWhite.main
-  },
-  nestableItemEditable: {
-    height: 70,
+    border: `1px solid ${theme.palette.gray500.main}`,
     backgroundColor: theme.palette.dfoWhite.main
   },
   nestableCustom: {
     '& .nestable-item': {
-      marginTop: '16px',
-      '& .nestable-item-name': {
-        borderTop: `1px solid ${theme.palette.gray500.main}`,
-        borderBottom: `1px solid ${theme.palette.gray500.main}`
-      }
+      marginTop: '16px'
     },
     '& .nestable-list > .nestable-item > .nestable-list': {
       margin: '0',
@@ -39,8 +31,7 @@ const useStyles = makeStyles({
           marginTop: '-1px'
         }
       }
-    },
-    width: '100%'
+    }
   },
   textItemTitle: {
     alignSelf: 'center',
@@ -98,7 +89,7 @@ const NestableHierarcyEditableComponent = <
   const renderItem = (item: Nestable<T>, handler: React.ReactNode) => {
     if (isEditingItem(item)) {
       return (
-        <FormContainerBox className={classes.nestableItemEditable}>
+        <FormContainerBox>
           {EditComponent(Utils.nestable2Parentable(item))}
         </FormContainerBox>
       );
@@ -121,11 +112,7 @@ const NestableHierarcyEditableComponent = <
 
   return (
     <Box>
-      {isCreating && (
-        <FormContainerBox className={classes.nestableItemEditable}>
-          {CreateComponent}
-        </FormContainerBox>
-      )}
+      {isCreating && <FormContainerBox>{CreateComponent}</FormContainerBox>}
       <NestableHierarcy<T>
         className={classes.nestableCustom}
         inputlist={inputlist}

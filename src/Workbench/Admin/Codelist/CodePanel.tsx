@@ -82,7 +82,7 @@ const CodePanel = (): React.ReactElement => {
   const renderItem = (item: Nestable<ICode>, handler: React.ReactNode) => {
     if (isEditingItem(item)) {
       return (
-        <FormContainerBox className={classes.editableListItem}>
+        <FormContainerBox sx={{ marginBottom: 1 }}>
           <EditCodeForm
             parent={codelist}
             element={Utils.nestable2Parentable(item)}
@@ -113,7 +113,7 @@ const CodePanel = (): React.ReactElement => {
     <Box className={classes.topContainer}>
       <CodeAddButton onClick={() => setCreating(true)} />
       {isCreating && (
-        <FormContainerBox className={classes.editableListItem}>
+        <FormContainerBox sx={{ marginBottom: 1 }}>
           <NewCodeForm parent={codelist} handleClose={handleCloseCreate} />
         </FormContainerBox>
       )}

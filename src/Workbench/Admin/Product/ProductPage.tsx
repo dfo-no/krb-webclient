@@ -4,7 +4,6 @@ import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import SearchUtils from '../../../common/SearchUtils';
 import Utils from '../../../common/Utils';
-import Dialog from '../../../components/DFODialog/DFODialog';
 import DFOSearchBar from '../../../components/DFOSearchBar/DFOSearchBar';
 import { Nestable } from '../../../models/Nestable';
 import { Parentable } from '../../../models/Parentable';
@@ -18,10 +17,7 @@ import theme from '../../../theme';
 import EditProductForm from './EditProductForm';
 import NewProductForm from './NewProductForm';
 import NestableHierarcyEditableComponent from '../../Components/NestableHiarchyEditableComponents';
-import {
-  EditableProvider,
-  useEditableState
-} from '../../Components/EditableContext';
+import { useEditableState } from '../../Components/EditableContext';
 
 const useStyles = makeStyles({
   productsContainer: {

@@ -13,11 +13,12 @@ import {
   putSelectedProjectThunk
 } from '../../../store/reducers/project-reducer';
 import { FormItemBox } from '../../Components/Form/FormItemBox';
-import { Box } from '@mui/material';
 import TextCtrl from '../../../FormProvider/TextCtrl';
 import { FormIconButton } from '../../Components/Form/FormIconButton';
 import CheckIcon from '@mui/icons-material/Check';
 import CloseIcon from '@mui/icons-material/Close';
+import { useFormStyles } from '../../Components/Form/FormStyles';
+import { FormFlexBox } from '../../Components/Form/FormFlexBox';
 
 interface IProps {
   element: Parentable<IProduct>;
@@ -30,6 +31,7 @@ export default function EditProductForm({
 }: IProps): React.ReactElement {
   const dispatch = useAppDispatch();
   const { t } = useTranslation();
+  const classes = useFormStyles();
 
   const methods = useForm<Parentable<IProduct>>({
     defaultValues: element,
@@ -52,17 +54,18 @@ export default function EditProductForm({
   return (
     <FormProvider {...methods}>
       <form
+        className={classes.form}
         onSubmit={methods.handleSubmit(onSubmit)}
         autoComplete="off"
         noValidate
       >
         <FormItemBox>
-          <Box sx={{ alignSelf: 'center', paddingLeft: 1 }}>
+          <FormFlexBox sx={{ paddingLeft: 1 }}>
             <TextCtrl name="title" label={t('Title')} />
-          </Box>
-          <Box sx={{ alignSelf: 'center', paddingLeft: 1, paddingRight: 1 }}>
+          </FormFlexBox>
+          <FormFlexBox sx={{ paddingLeft: 1, paddingRight: 1 }}>
             <TextCtrl name="description" label={t('Description')} />
-          </Box>
+          </FormFlexBox>
           <FormIconButton type="submit" aria-label="save">
             <CheckIcon />
           </FormIconButton>

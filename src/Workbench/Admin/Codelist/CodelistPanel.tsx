@@ -55,7 +55,7 @@ const CodelistPanel = (): React.ReactElement => {
   const renderItem = (item: ICodelist, i: number) => {
     if (isEditingItem(item)) {
       return (
-        <FormContainerBox className={classes.editableListItem} key={i}>
+        <FormContainerBox sx={{ marginBottom: 1 }} key={i}>
           <EditCodelistForm element={item} handleClose={handleCloseEdit} />
         </FormContainerBox>
       );
@@ -97,7 +97,7 @@ const CodelistPanel = (): React.ReactElement => {
     <Box className={classes.topContainer}>
       <CodelistAddButton onClick={() => setCreating(true)} />
       {isCreating && (
-        <FormContainerBox className={classes.editableListItem}>
+        <FormContainerBox sx={{ marginBottom: 1 }}>
           <NewCodelistForm handleClose={handleCloseCreate} />
         </FormContainerBox>
       )}

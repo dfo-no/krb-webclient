@@ -3,7 +3,6 @@ import React from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { v4 as uuidv4 } from 'uuid';
-import { Box } from '@mui/material/';
 import CheckIcon from '@mui/icons-material/Check';
 import CloseIcon from '@mui/icons-material/Close';
 import { useAppDispatch } from '../../../store/hooks';
@@ -17,6 +16,8 @@ import { IAlert } from '../../../models/IAlert';
 import { CodelistSchema, ICodelist } from '../../../Nexus/entities/ICodelist';
 import { FormIconButton } from '../../Components/Form/FormIconButton';
 import { FormItemBox } from '../../Components/Form/FormItemBox';
+import { FormFlexBox } from '../../Components/Form/FormFlexBox';
+import { useFormStyles } from '../../Components/Form/FormStyles';
 
 interface IProps {
   element: ICodelist;
@@ -29,6 +30,7 @@ export default function EditCodelistForm({
 }: IProps): React.ReactElement {
   const dispatch = useAppDispatch();
   const { t } = useTranslation();
+  const classes = useFormStyles();
 
   const methods = useForm<ICodelist>({
     defaultValues: element,
@@ -51,17 +53,18 @@ export default function EditCodelistForm({
   return (
     <FormProvider {...methods}>
       <form
+        className={classes.form}
         onSubmit={methods.handleSubmit(onSubmit)}
         autoComplete="off"
         noValidate
       >
         <FormItemBox>
-          <Box sx={{ alignSelf: 'center', paddingLeft: 1 }}>
+          <FormFlexBox sx={{ paddingLeft: 1 }}>
             <TextCtrl name="title" label={t('Title')} />
-          </Box>
-          <Box sx={{ alignSelf: 'center', paddingLeft: 1, paddingRight: 1 }}>
+          </FormFlexBox>
+          <FormFlexBox sx={{ paddingLeft: 1, paddingRight: 1 }}>
             <TextCtrl name="description" label={t('Description')} />
-          </Box>
+          </FormFlexBox>
           <FormIconButton type="submit" aria-label="save">
             <CheckIcon />
           </FormIconButton>

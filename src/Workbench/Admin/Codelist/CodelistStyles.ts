@@ -31,14 +31,14 @@ export const usePanelStyles = makeStyles({
   topContainer: {
     display: 'flex',
     flexDirection: 'column',
-    gap: 10
+    gap: 8
   },
   listItem: {
     display: 'flex',
     flexDirection: 'row',
     minHeight: 70,
     width: '100%',
-    marginBottom: 10,
+    marginBottom: 8,
     border: `1px solid ${theme.palette.gray500.main}`,
     backgroundColor: theme.palette.dfoWhite.main
   },
@@ -48,11 +48,6 @@ export const usePanelStyles = makeStyles({
       background: theme.palette.lightBlue.main,
       color: theme.palette.dfoWhite.main
     }
-  },
-  editableListItem: {
-    marginBottom: 10,
-    minHeight: 80,
-    border: `1px solid ${theme.palette.gray500.main}`
   },
   nestableCustom: {
     '& .nestable-item': {
