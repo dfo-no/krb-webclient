@@ -6,9 +6,8 @@ import LoaderSpinner from '../common/LoaderSpinner';
 import { useAppDispatch } from '../store/hooks';
 import { getProjectsThunk } from '../store/reducers/project-reducer';
 import theme from '../theme';
-import NewProjectPage from './Admin/Project/NewProjectPage';
 import ProjectGuard from './ProjectGuard';
-import Projects from './Projects';
+import Projects from './Projects/Projects';
 
 const useStyles = makeStyles({
   workbenchContainer: {
@@ -53,9 +52,6 @@ export default function WorkbenchModule(): React.ReactElement {
         <Switch>
           <Route exact path="/workbench">
             <Projects />
-          </Route>
-          <Route exact path="/workbench/project/new">
-            <NewProjectPage />
           </Route>
           <Route path="/workbench/:projectId">
             <ProjectGuard />
