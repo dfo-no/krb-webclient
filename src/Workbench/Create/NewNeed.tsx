@@ -1,4 +1,4 @@
-import Box from '@material-ui/core/Box/Box';
+import Box from '@mui/material/Box/Box';
 import { Button } from '@mui/material';
 import { useState } from 'react';
 import Dialog from '../../components/DFODialog/DFODialog';

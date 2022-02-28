@@ -3,14 +3,15 @@ import { joiResolver } from '@hookform/resolvers/joi';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Paper from '@mui/material/Paper';
-import Joi from 'joi';
 import React from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
+import CustomJoi from './common/CustomJoi';
 import ErrorSummary from './Form/ErrorSummary';
 import CheckboxCtrl from './FormProvider/CheckboxCtrl';
 import CodelistCtrl from './FormProvider/CodelistCtrl';
 import DateCtrl from './FormProvider/DateCtrl';
 import FileUploadCtrl from './FormProvider/FileUploadCtrl';
+import HiddenCtrl from './FormProvider/HiddenCtrl';
 import RadioCtrl from './FormProvider/RadioCtrl';
 import SliderCtrl from './FormProvider/SliderCtrl';
 import SwitchCtrl from './FormProvider/SwitchCtrl';
@@ -32,25 +33,27 @@ interface IFormValues {
     fileEndings: string[];
     codelist: ICodelist;
     gender: string;
+    counter: number;
   };
 }
 
-const FormSchema = Joi.object().keys({
-  person: Joi.object().keys({
-    firstName: Joi.string().max(20).required(),
-    lastName: Joi.string().max(20).required(),
-    birthDay: Joi.date().iso().raw().required(),
-    weddingDay: Joi.alternatives([
-      Joi.date().iso().max('12/13/2021').raw(),
-      Joi.string().valid(null)
+const FormSchema = CustomJoi.object().keys({
+  person: CustomJoi.object().keys({
+    firstName: CustomJoi.string().max(20).required(),
+    lastName: CustomJoi.string().max(20).required(),
+    birthDay: CustomJoi.date().iso().raw().required(),
+    weddingDay: CustomJoi.alternatives([
+      CustomJoi.date().iso().max('12/13/2021').raw(),
+      CustomJoi.string().valid(null)
     ]).required(),
-    point: Joi.number().required(),
-    isDeveloper: Joi.boolean().valid(true).required(),
-    range: Joi.number().min(20).max(100).required(),
-    isSexy: Joi.boolean().valid(true).required(),
-    fileEndings: Joi.array().items(Joi.string()).min(1).required(),
-    codelist: Joi.any().required(),
-    gender: Joi.string().valid(RequirementType.info).required()
+    point: CustomJoi.number().required(),
+    isDeveloper: CustomJoi.boolean().valid(true).required(),
+    range: CustomJoi.number().min(20).max(100).required(),
+    isSexy: CustomJoi.boolean().valid(true).required(),
+    fileEndings: CustomJoi.array().items(CustomJoi.string()).min(1).required(),
+    codelist: CustomJoi.any().required(),
+    gender: CustomJoi.string().valid(RequirementType.info).required(),
+    counter: CustomJoi.million().required()
   })
 });
 
@@ -91,7 +94,8 @@ const KitchenSink = (): React.ReactElement => {
       isSexy: true,
       fileEndings: ['doc'],
       codelist: codelists[0],
-      gender: RequirementType.requirement
+      gender: RequirementType.requirement,
+      counter: 999999
     }
   };
 
@@ -125,6 +129,7 @@ const KitchenSink = (): React.ReactElement => {
           <form onSubmit={methods.handleSubmit(saveValues)}>
             <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
               <TextCtrl name="person.firstName" label="First name" />
+              <HiddenCtrl name="person.counter" />
               <TextCtrl name="person.lastName" label="Last name" />
               <DateCtrl name="person.birthDay" label="birthDay" />
               <DateCtrl name="person.weddingDay" label="weddingDay" />
@@ -151,7 +156,7 @@ const KitchenSink = (): React.ReactElement => {
                   label="Kodeliste"
                   defaultValue={true}
                 />
-                 <CheckboxCtrl name="person.periode" label="Periode" />
+                <CheckboxCtrl name="person.periode" label="Periode" />
                 <CheckboxCtrl name="person.verdi" label="Verdi" />
                 <CheckboxCtrl name="person.tid" label="Tid" />
                 <CheckboxCtrl name="person.janei" label="Ja/Nei" />

@@ -1,10 +1,9 @@
-import Joi from 'joi';
+import CustomJoi from '../common/CustomJoi';
 import { IRequirementAnswer } from './IRequirementAnswer';
 import {
   ISpecificationProduct,
   SpecificationProductSchema
 } from './ISpecificationProduct';
-
 export interface IResponseProduct {
   id: string;
   title: string;
@@ -14,11 +13,11 @@ export interface IResponseProduct {
   requirementAnswers: IRequirementAnswer[];
 }
 
-export const ResponseProductSchema = Joi.object().keys({
-  id: Joi.string().required(),
-  title: Joi.string().required(),
-  description: Joi.string().allow(null, '').required(),
+export const ResponseProductSchema = CustomJoi.object().keys({
+  id: CustomJoi.string().required(),
+  title: CustomJoi.string().required(),
+  description: CustomJoi.string().allow(null, '').required(),
   originProduct: SpecificationProductSchema.required(),
-  requirementAnswers: Joi.array(),
-  price: Joi.number().integer().required()
+  requirementAnswers: CustomJoi.array(),
+  price: CustomJoi.number().integer().required()
 });

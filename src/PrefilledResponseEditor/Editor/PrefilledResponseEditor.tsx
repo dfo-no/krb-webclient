@@ -1,6 +1,5 @@
 import { joiResolver } from '@hookform/resolvers/joi';
 import Button from '@mui/material/Button';
-import Joi from 'joi';
 import React, { useEffect } from 'react';
 import Col from 'react-bootstrap/Col';
 import Container from 'react-bootstrap/Container';
@@ -9,6 +8,7 @@ import FormControl from 'react-bootstrap/FormControl';
 import Row from 'react-bootstrap/Row';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
+import CustomJoi from '../../common/CustomJoi';
 import ErrorSummary from '../../Form/ErrorSummary';
 import { useGetBankQuery } from '../../store/api/bankApi';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
@@ -21,8 +21,8 @@ interface IResponseInfoForm {
   supplier: string;
 }
 
-const supplierSchema = Joi.object().keys({
-  supplier: Joi.string().required()
+const supplierSchema = CustomJoi.object().keys({
+  supplier: CustomJoi.string().required()
 });
 
 export default function PrefilledResponseEditor(): React.ReactElement {
@@ -71,7 +71,7 @@ export default function PrefilledResponseEditor(): React.ReactElement {
             <Row>
               <h6>Kravbank {selectedBank.title}</h6>
             </Row>
-            <Form onSubmit={handleSubmit(saveSupplier)}>
+            <form onSubmit={handleSubmit(saveSupplier)}>
               <Form.Group as={Row}>
                 <Form.Label>Supplier</Form.Label>
                 <Col sm={8}>
@@ -91,7 +91,7 @@ export default function PrefilledResponseEditor(): React.ReactElement {
                 </Col>
               </Form.Group>
               <ErrorSummary errors={errors} />
-            </Form>
+            </form>
           </Col>
         )}
       </Row>

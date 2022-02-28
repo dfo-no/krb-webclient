@@ -2,9 +2,8 @@ import { joiResolver } from '@hookform/resolvers/joi';
 import DeleteIcon from '@mui/icons-material/Delete';
 import Button from '@mui/material/Button';
 import { get } from 'lodash';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import Card from 'react-bootstrap/Card';
-import Form from 'react-bootstrap/Form';
 import { FieldError, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { v4 as uuidv4 } from 'uuid';
@@ -28,7 +27,6 @@ interface IProps {
 
 export default function EditTagForm({ element }: IProps): React.ReactElement {
   const dispatch = useAppDispatch();
-  const [validated] = useState(false);
   const { t } = useTranslation();
 
   const {
@@ -85,11 +83,10 @@ export default function EditTagForm({ element }: IProps): React.ReactElement {
   return (
     <Card className="mb-4">
       <Card.Body>
-        <Form
+        <form
           onSubmit={handleSubmit((post) => onEditTagSubmit(post))}
           autoComplete="off"
           noValidate
-          validated={validated}
         >
           <ControlledTextInput
             control={control}
@@ -103,7 +100,7 @@ export default function EditTagForm({ element }: IProps): React.ReactElement {
           </Button>
 
           <ErrorSummary errors={errors} />
-        </Form>
+        </form>
       </Card.Body>
     </Card>
   );

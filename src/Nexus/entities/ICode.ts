@@ -1,29 +1,25 @@
-import Joi from 'joi';
+import CustomJoi from '../../common/CustomJoi';
 import ModelType from '../../models/ModelType';
 import { IBaseModel } from './IBaseModel';
-
 export interface ICode extends IBaseModel {
   id: string;
   title: string;
   description: string;
 }
 
-export const BaseCodeSchema = Joi.object().keys({
-  id: Joi.string().length(36).required(),
-  title: Joi.string().required(),
-  description: Joi.string().allow(null, '').required(),
-  type: Joi.string().equal(ModelType.code).required(),
-  parent: Joi.alternatives([Joi.string().length(36), Joi.string().valid('')]),
-  children: Joi.array(),
-  sourceOriginal: Joi.string().required(),
-  sourceRel: Joi.string().allow(null).required()
+export const BaseCodeSchema = CustomJoi.object().keys({
+  id: CustomJoi.string().length(36).required(),
+  title: CustomJoi.string().required(),
+  description: CustomJoi.string().allow(null, '').required(),
+  type: CustomJoi.string().equal(ModelType.code).required(),
+  parent: CustomJoi.alternatives([
+    CustomJoi.string().length(36),
+    CustomJoi.string().valid('')
+  ]),
+  sourceOriginal: CustomJoi.string().required(),
+  sourceRel: CustomJoi.string().allow(null).required()
 });
 
 export const PostCodeSchema = BaseCodeSchema.keys({
-  id: Joi.string().equal('').required()
-});
-
-export const EditCodeSchema = BaseCodeSchema.keys({
-  id: Joi.string().length(36).required(),
-  level: Joi.number()
+  id: CustomJoi.string().equal('').required()
 });

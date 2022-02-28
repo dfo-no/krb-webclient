@@ -1,14 +1,13 @@
 import { joiResolver } from '@hookform/resolvers/joi';
-import Joi from 'joi';
+import Button from '@mui/material/Button';
 import React from 'react';
 import Badge from 'react-bootstrap/Badge';
-import Button from '@mui/material/Button';
 import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
+import CustomJoi from '../../../common/CustomJoi';
 import ErrorSummary from '../../../Form/ErrorSummary';
-import DateCtrl from '../../../FormProvider/DateCtrl';
 import TimeCtrl from '../../../FormProvider/TimeCtrl';
 import {
   IRequirementAnswer,
@@ -32,10 +31,10 @@ interface IProps {
 
 export const PeriodDateSchema = RequirementAnswerSchema.keys({
   question: PeriodDateAnswerSchema.keys({
-    answer: Joi.object().keys({
-      fromDate: Joi.string().allow(null).required(),
-      toDate: Joi.string().allow(null).required(),
-      point: Joi.number().required()
+    answer: CustomJoi.object().keys({
+      fromDate: CustomJoi.string().allow(null).required(),
+      toDate: CustomJoi.string().allow(null).required(),
+      point: CustomJoi.number().required()
     })
   })
 });
@@ -112,7 +111,7 @@ export default function TimeForm({
         </small>
       </h6>
       <FormProvider {...methods}>
-        <Form
+        <form
           onSubmit={methods.handleSubmit(onSubmit)}
           key={question.id}
           className="mt-4"
@@ -152,7 +151,7 @@ export default function TimeForm({
             </Button>
           </div>
           <ErrorSummary errors={methods.formState.errors} />
-        </Form>
+        </form>
       </FormProvider>
     </div>
   );

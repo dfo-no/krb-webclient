@@ -1,4 +1,4 @@
-import Joi from 'joi';
+import CustomJoi from '../../common/CustomJoi';
 import QuestionEnum from '../../models/QuestionEnum';
 import {
   ConfigBaseSchema,
@@ -7,7 +7,6 @@ import {
   IQuestionBase,
   QuestionBaseSchema
 } from './IQuestionBase';
-
 export interface IFileUploadQuestion
   extends IQuestionBase<IFileUploadAnswer, IFileUploadConfig> {
   type: QuestionEnum.Q_FILEUPLOAD;
@@ -24,35 +23,35 @@ export interface IFileUploadConfig extends IConfigBase {
 }
 
 export const FileUploadWorkbenchSchema = QuestionBaseSchema.keys({
-  type: Joi.string().equal(QuestionEnum.Q_FILEUPLOAD).required(),
+  type: CustomJoi.string().equal(QuestionEnum.Q_FILEUPLOAD).required(),
   config: ConfigBaseSchema.keys({
-    fileEndings: Joi.array().items(Joi.string()).min(1).required(),
-    template: Joi.string().allow(null, '').required(),
-    uploadInSpec: Joi.boolean().required(),
-    allowMultipleFiles: Joi.boolean().required()
+    fileEndings: CustomJoi.array().items(CustomJoi.string()).min(1).required(),
+    template: CustomJoi.string().allow(null, '').required(),
+    uploadInSpec: CustomJoi.boolean().required(),
+    allowMultipleFiles: CustomJoi.boolean().required()
   })
 });
 
 export const FileUploadWorkbenchInfoSchema = QuestionBaseSchema.keys({
-  type: Joi.string().equal(QuestionEnum.Q_FILEUPLOAD).required(),
+  type: CustomJoi.string().equal(QuestionEnum.Q_FILEUPLOAD).required(),
   config: ConfigBaseSchema.keys({
-    fileEndings: Joi.array().items(Joi.string()).min(1).required(),
-    template: Joi.string().allow(null, '').required(),
-    uploadInSpec: Joi.boolean().valid(false).required(),
-    allowMultipleFiles: Joi.boolean().required()
+    fileEndings: CustomJoi.array().items(CustomJoi.string()).min(1).required(),
+    template: CustomJoi.string().allow(null, '').required(),
+    uploadInSpec: CustomJoi.boolean().valid(false).required(),
+    allowMultipleFiles: CustomJoi.boolean().required()
   })
 });
 
 export const FileUploadAnswerSchema = FileUploadWorkbenchSchema.keys({
-  answer: Joi.object().keys({
-    file: Joi.array().items(Joi.string()).required(),
-    point: Joi.number().required()
+  answer: CustomJoi.object().keys({
+    file: CustomJoi.array().items(CustomJoi.string()).required(),
+    point: CustomJoi.number().required()
   })
 });
 
 export const FileUploadInfoAnswerSchema = FileUploadWorkbenchInfoSchema.keys({
-  answer: Joi.object().keys({
-    file: Joi.array().items(Joi.string()).required(),
-    point: Joi.number().required()
+  answer: CustomJoi.object().keys({
+    file: CustomJoi.array().items(CustomJoi.string()).required(),
+    point: CustomJoi.number().required()
   })
 });

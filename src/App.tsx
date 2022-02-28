@@ -5,7 +5,6 @@ import {
   UnauthenticatedTemplate
 } from '@azure/msal-react';
 import { CssBaseline } from '@mui/material';
-import { ThemeProvider } from '@mui/material/styles';
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 import styles from './App.module.scss';
@@ -21,7 +20,6 @@ import PrefilledResponseModule from './PrefilledResponseEditor/PrefilledResponse
 import ResponseModule from './ResponseEditor/ResponseModule';
 import ResponsePage from './ResponseEditor/ResponsePage';
 import SpecModule from './SpecEditor/SpecModule';
-import theme from './theme';
 import WorkbenchModule from './Workbench/WorkbenchModule';
 
 const msalInstance = new PublicClientApplication(msalConfig);
@@ -63,16 +61,14 @@ function App(): React.ReactElement {
   return (
     <div>
       <MsalProvider instance={msalInstance}>
-        <ThemeProvider theme={theme}>
-          <CssBaseline />
-          <AlertList />
-          <div className={styles.App}>
-            <div className={styles.App__header}>
-              <Header />
-            </div>
-            <div className={styles.App__content}>{renderContent()}</div>
+        <CssBaseline />
+        <AlertList />
+        <div className={styles.App}>
+          <div className={styles.App__header}>
+            <Header />
           </div>
-        </ThemeProvider>
+          <div className={styles.App__content}>{renderContent()}</div>
+        </div>
       </MsalProvider>
     </div>
   );

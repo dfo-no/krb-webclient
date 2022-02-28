@@ -62,6 +62,15 @@ class Utils {
     }, []);
   }
 
+  static nestable2Parentable<T extends IBaseModel>(
+    item: Nestable<T>
+  ): Parentable<T> {
+    const parentableItem = { ...item };
+    delete parentableItem.level;
+    delete parentableItem.children;
+    return parentableItem as Parentable<T>;
+  }
+
   static nestable2Levelable<T extends IBaseModel>(
     items: Nestable<T>[]
   ): Levelable<T>[] {
@@ -69,7 +78,7 @@ class Utils {
     return result as Levelable<T>[];
   }
 
-  static nestable2Parentable<T extends IBaseModel>(item: Nestable<T>) {
+  /* static nestable2Parentable<T extends IBaseModel>(item: Nestable<T>) {
     const tmp = { ...item };
     if (tmp.children) {
       delete tmp.children;
@@ -78,7 +87,7 @@ class Utils {
       delete tmp.level;
     }
     return item as Parentable<T>;
-  }
+  } */
 
   static parentable2Levelable<T extends IBaseModel>(
     items: Parentable<T>[]
@@ -274,6 +283,9 @@ class Utils {
     return [relevantRequirements, needList, variantList];
   }
 
+  /*
+    Checks if this object has any subneeds
+  */
   static checkIfParent<T extends IBaseModel>(
     items: Nestable<T>[],
     id: string
@@ -283,9 +295,7 @@ class Utils {
     if (childArray === undefined) {
       return false;
     }
-    if (childArray.length > 0) return true;
-
-    return false;
+    return childArray.length > 0;
   }
 
   static findRequirementText(id: string, variants: IVariant[]): string {

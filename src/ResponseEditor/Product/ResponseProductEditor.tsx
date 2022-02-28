@@ -1,6 +1,6 @@
 import { joiResolver } from '@hookform/resolvers/joi';
-import React from 'react';
 import Button from '@mui/material/Button';
+import React from 'react';
 import Card from 'react-bootstrap/Card';
 import Col from 'react-bootstrap/Col';
 import Container from 'react-bootstrap/Container';
@@ -61,7 +61,7 @@ export default function ResponseProductEditor(): React.ReactElement {
               </p>
             </Col>
           </Row>
-          <Form
+          <form
             onSubmit={handleSubmit(addProductToResponse)}
             autoComplete="off"
           >
@@ -120,7 +120,7 @@ export default function ResponseProductEditor(): React.ReactElement {
               </Button>
             </Col>
             <ErrorSummary errors={errors} />
-          </Form>
+          </form>
           <ProductAutoFillSelector />
         </Card.Body>
       </Card>

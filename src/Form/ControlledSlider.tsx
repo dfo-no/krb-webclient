@@ -1,4 +1,3 @@
-import { Mark } from '@material-ui/core/Slider/Slider';
 import Slider from '@mui/material/Slider';
 import React from 'react';
 import Form from 'react-bootstrap/Form';
@@ -9,6 +8,7 @@ import {
   FieldValues,
   UseControllerProps
 } from 'react-hook-form';
+import { IMark } from '../Nexus/entities/IMark';
 
 interface IProps<T> extends UseControllerProps<T> {
   error: FieldError | undefined;
@@ -16,7 +16,7 @@ interface IProps<T> extends UseControllerProps<T> {
   max: number;
   step: number;
   unit: string;
-  marks: Mark[];
+  marks: IMark[];
 }
 
 /**

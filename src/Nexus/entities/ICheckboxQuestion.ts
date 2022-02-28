@@ -1,4 +1,4 @@
-import Joi from 'joi';
+import CustomJoi from '../../common/CustomJoi';
 import QuestionEnum from '../../models/QuestionEnum';
 import {
   ConfigBaseSchema,
@@ -7,7 +7,6 @@ import {
   IQuestionBase,
   QuestionBaseSchema
 } from './IQuestionBase';
-
 export type BooleanAsString = 'true' | 'false';
 
 export interface ICheckboxQuestion
@@ -25,16 +24,16 @@ export interface ICheckboxConfig extends IConfigBase {
 }
 
 export const CheckboxQuestionSchema = QuestionBaseSchema.keys({
-  type: Joi.string().equal(QuestionEnum.Q_CHECKBOX).required(),
+  type: CustomJoi.string().equal(QuestionEnum.Q_CHECKBOX).required(),
   config: ConfigBaseSchema.keys({
-    preferedAlternative: Joi.boolean(),
-    pointsNonPrefered: Joi.number().min(0).max(100)
+    preferedAlternative: CustomJoi.boolean(),
+    pointsNonPrefered: CustomJoi.number().min(0).max(100)
   })
 });
 
 export const CheckboxQuestionAnswerSchema = CheckboxQuestionSchema.keys({
-  answer: Joi.object().keys({
-    value: Joi.boolean().required(),
-    point: Joi.number().required()
+  answer: CustomJoi.object().keys({
+    value: CustomJoi.boolean().required(),
+    point: CustomJoi.number().required()
   })
 });

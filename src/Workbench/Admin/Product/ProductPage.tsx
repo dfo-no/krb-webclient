@@ -1,4 +1,12 @@
-import React, { useState } from 'react';
+import { Box, Button } from '@mui/material/';
+import makeStyles from '@mui/styles/makeStyles';
+import React, { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import SearchUtils from '../../../common/SearchUtils';
+import Utils from '../../../common/Utils';
+import Dialog from '../../../components/DFODialog/DFODialog';
+import DFOSearchBar from '../../../components/DFOSearchBar/DFOSearchBar';
+import { Nestable } from '../../../models/Nestable';
 import { Parentable } from '../../../models/Parentable';
 import NestableHierarcyWithAccordion from '../../../NestableHierarchy/NestableHierarcyWithAccordion';
 import { IProduct } from '../../../Nexus/entities/IProduct';
@@ -7,14 +15,9 @@ import {
   putSelectedProjectThunk,
   updateProductList
 } from '../../../store/reducers/project-reducer';
-import EditProductForm from './EditProductForm';
-import { Box, Button } from '@mui/material/';
-import { makeStyles } from '@material-ui/core';
-import { useTranslation } from 'react-i18next';
 import theme from '../../../theme';
+import EditProductForm from './EditProductForm';
 import NewProductForm from './NewProductForm';
-import Dialog from '../../../components/DFODialog/DFODialog';
-import DFOSearchBar from '../../../components/DFOSearchBar/DFOSearchBar';
 
 const useStyles = makeStyles({
   productsContainer: {
@@ -30,7 +33,7 @@ const useStyles = makeStyles({
     display: 'flex',
     flexDirection: 'row',
     gap: 5,
-    [theme.breakpoints.down('mddd')]: {
+    [theme.breakpoints.down('lg')]: {
       flexDirection: 'column',
       gap: 15
     }
@@ -49,7 +52,7 @@ const useStyles = makeStyles({
     alignSelf: 'center'
   },
   products: {
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down('md')]: {
       alignSelf: 'center',
       width: 400
     }
@@ -60,53 +63,38 @@ export default function ProductPage(): React.ReactElement {
   const { project } = useAppSelector((state) => state.project);
   const dispatch = useAppDispatch();
 
-  const [products, setProducts] = useState<IProduct[]>(project.products);
+  const [allProducts, setAllProducts] = useState<Nestable<IProduct>[]>([]);
+
+  const [products, setProducts] = useState<Nestable<IProduct>[]>([]);
   const [show, setShow] = useState(false);
-
-  const newProductList = (items: Parentable<IProduct>[]) => {
-    dispatch(updateProductList(items));
-    dispatch(putSelectedProjectThunk('dummy'));
-  };
-
-  const searchFieldCallback = (result: IProduct[]) => {
-    setProducts(result);
-  };
 
   const classes = useStyles();
   const { t } = useTranslation();
 
-  const productsSearch = (searchString: string, list: IProduct[]) => {
-    const searchResultProducts: Parentable<IProduct>[] = [];
+  useEffect(() => {
+    const nestedList = Utils.parentable2Nestable(project.products);
+    setAllProducts(nestedList);
+    setProducts(nestedList);
+  }, [project.products]);
 
-    const findListItemParent = (listItem: IProduct) => {
-      if (listItem.parent === '') {
-        return;
-      }
+  const moveProduct = (movedItem: Parentable<IProduct>, index: number) => {
+    const newProductList = [...project.products];
+    const indexOfMoved = newProductList.findIndex(
+      (oldItem) => oldItem.id === movedItem.id
+    );
+    newProductList.splice(indexOfMoved, 1);
+    newProductList.splice(index, 0, movedItem);
 
-      const parent: Parentable<IProduct> | undefined = list.find(
-        (product: IProduct) => product.id === listItem.parent
-      );
+    dispatch(updateProductList(newProductList));
+    dispatch(putSelectedProjectThunk('dummy'));
+  };
 
-      if (parent?.parent !== '') {
-        if (parent) {
-          findListItemParent(parent);
-        }
-      } else {
-        searchResultProducts.push(parent);
-      }
-    };
+  const searchFieldCallback = (result: Nestable<IProduct>[]) => {
+    setProducts(result);
+  };
 
-    for (const listItem of list) {
-      const listItemTitleLowerCase = listItem.title.toLowerCase();
-      const searchStringLowerCase = searchString.toLowerCase();
-
-      if (listItemTitleLowerCase.includes(searchStringLowerCase)) {
-        findListItemParent(listItem);
-        searchResultProducts.push(listItem);
-      }
-    }
-
-    return searchResultProducts;
+  const productsSearch = (searchString: string, list: Nestable<IProduct>[]) => {
+    return SearchUtils.search(list, searchString);
   };
 
   return (
@@ -116,7 +104,7 @@ export default function ProductPage(): React.ReactElement {
           <Box className={classes.searchBarContainer}>
             {' '}
             <DFOSearchBar
-              list={project.products}
+              list={allProducts}
               label={t('search for product')}
               callback={searchFieldCallback}
               searchFunction={productsSearch}
@@ -144,11 +132,11 @@ export default function ProductPage(): React.ReactElement {
 
         <Box className={classes.products}>
           <NestableHierarcyWithAccordion
-            dispatchfunc={(items: Parentable<IProduct>[]) =>
-              newProductList(items)
+            dispatchfunc={(item: Parentable<IProduct>, index: number) =>
+              moveProduct(item, index)
             }
-            inputlist={products.length > 0 ? products : project.products}
-            component={<EditProductForm element={project.products[0]} />}
+            inputlist={products}
+            component={<EditProductForm element={products[0]} />}
             depth={5}
           />
         </Box>

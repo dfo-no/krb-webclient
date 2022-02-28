@@ -1,7 +1,6 @@
-import Joi from 'joi';
+import CustomJoi from '../common/CustomJoi';
 import { IProduct } from '../Nexus/entities/IProduct';
 import { IRequirementAnswer } from './IRequirementAnswer';
-
 export interface ISpecificationProduct {
   id: string;
   title: string;
@@ -13,14 +12,14 @@ export interface ISpecificationProduct {
   requirementAnswers: IRequirementAnswer[];
 }
 
-export const SpecificationProductSchema = Joi.object().keys({
-  id: Joi.string().required(),
-  title: Joi.string().required(),
+export const SpecificationProductSchema = CustomJoi.object().keys({
+  id: CustomJoi.string().required(),
+  title: CustomJoi.string().required(),
   // TODO: change to productSchema when finished refactoring workbench
-  originProduct: Joi.object(),
-  description: Joi.string().allow(null, '').required(),
-  amount: Joi.number().integer().min(1).required(),
-  requirements: Joi.array().items(Joi.string()),
-  weight: Joi.number().integer().min(1).required(),
-  requirementAnswers: Joi.array()
+  originProduct: CustomJoi.object(),
+  description: CustomJoi.string().allow(null, '').required(),
+  amount: CustomJoi.number().integer().min(1).required(),
+  requirements: CustomJoi.array().items(CustomJoi.string()),
+  weight: CustomJoi.number().integer().min(1).required(),
+  requirementAnswers: CustomJoi.array()
 });

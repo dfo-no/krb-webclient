@@ -1,6 +1,6 @@
 import { joiResolver } from '@hookform/resolvers/joi';
-import React from 'react';
 import Button from '@mui/material/Button';
+import React from 'react';
 import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
@@ -103,7 +103,7 @@ export default function DateInfoAnswer({
   return (
     <Col className="p-0 m-0 w-50">
       <p>Hvilekn dato skal varene leveres</p>
-      <Form onSubmit={handleSubmit(saveValues)}>
+      <form onSubmit={handleSubmit(saveValues)}>
         <Form.Group as={Row}>
           {q.config.isPeriod && (
             <Form.Label>
@@ -142,7 +142,7 @@ export default function DateInfoAnswer({
           {t('save')}
         </Button>
         <ErrorSummary errors={errors} />
-      </Form>
+      </form>
     </Col>
   );
 }
