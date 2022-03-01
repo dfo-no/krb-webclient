@@ -61,7 +61,7 @@ export default function NewTagForm({
     defaultValues
   });
 
-  const saveValues = (post: any) => {
+  const onSubmit = (post: any) => {
     const newTag = nexus.tagService.generateTag(post);
     const alert: IAlert = {
       id: uuidv4(),
@@ -78,7 +78,7 @@ export default function NewTagForm({
   return (
     <>
       <FormProvider {...methods}>
-        <form onSubmit={methods.handleSubmit(saveValues)}>
+        <form onSubmit={methods.handleSubmit(onSubmit)}>
           <Box className={classes.tagFormContainer}>
             <Box className={classes.tagFormTextFields}>
               <TextCtrl name="title" label={t('Title')} />
