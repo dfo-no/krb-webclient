@@ -58,7 +58,7 @@ export default function NewTagForm({
 
   const methods = useForm<ITag>({
     resolver: joiResolver(PostTagSchema),
-    defaultValues: defaultValues
+    defaultValues
   });
 
   const saveValues = (post: any) => {
