@@ -71,6 +71,7 @@ export default function NewTagForm({
     dispatch(addTag(newTag));
     dispatch(putSelectedProjectThunk('dummy')).then(() => {
       dispatch(addAlert({ alert }));
+      methods.reset();
       handleClose();
     });
   };
