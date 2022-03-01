@@ -141,8 +141,7 @@ theme.typography.small = {
 
 theme.typography.smallBold = {
   fontSize: '14px',
-  fontWeight: 'bold',
-  whiteSpace: 'nowrap'
+  fontWeight: 'bold'
 };
 
 theme.typography.smallGray = {

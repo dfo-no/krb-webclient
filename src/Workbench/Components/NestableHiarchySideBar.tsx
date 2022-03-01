@@ -1,24 +1,23 @@
 import React, { useState } from 'react';
-import Nestable, { Item } from 'react-nestable';
 import 'react-nestable/dist/styles/index.css';
 import Utils from '../../common/Utils';
 import { Parentable } from '../../models/Parentable';
-import { Nestable as NestableModel } from '../../models/Nestable';
+import { Nestable } from '../../models/Nestable';
 import { IBaseModel } from '../../Nexus/entities/IBaseModel';
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
-import DragIndicatorIcon from '@mui/icons-material/DragIndicator';
 import { Box } from '@mui/material';
 import makeStyles from '@mui/styles/makeStyles';
 import { Typography } from '@mui/material';
 import theme from '../../theme';
 import NestableHierarcy from '../../NestableHierarchy/NestableHierarcy';
+import { BaseModelWithTitleAndDesc } from '../../models/BaseModelWithTitleAndDesc';
 
 interface IProps<T extends IBaseModel> {
-  dispatch: (item: Parentable<T>, index: number) => void;
+  dispatchFunc: (item: Parentable<T>, index: number) => void;
   selectFunc: (item: Parentable<T>) => void;
-  inputlist: NestableModel<T>[];
+  inputlist: Nestable<T>[];
   depth: number;
 }
 
@@ -80,8 +79,8 @@ const useStyles = makeStyles({
   }
 });
 
-const NestableHierarcySideBar = <T extends IBaseModel>({
-  dispatch,
+const NestableHierarcySideBar = <T extends BaseModelWithTitleAndDesc>({
+  dispatchFunc,
   selectFunc,
   inputlist,
   depth
@@ -89,16 +88,14 @@ const NestableHierarcySideBar = <T extends IBaseModel>({
   const classes = useStyles();
   const [selected, setSelected] = useState<Parentable<T> | null>(null);
 
-  const { onChange } = NestableHierarcy(dispatch);
-
-  const itemClicked = (item: Item) => {
+  const itemClicked = (item: Nestable<T>) => {
     const selectedParentable = item as Parentable<T>;
     selectFunc(selectedParentable);
     setSelected(selectedParentable);
   };
 
   const renderItem = (
-    item: Item,
+    item: Nestable<T>,
     handler: React.ReactNode,
     collapseIcon: React.ReactNode
   ) => {
@@ -124,15 +121,12 @@ const NestableHierarcySideBar = <T extends IBaseModel>({
   };
 
   return (
-    <Nestable
-      items={inputlist}
+    <NestableHierarcy
+      inputlist={inputlist}
       className={classes.nestableCustom}
-      renderItem={({ item, collapseIcon, handler }) =>
-        renderItem(item, handler, collapseIcon)
-      }
-      onChange={(items) => onChange(items)}
-      maxDepth={depth}
-      handler={<DragIndicatorIcon />}
+      renderItem={renderItem}
+      dispatchfunc={dispatchFunc}
+      depth={depth}
       renderCollapseIcon={({ isCollapsed }) => {
         return isCollapsed ? (
           <KeyboardArrowRightIcon />

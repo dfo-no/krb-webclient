@@ -27,7 +27,6 @@ const useStyles = makeStyles({
   dfoTextFieldContainer: {
     display: 'flex',
     flexDirection: 'column',
-    gap: 11,
     width: '100%'
   }
 });

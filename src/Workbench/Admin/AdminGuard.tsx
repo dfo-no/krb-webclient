@@ -8,7 +8,6 @@ import CodelistGuard from './Codelist/CodelistGuard';
 import InheritancePage from './Inheritance/InheritancePage';
 import NeedPage from './Need/NeedPage';
 import ProductGuard from './Product/ProductGuard';
-import ProductPage from './Product/ProductPage';
 import ProjectPage from './Project/ProjectPage';
 import RequirementEditor from './Requirement/RequirementEditor';
 import RequirementPage from './Requirement/RequirementPage';
@@ -58,7 +57,7 @@ export default function AdminGuard(): React.ReactElement {
           <CodelistGuard />
         </Route>
         <Route exact path="/workbench/:projectId/admin/products">
-          <ProductPage />
+          <ProductGuard />
         </Route>
         <Route exact path="/workbench/:projectId/admin/:productId/product">
           <ProductGuard />
