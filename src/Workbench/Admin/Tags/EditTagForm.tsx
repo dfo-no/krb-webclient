@@ -1,14 +1,8 @@
 import { joiResolver } from '@hookform/resolvers/joi';
-import DeleteIcon from '@mui/icons-material/Delete';
-import Button from '@mui/material/Button';
-import { get } from 'lodash';
-import React, { useEffect } from 'react';
-import Card from 'react-bootstrap/Card';
-import { FieldError, useForm } from 'react-hook-form';
+import React from 'react';
+import { FormProvider, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { v4 as uuidv4 } from 'uuid';
-import ControlledTextInput from '../../../Form/ControlledTextInput';
-import ErrorSummary from '../../../Form/ErrorSummary';
 import { IAlert } from '../../../models/IAlert';
 import { Nestable } from '../../../models/Nestable';
 import { Parentable } from '../../../models/Parentable';
@@ -20,30 +14,49 @@ import {
   putSelectedProjectThunk,
   removeTag
 } from '../../../store/reducers/project-reducer';
+import { Box, Button } from '@mui/material';
+import makeStyles from '@mui/styles/makeStyles';
+import TextCtrl from '../../../FormProvider/TextCtrl';
 
 interface IProps {
   element: Parentable<ITag>;
 }
 
+const useStyles = makeStyles({
+  tagFormContainer: {
+    display: 'flex',
+    height: 200
+  },
+  tagForm: {
+    display: 'flex',
+    flexDirection: 'column',
+    margin: '0 auto',
+    alignSelf: 'center',
+    gap: 10
+  },
+  tagFormTextFields: {
+    display: 'flex',
+    margin: 'auto',
+    flexDirection: 'column',
+    gap: 10,
+    width: '30vw',
+    minWidth: '350px'
+  },
+  tagFormButtons: {
+    display: 'flex',
+    justifyContent: 'center',
+    gap: 10
+  }
+});
+
 export default function EditTagForm({ element }: IProps): React.ReactElement {
   const dispatch = useAppDispatch();
   const { t } = useTranslation();
 
-  const {
-    control,
-    handleSubmit,
-    reset,
-    formState: { errors }
-  } = useForm<Parentable<ITag>>({
+  const methods = useForm<Parentable<ITag>>({
     resolver: joiResolver(PutTagSchema),
     defaultValues: element
   });
-
-  useEffect(() => {
-    if (element) {
-      reset(JSON.parse(JSON.stringify(element)));
-    }
-  }, [element, reset]);
 
   const onEditTagSubmit = (post: Nestable<ITag>) => {
     const postTag = { ...post };
@@ -61,16 +74,14 @@ export default function EditTagForm({ element }: IProps): React.ReactElement {
     dispatch(editTag(postTag as Parentable<ITag>));
     dispatch(putSelectedProjectThunk('dummy')).then(() => {
       dispatch(addAlert({ alert }));
-      reset();
     });
   };
 
   const deleteTag = () => {
     const deletableTag = { ...element };
     dispatch(removeTag(deletableTag));
-    dispatch(putSelectedProjectThunk('dummy')).then(() => {
-      reset();
-    });
+    dispatch(putSelectedProjectThunk('dummy'));
+    methods.reset();
 
     const alert: IAlert = {
       id: uuidv4(),
@@ -80,28 +91,27 @@ export default function EditTagForm({ element }: IProps): React.ReactElement {
     dispatch(addAlert({ alert }));
   };
 
-  return (
-    <Card className="mb-4">
-      <Card.Body>
-        <form
-          onSubmit={handleSubmit((post) => onEditTagSubmit(post))}
-          autoComplete="off"
-          noValidate
-        >
-          <ControlledTextInput
-            control={control}
-            name="title"
-            label={t('Title')}
-            error={get(errors, `description`) as FieldError}
-          />
-          <Button variant="primary">{t('save')}</Button>
-          <Button variant="warning" onClick={deleteTag}>
-            {t('delete')} <DeleteIcon />
-          </Button>
+  const classes = useStyles();
 
-          <ErrorSummary errors={errors} />
-        </form>
-      </Card.Body>
-    </Card>
+  return (
+    <FormProvider {...methods}>
+      <form onSubmit={methods.handleSubmit(onEditTagSubmit)}>
+        <Box className={classes.tagFormContainer}>
+          <Box className={classes.tagForm}>
+            <Box className={classes.tagFormTextFields}>
+              <TextCtrl name="title" label={t('Title')} />
+            </Box>
+            <Box className={classes.tagFormButtons}>
+              <Button variant="primary" type="submit">
+                {t('save')}
+              </Button>
+              <Button variant="warning" onClick={deleteTag}>
+                {t('delete')}
+              </Button>
+            </Box>
+          </Box>
+        </Box>
+      </form>
+    </FormProvider>
   );
 }

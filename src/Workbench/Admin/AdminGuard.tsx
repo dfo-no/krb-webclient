@@ -48,7 +48,6 @@ export default function AdminGuard(): React.ReactElement {
         >
           <RequirementEditor />
         </Route>
-
         <Route exact path="/workbench/:projectId/admin/need/requirement">
           <RequirementPage />
         </Route>
