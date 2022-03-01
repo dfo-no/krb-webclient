@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import {
   Box,
@@ -51,6 +51,13 @@ function ProjectPage(): React.ReactElement {
 
   const { projectId } = useParams<IRouteParams>();
   const { data: project, isLoading } = useGetProjectQuery(projectId);
+  const [publications, setPublications] = useState<IPublication[]>([]);
+
+  useEffect(() => {
+    if (project && project.publications) {
+      setPublications(project.publications);
+    }
+  }, [project]);
 
   if (isLoading) {
     return <LoaderSpinner />;
@@ -61,12 +68,17 @@ function ProjectPage(): React.ReactElement {
   }
 
   const searchFieldCallback = (result: IPublication[]) => {
-    // set list
+    setPublications(result);
   };
 
-  const productsSearch = (searchString: string, list: IPublication[]) => {
-    return list;
-    // return SearchUtils.search(list, searchString);
+  const versionSearch = (searchString: string, list: IPublication[]) => {
+    // Filters only versions with match in title or version number
+    return list.filter((aPub) => {
+      return (
+        aPub.comment.toLowerCase().includes(searchString.toLowerCase()) ||
+        String(aPub.version).includes(searchString)
+      );
+    });
   };
 
   const renderItem = (item: IPublication, i: number) => {
@@ -103,10 +115,10 @@ function ProjectPage(): React.ReactElement {
             <SearchFieldContainer>
               {' '}
               <DFOSearchBar
-                list={[]}
+                list={project.publications}
                 label={t('search for version')}
                 callback={searchFieldCallback}
-                searchFunction={productsSearch}
+                searchFunction={versionSearch}
               />
             </SearchFieldContainer>
             <NewButtonContainer>
@@ -124,9 +136,7 @@ function ProjectPage(): React.ReactElement {
               />
             </Box>
           )}
-          <List aria-label="publications">
-            {project.publications && project.publications.map(renderItem)}
-          </List>
+          <List aria-label="publications">{publications.map(renderItem)}</List>
         </CardContent>
       </Card>
     </StandardContainer>
