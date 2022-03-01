@@ -77,25 +77,23 @@ export default function NewTagForm({
   };
 
   return (
-    <>
-      <FormProvider {...methods}>
-        <form onSubmit={methods.handleSubmit(onSubmit)}>
-          <Box className={classes.tagFormContainer}>
-            <Box className={classes.tagFormTextFields}>
-              <TextCtrl name="title" label={t('Title')} />
-            </Box>
-
-            <Box className={classes.tagFormButtons}>
-              <Button variant="primary" type="submit">
-                {t('save')}
-              </Button>
-              <Button variant="warning" onClick={handleClose}>
-                {t('cancel')}
-              </Button>
-            </Box>
+    <FormProvider {...methods}>
+      <form onSubmit={methods.handleSubmit(onSubmit)}>
+        <Box className={classes.tagFormContainer}>
+          <Box className={classes.tagFormTextFields}>
+            <TextCtrl name="title" label={t('Title')} />
           </Box>
-        </form>
-      </FormProvider>
-    </>
+
+          <Box className={classes.tagFormButtons}>
+            <Button variant="primary" type="submit">
+              {t('save')}
+            </Button>
+            <Button variant="warning" onClick={handleClose}>
+              {t('cancel')}
+            </Button>
+          </Box>
+        </Box>
+      </form>
+    </FormProvider>
   );
 }
