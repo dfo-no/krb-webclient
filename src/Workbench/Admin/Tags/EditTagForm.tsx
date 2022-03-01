@@ -81,6 +81,7 @@ export default function EditTagForm({ element }: IProps): React.ReactElement {
     const deletableTag = { ...element };
     dispatch(removeTag(deletableTag));
     dispatch(putSelectedProjectThunk('dummy'));
+    methods.reset();
 
     const alert: IAlert = {
       id: uuidv4(),
