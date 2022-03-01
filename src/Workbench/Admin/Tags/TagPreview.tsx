@@ -28,7 +28,6 @@ export default function ProductPreview(): React.ReactElement {
         if (variant.requirementText.trim().length > 0)
           return { text: variant.requirementText };
       }
-      return null;
     });
 
     const textFiltered = texts.filter((text) => text !== null);
