@@ -94,26 +94,24 @@ export default function EditTagForm({ element }: IProps): React.ReactElement {
   const classes = useStyles();
 
   return (
-    <>
-      <FormProvider {...methods}>
-        <form onSubmit={methods.handleSubmit(onEditTagSubmit)}>
-          <Box className={classes.tagFormContainer}>
-            <Box className={classes.tagForm}>
-              <Box className={classes.tagFormTextFields}>
-                <TextCtrl name="title" label={t('Title')} />
-              </Box>
-              <Box className={classes.tagFormButtons}>
-                <Button variant="primary" type="submit">
-                  {t('save')}
-                </Button>
-                <Button variant="warning" onClick={deleteTag}>
-                  {t('delete')}
-                </Button>
-              </Box>
+    <FormProvider {...methods}>
+      <form onSubmit={methods.handleSubmit(onEditTagSubmit)}>
+        <Box className={classes.tagFormContainer}>
+          <Box className={classes.tagForm}>
+            <Box className={classes.tagFormTextFields}>
+              <TextCtrl name="title" label={t('Title')} />
+            </Box>
+            <Box className={classes.tagFormButtons}>
+              <Button variant="primary" type="submit">
+                {t('save')}
+              </Button>
+              <Button variant="warning" onClick={deleteTag}>
+                {t('delete')}
+              </Button>
             </Box>
           </Box>
-        </form>
-      </FormProvider>
-    </>
+        </Box>
+      </form>
+    </FormProvider>
   );
 }
