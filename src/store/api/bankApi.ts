@@ -14,7 +14,7 @@ export const bankApi = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: process.env.REACT_APP_API_URL
   }),
-  tagTypes: ['Banks', 'Projects'],
+  tagTypes: ['Banks', 'Projects', 'Project'],
   endpoints: (builder) => ({
     getBank: builder.query<IBank, string>({
       query: (id) => `/api/bank/${id}`
@@ -46,7 +46,8 @@ export const bankApi = createApi({
       invalidatesTags: [{ type: 'Banks' }]
     }),
     getProject: builder.query<IBank, string>({
-      query: (id) => `/api/bank/${id}`
+      query: (id) => `/api/bank/${id}`,
+      providesTags: [{ type: 'Project' }]
     }),
     getAllProjects: builder.query<Record<string, IBank>, void>({
       // TODO: should support Pagination to get page count etc
@@ -69,7 +70,7 @@ export const bankApi = createApi({
         method: 'PUT',
         body: project
       }),
-      invalidatesTags: [{ type: 'Projects' }]
+      invalidatesTags: [{ type: 'Projects' }, { type: 'Project' }]
     }),
     deleteProject: builder.mutation<IBank, IBank>({
       query: (project) => ({

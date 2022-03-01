@@ -17,39 +17,14 @@ import theme from '../../../theme';
 import DFOSearchBar from '../../../components/DFOSearchBar/DFOSearchBar';
 import Dialog from '../../../components/DFODialog/DFODialog';
 import { makeStyles } from '@mui/styles';
+import { StandardContainer } from '../../Components/StandardContainer';
+import {
+  NewButtonContainer,
+  SearchContainer,
+  SearchFieldContainer
+} from '../../Components/SearchContainer';
 
 const useStyles = makeStyles({
-  tagListContainer: {
-    display: 'flex',
-    flexDirection: 'column',
-    marginTop: 40,
-    gap: 30,
-    margin: 'auto',
-    width: '55.5vw',
-    paddingBottom: 40
-  },
-  topContainer: {
-    display: 'flex',
-    flexDirection: 'row',
-    gap: 5,
-    [theme.breakpoints.down('mddd')]: {
-      flexDirection: 'column',
-      gap: 15
-    }
-  },
-  searchBarContainer: {
-    flex: 1,
-    minWidth: 300,
-    alignSelf: 'center'
-  },
-  addTagButtonContainer: {
-    flex: 1,
-    alignSelf: 'center'
-  },
-  addTagButton: {
-    float: 'right',
-    alignSelf: 'center'
-  },
   tags: {
     width: '100%',
     alignSelf: 'center',
@@ -91,9 +66,9 @@ export default function TagPage(): React.ReactElement {
 
   return (
     <>
-      <Box className={classes.tagListContainer}>
-        <Box className={classes.topContainer}>
-          <Box className={classes.searchBarContainer}>
+      <StandardContainer>
+        <SearchContainer>
+          <SearchFieldContainer>
             {' '}
             <DFOSearchBar
               list={project.tags}
@@ -101,10 +76,9 @@ export default function TagPage(): React.ReactElement {
               callback={searchFieldCallback}
               searchFunction={tagPageSearch}
             />
-          </Box>
-          <Box className={classes.addTagButtonContainer}>
+          </SearchFieldContainer>
+          <NewButtonContainer>
             <Button
-              className={classes.addTagButton}
               variant="primary"
               onClick={() => {
                 setShow(true);
@@ -112,8 +86,8 @@ export default function TagPage(): React.ReactElement {
             >
               {t('add new tag')}
             </Button>
-          </Box>
-        </Box>
+          </NewButtonContainer>
+        </SearchContainer>
 
         <Box className={classes.tags}>
           <NestableHierarcyWithAccordion
@@ -132,7 +106,7 @@ export default function TagPage(): React.ReactElement {
           handleClose={() => setShow(false)}
           children={<NewTagForm handleClose={() => setShow(false)} />}
         />
-      </Box>
+      </StandardContainer>
     </>
   );
 }

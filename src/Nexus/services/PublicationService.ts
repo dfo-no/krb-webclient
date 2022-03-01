@@ -1,6 +1,7 @@
 import { IBank } from '../entities/IBank';
 import { IPublication } from '../entities/IPublication';
 import DateService from './DateService';
+import ModelType from '../../models/ModelType';
 
 export default class PublicationService {
   getNextVersion = (publications: IPublication[]): number => {
@@ -21,5 +22,18 @@ export default class PublicationService {
     newBank.version = this.getNextVersion(item.publications);
 
     return newBank;
+  };
+
+  defaultPublication = (bankId: string): IPublication => {
+    return {
+      id: '',
+      bankId: bankId,
+      comment: '',
+      date: null,
+      type: ModelType.publication,
+      version: 1,
+      sourceOriginal: null,
+      sourceRel: null
+    };
   };
 }

@@ -151,7 +151,6 @@ theme.typography.smallGray = {
 };
 
 theme.typography.smallUnderline = {
-  color: theme.palette.black.main,
   fontSize: '15px',
   textDecoration: 'underline'
 };
@@ -171,7 +170,6 @@ theme.typography.medium = {
 };
 
 theme.typography.mediumBold = {
-  color: theme.palette.black.main,
   fontSize: '20px',
   fontWeight: 700
 };
@@ -182,7 +180,6 @@ theme.typography.mediumBlue = {
 };
 
 theme.typography.big = {
-  color: theme.palette.black.main,
   fontSize: '28px',
   fontWeight: 700
 };

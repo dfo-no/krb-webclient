@@ -11,26 +11,15 @@ import {
 import { IInheritedBank } from '../../../models/IInheritedBank';
 import InheritanceBankBody from './InheritedBankAccordionBody';
 import InheritanceBankHeader from './InheritedBankAccordionHeader';
+import { StandardContainer } from '../../Components/StandardContainer';
+import {
+  SearchContainer,
+  SearchFieldContainer
+} from '../../Components/SearchContainer';
 
 const useStyles = makeStyles({
   accordionElement: {
     marginBottom: 14
-  },
-  inheritanceContainer: {
-    display: 'flex',
-    flexDirection: 'column',
-    marginTop: 40,
-    gap: 30,
-    margin: 'auto',
-    width: '55.5vw'
-  },
-  topContainer: {
-    display: 'flex',
-    flexDirection: 'row',
-    gap: 100
-  },
-  searchBarContainer: {
-    width: '25vw'
   }
 });
 
@@ -58,9 +47,9 @@ export default function InheritancePage(): React.ReactElement {
 
   return (
     <>
-      <Box className={classes.inheritanceContainer}>
-        <Box className={classes.topContainer}>
-          <Box className={classes.searchBarContainer}>
+      <StandardContainer>
+        <SearchContainer>
+          <SearchFieldContainer>
             {' '}
             <DFOSearchBar
               list={project.inheritedBanks}
@@ -68,15 +57,15 @@ export default function InheritancePage(): React.ReactElement {
               callback={searchFieldCallback}
               searchFunction={inheritanceSearch}
             />
-          </Box>
-        </Box>
+          </SearchFieldContainer>
+        </SearchContainer>
 
         <Box>
           <DFOAccordionProvider
             body={<>{renderInheritedBanks(project.inheritedBanks)}</>}
           />
         </Box>
-      </Box>
+      </StandardContainer>
     </>
   );
 }
