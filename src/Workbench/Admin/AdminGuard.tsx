@@ -8,8 +8,7 @@ import CodelistGuard from './Codelist/CodelistGuard';
 import InheritancePage from './Inheritance/InheritancePage';
 import NeedPage from './Need/NeedPage';
 import ProductGuard from './Product/ProductGuard';
-import ProductPage from './Product/ProductPage';
-import ProjectPage from './Project/ProjectPage';
+import ProjectGuard from './Project/ProjectGuard';
 import RequirementEditor from './Requirement/RequirementEditor';
 import RequirementPage from './Requirement/RequirementPage';
 import TagPage from './Tags/TagPage';
@@ -31,7 +30,7 @@ export default function AdminGuard(): React.ReactElement {
       </Box>
       <Box className={classes.editorContainer}>
         <Route exact path="/workbench/:projectId/admin/">
-          <ProjectPage />
+          <ProjectGuard />
         </Route>
         <Route exact path="/workbench/:projectId/admin/need">
           <NeedPage />
@@ -48,7 +47,6 @@ export default function AdminGuard(): React.ReactElement {
         >
           <RequirementEditor />
         </Route>
-
         <Route exact path="/workbench/:projectId/admin/need/requirement">
           <RequirementPage />
         </Route>
@@ -59,7 +57,7 @@ export default function AdminGuard(): React.ReactElement {
           <CodelistGuard />
         </Route>
         <Route exact path="/workbench/:projectId/admin/products">
-          <ProductPage />
+          <ProductGuard />
         </Route>
         <Route exact path="/workbench/:projectId/admin/:productId/product">
           <ProductGuard />

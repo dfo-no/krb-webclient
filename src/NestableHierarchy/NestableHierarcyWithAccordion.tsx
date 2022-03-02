@@ -2,12 +2,9 @@ import React from 'react';
 import makeStyles from '@mui/styles/makeStyles';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
-import DragIndicatorIcon from '@mui/icons-material/DragIndicator';
-import Nestable, { Item } from 'react-nestable';
 import 'react-nestable/dist/styles/index.css';
 import { Parentable } from '../models/Parentable';
-import { Nestable as NestableModel } from '../models/Nestable';
-import { IBaseModel } from '../Nexus/entities/IBaseModel';
+import { Nestable } from '../models/Nestable';
 import {
   DFOAccordionElement,
   DFOAccordionProvider
@@ -15,6 +12,7 @@ import {
 import NestableHierarcy from './NestableHierarcy';
 import Utils from '../common/Utils';
 import theme from '../theme';
+import { BaseModelWithTitleAndDesc } from '../models/BaseModelWithTitleAndDesc';
 
 const useStyles = makeStyles({
   nestableItemCustom: {
@@ -43,23 +41,22 @@ const useStyles = makeStyles({
   }
 });
 
-interface IProps<T extends IBaseModel> {
+interface IProps<T extends BaseModelWithTitleAndDesc> {
   dispatchfunc: (item: Parentable<T>, index: number) => void;
-  inputlist: NestableModel<T>[];
+  inputlist: Nestable<T>[];
   component: React.ReactElement;
   depth: number;
 }
 
-const NestableHierarcyWithAccordion = <T extends IBaseModel>({
+const NestableHierarcyWithAccordion = <T extends BaseModelWithTitleAndDesc>({
   dispatchfunc,
   inputlist,
   component,
   depth
 }: IProps<T>): React.ReactElement => {
   const classes = useStyles();
-  const { onChange } = NestableHierarcy(dispatchfunc);
 
-  const renderItem = (item: Item, handler: React.ReactNode) => {
+  const renderItem = (item: Nestable<T>, handler: React.ReactNode) => {
     return (
       <Box className={classes.nestableItemCustom}>
         <DFOAccordionElement
@@ -95,13 +92,12 @@ const NestableHierarcyWithAccordion = <T extends IBaseModel>({
   return (
     <DFOAccordionProvider
       body={
-        <Nestable
+        <NestableHierarcy<T>
           className={classes.nestableCustom}
-          items={inputlist}
-          renderItem={({ item, handler }) => renderItem(item, handler)}
-          onChange={(items) => onChange(items)}
-          maxDepth={depth}
-          handler={<DragIndicatorIcon />}
+          inputlist={inputlist}
+          renderItem={renderItem}
+          dispatchfunc={dispatchfunc}
+          depth={depth}
         />
       }
     />

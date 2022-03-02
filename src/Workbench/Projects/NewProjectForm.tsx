@@ -34,7 +34,7 @@ const NewProjectForm = ({ handleClose }: IProps) => {
       const alert: IAlert = {
         id: uuidv4(),
         style: 'success',
-        text: 'Successfully  created project'
+        text: 'Successfully created project'
       };
       dispatch(addAlert({ alert }));
       methods.reset();
@@ -54,8 +54,6 @@ const NewProjectForm = ({ handleClose }: IProps) => {
         <Button variant="contained" type="submit">
           {t('save')}
         </Button>
-
-        <ErrorSummary errors={methods.formState.errors} />
       </form>
     </FormProvider>
   );

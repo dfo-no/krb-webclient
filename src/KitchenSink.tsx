@@ -83,14 +83,13 @@ const KitchenSink = (): React.ReactElement => {
 
   const defaultValues: IFormValues = {
     person: {
-      firstName: null,
-      birthDay: null,
+      firstName: '',
+      lastName: '',
+      birthDay: '',
       weddingDay: '2021/12/14T14:00:00.123Z',
       point: 50,
       isDeveloper: false,
       range: 20,
-
-      lastName: null,
       isSexy: true,
       fileEndings: ['doc'],
       codelist: codelists[0],
@@ -129,8 +128,8 @@ const KitchenSink = (): React.ReactElement => {
           <form onSubmit={methods.handleSubmit(saveValues)}>
             <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
               <TextCtrl name="person.firstName" label="First name" />
-              <HiddenCtrl name="person.counter" />
               <TextCtrl name="person.lastName" label="Last name" />
+              {/*               <HiddenCtrl name="person.counter" /> */}
               <DateCtrl name="person.birthDay" label="birthDay" />
               <DateCtrl name="person.weddingDay" label="weddingDay" />
               <SliderCtrl
