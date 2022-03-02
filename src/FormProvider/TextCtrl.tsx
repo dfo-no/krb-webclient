@@ -9,7 +9,7 @@ interface IProps {
   label: string;
 }
 
-const SwitchCtrl = ({ name, label }: IProps): React.ReactElement => {
+const TextCtrl = ({ name, label }: IProps): React.ReactElement => {
   const {
     formState: { errors }
   } = useFormContext();
@@ -35,4 +35,4 @@ const SwitchCtrl = ({ name, label }: IProps): React.ReactElement => {
   );
 };
 
-export default SwitchCtrl;
+export default TextCtrl;
