@@ -24,7 +24,7 @@ const TextCtrl = ({ name, label }: IProps): React.ReactElement => {
             label={label}
             value={field.value}
             variant="outlined"
-            error={get(errors, name)}
+            error={!!get(errors, name)}
             helperText={get(errors, name)?.message ?? ''}
           />
         )}
