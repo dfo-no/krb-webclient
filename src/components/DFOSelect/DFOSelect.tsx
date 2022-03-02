@@ -36,12 +36,7 @@ export default function DFOSelect({
   };
 
   return (
-    <Select
-      className={classes.select}
-      value={0}
-      IconComponent={SelectIcon}
-      disableUnderline
-    >
+    <Select className={classes.select} value={0} IconComponent={SelectIcon}>
       {options.map((element: any, index: number) => (
         <MenuItem key={index} value={index} selected>
           {element.name}

@@ -47,7 +47,6 @@ export const getProjectsThunk = createAsyncThunk(
   'getProjectsThunk',
   async () => {
     const response = await httpGet<IBank[]>('/api/bank/projects');
-
     return response.data;
   }
 );
