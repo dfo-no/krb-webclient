@@ -25,12 +25,10 @@ const TextCtrl = ({ name, label }: IProps): React.ReactElement => {
             value={field.value}
             variant="outlined"
             error={get(errors, name)}
+            helperText={get(errors, name)?.message ?? ''}
           />
         )}
       />
-      {!!get(errors, name) && (
-        <FormLabel>{get(errors, name)?.message ?? ''}</FormLabel>
-      )}
     </FormControl>
   );
 };
