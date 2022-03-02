@@ -34,7 +34,7 @@ function ProjectHeader(): React.ReactElement {
     <DFOCardHeader>
       <Box className={classes.headerContainer}>
         <Box sx={{ display: 'flex', flexDirection: 'row' }}>
-          <Typography variant="big">{project.title}</Typography>
+          <Typography variant="bigBoldWhite">{project.title}</Typography>
           <DFOCardHeaderIconButton
             sx={{ marginLeft: 'auto' }}
             onClick={() => setEditing(true)}

@@ -145,7 +145,9 @@ export default function Header(): React.ReactElement {
                 </Box>
                 <Box className={classes.viewingProjectTitle}>
                   <Box className={classes.projectData}>
-                    <Typography variant="big">{project.title}</Typography>
+                    <Typography variant="bigBoldBlack">
+                      {project.title}
+                    </Typography>
                   </Box>
                   <Box className={classes.projectIcons}>
                     <Link
@@ -183,7 +185,7 @@ export default function Header(): React.ReactElement {
                   <Typography variant="small">{projectPath}</Typography>
                 </Box>
                 <Box className={classes.notViewingProjectTitle}>
-                  <Typography variant="big">Kravbank</Typography>
+                  <Typography variant="bigBoldBlack">Kravbank</Typography>
                 </Box>
               </Box>
             )}
