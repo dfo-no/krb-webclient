@@ -1,14 +1,14 @@
+import { get } from 'lodash';
 import React from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
-import { get } from 'lodash';
-import { DFOTextField } from '../components/DFOTextField/DFOTextField';
+import DFOTextField from '../components/DFOTextField/DFOTextField';
 
 interface IProps {
   name: string;
-  label?: string;
+  label: string;
 }
 
-const TextCtrl = ({ name, label }: IProps): React.ReactElement => {
+const SwitchCtrl = ({ name, label }: IProps): React.ReactElement => {
   const {
     formState: { errors }
   } = useFormContext();
@@ -18,15 +18,15 @@ const TextCtrl = ({ name, label }: IProps): React.ReactElement => {
       name={name}
       render={({ field }) => (
         <DFOTextField
-          element={field}
+          {...field}
           label={label}
           value={field.value}
+          variant="outlined"
           error={get(errors, name)}
-          errorMessage={get(errors, name)?.message}
         />
       )}
     />
   );
 };
 
-export default TextCtrl;
+export default SwitchCtrl;

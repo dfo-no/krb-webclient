@@ -80,14 +80,13 @@ const KitchenSink = (): React.ReactElement => {
 
   const defaultValues: IFormValues = {
     person: {
-      firstName: null,
-      birthDay: null,
+      firstName: '',
+      lastName: '',
+      birthDay: '',
       weddingDay: '2021/12/14T14:00:00.123Z',
       point: 50,
       isDeveloper: false,
       range: 20,
-
-      lastName: null,
       isSexy: true,
       fileEndings: ['doc'],
       codelist: codelists[0],
