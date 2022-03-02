@@ -7,7 +7,8 @@ import InheritedTagListItem from './InheritanceTagListItem';
 import makeStyles from '@mui/styles/makeStyles';
 import { IInheritedBank } from '../../../models/IInheritedBank';
 import { useGetAllBanksQuery } from '../../../store/api/bankApi';
-import React, { useState } from 'react';
+import React from 'react';
+import { ITag } from '../../../Nexus/entities/ITag';
 
 export interface IProps {
   bank: IInheritedBank;
@@ -50,11 +51,11 @@ export default function InheritedBankTagList({
   const { project } = useAppSelector((state) => state.project);
   const classes = useStyles();
   const { t } = useTranslation();
-  const { data } = useGetAllBanksQuery();
-  let tags: Array<object> = [];
+  const { data: banks } = useGetAllBanksQuery();
+  const tags: ITag[] = banks ? banks[bank.id].tags : [];
 
-  if (data) {
-    tags = data[bank.id].tags;
+  if (!banks) {
+    return <></>;
   }
 
   const tagsCallback = () => {};
