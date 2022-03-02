@@ -19,7 +19,7 @@ interface IRouteParams {
 const useStyles = makeStyles({
   sideBar: {
     height: '100%',
-    paddingTop: 75,
+    paddingTop: 45,
     [theme.breakpoints.down('md')]: {
       paddingTop: 0
     }
