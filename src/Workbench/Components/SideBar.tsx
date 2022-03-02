@@ -37,7 +37,8 @@ const useStyles = makeStyles({
   },
   sideBarListItem: {
     cursor: 'pointer',
-    width: '100%',
+    width: 200,
+    textAlign: 'center',
     '&:hover': {
       background: theme.palette.lightBlue.main,
       color: theme.palette.dfoWhite.main,
