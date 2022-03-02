@@ -1,43 +1,145 @@
-import EditIcon from '@mui/icons-material/Edit';
-import Button from '@mui/material/Button';
-import React, { useState } from 'react';
-import Col from 'react-bootstrap/Col';
+import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useAppSelector } from '../../../store/hooks';
+import {
+  Box,
+  Button,
+  Card,
+  CardContent,
+  List,
+  Typography
+} from '@mui/material/';
+import makeStyles from '@mui/styles/makeStyles';
+import ProjectHeader from './ProjectHeader';
+import DFOSearchBar from '../../../components/DFOSearchBar/DFOSearchBar';
+import { IPublication } from '../../../Nexus/entities/IPublication';
+import { PlainListBox } from '../../Components/PlainListBox';
+import { useProjectEditingState } from './ProjectEditingContext';
 import EditProjectForm from './EditProjectForm';
-import NewPublication from './NewPublication';
-import PublicationList from './PublicationList';
+import { useParams } from 'react-router-dom';
+import { useGetProjectQuery } from '../../../store/api/bankApi';
+import LoaderSpinner from '../../../common/LoaderSpinner';
+import { IRouteParams } from '../../Models/IRouteParams';
+import NewPublicationForm from './NewPublicationForm';
+import { StandardContainer } from '../../Components/StandardContainer';
+import {
+  NewButtonContainer,
+  SearchContainer,
+  SearchFieldContainer
+} from '../../Components/SearchContainer';
+
+const useStyles = makeStyles({
+  versionText: {
+    alignSelf: 'center',
+    paddingLeft: 15,
+    paddingRight: 15
+  },
+  commentText: {
+    display: 'flex',
+    height: '100%',
+    paddingLeft: 15,
+    borderLeft: '1px solid',
+    marginLeft: 'auto',
+    width: '40vw'
+  }
+});
 
 function ProjectPage(): React.ReactElement {
-  const { project } = useAppSelector((state) => state.project);
-  const [editMode, setEditMode] = useState(false);
-
+  const classes = useStyles();
   const { t } = useTranslation();
+  const { isEditing, setEditing } = useProjectEditingState();
+  const [isCreating, setCreating] = useState(false);
 
-  function editProjectForm(edit: boolean) {
-    if (edit) {
-      return <EditProjectForm toggleShow={setEditMode} />;
+  const { projectId } = useParams<IRouteParams>();
+  const { data: project, isLoading } = useGetProjectQuery(projectId);
+  const [publications, setPublications] = useState<IPublication[]>([]);
+
+  useEffect(() => {
+    if (project && project.publications) {
+      setPublications(project.publications);
     }
-    return <></>;
+  }, [project]);
+
+  if (isLoading) {
+    return <LoaderSpinner />;
   }
 
-  return (
-    <div>
-      <Col sm={8}>
-        <h3>
-          {project.title}
-          <Button variant="primary" onClick={() => setEditMode(true)}>
-            <EditIcon />
-          </Button>
-        </h3>
-      </Col>
-      <h6 className="ml-1 mb-3">{project.description}</h6>
-      {editProjectForm(editMode)}
-      <h4>{t('publications')}</h4>
+  if (!project) {
+    return <p>Finner ikke prosjekt</p>;
+  }
 
-      <NewPublication />
-      <PublicationList />
-    </div>
+  const searchFieldCallback = (result: IPublication[]) => {
+    setPublications(result);
+  };
+
+  const versionSearch = (searchString: string, list: IPublication[]) => {
+    // Filters only versions with match in title or version number
+    return list.filter((aPub) => {
+      return (
+        aPub.comment.toLowerCase().includes(searchString.toLowerCase()) ||
+        String(aPub.version).includes(searchString)
+      );
+    });
+  };
+
+  const renderItem = (item: IPublication, i: number) => {
+    return (
+      <Box key={i}>
+        <PlainListBox>
+          <Box className={classes.versionText}>
+            <Typography variant="smallBold">{`${t('Versjon')} ${
+              item.version
+            }`}</Typography>
+          </Box>
+          <Box className={classes.commentText}>
+            <Typography sx={{ alignSelf: 'center' }} variant="small">
+              {item.comment}
+            </Typography>
+          </Box>
+        </PlainListBox>
+      </Box>
+    );
+  };
+
+  return (
+    <StandardContainer>
+      <Card>
+        <ProjectHeader />
+        {isEditing && (
+          <EditProjectForm
+            project={project}
+            handleClose={() => setEditing(false)}
+          />
+        )}
+        <CardContent>
+          <SearchContainer>
+            <SearchFieldContainer>
+              {' '}
+              <DFOSearchBar
+                list={project.publications}
+                label={t('search for version')}
+                callback={searchFieldCallback}
+                searchFunction={versionSearch}
+              />
+            </SearchFieldContainer>
+            <NewButtonContainer>
+              <Button variant="primary" onClick={() => setCreating(true)}>
+                {t('new publication')}
+              </Button>
+            </NewButtonContainer>
+          </SearchContainer>
+
+          {isCreating && (
+            <Box sx={{ marginBottom: 3 }}>
+              <NewPublicationForm
+                project={project}
+                handleClose={() => setCreating(false)}
+              />
+            </Box>
+          )}
+          <List aria-label="publications">{publications.map(renderItem)}</List>
+        </CardContent>
+      </Card>
+    </StandardContainer>
   );
 }
 

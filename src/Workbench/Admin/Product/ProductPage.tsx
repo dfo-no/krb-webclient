@@ -18,39 +18,14 @@ import EditProductForm from './EditProductForm';
 import NewProductForm from './NewProductForm';
 import NestableHierarcyEditableComponent from '../../Components/NestableHiarchyEditableComponents';
 import { useEditableState } from '../../Components/EditableContext';
+import { StandardContainer } from '../../Components/StandardContainer';
+import {
+  NewButtonContainer,
+  SearchContainer,
+  SearchFieldContainer
+} from '../../Components/SearchContainer';
 
 const useStyles = makeStyles({
-  productsContainer: {
-    display: 'flex',
-    flexDirection: 'column',
-    marginTop: 40,
-    gap: 30,
-    margin: 'auto',
-    width: '55.5vw',
-    paddingBottom: 40
-  },
-  topContainer: {
-    display: 'flex',
-    flexDirection: 'row',
-    gap: 5,
-    [theme.breakpoints.down('lg')]: {
-      flexDirection: 'column',
-      gap: 15
-    }
-  },
-  searchBarContainer: {
-    flex: 1,
-    minWidth: 300,
-    alignSelf: 'center'
-  },
-  addCodeButtonContainer: {
-    flex: 1,
-    alignSelf: 'center'
-  },
-  addCodeButton: {
-    float: 'right',
-    alignSelf: 'center'
-  },
   products: {
     [theme.breakpoints.down('md')]: {
       alignSelf: 'center',
@@ -98,9 +73,9 @@ export default function ProductPage(): React.ReactElement {
 
   return (
     <>
-      <Box className={classes.productsContainer}>
-        <Box className={classes.topContainer}>
-          <Box className={classes.searchBarContainer}>
+      <StandardContainer>
+        <SearchContainer>
+          <SearchFieldContainer>
             {' '}
             <DFOSearchBar
               list={allProducts}
@@ -108,17 +83,13 @@ export default function ProductPage(): React.ReactElement {
               callback={searchFieldCallback}
               searchFunction={productsSearch}
             />
-          </Box>
-          <Box className={classes.addCodeButtonContainer}>
-            <Button
-              className={classes.addCodeButton}
-              variant="primary"
-              onClick={() => setCreating(true)}
-            >
+          </SearchFieldContainer>
+          <NewButtonContainer>
+            <Button variant="primary" onClick={() => setCreating(true)}>
               {t('add new product')}
             </Button>
-          </Box>
-        </Box>
+          </NewButtonContainer>
+        </SearchContainer>
 
         <Box className={classes.products}>
           <NestableHierarcyEditableComponent
@@ -138,7 +109,7 @@ export default function ProductPage(): React.ReactElement {
             depth={5}
           />
         </Box>
-      </Box>
+      </StandardContainer>
     </>
   );
 }
