@@ -23,7 +23,8 @@ interface IRouteParams {
 export default function Create(): React.ReactElement {
   const { projectId } = useParams<IRouteParams>();
   const { data: project } = useGetProjectQuery(projectId);
-  const { needIndex, setNeedIndex } = useSelectState();
+  const { needIndex, setNeedIndex, requirementIndex, setRequirementIndex } =
+    useSelectState();
 
   const methods = useForm<IBank>({
     resolver: joiResolver(PutProjectSchema),
@@ -60,15 +61,18 @@ export default function Create(): React.ReactElement {
           <NeedList parentables={project.needs} />
         </Grid>
         <Grid item xs={10}>
-          <span>{'needIndex:' + needIndex}</span>
-          <Button variant="outlined" onClick={() => setNeedIndex(1)}>
+          <span>{'needIndex: ' + needIndex}</span>
+          <span>{' requirementIndex: ' + requirementIndex}</span>
+          {/* <Button variant="outlined" onClick={() => setNeedIndex(1)}>
             Set selected 2
-          </Button>
+          </Button> */}
           {needIndex !== null ? (
             <>
               <NeedToolbar need={project.needs[needIndex]} />
-              <NewRequirement />
-              <RequirementsList />
+              <NewRequirement need={project.needs[needIndex]} />
+              <RequirementsList
+                requirements={project.needs[needIndex].requirements}
+              />
             </>
           ) : (
             <div>Ingen behov valgt</div>
