@@ -181,7 +181,8 @@ theme.typography.mediumBlue = {
 
 theme.typography.big = {
   fontSize: '28px',
-  fontWeight: 700
+  fontWeight: 700,
+  color: theme.palette.black.main
 };
 
 theme.typography.footerAddressText = {
