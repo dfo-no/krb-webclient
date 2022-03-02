@@ -128,8 +128,8 @@ const KitchenSink = (): React.ReactElement => {
           <form onSubmit={methods.handleSubmit(saveValues)}>
             <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
               <TextCtrl name="person.firstName" label="First name" />
-              <HiddenCtrl name="person.counter" />
               <TextCtrl name="person.lastName" label="Last name" />
+              {/*               <HiddenCtrl name="person.counter" /> */}
               <DateCtrl name="person.birthDay" label="birthDay" />
               <DateCtrl name="person.weddingDay" label="weddingDay" />
               <SliderCtrl

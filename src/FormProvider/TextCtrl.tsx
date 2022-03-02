@@ -1,3 +1,4 @@
+import { FormControl, FormLabel } from '@mui/material';
 import { get } from 'lodash';
 import React from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
@@ -14,18 +15,23 @@ const SwitchCtrl = ({ name, label }: IProps): React.ReactElement => {
   } = useFormContext();
 
   return (
-    <Controller
-      name={name}
-      render={({ field }) => (
-        <DFOTextField
-          {...field}
-          label={label}
-          value={field.value}
-          variant="outlined"
-          error={get(errors, name)}
-        />
+    <FormControl error={!!get(errors, name)} sx={{ width: '100%' }}>
+      <Controller
+        name={name}
+        render={({ field }) => (
+          <DFOTextField
+            {...field}
+            label={label}
+            value={field.value}
+            variant="outlined"
+            error={get(errors, name)}
+          />
+        )}
+      />
+      {!!get(errors, name) && (
+        <FormLabel>{get(errors, name)?.message ?? ''}</FormLabel>
       )}
-    />
+    </FormControl>
   );
 };
 
