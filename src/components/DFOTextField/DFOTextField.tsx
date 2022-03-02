@@ -1,7 +1,7 @@
 import { styled } from '@mui/material';
 import TextField from '@mui/material/TextField';
 
-const DFOTextField2 = styled(TextField)(({ theme }) => ({
+const DFOTextField = styled(TextField)(({ theme }) => ({
   '& .MuiOutlinedInput-root': {
     '& fieldset': {
       borderColor: theme.palette.indigo.main,
@@ -32,4 +32,4 @@ const DFOTextField2 = styled(TextField)(({ theme }) => ({
   }
 }));
 
-export default DFOTextField2;
+export default DFOTextField;

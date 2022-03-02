@@ -3,7 +3,6 @@ import React from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { v4 as uuidv4 } from 'uuid';
-import { Box, IconButton } from '@mui/material/';
 import CheckIcon from '@mui/icons-material/Check';
 import CloseIcon from '@mui/icons-material/Close';
 import { useAppDispatch } from '../../../store/hooks';
@@ -15,20 +14,23 @@ import {
 import TextCtrl from '../../../FormProvider/TextCtrl';
 import { IAlert } from '../../../models/IAlert';
 import { CodelistSchema, ICodelist } from '../../../Nexus/entities/ICodelist';
-import { useFormStyles } from './CodelistStyles';
+import { FormIconButton } from '../../Components/Form/FormIconButton';
+import { FormItemBox } from '../../Components/Form/FormItemBox';
+import { FormFlexBox } from '../../Components/Form/FormFlexBox';
+import { useFormStyles } from '../../Components/Form/FormStyles';
 
 interface IProps {
   element: ICodelist;
   handleClose: (newCodelist: ICodelist | null) => void;
 }
 
-function EditCodelistForm({
+export default function EditCodelistForm({
   element,
   handleClose
 }: IProps): React.ReactElement {
   const dispatch = useAppDispatch();
-  const classes = useFormStyles();
   const { t } = useTranslation();
+  const classes = useFormStyles();
 
   const methods = useForm<ICodelist>({
     defaultValues: element,
@@ -51,31 +53,26 @@ function EditCodelistForm({
   return (
     <FormProvider {...methods}>
       <form
+        className={classes.form}
         onSubmit={methods.handleSubmit(onSubmit)}
         autoComplete="off"
         noValidate
       >
-        <Box className={classes.formItem}>
-          <Box className={classes.inputBox}>
+        <FormItemBox>
+          <FormFlexBox sx={{ paddingLeft: 1 }}>
             <TextCtrl name="title" label={t('Title')} />
-          </Box>
-          <Box className={classes.inputBox}>
+          </FormFlexBox>
+          <FormFlexBox sx={{ paddingLeft: 1, paddingRight: 1 }}>
             <TextCtrl name="description" label={t('Description')} />
-          </Box>
-          <Box className={classes.iconButton}>
-            <IconButton type="submit" aria-label="save">
-              <CheckIcon />
-            </IconButton>
-          </Box>
-          <Box className={classes.iconButton} aria-label="close">
-            <IconButton onClick={() => handleClose(null)} aria-label="close">
-              <CloseIcon />
-            </IconButton>
-          </Box>
-        </Box>
+          </FormFlexBox>
+          <FormIconButton type="submit" aria-label="save">
+            <CheckIcon />
+          </FormIconButton>
+          <FormIconButton onClick={() => handleClose(null)} aria-label="close">
+            <CloseIcon />
+          </FormIconButton>
+        </FormItemBox>
       </form>
     </FormProvider>
   );
 }
-
-export default EditCodelistForm;

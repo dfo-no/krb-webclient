@@ -8,6 +8,11 @@ import DFOSearchBar from '../../../components/DFOSearchBar/DFOSearchBar';
 import CodePanel from './CodePanel';
 import CodelistPanel from './CodelistPanel';
 import { useSelectState } from './SelectContext';
+import { EditableProvider } from '../../Components/EditableContext';
+import {
+  SearchContainer,
+  SearchFieldContainer
+} from '../../Components/SearchContainer';
 
 const useStyles = makeStyles({
   root: {
@@ -35,9 +40,6 @@ const useStyles = makeStyles({
     flexDirection: 'column',
     width: '40%',
     gap: 5
-  },
-  searchBarContainer: {
-    width: 300
   }
 });
 
@@ -79,22 +81,28 @@ export default function CodeListPage(): React.ReactElement {
 
   return (
     <Box className={classes.root}>
-      <Box className={classes.searchBarContainer}>
-        {' '}
-        <DFOSearchBar
-          list={project.codelist}
-          label={t('search for codelist')}
-          callback={searchFieldCallback}
-          searchFunction={codelistSearch}
-        />
-      </Box>
+      <SearchContainer>
+        <SearchFieldContainer>
+          {' '}
+          <DFOSearchBar
+            list={project.codelist}
+            label={t('search for codelist')}
+            callback={searchFieldCallback}
+            searchFunction={codelistSearch}
+          />
+        </SearchFieldContainer>
+      </SearchContainer>
       <Box className={classes.tableContainer}>
         <Box className={classes.codelistContainer}>
-          <CodelistPanel />
+          <EditableProvider>
+            <CodelistPanel />
+          </EditableProvider>
         </Box>
         {showCodeContainer() && (
           <Box className={classes.codeContainer}>
-            <CodePanel />
+            <EditableProvider>
+              <CodePanel />
+            </EditableProvider>
           </Box>
         )}
       </Box>

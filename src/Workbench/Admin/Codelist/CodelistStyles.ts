@@ -4,27 +4,10 @@ import theme from '../../../theme';
 export const useFormStyles = makeStyles({
   formItem: {
     display: 'flex',
-    flexDirection: 'row',
-    paddingTop: 8
+    flexDirection: 'row'
   },
   inputBox: {
-    display: 'flex',
-    paddingRight: 8
-  },
-  iconButton: {
-    display: 'flex',
-    marginLeft: 'auto',
-    justifySelf: 'flex-end',
-    alignSelf: 'center',
-    '& .MuiSvgIcon-root': {
-      cursor: 'pointer',
-      color: theme.palette.gray500.main,
-      width: 32,
-      height: 32,
-      '&:hover': {
-        color: theme.palette.dfoLightBlue.main
-      }
-    }
+    alignSelf: 'center'
   }
 });
 
@@ -48,14 +31,14 @@ export const usePanelStyles = makeStyles({
   topContainer: {
     display: 'flex',
     flexDirection: 'column',
-    gap: 10
+    gap: 8
   },
   listItem: {
     display: 'flex',
     flexDirection: 'row',
-    height: 70,
+    minHeight: 70,
     width: '100%',
-    marginBottom: 10,
+    marginBottom: 8,
     border: `1px solid ${theme.palette.gray500.main}`,
     backgroundColor: theme.palette.dfoWhite.main
   },
@@ -65,15 +48,6 @@ export const usePanelStyles = makeStyles({
       background: theme.palette.lightBlue.main,
       color: theme.palette.dfoWhite.main
     }
-  },
-  editableListItem: {
-    display: 'flex',
-    flexDirection: 'row',
-    height: 90,
-    width: '100%',
-    marginBottom: 10,
-    border: `1px solid ${theme.palette.gray500.main}`,
-    backgroundColor: theme.palette.dfoWhite.main
   },
   nestableCustom: {
     '& .nestable-item': {

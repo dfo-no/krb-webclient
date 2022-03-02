@@ -43,24 +43,4 @@ export default function NeedList({ parentables }: IProps): React.ReactElement {
   };
 
   return <List dense={true}>{renderLevels(parentables)}</List>;
-
-  /* return (
-      <Button onClick={() => setNewOpen(true)}>
-        Legg til nytt behov
-        <EditIcon />
-      </Button>
-      {need && (
-        <Dialog
-          title="Rediger behov"
-          isOpen={isEditOpen}
-          handleClose={() => setEditOpen(false)}
-          children={
-            <EditNeedForm
-              element={selectedElement}
-              handleClose={() => setEditOpen(false)}
-            />
-          }
-        />
-      )}
-  ); */
 }

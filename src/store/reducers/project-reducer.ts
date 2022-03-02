@@ -89,6 +89,8 @@ export const putProjectThunk = createAsyncThunk(
   }
 );
 
+// @deprecated
+// @see useDeleteProjectMutation
 export const deleteProjectThunk = createAsyncThunk(
   'deleteProjectThunk',
   async (project: IBank) => {

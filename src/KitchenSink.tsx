@@ -11,6 +11,7 @@ import CheckboxCtrl from './FormProvider/CheckboxCtrl';
 import CodelistCtrl from './FormProvider/CodelistCtrl';
 import DateCtrl from './FormProvider/DateCtrl';
 import FileUploadCtrl from './FormProvider/FileUploadCtrl';
+import HiddenCtrl from './FormProvider/HiddenCtrl';
 import RadioCtrl from './FormProvider/RadioCtrl';
 import SliderCtrl from './FormProvider/SliderCtrl';
 import SwitchCtrl from './FormProvider/SwitchCtrl';
@@ -32,6 +33,7 @@ interface IFormValues {
     fileEndings: string[];
     codelist: ICodelist;
     gender: string;
+    counter: number;
   };
 }
 
@@ -50,7 +52,8 @@ const FormSchema = CustomJoi.object().keys({
     isSexy: CustomJoi.boolean().valid(true).required(),
     fileEndings: CustomJoi.array().items(CustomJoi.string()).min(1).required(),
     codelist: CustomJoi.any().required(),
-    gender: CustomJoi.string().valid(RequirementType.info).required()
+    gender: CustomJoi.string().valid(RequirementType.info).required(),
+    counter: CustomJoi.million().required()
   })
 });
 
@@ -90,7 +93,8 @@ const KitchenSink = (): React.ReactElement => {
       isSexy: true,
       fileEndings: ['doc'],
       codelist: codelists[0],
-      gender: RequirementType.requirement
+      gender: RequirementType.requirement,
+      counter: 999999
     }
   };
 
@@ -124,6 +128,7 @@ const KitchenSink = (): React.ReactElement => {
           <form onSubmit={methods.handleSubmit(saveValues)}>
             <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
               <TextCtrl name="person.firstName" label="First name" />
+              <HiddenCtrl name="person.counter" />
               <TextCtrl name="person.lastName" label="Last name" />
               <DateCtrl name="person.birthDay" label="birthDay" />
               <DateCtrl name="person.weddingDay" label="weddingDay" />
@@ -150,7 +155,7 @@ const KitchenSink = (): React.ReactElement => {
                   label="Kodeliste"
                   defaultValue={true}
                 />
-                 <CheckboxCtrl name="person.periode" label="Periode" />
+                <CheckboxCtrl name="person.periode" label="Periode" />
                 <CheckboxCtrl name="person.verdi" label="Verdi" />
                 <CheckboxCtrl name="person.tid" label="Tid" />
                 <CheckboxCtrl name="person.janei" label="Ja/Nei" />
