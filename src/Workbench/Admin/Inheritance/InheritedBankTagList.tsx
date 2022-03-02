@@ -64,7 +64,7 @@ export default function InheritedBankTagList({
   const renderList = () => {
     return (
       <List>
-        {tags.map((tag: object, index: number) => {
+        {tags.map((tag: ITag, index: number) => {
           {
             return <InheritedTagListItem tagListItem={tag} key={index} />;
           }
