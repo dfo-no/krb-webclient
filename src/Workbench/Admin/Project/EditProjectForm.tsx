@@ -16,18 +16,18 @@ import theme from '../../../theme';
 import { FormTextButton } from '../../Components/FormTextButton';
 
 interface IProps {
-  element: IBank;
+  project: IBank;
   handleClose: () => void;
 }
 
-const EditProjectForm = ({ element, handleClose }: IProps) => {
+const EditProjectForm = ({ project, handleClose }: IProps) => {
   const dispatch = useAppDispatch();
   const { t } = useTranslation();
   const [putProject] = usePutProjectMutation();
 
   const methods = useForm<IBank>({
     resolver: joiResolver(PutProjectSchema),
-    defaultValues: element
+    defaultValues: project
   });
 
   const onSubmit = async (put: IBank) => {

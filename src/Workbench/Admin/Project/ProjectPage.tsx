@@ -106,7 +106,7 @@ function ProjectPage(): React.ReactElement {
         <ProjectHeader />
         {isEditing && (
           <EditProjectForm
-            element={project}
+            project={project}
             handleClose={() => setEditing(false)}
           />
         )}

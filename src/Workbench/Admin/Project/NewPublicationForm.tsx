@@ -13,7 +13,10 @@ import {
   IPublication,
   PostPublicationSchema
 } from '../../../Nexus/entities/IPublication';
-import { bankApi } from '../../../store/api/bankApi';
+import {
+  useAddBankMutation,
+  usePutProjectMutation
+} from '../../../store/api/bankApi';
 import { FormFlexBox } from '../../Components/Form/FormFlexBox';
 import { FormIconButton } from '../../Components/Form/FormIconButton';
 import CheckIcon from '@mui/icons-material/Check';
@@ -32,29 +35,30 @@ export default function NewPublicationForm({
 }: IProps): React.ReactElement {
   const dispatch = useAppDispatch();
   const nexus = Nexus.getInstance();
-  const [addBank] = bankApi.useAddBankMutation();
-  const [putProject] = bankApi.usePutProjectMutation();
+  const [addBank] = useAddBankMutation();
+  const [putProject] = usePutProjectMutation();
   const { t } = useTranslation();
   const classes = useFormStyles();
   const [isSubmitting, setSubmitting] = useState(false);
 
+  const defaultValues = nexus.publicationService.defaultPublication(project.id);
   const methods = useForm<IPublication>({
     resolver: joiResolver(PostPublicationSchema),
-    defaultValues: nexus.publicationService.defaultPublication(project.id)
+    defaultValues
   });
 
-  const saveValues = (post: IPublication) => {
+  async function saveValues(post: IPublication) {
     setSubmitting(true);
-    const publication = { ...post };
-    const newPublications = [...project.publications];
 
     const generatedBank: IBank =
       nexus.publicationService.generateBankFromProject(project);
 
     // save the new published Bank
-    addBank(generatedBank)
+    await addBank(generatedBank)
       .unwrap()
       .then((result: IBank) => {
+        const publication = { ...post };
+        const newPublications = [...project.publications];
         // Update Publication with new data
         publication.id = result.id;
         publication.bankId = result.id;
@@ -63,18 +67,18 @@ export default function NewPublicationForm({
         // add publication to selected Bank
         newPublications.push(publication);
 
-        // save selected project to db
-        const alert: IAlert = {
-          id: uuidv4(),
-          style: 'success',
-          text: `successfully published version ${result.version}`
-        };
         putProject({ ...project, publications: newPublications }).then(() => {
+          const alert: IAlert = {
+            id: uuidv4(),
+            style: 'success',
+            text: `successfully published version ${result.version}`
+          };
           dispatch(addAlert({ alert }));
+          methods.reset();
           handleClose();
         });
       });
-  };
+  }
 
   return (
     <>
