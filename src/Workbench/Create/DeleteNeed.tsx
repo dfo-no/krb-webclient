@@ -1,16 +1,31 @@
 import DeleteIcon from '@mui/icons-material/Delete';
 import IconButton from '@mui/material/IconButton';
 import { useState } from 'react';
+import { useParams } from 'react-router-dom';
+import LoaderSpinner from '../../common/LoaderSpinner';
 import Dialog from '../../components/DFODialog/DFODialog';
 import { INeed } from '../../Nexus/entities/INeed';
+import { useGetProjectQuery } from '../../store/api/bankApi';
 import DeleteNeedForm from './DeleteNeedForm';
 
 interface IProps {
   need: INeed;
 }
 
+interface IRouteParams {
+  projectId: string;
+}
+
 const DeleteNeed = ({ need }: IProps) => {
   const [isOpen, setOpen] = useState(false);
+  const { projectId } = useParams<IRouteParams>();
+
+  const { data: project } = useGetProjectQuery(projectId);
+
+  if (!project) {
+    return <LoaderSpinner />;
+  }
+
   return (
     <span>
       <IconButton
@@ -27,7 +42,11 @@ const DeleteNeed = ({ need }: IProps) => {
         isOpen={isOpen}
         handleClose={() => setOpen(false)}
         children={
-          <DeleteNeedForm element={need} handleClose={() => setOpen(false)} />
+          <DeleteNeedForm
+            need={need}
+            project={project}
+            handleClose={() => setOpen(false)}
+          />
         }
       />
     </span>

@@ -1,7 +1,8 @@
-import { ListItemIcon } from '@mui/material';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton/ListItemButton';
+import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import React from 'react';
 import Utils from '../../common/Utils';
@@ -14,30 +15,26 @@ interface IProps {
 }
 
 export default function NeedList({ parentables }: IProps): React.ReactElement {
-  const { need, setNeed, setRequirement, setVariant } = useSelectState();
+  const { needIndex, setNeedIndex } = useSelectState();
 
   const renderLevels = (elements: Parentable<INeed>[]) => {
     const displayNeeds = Utils.parentable2Levelable(elements);
 
     return displayNeeds.map((element, index) => {
-      /* const cssClass = `level${element.level - 1}`; */
       return (
-        <ListItemButton
-          key={`${index}-${element.id}`}
-          onClick={() => {
-            if (!need || element.id !== need.id) {
-              setNeed(element);
-              setRequirement(null);
-              setVariant(null);
-            }
-          }}
-          selected={element.id === need?.id}
-        >
-          <ListItemText>{element.title}</ListItemText>
-          <ListItemIcon>
-            <ArrowForwardIcon />
-          </ListItemIcon>
-        </ListItemButton>
+        <ListItem key={`${index}-${element.id}`}>
+          <ListItemButton
+            onClick={() => {
+              setNeedIndex(index);
+            }}
+            selected={index === needIndex}
+          >
+            <ListItemText>{element.title}</ListItemText>
+            <ListItemIcon>
+              <ArrowForwardIcon />
+            </ListItemIcon>
+          </ListItemButton>
+        </ListItem>
       );
     });
   };
