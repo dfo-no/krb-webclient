@@ -1,4 +1,4 @@
-import { FormControl, FormLabel } from '@mui/material';
+import { FormControl } from '@mui/material';
 import { get } from 'lodash';
 import React from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
@@ -18,7 +18,7 @@ const SelectCtrl = ({ name, options }: IProps): React.ReactElement => {
     <FormControl error={!!get(errors, name)} sx={{ width: '100%' }}>
       <Controller
         name={name}
-        render={({ field }) => <DFOSelect options={options} />}
+        render={({ field }) => <DFOSelect options={options} field={field} />}
       />
     </FormControl>
   );

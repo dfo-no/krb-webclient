@@ -101,9 +101,7 @@ export default function InheritedBankAccordionBody({
             <Typography variant="smallBold">
               {t('Which version of the bank to inherit')}
             </Typography>
-            <Box className={classes.selectContainer}>
-              <DFOSelect options={versions} />
-            </Box>
+            <Box className={classes.selectContainer}>SELECT</Box>
           </Box>
           <Box className={classes.inheritPartsContainer}>
             <Typography variant="smallBold">

@@ -43,11 +43,7 @@ const FormSchema = CustomJoi.object().keys({
   person: CustomJoi.object().keys({
     firstName: CustomJoi.string().max(20).required(),
     lastName: CustomJoi.string().max(20).required(),
-    cars: CustomJoi.object()
-      .keys({
-        id: CustomJoi.string().valid('BMW', 'Volvo').required()
-      })
-      .required(),
+    cars: CustomJoi.string().valid('Volvo').required(),
     birthDay: CustomJoi.date().iso().raw().required(),
     weddingDay: CustomJoi.alternatives([
       CustomJoi.date().iso().max('12/13/2021').raw(),
@@ -92,7 +88,7 @@ const KitchenSink = (): React.ReactElement => {
     person: {
       firstName: '',
       lastName: '',
-      cars: '',
+      cars: 'BMW',
       birthDay: '',
       weddingDay: '2021/12/14T14:00:00.123Z',
       point: 50,

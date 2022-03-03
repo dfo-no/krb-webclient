@@ -1,13 +1,14 @@
-import React, { useState } from 'react';
+import React from 'react';
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
-import { InputBase, styled } from '@mui/material';
+import { styled } from '@mui/material';
 
 export interface DFOSelectProps {
   options: string[];
+  field: any;
 }
 
-const StyledDFOSelect = styled(InputBase)(({ theme }) => ({
+const DFOStyledSelect = styled(Select)(({ theme }) => ({
   '& .MuiInputBase-input': {
     border: `2px solid ${theme.palette.indigo.main}`,
     fontSize: 16,
@@ -16,21 +17,18 @@ const StyledDFOSelect = styled(InputBase)(({ theme }) => ({
 }));
 
 export default function DFOSelect({
-  options
+  options,
+  field
 }: DFOSelectProps): React.ReactElement {
-  const [selectedItem, setSelectedItem] = useState(0);
-
   return (
-    <Select input={<StyledDFOSelect />} value={selectedItem}>
-      {options.map((element: string, index: number) => (
-        <MenuItem
-          onClick={(e) => setSelectedItem(index)}
-          key={element}
-          value={index}
-        >
-          {element}
-        </MenuItem>
-      ))}
-    </Select>
+    <DFOStyledSelect {...field}>
+      {options.map((m) => {
+        return (
+          <MenuItem key={m} value={m}>
+            {m}
+          </MenuItem>
+        );
+      })}
+    </DFOStyledSelect>
   );
 }
