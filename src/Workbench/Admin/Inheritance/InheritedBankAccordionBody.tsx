@@ -73,8 +73,8 @@ export default function InheritedBankAccordionBody({
 
   // This is dummy data. Replace with real data.
   const versions = [
-    { name: 'Tronds versjon; 1. des. 2021' },
-    { name: 'Oslo kommune; 1. des. 2021' }
+    'Tronds versjon; 1. des. 2021',
+    'Oslo kommune; 1. des. 2021'
   ];
 
   const defaultValues: IFormValues = {

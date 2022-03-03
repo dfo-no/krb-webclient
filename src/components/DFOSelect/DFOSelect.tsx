@@ -1,57 +1,33 @@
-import React from 'react';
-import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
+import React, { useState } from 'react';
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import { InputBase, styled } from '@mui/material';
 
 export interface DFOSelectProps {
-  options: any;
+  options: string[];
 }
 
-const BootstrapInput = styled(InputBase)(({ theme }) => ({
-  'label + &': {
-    marginTop: theme.spacing(3)
-  },
+const StyledDFOSelect = styled(InputBase)(({ theme }) => ({
   '& .MuiInputBase-input': {
-    borderRadius: 4,
-    position: 'relative',
-    backgroundColor: theme.palette.background.paper,
-    border: '1px solid #ced4da',
+    border: `2px solid ${theme.palette.indigo.main}`,
     fontSize: 16,
-    padding: '10px 26px 10px 12px',
-    transition: theme.transitions.create(['border-color', 'box-shadow']),
-    // Use the system font instead of the default Roboto font.
-    fontFamily: [
-      '-apple-system',
-      'BlinkMacSystemFont',
-      '"Segoe UI"',
-      'Roboto',
-      '"Helvetica Neue"',
-      'Arial',
-      'sans-serif',
-      '"Apple Color Emoji"',
-      '"Segoe UI Emoji"',
-      '"Segoe UI Symbol"'
-    ].join(','),
-    '&:focus': {
-      borderRadius: 4,
-      borderColor: '#80bdff',
-      boxShadow: '0 0 0 0.2rem rgba(0,123,255,.25)'
-    }
+    padding: '10px 26px 10px 12px'
   }
 }));
 
 export default function DFOSelect({
   options
 }: DFOSelectProps): React.ReactElement {
-  const SelectIcon = () => {
-    return <KeyboardArrowDownIcon />;
-  };
+  const [selectedItem, setSelectedItem] = useState(0);
 
   return (
-    <Select value={0} IconComponent={SelectIcon}>
-      {options.map((element: any, index: number) => (
-        <MenuItem key={index} value={index} selected>
+    <Select input={<StyledDFOSelect />} value={selectedItem}>
+      {options.map((element: string, index: number) => (
+        <MenuItem
+          onClick={(e) => setSelectedItem(index)}
+          key={element}
+          value={index}
+        >
           {element}
         </MenuItem>
       ))}

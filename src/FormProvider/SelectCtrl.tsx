@@ -6,21 +6,19 @@ import DFOSelect from '../components/DFOSelect/DFOSelect';
 
 interface IProps {
   name: string;
-  label: string;
+  options: string[];
 }
 
-const SelectCtrl = ({ name, label }: IProps): React.ReactElement => {
+const SelectCtrl = ({ name, options }: IProps): React.ReactElement => {
   const {
     formState: { errors }
   } = useFormContext();
-
-  const options = ['BMW', 'Mercedes', 'Volvo'];
 
   return (
     <FormControl error={!!get(errors, name)} sx={{ width: '100%' }}>
       <Controller
         name={name}
-        render={({ field }) => <DFOSelect {...field} options={options} />}
+        render={({ field }) => <DFOSelect options={options} />}
       />
     </FormControl>
   );
