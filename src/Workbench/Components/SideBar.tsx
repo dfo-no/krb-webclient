@@ -19,7 +19,7 @@ interface IRouteParams {
 const useStyles = makeStyles({
   sideBar: {
     height: '100%',
-    paddingTop: 45,
+    paddingTop: 75,
     [theme.breakpoints.down('md')]: {
       paddingTop: 0
     }
@@ -37,8 +37,7 @@ const useStyles = makeStyles({
   },
   sideBarListItem: {
     cursor: 'pointer',
-    width: 200,
-    textAlign: 'center',
+    width: '100%',
     '&:hover': {
       background: theme.palette.lightBlue.main,
       color: theme.palette.dfoWhite.main,

@@ -25,6 +25,7 @@ const useStyles = makeStyles({
 
 export default function InheritancePage(): React.ReactElement {
   const { project } = useAppSelector((state) => state.project);
+
   const { t } = useTranslation();
   const classes = useStyles();
 
@@ -38,7 +39,7 @@ export default function InheritancePage(): React.ReactElement {
           <DFOAccordionElement
             eventKey={bank.id}
             header={<InheritanceBankHeader bank={bank} />}
-            body={<InheritanceBankBody />}
+            body={<InheritanceBankBody bank={bank} />}
           />
         </Box>
       );
