@@ -3,16 +3,16 @@ import makeStyles from '@mui/styles/makeStyles';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import 'react-nestable/dist/styles/index.css';
-import { Parentable } from '../models/Parentable';
-import { Nestable } from '../models/Nestable';
+import { Parentable } from '../../../models/Parentable';
+import { Nestable } from '../../../models/Nestable';
 import {
   DFOAccordionElement,
   DFOAccordionProvider
-} from '../components/DFOAccordion/DFOAccordion';
+} from '../../../components/DFOAccordion/DFOAccordion';
 import NestableHierarcy from './NestableHierarcy';
-import Utils from '../common/Utils';
-import theme from '../theme';
-import { BaseModelWithTitleAndDesc } from '../models/BaseModelWithTitleAndDesc';
+import Utils from '../../../common/Utils';
+import theme from '../../../theme';
+import { BaseModelWithTitleAndDesc } from '../../../models/BaseModelWithTitleAndDesc';
 
 const useStyles = makeStyles({
   nestableItemCustom: {
@@ -42,12 +42,15 @@ const useStyles = makeStyles({
 });
 
 interface IProps<T extends BaseModelWithTitleAndDesc> {
-  dispatchfunc: (item: Parentable<T>, index: number) => void;
+  dispatchfunc: (items: Parentable<T>[]) => void;
   inputlist: Nestable<T>[];
   component: React.ReactElement;
   depth: number;
 }
 
+/*
+ * @deprecated
+ **/
 const NestableHierarcyWithAccordion = <T extends BaseModelWithTitleAndDesc>({
   dispatchfunc,
   inputlist,

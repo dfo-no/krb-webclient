@@ -45,6 +45,24 @@ class Utils {
     return unescape('  '.replace(/ /g, '%A0').repeat(level - 1));
   }
 
+  static replaceElementInList<T extends IBaseModel>(
+    element: T,
+    list: T[]
+  ): T[] {
+    const newList = [...list];
+    const index = newList.findIndex((elem) => elem.id === element.id);
+    if (index !== -1) {
+      newList.splice(index, 1, element);
+    }
+    return newList;
+  }
+
+  static addElementToList<T extends IBaseModel>(element: T, list: T[]): T[] {
+    const newList = [...list];
+    newList.push(element);
+    return newList;
+  }
+
   private static flattenNestable<T extends IBaseModel>(
     items: Nestable<T>[]
   ): Nestable<T>[] {
@@ -60,6 +78,14 @@ class Utils {
       }
       return result;
     }, []);
+  }
+
+  static nestableList2Parentable<T extends IBaseModel>(
+    items: Nestable<T>[]
+  ): Parentable<T>[] {
+    return Utils.flattenNestable(items).map((item) =>
+      Utils.nestable2Parentable(item)
+    );
   }
 
   static nestable2Parentable<T extends IBaseModel>(

@@ -6,11 +6,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import { v4 as uuidv4 } from 'uuid';
 import TextCtrl from '../../../FormProvider/TextCtrl';
 import { useTranslation } from 'react-i18next';
-import { useAppDispatch, useAppSelector } from '../../../store/hooks';
-import {
-  addCodelist,
-  putSelectedProjectThunk
-} from '../../../store/reducers/project-reducer';
+import { useAppDispatch } from '../../../store/hooks';
 import { addAlert } from '../../../store/reducers/alert-reducer';
 import Nexus from '../../../Nexus/Nexus';
 import {
@@ -22,6 +18,9 @@ import { FormIconButton } from '../../Components/Form/FormIconButton';
 import { FormItemBox } from '../../Components/Form/FormItemBox';
 import { FormFlexBox } from '../../Components/Form/FormFlexBox';
 import { useFormStyles } from '../../Components/Form/FormStyles';
+import { useParams } from 'react-router-dom';
+import { IRouteParams } from '../../Models/IRouteParams';
+import useProjectMutations from '../../../store/api/ProjectMutations';
 
 interface IProps {
   handleClose: (newCodelist: ICodelist | null) => void;
@@ -31,23 +30,23 @@ export default function NewCodelistForm({
   handleClose
 }: IProps): React.ReactElement {
   const dispatch = useAppDispatch();
-  const { project } = useAppSelector((state) => state.project);
   const { t } = useTranslation();
   const nexus = Nexus.getInstance();
   const classes = useFormStyles();
+  const { projectId } = useParams<IRouteParams>();
+  const { addCodelist } = useProjectMutations();
 
   const defaultValues: ICodelist =
-    nexus.codelistService.generateDefaultCodelistValues(project.id);
+    nexus.codelistService.generateDefaultCodelistValues(projectId);
 
   const methods = useForm<ICodelist>({
     resolver: joiResolver(PostCodelistSchema),
     defaultValues
   });
 
-  const onSubmit = (post: ICodelist) => {
+  async function onSubmit(post: ICodelist) {
     const newCodelist = nexus.codelistService.createCodelistWithId(post);
-    dispatch(addCodelist(newCodelist));
-    dispatch(putSelectedProjectThunk('dummy')).then(() => {
+    await addCodelist(newCodelist).then(() => {
       const alert: IAlert = {
         id: uuidv4(),
         style: 'success',
@@ -57,7 +56,7 @@ export default function NewCodelistForm({
       methods.reset();
       handleClose(newCodelist);
     });
-  };
+  }
 
   return (
     <FormProvider {...methods}>

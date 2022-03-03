@@ -1,10 +1,11 @@
 import Nestable, { Item } from 'react-nestable';
 import 'react-nestable/dist/styles/index.css';
-import { Parentable } from '../models/Parentable';
-import { Nestable as NestableModel } from '../models/Nestable';
+import { Parentable } from '../../../models/Parentable';
+import { Nestable as NestableModel } from '../../../models/Nestable';
 import React from 'react';
 import DragIndicatorIcon from '@mui/icons-material/DragIndicator';
-import { BaseModelWithTitleAndDesc } from '../models/BaseModelWithTitleAndDesc';
+import { BaseModelWithTitleAndDesc } from '../../../models/BaseModelWithTitleAndDesc';
+import Utils from '../../../common/Utils';
 
 type NestableElementType =
   | React.ReactElement<any, string | React.JSXElementConstructor<any>>
@@ -20,10 +21,10 @@ type NestableElementType =
 
 interface IProps<T extends BaseModelWithTitleAndDesc> {
   className?: string;
-  inputlist: NestableModel<T>[];
-  dispatchfunc: (item: Parentable<T>, index: number) => void;
+  inputlist: Parentable<T>[];
+  dispatchfunc: (newItems: Parentable<T>[]) => void;
   renderItem: (
-    item: NestableModel<T>,
+    item: Parentable<T>,
     handler: NestableElementType,
     collapseIcon?: NestableElementType
   ) => React.ReactElement;
@@ -39,6 +40,8 @@ const NestableHierarcy = <T extends BaseModelWithTitleAndDesc>({
   depth,
   renderCollapseIcon
 }: IProps<T>): React.ReactElement => {
+  const nestedList = Utils.parentable2Nestable(inputlist);
+
   const convertTreeToList = (tree: Item, key: string, collection: Item[]) => {
     if ((!tree[key] || tree[key].length === 0) && collection.includes(tree)) {
       const copiedTree = { ...tree };
@@ -85,19 +88,20 @@ const NestableHierarcy = <T extends BaseModelWithTitleAndDesc>({
       delete clone.level;
       returnList.push(clone as Parentable<T>);
     });
-    const positionOfReturn = returnList.findIndex(
-      (item) => item.id === items.dragItem.id
-    );
 
-    dispatchfunc(returnList[positionOfReturn], positionOfReturn);
+    dispatchfunc(returnList);
   };
 
   return (
     <Nestable
       className={className}
-      items={inputlist}
+      items={nestedList}
       renderItem={({ item, handler, collapseIcon }) => {
-        return renderItem(item as NestableModel<T>, handler, collapseIcon);
+        return renderItem(
+          Utils.nestable2Parentable(item as NestableModel<T>),
+          handler,
+          collapseIcon
+        );
       }}
       onChange={(items) => onChange(items)}
       maxDepth={depth}
