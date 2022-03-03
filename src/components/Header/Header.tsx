@@ -12,7 +12,8 @@ const useStyles = makeStyles({
   header: {
     paddingTop: 10,
     paddingBottom: 6,
-    marginLeft: '5%'
+    marginLeft: '5%',
+    color: theme.palette.black.main
   },
   headerContent: {
     display: 'flex',
@@ -145,7 +146,7 @@ export default function Header(): React.ReactElement {
                 </Box>
                 <Box className={classes.viewingProjectTitle}>
                   <Box className={classes.projectData}>
-                    <Typography variant="big">{project.title}</Typography>
+                    <Typography variant="bigBold">{project.title}</Typography>
                   </Box>
                   <Box className={classes.projectIcons}>
                     <Link
@@ -183,7 +184,7 @@ export default function Header(): React.ReactElement {
                   <Typography variant="small">{projectPath}</Typography>
                 </Box>
                 <Box className={classes.notViewingProjectTitle}>
-                  <Typography variant="big">Kravbank</Typography>
+                  <Typography variant="bigBold">Kravbank</Typography>
                 </Box>
               </Box>
             )}

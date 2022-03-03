@@ -179,7 +179,7 @@ theme.typography.mediumBlue = {
   fontSize: '20px'
 };
 
-theme.typography.big = {
+theme.typography.bigBold = {
   fontSize: '28px',
   fontWeight: 700
 };

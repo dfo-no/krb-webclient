@@ -8,7 +8,7 @@ declare module '@mui/material/styles' {
     smallGray: React.CSSProperties;
     smallUnderline: React.CSSProperties;
     smallUnderlineBlue: React.CSSProperties;
-    big: React.CSSProperties;
+    bigBold: React.CSSProperties;
     medium: React.CSSProperties;
     mediumBold: React.CSSProperties;
     mediumBlue: React.CSSProperties;
@@ -23,7 +23,7 @@ declare module '@mui/material/styles' {
     smallGray?: React.CSSProperties;
     smallUnderline?: React.CSSProperties;
     smallUnderlineBlue?: React.CSSProperties;
-    big?: React.CSSProperties;
+    bigBold?: React.CSSProperties;
     medium?: React.CSSProperties;
     mediumBold?: React.CSSProperties;
     mediumBlue?: React.CSSProperties;
@@ -40,7 +40,7 @@ declare module '@mui/material/Typography' {
     smallGray: true;
     smallUnderline: true;
     smallUnderlineBlue: true;
-    big: true;
+    bigBold: true;
     medium: true;
     mediumBold: true;
     mediumBlue: true;
