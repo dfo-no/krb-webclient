@@ -2,15 +2,17 @@ import EditIcon from '@mui/icons-material/Edit';
 import IconButton from '@mui/material/IconButton';
 import { useState } from 'react';
 import Dialog from '../../components/DFODialog/DFODialog';
+import { Parentable } from '../../models/Parentable';
 import { INeed } from '../../Nexus/entities/INeed';
 import EditNeedForm from './EditNeedForm';
 
 interface IProps {
-  need: INeed;
+  need: Parentable<INeed>;
 }
 
 const EditNeed = ({ need }: IProps) => {
   const [isOpen, setOpen] = useState(false);
+
   return (
     <>
       <IconButton
@@ -27,7 +29,7 @@ const EditNeed = ({ need }: IProps) => {
         isOpen={isOpen}
         handleClose={() => setOpen(false)}
         children={
-          <EditNeedForm element={need} handleClose={() => setOpen(false)} />
+          <EditNeedForm need={need} handleClose={() => setOpen(false)} />
         }
       />
     </>

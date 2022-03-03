@@ -4,24 +4,29 @@ import Grid from '@mui/material/Grid';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import React from 'react';
+import { Parentable } from '../../models/Parentable';
+import { INeed } from '../../Nexus/entities/INeed';
 import DeleteNeed from './DeleteNeed';
 import EditNeed from './EditNeed';
-import { useSelectState } from './SelectContext';
 
-export default function NeedToolbar(): React.ReactElement {
-  const { need } = useSelectState();
-
+interface IProps {
+  need: Parentable<INeed>;
+}
+/**
+ * @TODO replace this with WB/ADmin/Project/ProjectHeader.tsx or its new component
+ */
+export default function NeedToolbar({ need }: IProps): React.ReactElement {
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static" color="secondary">
         <Toolbar color="secondary">
           <Grid container>
             <Typography variant="h6" component="span">
-              {need?.title}
+              {need && need.title}
             </Typography>
             <span style={{ flex: '1 1 auto' }}></span>
-            {need && <EditNeed need={need} />}
-            {need && <DeleteNeed need={need} />}
+            <EditNeed need={need} />
+            <DeleteNeed need={need} />
           </Grid>
         </Toolbar>
       </AppBar>

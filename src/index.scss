@@ -13,6 +13,9 @@ body {
   /* add padding around site*/
   /* do not add border or padding  w/hin addition to elemts w/h*/
   box-sizing: border-box;
+  /* TODO: ebug with url and Bradley Hand"
+   @see https://blog.hubspot.com/website/web-safe-html-css-fonts
+  font-family: 'Bradley Hand', 'Times New Roman', serif; */
 }
 
 /* Following is global styles. They must be used as className="iconText" etc... */

@@ -1,39 +1,44 @@
 import { joiResolver } from '@hookform/resolvers/joi';
 import Button from '@mui/material/Button';
+import produce from 'immer';
 import React from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { v4 as uuidv4 } from 'uuid';
+import LoaderSpinner from '../../common/LoaderSpinner';
 import ErrorSummary from '../../Form/ErrorSummary';
 import RadioCtrl from '../../FormProvider/RadioCtrl';
 import TextCtrl from '../../FormProvider/TextCtrl';
 import { IAlert } from '../../models/IAlert';
 import ModelType from '../../models/ModelType';
+import { Parentable } from '../../models/Parentable';
 import RequirementType from '../../models/RequirementType';
+import { IBank } from '../../Nexus/entities/IBank';
+import { INeed } from '../../Nexus/entities/INeed';
 import {
   IRequirement,
   PostRequirementSchema
 } from '../../Nexus/entities/IRequirement';
-import { useAppDispatch, useAppSelector } from '../../store/hooks';
+import { usePutProjectMutation } from '../../store/api/bankApi';
+import { useAppDispatch } from '../../store/hooks';
 import { addAlert } from '../../store/reducers/alert-reducer';
-import {
-  addRequirementToNeed,
-  putSelectedProjectThunk
-} from '../../store/reducers/project-reducer';
 import { useSelectState } from './SelectContext';
 
 interface IProps {
+  need: Parentable<INeed>;
+  project: IBank;
   handleClose: () => void;
 }
 
-function NewRequirementForm({ handleClose }: IProps): React.ReactElement {
+function NewRequirementForm({
+  project,
+  need,
+  handleClose
+}: IProps): React.ReactElement {
   const dispatch = useAppDispatch();
-
-  // need is never empty here, because otherwise this form would not be visible to the user
-  const { need } = useSelectState();
-
-  const { project } = useAppSelector((state) => state.project);
+  const { needIndex } = useSelectState();
   const { t } = useTranslation();
+  const [putProject] = usePutProjectMutation();
 
   const defaultValues: IRequirement = {
     id: '',
@@ -53,17 +58,17 @@ function NewRequirementForm({ handleClose }: IProps): React.ReactElement {
     defaultValues
   });
 
-  const onNewRequirementSubmit = (post: IRequirement) => {
-    const requirement = { ...post };
-    requirement.id = uuidv4();
-    dispatch(
-      addRequirementToNeed({
-        needId: post.needId,
-        requirement
-      })
-    );
+  if (needIndex === null) {
+    return <LoaderSpinner />;
+  }
 
-    dispatch(putSelectedProjectThunk('dummy')).then(() => {
+  const onSubmit = async (post: IRequirement) => {
+    const nextState = produce(project, (draftState) => {
+      const postDraft = { ...post, id: uuidv4() };
+      draftState.needs[needIndex].requirements.unshift(postDraft);
+    });
+
+    await putProject(nextState).then(() => {
       const alert: IAlert = {
         id: uuidv4(),
         style: 'success',
@@ -77,7 +82,7 @@ function NewRequirementForm({ handleClose }: IProps): React.ReactElement {
   return (
     <FormProvider {...methods}>
       <form
-        onSubmit={methods.handleSubmit(onNewRequirementSubmit)}
+        onSubmit={methods.handleSubmit(onSubmit)}
         autoComplete="off"
         noValidate
       >
