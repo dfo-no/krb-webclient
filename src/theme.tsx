@@ -179,16 +179,8 @@ theme.typography.mediumBlue = {
   fontSize: '20px'
 };
 
-theme.typography.bigBoldBlack = {
-  fontSize: '28px',
-  fontWeight: 700,
-  color: theme.palette.black.main
-};
-
-theme.typography.bigBoldWhite = {
-  fontSize: '28px',
-  fontWeight: 700,
-  color: theme.palette.dfoWhite.main
+theme.typography.bigBold = {
+  fontSize: '28px'
 };
 
 theme.typography.footerAddressText = {

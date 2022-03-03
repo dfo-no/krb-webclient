@@ -12,7 +12,8 @@ const useStyles = makeStyles({
   header: {
     paddingTop: 10,
     paddingBottom: 6,
-    marginLeft: '5%'
+    marginLeft: '5%',
+    color: theme.palette.black.main
   },
   headerContent: {
     display: 'flex',
@@ -30,12 +31,14 @@ const useStyles = makeStyles({
     display: 'flex',
     paddingBottom: 3,
     width: '90vw',
+    fontWeight: 700,
     [theme.breakpoints.down('mddd')]: {
       paddingBottom: 0
     }
   },
   notViewingProjectTitle: {
-    paddingBottom: 3
+    paddingBottom: 3,
+    fontWeight: 700
   },
   projectData: {
     display: 'flex',
@@ -145,9 +148,7 @@ export default function Header(): React.ReactElement {
                 </Box>
                 <Box className={classes.viewingProjectTitle}>
                   <Box className={classes.projectData}>
-                    <Typography variant="bigBoldBlack">
-                      {project.title}
-                    </Typography>
+                    <Typography variant="bigBold">{project.title}</Typography>
                   </Box>
                   <Box className={classes.projectIcons}>
                     <Link
@@ -185,7 +186,7 @@ export default function Header(): React.ReactElement {
                   <Typography variant="small">{projectPath}</Typography>
                 </Box>
                 <Box className={classes.notViewingProjectTitle}>
-                  <Typography variant="bigBoldBlack">Kravbank</Typography>
+                  <Typography variant="bigBold">Kravbank</Typography>
                 </Box>
               </Box>
             )}

@@ -8,6 +8,7 @@ import { useProjectEditingState } from './ProjectEditingContext';
 import { useParams } from 'react-router-dom';
 import { useGetProjectQuery } from '../../../store/api/bankApi';
 import { IRouteParams } from '../../Models/IRouteParams';
+import theme from '../../../theme';
 
 const useStyles = makeStyles({
   headerContainer: {
@@ -34,7 +35,7 @@ function ProjectHeader(): React.ReactElement {
     <DFOCardHeader>
       <Box className={classes.headerContainer}>
         <Box sx={{ display: 'flex', flexDirection: 'row' }}>
-          <Typography variant="bigBoldWhite">{project.title}</Typography>
+          <Typography variant="bigBold">{project.title}</Typography>
           <DFOCardHeaderIconButton
             sx={{ marginLeft: 'auto' }}
             onClick={() => setEditing(true)}
