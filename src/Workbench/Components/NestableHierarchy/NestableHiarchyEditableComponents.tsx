@@ -58,7 +58,7 @@ const useStyles = makeStyles({
 });
 
 interface IProps<T extends BaseModelWithTitleAndDesc> {
-  dispatchfunc: (item: Parentable<T>, index: number) => void;
+  dispatchfunc: (items: Parentable<T>[]) => void;
   inputlist: Parentable<T>[];
   CreateComponent: React.ReactElement;
   EditComponent: (item: Parentable<T>) => React.ReactElement;

@@ -15,7 +15,7 @@ import NestableHierarcy from './NestableHierarcy';
 import { BaseModelWithTitleAndDesc } from '../../../models/BaseModelWithTitleAndDesc';
 
 interface IProps<T extends IBaseModel> {
-  dispatchFunc: (item: Parentable<T>, index: number) => void;
+  dispatchFunc: (items: Parentable<T>[]) => void;
   selectFunc: (item: Parentable<T>) => void;
   inputlist: Parentable<T>[];
   depth: number;

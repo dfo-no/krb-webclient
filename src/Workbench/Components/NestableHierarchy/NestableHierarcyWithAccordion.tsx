@@ -42,7 +42,7 @@ const useStyles = makeStyles({
 });
 
 interface IProps<T extends BaseModelWithTitleAndDesc> {
-  dispatchfunc: (item: Parentable<T>, index: number) => void;
+  dispatchfunc: (items: Parentable<T>[]) => void;
   inputlist: Nestable<T>[];
   component: React.ReactElement;
   depth: number;

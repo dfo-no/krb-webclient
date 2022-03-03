@@ -40,11 +40,7 @@ const CodePanel = (): React.ReactElement => {
     return <></>;
   }
 
-  const dispatchfunc = (movedItem: Parentable<ICode>, index: number) => {
-    const newCodes = Utils.moveElementInList(movedItem, index, [
-      ...codelist.codes
-    ]);
-
+  const updateCodesArrangement = (newCodes: Parentable<ICode>[]) => {
     setCodes(newCodes);
     editCodes(newCodes, codelist);
   };
@@ -117,7 +113,7 @@ const CodePanel = (): React.ReactElement => {
         className={classes.nestableCustom}
         inputlist={codes}
         renderItem={renderItem}
-        dispatchfunc={dispatchfunc}
+        dispatchfunc={updateCodesArrangement}
         depth={1}
       />
     </Box>

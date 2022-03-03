@@ -22,7 +22,7 @@ type NestableElementType =
 interface IProps<T extends BaseModelWithTitleAndDesc> {
   className?: string;
   inputlist: Parentable<T>[];
-  dispatchfunc: (item: Parentable<T>, index: number) => void;
+  dispatchfunc: (newItems: Parentable<T>[]) => void;
   renderItem: (
     item: Parentable<T>,
     handler: NestableElementType,
@@ -88,11 +88,8 @@ const NestableHierarcy = <T extends BaseModelWithTitleAndDesc>({
       delete clone.level;
       returnList.push(clone as Parentable<T>);
     });
-    const positionOfReturn = returnList.findIndex(
-      (item) => item.id === items.dragItem.id
-    );
 
-    dispatchfunc(returnList[positionOfReturn], positionOfReturn);
+    dispatchfunc(returnList);
   };
 
   return (

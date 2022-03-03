@@ -57,11 +57,9 @@ export default function ProductPage(): React.ReactElement {
     return <p>Finner ikke prosjekt</p>;
   }
 
-  const moveProduct = (movedItem: Parentable<IProduct>, index: number) => {
-    const newProductList = Utils.moveElementInList(movedItem, index, [
-      ...project.products
-    ]);
-
+  const updateProductsArrangement = (
+    newProductList: Parentable<IProduct>[]
+  ) => {
     setProducts(newProductList);
     editProducts(newProductList);
   };
@@ -99,9 +97,7 @@ export default function ProductPage(): React.ReactElement {
 
         <Box className={classes.products}>
           <NestableHierarcyEditableComponents
-            dispatchfunc={(item: Parentable<IProduct>, index: number) =>
-              moveProduct(item, index)
-            }
+            dispatchfunc={updateProductsArrangement}
             inputlist={products}
             CreateComponent={
               <NewProductForm handleClose={() => setCreating(false)} />

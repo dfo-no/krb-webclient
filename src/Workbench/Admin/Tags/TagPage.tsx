@@ -60,11 +60,7 @@ export default function TagPage(): React.ReactElement {
     return <p>Finner ikke prosjekt</p>;
   }
 
-  const setNewTagList = (movedItem: Parentable<ITag>, index: number) => {
-    const newTagList = Utils.moveElementInList(movedItem, index, [
-      ...project.tags
-    ]);
-
+  const updateTagsArrangement = (newTagList: Parentable<ITag>[]) => {
     setTags(newTagList);
     editTags(newTagList);
   };
@@ -102,9 +98,7 @@ export default function TagPage(): React.ReactElement {
 
         <Box className={classes.tags}>
           <NestableHierarcyEditableComponents
-            dispatchfunc={(item: Parentable<ITag>, index: number) =>
-              setNewTagList(item, index)
-            }
+            dispatchfunc={updateTagsArrangement}
             inputlist={tags}
             CreateComponent={
               <NewTagForm handleClose={() => setCreating(false)} />
