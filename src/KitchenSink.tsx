@@ -13,6 +13,7 @@ import DateCtrl from './FormProvider/DateCtrl';
 import FileUploadCtrl from './FormProvider/FileUploadCtrl';
 import HiddenCtrl from './FormProvider/HiddenCtrl';
 import RadioCtrl from './FormProvider/RadioCtrl';
+import SelectCtrl from './FormProvider/SelectCtrl';
 import SliderCtrl from './FormProvider/SliderCtrl';
 import SwitchCtrl from './FormProvider/SwitchCtrl';
 import TextCtrl from './FormProvider/TextCtrl';
@@ -86,6 +87,7 @@ const KitchenSink = (): React.ReactElement => {
       firstName: '',
       lastName: '',
       birthDay: '',
+
       weddingDay: '2021/12/14T14:00:00.123Z',
       point: 50,
       isDeveloper: false,
@@ -129,6 +131,7 @@ const KitchenSink = (): React.ReactElement => {
             <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
               <TextCtrl name="person.firstName" label="First name" />
               <TextCtrl name="person.lastName" label="Last name" />
+              <SelectCtrl name="cars" label="Cars" />
               {/*               <HiddenCtrl name="person.counter" /> */}
               <DateCtrl name="person.birthDay" label="birthDay" />
               <DateCtrl name="person.weddingDay" label="weddingDay" />
