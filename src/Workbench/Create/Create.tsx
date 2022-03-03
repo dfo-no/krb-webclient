@@ -1,5 +1,5 @@
 import { joiResolver } from '@hookform/resolvers/joi';
-import Button from '@mui/material/Button';
+import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid/Grid';
 import React, { useEffect } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
@@ -23,8 +23,7 @@ interface IRouteParams {
 export default function Create(): React.ReactElement {
   const { projectId } = useParams<IRouteParams>();
   const { data: project } = useGetProjectQuery(projectId);
-  const { needIndex, setNeedIndex, requirementIndex, setRequirementIndex } =
-    useSelectState();
+  const { needIndex, setNeedIndex } = useSelectState();
 
   const methods = useForm<IBank>({
     resolver: joiResolver(PutProjectSchema),
@@ -47,38 +46,45 @@ export default function Create(): React.ReactElement {
   }
 
   return (
-    <Grid
-      container
-      spacing={2}
+    <Box
       sx={{
-        minHeight: '100vh',
-        backgroundColor: theme.palette.gray100.main
+        flexGrow: 1
       }}
     >
-      <FormProvider {...methods}>
-        <Grid item xs={2}>
-          <NewNeed />
-          <NeedList parentables={project.needs} />
-        </Grid>
-        <Grid item xs={10}>
-          <span>{'needIndex: ' + needIndex}</span>
-          <span>{' requirementIndex: ' + requirementIndex}</span>
-          {/* <Button variant="outlined" onClick={() => setNeedIndex(1)}>
-            Set selected 2
-          </Button> */}
-          {needIndex !== null ? (
-            <>
-              <NeedToolbar need={project.needs[needIndex]} />
-              <NewRequirement need={project.needs[needIndex]} />
-              <RequirementsList
-                requirements={project.needs[needIndex].requirements}
-              />
-            </>
-          ) : (
-            <div>Ingen behov valgt</div>
-          )}
-        </Grid>
-      </FormProvider>
-    </Grid>
+      <Grid
+        container
+        spacing={2}
+        sx={{
+          minHeight: '100vh',
+          backgroundColor: theme.palette.gray100.main
+        }}
+      >
+        <FormProvider {...methods}>
+          <Grid item xs={2}>
+            <NewNeed />
+            <NeedList parentables={project.needs} />
+          </Grid>
+          <Grid
+            item
+            xs={10}
+            sx={{ backgroundColor: theme.palette.dfoBackgroundBlue.main }}
+          >
+            {needIndex !== null ? (
+              <>
+                <NeedToolbar need={project.needs[needIndex]} />
+                <NewRequirement need={project.needs[needIndex]} />
+                {project.needs[needIndex]?.requirements && (
+                  <RequirementsList
+                    requirements={project.needs[needIndex].requirements}
+                  />
+                )}
+              </>
+            ) : (
+              <div>Ingen behov valgt</div>
+            )}
+          </Grid>
+        </FormProvider>
+      </Grid>
+    </Box>
   );
 }

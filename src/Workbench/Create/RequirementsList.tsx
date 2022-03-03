@@ -4,19 +4,20 @@ import Accordion from '@mui/material/Accordion';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import AccordionSummary from '@mui/material/AccordionSummary';
 import Button from '@mui/material/Button';
-import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
-import ListItemButton from '@mui/material/ListItemButton';
-import ListItemIcon from '@mui/material/ListItemIcon';
-import ListItemText from '@mui/material/ListItemText';
 import Typography from '@mui/material/Typography';
+import { produce } from 'immer';
 import React from 'react';
-import { useFieldArray } from 'react-hook-form';
 import { useParams } from 'react-router-dom';
+import { v4 as uuidv4 } from 'uuid';
 import LoaderSpinner from '../../common/LoaderSpinner';
-import { IBank } from '../../Nexus/entities/IBank';
+import { IAlert } from '../../models/IAlert';
 import { IRequirement } from '../../Nexus/entities/IRequirement';
-import { useGetProjectQuery } from '../../store/api/bankApi';
+import {
+  useGetProjectQuery,
+  usePutProjectMutation
+} from '../../store/api/bankApi';
+import { useAppDispatch } from '../../store/hooks';
+import { addAlert } from '../../store/reducers/alert-reducer';
 import Requirement from './Requirement';
 import { useSelectState } from './SelectContext';
 
@@ -34,30 +35,30 @@ export default function RequirementsList({
   const { needIndex } = useSelectState();
   const { projectId } = useParams<IRouteParams>();
   const { data: project } = useGetProjectQuery(projectId);
+  const [putProject] = usePutProjectMutation();
+  const dispatch = useAppDispatch();
 
   if (!project || needIndex === null) {
     return <LoaderSpinner />;
   }
 
-  /*   const { fields, append, remove } = useFieldArray({
-    name: `variants.${variantIndex}.questions` as 'variants.0.questions'
-  }); */
-
-  const onDelete = async (p: IRequirement) => {
-    console.log(p);
-    /* await deleteProject(p).then(() => {
+  const onDelete = async (p: number) => {
+    const nextState = produce(project, (draftState) => {
+      draftState.needs[needIndex].requirements.splice(p, 1);
+    });
+    await putProject(nextState).then(() => {
       const alert: IAlert = {
         id: uuidv4(),
         style: 'success',
-        text: 'Successfully deleted project'
+        text: 'Successfully deleted requirement'
       };
       dispatch(addAlert({ alert }));
-    }); */
+    });
   };
 
   return (
     <div>
-      {requirements.map((r) => (
+      {requirements.map((r, index) => (
         <Accordion key={r.id}>
           <AccordionSummary
             expandIcon={<ExpandMoreIcon />}
@@ -67,31 +68,17 @@ export default function RequirementsList({
             <Typography>{r.title}</Typography>
           </AccordionSummary>
           <AccordionDetails>
-            <Requirement requirement={r} />
+            <Requirement
+              requirement={r}
+              project={project}
+              needIndex={needIndex}
+            />
+            <Button variant="warning" onClick={() => onDelete(index)}>
+              <DeleteIcon />
+            </Button>
           </AccordionDetails>
         </Accordion>
       ))}
     </div>
-  );
-
-  return (
-    <List>
-      {requirements.map((element) => (
-        <ListItem key={element.id}>
-          <ListItemButton
-            onClick={(event) => {
-              // handleListItemClick(event, index);
-              // updateSelectedFunction(element);
-              // setRequirement(element);
-            }}
-          >
-            <ListItemText>{element.title}</ListItemText>
-          </ListItemButton>
-          <Button variant="warning" onClick={() => onDelete(element)}>
-            <DeleteIcon />
-          </Button>
-        </ListItem>
-      ))}
-    </List>
   );
 }
