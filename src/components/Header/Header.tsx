@@ -31,14 +31,12 @@ const useStyles = makeStyles({
     display: 'flex',
     paddingBottom: 3,
     width: '90vw',
-    fontWeight: 700,
     [theme.breakpoints.down('mddd')]: {
       paddingBottom: 0
     }
   },
   notViewingProjectTitle: {
-    paddingBottom: 3,
-    fontWeight: 700
+    paddingBottom: 3
   },
   projectData: {
     display: 'flex',

@@ -180,7 +180,8 @@ theme.typography.mediumBlue = {
 };
 
 theme.typography.bigBold = {
-  fontSize: '28px'
+  fontSize: '28px',
+  fontWeight: 700
 };
 
 theme.typography.footerAddressText = {
