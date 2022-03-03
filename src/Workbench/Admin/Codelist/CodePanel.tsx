@@ -3,7 +3,7 @@ import { Box, Typography } from '@mui/material/';
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
 import { Parentable } from '../../../models/Parentable';
 import { ICode } from '../../../Nexus/entities/ICode';
-import NestableHierarcy from '../../../NestableHierarchy/NestableHierarcy';
+import NestableHierarcy from '../../Components/NestableHierarchy/NestableHierarcy';
 import { useSelectState } from './SelectContext';
 import EditCodeForm from './EditCodeForm';
 import CodeAddButton from './CodeAddButton';

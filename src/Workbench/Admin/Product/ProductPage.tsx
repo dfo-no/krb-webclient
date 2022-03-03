@@ -9,7 +9,7 @@ import { IProduct } from '../../../Nexus/entities/IProduct';
 import theme from '../../../theme';
 import EditProductForm from './EditProductForm';
 import NewProductForm from './NewProductForm';
-import NestableHierarcyEditableComponents from '../../Components/NestableHiarchyEditableComponents';
+import NestableHierarcyEditableComponents from '../../Components/NestableHierarchy/NestableHiarchyEditableComponents';
 import { useEditableState } from '../../Components/EditableContext';
 import { StandardContainer } from '../../Components/StandardContainer';
 import {

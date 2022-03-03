@@ -1,11 +1,11 @@
 import Nestable, { Item } from 'react-nestable';
 import 'react-nestable/dist/styles/index.css';
-import { Parentable } from '../models/Parentable';
-import { Nestable as NestableModel } from '../models/Nestable';
+import { Parentable } from '../../../models/Parentable';
+import { Nestable as NestableModel } from '../../../models/Nestable';
 import React from 'react';
 import DragIndicatorIcon from '@mui/icons-material/DragIndicator';
-import { BaseModelWithTitleAndDesc } from '../models/BaseModelWithTitleAndDesc';
-import Utils from '../common/Utils';
+import { BaseModelWithTitleAndDesc } from '../../../models/BaseModelWithTitleAndDesc';
+import Utils from '../../../common/Utils';
 
 type NestableElementType =
   | React.ReactElement<any, string | React.JSXElementConstructor<any>>

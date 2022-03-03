@@ -1,14 +1,14 @@
 import React from 'react';
 import 'react-nestable/dist/styles/index.css';
-import { Parentable } from '../../models/Parentable';
+import { Parentable } from '../../../models/Parentable';
 import { Box, Typography } from '@mui/material';
 import makeStyles from '@mui/styles/makeStyles';
-import theme from '../../theme';
-import NestableHierarcy from '../../NestableHierarchy/NestableHierarcy';
+import theme from '../../../theme';
+import NestableHierarcy from './NestableHierarcy';
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
-import { useEditableState } from './EditableContext';
-import { BaseModelWithTitleAndDesc } from '../../models/BaseModelWithTitleAndDesc';
-import { FormContainerBox } from './Form/FormContainerBox';
+import { useEditableState } from '../EditableContext';
+import { BaseModelWithTitleAndDesc } from '../../../models/BaseModelWithTitleAndDesc';
+import { FormContainerBox } from '../Form/FormContainerBox';
 
 const useStyles = makeStyles({
   nestableItemCustom: {

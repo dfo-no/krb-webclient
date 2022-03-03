@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Parentable } from '../../../models/Parentable';
-import NestableHierarcyWithAccordion from '../../../NestableHierarchy/NestableHierarcyWithAccordion';
+import NestableHierarcyWithAccordion from '../../Components/NestableHierarchy/NestableHierarcyWithAccordion';
 import { INeed } from '../../../Nexus/entities/INeed';
 import { Nestable } from '../../../models/Nestable';
 import { useAppDispatch, useAppSelector } from '../../../store/hooks';
@@ -13,6 +13,9 @@ import EditNeedForm from './EditNeedForm';
 import NewNeedForm from './NewNeedForm';
 import Utils from '../../../common/Utils';
 
+/*
+ * @deprecated
+ **/
 function NeedPage(): React.ReactElement {
   const { project } = useAppSelector((state) => state.project);
   const [needlist, setNeedlist] = useState<Nestable<INeed>[]>([]);

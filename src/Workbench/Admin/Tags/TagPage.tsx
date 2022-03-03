@@ -20,7 +20,7 @@ import { useGetProjectQuery } from '../../../store/api/bankApi';
 import LoaderSpinner from '../../../common/LoaderSpinner';
 import { useParams } from 'react-router-dom';
 import { IRouteParams } from '../../Models/IRouteParams';
-import NestableHierarcyEditableComponents from '../../Components/NestableHiarchyEditableComponents';
+import NestableHierarcyEditableComponents from '../../Components/NestableHierarchy/NestableHiarchyEditableComponents';
 import SearchUtils from '../../../common/SearchUtils';
 import Utils from '../../../common/Utils';
 import useProjectMutations from '../../../store/api/ProjectMutations';
