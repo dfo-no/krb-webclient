@@ -45,18 +45,6 @@ class Utils {
     return unescape('  '.replace(/ /g, '%A0').repeat(level - 1));
   }
 
-  static moveElementInList<T extends IBaseModel>(
-    element: T,
-    newIndex: number,
-    list: T[]
-  ): T[] {
-    const newList = [...list];
-    const oldIndex = newList.findIndex((oldItem) => oldItem.id === element.id);
-    newList.splice(oldIndex, 1);
-    newList.splice(newIndex, 0, element);
-    return newList;
-  }
-
   static replaceElementInList<T extends IBaseModel>(
     element: T,
     list: T[]

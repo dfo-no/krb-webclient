@@ -54,9 +54,7 @@ const CodePanel = (): React.ReactElement => {
 
   const handleCloseEdit = (newCode: Parentable<ICode> | null) => {
     if (newCode) {
-      const newCodes = [...codelist.codes];
-      const codeIndex = newCodes.findIndex((code) => code.id === newCode.id);
-      newCodes.splice(codeIndex, 1, newCode);
+      const newCodes = Utils.replaceElementInList(newCode, codelist.codes);
       setCodelist({ ...codelist, codes: newCodes });
     }
     setEditMode('');
@@ -64,8 +62,7 @@ const CodePanel = (): React.ReactElement => {
 
   const handleCloseCreate = (newCode: Parentable<ICode> | null) => {
     if (newCode) {
-      const newCodes = [...codelist.codes];
-      newCodes.push(newCode);
+      const newCodes = Utils.addElementToList(newCode, codelist.codes);
       setCodelist({ ...codelist, codes: newCodes });
     }
     setCreating(false);
