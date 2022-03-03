@@ -1,11 +1,11 @@
 import React from 'react';
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
-import { styled } from '@mui/material';
+import { Box, styled } from '@mui/material';
 
 export interface DFOSelectProps {
   options: string[];
-  field: any;
+  field: object;
 }
 
 const DFOStyledSelect = styled(Select)(({ theme }) => ({
@@ -21,14 +21,16 @@ export default function DFOSelect({
   field
 }: DFOSelectProps): React.ReactElement {
   return (
-    <DFOStyledSelect {...field}>
-      {options.map((m) => {
-        return (
-          <MenuItem key={m} value={m}>
-            {m}
-          </MenuItem>
-        );
-      })}
-    </DFOStyledSelect>
+    <Box>
+      <DFOStyledSelect {...field}>
+        {options.map((option) => {
+          return (
+            <MenuItem key={option} value={option}>
+              {option}
+            </MenuItem>
+          );
+        })}
+      </DFOStyledSelect>
+    </Box>
   );
 }
