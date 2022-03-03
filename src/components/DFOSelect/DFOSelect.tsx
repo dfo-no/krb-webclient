@@ -1,47 +1,38 @@
 import React from 'react';
-import theme from '../../theme';
-import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
-import makeStyles from '@mui/styles/makeStyles';
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
+import { Box, styled } from '@mui/material';
+import { ControllerRenderProps, FieldValues } from 'react-hook-form';
 
 export interface DFOSelectProps {
-  options: any;
+  options: string[];
+  field: ControllerRenderProps<FieldValues, string>;
 }
 
-const useStyles = makeStyles({
-  select: {
-    width: '100%',
+const DFOStyledSelect = styled(Select)(({ theme }) => ({
+  '& .MuiInputBase-input': {
     border: `2px solid ${theme.palette.indigo.main}`,
-    height: 60,
-    paddingLeft: 20,
-    '& .MuiInputBase-input': {
-      backgroundColor: theme.palette.dfoWhite.main
-    }
-  },
-  selectIcon: {
-    color: theme.palette.gray700.main,
-    marginRight: 8,
-    fontSize: '38px !important'
+    fontSize: 16,
+    padding: '10px 26px 10px 12px',
+    width: '100%'
   }
-});
+}));
 
 export default function DFOSelect({
-  options
+  options,
+  field
 }: DFOSelectProps): React.ReactElement {
-  const classes = useStyles();
-
-  const SelectIcon = () => {
-    return <KeyboardArrowDownIcon className={classes.selectIcon} />;
-  };
-
   return (
-    <Select className={classes.select} value={0} IconComponent={SelectIcon}>
-      {options.map((element: any, index: number) => (
-        <MenuItem key={index} value={index} selected>
-          {element.name}
-        </MenuItem>
-      ))}
-    </Select>
+    <Box>
+      <DFOStyledSelect {...field}>
+        {options.map((option) => {
+          return (
+            <MenuItem key={option} value={option}>
+              {option}
+            </MenuItem>
+          );
+        })}
+      </DFOStyledSelect>
+    </Box>
   );
 }

@@ -13,6 +13,7 @@ import DateCtrl from './FormProvider/DateCtrl';
 import FileUploadCtrl from './FormProvider/FileUploadCtrl';
 import HiddenCtrl from './FormProvider/HiddenCtrl';
 import RadioCtrl from './FormProvider/RadioCtrl';
+import SelectCtrl from './FormProvider/SelectCtrl';
 import SliderCtrl from './FormProvider/SliderCtrl';
 import SwitchCtrl from './FormProvider/SwitchCtrl';
 import TextCtrl from './FormProvider/TextCtrl';
@@ -24,6 +25,7 @@ interface IFormValues {
   person: {
     firstName: string | null;
     lastName: string | null;
+    cars: string | null;
     birthDay: string | null;
     weddingDay?: string | null;
     point: number;
@@ -41,6 +43,7 @@ const FormSchema = CustomJoi.object().keys({
   person: CustomJoi.object().keys({
     firstName: CustomJoi.string().max(20).required(),
     lastName: CustomJoi.string().max(20).required(),
+    cars: CustomJoi.string().valid('Volvo').required(),
     birthDay: CustomJoi.date().iso().raw().required(),
     weddingDay: CustomJoi.alternatives([
       CustomJoi.date().iso().max('12/13/2021').raw(),
@@ -85,6 +88,7 @@ const KitchenSink = (): React.ReactElement => {
     person: {
       firstName: '',
       lastName: '',
+      cars: 'BMW',
       birthDay: '',
       weddingDay: '2021/12/14T14:00:00.123Z',
       point: 50,
@@ -106,6 +110,8 @@ const KitchenSink = (): React.ReactElement => {
   const saveValues = (data: IFormValues) => {
     console.log(data.person);
   };
+
+  const selectOptions = ['BMW', 'Mercedes', 'Volvo'];
 
   return (
     <Box
@@ -129,6 +135,7 @@ const KitchenSink = (): React.ReactElement => {
             <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
               <TextCtrl name="person.firstName" label="First name" />
               <TextCtrl name="person.lastName" label="Last name" />
+              <SelectCtrl name="person.cars" options={selectOptions} />
               {/*               <HiddenCtrl name="person.counter" /> */}
               <DateCtrl name="person.birthDay" label="birthDay" />
               <DateCtrl name="person.weddingDay" label="weddingDay" />
