@@ -3,20 +3,13 @@ import makeStyles from '@mui/styles/makeStyles';
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import SearchUtils from '../../../common/SearchUtils';
-import Utils from '../../../common/Utils';
 import DFOSearchBar from '../../../components/DFOSearchBar/DFOSearchBar';
-import { Nestable } from '../../../models/Nestable';
 import { Parentable } from '../../../models/Parentable';
 import { IProduct } from '../../../Nexus/entities/IProduct';
-import { useAppDispatch, useAppSelector } from '../../../store/hooks';
-import {
-  putSelectedProjectThunk,
-  updateProductList
-} from '../../../store/reducers/project-reducer';
 import theme from '../../../theme';
 import EditProductForm from './EditProductForm';
 import NewProductForm from './NewProductForm';
-import NestableHierarcyEditableComponent from '../../Components/NestableHiarchyEditableComponents';
+import NestableHierarcyEditableComponents from '../../Components/NestableHiarchyEditableComponents';
 import { useEditableState } from '../../Components/EditableContext';
 import { StandardContainer } from '../../Components/StandardContainer';
 import {
@@ -24,6 +17,12 @@ import {
   SearchContainer,
   SearchFieldContainer
 } from '../../Components/SearchContainer';
+import LoaderSpinner from '../../../common/LoaderSpinner';
+import { useParams } from 'react-router-dom';
+import { IRouteParams } from '../../Models/IRouteParams';
+import { useGetProjectQuery } from '../../../store/api/bankApi';
+import useProjectMutations from '../../../store/api/ProjectMutations';
+import Utils from '../../../common/Utils';
 
 const useStyles = makeStyles({
   products: {
@@ -35,39 +34,46 @@ const useStyles = makeStyles({
 });
 
 export default function ProductPage(): React.ReactElement {
-  const { project } = useAppSelector((state) => state.project);
-  const dispatch = useAppDispatch();
-
-  const [allProducts, setAllProducts] = useState<Nestable<IProduct>[]>([]);
-  const [products, setProducts] = useState<Nestable<IProduct>[]>([]);
+  const [products, setProducts] = useState<Parentable<IProduct>[]>([]);
   const { setEditMode, setCreating } = useEditableState();
-
   const classes = useStyles();
   const { t } = useTranslation();
 
+  const { projectId } = useParams<IRouteParams>();
+  const { data: project, isLoading } = useGetProjectQuery(projectId);
+  const { editProducts } = useProjectMutations();
+
   useEffect(() => {
-    const nestedList = Utils.parentable2Nestable(project.products);
-    setAllProducts(nestedList);
-    setProducts(nestedList);
-  }, [project.products]);
+    if (project && project.products) {
+      setProducts(project.products);
+    }
+  }, [project]);
+
+  if (isLoading) {
+    return <LoaderSpinner />;
+  }
+
+  if (!project) {
+    return <p>Finner ikke prosjekt</p>;
+  }
 
   const moveProduct = (movedItem: Parentable<IProduct>, index: number) => {
-    const newProductList = [...project.products];
-    const indexOfMoved = newProductList.findIndex(
-      (oldItem) => oldItem.id === movedItem.id
-    );
-    newProductList.splice(indexOfMoved, 1);
-    newProductList.splice(index, 0, movedItem);
+    const newProductList = Utils.moveElementInList(movedItem, index, [
+      ...project.products
+    ]);
 
-    dispatch(updateProductList(newProductList));
-    dispatch(putSelectedProjectThunk('dummy'));
+    setProducts(newProductList);
+    editProducts(newProductList);
   };
 
-  const searchFieldCallback = (result: Nestable<IProduct>[]) => {
+  const searchFieldCallback = (result: Parentable<IProduct>[]) => {
     setProducts(result);
   };
 
-  const productsSearch = (searchString: string, list: Nestable<IProduct>[]) => {
+  const productsSearch = (
+    searchString: string,
+    list: Parentable<IProduct>[]
+  ) => {
     return SearchUtils.search(list, searchString);
   };
 
@@ -78,7 +84,7 @@ export default function ProductPage(): React.ReactElement {
           <SearchFieldContainer>
             {' '}
             <DFOSearchBar
-              list={allProducts}
+              list={project.products}
               label={t('search for product')}
               callback={searchFieldCallback}
               searchFunction={productsSearch}
@@ -92,7 +98,7 @@ export default function ProductPage(): React.ReactElement {
         </SearchContainer>
 
         <Box className={classes.products}>
-          <NestableHierarcyEditableComponent
+          <NestableHierarcyEditableComponents
             dispatchfunc={(item: Parentable<IProduct>, index: number) =>
               moveProduct(item, index)
             }
@@ -102,7 +108,7 @@ export default function ProductPage(): React.ReactElement {
             }
             EditComponent={(item: Parentable<IProduct>) => (
               <EditProductForm
-                element={item}
+                product={item}
                 handleClose={() => setEditMode('')}
               />
             )}

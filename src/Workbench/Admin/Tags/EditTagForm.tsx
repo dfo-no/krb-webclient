@@ -4,113 +4,69 @@ import { FormProvider, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { v4 as uuidv4 } from 'uuid';
 import { IAlert } from '../../../models/IAlert';
-import { Nestable } from '../../../models/Nestable';
 import { Parentable } from '../../../models/Parentable';
-import { ITag, PutTagSchema } from '../../../Nexus/entities/ITag';
 import { useAppDispatch } from '../../../store/hooks';
 import { addAlert } from '../../../store/reducers/alert-reducer';
-import {
-  editTag,
-  putSelectedProjectThunk,
-  removeTag
-} from '../../../store/reducers/project-reducer';
-import { Box, Button } from '@mui/material';
-import makeStyles from '@mui/styles/makeStyles';
+import { FormItemBox } from '../../Components/Form/FormItemBox';
 import TextCtrl from '../../../FormProvider/TextCtrl';
+import { FormIconButton } from '../../Components/Form/FormIconButton';
+import CheckIcon from '@mui/icons-material/Check';
+import CloseIcon from '@mui/icons-material/Close';
+import { useFormStyles } from '../../Components/Form/FormStyles';
+import { FormFlexBox } from '../../Components/Form/FormFlexBox';
+import { BaseTagSchema, ITag } from '../../../Nexus/entities/ITag';
+import useProjectMutations from '../../../store/api/ProjectMutations';
 
 interface IProps {
-  element: Parentable<ITag>;
+  tag: Parentable<ITag>;
+  handleClose: () => void;
 }
 
-const useStyles = makeStyles({
-  tagFormContainer: {
-    display: 'flex',
-    height: 200
-  },
-  tagForm: {
-    display: 'flex',
-    flexDirection: 'column',
-    margin: '0 auto',
-    alignSelf: 'center',
-    gap: 10
-  },
-  tagFormTextFields: {
-    display: 'flex',
-    margin: 'auto',
-    flexDirection: 'column',
-    gap: 10,
-    width: '30vw',
-    minWidth: '350px'
-  },
-  tagFormButtons: {
-    display: 'flex',
-    justifyContent: 'center',
-    gap: 10
-  }
-});
-
-export default function EditTagForm({ element }: IProps): React.ReactElement {
+export default function EditTagForm({
+  tag,
+  handleClose
+}: IProps): React.ReactElement {
   const dispatch = useAppDispatch();
   const { t } = useTranslation();
+  const classes = useFormStyles();
+  const { editTag } = useProjectMutations();
 
   const methods = useForm<Parentable<ITag>>({
-    resolver: joiResolver(PutTagSchema),
-    defaultValues: element
+    defaultValues: tag,
+    resolver: joiResolver(BaseTagSchema)
   });
 
-  const onEditTagSubmit = (post: Nestable<ITag>) => {
-    const postTag = { ...post };
-    if (postTag.children) {
-      delete postTag.children;
-    }
-    if (postTag.level) {
-      delete postTag.level;
-    }
-    const alert: IAlert = {
-      id: uuidv4(),
-      style: 'success',
-      text: 'Successfully edited tag'
-    };
-    dispatch(editTag(postTag as Parentable<ITag>));
-    dispatch(putSelectedProjectThunk('dummy')).then(() => {
+  const onSubmit = (put: Parentable<ITag>) => {
+    editTag(put).then(() => {
+      const alert: IAlert = {
+        id: uuidv4(),
+        style: 'success',
+        text: 'Successfully edited tag'
+      };
       dispatch(addAlert({ alert }));
+      handleClose();
     });
   };
 
-  const deleteTag = () => {
-    const deletableTag = { ...element };
-    dispatch(removeTag(deletableTag));
-    dispatch(putSelectedProjectThunk('dummy'));
-    methods.reset();
-
-    const alert: IAlert = {
-      id: uuidv4(),
-      style: 'success',
-      text: 'Successfully edited tag'
-    };
-    dispatch(addAlert({ alert }));
-  };
-
-  const classes = useStyles();
-
   return (
     <FormProvider {...methods}>
-      <form onSubmit={methods.handleSubmit(onEditTagSubmit)}>
-        <Box className={classes.tagFormContainer}>
-          <Box className={classes.tagForm}>
-            <Box className={classes.tagFormTextFields}>
-              <TextCtrl name="title" label={t('Title')} />
-            </Box>
-            <Box className={classes.tagFormButtons}>
-              <Button variant="primary" type="submit">
-                {t('save')}
-              </Button>
-              <Button variant="warning" onClick={deleteTag}>
-                {t('delete')}
-              </Button>
-            </Box>
-          </Box>
-        </Box>
+      <form
+        className={classes.form}
+        onSubmit={methods.handleSubmit(onSubmit)}
+        autoComplete="off"
+        noValidate
+      >
+        <FormItemBox>
+          <FormFlexBox sx={{ paddingLeft: 1, paddingRight: 1 }}>
+            <TextCtrl name="title" label={t('Title')} />
+          </FormFlexBox>
+          <FormIconButton type="submit" aria-label="save">
+            <CheckIcon />
+          </FormIconButton>
+          <FormIconButton onClick={() => handleClose()} aria-label="close">
+            <CloseIcon />
+          </FormIconButton>
+        </FormItemBox>
       </form>
     </FormProvider>
   );

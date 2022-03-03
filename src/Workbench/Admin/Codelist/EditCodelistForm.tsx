@@ -7,10 +7,6 @@ import CheckIcon from '@mui/icons-material/Check';
 import CloseIcon from '@mui/icons-material/Close';
 import { useAppDispatch } from '../../../store/hooks';
 import { addAlert } from '../../../store/reducers/alert-reducer';
-import {
-  editSelectedCodelist,
-  putSelectedProjectThunk
-} from '../../../store/reducers/project-reducer';
 import TextCtrl from '../../../FormProvider/TextCtrl';
 import { IAlert } from '../../../models/IAlert';
 import { CodelistSchema, ICodelist } from '../../../Nexus/entities/ICodelist';
@@ -18,28 +14,29 @@ import { FormIconButton } from '../../Components/Form/FormIconButton';
 import { FormItemBox } from '../../Components/Form/FormItemBox';
 import { FormFlexBox } from '../../Components/Form/FormFlexBox';
 import { useFormStyles } from '../../Components/Form/FormStyles';
+import useProjectMutations from '../../../store/api/ProjectMutations';
 
 interface IProps {
-  element: ICodelist;
+  codelist: ICodelist;
   handleClose: (newCodelist: ICodelist | null) => void;
 }
 
 export default function EditCodelistForm({
-  element,
+  codelist,
   handleClose
 }: IProps): React.ReactElement {
   const dispatch = useAppDispatch();
   const { t } = useTranslation();
   const classes = useFormStyles();
+  const { editCodelist } = useProjectMutations();
 
   const methods = useForm<ICodelist>({
-    defaultValues: element,
+    defaultValues: codelist,
     resolver: joiResolver(CodelistSchema)
   });
 
   const onSubmit = (put: ICodelist) => {
-    dispatch(editSelectedCodelist(put));
-    dispatch(putSelectedProjectThunk('dummy')).then(() => {
+    editCodelist(put).then(() => {
       const alert: IAlert = {
         id: uuidv4(),
         style: 'success',

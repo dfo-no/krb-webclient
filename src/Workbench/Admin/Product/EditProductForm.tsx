@@ -8,10 +8,6 @@ import { Parentable } from '../../../models/Parentable';
 import { IProduct, BaseProductSchema } from '../../../Nexus/entities/IProduct';
 import { useAppDispatch } from '../../../store/hooks';
 import { addAlert } from '../../../store/reducers/alert-reducer';
-import {
-  editProduct,
-  putSelectedProjectThunk
-} from '../../../store/reducers/project-reducer';
 import { FormItemBox } from '../../Components/Form/FormItemBox';
 import TextCtrl from '../../../FormProvider/TextCtrl';
 import { FormIconButton } from '../../Components/Form/FormIconButton';
@@ -19,28 +15,29 @@ import CheckIcon from '@mui/icons-material/Check';
 import CloseIcon from '@mui/icons-material/Close';
 import { useFormStyles } from '../../Components/Form/FormStyles';
 import { FormFlexBox } from '../../Components/Form/FormFlexBox';
+import useProjectMutations from '../../../store/api/ProjectMutations';
 
 interface IProps {
-  element: Parentable<IProduct>;
+  product: Parentable<IProduct>;
   handleClose: (newProduct: Parentable<IProduct> | null) => void;
 }
 
 export default function EditProductForm({
-  element,
+  product,
   handleClose
 }: IProps): React.ReactElement {
   const dispatch = useAppDispatch();
   const { t } = useTranslation();
   const classes = useFormStyles();
+  const { editProduct } = useProjectMutations();
 
   const methods = useForm<Parentable<IProduct>>({
-    defaultValues: element,
+    defaultValues: product,
     resolver: joiResolver(BaseProductSchema)
   });
 
-  const onSubmit = (put: Parentable<IProduct>) => {
-    dispatch(editProduct(put));
-    dispatch(putSelectedProjectThunk('dummy')).then(() => {
+  async function onSubmit(put: Parentable<IProduct>) {
+    await editProduct(put).then(() => {
       const alert: IAlert = {
         id: uuidv4(),
         style: 'success',
@@ -49,7 +46,7 @@ export default function EditProductForm({
       dispatch(addAlert({ alert }));
       handleClose(put);
     });
-  };
+  }
 
   return (
     <FormProvider {...methods}>

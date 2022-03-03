@@ -5,11 +5,7 @@ import { joiResolver } from '@hookform/resolvers/joi';
 import CheckIcon from '@mui/icons-material/Check';
 import CloseIcon from '@mui/icons-material/Close';
 import { v4 as uuidv4 } from 'uuid';
-import { useAppDispatch, useAppSelector } from '../../../store/hooks';
-import {
-  addCodeToCodelist,
-  putSelectedProjectThunk
-} from '../../../store/reducers/project-reducer';
+import { useAppDispatch } from '../../../store/hooks';
 import { addAlert } from '../../../store/reducers/alert-reducer';
 import TextCtrl from '../../../FormProvider/TextCtrl';
 import Nexus from '../../../Nexus/Nexus';
@@ -21,24 +17,28 @@ import { FormIconButton } from '../../Components/Form/FormIconButton';
 import { FormItemBox } from '../../Components/Form/FormItemBox';
 import { FormFlexBox } from '../../Components/Form/FormFlexBox';
 import { useFormStyles } from '../../Components/Form/FormStyles';
+import useProjectMutations from '../../../store/api/ProjectMutations';
+import { useParams } from 'react-router-dom';
+import { IRouteParams } from '../../Models/IRouteParams';
 
 interface IProps {
-  parent: ICodelist;
+  codelist: ICodelist;
   handleClose: (newCode: Parentable<ICode> | null) => void;
 }
 
 export default function NewCodeForm({
-  parent,
+  codelist,
   handleClose
 }: IProps): React.ReactElement {
   const dispatch = useAppDispatch();
-  const { project } = useAppSelector((state) => state.project);
   const { t } = useTranslation();
   const nexus = Nexus.getInstance();
   const classes = useFormStyles();
+  const { projectId } = useParams<IRouteParams>();
+  const { addCode } = useProjectMutations();
 
   const defaultValues: Parentable<ICode> =
-    nexus.codelistService.generateDefaultCodeValues(project.id);
+    nexus.codelistService.generateDefaultCodeValues(projectId);
 
   const methods = useForm<Parentable<ICode>>({
     resolver: joiResolver(PostCodeSchema),
@@ -47,8 +47,7 @@ export default function NewCodeForm({
 
   const onSubmit = (post: Parentable<ICode>) => {
     const newCode = nexus.codelistService.createCodeWithId(post);
-    dispatch(addCodeToCodelist({ codelistId: parent.id, code: newCode }));
-    dispatch(putSelectedProjectThunk('dummy')).then(() => {
+    addCode(newCode, codelist).then(() => {
       const alert: IAlert = {
         id: uuidv4(),
         style: 'success',

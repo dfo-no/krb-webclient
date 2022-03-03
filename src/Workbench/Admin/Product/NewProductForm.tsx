@@ -2,11 +2,7 @@ import React from 'react';
 import { IProduct, PostProductSchema } from '../../../Nexus/entities/IProduct';
 import { v4 as uuidv4 } from 'uuid';
 import { IAlert } from '../../../models/IAlert';
-import { useAppDispatch, useAppSelector } from '../../../store/hooks';
-import {
-  addProduct,
-  putSelectedProjectThunk
-} from '../../../store/reducers/project-reducer';
+import { useAppDispatch } from '../../../store/hooks';
 import TextCtrl from '../../../FormProvider/TextCtrl';
 import { useTranslation } from 'react-i18next';
 import { FormProvider, useForm } from 'react-hook-form';
@@ -20,32 +16,35 @@ import CloseIcon from '@mui/icons-material/Close';
 import { Parentable } from '../../../models/Parentable';
 import { useFormStyles } from '../../Components/Form/FormStyles';
 import { FormFlexBox } from '../../Components/Form/FormFlexBox';
+import useProjectMutations from '../../../store/api/ProjectMutations';
+import { useParams } from 'react-router-dom';
+import { IRouteParams } from '../../Models/IRouteParams';
 
 interface IProps {
-  handleClose: (newProduct: Parentable<IProduct> | null) => void;
+  handleClose: () => void;
 }
 
 export default function NewProductForm({
   handleClose
 }: IProps): React.ReactElement {
   const dispatch = useAppDispatch();
-  const { project } = useAppSelector((state) => state.project);
   const { t } = useTranslation();
   const nexus = Nexus.getInstance();
   const classes = useFormStyles();
+  const { projectId } = useParams<IRouteParams>();
+  const { addProduct } = useProjectMutations();
 
   const defaultValues: Parentable<IProduct> =
-    nexus.productService.generateDefaultProductValues(project.id);
+    nexus.productService.generateDefaultProductValues(projectId);
 
   const methods = useForm<Parentable<IProduct>>({
     resolver: joiResolver(PostProductSchema),
     defaultValues
   });
 
-  const onSubmit = (post: Parentable<IProduct>) => {
+  async function onSubmit(post: Parentable<IProduct>) {
     const newProduct = nexus.productService.createProductWithId(post);
-    dispatch(addProduct(newProduct));
-    dispatch(putSelectedProjectThunk('dummy')).then(() => {
+    await addProduct(newProduct).then(() => {
       const alert: IAlert = {
         id: uuidv4(),
         style: 'success',
@@ -53,9 +52,9 @@ export default function NewProductForm({
       };
       dispatch(addAlert({ alert }));
       methods.reset();
-      handleClose(newProduct);
+      handleClose();
     });
-  };
+  }
 
   return (
     <FormProvider {...methods}>
@@ -75,7 +74,7 @@ export default function NewProductForm({
           <FormIconButton type="submit" aria-label="save">
             <CheckIcon />
           </FormIconButton>
-          <FormIconButton onClick={() => handleClose(null)} aria-label="close">
+          <FormIconButton onClick={() => handleClose()} aria-label="close">
             <CloseIcon />
           </FormIconButton>
         </FormItemBox>

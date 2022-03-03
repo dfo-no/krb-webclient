@@ -1,4 +1,4 @@
-import { PutTagSchema } from './entities/ITag';
+import { BaseTagSchema } from './entities/ITag';
 import Nexus from './Nexus';
 import PublicationService from './services/PublicationService';
 
@@ -22,7 +22,7 @@ describe('Nexus', () => {
         '123456789123456789123456789012345678'
       )
     );
-    const report = PutTagSchema.validate(tag);
+    const report = BaseTagSchema.validate(tag);
 
     expect(report.error).toBeUndefined();
   });
