@@ -5,8 +5,8 @@ import { AppBar, Box, Toolbar, Typography } from '@mui/material/';
 import makeStyles from '@mui/styles/makeStyles';
 import React from 'react';
 import { Link, useLocation, useRouteMatch } from 'react-router-dom';
-import { useAppSelector } from '../../store/hooks';
 import theme from '../../theme';
+import { useGetProjectQuery } from '../../store/api/bankApi';
 
 const useStyles = makeStyles({
   header: {
@@ -111,13 +111,36 @@ const useStyles = makeStyles({
 export default function Header(): React.ReactElement {
   const classes = useStyles();
 
-  const project = useAppSelector((state) => state.project.project);
-
-  const projectTitle = project.title;
-  const projectPath = 'Anskaffelser.no / Kravbank';
-
   const baseUrl = useRouteMatch<{ projectId: string }>('/workbench/:projectId');
   const location = useLocation();
+
+  const { data: project } = useGetProjectQuery(
+    baseUrl ? baseUrl.params.projectId : ''
+  );
+
+  const projectPath = 'Anskaffelser.no / Kravbank';
+
+  if (!project) {
+    return (
+      <AppBar elevation={0} position="sticky">
+        <Toolbar>
+          <Box className={classes.header}>
+            <Box className={classes.headerContent}>
+              <Box className={classes.projectPath}>
+                <Typography variant="small">{projectPath}</Typography>
+              </Box>
+              <Box className={classes.notViewingProjectTitle}>
+                <Typography variant="bigBold">Kravbank</Typography>
+              </Box>
+            </Box>
+          </Box>
+        </Toolbar>
+      </AppBar>
+    );
+  }
+
+  const projectTitle = project.title;
+
   const tabName = location.pathname
     .replace(baseUrl ? baseUrl.url : '', '')
     .split('/')
@@ -127,67 +150,52 @@ export default function Header(): React.ReactElement {
   const isLocationCreate = tabName === 'create';
   const isLocationPreview = tabName === 'preview';
 
-  const showProjectHeader = project.title && baseUrl;
-
   return (
     <AppBar elevation={0} position="sticky">
       <Toolbar>
         <Box className={classes.header}>
           <Box>
-            {showProjectHeader && (
-              <Box className={classes.headerContent}>
-                <Box className={classes.projectPath}>
-                  <Typography variant="small">
-                    {projectPath + ' / '}
-                    <Typography variant="smallUnderlineBlue">
-                      {projectTitle}
-                    </Typography>
+            <Box className={classes.headerContent}>
+              <Box className={classes.projectPath}>
+                <Typography variant="small">
+                  {projectPath + ' / '}
+                  <Typography variant="smallUnderlineBlue">
+                    {projectTitle}
                   </Typography>
+                </Typography>
+              </Box>
+              <Box className={classes.viewingProjectTitle}>
+                <Box className={classes.projectData}>
+                  <Typography variant="bigBold">{project.title}</Typography>
                 </Box>
-                <Box className={classes.viewingProjectTitle}>
-                  <Box className={classes.projectData}>
-                    <Typography variant="bigBold">{project.title}</Typography>
-                  </Box>
-                  <Box className={classes.projectIcons}>
-                    <Link
-                      to={`${baseUrl?.url}/admin`}
-                      className={
-                        isLocationAdmin ? classes.selectedIcon : classes.icon
-                      }
-                    >
-                      <SettingsOutlinedIcon />
-                    </Link>
-                    <Link
-                      to={`${baseUrl?.url}/create`}
-                      className={
-                        isLocationCreate ? classes.selectedIcon : classes.icon
-                      }
-                    >
-                      <ConstructionOutlinedIcon />
-                    </Link>
-                    <Link
-                      to={`${baseUrl?.url}/preview`}
-                      className={
-                        isLocationPreview ? classes.selectedIcon : classes.icon
-                      }
-                    >
-                      <VisibilityOutlinedIcon />
-                    </Link>
-                  </Box>
+                <Box className={classes.projectIcons}>
+                  <Link
+                    to={`${baseUrl?.url}/admin`}
+                    className={
+                      isLocationAdmin ? classes.selectedIcon : classes.icon
+                    }
+                  >
+                    <SettingsOutlinedIcon />
+                  </Link>
+                  <Link
+                    to={`${baseUrl?.url}/create`}
+                    className={
+                      isLocationCreate ? classes.selectedIcon : classes.icon
+                    }
+                  >
+                    <ConstructionOutlinedIcon />
+                  </Link>
+                  <Link
+                    to={`${baseUrl?.url}/preview`}
+                    className={
+                      isLocationPreview ? classes.selectedIcon : classes.icon
+                    }
+                  >
+                    <VisibilityOutlinedIcon />
+                  </Link>
                 </Box>
               </Box>
-            )}
-
-            {!showProjectHeader && (
-              <Box className={classes.headerContent}>
-                <Box className={classes.projectPath}>
-                  <Typography variant="small">{projectPath}</Typography>
-                </Box>
-                <Box className={classes.notViewingProjectTitle}>
-                  <Typography variant="bigBold">Kravbank</Typography>
-                </Box>
-              </Box>
-            )}
+            </Box>
           </Box>
         </Box>
       </Toolbar>

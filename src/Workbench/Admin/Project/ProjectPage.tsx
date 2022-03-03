@@ -13,7 +13,6 @@ import ProjectHeader from './ProjectHeader';
 import DFOSearchBar from '../../../components/DFOSearchBar/DFOSearchBar';
 import { IPublication } from '../../../Nexus/entities/IPublication';
 import { PlainListBox } from '../../Components/PlainListBox';
-import { useProjectEditingState } from './ProjectEditingContext';
 import EditProjectForm from './EditProjectForm';
 import { useParams } from 'react-router-dom';
 import { useGetProjectQuery } from '../../../store/api/bankApi';
@@ -26,6 +25,7 @@ import {
   SearchContainer,
   SearchFieldContainer
 } from '../../Components/SearchContainer';
+import { DFOCardHeader } from '../../../components/DFOCard/DFOCardHeader';
 
 const useStyles = makeStyles({
   versionText: {
@@ -46,7 +46,7 @@ const useStyles = makeStyles({
 function ProjectPage(): React.ReactElement {
   const classes = useStyles();
   const { t } = useTranslation();
-  const { isEditing, setEditing } = useProjectEditingState();
+  const [isEditing, setEditing] = useState(false);
   const [isCreating, setCreating] = useState(false);
 
   const { projectId } = useParams<IRouteParams>();
@@ -103,7 +103,9 @@ function ProjectPage(): React.ReactElement {
   return (
     <StandardContainer>
       <Card>
-        <ProjectHeader />
+        <DFOCardHeader>
+          <ProjectHeader editButtonOnClick={() => setEditing(true)} />
+        </DFOCardHeader>
         {isEditing && (
           <EditProjectForm
             project={project}
