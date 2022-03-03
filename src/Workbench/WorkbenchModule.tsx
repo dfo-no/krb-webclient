@@ -14,7 +14,6 @@ const useStyles = makeStyles({
     display: 'flex',
     gap: 50,
     backgroundColor: theme.palette.dfoBackgroundBlue.main,
-
     [theme.breakpoints.down('md')]: {
       flexWrap: 'wrap'
     }

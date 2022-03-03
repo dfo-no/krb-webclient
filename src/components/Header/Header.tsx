@@ -130,7 +130,7 @@ export default function Header(): React.ReactElement {
   const showProjectHeader = project.title && baseUrl;
 
   return (
-    <AppBar elevation={0} position="sticky">
+    <AppBar elevation={0} position="fixed">
       <Toolbar>
         <Box className={classes.header}>
           <Box>
