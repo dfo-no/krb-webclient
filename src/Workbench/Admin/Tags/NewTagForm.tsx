@@ -42,9 +42,9 @@ export default function NewTagForm({
     defaultValues
   });
 
-  const onSubmit = (post: Parentable<ITag>) => {
+  async function onSubmit(post: Parentable<ITag>) {
     const newTag = nexus.tagService.generateTag(post);
-    addTag(newTag).then(() => {
+    await addTag(newTag).then(() => {
       const alert: IAlert = {
         id: uuidv4(),
         style: 'success',
@@ -54,7 +54,7 @@ export default function NewTagForm({
       methods.reset();
       handleClose();
     });
-  };
+  }
 
   return (
     <FormProvider {...methods}>

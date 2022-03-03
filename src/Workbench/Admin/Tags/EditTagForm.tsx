@@ -36,8 +36,8 @@ export default function EditTagForm({
     resolver: joiResolver(BaseTagSchema)
   });
 
-  const onSubmit = (put: Parentable<ITag>) => {
-    editTag(put).then(() => {
+  async function onSubmit(put: Parentable<ITag>) {
+    await editTag(put).then(() => {
       const alert: IAlert = {
         id: uuidv4(),
         style: 'success',
@@ -46,7 +46,7 @@ export default function EditTagForm({
       dispatch(addAlert({ alert }));
       handleClose();
     });
-  };
+  }
 
   return (
     <FormProvider {...methods}>

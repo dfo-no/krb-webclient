@@ -44,9 +44,9 @@ export default function NewCodelistForm({
     defaultValues
   });
 
-  const onSubmit = (post: ICodelist) => {
+  async function onSubmit(post: ICodelist) {
     const newCodelist = nexus.codelistService.createCodelistWithId(post);
-    addCodelist(newCodelist).then(() => {
+    await addCodelist(newCodelist).then(() => {
       const alert: IAlert = {
         id: uuidv4(),
         style: 'success',
@@ -56,7 +56,7 @@ export default function NewCodelistForm({
       methods.reset();
       handleClose(newCodelist);
     });
-  };
+  }
 
   return (
     <FormProvider {...methods}>

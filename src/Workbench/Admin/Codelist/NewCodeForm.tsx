@@ -45,9 +45,9 @@ export default function NewCodeForm({
     defaultValues
   });
 
-  const onSubmit = (post: Parentable<ICode>) => {
+  async function onSubmit(post: Parentable<ICode>) {
     const newCode = nexus.codelistService.createCodeWithId(post);
-    addCode(newCode, codelist).then(() => {
+    await addCode(newCode, codelist).then(() => {
       const alert: IAlert = {
         id: uuidv4(),
         style: 'success',
@@ -57,7 +57,7 @@ export default function NewCodeForm({
       methods.reset();
       handleClose(newCode);
     });
-  };
+  }
 
   return (
     <FormProvider {...methods}>

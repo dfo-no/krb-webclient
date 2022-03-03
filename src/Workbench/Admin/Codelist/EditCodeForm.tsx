@@ -43,8 +43,8 @@ function EditCodeForm({
     resolver: joiResolver(BaseCodeSchema)
   });
 
-  const onSubmit = (put: Parentable<ICode>) => {
-    editCode(put, codelist).then(() => {
+  async function onSubmit(put: Parentable<ICode>) {
+    await editCode(put, codelist).then(() => {
       const alert: IAlert = {
         id: uuidv4(),
         style: 'success',
@@ -53,7 +53,7 @@ function EditCodeForm({
       dispatch(addAlert({ alert }));
       handleClose(put);
     });
-  };
+  }
 
   return (
     <FormProvider {...methods}>

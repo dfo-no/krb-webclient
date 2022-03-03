@@ -35,8 +35,8 @@ export default function EditCodelistForm({
     resolver: joiResolver(CodelistSchema)
   });
 
-  const onSubmit = (put: ICodelist) => {
-    editCodelist(put).then(() => {
+  async function onSubmit(put: ICodelist) {
+    await editCodelist(put).then(() => {
       const alert: IAlert = {
         id: uuidv4(),
         style: 'success',
@@ -45,7 +45,7 @@ export default function EditCodelistForm({
       dispatch(addAlert({ alert }));
       handleClose(put);
     });
-  };
+  }
 
   return (
     <FormProvider {...methods}>
