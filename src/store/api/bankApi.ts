@@ -64,7 +64,7 @@ export const bankApi = createApi({
       }),
       invalidatesTags: [{ type: 'Projects' }]
     }),
-    putProject: builder.mutation<IBank, Partial<IBank> & Pick<IBank, 'id'>>({
+    putProject: builder.mutation<IBank, IBank>({
       query: (project) => ({
         url: `/api/bank/${project.id}`,
         method: 'PUT',
