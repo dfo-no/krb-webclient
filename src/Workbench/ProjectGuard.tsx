@@ -28,7 +28,7 @@ const useStyles = makeStyles({
   wrapperContainer: {
     display: 'flex',
     flexDirection: 'row',
-    backgroundColor: '#80ADC8',
+    backgroundColor: theme.palette.dfoBackgroundBlue.main,
     height: '100%',
 
     [theme.breakpoints.down('md')]: {
