@@ -25,10 +25,12 @@ const useStyles = makeStyles({
     }
   },
   sideBarList: {
+    position: 'fixed',
     backgroundColor: theme.palette.gray100.main,
     width: '15vw',
     minWidth: 230,
     height: '100vh',
+    paddingTop: 60,
     [theme.breakpoints.down('md')]: {
       height: 'auto',
       width: '100vw',

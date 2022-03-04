@@ -20,7 +20,6 @@ const useStyles = makeStyles({
     display: 'flex',
     flexDirection: 'column',
     width: '100%',
-
     [theme.breakpoints.down('md')]: {
       flexWrap: 'wrap'
     }
@@ -29,7 +28,6 @@ const useStyles = makeStyles({
     display: 'flex',
     flexDirection: 'row',
     backgroundColor: theme.palette.dfoBackgroundBlue.main,
-    height: '100%',
 
     [theme.breakpoints.down('md')]: {
       flexWrap: 'wrap'
