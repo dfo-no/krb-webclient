@@ -62,6 +62,7 @@ interface IProps<T extends BaseModelWithTitleAndDesc> {
   inputlist: Parentable<T>[];
   CreateComponent: React.ReactElement;
   EditComponent: (item: Parentable<T>) => React.ReactElement;
+  DeleteComponent?: (item: Parentable<T>) => React.ReactElement;
   depth: number;
 }
 
@@ -72,6 +73,7 @@ const NestableHierarcyEditableComponents = <
   inputlist,
   CreateComponent,
   EditComponent,
+  DeleteComponent,
   depth
 }: IProps<T>): React.ReactElement => {
   const classes = useStyles();
@@ -86,7 +88,12 @@ const NestableHierarcyEditableComponents = <
 
   const renderItem = (item: Parentable<T>, handler: React.ReactNode) => {
     if (isEditingItem(item)) {
-      return <FormContainerBox>{EditComponent(item)}</FormContainerBox>;
+      return (
+        <FormContainerBox>
+          {EditComponent(item)}
+          {DeleteComponent && DeleteComponent(item)}
+        </FormContainerBox>
+      );
     }
     return (
       <Box className={classes.nestableItemCustom}>

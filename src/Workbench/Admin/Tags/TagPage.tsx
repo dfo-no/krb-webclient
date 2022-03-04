@@ -24,6 +24,7 @@ import NestableHierarcyEditableComponents from '../../Components/NestableHierarc
 import SearchUtils from '../../../common/SearchUtils';
 import Utils from '../../../common/Utils';
 import useProjectMutations from '../../../store/api/ProjectMutations';
+import DeleteTagForm from './DeleteTagForm';
 
 const useStyles = makeStyles({
   tags: {
@@ -105,6 +106,9 @@ export default function TagPage(): React.ReactElement {
             }
             EditComponent={(item: Parentable<ITag>) => (
               <EditTagForm tag={item} handleClose={() => setEditMode('')} />
+            )}
+            DeleteComponent={(item: Parentable<ITag>) => (
+              <DeleteTagForm tag={item} handleClose={() => setEditMode('')} />
             )}
             depth={5}
           />
