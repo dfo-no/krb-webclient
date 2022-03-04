@@ -47,74 +47,22 @@ const useStyles = makeStyles({
     cursor: 'pointer',
     width: '100%',
     paddingLeft: 45,
-    '&:hover': {
-      background: theme.palette.lightBlue.main,
-      color: theme.palette.dfoWhite.main,
-
-      '& $sideBarListItemText': {
-        color: theme.palette.dfoWhite.main
-      },
-
-      '& $selectedSideBarListItemText': {
-        color: theme.palette.dfoWhite.main
-      },
-
-      '& $selectedListItemArrow': {
-        color: theme.palette.dfoWhite.main
-      },
-
-      '& $selectedSideBarListItemIcon': {
-        '& .MuiSvgIcon-root': {
-          color: 'white'
-        }
-      },
-
-      '& $sideBarListItemIcon': {
-        '& .MuiSvgIcon-root': {
-          color: 'white'
-        }
-      }
-    },
-
-    [theme.breakpoints.down('md')]: {
-      backgroundColor: theme.palette.gray100.main
-    }
-  },
-  sideBarListItemIcon: {
-    '& .MuiSvgIcon-root': {
-      color: theme.palette.gray700.main
-    }
-  },
-  selectedSideBarListItemIcon: {
-    '& .MuiSvgIcon-root': {
-      color: 'black'
-    }
-  },
-  sideBarListItemText: {
     color: theme.palette.gray700.main,
-    marginLeft: 40
-  },
-  selectedSideBarListItemText: {
-    color: theme.palette.black.main,
-    marginLeft: 40
-  },
-  sideBarListItemPicked: {
-    cursor: 'pointer',
-    fontWeight: 'bold',
     '&:hover': {
       background: theme.palette.lightBlue.main,
       color: theme.palette.dfoWhite.main
-    },
-
-    [theme.breakpoints.down('md')]: {
-      backgroundColor: theme.palette.gray100.main
     }
   },
-  selectedListItemArrow: {
-    color: theme.palette.dfoDarkBlue.main,
-
-    [theme.breakpoints.down('md')]: {
-      marginRight: 50
+  selectedSideBarListItem: {
+    display: 'flex',
+    gap: 5,
+    cursor: 'pointer',
+    width: '100%',
+    paddingLeft: 45,
+    color: theme.palette.black.main,
+    '&:hover': {
+      background: theme.palette.lightBlue.main,
+      color: theme.palette.dfoWhite.main
     }
   }
 });
@@ -206,29 +154,17 @@ function SideBar(): React.ReactElement {
               key={route.name}
               component={Link}
               to={route.link}
-              className={classes.sideBarListItem}
+              className={`${
+                route.name == currentRoute
+                  ? classes.selectedSideBarListItem
+                  : classes.sideBarListItem
+              }`}
             >
-              <Box
-                className={`${
-                  route.name == currentRoute
-                    ? classes.selectedSideBarListItemIcon
-                    : classes.sideBarListItemIcon
-                }`}
-              >
-                {route.icon}
-              </Box>
-              <ListItemText
-                className={`${
-                  route.name == currentRoute
-                    ? classes.selectedSideBarListItemText
-                    : classes.sideBarListItemText
-                }`}
-              >
+              <Box>{route.icon}</Box>
+              <ListItemText sx={{ marginLeft: 5 }}>
                 <Box sx={{ fontWeight: 'bold' }}>{route.name}</Box>
               </ListItemText>
-              {route.name == currentRoute && (
-                <ArrowForwardIcon className={classes.selectedListItemArrow} />
-              )}
+              {route.name == currentRoute && <ArrowForwardIcon />}
             </ListItem>
           );
         })}
