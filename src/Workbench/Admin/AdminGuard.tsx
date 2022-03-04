@@ -10,7 +10,7 @@ import ProductGuard from './Product/ProductGuard';
 import ProjectGuard from './Project/ProjectGuard';
 import RequirementEditor from './Requirement/RequirementEditor';
 import RequirementPage from './Requirement/RequirementPage';
-import TagPage from './Tags/TagPage';
+import TagGuard from './Tags/TagGuard';
 
 const useStyles = makeStyles({
   sideBarContainer: {
@@ -53,7 +53,7 @@ export default function AdminGuard(): React.ReactElement {
             <RequirementPage />
           </Route>
           <Route exact path="/workbench/:projectId/admin/tags">
-            <TagPage />
+            <TagGuard />
           </Route>
           <Route exact path="/workbench/:projectId/admin/codelist">
             <CodelistGuard />

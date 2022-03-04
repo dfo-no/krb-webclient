@@ -2,7 +2,6 @@ import React, { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Box } from '@mui/material/';
 import makeStyles from '@mui/styles/makeStyles';
-import { useAppSelector } from '../../../store/hooks';
 import { ICodelist } from '../../../Nexus/entities/ICodelist';
 import DFOSearchBar from '../../../components/DFOSearchBar/DFOSearchBar';
 import CodePanel from './CodePanel';
@@ -13,17 +12,13 @@ import {
   SearchContainer,
   SearchFieldContainer
 } from '../../Components/SearchContainer';
+import { useParams } from 'react-router-dom';
+import { IRouteParams } from '../../Models/IRouteParams';
+import { useGetProjectQuery } from '../../../store/api/bankApi';
+import LoaderSpinner from '../../../common/LoaderSpinner';
+import { StandardContainer } from '../../Components/StandardContainer';
 
 const useStyles = makeStyles({
-  root: {
-    display: 'flex',
-    flexDirection: 'column',
-    marginTop: 40,
-    width: '75.5vw',
-    gap: 10,
-    margin: 'auto',
-    paddingBottom: 40
-  },
   tableContainer: {
     display: 'flex',
     flexDirection: 'row',
@@ -44,16 +39,26 @@ const useStyles = makeStyles({
 });
 
 export default function CodeListPage(): React.ReactElement {
-  const { project } = useAppSelector((state) => state.project);
   const { codelist, codelists, setCodelists } = useSelectState();
-
   const classes = useStyles();
   const { t } = useTranslation();
 
-  // TODO: Hack som kan løses med RTK Query
+  const { projectId } = useParams<IRouteParams>();
+  const { data: project, isLoading } = useGetProjectQuery(projectId);
+
   useEffect(() => {
-    setCodelists(project.codelist);
-  }, [setCodelists, project.codelist]);
+    if (project && project.codelist) {
+      setCodelists(project.codelist);
+    }
+  }, [setCodelists, project]);
+
+  if (isLoading) {
+    return <LoaderSpinner />;
+  }
+
+  if (!project) {
+    return <p>Finner ikke prosjekt</p>;
+  }
 
   const searchFieldCallback = (result: ICodelist[]) => {
     setCodelists(result);
@@ -80,7 +85,7 @@ export default function CodeListPage(): React.ReactElement {
   };
 
   return (
-    <Box className={classes.root}>
+    <StandardContainer sx={{ width: '75.5vw' }}>
       <SearchContainer>
         <SearchFieldContainer>
           {' '}
@@ -106,6 +111,6 @@ export default function CodeListPage(): React.ReactElement {
           </Box>
         )}
       </Box>
-    </Box>
+    </StandardContainer>
   );
 }

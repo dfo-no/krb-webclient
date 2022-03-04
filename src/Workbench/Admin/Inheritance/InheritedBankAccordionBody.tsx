@@ -73,8 +73,8 @@ export default function InheritedBankAccordionBody({
 
   // This is dummy data. Replace with real data.
   const versions = [
-    { name: 'Tronds versjon; 1. des. 2021' },
-    { name: 'Oslo kommune; 1. des. 2021' }
+    'Tronds versjon; 1. des. 2021',
+    'Oslo kommune; 1. des. 2021'
   ];
 
   const defaultValues: IFormValues = {
@@ -102,7 +102,7 @@ export default function InheritedBankAccordionBody({
               {t('Which version of the bank to inherit')}
             </Typography>
             <Box className={classes.selectContainer}>
-              <DFOSelect options={versions} />
+              {/*      <DFOSelect options={versions} /> */}
             </Box>
           </Box>
           <Box className={classes.inheritPartsContainer}>

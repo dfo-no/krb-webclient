@@ -1,18 +1,17 @@
 import { Nestable } from '../models/Nestable';
-import { IProduct } from '../Nexus/entities/IProduct';
-import { ITag } from '../Nexus/entities/ITag';
+import { BaseModelWithTitleAndDesc } from '../models/BaseModelWithTitleAndDesc';
+import { Parentable } from '../models/Parentable';
+import Utils from './Utils';
 
 interface SearchableParams {
   inSearch?: boolean;
 }
 
-type SeacrhableTypes = Nestable<IProduct | ITag>;
-type Searchable = SearchableParams & SeacrhableTypes;
+type Searchable = SearchableParams & Nestable<BaseModelWithTitleAndDesc>;
 
-// TODO: rewrite to Generic
 class SearchUtils {
   private static searchRecursive(
-    topItem: SeacrhableTypes,
+    topItem: Nestable<BaseModelWithTitleAndDesc>,
     searchString: string
   ): Searchable {
     // Returns item as match if searchtext is in the title
@@ -30,7 +29,7 @@ class SearchUtils {
       .map((childItem) => {
         const seacrhableTypeItem = { ...childItem };
         delete seacrhableTypeItem.inSearch;
-        return seacrhableTypeItem as SeacrhableTypes;
+        return seacrhableTypeItem as Nestable<BaseModelWithTitleAndDesc>;
       });
 
     // Returns item as no-match if no children has match
@@ -46,17 +45,19 @@ class SearchUtils {
   }
 
   static search(
-    items: SeacrhableTypes[],
+    items: Parentable<BaseModelWithTitleAndDesc>[],
     searchString: string
-  ): SeacrhableTypes[] {
-    return items
+  ): Parentable<BaseModelWithTitleAndDesc>[] {
+    const nestedItems = Utils.parentable2Nestable(items);
+    const returnList = nestedItems
       .map((item) => this.searchRecursive(item, searchString))
       .filter((item) => item.inSearch)
       .map((item) => {
         const seacrhableTypeItem = { ...item };
         delete seacrhableTypeItem.inSearch;
-        return seacrhableTypeItem as SeacrhableTypes;
+        return seacrhableTypeItem as Nestable<BaseModelWithTitleAndDesc>;
       });
+    return Utils.nestableList2Parentable(returnList);
   }
 }
 

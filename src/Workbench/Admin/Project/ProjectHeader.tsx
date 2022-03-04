@@ -1,29 +1,17 @@
 import React from 'react';
-import makeStyles from '@mui/styles/makeStyles';
 import { Box, Typography } from '@mui/material';
 import { DFOCardHeaderIconButton } from '../../../components/DFOCard/DFOCardHeaderIconButton';
 import EditIcon from '@mui/icons-material/Edit';
-import { DFOCardHeader } from '../../../components/DFOCard/DFOCardHeader';
-import { useProjectEditingState } from './ProjectEditingContext';
 import { useParams } from 'react-router-dom';
 import { useGetProjectQuery } from '../../../store/api/bankApi';
 import { IRouteParams } from '../../Models/IRouteParams';
-import theme from '../../../theme';
+import { DFOHeaderContentBox } from '../../../components/DFOCard/DFOHeaderContentBox';
 
-const useStyles = makeStyles({
-  headerContainer: {
-    display: 'flex',
-    flexDirection: 'column',
-    width: '100%',
-    padding: 15,
-    paddingLeft: 70,
-    paddingRight: 70
-  }
-});
+interface IProps {
+  editButtonOnClick: () => void;
+}
 
-function ProjectHeader(): React.ReactElement {
-  const classes = useStyles();
-  const { setEditing } = useProjectEditingState();
+function ProjectHeader({ editButtonOnClick }: IProps): React.ReactElement {
   const { projectId } = useParams<IRouteParams>();
   const { data: project } = useGetProjectQuery(projectId);
 
@@ -32,25 +20,23 @@ function ProjectHeader(): React.ReactElement {
   }
 
   return (
-    <DFOCardHeader>
-      <Box className={classes.headerContainer}>
-        <Box sx={{ display: 'flex', flexDirection: 'row' }}>
-          <Typography variant="bigBold">{project.title}</Typography>
-          <DFOCardHeaderIconButton
-            sx={{ marginLeft: 'auto' }}
-            onClick={() => setEditing(true)}
-          >
-            <EditIcon />
-          </DFOCardHeaderIconButton>
-        </Box>
-        <Typography
-          variant="small"
-          sx={{ borderTop: '1px solid', paddingTop: 1 }}
+    <DFOHeaderContentBox>
+      <Box sx={{ display: 'flex', flexDirection: 'row' }}>
+        <Typography variant="bigBold">{project.title}</Typography>
+        <DFOCardHeaderIconButton
+          sx={{ marginLeft: 'auto' }}
+          onClick={editButtonOnClick}
         >
-          {project.description}
-        </Typography>
+          <EditIcon />
+        </DFOCardHeaderIconButton>
       </Box>
-    </DFOCardHeader>
+      <Typography
+        variant="small"
+        sx={{ borderTop: '1px solid', paddingTop: 1 }}
+      >
+        {project.description}
+      </Typography>
+    </DFOHeaderContentBox>
   );
 }
 

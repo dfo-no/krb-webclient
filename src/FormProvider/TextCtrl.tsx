@@ -1,4 +1,4 @@
-import { FormControl, FormLabel } from '@mui/material';
+import { FormControl } from '@mui/material';
 import { get } from 'lodash';
 import React from 'react';
 import { Controller, useFormContext } from 'react-hook-form';

@@ -1,98 +1,80 @@
-import { joiResolver } from '@hookform/resolvers/joi';
-import { Box } from '@mui/material';
-import Button from '@mui/material/Button';
-import { makeStyles } from '@mui/styles';
 import React from 'react';
-import { FormProvider, useForm } from 'react-hook-form';
-import { useTranslation } from 'react-i18next';
 import { v4 as uuidv4 } from 'uuid';
-import TextCtrl from '../../../FormProvider/TextCtrl';
 import { IAlert } from '../../../models/IAlert';
-import { ITag, PostTagSchema } from '../../../Nexus/entities/ITag';
+import { useAppDispatch } from '../../../store/hooks';
+import TextCtrl from '../../../FormProvider/TextCtrl';
+import { useTranslation } from 'react-i18next';
+import { FormProvider, useForm } from 'react-hook-form';
+import { joiResolver } from '@hookform/resolvers/joi';
 import Nexus from '../../../Nexus/Nexus';
-import { useAppDispatch, useAppSelector } from '../../../store/hooks';
 import { addAlert } from '../../../store/reducers/alert-reducer';
-import {
-  addTag,
-  putSelectedProjectThunk
-} from '../../../store/reducers/project-reducer';
+import { FormItemBox } from '../../Components/Form/FormItemBox';
+import { FormIconButton } from '../../Components/Form/FormIconButton';
+import CheckIcon from '@mui/icons-material/Check';
+import CloseIcon from '@mui/icons-material/Close';
+import { Parentable } from '../../../models/Parentable';
+import { useFormStyles } from '../../Components/Form/FormStyles';
+import { FormFlexBox } from '../../Components/Form/FormFlexBox';
+import { ITag, PostTagSchema } from '../../../Nexus/entities/ITag';
+import { useParams } from 'react-router-dom';
+import { IRouteParams } from '../../Models/IRouteParams';
+import useProjectMutations from '../../../store/api/ProjectMutations';
 
 interface IProps {
   handleClose: () => void;
 }
 
-const useStyles = makeStyles({
-  tagFormContainer: {
-    display: 'flex',
-    flexDirection: 'column',
-    gap: 10
-  },
-  tagFormTextFields: {
-    display: 'flex',
-    margin: 'auto',
-    flexDirection: 'column',
-    gap: 10,
-    width: '30vw',
-    minWidth: '350px'
-  },
-  tagFormButtons: {
-    display: 'flex',
-    justifyContent: 'center',
-    gap: 10
-  }
-});
-
 export default function NewTagForm({
   handleClose
 }: IProps): React.ReactElement {
   const dispatch = useAppDispatch();
-  const { project } = useAppSelector((state) => state.project);
   const { t } = useTranslation();
   const nexus = Nexus.getInstance();
+  const classes = useFormStyles();
+  const { projectId } = useParams<IRouteParams>();
+  const { addTag } = useProjectMutations();
 
-  const classes = useStyles();
+  const defaultValues: Parentable<ITag> =
+    nexus.tagService.generateDefaultTaglistValues(projectId);
 
-  const defaultValues = nexus.tagService.generateDefaultTaglistValues(
-    project.id
-  );
-
-  const methods = useForm<ITag>({
+  const methods = useForm<Parentable<ITag>>({
     resolver: joiResolver(PostTagSchema),
     defaultValues
   });
 
-  const onSubmit = (post: any) => {
+  async function onSubmit(post: Parentable<ITag>) {
     const newTag = nexus.tagService.generateTag(post);
-    const alert: IAlert = {
-      id: uuidv4(),
-      style: 'success',
-      text: 'Successfully added tag'
-    };
-    dispatch(addTag(newTag));
-    dispatch(putSelectedProjectThunk('dummy')).then(() => {
+    await addTag(newTag).then(() => {
+      const alert: IAlert = {
+        id: uuidv4(),
+        style: 'success',
+        text: 'Successfully created tag'
+      };
       dispatch(addAlert({ alert }));
       methods.reset();
       handleClose();
     });
-  };
+  }
 
   return (
     <FormProvider {...methods}>
-      <form onSubmit={methods.handleSubmit(onSubmit)}>
-        <Box className={classes.tagFormContainer}>
-          <Box className={classes.tagFormTextFields}>
+      <form
+        className={classes.form}
+        onSubmit={methods.handleSubmit(onSubmit)}
+        autoComplete="off"
+        noValidate
+      >
+        <FormItemBox>
+          <FormFlexBox sx={{ paddingLeft: 1, paddingRight: 1 }}>
             <TextCtrl name="title" label={t('Title')} />
-          </Box>
-
-          <Box className={classes.tagFormButtons}>
-            <Button variant="primary" type="submit">
-              {t('save')}
-            </Button>
-            <Button variant="warning" onClick={handleClose}>
-              {t('cancel')}
-            </Button>
-          </Box>
-        </Box>
+          </FormFlexBox>
+          <FormIconButton type="submit" aria-label="save">
+            <CheckIcon />
+          </FormIconButton>
+          <FormIconButton onClick={() => handleClose()} aria-label="close">
+            <CloseIcon />
+          </FormIconButton>
+        </FormItemBox>
       </form>
     </FormProvider>
   );

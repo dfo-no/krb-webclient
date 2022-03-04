@@ -1,16 +1,14 @@
 import React from 'react';
 import 'react-nestable/dist/styles/index.css';
-import { Parentable } from '../../models/Parentable';
-import { Nestable, Nestable as NestableModel } from '../../models/Nestable';
+import { Parentable } from '../../../models/Parentable';
 import { Box, Typography } from '@mui/material';
 import makeStyles from '@mui/styles/makeStyles';
-import theme from '../../theme';
-import NestableHierarcy from '../../NestableHierarchy/NestableHierarcy';
+import theme from '../../../theme';
+import NestableHierarcy from './NestableHierarcy';
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
-import { useEditableState } from './EditableContext';
-import { BaseModelWithTitleAndDesc } from '../../models/BaseModelWithTitleAndDesc';
-import { FormContainerBox } from './Form/FormContainerBox';
-import Utils from '../../common/Utils';
+import { useEditableState } from '../EditableContext';
+import { BaseModelWithTitleAndDesc } from '../../../models/BaseModelWithTitleAndDesc';
+import { FormContainerBox } from '../Form/FormContainerBox';
 
 const useStyles = makeStyles({
   nestableItemCustom: {
@@ -60,14 +58,14 @@ const useStyles = makeStyles({
 });
 
 interface IProps<T extends BaseModelWithTitleAndDesc> {
-  dispatchfunc: (item: Parentable<T>, index: number) => void;
-  inputlist: NestableModel<T>[];
+  dispatchfunc: (items: Parentable<T>[]) => void;
+  inputlist: Parentable<T>[];
   CreateComponent: React.ReactElement;
   EditComponent: (item: Parentable<T>) => React.ReactElement;
   depth: number;
 }
 
-const NestableHierarcyEditableComponent = <
+const NestableHierarcyEditableComponents = <
   T extends BaseModelWithTitleAndDesc
 >({
   dispatchfunc,
@@ -82,17 +80,13 @@ const NestableHierarcyEditableComponent = <
   const isEditing = () => {
     return editMode !== '';
   };
-  const isEditingItem = (item: Nestable<T>) => {
+  const isEditingItem = (item: Parentable<T>) => {
     return item && item.id === editMode;
   };
 
-  const renderItem = (item: Nestable<T>, handler: React.ReactNode) => {
+  const renderItem = (item: Parentable<T>, handler: React.ReactNode) => {
     if (isEditingItem(item)) {
-      return (
-        <FormContainerBox>
-          {EditComponent(Utils.nestable2Parentable(item))}
-        </FormContainerBox>
-      );
+      return <FormContainerBox>{EditComponent(item)}</FormContainerBox>;
     }
     return (
       <Box className={classes.nestableItemCustom}>
@@ -124,4 +118,4 @@ const NestableHierarcyEditableComponent = <
   );
 };
 
-export default NestableHierarcyEditableComponent;
+export default NestableHierarcyEditableComponents;

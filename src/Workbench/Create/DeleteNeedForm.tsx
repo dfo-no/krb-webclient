@@ -6,72 +6,54 @@ import { FormProvider, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { v4 as uuidv4 } from 'uuid';
 import AlertModal from '../../common/AlertModal';
-import Utils from '../../common/Utils';
 import ErrorSummary from '../../Form/ErrorSummary';
-import HiddenCtrl from '../../FormProvider/HiddenCtrl';
 import { IAlert } from '../../models/IAlert';
 import { Parentable } from '../../models/Parentable';
+import { IBank } from '../../Nexus/entities/IBank';
 import { DeleteNeedSchema, INeed } from '../../Nexus/entities/INeed';
-import { useAppDispatch, useAppSelector } from '../../store/hooks';
+import { usePutProjectMutation } from '../../store/api/bankApi';
+import { useAppDispatch } from '../../store/hooks';
 import { addAlert } from '../../store/reducers/alert-reducer';
-import {
-  deleteNeed,
-  putSelectedProjectThunk
-} from '../../store/reducers/project-reducer';
+import { useSelectState } from './SelectContext';
 
 interface IProps {
-  element: INeed;
+  need: INeed;
   handleClose: () => void;
+  project: IBank;
 }
 
-function DeleteNeedForm({ element, handleClose }: IProps): React.ReactElement {
+function DeleteNeedForm({
+  need,
+  project,
+  handleClose
+}: IProps): React.ReactElement {
   const dispatch = useAppDispatch();
-  const { project } = useAppSelector((state) => state.project);
 
   const { t } = useTranslation();
+  const [putProject] = usePutProjectMutation();
+  const { setNeedIndex } = useSelectState();
 
   const methods = useForm<Parentable<INeed>>({
-    defaultValues: element,
+    defaultValues: need,
     resolver: joiResolver(DeleteNeedSchema),
     context: { needList: project.needs }
   });
 
   const [modalShow, setModalShow] = useState(false);
 
-  /* const onSubmit = (post: Nestable<INeed>) => {
-    const postNeed = Utils.nestable2Parentable(post);
-    dispatch(editNeed(postNeed));
-    dispatch(putSelectedProjectThunk('dummy')).then(() => {
-      const alert: IAlert = {
-        id: uuidv4(),
-        style: 'success',
-        text: 'Successfully edited need'
-      };
-      dispatch(addAlert({ alert }));
-      handleClose();
-    });
-  }; */
-
-  const onSubmit = (n: INeed) => {
-    dispatch(deleteNeed(n));
-    dispatch(putSelectedProjectThunk('dummy')).then(() => {
-      const alert: IAlert = {
-        id: uuidv4(),
-        style: 'success',
-        text: 'Successfully edited need'
-      };
-      dispatch(addAlert({ alert }));
-      handleClose();
-    });
-    // TODO: fix back to commented out code
-    /* if (
-      element.requirements.length > 0 ||
-      Utils.checkIfParent(project.needs, n.id)
-    ) {
-      setModalShow(true);
-    } else {
-      dispatch(deleteNeed(n));
-      dispatch(putSelectedProjectThunk('dummy')).then(() => {
+  const onSubmit = async (deleteNeed: INeed) => {
+    const foundIndex = project.needs.findIndex((n) => n.id === deleteNeed.id);
+    const needs = [...project.needs];
+    if (foundIndex !== -1) {
+      needs.splice(foundIndex, 1);
+    }
+    const saveProject: IBank = {
+      ...project,
+      needs
+    };
+    await putProject(saveProject)
+      .unwrap()
+      .then((result) => {
         const alert: IAlert = {
           id: uuidv4(),
           style: 'success',
@@ -79,8 +61,15 @@ function DeleteNeedForm({ element, handleClose }: IProps): React.ReactElement {
         };
         dispatch(addAlert({ alert }));
         handleClose();
+        if (result.needs.length > 0) {
+          setNeedIndex(needs.length - 1);
+        } else {
+          setNeedIndex(null);
+        }
       });
-    } */
+
+    // TODO: fix back-end to joi-check with commented out code
+    // element.requirements.length > 0 || Utils.checkIfParent(project.needs, n.id)
   };
 
   return (
@@ -90,7 +79,7 @@ function DeleteNeedForm({ element, handleClose }: IProps): React.ReactElement {
         autoComplete="off"
         noValidate
       >
-        {/*         <input
+        {/* <input
           name="hasNeeds"
           defaultValue={
             Utils.checkIfParent(project.needs, element.id) ? 'true' : 'false'

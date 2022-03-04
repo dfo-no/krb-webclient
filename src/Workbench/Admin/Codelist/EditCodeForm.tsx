@@ -20,30 +20,31 @@ import { FormIconButton } from '../../Components/Form/FormIconButton';
 import { FormItemBox } from '../../Components/Form/FormItemBox';
 import { FormFlexBox } from '../../Components/Form/FormFlexBox';
 import { useFormStyles } from '../../Components/Form/FormStyles';
+import useProjectMutations from '../../../store/api/ProjectMutations';
 
 interface IProps {
-  parent: ICodelist;
-  element: Parentable<ICode>;
+  codelist: ICodelist;
+  code: Parentable<ICode>;
   handleClose: (newCode: Parentable<ICode> | null) => void;
 }
 
 function EditCodeForm({
-  parent,
-  element,
+  codelist,
+  code,
   handleClose
 }: IProps): React.ReactElement {
   const dispatch = useAppDispatch();
   const { t } = useTranslation();
   const classes = useFormStyles();
+  const { editCode } = useProjectMutations();
 
   const methods = useForm<Parentable<ICode>>({
-    defaultValues: element,
+    defaultValues: code,
     resolver: joiResolver(BaseCodeSchema)
   });
 
-  const onSubmit = (put: Parentable<ICode>) => {
-    dispatch(editCodeInCodelist({ codelistId: parent.id, code: put }));
-    dispatch(putSelectedProjectThunk('dummy')).then(() => {
+  async function onSubmit(put: Parentable<ICode>) {
+    await editCode(put, codelist).then(() => {
       const alert: IAlert = {
         id: uuidv4(),
         style: 'success',
@@ -52,7 +53,7 @@ function EditCodeForm({
       dispatch(addAlert({ alert }));
       handleClose(put);
     });
-  };
+  }
 
   return (
     <FormProvider {...methods}>

@@ -45,6 +45,24 @@ class Utils {
     return unescape('  '.replace(/ /g, '%A0').repeat(level - 1));
   }
 
+  static replaceElementInList<T extends IBaseModel>(
+    element: T,
+    list: T[]
+  ): T[] {
+    const newList = [...list];
+    const index = newList.findIndex((elem) => elem.id === element.id);
+    if (index !== -1) {
+      newList.splice(index, 1, element);
+    }
+    return newList;
+  }
+
+  static addElementToList<T extends IBaseModel>(element: T, list: T[]): T[] {
+    const newList = [...list];
+    newList.push(element);
+    return newList;
+  }
+
   private static flattenNestable<T extends IBaseModel>(
     items: Nestable<T>[]
   ): Nestable<T>[] {
@@ -62,6 +80,14 @@ class Utils {
     }, []);
   }
 
+  static nestableList2Parentable<T extends IBaseModel>(
+    items: Nestable<T>[]
+  ): Parentable<T>[] {
+    return Utils.flattenNestable(items).map((item) =>
+      Utils.nestable2Parentable(item)
+    );
+  }
+
   static nestable2Parentable<T extends IBaseModel>(
     item: Nestable<T>
   ): Parentable<T> {
@@ -77,6 +103,17 @@ class Utils {
     const result = Utils.flattenNestable(items);
     return result as Levelable<T>[];
   }
+
+  /* static nestable2Parentable<T extends IBaseModel>(item: Nestable<T>) {
+    const tmp = { ...item };
+    if (tmp.children) {
+      delete tmp.children;
+    }
+    if (tmp.level) {
+      delete tmp.level;
+    }
+    return item as Parentable<T>;
+  } */
 
   static parentable2Levelable<T extends IBaseModel>(
     items: Parentable<T>[]

@@ -56,7 +56,7 @@ const CodelistPanel = (): React.ReactElement => {
     if (isEditingItem(item)) {
       return (
         <FormContainerBox sx={{ marginBottom: 1 }} key={i}>
-          <EditCodelistForm element={item} handleClose={handleCloseEdit} />
+          <EditCodelistForm codelist={item} handleClose={handleCloseEdit} />
         </FormContainerBox>
       );
     }

@@ -17,6 +17,10 @@ interface ISelectContext {
   setRequirement: Dispatch<SetStateAction<IRequirement | null>>;
   variant: IVariant | null;
   setVariant: Dispatch<SetStateAction<IVariant | null>>;
+  needIndex: number | null;
+  setNeedIndex: (value: number | null) => void;
+  requirementIndex: number | null;
+  setRequirementIndex: (value: number | null) => void;
 }
 
 const initialContext: ISelectContext = {
@@ -31,6 +35,14 @@ const initialContext: ISelectContext = {
   variant: null,
   setVariant: function (): void {
     throw new Error('Function not implemented.');
+  },
+  needIndex: null,
+  setNeedIndex: function (): void {
+    throw new Error('Function not implemented.');
+  },
+  requirementIndex: null,
+  setRequirementIndex: function (): void {
+    throw new Error('Function not implemented.');
   }
 };
 
@@ -44,6 +56,8 @@ export const SelectProvider = ({ children }: IProps) => {
   const [need, setNeed] = useState<Levelable<INeed> | null>(null);
   const [requirement, setRequirement] = useState<IRequirement | null>(null);
   const [variant, setVariant] = useState<IVariant | null>(null);
+  const [needIndex, setNeedIndex] = useState<number | null>(null);
+  const [requirementIndex, setRequirementIndex] = useState<number | null>(null);
 
   return (
     <SelectContext.Provider
@@ -53,7 +67,11 @@ export const SelectProvider = ({ children }: IProps) => {
         requirement,
         setRequirement,
         variant,
-        setVariant
+        setVariant,
+        needIndex,
+        setNeedIndex,
+        requirementIndex,
+        setRequirementIndex
       }}
     >
       {children}
