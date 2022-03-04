@@ -6,10 +6,16 @@ import { useTranslation } from 'react-i18next';
 import { withRouter } from 'react-router';
 import { Link, useRouteMatch } from 'react-router-dom';
 import theme from '../../theme';
+import ContentCopyIcon from '@mui/icons-material/ContentCopy'; // Versjoner
+import Inventory2Icon from '@mui/icons-material/Inventory2'; // Produkter
+import CodeIcon from '@mui/icons-material/Code'; // Kodeliste
+import LinkIcon from '@mui/icons-material/Link'; // Arv
+import LocalOfferIcon from '@mui/icons-material/LocalOffer'; // Merkelapper
 
 interface IRouteLink {
   link: string;
   name: string;
+  icon?: object;
 }
 
 interface IRouteParams {
@@ -137,11 +143,31 @@ function SideBar(): React.ReactElement {
   const currentRoute = getCurrentRoute();
 
   const routes: IRouteLink[] = [
-    { link: `${baseUrl?.url}/admin`, name: t('Versions') },
-    { link: `${baseUrl?.url}/admin/products`, name: t('Products') },
-    { link: `${baseUrl?.url}/admin/codelist`, name: t('Codelist') },
-    { link: `${baseUrl?.url}/admin/inheritance`, name: t('Inheritance') },
-    { link: `${baseUrl?.url}/admin/tags`, name: t('Tags') }
+    {
+      link: `${baseUrl?.url}/admin`,
+      name: t('Versions'),
+      icon: Object(<ContentCopyIcon />)
+    },
+    {
+      link: `${baseUrl?.url}/admin/products`,
+      name: t('Products'),
+      icon: Object(<Inventory2Icon />)
+    },
+    {
+      link: `${baseUrl?.url}/admin/codelist`,
+      name: t('Codelist'),
+      icon: Object(<CodeIcon />)
+    },
+    {
+      link: `${baseUrl?.url}/admin/inheritance`,
+      name: t('Inheritance'),
+      icon: Object(<LinkIcon />)
+    },
+    {
+      link: `${baseUrl?.url}/admin/tags`,
+      name: t('Tags'),
+      icon: Object(<LocalOfferIcon />)
+    }
   ];
 
   const classes = useStyles();
@@ -157,6 +183,7 @@ function SideBar(): React.ReactElement {
               to={route.link}
               className={classes.sideBarListItem}
             >
+              <Box>{route.icon}</Box>
               <ListItemText
                 className={`${
                   route.name == currentRoute
