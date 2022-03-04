@@ -13,9 +13,6 @@ import RequirementPage from './Requirement/RequirementPage';
 import TagPage from './Tags/TagPage';
 
 const useStyles = makeStyles({
-  adminGuardContainer: {
-    display: 'flex'
-  },
   sideBarContainer: {
     height: '100vh',
     width: '15vw'
@@ -29,7 +26,7 @@ export default function AdminGuard(): React.ReactElement {
   const classes = useStyles();
   return (
     <>
-      <Box className={classes.adminGuardContainer}>
+      <Box sx={{ display: 'flex' }}>
         <Box className={classes.sideBarContainer}>
           <SideBar />
         </Box>
