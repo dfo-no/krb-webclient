@@ -6,11 +6,11 @@ import { useTranslation } from 'react-i18next';
 import { withRouter } from 'react-router';
 import { Link, useRouteMatch } from 'react-router-dom';
 import theme from '../../theme';
-import ContentCopyIcon from '@mui/icons-material/ContentCopy'; // Versjoner
-import Inventory2Icon from '@mui/icons-material/Inventory2'; // Produkter
-import CodeIcon from '@mui/icons-material/Code'; // Kodeliste
-import LinkIcon from '@mui/icons-material/Link'; // Arv
-import LocalOfferIcon from '@mui/icons-material/LocalOffer'; // Merkelapper
+import ContentCopyIcon from '@mui/icons-material/ContentCopy';
+import Inventory2Icon from '@mui/icons-material/Inventory2';
+import CodeIcon from '@mui/icons-material/Code';
+import LinkIcon from '@mui/icons-material/Link';
+import LocalOfferIcon from '@mui/icons-material/LocalOffer';
 
 interface IRouteLink {
   link: string;
@@ -32,7 +32,7 @@ const useStyles = makeStyles({
   },
   sideBarList: {
     backgroundColor: theme.palette.gray100.main,
-    width: '15vw',
+    width: '18vw',
     minWidth: 230,
     height: '100vh',
     [theme.breakpoints.down('md')]: {
@@ -42,8 +42,11 @@ const useStyles = makeStyles({
     }
   },
   sideBarListItem: {
+    display: 'flex',
+    gap: 10,
     cursor: 'pointer',
     width: '100%',
+    paddingLeft: 45,
     '&:hover': {
       background: theme.palette.lightBlue.main,
       color: theme.palette.dfoWhite.main,
@@ -58,6 +61,18 @@ const useStyles = makeStyles({
 
       '& $selectedListItemArrow': {
         color: theme.palette.dfoWhite.main
+      },
+
+      '& $selectedSideBarListItemIcon': {
+        '& .MuiSvgIcon-root': {
+          color: 'white'
+        }
+      },
+
+      '& $sideBarListItemIcon': {
+        '& .MuiSvgIcon-root': {
+          color: 'white'
+        }
       }
     },
 
@@ -65,12 +80,22 @@ const useStyles = makeStyles({
       backgroundColor: theme.palette.gray100.main
     }
   },
+  sideBarListItemIcon: {
+    '& .MuiSvgIcon-root': {
+      color: theme.palette.gray700.main
+    }
+  },
+  selectedSideBarListItemIcon: {
+    '& .MuiSvgIcon-root': {
+      color: 'black'
+    }
+  },
   sideBarListItemText: {
     color: theme.palette.gray700.main,
     marginLeft: 40
   },
   selectedSideBarListItemText: {
-    color: theme.palette.dfoDarkBlue.main,
+    color: theme.palette.black.main,
     marginLeft: 40
   },
   sideBarListItemPicked: {
@@ -183,7 +208,15 @@ function SideBar(): React.ReactElement {
               to={route.link}
               className={classes.sideBarListItem}
             >
-              <Box>{route.icon}</Box>
+              <Box
+                className={`${
+                  route.name == currentRoute
+                    ? classes.selectedSideBarListItemIcon
+                    : classes.sideBarListItemIcon
+                }`}
+              >
+                {route.icon}
+              </Box>
               <ListItemText
                 className={`${
                   route.name == currentRoute
