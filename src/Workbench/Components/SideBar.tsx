@@ -43,7 +43,7 @@ const useStyles = makeStyles({
   },
   sideBarListItem: {
     display: 'flex',
-    gap: 10,
+    gap: 5,
     cursor: 'pointer',
     width: '100%',
     paddingLeft: 45,
