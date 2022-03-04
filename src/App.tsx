@@ -21,6 +21,7 @@ import ResponseModule from './ResponseEditor/ResponseModule';
 import ResponsePage from './ResponseEditor/ResponsePage';
 import SpecModule from './SpecEditor/SpecModule';
 import WorkbenchModule from './Workbench/WorkbenchModule';
+import ScrollToTop from './ScrollToTop';
 
 const msalInstance = new PublicClientApplication(msalConfig);
 
@@ -29,32 +30,34 @@ function App(): React.ReactElement {
 
   function renderContent() {
     return (
-      <Switch>
-        <Route exact path="/">
-          <HomePage />
-        </Route>
-        <PageLayout>
-          <AuthenticatedTemplate>
-            <Route path="/workbench" component={WorkbenchModule} />
-            <Route path="/specification" component={SpecModule} />
-            <Route path="/response/:id" component={ResponseModule} />
-            <Route exact path="/response" component={ResponsePage} />
-            <Route path="/evaluation" component={Evaluation} />
-            <Route
-              path="/prefilledresponse/:id"
-              component={PrefilledResponseModule}
-            />
-          </AuthenticatedTemplate>
-          {process.env.NODE_ENV === 'development' ? (
-            <Route path="/kitchensink" component={KitchenSink} />
-          ) : (
-            <></>
-          )}
-          <UnauthenticatedTemplate>
-            <h5 className="card-title">Please sign-in to access this page</h5>
-          </UnauthenticatedTemplate>
-        </PageLayout>
-      </Switch>
+      <ScrollToTop>
+        <Switch>
+          <Route exact path="/">
+            <HomePage />
+          </Route>
+          <PageLayout>
+            <AuthenticatedTemplate>
+              <Route path="/workbench" component={WorkbenchModule} />
+              <Route path="/specification" component={SpecModule} />
+              <Route path="/response/:id" component={ResponseModule} />
+              <Route exact path="/response" component={ResponsePage} />
+              <Route path="/evaluation" component={Evaluation} />
+              <Route
+                path="/prefilledresponse/:id"
+                component={PrefilledResponseModule}
+              />
+            </AuthenticatedTemplate>
+            {process.env.NODE_ENV === 'development' ? (
+              <Route path="/kitchensink" component={KitchenSink} />
+            ) : (
+              <></>
+            )}
+            <UnauthenticatedTemplate>
+              <h5 className="card-title">Please sign-in to access this page</h5>
+            </UnauthenticatedTemplate>
+          </PageLayout>
+        </Switch>
+      </ScrollToTop>
     );
   }
 
@@ -64,10 +67,8 @@ function App(): React.ReactElement {
         <CssBaseline />
         <AlertList />
         <div className={styles.App}>
-          <div className={styles.App__header}>
-            <Header />
-          </div>
-          <div className={styles.App__content}>{renderContent()}</div>
+          <Header />
+          {renderContent()}
         </div>
       </MsalProvider>
     </div>

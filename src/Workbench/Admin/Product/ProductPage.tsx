@@ -22,21 +22,10 @@ import { useParams } from 'react-router-dom';
 import { IRouteParams } from '../../Models/IRouteParams';
 import { useGetProjectQuery } from '../../../store/api/bankApi';
 import useProjectMutations from '../../../store/api/ProjectMutations';
-import Utils from '../../../common/Utils';
-
-const useStyles = makeStyles({
-  products: {
-    [theme.breakpoints.down('md')]: {
-      alignSelf: 'center',
-      width: 400
-    }
-  }
-});
 
 export default function ProductPage(): React.ReactElement {
   const [products, setProducts] = useState<Parentable<IProduct>[]>([]);
   const { setEditMode, setCreating } = useEditableState();
-  const classes = useStyles();
   const { t } = useTranslation();
 
   const { projectId } = useParams<IRouteParams>();
@@ -76,42 +65,35 @@ export default function ProductPage(): React.ReactElement {
   };
 
   return (
-    <>
-      <StandardContainer>
-        <SearchContainer>
-          <SearchFieldContainer>
-            {' '}
-            <DFOSearchBar
-              list={project.products}
-              label={t('search for product')}
-              callback={searchFieldCallback}
-              searchFunction={productsSearch}
-            />
-          </SearchFieldContainer>
-          <NewButtonContainer>
-            <Button variant="primary" onClick={() => setCreating(true)}>
-              {t('add new product')}
-            </Button>
-          </NewButtonContainer>
-        </SearchContainer>
-
-        <Box className={classes.products}>
-          <NestableHierarcyEditableComponents
-            dispatchfunc={updateProductsArrangement}
-            inputlist={products}
-            CreateComponent={
-              <NewProductForm handleClose={() => setCreating(false)} />
-            }
-            EditComponent={(item: Parentable<IProduct>) => (
-              <EditProductForm
-                product={item}
-                handleClose={() => setEditMode('')}
-              />
-            )}
-            depth={5}
+    <StandardContainer>
+      <SearchContainer>
+        <SearchFieldContainer>
+          {' '}
+          <DFOSearchBar
+            list={project.products}
+            label={t('search for product')}
+            callback={searchFieldCallback}
+            searchFunction={productsSearch}
           />
-        </Box>
-      </StandardContainer>
-    </>
+        </SearchFieldContainer>
+        <NewButtonContainer>
+          <Button variant="primary" onClick={() => setCreating(true)}>
+            {t('add new product')}
+          </Button>
+        </NewButtonContainer>
+      </SearchContainer>
+
+      <NestableHierarcyEditableComponents
+        dispatchfunc={updateProductsArrangement}
+        inputlist={products}
+        CreateComponent={
+          <NewProductForm handleClose={() => setCreating(false)} />
+        }
+        EditComponent={(item: Parentable<IProduct>) => (
+          <EditProductForm product={item} handleClose={() => setEditMode('')} />
+        )}
+        depth={5}
+      />
+    </StandardContainer>
   );
 }

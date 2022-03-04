@@ -22,7 +22,6 @@ import { useParams } from 'react-router-dom';
 import { IRouteParams } from '../../Models/IRouteParams';
 import NestableHierarcyEditableComponents from '../../Components/NestableHierarchy/NestableHiarchyEditableComponents';
 import SearchUtils from '../../../common/SearchUtils';
-import Utils from '../../../common/Utils';
 import useProjectMutations from '../../../store/api/ProjectMutations';
 import DeleteTagForm from './DeleteTagForm';
 
@@ -30,7 +29,6 @@ const useStyles = makeStyles({
   tags: {
     width: '100%',
     alignSelf: 'center',
-    height: '100vh',
     [theme.breakpoints.down('sm')]: {
       width: 400
     }

@@ -16,22 +16,11 @@ interface IRouteParams {
 }
 
 const useStyles = makeStyles({
-  projectContainer: {
-    display: 'flex',
-    flexDirection: 'column',
-    width: '100%',
-    [theme.breakpoints.down('md')]: {
-      flexWrap: 'wrap'
-    }
-  },
   wrapperContainer: {
     display: 'flex',
     flexDirection: 'row',
-    backgroundColor: theme.palette.dfoBackgroundBlue.main,
-
-    [theme.breakpoints.down('md')]: {
-      flexWrap: 'wrap'
-    }
+    width: '100%',
+    backgroundColor: theme.palette.dfoBackgroundBlue.main
   }
 });
 
@@ -60,20 +49,18 @@ export default function ProjectGuard(): React.ReactElement {
   }
 
   return (
-    <Box className={classes.projectContainer}>
-      <Box className={classes.wrapperContainer}>
-        <Route path="/workbench/:projectId/admin">
-          <AdminGuard />
-        </Route>
-        <Route path="/workbench/:projectId/create">
-          <SelectProvider>
-            <Create />
-          </SelectProvider>
-        </Route>
-        <Route path="/workbench/:projectId/preview">
-          <Preview />
-        </Route>
-      </Box>
+    <Box className={classes.wrapperContainer}>
+      <Route path="/workbench/:projectId/admin">
+        <AdminGuard />
+      </Route>
+      <Route path="/workbench/:projectId/create">
+        <SelectProvider>
+          <Create />
+        </SelectProvider>
+      </Route>
+      <Route path="/workbench/:projectId/preview">
+        <Preview />
+      </Route>
     </Box>
   );
 }

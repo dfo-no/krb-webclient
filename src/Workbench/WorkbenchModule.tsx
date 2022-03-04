@@ -12,14 +12,9 @@ import Projects from './Projects/Projects';
 const useStyles = makeStyles({
   workbenchContainer: {
     display: 'flex',
-    gap: 50,
-    backgroundColor: theme.palette.dfoBackgroundBlue.main,
-    [theme.breakpoints.down('md')]: {
-      flexWrap: 'wrap'
-    }
-  },
-  editorContainer: {
-    width: '100vw'
+    width: '100%',
+    height: '100%',
+    backgroundColor: theme.palette.dfoBackgroundBlue.main
   }
 });
 
@@ -47,16 +42,14 @@ export default function WorkbenchModule(): React.ReactElement {
 
   return (
     <Box className={classes.workbenchContainer}>
-      <Box className={classes.editorContainer}>
-        <Switch>
-          <Route exact path="/workbench">
-            <Projects />
-          </Route>
-          <Route path="/workbench/:projectId">
-            <ProjectGuard />
-          </Route>
-        </Switch>
-      </Box>
+      <Switch>
+        <Route exact path="/workbench">
+          <Projects />
+        </Route>
+        <Route path="/workbench/:projectId">
+          <ProjectGuard />
+        </Route>
+      </Switch>
     </Box>
   );
 }
