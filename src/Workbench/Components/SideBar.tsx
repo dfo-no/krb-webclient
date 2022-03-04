@@ -47,19 +47,6 @@ const useStyles = makeStyles({
     cursor: 'pointer',
     width: '100%',
     paddingLeft: 45,
-    color: theme.palette.gray700.main,
-    '&:hover': {
-      background: theme.palette.lightBlue.main,
-      color: theme.palette.dfoWhite.main
-    }
-  },
-  selectedSideBarListItem: {
-    display: 'flex',
-    gap: 5,
-    cursor: 'pointer',
-    width: '100%',
-    paddingLeft: 45,
-    color: theme.palette.black.main,
     '&:hover': {
       background: theme.palette.lightBlue.main,
       color: theme.palette.dfoWhite.main
@@ -151,14 +138,15 @@ function SideBar(): React.ReactElement {
         {routes.map((route) => {
           return (
             <ListItem
+              sx={
+                route.name === currentRoute
+                  ? { color: theme.palette.black.main }
+                  : { color: theme.palette.gray700.main }
+              }
               key={route.name}
               component={Link}
               to={route.link}
-              className={`${
-                route.name == currentRoute
-                  ? classes.selectedSideBarListItem
-                  : classes.sideBarListItem
-              }`}
+              className={classes.sideBarListItem}
             >
               <Box>{route.icon}</Box>
               <ListItemText sx={{ marginLeft: 5 }}>
