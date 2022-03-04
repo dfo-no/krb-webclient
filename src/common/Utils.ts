@@ -63,6 +63,18 @@ class Utils {
     return newList;
   }
 
+  static removeElementFromList<T extends IBaseModel>(
+    element: T,
+    list: T[]
+  ): T[] {
+    const newList = [...list];
+    const index = newList.findIndex((elem) => elem.id === element.id);
+    if (index !== -1) {
+      newList.splice(index, 1);
+    }
+    return newList;
+  }
+
   private static flattenNestable<T extends IBaseModel>(
     items: Nestable<T>[]
   ): Nestable<T>[] {

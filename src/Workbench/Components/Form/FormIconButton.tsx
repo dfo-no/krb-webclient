@@ -1,19 +1,19 @@
 import { IconButton, styled } from '@mui/material/';
 
-export const FormIconButton = styled(IconButton)(({ theme }) => ({
+export const FormIconButton = styled(IconButton, {
+  shouldForwardProp: (prop) => prop !== 'hoverColor'
+})<{ hoverColor?: string }>(({ theme, hoverColor }) => ({
   display: 'flex',
   alignSelf: 'center',
   padding: 0,
   paddingRight: 8,
   width: 32,
   height: 32,
+  color: theme.palette.gray500.main,
   '&:hover': {
-    '& .MuiSvgIcon-root': {
-      color: theme.palette.dfoLightBlue.main
-    }
+    color: hoverColor ? hoverColor : theme.palette.dfoLightBlue.main
   },
   '& .MuiSvgIcon-root': {
-    color: theme.palette.gray500.main,
     width: 32,
     height: 32
   }

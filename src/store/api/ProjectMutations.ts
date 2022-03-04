@@ -55,6 +55,14 @@ function useProjectMutations() {
     throw Error('Cant save changes to Project');
   }
 
+  async function deleteTag(tag: Parentable<ITag>) {
+    if (project) {
+      const deletedTags = Utils.removeElementFromList(tag, project.tags);
+      return putProject({ ...project, tags: deletedTags });
+    }
+    throw Error('Cant save changes to Project');
+  }
+
   async function editTags(tags: Parentable<ITag>[]) {
     if (project) {
       return putProject({ ...project, tags: tags });
@@ -120,6 +128,7 @@ function useProjectMutations() {
     editProducts,
     addTag,
     editTag,
+    deleteTag,
     editTags,
     addCodelist,
     editCodelist,
