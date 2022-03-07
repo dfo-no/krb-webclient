@@ -32,9 +32,9 @@ const useStyles = makeStyles({
   sideBarList: {
     position: 'sticky',
     backgroundColor: theme.palette.gray100.main,
+    height: '100%',
     width: '18vw',
     minWidth: 230,
-    height: '100%',
     paddingTop: 60,
     [theme.breakpoints.down('md')]: {
       height: 'auto',

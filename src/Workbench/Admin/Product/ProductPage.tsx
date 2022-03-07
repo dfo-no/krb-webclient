@@ -22,6 +22,7 @@ import { useParams } from 'react-router-dom';
 import { IRouteParams } from '../../Models/IRouteParams';
 import { useGetProjectQuery } from '../../../store/api/bankApi';
 import useProjectMutations from '../../../store/api/ProjectMutations';
+import { ScrollableContainer } from '../../Components/ScrollableContainer';
 
 export default function ProductPage(): React.ReactElement {
   const [products, setProducts] = useState<Parentable<IProduct>[]>([]);
@@ -83,17 +84,22 @@ export default function ProductPage(): React.ReactElement {
         </NewButtonContainer>
       </SearchContainer>
 
-      <NestableHierarcyEditableComponents
-        dispatchfunc={updateProductsArrangement}
-        inputlist={products}
-        CreateComponent={
-          <NewProductForm handleClose={() => setCreating(false)} />
-        }
-        EditComponent={(item: Parentable<IProduct>) => (
-          <EditProductForm product={item} handleClose={() => setEditMode('')} />
-        )}
-        depth={5}
-      />
+      <ScrollableContainer>
+        <NestableHierarcyEditableComponents
+          dispatchfunc={updateProductsArrangement}
+          inputlist={products}
+          CreateComponent={
+            <NewProductForm handleClose={() => setCreating(false)} />
+          }
+          EditComponent={(item: Parentable<IProduct>) => (
+            <EditProductForm
+              product={item}
+              handleClose={() => setEditMode('')}
+            />
+          )}
+          depth={5}
+        />
+      </ScrollableContainer>
     </StandardContainer>
   );
 }

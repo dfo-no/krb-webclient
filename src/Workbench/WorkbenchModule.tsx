@@ -11,9 +11,8 @@ import Projects from './Projects/Projects';
 
 const useStyles = makeStyles({
   workbenchContainer: {
-    display: 'flex',
+    height: '90%',
     width: '100%',
-    height: '100%',
     backgroundColor: theme.palette.dfoBackgroundBlue.main
   }
 });

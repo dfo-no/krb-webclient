@@ -11,6 +11,7 @@ import NewCodelistForm from './NewCodelistForm';
 import { usePanelStyles } from './CodelistStyles';
 import { useEditableState } from '../../Components/EditableContext';
 import { FormContainerBox } from '../../Components/Form/FormContainerBox';
+import { ScrollableContainer } from '../../Components/ScrollableContainer';
 
 const CodelistPanel = (): React.ReactElement => {
   const classes = usePanelStyles();
@@ -101,9 +102,13 @@ const CodelistPanel = (): React.ReactElement => {
           <NewCodelistForm handleClose={handleCloseCreate} />
         </FormContainerBox>
       )}
-      <List className={classes.list} aria-label="codelist">
-        {codelists && codelists.map(renderItem)}
-      </List>
+      <ScrollableContainer>
+        <Box sx={{ height: '65vh', width: '100%' }}>
+          <List className={classes.list} aria-label="codelist">
+            {codelists && codelists.map(renderItem)}
+          </List>
+        </Box>
+      </ScrollableContainer>
     </Box>
   );
 };

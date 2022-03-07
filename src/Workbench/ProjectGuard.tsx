@@ -5,7 +5,6 @@ import { Route, useParams } from 'react-router-dom';
 import LoaderSpinner from '../common/LoaderSpinner';
 import { useAppDispatch } from '../store/hooks';
 import { getProjectThunk } from '../store/reducers/project-reducer';
-import theme from '../theme';
 import AdminGuard from './Admin/AdminGuard';
 import Create from './Create/Create';
 import { SelectProvider } from './Create/SelectContext';
@@ -17,10 +16,8 @@ interface IRouteParams {
 
 const useStyles = makeStyles({
   wrapperContainer: {
-    display: 'flex',
-    flexDirection: 'row',
-    width: '100%',
-    backgroundColor: theme.palette.dfoBackgroundBlue.main
+    height: '100%',
+    width: '100%'
   }
 });
 

@@ -16,6 +16,7 @@ import { useParams } from 'react-router-dom';
 import { IRouteParams } from '../../Models/IRouteParams';
 import Utils from '../../../common/Utils';
 import useProjectMutations from '../../../store/api/ProjectMutations';
+import { ScrollableContainer } from '../../Components/ScrollableContainer';
 
 const CodePanel = (): React.ReactElement => {
   const classes = usePanelStyles();
@@ -106,13 +107,17 @@ const CodePanel = (): React.ReactElement => {
           <NewCodeForm codelist={codelist} handleClose={handleCloseCreate} />
         </FormContainerBox>
       )}
-      <NestableHierarcy
-        className={classes.nestableCustom}
-        inputlist={codes}
-        renderItem={renderItem}
-        dispatchfunc={updateCodesArrangement}
-        depth={1}
-      />
+      <ScrollableContainer>
+        <Box sx={{ height: '65vh', width: '100%' }}>
+          <NestableHierarcy
+            className={classes.nestableCustom}
+            inputlist={codes}
+            renderItem={renderItem}
+            dispatchfunc={updateCodesArrangement}
+            depth={1}
+          />
+        </Box>
+      </ScrollableContainer>
     </Box>
   );
 };

@@ -4,10 +4,8 @@ import { Parentable } from '../../../models/Parentable';
 import { ITag } from '../../../Nexus/entities/ITag';
 import EditTagForm from './EditTagForm';
 import NewTagForm from './NewTagForm';
-import { Box, Button } from '@mui/material';
-import theme from '../../../theme';
+import { Button } from '@mui/material';
 import DFOSearchBar from '../../../components/DFOSearchBar/DFOSearchBar';
-import { makeStyles } from '@mui/styles';
 import { StandardContainer } from '../../Components/StandardContainer';
 import {
   NewButtonContainer,
@@ -24,20 +22,10 @@ import NestableHierarcyEditableComponents from '../../Components/NestableHierarc
 import SearchUtils from '../../../common/SearchUtils';
 import useProjectMutations from '../../../store/api/ProjectMutations';
 import DeleteTagForm from './DeleteTagForm';
-
-const useStyles = makeStyles({
-  tags: {
-    width: '100%',
-    alignSelf: 'center',
-    [theme.breakpoints.down('sm')]: {
-      width: 400
-    }
-  }
-});
+import { ScrollableContainer } from '../../Components/ScrollableContainer';
 
 export default function TagPage(): React.ReactElement {
   const { t } = useTranslation();
-  const classes = useStyles();
   const { setEditMode, setCreating } = useEditableState();
   const [tags, setTags] = useState<Parentable<ITag>[]>([]);
 
@@ -95,7 +83,7 @@ export default function TagPage(): React.ReactElement {
           </NewButtonContainer>
         </SearchContainer>
 
-        <Box className={classes.tags}>
+        <ScrollableContainer>
           <NestableHierarcyEditableComponents
             dispatchfunc={updateTagsArrangement}
             inputlist={tags}
@@ -110,7 +98,7 @@ export default function TagPage(): React.ReactElement {
             )}
             depth={5}
           />
-        </Box>
+        </ScrollableContainer>
       </StandardContainer>
     </>
   );

@@ -112,7 +112,7 @@ const NestableHierarcyEditableComponents = <
   };
 
   return (
-    <Box>
+    <Box sx={{ width: '100%' }}>
       {isCreating && <FormContainerBox>{CreateComponent}</FormContainerBox>}
       <NestableHierarcy<T>
         className={classes.nestableCustom}
