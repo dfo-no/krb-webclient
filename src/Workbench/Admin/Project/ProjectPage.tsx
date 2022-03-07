@@ -103,7 +103,7 @@ function ProjectPage(): React.ReactElement {
 
   return (
     <StandardContainer>
-      <Card sx={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
+      <Card>
         <DFOCardHeader>
           <ProjectHeader editButtonOnClick={() => setEditing(true)} />
         </DFOCardHeader>
