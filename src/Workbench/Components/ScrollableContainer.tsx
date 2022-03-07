@@ -3,6 +3,7 @@ import { Box, styled } from '@mui/material';
 export const ScrollableContainer = styled(Box)(({ theme }) => ({
   display: 'flex',
   flexGrow: 1,
+  minHeight: 0,
   overflowY: 'auto',
   alignSelf: 'center',
   width: '100%',

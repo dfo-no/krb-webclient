@@ -108,15 +108,13 @@ const CodePanel = (): React.ReactElement => {
         </FormContainerBox>
       )}
       <ScrollableContainer>
-        <Box sx={{ height: '65vh', width: '100%' }}>
-          <NestableHierarcy
-            className={classes.nestableCustom}
-            inputlist={codes}
-            renderItem={renderItem}
-            dispatchfunc={updateCodesArrangement}
-            depth={1}
-          />
-        </Box>
+        <NestableHierarcy
+          className={classes.nestableCustom}
+          inputlist={codes}
+          renderItem={renderItem}
+          dispatchfunc={updateCodesArrangement}
+          depth={1}
+        />
       </ScrollableContainer>
     </Box>
   );

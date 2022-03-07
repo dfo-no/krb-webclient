@@ -114,7 +114,13 @@ function ProjectPage(): React.ReactElement {
           />
         )}
         <CardContent
-          sx={{ display: 'flex', flexDirection: 'column', height: '100%' }}
+          sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            height: '100%',
+            flexGrow: 1,
+            minHeight: 0
+          }}
         >
           <SearchContainer>
             <SearchFieldContainer>
@@ -142,11 +148,9 @@ function ProjectPage(): React.ReactElement {
             </Box>
           )}
           <ScrollableContainer>
-            <Box sx={{ height: '50vh', width: '100%' }}>
-              <List aria-label="publications">
-                {publications.map(renderItem)}
-              </List>
-            </Box>
+            <List aria-label="publications">
+              {publications.map(renderItem)}
+            </List>
           </ScrollableContainer>
         </CardContent>
       </Card>

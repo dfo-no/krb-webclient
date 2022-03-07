@@ -83,22 +83,20 @@ export default function TagPage(): React.ReactElement {
           </NewButtonContainer>
         </SearchContainer>
 
-        <ScrollableContainer>
-          <NestableHierarcyEditableComponents
-            dispatchfunc={updateTagsArrangement}
-            inputlist={tags}
-            CreateComponent={
-              <NewTagForm handleClose={() => setCreating(false)} />
-            }
-            EditComponent={(item: Parentable<ITag>) => (
-              <EditTagForm tag={item} handleClose={() => setEditMode('')} />
-            )}
-            DeleteComponent={(item: Parentable<ITag>) => (
-              <DeleteTagForm tag={item} handleClose={() => setEditMode('')} />
-            )}
-            depth={5}
-          />
-        </ScrollableContainer>
+        <NestableHierarcyEditableComponents
+          dispatchfunc={updateTagsArrangement}
+          inputlist={tags}
+          CreateComponent={
+            <NewTagForm handleClose={() => setCreating(false)} />
+          }
+          EditComponent={(item: Parentable<ITag>) => (
+            <EditTagForm tag={item} handleClose={() => setEditMode('')} />
+          )}
+          DeleteComponent={(item: Parentable<ITag>) => (
+            <DeleteTagForm tag={item} handleClose={() => setEditMode('')} />
+          )}
+          depth={5}
+        />
       </StandardContainer>
     </>
   );

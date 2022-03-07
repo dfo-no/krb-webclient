@@ -84,22 +84,17 @@ export default function ProductPage(): React.ReactElement {
         </NewButtonContainer>
       </SearchContainer>
 
-      <ScrollableContainer>
-        <NestableHierarcyEditableComponents
-          dispatchfunc={updateProductsArrangement}
-          inputlist={products}
-          CreateComponent={
-            <NewProductForm handleClose={() => setCreating(false)} />
-          }
-          EditComponent={(item: Parentable<IProduct>) => (
-            <EditProductForm
-              product={item}
-              handleClose={() => setEditMode('')}
-            />
-          )}
-          depth={5}
-        />
-      </ScrollableContainer>
+      <NestableHierarcyEditableComponents
+        dispatchfunc={updateProductsArrangement}
+        inputlist={products}
+        CreateComponent={
+          <NewProductForm handleClose={() => setCreating(false)} />
+        }
+        EditComponent={(item: Parentable<IProduct>) => (
+          <EditProductForm product={item} handleClose={() => setEditMode('')} />
+        )}
+        depth={5}
+      />
     </StandardContainer>
   );
 }

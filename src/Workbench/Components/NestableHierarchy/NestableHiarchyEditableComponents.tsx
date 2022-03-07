@@ -9,6 +9,7 @@ import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
 import { useEditableState } from '../EditableContext';
 import { BaseModelWithTitleAndDesc } from '../../../models/BaseModelWithTitleAndDesc';
 import { FormContainerBox } from '../Form/FormContainerBox';
+import { ScrollableContainer } from '../ScrollableContainer';
 
 const useStyles = makeStyles({
   nestableItemCustom: {
@@ -112,15 +113,25 @@ const NestableHierarcyEditableComponents = <
   };
 
   return (
-    <Box sx={{ width: '100%' }}>
+    <Box
+      sx={{
+        display: 'flex',
+        flexDirection: 'column',
+        width: '100%',
+        flexGrow: 1,
+        minHeight: 0
+      }}
+    >
       {isCreating && <FormContainerBox>{CreateComponent}</FormContainerBox>}
-      <NestableHierarcy<T>
-        className={classes.nestableCustom}
-        inputlist={inputlist}
-        renderItem={renderItem}
-        dispatchfunc={dispatchfunc}
-        depth={depth}
-      />
+      <ScrollableContainer>
+        <NestableHierarcy<T>
+          className={classes.nestableCustom}
+          inputlist={inputlist}
+          renderItem={renderItem}
+          dispatchfunc={dispatchfunc}
+          depth={depth}
+        />
+      </ScrollableContainer>
     </Box>
   );
 };

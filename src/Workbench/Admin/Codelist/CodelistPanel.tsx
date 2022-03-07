@@ -98,16 +98,14 @@ const CodelistPanel = (): React.ReactElement => {
     <Box className={classes.topContainer}>
       <CodelistAddButton onClick={() => setCreating(true)} />
       {isCreating && (
-        <FormContainerBox sx={{ marginBottom: 1 }}>
+        <FormContainerBox>
           <NewCodelistForm handleClose={handleCloseCreate} />
         </FormContainerBox>
       )}
       <ScrollableContainer>
-        <Box sx={{ height: '65vh', width: '100%' }}>
-          <List className={classes.list} aria-label="codelist">
-            {codelists && codelists.map(renderItem)}
-          </List>
-        </Box>
+        <List className={classes.list} aria-label="codelist">
+          {codelists && codelists.map(renderItem)}
+        </List>
       </ScrollableContainer>
     </Box>
   );
