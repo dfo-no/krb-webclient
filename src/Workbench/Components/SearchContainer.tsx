@@ -4,6 +4,7 @@ export const SearchContainer = styled(Box)(({}) => ({
   display: 'flex',
   flexDirection: 'row',
   width: '100%',
+  height: 90,
   paddingBottom: 32
 }));
 
