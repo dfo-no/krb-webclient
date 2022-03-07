@@ -2,8 +2,9 @@ import { styled } from '@mui/material';
 import TextField from '@mui/material/TextField';
 
 const DFOTextField = styled(TextField)(({ theme }) => ({
+  width: '100%',
   '& .MuiOutlinedInput-root': {
-    backgroundColor: 'white',
+    backgroundColor: theme.palette.dfoWhite.main,
     '& fieldset': {
       borderColor: theme.palette.indigo.main,
       borderWidth: 2
@@ -32,11 +33,14 @@ const DFOTextField = styled(TextField)(({ theme }) => ({
     }
   },
   '& .MuiFilledInput-root': {
-    backgroundColor: 'white',
-    border: `2px solid ${theme.palette.indigo.main}`,
-    '&:hover': {
-      border: `3px solid ${theme.palette.indigo.main}`
-    }
+    backgroundColor: theme.palette.dfoWhite.main,
+    border: `2px solid ${theme.palette.indigo.main}`
+  },
+  '& .MuiFilledInput-root:hover': {
+    border: `3px solid ${theme.palette.indigo.main}`
+  },
+  '& .MuiFilledInput-root.Mui-focused': {
+    border: `3px solid ${theme.palette.indigo.main}`
   }
 }));
 
