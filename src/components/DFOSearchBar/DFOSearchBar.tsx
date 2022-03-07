@@ -5,7 +5,7 @@ import makeStyles from '@mui/styles/makeStyles';
 import theme from '../../theme';
 
 interface DFOSearchBarProps {
-  list: any;
+  list: object;
   searchFunction: any;
   callback: any;
   label: string;
