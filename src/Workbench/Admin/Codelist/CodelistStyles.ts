@@ -31,6 +31,8 @@ export const usePanelStyles = makeStyles({
   topContainer: {
     display: 'flex',
     flexDirection: 'column',
+    flexGrow: 1,
+    minHeight: 0,
     gap: 8
   },
   listItem: {
@@ -57,6 +59,8 @@ export const usePanelStyles = makeStyles({
   list: {
     display: 'flex',
     flexDirection: 'column',
+    flexGrow: 1,
+    minHeight: 0,
     listStyle: 'none'
   },
   editIcon: {
