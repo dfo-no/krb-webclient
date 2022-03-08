@@ -13,7 +13,7 @@ import { addAlert } from '../../../store/reducers/alert-reducer';
 import { usePutProjectMutation } from '../../../store/api/bankApi';
 import TextCtrl from '../../../FormProvider/TextCtrl';
 import theme from '../../../theme';
-import { FormTextButton } from '../../Components/FormTextButton';
+import { FormTextButton } from '../../Components/Form/FormTextButton';
 
 interface IProps {
   project: IBank;

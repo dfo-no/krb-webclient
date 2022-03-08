@@ -25,7 +25,7 @@ import DeleteTagForm from './DeleteTagForm';
 
 export default function TagPage(): React.ReactElement {
   const { t } = useTranslation();
-  const { setEditMode, setCreating } = useEditableState();
+  const { setEditMode, setCreating, setDeleteMode } = useEditableState();
   const [tags, setTags] = useState<Parentable<ITag>[]>([]);
 
   const { projectId } = useParams<IRouteParams>();
@@ -91,8 +91,15 @@ export default function TagPage(): React.ReactElement {
           EditComponent={(item: Parentable<ITag>) => (
             <EditTagForm tag={item} handleClose={() => setEditMode('')} />
           )}
-          DeleteComponent={(item: Parentable<ITag>) => (
-            <DeleteTagForm tag={item} handleClose={() => setEditMode('')} />
+          DeleteComponent={(
+            item: Parentable<ITag>,
+            child: React.ReactElement
+          ) => (
+            <DeleteTagForm
+              child={child}
+              tag={item}
+              handleClose={() => setDeleteMode('')}
+            />
           )}
           depth={5}
         />
