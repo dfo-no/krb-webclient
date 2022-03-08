@@ -1,7 +1,6 @@
 import CustomJoi from '../../common/CustomJoi';
 import QuestionEnum from '../../models/QuestionEnum';
 import { QuestionTypes } from '../../models/QuestionTypes';
-import RequirementType from '../../models/RequirementType';
 import { CheckboxQuestionSchema } from './ICheckboxQuestion';
 import { CodelistQuestionSchema } from './ICodelistQuestion';
 import {
@@ -12,6 +11,7 @@ import { PeriodDateWorkbenchSchema } from './IPeriodDateQuestion';
 import { SliderQuestionSchema } from './ISliderQuestion';
 import { TextQuestionSchema } from './ITextQuestion';
 import { TimeWorkbenchSchema } from './ITimeQuestion';
+import VariantType from './VariantType';
 
 export interface IVariant {
   id: string;
@@ -22,6 +22,7 @@ export interface IVariant {
   useQualification: boolean;
   products: string[];
   questions: QuestionTypes;
+  type: VariantType;
 }
 
 export const VariantSchema = CustomJoi.object().keys({
@@ -39,8 +40,9 @@ export const VariantSchema = CustomJoi.object().keys({
       otherwise: CustomJoi.array().length(0).required()
     })
     .required(),
-  questions: CustomJoi.array().when('/requirement_Type', {
-    is: RequirementType.info,
+  type: CustomJoi.string().valid(...Object.values(VariantType)),
+  questions: CustomJoi.array().when('type', {
+    is: VariantType.info,
     then: CustomJoi.array()
       .items(
         CustomJoi.alternatives().conditional('.type', {
