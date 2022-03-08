@@ -196,14 +196,6 @@ theme.typography.formCtrlErrorMessage = {
 };
 
 theme.components = {
-  MuiAppBar: {
-    styleOverrides: {
-      root: {
-        backgroundColor: theme.palette.dfoWhite.main,
-        borderBottom: `2px solid ${theme.palette.gray300.main}`
-      }
-    }
-  },
   MuiButton: {
     variants: [
       {
@@ -243,40 +235,6 @@ theme.components = {
         }
       }
     ]
-  },
-  MuiListItemButton: {
-    styleOverrides: {
-      root: {
-        '&.Mui-selected, &.Mui-selected:hover': {
-          backgroundColor: theme.palette.dfoDarkBlue.main,
-          color: theme.palette.dfoWhite.main,
-          '& .MuiListItemIcon-root': {
-            display: 'block',
-            textAlign: 'right',
-            color: theme.palette.dfoWhite.main
-          }
-        },
-        '&:hover': {
-          backgroundColor: theme.palette.dfoDarkBlue.main,
-          color: theme.palette.dfoWhite.main,
-          '& .MuiListItemIcon-root': {
-            display: 'block',
-            textAlign: 'right',
-            color: theme.palette.dfoWhite.main
-          }
-        },
-        '& .MuiListItemIcon-root': {
-          display: 'none'
-        }
-      }
-    }
-  },
-  MuiList: {
-    styleOverrides: {
-      root: {
-        padding: 0
-      }
-    }
   },
   MuiCheckbox: {
     styleOverrides: {

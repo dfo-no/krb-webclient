@@ -5,8 +5,8 @@ import { AppBar, Box, Toolbar, Typography } from '@mui/material/';
 import makeStyles from '@mui/styles/makeStyles';
 import React from 'react';
 import { Link, useLocation, useRouteMatch } from 'react-router-dom';
-import theme from '../../theme';
 import { useGetProjectQuery } from '../../store/api/bankApi';
+import theme from '../../theme';
 
 const useStyles = makeStyles({
   header: {
@@ -122,7 +122,14 @@ export default function Header(): React.ReactElement {
 
   if (!project) {
     return (
-      <AppBar elevation={0} position="sticky">
+      <AppBar
+        elevation={0}
+        position="sticky"
+        sx={{
+          backgroundColor: theme.palette.dfoWhite.main,
+          borderBottom: `2px solid ${theme.palette.gray300.main}`
+        }}
+      >
         <Toolbar>
           <Box className={classes.header}>
             <Box className={classes.headerContent}>
