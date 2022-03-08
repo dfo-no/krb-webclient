@@ -28,6 +28,8 @@ export default function Header(): React.ReactElement {
   const classes = useStyles();
   const { t } = useTranslation();
 
+  console.log('YY');
+
   return (
     <Box className={classes.projectNotFoundContainer}>
       <Box className={classes.projectNotFoundPhoto}></Box>
