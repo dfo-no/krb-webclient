@@ -3,6 +3,7 @@ import AppBar from '@mui/material/AppBar';
 import CardMedia from '@mui/material/CardMedia';
 import Divider from '@mui/material/Divider';
 import Grid from '@mui/material/Grid';
+import Link from '@mui/material/Link';
 import List from '@mui/material/List';
 import ListItem, {
   listItemClasses,
@@ -34,18 +35,10 @@ const Footer = () => {
     { title: 'Personvern', href: '/' },
     { title: 'Offentlig postjournal', href: '/' }
   ];
-  console.log(listItemClasses.root);
-  /*
-  1. Slett Gammel Footer og tilhørende ubrukte komponenter.
-  2. Legg til hover farge
-  3. Endre icon farge.
-  4. Legg til lenke
-  5. Flytt footer til nederst.
-  */
 
   return (
-    <AppBar position="fixed" sx={{ top: 'auto', bottom: 0 }}>
-      <Toolbar sx={{ bgcolor: 'dfoDarkBlue.main' }}>
+    <AppBar position="sticky">
+      <Toolbar>
         <Grid container>
           <Grid
             item
@@ -84,9 +77,15 @@ const Footer = () => {
                   alignItems="flex-start"
                   key={link.title}
                 >
-                  <ListItemButton>
+                  <ListItemButton component={Link} href={link.href}>
                     <ListItemText primary={link.title} />
-                    <ListItemIcon sx={{ color: 'white' }}>
+                    <ListItemIcon
+                      sx={{
+                        color: 'white',
+                        display: 'flex',
+                        justifyContent: 'flex-end'
+                      }}
+                    >
                       <ArrowForwardIos />
                     </ListItemIcon>
                   </ListItemButton>
