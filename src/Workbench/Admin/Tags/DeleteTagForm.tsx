@@ -1,10 +1,11 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Parentable } from '../../../models/Parentable';
 import { BaseTagSchema, ITag } from '../../../Nexus/entities/ITag';
 import useProjectMutations from '../../../store/api/ProjectMutations';
 import { FormProvider, useForm } from 'react-hook-form';
 import { joiResolver } from '@hookform/resolvers/joi';
 import { v4 as uuidv4 } from 'uuid';
+import Typography from '@mui/material/Typography';
 import { IAlert } from '../../../models/IAlert';
 import { addAlert } from '../../../store/reducers/alert-reducer';
 import { useAppDispatch } from '../../../store/hooks';
@@ -18,7 +19,6 @@ import { useGetProjectQuery } from '../../../store/api/bankApi';
 import Utils from '../../../common/Utils';
 import { FormCantDeleteBox } from '../../Components/Form/FormCantDeleteBox';
 import { useEditableState } from '../../Components/EditableContext';
-import { Typography } from '@mui/material/';
 
 interface IProps {
   child: React.ReactElement;
