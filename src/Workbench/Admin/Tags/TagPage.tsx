@@ -22,7 +22,6 @@ import NestableHierarcyEditableComponents from '../../Components/NestableHierarc
 import SearchUtils from '../../../common/SearchUtils';
 import useProjectMutations from '../../../store/api/ProjectMutations';
 import DeleteTagForm from './DeleteTagForm';
-import { ScrollableContainer } from '../../Components/ScrollableContainer';
 
 export default function TagPage(): React.ReactElement {
   const { t } = useTranslation();
