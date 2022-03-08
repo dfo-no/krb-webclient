@@ -30,10 +30,6 @@ const useStyles = makeStyles({
   },
   navigation: {
     flexBasis: '50%'
-  },
-  footer: {
-    width: '100%',
-    alignSelf: 'flex-end'
   }
 });
 
@@ -93,9 +89,7 @@ export default function HomePage(): React.ReactElement {
           </Box>
         </Box>
       </Box>
-      <Box className={classes.footer}>
-        <Footer />
-      </Box>
+      <Footer />
     </div>
   );
 }
