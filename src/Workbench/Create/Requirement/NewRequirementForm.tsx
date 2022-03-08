@@ -5,24 +5,24 @@ import React from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { v4 as uuidv4 } from 'uuid';
-import LoaderSpinner from '../../common/LoaderSpinner';
-import ErrorSummary from '../../Form/ErrorSummary';
-import RadioCtrl from '../../FormProvider/RadioCtrl';
-import TextCtrl from '../../FormProvider/TextCtrl';
-import { IAlert } from '../../models/IAlert';
-import ModelType from '../../models/ModelType';
-import { Parentable } from '../../models/Parentable';
-import RequirementType from '../../models/RequirementType';
-import { IBank } from '../../Nexus/entities/IBank';
-import { INeed } from '../../Nexus/entities/INeed';
+import LoaderSpinner from '../../../common/LoaderSpinner';
+import ErrorSummary from '../../../Form/ErrorSummary';
+import RadioCtrl from '../../../FormProvider/RadioCtrl';
+import TextCtrl from '../../../FormProvider/TextCtrl';
+import { IAlert } from '../../../models/IAlert';
+import ModelType from '../../../models/ModelType';
+import { Parentable } from '../../../models/Parentable';
+import RequirementType from '../../../models/RequirementType';
+import { IBank } from '../../../Nexus/entities/IBank';
+import { INeed } from '../../../Nexus/entities/INeed';
 import {
   IRequirement,
   PostRequirementSchema
-} from '../../Nexus/entities/IRequirement';
-import { usePutProjectMutation } from '../../store/api/bankApi';
-import { useAppDispatch } from '../../store/hooks';
-import { addAlert } from '../../store/reducers/alert-reducer';
-import { useSelectState } from './SelectContext';
+} from '../../../Nexus/entities/IRequirement';
+import { usePutProjectMutation } from '../../../store/api/bankApi';
+import { useAppDispatch } from '../../../store/hooks';
+import { addAlert } from '../../../store/reducers/alert-reducer';
+import { useSelectState } from '../SelectContext';
 
 interface IProps {
   need: Parentable<INeed>;
@@ -95,7 +95,6 @@ function NewRequirementForm({
           ]}
         />
         <TextCtrl name="title" label={t('Title')} />
-        <TextCtrl name="description" label={t('Description')} />
         <Button variant="primary" type="submit">
           {t('save')}
         </Button>

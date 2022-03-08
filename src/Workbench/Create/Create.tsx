@@ -1,20 +1,19 @@
-import { joiResolver } from '@hookform/resolvers/joi';
 import Box from '@mui/material/Box';
-import Grid from '@mui/material/Grid/Grid';
 import React, { useEffect } from 'react';
-import { FormProvider, useForm } from 'react-hook-form';
 import { useParams } from 'react-router-dom';
 import LoaderSpinner from '../../common/LoaderSpinner';
-import { PutProjectSchema } from '../../models/Project';
-import { IBank } from '../../Nexus/entities/IBank';
 import { useGetProjectQuery } from '../../store/api/bankApi';
 import theme from '../../theme';
-import NeedList from './NeedList';
-import NeedToolbar from './NeedToolbar';
-import NewNeed from './NewNeed';
-import NewRequirement from './NewRequirement';
-import RequirementsList from './RequirementsList';
+import NeedList from './Need/NeedList';
+import NeedToolbar from './Need/NeedToolbar';
+import NewNeed from './Need/NewNeed';
+import NewRequirement from './Requirement/NewRequirement';
+import RequirementsList from './Requirement/RequirementsList';
 import { useSelectState } from './SelectContext';
+import { StandardContainer } from '../Components/StandardContainer';
+import { Card } from '@mui/material/';
+import DeleteNeedForm from './Need/DeleteNeedForm';
+import { ScrollableContainer } from '../Components/ScrollableContainer';
 
 interface IRouteParams {
   projectId: string;
@@ -22,13 +21,8 @@ interface IRouteParams {
 
 export default function Create(): React.ReactElement {
   const { projectId } = useParams<IRouteParams>();
-  const { data: project } = useGetProjectQuery(projectId);
-  const { needIndex, setNeedIndex } = useSelectState();
-
-  const methods = useForm<IBank>({
-    resolver: joiResolver(PutProjectSchema),
-    defaultValues: project
-  });
+  const { data: project, isLoading } = useGetProjectQuery(projectId);
+  const { needIndex, setNeedIndex, setDeletingNeed } = useSelectState();
 
   useEffect(() => {
     if (
@@ -41,50 +35,75 @@ export default function Create(): React.ReactElement {
     }
   }, [needIndex, project, setNeedIndex]);
 
-  if (!project) {
+  if (isLoading) {
     return <LoaderSpinner />;
   }
 
-  return (
-    <Box
-      sx={{
-        flexGrow: 1
-      }}
-    >
-      <Grid
-        container
-        spacing={2}
+  if (!project) {
+    return <></>;
+  }
+
+  const renderNeedCard = (index: number) => {
+    return (
+      <Card
         sx={{
-          minHeight: '100vh',
-          backgroundColor: theme.palette.gray100.main
+          display: 'flex',
+          flexDirection: 'column',
+          backgroundColor: theme.palette.gray300.main,
+          height: '100%',
+          paddingBottom: 2
         }}
       >
-        <FormProvider {...methods}>
-          <Grid item xs={2}>
-            <NewNeed />
-            <NeedList parentables={project.needs} />
-          </Grid>
-          <Grid
-            item
-            xs={10}
-            sx={{ backgroundColor: theme.palette.dfoBackgroundBlue.main }}
-          >
-            {needIndex !== null ? (
-              <>
-                <NeedToolbar need={project.needs[needIndex]} />
-                <NewRequirement need={project.needs[needIndex]} />
-                {project.needs[needIndex]?.requirements && (
-                  <RequirementsList
-                    requirements={project.needs[needIndex].requirements}
-                  />
-                )}
-              </>
-            ) : (
-              <div>Ingen behov valgt</div>
+        <NeedToolbar need={project.needs[index]} />
+        <Box
+          sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            paddingLeft: 6,
+            paddingRight: 6,
+            flexGrow: 1,
+            minHeight: 0
+          }}
+        >
+          <NewRequirement need={project.needs[index]} />
+          <ScrollableContainer>
+            {project.needs[index]?.requirements && (
+              <RequirementsList
+                requirements={project.needs[index].requirements}
+              />
             )}
-          </Grid>
-        </FormProvider>
-      </Grid>
+          </ScrollableContainer>
+        </Box>
+      </Card>
+    );
+  };
+
+  return (
+    <Box sx={{ display: 'flex', width: '100%', height: '100%' }}>
+      <Box
+        sx={{
+          width: '25%',
+          height: '100%',
+          backgroundColor: theme.palette.dfoWhite.main
+        }}
+      >
+        <NewNeed />
+        <NeedList parentables={project.needs} />
+      </Box>
+      <Box sx={{ height: '100%', flexGrow: 1, minWidth: 0 }}>
+        {needIndex !== null ? (
+          <StandardContainer>
+            <DeleteNeedForm
+              child={renderNeedCard(needIndex)}
+              project={project}
+              need={project.needs[needIndex]}
+              handleClose={() => setDeletingNeed(false)}
+            />
+          </StandardContainer>
+        ) : (
+          <div>Ingen behov valgt</div>
+        )}
+      </Box>
     </Box>
   );
 }

@@ -13,6 +13,8 @@ import { IVariant } from '../../Nexus/entities/IVariant';
 interface ISelectContext {
   need: INeed | null;
   setNeed: Dispatch<SetStateAction<Levelable<INeed> | null>>;
+  isDeletingNeed: boolean;
+  setDeletingNeed: Dispatch<SetStateAction<boolean>>;
   requirement: IRequirement | null;
   setRequirement: Dispatch<SetStateAction<IRequirement | null>>;
   variant: IVariant | null;
@@ -26,6 +28,10 @@ interface ISelectContext {
 const initialContext: ISelectContext = {
   need: null,
   setNeed: function (): void {
+    throw new Error('Function not implemented.');
+  },
+  isDeletingNeed: false,
+  setDeletingNeed: function (): void {
     throw new Error('Function not implemented.');
   },
   requirement: null,
@@ -53,6 +59,7 @@ interface IProps {
 }
 
 export const SelectProvider = ({ children }: IProps) => {
+  const [isDeletingNeed, setDeletingNeed] = useState(false);
   const [need, setNeed] = useState<Levelable<INeed> | null>(null);
   const [requirement, setRequirement] = useState<IRequirement | null>(null);
   const [variant, setVariant] = useState<IVariant | null>(null);
@@ -64,6 +71,8 @@ export const SelectProvider = ({ children }: IProps) => {
       value={{
         need,
         setNeed,
+        isDeletingNeed,
+        setDeletingNeed,
         requirement,
         setRequirement,
         variant,

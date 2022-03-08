@@ -2,12 +2,13 @@ import Box from '@mui/material/Box/Box';
 import Button from '@mui/material/Button/Button';
 import { useState } from 'react';
 import { useParams } from 'react-router-dom';
-import LoaderSpinner from '../../common/LoaderSpinner';
-import Dialog from '../../components/DFODialog/DFODialog';
-import { Parentable } from '../../models/Parentable';
-import { INeed } from '../../Nexus/entities/INeed';
-import { useGetProjectQuery } from '../../store/api/bankApi';
+import LoaderSpinner from '../../../common/LoaderSpinner';
+import Dialog from '../../../components/DFODialog/DFODialog';
+import { Parentable } from '../../../models/Parentable';
+import { INeed } from '../../../Nexus/entities/INeed';
+import { useGetProjectQuery } from '../../../store/api/bankApi';
 import NewRequirementForm from './NewRequirementForm';
+
 interface IProps {
   need: Parentable<INeed>;
 }
@@ -31,7 +32,8 @@ const NewRequirement = ({ need }: IProps) => {
     <Box
       sx={{
         display: 'flex',
-        m: 1,
+        paddingTop: 2,
+        paddingBottom: 2,
         flexDirection: 'row-reverse'
       }}
     >

@@ -1,37 +1,47 @@
 import { joiResolver } from '@hookform/resolvers/joi';
-import DeleteIcon from '@mui/icons-material/Delete';
-import Button from '@mui/material/Button';
-import React, { useState } from 'react';
+import React from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { v4 as uuidv4 } from 'uuid';
-import AlertModal from '../../common/AlertModal';
-import ErrorSummary from '../../Form/ErrorSummary';
-import { IAlert } from '../../models/IAlert';
-import { Parentable } from '../../models/Parentable';
-import { IBank } from '../../Nexus/entities/IBank';
-import { DeleteNeedSchema, INeed } from '../../Nexus/entities/INeed';
-import { usePutProjectMutation } from '../../store/api/bankApi';
-import { useAppDispatch } from '../../store/hooks';
-import { addAlert } from '../../store/reducers/alert-reducer';
-import { useSelectState } from './SelectContext';
+import { IAlert } from '../../../models/IAlert';
+import { Parentable } from '../../../models/Parentable';
+import { IBank } from '../../../Nexus/entities/IBank';
+import { DeleteNeedSchema, INeed } from '../../../Nexus/entities/INeed';
+import { usePutProjectMutation } from '../../../store/api/bankApi';
+import { useAppDispatch } from '../../../store/hooks';
+import { addAlert } from '../../../store/reducers/alert-reducer';
+import { useSelectState } from '../SelectContext';
+import theme from '../../../theme';
+import { FormDeleteBox } from '../../Components/Form/FormDeleteBox';
+import { FormTextButton } from '../../Components/Form/FormTextButton';
+import makeStyles from '@mui/styles/makeStyles';
 
 interface IProps {
+  child: React.ReactElement;
+  project: IBank;
   need: INeed;
   handleClose: () => void;
-  project: IBank;
 }
 
+const useStyles = makeStyles({
+  form: {
+    height: '100%'
+  }
+});
+
 function DeleteNeedForm({
-  need,
+  child,
   project,
+  need,
   handleClose
 }: IProps): React.ReactElement {
   const dispatch = useAppDispatch();
 
+  const classes = useStyles();
   const { t } = useTranslation();
   const [putProject] = usePutProjectMutation();
   const { setNeedIndex } = useSelectState();
+  const { isDeletingNeed } = useSelectState();
 
   const methods = useForm<Parentable<INeed>>({
     defaultValues: need,
@@ -39,7 +49,9 @@ function DeleteNeedForm({
     context: { needList: project.needs }
   });
 
-  const [modalShow, setModalShow] = useState(false);
+  if (!project) {
+    return <></>;
+  }
 
   const onSubmit = async (deleteNeed: INeed) => {
     const foundIndex = project.needs.findIndex((n) => n.id === deleteNeed.id);
@@ -75,6 +87,7 @@ function DeleteNeedForm({
   return (
     <FormProvider {...methods}>
       <form
+        className={classes.form}
         onSubmit={methods.handleSubmit(onSubmit)}
         autoComplete="off"
         noValidate
@@ -87,19 +100,26 @@ function DeleteNeedForm({
         /> */}
         {/*  <HiddenCtrl name="requirements" /> */}
 
-        <Button variant="warning" type="submit">
-          <DeleteIcon />
-        </Button>
-        <Button variant="warning" onClick={handleClose}>
-          {t('cancel')}
-        </Button>
-        <ErrorSummary errors={methods.formState.errors} />
-        <AlertModal
-          modalShow={modalShow}
-          setModalShow={setModalShow}
-          title="Attention"
-          text="This need has one or more connected requirements or has subneeds, please remove them to be able to delete"
-        />
+        {isDeletingNeed && (
+          <FormDeleteBox>
+            <FormTextButton
+              hoverColor={theme.palette.dfoErrorRed.main}
+              type="submit"
+              aria-label="delete"
+            >
+              {t('delete')}
+            </FormTextButton>
+            <FormTextButton
+              hoverColor={theme.palette.gray500.main}
+              onClick={() => handleClose()}
+              aria-label="close"
+            >
+              {t('cancel')}
+            </FormTextButton>
+            {child}
+          </FormDeleteBox>
+        )}
+        {!isDeletingNeed && child}
       </form>
     </FormProvider>
   );

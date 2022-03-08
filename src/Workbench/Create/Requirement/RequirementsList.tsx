@@ -9,17 +9,20 @@ import { produce } from 'immer';
 import React from 'react';
 import { useParams } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
-import LoaderSpinner from '../../common/LoaderSpinner';
-import { IAlert } from '../../models/IAlert';
-import { IRequirement } from '../../Nexus/entities/IRequirement';
+import LoaderSpinner from '../../../common/LoaderSpinner';
+import { IAlert } from '../../../models/IAlert';
+import { IRequirement } from '../../../Nexus/entities/IRequirement';
 import {
   useGetProjectQuery,
   usePutProjectMutation
-} from '../../store/api/bankApi';
-import { useAppDispatch } from '../../store/hooks';
-import { addAlert } from '../../store/reducers/alert-reducer';
+} from '../../../store/api/bankApi';
+import { useAppDispatch } from '../../../store/hooks';
+import { addAlert } from '../../../store/reducers/alert-reducer';
 import Requirement from './Requirement';
-import { useSelectState } from './SelectContext';
+import { useSelectState } from '../SelectContext';
+import { Box } from '@mui/material';
+import theme from '../../../theme';
+import RequirementToolbar from './RequirementToolbar';
 
 interface IRouteParams {
   projectId: string;
@@ -57,8 +60,19 @@ export default function RequirementsList({
   };
 
   return (
-    <div>
-      {requirements.map((r, index) => (
+    <Box sx={{ width: '100%' }}>
+      {requirements.map((r) => (
+        <Box sx={{ marginBottom: 4 }}>
+          <RequirementToolbar requirement={r} />
+          <Requirement requirement={r} />
+        </Box>
+      ))}
+    </Box>
+  );
+}
+
+/*
+
         <Accordion key={r.id}>
           <AccordionSummary
             expandIcon={<ExpandMoreIcon />}
@@ -78,7 +92,4 @@ export default function RequirementsList({
             </Button>
           </AccordionDetails>
         </Accordion>
-      ))}
-    </div>
-  );
-}
+ */

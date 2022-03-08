@@ -5,20 +5,20 @@ import { FormProvider, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
-import LoaderSpinner from '../../common/LoaderSpinner';
-import ErrorSummary from '../../Form/ErrorSummary';
-import TextCtrl from '../../FormProvider/TextCtrl';
-import { IAlert } from '../../models/IAlert';
-import { Parentable } from '../../models/Parentable';
-import { INeed, PostNeedSchema } from '../../Nexus/entities/INeed';
-import Nexus from '../../Nexus/Nexus';
+import LoaderSpinner from '../../../common/LoaderSpinner';
+import ErrorSummary from '../../../Form/ErrorSummary';
+import TextCtrl from '../../../FormProvider/TextCtrl';
+import { IAlert } from '../../../models/IAlert';
+import { Parentable } from '../../../models/Parentable';
+import { INeed, PostNeedSchema } from '../../../Nexus/entities/INeed';
+import Nexus from '../../../Nexus/Nexus';
 import {
   useGetProjectQuery,
   usePutProjectMutation
-} from '../../store/api/bankApi';
-import { useAppDispatch } from '../../store/hooks';
-import { addAlert } from '../../store/reducers/alert-reducer';
-import { useSelectState } from './SelectContext';
+} from '../../../store/api/bankApi';
+import { useAppDispatch } from '../../../store/hooks';
+import { addAlert } from '../../../store/reducers/alert-reducer';
+import { useSelectState } from '../SelectContext';
 
 interface IProps {
   handleClose: () => void;

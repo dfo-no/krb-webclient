@@ -5,10 +5,10 @@ import ListItemButton from '@mui/material/ListItemButton/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import React from 'react';
-import Utils from '../../common/Utils';
-import { Parentable } from '../../models/Parentable';
-import { INeed } from '../../Nexus/entities/INeed';
-import { useSelectState } from './SelectContext';
+import Utils from '../../../common/Utils';
+import { Parentable } from '../../../models/Parentable';
+import { INeed } from '../../../Nexus/entities/INeed';
+import { useSelectState } from '../SelectContext';
 
 interface IProps {
   parentables: Parentable<INeed>[];
