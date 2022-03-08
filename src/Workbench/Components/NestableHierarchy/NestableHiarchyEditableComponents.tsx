@@ -9,6 +9,7 @@ import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
 import { useEditableState } from '../EditableContext';
 import { BaseModelWithTitleAndDesc } from '../../../models/BaseModelWithTitleAndDesc';
 import { FormContainerBox } from '../Form/FormContainerBox';
+import { ScrollableContainer } from '../ScrollableContainer';
 
 const useStyles = makeStyles({
   nestableItemCustom: {
@@ -62,6 +63,7 @@ interface IProps<T extends BaseModelWithTitleAndDesc> {
   inputlist: Parentable<T>[];
   CreateComponent: React.ReactElement;
   EditComponent: (item: Parentable<T>) => React.ReactElement;
+  DeleteComponent?: (item: Parentable<T>) => React.ReactElement;
   depth: number;
 }
 
@@ -72,6 +74,7 @@ const NestableHierarcyEditableComponents = <
   inputlist,
   CreateComponent,
   EditComponent,
+  DeleteComponent,
   depth
 }: IProps<T>): React.ReactElement => {
   const classes = useStyles();
@@ -86,7 +89,12 @@ const NestableHierarcyEditableComponents = <
 
   const renderItem = (item: Parentable<T>, handler: React.ReactNode) => {
     if (isEditingItem(item)) {
-      return <FormContainerBox>{EditComponent(item)}</FormContainerBox>;
+      return (
+        <FormContainerBox>
+          {EditComponent(item)}
+          {DeleteComponent && DeleteComponent(item)}
+        </FormContainerBox>
+      );
     }
     return (
       <Box className={classes.nestableItemCustom}>
@@ -105,15 +113,25 @@ const NestableHierarcyEditableComponents = <
   };
 
   return (
-    <Box>
+    <Box
+      sx={{
+        display: 'flex',
+        flexDirection: 'column',
+        width: '100%',
+        flexGrow: 1,
+        minHeight: 0
+      }}
+    >
       {isCreating && <FormContainerBox>{CreateComponent}</FormContainerBox>}
-      <NestableHierarcy<T>
-        className={classes.nestableCustom}
-        inputlist={inputlist}
-        renderItem={renderItem}
-        dispatchfunc={dispatchfunc}
-        depth={depth}
-      />
+      <ScrollableContainer>
+        <NestableHierarcy<T>
+          className={classes.nestableCustom}
+          inputlist={inputlist}
+          renderItem={renderItem}
+          dispatchfunc={dispatchfunc}
+          depth={depth}
+        />
+      </ScrollableContainer>
     </Box>
   );
 };

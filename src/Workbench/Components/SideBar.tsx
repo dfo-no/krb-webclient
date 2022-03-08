@@ -6,10 +6,16 @@ import { useTranslation } from 'react-i18next';
 import { withRouter } from 'react-router';
 import { Link, useRouteMatch } from 'react-router-dom';
 import theme from '../../theme';
+import ContentCopyIcon from '@mui/icons-material/ContentCopy';
+import Inventory2Icon from '@mui/icons-material/Inventory2';
+import CodeIcon from '@mui/icons-material/Code';
+import LinkIcon from '@mui/icons-material/Link';
+import LocalOfferIcon from '@mui/icons-material/LocalOffer';
 
 interface IRouteLink {
   link: string;
   name: string;
+  icon?: object;
 }
 
 interface IRouteParams {
@@ -19,16 +25,17 @@ interface IRouteParams {
 const useStyles = makeStyles({
   sideBar: {
     height: '100%',
-    paddingTop: 75,
     [theme.breakpoints.down('md')]: {
       paddingTop: 0
     }
   },
   sideBarList: {
+    position: 'sticky',
     backgroundColor: theme.palette.gray100.main,
-    width: '15vw',
+    height: '100%',
+    width: '18vw',
     minWidth: 230,
-    height: '100vh',
+    paddingTop: 60,
     [theme.breakpoints.down('md')]: {
       height: 'auto',
       width: '100vw',
@@ -36,54 +43,14 @@ const useStyles = makeStyles({
     }
   },
   sideBarListItem: {
+    display: 'flex',
+    gap: 5,
     cursor: 'pointer',
     width: '100%',
-    '&:hover': {
-      background: theme.palette.lightBlue.main,
-      color: theme.palette.dfoWhite.main,
-
-      '& $sideBarListItemText': {
-        color: theme.palette.dfoWhite.main
-      },
-
-      '& $selectedSideBarListItemText': {
-        color: theme.palette.dfoWhite.main
-      },
-
-      '& $selectedListItemArrow': {
-        color: theme.palette.dfoWhite.main
-      }
-    },
-
-    [theme.breakpoints.down('md')]: {
-      backgroundColor: theme.palette.gray100.main
-    }
-  },
-  sideBarListItemText: {
-    color: theme.palette.gray700.main,
-    marginLeft: 40
-  },
-  selectedSideBarListItemText: {
-    color: theme.palette.dfoDarkBlue.main,
-    marginLeft: 40
-  },
-  sideBarListItemPicked: {
-    cursor: 'pointer',
-    fontWeight: 'bold',
+    paddingLeft: 30,
     '&:hover': {
       background: theme.palette.lightBlue.main,
       color: theme.palette.dfoWhite.main
-    },
-
-    [theme.breakpoints.down('md')]: {
-      backgroundColor: theme.palette.gray100.main
-    }
-  },
-  selectedListItemArrow: {
-    color: theme.palette.dfoDarkBlue.main,
-
-    [theme.breakpoints.down('md')]: {
-      marginRight: 50
     }
   }
 });
@@ -137,11 +104,31 @@ function SideBar(): React.ReactElement {
   const currentRoute = getCurrentRoute();
 
   const routes: IRouteLink[] = [
-    { link: `${baseUrl?.url}/admin`, name: t('Versions') },
-    { link: `${baseUrl?.url}/admin/products`, name: t('Products') },
-    { link: `${baseUrl?.url}/admin/codelist`, name: t('Codelist') },
-    { link: `${baseUrl?.url}/admin/inheritance`, name: t('Inheritance') },
-    { link: `${baseUrl?.url}/admin/tags`, name: t('Tags') }
+    {
+      link: `${baseUrl?.url}/admin`,
+      name: t('Versions'),
+      icon: Object(<ContentCopyIcon />)
+    },
+    {
+      link: `${baseUrl?.url}/admin/products`,
+      name: t('Products'),
+      icon: Object(<Inventory2Icon />)
+    },
+    {
+      link: `${baseUrl?.url}/admin/codelist`,
+      name: t('Codelist'),
+      icon: Object(<CodeIcon />)
+    },
+    {
+      link: `${baseUrl?.url}/admin/inheritance`,
+      name: t('Inheritance'),
+      icon: Object(<LinkIcon />)
+    },
+    {
+      link: `${baseUrl?.url}/admin/tags`,
+      name: t('Tags'),
+      icon: Object(<LocalOfferIcon />)
+    }
   ];
 
   const classes = useStyles();
@@ -152,23 +139,21 @@ function SideBar(): React.ReactElement {
         {routes.map((route) => {
           return (
             <ListItem
+              sx={
+                route.name === currentRoute
+                  ? { color: theme.palette.black.main }
+                  : { color: theme.palette.gray700.main }
+              }
               key={route.name}
               component={Link}
               to={route.link}
               className={classes.sideBarListItem}
             >
-              <ListItemText
-                className={`${
-                  route.name == currentRoute
-                    ? classes.selectedSideBarListItemText
-                    : classes.sideBarListItemText
-                }`}
-              >
+              <Box>{route.icon}</Box>
+              <ListItemText sx={{ marginLeft: 5 }}>
                 <Box sx={{ fontWeight: 'bold' }}>{route.name}</Box>
               </ListItemText>
-              {route.name == currentRoute && (
-                <ArrowForwardIcon className={classes.selectedListItemArrow} />
-              )}
+              {route.name == currentRoute && <ArrowForwardIcon />}
             </ListItem>
           );
         })}

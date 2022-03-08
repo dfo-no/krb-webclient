@@ -10,6 +10,7 @@ import theme from '../../theme';
 
 const useStyles = makeStyles({
   header: {
+    height: '100%',
     paddingTop: 10,
     paddingBottom: 6,
     marginLeft: '5%',

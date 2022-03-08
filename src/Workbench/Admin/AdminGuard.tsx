@@ -1,8 +1,6 @@
 import { Box } from '@mui/material';
-import makeStyles from '@mui/styles/makeStyles';
 import React from 'react';
 import { Route } from 'react-router';
-import theme from '../../theme';
 import SideBar from '../Components/SideBar';
 import CodelistGuard from './Codelist/CodelistGuard';
 import InheritancePage from './Inheritance/InheritancePage';
@@ -13,22 +11,23 @@ import RequirementEditor from './Requirement/RequirementEditor';
 import RequirementPage from './Requirement/RequirementPage';
 import TagGuard from './Tags/TagGuard';
 
-const useStyles = makeStyles({
-  sideBarContainer: {
-    backgroundColor: theme.palette.gray100.main
-  },
-  editorContainer: {
-    flex: '1'
-  }
-});
 export default function AdminGuard(): React.ReactElement {
-  const classes = useStyles();
   return (
-    <>
-      <Box className={classes.sideBarContainer}>
-        <SideBar />
-      </Box>
-      <Box className={classes.editorContainer}>
+    <Box
+      sx={{
+        display: 'flex',
+        height: '100%',
+        width: '100%'
+      }}
+    >
+      <SideBar />
+      <Box
+        sx={{
+          display: 'flex',
+          height: '100%',
+          width: '100%'
+        }}
+      >
         <Route exact path="/workbench/:projectId/admin/">
           <ProjectGuard />
         </Route>
@@ -66,6 +65,6 @@ export default function AdminGuard(): React.ReactElement {
           <InheritancePage />
         </Route>
       </Box>
-    </>
+    </Box>
   );
 }
