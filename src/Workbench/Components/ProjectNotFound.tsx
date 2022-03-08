@@ -1,21 +1,23 @@
-import { Box, Button, Link, Typography } from '@mui/material';
+import { Box, Button, Typography } from '@mui/material';
 import makeStyles from '@mui/styles/makeStyles';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
+import ErrorIcon from '@mui/icons-material/Error';
 
 const useStyles = makeStyles({
   projectNotFoundContainer: {
     display: 'flex',
     flexDirection: 'column',
-    padding: 40,
     gap: 20,
     width: '100vw',
-    alignItems: 'center'
+    height: '100vh',
+    alignItems: 'center',
+    paddingTop: 200
   },
   projectNotFoundPhoto: {
     height: 300,
     width: 300,
-    backgroundColor: 'green'
+    color: 'red'
   },
   projectNotFoundTitleButton: {
     display: 'flex',
@@ -28,15 +30,13 @@ export default function Header(): React.ReactElement {
   const classes = useStyles();
   const { t } = useTranslation();
 
-  console.log('YYasdasd');
-
   return (
     <Box className={classes.projectNotFoundContainer}>
-      <Box className={classes.projectNotFoundPhoto}></Box>
+      <ErrorIcon className={classes.projectNotFoundPhoto} />
       <Box className={classes.projectNotFoundTitleButton}>
         <Typography variant="medium">{t('Project not found')}</Typography>
         <Button href="/workbench" variant="primary">
-          {t('Tilbake til prosjektliste')}
+          {t('Tilbake til prosjekter')}
         </Button>
       </Box>
     </Box>
