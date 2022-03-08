@@ -1,8 +1,11 @@
 import { Box } from '@mui/material';
 import makeStyles from '@mui/styles/makeStyles';
 import React from 'react';
-import { Route } from 'react-router';
+import { Route, useParams } from 'react-router';
+import { useGetProjectQuery } from '../../store/api/bankApi';
+import ProjectNotFound from '../Components/ProjectNotFound';
 import SideBar from '../Components/SideBar';
+import { IRouteParams } from '../Models/IRouteParams';
 import CodelistGuard from './Codelist/CodelistGuard';
 import InheritancePage from './Inheritance/InheritancePage';
 import NeedPage from './Need/NeedPage';
@@ -24,6 +27,14 @@ const useStyles = makeStyles({
 });
 export default function AdminGuard(): React.ReactElement {
   const classes = useStyles();
+
+  const { projectId } = useParams<IRouteParams>();
+  const { data: project } = useGetProjectQuery(projectId);
+
+  if (!project) {
+    return <ProjectNotFound />;
+  }
+
   return (
     <>
       <Box sx={{ display: 'flex' }}>

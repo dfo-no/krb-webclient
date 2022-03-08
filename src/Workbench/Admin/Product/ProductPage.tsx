@@ -54,7 +54,7 @@ export default function ProductPage(): React.ReactElement {
   }
 
   if (!project) {
-    return <p>Finner ikke prosjekt</p>;
+    return <></>;
   }
 
   const updateProductsArrangement = (

@@ -58,7 +58,7 @@ export default function TagPage(): React.ReactElement {
   }
 
   if (!project) {
-    return <p>Finner ikke prosjekt</p>;
+    return <></>;
   }
 
   const updateTagsArrangement = (newTagList: Parentable<ITag>[]) => {
