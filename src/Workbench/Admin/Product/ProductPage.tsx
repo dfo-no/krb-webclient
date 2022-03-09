@@ -1,12 +1,9 @@
-import { Button } from '@mui/material/';
-import makeStyles from '@mui/styles/makeStyles';
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import SearchUtils from '../../../common/SearchUtils';
 import DFOSearchBar from '../../../components/DFOSearchBar/DFOSearchBar';
 import { Parentable } from '../../../models/Parentable';
 import { IProduct } from '../../../Nexus/entities/IProduct';
-import theme from '../../../theme';
 import EditProductForm from './EditProductForm';
 import NewProductForm from './NewProductForm';
 import NestableHierarcyEditableComponents from '../../Components/NestableHierarchy/NestableHiarchyEditableComponents';
