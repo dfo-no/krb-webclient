@@ -1,17 +1,24 @@
 import { Box } from '@mui/material';
 import React from 'react';
-import { Route } from 'react-router';
+import { Route, useParams } from 'react-router';
+import { useGetProjectQuery } from '../../store/api/bankApi';
+import ProjectNotFound from '../Components/ProjectNotFound';
 import SideBar from '../Components/SideBar';
+import { IRouteParams } from '../Models/IRouteParams';
 import CodelistGuard from './Codelist/CodelistGuard';
 import InheritancePage from './Inheritance/InheritancePage';
-import NeedPage from './Need/NeedPage';
 import ProductGuard from './Product/ProductGuard';
-import ProjectGuard from './Project/ProjectGuard';
-import RequirementEditor from './Requirement/RequirementEditor';
-import RequirementPage from './Requirement/RequirementPage';
+import ProjectPage from './Project/ProjectPage';
 import TagGuard from './Tags/TagGuard';
 
 export default function AdminGuard(): React.ReactElement {
+  const { projectId } = useParams<IRouteParams>();
+  const { data: project } = useGetProjectQuery(projectId);
+
+  if (!project) {
+    return <ProjectNotFound />;
+  }
+
   return (
     <Box
       sx={{
@@ -29,25 +36,7 @@ export default function AdminGuard(): React.ReactElement {
         }}
       >
         <Route exact path="/workbench/:projectId/admin/">
-          <ProjectGuard />
-        </Route>
-        <Route exact path="/workbench/:projectId/admin/need">
-          <NeedPage />
-        </Route>
-        <Route
-          exact
-          path="/workbench/:projectId/admin/need/:needId/requirement"
-        >
-          <RequirementPage />
-        </Route>
-        <Route
-          exact
-          path="/workbench/:projectId/admin/need/:needId/requirement/:requirementId/edit"
-        >
-          <RequirementEditor />
-        </Route>
-        <Route exact path="/workbench/:projectId/admin/need/requirement">
-          <RequirementPage />
+          <ProjectPage />
         </Route>
         <Route exact path="/workbench/:projectId/admin/tags">
           <TagGuard />
@@ -56,9 +45,6 @@ export default function AdminGuard(): React.ReactElement {
           <CodelistGuard />
         </Route>
         <Route exact path="/workbench/:projectId/admin/products">
-          <ProductGuard />
-        </Route>
-        <Route exact path="/workbench/:projectId/admin/:productId/product">
           <ProductGuard />
         </Route>
         <Route exact path="/workbench/:projectId/admin/inheritance">

@@ -1,17 +1,17 @@
-import { ListItem } from '@mui/material';
-import makeStyles from '@mui/styles/makeStyles';
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
 import Typography from '@mui/material/Typography';
+import makeStyles from '@mui/styles/makeStyles';
 import React from 'react';
-import ListGroup from 'react-bootstrap/ListGroup';
+import {
+  DFOAccordionElement,
+  DFOAccordionProvider
+} from '../../components/DFOAccordion/DFOAccordion';
 import { QuestionType } from '../../models/QuestionType';
 import { QuestionTypes } from '../../models/QuestionTypes';
 import { IRequirement } from '../../Nexus/entities/IRequirement';
 import { IVariant } from '../../Nexus/entities/IVariant';
 import theme from '../../theme';
-import {
-  DFOAccordionElement,
-  DFOAccordionProvider
-} from '../../components/DFOAccordion/DFOAccordion';
 
 interface IProps {
   selectedRequirement: IRequirement | null;
@@ -36,11 +36,7 @@ export default function VariantList({
         </ListItem>
       );
     });
-    return (
-      <>
-        <ListGroup className="ml-3 mt-3 mb-4">{questionList}</ListGroup>
-      </>
-    );
+    return <List className="ml-3 mt-3 mb-4">{questionList}</List>;
   };
 
   const variants = (variantList: IVariant[]) => {

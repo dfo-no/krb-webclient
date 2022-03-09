@@ -1,12 +1,11 @@
-import React from 'react';
 import Button from '@mui/material/Button';
+import React from 'react';
 import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 import { Control, useFieldArray, UseFormRegister } from 'react-hook-form';
 import DateCtrl from '../../FormProvider/DateCtrl';
 import { IPeriodDateQuestion } from '../../Nexus/entities/IPeriodDateQuestion';
-import { ISliderQuestion } from '../../Nexus/entities/ISliderQuestion';
 
 type IProps = {
   control: Control<IPeriodDateQuestion>;

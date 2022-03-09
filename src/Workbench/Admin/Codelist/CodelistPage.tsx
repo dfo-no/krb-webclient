@@ -59,7 +59,7 @@ export default function CodeListPage(): React.ReactElement {
   }
 
   if (!project) {
-    return <p>Finner ikke prosjekt</p>;
+    return <></>;
   }
 
   const searchFieldCallback = (result: ICodelist[]) => {
