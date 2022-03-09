@@ -22,7 +22,6 @@ import { useParams } from 'react-router-dom';
 import { IRouteParams } from '../../Models/IRouteParams';
 import { useGetProjectQuery } from '../../../store/api/bankApi';
 import useProjectMutations from '../../../store/api/ProjectMutations';
-import Utils from '../../../common/Utils';
 
 const useStyles = makeStyles({
   products: {
@@ -54,7 +53,7 @@ export default function ProductPage(): React.ReactElement {
   }
 
   if (!project) {
-    return <></>;
+    return <p>Finner ikke prosjekt</p>;
   }
 
   const updateProductsArrangement = (

@@ -3,7 +3,6 @@ import Button from '@mui/material/Button';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { v4 as uuidv4 } from 'uuid';
-import ErrorSummary from '../../Form/ErrorSummary';
 import TextCtrl from '../../FormProvider/TextCtrl';
 import { IAlert } from '../../models/IAlert';
 import { PostProjectSchema } from '../../models/Project';
@@ -12,10 +11,27 @@ import Nexus from '../../Nexus/Nexus';
 import { usePostProjectMutation } from '../../store/api/bankApi';
 import { useAppDispatch } from '../../store/hooks';
 import { addAlert } from '../../store/reducers/alert-reducer';
+import makeStyles from '@mui/styles/makeStyles';
+import { Box } from '@mui/material';
 
 interface IProps {
   handleClose: () => void;
 }
+
+const useStyles = makeStyles({
+  fields: {
+    display: 'flex',
+    flexDirection: 'column',
+    margin: '0 auto',
+    gap: 20,
+    padding: 10,
+    width: 450
+  },
+  buttons: {
+    display: 'flex',
+    gap: 10
+  }
+});
 
 const NewProjectForm = ({ handleClose }: IProps) => {
   const dispatch = useAppDispatch();
@@ -23,6 +39,7 @@ const NewProjectForm = ({ handleClose }: IProps) => {
   const nexus = Nexus.getInstance();
   const defaultValues = nexus.projectService.generateDefaultProjectValues();
   const [postProject] = usePostProjectMutation();
+  const classes = useStyles();
 
   const methods = useForm<IBank>({
     resolver: joiResolver(PostProjectSchema),
@@ -45,15 +62,25 @@ const NewProjectForm = ({ handleClose }: IProps) => {
   return (
     <FormProvider {...methods}>
       <form
+        className={classes.fields}
         onSubmit={methods.handleSubmit(onSubmit)}
         autoComplete="off"
         noValidate
       >
         <TextCtrl name="title" label={t('Title')} />
         <TextCtrl name="description" label={t('Description')} />
-        <Button variant="contained" type="submit">
-          {t('save')}
-        </Button>
+        <Box className={classes.buttons}>
+          <Button sx={{ width: '90%' }} variant="primary" type="submit">
+            {t('save')}
+          </Button>
+          <Button
+            variant="warning"
+            sx={{ width: '90%' }}
+            onClick={() => handleClose()}
+          >
+            {t('close')}
+          </Button>
+        </Box>
       </form>
     </FormProvider>
   );
