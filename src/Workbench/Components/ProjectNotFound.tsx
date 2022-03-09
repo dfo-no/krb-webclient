@@ -26,7 +26,7 @@ const useStyles = makeStyles({
   }
 });
 
-export default function Header(): React.ReactElement {
+export default function ProjectNotFound(): React.ReactElement {
   const classes = useStyles();
   const { t } = useTranslation();
 
