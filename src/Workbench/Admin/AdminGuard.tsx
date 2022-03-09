@@ -1,4 +1,4 @@
-import { Box } from '@mui/material';
+import Box from '@mui/material/Box';
 import React from 'react';
 import { Route, useParams } from 'react-router';
 import { useGetProjectQuery } from '../../store/api/bankApi';
@@ -9,6 +9,7 @@ import CodelistGuard from './Codelist/CodelistGuard';
 import InheritancePage from './Inheritance/InheritancePage';
 import ProductGuard from './Product/ProductGuard';
 import ProjectPage from './Project/ProjectPage';
+import PropertiesPage from './Properties/PropertiesPage';
 import TagGuard from './Tags/TagGuard';
 
 export default function AdminGuard(): React.ReactElement {
@@ -49,6 +50,9 @@ export default function AdminGuard(): React.ReactElement {
         </Route>
         <Route exact path="/workbench/:projectId/admin/inheritance">
           <InheritancePage />
+        </Route>
+        <Route exact path="/workbench/:projectId/admin/properties">
+          <PropertiesPage />
         </Route>
       </Box>
     </Box>
