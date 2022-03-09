@@ -1,24 +1,25 @@
+import Button from '@mui/material/Button';
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useParams } from 'react-router-dom';
+import LoaderSpinner from '../../../common/LoaderSpinner';
 import SearchUtils from '../../../common/SearchUtils';
 import DFOSearchBar from '../../../components/DFOSearchBar/DFOSearchBar';
 import { Parentable } from '../../../models/Parentable';
 import { IProduct } from '../../../Nexus/entities/IProduct';
-import EditProductForm from './EditProductForm';
-import NewProductForm from './NewProductForm';
-import NestableHierarcyEditableComponents from '../../Components/NestableHierarchy/NestableHiarchyEditableComponents';
+import { useGetProjectQuery } from '../../../store/api/bankApi';
+import useProjectMutations from '../../../store/api/ProjectMutations';
 import { useEditableState } from '../../Components/EditableContext';
-import { StandardContainer } from '../../Components/StandardContainer';
+import NestableHierarcyEditableComponents from '../../Components/NestableHierarchy/NestableHiarchyEditableComponents';
 import {
   NewButtonContainer,
   SearchContainer,
   SearchFieldContainer
 } from '../../Components/SearchContainer';
-import LoaderSpinner from '../../../common/LoaderSpinner';
-import { useParams } from 'react-router-dom';
+import { StandardContainer } from '../../Components/StandardContainer';
 import { IRouteParams } from '../../Models/IRouteParams';
-import { useGetProjectQuery } from '../../../store/api/bankApi';
-import useProjectMutations from '../../../store/api/ProjectMutations';
+import EditProductForm from './EditProductForm';
+import NewProductForm from './NewProductForm';
 
 export default function ProductPage(): React.ReactElement {
   const [products, setProducts] = useState<Parentable<IProduct>[]>([]);
