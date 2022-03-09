@@ -64,10 +64,8 @@ function App(): React.ReactElement {
         <CssBaseline />
         <AlertList />
         <div className={styles.App}>
-          <div className={styles.App__header}>
-            <Header />
-          </div>
-          <div className={styles.App__content}>{renderContent()}</div>
+          <Header />
+          {renderContent()}
         </div>
       </MsalProvider>
     </div>

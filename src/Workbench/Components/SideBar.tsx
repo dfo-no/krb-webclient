@@ -25,17 +25,16 @@ interface IRouteParams {
 const useStyles = makeStyles({
   sideBar: {
     height: '100%',
-    paddingTop: 75,
     [theme.breakpoints.down('md')]: {
       paddingTop: 0
     }
   },
   sideBarList: {
-    position: 'fixed',
+    position: 'sticky',
     backgroundColor: theme.palette.gray100.main,
+    height: '100%',
     width: '18vw',
     minWidth: 230,
-    height: '100vh',
     paddingTop: 60,
     [theme.breakpoints.down('md')]: {
       height: 'auto',
@@ -48,7 +47,7 @@ const useStyles = makeStyles({
     gap: 5,
     cursor: 'pointer',
     width: '100%',
-    paddingLeft: 45,
+    paddingLeft: 30,
     '&:hover': {
       background: theme.palette.lightBlue.main,
       color: theme.palette.dfoWhite.main

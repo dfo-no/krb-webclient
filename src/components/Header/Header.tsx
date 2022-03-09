@@ -10,6 +10,7 @@ import { useGetProjectQuery } from '../../store/api/bankApi';
 
 const useStyles = makeStyles({
   header: {
+    height: '100%',
     paddingTop: 10,
     paddingBottom: 6,
     marginLeft: '5%',
@@ -151,7 +152,7 @@ export default function Header(): React.ReactElement {
   const isLocationPreview = tabName === 'preview';
 
   return (
-    <AppBar elevation={0} position="fixed">
+    <AppBar elevation={0} position="sticky">
       <Toolbar>
         <Box className={classes.header}>
           <Box>
