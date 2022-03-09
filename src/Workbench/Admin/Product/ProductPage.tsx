@@ -1,4 +1,4 @@
-import { Box, Button } from '@mui/material/';
+import { Button } from '@mui/material/';
 import makeStyles from '@mui/styles/makeStyles';
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -23,15 +23,6 @@ import { IRouteParams } from '../../Models/IRouteParams';
 import { useGetProjectQuery } from '../../../store/api/bankApi';
 import useProjectMutations from '../../../store/api/ProjectMutations';
 
-const useStyles = makeStyles({
-  products: {
-    [theme.breakpoints.down('md')]: {
-      alignSelf: 'center',
-      width: 400
-    }
-  }
-});
-
 export default function ProductPage(): React.ReactElement {
   const [products, setProducts] = useState<Parentable<IProduct>[]>([]);
   const { setEditMode, setCreating } = useEditableState();
@@ -49,10 +40,6 @@ export default function ProductPage(): React.ReactElement {
 
   if (isLoading) {
     return <LoaderSpinner />;
-  }
-
-  if (!project) {
-    return <p>Finner ikke prosjekt</p>;
   }
 
   const updateProductsArrangement = (
@@ -79,12 +66,14 @@ export default function ProductPage(): React.ReactElement {
         <SearchContainer>
           <SearchFieldContainer>
             {' '}
-            <DFOSearchBar
-              list={project.products}
-              label={t('search for product')}
-              callback={searchFieldCallback}
-              searchFunction={productsSearch}
-            />
+            {project && (
+              <DFOSearchBar
+                list={project.products}
+                label={t('search for product')}
+                callback={searchFieldCallback}
+                searchFunction={productsSearch}
+              />
+            )}
           </SearchFieldContainer>
           <NewButtonContainer>
             <Button variant="primary" onClick={() => setCreating(true)}>

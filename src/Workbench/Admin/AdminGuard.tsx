@@ -24,7 +24,6 @@ const useStyles = makeStyles({
 });
 export default function AdminGuard(): React.ReactElement {
   const classes = useStyles();
-
   return (
     <>
       <Box sx={{ display: 'flex' }}>
