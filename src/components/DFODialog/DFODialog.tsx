@@ -11,7 +11,7 @@ interface IProps {
 
 const DFODialog = ({ title, children, isOpen, handleClose }: IProps) => {
   return (
-    <Dialog maxWidth="md" fullWidth={true} open={isOpen} onClose={handleClose}>
+    <Dialog fullWidth={true} open={isOpen} onClose={handleClose}>
       <DialogTitle>{title}</DialogTitle>
       <DialogContent>{children}</DialogContent>
     </Dialog>

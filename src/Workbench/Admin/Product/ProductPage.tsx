@@ -1,4 +1,3 @@
-import { Button } from '@mui/material/';
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import SearchUtils from '../../../common/SearchUtils';
@@ -40,10 +39,6 @@ export default function ProductPage(): React.ReactElement {
     return <LoaderSpinner />;
   }
 
-  if (!project) {
-    return <p>Finner ikke prosjekt</p>;
-  }
-
   const updateProductsArrangement = (
     newProductList: Parentable<IProduct>[]
   ) => {
@@ -63,35 +58,42 @@ export default function ProductPage(): React.ReactElement {
   };
 
   return (
-    <StandardContainer>
-      <SearchContainer>
-        <SearchFieldContainer>
-          {' '}
-          <DFOSearchBar
-            list={project.products}
-            label={t('search for product')}
-            callback={searchFieldCallback}
-            searchFunction={productsSearch}
-          />
-        </SearchFieldContainer>
-        <NewButtonContainer>
-          <Button variant="primary" onClick={() => setCreating(true)}>
-            {t('add new product')}
-          </Button>
-        </NewButtonContainer>
-      </SearchContainer>
+    <>
+      <StandardContainer>
+        <SearchContainer>
+          <SearchFieldContainer>
+            {' '}
+            {project && (
+              <DFOSearchBar
+                list={project.products}
+                label={t('search for product')}
+                callback={searchFieldCallback}
+                searchFunction={productsSearch}
+              />
+            )}
+          </SearchFieldContainer>
+          <NewButtonContainer>
+            <Button variant="primary" onClick={() => setCreating(true)}>
+              {t('add new product')}
+            </Button>
+          </NewButtonContainer>
+        </SearchContainer>
 
-      <NestableHierarcyEditableComponents
-        dispatchfunc={updateProductsArrangement}
-        inputlist={products}
-        CreateComponent={
-          <NewProductForm handleClose={() => setCreating(false)} />
-        }
-        EditComponent={(item: Parentable<IProduct>) => (
-          <EditProductForm product={item} handleClose={() => setEditMode('')} />
-        )}
-        depth={5}
-      />
-    </StandardContainer>
+        <NestableHierarcyEditableComponents
+          dispatchfunc={updateProductsArrangement}
+          inputlist={products}
+          CreateComponent={
+            <NewProductForm handleClose={() => setCreating(false)} />
+          }
+          EditComponent={(item: Parentable<IProduct>) => (
+            <EditProductForm
+              product={item}
+              handleClose={() => setEditMode('')}
+            />
+          )}
+          depth={5}
+        />
+      </StandardContainer>
+    </>
   );
 }

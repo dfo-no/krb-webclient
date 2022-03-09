@@ -1,5 +1,6 @@
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
+import { t } from 'i18next';
 import { useState } from 'react';
 import Dialog from '../../components/DFODialog/DFODialog';
 import NewProjectForm from './NewProjectForm';
@@ -16,10 +17,10 @@ const NewProject = () => {
       }}
     >
       <Button variant="primary" onClick={() => setOpen(true)}>
-        Nytt prosjekt
+        {t('new project')}
       </Button>
       <Dialog
-        title="Nytt prosjekt"
+        title={t('new project')}
         isOpen={isOpen}
         handleClose={() => setOpen(false)}
         children={<NewProjectForm handleClose={() => setOpen(false)} />}
