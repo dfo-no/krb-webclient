@@ -2,6 +2,7 @@ import { IResponse } from '../../models/IResponse';
 import ModelType from '../../models/ModelType';
 import QuestionEnum from '../../models/QuestionEnum';
 import RequirementType from '../../models/RequirementType';
+import VariantType from '../entities/VariantType';
 import Nexus from '../Nexus';
 
 describe('EvaluationService', () => {
@@ -55,7 +56,8 @@ describe('EvaluationService', () => {
                           id: '50bf8a0a-e435-4c8f-b7d3-0048810b4491'
                         }
                       ],
-                      id: 'b2f218dc-d5e6-49b4-9a60-f906db1ec74e'
+                      id: 'b2f218dc-d5e6-49b4-9a60-f906db1ec74e',
+                      type: VariantType.requirement
                     }
                   ],
                   type: ModelType.requirement,
@@ -110,7 +112,8 @@ describe('EvaluationService', () => {
                           id: 'fa9ad612-2ab3-4877-8850-c65986347ece'
                         }
                       ],
-                      id: '2fbd3495-b95e-473c-923c-6aec0a9e4305'
+                      id: '2fbd3495-b95e-473c-923c-6aec0a9e4305',
+                      type: VariantType.requirement
                     }
                   ],
                   type: ModelType.requirement,
@@ -160,7 +163,8 @@ describe('EvaluationService', () => {
                           id: '14b047d9-20f1-4681-83c4-519904352027'
                         }
                       ],
-                      id: 'b8dadd61-3f16-462c-9eb7-a72c61732fbf'
+                      id: 'b8dadd61-3f16-462c-9eb7-a72c61732fbf',
+                      type: VariantType.requirement
                     }
                   ],
                   type: ModelType.requirement,
@@ -213,7 +217,8 @@ describe('EvaluationService', () => {
                           id: '01c570c3-f591-47f3-9d0b-6cc6bb881509'
                         }
                       ],
-                      id: 'd9c55f57-d22f-4ebc-a53e-9133ce7885d2'
+                      id: 'd9c55f57-d22f-4ebc-a53e-9133ce7885d2',
+                      type: VariantType.requirement
                     }
                   ],
                   type: ModelType.requirement,
@@ -262,7 +267,8 @@ describe('EvaluationService', () => {
                           id: '087fd637-2ae9-4ccf-87e5-f61599078255'
                         }
                       ],
-                      id: 'ccb83429-07f0-4142-a120-c5b384185177'
+                      id: 'ccb83429-07f0-4142-a120-c5b384185177',
+                      type: VariantType.requirement
                     }
                   ],
                   type: ModelType.requirement,
@@ -436,7 +442,8 @@ describe('EvaluationService', () => {
                       id: '50bf8a0a-e435-4c8f-b7d3-0048810b4491'
                     }
                   ],
-                  id: 'b2f218dc-d5e6-49b4-9a60-f906db1ec74e'
+                  id: 'b2f218dc-d5e6-49b4-9a60-f906db1ec74e',
+                  type: VariantType.requirement
                 }
               ],
               type: ModelType.requirement,
@@ -507,7 +514,8 @@ describe('EvaluationService', () => {
                       id: 'fa9ad612-2ab3-4877-8850-c65986347ece'
                     }
                   ],
-                  id: '2fbd3495-b95e-473c-923c-6aec0a9e4305'
+                  id: '2fbd3495-b95e-473c-923c-6aec0a9e4305',
+                  type: VariantType.requirement
                 }
               ],
               type: ModelType.requirement,
@@ -568,7 +576,8 @@ describe('EvaluationService', () => {
                       id: '14b047d9-20f1-4681-83c4-519904352027'
                     }
                   ],
-                  id: 'b8dadd61-3f16-462c-9eb7-a72c61732fbf'
+                  id: 'b8dadd61-3f16-462c-9eb7-a72c61732fbf',
+                  type: VariantType.requirement
                 }
               ],
               type: ModelType.requirement,
@@ -635,7 +644,8 @@ describe('EvaluationService', () => {
                       id: '01c570c3-f591-47f3-9d0b-6cc6bb881509'
                     }
                   ],
-                  id: 'd9c55f57-d22f-4ebc-a53e-9133ce7885d2'
+                  id: 'd9c55f57-d22f-4ebc-a53e-9133ce7885d2',
+                  type: VariantType.requirement
                 }
               ],
               type: ModelType.requirement,
@@ -694,7 +704,8 @@ describe('EvaluationService', () => {
                       id: '087fd637-2ae9-4ccf-87e5-f61599078255'
                     }
                   ],
-                  id: 'ccb83429-07f0-4142-a120-c5b384185177'
+                  id: 'ccb83429-07f0-4142-a120-c5b384185177',
+                  type: VariantType.requirement
                 }
               ],
               type: ModelType.requirement,
@@ -772,7 +783,8 @@ describe('EvaluationService', () => {
                     id: '50bf8a0a-e435-4c8f-b7d3-0048810b4491'
                   }
                 ],
-                id: 'b2f218dc-d5e6-49b4-9a60-f906db1ec74e'
+                id: 'b2f218dc-d5e6-49b4-9a60-f906db1ec74e',
+                type: VariantType.requirement
               }
             ],
             type: ModelType.requirement,

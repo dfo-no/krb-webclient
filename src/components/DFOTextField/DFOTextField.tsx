@@ -3,6 +3,7 @@ import TextField from '@mui/material/TextField';
 
 const DFOTextField = styled(TextField)(({ theme }) => ({
   width: '100%',
+  backgroundColor: theme.palette.dfoWhite.main,
   '& .MuiOutlinedInput-root': {
     backgroundColor: theme.palette.dfoWhite.main,
     '& fieldset': {

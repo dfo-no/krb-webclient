@@ -6,8 +6,7 @@ const i18nJoi = Joi.defaults((schema) =>
     abortEarly: false,
     messages: {
       // Add all keys here and translate them as needed: https://joi.dev/api/?v=17.6.0#list-of-errors
-      'string.max': '{{#label}} må være mindre eller lik {{#limit}} karakterer',
-      'array.max': 'Bobbo'
+      'string.max': '{{#label}} må være mindre eller lik {{#limit}} karakterer'
     }
   })
 );

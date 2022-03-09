@@ -26,7 +26,6 @@ import {
   SearchFieldContainer
 } from '../../Components/SearchContainer';
 import { DFOCardHeader } from '../../../components/DFOCard/DFOCardHeader';
-import { ScrollableContainer } from '../../Components/ScrollableContainer';
 
 const useStyles = makeStyles({
   versionText: {
@@ -113,15 +112,7 @@ function ProjectPage(): React.ReactElement {
             handleClose={() => setEditing(false)}
           />
         )}
-        <CardContent
-          sx={{
-            display: 'flex',
-            flexDirection: 'column',
-            height: '100%',
-            flexGrow: 1,
-            minHeight: 0
-          }}
-        >
+        <CardContent>
           <SearchContainer>
             <SearchFieldContainer>
               {' '}
@@ -147,11 +138,7 @@ function ProjectPage(): React.ReactElement {
               />
             </Box>
           )}
-          <ScrollableContainer>
-            <List aria-label="publications">
-              {publications.map(renderItem)}
-            </List>
-          </ScrollableContainer>
+          <List aria-label="publications">{publications.map(renderItem)}</List>
         </CardContent>
       </Card>
     </StandardContainer>

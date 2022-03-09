@@ -1,4 +1,3 @@
-import { INeed } from '../Nexus/entities/INeed';
 import CustomJoi from './CustomJoi';
 
 describe('CustomJoi', () => {

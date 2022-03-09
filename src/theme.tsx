@@ -163,6 +163,11 @@ theme.typography.smallUnderlineBlue = {
   cursor: 'pointer'
 };
 
+theme.typography.smediumBold = {
+  fontSize: '18px',
+  fontWeight: 700
+};
+
 theme.typography.medium = {
   color: theme.palette.black.main,
   fontSize: '20px',
@@ -184,6 +189,10 @@ theme.typography.bigBold = {
   fontWeight: 700
 };
 
+theme.typography.biggerBold = {
+  fontSize: '40px'
+};
+
 theme.typography.footerAddressText = {
   color: theme.palette.dfoWhite.main,
   fontSize: '15px'
@@ -196,14 +205,6 @@ theme.typography.formCtrlErrorMessage = {
 };
 
 theme.components = {
-  MuiAppBar: {
-    styleOverrides: {
-      root: {
-        backgroundColor: theme.palette.dfoWhite.main,
-        borderBottom: `2px solid ${theme.palette.gray300.main}`
-      }
-    }
-  },
   MuiButton: {
     variants: [
       {
@@ -243,40 +244,6 @@ theme.components = {
         }
       }
     ]
-  },
-  MuiListItemButton: {
-    styleOverrides: {
-      root: {
-        '&.Mui-selected, &.Mui-selected:hover': {
-          backgroundColor: theme.palette.dfoDarkBlue.main,
-          color: theme.palette.dfoWhite.main,
-          '& .MuiListItemIcon-root': {
-            display: 'block',
-            textAlign: 'right',
-            color: theme.palette.dfoWhite.main
-          }
-        },
-        '&:hover': {
-          backgroundColor: theme.palette.dfoDarkBlue.main,
-          color: theme.palette.dfoWhite.main,
-          '& .MuiListItemIcon-root': {
-            display: 'block',
-            textAlign: 'right',
-            color: theme.palette.dfoWhite.main
-          }
-        },
-        '& .MuiListItemIcon-root': {
-          display: 'none'
-        }
-      }
-    }
-  },
-  MuiList: {
-    styleOverrides: {
-      root: {
-        padding: 0
-      }
-    }
   },
   MuiCheckbox: {
     styleOverrides: {

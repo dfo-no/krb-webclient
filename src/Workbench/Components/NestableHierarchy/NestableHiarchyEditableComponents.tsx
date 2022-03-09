@@ -6,10 +6,12 @@ import makeStyles from '@mui/styles/makeStyles';
 import theme from '../../../theme';
 import NestableHierarcy from './NestableHierarcy';
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
+import DeleteIcon from '@mui/icons-material/Delete';
 import { useEditableState } from '../EditableContext';
 import { BaseModelWithTitleAndDesc } from '../../../models/BaseModelWithTitleAndDesc';
 import { FormContainerBox } from '../Form/FormContainerBox';
 import { ScrollableContainer } from '../ScrollableContainer';
+import { FormIconButton } from '../Form/FormIconButton';
 
 const useStyles = makeStyles({
   nestableItemCustom: {
@@ -63,7 +65,10 @@ interface IProps<T extends BaseModelWithTitleAndDesc> {
   inputlist: Parentable<T>[];
   CreateComponent: React.ReactElement;
   EditComponent: (item: Parentable<T>) => React.ReactElement;
-  DeleteComponent?: (item: Parentable<T>) => React.ReactElement;
+  DeleteComponent?: (
+    item: Parentable<T>,
+    child: React.ReactElement
+  ) => React.ReactElement;
   depth: number;
 }
 
@@ -78,7 +83,8 @@ const NestableHierarcyEditableComponents = <
   depth
 }: IProps<T>): React.ReactElement => {
   const classes = useStyles();
-  const { editMode, setEditMode, isCreating } = useEditableState();
+  const { editMode, setEditMode, isCreating, setDeleteMode } =
+    useEditableState();
 
   const isEditing = () => {
     return editMode !== '';
@@ -87,15 +93,7 @@ const NestableHierarcyEditableComponents = <
     return item && item.id === editMode;
   };
 
-  const renderItem = (item: Parentable<T>, handler: React.ReactNode) => {
-    if (isEditingItem(item)) {
-      return (
-        <FormContainerBox>
-          {EditComponent(item)}
-          {DeleteComponent && DeleteComponent(item)}
-        </FormContainerBox>
-      );
-    }
+  const renderTextBox = (item: Parentable<T>, handler: React.ReactNode) => {
     return (
       <Box className={classes.nestableItemCustom}>
         {!isEditing() && <Box className={classes.handlerIcon}>{handler}</Box>}
@@ -105,10 +103,29 @@ const NestableHierarcyEditableComponents = <
         <Box className={classes.textItemDescription}>
           <Typography variant="small">{item.description}</Typography>
         </Box>
-        <Box className={classes.editIcon} onClick={() => setEditMode(item.id)}>
+        <FormIconButton onClick={() => setEditMode(item.id)}>
           <EditOutlinedIcon />
-        </Box>
+        </FormIconButton>
+        {DeleteComponent && (
+          <FormIconButton
+            hoverColor={theme.palette.dfoErrorRed.main}
+            onClick={() => setDeleteMode(item.id)}
+          >
+            <DeleteIcon />
+          </FormIconButton>
+        )}
       </Box>
+    );
+  };
+
+  const renderItem = (item: Parentable<T>, handler: React.ReactNode) => {
+    if (isEditingItem(item)) {
+      return <FormContainerBox>{EditComponent(item)}</FormContainerBox>;
+    }
+    return (
+      <>
+        {DeleteComponent && DeleteComponent(item, renderTextBox(item, handler))}
+      </>
     );
   };
 

@@ -1,7 +1,8 @@
-import { Button, Chip } from '@mui/material';
+import Button from '@mui/material/Button';
+import Chip from '@mui/material/Chip';
+import List from '@mui/material/List';
 import makeStyles from '@mui/styles/makeStyles';
 import React from 'react';
-import { ListGroup } from 'react-bootstrap';
 import { IRequirement } from '../../Nexus/entities/IRequirement';
 import theme from '../../theme';
 
@@ -46,16 +47,13 @@ export default function RequirementList({
           onClick={() => updateSelectedFunction(element)}
           className={classes.requirementButton}
         >
-          {element.title}{' '}
+          {element.title}
+          {'22222 '}
           {element.sourceRel && <Chip label="Arvet" variant="outlined" />}
         </Button>
       );
     });
-    return (
-      <>
-        <ListGroup className="ml-3 mt-3 mb-4">{reqList}</ListGroup>
-      </>
-    );
+    return <List>{reqList}</List>;
   };
 
   return <>{list()}</>;

@@ -1,15 +1,16 @@
-import makeStyles from '@mui/styles/makeStyles';
-import { Button, Typography, Box } from '@mui/material';
-import React from 'react';
-import { useTranslation } from 'react-i18next';
-import theme from '../../../theme';
-import { FormProvider, useForm } from 'react-hook-form';
 import { joiResolver } from '@hookform/resolvers/joi';
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
+import Typography from '@mui/material/Typography';
+import makeStyles from '@mui/styles/makeStyles';
 import Joi from 'joi';
+import React from 'react';
+import { FormProvider, useForm } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
 import CheckboxCtrl from '../../../FormProvider/CheckboxCtrl';
-import InheritanceTagList from './InheritedBankTagList';
-import DFOSelect from '../../../components/DFOSelect/DFOSelect';
 import { IInheritedBank } from '../../../models/IInheritedBank';
+import theme from '../../../theme';
+import InheritanceTagList from './InheritedBankTagList';
 
 export interface IProps {
   bank: IInheritedBank;
@@ -70,12 +71,6 @@ export default function InheritedBankAccordionBody({
 }: IProps): React.ReactElement {
   const { t } = useTranslation();
   const classes = useStyles();
-
-  // This is dummy data. Replace with real data.
-  const versions = [
-    'Tronds versjon; 1. des. 2021',
-    'Oslo kommune; 1. des. 2021'
-  ];
 
   const defaultValues: IFormValues = {
     inherit: {

@@ -222,6 +222,13 @@ class Utils {
     return [hierarchy, mappedArr];
   }
 
+  static checkIfHasChildren<T extends IBaseModel>(
+    item: Parentable<T>,
+    list: Parentable<T>[]
+  ): boolean {
+    return list.some((listItem) => listItem.parent === item.id);
+  }
+
   static findNeedParents(
     element: Nestable<INeed>,
     parents: Nestable<INeed>[],

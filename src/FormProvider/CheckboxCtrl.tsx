@@ -1,6 +1,6 @@
 import { Box, FormControl, FormLabel } from '@mui/material';
 import { get } from 'lodash';
-import React, { JSXElementConstructor, ReactElement, useState } from 'react';
+import React, { JSXElementConstructor, ReactElement } from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
 import { DFOCheckbox } from '../components/DFOCheckbox/DFOCheckbox';
 
