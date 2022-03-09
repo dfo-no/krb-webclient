@@ -2,8 +2,8 @@ import {
   AuthenticatedTemplate,
   UnauthenticatedTemplate
 } from '@azure/msal-react';
+import Grid from '@mui/material/Grid';
 import React from 'react';
-import Col from 'react-bootstrap/Col';
 import SignedButton from './SignedButton/SignedButton';
 
 interface IProps {
@@ -15,11 +15,13 @@ export default function PageLayout({ children }: IProps): React.ReactElement {
     <>
       <AuthenticatedTemplate>{children}</AuthenticatedTemplate>
       <UnauthenticatedTemplate>
-        <Col className="col-sm-12 col-md-6 offset-md-3 mt-3">
-          {children}
+        <Grid container>
+          <Grid item sm={12}>
+            {children}
 
-          <SignedButton />
-        </Col>
+            <SignedButton />
+          </Grid>
+        </Grid>
       </UnauthenticatedTemplate>
     </>
   );
