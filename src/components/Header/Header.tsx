@@ -115,8 +115,14 @@ export default function Header(): React.ReactElement {
   const baseUrl = useRouteMatch<{ projectId: string }>('/workbench/:projectId');
   const location = useLocation();
 
+  let skip = false;
+  if (!baseUrl?.params?.projectId) {
+    skip = true;
+  }
+
   const { data: project } = useGetProjectQuery(
-    baseUrl ? baseUrl.params.projectId : ''
+    baseUrl ? baseUrl.params.projectId : '',
+    { skip: skip }
   );
 
   const projectPath = 'Anskaffelser.no / Kravbank';
