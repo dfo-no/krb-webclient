@@ -163,6 +163,11 @@ theme.typography.smallUnderlineBlue = {
   cursor: 'pointer'
 };
 
+theme.typography.smediumBold = {
+  fontSize: '18px',
+  fontWeight: 700
+};
+
 theme.typography.medium = {
   color: theme.palette.black.main,
   fontSize: '20px',
@@ -182,6 +187,10 @@ theme.typography.mediumBlue = {
 theme.typography.bigBold = {
   fontSize: '28px',
   fontWeight: 700
+};
+
+theme.typography.biggerBold = {
+  fontSize: '40px'
 };
 
 theme.typography.footerAddressText = {
