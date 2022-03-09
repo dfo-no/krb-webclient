@@ -12,6 +12,8 @@ interface IEditableContext {
   setEditMode: Dispatch<SetStateAction<string>>;
   isCreating: boolean;
   setCreating: Dispatch<SetStateAction<boolean>>;
+  deleteMode: string;
+  setDeleteMode: Dispatch<SetStateAction<string>>;
 }
 
 const initialContext: IEditableContext = {
@@ -21,6 +23,10 @@ const initialContext: IEditableContext = {
   },
   isCreating: false,
   setCreating: function (): void {
+    throw new Error('Function not implemented.');
+  },
+  deleteMode: '',
+  setDeleteMode: function (): void {
     throw new Error('Function not implemented.');
   }
 };
@@ -34,18 +40,28 @@ interface IProps {
 export const EditableProvider = ({ children }: IProps) => {
   const [editMode, setEditMode] = useState('');
   const [isCreating, setCreating] = useState(false);
+  const [deleteMode, setDeleteMode] = useState('');
 
   useEffect(() => {
     if (editMode !== '') {
       setCreating(false);
+      setDeleteMode('');
     }
   }, [editMode]);
 
   useEffect(() => {
     if (isCreating) {
       setEditMode('');
+      setDeleteMode('');
     }
   }, [isCreating]);
+
+  useEffect(() => {
+    if (deleteMode) {
+      setCreating(false);
+      setEditMode('');
+    }
+  }, [deleteMode]);
 
   return (
     <EditableContext.Provider
@@ -53,7 +69,9 @@ export const EditableProvider = ({ children }: IProps) => {
         editMode,
         setEditMode,
         isCreating,
-        setCreating
+        setCreating,
+        deleteMode,
+        setDeleteMode
       }}
     >
       {children}
