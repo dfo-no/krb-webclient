@@ -1,18 +1,18 @@
+import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
+import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
+import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
+import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
+import makeStyles from '@mui/styles/makeStyles';
 import React, { useState } from 'react';
 import 'react-nestable/dist/styles/index.css';
 import Utils from '../../../common/Utils';
-import { Parentable } from '../../../models/Parentable';
+import { BaseModelWithTitleAndDesc } from '../../../models/BaseModelWithTitleAndDesc';
 import { Nestable } from '../../../models/Nestable';
+import { Parentable } from '../../../models/Parentable';
 import { IBaseModel } from '../../../Nexus/entities/IBaseModel';
-import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
-import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
-import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
-import { Box } from '@mui/material';
-import makeStyles from '@mui/styles/makeStyles';
-import { Typography } from '@mui/material';
 import theme from '../../../theme';
 import NestableHierarcy from './NestableHierarcy';
-import { BaseModelWithTitleAndDesc } from '../../../models/BaseModelWithTitleAndDesc';
 
 interface IProps<T extends IBaseModel> {
   dispatchFunc: (items: Parentable<T>[]) => void;

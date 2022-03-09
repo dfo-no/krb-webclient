@@ -1,7 +1,3 @@
-const padToTwo = (nr: number) => {
-  return nr > 9 ? nr : `0${nr}`;
-};
-
 const formatDate = (date: Date): string => {
   const dateStr = date.toISOString();
 

@@ -11,7 +11,6 @@ import CheckboxCtrl from './FormProvider/CheckboxCtrl';
 import CodelistCtrl from './FormProvider/CodelistCtrl';
 import DateCtrl from './FormProvider/DateCtrl';
 import FileUploadCtrl from './FormProvider/FileUploadCtrl';
-import HiddenCtrl from './FormProvider/HiddenCtrl';
 import RadioCtrl from './FormProvider/RadioCtrl';
 import SelectCtrl from './FormProvider/SelectCtrl';
 import SliderCtrl from './FormProvider/SliderCtrl';

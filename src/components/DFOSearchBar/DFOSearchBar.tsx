@@ -1,7 +1,7 @@
-import React from 'react';
-import { InputAdornment } from '@mui/material/';
 import SearchIcon from '@mui/icons-material/Search';
+import InputAdornment from '@mui/material/InputAdornment';
 import makeStyles from '@mui/styles/makeStyles';
+import React from 'react';
 import theme from '../../theme';
 import DFOTextField from '../DFOTextField/DFOTextField';
 

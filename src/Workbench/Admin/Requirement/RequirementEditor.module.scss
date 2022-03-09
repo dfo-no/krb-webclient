@@ -1,6 +1,0 @@
-@for $i from 1 through 9 {
-  $margin: 3rem * $i;
-  .level#{$i} {
-    margin-left: $margin;
-  }
-}
