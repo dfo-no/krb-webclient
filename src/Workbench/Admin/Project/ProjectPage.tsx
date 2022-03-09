@@ -64,7 +64,7 @@ function ProjectPage(): React.ReactElement {
   }
 
   if (!project) {
-    return <></>;
+    return <p>Finner ikke prosjekt</p>;
   }
 
   const searchFieldCallback = (result: IPublication[]) => {

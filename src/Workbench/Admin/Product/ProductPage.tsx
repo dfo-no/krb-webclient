@@ -35,7 +35,6 @@ const useStyles = makeStyles({
 export default function ProductPage(): React.ReactElement {
   const [products, setProducts] = useState<Parentable<IProduct>[]>([]);
   const { setEditMode, setCreating } = useEditableState();
-  const classes = useStyles();
   const { t } = useTranslation();
 
   const { projectId } = useParams<IRouteParams>();
@@ -94,22 +93,20 @@ export default function ProductPage(): React.ReactElement {
           </NewButtonContainer>
         </SearchContainer>
 
-        <Box className={classes.products}>
-          <NestableHierarcyEditableComponents
-            dispatchfunc={updateProductsArrangement}
-            inputlist={products}
-            CreateComponent={
-              <NewProductForm handleClose={() => setCreating(false)} />
-            }
-            EditComponent={(item: Parentable<IProduct>) => (
-              <EditProductForm
-                product={item}
-                handleClose={() => setEditMode('')}
-              />
-            )}
-            depth={5}
-          />
-        </Box>
+        <NestableHierarcyEditableComponents
+          dispatchfunc={updateProductsArrangement}
+          inputlist={products}
+          CreateComponent={
+            <NewProductForm handleClose={() => setCreating(false)} />
+          }
+          EditComponent={(item: Parentable<IProduct>) => (
+            <EditProductForm
+              product={item}
+              handleClose={() => setEditMode('')}
+            />
+          )}
+          depth={5}
+        />
       </StandardContainer>
     </>
   );
