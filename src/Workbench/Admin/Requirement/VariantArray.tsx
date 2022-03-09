@@ -19,6 +19,7 @@ import { IBank } from '../../../Nexus/entities/IBank';
 import { IProduct } from '../../../Nexus/entities/IProduct';
 import { IRequirement } from '../../../Nexus/entities/IRequirement';
 import { IVariant } from '../../../Nexus/entities/IVariant';
+import VariantType from '../../../Nexus/entities/VariantType';
 import QuestionArray from './QuestionArray';
 import styles from './Variant.module.scss';
 
@@ -110,7 +111,8 @@ export default function VariantArray({
             useSpesification: false,
             useQualification: false,
             products: [],
-            questions: []
+            questions: [],
+            type: VariantType.requirement
           };
           append(newVariant);
         }}

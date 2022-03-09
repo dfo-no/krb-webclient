@@ -13,6 +13,7 @@ import CheckboxCtrl from '../../FormProvider/CheckboxCtrl';
 import TextCtrl from '../../FormProvider/TextCtrl';
 import { IRequirement } from '../../Nexus/entities/IRequirement';
 import { IVariant } from '../../Nexus/entities/IVariant';
+import VariantType from '../../Nexus/entities/VariantType';
 
 const VariantsList = () => {
   const { t } = useTranslation();
@@ -30,7 +31,8 @@ const VariantsList = () => {
       useSpesification: false,
       useQualification: false,
       products: [],
-      questions: []
+      questions: [],
+      type: VariantType.requirement
     };
     append(newVariant);
   };
