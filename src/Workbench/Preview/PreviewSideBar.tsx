@@ -1,11 +1,10 @@
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
-import { Box } from '@mui/material';
+import Box from '@mui/material/Box';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
 import makeStyles from '@mui/styles/makeStyles';
 import React, { useState } from 'react';
-import Nav from 'react-bootstrap/Nav';
 import Utils from '../../common/Utils';
 import { Levelable } from '../../models/Levelable';
 import { Parentable } from '../../models/Parentable';
@@ -112,7 +111,7 @@ export default function PreviewSideBar({
   };
 
   return (
-    <Nav className={`sidebar flex-column p-0 ${styles.sidebar}`}>
+    <div className={`${styles.sidebar}`}>
       <Box className={classes.sideBarList}>
         <List>
           <ListItem
@@ -133,6 +132,6 @@ export default function PreviewSideBar({
           {levels(parentableArray)}
         </List>
       </Box>
-    </Nav>
+    </div>
   );
 }
