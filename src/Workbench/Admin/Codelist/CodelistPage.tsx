@@ -22,6 +22,8 @@ const useStyles = makeStyles({
   tableContainer: {
     display: 'flex',
     flexDirection: 'row',
+    flexGrow: 1,
+    minHeight: 0,
     gap: 25
   },
   codelistContainer: {

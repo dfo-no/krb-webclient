@@ -5,7 +5,6 @@ import { Route, useParams } from 'react-router-dom';
 import LoaderSpinner from '../common/LoaderSpinner';
 import { useAppDispatch } from '../store/hooks';
 import { getProjectThunk } from '../store/reducers/project-reducer';
-import theme from '../theme';
 import AdminGuard from './Admin/AdminGuard';
 import Create from './Create/Create';
 import { SelectProvider } from './Create/SelectContext';
@@ -16,22 +15,9 @@ interface IRouteParams {
 }
 
 const useStyles = makeStyles({
-  projectContainer: {
-    display: 'flex',
-    flexDirection: 'column',
-    width: '100%',
-    [theme.breakpoints.down('md')]: {
-      flexWrap: 'wrap'
-    }
-  },
   wrapperContainer: {
-    display: 'flex',
-    flexDirection: 'row',
-    backgroundColor: theme.palette.dfoBackgroundBlue.main,
-
-    [theme.breakpoints.down('md')]: {
-      flexWrap: 'wrap'
-    }
+    height: '100%',
+    width: '100%'
   }
 });
 
@@ -60,20 +46,18 @@ export default function ProjectGuard(): React.ReactElement {
   }
 
   return (
-    <Box className={classes.projectContainer}>
-      <Box className={classes.wrapperContainer}>
-        <Route path="/workbench/:projectId/admin">
-          <AdminGuard />
-        </Route>
-        <Route path="/workbench/:projectId/create">
-          <SelectProvider>
-            <Create />
-          </SelectProvider>
-        </Route>
-        <Route path="/workbench/:projectId/preview">
-          <Preview />
-        </Route>
-      </Box>
+    <Box className={classes.wrapperContainer}>
+      <Route path="/workbench/:projectId/admin">
+        <AdminGuard />
+      </Route>
+      <Route path="/workbench/:projectId/create">
+        <SelectProvider>
+          <Create />
+        </SelectProvider>
+      </Route>
+      <Route path="/workbench/:projectId/preview">
+        <Preview />
+      </Route>
     </Box>
   );
 }
