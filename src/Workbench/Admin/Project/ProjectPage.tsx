@@ -14,7 +14,6 @@ import { DFOCardHeader } from '../../../components/DFOCard/DFOCardHeader';
 import { IPublication } from '../../../Nexus/entities/IPublication';
 import { useGetProjectQuery } from '../../../store/api/bankApi';
 import { PlainListBox } from '../../Components/PlainListBox';
-import { ScrollableContainer } from '../../Components/ScrollableContainer';
 import {
   NewButtonContainer,
   SearchContainer
@@ -102,15 +101,7 @@ function ProjectPage(): React.ReactElement {
         <DFOCardHeader>
           <ProjectHeader />
         </DFOCardHeader>
-        <CardContent
-          sx={{
-            display: 'flex',
-            flexDirection: 'column',
-            height: '100%',
-            flexGrow: 1,
-            minHeight: 0
-          }}
-        >
+        <CardContent>
           <SearchContainer>
             {/*  <SearchFieldContainer>
               {' '}
@@ -136,11 +127,7 @@ function ProjectPage(): React.ReactElement {
               />
             </Box>
           )}
-          <ScrollableContainer>
-            <List aria-label="publications">
-              {publications.map(renderItem)}
-            </List>
-          </ScrollableContainer>
+          <List aria-label="publications">{publications.map(renderItem)}</List>
         </CardContent>
       </Card>
     </StandardContainer>
