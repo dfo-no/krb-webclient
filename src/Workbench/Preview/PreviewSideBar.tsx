@@ -1,8 +1,9 @@
+import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import { Box } from '@mui/material';
-import makeStyles from '@mui/styles/makeStyles';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
+import makeStyles from '@mui/styles/makeStyles';
 import React, { useState } from 'react';
 import Nav from 'react-bootstrap/Nav';
 import Utils from '../../common/Utils';
@@ -10,10 +11,9 @@ import { Levelable } from '../../models/Levelable';
 import { Parentable } from '../../models/Parentable';
 import { INeed } from '../../Nexus/entities/INeed';
 import { IProduct } from '../../Nexus/entities/IProduct';
-import theme from '../../theme';
-import styles from '../Admin/Requirement/NeedSideBar/NeedSidebar.module.scss';
 import { IRequirement } from '../../Nexus/entities/IRequirement';
-import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
+import theme from '../../theme';
+import styles from './PreviewSideBar.module.scss';
 
 const useStyles = makeStyles({
   sideBarList: {
