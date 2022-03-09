@@ -1,8 +1,12 @@
 import ConstructionOutlinedIcon from '@mui/icons-material/ConstructionOutlined';
 import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
 import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
-import { AppBar, Box, Toolbar, Typography } from '@mui/material/';
+import AppBar from '@mui/material/AppBar';
+import Box from '@mui/material/Box';
+import Toolbar from '@mui/material/Toolbar';
+import Typography from '@mui/material/Typography';
 import makeStyles from '@mui/styles/makeStyles';
+import { skipToken } from '@reduxjs/toolkit/query/react';
 import React from 'react';
 import { Link, useLocation, useRouteMatch } from 'react-router-dom';
 import { useGetProjectQuery } from '../../store/api/bankApi';
@@ -115,14 +119,8 @@ export default function Header(): React.ReactElement {
   const baseUrl = useRouteMatch<{ projectId: string }>('/workbench/:projectId');
   const location = useLocation();
 
-  let skip = false;
-  if (!baseUrl?.params?.projectId) {
-    skip = true;
-  }
-
   const { data: project } = useGetProjectQuery(
-    baseUrl ? baseUrl.params.projectId : '',
-    { skip: skip }
+    baseUrl?.params?.projectId ?? skipToken
   );
 
   const projectPath = 'Anskaffelser.no / Kravbank';
