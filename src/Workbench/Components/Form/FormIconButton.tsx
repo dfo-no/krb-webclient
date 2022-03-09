@@ -7,14 +7,8 @@ export const FormIconButton = styled(IconButton, {
   alignSelf: 'center',
   padding: 0,
   paddingRight: 8,
-  width: 32,
-  height: 32,
-  color: theme.palette.gray500.main,
+  color: theme.palette.common.black,
   '&:hover': {
     color: hoverColor ? hoverColor : theme.palette.dfoLightBlue.main
-  },
-  '& .MuiSvgIcon-root': {
-    width: 32,
-    height: 32
   }
 }));
