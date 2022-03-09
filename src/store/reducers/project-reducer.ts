@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { httpDelete, httpGet, httpPost, httpPut } from '../../api/http';
+import { httpGet } from '../../api/http';
 import Utils from '../../common/Utils';
 import { IInheritedBank } from '../../models/IInheritedBank';
 import ModelType from '../../models/ModelType';
@@ -56,53 +56,6 @@ export const getProjectThunk = createAsyncThunk(
   async (id: string) => {
     const response = await httpGet<IBank>(`/api/bank/${id}`);
     return response.data;
-  }
-);
-
-export const postProjectThunk = createAsyncThunk(
-  'postProjectThunk',
-  async (project: IBank) => {
-    const response = await httpPost<IBank>('/api/bank', project);
-    return response.data;
-  }
-);
-
-export const putSelectedProjectThunk = createAsyncThunk<
-  IBank,
-  string,
-  {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    state: any; // do not use : RootState here. Circular reference!!
-  }
->('putSelectedProjectThunk', async (id: string, thunkApi) => {
-  const { project } = thunkApi.getState().project as IProjectState;
-  const response = await httpPut<IBank>(`/api/bank/${project.id}`, project);
-  return response.data;
-});
-
-export const putProjectThunk = createAsyncThunk(
-  'putProjectThunk',
-  async (project: IBank) => {
-    const response = await httpPut<IBank>(`/api/bank/${project.id}`, project);
-    return response.data;
-  }
-);
-
-// @deprecated
-// @see useDeleteProjectMutation
-export const deleteProjectThunk = createAsyncThunk(
-  'deleteProjectThunk',
-  async (project: IBank) => {
-    await httpDelete<IBank>(`/api/bank/${project.id}`);
-    return project;
-  }
-);
-
-export const deleteProjectByIdThunk = createAsyncThunk(
-  'deleteProjectByIdThunk',
-  async (projectId: string) => {
-    await httpDelete<IBank>(`/api/bank/${projectId}`);
-    return projectId;
   }
 );
 
@@ -457,52 +410,6 @@ const projectSlice = createSlice({
       state.projectLoading = 'fulfilled';
     });
     builder.addCase(getProjectThunk.rejected, (state) => {
-      state.projectLoading = 'rejected';
-    });
-    builder.addCase(postProjectThunk.fulfilled, (state, { payload }) => {
-      state.list.push(payload);
-      state.projectLoading = 'fulfilled';
-    });
-    builder.addCase(postProjectThunk.pending, (state) => {
-      state.projectLoading = 'pending';
-    });
-    builder.addCase(postProjectThunk.rejected, (state) => {
-      state.projectLoading = 'rejected';
-    });
-    builder.addCase(putProjectThunk.fulfilled, (state, { payload }) => {
-      state.project = payload;
-      state.projectLoading = 'fulfilled';
-    });
-    builder.addCase(putProjectThunk.pending, (state) => {
-      state.projectLoading = 'pending';
-    });
-    builder.addCase(putProjectThunk.rejected, (state) => {
-      state.projectLoading = 'rejected';
-    });
-    builder.addCase(deleteProjectThunk.fulfilled, (state, { payload }) => {
-      state.list = state.list.filter((item) => item.id !== payload.id);
-
-      // if deleted project is the current selected, set project back to default
-      if (state.project.id === payload.id) {
-        state.project = initialState.project;
-      }
-
-      state.projectLoading = 'fulfilled';
-    });
-    builder.addCase(deleteProjectThunk.pending, (state) => {
-      state.projectLoading = 'pending';
-    });
-    builder.addCase(deleteProjectThunk.rejected, (state) => {
-      state.projectLoading = 'rejected';
-    });
-    builder.addCase(deleteProjectByIdThunk.fulfilled, (state, { payload }) => {
-      state.list = state.list.filter((item) => item.id !== payload);
-      state.projectLoading = 'fulfilled';
-    });
-    builder.addCase(deleteProjectByIdThunk.pending, (state) => {
-      state.projectLoading = 'pending';
-    });
-    builder.addCase(deleteProjectByIdThunk.rejected, (state) => {
       state.projectLoading = 'rejected';
     });
   }
