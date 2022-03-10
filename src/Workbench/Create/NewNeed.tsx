@@ -4,7 +4,11 @@ import { useState } from 'react';
 import Dialog from '../../components/DFODialog/DFODialog';
 import NewNeedForm from './NewNeedForm';
 
-const NewNeed = () => {
+interface IProps {
+  buttonText: string;
+}
+
+const NewNeed = ({ buttonText }: IProps) => {
   const [isNewOpen, setNewOpen] = useState(false);
   return (
     <Box
@@ -15,7 +19,7 @@ const NewNeed = () => {
       }}
     >
       <Button variant="primary" onClick={() => setNewOpen(true)}>
-        Legg til nytt behov
+        {buttonText}
       </Button>
       <Dialog
         title="Nytt behov til kravet"
