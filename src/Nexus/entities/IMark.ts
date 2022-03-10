@@ -1,4 +1,4 @@
 export interface IMark {
   value: number;
-  label?: React.ReactNode;
+  label?: React.ReactNode | string;
 }

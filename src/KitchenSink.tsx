@@ -92,7 +92,7 @@ const KitchenSink = (): React.ReactElement => {
       weddingDay: '2021/12/14T14:00:00.123Z',
       point: 50,
       isDeveloper: false,
-      range: 20,
+      range: 15,
       isSexy: true,
       fileEndings: ['doc'],
       codelist: codelists[0],
@@ -143,8 +143,9 @@ const KitchenSink = (): React.ReactElement => {
                 min={0}
                 max={100}
                 step={5}
-                unit="Marsipan"
+                unit="marsipaner"
                 marks={[]}
+                label="Range"
               />
               <SwitchCtrl name="person.isDeveloper" label="Developer" />
               <Box
