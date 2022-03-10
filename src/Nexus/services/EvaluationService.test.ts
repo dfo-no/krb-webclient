@@ -1,7 +1,6 @@
 import { IResponse } from '../../models/IResponse';
 import ModelType from '../../models/ModelType';
 import QuestionEnum from '../../models/QuestionEnum';
-import RequirementType from '../../models/RequirementType';
 import VariantType from '../entities/VariantType';
 import Nexus from '../Nexus';
 
@@ -61,7 +60,6 @@ describe('EvaluationService', () => {
                     }
                   ],
                   type: ModelType.requirement,
-                  requirement_Type: RequirementType.requirement,
                   sourceOriginal: '61cdf70d-9ef5-4ae1-a006-b2e2f5242273',
                   sourceRel: null
                 }
@@ -117,7 +115,6 @@ describe('EvaluationService', () => {
                     }
                   ],
                   type: ModelType.requirement,
-                  requirement_Type: RequirementType.requirement,
                   sourceOriginal: '61cdf70d-9ef5-4ae1-a006-b2e2f5242273',
                   sourceRel: null
                 }
@@ -168,7 +165,6 @@ describe('EvaluationService', () => {
                     }
                   ],
                   type: ModelType.requirement,
-                  requirement_Type: RequirementType.requirement,
                   sourceOriginal: '61cdf70d-9ef5-4ae1-a006-b2e2f5242273',
                   sourceRel: null
                 }
@@ -222,7 +218,6 @@ describe('EvaluationService', () => {
                     }
                   ],
                   type: ModelType.requirement,
-                  requirement_Type: RequirementType.requirement,
                   sourceOriginal: '61cdf70d-9ef5-4ae1-a006-b2e2f5242273',
                   sourceRel: null
                 }
@@ -272,7 +267,6 @@ describe('EvaluationService', () => {
                     }
                   ],
                   type: ModelType.requirement,
-                  requirement_Type: RequirementType.requirement,
                   sourceOriginal: '61cdf70d-9ef5-4ae1-a006-b2e2f5242273',
                   sourceRel: null
                 }
@@ -447,7 +441,6 @@ describe('EvaluationService', () => {
                 }
               ],
               type: ModelType.requirement,
-              requirement_Type: RequirementType.requirement,
               sourceOriginal: '61cdf70d-9ef5-4ae1-a006-b2e2f5242273',
               sourceRel: null
             },
@@ -519,7 +512,6 @@ describe('EvaluationService', () => {
                 }
               ],
               type: ModelType.requirement,
-              requirement_Type: RequirementType.requirement,
               sourceOriginal: '61cdf70d-9ef5-4ae1-a006-b2e2f5242273',
               sourceRel: null
             },
@@ -581,7 +573,6 @@ describe('EvaluationService', () => {
                 }
               ],
               type: ModelType.requirement,
-              requirement_Type: RequirementType.requirement,
               sourceOriginal: '61cdf70d-9ef5-4ae1-a006-b2e2f5242273',
               sourceRel: null
             },
@@ -649,7 +640,6 @@ describe('EvaluationService', () => {
                 }
               ],
               type: ModelType.requirement,
-              requirement_Type: RequirementType.requirement,
               sourceOriginal: '61cdf70d-9ef5-4ae1-a006-b2e2f5242273',
               sourceRel: null
             },
@@ -709,7 +699,6 @@ describe('EvaluationService', () => {
                 }
               ],
               type: ModelType.requirement,
-              requirement_Type: RequirementType.requirement,
               sourceOriginal: '61cdf70d-9ef5-4ae1-a006-b2e2f5242273',
               sourceRel: null
             },
@@ -788,7 +777,6 @@ describe('EvaluationService', () => {
               }
             ],
             type: ModelType.requirement,
-            requirement_Type: RequirementType.requirement,
             sourceOriginal: '61cdf70d-9ef5-4ae1-a006-b2e2f5242273',
             sourceRel: null
           },
