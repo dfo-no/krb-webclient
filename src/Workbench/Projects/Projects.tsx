@@ -103,6 +103,8 @@ export default function Projects(): React.ReactElement {
   const searchFunction = () => {};
   const callback = () => {};
 
+  console.log(projects);
+
   const renderProjects = (projectList: Record<string, IBank>) => {
     const result = Object.values(projectList).map((element) => {
       return (
