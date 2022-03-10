@@ -104,6 +104,8 @@ export default function Projects(): React.ReactElement {
 
   const { data: projects, isLoading } = useGetAllProjectsQuery();
 
+  console.log(projects);
+
   if (isLoading) {
     return <LoaderSpinner />;
   }
