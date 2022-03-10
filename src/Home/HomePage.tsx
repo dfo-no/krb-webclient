@@ -1,7 +1,8 @@
-import { Box } from '@mui/material';
+import Box from '@mui/material/Box';
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
 import makeStyles from '@mui/styles/makeStyles';
 import React from 'react';
-import ListGroup from 'react-bootstrap/ListGroup';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import Footer from '../Footer/Footer';
@@ -50,28 +51,28 @@ export default function HomePage(): React.ReactElement {
             {list && <SearchBar list={list} />}
           </Box>
           <Box className={classes.navigation}>
-            <ListGroup variant="flush">
-              <ListGroup.Item className="mt-1 ">
+            <List>
+              <ListItem>
                 <Link to="/workbench">
                   <h5>{t('create projects')}</h5>
                 </Link>
-              </ListGroup.Item>
-              <ListGroup.Item className="mt-1 ">
+              </ListItem>
+              <ListItem>
                 <Link to="/response">
                   <h5>{t('create response')}</h5>
                 </Link>
-              </ListGroup.Item>
-              <ListGroup.Item className="mt-1 ">
+              </ListItem>
+              <ListItem>
                 <Link to="/evaluation">
                   <h5>{t('create evaluation')}</h5>
                 </Link>
-              </ListGroup.Item>
-              <ListGroup.Item className="mt-1 ">
+              </ListItem>
+              <ListItem>
                 <Link to="/specification">
                   <h5>{t('create specification')}</h5>
                 </Link>
-              </ListGroup.Item>
-            </ListGroup>
+              </ListItem>
+            </List>
           </Box>
         </Box>
         <Box className={classes.actionContainer}>

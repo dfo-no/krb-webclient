@@ -1,5 +1,8 @@
+import Divider from '@mui/material/Divider';
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
+import Typography from '@mui/material/Typography';
 import React from 'react';
-import ListGroup from 'react-bootstrap/ListGroup';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import { IBank } from '../../Nexus/entities/IBank';
@@ -29,23 +32,27 @@ export default function FilteredList({
   const filteredElements = () => {
     return list.map((bank: IBank) => {
       return (
-        <ListGroup.Item key={bank.id}>
-          <Link to="/specification" onClick={handleSelectedBank(bank)}>
-            {bank.title}
-          </Link>
-          {bank.publishedDate && (
-            <small className="mx-2 text-muted">
-              {t('date.ago', { date: new Date(bank.publishedDate) })}
-            </small>
-          )}
-        </ListGroup.Item>
+        <div key={bank.id}>
+          <ListItem>
+            <Link to="/specification" onClick={handleSelectedBank(bank)}>
+              {bank.title}
+            </Link>
+            {bank.publishedDate && (
+              <Typography variant="subtitle1" sx={{ mx: 2 }}>
+                {t('date.ago', { date: new Date(bank.publishedDate) })}
+              </Typography>
+            )}
+          </ListItem>
+          <Divider component="li" />
+        </div>
       );
     });
   };
+
   return (
-    <ListGroup variant="flush">
+    <>
       <h5>{filterTitle}</h5>
-      {filteredElements()}
-    </ListGroup>
+      <List>{filteredElements()}</List>
+    </>
   );
 }
