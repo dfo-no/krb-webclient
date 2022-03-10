@@ -48,7 +48,6 @@ function NewRequirementForm({
     tags: [],
     variants: [],
     type: ModelType.requirement,
-    requirement_Type: RequirementType.requirement,
     sourceOriginal: project.id,
     sourceRel: null
   };

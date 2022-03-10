@@ -1,12 +1,11 @@
-import WarningAmberIcon from '@mui/icons-material/WarningAmber';
+// import WarningAmberIcon from '@mui/icons-material/WarningAmber';
 import React from 'react';
-import Card from 'react-bootstrap/Card';
+// import Card from 'react-bootstrap/Card';
 import { IRequirementAnswer } from '../../models/IRequirementAnswer';
-import QuestionEnum from '../../models/QuestionEnum';
-import RequirementType from '../../models/RequirementType';
+// import QuestionEnum from '../../models/QuestionEnum';
 import { IRequirement } from '../../Nexus/entities/IRequirement';
 import { useAppSelector } from '../../store/hooks';
-import CheckBoxInfo from '../InfoQuestionFields/CheckBoxInfo';
+/* import CheckBoxInfo from '../InfoQuestionFields/CheckBoxInfo';
 import CodelistInfo from '../InfoQuestionFields/CodelistInfo';
 import DateInfo from '../InfoQuestionFields/DateInfo';
 import FileUploadInfo from '../InfoQuestionFields/FileUploadInfo';
@@ -19,7 +18,7 @@ import ICodelistAnswerForm from '../QuestionAnswerForms/ICodeListAnswerForm';
 import PeriodDateAnswerForm from '../QuestionAnswerForms/IPeriodDateAnswerForm';
 import ISliderAnswerForm from '../QuestionAnswerForms/ISliderAnswerForm';
 import ITextAnswerForm from '../QuestionAnswerForms/TextAnswerForm';
-import TimeAnswerForm from '../QuestionAnswerForms/TimeForm';
+import TimeAnswerForm from '../QuestionAnswerForms/TimeForm'; */
 
 interface IProps {
   selectedAnswer: IRequirementAnswer;
@@ -35,9 +34,12 @@ export default function QuestionFormSelector({
   const { markedRequirements } = useAppSelector(
     (state) => state.uploadedResponse
   );
+
+  // Commented out delow due to moving requirement_Type from IRequirement to
+  // type on IVariant. Thsi must be fixed up in another task
   return (
     <div key={selectedAnswer.id}>
-      {req.requirement_Type === RequirementType.requirement && (
+      {/* {req.requirement_Type === RequirementType.requirement && (
         <Card key={req.id} className="ml-3 mb-3">
           <Card.Body>
             {requirementText}{' '}
@@ -144,7 +146,7 @@ export default function QuestionFormSelector({
             answer={selectedAnswer}
             key={selectedAnswer.id}
           />
-        )}
+        )} */}
     </div>
   );
 }
