@@ -1,10 +1,11 @@
-import { Box, Typography } from '@mui/material';
-import React from 'react';
-import theme from '../../../theme';
 import CloseIcon from '@mui/icons-material/Close';
+import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
+import makeStyles from '@mui/styles/makeStyles';
+import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { IInheritedBank } from '../../../models/IInheritedBank';
-import makeStyles from '@mui/styles/makeStyles';
+import theme from '../../../theme';
 
 export interface IProps {
   bank: IInheritedBank;
@@ -48,7 +49,7 @@ export default function InheritanceBankHeader({
       <Box className={classes.titleOptions}>
         <Box className={classes.titleVersion}>
           <Typography variant="mediumBold">{bank.title}; </Typography>
-          <Typography variant="medium">{t('versjon')}</Typography>
+          <Typography variant="medium">{t('version')}</Typography>
         </Box>
         <Box className={classes.endContainer}>
           <CloseIcon className={classes.closeIcon} />
