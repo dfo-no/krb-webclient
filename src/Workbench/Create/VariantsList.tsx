@@ -32,7 +32,8 @@ const VariantsList = () => {
       useQualification: false,
       products: [],
       questions: [],
-      type: VariantType.requirement
+      type: VariantType.requirement,
+      description: ''
     };
     append(newVariant);
   };
@@ -49,6 +50,10 @@ const VariantsList = () => {
             <AccordionDetails
               sx={{ bgcolor: 'common.white', border: '1px solid black' }}
             >
+              <TextCtrl
+                name={`variants.${index}.description` as const}
+                label="Beskrivelse"
+              />
               <CheckboxCtrl
                 name={`variants.${index}.useProduct` as const}
                 label="Produkt"

@@ -57,7 +57,8 @@ describe('EvaluationService', () => {
                         }
                       ],
                       id: 'b2f218dc-d5e6-49b4-9a60-f906db1ec74e',
-                      type: VariantType.requirement
+                      type: VariantType.requirement,
+                      description: ''
                     }
                   ],
                   type: ModelType.requirement,
@@ -113,7 +114,8 @@ describe('EvaluationService', () => {
                         }
                       ],
                       id: '2fbd3495-b95e-473c-923c-6aec0a9e4305',
-                      type: VariantType.requirement
+                      type: VariantType.requirement,
+                      description: ''
                     }
                   ],
                   type: ModelType.requirement,
@@ -164,7 +166,8 @@ describe('EvaluationService', () => {
                         }
                       ],
                       id: 'b8dadd61-3f16-462c-9eb7-a72c61732fbf',
-                      type: VariantType.requirement
+                      type: VariantType.requirement,
+                      description: ''
                     }
                   ],
                   type: ModelType.requirement,
@@ -218,7 +221,8 @@ describe('EvaluationService', () => {
                         }
                       ],
                       id: 'd9c55f57-d22f-4ebc-a53e-9133ce7885d2',
-                      type: VariantType.requirement
+                      type: VariantType.requirement,
+                      description: ''
                     }
                   ],
                   type: ModelType.requirement,
@@ -268,7 +272,8 @@ describe('EvaluationService', () => {
                         }
                       ],
                       id: 'ccb83429-07f0-4142-a120-c5b384185177',
-                      type: VariantType.requirement
+                      type: VariantType.requirement,
+                      description: ''
                     }
                   ],
                   type: ModelType.requirement,
@@ -443,7 +448,8 @@ describe('EvaluationService', () => {
                     }
                   ],
                   id: 'b2f218dc-d5e6-49b4-9a60-f906db1ec74e',
-                  type: VariantType.requirement
+                  type: VariantType.requirement,
+                  description: ''
                 }
               ],
               type: ModelType.requirement,
@@ -515,7 +521,8 @@ describe('EvaluationService', () => {
                     }
                   ],
                   id: '2fbd3495-b95e-473c-923c-6aec0a9e4305',
-                  type: VariantType.requirement
+                  type: VariantType.requirement,
+                  description: ''
                 }
               ],
               type: ModelType.requirement,
@@ -577,7 +584,8 @@ describe('EvaluationService', () => {
                     }
                   ],
                   id: 'b8dadd61-3f16-462c-9eb7-a72c61732fbf',
-                  type: VariantType.requirement
+                  type: VariantType.requirement,
+                  description: ''
                 }
               ],
               type: ModelType.requirement,
@@ -645,7 +653,8 @@ describe('EvaluationService', () => {
                     }
                   ],
                   id: 'd9c55f57-d22f-4ebc-a53e-9133ce7885d2',
-                  type: VariantType.requirement
+                  type: VariantType.requirement,
+                  description: ''
                 }
               ],
               type: ModelType.requirement,
@@ -705,7 +714,8 @@ describe('EvaluationService', () => {
                     }
                   ],
                   id: 'ccb83429-07f0-4142-a120-c5b384185177',
-                  type: VariantType.requirement
+                  type: VariantType.requirement,
+                  description: ''
                 }
               ],
               type: ModelType.requirement,
@@ -784,7 +794,8 @@ describe('EvaluationService', () => {
                   }
                 ],
                 id: 'b2f218dc-d5e6-49b4-9a60-f906db1ec74e',
-                type: VariantType.requirement
+                type: VariantType.requirement,
+                description: ''
               }
             ],
             type: ModelType.requirement,
