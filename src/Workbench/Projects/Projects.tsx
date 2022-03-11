@@ -70,8 +70,7 @@ const useStyles = makeStyles({
   },
   projectListItemTitleButton: {
     display: 'flex',
-    justifyContent: 'space-between',
-    paddingBottom: 1
+    justifyContent: 'space-between'
   },
   list: {
     display: 'flex',
@@ -103,6 +102,18 @@ const useStyles = makeStyles({
   projectLink: {
     textDecoration: 'none',
     width: '100%'
+  },
+  projects: {
+    display: 'flex',
+    alignContent: 'center',
+    marginTop: 50
+  },
+  noProjectsContainer: {
+    display: 'flex',
+    textAlign: 'center',
+    flexDirection: 'column',
+    width: 1000,
+    gap: 15
   }
 });
 
@@ -180,31 +191,46 @@ export default function Projects(): React.ReactElement {
         </Box>
         <img src={mainIllustration} alt="Illustration" />
       </Box>
-      <Box className={classes.contentContainer}>
-        <Box className={classes.topContainer}>
-          <SearchContainer>
-            <SearchFieldContainer>
-              {' '}
-              <DFOSearchBar
-                list={list}
-                label={t('search for banks')}
-                callback={searchFunction}
-                searchFunction={callback}
-              />
-            </SearchFieldContainer>
-            <NewButtonContainer>
-              <Button variant="primary" className={classes.newBankButton}>
-                {t('create new bank')}
-              </Button>
-            </NewButtonContainer>
-          </SearchContainer>
+      {projects ? (
+        <Box className={classes.contentContainer}>
+          <Box className={classes.topContainer}>
+            <SearchContainer>
+              <SearchFieldContainer>
+                {' '}
+                <DFOSearchBar
+                  list={list}
+                  label={t('search for banks')}
+                  callback={searchFunction}
+                  searchFunction={callback}
+                />
+              </SearchFieldContainer>
+              <NewButtonContainer>
+                <Button variant="primary">{t('create new bank')}</Button>
+              </NewButtonContainer>
+            </SearchContainer>
+          </Box>
+          <Box className={classes.projects}>
+            <ScrollableContainer>
+              <List className={classes.list} aria-label="codelist">
+                {projects && renderProjects(projects)}
+              </List>
+            </ScrollableContainer>
+          </Box>
         </Box>
-        <ScrollableContainer>
-          <List className={classes.list} aria-label="codelist">
-            {projects && renderProjects(projects)}
-          </List>
-        </ScrollableContainer>
-      </Box>
+      ) : (
+        <Box className={classes.noProjectsContainer}>
+          <Box>
+            <Typography variant="medium" sx={{ letterSpacing: 2 }}>
+              {t('There is no banks')}
+            </Typography>
+          </Box>
+          <Box>
+            <Button variant="primary" sx={{ width: 170 }}>
+              {t('create new bank')}
+            </Button>
+          </Box>
+        </Box>
+      )}
     </Box>
   );
 }
