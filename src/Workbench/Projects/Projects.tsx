@@ -126,7 +126,7 @@ export default function Projects(): React.ReactElement {
     return <LoaderSpinner />;
   }
 
-  if (projects) {
+  if (!projects) {
     return <p>Could not find projects</p>;
   }
 
