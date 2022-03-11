@@ -38,9 +38,11 @@ const DFOTextField = styled(TextField)(({ theme }) => ({
     border: `2px solid ${theme.palette.indigo.main}`
   },
   '& .MuiFilledInput-root:hover': {
-    border: `3px solid ${theme.palette.indigo.main}`
+    border: `3px solid ${theme.palette.indigo.main}`,
+    backgroundColor: theme.palette.dfoWhite.main
   },
   '& .MuiFilledInput-root.Mui-focused': {
+    backgroundColor: theme.palette.dfoWhite.main,
     border: `3px solid ${theme.palette.indigo.main}`
   }
 }));
