@@ -7,7 +7,7 @@ import DFOInput from '../components/DFOInput/DFOInput';
 interface IProps {
   name: string;
   label: string;
-  placeholder?: string;
+  placeholder: string;
 }
 
 const VerticalTextCtrl = ({
