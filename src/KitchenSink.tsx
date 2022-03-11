@@ -6,6 +6,7 @@ import Paper from '@mui/material/Paper';
 import React from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import CustomJoi from './common/CustomJoi';
+import DFOSearchBar from './components/DFOSearchBar/DFOSearchBar';
 import ErrorSummary from './Form/ErrorSummary';
 import CheckboxCtrl from './FormProvider/CheckboxCtrl';
 import CodelistCtrl from './FormProvider/CodelistCtrl';
@@ -16,7 +17,7 @@ import SelectCtrl from './FormProvider/SelectCtrl';
 import SliderCtrl from './FormProvider/SliderCtrl';
 import SwitchCtrl from './FormProvider/SwitchCtrl';
 import TextCtrl from './FormProvider/TextCtrl';
-import TextCtrl2 from './FormProvider/TextCtrl2';
+import LabelledTextCtrl from './FormProvider/LabelledTextCtrl';
 import ModelType from './models/ModelType';
 import RequirementType from './models/RequirementType';
 import { ICodelist } from './Nexus/entities/ICodelist';
@@ -116,6 +117,10 @@ const KitchenSink = (): React.ReactElement => {
 
   const selectOptions = ['BMW', 'Mercedes', 'Volvo'];
 
+  const list: any = [];
+  const searchFunction = () => {};
+  const callback = () => {};
+
   return (
     <Box
       sx={{
@@ -137,11 +142,17 @@ const KitchenSink = (): React.ReactElement => {
           <form onSubmit={methods.handleSubmit(saveValues)}>
             <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
               <TextCtrl name="person.firstName" placeholder="Fornavn" />
-              <TextCtrl name="person.firstName" placeholder="Etternavn" />
-              <TextCtrl2
+              <TextCtrl name="person.lastName" placeholder="Etternavn" />
+              <LabelledTextCtrl
                 name="person.adress"
                 label="Hva er din adresse?"
                 placeholder="Adresse"
+              />
+              <DFOSearchBar
+                list={list}
+                placeholder="Søk etter biler"
+                callback={searchFunction}
+                searchFunction={callback}
               />
               <SelectCtrl name="person.cars" options={selectOptions} />
               {/*               <HiddenCtrl name="person.counter" /> */}

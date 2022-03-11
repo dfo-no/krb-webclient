@@ -10,7 +10,7 @@ interface IProps {
   placeholder?: string;
 }
 
-const TextCtrl2 = ({
+const LabelledTextCtrl = ({
   name,
   label = '',
   placeholder = ''
@@ -28,8 +28,11 @@ const TextCtrl2 = ({
           <DFOInput {...field} placeholder={placeholder} disableUnderline />
         )}
       />
+      {!!get(errors, name) && (
+        <FormLabel>{get(errors, name)?.message ?? ''}</FormLabel>
+      )}
     </FormControl>
   );
 };
 
-export default TextCtrl2;
+export default LabelledTextCtrl;

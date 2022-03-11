@@ -79,7 +79,7 @@ export default function InheritedBankTagList({
         <Box className={classes.topContainer}>
           <Box className={classes.searchContainer}>
             <DFOSearchBar
-              label={t('search for tags')}
+              placeholder={t('search for tags')}
               list={project.tags}
               searchFunction={tagsSearchFunction}
               callback={tagsCallback}

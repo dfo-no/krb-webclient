@@ -1,4 +1,4 @@
-import { FormControl } from '@mui/material';
+import { FormControl, FormLabel } from '@mui/material';
 import { get } from 'lodash';
 import React from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
@@ -19,9 +19,17 @@ const TextCtrl = ({ name, placeholder = '' }: IProps): React.ReactElement => {
       <Controller
         name={name}
         render={({ field }) => (
-          <DFOInput {...field} placeholder={placeholder} disableUnderline />
+          <DFOInput
+            {...field}
+            placeholder={placeholder}
+            error={!!get(errors, name)}
+            disableUnderline
+          />
         )}
       />
+      {!!get(errors, name) && (
+        <FormLabel>{get(errors, name)?.message ?? ''}</FormLabel>
+      )}
     </FormControl>
   );
 };
