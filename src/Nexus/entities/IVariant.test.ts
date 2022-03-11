@@ -7,6 +7,7 @@ describe('IVariant', () => {
   test('Valid WB form should validate', () => {
     const variant: IVariant = {
       id: 'e56367af-d48d-422d-a4f6-ba52ee17af23',
+      description: '',
       requirementText: '',
       instruction: '',
       useProduct: false,
@@ -54,6 +55,7 @@ describe('IVariant', () => {
 
     const variant: IVariant = {
       id: 'e56367af-d48d-422d-a4f6-ba52ee17af23',
+      description: '',
       requirementText: '',
       instruction: '',
       useProduct: false,
@@ -102,6 +104,7 @@ describe('IVariant', () => {
 
     const variant: IVariant = {
       id: 'e56367af-d48d-422d-a4f6-ba52ee17af23',
+      description: '',
       requirementText: '',
       instruction: '',
       useProduct: false,
@@ -153,6 +156,7 @@ describe('IVariant', () => {
 
     const variant: IVariant = {
       id: 'e56367af-d48d-422d-a4f6-ba52ee17af23',
+      description: '',
       requirementText: '',
       instruction: '',
       useProduct: false,

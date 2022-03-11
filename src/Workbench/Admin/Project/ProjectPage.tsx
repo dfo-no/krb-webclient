@@ -1,31 +1,27 @@
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
+import Card from '@mui/material/Card';
+import CardContent from '@mui/material/CardContent';
+import List from '@mui/material/List';
+import Typography from '@mui/material/Typography';
+import makeStyles from '@mui/styles/makeStyles';
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import {
-  Box,
-  Button,
-  Card,
-  CardContent,
-  List,
-  Typography
-} from '@mui/material/';
-import makeStyles from '@mui/styles/makeStyles';
-import ProjectHeader from './ProjectHeader';
-import DFOSearchBar from '../../../components/DFOSearchBar/DFOSearchBar';
-import { IPublication } from '../../../Nexus/entities/IPublication';
-import { PlainListBox } from '../../Components/PlainListBox';
-import EditProjectForm from './EditProjectForm';
 import { useParams } from 'react-router-dom';
-import { useGetProjectQuery } from '../../../store/api/bankApi';
 import LoaderSpinner from '../../../common/LoaderSpinner';
-import { IRouteParams } from '../../Models/IRouteParams';
-import NewPublicationForm from './NewPublicationForm';
-import { StandardContainer } from '../../Components/StandardContainer';
+import { DFOCardHeader } from '../../../components/DFOCard/DFOCardHeader';
+// import DFOSearchBar from '../../../components/DFOSearchBar/DFOSearchBar';
+import { IPublication } from '../../../Nexus/entities/IPublication';
+import { useGetProjectQuery } from '../../../store/api/bankApi';
+import { PlainListBox } from '../../Components/PlainListBox';
 import {
   NewButtonContainer,
-  SearchContainer,
-  SearchFieldContainer
+  SearchContainer
 } from '../../Components/SearchContainer';
-import { DFOCardHeader } from '../../../components/DFOCard/DFOCardHeader';
+import { StandardContainer } from '../../Components/StandardContainer';
+import { IRouteParams } from '../../Models/IRouteParams';
+import NewPublicationForm from './NewPublicationForm';
+import ProjectHeader from './ProjectHeader';
 
 const useStyles = makeStyles({
   versionText: {
@@ -46,7 +42,6 @@ const useStyles = makeStyles({
 function ProjectPage(): React.ReactElement {
   const classes = useStyles();
   const { t } = useTranslation();
-  const [isEditing, setEditing] = useState(false);
   const [isCreating, setCreating] = useState(false);
 
   const { projectId } = useParams<IRouteParams>();
@@ -67,7 +62,7 @@ function ProjectPage(): React.ReactElement {
     return <></>;
   }
 
-  const searchFieldCallback = (result: IPublication[]) => {
+  /* const searchFieldCallback = (result: IPublication[]) => {
     setPublications(result);
   };
 
@@ -79,14 +74,14 @@ function ProjectPage(): React.ReactElement {
         String(aPub.version).includes(searchString)
       );
     });
-  };
+  }; */
 
   const renderItem = (item: IPublication, i: number) => {
     return (
       <Box key={i}>
         <PlainListBox>
           <Box className={classes.versionText}>
-            <Typography variant="smallBold">{`${t('Versjon')} ${
+            <Typography variant="smallBold">{`${t('Version')} ${
               item.version
             }`}</Typography>
           </Box>
@@ -104,17 +99,11 @@ function ProjectPage(): React.ReactElement {
     <StandardContainer>
       <Card>
         <DFOCardHeader>
-          <ProjectHeader editButtonOnClick={() => setEditing(true)} />
+          <ProjectHeader />
         </DFOCardHeader>
-        {isEditing && (
-          <EditProjectForm
-            project={project}
-            handleClose={() => setEditing(false)}
-          />
-        )}
         <CardContent>
           <SearchContainer>
-            <SearchFieldContainer>
+            {/*  <SearchFieldContainer>
               {' '}
               <DFOSearchBar
                 list={project.publications}
@@ -122,7 +111,7 @@ function ProjectPage(): React.ReactElement {
                 callback={searchFieldCallback}
                 searchFunction={versionSearch}
               />
-            </SearchFieldContainer>
+            </SearchFieldContainer> */}
             <NewButtonContainer>
               <Button variant="primary" onClick={() => setCreating(true)}>
                 {t('new publication')}

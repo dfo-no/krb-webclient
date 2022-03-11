@@ -1,5 +1,4 @@
 import ModelType from '../../models/ModelType';
-import RequirementType from '../../models/RequirementType';
 import { IRequirement } from '../entities/IRequirement';
 import { IVariant } from '../entities/IVariant';
 import StoreService from './StoreService';
@@ -20,7 +19,6 @@ export default class RequirementService {
       title: '',
       description: '',
       needId: '',
-      requirement_Type: RequirementType.requirement,
       type: ModelType.requirement,
       variants: [],
       tags: [],

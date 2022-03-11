@@ -3,7 +3,6 @@ import Card from 'react-bootstrap/Card';
 import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
-import RequirementType from '../../models/RequirementType';
 import { IRequirement } from '../../Nexus/entities/IRequirement';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import {
@@ -11,8 +10,8 @@ import {
   deleteAnswer,
   removeRequirement
 } from '../../store/reducers/spesification-reducer';
-import InfoAnswer from './InfoAnswer';
-import RequirementAnswer from './RequirementAnswer';
+// import InfoAnswer from './InfoAnswer';
+// import RequirementAnswer from './RequirementAnswer';
 
 type InputProps = {
   requirement: IRequirement;
@@ -61,7 +60,7 @@ export default function SpesificationRequirement({
             onChange={(e) => changedCheckedValue(e)}
           />
         </Col>
-        <Col>
+        {/*  <Col>
           {!isSelected && <p>{requirement.title}</p>}
           {isSelected &&
             requirement.requirement_Type === RequirementType.info && (
@@ -74,7 +73,7 @@ export default function SpesificationRequirement({
                 requirement={requirement}
               />
             )}
-        </Col>
+        </Col> */}
       </Row>
     </Card>
   );

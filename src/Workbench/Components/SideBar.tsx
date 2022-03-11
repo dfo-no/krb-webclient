@@ -1,4 +1,10 @@
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
+import CodeIcon from '@mui/icons-material/Code';
+import ContentCopyIcon from '@mui/icons-material/ContentCopy';
+import Inventory2Icon from '@mui/icons-material/Inventory2';
+import LinkIcon from '@mui/icons-material/Link';
+import LocalOfferIcon from '@mui/icons-material/LocalOffer';
+import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
 import { Box, List, ListItem, ListItemText } from '@mui/material';
 import makeStyles from '@mui/styles/makeStyles';
 import React from 'react';
@@ -6,16 +12,11 @@ import { useTranslation } from 'react-i18next';
 import { withRouter } from 'react-router';
 import { Link, useRouteMatch } from 'react-router-dom';
 import theme from '../../theme';
-import ContentCopyIcon from '@mui/icons-material/ContentCopy';
-import Inventory2Icon from '@mui/icons-material/Inventory2';
-import CodeIcon from '@mui/icons-material/Code';
-import LinkIcon from '@mui/icons-material/Link';
-import LocalOfferIcon from '@mui/icons-material/LocalOffer';
 
 interface IRouteLink {
   link: string;
   name: string;
-  icon?: object;
+  icon?: React.ReactElement;
 }
 
 interface IRouteParams {
@@ -59,6 +60,7 @@ function SideBar(): React.ReactElement {
   const { t } = useTranslation();
 
   const baseUrl = useRouteMatch<IRouteParams>('/workbench/:projectId');
+
   const productMatch = useRouteMatch<IRouteParams>(
     '/workbench/:projectId/admin/products'
   );
@@ -71,6 +73,10 @@ function SideBar(): React.ReactElement {
 
   const tagsMatch = useRouteMatch<IRouteParams>(
     '/workbench/:projectId/admin/tags'
+  );
+
+  const propertiesMatch = useRouteMatch<IRouteParams>(
+    '/workbench/:projectId/admin/properties'
   );
 
   const getCurrentRoute = () => {
@@ -92,6 +98,10 @@ function SideBar(): React.ReactElement {
       url = tagsMatch?.url;
     }
 
+    if (propertiesMatch) {
+      url = propertiesMatch?.url;
+    }
+
     if (!url) return t('Versions');
 
     const shortenedPath = url?.substring(url?.lastIndexOf('/') + 1);
@@ -107,27 +117,32 @@ function SideBar(): React.ReactElement {
     {
       link: `${baseUrl?.url}/admin`,
       name: t('Versions'),
-      icon: Object(<ContentCopyIcon />)
+      icon: <ContentCopyIcon />
     },
     {
       link: `${baseUrl?.url}/admin/products`,
       name: t('Products'),
-      icon: Object(<Inventory2Icon />)
+      icon: <Inventory2Icon />
     },
     {
       link: `${baseUrl?.url}/admin/codelist`,
       name: t('Codelist'),
-      icon: Object(<CodeIcon />)
+      icon: <CodeIcon />
     },
     {
       link: `${baseUrl?.url}/admin/inheritance`,
       name: t('Inheritance'),
-      icon: Object(<LinkIcon />)
+      icon: <LinkIcon />
     },
     {
       link: `${baseUrl?.url}/admin/tags`,
       name: t('Tags'),
-      icon: Object(<LocalOfferIcon />)
+      icon: <LocalOfferIcon />
+    },
+    {
+      link: `${baseUrl?.url}/admin/properties`,
+      name: t('Properties'),
+      icon: <SettingsOutlinedIcon />
     }
   ];
 
