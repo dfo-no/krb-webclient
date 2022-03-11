@@ -19,7 +19,7 @@ import {
 import { useAppDispatch } from '../../store/hooks';
 import { addAlert } from '../../store/reducers/alert-reducer';
 import Card from '@mui/material/Card';
-
+import { Link } from 'react-router-dom';
 import mainIllustration from '../../assets/images/main-illustration.svg';
 import {
   NewButtonContainer,
@@ -40,7 +40,11 @@ const useStyles = makeStyles({
     backgroundColor: theme.palette.gray100.main,
     height: '100%'
   },
-  topContainer: { display: 'flex', flexDirection: 'column', gap: 50 },
+  topContainer: {
+    display: 'flex',
+    flexDirection: 'column',
+    gap: 50
+  },
   titleSubTitleContainer: {
     display: 'flex',
     flexDirection: 'column',
@@ -48,12 +52,18 @@ const useStyles = makeStyles({
   },
   projectListItemCard: {
     width: '100%',
-    height: 100
+    height: 100,
+    boxShadow: 'none',
+    border: `1px solid ${theme.palette.gray300.main}`,
+    '&:hover': {
+      backgroundColor: theme.palette.primary.main,
+      color: theme.palette.dfoWhite.main
+    }
   },
   projectListItemCardContent: {
     display: 'flex',
     flexDirection: 'column',
-    gap: 8,
+    gap: 5,
     width: '90%',
     paddingTop: 25,
     paddingLeft: 25
@@ -71,7 +81,10 @@ const useStyles = makeStyles({
     marginRight: 20,
     width: '100%'
   },
-  projectListItem: { padding: 0, paddingBottom: 20 },
+  projectListItem: {
+    padding: 0,
+    paddingBottom: 15
+  },
   titleImageContainer: {
     display: 'flex',
     width: 1200,
@@ -82,6 +95,25 @@ const useStyles = makeStyles({
   },
   contentContainer: {
     width: 1000
+  },
+  newBankButton: {
+    marginRight: 26
+  },
+  projectLink: {
+    textDecoration: 'none',
+    width: '100%'
+  },
+  projects: {
+    display: 'flex',
+    alignContent: 'center',
+    marginTop: 50
+  },
+  noProjectsContainer: {
+    display: 'flex',
+    textAlign: 'center',
+    flexDirection: 'column',
+    width: 1000,
+    gap: 15
   }
 });
 
@@ -109,7 +141,7 @@ export default function Projects(): React.ReactElement {
   }
 
   if (!projects) {
-    return <p>Ingen prosjekter</p>;
+    return <p>Could not find projects</p>;
   }
 
   const list: any = [];
@@ -119,21 +151,25 @@ export default function Projects(): React.ReactElement {
   const renderProjects = (projectList: Record<string, IBank>) => {
     const result = Object.values(projectList).map((element) => {
       return (
-        <ListItem className={classes.projectListItem}>
-          <Card className={classes.projectListItemCard}>
-            <Box className={classes.projectListItemCardContent}>
-              <Box className={classes.projectListItemTitleButton}>
-                <Typography variant="smediumBold">{element.title}</Typography>
-                <DeleteIcon />
+        <ListItem className={classes.projectListItem} key={element.id}>
+          <Link
+            to={`/workbench/${element.id}/admin`}
+            className={classes.projectLink}
+          >
+            <Card className={classes.projectListItemCard}>
+              <Box className={classes.projectListItemCardContent}>
+                <Box className={classes.projectListItemTitleButton}>
+                  <Typography variant="smediumBold">{element.title}</Typography>
+                  <DeleteIcon />
+                </Box>
+                <Divider sx={{ color: theme.palette.gray700.main }} />
+                <Typography variant="small">{element.description}</Typography>
               </Box>
-              <Divider />
-              <Typography variant="small">{element.description}</Typography>
-            </Box>
-          </Card>
+            </Card>
+          </Link>
         </ListItem>
       );
     });
-
     return result;
   };
 
@@ -145,7 +181,7 @@ export default function Projects(): React.ReactElement {
             variant="biggerBold"
             sx={{ letterSpacing: 0.2, color: theme.palette.primary.main }}
           >
-            Velkommen til arbeidsbenken
+            {t('Welcome to the workbench')}
           </Typography>
           <Box className={classes.subTitle}>
             <Typography>
@@ -155,31 +191,46 @@ export default function Projects(): React.ReactElement {
         </Box>
         <img src={mainIllustration} alt="Illustration" />
       </Box>
-      <Box className={classes.contentContainer}>
-        <Box className={classes.topContainer}>
-          <SearchContainer>
-            <SearchFieldContainer>
-              {' '}
-              <DFOSearchBar
-                list={list}
-                placeholder={t('search for banks')}
-                callback={searchFunction}
-                searchFunction={callback}
-              />
-            </SearchFieldContainer>
-            <NewButtonContainer>
-              <Button variant="primary">{t('create new bank')}</Button>
-            </NewButtonContainer>
-          </SearchContainer>
+      {projects ? (
+        <Box className={classes.contentContainer}>
+          <Box className={classes.topContainer}>
+            <SearchContainer>
+              <SearchFieldContainer>
+                {' '}
+                <DFOSearchBar
+                  list={list}
+                  placeholder={t('search for banks')}
+                  callback={searchFunction}
+                  searchFunction={callback}
+                />
+              </SearchFieldContainer>
+              <NewButtonContainer>
+                <Button variant="primary">{t('create new bank')}</Button>
+              </NewButtonContainer>
+            </SearchContainer>
+          </Box>
+          <Box className={classes.projects}>
+            <ScrollableContainer>
+              <List className={classes.list} aria-label="codelist">
+                {projects && renderProjects(projects)}
+              </List>
+            </ScrollableContainer>
+          </Box>
         </Box>
-        <Box>
-          <ScrollableContainer>
-            <List className={classes.list} aria-label="codelist">
-              {projects && renderProjects(projects)}
-            </List>
-          </ScrollableContainer>
+      ) : (
+        <Box className={classes.noProjectsContainer}>
+          <Box>
+            <Typography variant="medium" sx={{ letterSpacing: 2 }}>
+              {t('There is no banks')}
+            </Typography>
+          </Box>
+          <Box>
+            <Button variant="primary" sx={{ width: 170 }}>
+              {t('create new bank')}
+            </Button>
+          </Box>
         </Box>
-      </Box>
+      )}
     </Box>
   );
 }
