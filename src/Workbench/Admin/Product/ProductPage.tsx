@@ -67,7 +67,7 @@ export default function ProductPage(): React.ReactElement {
             {project && (
               <DFOSearchBar
                 list={project.products}
-                label={t('search for product')}
+                placeholder={t('search for product')}
                 callback={searchFieldCallback}
                 searchFunction={productsSearch}
               />

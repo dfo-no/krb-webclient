@@ -6,7 +6,7 @@ import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
 import LoaderSpinner from '../../common/LoaderSpinner';
-import TextCtrl from '../../FormProvider/TextCtrl';
+import HorizontalTextCtrl from '../../FormProvider/HorizontalTextCtrl';
 import { IAlert } from '../../models/IAlert';
 import { Parentable } from '../../models/Parentable';
 import { IBank } from '../../Nexus/entities/IBank';
@@ -71,8 +71,8 @@ function EditNeedForm({ need, handleClose }: IProps): React.ReactElement {
         autoComplete="off"
         noValidate
       >
-        <TextCtrl name="title" label={t('Title')} />
-        <TextCtrl name="description" label={t('Description')} />
+        <HorizontalTextCtrl name="title" placeholder={t('Title')} />
+        <HorizontalTextCtrl name="description" placeholder={t('Description')} />
 
         <Button variant="primary" type="submit">
           {t('save')}

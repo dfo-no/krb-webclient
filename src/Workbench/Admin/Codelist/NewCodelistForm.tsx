@@ -4,7 +4,7 @@ import { joiResolver } from '@hookform/resolvers/joi';
 import CheckIcon from '@mui/icons-material/Check';
 import CloseIcon from '@mui/icons-material/Close';
 import { v4 as uuidv4 } from 'uuid';
-import TextCtrl from '../../../FormProvider/TextCtrl';
+import HorizontalTextCtrl from '../../../FormProvider/HorizontalTextCtrl';
 import { useTranslation } from 'react-i18next';
 import { useAppDispatch } from '../../../store/hooks';
 import { addAlert } from '../../../store/reducers/alert-reducer';
@@ -68,10 +68,13 @@ export default function NewCodelistForm({
       >
         <FormItemBox>
           <FormFlexBox sx={{ paddingLeft: 1 }}>
-            <TextCtrl name="title" label={t('Title')} />
+            <HorizontalTextCtrl name="title" placeholder={t('Title')} />
           </FormFlexBox>
           <FormFlexBox sx={{ paddingLeft: 1, paddingRight: 1 }}>
-            <TextCtrl name="description" label={t('Description')} />
+            <HorizontalTextCtrl
+              name="description"
+              placeholder={t('Description')}
+            />
           </FormFlexBox>
           <FormIconButton type="submit" aria-label="save">
             <CheckIcon />

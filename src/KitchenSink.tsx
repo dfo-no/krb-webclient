@@ -6,6 +6,7 @@ import Paper from '@mui/material/Paper';
 import React from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import CustomJoi from './common/CustomJoi';
+import DFOSearchBar from './components/DFOSearchBar/DFOSearchBar';
 import ErrorSummary from './Form/ErrorSummary';
 import CheckboxCtrl from './FormProvider/CheckboxCtrl';
 import CodelistCtrl from './FormProvider/CodelistCtrl';
@@ -15,7 +16,8 @@ import RadioCtrl from './FormProvider/RadioCtrl';
 import SelectCtrl from './FormProvider/SelectCtrl';
 import SliderCtrl from './FormProvider/SliderCtrl';
 import SwitchCtrl from './FormProvider/SwitchCtrl';
-import TextCtrl from './FormProvider/TextCtrl';
+import HorizontalTextCtrl from './FormProvider/HorizontalTextCtrl';
+import VerticalTextCtrl from './FormProvider/VerticalTextCtrl';
 import ModelType from './models/ModelType';
 import RequirementType from './models/RequirementType';
 import { ICodelist } from './Nexus/entities/ICodelist';
@@ -24,6 +26,7 @@ interface IFormValues {
   person: {
     firstName: string | null;
     lastName: string | null;
+    adress: string | null;
     cars: string | null;
     birthDay: string | null;
     weddingDay?: string | null;
@@ -42,6 +45,7 @@ const FormSchema = CustomJoi.object().keys({
   person: CustomJoi.object().keys({
     firstName: CustomJoi.string().max(20).required(),
     lastName: CustomJoi.string().max(20).required(),
+    adress: CustomJoi.string().max(20).required(),
     cars: CustomJoi.string().valid('Volvo').required(),
     birthDay: CustomJoi.date().iso().raw().required(),
     weddingDay: CustomJoi.alternatives([
@@ -87,6 +91,7 @@ const KitchenSink = (): React.ReactElement => {
     person: {
       firstName: '',
       lastName: '',
+      adress: '',
       cars: 'BMW',
       birthDay: '',
       weddingDay: '2021/12/14T14:00:00.123Z',
@@ -112,6 +117,10 @@ const KitchenSink = (): React.ReactElement => {
 
   const selectOptions = ['BMW', 'Mercedes', 'Volvo'];
 
+  const list: any = [];
+  const searchFunction = () => {};
+  const callback = () => {};
+
   return (
     <Box
       sx={{
@@ -132,8 +141,25 @@ const KitchenSink = (): React.ReactElement => {
         <FormProvider {...methods}>
           <form onSubmit={methods.handleSubmit(saveValues)}>
             <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
-              <TextCtrl name="person.firstName" label="First name" />
-              <TextCtrl name="person.lastName" label="Last name" />
+              <HorizontalTextCtrl
+                name="person.firstName"
+                placeholder="Fornavn"
+              />
+              <HorizontalTextCtrl
+                name="person.lastName"
+                placeholder="Etternavn"
+              />
+              <VerticalTextCtrl
+                name="person.adress"
+                label="Hva er din adresse?"
+                placeholder="Adresse"
+              />
+              <DFOSearchBar
+                list={list}
+                placeholder="Søk etter biler"
+                callback={searchFunction}
+                searchFunction={callback}
+              />
               <SelectCtrl name="person.cars" options={selectOptions} />
               {/*               <HiddenCtrl name="person.counter" /> */}
               <DateCtrl name="person.birthDay" label="birthDay" />

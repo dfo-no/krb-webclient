@@ -10,13 +10,15 @@ import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
 import LoaderSpinner from '../../../common/LoaderSpinner';
 import { DFOCardHeader } from '../../../components/DFOCard/DFOCardHeader';
+import DFOSearchBar from '../../../components/DFOSearchBar/DFOSearchBar';
 // import DFOSearchBar from '../../../components/DFOSearchBar/DFOSearchBar';
 import { IPublication } from '../../../Nexus/entities/IPublication';
 import { useGetProjectQuery } from '../../../store/api/bankApi';
 import { PlainListBox } from '../../Components/PlainListBox';
 import {
   NewButtonContainer,
-  SearchContainer
+  SearchContainer,
+  SearchFieldContainer
 } from '../../Components/SearchContainer';
 import { StandardContainer } from '../../Components/StandardContainer';
 import { IRouteParams } from '../../Models/IRouteParams';
@@ -62,7 +64,7 @@ function ProjectPage(): React.ReactElement {
     return <></>;
   }
 
-  /* const searchFieldCallback = (result: IPublication[]) => {
+  const searchFieldCallback = (result: IPublication[]) => {
     setPublications(result);
   };
 
@@ -74,7 +76,7 @@ function ProjectPage(): React.ReactElement {
         String(aPub.version).includes(searchString)
       );
     });
-  }; */
+  };
 
   const renderItem = (item: IPublication, i: number) => {
     return (
@@ -103,15 +105,15 @@ function ProjectPage(): React.ReactElement {
         </DFOCardHeader>
         <CardContent>
           <SearchContainer>
-            {/*  <SearchFieldContainer>
+            <SearchFieldContainer>
               {' '}
               <DFOSearchBar
                 list={project.publications}
-                label={t('search for version')}
+                placeholder={t('search for version')}
                 callback={searchFieldCallback}
                 searchFunction={versionSearch}
               />
-            </SearchFieldContainer> */}
+            </SearchFieldContainer>
             <NewButtonContainer>
               <Button variant="primary" onClick={() => setCreating(true)}>
                 {t('new publication')}

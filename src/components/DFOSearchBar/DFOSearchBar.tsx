@@ -3,18 +3,19 @@ import InputAdornment from '@mui/material/InputAdornment';
 import makeStyles from '@mui/styles/makeStyles';
 import React from 'react';
 import theme from '../../theme';
-import DFOTextField from '../DFOTextField/DFOTextField';
+import DFOInput from '../DFOInput/DFOInput';
 
 interface DFOSearchBarProps {
   list: object;
   searchFunction: any;
   callback: any;
-  label: string;
+  placeholder: string;
 }
 
 const useStyles = makeStyles({
   searchFieldIcon: {
     marginBottom: 2,
+    marginRight: 10,
     color: theme.palette.purple.main,
     fontSize: '30px !important',
     zIndex: 1
@@ -28,7 +29,7 @@ export default function DFOSearchBar({
   list,
   callback,
   searchFunction,
-  label
+  placeholder
 }: DFOSearchBarProps): React.ReactElement {
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.value.length !== 0) {
@@ -41,23 +42,15 @@ export default function DFOSearchBar({
   const classes = useStyles();
 
   return (
-    <DFOTextField
-      variant="filled"
-      size="small"
-      label={label}
-      autoComplete="off"
+    <DFOInput
+      placeholder={placeholder}
       onChange={onChange}
-      InputProps={{
-        disableUnderline: true,
-        classes: {
-          adornedEnd: classes.adornedEnd
-        },
-        endAdornment: (
-          <InputAdornment position="end">
-            <SearchIcon className={classes.searchFieldIcon} />
-          </InputAdornment>
-        )
-      }}
+      endAdornment={
+        <InputAdornment position="end">
+          <SearchIcon className={classes.searchFieldIcon} />
+        </InputAdornment>
+      }
+      disableUnderline
     />
   );
 }

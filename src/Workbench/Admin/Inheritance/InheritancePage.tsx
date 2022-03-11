@@ -54,7 +54,7 @@ export default function InheritancePage(): React.ReactElement {
             {' '}
             <DFOSearchBar
               list={project.inheritedBanks}
-              label={t('Find banks to inherit from')}
+              placeholder={t('Find banks to inherit from')}
               callback={searchFieldCallback}
               searchFunction={inheritanceSearch}
             />
