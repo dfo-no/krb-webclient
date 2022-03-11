@@ -9,7 +9,10 @@ interface IProps {
   placeholder?: string;
 }
 
-const TextCtrl = ({ name, placeholder = '' }: IProps): React.ReactElement => {
+const HorizontalTextCtrl = ({
+  name,
+  placeholder = ''
+}: IProps): React.ReactElement => {
   const {
     formState: { errors }
   } = useFormContext();
@@ -34,4 +37,4 @@ const TextCtrl = ({ name, placeholder = '' }: IProps): React.ReactElement => {
   );
 };
 
-export default TextCtrl;
+export default HorizontalTextCtrl;

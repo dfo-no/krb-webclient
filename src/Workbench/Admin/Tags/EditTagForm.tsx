@@ -8,7 +8,7 @@ import { Parentable } from '../../../models/Parentable';
 import { useAppDispatch } from '../../../store/hooks';
 import { addAlert } from '../../../store/reducers/alert-reducer';
 import { FormItemBox } from '../../Components/Form/FormItemBox';
-import TextCtrl from '../../../FormProvider/TextCtrl';
+import HorizontalTextCtrl from '../../../FormProvider/HorizontalTextCtrl';
 import { FormIconButton } from '../../Components/Form/FormIconButton';
 import CheckIcon from '@mui/icons-material/Check';
 import CloseIcon from '@mui/icons-material/Close';
@@ -58,7 +58,7 @@ export default function EditTagForm({
       >
         <FormItemBox>
           <FormFlexBox sx={{ paddingLeft: 1, paddingRight: 1 }}>
-            <TextCtrl name="title" placeholder={t('Title')} />
+            <HorizontalTextCtrl name="title" placeholder={t('Title')} />
           </FormFlexBox>
           <FormIconButton type="submit" aria-label="save">
             <CheckIcon />

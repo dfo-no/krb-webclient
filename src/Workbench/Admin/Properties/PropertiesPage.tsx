@@ -10,7 +10,7 @@ import { useParams } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
 import LoaderSpinner from '../../../common/LoaderSpinner';
 import { DFOCardHeader } from '../../../components/DFOCard/DFOCardHeader';
-import TextCtrl from '../../../FormProvider/TextCtrl';
+import HorizontalTextCtrl from '../../../FormProvider/HorizontalTextCtrl';
 import { IAlert } from '../../../models/IAlert';
 import { PutProjectSchema } from '../../../models/Project';
 import { IBank } from '../../../Nexus/entities/IBank';
@@ -69,8 +69,11 @@ function PropertiesPage(): React.ReactElement {
             </DFOCardHeader>
 
             <CardContent>
-              <TextCtrl name="title" placeholder={t('Title')} />
-              <TextCtrl name="description" placeholder={t('Description')} />
+              <HorizontalTextCtrl name="title" placeholder={t('Title')} />
+              <HorizontalTextCtrl
+                name="description"
+                placeholder={t('Description')}
+              />
             </CardContent>
             <CardActions>
               <Button variant="primary" type="submit" aria-label="save">

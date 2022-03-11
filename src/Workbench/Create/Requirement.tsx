@@ -6,7 +6,7 @@ import { FormProvider, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { v4 as uuidv4 } from 'uuid';
 import ErrorSummary from '../../Form/ErrorSummary';
-import TextCtrl from '../../FormProvider/TextCtrl';
+import HorizontalTextCtrl from '../../FormProvider/HorizontalTextCtrl';
 import { IAlert } from '../../models/IAlert';
 import { IBank } from '../../Nexus/entities/IBank';
 import {
@@ -57,7 +57,7 @@ const Requirement = ({ requirement, project, needIndex }: IProps) => {
   return (
     <FormProvider {...methods}>
       <form onSubmit={methods.handleSubmit(onSubmit)}>
-        <TextCtrl name="title" placeholder={t('Title')} />
+        <HorizontalTextCtrl name="title" placeholder={t('Title')} />
         {/* TODO: replace with Custom SelectCtrl when done */}
         <div>
           {requirement.tags.map((tag) => {

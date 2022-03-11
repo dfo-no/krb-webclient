@@ -7,7 +7,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import { v4 as uuidv4 } from 'uuid';
 import { useAppDispatch } from '../../../store/hooks';
 import { addAlert } from '../../../store/reducers/alert-reducer';
-import TextCtrl from '../../../FormProvider/TextCtrl';
+import HorizontalTextCtrl from '../../../FormProvider/HorizontalTextCtrl';
 import Nexus from '../../../Nexus/Nexus';
 import { ICode, PostCodeSchema } from '../../../Nexus/entities/ICode';
 import { ICodelist } from '../../../Nexus/entities/ICodelist';
@@ -69,10 +69,13 @@ export default function NewCodeForm({
       >
         <FormItemBox>
           <FormFlexBox sx={{ paddingLeft: 1 }}>
-            <TextCtrl name="title" placeholder={t('Title')} />
+            <HorizontalTextCtrl name="title" placeholder={t('Title')} />
           </FormFlexBox>
           <FormFlexBox sx={{ paddingLeft: 1, paddingRight: 1 }}>
-            <TextCtrl name="description" placeholder={t('Description')} />
+            <HorizontalTextCtrl
+              name="description"
+              placeholder={t('Description')}
+            />
           </FormFlexBox>
           <FormIconButton type="submit" aria-label="save">
             <CheckIcon />

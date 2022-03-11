@@ -8,7 +8,7 @@ import { v4 as uuidv4 } from 'uuid';
 import LoaderSpinner from '../../common/LoaderSpinner';
 import ErrorSummary from '../../Form/ErrorSummary';
 import RadioCtrl from '../../FormProvider/RadioCtrl';
-import TextCtrl from '../../FormProvider/TextCtrl';
+import HorizontalTextCtrl from '../../FormProvider/HorizontalTextCtrl';
 import { IAlert } from '../../models/IAlert';
 import ModelType from '../../models/ModelType';
 import { Parentable } from '../../models/Parentable';
@@ -93,8 +93,8 @@ function NewRequirementForm({
             { value: RequirementType.info, label: 'Info' }
           ]}
         />
-        <TextCtrl name="title" placeholder={t('Title')} />
-        <TextCtrl name="description" placeholder={t('Description')} />
+        <HorizontalTextCtrl name="title" placeholder={t('Title')} />
+        <HorizontalTextCtrl name="description" placeholder={t('Description')} />
         <Button variant="primary" type="submit">
           {t('save')}
         </Button>

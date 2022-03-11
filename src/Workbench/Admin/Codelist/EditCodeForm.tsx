@@ -5,7 +5,7 @@ import React from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { v4 as uuidv4 } from 'uuid';
-import TextCtrl from '../../../FormProvider/TextCtrl';
+import TextCtrl from '../../../FormProvider/HorizontalTextCtrl';
 import { IAlert } from '../../../models/IAlert';
 import { Parentable } from '../../../models/Parentable';
 import { BaseCodeSchema, ICode } from '../../../Nexus/entities/ICode';
