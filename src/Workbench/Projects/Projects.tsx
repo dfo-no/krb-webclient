@@ -140,7 +140,7 @@ export default function Projects(): React.ReactElement {
   const renderProjects = (projectList: Record<string, IBank>) => {
     const result = Object.values(projectList).map((element) => {
       return (
-        <ListItem className={classes.projectListItem}>
+        <ListItem className={classes.projectListItem} key={element.id}>
           <Link
             to={`/workbench/${element.id}/admin`}
             className={classes.projectLink}
