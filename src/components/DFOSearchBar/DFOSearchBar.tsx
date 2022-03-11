@@ -40,24 +40,5 @@ export default function DFOSearchBar({
 
   const classes = useStyles();
 
-  return (
-    <DFOTextField
-      variant="filled"
-      size="small"
-      label={label}
-      autoComplete="off"
-      onChange={onChange}
-      InputProps={{
-        disableUnderline: true,
-        classes: {
-          adornedEnd: classes.adornedEnd
-        },
-        endAdornment: (
-          <InputAdornment position="end">
-            <SearchIcon className={classes.searchFieldIcon} />
-          </InputAdornment>
-        )
-      }}
-    />
-  );
+  return <DFOTextField />;
 }

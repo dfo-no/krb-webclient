@@ -67,8 +67,8 @@ const NewProjectForm = ({ handleClose }: IProps) => {
         autoComplete="off"
         noValidate
       >
-        <TextCtrl name="title" label={t('Title')} />
-        <TextCtrl name="description" label={t('Description')} />
+        <TextCtrl name="title" placeholder={t('Title')} />
+        <TextCtrl name="description" placeholder={t('Description')} />
         <Box className={classes.buttons}>
           <Button sx={{ width: '90%' }} variant="primary" type="submit">
             {t('save')}

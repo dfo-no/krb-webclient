@@ -58,7 +58,7 @@ export default function EditTagForm({
       >
         <FormItemBox>
           <FormFlexBox sx={{ paddingLeft: 1, paddingRight: 1 }}>
-            <TextCtrl name="title" label={t('Title')} />
+            <TextCtrl name="title" placeholder={t('Title')} />
           </FormFlexBox>
           <FormIconButton type="submit" aria-label="save">
             <CheckIcon />

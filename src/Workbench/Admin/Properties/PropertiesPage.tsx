@@ -69,8 +69,8 @@ function PropertiesPage(): React.ReactElement {
             </DFOCardHeader>
 
             <CardContent>
-              <TextCtrl name="title" label={t('Title')} />
-              <TextCtrl name="description" label={t('Description')} />
+              <TextCtrl name="title" placeholder={t('Title')} />
+              <TextCtrl name="description" placeholder={t('Description')} />
             </CardContent>
             <CardActions>
               <Button variant="primary" type="submit" aria-label="save">

@@ -1,4 +1,4 @@
-import { FormControl } from '@mui/material';
+import { FormControl, FormLabel } from '@mui/material';
 import { get } from 'lodash';
 import React from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
@@ -6,16 +6,22 @@ import DFOInput from '../components/DFOInput/DFOInput';
 
 interface IProps {
   name: string;
+  label?: string;
   placeholder?: string;
 }
 
-const TextCtrl = ({ name, placeholder = '' }: IProps): React.ReactElement => {
+const TextCtrl2 = ({
+  name,
+  label = '',
+  placeholder = ''
+}: IProps): React.ReactElement => {
   const {
     formState: { errors }
   } = useFormContext();
 
   return (
     <FormControl error={!!get(errors, name)} sx={{ width: '100%' }}>
+      <FormLabel>{label}</FormLabel>
       <Controller
         name={name}
         render={({ field }) => (
@@ -26,4 +32,4 @@ const TextCtrl = ({ name, placeholder = '' }: IProps): React.ReactElement => {
   );
 };
 
-export default TextCtrl;
+export default TextCtrl2;

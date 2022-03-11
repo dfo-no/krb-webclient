@@ -57,7 +57,7 @@ const Requirement = ({ requirement, project, needIndex }: IProps) => {
   return (
     <FormProvider {...methods}>
       <form onSubmit={methods.handleSubmit(onSubmit)}>
-        <TextCtrl name="title" label={t('Title')} />
+        <TextCtrl name="title" placeholder={t('Title')} />
         {/* TODO: replace with Custom SelectCtrl when done */}
         <div>
           {requirement.tags.map((tag) => {

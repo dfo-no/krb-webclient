@@ -71,8 +71,8 @@ function EditNeedForm({ need, handleClose }: IProps): React.ReactElement {
         autoComplete="off"
         noValidate
       >
-        <TextCtrl name="title" label={t('Title')} />
-        <TextCtrl name="description" label={t('Description')} />
+        <TextCtrl name="title" placeholder={t('Title')} />
+        <TextCtrl name="description" placeholder={t('Description')} />
 
         <Button variant="primary" type="submit">
           {t('save')}

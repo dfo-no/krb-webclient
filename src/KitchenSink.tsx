@@ -16,6 +16,7 @@ import SelectCtrl from './FormProvider/SelectCtrl';
 import SliderCtrl from './FormProvider/SliderCtrl';
 import SwitchCtrl from './FormProvider/SwitchCtrl';
 import TextCtrl from './FormProvider/TextCtrl';
+import TextCtrl2 from './FormProvider/TextCtrl2';
 import ModelType from './models/ModelType';
 import RequirementType from './models/RequirementType';
 import { ICodelist } from './Nexus/entities/ICodelist';
@@ -24,6 +25,7 @@ interface IFormValues {
   person: {
     firstName: string | null;
     lastName: string | null;
+    adress: string | null;
     cars: string | null;
     birthDay: string | null;
     weddingDay?: string | null;
@@ -42,6 +44,7 @@ const FormSchema = CustomJoi.object().keys({
   person: CustomJoi.object().keys({
     firstName: CustomJoi.string().max(20).required(),
     lastName: CustomJoi.string().max(20).required(),
+    adress: CustomJoi.string().max(20).required(),
     cars: CustomJoi.string().valid('Volvo').required(),
     birthDay: CustomJoi.date().iso().raw().required(),
     weddingDay: CustomJoi.alternatives([
@@ -87,6 +90,7 @@ const KitchenSink = (): React.ReactElement => {
     person: {
       firstName: '',
       lastName: '',
+      adress: '',
       cars: 'BMW',
       birthDay: '',
       weddingDay: '2021/12/14T14:00:00.123Z',
@@ -132,8 +136,13 @@ const KitchenSink = (): React.ReactElement => {
         <FormProvider {...methods}>
           <form onSubmit={methods.handleSubmit(saveValues)}>
             <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
-              <TextCtrl name="person.firstName" label="First name" />
-              <TextCtrl name="person.lastName" label="Last name" />
+              <TextCtrl name="person.firstName" placeholder="Fornavn" />
+              <TextCtrl name="person.firstName" placeholder="Etternavn" />
+              <TextCtrl2
+                name="person.adress"
+                label="Hva er din adresse?"
+                placeholder="Adresse"
+              />
               <SelectCtrl name="person.cars" options={selectOptions} />
               {/*               <HiddenCtrl name="person.counter" /> */}
               <DateCtrl name="person.birthDay" label="birthDay" />

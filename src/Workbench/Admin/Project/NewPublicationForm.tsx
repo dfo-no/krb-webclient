@@ -89,7 +89,7 @@ export default function NewPublicationForm({
         >
           <FormItemBox>
             <FormFlexBox sx={{ paddingLeft: 1, paddingRight: 1 }}>
-              <TextCtrl name="comment" label={t('Comment')} />
+              <TextCtrl name="comment" placeholder={t('Comment')} />
             </FormFlexBox>
             <FormIconButton
               disabled={isSubmitting}

@@ -52,7 +52,7 @@ const VariantsList = () => {
             >
               <TextCtrl
                 name={`variants.${index}.description` as const}
-                label="Beskrivelse"
+                placeholder="Beskrivelse"
               />
               <CheckboxCtrl
                 name={`variants.${index}.useProduct` as const}
@@ -68,11 +68,11 @@ const VariantsList = () => {
               />
               <br />
               <TextCtrl
-                label="Requirement text"
+                placeholder="Requirement text"
                 name={`variants.${index}.requirementText` as const}
               />
               <TextCtrl
-                label="Requirement text"
+                placeholder="Requirement text"
                 name={`variants.${index}.instruction` as const}
               />
             </AccordionDetails>
