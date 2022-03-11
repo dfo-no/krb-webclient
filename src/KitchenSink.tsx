@@ -17,7 +17,7 @@ import SelectCtrl from './FormProvider/SelectCtrl';
 import SliderCtrl from './FormProvider/SliderCtrl';
 import SwitchCtrl from './FormProvider/SwitchCtrl';
 import TextCtrl from './FormProvider/TextCtrl';
-import LabelledTextCtrl from './FormProvider/LabelledTextCtrl';
+import VerticalTextCtrl from './FormProvider/VerticalTextCtrl';
 import ModelType from './models/ModelType';
 import RequirementType from './models/RequirementType';
 import { ICodelist } from './Nexus/entities/ICodelist';
@@ -143,7 +143,7 @@ const KitchenSink = (): React.ReactElement => {
             <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
               <TextCtrl name="person.firstName" placeholder="Fornavn" />
               <TextCtrl name="person.lastName" placeholder="Etternavn" />
-              <LabelledTextCtrl
+              <VerticalTextCtrl
                 name="person.adress"
                 label="Hva er din adresse?"
                 placeholder="Adresse"

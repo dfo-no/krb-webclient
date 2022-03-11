@@ -6,11 +6,11 @@ import DFOInput from '../components/DFOInput/DFOInput';
 
 interface IProps {
   name: string;
-  label?: string;
+  label: string;
   placeholder?: string;
 }
 
-const LabelledTextCtrl = ({
+const VerticalTextCtrl = ({
   name,
   label = '',
   placeholder = ''
@@ -35,4 +35,4 @@ const LabelledTextCtrl = ({
   );
 };
 
-export default LabelledTextCtrl;
+export default VerticalTextCtrl;
