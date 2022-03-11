@@ -140,10 +140,6 @@ export default function Projects(): React.ReactElement {
     return <LoaderSpinner />;
   }
 
-  if (!projects) {
-    return <p>Could not find projects</p>;
-  }
-
   const list: any = [];
   const searchFunction = () => {};
   const callback = () => {};
