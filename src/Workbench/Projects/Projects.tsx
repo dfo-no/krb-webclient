@@ -120,15 +120,14 @@ export default function Projects(): React.ReactElement {
     });
   };
 
-  const { isLoading } = useGetAllProjectsQuery();
-  const projects: any = [];
+  const { data: projects, isLoading } = useGetAllProjectsQuery();
 
   if (isLoading) {
     return <LoaderSpinner />;
   }
 
-  if (projects.length === 0) {
-    return <p>Could not find any project!</p>;
+  if (projects) {
+    return <p>Could not find projects</p>;
   }
 
   const list: any = [];
