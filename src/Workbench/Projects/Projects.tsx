@@ -53,6 +53,8 @@ const useStyles = makeStyles({
   projectListItemCard: {
     width: '100%',
     height: 100,
+    boxShadow: 'none',
+    border: `1px solid ${theme.palette.gray300.main}`,
     '&:hover': {
       backgroundColor: theme.palette.primary.main,
       color: theme.palette.dfoWhite.main
@@ -61,14 +63,15 @@ const useStyles = makeStyles({
   projectListItemCardContent: {
     display: 'flex',
     flexDirection: 'column',
-    gap: 8,
+    gap: 5,
     width: '90%',
     paddingTop: 25,
     paddingLeft: 25
   },
   projectListItemTitleButton: {
     display: 'flex',
-    justifyContent: 'space-between'
+    justifyContent: 'space-between',
+    paddingBottom: 1
   },
   list: {
     display: 'flex',
@@ -148,7 +151,7 @@ export default function Projects(): React.ReactElement {
                   <Typography variant="smediumBold">{element.title}</Typography>
                   <DeleteIcon />
                 </Box>
-                <Divider />
+                <Divider sx={{ color: theme.palette.gray700.main }} />
                 <Typography variant="small">{element.description}</Typography>
               </Box>
             </Card>
