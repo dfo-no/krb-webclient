@@ -1,15 +1,18 @@
-import { FormControl } from '@mui/material';
+import { FormControl, FormLabel } from '@mui/material';
 import { get } from 'lodash';
 import React from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
-import DFOTextField from '../components/DFOTextField/DFOTextField';
+import DFOInput from '../components/DFOInput/DFOInput';
 
 interface IProps {
   name: string;
-  label: string;
+  placeholder: string;
 }
 
-const TextCtrl = ({ name, label }: IProps): React.ReactElement => {
+const HorizontalTextCtrl = ({
+  name,
+  placeholder = ''
+}: IProps): React.ReactElement => {
   const {
     formState: { errors }
   } = useFormContext();
@@ -19,18 +22,19 @@ const TextCtrl = ({ name, label }: IProps): React.ReactElement => {
       <Controller
         name={name}
         render={({ field }) => (
-          <DFOTextField
+          <DFOInput
             {...field}
-            label={label}
-            value={field.value}
-            variant="outlined"
+            placeholder={placeholder}
             error={!!get(errors, name)}
-            helperText={get(errors, name)?.message ?? ''}
+            disableUnderline
           />
         )}
       />
+      {!!get(errors, name) && (
+        <FormLabel>{get(errors, name)?.message ?? ''}</FormLabel>
+      )}
     </FormControl>
   );
 };
 
-export default TextCtrl;
+export default HorizontalTextCtrl;

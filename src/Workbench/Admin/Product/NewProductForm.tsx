@@ -3,7 +3,7 @@ import { IProduct, PostProductSchema } from '../../../Nexus/entities/IProduct';
 import { v4 as uuidv4 } from 'uuid';
 import { IAlert } from '../../../models/IAlert';
 import { useAppDispatch } from '../../../store/hooks';
-import TextCtrl from '../../../FormProvider/TextCtrl';
+import HorizontalTextCtrl from '../../../FormProvider/HorizontalTextCtrl';
 import { useTranslation } from 'react-i18next';
 import { FormProvider, useForm } from 'react-hook-form';
 import { joiResolver } from '@hookform/resolvers/joi';
@@ -66,10 +66,13 @@ export default function NewProductForm({
       >
         <FormItemBox>
           <FormFlexBox sx={{ paddingLeft: 1 }}>
-            <TextCtrl name="title" label={t('Title')} />
+            <HorizontalTextCtrl name="title" placeholder={t('Title')} />
           </FormFlexBox>
           <FormFlexBox sx={{ paddingLeft: 1, paddingRight: 1 }}>
-            <TextCtrl name="description" label={t('Description')} />
+            <HorizontalTextCtrl
+              name="description"
+              placeholder={t('Description')}
+            />
           </FormFlexBox>
           <FormIconButton type="submit" aria-label="save">
             <CheckIcon />

@@ -195,15 +195,15 @@ export default function Projects(): React.ReactElement {
         <Box className={classes.contentContainer}>
           <Box className={classes.topContainer}>
             <SearchContainer>
-              <SearchFieldContainer>
+              {/*               <SearchFieldContainer>
                 {' '}
                 <DFOSearchBar
                   list={list}
-                  label={t('search for banks')}
+                  placeholder={t('search for banks')}
                   callback={searchFunction}
                   searchFunction={callback}
                 />
-              </SearchFieldContainer>
+              </SearchFieldContainer> */}
               <NewButtonContainer>
                 <Button variant="primary">{t('create new bank')}</Button>
               </NewButtonContainer>
