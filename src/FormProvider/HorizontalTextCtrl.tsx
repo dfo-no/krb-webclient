@@ -6,7 +6,7 @@ import DFOInput from '../components/DFOInput/DFOInput';
 
 interface IProps {
   name: string;
-  placeholder?: string;
+  placeholder: string;
 }
 
 const HorizontalTextCtrl = ({
