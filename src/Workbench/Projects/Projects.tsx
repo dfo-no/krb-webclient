@@ -97,7 +97,7 @@ const useStyles = makeStyles({
     width: 1000
   },
   newBankButton: {
-    marginRight: 26
+    marginRight: 27
   },
   projectLink: {
     textDecoration: 'none',
@@ -138,10 +138,6 @@ export default function Projects(): React.ReactElement {
 
   if (isLoading) {
     return <LoaderSpinner />;
-  }
-
-  if (!projects) {
-    return <p>Could not find projects</p>;
   }
 
   const list: any = [];
@@ -195,7 +191,7 @@ export default function Projects(): React.ReactElement {
         <Box className={classes.contentContainer}>
           <Box className={classes.topContainer}>
             <SearchContainer>
-              {/*               <SearchFieldContainer>
+              <SearchFieldContainer>
                 {' '}
                 <DFOSearchBar
                   list={list}
@@ -203,9 +199,11 @@ export default function Projects(): React.ReactElement {
                   callback={searchFunction}
                   searchFunction={callback}
                 />
-              </SearchFieldContainer> */}
+              </SearchFieldContainer>
               <NewButtonContainer>
-                <Button variant="primary">{t('create new bank')}</Button>
+                <Button variant="primary" className={classes.newBankButton}>
+                  {t('create new bank')}
+                </Button>
               </NewButtonContainer>
             </SearchContainer>
           </Box>
