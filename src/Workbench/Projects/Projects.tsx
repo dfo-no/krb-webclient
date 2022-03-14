@@ -6,7 +6,7 @@ import Divider from '@mui/material/Divider';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import Typography from '@mui/material/Typography';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { v4 as uuidv4 } from 'uuid';
 import LoaderSpinner from '../../common/LoaderSpinner';
@@ -38,17 +38,49 @@ const useStyles = makeStyles({
     paddingTop: 100,
     paddingLeft: 200,
     backgroundColor: theme.palette.gray100.main,
-    height: '100%'
+    height: '100vh',
+    overflowY: 'auto'
   },
-  topContainer: {
+  titleImageContainer: {
     display: 'flex',
-    flexDirection: 'column',
-    gap: 50
+    width: 1200,
+    gap: 80
   },
   titleSubTitleContainer: {
     display: 'flex',
     flexDirection: 'column',
     gap: 15
+  },
+  subTitle: {
+    width: 600
+  },
+  contentContainer: {
+    width: 1000
+  },
+  searchContainer: {
+    display: 'flex',
+    flexDirection: 'column',
+    gap: 50
+  },
+  projects: {
+    display: 'flex',
+    alignContent: 'center',
+    marginTop: 50
+  },
+  list: {
+    display: 'flex',
+    flexDirection: 'column',
+    flexGrow: 1,
+    listStyle: 'none',
+    height: 590
+  },
+  projectListItem: {
+    padding: 0,
+    paddingBottom: 15
+  },
+  projectLink: {
+    textDecoration: 'none',
+    width: '100%'
   },
   projectListItemCard: {
     width: '100%',
@@ -72,41 +104,8 @@ const useStyles = makeStyles({
     display: 'flex',
     justifyContent: 'space-between'
   },
-  list: {
-    display: 'flex',
-    flexDirection: 'column',
-    flexGrow: 1,
-    listStyle: 'none',
-    height: 590,
-    marginRight: 20,
-    width: '100%'
-  },
-  projectListItem: {
-    padding: 0,
-    paddingBottom: 15
-  },
-  titleImageContainer: {
-    display: 'flex',
-    width: 1200,
-    gap: 80
-  },
-  subTitle: {
-    width: 600
-  },
-  contentContainer: {
-    width: 1000
-  },
-  newBankButton: {
-    marginRight: 27
-  },
-  projectLink: {
-    textDecoration: 'none',
-    width: '100%'
-  },
-  projects: {
-    display: 'flex',
-    alignContent: 'center',
-    marginTop: 50
+  projectListItemDivider: {
+    color: theme.palette.gray300.main
   },
   noProjectsContainer: {
     display: 'flex',
@@ -122,6 +121,7 @@ export default function Projects(): React.ReactElement {
   const { t } = useTranslation();
   const [deleteProject] = useDeleteProjectMutation();
   const classes = useStyles();
+  const [projectList, setProjectList] = useState<Record<string, IBank>>();
 
   const onDelete = async (p: IBank) => {
     await deleteProject(p).then(() => {
@@ -136,16 +136,30 @@ export default function Projects(): React.ReactElement {
 
   const { data: projects, isLoading } = useGetAllProjectsQuery();
 
+  useEffect(() => {
+    if (projects) {
+      setProjectList(projects);
+    }
+  }, [setProjectList, projects]);
+
   if (isLoading) {
     return <LoaderSpinner />;
   }
 
-  const list: any = [];
-  const searchFunction = () => {};
-  const callback = () => {};
+  const searchFunction = (searchString: string, list: IBank[]) => {
+    return Object.values(list).filter((project: IBank) => {
+      if (project.title.toLowerCase().includes(searchString.toLowerCase())) {
+        return project;
+      }
+    });
+  };
 
-  const renderProjects = (projectList: Record<string, IBank>) => {
-    const result = Object.values(projectList).map((element) => {
+  const searchFieldCallback = (result: Record<string, IBank>) => {
+    setProjectList(result);
+  };
+
+  const renderProjects = (list: Record<string, IBank>) => {
+    const result = Object.values(list).map((element) => {
       return (
         <ListItem className={classes.projectListItem} key={element.id}>
           <Link
@@ -158,7 +172,7 @@ export default function Projects(): React.ReactElement {
                   <Typography variant="smediumBold">{element.title}</Typography>
                   <DeleteIcon />
                 </Box>
-                <Divider sx={{ color: theme.palette.gray700.main }} />
+                <Divider className={classes.projectListItemDivider} />
                 <Typography variant="small">{element.description}</Typography>
               </Box>
             </Card>
@@ -185,32 +199,30 @@ export default function Projects(): React.ReactElement {
             </Typography>
           </Box>
         </Box>
-        <img src={mainIllustration} alt="Illustration" />
+        <img src={mainIllustration} alt="main illustration" />
       </Box>
-      {projects ? (
+      {projectList ? (
         <Box className={classes.contentContainer}>
-          <Box className={classes.topContainer}>
+          <Box className={classes.searchContainer}>
             <SearchContainer>
               <SearchFieldContainer>
                 {' '}
                 <DFOSearchBar
-                  list={list}
+                  list={Object(projects)}
                   placeholder={t('search for banks')}
-                  callback={searchFunction}
-                  searchFunction={callback}
+                  callback={searchFieldCallback}
+                  searchFunction={searchFunction}
                 />
               </SearchFieldContainer>
               <NewButtonContainer>
-                <Button variant="primary" className={classes.newBankButton}>
-                  {t('create new bank')}
-                </Button>
+                <Button variant="primary">{t('create new bank')}</Button>
               </NewButtonContainer>
             </SearchContainer>
           </Box>
           <Box className={classes.projects}>
-            <ScrollableContainer>
-              <List className={classes.list} aria-label="codelist">
-                {projects && renderProjects(projects)}
+            <ScrollableContainer sx={{ padding: 0 }}>
+              <List className={classes.list} aria-label="projects">
+                {projectList && renderProjects(projectList)}
               </List>
             </ScrollableContainer>
           </Box>
@@ -223,9 +235,7 @@ export default function Projects(): React.ReactElement {
             </Typography>
           </Box>
           <Box>
-            <Button variant="primary" sx={{ width: 170 }}>
-              {t('create new bank')}
-            </Button>
+            <Button variant="primary">{t('create new bank')}</Button>
           </Box>
         </Box>
       )}
