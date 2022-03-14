@@ -29,6 +29,8 @@ import {
 import DFOSearchBar from '../../components/DFOSearchBar/DFOSearchBar';
 import theme from '../../theme';
 import { ScrollableContainer } from '../Components/ScrollableContainer';
+import DFODialog from '../../components/DFODialog/DFODialog';
+import NewProjectForm from './NewProjectForm';
 
 const useStyles = makeStyles({
   projectsContainer: {
@@ -122,6 +124,7 @@ export default function Projects(): React.ReactElement {
   const [deleteProject] = useDeleteProjectMutation();
   const classes = useStyles();
   const [projectList, setProjectList] = useState<Record<string, IBank>>();
+  const [isOpen, setOpen] = useState(false);
 
   const onDelete = async (p: IBank) => {
     await deleteProject(p).then(() => {
@@ -183,6 +186,14 @@ export default function Projects(): React.ReactElement {
     return result;
   };
 
+  const renderNewBankButton = () => {
+    return (
+      <Button variant="primary" onClick={() => setOpen(true)}>
+        {t('create new bank')}
+      </Button>
+    );
+  };
+
   return (
     <Box className={classes.projectsContainer}>
       <Box className={classes.titleImageContainer}>
@@ -214,9 +225,7 @@ export default function Projects(): React.ReactElement {
                   searchFunction={searchFunction}
                 />
               </SearchFieldContainer>
-              <NewButtonContainer>
-                <Button variant="primary">{t('create new bank')}</Button>
-              </NewButtonContainer>
+              <NewButtonContainer>{renderNewBankButton()}</NewButtonContainer>
             </SearchContainer>
           </Box>
           <Box className={classes.projects}>
@@ -234,11 +243,16 @@ export default function Projects(): React.ReactElement {
               {t('There is no banks')}
             </Typography>
           </Box>
-          <Box>
-            <Button variant="primary">{t('create new bank')}</Button>
-          </Box>
+          <Box>{renderNewBankButton()}</Box>
         </Box>
       )}
+
+      <DFODialog
+        title="Opprett nytt kravsett"
+        isOpen={isOpen}
+        handleClose={() => setOpen(false)}
+        children={<NewProjectForm handleClose={() => setOpen(false)} />}
+      />
     </Box>
   );
 }

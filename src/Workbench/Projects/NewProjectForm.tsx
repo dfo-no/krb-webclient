@@ -3,7 +3,7 @@ import Button from '@mui/material/Button';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { v4 as uuidv4 } from 'uuid';
-import HorizontalTextCtrl from '../../FormProvider/HorizontalTextCtrl';
+import VerticalTextCtrl from '../../FormProvider/VerticalTextCtrl';
 import { IAlert } from '../../models/IAlert';
 import { PostProjectSchema } from '../../models/Project';
 import { IBank } from '../../Nexus/entities/IBank';
@@ -13,6 +13,8 @@ import { useAppDispatch } from '../../store/hooks';
 import { addAlert } from '../../store/reducers/alert-reducer';
 import makeStyles from '@mui/styles/makeStyles';
 import { Box } from '@mui/material';
+import DFOSelect from '../../components/DFOSelect/DFOSelect';
+import SelectCtrl from '../../FormProvider/SelectCtrl';
 
 interface IProps {
   handleClose: () => void;
@@ -29,7 +31,8 @@ const useStyles = makeStyles({
   },
   buttons: {
     display: 'flex',
-    gap: 10
+    gap: 10,
+    justifyContent: 'flex-end'
   }
 });
 
@@ -40,6 +43,8 @@ const NewProjectForm = ({ handleClose }: IProps) => {
   const defaultValues = nexus.projectService.generateDefaultProjectValues();
   const [postProject] = usePostProjectMutation();
   const classes = useStyles();
+
+  const options = ['Bil', 'Buss'];
 
   const methods = useForm<IBank>({
     resolver: joiResolver(PostProjectSchema),
@@ -67,18 +72,23 @@ const NewProjectForm = ({ handleClose }: IProps) => {
         autoComplete="off"
         noValidate
       >
-        <HorizontalTextCtrl name="title" placeholder={t('Title')} />
-        <HorizontalTextCtrl name="description" placeholder={t('Description')} />
+        <VerticalTextCtrl
+          name="title"
+          label="Hva er navnet på prosjektet?"
+          placeholder="Navn på prosjekt"
+        />
+        <VerticalTextCtrl
+          name="description"
+          label="Beskriv prosjektet"
+          placeholder="Kort beskrivelse"
+        />
+        <SelectCtrl options={options} name="name" />
         <Box className={classes.buttons}>
-          <Button sx={{ width: '90%' }} variant="primary" type="submit">
-            {t('save')}
-          </Button>
-          <Button
-            variant="warning"
-            sx={{ width: '90%' }}
-            onClick={() => handleClose()}
-          >
+          <Button variant="warning" onClick={() => handleClose()}>
             {t('close')}
+          </Button>
+          <Button variant="primary" type="submit">
+            {t('save')}
           </Button>
         </Box>
       </form>
