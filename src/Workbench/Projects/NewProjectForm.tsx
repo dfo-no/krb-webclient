@@ -78,7 +78,7 @@ const NewProjectForm = ({ handleClose }: IProps) => {
         />
         <VerticalTextCtrl
           name="description"
-          label={t('Describe the project')}
+          label={t('describe the project')}
           placeholder="Kort beskrivelse"
         />
         <SelectCtrl
