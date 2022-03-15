@@ -6,16 +6,22 @@ import DFOSelect from '../components/DFOSelect/DFOSelect';
 
 interface IProps {
   name: string;
-  options: any;
+  label: string;
+  options: string[];
 }
 
-const VerticalTextCtrl = ({ name, options }: IProps): React.ReactElement => {
+const SelectCtrl = ({
+  name,
+  label = '',
+  options
+}: IProps): React.ReactElement => {
   const {
     formState: { errors }
   } = useFormContext();
 
   return (
-    <FormControl error={!!get(errors, name)} sx={{ width: '100%' }}>
+    <FormControl error={!!get(errors, name)}>
+      <FormLabel sx={{ paddingBottom: 2 }}>{label}</FormLabel>
       <Controller
         name={name}
         render={({ field }) => <DFOSelect {...field} options={options} />}
@@ -27,4 +33,4 @@ const VerticalTextCtrl = ({ name, options }: IProps): React.ReactElement => {
   );
 };
 
-export default VerticalTextCtrl;
+export default SelectCtrl;

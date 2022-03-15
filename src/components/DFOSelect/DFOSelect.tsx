@@ -2,17 +2,35 @@ import React from 'react';
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import { InputBase, styled } from '@mui/material';
-import { ControllerRenderProps, FieldValues } from 'react-hook-form';
 
 export interface DFOSelectProps {
   options: string[];
 }
 
 const DFOSelectInput = styled(InputBase)(({ theme }) => ({
-  '& .MuiInputBase-input': {
-    backgroundColor: theme.palette.dfoWhite.main,
-    border: `2px solid ${theme.palette.indigo.main}`,
-    padding: '10px 26px 10px 12px'
+  width: '100%',
+  border: `2px solid ${theme.palette.indigo.main}`,
+  backgroundColor: theme.palette.dfoWhite.main,
+  height: 45,
+  paddingLeft: '10px',
+  color: theme.palette.gray700.main,
+
+  '&:hover': {
+    border: `3px solid ${theme.palette.indigo.main}`
+  },
+  '&.Mui-focused': {
+    border: `3px solid ${theme.palette.indigo.main}`
+  },
+  '&.Mui-error': {
+    border: `2px solid ${theme.palette.dfoErrorRed.main}`,
+    '&:hover': {
+      borderColor: theme.palette.dfoErrorRed.main,
+      borderWidth: 3
+    },
+    '&.Mui-focused': {
+      borderColor: theme.palette.dfoErrorRed.main,
+      borderWidth: 3
+    }
   }
 }));
 

@@ -1,6 +1,6 @@
 import DialogContent from '@mui/material/DialogContent';
 import Dialog from '@mui/material/Dialog/Dialog';
-import { Box, DialogTitle } from '@mui/material';
+import { DialogTitle } from '@mui/material';
 import theme from '../../theme';
 import makeStyles from '@mui/styles/makeStyles';
 
@@ -25,10 +25,10 @@ const DFODialog = ({ title, children, isOpen, handleClose }: IProps) => {
   const classes = useStyles();
 
   return (
-    <Dialog fullWidth={true} open={isOpen} onClose={handleClose}>
+    <Dialog open={isOpen} onClose={handleClose}>
       <DialogContent className={classes.dfoDialog}>
         <DialogTitle className={classes.dialogTitle}>{title}</DialogTitle>
-        <Box>{children}</Box>
+        {children}
       </DialogContent>
     </Dialog>
   );

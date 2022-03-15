@@ -248,7 +248,7 @@ export default function Projects(): React.ReactElement {
       )}
 
       <DFODialog
-        title="Opprett nytt kravsett"
+        title="Opprett nytt prosjekt"
         isOpen={isOpen}
         handleClose={() => setOpen(false)}
         children={<NewProjectForm handleClose={() => setOpen(false)} />}

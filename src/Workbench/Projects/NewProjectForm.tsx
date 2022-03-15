@@ -13,7 +13,6 @@ import { useAppDispatch } from '../../store/hooks';
 import { addAlert } from '../../store/reducers/alert-reducer';
 import makeStyles from '@mui/styles/makeStyles';
 import { Box } from '@mui/material';
-import DFOSelect from '../../components/DFOSelect/DFOSelect';
 import SelectCtrl from '../../FormProvider/SelectCtrl';
 
 interface IProps {
@@ -44,8 +43,6 @@ const NewProjectForm = ({ handleClose }: IProps) => {
   const [postProject] = usePostProjectMutation();
   const classes = useStyles();
 
-  const options = ['Bil', 'Buss'];
-
   const methods = useForm<IBank>({
     resolver: joiResolver(PostProjectSchema),
     defaultValues
@@ -64,6 +61,8 @@ const NewProjectForm = ({ handleClose }: IProps) => {
     });
   };
 
+  const options = ['Type 1', 'Type 2', 'Type 3', 'Type 4'];
+
   return (
     <FormProvider {...methods}>
       <form
@@ -74,21 +73,25 @@ const NewProjectForm = ({ handleClose }: IProps) => {
       >
         <VerticalTextCtrl
           name="title"
-          label="Hva er navnet på prosjektet?"
+          label={t('What is the name of the project?')}
           placeholder="Navn på prosjekt"
         />
         <VerticalTextCtrl
           name="description"
-          label="Beskriv prosjektet"
+          label={t('Describe the project')}
           placeholder="Kort beskrivelse"
         />
-        <SelectCtrl options={options} name="name" />
+        <SelectCtrl
+          label={t('What kind of project is this?')}
+          name="name"
+          options={options}
+        />
         <Box className={classes.buttons}>
-          <Button variant="warning" onClick={() => handleClose()}>
-            {t('close')}
+          <Button variant="warningTransparent" onClick={() => handleClose()}>
+            {t('cancel')}
           </Button>
-          <Button variant="primary" type="submit">
-            {t('save')}
+          <Button variant="save" type="submit" sx={{ width: 150, height: 32 }}>
+            Opprett prosjekt
           </Button>
         </Box>
       </form>
