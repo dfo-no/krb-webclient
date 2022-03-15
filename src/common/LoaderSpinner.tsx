@@ -1,18 +1,19 @@
+import Box from '@mui/material/Box';
+import CircularProgress from '@mui/material/CircularProgress';
 import React from 'react';
-import Spinner from 'react-bootstrap/Spinner';
 
-interface IProps {
-  variant?: string;
-}
-
-export default function LoaderSpinner({ variant }: IProps): React.ReactElement {
+export default function LoaderSpinner(): React.ReactElement {
   return (
-    <div className="SpinnerContainer">
-      <Spinner animation="border" variant={variant} />
-    </div>
+    <Box
+      sx={{
+        minHeight: '90vh',
+        width: '100%',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center'
+      }}
+    >
+      <CircularProgress color="secondary" />
+    </Box>
   );
 }
-
-LoaderSpinner.defaultProps = {
-  variant: 'primary'
-};
