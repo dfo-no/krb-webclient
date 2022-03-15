@@ -156,7 +156,6 @@ export default function Projects(): React.ReactElement {
       }
     });
   };
-
   const searchFieldCallback = (result: Record<string, IBank>) => {
     setProjectList(result);
   };

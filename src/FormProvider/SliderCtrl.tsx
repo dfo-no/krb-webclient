@@ -1,8 +1,11 @@
+import Box from '@mui/material/Box';
+import FormControl from '@mui/material/FormControl';
+import FormHelperText from '@mui/material/FormHelperText';
 import Slider from '@mui/material/Slider';
+import Stack from '@mui/material/Stack';
+import Typography from '@mui/material/Typography';
 import { get } from 'lodash';
 import React from 'react';
-import Form from 'react-bootstrap/Form';
-import FormControl from 'react-bootstrap/FormControl';
 import { Controller, useFormContext } from 'react-hook-form';
 import { IMark } from '../Nexus/entities/IMark';
 
@@ -13,6 +16,7 @@ interface IProps {
   step: number;
   unit: string;
   marks: IMark[];
+  label?: string;
 }
 
 const SliderCtrl = ({
@@ -21,18 +25,21 @@ const SliderCtrl = ({
   max,
   step,
   unit,
-  marks
+  marks,
+  label
 }: IProps): React.ReactElement => {
   const {
     formState: { errors }
   } = useFormContext();
 
   return (
-    <div className="d-flex align-items-center">
-      {marks.length === 0 && <div className="px-2">{`${min} ${unit}`}</div>}
-
-      <span className="mx-3 flex-grow-1">
-        <Form.Group controlId={name}>
+    <Box>
+      <FormControl fullWidth error={!!get(errors, name)}>
+        <Stack>{label}</Stack>
+        <Stack spacing={2} direction="row" sx={{ mb: 1 }} alignItems="center">
+          <Typography variant="body1" sx={{ whiteSpace: 'nowrap' }}>
+            {min} {unit}
+          </Typography>
           <Controller
             name={name}
             render={({ field }) => (
@@ -49,18 +56,27 @@ const SliderCtrl = ({
                 step={step}
                 marks={marks}
                 value={field.value}
+                id={name}
               />
             )}
           />
-          <Form.Control type="hidden" isInvalid={!!get(errors, name)} />
-          <FormControl.Feedback type="invalid">
+
+          <Typography variant="body1" sx={{ whiteSpace: 'nowrap' }}>
+            {max} {unit}
+          </Typography>
+        </Stack>
+        <Stack>
+          <FormHelperText id={name}>
             {get(errors, name)?.message ?? ''}
-          </FormControl.Feedback>
-        </Form.Group>
-      </span>
-      {marks.length === 0 && <span className="px-2">{`${max} ${unit}`}</span>}
-    </div>
+          </FormHelperText>
+        </Stack>
+      </FormControl>
+    </Box>
   );
 };
 
 export default SliderCtrl;
+
+SliderCtrl.defaultProps = {
+  label: ''
+};
