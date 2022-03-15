@@ -31,7 +31,8 @@ const useStyles = makeStyles({
   buttons: {
     display: 'flex',
     gap: 10,
-    justifyContent: 'flex-end'
+    justifyContent: 'flex-end',
+    marginTop: 13
   }
 });
 
