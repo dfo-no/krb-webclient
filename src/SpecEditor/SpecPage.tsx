@@ -1,29 +1,19 @@
-import DeleteIcon from '@mui/icons-material/Delete';
 import makeStyles from '@mui/styles/makeStyles';
 import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
 import Divider from '@mui/material/Divider';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import Typography from '@mui/material/Typography';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { v4 as uuidv4 } from 'uuid';
 import Card from '@mui/material/Card';
 import { Link } from 'react-router-dom';
 import mainIllustration from '../assets/images/main-illustration.svg';
 import theme from '../theme';
-import { useAppDispatch } from '../store/hooks';
-import {
-  useDeleteProjectMutation,
-  useGetAllProjectsQuery
-} from '../store/api/bankApi';
+import { useGetAllProjectsQuery } from '../store/api/bankApi';
 import { IBank } from '../Nexus/entities/IBank';
-import { IAlert } from '../models/IAlert';
-import { addAlert } from '../store/reducers/alert-reducer';
 import LoaderSpinner from '../common/LoaderSpinner';
 import {
-  NewButtonContainer,
   SearchContainer,
   SearchFieldContainer
 } from '../Workbench/Components/SearchContainer';
@@ -90,11 +80,11 @@ const useStyles = makeStyles({
   subTitle: {
     width: 600
   },
+  subTitleTwo: {
+    marginTop: 5
+  },
   contentContainer: {
     width: 1000
-  },
-  newBankButton: {
-    marginRight: 27
   },
   projectLink: {
     textDecoration: 'none',
@@ -114,22 +104,9 @@ const useStyles = makeStyles({
   }
 });
 
-export default function Projects(): React.ReactElement {
-  const dispatch = useAppDispatch();
+export default function SpecPage(): React.ReactElement {
   const { t } = useTranslation();
-  const [deleteProject] = useDeleteProjectMutation();
   const classes = useStyles();
-
-  const onDelete = async (p: IBank) => {
-    await deleteProject(p).then(() => {
-      const alert: IAlert = {
-        id: uuidv4(),
-        style: 'success',
-        text: 'Successfully deleted project'
-      };
-      dispatch(addAlert({ alert }));
-    });
-  };
 
   const { data: projects, isLoading } = useGetAllProjectsQuery();
 
@@ -153,7 +130,6 @@ export default function Projects(): React.ReactElement {
               <Box className={classes.projectListItemCardContent}>
                 <Box className={classes.projectListItemTitleButton}>
                   <Typography variant="smediumBold">{element.title}</Typography>
-                  <DeleteIcon />
                 </Box>
                 <Divider sx={{ color: theme.palette.gray700.main }} />
                 <Typography variant="small">{element.description}</Typography>
@@ -174,12 +150,13 @@ export default function Projects(): React.ReactElement {
             variant="biggerBold"
             sx={{ letterSpacing: 0.2, color: theme.palette.primary.main }}
           >
-            {t('Welcome to the workbench')}
+            {t('Welcome to the builder')}
           </Typography>
           <Box className={classes.subTitle}>
-            <Typography>
-              {t('In the workbench you can create new banks')}
-            </Typography>
+            <Typography>{t('In the builder you can pick a bank')}</Typography>
+          </Box>
+          <Box className={classes.subTitleTwo}>
+            <Typography>{t('Pick a project to start')}</Typography>
           </Box>
         </Box>
         <img
@@ -202,11 +179,6 @@ export default function Projects(): React.ReactElement {
                   searchFunction={callback}
                 />
               </SearchFieldContainer>
-              <NewButtonContainer>
-                <Button variant="primary" className={classes.newBankButton}>
-                  {t('create new bank')}
-                </Button>
-              </NewButtonContainer>
             </SearchContainer>
           </Box>
           <Box className={classes.projects}>
@@ -223,11 +195,6 @@ export default function Projects(): React.ReactElement {
             <Typography variant="medium" sx={{ letterSpacing: 2 }}>
               {t('There is no banks')}
             </Typography>
-          </Box>
-          <Box>
-            <Button variant="primary" sx={{ width: 170 }}>
-              {t('create new bank')}
-            </Button>
           </Box>
         </Box>
       )}
