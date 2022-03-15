@@ -160,7 +160,11 @@ const KitchenSink = (): React.ReactElement => {
                 callback={searchFunction}
                 searchFunction={callback}
               />
-              <SelectCtrl name="person.cars" options={selectOptions} />
+              <SelectCtrl
+                name="person.cars"
+                label="Cars"
+                options={selectOptions}
+              />
               {/*               <HiddenCtrl name="person.counter" /> */}
               <DateCtrl name="person.birthDay" label="birthDay" />
               <DateCtrl name="person.weddingDay" label="weddingDay" />

@@ -1,38 +1,52 @@
 import React from 'react';
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
-import { Box, styled } from '@mui/material';
-import { ControllerRenderProps, FieldValues } from 'react-hook-form';
+import { styled } from '@mui/material/styles';
+import InputBase from '@mui/material/InputBase';
 
 export interface DFOSelectProps {
   options: string[];
-  field: ControllerRenderProps<FieldValues, string>;
 }
 
-const DFOStyledSelect = styled(Select)(({ theme }) => ({
-  '& .MuiInputBase-input': {
-    border: `2px solid ${theme.palette.indigo.main}`,
-    fontSize: 16,
-    padding: '10px 26px 10px 12px',
-    width: '100%'
+const StyledSelect = styled(InputBase)(({ theme }) => ({
+  width: '100%',
+  border: `2px solid ${theme.palette.indigo.main}`,
+  backgroundColor: theme.palette.common.white,
+  height: 45,
+  paddingLeft: '10px',
+  color: theme.palette.gray700.main,
+
+  '&:hover': {
+    border: `3px solid ${theme.palette.indigo.main}`
+  },
+  '&.Mui-focused': {
+    border: `3px solid ${theme.palette.indigo.main}`
+  },
+  '&.Mui-error': {
+    border: `2px solid ${theme.palette.dfoErrorRed.main}`,
+    '&:hover': {
+      borderColor: theme.palette.dfoErrorRed.main,
+      borderWidth: 3
+    },
+    '&.Mui-focused': {
+      borderColor: theme.palette.dfoErrorRed.main,
+      borderWidth: 3
+    }
   }
 }));
 
 export default function DFOSelect({
-  options,
-  field
+  options
 }: DFOSelectProps): React.ReactElement {
   return (
-    <Box>
-      <DFOStyledSelect {...field}>
-        {options.map((option) => {
-          return (
-            <MenuItem key={option} value={option}>
-              {option}
-            </MenuItem>
-          );
-        })}
-      </DFOStyledSelect>
-    </Box>
+    <Select input={<StyledSelect />}>
+      {options.map((option) => {
+        return (
+          <MenuItem value={option} key={option}>
+            {option}
+          </MenuItem>
+        );
+      })}
+    </Select>
   );
 }
