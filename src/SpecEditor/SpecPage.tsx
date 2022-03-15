@@ -7,7 +7,6 @@ import Typography from '@mui/material/Typography';
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import Card from '@mui/material/Card';
-import { Link } from 'react-router-dom';
 import mainIllustration from '../assets/images/main-illustration.svg';
 import theme from '../theme';
 import { useGetAllProjectsQuery } from '../store/api/bankApi';
@@ -20,7 +19,7 @@ import {
 import DFOSearchBar from '../components/DFOSearchBar/DFOSearchBar';
 import { ScrollableContainer } from '../Workbench/Components/ScrollableContainer';
 import DFODialog from '../components/DFODialog/DFODialog';
-import NewProjectForm from '../Workbench/Projects/NewProjectForm';
+import NewSpecForm from './NewSpecForm';
 
 const useStyles = makeStyles({
   projectsContainer: {
@@ -111,11 +110,18 @@ export default function SpecPage(): React.ReactElement {
   const classes = useStyles();
 
   const { data: projects, isLoading } = useGetAllProjectsQuery();
+
   const [isOpen, setOpen] = useState(false);
+  const [selectedProject, setSelectedProject] = useState<IBank>();
 
   if (isLoading) {
     return <LoaderSpinner />;
   }
+
+  const openProjectModal = (project: any) => {
+    setSelectedProject(project);
+    setOpen(true);
+  };
 
   const list: any = [];
   const searchFunction = () => {};
@@ -127,7 +133,7 @@ export default function SpecPage(): React.ReactElement {
         <ListItem
           className={classes.projectListItem}
           key={element.id}
-          onClick={() => setOpen(true)}
+          onClick={() => openProjectModal(element)}
         >
           <Card className={classes.projectListItemCard}>
             <Box className={classes.projectListItemCardContent}>
@@ -200,12 +206,20 @@ export default function SpecPage(): React.ReactElement {
           </Box>
         </Box>
       )}
-      <DFODialog
-        title="Opprett nytt prosjekt"
-        isOpen={isOpen}
-        handleClose={() => setOpen(false)}
-        children={<NewProjectForm handleClose={() => setOpen(false)} />}
-      />
+
+      {selectedProject && (
+        <DFODialog
+          title={selectedProject.title}
+          isOpen={isOpen}
+          handleClose={() => setOpen(false)}
+          children={
+            <NewSpecForm
+              project={selectedProject}
+              handleClose={() => setOpen(false)}
+            />
+          }
+        />
+      )}
     </Box>
   );
 }

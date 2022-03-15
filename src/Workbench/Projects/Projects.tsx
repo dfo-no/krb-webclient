@@ -40,21 +40,71 @@ const useStyles = makeStyles({
     paddingTop: 100,
     paddingLeft: 200,
     backgroundColor: theme.palette.gray100.main,
-    height: '100vh',
-    overflowY: 'auto'
+    height: '100%'
   },
-  titleImageContainer: {
+  topContainer: {
     display: 'flex',
-    width: 1200,
-    gap: 80
+    flexDirection: 'column',
+    gap: 50
   },
   titleSubTitleContainer: {
     display: 'flex',
     flexDirection: 'column',
     gap: 15
   },
+  projectListItemCard: {
+    height: 100,
+    boxShadow: 'none',
+    border: `1px solid ${theme.palette.gray300.main}`,
+    textDecoration: 'none',
+    width: '100%',
+    cursor: 'pointer',
+    '&:hover': {
+      backgroundColor: theme.palette.primary.main,
+      color: theme.palette.dfoWhite.main
+    }
+  },
+  projectListItemCardContent: {
+    display: 'flex',
+    flexDirection: 'column',
+    gap: 5,
+    paddingTop: 25,
+    paddingLeft: 25,
+    paddingRight: 70
+  },
+  projectListItemTitleButton: {
+    display: 'flex',
+    justifyContent: 'space-between'
+  },
+  list: {
+    display: 'flex',
+    flexDirection: 'column',
+    flexGrow: 1,
+    listStyle: 'none',
+    marginRight: 20
+  },
+  projectListItem: {
+    padding: 0,
+    paddingBottom: 15,
+    textDecoration: 'none',
+    width: '100%'
+  },
+  projectListItemDivider: {
+    color: theme.palette.gray300.main
+  },
+  projectLink: {
+    textDecoration: 'none',
+    width: '100%'
+  },
+  titleImageContainer: {
+    display: 'flex',
+    gap: 80
+  },
   subTitle: {
     width: 600
+  },
+  subTitleTwo: {
+    marginTop: 5
   },
   contentContainer: {
     width: 1000
@@ -68,46 +118,6 @@ const useStyles = makeStyles({
     display: 'flex',
     alignContent: 'center',
     marginTop: 50
-  },
-  list: {
-    display: 'flex',
-    flexDirection: 'column',
-    flexGrow: 1,
-    listStyle: 'none',
-    height: 590
-  },
-  projectListItem: {
-    padding: 0,
-    paddingBottom: 15
-  },
-  projectLink: {
-    textDecoration: 'none',
-    width: '100%'
-  },
-  projectListItemCard: {
-    width: '100%',
-    height: 100,
-    boxShadow: 'none',
-    border: `1px solid ${theme.palette.gray300.main}`,
-    '&:hover': {
-      backgroundColor: theme.palette.primary.main,
-      color: theme.palette.dfoWhite.main
-    }
-  },
-  projectListItemCardContent: {
-    display: 'flex',
-    flexDirection: 'column',
-    gap: 5,
-    width: '90%',
-    paddingTop: 25,
-    paddingLeft: 25
-  },
-  projectListItemTitleButton: {
-    display: 'flex',
-    justifyContent: 'space-between'
-  },
-  projectListItemDivider: {
-    color: theme.palette.gray300.main
   },
   noProjectsContainer: {
     display: 'flex',
