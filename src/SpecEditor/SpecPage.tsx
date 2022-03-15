@@ -1,31 +1,27 @@
-import theme from '../theme';
+import DeleteIcon from '@mui/icons-material/Delete';
 import makeStyles from '@mui/styles/makeStyles';
-import { useAppDispatch } from '../store/hooks';
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
+import Divider from '@mui/material/Divider';
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
+import Typography from '@mui/material/Typography';
+import React from 'react';
 import { useTranslation } from 'react-i18next';
+import { v4 as uuidv4 } from 'uuid';
+import Card from '@mui/material/Card';
+import { Link } from 'react-router-dom';
+import mainIllustration from '../assets/images/main-illustration.svg';
+import theme from '../theme';
+import { useAppDispatch } from '../store/hooks';
 import {
   useDeleteProjectMutation,
   useGetAllProjectsQuery
 } from '../store/api/bankApi';
-import { httpPost } from '../api/http';
-import { AxiosResponse } from 'axios';
 import { IBank } from '../Nexus/entities/IBank';
-import { selectBank } from '../store/reducers/selectedBank-reducer';
 import { IAlert } from '../models/IAlert';
 import { addAlert } from '../store/reducers/alert-reducer';
 import LoaderSpinner from '../common/LoaderSpinner';
-import {
-  Box,
-  Button,
-  Card,
-  Divider,
-  Link,
-  List,
-  ListItem,
-  Typography
-} from '@mui/material';
-import DeleteIcon from '@mui/icons-material/Delete';
-import { setSpecification } from '../store/reducers/spesification-reducer';
-import { v4 as uuidv4 } from 'uuid';
 import {
   NewButtonContainer,
   SearchContainer,
@@ -55,7 +51,6 @@ const useStyles = makeStyles({
     gap: 15
   },
   projectListItemCard: {
-    width: '100%',
     height: 100,
     boxShadow: 'none',
     border: `1px solid ${theme.palette.gray300.main}`,
@@ -68,9 +63,9 @@ const useStyles = makeStyles({
     display: 'flex',
     flexDirection: 'column',
     gap: 5,
-    width: '90%',
     paddingTop: 25,
-    paddingLeft: 25
+    paddingLeft: 25,
+    paddingRight: 70
   },
   projectListItemTitleButton: {
     display: 'flex',
@@ -82,8 +77,7 @@ const useStyles = makeStyles({
     flexGrow: 1,
     listStyle: 'none',
     height: 590,
-    marginRight: 20,
-    width: '100%'
+    marginRight: 20
   },
   projectListItem: {
     padding: 0,
@@ -91,7 +85,6 @@ const useStyles = makeStyles({
   },
   titleImageContainer: {
     display: 'flex',
-    width: 1200,
     gap: 80
   },
   subTitle: {
@@ -121,32 +114,11 @@ const useStyles = makeStyles({
   }
 });
 
-export default function SpecPage(): React.ReactElement {
+export default function Projects(): React.ReactElement {
   const dispatch = useAppDispatch();
   const { t } = useTranslation();
   const [deleteProject] = useDeleteProjectMutation();
   const classes = useStyles();
-
-  const onUploadSpecification = (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    const formData = new FormData();
-    const files = event.target.files as FileList;
-    for (let index = 0; index < files.length; index += 1) {
-      const file = files[index];
-      formData.append('file', file);
-    }
-    httpPost<FormData, AxiosResponse>('/java/uploadPdf', formData, {
-      headers: {
-        'Content-Type': 'multipart/form-data'
-      },
-      responseType: 'json'
-    }).then((response) => {
-      dispatch(selectBank(response.data.bank.id));
-      dispatch(setSpecification(response.data));
-      return response;
-    });
-  };
 
   const onDelete = async (p: IBank) => {
     await deleteProject(p).then(() => {
@@ -173,16 +145,21 @@ export default function SpecPage(): React.ReactElement {
     const result = Object.values(projectList).map((element) => {
       return (
         <ListItem className={classes.projectListItem} key={element.id}>
-          <Card className={classes.projectListItemCard}>
-            <Box className={classes.projectListItemCardContent}>
-              <Box className={classes.projectListItemTitleButton}>
-                <Typography variant="smediumBold">{element.title}</Typography>
-                <DeleteIcon />
+          <Link
+            to={`/workbench/${element.id}/admin`}
+            className={classes.projectLink}
+          >
+            <Card className={classes.projectListItemCard}>
+              <Box className={classes.projectListItemCardContent}>
+                <Box className={classes.projectListItemTitleButton}>
+                  <Typography variant="smediumBold">{element.title}</Typography>
+                  <DeleteIcon />
+                </Box>
+                <Divider sx={{ color: theme.palette.gray700.main }} />
+                <Typography variant="small">{element.description}</Typography>
               </Box>
-              <Divider sx={{ color: theme.palette.gray700.main }} />
-              <Typography variant="small">{element.description}</Typography>
-            </Box>
-          </Card>
+            </Card>
+          </Link>
         </ListItem>
       );
     });
@@ -205,6 +182,12 @@ export default function SpecPage(): React.ReactElement {
             </Typography>
           </Box>
         </Box>
+        <img
+          src={mainIllustration}
+          alt="Illustration"
+          height="222"
+          width="518"
+        />
       </Box>
       {projects ? (
         <Box className={classes.contentContainer}>
@@ -228,7 +211,7 @@ export default function SpecPage(): React.ReactElement {
           </Box>
           <Box className={classes.projects}>
             <ScrollableContainer>
-              <List className={classes.list} aria-label="codelist">
+              <List className={classes.list} aria-label="projects">
                 {projects && renderProjects(projects)}
               </List>
             </ScrollableContainer>

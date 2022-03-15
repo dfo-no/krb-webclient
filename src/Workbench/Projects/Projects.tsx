@@ -51,7 +51,6 @@ const useStyles = makeStyles({
     gap: 15
   },
   projectListItemCard: {
-    width: '100%',
     height: 100,
     boxShadow: 'none',
     border: `1px solid ${theme.palette.gray300.main}`,
@@ -64,9 +63,9 @@ const useStyles = makeStyles({
     display: 'flex',
     flexDirection: 'column',
     gap: 5,
-    width: '90%',
     paddingTop: 25,
-    paddingLeft: 25
+    paddingLeft: 25,
+    paddingRight: 70
   },
   projectListItemTitleButton: {
     display: 'flex',
@@ -78,8 +77,7 @@ const useStyles = makeStyles({
     flexGrow: 1,
     listStyle: 'none',
     height: 590,
-    marginRight: 20,
-    width: '100%'
+    marginRight: 20
   },
   projectListItem: {
     padding: 0,
@@ -87,7 +85,6 @@ const useStyles = makeStyles({
   },
   titleImageContainer: {
     display: 'flex',
-    width: 1200,
     gap: 80
   },
   subTitle: {
@@ -185,7 +182,12 @@ export default function Projects(): React.ReactElement {
             </Typography>
           </Box>
         </Box>
-        <img src={mainIllustration} alt="Illustration" />
+        <img
+          src={mainIllustration}
+          alt="Illustration"
+          height="222"
+          width="518"
+        />
       </Box>
       {projects ? (
         <Box className={classes.contentContainer}>
@@ -209,7 +211,7 @@ export default function Projects(): React.ReactElement {
           </Box>
           <Box className={classes.projects}>
             <ScrollableContainer>
-              <List className={classes.list} aria-label="codelist">
+              <List className={classes.list} aria-label="projects">
                 {projects && renderProjects(projects)}
               </List>
             </ScrollableContainer>
