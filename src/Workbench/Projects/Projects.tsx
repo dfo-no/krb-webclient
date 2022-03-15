@@ -37,7 +37,8 @@ const useStyles = makeStyles({
     gap: 100,
     paddingTop: 100,
     paddingLeft: 200,
-    backgroundColor: theme.palette.gray100.main
+    backgroundColor: theme.palette.gray100.main,
+    height: '100%'
   },
   topContainer: {
     display: 'flex',
