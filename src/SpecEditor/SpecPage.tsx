@@ -4,7 +4,7 @@ import Divider from '@mui/material/Divider';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import Typography from '@mui/material/Typography';
-import React from 'react';
+import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import Card from '@mui/material/Card';
 import { Link } from 'react-router-dom';
@@ -19,6 +19,8 @@ import {
 } from '../Workbench/Components/SearchContainer';
 import DFOSearchBar from '../components/DFOSearchBar/DFOSearchBar';
 import { ScrollableContainer } from '../Workbench/Components/ScrollableContainer';
+import DFODialog from '../components/DFODialog/DFODialog';
+import NewProjectForm from '../Workbench/Projects/NewProjectForm';
 
 const useStyles = makeStyles({
   projectsContainer: {
@@ -44,6 +46,9 @@ const useStyles = makeStyles({
     height: 100,
     boxShadow: 'none',
     border: `1px solid ${theme.palette.gray300.main}`,
+    textDecoration: 'none',
+    width: '100%',
+    cursor: 'pointer',
     '&:hover': {
       backgroundColor: theme.palette.primary.main,
       color: theme.palette.dfoWhite.main
@@ -70,7 +75,9 @@ const useStyles = makeStyles({
   },
   projectListItem: {
     padding: 0,
-    paddingBottom: 15
+    paddingBottom: 15,
+    textDecoration: 'none',
+    width: '100%'
   },
   titleImageContainer: {
     display: 'flex',
@@ -84,10 +91,6 @@ const useStyles = makeStyles({
   },
   contentContainer: {
     width: 1000
-  },
-  projectLink: {
-    textDecoration: 'none',
-    width: '100%'
   },
   projects: {
     display: 'flex',
@@ -108,6 +111,7 @@ export default function SpecPage(): React.ReactElement {
   const classes = useStyles();
 
   const { data: projects, isLoading } = useGetAllProjectsQuery();
+  const [isOpen, setOpen] = useState(false);
 
   if (isLoading) {
     return <LoaderSpinner />;
@@ -120,21 +124,20 @@ export default function SpecPage(): React.ReactElement {
   const renderProjects = (projectList: Record<string, IBank>) => {
     const result = Object.values(projectList).map((element) => {
       return (
-        <ListItem className={classes.projectListItem} key={element.id}>
-          <Link
-            to={`/workbench/${element.id}/admin`}
-            className={classes.projectLink}
-          >
-            <Card className={classes.projectListItemCard}>
-              <Box className={classes.projectListItemCardContent}>
-                <Box className={classes.projectListItemTitleButton}>
-                  <Typography variant="smediumBold">{element.title}</Typography>
-                </Box>
-                <Divider sx={{ color: theme.palette.gray700.main }} />
-                <Typography variant="small">{element.description}</Typography>
+        <ListItem
+          className={classes.projectListItem}
+          key={element.id}
+          onClick={() => setOpen(true)}
+        >
+          <Card className={classes.projectListItemCard}>
+            <Box className={classes.projectListItemCardContent}>
+              <Box className={classes.projectListItemTitleButton}>
+                <Typography variant="smediumBold">{element.title}</Typography>
               </Box>
-            </Card>
-          </Link>
+              <Divider sx={{ color: theme.palette.gray700.main }} />
+              <Typography variant="small">{element.description}</Typography>
+            </Box>
+          </Card>
         </ListItem>
       );
     });
@@ -197,6 +200,12 @@ export default function SpecPage(): React.ReactElement {
           </Box>
         </Box>
       )}
+      <DFODialog
+        title="Opprett nytt prosjekt"
+        isOpen={isOpen}
+        handleClose={() => setOpen(false)}
+        children={<NewProjectForm handleClose={() => setOpen(false)} />}
+      />
     </Box>
   );
 }
