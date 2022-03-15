@@ -1,7 +1,11 @@
+import Box from '@mui/material/Box';
+import FormControl from '@mui/material/FormControl';
+import FormHelperText from '@mui/material/FormHelperText';
 import Slider from '@mui/material/Slider';
-import { get, has, toPath } from 'lodash';
+import Stack from '@mui/material/Stack';
+import Typography from '@mui/material/Typography';
+import { get } from 'lodash';
 import React from 'react';
-import Form from 'react-bootstrap/Form';
 import { Control, Controller, FieldErrors } from 'react-hook-form';
 import { IMark } from '../Nexus/entities/IMark';
 
@@ -17,6 +21,9 @@ interface IProps {
   marks: IMark[];
 }
 
+/**
+ * @deprecated use src/FormProvider/SliderCtrl instead
+ */
 export default function SliderSelect({
   control,
   name,
@@ -24,51 +31,46 @@ export default function SliderSelect({
   min,
   max,
   step,
-  marks
+  marks,
+  label
 }: IProps): React.ReactElement {
-  const hasError = (str: string) => {
-    let retVal = null;
-    const path = toPath(str);
-    if (has(errors, path)) {
-      retVal = true;
-    } else {
-      retVal = false;
-    }
-    return retVal;
-  };
-
-  const getError = (str: string) => {
-    const path = toPath(str);
-    path.push('message');
-    return get(errors, path);
-  };
   return (
-    <div className="m-4">
-      <Controller
-        name={name}
-        control={control}
-        render={({ field }) => (
-          <Slider
-            name={field.name}
-            value={field.value}
-            onBlur={field.onBlur}
-            ref={field.ref}
-            onChange={(_, value) => {
-              field.onChange(value);
-            }}
-            min={min}
-            max={max}
-            step={step}
-            marks={marks}
+    <Box>
+      <FormControl fullWidth error={!!get(errors, name)}>
+        <Stack>{label}</Stack>
+        <Stack spacing={2} direction="row" sx={{ mb: 1 }} alignItems="center">
+          <Typography variant="body1" sx={{ whiteSpace: 'nowrap' }}>
+            {min}
+          </Typography>
+          <Controller
+            name={name}
+            control={control}
+            render={({ field }) => (
+              <Slider
+                name={field.name}
+                value={field.value}
+                onBlur={field.onBlur}
+                ref={field.ref}
+                onChange={(_, value) => {
+                  field.onChange(value);
+                }}
+                min={min}
+                max={max}
+                step={step}
+                marks={marks}
+              />
+            )}
           />
-        )}
-      />
-
-      {hasError(name) && (
-        <Form.Control.Feedback type="invalid">
-          {getError(name)}
-        </Form.Control.Feedback>
-      )}
-    </div>
+          <Typography variant="body1" sx={{ whiteSpace: 'nowrap' }}>
+            {max}
+          </Typography>
+        </Stack>
+        <Stack>
+          <FormHelperText id={name}>
+            {get(errors, name)?.message ?? ''}
+          </FormHelperText>
+        </Stack>
+      </FormControl>
+    </Box>
   );
 }

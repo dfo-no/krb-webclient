@@ -42,7 +42,7 @@ export default function ProjectGuard(): React.ReactElement {
   }, [dispatch, projectId]);
 
   if (isLoading) {
-    return <LoaderSpinner variant="danger" />;
+    return <LoaderSpinner />;
   }
 
   return (
