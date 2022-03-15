@@ -1,16 +1,17 @@
 import React from 'react';
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
-import { InputBase, styled } from '@mui/material';
+import { styled } from '@mui/material/styles';
+import InputBase from '@mui/material/InputBase';
 
 export interface DFOSelectProps {
   options: string[];
 }
 
-const DFOSelectInput = styled(InputBase)(({ theme }) => ({
+const StyledSelect = styled(InputBase)(({ theme }) => ({
   width: '100%',
   border: `2px solid ${theme.palette.indigo.main}`,
-  backgroundColor: theme.palette.dfoWhite.main,
+  backgroundColor: theme.palette.common.white,
   height: 45,
   paddingLeft: '10px',
   color: theme.palette.gray700.main,
@@ -38,7 +39,7 @@ export default function DFOSelect({
   options
 }: DFOSelectProps): React.ReactElement {
   return (
-    <Select input={<DFOSelectInput />}>
+    <Select input={<StyledSelect />}>
       {options.map((option) => {
         return (
           <MenuItem value={option} key={option}>

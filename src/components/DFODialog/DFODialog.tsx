@@ -1,6 +1,6 @@
 import DialogContent from '@mui/material/DialogContent';
 import Dialog from '@mui/material/Dialog/Dialog';
-import { DialogTitle } from '@mui/material';
+import DialogTitle from '@mui/material/DialogTitle';
 import theme from '../../theme';
 import makeStyles from '@mui/styles/makeStyles';
 
