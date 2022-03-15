@@ -37,8 +37,7 @@ const useStyles = makeStyles({
     gap: 100,
     paddingTop: 100,
     paddingLeft: 200,
-    backgroundColor: theme.palette.gray100.main,
-    height: '100%'
+    backgroundColor: theme.palette.gray100.main
   },
   topContainer: {
     display: 'flex',
@@ -76,7 +75,7 @@ const useStyles = makeStyles({
     flexDirection: 'column',
     flexGrow: 1,
     listStyle: 'none',
-    height: 590,
+    height: 'fit-content',
     marginRight: 20
   },
   projectListItem: {

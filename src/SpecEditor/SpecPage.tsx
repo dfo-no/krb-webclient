@@ -66,7 +66,6 @@ const useStyles = makeStyles({
     flexDirection: 'column',
     flexGrow: 1,
     listStyle: 'none',
-    height: 590,
     marginRight: 20
   },
   projectListItem: {
