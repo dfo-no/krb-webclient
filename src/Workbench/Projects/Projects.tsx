@@ -6,7 +6,7 @@ import Divider from '@mui/material/Divider';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import Typography from '@mui/material/Typography';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { v4 as uuidv4 } from 'uuid';
 import LoaderSpinner from '../../common/LoaderSpinner';
@@ -29,6 +29,8 @@ import {
 import DFOSearchBar from '../../components/DFOSearchBar/DFOSearchBar';
 import theme from '../../theme';
 import { ScrollableContainer } from '../Components/ScrollableContainer';
+import DFODialog from '../../components/DFODialog/DFODialog';
+import NewProjectForm from './NewProjectForm';
 
 const useStyles = makeStyles({
   projectsContainer: {
@@ -38,19 +40,52 @@ const useStyles = makeStyles({
     paddingTop: 100,
     paddingLeft: 200,
     backgroundColor: theme.palette.gray100.main,
-    height: '100%'
+    height: '100vh',
+    overflowY: 'auto'
   },
-  topContainer: {
+  titleImageContainer: {
     display: 'flex',
-    flexDirection: 'column',
-    gap: 50
+    width: 1200,
+    gap: 80
   },
   titleSubTitleContainer: {
     display: 'flex',
     flexDirection: 'column',
     gap: 15
   },
+  subTitle: {
+    width: 600
+  },
+  contentContainer: {
+    width: 1000
+  },
+  searchContainer: {
+    display: 'flex',
+    flexDirection: 'column',
+    gap: 50
+  },
+  projects: {
+    display: 'flex',
+    alignContent: 'center',
+    marginTop: 50
+  },
+  list: {
+    display: 'flex',
+    flexDirection: 'column',
+    flexGrow: 1,
+    listStyle: 'none',
+    height: 590
+  },
+  projectListItem: {
+    padding: 0,
+    paddingBottom: 15
+  },
+  projectLink: {
+    textDecoration: 'none',
+    width: '100%'
+  },
   projectListItemCard: {
+    width: '100%',
     height: 100,
     boxShadow: 'none',
     border: `1px solid ${theme.palette.gray300.main}`,
@@ -63,47 +98,16 @@ const useStyles = makeStyles({
     display: 'flex',
     flexDirection: 'column',
     gap: 5,
+    width: '90%',
     paddingTop: 25,
-    paddingLeft: 25,
-    paddingRight: 70
+    paddingLeft: 25
   },
   projectListItemTitleButton: {
     display: 'flex',
     justifyContent: 'space-between'
   },
-  list: {
-    display: 'flex',
-    flexDirection: 'column',
-    flexGrow: 1,
-    listStyle: 'none',
-    height: 'fit-content',
-    marginRight: 20
-  },
-  projectListItem: {
-    padding: 0,
-    paddingBottom: 15
-  },
-  titleImageContainer: {
-    display: 'flex',
-    gap: 80
-  },
-  subTitle: {
-    width: 600
-  },
-  contentContainer: {
-    width: 1000
-  },
-  newBankButton: {
-    marginRight: 27
-  },
-  projectLink: {
-    textDecoration: 'none',
-    width: '100%'
-  },
-  projects: {
-    display: 'flex',
-    alignContent: 'center',
-    marginTop: 50
+  projectListItemDivider: {
+    color: theme.palette.gray300.main
   },
   noProjectsContainer: {
     display: 'flex',
@@ -119,6 +123,8 @@ export default function Projects(): React.ReactElement {
   const { t } = useTranslation();
   const [deleteProject] = useDeleteProjectMutation();
   const classes = useStyles();
+  const [projectList, setProjectList] = useState<Record<string, IBank>>();
+  const [isOpen, setOpen] = useState(false);
 
   const onDelete = async (p: IBank) => {
     await deleteProject(p).then(() => {
@@ -133,16 +139,29 @@ export default function Projects(): React.ReactElement {
 
   const { data: projects, isLoading } = useGetAllProjectsQuery();
 
+  useEffect(() => {
+    if (projects) {
+      setProjectList(projects);
+    }
+  }, [setProjectList, projects]);
+
   if (isLoading) {
     return <LoaderSpinner />;
   }
 
-  const list: any = [];
-  const searchFunction = () => {};
-  const callback = () => {};
+  const searchFunction = (searchString: string, list: IBank[]) => {
+    return Object.values(list).filter((project: IBank) => {
+      if (project.title.toLowerCase().includes(searchString.toLowerCase())) {
+        return project;
+      }
+    });
+  };
+  const searchFieldCallback = (result: Record<string, IBank>) => {
+    setProjectList(result);
+  };
 
-  const renderProjects = (projectList: Record<string, IBank>) => {
-    const result = Object.values(projectList).map((element) => {
+  const renderProjects = (list: Record<string, IBank>) => {
+    const result = Object.values(list).map((element) => {
       return (
         <ListItem className={classes.projectListItem} key={element.id}>
           <Link
@@ -155,7 +174,7 @@ export default function Projects(): React.ReactElement {
                   <Typography variant="smediumBold">{element.title}</Typography>
                   <DeleteIcon />
                 </Box>
-                <Divider sx={{ color: theme.palette.gray700.main }} />
+                <Divider className={classes.projectListItemDivider} />
                 <Typography variant="small">{element.description}</Typography>
               </Box>
             </Card>
@@ -164,6 +183,14 @@ export default function Projects(): React.ReactElement {
       );
     });
     return result;
+  };
+
+  const renderNewBankButton = () => {
+    return (
+      <Button variant="primary" onClick={() => setOpen(true)}>
+        {t('create new bank')}
+      </Button>
+    );
   };
 
   return (
@@ -182,37 +209,28 @@ export default function Projects(): React.ReactElement {
             </Typography>
           </Box>
         </Box>
-        <img
-          src={mainIllustration}
-          alt="Illustration"
-          height="222"
-          width="518"
-        />
+        <img src={mainIllustration} alt="main illustration" />
       </Box>
-      {projects ? (
+      {projectList ? (
         <Box className={classes.contentContainer}>
-          <Box className={classes.topContainer}>
+          <Box className={classes.searchContainer}>
             <SearchContainer>
               <SearchFieldContainer>
                 {' '}
                 <DFOSearchBar
-                  list={list}
+                  list={Object(projects)}
                   placeholder={t('search for banks')}
-                  callback={searchFunction}
-                  searchFunction={callback}
+                  callback={searchFieldCallback}
+                  searchFunction={searchFunction}
                 />
               </SearchFieldContainer>
-              <NewButtonContainer>
-                <Button variant="primary" className={classes.newBankButton}>
-                  {t('create new bank')}
-                </Button>
-              </NewButtonContainer>
+              <NewButtonContainer>{renderNewBankButton()}</NewButtonContainer>
             </SearchContainer>
           </Box>
           <Box className={classes.projects}>
-            <ScrollableContainer>
+            <ScrollableContainer sx={{ padding: 0 }}>
               <List className={classes.list} aria-label="projects">
-                {projects && renderProjects(projects)}
+                {projectList && renderProjects(projectList)}
               </List>
             </ScrollableContainer>
           </Box>
@@ -224,13 +242,16 @@ export default function Projects(): React.ReactElement {
               {t('There is no banks')}
             </Typography>
           </Box>
-          <Box>
-            <Button variant="primary" sx={{ width: 170 }}>
-              {t('create new bank')}
-            </Button>
-          </Box>
+          <Box>{renderNewBankButton()}</Box>
         </Box>
       )}
+
+      <DFODialog
+        title="Opprett nytt prosjekt"
+        isOpen={isOpen}
+        handleClose={() => setOpen(false)}
+        children={<NewProjectForm handleClose={() => setOpen(false)} />}
+      />
     </Box>
   );
 }

@@ -3,7 +3,7 @@ import Button from '@mui/material/Button';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { v4 as uuidv4 } from 'uuid';
-import HorizontalTextCtrl from '../../FormProvider/HorizontalTextCtrl';
+import VerticalTextCtrl from '../../FormProvider/VerticalTextCtrl';
 import { IAlert } from '../../models/IAlert';
 import { PostProjectSchema } from '../../models/Project';
 import { IBank } from '../../Nexus/entities/IBank';
@@ -13,6 +13,7 @@ import { useAppDispatch } from '../../store/hooks';
 import { addAlert } from '../../store/reducers/alert-reducer';
 import makeStyles from '@mui/styles/makeStyles';
 import { Box } from '@mui/material';
+import SelectCtrl from '../../FormProvider/SelectCtrl';
 
 interface IProps {
   handleClose: () => void;
@@ -29,7 +30,9 @@ const useStyles = makeStyles({
   },
   buttons: {
     display: 'flex',
-    gap: 10
+    gap: 10,
+    justifyContent: 'flex-end',
+    marginTop: 13
   }
 });
 
@@ -59,6 +62,8 @@ const NewProjectForm = ({ handleClose }: IProps) => {
     });
   };
 
+  const options = ['Type 1', 'Type 2', 'Type 3', 'Type 4'];
+
   return (
     <FormProvider {...methods}>
       <form
@@ -67,18 +72,27 @@ const NewProjectForm = ({ handleClose }: IProps) => {
         autoComplete="off"
         noValidate
       >
-        <HorizontalTextCtrl name="title" placeholder={t('Title')} />
-        <HorizontalTextCtrl name="description" placeholder={t('Description')} />
+        <VerticalTextCtrl
+          name="title"
+          label={t('What is the name of the project?')}
+          placeholder="Navn på prosjekt"
+        />
+        <VerticalTextCtrl
+          name="description"
+          label={t('describe the project')}
+          placeholder="Kort beskrivelse"
+        />
+        <SelectCtrl
+          label={t('What kind of project is this?')}
+          name="name"
+          options={options}
+        />
         <Box className={classes.buttons}>
-          <Button sx={{ width: '90%' }} variant="primary" type="submit">
-            {t('save')}
+          <Button variant="warningTransparent" onClick={() => handleClose()}>
+            {t('cancel')}
           </Button>
-          <Button
-            variant="warning"
-            sx={{ width: '90%' }}
-            onClick={() => handleClose()}
-          >
-            {t('close')}
+          <Button variant="save" type="submit" sx={{ width: 150, height: 32 }}>
+            Opprett prosjekt
           </Button>
         </Box>
       </form>

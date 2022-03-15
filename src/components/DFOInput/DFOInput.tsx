@@ -5,7 +5,7 @@ const DFOTextField = styled(Input)(({ theme }) => ({
   width: '100%',
   border: `2px solid ${theme.palette.indigo.main}`,
   backgroundColor: theme.palette.dfoWhite.main,
-  height: 50,
+  height: 45,
   paddingLeft: '10px',
 
   '&:hover': {
