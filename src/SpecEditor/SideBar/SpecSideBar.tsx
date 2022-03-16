@@ -4,6 +4,7 @@ import makeStyles from '@mui/styles/makeStyles';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { RouteComponentProps, withRouter } from 'react-router';
+import { useGetBankQuery } from '../../store/api/bankApi';
 import { useAppSelector } from '../../store/hooks';
 import theme from '../../theme';
 
@@ -72,7 +73,10 @@ const useStyles = makeStyles({
 
 function SpecSideBar({ match }: RouteComponentProps): React.ReactElement {
   const { t } = useTranslation();
-  const { spec } = useAppSelector((state) => state.specification);
+  const selectedBank = useAppSelector((state) => state.selectedBank);
+  const { data: bankSelected } = useGetBankQuery(String(selectedBank.id));
+
+  console.log(bankSelected?.products);
 
   const classes = useStyles();
 

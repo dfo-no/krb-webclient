@@ -5,6 +5,7 @@ import SpecSideBar from '../SideBar/SpecSideBar';
 import makeStyles from '@mui/styles/makeStyles';
 import theme from '../../theme';
 import byggernIllustration from '../../assets/images/byggern-illustration.svg';
+import { useGetBankQuery } from '../../store/api/bankApi';
 
 const useStyles = makeStyles({
   editor: {
@@ -27,11 +28,8 @@ const useStyles = makeStyles({
 });
 
 export default function SpecEditor(): React.ReactElement {
-  const { spec } = useAppSelector((state) => state.specification);
-  const dispatch = useAppDispatch();
-  const selectedBank = spec.bank;
-
-  console.log(selectedBank);
+  const selectedBank = useAppSelector((state) => state.selectedBank);
+  const { data: bankSelected } = useGetBankQuery(String(selectedBank.id));
 
   const classes = useStyles();
 
