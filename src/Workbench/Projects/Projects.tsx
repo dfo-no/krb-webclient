@@ -29,6 +29,8 @@ import {
 import DFOSearchBar from '../../components/DFOSearchBar/DFOSearchBar';
 import theme from '../../theme';
 import { ScrollableContainer } from '../Components/ScrollableContainer';
+import DFODialog from '../../components/DFODialog/DFODialog';
+import NewProjectForm from './NewProjectForm';
 
 const useStyles = makeStyles({
   projectsContainer: {
@@ -119,6 +121,9 @@ export default function Projects(): React.ReactElement {
   const { t } = useTranslation();
   const [deleteProject] = useDeleteProjectMutation();
   const classes = useStyles();
+  
+  const [projectList, setProjectList] = useState<Record<string, IBank>>();
+  const [isOpen, setOpen] = useState(false);
 
   const onDelete = async (p: IBank) => {
     await deleteProject(p).then(() => {
@@ -140,6 +145,17 @@ export default function Projects(): React.ReactElement {
   const list: any = [];
   const searchFunction = () => {};
   const callback = () => {};
+    
+  const searchFunction = (searchString: string, list: IBank[]) => {
+    return Object.values(list).filter((project: IBank) => {
+      if (project.title.toLowerCase().includes(searchString.toLowerCase())) {
+        return project;
+      }
+    });
+  };
+  const searchFieldCallback = (result: Record<string, IBank>) => {
+    setProjectList(result);
+  };
 
   const renderProjects = (projectList: Record<string, IBank>) => {
     const result = Object.values(projectList).map((element) => {
@@ -164,6 +180,14 @@ export default function Projects(): React.ReactElement {
       );
     });
     return result;
+  };
+
+  const renderNewBankButton = () => {
+    return (
+      <Button variant="primary" onClick={() => setOpen(true)}>
+        {t('create new bank')}
+      </Button>
+    );
   };
 
   return (
@@ -202,11 +226,7 @@ export default function Projects(): React.ReactElement {
                   searchFunction={callback}
                 />
               </SearchFieldContainer>
-              <NewButtonContainer>
-                <Button variant="primary" className={classes.newBankButton}>
-                  {t('create new bank')}
-                </Button>
-              </NewButtonContainer>
+              <NewButtonContainer>{renderNewBankButton()}</NewButtonContainer>
             </SearchContainer>
           </Box>
           <Box className={classes.projects}>
@@ -224,13 +244,16 @@ export default function Projects(): React.ReactElement {
               {t('There is no banks')}
             </Typography>
           </Box>
-          <Box>
-            <Button variant="primary" sx={{ width: 170 }}>
-              {t('create new bank')}
-            </Button>
-          </Box>
+          <Box>{renderNewBankButton()}</Box>
         </Box>
       )}
+
+      <DFODialog
+        title="Opprett nytt prosjekt"
+        isOpen={isOpen}
+        handleClose={() => setOpen(false)}
+        children={<NewProjectForm handleClose={() => setOpen(false)} />}
+      />
     </Box>
   );
 }

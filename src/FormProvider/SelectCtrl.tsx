@@ -1,4 +1,4 @@
-import { Box, FormControl, FormLabel } from '@mui/material';
+import { FormControl, FormLabel } from '@mui/material';
 import { get } from 'lodash';
 import React from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
@@ -6,22 +6,26 @@ import DFOSelect from '../components/DFOSelect/DFOSelect';
 
 interface IProps {
   name: string;
+  label: string;
   options: string[];
 }
 
-const SelectCtrl = ({ name, options }: IProps): React.ReactElement => {
+const SelectCtrl = ({
+  name,
+  label = '',
+  options
+}: IProps): React.ReactElement => {
   const {
     formState: { errors }
   } = useFormContext();
 
   return (
     <FormControl error={!!get(errors, name)}>
-      <Box sx={{ display: 'flex', alignItems: 'center' }}>
-        <Controller
-          name={name}
-          render={({ field }) => <DFOSelect options={options} field={field} />}
-        />
-      </Box>
+      <FormLabel sx={{ paddingBottom: 2 }}>{label}</FormLabel>
+      <Controller
+        name={name}
+        render={({ field }) => <DFOSelect {...field} options={options} />}
+      />
       {!!get(errors, name) && (
         <FormLabel>{get(errors, name)?.message ?? ''}</FormLabel>
       )}
