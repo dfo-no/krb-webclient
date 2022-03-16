@@ -1,5 +1,5 @@
 import { joiResolver } from '@hookform/resolvers/joi';
-import { Box } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 import makeStyles from '@mui/styles/makeStyles';
 import Button from '@mui/material/Button';
 import { FormProvider, useForm } from 'react-hook-form';
@@ -21,7 +21,7 @@ interface IProps {
 }
 
 const useStyles = makeStyles({
-  fields: {
+  newSpecForm: {
     display: 'flex',
     flexDirection: 'column',
     margin: '0 auto',
@@ -34,6 +34,12 @@ const useStyles = makeStyles({
     gap: 10,
     justifyContent: 'flex-end',
     marginTop: 13
+  },
+  fields: {
+    display: 'flex',
+    flexDirection: 'column',
+    gap: 20,
+    marginTop: 20
   }
 });
 
@@ -63,17 +69,64 @@ const NewSpecForm = ({ handleClose, project }: IProps) => {
     });
   };
 
-  console.log('PJ');
-  console.log(project);
+  const versions = ['Versjon 1', 'Versjon 2', 'Versjon 3', 'Versjon 4'];
 
   return (
     <FormProvider {...methods}>
       <form
-        className={classes.fields}
+        className={classes.newSpecForm}
         onSubmit={methods.handleSubmit(onSubmit)}
         autoComplete="off"
         noValidate
-      ></form>
+      >
+        <Box>
+          <Typography variant="bigBlue">{project.title}</Typography>
+          <Typography>{project.description}</Typography>
+        </Box>
+
+        <Typography>
+          {t(
+            'In addition to project, you need to pick which version of the project'
+          )}
+        </Typography>
+
+        <Box className={classes.fields}>
+          <SelectCtrl
+            name="person.cars"
+            label={t(
+              'Pick which version of the project you want to use in this specification'
+            )}
+            options={versions}
+          />
+          <VerticalTextCtrl
+            name="title"
+            label={t('What will be the name of the procurement?')}
+            placeholder={t('Name of specification')}
+          />
+          <VerticalTextCtrl
+            name="title"
+            label={t('name of your organization')}
+            placeholder={t('name')}
+          />
+          <VerticalTextCtrl
+            name="title"
+            label="Organisasjonsnummer:"
+            placeholder="Organsisasjonsnummer"
+          />
+          <Box className={classes.buttons}>
+            <Button variant="warningTransparent" onClick={() => handleClose()}>
+              {t('cancel')}
+            </Button>
+            <Button
+              variant="save"
+              type="submit"
+              sx={{ width: 200, height: 32 }}
+            >
+              {t('create specification')}
+            </Button>
+          </Box>
+        </Box>
+      </form>
     </FormProvider>
   );
 };

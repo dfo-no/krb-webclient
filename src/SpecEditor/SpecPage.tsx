@@ -209,7 +209,6 @@ export default function SpecPage(): React.ReactElement {
 
       {selectedProject && (
         <DFODialog
-          title={selectedProject.title}
           isOpen={isOpen}
           handleClose={() => setOpen(false)}
           children={

@@ -189,6 +189,11 @@ theme.typography.bigBold = {
   fontWeight: 700
 };
 
+theme.typography.bigBlue = {
+  color: theme.palette.primary.main,
+  fontSize: '28px'
+};
+
 theme.typography.biggerBold = {
   fontSize: '40px'
 };
