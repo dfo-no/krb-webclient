@@ -12,8 +12,11 @@ import { PostProjectSchema } from '../models/Project';
 import { IBank } from '../Nexus/entities/IBank';
 import Nexus from '../Nexus/Nexus';
 import { usePostProjectMutation } from '../store/api/bankApi';
-import { useAppDispatch } from '../store/hooks';
+import { useAppDispatch, useAppSelector } from '../store/hooks';
 import { addAlert } from '../store/reducers/alert-reducer';
+import { selectBank } from '../store/reducers/selectedBank-reducer';
+import { IRouteParams } from '../Workbench/Models/IRouteParams';
+import { useRouteMatch } from 'react-router';
 
 interface IProps {
   project: IBank;
@@ -44,12 +47,13 @@ const useStyles = makeStyles({
 });
 
 const NewSpecForm = ({ handleClose, project }: IProps) => {
-  const dispatch = useAppDispatch();
   const { t } = useTranslation();
   const nexus = Nexus.getInstance();
   const defaultValues = nexus.projectService.generateDefaultProjectValues();
   const [postProject] = usePostProjectMutation();
   const classes = useStyles();
+
+  const dispatch = useAppDispatch();
 
   const methods = useForm<IBank>({
     resolver: joiResolver(PostProjectSchema),
@@ -70,8 +74,6 @@ const NewSpecForm = ({ handleClose, project }: IProps) => {
   };
 
   const versions = ['Versjon 1', 'Versjon 2', 'Versjon 3', 'Versjon 4'];
-
-  console.log(project);
 
   return (
     <FormProvider {...methods}>
