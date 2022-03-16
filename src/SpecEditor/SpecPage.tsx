@@ -74,7 +74,7 @@ const useStyles = makeStyles({
   },
   projectListItem: {
     padding: 0,
-    paddingBottom: 15,
+    paddingBottom: 10,
     textDecoration: 'none',
     width: '100%'
   },

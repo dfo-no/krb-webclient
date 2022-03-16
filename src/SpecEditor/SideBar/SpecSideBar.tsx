@@ -12,9 +12,7 @@ const useStyles = makeStyles({
     display: 'flex',
     flexDirection: 'column',
     gap: 20,
-    width: '30vw',
-    height: '100vh',
-    paddingTop: 30
+    width: '30vw'
   },
   container: {
     display: 'flex',
@@ -62,7 +60,7 @@ const useStyles = makeStyles({
   },
   projectListItem: {
     padding: 0,
-    paddingBottom: 15,
+    paddingBottom: 10,
     textDecoration: 'none',
     width: '100%'
   },
@@ -79,7 +77,9 @@ function SpecSideBar({ match }: RouteComponentProps): React.ReactElement {
   const classes = useStyles();
 
   const products = [
-    { id: '1', title: 'Produkt En', description: 'Et produkt' }
+    { id: '1', title: 'Produkt En', description: 'Et produkt' },
+    { id: '2', title: 'Produkt To', description: 'Et produkt til' },
+    { id: '3', title: 'Produkt Tre', description: 'Et produkt tall' }
   ];
 
   const renderProducts = () => {
@@ -108,9 +108,10 @@ function SpecSideBar({ match }: RouteComponentProps): React.ReactElement {
           <Button variant="primary">Lag et nytt produkt</Button>
         </Box>
 
-        <List className={classes.list} aria-label="projects">
+        <List className={classes.list} aria-label="products">
           {renderProducts()}
         </List>
+        <Divider />
       </Box>
     </Box>
   );

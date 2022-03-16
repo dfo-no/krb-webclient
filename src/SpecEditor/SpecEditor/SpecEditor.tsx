@@ -4,10 +4,18 @@ import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import SpecSideBar from '../SideBar/SpecSideBar';
 import makeStyles from '@mui/styles/makeStyles';
 import theme from '../../theme';
+import { ThemeProvider } from '@mui/styles';
 
 const useStyles = makeStyles({
   editor: {
+    display: 'flex',
+    paddingTop: 30,
+    height: '100%',
     backgroundColor: theme.palette.gray100.main
+  },
+  editorContent: {
+    backgroundColor: '#efefef',
+    width: '65%'
   }
 });
 
@@ -20,8 +28,8 @@ export default function SpecEditor(): React.ReactElement {
 
   return (
     <Box className={classes.editor}>
-      {' '}
       <SpecSideBar />
+      <Box className={classes.editorContent}></Box>
     </Box>
   );
 }
