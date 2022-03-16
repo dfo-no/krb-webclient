@@ -1,54 +1,38 @@
+import { Box } from '@mui/material/';
+import { Button } from '@mui/material/';
+import makeStyles from '@mui/styles/makeStyles';
 import React from 'react';
-import Nav from 'react-bootstrap/Nav';
 import { useTranslation } from 'react-i18next';
 import { RouteComponentProps, withRouter } from 'react-router';
-import { NavLink } from 'react-router-dom';
 import { useAppSelector } from '../../store/hooks';
-import css from './SpecSideBar.module.scss';
 
-interface IRouteLink {
-  link: string;
-  name: string;
-}
+const useStyles = makeStyles({
+  specSideBar: {
+    display: 'flex',
+    width: '30vw',
+    height: '100vh'
+  },
+  topContainer: {
+    display: 'flex',
+    justifyContent: 'flex-end',
+    width: '100%',
+    paddingTop: 20,
+    paddingRight: 30
+  }
+});
 
-type TParams = { id: string };
-
-const renderRouteLinks = (routes: IRouteLink[]) => {
-  return routes.map((route) => {
-    return (
-      <Nav.Item key={route.name} className={`${css.sidebar__item}`}>
-        <Nav.Link
-          as={NavLink}
-          to={route.link}
-          role="link"
-          exact
-          activeClassName={`${css.sidebar__item__active}`}
-        >
-          {route.name}
-        </Nav.Link>
-      </Nav.Item>
-    );
-  });
-};
-
-function SpecSideBar({
-  match
-}: RouteComponentProps<TParams>): React.ReactElement {
+function SpecSideBar({ match }: RouteComponentProps): React.ReactElement {
   const { t } = useTranslation();
-
   const { spec } = useAppSelector((state) => state.specification);
 
-  const routes = [
-    { link: `${match.url}`, name: `${t('Specification')}: ${spec.bank.title}` },
-    { link: `${match.url}/requirement`, name: t('Requirements') },
-    { link: `${match.url}/download`, name: t('Download') },
-    { link: `${match.url}/product`, name: t('Products') }
-  ];
+  const classes = useStyles();
 
   return (
-    <Nav className={`sidebar col-md-12 flex-column ${css.sidebar}`}>
-      {renderRouteLinks(routes)}
-    </Nav>
+    <Box className={classes.specSideBar}>
+      <Box className={classes.topContainer}>
+        <Button variant="primary">Lag et nytt produkt</Button>
+      </Box>
+    </Box>
   );
 }
 

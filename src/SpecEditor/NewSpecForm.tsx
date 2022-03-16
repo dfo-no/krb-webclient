@@ -71,6 +71,8 @@ const NewSpecForm = ({ handleClose, project }: IProps) => {
 
   const versions = ['Versjon 1', 'Versjon 2', 'Versjon 3', 'Versjon 4'];
 
+  console.log(project);
+
   return (
     <FormProvider {...methods}>
       <form
@@ -117,10 +119,13 @@ const NewSpecForm = ({ handleClose, project }: IProps) => {
             <Button variant="warningTransparent" onClick={() => handleClose()}>
               {t('cancel')}
             </Button>
+            {/* HREF here is temporarily. Remove when call to create new spec is
+            called, and push to new page there. */}
             <Button
               variant="save"
               type="submit"
-              sx={{ width: 200, height: 32 }}
+              href={`/specification/${project.id}`}
+              sx={{ width: 200, height: 32, textDecoration: 'none' }}
             >
               {t('create specification')}
             </Button>
