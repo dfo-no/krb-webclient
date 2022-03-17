@@ -20,6 +20,11 @@ class Utils {
     return argument;
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  static assertUnreachable(_x: never): never {
+    throw new Error("Didn't expect to get here");
+  }
+
   static truncate(
     str: string | undefined,
     length = 100,
