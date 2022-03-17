@@ -73,12 +73,12 @@ export default function SpecEditor(): React.ReactElement {
               </Typography>
               <Typography variant="smedium">
                 {t(
-                  'For hvert produkt finner du forhåndsdefinerte krav som kan passe til din anskaffelse.'
+                  'For every product you can find predefined banks that can fit your procurement'
                 )}
               </Typography>
               <Typography variant="smedium">
                 {t(
-                  'Husk at du må laste ned kravspesifikasjonen og lagre den lokalt på din PC.'
+                  'Remember that you have to download the specification and save it locally on your computer'
                 )}
               </Typography>
             </Box>
