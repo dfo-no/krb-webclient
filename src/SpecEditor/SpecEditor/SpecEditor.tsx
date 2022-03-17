@@ -83,7 +83,7 @@ export default function SpecEditor(): React.ReactElement {
               </Typography>
             </Box>
           </Box>
-          <Button variant="primary">Lag ditt første produkt</Button>
+          <Button variant="primary">{t('Create your first product')}</Button>
         </Box>
       </Box>
     </Box>
