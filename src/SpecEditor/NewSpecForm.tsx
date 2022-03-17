@@ -4,16 +4,13 @@ import makeStyles from '@mui/styles/makeStyles';
 import Button from '@mui/material/Button';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import { v4 as uuidv4 } from 'uuid';
 import SelectCtrl from '../FormProvider/SelectCtrl';
 import VerticalTextCtrl from '../FormProvider/VerticalTextCtrl';
-import { IAlert } from '../models/IAlert';
 import { PostProjectSchema } from '../models/Project';
 import { IBank } from '../Nexus/entities/IBank';
 import Nexus from '../Nexus/Nexus';
-import { useGetBankQuery, usePostProjectMutation } from '../store/api/bankApi';
-import { useAppDispatch, useAppSelector } from '../store/hooks';
-import { addAlert } from '../store/reducers/alert-reducer';
+import { useGetBankQuery } from '../store/api/bankApi';
+import { useAppSelector } from '../store/hooks';
 import { useHistory } from 'react-router';
 
 interface IProps {
@@ -141,7 +138,7 @@ const NewSpecForm = ({ handleClose }: IProps) => {
           </form>
         </FormProvider>
       ) : (
-        <p>Ikke hei</p>
+        <p>Du har ikke valgt en bank</p>
       )}
     </div>
   );

@@ -3,7 +3,7 @@ import { Button } from '@mui/material/';
 import makeStyles from '@mui/styles/makeStyles';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { RouteComponentProps, withRouter } from 'react-router';
+import { withRouter } from 'react-router';
 import { useGetBankQuery } from '../../store/api/bankApi';
 import { useAppSelector } from '../../store/hooks';
 import theme from '../../theme';
@@ -71,38 +71,32 @@ const useStyles = makeStyles({
   }
 });
 
-function SpecSideBar({ match }: RouteComponentProps): React.ReactElement {
-  const { t } = useTranslation();
+function SpecSideBar(): React.ReactElement {
   const selectedBank = useAppSelector((state) => state.selectedBank);
   const { data: bankSelected } = useGetBankQuery(String(selectedBank.id));
 
-  console.log(bankSelected?.products);
-
   const classes = useStyles();
 
-  const products = [
-    { id: '1', title: 'Produkt En', description: 'Et produkt' },
-    { id: '2', title: 'Produkt To', description: 'Et produkt til' },
-    { id: '3', title: 'Produkt Tre', description: 'Et produkt tall' }
-  ];
-
   const renderProducts = () => {
-    const result = Object.values(products).map((element) => {
-      return (
-        <ListItem className={classes.projectListItem} key={element.id}>
-          <Card className={classes.projectListItemCard}>
-            <Box className={classes.projectListItemCardContent}>
-              <Box className={classes.projectListItemTitle}>
-                <Typography variant="smediumBold">{element.title}</Typography>
+    if (bankSelected) {
+      const result = Object.values(bankSelected.products).map((element) => {
+        return (
+          <ListItem className={classes.projectListItem} key={element.id}>
+            <Card className={classes.projectListItemCard}>
+              <Box className={classes.projectListItemCardContent}>
+                <Box className={classes.projectListItemTitle}>
+                  <Typography variant="smediumBold">{element.title}</Typography>
+                </Box>
+                <Divider sx={{ color: theme.palette.gray700.main }} />
+                <Typography variant="small">{element.description}</Typography>
               </Box>
-              <Divider sx={{ color: theme.palette.gray700.main }} />
-              <Typography variant="small">{element.description}</Typography>
-            </Box>
-          </Card>
-        </ListItem>
-      );
-    });
-    return result;
+            </Card>
+          </ListItem>
+        );
+      });
+
+      return result;
+    }
   };
 
   return (
@@ -111,7 +105,6 @@ function SpecSideBar({ match }: RouteComponentProps): React.ReactElement {
         <Box className={classes.topContainer}>
           <Button variant="primary">Lag et nytt produkt</Button>
         </Box>
-
         <List className={classes.list} aria-label="products">
           {renderProducts()}
         </List>
