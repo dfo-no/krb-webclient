@@ -1,6 +1,8 @@
+import MenuBookIcon from '@mui/icons-material/MenuBook';
 import Divider from '@mui/material/Divider';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
+import ListItemIcon from '@mui/material/ListItemIcon';
 import Typography from '@mui/material/Typography';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
@@ -12,12 +14,10 @@ import { setBank } from '../../store/reducers/spesification-reducer';
 
 interface IFilteredListProps {
   list: IBank[];
-  filterTitle: string;
 }
 
 export default function FilteredList({
-  list,
-  filterTitle
+  list
 }: IFilteredListProps): React.ReactElement {
   const dispatch = useAppDispatch();
   const { t } = useTranslation();
@@ -34,6 +34,9 @@ export default function FilteredList({
       return (
         <div key={bank.id}>
           <ListItem>
+            <ListItemIcon>
+              <MenuBookIcon />
+            </ListItemIcon>
             <Link to="/specification" onClick={handleSelectedBank(bank)}>
               {bank.title}
             </Link>
@@ -49,10 +52,5 @@ export default function FilteredList({
     });
   };
 
-  return (
-    <>
-      <h5>{filterTitle}</h5>
-      <List>{filteredElements()}</List>
-    </>
-  );
+  return <List>{filteredElements()}</List>;
 }
