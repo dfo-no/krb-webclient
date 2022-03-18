@@ -1,54 +1,116 @@
+import { Box, Card, Divider, List, ListItem, Typography } from '@mui/material/';
+import { Button } from '@mui/material/';
+import makeStyles from '@mui/styles/makeStyles';
 import React from 'react';
-import Nav from 'react-bootstrap/Nav';
 import { useTranslation } from 'react-i18next';
-import { RouteComponentProps, withRouter } from 'react-router';
-import { NavLink } from 'react-router-dom';
+import { withRouter } from 'react-router';
+import { useGetBankQuery } from '../../store/api/bankApi';
 import { useAppSelector } from '../../store/hooks';
-import css from './SpecSideBar.module.scss';
+import theme from '../../theme';
 
-interface IRouteLink {
-  link: string;
-  name: string;
-}
+const useStyles = makeStyles({
+  specSideBar: {
+    display: 'flex',
+    flexDirection: 'column',
+    gap: 20,
+    width: '30vw'
+  },
+  container: {
+    display: 'flex',
+    flexDirection: 'column',
+    gap: 20,
+    paddingRight: 40,
+    paddingLeft: 40
+  },
+  topContainer: {
+    display: 'flex',
+    justifyContent: 'flex-end',
+    width: '100%'
+  },
+  projectListItemCard: {
+    height: 100,
+    boxShadow: 'none',
+    border: `1px solid ${theme.palette.gray300.main}`,
+    textDecoration: 'none',
+    width: '100%',
+    cursor: 'pointer',
+    '&:hover': {
+      backgroundColor: theme.palette.primary.main,
+      color: theme.palette.dfoWhite.main
+    }
+  },
+  projectListItemCardContent: {
+    display: 'flex',
+    flexDirection: 'column',
+    gap: 5,
+    paddingTop: 25,
+    paddingLeft: 25,
+    paddingRight: 70
+  },
+  projectListItemTitle: {
+    display: 'flex',
+    justifyContent: 'space-between'
+  },
+  list: {
+    display: 'flex',
+    flexDirection: 'column',
+    flexGrow: 1,
+    listStyle: 'none',
+    width: '100%',
+    alignSelf: 'center'
+  },
+  projectListItem: {
+    padding: 0,
+    paddingBottom: 10,
+    textDecoration: 'none',
+    width: '100%'
+  },
+  specSideBarContainer: {
+    backgroundColor: 'blue',
+    width: '100%'
+  }
+});
 
-type TParams = { id: string };
+function SpecSideBar(): React.ReactElement {
+  const selectedBank = useAppSelector((state) => state.selectedBank);
+  const { data: bankSelected } = useGetBankQuery(String(selectedBank.id));
 
-const renderRouteLinks = (routes: IRouteLink[]) => {
-  return routes.map((route) => {
-    return (
-      <Nav.Item key={route.name} className={`${css.sidebar__item}`}>
-        <Nav.Link
-          as={NavLink}
-          to={route.link}
-          role="link"
-          exact
-          activeClassName={`${css.sidebar__item__active}`}
-        >
-          {route.name}
-        </Nav.Link>
-      </Nav.Item>
-    );
-  });
-};
+  const classes = useStyles();
 
-function SpecSideBar({
-  match
-}: RouteComponentProps<TParams>): React.ReactElement {
-  const { t } = useTranslation();
+  const renderProducts = () => {
+    if (bankSelected) {
+      const result = Object.values(bankSelected.products).map((element) => {
+        return (
+          <ListItem className={classes.projectListItem} key={element.id}>
+            <Card className={classes.projectListItemCard}>
+              <Box className={classes.projectListItemCardContent}>
+                <Box className={classes.projectListItemTitle}>
+                  <Typography variant="smediumBold">{element.title}</Typography>
+                </Box>
+                <Divider sx={{ color: theme.palette.gray700.main }} />
+                <Typography variant="small">{element.description}</Typography>
+              </Box>
+            </Card>
+          </ListItem>
+        );
+      });
 
-  const { spec } = useAppSelector((state) => state.specification);
-
-  const routes = [
-    { link: `${match.url}`, name: `${t('Specification')}: ${spec.bank.title}` },
-    { link: `${match.url}/requirement`, name: t('Requirements') },
-    { link: `${match.url}/download`, name: t('Download') },
-    { link: `${match.url}/product`, name: t('Products') }
-  ];
+      return result;
+    }
+  };
 
   return (
-    <Nav className={`sidebar col-md-12 flex-column ${css.sidebar}`}>
-      {renderRouteLinks(routes)}
-    </Nav>
+    <Box className={classes.specSideBar}>
+      <Box className={classes.container}>
+        <Box className={classes.topContainer}>
+          <Button variant="primary">Lag et nytt produkt</Button>
+        </Box>
+        <List className={classes.list} aria-label="products">
+          {renderProducts()}
+        </List>
+        <Divider />
+      </Box>
+    </Box>
   );
 }
 
