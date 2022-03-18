@@ -91,6 +91,7 @@
   "For every product you can find predefined banks that can fit your procurement": "For hvert produkt finner du forhåndsdefinerte krav som kan passe til din anskaffelse.",
   "To date": "Til dato",
   "There is no banks": "Det finnes ingen kravsett",
+  "This specification has no products yet": "Denne kravspesifikasjonen har ingen produkter enda",
   "Select date": "Velg dato",
   "Requirement not found": "Kunne ikke finne krav",
   "Page": "Side",
@@ -129,6 +130,7 @@
   "Answer types": "Svartyper",
   "Select answer type": "Velg svartype",
   "You are now building your spec": "Du er nå i gang med å bygge din kravspesifikasjon.",
+  "You did not pick a bank": "Du har ikke valgt en bank",
   "date": {
     "P": "{{date, P}}",
     "PP": "{{date, PP}}",

@@ -28,7 +28,9 @@ const useStyles = makeStyles({
     display: 'flex',
     justifyContent: 'flex-end'
   },
-  productContainer: { width: '100%' },
+  productContainer: {
+    width: '100%'
+  },
   list: {
     display: 'flex',
     gap: 10,
@@ -62,6 +64,9 @@ const useStyles = makeStyles({
     paddingLeft: 25,
     paddingRight: 70
   },
+  productListItemDivider: {
+    color: theme.palette.gray700.main
+  },
   buttonContainer: {
     display: 'flex',
     justifyContent: 'flex-end',
@@ -71,7 +76,9 @@ const useStyles = makeStyles({
     width: '100%'
   },
   noProductsMessage: {
-    textAlign: 'center'
+    textAlign: 'center',
+    height: '100%',
+    paddingTop: 20
   }
 });
 
@@ -89,7 +96,7 @@ function SpecSideBar(): React.ReactElement {
             <Card className={classes.productListItemCard}>
               <Box className={classes.productListItemCardContent}>
                 <Typography variant="smediumBold">{element.title}</Typography>
-                <Divider sx={{ color: theme.palette.gray700.main }} />
+                <Divider className={classes.productListItemDivider} />
                 <Typography variant="small">{element.description}</Typography>
               </Box>
             </Card>
@@ -106,8 +113,8 @@ function SpecSideBar(): React.ReactElement {
         <Box className={classes.buttonContainer}>
           <Button variant="primary">{t('create a new product')}</Button>
         </Box>
-        <Box className={classes.listContainer}>
-          {bankSelected && (
+        {bankSelected && bankSelected?.products.length > 0 && (
+          <Box className={classes.listContainer}>
             <ScrollableContainer
               sx={{
                 paddingRight: bankSelected.products.length > 6 ? 2 : 0,
@@ -118,20 +125,19 @@ function SpecSideBar(): React.ReactElement {
                 {renderProducts()}
               </List>
             </ScrollableContainer>
-          )}
-          {!bankSelected && (
-            <Box className={classes.noProductsMessage}>
-              <Typography variant="small">
-                Denne kravspesifikasjonen har ingen produkter enda
-              </Typography>
-            </Box>
-          )}
-        </Box>
+          </Box>
+        )}
+        {bankSelected?.products.length === 0 && (
+          <Box className={classes.noProductsMessage}>
+            <Typography>
+              {t('This specification has no products yet')}
+            </Typography>
+          </Box>
+        )}
         <Divider />
       </Box>
     </Box>
   );
-  return <p>CooCoo</p>;
 }
 
 export default withRouter(SpecSideBar);

@@ -1,10 +1,7 @@
 import Box from '@mui/material/Box';
 import React from 'react';
-import { Route, useParams } from 'react-router';
-import { useGetProjectQuery } from '../../store/api/bankApi';
-import ProjectNotFound from '../Components/ProjectNotFound';
+import { Route } from 'react-router';
 import SideBar from '../Components/SideBar';
-import { IRouteParams } from '../Models/IRouteParams';
 import CodelistGuard from './Codelist/CodelistGuard';
 import InheritancePage from './Inheritance/InheritancePage';
 import ProductGuard from './Product/ProductGuard';
@@ -13,13 +10,6 @@ import PropertiesPage from './Properties/PropertiesPage';
 import TagGuard from './Tags/TagGuard';
 
 export default function AdminGuard(): React.ReactElement {
-  const { projectId } = useParams<IRouteParams>();
-  const { data: project } = useGetProjectQuery(projectId);
-
-  if (!project) {
-    return <ProjectNotFound />;
-  }
-
   return (
     <Box
       sx={{
