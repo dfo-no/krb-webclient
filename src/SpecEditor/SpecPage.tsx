@@ -7,7 +7,7 @@ import Typography from '@mui/material/Typography';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import Card from '@mui/material/Card';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import mainIllustration from '../assets/images/main-illustration.svg';
 import theme from '../theme';
 import { useGetAllProjectsQuery } from '../store/api/bankApi';
@@ -19,6 +19,11 @@ import {
 } from '../Workbench/Components/SearchContainer';
 import DFOSearchBar from '../components/DFOSearchBar/DFOSearchBar';
 import { ScrollableContainer } from '../Workbench/Components/ScrollableContainer';
+import { httpPost } from '../api/http';
+import { AxiosResponse } from 'axios';
+import { selectBank } from '../store/reducers/selectedBank-reducer';
+import { setSpecification } from '../store/reducers/evaluation-reducer';
+import { useAppDispatch } from '../store/hooks';
 
 const useStyles = makeStyles({
   projectsContainer: {
@@ -105,7 +110,32 @@ const useStyles = makeStyles({
 
 export default function SpecPage(): React.ReactElement {
   const { t } = useTranslation();
+  const history = useHistory();
+
   const classes = useStyles();
+  const dispatch = useAppDispatch();
+
+  const onUploadSpecification = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    const formData = new FormData();
+    const files = event.target.files as FileList;
+    for (let index = 0; index < files.length; index += 1) {
+      const file = files[index];
+      formData.append('file', file);
+    }
+    httpPost<FormData, AxiosResponse>('/java/uploadPdf', formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      },
+      responseType: 'json'
+    }).then((response) => {
+      dispatch(selectBank(response.data.bank.id));
+      dispatch(setSpecification(response.data));
+      history.push(`/specification/${response.data.bank.id}`);
+      return response;
+    });
+  };
 
   const { data: projects, isLoading } = useGetAllProjectsQuery();
 
