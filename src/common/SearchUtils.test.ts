@@ -9,6 +9,7 @@ describe('SearchUtils functions should work', () => {
       {
         id: 'aa28e225-7a76-4c57-bb22-ec87b3131762',
         title: 'A',
+        description: '',
         parent: '',
         type: ModelType.tag,
         sourceOriginal: null,

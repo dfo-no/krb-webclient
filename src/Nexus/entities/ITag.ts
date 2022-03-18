@@ -4,12 +4,13 @@ import { IBaseModel } from './IBaseModel';
 
 export interface ITag extends IBaseModel {
   title: string;
-  id: string;
+  description?: string;
 }
 
 export const BaseTagSchema = CustomJoi.object().keys({
   id: CustomJoi.string().length(36).required(),
   title: CustomJoi.string().allow('').required(),
+  description: CustomJoi.string().allow(''),
   parent: CustomJoi.alternatives([
     CustomJoi.string().length(36),
     CustomJoi.string().valid('')
