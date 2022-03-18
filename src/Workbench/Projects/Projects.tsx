@@ -264,3 +264,4 @@ export default function Projects(): React.ReactElement {
     </Box>
   );
 }
+
