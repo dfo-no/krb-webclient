@@ -1,4 +1,7 @@
 import Box from '@mui/material/Box';
+import Card from '@mui/material/Card';
+import CardContent from '@mui/material/CardContent';
+import CardHeader from '@mui/material/CardHeader';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import makeStyles from '@mui/styles/makeStyles';
@@ -28,7 +31,8 @@ const useStyles = makeStyles({
   },
   actionContainer: {
     display: 'flex',
-    margin: '1%'
+    margin: '1%',
+    gap: 10
   },
   navigation: {
     flexBasis: '50%'
@@ -77,17 +81,20 @@ export default function HomePage(): React.ReactElement {
         </Box>
         <Box className={classes.actionContainer}>
           <Box className={classes.navigation}>
-            {latest && (
-              <FilteredList list={latest} filterTitle={t('newest banks')} />
-            )}
+            <Card>
+              <CardHeader title={t('newest banks')} />
+              <CardContent>
+                {latest && <FilteredList list={latest} />}
+              </CardContent>
+            </Card>
           </Box>
           <Box className={classes.navigation}>
-            {alfabetic && (
-              <FilteredList
-                list={alfabetic}
-                filterTitle={t('Alfabetically sorted')}
-              />
-            )}
+            <Card>
+              <CardHeader title={t('Alfabetically sorted')} />
+              <CardContent>
+                {alfabetic && <FilteredList list={alfabetic} />}
+              </CardContent>
+            </Card>
           </Box>
         </Box>
       </Box>

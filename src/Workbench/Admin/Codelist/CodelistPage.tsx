@@ -1,22 +1,22 @@
+import Box from '@mui/material/Box';
+import makeStyles from '@mui/styles/makeStyles';
 import React, { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Box } from '@mui/material/';
-import makeStyles from '@mui/styles/makeStyles';
-import { ICodelist } from '../../../Nexus/entities/ICodelist';
+import { useParams } from 'react-router-dom';
+import LoaderSpinner from '../../../common/LoaderSpinner';
 import DFOSearchBar from '../../../components/DFOSearchBar/DFOSearchBar';
-import CodePanel from './CodePanel';
-import CodelistPanel from './CodelistPanel';
-import { useSelectState } from './SelectContext';
+import { ICodelist } from '../../../Nexus/entities/ICodelist';
+import { useGetProjectQuery } from '../../../store/api/bankApi';
 import { EditableProvider } from '../../Components/EditableContext';
 import {
   SearchContainer,
   SearchFieldContainer
 } from '../../Components/SearchContainer';
-import { useParams } from 'react-router-dom';
-import { IRouteParams } from '../../Models/IRouteParams';
-import { useGetProjectQuery } from '../../../store/api/bankApi';
-import LoaderSpinner from '../../../common/LoaderSpinner';
 import { StandardContainer } from '../../Components/StandardContainer';
+import { IRouteParams } from '../../Models/IRouteParams';
+import CodelistPanel from './CodelistPanel';
+import CodePanel from './CodePanel';
+import { useSelectState } from './SelectContext';
 
 const useStyles = makeStyles({
   tableContainer: {

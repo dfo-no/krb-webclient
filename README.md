@@ -4,7 +4,7 @@ This README is written for Mac users.
 
 ## Prerequisites
 
-1. You need a client id in order to run the application. Send an email to either tal@computas.com, imed@computas.com or chaa@computas.com to request a key.
+1. You need a client id in order to run the application. Send an email to an project owner to request a key.
 2. Open existing or create a new .zshrc file in your home directory, and add the following line:
 
    > export REACT_APP_CLIENTID="Key attained from developer"

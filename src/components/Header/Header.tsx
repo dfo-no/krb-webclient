@@ -163,7 +163,14 @@ export default function Header(): React.ReactElement {
   const isLocationPreview = tabName === 'preview';
 
   return (
-    <AppBar elevation={0} position="sticky">
+    <AppBar
+      elevation={0}
+      position="sticky"
+      sx={{
+        backgroundColor: theme.palette.dfoWhite.main,
+        borderBottom: `2px solid ${theme.palette.gray300.main}`
+      }}
+    >
       <Toolbar>
         <Box className={classes.header}>
           <Box>

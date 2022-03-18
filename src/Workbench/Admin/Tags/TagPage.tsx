@@ -1,27 +1,27 @@
+import Button from '@mui/material/Button';
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Parentable } from '../../../models/Parentable';
-import { ITag } from '../../../Nexus/entities/ITag';
-import EditTagForm from './EditTagForm';
-import NewTagForm from './NewTagForm';
-import { Button } from '@mui/material';
+import { useParams } from 'react-router-dom';
+import LoaderSpinner from '../../../common/LoaderSpinner';
+import SearchUtils from '../../../common/SearchUtils';
 import DFOSearchBar from '../../../components/DFOSearchBar/DFOSearchBar';
-import { StandardContainer } from '../../Components/StandardContainer';
+import { Parentable } from '../../../models/Parentable';
+import { IProduct } from '../../../Nexus/entities/IProduct';
+import { ITag } from '../../../Nexus/entities/ITag';
+import { useGetProjectQuery } from '../../../store/api/bankApi';
+import useProjectMutations from '../../../store/api/ProjectMutations';
+import { useEditableState } from '../../Components/EditableContext';
+import NestableHierarcyEditableComponents from '../../Components/NestableHierarchy/NestableHiarchyEditableComponents';
 import {
   NewButtonContainer,
   SearchContainer,
   SearchFieldContainer
 } from '../../Components/SearchContainer';
-import { IProduct } from '../../../Nexus/entities/IProduct';
-import { useEditableState } from '../../Components/EditableContext';
-import { useGetProjectQuery } from '../../../store/api/bankApi';
-import LoaderSpinner from '../../../common/LoaderSpinner';
-import { useParams } from 'react-router-dom';
+import { StandardContainer } from '../../Components/StandardContainer';
 import { IRouteParams } from '../../Models/IRouteParams';
-import NestableHierarcyEditableComponents from '../../Components/NestableHierarchy/NestableHiarchyEditableComponents';
-import SearchUtils from '../../../common/SearchUtils';
-import useProjectMutations from '../../../store/api/ProjectMutations';
 import DeleteTagForm from './DeleteTagForm';
+import EditTagForm from './EditTagForm';
+import NewTagForm from './NewTagForm';
 
 export default function TagPage(): React.ReactElement {
   const { t } = useTranslation();
@@ -63,47 +63,43 @@ export default function TagPage(): React.ReactElement {
   };
 
   return (
-    <>
-      <StandardContainer>
-        <SearchContainer>
-          <SearchFieldContainer>
-            {' '}
-            <DFOSearchBar
-              list={project.tags}
-              placeholder={t('search for tags')}
-              callback={searchFieldCallback}
-              searchFunction={tagPageSearch}
-            />
-          </SearchFieldContainer>
-          <NewButtonContainer>
-            <Button variant="primary" onClick={() => setCreating(true)}>
-              {t('add new tag')}
-            </Button>
-          </NewButtonContainer>
-        </SearchContainer>
+    <StandardContainer>
+      <SearchContainer>
+        <SearchFieldContainer>
+          {' '}
+          <DFOSearchBar
+            list={project.tags}
+            placeholder={t('search for tags')}
+            callback={searchFieldCallback}
+            searchFunction={tagPageSearch}
+          />
+        </SearchFieldContainer>
+        <NewButtonContainer>
+          <Button variant="primary" onClick={() => setCreating(true)}>
+            {t('add new tag')}
+          </Button>
+        </NewButtonContainer>
+      </SearchContainer>
 
-        <NestableHierarcyEditableComponents
-          dispatchfunc={updateTagsArrangement}
-          inputlist={tags}
-          CreateComponent={
-            <NewTagForm handleClose={() => setCreating(false)} />
-          }
-          EditComponent={(item: Parentable<ITag>) => (
-            <EditTagForm tag={item} handleClose={() => setEditMode('')} />
-          )}
-          DeleteComponent={(
-            item: Parentable<ITag>,
-            child: React.ReactElement
-          ) => (
-            <DeleteTagForm
-              child={child}
-              tag={item}
-              handleClose={() => setDeleteMode('')}
-            />
-          )}
-          depth={5}
-        />
-      </StandardContainer>
-    </>
+      <NestableHierarcyEditableComponents
+        dispatchfunc={updateTagsArrangement}
+        inputlist={tags}
+        CreateComponent={<NewTagForm handleClose={() => setCreating(false)} />}
+        EditComponent={(item: Parentable<ITag>) => (
+          <EditTagForm tag={item} handleClose={() => setEditMode('')} />
+        )}
+        DeleteComponent={(
+          item: Parentable<ITag>,
+          child: React.ReactElement
+        ) => (
+          <DeleteTagForm
+            child={child}
+            tag={item}
+            handleClose={() => setDeleteMode('')}
+          />
+        )}
+        depth={5}
+      />
+    </StandardContainer>
   );
 }
