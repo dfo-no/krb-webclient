@@ -80,8 +80,7 @@ const useStyles = makeStyles({
     display: 'flex',
     flexDirection: 'column',
     flexGrow: 1,
-    listStyle: 'none',
-    marginRight: 20
+    listStyle: 'none'
   },
   projectListItem: {
     padding: 0,

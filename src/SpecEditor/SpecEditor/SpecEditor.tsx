@@ -1,6 +1,6 @@
 import { Box, Button, Typography } from '@mui/material';
 import React from 'react';
-import { useAppDispatch, useAppSelector } from '../../store/hooks';
+import { useAppSelector } from '../../store/hooks';
 import SpecSideBar from '../SideBar/SpecSideBar';
 import makeStyles from '@mui/styles/makeStyles';
 import theme from '../../theme';
@@ -16,7 +16,7 @@ const useStyles = makeStyles({
     backgroundColor: theme.palette.gray100.main
   },
   editorContent: {
-    backgroundColor: '#efefef',
+    backgroundColor: theme.palette.gray200.main,
     width: '65%'
   },
   editorContentContainer: {
