@@ -5,7 +5,7 @@ import theme from '../../theme';
 import makeStyles from '@mui/styles/makeStyles';
 
 interface IProps {
-  title: string;
+  title?: string;
   isOpen: boolean;
   handleClose: () => void;
   children: React.ReactNode;

@@ -14,6 +14,7 @@ declare module '@mui/material/styles' {
     medium: React.CSSProperties;
     mediumBold: React.CSSProperties;
     mediumBlue: React.CSSProperties;
+    bigBlue: React.CSSProperties;
     footerAddressText: React.CSSProperties;
     footerLinkText: React.CSSProperties;
     formCtrlErrorMessage: React.CSSProperties;
@@ -31,6 +32,7 @@ declare module '@mui/material/styles' {
     medium?: React.CSSProperties;
     mediumBold?: React.CSSProperties;
     mediumBlue?: React.CSSProperties;
+    bigBlue?: React.CSSProperties;
     footerAddressText?: React.CSSProperties;
     footerLinkText?: React.CSSProperties;
     formCtrlErrorMessage?: React.CSSProperties;
@@ -50,6 +52,7 @@ declare module '@mui/material/Typography' {
     medium: true;
     mediumBold: true;
     mediumBlue: true;
+    bigBlue: true;
     footerAddressText: true;
     footerLinkText: true;
     formCtrlErrorMessage: true;
