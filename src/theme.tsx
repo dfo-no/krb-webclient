@@ -163,6 +163,10 @@ theme.typography.smallUnderlineBlue = {
   cursor: 'pointer'
 };
 
+theme.typography.smedium = {
+  fontSize: '18px'
+};
+
 theme.typography.smediumBold = {
   fontSize: '18px',
   fontWeight: 700
@@ -194,6 +198,12 @@ theme.typography.bigBlue = {
   fontSize: '28px'
 };
 
+theme.typography.bigBoldBlue = {
+  color: theme.palette.primary.main,
+  fontSize: '50px',
+  fontWeight: 550
+};
+
 theme.typography.biggerBold = {
   fontSize: '40px'
 };
@@ -215,7 +225,7 @@ theme.components = {
       {
         props: { variant: 'primary' },
         style: {
-          backgroundColor: theme.palette.lightBlue.main,
+          backgroundColor: theme.palette.indigo.main,
           color: theme.palette.dfoWhite.main,
           whiteSpace: 'nowrap',
           height: 40,

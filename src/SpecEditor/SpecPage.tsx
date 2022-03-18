@@ -20,6 +20,8 @@ import DFOSearchBar from '../components/DFOSearchBar/DFOSearchBar';
 import { ScrollableContainer } from '../Workbench/Components/ScrollableContainer';
 import DFODialog from '../components/DFODialog/DFODialog';
 import NewSpecForm from './NewSpecForm';
+import { selectBank } from '../store/reducers/selectedBank-reducer';
+import { useAppDispatch } from '../store/hooks';
 
 const useStyles = makeStyles({
   projectsContainer: {
@@ -74,7 +76,7 @@ const useStyles = makeStyles({
   },
   projectListItem: {
     padding: 0,
-    paddingBottom: 15,
+    paddingBottom: 10,
     textDecoration: 'none',
     width: '100%'
   },
@@ -108,18 +110,18 @@ const useStyles = makeStyles({
 export default function SpecPage(): React.ReactElement {
   const { t } = useTranslation();
   const classes = useStyles();
+  const dispatch = useAppDispatch();
 
   const { data: projects, isLoading } = useGetAllProjectsQuery();
 
   const [isOpen, setOpen] = useState(false);
-  const [selectedProject, setSelectedProject] = useState<IBank>();
 
   if (isLoading) {
     return <LoaderSpinner />;
   }
 
   const openProjectModal = (project: any) => {
-    setSelectedProject(project);
+    dispatch(selectBank(project.id));
     setOpen(true);
   };
 
@@ -207,18 +209,11 @@ export default function SpecPage(): React.ReactElement {
         </Box>
       )}
 
-      {selectedProject && (
-        <DFODialog
-          isOpen={isOpen}
-          handleClose={() => setOpen(false)}
-          children={
-            <NewSpecForm
-              project={selectedProject}
-              handleClose={() => setOpen(false)}
-            />
-          }
-        />
-      )}
+      <DFODialog
+        isOpen={isOpen}
+        handleClose={() => setOpen(false)}
+        children={<NewSpecForm handleClose={() => setOpen(false)} />}
+      />
     </Box>
   );
 }
