@@ -135,4 +135,3 @@ function SpecSideBar(): React.ReactElement {
 }
 
 export default withRouter(SpecSideBar);
-
