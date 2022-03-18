@@ -12,7 +12,7 @@ import { usePostProjectMutation } from '../../store/api/bankApi';
 import { useAppDispatch } from '../../store/hooks';
 import { addAlert } from '../../store/reducers/alert-reducer';
 import makeStyles from '@mui/styles/makeStyles';
-import { Box } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 import SelectCtrl from '../../FormProvider/SelectCtrl';
 
 interface IProps {
@@ -72,6 +72,7 @@ const NewProjectForm = ({ handleClose }: IProps) => {
         autoComplete="off"
         noValidate
       >
+        <Typography variant="bigBlue">{t('create new bank')}</Typography>
         <VerticalTextCtrl
           name="title"
           label={t('What is the name of the project?')}

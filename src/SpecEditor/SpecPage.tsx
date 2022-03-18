@@ -4,10 +4,9 @@ import Divider from '@mui/material/Divider';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import Typography from '@mui/material/Typography';
-import React from 'react';
+import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import Card from '@mui/material/Card';
-import { Link, useHistory } from 'react-router-dom';
 import mainIllustration from '../assets/images/main-illustration.svg';
 import theme from '../theme';
 import { useGetAllProjectsQuery } from '../store/api/bankApi';
@@ -19,11 +18,8 @@ import {
 } from '../Workbench/Components/SearchContainer';
 import DFOSearchBar from '../components/DFOSearchBar/DFOSearchBar';
 import { ScrollableContainer } from '../Workbench/Components/ScrollableContainer';
-import { httpPost } from '../api/http';
-import { AxiosResponse } from 'axios';
-import { selectBank } from '../store/reducers/selectedBank-reducer';
-import { setSpecification } from '../store/reducers/evaluation-reducer';
-import { useAppDispatch } from '../store/hooks';
+import DFODialog from '../components/DFODialog/DFODialog';
+import NewSpecForm from './NewSpecForm';
 
 const useStyles = makeStyles({
   projectsContainer: {
@@ -49,6 +45,9 @@ const useStyles = makeStyles({
     height: 100,
     boxShadow: 'none',
     border: `1px solid ${theme.palette.gray300.main}`,
+    textDecoration: 'none',
+    width: '100%',
+    cursor: 'pointer',
     '&:hover': {
       backgroundColor: theme.palette.primary.main,
       color: theme.palette.dfoWhite.main
@@ -75,7 +74,9 @@ const useStyles = makeStyles({
   },
   projectListItem: {
     padding: 0,
-    paddingBottom: 15
+    paddingBottom: 15,
+    textDecoration: 'none',
+    width: '100%'
   },
   titleImageContainer: {
     display: 'flex',
@@ -89,10 +90,6 @@ const useStyles = makeStyles({
   },
   contentContainer: {
     width: 1000
-  },
-  projectLink: {
-    textDecoration: 'none',
-    width: '100%'
   },
   projects: {
     display: 'flex',
@@ -110,38 +107,21 @@ const useStyles = makeStyles({
 
 export default function SpecPage(): React.ReactElement {
   const { t } = useTranslation();
-  const history = useHistory();
-
   const classes = useStyles();
-  const dispatch = useAppDispatch();
-
-  const onUploadSpecification = (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    const formData = new FormData();
-    const files = event.target.files as FileList;
-    for (let index = 0; index < files.length; index += 1) {
-      const file = files[index];
-      formData.append('file', file);
-    }
-    httpPost<FormData, AxiosResponse>('/java/uploadPdf', formData, {
-      headers: {
-        'Content-Type': 'multipart/form-data'
-      },
-      responseType: 'json'
-    }).then((response) => {
-      dispatch(selectBank(response.data.bank.id));
-      dispatch(setSpecification(response.data));
-      history.push(`/specification/${response.data.bank.id}`);
-      return response;
-    });
-  };
 
   const { data: projects, isLoading } = useGetAllProjectsQuery();
+
+  const [isOpen, setOpen] = useState(false);
+  const [selectedProject, setSelectedProject] = useState<IBank>();
 
   if (isLoading) {
     return <LoaderSpinner />;
   }
+
+  const openProjectModal = (project: any) => {
+    setSelectedProject(project);
+    setOpen(true);
+  };
 
   const list: any = [];
   const searchFunction = () => {};
@@ -150,21 +130,20 @@ export default function SpecPage(): React.ReactElement {
   const renderProjects = (projectList: Record<string, IBank>) => {
     const result = Object.values(projectList).map((element) => {
       return (
-        <ListItem className={classes.projectListItem} key={element.id}>
-          <Link
-            to={`/workbench/${element.id}/admin`}
-            className={classes.projectLink}
-          >
-            <Card className={classes.projectListItemCard}>
-              <Box className={classes.projectListItemCardContent}>
-                <Box className={classes.projectListItemTitleButton}>
-                  <Typography variant="smediumBold">{element.title}</Typography>
-                </Box>
-                <Divider sx={{ color: theme.palette.gray700.main }} />
-                <Typography variant="small">{element.description}</Typography>
+        <ListItem
+          className={classes.projectListItem}
+          key={element.id}
+          onClick={() => openProjectModal(element)}
+        >
+          <Card className={classes.projectListItemCard}>
+            <Box className={classes.projectListItemCardContent}>
+              <Box className={classes.projectListItemTitleButton}>
+                <Typography variant="smediumBold">{element.title}</Typography>
               </Box>
-            </Card>
-          </Link>
+              <Divider sx={{ color: theme.palette.gray700.main }} />
+              <Typography variant="small">{element.description}</Typography>
+            </Box>
+          </Card>
         </ListItem>
       );
     });
@@ -226,6 +205,19 @@ export default function SpecPage(): React.ReactElement {
             </Typography>
           </Box>
         </Box>
+      )}
+
+      {selectedProject && (
+        <DFODialog
+          isOpen={isOpen}
+          handleClose={() => setOpen(false)}
+          children={
+            <NewSpecForm
+              project={selectedProject}
+              handleClose={() => setOpen(false)}
+            />
+          }
+        />
       )}
     </Box>
   );
