@@ -22,7 +22,7 @@ const useStyles = makeStyles({
     display: 'flex',
     flexDirection: 'column',
     margin: '0 auto',
-    gap: 20,
+    gap: 25,
     padding: 10,
     width: 450
   },
@@ -35,8 +35,12 @@ const useStyles = makeStyles({
   fields: {
     display: 'flex',
     flexDirection: 'column',
-    gap: 20,
-    marginTop: 20
+    gap: 20
+  },
+  newSpecButton: {
+    width: 200,
+    height: 35,
+    textDecoration: 'none'
   }
 });
 
@@ -55,9 +59,10 @@ const NewSpecForm = ({ handleClose }: IProps) => {
     defaultValues
   });
 
-  const onSubmit = async () => {
-    history.push(`/specification/${selectedBank.id}`);
+  // Get from selectedBank later. Logic for this?
+  const versions = ['Versjon 1', 'Versjon 2', 'Versjon 3', 'Versjon 4'];
 
+  const onSubmit = async () => {
     /*     await postProject(post).then(() => {
       const alert: IAlert = {
         id: uuidv4(),
@@ -68,13 +73,12 @@ const NewSpecForm = ({ handleClose }: IProps) => {
       methods.reset();
       handleClose();
     }); */
+    history.push(`/specification/${selectedBank.id}`);
   };
-
-  const versions = ['Versjon 1', 'Versjon 2', 'Versjon 3', 'Versjon 4'];
 
   return (
     <div>
-      {bankSelected ? (
+      {bankSelected && (
         <FormProvider {...methods}>
           <form
             className={classes.newSpecForm}
@@ -123,13 +127,11 @@ const NewSpecForm = ({ handleClose }: IProps) => {
                 >
                   {t('cancel')}
                 </Button>
-                {/* HREF here is temporarily. Remove when call to create new spec is
-            called, and push to new page there. */}
                 <Button
+                  className={classes.newSpecButton}
                   variant="save"
                   type="submit"
                   onClick={onSubmit}
-                  sx={{ width: 200, height: 32, textDecoration: 'none' }}
                 >
                   {t('create specification')}
                 </Button>
@@ -137,8 +139,6 @@ const NewSpecForm = ({ handleClose }: IProps) => {
             </Box>
           </form>
         </FormProvider>
-      ) : (
-        <p>Du har ikke valgt en bank</p>
       )}
     </div>
   );

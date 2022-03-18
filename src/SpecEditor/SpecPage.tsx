@@ -43,6 +43,10 @@ const useStyles = makeStyles({
     flexDirection: 'column',
     gap: 15
   },
+  title: {
+    letterSpacing: 0.2,
+    color: theme.palette.primary.main
+  },
   projectListItemCard: {
     height: 100,
     boxShadow: 'none',
@@ -84,10 +88,10 @@ const useStyles = makeStyles({
     display: 'flex',
     gap: 80
   },
-  subTitle: {
+  specPageText: {
     width: 600
   },
-  subTitleTwo: {
+  specPageTextTwo: {
     marginTop: 5
   },
   contentContainer: {
@@ -125,6 +129,7 @@ export default function SpecPage(): React.ReactElement {
     setOpen(true);
   };
 
+  // Implement search here
   const list: any = [];
   const searchFunction = () => {};
   const callback = () => {};
@@ -156,16 +161,13 @@ export default function SpecPage(): React.ReactElement {
     <Box className={classes.projectsContainer}>
       <Box className={classes.titleImageContainer}>
         <Box className={classes.titleSubTitleContainer}>
-          <Typography
-            variant="biggerBold"
-            sx={{ letterSpacing: 0.2, color: theme.palette.primary.main }}
-          >
+          <Typography className={classes.title} variant="biggerBold">
             {t('Welcome to the builder')}
           </Typography>
-          <Box className={classes.subTitle}>
+          <Box className={classes.specPageText}>
             <Typography>{t('In the builder you can pick a bank')}</Typography>
           </Box>
-          <Box className={classes.subTitleTwo}>
+          <Box className={classes.specPageTextTwo}>
             <Typography>{t('Pick a project to start')}</Typography>
           </Box>
         </Box>

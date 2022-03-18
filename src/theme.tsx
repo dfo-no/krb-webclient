@@ -200,7 +200,7 @@ theme.typography.bigBlue = {
 
 theme.typography.bigBoldBlue = {
   color: theme.palette.primary.main,
-  fontSize: '50px',
+  fontSize: '48px',
   fontWeight: 550
 };
 
