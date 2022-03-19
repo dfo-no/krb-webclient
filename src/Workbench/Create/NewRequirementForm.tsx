@@ -7,12 +7,10 @@ import { useTranslation } from 'react-i18next';
 import { v4 as uuidv4 } from 'uuid';
 import LoaderSpinner from '../../common/LoaderSpinner';
 import ErrorSummary from '../../Form/ErrorSummary';
-import RadioCtrl from '../../FormProvider/RadioCtrl';
 import TextCtrl from '../../FormProvider/TextCtrl';
 import { IAlert } from '../../models/IAlert';
 import ModelType from '../../models/ModelType';
 import { Parentable } from '../../models/Parentable';
-import RequirementType from '../../models/RequirementType';
 import { IBank } from '../../Nexus/entities/IBank';
 import { INeed } from '../../Nexus/entities/INeed';
 import {
@@ -36,7 +34,7 @@ function NewRequirementForm({
   handleClose
 }: IProps): React.ReactElement {
   const dispatch = useAppDispatch();
-  const { needIndex } = useSelectState();
+  const { needIndex, setNeedIndex } = useSelectState();
   const { t } = useTranslation();
   const [putProject] = usePutProjectMutation();
 
@@ -62,20 +60,27 @@ function NewRequirementForm({
   }
 
   const onSubmit = async (post: IRequirement) => {
+    const newId = uuidv4();
     const nextState = produce(project, (draftState) => {
-      const postDraft = { ...post, id: uuidv4() };
+      const postDraft = { ...post, id: newId };
       draftState.needs[needIndex].requirements.unshift(postDraft);
     });
 
-    await putProject(nextState).then(() => {
-      const alert: IAlert = {
-        id: uuidv4(),
-        style: 'success',
-        text: 'Successfully created new requirement'
-      };
-      dispatch(addAlert({ alert }));
-      handleClose();
-    });
+    await putProject(nextState)
+      .unwrap()
+      .then((result) => {
+        const newIndex = result.needs.findIndex((n) => n.id === newId);
+        if (newIndex !== -1) {
+          setNeedIndex(newIndex);
+        }
+        const alert: IAlert = {
+          id: uuidv4(),
+          style: 'success',
+          text: 'Successfully created new requirement'
+        };
+        dispatch(addAlert({ alert }));
+        handleClose();
+      });
   };
 
   return (
@@ -85,14 +90,6 @@ function NewRequirementForm({
         autoComplete="off"
         noValidate
       >
-        <RadioCtrl
-          name="requirement_Type"
-          label="Type"
-          options={[
-            { value: RequirementType.requirement, label: 'Krav' },
-            { value: RequirementType.info, label: 'Info' }
-          ]}
-        />
         <TextCtrl name="title" label={t('Title')} />
         <TextCtrl name="description" label={t('Description')} />
         <Button variant="primary" type="submit">
