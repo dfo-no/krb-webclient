@@ -80,6 +80,7 @@ function NewRequirementForm({
         };
         dispatch(addAlert({ alert }));
         handleClose();
+        methods.reset();
       });
   };
 
