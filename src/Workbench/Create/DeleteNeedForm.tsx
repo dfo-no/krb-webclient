@@ -6,6 +6,7 @@ import { FormProvider, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { v4 as uuidv4 } from 'uuid';
 import AlertModal from '../../common/AlertModal';
+import Utils from '../../common/Utils';
 import ErrorSummary from '../../Form/ErrorSummary';
 import { IAlert } from '../../models/IAlert';
 import { Parentable } from '../../models/Parentable';
@@ -43,17 +44,20 @@ function DeleteNeedForm({
 
   const onSubmit = async (deleteNeed: INeed) => {
     const foundIndex = project.needs.findIndex((n) => n.id === deleteNeed.id);
+
     const needs = [...project.needs];
     if (foundIndex !== -1) {
       needs.splice(foundIndex, 1);
     }
+    const nextIndex = Utils.getNextIndexAfterDelete(needs, foundIndex);
+
     const saveProject: IBank = {
       ...project,
       needs
     };
     await putProject(saveProject)
       .unwrap()
-      .then((result) => {
+      .then(() => {
         const alert: IAlert = {
           id: uuidv4(),
           style: 'success',
@@ -61,11 +65,7 @@ function DeleteNeedForm({
         };
         dispatch(addAlert({ alert }));
         handleClose();
-        if (result.needs.length > 0) {
-          setNeedIndex(needs.length - 1);
-        } else {
-          setNeedIndex(null);
-        }
+        setNeedIndex(nextIndex);
       });
 
     // TODO: fix back-end to joi-check with commented out code

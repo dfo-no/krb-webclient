@@ -14,7 +14,7 @@ interface IProps {
   parentables: Parentable<INeed>[];
 }
 
-export default function NeedList({ parentables }: IProps): React.ReactElement {
+export default function Sidebar({ parentables }: IProps): React.ReactElement {
   const { needIndex, setNeedIndex } = useSelectState();
 
   const renderLevels = (elements: Parentable<INeed>[]) => {
