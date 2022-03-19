@@ -20,6 +20,58 @@ class Utils {
     return argument;
   }
 
+  static getNextIndexAfterDelete<T>(array: T[], foundIndex: number) {
+    if (foundIndex === -1) {
+      return -1;
+    }
+    if (array.length === 0) {
+      return null;
+    }
+    if (array.length === 1) {
+      return 0;
+    }
+    if (foundIndex < array.length - 1) {
+      return foundIndex;
+    }
+
+    if (foundIndex === array.length - 1) {
+      return foundIndex;
+    }
+
+    if (foundIndex > array.length - 1) {
+      return array.length - 1;
+    }
+    return foundIndex;
+  }
+
+  static deleteItem(array: string[], value: string): number | null {
+    const foundIndex = array.findIndex((n) => n === value);
+    if (foundIndex === -1) {
+      return -1;
+    }
+    array.splice(foundIndex, 1);
+
+    if (array.length === 0) {
+      return null;
+    }
+    if (array.length === 1) {
+      return 0;
+    }
+
+    if (foundIndex < array.length - 1) {
+      return foundIndex;
+    }
+
+    if (foundIndex === array.length - 1) {
+      return foundIndex;
+    }
+
+    if (foundIndex > array.length - 1) {
+      return array.length - 1;
+    }
+    return foundIndex;
+  }
+
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   static assertUnreachable(_x: never): never {
     throw new Error("Didn't expect to get here");
