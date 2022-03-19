@@ -8,6 +8,7 @@ import theme from '../../theme';
 import NeedToolbar from './NeedToolbar';
 import NewNeed from './NewNeed';
 import NewRequirement from './NewRequirement';
+import Requirement from './Requirement';
 import { useSelectState } from './SelectContext';
 import Sidebar from './Sidebar';
 
@@ -68,7 +69,16 @@ export default function Create(): React.ReactElement {
             <>
               <NeedToolbar need={project.needs[needIndex]} />
               <NewRequirement need={project.needs[needIndex]} />
-              {/* <RequirementsList need={project.needs[needIndex]} /> */}
+              {project.needs[needIndex].requirements.map((r, index) => {
+                return (
+                  <Requirement
+                    key={r.id}
+                    requirementIndex={index}
+                    needIndex={needIndex}
+                    project={project}
+                  />
+                );
+              })}
             </>
           ) : (
             <div>Ingen behov valgt</div>
