@@ -68,11 +68,11 @@ export default function RequirementsList({
             <Typography>{r.title}</Typography>
           </AccordionSummary>
           <AccordionDetails>
-            <Requirement
+            {/*  <Requirement
               requirement={r}
               project={project}
               needIndex={needIndex}
-            />
+            /> */}
             <Button variant="warning" onClick={() => onDelete(index)}>
               <DeleteIcon />
             </Button>
