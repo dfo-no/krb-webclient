@@ -69,16 +69,18 @@ export default function Create(): React.ReactElement {
             <>
               <NeedToolbar need={project.needs[needIndex]} />
               <NewRequirement need={project.needs[needIndex]} />
-              {project.needs[needIndex].requirements.map((r, index) => {
-                return (
-                  <Requirement
-                    key={r.id}
-                    requirementIndex={index}
-                    needIndex={needIndex}
-                    project={project}
-                  />
-                );
-              })}
+              {project.needs[needIndex] &&
+                project.needs[needIndex].requirements &&
+                project.needs[needIndex].requirements.map((r, index) => {
+                  return (
+                    <Requirement
+                      key={r.id}
+                      requirementIndex={index}
+                      needIndex={needIndex}
+                      project={project}
+                    />
+                  );
+                })}
             </>
           ) : (
             <div>Ingen behov valgt</div>
