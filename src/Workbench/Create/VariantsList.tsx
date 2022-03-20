@@ -1,32 +1,47 @@
+import DeleteIcon from '@mui/icons-material/Delete';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import Accordion from '@mui/material/Accordion';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import AccordionSummary from '@mui/material/AccordionSummary';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
+import Tooltip from '@mui/material/Tooltip';
 import Typography from '@mui/material/Typography';
 import React from 'react';
-import { useFieldArray } from 'react-hook-form';
+import { useFieldArray, useFormContext } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { v4 as uuidv4 } from 'uuid';
 import CheckboxCtrl from '../../FormProvider/CheckboxCtrl';
-import HorizontalTextCtrl from '../../FormProvider/HorizontalTextCtrl';
+import RadioCtrl from '../../FormProvider/RadioCtrl';
+import VerticalTextCtrl from '../../FormProvider/VerticalTextCtrl';
+import { Parentable } from '../../models/Parentable';
+import { INeed } from '../../Nexus/entities/INeed';
 import { IRequirement } from '../../Nexus/entities/IRequirement';
 import { IVariant } from '../../Nexus/entities/IVariant';
 import VariantType from '../../Nexus/entities/VariantType';
+import NewQuestion from './NewQuestion';
+import QuestionsList from './QuestionsList';
+import { useSelectState } from './SelectContext';
 
-const VariantsList = () => {
+interface IProps {
+  needIndex: number;
+  requirementIndex: number;
+}
+
+const VariantsList = ({ needIndex, requirementIndex }: IProps) => {
   const { t } = useTranslation();
+  const { needIndex: needIndex2 } = useSelectState();
 
-  const { fields, append } = useFieldArray<IRequirement, 'variants', 'id'>({
-    name: 'variants'
+  const { register } = useFormContext();
+  const { fields, append, remove } = useFieldArray<IRequirement>({
+    name: `variants`
   });
 
   const appendVariant = () => {
     const newVariant: IVariant = {
       id: uuidv4(),
-      requirementText: '',
-      instruction: '',
+      requirementText: 'requirementText',
+      instruction: 'instruction',
       useProduct: false,
       useSpesification: false,
       useQualification: false,
@@ -40,21 +55,63 @@ const VariantsList = () => {
 
   return (
     <Box>
-      {fields.map((item, index) => {
+      <Button onClick={() => appendVariant()}>Add Variant</Button>
+      {fields.map((field, index) => {
         return (
-          <Accordion key={item.id}>
+          <Accordion key={field.id}>
             <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-              <Typography>{item.requirementText}</Typography>
+              {/*  {item?.description ? item.description : ''} */}
+              {/*  <TextCtrl
+                name={`requirements.${index}.variants.${index}.title`}
+                label="Foo"
+              /> */}
+              <VerticalTextCtrl
+                key={field.id} // important to include key with field's id
+                name={`variants.${index}.requirementText`}
+                label="requirementText"
+                placeholder=""
+              />
+              <VerticalTextCtrl
+                name={`variants.${index}.instruction`}
+                label="instruction"
+                placeholder=""
+              />
+              <Box sx={{ flex: '1 1 auto' }} />
+              <Tooltip title="Slett variant">
+                <DeleteIcon
+                  color="warning"
+                  sx={{ mr: 1 }}
+                  onClick={() => remove(index)}
+                />
+              </Tooltip>
             </AccordionSummary>
 
-            <AccordionDetails
+            {/* <AccordionDetails
               sx={{ bgcolor: 'common.white', border: '1px solid black' }}
             >
-              <HorizontalTextCtrl
-                name={`variants.${index}.description` as const}
-                placeholder="Beskrivelse"
+              <TextCtrl
+                label="Krav tekst"
+                name={
+                  `requirements.${requirementIndex}.variants.${index}.requirementText` as const
+                }
               />
-              <CheckboxCtrl
+              <TextCtrl
+                label="Instruksjon tekst"
+                name={
+                  `requirements.${requirementIndex}.variants.${index}.instruction` as const
+                }
+              />
+              <RadioCtrl
+                name={
+                  `requirements.${requirementIndex}.variants.${index}.type` as const
+                }
+                label="Type"
+                options={[
+                  { value: VariantType.requirement, label: 'Krav' },
+                  { value: VariantType.info, label: 'Info' }
+                ]}
+              />
+               <CheckboxCtrl
                 name={`variants.${index}.useProduct` as const}
                 label="Produkt"
               />
@@ -67,24 +124,13 @@ const VariantsList = () => {
                 label="Spesifikasjon"
               />
               <br />
-              <HorizontalTextCtrl
-                placeholder="Requirement text"
-                name={`variants.${index}.requirementText` as const}
-              />
-              <HorizontalTextCtrl
-                placeholder="Requirement text"
-                name={`variants.${index}.instruction` as const}
-              />
-            </AccordionDetails>
+
+              <NewQuestion index={index} />
+              <QuestionsList index={index} />
+            </AccordionDetails> */}
           </Accordion>
         );
       })}
-      <Button variant="primary" sx={{ m: 1 }} onClick={() => appendVariant()}>
-        {t('Add Variant')}
-      </Button>
-      <Button variant="warning" type="submit">
-        Save
-      </Button>
     </Box>
   );
 };

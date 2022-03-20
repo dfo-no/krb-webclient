@@ -11,7 +11,11 @@ interface IRouteParams {
   projectId: string;
 }
 
-const NewNeed = () => {
+interface IProps {
+  buttonText: string;
+}
+
+const NewNeed = ({ buttonText }: IProps) => {
   const [isOpen, setOpen] = useState(false);
   const { projectId } = useParams<IRouteParams>();
   const { data: project } = useGetProjectQuery(projectId);
@@ -29,10 +33,10 @@ const NewNeed = () => {
       }}
     >
       <Button variant="primary" onClick={() => setOpen(true)}>
-        Legg til nytt behov
+        {buttonText}
       </Button>
       <Dialog
-        title="Nytt behov til kravet"
+        title="Lag nytt behov"
         isOpen={isOpen}
         handleClose={() => setOpen(false)}
         children={
