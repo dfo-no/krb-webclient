@@ -13,7 +13,7 @@ import {
 import { useTranslation } from 'react-i18next';
 import { v4 as uuidv4 } from 'uuid';
 import ErrorSummary from '../../Form/ErrorSummary';
-import TextCtrl from '../../FormProvider/TextCtrl';
+import HorizontalTextCtrl from '../../FormProvider/HorizontalTextCtrl';
 import { IAlert } from '../../models/IAlert';
 import { IBank } from '../../Nexus/entities/IBank';
 import {

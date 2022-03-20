@@ -2,29 +2,31 @@ import { FormControl, FormLabel } from '@mui/material';
 import { get } from 'lodash';
 import React from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
-import DFOSelect from '../components/DFOSelect/DFOSelect';
+import DFOInput from '../components/DFOInput/DFOInput';
 
 interface IProps {
   name: string;
   label: string;
-  options: string[];
+  placeholder: string;
 }
 
-const SelectCtrl = ({
+const VerticalTextCtrl = ({
   name,
   label = '',
-  options
+  placeholder = ''
 }: IProps): React.ReactElement => {
   const {
     formState: { errors }
   } = useFormContext();
 
   return (
-    <FormControl error={!!get(errors, name)}>
-      <FormLabel sx={{ paddingBottom: 2 }}>{label}</FormLabel>
+    <FormControl error={!!get(errors, name)} sx={{ width: '100%' }}>
+      <FormLabel>{label}</FormLabel>
       <Controller
         name={name}
-        render={({ field }) => <DFOSelect {...field} options={options} />}
+        render={({ field }) => (
+          <DFOInput {...field} placeholder={placeholder} disableUnderline />
+        )}
       />
       {!!get(errors, name) && (
         <FormLabel>{get(errors, name)?.message ?? ''}</FormLabel>
@@ -33,4 +35,4 @@ const SelectCtrl = ({
   );
 };
 
-export default SelectCtrl;
+export default VerticalTextCtrl;

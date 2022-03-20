@@ -5,7 +5,6 @@ import React, { useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { v4 as uuidv4 } from 'uuid';
-import AlertModal from '../../common/AlertModal';
 import Utils from '../../common/Utils';
 import ErrorSummary from '../../Form/ErrorSummary';
 import { IAlert } from '../../models/IAlert';
@@ -94,12 +93,12 @@ function DeleteNeedForm({
           {t('cancel')}
         </Button>
         <ErrorSummary errors={methods.formState.errors} />
-        <AlertModal
+        {/*  <AlertModal
           modalShow={modalShow}
           setModalShow={setModalShow}
           title="Attention"
           text="This need has one or more connected requirements or has subneeds, please remove them to be able to delete"
-        />
+        /> */}
       </form>
     </FormProvider>
   );

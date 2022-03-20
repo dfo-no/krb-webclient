@@ -1,21 +1,21 @@
-import { Box } from '@mui/material';
+import Box from '@mui/material/Box';
 import makeStyles from '@mui/styles/makeStyles';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import DFOSearchBar from '../../../components/DFOSearchBar/DFOSearchBar';
-import { useAppSelector } from '../../../store/hooks';
 import {
   DFOAccordionElement,
   DFOAccordionProvider
 } from '../../../components/DFOAccordion/DFOAccordion';
+import DFOSearchBar from '../../../components/DFOSearchBar/DFOSearchBar';
 import { IInheritedBank } from '../../../models/IInheritedBank';
-import InheritanceBankBody from './InheritedBankAccordionBody';
-import InheritanceBankHeader from './InheritedBankAccordionHeader';
-import { StandardContainer } from '../../Components/StandardContainer';
+import { useAppSelector } from '../../../store/hooks';
 import {
   SearchContainer,
   SearchFieldContainer
 } from '../../Components/SearchContainer';
+import { StandardContainer } from '../../Components/StandardContainer';
+import InheritanceBankBody from './InheritedBankAccordionBody';
+import InheritanceBankHeader from './InheritedBankAccordionHeader';
 
 const useStyles = makeStyles({
   accordionElement: {
@@ -47,26 +47,24 @@ export default function InheritancePage(): React.ReactElement {
   };
 
   return (
-    <>
-      <StandardContainer>
-        <SearchContainer>
-          <SearchFieldContainer>
-            {' '}
-            <DFOSearchBar
-              list={project.inheritedBanks}
-              label={t('Find banks to inherit from')}
-              callback={searchFieldCallback}
-              searchFunction={inheritanceSearch}
-            />
-          </SearchFieldContainer>
-        </SearchContainer>
-
-        <Box>
-          <DFOAccordionProvider
-            body={<>{renderInheritedBanks(project.inheritedBanks)}</>}
+    <StandardContainer>
+      <SearchContainer>
+        <SearchFieldContainer>
+          {' '}
+          <DFOSearchBar
+            list={project.inheritedBanks}
+            placeholder={t('Find banks to inherit from')}
+            callback={searchFieldCallback}
+            searchFunction={inheritanceSearch}
           />
-        </Box>
-      </StandardContainer>
-    </>
+        </SearchFieldContainer>
+      </SearchContainer>
+
+      <Box>
+        <DFOAccordionProvider
+          body={<>{renderInheritedBanks(project.inheritedBanks)}</>}
+        />
+      </Box>
+    </StandardContainer>
   );
 }

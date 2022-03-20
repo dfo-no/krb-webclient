@@ -9,7 +9,7 @@ import { IProduct, BaseProductSchema } from '../../../Nexus/entities/IProduct';
 import { useAppDispatch } from '../../../store/hooks';
 import { addAlert } from '../../../store/reducers/alert-reducer';
 import { FormItemBox } from '../../Components/Form/FormItemBox';
-import TextCtrl from '../../../FormProvider/TextCtrl';
+import HorizontalTextCtrl from '../../../FormProvider/HorizontalTextCtrl';
 import { FormIconButton } from '../../Components/Form/FormIconButton';
 import CheckIcon from '@mui/icons-material/Check';
 import CloseIcon from '@mui/icons-material/Close';
@@ -58,10 +58,13 @@ export default function EditProductForm({
       >
         <FormItemBox>
           <FormFlexBox sx={{ paddingLeft: 1 }}>
-            <TextCtrl name="title" label={t('Title')} />
+            <HorizontalTextCtrl name="title" placeholder={t('Title')} />
           </FormFlexBox>
           <FormFlexBox sx={{ paddingLeft: 1, paddingRight: 1 }}>
-            <TextCtrl name="description" label={t('Description')} />
+            <HorizontalTextCtrl
+              name="description"
+              placeholder={t('Description')}
+            />
           </FormFlexBox>
           <FormIconButton type="submit" aria-label="save">
             <CheckIcon />

@@ -7,7 +7,7 @@ import { useTranslation } from 'react-i18next';
 import { v4 as uuidv4 } from 'uuid';
 import LoaderSpinner from '../../common/LoaderSpinner';
 import ErrorSummary from '../../Form/ErrorSummary';
-import TextCtrl from '../../FormProvider/TextCtrl';
+import VerticalTextCtrl from '../../FormProvider/VerticalTextCtrl';
 import { IAlert } from '../../models/IAlert';
 import ModelType from '../../models/ModelType';
 import { Parentable } from '../../models/Parentable';
@@ -91,8 +91,12 @@ function NewRequirementForm({
         autoComplete="off"
         noValidate
       >
-        <TextCtrl name="title" label={t('Title')} />
-        <TextCtrl name="description" label={t('Description')} />
+        <VerticalTextCtrl name="title" label={t('Title')} placeholder="" />
+        <VerticalTextCtrl
+          name="description"
+          label={t('Description')}
+          placeholder=""
+        />
         <Button variant="primary" type="submit">
           {t('save')}
         </Button>

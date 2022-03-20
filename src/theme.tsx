@@ -163,6 +163,10 @@ theme.typography.smallUnderlineBlue = {
   cursor: 'pointer'
 };
 
+theme.typography.smedium = {
+  fontSize: '18px'
+};
+
 theme.typography.smediumBold = {
   fontSize: '18px',
   fontWeight: 700
@@ -189,6 +193,17 @@ theme.typography.bigBold = {
   fontWeight: 700
 };
 
+theme.typography.bigBlue = {
+  color: theme.palette.primary.main,
+  fontSize: '28px'
+};
+
+theme.typography.bigBoldBlue = {
+  color: theme.palette.primary.main,
+  fontSize: '48px',
+  fontWeight: 550
+};
+
 theme.typography.biggerBold = {
   fontSize: '40px'
 };
@@ -210,7 +225,7 @@ theme.components = {
       {
         props: { variant: 'primary' },
         style: {
-          backgroundColor: theme.palette.lightBlue.main,
+          backgroundColor: theme.palette.indigo.main,
           color: theme.palette.dfoWhite.main,
           whiteSpace: 'nowrap',
           height: 40,
@@ -228,6 +243,19 @@ theme.components = {
           height: 40,
           '&:hover': {
             background: theme.palette.dfoErrorRedHover.main
+          }
+        }
+      },
+      {
+        props: { variant: 'warningTransparent' },
+        style: {
+          color: theme.palette.dfoErrorRed.main,
+          whiteSpace: 'nowrap',
+          height: 40,
+          textDecorationLine: 'underline',
+          '&:hover': {
+            background: 'none',
+            textDecorationLine: 'underline'
           }
         }
       },

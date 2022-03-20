@@ -10,7 +10,7 @@ import { useParams } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
 import LoaderSpinner from '../../../common/LoaderSpinner';
 import { DFOCardHeader } from '../../../components/DFOCard/DFOCardHeader';
-import TextCtrl from '../../../FormProvider/TextCtrl';
+import HorizontalTextCtrl from '../../../FormProvider/HorizontalTextCtrl';
 import { IAlert } from '../../../models/IAlert';
 import { PutProjectSchema } from '../../../models/Project';
 import { IBank } from '../../../Nexus/entities/IBank';
@@ -56,31 +56,36 @@ function PropertiesPage(): React.ReactElement {
   }
 
   return (
-    <FormProvider {...methods}>
-      <form
-        onSubmit={methods.handleSubmit(onSubmit)}
-        autoComplete="off"
-        noValidate
-      >
-        <StandardContainer>
-          <Card>
-            <DFOCardHeader>
-              <ProjectHeader />
-            </DFOCardHeader>
+    <StandardContainer>
+      <FormProvider {...methods}>
+        <form
+          onSubmit={methods.handleSubmit(onSubmit)}
+          autoComplete="off"
+          noValidate
+        >
+          <StandardContainer>
+            <Card>
+              <DFOCardHeader>
+                <ProjectHeader />
+              </DFOCardHeader>
 
-            <CardContent>
-              <TextCtrl name="title" label={t('Title')} />
-              <TextCtrl name="description" label={t('Description')} />
-            </CardContent>
-            <CardActions>
-              <Button variant="primary" type="submit" aria-label="save">
-                {t('Save')}
-              </Button>
-            </CardActions>
-          </Card>
-        </StandardContainer>
-      </form>
-    </FormProvider>
+              <CardContent>
+                <HorizontalTextCtrl name="title" placeholder={t('Title')} />
+                <HorizontalTextCtrl
+                  name="description"
+                  placeholder={t('Description')}
+                />
+              </CardContent>
+              <CardActions>
+                <Button variant="primary" type="submit" aria-label="save">
+                  {t('Save')}
+                </Button>
+              </CardActions>
+            </Card>
+          </StandardContainer>
+        </form>
+      </FormProvider>
+    </StandardContainer>
   );
 }
 

@@ -10,7 +10,7 @@ import { useFieldArray } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { v4 as uuidv4 } from 'uuid';
 import CheckboxCtrl from '../../FormProvider/CheckboxCtrl';
-import TextCtrl from '../../FormProvider/TextCtrl';
+import HorizontalTextCtrl from '../../FormProvider/HorizontalTextCtrl';
 import { IRequirement } from '../../Nexus/entities/IRequirement';
 import { IVariant } from '../../Nexus/entities/IVariant';
 import VariantType from '../../Nexus/entities/VariantType';
@@ -50,9 +50,9 @@ const VariantsList = () => {
             <AccordionDetails
               sx={{ bgcolor: 'common.white', border: '1px solid black' }}
             >
-              <TextCtrl
+              <HorizontalTextCtrl
                 name={`variants.${index}.description` as const}
-                label="Beskrivelse"
+                placeholder="Beskrivelse"
               />
               <CheckboxCtrl
                 name={`variants.${index}.useProduct` as const}
@@ -67,12 +67,12 @@ const VariantsList = () => {
                 label="Spesifikasjon"
               />
               <br />
-              <TextCtrl
-                label="Requirement text"
+              <HorizontalTextCtrl
+                placeholder="Requirement text"
                 name={`variants.${index}.requirementText` as const}
               />
-              <TextCtrl
-                label="Requirement text"
+              <HorizontalTextCtrl
+                placeholder="Requirement text"
                 name={`variants.${index}.instruction` as const}
               />
             </AccordionDetails>

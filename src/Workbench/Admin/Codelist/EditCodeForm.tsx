@@ -5,7 +5,7 @@ import React from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { v4 as uuidv4 } from 'uuid';
-import TextCtrl from '../../../FormProvider/TextCtrl';
+import TextCtrl from '../../../FormProvider/HorizontalTextCtrl';
 import { IAlert } from '../../../models/IAlert';
 import { Parentable } from '../../../models/Parentable';
 import { BaseCodeSchema, ICode } from '../../../Nexus/entities/ICode';
@@ -61,10 +61,10 @@ function EditCodeForm({
       >
         <FormItemBox>
           <FormFlexBox sx={{ paddingLeft: 1 }}>
-            <TextCtrl name="title" label={t('Title')} />
+            <TextCtrl name="title" placeholder={t('Title')} />
           </FormFlexBox>
           <FormFlexBox sx={{ paddingLeft: 1, paddingRight: 1 }}>
-            <TextCtrl name="description" label={t('Description')} />
+            <TextCtrl name="description" placeholder={t('Description')} />
           </FormFlexBox>
           <FormIconButton type="submit" aria-label="save">
             <CheckIcon />
