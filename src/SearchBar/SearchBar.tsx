@@ -63,7 +63,7 @@ export default function SearchBar({
       <FormControl
         value={input}
         type="text"
-        placeholder={t('Søk kravbanker')}
+        placeholder={t('search for banks')}
         onChange={(e) => updateSearchText(e)}
       />
       {displaylist(searchList)}
