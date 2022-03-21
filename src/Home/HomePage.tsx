@@ -15,23 +15,25 @@ import {
   useGetAllBanksQuery,
   useGetDateSortedBanksQuery
 } from '../store/api/bankApi';
-import theme from '../theme';
 import FilteredList from './Components/FilteredList';
+import { ScrollableContainer } from '../Workbench/Components/ScrollableContainer';
 
 const useStyles = makeStyles({
   homepageWrapper: {
-    height: '100%',
-    width: '100%',
+    flexGrow: 1,
+    minHeight: 0,
     display: 'flex',
     flexDirection: 'column',
-    justifyContent: 'space-between',
-    [theme.breakpoints.down('md')]: {
-      flexWrap: 'wrap'
-    }
+    justifyContent: 'space-between'
+  },
+  scrollableContent: {
+    height: '100%',
+    width: '100%'
   },
   actionContainer: {
     display: 'flex',
-    margin: '1%',
+    margin: 8,
+    marginBottom: 0,
     gap: 10
   },
   navigation: {
@@ -49,55 +51,57 @@ export default function HomePage(): React.ReactElement {
 
   return (
     <div className={classes.homepageWrapper}>
-      <Box>
-        <Box className={classes.actionContainer}>
-          <Box className={classes.navigation}>
-            {list && <SearchBar list={list} />}
+      <ScrollableContainer>
+        <Box className={classes.scrollableContent}>
+          <Box className={classes.actionContainer}>
+            <Box className={classes.navigation}>
+              {list && <SearchBar list={list} />}
+            </Box>
+            <Box className={classes.navigation}>
+              <List>
+                <ListItem>
+                  <Link to="/workbench">
+                    <h5>{t('create projects')}</h5>
+                  </Link>
+                </ListItem>
+                <ListItem>
+                  <Link to="/response">
+                    <h5>{t('create response')}</h5>
+                  </Link>
+                </ListItem>
+                <ListItem>
+                  <Link to="/evaluation">
+                    <h5>{t('create evaluation')}</h5>
+                  </Link>
+                </ListItem>
+                <ListItem>
+                  <Link to="/specification">
+                    <h5>{t('create specification')}</h5>
+                  </Link>
+                </ListItem>
+              </List>
+            </Box>
           </Box>
-          <Box className={classes.navigation}>
-            <List>
-              <ListItem>
-                <Link to="/workbench">
-                  <h5>{t('create projects')}</h5>
-                </Link>
-              </ListItem>
-              <ListItem>
-                <Link to="/response">
-                  <h5>{t('create response')}</h5>
-                </Link>
-              </ListItem>
-              <ListItem>
-                <Link to="/evaluation">
-                  <h5>{t('create evaluation')}</h5>
-                </Link>
-              </ListItem>
-              <ListItem>
-                <Link to="/specification">
-                  <h5>{t('create specification')}</h5>
-                </Link>
-              </ListItem>
-            </List>
+          <Box className={classes.actionContainer}>
+            <Box className={classes.navigation}>
+              <Card>
+                <CardHeader title={t('newest banks')} />
+                <CardContent>
+                  {latest && <FilteredList list={latest} />}
+                </CardContent>
+              </Card>
+            </Box>
+            <Box className={classes.navigation}>
+              <Card>
+                <CardHeader title={t('Alfabetically sorted')} />
+                <CardContent>
+                  {alfabetic && <FilteredList list={alfabetic} />}
+                </CardContent>
+              </Card>
+            </Box>
           </Box>
         </Box>
-        <Box className={classes.actionContainer}>
-          <Box className={classes.navigation}>
-            <Card>
-              <CardHeader title={t('newest banks')} />
-              <CardContent>
-                {latest && <FilteredList list={latest} />}
-              </CardContent>
-            </Card>
-          </Box>
-          <Box className={classes.navigation}>
-            <Card>
-              <CardHeader title={t('Alfabetically sorted')} />
-              <CardContent>
-                {alfabetic && <FilteredList list={alfabetic} />}
-              </CardContent>
-            </Card>
-          </Box>
-        </Box>
-      </Box>
+      </ScrollableContainer>
       <Footer />
     </div>
   );
