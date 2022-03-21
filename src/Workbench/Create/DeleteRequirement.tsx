@@ -27,11 +27,9 @@ const DeleteRequirement = ({ needIndex, requirementIndex }: IProps) => {
   }
 
   return (
-    <span>
+    <>
       <IconButton
         onClick={() => setOpen(true)}
-        size="large"
-        edge="start"
         color="inherit"
         aria-label="edit"
       >
@@ -50,7 +48,7 @@ const DeleteRequirement = ({ needIndex, requirementIndex }: IProps) => {
           />
         }
       />
-    </span>
+    </>
   );
 };
 

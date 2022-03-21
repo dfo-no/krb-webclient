@@ -5,34 +5,30 @@ import AccordionDetails from '@mui/material/AccordionDetails';
 import AccordionSummary from '@mui/material/AccordionSummary';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
+import Divider from '@mui/material/Divider';
+import MenuItem from '@mui/material/MenuItem';
+import Select from '@mui/material/Select';
 import Tooltip from '@mui/material/Tooltip';
 import Typography from '@mui/material/Typography';
-import React from 'react';
-import { useFieldArray, useFormContext } from 'react-hook-form';
-import { useTranslation } from 'react-i18next';
+import { Controller, useFieldArray, useFormContext } from 'react-hook-form';
 import { v4 as uuidv4 } from 'uuid';
 import CheckboxCtrl from '../../FormProvider/CheckboxCtrl';
 import RadioCtrl from '../../FormProvider/RadioCtrl';
 import VerticalTextCtrl from '../../FormProvider/VerticalTextCtrl';
-import { Parentable } from '../../models/Parentable';
-import { INeed } from '../../Nexus/entities/INeed';
+import { IBank } from '../../Nexus/entities/IBank';
 import { IRequirement } from '../../Nexus/entities/IRequirement';
 import { IVariant } from '../../Nexus/entities/IVariant';
 import VariantType from '../../Nexus/entities/VariantType';
-import NewQuestion from './NewQuestion';
 import QuestionsList from './QuestionsList';
-import { useSelectState } from './SelectContext';
 
 interface IProps {
+  project: IBank;
   needIndex: number;
   requirementIndex: number;
 }
 
-const VariantsList = ({ needIndex, requirementIndex }: IProps) => {
-  const { t } = useTranslation();
-  const { needIndex: needIndex2 } = useSelectState();
-
-  const { register } = useFormContext();
+const VariantsList = ({ project }: IProps) => {
+  const { getValues } = useFormContext();
   const { fields, append, remove } = useFieldArray<IRequirement>({
     name: `variants`
   });
@@ -55,27 +51,13 @@ const VariantsList = ({ needIndex, requirementIndex }: IProps) => {
 
   return (
     <Box>
-      <Button onClick={() => appendVariant()}>Add Variant</Button>
       {fields.map((field, index) => {
         return (
           <Accordion key={field.id}>
             <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-              {/*  {item?.description ? item.description : ''} */}
-              {/*  <TextCtrl
-                name={`requirements.${index}.variants.${index}.title`}
-                label="Foo"
-              /> */}
-              <VerticalTextCtrl
-                key={field.id} // important to include key with field's id
-                name={`variants.${index}.requirementText`}
-                label="requirementText"
-                placeholder=""
-              />
-              <VerticalTextCtrl
-                name={`variants.${index}.instruction`}
-                label="instruction"
-                placeholder=""
-              />
+              <Typography>
+                {getValues(`variants.${index}.requirementText`)}
+              </Typography>
               <Box sx={{ flex: '1 1 auto' }} />
               <Tooltip title="Slett variant">
                 <DeleteIcon
@@ -85,52 +67,70 @@ const VariantsList = ({ needIndex, requirementIndex }: IProps) => {
                 />
               </Tooltip>
             </AccordionSummary>
-
-            {/* <AccordionDetails
-              sx={{ bgcolor: 'common.white', border: '1px solid black' }}
-            >
-              <TextCtrl
-                label="Krav tekst"
-                name={
-                  `requirements.${requirementIndex}.variants.${index}.requirementText` as const
-                }
+            <AccordionDetails>
+              <Divider />
+              <VerticalTextCtrl
+                name={`variants.${index}.requirementText`}
+                label="Kravtekst"
+                placeholder=""
               />
-              <TextCtrl
-                label="Instruksjon tekst"
-                name={
-                  `requirements.${requirementIndex}.variants.${index}.instruction` as const
-                }
+              <VerticalTextCtrl
+                name={`variants.${index}.instruction`}
+                label="Instruksjon"
+                placeholder=""
+              />
+              <VerticalTextCtrl
+                name={`variants.${index}.description`}
+                label="Beskrivelse"
+                placeholder=""
               />
               <RadioCtrl
-                name={
-                  `requirements.${requirementIndex}.variants.${index}.type` as const
-                }
+                name="type"
                 label="Type"
                 options={[
                   { value: VariantType.requirement, label: 'Krav' },
                   { value: VariantType.info, label: 'Info' }
                 ]}
               />
-               <CheckboxCtrl
-                name={`variants.${index}.useProduct` as const}
-                label="Produkt"
-              />
-              <CheckboxCtrl
-                name={`variants.${index}.useQualification`}
-                label="Kvalifisering"
-              />
-              <CheckboxCtrl
-                name={`variants.${index}.useSpesification` as const}
-                label="Spesifikasjon"
-              />
-              <br />
+              <div style={{ width: '100%' }}>
+                <CheckboxCtrl
+                  name={`variants.${index}.useProduct` as const}
+                  label="Produkt"
+                />
+                {/* <CheckboxCtrl
+                  name={`variants.${index}.useQualification`}
+                  label="Kvalifisering"
+                /> */}
+                <CheckboxCtrl
+                  name={`variants.${index}.useSpesification` as const}
+                  label="Generellt krav (kravspesifikasjon)"
+                />
 
-              <NewQuestion index={index} />
+                <Controller
+                  render={({ field: field2 }) => (
+                    <Select {...field2} multiple>
+                      {project.products.map((p) => (
+                        <MenuItem key={p.id} value={p.id}>
+                          {p.title}
+                        </MenuItem>
+                      ))}
+                    </Select>
+                  )}
+                  name={`variants.${index}.products`}
+                />
+              </div>
               <QuestionsList index={index} />
-            </AccordionDetails> */}
+            </AccordionDetails>
           </Accordion>
         );
       })}
+      <Button
+        variant="contained"
+        color="warning"
+        onClick={() => appendVariant()}
+      >
+        Add Variant
+      </Button>
     </Box>
   );
 };

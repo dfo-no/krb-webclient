@@ -1,62 +1,70 @@
-import React from 'react';
-import { FormProvider, useFieldArray, useFormContext } from 'react-hook-form';
-import { v4 as uuidv4 } from 'uuid';
-import VerticalTextCtrl from '../../FormProvider/VerticalTextCtrl';
+import DeleteIcon from '@mui/icons-material/Delete';
+import Button from '@mui/material/Button';
+import Card from '@mui/material/Card';
+import CardHeader from '@mui/material/CardHeader';
+import IconButton from '@mui/material/IconButton';
+import { useState } from 'react';
+import { useFieldArray, useFormContext } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
 import QuestionEnum from '../../models/QuestionEnum';
-import { QuestionType } from '../../models/QuestionType';
-import { QuestionTypes } from '../../models/QuestionTypes';
 import { IRequirement } from '../../Nexus/entities/IRequirement';
+import QuestionService from '../../Nexus/services/QuestionService';
+import SelectQuestionDialog from './SelectQuestionDialog';
 
 interface IProps {
   index: number;
 }
 
 const QuestionsList = ({ index }: IProps) => {
-  /*   const { control, register, watch } = useFormContext<IRequirement>();
-   */
-  const { fields } = useFieldArray<IRequirement>({
+  const { t } = useTranslation();
+  const { control } = useFormContext<IRequirement>();
+  const { fields, append, remove } = useFieldArray({
+    control,
     name: `variants.${index}.questions` as 'variants.0.questions'
   });
 
+  const [isOpen, setOpen] = useState(false);
+  const [selectedValue, setSelectedValue] = useState(QuestionEnum.Q_TEXT);
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = (value: QuestionEnum) => {
+    setOpen(false);
+    setSelectedValue(value);
+    const questionService = new QuestionService();
+    const result = questionService.getQuestion(value);
+    if (result) {
+      append(result);
+    }
+  };
+
   return (
-    <div>
+    <>
       {fields.map((item, i) => {
         return (
-          <div key={uuidv4()}>
-            <VerticalTextCtrl
-              name={`variants.${index}.questions.${i}.id` as const}
-              label="id"
-              placeholder=""
-            />
-            <VerticalTextCtrl
-              name={`variants.${index}.questions.${i}.type` as const}
-              label="type"
-              placeholder=""
-            />
-            <VerticalTextCtrl
-              name={
-                `variants.${index}.questions.${i}.config.defaultPoint` as const
+          <Card key={item.id}>
+            <CardHeader
+              title={t(item.type)}
+              action={
+                <IconButton aria-label="settings" onClick={() => remove(i)}>
+                  <DeleteIcon color="warning" sx={{ mr: 1 }} />
+                </IconButton>
               }
-              label="type"
-              placeholder=""
             />
-            <VerticalTextCtrl
-              name={`variants.${index}.questions.${i}.config.max` as const}
-              label="type"
-              placeholder=""
-            />
-            {/* <TextCtrl
-              name={`variants.${index}.questions.${i}.sourceRel` as const}
-              label="sourceRel"
-            />
-            <TextCtrl
-              name={`variants.${index}.questions.${i}.sourceOriginal` as const}
-              label="sourceOriginal"
-            /> */}
-          </div>
+          </Card>
         );
       })}
-    </div>
+      <Button sx={{ mt: 1 }} variant="contained" onClick={handleClickOpen}>
+        Lag ny svartype
+      </Button>
+      <SelectQuestionDialog
+        selectedValue={selectedValue}
+        isOpen={isOpen}
+        onClose={handleClose}
+      />
+    </>
   );
 };
 

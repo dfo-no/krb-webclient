@@ -33,9 +33,6 @@ export default function Create(): React.ReactElement {
         flexGrow: 1
       }}
     >
-      <code style={{ backgroundColor: 'orange' }}>
-        {JSON.stringify(needIndex, null, 2)} {project.needs.length}
-      </code>
       <Grid
         container
         spacing={2}
@@ -73,7 +70,7 @@ export default function Create(): React.ReactElement {
           ) : (
             <>
               {project.needs.length >= 1 && (
-                <Typography>Ingen behov valgt</Typography>
+                <Typography>Velg et behov</Typography>
               )}
               {project.needs.length === 0 && <ProjectStart project={project} />}
             </>
