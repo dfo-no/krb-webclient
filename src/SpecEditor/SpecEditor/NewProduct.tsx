@@ -55,6 +55,8 @@ export default function NewProduct(): React.ReactElement {
 
   const classes = useStyles();
 
+  console.log('lol');
+
   const { addProduct } = useProjectMutations();
 
   const defaultValues: Parentable<IProduct> =
