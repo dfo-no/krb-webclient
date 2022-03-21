@@ -1,7 +1,8 @@
 import { joiResolver } from '@hookform/resolvers/joi';
 import DeleteIcon from '@mui/icons-material/Delete';
 import Button from '@mui/material/Button';
-import React, { useState } from 'react';
+import produce from 'immer';
+import React from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { v4 as uuidv4 } from 'uuid';
@@ -10,65 +11,74 @@ import ErrorSummary from '../../Form/ErrorSummary';
 import { IAlert } from '../../models/IAlert';
 import { Parentable } from '../../models/Parentable';
 import { IBank } from '../../Nexus/entities/IBank';
-import { DeleteNeedSchema, INeed } from '../../Nexus/entities/INeed';
+import {
+  BaseRequirementSchema,
+  IRequirement
+} from '../../Nexus/entities/IRequirement';
 import { usePutProjectMutation } from '../../store/api/bankApi';
 import { useAppDispatch } from '../../store/hooks';
 import { addAlert } from '../../store/reducers/alert-reducer';
 import { useSelectState } from './SelectContext';
 
 interface IProps {
-  need: INeed;
+  requirementIndex: number;
+  needIndex: number;
   handleClose: () => void;
   project: IBank;
 }
 
-function DeleteNeedForm({
-  need,
+function DeleteRequirementForm({
+  requirementIndex,
+  needIndex,
   project,
   handleClose
 }: IProps): React.ReactElement {
   const dispatch = useAppDispatch();
+  const [putProject] = usePutProjectMutation();
 
   const { t } = useTranslation();
-  const [putProject] = usePutProjectMutation();
-  const { setNeedIndex } = useSelectState();
+  const { setRequirementIndex } = useSelectState();
 
-  const methods = useForm<Parentable<INeed>>({
-    defaultValues: need,
-    resolver: joiResolver(DeleteNeedSchema),
+  const methods = useForm<Parentable<IRequirement>>({
+    defaultValues: project.needs[needIndex].requirements[requirementIndex],
+    resolver: joiResolver(BaseRequirementSchema),
     context: { needList: project.needs }
   });
 
-  const [modalShow, setModalShow] = useState(false);
-
-  const onSubmit = async (deleteNeed: INeed) => {
-    const foundIndex = project.needs.findIndex((n) => n.id === deleteNeed.id);
-
-    const needs = [...project.needs];
-    if (foundIndex !== -1) {
-      needs.splice(foundIndex, 1);
-    }
-    const nextIndex = Utils.getNextIndexAfterDelete(needs, foundIndex);
-
-    const saveProject: IBank = {
-      ...project,
-      needs
-    };
-    await putProject(saveProject)
+  const onSubmit = async (item: Parentable<IRequirement>) => {
+    // This code can possibly be moved to ProjectMutations if we don't need
+    // to set needIndex or requirementIndex after save
+    let rIndex = -1;
+    const nextState = produce(project, (draftState) => {
+      const nIndex = draftState.needs.findIndex((n) => n.id === item.needId);
+      if (nIndex !== -1) {
+        rIndex = draftState.needs[needIndex].requirements.findIndex(
+          (r) => r.id === item.id
+        );
+        if (rIndex !== -1) {
+          draftState.needs[needIndex].requirements.splice(rIndex, 1);
+        }
+      }
+    });
+    await putProject(nextState)
       .unwrap()
-      .then(() => {
+      .then((result) => {
+        const nextIndex = Utils.getNextIndexAfterDelete(
+          result.needs[needIndex].requirements,
+          rIndex
+        );
+        if (nextIndex !== -1) {
+          setRequirementIndex(nextIndex);
+        }
         const alert: IAlert = {
           id: uuidv4(),
           style: 'success',
-          text: 'Successfully edited need'
+          text: 'Successfully deleted requirement'
         };
         dispatch(addAlert({ alert }));
+        methods.reset();
         handleClose();
-        setNeedIndex(nextIndex);
       });
-
-    // TODO: fix back-end to joi-check with commented out code
-    // element.requirements.length > 0 || Utils.checkIfParent(project.needs, n.id)
   };
 
   return (
@@ -78,14 +88,6 @@ function DeleteNeedForm({
         autoComplete="off"
         noValidate
       >
-        {/* <input
-          name="hasNeeds"
-          defaultValue={
-            Utils.checkIfParent(project.needs, element.id) ? 'true' : 'false'
-          }
-        /> */}
-        {/*  <HiddenCtrl name="requirements" /> */}
-
         <Button variant="warning" type="submit">
           <DeleteIcon />
         </Button>
@@ -93,15 +95,9 @@ function DeleteNeedForm({
           {t('cancel')}
         </Button>
         <ErrorSummary errors={methods.formState.errors} />
-        {/*  <AlertModal
-          modalShow={modalShow}
-          setModalShow={setModalShow}
-          title="Attention"
-          text="This need has one or more connected requirements or has subneeds, please remove them to be able to delete"
-        /> */}
       </form>
     </FormProvider>
   );
 }
 
-export default DeleteNeedForm;
+export default DeleteRequirementForm;

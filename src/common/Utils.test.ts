@@ -239,4 +239,42 @@ describe('Utils functions should work', () => {
     expect(Utils.capitalizeFirstLetter('a')).toEqual('A');
     expect(Utils.capitalizeFirstLetter('')).toEqual('');
   });
+
+  it('Utils.getNextIndexAfterDelete', () => {
+    const ary1 = ['a'];
+    const foundIndex1 = ary1.findIndex((n) => n === 'a');
+    ary1.splice(foundIndex1, 1);
+    const result1 = Utils.getNextIndexAfterDelete(ary1, foundIndex1);
+    expect(result1).toEqual(null);
+
+    const ary2 = ['a', 'b'];
+    const foundIndex2 = ary2.findIndex((n) => n === 'a');
+    ary1.splice(foundIndex2, 1);
+    const result2 = Utils.getNextIndexAfterDelete(ary2, foundIndex2);
+    expect(result2).toEqual(0);
+
+    const ary3 = ['a', 'b', 'c', 'd'];
+    const foundIndex3 = ary3.findIndex((n) => n === 'b');
+    ary1.splice(foundIndex3, 1);
+    const result3 = Utils.getNextIndexAfterDelete(ary3, foundIndex3);
+    expect(result3).toEqual(1);
+
+    const ary4: string[] = [];
+    const foundIndex4 = ary4.findIndex((n) => n === 'b');
+    ary4.splice(foundIndex4, 1);
+    const result4 = Utils.getNextIndexAfterDelete(ary4, foundIndex4);
+    expect(result4).toEqual(-1);
+
+    const ary5: string[] = ['a', 'b', 'c', 'd'];
+    const foundIndex5 = ary5.findIndex((n) => n === 'c');
+    ary5.splice(foundIndex5, 1);
+    const result5 = Utils.getNextIndexAfterDelete(ary5, foundIndex5);
+    expect(result5).toEqual(2);
+
+    const ary6: string[] = ['a', 'b', 'c', 'd'];
+    const foundIndex6 = ary6.findIndex((n) => n === 'd');
+    ary5.splice(foundIndex6, 1);
+    const result6 = Utils.getNextIndexAfterDelete(ary6, foundIndex5);
+    expect(result6).toEqual(2);
+  });
 });

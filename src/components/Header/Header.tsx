@@ -189,14 +189,6 @@ export default function Header(): React.ReactElement {
                 </Box>
                 <Box className={classes.projectIcons}>
                   <Link
-                    to={`${baseUrl?.url}/admin`}
-                    className={
-                      isLocationAdmin ? classes.selectedIcon : classes.icon
-                    }
-                  >
-                    <SettingsOutlinedIcon />
-                  </Link>
-                  <Link
                     to={`${baseUrl?.url}/create`}
                     className={
                       isLocationCreate ? classes.selectedIcon : classes.icon
@@ -211,6 +203,14 @@ export default function Header(): React.ReactElement {
                     }
                   >
                     <VisibilityOutlinedIcon />
+                  </Link>
+                  <Link
+                    to={`${baseUrl?.url}/admin`}
+                    className={
+                      isLocationAdmin ? classes.selectedIcon : classes.icon
+                    }
+                  >
+                    <SettingsOutlinedIcon />
                   </Link>
                 </Box>
               </Box>
