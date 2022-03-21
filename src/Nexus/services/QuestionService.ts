@@ -161,25 +161,4 @@ export default class QuestionService {
         Utils.assertUnreachable(type);
     }
   };
-
-  generateDefaultProjectValues = (): IBank => {
-    const defaultValues: IBank = {
-      id: '',
-      title: '',
-      description: '',
-      needs: [],
-      codelist: [],
-      products: [],
-      publications: [],
-      tags: [],
-      version: 0,
-      publishedDate: null,
-      type: ModelType.bank,
-      inheritedBanks: [],
-      sourceOriginal: null,
-      sourceRel: null,
-      projectId: null
-    };
-    return defaultValues;
-  };
 }

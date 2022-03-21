@@ -1,12 +1,12 @@
-import { IProduct } from '../../Nexus/entities/IProduct';
 import { useParams } from 'react-router-dom';
+import Utils from '../../common/Utils';
+import { Parentable } from '../../models/Parentable';
+import { ICode } from '../../Nexus/entities/ICode';
+import { ICodelist } from '../../Nexus/entities/ICodelist';
+import { IProduct } from '../../Nexus/entities/IProduct';
+import { ITag } from '../../Nexus/entities/ITag';
 import { IRouteParams } from '../../Workbench/Models/IRouteParams';
 import { useGetProjectQuery, usePutProjectMutation } from './bankApi';
-import { ITag } from '../../Nexus/entities/ITag';
-import { Parentable } from '../../models/Parentable';
-import Utils from '../../common/Utils';
-import { ICodelist } from '../../Nexus/entities/ICodelist';
-import { ICode } from '../../Nexus/entities/ICode';
 
 function useProjectMutations() {
   const { projectId } = useParams<IRouteParams>();

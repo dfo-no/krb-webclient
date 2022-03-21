@@ -30,16 +30,17 @@ export default function Create(): React.ReactElement {
   return (
     <Box
       sx={{
-        flexGrow: 1
+        flexGrow: 1,
+        height: '100%'
       }}
     >
       <Grid
         container
         spacing={2}
         sx={{
-          minHeight: '100vh',
           backgroundColor: theme.palette.gray100.main,
-          marginRight: '1rem'
+          marginRight: '1rem',
+          height: '100%'
         }}
       >
         <Grid item xs={2}>
