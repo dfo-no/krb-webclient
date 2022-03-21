@@ -1,7 +1,6 @@
 import { Box, Button, Typography } from '@mui/material';
 import React from 'react';
 import { useAppSelector } from '../../store/hooks';
-import SpecSideBar from '../SideBar/SpecSideBar';
 import makeStyles from '@mui/styles/makeStyles';
 import theme from '../../theme';
 import byggernIllustration from '../../assets/images/byggern-illustration.svg';
@@ -11,13 +10,12 @@ import { useTranslation } from 'react-i18next';
 const useStyles = makeStyles({
   editor: {
     display: 'flex',
-    paddingTop: 30,
     height: '100%',
-    backgroundColor: theme.palette.gray100.main
+    width: '100vw'
   },
   editorContent: {
     backgroundColor: theme.palette.gray200.main,
-    width: '65%'
+    width: '100%'
   },
   editorContentContainer: {
     display: 'flex',
@@ -50,7 +48,6 @@ export default function SpecEditor(): React.ReactElement {
 
   return (
     <Box className={classes.editor}>
-      <SpecSideBar />
       <Box className={classes.editorContent}>
         {' '}
         <Box className={classes.editorContentContainer}>

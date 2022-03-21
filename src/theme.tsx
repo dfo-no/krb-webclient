@@ -270,6 +270,19 @@ theme.components = {
             background: theme.palette.saveGreenHover.main
           }
         }
+      },
+      {
+        props: { variant: 'saveTransparent' },
+        style: {
+          color: theme.palette.saveGreen.main,
+          whiteSpace: 'nowrap',
+          height: 40,
+          textDecorationLine: 'underline',
+          '&:hover': {
+            background: 'none',
+            textDecorationLine: 'underline'
+          }
+        }
       }
     ]
   },
