@@ -31,12 +31,13 @@ const useStyles = makeStyles({
     paddingTop: 100,
     paddingLeft: 200,
     backgroundColor: theme.palette.gray100.main,
-    height: '100%'
+    flexGrow: 1,
+    minHeight: 0
   },
   topContainer: {
     display: 'flex',
     flexDirection: 'column',
-    gap: 50
+    paddingBottom: 20
   },
   titleSubTitleContainer: {
     display: 'flex',
@@ -74,13 +75,15 @@ const useStyles = makeStyles({
   list: {
     display: 'flex',
     flexDirection: 'column',
-    flexGrow: 1,
+    height: '100%',
+    width: '100%',
+    paddingTop: 0,
+    gap: 15,
     listStyle: 'none',
     marginRight: 20
   },
   projectListItem: {
     padding: 0,
-    paddingBottom: 10,
     textDecoration: 'none',
     width: '100%'
   },
@@ -95,12 +98,12 @@ const useStyles = makeStyles({
     marginTop: 5
   },
   contentContainer: {
-    width: 1000
-  },
-  projects: {
     display: 'flex',
-    alignContent: 'center',
-    marginTop: 50
+    flexDirection: 'column',
+    flexGrow: 1,
+    minHeight: 0,
+    marginBottom: 16,
+    width: 1000
   },
   noProjectsContainer: {
     display: 'flex',
@@ -193,13 +196,11 @@ export default function SpecPage(): React.ReactElement {
               </SearchFieldContainer>
             </SearchContainer>
           </Box>
-          <Box className={classes.projects}>
-            <ScrollableContainer>
-              <List className={classes.list} aria-label="projects">
-                {projects && renderProjects(projects)}
-              </List>
-            </ScrollableContainer>
-          </Box>
+          <ScrollableContainer>
+            <List className={classes.list} aria-label="projects">
+              {projects && renderProjects(projects)}
+            </List>
+          </ScrollableContainer>
         </Box>
       ) : (
         <Box className={classes.noProjectsContainer}>
