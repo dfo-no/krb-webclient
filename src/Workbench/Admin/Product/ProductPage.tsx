@@ -59,42 +59,37 @@ export default function ProductPage(): React.ReactElement {
   };
 
   return (
-    <>
-      <StandardContainer>
-        <SearchContainer>
-          <SearchFieldContainer>
-            {' '}
-            {project && (
-              <DFOSearchBar
-                list={project.products}
-                placeholder={t('search for product')}
-                callback={searchFieldCallback}
-                searchFunction={productsSearch}
-              />
-            )}
-          </SearchFieldContainer>
-          <NewButtonContainer>
-            <Button variant="primary" onClick={() => setCreating(true)}>
-              {t('add new product')}
-            </Button>
-          </NewButtonContainer>
-        </SearchContainer>
-
-        <NestableHierarcyEditableComponents
-          dispatchfunc={updateProductsArrangement}
-          inputlist={products}
-          CreateComponent={
-            <NewProductForm handleClose={() => setCreating(false)} />
-          }
-          EditComponent={(item: Parentable<IProduct>) => (
-            <EditProductForm
-              product={item}
-              handleClose={() => setEditMode('')}
+    <StandardContainer>
+      <SearchContainer>
+        <SearchFieldContainer>
+          {' '}
+          {project && (
+            <DFOSearchBar
+              list={project.products}
+              placeholder={t('search for product')}
+              callback={searchFieldCallback}
+              searchFunction={productsSearch}
             />
           )}
-          depth={5}
-        />
-      </StandardContainer>
-    </>
+        </SearchFieldContainer>
+        <NewButtonContainer>
+          <Button variant="primary" onClick={() => setCreating(true)}>
+            {t('add new product')}
+          </Button>
+        </NewButtonContainer>
+      </SearchContainer>
+
+      <NestableHierarcyEditableComponents
+        dispatchfunc={updateProductsArrangement}
+        inputlist={products}
+        CreateComponent={
+          <NewProductForm handleClose={() => setCreating(false)} />
+        }
+        EditComponent={(item: Parentable<IProduct>) => (
+          <EditProductForm product={item} handleClose={() => setEditMode('')} />
+        )}
+        depth={5}
+      />
+    </StandardContainer>
   );
 }

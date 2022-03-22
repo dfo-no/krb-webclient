@@ -17,6 +17,7 @@ export default class TagService {
     const defaultValues: Parentable<ITag> = {
       id: '',
       title: '',
+      description: '',
       type: ModelType.tag,
       parent: '',
       sourceOriginal: projectId,

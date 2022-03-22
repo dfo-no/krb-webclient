@@ -3,38 +3,30 @@ import Button from '@mui/material/Button';
 import React from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import { useParams } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
 import LoaderSpinner from '../../common/LoaderSpinner';
 import ErrorSummary from '../../Form/ErrorSummary';
 import HorizontalTextCtrl from '../../FormProvider/HorizontalTextCtrl';
 import { IAlert } from '../../models/IAlert';
 import { Parentable } from '../../models/Parentable';
+import { IBank } from '../../Nexus/entities/IBank';
 import { INeed, PostNeedSchema } from '../../Nexus/entities/INeed';
 import Nexus from '../../Nexus/Nexus';
-import {
-  useGetProjectQuery,
-  usePutProjectMutation
-} from '../../store/api/bankApi';
+import { usePutProjectMutation } from '../../store/api/bankApi';
 import { useAppDispatch } from '../../store/hooks';
 import { addAlert } from '../../store/reducers/alert-reducer';
 import { useSelectState } from './SelectContext';
 
 interface IProps {
+  project: IBank;
   handleClose: () => void;
 }
 
-interface IRouteParams {
-  projectId: string;
-}
-
-function NewNeedForm({ handleClose }: IProps): React.ReactElement {
-  const { projectId } = useParams<IRouteParams>();
+function NewNeedForm({ project, handleClose }: IProps): React.ReactElement {
   const nexus = Nexus.getInstance();
   const defaultValues: Parentable<INeed> =
-    nexus.needService.generateDefaultNeedValues(projectId);
+    nexus.needService.generateDefaultNeedValues(project.id);
   const dispatch = useAppDispatch();
-  const { data: project } = useGetProjectQuery(projectId);
   const { setNeedIndex } = useSelectState();
 
   const [putProject] = usePutProjectMutation();
@@ -50,15 +42,18 @@ function NewNeedForm({ handleClose }: IProps): React.ReactElement {
   }
 
   const onSubmit = async (post: Parentable<INeed>) => {
+    const newId = uuidv4();
     const saveProject = {
       ...project,
-      needs: [...project.needs, { ...post, id: uuidv4() }]
+      needs: [...project.needs, { ...post, id: newId }]
     };
     await putProject(saveProject)
       .unwrap()
       .then((result) => {
-        if (result.needs.length > 0) {
-          setNeedIndex(result.needs.length - 1);
+        // set sidebar selected to the new
+        const newIndex = result.needs.findIndex((n) => n.id === newId);
+        if (newIndex !== -1) {
+          setNeedIndex(newIndex);
         }
         const alert: IAlert = {
           id: uuidv4(),

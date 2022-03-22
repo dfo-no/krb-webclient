@@ -18,9 +18,7 @@ interface IRouteParams {
 
 const NewRequirement = ({ need }: IProps) => {
   const [isNewOpen, setNewOpen] = useState(false);
-
   const { projectId } = useParams<IRouteParams>();
-
   const { data: project } = useGetProjectQuery(projectId);
 
   if (!project) {
@@ -39,7 +37,7 @@ const NewRequirement = ({ need }: IProps) => {
         Legg til nytt krav
       </Button>
       <Dialog
-        title="Nytt behov til kravet"
+        title="Nytt krav til behovet"
         isOpen={isNewOpen}
         handleClose={() => setNewOpen(false)}
         children={

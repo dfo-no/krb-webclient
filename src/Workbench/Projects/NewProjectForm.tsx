@@ -1,8 +1,12 @@
 import { joiResolver } from '@hookform/resolvers/joi';
+import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
+import Typography from '@mui/material/Typography';
+import makeStyles from '@mui/styles/makeStyles';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { v4 as uuidv4 } from 'uuid';
+import SelectCtrl from '../../FormProvider/SelectCtrl';
 import VerticalTextCtrl from '../../FormProvider/VerticalTextCtrl';
 import { IAlert } from '../../models/IAlert';
 import { PostProjectSchema } from '../../models/Project';
@@ -11,9 +15,6 @@ import Nexus from '../../Nexus/Nexus';
 import { usePostProjectMutation } from '../../store/api/bankApi';
 import { useAppDispatch } from '../../store/hooks';
 import { addAlert } from '../../store/reducers/alert-reducer';
-import makeStyles from '@mui/styles/makeStyles';
-import { Box, Typography } from '@mui/material';
-import SelectCtrl from '../../FormProvider/SelectCtrl';
 
 interface IProps {
   handleClose: () => void;

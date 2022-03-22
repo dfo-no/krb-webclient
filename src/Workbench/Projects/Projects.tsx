@@ -79,12 +79,14 @@ const useStyles = makeStyles({
   list: {
     display: 'flex',
     flexDirection: 'column',
-    flexGrow: 1,
+    height: '100%',
+    width: '100%',
+    paddingTop: 0,
+    gap: 15,
     listStyle: 'none'
   },
   projectListItem: {
     padding: 0,
-    paddingBottom: 15,
     textDecoration: 'none',
     width: '100%'
   },
@@ -106,17 +108,12 @@ const useStyles = makeStyles({
     marginTop: 5
   },
   contentContainer: {
-    width: 1000
-  },
-  searchContainer: {
     display: 'flex',
     flexDirection: 'column',
-    gap: 50
-  },
-  projects: {
-    display: 'flex',
-    alignContent: 'center',
-    marginTop: 50
+    flexGrow: 1,
+    minHeight: 0,
+    marginBottom: 16,
+    width: 1000
   },
   noProjectsContainer: {
     display: 'flex',
@@ -222,27 +219,23 @@ export default function Projects(): React.ReactElement {
       </Box>
       {projectList ? (
         <Box className={classes.contentContainer}>
-          <Box className={classes.searchContainer}>
-            <SearchContainer>
-              <SearchFieldContainer>
-                {' '}
-                <DFOSearchBar
-                  list={Object(projects)}
-                  placeholder={t('search for banks')}
-                  callback={searchFieldCallback}
-                  searchFunction={searchFunction}
-                />
-              </SearchFieldContainer>
-              <NewButtonContainer>{renderNewBankButton()}</NewButtonContainer>
-            </SearchContainer>
-          </Box>
-          <Box className={classes.projects}>
-            <ScrollableContainer sx={{ padding: 0 }}>
-              <List className={classes.list} aria-label="projects">
-                {projectList && renderProjects(projectList)}
-              </List>
-            </ScrollableContainer>
-          </Box>
+          <SearchContainer sx={{ marginBottom: 1 }}>
+            <SearchFieldContainer>
+              {' '}
+              <DFOSearchBar
+                list={Object(projects)}
+                placeholder={t('search for banks')}
+                callback={searchFieldCallback}
+                searchFunction={searchFunction}
+              />
+            </SearchFieldContainer>
+            <NewButtonContainer>{renderNewBankButton()}</NewButtonContainer>
+          </SearchContainer>
+          <ScrollableContainer>
+            <List className={classes.list} aria-label="projects">
+              {projectList && renderProjects(projectList)}
+            </List>
+          </ScrollableContainer>
         </Box>
       ) : (
         <Box className={classes.noProjectsContainer}>
