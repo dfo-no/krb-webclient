@@ -112,7 +112,12 @@ export default function NewProduct(): React.ReactElement {
               <NewProductTypeList />
             </Box>
             <Box className={classes.saveButtonContainer}>
-              <Button className={classes.saveButton} variant="save">
+              <Button
+                className={classes.saveButton}
+                type="submit"
+                aria-label="save"
+                variant="save"
+              >
                 {t('save')}
               </Button>
             </Box>
