@@ -1,5 +1,5 @@
+import Alert from '@mui/material/Alert';
 import React from 'react';
-import Alert from 'react-bootstrap/Alert';
 import { FieldError, FieldErrors } from 'react-hook-form';
 
 function isFieldError(object: unknown): object is FieldError {
@@ -41,7 +41,7 @@ export default function ErrorSummary<T>({
   traverse(errors);
 
   return (
-    <Alert variant="danger">
+    <Alert severity="error">
       {errorMessages.map((msg) => (
         <div key={msg}>{msg}</div>
       ))}

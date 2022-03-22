@@ -24,7 +24,15 @@ const SelectCtrl = ({
       <FormLabel sx={{ paddingBottom: 2 }}>{label}</FormLabel>
       <Controller
         name={name}
-        render={({ field }) => <DFOSelect {...field} options={options} />}
+        render={({ field }) => (
+          <DFOSelect
+            {...field.name}
+            {...field.onBlur}
+            {...field.onChange}
+            {...field.value}
+            options={options}
+          />
+        )}
       />
       {!!get(errors, name) && (
         <FormLabel>{get(errors, name)?.message ?? ''}</FormLabel>

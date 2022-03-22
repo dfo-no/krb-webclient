@@ -163,7 +163,14 @@ export default function Header(): React.ReactElement {
   const isLocationPreview = tabName === 'preview';
 
   return (
-    <AppBar elevation={0} position="sticky">
+    <AppBar
+      elevation={0}
+      position="sticky"
+      sx={{
+        backgroundColor: theme.palette.dfoWhite.main,
+        borderBottom: `2px solid ${theme.palette.gray300.main}`
+      }}
+    >
       <Toolbar>
         <Box className={classes.header}>
           <Box>
@@ -182,14 +189,6 @@ export default function Header(): React.ReactElement {
                 </Box>
                 <Box className={classes.projectIcons}>
                   <Link
-                    to={`${baseUrl?.url}/admin`}
-                    className={
-                      isLocationAdmin ? classes.selectedIcon : classes.icon
-                    }
-                  >
-                    <SettingsOutlinedIcon />
-                  </Link>
-                  <Link
                     to={`${baseUrl?.url}/create`}
                     className={
                       isLocationCreate ? classes.selectedIcon : classes.icon
@@ -204,6 +203,14 @@ export default function Header(): React.ReactElement {
                     }
                   >
                     <VisibilityOutlinedIcon />
+                  </Link>
+                  <Link
+                    to={`${baseUrl?.url}/admin`}
+                    className={
+                      isLocationAdmin ? classes.selectedIcon : classes.icon
+                    }
+                  >
+                    <SettingsOutlinedIcon />
                   </Link>
                 </Box>
               </Box>

@@ -56,34 +56,36 @@ function PropertiesPage(): React.ReactElement {
   }
 
   return (
-    <FormProvider {...methods}>
-      <form
-        onSubmit={methods.handleSubmit(onSubmit)}
-        autoComplete="off"
-        noValidate
-      >
-        <StandardContainer>
-          <Card>
-            <DFOCardHeader>
-              <ProjectHeader />
-            </DFOCardHeader>
+    <StandardContainer>
+      <FormProvider {...methods}>
+        <form
+          onSubmit={methods.handleSubmit(onSubmit)}
+          autoComplete="off"
+          noValidate
+        >
+          <StandardContainer>
+            <Card>
+              <DFOCardHeader>
+                <ProjectHeader />
+              </DFOCardHeader>
 
-            <CardContent>
-              <HorizontalTextCtrl name="title" placeholder={t('Title')} />
-              <HorizontalTextCtrl
-                name="description"
-                placeholder={t('Description')}
-              />
-            </CardContent>
-            <CardActions>
-              <Button variant="primary" type="submit" aria-label="save">
-                {t('Save')}
-              </Button>
-            </CardActions>
-          </Card>
-        </StandardContainer>
-      </form>
-    </FormProvider>
+              <CardContent>
+                <HorizontalTextCtrl name="title" placeholder={t('Title')} />
+                <HorizontalTextCtrl
+                  name="description"
+                  placeholder={t('Description')}
+                />
+              </CardContent>
+              <CardActions>
+                <Button variant="primary" type="submit" aria-label="save">
+                  {t('Save')}
+                </Button>
+              </CardActions>
+            </Card>
+          </StandardContainer>
+        </form>
+      </FormProvider>
+    </StandardContainer>
   );
 }
 

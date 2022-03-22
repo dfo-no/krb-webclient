@@ -1,138 +1,135 @@
 import '@fontsource/source-sans-pro';
-import { adaptV4Theme, createTheme } from '@mui/material/styles';
-import dfoThemeScss from './dfo-theme.module.scss';
+import { createTheme } from '@mui/material/styles';
 
-const theme = createTheme(
-  adaptV4Theme({
-    typography: {
-      fontFamily: ['Source Sans Pro', 'Helvetica', 'Arial'].join(',')
-    },
+const theme = createTheme({
+  typography: {
+    fontFamily: ['Source Sans Pro', 'Helvetica', 'Arial'].join(',')
+  },
 
-    // TODO: Out of sync with mui@5's breakpoints
-    // @see https://mui.com/guides/migration-v4/#theme
-    breakpoints: {
-      values: {
-        xs: 0,
-        sm: 600,
-        md: 900,
-        mdd: 906,
-        mddd: 956,
-        lg: 1200,
-        xl: 1536
-      }
-    },
-    palette: {
-      primary: {
-        main: dfoThemeScss.primary
-      },
-      secondary: {
-        main: dfoThemeScss.secondary
-      },
-      dfoBlue: {
-        main: dfoThemeScss.dfoBlue
-      },
-      dfoDarkBlue: {
-        main: dfoThemeScss.dfoDarkBlue
-      },
-      dfoInputBackground: {
-        main: dfoThemeScss.dfoInputBackground
-      },
-      dfoWhite: {
-        main: dfoThemeScss.dfoWhite
-      },
-      dfoLightBlue: {
-        main: dfoThemeScss.dfoLightBlue
-      },
-      dfoErrorRed: {
-        main: dfoThemeScss.dfoErrorRed
-      },
-      dfoErrorRedHover: {
-        main: dfoThemeScss.dfoErrorRedHover
-      },
-      dfoBackgroundBlue: {
-        main: dfoThemeScss.dfoBackgroundBlue
-      },
-      gray100: {
-        main: dfoThemeScss.gray100
-      },
-      gray200: {
-        main: dfoThemeScss.gray200
-      },
-      gray300: {
-        main: dfoThemeScss.gray300
-      },
-      gray400: {
-        main: dfoThemeScss.gray400
-      },
-      gray500: {
-        main: dfoThemeScss.gray500
-      },
-      gray600: {
-        main: dfoThemeScss.gray600
-      },
-      gray700: {
-        main: dfoThemeScss.gray700
-      },
-      gray800: {
-        main: dfoThemeScss.gray800
-      },
-      gray900: {
-        main: dfoThemeScss.gray900
-      },
-      blue: {
-        main: dfoThemeScss.blue
-      },
-      black: {
-        main: dfoThemeScss.black
-      },
-      lightBlue: {
-        main: dfoThemeScss.lightBlue
-      },
-      indigo: {
-        main: dfoThemeScss.indigo
-      },
-      purple: {
-        main: dfoThemeScss.purple
-      },
-      pink: {
-        main: dfoThemeScss.pink
-      },
-      red: {
-        main: dfoThemeScss.red
-      },
-      yellow: {
-        main: dfoThemeScss.yellow
-      },
-      brandPrimary: {
-        main: dfoThemeScss.brandPrimary
-      },
-      green: {
-        main: dfoThemeScss.green
-      },
-      teal: {
-        main: dfoThemeScss.teal
-      },
-      cyan: {
-        main: dfoThemeScss.cyan
-      },
-      linkHoverColor: {
-        main: dfoThemeScss.linkHoverColor
-      },
-      saveGreen: {
-        main: dfoThemeScss.saveGreen
-      },
-      saveGreenHover: {
-        main: dfoThemeScss.saveGreenHover
-      },
-      success: {
-        main: dfoThemeScss.success
-      },
-      silver: {
-        main: dfoThemeScss.silver
-      }
+  // TODO: Out of sync with mui@5's breakpoints
+  // @see https://mui.com/guides/migration-v4/#theme
+  breakpoints: {
+    values: {
+      xs: 0,
+      sm: 600,
+      md: 900,
+      mdd: 906,
+      mddd: 956,
+      lg: 1200,
+      xl: 1536
     }
-  })
-);
+  },
+  palette: {
+    primary: {
+      main: '#012a4c'
+    },
+    secondary: {
+      main: '#009fe3'
+    },
+    dfoBlue: {
+      main: '#005c91'
+    },
+    dfoDarkBlue: {
+      main: '#012a4c'
+    },
+    dfoInputBackground: {
+      main: '#f2f1f9'
+    },
+    dfoWhite: {
+      main: '#ffff;'
+    },
+    dfoLightBlue: {
+      main: '#1fa9e6'
+    },
+    dfoErrorRed: {
+      main: '#d32f2e'
+    },
+    dfoErrorRedHover: {
+      main: '#e65655'
+    },
+    dfoBackgroundBlue: {
+      main: '#bfe7f8'
+    },
+    gray100: {
+      main: '#f7f7f7'
+    },
+    gray200: {
+      main: '#efefef'
+    },
+    gray300: {
+      main: '#e5e5e5'
+    },
+    gray400: {
+      main: '#d1d1d'
+    },
+    gray500: {
+      main: '#c4c4c4'
+    },
+    gray600: {
+      main: '#b5b5b5'
+    },
+    gray700: {
+      main: '#828282'
+    },
+    gray800: {
+      main: '#848484'
+    },
+    gray900: {
+      main: '#333333'
+    },
+    blue: {
+      main: '#012a4c'
+    },
+    black: {
+      main: '#000000'
+    },
+    lightBlue: {
+      main: '#1fa9e6'
+    },
+    indigo: {
+      main: '#005b91'
+    },
+    purple: {
+      main: '#009fe3'
+    },
+    pink: {
+      main: '#e83f53'
+    },
+    red: {
+      main: '#e52036'
+    },
+    yellow: {
+      main: '#f7b715;'
+    },
+    brandPrimary: {
+      main: '#012a4c'
+    },
+    green: {
+      main: '#018566'
+    },
+    teal: {
+      main: '#00ab84 '
+    },
+    cyan: {
+      main: '#008ea6'
+    },
+    linkHoverColor: {
+      main: '#009fe3'
+    },
+    saveGreen: {
+      main: '#019b78'
+    },
+    saveGreenHover: {
+      main: '#04ba91'
+    },
+    success: {
+      main: '#018566'
+    },
+    silver: {
+      main: '#bbbbbb'
+    }
+  }
+});
 
 theme.typography.small = {
   fontSize: '14px',
