@@ -49,11 +49,9 @@ export default function NewProductNeedList(): React.ReactElement {
     return (
       <List>
         {productList.map((product: IProduct, index: number) => {
-          {
-            return (
-              <NewProductTypeListItem productListItem={product} key={index} />
-            );
-          }
+          return (
+            <NewProductTypeListItem productListItem={product} key={index} />
+          );
         })}
       </List>
     );
