@@ -3,7 +3,7 @@ import { IPrefilledResponse } from '../../models/IPrefilledResponse';
 import { IRequirementAnswer } from '../../models/IRequirementAnswer';
 import { IResponse } from '../../models/IResponse';
 import { IResponseProduct } from '../../models/IResponseProduct';
-import { ISpecification } from '../../models/ISpecification';
+import { ISpecification } from '../entities/ISpecification';
 import ResponseStoreService from './ResponseStoreService';
 import UuidService from './UuidService';
 

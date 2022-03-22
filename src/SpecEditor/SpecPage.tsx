@@ -1,27 +1,27 @@
-import makeStyles from '@mui/styles/makeStyles';
 import Box from '@mui/material/Box';
+import Card from '@mui/material/Card';
 import Divider from '@mui/material/Divider';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import Typography from '@mui/material/Typography';
+import makeStyles from '@mui/styles/makeStyles';
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import Card from '@mui/material/Card';
 import mainIllustration from '../assets/images/main-illustration.svg';
-import theme from '../theme';
-import { useGetAllProjectsQuery } from '../store/api/bankApi';
-import { IBank } from '../Nexus/entities/IBank';
 import LoaderSpinner from '../common/LoaderSpinner';
+import DFODialog from '../components/DFODialog/DFODialog';
+import DFOSearchBar from '../components/DFOSearchBar/DFOSearchBar';
+import { IBank } from '../Nexus/entities/IBank';
+import { useGetAllProjectsQuery } from '../store/api/bankApi';
+import { useAppDispatch } from '../store/hooks';
+import { selectBank } from '../store/reducers/selectedBank-reducer';
+import theme from '../theme';
+import { ScrollableContainer } from '../Workbench/Components/ScrollableContainer';
 import {
   SearchContainer,
   SearchFieldContainer
 } from '../Workbench/Components/SearchContainer';
-import DFOSearchBar from '../components/DFOSearchBar/DFOSearchBar';
-import { ScrollableContainer } from '../Workbench/Components/ScrollableContainer';
-import DFODialog from '../components/DFODialog/DFODialog';
 import NewSpecForm from './NewSpecForm';
-import { selectBank } from '../store/reducers/selectedBank-reducer';
-import { useAppDispatch } from '../store/hooks';
 
 const useStyles = makeStyles({
   projectsContainer: {

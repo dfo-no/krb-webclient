@@ -1,9 +1,9 @@
+import Button from '@mui/material/Button';
 import { AxiosResponse } from 'axios';
 import React from 'react';
-import Button from '@mui/material/Button';
 import { useTranslation } from 'react-i18next';
 import { httpPost } from '../../api/http';
-import { ISpecification } from '../../models/ISpecification';
+import { ISpecification } from '../../Nexus/entities/ISpecification';
 import { useAppSelector } from '../../store/hooks';
 
 export default function SpecPage(): React.ReactElement {

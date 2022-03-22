@@ -1,17 +1,18 @@
 import { joiResolver } from '@hookform/resolvers/joi';
 import { Box, Typography } from '@mui/material';
-import makeStyles from '@mui/styles/makeStyles';
 import Button from '@mui/material/Button';
+import makeStyles from '@mui/styles/makeStyles';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
+import { useHistory } from 'react-router';
 import SelectCtrl from '../FormProvider/SelectCtrl';
 import VerticalTextCtrl from '../FormProvider/VerticalTextCtrl';
 import { PostProjectSchema } from '../models/Project';
 import { IBank } from '../Nexus/entities/IBank';
+import { BaseSpecificationSchema } from '../Nexus/entities/ISpecification';
 import Nexus from '../Nexus/Nexus';
 import { useGetBankQuery } from '../store/api/bankApi';
 import { useAppSelector } from '../store/hooks';
-import { useHistory } from 'react-router';
 
 interface IProps {
   handleClose: () => void;
@@ -55,7 +56,7 @@ const NewSpecForm = ({ handleClose }: IProps) => {
   const { data: bankSelected } = useGetBankQuery(String(selectedBank.id));
 
   const methods = useForm<IBank>({
-    resolver: joiResolver(PostProjectSchema),
+    resolver: joiResolver(BaseSpecificationSchema),
     defaultValues
   });
 
@@ -63,7 +64,7 @@ const NewSpecForm = ({ handleClose }: IProps) => {
   const versions = ['Versjon 1', 'Versjon 2', 'Versjon 3', 'Versjon 4'];
 
   const onSubmit = async () => {
-    /*     await postProject(post).then(() => {
+    /* await postProject(post).then(() => {
       const alert: IAlert = {
         id: uuidv4(),
         style: 'success',
@@ -99,7 +100,7 @@ const NewSpecForm = ({ handleClose }: IProps) => {
 
             <Box className={classes.fields}>
               <SelectCtrl
-                name="person.cars"
+                name="version"
                 label={t(
                   'Pick which version of the project you want to use in this specification'
                 )}

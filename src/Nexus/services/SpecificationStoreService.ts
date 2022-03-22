@@ -2,9 +2,9 @@
 /* eslint-disable class-methods-use-this */
 import produce from 'immer';
 import { IRequirementAnswer } from '../../models/IRequirementAnswer';
-import { ISpecification } from '../../models/ISpecification';
 import { ISpecificationProduct } from '../../models/ISpecificationProduct';
 import { IBank } from '../entities/IBank';
+import { ISpecification } from '../entities/ISpecification';
 
 export default class SpecificationStoreService {
   private static specification: ISpecification;
@@ -22,6 +22,8 @@ export default class SpecificationStoreService {
     SpecificationStoreService.specification = {
       bank,
       title: '',
+      organization: '',
+      organizationNumber: null,
       products: [],
       requirements: [],
       requirementAnswers: []
