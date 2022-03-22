@@ -8,7 +8,7 @@ const useStyles = makeStyles({
   productTypeList: {
     height: 500,
     padding: 25,
-    backgroundColor: '#f7f7f7',
+    backgroundColor: theme.palette.gray100.main,
     marginTop: 20,
     border: `1px solid ${theme.palette.dfoLightBlue.main}`
   },
