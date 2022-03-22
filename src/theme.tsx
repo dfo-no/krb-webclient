@@ -3,9 +3,7 @@ import { createTheme } from '@mui/material/styles';
 
 const theme = createTheme({
   typography: {
-    fontFamily: ['Bradley Hand', 'Source Sans Pro', 'Helvetica', 'Arial'].join(
-      ','
-    )
+    fontFamily: ['Source Sans Pro', 'Helvetica', 'Arial'].join(',')
   },
 
   // TODO: Out of sync with mui@5's breakpoints
