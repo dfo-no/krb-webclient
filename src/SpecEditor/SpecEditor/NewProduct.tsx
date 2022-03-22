@@ -5,7 +5,6 @@ import { useAppSelector } from '../../store/hooks';
 import makeStyles from '@mui/styles/makeStyles';
 import { useGetBankQuery } from '../../store/api/bankApi';
 import { useTranslation } from 'react-i18next';
-import HorizontalTextCtrl from '../../FormProvider/HorizontalTextCtrl';
 import { FormProvider, useForm } from 'react-hook-form';
 import { IProduct, PostProductSchema } from '../../Nexus/entities/IProduct';
 import useProjectMutations from '../../store/api/ProjectMutations';
@@ -14,10 +13,14 @@ import Nexus from '../../Nexus/Nexus';
 import { joiResolver } from '@hookform/resolvers/joi';
 import theme from '../../theme';
 import VerticalTextCtrl from '../../FormProvider/VerticalTextCtrl';
+import NewProductForm from './NewProductForm';
+import NewProductTypeList from './NewProductTypeList';
+import NewProductNeedList from './NewProductNeedList';
 
 const useStyles = makeStyles({
-  editor: {
+  newProduct: {
     width: '100vw',
+    height: '100%',
     backgroundColor: theme.palette.gray200.main
   },
   newProductContainer: {
@@ -39,9 +42,9 @@ const useStyles = makeStyles({
     display: 'flex',
     flexDirection: 'column',
     paddingTop: 50,
+    paddingBottom: 60,
     margin: '0 auto',
     width: '60%',
-    height: '100vh',
     backgroundColor: theme.palette.dfoWhite.main,
     padding: 20
   },
@@ -49,6 +52,18 @@ const useStyles = makeStyles({
     display: 'flex',
     gap: 30,
     flexDirection: 'column'
+  },
+  productTypeContainer: {
+    marginTop: 23
+  },
+  saveButtonContainer: {
+    display: 'flex',
+    width: '100%',
+    marginTop: 20,
+    justifyContent: 'flex-end'
+  },
+  saveButton: {
+    width: 45
   }
 });
 
@@ -78,33 +93,31 @@ export default function NewProduct(): React.ReactElement {
   }
 
   return (
-    <Box className={classes.editor}>
+    <Box className={classes.newProduct}>
       <FormProvider {...methods}>
         <form>
-          <Box>
-            <Box className={classes.newProductContainer}>
-              <Box className={classes.newProductFormContainer}>
-                <HorizontalTextCtrl name="name" placeholder="Navn på produkt" />
-                <HorizontalTextCtrl
-                  name="description"
-                  placeholder="Beskrivelse av produktet"
-                />
-              </Box>
-              <Box className={classes.optionButtons}>
-                <Button variant="saveTransparent">Lagre</Button>
-                <Button variant="warningTransparent">Avbryt</Button>{' '}
-                <Button variant="warningTransparent">Slett behov</Button>
-              </Box>
-            </Box>
-          </Box>
+          <NewProductForm />
           <Box className={classes.mainContainer}>
             <Box className={classes.topContainer}>
               <VerticalTextCtrl
                 name="number"
-                label="Hvor mange av dette produktet har du behov for i denne anskaffelsen?"
-                placeholder="Antall"
+                label={t(
+                  'How many of this product do you need in this procurement'
+                )}
+                placeholder={t('Antall')}
               />
               <Divider />
+            </Box>
+            <Box className={classes.productTypeContainer}>
+              <NewProductTypeList />
+            </Box>
+            <Box className={classes.saveButtonContainer}>
+              <Button className={classes.saveButton} variant="save">
+                {t('save')}
+              </Button>
+            </Box>
+            <Box>
+              <NewProductNeedList />
             </Box>
           </Box>
         </form>

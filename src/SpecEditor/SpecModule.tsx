@@ -17,7 +17,7 @@ interface IRouteParams {
 const useStyles = makeStyles({
   specification: {
     display: 'flex',
-    height: '100%',
+    flexGrow: 1,
     backgroundColor: theme.palette.gray100.main
   }
 });

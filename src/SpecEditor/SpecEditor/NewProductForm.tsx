@@ -14,11 +14,6 @@ import { joiResolver } from '@hookform/resolvers/joi';
 import theme from '../../theme';
 
 const useStyles = makeStyles({
-  editor: {
-    display: 'flex',
-    height: '100%',
-    width: '100vw'
-  },
   newProductContent: {
     backgroundColor: theme.palette.gray200.main,
     width: '100%'
@@ -66,27 +61,28 @@ export default function NewProductForm(): React.ReactElement {
   }
 
   return (
-    <Box className={classes.editor}>
-      <Box className={classes.newProductContent}>
-        <FormProvider {...methods}>
-          <form>
-            <Box className={classes.newProductContainer}>
-              <Box className={classes.newProductFormContainer}>
-                <HorizontalTextCtrl name="name" placeholder="Navn på produkt" />
-                <HorizontalTextCtrl
-                  name="description"
-                  placeholder="Beskrivelse av produktet"
-                />
-              </Box>
-              <Box className={classes.optionButtons}>
-                <Button variant="saveTransparent">Lagre</Button>
-                <Button variant="warningTransparent">Avbryt</Button>{' '}
-                <Button variant="warningTransparent">Slett behov</Button>
-              </Box>
+    <Box className={classes.newProductContent}>
+      <FormProvider {...methods}>
+        <form>
+          <Box className={classes.newProductContainer}>
+            <Box className={classes.newProductFormContainer}>
+              <HorizontalTextCtrl
+                name="name"
+                placeholder={t('name of product')}
+              />
+              <HorizontalTextCtrl
+                name="description"
+                placeholder={t('description of the product')}
+              />
             </Box>
-          </form>
-        </FormProvider>
-      </Box>
+            <Box className={classes.optionButtons}>
+              <Button variant="saveTransparent">{t('save')}</Button>
+              <Button variant="warningTransparent">{t('cancel')}</Button>{' '}
+              <Button variant="warningTransparent">{t('delete need')}</Button>
+            </Box>
+          </Box>
+        </form>
+      </FormProvider>
     </Box>
   );
 }

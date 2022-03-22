@@ -4,6 +4,7 @@ import React from 'react';
 declare module '@mui/material/styles' {
   interface TypographyVariants {
     small: React.CSSProperties;
+    smallBlue?: React.CSSProperties;
     smallBold: React.CSSProperties;
     smallGray: React.CSSProperties;
     smallUnderline: React.CSSProperties;
@@ -24,6 +25,7 @@ declare module '@mui/material/styles' {
 
   interface TypographyVariantsOptions {
     small?: React.CSSProperties;
+    smallBlue?: React.CSSProperties;
     smallBold?: React.CSSProperties;
     smallGray?: React.CSSProperties;
     smallUnderline?: React.CSSProperties;
@@ -46,6 +48,7 @@ declare module '@mui/material/styles' {
 declare module '@mui/material/Typography' {
   interface TypographyPropsVariantOverrides {
     small: true;
+    smallBlue?: true;
     smallBold: true;
     smallGray: true;
     smallUnderline: true;

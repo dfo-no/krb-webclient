@@ -10,7 +10,6 @@ import { useTranslation } from 'react-i18next';
 const useStyles = makeStyles({
   editor: {
     display: 'flex',
-    height: '100%',
     width: '100vw'
   },
   editorContent: {
