@@ -24,9 +24,6 @@ const useStyles = makeStyles({
     justifyContent: 'space-between',
     alignItems: 'center'
   },
-  searchContainer: {
-    width: '25vw'
-  },
   needsList: {
     border: `1px solid ${theme.palette.silver.main}`,
     '&:last-child': {
