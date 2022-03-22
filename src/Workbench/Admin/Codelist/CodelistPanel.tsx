@@ -75,37 +75,39 @@ const CodelistPanel = (): React.ReactElement => {
     setEditMode(item.id);
   };
 
-  const renderCodelistItem = (item: ICodelist, i: number) => {
+  const enterDeleteMode = (item: ICodelist) => {
+    setCodelist(item);
+    setDeleteMode(item.id);
+  };
+
+  const renderCodelistItem = (item: ICodelist) => {
     return (
-      <Box key={i}>
-        {!isEditingItem(item) && (
-          <Box
-            className={`${classes.listItem} ${
-              classes.withHover
-            } ${selectedClass(item)}`}
-          >
-            <Box className={classes.textItem} onClick={() => itemClicked(item)}>
-              <Box className={classes.textItemTitle}>
-                <Typography variant="smallBold">{item.title}</Typography>
-                <FormIconButton
-                  sx={{ marginLeft: 'auto' }}
-                  onClick={() => enterEditMode(item)}
-                >
-                  <EditOutlinedIcon />
-                </FormIconButton>
-                <FormIconButton
-                  hoverColor={theme.palette.dfoErrorRed.main}
-                  onClick={() => setDeleteMode(item.id)}
-                >
-                  <DeleteIcon />
-                </FormIconButton>
-              </Box>
-              <Box className={classes.textItemDescription}>
-                <Typography variant="small">{item.description}</Typography>
-              </Box>
-            </Box>
+      <Box
+        className={`${classes.listItem} ${classes.withHover} ${selectedClass(
+          item
+        )}`}
+      >
+        <Box className={classes.textItem} onClick={() => itemClicked(item)}>
+          <Box className={classes.textItemTitle}>
+            <Typography variant="smallBold">{item.title}</Typography>
+            <FormIconButton
+              sx={{ marginLeft: 'auto' }}
+              hoverColor={theme.palette.dfoDarkBlue.main}
+              onClick={() => enterEditMode(item)}
+            >
+              <EditOutlinedIcon />
+            </FormIconButton>
+            <FormIconButton
+              hoverColor={theme.palette.dfoErrorRed.main}
+              onClick={() => enterDeleteMode(item)}
+            >
+              <DeleteIcon />
+            </FormIconButton>
           </Box>
-        )}
+          <Box className={classes.textItemDescription}>
+            <Typography variant="small">{item.description}</Typography>
+          </Box>
+        </Box>
       </Box>
     );
   };
@@ -120,7 +122,8 @@ const CodelistPanel = (): React.ReactElement => {
     }
     return (
       <DeleteCodelistForm
-        child={renderCodelistItem(item, i)}
+        key={i}
+        child={renderCodelistItem(item)}
         codelist={item}
         handleClose={handleCloseDelete}
       />
