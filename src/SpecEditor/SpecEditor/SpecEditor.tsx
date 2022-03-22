@@ -10,7 +10,7 @@ import { useTranslation } from 'react-i18next';
 const useStyles = makeStyles({
   editor: {
     display: 'flex',
-    width: '100vw'
+    width: '100%'
   },
   editorContent: {
     backgroundColor: theme.palette.gray200.main,
