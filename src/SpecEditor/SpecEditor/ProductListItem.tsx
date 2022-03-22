@@ -35,7 +35,7 @@ const useStyles = makeStyles({
     borderLeft: `1px solid ${theme.palette.silver.main}`,
     paddingLeft: 10,
     width: '90%',
-    height: '42px'
+    height: '100%'
   }
 });
 
