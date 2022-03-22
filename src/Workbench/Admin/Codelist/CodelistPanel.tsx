@@ -2,7 +2,6 @@ import React from 'react';
 import 'react-nestable/dist/styles/index.css';
 import { Typography, Box, List } from '@mui/material';
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
-import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import { ICodelist } from '../../../Nexus/entities/ICodelist';
 import CodelistAddButton from './CodelistAddButton';
 import { useSelectState } from './SelectContext';
@@ -12,15 +11,30 @@ import { usePanelStyles } from './CodelistStyles';
 import { useEditableState } from '../../Components/EditableContext';
 import { FormContainerBox } from '../../Components/Form/FormContainerBox';
 import { ScrollableContainer } from '../../Components/ScrollableContainer';
+import Utils from '../../../common/Utils';
+import { FormIconButton } from '../../Components/Form/FormIconButton';
+import theme from '../../../theme';
+import DeleteIcon from '@mui/icons-material/Delete';
+import DeleteCodelistForm from './DeleteCodelistForm';
 
 const CodelistPanel = (): React.ReactElement => {
   const classes = usePanelStyles();
   const { codelist, setCodelist, codelists, setCodelists } = useSelectState();
-  const { editMode, setEditMode, isCreating, setCreating } = useEditableState();
+  const {
+    editMode,
+    setEditMode,
+    isCreating,
+    setCreating,
+    deleteMode,
+    setDeleteMode
+  } = useEditableState();
 
   const itemClicked = (item: ICodelist) => {
     if (editMode !== '') {
       setEditMode('');
+    }
+    if (deleteMode !== '') {
+      setDeleteMode('');
     }
     setCodelist(item);
   };
@@ -35,9 +49,17 @@ const CodelistPanel = (): React.ReactElement => {
   const handleCloseCreate = (newCodelist: ICodelist | null) => {
     if (newCodelist) {
       setCodelist(newCodelist);
-      setCodelists([...codelists, newCodelist]);
+      setCodelists(Utils.addElementToList(newCodelist, codelists));
     }
     setCreating(false);
+  };
+
+  const handleCloseDelete = (deletedCodelist: ICodelist | null) => {
+    if (deletedCodelist) {
+      setCodelist(null);
+      setCodelists(Utils.removeElementFromList(deletedCodelist, codelists));
+    }
+    setDeleteMode('');
   };
 
   const isEditingItem = (item: ICodelist) => {
@@ -53,14 +75,7 @@ const CodelistPanel = (): React.ReactElement => {
     setEditMode(item.id);
   };
 
-  const renderItem = (item: ICodelist, i: number) => {
-    if (isEditingItem(item)) {
-      return (
-        <FormContainerBox sx={{ marginBottom: 1 }} key={i}>
-          <EditCodelistForm codelist={item} handleClose={handleCloseEdit} />
-        </FormContainerBox>
-      );
-    }
+  const renderCodelistItem = (item: ICodelist, i: number) => {
     return (
       <Box key={i}>
         {!isEditingItem(item) && (
@@ -72,25 +87,43 @@ const CodelistPanel = (): React.ReactElement => {
             <Box className={classes.textItem} onClick={() => itemClicked(item)}>
               <Box className={classes.textItemTitle}>
                 <Typography variant="smallBold">{item.title}</Typography>
+                <FormIconButton
+                  sx={{ marginLeft: 'auto' }}
+                  onClick={() => enterEditMode(item)}
+                >
+                  <EditOutlinedIcon />
+                </FormIconButton>
+                <FormIconButton
+                  hoverColor={theme.palette.dfoErrorRed.main}
+                  onClick={() => setDeleteMode(item.id)}
+                >
+                  <DeleteIcon />
+                </FormIconButton>
               </Box>
               <Box className={classes.textItemDescription}>
                 <Typography variant="small">{item.description}</Typography>
               </Box>
             </Box>
-            <Box
-              className={classes.editIcon}
-              onClick={() => enterEditMode(item)}
-            >
-              <EditOutlinedIcon />
-            </Box>
-            {codelist && codelist.id === item.id && (
-              <Box className={classes.arrowIcon}>
-                <ArrowForwardIcon />
-              </Box>
-            )}
           </Box>
         )}
       </Box>
+    );
+  };
+
+  const renderItem = (item: ICodelist, i: number) => {
+    if (isEditingItem(item)) {
+      return (
+        <FormContainerBox sx={{ marginBottom: 1 }} key={i}>
+          <EditCodelistForm codelist={item} handleClose={handleCloseEdit} />
+        </FormContainerBox>
+      );
+    }
+    return (
+      <DeleteCodelistForm
+        child={renderCodelistItem(item, i)}
+        codelist={item}
+        handleClose={handleCloseDelete}
+      />
     );
   };
 

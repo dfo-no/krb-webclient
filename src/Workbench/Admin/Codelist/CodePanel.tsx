@@ -17,11 +17,22 @@ import { IRouteParams } from '../../Models/IRouteParams';
 import Utils from '../../../common/Utils';
 import useProjectMutations from '../../../store/api/ProjectMutations';
 import { ScrollableContainer } from '../../Components/ScrollableContainer';
+import theme from '../../../theme';
+import DeleteIcon from '@mui/icons-material/Delete';
+import { FormIconButton } from '../../Components/Form/FormIconButton';
+import DeleteCodeForm from './DeleteCodeForm';
 
 const CodePanel = (): React.ReactElement => {
   const classes = usePanelStyles();
   const { codelist, setCodelist } = useSelectState();
-  const { editMode, setEditMode, isCreating, setCreating } = useEditableState();
+  const {
+    editMode,
+    setEditMode,
+    isCreating,
+    setCreating,
+    deleteMode,
+    setDeleteMode
+  } = useEditableState();
   const [codes, setCodes] = useState<Parentable<ICode>[]>([]);
 
   const { projectId } = useParams<IRouteParams>();
@@ -47,7 +58,7 @@ const CodePanel = (): React.ReactElement => {
   };
 
   const isEditing = () => {
-    return editMode !== '';
+    return editMode !== '' && deleteMode !== '';
   };
   const isEditingItem = (item: Parentable<ICode>) => {
     return item && item.id === editMode;
@@ -69,6 +80,45 @@ const CodePanel = (): React.ReactElement => {
     setCreating(false);
   };
 
+  const handleCloseDelete = (deletedCode: Parentable<ICode> | null) => {
+    if (deletedCode) {
+      const newCodes = Utils.removeElementFromList(deletedCode, codelist.codes);
+      setCodelist({ ...codelist, codes: newCodes });
+    }
+    setDeleteMode('');
+  };
+
+  const renderCodeItem = (
+    item: Parentable<ICode>,
+    handler: React.ReactNode
+  ) => {
+    return (
+      <Box className={classes.listItem}>
+        {!isEditing() && <Box className={classes.handlerIcon}>{handler}</Box>}
+        <Box className={classes.textItem}>
+          <Box className={classes.textItemTitle}>
+            <Typography variant="smallBold">{item.title}</Typography>
+            <FormIconButton
+              sx={{ marginLeft: 'auto' }}
+              onClick={() => setEditMode(item.id)}
+            >
+              <EditOutlinedIcon />
+            </FormIconButton>
+            <FormIconButton
+              hoverColor={theme.palette.dfoErrorRed.main}
+              onClick={() => setDeleteMode(item.id)}
+            >
+              <DeleteIcon />
+            </FormIconButton>
+          </Box>
+          <Box className={classes.textItemDescription}>
+            <Typography variant="small">{item.description}</Typography>
+          </Box>
+        </Box>
+      </Box>
+    );
+  };
+
   const renderItem = (item: Parentable<ICode>, handler: React.ReactNode) => {
     if (isEditingItem(item)) {
       return (
@@ -82,20 +132,12 @@ const CodePanel = (): React.ReactElement => {
       );
     }
     return (
-      <Box className={classes.listItem}>
-        {!isEditing() && <Box className={classes.handlerIcon}>{handler}</Box>}
-        <Box className={classes.textItem}>
-          <Box className={classes.textItemTitle}>
-            <Typography variant="smallBold">{item.title}</Typography>
-          </Box>
-          <Box className={classes.textItemDescription}>
-            <Typography variant="small">{item.description}</Typography>
-          </Box>
-        </Box>
-        <Box className={classes.editIcon} onClick={() => setEditMode(item.id)}>
-          <EditOutlinedIcon />
-        </Box>
-      </Box>
+      <DeleteCodeForm
+        child={renderCodeItem(item, handler)}
+        codelist={codelist}
+        code={item}
+        handleClose={handleCloseDelete}
+      />
     );
   };
 
