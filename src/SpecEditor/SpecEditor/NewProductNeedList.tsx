@@ -61,13 +61,11 @@ export default function NewProductNeedList(): React.ReactElement {
 
   return (
     <>
-      <Box>
-        <Typography variant="smallBlue">{t('needs you find under')}</Typography>
-        <Box className={classes.newProductNeedList}>
-          <Box className={classes.topContainer}></Box>
-          <Box className={classes.needsList}>
-            {products && renderList(products)}
-          </Box>
+      <Typography variant="smallBlue">{t('needs you find under')}</Typography>
+      <Box className={classes.newProductNeedList}>
+        <Box className={classes.topContainer}></Box>
+        <Box className={classes.needsList}>
+          {products && renderList(products)}
         </Box>
       </Box>
     </>

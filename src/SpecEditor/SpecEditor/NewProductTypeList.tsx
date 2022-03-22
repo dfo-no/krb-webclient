@@ -69,24 +69,22 @@ export default function NewProductTypeList(): React.ReactElement {
 
   return (
     <>
-      <Box>
-        <Typography variant="smallBlue">
-          Velg en produkttype fra kravsettet som passer best til ditt produkt
-        </Typography>
-        <Box className={classes.newProductTypeList}>
-          <Box className={classes.topContainer}>
-            <Box className={classes.searchContainer}>
-              <DFOSearchBar
-                placeholder="Søk etter produkttype"
-                list={list}
-                callback={newProductTypeListCallback}
-                searchFunction={newProductSearchFunction}
-              />
-            </Box>
+      <Typography variant="smallBlue">
+        Velg en produkttype fra kravsettet som passer best til ditt produkt
+      </Typography>
+      <Box className={classes.newProductTypeList}>
+        <Box className={classes.topContainer}>
+          <Box className={classes.searchContainer}>
+            <DFOSearchBar
+              placeholder="Søk etter produkttype"
+              list={list}
+              callback={newProductTypeListCallback}
+              searchFunction={newProductSearchFunction}
+            />
           </Box>
-          <Box className={classes.productsList}>
-            {products && renderList(products)}
-          </Box>
+        </Box>
+        <Box className={classes.productsList}>
+          {products && renderList(products)}
         </Box>
       </Box>
     </>
