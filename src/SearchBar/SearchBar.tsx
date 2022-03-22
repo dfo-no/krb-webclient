@@ -1,72 +1,55 @@
-import React, { useState } from 'react';
-import FormControl from 'react-bootstrap/FormControl';
-import ListGroup from 'react-bootstrap/ListGroup';
+import Autocomplete from '@mui/material/Autocomplete';
+import TextField from '@mui/material/TextField';
+import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { Link } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { IBank } from '../Nexus/entities/IBank';
 import { useAppDispatch } from '../store/hooks';
 import { selectBank } from '../store/reducers/selectedBank-reducer';
-import styles from './SearchBar.module.scss';
 
-interface ISearchBarProps {
+interface IProps {
   list: Record<string, IBank>;
 }
 
-export default function SearchBar({
-  list
-}: ISearchBarProps): React.ReactElement {
-  const [input, setInput] = useState('');
-  const [searchList, setSearchList] = useState<IBank[]>([]);
+interface ILabel {
+  label: string;
+  value: string;
+}
+
+export default function SearchBar({ list }: IProps): React.ReactElement {
+  const history = useHistory();
+
   const dispatch = useAppDispatch();
   const { t } = useTranslation();
 
-  const updateSearchText = async (
-    event: React.ChangeEvent<
-      HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
-    >
-  ) => {
-    const { value } = event.target;
-    if (value === '' || value === ' ') {
-      setSearchList([]);
-    } else {
-      const filtered = Object.values(list).filter((element) => {
-        return element.title.toLowerCase().includes(value.toLowerCase());
-      });
-      setSearchList(filtered.slice(0, 5));
-    }
-    setInput(value);
-  };
+  const displayList: ILabel[] = [];
+  Object.values(list).forEach((item, i) => {
+    displayList[i] = { label: item.title, value: item.id };
+  });
 
-  const handleEdit = (bank: IBank) => () => {
-    dispatch(selectBank(bank.id));
-  };
+  const uniqueValuesSet = new Set();
+  const filteredArr: ILabel[] = displayList.filter((obj) => {
+    // check if name property value is already in the set
+    const isPresentInSet = uniqueValuesSet.has(obj.label);
 
-  const displaylist = (bankList: IBank[]) => {
-    const resultList = bankList.map((bank: IBank) => {
-      return (
-        <ListGroup.Item key={bank.id} className={styles.katalogitem}>
-          <Link to={`/specification/${bank.id}`} onClick={handleEdit(bank)}>
-            {bank.title}
-          </Link>
-        </ListGroup.Item>
-      );
-    });
-    return (
-      <ListGroup className={styles.searchResults} variant="flush">
-        {resultList}
-      </ListGroup>
-    );
-  };
+    // add name property value to Set
+    uniqueValuesSet.add(obj.label);
+    return !isPresentInSet;
+  });
 
   return (
-    <>
-      <FormControl
-        value={input}
-        type="text"
-        placeholder={t('Søk kravbanker')}
-        onChange={(e) => updateSearchText(e)}
-      />
-      {displaylist(searchList)}
-    </>
+    <Autocomplete
+      options={filteredArr}
+      disablePortal={true}
+      onChange={(event, newValue) => {
+        if (newValue) {
+          dispatch(selectBank(newValue.value));
+          history.push(`/specification/${newValue.value}`);
+        }
+      }}
+      renderInput={(params) => (
+        <TextField {...params} label={t('Søk kravbanker')} />
+      )}
+    />
   );
 }
