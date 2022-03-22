@@ -102,7 +102,7 @@ export default function NewProduct(): React.ReactElement {
               <VerticalTextCtrl
                 name="number"
                 label={t(
-                  'How many of this product do you need in this procurement'
+                  'how many of this product do you need in this procurement'
                 )}
                 placeholder={t('Antall')}
               />

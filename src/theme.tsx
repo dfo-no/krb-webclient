@@ -138,7 +138,7 @@ theme.typography.small = {
 
 theme.typography.smallBlue = {
   color: theme.palette.primary.main,
-  fontSize: '14px',
+  fontSize: '16px',
   fontWeight: 400
 };
 
