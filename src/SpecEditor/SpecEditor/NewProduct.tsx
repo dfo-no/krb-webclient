@@ -13,7 +13,7 @@ import Nexus from '../../Nexus/Nexus';
 import { joiResolver } from '@hookform/resolvers/joi';
 import theme from '../../theme';
 import VerticalTextCtrl from '../../FormProvider/VerticalTextCtrl';
-import NewProductForm from './NewProductForm';
+import NewProductHeader from './NewProductHeader';
 import NewProductTypeList from './NewProductTypeList';
 import NewProductNeedList from './NewProductNeedList';
 
@@ -96,7 +96,7 @@ export default function NewProduct(): React.ReactElement {
     <Box className={classes.newProduct}>
       <FormProvider {...methods}>
         <form>
-          <NewProductForm />
+          <NewProductHeader />
           <Box className={classes.mainContainer}>
             <Box className={classes.topContainer}>
               <VerticalTextCtrl
