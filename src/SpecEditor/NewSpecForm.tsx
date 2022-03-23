@@ -101,7 +101,7 @@ const NewSpecForm = ({ handleClose, specification }: IProps) => {
             )}
             onChange={(e) => console.log(e.target.value)}
           >
-            {versions.map((v, i) => (
+            {versions.map((v) => (
               <MenuItem key={v.name} value={v.name}>
                 {v.label}
               </MenuItem>

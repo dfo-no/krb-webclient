@@ -134,11 +134,6 @@ export default function SpecPage(): React.ReactElement {
     setOpen(true);
   };
 
-  // Implement search here
-  const list: any = [];
-  const searchFunction = () => {};
-  const callback = () => {};
-
   const renderProjects = (projectList: Record<string, IBank>) => {
     return Object.values(projectList).map((element) => {
       return (
@@ -186,13 +181,14 @@ export default function SpecPage(): React.ReactElement {
         <Box className={classes.contentContainer}>
           <Box className={classes.topContainer}>
             <SearchContainer>
+              {/*  TODO: replace with 'AutoComplete' from @mui */}
               <SearchFieldContainer>
                 {' '}
                 <DFOSearchBar
-                  list={list}
+                  list={[]}
                   placeholder={t('search for banks')}
-                  callback={searchFunction}
-                  searchFunction={callback}
+                  callback={() => {}}
+                  searchFunction={() => {}}
                 />
               </SearchFieldContainer>
             </SearchContainer>
