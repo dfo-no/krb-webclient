@@ -31,7 +31,7 @@ const initialState: ISelectedBankState = {
     },
     title: '',
     organization: '',
-    organizationNumber: null,
+    organizationNumber: '',
     products: [],
     requirements: [],
     requirementAnswers: []

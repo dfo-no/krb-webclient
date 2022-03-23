@@ -33,7 +33,7 @@ const initialState: IResponseState = {
       },
       title: '',
       organization: '',
-      organizationNumber: null,
+      organizationNumber: '',
       products: [],
       requirements: [],
       requirementAnswers: []

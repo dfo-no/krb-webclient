@@ -370,7 +370,7 @@ describe('EvaluationService', () => {
         },
         title: 'Spesifikasjon test',
         organization: 'Evil Corp',
-        organizationNumber: 987654321,
+        organizationNumber: '987654321',
         products: [],
         requirements: [
           'df0d29e2-b77c-4509-a73a-170a791a9e95',

@@ -31,7 +31,7 @@ const initialState: ISpecificationState = {
     },
     title: '',
     organization: '',
-    organizationNumber: null,
+    organizationNumber: '',
     products: [],
     requirements: [],
     requirementAnswers: []
