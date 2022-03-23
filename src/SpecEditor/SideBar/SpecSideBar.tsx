@@ -8,7 +8,7 @@ import Typography from '@mui/material/Typography';
 import makeStyles from '@mui/styles/makeStyles';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { withRouter } from 'react-router';
+import { useHistory, withRouter } from 'react-router';
 import LoaderSpinner from '../../common/LoaderSpinner';
 import theme from '../../theme';
 import { ScrollableContainer } from '../../Workbench/Components/ScrollableContainer';
@@ -19,7 +19,8 @@ const useStyles = makeStyles({
     display: 'flex',
     flexDirection: 'column',
     gap: 20,
-    width: '30vw'
+    width: '30vw',
+    paddingTop: 20
   },
   container: {
     display: 'flex',
@@ -89,6 +90,8 @@ const useStyles = makeStyles({
 
 function SpecSideBar(): React.ReactElement {
   const { t } = useTranslation();
+  const history = useHistory();
+
   const classes = useStyles();
   const { specification } = useSpecificationState();
 
@@ -116,7 +119,12 @@ function SpecSideBar(): React.ReactElement {
     <Box className={classes.specSideBar}>
       <Box className={classes.container}>
         <Box className={classes.buttonContainer}>
-          <Button variant="primary">{t('create a new product')}</Button>
+          <Button
+            variant="primary"
+            onClick={() => history.push('/specification/:id/createProduct')}
+          >
+            {t('create a new product')}
+          </Button>
         </Box>
         {specification.bank.products.length > 0 && (
           <Box className={classes.listContainer}>

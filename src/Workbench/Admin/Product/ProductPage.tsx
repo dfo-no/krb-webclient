@@ -18,12 +18,13 @@ import {
 } from '../../Components/SearchContainer';
 import { StandardContainer } from '../../Components/StandardContainer';
 import { IRouteParams } from '../../Models/IRouteParams';
+import DeleteProductForm from './DeleteProductForm';
 import EditProductForm from './EditProductForm';
 import NewProductForm from './NewProductForm';
 
 export default function ProductPage(): React.ReactElement {
   const [products, setProducts] = useState<Parentable<IProduct>[]>([]);
-  const { setEditMode, setCreating } = useEditableState();
+  const { setEditMode, setCreating, setDeleteMode } = useEditableState();
   const { t } = useTranslation();
 
   const { projectId } = useParams<IRouteParams>();
@@ -87,6 +88,16 @@ export default function ProductPage(): React.ReactElement {
         }
         EditComponent={(item: Parentable<IProduct>) => (
           <EditProductForm product={item} handleClose={() => setEditMode('')} />
+        )}
+        DeleteComponent={(
+          item: Parentable<IProduct>,
+          child: React.ReactElement
+        ) => (
+          <DeleteProductForm
+            children={child}
+            product={item}
+            handleClose={() => setDeleteMode('')}
+          />
         )}
         depth={5}
       />

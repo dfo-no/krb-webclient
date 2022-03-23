@@ -1,53 +1,44 @@
+import Box from '@mui/material/Box';
+import makeStyles from '@mui/styles/makeStyles';
 import React from 'react';
 import { Route, Switch } from 'react-router';
-import NotFound from '../NotFound';
-import DownloadPage from './Download/DownloadPage';
-import ConfigureProductQuestion from './Product/ConfigureProductQuestion';
-import ProductSpecEditor from './Product/ProductSpecEditor';
-import ProductSpecList from './Product/ProductSpecList';
-import ConfigureQuestion from './Requirement/ConfigureQuestion';
-import RequirementSpecEditor from './Requirement/RequirementSpecEditor';
+import theme from '../theme';
+import SpecSideBar from './SideBar/SpecSideBar';
+import NewProduct from './SpecEditor/NewProduct';
 import SpecEditor from './SpecEditor/SpecEditor';
 import { SpecificationProvider } from './SpecificationContext';
 import SpecificationGuard from './SpecificationGuard';
 import SpecPage from './SpecPage';
 
+const useStyles = makeStyles({
+  specification: {
+    display: 'flex',
+    flexGrow: 1,
+    backgroundColor: theme.palette.gray100.main
+  }
+});
+
 export default function SpecModule(): React.ReactElement {
+  const classes = useStyles();
+
   return (
     <SpecificationProvider>
       <Switch>
         <Route exact path="/specification">
           <SpecPage />
         </Route>
-        <Route exact path="/specification/:id">
-          <SpecificationGuard>
-            <SpecEditor />
-          </SpecificationGuard>
-        </Route>
-        <Route exact path="/specification/:id/requirement">
-          <RequirementSpecEditor />
-        </Route>
-        <Route exact path="/specification/:id/requirement/question/:questionid">
-          <ConfigureQuestion />
-        </Route>
-        <Route exact path="/specification/:id/product">
-          <ProductSpecList />
-        </Route>
-        <Route exact path="/specification/:id/product/:productid">
-          <ProductSpecEditor />
-        </Route>
-        <Route
-          exact
-          path="/specification/:id/product/:productid/question/:questionid"
-        >
-          <ConfigureProductQuestion />
-        </Route>
-        <Route exact path="/specification/:id/download">
-          <DownloadPage />
-        </Route>
-        <Route>
-          <NotFound />
-        </Route>
+
+        <Box className={classes.specification}>
+          <SpecSideBar />
+          <Route exact path="/specification/:id">
+            <SpecificationGuard>
+              <SpecEditor />
+            </SpecificationGuard>
+          </Route>
+          <Route exact path="/specification/:id/createProduct">
+            <NewProduct />
+          </Route>
+        </Box>
       </Switch>
     </SpecificationProvider>
   );

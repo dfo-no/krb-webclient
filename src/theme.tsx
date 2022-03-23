@@ -136,6 +136,12 @@ theme.typography.small = {
   fontWeight: 400
 };
 
+theme.typography.smallBlue = {
+  color: theme.palette.primary.main,
+  fontSize: '16px',
+  fontWeight: 400
+};
+
 theme.typography.smallBold = {
   fontSize: '14px',
   fontWeight: 'bold'
@@ -265,6 +271,19 @@ theme.components = {
           height: 40,
           '&:hover': {
             background: theme.palette.saveGreenHover.main
+          }
+        }
+      },
+      {
+        props: { variant: 'saveTransparent' },
+        style: {
+          color: theme.palette.saveGreen.main,
+          whiteSpace: 'nowrap',
+          height: 40,
+          textDecorationLine: 'underline',
+          '&:hover': {
+            background: 'none',
+            textDecorationLine: 'underline'
           }
         }
       }
