@@ -1,21 +1,21 @@
+import DeleteIcon from '@mui/icons-material/Delete';
+import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
+import { Box, List, Typography } from '@mui/material';
 import React from 'react';
 import 'react-nestable/dist/styles/index.css';
-import { Typography, Box, List } from '@mui/material';
-import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
+import Utils from '../../../common/Utils';
 import { ICodelist } from '../../../Nexus/entities/ICodelist';
-import CodelistAddButton from './CodelistAddButton';
-import { useSelectState } from './SelectContext';
-import EditCodelistForm from './EditCodelistForm';
-import NewCodelistForm from './NewCodelistForm';
-import { usePanelStyles } from './CodelistStyles';
+import theme from '../../../theme';
 import { useEditableState } from '../../Components/EditableContext';
 import { FormContainerBox } from '../../Components/Form/FormContainerBox';
-import { ScrollableContainer } from '../../Components/ScrollableContainer';
-import Utils from '../../../common/Utils';
 import { FormIconButton } from '../../Components/Form/FormIconButton';
-import theme from '../../../theme';
-import DeleteIcon from '@mui/icons-material/Delete';
+import { ScrollableContainer } from '../../Components/ScrollableContainer';
+import CodelistAddButton from './CodelistAddButton';
+import { usePanelStyles } from './CodelistStyles';
 import DeleteCodelistForm from './DeleteCodelistForm';
+import EditCodelistForm from './EditCodelistForm';
+import NewCodelistForm from './NewCodelistForm';
+import { useSelectState } from './SelectContext';
 
 const CodelistPanel = (): React.ReactElement => {
   const classes = usePanelStyles();
@@ -123,7 +123,7 @@ const CodelistPanel = (): React.ReactElement => {
     return (
       <DeleteCodelistForm
         key={i}
-        child={renderCodelistItem(item)}
+        children={renderCodelistItem(item)}
         codelist={item}
         handleClose={handleCloseDelete}
       />

@@ -1,26 +1,26 @@
-import React, { useEffect, useState } from 'react';
-import { Box, Typography } from '@mui/material/';
+import DeleteIcon from '@mui/icons-material/Delete';
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
+import { Box, Typography } from '@mui/material/';
+import React, { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
+import Utils from '../../../common/Utils';
 import { Parentable } from '../../../models/Parentable';
 import { ICode } from '../../../Nexus/entities/ICode';
-import NestableHierarcy from '../../Components/NestableHierarchy/NestableHierarcy';
-import { useSelectState } from './SelectContext';
-import EditCodeForm from './EditCodeForm';
-import CodeAddButton from './CodeAddButton';
-import NewCodeForm from './NewCodeForm';
-import { usePanelStyles } from './CodelistStyles';
+import { useGetProjectQuery } from '../../../store/api/bankApi';
+import useProjectMutations from '../../../store/api/ProjectMutations';
+import theme from '../../../theme';
 import { useEditableState } from '../../Components/EditableContext';
 import { FormContainerBox } from '../../Components/Form/FormContainerBox';
-import { useGetProjectQuery } from '../../../store/api/bankApi';
-import { useParams } from 'react-router-dom';
-import { IRouteParams } from '../../Models/IRouteParams';
-import Utils from '../../../common/Utils';
-import useProjectMutations from '../../../store/api/ProjectMutations';
-import { ScrollableContainer } from '../../Components/ScrollableContainer';
-import theme from '../../../theme';
-import DeleteIcon from '@mui/icons-material/Delete';
 import { FormIconButton } from '../../Components/Form/FormIconButton';
+import NestableHierarcy from '../../Components/NestableHierarchy/NestableHierarcy';
+import { ScrollableContainer } from '../../Components/ScrollableContainer';
+import { IRouteParams } from '../../Models/IRouteParams';
+import CodeAddButton from './CodeAddButton';
+import { usePanelStyles } from './CodelistStyles';
 import DeleteCodeForm from './DeleteCodeForm';
+import EditCodeForm from './EditCodeForm';
+import NewCodeForm from './NewCodeForm';
+import { useSelectState } from './SelectContext';
 
 const CodePanel = (): React.ReactElement => {
   const classes = usePanelStyles();
@@ -133,7 +133,7 @@ const CodePanel = (): React.ReactElement => {
     }
     return (
       <DeleteCodeForm
-        child={renderCodeItem(item, handler)}
+        children={renderCodeItem(item, handler)}
         codelist={codelist}
         code={item}
         handleClose={handleCloseDelete}

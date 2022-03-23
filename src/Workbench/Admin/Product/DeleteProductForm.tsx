@@ -1,34 +1,33 @@
-import React from 'react';
-import { Parentable } from '../../../models/Parentable';
-import { BaseTagSchema, ITag } from '../../../Nexus/entities/ITag';
-import useProjectMutations from '../../../store/api/ProjectMutations';
-import { FormProvider, useForm } from 'react-hook-form';
 import { joiResolver } from '@hookform/resolvers/joi';
-import { v4 as uuidv4 } from 'uuid';
 import Typography from '@mui/material/Typography';
+import React from 'react';
+import { FormProvider, useForm } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
+import { useParams } from 'react-router-dom';
+import { v4 as uuidv4 } from 'uuid';
+import Utils from '../../../common/Utils';
 import { IAlert } from '../../../models/IAlert';
-import { addAlert } from '../../../store/reducers/alert-reducer';
+import { Parentable } from '../../../models/Parentable';
+import { BaseProductSchema, IProduct } from '../../../Nexus/entities/IProduct';
+import { useGetProjectQuery } from '../../../store/api/bankApi';
+import useProjectMutations from '../../../store/api/ProjectMutations';
 import { useAppDispatch } from '../../../store/hooks';
+import { addAlert } from '../../../store/reducers/alert-reducer';
+import theme from '../../../theme';
+import { useEditableState } from '../../Components/EditableContext';
+import { FormCantDeleteBox } from '../../Components/Form/FormCantDeleteBox';
 import { FormDeleteBox } from '../../Components/Form/FormDeleteBox';
 import { FormTextButton } from '../../Components/Form/FormTextButton';
-import { useTranslation } from 'react-i18next';
-import theme from '../../../theme';
-import { useParams } from 'react-router-dom';
 import { IRouteParams } from '../../Models/IRouteParams';
-import { useGetProjectQuery } from '../../../store/api/bankApi';
-import Utils from '../../../common/Utils';
-import { FormCantDeleteBox } from '../../Components/Form/FormCantDeleteBox';
-import { useEditableState } from '../../Components/EditableContext';
-import { BaseProductSchema, IProduct } from '../../../Nexus/entities/IProduct';
 
 interface IProps {
-  child: React.ReactElement;
+  children: React.ReactNode;
   product: Parentable<IProduct>;
   handleClose: () => void;
 }
 
 export default function DeleteProductForm({
-  child,
+  children,
   product,
   handleClose
 }: IProps): React.ReactElement {
@@ -46,7 +45,7 @@ export default function DeleteProductForm({
   const { data: project } = useGetProjectQuery(projectId);
 
   if (deleteMode !== product.id) {
-    return <>{child}</>;
+    return <>{children}</>;
   }
 
   if (!project) {
@@ -90,7 +89,7 @@ export default function DeleteProductForm({
             >
               {t('cancel')}
             </FormTextButton>
-            {child}
+            {children}
           </FormDeleteBox>
         )}
         {hasChildren && (
@@ -105,7 +104,7 @@ export default function DeleteProductForm({
             >
               {t('cancel')}
             </FormTextButton>
-            {child}
+            {children}
           </FormCantDeleteBox>
         )}
       </form>

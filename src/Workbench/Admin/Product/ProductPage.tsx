@@ -18,9 +18,9 @@ import {
 } from '../../Components/SearchContainer';
 import { StandardContainer } from '../../Components/StandardContainer';
 import { IRouteParams } from '../../Models/IRouteParams';
+import DeleteProductForm from './DeleteProductForm';
 import EditProductForm from './EditProductForm';
 import NewProductForm from './NewProductForm';
-import DeleteProductForm from './DeleteProductForm';
 
 export default function ProductPage(): React.ReactElement {
   const [products, setProducts] = useState<Parentable<IProduct>[]>([]);
@@ -94,7 +94,7 @@ export default function ProductPage(): React.ReactElement {
           child: React.ReactElement
         ) => (
           <DeleteProductForm
-            child={child}
+            children={child}
             product={item}
             handleClose={() => setDeleteMode('')}
           />
