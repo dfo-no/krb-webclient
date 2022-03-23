@@ -12,13 +12,13 @@ import Tooltip from '@mui/material/Tooltip';
 import Typography from '@mui/material/Typography';
 import { Controller, useFieldArray, useFormContext } from 'react-hook-form';
 import { v4 as uuidv4 } from 'uuid';
-import CheckboxCtrl from '../../FormProvider/CheckboxCtrl';
-import RadioCtrl from '../../FormProvider/RadioCtrl';
-import VerticalTextCtrl from '../../FormProvider/VerticalTextCtrl';
-import { IBank } from '../../Nexus/entities/IBank';
-import { IRequirement } from '../../Nexus/entities/IRequirement';
-import { IVariant } from '../../Nexus/entities/IVariant';
-import VariantType from '../../Nexus/entities/VariantType';
+import CheckboxCtrl from '../../../FormProvider/CheckboxCtrl';
+import RadioCtrl from '../../../FormProvider/RadioCtrl';
+import VerticalTextCtrl from '../../../FormProvider/VerticalTextCtrl';
+import { IBank } from '../../../Nexus/entities/IBank';
+import { IRequirement } from '../../../Nexus/entities/IRequirement';
+import { IVariant } from '../../../Nexus/entities/IVariant';
+import VariantType from '../../../Nexus/entities/VariantType';
 import QuestionsList from './QuestionsList';
 
 interface IProps {

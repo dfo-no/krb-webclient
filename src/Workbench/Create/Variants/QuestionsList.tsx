@@ -6,9 +6,9 @@ import IconButton from '@mui/material/IconButton';
 import { useState } from 'react';
 import { useFieldArray, useFormContext } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import QuestionEnum from '../../models/QuestionEnum';
-import { IRequirement } from '../../Nexus/entities/IRequirement';
-import QuestionService from '../../Nexus/services/QuestionService';
+import QuestionEnum from '../../../models/QuestionEnum';
+import { IRequirement } from '../../../Nexus/entities/IRequirement';
+import QuestionService from '../../../Nexus/services/QuestionService';
 import SelectQuestionDialog from './SelectQuestionDialog';
 
 interface IProps {

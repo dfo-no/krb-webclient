@@ -5,18 +5,18 @@ import { FormProvider, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
-import LoaderSpinner from '../../common/LoaderSpinner';
-import HorizontalTextCtrl from '../../FormProvider/HorizontalTextCtrl';
-import { IAlert } from '../../models/IAlert';
-import { Parentable } from '../../models/Parentable';
-import { IBank } from '../../Nexus/entities/IBank';
-import { INeed, PutNeedSchema } from '../../Nexus/entities/INeed';
+import LoaderSpinner from '../../../common/LoaderSpinner';
+import HorizontalTextCtrl from '../../../FormProvider/HorizontalTextCtrl';
+import { IAlert } from '../../../models/IAlert';
+import { Parentable } from '../../../models/Parentable';
+import { IBank } from '../../../Nexus/entities/IBank';
+import { INeed, PutNeedSchema } from '../../../Nexus/entities/INeed';
 import {
   useGetProjectQuery,
   usePutProjectMutation
-} from '../../store/api/bankApi';
-import { useAppDispatch } from '../../store/hooks';
-import { addAlert } from '../../store/reducers/alert-reducer';
+} from '../../../store/api/bankApi';
+import { useAppDispatch } from '../../../store/hooks';
+import { addAlert } from '../../../store/reducers/alert-reducer';
 
 interface IProps {
   // element: INeed;

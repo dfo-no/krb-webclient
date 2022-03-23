@@ -7,7 +7,7 @@ import Typography from '@mui/material/Typography';
 import React from 'react';
 import mainIllustration from '../../assets/images/main-illustration.svg';
 import { IBank } from '../../Nexus/entities/IBank';
-import NewNeed from './NewNeed';
+import NewNeed from './Need/NewNeed';
 
 interface IProps {
   project: IBank;

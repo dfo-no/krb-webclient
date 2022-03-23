@@ -2,21 +2,21 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import IconButton from '@mui/material/IconButton';
 import { useState } from 'react';
 import { useParams } from 'react-router-dom';
-import LoaderSpinner from '../../common/LoaderSpinner';
-import Dialog from '../../components/DFODialog/DFODialog';
-import { useGetProjectQuery } from '../../store/api/bankApi';
-import DeleteRequirementForm from './DeleteRequirementForm';
+import LoaderSpinner from '../../../common/LoaderSpinner';
+import Dialog from '../../../components/DFODialog/DFODialog';
+import { INeed } from '../../../Nexus/entities/INeed';
+import { useGetProjectQuery } from '../../../store/api/bankApi';
+import DeleteNeedForm from './DeleteNeedForm';
 
 interface IProps {
-  needIndex: number;
-  requirementIndex: number;
+  need: INeed;
 }
 
 interface IRouteParams {
   projectId: string;
 }
 
-const DeleteRequirement = ({ needIndex, requirementIndex }: IProps) => {
+const DeleteNeed = ({ need }: IProps) => {
   const [isOpen, setOpen] = useState(false);
   const { projectId } = useParams<IRouteParams>();
 
@@ -27,9 +27,11 @@ const DeleteRequirement = ({ needIndex, requirementIndex }: IProps) => {
   }
 
   return (
-    <>
+    <span>
       <IconButton
         onClick={() => setOpen(true)}
+        size="large"
+        edge="start"
         color="inherit"
         aria-label="edit"
       >
@@ -40,16 +42,15 @@ const DeleteRequirement = ({ needIndex, requirementIndex }: IProps) => {
         isOpen={isOpen}
         handleClose={() => setOpen(false)}
         children={
-          <DeleteRequirementForm
-            requirementIndex={requirementIndex}
-            needIndex={needIndex}
+          <DeleteNeedForm
+            need={need}
             project={project}
             handleClose={() => setOpen(false)}
           />
         }
       />
-    </>
+    </span>
   );
 };
 
-export default DeleteRequirement;
+export default DeleteNeed;

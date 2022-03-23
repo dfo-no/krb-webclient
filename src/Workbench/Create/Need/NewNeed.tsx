@@ -2,9 +2,9 @@ import Box from '@mui/material/Box/Box';
 import Button from '@mui/material/Button';
 import { useState } from 'react';
 import { useParams } from 'react-router-dom';
-import LoaderSpinner from '../../common/LoaderSpinner';
-import Dialog from '../../components/DFODialog/DFODialog';
-import { useGetProjectQuery } from '../../store/api/bankApi';
+import LoaderSpinner from '../../../common/LoaderSpinner';
+import Dialog from '../../../components/DFODialog/DFODialog';
+import { useGetProjectQuery } from '../../../store/api/bankApi';
 import NewNeedForm from './NewNeedForm';
 
 interface IRouteParams {

@@ -12,18 +12,18 @@ import Typography from '@mui/material/Typography';
 import produce from 'immer';
 import { FormProvider, useForm } from 'react-hook-form';
 import { v4 as uuidv4 } from 'uuid';
-import ErrorSummary from '../../Form/ErrorSummary';
-import { IAlert } from '../../models/IAlert';
-import { IBank } from '../../Nexus/entities/IBank';
+import ErrorSummary from '../../../Form/ErrorSummary';
+import { IAlert } from '../../../models/IAlert';
+import { IBank } from '../../../Nexus/entities/IBank';
 import {
   BaseRequirementSchema,
   IRequirement
-} from '../../Nexus/entities/IRequirement';
-import { usePutProjectMutation } from '../../store/api/bankApi';
-import { useAppDispatch } from '../../store/hooks';
-import { addAlert } from '../../store/reducers/alert-reducer';
+} from '../../../Nexus/entities/IRequirement';
+import { usePutProjectMutation } from '../../../store/api/bankApi';
+import { useAppDispatch } from '../../../store/hooks';
+import { addAlert } from '../../../store/reducers/alert-reducer';
 import DeleteRequirement from './DeleteRequirement';
-import VariantsList from './VariantsList';
+import VariantsList from '../Variants/VariantsList';
 
 interface IProps {
   requirementIndex: number;
