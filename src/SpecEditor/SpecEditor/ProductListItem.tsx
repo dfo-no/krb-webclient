@@ -24,8 +24,9 @@ const useStyles = makeStyles({
     flexBasis: '50%',
     paddingRight: 10
   },
-  productListItemText: {
-    color: theme.palette.gray700.main
+  productListItemTitle: {
+    color: 'black',
+    fontWeight: 600
   },
   productListItemDescription: {
     display: 'flex',
@@ -58,6 +59,7 @@ export default function ProductListItem({
   const listItemOnMouseLeave = () => {
     setRadioButtonColor(`${theme.palette.dfoLightBlue.main}`);
   };
+
   const classes = useStyles();
 
   return (
@@ -74,7 +76,7 @@ export default function ProductListItem({
           checked={radioButtonState}
         />
         <Typography
-          className={classes.productListItemText}
+          className={classes.productListItemTitle}
           variant="smallGray"
           onClick={toggleRadioButton}
         >
@@ -85,9 +87,7 @@ export default function ProductListItem({
       {productListItem.description && (
         <Box className={classes.productListItemDescription}>
           <ListItemText>
-            <Typography className={classes.productListItemText}>
-              {productListItem.description}
-            </Typography>
+            <Typography>{productListItem.description}</Typography>
           </ListItemText>
         </Box>
       )}

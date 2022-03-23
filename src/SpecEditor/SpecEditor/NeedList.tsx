@@ -5,8 +5,8 @@ import React from 'react';
 import theme from '../../theme';
 import { useAppSelector } from '../../store/hooks';
 import { useGetBankQuery } from '../../store/api/bankApi';
-import NewProductTypeListItem from './ProductListItem';
 import { IProduct } from '../../Nexus/entities/IProduct';
+import NeedListItem from './NeedListItem';
 
 const useStyles = makeStyles({
   newProductNeedList: {
@@ -49,9 +49,7 @@ export default function NeedList(): React.ReactElement {
     return (
       <List>
         {productList.map((product: IProduct, index: number) => {
-          return (
-            <NewProductTypeListItem productListItem={product} key={index} />
-          );
+          return <NeedListItem productListItem={product} key={index} />;
         })}
       </List>
     );
