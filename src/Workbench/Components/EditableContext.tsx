@@ -57,7 +57,7 @@ export const EditableProvider = ({ children }: IProps) => {
   }, [isCreating]);
 
   useEffect(() => {
-    if (deleteMode) {
+    if (deleteMode !== '') {
       setCreating(false);
       setEditMode('');
     }
