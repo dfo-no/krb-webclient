@@ -45,13 +45,13 @@ export default function ProductListItem({
   const [radioButtonColor, setRadioButtonColor] = useState(
     `${theme.palette.dfoLightBlue.main}`
   );
-  const [checkboxState, setCheckboxState] = useState(false);
+  const [radioButtonState, setRadioButtonState] = useState(false);
 
-  const toggleCheckbox = () => {
-    if (checkboxState) {
-      setCheckboxState(false);
+  const toggleRadioButton = () => {
+    if (radioButtonState) {
+      setRadioButtonState(false);
     } else {
-      setCheckboxState(true);
+      setRadioButtonState(true);
     }
   };
 
@@ -70,14 +70,17 @@ export default function ProductListItem({
       key={productListItem.title}
       onMouseEnter={listItemOnMouseEnter}
       onMouseLeave={listItemOnMouseLeave}
-      onClick={toggleCheckbox}
+      onClick={toggleRadioButton}
     >
       <Box className={classes.productListItemRadioButton}>
-        <DFORadioButton radioColor={radioButtonColor} checked={checkboxState} />
+        <DFORadioButton
+          radioColor={radioButtonColor}
+          checked={radioButtonState}
+        />
         <Typography
           className={classes.productListItemText}
           variant="smallGray"
-          onClick={toggleCheckbox}
+          onClick={toggleRadioButton}
         >
           {productListItem.title}
         </Typography>

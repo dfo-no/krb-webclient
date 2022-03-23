@@ -5,11 +5,12 @@ import React from 'react';
 import theme from '../../theme';
 import { useAppSelector } from '../../store/hooks';
 import { useGetBankQuery } from '../../store/api/bankApi';
+import DFOSearchBar from '../../components/DFOSearchBar/DFOSearchBar';
 import NewProductTypeListItem from './ProductListItem';
 import { IProduct } from '../../Nexus/entities/IProduct';
 
 const useStyles = makeStyles({
-  newProductNeedList: {
+  newProductTypeList: {
     display: 'flex',
     flexDirection: 'column',
     gap: 20,
@@ -24,7 +25,10 @@ const useStyles = makeStyles({
     justifyContent: 'space-between',
     alignItems: 'center'
   },
-  needsList: {
+  searchContainer: {
+    width: '25vw'
+  },
+  productsList: {
     border: `1px solid ${theme.palette.silver.main}`,
     '&:last-child': {
       borderBottom: 'none'
@@ -36,7 +40,7 @@ const useStyles = makeStyles({
   }
 });
 
-export default function NewProductNeedList(): React.ReactElement {
+export default function ProductList(): React.ReactElement {
   const classes = useStyles();
   const { t } = useTranslation();
 
@@ -45,13 +49,19 @@ export default function NewProductNeedList(): React.ReactElement {
 
   const products = bankSelected?.products;
 
+  const newProductTypeListCallback = () => {};
+  const newProductSearchFunction = () => {};
+  const list: any = [];
+
   const renderList = (productList: IProduct[]) => {
     return (
       <List>
         {productList.map((product: IProduct, index: number) => {
-          return (
-            <NewProductTypeListItem productListItem={product} key={index} />
-          );
+          {
+            return (
+              <NewProductTypeListItem productListItem={product} key={index} />
+            );
+          }
         })}
       </List>
     );
@@ -59,9 +69,21 @@ export default function NewProductNeedList(): React.ReactElement {
 
   return (
     <>
-      <Typography variant="smallBlue">{t('needs you find under')}</Typography>
-      <Box className={classes.newProductNeedList}>
-        <Box className={classes.needsList}>
+      <Typography variant="smallBlue">
+        Velg en produkttype fra kravsettet som passer best til ditt produkt
+      </Typography>
+      <Box className={classes.newProductTypeList}>
+        <Box className={classes.topContainer}>
+          <Box className={classes.searchContainer}>
+            <DFOSearchBar
+              placeholder="Søk etter produkttype"
+              list={list}
+              callback={newProductTypeListCallback}
+              searchFunction={newProductSearchFunction}
+            />
+          </Box>
+        </Box>
+        <Box className={classes.productsList}>
           {products && renderList(products)}
         </Box>
       </Box>

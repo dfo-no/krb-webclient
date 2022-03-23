@@ -14,8 +14,8 @@ import { joiResolver } from '@hookform/resolvers/joi';
 import theme from '../../theme';
 import VerticalTextCtrl from '../../FormProvider/VerticalTextCtrl';
 import NewProductHeader from './NewProductHeader';
-import NewProductTypeList from './NewProductTypeList';
-import NewProductNeedList from './NewProductNeedList';
+import NewProductTypeList from './ProductList';
+import NewProductNeedList from './NeedList';
 
 const useStyles = makeStyles({
   newProduct: {
