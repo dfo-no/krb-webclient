@@ -1,21 +1,27 @@
+import { Box } from '@mui/material';
 import React from 'react';
 import { Route, Switch, useRouteMatch } from 'react-router';
-import NotFound from '../NotFound';
 import { useAppDispatch, useAppSelector } from '../store/hooks';
 import { selectBank } from '../store/reducers/selectedBank-reducer';
-import DownloadPage from './Download/DownloadPage';
-import ConfigureProductQuestion from './Product/ConfigureProductQuestion';
-import ProductSpecEditor from './Product/ProductSpecEditor';
-import ProductSpecList from './Product/ProductSpecList';
-import ConfigureQuestion from './Requirement/ConfigureQuestion';
-import RequirementSpecEditor from './Requirement/RequirementSpecEditor';
-
+import SpecSideBar from './SideBar/SpecSideBar';
 import SpecEditor from './SpecEditor/SpecEditor';
 import SpecPage from './SpecPage';
+import makeStyles from '@mui/styles/makeStyles';
+import theme from '../theme';
+import NewProduct from './SpecEditor/NewProduct';
 
 interface IRouteParams {
   bankId: string;
 }
+
+const useStyles = makeStyles({
+  specification: {
+    display: 'flex',
+    flexGrow: 1,
+    backgroundColor: theme.palette.gray100.main
+  }
+});
+
 export default function SpecModule(): React.ReactElement {
   const projectMatch = useRouteMatch<IRouteParams>('/speceditor/:bankId');
   const dispatch = useAppDispatch();
@@ -25,38 +31,23 @@ export default function SpecModule(): React.ReactElement {
     dispatch(selectBank(projectMatch?.params.bankId));
   }
 
+  const classes = useStyles();
+
   return (
     <Switch>
       <Route exact path="/specification">
         <SpecPage />
       </Route>
-      <Route exact path="/specification/:id">
-        <SpecEditor />
-      </Route>
-      <Route exact path="/specification/:id/requirement">
-        <RequirementSpecEditor />
-      </Route>
-      <Route exact path="/specification/:id/requirement/question/:questionid">
-        <ConfigureQuestion />
-      </Route>
-      <Route exact path="/specification/:id/product">
-        <ProductSpecList />
-      </Route>
-      <Route exact path="/specification/:id/product/:productid">
-        <ProductSpecEditor />
-      </Route>
-      <Route
-        exact
-        path="/specification/:id/product/:productid/question/:questionid"
-      >
-        <ConfigureProductQuestion />
-      </Route>
-      <Route exact path="/specification/:id/download">
-        <DownloadPage />
-      </Route>
-      <Route>
-        <NotFound />
-      </Route>
+
+      <Box className={classes.specification}>
+        <SpecSideBar />
+        <Route exact path="/specification/:id">
+          <SpecEditor />
+        </Route>
+        <Route exact path="/specification/:id/createProduct">
+          <NewProduct />
+        </Route>
+      </Box>
     </Switch>
   );
 }

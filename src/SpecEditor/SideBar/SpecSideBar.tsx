@@ -8,13 +8,15 @@ import { useGetBankQuery } from '../../store/api/bankApi';
 import { useAppSelector } from '../../store/hooks';
 import theme from '../../theme';
 import { ScrollableContainer } from '../../Workbench/Components/ScrollableContainer';
+import { useHistory } from 'react-router';
 
 const useStyles = makeStyles({
   specSideBar: {
     display: 'flex',
     flexDirection: 'column',
     gap: 20,
-    width: '30vw'
+    width: '30vw',
+    paddingTop: 20
   },
   container: {
     display: 'flex',
@@ -86,6 +88,8 @@ function SpecSideBar(): React.ReactElement {
   const selectedBank = useAppSelector((state) => state.selectedBank);
   const { data: bankSelected } = useGetBankQuery(String(selectedBank.id));
   const { t } = useTranslation();
+  const history = useHistory();
+
   const classes = useStyles();
 
   const renderProducts = () => {
@@ -111,7 +115,12 @@ function SpecSideBar(): React.ReactElement {
     <Box className={classes.specSideBar}>
       <Box className={classes.container}>
         <Box className={classes.buttonContainer}>
-          <Button variant="primary">{t('create a new product')}</Button>
+          <Button
+            variant="primary"
+            onClick={() => history.push('/specification/:id/createProduct')}
+          >
+            {t('create a new product')}
+          </Button>
         </Box>
         {bankSelected && bankSelected?.products.length > 0 && (
           <Box className={classes.listContainer}>

@@ -6,5 +6,6 @@ declare module '@mui/material/Button' {
     warning: true;
     warningTransparent: true;
     save: true;
+    saveTransparent: true;
   }
 }

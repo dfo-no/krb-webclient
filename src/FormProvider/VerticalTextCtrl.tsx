@@ -1,4 +1,4 @@
-import { FormControl, FormLabel } from '@mui/material';
+import { FormControl, FormLabel, Typography } from '@mui/material';
 import { get } from 'lodash';
 import React from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
@@ -21,7 +21,9 @@ const VerticalTextCtrl = ({
 
   return (
     <FormControl error={!!get(errors, name)} sx={{ width: '100%' }}>
-      <FormLabel>{label}</FormLabel>
+      <FormLabel>
+        <Typography variant="smallBlue">{label}</Typography>
+      </FormLabel>
       <Controller
         name={name}
         render={({ field }) => (
