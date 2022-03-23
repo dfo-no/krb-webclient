@@ -10,10 +10,8 @@ export interface IProps {
 
 const useStyles = makeStyles({
   productListItem: {
-    display: 'flex',
     backgroundColor: theme.palette.dfoWhite.main,
     borderBottom: `1px solid ${theme.palette.silver.main}`,
-    height: '42px',
     cursor: 'pointer',
     '&:hover': {
       background: theme.palette.lightBlue.main,
@@ -23,7 +21,7 @@ const useStyles = makeStyles({
     }
   },
   productListItemRadioButton: {
-    width: '40%',
+    flexBasis: '50%',
     paddingRight: 10
   },
   productListItemText: {
@@ -31,11 +29,9 @@ const useStyles = makeStyles({
   },
   productListItemDescription: {
     display: 'flex',
-    alignItems: 'center',
+    flexBasis: '50%',
     borderLeft: `1px solid ${theme.palette.silver.main}`,
-    paddingLeft: 10,
-    width: '90%',
-    height: '100%'
+    paddingLeft: 20
   }
 });
 
@@ -85,16 +81,16 @@ export default function ProductListItem({
           {productListItem.title}
         </Typography>
       </Box>
-      <Box className={classes.productListItemDescription}>
-        <ListItemText>
-          <Typography
-            variant="smallGray"
-            className={classes.productListItemText}
-          >
-            {productListItem.description}
-          </Typography>
-        </ListItemText>
-      </Box>
+
+      {productListItem.description && (
+        <Box className={classes.productListItemDescription}>
+          <ListItemText>
+            <Typography className={classes.productListItemText}>
+              {productListItem.description}
+            </Typography>
+          </ListItemText>
+        </Box>
+      )}
     </ListItem>
   );
 }

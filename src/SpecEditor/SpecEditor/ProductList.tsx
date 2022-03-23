@@ -53,10 +53,44 @@ export default function ProductList(): React.ReactElement {
   const newProductSearchFunction = () => {};
   const list: any = [];
 
+  const lista: any[] = [
+    {
+      title: 'En produkttype',
+      description:
+        'En veldig finfin beskrivelse som skal illustrere ett eller annet CSS poeng, En veldig finfin beskrivelse som skal illustrere ett eller annet CSS poeng, En veldig finfin beskrivelse som skal illustrere ett eller annet CSS poeng',
+      id: '1'
+    },
+    {
+      title: 'En produkttype',
+      description: 'En veldig finfin beskrivelse',
+      id: '2'
+    },
+    {
+      title: 'En produkttype',
+      description: 'En veldig finfin beskrivelse',
+      id: '1'
+    },
+    {
+      title: 'En produkttype',
+      description: 'En veldig finfin beskrivelse',
+      id: '2'
+    },
+    {
+      title: 'En produkttype',
+      description: 'En veldig finfin beskrivelse',
+      id: '1'
+    },
+    {
+      title: 'En produkttype',
+      description: 'En veldig finfin beskrivelse',
+      id: '2'
+    }
+  ];
+
   const renderList = (productList: IProduct[]) => {
     return (
       <List>
-        {productList.map((product: IProduct, index: number) => {
+        {lista.map((product: IProduct, index: number) => {
           {
             return (
               <NewProductTypeListItem productListItem={product} key={index} />
