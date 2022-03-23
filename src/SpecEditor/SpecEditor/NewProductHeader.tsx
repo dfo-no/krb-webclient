@@ -1,4 +1,4 @@
-import { Box, Button } from '@mui/material';
+import { Box } from '@mui/material';
 import React from 'react';
 import makeStyles from '@mui/styles/makeStyles';
 import { useTranslation } from 'react-i18next';
@@ -21,9 +21,6 @@ const useStyles = makeStyles({
     paddingLeft: 100,
     flexDirection: 'column',
     gap: 9
-  },
-  optionButtons: {
-    display: 'flex'
   }
 });
 
@@ -40,11 +37,6 @@ export default function NewProductForm(): React.ReactElement {
             name="description"
             placeholder={t('description of the product')}
           />
-        </Box>
-        <Box className={classes.optionButtons}>
-          <Button variant="saveTransparent">{t('save')}</Button>
-          <Button variant="warningTransparent">{t('cancel')}</Button>{' '}
-          <Button variant="warningTransparent">{t('delete need')}</Button>
         </Box>
       </Box>
     </Box>
