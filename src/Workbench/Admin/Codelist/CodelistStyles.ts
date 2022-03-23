@@ -1,16 +1,6 @@
 import makeStyles from '@mui/styles/makeStyles';
 import theme from '../../../theme';
 
-export const useFormStyles = makeStyles({
-  formItem: {
-    display: 'flex',
-    flexDirection: 'row'
-  },
-  inputBox: {
-    alignSelf: 'center'
-  }
-});
-
 export const useButtonStyles = makeStyles({
   buttonContainer: {
     display: 'flex',
@@ -33,14 +23,16 @@ export const usePanelStyles = makeStyles({
     flexDirection: 'column',
     flexGrow: 1,
     minHeight: 0,
-    gap: 8
+    gap: 16,
+    '& .MuiList-root': {
+      padding: 0
+    }
   },
   listItem: {
     display: 'flex',
     flexDirection: 'row',
     minHeight: 70,
     width: '100%',
-    marginBottom: 8,
     border: `1px solid ${theme.palette.gray500.main}`,
     backgroundColor: theme.palette.dfoWhite.main
   },
@@ -52,8 +44,13 @@ export const usePanelStyles = makeStyles({
     }
   },
   nestableCustom: {
+    width: '100%',
     '& .nestable-item': {
-      margin: 0
+      margin: 0,
+      paddingBottom: 8,
+      '&:last-child': {
+        paddingBottom: 0
+      }
     }
   },
   list: {
@@ -61,18 +58,8 @@ export const usePanelStyles = makeStyles({
     flexDirection: 'column',
     flexGrow: 1,
     minHeight: 0,
+    gap: '8px',
     listStyle: 'none'
-  },
-  editIcon: {
-    display: 'flex',
-    alignSelf: 'center',
-    cursor: 'pointer',
-    paddingRight: '8px',
-    justifySelf: 'flex-end',
-    marginLeft: 'auto',
-    '&:hover': {
-      color: theme.palette.dfoLightBlue.main
-    }
   },
   handlerIcon: {
     display: 'flex',
@@ -80,12 +67,6 @@ export const usePanelStyles = makeStyles({
     cursor: 'pointer',
     justifySelf: 'flex-end',
     paddingLeft: 8
-  },
-  arrowIcon: {
-    display: 'flex',
-    alignSelf: 'center',
-    paddingRight: '8px',
-    justifySelf: 'flex-end'
   },
   textItem: {
     display: 'flex',
@@ -98,13 +79,12 @@ export const usePanelStyles = makeStyles({
     paddingRight: 15
   },
   textItemTitle: {
-    flexGrow: 1,
+    display: 'flex',
     height: 30,
     paddingTop: 5,
     borderBottom: '1px solid'
   },
   textItemDescription: {
-    flexGrow: 1,
     height: 30,
     paddingTop: 5
   },

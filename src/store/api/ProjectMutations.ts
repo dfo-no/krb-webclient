@@ -32,6 +32,17 @@ function useProjectMutations() {
     throw Error('Cant save changes to Project');
   }
 
+  async function deleteProduct(product: Parentable<IProduct>) {
+    if (project) {
+      const editedProducts = Utils.removeElementFromList(
+        product,
+        project.products
+      );
+      return putProject({ ...project, products: editedProducts });
+    }
+    throw Error('Cant save changes to Project');
+  }
+
   async function editProducts(products: Parentable<IProduct>[]) {
     if (project) {
       return putProject({ ...project, products: products });
@@ -92,6 +103,17 @@ function useProjectMutations() {
     throw Error('Cant save changes to Project');
   }
 
+  async function deleteCodelist(codelist: ICodelist) {
+    if (project) {
+      const editedCodelists = Utils.removeElementFromList(
+        codelist,
+        project.codelist
+      );
+      return putProject({ ...project, codelist: editedCodelists });
+    }
+    throw Error('Cant save changes to Project');
+  }
+
   async function editCodelists(codelists: ICodelist[]) {
     if (project) {
       return putProject({ ...project, codelist: codelists });
@@ -109,8 +131,16 @@ function useProjectMutations() {
 
   async function editCode(code: Parentable<ICode>, codelist: ICodelist) {
     if (project) {
-      const editableCodes = Utils.replaceElementInList(code, codelist.codes);
-      return editCodelist({ ...codelist, codes: editableCodes });
+      const editedCodes = Utils.replaceElementInList(code, codelist.codes);
+      return editCodelist({ ...codelist, codes: editedCodes });
+    }
+    throw Error('Cant save changes to Project');
+  }
+
+  async function deleteCode(code: Parentable<ICode>, codelist: ICodelist) {
+    if (project) {
+      const editedCodes = Utils.removeElementFromList(code, codelist.codes);
+      return editCodelist({ ...codelist, codes: editedCodes });
     }
     throw Error('Cant save changes to Project');
   }
@@ -125,6 +155,7 @@ function useProjectMutations() {
   return {
     addProduct,
     editProduct,
+    deleteProduct,
     editProducts,
     addTag,
     editTag,
@@ -132,9 +163,11 @@ function useProjectMutations() {
     editTags,
     addCodelist,
     editCodelist,
+    deleteCodelist,
     editCodelists,
     addCode,
     editCode,
+    deleteCode,
     editCodes
   };
 }

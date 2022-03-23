@@ -21,8 +21,12 @@ const useStyles = makeStyles({
     backgroundColor: theme.palette.dfoWhite.main
   },
   nestableCustom: {
+    width: '100%',
     '& .nestable-item': {
-      marginTop: '16px'
+      marginTop: '16px',
+      '&:first-child': {
+        marginTop: '0'
+      }
     },
     '& .nestable-list > .nestable-item > .nestable-list': {
       margin: '0',

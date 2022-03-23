@@ -7,7 +7,7 @@ export const FormIconButton = styled(IconButton, {
   alignSelf: 'center',
   padding: 0,
   paddingRight: 8,
-  color: theme.palette.common.black,
+  color: 'inherit',
   '&:hover': {
     color: hoverColor ? hoverColor : theme.palette.dfoLightBlue.main
   }
