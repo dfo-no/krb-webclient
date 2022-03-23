@@ -12,9 +12,8 @@ import LoaderSpinner from '../common/LoaderSpinner';
 import DFODialog from '../components/DFODialog/DFODialog';
 import DFOSearchBar from '../components/DFOSearchBar/DFOSearchBar';
 import { IBank } from '../Nexus/entities/IBank';
+import SpecificationStoreService from '../Nexus/services/SpecificationStoreService';
 import { useGetAllProjectsQuery } from '../store/api/bankApi';
-import { useAppDispatch } from '../store/hooks';
-import { selectBank } from '../store/reducers/selectedBank-reducer';
 import theme from '../theme';
 import { ScrollableContainer } from '../Workbench/Components/ScrollableContainer';
 import {
@@ -22,6 +21,7 @@ import {
   SearchFieldContainer
 } from '../Workbench/Components/SearchContainer';
 import NewSpecForm from './NewSpecForm';
+import { useSpecificationState } from './SpecificationContext';
 
 const useStyles = makeStyles({
   projectsContainer: {
@@ -114,10 +114,11 @@ const useStyles = makeStyles({
   }
 });
 
+// specification
 export default function SpecPage(): React.ReactElement {
   const { t } = useTranslation();
   const classes = useStyles();
-  const dispatch = useAppDispatch();
+  const { specification, setSpecification } = useSpecificationState();
 
   const { data: projects, isLoading } = useGetAllProjectsQuery();
 
@@ -127,8 +128,9 @@ export default function SpecPage(): React.ReactElement {
     return <LoaderSpinner />;
   }
 
-  const openProjectModal = (project: any) => {
-    dispatch(selectBank(project.id));
+  const openProjectModal = (project: IBank) => {
+    const spec = SpecificationStoreService.getSpecificationFromBank(project);
+    setSpecification(spec);
     setOpen(true);
   };
 
@@ -138,7 +140,7 @@ export default function SpecPage(): React.ReactElement {
   const callback = () => {};
 
   const renderProjects = (projectList: Record<string, IBank>) => {
-    const result = Object.values(projectList).map((element) => {
+    return Object.values(projectList).map((element) => {
       return (
         <ListItem
           className={classes.projectListItem}
@@ -157,7 +159,6 @@ export default function SpecPage(): React.ReactElement {
         </ListItem>
       );
     });
-    return result;
   };
 
   return (
@@ -212,11 +213,18 @@ export default function SpecPage(): React.ReactElement {
         </Box>
       )}
 
-      <DFODialog
-        isOpen={isOpen}
-        handleClose={() => setOpen(false)}
-        children={<NewSpecForm handleClose={() => setOpen(false)} />}
-      />
+      {specification && (
+        <DFODialog
+          isOpen={isOpen}
+          handleClose={() => setOpen(false)}
+          children={
+            <NewSpecForm
+              specification={specification}
+              handleClose={() => setOpen(false)}
+            />
+          }
+        />
+      )}
     </Box>
   );
 }

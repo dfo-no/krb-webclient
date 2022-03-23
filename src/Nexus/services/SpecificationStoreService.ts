@@ -23,11 +23,24 @@ export default class SpecificationStoreService {
       bank,
       title: '',
       organization: '',
-      organizationNumber: null,
+      organizationNumber: '',
       products: [],
       requirements: [],
       requirementAnswers: []
     };
+  }
+
+  public static getSpecificationFromBank(bank: IBank): ISpecification {
+    const spec: ISpecification = {
+      bank,
+      title: '',
+      organization: '',
+      organizationNumber: '',
+      products: [],
+      requirements: [],
+      requirementAnswers: []
+    };
+    return spec;
   }
 
   public editTitle(title: string): void {

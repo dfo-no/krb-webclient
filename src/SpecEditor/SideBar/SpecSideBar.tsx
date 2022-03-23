@@ -1,13 +1,18 @@
-import { Box, Card, Divider, List, ListItem, Typography } from '@mui/material/';
-import { Button } from '@mui/material/';
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
+import Card from '@mui/material/Card';
+import Divider from '@mui/material/Divider';
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
+import Typography from '@mui/material/Typography';
 import makeStyles from '@mui/styles/makeStyles';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { withRouter } from 'react-router';
-import { useGetBankQuery } from '../../store/api/bankApi';
-import { useAppSelector } from '../../store/hooks';
+import LoaderSpinner from '../../common/LoaderSpinner';
 import theme from '../../theme';
 import { ScrollableContainer } from '../../Workbench/Components/ScrollableContainer';
+import { useSpecificationState } from '../SpecificationContext';
 
 const useStyles = makeStyles({
   specSideBar: {
@@ -83,27 +88,27 @@ const useStyles = makeStyles({
 });
 
 function SpecSideBar(): React.ReactElement {
-  const selectedBank = useAppSelector((state) => state.selectedBank);
-  const { data: bankSelected } = useGetBankQuery(String(selectedBank.id));
   const { t } = useTranslation();
   const classes = useStyles();
+  const { specification } = useSpecificationState();
+
+  if (!specification) {
+    return <LoaderSpinner />;
+  }
 
   const renderProducts = () => {
-    if (bankSelected) {
-      const result = Object.values(bankSelected.products).map((element) => {
-        return (
-          <ListItem className={classes.productListItem} key={element.id}>
-            <Card className={classes.productListItemCard}>
-              <Box className={classes.productListItemCardContent}>
-                <Typography variant="smediumBold">{element.title}</Typography>
-                <Divider className={classes.productListItemDivider} />
-                <Typography variant="small">{element.description}</Typography>
-              </Box>
-            </Card>
-          </ListItem>
-        );
-      });
-      return result;
+    if (specification.bank) {
+      return Object.values(specification.bank.products).map((element) => (
+        <ListItem className={classes.productListItem} key={element.id}>
+          <Card className={classes.productListItemCard}>
+            <Box className={classes.productListItemCardContent}>
+              <Typography variant="smediumBold">{element.title}</Typography>
+              <Divider className={classes.productListItemDivider} />
+              <Typography variant="small">{element.description}</Typography>
+            </Box>
+          </Card>
+        </ListItem>
+      ));
     }
   };
 
@@ -113,11 +118,11 @@ function SpecSideBar(): React.ReactElement {
         <Box className={classes.buttonContainer}>
           <Button variant="primary">{t('create a new product')}</Button>
         </Box>
-        {bankSelected && bankSelected?.products.length > 0 && (
+        {specification.bank.products.length > 0 && (
           <Box className={classes.listContainer}>
             <ScrollableContainer
               sx={{
-                paddingRight: bankSelected.products.length > 6 ? 2 : 0,
+                paddingRight: specification.bank.products.length > 6 ? 2 : 0,
                 height: '66.7vh'
               }}
             >
@@ -127,7 +132,7 @@ function SpecSideBar(): React.ReactElement {
             </ScrollableContainer>
           </Box>
         )}
-        {bankSelected?.products.length === 0 && (
+        {specification.bank.products.length === 0 && (
           <Box className={classes.noProductsMessage}>
             <Typography>
               {t('This specification has no products yet')}
