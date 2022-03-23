@@ -11,6 +11,7 @@ import ProjectNotFound from './Components/ProjectNotFound';
 import Create from './Create/Create';
 import { SelectProvider } from './Create/SelectContext';
 import Preview from './Preview/Preview';
+import { PreviewProvider } from './Preview/PreviewContext';
 
 interface IRouteParams {
   projectId: string;
@@ -63,7 +64,9 @@ export default function ProjectGuard(): React.ReactElement {
         </SelectProvider>
       </Route>
       <Route path="/workbench/:projectId/preview">
-        <Preview />
+        <PreviewProvider>
+          <Preview />
+        </PreviewProvider>
       </Route>
     </Box>
   );
