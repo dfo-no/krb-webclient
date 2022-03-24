@@ -50,7 +50,7 @@ export default function Create(): React.ReactElement {
         <Grid
           item
           xs={10}
-          sx={{ backgroundColor: theme.palette.dfoBackgroundBlue.main }}
+          sx={{ backgroundColor: theme.palette.backgroundBlue.main }}
         >
           {needIndex !== null ? (
             <>

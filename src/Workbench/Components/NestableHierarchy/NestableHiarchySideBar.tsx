@@ -25,22 +25,22 @@ const useStyles = makeStyles({
   nestableItemCustom: {
     display: 'flex',
     cursor: 'pointer',
-    backgroundColor: theme.palette.dfoWhite.main,
+    backgroundColor: theme.palette.white.main,
     verticalAlign: 'middle',
     height: '35px',
-    borderLeft: `1px solid ${theme.palette.gray500.main}`,
-    borderRight: `1px solid ${theme.palette.gray500.main}`,
+    borderLeft: `1px solid ${theme.palette.gray400.main}`,
+    borderRight: `1px solid ${theme.palette.gray400.main}`,
     '&:hover': {
       background: theme.palette.lightBlue.main,
-      color: theme.palette.dfoWhite.main
+      color: theme.palette.white.main
     }
   },
   nestableCustom: {
     '& .nestable-item': {
       marginTop: '16px',
       '& .nestable-item-name': {
-        borderTop: `1px solid ${theme.palette.gray500.main}`,
-        borderBottom: `1px solid ${theme.palette.gray500.main}`
+        borderTop: `1px solid ${theme.palette.gray400.main}`,
+        borderBottom: `1px solid ${theme.palette.gray400.main}`
       }
     },
     '& .nestable-list > .nestable-item > .nestable-list': {
@@ -74,8 +74,8 @@ const useStyles = makeStyles({
     justifySelf: 'flex-end'
   },
   selectedItem: {
-    background: theme.palette.dfoDarkBlue.main,
-    color: theme.palette.dfoWhite.main
+    background: theme.palette.primary.main,
+    color: theme.palette.white.main
   }
 });
 

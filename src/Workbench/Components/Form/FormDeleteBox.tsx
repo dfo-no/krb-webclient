@@ -5,6 +5,6 @@ export const FormDeleteBox = styled(Box)(({ theme }) => ({
   flexDirection: 'column',
   width: '100%',
   height: '100%',
-  backgroundColor: theme.palette.dfoErrorRed.main,
-  border: `2px solid ${theme.palette.dfoErrorRed.main}`
+  backgroundColor: theme.palette.errorRed.main,
+  border: `2px solid ${theme.palette.errorRed.main}`
 }));

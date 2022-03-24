@@ -11,5 +11,5 @@ export const PlainListBox = styled(Box)(({ theme }) => ({
   paddingRight: 15,
   marginBottom: 15,
   backgroundColor: theme.palette.gray100.main,
-  border: `1px solid ${theme.palette.gray500.main}`
+  border: `1px solid ${theme.palette.gray400.main}`
 }));

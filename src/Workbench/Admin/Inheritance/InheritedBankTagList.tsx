@@ -20,7 +20,7 @@ const useStyles = makeStyles({
     flexDirection: 'column',
     gap: 20,
     margin: 'auto',
-    border: `2px solid ${theme.palette.dfoBlue.main}`,
+    border: `2px solid ${theme.palette.primary.main}`,
     backgroundColor: theme.palette.gray200.main,
     width: '50vw',
     padding: 30

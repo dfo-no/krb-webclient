@@ -23,13 +23,13 @@ const StyledSelect = styled(InputBase)(({ theme }) => ({
     border: `3px solid ${theme.palette.indigo.main}`
   },
   '&.Mui-error': {
-    border: `2px solid ${theme.palette.dfoErrorRed.main}`,
+    border: `2px solid ${theme.palette.errorRed.main}`,
     '&:hover': {
-      borderColor: theme.palette.dfoErrorRed.main,
+      borderColor: theme.palette.errorRed.main,
       borderWidth: 3
     },
     '&.Mui-focused': {
-      borderColor: theme.palette.dfoErrorRed.main,
+      borderColor: theme.palette.errorRed.main,
       borderWidth: 3
     }
   }

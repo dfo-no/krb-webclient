@@ -25,14 +25,14 @@ const useStyles = makeStyles({
   },
   sideBarListItem: {
     cursor: 'pointer',
-    backgroundColor: theme.palette.dfoWhite.main,
+    backgroundColor: theme.palette.white.main,
     height: '35px',
     border: `1px solid ${theme.palette.gray500.main}`,
     '&:hover': {
       background: theme.palette.lightBlue.main,
-      color: theme.palette.dfoWhite.main,
+      color: theme.palette.white.main,
       '& $sideBarListItemText': {
-        color: theme.palette.dfoWhite.main
+        color: theme.palette.white.main
       }
     }
   },
@@ -40,15 +40,15 @@ const useStyles = makeStyles({
     color: theme.palette.primary.main
   },
   selectedItem: {
-    background: theme.palette.dfoDarkBlue.main,
+    background: theme.palette.primary.main,
     '& $sideBarListItemText': {
-      color: theme.palette.dfoWhite.main
+      color: theme.palette.white.main
     }
   },
   collapseIcon: {
     display: 'flex',
     marginLeft: 'auto',
-    color: theme.palette.dfoWhite.main
+    color: theme.palette.white.main
   }
 });
 
