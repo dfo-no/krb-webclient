@@ -298,6 +298,35 @@ theme.components = {
         paddingBottom: '0'
       }
     }
+  },
+  MuiListItemButton: {
+    styleOverrides: {
+      root: {
+        '&.sidebar': {
+          '& .MuiListItemIcon-root': {
+            display: 'none' // don't show icons except on selected and hover
+          },
+          '&.Mui-selected': {
+            backgroundColor: 'inherit',
+            '& .MuiListItemIcon-root': {
+              color: 'inherit',
+              display: 'flex',
+              justifyContent: 'flex-end'
+            },
+            '& .MuiListItemText-root': {
+              color: 'inherit'
+            }
+          },
+          '&:hover': {
+            backgroundColor: theme.palette.lightBlue.main,
+            color: theme.palette.common.white,
+            '& .MuiListItemText-root': {
+              color: 'inherit'
+            }
+          }
+        }
+      }
+    }
   }
 };
 
