@@ -130,7 +130,6 @@ function SpecSideBar(): React.ReactElement {
           <Box className={classes.listContainer}>
             <ScrollableContainer
               sx={{
-                paddingRight: specification.bank.products.length > 6 ? 2 : 0,
                 height: '66.7vh'
               }}
             >
