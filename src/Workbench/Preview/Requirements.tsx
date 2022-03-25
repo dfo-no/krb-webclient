@@ -1,6 +1,7 @@
-import { ListItemText } from '@mui/material';
+import Box from '@mui/material/Box';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
+import ListItemText from '@mui/material/ListItemText';
 import Typography from '@mui/material/Typography';
 import makeStyles from '@mui/styles/makeStyles';
 import React from 'react';
@@ -49,7 +50,7 @@ export default function Requirements({ project }: IProps): React.ReactElement {
   const renderVariants = (variantList: IVariant[]) => {
     return variantList.map((element) => {
       return (
-        <div key={element.id} style={{ marginTop: '.5rem' }}>
+        <Box key={element.id} sx={{ mt: 1 }}>
           <DFOAccordionElement
             eventKey={element.id}
             header={
@@ -76,25 +77,26 @@ export default function Requirements({ project }: IProps): React.ReactElement {
               </div>
             }
           />
-        </div>
+        </Box>
       );
     });
   };
 
   const renderRequirements = (requirements: IRequirement[]) => {
     return requirements.map((r) => (
-      <div key={r.id} style={{ marginTop: '.5rem' }}>
-        <div
-          style={{
+      <Box key={r.id} sx={{ mt: 1 }}>
+        <Typography
+          sx={{
+            fontWeight: 'bold',
             backgroundColor: theme.palette.dfoBlue.main,
             color: theme.palette.common.white,
             padding: '.5rem'
           }}
         >
-          <Typography sx={{ fontWeight: 'bold' }}>{r.title}</Typography>
-        </div>
+          {r.title}
+        </Typography>
         {renderVariants(r.variants)}
-      </div>
+      </Box>
     ));
   };
 
