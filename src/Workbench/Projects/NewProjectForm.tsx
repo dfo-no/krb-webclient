@@ -6,7 +6,6 @@ import makeStyles from '@mui/styles/makeStyles';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { v4 as uuidv4 } from 'uuid';
-import SelectCtrl from '../../FormProvider/SelectCtrl';
 import VerticalTextCtrl from '../../FormProvider/VerticalTextCtrl';
 import { IAlert } from '../../models/IAlert';
 import { PostProjectSchema } from '../../models/Project';
@@ -83,11 +82,6 @@ const NewProjectForm = ({ handleClose }: IProps) => {
           name="description"
           label={t('describe the project')}
           placeholder="Kort beskrivelse"
-        />
-        <SelectCtrl
-          label={t('What kind of project is this?')}
-          name="name"
-          options={options}
         />
         <Box className={classes.buttons}>
           <Button variant="warningTransparent" onClick={() => handleClose()}>
