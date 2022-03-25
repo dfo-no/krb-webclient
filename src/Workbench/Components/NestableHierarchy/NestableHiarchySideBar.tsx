@@ -45,7 +45,7 @@ const useStyles = makeStyles({
         }
       }
     },
-    width: '95%',
+    width: '100%',
     paddingLeft: '5%',
     paddingBottom: '5%'
   },

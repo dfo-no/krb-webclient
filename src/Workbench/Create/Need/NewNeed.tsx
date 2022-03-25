@@ -1,26 +1,35 @@
 import Box from '@mui/material/Box/Box';
 import Button from '@mui/material/Button';
-import { useState } from 'react';
+import React, { useState } from 'react';
 import Dialog from '../../../components/DFODialog/DFODialog';
 import NewNeedForm from './NewNeedForm';
 import { useSelectState } from '../SelectContext';
 import { Parentable } from '../../../models/Parentable';
 import { INeed } from '../../../Nexus/entities/INeed';
 import { useTranslation } from 'react-i18next';
+import { useParams } from 'react-router-dom';
+import { IRouteParams } from '../../Models/IRouteParams';
+import { useGetProjectQuery } from '../../../store/api/bankApi';
 
 interface IProps {
   buttonText: string;
 }
 
 const NewNeed = ({ buttonText }: IProps) => {
+  const { projectId } = useParams<IRouteParams>();
+  const { data: project } = useGetProjectQuery(projectId);
   const { t } = useTranslation();
   const [isOpen, setOpen] = useState(false);
-  const { setNeed } = useSelectState();
+  const { setNeedIndex } = useSelectState();
+
+  if (!project) {
+    return <></>;
+  }
 
   const onClose = (newNeed: Parentable<INeed> | null) => {
     setOpen(false);
     if (newNeed) {
-      setNeed(newNeed);
+      setNeedIndex(project.needs.length - 1);
     }
   };
 
@@ -28,8 +37,8 @@ const NewNeed = ({ buttonText }: IProps) => {
     <Box
       sx={{
         display: 'flex',
-        m: 1,
-        flexDirection: 'row-reverse'
+        flexDirection: 'row-reverse',
+        paddingTop: 2
       }}
     >
       <Button variant="primary" onClick={() => setOpen(true)}>

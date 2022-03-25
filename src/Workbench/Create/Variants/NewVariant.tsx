@@ -46,7 +46,7 @@ const NewVariant = ({ need, requirement }: IProps) => {
         <AddIcon />
       </FormIconButton>
       <Dialog
-        title={t('new variant')}
+        title={t('create variant')}
         isOpen={isNewOpen}
         handleClose={() => setNewOpen(false)}
         children={

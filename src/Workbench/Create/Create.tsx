@@ -1,5 +1,5 @@
 import { Box, Card, Typography } from '@mui/material/';
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { useParams } from 'react-router-dom';
 import LoaderSpinner from '../../common/LoaderSpinner';
 import { useGetProjectQuery } from '../../store/api/bankApi';
@@ -78,7 +78,11 @@ export default function Create(): React.ReactElement {
         }}
       >
         <>
-          {project.needs.length >= 1 && <Typography>Velg et behov</Typography>}
+          {project.needs.length >= 1 && (
+            <StandardContainer>
+              <Typography>Velg et behov</Typography>
+            </StandardContainer>
+          )}
           {project.needs.length === 0 && <ProjectStart project={project} />}
         </>
       </Box>
