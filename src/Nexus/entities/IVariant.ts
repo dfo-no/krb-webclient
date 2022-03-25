@@ -12,7 +12,6 @@ import { SliderQuestionSchema } from './ISliderQuestion';
 import { TextQuestionSchema } from './ITextQuestion';
 import { TimeWorkbenchSchema } from './ITimeQuestion';
 import VariantType from './VariantType';
-import { BaseRequirementSchema } from './IRequirement';
 
 export interface IVariant {
   id: string;

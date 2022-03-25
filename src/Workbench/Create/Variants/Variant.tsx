@@ -33,6 +33,8 @@ import ErrorSummary from '../../../Form/ErrorSummary';
 import { useVariantState } from '../Requirement/VariantContext';
 import { useTranslation } from 'react-i18next';
 import { useSelectState } from '../SelectContext';
+import theme from '../../../theme';
+import { FormIconButton } from '../../Components/Form/FormIconButton';
 
 interface IProps {
   variant: IVariant;
@@ -46,7 +48,7 @@ const Variant = ({ variant, requirementIndex }: IProps) => {
 
   const { editVariant } = useProjectMutations();
   const { setOpenVariants } = useVariantState();
-  const { needIndex } = useSelectState();
+  const { needIndex, setDeleteMode } = useSelectState();
   const dispatch = useAppDispatch();
 
   const methods = useForm<IVariant>({
@@ -96,10 +98,13 @@ const Variant = ({ variant, requirementIndex }: IProps) => {
         <Accordion key={variant.id} onChange={accordionChange()}>
           <AccordionSummary expandIcon={<ExpandMoreIcon />}>
             <Typography>{variant.requirementText}</Typography>
-            <Box sx={{ flex: '1 1 auto' }} />
-            <Tooltip title={<>t('delete variant')</>}>
-              <DeleteIcon sx={{ mr: 1 }} onClick={() => {}} />
-            </Tooltip>
+            <FormIconButton
+              hoverColor={theme.palette.dfoErrorRed.main}
+              onClick={() => setDeleteMode(variant.id)}
+              sx={{ marginLeft: 'auto' }}
+            >
+              <DeleteIcon />
+            </FormIconButton>
           </AccordionSummary>
           <AccordionDetails>
             <Divider />
@@ -149,7 +154,7 @@ const Variant = ({ variant, requirementIndex }: IProps) => {
                 name={`products`}
               />
             </div>
-            <QuestionsList variant={variant} />
+            <QuestionsList />
           </AccordionDetails>
           <AccordionActions>
             <Button variant="contained" type="submit">

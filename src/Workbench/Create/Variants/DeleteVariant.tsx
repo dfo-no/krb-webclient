@@ -18,17 +18,20 @@ import { Box } from '@mui/material/';
 import { FormCantDeleteBox } from '../../Components/Form/FormCantDeleteBox';
 import Typography from '@mui/material/Typography';
 import { useSelectState } from '../SelectContext';
+import { IVariant } from '../../../Nexus/entities/IVariant';
 
 interface IProps {
   children: React.ReactNode;
+  variant: IVariant;
   requirement: IRequirement;
   need: Parentable<INeed>;
   handleClose: () => void;
 }
 
 /* TODO: Needs validating */
-function DeleteRequirement({
+function DeleteVariant({
   children,
+  variant,
   requirement,
   need,
   handleClose
@@ -38,24 +41,24 @@ function DeleteRequirement({
 
   const dispatch = useAppDispatch();
   const { t } = useTranslation();
-  const { deleteRequirement } = useProjectMutations();
+  const { deleteVariant } = useProjectMutations();
   const { deleteMode } = useSelectState();
-  const hasChildren = requirement.variants.length > 0;
+  const hasChildren = variant.questions.length > 0;
 
   if (!project) {
     return <></>;
   }
 
-  if (deleteMode !== requirement.id) {
+  if (deleteMode !== variant.id) {
     return <>{children}</>;
   }
 
   const onSubmit = async () => {
-    await deleteRequirement(requirement, need).then(() => {
+    await deleteVariant(variant, requirement, need).then(() => {
       const alert: IAlert = {
         id: uuidv4(),
         style: 'success',
-        text: 'Successfully deleted requirement'
+        text: 'Successfully deleted variant'
       };
       dispatch(addAlert({ alert }));
       handleClose();
@@ -86,7 +89,7 @@ function DeleteRequirement({
       {hasChildren && (
         <FormCantDeleteBox>
           <Typography variant={'smallBold'}>
-            {t('cant delete this requirement')}
+            {t('cant delete this variant')}
           </Typography>
           <FormTextButton
             hoverColor={theme.palette.gray500.main}
@@ -102,4 +105,4 @@ function DeleteRequirement({
   );
 }
 
-export default DeleteRequirement;
+export default DeleteVariant;
