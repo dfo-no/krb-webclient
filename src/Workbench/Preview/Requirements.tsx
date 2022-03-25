@@ -15,6 +15,7 @@ import { IBank } from '../../Nexus/entities/IBank';
 import { IRequirement } from '../../Nexus/entities/IRequirement';
 import { IVariant } from '../../Nexus/entities/IVariant';
 import theme from '../../theme';
+import { StandardContainer } from '../Components/StandardContainer';
 import { usePreviewState } from './PreviewContext';
 
 interface IProps {
@@ -108,8 +109,8 @@ export default function Requirements({ project }: IProps): React.ReactElement {
   };
 
   return (
-    <div>
+    <StandardContainer>
       <DFOAccordionProvider body={<>{renderNeeds()}</>} />
-    </div>
+    </StandardContainer>
   );
 }

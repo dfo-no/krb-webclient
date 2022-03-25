@@ -41,23 +41,6 @@ export const CodelistQuestionSchema = QuestionBaseSchema.keys({
   })
 });
 
-export const CodelistQuestionSchema2 = QuestionBaseSchema.keys({
-  type: CustomJoi.string().equal(QuestionEnum.Q_CODELIST).required(),
-  config: ConfigBaseSchema.keys({
-    codelist: CustomJoi.string().required(),
-    mandatoryCodes: CustomJoi.array()
-      .items(CustomJoi.string())
-      .min(0)
-      .required(),
-    optionalCodes: CustomJoi.array()
-      .items(CustomJoi.string())
-      .min(0)
-      .required(),
-    optionalCodeMinAmount: CustomJoi.number().min(0).required(),
-    optionalCodeMaxAmount: CustomJoi.number().min(1).required()
-  })
-});
-
 export const CodelistQuestionAnswerSchema = CodelistQuestionSchema.keys({
   answer: CustomJoi.object().keys({
     codes: CustomJoi.array()

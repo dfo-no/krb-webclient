@@ -1,15 +1,13 @@
+import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import React from 'react';
-import { useParams } from 'react-router-dom';
+import { Route, useParams } from 'react-router-dom';
 import LoaderSpinner from '../../common/LoaderSpinner';
 import { useGetProjectQuery } from '../../store/api/bankApi';
 import theme from '../../theme';
-import PreviewSideBar from './PreviewSideBar';
+import { IRouteParams } from '../Models/IRouteParams';
 import Requirements from './Requirements';
-
-interface IRouteParams {
-  projectId: string;
-}
+import Sidebar from './Sidebar';
 
 export default function Preview(): React.ReactElement {
   const { projectId } = useParams<IRouteParams>();
@@ -21,27 +19,23 @@ export default function Preview(): React.ReactElement {
   }
 
   return (
-    <Grid
-      container
-      spacing={2}
+    <Box
       sx={{
         flex: '1',
-        display: 'flex',
-        minHeight: '100vh',
-        backgroundColor: theme.palette.gray100.main,
-        pr: 1
+        height: '100%',
+        width: '100%'
       }}
     >
-      <Grid item xs={3}>
-        <PreviewSideBar parentableArray={project.products} />
-      </Grid>
-      <Grid
-        item
-        xs={9}
-        sx={{ backgroundColor: theme.palette.dfoBackgroundBlue.main }}
+      <Box
+        sx={{
+          display: 'flex',
+          height: '100%',
+          width: '100%'
+        }}
       >
+        <Sidebar parentableArray={project.products} />
         <Requirements project={project} />
-      </Grid>
-    </Grid>
+      </Box>
+    </Box>
   );
 }
