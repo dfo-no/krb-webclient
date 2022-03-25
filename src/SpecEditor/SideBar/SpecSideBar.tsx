@@ -101,7 +101,7 @@ function SpecSideBar(): React.ReactElement {
 
   const renderProducts = () => {
     if (specification.bank) {
-      return Object.values(specification.bank.products).map((element) => (
+      return specification.bank.products.map((element) => (
         <ListItem className={classes.productListItem} key={element.id}>
           <Card className={classes.productListItemCard}>
             <Box className={classes.productListItemCardContent}>
