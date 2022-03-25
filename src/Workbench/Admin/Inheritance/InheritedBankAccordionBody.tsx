@@ -93,26 +93,18 @@ export default function InheritedBankAccordionBody({
       <form onSubmit={methods.handleSubmit(saveValues)}>
         <Box className={classes.bankBodyContainer}>
           <Box className={classes.inheritVersionContainer}>
-            <Typography variant="smallBold">
-              {t('Which version of the bank to inherit')}
-            </Typography>
+            <Typography>{t('Which version of the bank to inherit')}</Typography>
             <Box className={classes.selectContainer}>
               {/*      <DFOSelect options={versions} /> */}
             </Box>
           </Box>
           <Box className={classes.inheritPartsContainer}>
-            <Typography variant="smallBold">
-              {t('Which parts of the bank to inherit')}
-            </Typography>
+            <Typography>{t('Which parts of the bank to inherit')}</Typography>
             <Box className={classes.partsCheckBoxSaveButtonContainer}>
               <CheckboxCtrl
                 variant="blueborder"
                 name="name"
-                label={
-                  <Typography variant="smallGray">
-                    Arv hele kravsettet
-                  </Typography>
-                }
+                label={<Typography>Arv hele kravsettet</Typography>}
               />
               <Button variant="save">{t('save changes')}</Button>
             </Box>

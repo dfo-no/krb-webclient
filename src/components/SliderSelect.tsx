@@ -39,9 +39,7 @@ export default function SliderSelect({
       <FormControl fullWidth error={!!get(errors, name)}>
         <Stack>{label}</Stack>
         <Stack spacing={2} direction="row" sx={{ mb: 1 }} alignItems="center">
-          <Typography variant="body1" sx={{ whiteSpace: 'nowrap' }}>
-            {min}
-          </Typography>
+          <Typography sx={{ whiteSpace: 'nowrap' }}>{min}</Typography>
           <Controller
             name={name}
             control={control}
@@ -61,9 +59,7 @@ export default function SliderSelect({
               />
             )}
           />
-          <Typography variant="body1" sx={{ whiteSpace: 'nowrap' }}>
-            {max}
-          </Typography>
+          <Typography sx={{ whiteSpace: 'nowrap' }}>{max}</Typography>
         </Stack>
         <Stack>
           <FormHelperText id={name}>

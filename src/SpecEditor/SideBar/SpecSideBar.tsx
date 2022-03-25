@@ -99,9 +99,9 @@ function SpecSideBar(): React.ReactElement {
           <ListItem className={classes.productListItem} key={element.id}>
             <Card className={classes.productListItemCard}>
               <Box className={classes.productListItemCardContent}>
-                <Typography variant="smediumBold">{element.title}</Typography>
+                <Typography>{element.title}</Typography>
                 <Divider className={classes.productListItemDivider} />
-                <Typography variant="small">{element.description}</Typography>
+                <Typography>{element.description}</Typography>
               </Box>
             </Card>
           </ListItem>

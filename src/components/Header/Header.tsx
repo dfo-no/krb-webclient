@@ -32,6 +32,11 @@ const useStyles = makeStyles({
       marginLeft: 1
     }
   },
+  projectPathTitle: {
+    textDecoration: 'underline',
+    fontWeight: 'bold',
+    color: theme.palette.dfoDarkBlue.main
+  },
   viewingProjectTitle: {
     display: 'flex',
     paddingBottom: 3,
@@ -139,10 +144,12 @@ export default function Header(): React.ReactElement {
           <Box className={classes.header}>
             <Box className={classes.headerContent}>
               <Box className={classes.projectPath}>
-                <Typography variant="small">{projectPath}</Typography>
+                <Typography variant="sm">{projectPath}</Typography>
               </Box>
               <Box className={classes.notViewingProjectTitle}>
-                <Typography variant="bigBold">Kravbank</Typography>
+                <Typography variant="xl" sx={{ fontWeight: 'bold' }}>
+                  Kravbank
+                </Typography>
               </Box>
             </Box>
           </Box>
@@ -176,16 +183,18 @@ export default function Header(): React.ReactElement {
           <Box>
             <Box className={classes.headerContent}>
               <Box className={classes.projectPath}>
-                <Typography variant="small">
+                <Typography variant="sm">
                   {projectPath + ' / '}
-                  <Typography variant="smallUnderlineBlue">
+                  <Typography variant="sm" className={classes.projectPathTitle}>
                     {projectTitle}
                   </Typography>
                 </Typography>
               </Box>
               <Box className={classes.viewingProjectTitle}>
                 <Box className={classes.projectData}>
-                  <Typography variant="bigBold">{project.title}</Typography>
+                  <Typography variant="xl" sx={{ fontWeight: 'bold' }}>
+                    {project.title}
+                  </Typography>
                 </Box>
                 <Box className={classes.projectIcons}>
                   <Link

@@ -28,17 +28,15 @@ const ProjectStart = ({ project }: IProps) => {
         />
       </div>
       <CardContent component={Stack}>
-        <Typography variant="h3" alignSelf="center">
-          {project.title}
-        </Typography>
-        <Typography variant="subtitle1" alignSelf="center">
+        <Typography alignSelf="center">{project.title}</Typography>
+        <Typography alignSelf="center">
           Du er nå i gang med å bygge et nytt kravsett.
         </Typography>
-        <Typography variant="subtitle1" alignSelf="center">
+        <Typography alignSelf="center">
           Start med å definere behov som skal treffe brukerne av dette
           kravsettet.
         </Typography>
-        <Typography variant="subtitle1" alignSelf="center">
+        <Typography alignSelf="center">
           Organiser behovene i hierarki og formuler krav som hører til de ulike
           behovene.
         </Typography>

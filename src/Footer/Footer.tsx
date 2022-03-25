@@ -111,10 +111,12 @@ const Footer = () => {
               image={logoWhite}
               sx={{ width: 137, height: 38 }}
             />
-            <Typography>Karl Johans gate 37B</Typography>
-            <Typography>Pb 7154 St. Olavs plass, 0130 Oslo</Typography>
-            <Typography>Tlf: 400 07 997</Typography>
-            <Typography>Org. nr. 986 252 932</Typography>
+            <Typography variant="sm">Karl Johans gate 37B</Typography>
+            <Typography variant="sm">
+              Pb 7154 St. Olavs plass, 0130 Oslo
+            </Typography>
+            <Typography variant="sm">Tlf: 400 07 997</Typography>
+            <Typography variant="sm">Org. nr. 986 252 932</Typography>
           </Grid>
         </Grid>
       </Toolbar>

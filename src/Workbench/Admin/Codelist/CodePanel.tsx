@@ -97,7 +97,7 @@ const CodePanel = (): React.ReactElement => {
         {!isEditing() && <Box className={classes.handlerIcon}>{handler}</Box>}
         <Box className={classes.textItem}>
           <Box className={classes.textItemTitle}>
-            <Typography variant="smallBold">{item.title}</Typography>
+            <Typography>{item.title}</Typography>
             <FormIconButton
               sx={{ marginLeft: 'auto' }}
               onClick={() => setEditMode(item.id)}
@@ -112,7 +112,7 @@ const CodePanel = (): React.ReactElement => {
             </FormIconButton>
           </Box>
           <Box className={classes.textItemDescription}>
-            <Typography variant="small">{item.description}</Typography>
+            <Typography>{item.description}</Typography>
           </Box>
         </Box>
       </Box>

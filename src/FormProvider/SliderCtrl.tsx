@@ -37,7 +37,7 @@ const SliderCtrl = ({
       <FormControl fullWidth error={!!get(errors, name)}>
         <Stack>{label}</Stack>
         <Stack spacing={2} direction="row" sx={{ mb: 1 }} alignItems="center">
-          <Typography variant="body1" sx={{ whiteSpace: 'nowrap' }}>
+          <Typography variant="sm" sx={{ whiteSpace: 'nowrap' }}>
             {min} {unit}
           </Typography>
           <Controller
@@ -61,7 +61,7 @@ const SliderCtrl = ({
             )}
           />
 
-          <Typography variant="body1" sx={{ whiteSpace: 'nowrap' }}>
+          <Typography variant="sm" sx={{ whiteSpace: 'nowrap' }}>
             {max} {unit}
           </Typography>
         </Stack>

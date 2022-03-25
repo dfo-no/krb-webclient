@@ -38,10 +38,10 @@ export default function FilteredList({
               <MenuBookIcon />
             </ListItemIcon>
             <Link to="/specification" onClick={handleSelectedBank(bank)}>
-              {bank.title}
+              <Typography variant="md">{bank.title}</Typography>
             </Link>
             {bank.publishedDate && (
-              <Typography variant="subtitle1" sx={{ mx: 2 }}>
+              <Typography variant="md" sx={{ mx: 2 }}>
                 {t('date.ago', { date: new Date(bank.publishedDate) })}
               </Typography>
             )}

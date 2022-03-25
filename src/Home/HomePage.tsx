@@ -62,24 +62,24 @@ export default function HomePage(): React.ReactElement {
               <List>
                 <ListItem>
                   <Link to="/workbench">
-                    <Typography variant="h5">{t('create projects')}</Typography>
+                    <Typography variant="lg">{t('create projects')}</Typography>
                   </Link>
                 </ListItem>
                 <ListItem>
                   <Link to="/response">
-                    <Typography variant="h5">{t('create response')}</Typography>
+                    <Typography variant="lg">{t('create response')}</Typography>
                   </Link>
                 </ListItem>
                 <ListItem>
                   <Link to="/evaluation">
-                    <Typography variant="h5">
+                    <Typography variant="lg">
                       {t('create evaluation')}
                     </Typography>
                   </Link>
                 </ListItem>
                 <ListItem>
                   <Link to="/specification">
-                    <Typography variant="h5">
+                    <Typography variant="lg">
                       {t('create specification')}
                     </Typography>
                   </Link>

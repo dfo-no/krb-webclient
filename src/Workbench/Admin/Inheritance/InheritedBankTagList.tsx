@@ -85,9 +85,7 @@ export default function InheritedBankTagList({
               callback={tagsCallback}
             />
           </Box>
-          <Typography variant="smallUnderline">
-            {t('show selected tags')}
-          </Typography>
+          <Typography>{t('show selected tags')}</Typography>
         </Box>
         <Box className={classes.tagsList}>{renderList()}</Box>
       </Box>

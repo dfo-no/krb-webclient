@@ -21,9 +21,7 @@ export default function NeedToolbar({ need }: IProps): React.ReactElement {
       <AppBar position="static" color="secondary">
         <Toolbar color="secondary">
           <Grid container>
-            <Typography variant="h6" component="span">
-              {need && need.title}
-            </Typography>
+            <Typography component="span">{need && need.title}</Typography>
             <span style={{ flex: '1 1 auto' }}></span>
             <EditNeed need={need} />
             <DeleteNeed need={need} />

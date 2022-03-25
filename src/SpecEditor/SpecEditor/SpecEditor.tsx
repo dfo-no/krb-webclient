@@ -58,22 +58,22 @@ export default function SpecEditor(): React.ReactElement {
             width="594"
           />
           <Box className={classes.specEditorText}>
-            <Typography variant="bigBoldBlue">{bankSelected?.title}</Typography>
+            <Typography>{bankSelected?.title}</Typography>
             <Box className={classes.specEditorDescription}>
-              <Typography variant="smedium">
+              <Typography>
                 {t('Du er nå i gang med å bygge din kravspesifikasjon.')}
               </Typography>
-              <Typography variant="smedium">
+              <Typography>
                 {t(
                   'Start by creating the products you need for your procurement'
                 )}
               </Typography>
-              <Typography variant="smedium">
+              <Typography>
                 {t(
                   'For every product you can find predefined banks that can fit your procurement'
                 )}
               </Typography>
-              <Typography variant="smedium">
+              <Typography>
                 {t(
                   'Remember that you have to download the specification and save it locally on your computer'
                 )}

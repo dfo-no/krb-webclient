@@ -16,12 +16,9 @@ function ProjectHeader(): React.ReactElement {
   return (
     <DFOHeaderContentBox>
       <Box sx={{ display: 'flex', flexDirection: 'row' }}>
-        <Typography variant="bigBold">{project.title}</Typography>
+        <Typography>{project.title}</Typography>
       </Box>
-      <Typography
-        variant="small"
-        sx={{ borderTop: '1px solid', paddingTop: 1 }}
-      >
+      <Typography sx={{ borderTop: '1px solid', paddingTop: 1 }}>
         {project.description}
       </Typography>
     </DFOHeaderContentBox>

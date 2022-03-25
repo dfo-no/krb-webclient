@@ -87,7 +87,7 @@ const NewSpecForm = ({ handleClose }: IProps) => {
             noValidate
           >
             <Box>
-              <Typography variant="bigBlue">{bankSelected.title}</Typography>
+              <Typography variant="xl">{bankSelected.title}</Typography>
               <Typography>{bankSelected.description}</Typography>
             </Box>
 

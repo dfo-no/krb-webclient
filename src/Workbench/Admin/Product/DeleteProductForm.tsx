@@ -94,9 +94,7 @@ export default function DeleteProductForm({
         )}
         {hasChildren && (
           <FormCantDeleteBox>
-            <Typography variant={'smallBold'}>
-              {t('cant delete this tag')}
-            </Typography>
+            <Typography>{t('cant delete this tag')}</Typography>
             <FormTextButton
               hoverColor={theme.palette.gray500.main}
               onClick={() => handleClose()}

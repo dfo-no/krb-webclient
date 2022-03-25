@@ -102,10 +102,10 @@ const NestableHierarcyEditableComponents = <
       <Box className={classes.nestableItemCustom}>
         {!isEditing() && <Box className={classes.handlerIcon}>{handler}</Box>}
         <Box className={classes.textItemTitle}>
-          <Typography variant="smallBold">{item.title}</Typography>
+          <Typography>{item.title}</Typography>
         </Box>
         <Box className={classes.textItemDescription}>
-          <Typography variant="small">{item.description}</Typography>
+          <Typography>{item.description}</Typography>
         </Box>
         <FormIconButton onClick={() => setEditMode(item.id)}>
           <EditOutlinedIcon />
