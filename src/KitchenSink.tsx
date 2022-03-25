@@ -12,15 +12,16 @@ import CheckboxCtrl from './FormProvider/CheckboxCtrl';
 import CodelistCtrl from './FormProvider/CodelistCtrl';
 import DateCtrl from './FormProvider/DateCtrl';
 import FileUploadCtrl from './FormProvider/FileUploadCtrl';
+import HorizontalTextCtrl from './FormProvider/HorizontalTextCtrl';
 import RadioCtrl from './FormProvider/RadioCtrl';
 import SelectCtrl from './FormProvider/SelectCtrl';
 import SliderCtrl from './FormProvider/SliderCtrl';
 import SwitchCtrl from './FormProvider/SwitchCtrl';
-import HorizontalTextCtrl from './FormProvider/HorizontalTextCtrl';
 import VerticalTextCtrl from './FormProvider/VerticalTextCtrl';
 import ModelType from './models/ModelType';
 import RequirementType from './models/RequirementType';
 import { ICodelist } from './Nexus/entities/ICodelist';
+import { IOption } from './Nexus/entities/IOption';
 
 interface IFormValues {
   person: {
@@ -46,7 +47,7 @@ const FormSchema = CustomJoi.object().keys({
     firstName: CustomJoi.string().max(20).required(),
     lastName: CustomJoi.string().max(20).required(),
     adress: CustomJoi.string().max(20).required(),
-    cars: CustomJoi.string().valid('Volvo').required(),
+    cars: CustomJoi.string().valid('2').required(),
     birthDay: CustomJoi.date().iso().raw().required(),
     weddingDay: CustomJoi.alternatives([
       CustomJoi.date().iso().max('12/13/2021').raw(),
@@ -64,8 +65,6 @@ const FormSchema = CustomJoi.object().keys({
 });
 
 const KitchenSink = (): React.ReactElement => {
-  // useConfirmTabClose();
-
   const codelists = [
     {
       id: '012345678901234567890123456789123456',
@@ -92,7 +91,7 @@ const KitchenSink = (): React.ReactElement => {
       firstName: '',
       lastName: '',
       adress: '',
-      cars: 'BMW',
+      cars: '2',
       birthDay: '',
       weddingDay: '2021/12/14T14:00:00.123Z',
       point: 50,
@@ -115,7 +114,11 @@ const KitchenSink = (): React.ReactElement => {
     console.log(data.person);
   };
 
-  const selectOptions = ['BMW', 'Mercedes', 'Volvo'];
+  const selectOptions: IOption[] = [
+    { label: 'BMW', value: '1' },
+    { label: 'Mercedes', value: '2' },
+    { label: 'Volvo', value: '3' }
+  ];
 
   const list: any = [];
   const searchFunction = () => {};

@@ -1,14 +1,14 @@
 import { joiResolver } from '@hookform/resolvers/joi';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
-import MenuItem from '@mui/material/MenuItem';
-import Select from '@mui/material/Select';
 import Typography from '@mui/material/Typography';
 import makeStyles from '@mui/styles/makeStyles';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router';
+import SelectCtrl from '../FormProvider/SelectCtrl';
 import VerticalTextCtrl from '../FormProvider/VerticalTextCtrl';
+import { IOption } from '../Nexus/entities/IOption';
 import {
   BaseSpecificationSchema,
   ISpecification
@@ -53,18 +53,15 @@ const NewSpecForm = ({ handleClose, specification }: IProps) => {
   const classes = useStyles();
   const { setSpecification } = useSpecificationState();
 
+  const versions: IOption[] = specification.bank.publications.map((p) => {
+    const option: IOption = { label: p.comment, value: p.id };
+    return option;
+  });
+
   const methods = useForm<ISpecification>({
     resolver: joiResolver(BaseSpecificationSchema),
     defaultValues: specification
   });
-
-  // Get from selectedBank later. Logic for this?
-  const versions = [
-    { label: 'Versjon 1', name: 'Versjon 1' },
-    { label: 'Versjon 2', name: 'Versjon 2' },
-    { label: 'Versjon 3', name: 'Versjon 3' },
-    { label: 'Versjon 4', name: 'Versjon 4' }
-  ];
 
   const onSubmit = async (post: ISpecification) => {
     setSpecification(post);
@@ -92,21 +89,13 @@ const NewSpecForm = ({ handleClose, specification }: IProps) => {
         <code>{}</code>
 
         <Box className={classes.fields}>
-          <Select
+          <SelectCtrl
             name="version"
-            value={versions[0].label}
-            disabled
             label={t(
               'Pick which version of the project you want to use in this specification'
             )}
-            onChange={(e) => console.log(e.target.value)}
-          >
-            {versions.map((v) => (
-              <MenuItem key={v.name} value={v.name}>
-                {v.label}
-              </MenuItem>
-            ))}
-          </Select>
+            options={versions}
+          />
           <VerticalTextCtrl
             name="title"
             label={t('What will be the name of the procurement?')}

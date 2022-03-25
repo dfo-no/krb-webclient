@@ -11,6 +11,7 @@ import VerticalTextCtrl from '../../FormProvider/VerticalTextCtrl';
 import { IAlert } from '../../models/IAlert';
 import { PostProjectSchema } from '../../models/Project';
 import { IBank } from '../../Nexus/entities/IBank';
+import { IOption } from '../../Nexus/entities/IOption';
 import Nexus from '../../Nexus/Nexus';
 import { usePostProjectMutation } from '../../store/api/bankApi';
 import { useAppDispatch } from '../../store/hooks';
@@ -41,6 +42,8 @@ const NewProjectForm = ({ handleClose }: IProps) => {
   const dispatch = useAppDispatch();
   const { t } = useTranslation();
   const nexus = Nexus.getInstance();
+
+  // TODO: Should contain a defaultValue from options to fully control the Select
   const defaultValues = nexus.projectService.generateDefaultProjectValues();
   const [postProject] = usePostProjectMutation();
   const classes = useStyles();
@@ -63,7 +66,13 @@ const NewProjectForm = ({ handleClose }: IProps) => {
     });
   };
 
-  const options = ['Type 1', 'Type 2', 'Type 3', 'Type 4'];
+  // TODO: set defaultValue from this in
+  const options: IOption[] = [
+    { label: 'Type 1', value: 'Type 1' },
+    { label: 'Type 2', value: 'Type 2' },
+    { label: 'Type 3', value: 'Type 3' },
+    { label: 'Type 4', value: 'Type 4' }
+  ];
 
   return (
     <FormProvider {...methods}>
