@@ -52,7 +52,8 @@ const useStyles = makeStyles({
   handlerIcon: {
     alignSelf: 'center',
     cursor: 'pointer',
-    paddingLeft: 8
+    paddingLeft: 8,
+    paddingTop: 6
   },
   editIcon: {
     alignSelf: 'center',
