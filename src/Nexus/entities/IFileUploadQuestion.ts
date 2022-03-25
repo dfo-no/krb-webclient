@@ -25,7 +25,7 @@ export interface IFileUploadConfig extends IConfigBase {
 export const FileUploadWorkbenchSchema = QuestionBaseSchema.keys({
   type: CustomJoi.string().equal(QuestionEnum.Q_FILEUPLOAD).required(),
   config: ConfigBaseSchema.keys({
-    fileEndings: CustomJoi.array().items(CustomJoi.string()).min(1).required(),
+    fileEndings: CustomJoi.array().items(CustomJoi.string()).required(),
     template: CustomJoi.string().allow(null, '').required(),
     uploadInSpec: CustomJoi.boolean().required(),
     allowMultipleFiles: CustomJoi.boolean().required()
@@ -35,7 +35,7 @@ export const FileUploadWorkbenchSchema = QuestionBaseSchema.keys({
 export const FileUploadWorkbenchInfoSchema = QuestionBaseSchema.keys({
   type: CustomJoi.string().equal(QuestionEnum.Q_FILEUPLOAD).required(),
   config: ConfigBaseSchema.keys({
-    fileEndings: CustomJoi.array().items(CustomJoi.string()).min(1).required(),
+    fileEndings: CustomJoi.array().items(CustomJoi.string()).required(),
     template: CustomJoi.string().allow(null, '').required(),
     uploadInSpec: CustomJoi.boolean().valid(false).required(),
     allowMultipleFiles: CustomJoi.boolean().required()

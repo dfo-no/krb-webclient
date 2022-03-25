@@ -1,78 +1,40 @@
-import { Box } from '@mui/material';
-import makeStyles from '@mui/styles/makeStyles';
-import React, { useState } from 'react';
-import { Levelable } from '../../models/Levelable';
-import { IProduct } from '../../Nexus/entities/IProduct';
-import { IRequirement } from '../../Nexus/entities/IRequirement';
-import { useAppSelector } from '../../store/hooks';
+import Box from '@mui/material/Box';
+import Grid from '@mui/material/Grid';
+import React from 'react';
+import { Route, useParams } from 'react-router-dom';
+import LoaderSpinner from '../../common/LoaderSpinner';
+import { useGetProjectQuery } from '../../store/api/bankApi';
 import theme from '../../theme';
-import PreviewSideBar from './PreviewSideBar';
-import RequirementsPerNeed from './RequirementsPerNeed';
-import VariantList from './VariantList';
-
-const useStyles = makeStyles({
-  headerText: {
-    margin: '0 0 0 30px',
-    fontWeight: 'bold',
-    color: theme.palette.primary.main
-  },
-  editorContainer: {
-    flex: '1',
-    display: 'flex',
-    minHeight: '100vh',
-    backgroundColor: theme.palette.gray100.main
-  },
-  product: {
-    width: '30%'
-  },
-  requirement: {
-    width: '25%'
-  },
-  variant: {
-    width: '45%'
-  }
-});
+import { IRouteParams } from '../Models/IRouteParams';
+import Requirements from './Requirements';
+import Sidebar from './Sidebar';
 
 export default function Preview(): React.ReactElement {
-  const { project } = useAppSelector((state) => state.project);
-  const classes = useStyles();
+  const { projectId } = useParams<IRouteParams>();
 
-  const [isRequirement, setIsRequirement] = useState(false);
+  const { data: project } = useGetProjectQuery(projectId);
 
-  const [selectedProduct, setSelectedProduct] =
-    useState<null | Levelable<IProduct>>(null);
-  const [selectedRequirement, setSelectedRequirement] =
-    useState<null | IRequirement>(null);
-
-  const updateSelected = (
-    isRequirementUpdate: boolean,
-    selectedRequirementUpdate: null | IRequirement,
-    selectedProductUpdate: null | Levelable<IProduct>
-  ) => {
-    setIsRequirement(isRequirementUpdate);
-    setSelectedRequirement(selectedRequirementUpdate);
-    setSelectedProduct(selectedProductUpdate);
-  };
+  if (!project) {
+    return <LoaderSpinner />;
+  }
 
   return (
-    <Box className={classes.editorContainer}>
-      <Box className={classes.product}>
-        <PreviewSideBar
-          parentableArray={project.products}
-          updateSelectedFunction={updateSelected}
-        />
-      </Box>
-      <Box className={classes.requirement}>
-        <h6 className={classes.headerText}>Krav</h6>
-        <RequirementsPerNeed
-          selectedProduct={selectedProduct}
-          updateSelectedFunction={setSelectedRequirement}
-          isRequirement={isRequirement}
-        />
-      </Box>
-      <Box className={classes.variant}>
-        <h6 className={classes.headerText}>Variant</h6>
-        <VariantList selectedRequirement={selectedRequirement} />
+    <Box
+      sx={{
+        flex: '1',
+        height: '100%',
+        width: '100%'
+      }}
+    >
+      <Box
+        sx={{
+          display: 'flex',
+          height: '100%',
+          width: '100%'
+        }}
+      >
+        <Sidebar parentableArray={project.products} />
+        <Requirements project={project} />
       </Box>
     </Box>
   );

@@ -298,6 +298,30 @@ theme.components = {
         paddingBottom: '0'
       }
     }
+  },
+  MuiListItemButton: {
+    styleOverrides: {
+      root: {
+        '&.sidebar': {
+          border: '1px solid black',
+          backgroundColor: theme.palette.dfoWhite.main,
+          '&.Mui-selected': {
+            backgroundColor: theme.palette.primary.main,
+            color: theme.palette.common.white,
+            '& .MuiListItemText-root': {
+              color: 'inherit'
+            }
+          },
+          '&:hover': {
+            backgroundColor: theme.palette.primary.main,
+            color: theme.palette.common.white,
+            '& .MuiListItemText-root': {
+              color: 'inherit'
+            }
+          }
+        }
+      }
+    }
   }
 };
 
