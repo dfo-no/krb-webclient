@@ -60,7 +60,7 @@ export default function SpecEditor(): React.ReactElement {
             </Typography>
             <Box className={classes.specEditorDescription}>
               <Typography variant="smedium">
-                {t('Du er nå i gang med å bygge din kravspesifikasjon.')}
+                {t('You are now building your spec')}
               </Typography>
               <Typography variant="smedium">
                 {t(

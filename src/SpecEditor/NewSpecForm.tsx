@@ -106,8 +106,8 @@ const NewSpecForm = ({ handleClose, specification }: IProps) => {
           />
           <VerticalTextCtrl
             name="organizationNumber"
-            label="Organisasjonsnummer:"
-            placeholder="Organisasjonsnummer"
+            label={t('Organization number')}
+            placeholder={t('Organization number')}
           />
           <Box className={classes.buttons}>
             <Button variant="warningTransparent" onClick={() => handleClose()}>
