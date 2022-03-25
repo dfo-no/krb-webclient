@@ -50,7 +50,7 @@ const useStyles = makeStyles({
     width: '100%',
     paddingLeft: 30,
     '&:hover': {
-      background: theme.palette.lightBlue.main,
+      background: theme.palette.primary.main,
       color: theme.palette.dfoWhite.main
     }
   }
