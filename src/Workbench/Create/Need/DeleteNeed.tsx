@@ -1,56 +1,92 @@
-import DeleteIcon from '@mui/icons-material/Delete';
-import IconButton from '@mui/material/IconButton';
-import { useState } from 'react';
-import { useParams } from 'react-router-dom';
-import LoaderSpinner from '../../../common/LoaderSpinner';
-import Dialog from '../../../components/DFODialog/DFODialog';
+import React from 'react';
+import { useTranslation } from 'react-i18next';
+import { v4 as uuidv4 } from 'uuid';
+import { IAlert } from '../../../models/IAlert';
 import { INeed } from '../../../Nexus/entities/INeed';
-import { useGetProjectQuery } from '../../../store/api/bankApi';
-import DeleteNeedForm from './DeleteNeedForm';
+import { useAppDispatch } from '../../../store/hooks';
+import { addAlert } from '../../../store/reducers/alert-reducer';
+import theme from '../../../theme';
+import { FormDeleteBox } from '../../Components/Form/FormDeleteBox';
+import { FormTextButton } from '../../Components/Form/FormTextButton';
+import useProjectMutations from '../../../store/api/ProjectMutations';
+import { Box } from '@mui/material/';
+import { Parentable } from '../../../models/Parentable';
+import { FormCantDeleteBox } from '../../Components/Form/FormCantDeleteBox';
+import Typography from '@mui/material/Typography';
+import { useSelectState } from '../SelectContext';
 
 interface IProps {
-  need: INeed;
+  children: React.ReactNode;
+  need: Parentable<INeed>;
+  handleClose: () => void;
 }
 
-interface IRouteParams {
-  projectId: string;
-}
+/* TODO: Needs validating */
+function DeleteNeed({
+  children,
+  need,
+  handleClose
+}: IProps): React.ReactElement {
+  const dispatch = useAppDispatch();
+  const { t } = useTranslation();
+  const { deleteNeed } = useProjectMutations();
 
-const DeleteNeed = ({ need }: IProps) => {
-  const [isOpen, setOpen] = useState(false);
-  const { projectId } = useParams<IRouteParams>();
+  const { deleteMode } = useSelectState();
+  const hasChildren = need.requirements.length > 0;
 
-  const { data: project } = useGetProjectQuery(projectId);
-
-  if (!project) {
-    return <LoaderSpinner />;
+  if (deleteMode !== need.id) {
+    return <>{children}</>;
   }
 
+  const onDelete = async () => {
+    await deleteNeed(need).then(() => {
+      const alert: IAlert = {
+        id: uuidv4(),
+        style: 'success',
+        text: 'Successfully deleted need'
+      };
+      dispatch(addAlert({ alert }));
+      handleClose();
+    });
+  };
+
   return (
-    <span>
-      <IconButton
-        onClick={() => setOpen(true)}
-        size="large"
-        edge="start"
-        color="inherit"
-        aria-label="edit"
-      >
-        <DeleteIcon />
-      </IconButton>
-      <Dialog
-        title="Slett behovet"
-        isOpen={isOpen}
-        handleClose={() => setOpen(false)}
-        children={
-          <DeleteNeedForm
-            need={need}
-            project={project}
-            handleClose={() => setOpen(false)}
-          />
-        }
-      />
-    </span>
+    <Box>
+      {!hasChildren && (
+        <FormDeleteBox>
+          <FormTextButton
+            hoverColor={theme.palette.dfoErrorRed.main}
+            onClick={onDelete}
+          >
+            {t('delete')}
+          </FormTextButton>
+          <FormTextButton
+            hoverColor={theme.palette.gray500.main}
+            onClick={() => handleClose()}
+            aria-label="close"
+          >
+            {t('cancel')}
+          </FormTextButton>
+          {children}
+        </FormDeleteBox>
+      )}
+      {hasChildren && (
+        <FormCantDeleteBox>
+          <Typography variant={'smallBold'}>
+            {t('cant delete this need')}
+          </Typography>
+          <FormTextButton
+            hoverColor={theme.palette.gray500.main}
+            onClick={() => handleClose()}
+            aria-label="close"
+          >
+            {t('cancel')}
+          </FormTextButton>
+          {children}
+        </FormCantDeleteBox>
+      )}
+    </Box>
   );
-};
+}
 
 export default DeleteNeed;

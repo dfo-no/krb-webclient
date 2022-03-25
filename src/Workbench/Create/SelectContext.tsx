@@ -5,14 +5,14 @@ import {
   useContext,
   useState
 } from 'react';
-import { Levelable } from '../../models/Levelable';
 import { INeed } from '../../Nexus/entities/INeed';
 import { IRequirement } from '../../Nexus/entities/IRequirement';
 import { IVariant } from '../../Nexus/entities/IVariant';
+import { Parentable } from '../../models/Parentable';
 
 interface ISelectContext {
-  need: INeed | null;
-  setNeed: Dispatch<SetStateAction<Levelable<INeed> | null>>;
+  need: Parentable<INeed> | null;
+  setNeed: Dispatch<SetStateAction<Parentable<INeed> | null>>;
   requirement: IRequirement | null;
   setRequirement: Dispatch<SetStateAction<IRequirement | null>>;
   variant: IVariant | null;
@@ -21,6 +21,8 @@ interface ISelectContext {
   setNeedIndex: (value: number | null) => void;
   requirementIndex: number | null;
   setRequirementIndex: (value: number | null) => void;
+  deleteMode: string;
+  setDeleteMode: (value: string) => void;
 }
 
 const initialContext: ISelectContext = {
@@ -43,6 +45,10 @@ const initialContext: ISelectContext = {
   requirementIndex: null,
   setRequirementIndex: function (): void {
     throw new Error('Function not implemented.');
+  },
+  deleteMode: '',
+  setDeleteMode: function (): void {
+    throw new Error('Function not implemented.');
   }
 };
 
@@ -53,11 +59,12 @@ interface IProps {
 }
 
 export const SelectProvider = ({ children }: IProps) => {
-  const [need, setNeed] = useState<Levelable<INeed> | null>(null);
+  const [need, setNeed] = useState<Parentable<INeed> | null>(null);
   const [requirement, setRequirement] = useState<IRequirement | null>(null);
   const [variant, setVariant] = useState<IVariant | null>(null);
   const [needIndex, setNeedIndex] = useState<number | null>(null);
   const [requirementIndex, setRequirementIndex] = useState<number | null>(null);
+  const [deleteMode, setDeleteMode] = useState('');
 
   return (
     <SelectContext.Provider
@@ -71,7 +78,9 @@ export const SelectProvider = ({ children }: IProps) => {
         needIndex,
         setNeedIndex,
         requirementIndex,
-        setRequirementIndex
+        setRequirementIndex,
+        deleteMode,
+        setDeleteMode
       }}
     >
       {children}

@@ -5,18 +5,25 @@ import { Parentable } from '../../../models/Parentable';
 import { INeed } from '../../../Nexus/entities/INeed';
 import EditNeedForm from './EditNeedForm';
 import { DFOCardHeaderIconButton } from '../../../components/DFOCard/DFOCardHeaderIconButton';
+import { useSelectState } from '../SelectContext';
+import { useTranslation } from 'react-i18next';
 
 interface IProps {
   need: Parentable<INeed>;
 }
 
 const EditNeed = ({ need }: IProps) => {
+  const { t } = useTranslation();
   const [isEditOpen, setEditOpen] = useState(false);
-  const [deletingNeed, setDeletingNeed] = useState(false);
+  const { setDeleteMode } = useSelectState();
 
   const handleOpen = () => {
     setEditOpen(true);
-    setDeletingNeed(false);
+    setDeleteMode('');
+  };
+
+  const onClose = () => {
+    setEditOpen(false);
   };
 
   return (
@@ -28,12 +35,10 @@ const EditNeed = ({ need }: IProps) => {
         <EditIcon />
       </DFOCardHeaderIconButton>
       <Dialog
-        title="Rediger behovet"
+        title={t('edit need')}
         isOpen={isEditOpen}
-        handleClose={() => setEditOpen(false)}
-        children={
-          <EditNeedForm need={need} handleClose={() => setEditOpen(false)} />
-        }
+        handleClose={onClose}
+        children={<EditNeedForm need={need} handleClose={onClose} />}
       />
     </>
   );

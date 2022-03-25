@@ -14,13 +14,6 @@ import { IBaseModel } from '../../../Nexus/entities/IBaseModel';
 import theme from '../../../theme';
 import NestableHierarcy from './NestableHierarcy';
 
-interface IProps<T extends IBaseModel> {
-  dispatchFunc: (items: Parentable<T>[]) => void;
-  selectFunc: (item: Parentable<T>) => void;
-  inputlist: Parentable<T>[];
-  depth: number;
-}
-
 const useStyles = makeStyles({
   nestableItemCustom: {
     display: 'flex',
@@ -78,6 +71,13 @@ const useStyles = makeStyles({
     color: theme.palette.dfoWhite.main
   }
 });
+
+interface IProps<T extends IBaseModel> {
+  dispatchFunc: (items: Parentable<T>[]) => void;
+  selectFunc: (item: Parentable<T>) => void;
+  inputlist: Parentable<T>[];
+  depth: number;
+}
 
 const NestableHierarcySideBar = <T extends BaseModelWithTitleAndDesc>({
   dispatchFunc,

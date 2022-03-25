@@ -3,50 +3,63 @@ import Button from '@mui/material/Button';
 import React from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
+import { useParams } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
-import VerticalTextCtrl from '../../../FormProvider/VerticalTextCtrl';
+import LoaderSpinner from '../../../common/LoaderSpinner';
 import { IAlert } from '../../../models/IAlert';
 import { Parentable } from '../../../models/Parentable';
-import { INeed, PostNeedSchema } from '../../../Nexus/entities/INeed';
-import Nexus from '../../../Nexus/Nexus';
+import {
+  IRequirement,
+  PutRequirementSchema
+} from '../../../Nexus/entities/IRequirement';
+import { useGetProjectQuery } from '../../../store/api/bankApi';
 import { useAppDispatch } from '../../../store/hooks';
 import { addAlert } from '../../../store/reducers/alert-reducer';
 import useProjectMutations from '../../../store/api/ProjectMutations';
-import { useParams } from 'react-router-dom';
-import { IRouteParams } from '../../Models/IRouteParams';
+import { INeed } from '../../../Nexus/entities/INeed';
 import { ModalBox, ModalButtonsBox } from '../../Components/ModalBox';
+import VerticalTextCtrl from '../../../FormProvider/VerticalTextCtrl';
 
 interface IProps {
-  handleClose: (newNeed: Parentable<INeed> | null) => void;
+  requirement: IRequirement;
+  need: Parentable<INeed>;
+  handleClose: (requirement: IRequirement | null) => void;
 }
 
-function NewNeedForm({ handleClose }: IProps): React.ReactElement {
+interface IRouteParams {
+  projectId: string;
+}
+
+function EditRequirementForm({
+  requirement,
+  need,
+  handleClose
+}: IProps): React.ReactElement {
   const { projectId } = useParams<IRouteParams>();
+  const { data: project } = useGetProjectQuery(projectId);
 
-  const nexus = Nexus.getInstance();
-  const defaultValues: Parentable<INeed> =
-    nexus.needService.generateDefaultNeedValues(projectId);
   const dispatch = useAppDispatch();
-  const { addNeed } = useProjectMutations();
-
   const { t } = useTranslation();
+  const { editRequirement } = useProjectMutations();
 
-  const methods = useForm<Parentable<INeed>>({
-    resolver: joiResolver(PostNeedSchema),
-    defaultValues
+  const methods = useForm<Parentable<IRequirement>>({
+    defaultValues: requirement,
+    resolver: joiResolver(PutRequirementSchema)
   });
 
-  const onSubmit = async (post: Parentable<INeed>) => {
-    const newNeed = nexus.needService.createNeedWithId(post);
-    await addNeed(newNeed).then(() => {
+  if (!project) {
+    return <LoaderSpinner />;
+  }
+
+  const onSubmit = async (put: Parentable<IRequirement>) => {
+    await editRequirement(put, need).then(() => {
       const alert: IAlert = {
         id: uuidv4(),
         style: 'success',
-        text: 'Successfully added new need'
+        text: 'Successfully edited requirement'
       };
       dispatch(addAlert({ alert }));
-      methods.reset();
-      handleClose(newNeed);
+      handleClose(put);
     });
   };
 
@@ -59,11 +72,7 @@ function NewNeedForm({ handleClose }: IProps): React.ReactElement {
       >
         <ModalBox>
           <VerticalTextCtrl name="title" label={t('Title')} placeholder={''} />
-          <VerticalTextCtrl
-            name="description"
-            label={t('Description')}
-            placeholder={''}
-          />
+
           <ModalButtonsBox>
             <Button variant="primary" type="submit">
               {t('save')}
@@ -78,4 +87,4 @@ function NewNeedForm({ handleClose }: IProps): React.ReactElement {
   );
 }
 
-export default NewNeedForm;
+export default EditRequirementForm;

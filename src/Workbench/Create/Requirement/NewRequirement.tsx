@@ -1,52 +1,51 @@
 import Box from '@mui/material/Box/Box';
 import Button from '@mui/material/Button/Button';
 import { useState } from 'react';
-import { useParams } from 'react-router-dom';
-import LoaderSpinner from '../../../common/LoaderSpinner';
 import Dialog from '../../../components/DFODialog/DFODialog';
 import { Parentable } from '../../../models/Parentable';
 import { INeed } from '../../../Nexus/entities/INeed';
-import { useGetProjectQuery } from '../../../store/api/bankApi';
 import NewRequirementForm from './NewRequirementForm';
+import { IRequirement } from '../../../Nexus/entities/IRequirement';
+import { useSelectState } from '../SelectContext';
+import Utils from '../../../common/Utils';
+import { useTranslation } from 'react-i18next';
 interface IProps {
   need: Parentable<INeed>;
 }
 
-interface IRouteParams {
-  projectId: string;
-}
-
 const NewRequirement = ({ need }: IProps) => {
+  const { t } = useTranslation();
   const [isNewOpen, setNewOpen] = useState(false);
-  const { projectId } = useParams<IRouteParams>();
-  const { data: project } = useGetProjectQuery(projectId);
+  const { setNeed } = useSelectState();
 
-  if (!project) {
-    return <LoaderSpinner />;
-  }
+  const onClose = (newRequirement: IRequirement | null) => {
+    setNewOpen(false);
+    if (newRequirement) {
+      const newReqList = Utils.addElementToList(
+        newRequirement,
+        need.requirements
+      );
+      setNeed({ ...need, requirements: newReqList });
+    }
+  };
 
   return (
     <Box
       sx={{
         display: 'flex',
         m: 1,
-        flexDirection: 'row-reverse'
+        flexDirection: 'row-reverse',
+        marginRight: 0
       }}
     >
       <Button variant="primary" onClick={() => setNewOpen(true)}>
         Legg til nytt krav
       </Button>
       <Dialog
-        title="Nytt krav til behovet"
+        title={t('create requirement')}
         isOpen={isNewOpen}
         handleClose={() => setNewOpen(false)}
-        children={
-          <NewRequirementForm
-            need={need}
-            project={project}
-            handleClose={() => setNewOpen(false)}
-          />
-        }
+        children={<NewRequirementForm need={need} handleClose={onClose} />}
       />
     </Box>
   );

@@ -1,87 +1,61 @@
 import { joiResolver } from '@hookform/resolvers/joi';
 import Button from '@mui/material/Button';
-import produce from 'immer';
 import React from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { v4 as uuidv4 } from 'uuid';
-import LoaderSpinner from '../../../common/LoaderSpinner';
-import ErrorSummary from '../../../Form/ErrorSummary';
-import VerticalTextCtrl from '../../../FormProvider/VerticalTextCtrl';
 import { IAlert } from '../../../models/IAlert';
-import ModelType from '../../../models/ModelType';
 import { Parentable } from '../../../models/Parentable';
-import { IBank } from '../../../Nexus/entities/IBank';
 import { INeed } from '../../../Nexus/entities/INeed';
 import {
   IRequirement,
   PostRequirementSchema
 } from '../../../Nexus/entities/IRequirement';
-import { usePutProjectMutation } from '../../../store/api/bankApi';
 import { useAppDispatch } from '../../../store/hooks';
 import { addAlert } from '../../../store/reducers/alert-reducer';
-import { useSelectState } from '../SelectContext';
+import Nexus from '../../../Nexus/Nexus';
+import { useParams } from 'react-router-dom';
+import { IRouteParams } from '../../Models/IRouteParams';
+import useProjectMutations from '../../../store/api/ProjectMutations';
+import { ModalBox, ModalButtonsBox } from '../../Components/ModalBox';
+import VerticalTextCtrl from '../../../FormProvider/VerticalTextCtrl';
 
 interface IProps {
   need: Parentable<INeed>;
-  project: IBank;
-  handleClose: () => void;
+  handleClose: (newRequirement: IRequirement | null) => void;
 }
 
-function NewRequirementForm({
-  project,
-  need,
-  handleClose
-}: IProps): React.ReactElement {
+function NewRequirementForm({ need, handleClose }: IProps): React.ReactElement {
   const dispatch = useAppDispatch();
-  const { needIndex, setNeedIndex } = useSelectState();
   const { t } = useTranslation();
-  const [putProject] = usePutProjectMutation();
+  const nexus = Nexus.getInstance();
+  const { projectId } = useParams<IRouteParams>();
+  const { addRequirement } = useProjectMutations();
 
-  const defaultValues: IRequirement = {
-    id: '',
-    title: '',
-    description: '',
-    needId: need?.id ? need.id : '',
-    tags: [],
-    variants: [],
-    type: ModelType.requirement,
-    sourceOriginal: project.id,
-    sourceRel: null
-  };
+  const defaultValues: IRequirement =
+    nexus.requirementService.generateDefaultRequirementValues(
+      projectId,
+      need.id
+    );
 
   const methods = useForm<IRequirement>({
     resolver: joiResolver(PostRequirementSchema),
     defaultValues
   });
 
-  if (needIndex === null) {
-    return <LoaderSpinner />;
-  }
-
   const onSubmit = async (post: IRequirement) => {
-    const newId = uuidv4();
-    const nextState = produce(project, (draftState) => {
-      const postDraft = { ...post, id: newId };
-      draftState.needs[needIndex].requirements.unshift(postDraft);
+    const newRequirement =
+      nexus.requirementService.createRequirementWithId(post);
+    await addRequirement(newRequirement, need).then(() => {
+      const alert: IAlert = {
+        id: uuidv4(),
+        style: 'success',
+        text: 'Successfully created new requirement'
+      };
+      dispatch(addAlert({ alert }));
+      handleClose(newRequirement);
+      methods.reset();
     });
-
-    await putProject(nextState)
-      .unwrap()
-      .then((result) => {
-        const newIndex = result.needs.findIndex((n) => n.id === newId);
-        if (newIndex !== -1) {
-          setNeedIndex(newIndex);
-        }
-        const alert: IAlert = {
-          id: uuidv4(),
-          style: 'success',
-          text: 'Successfully created new requirement'
-        };
-        dispatch(addAlert({ alert }));
-        handleClose();
-        methods.reset();
-      });
   };
 
   return (
@@ -91,19 +65,17 @@ function NewRequirementForm({
         autoComplete="off"
         noValidate
       >
-        <VerticalTextCtrl name="title" label={t('Title')} placeholder="" />
-        <VerticalTextCtrl
-          name="description"
-          label={t('Description')}
-          placeholder=""
-        />
-        <Button variant="primary" type="submit">
-          {t('save')}
-        </Button>
-        <Button variant="warning" onClick={handleClose}>
-          {t('cancel')}
-        </Button>
-        <ErrorSummary errors={methods?.formState?.errors} />
+        <ModalBox>
+          <VerticalTextCtrl name="title" label={t('Title')} placeholder="" />
+          <ModalButtonsBox>
+            <Button variant="primary" type="submit">
+              {t('save')}
+            </Button>
+            <Button variant="warning" onClick={() => handleClose(null)}>
+              {t('cancel')}
+            </Button>
+          </ModalButtonsBox>
+        </ModalBox>
       </form>
     </FormProvider>
   );

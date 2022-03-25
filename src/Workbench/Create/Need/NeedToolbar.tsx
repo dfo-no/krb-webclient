@@ -1,6 +1,4 @@
-import React, { useState } from 'react';
-import { Parentable } from '../../../models/Parentable';
-import { INeed } from '../../../Nexus/entities/INeed';
+import React from 'react';
 import { Box, Typography } from '@mui/material/';
 import { DFOCardHeader } from '../../../components/DFOCard/DFOCardHeader';
 import { DFOHeaderContentBox } from '../../../components/DFOCard/DFOHeaderContentBox';
@@ -8,13 +6,19 @@ import { DFOCardHeaderIconButton } from '../../../components/DFOCard/DFOCardHead
 import DeleteIcon from '@mui/icons-material/Delete';
 import theme from '../../../theme';
 import EditNeed from './EditNeed';
+import { useSelectState } from '../SelectContext';
+import { useParams } from 'react-router-dom';
+import { useGetProjectQuery } from '../../../store/api/bankApi';
+import { IRouteParams } from '../../Models/IRouteParams';
 
-interface IProps {
-  need: Parentable<INeed>;
-}
+export default function NeedToolbar(): React.ReactElement {
+  const { projectId } = useParams<IRouteParams>();
+  const { data: project } = useGetProjectQuery(projectId);
+  const { needIndex, setDeleteMode } = useSelectState();
 
-export default function NeedToolbar({ need }: IProps): React.ReactElement {
-  const [deletingNeed, setDeletingNeed] = useState(false);
+  if (!project || !needIndex) {
+    return <></>;
+  }
 
   return (
     <DFOCardHeader>
@@ -26,17 +30,19 @@ export default function NeedToolbar({ need }: IProps): React.ReactElement {
             borderBottom: '1px solid'
           }}
         >
-          <Typography variant="bigBold">{need && need.title}</Typography>
-          <EditNeed need={need} />
+          <Typography variant="bigBold">
+            {project.needs[needIndex] && project.needs[needIndex].title}
+          </Typography>
+          <EditNeed need={project.needs[needIndex]} />
           <DFOCardHeaderIconButton
             hoverColor={theme.palette.dfoErrorRed.main}
-            onClick={() => setDeletingNeed(true)}
+            onClick={() => setDeleteMode(project.needs[needIndex].id)}
           >
             <DeleteIcon />
           </DFOCardHeaderIconButton>
         </Box>
         <Typography variant="smallBold" sx={{ paddingTop: 1 }}>
-          {need && need.description}
+          {project.needs[needIndex] && project.needs[needIndex].description}
         </Typography>
       </DFOHeaderContentBox>
     </DFOCardHeader>

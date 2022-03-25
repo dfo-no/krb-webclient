@@ -1,28 +1,28 @@
 import Box from '@mui/material/Box/Box';
 import Button from '@mui/material/Button';
 import { useState } from 'react';
-import { useParams } from 'react-router-dom';
-import LoaderSpinner from '../../../common/LoaderSpinner';
 import Dialog from '../../../components/DFODialog/DFODialog';
-import { useGetProjectQuery } from '../../../store/api/bankApi';
 import NewNeedForm from './NewNeedForm';
-
-interface IRouteParams {
-  projectId: string;
-}
+import { useSelectState } from '../SelectContext';
+import { Parentable } from '../../../models/Parentable';
+import { INeed } from '../../../Nexus/entities/INeed';
+import { useTranslation } from 'react-i18next';
 
 interface IProps {
   buttonText: string;
 }
 
 const NewNeed = ({ buttonText }: IProps) => {
+  const { t } = useTranslation();
   const [isOpen, setOpen] = useState(false);
-  const { projectId } = useParams<IRouteParams>();
-  const { data: project } = useGetProjectQuery(projectId);
+  const { setNeed } = useSelectState();
 
-  if (!project) {
-    return <LoaderSpinner />;
-  }
+  const onClose = (newNeed: Parentable<INeed> | null) => {
+    setOpen(false);
+    if (newNeed) {
+      setNeed(newNeed);
+    }
+  };
 
   return (
     <Box
@@ -36,12 +36,10 @@ const NewNeed = ({ buttonText }: IProps) => {
         {buttonText}
       </Button>
       <Dialog
-        title="Lag nytt behov"
+        title={t('create need')}
         isOpen={isOpen}
         handleClose={() => setOpen(false)}
-        children={
-          <NewNeedForm project={project} handleClose={() => setOpen(false)} />
-        }
+        children={<NewNeedForm handleClose={onClose} />}
       />
     </Box>
   );

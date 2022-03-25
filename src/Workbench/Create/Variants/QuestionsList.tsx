@@ -4,24 +4,18 @@ import Card from '@mui/material/Card';
 import CardHeader from '@mui/material/CardHeader';
 import IconButton from '@mui/material/IconButton';
 import { useState } from 'react';
-import { useFieldArray, useFormContext } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import QuestionEnum from '../../../models/QuestionEnum';
-import { IRequirement } from '../../../Nexus/entities/IRequirement';
 import QuestionService from '../../../Nexus/services/QuestionService';
-import SelectQuestionDialog from './SelectQuestionDialog';
+import { IVariant } from '../../../Nexus/entities/IVariant';
 
 interface IProps {
-  index: number;
+  variant: IVariant;
 }
 
-const QuestionsList = ({ index }: IProps) => {
+// TODO: Make modal to create questions
+const QuestionsList = ({ variant }: IProps) => {
   const { t } = useTranslation();
-  const { control } = useFormContext<IRequirement>();
-  const { fields, append, remove } = useFieldArray({
-    control,
-    name: `variants.${index}.questions` as 'variants.0.questions'
-  });
 
   const [isOpen, setOpen] = useState(false);
   const [selectedValue, setSelectedValue] = useState(QuestionEnum.Q_TEXT);
@@ -35,20 +29,17 @@ const QuestionsList = ({ index }: IProps) => {
     setSelectedValue(value);
     const questionService = new QuestionService();
     const result = questionService.getQuestion(value);
-    if (result) {
-      append(result);
-    }
   };
 
   return (
     <>
-      {fields.map((item, i) => {
+      {variant.questions.map((item) => {
         return (
           <Card key={item.id}>
             <CardHeader
               title={t(item.type)}
               action={
-                <IconButton aria-label="settings" onClick={() => remove(i)}>
+                <IconButton aria-label="settings" onClick={() => {}}>
                   <DeleteIcon color="warning" sx={{ mr: 1 }} />
                 </IconButton>
               }
@@ -59,11 +50,11 @@ const QuestionsList = ({ index }: IProps) => {
       <Button sx={{ mt: 1 }} variant="contained" onClick={handleClickOpen}>
         Lag ny svartype
       </Button>
-      <SelectQuestionDialog
+      {/* <SelectQuestionDialog
         selectedValue={selectedValue}
         isOpen={isOpen}
         onClose={handleClose}
-      />
+      />*/}
     </>
   );
 };
