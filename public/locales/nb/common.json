@@ -136,6 +136,7 @@
   "You are now building your spec": "Du er nå i gang med å bygge din kravspesifikasjon.",
   "You did not pick a bank": "Du har ikke valgt en bank",
   "quantity": "Antall",
+  "Organization number": "Organisasjonsnummer",
   "date": {
     "P": "{{date, P}}",
     "PP": "{{date, PP}}",

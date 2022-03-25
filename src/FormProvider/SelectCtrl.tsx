@@ -1,37 +1,42 @@
-import { FormControl, FormLabel } from '@mui/material';
+import FormControl from '@mui/material/FormControl';
+import FormLabel from '@mui/material/FormLabel';
+import MenuItem from '@mui/material/MenuItem';
+import Select from '@mui/material/Select';
+import Typography from '@mui/material/Typography';
 import { get } from 'lodash';
 import React from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
-import DFOSelect from '../components/DFOSelect/DFOSelect';
+import DFOTextField from '../components/DFOInput/DFOInput';
+import { IOption } from '../Nexus/entities/IOption';
 
 interface IProps {
   name: string;
   label: string;
-  options: string[];
+  options: IOption[];
 }
 
-const SelectCtrl = ({
-  name,
-  label = '',
-  options
-}: IProps): React.ReactElement => {
+const SelectCtrl = ({ name, label, options }: IProps): React.ReactElement => {
   const {
     formState: { errors }
   } = useFormContext();
 
   return (
-    <FormControl error={!!get(errors, name)}>
-      <FormLabel sx={{ paddingBottom: 2 }}>{label}</FormLabel>
+    <FormControl error={!!get(errors, name)} fullWidth>
+      <FormLabel>
+        <Typography variant="smallBlue">{label}</Typography>
+      </FormLabel>
       <Controller
         name={name}
         render={({ field }) => (
-          <DFOSelect
-            {...field.name}
-            {...field.onBlur}
-            {...field.onChange}
-            {...field.value}
-            options={options}
-          />
+          <Select input={<DFOTextField />} {...field}>
+            {options.map((option) => {
+              return (
+                <MenuItem value={option.value} key={option.value}>
+                  {option.label}
+                </MenuItem>
+              );
+            })}
+          </Select>
         )}
       />
       {!!get(errors, name) && (

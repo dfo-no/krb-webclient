@@ -6,7 +6,7 @@ import RadioGroup from '@mui/material/RadioGroup/RadioGroup';
 import { get } from 'lodash';
 import React from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
-import { IOption } from '../models/IOption';
+import { IOption } from '../Nexus/entities/IOption';
 
 interface IProps {
   name: string;

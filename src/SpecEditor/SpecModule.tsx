@@ -1,18 +1,14 @@
-import { Box } from '@mui/material';
-import React from 'react';
-import { Route, Switch, useRouteMatch } from 'react-router';
-import { useAppDispatch, useAppSelector } from '../store/hooks';
-import { selectBank } from '../store/reducers/selectedBank-reducer';
-import SpecSideBar from './SideBar/SpecSideBar';
-import SpecEditor from './SpecEditor/SpecEditor';
-import SpecPage from './SpecPage';
+import Box from '@mui/material/Box';
 import makeStyles from '@mui/styles/makeStyles';
+import React from 'react';
+import { Route, Switch } from 'react-router';
 import theme from '../theme';
+import SpecSideBar from './SideBar/SpecSideBar';
 import NewProduct from './SpecEditor/NewProduct';
-
-interface IRouteParams {
-  bankId: string;
-}
+import SpecEditor from './SpecEditor/SpecEditor';
+import { SpecificationProvider } from './SpecificationContext';
+import SpecificationGuard from './SpecificationGuard';
+import SpecPage from './SpecPage';
 
 const useStyles = makeStyles({
   specification: {
@@ -23,31 +19,27 @@ const useStyles = makeStyles({
 });
 
 export default function SpecModule(): React.ReactElement {
-  const projectMatch = useRouteMatch<IRouteParams>('/speceditor/:bankId');
-  const dispatch = useAppDispatch();
-  const { id } = useAppSelector((state) => state.selectedBank);
-  // Can set this safely, even if we got here directly by url or by clicks
-  if (projectMatch?.params.bankId && !id) {
-    dispatch(selectBank(projectMatch?.params.bankId));
-  }
-
   const classes = useStyles();
 
   return (
-    <Switch>
-      <Route exact path="/specification">
-        <SpecPage />
-      </Route>
+    <SpecificationProvider>
+      <Switch>
+        <Route exact path="/specification">
+          <SpecPage />
+        </Route>
 
-      <Box className={classes.specification}>
-        <SpecSideBar />
-        <Route exact path="/specification/:id">
-          <SpecEditor />
-        </Route>
-        <Route exact path="/specification/:id/createProduct">
-          <NewProduct />
-        </Route>
-      </Box>
-    </Switch>
+        <Box className={classes.specification}>
+          <SpecSideBar />
+          <Route exact path="/specification/:id">
+            <SpecificationGuard>
+              <SpecEditor />
+            </SpecificationGuard>
+          </Route>
+          <Route exact path="/specification/:id/createProduct">
+            <NewProduct />
+          </Route>
+        </Box>
+      </Switch>
+    </SpecificationProvider>
   );
 }

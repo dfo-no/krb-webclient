@@ -40,6 +40,8 @@ const NewProjectForm = ({ handleClose }: IProps) => {
   const dispatch = useAppDispatch();
   const { t } = useTranslation();
   const nexus = Nexus.getInstance();
+
+  // TODO: Should contain a defaultValue from options to fully control the Select
   const defaultValues = nexus.projectService.generateDefaultProjectValues();
   const [postProject] = usePostProjectMutation();
   const classes = useStyles();

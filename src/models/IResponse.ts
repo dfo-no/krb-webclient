@@ -1,6 +1,6 @@
+import { ISpecification } from '../Nexus/entities/ISpecification';
 import { IRequirementAnswer } from './IRequirementAnswer';
 import { IResponseProduct } from './IResponseProduct';
-import { ISpecification } from './ISpecification';
 
 export interface IResponse {
   spesification: ISpecification;
