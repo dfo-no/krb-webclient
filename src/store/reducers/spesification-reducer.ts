@@ -30,6 +30,7 @@ const initialState: ISpecificationState = {
       projectId: null
     },
     title: '',
+    version: '',
     organization: '',
     organizationNumber: '',
     products: [],

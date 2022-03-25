@@ -32,6 +32,7 @@ const initialState: IResponseState = {
         projectId: null
       },
       title: '',
+      version: '',
       organization: '',
       organizationNumber: '',
       products: [],

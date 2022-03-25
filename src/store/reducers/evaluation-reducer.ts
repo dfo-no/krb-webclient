@@ -30,6 +30,7 @@ const initialState: ISelectedBankState = {
       projectId: null
     },
     title: '',
+    version: '',
     organization: '',
     organizationNumber: '',
     products: [],
