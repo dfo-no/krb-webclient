@@ -129,11 +129,11 @@ function SideBar(): React.ReactElement {
       name: t('Codelist'),
       icon: <CodeIcon />
     },
-    {
+    /*  {
       link: `${baseUrl?.url}/admin/inheritance`,
       name: t('Inheritance'),
       icon: <LinkIcon />
-    },
+    }, */
     {
       link: `${baseUrl?.url}/admin/tags`,
       name: t('Tags'),
