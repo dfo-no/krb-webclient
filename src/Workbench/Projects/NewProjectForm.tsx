@@ -61,9 +61,6 @@ const NewProjectForm = ({ handleClose }: IProps) => {
       handleClose();
     });
   };
-
-  const options = ['Type 1', 'Type 2', 'Type 3', 'Type 4'];
-
   return (
     <FormProvider {...methods}>
       <form
