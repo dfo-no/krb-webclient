@@ -86,8 +86,6 @@ const NewSpecForm = ({ handleClose, specification }: IProps) => {
             'In addition to project, you need to pick which version of the project'
           )}
         </Typography>
-        <code>{}</code>
-
         <Box className={classes.fields}>
           <SelectCtrl
             name="version"
