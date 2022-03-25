@@ -28,12 +28,7 @@ const useStyles = makeStyles({
     height: '100%',
     width: '18vw',
     minWidth: 230,
-    paddingTop: 60,
-    [theme.breakpoints.down('md')]: {
-      height: 'auto',
-      width: '100vw',
-      backgroundColor: theme.palette.dfoWhite.main
-    }
+    paddingTop: 60
   }
 });
 
