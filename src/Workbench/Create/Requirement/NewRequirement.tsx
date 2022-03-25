@@ -5,9 +5,6 @@ import Dialog from '../../../components/DFODialog/DFODialog';
 import { Parentable } from '../../../models/Parentable';
 import { INeed } from '../../../Nexus/entities/INeed';
 import NewRequirementForm from './NewRequirementForm';
-import { IRequirement } from '../../../Nexus/entities/IRequirement';
-import { useSelectState } from '../SelectContext';
-import Utils from '../../../common/Utils';
 import { useTranslation } from 'react-i18next';
 interface IProps {
   need: Parentable<INeed>;
@@ -16,17 +13,9 @@ interface IProps {
 const NewRequirement = ({ need }: IProps) => {
   const { t } = useTranslation();
   const [isNewOpen, setNewOpen] = useState(false);
-  const { setNeed } = useSelectState();
 
-  const onClose = (newRequirement: IRequirement | null) => {
+  const onClose = () => {
     setNewOpen(false);
-    if (newRequirement) {
-      const newReqList = Utils.addElementToList(
-        newRequirement,
-        need.requirements
-      );
-      setNeed({ ...need, requirements: newReqList });
-    }
   };
 
   return (

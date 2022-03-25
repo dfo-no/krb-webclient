@@ -179,7 +179,7 @@ function useProjectMutations() {
 
   async function editNeeds(needs: Parentable<INeed>[]) {
     if (project) {
-      return putProject({ ...project, products: needs });
+      return putProject({ ...project, needs: needs });
     }
     throw Error('Cant save changes to Project');
   }

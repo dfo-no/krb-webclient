@@ -20,7 +20,7 @@ const NewNeed = ({ buttonText }: IProps) => {
   const { data: project } = useGetProjectQuery(projectId);
   const { t } = useTranslation();
   const [isOpen, setOpen] = useState(false);
-  const { setNeedIndex } = useSelectState();
+  const { setNeedIndex, setNeedId } = useSelectState();
 
   if (!project) {
     return <></>;
@@ -29,7 +29,8 @@ const NewNeed = ({ buttonText }: IProps) => {
   const onClose = (newNeed: Parentable<INeed> | null) => {
     setOpen(false);
     if (newNeed) {
-      setNeedIndex(project.needs.length - 1);
+      setNeedIndex(project.needs.length);
+      setNeedId(newNeed.id);
     }
   };
 

@@ -4,7 +4,7 @@ import { useParams } from 'react-router-dom';
 import LoaderSpinner from '../../common/LoaderSpinner';
 import { useGetProjectQuery } from '../../store/api/bankApi';
 import theme from '../../theme';
-import NeedToolbar from './Need/NeedToolbar';
+import NeedHeader from './Need/NeedHeader';
 import NewNeed from './Need/NewNeed';
 import NewRequirement from './Requirement/NewRequirement';
 import ProjectStart from './ProjectStart';
@@ -13,18 +13,15 @@ import { useSelectState } from './SelectContext';
 import { ScrollableContainer } from '../Components/ScrollableContainer';
 import { StandardContainer } from '../Components/StandardContainer';
 import DeleteNeed from './Need/DeleteNeed';
-import NestableHierarcySideBar from '../Components/NestableHierarchy/NestableHiarchySideBar';
-import { Parentable } from '../../models/Parentable';
-import { INeed } from '../../Nexus/entities/INeed';
+import CreateSideBar from './CreateSideBar';
 import { VariantProvider } from './Requirement/VariantContext';
-import useProjectMutations from '../../store/api/ProjectMutations';
 import { IRouteParams } from '../Models/IRouteParams';
 
 export default function Create(): React.ReactElement {
   const { projectId } = useParams<IRouteParams>();
   const { data: project, isLoading } = useGetProjectQuery(projectId);
-  const { needIndex, setNeedIndex, setDeleteMode } = useSelectState();
-  const { editNeeds } = useProjectMutations();
+  const { needIndex, setNeedIndex, setNeedId, setDeleteMode } =
+    useSelectState();
 
   if (isLoading) {
     return <LoaderSpinner />;
@@ -33,15 +30,6 @@ export default function Create(): React.ReactElement {
   if (!project) {
     return <></>;
   }
-
-  const updateNeedsArrangement = (newNeedList: Parentable<INeed>[]) => {
-    editNeeds(newNeedList);
-  };
-
-  const selectNeed = (item: Parentable<INeed>) => {
-    const index = project.needs.findIndex((n) => n.id === item.id);
-    setNeedIndex(index);
-  };
 
   const renderCreatePageWithContent = (children: React.ReactNode) => {
     return (
@@ -55,19 +43,14 @@ export default function Create(): React.ReactElement {
       >
         <Box sx={{ width: '25%', height: '100%' }}>
           <NewNeed buttonText={'Legg til nytt behov'} />
-          <NestableHierarcySideBar
-            dispatchFunc={updateNeedsArrangement}
-            selectFunc={selectNeed}
-            inputlist={project.needs}
-            depth={5}
-          />
+          <CreateSideBar />
         </Box>
         <Box sx={{ height: '100%', flexGrow: 1, minWidth: 0 }}>{children}</Box>
       </Box>
     );
   };
 
-  if (!needIndex || !project.needs[needIndex]) {
+  if (needIndex === null || !project.needs[needIndex]) {
     return renderCreatePageWithContent(
       <Box
         sx={{
@@ -91,11 +74,13 @@ export default function Create(): React.ReactElement {
 
   const needDeleted = () => {
     setDeleteMode('');
-    if (needIndex === project.needs.length - 1) {
-      setNeedIndex(needIndex - 1);
-    }
     if (project.needs.length === 1) {
       setNeedIndex(null);
+      setNeedId(null);
+    }
+    if (needIndex === project.needs.length - 1) {
+      setNeedIndex(needIndex - 1);
+      setNeedId(project.needs[needIndex - 1].id);
     }
   };
 
@@ -110,7 +95,7 @@ export default function Create(): React.ReactElement {
           paddingBottom: 2
         }}
       >
-        <NeedToolbar />
+        <NeedHeader />
         <Box
           sx={{
             display: 'flex',

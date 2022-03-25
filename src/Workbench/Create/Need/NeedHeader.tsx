@@ -11,12 +11,12 @@ import { useParams } from 'react-router-dom';
 import { useGetProjectQuery } from '../../../store/api/bankApi';
 import { IRouteParams } from '../../Models/IRouteParams';
 
-export default function NeedToolbar(): React.ReactElement {
+export default function NeedHeader(): React.ReactElement {
   const { projectId } = useParams<IRouteParams>();
   const { data: project } = useGetProjectQuery(projectId);
   const { needIndex, setDeleteMode } = useSelectState();
 
-  if (!project || !needIndex) {
+  if (!project || needIndex === null) {
     return <></>;
   }
 

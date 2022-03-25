@@ -3,9 +3,6 @@ import Dialog from '../../../components/DFODialog/DFODialog';
 import { Parentable } from '../../../models/Parentable';
 import { INeed } from '../../../Nexus/entities/INeed';
 import { IRequirement } from '../../../Nexus/entities/IRequirement';
-import { useSelectState } from '../SelectContext';
-import Utils from '../../../common/Utils';
-import { IVariant } from '../../../Nexus/entities/IVariant';
 import AddIcon from '@mui/icons-material/Add';
 import { FormIconButton } from '../../Components/Form/FormIconButton';
 import NewVariantForm from './NewVariantForm';
@@ -19,21 +16,9 @@ interface IProps {
 const NewVariant = ({ need, requirement }: IProps) => {
   const { t } = useTranslation();
   const [isNewOpen, setNewOpen] = useState(false);
-  const { setNeed } = useSelectState();
 
-  const onClose = (newVariant: IVariant | null) => {
+  const onClose = () => {
     setNewOpen(false);
-    if (newVariant) {
-      const newVariantList = Utils.addElementToList(
-        newVariant,
-        requirement.variants
-      );
-      const newReqList = Utils.replaceElementInList(
-        { ...requirement, variants: newVariantList },
-        need.requirements
-      );
-      setNeed({ ...need, requirements: newReqList });
-    }
   };
 
   return (

@@ -23,7 +23,7 @@ import VerticalTextCtrl from '../../../FormProvider/VerticalTextCtrl';
 interface IProps {
   requirement: IRequirement;
   need: Parentable<INeed>;
-  handleClose: (requirement: IRequirement | null) => void;
+  handleClose: () => void;
 }
 
 interface IRouteParams {
@@ -59,7 +59,7 @@ function EditRequirementForm({
         text: 'Successfully edited requirement'
       };
       dispatch(addAlert({ alert }));
-      handleClose(put);
+      handleClose();
     });
   };
 
@@ -77,7 +77,7 @@ function EditRequirementForm({
             <Button variant="primary" type="submit">
               {t('save')}
             </Button>
-            <Button variant="warning" onClick={() => handleClose(null)}>
+            <Button variant="warning" onClick={() => handleClose()}>
               {t('cancel')}
             </Button>
           </ModalButtonsBox>

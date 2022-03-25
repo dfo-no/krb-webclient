@@ -1,24 +1,10 @@
-import {
-  createContext,
-  Dispatch,
-  SetStateAction,
-  useContext,
-  useState
-} from 'react';
-import { INeed } from '../../Nexus/entities/INeed';
-import { IRequirement } from '../../Nexus/entities/IRequirement';
-import { IVariant } from '../../Nexus/entities/IVariant';
-import { Parentable } from '../../models/Parentable';
+import { createContext, useContext, useState } from 'react';
 
 interface ISelectContext {
-  need: Parentable<INeed> | null;
-  setNeed: Dispatch<SetStateAction<Parentable<INeed> | null>>;
-  requirement: IRequirement | null;
-  setRequirement: Dispatch<SetStateAction<IRequirement | null>>;
-  variant: IVariant | null;
-  setVariant: Dispatch<SetStateAction<IVariant | null>>;
   needIndex: number | null;
   setNeedIndex: (value: number | null) => void;
+  needId: string | null;
+  setNeedId: (value: string | null) => void;
   requirementIndex: number | null;
   setRequirementIndex: (value: number | null) => void;
   deleteMode: string;
@@ -26,20 +12,12 @@ interface ISelectContext {
 }
 
 const initialContext: ISelectContext = {
-  need: null,
-  setNeed: function (): void {
-    throw new Error('Function not implemented.');
-  },
-  requirement: null,
-  setRequirement: function (): void {
-    throw new Error('Function not implemented.');
-  },
-  variant: null,
-  setVariant: function (): void {
-    throw new Error('Function not implemented.');
-  },
   needIndex: null,
   setNeedIndex: function (): void {
+    throw new Error('Function not implemented.');
+  },
+  needId: null,
+  setNeedId: function (): void {
     throw new Error('Function not implemented.');
   },
   requirementIndex: null,
@@ -59,24 +37,18 @@ interface IProps {
 }
 
 export const SelectProvider = ({ children }: IProps) => {
-  const [need, setNeed] = useState<Parentable<INeed> | null>(null);
-  const [requirement, setRequirement] = useState<IRequirement | null>(null);
-  const [variant, setVariant] = useState<IVariant | null>(null);
   const [needIndex, setNeedIndex] = useState<number | null>(null);
+  const [needId, setNeedId] = useState<string | null>(null);
   const [requirementIndex, setRequirementIndex] = useState<number | null>(null);
   const [deleteMode, setDeleteMode] = useState('');
 
   return (
     <SelectContext.Provider
       value={{
-        need,
-        setNeed,
-        requirement,
-        setRequirement,
-        variant,
-        setVariant,
         needIndex,
         setNeedIndex,
+        needId,
+        setNeedId,
         requirementIndex,
         setRequirementIndex,
         deleteMode,

@@ -1,9 +1,6 @@
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
-import { IRequirement } from '../../../Nexus/entities/IRequirement';
 import VariantsList from '../Variants/VariantsList';
-import { Parentable } from '../../../models/Parentable';
-import { INeed } from '../../../Nexus/entities/INeed';
 import DeleteRequirement from './DeleteRequirement';
 import makeStyles from '@mui/styles/makeStyles';
 import theme from '../../../theme';
@@ -13,7 +10,6 @@ import React from 'react';
 import EditRequirement from './EditRequirement';
 import { useVariantState } from './VariantContext';
 import { useSelectState } from '../SelectContext';
-import Utils from '../../../common/Utils';
 import NewVariant from '../Variants/NewVariant';
 import { useParams } from 'react-router-dom';
 import { IRouteParams } from '../../Models/IRouteParams';
@@ -45,7 +41,7 @@ const Requirement = ({ requirementIndex }: IProps) => {
   const { data: project } = useGetProjectQuery(projectId);
   const { needIndex, setDeleteMode } = useSelectState();
 
-  if (!project || !needIndex) {
+  if (!project || needIndex === null) {
     return <></>;
   }
 
@@ -99,8 +95,8 @@ const Requirement = ({ requirementIndex }: IProps) => {
           />
         </Box>
         <VariantsList
-          need={project.needs[needIndex]}
           requirement={project.needs[needIndex].requirements[requirementIndex]}
+          requirementIndex={requirementIndex}
         />
       </Box>
     );

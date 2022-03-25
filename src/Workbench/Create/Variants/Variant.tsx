@@ -17,13 +17,10 @@ import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import QuestionsList from './QuestionsList';
 import { useAppDispatch } from '../../../store/hooks';
-import { IRequirement } from '../../../Nexus/entities/IRequirement';
 import { IAlert } from '../../../models/IAlert';
 import { v4 as uuidv4 } from 'uuid';
 import { addAlert } from '../../../store/reducers/alert-reducer';
 import { IVariant, VariantSchema } from '../../../Nexus/entities/IVariant';
-import { INeed } from '../../../Nexus/entities/INeed';
-import { Parentable } from '../../../models/Parentable';
 import useProjectMutations from '../../../store/api/ProjectMutations';
 import { useParams } from 'react-router-dom';
 import { useGetProjectQuery } from '../../../store/api/bankApi';
@@ -35,20 +32,21 @@ import { AccordionActions } from '@mui/material';
 import ErrorSummary from '../../../Form/ErrorSummary';
 import { useVariantState } from '../Requirement/VariantContext';
 import { useTranslation } from 'react-i18next';
+import { useSelectState } from '../SelectContext';
 
 interface IProps {
-  need: Parentable<INeed>;
-  requirement: IRequirement;
   variant: IVariant;
+  requirementIndex: number;
 }
 
-const Variant = ({ need, requirement, variant }: IProps) => {
+const Variant = ({ variant, requirementIndex }: IProps) => {
   const { t } = useTranslation();
   const { projectId } = useParams<IRouteParams>();
   const { data: project } = useGetProjectQuery(projectId);
 
   const { editVariant } = useProjectMutations();
   const { setOpenVariants } = useVariantState();
+  const { needIndex } = useSelectState();
   const dispatch = useAppDispatch();
 
   const methods = useForm<IVariant>({
@@ -56,12 +54,16 @@ const Variant = ({ need, requirement, variant }: IProps) => {
     defaultValues: variant
   });
 
-  if (!project) {
+  if (!project || needIndex === null) {
     return <LoaderSpinner />;
   }
 
   const onSubmit = async (put: IVariant) => {
-    await editVariant(put, requirement, need).then(() => {
+    await editVariant(
+      put,
+      project.needs[needIndex].requirements[requirementIndex],
+      project.needs[needIndex]
+    ).then(() => {
       const alert: IAlert = {
         id: uuidv4(),
         style: 'success',

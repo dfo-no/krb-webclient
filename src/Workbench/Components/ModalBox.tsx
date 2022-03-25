@@ -4,8 +4,7 @@ export const ModalBox = styled(Box)(() => ({
   marginTop: 16,
   display: 'flex',
   flexDirection: 'column',
-  gap: 32,
-  width: '30vw'
+  gap: 32
 }));
 
 export const ModalButtonsBox = styled(Box)(() => ({

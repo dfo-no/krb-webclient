@@ -4,15 +4,22 @@ import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import makeStyles from '@mui/styles/makeStyles';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import 'react-nestable/dist/styles/index.css';
-import Utils from '../../../common/Utils';
-import { BaseModelWithTitleAndDesc } from '../../../models/BaseModelWithTitleAndDesc';
-import { Nestable } from '../../../models/Nestable';
-import { Parentable } from '../../../models/Parentable';
-import { IBaseModel } from '../../../Nexus/entities/IBaseModel';
-import theme from '../../../theme';
-import NestableHierarcy from './NestableHierarcy';
+import Utils from '../../common/Utils';
+import { BaseModelWithTitleAndDesc } from '../../models/BaseModelWithTitleAndDesc';
+import { Nestable } from '../../models/Nestable';
+import { Parentable } from '../../models/Parentable';
+import { IBaseModel } from '../../Nexus/entities/IBaseModel';
+import theme from '../../theme';
+import NestableHierarcy from '../Components/NestableHierarchy/NestableHierarcy';
+import { useParams } from 'react-router-dom';
+import { IRouteParams } from '../Models/IRouteParams';
+import { useGetProjectQuery } from '../../store/api/bankApi';
+import LoaderSpinner from '../../common/LoaderSpinner';
+import { INeed } from '../../Nexus/entities/INeed';
+import { useSelectState } from './SelectContext';
+import useProjectMutations from '../../store/api/ProjectMutations';
 
 const useStyles = makeStyles({
   nestableItemCustom: {
@@ -72,37 +79,49 @@ const useStyles = makeStyles({
   }
 });
 
-interface IProps<T extends IBaseModel> {
-  dispatchFunc: (items: Parentable<T>[]) => void;
-  selectFunc: (item: Parentable<T>) => void;
-  inputlist: Parentable<T>[];
-  depth: number;
-}
-
-const NestableHierarcySideBar = <T extends BaseModelWithTitleAndDesc>({
-  dispatchFunc,
-  selectFunc,
-  inputlist,
-  depth
-}: IProps<T>): React.ReactElement => {
+const CreateSideBar = (): React.ReactElement => {
+  const { projectId } = useParams<IRouteParams>();
+  const { data: project } = useGetProjectQuery(projectId);
   const classes = useStyles();
-  const [selected, setSelected] = useState<Parentable<T> | null>(null);
+  const { needId, setNeedId, setNeedIndex } = useSelectState();
+  const { editNeeds } = useProjectMutations();
+  const [needs, setNeeds] = useState<Parentable<INeed>[]>([]);
 
-  const itemClicked = (item: Nestable<T>) => {
-    const selectedParentable = item as Parentable<T>;
-    selectFunc(selectedParentable);
-    setSelected(selectedParentable);
+  useEffect(() => {
+    if (project && project.needs) {
+      setNeeds(project.needs);
+    }
+  }, [project]);
+
+  if (!project) {
+    return <></>;
+  }
+
+  const updateNeedsArrangement = (newNeedList: Parentable<INeed>[]) => {
+    console.log(newNeedList);
+    setNeeds(newNeedList);
+    editNeeds(newNeedList);
+  };
+
+  const selectNeed = (item: Parentable<INeed>) => {
+    const index = project.needs.findIndex((n) => n.id === item.id);
+    setNeedIndex(index);
+    setNeedId(project.needs[index].id);
+  };
+
+  const itemClicked = (item: Parentable<INeed>) => {
+    selectNeed(item);
   };
 
   const renderItem = (
-    item: Nestable<T>,
+    item: Parentable<INeed>,
     handler: React.ReactNode,
     collapseIcon: React.ReactNode
   ) => {
     return (
       <Box
         className={`${classes.nestableItemCustom} ${
-          selected && selected.id === item.id ? classes.selectedItem : ''
+          needId && needId === item.id ? classes.selectedItem : ''
         }`}
         onClick={() => itemClicked(item)}
       >
@@ -111,7 +130,7 @@ const NestableHierarcySideBar = <T extends BaseModelWithTitleAndDesc>({
           {Utils.capitalizeFirstLetter(item.title ? item.title : '')}
         </Typography>
         <Box className={classes.collapseIcon}>{collapseIcon}</Box>
-        {selected && selected.id === item.id && (
+        {needId && needId === item.id && (
           <Box className={classes.collapseIcon}>
             <ArrowForwardIcon />
           </Box>
@@ -122,11 +141,11 @@ const NestableHierarcySideBar = <T extends BaseModelWithTitleAndDesc>({
 
   return (
     <NestableHierarcy
-      inputlist={inputlist}
+      inputlist={needs}
       className={classes.nestableCustom}
       renderItem={renderItem}
-      dispatchfunc={dispatchFunc}
-      depth={depth}
+      dispatchfunc={updateNeedsArrangement}
+      depth={5}
       renderCollapseIcon={({ isCollapsed }) => {
         return isCollapsed ? (
           <KeyboardArrowRightIcon />
@@ -138,4 +157,4 @@ const NestableHierarcySideBar = <T extends BaseModelWithTitleAndDesc>({
   );
 };
 
-export default NestableHierarcySideBar;
+export default CreateSideBar;

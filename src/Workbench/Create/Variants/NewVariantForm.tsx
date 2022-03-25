@@ -19,7 +19,7 @@ import VerticalTextCtrl from '../../../FormProvider/VerticalTextCtrl';
 interface IProps {
   need: Parentable<INeed>;
   requirement: IRequirement;
-  handleClose: (newVariant: IVariant | null) => void;
+  handleClose: () => void;
 }
 
 function NewVariantForm({
@@ -49,7 +49,7 @@ function NewVariantForm({
         text: 'Successfully created new variant'
       };
       dispatch(addAlert({ alert }));
-      handleClose(newVariant);
+      handleClose();
       methods.reset();
     });
   };
@@ -77,7 +77,7 @@ function NewVariantForm({
               <Button variant="primary" type="submit">
                 {t('save')}
               </Button>
-              <Button variant="warning" onClick={() => handleClose(null)}>
+              <Button variant="warning" onClick={() => handleClose()}>
                 {t('cancel')}
               </Button>
             </ModalButtonsBox>
