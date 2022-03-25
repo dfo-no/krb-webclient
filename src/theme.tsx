@@ -303,22 +303,17 @@ theme.components = {
     styleOverrides: {
       root: {
         '&.sidebar': {
-          '& .MuiListItemIcon-root': {
-            display: 'none' // don't show icons except on selected and hover
-          },
+          border: '1px solid black',
+          backgroundColor: theme.palette.dfoWhite.main,
           '&.Mui-selected': {
-            backgroundColor: 'inherit',
-            '& .MuiListItemIcon-root': {
-              color: 'inherit',
-              display: 'flex',
-              justifyContent: 'flex-end'
-            },
+            backgroundColor: theme.palette.primary.main,
+            color: theme.palette.common.white,
             '& .MuiListItemText-root': {
               color: 'inherit'
             }
           },
           '&:hover': {
-            backgroundColor: theme.palette.lightBlue.main,
+            backgroundColor: theme.palette.primary.main,
             color: theme.palette.common.white,
             '& .MuiListItemText-root': {
               color: 'inherit'

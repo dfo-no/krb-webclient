@@ -1,9 +1,7 @@
-import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import Box from '@mui/material/Box';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
-import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import makeStyles from '@mui/styles/makeStyles';
 import React from 'react';
@@ -55,16 +53,13 @@ export default function Sidebar({
     const displayNeeds = Utils.parentable2Levelable(elements);
     return displayNeeds.map((element, index) => {
       return (
-        <ListItem key={`sidebar-${element.id}`} disablePadding>
+        <ListItem key={`sidebar-${element.id}`}>
           <ListItemButton
             className="sidebar"
             selected={selectedIndex === index + 1}
             onClick={() => handleListItemClick(element.id, index + 1)}
           >
             <ListItemText>{element.title}</ListItemText>
-            <ListItemIcon>
-              <ArrowForwardIcon />
-            </ListItemIcon>
           </ListItemButton>
         </ListItem>
       );
@@ -74,16 +69,13 @@ export default function Sidebar({
   return (
     <Box className={classes.sideBar}>
       <List className={classes.sideBarList}>
-        <ListItem disablePadding>
+        <ListItem>
           <ListItemButton
             className="sidebar"
             selected={selectedIndex === 0}
             onClick={() => handleListItemClick('', 0)}
           >
             <ListItemText>Generiske krav</ListItemText>
-            <ListItemIcon>
-              <ArrowForwardIcon />
-            </ListItemIcon>
           </ListItemButton>
         </ListItem>
         {renderProducts(parentableArray)}
