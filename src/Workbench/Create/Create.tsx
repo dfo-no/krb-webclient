@@ -1,83 +1,135 @@
-import Box from '@mui/material/Box';
-import Grid from '@mui/material/Grid/Grid';
-import Typography from '@mui/material/Typography';
+import { Box, Card, Typography } from '@mui/material/';
 import React from 'react';
 import { useParams } from 'react-router-dom';
 import LoaderSpinner from '../../common/LoaderSpinner';
 import { useGetProjectQuery } from '../../store/api/bankApi';
 import theme from '../../theme';
-import NeedToolbar from './NeedToolbar';
-import NewNeed from './NewNeed';
-import NewRequirement from './NewRequirement';
+import NeedHeader from './Need/NeedHeader';
+import NewNeed from './Need/NewNeed';
+import NewRequirement from './Requirement/NewRequirement';
 import ProjectStart from './ProjectStart';
-import Requirement from './Requirement';
+import Requirement from './Requirement/Requirement';
 import { useSelectState } from './SelectContext';
-import Sidebar from './Sidebar';
-
-interface IRouteParams {
-  projectId: string;
-}
+import { ScrollableContainer } from '../Components/ScrollableContainer';
+import { StandardContainer } from '../Components/StandardContainer';
+import DeleteNeed from './Need/DeleteNeed';
+import CreateSideBar from './CreateSideBar';
+import { VariantProvider } from './Requirement/VariantContext';
+import { IRouteParams } from '../Models/IRouteParams';
 
 export default function Create(): React.ReactElement {
   const { projectId } = useParams<IRouteParams>();
-  const { data: project } = useGetProjectQuery(projectId);
-  const { needIndex } = useSelectState();
+  const { data: project, isLoading } = useGetProjectQuery(projectId);
+  const { needIndex, setNeedIndex, setNeedId, setDeleteMode } =
+    useSelectState();
 
-  if (!project) {
+  if (isLoading) {
     return <LoaderSpinner />;
   }
 
-  return (
-    <Box
-      sx={{
-        flexGrow: 1,
-        height: '100%'
-      }}
-    >
-      <Grid
-        container
-        spacing={2}
+  if (!project) {
+    return <></>;
+  }
+
+  const renderCreatePageWithContent = (children: React.ReactNode) => {
+    return (
+      <Box
         sx={{
-          backgroundColor: theme.palette.gray100.main,
-          marginRight: '1rem',
-          height: '100%'
+          display: 'flex',
+          width: '100%',
+          height: '100%',
+          backgroundColor: theme.palette.gray100.main
         }}
       >
-        <Grid item xs={2}>
+        <Box sx={{ width: '25%', height: '100%' }}>
           <NewNeed buttonText={'Legg til nytt behov'} />
-          <Sidebar parentables={project.needs} />
-        </Grid>
-        <Grid
-          item
-          xs={10}
-          sx={{ backgroundColor: theme.palette.dfoBackgroundBlue.main }}
-        >
-          {needIndex !== null ? (
-            <>
-              <NeedToolbar need={project.needs[needIndex]} />
-              <NewRequirement need={project.needs[needIndex]} />
-              {project.needs[needIndex] &&
-                project.needs[needIndex].requirements.map((r, index) => {
-                  return (
-                    <Requirement
-                      key={r.id}
-                      requirementIndex={index}
-                      needIndex={needIndex}
-                      project={project}
-                    />
-                  );
-                })}
-            </>
-          ) : (
-            <>
-              {project.needs.length >= 1 && (
-                <Typography>Velg et behov</Typography>
-              )}
-              {project.needs.length === 0 && <ProjectStart project={project} />}
-            </>
+          <CreateSideBar />
+        </Box>
+        <Box sx={{ height: '100%', flexGrow: 1, minWidth: 0 }}>{children}</Box>
+      </Box>
+    );
+  };
+
+  if (needIndex === null || !project.needs[needIndex]) {
+    return renderCreatePageWithContent(
+      <Box
+        sx={{
+          display: 'flex',
+          width: '100%',
+          height: '100%',
+          backgroundColor: theme.palette.gray100.main
+        }}
+      >
+        <>
+          {project.needs.length >= 1 && (
+            <StandardContainer>
+              <Typography>Velg et behov</Typography>
+            </StandardContainer>
           )}
-        </Grid>
-      </Grid>
-    </Box>
+          {project.needs.length === 0 && <ProjectStart project={project} />}
+        </>
+      </Box>
+    );
+  }
+
+  const needDeleted = () => {
+    setDeleteMode('');
+    if (project.needs.length === 1) {
+      setNeedIndex(null);
+      setNeedId(null);
+    }
+    if (needIndex === project.needs.length - 1) {
+      setNeedIndex(needIndex - 1);
+      setNeedId(project.needs[needIndex - 1].id);
+    }
+  };
+
+  const renderNeedCard = () => {
+    return (
+      <Card
+        sx={{
+          display: 'flex',
+          flexDirection: 'column',
+          backgroundColor: theme.palette.gray200.main,
+          height: '100%',
+          paddingBottom: 2
+        }}
+      >
+        <NeedHeader />
+        <Box
+          sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            paddingLeft: 6,
+            paddingRight: 6,
+            flexGrow: 1,
+            minHeight: 0,
+            width: '100%'
+          }}
+        >
+          <NewRequirement need={project.needs[needIndex]} />
+          <ScrollableContainer>
+            {project.needs[needIndex] &&
+              project.needs[needIndex].requirements.map((req, index) => {
+                return (
+                  <VariantProvider key={req.id}>
+                    <Requirement requirementIndex={index} />
+                  </VariantProvider>
+                );
+              })}
+          </ScrollableContainer>
+        </Box>
+      </Card>
+    );
+  };
+
+  return renderCreatePageWithContent(
+    <StandardContainer sx={{ width: '90%', maxHeight: '100%' }}>
+      <DeleteNeed
+        children={renderNeedCard()}
+        need={project.needs[needIndex]}
+        handleClose={needDeleted}
+      />
+    </StandardContainer>
   );
 }

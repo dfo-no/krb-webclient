@@ -3,24 +3,22 @@ import Button from '@mui/material/Button';
 import Card from '@mui/material/Card';
 import CardHeader from '@mui/material/CardHeader';
 import IconButton from '@mui/material/IconButton';
-import { useState } from 'react';
-import { useFieldArray, useFormContext } from 'react-hook-form';
+import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import QuestionEnum from '../../models/QuestionEnum';
-import { IRequirement } from '../../Nexus/entities/IRequirement';
-import QuestionService from '../../Nexus/services/QuestionService';
+import QuestionEnum from '../../../models/QuestionEnum';
+import QuestionService from '../../../Nexus/services/QuestionService';
+import { IVariant } from '../../../Nexus/entities/IVariant';
 import SelectQuestionDialog from './SelectQuestionDialog';
+import { useFieldArray, useFormContext } from 'react-hook-form';
+import { FormIconButton } from '../../Components/Form/FormIconButton';
+import theme from '../../../theme';
 
-interface IProps {
-  index: number;
-}
-
-const QuestionsList = ({ index }: IProps) => {
+const QuestionsList = () => {
   const { t } = useTranslation();
-  const { control } = useFormContext<IRequirement>();
+  const { control } = useFormContext<IVariant>();
   const { fields, append, remove } = useFieldArray({
     control,
-    name: `variants.${index}.questions` as 'variants.0.questions'
+    name: `questions`
   });
 
   const [isOpen, setOpen] = useState(false);
@@ -42,15 +40,19 @@ const QuestionsList = ({ index }: IProps) => {
 
   return (
     <>
-      {fields.map((item, i) => {
+      {fields.map((item, index) => {
         return (
           <Card key={item.id}>
             <CardHeader
               title={t(item.type)}
               action={
-                <IconButton aria-label="settings" onClick={() => remove(i)}>
-                  <DeleteIcon color="warning" sx={{ mr: 1 }} />
-                </IconButton>
+                <FormIconButton
+                  hoverColor={theme.palette.dfoErrorRed.main}
+                  onClick={() => remove(index)}
+                  sx={{ marginLeft: 'auto' }}
+                >
+                  <DeleteIcon />
+                </FormIconButton>
               }
             />
           </Card>

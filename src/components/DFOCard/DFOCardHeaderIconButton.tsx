@@ -1,6 +1,8 @@
 import { IconButton, styled } from '@mui/material/';
 
-export const DFOCardHeaderIconButton = styled(IconButton)(({ theme }) => ({
+export const DFOCardHeaderIconButton = styled(IconButton, {
+  shouldForwardProp: (prop) => prop !== 'hoverColor'
+})<{ hoverColor?: string }>(({ theme, hoverColor }) => ({
   display: 'flex',
   alignSelf: 'center',
   padding: 0,
@@ -9,7 +11,7 @@ export const DFOCardHeaderIconButton = styled(IconButton)(({ theme }) => ({
   height: 32,
   '&:hover': {
     '& .MuiSvgIcon-root': {
-      color: theme.palette.dfoLightBlue.main
+      color: hoverColor ? hoverColor : theme.palette.dfoLightBlue.main
     }
   },
   '& .MuiSvgIcon-root': {
