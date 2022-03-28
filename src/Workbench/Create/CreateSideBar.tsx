@@ -69,7 +69,9 @@ const useStyles = makeStyles({
     marginLeft: 'auto'
   },
   handlerIcon: {
+    paddingTop: 6,
     display: 'flex',
+    paddingRight: '4px',
     alignSelf: 'center',
     justifySelf: 'flex-end'
   },
@@ -125,7 +127,7 @@ const CreateSideBar = (): React.ReactElement => {
         }`}
         onClick={() => itemClicked(item)}
       >
-        <Box className={classes.collapseIcon}>{handler}</Box>
+        <Box className={classes.handlerIcon}>{handler}</Box>
         <Typography className={classes.itemNameText}>
           {Utils.capitalizeFirstLetter(item.title ? item.title : '')}
         </Typography>

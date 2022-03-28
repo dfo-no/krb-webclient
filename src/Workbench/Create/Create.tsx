@@ -124,7 +124,7 @@ export default function Create(): React.ReactElement {
   };
 
   return renderCreatePageWithContent(
-    <StandardContainer sx={{ width: '90%' }}>
+    <StandardContainer sx={{ width: '90%', maxHeight: '100%' }}>
       <DeleteNeed
         children={renderNeedCard()}
         need={project.needs[needIndex]}

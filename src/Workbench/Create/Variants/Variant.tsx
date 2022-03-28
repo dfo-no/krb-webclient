@@ -157,7 +157,7 @@ const Variant = ({ variant, requirementIndex }: IProps) => {
             <QuestionsList />
           </AccordionDetails>
           <AccordionActions>
-            <Button variant="contained" type="submit">
+            <Button variant="save" type="submit">
               {t('save')}
             </Button>
           </AccordionActions>
