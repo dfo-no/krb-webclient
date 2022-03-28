@@ -1,27 +1,27 @@
-import makeStyles from '@mui/styles/makeStyles';
 import Box from '@mui/material/Box';
+import Card from '@mui/material/Card';
 import Divider from '@mui/material/Divider';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import Typography from '@mui/material/Typography';
+import makeStyles from '@mui/styles/makeStyles';
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import Card from '@mui/material/Card';
 import mainIllustration from '../assets/images/main-illustration.svg';
-import theme from '../theme';
-import { useGetAllProjectsQuery } from '../store/api/bankApi';
-import { IBank } from '../Nexus/entities/IBank';
 import LoaderSpinner from '../common/LoaderSpinner';
+import DFODialog from '../components/DFODialog/DFODialog';
+import DFOSearchBar from '../components/DFOSearchBar/DFOSearchBar';
+import { IBank } from '../Nexus/entities/IBank';
+import SpecificationStoreService from '../Nexus/services/SpecificationStoreService';
+import { useGetAllProjectsQuery } from '../store/api/bankApi';
+import theme from '../theme';
+import { ScrollableContainer } from '../Workbench/Components/ScrollableContainer';
 import {
   SearchContainer,
   SearchFieldContainer
 } from '../Workbench/Components/SearchContainer';
-import DFOSearchBar from '../components/DFOSearchBar/DFOSearchBar';
-import { ScrollableContainer } from '../Workbench/Components/ScrollableContainer';
-import DFODialog from '../components/DFODialog/DFODialog';
 import NewSpecForm from './NewSpecForm';
-import { selectBank } from '../store/reducers/selectedBank-reducer';
-import { useAppDispatch } from '../store/hooks';
+import { useSpecificationState } from './SpecificationContext';
 
 const useStyles = makeStyles({
   projectsContainer: {
@@ -114,10 +114,11 @@ const useStyles = makeStyles({
   }
 });
 
+// specification
 export default function SpecPage(): React.ReactElement {
   const { t } = useTranslation();
   const classes = useStyles();
-  const dispatch = useAppDispatch();
+  const { specification, setSpecification } = useSpecificationState();
 
   const { data: projects, isLoading } = useGetAllProjectsQuery();
 
@@ -127,18 +128,14 @@ export default function SpecPage(): React.ReactElement {
     return <LoaderSpinner />;
   }
 
-  const openProjectModal = (project: any) => {
-    dispatch(selectBank(project.id));
+  const openProjectModal = (project: IBank) => {
+    const spec = SpecificationStoreService.getSpecificationFromBank(project);
+    setSpecification(spec);
     setOpen(true);
   };
 
-  // Implement search here
-  const list: any = [];
-  const searchFunction = () => {};
-  const callback = () => {};
-
   const renderProjects = (projectList: Record<string, IBank>) => {
-    const result = Object.values(projectList).map((element) => {
+    return Object.values(projectList).map((element) => {
       return (
         <ListItem
           className={classes.projectListItem}
@@ -157,7 +154,6 @@ export default function SpecPage(): React.ReactElement {
         </ListItem>
       );
     });
-    return result;
   };
 
   return (
@@ -185,13 +181,14 @@ export default function SpecPage(): React.ReactElement {
         <Box className={classes.contentContainer}>
           <Box className={classes.topContainer}>
             <SearchContainer>
+              {/*  TODO: replace with 'AutoComplete' from @mui */}
               <SearchFieldContainer>
                 {' '}
                 <DFOSearchBar
-                  list={list}
+                  list={[]}
                   placeholder={t('search for banks')}
-                  callback={searchFunction}
-                  searchFunction={callback}
+                  callback={() => {}}
+                  searchFunction={() => {}}
                 />
               </SearchFieldContainer>
             </SearchContainer>
@@ -212,11 +209,18 @@ export default function SpecPage(): React.ReactElement {
         </Box>
       )}
 
-      <DFODialog
-        isOpen={isOpen}
-        handleClose={() => setOpen(false)}
-        children={<NewSpecForm handleClose={() => setOpen(false)} />}
-      />
+      {specification && (
+        <DFODialog
+          isOpen={isOpen}
+          handleClose={() => setOpen(false)}
+          children={
+            <NewSpecForm
+              specification={specification}
+              handleClose={() => setOpen(false)}
+            />
+          }
+        />
+      )}
     </Box>
   );
 }

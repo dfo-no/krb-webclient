@@ -50,7 +50,7 @@ const useStyles = makeStyles({
     width: '100%',
     paddingLeft: 30,
     '&:hover': {
-      background: theme.palette.lightBlue.main,
+      background: theme.palette.primary.main,
       color: theme.palette.dfoWhite.main
     }
   }
@@ -129,11 +129,11 @@ function SideBar(): React.ReactElement {
       name: t('Codelist'),
       icon: <CodeIcon />
     },
-    {
+    /*  {
       link: `${baseUrl?.url}/admin/inheritance`,
       name: t('Inheritance'),
       icon: <LinkIcon />
-    },
+    }, */
     {
       link: `${baseUrl?.url}/admin/tags`,
       name: t('Tags'),

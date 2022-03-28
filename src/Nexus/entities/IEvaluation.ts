@@ -1,5 +1,5 @@
-import { ISpecification } from '../../models/ISpecification';
 import { IEvaluatedResponse } from './IEvaluatedResponse';
+import { ISpecification } from './ISpecification';
 
 export interface IEvaluation {
   responses: IEvaluatedResponse[];

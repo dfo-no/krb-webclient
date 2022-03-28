@@ -1,8 +1,8 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { IResponse } from '../../models/IResponse';
-import { ISpecification } from '../../models/ISpecification';
 import ModelType from '../../models/ModelType';
 import { IEvaluatedResponse } from '../../Nexus/entities/IEvaluatedResponse';
+import { ISpecification } from '../../Nexus/entities/ISpecification';
 
 interface ISelectedBankState {
   specification: ISpecification;
@@ -30,6 +30,9 @@ const initialState: ISelectedBankState = {
       projectId: null
     },
     title: '',
+    version: '',
+    organization: '',
+    organizationNumber: '',
     products: [],
     requirements: [],
     requirementAnswers: []

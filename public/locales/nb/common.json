@@ -96,7 +96,6 @@
   "Welcome to the workbench": "Velkommen til arbeidsbenken",
   "Welcome to the builder": "Velkommen til byggern",
   "What is the name of the project?": "Hva er navnet på prosjektet?",
-  "What kind of project is this?": "Hva slags type kravsett er dette?",
   "What will be the name of the procurement?": "Hva skal anskaffelsen hete?",
   "Q_SLIDER": "Verdi",
   "Q_CHECKBOX": "Ja/Nei",
@@ -150,6 +149,7 @@
   "You are now building your spec": "Du er nå i gang med å bygge din kravspesifikasjon.",
   "You did not pick a bank": "Du har ikke valgt en bank",
   "quantity": "Antall",
+  "Organization number": "Organisasjonsnummer",
   "date": {
     "P": "{{date, P}}",
     "PP": "{{date, PP}}",

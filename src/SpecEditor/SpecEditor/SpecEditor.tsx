@@ -1,11 +1,10 @@
 import { Box, Button, Typography } from '@mui/material';
-import React from 'react';
-import { useAppSelector } from '../../store/hooks';
 import makeStyles from '@mui/styles/makeStyles';
-import theme from '../../theme';
-import byggernIllustration from '../../assets/images/byggern-illustration.svg';
-import { useGetBankQuery } from '../../store/api/bankApi';
+import React from 'react';
 import { useTranslation } from 'react-i18next';
+import byggernIllustration from '../../assets/images/byggern-illustration.svg';
+import theme from '../../theme';
+import { useSpecificationState } from '../SpecificationContext';
 
 const useStyles = makeStyles({
   editor: {
@@ -39,9 +38,8 @@ const useStyles = makeStyles({
 });
 
 export default function SpecEditor(): React.ReactElement {
-  const selectedBank = useAppSelector((state) => state.selectedBank);
-  const { data: bankSelected } = useGetBankQuery(String(selectedBank.id));
   const { t } = useTranslation();
+  const { specification } = useSpecificationState();
 
   const classes = useStyles();
 
@@ -57,10 +55,12 @@ export default function SpecEditor(): React.ReactElement {
             width="594"
           />
           <Box className={classes.specEditorText}>
-            <Typography variant="bigBoldBlue">{bankSelected?.title}</Typography>
+            <Typography variant="bigBoldBlue">
+              {specification?.title}
+            </Typography>
             <Box className={classes.specEditorDescription}>
               <Typography variant="smedium">
-                {t('Du er nå i gang med å bygge din kravspesifikasjon.')}
+                {t('You are now building your spec')}
               </Typography>
               <Typography variant="smedium">
                 {t(
