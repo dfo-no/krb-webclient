@@ -8,7 +8,7 @@ import { FormIconButton } from '../../Components/Form/FormIconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
 import React from 'react';
 import EditRequirement from './EditRequirement';
-import { useVariantState } from './VariantContext';
+import { useVariantState } from '../../Components/VariantContext';
 import { useSelectState } from '../SelectContext';
 import NewVariant from '../Variants/NewVariant';
 import { useParams } from 'react-router-dom';

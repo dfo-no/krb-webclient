@@ -3,8 +3,6 @@ import Accordion from '@mui/material/Accordion';
 import AccordionSummary from '@mui/material/AccordionSummary';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import Typography from '@mui/material/Typography';
-import Box from '@mui/material/Box';
-import Tooltip from '@mui/material/Tooltip';
 import DeleteIcon from '@mui/icons-material/Delete';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import Divider from '@mui/material/Divider';
@@ -30,7 +28,7 @@ import { IRouteParams } from '../../Models/IRouteParams';
 import Button from '@mui/material/Button';
 import { AccordionActions } from '@mui/material';
 import ErrorSummary from '../../../Form/ErrorSummary';
-import { useVariantState } from '../Requirement/VariantContext';
+import { useVariantState } from '../../Components/VariantContext';
 import { useTranslation } from 'react-i18next';
 import { useSelectState } from '../SelectContext';
 import theme from '../../../theme';
@@ -120,7 +118,7 @@ const Variant = ({ variant, requirementIndex }: IProps) => {
             />
             <VerticalTextCtrl
               name={`description`}
-              label={t('description')}
+              label={t('Description')}
               placeholder=""
             />
             <RadioCtrl
