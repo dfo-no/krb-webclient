@@ -37,7 +37,8 @@ const initialState: IProjectState = {
     publishedDate: null,
     sourceOriginal: null,
     sourceRel: null,
-    projectId: null
+    projectId: null,
+    deletedDate: null
   },
   projectLoading: 'idle',
   listLoading: 'idle'
