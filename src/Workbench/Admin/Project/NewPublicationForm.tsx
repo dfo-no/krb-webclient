@@ -7,7 +7,7 @@ import { joiResolver } from '@hookform/resolvers/joi';
 import { IAlert } from '../../../models/IAlert';
 import { v4 as uuidv4 } from 'uuid';
 import { addAlert } from '../../../store/reducers/alert-reducer';
-import HorizontalTextCtrl from '../../../FormProvider/HorizontalTextCtrl';
+import VerticalTextCtrl from '../../../FormProvider/VerticalTextCtrl';
 import { IBank } from '../../../Nexus/entities/IBank';
 import {
   IPublication,
@@ -17,12 +17,9 @@ import {
   useAddBankMutation,
   usePutProjectMutation
 } from '../../../store/api/bankApi';
-import { FormFlexBox } from '../../Components/Form/FormFlexBox';
-import { FormIconButton } from '../../Components/Form/FormIconButton';
-import CheckIcon from '@mui/icons-material/Check';
-import CloseIcon from '@mui/icons-material/Close';
 import { FormItemBox } from '../../Components/Form/FormItemBox';
 import { useFormStyles } from '../../Components/Form/FormStyles';
+import FormButtons from '../../Components/Form/FormButtons';
 
 interface IProps {
   project: IBank;
@@ -88,23 +85,12 @@ export default function NewPublicationForm({
           onSubmit={methods.handleSubmit(saveValues)}
         >
           <FormItemBox>
-            <FormFlexBox sx={{ paddingLeft: 1, paddingRight: 1 }}>
-              <HorizontalTextCtrl name="comment" placeholder={t('Comment')} />
-            </FormFlexBox>
-            <FormIconButton
-              disabled={isSubmitting}
-              type="submit"
-              aria-label="save"
-            >
-              <CheckIcon />
-            </FormIconButton>
-            <FormIconButton
-              disabled={isSubmitting}
-              onClick={() => handleClose()}
-              aria-label="close"
-            >
-              <CloseIcon />
-            </FormIconButton>
+            <VerticalTextCtrl
+              name="comment"
+              label={t('Comment')}
+              placeholder={''}
+            />
+            <FormButtons handleClose={() => handleClose()} />
           </FormItemBox>
         </form>
       </FormProvider>

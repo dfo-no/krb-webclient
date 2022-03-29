@@ -286,6 +286,18 @@ theme.components = {
             textDecorationLine: 'underline'
           }
         }
+      },
+      {
+        props: { variant: 'cancel' },
+        style: {
+          backgroundColor: theme.palette.gray600.main,
+          color: theme.palette.dfoWhite.main,
+          whiteSpace: 'nowrap',
+          height: 40,
+          '&:hover': {
+            background: theme.palette.gray500.main
+          }
+        }
       }
     ]
   },
