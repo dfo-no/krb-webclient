@@ -1,29 +1,20 @@
-import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
-import Card from '@mui/material/Card';
-import CardContent from '@mui/material/CardContent';
-import List from '@mui/material/List';
-import Typography from '@mui/material/Typography';
+import { Box, Button, List, Typography, styled } from '@mui/material/';
 import makeStyles from '@mui/styles/makeStyles';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
 import LoaderSpinner from '../../../common/LoaderSpinner';
-import { DFOCardHeader } from '../../../components/DFOCard/DFOCardHeader';
-import DFOSearchBar from '../../../components/DFOSearchBar/DFOSearchBar';
-// import DFOSearchBar from '../../../components/DFOSearchBar/DFOSearchBar';
 import { IPublication } from '../../../Nexus/entities/IPublication';
 import { useGetProjectQuery } from '../../../store/api/bankApi';
-import { PlainListBox } from '../../Components/PlainListBox';
+import { ScrollableContainer } from '../../Components/ScrollableContainer';
 import {
   NewButtonContainer,
-  SearchContainer,
-  SearchFieldContainer
+  SearchContainer
 } from '../../Components/SearchContainer';
 import { StandardContainer } from '../../Components/StandardContainer';
 import { IRouteParams } from '../../Models/IRouteParams';
 import NewPublicationForm from './NewPublicationForm';
-import ProjectHeader from './ProjectHeader';
+import { FormContainerBox } from '../../Components/Form/FormContainerBox';
 
 const useStyles = makeStyles({
   versionText: {
@@ -41,6 +32,20 @@ const useStyles = makeStyles({
   }
 });
 
+const PlainListBox = styled(Box)(({ theme }) => ({
+  display: 'flex',
+  flexDirection: 'row',
+  height: 60,
+  width: '100%',
+  paddingTop: 10,
+  paddingBottom: 10,
+  paddingLeft: 15,
+  paddingRight: 15,
+  marginBottom: 15,
+  backgroundColor: theme.palette.dfoWhite.main,
+  border: `1px solid ${theme.palette.gray500.main}`
+}));
+
 function ProjectPage(): React.ReactElement {
   const classes = useStyles();
   const { t } = useTranslation();
@@ -48,13 +53,6 @@ function ProjectPage(): React.ReactElement {
 
   const { projectId } = useParams<IRouteParams>();
   const { data: project, isLoading } = useGetProjectQuery(projectId);
-  const [publications, setPublications] = useState<IPublication[]>([]);
-
-  useEffect(() => {
-    if (project && project.publications) {
-      setPublications(project.publications);
-    }
-  }, [project]);
 
   if (isLoading) {
     return <LoaderSpinner />;
@@ -63,20 +61,6 @@ function ProjectPage(): React.ReactElement {
   if (!project) {
     return <></>;
   }
-
-  const searchFieldCallback = (result: IPublication[]) => {
-    setPublications(result);
-  };
-
-  const versionSearch = (searchString: string, list: IPublication[]) => {
-    // Filters only versions with match in title or version number
-    return list.filter((aPub) => {
-      return (
-        aPub.comment.toLowerCase().includes(searchString.toLowerCase()) ||
-        String(aPub.version).includes(searchString)
-      );
-    });
-  };
 
   const renderItem = (item: IPublication, i: number) => {
     return (
@@ -99,39 +83,27 @@ function ProjectPage(): React.ReactElement {
 
   return (
     <StandardContainer>
-      <Card>
-        <DFOCardHeader>
-          <ProjectHeader />
-        </DFOCardHeader>
-        <CardContent>
-          <SearchContainer>
-            <SearchFieldContainer>
-              {' '}
-              <DFOSearchBar
-                list={project.publications}
-                placeholder={t('search for version')}
-                callback={searchFieldCallback}
-                searchFunction={versionSearch}
-              />
-            </SearchFieldContainer>
-            <NewButtonContainer>
-              <Button variant="primary" onClick={() => setCreating(true)}>
-                {t('new publication')}
-              </Button>
-            </NewButtonContainer>
-          </SearchContainer>
+      <SearchContainer>
+        <NewButtonContainer>
+          <Button variant="primary" onClick={() => setCreating(true)}>
+            {t('new publication')}
+          </Button>
+        </NewButtonContainer>
+      </SearchContainer>
 
-          {isCreating && (
-            <Box sx={{ marginBottom: 3 }}>
-              <NewPublicationForm
-                project={project}
-                handleClose={() => setCreating(false)}
-              />
-            </Box>
-          )}
-          <List aria-label="publications">{publications.map(renderItem)}</List>
-        </CardContent>
-      </Card>
+      {isCreating && (
+        <FormContainerBox>
+          <NewPublicationForm
+            project={project}
+            handleClose={() => setCreating(false)}
+          />
+        </FormContainerBox>
+      )}
+      <ScrollableContainer>
+        <List aria-label="publications">
+          {project.publications.map(renderItem)}
+        </List>
+      </ScrollableContainer>
     </StandardContainer>
   );
 }

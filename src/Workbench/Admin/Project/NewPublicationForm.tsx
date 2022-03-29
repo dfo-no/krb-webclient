@@ -7,7 +7,7 @@ import { joiResolver } from '@hookform/resolvers/joi';
 import { IAlert } from '../../../models/IAlert';
 import { v4 as uuidv4 } from 'uuid';
 import { addAlert } from '../../../store/reducers/alert-reducer';
-import HorizontalTextCtrl from '../../../FormProvider/HorizontalTextCtrl';
+import VerticalTextCtrl from '../../../FormProvider/VerticalTextCtrl';
 import { IBank } from '../../../Nexus/entities/IBank';
 import {
   IPublication,
@@ -89,7 +89,11 @@ export default function NewPublicationForm({
         >
           <FormItemBox>
             <FormFlexBox sx={{ paddingLeft: 1, paddingRight: 1 }}>
-              <HorizontalTextCtrl name="comment" placeholder={t('Comment')} />
+              <VerticalTextCtrl
+                name="comment"
+                label={t('Comment')}
+                placeholder={''}
+              />
             </FormFlexBox>
             <FormIconButton
               disabled={isSubmitting}
