@@ -13,7 +13,7 @@ import { selectBank } from '../../store/reducers/selectedBank-reducer';
 import { setBank } from '../../store/reducers/spesification-reducer';
 
 interface IFilteredListProps {
-  list: IBank[];
+  list: Record<string, IBank>;
 }
 
 export default function FilteredList({
@@ -30,7 +30,7 @@ export default function FilteredList({
   // TODO: correct link to other page than workbench when site exist.
   // TODO: Discuss suitable amount of elements displayed
   const filteredElements = () => {
-    return list.map((bank: IBank) => {
+    return Object.values(list).map((bank: IBank) => {
       return (
         <div key={bank.id}>
           <ListItem>

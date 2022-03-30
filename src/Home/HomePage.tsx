@@ -11,11 +11,7 @@ import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import Footer from '../Footer/Footer';
 import SearchBar from '../SearchBar/SearchBar';
-import {
-  useGetAlbefaticalSortedBanksQuery,
-  useGetAllBanksQuery,
-  useGetDateSortedBanksQuery
-} from '../store/api/bankApi';
+import { useGetBanksQuery } from '../store/api/bankApi';
 import { ScrollableContainer } from '../Workbench/Components/ScrollableContainer';
 import FilteredList from './Components/FilteredList';
 
@@ -45,9 +41,25 @@ const useStyles = makeStyles({
 export default function HomePage(): React.ReactElement {
   const { t } = useTranslation();
 
-  const { data: latest } = useGetDateSortedBanksQuery();
-  const { data: alfabetic } = useGetAlbefaticalSortedBanksQuery();
-  const { data: list } = useGetAllBanksQuery();
+  const { data: latest } = useGetBanksQuery({
+    pageSize: 5,
+    page: 1,
+    fieldName: 'publishedDate',
+    order: 'DESC'
+  });
+  const { data: alfabetic } = useGetBanksQuery({
+    pageSize: 5,
+    page: 1,
+    fieldName: 'title',
+    order: 'ASC'
+  });
+  const { data: list } = useGetBanksQuery({
+    pageSize: 500,
+    page: 1,
+    fieldName: 'title',
+    order: 'DESC'
+  });
+
   const classes = useStyles();
 
   return (
