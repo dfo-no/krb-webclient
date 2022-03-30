@@ -63,10 +63,11 @@
     "build": "react-scripts build",
     "build:ci": "CI=true react-scripts build",
     "test": "react-scripts test",
+    "test:ci": "CI=true react-scripts test",
     "eslint": "eslint 'src/**/*.{js,jsx,ts,tsx,json,css,md}'",
-    "lint": "tsc --noEmit && eslint ./ --ignore-path .gitignore",
+    "lint:ci": "tsc --noEmit && eslint ./ --ignore-path .gitignore",
     "lint:fix": "tsc --noEmit && eslint ./ --ignore-path .gitignore --fix",
-    "prettier": "prettier --check \"src/**/*.{js,jsx,ts,tsx,json,css,scss,md}\"",
+    "prettier:ci": "prettier --check \"src/**/*.{js,jsx,ts,tsx,json,css,scss,md}\"",
     "prettier:write": "prettier  --write \"src/**/*.{js,jsx,ts,tsx,json,css,scss,md}\"",
     "git-info": "echo \"{\\\"sha\\\": \\\"$(git show -s --format='%h')\\\", \\\"msg\\\": \\\"$(git show -s --format='%s')\\\"}\"  > public/version.json",
     "analyse": "node analyse.js"
@@ -159,7 +160,8 @@
     "webpack-bundle-analyzer": "^4.4.2"
   },
   "pre-commit": [
-    "prettier",
-    "lint"
+    "prettier:ci",
+    "lint:ci",
+    "test:ci"
   ]
 }
