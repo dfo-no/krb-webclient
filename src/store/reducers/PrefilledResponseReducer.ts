@@ -29,7 +29,8 @@ const initialState: IPrefilledResponseState = {
       publishedDate: null,
       sourceOriginal: null,
       sourceRel: null,
-      projectId: null
+      projectId: null,
+      deletedDate: null
     },
     // answeredVariants: [], // list over string med id som er besvart, uavhengig questiontype, drit i denne
     supplier: '',

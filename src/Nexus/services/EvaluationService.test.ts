@@ -366,7 +366,8 @@ describe('EvaluationService', () => {
           inheritedBanks: [],
           sourceOriginal: null,
           sourceRel: null,
-          projectId: '61cdf70d-9ef5-4ae1-a006-b2e2f5242273'
+          projectId: '61cdf70d-9ef5-4ae1-a006-b2e2f5242273',
+          deletedDate: null
         },
         title: 'Spesifikasjon test',
         organization: 'Evil Corp',

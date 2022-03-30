@@ -1,5 +1,4 @@
-import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { httpGet } from '../../api/http';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import Utils from '../../common/Utils';
 import { IInheritedBank } from '../../models/IInheritedBank';
 import ModelType from '../../models/ModelType';
@@ -37,27 +36,12 @@ const initialState: IProjectState = {
     publishedDate: null,
     sourceOriginal: null,
     sourceRel: null,
-    projectId: null
+    projectId: null,
+    deletedDate: null
   },
   projectLoading: 'idle',
   listLoading: 'idle'
 };
-
-export const getProjectsThunk = createAsyncThunk(
-  'getProjectsThunk',
-  async () => {
-    const response = await httpGet<IBank[]>('/api/bank/projects');
-    return response.data;
-  }
-);
-
-export const getProjectThunk = createAsyncThunk(
-  'getProjectThunk',
-  async (id: string) => {
-    const response = await httpGet<IBank>(`/api/bank/${id}`);
-    return response.data;
-  }
-);
 
 const projectSlice = createSlice({
   name: 'projects',
@@ -390,28 +374,6 @@ const projectSlice = createSlice({
     setTags(state, { payload }: PayloadAction<Parentable<ITag>[]>) {
       state.project.tags = payload;
     }
-  },
-  extraReducers: (builder) => {
-    builder.addCase(getProjectsThunk.pending, (state) => {
-      state.listLoading = 'pending';
-    });
-    builder.addCase(getProjectsThunk.fulfilled, (state, { payload }) => {
-      state.list = payload;
-      state.listLoading = 'fulfilled';
-    });
-    builder.addCase(getProjectsThunk.rejected, (state) => {
-      state.listLoading = 'rejected';
-    });
-    builder.addCase(getProjectThunk.pending, (state) => {
-      state.projectLoading = 'pending';
-    });
-    builder.addCase(getProjectThunk.fulfilled, (state, { payload }) => {
-      state.project = payload;
-      state.projectLoading = 'fulfilled';
-    });
-    builder.addCase(getProjectThunk.rejected, (state) => {
-      state.projectLoading = 'rejected';
-    });
   }
 });
 
