@@ -2,7 +2,7 @@ export const DATE_FORMAT_SHORT = 'dd.MM.yyyy';
 
 export const DATETIME_FORMAT = 'dd.MM.yyyy H:s';
 
-export const PAGE_SIZE = 10;
+export const PAGE_SIZE = 100;
 
 /** The recommended format for DateTime strings in Azure Cosmos DB
  * is yyyy-MM-ddTHH:mm:ss.fffffffZ which follows the ISO 8601 UTC
