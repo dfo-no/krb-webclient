@@ -1,8 +1,0 @@
-@import '../../dfo-theme.scss';
-
-@for $i from 1 through 9 {
-  $margin: 1rem * $i;
-  .level#{$i} {
-    margin-left: $margin;
-  }
-}

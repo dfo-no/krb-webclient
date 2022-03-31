@@ -1,19 +1,17 @@
+import Button from '@mui/material/Button';
 import { AxiosResponse } from 'axios';
-import React, { ReactElement } from 'react';
-import Button from 'react-bootstrap/Button';
-import Row from 'react-bootstrap/Row';
+import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { useSelector } from 'react-redux';
 import { httpPost } from '../../api/http';
-import { Specification } from '../../models/Specification';
-import { RootState } from '../../store/store';
+import { ISpecification } from '../../Nexus/entities/ISpecification';
+import { useAppSelector } from '../../store/hooks';
 
-export default function SpecPage(): ReactElement {
+export default function SpecPage(): React.ReactElement {
   const { t } = useTranslation();
-  const { spec } = useSelector((state: RootState) => state.specification);
+  const { spec } = useAppSelector((state) => state.specification);
   const onDownLoad = () => {
-    httpPost<Specification, AxiosResponse<File>>(
-      `${process.env.REACT_APP_JAVA_API_URL}/generatePdf`,
+    httpPost<ISpecification, AxiosResponse<File>>(
+      '/java/generateSpecification',
       spec,
       {
         headers: {
@@ -26,7 +24,7 @@ export default function SpecPage(): ReactElement {
       const url = window.URL.createObjectURL(new Blob([response.data]));
       const link = document.createElement('a');
       link.href = url;
-      link.setAttribute('download', 'response.pdf');
+      link.setAttribute('download', 'specification.pdf');
       document.body.appendChild(link);
       link.click();
       setTimeout(() => {
@@ -36,10 +34,8 @@ export default function SpecPage(): ReactElement {
   };
 
   return (
-    <Row className="justify-content-md-center">
-      <Button type="submit" className="mt-4" onClick={onDownLoad}>
-        {t('download specification')}
-      </Button>
-    </Row>
+    <Button variant="primary" type="submit" onClick={onDownLoad}>
+      {t('download specification')}
+    </Button>
   );
 }

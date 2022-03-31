@@ -1,21 +1,21 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import { AxiosResponse } from 'axios';
-import React, { ReactElement } from 'react';
+import React from 'react';
 import Col from 'react-bootstrap/Col';
 import Container from 'react-bootstrap/Container';
 import InputGroup from 'react-bootstrap/InputGroup';
 import Row from 'react-bootstrap/Row';
-import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router';
 import { httpPost } from '../api/http';
+import { useAppDispatch } from '../store/hooks';
 import {
   setResponse,
   setSpecification
 } from '../store/reducers/response-reducer';
 import { selectBank } from '../store/reducers/selectedBank-reducer';
 
-export default function ResponsePage(): ReactElement {
-  const dispatch = useDispatch();
+export default function ResponsePage(): React.ReactElement {
+  const dispatch = useAppDispatch();
   const history = useHistory();
 
   const onUploadSpecification = (
@@ -27,16 +27,12 @@ export default function ResponsePage(): ReactElement {
       const file = files[index];
       formData.append('file', file);
     }
-    httpPost<FormData, AxiosResponse>(
-      `${process.env.REACT_APP_JAVA_API_URL}/uploadPdf`,
-      formData,
-      {
-        headers: {
-          'Content-Type': 'multipart/form-data'
-        },
-        responseType: 'json'
-      }
-    ).then((response) => {
+    httpPost<FormData, AxiosResponse>('/java/uploadPdf', formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      },
+      responseType: 'json'
+    }).then((response) => {
       dispatch(selectBank(response.data.bank.id));
       dispatch(setSpecification(response.data));
       history.push(`/response/${response.data.bank.id}`);
@@ -51,21 +47,21 @@ export default function ResponsePage(): ReactElement {
       const file = files[index];
       formData.append('file', file);
     }
-    httpPost<FormData, AxiosResponse>(
-      `${process.env.REACT_APP_JAVA_API_URL}/uploadPdf`,
-      formData,
-      {
-        headers: {
-          'Content-Type': 'multipart/form-data'
-        },
-        responseType: 'json'
-      }
-    ).then((response) => {
-      dispatch(selectBank(response.data.spesification.bank.id));
-      dispatch(setResponse(response.data));
-      history.push(`/response/${response.data.spesification.bank.id}`);
-      return response;
-    });
+    httpPost<FormData, AxiosResponse>('/java/uploadPdf', formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      },
+      responseType: 'json'
+    })
+      .then((response) => {
+        dispatch(selectBank(response.data.spesification.bank.id));
+        dispatch(setResponse(response.data));
+        history.push(`/response/${response.data.spesification.bank.id}`);
+        return response;
+      })
+      .catch((error) => {
+        return error;
+      });
   };
 
   return (

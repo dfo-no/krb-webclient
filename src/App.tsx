@@ -4,42 +4,52 @@ import {
   MsalProvider,
   UnauthenticatedTemplate
 } from '@azure/msal-react';
-import React, { ReactElement } from 'react';
+import { CssBaseline } from '@mui/material';
+import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 import styles from './App.module.scss';
 import { msalConfig } from './authentication/authConfig';
+import AlertList from './components/Alert/AlertList';
+import Header from './components/Header/Header';
 import Evaluation from './Evaluation/Evaluation';
-import Header from './Header/Header';
-import BankPage from './Home/BankPage';
 import HomePage from './Home/HomePage';
+import useConfirmTabClose from './hooks/useConfirmTabClose';
+import KitchenSink from './KitchenSink';
 import PageLayout from './PageLayout';
+import PrefilledResponseModule from './PrefilledResponseEditor/PrefilledResponseModule';
 import ResponseModule from './ResponseEditor/ResponseModule';
 import ResponsePage from './ResponseEditor/ResponsePage';
 import SpecModule from './SpecEditor/SpecModule';
-import SpecPage from './SpecEditor/SpecPage';
 import WorkbenchModule from './Workbench/WorkbenchModule';
 
 const msalInstance = new PublicClientApplication(msalConfig);
 
-function App(): ReactElement {
+function App(): React.ReactElement {
+  useConfirmTabClose();
+
   function renderContent() {
     return (
       <Switch>
         <Route exact path="/">
           <HomePage />
         </Route>
-        <Route exact path="/bank/:bankId">
-          <BankPage />
-        </Route>
         <PageLayout>
           <AuthenticatedTemplate>
             <Route path="/workbench" component={WorkbenchModule} />
-            <Route path="/speceditor/:id" component={SpecModule} />
-            <Route exact path="/speceditor" component={SpecPage} />
+            <Route path="/specification" component={SpecModule} />
             <Route path="/response/:id" component={ResponseModule} />
             <Route exact path="/response" component={ResponsePage} />
             <Route path="/evaluation" component={Evaluation} />
+            <Route
+              path="/prefilledresponse/:id"
+              component={PrefilledResponseModule}
+            />
           </AuthenticatedTemplate>
+          {process.env.NODE_ENV === 'development' ? (
+            <Route path="/kitchensink" component={KitchenSink} />
+          ) : (
+            <></>
+          )}
           <UnauthenticatedTemplate>
             <h5 className="card-title">Please sign-in to access this page</h5>
           </UnauthenticatedTemplate>
@@ -49,10 +59,14 @@ function App(): ReactElement {
   }
 
   return (
-    <div className={styles.App}>
+    <div>
       <MsalProvider instance={msalInstance}>
-        <Header />
-        {renderContent()}
+        <CssBaseline />
+        <AlertList />
+        <div className={styles.App}>
+          <Header />
+          {renderContent()}
+        </div>
       </MsalProvider>
     </div>
   );

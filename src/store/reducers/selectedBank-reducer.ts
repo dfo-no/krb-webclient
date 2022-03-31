@@ -1,11 +1,10 @@
-/* eslint-disable no-param-reassign */
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-interface SelectedBankState {
+interface ISelectedBankState {
   id: string | null;
 }
 
-const initialState: SelectedBankState = { id: null };
+const initialState: ISelectedBankState = { id: null };
 
 const selectedBankSlice = createSlice({
   name: 'selectedBank',

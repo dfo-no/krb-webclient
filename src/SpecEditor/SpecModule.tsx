@@ -1,72 +1,45 @@
-import React, { ReactElement } from 'react';
-import Col from 'react-bootstrap/Col';
-import Container from 'react-bootstrap/Container';
-import Row from 'react-bootstrap/Row';
-import { useDispatch, useSelector } from 'react-redux';
-import { Route, Switch, useRouteMatch } from 'react-router';
-import NotFound from '../NotFound';
-import { selectBank } from '../store/reducers/selectedBank-reducer';
-import { RootState } from '../store/store';
-import DownloadPage from './Download/DownloadPage';
-import EditProductAlternative from './Product/EditProductAlternative';
-import ProductSpecEditor from './Product/ProductSpecEditor';
-import ProductSpecList from './Product/ProductSpecList';
-import EditAlternative from './Requirement/EditAlternative';
-import RequirementSpecEditor from './Requirement/RequirementSpecEditor';
+import Box from '@mui/material/Box';
+import makeStyles from '@mui/styles/makeStyles';
+import React from 'react';
+import { Route, Switch } from 'react-router';
+import theme from '../theme';
 import SpecSideBar from './SideBar/SpecSideBar';
+import NewProduct from './SpecEditor/NewProduct';
 import SpecEditor from './SpecEditor/SpecEditor';
+import { SpecificationProvider } from './SpecificationContext';
+import SpecificationGuard from './SpecificationGuard';
+import SpecPage from './SpecPage';
 
-interface RouteParams {
-  bankId: string;
-}
-export default function SpecModule(): ReactElement {
-  const projectMatch = useRouteMatch<RouteParams>('/speceditor/:bankId');
-  const dispatch = useDispatch();
-  const { id } = useSelector((state: RootState) => state.selectedBank);
-  // Can set this safely, even if we got here directly by url or by clicks
-  if (projectMatch?.params.bankId && !id) {
-    dispatch(selectBank(projectMatch?.params.bankId));
+const useStyles = makeStyles({
+  specification: {
+    display: 'flex',
+    flexGrow: 1,
+    backgroundColor: theme.palette.gray100.main
   }
+});
+
+export default function SpecModule(): React.ReactElement {
+  const classes = useStyles();
 
   return (
-    <Container fluid>
-      <Row>
-        <Col className="col-2 p-0">
+    <SpecificationProvider>
+      <Switch>
+        <Route exact path="/specification">
+          <SpecPage />
+        </Route>
+
+        <Box className={classes.specification}>
           <SpecSideBar />
-          {/* Sidebar outside Switch *may* be a very bad idea */}
-        </Col>
-        <Col>
-          <Switch>
-            <Route exact path="/speceditor/:id">
+          <Route exact path="/specification/:id">
+            <SpecificationGuard>
               <SpecEditor />
-            </Route>
-            <Route exact path="/speceditor/:id/requirement">
-              <RequirementSpecEditor />
-            </Route>
-            <Route exact path="/speceditor/:id/requirement/alternative/:altid">
-              <EditAlternative />
-            </Route>
-            <Route exact path="/speceditor/:id/product">
-              <ProductSpecList />
-            </Route>
-            <Route exact path="/speceditor/:id/product/:productid">
-              <ProductSpecEditor />
-            </Route>
-            <Route
-              exact
-              path="/speceditor/:id/product/:productid/alternative/:altid"
-            >
-              <EditProductAlternative />
-            </Route>
-            <Route exact path="/speceditor/:id/download">
-              <DownloadPage />
-            </Route>
-            <Route>
-              <NotFound />
-            </Route>
-          </Switch>
-        </Col>
-      </Row>
-    </Container>
+            </SpecificationGuard>
+          </Route>
+          <Route exact path="/specification/:id/createProduct">
+            <NewProduct />
+          </Route>
+        </Box>
+      </Switch>
+    </SpecificationProvider>
   );
 }

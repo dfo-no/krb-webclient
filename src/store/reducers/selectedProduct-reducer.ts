@@ -1,18 +1,29 @@
-/* eslint-disable no-param-reassign */
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import ModelType from '../../models/ModelType';
+import { IProduct } from '../../Nexus/entities/IProduct';
 
-interface SelectedProductState {
-  productId: string | null;
+interface ISelectedProductState {
+  product: IProduct;
 }
 
-const initialState: SelectedProductState = { productId: null };
+const initialState: ISelectedProductState = {
+  product: {
+    id: '',
+    title: '',
+    description: '',
+    parent: '',
+    type: ModelType.product,
+    sourceOriginal: null,
+    sourceRel: null
+  }
+};
 
 const selectedProductState = createSlice({
   name: 'selectedProduct',
   initialState,
   reducers: {
-    selectProduct(state, { payload }: PayloadAction<string>) {
-      state.productId = payload;
+    selectProduct(state, { payload }: PayloadAction<IProduct>) {
+      state.product = payload;
     }
   }
 });

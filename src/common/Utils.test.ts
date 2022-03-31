@@ -1,40 +1,280 @@
-import { BaseModel } from '../models/BaseModel';
+import { get } from 'lodash';
 import ModelType from '../models/ModelType';
 import { Nestable } from '../models/Nestable';
+import { Parentable } from '../models/Parentable';
+import { IBaseModel } from '../Nexus/entities/IBaseModel';
 import Utils from './Utils';
 
-// eslint-disable-next-line jest/no-export
-export interface Car extends BaseModel {
+interface ICar extends IBaseModel {
   id: string;
   title: string;
   type: ModelType.need;
 }
 
-test('Utils.unflatten is type safe', () => {
-  const cars: Nestable<Car>[] = [
-    {
-      id: 'ad28e225-7a76-4c57-bb22-ec87b3131762',
-      title: 'Maserati',
-      parent: '',
-      type: ModelType.need
-    },
-    {
-      id: '4f60be0f-44e9-4ea9-a755-476fbc6dd85d',
-      title: 'MG',
-      parent: 'ad28e225-7a76-4c57-bb22-ec87b3131762',
-      type: ModelType.need
-    },
-    {
-      id: 'ca029ba3-aa01-4150-bd43-8d754bcfd890',
-      title: 'Porche',
-      parent: 'ad28e225-7a76-4c57-bb22-ec87b3131762',
-      type: ModelType.need
-    },
-    { id: 'dddd', title: 'leaf', parent: '', type: ModelType.need }
-  ];
+describe('Utils functions should work', () => {
+  test('Utils.parentable2Nestable', () => {
+    const cars: Parentable<ICar>[] = [
+      {
+        id: 'aa28e225-7a76-4c57-bb22-ec87b3131762',
+        title: 'A',
+        parent: '',
+        type: ModelType.need,
+        sourceOriginal: null,
+        sourceRel: null
+      },
+      {
+        id: 'bb60be0f-44e9-4ea9-a755-476fbc6dd85d',
+        title: 'B_1',
+        parent: 'aa28e225-7a76-4c57-bb22-ec87b3131762',
+        type: ModelType.need,
+        sourceOriginal: null,
+        sourceRel: null
+      },
+      {
+        id: 'cc60be0f-44e9-4ea9-a755-476fbc6dd855',
+        title: 'C_1',
+        parent: 'aa28e225-7a76-4c57-bb22-ec87b3131762',
+        type: ModelType.need,
+        sourceOriginal: null,
+        sourceRel: null
+      },
+      {
+        id: 'dd029ba3-aa01-4150-bd43-8d754bcfd890',
+        title: 'D_2',
+        parent: 'cc60be0f-44e9-4ea9-a755-476fbc6dd855',
+        type: ModelType.need,
+        sourceOriginal: null,
+        sourceRel: null
+      },
+      {
+        id: '0e998bb7-bc0f-41d8-9199-800b46145ba9',
+        title: 'F_4',
+        parent: 'ee7d9375-aee7-42c2-a6d7-9fa1541d56ef',
+        type: ModelType.need,
+        sourceOriginal: null,
+        sourceRel: null
+      },
+      {
+        id: 'a85deb14-9549-465f-9183-fe9102c4f8e0',
+        title: 'O_2',
+        parent: 'ee7d9375-aee7-42c2-a6d7-9fa1541d56ef',
+        type: ModelType.need,
+        sourceOriginal: null,
+        sourceRel: null
+      },
+      {
+        id: 'ee7d9375-aee7-42c2-a6d7-9fa1541d56ef',
+        title: 'E_3',
+        parent: 'dd029ba3-aa01-4150-bd43-8d754bcfd890',
+        type: ModelType.need,
+        sourceOriginal: null,
+        sourceRel: null
+      },
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [items] = Utils.unflatten(cars);
+      {
+        id: 'ffb9bfe0-0b87-4e2d-95c8-9b703e655e61',
+        title: 'K',
+        parent: '',
+        type: ModelType.need,
+        sourceOriginal: null,
+        sourceRel: null
+      },
+      {
+        id: '1f22e20c-2777-4ff3-880d-20256f6cb931',
+        title: 'K_1',
+        parent: 'ffb9bfe0-0b87-4e2d-95c8-9b703e655e61',
+        type: ModelType.need,
+        sourceOriginal: null,
+        sourceRel: null
+      },
+      {
+        id: '293b2bc4-a5f5-4c61-9759-814bc68ee9bb',
+        title: 'K_2',
+        parent: '1f22e20c-2777-4ff3-880d-20256f6cb931',
+        type: ModelType.need,
+        sourceOriginal: null,
+        sourceRel: null
+      },
+      {
+        id: 'a85deb14-9549-465f-9183-fe9102c4f8e0',
+        title: 'O_2',
+        parent: '1f22e20c-2777-4ff3-880d-20256f6cb931',
+        type: ModelType.need,
+        sourceOriginal: null,
+        sourceRel: null
+      }
+    ];
 
-  expect(true).toBeTruthy();
+    const items = Utils.parentable2Nestable<ICar>(cars);
+
+    // Check that the props are correct
+    expect(items[1].title).toEqual('K');
+    expect(items[0]?.children?.length).toEqual(2);
+
+    const result1 = get(items, `[0].children.1.title`);
+
+    expect(result1).toEqual('C_1');
+
+    const result2 = get(items, `[0].children[1].children[0].title`);
+    expect(result2).toEqual('D_2');
+
+    const result3 = get(items, `[0].children[1].children[0].children[0].title`);
+    expect(result3).toEqual('E_3');
+
+    const result4 = get(items, `[1].title`);
+    expect(result4).toEqual('K');
+
+    // Make sure end-items have children property
+    const result5 = get(items, `[1].children`);
+    expect(result5.length).toBe(1);
+
+    const result6 = get(
+      items,
+      `[0].children[1].children[0].children[0].children[0].title`
+    );
+    expect(result6).toEqual('F_4');
+
+    const result7 = get(
+      items,
+      `[0].children[1].children[0].children[0].children[0].children`
+    );
+    expect(result7.length).toBe(0);
+  });
+
+  test('Utils.nestable2Levelable', () => {
+    const cars: Nestable<ICar>[] = [
+      {
+        id: 'aa28e225-7a76-4c57-bb22-ec87b3131762',
+        title: 'A',
+        parent: '',
+        type: ModelType.need,
+        level: 1,
+        sourceOriginal: null,
+        sourceRel: null,
+        children: [
+          {
+            id: 'bb60be0f-44e9-4ea9-a755-476fbc6dd85d',
+            title: 'B_1',
+            parent: 'aa28e225-7a76-4c57-bb22-ec87b3131762',
+            type: ModelType.need,
+            level: 2,
+            sourceOriginal: null,
+            sourceRel: null
+          },
+          {
+            id: 'cc60be0f-44e9-4ea9-a755-476fbc6dd855',
+            title: 'C_1',
+            parent: 'aa28e225-7a76-4c57-bb22-ec87b3131762',
+            type: ModelType.need,
+            level: 2,
+            sourceOriginal: null,
+            sourceRel: null,
+            children: [
+              {
+                id: 'dd029ba3-aa01-4150-bd43-8d754bcfd890',
+                title: 'D_2',
+                parent: 'cc60be0f-44e9-4ea9-a755-476fbc6dd855',
+                type: ModelType.need,
+                level: 3,
+                sourceOriginal: null,
+                sourceRel: null,
+                children: [
+                  {
+                    id: 'ee7d9375-aee7-42c2-a6d7-9fa1541d56ef',
+                    title: 'E_3',
+                    parent: 'dd029ba3-aa01-4150-bd43-8d754bcfd890',
+                    type: ModelType.need,
+                    level: 4,
+                    children: [
+                      {
+                        id: '0e998bb7-bc0f-41d8-9199-800b46145ba9',
+                        title: 'F_4',
+                        parent: 'ee7d9375-aee7-42c2-a6d7-9fa1541d56ef',
+                        type: ModelType.need,
+                        level: 5,
+                        sourceOriginal: null,
+                        sourceRel: null
+                      }
+                    ],
+                    sourceOriginal: null,
+                    sourceRel: null
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        id: 'ffb9bfe0-0b87-4e2d-95c8-9b703e655e61',
+        title: 'K',
+        parent: '',
+        type: ModelType.need,
+        level: 1,
+        sourceOriginal: null,
+        sourceRel: null
+      }
+    ];
+
+    const leveled = Utils.nestable2Levelable(cars);
+
+    expect(leveled[0].title).toBe('A');
+    expect(leveled[6].title).toBe('K');
+    expect(leveled.length).toBe(7);
+  });
+
+  test('Utils.truncate', () => {
+    expect(Utils.truncate(undefined)).toEqual('');
+
+    // Possible bug: integer variable is included in the total: Expected result could be 'abcde$'
+    expect(Utils.truncate('abcdefghijk', 5, '$')).toEqual('abcd$');
+
+    // Possible bug: emojii is two bytes, and is included in the integer. Expected result should be 'abcde⚛️'
+    expect(Utils.truncate('abcdefghijk', 5, '⚛️')).toEqual('abc⚛️');
+  });
+
+  test('Utils.capitalizeFirstLetter', () => {
+    expect(Utils.capitalizeFirstLetter('bobbo')).toEqual('Bobbo');
+    expect(Utils.capitalizeFirstLetter('A')).toEqual('A');
+    expect(Utils.capitalizeFirstLetter('a')).toEqual('A');
+    expect(Utils.capitalizeFirstLetter('')).toEqual('');
+  });
+
+  it('Utils.getNextIndexAfterDelete', () => {
+    const ary1 = ['a'];
+    const foundIndex1 = ary1.findIndex((n) => n === 'a');
+    ary1.splice(foundIndex1, 1);
+    const result1 = Utils.getNextIndexAfterDelete(ary1, foundIndex1);
+    expect(result1).toEqual(null);
+
+    const ary2 = ['a', 'b'];
+    const foundIndex2 = ary2.findIndex((n) => n === 'a');
+    ary1.splice(foundIndex2, 1);
+    const result2 = Utils.getNextIndexAfterDelete(ary2, foundIndex2);
+    expect(result2).toEqual(0);
+
+    const ary3 = ['a', 'b', 'c', 'd'];
+    const foundIndex3 = ary3.findIndex((n) => n === 'b');
+    ary1.splice(foundIndex3, 1);
+    const result3 = Utils.getNextIndexAfterDelete(ary3, foundIndex3);
+    expect(result3).toEqual(1);
+
+    const ary4: string[] = [];
+    const foundIndex4 = ary4.findIndex((n) => n === 'b');
+    ary4.splice(foundIndex4, 1);
+    const result4 = Utils.getNextIndexAfterDelete(ary4, foundIndex4);
+    expect(result4).toEqual(-1);
+
+    const ary5: string[] = ['a', 'b', 'c', 'd'];
+    const foundIndex5 = ary5.findIndex((n) => n === 'c');
+    ary5.splice(foundIndex5, 1);
+    const result5 = Utils.getNextIndexAfterDelete(ary5, foundIndex5);
+    expect(result5).toEqual(2);
+
+    const ary6: string[] = ['a', 'b', 'c', 'd'];
+    const foundIndex6 = ary6.findIndex((n) => n === 'd');
+    ary5.splice(foundIndex6, 1);
+    const result6 = Utils.getNextIndexAfterDelete(ary6, foundIndex5);
+    expect(result6).toEqual(2);
+  });
 });

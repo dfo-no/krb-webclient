@@ -1,5 +1,5 @@
-import React, { ReactElement } from 'react';
+import React from 'react';
 
-export default function NotFound(): ReactElement {
+export default function NotFound(): React.ReactElement {
   return <p>404: Not found</p>;
 }

@@ -1,27 +1,31 @@
-import React, { ReactElement } from 'react';
-import { ListGroup } from 'react-bootstrap';
+import EditIcon from '@mui/icons-material/Edit';
+import React from 'react';
 import Container from 'react-bootstrap/Container';
+import ListGroup from 'react-bootstrap/ListGroup';
 import Row from 'react-bootstrap/Row';
-import { BsPencil } from 'react-icons/bs';
-import { useDispatch, useSelector } from 'react-redux';
 import { Link, useRouteMatch } from 'react-router-dom';
-
+import { v4 as uuidv4 } from 'uuid';
 import Utils from '../../common/Utils';
-import { SpecificationProduct } from '../../models/SpecificationProduct';
+import { IResponseProduct } from '../../models/IResponseProduct';
+import { ISpecificationProduct } from '../../models/ISpecificationProduct';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
+import { addProduct } from '../../store/reducers/response-reducer';
 import { selectBank } from '../../store/reducers/selectedBank-reducer';
-import { RootState } from '../../store/store';
-import { selectSpecProduct } from '../../store/reducers/selectedSpecProduct-reducer';
+import {
+  selectResponseProduct,
+  selectResponseSpecificationProduct
+} from '../../store/reducers/selectedResponseProduct-reducer';
 
-interface RouteParams {
+interface IRouteParams {
   bankId: string;
 }
 
-export default function ProductResponseList(): ReactElement {
-  const projectMatch = useRouteMatch<RouteParams>('/response/:bankId');
-  const { id } = useSelector((state: RootState) => state.selectedBank);
-  const { response } = useSelector((state: RootState) => state.response);
+export default function ProductResponseList(): React.ReactElement {
+  const projectMatch = useRouteMatch<IRouteParams>('/response/:bankId');
+  const { id } = useAppSelector((state) => state.selectedBank);
+  const { response } = useAppSelector((state) => state.response);
 
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   if (projectMatch?.params.bankId && !id) {
     dispatch(selectBank(projectMatch?.params.bankId));
@@ -30,9 +34,34 @@ export default function ProductResponseList(): ReactElement {
   if (!id) {
     return <p>No selected bank</p>;
   }
+  const generateResponseProduct = (
+    specificationProduct: ISpecificationProduct
+  ) => {
+    dispatch(selectResponseSpecificationProduct(specificationProduct));
+    const productIndex = response.products.findIndex(
+      (responseProduct) =>
+        responseProduct.originProduct.id === specificationProduct.id
+    );
 
-  const productList = (productArray: SpecificationProduct[]) => {
-    const items = productArray.map((product: SpecificationProduct) => {
+    const newProduct: IResponseProduct = {
+      id: uuidv4(),
+      title: '',
+      description: '',
+      originProduct: specificationProduct,
+      price: 0,
+      requirementAnswers: []
+    };
+    const product: IResponseProduct =
+      productIndex !== -1 ? response.products[productIndex] : newProduct;
+    if (productIndex === -1) {
+      dispatch(addProduct(newProduct));
+    }
+
+    dispatch(selectResponseProduct(product));
+  };
+
+  const productList = (productArray: ISpecificationProduct[]) => {
+    const items = productArray.map((product: ISpecificationProduct) => {
       return (
         <ListGroup.Item key={product.id + 1}>
           <Row>
@@ -40,10 +69,10 @@ export default function ProductResponseList(): ReactElement {
               {Utils.capitalizeFirstLetter(product.title)}, {product.amount} stk
             </p>
             <Link
-              onClick={() => dispatch(selectSpecProduct(product.id))}
+              onClick={() => generateResponseProduct(product)}
               to={`/response/${id}/product/${product.id}`}
             >
-              <BsPencil className="ml-4  mt-1" />
+              <EditIcon className="ml-4  mt-1" />
             </Link>
           </Row>
           <Row>

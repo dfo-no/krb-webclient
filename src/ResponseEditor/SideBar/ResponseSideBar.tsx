@@ -1,21 +1,18 @@
-import React, { ReactElement } from 'react';
+import React from 'react';
 import Nav from 'react-bootstrap/Nav';
-import { withRouter } from 'react-router';
-import { NavLink, useRouteMatch } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { RouteComponentProps, withRouter } from 'react-router';
+import { NavLink } from 'react-router-dom';
+import { useAppSelector } from '../../store/hooks';
 import css from './ResponseSideBar.module.scss';
-import { RootState } from '../../store/store';
 
 interface IRouteLink {
   link: string;
   name: string;
 }
 
-interface RouteParams {
-  projectId: string;
-}
+type TParams = { id: string };
 
-const renderRouteLinks = (routes: IRouteLink[], isProjectSelected: boolean) => {
+const renderRouteLinks = (routes: IRouteLink[]) => {
   return routes.map((route) => {
     return (
       <Nav.Item key={route.name} className={`${css.sidebar__item}`}>
@@ -24,7 +21,6 @@ const renderRouteLinks = (routes: IRouteLink[], isProjectSelected: boolean) => {
           to={route.link}
           role="link"
           activeClassName={`${css.sidebar__item__active}`}
-          disabled={!isProjectSelected}
         >
           {route.name}
         </Nav.Link>
@@ -33,27 +29,25 @@ const renderRouteLinks = (routes: IRouteLink[], isProjectSelected: boolean) => {
   });
 };
 
-function ResponseSideBar(): ReactElement {
-  const { id } = useSelector((state: RootState) => state.selectedBank);
-  const { response } = useSelector((state: RootState) => state.response);
-
-  const match = useRouteMatch<RouteParams>('/response/:bankId');
-  const currentUrl = match?.url ? match.url : `/response/${id}`;
-  const isProjectSelected = !!response.spesification.bank.id;
+function ResponseSideBar({
+  match
+}: RouteComponentProps<TParams>): React.ReactElement {
+  const { response } = useAppSelector((state) => state.response);
 
   const routes = [
     {
-      link: `${currentUrl}`,
+      link: `${match.url}`,
       name: `Response: ${response.spesification.title}`
     },
-    { link: `${currentUrl}/requirement`, name: 'Requirements' },
-    { link: `${currentUrl}/download`, name: 'Download' },
-    { link: `${currentUrl}/product`, name: 'Products' }
+    { link: `${match.url}/requirement`, name: 'Requirements' },
+    { link: `${match.url}/download`, name: 'Download' },
+    { link: `${match.url}/product`, name: 'Products' },
+    { link: `${match.url}/overview`, name: 'Overview' }
   ];
 
   return (
     <Nav className={`sidebar col-md-12 flex-column ${css.sidebar}`}>
-      {renderRouteLinks(routes, isProjectSelected)}
+      {renderRouteLinks(routes)}
     </Nav>
   );
 }

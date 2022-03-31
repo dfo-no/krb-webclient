@@ -1,25 +1,26 @@
-import React, { ReactElement } from 'react';
+import SubdirectoryArrowRightIcon from '@mui/icons-material/SubdirectoryArrowRight';
+import React from 'react';
+import Col from 'react-bootstrap/Col';
 import ListGroup from 'react-bootstrap/ListGroup';
 import Row from 'react-bootstrap/Row';
-import { BsArrowReturnRight } from 'react-icons/bs';
-import { useSelector } from 'react-redux';
 import Utils from '../../common/Utils';
-import { Need } from '../../models/Need';
 import { Nestable } from '../../models/Nestable';
-import { Requirement } from '../../models/Requirement';
-import { RootState } from '../../store/store';
+import { INeed } from '../../Nexus/entities/INeed';
+import { IRequirement } from '../../Nexus/entities/IRequirement';
+import { useAppSelector } from '../../store/hooks';
 import styles from './RequirementSelectorList.module.scss';
 import SpesificationRequirement from './SpesificationRequirement';
 
-interface InputProps {
-  needList: Nestable<Need>[];
+interface IInputProps {
+  needList: Nestable<INeed>[];
 }
 
 export default function RequirementSelectorList({
   needList
-}: InputProps): ReactElement {
-  const { spec } = useSelector((state: RootState) => state.specification);
-  const checkIfReqHasVariantMatch = (req: Requirement): boolean => {
+}: IInputProps): React.ReactElement {
+  const { spec } = useAppSelector((state) => state.specification);
+
+  const checkIfReqHasVariantMatch = (req: IRequirement): boolean => {
     let found = false;
     req.variants.forEach((variant) => {
       if (variant.useSpesification === true) {
@@ -31,7 +32,7 @@ export default function RequirementSelectorList({
   };
 
   function checkIfNeedHasChildWithRequirements(
-    listofneed: Nestable<Need>[]
+    listofneed: Nestable<INeed>[]
   ): boolean {
     let foundMatch = false;
     listofneed.forEach((element) => {
@@ -50,7 +51,7 @@ export default function RequirementSelectorList({
     return foundMatch;
   }
 
-  function checkNeed(element: Nestable<Need>): boolean {
+  function checkNeed(element: Nestable<INeed>): boolean {
     let found = false;
     if (element.requirements.length > 0) {
       element.requirements.forEach((requirement) => {
@@ -65,7 +66,7 @@ export default function RequirementSelectorList({
     return found;
   }
 
-  const requirementsAnswers = (requirementArray: Requirement[]) => {
+  const requirementsAnswers = (requirementArray: IRequirement[]) => {
     return requirementArray.map((req) => {
       const selected = !!spec.requirements.includes(req.id);
       if (checkIfReqHasVariantMatch(req)) {
@@ -80,7 +81,7 @@ export default function RequirementSelectorList({
       return null;
     });
   };
-  const childrenHierarchy = (listofneed: Nestable<Need>[], level: number) => {
+  const childrenHierarchy = (listofneed: Nestable<INeed>[], level: number) => {
     let n = level;
     let children: JSX.Element[];
     const cssClass = `level${n}`;
@@ -93,8 +94,10 @@ export default function RequirementSelectorList({
       return (
         <div key={element.id} className={` ${styles[cssClass]} pt-0`}>
           <Row>
-            <BsArrowReturnRight className="ml-2 mt-1 mr-2" />
-            <p>{element.title}</p>
+            <Col className="d-flex justify-content-start">
+              <SubdirectoryArrowRightIcon className="ml-2 mt-1 mr-2" />
+              <p>{element.title}</p>
+            </Col>
           </Row>
           {element.requirements.length > 0 &&
             requirementsAnswers(element.requirements)}
@@ -104,7 +107,7 @@ export default function RequirementSelectorList({
     });
   };
 
-  const needHierarchy = (needsList: Nestable<Need>[]) => {
+  const needHierarchy = (needsList: Nestable<INeed>[]) => {
     const newList = Utils.unflatten(needsList)[0];
     let children: JSX.Element[];
     return newList.map((element) => {

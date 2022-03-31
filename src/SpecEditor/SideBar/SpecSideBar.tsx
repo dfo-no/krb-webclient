@@ -1,66 +1,154 @@
-import React, { ReactElement } from 'react';
-import Nav from 'react-bootstrap/Nav';
-import { withRouter } from 'react-router';
-import { NavLink, useRouteMatch } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
+import Card from '@mui/material/Card';
+import Divider from '@mui/material/Divider';
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
+import Typography from '@mui/material/Typography';
+import makeStyles from '@mui/styles/makeStyles';
+import React from 'react';
 import { useTranslation } from 'react-i18next';
-import css from './SpecSideBar.module.scss';
-import { RootState } from '../../store/store';
+import { useHistory, withRouter } from 'react-router';
+import LoaderSpinner from '../../common/LoaderSpinner';
+import theme from '../../theme';
+import { ScrollableContainer } from '../../Workbench/Components/ScrollableContainer';
+import { useSpecificationState } from '../SpecificationContext';
 
-interface IRouteLink {
-  link: string;
-  name: string;
-}
+const useStyles = makeStyles({
+  specSideBar: {
+    display: 'flex',
+    flexDirection: 'column',
+    gap: 20,
+    width: '30vw',
+    paddingTop: 20
+  },
+  container: {
+    display: 'flex',
+    flexDirection: 'column',
+    gap: 20,
+    margin: '0 auto',
+    alignItems: 'center',
+    width: '90%'
+  },
+  topContainer: {
+    display: 'flex',
+    justifyContent: 'flex-end'
+  },
+  productContainer: {
+    width: '100%'
+  },
+  list: {
+    display: 'flex',
+    gap: 10,
+    flexDirection: 'column',
+    flexGrow: 1,
+    listStyle: 'none',
+    alignSelf: 'center',
+    height: '100%'
+  },
+  productListItem: {
+    padding: 0,
+    textDecoration: 'none'
+  },
+  productListItemCard: {
+    height: 100,
+    boxShadow: 'none',
+    border: `1px solid ${theme.palette.gray300.main}`,
+    width: '100%',
+    cursor: 'pointer',
 
-interface RouteParams {
-  projectId: string;
-}
+    '&:hover': {
+      backgroundColor: theme.palette.primary.main,
+      color: theme.palette.dfoWhite.main
+    }
+  },
+  productListItemCardContent: {
+    display: 'flex',
+    flexDirection: 'column',
+    gap: 5,
+    paddingTop: 25,
+    paddingLeft: 25,
+    paddingRight: 70
+  },
+  productListItemDivider: {
+    color: theme.palette.gray700.main
+  },
+  buttonContainer: {
+    display: 'flex',
+    justifyContent: 'flex-end',
+    width: '100%'
+  },
+  listContainer: {
+    width: '100%'
+  },
+  noProductsMessage: {
+    textAlign: 'center',
+    height: '100%',
+    paddingTop: 20
+  }
+});
 
-const renderRouteLinks = (routes: IRouteLink[], isProjectSelected: boolean) => {
-  return routes.map((route) => {
-    return (
-      <Nav.Item key={route.name} className={`${css.sidebar__item}`}>
-        <Nav.Link
-          as={NavLink}
-          to={route.link}
-          role="link"
-          activeClassName={`${css.sidebar__item__active}`}
-          disabled={!isProjectSelected}
-        >
-          {route.name}
-        </Nav.Link>
-      </Nav.Item>
-    );
-  });
-};
-
-function SpecSideBar(): ReactElement {
+function SpecSideBar(): React.ReactElement {
   const { t } = useTranslation();
-  const match = useRouteMatch<RouteParams>('/speceditor/:bankId');
+  const history = useHistory();
 
-  const { id } = useSelector((state: RootState) => state.selectedBank);
-  const { list } = useSelector((state: RootState) => state.bank);
+  const classes = useStyles();
+  const { specification } = useSpecificationState();
 
-  const currentUrl = match?.url ? match.url : `/speceditor/${id}`;
-  const isProjectSelected = !!id;
+  if (!specification) {
+    return <LoaderSpinner />;
+  }
 
-  const selectProject = list.find((bank) => bank.id === id);
-
-  const displayTitle = selectProject
-    ? selectProject.title
-    : `<${t('none selected')}>`;
-
-  const routes = [
-    { link: `${currentUrl}`, name: `${t('Specification')}: ${displayTitle}` },
-    { link: `${currentUrl}/requirement`, name: t('Requirements') },
-    { link: `${currentUrl}/download`, name: t('Download') },
-    { link: `${currentUrl}/product`, name: t('Products') }
-  ];
+  const renderProducts = () => {
+    if (specification.bank) {
+      return specification.bank.products.map((element) => (
+        <ListItem className={classes.productListItem} key={element.id}>
+          <Card className={classes.productListItemCard}>
+            <Box className={classes.productListItemCardContent}>
+              <Typography variant="smediumBold">{element.title}</Typography>
+              <Divider className={classes.productListItemDivider} />
+              <Typography variant="small">{element.description}</Typography>
+            </Box>
+          </Card>
+        </ListItem>
+      ));
+    }
+  };
 
   return (
-    <Nav className={`sidebar col-md-12 flex-column ${css.sidebar}`}>
-      {renderRouteLinks(routes, isProjectSelected)}
-    </Nav>
+    <Box className={classes.specSideBar}>
+      <Box className={classes.container}>
+        <Box className={classes.buttonContainer}>
+          <Button
+            variant="primary"
+            onClick={() => history.push('/specification/:id/createProduct')}
+          >
+            {t('create a new product')}
+          </Button>
+        </Box>
+        {specification.bank.products.length > 0 && (
+          <Box className={classes.listContainer}>
+            <ScrollableContainer
+              sx={{
+                height: '66.7vh'
+              }}
+            >
+              <List className={classes.list} aria-label="products">
+                {renderProducts()}
+              </List>
+            </ScrollableContainer>
+          </Box>
+        )}
+        {specification.bank.products.length === 0 && (
+          <Box className={classes.noProductsMessage}>
+            <Typography>
+              {t('This specification has no products yet')}
+            </Typography>
+          </Box>
+        )}
+        <Divider />
+      </Box>
+    </Box>
   );
 }
 

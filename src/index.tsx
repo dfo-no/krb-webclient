@@ -1,20 +1,22 @@
-import DateFnsUtils from '@date-io/date-fns';
-import { MuiPickersUtilsProvider } from '@material-ui/pickers';
+import {
+  StyledEngineProvider,
+  Theme,
+  ThemeProvider
+} from '@mui/material/styles';
 import React, { Suspense } from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
 import App from './App';
-import './dfo-theme.scss';
 import './i18n';
-import './index.scss';
 import reportWebVitals from './reportWebVitals';
-import { getBanksThunk } from './store/reducers/bank-reducer';
-import store from './store/store';
-/* import UIDemo from './UIDemo'; */
+import { store } from './store/store';
+import theme from './theme';
 
-// fetch all banks here because they are published and will show on the front page.
-store.dispatch(getBanksThunk());
+declare module '@mui/styles/defaultTheme' {
+  // eslint-disable-next-line @typescript-eslint/no-empty-interface
+  interface DefaultTheme extends Theme {}
+}
 
 // Hot reload the component tree whenever a component file changes
 const render = () => {
@@ -23,10 +25,11 @@ const render = () => {
       <Suspense fallback="">
         <Provider store={store}>
           <BrowserRouter>
-            <MuiPickersUtilsProvider utils={DateFnsUtils}>
-              {/* <UIDemo/> */}
-              <App />
-            </MuiPickersUtilsProvider>
+            <StyledEngineProvider injectFirst>
+              <ThemeProvider theme={theme}>
+                <App />
+              </ThemeProvider>
+            </StyledEngineProvider>
           </BrowserRouter>
         </Provider>
       </Suspense>
@@ -38,7 +41,7 @@ const render = () => {
 render();
 
 if (process.env.NODE_ENV === 'development' && module.hot) {
-  module.hot.accept(['./UIDemo', './App'], render);
+  module.hot.accept(['./App'], render);
 }
 
 // If you want to start measuring performance in your app, pass a function

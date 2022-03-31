@@ -1,97 +1,87 @@
-import React, { ReactElement } from 'react';
-
-import Container from 'react-bootstrap/Container';
-import Button from 'react-bootstrap/Button';
-import Col from 'react-bootstrap/Col';
-import FormControl from 'react-bootstrap/FormControl';
-import Row from 'react-bootstrap/Row';
-import { useDispatch, useSelector } from 'react-redux';
-import { useForm } from 'react-hook-form';
-import Form from 'react-bootstrap/Form';
-
-import Joi from 'joi';
-import { joiResolver } from '@hookform/resolvers/joi';
+import { Box, Button, Typography } from '@mui/material';
+import makeStyles from '@mui/styles/makeStyles';
+import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { RootState } from '../../store/store';
-import { Bank } from '../../models/Bank';
-import Utils from '../../common/Utils';
-import { editTitle, setBank } from '../../store/reducers/spesification-reducer';
-import ErrorSummary from '../../Form/ErrorSummary';
+import byggernIllustration from '../../assets/images/byggern-illustration.svg';
+import theme from '../../theme';
+import { useSpecificationState } from '../SpecificationContext';
 
-type FormInput = {
-  title: string;
-};
-
-const titleSchema = Joi.object().keys({
-  title: Joi.string().required()
+const useStyles = makeStyles({
+  editor: {
+    display: 'flex',
+    width: '100%'
+  },
+  editorContent: {
+    backgroundColor: theme.palette.gray200.main,
+    width: '100%'
+  },
+  editorContentContainer: {
+    display: 'flex',
+    flexDirection: 'column',
+    gap: 34,
+    alignItems: 'center',
+    justifyContent: 'center',
+    height: '100%'
+  },
+  specEditorText: {
+    display: 'flex',
+    flexDirection: 'column',
+    textAlign: 'center',
+    gap: 6
+  },
+  specEditorDescription: {
+    display: 'flex',
+    gap: 3,
+    flexDirection: 'column',
+    textAlign: 'center'
+  }
 });
 
-export default function SpecEditor(): ReactElement {
-  const { id } = useSelector((state: RootState) => state.selectedBank);
-  const { list } = useSelector((state: RootState) => state.bank);
-  const { spec } = useSelector((state: RootState) => state.specification);
+export default function SpecEditor(): React.ReactElement {
   const { t } = useTranslation();
-  const {
-    register,
-    handleSubmit,
-    formState: { errors }
-  } = useForm<FormInput>({
-    resolver: joiResolver(titleSchema),
-    defaultValues: {
-      title: spec.title
-    }
-  });
-  const dispatch = useDispatch();
+  const { specification } = useSpecificationState();
 
-  if (!id) {
-    return <p>No selected bank</p>;
-  }
-
-  const selectedBank = Utils.ensure(list.find((bank: Bank) => bank.id === id));
-
-  dispatch(setBank(selectedBank));
-
-  const saveTitle = (post: FormInput) => {
-    dispatch(editTitle(post.title));
-  };
+  const classes = useStyles();
 
   return (
-    <Container fluid>
-      <Row className="m-4">
-        <Col>
-          <Form onSubmit={handleSubmit(saveTitle)}>
-            <Form.Group as={Row}>
-              <Form.Label column sm={2}>
-                {t('Title')}
-              </Form.Label>
-              <Col sm={6}>
-                <FormControl
-                  {...register('title')}
-                  defaultValue={spec.title}
-                  isInvalid={!!errors.title}
-                />
-                {errors.title && (
-                  <Form.Control.Feedback type="invalid">
-                    {errors.title?.message}
-                  </Form.Control.Feedback>
+    <Box className={classes.editor}>
+      <Box className={classes.editorContent}>
+        {' '}
+        <Box className={classes.editorContentContainer}>
+          <img
+            src={byggernIllustration}
+            alt="main illustration"
+            height="385"
+            width="594"
+          />
+          <Box className={classes.specEditorText}>
+            <Typography variant="bigBoldBlue">
+              {specification?.title}
+            </Typography>
+            <Box className={classes.specEditorDescription}>
+              <Typography variant="smedium">
+                {t('You are now building your spec')}
+              </Typography>
+              <Typography variant="smedium">
+                {t(
+                  'Start by creating the products you need for your procurement'
                 )}
-              </Col>
-              <Col sm={4}>
-                <Button type="submit">{t('save')}</Button>
-              </Col>
-            </Form.Group>
-            <ErrorSummary errors={errors} />
-          </Form>
-        </Col>
-      </Row>
-      <Row className="m-4">
-        <h4>
-          {t('Bank')} {selectedBank.title}
-        </h4>
-      </Row>
-      <Row className=" m-4 d-flex justify-content-md-end">
-        <Button>{t('update')}</Button>
-      </Row>
-    </Container>
+              </Typography>
+              <Typography variant="smedium">
+                {t(
+                  'For every product you can find predefined banks that can fit your procurement'
+                )}
+              </Typography>
+              <Typography variant="smedium">
+                {t(
+                  'Remember that you have to download the specification and save it locally on your computer'
+                )}
+              </Typography>
+            </Box>
+          </Box>
+          <Button variant="primary">{t('Create your first product')}</Button>
+        </Box>
+      </Box>
+    </Box>
   );
 }

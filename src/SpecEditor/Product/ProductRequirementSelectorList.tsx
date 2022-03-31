@@ -1,26 +1,27 @@
-import React, { ReactElement } from 'react';
+import SubdirectoryArrowRightIcon from '@mui/icons-material/SubdirectoryArrowRight';
+import React from 'react';
+import Col from 'react-bootstrap/Col';
 import ListGroup from 'react-bootstrap/ListGroup';
 import Row from 'react-bootstrap/Row';
-import { BsArrowReturnRight } from 'react-icons/bs';
 import Utils from '../../common/Utils';
-import { Bank } from '../../models/Bank';
-import { Need } from '../../models/Need';
+import { ISpecificationProduct } from '../../models/ISpecificationProduct';
 import { Nestable } from '../../models/Nestable';
-import { Requirement } from '../../models/Requirement';
-import { SpecificationProduct } from '../../models/SpecificationProduct';
+import { IBank } from '../../Nexus/entities/IBank';
+import { INeed } from '../../Nexus/entities/INeed';
+import { IRequirement } from '../../Nexus/entities/IRequirement';
 import styles from './ProductSpecEditor.module.scss';
 import ProductSpesificationRequirement from './ProductSpecificationRequirement';
 
 interface InputProps {
-  selectedBank: Bank;
-  product: SpecificationProduct;
+  selectedBank: IBank;
+  product: ISpecificationProduct;
 }
 
 export default function ProductRequirementSelectorList({
   selectedBank,
   product
-}: InputProps): ReactElement {
-  const requirementsAnswers = (requirementArray: Requirement[]) => {
+}: InputProps): React.ReactElement {
+  const requirementsAnswers = (requirementArray: IRequirement[]) => {
     return requirementArray.map((req) => {
       const selected = !!product.requirements.includes(req.id);
       return (
@@ -36,11 +37,11 @@ export default function ProductRequirementSelectorList({
 
   const [associatedRequirements, associatedNeeds] =
     Utils.findAssociatedRequirements(product.originProduct, selectedBank);
-  const childrenHierarchy = (listOfNeed: Nestable<Need>[], level: number) => {
+  const childrenHierarchy = (listOfNeed: Nestable<INeed>[], level: number) => {
     let n = level;
     let children: JSX.Element[];
     const cssClass = `level${n}`;
-    let requirementsArray: Requirement[] = [];
+    let requirementsArray: IRequirement[] = [];
     return listOfNeed.map((element) => {
       if (element.children && element.children.length > 0) {
         n += 1;
@@ -54,8 +55,10 @@ export default function ProductRequirementSelectorList({
       return (
         <div className={` ${styles[cssClass]} pt-0`} key={element.id}>
           <Row>
-            <BsArrowReturnRight className="ml-2 mt-1 mr-2" />
-            <p>{element.title}</p>
+            <Col className="d-flex justify-content-start">
+              <SubdirectoryArrowRightIcon className="ml-2 mt-1 mr-2" />
+              <p>{element.title}</p>
+            </Col>
           </Row>
           {requirementsArray.length > 0 &&
             requirementsAnswers(requirementsArray)}
@@ -65,10 +68,10 @@ export default function ProductRequirementSelectorList({
     });
   };
 
-  const needHierarchy = (needsList: Nestable<Need>[]) => {
+  const needHierarchy = (needsList: Nestable<INeed>[]) => {
     const newList = Utils.unflatten(needsList)[0];
     let children: JSX.Element[];
-    let requirementsArray: Requirement[] = [];
+    let requirementsArray: IRequirement[] = [];
     const hierarchy = newList.map((element) => {
       if (
         element.id in associatedRequirements &&
@@ -79,18 +82,16 @@ export default function ProductRequirementSelectorList({
         children = childrenHierarchy(element.children, 1);
       }
       return (
-        <>
-          <ListGroup.Item className="mt-2 ml-0 pl-0" key={element.id}>
-            <b>{element.title}</b>
-            {requirementsArray.length > 0 &&
-              requirementsAnswers(requirementsArray)}
-            {element.children && element.children.length > 0 && children}
-          </ListGroup.Item>
-        </>
+        <ListGroup.Item className="mt-2 ml-0 pl-0" key={element.id}>
+          <b>{element.title}</b>
+          {requirementsArray.length > 0 &&
+            requirementsAnswers(requirementsArray)}
+          {element.children && element.children.length > 0 && children}
+        </ListGroup.Item>
       );
     });
     return (
-      <ListGroup variant="flush" className="mt-4 ml-0 p-0">
+      <ListGroup variant="flush" className="mt-4 ml-0 p-0 w-100">
         {hierarchy}
       </ListGroup>
     );

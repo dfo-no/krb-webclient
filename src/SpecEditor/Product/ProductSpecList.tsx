@@ -1,34 +1,37 @@
-import React, { ReactElement } from 'react';
-import { Button, ListGroup } from 'react-bootstrap';
+import EditIcon from '@mui/icons-material/Edit';
+import Button from '@mui/material/Button';
+import React, { useEffect } from 'react';
 import Col from 'react-bootstrap/Col';
 import Container from 'react-bootstrap/Container';
 import Form from 'react-bootstrap/Form';
+import ListGroup from 'react-bootstrap/ListGroup';
 import Row from 'react-bootstrap/Row';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import { BsPencil } from 'react-icons/bs';
-import { useDispatch, useSelector } from 'react-redux';
-import { Link, useRouteMatch } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
+import LoaderSpinner from '../../common/LoaderSpinner';
 import Utils from '../../common/Utils';
 import ErrorSummary from '../../Form/ErrorSummary';
-import { Bank } from '../../models/Bank';
-import ModelType from '../../models/ModelType';
+import { ISpecificationProduct } from '../../models/ISpecificationProduct';
 import { Nestable } from '../../models/Nestable';
-import { Product } from '../../models/Product';
-import { SpecificationProduct } from '../../models/SpecificationProduct';
+import { IProduct } from '../../Nexus/entities/IProduct';
+import { useGetBankQuery } from '../../store/api/bankApi';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { selectBank } from '../../store/reducers/selectedBank-reducer';
-import { selectSpecProduct } from '../../store/reducers/selectedSpecProduct-reducer';
-import { addProduct } from '../../store/reducers/spesification-reducer';
-import { RootState } from '../../store/store';
+import { selectSpecificationProduct } from '../../store/reducers/selectedSpecProduct-reducer';
+import {
+  addProduct,
+  setBank
+} from '../../store/reducers/spesification-reducer';
 import styles from './ProductSpecEditor.module.scss';
 
 type FormInput = {
   product: string;
 };
 
-interface RouteParams {
-  bankId: string;
+interface IRouteParams {
+  id: string;
 }
 
 interface IOption {
@@ -37,34 +40,46 @@ interface IOption {
   level: number;
 }
 
-export default function ProductSpecList(): ReactElement {
-  const projectMatch = useRouteMatch<RouteParams>('/speceditor/:bankId');
-  const { id } = useSelector((state: RootState) => state.selectedBank);
-  const { list } = useSelector((state: RootState) => state.bank);
-  const { spec } = useSelector((state: RootState) => state.specification);
+export default function ProductSpecList(): React.ReactElement {
+  const { id } = useParams<IRouteParams>();
+  const dispatch = useAppDispatch();
+  // const projectMatch = useRouteMatch<IRouteParams>('/specification/:bankId');
+  // const { id } = useAppSelector((state) => state.selectedBank);
+  // const { normalizedList } = useAppSelector((state) => state.bank);
+  const { spec } = useAppSelector((state) => state.specification);
+  const { data: bankSelected, isLoading } = useGetBankQuery(id ?? '');
+
+  useEffect(() => {
+    if (id) {
+      dispatch(selectBank(id));
+    }
+    if (bankSelected) {
+      dispatch(setBank(bankSelected));
+    }
+  }, [dispatch, id, bankSelected]);
+
   const { t } = useTranslation();
   const {
     register,
     handleSubmit,
     formState: { errors }
-  } = useForm();
-  const dispatch = useDispatch();
+  } = useForm<FormInput>();
 
-  if (projectMatch?.params.bankId && !id) {
+  /* if (projectMatch?.params.bankId && !id) {
     dispatch(selectBank(projectMatch?.params.bankId));
-  }
+  } */
 
-  if (!id) {
+  if (!id || !bankSelected) {
     return <p>No selected bank</p>;
   }
 
-  const bankSelected = Utils.ensure(list.find((bank: Bank) => bank.id === id));
+  // const bankSelected = normalizedList[id];
 
-  const levelOptions = (products: Nestable<Product>[]) => {
+  const levelOptions = (products: Nestable<IProduct>[]) => {
     const newList = Utils.unflatten(products)[0];
     const options: IOption[] = [];
 
-    const getAllItemsPerChildren = (item: Nestable<Product>, level = 0) => {
+    const getAllItemsPerChildren = (item: Nestable<IProduct>, level = 0) => {
       options.push({
         id: item.id,
         title: item.title,
@@ -72,7 +87,7 @@ export default function ProductSpecList(): ReactElement {
       });
       if (item.children) {
         const iteration = level + 1;
-        item.children.forEach((i: Nestable<Product>) =>
+        item.children.forEach((i: Nestable<IProduct>) =>
           getAllItemsPerChildren(i, iteration)
         );
       }
@@ -87,24 +102,28 @@ export default function ProductSpecList(): ReactElement {
   const addProductToSpecification = (post: FormInput) => {
     const selectedProduct = Utils.ensure(
       bankSelected.products.find(
-        (product: Product) => product.id === post.product
+        (product: IProduct) => product.id === post.product
       )
     );
-    const newProduct: SpecificationProduct = {
+    const newProduct: ISpecificationProduct = {
       id: uuidv4(),
       originProduct: selectedProduct,
       title: selectedProduct.title,
       description: selectedProduct.description,
       amount: 0,
-      type: ModelType.specificationProduct,
+      weight: 10,
       requirements: [],
       requirementAnswers: []
     };
     dispatch(addProduct({ product: newProduct }));
   };
 
-  const productList = (productArray: SpecificationProduct[]) => {
-    const items = productArray.map((product: SpecificationProduct) => {
+  if (isLoading) {
+    return <LoaderSpinner />;
+  }
+
+  const productList = (productArray: ISpecificationProduct[]) => {
+    const items = productArray.map((product: ISpecificationProduct) => {
       return (
         <ListGroup.Item key={product.id}>
           <Row className="d-flex justify-content-end">
@@ -112,10 +131,10 @@ export default function ProductSpecList(): ReactElement {
               {Utils.capitalizeFirstLetter(product.originProduct.title)}
             </p>
             <Link
-              onClick={() => dispatch(selectSpecProduct(product.id))}
-              to={`/speceditor/${id}/product/${product.id}`}
+              onClick={() => dispatch(selectSpecificationProduct(product))}
+              to={`/specification/${id}/product/${product.id}`}
             >
-              <BsPencil className="ml-2  mt-1" />
+              <EditIcon className="ml-2  mt-1" />
             </Link>
           </Row>
         </ListGroup.Item>
@@ -123,9 +142,10 @@ export default function ProductSpecList(): ReactElement {
     });
     return <ListGroup>{items}</ListGroup>;
   };
+
   return (
     <Container fluid>
-      <Form
+      <form
         onSubmit={handleSubmit(addProductToSpecification)}
         autoComplete="off"
       >
@@ -147,7 +167,9 @@ export default function ProductSpecList(): ReactElement {
             </Form.Control>
           </Col>
           <Col>
-            <Button type="submit">{t('add')}</Button>
+            <Button variant="primary" type="submit">
+              {t('add')}
+            </Button>
           </Col>
         </Row>
         <Row className="m-4">
@@ -155,7 +177,7 @@ export default function ProductSpecList(): ReactElement {
         </Row>
         <Row className=" ml-4">{productList(spec.products)}</Row>
         <ErrorSummary errors={errors} />
-      </Form>
+      </form>
     </Container>
   );
 }

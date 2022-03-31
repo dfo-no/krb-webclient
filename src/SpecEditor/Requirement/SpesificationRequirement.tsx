@@ -1,31 +1,30 @@
-import React, { ReactElement, useState } from 'react';
-import { Card } from 'react-bootstrap';
+import React, { useState } from 'react';
+import Card from 'react-bootstrap/Card';
 import Col from 'react-bootstrap/Col';
-import { useDispatch, useSelector } from 'react-redux';
-
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
-import { Requirement } from '../../models/Requirement';
-import RequirementAnswer from './RequirementAnswer';
+import { IRequirement } from '../../Nexus/entities/IRequirement';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import {
   addRequirement,
   deleteAnswer,
   removeRequirement
 } from '../../store/reducers/spesification-reducer';
-import { RootState } from '../../store/store';
+// import InfoAnswer from './InfoAnswer';
+// import RequirementAnswer from './RequirementAnswer';
 
 type InputProps = {
-  requirement: Requirement;
+  requirement: IRequirement;
   selected: boolean;
 };
 
 export default function SpesificationRequirement({
   requirement,
   selected
-}: InputProps): ReactElement {
-  const dispatch = useDispatch();
+}: InputProps): React.ReactElement {
+  const dispatch = useAppDispatch();
   const [isSelected, setSelected] = useState(selected);
-  const { spec } = useSelector((state: RootState) => state.specification);
+  const { spec } = useAppSelector((state) => state.specification);
 
   const changedCheckedValue = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSelected(!isSelected);
@@ -36,11 +35,11 @@ export default function SpesificationRequirement({
       requirement.variants.forEach((variant) => {
         if (
           spec.requirementAnswers.find(
-            (answer) => answer.reqTextId === variant.id
+            (answer) => answer.variantId === variant.id
           )
         ) {
           const index = spec.requirementAnswers.findIndex(
-            (answer) => answer.reqTextId === variant.id
+            (answer) => answer.variantId === variant.id
           );
           dispatch(
             deleteAnswer({
@@ -61,10 +60,20 @@ export default function SpesificationRequirement({
             onChange={(e) => changedCheckedValue(e)}
           />
         </Col>
-        <Col>
+        {/*  <Col>
           {!isSelected && <p>{requirement.title}</p>}
-          {isSelected && <RequirementAnswer requirement={requirement} />}
-        </Col>
+          {isSelected &&
+            requirement.requirement_Type === RequirementType.info && (
+              <InfoAnswer key={requirement.id} requirement={requirement} />
+            )}
+          {isSelected &&
+            requirement.requirement_Type === RequirementType.requirement && (
+              <RequirementAnswer
+                key={requirement.id}
+                requirement={requirement}
+              />
+            )}
+        </Col> */}
       </Row>
     </Card>
   );

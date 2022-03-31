@@ -1,18 +1,16 @@
+import Button from '@mui/material/Button';
 import { AxiosResponse } from 'axios';
-import React, { ReactElement } from 'react';
-import Button from 'react-bootstrap/Button';
-import Row from 'react-bootstrap/Row';
-import { useSelector } from 'react-redux';
+import React from 'react';
 import { httpPost } from '../../api/http';
-import { Response } from '../../models/Response';
-import { RootState } from '../../store/store';
+import { IResponse } from '../../models/IResponse';
+import { useAppSelector } from '../../store/hooks';
 
-export default function ResponseDownLoad(): ReactElement {
-  const { response } = useSelector((state: RootState) => state.response);
+export default function ResponseDownLoad(): React.ReactElement {
+  const { response } = useAppSelector((state) => state.response);
 
   const onDownLoad = () => {
-    httpPost<Response, AxiosResponse<File>>(
-      `${process.env.REACT_APP_JAVA_API_URL}/generatePdf`,
+    httpPost<IResponse, AxiosResponse<File>>(
+      '/java/generateResponse',
       response,
       {
         headers: {
@@ -35,10 +33,8 @@ export default function ResponseDownLoad(): ReactElement {
   };
 
   return (
-    <Row className="justify-content-md-center">
-      <Button type="submit" className="mt-4" onClick={onDownLoad}>
-        Download Response
-      </Button>
-    </Row>
+    <Button type="submit" onClick={onDownLoad}>
+      Download Response
+    </Button>
   );
 }

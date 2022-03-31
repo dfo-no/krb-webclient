@@ -1,11 +1,10 @@
-/* eslint-disable no-param-reassign */
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-interface SelectedNeedState {
-  needId: string | null;
+interface ISelectedNeedState {
+  needId: string;
 }
 
-const initialState: SelectedNeedState = { needId: null };
+const initialState: ISelectedNeedState = { needId: '' };
 
 const selectedNeedState = createSlice({
   name: 'selectedNeed',

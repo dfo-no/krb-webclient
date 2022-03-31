@@ -1,97 +1,33 @@
-import React, { ReactElement, useEffect } from 'react';
-import Col from 'react-bootstrap/Col';
-import Container from 'react-bootstrap/Container';
-import Row from 'react-bootstrap/Row';
-import { useDispatch, useSelector } from 'react-redux';
-import { Route, Switch, useRouteMatch } from 'react-router-dom';
-import NotFound from '../NotFound';
-import { getProjectsThunk } from '../store/reducers/project-reducer';
-import { selectProject } from '../store/reducers/selectedProject-reducer';
-import { RootState } from '../store/store';
-import CodeListEditor from './Codelist/CodeListEditor';
-import CodelistPage from './Codelist/CodelistPage';
-import NeedPage from './Need/NeedPage';
-import ProductPage from './Product/ProductPage';
-import ProductPreview from './Product/ProductPreview';
-import ProjectPage from './Project/ProjectPage';
-import RequirementEditor from './Requirement/RequirementEditor';
-import RequirementPage from './Requirement/RequirementPage';
-import SideBar from './SideBar/SideBar';
-import styles from './WorkBench.module.scss';
-import WorkbenchPage from './WorkbenchPage';
+import Box from '@mui/material/Box';
+import makeStyles from '@mui/styles/makeStyles';
+import React from 'react';
+import { Route, Switch } from 'react-router-dom';
+import theme from '../theme';
+import ProjectGuard from './ProjectGuard';
+import Projects from './Projects/Projects';
 
-interface RouteParams {
-  projectId: string;
-}
-
-export default function WorkbenchModule(): ReactElement {
-  const projectMatch = useRouteMatch<RouteParams>('/workbench/:projectId');
-  const dispatch = useDispatch();
-  const { id } = useSelector((state: RootState) => state.selectedProject);
-  // Can set this safely, even if we got here directly by url or by clicks
-  if (projectMatch?.params.projectId && !id) {
-    dispatch(selectProject(projectMatch?.params.projectId));
+const useStyles = makeStyles({
+  workbenchContainer: {
+    width: '100%',
+    flexGrow: 1,
+    minHeight: 0,
+    backgroundColor: theme.palette.dfoBackgroundBlue.main
   }
+});
 
-  /* Every child of this WorkbenchModule need the list of projects.
-    So we fetch it here instead of in each child. This also makes it
-    possible to have a loading-indicator or some other nice stuff */
-  useEffect(() => {
-    async function fetchEverything() {
-      setTimeout(async () => {
-        await dispatch(getProjectsThunk());
-      });
-    }
-    fetchEverything();
-  }, [dispatch]);
+export default function WorkbenchModule(): React.ReactElement {
+  const classes = useStyles();
 
   return (
-    <Container fluid>
-      <Row>
-        <Col className="col-2 p-0">
-          <SideBar /> {/* Sidebar outside Switch *may* be a very bad idea */}
-        </Col>
-        <Col className={styles.editor}>
-          <Switch>
-            <Route exact path="/workbench">
-              <WorkbenchPage />
-            </Route>
-            <Route exact path="/workbench/:projectId/need">
-              <NeedPage />
-            </Route>
-            <Route exact path="/workbench/:projectId/need/:needId/requirement">
-              <RequirementPage />
-            </Route>
-            <Route exact path="/workbench/:projectId/requirement">
-              <RequirementPage />
-            </Route>
-            <Route
-              exact
-              path="/workbench/:projectId/need/:needId/requirement/:requirementId/edit"
-            >
-              <RequirementEditor />
-            </Route>
-            <Route exact path="/workbench/:projectId/codelist">
-              <CodelistPage />
-            </Route>
-            <Route exact path="/workbench/:projectId/codelist/:id">
-              <CodeListEditor />
-            </Route>
-            <Route exact path="/workbench/:projectId/product">
-              <ProductPage />
-            </Route>
-            <Route exact path="/workbench/:projectId/:productId/product">
-              <ProductPreview />
-            </Route>
-            <Route exact path="/workbench/:projectId">
-              <ProjectPage />
-            </Route>
-            <Route>
-              <NotFound />
-            </Route>
-          </Switch>
-        </Col>
-      </Row>
-    </Container>
+    <Box className={classes.workbenchContainer}>
+      <Switch>
+        <Route exact path="/workbench">
+          <Projects />
+        </Route>
+        <Route path="/workbench/:projectId">
+          <ProjectGuard />
+        </Route>
+      </Switch>
+    </Box>
   );
 }

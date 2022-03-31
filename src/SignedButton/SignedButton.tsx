@@ -1,31 +1,26 @@
-import React, { ReactElement } from 'react';
-import Button from 'react-bootstrap/Button';
 import {
   AuthenticatedTemplate,
   UnauthenticatedTemplate,
   useMsal
 } from '@azure/msal-react';
+import Button from '@mui/material/Button';
+import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { loginRequest } from '../authentication/authConfig';
 
-export default function SignedButton(): ReactElement {
+export default function SignedButton(): React.ReactElement {
   const { instance } = useMsal();
   const { t } = useTranslation();
   return (
     <>
       <AuthenticatedTemplate>
-        <Button
-          variant="secondary"
-          onClick={() => instance.logout()}
-          className="ml-auto"
-        >
+        <Button variant="primary" onClick={() => instance.logout()}>
           {t('sign out')}
         </Button>
       </AuthenticatedTemplate>
       <UnauthenticatedTemplate>
         <Button
-          variant="secondary"
-          className="ml-auto"
+          variant="primary"
           onClick={() => instance.loginPopup(loginRequest)}
         >
           {t('sign in')}

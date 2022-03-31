@@ -1,82 +1,125 @@
-import React, { ReactElement, useEffect } from 'react';
-import Col from 'react-bootstrap/Col';
-import Container from 'react-bootstrap/Container';
-import ListGroup from 'react-bootstrap/ListGroup';
-import Row from 'react-bootstrap/Row';
+import Box from '@mui/material/Box';
+import Card from '@mui/material/Card';
+import CardContent from '@mui/material/CardContent';
+import CardHeader from '@mui/material/CardHeader';
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
+import Typography from '@mui/material/Typography';
+import makeStyles from '@mui/styles/makeStyles';
+import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
+import Footer from '../Footer/Footer';
 import SearchBar from '../SearchBar/SearchBar';
-import { getBanksThunk } from '../store/reducers/bank-reducer';
-import { RootState } from '../store/store';
+import { useGetBanksQuery } from '../store/api/bankApi';
+import { ScrollableContainer } from '../Workbench/Components/ScrollableContainer';
 import FilteredList from './Components/FilteredList';
 
-export default function HomePage(): ReactElement {
-  const dispatch = useDispatch();
-  const { t } = useTranslation();
-  const { list, status } = useSelector((state: RootState) => state.bank);
+const useStyles = makeStyles({
+  homepageWrapper: {
+    flexGrow: 1,
+    minHeight: 0,
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'space-between'
+  },
+  scrollableContent: {
+    height: '100%',
+    width: '100%'
+  },
+  actionContainer: {
+    display: 'flex',
+    margin: 8,
+    marginBottom: 0,
+    gap: 10
+  },
+  navigation: {
+    flexBasis: '50%'
+  }
+});
 
-  useEffect(() => {
-    async function fetchEverything() {
-      if (status === 'idle') {
-        dispatch(getBanksThunk());
-      }
-    }
-    fetchEverything();
-  }, [status, dispatch]);
+export default function HomePage(): React.ReactElement {
+  const { t } = useTranslation();
+
+  const { data: latest } = useGetBanksQuery({
+    pageSize: 5,
+    page: 1,
+    fieldName: 'publishedDate',
+    order: 'DESC'
+  });
+  const { data: alfabetic } = useGetBanksQuery({
+    pageSize: 5,
+    page: 1,
+    fieldName: 'title',
+    order: 'ASC'
+  });
+  const { data: list } = useGetBanksQuery({
+    pageSize: 500,
+    page: 1,
+    fieldName: 'title',
+    order: 'DESC'
+  });
+
+  const classes = useStyles();
 
   return (
-    <Container fluid>
-      <Row className="mt-2">
-        <Col>
-          <SearchBar list={list} />
-        </Col>
-        <Col>
-          <ListGroup variant="flush">
-            <ListGroup.Item className="mt-1 ">
-              <Link to="/workbench">
-                <h5>{t('create projects')}</h5>
-              </Link>
-            </ListGroup.Item>
-            <ListGroup.Item className="mt-1 ">
-              <Link to="/response">
-                <h5>{t('create response')}</h5>
-              </Link>
-            </ListGroup.Item>
-            <ListGroup.Item className="mt-1 ">
-              <Link to="/evaluation">
-                <h5>{t('create evaluation')}</h5>
-              </Link>
-            </ListGroup.Item>
-            <ListGroup.Item className="mt-1 ">
-              <Link to="/speceditor">
-                <h5>{t('create specification')}</h5>
-              </Link>
-            </ListGroup.Item>
-            <ListGroup.Item className="mt-1 ">
-              <Link to="/speceditor">
-                <h5>Create Spesification</h5>
-              </Link>
-            </ListGroup.Item>
-          </ListGroup>
-        </Col>
-      </Row>
-      <Row className="mt-5">
-        <Col>
-          <FilteredList
-            list={list}
-            filterTitle={t('newest banks')}
-            filterType="date"
-          />
-        </Col>
-        <Col>
-          <FilteredList
-            list={list}
-            filterTitle={t('popular banks')}
-            filterType="alphabetic"
-          />
-        </Col>
-      </Row>
-    </Container>
+    <div className={classes.homepageWrapper}>
+      <ScrollableContainer>
+        <Box className={classes.scrollableContent}>
+          <Box className={classes.actionContainer}>
+            <Box className={classes.navigation}>
+              {list && <SearchBar list={list} />}
+            </Box>
+            <Box className={classes.navigation}>
+              <List>
+                <ListItem>
+                  <Link to="/workbench">
+                    <Typography variant="h5">{t('create projects')}</Typography>
+                  </Link>
+                </ListItem>
+                <ListItem>
+                  <Link to="/response">
+                    <Typography variant="h5">{t('create response')}</Typography>
+                  </Link>
+                </ListItem>
+                <ListItem>
+                  <Link to="/evaluation">
+                    <Typography variant="h5">
+                      {t('create evaluation')}
+                    </Typography>
+                  </Link>
+                </ListItem>
+                <ListItem>
+                  <Link to="/specification">
+                    <Typography variant="h5">
+                      {t('create specification')}
+                    </Typography>
+                  </Link>
+                </ListItem>
+              </List>
+            </Box>
+          </Box>
+          <Box className={classes.actionContainer}>
+            <Box className={classes.navigation}>
+              <Card>
+                <CardHeader title={t('newest banks')} />
+                <CardContent>
+                  {latest && <FilteredList list={latest} />}
+                </CardContent>
+              </Card>
+            </Box>
+            <Box className={classes.navigation}>
+              <Card>
+                <CardHeader title={t('Alfabetically sorted')} />
+                <CardContent>
+                  {alfabetic && <FilteredList list={alfabetic} />}
+                </CardContent>
+              </Card>
+            </Box>
+          </Box>
+        </Box>
+      </ScrollableContainer>
+      <Footer />
+    </div>
   );
 }

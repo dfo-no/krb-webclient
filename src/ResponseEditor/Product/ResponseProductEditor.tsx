@@ -1,118 +1,67 @@
 import { joiResolver } from '@hookform/resolvers/joi';
-import Joi from 'joi';
-import React, { ReactElement } from 'react';
-import Button from 'react-bootstrap/Button';
+import Button from '@mui/material/Button';
+import React from 'react';
 import Card from 'react-bootstrap/Card';
 import Col from 'react-bootstrap/Col';
-import { v4 as uuidv4 } from 'uuid';
 import Container from 'react-bootstrap/Container';
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 import { useForm } from 'react-hook-form';
-import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
-import Utils from '../../common/Utils';
-import { ResponseProduct } from '../../models/ResponseProduct';
-import { SpecificationProduct } from '../../models/SpecificationProduct';
-import { RootState } from '../../store/store';
-import ModelType from '../../models/ModelType';
-import { addProduct, editProduct } from '../../store/reducers/response-reducer';
 import ErrorSummary from '../../Form/ErrorSummary';
+import {
+  IResponseProduct,
+  ResponseProductSchema
+} from '../../models/IResponseProduct';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
+import { editProduct } from '../../store/reducers/response-reducer';
+import ProductAutoFillSelector from './ProductAutoFillSelector';
 import ResponseProductRequirementSelector from './ResponseProductRequirementSelector';
-import { selectResponseProduct } from '../../store/reducers/selectedResponseProduct-reducer';
 
-interface IResponseProductForm {
-  title: string;
-  description: string;
-  price: number;
-}
+export default function ResponseProductEditor(): React.ReactElement {
+  const dispatch = useAppDispatch();
+  const { t } = useTranslation();
+  const { response } = useAppSelector((state) => state.response);
+  const { selectedResponseSpecificationProduct, selectedResponseProduct } =
+    useAppSelector((state) => state.selectedResponseProduct);
 
-const productSchema = Joi.object().keys({
-  title: Joi.string(),
-  description: Joi.string(),
-  price: Joi.number().integer().min(1).required()
-});
-
-export default function ResponseProductEditor(): ReactElement {
-  const { id } = useSelector((state: RootState) => state.selectedBank);
-  const { response } = useSelector((state: RootState) => state.response);
-  const { productId } = useSelector(
-    (state: RootState) => state.selectedSpecProduct
+  const productIndex = response.products.findIndex(
+    (responseProduct) => responseProduct.id === selectedResponseProduct.id
   );
 
   const {
     register,
     handleSubmit,
     formState: { errors }
-  } = useForm({
-    resolver: joiResolver(productSchema)
+  } = useForm<IResponseProduct>({
+    resolver: joiResolver(ResponseProductSchema),
+    defaultValues: selectedResponseProduct
   });
-  const dispatch = useDispatch();
-  const { t } = useTranslation();
 
-  if (!id) {
-    return <p>No selected bank</p>;
-  }
-
-  if (!productId) {
-    return <p>No selected product</p>;
-  }
-
-  const specProduct: SpecificationProduct = Utils.ensure(
-    response.spesification.products.find(
-      (product: SpecificationProduct) => product.id === productId
-    )
-  );
-
-  const productIndex = response.products.findIndex(
-    (product) => product.originProduct.id === specProduct.id
-  );
-
-  const newProduct: ResponseProduct = {
-    id: uuidv4(),
-    title: '',
-    description: '',
-    originProduct: specProduct,
-    price: 0,
-    requirementAnswers: [],
-    type: ModelType.responseProduct
-  };
-
-  const product =
-    productIndex === -1 ? newProduct : response.products[productIndex];
-  dispatch(selectResponseProduct(product.id));
-  if (productIndex === -1) {
-    dispatch(addProduct(newProduct));
-  }
-  const addProductToResponse = (post: IResponseProductForm) => {
-    const newResponseProduct: ResponseProduct = {
-      ...product
+  const addProductToResponse = (post: IResponseProduct) => {
+    const newResponseProduct: IResponseProduct = {
+      ...post
     };
-    newResponseProduct.title = post.title;
-    newResponseProduct.description = post.description;
-    newResponseProduct.price = post.price;
 
-    if (productIndex === -1) {
-      dispatch(addProduct(newResponseProduct));
-    } else {
-      dispatch(editProduct({ product: newResponseProduct, productIndex }));
-    }
+    dispatch(editProduct({ product: newResponseProduct, productIndex }));
   };
 
   return (
     <Container fluid>
       <Row className="m-4">
-        <h4>{specProduct.title}</h4>
+        <h4>{selectedResponseSpecificationProduct.title}</h4>
       </Row>
       <Card className="m-4">
         <Card.Body>
           <Row className="mb-3">
             <Col sm="2"> Amount:</Col>
             <Col sm="10">
-              <p className="ml-3">{specProduct.amount} </p>
+              <p className="ml-3">
+                {selectedResponseSpecificationProduct.amount}{' '}
+              </p>
             </Col>
           </Row>
-          <Form
+          <form
             onSubmit={handleSubmit(addProductToResponse)}
             autoComplete="off"
           >
@@ -124,7 +73,6 @@ export default function ResponseProductEditor(): ReactElement {
                 <Form.Control
                   type="number"
                   {...register('price')}
-                  defaultValue={product.price}
                   isInvalid={!!errors.price}
                 />
                 {errors.price && (
@@ -141,7 +89,6 @@ export default function ResponseProductEditor(): ReactElement {
               <Col sm={10}>
                 <Form.Control
                   {...register('title')}
-                  defaultValue={product.title}
                   isInvalid={!!errors.title}
                 />
                 {errors.title && (
@@ -158,7 +105,6 @@ export default function ResponseProductEditor(): ReactElement {
               <Col sm={10}>
                 <Form.Control
                   {...register('description')}
-                  defaultValue={product.description}
                   isInvalid={!!errors.description}
                 />
                 {errors.description && (
@@ -169,14 +115,19 @@ export default function ResponseProductEditor(): ReactElement {
               </Col>
             </Form.Group>
             <Col className="p-0 d-flex justify-content-end">
-              <Button type="submit">{t('save')}</Button>
+              <Button variant="primary" type="submit">
+                {t('save')}
+              </Button>
             </Col>
             <ErrorSummary errors={errors} />
-          </Form>
+          </form>
+          <ProductAutoFillSelector />
         </Card.Body>
       </Card>
 
-      <ResponseProductRequirementSelector product={specProduct} />
+      <ResponseProductRequirementSelector
+        product={selectedResponseSpecificationProduct}
+      />
     </Container>
   );
 }

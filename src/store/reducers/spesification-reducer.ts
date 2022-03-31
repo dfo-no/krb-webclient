@@ -1,17 +1,16 @@
-/* eslint-disable no-param-reassign */
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import Utils from '../../common/Utils';
-import { Bank } from '../../models/Bank';
 import { IRequirementAnswer } from '../../models/IRequirementAnswer';
+import { ISpecificationProduct } from '../../models/ISpecificationProduct';
 import ModelType from '../../models/ModelType';
-import { Specification } from '../../models/Specification';
-import { SpecificationProduct } from '../../models/SpecificationProduct';
+import { IBank } from '../../Nexus/entities/IBank';
+import { ISpecification } from '../../Nexus/entities/ISpecification';
 
-interface SpecificationState {
-  spec: Specification;
+interface ISpecificationState {
+  spec: ISpecification;
 }
 
-const initialState: SpecificationState = {
+const initialState: ISpecificationState = {
   spec: {
     bank: {
       id: '',
@@ -20,11 +19,21 @@ const initialState: SpecificationState = {
       needs: [],
       products: [],
       codelist: [],
+      tags: [],
       version: 0,
       type: ModelType.bank,
-      publications: []
+      publications: [],
+      inheritedBanks: [],
+      publishedDate: null,
+      sourceOriginal: null,
+      sourceRel: null,
+      projectId: null,
+      deletedDate: null
     },
     title: '',
+    version: '',
+    organization: '',
+    organizationNumber: '',
     products: [],
     requirements: [],
     requirementAnswers: []
@@ -35,24 +44,24 @@ const specificationSlice = createSlice({
   name: 'specification',
   initialState,
   reducers: {
-    setSpecification(state, { payload }: PayloadAction<Specification>) {
+    setSpecification(state, { payload }: PayloadAction<ISpecification>) {
       state.spec = payload;
     },
     editTitle(state, { payload }: PayloadAction<string>) {
       state.spec.title = payload;
     },
-    setBank(state, { payload }: PayloadAction<Bank>) {
+    setBank(state, { payload }: PayloadAction<IBank>) {
       state.spec.bank = payload;
     },
     addProduct(
       state,
-      { payload }: PayloadAction<{ product: SpecificationProduct }>
+      { payload }: PayloadAction<{ product: ISpecificationProduct }>
     ) {
       state.spec.products.push(payload.product);
     },
     editSpecProduct(
       state,
-      { payload }: PayloadAction<{ product: SpecificationProduct }>
+      { payload }: PayloadAction<{ product: ISpecificationProduct }>
     ) {
       const index = Utils.ensure(
         state.spec.products.findIndex(
@@ -80,7 +89,7 @@ const specificationSlice = createSlice({
         const oldSelectIndex = state.spec.products[
           index
         ].requirementAnswers.findIndex(
-          (answer) => answer.reqTextId === payload.answer.reqTextId
+          (answer) => answer.variantId === payload.answer.variantId
         );
         state.spec.products[index].requirementAnswers.splice(oldSelectIndex, 1);
       }
@@ -152,7 +161,7 @@ const specificationSlice = createSlice({
         )
       ) {
         const oldSelectIndex = state.spec.requirementAnswers.findIndex(
-          (answer) => answer.reqTextId === payload.answer.reqTextId
+          (answer) => answer.variantId === payload.answer.variantId
         );
         state.spec.requirementAnswers.splice(oldSelectIndex, 1);
       }

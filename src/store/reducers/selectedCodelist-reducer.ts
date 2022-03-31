@@ -1,22 +1,70 @@
-/* eslint-disable no-param-reassign */
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import ModelType from '../../models/ModelType';
+import { Parentable } from '../../models/Parentable';
+import { ICode } from '../../Nexus/entities/ICode';
+import { ICodelist } from '../../Nexus/entities/ICodelist';
 
-interface SelectedCodeListState {
-  listId: string | null;
+interface ISelectedCodeListState {
+  codelist: ICodelist;
 }
 
-const initialState: SelectedCodeListState = { listId: null };
+const initialState: ISelectedCodeListState = {
+  codelist: {
+    id: '',
+    title: '',
+    description: '',
+    codes: [],
+    type: ModelType.codelist,
+    sourceOriginal: null,
+    sourceRel: null
+  }
+};
 
 const selectedCodeListState = createSlice({
   name: 'selectedCodeList',
   initialState,
   reducers: {
-    selectCodeList(state, { payload }: PayloadAction<string>) {
-      state.listId = payload;
+    selectCodeList(state, { payload }: PayloadAction<ICodelist>) {
+      state.codelist = payload;
+    },
+    editCodelist(state, { payload }: PayloadAction<ICodelist>) {
+      state.codelist = payload;
+    },
+    editCodeInSelectedCodelist(
+      state,
+      { payload }: PayloadAction<Parentable<ICode>>
+    ) {
+      const codeIndex = state.codelist.codes.findIndex(
+        (elem) => elem.id === payload.id
+      );
+      if (codeIndex !== -1) {
+        state.codelist.codes[codeIndex] = payload;
+      }
+    },
+    removeCodeInSelectedCodelist(state, { payload }: PayloadAction<ICode>) {
+      const codeIndex = state.codelist.codes.findIndex(
+        (elem) => elem.id === payload.id
+      );
+      if (codeIndex !== -1) {
+        state.codelist.codes.splice(codeIndex, 1);
+      }
+    },
+    addCodeToSelected(state, { payload }: PayloadAction<Parentable<ICode>>) {
+      state.codelist.codes.push(payload);
+    },
+    setCodesToSelected(state, { payload }: PayloadAction<Parentable<ICode>[]>) {
+      state.codelist.codes = payload;
     }
   }
 });
 
-export const { selectCodeList } = selectedCodeListState.actions;
+export const {
+  selectCodeList,
+  editCodelist,
+  editCodeInSelectedCodelist,
+  removeCodeInSelectedCodelist,
+  addCodeToSelected,
+  setCodesToSelected
+} = selectedCodeListState.actions;
 
 export default selectedCodeListState.reducer;

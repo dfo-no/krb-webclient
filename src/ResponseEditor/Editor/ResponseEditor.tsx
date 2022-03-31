@@ -1,55 +1,93 @@
-import React, { ReactElement } from 'react';
-
-import Container from 'react-bootstrap/Container';
-import Button from 'react-bootstrap/Button';
-import Col from 'react-bootstrap/Col';
-import FormControl from 'react-bootstrap/FormControl';
-import Row from 'react-bootstrap/Row';
-import { useDispatch, useSelector } from 'react-redux';
-import { useForm } from 'react-hook-form';
-import Form from 'react-bootstrap/Form';
-
-import Joi from 'joi';
 import { joiResolver } from '@hookform/resolvers/joi';
+import Button from '@mui/material/Button';
+import { AxiosResponse } from 'axios';
+import React from 'react';
+import Col from 'react-bootstrap/Col';
+import Container from 'react-bootstrap/Container';
+import Form from 'react-bootstrap/Form';
+import FormControl from 'react-bootstrap/FormControl';
+import InputGroup from 'react-bootstrap/InputGroup';
+import Row from 'react-bootstrap/Row';
+import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import { RootState } from '../../store/store';
-import { setBank, editSupplier } from '../../store/reducers/response-reducer';
-import Utils from '../../common/Utils';
-import { Bank } from '../../models/Bank';
+import { useHistory } from 'react-router';
+import { v4 as uuidv4 } from 'uuid';
+import { httpPost } from '../../api/http';
+import CustomJoi from '../../common/CustomJoi';
 import ErrorSummary from '../../Form/ErrorSummary';
+import { IAlert } from '../../models/IAlert';
+import Nexus from '../../Nexus/Nexus';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
+import { addAlert } from '../../store/reducers/alert-reducer';
+import {
+  editSupplier,
+  setRequirementAnswers
+} from '../../store/reducers/response-reducer';
+import {
+  setMarkedRequirements,
+  setPrefilledResponse
+} from '../../store/reducers/uploadedPrefilledResponseReducer';
 
 interface IResponseInfoForm {
   supplier: string;
 }
 
-const supplierSchema = Joi.object().keys({
-  supplier: Joi.string().required()
+const supplierSchema = CustomJoi.object().keys({
+  supplier: CustomJoi.string().required()
 });
 
-export default function ResponseEditor(): ReactElement {
-  const { id } = useSelector((state: RootState) => state.selectedBank);
-  const { list } = useSelector((state: RootState) => state.bank);
-  const { response } = useSelector((state: RootState) => state.response);
+export default function ResponseEditor(): React.ReactElement {
+  const { response } = useAppSelector((state) => state.response);
+  const nexus = Nexus.getInstance();
   const {
     register,
     handleSubmit,
     formState: { errors }
-  } = useForm({
+  } = useForm<IResponseInfoForm>({
     resolver: joiResolver(supplierSchema)
   });
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const { t } = useTranslation();
-
-  if (!id) {
-    return <p>No selected bank</p>;
-  }
-
-  const selectedBank = Utils.ensure(list.find((bank: Bank) => bank.id === id));
-
-  dispatch(setBank(selectedBank));
-
+  const history = useHistory();
   const saveSupplier = (post: IResponseInfoForm) => {
     dispatch(editSupplier(post.supplier));
+  };
+
+  const onUploadPrefilledResponse = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    const formData = new FormData();
+    const files = event.target.files as FileList;
+    for (let index = 0; index < files.length; index += 1) {
+      const file = files[index];
+      formData.append('file', file);
+    }
+    httpPost<FormData, AxiosResponse>('/java/uploadPdf', formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      },
+      responseType: 'json'
+    }).then((result) => {
+      if (result.data.bank.id !== response.spesification.bank.id) {
+        const alert: IAlert = {
+          id: uuidv4(),
+          style: 'error',
+          text: ' bank used in prefilledResponse does not match the bank in the uploaded specification '
+        };
+        dispatch(addAlert({ alert }));
+      } else {
+        dispatch(setPrefilledResponse(result.data));
+        const [requirementAnswers, markedQuestions] =
+          nexus.responseService.matchPreAnsweredQuestions(
+            response.spesification.requirementAnswers,
+            result.data.requirementAnswers
+          );
+        dispatch(setRequirementAnswers(requirementAnswers));
+        dispatch(setMarkedRequirements(markedQuestions));
+
+        history.push(`/response/${response.spesification.bank.id}/requirement`);
+      }
+    });
   };
 
   return (
@@ -60,15 +98,27 @@ export default function ResponseEditor(): ReactElement {
             <h3>Response </h3>
           </Row>
           <Row className="mt-4 mb-4">
-            <h5>Specification {response.spesification.title}</h5>
+            <Col sm={6}>
+              <h5>Spesifikasjon :{response.spesification.title}</h5>
+            </Col>
+            <Col sm={4}>
+              <h6>Last opp preutfylt besvarelse</h6>
+              <InputGroup>
+                <input
+                  type="file"
+                  accept="application/pdf"
+                  onChange={(e) => onUploadPrefilledResponse(e)}
+                />
+              </InputGroup>
+            </Col>
           </Row>
           <Row>
-            <h6>Kravbank {selectedBank.title}</h6>
+            <h6>Kravbank: {response.spesification.bank.title}</h6>
           </Row>
-          <Form onSubmit={handleSubmit(saveSupplier)}>
+          <form onSubmit={handleSubmit(saveSupplier)}>
             <Form.Group as={Row}>
               <Form.Label>Supplier</Form.Label>
-              <Col sm={8}>
+              <Col sm={4}>
                 <FormControl
                   {...register('supplier')}
                   defaultValue={response.supplier}
@@ -85,7 +135,7 @@ export default function ResponseEditor(): ReactElement {
               </Col>
             </Form.Group>
             <ErrorSummary errors={errors} />
-          </Form>
+          </form>
         </Col>
       </Row>
     </Container>

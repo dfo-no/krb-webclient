@@ -1,16 +1,24 @@
-/* eslint-disable no-param-reassign */
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-interface SelectedProjectState {
+/**
+ * @deprecated
+ */
+interface ISelectedProjectState {
   id: string | null;
 }
 
-const initialState: SelectedProjectState = { id: null };
+const initialState: ISelectedProjectState = { id: null };
 
+/**
+ * @deprecated
+ */
 const selectedProjectSlice = createSlice({
   name: 'selectedProject',
   initialState,
   reducers: {
+    /**
+      @deprecated use selectProject from from project slice instead
+     * */
     selectProject(state, { payload }: PayloadAction<string>) {
       state.id = payload;
     }

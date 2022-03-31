@@ -1,104 +1,60 @@
-/* eslint-disable no-param-reassign */
-import { FeedResponse, ItemDefinition, ItemResponse } from '@azure/cosmos';
-import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import Utils from '../../common/Utils';
-import { CosmosApi } from '../../database/CosmosApi';
-import { Bank } from '../../models/Bank';
-import { Code } from '../../models/Code';
-import { Codelist } from '../../models/Codelist';
-import { Nestable } from '../../models/Nestable';
-import { Need } from '../../models/Need';
-import { Product } from '../../models/Product';
-import { Publication } from '../../models/Publication';
-import { Requirement } from '../../models/Requirement';
+import { IInheritedBank } from '../../models/IInheritedBank';
+import ModelType from '../../models/ModelType';
+import { Parentable } from '../../models/Parentable';
+import { IBank } from '../../Nexus/entities/IBank';
+import { ICode } from '../../Nexus/entities/ICode';
+import { ICodelist } from '../../Nexus/entities/ICodelist';
+import { INeed } from '../../Nexus/entities/INeed';
+import { IProduct } from '../../Nexus/entities/IProduct';
+import { IPublication } from '../../Nexus/entities/IPublication';
+import { IRequirement } from '../../Nexus/entities/IRequirement';
+import { ITag } from '../../Nexus/entities/ITag';
 
-// eslint-disable-next-line import/no-cycle
-import { AppDispatch, RootState } from '../store';
-
-interface ProjectState {
-  list: Bank[];
-  status: 'idle' | 'fulfilled' | 'rejected' | 'pending';
+interface IProjectState {
+  list: IBank[];
+  listLoading: 'idle' | 'fulfilled' | 'rejected' | 'pending';
+  project: IBank;
+  projectLoading: 'idle' | 'fulfilled' | 'rejected' | 'pending';
 }
 
-const initialState: ProjectState = {
+const initialState: IProjectState = {
   list: [],
-  status: 'idle'
+  project: {
+    id: '',
+    title: '',
+    description: '',
+    needs: [],
+    codelist: [],
+    products: [],
+    tags: [],
+    publications: [],
+    type: ModelType.bank,
+    version: 0,
+    inheritedBanks: [],
+    publishedDate: null,
+    sourceOriginal: null,
+    sourceRel: null,
+    projectId: null,
+    deletedDate: null
+  },
+  projectLoading: 'idle',
+  listLoading: 'idle'
 };
 
-export const getProjectThunk = createAsyncThunk(
-  'getProjectThunk',
-  async (id: string) => {
-    const api = new CosmosApi();
-    const result = await api.readBank(id);
-    return result.resource;
-  }
-);
-
-// this, this is the one
-export const getProjectsThunk = createAsyncThunk(
-  'getProjectsThunk',
-  async () => {
-    const api = new CosmosApi();
-    const result: FeedResponse<Bank[]> = await api.fetchAllProjects();
-    const banks: Bank[] = [];
-    for (let i = 0; i < result.resources.length; i += 1) {
-      // TODO: do not fetch inedxed
-      const element = result.resources[i] as unknown;
-      banks.push(element as Bank);
-    }
-    return banks;
-  }
-);
-
-export const postProjectThunk = createAsyncThunk(
-  'postProjectThunk',
-  async (project: Bank) => {
-    const api = new CosmosApi();
-    const result = await api.createBank(project);
-    return result.resource as Bank;
-  }
-);
-
-export const putProjectThunk = createAsyncThunk<
-  Bank,
-  string,
-  {
-    dispatch: AppDispatch;
-    state: RootState;
-  }
->('putProjectThunk', async (projectId: string, thunkApi) => {
-  // get updated project from redux
-  const project = Utils.ensure(
-    thunkApi
-      .getState()
-      .project.list.find((element: Bank) => element.id === projectId)
-  );
-  const api = new CosmosApi();
-  const result: ItemResponse<ItemDefinition> = await api.replaceBank(project);
-  const res = result.resource as unknown;
-
-  return res as Bank;
-});
-
-export const deleteProjectThunk = createAsyncThunk(
-  'deleteProjectThunk',
-  async (project: Bank) => {
-    const api = new CosmosApi();
-    const result = await api.deleteBank(project.id);
-    return result.resource;
-  }
-);
-
 const projectSlice = createSlice({
-  name: 'Projects',
+  name: 'projects',
   initialState,
   reducers: {
-    addProjects(state, { payload }: PayloadAction<Bank[]>) {
+    addProjects(state, { payload }: PayloadAction<IBank[]>) {
       state.list = payload;
     },
-
+    selectProject(state, { payload }: PayloadAction<IBank>) {
+      state.project = payload;
+    },
     // Should not be needed, when removing, we reload the list
-    deleteProject(state, { payload }: PayloadAction<Bank>) {
+    deleteProject(state, { payload }: PayloadAction<IBank>) {
       const index = Utils.ensure(
         state.list.findIndex((project) => project.id === payload.id)
       );
@@ -106,46 +62,18 @@ const projectSlice = createSlice({
         state.list.splice(index, 1);
       }
     },
-    editProject(
-      state,
-      {
-        payload
-      }: PayloadAction<{
-        projectId: string;
-        title: string;
-        description: string;
-      }>
-    ) {
-      const projectIndex = state.list.findIndex(
-        (project) => project.id === payload.projectId
-      );
-      state.list[projectIndex].title = payload.title;
-      state.list[projectIndex].description = payload.description;
-    },
     incrementProjectVersion(state, { payload }: PayloadAction<string>) {
       const projectIndex = state.list.findIndex(
         (project) => project.id === payload
       );
       state.list[projectIndex].version += 1;
     },
-    addPublication(
-      state,
-      {
-        payload
-      }: PayloadAction<{ projectId: string; publication: Publication }>
-    ) {
-      const projectIndex = Utils.ensure(
-        state.list.findIndex((project) => project.id === payload.projectId)
-      );
-
-      if (!state.list[projectIndex].publications) {
-        state.list[projectIndex].publications = [];
-      }
-      state.list[projectIndex].publications?.push(payload.publication);
+    prependPublication(state, { payload }: PayloadAction<IPublication>) {
+      state.project.publications.push(payload);
     },
     publishProject(
       state,
-      { payload }: PayloadAction<{ id: string; publication: Publication }>
+      { payload }: PayloadAction<{ id: string; publication: IPublication }>
     ) {
       const index = state.list.findIndex(
         (project) => project.id === payload.id
@@ -156,255 +84,148 @@ const projectSlice = createSlice({
 
       state.list[index].publications?.push(payload.publication);
     },
-    updateNeedList(
-      state,
-      { payload }: PayloadAction<{ id: string; needs: Nestable<Need>[] }>
-    ) {
-      const index = Utils.ensure(
-        state.list.findIndex((project) => project.id === payload.id)
-      );
-      state.list[index].needs = payload.needs;
+    setNeeds(state, { payload }: PayloadAction<Parentable<INeed>[]>) {
+      state.project.needs = payload;
     },
-    addNeed(
-      state,
-      { payload }: PayloadAction<{ id: string; need: Nestable<Need> }>
-    ) {
-      const projectIndex = Utils.ensure(
-        state.list.findIndex((project) => project.id === payload.id)
-      );
-      state.list[projectIndex].needs.push(payload.need);
+    addNeed(state, { payload }: PayloadAction<Parentable<INeed>>) {
+      state.project.needs.push(payload);
     },
-    editNeed(
+    editNeed(state, { payload }: PayloadAction<Parentable<INeed>>) {
+      const needIndex = state.project.needs.findIndex(
+        (elem) => elem.id === payload.id
+      );
+      if (needIndex !== -1) {
+        state.project.needs[needIndex] = payload;
+      }
+    },
+    deleteNeed(state, { payload }: PayloadAction<INeed>) {
+      const needIndex = state.project.needs.findIndex(
+        (need) => need.id === payload.id
+      );
+      if (needIndex !== -1) {
+        state.project.needs.splice(needIndex, 1);
+      }
+    },
+    addCodelist(state, { payload }: PayloadAction<ICodelist>) {
+      state.project.codelist.push(payload);
+    },
+    addProduct(state, { payload }: PayloadAction<IProduct>) {
+      state.project.products.push(payload);
+    },
+    updateProductList(state, { payload }: PayloadAction<IProduct[]>) {
+      state.project.products = payload;
+    },
+    editProduct(state, { payload }: PayloadAction<IProduct>) {
+      const productIndex = state.project.products.findIndex(
+        (elem) => elem.id === payload.id
+      );
+      if (productIndex !== -1) {
+        state.project.products[productIndex] = payload;
+      }
+    },
+    removeProduct(state, { payload }: PayloadAction<IProduct>) {
+      const productindex = state.project.products.findIndex(
+        (elem) => elem.id === payload.id
+      );
+      if (productindex !== -1) {
+        state.project.products.splice(productindex, 1);
+      }
+    },
+    setCodes(
       state,
       {
         payload
       }: PayloadAction<{
-        projectId: string;
-        needId: string;
-        title: string;
-        description: string;
-      }>
-    ) {
-      const projectIndex = Utils.ensure(
-        state.list.findIndex((project) => project.id === payload.projectId)
-      );
-      const needIndex = Utils.ensure(
-        state.list[projectIndex].needs.findIndex(
-          (need) => need.id === payload.needId
-        )
-      );
-
-      state.list[projectIndex].needs[needIndex].title = payload.title;
-      state.list[projectIndex].needs[needIndex].description =
-        payload.description;
-    },
-    deleteNeed(
-      state,
-      {
-        payload
-      }: PayloadAction<{
-        projectId: string;
-        needId: string;
-      }>
-    ) {
-      const projectIndex = Utils.ensure(
-        state.list.findIndex((project) => project.id === payload.projectId)
-      );
-      const needindex = state.list[projectIndex].needs.findIndex(
-        (need) => need.id === payload.needId
-      );
-
-      state.list[projectIndex].needs.splice(needindex, 1);
-    },
-    addCodelist(
-      state,
-      { payload }: PayloadAction<{ id: string; codelist: Codelist }>
-    ) {
-      const index = Utils.ensure(
-        state.list.findIndex((project) => project.id === payload.id)
-      );
-      state.list[index].codelist.push(payload.codelist);
-    },
-    addProduct(
-      state,
-      { payload }: PayloadAction<{ id: string; product: Product }>
-    ) {
-      const index = Utils.ensure(
-        state.list.findIndex((project) => project.id === payload.id)
-      );
-      state.list[index].products.push(payload.product);
-    },
-    updateProductList(
-      state,
-      { payload }: PayloadAction<{ id: string; products: Product[] }>
-    ) {
-      const index = Utils.ensure(
-        state.list.findIndex((project) => project.id === payload.id)
-      );
-      state.list[index].products = payload.products;
-    },
-    editProduct(
-      state,
-      {
-        payload
-      }: PayloadAction<{
-        projectId: string;
-        product: Product;
-      }>
-    ) {
-      const projectIndex = Utils.ensure(
-        state.list.findIndex((project) => project.id === payload.projectId)
-      );
-      const productindex = state.list[projectIndex].products.findIndex(
-        (product) => product.id === payload.product.id
-      );
-
-      state.list[projectIndex].products[productindex] = payload.product;
-    },
-    deleteProduct(
-      state,
-      {
-        payload
-      }: PayloadAction<{
-        projectId: string;
-        productId: string;
-      }>
-    ) {
-      const projectIndex = Utils.ensure(
-        state.list.findIndex((project) => project.id === payload.projectId)
-      );
-      const productindex = state.list[projectIndex].products.findIndex(
-        (product) => product.id === payload.productId
-      );
-
-      state.list[projectIndex].products.splice(productindex, 1);
-    },
-    updateCodeList(
-      state,
-      {
-        payload
-      }: PayloadAction<{ id: string; codelistId: string; codes: Code[] }>
-    ) {
-      const index = Utils.ensure(
-        state.list.findIndex((project) => project.id === payload.id)
-      );
-      const codeListIndex = state.list[index].codelist.findIndex(
-        (codelist) => codelist.id === payload.codelistId
-      );
-      state.list[index].codelist[codeListIndex].codes = payload.codes;
-    },
-    editCodelist(
-      state,
-      {
-        payload
-      }: PayloadAction<{
-        projectId: string;
         codelistId: string;
-        title: string;
-        description: string;
+        codes: Parentable<ICode>[];
       }>
     ) {
-      const projectIndex = Utils.ensure(
-        state.list.findIndex((project) => project.id === payload.projectId)
+      const codelistIndex = state.project.codelist.findIndex(
+        (c) => c.id === payload.codelistId
       );
-      const codeListIndex = state.list[projectIndex].codelist.findIndex(
-        (codelist) => codelist.id === payload.codelistId
-      );
-      state.list[projectIndex].codelist[codeListIndex].title = payload.title;
-      state.list[projectIndex].codelist[codeListIndex].description =
-        payload.description;
+      if (codelistIndex !== -1) {
+        state.project.codelist[codelistIndex].codes = payload.codes;
+      }
     },
-    deleteCodelist(
-      state,
-      {
-        payload
-      }: PayloadAction<{
-        projectId: string;
-        codelistId: string;
-      }>
-    ) {
-      const projectIndex = Utils.ensure(
-        state.list.findIndex((project) => project.id === payload.projectId)
+    editSelectedCodelist(state, { payload }: PayloadAction<ICodelist>) {
+      const index = state.project.codelist.findIndex(
+        (codelist) => codelist.id === payload.id
       );
-      const codeListIndex = state.list[projectIndex].codelist.findIndex(
-        (codelist) => codelist.id === payload.codelistId
+      if (index !== -1) {
+        state.project.codelist[index] = payload;
+      }
+    },
+    deleteCodelist(state, { payload }: PayloadAction<ICodelist>) {
+      const index = state.project.codelist.findIndex(
+        (codelist) => codelist.id === payload.id
       );
-      state.list[projectIndex].codelist.splice(codeListIndex, 1);
+      if (index !== -1) {
+        state.project.codelist.splice(index, 1);
+      }
     },
 
     editCodeInCodelist(
       state,
       {
         payload
-      }: PayloadAction<{ projectId: string; codelistId: string; code: Code }>
+      }: PayloadAction<{ codelistId: string; code: Parentable<ICode> }>
     ) {
-      const projectIndex = Utils.ensure(
-        state.list.findIndex((project) => project.id === payload.projectId)
+      const codelistIndex = state.project.codelist.findIndex(
+        (codelist) => codelist.id === payload.codelistId
       );
-      const codelistIndex = Utils.ensure(
-        state.list[projectIndex].codelist.findIndex(
-          (codelist) => codelist.id === payload.codelistId
-        )
-      );
-      const codeIndex = Utils.ensure(
-        state.list[projectIndex].codelist[codelistIndex].codes.findIndex(
+      if (codelistIndex !== -1) {
+        const codeIndex = state.project.codelist[codelistIndex].codes.findIndex(
           (code) => code.id === payload.code.id
-        )
-      );
-      state.list[projectIndex].codelist[codelistIndex].codes[codeIndex].title =
-        payload.code.title;
-      state.list[projectIndex].codelist[codelistIndex].codes[
-        codeIndex
-      ].description = payload.code.description;
+        );
+        if (codeIndex !== -1) {
+          state.project.codelist[codelistIndex].codes[codeIndex] = payload.code;
+        }
+      }
     },
 
     addCodeToCodelist(
       state,
       {
         payload
-      }: PayloadAction<{ projectId: string; codelistId: string; code: Code }>
+      }: PayloadAction<{ codelistId: string; code: Parentable<ICode> }>
     ) {
-      const projectIndex = Utils.ensure(
-        state.list.findIndex((project) => project.id === payload.projectId)
+      const index = state.project.codelist.findIndex(
+        (codelist) => codelist.id === payload.codelistId
       );
-      const codelistIndex = Utils.ensure(
-        state.list[projectIndex].codelist.findIndex(
-          (codelist) => codelist.id === payload.codelistId
-        )
-      );
-      state.list[projectIndex].codelist[codelistIndex].codes.push(payload.code);
+      if (index !== -1) {
+        state.project.codelist[index].codes.push(payload.code);
+      }
     },
-    deleteCodeInCodelist(
+    removeCode(
       state,
       {
         payload
       }: PayloadAction<{
-        projectId: string;
         codelistId: string;
-        codeId: string;
+        code: ICode;
       }>
     ) {
-      const projectIndex = Utils.ensure(
-        state.list.findIndex((project) => project.id === payload.projectId)
+      const codelistIndex = state.project.codelist.findIndex(
+        (elem) => elem.id === payload.codelistId
       );
-      const codelistIndex = Utils.ensure(
-        state.list[projectIndex].codelist.findIndex(
-          (codelist) => codelist.id === payload.codelistId
-        )
-      );
-      const codeIndex = Utils.ensure(
-        state.list[projectIndex].codelist[codelistIndex].codes.findIndex(
-          (code) => code.id === payload.codeId
-        )
-      );
-      state.list[projectIndex].codelist[codelistIndex].codes.splice(
-        codeIndex,
-        1
-      );
+      if (codelistIndex !== -1) {
+        const codeIndex = state.project.codelist[codelistIndex].codes.findIndex(
+          (elem) => elem.id === payload.code.id
+        );
+        if (codeIndex !== -1) {
+          state.project.codelist[codelistIndex].codes.splice(codeIndex, 1);
+        }
+      }
     },
     addCode(
       state,
-      { payload }: PayloadAction<{ id: string; code: Code; codeListId: string }>
+      {
+        payload
+      }: PayloadAction<{
+        id: string;
+        code: Parentable<ICode>;
+        codeListId: string;
+      }>
     ) {
       const index = Utils.ensure(
         state.list.findIndex((project) => project.id === payload.id)
@@ -417,7 +238,13 @@ const projectSlice = createSlice({
     },
     editCode(
       state,
-      { payload }: PayloadAction<{ id: string; code: Code; codeListId: string }>
+      {
+        payload
+      }: PayloadAction<{
+        id: string;
+        code: Parentable<ICode>;
+        codeListId: string;
+      }>
     ) {
       // todo: move to more suitable and less repetetive place
       const index = Utils.ensure(
@@ -432,156 +259,121 @@ const projectSlice = createSlice({
 
       state.list[index].codelist[codeListIndex].codes[codeIndex] = payload.code;
     },
-    setRequirementListToNeed(
+    editRequirementPublication(
       state,
-      {
-        payload
-      }: PayloadAction<{
-        projectId: string;
-        needIndex: number;
-        reqList: Requirement[];
-      }>
+      { payload }: PayloadAction<IPublication>
     ) {
-      const projectIndex = Utils.ensure(
-        state.list.findIndex((project) => project.id === payload.projectId)
+      const index = state.project.publications.findIndex(
+        (element) => payload.id === element.id
       );
-      state.list[projectIndex].needs[payload.needIndex].requirements =
-        payload.reqList;
+      if (index !== -1) {
+        state.project.publications[index].comment = payload.comment;
+      }
     },
     editRequirementInNeed(
       state,
       {
         payload
       }: PayloadAction<{
-        projectId: string;
-        requirement: Requirement;
-        oldNeedId: string;
         needId: string;
-        requirementIndex: number;
+        requirement: IRequirement;
       }>
     ) {
-      const projectIndex = Utils.ensure(
-        state.list.findIndex((project) => project.id === payload.projectId)
-      );
-      const needIndex = Utils.ensure(
-        state.list[projectIndex].needs.findIndex(
-          (need) => need.id === payload.needId
-        )
-      );
-      const oldNeedIndex = Utils.ensure(
-        state.list[projectIndex].needs.findIndex(
-          (need) => need.id === payload.oldNeedId
-        )
-      );
-      state.list[projectIndex].needs[oldNeedIndex].requirements.splice(
-        payload.requirementIndex,
-        1
+      const needIndex = state.project.needs.findIndex(
+        (need) => need.id === payload.needId
       );
 
-      state.list[projectIndex].needs[needIndex].requirements.push(
-        payload.requirement
-      );
+      if (needIndex !== -1) {
+        const requirementIndex = state.project.needs[
+          needIndex
+        ].requirements.findIndex((elem) => elem.id === payload.requirement.id);
+        if (requirementIndex !== -1) {
+          state.project.needs[needIndex].requirements[requirementIndex] =
+            payload.requirement;
+        }
+      }
     },
-    addRequirement(
+    addRequirementToNeed(
       state,
       {
         payload
       }: PayloadAction<{
-        id: string;
-        requirement: Requirement;
-        needIndex: number;
+        needId: string;
+        requirement: IRequirement;
       }>
     ) {
-      const index = Utils.ensure(
-        state.list.findIndex((project) => project.id === payload.id)
+      const needIndex = state.project.needs.findIndex(
+        (elem) => elem.id === payload.needId
       );
-      state.list[index].needs[payload.needIndex].requirements.push(
-        payload.requirement
-      );
+      if (needIndex !== -1) {
+        state.project.needs[needIndex].requirements.unshift(
+          payload.requirement
+        );
+      }
     },
     deleteRequirement(
       state,
-      {
-        payload
-      }: PayloadAction<{
-        id: string;
-        needIndex: number;
-        requirementIndex: number;
-      }>
+      { payload }: PayloadAction<{ needId: string; requirement: IRequirement }>
     ) {
-      const index = Utils.ensure(
-        state.list.findIndex((project) => project.id === payload.id)
+      const needIndex = state.project.needs.findIndex(
+        (elem) => elem.id === payload.needId
       );
-      state.list[index].needs[payload.needIndex].requirements.splice(
-        payload.requirementIndex,
-        1
-      );
+      if (needIndex !== -1) {
+        const requirementIndex = state.project.needs[
+          needIndex
+        ].requirements.findIndex(
+          (element) => element.id === payload.requirement.id
+        );
+        if (requirementIndex !== -1) {
+          state.project.needs[needIndex].requirements.splice(
+            requirementIndex,
+            1
+          );
+        }
+      }
     },
-    deletePublication(
-      state,
-      {
-        payload
-      }: PayloadAction<{
-        projectId: string;
-        publicationId: string;
-      }>
-    ) {
-      const projectIndex = Utils.ensure(
-        state.list.findIndex((project) => project.id === payload.projectId)
+    editPublication(state, { payload }: PayloadAction<IPublication>) {
+      const index = state.project.publications.findIndex(
+        (element) => payload.id === element.id
       );
-      const publicationIndex = state.list[projectIndex].publications.findIndex(
-        (p) => p.id === payload.publicationId
+      if (index !== -1) {
+        state.project.publications[index].comment = payload.comment;
+      }
+    },
+    removePublication(state, { payload }: PayloadAction<string>) {
+      const index = state.project.publications.findIndex(
+        (element) => payload === element.id
       );
-
-      state.list[projectIndex].publications.splice(publicationIndex, 1);
+      if (index !== -1) {
+        state.project.publications.splice(index, 1);
+      }
+    },
+    updateSelectedVersion(state, { payload }: PayloadAction<number>) {
+      state.project.version = payload;
+    },
+    addTag(state, { payload }: PayloadAction<Parentable<ITag>>) {
+      state.project.tags.push(payload);
+    },
+    editTag(state, { payload }: PayloadAction<Parentable<ITag>>) {
+      const index = state.project.tags.findIndex(
+        (element) => payload.id === element.id
+      );
+      state.project.tags[index] = payload;
+    },
+    removeTag(state, { payload }: PayloadAction<Parentable<ITag>>) {
+      const index = state.project.tags.findIndex(
+        (element) => payload.id === element.id
+      );
+      if (index !== -1) {
+        state.project.tags.splice(index, 1);
+      }
+    },
+    addInheritedBank(state, { payload }: PayloadAction<IInheritedBank>) {
+      state.project.inheritedBanks.push(payload);
+    },
+    setTags(state, { payload }: PayloadAction<Parentable<ITag>[]>) {
+      state.project.tags = payload;
     }
-  },
-  extraReducers: (builder) => {
-    builder.addCase(getProjectThunk.fulfilled, () => {});
-    builder.addCase(getProjectThunk.pending, () => {});
-    builder.addCase(getProjectThunk.rejected, () => {});
-    builder.addCase(getProjectsThunk.pending, (state) => {
-      state.status = 'pending';
-    });
-    builder.addCase(getProjectsThunk.fulfilled, (state, { payload }) => {
-      state.list = payload;
-      state.status = 'fulfilled';
-    });
-    builder.addCase(getProjectsThunk.rejected, (state) => {
-      state.status = 'rejected';
-    });
-    builder.addCase(postProjectThunk.fulfilled, (state, { payload }) => {
-      state.list.push(payload);
-      state.status = 'fulfilled';
-    });
-    builder.addCase(postProjectThunk.pending, (state) => {
-      state.status = 'pending';
-    });
-    builder.addCase(postProjectThunk.rejected, (state) => {
-      state.status = 'rejected';
-    });
-    builder.addCase(putProjectThunk.fulfilled, (state, { payload }) => {
-      state.status = 'fulfilled';
-      const projectIndex = Utils.ensure(
-        state.list.findIndex((project) => project.id === payload.id)
-      );
-      state.list[projectIndex] = payload;
-    });
-    builder.addCase(putProjectThunk.pending, (state) => {
-      state.status = 'pending';
-    });
-    builder.addCase(putProjectThunk.rejected, (state) => {
-      state.status = 'rejected';
-    });
-    builder.addCase(deleteProjectThunk.fulfilled, (state) => {
-      state.status = 'fulfilled';
-    });
-    builder.addCase(deleteProjectThunk.pending, (state) => {
-      state.status = 'pending';
-    });
-    builder.addCase(deleteProjectThunk.rejected, (state) => {
-      state.status = 'rejected';
-    });
   }
 });
 
@@ -591,29 +383,35 @@ export const {
   addCodelist,
   addProduct,
   updateProductList,
-  updateNeedList,
+  setNeeds,
   editProduct,
-  deleteProduct,
+  removeProduct,
   addCode,
-  updateCodeList,
+  setCodes,
   deleteCodelist,
   addCodeToCodelist,
   editCodeInCodelist,
-  deleteCodeInCodelist,
-  addPublication,
+  removeCode,
+  prependPublication,
   incrementProjectVersion,
   addNeed,
   editNeed,
   deleteNeed,
   editCode,
-  editCodelist,
+  editSelectedCodelist,
   publishProject,
-  editProject,
-  setRequirementListToNeed,
   editRequirementInNeed,
-  addRequirement,
+  addRequirementToNeed,
   deleteRequirement,
-  deletePublication
+  removePublication,
+  updateSelectedVersion,
+  selectProject,
+  editPublication,
+  addTag,
+  editTag,
+  removeTag,
+  addInheritedBank,
+  setTags
 } = projectSlice.actions;
 
 export default projectSlice.reducer;
