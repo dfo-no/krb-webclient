@@ -24,15 +24,16 @@ jobs:
           npm install
 
       - name: Build
+        run: |
+          npm run-script git-info
+          npm run-script build:ci
         env:
           REACT_APP_COSMOS_DATABASE: ${{ secrets.REACT_APP_COSMOS_DATABASE_PROD }}
           REACT_APP_COSMOS_CONTAINER: ${{ secrets.REACT_APP_COSMOS_CONTAINER_PROD }}
           REACT_APP_COSMOSDB_CONNECTION_STRING: ${{ secrets.REACT_APP_COSMOSDB_CONNECTION_STRING_PROD }}
           REACT_APP_CLIENTID: ${{ secrets.REACT_APP_CLIENTID }}
           CI: false
-        run: |
-          npm run-script git-info
-          npm run-script build:ci
+
 
       - name: 'Deploy to Azure WebApp'
         uses: azure/webapps-deploy@v2
