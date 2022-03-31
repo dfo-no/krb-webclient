@@ -61,7 +61,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "build:ci": "CI=true react-scripts build",
+    "build:ci": "CI=false react-scripts build",
     "test": "react-scripts test",
     "test:ci": "CI=true react-scripts test",
     "eslint": "eslint 'src/**/*.{js,jsx,ts,tsx,json,css,md}'",
