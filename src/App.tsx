@@ -27,6 +27,9 @@ const msalInstance = new PublicClientApplication(msalConfig);
 function App(): React.ReactElement {
   useConfirmTabClose();
 
+  const nodeVersionMajor = process.versions.node.split('.')[0];
+  console.log(nodeVersionMajor);
+
   function renderContent() {
     return (
       <Switch>
