@@ -32,7 +32,7 @@ jobs:
       - name: Lint and test
         shell: bash
         run: |
-          npm run-script lint
+          npm run-script lint:ci
           npm run-script test --coverage
 
       - name: Build
