@@ -1,4 +1,4 @@
-# Kravbank webclient README2
+# Kravbank webclient README
 
 This receipe is written for Mac users.
 
