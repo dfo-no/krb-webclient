@@ -9,6 +9,9 @@ export const API_URL =
     ? 'https://krb-api-man-dev.azure-api.net'
     : 'https://krb-api-man.azure-api.net';
 
+console.log(JSON.stringify(process.env));
+console.log(API_URL);
+
 /** The recommended format for DateTime strings in Azure Cosmos DB
  * is yyyy-MM-ddTHH:mm:ss.fffffffZ which follows the ISO 8601 UTC
  * standard. It is recommended to store all dates in
