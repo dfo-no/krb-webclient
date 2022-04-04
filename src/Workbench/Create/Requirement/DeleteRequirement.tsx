@@ -67,7 +67,7 @@ function DeleteRequirement({
       {!hasChildren && (
         <FormDeleteBox>
           <FormTextButton
-            hoverColor={theme.palette.dfoErrorRed.main}
+            hoverColor={theme.palette.errorRed.main}
             onClick={onSubmit}
             aria-label="delete"
           >

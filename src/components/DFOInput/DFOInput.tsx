@@ -4,7 +4,7 @@ import { Input } from '@mui/material';
 const DFOTextField = styled(Input)(({ theme }) => ({
   width: '100%',
   border: `2px solid ${theme.palette.indigo.main}`,
-  backgroundColor: theme.palette.dfoWhite.main,
+  backgroundColor: theme.palette.white.main,
   height: 45,
   paddingLeft: '10px',
 
@@ -15,13 +15,13 @@ const DFOTextField = styled(Input)(({ theme }) => ({
     border: `3px solid ${theme.palette.indigo.main}`
   },
   '&.Mui-error': {
-    border: `2px solid ${theme.palette.dfoErrorRed.main}`,
+    border: `2px solid ${theme.palette.errorRed.main}`,
     '&:hover': {
-      borderColor: theme.palette.dfoErrorRed.main,
+      borderColor: theme.palette.errorRed.main,
       borderWidth: 3
     },
     '&.Mui-focused': {
-      borderColor: theme.palette.dfoErrorRed.main,
+      borderColor: theme.palette.errorRed.main,
       borderWidth: 3
     }
   }

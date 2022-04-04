@@ -21,7 +21,7 @@ const useStyles = makeStyles({
   projectNotFoundPhoto: {
     height: 300,
     width: 300,
-    color: theme.palette.dfoErrorRed.main
+    color: theme.palette.errorRed.main
   },
   projectNotFoundTitleButton: {
     display: 'flex',

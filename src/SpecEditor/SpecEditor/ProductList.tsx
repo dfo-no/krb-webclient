@@ -14,7 +14,7 @@ const useStyles = makeStyles({
     display: 'flex',
     flexDirection: 'column',
     gap: 20,
-    border: `1px solid ${theme.palette.dfoLightBlue.main}`,
+    border: `1px solid ${theme.palette.lightBlue.main}`,
     backgroundColor: theme.palette.gray200.main,
     width: '100%',
     padding: 30,

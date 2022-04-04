@@ -6,5 +6,5 @@ export const FormCantDeleteBox = styled(Box)(({ theme }) => ({
   width: '100%',
   height: '100%',
   backgroundColor: theme.palette.gray500.main,
-  border: `2px solid ${theme.palette.gray500.main}`
+  border: `2px solid ${theme.palette.gray400.main}`
 }));
