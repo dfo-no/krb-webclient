@@ -9,13 +9,10 @@ import { IProduct, BaseProductSchema } from '../../../Nexus/entities/IProduct';
 import { useAppDispatch } from '../../../store/hooks';
 import { addAlert } from '../../../store/reducers/alert-reducer';
 import { FormItemBox } from '../../Components/Form/FormItemBox';
-import HorizontalTextCtrl from '../../../FormProvider/HorizontalTextCtrl';
-import { FormIconButton } from '../../Components/Form/FormIconButton';
-import CheckIcon from '@mui/icons-material/Check';
-import CloseIcon from '@mui/icons-material/Close';
+import VerticalTextCtrl from '../../../FormProvider/VerticalTextCtrl';
 import { useFormStyles } from '../../Components/Form/FormStyles';
-import { FormFlexBox } from '../../Components/Form/FormFlexBox';
 import useProjectMutations from '../../../store/api/ProjectMutations';
+import FormButtons from '../../Components/Form/FormButtons';
 
 interface IProps {
   product: Parentable<IProduct>;
@@ -57,21 +54,13 @@ export default function EditProductForm({
         noValidate
       >
         <FormItemBox>
-          <FormFlexBox sx={{ paddingLeft: 1 }}>
-            <HorizontalTextCtrl name="title" placeholder={t('Title')} />
-          </FormFlexBox>
-          <FormFlexBox sx={{ paddingLeft: 1, paddingRight: 1 }}>
-            <HorizontalTextCtrl
-              name="description"
-              placeholder={t('Description')}
-            />
-          </FormFlexBox>
-          <FormIconButton type="submit" aria-label="save">
-            <CheckIcon />
-          </FormIconButton>
-          <FormIconButton onClick={() => handleClose(null)} aria-label="close">
-            <CloseIcon />
-          </FormIconButton>
+          <VerticalTextCtrl name="title" label={t('Title')} placeholder={''} />
+          <VerticalTextCtrl
+            name="description"
+            label={t('Description')}
+            placeholder={''}
+          />
+          <FormButtons handleClose={() => handleClose(null)} />
         </FormItemBox>
       </form>
     </FormProvider>
