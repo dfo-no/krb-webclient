@@ -30,7 +30,7 @@ export default function NeedHeader(): React.ReactElement {
             borderBottom: '1px solid'
           }}
         >
-          <Typography variant="lg" sx={{ fontWeight: 700 }}>
+          <Typography variant="lg" sx={{ fontWeight: 'bold' }}>
             {project.needs[needIndex] && project.needs[needIndex].title}
           </Typography>
           <EditNeed need={project.needs[needIndex]} />
