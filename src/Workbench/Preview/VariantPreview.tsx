@@ -52,7 +52,7 @@ export default function VariantPreview({
       sx={{ boxShadow: 'none' }}
     >
       <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-        <Typography>{variant.requirementText}</Typography>
+        <Typography>{variant.description}</Typography>
       </AccordionSummary>
       <AccordionDetails>
         <Typography variant={'smallBold'} color={theme.palette.primary.main}>
