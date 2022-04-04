@@ -26,7 +26,7 @@ const useStyles = makeStyles({
   },
   productListItemTitle: {
     color: theme.palette.gray700.main,
-    fontWeight: 600,
+    fontWeight: 'bold',
     whiteSpace: 'nowrap'
   },
   productListItemDescription: {

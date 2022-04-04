@@ -23,7 +23,7 @@ const useStyles = makeStyles({
     flexBasis: '50%',
     paddingLeft: 40,
     color: 'black',
-    fontWeight: 600
+    fontWeight: 'bold'
   },
   needListItemText: {
     color: theme.palette.gray700.main

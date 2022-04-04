@@ -28,8 +28,7 @@ const SelectCtrl = ({ name, label, options }: IProps): React.ReactElement => {
           variant="sm"
           sx={{
             color: theme.palette.primary.main,
-            fontSize: 16,
-            fontWeight: 400
+            fontSize: 16
           }}
         >
           {label}

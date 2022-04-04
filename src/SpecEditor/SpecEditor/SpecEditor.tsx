@@ -58,8 +58,7 @@ export default function SpecEditor(): React.ReactElement {
             <Typography
               variant="xxl"
               sx={{
-                color: theme.palette.primary.main,
-                fontWeight: 550
+                color: theme.palette.primary.main
               }}
             >
               {specification?.title}

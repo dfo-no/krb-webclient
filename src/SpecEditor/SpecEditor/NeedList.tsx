@@ -61,8 +61,7 @@ export default function NeedList(): React.ReactElement {
         variant="sm"
         sx={{
           color: theme.palette.primary.main,
-          fontSize: 16,
-          fontWeight: 400
+          fontSize: 16
         }}
       >
         {t('needs you find under')}

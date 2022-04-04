@@ -73,8 +73,7 @@ export default function ProductList(): React.ReactElement {
         variant="sm"
         sx={{
           color: theme.palette.primary.main,
-          fontSize: 16,
-          fontWeight: 400
+          fontSize: 16
         }}
       >
         Velg en produkttype fra kravsettet som passer best til ditt produkt
