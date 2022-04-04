@@ -142,7 +142,7 @@ export default function Header(): React.ReactElement {
                 <Typography variant="sm">{projectPath}</Typography>
               </Box>
               <Box className={classes.notViewingProjectTitle}>
-                <Typography variant="lg" sx={{ fontWeight: 'bold' }}>
+                <Typography variant="xl" sx={{ fontWeight: 'bold' }}>
                   Kravbank
                 </Typography>
               </Box>
@@ -195,7 +195,7 @@ export default function Header(): React.ReactElement {
               </Box>
               <Box className={classes.viewingProjectTitle}>
                 <Box className={classes.projectData}>
-                  <Typography variant="xl" sx={{ fontWeight: 700 }}>
+                  <Typography variant="xl" sx={{ fontWeight: 'bold' }}>
                     {project.title}
                   </Typography>
                 </Box>
