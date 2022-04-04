@@ -69,7 +69,7 @@ export default function ProductList(): React.ReactElement {
 
   return (
     <>
-      <Typography variant="smallBlue">
+      <Typography variant="sm" sx={{ fontSize: '16px', fontWeight: 400 }}>
         Velg en produkttype fra kravsettet som passer best til ditt produkt
       </Typography>
       <Box className={classes.newProductTypeList}>

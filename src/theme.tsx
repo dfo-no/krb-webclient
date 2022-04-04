@@ -131,8 +131,6 @@ const theme = createTheme({
   }
 });
 
-// //////////////////////
-
 theme.typography.xss = {
   fontSize: 12
 };
@@ -155,99 +153,6 @@ theme.typography.xl = {
 
 theme.typography.xxl = {
   fontSize: 50
-};
-
-// //////////////////////
-
-theme.typography.small = {
-  fontSize: '14px',
-  fontWeight: 400
-};
-
-theme.typography.smallBlue = {
-  color: theme.palette.primary.main,
-  fontSize: '16px',
-  fontWeight: 400
-};
-
-theme.typography.smallBold = {
-  fontSize: '14px',
-  fontWeight: 'bold'
-};
-
-theme.typography.smallGray = {
-  color: theme.palette.gray700.main,
-  fontSize: '14px',
-  whiteSpace: 'nowrap'
-};
-
-theme.typography.smallUnderline = {
-  fontSize: '15px',
-  textDecoration: 'underline'
-};
-
-theme.typography.smallUnderlineBlue = {
-  color: theme.palette.dfoDarkBlue.main,
-  fontSize: '15px',
-  textDecoration: 'underline',
-  fontWeight: 'bold',
-  cursor: 'pointer'
-};
-
-theme.typography.smedium = {
-  fontSize: '18px'
-};
-
-theme.typography.smediumBold = {
-  fontSize: '18px',
-  fontWeight: 700
-};
-
-theme.typography.medium = {
-  color: theme.palette.black.main,
-  fontSize: '20px',
-  fontWeight: 100
-};
-
-theme.typography.mediumBold = {
-  fontSize: '20px',
-  fontWeight: 700
-};
-
-theme.typography.mediumBlue = {
-  color: theme.palette.primary.main,
-  fontSize: '20px'
-};
-
-theme.typography.bigBold = {
-  fontSize: '28px',
-  fontWeight: 700
-};
-
-theme.typography.bigBlue = {
-  color: theme.palette.primary.main,
-  fontSize: '28px'
-};
-
-theme.typography.bigBoldBlue = {
-  color: theme.palette.primary.main,
-  fontSize: '48px',
-  fontWeight: 550
-};
-
-theme.typography.biggerBold = {
-  fontSize: '40px'
-};
-
-theme.typography.footerAddressText = {
-  color: theme.palette.dfoWhite.main,
-  fontSize: '15px'
-};
-
-theme.typography.formCtrlErrorMessage = {
-  color: theme.palette.dfoErrorRed.main,
-  paddingLeft: 10,
-  fontSize: 14
 };
 
 theme.components = {

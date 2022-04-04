@@ -66,8 +66,8 @@ const Requirement = ({ requirementIndex }: IProps) => {
           }}
         >
           <Typography
-            variant={'mediumBold'}
-            sx={{ alignSelf: 'center', paddingLeft: 1 }}
+            variant="md"
+            sx={{ alignSelf: 'center', paddingLeft: 1, fontWeight: 700 }}
           >
             {project.needs[needIndex].requirements[requirementIndex].title}
           </Typography>

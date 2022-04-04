@@ -13,6 +13,7 @@ import {
   BaseSpecificationSchema,
   ISpecification
 } from '../Nexus/entities/ISpecification';
+import theme from '../theme';
 import { useSpecificationState } from './SpecificationContext';
 
 interface IProps {
@@ -77,7 +78,9 @@ const NewSpecForm = ({ handleClose, specification }: IProps) => {
         noValidate
       >
         <Box>
-          <Typography variant="bigBlue">{specification.bank.title}</Typography>
+          <Typography variant="lg" sx={{ color: theme.palette.primary.main }}>
+            {specification.bank.title}
+          </Typography>
           <Typography>{specification.bank.description}</Typography>
         </Box>
 

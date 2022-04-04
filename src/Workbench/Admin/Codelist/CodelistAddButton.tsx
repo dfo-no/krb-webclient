@@ -16,7 +16,9 @@ export default function CodelistAddButton({
   return (
     <Box className={classes.buttonContainer}>
       <Box className={classes.buttonTitle}>
-        <Typography variant="smallBold">{t('Codelist')}</Typography>
+        <Typography variant="sm" sx={{ fontWeight: 'bold' }}>
+          {t('Codelist')}
+        </Typography>
       </Box>
       <Box className={classes.button}>
         <Button variant="primary" onClick={onClick}>

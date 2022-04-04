@@ -23,7 +23,9 @@ const SelectCtrl = ({ name, label, options }: IProps): React.ReactElement => {
   return (
     <FormControl error={!!get(errors, name)} fullWidth>
       <FormLabel>
-        <Typography variant="smallBlue">{label}</Typography>
+        <Typography variant="sm" sx={{ fontSize: '16px', fontWeight: 400 }}>
+          {label}
+        </Typography>
       </FormLabel>
       <Controller
         name={name}

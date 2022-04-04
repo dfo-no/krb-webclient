@@ -67,12 +67,12 @@ function ProjectPage(): React.ReactElement {
       <Box key={i}>
         <PlainListBox>
           <Box className={classes.versionText}>
-            <Typography variant="smallBold">{`${t('Version')} ${
-              item.version
-            }`}</Typography>
+            <Typography variant="sm" sx={{ fontWeight: 'bold' }}>{`${t(
+              'Version'
+            )} ${item.version}`}</Typography>
           </Box>
           <Box className={classes.commentText}>
-            <Typography sx={{ alignSelf: 'center' }} variant="small">
+            <Typography sx={{ alignSelf: 'center' }} variant="sm">
               {item.comment}
             </Typography>
           </Box>

@@ -30,7 +30,7 @@ export default function NeedHeader(): React.ReactElement {
             borderBottom: '1px solid'
           }}
         >
-          <Typography variant="bigBold">
+          <Typography variant="lg" sx={{ fontWeight: 700 }}>
             {project.needs[needIndex] && project.needs[needIndex].title}
           </Typography>
           <EditNeed need={project.needs[needIndex]} />
@@ -41,7 +41,7 @@ export default function NeedHeader(): React.ReactElement {
             <DeleteIcon />
           </DFOCardHeaderIconButton>
         </Box>
-        <Typography variant="smallBold" sx={{ paddingTop: 1 }}>
+        <Typography variant="sm" sx={{ paddingTop: 1, fontWeight: 'bold' }}>
           {project.needs[needIndex] && project.needs[needIndex].description}
         </Typography>
       </DFOHeaderContentBox>

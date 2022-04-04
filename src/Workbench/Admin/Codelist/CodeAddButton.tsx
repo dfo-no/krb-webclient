@@ -14,7 +14,9 @@ export default function CodeAddButton({ onClick }: IProps): React.ReactElement {
   return (
     <Box className={classes.buttonContainer}>
       <Box className={classes.buttonTitle}>
-        <Typography variant="smallBold">{t('Code')}</Typography>
+        <Typography variant="sm" sx={{ fontWeight: 'bold' }}>
+          {t('Code')}
+        </Typography>
       </Box>
       <Box className={classes.button}>
         <Button variant="primary" onClick={onClick}>

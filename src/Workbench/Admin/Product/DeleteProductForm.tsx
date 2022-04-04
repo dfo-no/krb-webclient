@@ -94,7 +94,7 @@ export default function DeleteProductForm({
         )}
         {hasChildren && (
           <FormCantDeleteBox>
-            <Typography variant={'smallBold'}>
+            <Typography variant="sm" sx={{ fontWeight: 'bold' }}>
               {t('cant delete this product')}
             </Typography>
             <FormTextButton

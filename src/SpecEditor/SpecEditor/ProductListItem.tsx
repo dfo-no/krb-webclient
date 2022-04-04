@@ -25,8 +25,9 @@ const useStyles = makeStyles({
     paddingRight: 10
   },
   productListItemTitle: {
-    color: 'black',
-    fontWeight: 600
+    color: theme.palette.gray700.main,
+    fontWeight: 600,
+    whiteSpace: 'nowrap'
   },
   productListItemDescription: {
     display: 'flex',
@@ -77,7 +78,7 @@ export default function ProductListItem({
         />
         <Typography
           className={classes.productListItemTitle}
-          variant="smallGray"
+          variant="sm"
           onClick={toggleRadioButton}
         >
           {productListItem.title}

@@ -139,10 +139,12 @@ export default function Header(): React.ReactElement {
           <Box className={classes.header}>
             <Box className={classes.headerContent}>
               <Box className={classes.projectPath}>
-                <Typography variant="small">{projectPath}</Typography>
+                <Typography variant="sm">{projectPath}</Typography>
               </Box>
               <Box className={classes.notViewingProjectTitle}>
-                <Typography variant="bigBold">Kravbank</Typography>
+                <Typography variant="lg" sx={{ fontWeight: 700 }}>
+                  Kravbank
+                </Typography>
               </Box>
             </Box>
           </Box>
@@ -176,16 +178,26 @@ export default function Header(): React.ReactElement {
           <Box>
             <Box className={classes.headerContent}>
               <Box className={classes.projectPath}>
-                <Typography variant="small">
+                <Typography variant="sm">
                   {projectPath + ' / '}
-                  <Typography variant="smallUnderlineBlue">
+                  <Typography
+                    variant="sm"
+                    sx={{
+                      color: theme.palette.dfoDarkBlue.main,
+                      textDecoration: 'underline',
+                      fontWeight: 'bold',
+                      cursor: 'pointer'
+                    }}
+                  >
                     {projectTitle}
                   </Typography>
                 </Typography>
               </Box>
               <Box className={classes.viewingProjectTitle}>
                 <Box className={classes.projectData}>
-                  <Typography variant="bigBold">{project.title}</Typography>
+                  <Typography variant="xl" sx={{ fontWeight: 700 }}>
+                    {project.title}
+                  </Typography>
                 </Box>
                 <Box className={classes.projectIcons}>
                   <Link

@@ -85,7 +85,7 @@ function DeleteRequirement({
       )}
       {hasChildren && (
         <FormCantDeleteBox>
-          <Typography variant={'smallBold'}>
+          <Typography variant="sm" sx={{ fontWeight: 'bold' }}>
             {t('cant delete this requirement')}
           </Typography>
           <FormTextButton
