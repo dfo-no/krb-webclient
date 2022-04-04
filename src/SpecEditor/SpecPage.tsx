@@ -151,7 +151,7 @@ export default function SpecPage(): React.ReactElement {
           <Card className={classes.projectListItemCard}>
             <Box className={classes.projectListItemCardContent}>
               <Box className={classes.projectListItemTitleButton}>
-                <Typography variant="md" sx={{ fontWeight: 700 }}>
+                <Typography variant="md" sx={{ fontWeight: 'bold' }}>
                   {element.title}
                 </Typography>
               </Box>
