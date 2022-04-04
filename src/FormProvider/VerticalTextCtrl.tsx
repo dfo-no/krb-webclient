@@ -3,6 +3,7 @@ import { get } from 'lodash';
 import React from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
 import DFOInput from '../components/DFOInput/DFOInput';
+import theme from '../theme';
 
 interface IProps {
   name: string;
@@ -22,7 +23,14 @@ const VerticalTextCtrl = ({
   return (
     <FormControl error={!!get(errors, name)} sx={{ width: '100%' }}>
       <FormLabel>
-        <Typography variant="sm" sx={{ fontSize: '16px', fontWeight: 400 }}>
+        <Typography
+          variant="sm"
+          sx={{
+            color: theme.palette.primary.main,
+            fontSize: '16px',
+            fontWeight: 400
+          }}
+        >
           {label}
         </Typography>
       </FormLabel>
