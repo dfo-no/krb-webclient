@@ -14,13 +14,13 @@ export const ScrollableContainer = styled(Box)(({ theme }) => ({
     width: '10px'
   },
   '::-webkit-scrollbar-track': {
-    boxShadow: `inset 0 0 5px ${theme.palette.dfoDarkBlue.main}`,
+    boxShadow: `inset 0 0 5px ${theme.palette.primary.main}`,
     borderRadius: '10px'
   },
 
   /* Handle */
   '::-webkit-scrollbar-thumb': {
-    background: theme.palette.dfoDarkBlue.main,
+    background: theme.palette.primary.main,
     borderRadius: '10px'
   },
 

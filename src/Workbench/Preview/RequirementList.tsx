@@ -20,10 +20,10 @@ const useStyles = makeStyles({
     border: `1px solid ${theme.palette.lightBlue.main}`,
     '&:hover': {
       background: theme.palette.lightBlue.main,
-      color: theme.palette.dfoWhite.main,
+      color: theme.palette.white.main,
 
       '& $sideBarListItemText': {
-        color: theme.palette.dfoWhite.main
+        color: theme.palette.white.main
       }
     },
 

@@ -55,7 +55,7 @@ function DeleteNeed({
       {!hasChildren && (
         <FormDeleteBox>
           <FormTextButton
-            hoverColor={theme.palette.dfoErrorRed.main}
+            hoverColor={theme.palette.errorRed.main}
             onClick={onDelete}
           >
             {t('delete')}

@@ -45,7 +45,7 @@ const useStyles = makeStyles({
     paddingBottom: 60,
     margin: '0 auto',
     width: '60%',
-    backgroundColor: theme.palette.dfoWhite.main,
+    backgroundColor: theme.palette.white.main,
     padding: 20
   },
   topContainer: {
