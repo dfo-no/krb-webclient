@@ -11,7 +11,7 @@ import makeStyles from '@mui/styles/makeStyles';
 
 const useStyles = makeStyles({
   card: {
-    backgroundColor: theme.palette.common.white,
+    backgroundColor: theme.palette.white.main,
     display: 'flex',
     flexDirection: 'column',
     color: theme.palette.black.main,
