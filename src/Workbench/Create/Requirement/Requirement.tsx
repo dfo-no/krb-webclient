@@ -6,7 +6,6 @@ import makeStyles from '@mui/styles/makeStyles';
 import theme from '../../../theme';
 import { FormIconButton } from '../../Components/Form/FormIconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
-import React from 'react';
 import EditRequirement from './EditRequirement';
 import { useVariantState } from './VariantContext';
 import { useSelectState } from '../SelectContext';
