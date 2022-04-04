@@ -3,6 +3,12 @@ import React from 'react';
 
 declare module '@mui/material/styles' {
   interface TypographyVariants {
+    xss: React.CSSProperties;
+    sm: React.CSSProperties;
+    md: React.CSSProperties;
+    lg: React.CSSProperties;
+    xl: React.CSSProperties;
+    xxl: React.CSSProperties;
     small: React.CSSProperties;
     smallBlue?: React.CSSProperties;
     smallBold: React.CSSProperties;
@@ -24,6 +30,12 @@ declare module '@mui/material/styles' {
   }
 
   interface TypographyVariantsOptions {
+    xss?: React.CSSProperties;
+    sm?: React.CSSProperties;
+    md?: React.CSSProperties;
+    lg?: React.CSSProperties;
+    xl?: React.CSSProperties;
+    xxl?: React.CSSProperties;
     small?: React.CSSProperties;
     smallBlue?: React.CSSProperties;
     smallBold?: React.CSSProperties;
@@ -47,6 +59,12 @@ declare module '@mui/material/styles' {
 
 declare module '@mui/material/Typography' {
   interface TypographyPropsVariantOverrides {
+    xss?: true;
+    sm?: true;
+    md?: true;
+    lg?: true;
+    xl?: true;
+    xxl?: true;
     small: true;
     smallBlue?: true;
     smallBold: true;

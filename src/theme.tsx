@@ -131,6 +131,34 @@ const theme = createTheme({
   }
 });
 
+// //////////////////////
+
+theme.typography.xss = {
+  fontSize: 12
+};
+
+theme.typography.sm = {
+  fontSize: 14
+};
+
+theme.typography.md = {
+  fontSize: 18
+};
+
+theme.typography.lg = {
+  fontSize: 22
+};
+
+theme.typography.xl = {
+  fontSize: 36
+};
+
+theme.typography.xxl = {
+  fontSize: 50
+};
+
+// //////////////////////
+
 theme.typography.small = {
   fontSize: '14px',
   fontWeight: 400
