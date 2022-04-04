@@ -258,12 +258,12 @@ theme.components = {
       {
         props: { variant: 'cancel' },
         style: {
-          backgroundColor: theme.palette.gray500.main,
+          backgroundColor: theme.palette.gray600.main,
           color: theme.palette.white.main,
           whiteSpace: 'nowrap',
           height: 40,
           '&:hover': {
-            background: theme.palette.gray400.main
+            background: theme.palette.gray500.main
           }
         }
       }

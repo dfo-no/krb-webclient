@@ -17,7 +17,12 @@ export default function FormButtons({
       <Button variant="save" type="submit" aria-label="save">
         {t('save')}
       </Button>
-      <Button variant="cancel" onClick={() => handleClose()} aria-label="close">
+      <Button
+        variant="cancel"
+        sx={{ marginLeft: 2 }}
+        onClick={() => handleClose()}
+        aria-label="close"
+      >
         {t('cancel')}
       </Button>
     </FormButtonBox>
