@@ -8,6 +8,7 @@ import React from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
 import DFOTextField from '../components/DFOInput/DFOInput';
 import { IOption } from '../Nexus/entities/IOption';
+import theme from '../theme';
 
 interface IProps {
   name: string;
@@ -23,7 +24,14 @@ const SelectCtrl = ({ name, label, options }: IProps): React.ReactElement => {
   return (
     <FormControl error={!!get(errors, name)} fullWidth>
       <FormLabel>
-        <Typography variant="sm" sx={{ fontSize: '16px', fontWeight: 400 }}>
+        <Typography
+          variant="sm"
+          sx={{
+            color: theme.palette.primary.main,
+            fontSize: '16px',
+            fontWeight: 400
+          }}
+        >
           {label}
         </Typography>
       </FormLabel>
