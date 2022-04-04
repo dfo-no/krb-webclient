@@ -11,13 +11,13 @@ export interface IProps {
 const useStyles = makeStyles({
   tagListItem: {
     display: 'flex',
-    backgroundColor: theme.palette.dfoWhite.main,
+    backgroundColor: theme.palette.white.main,
     borderBottom: `1px solid ${theme.palette.silver.main}`,
     height: '42px',
     '&:hover': {
       background: theme.palette.lightBlue.main,
       '& $tagListItemText': {
-        color: theme.palette.dfoWhite.main
+        color: theme.palette.white.main
       }
     }
   },

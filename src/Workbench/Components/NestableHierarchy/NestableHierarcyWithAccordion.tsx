@@ -17,7 +17,7 @@ import { BaseModelWithTitleAndDesc } from '../../../models/BaseModelWithTitleAnd
 const useStyles = makeStyles({
   nestableItemCustom: {
     cursor: 'pointer',
-    backgroundColor: theme.palette.dfoWhite.main,
+    backgroundColor: theme.palette.white.main,
     verticalAlign: 'middle'
   },
   nestableCustom: {

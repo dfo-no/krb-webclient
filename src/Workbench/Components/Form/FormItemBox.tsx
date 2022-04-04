@@ -4,5 +4,5 @@ export const FormItemBox = styled(Box)(({ theme }) => ({
   display: 'flex',
   width: '100%',
   height: '100%',
-  backgroundColor: theme.palette.dfoWhite.main
+  backgroundColor: theme.palette.white.main
 }));

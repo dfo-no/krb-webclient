@@ -55,25 +55,25 @@ export default function VariantPreview({
         <Typography>{variant.requirementText}</Typography>
       </AccordionSummary>
       <AccordionDetails>
-        <Typography variant={'smallBold'} color={theme.palette.dfoBlue.main}>
+        <Typography variant={'smallBold'} color={theme.palette.primary.main}>
           {t('Description')}
         </Typography>
         <Typography sx={{ marginBottom: 2 }}>
           {variant.description ? variant.description : '-'}
         </Typography>
-        <Typography variant={'smallBold'} color={theme.palette.dfoBlue.main}>
+        <Typography variant={'smallBold'} color={theme.palette.primary.main}>
           {t('requirementText')}
         </Typography>
         <Typography sx={{ marginBottom: 2 }}>
           {variant.requirementText ? variant.requirementText : '-'}
         </Typography>
-        <Typography variant={'smallBold'} color={theme.palette.dfoBlue.main}>
+        <Typography variant={'smallBold'} color={theme.palette.primary.main}>
           {t('instruction')}
         </Typography>
         <Typography sx={{ marginBottom: 2 }}>
           {variant.instruction ? variant.instruction : '-'}
         </Typography>
-        <Typography variant={'smallBold'} color={theme.palette.dfoBlue.main}>
+        <Typography variant={'smallBold'} color={theme.palette.primary.main}>
           {t('how to answer requirement')}
         </Typography>
         {variant.questions.length > 0 ? (

@@ -33,14 +33,14 @@ export const usePanelStyles = makeStyles({
     flexDirection: 'row',
     minHeight: 70,
     width: '100%',
-    border: `1px solid ${theme.palette.gray500.main}`,
-    backgroundColor: theme.palette.dfoWhite.main
+    border: `1px solid ${theme.palette.gray400.main}`,
+    backgroundColor: theme.palette.white.main
   },
   withHover: {
     cursor: 'pointer',
     '&:hover': {
-      background: theme.palette.lightBlue.main,
-      color: theme.palette.dfoWhite.main
+      background: theme.palette.white.main,
+      color: theme.palette.white.main
     }
   },
   nestableCustom: {
@@ -89,7 +89,7 @@ export const usePanelStyles = makeStyles({
     paddingTop: 5
   },
   selectedItem: {
-    background: theme.palette.dfoDarkBlue.main,
-    color: theme.palette.dfoWhite.main
+    background: theme.palette.primary.main,
+    color: theme.palette.white.main
   }
 });

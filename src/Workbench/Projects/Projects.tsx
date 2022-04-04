@@ -1,35 +1,36 @@
 import DeleteIcon from '@mui/icons-material/Delete';
-import makeStyles from '@mui/styles/makeStyles';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
+import Card from '@mui/material/Card';
 import Divider from '@mui/material/Divider';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import Typography from '@mui/material/Typography';
+import makeStyles from '@mui/styles/makeStyles';
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { Link } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
+import mainIllustration from '../../assets/images/main-illustration.svg';
+import { PAGE_SIZE } from '../../common/Constants';
 import LoaderSpinner from '../../common/LoaderSpinner';
+import DFODialog from '../../components/DFODialog/DFODialog';
+import DFOSearchBar from '../../components/DFOSearchBar/DFOSearchBar';
 import { IAlert } from '../../models/IAlert';
 import { IBank } from '../../Nexus/entities/IBank';
 import {
   useDeleteProjectMutation,
-  useGetAllProjectsQuery
+  useGetProjectsQuery
 } from '../../store/api/bankApi';
 import { useAppDispatch } from '../../store/hooks';
 import { addAlert } from '../../store/reducers/alert-reducer';
-import Card from '@mui/material/Card';
-import { Link } from 'react-router-dom';
-import mainIllustration from '../../assets/images/main-illustration.svg';
+import theme from '../../theme';
+import { ScrollableContainer } from '../Components/ScrollableContainer';
 import {
   NewButtonContainer,
   SearchContainer,
   SearchFieldContainer
 } from '../Components/SearchContainer';
-import DFOSearchBar from '../../components/DFOSearchBar/DFOSearchBar';
-import theme from '../../theme';
-import { ScrollableContainer } from '../Components/ScrollableContainer';
-import DFODialog from '../../components/DFODialog/DFODialog';
 import NewProjectForm from './NewProjectForm';
 
 const useStyles = makeStyles({
@@ -61,7 +62,7 @@ const useStyles = makeStyles({
     cursor: 'pointer',
     '&:hover': {
       backgroundColor: theme.palette.primary.main,
-      color: theme.palette.dfoWhite.main
+      color: theme.palette.white.main
     }
   },
   projectListItemCardContent: {
@@ -143,7 +144,12 @@ export default function Projects(): React.ReactElement {
     });
   };
 
-  const { data: projects, isLoading } = useGetAllProjectsQuery();
+  const { data: projects, isLoading } = useGetProjectsQuery({
+    pageSize: PAGE_SIZE,
+    page: 1,
+    fieldName: 'title',
+    order: 'DESC'
+  });
 
   useEffect(() => {
     if (projects) {
@@ -167,7 +173,7 @@ export default function Projects(): React.ReactElement {
   };
 
   const renderProjects = (list: Record<string, IBank>) => {
-    const result = Object.values(list).map((element) => {
+    return Object.values(list).map((element) => {
       return (
         <ListItem className={classes.projectListItem} key={element.id}>
           <Link
@@ -188,7 +194,6 @@ export default function Projects(): React.ReactElement {
         </ListItem>
       );
     });
-    return result;
   };
 
   const renderNewBankButton = () => {

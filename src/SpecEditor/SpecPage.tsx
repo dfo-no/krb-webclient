@@ -8,12 +8,13 @@ import makeStyles from '@mui/styles/makeStyles';
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import mainIllustration from '../assets/images/main-illustration.svg';
+import { PAGE_SIZE } from '../common/Constants';
 import LoaderSpinner from '../common/LoaderSpinner';
 import DFODialog from '../components/DFODialog/DFODialog';
 import DFOSearchBar from '../components/DFOSearchBar/DFOSearchBar';
 import { IBank } from '../Nexus/entities/IBank';
 import SpecificationStoreService from '../Nexus/services/SpecificationStoreService';
-import { useGetAllProjectsQuery } from '../store/api/bankApi';
+import { useGetProjectsQuery } from '../store/api/bankApi';
 import theme from '../theme';
 import { ScrollableContainer } from '../Workbench/Components/ScrollableContainer';
 import {
@@ -57,7 +58,7 @@ const useStyles = makeStyles({
     cursor: 'pointer',
     '&:hover': {
       backgroundColor: theme.palette.primary.main,
-      color: theme.palette.dfoWhite.main
+      color: theme.palette.white.main
     }
   },
   projectListItemCardContent: {
@@ -120,7 +121,12 @@ export default function SpecPage(): React.ReactElement {
   const classes = useStyles();
   const { specification, setSpecification } = useSpecificationState();
 
-  const { data: projects, isLoading } = useGetAllProjectsQuery();
+  const { data: projects, isLoading } = useGetProjectsQuery({
+    pageSize: PAGE_SIZE,
+    page: 1,
+    fieldName: 'title',
+    order: 'DESC'
+  });
 
   const [isOpen, setOpen] = useState(false);
 

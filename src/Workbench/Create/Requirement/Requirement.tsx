@@ -6,7 +6,6 @@ import makeStyles from '@mui/styles/makeStyles';
 import theme from '../../../theme';
 import { FormIconButton } from '../../Components/Form/FormIconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
-import React from 'react';
 import EditRequirement from './EditRequirement';
 import { useVariantState } from '../../Components/VariantContext';
 import { useSelectState } from '../SelectContext';
@@ -25,8 +24,8 @@ const useStyles = makeStyles({
     marginBottom: 32
   },
   active: {
-    border: `2px solid ${theme.palette.purple.main}`,
-    borderTop: `12px solid ${theme.palette.purple.main}`
+    border: `2px solid ${theme.palette.secondary.main}`,
+    borderTop: `12px solid ${theme.palette.secondary.main}`
   }
 });
 
@@ -78,7 +77,7 @@ const Requirement = ({ requirementIndex }: IProps) => {
             }
           />
           <FormIconButton
-            hoverColor={theme.palette.dfoErrorRed.main}
+            hoverColor={theme.palette.errorRed.main}
             onClick={() =>
               setDeleteMode(
                 project.needs[needIndex].requirements[requirementIndex].id

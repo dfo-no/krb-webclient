@@ -309,6 +309,7 @@ export const projectTestData: IBank = {
   version: 0,
   tags: [],
   publishedDate: null,
+  deletedDate: null,
   projectId: null,
   publications: [],
   inheritedBanks: [],

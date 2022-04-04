@@ -21,8 +21,8 @@ const useStyles = makeStyles({
     margin: 32
   },
   active: {
-    border: `2px solid ${theme.palette.purple.main}`,
-    borderTop: `12px solid ${theme.palette.purple.main}`
+    border: `2px solid ${theme.palette.secondary.main}`,
+    borderTop: `12px solid ${theme.palette.secondary.main}`
   }
 });
 

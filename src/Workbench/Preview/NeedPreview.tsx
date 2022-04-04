@@ -39,8 +39,8 @@ export default function NeedPreview({ need }: IProps): React.ReactElement {
     <Box>
       <Box
         sx={{
-          backgroundColor: theme.palette.dfoBlue.main,
-          color: theme.palette.dfoWhite.main,
+          backgroundColor: theme.palette.primary.main,
+          color: theme.palette.white.main,
           padding: 0.5,
           paddingLeft: 4,
           margin: 4

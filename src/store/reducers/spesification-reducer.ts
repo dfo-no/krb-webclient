@@ -27,7 +27,8 @@ const initialState: ISpecificationState = {
       publishedDate: null,
       sourceOriginal: null,
       sourceRel: null,
-      projectId: null
+      projectId: null,
+      deletedDate: null
     },
     title: '',
     version: '',

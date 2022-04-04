@@ -1,14 +1,15 @@
+import { Box, List, Typography } from '@mui/material/';
+import makeStyles from '@mui/styles/makeStyles';
+import React from 'react';
+import { useTranslation } from 'react-i18next';
+import { PAGE_SIZE } from '../../../common/Constants';
 import DFOSearchBar from '../../../components/DFOSearchBar/DFOSearchBar';
+import { IInheritedBank } from '../../../models/IInheritedBank';
+import { ITag } from '../../../Nexus/entities/ITag';
+import { useGetBanksQuery } from '../../../store/api/bankApi';
 import { useAppSelector } from '../../../store/hooks';
 import theme from '../../../theme';
-import { Typography, Box, List } from '@mui/material/';
-import { useTranslation } from 'react-i18next';
 import InheritedTagListItem from './InheritanceTagListItem';
-import makeStyles from '@mui/styles/makeStyles';
-import { IInheritedBank } from '../../../models/IInheritedBank';
-import { useGetAllBanksQuery } from '../../../store/api/bankApi';
-import React from 'react';
-import { ITag } from '../../../Nexus/entities/ITag';
 
 export interface IProps {
   bank: IInheritedBank;
@@ -20,7 +21,7 @@ const useStyles = makeStyles({
     flexDirection: 'column',
     gap: 20,
     margin: 'auto',
-    border: `2px solid ${theme.palette.dfoBlue.main}`,
+    border: `2px solid ${theme.palette.primary.main}`,
     backgroundColor: theme.palette.gray200.main,
     width: '50vw',
     padding: 30
@@ -51,7 +52,12 @@ export default function InheritedBankTagList({
   const { project } = useAppSelector((state) => state.project);
   const classes = useStyles();
   const { t } = useTranslation();
-  const { data: banks } = useGetAllBanksQuery();
+  const { data: banks } = useGetBanksQuery({
+    pageSize: PAGE_SIZE,
+    page: 1,
+    fieldName: 'title',
+    order: 'DESC'
+  });
   const tags: ITag[] = banks ? banks[bank.id].tags : [];
 
   if (!banks) {

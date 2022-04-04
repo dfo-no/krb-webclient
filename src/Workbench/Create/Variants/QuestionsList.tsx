@@ -47,7 +47,7 @@ const QuestionsList = () => {
               title={t(item.type)}
               action={
                 <FormIconButton
-                  hoverColor={theme.palette.dfoErrorRed.main}
+                  hoverColor={theme.palette.errorRed.main}
                   onClick={() => remove(index)}
                   sx={{ marginLeft: 'auto' }}
                 >

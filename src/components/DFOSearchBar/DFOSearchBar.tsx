@@ -16,12 +16,12 @@ const useStyles = makeStyles({
   searchFieldIcon: {
     marginBottom: 2,
     marginRight: 10,
-    color: theme.palette.purple.main,
+    color: theme.palette.secondary.main,
     fontSize: '30px !important',
     zIndex: 1
   },
   adornedEnd: {
-    backgroundColor: theme.palette.dfoWhite.main
+    backgroundColor: theme.palette.white.main
   }
 });
 
