@@ -100,7 +100,6 @@ const CodePanel = (): React.ReactElement => {
             <Typography variant="sm" sx={{ fontWeight: 'bold' }}>
               {item.title}
             </Typography>
-            <Typography variant="sm">{item.title}</Typography>
             <FormIconButton
               sx={{ marginLeft: 'auto' }}
               onClick={() => setEditMode(item.id)}
