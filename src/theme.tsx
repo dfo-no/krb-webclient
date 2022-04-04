@@ -91,6 +91,12 @@ theme.typography.small = {
   fontWeight: 400
 };
 
+theme.typography.smallBlue = {
+  color: theme.palette.primary.main,
+  fontSize: '16px',
+  fontWeight: 400
+};
+
 theme.typography.smallBold = {
   fontSize: '14px',
   fontWeight: 'bold'
@@ -235,6 +241,19 @@ theme.components = {
             textDecorationLine: 'underline'
           }
         }
+      },
+      {
+        props: { variant: 'saveTransparent' },
+        style: {
+          color: theme.palette.green.main,
+          whiteSpace: 'nowrap',
+          height: 40,
+          textDecorationLine: 'underline',
+          '&:hover': {
+            background: 'none',
+            textDecorationLine: 'underline'
+          }
+        }
       }
     ]
   },
@@ -245,6 +264,30 @@ theme.components = {
         height: '40px',
         paddingTop: '0',
         paddingBottom: '0'
+      }
+    }
+  },
+  MuiListItemButton: {
+    styleOverrides: {
+      root: {
+        '&.sidebar': {
+          border: '1px solid black',
+          backgroundColor: theme.palette.white.main,
+          '&.Mui-selected': {
+            backgroundColor: theme.palette.primary.main,
+            color: theme.palette.common.white,
+            '& .MuiListItemText-root': {
+              color: 'inherit'
+            }
+          },
+          '&:hover': {
+            backgroundColor: theme.palette.primary.main,
+            color: theme.palette.common.white,
+            '& .MuiListItemText-root': {
+              color: 'inherit'
+            }
+          }
+        }
       }
     }
   }

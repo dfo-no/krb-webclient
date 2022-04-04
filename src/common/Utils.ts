@@ -37,6 +37,16 @@ class Utils {
     return foundIndex;
   }
 
+  static getNextTAfterDelete<T>(array: T[], foundIndex: number) {
+    if (foundIndex === -1 || array.length === 0) {
+      return null;
+    }
+    if (foundIndex > array.length - 1) {
+      return array[array.length - 1];
+    }
+    return array[foundIndex];
+  }
+
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   static assertUnreachable(_x: never): never {
     throw new Error("Didn't expect to get here");
@@ -67,7 +77,7 @@ class Utils {
     return unescape('  '.replace(/ /g, '%A0').repeat(level - 1));
   }
 
-  static replaceElementInList<T extends IBaseModel>(
+  static replaceElementInList<T extends { id: string }>(
     element: T,
     list: T[]
   ): T[] {
@@ -79,13 +89,16 @@ class Utils {
     return newList;
   }
 
-  static addElementToList<T extends IBaseModel>(element: T, list: T[]): T[] {
+  static addElementToList<T extends { id: string }>(
+    element: T,
+    list: T[]
+  ): T[] {
     const newList = [...list];
     newList.push(element);
     return newList;
   }
 
-  static removeElementFromList<T extends IBaseModel>(
+  static removeElementFromList<T extends { id: string }>(
     element: T,
     list: T[]
   ): T[] {

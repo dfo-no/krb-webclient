@@ -13,12 +13,15 @@ export default class RequirementService {
     this.storeService = store;
   }
 
-  generateDefaultRequirementValues = (projectId: string): IRequirement => {
+  generateDefaultRequirementValues = (
+    projectId: string,
+    needId: string
+  ): IRequirement => {
     const defaultValues: IRequirement = {
       id: '',
       title: '',
       description: '',
-      needId: '',
+      needId: needId,
       type: ModelType.requirement,
       variants: [],
       tags: [],

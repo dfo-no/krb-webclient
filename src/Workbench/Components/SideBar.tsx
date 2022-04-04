@@ -2,7 +2,6 @@ import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import CodeIcon from '@mui/icons-material/Code';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import Inventory2Icon from '@mui/icons-material/Inventory2';
-import LinkIcon from '@mui/icons-material/Link';
 import LocalOfferIcon from '@mui/icons-material/LocalOffer';
 import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
 import { Box, List, ListItem, ListItemText } from '@mui/material';
@@ -129,11 +128,11 @@ function SideBar(): React.ReactElement {
       name: t('Codelist'),
       icon: <CodeIcon />
     },
-    {
+    /*  {
       link: `${baseUrl?.url}/admin/inheritance`,
       name: t('Inheritance'),
       icon: <LinkIcon />
-    },
+    }, */
     {
       link: `${baseUrl?.url}/admin/tags`,
       name: t('Tags'),

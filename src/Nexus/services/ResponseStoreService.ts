@@ -4,7 +4,7 @@ import produce from 'immer';
 import { IRequirementAnswer } from '../../models/IRequirementAnswer';
 import { IResponse } from '../../models/IResponse';
 import { IResponseProduct } from '../../models/IResponseProduct';
-import { ISpecification } from '../../models/ISpecification';
+import { ISpecification } from '../entities/ISpecification';
 
 export default class ResponseStoreService {
   private static response: IResponse;

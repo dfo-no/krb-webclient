@@ -81,3 +81,7 @@ export const VariantSchema = CustomJoi.object().keys({
     )
   })
 });
+
+export const PostVariantSchema = VariantSchema.keys({
+  id: CustomJoi.string().equal('').required()
+});

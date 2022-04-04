@@ -1,6 +1,6 @@
 # Kravbank webclient README
 
-This README is written for Mac users.
+This receipe is written for Mac users.
 
 ## Prerequisites
 
@@ -15,9 +15,9 @@ This README is written for Mac users.
 
 ## Installation
 
-1. Install Node 14 with Homebrew.
+1. Install Node 16 with Homebrew.
 
-   > brew install node@14
+   > brew install node@16
 
 2. Make sure you have added a SSH key to your GitHub settings to be able to clone the repository securely.
 3. Clone the repository:

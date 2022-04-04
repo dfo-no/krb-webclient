@@ -36,7 +36,11 @@ export const BaseBankSchema = CustomJoi.object().keys({
   sourceRel: CustomJoi.alternatives([
     CustomJoi.string().length(36),
     CustomJoi.string().allow(null)
-  ]).required()
+  ]).required(),
+  deletedDate: CustomJoi.alternatives([
+    CustomJoi.date().iso().raw(),
+    CustomJoi.string().valid(null)
+  ])
 });
 
 export interface IBank extends IBaseModel {
@@ -52,4 +56,5 @@ export interface IBank extends IBaseModel {
   publishedDate: string | null;
   projectId: string | null;
   inheritedBanks: IInheritedBank[];
+  deletedDate: string | null;
 }

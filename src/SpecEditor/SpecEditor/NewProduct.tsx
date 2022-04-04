@@ -1,10 +1,10 @@
-import { Box, Button, Divider } from '@mui/material';
+import { Box, Button } from '@mui/material';
+import Divider from '@mui/material/Divider';
 import React from 'react';
 import { useAppSelector } from '../../store/hooks';
 import makeStyles from '@mui/styles/makeStyles';
 import { useGetBankQuery } from '../../store/api/bankApi';
 import { useTranslation } from 'react-i18next';
-import HorizontalTextCtrl from '../../FormProvider/HorizontalTextCtrl';
 import { FormProvider, useForm } from 'react-hook-form';
 import { IProduct, PostProductSchema } from '../../Nexus/entities/IProduct';
 import useProjectMutations from '../../store/api/ProjectMutations';
@@ -12,17 +12,16 @@ import { Parentable } from '../../models/Parentable';
 import Nexus from '../../Nexus/Nexus';
 import { joiResolver } from '@hookform/resolvers/joi';
 import theme from '../../theme';
-import { StandardContainer } from '../../Workbench/Components/StandardContainer';
 import VerticalTextCtrl from '../../FormProvider/VerticalTextCtrl';
+import NewProductHeader from './NewProductHeader';
+import NewProductTypeList from './ProductList';
+import NewProductNeedList from './NeedList';
 
 const useStyles = makeStyles({
-  editor: {
+  newProduct: {
+    width: '100%',
     height: '100%',
-    width: '100vw'
-  },
-  newProductContent: {
-    backgroundColor: theme.palette.gray200.main,
-    width: '100%'
+    backgroundColor: theme.palette.gray200.main
   },
   newProductContainer: {
     display: 'flex',
@@ -41,9 +40,30 @@ const useStyles = makeStyles({
   },
   mainContainer: {
     display: 'flex',
+    flexDirection: 'column',
     paddingTop: 50,
+    paddingBottom: 60,
     margin: '0 auto',
-    width: '50%'
+    width: '60%',
+    backgroundColor: theme.palette.white.main,
+    padding: 20
+  },
+  topContainer: {
+    display: 'flex',
+    gap: 30,
+    flexDirection: 'column'
+  },
+  productTypeContainer: {
+    marginTop: 23
+  },
+  saveButtonContainer: {
+    display: 'flex',
+    width: '100%',
+    marginTop: 20,
+    justifyContent: 'flex-end'
+  },
+  saveButton: {
+    width: 45
   }
 });
 
@@ -73,23 +93,36 @@ export default function NewProduct(): React.ReactElement {
   }
 
   return (
-    <Box className={classes.editor}>
+    <Box className={classes.newProduct}>
       <FormProvider {...methods}>
         <form>
-          <Box className={classes.newProductContent}>
-            <Box className={classes.newProductContainer}>
-              <Box className={classes.newProductFormContainer}>
-                <HorizontalTextCtrl name="name" placeholder="Navn på produkt" />
-                <HorizontalTextCtrl
-                  name="description"
-                  placeholder="Beskrivelse av produktet"
-                />
-              </Box>
-              <Box className={classes.optionButtons}>
-                <Button variant="saveTransparent">Lagre</Button>
-                <Button variant="warningTransparent">Avbryt</Button>{' '}
-                <Button variant="warningTransparent">Slett behov</Button>
-              </Box>
+          <NewProductHeader />
+          <Box className={classes.mainContainer}>
+            <Box className={classes.topContainer}>
+              <VerticalTextCtrl
+                name="number"
+                label={t(
+                  'how many of this product do you need in this procurement'
+                )}
+                placeholder={t('Antall')}
+              />
+              <Divider />
+            </Box>
+            <Box className={classes.productTypeContainer}>
+              <NewProductTypeList />
+            </Box>
+            <Box className={classes.saveButtonContainer}>
+              <Button
+                className={classes.saveButton}
+                type="submit"
+                aria-label="save"
+                variant="save"
+              >
+                {t('save')}
+              </Button>
+            </Box>
+            <Box>
+              <NewProductNeedList />
             </Box>
           </Box>
         </form>

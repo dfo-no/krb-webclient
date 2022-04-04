@@ -1,5 +1,14 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import { API_URL } from '../../common/Constants';
 import { IBank } from '../../Nexus/entities/IBank';
+
+// TODO: This interface is duplicated in krb-api as SortPagination
+interface ISortPagination {
+  fieldName: string;
+  order: 'ASC' | 'DESC';
+  pageSize: number;
+  page: number;
+}
 
 const normalizeBanks = (banks: IBank[]): Record<string, IBank> =>
   banks.reduce((acc, curr) => {
@@ -8,32 +17,34 @@ const normalizeBanks = (banks: IBank[]): Record<string, IBank> =>
     return acc;
   }, {} as Record<string, IBank>);
 
-// TODO: rename to just 'api' sinc
 export const bankApi = createApi({
   reducerPath: 'bankApi',
   baseQuery: fetchBaseQuery({
-    baseUrl: process.env.REACT_APP_API_URL
+    baseUrl: API_URL
   }),
   tagTypes: ['Banks', 'Projects', 'Project'],
   endpoints: (builder) => ({
     getBank: builder.query<IBank, string>({
       query: (id) => `/api/bank/${id}`
     }),
-    getAllBanks: builder.query<Record<string, IBank>, void>({
-      query: () => `/api/bank/banks`,
+    getProject: builder.query<IBank, string>({
+      query: (id) => `/api/bank/${id}`,
+      providesTags: [{ type: 'Project' }]
+    }),
+    getBanks: builder.query<Record<string, IBank>, ISortPagination>({
+      query: (arg) =>
+        `/api/bank/banks?pageSize=${arg.pageSize}&page=${arg.page}&fieldName=${arg.fieldName}&order=${arg.order}`,
       // this transformResponse happens before it's cached by RTK by providesTag
       transformResponse: (response: IBank[]) => normalizeBanks(response),
       providesTags: [{ type: 'Banks' }]
     }),
-    getAlbefaticalSortedBanks: builder.query<IBank[], void>({
-      query: () =>
-        `/api/bank/sorted?fieldName=${'title'}&limit=${5}&order=${'ASC'}`,
-      providesTags: [{ type: 'Banks' }]
-    }),
-    getDateSortedBanks: builder.query<IBank[], void>({
-      query: () =>
-        `/api/bank/sorted?fieldName=${'publishedDate'}&limit=${5}&order=${'DESC'}`,
-      providesTags: [{ type: 'Banks' }]
+
+    getProjects: builder.query<Record<string, IBank>, ISortPagination>({
+      query: (arg) =>
+        `/api/bank/projects?pageSize=${arg.pageSize}&page=${arg.page}&fieldName=${arg.fieldName}&order=${arg.order}`,
+      // this transformResponse happens before it's cached by RTK by providesTag
+      transformResponse: (response: IBank[]) => normalizeBanks(response),
+      providesTags: [{ type: 'Projects' }]
     }),
     addBank: builder.mutation<IBank, IBank>({
       query(bank) {
@@ -45,17 +56,7 @@ export const bankApi = createApi({
       },
       invalidatesTags: [{ type: 'Banks' }]
     }),
-    getProject: builder.query<IBank, string>({
-      query: (id) => `/api/bank/${id}`,
-      providesTags: [{ type: 'Project' }]
-    }),
-    getAllProjects: builder.query<Record<string, IBank>, void>({
-      // TODO: should support Pagination to get page count etc
-      query: () => `/api/bank/projects`,
-      // this transformResponse happens before it's cached by RTK by providesTag
-      transformResponse: (response: IBank[]) => normalizeBanks(response),
-      providesTags: [{ type: 'Projects' }]
-    }),
+
     postProject: builder.mutation<IBank, IBank>({
       query: (project) => ({
         url: `/api/bank`,
@@ -92,12 +93,10 @@ export const bankApi = createApi({
 
 export const {
   useGetBankQuery,
-  useGetAllBanksQuery,
-  useGetAlbefaticalSortedBanksQuery,
-  useGetDateSortedBanksQuery,
+  useGetBanksQuery,
   useAddBankMutation,
   useGetProjectQuery,
-  useGetAllProjectsQuery,
+  useGetProjectsQuery,
   usePostProjectMutation,
   usePutProjectMutation,
   useDeleteProjectMutation,

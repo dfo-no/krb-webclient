@@ -47,8 +47,7 @@ export default function RequirementList({
           onClick={() => updateSelectedFunction(element)}
           className={classes.requirementButton}
         >
-          {element.title}
-          {'22222 '}
+          {element.title}{' '}
           {element.sourceRel && <Chip label="Arvet" variant="outlined" />}
         </Button>
       );

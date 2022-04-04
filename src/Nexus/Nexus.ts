@@ -15,6 +15,7 @@ import SpecificationService from './services/SpecificationService';
 import SpecificationStoreService from './services/SpecificationStoreService';
 import StoreService from './services/StoreService';
 import TagService from './services/TagService';
+import VariantService from './services/VariantService';
 
 export default class Nexus {
   private static instance: Nexus;
@@ -31,6 +32,8 @@ export default class Nexus {
   public needService = new NeedService(this.store);
 
   public requirementService = new RequirementService(this.store);
+
+  public variantService = new VariantService(this.store);
 
   public tagService = new TagService(this.store);
 

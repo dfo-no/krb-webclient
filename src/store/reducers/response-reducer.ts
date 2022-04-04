@@ -3,9 +3,9 @@ import Utils from '../../common/Utils';
 import { IRequirementAnswer } from '../../models/IRequirementAnswer';
 import { IResponse } from '../../models/IResponse';
 import { IResponseProduct } from '../../models/IResponseProduct';
-import { ISpecification } from '../../models/ISpecification';
 import ModelType from '../../models/ModelType';
 import { IBank } from '../../Nexus/entities/IBank';
+import { ISpecification } from '../../Nexus/entities/ISpecification';
 
 interface IResponseState {
   response: IResponse;
@@ -29,9 +29,13 @@ const initialState: IResponseState = {
         publishedDate: null,
         sourceOriginal: null,
         sourceRel: null,
-        projectId: null
+        projectId: null,
+        deletedDate: null
       },
       title: '',
+      version: '',
+      organization: '',
+      organizationNumber: '',
       products: [],
       requirements: [],
       requirementAnswers: []
