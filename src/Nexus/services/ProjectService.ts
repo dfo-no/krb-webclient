@@ -36,7 +36,8 @@ export default class ProjectService {
       inheritedBanks: [],
       sourceOriginal: null,
       sourceRel: null,
-      projectId: null
+      projectId: null,
+      deletedDate: null
     };
     return defaultValues;
   };

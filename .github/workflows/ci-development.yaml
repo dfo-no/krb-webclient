@@ -7,7 +7,7 @@ on:
 env:
   AZURE_WEBAPP_NAME: krb-webclient # set this to your application's name
   AZURE_WEBAPP_PACKAGE_PATH: 'build' # set this to the path to your web app project, defaults to the repository root
-  NODE_VERSION: '14.x'
+  NODE_VERSION: '16.x'
 
 jobs:
   Build_and_Deploy_to_Azure_Dev:
@@ -32,7 +32,7 @@ jobs:
       - name: Lint and test
         shell: bash
         run: |
-          npm run-script lint
+          npm run-script lint:ci
           npm run-script test --coverage
 
       - name: Build

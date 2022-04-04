@@ -25,7 +25,8 @@ const initialState: UploadedResponseState = {
       publishedDate: null,
       sourceOriginal: null,
       sourceRel: null,
-      projectId: null
+      projectId: null,
+      deletedDate: null
     },
     supplier: '',
     products: [],

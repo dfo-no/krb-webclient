@@ -20,7 +20,8 @@ describe('BankSchema should validate', () => {
       inheritedBanks: [],
       sourceOriginal: null,
       sourceRel: null,
-      projectId: null
+      projectId: null,
+      deletedDate: null
     };
 
     const report = BaseBankSchema.validate(bank);

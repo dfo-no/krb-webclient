@@ -1,4 +1,4 @@
-name: Continuous Deployment
+name: Release
 
 on:
   release:
@@ -7,15 +7,14 @@ on:
 env:
   AZURE_WEBAPP_NAME: krb-webclient-prod # set this to your application's name
   AZURE_WEBAPP_PACKAGE_PATH: 'build' # set this to the path to your web app project, defaults to the repository root
-  NODE_VERSION: '12.x'
+  NODE_VERSION: '16.x'
 
 jobs:
-  Build_and_Deploy:
+  Build_and_Release:
     runs-on: ubuntu-18.04
     steps:
       - uses: actions/checkout@v2
-
-      - uses: actions/setup-node@v1
+      - uses: actions/setup-node@v2
         with:
           node-version: ${{ env.NODE_VERSION }}
 
@@ -25,15 +24,15 @@ jobs:
           npm install
 
       - name: Build
+        #change build:ci to build when all warnings are gone
+        run: |
+          npm run-script git-info
+          npm run-script build:ci
         env:
           REACT_APP_COSMOS_DATABASE: ${{ secrets.REACT_APP_COSMOS_DATABASE_PROD }}
           REACT_APP_COSMOS_CONTAINER: ${{ secrets.REACT_APP_COSMOS_CONTAINER_PROD }}
           REACT_APP_COSMOSDB_CONNECTION_STRING: ${{ secrets.REACT_APP_COSMOSDB_CONNECTION_STRING_PROD }}
           REACT_APP_CLIENTID: ${{ secrets.REACT_APP_CLIENTID }}
-          CI: ''
-        run: |
-          npm run-script git-info
-          npm run-script build:ci
 
       - name: 'Deploy to Azure WebApp'
         uses: azure/webapps-deploy@v2
@@ -41,4 +40,3 @@ jobs:
           app-name: ${{ env.AZURE_WEBAPP_NAME }}
           publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE_PROD }}
           package: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
-          images:

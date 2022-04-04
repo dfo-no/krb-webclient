@@ -21,7 +21,8 @@ describe('ProjectSchemas works', () => {
       inheritedBanks: [],
       sourceOriginal: null,
       sourceRel: null,
-      projectId: null
+      projectId: null,
+      deletedDate: null
     };
     const report = PostProjectSchema.validate(bank);
 
@@ -44,7 +45,8 @@ describe('ProjectSchemas works', () => {
       inheritedBanks: [],
       sourceOriginal: null,
       sourceRel: null,
-      projectId: null
+      projectId: null,
+      deletedDate: null
     };
     const report = PutProjectSchema.validate(bank);
 
@@ -91,6 +93,7 @@ describe('ProjectSchemas works', () => {
       needs: [],
       products: [],
       publishedDate: null,
+      deletedDate: null,
       inheritedBanks: [],
       sourceOriginal: null,
       sourceRel: null,
@@ -136,6 +139,7 @@ describe('ProjectSchemas works', () => {
         }
       ],
       inheritedBanks: [],
+      deletedDate: null,
       sourceOriginal: null,
       sourceRel: null,
       projectId: null
