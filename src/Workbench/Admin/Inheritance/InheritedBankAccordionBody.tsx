@@ -109,7 +109,12 @@ export default function InheritedBankAccordionBody({
                 variant="blueborder"
                 name="name"
                 label={
-                  <Typography variant="sm">Arv hele kravsettet</Typography>
+                  <Typography
+                    variant="sm"
+                    sx={{ color: theme.palette.gray700.main }}
+                  >
+                    Arv hele kravsettet
+                  </Typography>
                 }
               />
               <Button variant="save">{t('save changes')}</Button>
