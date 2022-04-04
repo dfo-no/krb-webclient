@@ -189,9 +189,7 @@ export default function Projects(): React.ReactElement {
                   <DeleteIcon />
                 </Box>
                 <Divider className={classes.projectListItemDivider} />
-                <Typography variant="sm" sx={{ fontWeight: 'bold' }}>
-                  {element.description}
-                </Typography>
+                <Typography variant="sm">{element.description}</Typography>
               </Box>
             </Card>
           </Link>
