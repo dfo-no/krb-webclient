@@ -60,8 +60,7 @@ export default function NeedList(): React.ReactElement {
       <Typography
         variant="sm"
         sx={{
-          color: theme.palette.primary.main,
-          fontSize: 16
+          color: theme.palette.primary.main
         }}
       >
         {t('needs you find under')}

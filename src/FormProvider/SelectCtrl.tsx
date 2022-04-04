@@ -27,8 +27,7 @@ const SelectCtrl = ({ name, label, options }: IProps): React.ReactElement => {
         <Typography
           variant="sm"
           sx={{
-            color: theme.palette.primary.main,
-            fontSize: 16
+            color: theme.palette.primary.main
           }}
         >
           {label}

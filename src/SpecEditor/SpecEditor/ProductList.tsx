@@ -72,8 +72,7 @@ export default function ProductList(): React.ReactElement {
       <Typography
         variant="sm"
         sx={{
-          color: theme.palette.primary.main,
-          fontSize: 16
+          color: theme.palette.primary.main
         }}
       >
         Velg en produkttype fra kravsettet som passer best til ditt produkt
