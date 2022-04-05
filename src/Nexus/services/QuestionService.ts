@@ -1,7 +1,5 @@
 import Utils from '../../common/Utils';
-import ModelType from '../../models/ModelType';
 import QuestionEnum from '../../models/QuestionEnum';
-import { IBank } from '../entities/IBank';
 import { ICheckboxQuestion } from '../entities/ICheckboxQuestion';
 import { ICodelistQuestion } from '../entities/ICodelistQuestion';
 import { IFileUploadQuestion } from '../entities/IFileUploadQuestion';

@@ -9,6 +9,8 @@ interface ISelectContext {
   setRequirementIndex: (value: number | null) => void;
   deleteMode: string;
   setDeleteMode: (value: string) => void;
+  createVariant: string;
+  setCreateVariant: (value: string) => void;
 }
 
 const initialContext: ISelectContext = {
@@ -27,6 +29,10 @@ const initialContext: ISelectContext = {
   deleteMode: '',
   setDeleteMode: function (): void {
     throw new Error('Function not implemented.');
+  },
+  createVariant: '',
+  setCreateVariant: function (): void {
+    throw new Error('Function not implemented.');
   }
 };
 
@@ -41,6 +47,7 @@ export const SelectProvider = ({ children }: IProps) => {
   const [needId, setNeedId] = useState<string | null>(null);
   const [requirementIndex, setRequirementIndex] = useState<number | null>(null);
   const [deleteMode, setDeleteMode] = useState('');
+  const [createVariant, setCreateVariant] = useState('');
 
   return (
     <SelectContext.Provider
@@ -52,7 +59,9 @@ export const SelectProvider = ({ children }: IProps) => {
         requirementIndex,
         setRequirementIndex,
         deleteMode,
-        setDeleteMode
+        setDeleteMode,
+        createVariant,
+        setCreateVariant
       }}
     >
       {children}

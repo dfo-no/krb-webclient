@@ -7,13 +7,15 @@ import DFOInput from '../components/DFOInput/DFOInput';
 interface IProps {
   name: string;
   label: string;
-  placeholder: string;
+  placeholder?: string;
+  type?: string;
 }
 
 const VerticalTextCtrl = ({
   name,
   label = '',
-  placeholder = ''
+  placeholder = '',
+  type = 'text'
 }: IProps): React.ReactElement => {
   const {
     formState: { errors }
@@ -21,15 +23,16 @@ const VerticalTextCtrl = ({
 
   return (
     <FormControl error={!!get(errors, name)} sx={{ width: '100%' }}>
-      <FormLabel>
-        <Typography variant="smallBlue">{label}</Typography>
-      </FormLabel>
+      <Typography variant="smallBold" sx={{ marginBottom: 2 }}>
+        {label}
+      </Typography>
       <Controller
         name={name}
         render={({ field }) => (
           <DFOInput
             {...field}
             placeholder={placeholder}
+            type={type}
             sx={{ marginBottom: 4 }}
             disableUnderline
           />

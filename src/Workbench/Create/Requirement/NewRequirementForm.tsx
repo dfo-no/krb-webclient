@@ -22,7 +22,7 @@ import VerticalTextCtrl from '../../../FormProvider/VerticalTextCtrl';
 
 interface IProps {
   need: Parentable<INeed>;
-  handleClose: () => void;
+  handleClose: (id: string) => void;
 }
 
 function NewRequirementForm({ need, handleClose }: IProps): React.ReactElement {
@@ -53,7 +53,7 @@ function NewRequirementForm({ need, handleClose }: IProps): React.ReactElement {
         text: 'Successfully created new requirement'
       };
       dispatch(addAlert({ alert }));
-      handleClose();
+      handleClose(newRequirement.id);
       methods.reset();
     });
   };
@@ -71,7 +71,7 @@ function NewRequirementForm({ need, handleClose }: IProps): React.ReactElement {
             <Button variant="primary" type="submit">
               {t('save')}
             </Button>
-            <Button variant="warning" onClick={() => handleClose()}>
+            <Button variant="warning" onClick={() => handleClose('')}>
               {t('cancel')}
             </Button>
           </ModalButtonsBox>

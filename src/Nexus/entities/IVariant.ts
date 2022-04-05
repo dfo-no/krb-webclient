@@ -15,7 +15,7 @@ import VariantType from './VariantType';
 
 export interface IVariant {
   id: string;
-  description: string | null;
+  description: string;
   requirementText: string;
   instruction: string;
   useProduct: boolean;
@@ -28,9 +28,9 @@ export interface IVariant {
 
 export const VariantSchema = CustomJoi.object().keys({
   id: CustomJoi.string().max(36).required(),
-  description: CustomJoi.string().allow(null, '').required(),
-  requirementText: CustomJoi.string().allow(null, '').required(),
-  instruction: CustomJoi.string().allow(null, '').required(),
+  description: CustomJoi.string().required(),
+  requirementText: CustomJoi.string().allow('').required(),
+  instruction: CustomJoi.string().allow('').required(),
   useProduct: CustomJoi.boolean().required(),
   useSpesification: CustomJoi.boolean().required(),
   useQualification: CustomJoi.boolean().required(),
