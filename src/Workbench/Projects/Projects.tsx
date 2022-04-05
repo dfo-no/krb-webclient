@@ -168,6 +168,7 @@ export default function Projects(): React.ReactElement {
       }
     });
   };
+
   const searchFieldCallback = (result: Record<string, IBank>) => {
     setProjectList(result);
   };
@@ -177,7 +178,7 @@ export default function Projects(): React.ReactElement {
       return (
         <ListItem className={classes.projectListItem} key={element.id}>
           <Link
-            to={`/workbench/${element.id}/admin`}
+            to={`/workbench/${element.id}/create`}
             className={classes.projectLink}
           >
             <Card className={classes.projectListItemCard}>
