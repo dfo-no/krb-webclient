@@ -20,22 +20,22 @@ const useStyles = makeStyles({
     height: '22px'
   },
   allWhiteCheckbox: {
-    border: `2px solid ${theme.palette.dfoWhite.main}`,
+    border: `2px solid ${theme.palette.white.main}`,
     '& .MuiSvgIcon-root': {
-      color: theme.palette.dfoWhite.main
+      color: theme.palette.white.main
     }
   },
   blueCheckbox: {
-    border: `2px solid ${theme.palette.dfoBlue.main}`,
+    border: `2px solid ${theme.palette.primary.main}`,
     '& .MuiSvgIcon-root': {
-      color: theme.palette.dfoWhite.main,
-      backgroundColor: theme.palette.dfoBlue.main
+      color: theme.palette.white.main,
+      backgroundColor: theme.palette.primary.main
     }
   },
   blueBorderCheckbox: {
-    border: `2px solid ${theme.palette.dfoLightBlue.main}`,
+    border: `2px solid ${theme.palette.lightBlue.main}`,
     '& .MuiSvgIcon-root': {
-      color: theme.palette.dfoLightBlue.main
+      color: theme.palette.lightBlue.main
     }
   }
 });

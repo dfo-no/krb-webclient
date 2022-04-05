@@ -14,7 +14,7 @@ import { ScrollableContainer } from '../Components/ScrollableContainer';
 import { StandardContainer } from '../Components/StandardContainer';
 import DeleteNeed from './Need/DeleteNeed';
 import CreateSideBar from './CreateSideBar';
-import { VariantProvider } from './Requirement/VariantContext';
+import { VariantProvider } from '../Components/VariantContext';
 import { IRouteParams } from '../Models/IRouteParams';
 
 export default function Create(): React.ReactElement {

@@ -105,7 +105,7 @@ const CodePanel = (): React.ReactElement => {
               <EditOutlinedIcon />
             </FormIconButton>
             <FormIconButton
-              hoverColor={theme.palette.dfoErrorRed.main}
+              hoverColor={theme.palette.errorRed.main}
               onClick={() => setDeleteMode(item.id)}
             >
               <DeleteIcon />

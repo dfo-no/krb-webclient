@@ -1,111 +1,16 @@
 import { get } from 'lodash';
-import ModelType from '../models/ModelType';
-import { Nestable } from '../models/Nestable';
-import { Parentable } from '../models/Parentable';
-import { IBaseModel } from '../Nexus/entities/IBaseModel';
 import Utils from './Utils';
-
-interface ICar extends IBaseModel {
-  id: string;
-  title: string;
-  type: ModelType.need;
-}
+import {
+  needHierarchyTestData,
+  nestableCarsTestData,
+  parentableCarsTestData,
+  productsTestData,
+  projectTestData
+} from './TestData';
 
 describe('Utils functions should work', () => {
   test('Utils.parentable2Nestable', () => {
-    const cars: Parentable<ICar>[] = [
-      {
-        id: 'aa28e225-7a76-4c57-bb22-ec87b3131762',
-        title: 'A',
-        parent: '',
-        type: ModelType.need,
-        sourceOriginal: null,
-        sourceRel: null
-      },
-      {
-        id: 'bb60be0f-44e9-4ea9-a755-476fbc6dd85d',
-        title: 'B_1',
-        parent: 'aa28e225-7a76-4c57-bb22-ec87b3131762',
-        type: ModelType.need,
-        sourceOriginal: null,
-        sourceRel: null
-      },
-      {
-        id: 'cc60be0f-44e9-4ea9-a755-476fbc6dd855',
-        title: 'C_1',
-        parent: 'aa28e225-7a76-4c57-bb22-ec87b3131762',
-        type: ModelType.need,
-        sourceOriginal: null,
-        sourceRel: null
-      },
-      {
-        id: 'dd029ba3-aa01-4150-bd43-8d754bcfd890',
-        title: 'D_2',
-        parent: 'cc60be0f-44e9-4ea9-a755-476fbc6dd855',
-        type: ModelType.need,
-        sourceOriginal: null,
-        sourceRel: null
-      },
-      {
-        id: '0e998bb7-bc0f-41d8-9199-800b46145ba9',
-        title: 'F_4',
-        parent: 'ee7d9375-aee7-42c2-a6d7-9fa1541d56ef',
-        type: ModelType.need,
-        sourceOriginal: null,
-        sourceRel: null
-      },
-      {
-        id: 'a85deb14-9549-465f-9183-fe9102c4f8e0',
-        title: 'O_2',
-        parent: 'ee7d9375-aee7-42c2-a6d7-9fa1541d56ef',
-        type: ModelType.need,
-        sourceOriginal: null,
-        sourceRel: null
-      },
-      {
-        id: 'ee7d9375-aee7-42c2-a6d7-9fa1541d56ef',
-        title: 'E_3',
-        parent: 'dd029ba3-aa01-4150-bd43-8d754bcfd890',
-        type: ModelType.need,
-        sourceOriginal: null,
-        sourceRel: null
-      },
-
-      {
-        id: 'ffb9bfe0-0b87-4e2d-95c8-9b703e655e61',
-        title: 'K',
-        parent: '',
-        type: ModelType.need,
-        sourceOriginal: null,
-        sourceRel: null
-      },
-      {
-        id: '1f22e20c-2777-4ff3-880d-20256f6cb931',
-        title: 'K_1',
-        parent: 'ffb9bfe0-0b87-4e2d-95c8-9b703e655e61',
-        type: ModelType.need,
-        sourceOriginal: null,
-        sourceRel: null
-      },
-      {
-        id: '293b2bc4-a5f5-4c61-9759-814bc68ee9bb',
-        title: 'K_2',
-        parent: '1f22e20c-2777-4ff3-880d-20256f6cb931',
-        type: ModelType.need,
-        sourceOriginal: null,
-        sourceRel: null
-      },
-      {
-        id: 'a85deb14-9549-465f-9183-fe9102c4f8e0',
-        title: 'O_2',
-        parent: '1f22e20c-2777-4ff3-880d-20256f6cb931',
-        type: ModelType.need,
-        sourceOriginal: null,
-        sourceRel: null
-      }
-    ];
-
-    const items = Utils.parentable2Nestable<ICar>(cars);
+    const items = Utils.parentable2Nestable(parentableCarsTestData);
 
     // Check that the props are correct
     expect(items[1].title).toEqual('K');
@@ -142,81 +47,7 @@ describe('Utils functions should work', () => {
   });
 
   test('Utils.nestable2Levelable', () => {
-    const cars: Nestable<ICar>[] = [
-      {
-        id: 'aa28e225-7a76-4c57-bb22-ec87b3131762',
-        title: 'A',
-        parent: '',
-        type: ModelType.need,
-        level: 1,
-        sourceOriginal: null,
-        sourceRel: null,
-        children: [
-          {
-            id: 'bb60be0f-44e9-4ea9-a755-476fbc6dd85d',
-            title: 'B_1',
-            parent: 'aa28e225-7a76-4c57-bb22-ec87b3131762',
-            type: ModelType.need,
-            level: 2,
-            sourceOriginal: null,
-            sourceRel: null
-          },
-          {
-            id: 'cc60be0f-44e9-4ea9-a755-476fbc6dd855',
-            title: 'C_1',
-            parent: 'aa28e225-7a76-4c57-bb22-ec87b3131762',
-            type: ModelType.need,
-            level: 2,
-            sourceOriginal: null,
-            sourceRel: null,
-            children: [
-              {
-                id: 'dd029ba3-aa01-4150-bd43-8d754bcfd890',
-                title: 'D_2',
-                parent: 'cc60be0f-44e9-4ea9-a755-476fbc6dd855',
-                type: ModelType.need,
-                level: 3,
-                sourceOriginal: null,
-                sourceRel: null,
-                children: [
-                  {
-                    id: 'ee7d9375-aee7-42c2-a6d7-9fa1541d56ef',
-                    title: 'E_3',
-                    parent: 'dd029ba3-aa01-4150-bd43-8d754bcfd890',
-                    type: ModelType.need,
-                    level: 4,
-                    children: [
-                      {
-                        id: '0e998bb7-bc0f-41d8-9199-800b46145ba9',
-                        title: 'F_4',
-                        parent: 'ee7d9375-aee7-42c2-a6d7-9fa1541d56ef',
-                        type: ModelType.need,
-                        level: 5,
-                        sourceOriginal: null,
-                        sourceRel: null
-                      }
-                    ],
-                    sourceOriginal: null,
-                    sourceRel: null
-                  }
-                ]
-              }
-            ]
-          }
-        ]
-      },
-      {
-        id: 'ffb9bfe0-0b87-4e2d-95c8-9b703e655e61',
-        title: 'K',
-        parent: '',
-        type: ModelType.need,
-        level: 1,
-        sourceOriginal: null,
-        sourceRel: null
-      }
-    ];
-
-    const leveled = Utils.nestable2Levelable(cars);
+    const leveled = Utils.nestable2Levelable(nestableCarsTestData);
 
     expect(leveled[0].title).toBe('A');
     expect(leveled[6].title).toBe('K');
@@ -276,5 +107,69 @@ describe('Utils functions should work', () => {
     ary5.splice(foundIndex6, 1);
     const result6 = Utils.getNextIndexAfterDelete(ary6, foundIndex5);
     expect(result6).toEqual(2);
+  });
+
+  it('Utils.findParentTree returns list when parents', () => {
+    const element = parentableCarsTestData[3]; // D_2, with parents -> C_1 (index 2) -> A (index 0)
+    const parents = Utils.findParentTree(element, [], parentableCarsTestData);
+
+    expect(parents.length).toEqual(2);
+    expect(parents[0]).toEqual(parentableCarsTestData[0]);
+    expect(parents[1]).toEqual(parentableCarsTestData[2]);
+  });
+
+  it('Utils.findParentTree returns empty list when no parents', () => {
+    const element = parentableCarsTestData[7]; // K, with no parents
+    const parents = Utils.findParentTree(element, [], parentableCarsTestData);
+
+    expect(parents.length).toEqual(0);
+  });
+
+  it('Utils.findVariantsUsedBySpesification returns only variants with useSpesification true', () => {
+    const project = { ...projectTestData, needs: needHierarchyTestData };
+    const needs = Utils.findVariantsUsedBySpesification(project);
+
+    expect(needs.length).toEqual(1);
+    expect(needs[0].requirements.length).toEqual(1);
+    expect(needs[0].requirements[0].variants.length).toEqual(1);
+    expect(needs[0].requirements[0].variants[0].description).toEqual(
+      'A3 Variant'
+    );
+  });
+
+  it('Utils.findVariantsUsedByProduct returns only variants with useProduct true and product in productslist', () => {
+    const project = {
+      ...projectTestData,
+      needs: needHierarchyTestData,
+      products: productsTestData
+    };
+    const needsForProductA = Utils.findVariantsUsedByProduct(
+      productsTestData[0],
+      project
+    );
+
+    expect(needsForProductA.length).toEqual(1);
+    expect(needsForProductA[0].requirements.length).toEqual(1);
+    expect(needsForProductA[0].requirements[0].variants.length).toEqual(1);
+    expect(needsForProductA[0].requirements[0].variants[0].description).toEqual(
+      'A2 Variant'
+    );
+
+    const needsForProductB = Utils.findVariantsUsedByProduct(
+      productsTestData[1],
+      project
+    );
+
+    expect(needsForProductB.length).toEqual(2);
+    expect(needsForProductB[0].requirements.length).toEqual(1);
+    expect(needsForProductB[0].requirements[0].variants.length).toEqual(1);
+    expect(needsForProductB[0].requirements[0].variants[0].description).toEqual(
+      'A2 Variant'
+    );
+    expect(needsForProductB[1].requirements.length).toEqual(1);
+    expect(needsForProductB[1].requirements[0].variants.length).toEqual(1);
+    expect(needsForProductB[1].requirements[0].variants[0].description).toEqual(
+      'B Variant'
+    );
   });
 });

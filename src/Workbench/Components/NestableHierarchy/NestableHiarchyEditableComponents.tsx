@@ -18,7 +18,7 @@ const useStyles = makeStyles({
     display: 'flex',
     minHeight: 50,
     border: `1px solid ${theme.palette.gray500.main}`,
-    backgroundColor: theme.palette.dfoWhite.main
+    backgroundColor: theme.palette.white.main
   },
   nestableCustom: {
     width: '100%',
@@ -60,7 +60,7 @@ const useStyles = makeStyles({
     cursor: 'pointer',
     paddingRight: '8px',
     '&:hover': {
-      color: theme.palette.dfoLightBlue.main
+      color: theme.palette.lightBlue.main
     }
   }
 });
@@ -113,7 +113,7 @@ const NestableHierarcyEditableComponents = <
         </FormIconButton>
         {DeleteComponent && (
           <FormIconButton
-            hoverColor={theme.palette.dfoErrorRed.main}
+            hoverColor={theme.palette.errorRed.main}
             onClick={() => setDeleteMode(item.id)}
           >
             <DeleteIcon />

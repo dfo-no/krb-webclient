@@ -11,11 +11,11 @@ export const DFOCardHeaderIconButton = styled(IconButton, {
   height: 32,
   '&:hover': {
     '& .MuiSvgIcon-root': {
-      color: hoverColor ? hoverColor : theme.palette.dfoLightBlue.main
+      color: hoverColor ? hoverColor : theme.palette.lightBlue.main
     }
   },
   '& .MuiSvgIcon-root': {
-    color: theme.palette.dfoWhite.main,
+    color: theme.palette.white.main,
     width: 32,
     height: 32
   }

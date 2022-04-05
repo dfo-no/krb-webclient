@@ -27,7 +27,6 @@ export default function SpecModule(): React.ReactElement {
         <Route exact path="/specification">
           <SpecPage />
         </Route>
-
         <Box className={classes.specification}>
           <SpecSideBar />
           <Route exact path="/specification/:id">

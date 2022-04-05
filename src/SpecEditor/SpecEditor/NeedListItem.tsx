@@ -9,13 +9,13 @@ export interface IProps {
 
 const useStyles = makeStyles({
   needListItem: {
-    backgroundColor: theme.palette.dfoWhite.main,
+    backgroundColor: theme.palette.white.main,
     borderBottom: `1px solid ${theme.palette.silver.main}`,
     cursor: 'pointer',
     '&:hover': {
       background: theme.palette.lightBlue.main,
       '& $needListItemText': {
-        color: theme.palette.dfoWhite.main
+        color: theme.palette.white.main
       }
     }
   },

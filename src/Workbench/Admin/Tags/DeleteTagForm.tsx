@@ -76,14 +76,14 @@ export default function DeleteTagForm({
         {!hasChildren && (
           <FormDeleteBox>
             <FormTextButton
-              hoverColor={theme.palette.dfoErrorRed.main}
+              hoverColor={theme.palette.errorRed.main}
               type="submit"
               aria-label="delete"
             >
               {t('delete')}
             </FormTextButton>
             <FormTextButton
-              hoverColor={theme.palette.gray500.main}
+              hoverColor={theme.palette.gray400.main}
               onClick={() => handleClose()}
               aria-label="close"
             >
@@ -98,7 +98,7 @@ export default function DeleteTagForm({
               {t('cant delete this tag')}
             </Typography>
             <FormTextButton
-              hoverColor={theme.palette.gray500.main}
+              hoverColor={theme.palette.gray400.main}
               onClick={() => handleClose()}
               aria-label="close"
             >

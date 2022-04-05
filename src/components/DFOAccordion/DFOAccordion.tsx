@@ -20,7 +20,7 @@ interface DFOAccordionProviderProps {
 
 const useStyles = makeStyles({
   root: {
-    borderTop: `12px solid ${theme.palette.purple.main}`
+    borderTop: `12px solid ${theme.palette.secondary.main}`
   },
   accordionBody: {
     borderTop: `2px solid ${theme.palette.gray300.main}`

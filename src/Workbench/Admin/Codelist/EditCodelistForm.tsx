@@ -3,18 +3,15 @@ import React from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { v4 as uuidv4 } from 'uuid';
-import CheckIcon from '@mui/icons-material/Check';
-import CloseIcon from '@mui/icons-material/Close';
 import { useAppDispatch } from '../../../store/hooks';
 import { addAlert } from '../../../store/reducers/alert-reducer';
-import HorizontalTextCtrl from '../../../FormProvider/HorizontalTextCtrl';
+import VerticalTextCtrl from '../../../FormProvider/VerticalTextCtrl';
 import { IAlert } from '../../../models/IAlert';
 import { CodelistSchema, ICodelist } from '../../../Nexus/entities/ICodelist';
-import { FormIconButton } from '../../Components/Form/FormIconButton';
 import { FormItemBox } from '../../Components/Form/FormItemBox';
-import { FormFlexBox } from '../../Components/Form/FormFlexBox';
 import { useFormStyles } from '../../Components/Form/FormStyles';
 import useProjectMutations from '../../../store/api/ProjectMutations';
+import FormButtons from '../../Components/Form/FormButtons';
 
 interface IProps {
   codelist: ICodelist;
@@ -56,21 +53,13 @@ export default function EditCodelistForm({
         noValidate
       >
         <FormItemBox>
-          <FormFlexBox sx={{ paddingLeft: 1 }}>
-            <HorizontalTextCtrl name="title" placeholder={t('Title')} />
-          </FormFlexBox>
-          <FormFlexBox sx={{ paddingLeft: 1, paddingRight: 1 }}>
-            <HorizontalTextCtrl
-              name="description"
-              placeholder={t('Description')}
-            />
-          </FormFlexBox>
-          <FormIconButton type="submit" aria-label="save">
-            <CheckIcon />
-          </FormIconButton>
-          <FormIconButton onClick={() => handleClose(null)} aria-label="close">
-            <CloseIcon />
-          </FormIconButton>
+          <VerticalTextCtrl name="title" label={t('Title')} placeholder={''} />
+          <VerticalTextCtrl
+            name="description"
+            label={t('Description')}
+            placeholder={''}
+          />
+          <FormButtons handleClose={() => handleClose(null)} />
         </FormItemBox>
       </form>
     </FormProvider>

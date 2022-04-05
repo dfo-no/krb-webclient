@@ -7,26 +7,25 @@ import makeStyles from '@mui/styles/makeStyles';
 import React from 'react';
 import Utils from '../../common/Utils';
 import { Parentable } from '../../models/Parentable';
-import { INeed } from '../../Nexus/entities/INeed';
 import { IProduct } from '../../Nexus/entities/IProduct';
 import theme from '../../theme';
 import { usePreviewState } from './PreviewContext';
 interface IProps {
-  parentableArray: Parentable<INeed | IProduct>[];
+  parentableArray: Parentable<IProduct>[];
 }
 
 const useStyles = makeStyles({
   sideBar: {
     height: '100%',
+    width: '100%',
     [theme.breakpoints.down('md')]: {
       paddingTop: 0
     }
   },
   sideBarList: {
     position: 'sticky',
-    backgroundColor: theme.palette.gray100.main,
     height: '100%',
-    width: '18vw',
+    width: '100%',
     minWidth: 230,
     paddingTop: 60
   }
@@ -39,12 +38,15 @@ export default function Sidebar({
   const classes = useStyles();
   const [selectedIndex, setSelectedIndex] = React.useState(0);
 
-  const handleListItemClick = (value: string, index: number) => {
+  const handleListItemClick = (
+    value: Parentable<IProduct> | null,
+    index: number
+  ) => {
     setSelectedIndex(index);
     setSelected(value);
   };
 
-  const renderProducts = (elements: Parentable<INeed | IProduct>[]) => {
+  const renderProducts = (elements: Parentable<IProduct>[]) => {
     const displayNeeds = Utils.parentable2Levelable(elements);
     return displayNeeds.map((element, index) => {
       return (
@@ -52,7 +54,7 @@ export default function Sidebar({
           <ListItemButton
             className="sidebar"
             selected={selectedIndex === index + 1}
-            onClick={() => handleListItemClick(element.id, index + 1)}
+            onClick={() => handleListItemClick(element, index + 1)}
           >
             <ListItemText>{element.title}</ListItemText>
           </ListItemButton>
@@ -68,7 +70,7 @@ export default function Sidebar({
           <ListItemButton
             className="sidebar"
             selected={selectedIndex === 0}
-            onClick={() => handleListItemClick('', 0)}
+            onClick={() => handleListItemClick(null, 0)}
           >
             <ListItemText>Generiske krav</ListItemText>
           </ListItemButton>

@@ -24,7 +24,7 @@ const NewVariant = ({ need, requirement }: IProps) => {
   return (
     <>
       <FormIconButton
-        hoverColor={theme.palette.saveGreen.main}
+        hoverColor={theme.palette.green.main}
         sx={{ marginLeft: 0, marginRight: -2 }}
         onClick={() => setNewOpen(true)}
       >

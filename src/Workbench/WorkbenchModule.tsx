@@ -11,7 +11,7 @@ const useStyles = makeStyles({
     width: '100%',
     flexGrow: 1,
     minHeight: 0,
-    backgroundColor: theme.palette.dfoBackgroundBlue.main
+    backgroundColor: theme.palette.backgroundBlue.main
   }
 });
 
