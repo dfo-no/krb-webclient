@@ -73,7 +73,7 @@ const NewProjectForm = ({ handleClose }: IProps) => {
         autoComplete="off"
         noValidate
       >
-        <Typography variant="lg" sx={{ color: theme.palette.primary.main }}>
+        <Typography variant="lg" color={theme.palette.primary.main}>
           {t('create new bank')}
         </Typography>
         <VerticalTextCtrl

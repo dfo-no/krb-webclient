@@ -86,10 +86,10 @@ export default function Requirements({ project }: IProps): React.ReactElement {
     return requirements.map((r) => (
       <Box key={r.id} sx={{ mt: 1 }}>
         <Typography
+          color={theme.palette.common.white}
           sx={{
             fontWeight: 'bold',
             backgroundColor: theme.palette.primary.main,
-            color: theme.palette.common.white,
             padding: '.5rem'
           }}
         >

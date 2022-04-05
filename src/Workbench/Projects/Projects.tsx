@@ -212,9 +212,9 @@ export default function Projects(): React.ReactElement {
         <Box className={classes.titleSubTitleContainer}>
           <Typography
             variant="xl"
+            color={theme.palette.primary.main}
             sx={{
               letterSpacing: 0.2,
-              color: theme.palette.primary.main,
               fontWeight: 'bold'
             }}
           >

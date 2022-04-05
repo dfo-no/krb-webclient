@@ -181,9 +181,9 @@ export default function Header(): React.ReactElement {
                 <Typography variant="sm">
                   {projectPath + ' / '}
                   <Typography
+                    color={theme.palette.primary.main}
                     variant="sm"
                     sx={{
-                      color: theme.palette.dfoDarkBlue.main,
                       textDecoration: 'underline',
                       fontWeight: 'bold',
                       cursor: 'pointer'

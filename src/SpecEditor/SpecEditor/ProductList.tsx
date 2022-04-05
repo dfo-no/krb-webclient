@@ -69,12 +69,7 @@ export default function ProductList(): React.ReactElement {
 
   return (
     <>
-      <Typography
-        variant="sm"
-        sx={{
-          color: theme.palette.primary.main
-        }}
-      >
+      <Typography variant="sm" color={theme.palette.primary.main}>
         Velg en produkttype fra kravsettet som passer best til ditt produkt
       </Typography>
       <Box className={classes.newProductTypeList}>

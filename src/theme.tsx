@@ -23,6 +23,17 @@ const theme = createTheme({
       fontSize: '3.125rem'
     }
   },
+  breakpoints: {
+    values: {
+      xs: 0,
+      sm: 600,
+      md: 900,
+      mdd: 906,
+      mddd: 956,
+      lg: 1200,
+      xl: 1536
+    }
+  },
   palette: {
     primary: {
       main: '#012a4c'
@@ -30,29 +41,26 @@ const theme = createTheme({
     secondary: {
       main: '#009fe3'
     },
-    dfoBlue: {
+    backgroundBlue: {
+      main: '#bfe7f8'
+    },
+    darkBlue: {
       main: '#005c91'
     },
-    dfoDarkBlue: {
-      main: '#012a4c'
-    },
-    dfoInputBackground: {
-      main: '#f2f1f9'
-    },
-    dfoWhite: {
-      main: '#ffff;'
-    },
-    dfoLightBlue: {
+    lightBlue: {
       main: '#1fa9e6'
     },
-    dfoErrorRed: {
+    indigo: {
+      main: '#005b91'
+    },
+    white: {
+      main: '#ffff'
+    },
+    errorRed: {
       main: '#d32f2e'
     },
-    dfoErrorRedHover: {
+    errorRedBright: {
       main: '#e65655'
-    },
-    dfoBackgroundBlue: {
-      main: '#bfe7f8'
     },
     gray100: {
       main: '#f7f7f7'
@@ -64,84 +72,31 @@ const theme = createTheme({
       main: '#e5e5e5'
     },
     gray400: {
-      main: '#d1d1d'
-    },
-    gray500: {
       main: '#c4c4c4'
     },
-    gray600: {
+    gray500: {
       main: '#b5b5b5'
     },
-    gray700: {
+    gray600: {
       main: '#828282'
     },
-    gray800: {
+    gray700: {
       main: '#848484'
     },
-    gray900: {
+    gray800: {
       main: '#333333'
-    },
-    blue: {
-      main: '#012a4c'
     },
     black: {
       main: '#000000'
     },
-    lightBlue: {
-      main: '#1fa9e6'
-    },
-    indigo: {
-      main: '#005b91'
-    },
-    purple: {
-      main: '#009fe3'
-    },
-    pink: {
-      main: '#e83f53'
-    },
-    red: {
-      main: '#e52036'
-    },
-    yellow: {
-      main: '#f7b715;'
-    },
-    brandPrimary: {
-      main: '#012a4c'
-    },
     green: {
-      main: '#018566'
-    },
-    teal: {
-      main: '#00ab84 '
-    },
-    cyan: {
-      main: '#008ea6'
-    },
-    linkHoverColor: {
-      main: '#009fe3'
-    },
-    saveGreen: {
       main: '#019b78'
     },
-    saveGreenHover: {
+    greenHover: {
       main: '#04ba91'
-    },
-    success: {
-      main: '#018566'
     },
     silver: {
       main: '#bbbbbb'
-    }
-  },
-  breakpoints: {
-    values: {
-      xs: 0,
-      sm: 600,
-      md: 900,
-      mdd: 906,
-      mddd: 956,
-      lg: 1200,
-      xl: 1536
     }
   }
 });
@@ -153,30 +108,30 @@ theme.components = {
         props: { variant: 'primary' },
         style: {
           backgroundColor: theme.palette.indigo.main,
-          color: theme.palette.dfoWhite.main,
+          color: theme.palette.white.main,
           whiteSpace: 'nowrap',
           height: 40,
           '&:hover': {
-            background: theme.palette.blue.main
+            background: theme.palette.primary.main
           }
         }
       },
       {
         props: { variant: 'warning' },
         style: {
-          backgroundColor: theme.palette.dfoErrorRed.main,
-          color: theme.palette.dfoWhite.main,
+          backgroundColor: theme.palette.errorRed.main,
+          color: theme.palette.white.main,
           whiteSpace: 'nowrap',
           height: 40,
           '&:hover': {
-            background: theme.palette.dfoErrorRedHover.main
+            background: theme.palette.errorRed.main
           }
         }
       },
       {
         props: { variant: 'warningTransparent' },
         style: {
-          color: theme.palette.dfoErrorRed.main,
+          color: theme.palette.errorRed.main,
           whiteSpace: 'nowrap',
           height: 40,
           textDecorationLine: 'underline',
@@ -189,25 +144,50 @@ theme.components = {
       {
         props: { variant: 'save' },
         style: {
-          backgroundColor: theme.palette.saveGreen.main,
-          color: theme.palette.dfoWhite.main,
+          backgroundColor: theme.palette.green.main,
+          color: theme.palette.white.main,
           whiteSpace: 'nowrap',
           height: 40,
           '&:hover': {
-            background: theme.palette.saveGreenHover.main
+            background: theme.palette.greenHover.main
           }
         }
       },
       {
         props: { variant: 'saveTransparent' },
         style: {
-          color: theme.palette.saveGreen.main,
+          color: theme.palette.green.main,
           whiteSpace: 'nowrap',
           height: 40,
           textDecorationLine: 'underline',
           '&:hover': {
             background: 'none',
             textDecorationLine: 'underline'
+          }
+        }
+      },
+      {
+        props: { variant: 'saveTransparent' },
+        style: {
+          color: theme.palette.green.main,
+          whiteSpace: 'nowrap',
+          height: 40,
+          textDecorationLine: 'underline',
+          '&:hover': {
+            background: 'none',
+            textDecorationLine: 'underline'
+          }
+        }
+      },
+      {
+        props: { variant: 'cancel' },
+        style: {
+          backgroundColor: theme.palette.gray600.main,
+          color: theme.palette.white.main,
+          whiteSpace: 'nowrap',
+          height: 40,
+          '&:hover': {
+            background: theme.palette.gray500.main
           }
         }
       }
@@ -228,7 +208,7 @@ theme.components = {
       root: {
         '&.sidebar': {
           border: '1px solid black',
-          backgroundColor: theme.palette.dfoWhite.main,
+          backgroundColor: theme.palette.white.main,
           '&.Mui-selected': {
             backgroundColor: theme.palette.primary.main,
             color: theme.palette.common.white,
@@ -250,4 +230,3 @@ theme.components = {
 };
 
 export default theme;
-

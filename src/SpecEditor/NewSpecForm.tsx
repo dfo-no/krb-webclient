@@ -78,7 +78,7 @@ const NewSpecForm = ({ handleClose, specification }: IProps) => {
         noValidate
       >
         <Box>
-          <Typography variant="lg" sx={{ color: theme.palette.primary.main }}>
+          <Typography variant="lg" color={theme.palette.primary.main}>
             {specification.bank.title}
           </Typography>
           <Typography>{specification.bank.description}</Typography>
