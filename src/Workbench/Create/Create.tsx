@@ -24,7 +24,7 @@ export default function Create(): React.ReactElement {
     useSelectState();
 
   useEffect(() => {
-    if (project) {
+    if (project && !needIndex) {
       if (project.needs.length >= 1) {
         const index = project.needs.findIndex(
           (n) => n.id === project.needs[0].id
