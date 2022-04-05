@@ -225,7 +225,7 @@ export default function Projects(): React.ReactElement {
       {projectList ? (
         <Box className={classes.contentContainer}>
           <SearchContainer sx={{ marginBottom: 1 }}>
-            <SearchFieldContainer>
+            <SearchFieldContainer sx={{ width: 500 }}>
               {' '}
               <DFOSearchBar
                 list={Object(projects)}
