@@ -25,7 +25,6 @@ const SelectCtrl = ({ name, label, options }: IProps): React.ReactElement => {
     <FormControl error={!!get(errors, name)} fullWidth>
       <FormLabel>
         <Typography
-          variant="sm"
           sx={{
             color: theme.palette.primary.main
           }}

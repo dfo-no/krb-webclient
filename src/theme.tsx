@@ -3,20 +3,24 @@ import { createTheme } from '@mui/material/styles';
 
 const theme = createTheme({
   typography: {
-    fontFamily: ['Source Sans Pro', 'Helvetica', 'Arial'].join(',')
-  },
-
-  // TODO: Out of sync with mui@5's breakpoints
-  // @see https://mui.com/guides/migration-v4/#theme
-  breakpoints: {
-    values: {
-      xs: 0,
-      sm: 600,
-      md: 900,
-      mdd: 906,
-      mddd: 956,
-      lg: 1200,
-      xl: 1536
+    fontFamily: ['Source Sans Pro', 'Helvetica', 'Arial'].join(','),
+    xss: {
+      fontSize: '0.75rem'
+    },
+    sm: {
+      fontSize: '0.875rem'
+    },
+    md: {
+      fontSize: '1.125rem'
+    },
+    lg: {
+      fontSize: '1.375rem'
+    },
+    xl: {
+      fontSize: '2.25rem'
+    },
+    xxl: {
+      fontSize: '3.125rem'
     }
   },
   palette: {
@@ -128,32 +132,19 @@ const theme = createTheme({
     silver: {
       main: '#bbbbbb'
     }
+  },
+  breakpoints: {
+    values: {
+      xs: 0,
+      sm: 600,
+      md: 900,
+      mdd: 906,
+      mddd: 956,
+      lg: 1200,
+      xl: 1536
+    }
   }
 });
-
-theme.typography.xss = {
-  fontSize: 12
-};
-
-theme.typography.sm = {
-  fontSize: 14
-};
-
-theme.typography.md = {
-  fontSize: 18
-};
-
-theme.typography.lg = {
-  fontSize: 22
-};
-
-theme.typography.xl = {
-  fontSize: 36
-};
-
-theme.typography.xxl = {
-  fontSize: 50
-};
 
 theme.components = {
   MuiButton: {
