@@ -33,6 +33,9 @@ const useStyles = makeStyles({
   }
 });
 
+/*
+ * Deprecated
+ * */
 export default function RequirementList({
   requirements,
   updateSelectedFunction
