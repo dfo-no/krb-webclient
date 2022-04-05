@@ -31,6 +31,12 @@ export default function Create(): React.ReactElement {
     return <></>;
   }
 
+  const setFirstNeedIndex = (item: any) => {
+    const index = project.needs.findIndex((n) => n.id === item.id);
+    setNeedIndex(index);
+    setNeedId(project.needs[index].id);
+  };
+
   const renderCreatePageWithContent = (children: React.ReactNode) => {
     return (
       <Box
@@ -61,11 +67,7 @@ export default function Create(): React.ReactElement {
         }}
       >
         <>
-          {project.needs.length >= 1 && (
-            <StandardContainer>
-              <Typography>Velg et behov</Typography>
-            </StandardContainer>
-          )}
+          {project.needs.length >= 1 && setFirstNeedIndex(project.needs[0])}
           {project.needs.length === 0 && <ProjectStart project={project} />}
         </>
       </Box>
