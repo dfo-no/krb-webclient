@@ -7,7 +7,7 @@ import theme from '../../../theme';
 import { FormIconButton } from '../../Components/Form/FormIconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditRequirement from './EditRequirement';
-import { useVariantState } from './VariantContext';
+import { useVariantState } from '../../Components/VariantContext';
 import { useSelectState } from '../SelectContext';
 import { useParams } from 'react-router-dom';
 import { IRouteParams } from '../../Models/IRouteParams';

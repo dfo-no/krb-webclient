@@ -306,6 +306,91 @@ class Utils {
     return false;
   }
 
+  static findVariantsUsedByProduct(
+    selectedProduct: IProduct,
+    selectedProject: IBank
+  ): Parentable<INeed>[] {
+    const associatedNeeds: Parentable<INeed>[] = [];
+
+    selectedProject.needs.forEach((need: Parentable<INeed>) => {
+      const associatedRequirements: IRequirement[] = [];
+      need.requirements.forEach((requirement: IRequirement) => {
+        const associatedVariants: IVariant[] = [];
+        requirement.variants.forEach((variant: IVariant) => {
+          if (
+            variant.useProduct &&
+            variant.products.some((p) => p === selectedProduct.id)
+          ) {
+            associatedVariants.push(variant);
+          }
+        });
+        if (associatedVariants.length > 0) {
+          associatedRequirements.push({
+            ...requirement,
+            variants: associatedVariants
+          });
+        }
+      });
+      if (associatedRequirements.length > 0) {
+        associatedNeeds.push({
+          ...need,
+          requirements: associatedRequirements
+        });
+      }
+    });
+
+    return associatedNeeds;
+  }
+
+  static findVariantsUsedBySpesification(
+    selectedProject: IBank
+  ): Parentable<INeed>[] {
+    const associatedNeeds: Parentable<INeed>[] = [];
+
+    selectedProject.needs.forEach((need: Parentable<INeed>) => {
+      const associatedRequirements: IRequirement[] = [];
+      need.requirements.forEach((requirement: IRequirement) => {
+        const associatedVariants: IVariant[] = [];
+        requirement.variants.forEach((variant: IVariant) => {
+          if (variant.useSpesification) {
+            associatedVariants.push(variant);
+          }
+        });
+        if (associatedVariants.length > 0) {
+          associatedRequirements.push({
+            ...requirement,
+            variants: associatedVariants
+          });
+        }
+      });
+      if (associatedRequirements.length > 0) {
+        associatedNeeds.push({
+          ...need,
+          requirements: associatedRequirements
+        });
+      }
+    });
+
+    return associatedNeeds;
+  }
+
+  static findParentTree<T extends Parentable<IBaseModel>>(
+    element: T,
+    parentList: T[],
+    allElements: T[]
+  ): T[] {
+    const parentIndex = allElements.findIndex((e) => e.id === element.parent);
+    if (parentIndex === -1) {
+      return parentList;
+    }
+
+    return Utils.findParentTree(
+      allElements[parentIndex],
+      [allElements[parentIndex], ...parentList],
+      allElements
+    );
+  }
+
   static findAssociatedRequirements(
     selectedProduct: IProduct,
     selectedProject: IBank
