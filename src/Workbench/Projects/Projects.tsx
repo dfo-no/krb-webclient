@@ -1,10 +1,15 @@
 import DeleteIcon from '@mui/icons-material/Delete';
+import MenuBookIcon from '@mui/icons-material/MenuBook';
+import Avatar from '@mui/material/Avatar';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
-import Card from '@mui/material/Card';
-import Divider from '@mui/material/Divider';
+import IconButton from '@mui/material/IconButton';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
+import ListItemAvatar from '@mui/material/ListItemAvatar';
+import ListItemButton from '@mui/material/ListItemButton';
+import ListItemText from '@mui/material/ListItemText';
+import { styled } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
 import makeStyles from '@mui/styles/makeStyles';
 import React, { useEffect, useState } from 'react';
@@ -18,9 +23,10 @@ import DFODialog from '../../components/DFODialog/DFODialog';
 import DFOSearchBar from '../../components/DFOSearchBar/DFOSearchBar';
 import { IAlert } from '../../models/IAlert';
 import { IBank } from '../../Nexus/entities/IBank';
+import DateService from '../../Nexus/services/DateService';
 import {
-  useDeleteProjectMutation,
-  useGetProjectsQuery
+  useGetProjectsQuery,
+  usePutProjectMutation
 } from '../../store/api/bankApi';
 import { useAppDispatch } from '../../store/hooks';
 import { addAlert } from '../../store/reducers/alert-reducer';
@@ -32,6 +38,18 @@ import {
   SearchFieldContainer
 } from '../Components/SearchContainer';
 import NewProjectForm from './NewProjectForm';
+
+const StyledListItemText = styled(ListItemText)(({ theme: th }) => ({
+  '& .MuiListItemText-primary': {
+    fontSize: '18px',
+    fontWeight: 700
+  },
+  '& .MuiListItemText-secondary': {
+    fontSize: '14px',
+    fontWeight: 400,
+    color: th.palette.common.black
+  }
+}));
 
 const useStyles = makeStyles({
   projectsContainer: {
@@ -53,30 +71,6 @@ const useStyles = makeStyles({
     flexDirection: 'column',
     gap: 15
   },
-  projectListItemCard: {
-    height: 100,
-    boxShadow: 'none',
-    border: `1px solid ${theme.palette.gray300.main}`,
-    textDecoration: 'none',
-    width: '100%',
-    cursor: 'pointer',
-    '&:hover': {
-      backgroundColor: theme.palette.primary.main,
-      color: theme.palette.white.main
-    }
-  },
-  projectListItemCardContent: {
-    display: 'flex',
-    flexDirection: 'column',
-    gap: 5,
-    paddingTop: 25,
-    paddingLeft: 25,
-    paddingRight: 70
-  },
-  projectListItemTitleButton: {
-    display: 'flex',
-    justifyContent: 'space-between'
-  },
   list: {
     display: 'flex',
     flexDirection: 'column',
@@ -88,13 +82,6 @@ const useStyles = makeStyles({
   },
   projectListItem: {
     padding: 0,
-    textDecoration: 'none',
-    width: '100%'
-  },
-  projectListItemDivider: {
-    color: theme.palette.gray300.main
-  },
-  projectLink: {
     textDecoration: 'none',
     width: '100%'
   },
@@ -125,23 +112,39 @@ const useStyles = makeStyles({
   }
 });
 
+const StyledList = styled(List)(({ theme: th }) => ({
+  backgroundColor: th.palette.common.white,
+  '& .MuiListItemButton-root': {
+    '&:hover': {
+      backgroundColor: th.palette.primary.main,
+      color: th.palette.common.white,
+      // force all sub-components to use this inherited color
+      '*': {
+        color: 'inherit'
+      }
+    }
+  }
+}));
+
 export default function Projects(): React.ReactElement {
   const dispatch = useAppDispatch();
   const { t } = useTranslation();
-  const [deleteProject] = useDeleteProjectMutation();
+  const [putProject] = usePutProjectMutation();
   const classes = useStyles();
   const [projectList, setProjectList] = useState<Record<string, IBank>>();
   const [isOpen, setOpen] = useState(false);
 
   const onDelete = async (p: IBank) => {
-    await deleteProject(p).then(() => {
-      const alert: IAlert = {
-        id: uuidv4(),
-        style: 'success',
-        text: 'Successfully deleted project'
-      };
-      dispatch(addAlert({ alert }));
-    });
+    await putProject({ ...p, deletedDate: DateService.getNowString() }).then(
+      () => {
+        const alert: IAlert = {
+          id: uuidv4(),
+          style: 'success',
+          text: 'Successfully deleted project'
+        };
+        dispatch(addAlert({ alert }));
+      }
+    );
   };
 
   const { data: projects, isLoading } = useGetProjectsQuery({
@@ -176,22 +179,34 @@ export default function Projects(): React.ReactElement {
   const renderProjects = (list: Record<string, IBank>) => {
     return Object.values(list).map((element) => {
       return (
-        <ListItem className={classes.projectListItem} key={element.id}>
-          <Link
+        <ListItem
+          divider={true}
+          className={classes.projectListItem}
+          key={element.id}
+          secondaryAction={
+            <IconButton
+              edge="end"
+              aria-label="delete"
+              onClick={() => onDelete(element)}
+            >
+              <DeleteIcon color={'error'} />
+            </IconButton>
+          }
+        >
+          <ListItemButton
+            component={Link}
             to={`/workbench/${element.id}/create`}
-            className={classes.projectLink}
           >
-            <Card className={classes.projectListItemCard}>
-              <Box className={classes.projectListItemCardContent}>
-                <Box className={classes.projectListItemTitleButton}>
-                  <Typography variant="smediumBold">{element.title}</Typography>
-                  <DeleteIcon />
-                </Box>
-                <Divider className={classes.projectListItemDivider} />
-                <Typography variant="small">{element.description}</Typography>
-              </Box>
-            </Card>
-          </Link>
+            <ListItemAvatar>
+              <Avatar variant="rounded">
+                <MenuBookIcon />
+              </Avatar>
+            </ListItemAvatar>
+            <StyledListItemText
+              primary={element.title}
+              secondary={element.description}
+            />
+          </ListItemButton>
         </ListItem>
       );
     });
@@ -238,9 +253,9 @@ export default function Projects(): React.ReactElement {
             <NewButtonContainer>{renderNewBankButton()}</NewButtonContainer>
           </SearchContainer>
           <ScrollableContainer>
-            <List className={classes.list} aria-label="projects">
+            <StyledList className={classes.list} aria-label="projects">
               {projectList && renderProjects(projectList)}
-            </List>
+            </StyledList>
           </ScrollableContainer>
         </Box>
       ) : (
