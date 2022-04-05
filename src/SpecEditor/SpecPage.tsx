@@ -186,9 +186,9 @@ export default function SpecPage(): React.ReactElement {
       {projects ? (
         <Box className={classes.contentContainer}>
           <Box className={classes.topContainer}>
-            <SearchContainer sx={{ marginBottom: 1 }}>
+            <SearchContainer>
               {/*  TODO: replace with 'AutoComplete' from @mui */}
-              <SearchFieldContainer sx={{ width: 500 }}>
+              <SearchFieldContainer>
                 {' '}
                 <DFOSearchBar
                   list={[]}
