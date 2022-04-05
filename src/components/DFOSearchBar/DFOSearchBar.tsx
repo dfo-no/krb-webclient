@@ -7,7 +7,7 @@ import DFOInput from '../DFOInput/DFOInput';
 
 interface DFOSearchBarProps {
   list: object;
-  searchFunction: any;
+  searchFunction: (searchString: any, list: any) => void;
   callback: any;
   placeholder: string;
 }
@@ -31,6 +31,8 @@ export default function DFOSearchBar({
   searchFunction,
   placeholder
 }: DFOSearchBarProps): React.ReactElement {
+  console.log(typeof list);
+
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.value.length !== 0) {
       callback(searchFunction(e.target.value, list));
