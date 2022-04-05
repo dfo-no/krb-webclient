@@ -20,7 +20,7 @@ import { IRouteParams } from '../../Models/IRouteParams';
 import Button from '@mui/material/Button';
 import { Box } from '@mui/material';
 import ErrorSummary from '../../../Form/ErrorSummary';
-import { useVariantState } from '../Requirement/VariantContext';
+import { useVariantState } from '../../Components/VariantContext';
 import { useTranslation } from 'react-i18next';
 import { useSelectState } from '../SelectContext';
 import theme from '../../../theme';

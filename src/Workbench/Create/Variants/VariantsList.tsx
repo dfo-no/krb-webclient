@@ -7,7 +7,7 @@ import { IRouteParams } from '../../Models/IRouteParams';
 import { useGetProjectQuery } from '../../../store/api/bankApi';
 import { useSelectState } from '../SelectContext';
 import React from 'react';
-import { useVariantState } from '../Requirement/VariantContext';
+import { useVariantState } from '../../Components/VariantContext';
 import NewVariantForm from './NewVariantForm';
 
 interface IProps {
