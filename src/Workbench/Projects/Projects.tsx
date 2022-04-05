@@ -161,10 +161,6 @@ export default function Projects(): React.ReactElement {
     return <LoaderSpinner />;
   }
 
-  const onClick = () => {
-    console.log('HAHAHOHO');
-  };
-
   const searchFunction = (searchString: string, list: IBank[]) => {
     return Object.values(list).filter((project: IBank) => {
       if (project.title.toLowerCase().includes(searchString.toLowerCase())) {
@@ -172,6 +168,7 @@ export default function Projects(): React.ReactElement {
       }
     });
   };
+
   const searchFieldCallback = (result: Record<string, IBank>) => {
     setProjectList(result);
   };
@@ -181,15 +178,14 @@ export default function Projects(): React.ReactElement {
       return (
         <ListItem className={classes.projectListItem} key={element.id}>
           <Link
-            to={`/workbench/${element.id}/admin`}
+            to={`/workbench/${element.id}/create`}
             className={classes.projectLink}
           >
             <Card className={classes.projectListItemCard}>
               <Box className={classes.projectListItemCardContent}>
                 <Box className={classes.projectListItemTitleButton}>
                   <Typography variant="smediumBold">{element.title}</Typography>
-
-                  <DeleteIcon onClick={onClick} />
+                  <DeleteIcon />
                 </Box>
                 <Divider className={classes.projectListItemDivider} />
                 <Typography variant="small">{element.description}</Typography>
