@@ -35,7 +35,7 @@ export default function NeedHeader(): React.ReactElement {
           </Typography>
           <EditNeed need={project.needs[needIndex]} />
           <DFOCardHeaderIconButton
-            hoverColor={theme.palette.dfoErrorRed.main}
+            hoverColor={theme.palette.errorRed.main}
             onClick={() => setDeleteMode(project.needs[needIndex].id)}
           >
             <DeleteIcon />

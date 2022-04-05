@@ -39,7 +39,7 @@ const useStyles = makeStyles({
     [theme.breakpoints.down('md')]: {
       height: 'auto',
       width: '100vw',
-      backgroundColor: theme.palette.dfoWhite.main
+      backgroundColor: theme.palette.white.main
     }
   },
   sideBarListItem: {
@@ -50,7 +50,7 @@ const useStyles = makeStyles({
     paddingLeft: 30,
     '&:hover': {
       background: theme.palette.primary.main,
-      color: theme.palette.dfoWhite.main
+      color: theme.palette.white.main
     }
   }
 });

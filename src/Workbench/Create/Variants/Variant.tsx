@@ -99,7 +99,7 @@ const Variant = ({ variant, requirementIndex }: IProps) => {
           <AccordionSummary expandIcon={<ExpandMoreIcon />}>
             <Typography>{variant.requirementText}</Typography>
             <FormIconButton
-              hoverColor={theme.palette.dfoErrorRed.main}
+              hoverColor={theme.palette.errorRed.main}
               onClick={() => setDeleteMode(variant.id)}
               sx={{ marginLeft: 'auto' }}
             >

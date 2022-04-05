@@ -10,13 +10,13 @@ export interface IProps {
 
 const useStyles = makeStyles({
   productListItem: {
-    backgroundColor: theme.palette.dfoWhite.main,
+    backgroundColor: theme.palette.white.main,
     borderBottom: `1px solid ${theme.palette.silver.main}`,
     cursor: 'pointer',
     '&:hover': {
       background: theme.palette.lightBlue.main,
       '& $productListItemText': {
-        color: theme.palette.dfoWhite.main
+        color: theme.palette.white.main
       }
     }
   },
@@ -41,7 +41,7 @@ export default function ProductListItem({
   productListItem
 }: IProps): React.ReactElement {
   const [radioButtonColor, setRadioButtonColor] = useState(
-    `${theme.palette.dfoLightBlue.main}`
+    `${theme.palette.lightBlue.main}`
   );
   const [radioButtonState, setRadioButtonState] = useState(false);
 
@@ -54,11 +54,11 @@ export default function ProductListItem({
   };
 
   const listItemOnMouseEnter = () => {
-    setRadioButtonColor(`${theme.palette.dfoWhite.main}`);
+    setRadioButtonColor(`${theme.palette.white.main}`);
   };
 
   const listItemOnMouseLeave = () => {
-    setRadioButtonColor(`${theme.palette.dfoLightBlue.main}`);
+    setRadioButtonColor(`${theme.palette.lightBlue.main}`);
   };
 
   const classes = useStyles();

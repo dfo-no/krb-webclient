@@ -42,7 +42,7 @@ const PlainListBox = styled(Box)(({ theme }) => ({
   paddingLeft: 15,
   paddingRight: 15,
   marginBottom: 15,
-  backgroundColor: theme.palette.dfoWhite.main,
+  backgroundColor: theme.palette.white.main,
   border: `1px solid ${theme.palette.gray500.main}`
 }));
 

@@ -94,13 +94,13 @@ const CodelistPanel = (): React.ReactElement => {
             </Typography>
             <FormIconButton
               sx={{ marginLeft: 'auto' }}
-              hoverColor={theme.palette.dfoDarkBlue.main}
+              hoverColor={theme.palette.primary.main}
               onClick={() => enterEditMode(item)}
             >
               <EditOutlinedIcon />
             </FormIconButton>
             <FormIconButton
-              hoverColor={theme.palette.dfoErrorRed.main}
+              hoverColor={theme.palette.errorRed.main}
               onClick={() => enterDeleteMode(item)}
             >
               <DeleteIcon />

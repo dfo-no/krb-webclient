@@ -59,7 +59,7 @@ const useStyles = makeStyles({
 
     '&:hover': {
       backgroundColor: theme.palette.primary.main,
-      color: theme.palette.dfoWhite.main
+      color: theme.palette.white.main
     }
   },
   productListItemCardContent: {

@@ -88,7 +88,7 @@ export default function Requirements({ project }: IProps): React.ReactElement {
         <Typography
           sx={{
             fontWeight: 'bold',
-            backgroundColor: theme.palette.dfoBlue.main,
+            backgroundColor: theme.palette.primary.main,
             color: theme.palette.common.white,
             padding: '.5rem'
           }}

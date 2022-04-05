@@ -22,7 +22,7 @@ const StyledListItem = styled(ListItem)<ListItemProps>(({ theme: t }) => {
   return {
     '&.MuiListItem-root': {
       '&.MuiListItem-divider': {
-        borderBottom: `1px solid ${t.palette.dfoLightBlue.main}`
+        borderBottom: `1px solid ${t.palette.lightBlue.main}`
       }
     }
   };
@@ -57,10 +57,10 @@ const Footer = () => {
                 maxWidth: 460,
                 height: '90%',
                 [`& .${listItemClasses.root}:hover`]: {
-                  color: theme.palette.dfoLightBlue.main,
+                  color: theme.palette.lightBlue.main,
                   fontWeight: 'bold',
                   '& svg': {
-                    fill: theme.palette.dfoLightBlue.main
+                    fill: theme.palette.lightBlue.main
                   }
                 }
               }}
@@ -68,7 +68,7 @@ const Footer = () => {
               <Divider
                 component="li"
                 sx={{
-                  borderTop: `1px solid ${theme.palette.dfoLightBlue.main}`
+                  borderTop: `1px solid ${theme.palette.lightBlue.main}`
                 }}
               />
               {links.map((link) => (

@@ -34,7 +34,12 @@ const VerticalTextCtrl = ({
       <Controller
         name={name}
         render={({ field }) => (
-          <DFOInput {...field} placeholder={placeholder} disableUnderline />
+          <DFOInput
+            {...field}
+            placeholder={placeholder}
+            sx={{ marginBottom: 4 }}
+            disableUnderline
+          />
         )}
       />
       {!!get(errors, name) && (

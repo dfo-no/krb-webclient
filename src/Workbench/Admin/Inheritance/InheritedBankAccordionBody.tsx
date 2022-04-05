@@ -35,7 +35,7 @@ const useStyles = makeStyles({
     display: 'flex',
     flexDirection: 'column',
     gap: 30,
-    backgroundColor: theme.palette.dfoWhite.main,
+    backgroundColor: theme.palette.white.main,
     paddingTop: 30,
     paddingBottom: 30
   },

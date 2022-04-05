@@ -69,14 +69,14 @@ export default function DeleteCodelistForm({
       >
         <FormDeleteBox>
           <FormTextButton
-            hoverColor={theme.palette.dfoErrorRed.main}
+            hoverColor={theme.palette.errorRed.main}
             type="submit"
             aria-label="delete"
           >
             {t('delete')}
           </FormTextButton>
           <FormTextButton
-            hoverColor={theme.palette.gray500.main}
+            hoverColor={theme.palette.gray400.main}
             onClick={() => handleClose(null)}
             aria-label="close"
           >

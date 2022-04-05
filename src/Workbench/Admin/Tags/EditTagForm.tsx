@@ -1,21 +1,18 @@
 import { joiResolver } from '@hookform/resolvers/joi';
-import CheckIcon from '@mui/icons-material/Check';
-import CloseIcon from '@mui/icons-material/Close';
 import React from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { v4 as uuidv4 } from 'uuid';
-import HorizontalTextCtrl from '../../../FormProvider/HorizontalTextCtrl';
 import { IAlert } from '../../../models/IAlert';
 import { Parentable } from '../../../models/Parentable';
 import { BaseTagSchema, ITag } from '../../../Nexus/entities/ITag';
 import useProjectMutations from '../../../store/api/ProjectMutations';
 import { useAppDispatch } from '../../../store/hooks';
 import { addAlert } from '../../../store/reducers/alert-reducer';
-import { FormFlexBox } from '../../Components/Form/FormFlexBox';
-import { FormIconButton } from '../../Components/Form/FormIconButton';
 import { FormItemBox } from '../../Components/Form/FormItemBox';
 import { useFormStyles } from '../../Components/Form/FormStyles';
+import FormButtons from '../../Components/Form/FormButtons';
+import VerticalTextCtrl from '../../../FormProvider/VerticalTextCtrl';
 
 interface IProps {
   tag: Parentable<ITag>;
@@ -57,19 +54,13 @@ export default function EditTagForm({
         noValidate
       >
         <FormItemBox>
-          <FormFlexBox sx={{ paddingLeft: 1, paddingRight: 1 }}>
-            <HorizontalTextCtrl name="title" placeholder={t('Title')} />
-            <HorizontalTextCtrl
-              name="description"
-              placeholder={t('Description')}
-            />
-          </FormFlexBox>
-          <FormIconButton type="submit" aria-label="save">
-            <CheckIcon />
-          </FormIconButton>
-          <FormIconButton onClick={() => handleClose()} aria-label="close">
-            <CloseIcon />
-          </FormIconButton>
+          <VerticalTextCtrl name="title" label={t('Title')} placeholder={''} />
+          <VerticalTextCtrl
+            name="description"
+            label={t('Description')}
+            placeholder={''}
+          />
+          <FormButtons handleClose={() => handleClose()} />
         </FormItemBox>
       </form>
     </FormProvider>

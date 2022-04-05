@@ -71,7 +71,7 @@ const useStyles = makeStyles({
     display: 'flex',
     gap: 50,
     alignItems: 'center',
-    color: theme.palette.dfoBlue.main,
+    color: theme.palette.primary.main,
     height: '100%',
 
     [theme.breakpoints.down('mddd')]: {
@@ -88,13 +88,13 @@ const useStyles = makeStyles({
       paddingBottom: '8px',
       paddingTop: '8px',
       '&:hover': {
-        color: theme.palette.dfoLightBlue.main
+        color: theme.palette.lightBlue.main
       }
     }
   },
   selectedIcon: {
     '& .MuiSvgIcon-root': {
-      color: theme.palette.dfoBlue.main,
+      color: theme.palette.primary.main,
       width: '24px',
       height: '40px',
       paddingTop: '8px',
@@ -131,7 +131,7 @@ export default function Header(): React.ReactElement {
         elevation={0}
         position="sticky"
         sx={{
-          backgroundColor: theme.palette.dfoWhite.main,
+          backgroundColor: theme.palette.white.main,
           borderBottom: `2px solid ${theme.palette.gray300.main}`
         }}
       >
@@ -169,7 +169,7 @@ export default function Header(): React.ReactElement {
       elevation={0}
       position="sticky"
       sx={{
-        backgroundColor: theme.palette.dfoWhite.main,
+        backgroundColor: theme.palette.white.main,
         borderBottom: `2px solid ${theme.palette.gray300.main}`
       }}
     >
