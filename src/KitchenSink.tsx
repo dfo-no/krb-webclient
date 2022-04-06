@@ -235,7 +235,13 @@ const KitchenSink = (): React.ReactElement => {
                 <Typography variant="lg">LG</Typography>
                 <Typography variant="md">MD</Typography>
                 <Typography variant="sm">SM</Typography>
-                <Typography variant="xss">XSS</Typography>
+                <Typography variant="xs">XSS</Typography>
+                <Typography variant="xxlBold">XXLBOLD</Typography>
+                <Typography variant="xlBold">XLBOLD</Typography>
+                <Typography variant="lgBold">LGBOLD</Typography>
+                <Typography variant="mdBold">MDBOLD</Typography>
+                <Typography variant="smBold">SMBOLD</Typography>
+                <Typography variant="xsBold">XSSBOLD</Typography>
               </Box>
 
               <Button variant="primary" type="submit">

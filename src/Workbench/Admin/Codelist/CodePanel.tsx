@@ -97,9 +97,7 @@ const CodePanel = (): React.ReactElement => {
         {!isEditing() && <Box className={classes.handlerIcon}>{handler}</Box>}
         <Box className={classes.textItem}>
           <Box className={classes.textItemTitle}>
-            <Typography variant="sm" sx={{ fontWeight: 'bold' }}>
-              {item.title}
-            </Typography>
+            <Typography variant="smBold">{item.title}</Typography>
             <FormIconButton
               sx={{ marginLeft: 'auto' }}
               onClick={() => setEditMode(item.id)}

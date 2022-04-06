@@ -88,7 +88,7 @@ function DeleteVariant({
       )}
       {hasChildren && (
         <FormCantDeleteBox>
-          <Typography variant="sm" sx={{ fontWeight: 'bold' }}>
+          <Typography variant="smBold">
             {t('cant delete this variant')}
           </Typography>
           <FormTextButton

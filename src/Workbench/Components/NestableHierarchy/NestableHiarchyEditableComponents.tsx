@@ -103,9 +103,7 @@ const NestableHierarcyEditableComponents = <
       <Box className={classes.nestableItemCustom}>
         {!isEditing() && <Box className={classes.handlerIcon}>{handler}</Box>}
         <Box className={classes.textItemTitle}>
-          <Typography variant="sm" sx={{ fontWeight: 'bold' }}>
-            {item.title}
-          </Typography>
+          <Typography variant="smBold">{item.title}</Typography>
         </Box>
         <Box className={classes.textItemDescription}>
           <Typography variant="sm">{item.description}</Typography>

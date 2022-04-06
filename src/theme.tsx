@@ -4,7 +4,7 @@ import { createTheme } from '@mui/material/styles';
 const theme = createTheme({
   typography: {
     fontFamily: ['Source Sans Pro', 'Helvetica', 'Arial'].join(','),
-    xss: {
+    xs: {
       fontSize: '0.75rem'
     },
     sm: {
@@ -20,7 +20,32 @@ const theme = createTheme({
       fontSize: '2.25rem'
     },
     xxl: {
-      fontSize: '3.125rem'
+      fontSize: '3.125rem',
+      fontWeight: 'bold'
+    },
+    xsBold: {
+      fontSize: '0.75rem',
+      fontWeight: 'bold'
+    },
+    smBold: {
+      fontSize: '0.875rem',
+      fontWeight: 'bold'
+    },
+    mdBold: {
+      fontSize: '1.125rem',
+      fontWeight: 'bold'
+    },
+    lgBold: {
+      fontSize: '1.375rem',
+      fontWeight: 'bold'
+    },
+    xlBold: {
+      fontSize: '2.25rem',
+      fontWeight: 'bold'
+    },
+    xxlBold: {
+      fontSize: '3.125rem',
+      fontWeight: 'bold'
     }
   },
   breakpoints: {

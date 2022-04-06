@@ -55,11 +55,11 @@ export default function ProductPreview(): React.ReactElement {
                 borderBottom: '1px solid'
               }}
             >
-              <Typography variant="lg" sx={{ fontWeight: 'bold' }}>
+              <Typography variant="lgBold">
                 {selected ? selected.title : 'Generiske krav'}
               </Typography>
             </Box>
-            <Typography variant="sm" sx={{ paddingTop: 1, fontWeight: 'bold' }}>
+            <Typography variant="smBold" sx={{ paddingTop: 1 }}>
               {selected ? selected.description : ''}
             </Typography>
           </DFOHeaderContentBox>

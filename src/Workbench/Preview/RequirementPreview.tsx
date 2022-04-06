@@ -49,9 +49,7 @@ export default function RequirementPreview({
   return (
     <Box className={`${classes.card} ${isActive() ? classes.active : ''}`}>
       <Box sx={{ borderBottom: '1px solid' }}>
-        <Typography variant="lg" sx={{ fontWeight: 'bold' }}>
-          {requirement.title}
-        </Typography>
+        <Typography variant="lgBold">{requirement.title}</Typography>
       </Box>
       {requirement.variants.map((variant) => {
         return <VariantPreview variant={variant} />;

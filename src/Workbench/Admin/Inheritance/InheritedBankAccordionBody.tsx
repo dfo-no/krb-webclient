@@ -93,7 +93,7 @@ export default function InheritedBankAccordionBody({
       <form onSubmit={methods.handleSubmit(saveValues)}>
         <Box className={classes.bankBodyContainer}>
           <Box className={classes.inheritVersionContainer}>
-            <Typography variant="sm" sx={{ fontWeight: 'bold' }}>
+            <Typography variant="smBold">
               {t('Which version of the bank to inherit')}
             </Typography>
             <Box className={classes.selectContainer}>
@@ -101,7 +101,7 @@ export default function InheritedBankAccordionBody({
             </Box>
           </Box>
           <Box className={classes.inheritPartsContainer}>
-            <Typography variant="sm" sx={{ fontWeight: 'bold' }}>
+            <Typography variant="smBold">
               {t('Which parts of the bank to inherit')}
             </Typography>
             <Box className={classes.partsCheckBoxSaveButtonContainer}>

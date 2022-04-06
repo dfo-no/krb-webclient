@@ -184,9 +184,7 @@ export default function Projects(): React.ReactElement {
             <Card className={classes.projectListItemCard}>
               <Box className={classes.projectListItemCardContent}>
                 <Box className={classes.projectListItemTitleButton}>
-                  <Typography variant="md" sx={{ fontWeight: 'bold' }}>
-                    {element.title}
-                  </Typography>
+                  <Typography variant="mdBold">{element.title}</Typography>
                   <DeleteIcon />
                 </Box>
                 <Divider className={classes.projectListItemDivider} />
@@ -212,11 +210,10 @@ export default function Projects(): React.ReactElement {
       <Box className={classes.titleImageContainer}>
         <Box className={classes.titleSubTitleContainer}>
           <Typography
-            variant="xl"
+            variant="xlBold"
             color={theme.palette.primary.main}
             sx={{
-              letterSpacing: 0.2,
-              fontWeight: 'bold'
+              letterSpacing: 0.2
             }}
           >
             {t('Welcome to the workbench')}

@@ -94,7 +94,7 @@ export default function DeleteTagForm({
         )}
         {hasChildren && (
           <FormCantDeleteBox>
-            <Typography variant="sm" sx={{ fontWeight: 'bold' }}>
+            <Typography variant="smBold">
               {t('cant delete this tag')}
             </Typography>
             <FormTextButton

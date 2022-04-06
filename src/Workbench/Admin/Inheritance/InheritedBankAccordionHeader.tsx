@@ -48,9 +48,7 @@ export default function InheritanceBankHeader({
     <Box className={classes.bankItem}>
       <Box className={classes.titleOptions}>
         <Box className={classes.titleVersion}>
-          <Typography variant="md" sx={{ fontWeight: 'bold' }}>
-            {bank.title};{' '}
-          </Typography>
+          <Typography variant="mdBold">{bank.title}; </Typography>
           <Typography variant="md">{t('version')}</Typography>
         </Box>
         <Box className={classes.endContainer}>

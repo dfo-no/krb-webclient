@@ -72,9 +72,7 @@ function DeleteNeed({
       )}
       {hasChildren && (
         <FormCantDeleteBox>
-          <Typography variant="sm" sx={{ fontWeight: 'bold' }}>
-            {t('cant delete this need')}
-          </Typography>
+          <Typography variant="smBold">{t('cant delete this need')}</Typography>
           <FormTextButton
             hoverColor={theme.palette.gray500.main}
             onClick={() => handleClose()}
