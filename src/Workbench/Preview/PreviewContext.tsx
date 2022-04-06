@@ -5,14 +5,16 @@ import {
   useContext,
   useState
 } from 'react';
+import { IProduct } from '../../Nexus/entities/IProduct';
+import { Parentable } from '../../models/Parentable';
 
 interface IPreviewContext {
-  selected: string;
-  setSelected: Dispatch<SetStateAction<string>>;
+  selected: Parentable<IProduct> | null;
+  setSelected: Dispatch<SetStateAction<Parentable<IProduct> | null>>;
 }
 
 const initialContext: IPreviewContext = {
-  selected: '',
+  selected: null,
   setSelected: function (): void {
     throw new Error('Function not implemented.');
   }
@@ -25,7 +27,7 @@ interface IProps {
 }
 
 export const PreviewProvider = ({ children }: IProps) => {
-  const [selected, setSelected] = useState<string>('');
+  const [selected, setSelected] = useState<Parentable<IProduct> | null>(null);
 
   return (
     <PreviewContext.Provider

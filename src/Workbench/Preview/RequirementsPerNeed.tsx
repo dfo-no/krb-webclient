@@ -14,6 +14,9 @@ interface IProps {
   updateSelectedFunction: (item: IRequirement) => void;
 }
 
+/*
+ * Deprecated
+ * */
 export default function RequirementsPerNeed({
   selectedProduct,
   updateSelectedFunction,

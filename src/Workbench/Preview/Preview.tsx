@@ -1,17 +1,15 @@
 import Box from '@mui/material/Box';
-import Grid from '@mui/material/Grid';
 import React from 'react';
-import { Route, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import LoaderSpinner from '../../common/LoaderSpinner';
 import { useGetProjectQuery } from '../../store/api/bankApi';
-import theme from '../../theme';
 import { IRouteParams } from '../Models/IRouteParams';
-import Requirements from './Requirements';
 import Sidebar from './Sidebar';
+import ProductPreview from './ProductPreview';
+import theme from '../../theme';
 
 export default function Preview(): React.ReactElement {
   const { projectId } = useParams<IRouteParams>();
-
   const { data: project } = useGetProjectQuery(projectId);
 
   if (!project) {
@@ -21,20 +19,18 @@ export default function Preview(): React.ReactElement {
   return (
     <Box
       sx={{
+        display: 'flex',
         flex: '1',
         height: '100%',
-        width: '100%'
+        width: '100%',
+        backgroundColor: theme.palette.gray100.main
       }}
     >
-      <Box
-        sx={{
-          display: 'flex',
-          height: '100%',
-          width: '100%'
-        }}
-      >
+      <Box sx={{ width: '25%', height: '100%' }}>
         <Sidebar parentableArray={project.products} />
-        <Requirements project={project} />
+      </Box>
+      <Box sx={{ height: '100%', flexGrow: 1, minWidth: 0 }}>
+        <ProductPreview />
       </Box>
     </Box>
   );
