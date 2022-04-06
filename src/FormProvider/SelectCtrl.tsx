@@ -24,7 +24,9 @@ const SelectCtrl = ({ name, label, options }: IProps): React.ReactElement => {
   return (
     <FormControl error={!!get(errors, name)} fullWidth>
       <FormLabel>
-        <Typography color={theme.palette.primary.main}>{label}</Typography>
+        <Typography variant="sm" color={theme.palette.primary.main}>
+          {label}
+        </Typography>
       </FormLabel>
       <Controller
         name={name}
