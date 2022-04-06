@@ -59,7 +59,7 @@ const QuestionConfig = ({ item, index }: IProps) => {
       return (
         <ConfigBox>
           <Typography variant={'smallBold'} sx={{ marginBottom: 2 }}>
-            {t('Perferred alternative')}
+            {t('Preferred alternative')}
           </Typography>
           <RadioCtrl
             name={
