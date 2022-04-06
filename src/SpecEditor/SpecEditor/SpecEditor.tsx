@@ -55,7 +55,7 @@ export default function SpecEditor(): React.ReactElement {
             width="594"
           />
           <Box className={classes.specEditorText}>
-            <Typography variant="xxl" color={theme.palette.primary.main}>
+            <Typography variant="xxlBold" color={theme.palette.primary.main}>
               {specification?.title}
             </Typography>
             <Box className={classes.specEditorDescription}>
