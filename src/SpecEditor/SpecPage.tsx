@@ -166,7 +166,7 @@ export default function SpecPage(): React.ReactElement {
     <Box className={classes.projectsContainer}>
       <Box className={classes.titleImageContainer}>
         <Box className={classes.titleSubTitleContainer}>
-          <Typography className={classes.title} variant="xl">
+          <Typography className={classes.title} variant="xlBold">
             {t('Welcome to the builder')}
           </Typography>
           <Box className={classes.specPageText}>
