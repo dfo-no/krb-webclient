@@ -1,5 +1,5 @@
-import { Box, Card, Typography } from '@mui/material/';
-import React from 'react';
+import { Box, Card } from '@mui/material/';
+import React, { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import LoaderSpinner from '../../common/LoaderSpinner';
 import { useGetProjectQuery } from '../../store/api/bankApi';
@@ -23,6 +23,18 @@ export default function Create(): React.ReactElement {
   const { needIndex, setNeedIndex, setNeedId, setDeleteMode } =
     useSelectState();
 
+  useEffect(() => {
+    if (project && !needIndex) {
+      if (project.needs.length >= 1) {
+        const index = project.needs.findIndex(
+          (n) => n.id === project.needs[0].id
+        );
+        setNeedIndex(index);
+        setNeedId(project.needs[index].id);
+      }
+    }
+  });
+
   if (isLoading) {
     return <LoaderSpinner />;
   }
@@ -30,12 +42,6 @@ export default function Create(): React.ReactElement {
   if (!project) {
     return <></>;
   }
-
-  const setFirstNeedIndex = (item: any) => {
-    const index = project.needs.findIndex((n) => n.id === item.id);
-    setNeedIndex(index);
-    setNeedId(project.needs[index].id);
-  };
 
   const renderCreatePageWithContent = (children: React.ReactNode) => {
     return (
@@ -66,10 +72,7 @@ export default function Create(): React.ReactElement {
           backgroundColor: theme.palette.gray100.main
         }}
       >
-        <>
-          {project.needs.length >= 1 && setFirstNeedIndex(project.needs[0])}
-          {project.needs.length === 0 && <ProjectStart project={project} />}
-        </>
+        <>{project.needs.length === 0 && <ProjectStart project={project} />}</>
       </Box>
     );
   }
