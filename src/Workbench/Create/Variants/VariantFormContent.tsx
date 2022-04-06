@@ -48,7 +48,7 @@ const VariantFormContent = ({ control }: IProps) => {
         label={t('instruction')}
         placeholder=""
       />
-      <Typography variant={'smallBold'} sx={{ marginBottom: 2 }}>
+      <Typography variant={'smBold'} sx={{ marginBottom: 2 }}>
         {t('type variant')}
       </Typography>
       <RadioCtrl
@@ -58,7 +58,7 @@ const VariantFormContent = ({ control }: IProps) => {
           { value: VariantType.info, label: 'Info' }
         ]}
       />
-      <Typography variant={'smallBold'} sx={{ marginTop: 4, marginBottom: 2 }}>
+      <Typography variant={'smBold'} sx={{ marginTop: 4, marginBottom: 2 }}>
         {t('how to use this requirement')}
       </Typography>
       <Box sx={{ width: '100%', marginBottom: 2 }}>
@@ -71,7 +71,7 @@ const VariantFormContent = ({ control }: IProps) => {
       {useProduct && (
         <SelectionMultipleCtrl name={'products'} items={project.products} />
       )}
-      <Typography variant={'smallBold'} sx={{ marginTop: 4, marginBottom: 2 }}>
+      <Typography variant={'smBold'} sx={{ marginTop: 4, marginBottom: 2 }}>
         {t('how to answer requirement')}
       </Typography>
       <QuestionsList />

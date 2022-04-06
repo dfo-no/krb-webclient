@@ -14,6 +14,7 @@ import Nexus from '../../Nexus/Nexus';
 import { usePostProjectMutation } from '../../store/api/bankApi';
 import { useAppDispatch } from '../../store/hooks';
 import { addAlert } from '../../store/reducers/alert-reducer';
+import theme from '../../theme';
 
 interface IProps {
   handleClose: () => void;
@@ -72,7 +73,9 @@ const NewProjectForm = ({ handleClose }: IProps) => {
         autoComplete="off"
         noValidate
       >
-        <Typography variant="bigBlue">{t('create new bank')}</Typography>
+        <Typography variant="lg" color={theme.palette.primary.main}>
+          {t('create new bank')}
+        </Typography>
         <VerticalTextCtrl
           name="title"
           label={t('What is the name of the project?')}

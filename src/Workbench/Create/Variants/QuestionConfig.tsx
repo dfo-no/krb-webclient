@@ -58,7 +58,7 @@ const QuestionConfig = ({ item, index }: IProps) => {
     case QuestionEnum.Q_CHECKBOX:
       return (
         <ConfigBox>
-          <Typography variant={'smallBold'} sx={{ marginBottom: 2 }}>
+          <Typography variant={'smBold'} sx={{ marginBottom: 2 }}>
             {t('Preferred alternative')}
           </Typography>
           <RadioCtrl

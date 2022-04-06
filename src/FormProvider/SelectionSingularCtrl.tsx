@@ -1,27 +1,17 @@
 import { Controller } from 'react-hook-form';
-import {
-  List,
-  ListItem,
-  Typography,
-  Checkbox,
-  Box,
-  Radio
-} from '@mui/material';
+import { List, ListItem, Typography, Box, Radio } from '@mui/material';
 import makeStyles from '@mui/styles/makeStyles';
 import React from 'react';
 import { useParams } from 'react-router-dom';
 import { IRouteParams } from '../Workbench/Models/IRouteParams';
 import { useGetProjectQuery } from '../store/api/bankApi';
 import LoaderSpinner from '../common/LoaderSpinner';
-import { IProduct } from '../Nexus/entities/IProduct';
 import theme from '../theme';
 import Utils from '../common/Utils';
 import { Levelable } from '../models/Levelable';
-import CheckBoxIcon from '@mui/icons-material/CheckBox';
 import { ScrollableContainer } from '../Workbench/Components/ScrollableContainer';
 import { Parentable } from '../models/Parentable';
 import { BaseModelWithTitleAndDesc } from '../models/BaseModelWithTitleAndDesc';
-import { RadioButtonChecked, RadioButtonUnchecked } from '@mui/icons-material';
 
 const useStyles = makeStyles({
   checkbox: {
@@ -126,14 +116,12 @@ const SelectionMultipleCtrl = <T extends BaseModelWithTitleAndDesc>({
                   <Box className={classes.checkbox}>
                     <Radio checked={productChecked(item, selected)} />
                   </Box>
-                  <Typography
-                    variant={item.level === 1 ? 'smallBold' : 'small'}
-                  >
+                  <Typography variant={item.level === 1 ? 'smBold' : 'sm'}>
                     {item.title}
                   </Typography>
                   <Typography
                     className={classes.itemDescription}
-                    variant={'small'}
+                    variant={'sm'}
                   >
                     {item.description}
                   </Typography>
