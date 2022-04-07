@@ -19,7 +19,7 @@ describe('Nexus', () => {
     const nexus = Nexus.getInstance();
     const tag = nexus.tagService.generateTag(
       nexus.tagService.generateDefaultTaglistValues(
-        '123456789123456789123456789012345678'
+        'b3f7f5ac-c22d-4e71-a06a-8951a2d864f2'
       )
     );
     const report = BaseTagSchema.validate(tag);

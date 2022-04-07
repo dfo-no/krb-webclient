@@ -3,14 +3,25 @@ import ModelType from '../../models/ModelType';
 import { IBaseModel } from './IBaseModel';
 
 export const BasePublicationSchema = CustomJoi.object().keys({
-  id: CustomJoi.string().length(36).required(),
+  id: CustomJoi.string()
+    .guid({ version: ['uuidv4'] })
+    .length(36)
+    .required(),
   comment: CustomJoi.string().required(),
   date: CustomJoi.date().iso().raw().required(),
   version: CustomJoi.number().min(1).required(),
   bankId: CustomJoi.string().length(36).required(),
   type: CustomJoi.string().equal(ModelType.publication).required(),
-  sourceOriginal: CustomJoi.string().allow(null).required(),
-  sourceRel: CustomJoi.string().allow(null).required()
+  sourceOriginal: CustomJoi.string()
+    .guid({ version: ['uuidv4'] })
+    .length(36)
+    .allow(null)
+    .required(),
+  sourceRel: CustomJoi.string()
+    .guid({ version: ['uuidv4'] })
+    .length(36)
+    .allow(null)
+    .required()
 });
 
 export const PostPublicationSchema = BasePublicationSchema.keys({
@@ -19,7 +30,10 @@ export const PostPublicationSchema = BasePublicationSchema.keys({
 });
 
 export const PutPublicationSchema = BasePublicationSchema.keys({
-  id: CustomJoi.string().min(36).max(36).required()
+  id: CustomJoi.string()
+    .guid({ version: ['uuidv4'] })
+    .length(36)
+    .required()
 });
 
 export const PutPublicationSchemaArray = CustomJoi.object().keys({

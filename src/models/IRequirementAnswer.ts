@@ -24,10 +24,19 @@ export interface IRequirementAnswer {
 }
 
 export const RequirementAnswerSchema = CustomJoi.object().keys({
-  id: CustomJoi.string().length(36).required(),
-  questionId: CustomJoi.string().length(36).required(),
+  id: CustomJoi.string()
+    .guid({ version: ['uuidv4'] })
+    .length(36)
+    .required(),
+  questionId: CustomJoi.string()
+    .guid({ version: ['uuidv4'] })
+    .length(36)
+    .required(),
   weight: CustomJoi.number().required(),
-  variantId: CustomJoi.string().length(36).required(),
+  variantId: CustomJoi.string()
+    .guid({ version: ['uuidv4'] })
+    .length(36)
+    .required(),
   question: CustomJoi.alternatives().conditional('.type', {
     switch: [
       { is: QuestionEnum.Q_SLIDER, then: SliderQuestionAnswerSchema },
