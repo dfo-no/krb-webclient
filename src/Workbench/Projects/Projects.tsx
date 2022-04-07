@@ -1,15 +1,11 @@
 import DeleteIcon from '@mui/icons-material/Delete';
-import MenuBookIcon from '@mui/icons-material/MenuBook';
-import Avatar from '@mui/material/Avatar';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
+import Card from '@mui/material/Card';
+import Divider from '@mui/material/Divider';
 import IconButton from '@mui/material/IconButton';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
-import ListItemAvatar from '@mui/material/ListItemAvatar';
-import ListItemButton from '@mui/material/ListItemButton';
-import ListItemText from '@mui/material/ListItemText';
-import { styled } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
 import makeStyles from '@mui/styles/makeStyles';
 import React, { useEffect, useState } from 'react';
@@ -39,18 +35,6 @@ import {
 } from '../Components/SearchContainer';
 import NewProjectForm from './NewProjectForm';
 
-const StyledListItemText = styled(ListItemText)(({ theme: th }) => ({
-  '& .MuiListItemText-primary': {
-    fontSize: '18px',
-    fontWeight: 700
-  },
-  '& .MuiListItemText-secondary': {
-    fontSize: '14px',
-    fontWeight: 400,
-    color: th.palette.common.black
-  }
-}));
-
 const useStyles = makeStyles({
   projectsContainer: {
     display: 'flex',
@@ -71,6 +55,30 @@ const useStyles = makeStyles({
     flexDirection: 'column',
     gap: 15
   },
+  projectListItemCard: {
+    height: 100,
+    boxShadow: 'none',
+    border: `1px solid ${theme.palette.gray300.main}`,
+    textDecoration: 'none',
+    width: '100%',
+    cursor: 'pointer',
+    '&:hover': {
+      backgroundColor: theme.palette.primary.main,
+      color: theme.palette.white.main
+    }
+  },
+  projectListItemCardContent: {
+    display: 'flex',
+    flexDirection: 'column',
+    gap: 5,
+    paddingTop: 25,
+    paddingLeft: 25,
+    paddingRight: 70
+  },
+  projectListItemTitleButton: {
+    display: 'flex',
+    justifyContent: 'space-between'
+  },
   list: {
     display: 'flex',
     flexDirection: 'column',
@@ -79,6 +87,13 @@ const useStyles = makeStyles({
     paddingTop: 0,
     gap: 15,
     listStyle: 'none'
+  },
+  projectListItemDivider: {
+    color: theme.palette.gray300.main
+  },
+  projectLink: {
+    textDecoration: 'none',
+    width: '100%'
   },
   projectListItem: {
     padding: 0,
@@ -111,20 +126,6 @@ const useStyles = makeStyles({
     gap: 15
   }
 });
-
-const StyledList = styled(List)(({ theme: th }) => ({
-  backgroundColor: th.palette.common.white,
-  '& .MuiListItemButton-root': {
-    '&:hover': {
-      backgroundColor: th.palette.primary.main,
-      color: th.palette.common.white,
-      // force all sub-components to use this inherited color
-      '*': {
-        color: 'inherit'
-      }
-    }
-  }
-}));
 
 export default function Projects(): React.ReactElement {
   const dispatch = useAppDispatch();
@@ -180,7 +181,6 @@ export default function Projects(): React.ReactElement {
     return Object.values(list).map((element) => {
       return (
         <ListItem
-          divider={true}
           className={classes.projectListItem}
           key={element.id}
           secondaryAction={
@@ -193,20 +193,20 @@ export default function Projects(): React.ReactElement {
             </IconButton>
           }
         >
-          <ListItemButton
-            component={Link}
+          <Link
             to={`/workbench/${element.id}/create`}
+            className={classes.projectLink}
           >
-            <ListItemAvatar>
-              <Avatar variant="rounded">
-                <MenuBookIcon />
-              </Avatar>
-            </ListItemAvatar>
-            <StyledListItemText
-              primary={element.title}
-              secondary={element.description}
-            />
-          </ListItemButton>
+            <Card className={classes.projectListItemCard}>
+              <Box className={classes.projectListItemCardContent}>
+                <Box className={classes.projectListItemTitleButton}>
+                  <Typography variant="smediumBold">{element.title}</Typography>
+                </Box>
+                <Divider className={classes.projectListItemDivider} />
+                <Typography variant="small">{element.description}</Typography>
+              </Box>
+            </Card>
+          </Link>
         </ListItem>
       );
     });
@@ -253,9 +253,9 @@ export default function Projects(): React.ReactElement {
             <NewButtonContainer>{renderNewBankButton()}</NewButtonContainer>
           </SearchContainer>
           <ScrollableContainer>
-            <StyledList className={classes.list} aria-label="projects">
+            <List className={classes.list} aria-label="projects">
               {projectList && renderProjects(projectList)}
-            </StyledList>
+            </List>
           </ScrollableContainer>
         </Box>
       ) : (
