@@ -2,10 +2,11 @@ import { Box, ListItem, ListItemText, Typography } from '@mui/material';
 import makeStyles from '@mui/styles/makeStyles';
 import React, { useState } from 'react';
 import CheckboxCtrl from '../../../FormProvider/CheckboxCtrl';
+import { ITag } from '../../../Nexus/entities/ITag';
 import theme from '../../../theme';
 
 export interface IProps {
-  tagListItem: any;
+  tagListItem: ITag;
 }
 
 const useStyles = makeStyles({

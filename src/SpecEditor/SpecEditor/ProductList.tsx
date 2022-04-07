@@ -8,6 +8,7 @@ import { useGetBankQuery } from '../../store/api/bankApi';
 import DFOSearchBar from '../../components/DFOSearchBar/DFOSearchBar';
 import NewProductTypeListItem from './ProductListItem';
 import { IProduct } from '../../Nexus/entities/IProduct';
+import { IBaseModel } from '../../Nexus/entities/IBaseModel';
 
 const useStyles = makeStyles({
   newProductTypeList: {
@@ -49,9 +50,11 @@ export default function ProductList(): React.ReactElement {
 
   const products = bankSelected?.products;
 
-  const newProductTypeListCallback = () => {};
-  const newProductSearchFunction = () => {};
-  const list: any = [];
+  const searchFunction = (searchString: string, list: IBaseModel[]) => {
+    return list;
+  };
+  const callback = (list: IBaseModel[]) => {};
+  const list: IBaseModel[] = [];
 
   const renderList = (productList: IProduct[]) => {
     return (
@@ -78,8 +81,8 @@ export default function ProductList(): React.ReactElement {
             <DFOSearchBar
               placeholder="Søk etter produkttype"
               list={list}
-              callback={newProductTypeListCallback}
-              searchFunction={newProductSearchFunction}
+              callback={callback}
+              searchFunction={searchFunction}
             />
           </Box>
         </Box>

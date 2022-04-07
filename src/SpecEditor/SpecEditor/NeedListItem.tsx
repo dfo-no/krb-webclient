@@ -1,10 +1,11 @@
 import { Box, ListItem, ListItemText, Typography } from '@mui/material';
 import makeStyles from '@mui/styles/makeStyles';
 import React from 'react';
+import { IProduct } from '../../Nexus/entities/IProduct';
 import theme from '../../theme';
 
 export interface IProps {
-  productListItem: any;
+  productListItem: IProduct;
 }
 
 const useStyles = makeStyles({

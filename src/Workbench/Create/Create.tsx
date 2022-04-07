@@ -16,6 +16,7 @@ import DeleteNeed from './Need/DeleteNeed';
 import CreateSideBar from './CreateSideBar';
 import { VariantProvider } from '../Components/VariantContext';
 import { IRouteParams } from '../Models/IRouteParams';
+import { INeed } from '../../Nexus/entities/INeed';
 
 export default function Create(): React.ReactElement {
   const { projectId } = useParams<IRouteParams>();
@@ -31,7 +32,7 @@ export default function Create(): React.ReactElement {
     return <></>;
   }
 
-  const setFirstNeedIndex = (item: any) => {
+  const setFirstNeedIndex = (item: INeed) => {
     const index = project.needs.findIndex((n) => n.id === item.id);
     setNeedIndex(index);
     setNeedId(project.needs[index].id);

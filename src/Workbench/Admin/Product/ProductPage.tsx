@@ -56,7 +56,7 @@ export default function ProductPage(): React.ReactElement {
     searchString: string,
     list: Parentable<IProduct>[]
   ) => {
-    return SearchUtils.search(list, searchString);
+    return SearchUtils.search(list, searchString) as Parentable<IProduct>[];
   };
 
   return (

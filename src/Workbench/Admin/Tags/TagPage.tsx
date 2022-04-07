@@ -51,14 +51,11 @@ export default function TagPage(): React.ReactElement {
     editTags(newTagList);
   };
 
-  const searchFieldCallback = (result: Parentable<IProduct>[]) => {
+  const searchFieldCallback = (result: Parentable<ITag>[]) => {
     setTags(result);
   };
 
-  const tagPageSearch = (
-    searchString: string,
-    list: Parentable<IProduct>[]
-  ) => {
+  const tagPageSearch = (searchString: string, list: Parentable<ITag>[]) => {
     return SearchUtils.search(list, searchString);
   };
 
@@ -68,7 +65,7 @@ export default function TagPage(): React.ReactElement {
         <SearchFieldContainer>
           {' '}
           <DFOSearchBar
-            list={project.tags}
+            list={tags}
             placeholder={t('search for tags')}
             callback={searchFieldCallback}
             searchFunction={tagPageSearch}

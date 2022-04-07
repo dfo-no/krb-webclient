@@ -587,7 +587,10 @@ class Utils {
       description: inheritedBank.description,
       id: inheritedBank.id,
       projectId: this.ensure(inheritedBank.projectId),
-      date: this.ensure(inheritedBank.publishedDate)
+      date: this.ensure(inheritedBank.publishedDate),
+      type: inheritedBank.type,
+      sourceRel: inheritedBank.sourceRel,
+      sourceOriginal: inheritedBank.sourceOriginal
     };
     const inheritedBanks = [...project.inheritedBanks, newInheritance];
     newProject.inheritedBanks = inheritedBanks;

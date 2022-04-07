@@ -13,6 +13,7 @@ import LoaderSpinner from '../common/LoaderSpinner';
 import DFODialog from '../components/DFODialog/DFODialog';
 import DFOSearchBar from '../components/DFOSearchBar/DFOSearchBar';
 import { IBank } from '../Nexus/entities/IBank';
+import { IBaseModel } from '../Nexus/entities/IBaseModel';
 import SpecificationStoreService from '../Nexus/services/SpecificationStoreService';
 import { useGetProjectsQuery } from '../store/api/bankApi';
 import theme from '../theme';
@@ -121,6 +122,13 @@ export default function SpecPage(): React.ReactElement {
   const classes = useStyles();
   const { specification, setSpecification } = useSpecificationState();
 
+  const searchFunction = (searchString: string, list: IBaseModel[]) => {
+    return list;
+  };
+  const callback = (list: IBaseModel[]) => {
+    return list;
+  };
+
   const { data: projects, isLoading } = useGetProjectsQuery({
     pageSize: PAGE_SIZE,
     page: 1,
@@ -193,8 +201,8 @@ export default function SpecPage(): React.ReactElement {
                 <DFOSearchBar
                   list={[]}
                   placeholder={t('search for banks')}
-                  callback={() => {}}
-                  searchFunction={() => {}}
+                  callback={callback}
+                  searchFunction={searchFunction}
                 />
               </SearchFieldContainer>
             </SearchContainer>

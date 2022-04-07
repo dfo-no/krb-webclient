@@ -2,10 +2,11 @@ import { Box, ListItem, ListItemText, Typography } from '@mui/material';
 import makeStyles from '@mui/styles/makeStyles';
 import React, { useState } from 'react';
 import { DFORadioButton } from '../../components/DFORadioButton/DFORadioButton';
+import { IProduct } from '../../Nexus/entities/IProduct';
 import theme from '../../theme';
 
 export interface IProps {
-  productListItem: any;
+  productListItem: IProduct;
 }
 
 const useStyles = makeStyles({

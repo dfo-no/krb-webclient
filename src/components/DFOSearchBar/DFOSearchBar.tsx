@@ -2,13 +2,14 @@ import SearchIcon from '@mui/icons-material/Search';
 import InputAdornment from '@mui/material/InputAdornment';
 import makeStyles from '@mui/styles/makeStyles';
 import React from 'react';
+import { IBaseModel } from '../../Nexus/entities/IBaseModel';
 import theme from '../../theme';
 import DFOInput from '../DFOInput/DFOInput';
 
-interface DFOSearchBarProps {
-  list: object;
-  searchFunction: (searchString: any, list: any) => void;
-  callback: any;
+interface DFOSearchBarProps<T extends IBaseModel> {
+  list: T[];
+  searchFunction: (searchString: string, list: T[]) => T[];
+  callback: (list: T[]) => void;
   placeholder: string;
 }
 
@@ -25,14 +26,12 @@ const useStyles = makeStyles({
   }
 });
 
-export default function DFOSearchBar({
+export default function DFOSearchBar<T extends IBaseModel>({
   list,
   callback,
   searchFunction,
   placeholder
-}: DFOSearchBarProps): React.ReactElement {
-  console.log(typeof list);
-
+}: DFOSearchBarProps<T>): React.ReactElement {
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.value.length !== 0) {
       callback(searchFunction(e.target.value, list));

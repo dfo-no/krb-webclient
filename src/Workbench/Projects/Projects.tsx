@@ -130,7 +130,7 @@ export default function Projects(): React.ReactElement {
   const { t } = useTranslation();
   const [deleteProject] = useDeleteProjectMutation();
   const classes = useStyles();
-  const [projectList, setProjectList] = useState<Record<string, IBank>>();
+  const [projectList, setProjectList] = useState<IBank[]>();
   const [isOpen, setOpen] = useState(false);
 
   const onDelete = async (p: IBank) => {
@@ -153,7 +153,7 @@ export default function Projects(): React.ReactElement {
 
   useEffect(() => {
     if (projects) {
-      setProjectList(projects);
+      setProjectList(Object.values(projects));
     }
   }, [setProjectList, projects]);
 
@@ -162,19 +162,19 @@ export default function Projects(): React.ReactElement {
   }
 
   const searchFunction = (searchString: string, list: IBank[]) => {
-    return Object.values(list).filter((project: IBank) => {
+    return list.filter((project: IBank) => {
       if (project.title.toLowerCase().includes(searchString.toLowerCase())) {
         return project;
       }
     });
   };
 
-  const searchFieldCallback = (result: Record<string, IBank>) => {
+  const searchFieldCallback = (result: IBank[]) => {
     setProjectList(result);
   };
 
-  const renderProjects = (list: Record<string, IBank>) => {
-    return Object.values(list).map((element) => {
+  const renderProjects = (list: IBank[]) => {
+    return list.map((element) => {
       return (
         <ListItem className={classes.projectListItem} key={element.id}>
           <Link
@@ -229,7 +229,7 @@ export default function Projects(): React.ReactElement {
             <SearchFieldContainer>
               {' '}
               <DFOSearchBar
-                list={Object(projects)}
+                list={projectList}
                 placeholder={t('search for banks')}
                 callback={searchFieldCallback}
                 searchFunction={searchFunction}
