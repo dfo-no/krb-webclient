@@ -39,7 +39,7 @@ export const usePanelStyles = makeStyles({
   withHover: {
     cursor: 'pointer',
     '&:hover': {
-      background: theme.palette.white.main,
+      background: theme.palette.secondary.main,
       color: theme.palette.white.main
     }
   },

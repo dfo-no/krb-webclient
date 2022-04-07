@@ -9,10 +9,10 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import EditRequirement from './EditRequirement';
 import { useVariantState } from '../../Components/VariantContext';
 import { useSelectState } from '../SelectContext';
-import NewVariant from '../Variants/NewVariant';
 import { useParams } from 'react-router-dom';
 import { IRouteParams } from '../../Models/IRouteParams';
 import { useGetProjectQuery } from '../../../store/api/bankApi';
+import AddIcon from '@mui/icons-material/Add';
 
 const useStyles = makeStyles({
   card: {
@@ -38,7 +38,7 @@ const Requirement = ({ requirementIndex }: IProps) => {
   const { openVariants } = useVariantState();
   const { projectId } = useParams<IRouteParams>();
   const { data: project } = useGetProjectQuery(projectId);
-  const { needIndex, setDeleteMode } = useSelectState();
+  const { needIndex, setDeleteMode, setCreateVariant } = useSelectState();
 
   if (!project || needIndex === null) {
     return <></>;
@@ -86,12 +86,17 @@ const Requirement = ({ requirementIndex }: IProps) => {
           >
             <DeleteIcon />
           </FormIconButton>
-          <NewVariant
-            need={project.needs[needIndex]}
-            requirement={
-              project.needs[needIndex].requirements[requirementIndex]
+          <FormIconButton
+            hoverColor={theme.palette.green.main}
+            sx={{ marginLeft: 0, marginRight: -2 }}
+            onClick={() =>
+              setCreateVariant(
+                project.needs[needIndex].requirements[requirementIndex].id
+              )
             }
-          />
+          >
+            <AddIcon />
+          </FormIconButton>
         </Box>
         <VariantsList
           requirement={project.needs[needIndex].requirements[requirementIndex]}

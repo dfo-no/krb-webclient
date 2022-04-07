@@ -74,7 +74,6 @@ export default function InheritedTagListItem({
         <CheckboxCtrl
           variant={checkboxVariant}
           name="name"
-          value={checkboxState}
           label={
             <Typography
               className={classes.tagListItemText}
