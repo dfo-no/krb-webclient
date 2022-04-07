@@ -97,7 +97,7 @@ export default function InheritedBankTagList({
               callback={tagsCallback}
             />
           </Box>
-          <Typography variant="smallUnderline">
+          <Typography variant="sm" sx={{ textDecoration: 'underline' }}>
             {t('show selected tags')}
           </Typography>
         </Box>

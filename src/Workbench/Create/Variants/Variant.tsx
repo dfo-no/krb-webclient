@@ -5,15 +5,7 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import Typography from '@mui/material/Typography';
 import DeleteIcon from '@mui/icons-material/Delete';
 import AccordionDetails from '@mui/material/AccordionDetails';
-import Divider from '@mui/material/Divider';
-import VerticalTextCtrl from '../../../FormProvider/VerticalTextCtrl';
-import RadioCtrl from '../../../FormProvider/RadioCtrl';
-import VariantType from '../../../Nexus/entities/VariantType';
-import CheckboxCtrl from '../../../FormProvider/CheckboxCtrl';
-import { Controller, useForm, FormProvider } from 'react-hook-form';
-import Select from '@mui/material/Select';
-import MenuItem from '@mui/material/MenuItem';
-import QuestionsList from './QuestionsList';
+import { useForm, FormProvider } from 'react-hook-form';
 import { useAppDispatch } from '../../../store/hooks';
 import { IAlert } from '../../../models/IAlert';
 import { v4 as uuidv4 } from 'uuid';
@@ -26,13 +18,14 @@ import LoaderSpinner from '../../../common/LoaderSpinner';
 import React, { SyntheticEvent } from 'react';
 import { IRouteParams } from '../../Models/IRouteParams';
 import Button from '@mui/material/Button';
-import { AccordionActions } from '@mui/material';
+import { Box } from '@mui/material';
 import ErrorSummary from '../../../Form/ErrorSummary';
 import { useVariantState } from '../../Components/VariantContext';
 import { useTranslation } from 'react-i18next';
 import { useSelectState } from '../SelectContext';
 import theme from '../../../theme';
 import { FormIconButton } from '../../Components/Form/FormIconButton';
+import VariantFormContent from './VariantFormContent';
 
 interface IProps {
   variant: IVariant;
@@ -95,7 +88,7 @@ const Variant = ({ variant, requirementIndex }: IProps) => {
       >
         <Accordion key={variant.id} onChange={accordionChange()}>
           <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-            <Typography>{variant.requirementText}</Typography>
+            <Typography>{variant.description}</Typography>
             <FormIconButton
               hoverColor={theme.palette.errorRed.main}
               onClick={() => setDeleteMode(variant.id)}
@@ -104,61 +97,21 @@ const Variant = ({ variant, requirementIndex }: IProps) => {
               <DeleteIcon />
             </FormIconButton>
           </AccordionSummary>
-          <AccordionDetails>
-            <Divider />
-            <VerticalTextCtrl
-              name={`requirementText`}
-              label={t('requirementText')}
-              placeholder=""
-            />
-            <VerticalTextCtrl
-              name={`instruction`}
-              label={t('instruction')}
-              placeholder=""
-            />
-            <VerticalTextCtrl
-              name={`description`}
-              label={t('Description')}
-              placeholder=""
-            />
-            <RadioCtrl
-              name="type"
-              label="Type"
-              options={[
-                { value: VariantType.requirement, label: 'Krav' },
-                { value: VariantType.info, label: 'Info' }
-              ]}
-            />
-            <div style={{ width: '100%' }}>
-              <CheckboxCtrl
-                name={`useProduct` as const}
-                label={`${t('product')}`}
-              />
-              <CheckboxCtrl
-                name={`useSpesification` as const}
-                label={`${t('general requirement')}`}
-              />
-
-              <Controller
-                render={({ field: field2 }) => (
-                  <Select {...field2} multiple>
-                    {project.products.map((p) => (
-                      <MenuItem key={p.id} value={p.id}>
-                        {p.title}
-                      </MenuItem>
-                    ))}
-                  </Select>
-                )}
-                name={`products`}
-              />
-            </div>
-            <QuestionsList />
+          <AccordionDetails sx={{ display: 'flex', flexDirection: 'column' }}>
+            <VariantFormContent control={methods.control} />
+            <Box sx={{ display: 'flex', flexDirection: 'row', marginTop: 2 }}>
+              <Button
+                variant="cancel"
+                onClick={() => methods.reset()}
+                sx={{ marginLeft: 'auto', marginRight: 2 }}
+              >
+                {t('Reset')}
+              </Button>
+              <Button variant="save" type="submit">
+                {t('save')}
+              </Button>
+            </Box>
           </AccordionDetails>
-          <AccordionActions>
-            <Button variant="save" type="submit">
-              {t('save')}
-            </Button>
-          </AccordionActions>
         </Accordion>
         <ErrorSummary errors={methods.formState.errors} />
       </form>

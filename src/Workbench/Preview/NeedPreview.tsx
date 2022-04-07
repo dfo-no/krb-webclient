@@ -46,8 +46,8 @@ export default function NeedPreview({ need }: IProps): React.ReactElement {
           margin: 4
         }}
       >
-        <Typography variant={'small'}>{getFullPath()}</Typography>
-        <Typography variant={'smallBold'}>{need.title}</Typography>
+        <Typography variant="sm">{getFullPath()}</Typography>
+        <Typography variant="smBold">{need.title}</Typography>
       </Box>
       {need.requirements.map((req) => {
         return (

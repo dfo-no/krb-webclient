@@ -57,7 +57,9 @@ export default function NeedList(): React.ReactElement {
 
   return (
     <>
-      <Typography variant="smallBlue">{t('needs you find under')}</Typography>
+      <Typography variant="sm" color={theme.palette.primary.main}>
+        {t('needs you find under')}
+      </Typography>
       <Box className={classes.newProductNeedList}>
         <Box className={classes.needsList}>
           {products && renderList(products)}

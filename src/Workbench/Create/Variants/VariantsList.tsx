@@ -7,6 +7,8 @@ import { IRouteParams } from '../../Models/IRouteParams';
 import { useGetProjectQuery } from '../../../store/api/bankApi';
 import { useSelectState } from '../SelectContext';
 import React from 'react';
+import { useVariantState } from '../../Components/VariantContext';
+import NewVariantForm from './NewVariantForm';
 
 interface IProps {
   requirement: IRequirement;
@@ -16,18 +18,36 @@ interface IProps {
 const VariantsList = ({ requirement, requirementIndex }: IProps) => {
   const { projectId } = useParams<IRouteParams>();
   const { data: project } = useGetProjectQuery(projectId);
-  const { needIndex, setDeleteMode } = useSelectState();
+  const { needIndex, setDeleteMode, createVariant, setCreateVariant } =
+    useSelectState();
+  const { setOpenVariants } = useVariantState();
 
   if (!project || needIndex === null) {
     return <></>;
   }
 
-  const variantDeleted = () => {
+  const variantDeleted = (variantId: string) => {
     setDeleteMode('');
+    setOpenVariants((ov) => {
+      const tmp = [...ov];
+      tmp.splice(tmp.indexOf(variantId), 1);
+      return tmp;
+    });
+  };
+
+  const variantCreated = () => {
+    setCreateVariant('');
   };
 
   return (
     <Box>
+      {createVariant === requirement.id && (
+        <NewVariantForm
+          need={project.needs[needIndex]}
+          requirement={project.needs[needIndex].requirements[requirementIndex]}
+          handleClose={() => variantCreated()}
+        />
+      )}
       {requirement.variants.map((variant, index) => {
         return (
           <DeleteVariant
@@ -37,7 +57,7 @@ const VariantsList = ({ requirement, requirementIndex }: IProps) => {
               project.needs[needIndex].requirements[requirementIndex]
             }
             need={project.needs[needIndex]}
-            handleClose={variantDeleted}
+            handleClose={() => variantDeleted(variant.id)}
           >
             <Variant variant={variant} requirementIndex={requirementIndex} />
           </DeleteVariant>

@@ -22,9 +22,7 @@ const useStyles = makeStyles({
   },
   needListItemTitle: {
     flexBasis: '50%',
-    paddingLeft: 40,
-    color: 'black',
-    fontWeight: 600
+    paddingLeft: 40
   },
   needListItemText: {
     color: theme.palette.gray700.main
@@ -44,14 +42,14 @@ export default function NeedListItem({
 
   return (
     <ListItem className={classes.needListItem} key={productListItem.title}>
-      <Typography className={classes.needListItemTitle}>
+      <Typography variant="lgBold" className={classes.needListItemTitle}>
         {productListItem.title}
       </Typography>
 
       {productListItem.description && (
         <Box className={classes.needListItemDescription}>
           <ListItemText>
-            <Typography className={classes.needListItemText}>
+            <Typography variant="sm" className={classes.needListItemText}>
               {productListItem.description}
             </Typography>
           </ListItemText>

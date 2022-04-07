@@ -6,6 +6,7 @@ import { Parentable } from '../../../models/Parentable';
 import { INeed } from '../../../Nexus/entities/INeed';
 import NewRequirementForm from './NewRequirementForm';
 import { useTranslation } from 'react-i18next';
+import { useSelectState } from '../SelectContext';
 interface IProps {
   need: Parentable<INeed>;
 }
@@ -13,9 +14,11 @@ interface IProps {
 const NewRequirement = ({ need }: IProps) => {
   const { t } = useTranslation();
   const [isNewOpen, setNewOpen] = useState(false);
+  const { setCreateVariant } = useSelectState();
 
-  const onClose = () => {
+  const onClose = (id: string) => {
     setNewOpen(false);
+    setCreateVariant(id);
   };
 
   return (

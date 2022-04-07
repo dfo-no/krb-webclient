@@ -75,11 +75,10 @@ export default function InheritedTagListItem({
         <CheckboxCtrl
           variant={checkboxVariant}
           name="name"
-          value={checkboxState}
           label={
             <Typography
               className={classes.tagListItemText}
-              variant="smallGray"
+              variant="sm"
               onClick={toggleCheckbox}
             >
               {tagListItem.title}
@@ -89,9 +88,7 @@ export default function InheritedTagListItem({
       </Box>
       <Box className={classes.tagListItemDescription}>
         <ListItemText>
-          <Typography variant="smallGray" className={classes.tagListItemText}>
-            {tagListItem.description}
-          </Typography>
+          <Typography variant="sm">{tagListItem.description}</Typography>
         </ListItemText>
       </Box>
     </ListItem>
