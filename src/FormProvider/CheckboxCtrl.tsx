@@ -11,15 +11,9 @@ interface IProps {
     | number
     | ReactElement<any, string | JSXElementConstructor<any>>;
   variant?: string;
-  value?: boolean;
 }
 
-const CheckboxCtrl = ({
-  name,
-  label,
-  variant,
-  value
-}: IProps): React.ReactElement => {
+const CheckboxCtrl = ({ name, label, variant }: IProps): React.ReactElement => {
   const {
     formState: { errors }
   } = useFormContext();
@@ -29,7 +23,11 @@ const CheckboxCtrl = ({
         <Controller
           name={name}
           render={({ field }) => (
-            <DFOCheckbox element={field} variant={variant} value={value} />
+            <DFOCheckbox
+              element={field}
+              variant={variant}
+              value={field.value}
+            />
           )}
         />
         {label && <FormLabel id={name}>{label}</FormLabel>}

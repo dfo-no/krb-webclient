@@ -168,6 +168,7 @@ export default function Projects(): React.ReactElement {
       }
     });
   };
+
   const searchFieldCallback = (result: Record<string, IBank>) => {
     setProjectList(result);
   };
@@ -183,11 +184,11 @@ export default function Projects(): React.ReactElement {
             <Card className={classes.projectListItemCard}>
               <Box className={classes.projectListItemCardContent}>
                 <Box className={classes.projectListItemTitleButton}>
-                  <Typography variant="smediumBold">{element.title}</Typography>
+                  <Typography variant="mdBold">{element.title}</Typography>
                   <DeleteIcon />
                 </Box>
                 <Divider className={classes.projectListItemDivider} />
-                <Typography variant="small">{element.description}</Typography>
+                <Typography variant="sm">{element.description}</Typography>
               </Box>
             </Card>
           </Link>
@@ -209,8 +210,11 @@ export default function Projects(): React.ReactElement {
       <Box className={classes.titleImageContainer}>
         <Box className={classes.titleSubTitleContainer}>
           <Typography
-            variant="biggerBold"
-            sx={{ letterSpacing: 0.2, color: theme.palette.primary.main }}
+            variant="xlBold"
+            color={theme.palette.primary.main}
+            sx={{
+              letterSpacing: 0.2
+            }}
           >
             {t('Welcome to the workbench')}
           </Typography>
@@ -225,7 +229,7 @@ export default function Projects(): React.ReactElement {
       {projectList ? (
         <Box className={classes.contentContainer}>
           <SearchContainer sx={{ marginBottom: 1 }}>
-            <SearchFieldContainer>
+            <SearchFieldContainer sx={{ width: 500 }}>
               {' '}
               <DFOSearchBar
                 list={Object(projects)}
@@ -245,7 +249,7 @@ export default function Projects(): React.ReactElement {
       ) : (
         <Box className={classes.noProjectsContainer}>
           <Box>
-            <Typography variant="medium" sx={{ letterSpacing: 2 }}>
+            <Typography variant="md" sx={{ letterSpacing: 2 }}>
               {t('There is no banks')}
             </Typography>
           </Box>

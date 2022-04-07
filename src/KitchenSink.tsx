@@ -1,5 +1,6 @@
 import { DevTool } from '@hookform/devtools';
 import { joiResolver } from '@hookform/resolvers/joi';
+import { Typography } from '@mui/material';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Paper from '@mui/material/Paper';
@@ -222,6 +223,27 @@ const KitchenSink = (): React.ReactElement => {
                 ]}
               />
               <br />
+
+              <Box
+                sx={{
+                  display: 'flex',
+                  flexDirection: 'column'
+                }}
+              >
+                <Typography variant="xxl">XXL</Typography>
+                <Typography variant="xl">XL</Typography>
+                <Typography variant="lg">LG</Typography>
+                <Typography variant="md">MD</Typography>
+                <Typography variant="sm">SM</Typography>
+                <Typography variant="xs">XSS</Typography>
+                <Typography variant="xxlBold">XXLBOLD</Typography>
+                <Typography variant="xlBold">XLBOLD</Typography>
+                <Typography variant="lgBold">LGBOLD</Typography>
+                <Typography variant="mdBold">MDBOLD</Typography>
+                <Typography variant="smBold">SMBOLD</Typography>
+                <Typography variant="xsBold">XSSBOLD</Typography>
+              </Box>
+
               <Button variant="primary" type="submit">
                 Save
               </Button>

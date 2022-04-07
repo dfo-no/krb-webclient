@@ -13,8 +13,13 @@ import { addAlert } from '../../../store/reducers/alert-reducer';
 import Nexus from '../../../Nexus/Nexus';
 import useProjectMutations from '../../../store/api/ProjectMutations';
 import { IRequirement } from '../../../Nexus/entities/IRequirement';
-import { ModalBox, ModalButtonsBox } from '../../Components/ModalBox';
-import VerticalTextCtrl from '../../../FormProvider/VerticalTextCtrl';
+import Typography from '@mui/material/Typography';
+import { useParams } from 'react-router-dom';
+import { IRouteParams } from '../../Models/IRouteParams';
+import { useGetProjectQuery } from '../../../store/api/bankApi';
+import LoaderSpinner from '../../../common/LoaderSpinner';
+import { Box } from '@mui/material';
+import VariantFormContent from './VariantFormContent';
 
 interface IProps {
   need: Parentable<INeed>;
@@ -31,6 +36,8 @@ function NewVariantForm({
   const { t } = useTranslation();
   const nexus = Nexus.getInstance();
   const { addVariant } = useProjectMutations();
+  const { projectId } = useParams<IRouteParams>();
+  const { data: project } = useGetProjectQuery(projectId);
 
   const defaultValues: IVariant =
     nexus.variantService.generateDefaultVariantValues();
@@ -39,6 +46,15 @@ function NewVariantForm({
     resolver: joiResolver(PostVariantSchema),
     defaultValues
   });
+
+  if (!project) {
+    return <LoaderSpinner />;
+  }
+
+  const closeAndReset = () => {
+    handleClose();
+    methods.reset();
+  };
 
   const onSubmit = async (post: IVariant) => {
     const newVariant = nexus.variantService.createVariantWithId(post);
@@ -49,8 +65,7 @@ function NewVariantForm({
         text: 'Successfully created new variant'
       };
       dispatch(addAlert({ alert }));
-      handleClose();
-      methods.reset();
+      closeAndReset();
     });
   };
 
@@ -62,26 +77,22 @@ function NewVariantForm({
           autoComplete="off"
           noValidate
         >
-          <ModalBox>
-            <VerticalTextCtrl
-              name="requirementText"
-              label={t('requirementText')}
-              placeholder={''}
-            />
-            <VerticalTextCtrl
-              name="instruction"
-              label={t('instruction')}
-              placeholder={''}
-            />
-            <ModalButtonsBox>
-              <Button variant="primary" type="submit">
-                {t('save')}
-              </Button>
-              <Button variant="warning" onClick={() => handleClose()}>
+          <Box sx={{ display: 'flex', flexDirection: 'column', padding: 4 }}>
+            <Typography>{t('Add Variant')}</Typography>
+            <VariantFormContent control={methods.control} />
+            <Box sx={{ display: 'flex', flexDirection: 'row', marginTop: 2 }}>
+              <Button
+                variant="cancel"
+                onClick={() => closeAndReset()}
+                sx={{ marginLeft: 'auto', marginRight: 2 }}
+              >
                 {t('cancel')}
               </Button>
-            </ModalButtonsBox>
-          </ModalBox>
+              <Button variant="save" type="submit">
+                {t('save')}
+              </Button>
+            </Box>
+          </Box>
         </form>
       </FormProvider>
     </>

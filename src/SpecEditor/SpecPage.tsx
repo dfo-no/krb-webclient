@@ -151,10 +151,10 @@ export default function SpecPage(): React.ReactElement {
           <Card className={classes.projectListItemCard}>
             <Box className={classes.projectListItemCardContent}>
               <Box className={classes.projectListItemTitleButton}>
-                <Typography variant="smediumBold">{element.title}</Typography>
+                <Typography variant="mdBold">{element.title}</Typography>
               </Box>
               <Divider sx={{ color: theme.palette.gray700.main }} />
-              <Typography variant="small">{element.description}</Typography>
+              <Typography variant="sm">{element.description}</Typography>
             </Box>
           </Card>
         </ListItem>
@@ -166,7 +166,7 @@ export default function SpecPage(): React.ReactElement {
     <Box className={classes.projectsContainer}>
       <Box className={classes.titleImageContainer}>
         <Box className={classes.titleSubTitleContainer}>
-          <Typography className={classes.title} variant="biggerBold">
+          <Typography className={classes.title} variant="xlBold">
             {t('Welcome to the builder')}
           </Typography>
           <Box className={classes.specPageText}>
@@ -186,9 +186,9 @@ export default function SpecPage(): React.ReactElement {
       {projects ? (
         <Box className={classes.contentContainer}>
           <Box className={classes.topContainer}>
-            <SearchContainer>
+            <SearchContainer sx={{ marginBottom: 1 }}>
               {/*  TODO: replace with 'AutoComplete' from @mui */}
-              <SearchFieldContainer>
+              <SearchFieldContainer sx={{ width: 500 }}>
                 {' '}
                 <DFOSearchBar
                   list={[]}
@@ -208,7 +208,7 @@ export default function SpecPage(): React.ReactElement {
       ) : (
         <Box className={classes.noProjectsContainer}>
           <Box>
-            <Typography variant="medium" sx={{ letterSpacing: 2 }}>
+            <Typography variant="md" sx={{ letterSpacing: 2 }}>
               {t('There is no banks')}
             </Typography>
           </Box>

@@ -15,7 +15,7 @@ interface IProps {
 
 const ProjectStart = ({ project }: IProps) => {
   return (
-    <Card>
+    <Card sx={{ width: '100%', margin: 16 }}>
       <div style={{ display: 'flex', justifyContent: 'center' }}>
         <CardMedia
           component="img"

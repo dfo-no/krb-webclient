@@ -1,17 +1,24 @@
 import DeleteIcon from '@mui/icons-material/Delete';
-import Button from '@mui/material/Button';
-import Card from '@mui/material/Card';
-import CardHeader from '@mui/material/CardHeader';
-import IconButton from '@mui/material/IconButton';
+import { Box, Button, Card, Divider, Typography } from '@mui/material';
+import makeStyles from '@mui/styles/makeStyles';
+import { useFieldArray, useFormContext } from 'react-hook-form';
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import QuestionEnum from '../../../models/QuestionEnum';
 import QuestionService from '../../../Nexus/services/QuestionService';
 import { IVariant } from '../../../Nexus/entities/IVariant';
 import SelectQuestionDialog from './SelectQuestionDialog';
-import { useFieldArray, useFormContext } from 'react-hook-form';
 import { FormIconButton } from '../../Components/Form/FormIconButton';
 import theme from '../../../theme';
+import QuestionConfig from './QuestionConfig';
+
+const useStyles = makeStyles({
+  list: {
+    border: `1px solid ${theme.palette.black.main}`,
+    backgroundColor: theme.palette.gray100.main,
+    padding: 32
+  }
+});
 
 const QuestionsList = () => {
   const { t } = useTranslation();
@@ -20,6 +27,7 @@ const QuestionsList = () => {
     control,
     name: `questions`
   });
+  const classes = useStyles();
 
   const [isOpen, setOpen] = useState(false);
   const [selectedValue, setSelectedValue] = useState(QuestionEnum.Q_TEXT);
@@ -40,27 +48,35 @@ const QuestionsList = () => {
 
   return (
     <>
-      {fields.map((item, index) => {
-        return (
-          <Card key={item.id}>
-            <CardHeader
-              title={t(item.type)}
-              action={
+      <Button
+        sx={{ marginBottom: 1, marginRight: 'auto' }}
+        variant="contained"
+        onClick={handleClickOpen}
+      >
+        Lag ny svartype
+      </Button>
+      <Box className={classes.list}>
+        {fields.map((item, index) => {
+          return (
+            <Card key={item.id} sx={{ margin: 1, padding: 1 }}>
+              <Box sx={{ display: 'flex', flexDirection: 'row', margin: 2 }}>
+                <Typography variant={'md'} sx={{ paddingLeft: 4 }}>
+                  {t(item.type)}
+                </Typography>
                 <FormIconButton
                   hoverColor={theme.palette.errorRed.main}
                   onClick={() => remove(index)}
-                  sx={{ marginLeft: 'auto' }}
+                  sx={{ marginLeft: 'auto', paddingRight: 2 }}
                 >
                   <DeleteIcon />
                 </FormIconButton>
-              }
-            />
-          </Card>
-        );
-      })}
-      <Button sx={{ mt: 1 }} variant="contained" onClick={handleClickOpen}>
-        Lag ny svartype
-      </Button>
+              </Box>
+              <Divider />
+              <QuestionConfig item={item} index={index} />
+            </Card>
+          );
+        })}
+      </Box>
       <SelectQuestionDialog
         selectedValue={selectedValue}
         isOpen={isOpen}

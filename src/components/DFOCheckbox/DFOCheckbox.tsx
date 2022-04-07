@@ -51,9 +51,7 @@ export const DFOCheckbox = ({
     white: {
       icon: () => {
         return Object(
-          <Box
-            className={`${classes.checkbox} ${classes.allWhiteCheckbox}`}
-          ></Box>
+          <Box className={`${classes.checkbox} ${classes.allWhiteCheckbox}`} />
         );
       },
       checkedIcon: () => {
@@ -67,7 +65,7 @@ export const DFOCheckbox = ({
     blue: {
       icon: () => {
         return (
-          <Box className={`${classes.checkbox} ${classes.blueCheckbox}`}></Box>
+          <Box className={`${classes.checkbox} ${classes.blueCheckbox}`} />
         );
       },
       checkedIcon: () => {
@@ -83,7 +81,7 @@ export const DFOCheckbox = ({
         return Object(
           <Box
             className={`${classes.checkbox} ${classes.blueBorderCheckbox}`}
-          ></Box>
+          />
         );
       },
       checkedIcon: () => {
