@@ -89,7 +89,7 @@ const CodelistPanel = (): React.ReactElement => {
       >
         <Box className={classes.textItem} onClick={() => itemClicked(item)}>
           <Box className={classes.textItemTitle}>
-            <Typography variant="smallBold">{item.title}</Typography>
+            <Typography variant="smBold">{item.title}</Typography>
             <FormIconButton
               sx={{ marginLeft: 'auto' }}
               hoverColor={theme.palette.primary.main}
@@ -105,7 +105,7 @@ const CodelistPanel = (): React.ReactElement => {
             </FormIconButton>
           </Box>
           <Box className={classes.textItemDescription}>
-            <Typography variant="small">{item.description}</Typography>
+            <Typography variant="sm">{item.description}</Typography>
           </Box>
         </Box>
       </Box>

@@ -55,24 +55,24 @@ export default function SpecEditor(): React.ReactElement {
             width="594"
           />
           <Box className={classes.specEditorText}>
-            <Typography variant="bigBoldBlue">
+            <Typography variant="xxlBold" color={theme.palette.primary.main}>
               {specification?.title}
             </Typography>
             <Box className={classes.specEditorDescription}>
-              <Typography variant="smedium">
+              <Typography variant="md">
                 {t('You are now building your spec')}
               </Typography>
-              <Typography variant="smedium">
+              <Typography variant="md">
                 {t(
                   'Start by creating the products you need for your procurement'
                 )}
               </Typography>
-              <Typography variant="smedium">
+              <Typography variant="md">
                 {t(
                   'For every product you can find predefined banks that can fit your procurement'
                 )}
               </Typography>
-              <Typography variant="smedium">
+              <Typography variant="md">
                 {t(
                   'Remember that you have to download the specification and save it locally on your computer'
                 )}

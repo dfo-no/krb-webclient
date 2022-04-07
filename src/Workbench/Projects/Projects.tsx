@@ -189,7 +189,7 @@ export default function Projects(): React.ReactElement {
               aria-label="delete"
               onClick={() => onDelete(element)}
             >
-              <DeleteIcon color={'error'} />
+              <DeleteIcon color="primary" />
             </IconButton>
           }
         >
@@ -200,10 +200,10 @@ export default function Projects(): React.ReactElement {
             <Card className={classes.projectListItemCard}>
               <Box className={classes.projectListItemCardContent}>
                 <Box className={classes.projectListItemTitleButton}>
-                  <Typography variant="smediumBold">{element.title}</Typography>
+                  <Typography variant="mdBold">{element.title}</Typography>
                 </Box>
                 <Divider className={classes.projectListItemDivider} />
-                <Typography variant="small">{element.description}</Typography>
+                <Typography variant="sm">{element.description}</Typography>
               </Box>
             </Card>
           </Link>
@@ -225,8 +225,11 @@ export default function Projects(): React.ReactElement {
       <Box className={classes.titleImageContainer}>
         <Box className={classes.titleSubTitleContainer}>
           <Typography
-            variant="biggerBold"
-            sx={{ letterSpacing: 0.2, color: theme.palette.primary.main }}
+            variant="xlBold"
+            color={theme.palette.primary.main}
+            sx={{
+              letterSpacing: 0.2
+            }}
           >
             {t('Welcome to the workbench')}
           </Typography>
@@ -261,7 +264,7 @@ export default function Projects(): React.ReactElement {
       ) : (
         <Box className={classes.noProjectsContainer}>
           <Box>
-            <Typography variant="medium" sx={{ letterSpacing: 2 }}>
+            <Typography variant="md" sx={{ letterSpacing: 2 }}>
               {t('There is no banks')}
             </Typography>
           </Box>
