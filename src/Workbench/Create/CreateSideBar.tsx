@@ -5,7 +5,6 @@ import Typography from '@mui/material/Typography';
 import makeStyles from '@mui/styles/makeStyles';
 import React, { useEffect, useState } from 'react';
 import 'react-nestable/dist/styles/index.css';
-import Utils from '../../common/Utils';
 import { Parentable } from '../../models/Parentable';
 import theme from '../../theme';
 import NestableHierarcy from '../Components/NestableHierarchy/NestableHierarcy';
@@ -133,7 +132,7 @@ const CreateSideBar = (): React.ReactElement => {
           variant={item.parent === '' ? 'smBold' : 'sm'}
           className={classes.itemNameText}
         >
-          {Utils.capitalizeFirstLetter(item.title ? item.title : '')}
+          {item.title}
         </Typography>
         <Box className={classes.collapseIcon}>{collapseIcon}</Box>
       </Box>
