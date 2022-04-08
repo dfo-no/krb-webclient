@@ -144,6 +144,13 @@ class Utils {
     return parentableItem as Parentable<T>;
   }
 
+  static levelable2Parentable<T extends IBaseModel>(
+    item: Levelable<T>
+  ): Parentable<T> {
+    const { level, ...parentableItem } = item;
+    return parentableItem as Parentable<T>;
+  }
+
   static nestable2Levelable<T extends IBaseModel>(
     items: Nestable<T>[]
   ): Levelable<T>[] {

@@ -8,7 +8,6 @@ import Typography from '@mui/material/Typography';
 import makeStyles from '@mui/styles/makeStyles';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { useHistory, withRouter } from 'react-router';
 import LoaderSpinner from '../../common/LoaderSpinner';
 import theme from '../../theme';
 import { ScrollableContainer } from '../../Workbench/Components/ScrollableContainer';
@@ -19,29 +18,15 @@ const useStyles = makeStyles({
     display: 'flex',
     flexDirection: 'column',
     gap: 20,
-    width: '30vw',
-    paddingTop: 20
-  },
-  container: {
-    display: 'flex',
-    flexDirection: 'column',
-    gap: 20,
-    margin: '0 auto',
+    width: '25vw',
+    height: '100%',
     alignItems: 'center',
-    width: '90%'
-  },
-  topContainer: {
-    display: 'flex',
-    justifyContent: 'flex-end'
-  },
-  productContainer: {
-    width: '100%'
+    paddingTop: 20
   },
   list: {
     display: 'flex',
     gap: 10,
     flexDirection: 'column',
-    flexGrow: 1,
     listStyle: 'none',
     alignSelf: 'center',
     height: '100%'
@@ -56,9 +41,8 @@ const useStyles = makeStyles({
     border: `1px solid ${theme.palette.gray300.main}`,
     width: '100%',
     cursor: 'pointer',
-
     '&:hover': {
-      backgroundColor: theme.palette.primary.main,
+      backgroundColor: theme.palette.lightBlue.main,
       color: theme.palette.white.main
     }
   },
@@ -78,9 +62,6 @@ const useStyles = makeStyles({
     justifyContent: 'flex-end',
     width: '100%'
   },
-  listContainer: {
-    width: '100%'
-  },
   noProductsMessage: {
     textAlign: 'center',
     height: '100%',
@@ -90,18 +71,17 @@ const useStyles = makeStyles({
 
 function SpecSideBar(): React.ReactElement {
   const { t } = useTranslation();
-  const history = useHistory();
 
   const classes = useStyles();
-  const { specification } = useSpecificationState();
+  const { specification, setCreate } = useSpecificationState();
 
   if (!specification) {
     return <LoaderSpinner />;
   }
 
   const renderProducts = () => {
-    if (specification.bank) {
-      return specification.bank.products.map((element) => (
+    if (specification) {
+      return specification.products.map((element) => (
         <ListItem className={classes.productListItem} key={element.id}>
           <Card className={classes.productListItemCard}>
             <Box className={classes.productListItemCardContent}>
@@ -117,39 +97,25 @@ function SpecSideBar(): React.ReactElement {
 
   return (
     <Box className={classes.specSideBar}>
-      <Box className={classes.container}>
-        <Box className={classes.buttonContainer}>
-          <Button
-            variant="primary"
-            onClick={() => history.push('/specification/:id/createProduct')}
-          >
-            {t('create a new product')}
-          </Button>
-        </Box>
-        {specification.bank.products.length > 0 && (
-          <Box className={classes.listContainer}>
-            <ScrollableContainer
-              sx={{
-                height: '66.7vh'
-              }}
-            >
-              <List className={classes.list} aria-label="products">
-                {renderProducts()}
-              </List>
-            </ScrollableContainer>
-          </Box>
-        )}
-        {specification.bank.products.length === 0 && (
-          <Box className={classes.noProductsMessage}>
-            <Typography>
-              {t('This specification has no products yet')}
-            </Typography>
-          </Box>
-        )}
-        <Divider />
+      <Box className={classes.buttonContainer}>
+        <Button variant="primary" onClick={() => setCreate(true)}>
+          {t('create a new product')}
+        </Button>
       </Box>
+      {specification.products.length > 0 && (
+        <ScrollableContainer sx={{ marginBottom: 8 }}>
+          <List className={classes.list} aria-label="products">
+            {renderProducts()}
+          </List>
+        </ScrollableContainer>
+      )}
+      {specification.products.length === 0 && (
+        <Box className={classes.noProductsMessage}>
+          <Typography>{t('This specification has no products yet')}</Typography>
+        </Box>
+      )}
     </Box>
   );
 }
 
-export default withRouter(SpecSideBar);
+export default SpecSideBar;

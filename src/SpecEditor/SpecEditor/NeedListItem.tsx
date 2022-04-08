@@ -2,10 +2,8 @@ import { Box, ListItem, ListItemText, Typography } from '@mui/material';
 import makeStyles from '@mui/styles/makeStyles';
 import React from 'react';
 import theme from '../../theme';
-
-export interface IProps {
-  productListItem: any;
-}
+import { INeed } from '../../Nexus/entities/INeed';
+import { Parentable } from '../../models/Parentable';
 
 const useStyles = makeStyles({
   needListItem: {
@@ -34,22 +32,24 @@ const useStyles = makeStyles({
   }
 });
 
-export default function NeedListItem({
-  productListItem
-}: IProps): React.ReactElement {
+export interface IProps {
+  need: Parentable<INeed>;
+}
+
+export default function NeedListItem({ need }: IProps): React.ReactElement {
   const classes = useStyles();
 
   return (
-    <ListItem className={classes.needListItem} key={productListItem.title}>
+    <ListItem className={classes.needListItem} key={need.id}>
       <Typography variant="lgBold" className={classes.needListItemTitle}>
-        {productListItem.title}
+        {need.title}
       </Typography>
 
-      {productListItem.description && (
+      {need.description && (
         <Box className={classes.needListItemDescription}>
           <ListItemText>
             <Typography variant="sm" className={classes.needListItemText}>
-              {productListItem.description}
+              {need.description}
             </Typography>
           </ListItemText>
         </Box>

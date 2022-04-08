@@ -12,7 +12,7 @@ import {
 import NestableHierarcy from './NestableHierarcy';
 import Utils from '../../../common/Utils';
 import theme from '../../../theme';
-import { BaseModelWithTitleAndDesc } from '../../../models/BaseModelWithTitleAndDesc';
+import { IBaseModelWithTitleAndDesc } from '../../../models/IBaseModelWithTitleAndDesc';
 
 const useStyles = makeStyles({
   nestableItemCustom: {
@@ -41,7 +41,7 @@ const useStyles = makeStyles({
   }
 });
 
-interface IProps<T extends BaseModelWithTitleAndDesc> {
+interface IProps<T extends IBaseModelWithTitleAndDesc> {
   dispatchfunc: (items: Parentable<T>[]) => void;
   inputlist: Nestable<T>[];
   component: React.ReactElement;
@@ -51,7 +51,7 @@ interface IProps<T extends BaseModelWithTitleAndDesc> {
 /*
  * @deprecated
  **/
-const NestableHierarcyWithAccordion = <T extends BaseModelWithTitleAndDesc>({
+const NestableHierarcyWithAccordion = <T extends IBaseModelWithTitleAndDesc>({
   dispatchfunc,
   inputlist,
   component,

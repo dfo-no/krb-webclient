@@ -12,7 +12,6 @@ import { BaseBankSchema, IBank } from './IBank';
 export interface ISpecification {
   bank: IBank;
   title: string;
-  version: string;
   organization: string;
   organizationNumber: string;
   products: ISpecificationProduct[];
@@ -24,7 +23,6 @@ export const BaseSpecificationSchema = CustomJoi.object().keys({
   bank: BaseBankSchema,
   title: CustomJoi.string().required(),
   organization: CustomJoi.string().required(),
-  version: CustomJoi.string().length(36).required(),
   organizationNumber: CustomJoi.string().length(9).required(),
   products: CustomJoi.array().items(SpecificationProductSchema).required(),
   requirements: CustomJoi.array().items(CustomJoi.string()).required(),

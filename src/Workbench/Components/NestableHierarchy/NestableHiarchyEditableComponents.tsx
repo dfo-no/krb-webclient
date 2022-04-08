@@ -8,7 +8,7 @@ import NestableHierarcy from './NestableHierarcy';
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { useEditableState } from '../EditableContext';
-import { BaseModelWithTitleAndDesc } from '../../../models/BaseModelWithTitleAndDesc';
+import { IBaseModelWithTitleAndDesc } from '../../../models/IBaseModelWithTitleAndDesc';
 import { FormContainerBox } from '../Form/FormContainerBox';
 import { ScrollableContainer } from '../ScrollableContainer';
 import { FormIconButton } from '../Form/FormIconButton';
@@ -65,7 +65,7 @@ const useStyles = makeStyles({
   }
 });
 
-interface IProps<T extends BaseModelWithTitleAndDesc> {
+interface IProps<T extends IBaseModelWithTitleAndDesc> {
   dispatchfunc: (items: Parentable<T>[]) => void;
   inputlist: Parentable<T>[];
   CreateComponent: React.ReactElement;
@@ -78,7 +78,7 @@ interface IProps<T extends BaseModelWithTitleAndDesc> {
 }
 
 const NestableHierarcyEditableComponents = <
-  T extends BaseModelWithTitleAndDesc
+  T extends IBaseModelWithTitleAndDesc
 >({
   dispatchfunc,
   inputlist,

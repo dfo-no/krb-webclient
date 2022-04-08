@@ -3,7 +3,7 @@ import { Redirect } from 'react-router-dom';
 import { useSpecificationState } from './SpecificationContext';
 
 interface IProps {
-  children: React.ReactNode;
+  children: React.ReactElement;
 }
 
 const SpecificationGuard = ({ children }: IProps) => {
@@ -13,7 +13,7 @@ const SpecificationGuard = ({ children }: IProps) => {
     return <Redirect to={{ pathname: '/specification' }} />;
   }
 
-  return <>{children}</>;
+  return children;
 };
 
 export default SpecificationGuard;
