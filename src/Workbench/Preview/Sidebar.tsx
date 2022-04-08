@@ -10,6 +10,7 @@ import { Parentable } from '../../models/Parentable';
 import { IProduct } from '../../Nexus/entities/IProduct';
 import theme from '../../theme';
 import { usePreviewState } from './PreviewContext';
+
 interface IProps {
   parentableArray: Parentable<IProduct>[];
 }
@@ -48,6 +49,10 @@ export default function Sidebar({
 
   const renderProducts = (elements: Parentable<IProduct>[]) => {
     const displayNeeds = Utils.parentable2Levelable(elements);
+
+    console.log('displayneeds');
+    console.log(displayNeeds);
+
     return displayNeeds.map((element, index) => {
       return (
         <ListItem key={`sidebar-${element.id}`}>
