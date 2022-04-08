@@ -35,6 +35,7 @@ const useStyles = makeStyles({
     padding: 32
   },
   listItem: {
+    display: 'flex',
     backgroundColor: theme.palette.white.main,
     border: `1px solid ${theme.palette.silver.main}`,
     minHeight: 50,
