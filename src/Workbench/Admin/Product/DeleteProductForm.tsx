@@ -53,6 +53,7 @@ export default function DeleteProductForm({
   }
 
   const hasChildren = Utils.checkIfHasChildren(product, project.products);
+  const isInUse = Utils.productUsedInVariants(product, project);
 
   async function onSubmit(put: Parentable<IProduct>) {
     await deleteProduct(put).then(() => {
@@ -73,7 +74,7 @@ export default function DeleteProductForm({
         autoComplete="off"
         noValidate
       >
-        {!hasChildren && (
+        {!hasChildren && !isInUse && (
           <FormDeleteBox>
             <FormTextButton
               hoverColor={theme.palette.errorRed.main}
@@ -92,10 +93,12 @@ export default function DeleteProductForm({
             {children}
           </FormDeleteBox>
         )}
-        {hasChildren && (
+        {(hasChildren || isInUse) && (
           <FormCantDeleteBox>
-            <Typography variant="smBold">
-              {t('cant delete this product')}
+            <Typography variant="smBold" sx={{ paddingLeft: 1 }}>
+              {t('cant delete this product')}{' '}
+              {isInUse ? t('product has connected requirements') : ''}{' '}
+              {hasChildren ? t('product has children') : ''}
             </Typography>
             <FormTextButton
               hoverColor={theme.palette.gray400.main}
