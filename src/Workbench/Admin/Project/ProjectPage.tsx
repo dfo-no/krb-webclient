@@ -35,7 +35,6 @@ const useStyles = makeStyles({
 const PlainListBox = styled(Box)(({ theme }) => ({
   display: 'flex',
   flexDirection: 'row',
-  height: 60,
   width: '100%',
   paddingTop: 10,
   paddingBottom: 10,

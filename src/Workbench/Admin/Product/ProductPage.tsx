@@ -99,7 +99,7 @@ export default function ProductPage(): React.ReactElement {
             handleClose={() => setDeleteMode('')}
           />
         )}
-        depth={5}
+        depth={8}
       />
     </StandardContainer>
   );

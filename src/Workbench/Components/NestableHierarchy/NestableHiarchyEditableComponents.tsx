@@ -16,12 +16,16 @@ import { FormIconButton } from '../Form/FormIconButton';
 const useStyles = makeStyles({
   nestableItemCustom: {
     display: 'flex',
-    minHeight: 50,
+    paddingTop: 8,
+    paddingBottom: 8,
     border: `1px solid ${theme.palette.gray500.main}`,
     backgroundColor: theme.palette.white.main
   },
   nestableCustom: {
     width: '100%',
+    '& .nestable-list': {
+      paddingLeft: 25
+    },
     '& .nestable-item': {
       marginTop: '16px',
       '&:first-child': {
@@ -40,14 +44,15 @@ const useStyles = makeStyles({
   },
   textItemTitle: {
     alignSelf: 'center',
-    paddingLeft: 15
+    paddingLeft: 15,
+    flex: '1 1 auto'
   },
   textItemDescription: {
     alignSelf: 'center',
     paddingLeft: 15,
     borderLeft: '1px solid',
     marginLeft: 'auto',
-    width: '25vw'
+    flex: '0 0 25vw'
   },
   handlerIcon: {
     alignSelf: 'center',
