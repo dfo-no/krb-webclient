@@ -54,11 +54,6 @@ const NewSpecForm = ({ handleClose, specification }: IProps) => {
   const classes = useStyles();
   const { setSpecification } = useSpecificationState();
 
-  const versions: IOption[] = specification.bank.publications.map((p) => {
-    const option: IOption = { label: p.comment, value: p.id };
-    return option;
-  });
-
   const methods = useForm<ISpecification>({
     resolver: joiResolver(BaseSpecificationSchema),
     defaultValues: specification
@@ -90,13 +85,6 @@ const NewSpecForm = ({ handleClose, specification }: IProps) => {
           )}
         </Typography>
         <Box className={classes.fields}>
-          <SelectCtrl
-            name="version"
-            label={t(
-              'Pick which version of the project you want to use in this specification'
-            )}
-            options={versions}
-          />
           <VerticalTextCtrl
             name="title"
             label={t('What will be the name of the procurement?')}

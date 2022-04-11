@@ -12,7 +12,7 @@ import { Levelable } from '../models/Levelable';
 import CheckBoxIcon from '@mui/icons-material/CheckBox';
 import { ScrollableContainer } from '../Workbench/Components/ScrollableContainer';
 import { Parentable } from '../models/Parentable';
-import { BaseModelWithTitleAndDesc } from '../models/BaseModelWithTitleAndDesc';
+import { IBaseModelWithTitleAndDesc } from '../models/IBaseModelWithTitleAndDesc';
 
 const useStyles = makeStyles({
   checkbox: {
@@ -65,12 +65,12 @@ const useStyles = makeStyles({
   }
 });
 
-interface IProps<T extends BaseModelWithTitleAndDesc> {
+interface IProps<T extends IBaseModelWithTitleAndDesc> {
   name: string;
   items: Parentable<T>[];
 }
 
-const SelectionMultipleCtrl = <T extends BaseModelWithTitleAndDesc>({
+const SelectionMultipleCtrl = <T extends IBaseModelWithTitleAndDesc>({
   name,
   items
 }: IProps<T>): React.ReactElement => {

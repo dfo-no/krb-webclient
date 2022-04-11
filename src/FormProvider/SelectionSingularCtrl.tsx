@@ -2,16 +2,13 @@ import { Controller } from 'react-hook-form';
 import { List, ListItem, Typography, Box, Radio } from '@mui/material';
 import makeStyles from '@mui/styles/makeStyles';
 import React from 'react';
-import { useParams } from 'react-router-dom';
-import { IRouteParams } from '../Workbench/Models/IRouteParams';
-import { useGetProjectQuery } from '../store/api/bankApi';
 import LoaderSpinner from '../common/LoaderSpinner';
 import theme from '../theme';
 import Utils from '../common/Utils';
 import { Levelable } from '../models/Levelable';
 import { ScrollableContainer } from '../Workbench/Components/ScrollableContainer';
 import { Parentable } from '../models/Parentable';
-import { BaseModelWithTitleAndDesc } from '../models/BaseModelWithTitleAndDesc';
+import { IBaseModelWithTitleAndDesc } from '../models/IBaseModelWithTitleAndDesc';
 
 const useStyles = makeStyles({
   checkbox: {
@@ -62,22 +59,26 @@ const useStyles = makeStyles({
   }
 });
 
-interface IProps<T extends BaseModelWithTitleAndDesc> {
+interface IProps<T extends IBaseModelWithTitleAndDesc> {
   name: string;
+  initValue: string | T;
+  saveAsString: boolean;
   items?: T[];
   parentableItems?: Parentable<T>[];
+  postChange?: (selection: T) => void;
 }
 
-const SelectionSingularCtrl = <T extends BaseModelWithTitleAndDesc>({
+const SelectionSingularCtrl = <T extends IBaseModelWithTitleAndDesc>({
   name,
+  initValue,
+  saveAsString,
   items,
-  parentableItems
+  parentableItems,
+  postChange = () => {}
 }: IProps<T>): React.ReactElement => {
-  const { projectId } = useParams<IRouteParams>();
-  const { data: project } = useGetProjectQuery(projectId);
   const classes = useStyles();
 
-  if (!project || (!items && !parentableItems)) {
+  if (!items && !parentableItems) {
     return <LoaderSpinner />;
   }
 
@@ -93,20 +94,29 @@ const SelectionSingularCtrl = <T extends BaseModelWithTitleAndDesc>({
   }
 
   const onClick = (
-    item: T,
+    item: Levelable<T>,
     selected: string,
-    onChange: (value: string) => void
+    onChange: (value: string | T) => void
   ) => {
-    onChange(item.id);
+    if (saveAsString) {
+      onChange(item.id);
+    } else {
+      onChange(Utils.levelable2Parentable(item));
+    }
+    postChange(item);
   };
 
-  const productChecked = (item: T, selected: string) => {
-    return selected === item.id;
+  const itemChecked = (item: T, selected: string | T) => {
+    if (saveAsString) {
+      return selected === item.id;
+    } else {
+      return (selected as T).id === item.id;
+    }
   };
 
   return (
     <Controller
-      render={({ field: { value: selected, onChange } }) => (
+      render={({ field: { value: selected = initValue, onChange } }) => (
         <ScrollableContainer className={classes.list}>
           <List>
             {levelableItems.map((item) => {
@@ -122,7 +132,7 @@ const SelectionSingularCtrl = <T extends BaseModelWithTitleAndDesc>({
                   onClick={() => onClick(item, selected, onChange)}
                 >
                   <Box className={classes.checkbox}>
-                    <Radio checked={productChecked(item, selected)} />
+                    <Radio checked={itemChecked(item, selected)} />
                   </Box>
                   <Typography
                     className={classes.itemTitle}

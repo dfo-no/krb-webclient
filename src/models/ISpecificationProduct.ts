@@ -1,8 +1,10 @@
 import CustomJoi from '../common/CustomJoi';
-import { IProduct } from '../Nexus/entities/IProduct';
+import { BaseProductSchema, IProduct } from '../Nexus/entities/IProduct';
 import { IRequirementAnswer } from './IRequirementAnswer';
-export interface ISpecificationProduct {
-  id: string;
+import { IBaseModel } from '../Nexus/entities/IBaseModel';
+import ModelType from './ModelType';
+
+export interface ISpecificationProduct extends IBaseModel {
   title: string;
   description: string;
   originProduct: IProduct;
@@ -15,11 +17,17 @@ export interface ISpecificationProduct {
 export const SpecificationProductSchema = CustomJoi.object().keys({
   id: CustomJoi.string().required(),
   title: CustomJoi.string().required(),
-  // TODO: change to productSchema when finished refactoring workbench
-  originProduct: CustomJoi.object(),
+  originProduct: BaseProductSchema,
   description: CustomJoi.string().allow(null, '').required(),
   amount: CustomJoi.number().integer().min(1).required(),
   requirements: CustomJoi.array().items(CustomJoi.string()),
   weight: CustomJoi.number().integer().min(1).required(),
-  requirementAnswers: CustomJoi.array()
+  requirementAnswers: CustomJoi.array(),
+  type: CustomJoi.string().equal(ModelType.specificationProduct).required(),
+  sourceOriginal: CustomJoi.string().allow(null).required(),
+  sourceRel: CustomJoi.string().allow(null).required()
+});
+
+export const PostSpecificationProductSchema = SpecificationProductSchema.keys({
+  id: CustomJoi.string().equal('').required()
 });

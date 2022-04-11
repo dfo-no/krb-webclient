@@ -22,7 +22,6 @@ export default class SpecificationStoreService {
     SpecificationStoreService.specification = {
       bank,
       title: '',
-      version: '',
       organization: '',
       organizationNumber: '',
       products: [],
@@ -35,7 +34,6 @@ export default class SpecificationStoreService {
     const spec: ISpecification = {
       bank,
       title: '',
-      version: '',
       organization: '',
       organizationNumber: '',
       products: [],

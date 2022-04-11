@@ -25,6 +25,7 @@ import {
   setBank
 } from '../../store/reducers/spesification-reducer';
 import styles from './ProductSpecEditor.module.scss';
+import Nexus from '../../Nexus/Nexus';
 
 type FormInput = {
   product: string;
@@ -43,6 +44,7 @@ interface IOption {
 export default function ProductSpecList(): React.ReactElement {
   const { id } = useParams<IRouteParams>();
   const dispatch = useAppDispatch();
+  const nexus = Nexus.getInstance();
   // const projectMatch = useRouteMatch<IRouteParams>('/specification/:bankId');
   // const { id } = useAppSelector((state) => state.selectedBank);
   // const { normalizedList } = useAppSelector((state) => state.bank);
@@ -105,16 +107,8 @@ export default function ProductSpecList(): React.ReactElement {
         (product: IProduct) => product.id === post.product
       )
     );
-    const newProduct: ISpecificationProduct = {
-      id: uuidv4(),
-      originProduct: selectedProduct,
-      title: selectedProduct.title,
-      description: selectedProduct.description,
-      amount: 0,
-      weight: 10,
-      requirements: [],
-      requirementAnswers: []
-    };
+    const newProduct: ISpecificationProduct =
+      nexus.specificationService.generateDefaultSpecificationProductValues();
     dispatch(addProduct({ product: newProduct }));
   };
 

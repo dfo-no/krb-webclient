@@ -31,7 +31,6 @@ const initialState: ISelectedBankState = {
       deletedDate: null
     },
     title: '',
-    version: '',
     organization: '',
     organizationNumber: '',
     products: [],
