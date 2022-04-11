@@ -8,6 +8,10 @@ import { INeed } from '../Nexus/entities/INeed';
 import { IProduct } from '../Nexus/entities/IProduct';
 import { IRequirement } from '../Nexus/entities/IRequirement';
 import { IVariant } from '../Nexus/entities/IVariant';
+import { ICodelist } from '../Nexus/entities/ICodelist';
+import { QuestionType } from '../models/QuestionType';
+import { ICodelistQuestion } from '../Nexus/entities/ICodelistQuestion';
+import QuestionEnum from '../models/QuestionEnum';
 
 class Utils {
   static ensure<T>(
@@ -304,6 +308,52 @@ class Utils {
     }
 
     return false;
+  }
+
+  static productUsedInVariants(
+    selectedProduct: IProduct,
+    selectedProject: IBank
+  ): boolean {
+    let returnValue = false;
+    selectedProject.needs.forEach((need: Parentable<INeed>) => {
+      need.requirements.forEach((requirement: IRequirement) => {
+        requirement.variants.forEach((variant: IVariant) => {
+          if (
+            variant.useProduct &&
+            variant.products.some((p) => p === selectedProduct.id)
+          ) {
+            returnValue = true;
+          }
+        });
+      });
+    });
+
+    return returnValue;
+  }
+
+  static codelistUsedInVariants(
+    selectedCodelist: ICodelist,
+    selectedProject: IBank
+  ): boolean {
+    let returnValue = false;
+    selectedProject.needs.forEach((need: Parentable<INeed>) => {
+      need.requirements.forEach((requirement: IRequirement) => {
+        requirement.variants.forEach((variant: IVariant) => {
+          variant.questions.forEach((question: QuestionType) => {
+            if (question.type === QuestionEnum.Q_CODELIST) {
+              if (
+                (question as ICodelistQuestion).config.codelist ===
+                selectedCodelist.id
+              ) {
+                returnValue = true;
+              }
+            }
+          });
+        });
+      });
+    });
+
+    return returnValue;
   }
 
   static findVariantsUsedByProduct(

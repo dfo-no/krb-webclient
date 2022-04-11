@@ -5,6 +5,7 @@ import { Nestable } from '../models/Nestable';
 import VariantType from '../Nexus/entities/VariantType';
 import { INeed } from '../Nexus/entities/INeed';
 import { IBank } from '../Nexus/entities/IBank';
+import QuestionEnum from '../models/QuestionEnum';
 
 interface ICar extends IBaseModel {
   id: string;
@@ -196,6 +197,36 @@ export const productsTestData = [
     type: ModelType.product,
     sourceOriginal: null,
     sourceRel: null
+  },
+  {
+    id: '38c1b14e-b742-11ec-b909-0242ac120002',
+    title: 'C Product',
+    description: '',
+    parent: '',
+    type: ModelType.product,
+    sourceOriginal: null,
+    sourceRel: null
+  }
+];
+
+export const codelistsTestData = [
+  {
+    id: '7aa1c0e8-d8f0-45f5-9bfc-3584ef3ba052',
+    title: 'A Codelist',
+    description: '',
+    codes: [],
+    type: ModelType.codelist,
+    sourceOriginal: null,
+    sourceRel: null
+  },
+  {
+    id: 'c71f3e4a-baf9-4625-969f-58d206f9794b',
+    title: 'B Codelist',
+    description: '',
+    codes: [],
+    type: ModelType.codelist,
+    sourceOriginal: null,
+    sourceRel: null
   }
 ];
 
@@ -254,7 +285,26 @@ export const needHierarchyTestData: Parentable<INeed>[] = [
             useSpesification: true,
             useQualification: false,
             products: [],
-            questions: [],
+            questions: [
+              {
+                id: '523acdad-95fa-4515-ac1f-f785f3000260',
+                type: QuestionEnum.Q_CODELIST,
+                config: {
+                  mandatoryCodes: [],
+                  optionalCodes: [],
+                  codelist: '7aa1c0e8-d8f0-45f5-9bfc-3584ef3ba052',
+                  defaultPoint: 1,
+                  optionalCodeMinAmount: 0,
+                  optionalCodeMaxAmount: 1
+                },
+                answer: {
+                  point: 0,
+                  codes: []
+                },
+                sourceRel: null,
+                sourceOriginal: null
+              }
+            ],
             type: VariantType.requirement
           }
         ],

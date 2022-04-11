@@ -95,7 +95,8 @@ export default function DeleteTagForm({
         {hasChildren && (
           <FormCantDeleteBox>
             <Typography variant="smBold">
-              {t('cant delete this tag')}
+              {t('cant delete this tag')}{' '}
+              {hasChildren ? t('tag has children') : ''}
             </Typography>
             <FormTextButton
               hoverColor={theme.palette.gray400.main}
