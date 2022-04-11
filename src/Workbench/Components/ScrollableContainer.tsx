@@ -8,7 +8,7 @@ export const ScrollableContainer = styled(Box)(({ theme }) => ({
   overflowY: 'auto',
   alignSelf: 'center',
   width: '100%',
-  paddingBottom: 16,
+  marginBottom: 16,
 
   '::-webkit-scrollbar': {
     width: '10px'

@@ -43,7 +43,7 @@ export default function Create(): React.ReactElement {
     return <></>;
   }
 
-  const renderCreatePageWithContent = (children: React.ReactNode) => {
+  const renderCreatePageWithContent = (children: React.ReactElement) => {
     return (
       <Box
         sx={{
@@ -53,11 +53,20 @@ export default function Create(): React.ReactElement {
           backgroundColor: theme.palette.gray100.main
         }}
       >
-        <Box sx={{ width: '25%', height: '100%' }}>
+        <Box
+          sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            flex: '1 1 0',
+            height: '100%'
+          }}
+        >
           <NewNeed buttonText={'Legg til nytt behov'} />
           <CreateSideBar />
         </Box>
-        <Box sx={{ height: '100%', flexGrow: 1, minWidth: 0 }}>{children}</Box>
+        <Box sx={{ flex: '3 1 0', height: '100%', minWidth: 0 }}>
+          {children}
+        </Box>
       </Box>
     );
   };
@@ -97,6 +106,7 @@ export default function Create(): React.ReactElement {
           flexDirection: 'column',
           backgroundColor: theme.palette.gray200.main,
           height: '100%',
+          width: '100%',
           paddingBottom: 2
         }}
       >

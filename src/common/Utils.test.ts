@@ -1,6 +1,7 @@
 import { get } from 'lodash';
 import Utils from './Utils';
 import {
+  codelistsTestData,
   needHierarchyTestData,
   nestableCarsTestData,
   parentableCarsTestData,
@@ -171,5 +172,37 @@ describe('Utils functions should work', () => {
     expect(needsForProductB[1].requirements[0].variants[0].description).toEqual(
       'B Variant'
     );
+  });
+
+  it('Utils.productUsedInVariants returns true if variants with useProduct true and product in productslist', () => {
+    const project = {
+      ...projectTestData,
+      needs: needHierarchyTestData,
+      products: productsTestData
+    };
+    const isInUse1 = Utils.productUsedInVariants(productsTestData[0], project);
+    expect(isInUse1).toBeTruthy();
+
+    const isInUse2 = Utils.productUsedInVariants(productsTestData[2], project);
+    expect(isInUse2).toBeFalsy();
+  });
+
+  it('Utils.codelistUsedInVariants returns true if questions with codelist selected is on any variant', () => {
+    const project = {
+      ...projectTestData,
+      needs: needHierarchyTestData,
+      codelist: codelistsTestData
+    };
+    const isInUse1 = Utils.codelistUsedInVariants(
+      codelistsTestData[0],
+      project
+    );
+    expect(isInUse1).toBeTruthy();
+
+    const isInUse2 = Utils.codelistUsedInVariants(
+      codelistsTestData[1],
+      project
+    );
+    expect(isInUse2).toBeFalsy();
   });
 });
