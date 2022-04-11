@@ -98,7 +98,7 @@ export default function TagPage(): React.ReactElement {
             handleClose={() => setDeleteMode('')}
           />
         )}
-        depth={5}
+        depth={8}
       />
     </StandardContainer>
   );
