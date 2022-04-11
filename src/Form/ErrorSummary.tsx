@@ -12,11 +12,13 @@ function isFieldError(object: unknown): object is FieldError {
 
 type ErrorSummaryProps<T> = {
   errors: FieldErrors<T>;
+  visible?: boolean;
 };
 export default function ErrorSummary<T>({
-  errors
+  errors,
+  visible = false
 }: ErrorSummaryProps<T>): React.ReactElement | null {
-  if (process.env.NODE_ENV !== 'development') {
+  if (!visible && process.env.NODE_ENV !== 'development') {
     return null;
   }
 

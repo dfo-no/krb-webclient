@@ -38,7 +38,7 @@ const Variant = ({ variant, requirementIndex }: IProps) => {
   const { data: project } = useGetProjectQuery(projectId);
 
   const { editVariant } = useProjectMutations();
-  const { setOpenVariants } = useVariantState();
+  const { openVariants, setOpenVariants } = useVariantState();
   const { needIndex, setDeleteMode } = useSelectState();
   const dispatch = useAppDispatch();
 
@@ -63,6 +63,12 @@ const Variant = ({ variant, requirementIndex }: IProps) => {
         text: 'successfully updated variant'
       };
       dispatch(addAlert({ alert }));
+      methods.reset({ ...put });
+      setOpenVariants((ov) => {
+        const tmp = [...ov];
+        tmp.splice(tmp.indexOf(variant.id), 1);
+        return tmp;
+      });
     });
   };
 
@@ -86,7 +92,11 @@ const Variant = ({ variant, requirementIndex }: IProps) => {
         autoComplete="off"
         noValidate
       >
-        <Accordion key={variant.id} onChange={accordionChange()}>
+        <Accordion
+          key={variant.id}
+          onChange={accordionChange()}
+          expanded={openVariants.some((id) => id === variant.id)}
+        >
           <AccordionSummary expandIcon={<ExpandMoreIcon />}>
             <Typography>{variant.description}</Typography>
             <FormIconButton
@@ -99,6 +109,7 @@ const Variant = ({ variant, requirementIndex }: IProps) => {
           </AccordionSummary>
           <AccordionDetails sx={{ display: 'flex', flexDirection: 'column' }}>
             <VariantFormContent control={methods.control} />
+            <ErrorSummary errors={methods.formState.errors} visible={true} />
             <Box sx={{ display: 'flex', flexDirection: 'row', marginTop: 2 }}>
               <Button
                 variant="cancel"
@@ -113,7 +124,6 @@ const Variant = ({ variant, requirementIndex }: IProps) => {
             </Box>
           </AccordionDetails>
         </Accordion>
-        <ErrorSummary errors={methods.formState.errors} />
       </form>
     </FormProvider>
   );
