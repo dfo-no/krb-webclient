@@ -25,7 +25,7 @@ export default class InheritanceService {
       id: inheritedBank.id,
       projectId: Utils.ensure(inheritedBank.projectId),
       date: Utils.ensure(inheritedBank.publishedDate),
-      type: ModelType.product,
+      type: ModelType.inheritedBank,
       sourceOriginal: inheritedBank.projectId,
       sourceRel: null
     };
