@@ -122,7 +122,7 @@ const KitchenSink = (): React.ReactElement => {
     { label: 'Volvo', value: '3' }
   ];
 
-  const carList: any = [];
+  const carList: IBaseModel[] = [];
   const searchFunction = (searchString: string, list: IBaseModel[]) => {
     return list;
   };

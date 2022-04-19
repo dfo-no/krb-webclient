@@ -100,7 +100,6 @@ const CreateSideBar = (): React.ReactElement => {
   }
 
   const updateNeedsArrangement = (newNeedList: Parentable<INeed>[]) => {
-    console.log(newNeedList);
     setNeeds(newNeedList);
     editNeeds(newNeedList);
   };
