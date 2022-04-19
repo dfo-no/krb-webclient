@@ -1,7 +1,7 @@
 import CustomJoi from '../../common/CustomJoi';
 import ModelType from '../../models/ModelType';
 import { IBaseModel } from './IBaseModel';
-import { IRequirement } from './IRequirement';
+import { BaseRequirementSchema, IRequirement } from './IRequirement';
 
 export interface INeed extends IBaseModel {
   title: string;
@@ -10,46 +10,45 @@ export interface INeed extends IBaseModel {
 }
 
 export const BaseNeedSchema = CustomJoi.object().keys({
-  id: CustomJoi.string().length(36).required(),
+  id: CustomJoi.string()
+    .guid({ version: ['uuidv4'] })
+    .length(36)
+    .required(),
   title: CustomJoi.string().required(),
   description: CustomJoi.string().allow(null, '').required(),
-  requirements: CustomJoi.array().required(),
+  requirements: CustomJoi.array().items(BaseRequirementSchema).required(),
   type: CustomJoi.string().equal(ModelType.need).required(),
-  sourceOriginal: CustomJoi.string().required(),
-  sourceRel: CustomJoi.string().allow(null).required()
+  sourceOriginal: CustomJoi.string()
+    .guid({ version: ['uuidv4'] })
+    .length(36)
+    .allow(null)
+    .required(),
+  sourceRel: CustomJoi.string()
+    .guid({ version: ['uuidv4'] })
+    .length(36)
+    .allow(null)
+    .required(),
+  parent: CustomJoi.alternatives([
+    CustomJoi.string().length(36),
+    CustomJoi.string().valid('')
+  ])
 });
 
 export const PostNeedSchema = BaseNeedSchema.keys({
-  id: CustomJoi.string().equal('').required(),
-  parent: CustomJoi.alternatives([
-    CustomJoi.string().length(36),
-    CustomJoi.string().valid('')
-  ]),
-  children: CustomJoi.array()
+  id: CustomJoi.string().equal('').required()
 });
 
-export const PutNeedSchema = BaseNeedSchema.keys({
-  parent: CustomJoi.alternatives([
-    CustomJoi.string().length(36),
-    CustomJoi.string().valid('')
-  ]),
-  children: CustomJoi.array(),
-  level: CustomJoi.number()
-});
+export const PutNeedSchema = BaseNeedSchema.keys({});
 
 export const DeleteNeedSchema = BaseNeedSchema.keys({
-  id: CustomJoi.string().length(36).required(),
+  id: CustomJoi.string()
+    .guid({ version: ['uuidv4'] })
+    .length(36)
+    .required(),
   parent: CustomJoi.alternatives([
     CustomJoi.string().length(36),
     CustomJoi.string().valid('')
   ]),
   level: CustomJoi.number(),
   requirements: CustomJoi.array().max(0).required()
-  // requirements: CustomJoi.assertEmptyRequirements()
 });
-
-// BaseNeedSchema.options({});
-/* export const DeleteNeedProjectSchema = BaseBankSchema.keys({
-  id: CustomJoi.string().length(36).required(),
-  requirements: CustomJoi.assertEmptyRequirements().required()
-}); */
