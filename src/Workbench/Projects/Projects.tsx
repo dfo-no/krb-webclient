@@ -131,6 +131,7 @@ export default function Projects(): React.ReactElement {
   const [deleteProject] = useDeleteProjectMutation();
   const classes = useStyles();
   const [projectList, setProjectList] = useState<IBank[]>();
+  const [allProjects, setAllProjects] = useState<IBank[]>();
   const [isOpen, setOpen] = useState(false);
 
   const onDelete = async (p: IBank) => {
@@ -154,8 +155,9 @@ export default function Projects(): React.ReactElement {
   useEffect(() => {
     if (projects) {
       setProjectList(Object.values(projects));
+      setAllProjects(Object.values(projects));
     }
-  }, [setProjectList, projects]);
+  }, [setProjectList, setAllProjects, projects]);
 
   if (isLoading) {
     return <LoaderSpinner />;
@@ -226,13 +228,13 @@ export default function Projects(): React.ReactElement {
         </Box>
         <img src={mainIllustration} alt="main illustration" />
       </Box>
-      {projectList ? (
+      {allProjects && (
         <Box className={classes.contentContainer}>
           <SearchContainer sx={{ marginBottom: 1 }}>
             <SearchFieldContainer>
               {' '}
               <DFOSearchBar
-                list={projectList}
+                list={allProjects}
                 placeholder={t('search for banks')}
                 callback={searchFieldCallback}
                 searchFunction={searchFunction}
@@ -245,15 +247,6 @@ export default function Projects(): React.ReactElement {
               {projectList && renderProjects(projectList)}
             </List>
           </ScrollableContainer>
-        </Box>
-      ) : (
-        <Box className={classes.noProjectsContainer}>
-          <Box>
-            <Typography variant="md" sx={{ letterSpacing: 2 }}>
-              {t('There is no banks')}
-            </Typography>
-          </Box>
-          <Box>{renderNewBankButton()}</Box>
         </Box>
       )}
 
