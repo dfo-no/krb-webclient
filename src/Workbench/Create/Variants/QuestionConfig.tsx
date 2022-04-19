@@ -103,6 +103,8 @@ const QuestionConfig = ({ item, index }: IProps) => {
             name={
               `questions.${index}.config.codelist` as 'questions.0.config.codelist'
             }
+            saveAsString={true}
+            initValue={project.codelist[0]}
             items={project.codelist}
           />
         </ConfigBox>

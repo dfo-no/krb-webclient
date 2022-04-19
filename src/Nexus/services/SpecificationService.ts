@@ -1,10 +1,10 @@
 /* eslint-disable class-methods-use-this */
 import { IRequirementAnswer } from '../../models/IRequirementAnswer';
 import { ISpecificationProduct } from '../../models/ISpecificationProduct';
-import { IBank } from '../entities/IBank';
 import { ISpecification } from '../entities/ISpecification';
 import SpecificationStoreService from './SpecificationStoreService';
 import UuidService from './UuidService';
+import ModelType from '../../models/ModelType';
 
 export default class SpecificationService {
   UuidService = new UuidService();
@@ -14,6 +14,39 @@ export default class SpecificationService {
   public constructor(store: SpecificationStoreService) {
     this.store = store;
   }
+
+  generateDefaultSpecificationProductValues = (): ISpecificationProduct => {
+    const defaultValues: ISpecificationProduct = {
+      id: '',
+      title: '',
+      description: '',
+      originProduct: {
+        id: '',
+        title: '',
+        description: '',
+        type: ModelType.product,
+        parent: '',
+        sourceOriginal: '',
+        sourceRel: null
+      },
+      weight: 1,
+      amount: 1,
+      requirements: [],
+      requirementAnswers: [],
+      type: ModelType.specificationProduct,
+      sourceOriginal: null,
+      sourceRel: null
+    };
+    return defaultValues;
+  };
+
+  createSpecificationProductWithId = (
+    item: ISpecificationProduct
+  ): ISpecificationProduct => {
+    const tag = { ...item };
+    tag.id = this.UuidService.generateId();
+    return tag;
+  };
 
   async setSpecification(specification: ISpecification): Promise<void> {
     return this.store.setSpecification(specification);
@@ -25,10 +58,6 @@ export default class SpecificationService {
 
   async editTtile(title: string): Promise<void> {
     return this.store.editTitle(title);
-  }
-
-  async createSpecificationFromBank(bank: IBank): Promise<void> {
-    return this.store.createSpecificationFromBank(bank);
   }
 
   async addSpecificationProduct(product: ISpecificationProduct): Promise<void> {

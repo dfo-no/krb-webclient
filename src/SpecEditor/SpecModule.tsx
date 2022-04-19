@@ -28,14 +28,10 @@ export default function SpecModule(): React.ReactElement {
           <SpecPage />
         </Route>
         <Box className={classes.specification}>
-          <SpecSideBar />
           <Route exact path="/specification/:id">
             <SpecificationGuard>
               <SpecEditor />
             </SpecificationGuard>
-          </Route>
-          <Route exact path="/specification/:id/createProduct">
-            <NewProduct />
           </Route>
         </Box>
       </Switch>

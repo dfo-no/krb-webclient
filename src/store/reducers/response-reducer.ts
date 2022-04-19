@@ -33,7 +33,6 @@ const initialState: IResponseState = {
         deletedDate: null
       },
       title: '',
-      version: '',
       organization: '',
       organizationNumber: '',
       products: [],

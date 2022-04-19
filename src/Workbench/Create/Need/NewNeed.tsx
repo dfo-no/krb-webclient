@@ -39,7 +39,8 @@ const NewNeed = ({ buttonText }: IProps) => {
       sx={{
         display: 'flex',
         flexDirection: 'row-reverse',
-        paddingTop: 2
+        paddingTop: 2,
+        paddingBottom: 2
       }}
     >
       <Button variant="primary" onClick={() => setOpen(true)}>

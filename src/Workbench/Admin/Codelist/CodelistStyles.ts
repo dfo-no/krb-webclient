@@ -66,7 +66,8 @@ export const usePanelStyles = makeStyles({
     alignSelf: 'center',
     cursor: 'pointer',
     justifySelf: 'flex-end',
-    paddingLeft: 8
+    paddingLeft: 8,
+    paddingTop: 8
   },
   textItem: {
     display: 'flex',
@@ -80,12 +81,11 @@ export const usePanelStyles = makeStyles({
   },
   textItemTitle: {
     display: 'flex',
-    height: 30,
     paddingTop: 5,
+    paddingBottom: 5,
     borderBottom: '1px solid'
   },
   textItemDescription: {
-    height: 30,
     paddingTop: 5
   },
   selectedItem: {

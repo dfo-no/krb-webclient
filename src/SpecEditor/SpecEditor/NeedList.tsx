@@ -3,10 +3,12 @@ import { useTranslation } from 'react-i18next';
 import makeStyles from '@mui/styles/makeStyles';
 import React from 'react';
 import theme from '../../theme';
-import { useAppSelector } from '../../store/hooks';
-import { useGetBankQuery } from '../../store/api/bankApi';
 import { IProduct } from '../../Nexus/entities/IProduct';
 import NeedListItem from './NeedListItem';
+import { Parentable } from '../../models/Parentable';
+import { useSpecificationState } from '../SpecificationContext';
+import Utils from '../../common/Utils';
+import { INeed } from '../../Nexus/entities/INeed';
 
 const useStyles = makeStyles({
   newProductNeedList: {
@@ -36,20 +38,26 @@ const useStyles = makeStyles({
   }
 });
 
-export default function NeedList(): React.ReactElement {
+interface IProps {
+  product: Parentable<IProduct>;
+}
+
+export default function NeedList({ product }: IProps): React.ReactElement {
   const classes = useStyles();
   const { t } = useTranslation();
+  const { specification } = useSpecificationState();
 
-  const selectedBank = useAppSelector((state) => state.selectedBank);
-  const { data: bankSelected } = useGetBankQuery(String(selectedBank.id));
+  if (!specification || !specification.bank || !product) {
+    return <></>;
+  }
 
-  const products = bankSelected?.products;
+  const needs = Utils.findVariantsUsedByProduct(product, specification.bank);
 
-  const renderList = (productList: IProduct[]) => {
+  const renderList = () => {
     return (
       <List>
-        {productList.map((product: IProduct, index: number) => {
-          return <NeedListItem productListItem={product} key={index} />;
+        {needs.map((need: Parentable<INeed>, index: number) => {
+          return <NeedListItem need={need} key={index} />;
         })}
       </List>
     );
@@ -57,13 +65,11 @@ export default function NeedList(): React.ReactElement {
 
   return (
     <>
-      <Typography variant="sm" color={theme.palette.primary.main}>
-        {t('needs you find under')}
+      <Typography variant="smBold" color={theme.palette.primary.main}>
+        {t('Requirement you find under')} <i>{product.title}</i>
       </Typography>
       <Box className={classes.newProductNeedList}>
-        <Box className={classes.needsList}>
-          {products && renderList(products)}
-        </Box>
+        <Box className={classes.needsList}>{renderList()}</Box>
       </Box>
     </>
   );

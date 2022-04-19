@@ -4,7 +4,7 @@ import { Parentable } from '../../../models/Parentable';
 import { Nestable as NestableModel } from '../../../models/Nestable';
 import React from 'react';
 import DragIndicatorIcon from '@mui/icons-material/DragIndicator';
-import { BaseModelWithTitleAndDesc } from '../../../models/BaseModelWithTitleAndDesc';
+import { IBaseModelWithTitleAndDesc } from '../../../models/IBaseModelWithTitleAndDesc';
 import Utils from '../../../common/Utils';
 
 type NestableElementType =
@@ -19,7 +19,7 @@ type NestableElementType =
   | null
   | undefined;
 
-interface IProps<T extends BaseModelWithTitleAndDesc> {
+interface IProps<T extends IBaseModelWithTitleAndDesc> {
   className?: string;
   inputlist: Parentable<T>[];
   dispatchfunc: (newItems: Parentable<T>[]) => void;
@@ -32,7 +32,7 @@ interface IProps<T extends BaseModelWithTitleAndDesc> {
   renderCollapseIcon?: (obj: { isCollapsed: boolean }) => React.ReactElement;
 }
 
-const NestableHierarcy = <T extends BaseModelWithTitleAndDesc>({
+const NestableHierarcy = <T extends IBaseModelWithTitleAndDesc>({
   className,
   inputlist,
   dispatchfunc,

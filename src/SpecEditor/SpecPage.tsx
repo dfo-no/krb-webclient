@@ -5,7 +5,7 @@ import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import Typography from '@mui/material/Typography';
 import makeStyles from '@mui/styles/makeStyles';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import mainIllustration from '../assets/images/main-illustration.svg';
 import { PAGE_SIZE } from '../common/Constants';
@@ -15,7 +15,7 @@ import DFOSearchBar from '../components/DFOSearchBar/DFOSearchBar';
 import { IBank } from '../Nexus/entities/IBank';
 import { IBaseModel } from '../Nexus/entities/IBaseModel';
 import SpecificationStoreService from '../Nexus/services/SpecificationStoreService';
-import { useGetProjectsQuery } from '../store/api/bankApi';
+import { useGetBanksQuery } from '../store/api/bankApi';
 import theme from '../theme';
 import { ScrollableContainer } from '../Workbench/Components/ScrollableContainer';
 import {
@@ -105,13 +105,13 @@ const useStyles = makeStyles({
     flexGrow: 1,
     minHeight: 0,
     marginBottom: 16,
-    width: 1000
+    width: '70%'
   },
   noProjectsContainer: {
     display: 'flex',
     textAlign: 'center',
     flexDirection: 'column',
-    width: 1000,
+    width: '70%',
     gap: 15
   }
 });
@@ -121,6 +121,14 @@ export default function SpecPage(): React.ReactElement {
   const { t } = useTranslation();
   const classes = useStyles();
   const { specification, setSpecification } = useSpecificationState();
+  const [latestPublishedBanks, setLatestPublishedBanks] = useState<IBank[]>([]);
+
+  const { data: banks, isLoading } = useGetBanksQuery({
+    pageSize: PAGE_SIZE,
+    page: 1,
+    fieldName: 'title',
+    order: 'DESC'
+  });
 
   const searchFunction = (searchString: string, list: IBaseModel[]) => {
     return list;
@@ -129,12 +137,34 @@ export default function SpecPage(): React.ReactElement {
     return list;
   };
 
-  const { data: projects, isLoading } = useGetProjectsQuery({
-    pageSize: PAGE_SIZE,
-    page: 1,
-    fieldName: 'title',
-    order: 'DESC'
-  });
+  useEffect(() => {
+    if (banks) {
+      setLatestPublishedBanks(
+        Object.values(banks)
+          .filter((bank: IBank) => bank.publishedDate)
+          .reduce((prev: IBank[], current: IBank) => {
+            const existingBank = prev.find(
+              (bank) => bank.projectId === current.projectId
+            );
+            if (existingBank) {
+              if (
+                existingBank.publishedDate &&
+                current.publishedDate &&
+                existingBank.publishedDate < current.publishedDate
+              ) {
+                const prevWithoutBank = prev.filter(
+                  (bank) => bank.id !== existingBank.id
+                );
+                return [current, ...prevWithoutBank];
+              } else {
+                return prev;
+              }
+            }
+            return [current, ...prev];
+          }, [])
+      );
+    }
+  }, [banks]);
 
   const [isOpen, setOpen] = useState(false);
 
@@ -142,14 +172,14 @@ export default function SpecPage(): React.ReactElement {
     return <LoaderSpinner />;
   }
 
-  const openProjectModal = (project: IBank) => {
-    const spec = SpecificationStoreService.getSpecificationFromBank(project);
+  const openProjectModal = (bank: IBank) => {
+    const spec = SpecificationStoreService.getSpecificationFromBank(bank);
     setSpecification(spec);
     setOpen(true);
   };
 
-  const renderProjects = (projectList: Record<string, IBank>) => {
-    return Object.values(projectList).map((element) => {
+  const renderProjects = () => {
+    return latestPublishedBanks.map((element) => {
       return (
         <ListItem
           className={classes.projectListItem}
@@ -191,7 +221,7 @@ export default function SpecPage(): React.ReactElement {
           width="518"
         />
       </Box>
-      {projects ? (
+      {latestPublishedBanks ? (
         <Box className={classes.contentContainer}>
           <Box className={classes.topContainer}>
             <SearchContainer sx={{ marginBottom: 1 }}>
@@ -209,7 +239,7 @@ export default function SpecPage(): React.ReactElement {
           </Box>
           <ScrollableContainer>
             <List className={classes.list} aria-label="projects">
-              {projects && renderProjects(projects)}
+              {renderProjects()}
             </List>
           </ScrollableContainer>
         </Box>

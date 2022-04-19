@@ -30,7 +30,10 @@ const initialResponseProduct: IResponseProduct = {
     weight: 0,
     amount: 0,
     requirements: [],
-    requirementAnswers: []
+    requirementAnswers: [],
+    type: ModelType.specificationProduct,
+    sourceOriginal: null,
+    sourceRel: null
   }
 };
 const initialResponseSpecificationProduct: ISpecificationProduct = {
@@ -49,7 +52,10 @@ const initialResponseSpecificationProduct: ISpecificationProduct = {
   weight: 0,
   amount: 0,
   requirements: [],
-  requirementAnswers: []
+  requirementAnswers: [],
+  type: ModelType.specificationProduct,
+  sourceOriginal: null,
+  sourceRel: null
 };
 
 const initialState: ISelectedResponseProductState = {
