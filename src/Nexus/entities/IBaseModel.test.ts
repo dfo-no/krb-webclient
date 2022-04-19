@@ -18,7 +18,7 @@ describe('IBaseModel', () => {
     expect(report.error).toBeUndefined();
   });
 
-  test('Should invalidate on v5', () => {
+  test('Should invalidate on v1', () => {
     const model: IBaseModel = {
       id: uuidv1(),
       type: ModelType.bank,

@@ -19,7 +19,9 @@ export const BaseModelSchema = CustomJoi.object().keys({
     .guid({ version: ['uuidv4'] })
     .length(36)
     .required(),
-  type: CustomJoi.string().equal(ModelType.bank).required(),
+  type: CustomJoi.string()
+    .equal(...Object.values(ModelType))
+    .required(),
   sourceRel: CustomJoi.string()
     .guid({ version: ['uuidv4'] })
     .length(36)
