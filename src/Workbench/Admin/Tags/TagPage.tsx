@@ -65,7 +65,7 @@ export default function TagPage(): React.ReactElement {
         <SearchFieldContainer>
           {' '}
           <DFOSearchBar
-            list={tags}
+            list={project.tags}
             placeholder={t('search for tags')}
             callback={searchFieldCallback}
             searchFunction={tagPageSearch}
