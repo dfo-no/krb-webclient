@@ -74,20 +74,4 @@ describe('Nexus', () => {
       expect(result).toEqual(storageBank);
     });
   });
-  it('Nexus can create specification from project', () => {
-    const nexus = Nexus.getInstance();
-    const projectDefaultValues =
-      nexus.projectService.generateDefaultProjectValues();
-    nexus.projectService.setProject(projectDefaultValues);
-    const need = nexus.needService.generateDefaultNeedValues(
-      projectDefaultValues.id
-    );
-    nexus.needService.add(need);
-    nexus.projectService.editTitle('testbank');
-    const bank = nexus.projectService.getProject();
-    nexus.specificationService.createSpecificationFromBank(bank);
-    return nexus.specificationService.getSpecification().then((result) => {
-      expect(result.bank).toEqual(bank);
-    });
-  });
 });

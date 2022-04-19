@@ -1,4 +1,3 @@
-import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
 import Box from '@mui/material/Box';
@@ -6,20 +5,16 @@ import Typography from '@mui/material/Typography';
 import makeStyles from '@mui/styles/makeStyles';
 import React, { useEffect, useState } from 'react';
 import 'react-nestable/dist/styles/index.css';
-import Utils from '../../common/Utils';
-import { BaseModelWithTitleAndDesc } from '../../models/BaseModelWithTitleAndDesc';
-import { Nestable } from '../../models/Nestable';
 import { Parentable } from '../../models/Parentable';
-import { IBaseModel } from '../../Nexus/entities/IBaseModel';
 import theme from '../../theme';
 import NestableHierarcy from '../Components/NestableHierarchy/NestableHierarcy';
 import { useParams } from 'react-router-dom';
 import { IRouteParams } from '../Models/IRouteParams';
 import { useGetProjectQuery } from '../../store/api/bankApi';
-import LoaderSpinner from '../../common/LoaderSpinner';
 import { INeed } from '../../Nexus/entities/INeed';
 import { useSelectState } from './SelectContext';
 import useProjectMutations from '../../store/api/ProjectMutations';
+import { ScrollableContainer } from '../Components/ScrollableContainer';
 
 const useStyles = makeStyles({
   nestableItemCustom: {
@@ -27,7 +22,6 @@ const useStyles = makeStyles({
     cursor: 'pointer',
     backgroundColor: theme.palette.white.main,
     verticalAlign: 'middle',
-    height: '35px',
     borderLeft: `1px solid ${theme.palette.gray400.main}`,
     borderRight: `1px solid ${theme.palette.gray400.main}`,
     '&:hover': {
@@ -36,8 +30,13 @@ const useStyles = makeStyles({
     }
   },
   nestableCustom: {
+    '& .nestable-list': {
+      paddingLeft: 25
+    },
     '& .nestable-item': {
-      marginTop: '16px',
+      '&:not(:first-child)': {
+        marginTop: '16px'
+      },
       '& .nestable-item-name': {
         borderTop: `1px solid ${theme.palette.gray400.main}`,
         borderBottom: `1px solid ${theme.palette.gray400.main}`
@@ -52,9 +51,7 @@ const useStyles = makeStyles({
         }
       }
     },
-    width: '100%',
-    paddingLeft: '5%',
-    paddingBottom: '5%'
+    paddingLeft: '5%'
   },
   itemNameText: {
     display: 'flex',
@@ -100,7 +97,10 @@ const CreateSideBar = (): React.ReactElement => {
   }
 
   const updateNeedsArrangement = (newNeedList: Parentable<INeed>[]) => {
-    console.log(newNeedList);
+    if (needId) {
+      const newIndex = newNeedList.findIndex((need) => need.id === needId);
+      setNeedIndex(newIndex);
+    }
     setNeeds(newNeedList);
     editNeeds(newNeedList);
   };
@@ -128,34 +128,34 @@ const CreateSideBar = (): React.ReactElement => {
         onClick={() => itemClicked(item)}
       >
         <Box className={classes.handlerIcon}>{handler}</Box>
-        <Typography className={classes.itemNameText}>
-          {Utils.capitalizeFirstLetter(item.title ? item.title : '')}
+        <Typography
+          variant={item.parent === '' ? 'smBold' : 'sm'}
+          className={classes.itemNameText}
+        >
+          {item.title}
         </Typography>
         <Box className={classes.collapseIcon}>{collapseIcon}</Box>
-        {needId && needId === item.id && (
-          <Box className={classes.collapseIcon}>
-            <ArrowForwardIcon />
-          </Box>
-        )}
       </Box>
     );
   };
 
   return (
-    <NestableHierarcy
-      inputlist={needs}
-      className={classes.nestableCustom}
-      renderItem={renderItem}
-      dispatchfunc={updateNeedsArrangement}
-      depth={5}
-      renderCollapseIcon={({ isCollapsed }) => {
-        return isCollapsed ? (
-          <KeyboardArrowRightIcon />
-        ) : (
-          <KeyboardArrowDownIcon />
-        );
-      }}
-    />
+    <ScrollableContainer>
+      <NestableHierarcy
+        inputlist={needs}
+        className={classes.nestableCustom}
+        renderItem={renderItem}
+        dispatchfunc={updateNeedsArrangement}
+        depth={8}
+        renderCollapseIcon={({ isCollapsed }) => {
+          return isCollapsed ? (
+            <KeyboardArrowRightIcon />
+          ) : (
+            <KeyboardArrowDownIcon />
+          );
+        }}
+      />
+    </ScrollableContainer>
   );
 };
 

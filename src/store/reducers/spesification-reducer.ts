@@ -31,7 +31,6 @@ const initialState: ISpecificationState = {
       deletedDate: null
     },
     title: '',
-    version: '',
     organization: '',
     organizationNumber: '',
     products: [],

@@ -12,7 +12,7 @@ import { Levelable } from '../models/Levelable';
 import CheckBoxIcon from '@mui/icons-material/CheckBox';
 import { ScrollableContainer } from '../Workbench/Components/ScrollableContainer';
 import { Parentable } from '../models/Parentable';
-import { BaseModelWithTitleAndDesc } from '../models/BaseModelWithTitleAndDesc';
+import { IBaseModelWithTitleAndDesc } from '../models/IBaseModelWithTitleAndDesc';
 
 const useStyles = makeStyles({
   checkbox: {
@@ -35,10 +35,13 @@ const useStyles = makeStyles({
     padding: 32
   },
   listItem: {
+    display: 'flex',
     backgroundColor: theme.palette.white.main,
     border: `1px solid ${theme.palette.silver.main}`,
-    height: 50,
+    minHeight: 50,
     padding: 0,
+    paddingTop: 8,
+    paddingBottom: 8,
     cursor: 'pointer',
     '&:hover': {
       backgroundColor: theme.palette.lightBlue.main,
@@ -53,16 +56,21 @@ const useStyles = makeStyles({
     marginLeft: 'auto',
     borderLeft: `1px solid ${theme.palette.silver.main}`,
     paddingLeft: 20,
-    width: '25vw'
+    flex: '0 0 30vw'
+  },
+  itemTitle: {
+    alignSelf: 'center',
+    paddingLeft: 15,
+    flex: '1 1 auto'
   }
 });
 
-interface IProps<T extends BaseModelWithTitleAndDesc> {
+interface IProps<T extends IBaseModelWithTitleAndDesc> {
   name: string;
   items: Parentable<T>[];
 }
 
-const SelectionMultipleCtrl = <T extends BaseModelWithTitleAndDesc>({
+const SelectionMultipleCtrl = <T extends IBaseModelWithTitleAndDesc>({
   name,
   items
 }: IProps<T>): React.ReactElement => {
@@ -109,8 +117,8 @@ const SelectionMultipleCtrl = <T extends BaseModelWithTitleAndDesc>({
                   className={classes.listItem}
                   sx={{
                     marginTop: item.level === 1 ? 2 : -0.125, // -0.125 is equal to 1px to prevent double border
-                    marginLeft: `${(item.level - 1) * 4}%`,
-                    width: `${100 - (item.level - 1) * 4}%`
+                    marginLeft: `${(item.level - 1) * 2}%`,
+                    width: `${100 - (item.level - 1) * 2}%`
                   }}
                   onClick={() => onClick(item, selected, onChange)}
                 >
@@ -128,7 +136,10 @@ const SelectionMultipleCtrl = <T extends BaseModelWithTitleAndDesc>({
                       checked={productChecked(item, selected)}
                     />
                   </Box>
-                  <Typography variant={item.level === 1 ? 'smBold' : 'sm'}>
+                  <Typography
+                    className={classes.itemTitle}
+                    variant={item.level === 1 ? 'smBold' : 'sm'}
+                  >
                     {item.title}
                   </Typography>
                   <Typography
