@@ -1,17 +1,18 @@
 import { Box, Divider, Typography } from '@mui/material';
 import React from 'react';
-import { useTranslation } from 'react-i18next';
 import { Control, useWatch } from 'react-hook-form';
-import VerticalTextCtrl from '../../../FormProvider/VerticalTextCtrl';
-import RadioCtrl from '../../../FormProvider/RadioCtrl';
-import VariantType from '../../../Nexus/entities/VariantType';
-import CheckboxCtrl from '../../../FormProvider/CheckboxCtrl';
-import QuestionsList from './QuestionsList';
-import { IVariant } from '../../../Nexus/entities/IVariant';
-import SelectionMultipleCtrl from '../../../FormProvider/SelectionMultipleCtrl';
+import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
-import { IRouteParams } from '../../Models/IRouteParams';
+import CheckboxCtrl from '../../../FormProvider/CheckboxCtrl';
+import RadioCtrl from '../../../FormProvider/RadioCtrl';
+import SelectionMultipleCtrl from '../../../FormProvider/SelectionMultipleCtrl';
+import TextAreaCtrl from '../../../FormProvider/TextAreaCtrl';
+import VerticalTextCtrl from '../../../FormProvider/VerticalTextCtrl';
+import { IVariant } from '../../../Nexus/entities/IVariant';
+import VariantType from '../../../Nexus/entities/VariantType';
 import { useGetProjectQuery } from '../../../store/api/bankApi';
+import { IRouteParams } from '../../Models/IRouteParams';
+import QuestionsList from './QuestionsList';
 
 interface IProps {
   control: Control<IVariant>;
@@ -38,12 +39,12 @@ const VariantFormContent = ({ control }: IProps) => {
         label={t('Description')}
         placeholder=""
       />
-      <VerticalTextCtrl
+      <TextAreaCtrl
         name={`requirementText`}
         label={t('requirementText')}
         placeholder=""
       />
-      <VerticalTextCtrl
+      <TextAreaCtrl
         name={`instruction`}
         label={t('instruction')}
         placeholder=""

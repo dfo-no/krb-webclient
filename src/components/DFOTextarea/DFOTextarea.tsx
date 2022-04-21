@@ -1,11 +1,9 @@
-import { Input } from '@mui/material';
-import { styled } from '@mui/material/styles';
+import { Input, styled } from '@mui/material';
 
-const DFOTextField = styled(Input)(({ theme }) => ({
+const DFOTextarea = styled(Input)(({ theme }) => ({
   width: '100%',
   border: `2px solid ${theme.palette.indigo.main}`,
   backgroundColor: theme.palette.white.main,
-  height: 45,
   paddingLeft: '10px',
 
   '&:hover': {
@@ -27,4 +25,4 @@ const DFOTextField = styled(Input)(({ theme }) => ({
   }
 }));
 
-export default DFOTextField;
+export default DFOTextarea;
