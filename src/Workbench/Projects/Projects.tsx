@@ -1,32 +1,19 @@
-import DeleteIcon from '@mui/icons-material/Delete';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
-import Card from '@mui/material/Card';
-import Divider from '@mui/material/Divider';
-import IconButton from '@mui/material/IconButton';
 import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
 import Typography from '@mui/material/Typography';
 import makeStyles from '@mui/styles/makeStyles';
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Link } from 'react-router-dom';
-import { v4 as uuidv4 } from 'uuid';
 import mainIllustration from '../../assets/images/main-illustration.svg';
 import { PAGE_SIZE } from '../../common/Constants';
 import LoaderSpinner from '../../common/LoaderSpinner';
 import DFODialog from '../../components/DFODialog/DFODialog';
 import DFOSearchBar from '../../components/DFOSearchBar/DFOSearchBar';
-import { IAlert } from '../../models/IAlert';
 import { IBank } from '../../Nexus/entities/IBank';
-import DateService from '../../Nexus/services/DateService';
-import {
-  useGetProjectsQuery,
-  usePutProjectMutation
-} from '../../store/api/bankApi';
-import { useAppDispatch } from '../../store/hooks';
-import { addAlert } from '../../store/reducers/alert-reducer';
+import { useGetProjectsQuery } from '../../store/api/bankApi';
 import theme from '../../theme';
+import { EditableProvider } from '../Components/EditableContext';
 import { ScrollableContainer } from '../Components/ScrollableContainer';
 import {
   NewButtonContainer,
@@ -34,6 +21,7 @@ import {
   SearchFieldContainer
 } from '../Components/SearchContainer';
 import NewProjectForm from './NewProjectForm';
+import ProjectItem from './ProjectItem';
 
 const useStyles = makeStyles({
   projectsContainer: {
@@ -45,39 +33,10 @@ const useStyles = makeStyles({
     backgroundColor: theme.palette.gray100.main,
     height: '100%'
   },
-  topContainer: {
-    display: 'flex',
-    flexDirection: 'column',
-    gap: 50
-  },
   titleSubTitleContainer: {
     display: 'flex',
     flexDirection: 'column',
     gap: 15
-  },
-  projectListItemCard: {
-    height: 100,
-    boxShadow: 'none',
-    border: `1px solid ${theme.palette.gray300.main}`,
-    textDecoration: 'none',
-    width: '100%',
-    cursor: 'pointer',
-    '&:hover': {
-      backgroundColor: theme.palette.primary.main,
-      color: theme.palette.white.main
-    }
-  },
-  projectListItemCardContent: {
-    display: 'flex',
-    flexDirection: 'column',
-    gap: 5,
-    paddingTop: 25,
-    paddingLeft: 25,
-    paddingRight: 70
-  },
-  projectListItemTitleButton: {
-    display: 'flex',
-    justifyContent: 'space-between'
   },
   list: {
     display: 'flex',
@@ -88,27 +47,12 @@ const useStyles = makeStyles({
     gap: 15,
     listStyle: 'none'
   },
-  projectListItemDivider: {
-    color: theme.palette.gray300.main
-  },
-  projectLink: {
-    textDecoration: 'none',
-    width: '100%'
-  },
-  projectListItem: {
-    padding: 0,
-    textDecoration: 'none',
-    width: '100%'
-  },
   titleImageContainer: {
     display: 'flex',
     gap: 80
   },
   subTitle: {
     width: 600
-  },
-  subTitleTwo: {
-    marginTop: 5
   },
   contentContainer: {
     display: 'flex',
@@ -128,25 +72,10 @@ const useStyles = makeStyles({
 });
 
 export default function Projects(): React.ReactElement {
-  const dispatch = useAppDispatch();
   const { t } = useTranslation();
-  const [putProject] = usePutProjectMutation();
   const classes = useStyles();
   const [projectList, setProjectList] = useState<Record<string, IBank>>();
   const [isOpen, setOpen] = useState(false);
-
-  const onDelete = async (p: IBank) => {
-    await putProject({ ...p, deletedDate: DateService.getNowString() }).then(
-      () => {
-        const alert: IAlert = {
-          id: uuidv4(),
-          style: 'success',
-          text: 'Successfully deleted project'
-        };
-        dispatch(addAlert({ alert }));
-      }
-    );
-  };
 
   const { data: projects, isLoading } = useGetProjectsQuery({
     pageSize: PAGE_SIZE,
@@ -180,34 +109,9 @@ export default function Projects(): React.ReactElement {
   const renderProjects = (list: Record<string, IBank>) => {
     return Object.values(list).map((element) => {
       return (
-        <ListItem
-          className={classes.projectListItem}
-          key={element.id}
-          secondaryAction={
-            <IconButton
-              edge="end"
-              aria-label="delete"
-              onClick={() => onDelete(element)}
-            >
-              <DeleteIcon color="primary" />
-            </IconButton>
-          }
-        >
-          <Link
-            to={`/workbench/${element.id}/create`}
-            className={classes.projectLink}
-          >
-            <Card className={classes.projectListItemCard}>
-              <Box className={classes.projectListItemCardContent}>
-                <Box className={classes.projectListItemTitleButton}>
-                  <Typography variant="mdBold">{element.title}</Typography>
-                </Box>
-                <Divider className={classes.projectListItemDivider} />
-                <Typography variant="sm">{element.description}</Typography>
-              </Box>
-            </Card>
-          </Link>
-        </ListItem>
+        <EditableProvider key={element.id}>
+          <ProjectItem project={element} />
+        </EditableProvider>
       );
     });
   };
