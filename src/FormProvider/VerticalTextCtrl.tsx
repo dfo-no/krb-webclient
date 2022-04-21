@@ -2,7 +2,7 @@ import { FormControl, FormLabel, Typography } from '@mui/material';
 import { get } from 'lodash';
 import React from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
-import DFOInput from '../components/DFOInput/DFOInput';
+import DFOInput from '../components/DFOTextField/DFOTextField';
 import theme from '../theme';
 
 interface IProps {

@@ -3,7 +3,7 @@ import InputAdornment from '@mui/material/InputAdornment';
 import makeStyles from '@mui/styles/makeStyles';
 import React from 'react';
 import theme from '../../theme';
-import DFOInput from '../DFOInput/DFOInput';
+import DFOInput from '../DFOTextField/DFOTextField';
 
 interface DFOSearchBarProps {
   list: object;
