@@ -15,9 +15,9 @@ import { FormDeleteBox } from '../Components/Form/FormDeleteBox';
 import { FormTextButton } from '../Components/Form/FormTextButton';
 
 interface IProps {
-  children: React.ReactNode;
+  children: React.ReactElement;
   bank: IBank;
-  handleClose: (codelist: IBank | null) => void;
+  handleClose: () => void;
 }
 
 export default function DeleteProjectForm({
@@ -70,7 +70,7 @@ export default function DeleteProjectForm({
           </FormTextButton>
           <FormTextButton
             hoverColor={theme.palette.gray400.main}
-            onClick={() => handleClose(null)}
+            onClick={() => handleClose()}
             aria-label="close"
           >
             {t('cancel')}
