@@ -1,5 +1,4 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { API_URL } from '../../common/Constants';
 import { IBank } from '../../Nexus/entities/IBank';
 
 // TODO: This interface is duplicated in krb-api as SortPagination
@@ -20,7 +19,7 @@ const normalizeBanks = (banks: IBank[]): Record<string, IBank> =>
 export const bankApi = createApi({
   reducerPath: 'bankApi',
   baseQuery: fetchBaseQuery({
-    baseUrl: API_URL
+    baseUrl: process.env.REACT_APP_API_URL
   }),
   tagTypes: ['Banks', 'Projects', 'Project'],
   endpoints: (builder) => ({

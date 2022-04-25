@@ -4,11 +4,6 @@ export const DATETIME_FORMAT = 'dd.MM.yyyy H:s';
 
 export const PAGE_SIZE = 100;
 
-export const API_URL =
-  process.env.NODE_ENV === 'development'
-    ? 'https://krb-api-man-dev.azure-api.net'
-    : 'https://krb-api-man.azure-api.net';
-
 /** The recommended format for DateTime strings in Azure Cosmos DB
  * is yyyy-MM-ddTHH:mm:ss.fffffffZ which follows the ISO 8601 UTC
  * standard. It is recommended to store all dates in
