@@ -234,7 +234,6 @@ theme.components = {
         '&.sidebar': {
           border: '1px solid black',
           backgroundColor: theme.palette.white.main,
-          height: 37,
           '&.Mui-selected': {
             backgroundColor: theme.palette.primary.main,
             color: theme.palette.common.white,
