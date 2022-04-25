@@ -20,16 +20,15 @@ export default function Preview(): React.ReactElement {
     <Box
       sx={{
         display: 'flex',
-        flex: '1',
         height: '100%',
         width: '100%',
         backgroundColor: theme.palette.gray100.main
       }}
     >
-      <Box sx={{ width: '25%', height: '100%' }}>
+      <Box sx={{ height: '100%', flex: '1 1 0' }}>
         <Sidebar parentableArray={project.products} />
       </Box>
-      <Box sx={{ height: '100%', flexGrow: 1, minWidth: 0 }}>
+      <Box sx={{ height: '100%', flex: '3 1 0' }}>
         <ProductPreview />
       </Box>
     </Box>
