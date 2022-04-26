@@ -27,7 +27,7 @@ export default function NeedHeader(): React.ReactElement {
           sx={{
             display: 'flex',
             flexDirection: 'row',
-            borderBottom: '1px solid'
+            borderBottom: `1px solid ${theme.palette.silver.main}`
           }}
         >
           <Typography variant="lgBold">
