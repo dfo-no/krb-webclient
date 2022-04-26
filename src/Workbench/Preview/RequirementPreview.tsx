@@ -52,7 +52,7 @@ export default function RequirementPreview({
         <Typography variant="lgBold">{requirement.title}</Typography>
       </Box>
       {requirement.variants.map((variant) => {
-        return <VariantPreview variant={variant} />;
+        return <VariantPreview variant={variant} key={variant.id} />;
       })}
     </Box>
   );
