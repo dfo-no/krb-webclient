@@ -1,150 +1,162 @@
-import { Box, Card } from '@mui/material/';
-import React, { useEffect } from 'react';
-import { useParams } from 'react-router-dom';
-import LoaderSpinner from '../../common/LoaderSpinner';
-import { useGetProjectQuery } from '../../store/api/bankApi';
+import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
+import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
+import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
+import makeStyles from '@mui/styles/makeStyles';
+import React, { useEffect, useState } from 'react';
+import 'react-nestable/dist/styles/index.css';
+import { Parentable } from '../../models/Parentable';
 import theme from '../../theme';
-import NeedHeader from './Need/NeedHeader';
-import NewNeed from './Need/NewNeed';
-import NewRequirement from './Requirement/NewRequirement';
-import ProjectStart from './ProjectStart';
-import Requirement from './Requirement/Requirement';
-import { useSelectState } from './SelectContext';
-import { ScrollableContainer } from '../Components/ScrollableContainer';
-import { StandardContainer } from '../Components/StandardContainer';
-import DeleteNeed from './Need/DeleteNeed';
-import CreateSideBar from './CreateSideBar';
-import { VariantProvider } from '../Components/VariantContext';
+import NestableHierarcy from '../Components/NestableHierarchy/NestableHierarcy';
+import { useParams } from 'react-router-dom';
 import { IRouteParams } from '../Models/IRouteParams';
+import { useGetProjectQuery } from '../../store/api/bankApi';
+import { INeed } from '../../Nexus/entities/INeed';
+import { useSelectState } from './SelectContext';
+import useProjectMutations from '../../store/api/ProjectMutations';
+import { ScrollableContainer } from '../Components/ScrollableContainer';
 
-export default function Create(): React.ReactElement {
+const useStyles = makeStyles({
+  nestableItemCustom: {
+    display: 'flex',
+    cursor: 'pointer',
+    backgroundColor: theme.palette.white.main,
+    verticalAlign: 'middle',
+    borderLeft: `1px solid ${theme.palette.gray400.main}`,
+    borderRight: `1px solid ${theme.palette.gray400.main}`,
+    '&:hover': {
+      background: theme.palette.lightBlue.main,
+      color: theme.palette.white.main
+    }
+  },
+  nestableCustom: {
+    '& .nestable-list': {
+      paddingLeft: 25
+    },
+    '& .nestable-item': {
+      '&:not(:first-child)': {
+        marginTop: '16px'
+      },
+      '& .nestable-item-name': {
+        borderTop: `1px solid ${theme.palette.gray400.main}`,
+        borderBottom: `1px solid ${theme.palette.gray400.main}`
+      }
+    },
+    '& .nestable-list > .nestable-item > .nestable-list': {
+      margin: '0',
+      '& .nestable-item': {
+        margin: '0',
+        '& .nestable-item-name': {
+          marginTop: '-1px'
+        }
+      }
+    },
+    paddingLeft: '5%'
+  },
+  itemNameText: {
+    display: 'flex',
+    alignSelf: 'center',
+    width: '95%'
+  },
+  collapseIcon: {
+    display: 'flex',
+    alignSelf: 'center',
+    paddingRight: '4px',
+    justifySelf: 'flex-end',
+    marginLeft: 'auto'
+  },
+  handlerIcon: {
+    paddingTop: 6,
+    display: 'flex',
+    paddingRight: '4px',
+    alignSelf: 'center',
+    justifySelf: 'flex-end'
+  },
+  selectedItem: {
+    background: theme.palette.primary.main,
+    color: theme.palette.white.main
+  }
+});
+
+const CreateSideBar = (): React.ReactElement => {
   const { projectId } = useParams<IRouteParams>();
-  const { data: project, isLoading } = useGetProjectQuery(projectId);
-  const { needIndex, setNeedIndex, setNeedId, setDeleteMode } =
-    useSelectState();
+  const { data: project } = useGetProjectQuery(projectId);
+  const classes = useStyles();
+  const { needId, setNeedId, setNeedIndex } = useSelectState();
+  const { editNeeds } = useProjectMutations();
+  const [needs, setNeeds] = useState<Parentable<INeed>[]>([]);
 
   useEffect(() => {
-    if (project && !needIndex) {
-      if (project.needs.length >= 1) {
-        const index = project.needs.findIndex(
-          (n) => n.id === project.needs[0].id
-        );
-        setNeedIndex(index);
-        setNeedId(project.needs[index].id);
-      }
+    if (project && project.needs) {
+      setNeeds(project.needs);
     }
-  });
-
-  if (isLoading) {
-    return <LoaderSpinner />;
-  }
+  }, [project]);
 
   if (!project) {
     return <></>;
   }
 
-  const renderCreatePageWithContent = (children: React.ReactElement) => {
+  const updateNeedsArrangement = (newNeedList: Parentable<INeed>[]) => {
+    if (needId) {
+      const newIndex = newNeedList.findIndex((need) => need.id === needId);
+      setNeedIndex(newIndex);
+    }
+    setNeeds(newNeedList);
+    editNeeds(newNeedList);
+  };
+
+  const selectNeed = (item: Parentable<INeed>) => {
+    const index = project.needs.findIndex((n) => n.id === item.id);
+    setNeedIndex(index);
+    setNeedId(project.needs[index].id);
+  };
+
+  const itemClicked = (item: Parentable<INeed>) => {
+    selectNeed(item);
+  };
+
+  const renderItem = (
+    item: Parentable<INeed>,
+    handler: React.ReactNode,
+    collapseIcon: React.ReactNode
+  ) => {
     return (
       <Box
-        sx={{
-          display: 'flex',
-          width: '100%',
-          height: '100%',
-          backgroundColor: theme.palette.gray100.main
-        }}
+        className={`${classes.nestableItemCustom} ${
+          needId && needId === item.id ? classes.selectedItem : ''
+        }`}
+        onClick={() => itemClicked(item)}
       >
-        <Box
-          sx={{
-            display: 'flex',
-            flexDirection: 'column',
-            flex: '1 1 0',
-            height: '100%'
-          }}
+        <Box className={classes.handlerIcon}>{handler}</Box>
+        <Typography
+          variant={item.parent === '' ? 'smBold' : 'sm'}
+          className={classes.itemNameText}
         >
-          <NewNeed buttonText={'Legg til nytt behov'} />
-          <CreateSideBar />
-        </Box>
-        <Box sx={{ flex: '3 1 0', height: '100%', minWidth: 0 }}>
-          {children}
-        </Box>
+          {item.title}
+        </Typography>
+        <Box className={classes.collapseIcon}>{collapseIcon}</Box>
       </Box>
     );
   };
 
-  if (needIndex === null || !project.needs[needIndex]) {
-    return renderCreatePageWithContent(
-      <Box
-        sx={{
-          display: 'flex',
-          width: '100%',
-          height: '100%',
-          backgroundColor: theme.palette.gray100.main
+  return (
+    <ScrollableContainer>
+      <NestableHierarcy
+        inputlist={needs}
+        className={classes.nestableCustom}
+        renderItem={renderItem}
+        dispatchfunc={updateNeedsArrangement}
+        depth={8}
+        renderCollapseIcon={({ isCollapsed }) => {
+          return isCollapsed ? (
+            <KeyboardArrowRightIcon />
+          ) : (
+            <KeyboardArrowDownIcon />
+          );
         }}
-      >
-        <>{project.needs.length === 0 && <ProjectStart project={project} />}</>
-      </Box>
-    );
-  }
-
-  const needDeleted = () => {
-    setDeleteMode('');
-    if (project.needs.length === 1) {
-      setNeedIndex(null);
-      setNeedId(null);
-    }
-    if (needIndex === project.needs.length - 1) {
-      setNeedIndex(needIndex - 1);
-      setNeedId(project.needs[needIndex - 1].id);
-    }
-  };
-
-  const renderNeedCard = () => {
-    return (
-      <Card
-        sx={{
-          display: 'flex',
-          flexDirection: 'column',
-          backgroundColor: theme.palette.gray200.main,
-          height: '100%',
-          width: '100%',
-          paddingBottom: 2
-        }}
-      >
-        <NeedHeader />
-        <Box
-          sx={{
-            display: 'flex',
-            flexDirection: 'column',
-            paddingLeft: 6,
-            paddingRight: 6,
-            flexGrow: 1,
-            minHeight: 0,
-            width: '100%'
-          }}
-        >
-          <NewRequirement need={project.needs[needIndex]} />
-          <ScrollableContainer>
-            {project.needs[needIndex] &&
-              project.needs[needIndex].requirements.map((req, index) => {
-                return (
-                  <VariantProvider key={req.id}>
-                    <Requirement requirementIndex={index} />
-                  </VariantProvider>
-                );
-              })}
-          </ScrollableContainer>
-        </Box>
-      </Card>
-    );
-  };
-
-  return renderCreatePageWithContent(
-    <StandardContainer sx={{ width: '90%', maxHeight: '100%' }}>
-      <DeleteNeed
-        children={renderNeedCard()}
-        need={project.needs[needIndex]}
-        handleClose={needDeleted}
       />
-    </StandardContainer>
+    </ScrollableContainer>
   );
-}
+};
+
+export default CreateSideBar;
