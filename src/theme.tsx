@@ -154,19 +154,6 @@ theme.components = {
         }
       },
       {
-        props: { variant: 'warningTransparent' },
-        style: {
-          color: theme.palette.errorRed.main,
-          whiteSpace: 'nowrap',
-          height: 40,
-          textDecorationLine: 'underline',
-          '&:hover': {
-            background: 'none',
-            textDecorationLine: 'underline'
-          }
-        }
-      },
-      {
         props: { variant: 'save' },
         style: {
           backgroundColor: theme.palette.green.main,

@@ -248,6 +248,7 @@ export default function SpecPage(): React.ReactElement {
       {specification && (
         <DFODialog
           isOpen={isOpen}
+          title={specification.bank.title}
           handleClose={() => setOpen(false)}
           children={
             <NewSpecForm

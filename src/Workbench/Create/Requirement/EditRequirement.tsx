@@ -34,7 +34,6 @@ const EditRequirement = ({ requirement, need }: IProps) => {
         <EditIcon />
       </FormIconButton>
       <Dialog
-        title={t('edit requirement')}
         isOpen={isEditOpen}
         handleClose={() => setEditOpen(false)}
         children={
