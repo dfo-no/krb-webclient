@@ -58,7 +58,7 @@ const useStyles = makeStyles({
     flexDirection: 'column',
     gap: 5,
     padding: 25,
-    paddingBottom: 5
+    paddingBottom: 0
   },
   buttonContainer: {
     display: 'flex',

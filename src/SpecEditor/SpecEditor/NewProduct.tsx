@@ -123,7 +123,7 @@ export default function NewProduct(): React.ReactElement {
             <Divider sx={{ marginBottom: 4 }} />
             <Typography variant={'smBold'}>
               {t('Choose a product type from the requirement set')}{' '}
-              <i>{spec.bank.title}</i> {t('that fits the produc t best')}
+              <i>{spec.bank.title}</i> {t('that fits the product best')}
             </Typography>
             <Box className={classes.productTypeContainer}>
               {spec.bank.products && (

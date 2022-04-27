@@ -13,7 +13,7 @@ import {
 } from '../Nexus/entities/ISpecification';
 import theme from '../theme';
 import { useAppDispatch, useAppSelector } from '../store/hooks';
-import { setSpecification } from '../store/reducers/response-reducer';
+import { setSpecification } from '../store/reducers/spesification-reducer';
 
 interface IProps {
   handleClose: () => void;
