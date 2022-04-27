@@ -3,7 +3,10 @@ import { BaseBankSchema } from '../Nexus/entities/IBank';
 import { PutPublicationSchema } from '../Nexus/entities/IPublication';
 import ModelType from './ModelType';
 export const EditProjectSchema = BaseBankSchema.keys({
-  id: CustomJoi.string().length(36).required(),
+  id: CustomJoi.string()
+    .guid({ version: ['uuidv4'] })
+    .length(36)
+    .required(),
   type: CustomJoi.string().equal(ModelType.bank).required(),
   needs: CustomJoi.array(),
   publications: CustomJoi.array()
@@ -14,7 +17,10 @@ export const EditProjectSchema = BaseBankSchema.keys({
 });
 
 export const PutProjectSchema = BaseBankSchema.keys({
-  id: CustomJoi.string().length(36).required(),
+  id: CustomJoi.string()
+    .guid({ version: ['uuidv4'] })
+    .length(36)
+    .required(),
   type: CustomJoi.string().equal(ModelType.bank).required(),
   publications: CustomJoi.array()
     .items(PutPublicationSchema)

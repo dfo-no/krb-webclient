@@ -10,7 +10,10 @@ export interface IProduct extends IBaseModel {
 }
 
 export const BaseProductSchema = CustomJoi.object().keys({
-  id: CustomJoi.string().length(36).required(),
+  id: CustomJoi.string()
+    .guid({ version: ['uuidv4'] })
+    .length(36)
+    .required(),
   title: CustomJoi.string().required(),
   description: CustomJoi.string().allow(null, '').required(),
   parent: CustomJoi.alternatives([
@@ -18,8 +21,16 @@ export const BaseProductSchema = CustomJoi.object().keys({
     CustomJoi.string().valid('')
   ]),
   type: CustomJoi.string().equal(ModelType.product).required(),
-  sourceOriginal: CustomJoi.string().required(),
-  sourceRel: CustomJoi.string().allow(null).required()
+  sourceOriginal: CustomJoi.string()
+    .guid({ version: ['uuidv4'] })
+    .length(36)
+    .allow(null)
+    .required(),
+  sourceRel: CustomJoi.string()
+    .guid({ version: ['uuidv4'] })
+    .length(36)
+    .allow(null)
+    .required()
 });
 
 export const PostProductSchema = BaseProductSchema.keys({
