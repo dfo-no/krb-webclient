@@ -27,7 +27,10 @@ export interface IVariant {
 }
 
 export const VariantSchema = CustomJoi.object().keys({
-  id: CustomJoi.string().max(36).required(),
+  id: CustomJoi.string()
+    .guid({ version: ['uuidv4'] })
+    .length(36)
+    .required(),
   description: CustomJoi.string().required(),
   requirementText: CustomJoi.string().allow('').required(),
   instruction: CustomJoi.string().allow('').required(),
