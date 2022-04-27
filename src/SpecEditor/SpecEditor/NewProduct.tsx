@@ -16,10 +16,11 @@ import {
   ISpecificationProduct,
   PostSpecificationProductSchema
 } from '../../models/ISpecificationProduct';
-import Utils from '../../common/Utils';
 import SelectionSingularCtrl from '../../FormProvider/SelectionSingularCtrl';
 import NeedList from './NeedList';
 import ErrorSummary from '../../Form/ErrorSummary';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
+import { addProduct } from '../../store/reducers/spesification-reducer';
 
 const useStyles = makeStyles({
   newProduct: {
@@ -69,12 +70,10 @@ const useStyles = makeStyles({
 export default function NewProduct(): React.ReactElement {
   const { t } = useTranslation();
   const nexus = Nexus.getInstance();
-  const {
-    specification,
-    setSpecification,
-    setSpecificationProduct,
-    setCreate
-  } = useSpecificationState();
+  const { spec } = useAppSelector((state) => state.specification);
+  const dispatch = useAppDispatch();
+  const { setSpecificationProductIndex, setGenericRequirement, setCreate } =
+    useSpecificationState();
   const [product, setProduct] = useState<Parentable<IProduct> | null>(null);
   const classes = useStyles();
 
@@ -87,26 +86,20 @@ export default function NewProduct(): React.ReactElement {
   });
 
   useEffect(() => {
-    if (specification && !product) {
-      const firstProduct = specification.bank.products[0];
+    if (!product) {
+      const firstProduct = spec.bank.products[0];
       setProduct(firstProduct);
       methods.setValue('originProduct', firstProduct);
     }
-  }, [specification, product, setProduct, methods]);
-
-  if (!specification) {
-    return <></>;
-  }
+  }, [spec, product, setProduct, methods]);
 
   const onSubmit = async (post: ISpecificationProduct) => {
     const newProduct =
       nexus.specificationService.createSpecificationProductWithId(post);
-    const newProductList = Utils.addElementToList(
-      newProduct,
-      specification.products
-    );
-    setSpecification({ ...specification, products: newProductList });
-    setSpecificationProduct(newProduct);
+    const newId = spec.products.length;
+    dispatch(addProduct({ product: newProduct }));
+    setSpecificationProductIndex(newId);
+    setGenericRequirement(false);
     setCreate(false);
   };
 
@@ -125,21 +118,20 @@ export default function NewProduct(): React.ReactElement {
               label={t(
                 'how many of this product do you need in this procurement'
               )}
-              placeholder={t('Antall')}
+              placeholder={t('quantity')}
             />
             <Divider sx={{ marginBottom: 4 }} />
             <Typography variant={'smBold'}>
               {t('Choose a product type from the requirement set')}{' '}
-              <i>{specification.bank.title}</i>{' '}
-              {t('that fits the product best')}
+              <i>{spec.bank.title}</i> {t('that fits the produc t best')}
             </Typography>
             <Box className={classes.productTypeContainer}>
-              {specification.bank.products && (
+              {spec.bank.products && (
                 <SelectionSingularCtrl
                   name={'originProduct'}
-                  initValue={specification.bank.products[0]}
+                  initValue={spec.bank.products[0]}
                   saveAsString={false}
-                  parentableItems={specification.bank.products}
+                  parentableItems={spec.bank.products}
                   postChange={(selection: Parentable<IProduct>) => {
                     setProduct(selection);
                   }}

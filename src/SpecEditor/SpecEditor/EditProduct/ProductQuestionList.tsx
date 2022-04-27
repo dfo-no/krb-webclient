@@ -1,0 +1,91 @@
+import { useFormContext, useWatch } from 'react-hook-form';
+import { Box, Card, Divider, Typography } from '@mui/material';
+import theme from '../../../theme';
+import React, { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import makeStyles from '@mui/styles/makeStyles';
+import QuestionSpecification from './QuestionSpecification';
+import { DFORadioButton } from '../../../components/DFORadioButton/DFORadioButton';
+import { IVariant } from '../../../Nexus/entities/IVariant';
+import { IRequirementAnswer } from '../../../models/IRequirementAnswer';
+import { ITimeQuestion } from '../../../Nexus/entities/ITimeQuestion';
+import { ITextQuestion } from '../../../Nexus/entities/ITextQuestion';
+import { ISliderQuestion } from '../../../Nexus/entities/ISliderQuestion';
+import { IPeriodDateQuestion } from '../../../Nexus/entities/IPeriodDateQuestion';
+import { IFileUploadQuestion } from '../../../Nexus/entities/IFileUploadQuestion';
+import { ICodelistQuestion } from '../../../Nexus/entities/ICodelistQuestion';
+import { ICheckboxQuestion } from '../../../Nexus/entities/ICheckboxQuestion';
+
+const useStyles = makeStyles({
+  list: {
+    border: `1px solid ${theme.palette.black.main}`,
+    backgroundColor: theme.palette.gray100.main,
+    padding: 32,
+    marginBottom: 16
+  }
+});
+
+interface IProps {
+  variant: IVariant;
+}
+
+const ProductQuestionsList = ({ variant }: IProps) => {
+  const { t } = useTranslation();
+  const classes = useStyles();
+  const [selectedRadioIndex, setSelectedRadioIndex] = useState(0);
+  const { control, setValue } = useFormContext<IRequirementAnswer>();
+  const useQuestionId = useWatch({ name: 'questionId', control });
+
+  useEffect(() => {
+    const index = variant.questions.findIndex(
+      (question) => question.id === useQuestionId
+    );
+    if (variant.questions.length > 0 && index < 0) {
+      setValue('question', variant.questions[0]);
+      setValue('questionId', variant.questions[0].id);
+    }
+    setSelectedRadioIndex(index > 0 ? index : 0);
+  }, [useQuestionId, setValue, variant]);
+
+  const questionSelected = (
+    item:
+      | ITimeQuestion
+      | ITextQuestion
+      | ISliderQuestion
+      | IPeriodDateQuestion
+      | IFileUploadQuestion
+      | ICodelistQuestion
+      | ICheckboxQuestion,
+    index: number
+  ) => {
+    setSelectedRadioIndex(index);
+    setValue('question', item);
+    setValue('questionId', item.id);
+  };
+
+  return (
+    <Box className={classes.list}>
+      {variant.questions.map((item, index) => {
+        return (
+          <Card key={index} sx={{ margin: 1, padding: 1 }}>
+            <Box sx={{ display: 'flex', flexDirection: 'row', margin: 2 }}>
+              <DFORadioButton
+                checked={selectedRadioIndex === index}
+                onClick={() => questionSelected(item, index)}
+              />
+              <Typography variant={'md'} sx={{ paddingLeft: 4 }}>
+                {t(item.type)}
+              </Typography>
+            </Box>
+            <Divider />
+            {index === selectedRadioIndex && (
+              <QuestionSpecification item={item} />
+            )}
+          </Card>
+        );
+      })}
+    </Box>
+  );
+};
+
+export default ProductQuestionsList;

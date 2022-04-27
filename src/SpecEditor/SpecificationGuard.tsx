@@ -1,15 +1,15 @@
 import React from 'react';
 import { Redirect } from 'react-router-dom';
-import { useSpecificationState } from './SpecificationContext';
+import { useAppSelector } from '../store/hooks';
 
 interface IProps {
   children: React.ReactElement;
 }
 
 const SpecificationGuard = ({ children }: IProps) => {
-  const { specification } = useSpecificationState();
+  const { spec } = useAppSelector((state) => state.specification);
 
-  if (!specification) {
+  if (!spec) {
     return <Redirect to={{ pathname: '/specification' }} />;
   }
 

@@ -6,9 +6,9 @@ import theme from '../../theme';
 import { IProduct } from '../../Nexus/entities/IProduct';
 import NeedListItem from './NeedListItem';
 import { Parentable } from '../../models/Parentable';
-import { useSpecificationState } from '../SpecificationContext';
 import Utils from '../../common/Utils';
 import { INeed } from '../../Nexus/entities/INeed';
+import { useAppSelector } from '../../store/hooks';
 
 const useStyles = makeStyles({
   newProductNeedList: {
@@ -45,13 +45,13 @@ interface IProps {
 export default function NeedList({ product }: IProps): React.ReactElement {
   const classes = useStyles();
   const { t } = useTranslation();
-  const { specification } = useSpecificationState();
+  const { spec } = useAppSelector((state) => state.specification);
 
-  if (!specification || !specification.bank || !product) {
+  if (!spec.bank || !product) {
     return <></>;
   }
 
-  const needs = Utils.findVariantsUsedByProduct(product, specification.bank);
+  const needs = Utils.findVariantsUsedByProduct(product, spec.bank);
 
   const renderList = () => {
     return (
