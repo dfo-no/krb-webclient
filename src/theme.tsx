@@ -166,32 +166,6 @@ theme.components = {
         }
       },
       {
-        props: { variant: 'saveTransparent' },
-        style: {
-          color: theme.palette.green.main,
-          whiteSpace: 'nowrap',
-          height: 40,
-          textDecorationLine: 'underline',
-          '&:hover': {
-            background: 'none',
-            textDecorationLine: 'underline'
-          }
-        }
-      },
-      {
-        props: { variant: 'saveTransparent' },
-        style: {
-          color: theme.palette.green.main,
-          whiteSpace: 'nowrap',
-          height: 40,
-          textDecorationLine: 'underline',
-          '&:hover': {
-            background: 'none',
-            textDecorationLine: 'underline'
-          }
-        }
-      },
-      {
         props: { variant: 'cancel' },
         style: {
           backgroundColor: theme.palette.gray600.main,
