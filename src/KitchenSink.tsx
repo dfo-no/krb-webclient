@@ -21,6 +21,7 @@ import SwitchCtrl from './FormProvider/SwitchCtrl';
 import VerticalTextCtrl from './FormProvider/VerticalTextCtrl';
 import ModelType from './models/ModelType';
 import RequirementType from './models/RequirementType';
+import { IBaseModel } from './Nexus/entities/IBaseModel';
 import { ICodelist } from './Nexus/entities/ICodelist';
 import { IOption } from './Nexus/entities/IOption';
 
@@ -121,9 +122,11 @@ const KitchenSink = (): React.ReactElement => {
     { label: 'Volvo', value: '3' }
   ];
 
-  const list: any = [];
-  const searchFunction = () => {};
-  const callback = () => {};
+  const carList: IBaseModel[] = [];
+  const searchFunction = (searchString: string, list: IBaseModel[]) => {
+    return list;
+  };
+  const callback = (list: IBaseModel[]) => {};
 
   return (
     <Box
@@ -159,10 +162,10 @@ const KitchenSink = (): React.ReactElement => {
                 placeholder="Adresse"
               />
               <DFOSearchBar
-                list={list}
+                list={carList}
                 placeholder="Søk etter biler"
-                callback={searchFunction}
-                searchFunction={callback}
+                callback={callback}
+                searchFunction={searchFunction}
               />
               <SelectCtrl
                 name="person.cars"
