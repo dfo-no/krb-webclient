@@ -74,7 +74,8 @@ const useStyles = makeStyles({
 export default function Projects(): React.ReactElement {
   const { t } = useTranslation();
   const classes = useStyles();
-  const [projectList, setProjectList] = useState<Record<string, IBank>>();
+  const [projectList, setProjectList] = useState<IBank[]>();
+  const [allProjects, setAllProjects] = useState<IBank[]>();
   const [isOpen, setOpen] = useState(false);
 
   const { data: projects, isLoading } = useGetProjectsQuery({
@@ -86,28 +87,29 @@ export default function Projects(): React.ReactElement {
 
   useEffect(() => {
     if (projects) {
-      setProjectList(projects);
+      setProjectList(Object.values(projects));
+      setAllProjects(Object.values(projects));
     }
-  }, [setProjectList, projects]);
+  }, [setProjectList, setAllProjects, projects]);
 
   if (isLoading) {
     return <LoaderSpinner />;
   }
 
   const searchFunction = (searchString: string, list: IBank[]) => {
-    return Object.values(list).filter((project: IBank) => {
+    return list.filter((project: IBank) => {
       if (project.title.toLowerCase().includes(searchString.toLowerCase())) {
         return project;
       }
     });
   };
 
-  const searchFieldCallback = (result: Record<string, IBank>) => {
+  const searchFieldCallback = (result: IBank[]) => {
     setProjectList(result);
   };
 
-  const renderProjects = (list: Record<string, IBank>) => {
-    return Object.values(list).map((element) => {
+  const renderProjects = (list: IBank[]) => {
+    return list.map((element) => {
       return (
         <EditableProvider key={element.id}>
           <ProjectItem project={element} />
@@ -145,13 +147,13 @@ export default function Projects(): React.ReactElement {
         </Box>
         <img src={mainIllustration} alt="main illustration" />
       </Box>
-      {projectList ? (
+      {allProjects && (
         <Box className={classes.contentContainer}>
           <SearchContainer sx={{ marginBottom: 1 }}>
-            <SearchFieldContainer sx={{ width: 500 }}>
+            <SearchFieldContainer>
               {' '}
               <DFOSearchBar
-                list={Object(projects)}
+                list={allProjects}
                 placeholder={t('search for banks')}
                 callback={searchFieldCallback}
                 searchFunction={searchFunction}
@@ -164,15 +166,6 @@ export default function Projects(): React.ReactElement {
               {projectList && renderProjects(projectList)}
             </List>
           </ScrollableContainer>
-        </Box>
-      ) : (
-        <Box className={classes.noProjectsContainer}>
-          <Box>
-            <Typography variant="md" sx={{ letterSpacing: 2 }}>
-              {t('There is no banks')}
-            </Typography>
-          </Box>
-          <Box>{renderNewBankButton()}</Box>
         </Box>
       )}
 

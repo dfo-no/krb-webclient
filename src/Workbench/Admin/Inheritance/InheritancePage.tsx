@@ -8,6 +8,7 @@ import {
 } from '../../../components/DFOAccordion/DFOAccordion';
 import DFOSearchBar from '../../../components/DFOSearchBar/DFOSearchBar';
 import { IInheritedBank } from '../../../models/IInheritedBank';
+import { IBaseModel } from '../../../Nexus/entities/IBaseModel';
 import { useAppSelector } from '../../../store/hooks';
 import {
   SearchContainer,
@@ -29,8 +30,10 @@ export default function InheritancePage(): React.ReactElement {
   const { t } = useTranslation();
   const classes = useStyles();
 
-  const inheritanceSearch = () => {};
-  const searchFieldCallback = () => {};
+  const inheritanceSearch = (searchString: string, list: IBaseModel[]) => {
+    return list;
+  };
+  const searchFieldCallback = (list: IBaseModel[]) => {};
 
   const renderInheritedBanks = (inheritedBanksList: IInheritedBank[]) => {
     return inheritedBanksList.map((bank: IInheritedBank) => {
