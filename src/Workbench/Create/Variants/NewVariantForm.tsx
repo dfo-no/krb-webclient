@@ -20,7 +20,7 @@ import { useGetProjectQuery } from '../../../store/api/bankApi';
 import LoaderSpinner from '../../../common/LoaderSpinner';
 import { Box } from '@mui/material';
 import VariantFormContent from './VariantFormContent';
-import ErrorSummary from '../../../Form/ErrorSummary';
+import GeneralErrorMessage from '../../../Form/GeneralErrorMessage';
 
 interface IProps {
   need: Parentable<INeed>;
@@ -81,7 +81,6 @@ function NewVariantForm({
           <Box sx={{ display: 'flex', flexDirection: 'column', padding: 4 }}>
             <Typography>{t('Add Variant')}</Typography>
             <VariantFormContent control={methods.control} />
-            <ErrorSummary errors={methods.formState.errors} visible={true} />
             <Box sx={{ display: 'flex', flexDirection: 'row', marginTop: 2 }}>
               <Button
                 variant="cancel"
@@ -94,6 +93,7 @@ function NewVariantForm({
                 {t('save')}
               </Button>
             </Box>
+            <GeneralErrorMessage errors={methods.formState.errors} />
           </Box>
         </form>
       </FormProvider>

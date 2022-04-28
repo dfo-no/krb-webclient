@@ -23,10 +23,7 @@ const VerticalTextCtrl = ({
   } = useFormContext();
 
   return (
-    <FormControl
-      error={!!get(errors, name)}
-      sx={{ width: '100%', marginBottom: 4 }}
-    >
+    <FormControl error={!!get(errors, name)} sx={{ width: '100%' }}>
       <Typography
         variant={'smBold'}
         color={theme.palette.primary.main}

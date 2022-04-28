@@ -19,13 +19,13 @@ import React, { SyntheticEvent } from 'react';
 import { IRouteParams } from '../../Models/IRouteParams';
 import Button from '@mui/material/Button';
 import { Box } from '@mui/material';
-import ErrorSummary from '../../../Form/ErrorSummary';
 import { useVariantState } from '../../Components/VariantContext';
 import { useTranslation } from 'react-i18next';
 import { useSelectState } from '../SelectContext';
 import theme from '../../../theme';
 import { FormIconButton } from '../../Components/Form/FormIconButton';
 import VariantFormContent from './VariantFormContent';
+import GeneralErrorMessage from '../../../Form/GeneralErrorMessage';
 
 interface IProps {
   variant: IVariant;
@@ -109,7 +109,6 @@ const Variant = ({ variant, requirementIndex }: IProps) => {
           </AccordionSummary>
           <AccordionDetails sx={{ display: 'flex', flexDirection: 'column' }}>
             <VariantFormContent control={methods.control} />
-            <ErrorSummary errors={methods.formState.errors} visible={true} />
             <Box sx={{ display: 'flex', flexDirection: 'row', marginTop: 2 }}>
               <Button
                 variant="cancel"
@@ -122,6 +121,7 @@ const Variant = ({ variant, requirementIndex }: IProps) => {
                 {t('save')}
               </Button>
             </Box>
+            <GeneralErrorMessage errors={methods.formState.errors} />
           </AccordionDetails>
         </Accordion>
       </form>
