@@ -187,7 +187,8 @@ export const productsTestData = [
     parent: '',
     type: ModelType.product,
     sourceOriginal: null,
-    sourceRel: null
+    sourceRel: null,
+    deletedDate: null
   },
   {
     id: 'fb55c57e-af4a-11ec-b909-0242ac120002',
@@ -196,7 +197,8 @@ export const productsTestData = [
     parent: '',
     type: ModelType.product,
     sourceOriginal: null,
-    sourceRel: null
+    sourceRel: null,
+    deletedDate: null
   },
   {
     id: '38c1b14e-b742-11ec-b909-0242ac120002',
@@ -205,7 +207,8 @@ export const productsTestData = [
     parent: '',
     type: ModelType.product,
     sourceOriginal: null,
-    sourceRel: null
+    sourceRel: null,
+    deletedDate: null
   }
 ];
 

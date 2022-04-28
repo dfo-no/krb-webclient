@@ -10,6 +10,7 @@ import { useGetProjectQuery, usePutProjectMutation } from './bankApi';
 import { INeed } from '../../Nexus/entities/INeed';
 import { IRequirement } from '../../Nexus/entities/IRequirement';
 import { IVariant } from '../../Nexus/entities/IVariant';
+import DateService from '../../Nexus/services/DateService';
 
 function useProjectMutations() {
   const { projectId } = useParams<IRouteParams>();
@@ -38,11 +39,10 @@ function useProjectMutations() {
 
   async function deleteProduct(product: Parentable<IProduct>) {
     if (project) {
-      const editedProducts = Utils.removeElementFromList(
-        product,
-        project.products
-      );
-      return putProject({ ...project, products: editedProducts });
+      return editProduct({
+        ...product,
+        deletedDate: DateService.getNowString()
+      });
     }
     throw Error('Cant save changes to Project');
   }

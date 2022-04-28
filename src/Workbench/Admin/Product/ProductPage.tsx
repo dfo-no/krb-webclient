@@ -21,6 +21,7 @@ import { IRouteParams } from '../../Models/IRouteParams';
 import DeleteProductForm from './DeleteProductForm';
 import EditProductForm from './EditProductForm';
 import NewProductForm from './NewProductForm';
+import Utils from '../../../common/Utils';
 
 export default function ProductPage(): React.ReactElement {
   const [products, setProducts] = useState<Parentable<IProduct>[]>([]);
@@ -33,11 +34,11 @@ export default function ProductPage(): React.ReactElement {
 
   useEffect(() => {
     if (project && project.products) {
-      setProducts(project.products);
+      setProducts(Utils.filterOutDeletedElements(project.products));
     }
   }, [project]);
 
-  if (isLoading) {
+  if (isLoading || !project) {
     return <LoaderSpinner />;
   }
 
@@ -59,19 +60,21 @@ export default function ProductPage(): React.ReactElement {
     return SearchUtils.search(list, searchString) as Parentable<IProduct>[];
   };
 
+  const afterDelete = () => {
+    setDeleteMode('');
+    setProducts(Utils.filterOutDeletedElements(project.products));
+  };
+
   return (
     <StandardContainer>
       <SearchContainer>
         <SearchFieldContainer>
-          {' '}
-          {project && (
-            <DFOSearchBar
-              list={project.products}
-              placeholder={t('search for product')}
-              callback={searchFieldCallback}
-              searchFunction={productsSearch}
-            />
-          )}
+          <DFOSearchBar
+            list={Utils.filterOutDeletedElements(project.products)}
+            placeholder={t('search for product')}
+            callback={searchFieldCallback}
+            searchFunction={productsSearch}
+          />
         </SearchFieldContainer>
         <NewButtonContainer>
           <Button variant="primary" onClick={() => setCreating(true)}>
@@ -96,7 +99,7 @@ export default function ProductPage(): React.ReactElement {
           <DeleteProductForm
             children={child}
             product={item}
-            handleClose={() => setDeleteMode('')}
+            handleClose={afterDelete}
           />
         )}
         depth={8}
