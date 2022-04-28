@@ -1,5 +1,4 @@
-import { Typography } from '@mui/material';
-import Box from '@mui/material/Box';
+import { Box, Typography } from '@mui/material';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import makeStyles from '@mui/styles/makeStyles';
@@ -8,6 +7,7 @@ import Utils from '../../common/Utils';
 import { Parentable } from '../../models/Parentable';
 import { IProduct } from '../../Nexus/entities/IProduct';
 import theme from '../../theme';
+import { ScrollableContainer } from '../Components/ScrollableContainer';
 import { usePreviewState } from './PreviewContext';
 
 interface IProps {
@@ -15,80 +15,45 @@ interface IProps {
 }
 
 const useStyles = makeStyles({
-  listItem: {
-    paddingBottom: 0,
-    paddingTop: 0,
-    paddingRight: 0,
-    cursor: 'pointer'
-  },
-  listItemParent: {
-    paddingTop: 16
-  },
-  listItemChild: {
-    display: 'flex',
-    paddingBottom: 0,
-    paddingTop: 0,
-    width: '95%',
-    float: 'right',
-    paddingRight: 0,
-    cursor: 'pointer'
-  },
-  listItemButtonParent: {
-    border: `1px solid ${theme.palette.gray400.main}`,
-    minHeight: 37,
-    width: '100%',
-    display: 'flex',
-    justifySelf: 'center',
-    paddingBottom: 0,
-    paddingTop: 0,
-    paddingRight: 0,
-    cursor: 'pointer'
-  },
-  listItemButtonChild: {
-    borderLeft: `1px solid ${theme.palette.gray400.main}`,
-    borderRight: `1px solid ${theme.palette.gray400.main}`,
-    borderBottom: `1px solid ${theme.palette.gray400.main}`,
-    minHeight: 37,
-    width: '100%',
-    display: 'flex',
-    paddingBottom: 0,
-    paddingTop: 0
-  },
   sideBarList: {
     position: 'sticky',
     height: '100%',
     width: '100%',
     minWidth: 230,
-    paddingTop: 60,
-    paddingLeft: '5%'
+    paddingLeft: '5%',
+    paddingTop: 0
   },
-  selectedItem: {
+  listItem: {
+    cursor: 'pointer',
+    minHeight: 36,
+    background: theme.palette.white.main,
+    '&:hover': {
+      background: theme.palette.lightBlue.main,
+      color: theme.palette.white.main
+    }
+  },
+  listItemParent: {
+    border: `1px solid ${theme.palette.gray400.main}`,
+    '&:not(:first-child)': {
+      marginTop: '16px'
+    }
+  },
+  listItemChild: {
+    borderLeft: `1px solid ${theme.palette.gray400.main}`,
+    borderRight: `1px solid ${theme.palette.gray400.main}`,
+    borderBottom: `1px solid ${theme.palette.gray400.main}`
+  },
+  selectedListItem: {
     background: theme.palette.primary.main,
     color: theme.palette.white.main
   },
-  listItemButtonSelected: {
-    background: theme.palette.primary.main,
-    color: theme.palette.white.main,
-    '&:hover': {
-      background: theme.palette.lightBlue.main,
-      color: theme.palette.white.main
-    }
-  },
-  listItemButton: {
-    backgroundColor: theme.palette.white.main,
-    '&:hover': {
-      background: theme.palette.lightBlue.main,
-      color: theme.palette.white.main
-    }
-  },
   itemNameText: {
     display: 'flex',
-    alignSelf: 'center',
-    paddingLeft: '28px'
+    alignSelf: 'center'
   }
 });
 
-export default function Sidebar({
+export default function PreviewSideBar({
   parentableArray
 }: IProps): React.ReactElement {
   const { setSelected } = usePreviewState();
@@ -107,59 +72,61 @@ export default function Sidebar({
     const displayNeeds = Utils.parentable2Levelable(elements);
 
     return displayNeeds.map((element, index) => {
-      const isParent = element.parent === '' ? true : false;
-      const isSelected = index === selectedIndex - 1 ? true : false;
+      const isParent = element.parent === '';
+      const isSelected = index === selectedIndex - 1;
 
       return (
         <ListItem
-          className={`${classes.listItem} ${
-            isParent ? classes.listItemParent : classes.listItemChild
-          }`}
+          key={element.id}
+          className={`${classes.listItem} 
+                      ${
+                        isParent
+                          ? classes.listItemParent
+                          : classes.listItemChild
+                      } 
+                      ${isSelected ? classes.selectedListItem : ''}`}
+          sx={{
+            marginLeft: `${element.level * 25}px`,
+            width: `calc(100% - ${element.level * 25}px)`
+          }}
+          onClick={() => handleListItemClick(element, index + 1)}
         >
-          <Box
-            className={`${
-              isParent
-                ? classes.listItemButtonParent
-                : classes.listItemButtonChild
-            } 
-                
-                ${
-                  isSelected
-                    ? classes.listItemButtonSelected
-                    : classes.listItemButton
-                }`}
-            onClick={() => handleListItemClick(element, index + 1)}
+          <Typography
+            className={classes.itemNameText}
+            variant={element.parent === '' ? 'smBold' : 'sm'}
           >
-            <Typography
-              className={classes.itemNameText}
-              variant={element.parent === '' ? 'smBold' : 'sm'}
-            >
-              {element.title}
-            </Typography>
-          </Box>
+            {element.title}
+          </Typography>
         </ListItem>
       );
     });
   };
 
   return (
-    <List className={classes.sideBarList}>
-      <ListItem className={classes.listItem}>
-        <Box
-          className={`${classes.listItemButtonParent} 
-           ${
-             selectedIndex === 0
-               ? classes.listItemButtonSelected
-               : classes.listItemButton
-           }`}
-          onClick={() => handleListItemClick(null, 0)}
-        >
-          <Typography className={classes.itemNameText} variant="smBold">
-            Generiske krav
-          </Typography>
-        </Box>
-      </ListItem>
-      {renderProducts(parentableArray)}
-    </List>
+    <Box
+      sx={{ paddingBottom: 5, paddingTop: 5, height: '100%', width: '100%' }}
+    >
+      <ScrollableContainer sx={{ height: '100%' }}>
+        <List className={classes.sideBarList}>
+          <ListItem
+            key="generic"
+            className={`${classes.listItem} ${
+              classes.listItemParent
+            }            
+            ${selectedIndex === 0 ? classes.selectedListItem : ''}`}
+            onClick={() => handleListItemClick(null, 0)}
+            sx={{
+              marginLeft: `${1 * 25}px`,
+              width: `calc(100% - ${1 * 25}px)`
+            }}
+          >
+            <Typography className={classes.itemNameText} variant="smBold">
+              Generiske krav
+            </Typography>
+          </ListItem>
+          {renderProducts(parentableArray)}
+        </List>
+      </ScrollableContainer>
+    </Box>
   );
 }
