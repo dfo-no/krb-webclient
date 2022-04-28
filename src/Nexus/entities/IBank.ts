@@ -3,23 +3,26 @@ import { IInheritedBank } from '../../models/IInheritedBank';
 import ModelType from '../../models/ModelType';
 import { Parentable } from '../../models/Parentable';
 import { IBaseModel } from './IBaseModel';
-import { ICodelist } from './ICodelist';
-import { INeed } from './INeed';
-import { IProduct } from './IProduct';
-import { IPublication } from './IPublication';
-import { ITag } from './ITag';
+import { CodelistSchema, ICodelist } from './ICodelist';
+import { BaseNeedSchema, INeed } from './INeed';
+import { BaseProductSchema, IProduct } from './IProduct';
+import { BasePublicationSchema, IPublication } from './IPublication';
+import { BaseTagSchema, ITag } from './ITag';
 
 export const BaseBankSchema = CustomJoi.object().keys({
-  id: CustomJoi.string().length(36).required(),
+  id: CustomJoi.string()
+    .guid({ version: ['uuidv4'] })
+    .length(36)
+    .required(),
   title: CustomJoi.string().min(3).required(),
   description: CustomJoi.string().allow('').required(),
-  needs: CustomJoi.array().required(),
-  products: CustomJoi.array().required(),
-  codelist: CustomJoi.array().required(),
-  tags: CustomJoi.array().required(),
+  needs: CustomJoi.array().items(BaseNeedSchema).required(),
+  products: CustomJoi.array().items(BaseProductSchema).required(),
+  codelist: CustomJoi.array().items(CodelistSchema).required(),
+  tags: CustomJoi.array().items(BaseTagSchema).required(),
   version: CustomJoi.number().min(0).required(),
   type: CustomJoi.string().equal(ModelType.bank).required(),
-  publications: CustomJoi.array().required(),
+  publications: CustomJoi.array().items(BasePublicationSchema).required(),
   publishedDate: CustomJoi.alternatives([
     CustomJoi.date().iso().raw(),
     CustomJoi.string().valid(null)
@@ -29,14 +32,16 @@ export const BaseBankSchema = CustomJoi.object().keys({
     CustomJoi.string().allow(null)
   ]).required(),
   inheritedBanks: CustomJoi.array().required(),
-  sourceOriginal: CustomJoi.alternatives([
-    CustomJoi.string().length(36),
-    CustomJoi.string().allow(null)
-  ]).required(),
-  sourceRel: CustomJoi.alternatives([
-    CustomJoi.string().length(36),
-    CustomJoi.string().allow(null)
-  ]).required(),
+  sourceOriginal: CustomJoi.string()
+    .guid({ version: ['uuidv4'] })
+    .length(36)
+    .allow(null)
+    .required(),
+  sourceRel: CustomJoi.string()
+    .guid({ version: ['uuidv4'] })
+    .length(36)
+    .allow(null)
+    .required(),
   deletedDate: CustomJoi.alternatives([
     CustomJoi.date().iso().raw(),
     CustomJoi.string().valid(null)

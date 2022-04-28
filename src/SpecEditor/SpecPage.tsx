@@ -13,6 +13,7 @@ import LoaderSpinner from '../common/LoaderSpinner';
 import DFODialog from '../components/DFODialog/DFODialog';
 import DFOSearchBar from '../components/DFOSearchBar/DFOSearchBar';
 import { IBank } from '../Nexus/entities/IBank';
+import { IBaseModel } from '../Nexus/entities/IBaseModel';
 import SpecificationStoreService from '../Nexus/services/SpecificationStoreService';
 import { useGetBanksQuery } from '../store/api/bankApi';
 import theme from '../theme';
@@ -129,6 +130,13 @@ export default function SpecPage(): React.ReactElement {
     order: 'DESC'
   });
 
+  const searchFunction = (searchString: string, list: IBaseModel[]) => {
+    return list;
+  };
+  const callback = (list: IBaseModel[]) => {
+    return list;
+  };
+
   useEffect(() => {
     if (banks) {
       setLatestPublishedBanks(
@@ -223,8 +231,8 @@ export default function SpecPage(): React.ReactElement {
                 <DFOSearchBar
                   list={[]}
                   placeholder={t('search for banks')}
-                  callback={() => {}}
-                  searchFunction={() => {}}
+                  callback={callback}
+                  searchFunction={searchFunction}
                 />
               </SearchFieldContainer>
             </SearchContainer>

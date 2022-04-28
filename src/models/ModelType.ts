@@ -8,6 +8,7 @@ enum ModelType {
   requirement = 'requirement',
   specificationProduct = 'specificationProduct',
   responseProduct = 'responseProduct',
+  inheritedBank = 'inheritedBank',
   tag = 'tag',
   prefilledResponse = 'prefilledResponse',
   requirementAnswer = 'requirementAnswer',
