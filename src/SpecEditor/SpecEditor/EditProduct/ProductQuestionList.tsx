@@ -18,6 +18,9 @@ import { ICheckboxQuestion } from '../../../Nexus/entities/ICheckboxQuestion';
 
 const useStyles = makeStyles({
   list: {
+    display: 'flex',
+    flexDirection: 'column',
+    gap: 16,
     border: `1px solid ${theme.palette.black.main}`,
     backgroundColor: theme.palette.gray100.main,
     padding: 32,
@@ -67,19 +70,31 @@ const ProductQuestionsList = ({ variant }: IProps) => {
     <Box className={classes.list}>
       {variant.questions.map((item, index) => {
         return (
-          <Card key={index} sx={{ margin: 1, padding: 1 }}>
-            <Box sx={{ display: 'flex', flexDirection: 'row', margin: 2 }}>
+          <Card key={index} sx={{ padding: 1 }}>
+            <Box
+              sx={{
+                display: 'flex',
+                flexDirection: 'row',
+                marginLeft: 2,
+                marginRight: 2
+              }}
+            >
               <DFORadioButton
                 checked={selectedRadioIndex === index}
                 onClick={() => questionSelected(item, index)}
               />
-              <Typography variant={'md'} sx={{ paddingLeft: 4 }}>
+              <Typography
+                variant={'md'}
+                sx={{ display: 'flex', paddingLeft: 2, alignSelf: 'center' }}
+              >
                 {t(item.type)}
               </Typography>
             </Box>
-            <Divider />
             {index === selectedRadioIndex && (
-              <QuestionSpecification item={item} />
+              <Box sx={{ margin: 2 }}>
+                <Divider />
+                <QuestionSpecification item={item} />
+              </Box>
             )}
           </Card>
         );

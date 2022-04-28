@@ -31,7 +31,7 @@ const QuestionSpecificationSlider = ({ item }: IProps) => {
       <Grid item xs={8}>
         <HorizontalTextCtrl
           name={'question.config.min'}
-          placeholder={t('Minumum')}
+          placeholder={t('Minimum')}
           type={'number'}
         />
       </Grid>
@@ -65,7 +65,9 @@ const QuestionSpecificationSlider = ({ item }: IProps) => {
           justifyContent: 'center'
         }}
       >
-        <Typography variant={'sm'}>Min: {item.config.min}</Typography>
+        <Typography variant={'sm'}>
+          {t('Minimum')}: {item.config.min}
+        </Typography>
       </Grid>
       <Grid
         item
@@ -85,7 +87,9 @@ const QuestionSpecificationSlider = ({ item }: IProps) => {
           justifyContent: 'center'
         }}
       >
-        <Typography variant={'sm'}>Max: {item.config.max}</Typography>
+        <Typography variant={'sm'}>
+          {t('Maximum')}: {item.config.max}
+        </Typography>
       </Grid>
       <Grid item xs={20}>
         <Typography variant={'smBold'}>Evaluering:</Typography>
