@@ -145,7 +145,7 @@ const specificationSlice = createSlice({
           (product) => product.id === payload.productId
         )
       );
-      const index = state.spec.requirements.findIndex(
+      const index = state.spec.products[productIndex].requirements.findIndex(
         (req) => req === payload.requirement
       );
       state.spec.products[productIndex].requirements.splice(index, 1);

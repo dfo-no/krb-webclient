@@ -28,7 +28,7 @@ export const TextQuestionSchema = QuestionBaseSchema.keys({
 
 export const TextQuestionAnswerSchema = TextQuestionSchema.keys({
   answer: CustomJoi.object().keys({
-    text: CustomJoi.string().required(),
+    text: CustomJoi.string().allow('').required(),
     point: CustomJoi.number().required()
   })
 });

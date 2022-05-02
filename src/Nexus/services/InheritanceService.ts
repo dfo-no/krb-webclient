@@ -1,6 +1,7 @@
 /* eslint-disable class-methods-use-this */
 import Utils from '../../common/Utils';
 import { IInheritedBank } from '../../models/IInheritedBank';
+import ModelType from '../../models/ModelType';
 import { Parentable } from '../../models/Parentable';
 import { IBank } from '../entities/IBank';
 import { IBaseModel } from '../entities/IBaseModel';
@@ -23,7 +24,10 @@ export default class InheritanceService {
       description: inheritedBank.description,
       id: inheritedBank.id,
       projectId: Utils.ensure(inheritedBank.projectId),
-      date: Utils.ensure(inheritedBank.publishedDate)
+      date: Utils.ensure(inheritedBank.publishedDate),
+      type: ModelType.inheritedBank,
+      sourceOriginal: inheritedBank.projectId,
+      sourceRel: null
     };
   };
 

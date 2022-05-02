@@ -1,15 +1,12 @@
 import { Box, FormControl, FormLabel } from '@mui/material';
 import { get } from 'lodash';
-import React, { JSXElementConstructor, ReactElement } from 'react';
+import React, { ReactElement } from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
 import { DFOCheckbox } from '../components/DFOCheckbox/DFOCheckbox';
 
 interface IProps {
   name: string;
-  label:
-    | string
-    | number
-    | ReactElement<any, string | JSXElementConstructor<any>>;
+  label: string | number | ReactElement;
   variant?: string;
 }
 
@@ -17,6 +14,7 @@ const CheckboxCtrl = ({ name, label, variant }: IProps): React.ReactElement => {
   const {
     formState: { errors }
   } = useFormContext();
+
   return (
     <FormControl error={!!get(errors, name)}>
       <Box sx={{ display: 'flex', alignItems: 'center' }}>

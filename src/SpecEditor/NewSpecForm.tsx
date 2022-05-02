@@ -6,18 +6,16 @@ import makeStyles from '@mui/styles/makeStyles';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router';
-import SelectCtrl from '../FormProvider/SelectCtrl';
 import VerticalTextCtrl from '../FormProvider/VerticalTextCtrl';
-import { IOption } from '../Nexus/entities/IOption';
 import {
   BaseSpecificationSchema,
   ISpecification
 } from '../Nexus/entities/ISpecification';
 import theme from '../theme';
-import { useSpecificationState } from './SpecificationContext';
+import { useAppDispatch, useAppSelector } from '../store/hooks';
+import { setSpecification } from '../store/reducers/spesification-reducer';
 
 interface IProps {
-  specification: ISpecification;
   handleClose: () => void;
 }
 
@@ -48,19 +46,20 @@ const useStyles = makeStyles({
   }
 });
 
-const NewSpecForm = ({ handleClose, specification }: IProps) => {
+const NewSpecForm = ({ handleClose }: IProps) => {
   const { t } = useTranslation();
   const history = useHistory();
   const classes = useStyles();
-  const { setSpecification } = useSpecificationState();
+  const { spec } = useAppSelector((state) => state.specification);
+  const dispatch = useAppDispatch();
 
   const methods = useForm<ISpecification>({
     resolver: joiResolver(BaseSpecificationSchema),
-    defaultValues: specification
+    defaultValues: spec
   });
 
   const onSubmit = async (post: ISpecification) => {
-    setSpecification(post);
+    dispatch(setSpecification(post));
     history.push(`/specification/${post.bank.id}`);
   };
 
@@ -74,9 +73,9 @@ const NewSpecForm = ({ handleClose, specification }: IProps) => {
       >
         <Box>
           <Typography variant="lg" color={theme.palette.primary.main}>
-            {specification.bank.title}
+            {spec.bank.title}
           </Typography>
-          <Typography>{specification.bank.description}</Typography>
+          <Typography>{spec.bank.description}</Typography>
         </Box>
 
         <Typography>
