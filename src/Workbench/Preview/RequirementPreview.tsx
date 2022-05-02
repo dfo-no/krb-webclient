@@ -19,6 +19,7 @@ const useStyles = makeStyles({
     paddingLeft: 32,
     paddingRight: 32,
     margin: 32,
+    marginBottom: 0,
     border: `1px solid ${theme.palette.silver.main}`
   },
   active: {

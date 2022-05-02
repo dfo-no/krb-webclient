@@ -6,7 +6,6 @@ import { useGetProjectQuery } from '../../store/api/bankApi';
 import theme from '../../theme';
 import { useTranslation } from 'react-i18next';
 import QuestionEnum from '../../models/QuestionEnum';
-import {} from '../../Nexus/entities/IQuestionBase';
 import { ITextQuestion } from '../../Nexus/entities/ITextQuestion';
 import { ICheckboxQuestion } from '../../Nexus/entities/ICheckboxQuestion';
 import { ISliderQuestion } from '../../Nexus/entities/ISliderQuestion';
