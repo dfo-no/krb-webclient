@@ -4,7 +4,7 @@ import { useParams } from 'react-router-dom';
 import LoaderSpinner from '../../common/LoaderSpinner';
 import { useGetProjectQuery } from '../../store/api/bankApi';
 import { IRouteParams } from '../Models/IRouteParams';
-import Sidebar from './Sidebar';
+import PreviewSideBar from './PreviewSideBar';
 import ProductPreview from './ProductPreview';
 import theme from '../../theme';
 
@@ -20,16 +20,15 @@ export default function Preview(): React.ReactElement {
     <Box
       sx={{
         display: 'flex',
-        flex: '1',
         height: '100%',
         width: '100%',
         backgroundColor: theme.palette.gray100.main
       }}
     >
-      <Box sx={{ width: '25%', height: '100%' }}>
-        <Sidebar parentableArray={project.products} />
+      <Box sx={{ height: '100%', flex: '1 1 0' }}>
+        <PreviewSideBar parentableArray={project.products} />
       </Box>
-      <Box sx={{ height: '100%', flexGrow: 1, minWidth: 0 }}>
+      <Box sx={{ height: '100%', flex: '3 1 0' }}>
         <ProductPreview />
       </Box>
     </Box>
