@@ -7,7 +7,6 @@ import EditRequirementForm from './EditRequirementForm';
 import { useSelectState } from '../SelectContext';
 import { INeed } from '../../../Nexus/entities/INeed';
 import { FormIconButton } from '../../Components/Form/FormIconButton';
-import { useTranslation } from 'react-i18next';
 
 interface IProps {
   requirement: IRequirement;
@@ -15,7 +14,6 @@ interface IProps {
 }
 
 const EditRequirement = ({ requirement, need }: IProps) => {
-  const { t } = useTranslation();
   const [isEditOpen, setEditOpen] = useState(false);
   const { setDeleteMode } = useSelectState();
 

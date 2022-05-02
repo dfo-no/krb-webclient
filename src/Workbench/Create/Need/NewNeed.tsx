@@ -6,7 +6,6 @@ import NewNeedForm from './NewNeedForm';
 import { useSelectState } from '../SelectContext';
 import { Parentable } from '../../../models/Parentable';
 import { INeed } from '../../../Nexus/entities/INeed';
-import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
 import { IRouteParams } from '../../Models/IRouteParams';
 import { useGetProjectQuery } from '../../../store/api/bankApi';
@@ -18,7 +17,6 @@ interface IProps {
 const NewNeed = ({ buttonText }: IProps) => {
   const { projectId } = useParams<IRouteParams>();
   const { data: project } = useGetProjectQuery(projectId);
-  const { t } = useTranslation();
   const [isOpen, setOpen] = useState(false);
   const { setNeedIndex, setNeedId } = useSelectState();
 
