@@ -107,55 +107,65 @@ const ProductSelection = (): React.ReactElement => {
             )`;
   };
 
+  const isDeletedAndUnused = (item: IProduct, selected: string[]) => {
+    return item.deletedDate && productChecked(item, selected);
+  };
+
+  const isDeleted = (item: IProduct, selected: string[]) => {
+    return item.deletedDate && !productChecked(item, selected);
+  };
+
   return (
     <Controller
       render={({ field: { value: selected, onChange } }) => (
         <ScrollableContainer className={classes.list}>
           <List>
-            {levelableItems.map((item) => {
-              return (
-                <ListItem
-                  key={item.id}
-                  className={classes.listItem}
-                  sx={{
-                    background: item.deletedDate
-                      ? deletedBackground()
-                      : theme.palette.white.main,
-                    marginTop: item.level === 1 ? 2 : -0.125, // -0.125 is equal to 1px to prevent double border
-                    marginLeft: `${(item.level - 1) * 2}%`,
-                    width: `${100 - (item.level - 1) * 2}%`
-                  }}
-                  onClick={() => onClick(item, selected, onChange)}
-                >
-                  <Box
-                    className={classes.checkbox}
+            {levelableItems
+              .filter((item) => !isDeleted(item, selected))
+              .map((item) => {
+                return (
+                  <ListItem
+                    key={item.id}
+                    className={classes.listItem}
                     sx={{
-                      backgroundColor: productChecked(item, selected)
-                        ? theme.palette.primary.main
-                        : 'none'
+                      background: isDeletedAndUnused(item, selected)
+                        ? deletedBackground()
+                        : theme.palette.white.main,
+                      marginTop: item.level === 1 ? 2 : -0.125, // -0.125 is equal to 1px to prevent double border
+                      marginLeft: `${(item.level - 1) * 2}%`,
+                      width: `${100 - (item.level - 1) * 2}%`
                     }}
+                    onClick={() => onClick(item, selected, onChange)}
                   >
-                    <Checkbox
-                      icon={<></>}
-                      checkedIcon={<CheckBoxIcon />}
-                      checked={productChecked(item, selected)}
-                    />
-                  </Box>
-                  <Typography
-                    className={classes.itemTitle}
-                    variant={item.level === 1 ? 'smBold' : 'sm'}
-                  >
-                    {item.title}
-                  </Typography>
-                  <Typography
-                    className={classes.itemDescription}
-                    variant={'sm'}
-                  >
-                    {item.description}
-                  </Typography>
-                </ListItem>
-              );
-            })}
+                    <Box
+                      className={classes.checkbox}
+                      sx={{
+                        backgroundColor: productChecked(item, selected)
+                          ? theme.palette.primary.main
+                          : 'none'
+                      }}
+                    >
+                      <Checkbox
+                        icon={<></>}
+                        checkedIcon={<CheckBoxIcon />}
+                        checked={productChecked(item, selected)}
+                      />
+                    </Box>
+                    <Typography
+                      className={classes.itemTitle}
+                      variant={item.level === 1 ? 'smBold' : 'sm'}
+                    >
+                      {item.title}
+                    </Typography>
+                    <Typography
+                      className={classes.itemDescription}
+                      variant={'sm'}
+                    >
+                      {item.description}
+                    </Typography>
+                  </ListItem>
+                );
+              })}
           </List>
         </ScrollableContainer>
       )}
