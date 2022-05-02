@@ -1,11 +1,14 @@
-import { Grid, Typography } from '@mui/material';
+import { Button, Grid, Typography } from '@mui/material';
 import HorizontalTextCtrl from '../../../FormProvider/HorizontalTextCtrl';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
-import React from 'react';
+import { useEffect } from 'react';
 import { ISliderQuestion } from '../../../Nexus/entities/ISliderQuestion';
 import { useTranslation } from 'react-i18next';
-import { useFieldArray, useFormContext } from 'react-hook-form';
+import { useFieldArray, useFormContext, useWatch } from 'react-hook-form';
 import { IRequirementAnswer } from '../../../models/IRequirementAnswer';
+import DeleteIcon from '@mui/icons-material/Delete';
+import { FormIconButton } from '../../../Workbench/Components/Form/FormIconButton';
+import theme from '../../../theme';
 
 interface IProps {
   item: ISliderQuestion;
@@ -14,10 +17,31 @@ interface IProps {
 const QuestionSpecificationSlider = ({ item }: IProps) => {
   const { t } = useTranslation();
   const { control } = useFormContext<IRequirementAnswer>();
-  const { fields } = useFieldArray({
+
+  const useMinValue = useWatch({ name: 'question.config.min', control });
+  const useMaxValue = useWatch({ name: 'question.config.max', control });
+
+  const useMinScore = useWatch({
+    name: 'question.config.scoreValues.0.score',
+    control
+  });
+  const useMaxScore = useWatch({
+    name: 'question.config.scoreValues.1.score',
+    control
+  });
+
+  const { fields, append, remove, update } = useFieldArray({
     control,
     name: 'question.config.scoreValues'
   });
+
+  useEffect(() => {
+    update(0, { value: useMinValue, score: useMinScore });
+  }, [useMinValue, useMinScore, update]);
+
+  useEffect(() => {
+    update(1, { value: useMaxValue, score: useMaxScore });
+  }, [useMaxValue, useMaxScore, update]);
 
   return (
     <Grid
@@ -109,7 +133,17 @@ const QuestionSpecificationSlider = ({ item }: IProps) => {
             }}
           >
             <Grid item xs={8}>
-              <Typography variant={'smBold'}>{scoreValue.value}</Typography>
+              {id < 2 ? (
+                <Typography variant={'smBold'}>{scoreValue.value}</Typography>
+              ) : (
+                <HorizontalTextCtrl
+                  name={
+                    `question.config.scoreValues.${id}.value` as 'question.config.scoreValues.0.value'
+                  }
+                  placeholder={t('Value')}
+                  type={'number'}
+                />
+              )}
             </Grid>
             <Grid
               item
@@ -130,9 +164,27 @@ const QuestionSpecificationSlider = ({ item }: IProps) => {
                 type={'number'}
               />
             </Grid>
+            {id > 1 && (
+              <FormIconButton
+                hoverColor={theme.palette.errorRed.main}
+                onClick={() => remove(id)}
+                sx={{ marginLeft: 2, cursor: 'pointer' }}
+              >
+                <DeleteIcon />
+              </FormIconButton>
+            )}
           </Grid>
         );
       })}
+      <Grid item>
+        <Button
+          variant="primary"
+          sx={{ marginTop: 2 }}
+          onClick={() => append({ value: useMinValue, score: 0 })}
+        >
+          {t('Add new value score')}
+        </Button>
+      </Grid>
     </Grid>
   );
 };
