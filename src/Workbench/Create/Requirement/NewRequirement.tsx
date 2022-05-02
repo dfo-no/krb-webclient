@@ -34,7 +34,6 @@ const NewRequirement = ({ need }: IProps) => {
         Legg til nytt krav
       </Button>
       <Dialog
-        title={t('create requirement')}
         isOpen={isNewOpen}
         handleClose={() => setNewOpen(false)}
         children={<NewRequirementForm need={need} handleClose={onClose} />}
