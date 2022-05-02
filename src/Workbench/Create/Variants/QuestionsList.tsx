@@ -60,9 +60,7 @@ const QuestionsList = () => {
           return (
             <Card key={item.id} sx={{ margin: 1, padding: 1 }}>
               <Box sx={{ display: 'flex', flexDirection: 'row', margin: 2 }}>
-                <Typography variant={'md'} sx={{ paddingLeft: 4 }}>
-                  {t(item.type)}
-                </Typography>
+                <Typography variant={'smBold'}>{t(item.type)}</Typography>
                 <FormIconButton
                   hoverColor={theme.palette.errorRed.main}
                   onClick={() => remove(index)}

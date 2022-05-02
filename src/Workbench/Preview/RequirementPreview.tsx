@@ -18,7 +18,9 @@ const useStyles = makeStyles({
     padding: 16,
     paddingLeft: 32,
     paddingRight: 32,
-    margin: 32
+    margin: 32,
+    marginBottom: 0,
+    border: `1px solid ${theme.palette.silver.main}`
   },
   active: {
     border: `2px solid ${theme.palette.secondary.main}`,
