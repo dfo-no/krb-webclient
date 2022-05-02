@@ -20,7 +20,7 @@ function ProjectHeader(): React.ReactElement {
         <Typography variant="lgBold">{project.title}</Typography>
       </Box>
       <Typography
-        variant="sm"
+        variant={'sm'}
         sx={{
           borderTop: `1px solid ${theme.palette.silver.main}`,
           paddingTop: 1
