@@ -21,7 +21,8 @@ const useStyles = makeStyles({
     flexDirection: 'column',
     height: '100%',
     width: '100%',
-    marginBottom: 32
+    marginBottom: 32,
+    border: `1px solid ${theme.palette.gray400.main}`
   },
   active: {
     border: `2px solid ${theme.palette.secondary.main}`,
@@ -59,15 +60,13 @@ const Requirement = ({ requirementIndex }: IProps) => {
           sx={{
             display: 'flex',
             flexDirection: 'row',
-            width: '95%',
             margin: 2,
+            paddingRight: 1,
+            paddingBottom: 1,
             borderBottom: `1px solid ${theme.palette.silver.main}`
           }}
         >
-          <Typography
-            variant="mdBold"
-            sx={{ alignSelf: 'center', paddingLeft: 1 }}
-          >
+          <Typography variant="mdBold" sx={{ alignSelf: 'center' }}>
             {project.needs[needIndex].requirements[requirementIndex].title}
           </Typography>
           <EditRequirement

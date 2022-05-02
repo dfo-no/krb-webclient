@@ -86,7 +86,7 @@ const Variant = ({ variant, requirementIndex }: IProps) => {
         autoComplete="off"
         noValidate
       >
-        <Accordion key={variant.id} onChange={accordionChange()}>
+        <Accordion key={variant.id} onChange={accordionChange()} elevation={0}>
           <AccordionSummary expandIcon={<ExpandMoreIcon />}>
             <Typography>{variant.description}</Typography>
             <FormIconButton
