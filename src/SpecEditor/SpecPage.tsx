@@ -25,6 +25,7 @@ import {
 import NewSpecForm from './NewSpecForm';
 import { useAppDispatch } from '../store/hooks';
 import { setSpecification } from '../store/reducers/spesification-reducer';
+import { ISpecification } from '../Nexus/entities/ISpecification';
 
 const useStyles = makeStyles({
   projectsContainer: {
@@ -122,6 +123,7 @@ export default function SpecPage(): React.ReactElement {
   const { t } = useTranslation();
   const classes = useStyles();
   const dispatch = useAppDispatch();
+  const [spec, setSpec] = useState<ISpecification | null>(null);
   const [latestPublishedBanks, setLatestPublishedBanks] = useState<IBank[]>([]);
 
   const { data: banks, isLoading } = useGetBanksQuery({
@@ -167,16 +169,14 @@ export default function SpecPage(): React.ReactElement {
     }
   }, [banks]);
 
-  const [isOpen, setOpen] = useState(false);
-
   if (isLoading) {
     return <LoaderSpinner />;
   }
 
   const openProjectModal = (bank: IBank) => {
     const newSpec = SpecificationStoreService.getSpecificationFromBank(bank);
+    setSpec(newSpec);
     dispatch(setSpecification(newSpec));
-    setOpen(true);
   };
 
   const renderProjects = () => {
@@ -253,11 +253,18 @@ export default function SpecPage(): React.ReactElement {
           </Box>
         </Box>
       )}
-      <DFODialog
-        isOpen={isOpen}
-        handleClose={() => setOpen(false)}
-        children={<NewSpecForm handleClose={() => setOpen(false)} />}
-      />
+      {spec && (
+        <DFODialog
+          isOpen={true}
+          handleClose={() => setSpec(null)}
+          children={
+            <NewSpecForm
+              handleClose={() => setSpec(null)}
+              specification={spec}
+            />
+          }
+        />
+      )}
     </Box>
   );
 }
