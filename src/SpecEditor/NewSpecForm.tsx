@@ -16,7 +16,6 @@ import {
   ModalButtonsBox,
   ModalButton
 } from '../Workbench/Components/ModalBox';
-import { useSpecificationState } from './SpecificationContext';
 
 interface IProps {
   specification: ISpecification;
@@ -26,7 +25,6 @@ interface IProps {
 const NewSpecForm = ({ handleClose, specification }: IProps) => {
   const { t } = useTranslation();
   const history = useHistory();
-  const { setSpecification } = useSpecificationState();
 
   const methods = useForm<ISpecification>({
     resolver: joiResolver(BaseSpecificationSchema),
@@ -34,7 +32,6 @@ const NewSpecForm = ({ handleClose, specification }: IProps) => {
   });
 
   const onSubmit = async (post: ISpecification) => {
-    setSpecification(post);
     history.push(`/specification/${post.bank.id}`);
   };
 
@@ -86,4 +83,3 @@ const NewSpecForm = ({ handleClose, specification }: IProps) => {
 };
 
 export default NewSpecForm;
-
