@@ -79,7 +79,7 @@ const theme = createTheme({
       main: '#005b91'
     },
     white: {
-      main: '#ffff'
+      main: '#ffffff'
     },
     errorRed: {
       main: '#d32f2e'
