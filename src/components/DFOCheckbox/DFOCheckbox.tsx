@@ -9,6 +9,7 @@ interface DFOCheckboxProps {
   element?: ControllerRenderProps<FieldValues, string>;
   variant?: string;
   value?: boolean;
+  onClick?: () => void;
 }
 
 const useStyles = makeStyles({
@@ -43,7 +44,8 @@ const useStyles = makeStyles({
 export const DFOCheckbox = ({
   element,
   value,
-  variant
+  variant,
+  onClick = () => {}
 }: DFOCheckboxProps): React.ReactElement => {
   const classes = useStyles();
 
@@ -120,6 +122,7 @@ export const DFOCheckbox = ({
       icon={<checkboxType.icon />}
       checkedIcon={<checkboxType.checkedIcon />}
       checked={value}
+      onClick={onClick}
     />
   );
 };

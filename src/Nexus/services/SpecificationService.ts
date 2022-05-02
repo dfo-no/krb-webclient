@@ -5,6 +5,9 @@ import { ISpecification } from '../entities/ISpecification';
 import SpecificationStoreService from './SpecificationStoreService';
 import UuidService from './UuidService';
 import ModelType from '../../models/ModelType';
+import { IRequirement } from '../entities/IRequirement';
+import QuestionService from './QuestionService';
+import QuestionEnum from '../../models/QuestionEnum';
 
 export default class SpecificationService {
   UuidService = new UuidService();
@@ -41,12 +44,35 @@ export default class SpecificationService {
     return defaultValues;
   };
 
+  generateDefaultRequirementAnswer = (
+    requirement: IRequirement
+  ): IRequirementAnswer => {
+    const questionService = new QuestionService();
+    return {
+      id: this.UuidService.generateId(),
+      questionId: '',
+      weight: 1,
+      variantId: '',
+      question: questionService.getQuestion(QuestionEnum.Q_TEXT),
+      type: ModelType.requirementAnswer,
+      requirement: requirement
+    };
+  };
+
   createSpecificationProductWithId = (
     item: ISpecificationProduct
   ): ISpecificationProduct => {
-    const tag = { ...item };
-    tag.id = this.UuidService.generateId();
-    return tag;
+    const specProd = { ...item };
+    specProd.id = this.UuidService.generateId();
+    return specProd;
+  };
+
+  createRequirementAnswerWithId = (
+    item: IRequirementAnswer
+  ): IRequirementAnswer => {
+    const reqAns = { ...item };
+    reqAns.id = this.UuidService.generateId();
+    return reqAns;
   };
 
   async setSpecification(specification: ISpecification): Promise<void> {

@@ -11,8 +11,10 @@ import { useGetProjectQuery } from '../../store/api/bankApi';
 import { usePreviewState } from './PreviewContext';
 import NeedPreview from './NeedPreview';
 import { ScrollableContainer } from '../Components/ScrollableContainer';
+import { useTranslation } from 'react-i18next';
 
 export default function ProductPreview(): React.ReactElement {
+  const { t } = useTranslation();
   const { projectId } = useParams<IRouteParams>();
   const { data: project } = useGetProjectQuery(projectId);
   const { selected } = usePreviewState();
@@ -24,13 +26,14 @@ export default function ProductPreview(): React.ReactElement {
   const renderNeeds = () => {
     if (!selected) {
       const needs = Utils.findVariantsUsedBySpesification(project);
+
       return needs.map((need) => {
-        return <NeedPreview need={need} />;
+        return <NeedPreview need={need} key={need.id} />;
       });
     } else {
       const needs = Utils.findVariantsUsedByProduct(selected, project);
       return needs.map((need) => {
-        return <NeedPreview need={need} />;
+        return <NeedPreview need={need} key={need.id} />;
       });
     }
   };
@@ -52,11 +55,11 @@ export default function ProductPreview(): React.ReactElement {
               sx={{
                 display: 'flex',
                 flexDirection: 'row',
-                borderBottom: '1px solid'
+                borderBottom: `1px solid ${theme.palette.silver.main}`
               }}
             >
               <Typography variant="lgBold">
-                {selected ? selected.title : 'Generiske krav'}
+                {selected ? selected.title : t('Generic requirement')}
               </Typography>
             </Box>
             <Typography variant="smBold" sx={{ paddingTop: 1 }}>
