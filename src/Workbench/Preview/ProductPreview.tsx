@@ -11,8 +11,10 @@ import { useGetProjectQuery } from '../../store/api/bankApi';
 import { usePreviewState } from './PreviewContext';
 import NeedPreview from './NeedPreview';
 import { ScrollableContainer } from '../Components/ScrollableContainer';
+import { useTranslation } from 'react-i18next';
 
 export default function ProductPreview(): React.ReactElement {
+  const { t } = useTranslation();
   const { projectId } = useParams<IRouteParams>();
   const { data: project } = useGetProjectQuery(projectId);
   const { selected } = usePreviewState();
@@ -57,7 +59,7 @@ export default function ProductPreview(): React.ReactElement {
               }}
             >
               <Typography variant="lgBold">
-                {selected ? selected.title : 'Generiske krav'}
+                {selected ? selected.title : t('Generic requirement')}
               </Typography>
             </Box>
             <Typography variant="smBold" sx={{ paddingTop: 1 }}>

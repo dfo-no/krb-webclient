@@ -23,7 +23,9 @@ import {
   SearchFieldContainer
 } from '../Workbench/Components/SearchContainer';
 import NewSpecForm from './NewSpecForm';
-import { useSpecificationState } from './SpecificationContext';
+import { useAppDispatch } from '../store/hooks';
+import { setSpecification } from '../store/reducers/spesification-reducer';
+import { ISpecification } from '../Nexus/entities/ISpecification';
 
 const useStyles = makeStyles({
   projectsContainer: {
@@ -120,7 +122,8 @@ const useStyles = makeStyles({
 export default function SpecPage(): React.ReactElement {
   const { t } = useTranslation();
   const classes = useStyles();
-  const { specification, setSpecification } = useSpecificationState();
+  const dispatch = useAppDispatch();
+  const [spec, setSpec] = useState<ISpecification | null>(null);
   const [latestPublishedBanks, setLatestPublishedBanks] = useState<IBank[]>([]);
 
   const { data: banks, isLoading } = useGetBanksQuery({
@@ -166,16 +169,14 @@ export default function SpecPage(): React.ReactElement {
     }
   }, [banks]);
 
-  const [isOpen, setOpen] = useState(false);
-
   if (isLoading) {
     return <LoaderSpinner />;
   }
 
   const openProjectModal = (bank: IBank) => {
-    const spec = SpecificationStoreService.getSpecificationFromBank(bank);
-    setSpecification(spec);
-    setOpen(true);
+    const newSpec = SpecificationStoreService.getSpecificationFromBank(bank);
+    setSpec(newSpec);
+    dispatch(setSpecification(newSpec));
   };
 
   const renderProjects = () => {
@@ -252,15 +253,14 @@ export default function SpecPage(): React.ReactElement {
           </Box>
         </Box>
       )}
-
-      {specification && (
+      {spec && (
         <DFODialog
-          isOpen={isOpen}
-          handleClose={() => setOpen(false)}
+          isOpen={true}
+          handleClose={() => setSpec(null)}
           children={
             <NewSpecForm
-              specification={specification}
-              handleClose={() => setOpen(false)}
+              handleClose={() => setSpec(null)}
+              specification={spec}
             />
           }
         />

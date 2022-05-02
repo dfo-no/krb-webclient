@@ -4,7 +4,7 @@ import HorizontalTextCtrl from '../../FormProvider/HorizontalTextCtrl';
 import { DFOCardHeader } from '../../components/DFOCard/DFOCardHeader';
 import { DFOHeaderContentBox } from '../../components/DFOCard/DFOHeaderContentBox';
 
-export default function NewProductForm(): React.ReactElement {
+export default function NewProductHeader(): React.ReactElement {
   const { t } = useTranslation();
 
   return (

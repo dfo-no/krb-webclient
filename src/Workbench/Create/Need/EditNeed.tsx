@@ -35,7 +35,6 @@ const EditNeed = ({ need }: IProps) => {
         <EditIcon />
       </DFOCardHeaderIconButton>
       <Dialog
-        title={t('edit need')}
         isOpen={isEditOpen}
         handleClose={onClose}
         children={<EditNeedForm need={need} handleClose={onClose} />}

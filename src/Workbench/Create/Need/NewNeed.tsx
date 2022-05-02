@@ -47,7 +47,6 @@ const NewNeed = ({ buttonText }: IProps) => {
         {buttonText}
       </Button>
       <Dialog
-        title={t('create need')}
         isOpen={isOpen}
         handleClose={() => setOpen(false)}
         children={<NewNeedForm handleClose={onClose} />}

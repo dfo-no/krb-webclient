@@ -79,7 +79,7 @@ const theme = createTheme({
       main: '#005b91'
     },
     white: {
-      main: '#ffff'
+      main: '#ffffff'
     },
     errorRed: {
       main: '#d32f2e'
@@ -154,19 +154,6 @@ theme.components = {
         }
       },
       {
-        props: { variant: 'warningTransparent' },
-        style: {
-          color: theme.palette.errorRed.main,
-          whiteSpace: 'nowrap',
-          height: 40,
-          textDecorationLine: 'underline',
-          '&:hover': {
-            background: 'none',
-            textDecorationLine: 'underline'
-          }
-        }
-      },
-      {
         props: { variant: 'save' },
         style: {
           backgroundColor: theme.palette.green.main,
@@ -175,32 +162,6 @@ theme.components = {
           height: 40,
           '&:hover': {
             background: theme.palette.greenHover.main
-          }
-        }
-      },
-      {
-        props: { variant: 'saveTransparent' },
-        style: {
-          color: theme.palette.green.main,
-          whiteSpace: 'nowrap',
-          height: 40,
-          textDecorationLine: 'underline',
-          '&:hover': {
-            background: 'none',
-            textDecorationLine: 'underline'
-          }
-        }
-      },
-      {
-        props: { variant: 'saveTransparent' },
-        style: {
-          color: theme.palette.green.main,
-          whiteSpace: 'nowrap',
-          height: 40,
-          textDecorationLine: 'underline',
-          '&:hover': {
-            background: 'none',
-            textDecorationLine: 'underline'
           }
         }
       },

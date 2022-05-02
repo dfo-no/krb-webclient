@@ -4,7 +4,7 @@ import makeStyles from '@mui/styles/makeStyles';
 import React from 'react';
 import { IBaseModel } from '../../Nexus/entities/IBaseModel';
 import theme from '../../theme';
-import DFOInput from '../DFOInput/DFOInput';
+import DFOInput from '../DFOTextField/DFOTextField';
 
 interface DFOSearchBarProps<T extends IBaseModel> {
   list: T[];
