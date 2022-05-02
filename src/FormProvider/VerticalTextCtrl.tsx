@@ -38,7 +38,6 @@ const VerticalTextCtrl = ({
             {...field}
             placeholder={placeholder}
             type={type}
-            sx={{ marginBottom: 4 }}
             disableUnderline
           />
         )}

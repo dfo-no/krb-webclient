@@ -143,6 +143,7 @@
   "Include to time": "Inkluder til-tid",
   "Usage": "Bruk",
   "Requirement spesification": "Krav spesifikasjon",
+  "Invalid value in the form Please fix this before saving": "Ugyldig verdi(er) i skjemaet. Venligst rett opp i dette før du lagrer.",
   "Remember that you have to download the specification and save it locally on your computer": "Husk at du må laste ned kravspesifikasjonen og lagre den lokalt på din PC.",
   "Qualification": "Kvalifikasjon",
   "Select associated products": "Velg assosierte produkter",

@@ -27,7 +27,7 @@ export interface ICodelistAnswer extends IAnswerBase {
 export const CodelistQuestionSchema = QuestionBaseSchema.keys({
   type: CustomJoi.string().equal(QuestionEnum.Q_CODELIST).required(),
   config: ConfigBaseSchema.keys({
-    codelist: CustomJoi.string().allow('', null).required(),
+    codelist: CustomJoi.string().length(36).required(),
     mandatoryCodes: CustomJoi.array()
       .items(CustomJoi.string())
       .min(0)

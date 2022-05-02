@@ -16,7 +16,8 @@ const useStyles = makeStyles({
   list: {
     border: `1px solid ${theme.palette.black.main}`,
     backgroundColor: theme.palette.gray100.main,
-    padding: 32
+    padding: 32,
+    marginBottom: 16
   }
 });
 

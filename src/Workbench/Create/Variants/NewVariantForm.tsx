@@ -20,6 +20,7 @@ import { useGetProjectQuery } from '../../../store/api/bankApi';
 import LoaderSpinner from '../../../common/LoaderSpinner';
 import { Box } from '@mui/material';
 import VariantFormContent from './VariantFormContent';
+import GeneralErrorMessage from '../../../Form/GeneralErrorMessage';
 
 interface IProps {
   need: Parentable<INeed>;
@@ -92,6 +93,7 @@ function NewVariantForm({
                 {t('save')}
               </Button>
             </Box>
+            <GeneralErrorMessage errors={methods.formState.errors} />
           </Box>
         </form>
       </FormProvider>
