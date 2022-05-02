@@ -15,7 +15,10 @@ export interface IPrefilledResponseProduct {
 }
 
 export const PrefilledResponseProductSchema = CustomJoi.object().keys({
-  id: CustomJoi.string().required(),
+  id: CustomJoi.string()
+    .guid({ version: ['uuidv4'] })
+    .length(36)
+    .required(),
   title: CustomJoi.string().required(),
   originProduct: CustomJoi.object(),
   description: CustomJoi.string().allow(null, '').required(),

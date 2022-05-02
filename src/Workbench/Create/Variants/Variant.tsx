@@ -19,13 +19,13 @@ import React, { SyntheticEvent } from 'react';
 import { IRouteParams } from '../../Models/IRouteParams';
 import Button from '@mui/material/Button';
 import { Box } from '@mui/material';
-import ErrorSummary from '../../../Form/ErrorSummary';
 import { useVariantState } from '../../Components/VariantContext';
 import { useTranslation } from 'react-i18next';
 import { useSelectState } from '../SelectContext';
 import theme from '../../../theme';
 import { FormIconButton } from '../../Components/Form/FormIconButton';
 import VariantFormContent from './VariantFormContent';
+import GeneralErrorMessage from '../../../Form/GeneralErrorMessage';
 
 interface IProps {
   variant: IVariant;
@@ -38,7 +38,7 @@ const Variant = ({ variant, requirementIndex }: IProps) => {
   const { data: project } = useGetProjectQuery(projectId);
 
   const { editVariant } = useProjectMutations();
-  const { setOpenVariants } = useVariantState();
+  const { openVariants, setOpenVariants } = useVariantState();
   const { needIndex, setDeleteMode } = useSelectState();
   const dispatch = useAppDispatch();
 
@@ -63,6 +63,12 @@ const Variant = ({ variant, requirementIndex }: IProps) => {
         text: 'successfully updated variant'
       };
       dispatch(addAlert({ alert }));
+      methods.reset({ ...put });
+      setOpenVariants((ov) => {
+        const tmp = [...ov];
+        tmp.splice(tmp.indexOf(variant.id), 1);
+        return tmp;
+      });
     });
   };
 
@@ -86,7 +92,11 @@ const Variant = ({ variant, requirementIndex }: IProps) => {
         autoComplete="off"
         noValidate
       >
-        <Accordion key={variant.id} onChange={accordionChange()}>
+        <Accordion
+          key={variant.id}
+          onChange={accordionChange()}
+          expanded={openVariants.some((id) => id === variant.id)}
+        >
           <AccordionSummary expandIcon={<ExpandMoreIcon />}>
             <Typography>{variant.description}</Typography>
             <FormIconButton
@@ -111,9 +121,9 @@ const Variant = ({ variant, requirementIndex }: IProps) => {
                 {t('save')}
               </Button>
             </Box>
+            <GeneralErrorMessage errors={methods.formState.errors} />
           </AccordionDetails>
         </Accordion>
-        <ErrorSummary errors={methods.formState.errors} />
       </form>
     </FormProvider>
   );

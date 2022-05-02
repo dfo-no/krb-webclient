@@ -8,7 +8,10 @@ export interface ICode extends IBaseModel {
 }
 
 export const BaseCodeSchema = CustomJoi.object().keys({
-  id: CustomJoi.string().length(36).required(),
+  id: CustomJoi.string()
+    .guid({ version: ['uuidv4'] })
+    .length(36)
+    .required(),
   title: CustomJoi.string().required(),
   description: CustomJoi.string().allow(null, '').required(),
   type: CustomJoi.string().equal(ModelType.code).required(),
@@ -16,8 +19,16 @@ export const BaseCodeSchema = CustomJoi.object().keys({
     CustomJoi.string().length(36),
     CustomJoi.string().valid('')
   ]),
-  sourceOriginal: CustomJoi.string().required(),
-  sourceRel: CustomJoi.string().allow(null).required()
+  sourceOriginal: CustomJoi.string()
+    .guid({ version: ['uuidv4'] })
+    .length(36)
+    .allow(null)
+    .required(),
+  sourceRel: CustomJoi.string()
+    .guid({ version: ['uuidv4'] })
+    .length(36)
+    .allow(null)
+    .required()
 });
 
 export const PostCodeSchema = BaseCodeSchema.keys({

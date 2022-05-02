@@ -5,6 +5,7 @@ import { useTranslation } from 'react-i18next';
 import byggernIllustration from '../../assets/images/byggern-illustration.svg';
 import { useSpecificationState } from '../SpecificationContext';
 import theme from '../../theme';
+import { useAppSelector } from '../../store/hooks';
 
 const useStyles = makeStyles({
   editorContentContainer: {
@@ -31,7 +32,8 @@ const useStyles = makeStyles({
 
 export default function NoProducts(): React.ReactElement {
   const { t } = useTranslation();
-  const { specification, setCreate } = useSpecificationState();
+  const { spec } = useAppSelector((state) => state.specification);
+  const { setCreate } = useSpecificationState();
 
   const classes = useStyles();
 
@@ -45,7 +47,7 @@ export default function NoProducts(): React.ReactElement {
       />
       <Box className={classes.specEditorText}>
         <Typography variant="lgBold" color={theme.palette.primary.main}>
-          {specification?.title}
+          {spec.title}
         </Typography>
         <Box className={classes.specEditorDescription}>
           <Typography variant="md">

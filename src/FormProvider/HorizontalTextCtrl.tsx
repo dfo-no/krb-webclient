@@ -7,11 +7,13 @@ import DFOInput from '../components/DFOInput/DFOInput';
 interface IProps {
   name: string;
   placeholder: string;
+  type?: string;
 }
 
 const HorizontalTextCtrl = ({
   name,
-  placeholder = ''
+  placeholder = '',
+  type = 'text'
 }: IProps): React.ReactElement => {
   const {
     formState: { errors }
@@ -25,6 +27,7 @@ const HorizontalTextCtrl = ({
           <DFOInput
             {...field}
             placeholder={placeholder}
+            type={type}
             error={!!get(errors, name)}
             disableUnderline
           />

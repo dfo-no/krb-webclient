@@ -8,7 +8,10 @@ export interface ITag extends IBaseModel {
 }
 
 export const BaseTagSchema = CustomJoi.object().keys({
-  id: CustomJoi.string().length(36).required(),
+  id: CustomJoi.string()
+    .guid({ version: ['uuidv4'] })
+    .length(36)
+    .required(),
   title: CustomJoi.string().allow('').required(),
   description: CustomJoi.string().allow(''),
   parent: CustomJoi.alternatives([
@@ -16,8 +19,16 @@ export const BaseTagSchema = CustomJoi.object().keys({
     CustomJoi.string().valid('')
   ]),
   type: CustomJoi.string().equal(ModelType.tag).required(),
-  sourceOriginal: CustomJoi.string().required(),
-  sourceRel: CustomJoi.string().allow(null).required()
+  sourceOriginal: CustomJoi.string()
+    .guid({ version: ['uuidv4'] })
+    .length(36)
+    .allow(null)
+    .required(),
+  sourceRel: CustomJoi.string()
+    .guid({ version: ['uuidv4'] })
+    .length(36)
+    .allow(null)
+    .required()
 });
 
 export const PostTagSchema = BaseTagSchema.keys({

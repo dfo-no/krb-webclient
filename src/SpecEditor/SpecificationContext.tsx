@@ -5,27 +5,23 @@ import React, {
   useContext,
   useState
 } from 'react';
-import { ISpecification } from '../Nexus/entities/ISpecification';
-import { ISpecificationProduct } from '../models/ISpecificationProduct';
 
 interface ISpecificationContext {
-  specification: ISpecification | null;
-  setSpecification: Dispatch<SetStateAction<ISpecification | null>>;
-  specificationProduct: ISpecificationProduct | null;
-  setSpecificationProduct: Dispatch<
-    SetStateAction<ISpecificationProduct | null>
-  >;
+  specificationProductIndex: number;
+  setSpecificationProductIndex: Dispatch<SetStateAction<number>>;
+  genericRequirement: boolean;
+  setGenericRequirement: Dispatch<SetStateAction<boolean>>;
   create: boolean;
   setCreate: Dispatch<SetStateAction<boolean>>;
 }
 
 const initialContext: ISpecificationContext = {
-  specification: null,
-  setSpecification: function (): void {
+  specificationProductIndex: -1,
+  setSpecificationProductIndex: function (): void {
     throw new Error('Function not implemented.');
   },
-  specificationProduct: null,
-  setSpecificationProduct: function (): void {
+  genericRequirement: false,
+  setGenericRequirement: function (): void {
     throw new Error('Function not implemented.');
   },
   create: false,
@@ -44,20 +40,18 @@ interface IProps {
 export const SpecificationProvider = ({
   children
 }: IProps): React.ReactElement => {
-  const [specification, setSpecification] = useState<ISpecification | null>(
-    null
-  );
-  const [specificationProduct, setSpecificationProduct] =
-    useState<ISpecificationProduct | null>(null);
+  const [specificationProductIndex, setSpecificationProductIndex] =
+    useState(-1);
+  const [genericRequirement, setGenericRequirement] = useState(false);
   const [create, setCreate] = useState(false);
 
   return (
     <SpecificationContext.Provider
       value={{
-        specification,
-        setSpecification,
-        specificationProduct,
-        setSpecificationProduct,
+        specificationProductIndex,
+        setSpecificationProductIndex,
+        genericRequirement,
+        setGenericRequirement,
         create,
         setCreate
       }}

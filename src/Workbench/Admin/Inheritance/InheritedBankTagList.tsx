@@ -5,6 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { PAGE_SIZE } from '../../../common/Constants';
 import DFOSearchBar from '../../../components/DFOSearchBar/DFOSearchBar';
 import { IInheritedBank } from '../../../models/IInheritedBank';
+import { IBaseModel } from '../../../Nexus/entities/IBaseModel';
 import { ITag } from '../../../Nexus/entities/ITag';
 import { useGetBanksQuery } from '../../../store/api/bankApi';
 import { useAppSelector } from '../../../store/hooks';
@@ -64,8 +65,13 @@ export default function InheritedBankTagList({
     return <></>;
   }
 
-  const tagsCallback = () => {};
-  const tagsSearchFunction = () => {};
+  const tagsSearchFunction = (searchString: string, list: IBaseModel[]) => {
+    return list;
+  };
+
+  const tagsCallback = (list: IBaseModel[]) => {
+    return list;
+  };
 
   const renderList = () => {
     return (

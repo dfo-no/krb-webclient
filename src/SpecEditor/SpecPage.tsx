@@ -13,6 +13,7 @@ import LoaderSpinner from '../common/LoaderSpinner';
 import DFODialog from '../components/DFODialog/DFODialog';
 import DFOSearchBar from '../components/DFOSearchBar/DFOSearchBar';
 import { IBank } from '../Nexus/entities/IBank';
+import { IBaseModel } from '../Nexus/entities/IBaseModel';
 import SpecificationStoreService from '../Nexus/services/SpecificationStoreService';
 import { useGetBanksQuery } from '../store/api/bankApi';
 import theme from '../theme';
@@ -22,7 +23,8 @@ import {
   SearchFieldContainer
 } from '../Workbench/Components/SearchContainer';
 import NewSpecForm from './NewSpecForm';
-import { useSpecificationState } from './SpecificationContext';
+import { useAppDispatch } from '../store/hooks';
+import { setSpecification } from '../store/reducers/spesification-reducer';
 
 const useStyles = makeStyles({
   projectsContainer: {
@@ -119,7 +121,7 @@ const useStyles = makeStyles({
 export default function SpecPage(): React.ReactElement {
   const { t } = useTranslation();
   const classes = useStyles();
-  const { specification, setSpecification } = useSpecificationState();
+  const dispatch = useAppDispatch();
   const [latestPublishedBanks, setLatestPublishedBanks] = useState<IBank[]>([]);
 
   const { data: banks, isLoading } = useGetBanksQuery({
@@ -128,6 +130,13 @@ export default function SpecPage(): React.ReactElement {
     fieldName: 'title',
     order: 'DESC'
   });
+
+  const searchFunction = (searchString: string, list: IBaseModel[]) => {
+    return list;
+  };
+  const callback = (list: IBaseModel[]) => {
+    return list;
+  };
 
   useEffect(() => {
     if (banks) {
@@ -165,8 +174,8 @@ export default function SpecPage(): React.ReactElement {
   }
 
   const openProjectModal = (bank: IBank) => {
-    const spec = SpecificationStoreService.getSpecificationFromBank(bank);
-    setSpecification(spec);
+    const newSpec = SpecificationStoreService.getSpecificationFromBank(bank);
+    dispatch(setSpecification(newSpec));
     setOpen(true);
   };
 
@@ -223,8 +232,8 @@ export default function SpecPage(): React.ReactElement {
                 <DFOSearchBar
                   list={[]}
                   placeholder={t('search for banks')}
-                  callback={() => {}}
-                  searchFunction={() => {}}
+                  callback={callback}
+                  searchFunction={searchFunction}
                 />
               </SearchFieldContainer>
             </SearchContainer>
@@ -244,19 +253,11 @@ export default function SpecPage(): React.ReactElement {
           </Box>
         </Box>
       )}
-
-      {specification && (
-        <DFODialog
-          isOpen={isOpen}
-          handleClose={() => setOpen(false)}
-          children={
-            <NewSpecForm
-              specification={specification}
-              handleClose={() => setOpen(false)}
-            />
-          }
-        />
-      )}
+      <DFODialog
+        isOpen={isOpen}
+        handleClose={() => setOpen(false)}
+        children={<NewSpecForm handleClose={() => setOpen(false)} />}
+      />
     </Box>
   );
 }

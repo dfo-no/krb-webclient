@@ -12,13 +12,24 @@ export interface ICodelist extends IBaseModel {
 }
 
 export const CodelistSchema = CustomJoi.object().keys({
-  id: CustomJoi.string().length(36).required(),
+  id: CustomJoi.string()
+    .guid({ version: ['uuidv4'] })
+    .length(36)
+    .required(),
   title: CustomJoi.string().required(),
   description: CustomJoi.string().allow(null, '').required(),
   codes: CustomJoi.array().items(BaseCodeSchema).required(),
   type: CustomJoi.string().equal(ModelType.codelist).required(),
-  sourceOriginal: CustomJoi.string().required(),
-  sourceRel: CustomJoi.string().allow(null).required()
+  sourceOriginal: CustomJoi.string()
+    .guid({ version: ['uuidv4'] })
+    .length(36)
+    .allow(null)
+    .required(),
+  sourceRel: CustomJoi.string()
+    .guid({ version: ['uuidv4'] })
+    .length(36)
+    .allow(null)
+    .required()
 });
 
 export const PostCodelistSchema = CodelistSchema.keys({
