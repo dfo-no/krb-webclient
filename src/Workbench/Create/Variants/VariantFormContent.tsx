@@ -39,16 +39,20 @@ const VariantFormContent = ({ control }: IProps) => {
         label={t('Description')}
         placeholder=""
       />
-      <TextAreaCtrl
-        name={`requirementText`}
-        label={t('requirementText')}
-        placeholder=""
-      />
-      <TextAreaCtrl
-        name={`instruction`}
-        label={t('instruction')}
-        placeholder=""
-      />
+      <Box sx={{ marginBottom: 4 }}>
+        <TextAreaCtrl
+          name={`requirementText`}
+          label={t('requirementText')}
+          placeholder=""
+        />
+      </Box>
+      <Box sx={{ marginBottom: 4 }}>
+        <TextAreaCtrl
+          name={`instruction`}
+          label={t('instruction')}
+          placeholder=""
+        />
+      </Box>
       <Typography variant={'smBold'} sx={{ marginBottom: 2 }}>
         {t('type variant')}
       </Typography>
