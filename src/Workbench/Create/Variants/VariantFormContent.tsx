@@ -34,11 +34,13 @@ const VariantFormContent = ({ control }: IProps) => {
   return (
     <>
       <Divider sx={{ marginBottom: 2 }} />
-      <VerticalTextCtrl
-        name={`description`}
-        label={t('Description')}
-        placeholder=""
-      />
+      <Box sx={{ marginBottom: 4 }}>
+        <VerticalTextCtrl
+          name={`description`}
+          label={t('Description')}
+          placeholder=""
+        />
+      </Box>
       <Box sx={{ marginBottom: 4 }}>
         <TextAreaCtrl
           name={`requirementText`}

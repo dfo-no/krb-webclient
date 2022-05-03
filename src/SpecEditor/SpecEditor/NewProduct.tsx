@@ -121,7 +121,7 @@ export default function NewProduct(): React.ReactElement {
               placeholder={t('quantity')}
             />
             <Divider sx={{ marginBottom: 4 }} />
-            <Typography variant={'smBold'}>
+            <Typography variant={'smBold'} color={theme.palette.primary.main}>
               {t('Choose a product type from the requirement set')}{' '}
               <i>{spec.bank.title}</i> {t('that fits the product best')}
             </Typography>
