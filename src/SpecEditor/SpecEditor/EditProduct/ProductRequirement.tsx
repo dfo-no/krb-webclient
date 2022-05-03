@@ -26,6 +26,8 @@ import Nexus from '../../../Nexus/Nexus';
 import Button from '@mui/material/Button';
 import { useTranslation } from 'react-i18next';
 import ErrorSummary from '../../../Form/ErrorSummary';
+import Divider from '@mui/material/Divider';
+import ChosenConfiguration from './ChosenConfiguration';
 
 const useStyles = makeStyles({
   card: {
@@ -184,7 +186,7 @@ export default function ProductRequirement({
         <Box className={`${classes.card} ${classes.selected}`}>
           <Box sx={{ display: 'flex', flexDirection: 'row' }}>
             <DFOCheckbox value={true} onClick={uncheckRequirement} />
-            <Typography variant="lgBold" sx={{ marginLeft: 1 }}>
+            <Typography variant={'lgBold'} sx={{ marginLeft: 1 }}>
               {requirement.title}
             </Typography>
             <FormIconButton
@@ -193,6 +195,20 @@ export default function ProductRequirement({
             >
               <EditIcon />
             </FormIconButton>
+          </Box>
+          <Divider
+            color={theme.palette.silver.main}
+            sx={{ marginBottom: 0.5 }}
+          />
+          <Box>
+            <Typography
+              variant={'smBold'}
+              color={theme.palette.primary.main}
+              sx={{ marginRight: 1 }}
+            >
+              {t('Chosen')}
+            </Typography>
+            <ChosenConfiguration requirement={requirement} />
           </Box>
         </Box>
       )}
