@@ -18,9 +18,10 @@ import {
 } from '../../models/ISpecificationProduct';
 import SelectionSingularCtrl from '../../FormProvider/SelectionSingularCtrl';
 import NeedList from './NeedList';
-import ErrorSummary from '../../Form/ErrorSummary';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { addProduct } from '../../store/reducers/spesification-reducer';
+import { ScrollableContainer } from '../../Workbench/Components/ScrollableContainer';
+import { useFormStyles } from '../../Workbench/Components/Form/FormStyles';
 
 const useStyles = makeStyles({
   newProduct: {
@@ -44,17 +45,15 @@ const useStyles = makeStyles({
     display: 'flex'
   },
   mainContainer: {
-    display: 'flex',
-    flexDirection: 'column',
-    paddingTop: 50,
-    paddingBottom: 60,
+    paddingTop: 32,
+    paddingBottom: 32,
     margin: '0 auto',
     width: '90%',
     backgroundColor: theme.palette.white.main,
     padding: 20
   },
   productTypeContainer: {
-    marginTop: 23
+    marginTop: 8
   },
   saveButtonContainer: {
     display: 'flex',
@@ -71,6 +70,7 @@ export default function NewProduct(): React.ReactElement {
   const { t } = useTranslation();
   const nexus = Nexus.getInstance();
   const { spec } = useAppSelector((state) => state.specification);
+  const formStyles = useFormStyles();
   const dispatch = useAppDispatch();
   const { setSpecificationProductIndex, setGenericRequirement, setCreate } =
     useSpecificationState();
@@ -107,50 +107,64 @@ export default function NewProduct(): React.ReactElement {
     <Box className={classes.newProduct}>
       <FormProvider {...methods}>
         <form
+          className={formStyles.singlePageForm}
           onSubmit={methods.handleSubmit(onSubmit)}
           autoComplete="off"
           noValidate
         >
-          <NewProductHeader />
-          <Box className={classes.mainContainer}>
-            <VerticalTextCtrl
-              name="amount"
-              label={t(
-                'how many of this product do you need in this procurement'
-              )}
-              placeholder={t('quantity')}
-            />
-            <Divider sx={{ marginBottom: 4 }} />
-            <Typography variant={'smBold'} color={theme.palette.primary.main}>
-              {t('Choose a product type from the requirement set')}{' '}
-              <i>{spec.bank.title}</i> {t('that fits the product best')}
-            </Typography>
-            <Box className={classes.productTypeContainer}>
-              {spec.bank.products && (
-                <SelectionSingularCtrl
-                  name={'originProduct'}
-                  initValue={spec.bank.products[0]}
-                  saveAsString={false}
-                  parentableItems={spec.bank.products}
-                  postChange={(selection: Parentable<IProduct>) => {
-                    setProduct(selection);
-                  }}
+          <Box
+            sx={{
+              display: 'flex',
+              flexDirection: 'column',
+              width: '100%',
+              height: '100%'
+            }}
+          >
+            <NewProductHeader />
+            <ScrollableContainer>
+              <Box className={classes.mainContainer}>
+                <VerticalTextCtrl
+                  name="amount"
+                  label={t(
+                    'how many of this product do you need in this procurement'
+                  )}
+                  placeholder={t('quantity')}
                 />
-              )}
-            </Box>
-            <Box className={classes.saveButtonContainer}>
-              <Button
-                className={classes.saveButton}
-                type="submit"
-                aria-label="save"
-                variant="save"
-              >
-                {t('save')}
-              </Button>
-            </Box>
-            {product && <NeedList product={product} />}
+                <Divider sx={{ marginBottom: 4 }} />
+                <Typography
+                  variant={'smBold'}
+                  color={theme.palette.primary.main}
+                >
+                  {t('Choose a product type from the requirement set')}{' '}
+                  <i>{spec.bank.title}</i> {t('that fits the product best')}
+                </Typography>
+                <Box className={classes.productTypeContainer}>
+                  {spec.bank.products && (
+                    <SelectionSingularCtrl
+                      name={'originProduct'}
+                      initValue={spec.bank.products[0]}
+                      saveAsString={false}
+                      parentableItems={spec.bank.products}
+                      postChange={(selection: Parentable<IProduct>) => {
+                        setProduct(selection);
+                      }}
+                    />
+                  )}
+                </Box>
+                <Box className={classes.saveButtonContainer}>
+                  <Button
+                    className={classes.saveButton}
+                    type="submit"
+                    aria-label="save"
+                    variant="save"
+                  >
+                    {t('save')}
+                  </Button>
+                </Box>
+                {product && <NeedList product={product} />}
+              </Box>
+            </ScrollableContainer>
           </Box>
-          <ErrorSummary errors={methods.formState.errors} />
         </form>
       </FormProvider>
     </Box>
