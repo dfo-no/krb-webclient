@@ -1,5 +1,4 @@
 import React from 'react';
-import { useTranslation } from 'react-i18next';
 import { v4 as uuidv4 } from 'uuid';
 import { IAlert } from '../../../models/IAlert';
 import { Parentable } from '../../../models/Parentable';
@@ -10,13 +9,8 @@ import { addAlert } from '../../../store/reducers/alert-reducer';
 import { INeed } from '../../../Nexus/entities/INeed';
 import useProjectMutations from '../../../store/api/ProjectMutations';
 import { useParams } from 'react-router-dom';
-import { FormDeleteBox } from '../../../components/DeleteFrame/FormDeleteBox';
-import { FormTextButton } from '../../../components/DeleteFrame/FormTextButton';
-import theme from '../../../theme';
 import { IRouteParams } from '../../Models/IRouteParams';
 import { Box } from '@mui/material/';
-import { FormCantDeleteBox } from '../../../components/DeleteFrame/FormCantDeleteBox';
-import Typography from '@mui/material/Typography';
 import { useSelectState } from '../SelectContext';
 import { IVariant } from '../../../Nexus/entities/IVariant';
 import DeleteFrame from '../../../components/DeleteFrame/DeleteFrame';
@@ -41,7 +35,6 @@ function DeleteVariant({
   const { data: project } = useGetProjectQuery(projectId);
 
   const dispatch = useAppDispatch();
-  const { t } = useTranslation();
   const { deleteVariant } = useProjectMutations();
   const { deleteMode } = useSelectState();
 

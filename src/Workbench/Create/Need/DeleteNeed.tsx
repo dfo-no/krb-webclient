@@ -5,14 +5,9 @@ import { IAlert } from '../../../models/IAlert';
 import { INeed } from '../../../Nexus/entities/INeed';
 import { useAppDispatch } from '../../../store/hooks';
 import { addAlert } from '../../../store/reducers/alert-reducer';
-import theme from '../../../theme';
-import { FormDeleteBox } from '../../../components/DeleteFrame/FormDeleteBox';
-import { FormTextButton } from '../../../components/DeleteFrame/FormTextButton';
 import useProjectMutations from '../../../store/api/ProjectMutations';
 import { Box } from '@mui/material/';
 import { Parentable } from '../../../models/Parentable';
-import { FormCantDeleteBox } from '../../../components/DeleteFrame/FormCantDeleteBox';
-import Typography from '@mui/material/Typography';
 import { useSelectState } from '../SelectContext';
 import DeleteFrame from '../../../components/DeleteFrame/DeleteFrame';
 
