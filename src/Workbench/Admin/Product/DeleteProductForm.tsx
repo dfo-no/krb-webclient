@@ -1,5 +1,4 @@
 import { joiResolver } from '@hookform/resolvers/joi';
-import Typography from '@mui/material/Typography';
 import React from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
@@ -13,12 +12,9 @@ import { useGetProjectQuery } from '../../../store/api/bankApi';
 import useProjectMutations from '../../../store/api/ProjectMutations';
 import { useAppDispatch } from '../../../store/hooks';
 import { addAlert } from '../../../store/reducers/alert-reducer';
-import theme from '../../../theme';
 import { useEditableState } from '../../Components/EditableContext';
-import { FormCantDeleteBox } from '../../Components/Form/FormCantDeleteBox';
-import { FormDeleteBox } from '../../Components/Form/FormDeleteBox';
-import { FormTextButton } from '../../Components/Form/FormTextButton';
 import { IRouteParams } from '../../Models/IRouteParams';
+import DeleteFrame from '../../../components/DeleteFrame/DeleteFrame';
 
 interface IProps {
   children: React.ReactNode;
@@ -55,6 +51,13 @@ export default function DeleteProductForm({
   const hasChildren = Utils.checkIfHasChildren(product, project.products);
   const isInUse = Utils.productUsedInVariants(product, project);
 
+  const infoText =
+    hasChildren || isInUse
+      ? `${t('cant delete this product')} ${
+          isInUse ? t('product has connected requirements') : ''
+        } ${hasChildren ? t('product has children') : ''}`
+      : '';
+
   async function onSubmit(put: Parentable<IProduct>) {
     await deleteProduct(put).then(() => {
       const alert: IAlert = {
@@ -74,42 +77,12 @@ export default function DeleteProductForm({
         autoComplete="off"
         noValidate
       >
-        {!hasChildren && !isInUse && (
-          <FormDeleteBox>
-            <FormTextButton
-              hoverColor={theme.palette.errorRed.main}
-              type="submit"
-              aria-label="delete"
-            >
-              {t('delete')}
-            </FormTextButton>
-            <FormTextButton
-              hoverColor={theme.palette.gray400.main}
-              onClick={() => handleClose()}
-              aria-label="close"
-            >
-              {t('cancel')}
-            </FormTextButton>
-            {children}
-          </FormDeleteBox>
-        )}
-        {(hasChildren || isInUse) && (
-          <FormCantDeleteBox>
-            <Typography variant="smBold" sx={{ paddingLeft: 1 }}>
-              {t('cant delete this product')}{' '}
-              {isInUse ? t('product has connected requirements') : ''}{' '}
-              {hasChildren ? t('product has children') : ''}
-            </Typography>
-            <FormTextButton
-              hoverColor={theme.palette.gray400.main}
-              onClick={() => handleClose()}
-              aria-label="close"
-            >
-              {t('cancel')}
-            </FormTextButton>
-            {children}
-          </FormCantDeleteBox>
-        )}
+        <DeleteFrame
+          children={children}
+          canBeDeleted={!hasChildren && !isInUse}
+          infoText={infoText}
+          handleClose={handleClose}
+        />
       </form>
     </FormProvider>
   );

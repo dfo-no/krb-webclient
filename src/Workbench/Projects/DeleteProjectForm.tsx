@@ -1,7 +1,6 @@
 import { joiResolver } from '@hookform/resolvers/joi';
 import React from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
-import { useTranslation } from 'react-i18next';
 import { IAlert } from '../../models/IAlert';
 import { BaseBankSchema, IBank } from '../../Nexus/entities/IBank';
 import DateService from '../../Nexus/services/DateService';
@@ -9,10 +8,8 @@ import UuidService from '../../Nexus/services/UuidService';
 import { usePutProjectMutation } from '../../store/api/bankApi';
 import { useAppDispatch } from '../../store/hooks';
 import { addAlert } from '../../store/reducers/alert-reducer';
-import theme from '../../theme';
 import { useEditableState } from '../Components/EditableContext';
-import { FormDeleteBox } from '../Components/Form/FormDeleteBox';
-import { FormTextButton } from '../Components/Form/FormTextButton';
+import DeleteFrame from '../../components/DeleteFrame/DeleteFrame';
 
 interface IProps {
   children: React.ReactElement;
@@ -27,7 +24,6 @@ export default function DeleteProjectForm({
 }: IProps): React.ReactElement {
   const [putProject] = usePutProjectMutation();
   const dispatch = useAppDispatch();
-  const { t } = useTranslation();
   const { deleteMode } = useEditableState();
   const uuidService = new UuidService();
 
@@ -60,23 +56,12 @@ export default function DeleteProjectForm({
         autoComplete="off"
         noValidate
       >
-        <FormDeleteBox>
-          <FormTextButton
-            hoverColor={theme.palette.errorRed.main}
-            type="submit"
-            aria-label="delete"
-          >
-            {t('delete')}
-          </FormTextButton>
-          <FormTextButton
-            hoverColor={theme.palette.gray400.main}
-            onClick={() => handleClose()}
-            aria-label="close"
-          >
-            {t('cancel')}
-          </FormTextButton>
-          {children}
-        </FormDeleteBox>
+        <DeleteFrame
+          children={children}
+          canBeDeleted={true}
+          infoText={''}
+          handleClose={handleClose}
+        />
       </form>
     </FormProvider>
   );

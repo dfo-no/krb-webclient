@@ -10,14 +10,10 @@ import { useGetProjectQuery } from '../../../store/api/bankApi';
 import useProjectMutations from '../../../store/api/ProjectMutations';
 import { useAppDispatch } from '../../../store/hooks';
 import { addAlert } from '../../../store/reducers/alert-reducer';
-import theme from '../../../theme';
 import { useEditableState } from '../../Components/EditableContext';
-import { FormDeleteBox } from '../../Components/Form/FormDeleteBox';
-import { FormTextButton } from '../../Components/Form/FormTextButton';
 import { IRouteParams } from '../../Models/IRouteParams';
 import Utils from '../../../common/Utils';
-import { FormCantDeleteBox } from '../../Components/Form/FormCantDeleteBox';
-import Typography from '@mui/material/Typography';
+import DeleteFrame from '../../../components/DeleteFrame/DeleteFrame';
 
 interface IProps {
   children: React.ReactNode;
@@ -53,6 +49,12 @@ export default function DeleteCodelistForm({
 
   const isInUse = Utils.codelistUsedInVariants(codelist, project);
 
+  const infoText = isInUse
+    ? `${t('cant delete this codelist')} ${t(
+        'codelist has connected requirements'
+      )}`
+    : '';
+
   async function onSubmit(put: ICodelist) {
     await deleteCodelist(put).then(() => {
       const alert: IAlert = {
@@ -72,41 +74,12 @@ export default function DeleteCodelistForm({
         autoComplete="off"
         noValidate
       >
-        {!isInUse && (
-          <FormDeleteBox>
-            <FormTextButton
-              hoverColor={theme.palette.errorRed.main}
-              type="submit"
-              aria-label="delete"
-            >
-              {t('delete')}
-            </FormTextButton>
-            <FormTextButton
-              hoverColor={theme.palette.gray400.main}
-              onClick={() => handleClose(null)}
-              aria-label="close"
-            >
-              {t('cancel')}
-            </FormTextButton>
-            {children}
-          </FormDeleteBox>
-        )}
-        {isInUse && (
-          <FormCantDeleteBox>
-            <Typography variant="smBold" sx={{ paddingLeft: 1 }}>
-              {t('cant delete this codelist')}{' '}
-              {isInUse ? t('codelist has connected requirements') : ''}
-            </Typography>
-            <FormTextButton
-              hoverColor={theme.palette.gray400.main}
-              onClick={() => handleClose(null)}
-              aria-label="close"
-            >
-              {t('cancel')}
-            </FormTextButton>
-            {children}
-          </FormCantDeleteBox>
-        )}
+        <DeleteFrame
+          children={children}
+          canBeDeleted={!isInUse}
+          infoText={infoText}
+          handleClose={() => handleClose(null)}
+        />
       </form>
     </FormProvider>
   );

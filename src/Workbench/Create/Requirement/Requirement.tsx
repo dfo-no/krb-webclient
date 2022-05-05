@@ -20,8 +20,7 @@ const useStyles = makeStyles({
     display: 'flex',
     flexDirection: 'column',
     height: '100%',
-    width: '100%',
-    marginBottom: 32
+    width: '100%'
   },
   active: {
     border: `2px solid ${theme.palette.secondary.main}`,
