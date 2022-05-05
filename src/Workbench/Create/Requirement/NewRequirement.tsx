@@ -6,6 +6,7 @@ import { Parentable } from '../../../models/Parentable';
 import { INeed } from '../../../Nexus/entities/INeed';
 import NewRequirementForm from './NewRequirementForm';
 import { useSelectState } from '../SelectContext';
+import { t } from 'i18next';
 interface IProps {
   need: Parentable<INeed>;
 }
@@ -29,7 +30,7 @@ const NewRequirement = ({ need }: IProps) => {
       }}
     >
       <Button variant="primary" onClick={() => setNewOpen(true)}>
-        Legg til nytt krav
+        {t('add new requirement')}
       </Button>
       <Dialog
         isOpen={isNewOpen}
