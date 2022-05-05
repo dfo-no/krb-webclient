@@ -5,6 +5,6 @@ export const DFOHeaderContentBox = styled(Box)(() => ({
   flexDirection: 'column',
   width: '100%',
   padding: 15,
-  paddingLeft: 70,
-  paddingRight: 70
+  paddingLeft: 48,
+  paddingRight: 48
 }));

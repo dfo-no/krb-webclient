@@ -1,5 +1,4 @@
 import { joiResolver } from '@hookform/resolvers/joi';
-import Button from '@mui/material/Button';
 import React from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
@@ -17,8 +16,15 @@ import Nexus from '../../../Nexus/Nexus';
 import { useParams } from 'react-router-dom';
 import { IRouteParams } from '../../Models/IRouteParams';
 import useProjectMutations from '../../../store/api/ProjectMutations';
-import { ModalBox, ModalButtonsBox } from '../../Components/ModalBox';
+import {
+  ModalBox,
+  ModalButton,
+  ModalButtonsBox,
+  ModalFieldsBox
+} from '../../Components/ModalBox';
 import VerticalTextCtrl from '../../../FormProvider/VerticalTextCtrl';
+import { Typography } from '@mui/material';
+import theme from '../../../theme';
 
 interface IProps {
   need: Parentable<INeed>;
@@ -66,14 +72,23 @@ function NewRequirementForm({ need, handleClose }: IProps): React.ReactElement {
         noValidate
       >
         <ModalBox>
-          <VerticalTextCtrl name="title" label={t('Title')} placeholder="" />
+          <Typography variant="lg" color={theme.palette.primary.main}>
+            {t('create requirement')}
+          </Typography>
+          <ModalFieldsBox>
+            <VerticalTextCtrl
+              name="title"
+              label={t('Title')}
+              placeholder="Tittel på behov"
+            />
+          </ModalFieldsBox>
           <ModalButtonsBox>
-            <Button variant="primary" type="submit">
-              {t('save')}
-            </Button>
-            <Button variant="warning" onClick={() => handleClose('')}>
+            <ModalButton variant="cancel" onClick={() => handleClose('')}>
               {t('cancel')}
-            </Button>
+            </ModalButton>
+            <ModalButton variant="save" type="submit">
+              {t('save')}
+            </ModalButton>
           </ModalButtonsBox>
         </ModalBox>
       </form>

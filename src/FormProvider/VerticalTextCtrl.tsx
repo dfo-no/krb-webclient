@@ -2,7 +2,7 @@ import { FormControl, FormLabel, Typography } from '@mui/material';
 import { get } from 'lodash';
 import React from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
-import DFOInput from '../components/DFOInput/DFOInput';
+import DFOInput from '../components/DFOTextField/DFOTextField';
 import theme from '../theme';
 
 interface IProps {
@@ -27,7 +27,7 @@ const VerticalTextCtrl = ({
       <Typography
         variant={'smBold'}
         color={theme.palette.primary.main}
-        sx={{ marginBottom: 2 }}
+        sx={{ marginBottom: 1 }}
       >
         {label}
       </Typography>
@@ -38,7 +38,6 @@ const VerticalTextCtrl = ({
             {...field}
             placeholder={placeholder}
             type={type}
-            sx={{ marginBottom: 4 }}
             disableUnderline
           />
         )}

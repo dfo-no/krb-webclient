@@ -140,7 +140,7 @@ const CreateSideBar = (): React.ReactElement => {
   };
 
   return (
-    <ScrollableContainer>
+    <ScrollableContainer sx={{ marginBottom: 5 }}>
       <NestableHierarcy
         inputlist={needs}
         className={classes.nestableCustom}

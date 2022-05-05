@@ -19,7 +19,7 @@ const useStyles = makeStyles({
     backgroundColor: theme.palette.gray200.main,
     width: '100%',
     padding: 30,
-    marginTop: 16
+    marginTop: 8
   },
   topContainer: {
     display: 'flex',

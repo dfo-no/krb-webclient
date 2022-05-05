@@ -1,5 +1,4 @@
 import { joiResolver } from '@hookform/resolvers/joi';
-import Button from '@mui/material/Button';
 import React from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
@@ -14,7 +13,14 @@ import { addAlert } from '../../../store/reducers/alert-reducer';
 import useProjectMutations from '../../../store/api/ProjectMutations';
 import { useParams } from 'react-router-dom';
 import { IRouteParams } from '../../Models/IRouteParams';
-import { ModalBox, ModalButtonsBox } from '../../Components/ModalBox';
+import {
+  ModalBox,
+  ModalButton,
+  ModalButtonsBox,
+  ModalFieldsBox
+} from '../../Components/ModalBox';
+import { Typography } from '@mui/material';
+import theme from '../../../theme';
 
 interface IProps {
   handleClose: (newNeed: Parentable<INeed> | null) => void;
@@ -58,19 +64,28 @@ function NewNeedForm({ handleClose }: IProps): React.ReactElement {
         noValidate
       >
         <ModalBox>
-          <VerticalTextCtrl name="title" label={t('Title')} placeholder={''} />
-          <VerticalTextCtrl
-            name="description"
-            label={t('Description')}
-            placeholder={''}
-          />
+          <Typography variant="lg" color={theme.palette.primary.main}>
+            {t('create need')}
+          </Typography>
+          <ModalFieldsBox>
+            <VerticalTextCtrl
+              name="title"
+              label={t('Title')}
+              placeholder={''}
+            />
+            <VerticalTextCtrl
+              name="description"
+              label={t('Description')}
+              placeholder={''}
+            />
+          </ModalFieldsBox>
           <ModalButtonsBox>
-            <Button variant="primary" type="submit">
-              {t('save')}
-            </Button>
-            <Button variant="warning" onClick={() => handleClose(null)}>
+            <ModalButton variant="cancel" onClick={() => handleClose(null)}>
               {t('cancel')}
-            </Button>
+            </ModalButton>
+            <ModalButton variant="save" type="submit">
+              {t('save')}
+            </ModalButton>
           </ModalButtonsBox>
         </ModalBox>
       </form>

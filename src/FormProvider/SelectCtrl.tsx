@@ -6,7 +6,7 @@ import Typography from '@mui/material/Typography';
 import { get } from 'lodash';
 import React from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
-import DFOTextField from '../components/DFOInput/DFOInput';
+import DFOTextField from '../components/DFOTextField/DFOTextField';
 import { IOption } from '../Nexus/entities/IOption';
 import theme from '../theme';
 

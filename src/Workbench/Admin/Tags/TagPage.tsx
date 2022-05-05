@@ -6,7 +6,6 @@ import LoaderSpinner from '../../../common/LoaderSpinner';
 import SearchUtils from '../../../common/SearchUtils';
 import DFOSearchBar from '../../../components/DFOSearchBar/DFOSearchBar';
 import { Parentable } from '../../../models/Parentable';
-import { IProduct } from '../../../Nexus/entities/IProduct';
 import { ITag } from '../../../Nexus/entities/ITag';
 import { useGetProjectQuery } from '../../../store/api/bankApi';
 import useProjectMutations from '../../../store/api/ProjectMutations';

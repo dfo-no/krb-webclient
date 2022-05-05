@@ -14,7 +14,6 @@ import SelectionSingularCtrl from '../../../FormProvider/SelectionSingularCtrl';
 import { useParams } from 'react-router-dom';
 import { IRouteParams } from '../../Models/IRouteParams';
 import { useGetProjectQuery } from '../../../store/api/bankApi';
-import React from 'react';
 import CheckboxCtrl from '../../../FormProvider/CheckboxCtrl';
 
 const ConfigBox = styled(Box)(() => ({
