@@ -33,7 +33,9 @@ export default function InheritancePage(): React.ReactElement {
   const inheritanceSearch = (searchString: string, list: IBaseModel[]) => {
     return list;
   };
-  const searchFieldCallback = (list: IBaseModel[]) => {};
+  const searchFieldCallback = (list: IBaseModel[]) => {
+    return list;
+  };
 
   const renderInheritedBanks = (inheritedBanksList: IInheritedBank[]) => {
     return inheritedBanksList.map((bank: IInheritedBank) => {

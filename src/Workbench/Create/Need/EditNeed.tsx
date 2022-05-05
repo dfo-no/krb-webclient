@@ -6,14 +6,12 @@ import { INeed } from '../../../Nexus/entities/INeed';
 import EditNeedForm from './EditNeedForm';
 import { DFOCardHeaderIconButton } from '../../../components/DFOCard/DFOCardHeaderIconButton';
 import { useSelectState } from '../SelectContext';
-import { useTranslation } from 'react-i18next';
 
 interface IProps {
   need: Parentable<INeed>;
 }
 
 const EditNeed = ({ need }: IProps) => {
-  const { t } = useTranslation();
   const [isEditOpen, setEditOpen] = useState(false);
   const { setDeleteMode } = useSelectState();
 

@@ -15,10 +15,14 @@ import {
 } from '../../../models/IRequirementAnswer';
 import { useAppDispatch, useAppSelector } from '../../../store/hooks';
 import {
+  addAnswer,
   addProductAnswer,
   addProductRequirement,
+  addRequirement,
+  deleteAnswer,
   deleteProductAnswer,
-  removeProductRequirement
+  removeProductRequirement,
+  removeRequirement
 } from '../../../store/reducers/spesification-reducer';
 import { FormIconButton } from '../../../Workbench/Components/Form/FormIconButton';
 import EditIcon from '@mui/icons-material/Edit';
@@ -72,18 +76,27 @@ export default function ProductRequirement({
   const useVariant = useWatch({ name: 'variantId', control: methods.control });
 
   const onSubmit = async (put: IRequirementAnswer) => {
-    dispatch(
-      addProductAnswer({
-        answer: put,
-        productId: spec.products[specificationProductIndex].id
-      })
-    );
-    dispatch(
-      addProductRequirement({
-        requirement: requirement.id,
-        productId: spec.products[specificationProductIndex].id
-      })
-    );
+    if (specificationProductIndex === -1) {
+      dispatch(
+        addAnswer({
+          answer: put
+        })
+      );
+      dispatch(addRequirement(requirement.id));
+    } else {
+      dispatch(
+        addProductAnswer({
+          answer: put,
+          productId: spec.products[specificationProductIndex].id
+        })
+      );
+      dispatch(
+        addProductRequirement({
+          requirement: requirement.id,
+          productId: spec.products[specificationProductIndex].id
+        })
+      );
+    }
   };
 
   const onCancel = () => {
@@ -112,30 +125,50 @@ export default function ProductRequirement({
     return useVariant !== '';
   };
 
-  const uncheckRequirement = () => {
-    const product = spec.products[specificationProductIndex];
-    const answer = product.requirementAnswers.find(
-      (reqAnswer) => reqAnswer.requirement.id === requirement.id
-    );
-    if (answer) {
+  const unsaveRequirement = () => {
+    if (specificationProductIndex === -1) {
+      const answer = spec.requirementAnswers.find(
+        (reqAnswer) => reqAnswer.requirement.id === requirement.id
+      );
+      if (answer) {
+        dispatch(
+          deleteAnswer({
+            answer: answer.id
+          })
+        );
+      }
+      dispatch(removeRequirement(requirement.id));
+      return answer;
+    } else {
+      const product = spec.products[specificationProductIndex];
+      const answer = product.requirementAnswers.find(
+        (reqAnswer) => reqAnswer.requirement.id === requirement.id
+      );
+      if (answer) {
+        dispatch(
+          deleteProductAnswer({
+            answer: answer.id,
+            productId: product.id
+          })
+        );
+      }
       dispatch(
-        deleteProductAnswer({
-          answer: answer.id,
+        removeProductRequirement({
+          requirement: requirement.id,
           productId: product.id
         })
       );
+      return answer;
     }
-    dispatch(
-      removeProductRequirement({
-        requirement: requirement.id,
-        productId: product.id
-      })
-    );
-    return answer;
+  };
+
+  const uncheckRequirement = () => {
+    unsaveRequirement();
+    methods.reset();
   };
 
   const editRequirement = () => {
-    const answer = uncheckRequirement();
+    const answer = unsaveRequirement();
     if (answer) {
       methods.reset(answer);
       setOriginal(answer);

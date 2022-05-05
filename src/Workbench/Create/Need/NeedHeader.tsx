@@ -27,6 +27,7 @@ export default function NeedHeader(): React.ReactElement {
           sx={{
             display: 'flex',
             flexDirection: 'row',
+            paddingBottom: 0.5,
             borderBottom: `1px solid ${theme.palette.silver.main}`
           }}
         >

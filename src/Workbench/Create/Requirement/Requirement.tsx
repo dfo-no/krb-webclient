@@ -58,15 +58,13 @@ const Requirement = ({ requirementIndex }: IProps) => {
           sx={{
             display: 'flex',
             flexDirection: 'row',
-            width: '95%',
             margin: 2,
+            paddingRight: 1,
+            paddingBottom: 1,
             borderBottom: `1px solid ${theme.palette.silver.main}`
           }}
         >
-          <Typography
-            variant="mdBold"
-            sx={{ alignSelf: 'center', paddingLeft: 1 }}
-          >
+          <Typography variant="mdBold" sx={{ alignSelf: 'center' }}>
             {project.needs[needIndex].requirements[requirementIndex].title}
           </Typography>
           <EditRequirement
