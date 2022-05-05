@@ -8,14 +8,7 @@ import { Parentable } from '../../models/Parentable';
 const useStyles = makeStyles({
   needListItem: {
     backgroundColor: theme.palette.white.main,
-    borderBottom: `1px solid ${theme.palette.silver.main}`,
-    cursor: 'pointer',
-    '&:hover': {
-      background: theme.palette.lightBlue.main,
-      '& $needListItemText': {
-        color: theme.palette.white.main
-      }
-    }
+    borderBottom: `1px solid ${theme.palette.silver.main}`
   },
   needListItemTitle: {
     flexBasis: '50%',
