@@ -212,6 +212,13 @@ theme.components = {
         }
       }
     }
+  },
+  MuiChip: {
+    styleOverrides: {
+      root: {
+        height: '100%'
+      }
+    }
   }
 };
 
