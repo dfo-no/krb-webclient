@@ -119,11 +119,12 @@ const QuestionSpecificationSlider = ({ item }: IProps) => {
         <Typography variant={'smBold'}>Evaluering:</Typography>
       </Grid>
       {fields.map((scoreValue, id) => {
+        console.log(scoreValue);
         return (
           <Grid
             item
             container
-            key={id}
+            key={scoreValue.id}
             xs={20}
             columns={20}
             sx={{
