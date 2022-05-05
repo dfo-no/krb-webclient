@@ -96,6 +96,7 @@ const Variant = ({ variant, requirementIndex }: IProps) => {
           key={variant.id}
           onChange={accordionChange()}
           expanded={openVariants.some((id) => id === variant.id)}
+          elevation={0}
         >
           <AccordionSummary expandIcon={<ExpandMoreIcon />}>
             <Typography>{variant.description}</Typography>
