@@ -50,7 +50,7 @@ export default class SpecificationService {
     return {
       id: this.UuidService.generateId(),
       questionId: '',
-      weight: 1,
+      weight: 30,
       variantId: '',
       question: questionService.getQuestion(QuestionEnum.Q_TEXT),
       type: ModelType.requirementAnswer,

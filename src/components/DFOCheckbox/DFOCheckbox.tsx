@@ -123,6 +123,7 @@ export const DFOCheckbox = ({
       checkedIcon={<checkboxType.checkedIcon />}
       checked={value}
       onClick={onClick}
+      sx={{ alignSelf: 'center' }}
     />
   );
 };

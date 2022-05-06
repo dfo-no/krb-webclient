@@ -30,6 +30,7 @@ import Nexus from '../../../Nexus/Nexus';
 import Button from '@mui/material/Button';
 import { useTranslation } from 'react-i18next';
 import ErrorSummary from '../../../Form/ErrorSummary';
+import { WeightEnum } from '../../../models/WeightEnum';
 
 const useStyles = makeStyles({
   card: {
@@ -74,6 +75,7 @@ export default function ProductRequirement({
   });
 
   const useVariant = useWatch({ name: 'variantId', control: methods.control });
+  const useWeight = useWatch({ name: 'weight', control: methods.control });
 
   const onSubmit = async (put: IRequirementAnswer) => {
     if (specificationProductIndex === -1) {
@@ -217,13 +219,22 @@ export default function ProductRequirement({
         <Box className={`${classes.card} ${classes.selected}`}>
           <Box sx={{ display: 'flex', flexDirection: 'row' }}>
             <DFOCheckbox value={true} onClick={uncheckRequirement} />
-            <Typography variant="lgBold" sx={{ marginLeft: 1 }}>
+            <Typography variant={'lgBold'} sx={{ marginLeft: 1 }}>
               {requirement.title}
             </Typography>
-            <FormIconButton
-              sx={{ marginLeft: 'auto' }}
-              onClick={editRequirement}
+            <Typography
+              variant={'mdBold'}
+              sx={{
+                flex: '0 0 10%',
+                marginLeft: 'auto',
+                paddingLeft: 2,
+                marginRight: 2,
+                alignSelf: 'center'
+              }}
             >
+              {`${t('Weighting')}: ${t(WeightEnum[useWeight])}`}
+            </Typography>
+            <FormIconButton onClick={editRequirement}>
               <EditIcon />
             </FormIconButton>
           </Box>
