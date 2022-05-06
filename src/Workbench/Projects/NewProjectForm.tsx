@@ -58,7 +58,7 @@ const NewProjectForm = ({ handleClose }: IProps) => {
       >
         <ModalBox>
           <Typography variant="lg" color={theme.palette.primary.main}>
-            {t('create new bank')}
+            {t('create new project')}
           </Typography>
           <ModalFieldsBox>
             <VerticalTextCtrl
