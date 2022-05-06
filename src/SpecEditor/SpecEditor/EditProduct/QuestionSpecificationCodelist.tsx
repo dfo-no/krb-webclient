@@ -1,24 +1,18 @@
 import { useState } from 'react';
 import {
-  Autocomplete,
   Box,
-  Divider,
-  List,
-  ListItem,
-  TextField,
+  FormControl,
+  FormControlLabel,
+  Radio,
+  RadioGroup,
   Typography
 } from '@mui/material';
 import { DFOCheckbox } from '../../../components/DFOCheckbox/DFOCheckbox';
 import VerticalTextCtrl from '../../../FormProvider/VerticalTextCtrl';
 import { ICodelistQuestion } from '../../../Nexus/entities/ICodelistQuestion';
-import { Controller, useFormContext } from 'react-hook-form';
 import { useAppSelector } from '../../../store/hooks';
 import { ICodelist } from '../../../Nexus/entities/ICodelist';
-import DeleteIcon from '@mui/icons-material/Delete';
-import { t } from 'i18next';
-import { FormIconButton } from '../../../Workbench/Components/Form/FormIconButton';
-import theme from '../../../theme';
-import { IRequirementAnswer } from '../../../models/IRequirementAnswer';
+import QuestionSpecificationCodelistPicker from './QuestionSpecificationCodelistPicker';
 
 interface IProps {
   item: ICodelistQuestion;
@@ -31,70 +25,74 @@ interface ILabel {
 
 const QuestionSpecificationCodelist = ({ item }: IProps) => {
   const { spec } = useAppSelector((state) => state.specification);
-  const { control } = useFormContext<IRequirementAnswer>();
   const codelist = spec.bank.codelist.find((cl: ICodelist) => {
     return cl.id === item.config.codelist;
   });
 
-  const [optionalCodes, setOptionalCodes] = useState(false);
+  const [showOptionalCodes, setShowOptionalCodes] = useState(false);
+  const [showMandatoryCodes, setShowMandatoryCodes] = useState(false);
 
-  if (!codelist) return <></>;
+  const [showSelectedCodes, setShowSelectedCodes] = useState(false);
+  const [radiogroupValue, setRadiogroupValue] = useState('allCodes');
 
-  const displayList: ILabel[] = [];
-  Object.values(codelist.codes).forEach((code, i) => {
-    displayList[i] = { label: code.title, value: code.id };
-  });
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setRadiogroupValue((event.target as HTMLInputElement).value);
 
-  const uniqueValuesSet = new Set();
-  const filteredArr: ILabel[] = displayList.filter((obj) => {
-    const isPresentInSet = uniqueValuesSet.has(obj.label);
-    return !isPresentInSet;
-  });
-
-  const findSelectedIdTitle = (id: string) => {
-    const selectedCodelist = filteredArr.find((obj) => {
-      return obj.value === id;
-    });
-
-    if (selectedCodelist) return selectedCodelist.label;
-  };
-
-  const onClick = (
-    code: ILabel,
-    selected: string[],
-    onChange: (value: string[]) => void
-  ) => {
-    if (!selected.some((elem) => elem === code.value)) {
-      uniqueValuesSet.add(code.label);
-      onChange([...selected, code.value]);
+    if (event.target.value === 'pickedCodes') {
+      setShowSelectedCodes(true);
+    } else {
+      setShowSelectedCodes(false);
     }
   };
 
-  const onDelete = (
-    delItem: any,
-    selected: string[],
-    onChange: (value: string[]) => void
-  ) => {
-    const selectedUpdated = [...selected];
-    const index = selectedUpdated.findIndex((elem) => elem === delItem.id);
-    selectedUpdated.splice(index, 1);
-    onChange(selectedUpdated);
-  };
+  if (!codelist) return <></>;
+
+  const codesList: ILabel[] = [];
+  Object.values(codelist.codes).forEach((code, i) => {
+    codesList[i] = { label: code.title, value: code.id };
+  });
+
+  const uniqueCodes = new Set();
+  const filteredCodes: ILabel[] = codesList.filter((obj) => {
+    const isPresentInSet = uniqueCodes.has(obj.label);
+    return !isPresentInSet;
+  });
 
   return (
     <Box>
       <Box>
         <Box>
           <DFOCheckbox
-            value={optionalCodes}
-            onClick={() => setOptionalCodes((prev) => !prev)}
+            value={showMandatoryCodes}
+            onClick={() => setShowMandatoryCodes((prev) => !prev)}
           />
-          <Typography variant={'smBold'} sx={{ marginBottom: 2 }}>
-            Valgfrie koder
-          </Typography>
+          <Typography variant={'smBold'}>Obligatoriske koder</Typography>
         </Box>
-        {optionalCodes && (
-          <Box>
+        {showMandatoryCodes && (
+          <Box sx={{ padding: 3 }}>
+            <QuestionSpecificationCodelistPicker
+              codes={filteredCodes}
+              name="question.config.mandatoryCodes"
+            />
+          </Box>
+        )}
+        <DFOCheckbox
+          value={showOptionalCodes}
+          onClick={() => setShowOptionalCodes((prev) => !prev)}
+        />
+        <Typography variant={'smBold'}>Valgfrie koder</Typography>
+      </Box>
+      {showOptionalCodes && (
+        <Box>
+          <Box
+            sx={{
+              padding: 3,
+              backgroundColor: 'red',
+              display: 'flex',
+              flexDirection: 'column',
+              justifyItems: 'center'
+            }}
+          >
             <VerticalTextCtrl
               name={'question.config.optionalCodeMinAmount'}
               label="Minimum"
@@ -107,70 +105,31 @@ const QuestionSpecificationCodelist = ({ item }: IProps) => {
               placeholder={''}
               type={'number'}
             />
-            <Controller
-              render={({ field: { value: selected, onChange } }) => (
-                <Box>
-                  <Autocomplete
-                    options={filteredArr}
-                    onChange={(event, newValue) => {
-                      if (newValue) {
-                        onClick(newValue, selected, onChange);
-                      }
-                    }}
-                    renderInput={(params) => (
-                      <TextField
-                        {...params}
-                        placeholder={t('Skriv inn kode')}
-                      />
-                    )}
-                  />
-
-                  <List>
-                    {selected.map((selectedItem: string) => {
-                      return (
-                        <ListItem
-                          key={selectedItem}
-                          sx={{
-                            display: 'flex',
-                            flexDirection: 'column',
-                            padding: 0
-                          }}
-                        >
-                          <Box
-                            sx={{
-                              display: 'flex',
-                              width: '90%',
-                              padding: 2
-                            }}
-                          >
-                            <Typography>
-                              {findSelectedIdTitle(selectedItem)}
-                            </Typography>
-                            <FormIconButton
-                              hoverColor={theme.palette.errorRed.main}
-                              onClick={() =>
-                                onDelete(selectedItem, selected, onChange)
-                              }
-                              sx={{
-                                cursor: 'pointer',
-                                marginLeft: 'auto'
-                              }}
-                            >
-                              <DeleteIcon />
-                            </FormIconButton>
-                          </Box>
-                          <Divider style={{ width: '90%' }} />
-                        </ListItem>
-                      );
-                    })}
-                  </List>
-                </Box>
-              )}
-              name="question.config.optionalCodes"
-            />
           </Box>
-        )}
-      </Box>
+          <FormControl>
+            <RadioGroup value={radiogroupValue} onChange={handleChange}>
+              <FormControlLabel
+                value="allCodes"
+                control={<Radio />}
+                label="Alle koder"
+              />
+              <FormControlLabel
+                value="pickedCodes"
+                control={<Radio />}
+                label="Utvalgte koder"
+              />
+            </RadioGroup>
+          </FormControl>
+          {showSelectedCodes && (
+            <Box sx={{ padding: 3 }}>
+              <QuestionSpecificationCodelistPicker
+                codes={filteredCodes}
+                name="question.config.optionalCodes"
+              />
+            </Box>
+          )}
+        </Box>
+      )}
     </Box>
   );
 };
