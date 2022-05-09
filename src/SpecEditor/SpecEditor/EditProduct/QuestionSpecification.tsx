@@ -56,8 +56,7 @@ const QuestionSpecification = ({ item }: IProps) => {
     case QuestionEnum.Q_CODELIST:
       return (
         <ConfigBox>
-          {' '}
-          <QuestionSpecificationCodelist item={item} />{' '}
+          <QuestionSpecificationCodelist item={item} />
         </ConfigBox>
       );
     case QuestionEnum.Q_PERIOD_DATE:

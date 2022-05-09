@@ -119,7 +119,6 @@ const QuestionSpecificationSlider = ({ item }: IProps) => {
         <Typography variant={'smBold'}>Evaluering:</Typography>
       </Grid>
       {fields.map((scoreValue, id) => {
-        console.log(scoreValue);
         return (
           <Grid
             item

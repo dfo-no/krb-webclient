@@ -3,7 +3,6 @@ import {
   Box,
   FormControl,
   FormControlLabel,
-  Radio,
   RadioGroup,
   Typography
 } from '@mui/material';
@@ -13,6 +12,8 @@ import { ICodelistQuestion } from '../../../Nexus/entities/ICodelistQuestion';
 import { useAppSelector } from '../../../store/hooks';
 import { ICodelist } from '../../../Nexus/entities/ICodelist';
 import QuestionSpecificationCodelistPicker from './QuestionSpecificationCodelistPicker';
+import { DFORadioButton } from '../../../components/DFORadioButton/DFORadioButton';
+import theme from '../../../theme';
 
 interface IProps {
   item: ICodelistQuestion;
@@ -63,6 +64,7 @@ const QuestionSpecificationCodelist = ({ item }: IProps) => {
       <Box>
         <Box>
           <DFOCheckbox
+            variant="blue"
             value={showMandatoryCodes}
             onClick={() => setShowMandatoryCodes((prev) => !prev)}
           />
@@ -77,20 +79,28 @@ const QuestionSpecificationCodelist = ({ item }: IProps) => {
           </Box>
         )}
         <DFOCheckbox
+          variant="blue"
           value={showOptionalCodes}
           onClick={() => setShowOptionalCodes((prev) => !prev)}
         />
         <Typography variant={'smBold'}>Valgfrie koder</Typography>
       </Box>
       {showOptionalCodes && (
-        <Box>
+        <Box
+          sx={{
+            display: 'flex',
+            paddingTop: 3,
+            paddingLeft: 3,
+            paddingRight: 3,
+            flexDirection: 'column',
+            justifyItems: 'center'
+          }}
+        >
           <Box
             sx={{
-              padding: 3,
-              backgroundColor: 'red',
               display: 'flex',
               flexDirection: 'column',
-              justifyItems: 'center'
+              gap: 2
             }}
           >
             <VerticalTextCtrl
@@ -106,16 +116,20 @@ const QuestionSpecificationCodelist = ({ item }: IProps) => {
               type={'number'}
             />
           </Box>
-          <FormControl>
+          <FormControl sx={{ paddingTop: 2 }}>
             <RadioGroup value={radiogroupValue} onChange={handleChange}>
               <FormControlLabel
                 value="allCodes"
-                control={<Radio />}
+                control={
+                  <DFORadioButton radioColor={theme.palette.primary.main} />
+                }
                 label="Alle koder"
               />
               <FormControlLabel
                 value="pickedCodes"
-                control={<Radio />}
+                control={
+                  <DFORadioButton radioColor={theme.palette.primary.main} />
+                }
                 label="Utvalgte koder"
               />
             </RadioGroup>

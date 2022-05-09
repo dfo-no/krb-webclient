@@ -24,11 +24,7 @@ const VerticalTextCtrl = ({
 
   return (
     <FormControl error={!!get(errors, name)} sx={{ width: '100%' }}>
-      <Typography
-        variant={'smBold'}
-        color={theme.palette.primary.main}
-        sx={{ marginBottom: 2 }}
-      >
+      <Typography variant={'smBold'} color={theme.palette.primary.main}>
         {label}
       </Typography>
       <Controller
@@ -38,7 +34,6 @@ const VerticalTextCtrl = ({
             {...field}
             placeholder={placeholder}
             type={type}
-            sx={{ marginBottom: 4 }}
             disableUnderline
           />
         )}

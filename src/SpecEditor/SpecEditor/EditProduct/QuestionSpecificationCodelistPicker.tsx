@@ -60,7 +60,21 @@ const QuestionSpecificationCodelistPicker = ({ codes, name }: IProps) => {
     <Box>
       <Controller
         render={({ field: { value: selected, onChange } }) => (
-          <Box>
+          <Box
+            sx={{
+              '& .MuiOutlinedInput-root': {
+                '& fieldset': {
+                  border: `2px solid ${theme.palette.primary.main}`
+                },
+                '&.Mui-focused fieldset': {
+                  border: `3px solid ${theme.palette.primary.main}`
+                },
+                '&:hover fieldset': {
+                  border: `3px solid ${theme.palette.primary.main}`
+                }
+              }
+            }}
+          >
             <Autocomplete
               options={codes}
               onChange={(event, newValue: ILabel | null) => {
@@ -100,7 +114,8 @@ const QuestionSpecificationCodelistPicker = ({ codes, name }: IProps) => {
                         }
                         sx={{
                           cursor: 'pointer',
-                          marginLeft: 'auto'
+                          marginLeft: 'auto',
+                          color: theme.palette.primary.main
                         }}
                       >
                         <DeleteIcon />
