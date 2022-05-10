@@ -43,10 +43,7 @@ export const CodelistQuestionSchema = QuestionBaseSchema.keys({
 
 export const CodelistQuestionAnswerSchema = CodelistQuestionSchema.keys({
   answer: CustomJoi.object().keys({
-    codes: CustomJoi.array()
-      .items(CustomJoi.string().length(36))
-      .min(1)
-      .required()
-  }),
-  point: CustomJoi.number().required()
+    codes: CustomJoi.array().items(CustomJoi.string().length(36)).required(),
+    point: CustomJoi.number().required()
+  })
 });

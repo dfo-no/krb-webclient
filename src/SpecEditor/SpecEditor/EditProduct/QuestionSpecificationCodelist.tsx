@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import {
   Box,
   FormControl,
@@ -15,6 +15,8 @@ import QuestionSpecificationCodelistPicker from './QuestionSpecificationCodelist
 import { DFORadioButton } from '../../../components/DFORadioButton/DFORadioButton';
 import theme from '../../../theme';
 import { useTranslation } from 'react-i18next';
+import { useFormContext, useWatch } from 'react-hook-form';
+import { IRequirementAnswer } from '../../../models/IRequirementAnswer';
 
 interface IProps {
   item: ICodelistQuestion;
@@ -33,23 +35,79 @@ const QuestionSpecificationCodelist = ({ item }: IProps) => {
 
   const { t } = useTranslation();
 
+  const { control, setValue } = useFormContext<IRequirementAnswer>();
+
+  const useMandatoryCodes = useWatch({
+    name: 'question.config.mandatoryCodes',
+    control
+  });
+
+  const useOptionalCodes = useWatch({
+    name: 'question.config.optionalCodes',
+    control
+  });
+
   const [showOptionalCodes, setShowOptionalCodes] = useState(false);
   const [showMandatoryCodes, setShowMandatoryCodes] = useState(false);
 
   const [showSelectedCodes, setShowSelectedCodes] = useState(false);
   const [radiogroupValue, setRadiogroupValue] = useState('allCodes');
 
+  useEffect(() => {
+    if (useMandatoryCodes.length > 0) {
+      setShowMandatoryCodes(true);
+    }
+  }, [useMandatoryCodes]);
+
+  useEffect(() => {
+    if (useOptionalCodes.length > 0) {
+      if (codelist && useOptionalCodes.length < codelist?.codes.length) {
+        setShowSelectedCodes(true);
+        setRadiogroupValue('pickedCodes');
+      }
+
+      setShowOptionalCodes(true);
+    }
+  }, [useOptionalCodes, codelist]);
+
+  if (!codelist) return <></>;
+
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setRadiogroupValue((event.target as HTMLInputElement).value);
 
     if (event.target.value === 'pickedCodes') {
       setShowSelectedCodes(true);
+      setValue('question.config.optionalCodes', []);
     } else {
       setShowSelectedCodes(false);
+      setValue(
+        'question.config.optionalCodes',
+        codelist.codes.map((code) => code.id)
+      );
     }
   };
 
-  if (!codelist) return <></>;
+  const onOptionalCodesClick = () => {
+    if (showOptionalCodes) {
+      setValue('question.config.optionalCodes', []);
+    } else {
+      setValue(
+        'question.config.optionalCodes',
+        codelist.codes.map((code) => code.id)
+      );
+      setShowSelectedCodes(false);
+      setRadiogroupValue('allCodes');
+    }
+    setShowOptionalCodes((prev) => !prev);
+  };
+
+  const onMandatoryCodesClick = () => {
+    if (showMandatoryCodes) {
+      setValue('question.config.mandatoryCodes', []);
+    }
+
+    setShowMandatoryCodes((prev) => !prev);
+  };
 
   const codesList: ILabel[] = [];
   Object.values(codelist.codes).forEach((code, i) => {
@@ -69,9 +127,9 @@ const QuestionSpecificationCodelist = ({ item }: IProps) => {
           <DFOCheckbox
             variant="blue"
             value={showMandatoryCodes}
-            onClick={() => setShowMandatoryCodes((prev) => !prev)}
+            onClick={onMandatoryCodesClick}
           />
-          <Typography variant={'smBold'}>Obligatoriske koder</Typography>
+          <Typography variant={'smBold'}>{t('Obligatory codes')}</Typography>
         </Box>
         {showMandatoryCodes && (
           <Box sx={{ padding: 3 }}>
@@ -84,9 +142,9 @@ const QuestionSpecificationCodelist = ({ item }: IProps) => {
         <DFOCheckbox
           variant="blue"
           value={showOptionalCodes}
-          onClick={() => setShowOptionalCodes((prev) => !prev)}
+          onClick={onOptionalCodesClick}
         />
-        <Typography variant={'smBold'}>Valgfrie koder</Typography>
+        <Typography variant={'smBold'}>{t('Optional codes')}</Typography>
       </Box>
       {showOptionalCodes && (
         <Box
@@ -108,13 +166,13 @@ const QuestionSpecificationCodelist = ({ item }: IProps) => {
           >
             <VerticalTextCtrl
               name={'question.config.optionalCodeMinAmount'}
-              label="Minimum"
+              label={t('Minimum')}
               placeholder={''}
               type={'number'}
             />
             <VerticalTextCtrl
               name={'question.config.optionalCodeMaxAmount'}
-              label="Maksimum"
+              label={t('Maksimum')}
               placeholder={''}
               type={'number'}
             />
