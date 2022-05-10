@@ -13,6 +13,7 @@ import { FormIconButton } from '../../../Workbench/Components/Form/FormIconButto
 import DeleteIcon from '@mui/icons-material/Delete';
 import { t } from 'i18next';
 import theme from '../../../theme';
+import { IOption } from '../../../Nexus/entities/IOption';
 
 interface IProps {
   codes: ILabel[];
@@ -45,7 +46,7 @@ const QuestionSpecificationCodelistPicker = ({ codes, name }: IProps) => {
   const classes = useStyles();
 
   const pickCode = (
-    code: ILabel,
+    code: IOption,
     selected: string[],
     onChange: (value: string[]) => void
   ) => {
@@ -56,7 +57,7 @@ const QuestionSpecificationCodelistPicker = ({ codes, name }: IProps) => {
   };
 
   const findSelectedIdTitle = (codeId: string) => {
-    const selectedCodelist = codes.find((obj: ILabel) => {
+    const selectedCodelist = codes.find((obj: IOption) => {
       return obj.value === codeId;
     });
 
@@ -81,7 +82,7 @@ const QuestionSpecificationCodelistPicker = ({ codes, name }: IProps) => {
           <Box className={classes.autocompleteContainer}>
             <Autocomplete
               options={codes}
-              onChange={(event, newValue: ILabel | null) => {
+              onChange={(event, newValue: IOption | null) => {
                 if (newValue) {
                   pickCode(newValue, selected, onChange);
                 }
