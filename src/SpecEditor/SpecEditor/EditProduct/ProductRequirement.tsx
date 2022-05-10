@@ -232,7 +232,7 @@ export default function ProductRequirement({
                 alignSelf: 'center'
               }}
             >
-              {`${t('Weighting')}: ${t(WeightEnum[useWeight])}`}
+              {t('Weighting')}: {t(WeightEnum[useWeight])}
             </Typography>
             <FormIconButton onClick={editRequirement}>
               <EditIcon />

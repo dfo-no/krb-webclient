@@ -29,7 +29,7 @@ export default function EditProductVariant({
   const defaultValues =
     nexus.specificationService.generateDefaultRequirementAnswer(requirement);
   const [sliderMark, setSliderMark] = useState<IMark[]>([
-    { value: 30, label: t(WeightEnum[WeightEnum.MEDIUM]) }
+    { value: WeightEnum.MEDIUM, label: t(WeightEnum[WeightEnum.MEDIUM]) }
   ]);
 
   useEffect(() => {
@@ -51,9 +51,9 @@ export default function EditProductVariant({
           <SliderCtrl
             name={'weight'}
             label={`${t('Weighting')}:`}
-            min={10}
+            min={WeightEnum.LOWEST}
             step={10}
-            max={50}
+            max={WeightEnum.HIGHEST}
             showValue={false}
             marks={sliderMark}
           />
