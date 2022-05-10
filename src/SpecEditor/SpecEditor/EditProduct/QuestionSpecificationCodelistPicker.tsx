@@ -7,6 +7,7 @@ import {
   TextField,
   Typography
 } from '@mui/material';
+import makeStyles from '@mui/styles/makeStyles';
 import { Controller } from 'react-hook-form';
 import { FormIconButton } from '../../../Workbench/Components/Form/FormIconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -23,8 +24,25 @@ interface ILabel {
   value: string;
 }
 
+const useStyles = makeStyles({
+  autocompleteContainer: {
+    '& .MuiOutlinedInput-root': {
+      '& fieldset': {
+        border: `2px solid ${theme.palette.primary.main}`
+      },
+      '&.Mui-focused fieldset': {
+        border: `3px solid ${theme.palette.primary.main}`
+      },
+      '&:hover fieldset': {
+        border: `3px solid ${theme.palette.primary.main}`
+      }
+    }
+  }
+});
+
 const QuestionSpecificationCodelistPicker = ({ codes, name }: IProps) => {
   const uniqueValuesSet = new Set();
+  const classes = useStyles();
 
   const pickCode = (
     code: ILabel,
@@ -60,21 +78,7 @@ const QuestionSpecificationCodelistPicker = ({ codes, name }: IProps) => {
     <Box>
       <Controller
         render={({ field: { value: selected, onChange } }) => (
-          <Box
-            sx={{
-              '& .MuiOutlinedInput-root': {
-                '& fieldset': {
-                  border: `2px solid ${theme.palette.primary.main}`
-                },
-                '&.Mui-focused fieldset': {
-                  border: `3px solid ${theme.palette.primary.main}`
-                },
-                '&:hover fieldset': {
-                  border: `3px solid ${theme.palette.primary.main}`
-                }
-              }
-            }}
-          >
+          <Box className={classes.autocompleteContainer}>
             <Autocomplete
               options={codes}
               onChange={(event, newValue: ILabel | null) => {
