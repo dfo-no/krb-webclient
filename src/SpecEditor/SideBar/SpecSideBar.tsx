@@ -13,12 +13,12 @@ import { ScrollableContainer } from '../../Workbench/Components/ScrollableContai
 import { useSpecificationState } from '../SpecificationContext';
 import { ISpecificationProduct } from '../../models/ISpecificationProduct';
 import { useAppSelector } from '../../store/hooks';
+import DownloadButton from '../Download/DownloadButton';
 
 const useStyles = makeStyles({
   specSideBar: {
     display: 'flex',
     flexDirection: 'column',
-    gap: 20,
     flex: '1 1 0',
     height: '100%',
     alignItems: 'center',
@@ -63,7 +63,8 @@ const useStyles = makeStyles({
   buttonContainer: {
     display: 'flex',
     justifyContent: 'flex-end',
-    width: '100%'
+    width: '100%',
+    paddingBottom: 25
   }
 });
 
@@ -169,6 +170,9 @@ function SpecSideBar(): React.ReactElement {
           })}
         </ScrollableContainer>
       </List>
+      <Box className={classes.buttonContainer}>
+        <DownloadButton />
+      </Box>
     </Box>
   );
 }
