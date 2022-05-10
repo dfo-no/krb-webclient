@@ -48,7 +48,7 @@ export default function DeleteCodeForm({
     return <></>;
   }
 
-  const onSubmit = (post: Parentable<ICode>) => {
+  const onSubmit = (post: Parentable<ICode>): void => {
     deleteCode(post, codelist).then(() => {
       const alert: IAlert = {
         id: uuidv4(),

@@ -54,8 +54,8 @@ export default function DeleteTagForm({
     ? `${t('cant delete this tag')} ${t('tag has children')}`
     : '';
 
-  async function onSubmit(put: Parentable<ITag>) {
-    await deleteTag(put).then(() => {
+  const onSubmit = (put: Parentable<ITag>): void => {
+    deleteTag(put).then(() => {
       const alert: IAlert = {
         id: uuidv4(),
         style: 'success',
@@ -64,7 +64,7 @@ export default function DeleteTagForm({
       dispatch(addAlert({ alert }));
       handleClose();
     });
-  }
+  };
 
   return (
     <FormProvider {...methods}>

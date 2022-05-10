@@ -58,8 +58,8 @@ export default function DeleteProductForm({
         } ${hasChildren ? t('product has children') : ''}`
       : '';
 
-  async function onSubmit(put: Parentable<IProduct>) {
-    await deleteProduct(put).then(() => {
+  const onSubmit = (put: Parentable<IProduct>): void => {
+    deleteProduct(put).then(() => {
       const alert: IAlert = {
         id: uuidv4(),
         style: 'success',
@@ -68,7 +68,7 @@ export default function DeleteProductForm({
       dispatch(addAlert({ alert }));
       handleClose();
     });
-  }
+  };
 
   return (
     <FormProvider {...methods}>
