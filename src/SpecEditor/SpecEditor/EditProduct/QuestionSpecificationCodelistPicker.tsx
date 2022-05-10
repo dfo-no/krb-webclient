@@ -83,7 +83,7 @@ const QuestionSpecificationCodelistPicker = ({ codes, name }: IProps) => {
                 }
               }}
               renderInput={(params) => (
-                <TextField {...params} placeholder={t('Skriv inn kode')} />
+                <TextField {...params} placeholder={t('Enter code')} />
               )}
             />
             <List>
