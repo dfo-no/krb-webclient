@@ -25,7 +25,8 @@ const initialResponseProduct: IResponseProduct = {
       parent: '',
       type: ModelType.product,
       sourceOriginal: null,
-      sourceRel: null
+      sourceRel: null,
+      deletedDate: null
     },
     weight: 0,
     amount: 0,
@@ -47,7 +48,8 @@ const initialResponseSpecificationProduct: ISpecificationProduct = {
     parent: '',
     type: ModelType.product,
     sourceOriginal: null,
-    sourceRel: null
+    sourceRel: null,
+    deletedDate: null
   },
   weight: 0,
   amount: 0,

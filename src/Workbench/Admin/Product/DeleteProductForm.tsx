@@ -1,6 +1,6 @@
 import { joiResolver } from '@hookform/resolvers/joi';
 import Typography from '@mui/material/Typography';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
@@ -41,6 +41,12 @@ export default function DeleteProductForm({
     resolver: joiResolver(BaseProductSchema)
   });
 
+  useEffect(() => {
+    if (product !== methods.getValues()) {
+      methods.reset(product);
+    }
+  }, [product, methods]);
+
   const { projectId } = useParams<IRouteParams>();
   const { data: project } = useGetProjectQuery(projectId);
 
@@ -74,14 +80,18 @@ export default function DeleteProductForm({
         autoComplete="off"
         noValidate
       >
-        {!hasChildren && !isInUse && (
+        {!hasChildren && (
           <FormDeleteBox>
             <FormTextButton
               hoverColor={theme.palette.errorRed.main}
               type="submit"
               aria-label="delete"
             >
-              {t('delete')}
+              {isInUse
+                ? `${t('product has connected requirements')} ${t(
+                    'delete anyways'
+                  )}`
+                : t('delete')}
             </FormTextButton>
             <FormTextButton
               hoverColor={theme.palette.gray400.main}
@@ -93,11 +103,10 @@ export default function DeleteProductForm({
             {children}
           </FormDeleteBox>
         )}
-        {(hasChildren || isInUse) && (
+        {hasChildren && (
           <FormCantDeleteBox>
             <Typography variant="smBold" sx={{ paddingLeft: 1 }}>
               {t('cant delete this product')}{' '}
-              {isInUse ? t('product has connected requirements') : ''}{' '}
               {hasChildren ? t('product has children') : ''}
             </Typography>
             <FormTextButton

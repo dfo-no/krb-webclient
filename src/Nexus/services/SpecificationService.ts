@@ -29,8 +29,9 @@ export default class SpecificationService {
         description: '',
         type: ModelType.product,
         parent: '',
-        sourceOriginal: null,
-        sourceRel: null
+        sourceOriginal: '',
+        sourceRel: null,
+        deletedDate: null
       },
       weight: 1,
       amount: 1,
