@@ -108,7 +108,7 @@ const Variant = ({ variant, requirementIndex }: IProps) => {
             {useTypeWatch === VariantType.info && (
               <Chip
                 color={'primary'}
-                label={<b>{t('info')}</b>}
+                label={t('info')}
                 sx={{
                   marginLeft: 'auto',
                   marginRight: 2,

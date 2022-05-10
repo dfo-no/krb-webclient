@@ -216,7 +216,10 @@ theme.components = {
   MuiChip: {
     styleOverrides: {
       root: {
-        height: '100%'
+        height: '100%',
+        '&.MuiChip-root': {
+          fontWeight: 'bold'
+        }
       }
     }
   }
