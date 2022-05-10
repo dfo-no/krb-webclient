@@ -1,11 +1,16 @@
 import { joiResolver } from '@hookform/resolvers/joi';
-import Accordion from '@mui/material/Accordion';
-import AccordionSummary from '@mui/material/AccordionSummary';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import Typography from '@mui/material/Typography';
 import DeleteIcon from '@mui/icons-material/Delete';
-import AccordionDetails from '@mui/material/AccordionDetails';
-import { useForm, FormProvider } from 'react-hook-form';
+import {
+  Box,
+  Chip,
+  Button,
+  Typography,
+  Accordion,
+  AccordionSummary,
+  AccordionDetails
+} from '@mui/material';
+import { useForm, FormProvider, useWatch } from 'react-hook-form';
 import { useAppDispatch } from '../../../store/hooks';
 import { IAlert } from '../../../models/IAlert';
 import { v4 as uuidv4 } from 'uuid';
@@ -17,8 +22,6 @@ import { useGetProjectQuery } from '../../../store/api/bankApi';
 import LoaderSpinner from '../../../common/LoaderSpinner';
 import React, { SyntheticEvent } from 'react';
 import { IRouteParams } from '../../Models/IRouteParams';
-import Button from '@mui/material/Button';
-import { Box } from '@mui/material';
 import { useVariantState } from '../../Components/VariantContext';
 import { useTranslation } from 'react-i18next';
 import { useSelectState } from '../SelectContext';
@@ -26,6 +29,7 @@ import theme from '../../../theme';
 import { FormIconButton } from '../../Components/Form/FormIconButton';
 import VariantFormContent from './VariantFormContent';
 import GeneralErrorMessage from '../../../Form/GeneralErrorMessage';
+import VariantType from '../../../Nexus/entities/VariantType';
 
 interface IProps {
   variant: IVariant;
@@ -46,6 +50,7 @@ const Variant = ({ variant, requirementIndex }: IProps) => {
     resolver: joiResolver(VariantSchema),
     defaultValues: variant
   });
+  const useTypeWatch = useWatch({ name: 'type', control: methods.control });
 
   if (!project || needIndex === null) {
     return <LoaderSpinner />;
@@ -100,10 +105,23 @@ const Variant = ({ variant, requirementIndex }: IProps) => {
         >
           <AccordionSummary expandIcon={<ExpandMoreIcon />}>
             <Typography>{variant.description}</Typography>
+            {useTypeWatch === VariantType.info && (
+              <Chip
+                color={'primary'}
+                label={t('info')}
+                sx={{
+                  marginLeft: 'auto',
+                  marginRight: 2,
+                  alignSelf: 'center'
+                }}
+              />
+            )}
             <FormIconButton
               hoverColor={theme.palette.errorRed.main}
               onClick={() => setDeleteMode(variant.id)}
-              sx={{ marginLeft: 'auto' }}
+              sx={
+                useTypeWatch === VariantType.info ? {} : { marginLeft: 'auto' }
+              }
             >
               <DeleteIcon />
             </FormIconButton>
