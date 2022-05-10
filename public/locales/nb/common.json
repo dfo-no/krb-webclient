@@ -1,6 +1,7 @@
 {
   "Add new value score": "Legg til ny verdiscore",
   "Alfabetically sorted": "Alfabetisk sortert",
+  "All codes": "Alle koder",
   "Reset": "Nullstill",
   "all projects": "Alle prosjekter",
   "app_title": "Kravbank (Norsk)",
@@ -135,6 +136,7 @@
   "Page": "Side",
   "Pick a project to start": "Velg et prosjekt for å begynne.",
   "Pick which version of the project you want to use in this specification": "Velg hvilken versjon av kravsettet du vil bruke i denne kravspesifikasjonen:",
+  "Chosen codes": "Utvalgte koder",
   "Add Variant": "Legg til variant",
   "Variant": "Variant",
   "Requirement text": "Krav tekst",

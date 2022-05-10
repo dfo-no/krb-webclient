@@ -14,6 +14,7 @@ import { ICodelist } from '../../../Nexus/entities/ICodelist';
 import QuestionSpecificationCodelistPicker from './QuestionSpecificationCodelistPicker';
 import { DFORadioButton } from '../../../components/DFORadioButton/DFORadioButton';
 import theme from '../../../theme';
+import { useTranslation } from 'react-i18next';
 
 interface IProps {
   item: ICodelistQuestion;
@@ -29,6 +30,8 @@ const QuestionSpecificationCodelist = ({ item }: IProps) => {
   const codelist = spec.bank.codelist.find((cl: ICodelist) => {
     return cl.id === item.config.codelist;
   });
+
+  const { t } = useTranslation();
 
   const [showOptionalCodes, setShowOptionalCodes] = useState(false);
   const [showMandatoryCodes, setShowMandatoryCodes] = useState(false);
@@ -123,14 +126,14 @@ const QuestionSpecificationCodelist = ({ item }: IProps) => {
                 control={
                   <DFORadioButton radioColor={theme.palette.primary.main} />
                 }
-                label="Alle koder"
+                label={String(t('All codes'))}
               />
               <FormControlLabel
                 value="pickedCodes"
                 control={
                   <DFORadioButton radioColor={theme.palette.primary.main} />
                 }
-                label="Utvalgte koder"
+                label={String(t('Chosen codes'))}
               />
             </RadioGroup>
           </FormControl>
