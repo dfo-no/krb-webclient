@@ -172,7 +172,7 @@ const QuestionSpecificationCodelist = ({ item }: IProps) => {
             />
             <VerticalTextCtrl
               name={'question.config.optionalCodeMaxAmount'}
-              label={t('Maksimum')}
+              label={t('Maximum')}
               placeholder={''}
               type={'number'}
             />
