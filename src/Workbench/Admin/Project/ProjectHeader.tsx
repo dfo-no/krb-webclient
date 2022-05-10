@@ -3,6 +3,7 @@ import React from 'react';
 import { useParams } from 'react-router-dom';
 import { DFOHeaderContentBox } from '../../../components/DFOCard/DFOHeaderContentBox';
 import { useGetProjectQuery } from '../../../store/api/bankApi';
+import theme from '../../../theme';
 import { IRouteParams } from '../../Models/IRouteParams';
 
 function ProjectHeader(): React.ReactElement {
@@ -18,7 +19,13 @@ function ProjectHeader(): React.ReactElement {
       <Box sx={{ display: 'flex', flexDirection: 'row' }}>
         <Typography variant="lgBold">{project.title}</Typography>
       </Box>
-      <Typography variant="sm" sx={{ borderTop: '1px solid', paddingTop: 1 }}>
+      <Typography
+        variant={'sm'}
+        sx={{
+          borderTop: `1px solid ${theme.palette.silver.main}`,
+          paddingTop: 1
+        }}
+      >
         {project.description}
       </Typography>
     </DFOHeaderContentBox>

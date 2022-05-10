@@ -1,17 +1,20 @@
-import { FormControl, FormLabel } from '@mui/material';
+import { FormControl, FormLabel, Typography } from '@mui/material';
 import { get } from 'lodash';
 import React from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
-import DFOInput from '../components/DFOTextField/DFOTextField';
+import DFOTextarea from '../components/DFOTextarea/DFOTextarea';
+import theme from '../theme';
 
 interface IProps {
   name: string;
-  placeholder: string;
+  label: string;
+  placeholder?: string;
   type?: string;
 }
 
-const HorizontalTextCtrl = ({
+const TextAreaCtrl = ({
   name,
+  label = '',
   placeholder = '',
   type = 'text'
 }: IProps): React.ReactElement => {
@@ -21,14 +24,23 @@ const HorizontalTextCtrl = ({
 
   return (
     <FormControl error={!!get(errors, name)} sx={{ width: '100%' }}>
+      <Typography
+        variant={'smBold'}
+        color={theme.palette.primary.main}
+        sx={{ marginBottom: 2 }}
+      >
+        {label}
+      </Typography>
       <Controller
         name={name}
         render={({ field }) => (
-          <DFOInput
+          <DFOTextarea
+            maxRows={3}
+            minRows={3}
+            multiline={true}
             {...field}
             placeholder={placeholder}
             type={type}
-            error={!!get(errors, name)}
             disableUnderline
           />
         )}
@@ -40,4 +52,4 @@ const HorizontalTextCtrl = ({
   );
 };
 
-export default HorizontalTextCtrl;
+export default TextAreaCtrl;
