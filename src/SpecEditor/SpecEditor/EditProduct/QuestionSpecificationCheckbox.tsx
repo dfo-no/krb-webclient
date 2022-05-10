@@ -21,6 +21,7 @@ const QuestionSpecificationCheckbox = () => {
   }, [usePointsNonPrefered]);
 
   const { t } = useTranslation();
+
   return (
     <Box>
       <Box>

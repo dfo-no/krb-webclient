@@ -1,5 +1,6 @@
 import { joiResolver } from '@hookform/resolvers/joi';
-import React from 'react';
+import Typography from '@mui/material/Typography';
+import React, { useEffect } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
@@ -12,6 +13,7 @@ import { useGetProjectQuery } from '../../../store/api/bankApi';
 import useProjectMutations from '../../../store/api/ProjectMutations';
 import { useAppDispatch } from '../../../store/hooks';
 import { addAlert } from '../../../store/reducers/alert-reducer';
+import theme from '../../../theme';
 import { useEditableState } from '../../Components/EditableContext';
 import { IRouteParams } from '../../Models/IRouteParams';
 import DeleteFrame from '../../../components/DeleteFrame/DeleteFrame';
@@ -36,6 +38,12 @@ export default function DeleteProductForm({
     defaultValues: product,
     resolver: joiResolver(BaseProductSchema)
   });
+
+  useEffect(() => {
+    if (product !== methods.getValues()) {
+      methods.reset(product);
+    }
+  }, [product, methods]);
 
   const { projectId } = useParams<IRouteParams>();
   const { data: project } = useGetProjectQuery(projectId);

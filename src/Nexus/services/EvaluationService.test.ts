@@ -320,7 +320,8 @@ describe('EvaluationService', () => {
               type: ModelType.product,
               parent: '',
               sourceOriginal: '61cdf70d-9ef5-4ae1-a006-b2e2f5242273',
-              sourceRel: null
+              sourceRel: null,
+              deletedDate: null
             },
             {
               id: 'd9e879da-7a51-4738-80e9-991f5269f549',
@@ -329,7 +330,8 @@ describe('EvaluationService', () => {
               type: ModelType.product,
               parent: '',
               sourceOriginal: '61cdf70d-9ef5-4ae1-a006-b2e2f5242273',
-              sourceRel: null
+              sourceRel: null,
+              deletedDate: null
             },
             {
               id: 'c7edb0ea-b097-4e03-b5f2-6fe46d5c3291',
@@ -338,7 +340,8 @@ describe('EvaluationService', () => {
               type: ModelType.product,
               parent: '',
               sourceOriginal: '61cdf70d-9ef5-4ae1-a006-b2e2f5242273',
-              sourceRel: null
+              sourceRel: null,
+              deletedDate: null
             }
           ],
           publications: [],
