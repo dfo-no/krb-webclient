@@ -8,9 +8,9 @@ import { ICodelistQuestion } from '../../../Nexus/entities/ICodelistQuestion';
 import { ICheckboxQuestion } from '../../../Nexus/entities/ICheckboxQuestion';
 import QuestionEnum from '../../../models/QuestionEnum';
 import { useTranslation } from 'react-i18next';
-import React from 'react';
 import QuestionSpecificationSlider from './QuestionSpecificationSlider';
 import QuestionSpecificationCheckbox from './QuestionSpecificationCheckbox';
+import QuestionSpecificationCodelist from './QuestionSpecificationCodelist';
 
 const ConfigBox = styled(Box)(() => ({
   display: 'flex',
@@ -54,7 +54,11 @@ const QuestionSpecification = ({ item }: IProps) => {
         </ConfigBox>
       );
     case QuestionEnum.Q_CODELIST:
-      return <ConfigBox> Ikke definert </ConfigBox>;
+      return (
+        <ConfigBox>
+          <QuestionSpecificationCodelist item={item} />
+        </ConfigBox>
+      );
     case QuestionEnum.Q_PERIOD_DATE:
       return <ConfigBox> Ikke definert </ConfigBox>;
     case QuestionEnum.Q_TIME:
