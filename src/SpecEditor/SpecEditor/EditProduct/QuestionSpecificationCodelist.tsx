@@ -17,14 +17,10 @@ import theme from '../../../theme';
 import { useTranslation } from 'react-i18next';
 import { useFormContext, useWatch } from 'react-hook-form';
 import { IRequirementAnswer } from '../../../models/IRequirementAnswer';
+import { IOption } from '../../../Nexus/entities/IOption';
 
 interface IProps {
   item: ICodelistQuestion;
-}
-
-interface ILabel {
-  label: string;
-  value: string;
 }
 
 const QuestionSpecificationCodelist = ({ item }: IProps) => {
@@ -109,13 +105,13 @@ const QuestionSpecificationCodelist = ({ item }: IProps) => {
     setShowMandatoryCodes((prev) => !prev);
   };
 
-  const codesList: ILabel[] = [];
+  const codesList: IOption[] = [];
   Object.values(codelist.codes).forEach((code, i) => {
     codesList[i] = { label: code.title, value: code.id };
   });
 
   const uniqueCodes = new Set();
-  const filteredCodes: ILabel[] = codesList.filter((obj) => {
+  const filteredCodes: IOption[] = codesList.filter((obj) => {
     const isPresentInSet = uniqueCodes.has(obj.label);
     return !isPresentInSet;
   });
