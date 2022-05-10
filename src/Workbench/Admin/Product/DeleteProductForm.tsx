@@ -59,12 +59,13 @@ export default function DeleteProductForm({
   const hasChildren = Utils.checkIfHasChildren(product, project.products);
   const isInUse = Utils.productUsedInVariants(product, project);
 
-  const infoText =
-    hasChildren || isInUse
-      ? `${t('cant delete this product')} ${
-          isInUse ? t('product has connected requirements') : ''
-        } ${hasChildren ? t('product has children') : ''}`
-      : '';
+  const infoText = hasChildren
+    ? `${t('cant delete this product')} ${
+        hasChildren ? t('product has children') : ''
+      }`
+    : isInUse
+    ? t('product has connected requirements')
+    : '';
 
   const onSubmit = (put: Parentable<IProduct>): void => {
     deleteProduct(put).then(() => {
@@ -87,7 +88,7 @@ export default function DeleteProductForm({
       >
         <DeleteFrame
           children={children}
-          canBeDeleted={!hasChildren && !isInUse}
+          canBeDeleted={!hasChildren}
           infoText={infoText}
           handleClose={handleClose}
         />

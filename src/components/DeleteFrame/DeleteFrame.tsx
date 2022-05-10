@@ -35,8 +35,7 @@ export default function DeleteFrame({
         }}
       >
         <Typography variant={'mdBold'}>
-          {infoText}
-          {canBeDeleted ? t('Wish to delete') : ''}
+          {infoText} {canBeDeleted ? t('Wish to delete') : ''}
         </Typography>
         {canBeDeleted && (
           <FormTextButton

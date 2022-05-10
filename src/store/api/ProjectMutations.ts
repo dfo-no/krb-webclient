@@ -25,7 +25,7 @@ function useProjectMutations() {
   const [putProject] = usePutProjectMutation();
 
   // PROJECT
-  async function deleteProject(projectToDelete: IBank) {
+  async function deleteProject(projectToDelete: IBank): Promise<BankOrError> {
     if (projectToDelete) {
       return putProject({
         ...projectToDelete,
