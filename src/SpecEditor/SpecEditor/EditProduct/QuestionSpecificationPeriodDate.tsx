@@ -1,3 +1,4 @@
+import { Box } from '@mui/material';
 import { IPeriodDateQuestion } from '../../../Nexus/entities/IPeriodDateQuestion';
 
 interface IProps {
@@ -5,7 +6,7 @@ interface IProps {
 }
 
 const QuestionSpecificationPeriodDate = ({ item }: IProps) => {
-  return <p>Hei blyat</p>;
+  return <Box></Box>;
 };
 
 export default QuestionSpecificationPeriodDate;
