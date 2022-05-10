@@ -44,23 +44,23 @@ export default function ProductPage(): React.ReactElement {
 
   const updateProductsArrangement = (
     newProductList: Parentable<IProduct>[]
-  ) => {
+  ): void => {
     setProducts(newProductList);
     editProducts(newProductList);
   };
 
-  const searchFieldCallback = (result: Parentable<IProduct>[]) => {
+  const searchFieldCallback = (result: Parentable<IProduct>[]): void => {
     setProducts(result);
   };
 
   const productsSearch = (
     searchString: string,
     list: Parentable<IProduct>[]
-  ) => {
+  ): Parentable<IProduct>[] => {
     return SearchUtils.search(list, searchString) as Parentable<IProduct>[];
   };
 
-  const afterDelete = () => {
+  const afterDelete = (): void => {
     setDeleteMode('');
     setProducts(Utils.filterOutDeletedElements(project.products));
   };

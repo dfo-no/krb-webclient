@@ -80,7 +80,7 @@ const ProductSelection = (): React.ReactElement => {
     item: IProduct,
     selected: string[],
     onChange: (value: string[]) => void
-  ) => {
+  ): void => {
     if (selected.some((elem) => elem === item.id)) {
       const selectedUpdated = [...selected];
       const index = selectedUpdated.findIndex((elem) => elem === item.id);
@@ -93,11 +93,11 @@ const ProductSelection = (): React.ReactElement => {
     }
   };
 
-  const productChecked = (item: IProduct, selected: string[]) => {
+  const productChecked = (item: IProduct, selected: string[]): boolean => {
     return selected.some((elem) => elem === item.id);
   };
 
-  const deletedBackground = () => {
+  const deletedBackground = (): string => {
     return `repeating-linear-gradient(
               -55deg, 
               ${theme.palette.white.main}, 
@@ -107,12 +107,12 @@ const ProductSelection = (): React.ReactElement => {
             )`;
   };
 
-  const isDeletedAndUnused = (item: IProduct, selected: string[]) => {
-    return item.deletedDate && productChecked(item, selected);
+  const isDeletedAndUnused = (item: IProduct, selected: string[]): boolean => {
+    return !!item.deletedDate && productChecked(item, selected);
   };
 
-  const isDeleted = (item: IProduct, selected: string[]) => {
-    return item.deletedDate && !productChecked(item, selected);
+  const isDeleted = (item: IProduct, selected: string[]): boolean => {
+    return !!item.deletedDate && !productChecked(item, selected);
   };
 
   return (

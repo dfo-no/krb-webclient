@@ -103,9 +103,9 @@ export default function NewProduct(): React.ReactElement {
     setCreate(false);
   };
 
-  const nonDeletedProducts = () => {
-    return spec.bank.products.filter((item) => !item.deletedDate);
-  };
+  const nonDeletedProducts: Parentable<IProduct>[] = spec.bank.products.filter(
+    (item) => !item.deletedDate
+  );
 
   return (
     <Box className={classes.newProduct}>
@@ -143,12 +143,12 @@ export default function NewProduct(): React.ReactElement {
                   <i>{spec.bank.title}</i> {t('that fits the product best')}
                 </Typography>
                 <Box className={classes.productTypeContainer}>
-                  {spec.bank.products && (
+                  {nonDeletedProducts && (
                     <SelectionSingularCtrl
                       name={'originProduct'}
-                      initValue={nonDeletedProducts()[0]}
+                      initValue={nonDeletedProducts[0]}
                       saveAsString={false}
-                      parentableItems={nonDeletedProducts()}
+                      parentableItems={nonDeletedProducts}
                       postChange={(selection: Parentable<IProduct>) => {
                         setProduct(selection);
                       }}

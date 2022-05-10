@@ -11,6 +11,13 @@ import { INeed } from '../../Nexus/entities/INeed';
 import { IRequirement } from '../../Nexus/entities/IRequirement';
 import { IVariant } from '../../Nexus/entities/IVariant';
 import DateService from '../../Nexus/services/DateService';
+import { IBank } from '../../Nexus/entities/IBank';
+import { SerializedError } from '@reduxjs/toolkit';
+import { FetchBaseQueryError } from '@reduxjs/toolkit/query';
+
+type BankOrError =
+  | { data: IBank }
+  | { error: FetchBaseQueryError | SerializedError };
 
 function useProjectMutations() {
   const { projectId } = useParams<IRouteParams>();
@@ -18,7 +25,9 @@ function useProjectMutations() {
   const [putProject] = usePutProjectMutation();
 
   // PRODUCTS
-  async function addProduct(product: Parentable<IProduct>) {
+  async function addProduct(
+    product: Parentable<IProduct>
+  ): Promise<BankOrError> {
     if (project) {
       const editedProducts = Utils.addElementToList(product, project.products);
       return putProject({ ...project, products: editedProducts });
@@ -26,7 +35,9 @@ function useProjectMutations() {
     throw Error('Cant save changes to Project');
   }
 
-  async function editProduct(product: Parentable<IProduct>) {
+  async function editProduct(
+    product: Parentable<IProduct>
+  ): Promise<BankOrError> {
     if (project) {
       const editedProducts = Utils.replaceElementInList(
         product,
@@ -37,7 +48,9 @@ function useProjectMutations() {
     throw Error('Cant save changes to Project');
   }
 
-  async function deleteProduct(product: Parentable<IProduct>) {
+  async function deleteProduct(
+    product: Parentable<IProduct>
+  ): Promise<BankOrError> {
     if (project) {
       return editProduct({
         ...product,
@@ -47,7 +60,9 @@ function useProjectMutations() {
     throw Error('Cant save changes to Project');
   }
 
-  async function editProducts(products: Parentable<IProduct>[]) {
+  async function editProducts(
+    products: Parentable<IProduct>[]
+  ): Promise<BankOrError> {
     if (project) {
       return putProject({ ...project, products: products });
     }
@@ -55,7 +70,7 @@ function useProjectMutations() {
   }
 
   // TAGS
-  async function addTag(tag: Parentable<ITag>) {
+  async function addTag(tag: Parentable<ITag>): Promise<BankOrError> {
     if (project) {
       const editedTags = Utils.addElementToList(tag, project.tags);
       return putProject({ ...project, tags: editedTags });
@@ -63,7 +78,7 @@ function useProjectMutations() {
     throw Error('Cant save changes to Project');
   }
 
-  async function editTag(tag: Parentable<ITag>) {
+  async function editTag(tag: Parentable<ITag>): Promise<BankOrError> {
     if (project) {
       const editedTags = Utils.replaceElementInList(tag, project.tags);
       return putProject({ ...project, tags: editedTags });
@@ -71,7 +86,7 @@ function useProjectMutations() {
     throw Error('Cant save changes to Project');
   }
 
-  async function deleteTag(tag: Parentable<ITag>) {
+  async function deleteTag(tag: Parentable<ITag>): Promise<BankOrError> {
     if (project) {
       const editedTags = Utils.removeElementFromList(tag, project.tags);
       return putProject({ ...project, tags: editedTags });
@@ -79,7 +94,7 @@ function useProjectMutations() {
     throw Error('Cant save changes to Project');
   }
 
-  async function editTags(tags: Parentable<ITag>[]) {
+  async function editTags(tags: Parentable<ITag>[]): Promise<BankOrError> {
     if (project) {
       return putProject({ ...project, tags: tags });
     }
@@ -87,7 +102,7 @@ function useProjectMutations() {
   }
 
   // CODELISTS
-  async function addCodelist(codelist: ICodelist) {
+  async function addCodelist(codelist: ICodelist): Promise<BankOrError> {
     if (project) {
       const editedCodelists = Utils.addElementToList(
         codelist,
@@ -98,7 +113,7 @@ function useProjectMutations() {
     throw Error('Cant save changes to Project');
   }
 
-  async function editCodelist(codelist: ICodelist) {
+  async function editCodelist(codelist: ICodelist): Promise<BankOrError> {
     if (project) {
       const editedCodelists = Utils.replaceElementInList(
         codelist,
@@ -109,7 +124,7 @@ function useProjectMutations() {
     throw Error('Cant save changes to Project');
   }
 
-  async function deleteCodelist(codelist: ICodelist) {
+  async function deleteCodelist(codelist: ICodelist): Promise<BankOrError> {
     if (project) {
       const editedCodelists = Utils.removeElementFromList(
         codelist,
@@ -121,7 +136,10 @@ function useProjectMutations() {
   }
 
   // CODES
-  async function addCode(code: Parentable<ICode>, codelist: ICodelist) {
+  async function addCode(
+    code: Parentable<ICode>,
+    codelist: ICodelist
+  ): Promise<BankOrError> {
     if (project) {
       const editedCodes = Utils.addElementToList(code, codelist.codes);
       return editCodelist({ ...codelist, codes: editedCodes });
@@ -129,7 +147,10 @@ function useProjectMutations() {
     throw Error('Cant save changes to Project');
   }
 
-  async function editCode(code: Parentable<ICode>, codelist: ICodelist) {
+  async function editCode(
+    code: Parentable<ICode>,
+    codelist: ICodelist
+  ): Promise<BankOrError> {
     if (project) {
       const editedCodes = Utils.replaceElementInList(code, codelist.codes);
       return editCodelist({ ...codelist, codes: editedCodes });
@@ -137,7 +158,10 @@ function useProjectMutations() {
     throw Error('Cant save changes to Project');
   }
 
-  async function deleteCode(code: Parentable<ICode>, codelist: ICodelist) {
+  async function deleteCode(
+    code: Parentable<ICode>,
+    codelist: ICodelist
+  ): Promise<BankOrError> {
     if (project) {
       const editedCodes = Utils.removeElementFromList(code, codelist.codes);
       return editCodelist({ ...codelist, codes: editedCodes });
@@ -145,7 +169,10 @@ function useProjectMutations() {
     throw Error('Cant save changes to Project');
   }
 
-  async function editCodes(codes: Parentable<ICode>[], codelist: ICodelist) {
+  async function editCodes(
+    codes: Parentable<ICode>[],
+    codelist: ICodelist
+  ): Promise<BankOrError> {
     if (project) {
       return editCodelist({ ...codelist, codes: codes });
     }
@@ -153,7 +180,7 @@ function useProjectMutations() {
   }
 
   // NEEDS
-  async function addNeed(need: Parentable<INeed>) {
+  async function addNeed(need: Parentable<INeed>): Promise<BankOrError> {
     if (project) {
       const editedNeeds = Utils.addElementToList(need, project.needs);
       return putProject({ ...project, needs: editedNeeds });
@@ -161,7 +188,7 @@ function useProjectMutations() {
     throw Error('Cant save changes to Project');
   }
 
-  async function editNeed(need: Parentable<INeed>) {
+  async function editNeed(need: Parentable<INeed>): Promise<BankOrError> {
     if (project) {
       const editedNeeds = Utils.replaceElementInList(need, project.needs);
       return putProject({ ...project, needs: editedNeeds });
@@ -169,7 +196,7 @@ function useProjectMutations() {
     throw Error('Cant save changes to Project');
   }
 
-  async function deleteNeed(need: Parentable<INeed>) {
+  async function deleteNeed(need: Parentable<INeed>): Promise<BankOrError> {
     if (project) {
       const editedNeeds = Utils.removeElementFromList(need, project.needs);
       return putProject({ ...project, needs: editedNeeds });
@@ -177,7 +204,7 @@ function useProjectMutations() {
     throw Error('Cant save changes to Project');
   }
 
-  async function editNeeds(needs: Parentable<INeed>[]) {
+  async function editNeeds(needs: Parentable<INeed>[]): Promise<BankOrError> {
     if (project) {
       return putProject({ ...project, needs: needs });
     }
@@ -188,7 +215,7 @@ function useProjectMutations() {
   async function addRequirement(
     requirement: IRequirement,
     need: Parentable<INeed>
-  ) {
+  ): Promise<BankOrError> {
     if (project) {
       const editedRequirements = Utils.addElementToList(
         requirement,
@@ -202,7 +229,7 @@ function useProjectMutations() {
   async function editRequirement(
     requirement: IRequirement,
     need: Parentable<INeed>
-  ) {
+  ): Promise<BankOrError> {
     if (project) {
       const editedRequirements = Utils.replaceElementInList(
         requirement,
@@ -216,7 +243,7 @@ function useProjectMutations() {
   async function deleteRequirement(
     requirement: IRequirement,
     need: Parentable<INeed>
-  ) {
+  ): Promise<BankOrError> {
     if (project) {
       const editedRequirements = Utils.removeElementFromList(
         requirement,
@@ -232,7 +259,7 @@ function useProjectMutations() {
     variant: IVariant,
     requirement: IRequirement,
     need: Parentable<INeed>
-  ) {
+  ): Promise<BankOrError> {
     if (project) {
       const editedVariants = Utils.addElementToList(
         variant,
@@ -250,7 +277,7 @@ function useProjectMutations() {
     variant: IVariant,
     requirement: IRequirement,
     need: Parentable<INeed>
-  ) {
+  ): Promise<BankOrError> {
     if (project) {
       const editedVariants = Utils.replaceElementInList(
         variant,
@@ -268,7 +295,7 @@ function useProjectMutations() {
     variant: IVariant,
     requirement: IRequirement,
     need: Parentable<INeed>
-  ) {
+  ): Promise<BankOrError> {
     if (project) {
       const editedVariants = Utils.removeElementFromList(
         variant,
