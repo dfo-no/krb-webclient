@@ -16,7 +16,7 @@ import { useSelectState } from '../SelectContext';
 import DeleteFrame from '../../../components/DeleteFrame/DeleteFrame';
 
 interface IProps {
-  children: React.ReactNode;
+  children: React.ReactElement;
   requirement: IRequirement;
   need: Parentable<INeed>;
   handleClose: () => void;
@@ -43,15 +43,15 @@ function DeleteRequirement({
   }
 
   if (deleteMode !== requirement.id) {
-    return <>{children}</>;
+    return children;
   }
 
   const infoText = hasChildren
     ? `${t('cant delete this requirement')} ${t('requirement has children')}`
     : '';
 
-  const onDelete = async () => {
-    await deleteRequirement(requirement, need).then(() => {
+  const onDelete = (): void => {
+    deleteRequirement(requirement, need).then(() => {
       const alert: IAlert = {
         id: uuidv4(),
         style: 'success',

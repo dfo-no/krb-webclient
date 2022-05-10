@@ -16,7 +16,7 @@ import Utils from '../../../common/Utils';
 import DeleteFrame from '../../../components/DeleteFrame/DeleteFrame';
 
 interface IProps {
-  children: React.ReactNode;
+  children: React.ReactElement;
   codelist: ICodelist;
   handleClose: (codelist: ICodelist | null) => void;
 }
@@ -40,7 +40,7 @@ export default function DeleteCodelistForm({
   const { data: project } = useGetProjectQuery(projectId);
 
   if (deleteMode !== codelist.id) {
-    return <>{children}</>;
+    return children;
   }
 
   if (!project) {
@@ -55,8 +55,8 @@ export default function DeleteCodelistForm({
       )}`
     : '';
 
-  async function onSubmit(put: ICodelist) {
-    await deleteCodelist(put).then(() => {
+  const onSubmit = (put: ICodelist): void => {
+    deleteCodelist(put).then(() => {
       const alert: IAlert = {
         id: uuidv4(),
         style: 'success',
@@ -65,7 +65,7 @@ export default function DeleteCodelistForm({
       dispatch(addAlert({ alert }));
       handleClose(put);
     });
-  }
+  };
 
   return (
     <FormProvider {...methods}>

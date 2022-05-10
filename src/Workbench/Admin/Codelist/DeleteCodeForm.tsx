@@ -16,7 +16,7 @@ import { IRouteParams } from '../../Models/IRouteParams';
 import DeleteFrame from '../../../components/DeleteFrame/DeleteFrame';
 
 interface IProps {
-  children: React.ReactNode;
+  children: React.ReactElement;
   codelist: ICodelist;
   code: Parentable<ICode>;
   handleClose: (code: Parentable<ICode> | null) => void;
@@ -41,15 +41,15 @@ export default function DeleteCodeForm({
   const { data: project } = useGetProjectQuery(projectId);
 
   if (deleteMode !== code.id) {
-    return <>{children}</>;
+    return children;
   }
 
   if (!project) {
     return <></>;
   }
 
-  async function onSubmit(post: Parentable<ICode>) {
-    await deleteCode(post, codelist).then(() => {
+  const onSubmit = (post: Parentable<ICode>) => {
+    deleteCode(post, codelist).then(() => {
       const alert: IAlert = {
         id: uuidv4(),
         style: 'success',
@@ -58,7 +58,7 @@ export default function DeleteCodeForm({
       dispatch(addAlert({ alert }));
       handleClose(post);
     });
-  }
+  };
 
   return (
     <FormProvider {...methods}>

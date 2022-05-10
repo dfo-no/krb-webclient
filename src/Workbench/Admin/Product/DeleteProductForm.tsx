@@ -17,7 +17,7 @@ import { IRouteParams } from '../../Models/IRouteParams';
 import DeleteFrame from '../../../components/DeleteFrame/DeleteFrame';
 
 interface IProps {
-  children: React.ReactNode;
+  children: React.ReactElement;
   product: Parentable<IProduct>;
   handleClose: () => void;
 }
@@ -41,7 +41,7 @@ export default function DeleteProductForm({
   const { data: project } = useGetProjectQuery(projectId);
 
   if (deleteMode !== product.id) {
-    return <>{children}</>;
+    return children;
   }
 
   if (!project) {

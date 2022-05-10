@@ -41,7 +41,7 @@ export default function DeleteTagForm({
   const { data: project } = useGetProjectQuery(projectId);
 
   if (deleteMode !== tag.id) {
-    return <>{children}</>;
+    return children;
   }
 
   if (!project) {

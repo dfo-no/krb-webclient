@@ -12,7 +12,7 @@ import { useSelectState } from '../SelectContext';
 import DeleteFrame from '../../../components/DeleteFrame/DeleteFrame';
 
 interface IProps {
-  children: React.ReactNode;
+  children: React.ReactElement;
   need: Parentable<INeed>;
   handleClose: () => void;
 }
@@ -31,15 +31,15 @@ function DeleteNeed({
   const hasChildren = need.requirements.length > 0;
 
   if (deleteMode !== need.id) {
-    return <>{children}</>;
+    return children;
   }
 
   const infoText = hasChildren
     ? `${t('cant delete this need')} ${t('need has children')}`
     : '';
 
-  const onDelete = async () => {
-    await deleteNeed(need).then(() => {
+  const onDelete = (): void => {
+    deleteNeed(need).then(() => {
       const alert: IAlert = {
         id: uuidv4(),
         style: 'success',

@@ -16,7 +16,7 @@ import { IVariant } from '../../../Nexus/entities/IVariant';
 import DeleteFrame from '../../../components/DeleteFrame/DeleteFrame';
 
 interface IProps {
-  children: React.ReactNode;
+  children: React.ReactElement;
   variant: IVariant;
   requirement: IRequirement;
   need: Parentable<INeed>;
@@ -38,16 +38,16 @@ function DeleteVariant({
   const { deleteVariant } = useProjectMutations();
   const { deleteMode } = useSelectState();
 
+  if (deleteMode !== variant.id) {
+    return children;
+  }
+
   if (!project) {
     return <></>;
   }
 
-  if (deleteMode !== variant.id) {
-    return <>{children}</>;
-  }
-
-  const onDelete = async () => {
-    await deleteVariant(variant, requirement, need).then(() => {
+  const onDelete = (): void => {
+    deleteVariant(variant, requirement, need).then(() => {
       const alert: IAlert = {
         id: uuidv4(),
         style: 'success',
