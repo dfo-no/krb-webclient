@@ -14,9 +14,10 @@ interface IProps {
   min: number;
   max: number;
   step: number;
-  unit: string;
   marks: IMark[];
+  unit?: string;
   label?: string;
+  showValue?: boolean;
 }
 
 const SliderCtrl = ({
@@ -24,9 +25,10 @@ const SliderCtrl = ({
   min,
   max,
   step,
-  unit,
   marks,
-  label
+  unit,
+  label,
+  showValue = true
 }: IProps): React.ReactElement => {
   const {
     formState: { errors }
@@ -35,16 +37,22 @@ const SliderCtrl = ({
   return (
     <Box>
       <FormControl fullWidth error={!!get(errors, name)}>
-        <Stack>{label}</Stack>
         <Stack spacing={2} direction="row" sx={{ mb: 1 }} alignItems="center">
-          <Typography variant="body1" sx={{ whiteSpace: 'nowrap' }}>
-            {min} {unit}
-          </Typography>
+          {label && (
+            <Typography variant="smBold" sx={{ whiteSpace: 'nowrap' }}>
+              {label}
+            </Typography>
+          )}
+          {unit && (
+            <Typography variant="sm" sx={{ whiteSpace: 'nowrap' }}>
+              {min} {unit}
+            </Typography>
+          )}
           <Controller
             name={name}
             render={({ field }) => (
               <Slider
-                valueLabelDisplay="on"
+                valueLabelDisplay={showValue ? 'on' : 'off'}
                 name={field.name}
                 onBlur={field.onBlur}
                 ref={field.ref}
@@ -60,16 +68,15 @@ const SliderCtrl = ({
               />
             )}
           />
-
-          <Typography variant="body1" sx={{ whiteSpace: 'nowrap' }}>
-            {max} {unit}
-          </Typography>
+          {unit && (
+            <Typography variant="sm" sx={{ whiteSpace: 'nowrap' }}>
+              {max} {unit}
+            </Typography>
+          )}
         </Stack>
-        <Stack>
-          <FormHelperText id={name}>
-            {get(errors, name)?.message ?? ''}
-          </FormHelperText>
-        </Stack>
+        <FormHelperText id={name}>
+          {get(errors, name)?.message ?? ''}
+        </FormHelperText>
       </FormControl>
     </Box>
   );

@@ -93,6 +93,12 @@ class Utils {
     return newList;
   }
 
+  static filterOutDeletedElements<T extends { deletedDate: string | null }>(
+    list: T[]
+  ): T[] {
+    return list.filter((elem) => !elem.deletedDate);
+  }
+
   static addElementToList<T extends { id: string }>(
     element: T,
     list: T[]

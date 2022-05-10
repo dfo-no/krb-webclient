@@ -7,6 +7,7 @@ export interface IProduct extends IBaseModel {
   description: string;
   parent: string;
   children?: [];
+  deletedDate: string | null;
 }
 
 export const BaseProductSchema = CustomJoi.object().keys({
@@ -30,7 +31,11 @@ export const BaseProductSchema = CustomJoi.object().keys({
     .guid({ version: ['uuidv4'] })
     .length(36)
     .allow(null)
-    .required()
+    .required(),
+  deletedDate: CustomJoi.alternatives([
+    CustomJoi.date().iso().raw(),
+    CustomJoi.string().valid(null)
+  ])
 });
 
 export const PostProductSchema = BaseProductSchema.keys({

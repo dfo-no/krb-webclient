@@ -21,7 +21,8 @@ export default class ProductService {
       type: ModelType.product,
       parent: '',
       sourceOriginal: projectId,
-      sourceRel: null
+      sourceRel: null,
+      deletedDate: null
     };
     return defaultValues;
   };
