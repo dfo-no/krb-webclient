@@ -3,6 +3,9 @@ import {
   Accordion,
   AccordionDetails,
   AccordionSummary,
+  Box,
+  Card,
+  Divider,
   Typography
 } from '@mui/material';
 import { useParams } from 'react-router-dom';
@@ -13,8 +16,7 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { useVariantState } from '../Components/VariantContext';
 import theme from '../../theme';
 import { useTranslation } from 'react-i18next';
-import Card from '@mui/material/Card';
-import CardHeader from '@mui/material/CardHeader';
+import QuestionConfigItem from './QuestionConfigItem';
 
 interface IProps {
   variant: IVariant;
@@ -76,17 +78,37 @@ export default function VariantPreview({
         <Typography variant="smBold" color={theme.palette.primary.main}>
           {t('how to answer requirement')}
         </Typography>
-        {variant.questions.length > 0 ? (
-          variant.questions.map((item) => {
-            return (
-              <Card key={item.id}>
-                <CardHeader title={t(item.type)} />
-              </Card>
-            );
-          })
-        ) : (
-          <Typography>-</Typography>
-        )}
+        <Box
+          sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            gap: 2,
+            marginTop: 1.5,
+            border: `1px solid ${theme.palette.black.main}`,
+            backgroundColor: theme.palette.gray100.main,
+            padding: 5.5
+          }}
+        >
+          {variant.questions.length > 0 ? (
+            variant.questions.map((item) => {
+              return (
+                <Card key={item.id} sx={{ padding: 1 }}>
+                  <Box
+                    sx={{ display: 'flex', flexDirection: 'row', margin: 2 }}
+                  >
+                    <Typography variant={'smBold'}>{t(item.type)}</Typography>
+                  </Box>
+                  <Divider />
+                  <Box sx={{ display: 'flex', paddingLeft: 1 }}>
+                    <QuestionConfigItem item={item} />
+                  </Box>
+                </Card>
+              );
+            })
+          ) : (
+            <Typography>-</Typography>
+          )}
+        </Box>
       </AccordionDetails>
     </Accordion>
   );

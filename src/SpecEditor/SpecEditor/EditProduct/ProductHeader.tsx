@@ -20,6 +20,7 @@ export default function ProductHeader(): React.ReactElement {
           sx={{
             display: 'flex',
             flexDirection: 'row',
+            paddingBottom: 0.5,
             borderBottom: '1px solid'
           }}
         >

@@ -83,11 +83,19 @@ function SpecSideBar(): React.ReactElement {
   const genericPressed = () => {
     setSpecificationProductIndex(-1);
     setGenericRequirement(true);
+    setCreate(false);
   };
 
   const productPressed = (index: number) => {
     setSpecificationProductIndex(index);
     setGenericRequirement(false);
+    setCreate(false);
+  };
+
+  const createPressed = () => {
+    setSpecificationProductIndex(-1);
+    setGenericRequirement(false);
+    setCreate(true);
   };
 
   const renderProducts = (product: ISpecificationProduct, index: number) => {
@@ -104,14 +112,20 @@ function SpecSideBar(): React.ReactElement {
           }`}
         >
           <Box className={classes.productListItemCardContent}>
-            <Typography variant="mdBold">{product.title}</Typography>
-            <Divider
-              color={
-                isSelected
-                  ? theme.palette.white.main
-                  : theme.palette.gray300.main
-              }
-            />
+            <Box sx={{ display: 'flex' }}>
+              <Typography variant="mdBold">{product.title}</Typography>
+              <Typography
+                variant="mdBold"
+                sx={{
+                  alignSelf: 'center',
+                  marginLeft: 'auto',
+                  paddingLeft: 4
+                }}
+              >
+                {product.amount}
+              </Typography>
+            </Box>
+            <Divider color={theme.palette.silver.main} />
             <Typography variant="sm">{product.description}</Typography>
           </Box>
         </Card>
@@ -122,7 +136,7 @@ function SpecSideBar(): React.ReactElement {
   return (
     <Box className={classes.specSideBar}>
       <Box className={classes.buttonContainer}>
-        <Button variant="primary" onClick={() => setCreate(true)}>
+        <Button variant="primary" onClick={createPressed}>
           {t('create a new product')}
         </Button>
       </Box>
@@ -141,13 +155,7 @@ function SpecSideBar(): React.ReactElement {
               <Typography variant="mdBold">
                 {t('Generic requirement')}
               </Typography>
-              <Divider
-                color={
-                  genericRequirement
-                    ? theme.palette.white.main
-                    : theme.palette.gray300.main
-                }
-              />
+              <Divider color={theme.palette.silver.main} />
             </Box>
           </Card>
         </ListItem>

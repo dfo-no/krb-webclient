@@ -5,14 +5,13 @@ import Dialog from '../../../components/DFODialog/DFODialog';
 import { Parentable } from '../../../models/Parentable';
 import { INeed } from '../../../Nexus/entities/INeed';
 import NewRequirementForm from './NewRequirementForm';
-import { useTranslation } from 'react-i18next';
 import { useSelectState } from '../SelectContext';
+import { t } from 'i18next';
 interface IProps {
   need: Parentable<INeed>;
 }
 
 const NewRequirement = ({ need }: IProps) => {
-  const { t } = useTranslation();
   const [isNewOpen, setNewOpen] = useState(false);
   const { setCreateVariant } = useSelectState();
 
@@ -31,10 +30,9 @@ const NewRequirement = ({ need }: IProps) => {
       }}
     >
       <Button variant="primary" onClick={() => setNewOpen(true)}>
-        Legg til nytt krav
+        {t('add new requirement')}
       </Button>
       <Dialog
-        title={t('create requirement')}
         isOpen={isNewOpen}
         handleClose={() => setNewOpen(false)}
         children={<NewRequirementForm need={need} handleClose={onClose} />}
