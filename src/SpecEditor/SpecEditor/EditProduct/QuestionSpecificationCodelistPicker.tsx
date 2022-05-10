@@ -90,6 +90,9 @@ const QuestionSpecificationCodelistPicker = ({ codes, name }: IProps) => {
               renderInput={(params) => (
                 <TextField {...params} placeholder={t('Enter code')} />
               )}
+              isOptionEqualToValue={(option, value) =>
+                option.value === value.value
+              }
             />
             <List>
               {selected.map((selectedCodeId: string) => {
