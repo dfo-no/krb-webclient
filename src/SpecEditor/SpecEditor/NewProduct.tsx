@@ -143,7 +143,7 @@ export default function NewProduct(): React.ReactElement {
                   <i>{spec.bank.title}</i> {t('that fits the product best')}
                 </Typography>
                 <Box className={classes.productTypeContainer}>
-                  {nonDeletedProducts && (
+                  {nonDeletedProducts.length && (
                     <SelectionSingularCtrl
                       name={'originProduct'}
                       initValue={nonDeletedProducts[0]}
