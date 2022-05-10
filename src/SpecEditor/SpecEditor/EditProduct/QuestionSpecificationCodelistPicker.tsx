@@ -16,13 +16,8 @@ import theme from '../../../theme';
 import { IOption } from '../../../Nexus/entities/IOption';
 
 interface IProps {
-  codes: ILabel[];
+  codes: IOption[];
   name: string;
-}
-
-interface ILabel {
-  label: string;
-  value: string;
 }
 
 const useStyles = makeStyles({
@@ -49,26 +44,28 @@ const QuestionSpecificationCodelistPicker = ({ codes, name }: IProps) => {
     code: IOption,
     selected: string[],
     onChange: (value: string[]) => void
-  ) => {
+  ): void => {
     if (!selected.some((elem) => elem === code.value)) {
       uniqueValuesSet.add(code.label);
       onChange([...selected, code.value]);
     }
   };
 
-  const findSelectedIdTitle = (codeId: string) => {
+  const findSelectedIdTitle = (codeId: string): string => {
     const selectedCodelist = codes.find((obj: IOption) => {
       return obj.value === codeId;
     });
 
     if (selectedCodelist) return selectedCodelist.label;
+
+    return '';
   };
 
   const deleteCode = (
     itemId: string,
     selected: string[],
     onChange: (value: string[]) => void
-  ) => {
+  ): void => {
     const selectedUpdated = [...selected];
     const index = selectedUpdated.findIndex((elem) => elem === itemId);
     selectedUpdated.splice(index, 1);

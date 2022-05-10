@@ -68,7 +68,7 @@ const QuestionSpecificationCodelist = ({ item }: IProps) => {
 
   if (!codelist) return <></>;
 
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
     setRadiogroupValue((event.target as HTMLInputElement).value);
 
     if (event.target.value === 'pickedCodes') {
@@ -83,7 +83,7 @@ const QuestionSpecificationCodelist = ({ item }: IProps) => {
     }
   };
 
-  const onOptionalCodesClick = () => {
+  const onOptionalCodesClick = (): void => {
     if (showOptionalCodes) {
       setValue('question.config.optionalCodes', []);
     } else {
@@ -97,7 +97,7 @@ const QuestionSpecificationCodelist = ({ item }: IProps) => {
     setShowOptionalCodes((prev) => !prev);
   };
 
-  const onMandatoryCodesClick = () => {
+  const onMandatoryCodesClick = (): void => {
     if (showMandatoryCodes) {
       setValue('question.config.mandatoryCodes', []);
     }
