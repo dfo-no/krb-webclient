@@ -44,7 +44,7 @@ export default function EditProductVariant({
     <Box sx={{ display: 'flex', flexDirection: 'column', marginLeft: 6 }}>
       <Box sx={{ display: 'flex', flexDirection: 'row', marginLeft: -6 }}>
         <DFOCheckbox value={true} onClick={onCancel} />
-        <Typography variant={'lg'} sx={{ alignSelf: 'center', marginLeft: 1 }}>
+        <Typography variant={'lg'} sx={{ alignSelf: 'center', marginLeft: 2 }}>
           {variant.description}
         </Typography>
         <Box sx={{ flex: '0 0 15%', marginLeft: 'auto', paddingLeft: 4 }}>
