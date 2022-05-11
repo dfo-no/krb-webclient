@@ -8,6 +8,7 @@ import ModelType from '../../models/ModelType';
 import { IRequirement } from '../entities/IRequirement';
 import QuestionService from './QuestionService';
 import QuestionEnum from '../../models/QuestionEnum';
+import { WeightEnum } from '../../models/WeightEnum';
 
 export default class SpecificationService {
   UuidService = new UuidService();
@@ -19,7 +20,7 @@ export default class SpecificationService {
   }
 
   generateDefaultSpecificationProductValues = (): ISpecificationProduct => {
-    const defaultValues: ISpecificationProduct = {
+    return {
       id: '',
       title: '',
       description: '',
@@ -29,10 +30,11 @@ export default class SpecificationService {
         description: '',
         type: ModelType.product,
         parent: '',
-        sourceOriginal: null,
-        sourceRel: null
+        sourceOriginal: '',
+        sourceRel: null,
+        deletedDate: null
       },
-      weight: 1,
+      weight: WeightEnum.MEDIUM,
       amount: 1,
       requirements: [],
       requirementAnswers: [],
@@ -40,7 +42,6 @@ export default class SpecificationService {
       sourceOriginal: null,
       sourceRel: null
     };
-    return defaultValues;
   };
 
   generateDefaultRequirementAnswer = (
@@ -50,7 +51,7 @@ export default class SpecificationService {
     return {
       id: this.UuidService.generateId(),
       questionId: '',
-      weight: 1,
+      weight: WeightEnum.MEDIUM,
       variantId: '',
       question: questionService.getQuestion(QuestionEnum.Q_TEXT),
       type: ModelType.requirementAnswer,

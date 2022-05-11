@@ -14,7 +14,8 @@ const initialState: ISelectedProductState = {
     parent: '',
     type: ModelType.product,
     sourceOriginal: null,
-    sourceRel: null
+    sourceRel: null,
+    deletedDate: null
   }
 };
 

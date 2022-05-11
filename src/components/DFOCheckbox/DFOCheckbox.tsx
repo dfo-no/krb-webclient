@@ -114,6 +114,12 @@ export const DFOCheckbox = ({
         checkedIcon: checkboxes.blueBorder.checkedIcon
       };
       break;
+    case 'blue':
+      checkboxType = {
+        icon: checkboxes.blue.icon,
+        checkedIcon: checkboxes.blue.checkedIcon
+      };
+      break;
   }
 
   return (
@@ -123,6 +129,7 @@ export const DFOCheckbox = ({
       checkedIcon={<checkboxType.checkedIcon />}
       checked={value}
       onClick={onClick}
+      sx={{ alignSelf: 'center' }}
     />
   );
 };

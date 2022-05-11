@@ -5,7 +5,6 @@ import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
 import CheckboxCtrl from '../../../FormProvider/CheckboxCtrl';
 import RadioCtrl from '../../../FormProvider/RadioCtrl';
-import SelectionMultipleCtrl from '../../../FormProvider/SelectionMultipleCtrl';
 import TextAreaCtrl from '../../../FormProvider/TextAreaCtrl';
 import VerticalTextCtrl from '../../../FormProvider/VerticalTextCtrl';
 import { IVariant } from '../../../Nexus/entities/IVariant';
@@ -13,6 +12,7 @@ import VariantType from '../../../Nexus/entities/VariantType';
 import { useGetProjectQuery } from '../../../store/api/bankApi';
 import { IRouteParams } from '../../Models/IRouteParams';
 import QuestionsList from './QuestionsList';
+import ProductSelection from './ProductSelection';
 
 interface IProps {
   control: Control<IVariant>;
@@ -75,9 +75,7 @@ const VariantFormContent = ({ control }: IProps) => {
           label={`${t('general requirement')}`}
         />
       </Box>
-      {useProduct && (
-        <SelectionMultipleCtrl name={'products'} items={project.products} />
-      )}
+      {useProduct && <ProductSelection />}
       <Typography variant={'smBold'} sx={{ marginTop: 4, marginBottom: 2 }}>
         {t('how to answer requirement')}
       </Typography>
