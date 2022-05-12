@@ -24,7 +24,10 @@ const useStyles = makeStyles({
   nestableCustom: {
     width: '100%',
     '& .nestable-list': {
-      paddingLeft: 25
+      paddingLeft: 25,
+      '&:first-child': {
+        paddingLeft: 0
+      }
     },
     '& .nestable-item': {
       marginTop: '16px',
