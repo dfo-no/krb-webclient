@@ -10,6 +10,9 @@ import React from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import formatDate from '../common/DateUtils';
+import theme from '../theme';
+import makeStyles from '@mui/styles/makeStyles';
+import { Box, Typography } from '@mui/material';
 
 interface IProps {
   name: string;
@@ -18,12 +21,32 @@ interface IProps {
   maxDate?: string;
 }
 
+const useStyles = makeStyles({
+  datePicker: {
+    '& .MuiOutlinedInput-root': {
+      height: 45,
+      borderRadius: 0,
+      '& fieldset': {
+        border: `2px solid ${theme.palette.primary.main}`
+      },
+      '&.Mui-focused fieldset': {
+        border: `3px solid ${theme.palette.primary.main}`
+      },
+      '&:hover fieldset': {
+        border: `3px solid ${theme.palette.primary.main}`
+      }
+    }
+  }
+});
+
 const DateCtrl = ({
   name,
   label,
   minDate,
   maxDate
 }: IProps): React.ReactElement => {
+  const classes = useStyles();
+
   const {
     formState: { errors }
   } = useFormContext();
@@ -47,40 +70,45 @@ const DateCtrl = ({
       dateAdapter={AdapterDateFns}
       locale={localeMap[i18n.language]}
     >
-      <Controller
-        name={name}
-        render={({ field }) => (
-          <DatePicker
-            label={label}
-            mask={maskMap[i18n.language]}
-            ref={field.ref}
-            minDate={min}
-            maxDate={max}
-            value={field.value}
-            clearable
-            clearText="Clear"
-            onChange={(e: Date | null) => {
-              if (e) {
-                if (isDate(e) && isValid(e)) {
-                  const newValue = formatDate(e);
-                  field.onChange(newValue);
+      <Box sx={{ display: 'flex', gap: 1, flexDirection: 'column' }}>
+        <Typography variant={'smBold'} color={theme.palette.primary.main}>
+          {label}
+        </Typography>
+        <Controller
+          name={name}
+          render={({ field }) => (
+            <DatePicker
+              mask={maskMap[i18n.language]}
+              ref={field.ref}
+              minDate={min}
+              maxDate={max}
+              value={field.value}
+              clearable
+              clearText="Clear"
+              onChange={(e: Date | null) => {
+                if (e) {
+                  if (isDate(e) && isValid(e)) {
+                    const newValue = formatDate(e);
+                    field.onChange(newValue);
+                  } else {
+                    field.onChange(e);
+                  }
                 } else {
-                  field.onChange(e);
+                  field.onChange(null);
                 }
-              } else {
-                field.onChange(null);
-              }
-            }}
-            renderInput={(params) => (
-              <TextField
-                {...params}
-                error={!!get(errors, name)}
-                helperText={get(errors, name)?.message ?? ''}
-              />
-            )}
-          />
-        )}
-      />
+              }}
+              renderInput={(params) => (
+                <TextField
+                  className={classes.datePicker}
+                  {...params}
+                  error={!!get(errors, name)}
+                  helperText={get(errors, name)?.message ?? ''}
+                />
+              )}
+            />
+          )}
+        />
+      </Box>
     </LocalizationProvider>
   );
 };

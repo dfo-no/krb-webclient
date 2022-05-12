@@ -93,7 +93,7 @@ export default function NewProduct(): React.ReactElement {
     }
   }, [spec, product, setProduct, methods]);
 
-  const onSubmit = async (post: ISpecificationProduct) => {
+  const onSubmit = (post: ISpecificationProduct): void => {
     const newProduct =
       nexus.specificationService.createSpecificationProductWithId(post);
     const newId = spec.products.length;
@@ -102,6 +102,10 @@ export default function NewProduct(): React.ReactElement {
     setGenericRequirement(false);
     setCreate(false);
   };
+
+  const nonDeletedProducts: Parentable<IProduct>[] = spec.bank.products.filter(
+    (item) => !item.deletedDate
+  );
 
   return (
     <Box className={classes.newProduct}>
@@ -129,6 +133,7 @@ export default function NewProduct(): React.ReactElement {
                     'how many of this product do you need in this procurement'
                   )}
                   placeholder={t('quantity')}
+                  type={'number'}
                 />
                 <Divider sx={{ marginBottom: 4 }} />
                 <Typography
@@ -139,12 +144,12 @@ export default function NewProduct(): React.ReactElement {
                   <i>{spec.bank.title}</i> {t('that fits the product best')}
                 </Typography>
                 <Box className={classes.productTypeContainer}>
-                  {spec.bank.products && (
+                  {nonDeletedProducts.length && (
                     <SelectionSingularCtrl
                       name={'originProduct'}
-                      initValue={spec.bank.products[0]}
+                      initValue={nonDeletedProducts[0]}
                       saveAsString={false}
-                      parentableItems={spec.bank.products}
+                      parentableItems={nonDeletedProducts}
                       postChange={(selection: Parentable<IProduct>) => {
                         setProduct(selection);
                       }}

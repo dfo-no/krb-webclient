@@ -15,6 +15,8 @@ const HorizontalTextCtrl = ({
   placeholder = '',
   type = 'text'
 }: IProps): React.ReactElement => {
+  console.log(placeholder);
+
   const {
     formState: { errors }
   } = useFormContext();

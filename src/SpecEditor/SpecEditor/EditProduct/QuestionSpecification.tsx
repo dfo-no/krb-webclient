@@ -54,7 +54,7 @@ const QuestionSpecification = ({ item }: IProps) => {
         </ConfigBox>
       );
     case QuestionEnum.Q_CODELIST:
-      return <ConfigBox> Ikke definert </ConfigBox>;
+      return <ConfigBox></ConfigBox>;
     case QuestionEnum.Q_PERIOD_DATE:
       return (
         <ConfigBox>

@@ -17,7 +17,8 @@ const initialProduct: ISpecificationProduct = {
     parent: '',
     type: ModelType.product,
     sourceOriginal: null,
-    sourceRel: null
+    sourceRel: null,
+    deletedDate: null
   },
   weight: 0,
   amount: 0,

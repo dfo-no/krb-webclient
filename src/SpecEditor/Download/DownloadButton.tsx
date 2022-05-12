@@ -6,7 +6,7 @@ import { httpPost } from '../../api/http';
 import { ISpecification } from '../../Nexus/entities/ISpecification';
 import { useAppSelector } from '../../store/hooks';
 
-export default function SpecPage(): React.ReactElement {
+export default function DownloadButton(): React.ReactElement {
   const { t } = useTranslation();
   const { spec } = useAppSelector((state) => state.specification);
   const onDownLoad = () => {
@@ -34,7 +34,7 @@ export default function SpecPage(): React.ReactElement {
   };
 
   return (
-    <Button variant="primary" type="submit" onClick={onDownLoad}>
+    <Button variant="save" type="submit" onClick={onDownLoad}>
       {t('download specification')}
     </Button>
   );
