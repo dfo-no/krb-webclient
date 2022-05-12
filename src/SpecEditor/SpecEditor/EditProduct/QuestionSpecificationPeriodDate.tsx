@@ -117,9 +117,11 @@ const QuestionSpecificationPeriodDate = () => {
               width: 422
             }}
           >
-            <Typography variant="smBold" sx={{ alignSelf: 'center' }}>
-              {t('Date scores')}
-            </Typography>
+            {fields.length !== 0 && (
+              <Typography variant="smBold" sx={{ alignSelf: 'center' }}>
+                {t('Date scores')}
+              </Typography>
+            )}
           </Box>
           <Box
             sx={{
@@ -179,7 +181,7 @@ const QuestionSpecificationPeriodDate = () => {
               sx={{ width: 200 }}
               onClick={() => append({ score: 0, date: null })}
             >
-              {t('add new datescore')}
+              {t('add datescore')}
             </Button>
           </Box>
         </Box>
