@@ -58,9 +58,7 @@ export default function DeleteProductForm({
   const isInUse = Utils.productUsedInVariants(product, project);
 
   const infoText = hasChildren
-    ? `${t('cant delete this product')} ${
-        hasChildren ? t('product has children') : ''
-      }`
+    ? `${t('cant delete this product')} ${t('product has children')}`
     : isInUse
     ? t('product has connected requirements')
     : '';
