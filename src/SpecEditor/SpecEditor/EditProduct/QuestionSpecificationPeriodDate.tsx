@@ -1,30 +1,49 @@
-import { Box, Grid, styled, Typography } from '@mui/material';
+import { Box, Button, styled, Typography } from '@mui/material';
 import { t } from 'i18next';
 import DateCtrl from '../../../FormProvider/DateCtrl';
-import HorizontalTextCtrl from '../../../FormProvider/HorizontalTextCtrl';
-import { IPeriodDateQuestion } from '../../../Nexus/entities/IPeriodDateQuestion';
-import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
-import { useFieldArray, useFormContext } from 'react-hook-form';
-import { IRequirementAnswer } from '../../../models/IRequirementAnswer';
 import VerticalTextCtrl from '../../../FormProvider/VerticalTextCtrl';
-
-interface IProps {
-  item: IPeriodDateQuestion;
-}
+import { FormIconButton } from '../../../Workbench/Components/Form/FormIconButton';
+import theme from '../../../theme';
+import DeleteIcon from '@mui/icons-material/Delete';
+import { useEffect, useState } from 'react';
+import CheckboxCtrl from '../../../FormProvider/CheckboxCtrl';
+import { useFieldArray, useFormContext, useWatch } from 'react-hook-form';
+import { IRequirementAnswer } from '../../../models/IRequirementAnswer';
 
 const FieldBox = styled(Box)(() => ({
   width: 200
 }));
 
-const QuestionSpecificationPeriodDate = ({ item }: IProps) => {
+const QuestionSpecificationPeriodDate = () => {
+  const [isPeriod, setIsPeriod] = useState(false);
   const { control } = useFormContext<IRequirementAnswer>();
-  const { fields } = useFieldArray({
-    control,
-    name: 'question.config.scoreValues'
+  const useIsPeriod = useWatch({
+    name: 'question.config.isPeriod',
+    control
   });
 
+  const { fields, append, remove } = useFieldArray({
+    control,
+    name: 'question.config.dateScores'
+  });
+
+  console.log(fields);
+
+  useEffect(() => {
+    if (!useIsPeriod) {
+      setIsPeriod(false);
+      return;
+    }
+
+    setIsPeriod(true);
+  }, [useIsPeriod]);
+
   return (
-    <Box sx={{ display: 'flex', margin: '0 auto' }}>
+    <Box
+      sx={{
+        display: 'flex'
+      }}
+    >
       <Box
         sx={{
           display: 'flex',
@@ -33,6 +52,13 @@ const QuestionSpecificationPeriodDate = ({ item }: IProps) => {
           alignSelf: 'center'
         }}
       >
+        <Box>
+          <CheckboxCtrl
+            label="Periode"
+            variant="blue"
+            name="question.config.isPeriod"
+          />
+        </Box>
         <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
           <Box
             sx={{
@@ -42,19 +68,47 @@ const QuestionSpecificationPeriodDate = ({ item }: IProps) => {
             }}
           >
             <Typography variant="smBold" sx={{ alignSelf: 'center' }}>
-              Fra/til dato
+              {t('From/to date')}
             </Typography>
           </Box>
           <Box sx={{ display: 'flex', gap: 3 }}>
             <FieldBox>
-              <DateCtrl label={t('From')} name="question.config.fromBoundry" />
+              <DateCtrl label={t('From')} name="question.config.fromBoundary" />
             </FieldBox>
             <FieldBox>
-              <DateCtrl label={t('To')} name="question.config.toBoundry" />
+              <DateCtrl label={t('To')} name="question.config.toBoundary" />
             </FieldBox>
           </Box>
         </Box>
-
+        {isPeriod && (
+          <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
+            <Box
+              sx={{
+                display: 'flex',
+                justifyContent: 'center',
+                width: 422
+              }}
+            >
+              <Typography variant="smBold" sx={{ alignSelf: 'center' }}>
+                {t('Period')}
+              </Typography>
+            </Box>
+            <Box sx={{ display: 'flex', gap: 3 }}>
+              <FieldBox>
+                <VerticalTextCtrl
+                  name="question.config.periodMin"
+                  label={t('Minimum')}
+                />
+              </FieldBox>
+              <FieldBox>
+                <VerticalTextCtrl
+                  name="question.config.periodMax"
+                  label={t('Maximum')}
+                />
+              </FieldBox>
+            </Box>
+          </Box>
+        )}
         <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
           <Box
             sx={{
@@ -64,44 +118,69 @@ const QuestionSpecificationPeriodDate = ({ item }: IProps) => {
             }}
           >
             <Typography variant="smBold" sx={{ alignSelf: 'center' }}>
-              Periode
+              {t('Date scores')}
             </Typography>
           </Box>
-          <Box sx={{ display: 'flex', gap: 3 }}>
-            <FieldBox>
-              <VerticalTextCtrl name="question.config.periodMin" label="Min" />
-            </FieldBox>
-            <FieldBox>
-              <VerticalTextCtrl name="question.config.periodMax" label="Max" />
-            </FieldBox>
-          </Box>
-        </Box>
-
-        <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
           <Box
             sx={{
               display: 'flex',
-              justifyContent: 'center',
-              width: 422
+              flexDirection: 'column',
+              gap: 3
             }}
           >
-            <Typography variant="smBold" sx={{ alignSelf: 'center' }}>
-              Date scores
-            </Typography>
-          </Box>
-          <Box sx={{ display: 'flex', gap: 3 }}>
-            <FieldBox>
-              <DateCtrl label={t('From')} name="question.config.toBoundry" />
-            </FieldBox>
-            <FieldBox>
-              <VerticalTextCtrl
-                name={
-                  `question.config.scoreValues.0.score` as 'question.config.scoreValues.0.score'
-                }
-                label={t('Score')}
-                type={'number'}
-              />
-            </FieldBox>
+            {fields.map((field, index) => {
+              return (
+                <Box
+                  sx={{
+                    display: 'flex'
+                  }}
+                >
+                  <Box
+                    sx={{
+                      display: 'flex',
+                      flexDirection: 'row',
+                      gap: 3
+                    }}
+                  >
+                    <FieldBox>
+                      <DateCtrl
+                        label={t('From')}
+                        name={`question.config.dateScores.${index}.date`}
+                      />
+                    </FieldBox>
+                    <FieldBox>
+                      <Box sx={{ display: 'flex' }}>
+                        <VerticalTextCtrl
+                          name={`question.config.dateScores.${index}.score`}
+                          label={t('Score')}
+                          type={'number'}
+                        />
+                      </Box>
+                    </FieldBox>
+                  </Box>
+                  <FormIconButton
+                    onClick={() => remove(index)}
+                    hoverColor={theme.palette.errorRed.main}
+                    sx={{
+                      display: 'flex',
+                      cursor: 'pointer',
+                      color: theme.palette.primary.main,
+                      marginLeft: 2,
+                      marginTop: 2.7
+                    }}
+                  >
+                    <DeleteIcon />
+                  </FormIconButton>
+                </Box>
+              );
+            })}
+            <Button
+              variant="primary"
+              sx={{ width: 200 }}
+              onClick={() => append({ score: 0, date: null })}
+            >
+              {t('add new datescore')}
+            </Button>
           </Box>
         </Box>
       </Box>

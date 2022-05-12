@@ -6,7 +6,7 @@ import { DFOCheckbox } from '../components/DFOCheckbox/DFOCheckbox';
 
 interface IProps {
   name: string;
-  label: string | number | ReactElement;
+  label?: string | number | ReactElement;
   variant?: string;
 }
 
