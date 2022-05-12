@@ -182,10 +182,7 @@ theme.components = {
   MuiCheckbox: {
     styleOverrides: {
       root: {
-        width: '40px',
-        height: '40px',
-        paddingTop: '0',
-        paddingBottom: '0'
+        paddingLeft: 0
       }
     }
   },

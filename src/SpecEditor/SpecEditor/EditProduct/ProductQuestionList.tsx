@@ -35,7 +35,7 @@ interface IProps {
 const ProductQuestionsList = ({ variant }: IProps) => {
   const { t } = useTranslation();
   const classes = useStyles();
-  const [selectedRadioIndex, setSelectedRadioIndex] = useState(0);
+  const [selectedRadioIndex, setSelectedRadioIndex] = useState(-1);
   const { control, setValue } = useFormContext<IRequirementAnswer>();
   const useQuestionId = useWatch({ name: 'questionId', control });
 

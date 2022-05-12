@@ -93,7 +93,7 @@ export default function NewProduct(): React.ReactElement {
     }
   }, [spec, product, setProduct, methods]);
 
-  const onSubmit = async (post: ISpecificationProduct) => {
+  const onSubmit = (post: ISpecificationProduct): void => {
     const newProduct =
       nexus.specificationService.createSpecificationProductWithId(post);
     const newId = spec.products.length;
@@ -133,6 +133,7 @@ export default function NewProduct(): React.ReactElement {
                     'how many of this product do you need in this procurement'
                   )}
                   placeholder={t('quantity')}
+                  type={'number'}
                 />
                 <Divider sx={{ marginBottom: 4 }} />
                 <Typography

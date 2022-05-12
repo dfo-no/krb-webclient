@@ -1,5 +1,5 @@
 import { Box, Typography } from '@mui/material';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import theme from '../../../theme';
 import { IVariant } from '../../../Nexus/entities/IVariant';
@@ -7,8 +7,11 @@ import ProductQuestionList from './ProductQuestionList';
 import { IRequirement } from '../../../Nexus/entities/IRequirement';
 import { DFOCheckbox } from '../../../components/DFOCheckbox/DFOCheckbox';
 import { IRequirementAnswer } from '../../../models/IRequirementAnswer';
-import { useFormContext } from 'react-hook-form';
+import { useFormContext, useWatch } from 'react-hook-form';
 import Nexus from '../../../Nexus/Nexus';
+import SliderCtrl from '../../../FormProvider/SliderCtrl';
+import { IMark } from '../../../Nexus/entities/IMark';
+import { WeightEnum } from '../../../models/WeightEnum';
 
 interface IProps {
   requirement: IRequirement;
@@ -21,9 +24,17 @@ export default function EditProductVariant({
 }: IProps): React.ReactElement {
   const { t } = useTranslation();
   const nexus = Nexus.getInstance();
-  const { reset } = useFormContext<IRequirementAnswer>();
+  const { control, reset } = useFormContext<IRequirementAnswer>();
+  const useWeight = useWatch({ name: 'weight', control });
   const defaultValues =
     nexus.specificationService.generateDefaultRequirementAnswer(requirement);
+  const [sliderMark, setSliderMark] = useState<IMark[]>([
+    { value: WeightEnum.MEDIUM, label: t(WeightEnum[WeightEnum.MEDIUM]) }
+  ]);
+
+  useEffect(() => {
+    setSliderMark([{ value: useWeight, label: t(WeightEnum[useWeight]) }]);
+  }, [t, useWeight]);
 
   const onCancel = () => {
     reset(defaultValues);
@@ -33,9 +44,20 @@ export default function EditProductVariant({
     <Box sx={{ display: 'flex', flexDirection: 'column', marginLeft: 6 }}>
       <Box sx={{ display: 'flex', flexDirection: 'row', marginLeft: -6 }}>
         <DFOCheckbox value={true} onClick={onCancel} />
-        <Typography variant={'lg'} sx={{ alignSelf: 'center', marginLeft: 1 }}>
+        <Typography variant={'lg'} sx={{ alignSelf: 'center', marginLeft: 2 }}>
           {variant.description}
         </Typography>
+        <Box sx={{ flex: '0 0 15%', marginLeft: 'auto', paddingLeft: 4 }}>
+          <SliderCtrl
+            name={'weight'}
+            label={`${t('Weighting')}:`}
+            min={WeightEnum.LOWEST}
+            step={10}
+            max={WeightEnum.HIGHEST}
+            showValue={false}
+            marks={sliderMark}
+          />
+        </Box>
       </Box>
       <Typography variant={'smBold'} color={theme.palette.primary.main}>
         {t('requirementText')}
