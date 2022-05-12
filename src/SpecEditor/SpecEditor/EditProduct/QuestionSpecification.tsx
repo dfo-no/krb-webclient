@@ -58,7 +58,7 @@ const QuestionSpecification = ({ item }: IProps) => {
     case QuestionEnum.Q_PERIOD_DATE:
       return (
         <ConfigBox>
-          <QuestionSpecificationPeriodDate />{' '}
+          <QuestionSpecificationPeriodDate />
         </ConfigBox>
       );
     case QuestionEnum.Q_TIME:
