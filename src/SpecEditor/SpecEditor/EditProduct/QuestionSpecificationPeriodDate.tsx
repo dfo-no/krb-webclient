@@ -147,6 +147,7 @@ const QuestionSpecificationPeriodDate = () => {
             {fields.map((field, index) => {
               return (
                 <Box
+                  key={index}
                   sx={{
                     display: 'flex'
                   }}
