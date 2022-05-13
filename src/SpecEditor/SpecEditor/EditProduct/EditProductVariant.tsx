@@ -60,19 +60,19 @@ export default function EditProductVariant({
         </Box>
       </Box>
       <Typography variant={'smBold'} color={theme.palette.primary.main}>
-        {t('requirementText')}
+        {t('Requirement text')}
       </Typography>
       <Typography sx={{ marginBottom: 2 }}>
         {variant.requirementText ? variant.requirementText : '-'}
       </Typography>
       <Typography variant={'smBold'} color={theme.palette.primary.main}>
-        {t('instruction')}
+        {t('Instruction')}
       </Typography>
       <Typography sx={{ marginBottom: 2 }}>
         {variant.instruction ? variant.instruction : '-'}
       </Typography>
       <Typography variant={'smBold'}>
-        {t('how to answer requirement')}
+        {t('How to answer requirement')}
       </Typography>
       <ProductQuestionList variant={variant} />
     </Box>

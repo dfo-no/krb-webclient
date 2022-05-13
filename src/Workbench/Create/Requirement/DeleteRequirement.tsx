@@ -71,14 +71,14 @@ function DeleteRequirement({
             onClick={onSubmit}
             aria-label="delete"
           >
-            {t('delete')}
+            {t('Delete')}
           </FormTextButton>
           <FormTextButton
             hoverColor={theme.palette.gray500.main}
             onClick={() => handleClose()}
             aria-label="close"
           >
-            {t('cancel')}
+            {t('Cancel')}
           </FormTextButton>
           {children}
         </FormDeleteBox>
@@ -86,14 +86,14 @@ function DeleteRequirement({
       {hasChildren && (
         <FormCantDeleteBox>
           <Typography variant="smBold">
-            {t('cant delete this requirement')}
+            {t('Cant delete this requirement')}
           </Typography>
           <FormTextButton
             hoverColor={theme.palette.gray500.main}
             onClick={() => handleClose()}
             aria-label="close"
           >
-            {t('cancel')}
+            {t('Cancel')}
           </FormTextButton>
           {children}
         </FormCantDeleteBox>

@@ -87,10 +87,10 @@ function NewVariantForm({
                 onClick={() => closeAndReset()}
                 sx={{ marginLeft: 'auto', marginRight: 2 }}
               >
-                {t('cancel')}
+                {t('Cancel')}
               </Button>
               <Button variant="save" type="submit">
-                {t('save')}
+                {t('Save')}
               </Button>
             </Box>
             <GeneralErrorMessage errors={methods.formState.errors} />

@@ -44,19 +44,19 @@ const VariantFormContent = ({ control }: IProps) => {
       <Box sx={{ marginBottom: 4 }}>
         <TextAreaCtrl
           name={`requirementText`}
-          label={t('requirementText')}
+          label={t('Requirement text')}
           placeholder=""
         />
       </Box>
       <Box sx={{ marginBottom: 4 }}>
         <TextAreaCtrl
           name={`instruction`}
-          label={t('instruction')}
+          label={t('Instruction')}
           placeholder=""
         />
       </Box>
       <Typography variant={'smBold'} sx={{ marginBottom: 2 }}>
-        {t('type variant')}
+        {t('Type variant')}
       </Typography>
       <RadioCtrl
         name="type"
@@ -66,7 +66,7 @@ const VariantFormContent = ({ control }: IProps) => {
         ]}
       />
       <Typography variant={'smBold'} sx={{ marginTop: 4, marginBottom: 2 }}>
-        {t('how to use this requirement')}
+        {t('How to use this requirement')}
       </Typography>
       <Box sx={{ display: 'flex', width: '100%', marginBottom: 2, gap: 2 }}>
         <CheckboxCtrl name={`useProduct`} label={`${t('Product')}`} />
@@ -77,7 +77,7 @@ const VariantFormContent = ({ control }: IProps) => {
       </Box>
       {useProduct && <ProductSelection />}
       <Typography variant={'smBold'} sx={{ marginTop: 4, marginBottom: 2 }}>
-        {t('how to answer requirement')}
+        {t('How to answer requirement')}
       </Typography>
       <QuestionsList />
     </>

@@ -51,18 +51,18 @@ const NewProductForm = ({ handleClose, specificationProduct }: IProps) => {
           <ModalFieldsBox>
             <VerticalTextCtrl
               name="title"
-              label={t('name of product')}
-              placeholder={t('name of product')}
+              label={t('Name of product')}
+              placeholder={t('Name of product')}
             />
             <VerticalTextCtrl
               name="description"
-              label={t('description of the product')}
-              placeholder={t('description of the product')}
+              label={t('Description of the product')}
+              placeholder={t('Description of the product')}
             />
             <VerticalTextCtrl
               name="amount"
               label={t(
-                'how many of this product do you need in this procurement'
+                'How many of this product do you need in this procurement'
               )}
               placeholder={t('quantity')}
               type={'number'}
@@ -70,10 +70,10 @@ const NewProductForm = ({ handleClose, specificationProduct }: IProps) => {
           </ModalFieldsBox>
           <ModalButtonsBox>
             <ModalButton variant="cancel" onClick={() => handleClose()}>
-              {t('cancel')}
+              {t('Cancel')}
             </ModalButton>
             <ModalButton variant="save" type="submit">
-              {t('save')}
+              {t('Save')}
             </ModalButton>
           </ModalButtonsBox>
         </ModalBox>

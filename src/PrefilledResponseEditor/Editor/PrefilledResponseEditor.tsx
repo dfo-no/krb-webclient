@@ -87,7 +87,7 @@ export default function PrefilledResponseEditor(): React.ReactElement {
                   )}
                 </Col>
                 <Col sm={2}>
-                  <Button type="submit">{t('save')}</Button>
+                  <Button type="submit">{t('Save')}</Button>
                 </Col>
               </Form.Group>
               <ErrorSummary errors={errors} />

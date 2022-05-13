@@ -80,14 +80,14 @@ export default function DeleteTagForm({
               type="submit"
               aria-label="delete"
             >
-              {t('delete')}
+              {t('Delete')}
             </FormTextButton>
             <FormTextButton
               hoverColor={theme.palette.gray400.main}
               onClick={() => handleClose()}
               aria-label="close"
             >
-              {t('cancel')}
+              {t('Cancel')}
             </FormTextButton>
             {child}
           </FormDeleteBox>
@@ -95,7 +95,7 @@ export default function DeleteTagForm({
         {hasChildren && (
           <FormCantDeleteBox>
             <Typography variant="smBold">
-              {t('cant delete this tag')}{' '}
+              {t('Cant delete this tag')}{' '}
               {hasChildren ? t('tag has children') : ''}
             </Typography>
             <FormTextButton
@@ -103,7 +103,7 @@ export default function DeleteTagForm({
               onClick={() => handleClose()}
               aria-label="close"
             >
-              {t('cancel')}
+              {t('Cancel')}
             </FormTextButton>
             {child}
           </FormCantDeleteBox>

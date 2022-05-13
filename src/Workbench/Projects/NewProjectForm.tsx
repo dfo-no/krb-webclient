@@ -58,26 +58,26 @@ const NewProjectForm = ({ handleClose }: IProps) => {
       >
         <ModalBox>
           <Typography variant="lg" color={theme.palette.primary.main}>
-            {t('create new project')}
+            {t('Create new project')}
           </Typography>
           <ModalFieldsBox>
             <VerticalTextCtrl
               name="title"
               label={t('What is the name of the project?')}
-              placeholder={t('name of project')}
+              placeholder={t('Name of project')}
             />
             <VerticalTextCtrl
               name="description"
-              label={t('describe the project')}
+              label={t('Describe the project')}
               placeholder={t('short description')}
             />
           </ModalFieldsBox>
           <ModalButtonsBox>
             <ModalButton variant="cancel" onClick={() => handleClose()}>
-              {t('cancel')}
+              {t('Cancel')}
             </ModalButton>
             <ModalButton variant="save" type="submit">
-              {t('create project')}
+              {t('Create project')}
             </ModalButton>
           </ModalButtonsBox>
         </ModalBox>

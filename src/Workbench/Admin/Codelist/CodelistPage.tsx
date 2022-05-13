@@ -93,7 +93,7 @@ export default function CodeListPage(): React.ReactElement {
           {' '}
           <DFOSearchBar
             list={project.codelist}
-            placeholder={t('search for codelist')}
+            placeholder={t('Search for codelist')}
             callback={searchFieldCallback}
             searchFunction={codelistSearch}
           />

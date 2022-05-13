@@ -121,7 +121,7 @@ export default function Projects(): React.ReactElement {
   const renderNewBankButton = () => {
     return (
       <Button variant="primary" onClick={() => setOpen(true)}>
-        {t('create new project')}
+        {t('Create new project')}
       </Button>
     );
   };

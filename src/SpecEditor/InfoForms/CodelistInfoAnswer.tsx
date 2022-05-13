@@ -140,7 +140,7 @@ export default function CodelistInfoAnswer({
           ))}
         </Form.Control>
         <Button variant="primary" type="submit">
-          {t('save')}
+          {t('Save')}
         </Button>
         <ErrorSummary errors={errors} />
       </form>

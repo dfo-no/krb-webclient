@@ -73,7 +73,7 @@ function NewRequirementForm({ need, handleClose }: IProps): React.ReactElement {
       >
         <ModalBox>
           <Typography variant="lg" color={theme.palette.primary.main}>
-            {t('create requirement')}
+            {t('Create requirement')}
           </Typography>
           <ModalFieldsBox>
             <VerticalTextCtrl
@@ -84,10 +84,10 @@ function NewRequirementForm({ need, handleClose }: IProps): React.ReactElement {
           </ModalFieldsBox>
           <ModalButtonsBox>
             <ModalButton variant="cancel" onClick={() => handleClose('')}>
-              {t('cancel')}
+              {t('Cancel')}
             </ModalButton>
             <ModalButton variant="save" type="submit">
-              {t('save')}
+              {t('Save')}
             </ModalButton>
           </ModalButtonsBox>
         </ModalBox>

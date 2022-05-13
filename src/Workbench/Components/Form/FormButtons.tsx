@@ -15,7 +15,7 @@ export default function FormButtons({
   return (
     <FormButtonBox>
       <Button variant="save" type="submit" aria-label="save">
-        {t('save')}
+        {t('Save')}
       </Button>
       <Button
         variant="cancel"
@@ -23,7 +23,7 @@ export default function FormButtons({
         onClick={() => handleClose()}
         aria-label="close"
       >
-        {t('cancel')}
+        {t('Cancel')}
       </Button>
     </FormButtonBox>
   );

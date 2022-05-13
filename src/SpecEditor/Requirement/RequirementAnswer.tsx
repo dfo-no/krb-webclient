@@ -334,7 +334,7 @@ export default function RequirementAnswer({
           )}
         </Row>
         <Col className="p-0 d-flex justify-content-end">
-          <Button type="submit">{t('save')}</Button>
+          <Button type="submit">{t('Save')}</Button>
         </Col>
 
         <ErrorSummary errors={errors} />

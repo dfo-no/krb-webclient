@@ -95,7 +95,7 @@ export default function FileUploadAnswerForm({
         <form onSubmit={handleSubmit(saveValues)}>
           <Alert severity="error">Not implemented yet!</Alert>
           <Button variant="primary" disabled type="submit">
-            {t('save')}
+            {t('Save')}
           </Button>
           <ErrorSummary errors={errors} />
         </form>

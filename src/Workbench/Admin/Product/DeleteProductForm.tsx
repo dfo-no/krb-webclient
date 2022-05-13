@@ -91,14 +91,14 @@ export default function DeleteProductForm({
                 ? `${t('product has connected requirements')} ${t(
                     'delete anyways'
                   )}`
-                : t('delete')}
+                : t('Delete')}
             </FormTextButton>
             <FormTextButton
               hoverColor={theme.palette.gray400.main}
               onClick={() => handleClose()}
               aria-label="close"
             >
-              {t('cancel')}
+              {t('Cancel')}
             </FormTextButton>
             {children}
           </FormDeleteBox>
@@ -106,7 +106,7 @@ export default function DeleteProductForm({
         {hasChildren && (
           <FormCantDeleteBox>
             <Typography variant="smBold" sx={{ paddingLeft: 1 }}>
-              {t('cant delete this product')}{' '}
+              {t('Cant delete this product')}{' '}
               {hasChildren ? t('product has children') : ''}
             </Typography>
             <FormTextButton
@@ -114,7 +114,7 @@ export default function DeleteProductForm({
               onClick={() => handleClose()}
               aria-label="close"
             >
-              {t('cancel')}
+              {t('Cancel')}
             </FormTextButton>
             {children}
           </FormCantDeleteBox>

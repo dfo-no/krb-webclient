@@ -77,14 +77,14 @@ export default function DeleteCodeForm({
             type="submit"
             aria-label="delete"
           >
-            {t('delete')}
+            {t('Delete')}
           </FormTextButton>
           <FormTextButton
             hoverColor={theme.palette.gray400.main}
             onClick={() => handleClose(null)}
             aria-label="close"
           >
-            {t('cancel')}
+            {t('Cancel')}
           </FormTextButton>
           {children}
         </FormDeleteBox>

@@ -79,14 +79,14 @@ export default function DeleteCodelistForm({
               type="submit"
               aria-label="delete"
             >
-              {t('delete')}
+              {t('Delete')}
             </FormTextButton>
             <FormTextButton
               hoverColor={theme.palette.gray400.main}
               onClick={() => handleClose(null)}
               aria-label="close"
             >
-              {t('cancel')}
+              {t('Cancel')}
             </FormTextButton>
             {children}
           </FormDeleteBox>
@@ -95,14 +95,14 @@ export default function DeleteCodelistForm({
           <FormCantDeleteBox>
             <Typography variant="smBold" sx={{ paddingLeft: 1 }}>
               {t('cant delete this codelist')}{' '}
-              {isInUse ? t('codelist has connected requirements') : ''}
+              {isInUse ? t('Codelist has connected requirements') : ''}
             </Typography>
             <FormTextButton
               hoverColor={theme.palette.gray400.main}
               onClick={() => handleClose(null)}
               aria-label="close"
             >
-              {t('cancel')}
+              {t('Cancel')}
             </FormTextButton>
             {children}
           </FormCantDeleteBox>

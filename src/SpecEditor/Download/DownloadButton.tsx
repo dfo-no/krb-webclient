@@ -35,7 +35,7 @@ export default function DownloadButton(): React.ReactElement {
 
   return (
     <Button variant="save" type="submit" onClick={onDownLoad}>
-      {t('download specification')}
+      {t('Download specification')}
     </Button>
   );
 }

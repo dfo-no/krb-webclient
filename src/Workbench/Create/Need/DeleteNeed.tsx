@@ -58,27 +58,27 @@ function DeleteNeed({
             hoverColor={theme.palette.errorRed.main}
             onClick={onDelete}
           >
-            {t('delete')}
+            {t('Delete')}
           </FormTextButton>
           <FormTextButton
             hoverColor={theme.palette.gray500.main}
             onClick={() => handleClose()}
             aria-label="close"
           >
-            {t('cancel')}
+            {t('Cancel')}
           </FormTextButton>
           {children}
         </FormDeleteBox>
       )}
       {hasChildren && (
         <FormCantDeleteBox>
-          <Typography variant="smBold">{t('cant delete this need')}</Typography>
+          <Typography variant="smBold">{t('Cant delete this need')}</Typography>
           <FormTextButton
             hoverColor={theme.palette.gray500.main}
             onClick={() => handleClose()}
             aria-label="close"
           >
-            {t('cancel')}
+            {t('Cancel')}
           </FormTextButton>
           {children}
         </FormCantDeleteBox>

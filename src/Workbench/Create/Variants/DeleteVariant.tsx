@@ -74,14 +74,14 @@ function DeleteVariant({
             onClick={onSubmit}
             aria-label="delete"
           >
-            {t('delete')}
+            {t('Delete')}
           </FormTextButton>
           <FormTextButton
             hoverColor={theme.palette.gray500.main}
             onClick={() => handleClose()}
             aria-label="close"
           >
-            {t('cancel')}
+            {t('Cancel')}
           </FormTextButton>
           {children}
         </FormDeleteBox>
@@ -89,14 +89,14 @@ function DeleteVariant({
       {hasChildren && (
         <FormCantDeleteBox>
           <Typography variant="smBold">
-            {t('cant delete this variant')}
+            {t('Cant delete this variant')}
           </Typography>
           <FormTextButton
             hoverColor={theme.palette.gray500.main}
             onClick={() => handleClose()}
             aria-label="close"
           >
-            {t('cancel')}
+            {t('Cancel')}
           </FormTextButton>
           {children}
         </FormCantDeleteBox>
