@@ -165,7 +165,7 @@ const QuestionSpecificationPeriodDate = () => {
                         name={`question.config.dateScores.${index}.date`}
                       />
                     </FieldBox>
-                    <FieldBox sx={{ width: 232 }}>
+                    <FieldBox sx={{ width: 240 }}>
                       <VerticalTextCtrl
                         name={`question.config.dateScores.${index}.score`}
                         label={t('Score')}
