@@ -6,11 +6,9 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import Typography from '@mui/material/Typography';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { Link } from 'react-router-dom';
 import { IBank } from '../../Nexus/entities/IBank';
-import { useAppDispatch } from '../../store/hooks';
-import { selectBank } from '../../store/reducers/selectedBank-reducer';
-import { setBank } from '../../store/reducers/spesification-reducer';
+import { Box } from '@mui/material/';
+import { useBankState } from './BankContext';
 
 interface IFilteredListProps {
   list: Record<string, IBank>;
@@ -19,15 +17,9 @@ interface IFilteredListProps {
 export default function FilteredList({
   list
 }: IFilteredListProps): React.ReactElement {
-  const dispatch = useAppDispatch();
+  const { setSelectedBank } = useBankState();
   const { t } = useTranslation();
 
-  const handleSelectedBank = (bank: IBank) => () => {
-    dispatch(selectBank(bank.id));
-    dispatch(setBank(bank));
-  };
-
-  // TODO: correct link to other page than workbench when site exist.
   // TODO: Discuss suitable amount of elements displayed
   const filteredElements = () => {
     return Object.values(list).map((bank: IBank) => {
@@ -37,9 +29,12 @@ export default function FilteredList({
             <ListItemIcon>
               <MenuBookIcon />
             </ListItemIcon>
-            <Link to="/specification" onClick={handleSelectedBank(bank)}>
+            <Box
+              sx={{ cursor: 'pointer' }}
+              onClick={() => setSelectedBank(bank)}
+            >
               {bank.title}
-            </Link>
+            </Box>
             {bank.publishedDate && (
               <Typography variant="subtitle1" sx={{ mx: 2 }}>
                 {t('date.ago', { date: new Date(bank.publishedDate) })}

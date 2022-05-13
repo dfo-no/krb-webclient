@@ -14,6 +14,8 @@ import SearchBar from '../SearchBar/SearchBar';
 import { useGetBanksQuery } from '../store/api/bankApi';
 import { ScrollableContainer } from '../Workbench/Components/ScrollableContainer';
 import FilteredList from './Components/FilteredList';
+import ProjectSelectionModal from './Components/ProjectSelectionModal';
+import { useBankState } from './Components/BankContext';
 
 const useStyles = makeStyles({
   homepageWrapper: {
@@ -40,6 +42,7 @@ const useStyles = makeStyles({
 
 export default function HomePage(): React.ReactElement {
   const { t } = useTranslation();
+  const { selectedBank } = useBankState();
 
   const { data: latest } = useGetBanksQuery({
     pageSize: 5,
@@ -89,13 +92,6 @@ export default function HomePage(): React.ReactElement {
                     </Typography>
                   </Link>
                 </ListItem>
-                <ListItem>
-                  <Link to="/specification">
-                    <Typography variant="h5">
-                      {t('create specification')}
-                    </Typography>
-                  </Link>
-                </ListItem>
               </List>
             </Box>
           </Box>
@@ -120,6 +116,7 @@ export default function HomePage(): React.ReactElement {
         </Box>
       </ScrollableContainer>
       <Footer />
+      {selectedBank && <ProjectSelectionModal selectedBank={selectedBank} />}
     </div>
   );
 }

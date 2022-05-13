@@ -151,7 +151,6 @@ export default function Projects(): React.ReactElement {
         <Box className={classes.contentContainer}>
           <SearchContainer sx={{ marginBottom: 1 }}>
             <SearchFieldContainer>
-              {' '}
               <DFOSearchBar
                 list={allProjects}
                 placeholder={t('search for banks')}

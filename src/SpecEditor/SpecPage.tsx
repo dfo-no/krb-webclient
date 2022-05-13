@@ -123,7 +123,6 @@ export default function SpecPage(): React.ReactElement {
   const { t } = useTranslation();
   const classes = useStyles();
   const dispatch = useAppDispatch();
-  const [spec, setSpec] = useState<ISpecification | null>(null);
   const [latestPublishedBanks, setLatestPublishedBanks] = useState<IBank[]>([]);
 
   const { data: banks, isLoading } = useGetBanksQuery({
@@ -175,7 +174,6 @@ export default function SpecPage(): React.ReactElement {
 
   const openProjectModal = (bank: IBank) => {
     const newSpec = SpecificationStoreService.getSpecificationFromBank(bank);
-    setSpec(newSpec);
     dispatch(setSpecification(newSpec));
   };
 
@@ -252,18 +250,6 @@ export default function SpecPage(): React.ReactElement {
             </Typography>
           </Box>
         </Box>
-      )}
-      {spec && (
-        <DFODialog
-          isOpen={true}
-          handleClose={() => setSpec(null)}
-          children={
-            <NewSpecForm
-              handleClose={() => setSpec(null)}
-              specification={spec}
-            />
-          }
-        />
       )}
     </Box>
   );

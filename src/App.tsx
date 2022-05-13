@@ -21,6 +21,7 @@ import ResponseModule from './ResponseEditor/ResponseModule';
 import ResponsePage from './ResponseEditor/ResponsePage';
 import SpecModule from './SpecEditor/SpecModule';
 import WorkbenchModule from './Workbench/WorkbenchModule';
+import { BankProvider } from './Home/Components/BankContext';
 
 const msalInstance = new PublicClientApplication(msalConfig);
 
@@ -31,7 +32,9 @@ function App(): React.ReactElement {
     return (
       <Switch>
         <Route exact path="/">
-          <HomePage />
+          <BankProvider>
+            <HomePage />
+          </BankProvider>
         </Route>
         <PageLayout>
           <AuthenticatedTemplate>
