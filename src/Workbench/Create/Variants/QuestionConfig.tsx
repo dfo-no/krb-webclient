@@ -76,7 +76,7 @@ const QuestionConfig = ({ item, index }: IProps) => {
         <ConfigBox>
           <VerticalTextCtrl
             name={`questions.${index}.config.min` as 'questions.0.config.min'}
-            label={t('Minumum')}
+            label={t('Minimum')}
             type={'number'}
           />
           <VerticalTextCtrl
