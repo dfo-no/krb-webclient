@@ -68,8 +68,8 @@ const VariantFormContent = ({ control }: IProps) => {
       <Typography variant={'smBold'} sx={{ marginTop: 4, marginBottom: 2 }}>
         {t('how to use this requirement')}
       </Typography>
-      <Box sx={{ width: '100%', marginBottom: 2 }}>
-        <CheckboxCtrl name={`useProduct`} label={`${t('product')}`} />
+      <Box sx={{ display: 'flex', width: '100%', marginBottom: 2, gap: 2 }}>
+        <CheckboxCtrl name={`useProduct`} label={`${t('Product')}`} />
         <CheckboxCtrl
           name={`useSpesification`}
           label={`${t('general requirement')}`}
