@@ -10,17 +10,21 @@ interface IProps {
   label: string;
   placeholder?: string;
   type?: string;
+  endAdornment?: any;
 }
 
 const VerticalTextCtrl = ({
   name,
   label = '',
   placeholder = '',
-  type = 'text'
+  type = 'text',
+  endAdornment
 }: IProps): React.ReactElement => {
   const {
     formState: { errors }
   } = useFormContext();
+
+  console.log(endAdornment);
 
   return (
     <FormControl error={!!get(errors, name)} sx={{ width: '100%' }}>
@@ -31,12 +35,17 @@ const VerticalTextCtrl = ({
         <Controller
           name={name}
           render={({ field }) => (
-            <DFOTextField
-              {...field}
-              placeholder={placeholder}
-              type={type}
-              disableUnderline
-            />
+            <Box sx={{ display: 'flex', gap: 1 }}>
+              <DFOTextField
+                {...field}
+                placeholder={placeholder}
+                type={type}
+                disableUnderline
+              />
+              {endAdornment && (
+                <Box sx={{ alignSelf: 'center' }}>{endAdornment}</Box>
+              )}
+            </Box>
           )}
         />
         {!!get(errors, name) && (

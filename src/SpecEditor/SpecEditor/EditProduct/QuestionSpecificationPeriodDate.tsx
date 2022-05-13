@@ -27,7 +27,21 @@ const QuestionSpecificationPeriodDate = () => {
     name: 'question.config.dateScores'
   });
 
-  console.log(fields);
+  const renderDeleteAdornment = (index: number) => {
+    return (
+      <FormIconButton
+        onClick={() => remove(index)}
+        hoverColor={theme.palette.errorRed.main}
+        sx={{
+          display: 'flex',
+          cursor: 'pointer',
+          color: theme.palette.primary.main
+        }}
+      >
+        <DeleteIcon />
+      </FormIconButton>
+    );
+  };
 
   useEffect(() => {
     if (!useIsPeriod) {
@@ -150,29 +164,15 @@ const QuestionSpecificationPeriodDate = () => {
                         name={`question.config.dateScores.${index}.date`}
                       />
                     </FieldBox>
-                    <FieldBox>
-                      <Box sx={{ display: 'flex' }}>
-                        <VerticalTextCtrl
-                          name={`question.config.dateScores.${index}.score`}
-                          label={t('Score')}
-                          type={'number'}
-                        />
-                      </Box>
+                    <FieldBox sx={{ width: 232 }}>
+                      <VerticalTextCtrl
+                        name={`question.config.dateScores.${index}.score`}
+                        label={t('Score')}
+                        type={'number'}
+                        endAdornment={renderDeleteAdornment(index)}
+                      />
                     </FieldBox>
                   </Box>
-                  <FormIconButton
-                    onClick={() => remove(index)}
-                    hoverColor={theme.palette.errorRed.main}
-                    sx={{
-                      display: 'flex',
-                      cursor: 'pointer',
-                      color: theme.palette.primary.main,
-                      marginLeft: 2,
-                      marginTop: 2.7
-                    }}
-                  >
-                    <DeleteIcon />
-                  </FormIconButton>
                 </Box>
               );
             })}

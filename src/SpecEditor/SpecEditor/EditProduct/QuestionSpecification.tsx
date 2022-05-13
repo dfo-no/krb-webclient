@@ -11,6 +11,7 @@ import { useTranslation } from 'react-i18next';
 import QuestionSpecificationSlider from './QuestionSpecificationSlider';
 import QuestionSpecificationCheckbox from './QuestionSpecificationCheckbox';
 import QuestionSpecificationPeriodDate from './QuestionSpecificationPeriodDate';
+import QuestionSpecificationCodelist from './QuestionSpecificationCodelist';
 
 const ConfigBox = styled(Box)(() => ({
   display: 'flex',
@@ -54,7 +55,11 @@ const QuestionSpecification = ({ item }: IProps) => {
         </ConfigBox>
       );
     case QuestionEnum.Q_CODELIST:
-      return <ConfigBox></ConfigBox>;
+      return (
+        <ConfigBox>
+          <QuestionSpecificationCodelist item={item} />
+        </ConfigBox>
+      );
     case QuestionEnum.Q_PERIOD_DATE:
       return (
         <ConfigBox>
