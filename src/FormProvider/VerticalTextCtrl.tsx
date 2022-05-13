@@ -10,7 +10,7 @@ interface IProps {
   label: string;
   placeholder?: string;
   type?: string;
-  endAdornment?: any;
+  endAdornment?: object;
 }
 
 const VerticalTextCtrl = ({
@@ -23,8 +23,6 @@ const VerticalTextCtrl = ({
   const {
     formState: { errors }
   } = useFormContext();
-
-  console.log(endAdornment);
 
   return (
     <FormControl error={!!get(errors, name)} sx={{ width: '100%' }}>
