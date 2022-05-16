@@ -23,10 +23,12 @@ import { addAlert } from '../../../store/reducers/alert-reducer';
 import { StandardContainer } from '../../Components/StandardContainer';
 import { IRouteParams } from '../../Models/IRouteParams';
 import ProjectHeader from '../Project/ProjectHeader';
+import { useFormStyles } from '../../Components/Form/FormStyles';
 
 function PropertiesPage(): React.ReactElement {
   const dispatch = useAppDispatch();
   const { t } = useTranslation();
+  const formStyles = useFormStyles();
   const { projectId } = useParams<IRouteParams>();
   const { data: project, isLoading } = useGetProjectQuery(projectId);
   const [putProject] = usePutProjectMutation();
@@ -57,34 +59,33 @@ function PropertiesPage(): React.ReactElement {
 
   return (
     <StandardContainer>
-      <FormProvider {...methods}>
-        <form
-          onSubmit={methods.handleSubmit(onSubmit)}
-          autoComplete="off"
-          noValidate
-        >
-          <StandardContainer>
-            <Card>
-              <DFOCardHeader>
-                <ProjectHeader />
-              </DFOCardHeader>
+      <Card>
+        <FormProvider {...methods}>
+          <form
+            className={formStyles.singlePageForm}
+            onSubmit={methods.handleSubmit(onSubmit)}
+            autoComplete="off"
+            noValidate
+          >
+            <DFOCardHeader>
+              <ProjectHeader />
+            </DFOCardHeader>
 
-              <CardContent>
-                <HorizontalTextCtrl name="title" placeholder={t('Title')} />
-                <HorizontalTextCtrl
-                  name="description"
-                  placeholder={t('Description')}
-                />
-              </CardContent>
-              <CardActions>
-                <Button variant="primary" type="submit" aria-label="save">
-                  {t('Save')}
-                </Button>
-              </CardActions>
-            </Card>
-          </StandardContainer>
-        </form>
-      </FormProvider>
+            <CardContent>
+              <HorizontalTextCtrl name="title" placeholder={t('Title')} />
+              <HorizontalTextCtrl
+                name="description"
+                placeholder={t('Description')}
+              />
+            </CardContent>
+            <CardActions>
+              <Button variant="primary" type="submit" aria-label="save">
+                {t('Save')}
+              </Button>
+            </CardActions>
+          </form>
+        </FormProvider>
+      </Card>
     </StandardContainer>
   );
 }
