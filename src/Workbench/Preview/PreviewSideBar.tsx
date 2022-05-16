@@ -121,7 +121,7 @@ export default function PreviewSideBar({
             }}
           >
             <Typography className={classes.itemNameText} variant="smBold">
-              Generiske krav
+              t('General requirements')
             </Typography>
           </ListItem>
           {renderProducts(parentableArray)}

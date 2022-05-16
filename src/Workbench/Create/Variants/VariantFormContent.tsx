@@ -72,7 +72,7 @@ const VariantFormContent = ({ control }: IProps) => {
         <CheckboxCtrl name={`useProduct`} label={`${t('Product')}`} />
         <CheckboxCtrl
           name={`useSpesification`}
-          label={`${t('general requirement')}`}
+          label={`${t('General requirements')}`}
         />
       </Box>
       {useProduct && <ProductSelection />}
