@@ -112,9 +112,7 @@ const KitchenSink = (): React.ReactElement => {
     defaultValues
   });
 
-  const saveValues = (data: IFormValues) => {
-    console.log(data.person);
-  };
+  const saveValues = (data: IFormValues) => {};
 
   const selectOptions: IOption[] = [
     { label: 'BMW', value: '1' },

@@ -613,7 +613,6 @@ class Utils {
   }
 
   static inheritBank(project: IBank, inheritedBank: IBank): IBank {
-    console.log(project, inheritedBank);
     const newProject = { ...project };
 
     const newProductList = [
