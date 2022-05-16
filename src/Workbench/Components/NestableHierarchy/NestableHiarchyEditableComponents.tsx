@@ -77,7 +77,7 @@ interface IProps<T extends IBaseModelWithTitleAndDesc> {
   EditComponent: (item: Parentable<T>) => React.ReactElement;
   DeleteComponent?: (
     item: Parentable<T>,
-    child: React.ReactElement
+    children: React.ReactElement
   ) => React.ReactElement;
   depth: number;
 }

@@ -86,10 +86,10 @@ export default function TagPage(): React.ReactElement {
         )}
         DeleteComponent={(
           item: Parentable<ITag>,
-          child: React.ReactElement
+          children: React.ReactElement
         ) => (
           <DeleteTagForm
-            child={child}
+            children={children}
             tag={item}
             handleClose={() => setDeleteMode('')}
           />

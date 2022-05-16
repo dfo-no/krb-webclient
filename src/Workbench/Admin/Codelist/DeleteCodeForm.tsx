@@ -1,7 +1,6 @@
 import { joiResolver } from '@hookform/resolvers/joi';
 import React from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
-import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
 import { IAlert } from '../../../models/IAlert';
@@ -12,14 +11,12 @@ import { useGetProjectQuery } from '../../../store/api/bankApi';
 import useProjectMutations from '../../../store/api/ProjectMutations';
 import { useAppDispatch } from '../../../store/hooks';
 import { addAlert } from '../../../store/reducers/alert-reducer';
-import theme from '../../../theme';
 import { useEditableState } from '../../Components/EditableContext';
-import { FormDeleteBox } from '../../Components/Form/FormDeleteBox';
-import { FormTextButton } from '../../Components/Form/FormTextButton';
 import { IRouteParams } from '../../Models/IRouteParams';
+import DeleteFrame from '../../../components/DeleteFrame/DeleteFrame';
 
 interface IProps {
-  children: React.ReactNode;
+  children: React.ReactElement;
   codelist: ICodelist;
   code: Parentable<ICode>;
   handleClose: (code: Parentable<ICode> | null) => void;
@@ -33,7 +30,6 @@ export default function DeleteCodeForm({
 }: IProps): React.ReactElement {
   const { deleteCode } = useProjectMutations();
   const dispatch = useAppDispatch();
-  const { t } = useTranslation();
   const { deleteMode } = useEditableState();
 
   const methods = useForm<Parentable<ICode>>({
@@ -45,15 +41,15 @@ export default function DeleteCodeForm({
   const { data: project } = useGetProjectQuery(projectId);
 
   if (deleteMode !== code.id) {
-    return <>{children}</>;
+    return children;
   }
 
   if (!project) {
     return <></>;
   }
 
-  async function onSubmit(post: Parentable<ICode>) {
-    await deleteCode(post, codelist).then(() => {
+  const onSubmit = (post: Parentable<ICode>): void => {
+    deleteCode(post, codelist).then(() => {
       const alert: IAlert = {
         id: uuidv4(),
         style: 'success',
@@ -62,7 +58,7 @@ export default function DeleteCodeForm({
       dispatch(addAlert({ alert }));
       handleClose(post);
     });
-  }
+  };
 
   return (
     <FormProvider {...methods}>
@@ -71,23 +67,12 @@ export default function DeleteCodeForm({
         autoComplete="off"
         noValidate
       >
-        <FormDeleteBox>
-          <FormTextButton
-            hoverColor={theme.palette.errorRed.main}
-            type="submit"
-            aria-label="delete"
-          >
-            {t('delete')}
-          </FormTextButton>
-          <FormTextButton
-            hoverColor={theme.palette.gray400.main}
-            onClick={() => handleClose(null)}
-            aria-label="close"
-          >
-            {t('cancel')}
-          </FormTextButton>
-          {children}
-        </FormDeleteBox>
+        <DeleteFrame
+          children={children}
+          canBeDeleted={true}
+          infoText={''}
+          handleClose={() => handleClose(null)}
+        />
       </form>
     </FormProvider>
   );
