@@ -120,7 +120,7 @@ export default function ValueForm({
           />
 
           <Button variant="primary" type="submit">
-            {t('save')}
+            {t('Save')}
           </Button>
           <ErrorSummary errors={errors} />
         </form>

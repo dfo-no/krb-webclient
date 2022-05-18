@@ -128,7 +128,7 @@ export default function CheckBoxForm({
             </Col>
           </Row>
           <Button variant="primary" type="submit">
-            {t('save')}
+            {t('Save')}
           </Button>
         </form>
       </Card.Body>

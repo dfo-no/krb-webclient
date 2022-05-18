@@ -121,7 +121,7 @@ export default function ProductDateForm({
           )}
 
           <Button type="submit" variant="primary">
-            {t('save')}
+            {t('Save')}
           </Button>
           <Button
             type="button"

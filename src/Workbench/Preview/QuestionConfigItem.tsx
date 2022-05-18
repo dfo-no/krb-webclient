@@ -107,7 +107,7 @@ export default function QuestionConfigItem({
       return (
         <ConfigBox>
           <Typography variant={'smBold'} color={theme.palette.primary.main}>
-            {t('name of codelist')}
+            {t('Name of codelist')}
           </Typography>
           <Typography sx={{ marginTop: 1 }}>
             {getCodelistNameById(item.config.codelist)}

@@ -108,7 +108,7 @@ const Variant = ({ variant, requirementIndex }: IProps) => {
             {useTypeWatch === VariantType.info && (
               <Chip
                 color={'primary'}
-                label={t('info')}
+                label={t('Info')}
                 sx={{
                   marginLeft: 'auto',
                   marginRight: 2,
@@ -137,7 +137,7 @@ const Variant = ({ variant, requirementIndex }: IProps) => {
                 {t('Reset')}
               </Button>
               <Button variant="save" type="submit">
-                {t('save')}
+                {t('Save')}
               </Button>
             </Box>
             <GeneralErrorMessage errors={methods.formState.errors} />

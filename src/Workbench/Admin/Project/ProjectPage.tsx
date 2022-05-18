@@ -85,7 +85,7 @@ function ProjectPage(): React.ReactElement {
       <SearchContainer>
         <NewButtonContainer>
           <Button variant="primary" onClick={() => setCreating(true)}>
-            {t('new publication')}
+            {t('New publication')}
           </Button>
         </NewButtonContainer>
       </SearchContainer>

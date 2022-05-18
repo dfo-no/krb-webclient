@@ -106,7 +106,7 @@ export default function DateForm({ parentAnswer }: IProps): React.ReactElement {
             />
             <ErrorSummary errors={methods.formState.errors} />
             <Button variant="primary" type="submit">
-              {t('save')}
+              {t('Save')}
             </Button>
           </form>
         </FormProvider>

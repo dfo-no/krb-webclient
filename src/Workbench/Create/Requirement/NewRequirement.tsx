@@ -30,7 +30,7 @@ const NewRequirement = ({ need }: IProps) => {
       }}
     >
       <Button variant="primary" onClick={() => setNewOpen(true)}>
-        {t('add new requirement')}
+        {t('Add new requirement')}
       </Button>
       <Dialog
         isOpen={isNewOpen}

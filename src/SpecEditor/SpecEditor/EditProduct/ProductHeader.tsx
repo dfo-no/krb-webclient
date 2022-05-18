@@ -30,7 +30,7 @@ export default function ProductHeader(): React.ReactElement {
           <Typography variant="lgBold">
             {specificationProductIndex !== -1
               ? spec.products[specificationProductIndex].title
-              : t('Generic requirement')}
+              : t('General requirement')}
           </Typography>
           {specificationProductIndex !== -1 && (
             <DFOCardHeaderIconButton

@@ -20,7 +20,7 @@ export default function CodelistAddButton({
       </Box>
       <Box className={classes.button}>
         <Button variant="primary" onClick={onClick}>
-          {t('add new code list')}
+          {t('Add new codelist')}
         </Button>
       </Box>
     </Box>

@@ -137,7 +137,7 @@ export default function ISliderInfoAnswer({
         />
 
         <Button variant="primary" type="submit">
-          {t('save')}
+          {t('Save')}
         </Button>
         <ErrorSummary errors={errors} />
       </form>

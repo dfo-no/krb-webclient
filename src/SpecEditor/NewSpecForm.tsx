@@ -55,12 +55,12 @@ const NewSpecForm = ({ handleClose, specification }: IProps) => {
             <VerticalTextCtrl
               name="title"
               label={t('What will be the name of the procurement?')}
-              placeholder={t('name of specification')}
+              placeholder={t('Name of specification')}
             />
             <VerticalTextCtrl
               name="organization"
-              label={t('name of your organization')}
-              placeholder={t('name')}
+              label={t('Name of your organization')}
+              placeholder={t('Name')}
             />
             <VerticalTextCtrl
               name="organizationNumber"
@@ -70,10 +70,10 @@ const NewSpecForm = ({ handleClose, specification }: IProps) => {
           </ModalFieldsBox>
           <ModalButtonsBox>
             <ModalButton variant="cancel" onClick={() => handleClose()}>
-              {t('cancel')}
+              {t('Cancel')}
             </ModalButton>
             <ModalButton variant="save" type="submit">
-              {t('create specification')}
+              {t('Create specification')}
             </ModalButton>
           </ModalButtonsBox>
         </ModalBox>

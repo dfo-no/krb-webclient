@@ -87,7 +87,7 @@ export default function FileUploadForm({
               label="Tillat flere vedlegg"
             />
             <Button type="submit" variant="contained">
-              {t('save')}
+              {t('Save')}
             </Button>
             <ErrorSummary errors={methods.formState.errors} />
           </form>

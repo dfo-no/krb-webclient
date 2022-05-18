@@ -2,6 +2,7 @@ import { Box, Typography } from '@mui/material';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import makeStyles from '@mui/styles/makeStyles';
+import { t } from 'i18next';
 import React from 'react';
 import Utils from '../../common/Utils';
 import { Parentable } from '../../models/Parentable';
@@ -121,7 +122,7 @@ export default function PreviewSideBar({
             }}
           >
             <Typography className={classes.itemNameText} variant="smBold">
-              Generiske krav
+              {t('General requirements')}
             </Typography>
           </ListItem>
           {renderProducts(parentableArray)}

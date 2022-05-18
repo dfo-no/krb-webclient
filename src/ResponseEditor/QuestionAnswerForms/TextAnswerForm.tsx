@@ -104,7 +104,7 @@ export default function ITextAnswerForm({
           <input type="text" {...register('answer.point')} value={0} />
 
           <Button variant="primary" type="submit">
-            {t('save')}
+            {t('Save')}
           </Button>
           <ErrorSummary errors={errors} />
         </form>

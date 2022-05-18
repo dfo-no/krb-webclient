@@ -78,7 +78,7 @@ function EditRequirementForm({
       >
         <ModalBox>
           <Typography variant="lg" color={theme.palette.primary.main}>
-            {t('edit requirement')}
+            {t('Edit requirement')}
           </Typography>
           <ModalFieldsBox>
             <VerticalTextCtrl
@@ -89,10 +89,10 @@ function EditRequirementForm({
           </ModalFieldsBox>
           <ModalButtonsBox>
             <ModalButton variant="cancel" onClick={() => handleClose()}>
-              {t('cancel')}
+              {t('Cancel')}
             </ModalButton>
             <ModalButton variant="save" type="submit">
-              {t('save')}
+              {t('Save')}
             </ModalButton>
           </ModalButtonsBox>
         </ModalBox>

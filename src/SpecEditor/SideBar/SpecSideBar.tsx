@@ -138,7 +138,7 @@ function SpecSideBar(): React.ReactElement {
     <Box className={classes.specSideBar}>
       <Box className={classes.buttonContainer}>
         <Button variant="primary" onClick={createPressed}>
-          {t('create a new product')}
+          {t('Create a new product')}
         </Button>
       </Box>
       <List className={classes.list} aria-label="products">
@@ -154,7 +154,7 @@ function SpecSideBar(): React.ReactElement {
           >
             <Box className={classes.productListItemCardContent}>
               <Typography variant="mdBold">
-                {t('Generic requirement')}
+                {t('General requirements')}
               </Typography>
               <Divider color={theme.palette.silver.main} />
             </Box>

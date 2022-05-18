@@ -110,7 +110,7 @@ export default function PeriodDateAnswerForm({
             </Form.Group>
 
             <Button variant="primary" type="submit">
-              {t('save')}
+              {t('Save')}
             </Button>
             <ErrorSummary errors={methods.formState.errors} />
           </form>

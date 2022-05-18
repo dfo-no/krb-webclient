@@ -199,11 +199,11 @@ export default function ProductRequirement({
                 onClick={onCancel}
                 sx={{ marginLeft: 'auto' }}
               >
-                {t('cancel')}
+                {t('Cancel')}
               </Button>
               {activeVariant.questions.length > 0 && (
                 <Button variant="save" type="submit" sx={{ marginLeft: 2 }}>
-                  {t('save and chose requirement')}
+                  {t('Save and chose requirement')}
                 </Button>
               )}
             </Box>
