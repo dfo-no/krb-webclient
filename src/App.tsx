@@ -14,7 +14,6 @@ import Header from './components/Header/Header';
 import Evaluation from './Evaluation/Evaluation';
 import HomePage from './Home/HomePage';
 import useConfirmTabClose from './hooks/useConfirmTabClose';
-import KitchenSink from './KitchenSink';
 import PageLayout from './PageLayout';
 import PrefilledResponseModule from './PrefilledResponseEditor/PrefilledResponseModule';
 import ResponseModule from './ResponseEditor/ResponseModule';
@@ -45,11 +44,6 @@ function App(): React.ReactElement {
               component={PrefilledResponseModule}
             />
           </AuthenticatedTemplate>
-          {process.env.NODE_ENV === 'development' ? (
-            <Route path="/kitchensink" component={KitchenSink} />
-          ) : (
-            <></>
-          )}
           <UnauthenticatedTemplate>
             <h5 className="card-title">Please sign-in to access this page</h5>
           </UnauthenticatedTemplate>
