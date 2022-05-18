@@ -10,17 +10,13 @@ import { addAlert } from '../../../store/reducers/alert-reducer';
 import { INeed } from '../../../Nexus/entities/INeed';
 import useProjectMutations from '../../../store/api/ProjectMutations';
 import { useParams } from 'react-router-dom';
-import { FormDeleteBox } from '../../Components/Form/FormDeleteBox';
-import { FormTextButton } from '../../Components/Form/FormTextButton';
-import theme from '../../../theme';
 import { IRouteParams } from '../../Models/IRouteParams';
 import { Box } from '@mui/material/';
-import { FormCantDeleteBox } from '../../Components/Form/FormCantDeleteBox';
-import Typography from '@mui/material/Typography';
 import { useSelectState } from '../SelectContext';
+import DeleteFrame from '../../../components/DeleteFrame/DeleteFrame';
 
 interface IProps {
-  children: React.ReactNode;
+  children: React.ReactElement;
   requirement: IRequirement;
   need: Parentable<INeed>;
   handleClose: () => void;
@@ -47,11 +43,15 @@ function DeleteRequirement({
   }
 
   if (deleteMode !== requirement.id) {
-    return <>{children}</>;
+    return children;
   }
 
-  const onSubmit = async () => {
-    await deleteRequirement(requirement, need).then(() => {
+  const infoText = hasChildren
+    ? `${t('Cant delete this requirement')} ${t('Requirement has children')}`
+    : '';
+
+  const onDelete = (): void => {
+    deleteRequirement(requirement, need).then(() => {
       const alert: IAlert = {
         id: uuidv4(),
         style: 'success',
@@ -64,40 +64,13 @@ function DeleteRequirement({
 
   return (
     <Box sx={{ width: '100%' }}>
-      {!hasChildren && (
-        <FormDeleteBox>
-          <FormTextButton
-            hoverColor={theme.palette.errorRed.main}
-            onClick={onSubmit}
-            aria-label="delete"
-          >
-            {t('Delete')}
-          </FormTextButton>
-          <FormTextButton
-            hoverColor={theme.palette.gray500.main}
-            onClick={() => handleClose()}
-            aria-label="close"
-          >
-            {t('Cancel')}
-          </FormTextButton>
-          {children}
-        </FormDeleteBox>
-      )}
-      {hasChildren && (
-        <FormCantDeleteBox>
-          <Typography variant="smBold">
-            {t('Cant delete this requirement')}
-          </Typography>
-          <FormTextButton
-            hoverColor={theme.palette.gray500.main}
-            onClick={() => handleClose()}
-            aria-label="close"
-          >
-            {t('Cancel')}
-          </FormTextButton>
-          {children}
-        </FormCantDeleteBox>
-      )}
+      <DeleteFrame
+        children={children}
+        canBeDeleted={!hasChildren}
+        infoText={infoText}
+        handleClose={handleClose}
+        onDelete={onDelete}
+      />
     </Box>
   );
 }
