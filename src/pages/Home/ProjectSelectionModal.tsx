@@ -63,14 +63,14 @@ export default function ProjectSelectionModal({
     return t('Not published');
   };
 
-  const goToSpecification = () => {
+  const goToSpecification = (): void => {
     const newSpecification =
       SpecificationStoreService.getSpecificationFromBank(selectedBank);
     dispatch(setSpecification(newSpecification));
     setSelectedSpecification(newSpecification);
   };
 
-  const cancel = () => {
+  const cancel = (): void => {
     setSelectedBank(null);
     setSelectedSpecification(null);
   };

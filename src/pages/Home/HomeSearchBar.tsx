@@ -20,26 +20,26 @@ export default function HomeSearchBar({ list }: IProps): React.ReactElement {
   const { t } = useTranslation();
 
   const bankMap: Map<string, IBank> = new Map<string, IBank>();
-  const displayList: ILabel[] = Object.values(list).map((item) => {
+  const displayList: ILabel[] = list.map((item) => {
     bankMap.set(item.id, item);
     return { label: item.title, value: item.id };
   });
+
+  const onValueSelected = (newValue: ILabel | null): void => {
+    if (newValue) {
+      const selectedBank = bankMap.get(newValue.value);
+      if (selectedBank) {
+        setSelectedBank(selectedBank);
+      }
+    }
+  };
 
   return (
     <Autocomplete
       options={displayList}
       disablePortal={true}
-      onChange={(event, newValue) => {
-        if (newValue) {
-          const selectedBank = bankMap.get(newValue.value);
-          if (selectedBank) {
-            setSelectedBank(selectedBank);
-          }
-        }
-      }}
-      isOptionEqualToValue={(option, value) => {
-        return option.label === value.label;
-      }}
+      onChange={(event, newValue) => onValueSelected(newValue)}
+      isOptionEqualToValue={(option, value) => option.label === value.label}
       renderInput={(params) => (
         <TextField {...params} label={t('search for banks')} />
       )}

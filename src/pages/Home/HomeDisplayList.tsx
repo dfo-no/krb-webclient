@@ -12,14 +12,44 @@ import { useBankState } from '../../components/BankContext/BankContext';
 
 interface IProps {
   list: IBank[];
+  orderedByDate?: boolean;
 }
 
-export default function HomeDisplayList({ list }: IProps): React.ReactElement {
+export default function HomeDisplayList({
+  list,
+  orderedByDate = false
+}: IProps): React.ReactElement {
   const { setSelectedBank } = useBankState();
   const { t } = useTranslation();
 
+  const alfabeticOrderedList = (): IBank[] => {
+    const alfabeticOrdered = [...list];
+    alfabeticOrdered.sort((a, b) => (a.title > b.title ? 1 : -1));
+    return alfabeticOrdered;
+  };
+
+  const dateOrderedList = (): IBank[] => {
+    const dateOrdered = [...list];
+    dateOrdered.sort((a, b) => {
+      if (!a.publishedDate || !b.publishedDate) {
+        return -1;
+      }
+      const aTime = new Date(a.publishedDate).getTime();
+      const bTime = new Date(b.publishedDate).getTime();
+      return bTime - aTime;
+    });
+    return dateOrdered;
+  };
+
+  const getList = (): IBank[] => {
+    const orderedList = orderedByDate
+      ? dateOrderedList()
+      : alfabeticOrderedList();
+    return orderedList.slice(0, 5);
+  };
+
   const filteredElements = () => {
-    return list.slice(0, 5).map((bank: IBank) => {
+    return getList().map((bank: IBank) => {
       return (
         <div key={bank.id}>
           <ListItem>

@@ -76,34 +76,13 @@ export default function HomePage(): React.ReactElement {
     }
   }, [list]);
 
-  const alfabeticOrderedList = (): IBank[] => {
-    const alfabeticOrdered = [...latestPublishedProjects];
-    alfabeticOrdered.sort((a, b) => (a.title > b.title ? 1 : -1));
-    return alfabeticOrdered;
-  };
-
-  const dateOrderedList = (): IBank[] => {
-    const dateOrdered = [...latestPublishedProjects];
-    dateOrdered.sort((a, b) => {
-      if (!a.publishedDate || !b.publishedDate) {
-        return -1;
-      }
-      const aTime = new Date(a.publishedDate).getTime();
-      const bTime = new Date(b.publishedDate).getTime();
-      return bTime - aTime;
-    });
-    return dateOrdered;
-  };
-
   return (
     <div className={classes.homepageWrapper}>
       <ScrollableContainer>
         <Box className={classes.scrollableContent}>
           <Box className={classes.actionContainer}>
             <Box className={classes.navigation}>
-              {latestPublishedProjects && (
-                <HomeSearchBar list={latestPublishedProjects} />
-              )}
+              <HomeSearchBar list={latestPublishedProjects} />
             </Box>
             <Box className={classes.navigation}>
               <List>
@@ -132,9 +111,10 @@ export default function HomePage(): React.ReactElement {
               <Card>
                 <CardHeader title={t('newest banks')} />
                 <CardContent>
-                  {latestPublishedProjects && (
-                    <HomeDisplayList list={dateOrderedList()} />
-                  )}
+                  <HomeDisplayList
+                    list={latestPublishedProjects}
+                    orderedByDate={true}
+                  />
                 </CardContent>
               </Card>
             </Box>
@@ -142,9 +122,7 @@ export default function HomePage(): React.ReactElement {
               <Card>
                 <CardHeader title={t('Alfabetically sorted')} />
                 <CardContent>
-                  {latestPublishedProjects && (
-                    <HomeDisplayList list={alfabeticOrderedList()} />
-                  )}
+                  <HomeDisplayList list={latestPublishedProjects} />
                 </CardContent>
               </Card>
             </Box>
