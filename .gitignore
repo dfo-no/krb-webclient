@@ -8,6 +8,7 @@
 
 # testing
 /coverage
+.scannerwork
 
 # production
 /build
@@ -24,8 +25,9 @@ yarn-debug.log*
 yarn-error.log*
 .eslintcache
 
-# IDE - VSCode
+# IDE
 .vscode/*
+.idea/*
 
 # JSON Server
 db/local.json

@@ -84,9 +84,7 @@ export default function InheritedBankAccordionBody({
     defaultValues
   });
 
-  const saveValues = (data: IFormValues) => {
-    console.log(data);
-  };
+  const saveValues = (data: IFormValues) => {};
 
   return (
     <FormProvider {...methods}>
