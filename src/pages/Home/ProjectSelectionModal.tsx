@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import DFODialog from '../../components/DFODialog/DFODialog';
 import NewSpecForm from '../../SpecEditor/NewSpecForm';
-import { useBankState } from './BankContext';
+import { useBankState } from '../../components/BankContext/BankContext';
 import { setSpecification } from '../../store/reducers/spesification-reducer';
 import { useAppDispatch } from '../../store/hooks';
 import {
@@ -17,7 +17,6 @@ import { useGetBankQuery } from '../../store/api/bankApi';
 import LoaderSpinner from '../../common/LoaderSpinner';
 import { ISpecification } from '../../Nexus/entities/ISpecification';
 import SpecificationStoreService from '../../Nexus/services/SpecificationStoreService';
-import { useHistory } from 'react-router';
 import { IBank } from '../../Nexus/entities/IBank';
 
 interface IProps {
@@ -27,7 +26,6 @@ interface IProps {
 export default function ProjectSelectionModal({
   selectedBank
 }: IProps): React.ReactElement {
-  const history = useHistory();
   const { setSelectedBank } = useBankState();
   const [selectedSpecification, setSelectedSpecification] =
     useState<ISpecification | null>(null);
@@ -77,10 +75,6 @@ export default function ProjectSelectionModal({
     setSelectedSpecification(null);
   };
 
-  const goToWorkbench = () => {
-    history.push(`/workbench/${bank.id}/create`);
-  };
-
   const projectModalBox = (): React.ReactElement => {
     return (
       <ModalBox>
@@ -103,9 +97,6 @@ export default function ProjectSelectionModal({
           </ModalButton>
           <ModalButton variant="primary" type="submit" disabled={true}>
             {t('create prepared response')}
-          </ModalButton>
-          <ModalButton variant="primary" onClick={goToWorkbench}>
-            {t('edit project')}
           </ModalButton>
           <ModalButtonsBox>
             <ModalButton variant="cancel" onClick={cancel}>

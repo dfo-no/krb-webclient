@@ -6,16 +6,17 @@ import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import Typography from '@mui/material/Typography';
 import makeStyles from '@mui/styles/makeStyles';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
-import Footer from '../Footer/Footer';
-import SearchBar from '../SearchBar/SearchBar';
-import { useGetBanksQuery } from '../store/api/bankApi';
-import { ScrollableContainer } from '../Workbench/Components/ScrollableContainer';
-import FilteredList from './Components/FilteredList';
-import ProjectSelectionModal from './Components/ProjectSelectionModal';
-import { useBankState } from './Components/BankContext';
+import Footer from '../../Footer/Footer';
+import HomeSearchBar from './HomeSearchBar';
+import { useGetBanksQuery } from '../../store/api/bankApi';
+import { ScrollableContainer } from '../../Workbench/Components/ScrollableContainer';
+import HomeDisplayList from './HomeDisplayList';
+import ProjectSelectionModal from './ProjectSelectionModal';
+import { useBankState } from '../../components/BankContext/BankContext';
+import { IBank } from '../../Nexus/entities/IBank';
 
 const useStyles = makeStyles({
   homepageWrapper: {
@@ -42,20 +43,12 @@ const useStyles = makeStyles({
 
 export default function HomePage(): React.ReactElement {
   const { t } = useTranslation();
+  const classes = useStyles();
   const { selectedBank } = useBankState();
+  const [latestPublishedProjects, setLatestPublishedProjects] = useState<
+    IBank[]
+  >([]);
 
-  const { data: latest } = useGetBanksQuery({
-    pageSize: 5,
-    page: 1,
-    fieldName: 'publishedDate',
-    order: 'DESC'
-  });
-  const { data: alfabetic } = useGetBanksQuery({
-    pageSize: 5,
-    page: 1,
-    fieldName: 'title',
-    order: 'ASC'
-  });
   const { data: list } = useGetBanksQuery({
     pageSize: 500,
     page: 1,
@@ -63,7 +56,44 @@ export default function HomePage(): React.ReactElement {
     order: 'DESC'
   });
 
-  const classes = useStyles();
+  useEffect(() => {
+    if (list) {
+      const latestPublishedMap = new Map<string, IBank>();
+      Object.values(list).forEach((bank) => {
+        if (!bank.publishedDate || !bank.projectId) {
+          return;
+        }
+        if (latestPublishedMap.has(bank.projectId)) {
+          const oldValue = latestPublishedMap.get(bank.projectId);
+          if (oldValue && oldValue.version < bank.version) {
+            latestPublishedMap.set(bank.projectId, bank);
+          }
+        } else {
+          latestPublishedMap.set(bank.projectId, bank);
+        }
+      });
+      setLatestPublishedProjects(Array.from(latestPublishedMap.values()));
+    }
+  }, [list]);
+
+  const alfabeticOrderedList = (): IBank[] => {
+    const alfabeticOrdered = [...latestPublishedProjects];
+    alfabeticOrdered.sort((a, b) => (a.title > b.title ? 1 : -1));
+    return alfabeticOrdered;
+  };
+
+  const dateOrderedList = (): IBank[] => {
+    const dateOrdered = [...latestPublishedProjects];
+    dateOrdered.sort((a, b) => {
+      if (!a.publishedDate || !b.publishedDate) {
+        return -1;
+      }
+      const aTime = new Date(a.publishedDate).getTime();
+      const bTime = new Date(b.publishedDate).getTime();
+      return bTime - aTime;
+    });
+    return dateOrdered;
+  };
 
   return (
     <div className={classes.homepageWrapper}>
@@ -71,7 +101,9 @@ export default function HomePage(): React.ReactElement {
         <Box className={classes.scrollableContent}>
           <Box className={classes.actionContainer}>
             <Box className={classes.navigation}>
-              {list && <SearchBar list={list} />}
+              {latestPublishedProjects && (
+                <HomeSearchBar list={latestPublishedProjects} />
+              )}
             </Box>
             <Box className={classes.navigation}>
               <List>
@@ -100,7 +132,9 @@ export default function HomePage(): React.ReactElement {
               <Card>
                 <CardHeader title={t('newest banks')} />
                 <CardContent>
-                  {latest && <FilteredList list={latest} />}
+                  {latestPublishedProjects && (
+                    <HomeDisplayList list={dateOrderedList()} />
+                  )}
                 </CardContent>
               </Card>
             </Box>
@@ -108,7 +142,9 @@ export default function HomePage(): React.ReactElement {
               <Card>
                 <CardHeader title={t('Alfabetically sorted')} />
                 <CardContent>
-                  {alfabetic && <FilteredList list={alfabetic} />}
+                  {latestPublishedProjects && (
+                    <HomeDisplayList list={alfabeticOrderedList()} />
+                  )}
                 </CardContent>
               </Card>
             </Box>

@@ -12,7 +12,7 @@ import { msalConfig } from './authentication/authConfig';
 import AlertList from './components/Alert/AlertList';
 import Header from './components/Header/Header';
 import Evaluation from './Evaluation/Evaluation';
-import HomePage from './Home/HomePage';
+import HomePage from './pages/Home/HomePage';
 import useConfirmTabClose from './hooks/useConfirmTabClose';
 import KitchenSink from './KitchenSink';
 import PageLayout from './PageLayout';
@@ -21,7 +21,7 @@ import ResponseModule from './ResponseEditor/ResponseModule';
 import ResponsePage from './ResponseEditor/ResponsePage';
 import SpecModule from './SpecEditor/SpecModule';
 import WorkbenchModule from './Workbench/WorkbenchModule';
-import { BankProvider } from './Home/Components/BankContext';
+import { BankProvider } from './components/BankContext/BankContext';
 
 const msalInstance = new PublicClientApplication(msalConfig);
 

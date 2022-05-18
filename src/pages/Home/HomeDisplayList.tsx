@@ -8,21 +8,18 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { IBank } from '../../Nexus/entities/IBank';
 import { Box } from '@mui/material/';
-import { useBankState } from './BankContext';
+import { useBankState } from '../../components/BankContext/BankContext';
 
-interface IFilteredListProps {
-  list: Record<string, IBank>;
+interface IProps {
+  list: IBank[];
 }
 
-export default function FilteredList({
-  list
-}: IFilteredListProps): React.ReactElement {
+export default function HomeDisplayList({ list }: IProps): React.ReactElement {
   const { setSelectedBank } = useBankState();
   const { t } = useTranslation();
 
-  // TODO: Discuss suitable amount of elements displayed
   const filteredElements = () => {
-    return Object.values(list).map((bank: IBank) => {
+    return list.slice(0, 5).map((bank: IBank) => {
       return (
         <div key={bank.id}>
           <ListItem>
