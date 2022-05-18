@@ -5,29 +5,25 @@ import useProjectMutations from '../../../store/api/ProjectMutations';
 import { FormProvider, useForm } from 'react-hook-form';
 import { joiResolver } from '@hookform/resolvers/joi';
 import { v4 as uuidv4 } from 'uuid';
-import Typography from '@mui/material/Typography';
 import { IAlert } from '../../../models/IAlert';
 import { addAlert } from '../../../store/reducers/alert-reducer';
 import { useAppDispatch } from '../../../store/hooks';
-import { FormDeleteBox } from '../../Components/Form/FormDeleteBox';
-import { FormTextButton } from '../../Components/Form/FormTextButton';
 import { useTranslation } from 'react-i18next';
-import theme from '../../../theme';
 import { useParams } from 'react-router-dom';
 import { IRouteParams } from '../../Models/IRouteParams';
 import { useGetProjectQuery } from '../../../store/api/bankApi';
 import Utils from '../../../common/Utils';
-import { FormCantDeleteBox } from '../../Components/Form/FormCantDeleteBox';
 import { useEditableState } from '../../Components/EditableContext';
+import DeleteFrame from '../../../components/DeleteFrame/DeleteFrame';
 
 interface IProps {
-  child: React.ReactElement;
+  children: React.ReactElement;
   tag: Parentable<ITag>;
   handleClose: () => void;
 }
 
 export default function DeleteTagForm({
-  child,
+  children,
   tag,
   handleClose
 }: IProps): React.ReactElement {
@@ -45,7 +41,7 @@ export default function DeleteTagForm({
   const { data: project } = useGetProjectQuery(projectId);
 
   if (deleteMode !== tag.id) {
-    return <>{child}</>;
+    return children;
   }
 
   if (!project) {
@@ -54,8 +50,12 @@ export default function DeleteTagForm({
 
   const hasChildren = Utils.checkIfHasChildren(tag, project.tags);
 
-  async function onSubmit(put: Parentable<ITag>) {
-    await deleteTag(put).then(() => {
+  const infoText = hasChildren
+    ? `${t('cant delete this tag')} ${t('tag has children')}`
+    : '';
+
+  const onSubmit = (put: Parentable<ITag>): void => {
+    deleteTag(put).then(() => {
       const alert: IAlert = {
         id: uuidv4(),
         style: 'success',
@@ -64,7 +64,7 @@ export default function DeleteTagForm({
       dispatch(addAlert({ alert }));
       handleClose();
     });
-  }
+  };
 
   return (
     <FormProvider {...methods}>
@@ -73,41 +73,12 @@ export default function DeleteTagForm({
         autoComplete="off"
         noValidate
       >
-        {!hasChildren && (
-          <FormDeleteBox>
-            <FormTextButton
-              hoverColor={theme.palette.errorRed.main}
-              type="submit"
-              aria-label="delete"
-            >
-              {t('delete')}
-            </FormTextButton>
-            <FormTextButton
-              hoverColor={theme.palette.gray400.main}
-              onClick={() => handleClose()}
-              aria-label="close"
-            >
-              {t('cancel')}
-            </FormTextButton>
-            {child}
-          </FormDeleteBox>
-        )}
-        {hasChildren && (
-          <FormCantDeleteBox>
-            <Typography variant="smBold">
-              {t('cant delete this tag')}{' '}
-              {hasChildren ? t('tag has children') : ''}
-            </Typography>
-            <FormTextButton
-              hoverColor={theme.palette.gray400.main}
-              onClick={() => handleClose()}
-              aria-label="close"
-            >
-              {t('cancel')}
-            </FormTextButton>
-            {child}
-          </FormCantDeleteBox>
-        )}
+        <DeleteFrame
+          children={children}
+          canBeDeleted={!hasChildren}
+          infoText={infoText}
+          handleClose={handleClose}
+        />
       </form>
     </FormProvider>
   );

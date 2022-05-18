@@ -123,7 +123,7 @@ export default function Create(): React.ReactElement {
           }}
         >
           <NewRequirement need={project.needs[needIndex]} />
-          <ScrollableContainer>
+          <ScrollableContainer sx={{ gap: 4 }}>
             {project.needs[needIndex] &&
               project.needs[needIndex].requirements.map((req, index) => {
                 return (
