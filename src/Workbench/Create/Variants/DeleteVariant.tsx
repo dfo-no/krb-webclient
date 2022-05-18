@@ -106,3 +106,8 @@ function DeleteVariant({
 }
 
 export default DeleteVariant;
+
+  );
+}
+
+export default DeleteVariant;

@@ -8,6 +8,7 @@ export const FormTextButton = styled(Button, {
   marginTop: 'auto',
   padding: 0,
   marginBottom: 2,
+  marginRight: 16,
   '&:hover': {
     background: hoverColor ? hoverColor : theme.palette.lightBlue.main
   }

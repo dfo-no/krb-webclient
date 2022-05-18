@@ -1,6 +1,7 @@
 import { useParams } from 'react-router-dom';
 import Utils from '../../common/Utils';
 import { Parentable } from '../../models/Parentable';
+import { IBank } from '../../Nexus/entities/IBank';
 import { ICode } from '../../Nexus/entities/ICode';
 import { ICodelist } from '../../Nexus/entities/ICodelist';
 import { IProduct } from '../../Nexus/entities/IProduct';
@@ -11,7 +12,6 @@ import { INeed } from '../../Nexus/entities/INeed';
 import { IRequirement } from '../../Nexus/entities/IRequirement';
 import { IVariant } from '../../Nexus/entities/IVariant';
 import DateService from '../../Nexus/services/DateService';
-import { IBank } from '../../Nexus/entities/IBank';
 import { SerializedError } from '@reduxjs/toolkit';
 import { FetchBaseQueryError } from '@reduxjs/toolkit/query';
 
@@ -23,6 +23,17 @@ function useProjectMutations() {
   const { projectId } = useParams<IRouteParams>();
   const { data: project } = useGetProjectQuery(projectId);
   const [putProject] = usePutProjectMutation();
+
+  // PROJECT
+  async function deleteProject(projectToDelete: IBank): Promise<BankOrError> {
+    if (projectToDelete) {
+      return putProject({
+        ...projectToDelete,
+        deletedDate: DateService.getNowString()
+      });
+    }
+    throw Error('Cant save changes to Project');
+  }
 
   // PRODUCTS
   async function addProduct(
@@ -310,6 +321,7 @@ function useProjectMutations() {
   }
 
   return {
+    deleteProject,
     addProduct,
     editProduct,
     deleteProduct,

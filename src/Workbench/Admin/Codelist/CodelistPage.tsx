@@ -29,13 +29,13 @@ const useStyles = makeStyles({
   codelistContainer: {
     display: 'flex',
     flexDirection: 'column',
-    width: '40%',
+    flex: '1 0 0',
     gap: 5
   },
   codeContainer: {
     display: 'flex',
     flexDirection: 'column',
-    width: '40%',
+    flex: '1 0 0',
     gap: 5
   }
 });
@@ -87,10 +87,9 @@ export default function CodeListPage(): React.ReactElement {
   };
 
   return (
-    <StandardContainer sx={{ width: '75.5vw' }}>
+    <StandardContainer>
       <SearchContainer>
         <SearchFieldContainer>
-          {' '}
           <DFOSearchBar
             list={project.codelist}
             placeholder={t('Search for codelist')}
@@ -105,13 +104,13 @@ export default function CodeListPage(): React.ReactElement {
             <CodelistPanel />
           </EditableProvider>
         </Box>
-        {showCodeContainer() && (
-          <Box className={classes.codeContainer}>
+        <Box className={classes.codeContainer}>
+          {showCodeContainer() && (
             <EditableProvider>
               <CodePanel />
             </EditableProvider>
-          </Box>
-        )}
+          )}
+        </Box>
       </Box>
     </StandardContainer>
   );
