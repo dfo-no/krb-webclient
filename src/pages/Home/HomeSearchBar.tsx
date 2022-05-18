@@ -41,7 +41,7 @@ export default function HomeSearchBar({ list }: IProps): React.ReactElement {
       onChange={(event, newValue) => onValueSelected(newValue)}
       isOptionEqualToValue={(option, value) => option.label === value.label}
       renderInput={(params) => (
-        <TextField {...params} label={t('search for banks')} />
+        <TextField {...params} label={t('Search for banks')} />
       )}
     />
   );

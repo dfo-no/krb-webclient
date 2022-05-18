@@ -88,18 +88,18 @@ export default function HomePage(): React.ReactElement {
               <List>
                 <ListItem>
                   <Link to="/workbench">
-                    <Typography variant="h5">{t('create projects')}</Typography>
+                    <Typography variant="h5">{t('Create projects')}</Typography>
                   </Link>
                 </ListItem>
                 <ListItem>
                   <Link to="/response">
-                    <Typography variant="h5">{t('create response')}</Typography>
+                    <Typography variant="h5">{t('Create response')}</Typography>
                   </Link>
                 </ListItem>
                 <ListItem>
                   <Link to="/evaluation">
                     <Typography variant="h5">
-                      {t('create evaluation')}
+                      {t('Create evaluation')}
                     </Typography>
                   </Link>
                 </ListItem>
@@ -109,7 +109,7 @@ export default function HomePage(): React.ReactElement {
           <Box className={classes.actionContainer}>
             <Box className={classes.navigation}>
               <Card>
-                <CardHeader title={t('newest banks')} />
+                <CardHeader title={t('Newest banks')} />
                 <CardContent>
                   <HomeDisplayList
                     list={latestPublishedProjects}

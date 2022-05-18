@@ -93,14 +93,14 @@ export default function ProjectSelectionModal({
             onClick={goToSpecification}
             disabled={!isPublished}
           >
-            {t('create specification')}
+            {t('Create specification')}
           </ModalButton>
           <ModalButton variant="primary" type="submit" disabled={true}>
-            {t('create prepared response')}
+            {t('Create prepared response')}
           </ModalButton>
           <ModalButtonsBox>
             <ModalButton variant="cancel" onClick={cancel}>
-              {t('cancel')}
+              {t('Cancel')}
             </ModalButton>
           </ModalButtonsBox>
         </Box>

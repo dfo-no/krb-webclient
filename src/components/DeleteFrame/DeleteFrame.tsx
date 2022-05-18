@@ -45,7 +45,7 @@ export default function DeleteFrame({
             onClick={onDelete}
             sx={{ marginLeft: 'auto' }}
           >
-            {t('delete')}
+            {t('Delete')}
           </FormTextButton>
         )}
         <FormTextButton
