@@ -15,7 +15,7 @@ export default function SignedButton(): React.ReactElement {
     <>
       <AuthenticatedTemplate>
         <Button variant="primary" onClick={() => instance.logout()}>
-          {t('sign out')}
+          {t('Sign out')}
         </Button>
       </AuthenticatedTemplate>
       <UnauthenticatedTemplate>
@@ -23,7 +23,7 @@ export default function SignedButton(): React.ReactElement {
           variant="primary"
           onClick={() => instance.loginPopup(loginRequest)}
         >
-          {t('sign in')}
+          {t('Sign in')}
         </Button>
       </UnauthenticatedTemplate>
     </>

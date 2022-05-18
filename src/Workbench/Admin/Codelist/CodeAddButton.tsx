@@ -18,7 +18,7 @@ export default function CodeAddButton({ onClick }: IProps): React.ReactElement {
       </Box>
       <Box className={classes.button}>
         <Button variant="primary" onClick={onClick}>
-          {t('add new code')}
+          {t('Add new code')}
         </Button>
       </Box>
     </Box>

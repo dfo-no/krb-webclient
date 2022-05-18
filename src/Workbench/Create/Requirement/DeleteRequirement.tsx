@@ -47,7 +47,7 @@ function DeleteRequirement({
   }
 
   const infoText = hasChildren
-    ? `${t('cant delete this requirement')} ${t('requirement has children')}`
+    ? `${t('Cant delete this requirement')} ${t('Requirement has children')}`
     : '';
 
   const onDelete = (): void => {

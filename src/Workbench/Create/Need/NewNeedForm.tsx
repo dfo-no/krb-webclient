@@ -65,7 +65,7 @@ function NewNeedForm({ handleClose }: IProps): React.ReactElement {
       >
         <ModalBox>
           <Typography variant="lg" color={theme.palette.primary.main}>
-            {t('create need')}
+            {t('Create need')}
           </Typography>
           <ModalFieldsBox>
             <VerticalTextCtrl
@@ -81,10 +81,10 @@ function NewNeedForm({ handleClose }: IProps): React.ReactElement {
           </ModalFieldsBox>
           <ModalButtonsBox>
             <ModalButton variant="cancel" onClick={() => handleClose(null)}>
-              {t('cancel')}
+              {t('Cancel')}
             </ModalButton>
             <ModalButton variant="save" type="submit">
-              {t('save')}
+              {t('Save')}
             </ModalButton>
           </ModalButtonsBox>
         </ModalBox>

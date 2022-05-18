@@ -10,10 +10,10 @@ export default function NewProductHeader(): React.ReactElement {
   return (
     <DFOCardHeader>
       <DFOHeaderContentBox sx={{ padding: 4, paddingLeft: 16, gap: 2 }}>
-        <HorizontalTextCtrl name="title" placeholder={t('name of product')} />
+        <HorizontalTextCtrl name="title" placeholder={t('Name of product')} />
         <HorizontalTextCtrl
           name="description"
-          placeholder={t('description of the product')}
+          placeholder={t('Description of the product')}
         />
       </DFOHeaderContentBox>
     </DFOCardHeader>

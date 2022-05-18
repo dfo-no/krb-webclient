@@ -114,7 +114,7 @@ export default function InheritedBankAccordionBody({
                   </Typography>
                 }
               />
-              <Button variant="save">{t('save changes')}</Button>
+              <Button variant="save">{t('Save changes')}</Button>
             </Box>
           </Box>
         </Box>

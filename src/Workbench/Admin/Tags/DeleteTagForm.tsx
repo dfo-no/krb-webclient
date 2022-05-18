@@ -51,7 +51,7 @@ export default function DeleteTagForm({
   const hasChildren = Utils.checkIfHasChildren(tag, project.tags);
 
   const infoText = hasChildren
-    ? `${t('cant delete this tag')} ${t('tag has children')}`
+    ? `${t('Cant delete this tag')} ${t('Tag has children')}`
     : '';
 
   const onSubmit = (put: Parentable<ITag>): void => {

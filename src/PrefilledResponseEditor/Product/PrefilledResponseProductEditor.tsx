@@ -141,7 +141,7 @@ export default function PrefilledResponseProductEditor(): React.ReactElement {
               </>
             )}
             <Col className="p-0 d-flex justify-content-end">
-              <Button type="submit">{t('save')}</Button>
+              <Button type="submit">{t('Save')}</Button>
             </Col>
             <ErrorSummary errors={errors} />
           </form>

@@ -55,7 +55,7 @@ function EditNeedForm({ need, handleClose }: IProps): React.ReactElement {
       >
         <ModalBox>
           <Typography variant="lg" color={theme.palette.primary.main}>
-            {t('edit need')}
+            {t('Edit need')}
           </Typography>
           <ModalFieldsBox>
             <VerticalTextCtrl
@@ -71,10 +71,10 @@ function EditNeedForm({ need, handleClose }: IProps): React.ReactElement {
           </ModalFieldsBox>
           <ModalButtonsBox>
             <ModalButton variant="cancel" onClick={() => handleClose(null)}>
-              {t('cancel')}
+              {t('Cancel')}
             </ModalButton>
             <ModalButton variant="save" type="submit">
-              {t('save')}
+              {t('Save')}
             </ModalButton>
           </ModalButtonsBox>
         </ModalBox>

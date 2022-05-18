@@ -91,14 +91,14 @@ export default function InheritedBankTagList({
         <Box className={classes.topContainer}>
           <Box className={classes.searchContainer}>
             <DFOSearchBar
-              placeholder={t('search for tags')}
+              placeholder={t('Search for tags')}
               list={project.tags}
               searchFunction={tagsSearchFunction}
               callback={tagsCallback}
             />
           </Box>
           <Typography variant="sm" sx={{ textDecoration: 'underline' }}>
-            {t('show selected tags')}
+            {t('Show selected tags')}
           </Typography>
         </Box>
         <Box className={classes.tagsList}>{renderList()}</Box>

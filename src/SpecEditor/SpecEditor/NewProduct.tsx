@@ -130,7 +130,7 @@ export default function NewProduct(): React.ReactElement {
                 <VerticalTextCtrl
                   name="amount"
                   label={t(
-                    'how many of this product do you need in this procurement'
+                    'How many of this product do you need in this procurement'
                   )}
                   placeholder={t('quantity')}
                   type={'number'}
@@ -163,7 +163,7 @@ export default function NewProduct(): React.ReactElement {
                     aria-label="save"
                     variant="save"
                   >
-                    {t('save')}
+                    {t('Save')}
                   </Button>
                 </Box>
                 {product && <NeedList product={product} />}

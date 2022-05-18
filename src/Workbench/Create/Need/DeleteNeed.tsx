@@ -35,7 +35,7 @@ function DeleteNeed({
   }
 
   const infoText = hasChildren
-    ? `${t('cant delete this need')} ${t('need has children')}`
+    ? `${t('Cant delete this need')} ${t('Need has children')}`
     : '';
 
   const onDelete = (): void => {

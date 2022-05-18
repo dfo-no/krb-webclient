@@ -50,8 +50,8 @@ export default function DeleteCodelistForm({
   const isInUse = Utils.codelistUsedInVariants(codelist, project);
 
   const infoText = isInUse
-    ? `${t('cant delete this codelist')} ${t(
-        'codelist has connected requirements'
+    ? `${t('Cant delete this codelist')} ${t(
+        'Codelist has connected requirements'
       )}`
     : '';
 

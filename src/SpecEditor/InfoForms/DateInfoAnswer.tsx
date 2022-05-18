@@ -139,7 +139,7 @@ export default function DateInfoAnswer({
           )}
         </Form.Group>
         <Button variant="primary" type="submit">
-          {t('save')}
+          {t('Save')}
         </Button>
         <ErrorSummary errors={errors} />
       </form>

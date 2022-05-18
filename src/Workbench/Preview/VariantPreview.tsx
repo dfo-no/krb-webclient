@@ -64,19 +64,19 @@ export default function VariantPreview({
           {variant.description ? variant.description : '-'}
         </Typography>
         <Typography variant="smBold" color={theme.palette.primary.main}>
-          {t('requirementText')}
+          {t('Requirement text')}
         </Typography>
         <Typography sx={{ marginBottom: 2 }}>
           {variant.requirementText ? variant.requirementText : '-'}
         </Typography>
         <Typography variant="smBold" color={theme.palette.primary.main}>
-          {t('instruction')}
+          {t('Instruction')}
         </Typography>
         <Typography sx={{ marginBottom: 2 }}>
           {variant.instruction ? variant.instruction : '-'}
         </Typography>
         <Typography variant="smBold" color={theme.palette.primary.main}>
-          {t('how to answer requirement')}
+          {t('How to answer requirement')}
         </Typography>
         <Box
           sx={{

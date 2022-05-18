@@ -122,7 +122,7 @@ export default function FileUploadForm({
             )}
 
             <Button type="submit" variant="primary" disabled>
-              {t('save')}
+              {t('Save')}
             </Button>
             <Button
               variant="primary"

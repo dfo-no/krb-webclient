@@ -59,10 +59,10 @@ export default function DeleteProductForm({
 
   let infoText = '';
   if (isInUse) {
-    infoText = t('product has connected requirements');
+    infoText = t('Product has connected requirements');
   }
   if (hasChildren) {
-    infoText = `${t('cant delete this product')} ${t('product has children')}`;
+    infoText = `${t('Cant delete this product')} ${t('Product has children')}`;
   }
 
   const onSubmit = (put: Parentable<IProduct>): void => {

@@ -64,14 +64,14 @@ export default function TagPage(): React.ReactElement {
         <SearchFieldContainer>
           <DFOSearchBar
             list={project.tags}
-            placeholder={t('search for tags')}
+            placeholder={t('Search for tags')}
             callback={searchFieldCallback}
             searchFunction={tagPageSearch}
           />
         </SearchFieldContainer>
         <NewButtonContainer>
           <Button variant="primary" onClick={() => setCreating(true)}>
-            {t('add new tag')}
+            {t('Add new tag')}
           </Button>
         </NewButtonContainer>
       </SearchContainer>

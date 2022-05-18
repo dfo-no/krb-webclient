@@ -71,14 +71,14 @@ export default function ProductPage(): React.ReactElement {
         <SearchFieldContainer>
           <DFOSearchBar
             list={Utils.filterOutDeletedElements(project.products)}
-            placeholder={t('search for product')}
+            placeholder={t('Search for product')}
             callback={searchFieldCallback}
             searchFunction={productsSearch}
           />
         </SearchFieldContainer>
         <NewButtonContainer>
           <Button variant="primary" onClick={() => setCreating(true)}>
-            {t('add new product')}
+            {t('Add new product')}
           </Button>
         </NewButtonContainer>
       </SearchContainer>

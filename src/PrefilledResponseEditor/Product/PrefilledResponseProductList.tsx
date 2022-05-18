@@ -125,7 +125,7 @@ export default function ProductSpecList(): React.ReactElement {
           autoComplete="off"
         >
           <Row>
-            <h2 className="m-4">{t('product selection')}</h2>
+            <h2 className="m-4">{t('Product selection')}</h2>
           </Row>
           <Row className="ml-2 mt-4">
             <Col>

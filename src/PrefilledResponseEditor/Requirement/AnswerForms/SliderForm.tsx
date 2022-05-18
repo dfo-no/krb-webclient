@@ -150,7 +150,7 @@ export default function SliderForm({
             )}
 
             <Button type="submit" variant="primary">
-              {t('save')}
+              {t('Save')}
             </Button>
             <Button
               type="button"

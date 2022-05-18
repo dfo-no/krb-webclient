@@ -48,7 +48,7 @@ export default function SearchBar({ list }: IProps): React.ReactElement {
         }
       }}
       renderInput={(params) => (
-        <TextField {...params} label={t('Søk kravbanker')} />
+        <TextField {...params} label={t('Search for banks')} />
       )}
     />
   );

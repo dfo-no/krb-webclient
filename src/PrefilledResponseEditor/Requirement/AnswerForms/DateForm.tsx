@@ -140,7 +140,7 @@ export default function DateForm({
             )}
 
             <Button type="submit" variant="primary">
-              {t('save')}
+              {t('Save')}
             </Button>
             <Button
               type="button"

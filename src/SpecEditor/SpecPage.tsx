@@ -231,7 +231,7 @@ export default function SpecPage(): React.ReactElement {
                 {' '}
                 <DFOSearchBar
                   list={[]}
-                  placeholder={t('search for banks')}
+                  placeholder={t('Search for banks')}
                   callback={callback}
                   searchFunction={searchFunction}
                 />
