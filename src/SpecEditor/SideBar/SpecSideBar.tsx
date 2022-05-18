@@ -154,7 +154,7 @@ function SpecSideBar(): React.ReactElement {
           >
             <Box className={classes.productListItemCardContent}>
               <Typography variant="mdBold">
-                {t('General requirement')}
+                {t('General requirements')}
               </Typography>
               <Divider color={theme.palette.silver.main} />
             </Box>
