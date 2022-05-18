@@ -60,7 +60,7 @@ export default function ProductPreview(): React.ReactElement {
               }}
             >
               <Typography variant="lgBold">
-                {selected ? selected.title : t('Generic requirement')}
+                {selected ? selected.title : t('General requirement')}
               </Typography>
             </Box>
             <Typography variant="smBold" sx={{ paddingTop: 1 }}>

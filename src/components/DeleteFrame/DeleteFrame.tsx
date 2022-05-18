@@ -54,7 +54,7 @@ export default function DeleteFrame({
           aria-label="close"
           sx={!canBeDeleted ? { marginLeft: 'auto' } : {}}
         >
-          {t('cancel')}
+          {t('Cancel')}
         </FormTextButton>
       </Box>
 
