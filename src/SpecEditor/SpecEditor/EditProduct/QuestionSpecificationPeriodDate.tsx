@@ -27,13 +27,6 @@ const QuestionSpecificationPeriodDate = () => {
     name: 'question.config.dateScores'
   });
 
-  const onClickDel = (id: any) => {
-    console.log('DELETING');
-    console.log(id);
-    remove(id);
-    console.log(control);
-  };
-
   const renderDeleteAdornment = (index: number) => {
     return (
       <FormIconButton
