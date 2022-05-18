@@ -1,5 +1,4 @@
 import { joiResolver } from '@hookform/resolvers/joi';
-import Typography from '@mui/material/Typography';
 import React, { useEffect } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
@@ -13,15 +12,12 @@ import { useGetProjectQuery } from '../../../store/api/bankApi';
 import useProjectMutations from '../../../store/api/ProjectMutations';
 import { useAppDispatch } from '../../../store/hooks';
 import { addAlert } from '../../../store/reducers/alert-reducer';
-import theme from '../../../theme';
 import { useEditableState } from '../../Components/EditableContext';
-import { FormCantDeleteBox } from '../../Components/Form/FormCantDeleteBox';
-import { FormDeleteBox } from '../../Components/Form/FormDeleteBox';
-import { FormTextButton } from '../../Components/Form/FormTextButton';
 import { IRouteParams } from '../../Models/IRouteParams';
+import DeleteFrame from '../../../components/DeleteFrame/DeleteFrame';
 
 interface IProps {
-  children: React.ReactNode;
+  children: React.ReactElement;
   product: Parentable<IProduct>;
   handleClose: () => void;
 }
@@ -51,7 +47,7 @@ export default function DeleteProductForm({
   const { data: project } = useGetProjectQuery(projectId);
 
   if (deleteMode !== product.id) {
-    return <>{children}</>;
+    return children;
   }
 
   if (!project) {
@@ -61,8 +57,16 @@ export default function DeleteProductForm({
   const hasChildren = Utils.checkIfHasChildren(product, project.products);
   const isInUse = Utils.productUsedInVariants(product, project);
 
-  async function onSubmit(put: Parentable<IProduct>) {
-    await deleteProduct(put).then(() => {
+  let infoText = '';
+  if (isInUse) {
+    infoText = t('product has connected requirements');
+  }
+  if (hasChildren) {
+    infoText = `${t('cant delete this product')} ${t('product has children')}`;
+  }
+
+  const onSubmit = (put: Parentable<IProduct>): void => {
+    deleteProduct(put).then(() => {
       const alert: IAlert = {
         id: uuidv4(),
         style: 'success',
@@ -71,7 +75,7 @@ export default function DeleteProductForm({
       dispatch(addAlert({ alert }));
       handleClose();
     });
-  }
+  };
 
   return (
     <FormProvider {...methods}>
@@ -80,45 +84,12 @@ export default function DeleteProductForm({
         autoComplete="off"
         noValidate
       >
-        {!hasChildren && (
-          <FormDeleteBox>
-            <FormTextButton
-              hoverColor={theme.palette.errorRed.main}
-              type="submit"
-              aria-label="delete"
-            >
-              {isInUse
-                ? `${t('product has connected requirements')} ${t(
-                    'delete anyways'
-                  )}`
-                : t('delete')}
-            </FormTextButton>
-            <FormTextButton
-              hoverColor={theme.palette.gray400.main}
-              onClick={() => handleClose()}
-              aria-label="close"
-            >
-              {t('cancel')}
-            </FormTextButton>
-            {children}
-          </FormDeleteBox>
-        )}
-        {hasChildren && (
-          <FormCantDeleteBox>
-            <Typography variant="smBold" sx={{ paddingLeft: 1 }}>
-              {t('cant delete this product')}{' '}
-              {hasChildren ? t('product has children') : ''}
-            </Typography>
-            <FormTextButton
-              hoverColor={theme.palette.gray400.main}
-              onClick={() => handleClose()}
-              aria-label="close"
-            >
-              {t('cancel')}
-            </FormTextButton>
-            {children}
-          </FormCantDeleteBox>
-        )}
+        <DeleteFrame
+          children={children}
+          canBeDeleted={!hasChildren}
+          infoText={infoText}
+          handleClose={handleClose}
+        />
       </form>
     </FormProvider>
   );

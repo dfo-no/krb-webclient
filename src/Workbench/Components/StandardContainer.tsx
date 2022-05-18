@@ -5,8 +5,9 @@ export const StandardContainer = styled(Box)(({}) => ({
   flexDirection: 'column',
   paddingTop: 40,
   margin: '0 auto',
-  width: '55.5vw',
-  paddingLeft: 5,
-  paddingRight: 5,
+  width: '100%',
+  maxWidth: 1350,
+  paddingLeft: 16,
+  paddingRight: 16,
   paddingBottom: 40
 }));
