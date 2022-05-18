@@ -27,13 +27,14 @@ const QuestionSpecificationPeriodDate = () => {
     name: 'question.config.dateScores'
   });
 
-  const renderDeleteAdornment = (id: number) => {
-    console.log('DELADORN');
-    console.log(id);
+  const deletePeriod = (id: any) => {
+    remove(0);
+  };
 
+  const renderDeleteAdornment = (id: any) => {
     return (
       <FormIconButton
-        onClick={() => remove(id)}
+        onClick={() => deletePeriod(id)}
         hoverColor={theme.palette.errorRed.main}
         sx={{
           display: 'flex',
@@ -173,7 +174,7 @@ const QuestionSpecificationPeriodDate = () => {
                         name={`question.config.dateScores.${id}.score`}
                         label={t('Score')}
                         type={'number'}
-                        endAdornment={renderDeleteAdornment(id)}
+                        endAdornment={renderDeleteAdornment(period.id)}
                       />
                     </FieldBox>
                   </Box>
