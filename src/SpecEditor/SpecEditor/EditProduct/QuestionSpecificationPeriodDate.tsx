@@ -27,10 +27,13 @@ const QuestionSpecificationPeriodDate = () => {
     name: 'question.config.dateScores'
   });
 
-  const renderDeleteAdornment = (index: number) => {
+  const renderDeleteAdornment = (id: number) => {
+    console.log('DELADORN');
+    console.log(id);
+
     return (
       <FormIconButton
-        onClick={() => remove(index)}
+        onClick={() => remove(id)}
         hoverColor={theme.palette.errorRed.main}
         sx={{
           display: 'flex',
@@ -144,10 +147,10 @@ const QuestionSpecificationPeriodDate = () => {
               gap: 2
             }}
           >
-            {fields.map((field, index) => {
+            {fields.map((period, id) => {
               return (
                 <Box
-                  key={index}
+                  key={id}
                   sx={{
                     display: 'flex'
                   }}
@@ -162,15 +165,15 @@ const QuestionSpecificationPeriodDate = () => {
                     <FieldBox>
                       <DateCtrl
                         label={t('From')}
-                        name={`question.config.dateScores.${index}.date`}
+                        name={`question.config.dateScores.${id}.date`}
                       />
                     </FieldBox>
                     <FieldBox sx={{ width: 240 }}>
                       <VerticalTextCtrl
-                        name={`question.config.dateScores.${index}.score`}
+                        name={`question.config.dateScores.${id}.score`}
                         label={t('Score')}
                         type={'number'}
-                        endAdornment={renderDeleteAdornment(index)}
+                        endAdornment={renderDeleteAdornment(id)}
                       />
                     </FieldBox>
                   </Box>
