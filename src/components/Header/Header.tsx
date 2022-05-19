@@ -15,8 +15,8 @@ import DFOToolbar from '../DFOToolbar/DFOToolbar';
 import theme from '../../theme';
 import { IBank } from '../../Nexus/entities/IBank';
 import { IBreadcrumb } from '../../models/IBreadcrumb';
-import { useGetProjectQuery } from '../../store/api/bankApi';
 import { IToolbarItem } from '../../models/IToolbarItem';
+import { useGetProjectQuery } from '../../store/api/bankApi';
 
 const useStyles = makeStyles({
   header: {
@@ -30,13 +30,6 @@ const useStyles = makeStyles({
     display: 'flex',
     flexDirection: 'column',
     gap: 3
-  },
-  projectPath: {
-    marginLeft: 2.5,
-    color: theme.palette.black.main,
-    [theme.breakpoints.down('mddd')]: {
-      marginLeft: 1
-    }
   },
   viewingProjectTitle: {
     display: 'flex',
@@ -118,7 +111,6 @@ export default function Header(): React.ReactElement {
 
   useEffect(() => {
     setProject(baseUrl?.params.projectId ? fetchedProject : undefined);
-    // eslint-disable-next-line
   }, [baseUrl, fetchedProject]);
 
   if (project) {
@@ -157,9 +149,7 @@ export default function Header(): React.ReactElement {
         <Box className={classes.header}>
           <Box>
             <Box className={classes.headerContent}>
-              <Box className={classes.projectPath}>
-                <Breadcrumbs breadcrumbs={breadcrumbs} />
-              </Box>
+              <Breadcrumbs breadcrumbs={breadcrumbs} />
               <Box className={classes.viewingProjectTitle}>
                 <Box className={classes.projectData}>
                   <Typography variant="xlBold">
