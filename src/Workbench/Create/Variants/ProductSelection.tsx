@@ -41,8 +41,8 @@ const useStyles = makeStyles({
       background: theme.palette.lightBlue.main,
       color: theme.palette.white.main,
       '& .MuiSvgIcon-root': {
-        background: theme.palette.white.main,
-        color: theme.palette.lightBlue.main
+        background: 'transparent',
+        color: theme.palette.white.main
       }
     }
   },
