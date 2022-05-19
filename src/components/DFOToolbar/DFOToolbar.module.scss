@@ -1,0 +1,24 @@
+.Toolbar {
+  display: flex;
+  gap: 50px;
+  height: 100%;
+  align-items: center;
+
+  .icon {
+    display: inline-block;
+    width: 24px;
+    height: 40px;
+    padding: 8px 0;
+    color: var(--primary-main);
+    transition: color 220ms ease-out;
+
+    &:hover {
+      color: var(--lightBlue-main);
+    }
+
+    &.selected {
+      border-bottom: 4px solid;
+      color: var(--lightBlue-main);
+    }
+  }
+}
