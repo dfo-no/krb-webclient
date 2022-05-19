@@ -30,6 +30,7 @@ const HorizontalTextCtrl = ({
             type={type}
             error={!!get(errors, name)}
             disableUnderline
+            sx={{ height: 45 }}
           />
         )}
       />

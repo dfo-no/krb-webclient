@@ -67,7 +67,11 @@ const QuestionSpecification = ({ item }: IProps) => {
         </ConfigBox>
       );
     case QuestionEnum.Q_TIME:
-      return <ConfigBox> Ikke definert </ConfigBox>;
+      return (
+        <ConfigBox>
+          <QuestionSpecificationPeriodDate />
+        </ConfigBox>
+      );
   }
   return <></>;
 };

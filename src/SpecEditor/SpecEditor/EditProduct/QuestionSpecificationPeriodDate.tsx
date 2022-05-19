@@ -1,4 +1,4 @@
-import { Box, Button, styled, Typography } from '@mui/material';
+import { Box, Button, Grid, styled, Typography } from '@mui/material';
 import { t } from 'i18next';
 import DateCtrl from '../../../FormProvider/DateCtrl';
 import VerticalTextCtrl from '../../../FormProvider/VerticalTextCtrl';
@@ -9,6 +9,8 @@ import { useEffect, useState } from 'react';
 import CheckboxCtrl from '../../../FormProvider/CheckboxCtrl';
 import { useFieldArray, useFormContext, useWatch } from 'react-hook-form';
 import { IRequirementAnswer } from '../../../models/IRequirementAnswer';
+import HorizontalTextCtrl from '../../../FormProvider/HorizontalTextCtrl';
+import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 
 const FieldBox = styled(Box)(() => ({
   width: 200
@@ -55,138 +57,56 @@ const QuestionSpecificationPeriodDate = () => {
   return (
     <Box
       sx={{
-        display: 'flex'
+        display: 'flex',
+        margin: '0 auto',
+        justifyContent: 'center',
+        flexDirection: 'column',
+        gap: 3
       }}
     >
-      <Box
-        sx={{
-          display: 'flex',
-          flexDirection: 'column',
-          gap: 3,
-          alignSelf: 'center'
-        }}
-      >
-        <Box>
-          <CheckboxCtrl
-            label="Periode"
-            variant="blue"
-            name="question.config.isPeriod"
-          />
-        </Box>
-        <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
-          <Box
-            sx={{
-              display: 'flex',
-              justifyContent: 'center',
-              width: 422
-            }}
-          >
-            <Typography variant="smBold" sx={{ alignSelf: 'center' }}>
-              {t('From/to date')}
-            </Typography>
-          </Box>
-          <Box sx={{ display: 'flex', gap: 3 }}>
-            <FieldBox>
-              <DateCtrl label={t('From')} name="question.config.fromBoundary" />
-            </FieldBox>
-            <FieldBox>
-              <DateCtrl label={t('To')} name="question.config.toBoundary" />
-            </FieldBox>
-          </Box>
-        </Box>
-        {isPeriod && (
-          <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
-            <Box
-              sx={{
-                display: 'flex',
-                justifyContent: 'center',
-                width: 422
-              }}
-            >
-              <Typography variant="smBold" sx={{ alignSelf: 'center' }}>
-                {t('Period')}
-              </Typography>
-            </Box>
-            <Box sx={{ display: 'flex', gap: 3 }}>
-              <FieldBox>
-                <VerticalTextCtrl
-                  name="question.config.periodMin"
-                  label={t('Minimum')}
-                />
-              </FieldBox>
-              <FieldBox>
-                <VerticalTextCtrl
-                  name="question.config.periodMax"
-                  label={t('Maximum')}
-                />
-              </FieldBox>
-            </Box>
-          </Box>
-        )}
-        <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
-          <Box
-            sx={{
-              display: 'flex',
-              justifyContent: 'center',
-              width: 422
-            }}
-          >
-            {fields.length !== 0 && (
-              <Typography variant="smBold" sx={{ alignSelf: 'center' }}>
-                {t('Date scores')}
-              </Typography>
-            )}
-          </Box>
-          <Box
-            sx={{
-              display: 'flex',
-              flexDirection: 'column',
-              gap: 2
-            }}
-          >
-            {fields.map((period, id) => {
-              return (
-                <Box
-                  key={period.id}
-                  sx={{
-                    display: 'flex'
-                  }}
-                >
-                  <Box
-                    sx={{
-                      display: 'flex',
-                      flexDirection: 'row',
-                      gap: 3
-                    }}
-                  >
-                    <FieldBox>
-                      <DateCtrl
-                        label={t('From')}
-                        name={`question.config.dateScores.${id}.date`}
-                      />
-                    </FieldBox>
-                    <FieldBox sx={{ width: 240 }}>
-                      <VerticalTextCtrl
-                        name={`question.config.dateScores.${id}.score`}
-                        label={t('Score')}
-                        type={'number'}
-                        endAdornment={renderDeleteAdornment(id)}
-                      />
-                    </FieldBox>
-                  </Box>
-                </Box>
-              );
-            })}
-            <Button
-              variant="primary"
-              sx={{ width: 200 }}
-              onClick={() => append({ score: 0, date: null })}
-            >
-              {t('add datescore')}
-            </Button>
-          </Box>
-        </Box>
+      <Box sx={{ display: 'flex', margin: '0 auto' }}>
+        <Typography variant="smBold">Fra/til dato</Typography>
       </Box>
+      <Box sx={{ display: 'flex', gap: 2, width: '90%', margin: '0 auto' }}>
+        <DateCtrl label="Fra" name={'name'} />
+        <DateCtrl label="Til" name={'name'} />
+      </Box>
+      <Box sx={{ display: 'flex', margin: '0 auto' }}>
+        <Typography variant="smBold">Periode</Typography>
+      </Box>
+      <Box sx={{ display: 'flex', gap: 2, width: '90%', margin: '0 auto' }}>
+        <VerticalTextCtrl
+          label="Minimum"
+          placeholder="0"
+          name="Hei2"
+          type={'number'}
+        />
+        <VerticalTextCtrl
+          label="Maximum"
+          placeholder="1"
+          name="Hei2"
+          type={'number'}
+        />
+      </Box>
+      <Box sx={{ display: 'flex', margin: '0 auto' }}>
+        <Typography variant="smBold">Date scores</Typography>
+      </Box>
+      {fields.map((scoreValue, id) => {
+        return (
+          <Box sx={{ display: 'flex', gap: 2, width: '90%', margin: '0 auto' }}>
+            <DateCtrl label={''} name={'name'} />
+            <DateCtrl label={''} name={'name'} />
+          </Box>
+        );
+      })}
+
+      <Button
+        variant="primary"
+        sx={{ width: 200, display: 'flex', margin: '0 auto' }}
+        onClick={() => append({})}
+      >
+        {t('Add new value score')}
+      </Button>
     </Box>
   );
 };
