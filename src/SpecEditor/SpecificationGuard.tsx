@@ -10,7 +10,7 @@ const SpecificationGuard = ({ children }: IProps) => {
   const { spec } = useAppSelector((state) => state.specification);
 
   if (!spec || !spec.bank || !spec.bank.id) {
-    return <Redirect to={{ pathname: '/specification' }} />;
+    return <Redirect to={{ pathname: '/' }} />;
   }
 
   return children;
