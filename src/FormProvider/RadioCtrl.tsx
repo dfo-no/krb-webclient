@@ -7,6 +7,8 @@ import { get } from 'lodash';
 import React from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
 import { IOption } from '../Nexus/entities/IOption';
+import { Typography } from '@mui/material';
+import theme from '../theme';
 
 interface IProps {
   name: string;
@@ -26,7 +28,11 @@ const RadioCtrl = ({ name, label, options }: IProps): React.ReactElement => {
           key={option.value}
           value={option.value}
           control={<Radio />}
-          label={option.label}
+          label={
+            <Typography variant={'sm'} color={theme.palette.black.main}>
+              {option.label}
+            </Typography>
+          }
         />
       );
     });

@@ -182,7 +182,11 @@ theme.components = {
   MuiCheckbox: {
     styleOverrides: {
       root: {
-        paddingLeft: 0
+        // MUI Checkboxes has an invisible border, which can be seen when hovering,
+        // this margin is added to align the checkbox more accuratly to the other MUI components
+        marginLeft: -5,
+        paddingLeft: 0,
+        paddingRight: 0
       }
     }
   },

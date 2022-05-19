@@ -119,13 +119,11 @@ const QuestionSpecificationCodelist = ({ item }: IProps) => {
   return (
     <Box>
       <Box>
-        <Box>
-          <DFOCheckbox
-            variant="blue"
-            value={showMandatoryCodes}
-            onClick={onMandatoryCodesClick}
-          />
-          <Typography variant={'smBold'}>{t('Obligatory codes')}</Typography>
+        <Box onClick={onMandatoryCodesClick}>
+          <DFOCheckbox checked={showMandatoryCodes} />
+          <Typography variant={'smBold'} sx={{ marginLeft: 1 }}>
+            {t('Obligatory codes')}
+          </Typography>
         </Box>
         {showMandatoryCodes && (
           <Box sx={{ padding: 3 }}>
@@ -135,12 +133,12 @@ const QuestionSpecificationCodelist = ({ item }: IProps) => {
             />
           </Box>
         )}
-        <DFOCheckbox
-          variant="blue"
-          value={showOptionalCodes}
-          onClick={onOptionalCodesClick}
-        />
-        <Typography variant={'smBold'}>{t('Optional codes')}</Typography>
+        <Box onClick={onOptionalCodesClick}>
+          <DFOCheckbox checked={showOptionalCodes} />
+          <Typography variant={'smBold'} sx={{ marginLeft: 1 }}>
+            {t('Optional codes')}
+          </Typography>
+        </Box>
       </Box>
       {showOptionalCodes && (
         <Box
