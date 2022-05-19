@@ -1,6 +1,6 @@
 import React, { ReactElement } from 'react';
 import userEvent from '@testing-library/user-event';
-import { createMemoryHistory } from 'history';
+import { createMemoryHistory, MemoryHistory } from 'history';
 import { cleanup, render, RenderResult } from '@testing-library/react';
 import { Router } from 'react-router-dom';
 
@@ -9,15 +9,21 @@ import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
 import DFOToolbar from './DFOToolbar';
 import { IToolbarItem } from '../../models/IToolbarItem';
 
-const MockComponent = ({ history }: any): ReactElement => {
+interface MockProps {
+  history: MemoryHistory;
+}
+
+const MockComponent = ({ history }: MockProps): ReactElement => {
   const toolbarItems: IToolbarItem[] = [
     {
       icon: <ConstructionOutlinedIcon />,
+      label: 'Construction',
       selected: history.location.pathname === '/construction',
       url: '/construction'
     },
     {
       icon: <SettingsOutlinedIcon />,
+      label: 'Settings',
       selected: history.location.pathname === '/settings',
       url: '/settings'
     }
@@ -48,7 +54,8 @@ describe('DFOToolbar', () => {
   it('Should navigate when clicking on one of the items', () => {
     expect(history.location.pathname).toEqual('/');
 
-    userEvent.click(component.container.querySelector('a')!);
+    const link = component.getByLabelText('Construction');
+    userEvent.click(link);
     component = render(
       <Router history={history}>
         <MockComponent history={history} />

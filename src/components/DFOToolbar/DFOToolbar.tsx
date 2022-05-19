@@ -14,14 +14,15 @@ const DFOToolbar = ({ items }: IProps): ReactElement => {
     <div className={css.Toolbar}>
       {items.map((item) => (
         <Link
-          key={item.url}
-          to={item.url}
+          aria-label={item.label ?? ''}
           className={classnames(
             css.icon,
             item.selected ? css.selected : undefined
           )}
+          key={item.url}
+          to={item.url}
         >
-          {item.icon ?? <></>}
+          {item.icon}
         </Link>
       ))}
     </div>
