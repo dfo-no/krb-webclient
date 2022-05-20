@@ -22,6 +22,7 @@ import {
 } from '../Components/SearchContainer';
 import NewProjectForm from './NewProjectForm';
 import ProjectItem from './ProjectItem';
+import SearchUtils from '../../common/SearchUtils';
 
 const useStyles = makeStyles({
   projectsContainer: {
@@ -97,11 +98,7 @@ export default function Projects(): React.ReactElement {
   }
 
   const searchFunction = (searchString: string, list: IBank[]) => {
-    return list.filter((project: IBank) => {
-      if (project.title.toLowerCase().includes(searchString.toLowerCase())) {
-        return project;
-      }
-    });
+    return SearchUtils.searchBaseModel(list, searchString) as IBank[];
   };
 
   const searchFieldCallback = (result: IBank[]) => {

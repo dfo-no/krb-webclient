@@ -57,7 +57,10 @@ export default function ProductPage(): React.ReactElement {
     searchString: string,
     list: Parentable<IProduct>[]
   ): Parentable<IProduct>[] => {
-    return SearchUtils.search(list, searchString) as Parentable<IProduct>[];
+    return SearchUtils.searchParentable(
+      list,
+      searchString
+    ) as Parentable<IProduct>[];
   };
 
   const afterDelete = (): void => {
