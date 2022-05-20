@@ -104,7 +104,6 @@ export default function InheritedBankAccordionBody({
             </Typography>
             <Box className={classes.partsCheckBoxSaveButtonContainer}>
               <CheckboxCtrl
-                variant="blueborder"
                 name="name"
                 label={
                   <Typography variant="sm" color={theme.palette.gray700.main}>

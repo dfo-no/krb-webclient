@@ -39,9 +39,9 @@ const QuestionSpecificationCheckbox = () => {
           { value: 'false', label: t('No') }
         ]}
       />
-      <Box sx={{ paddingTop: 1 }}>
-        <DFOCheckbox value={preferredScore} onClick={onCheckboxClick} />
-        <Typography variant={'smBold'}>
+      <Box onClick={onCheckboxClick} sx={{ paddingTop: 1 }}>
+        <DFOCheckbox checked={preferredScore} />
+        <Typography variant={'smBold'} sx={{ marginLeft: 1 }}>
           {t('Give score for non-preferred alternative')}
         </Typography>
       </Box>
