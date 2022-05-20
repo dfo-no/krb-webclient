@@ -1,18 +1,14 @@
 import { joiResolver } from '@hookform/resolvers/joi';
-import Button from '@mui/material/Button';
-import Card from '@mui/material/Card';
-import CardActions from '@mui/material/CardActions';
-import CardContent from '@mui/material/CardContent';
+import { Box, Button } from '@mui/material/';
 import React from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
 import LoaderSpinner from '../../../common/LoaderSpinner';
-import { DFOCardHeader } from '../../../components/DFOCard/DFOCardHeader';
-import HorizontalTextCtrl from '../../../FormProvider/HorizontalTextCtrl';
 import { IAlert } from '../../../models/IAlert';
 import { PutProjectSchema } from '../../../models/Project';
+import { IRouteParams } from '../../Models/IRouteParams';
 import { IBank } from '../../../Nexus/entities/IBank';
 import {
   useGetProjectQuery,
@@ -21,9 +17,8 @@ import {
 import { useAppDispatch } from '../../../store/hooks';
 import { addAlert } from '../../../store/reducers/alert-reducer';
 import { StandardContainer } from '../../Components/StandardContainer';
-import { IRouteParams } from '../../Models/IRouteParams';
-import ProjectHeader from '../Project/ProjectHeader';
 import { useFormStyles } from '../../Components/Form/FormStyles';
+import VerticalTextCtrl from '../../../FormProvider/VerticalTextCtrl';
 
 function PropertiesPage(): React.ReactElement {
   const dispatch = useAppDispatch();
@@ -59,33 +54,35 @@ function PropertiesPage(): React.ReactElement {
 
   return (
     <StandardContainer>
-      <Card>
-        <FormProvider {...methods}>
-          <form
-            className={formStyles.singlePageForm}
-            onSubmit={methods.handleSubmit(onSubmit)}
-            autoComplete="off"
-            noValidate
-          >
-            <DFOCardHeader>
-              <ProjectHeader />
-            </DFOCardHeader>
-
-            <CardContent>
-              <HorizontalTextCtrl name="title" placeholder={t('Title')} />
-              <HorizontalTextCtrl
-                name="description"
-                placeholder={t('Description')}
-              />
-            </CardContent>
-            <CardActions>
-              <Button variant="primary" type="submit" aria-label="save">
-                {t('Save')}
-              </Button>
-            </CardActions>
-          </form>
-        </FormProvider>
-      </Card>
+      <FormProvider {...methods}>
+        <form
+          className={formStyles.singlePageForm}
+          onSubmit={methods.handleSubmit(onSubmit)}
+          autoComplete="off"
+          noValidate
+        >
+          <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+            <VerticalTextCtrl
+              name="title"
+              label={t('Title')}
+              placeholder={t('Title')}
+            />
+            <VerticalTextCtrl
+              name="description"
+              label={t('Description')}
+              placeholder={t('Description')}
+            />
+            <Button
+              variant="save"
+              type="submit"
+              aria-label="save"
+              sx={{ marginLeft: 'auto' }}
+            >
+              {t('Save')}
+            </Button>
+          </Box>
+        </form>
+      </FormProvider>
     </StandardContainer>
   );
 }
