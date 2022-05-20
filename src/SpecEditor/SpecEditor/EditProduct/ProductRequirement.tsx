@@ -29,7 +29,6 @@ import EditIcon from '@mui/icons-material/Edit';
 import Nexus from '../../../Nexus/Nexus';
 import Button from '@mui/material/Button';
 import { useTranslation } from 'react-i18next';
-import ErrorSummary from '../../../Form/ErrorSummary';
 import { WeightEnum } from '../../../models/WeightEnum';
 
 const useStyles = makeStyles({
@@ -218,8 +217,11 @@ export default function ProductRequirement({
       {isSelected() && (
         <Box className={`${classes.card} ${classes.selected}`}>
           <Box sx={{ display: 'flex', flexDirection: 'row' }}>
-            <DFOCheckbox value={true} onClick={uncheckRequirement} />
-            <Typography variant={'lgBold'} sx={{ marginLeft: 1 }}>
+            <DFOCheckbox checked={true} onClick={uncheckRequirement} />
+            <Typography
+              variant={'lgBold'}
+              sx={{ marginLeft: 1, alignSelf: 'center' }}
+            >
               {requirement.title}
             </Typography>
             <Typography
@@ -261,7 +263,6 @@ export default function ProductRequirement({
                   })}
                 {renderActiveVariant()}
               </Box>
-              <ErrorSummary errors={methods.formState.errors} />
             </form>
           </FormProvider>
         </Box>

@@ -42,7 +42,6 @@ const useStyles = makeStyles({
 export default function InheritedTagListItem({
   tagListItem
 }: IProps): React.ReactElement {
-  const [checkboxVariant, setCheckboxVariant] = useState('blueBorder');
   const [checkboxState, setCheckboxState] = useState(false);
 
   const toggleCheckbox = () => {
@@ -53,32 +52,20 @@ export default function InheritedTagListItem({
     }
   };
 
-  const listItemOnMouseEnter = () => {
-    setCheckboxVariant('white');
-  };
-
-  const listItemOnMouseLeave = () => {
-    setCheckboxVariant('blueBorder');
-  };
-
   const classes = useStyles();
 
   return (
     <ListItem
       className={classes.tagListItem}
       key={tagListItem.title}
-      onMouseEnter={listItemOnMouseEnter}
-      onMouseLeave={listItemOnMouseLeave}
       onClick={toggleCheckbox}
     >
       <Box className={classes.tagListItemCheckbox}>
         <CheckboxCtrl
-          variant={checkboxVariant}
           name="name"
           label={
             <Typography
               className={classes.tagListItemText}
-              variant="sm"
               onClick={toggleCheckbox}
             >
               {tagListItem.title}

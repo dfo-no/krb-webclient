@@ -21,12 +21,12 @@ export default function ProductVariant({
   };
 
   return (
-    <Box sx={{ display: 'flex', flexDirection: 'row' }}>
-      <DFOCheckbox value={false} onClick={openVariant} />
+    <Box onClick={openVariant} sx={{ display: 'flex', flexDirection: 'row' }}>
+      <DFOCheckbox checked={false} />
       <Typography variant={'lg'} sx={{ alignSelf: 'center', marginLeft: 2 }}>
         {variant.description}
       </Typography>
-      <FormIconButton sx={{ marginLeft: 'auto' }} onClick={openVariant}>
+      <FormIconButton sx={{ marginLeft: 'auto' }}>
         <EditIcon />
       </FormIconButton>
     </Box>
