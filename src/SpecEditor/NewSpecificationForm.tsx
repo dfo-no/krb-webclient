@@ -16,15 +16,18 @@ import {
   ModalButtonsBox,
   ModalButton
 } from '../Workbench/Components/ModalBox';
+import { setSpecification } from '../store/reducers/spesification-reducer';
+import { useAppDispatch } from '../store/hooks';
 
 interface IProps {
   specification: ISpecification;
   handleClose: () => void;
 }
 
-const NewSpecForm = ({ handleClose, specification }: IProps) => {
+const NewSpecificationForm = ({ handleClose, specification }: IProps) => {
   const { t } = useTranslation();
   const history = useHistory();
+  const dispatch = useAppDispatch();
 
   const methods = useForm<ISpecification>({
     resolver: joiResolver(BaseSpecificationSchema),
@@ -32,6 +35,7 @@ const NewSpecForm = ({ handleClose, specification }: IProps) => {
   });
 
   const onSubmit = async (post: ISpecification) => {
+    dispatch(setSpecification(post));
     history.push(`/specification/${post.bank.id}`);
   };
 
@@ -82,4 +86,4 @@ const NewSpecForm = ({ handleClose, specification }: IProps) => {
   );
 };
 
-export default NewSpecForm;
+export default NewSpecificationForm;

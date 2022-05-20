@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import DFODialog from '../../components/DFODialog/DFODialog';
-import NewSpecForm from '../../SpecEditor/NewSpecForm';
+import NewSpecificationForm from '../../SpecEditor/NewSpecificationForm';
 import { useBankState } from '../../components/BankContext/BankContext';
 import { setSpecification } from '../../store/reducers/spesification-reducer';
 import { useAppDispatch } from '../../store/hooks';
@@ -113,7 +113,7 @@ export default function ProjectSelectionModal({
       isOpen={true}
       handleClose={cancel}
       children={
-        <NewSpecForm
+        <NewSpecificationForm
           specification={selectedSpecification}
           handleClose={cancel}
         />
