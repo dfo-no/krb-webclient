@@ -1,11 +1,18 @@
 import makeStyles from '@mui/styles/makeStyles';
 import theme from '../../../theme';
 import React from 'react';
-import { Box, Typography } from '@mui/material';
+import {
+  Accordion,
+  AccordionDetails,
+  AccordionSummary,
+  Box,
+  Typography
+} from '@mui/material';
 import { IRequirementAnswer } from '../../../models/IRequirementAnswer';
 import ProductVariant from './ProductVariant';
 import { t } from 'i18next';
 import ProductQuestionAnswer from './ProductQuestionAnswer';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
 const useStyles = makeStyles({
   card: {
@@ -13,6 +20,7 @@ const useStyles = makeStyles({
     display: 'flex',
     flexDirection: 'column',
     color: theme.palette.black.main,
+    border: `1px solid ${theme.palette.primary.main}`,
     padding: 16,
     paddingLeft: 32,
     paddingRight: 32,
@@ -34,20 +42,32 @@ export default function ProductRequirementAnswer({
 
   return (
     <Box className={`${classes.card}`}>
-      <Box sx={{ borderBottom: '1px solid', marginBottom: 2 }}>
-        <Typography variant="lgBold">
-          {requirementAnswer.requirement.title}
-        </Typography>
-      </Box>
-      {requirementVariant && <ProductVariant variant={requirementVariant} />}
-      <Typography
-        variant={'smBold'}
-        color={theme.palette.primary.main}
-        sx={{ marginBottom: 1 }}
-      >
-        {t('Requirement answer')}
-      </Typography>
-      <ProductQuestionAnswer question={requirementAnswer.question} />
+      <Accordion key={requirementAnswer.id} sx={{ boxShadow: 'none' }}>
+        <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+          <Box
+            sx={{ borderBottom: '1px solid', width: '100%', marginRight: 4 }}
+          >
+            <Typography variant="lgBold">
+              {requirementAnswer.requirement.title}
+            </Typography>
+          </Box>
+        </AccordionSummary>
+        <AccordionDetails>
+          <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+            {requirementVariant && (
+              <ProductVariant variant={requirementVariant} />
+            )}
+            <Typography
+              variant={'smBold'}
+              color={theme.palette.primary.main}
+              sx={{ marginBottom: 1 }}
+            >
+              {t('Requirement answer')}
+            </Typography>
+            <ProductQuestionAnswer question={requirementAnswer.question} />
+          </Box>
+        </AccordionDetails>
+      </Accordion>
     </Box>
   );
 }
