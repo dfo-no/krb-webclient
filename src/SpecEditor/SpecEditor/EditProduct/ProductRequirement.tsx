@@ -1,7 +1,7 @@
 import makeStyles from '@mui/styles/makeStyles';
 import theme from '../../../theme';
 import { IRequirement } from '../../../Nexus/entities/IRequirement';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Box, Typography } from '@mui/material';
 import { useSpecificationState } from '../../SpecificationContext';
 import { DFOCheckbox } from '../../../components/DFOCheckbox/DFOCheckbox';
@@ -73,6 +73,10 @@ export default function ProductRequirement({
     resolver: joiResolver(RequirementAnswerSchema),
     defaultValues
   });
+
+  useEffect(() => {
+    methods.reset();
+  }, [methods, specificationProductIndex]);
 
   const useVariant = useWatch({ name: 'variantId', control: methods.control });
   const useWeight = useWatch({ name: 'weight', control: methods.control });
