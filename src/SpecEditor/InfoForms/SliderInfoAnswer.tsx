@@ -8,7 +8,6 @@ import { v4 as uuidv4 } from 'uuid';
 
 import CustomJoi from '../../common/CustomJoi';
 import ErrorSummary from '../../Form/ErrorSummary';
-import ModelType from '../../models/ModelType';
 import QuestionVariant from '../../models/QuestionVariant';
 import SliderSelect from '../../components/SliderSelect';
 import { addAnswer } from '../../store/reducers/spesification-reducer';
@@ -16,6 +15,7 @@ import { IMark } from '../../Nexus/entities/IMark';
 import { IRequirement } from '../../Nexus/entities/IRequirement';
 import { IRequirementAnswer } from '../../models/IRequirementAnswer';
 import { ISliderQuestion } from '../../Nexus/entities/ISliderQuestion';
+import { ModelType } from '../../enums';
 import { QuestionType } from '../../models/QuestionType';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 

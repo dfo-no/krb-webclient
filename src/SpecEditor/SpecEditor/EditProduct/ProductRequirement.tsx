@@ -30,7 +30,7 @@ import {
 } from '../../../models/IRequirementAnswer';
 import { useAppDispatch, useAppSelector } from '../../../store/hooks';
 import { useSpecificationState } from '../../SpecificationContext';
-import { Weighting } from '../../../enums/Weighting';
+import { Weighting } from '../../../enums';
 
 const useStyles = makeStyles({
   card: {

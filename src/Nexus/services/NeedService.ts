@@ -1,9 +1,9 @@
 /* eslint-disable class-methods-use-this */
-import ModelType from '../../models/ModelType';
-import { Parentable } from '../../models/Parentable';
-import { INeed } from '../entities/INeed';
 import StoreService from './StoreService';
 import UuidService from './UuidService';
+import { INeed } from '../entities/INeed';
+import { ModelType } from '../../enums';
+import { Parentable } from '../../models/Parentable';
 
 export default class NeedService {
   UuidService = new UuidService();

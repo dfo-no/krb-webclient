@@ -1,6 +1,8 @@
 import CustomJoi from '../../common/CustomJoi';
-import ModelType from '../../models/ModelType';
 import QuestionVariant from '../../models/QuestionVariant';
+
+import { ModelType } from '../../enums';
+
 /**
  * This interface is meant to be the most basic that can be saved
  * seperately in CosmosDB. Eventually the `type` property will be the marker that this is a separate

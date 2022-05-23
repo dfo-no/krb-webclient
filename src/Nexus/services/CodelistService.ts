@@ -1,9 +1,9 @@
-import ModelType from '../../models/ModelType';
-import { Parentable } from '../../models/Parentable';
-import { ICode } from '../entities/ICode';
-import { ICodelist } from '../entities/ICodelist';
 import StoreService from './StoreService';
 import UuidService from './UuidService';
+import { ICode } from '../entities/ICode';
+import { ICodelist } from '../entities/ICodelist';
+import { ModelType } from '../../enums';
+import { Parentable } from '../../models/Parentable';
 
 export default class CodelistService {
   UuidService = new UuidService();

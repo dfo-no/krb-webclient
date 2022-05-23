@@ -1,13 +1,13 @@
 /* eslint-disable class-methods-use-this */
+import StoreService from './StoreService';
 import Utils from '../../common/Utils';
-import { IInheritedBank } from '../../models/IInheritedBank';
-import ModelType from '../../models/ModelType';
-import { Parentable } from '../../models/Parentable';
+import UuidService from './UuidService';
 import { IBank } from '../entities/IBank';
 import { IBaseModel } from '../entities/IBaseModel';
+import { IInheritedBank } from '../../models/IInheritedBank';
 import { INeed } from '../entities/INeed';
-import StoreService from './StoreService';
-import UuidService from './UuidService';
+import { ModelType } from '../../enums';
+import { Parentable } from '../../models/Parentable';
 
 export default class InheritanceService {
   UuidService = new UuidService();

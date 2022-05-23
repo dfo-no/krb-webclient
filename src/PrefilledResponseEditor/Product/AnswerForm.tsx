@@ -1,7 +1,6 @@
 import React from 'react';
 import { v4 as uuidv4 } from 'uuid';
 
-import ModelType from '../../models/ModelType';
 import ProductCheckBoxForm from './AnswerForms/ProductCheckBoxForm';
 import ProductCodelistForm from './AnswerForms/ProductCodelistForm';
 import ProductDateForm from './AnswerForms/ProductDateForm';
@@ -12,6 +11,7 @@ import { INeed } from '../../Nexus/entities/INeed';
 import { IPrefilledResponseProduct } from '../../models/IPrefilledResponseProduct';
 import { IRequirementAnswer } from '../../models/IRequirementAnswer';
 import { Levelable } from '../../models/Levelable';
+import { ModelType } from '../../enums';
 
 interface IProps {
   element: Levelable<INeed>;

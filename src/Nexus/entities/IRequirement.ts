@@ -1,7 +1,7 @@
 import CustomJoi from '../../common/CustomJoi';
-import ModelType from '../../models/ModelType';
 import { IBaseModel } from './IBaseModel';
 import { IVariant, VariantSchema } from './IVariant';
+import { ModelType } from '../../enums';
 
 export interface IRequirement extends IBaseModel {
   id: string;

@@ -1,6 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+
 import { IPrefilledResponse } from '../../models/IPrefilledResponse';
-import ModelType from '../../models/ModelType';
+import { ModelType } from '../../enums';
 
 interface UploadedResponseState {
   prefilledResponse: IPrefilledResponse;

@@ -1,8 +1,8 @@
-import ModelType from '../../models/ModelType';
 import Nexus from '../Nexus';
 import QuestionVariant from '../../models/QuestionVariant';
 import VariantType from '../entities/VariantType';
 import { IResponse } from '../../models/IResponse';
+import { ModelType } from '../../enums';
 
 describe('EvaluationService', () => {
   it('Can get EvauateSlider', async () => {

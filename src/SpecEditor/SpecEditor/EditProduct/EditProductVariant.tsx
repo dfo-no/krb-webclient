@@ -12,7 +12,7 @@ import { IMark } from '../../../Nexus/entities/IMark';
 import { IRequirement } from '../../../Nexus/entities/IRequirement';
 import { IRequirementAnswer } from '../../../models/IRequirementAnswer';
 import { IVariant } from '../../../Nexus/entities/IVariant';
-import { Weighting } from '../../../enums/Weighting';
+import { Weighting } from '../../../enums';
 
 interface IProps {
   requirement: IRequirement;

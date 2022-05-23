@@ -1,20 +1,7 @@
 import CustomJoi from '../common/CustomJoi';
 import { BaseBankSchema } from '../Nexus/entities/IBank';
 import { PutPublicationSchema } from '../Nexus/entities/IPublication';
-import ModelType from './ModelType';
-export const EditProjectSchema = BaseBankSchema.keys({
-  id: CustomJoi.string()
-    .guid({ version: ['uuidv4'] })
-    .length(36)
-    .required(),
-  type: CustomJoi.string().equal(ModelType.bank).required(),
-  needs: CustomJoi.array(),
-  publications: CustomJoi.array()
-    .items(PutPublicationSchema)
-    .unique('id')
-    .unique('version')
-    .unique('date')
-});
+import { ModelType } from '../enums';
 
 export const PutProjectSchema = BaseBankSchema.keys({
   id: CustomJoi.string()
