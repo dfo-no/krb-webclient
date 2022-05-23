@@ -156,7 +156,7 @@ export default function Header(): React.ReactElement {
   const tabName = location.pathname
     .replace(baseUrl ? baseUrl.url : '', '')
     .split('/')
-    .filter((elem) => elem !== '')
+    .filter((elem: string) => elem !== '')
     .shift();
   const isLocationAdmin = tabName === 'admin';
   const isLocationCreate = tabName === 'create';
