@@ -1,16 +1,17 @@
 import React from 'react';
 import { v4 as uuidv4 } from 'uuid';
-import { IPrefilledResponseProduct } from '../../models/IPrefilledResponseProduct';
-import { IRequirementAnswer } from '../../models/IRequirementAnswer';
-import { Levelable } from '../../models/Levelable';
+
 import ModelType from '../../models/ModelType';
-import QuestionEnum from '../../models/QuestionEnum';
-import { INeed } from '../../Nexus/entities/INeed';
 import ProductCheckBoxForm from './AnswerForms/ProductCheckBoxForm';
 import ProductCodelistForm from './AnswerForms/ProductCodelistForm';
 import ProductDateForm from './AnswerForms/ProductDateForm';
 import ProductSliderForm from './AnswerForms/ProductSliderForm';
 import ProductTextForm from './AnswerForms/ProductTextForm';
+import QuestionVariant from '../../models/QuestionVariant';
+import { INeed } from '../../Nexus/entities/INeed';
+import { IPrefilledResponseProduct } from '../../models/IPrefilledResponseProduct';
+import { IRequirementAnswer } from '../../models/IRequirementAnswer';
+import { Levelable } from '../../models/Levelable';
 
 interface IProps {
   element: Levelable<INeed>;
@@ -52,7 +53,7 @@ export default function AnswerForm({
       existingAnswer = requirementAnswers[foundIndex];
     }
     switch (elem.question.type) {
-      case QuestionEnum.Q_SLIDER: {
+      case QuestionVariant.Q_SLIDER: {
         return (
           <ProductSliderForm
             existingAnswer={existingAnswer}
@@ -62,7 +63,7 @@ export default function AnswerForm({
           />
         );
       }
-      case QuestionEnum.Q_PERIOD_DATE: {
+      case QuestionVariant.Q_PERIOD_DATE: {
         return (
           <ProductDateForm
             existingAnswer={existingAnswer}
@@ -72,10 +73,10 @@ export default function AnswerForm({
           />
         );
       }
-      case QuestionEnum.Q_FILEUPLOAD: {
+      case QuestionVariant.Q_FILEUPLOAD: {
         return <div key={elem.question.id}>Q_FILEUPLOAD</div>;
       }
-      case QuestionEnum.Q_CHECKBOX: {
+      case QuestionVariant.Q_CHECKBOX: {
         return (
           <ProductCheckBoxForm
             answer={elem}
@@ -85,7 +86,7 @@ export default function AnswerForm({
           />
         );
       }
-      case QuestionEnum.Q_TEXT: {
+      case QuestionVariant.Q_TEXT: {
         return (
           <ProductTextForm
             existingAnswer={existingAnswer}
@@ -95,7 +96,7 @@ export default function AnswerForm({
           />
         );
       }
-      case QuestionEnum.Q_CODELIST: {
+      case QuestionVariant.Q_CODELIST: {
         return (
           <ProductCodelistForm
             existingAnswer={existingAnswer}

@@ -1,21 +1,22 @@
-import { joiResolver } from '@hookform/resolvers/joi';
 import Button from '@mui/material/Button';
-import React from 'react';
 import Card from 'react-bootstrap/Card';
 import Form from 'react-bootstrap/Form';
+import React from 'react';
+import { joiResolver } from '@hookform/resolvers/joi';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { v4 as uuidv4 } from 'uuid';
+
 import CustomJoi from '../../common/CustomJoi';
 import ErrorSummary from '../../Form/ErrorSummary';
-import { IRequirementAnswer } from '../../models/IRequirementAnswer';
 import ModelType from '../../models/ModelType';
-import QuestionEnum from '../../models/QuestionEnum';
-import { QuestionType } from '../../models/QuestionType';
-import { IRequirement } from '../../Nexus/entities/IRequirement';
-import { ITextQuestion } from '../../Nexus/entities/ITextQuestion';
-import { useAppDispatch, useAppSelector } from '../../store/hooks';
+import QuestionVariant from '../../models/QuestionVariant';
 import { addAnswer } from '../../store/reducers/spesification-reducer';
+import { IRequirement } from '../../Nexus/entities/IRequirement';
+import { IRequirementAnswer } from '../../models/IRequirementAnswer';
+import { ITextQuestion } from '../../Nexus/entities/ITextQuestion';
+import { QuestionType } from '../../models/QuestionType';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
 
 interface IProps {
   question: QuestionType;
@@ -26,7 +27,7 @@ interface IProps {
 
 export const ResponseCodelistSchema = CustomJoi.object().keys({
   id: CustomJoi.string().required(),
-  type: CustomJoi.string().equal(QuestionEnum.Q_TEXT).required(),
+  type: CustomJoi.string().equal(QuestionVariant.Q_TEXT).required(),
   config: CustomJoi.object().keys({
     codelist: CustomJoi.string().required(),
     multipleSelect: CustomJoi.boolean().required()

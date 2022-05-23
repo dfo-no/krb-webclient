@@ -1,5 +1,5 @@
 import CustomJoi from '../../common/CustomJoi';
-import QuestionEnum from '../../models/QuestionEnum';
+import QuestionVariant from '../../models/QuestionVariant';
 import {
   ConfigBaseSchema,
   IAnswerBase,
@@ -7,9 +7,10 @@ import {
   IQuestionBase,
   QuestionBaseSchema
 } from './IQuestionBase';
+
 export interface IFileUploadQuestion
   extends IQuestionBase<IFileUploadAnswer, IFileUploadConfig> {
-  type: QuestionEnum.Q_FILEUPLOAD;
+  type: QuestionVariant.Q_FILEUPLOAD;
 }
 
 export interface IFileUploadAnswer extends IAnswerBase {
@@ -23,7 +24,7 @@ export interface IFileUploadConfig extends IConfigBase {
 }
 
 export const FileUploadWorkbenchSchema = QuestionBaseSchema.keys({
-  type: CustomJoi.string().equal(QuestionEnum.Q_FILEUPLOAD).required(),
+  type: CustomJoi.string().equal(QuestionVariant.Q_FILEUPLOAD).required(),
   config: ConfigBaseSchema.keys({
     fileEndings: CustomJoi.array().items(CustomJoi.string()).required(),
     template: CustomJoi.string().allow(null, '').required(),
@@ -33,7 +34,7 @@ export const FileUploadWorkbenchSchema = QuestionBaseSchema.keys({
 });
 
 export const FileUploadWorkbenchInfoSchema = QuestionBaseSchema.keys({
-  type: CustomJoi.string().equal(QuestionEnum.Q_FILEUPLOAD).required(),
+  type: CustomJoi.string().equal(QuestionVariant.Q_FILEUPLOAD).required(),
   config: ConfigBaseSchema.keys({
     fileEndings: CustomJoi.array().items(CustomJoi.string()).required(),
     template: CustomJoi.string().allow(null, '').required(),

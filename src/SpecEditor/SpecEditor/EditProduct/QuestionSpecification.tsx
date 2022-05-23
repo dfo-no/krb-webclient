@@ -1,16 +1,17 @@
 import { Box, styled, Typography } from '@mui/material';
-import { ITimeQuestion } from '../../../Nexus/entities/ITimeQuestion';
-import { ITextQuestion } from '../../../Nexus/entities/ITextQuestion';
-import { ISliderQuestion } from '../../../Nexus/entities/ISliderQuestion';
-import { IPeriodDateQuestion } from '../../../Nexus/entities/IPeriodDateQuestion';
-import { IFileUploadQuestion } from '../../../Nexus/entities/IFileUploadQuestion';
-import { ICodelistQuestion } from '../../../Nexus/entities/ICodelistQuestion';
-import { ICheckboxQuestion } from '../../../Nexus/entities/ICheckboxQuestion';
-import QuestionEnum from '../../../models/QuestionEnum';
 import { useTranslation } from 'react-i18next';
+
+import QuestionVariant from '../../../models/QuestionVariant';
 import QuestionSpecificationSlider from './QuestionSpecificationSlider';
 import QuestionSpecificationCheckbox from './QuestionSpecificationCheckbox';
 import QuestionSpecificationCodelist from './QuestionSpecificationCodelist';
+import { ICheckboxQuestion } from '../../../Nexus/entities/ICheckboxQuestion';
+import { ICodelistQuestion } from '../../../Nexus/entities/ICodelistQuestion';
+import { IFileUploadQuestion } from '../../../Nexus/entities/IFileUploadQuestion';
+import { IPeriodDateQuestion } from '../../../Nexus/entities/IPeriodDateQuestion';
+import { ISliderQuestion } from '../../../Nexus/entities/ISliderQuestion';
+import { ITextQuestion } from '../../../Nexus/entities/ITextQuestion';
+import { ITimeQuestion } from '../../../Nexus/entities/ITimeQuestion';
 
 const ConfigBox = styled(Box)(() => ({
   display: 'flex',
@@ -33,7 +34,7 @@ const QuestionSpecification = ({ item }: IProps) => {
   const { t } = useTranslation();
 
   switch (item.type) {
-    case QuestionEnum.Q_TEXT:
+    case QuestionVariant.Q_TEXT:
       return (
         <ConfigBox>
           <Typography variant={'smBold'} sx={{ marginBottom: 2 }}>
@@ -41,27 +42,27 @@ const QuestionSpecification = ({ item }: IProps) => {
           </Typography>
         </ConfigBox>
       );
-    case QuestionEnum.Q_CHECKBOX:
+    case QuestionVariant.Q_CHECKBOX:
       return (
         <ConfigBox>
           <QuestionSpecificationCheckbox />
         </ConfigBox>
       );
-    case QuestionEnum.Q_SLIDER:
+    case QuestionVariant.Q_SLIDER:
       return (
         <ConfigBox>
           <QuestionSpecificationSlider item={item} />
         </ConfigBox>
       );
-    case QuestionEnum.Q_CODELIST:
+    case QuestionVariant.Q_CODELIST:
       return (
         <ConfigBox>
           <QuestionSpecificationCodelist item={item} />
         </ConfigBox>
       );
-    case QuestionEnum.Q_PERIOD_DATE:
+    case QuestionVariant.Q_PERIOD_DATE:
       return <ConfigBox> Ikke definert </ConfigBox>;
-    case QuestionEnum.Q_TIME:
+    case QuestionVariant.Q_TIME:
       return <ConfigBox> Ikke definert </ConfigBox>;
   }
   return <></>;

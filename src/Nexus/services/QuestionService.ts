@@ -1,5 +1,6 @@
+import QuestionVariant from '../../models/QuestionVariant';
 import Utils from '../../common/Utils';
-import QuestionEnum from '../../models/QuestionEnum';
+import UuidService from './UuidService';
 import { ICheckboxQuestion } from '../entities/ICheckboxQuestion';
 import { ICodelistQuestion } from '../entities/ICodelistQuestion';
 import { IFileUploadQuestion } from '../entities/IFileUploadQuestion';
@@ -7,19 +8,18 @@ import { IPeriodDateQuestion } from '../entities/IPeriodDateQuestion';
 import { ISliderQuestion } from '../entities/ISliderQuestion';
 import { ITextQuestion } from '../entities/ITextQuestion';
 import { ITimeQuestion } from '../entities/ITimeQuestion';
-import UuidService from './UuidService';
 
 export default class QuestionService {
   UuidService = new UuidService();
 
-  getQuestion = (type: QuestionEnum) => {
+  getQuestion = (type: QuestionVariant) => {
     const uuid = this.UuidService.generateId();
 
     switch (type) {
-      case QuestionEnum.Q_TIME:
+      case QuestionVariant.Q_TIME:
         const q1: ITimeQuestion = {
           id: uuid,
-          type: QuestionEnum.Q_TIME,
+          type: QuestionVariant.Q_TIME,
           config: {
             fromBoundary: null,
             toBoundary: null,
@@ -38,10 +38,10 @@ export default class QuestionService {
           sourceOriginal: null
         };
         return q1;
-      case QuestionEnum.Q_TEXT:
+      case QuestionVariant.Q_TEXT:
         const q2: ITextQuestion = {
           id: uuid,
-          type: QuestionEnum.Q_TEXT,
+          type: QuestionVariant.Q_TEXT,
           config: {
             max: 10000,
             defaultPoint: 1
@@ -54,10 +54,10 @@ export default class QuestionService {
           sourceOriginal: null
         };
         return q2;
-      case QuestionEnum.Q_SLIDER:
+      case QuestionVariant.Q_SLIDER:
         const q3: ISliderQuestion = {
           id: uuid,
-          type: QuestionEnum.Q_SLIDER,
+          type: QuestionVariant.Q_SLIDER,
           config: {
             min: 0,
             max: 10,
@@ -77,10 +77,10 @@ export default class QuestionService {
           sourceOriginal: null
         };
         return q3;
-      case QuestionEnum.Q_PERIOD_DATE:
+      case QuestionVariant.Q_PERIOD_DATE:
         const q4: IPeriodDateQuestion = {
           id: uuid,
-          type: QuestionEnum.Q_PERIOD_DATE,
+          type: QuestionVariant.Q_PERIOD_DATE,
           config: {
             fromBoundary: null,
             toBoundary: null,
@@ -99,10 +99,10 @@ export default class QuestionService {
           sourceOriginal: null
         };
         return q4;
-      case QuestionEnum.Q_FILEUPLOAD:
+      case QuestionVariant.Q_FILEUPLOAD:
         const q5: IFileUploadQuestion = {
           id: uuid,
-          type: QuestionEnum.Q_FILEUPLOAD,
+          type: QuestionVariant.Q_FILEUPLOAD,
           config: {
             template: null,
             uploadInSpec: false,
@@ -118,10 +118,10 @@ export default class QuestionService {
           sourceOriginal: null
         };
         return q5;
-      case QuestionEnum.Q_CODELIST:
+      case QuestionVariant.Q_CODELIST:
         const q6: ICodelistQuestion = {
           id: uuid,
-          type: QuestionEnum.Q_CODELIST,
+          type: QuestionVariant.Q_CODELIST,
           config: {
             mandatoryCodes: [],
             optionalCodes: [],
@@ -138,10 +138,10 @@ export default class QuestionService {
           sourceOriginal: null
         };
         return q6;
-      case QuestionEnum.Q_CHECKBOX:
+      case QuestionVariant.Q_CHECKBOX:
         const q7: ICheckboxQuestion = {
           id: uuid,
-          type: QuestionEnum.Q_CHECKBOX,
+          type: QuestionVariant.Q_CHECKBOX,
           config: {
             pointsNonPrefered: 0,
             defaultPoint: 1,

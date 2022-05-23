@@ -1,6 +1,6 @@
 import CustomJoi from '../../common/CustomJoi';
 import ModelType from '../../models/ModelType';
-import QuestionEnum from '../../models/QuestionEnum';
+import QuestionVariant from '../../models/QuestionVariant';
 /**
  * This interface is meant to be the most basic that can be saved
  * seperately in CosmosDB. Eventually the `type` property will be the marker that this is a separate
@@ -9,7 +9,7 @@ import QuestionEnum from '../../models/QuestionEnum';
 
 export interface IBaseModel {
   id: string;
-  type: ModelType | QuestionEnum;
+  type: ModelType | QuestionVariant;
   sourceRel: string | null;
   sourceOriginal: string | null;
 }

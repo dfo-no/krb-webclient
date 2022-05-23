@@ -1,17 +1,17 @@
-import { IInheritedBank } from '../models/IInheritedBank';
-import { Levelable } from '../models/Levelable';
-import { Nestable } from '../models/Nestable';
-import { Parentable } from '../models/Parentable';
+import QuestionVariant from '../models/QuestionVariant';
 import { IBank } from '../Nexus/entities/IBank';
 import { IBaseModel } from '../Nexus/entities/IBaseModel';
+import { ICodelist } from '../Nexus/entities/ICodelist';
+import { ICodelistQuestion } from '../Nexus/entities/ICodelistQuestion';
+import { IInheritedBank } from '../models/IInheritedBank';
 import { INeed } from '../Nexus/entities/INeed';
 import { IProduct } from '../Nexus/entities/IProduct';
 import { IRequirement } from '../Nexus/entities/IRequirement';
 import { IVariant } from '../Nexus/entities/IVariant';
-import { ICodelist } from '../Nexus/entities/ICodelist';
+import { Levelable } from '../models/Levelable';
+import { Nestable } from '../models/Nestable';
+import { Parentable } from '../models/Parentable';
 import { QuestionType } from '../models/QuestionType';
-import { ICodelistQuestion } from '../Nexus/entities/ICodelistQuestion';
-import QuestionEnum from '../models/QuestionEnum';
 
 class Utils {
   static ensure<T>(
@@ -353,7 +353,7 @@ class Utils {
       need.requirements.forEach((requirement: IRequirement) => {
         requirement.variants.forEach((variant: IVariant) => {
           variant.questions.forEach((question: QuestionType) => {
-            if (question.type === QuestionEnum.Q_CODELIST) {
+            if (question.type === QuestionVariant.Q_CODELIST) {
               if (
                 (question as ICodelistQuestion).config.codelist ===
                 selectedCodelist.id

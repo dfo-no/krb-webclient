@@ -1,5 +1,5 @@
 import CustomJoi from '../../common/CustomJoi';
-import QuestionEnum from '../../models/QuestionEnum';
+import QuestionVariant from '../../models/QuestionVariant';
 import {
   ConfigBaseSchema,
   IAnswerBase,
@@ -7,8 +7,9 @@ import {
   IQuestionBase,
   QuestionBaseSchema
 } from './IQuestionBase';
+
 export interface ITimeQuestion extends IQuestionBase<ITimeAnswer, ITimeConfig> {
-  type: QuestionEnum.Q_TIME;
+  type: QuestionVariant.Q_TIME;
 }
 
 export interface ITimeAnswer extends IAnswerBase {
@@ -31,7 +32,7 @@ export interface TimeScorePair {
 }
 
 export const TimeWorkbenchSchema = QuestionBaseSchema.keys({
-  type: CustomJoi.string().equal(QuestionEnum.Q_TIME).required(),
+  type: CustomJoi.string().equal(QuestionVariant.Q_TIME).required(),
   config: ConfigBaseSchema.keys({
     isPeriod: CustomJoi.boolean().required(),
     fromBoundary: CustomJoi.string().allow(null).required(),
@@ -56,7 +57,7 @@ export const TimeWorkbenchSchema = QuestionBaseSchema.keys({
 });
 
 export const TimeSpecSchema = QuestionBaseSchema.keys({
-  type: CustomJoi.string().equal(QuestionEnum.Q_TIME).required(),
+  type: CustomJoi.string().equal(QuestionVariant.Q_TIME).required(),
   config: ConfigBaseSchema.keys({
     isPeriod: CustomJoi.boolean().required(),
     fromBoundary: CustomJoi.string().allow(null).required(),

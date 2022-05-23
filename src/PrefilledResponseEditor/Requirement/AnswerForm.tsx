@@ -1,17 +1,18 @@
 import React from 'react';
 import { v4 as uuidv4 } from 'uuid';
-import { IRequirementAnswer } from '../../models/IRequirementAnswer';
-import { Levelable } from '../../models/Levelable';
-import ModelType from '../../models/ModelType';
-import QuestionEnum from '../../models/QuestionEnum';
-import { INeed } from '../../Nexus/entities/INeed';
-import { useAppSelector } from '../../store/hooks';
+
 import CheckBoxForm from './AnswerForms/CheckBoxForm';
 import CodelistForm from './AnswerForms/CodelistForm';
 import DateForm from './AnswerForms/DateForm';
 import FileUploadForm from './AnswerForms/FileUploadForm';
 import SliderForm from './AnswerForms/SliderForm';
 import TextForm from './AnswerForms/TextForm';
+import ModelType from '../../models/ModelType';
+import QuestionVariant from '../../models/QuestionVariant';
+import { INeed } from '../../Nexus/entities/INeed';
+import { IRequirementAnswer } from '../../models/IRequirementAnswer';
+import { Levelable } from '../../models/Levelable';
+import { useAppSelector } from '../../store/hooks';
 
 interface IProps {
   element: Levelable<INeed>;
@@ -53,7 +54,7 @@ export default function AnswerForm({ element }: IProps): React.ReactElement {
     }
 
     switch (elem.question.type) {
-      case QuestionEnum.Q_SLIDER: {
+      case QuestionVariant.Q_SLIDER: {
         return (
           <SliderForm
             answer={elem}
@@ -62,7 +63,7 @@ export default function AnswerForm({ element }: IProps): React.ReactElement {
           />
         );
       }
-      case QuestionEnum.Q_PERIOD_DATE: {
+      case QuestionVariant.Q_PERIOD_DATE: {
         return (
           <DateForm
             answer={elem}
@@ -71,7 +72,7 @@ export default function AnswerForm({ element }: IProps): React.ReactElement {
           />
         );
       }
-      case QuestionEnum.Q_FILEUPLOAD: {
+      case QuestionVariant.Q_FILEUPLOAD: {
         return (
           <FileUploadForm
             answer={elem}
@@ -80,7 +81,7 @@ export default function AnswerForm({ element }: IProps): React.ReactElement {
           />
         );
       }
-      case QuestionEnum.Q_TEXT: {
+      case QuestionVariant.Q_TEXT: {
         return (
           <TextForm
             answer={elem}
@@ -89,7 +90,7 @@ export default function AnswerForm({ element }: IProps): React.ReactElement {
           />
         );
       }
-      case QuestionEnum.Q_CODELIST: {
+      case QuestionVariant.Q_CODELIST: {
         return (
           <CodelistForm
             answer={elem}
@@ -98,10 +99,10 @@ export default function AnswerForm({ element }: IProps): React.ReactElement {
           />
         );
       }
-      case QuestionEnum.Q_TIME: {
+      case QuestionVariant.Q_TIME: {
         return <p key={elem.question.id}>Not Implemented</p>;
       }
-      case QuestionEnum.Q_CHECKBOX: {
+      case QuestionVariant.Q_CHECKBOX: {
         return (
           <CheckBoxForm
             answer={elem}

@@ -1,11 +1,11 @@
-import { IBaseModel } from '../Nexus/entities/IBaseModel';
 import ModelType from '../models/ModelType';
-import { Parentable } from '../models/Parentable';
-import { Nestable } from '../models/Nestable';
+import QuestionVariant from '../models/QuestionVariant';
 import VariantType from '../Nexus/entities/VariantType';
-import { INeed } from '../Nexus/entities/INeed';
 import { IBank } from '../Nexus/entities/IBank';
-import QuestionEnum from '../models/QuestionEnum';
+import { IBaseModel } from '../Nexus/entities/IBaseModel';
+import { INeed } from '../Nexus/entities/INeed';
+import { Nestable } from '../models/Nestable';
+import { Parentable } from '../models/Parentable';
 
 interface ICar extends IBaseModel {
   id: string;
@@ -291,7 +291,7 @@ export const needHierarchyTestData: Parentable<INeed>[] = [
             questions: [
               {
                 id: '523acdad-95fa-4515-ac1f-f785f3000260',
-                type: QuestionEnum.Q_CODELIST,
+                type: QuestionVariant.Q_CODELIST,
                 config: {
                   mandatoryCodes: [],
                   optionalCodes: [],

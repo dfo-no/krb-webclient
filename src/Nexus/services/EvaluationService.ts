@@ -1,11 +1,11 @@
 /* eslint-disable class-methods-use-this */
 
-import { IResponse } from '../../models/IResponse';
-import QuestionEnum from '../../models/QuestionEnum';
+import QuestionVariant from '../../models/QuestionVariant';
 import { ICheckboxQuestion } from '../entities/ICheckboxQuestion';
 import { ICodelistQuestion } from '../entities/ICodelistQuestion';
 import { IEvaluatedResponse } from '../entities/IEvaluatedResponse';
 import { IPeriodDateQuestion } from '../entities/IPeriodDateQuestion';
+import { IResponse } from '../../models/IResponse';
 import { ISliderQuestion, ScoreValuePair } from '../entities/ISliderQuestion';
 import { ITimeQuestion } from '../entities/ITimeQuestion';
 
@@ -188,29 +188,29 @@ export default class EvaluationService {
         throw Error('Answer does not exist in specification');
       }
 
-      if (requirementAnswer.question.type === QuestionEnum.Q_CHECKBOX) {
+      if (requirementAnswer.question.type === QuestionVariant.Q_CHECKBOX) {
         evaluation.points += this.evaluateCheckBox(requirementAnswer.question);
       }
-      if (requirementAnswer.question.type === QuestionEnum.Q_SLIDER) {
+      if (requirementAnswer.question.type === QuestionVariant.Q_SLIDER) {
         evaluation.points += this.evaluateSlider(requirementAnswer.question);
       }
 
-      if (requirementAnswer.question.type === QuestionEnum.Q_CODELIST) {
+      if (requirementAnswer.question.type === QuestionVariant.Q_CODELIST) {
         evaluation.points += this.evaluateCodelist(requirementAnswer.question);
       }
-      if (requirementAnswer.question.type === QuestionEnum.Q_TIME) {
+      if (requirementAnswer.question.type === QuestionVariant.Q_TIME) {
         evaluation.points += this.evaluateTime(requirementAnswer.question);
       }
-      if (requirementAnswer.question.type === QuestionEnum.Q_PERIOD_DATE) {
+      if (requirementAnswer.question.type === QuestionVariant.Q_PERIOD_DATE) {
         evaluation.points += this.evaluateDate(requirementAnswer.question);
       }
 
       if (
-        requirementAnswer.question.type !== QuestionEnum.Q_CODELIST &&
-        requirementAnswer.question.type !== QuestionEnum.Q_SLIDER &&
-        requirementAnswer.question.type !== QuestionEnum.Q_CHECKBOX &&
-        requirementAnswer.question.type !== QuestionEnum.Q_TIME &&
-        requirementAnswer.question.type !== QuestionEnum.Q_PERIOD_DATE
+        requirementAnswer.question.type !== QuestionVariant.Q_CODELIST &&
+        requirementAnswer.question.type !== QuestionVariant.Q_SLIDER &&
+        requirementAnswer.question.type !== QuestionVariant.Q_CHECKBOX &&
+        requirementAnswer.question.type !== QuestionVariant.Q_TIME &&
+        requirementAnswer.question.type !== QuestionVariant.Q_PERIOD_DATE
       ) {
         evaluation.points += 1;
       }
@@ -219,7 +219,7 @@ export default class EvaluationService {
     // TODO, if check of answer exisiting in corresponding product is necessary, add this
     response.products.forEach((product) => {
       product.requirementAnswers.forEach((answer) => {
-        if (answer.question.type !== QuestionEnum.Q_CHECKBOX) {
+        if (answer.question.type !== QuestionVariant.Q_CHECKBOX) {
           evaluation.points += 1;
         }
       });

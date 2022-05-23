@@ -1,6 +1,6 @@
 /* eslint-disable class-methods-use-this */
 import ModelType from '../../models/ModelType';
-import QuestionEnum from '../../models/QuestionEnum';
+import QuestionVariant from '../../models/QuestionVariant';
 import QuestionService from './QuestionService';
 import SpecificationStoreService from './SpecificationStoreService';
 import UuidService from './UuidService';
@@ -53,7 +53,7 @@ export default class SpecificationService {
       questionId: '',
       weight: Weighting.MEDIUM,
       variantId: '',
-      question: questionService.getQuestion(QuestionEnum.Q_TEXT),
+      question: questionService.getQuestion(QuestionVariant.Q_TEXT),
       type: ModelType.requirementAnswer,
       requirement: requirement
     };

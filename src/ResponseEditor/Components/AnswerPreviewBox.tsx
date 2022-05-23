@@ -1,12 +1,13 @@
 import Card from '@mui/material/Card';
 import React from 'react';
 import Utils from '../../common/Utils';
-import { IRequirementAnswer } from '../../models/IRequirementAnswer';
-import QuestionEnum from '../../models/QuestionEnum';
+
+import AnswerPreview from './AnswerPreview';
+import QuestionVariant from '../../models/QuestionVariant';
 import { ICode } from '../../Nexus/entities/ICode';
 import { ICodelist } from '../../Nexus/entities/ICodelist';
+import { IRequirementAnswer } from '../../models/IRequirementAnswer';
 import { useAppSelector } from '../../store/hooks';
-import AnswerPreview from './AnswerPreview';
 
 interface IProps {
   answerList: IRequirementAnswer[];
@@ -47,11 +48,11 @@ export default function AnswerPreviewBox({
     let textToBeDisplayed;
     let question;
     switch (answer.question.type) {
-      case QuestionEnum.Q_SLIDER:
+      case QuestionVariant.Q_SLIDER:
         question = answer.question;
         textToBeDisplayed = `${question.answer?.value} `;
         break;
-      case QuestionEnum.Q_CODELIST:
+      case QuestionVariant.Q_CODELIST:
         question = answer.question;
         if (question.answer?.codes) {
           textToBeDisplayed = `${CodelistToString(
@@ -62,15 +63,15 @@ export default function AnswerPreviewBox({
           textToBeDisplayed = '';
         }
         break;
-      case QuestionEnum.Q_TEXT:
+      case QuestionVariant.Q_TEXT:
         question = answer.question;
         textToBeDisplayed = `${question.answer?.text} `;
         break;
-      case QuestionEnum.Q_PERIOD_DATE:
+      case QuestionVariant.Q_PERIOD_DATE:
         question = answer.question;
         textToBeDisplayed = `${question.answer?.fromDate} `;
         break;
-      case QuestionEnum.Q_CHECKBOX:
+      case QuestionVariant.Q_CHECKBOX:
         question = answer.question;
         textToBeDisplayed = `${question.answer?.value} `;
         break;

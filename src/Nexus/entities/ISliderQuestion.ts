@@ -1,5 +1,5 @@
 import CustomJoi from '../../common/CustomJoi';
-import QuestionEnum from '../../models/QuestionEnum';
+import QuestionVariant from '../../models/QuestionVariant';
 import {
   ConfigBaseSchema,
   IAnswerBase,
@@ -7,9 +7,10 @@ import {
   IQuestionBase,
   QuestionBaseSchema
 } from './IQuestionBase';
+
 export interface ISliderQuestion
   extends IQuestionBase<ISliderAnswer, ISliderConfig> {
-  type: QuestionEnum.Q_SLIDER;
+  type: QuestionVariant.Q_SLIDER;
 }
 
 export interface ISliderAnswer extends IAnswerBase {
@@ -29,7 +30,7 @@ export interface ScoreValuePair {
 }
 
 export const SliderQuestionSchema = QuestionBaseSchema.keys({
-  type: CustomJoi.string().equal(QuestionEnum.Q_SLIDER).required(),
+  type: CustomJoi.string().equal(QuestionVariant.Q_SLIDER).required(),
   config: ConfigBaseSchema.keys({
     step: CustomJoi.number().min(0).max(1000000000).required(),
     min: CustomJoi.number().min(0).max(1000000000).required(),

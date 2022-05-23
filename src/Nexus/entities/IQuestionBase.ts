@@ -1,6 +1,7 @@
 import CustomJoi from '../../common/CustomJoi';
-import QuestionEnum from '../../models/QuestionEnum';
+import QuestionVariant from '../../models/QuestionVariant';
 import { IBaseModel } from './IBaseModel';
+
 export interface IAnswerBase {
   point: number | null;
 }
@@ -13,7 +14,7 @@ export interface IQuestionBase<A extends IAnswerBase, C extends IConfigBase>
   extends IBaseModel {
   id: string;
 
-  type: QuestionEnum;
+  type: QuestionVariant;
 
   answer: A;
 
@@ -29,7 +30,7 @@ export const QuestionBaseSchema = CustomJoi.object().keys({
     .guid({ version: ['uuidv4'] })
     .length(36)
     .required(),
-  type: CustomJoi.string().valid(QuestionEnum).required(),
+  type: CustomJoi.string().valid(QuestionVariant).required(),
   answer: CustomJoi.any().required(),
   config: CustomJoi.any().required(),
   sourceOriginal: CustomJoi.string()

@@ -1,4 +1,4 @@
-import QuestionEnum from '../../models/QuestionEnum';
+import QuestionVariant from '../../models/QuestionVariant';
 import {
   FileUploadWorkbenchSchema,
   IFileUploadQuestion
@@ -8,7 +8,7 @@ describe('IFileUploadQuestion', () => {
   test('Valid WB form should validate', () => {
     const question: IFileUploadQuestion = {
       id: 'e56367af-d48d-422d-a4f6-ba52ee17af23',
-      type: QuestionEnum.Q_FILEUPLOAD,
+      type: QuestionVariant.Q_FILEUPLOAD,
       answer: {
         files: [''],
         point: 2
