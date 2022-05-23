@@ -203,6 +203,13 @@ theme.components = {
       }
     }
   },
+  MuiToolbar: {
+    styleOverrides: {
+      root: {
+        paddingLeft: 0
+      }
+    }
+  },
   MuiChip: {
     styleOverrides: {
       root: {

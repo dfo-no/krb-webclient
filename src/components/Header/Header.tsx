@@ -135,7 +135,7 @@ export default function Header(): React.ReactElement {
           borderBottom: `2px solid ${theme.palette.gray300.main}`
         }}
       >
-        <Toolbar>
+        <Toolbar disableGutters>
           <Box className={classes.header}>
             <Box className={classes.headerContent}>
               <Box className={classes.projectPath}>
