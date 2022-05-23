@@ -1,8 +1,7 @@
 import React, { ReactElement } from 'react';
 import userEvent from '@testing-library/user-event';
-import { createMemoryHistory, MemoryHistory } from 'history';
 import { cleanup, render, RenderResult } from '@testing-library/react';
-import { Router } from 'react-router-dom';
+import { MemoryRouter, Route } from 'react-router-dom';
 
 import ConstructionOutlinedIcon from '@mui/icons-material/ConstructionOutlined';
 import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
@@ -10,21 +9,21 @@ import DFOToolbar from './DFOToolbar';
 import { IToolbarItem } from '../../models/IToolbarItem';
 
 interface MockProps {
-  history: MemoryHistory;
+  location: any;
 }
 
-const MockComponent = ({ history }: MockProps): ReactElement => {
+const MockComponent = ({ location }: MockProps): ReactElement => {
   const toolbarItems: IToolbarItem[] = [
     {
       icon: <ConstructionOutlinedIcon />,
       label: 'Construction',
-      selected: history.location.pathname === '/construction',
+      selected: location.pathname === '/construction',
       url: '/construction'
     },
     {
       icon: <SettingsOutlinedIcon />,
       label: 'Settings',
-      selected: history.location.pathname === '/settings',
+      selected: location.pathname === '/settings',
       url: '/settings'
     }
   ];
@@ -32,14 +31,20 @@ const MockComponent = ({ history }: MockProps): ReactElement => {
 };
 
 describe('DFOToolbar', () => {
-  const history = createMemoryHistory();
   let component: RenderResult;
+  let testLocation: any;
 
   beforeEach(() => {
     component = render(
-      <Router history={history}>
-        <MockComponent history={history} />
-      </Router>
+      <MemoryRouter>
+        <Route
+          path="*"
+          render={({ location }) => {
+            testLocation = location;
+            return <MockComponent location={location} />;
+          }}
+        />
+      </MemoryRouter>
     );
   });
 
@@ -51,20 +56,15 @@ describe('DFOToolbar', () => {
     expect(component.container.querySelectorAll('a.selected').length).toBe(0);
   });
 
-  it('Should navigate when clicking on one of the items', () => {
-    expect(history.location.pathname).toEqual('/');
+  it('Should navigate when clicking on one of the items', async () => {
+    expect(testLocation.pathname).toEqual('/');
 
     const link = component.getByLabelText('Construction');
-    userEvent.click(link);
-    component = render(
-      <Router history={history}>
-        <MockComponent history={history} />
-      </Router>
-    );
+    await userEvent.click(link);
 
     expect(
       component.container.querySelector('a.selected')?.getAttribute('href')
     ).toEqual('/construction');
-    expect(history.location.pathname).toEqual('/construction');
+    expect(testLocation.pathname).toEqual('/construction');
   });
 });

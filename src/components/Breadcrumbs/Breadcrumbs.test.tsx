@@ -1,8 +1,7 @@
 import React from 'react';
 import userEvent from '@testing-library/user-event';
-import { createMemoryHistory } from 'history';
 import { cleanup, render, RenderResult } from '@testing-library/react';
-import { Router } from 'react-router-dom';
+import { MemoryRouter, Route } from 'react-router-dom';
 
 import Breadcrumbs from './Breadcrumbs';
 import { IBreadcrumb } from '../../models/IBreadcrumb';
@@ -23,7 +22,7 @@ describe('Breadcrumbs', () => {
     }
   ];
 
-  const history = createMemoryHistory();
+  let testLocation: any;
   let component: RenderResult;
   let rootItem: HTMLElement;
   let pageItem: HTMLElement;
@@ -31,9 +30,15 @@ describe('Breadcrumbs', () => {
 
   beforeEach(() => {
     component = render(
-      <Router history={history}>
-        <Breadcrumbs breadcrumbs={breadcrumbs} />
-      </Router>
+      <MemoryRouter>
+        <Route
+          path="*"
+          render={({ location }) => {
+            testLocation = location;
+            return <Breadcrumbs breadcrumbs={breadcrumbs} />;
+          }}
+        />
+      </MemoryRouter>
     );
 
     rootItem = component.getByText('Root');
@@ -52,29 +57,29 @@ describe('Breadcrumbs', () => {
     );
   });
 
-  it('Should navigate when clicking on one of the links', () => {
-    expect(history.location.pathname).toEqual('/');
+  it('Should navigate when clicking on one of the links', async () => {
+    expect(testLocation.pathname).toEqual('/');
 
-    userEvent.click(pageItem);
-    expect(history.location.pathname).toEqual('/page');
+    await userEvent.click(pageItem);
+    expect(testLocation.pathname).toEqual('/page');
 
-    userEvent.click(rootItem);
-    expect(history.location.pathname).toEqual('/');
+    await userEvent.click(rootItem);
+    expect(testLocation.pathname).toEqual('/');
   });
 
-  it('Should not do anything if clicking the last item', () => {
-    expect(history.location.pathname).toEqual('/');
+  it('Should not do anything if clicking the last item', async () => {
+    expect(testLocation.pathname).toEqual('/');
 
-    userEvent.click(pageItem);
-    expect(history.location.pathname).toEqual('/page');
+    await userEvent.click(pageItem);
+    expect(testLocation.pathname).toEqual('/page');
 
-    userEvent.click(currentItem);
-    expect(history.location.pathname).toEqual('/page');
+    await userEvent.click(currentItem);
+    expect(testLocation.pathname).toEqual('/page');
 
-    userEvent.click(rootItem);
-    expect(history.location.pathname).toEqual('/');
+    await userEvent.click(rootItem);
+    expect(testLocation.pathname).toEqual('/');
 
-    userEvent.click(currentItem);
-    expect(history.location.pathname).toEqual('/');
+    await userEvent.click(currentItem);
+    expect(testLocation.pathname).toEqual('/');
   });
 });
