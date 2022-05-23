@@ -5,11 +5,11 @@ import CheckBoxForm from '../QuestionForms/CheckBoxForm';
 import CodelistForm from '../QuestionForms/ICodeListForm';
 import DateForm from '../QuestionForms/DateForm';
 import FileUploadForm from '../QuestionForms/FileUploadForm';
-import { QuestionVariant } from '../../enums/QuestionVariant';
 import TextAlternativeForm from '../QuestionForms/TextAlternativeForm';
 import TimeForm from '../QuestionForms/TimeForm';
 import ValueForm from '../QuestionForms/ISliderForm';
 import { IRequirementAnswer } from '../../models/IRequirementAnswer';
+import { QuestionVariant } from '../../enums';
 
 interface IProps {
   answer: IRequirementAnswer;

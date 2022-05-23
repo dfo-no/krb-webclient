@@ -6,12 +6,12 @@ import { useFieldArray, useFormContext } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
 import QuestionConfig from './QuestionConfig';
-import { QuestionVariant } from '../../../enums/QuestionVariant';
 import QuestionService from '../../../Nexus/services/QuestionService';
 import SelectQuestionDialog from './SelectQuestionDialog';
 import theme from '../../../theme';
 import { FormIconButton } from '../../Components/Form/FormIconButton';
 import { IVariant } from '../../../Nexus/entities/IVariant';
+import { QuestionVariant } from '../../../enums';
 
 const useStyles = makeStyles({
   list: {

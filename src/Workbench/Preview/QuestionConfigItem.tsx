@@ -3,7 +3,6 @@ import { Box, styled, Typography } from '@mui/material';
 import { useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 
-import { QuestionVariant } from '../../enums/QuestionVariant';
 import theme from '../../theme';
 import { ICheckboxQuestion } from '../../Nexus/entities/ICheckboxQuestion';
 import { ICodelistQuestion } from '../../Nexus/entities/ICodelistQuestion';
@@ -13,6 +12,7 @@ import { IRouteParams } from '../Models/IRouteParams';
 import { ISliderQuestion } from '../../Nexus/entities/ISliderQuestion';
 import { ITextQuestion } from '../../Nexus/entities/ITextQuestion';
 import { ITimeQuestion } from '../../Nexus/entities/ITimeQuestion';
+import { QuestionVariant } from '../../enums';
 import { useGetProjectQuery } from '../../store/api/bankApi';
 
 const ConfigBox = styled(Box)(() => ({
