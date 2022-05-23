@@ -84,7 +84,7 @@ export default function HomeDisplayList({
       <Card>
         <CardHeader title={title} />
         <CardContent>
-          <List>{filteredElements()}</List>;
+          <List>{filteredElements()}</List>
         </CardContent>
       </Card>
     </Box>
