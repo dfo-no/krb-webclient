@@ -9,6 +9,7 @@ import Typography from '@mui/material/Typography';
 import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
 import { skipToken } from '@reduxjs/toolkit/query/react';
 import { useLocation, useRouteMatch } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 import Breadcrumbs from '../Breadcrumbs/Breadcrumbs';
 import DFOToolbar from '../DFOToolbar/DFOToolbar';
@@ -17,6 +18,7 @@ import { IBank } from '../../Nexus/entities/IBank';
 import { IBreadcrumb } from '../../models/IBreadcrumb';
 import { IToolbarItem } from '../../models/IToolbarItem';
 import { useGetProjectQuery } from '../../store/api/bankApi';
+import { useAppSelector } from '../../store/hooks';
 
 const useStyles = makeStyles({
   header: {
@@ -79,6 +81,8 @@ const useStyles = makeStyles({
 
 export default function Header(): React.ReactElement {
   const classes = useStyles();
+  const { t } = useTranslation();
+  const { spec } = useAppSelector((state) => state.specification);
 
   const baseUrl = useRouteMatch<{ projectId: string }>('/workbench/:projectId');
   const location = useLocation();
@@ -86,7 +90,7 @@ export default function Header(): React.ReactElement {
 
   const breadcrumbs: IBreadcrumb[] = [
     {
-      label: 'Kravbank',
+      label: t('app_title'),
       url: '/'
     }
   ];
@@ -101,6 +105,9 @@ export default function Header(): React.ReactElement {
     .split('/')
     .filter((elem: string) => elem !== '')
     .shift();
+
+  const isWorkbench = location.pathname.startsWith('/workbench');
+  const isSpecification = location.pathname.startsWith('/specification');
   const isLocationAdmin = tabName === 'admin';
   const isLocationCreate = tabName === 'create';
   const isLocationPreview = tabName === 'preview';
@@ -113,9 +120,22 @@ export default function Header(): React.ReactElement {
     setProject(baseUrl?.params.projectId ? fetchedProject : undefined);
   }, [baseUrl, fetchedProject]);
 
+  if (isSpecification) {
+    breadcrumbs.push({
+      label: t('Requirement specification'),
+      url: '/specification'
+    });
+  }
+  if (isWorkbench) {
+    breadcrumbs.push({
+      label: t('Workbench'),
+      url: '/workbench'
+    });
+  }
+
   if (project) {
     breadcrumbs.push({
-      label: project.title,
+      label: t('Project'),
       url: project.id
     });
 
@@ -136,6 +156,16 @@ export default function Header(): React.ReactElement {
     });
   }
 
+  const getTitle = (): string => {
+    if (project) {
+      return project.title;
+    }
+    if (isSpecification) {
+      return spec.title ?? t('Requirement specification');
+    }
+    return t('app_title');
+  };
+
   return (
     <AppBar
       elevation={0}
@@ -152,9 +182,7 @@ export default function Header(): React.ReactElement {
               <Breadcrumbs breadcrumbs={breadcrumbs} />
               <Box className={classes.viewingProjectTitle}>
                 <Box className={classes.projectData}>
-                  <Typography variant="xlBold">
-                    {project?.title ?? 'Kravbank'}
-                  </Typography>
+                  <Typography variant="xlBold">{getTitle()}</Typography>
                 </Box>
                 {project && <DFOToolbar items={toolbarItems} />}
               </Box>
