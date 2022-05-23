@@ -78,10 +78,9 @@ class SearchUtils {
     items: IBaseModelWithTitleAndDesc[],
     searchString: string
   ): IBaseModelWithTitleAndDesc[] {
-    return items.filter((item) => {
-      // Returns item as match if searchtext is in the title or description
-      return this.inTitleOrDescription(item, searchString);
-    });
+    return items.filter((item) =>
+      this.inTitleOrDescription(item, searchString)
+    );
   }
 
   static searchCodelist(items: ICodelist[], searchString: string): ICodelist[] {

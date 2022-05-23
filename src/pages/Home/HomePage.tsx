@@ -1,7 +1,4 @@
 import Box from '@mui/material/Box';
-import Card from '@mui/material/Card';
-import CardContent from '@mui/material/CardContent';
-import CardHeader from '@mui/material/CardHeader';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import Typography from '@mui/material/Typography';
@@ -107,25 +104,15 @@ export default function HomePage(): React.ReactElement {
             </Box>
           </Box>
           <Box className={classes.actionContainer}>
-            <Box className={classes.navigation}>
-              <Card>
-                <CardHeader title={t('Newest banks')} />
-                <CardContent>
-                  <HomeDisplayList
-                    list={latestPublishedProjects}
-                    orderedByDate={true}
-                  />
-                </CardContent>
-              </Card>
-            </Box>
-            <Box className={classes.navigation}>
-              <Card>
-                <CardHeader title={t('Alfabetically sorted')} />
-                <CardContent>
-                  <HomeDisplayList list={latestPublishedProjects} />
-                </CardContent>
-              </Card>
-            </Box>
+            <HomeDisplayList
+              title={t('Newest banks')}
+              list={latestPublishedProjects}
+              orderedByDate={true}
+            />
+            <HomeDisplayList
+              title={t('Alfabetically sorted')}
+              list={latestPublishedProjects}
+            />
           </Box>
         </Box>
       </ScrollableContainer>
