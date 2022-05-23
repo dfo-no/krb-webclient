@@ -1,7 +1,7 @@
-import ModelType from '../models/ModelType';
-import { Parentable } from '../models/Parentable';
-import { ITag } from '../Nexus/entities/ITag';
 import SearchUtils from './SearchUtils';
+import { ITag } from '../Nexus/entities/ITag';
+import { ModelType } from '../enums';
+import { Parentable } from '../models/Parentable';
 
 describe('SearchUtils functions should work', () => {
   test('SearcUtils.searchRecursive', () => {
