@@ -3,11 +3,11 @@ import Container from 'react-bootstrap/Container';
 
 import CodelistInfoAnswer from '../InfoForms/CodelistInfoAnswer';
 import DateInfoAnswer from '../InfoForms/DateInfoAnswer';
-import QuestionVariant from '../../models/QuestionVariant';
 import SliderInfoAnswer from '../InfoForms/SliderInfoAnswer';
 import TextInfoAnswer from '../InfoForms/ITextInfoAnswer';
 import TimeInfoAnswer from '../InfoForms/TimeInfoAnswer';
 import { IRequirement } from '../../Nexus/entities/IRequirement';
+import { QuestionVariant } from '../../enums';
 
 interface IProps {
   requirement: IRequirement;

@@ -1,4 +1,4 @@
-enum QuestionVariant {
+export enum QuestionVariant {
   Q_CHECKBOX,
   Q_CODELIST,
   Q_FILEUPLOAD,
@@ -7,5 +7,3 @@ enum QuestionVariant {
   Q_SLIDER,
   Q_TIME
 }
-
-export default QuestionVariant;

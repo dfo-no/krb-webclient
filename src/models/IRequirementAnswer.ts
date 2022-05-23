@@ -1,5 +1,4 @@
 import CustomJoi from '../common/CustomJoi';
-import QuestionVariant from './QuestionVariant';
 import {
   BaseRequirementSchema,
   IRequirement
@@ -7,7 +6,7 @@ import {
 import { CheckboxQuestionAnswerSchema } from '../Nexus/entities/ICheckboxQuestion';
 import { CodelistQuestionAnswerSchema } from '../Nexus/entities/ICodelistQuestion';
 import { FileUploadAnswerSchema } from '../Nexus/entities/IFileUploadQuestion';
-import { ModelType } from '../enums';
+import { ModelType, QuestionVariant } from '../enums';
 import { PeriodDateAnswerSchema } from '../Nexus/entities/IPeriodDateQuestion';
 import { QuestionType } from './QuestionType';
 import { SliderQuestionAnswerSchema } from '../Nexus/entities/ISliderQuestion';

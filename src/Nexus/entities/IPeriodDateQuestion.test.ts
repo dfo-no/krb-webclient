@@ -1,8 +1,8 @@
-import QuestionVariant from '../../models/QuestionVariant';
 import {
   IPeriodDateQuestion,
   PeriodDateAnswerSchema
 } from './IPeriodDateQuestion';
+import { QuestionVariant } from '../../enums';
 
 describe('IPeriodDateQuestion should validate', () => {
   test('hasToDate true requires valid toDate', () => {

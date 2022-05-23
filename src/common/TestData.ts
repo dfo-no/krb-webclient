@@ -1,9 +1,8 @@
-import QuestionVariant from '../models/QuestionVariant';
 import VariantType from '../Nexus/entities/VariantType';
 import { IBank } from '../Nexus/entities/IBank';
 import { IBaseModel } from '../Nexus/entities/IBaseModel';
 import { INeed } from '../Nexus/entities/INeed';
-import { ModelType } from '../enums';
+import { ModelType, QuestionVariant } from '../enums';
 import { Nestable } from '../models/Nestable';
 import { Parentable } from '../models/Parentable';
 

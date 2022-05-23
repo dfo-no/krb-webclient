@@ -1,5 +1,4 @@
 import CustomJoi from '../../common/CustomJoi';
-import QuestionVariant from '../../models/QuestionVariant';
 import {
   ConfigBaseSchema,
   IAnswerBase,
@@ -7,6 +6,7 @@ import {
   IQuestionBase,
   QuestionBaseSchema
 } from './IQuestionBase';
+import { QuestionVariant } from '../../enums';
 
 export interface ISliderQuestion
   extends IQuestionBase<ISliderAnswer, ISliderConfig> {

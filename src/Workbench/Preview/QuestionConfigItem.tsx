@@ -3,7 +3,7 @@ import { Box, styled, Typography } from '@mui/material';
 import { useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 
-import QuestionVariant from '../../models/QuestionVariant';
+import { QuestionVariant } from '../../enums/QuestionVariant';
 import theme from '../../theme';
 import { ICheckboxQuestion } from '../../Nexus/entities/ICheckboxQuestion';
 import { ICodelistQuestion } from '../../Nexus/entities/ICodelistQuestion';

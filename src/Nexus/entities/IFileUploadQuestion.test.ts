@@ -1,8 +1,8 @@
-import QuestionVariant from '../../models/QuestionVariant';
 import {
   FileUploadWorkbenchSchema,
   IFileUploadQuestion
 } from './IFileUploadQuestion';
+import { QuestionVariant } from '../../enums';
 
 describe('IFileUploadQuestion', () => {
   test('Valid WB form should validate', () => {

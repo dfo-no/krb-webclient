@@ -1,5 +1,4 @@
 import CustomJoi from '../../common/CustomJoi';
-import QuestionVariant from '../../models/QuestionVariant';
 import VariantType from './VariantType';
 import { CheckboxQuestionSchema } from './ICheckboxQuestion';
 import { CodelistQuestionSchema } from './ICodelistQuestion';
@@ -9,6 +8,7 @@ import {
 } from './IFileUploadQuestion';
 import { PeriodDateWorkbenchSchema } from './IPeriodDateQuestion';
 import { QuestionTypes } from '../../models/QuestionTypes';
+import { QuestionVariant } from '../../enums';
 import { SliderQuestionSchema } from './ISliderQuestion';
 import { TextQuestionSchema } from './ITextQuestion';
 import { TimeWorkbenchSchema } from './ITimeQuestion';

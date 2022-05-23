@@ -1,7 +1,5 @@
 import CustomJoi from '../../common/CustomJoi';
-import QuestionVariant from '../../models/QuestionVariant';
-
-import { ModelType } from '../../enums';
+import { ModelType, QuestionVariant } from '../../enums';
 
 /**
  * This interface is meant to be the most basic that can be saved

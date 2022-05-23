@@ -1,5 +1,4 @@
 /* eslint-disable class-methods-use-this */
-import QuestionVariant from '../../models/QuestionVariant';
 import QuestionService from './QuestionService';
 import SpecificationStoreService from './SpecificationStoreService';
 import UuidService from './UuidService';
@@ -7,7 +6,7 @@ import { IRequirement } from '../entities/IRequirement';
 import { IRequirementAnswer } from '../../models/IRequirementAnswer';
 import { ISpecification } from '../entities/ISpecification';
 import { ISpecificationProduct } from '../../models/ISpecificationProduct';
-import { ModelType, Weighting } from '../../enums';
+import { ModelType, QuestionVariant, Weighting } from '../../enums';
 
 export default class SpecificationService {
   UuidService = new UuidService();

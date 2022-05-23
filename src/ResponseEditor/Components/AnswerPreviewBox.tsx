@@ -3,7 +3,7 @@ import React from 'react';
 import Utils from '../../common/Utils';
 
 import AnswerPreview from './AnswerPreview';
-import QuestionVariant from '../../models/QuestionVariant';
+import { QuestionVariant } from '../../enums/QuestionVariant';
 import { ICode } from '../../Nexus/entities/ICode';
 import { ICodelist } from '../../Nexus/entities/ICodelist';
 import { IRequirementAnswer } from '../../models/IRequirementAnswer';

@@ -5,7 +5,7 @@ import { useFormContext, useWatch } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
 import QuestionSpecification from './QuestionSpecification';
-import QuestionVariant from '../../../models/QuestionVariant';
+import { QuestionVariant } from '../../../enums/QuestionVariant';
 import theme from '../../../theme';
 import { DFORadioButton } from '../../../components/DFORadioButton/DFORadioButton';
 import { ICheckboxQuestion } from '../../../Nexus/entities/ICheckboxQuestion';

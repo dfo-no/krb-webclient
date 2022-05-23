@@ -13,7 +13,7 @@ import { useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 
 import QuestionConfigItem from './QuestionConfigItem';
-import QuestionVariant from '../../models/QuestionVariant';
+import { QuestionVariant } from '../../enums/QuestionVariant';
 import theme from '../../theme';
 import { IRouteParams } from '../Models/IRouteParams';
 import { IVariant } from '../../Nexus/entities/IVariant';

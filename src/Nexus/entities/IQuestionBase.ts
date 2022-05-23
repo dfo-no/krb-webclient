@@ -1,6 +1,6 @@
 import CustomJoi from '../../common/CustomJoi';
-import QuestionVariant from '../../models/QuestionVariant';
 import { IBaseModel } from './IBaseModel';
+import { QuestionVariant } from '../../enums';
 
 export interface IAnswerBase {
   point: number | null;

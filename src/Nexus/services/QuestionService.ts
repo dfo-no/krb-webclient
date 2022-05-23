@@ -1,4 +1,3 @@
-import QuestionVariant from '../../models/QuestionVariant';
 import Utils from '../../common/Utils';
 import UuidService from './UuidService';
 import { ICheckboxQuestion } from '../entities/ICheckboxQuestion';
@@ -8,6 +7,7 @@ import { IPeriodDateQuestion } from '../entities/IPeriodDateQuestion';
 import { ISliderQuestion } from '../entities/ISliderQuestion';
 import { ITextQuestion } from '../entities/ITextQuestion';
 import { ITimeQuestion } from '../entities/ITimeQuestion';
+import { QuestionVariant } from '../../enums';
 
 export default class QuestionService {
   UuidService = new UuidService();

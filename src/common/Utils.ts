@@ -1,4 +1,3 @@
-import QuestionVariant from '../models/QuestionVariant';
 import { IBank } from '../Nexus/entities/IBank';
 import { IBaseModel } from '../Nexus/entities/IBaseModel';
 import { ICodelist } from '../Nexus/entities/ICodelist';
@@ -12,6 +11,7 @@ import { Levelable } from '../models/Levelable';
 import { Nestable } from '../models/Nestable';
 import { Parentable } from '../models/Parentable';
 import { QuestionType } from '../models/QuestionType';
+import { QuestionVariant } from '../enums/QuestionVariant';
 
 class Utils {
   static ensure<T>(

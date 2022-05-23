@@ -1,7 +1,7 @@
 import { Box, styled, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 
-import QuestionVariant from '../../../models/QuestionVariant';
+import { QuestionVariant } from '../../../enums/QuestionVariant';
 import QuestionSpecificationSlider from './QuestionSpecificationSlider';
 import QuestionSpecificationCheckbox from './QuestionSpecificationCheckbox';
 import QuestionSpecificationCodelist from './QuestionSpecificationCodelist';

@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 
 import CheckboxCtrl from '../../../FormProvider/CheckboxCtrl';
-import QuestionVariant from '../../../models/QuestionVariant';
+import { QuestionVariant } from '../../../enums/QuestionVariant';
 import RadioCtrl from '../../../FormProvider/RadioCtrl';
 import SelectionSingularCtrl from '../../../FormProvider/SelectionSingularCtrl';
 import VerticalTextCtrl from '../../../FormProvider/VerticalTextCtrl';

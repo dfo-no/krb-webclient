@@ -1,6 +1,5 @@
 /* eslint-disable class-methods-use-this */
 
-import QuestionVariant from '../../models/QuestionVariant';
 import { ICheckboxQuestion } from '../entities/ICheckboxQuestion';
 import { ICodelistQuestion } from '../entities/ICodelistQuestion';
 import { IEvaluatedResponse } from '../entities/IEvaluatedResponse';
@@ -8,6 +7,7 @@ import { IPeriodDateQuestion } from '../entities/IPeriodDateQuestion';
 import { IResponse } from '../../models/IResponse';
 import { ISliderQuestion, ScoreValuePair } from '../entities/ISliderQuestion';
 import { ITimeQuestion } from '../entities/ITimeQuestion';
+import { QuestionVariant } from '../../enums';
 
 export default class EvaluationService {
   /**

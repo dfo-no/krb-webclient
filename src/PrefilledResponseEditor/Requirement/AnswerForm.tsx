@@ -5,13 +5,12 @@ import CheckBoxForm from './AnswerForms/CheckBoxForm';
 import CodelistForm from './AnswerForms/CodelistForm';
 import DateForm from './AnswerForms/DateForm';
 import FileUploadForm from './AnswerForms/FileUploadForm';
-import QuestionVariant from '../../models/QuestionVariant';
 import SliderForm from './AnswerForms/SliderForm';
 import TextForm from './AnswerForms/TextForm';
 import { INeed } from '../../Nexus/entities/INeed';
 import { IRequirementAnswer } from '../../models/IRequirementAnswer';
 import { Levelable } from '../../models/Levelable';
-import { ModelType } from '../../enums';
+import { ModelType, QuestionVariant } from '../../enums';
 import { useAppSelector } from '../../store/hooks';
 
 interface IProps {
