@@ -15,7 +15,7 @@ export default class CodelistService {
   }
 
   generateDefaultCodelistValues = (projectId: string): ICodelist => {
-    const defaultValues: ICodelist = {
+    return {
       id: '',
       title: '',
       description: '',
@@ -24,11 +24,10 @@ export default class CodelistService {
       sourceOriginal: projectId,
       sourceRel: null
     };
-    return defaultValues;
   };
 
   generateDefaultCodeValues = (projectId: string): Parentable<ICode> => {
-    const defaultValues: Parentable<ICode> = {
+    return {
       id: '',
       title: '',
       description: '',
@@ -37,7 +36,6 @@ export default class CodelistService {
       sourceRel: null,
       parent: ''
     };
-    return defaultValues;
   };
 
   createCodelistWithId = (item: ICodelist): ICodelist => {
