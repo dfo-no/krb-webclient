@@ -1,21 +1,22 @@
-import { PublicClientApplication } from '@azure/msal-browser';
-import { MsalProvider } from '@azure/msal-react';
-import { CssBaseline } from '@mui/material';
 import React from 'react';
-import { Route, Switch } from 'react-router-dom';
 import styles from './App.module.scss';
-import { msalConfig } from './authentication/authConfig';
+import { CssBaseline } from '@mui/material';
+import { MsalProvider } from '@azure/msal-react';
+import { PublicClientApplication } from '@azure/msal-browser';
+import { Route, Switch } from 'react-router-dom';
+
 import AlertList from './components/Alert/AlertList';
-import Header from './components/Header/Header';
 import Evaluation from './Evaluation/Evaluation';
+import Header from './components/Header/Header';
 import HomePage from './pages/Home/HomePage';
-import useConfirmTabClose from './hooks/useConfirmTabClose';
 import PrefilledResponseModule from './PrefilledResponseEditor/PrefilledResponseModule';
 import ResponseModule from './ResponseEditor/ResponseModule';
 import ResponsePage from './ResponseEditor/ResponsePage';
-import SpecModule from './SpecEditor/SpecModule';
+import SpecModule from './pages/SpecEditor/SpecModule';
+import useConfirmTabClose from './hooks/useConfirmTabClose';
 import WorkbenchModule from './Workbench/WorkbenchModule';
 import { BankProvider } from './components/BankContext/BankContext';
+import { msalConfig } from './authentication/authConfig';
 
 const msalInstance = new PublicClientApplication(msalConfig);
 

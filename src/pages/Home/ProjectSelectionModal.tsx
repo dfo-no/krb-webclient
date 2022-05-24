@@ -1,23 +1,24 @@
 import React, { useState } from 'react';
+import Typography from '@mui/material/Typography';
+import { Box } from '@mui/material';
+import { useTranslation } from 'react-i18next';
+
 import DFODialog from '../../components/DFODialog/DFODialog';
-import NewSpecificationForm from '../../SpecEditor/NewSpecificationForm';
-import { useBankState } from '../../components/BankContext/BankContext';
-import { setSpecification } from '../../store/reducers/spesification-reducer';
-import { useAppDispatch } from '../../store/hooks';
+import LoaderSpinner from '../../common/LoaderSpinner';
+import NewSpecificationForm from '../SpecEditor/NewSpecificationForm';
+import SpecificationStoreService from '../../Nexus/services/SpecificationStoreService';
+import theme from '../../theme';
+import { IBank } from '../../Nexus/entities/IBank';
+import { ISpecification } from '../../Nexus/entities/ISpecification';
 import {
   ModalBox,
   ModalButton,
   ModalButtonsBox
 } from '../../Workbench/Components/ModalBox';
-import { Box } from '@mui/material';
-import Typography from '@mui/material/Typography';
-import theme from '../../theme';
-import { useTranslation } from 'react-i18next';
+import { useAppDispatch } from '../../store/hooks';
+import { useBankState } from '../../components/BankContext/BankContext';
+import { setSpecification } from '../../store/reducers/spesification-reducer';
 import { useGetBankQuery } from '../../store/api/bankApi';
-import LoaderSpinner from '../../common/LoaderSpinner';
-import { ISpecification } from '../../Nexus/entities/ISpecification';
-import SpecificationStoreService from '../../Nexus/services/SpecificationStoreService';
-import { IBank } from '../../Nexus/entities/IBank';
 
 interface IProps {
   selectedBank: IBank;
@@ -108,7 +109,17 @@ export default function ProjectSelectionModal({
     );
   };
 
-  return selectedSpecification ? (
+  if (!selectedSpecification) {
+    return (
+      <DFODialog
+        isOpen={true}
+        handleClose={cancel}
+        children={projectModalBox()}
+      />
+    );
+  }
+
+  return (
     <DFODialog
       isOpen={true}
       handleClose={cancel}
@@ -118,12 +129,6 @@ export default function ProjectSelectionModal({
           handleClose={cancel}
         />
       }
-    />
-  ) : (
-    <DFODialog
-      isOpen={true}
-      handleClose={cancel}
-      children={projectModalBox()}
     />
   );
 }

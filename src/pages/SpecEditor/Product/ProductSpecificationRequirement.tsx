@@ -1,0 +1,90 @@
+import Card from 'react-bootstrap/Card';
+import Col from 'react-bootstrap/Col';
+import Form from 'react-bootstrap/Form';
+import React, { useState } from 'react';
+import Row from 'react-bootstrap/Row';
+
+import ProductRequirementAnswer from './ProductRequirementAnswer';
+import Utils from '../../../common/Utils';
+import {
+  addProductRequirement,
+  deleteProductAnswer,
+  removeProductRequirement
+} from '../../../store/reducers/spesification-reducer';
+import { IRequirement } from '../../../Nexus/entities/IRequirement';
+import { ISpecificationProduct } from '../../../models/ISpecificationProduct';
+import { useAppDispatch, useAppSelector } from '../../../store/hooks';
+
+type InputProps = {
+  productId: string;
+  requirement: IRequirement;
+  selected: boolean;
+};
+
+export default function ProductSpesificationRequirement({
+  productId,
+  requirement,
+  selected
+}: InputProps): React.ReactElement {
+  const dispatch = useAppDispatch();
+  const [isSelected, setSelected] = useState(selected);
+  const { spec } = useAppSelector((state) => state.specification);
+
+  const specProduct = Utils.ensure(
+    spec.products.find(
+      (product: ISpecificationProduct) => product.id === productId
+    )
+  );
+
+  const changedCheckedValue = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setSelected(!isSelected);
+    if (event.target.checked) {
+      dispatch(
+        addProductRequirement({ requirement: requirement.id, productId })
+      );
+    } else {
+      dispatch(
+        removeProductRequirement({ requirement: requirement.id, productId })
+      );
+      requirement.variants.forEach((variant) => {
+        if (
+          specProduct.requirementAnswers.find(
+            (answer) => answer.variantId === variant.id
+          )
+        ) {
+          const index = specProduct.requirementAnswers.findIndex(
+            (answer) => answer.variantId === variant.id
+          );
+          dispatch(
+            deleteProductAnswer({
+              answer: specProduct.requirementAnswers[index].id,
+              productId: specProduct.id
+            })
+          );
+        }
+      });
+    }
+  };
+
+  return (
+    <Card className="mb-3">
+      <Row className="p-0 m-2">
+        <Col sm={1}>
+          <Form.Check
+            checked={isSelected}
+            onChange={(e) => changedCheckedValue(e)}
+          />
+        </Col>
+        <Col>
+          {!isSelected && <p>{requirement.title}</p>}
+          {isSelected && (
+            <ProductRequirementAnswer
+              requirement={requirement}
+              productId={productId}
+            />
+          )}
+        </Col>
+      </Row>
+    </Card>
+  );
+}
