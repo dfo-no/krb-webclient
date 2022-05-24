@@ -1,14 +1,15 @@
-import React from 'react';
 import Card from 'react-bootstrap/Card';
 import Container from 'react-bootstrap/Container';
+import React, { ReactElement } from 'react';
 import Row from 'react-bootstrap/Row';
-import { getPaths } from '../../common/Tree';
-import { Levelable } from '../../models/Levelable';
-import { INeed } from '../../Nexus/entities/INeed';
-import { useAppSelector } from '../../store/hooks';
-import AnswerForm from './AnswerForm';
 
-export default function RequirementList(): React.ReactElement {
+import AnswerForm from './AnswerForm';
+import { getPaths } from '../../../common/Tree';
+import { INeed } from '../../../Nexus/entities/INeed';
+import { Levelable } from '../../../models/Levelable';
+import { useAppSelector } from '../../../store/hooks';
+
+export default function RequirementList(): ReactElement {
   const { id } = useAppSelector((state) => state.selectedBank);
   const { prefilledResponse } = useAppSelector(
     (state) => state.prefilledResponse
@@ -16,7 +17,7 @@ export default function RequirementList(): React.ReactElement {
 
   if (!id) return <p>No selected bank</p>;
 
-  const findNeedIdsForRequirements = (needArray: INeed[]) => {
+  const findNeedIdsForRequirements = (needArray: INeed[]): string[] => {
     const result: string[] = [];
     needArray.forEach((need) => {
       need.requirements.forEach((req) => {
@@ -31,10 +32,9 @@ export default function RequirementList(): React.ReactElement {
   };
 
   const needIds = findNeedIdsForRequirements(prefilledResponse.bank.needs);
-
   const needs = getPaths(needIds, prefilledResponse.bank.needs);
 
-  const checkIfNeedHasRenderedAnswer = (need: Levelable<INeed>) => {
+  const checkIfNeedHasRenderedAnswer = (need: Levelable<INeed>): boolean => {
     let used = false;
     need.requirements.forEach((req) => {
       req.variants.forEach((variant) => {
@@ -46,7 +46,7 @@ export default function RequirementList(): React.ReactElement {
     return used;
   };
 
-  const renderNeedsList = (list: Levelable<INeed>[]) => {
+  const renderNeedsList = (list: Levelable<INeed>[]): ReactElement[] => {
     return list.map((need) => {
       const margin = need.level === 1 ? '0rem' : `${need.level - 1}rem`;
       return (

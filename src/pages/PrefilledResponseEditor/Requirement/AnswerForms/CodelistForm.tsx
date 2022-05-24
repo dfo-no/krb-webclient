@@ -1,26 +1,27 @@
-import { joiResolver } from '@hookform/resolvers/joi';
+import Badge from 'react-bootstrap/Badge';
 import Button from '@mui/material/Button';
 import React from 'react';
-import Badge from 'react-bootstrap/Badge';
+import { joiResolver } from '@hookform/resolvers/joi';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import CustomJoi from '../../../common/CustomJoi';
-import ErrorSummary from '../../../Form/ErrorSummary';
-import CodelistCtrl from '../../../FormProvider/CodelistCtrl';
-import {
-  IRequirementAnswer,
-  RequirementAnswerSchema
-} from '../../../models/IRequirementAnswer';
-import {
-  CodelistQuestionAnswerSchema,
-  ICodelistQuestion
-} from '../../../Nexus/entities/ICodelistQuestion';
-import { IRequirement } from '../../../Nexus/entities/IRequirement';
-import { useAppDispatch, useAppSelector } from '../../../store/hooks';
+
+import CodelistCtrl from '../../../../FormProvider/CodelistCtrl';
+import CustomJoi from '../../../../common/CustomJoi';
+import ErrorSummary from '../../../../Form/ErrorSummary';
 import {
   addAnswer,
   removeAnswer
-} from '../../../store/reducers/PrefilledResponseReducer';
+} from '../../../../store/reducers/PrefilledResponseReducer';
+import { AnswerUtils } from '../../Product/AnswerForms/AnswerUtils';
+import {
+  CodelistQuestionAnswerSchema,
+  ICodelistQuestion
+} from '../../../../Nexus/entities/ICodelistQuestion';
+import {
+  IRequirementAnswer,
+  RequirementAnswerSchema
+} from '../../../../models/IRequirementAnswer';
+import { useAppDispatch, useAppSelector } from '../../../../store/hooks';
 
 interface IProps {
   answer: IRequirementAnswer;
@@ -35,14 +36,6 @@ export const ResponseCodelistSchema = RequirementAnswerSchema.keys({
   })
 });
 
-export const ResponseSingleCodelistSchema = RequirementAnswerSchema.keys({
-  question: CodelistQuestionAnswerSchema.keys({
-    answer: CustomJoi.object().keys({
-      codes: CustomJoi.array().items(CustomJoi.string()).max(1).required(),
-      point: CustomJoi.number().required()
-    })
-  })
-});
 export default function CodelistForm({
   answer,
   existingAnswer
@@ -61,46 +54,28 @@ export default function CodelistForm({
     defaultValues: determinedAnswer
   });
 
-  const onSubmit = (post: IRequirementAnswer) => {
+  const onSubmit = (post: IRequirementAnswer): void => {
     dispatch(addAnswer(post));
   };
 
-  const handleResetQuestion = (elemId: string) => {
+  const handleResetQuestion = (elemId: string): void => {
     dispatch(removeAnswer(elemId));
   };
 
-  const getVariantText = (requirement: IRequirement, variantId: string) => {
-    const variantIndex = requirement.variants.findIndex(
-      (v) => v.id === variantId
+  const isValueSet = (answerId: string): boolean => {
+    return !!prefilledResponse.requirementAnswers.find(
+      (a) => a.id === answerId
     );
-    let tuple: [string, string] = ['', ''];
-    if (variantIndex !== -1) {
-      tuple = [
-        requirement.variants[variantIndex].requirementText,
-        requirement.variants[variantIndex].instruction
-      ];
-    }
-    return tuple;
-  };
-
-  const isValueSet = (answerId: string) => {
-    let value = false;
-
-    const index = prefilledResponse.requirementAnswers.findIndex(
-      (e) => e.id === answerId
-    );
-    if (index !== -1) {
-      value = true;
-    }
-    return value;
   };
 
   return (
     <div>
-      <h5>{getVariantText(answer.requirement, answer.variantId)[0]}</h5>
+      <h5>
+        {AnswerUtils.getVariantText(answer.requirement, answer.variantId)[0]}
+      </h5>
       <h6>
         <small className="text-muted">
-          {getVariantText(answer.requirement, answer.variantId)[1]}
+          {AnswerUtils.getVariantText(answer.requirement, answer.variantId)[1]}
         </small>
       </h6>
       <FormProvider {...methods}>

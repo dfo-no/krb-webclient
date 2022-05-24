@@ -1,28 +1,32 @@
-import React from 'react';
 import Card from 'react-bootstrap/Card';
-import { getPaths } from '../../common/Tree';
-import { IPrefilledResponse } from '../../models/IPrefilledResponse';
-import { IPrefilledResponseProduct } from '../../models/IPrefilledResponseProduct';
-import { Levelable } from '../../models/Levelable';
-import { INeed } from '../../Nexus/entities/INeed';
+import React from 'react';
+
 import AnswerForm from './AnswerForm';
+import { getPaths } from '../../../common/Tree';
+import { INeed } from '../../../Nexus/entities/INeed';
+import { IPrefilledResponse } from '../../../models/IPrefilledResponse';
+import { IPrefilledResponseProduct } from '../../../models/IPrefilledResponseProduct';
+import { Levelable } from '../../../models/Levelable';
 
 interface IProps {
-  prefilledResponse: IPrefilledResponse;
-  selectedProduct: IPrefilledResponseProduct;
   checkNeeds(
     relatedProducts: string[],
     need: Levelable<INeed>,
     productId: string
   ): [boolean, string];
+  prefilledResponse: IPrefilledResponse;
+  selectedProduct: IPrefilledResponseProduct;
 }
 
 export default function NeedsList({
+  checkNeeds,
   prefilledResponse,
-  selectedProduct,
-  checkNeeds
+  selectedProduct
 }: IProps): React.ReactElement {
-  const findNeedIdsForProduct = (productId: string, needArray: INeed[]) => {
+  const findNeedIdsForProduct = (
+    productId: string,
+    needArray: INeed[]
+  ): string[] => {
     const result: string[] = [];
     needArray.forEach((need) => {
       need.requirements.forEach((req) => {
@@ -47,6 +51,7 @@ export default function NeedsList({
     });
     return result;
   };
+
   const needIds = findNeedIdsForProduct(
     selectedProduct.originProduct.id,
     prefilledResponse.bank.needs

@@ -1,28 +1,29 @@
-import DeleteIcon from '@mui/icons-material/Delete';
-import EditIcon from '@mui/icons-material/Edit';
 import Button from '@mui/material/Button';
-import React from 'react';
 import Col from 'react-bootstrap/Col';
 import Container from 'react-bootstrap/Container';
+import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit';
 import Form from 'react-bootstrap/Form';
 import ListGroup from 'react-bootstrap/ListGroup';
+import React, { ReactElement } from 'react';
 import Row from 'react-bootstrap/Row';
+import { Link } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import { Link } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
-import Utils from '../../common/Utils';
-import ErrorSummary from '../../Form/ErrorSummary';
-import { IPrefilledResponseProduct } from '../../models/IPrefilledResponseProduct';
-import { Parentable } from '../../models/Parentable';
-import { IProduct } from '../../Nexus/entities/IProduct';
-import { useGetBankQuery } from '../../store/api/bankApi';
-import { useAppDispatch, useAppSelector } from '../../store/hooks';
+
+import ErrorSummary from '../../../Form/ErrorSummary';
+import Utils from '../../../common/Utils';
 import {
   addProduct,
   removeProduct,
   selectProduct
-} from '../../store/reducers/PrefilledResponseReducer';
+} from '../../../store/reducers/PrefilledResponseReducer';
+import { IPrefilledResponseProduct } from '../../../models/IPrefilledResponseProduct';
+import { IProduct } from '../../../Nexus/entities/IProduct';
+import { Parentable } from '../../../models/Parentable';
+import { useAppDispatch, useAppSelector } from '../../../store/hooks';
+import { useGetBankQuery } from '../../../store/api/bankApi';
 
 interface IFormInput {
   product: string;
@@ -34,7 +35,7 @@ interface IOption {
   level: number;
 }
 
-export default function ProductSpecList(): React.ReactElement {
+export default function ProductSpecList(): ReactElement {
   const { id } = useAppSelector((state) => state.selectedBank);
   const { data: bankSelected } = useGetBankQuery(id ?? '');
   const { prefilledResponse } = useAppSelector(
@@ -52,7 +53,7 @@ export default function ProductSpecList(): React.ReactElement {
     return <p>No selected bank</p>;
   }
 
-  const levelOptions = (products: Parentable<IProduct>[]) => {
+  const levelOptions = (products: Parentable<IProduct>[]): IOption[] => {
     const newList = Utils.parentable2Levelable(products);
     const options: IOption[] = [];
 
@@ -66,7 +67,7 @@ export default function ProductSpecList(): React.ReactElement {
     return options;
   };
 
-  const addProductToPrefilledResponse = (post: IFormInput) => {
+  const addProductToPrefilledResponse = (post: IFormInput): void => {
     const selectedProduct = Utils.ensure(
       bankSelected.products.find(
         (product: IProduct) => product.id === post.product
@@ -84,11 +85,13 @@ export default function ProductSpecList(): React.ReactElement {
     dispatch(addProduct(newProduct));
   };
 
-  const removeProductFromPrefilledResponse = (productId: string) => {
+  const removeProductFromPrefilledResponse = (productId: string): void => {
     dispatch(removeProduct(productId));
   };
 
-  const productList = (productArray: IPrefilledResponseProduct[]) => {
+  const productList = (
+    productArray: IPrefilledResponseProduct[]
+  ): ReactElement => {
     const items = productArray.map((product: IPrefilledResponseProduct) => {
       return (
         <ListGroup.Item key={product.id} className="d-flex align-items-center">

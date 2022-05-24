@@ -1,9 +1,10 @@
-import React from 'react';
 import Nav from 'react-bootstrap/Nav';
-import { withRouter } from 'react-router';
+import React, { ReactElement } from 'react';
 import { NavLink, useRouteMatch } from 'react-router-dom';
-import { useAppSelector } from '../../store/hooks';
+import { withRouter } from 'react-router';
+
 import css from './PrefilledResponseSideBar.module.scss';
+import { useAppSelector } from '../../../store/hooks';
 
 interface IRouteLink {
   link: string;
@@ -14,7 +15,10 @@ interface IRouteParams {
   projectId: string;
 }
 
-const renderRouteLinks = (routes: IRouteLink[], isProjectSelected: boolean) => {
+const renderRouteLinks = (
+  routes: IRouteLink[],
+  isProjectSelected: boolean
+): ReactElement[] => {
   return routes.map((route) => {
     return (
       <Nav.Item key={route.name} className={`${css.sidebar__item}`}>
@@ -32,7 +36,7 @@ const renderRouteLinks = (routes: IRouteLink[], isProjectSelected: boolean) => {
   });
 };
 
-function PrefilledResponseSideBar(): React.ReactElement {
+function PrefilledResponseSideBar(): ReactElement {
   const { id } = useAppSelector((state) => state.selectedBank);
   const { prefilledResponse } = useAppSelector(
     (state) => state.prefilledResponse

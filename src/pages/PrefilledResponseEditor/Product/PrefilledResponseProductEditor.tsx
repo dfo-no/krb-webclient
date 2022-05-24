@@ -1,30 +1,30 @@
-/* eslint-disable no-plusplus */
-import { joiResolver } from '@hookform/resolvers/joi';
 import Button from '@mui/material/Button';
-import { get } from 'lodash';
-import React from 'react';
 import Card from 'react-bootstrap/Card';
 import Col from 'react-bootstrap/Col';
 import Container from 'react-bootstrap/Container';
 import Form from 'react-bootstrap/Form';
+import React from 'react';
 import Row from 'react-bootstrap/Row';
 import { FieldError, useForm } from 'react-hook-form';
+import { get } from 'lodash';
+import { joiResolver } from '@hookform/resolvers/joi';
 import { useTranslation } from 'react-i18next';
-import ControlledTextInput from '../../Form/ControlledTextInput';
-import ErrorSummary from '../../Form/ErrorSummary';
-import {
-  IPrefilledResponseProduct,
-  PrefilledResponseProductSchema
-} from '../../models/IPrefilledResponseProduct';
-import { Levelable } from '../../models/Levelable';
-import { INeed } from '../../Nexus/entities/INeed';
-import { IProduct } from '../../Nexus/entities/IProduct';
-import { useAppDispatch, useAppSelector } from '../../store/hooks';
+
+import ControlledTextInput from '../../../Form/ControlledTextInput';
+import ErrorSummary from '../../../Form/ErrorSummary';
+import NeedsList from './NeedsList';
 import {
   editProduct,
   selectProduct
-} from '../../store/reducers/PrefilledResponseReducer';
-import NeedsList from './NeedsList';
+} from '../../../store/reducers/PrefilledResponseReducer';
+import { INeed } from '../../../Nexus/entities/INeed';
+import {
+  IPrefilledResponseProduct,
+  PrefilledResponseProductSchema
+} from '../../../models/IPrefilledResponseProduct';
+import { IProduct } from '../../../Nexus/entities/IProduct';
+import { Levelable } from '../../../models/Levelable';
+import { useAppDispatch, useAppSelector } from '../../../store/hooks';
 
 export default function PrefilledResponseProductEditor(): React.ReactElement {
   const { t } = useTranslation();
@@ -43,7 +43,7 @@ export default function PrefilledResponseProductEditor(): React.ReactElement {
     defaultValues: selectedProduct
   });
 
-  const addProductToSpecification = (post: IPrefilledResponseProduct) => {
+  const addProductToSpecification = (post: IPrefilledResponseProduct): void => {
     const newProduct = {
       ...post
     };
@@ -57,7 +57,7 @@ export default function PrefilledResponseProductEditor(): React.ReactElement {
   const checkIfNeedHasRenderedAnswer = (
     need: Levelable<INeed>,
     productId: string
-  ) => {
+  ): boolean => {
     let used = false;
     need.requirements.forEach((req) => {
       req.variants.forEach((variant) => {
@@ -72,11 +72,11 @@ export default function PrefilledResponseProductEditor(): React.ReactElement {
     return used;
   };
 
-  function checkIfNeedHasRenderedAnswerInRelatedProduct(
+  const checkIfNeedHasRenderedAnswerInRelatedProduct = (
     relatedProducts: string[],
     need: Levelable<INeed>,
     selectedOriginProductId: string
-  ): [boolean, string] {
+  ): [boolean, string] => {
     let productIsUsed: boolean = checkIfNeedHasRenderedAnswer(
       need,
       selectedOriginProductId
@@ -97,7 +97,7 @@ export default function PrefilledResponseProductEditor(): React.ReactElement {
       }
     }
     return [productIsUsed, matchedProductId];
-  }
+  };
 
   return (
     <Container fluid>
@@ -151,7 +151,6 @@ export default function PrefilledResponseProductEditor(): React.ReactElement {
       <NeedsList
         prefilledResponse={prefilledResponse}
         selectedProduct={selectedProduct}
-        // eslint-disable-next-line react/jsx-no-bind
         checkNeeds={checkIfNeedHasRenderedAnswerInRelatedProduct}
       />
     </Container>
