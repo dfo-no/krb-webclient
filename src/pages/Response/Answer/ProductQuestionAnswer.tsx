@@ -8,7 +8,7 @@ import { IPeriodDateQuestion } from '../../../Nexus/entities/IPeriodDateQuestion
 import { IFileUploadQuestion } from '../../../Nexus/entities/IFileUploadQuestion';
 import { ICodelistQuestion } from '../../../Nexus/entities/ICodelistQuestion';
 import { useTranslation } from 'react-i18next';
-import QuestionEnum from '../../../models/QuestionEnum';
+import { QuestionVariant } from '../../../enums';
 
 interface IProps {
   question:
@@ -27,37 +27,37 @@ export default function ProductQuestionAnswer({
   const { t } = useTranslation();
 
   switch (question.type) {
-    case QuestionEnum.Q_TEXT:
+    case QuestionVariant.Q_TEXT:
       return (
         <Typography variant={'smBold'} sx={{ marginBottom: 2 }}>
           {t('No answer implemented')}
         </Typography>
       );
-    case QuestionEnum.Q_CHECKBOX:
+    case QuestionVariant.Q_CHECKBOX:
       return (
         <Typography variant={'smBold'} sx={{ marginBottom: 2 }}>
           {t('No answer implemented')}
         </Typography>
       );
-    case QuestionEnum.Q_SLIDER:
+    case QuestionVariant.Q_SLIDER:
       return (
         <Typography variant={'smBold'} sx={{ marginBottom: 2 }}>
           {t('No answer implemented')}
         </Typography>
       );
-    case QuestionEnum.Q_CODELIST:
+    case QuestionVariant.Q_CODELIST:
       return (
         <Typography variant={'smBold'} sx={{ marginBottom: 2 }}>
           {t('No answer implemented')}
         </Typography>
       );
-    case QuestionEnum.Q_PERIOD_DATE:
+    case QuestionVariant.Q_PERIOD_DATE:
       return (
         <Typography variant={'smBold'} sx={{ marginBottom: 2 }}>
           {t('No answer implemented')}
         </Typography>
       );
-    case QuestionEnum.Q_TIME:
+    case QuestionVariant.Q_TIME:
       return (
         <Typography variant={'smBold'} sx={{ marginBottom: 2 }}>
           {t('No answer implemented')}

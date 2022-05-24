@@ -1,21 +1,22 @@
-import { joiResolver } from '@hookform/resolvers/joi';
-import { has, toPath } from 'lodash';
-import React from 'react';
 import Card from 'react-bootstrap/Card';
 import Form from 'react-bootstrap/Form';
+import React from 'react';
+import { has, toPath } from 'lodash';
+import { joiResolver } from '@hookform/resolvers/joi';
 import { useForm } from 'react-hook-form';
+
 import ErrorSummary from '../../Form/ErrorSummary';
-import { IRequirementAnswer } from '../../models/IRequirementAnswer';
-import ModelType from '../../models/ModelType';
-import {
-  ITextQuestion,
-  TextQuestionSchema
-} from '../../Nexus/entities/ITextQuestion';
-import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import {
   addAnswer,
   addProductAnswer
 } from '../../store/reducers/spesification-reducer';
+import { IRequirementAnswer } from '../../models/IRequirementAnswer';
+import {
+  ITextQuestion,
+  TextQuestionSchema
+} from '../../Nexus/entities/ITextQuestion';
+import { ModelType } from '../../enums';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
 
 interface IProps {
   parentAnswer: IRequirementAnswer;

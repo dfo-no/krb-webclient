@@ -1,8 +1,8 @@
-import ModelType from '../../models/ModelType';
-import { Parentable } from '../../models/Parentable';
-import { ITag } from '../entities/ITag';
 import StoreService from './StoreService';
 import UuidService from './UuidService';
+import { ITag } from '../entities/ITag';
+import { ModelType } from '../../enums';
+import { Parentable } from '../../models/Parentable';
 
 export default class TagService {
   UuidService = new UuidService();
@@ -14,7 +14,7 @@ export default class TagService {
   }
 
   generateDefaultTaglistValues = (projectId: string): Parentable<ITag> => {
-    const defaultValues: Parentable<ITag> = {
+    return {
       id: '',
       title: '',
       description: '',
@@ -23,7 +23,6 @@ export default class TagService {
       sourceOriginal: projectId,
       sourceRel: null
     };
-    return defaultValues;
   };
 
   generateTag = (item: Parentable<ITag>): Parentable<ITag> => {

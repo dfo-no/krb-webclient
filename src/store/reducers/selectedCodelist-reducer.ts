@@ -1,8 +1,9 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import ModelType from '../../models/ModelType';
-import { Parentable } from '../../models/Parentable';
+
 import { ICode } from '../../Nexus/entities/ICode';
 import { ICodelist } from '../../Nexus/entities/ICodelist';
+import { ModelType } from '../../enums';
+import { Parentable } from '../../models/Parentable';
 
 interface ISelectedCodeListState {
   codelist: ICodelist;

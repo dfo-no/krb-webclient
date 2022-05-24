@@ -9,13 +9,18 @@ import { useTranslation } from 'react-i18next';
 import { IBank } from '../../Nexus/entities/IBank';
 import { Box } from '@mui/material/';
 import { useBankState } from '../../components/BankContext/BankContext';
+import CardHeader from '@mui/material/CardHeader';
+import Card from '@mui/material/Card';
+import CardContent from '@mui/material/CardContent';
 
 interface IProps {
+  title: string;
   list: IBank[];
   orderedByDate?: boolean;
 }
 
 export default function HomeDisplayList({
+  title,
   list,
   orderedByDate = false
 }: IProps): React.ReactElement {
@@ -74,5 +79,14 @@ export default function HomeDisplayList({
     });
   };
 
-  return <List>{filteredElements()}</List>;
+  return (
+    <Box sx={{ flexBasis: '50%' }}>
+      <Card>
+        <CardHeader title={title} />
+        <CardContent>
+          <List>{filteredElements()}</List>
+        </CardContent>
+      </Card>
+    </Box>
+  );
 }

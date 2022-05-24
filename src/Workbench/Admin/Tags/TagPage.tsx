@@ -55,7 +55,7 @@ export default function TagPage(): React.ReactElement {
   };
 
   const tagPageSearch = (searchString: string, list: Parentable<ITag>[]) => {
-    return SearchUtils.search(list, searchString);
+    return SearchUtils.searchParentable(list, searchString);
   };
 
   return (

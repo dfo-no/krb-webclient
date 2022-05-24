@@ -1,4 +1,4 @@
-export enum WeightEnum {
+export enum Weighting {
   LOWEST = 10,
   LOW = 20,
   MEDIUM = 30,

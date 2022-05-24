@@ -1,3 +1,4 @@
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import React, { SyntheticEvent } from 'react';
 import {
   Accordion,
@@ -9,14 +10,14 @@ import {
   Typography
 } from '@mui/material';
 import { useParams } from 'react-router-dom';
-import { IRouteParams } from '../Models/IRouteParams';
-import { useGetProjectQuery } from '../../store/api/bankApi';
-import { IVariant } from '../../Nexus/entities/IVariant';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import { useVariantState } from '../Components/VariantContext';
-import theme from '../../theme';
 import { useTranslation } from 'react-i18next';
+
 import QuestionConfigItem from './QuestionConfigItem';
+import theme from '../../theme';
+import { IRouteParams } from '../Models/IRouteParams';
+import { IVariant } from '../../Nexus/entities/IVariant';
+import { useGetProjectQuery } from '../../store/api/bankApi';
+import { useVariantState } from '../Components/VariantContext';
 
 interface IProps {
   variant: IVariant;

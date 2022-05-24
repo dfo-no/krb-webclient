@@ -1,4 +1,4 @@
-enum QuestionEnum {
+export enum QuestionVariant {
   Q_CHECKBOX = 'Q_CHECKBOX',
   Q_CODELIST = 'Q_CODELIST',
   Q_FILEUPLOAD = 'Q_FILEUPLOAD',
@@ -7,5 +7,3 @@ enum QuestionEnum {
   Q_SLIDER = 'Q_SLIDER',
   Q_TIME = 'Q_TIME'
 }
-
-export default QuestionEnum;

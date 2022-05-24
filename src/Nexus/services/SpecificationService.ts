@@ -1,14 +1,12 @@
 /* eslint-disable class-methods-use-this */
-import { IRequirementAnswer } from '../../models/IRequirementAnswer';
-import { ISpecificationProduct } from '../../models/ISpecificationProduct';
-import { ISpecification } from '../entities/ISpecification';
+import QuestionService from './QuestionService';
 import SpecificationStoreService from './SpecificationStoreService';
 import UuidService from './UuidService';
-import ModelType from '../../models/ModelType';
 import { IRequirement } from '../entities/IRequirement';
-import QuestionService from './QuestionService';
-import QuestionEnum from '../../models/QuestionEnum';
-import { WeightEnum } from '../../models/WeightEnum';
+import { IRequirementAnswer } from '../../models/IRequirementAnswer';
+import { ISpecification } from '../entities/ISpecification';
+import { ISpecificationProduct } from '../../models/ISpecificationProduct';
+import { ModelType, QuestionVariant, Weighting } from '../../enums';
 
 export default class SpecificationService {
   UuidService = new UuidService();
@@ -34,7 +32,7 @@ export default class SpecificationService {
         sourceRel: null,
         deletedDate: null
       },
-      weight: WeightEnum.MEDIUM,
+      weight: Weighting.MEDIUM,
       amount: 1,
       requirements: [],
       requirementAnswers: [],
@@ -51,9 +49,9 @@ export default class SpecificationService {
     return {
       id: this.UuidService.generateId(),
       questionId: '',
-      weight: WeightEnum.MEDIUM,
+      weight: Weighting.MEDIUM,
       variantId: '',
-      question: questionService.getQuestion(QuestionEnum.Q_TEXT),
+      question: questionService.getQuestion(QuestionVariant.Q_TEXT),
       type: ModelType.requirementAnswer,
       requirement: requirement
     };

@@ -1,25 +1,26 @@
-import { joiResolver } from '@hookform/resolvers/joi';
 import Button from '@mui/material/Button';
-import React from 'react';
 import Card from 'react-bootstrap/Card';
 import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
+import React from 'react';
+import { joiResolver } from '@hookform/resolvers/joi';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
+
 import ErrorSummary from '../../Form/ErrorSummary';
 import TimeCtrl from '../../FormProvider/TimeCtrl';
-import { IRequirementAnswer } from '../../models/IRequirementAnswer';
-import ModelType from '../../models/ModelType';
-import {
-  ITimeQuestion,
-  TimeAnswerSchema
-} from '../../Nexus/entities/ITimeQuestion';
-import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import {
   addProductAnswer,
   addRequirementAnswer
 } from '../../store/reducers/response-reducer';
+import { IRequirementAnswer } from '../../models/IRequirementAnswer';
+import {
+  ITimeQuestion,
+  TimeAnswerSchema
+} from '../../Nexus/entities/ITimeQuestion';
+import { ModelType } from '../../enums';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
 
 interface IProps {
   parentAnswer: IRequirementAnswer;

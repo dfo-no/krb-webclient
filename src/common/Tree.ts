@@ -1,19 +1,13 @@
+import Utils from './Utils';
 import { cloneDeep } from 'lodash';
+import { IBaseModel } from '../Nexus/entities/IBaseModel';
 import { Levelable } from '../models/Levelable';
-import ModelType from '../models/ModelType';
+import { ModelType } from '../enums';
 import { Nestable } from '../models/Nestable';
 import { Parentable } from '../models/Parentable';
-import { IBaseModel } from '../Nexus/entities/IBaseModel';
-import Utils from './Utils';
 
 interface IAcc {
   [key: string]: number;
-}
-
-export interface ITreePath {
-  id: string;
-  title: string;
-  parent: string;
 }
 
 /**

@@ -1,5 +1,5 @@
 import { Controller } from 'react-hook-form';
-import { List, ListItem, Typography, Checkbox, Box } from '@mui/material';
+import { List, ListItem, Typography, Box } from '@mui/material';
 import makeStyles from '@mui/styles/makeStyles';
 import React from 'react';
 import { useParams } from 'react-router-dom';
@@ -9,9 +9,9 @@ import LoaderSpinner from '../../../common/LoaderSpinner';
 import theme from '../../../theme';
 import Utils from '../../../common/Utils';
 import { Levelable } from '../../../models/Levelable';
-import CheckBoxIcon from '@mui/icons-material/CheckBox';
 import { ScrollableContainer } from '../../Components/ScrollableContainer';
 import { IProduct } from '../../../Nexus/entities/IProduct';
+import { DFOCheckbox } from '../../../components/DFOCheckbox/DFOCheckbox';
 
 const useStyles = makeStyles({
   checkbox: {
@@ -21,11 +21,7 @@ const useStyles = makeStyles({
     width: '22px',
     height: '22px',
     marginRight: 32,
-    marginLeft: 16,
-    border: `2px solid`,
-    '& .MuiSvgIcon-root': {
-      color: theme.palette.white.main
-    }
+    marginLeft: 16
   },
   list: {
     border: `1px solid ${theme.palette.black.main}`,
@@ -45,8 +41,8 @@ const useStyles = makeStyles({
       background: theme.palette.lightBlue.main,
       color: theme.palette.white.main,
       '& .MuiSvgIcon-root': {
-        background: theme.palette.white.main,
-        color: theme.palette.lightBlue.main
+        background: 'transparent',
+        color: theme.palette.white.main
       }
     }
   },
@@ -137,19 +133,8 @@ const ProductSelection = (): React.ReactElement => {
                     }}
                     onClick={() => onClick(item, selected, onChange)}
                   >
-                    <Box
-                      className={classes.checkbox}
-                      sx={{
-                        backgroundColor: productChecked(item, selected)
-                          ? theme.palette.primary.main
-                          : 'none'
-                      }}
-                    >
-                      <Checkbox
-                        icon={<></>}
-                        checkedIcon={<CheckBoxIcon />}
-                        checked={productChecked(item, selected)}
-                      />
+                    <Box className={classes.checkbox}>
+                      <DFOCheckbox checked={productChecked(item, selected)} />
                     </Box>
                     <Typography
                       className={classes.itemTitle}

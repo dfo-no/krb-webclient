@@ -5,12 +5,13 @@ import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import QuestionEnum from '../../../models/QuestionEnum';
+
+import { QuestionVariant } from '../../../enums';
 
 interface IProps {
   isOpen: boolean;
-  selectedValue: QuestionEnum;
-  onClose: (value: QuestionEnum) => void;
+  selectedValue: QuestionVariant;
+  onClose: (value: QuestionVariant) => void;
 }
 
 const SelectQuestionDialog = ({ onClose, selectedValue, isOpen }: IProps) => {
@@ -19,7 +20,7 @@ const SelectQuestionDialog = ({ onClose, selectedValue, isOpen }: IProps) => {
     onClose(selectedValue);
   };
 
-  const handleListItemClick = (value: QuestionEnum) => {
+  const handleListItemClick = (value: QuestionVariant) => {
     onClose(value);
   };
 
@@ -28,17 +29,17 @@ const SelectQuestionDialog = ({ onClose, selectedValue, isOpen }: IProps) => {
       <DialogContent>
         <DialogTitle>Velg svar type</DialogTitle>
         <List sx={{ pt: 0 }}>
-          {(Object.keys(QuestionEnum) as Array<keyof typeof QuestionEnum>).map(
-            (key) => (
-              <ListItem
-                value={key}
-                key={key}
-                onClick={() => handleListItemClick(QuestionEnum[key])}
-              >
-                {t(key)}
-              </ListItem>
-            )
-          )}
+          {(
+            Object.keys(QuestionVariant) as Array<keyof typeof QuestionVariant>
+          ).map((key) => (
+            <ListItem
+              value={key}
+              key={key}
+              onClick={() => handleListItemClick(QuestionVariant[key])}
+            >
+              {t(key)}
+            </ListItem>
+          ))}
         </List>
       </DialogContent>
     </Dialog>

@@ -1,5 +1,4 @@
 import CustomJoi from '../../common/CustomJoi';
-import QuestionEnum from '../../models/QuestionEnum';
 import {
   ConfigBaseSchema,
   IAnswerBase,
@@ -7,11 +6,11 @@ import {
   IQuestionBase,
   QuestionBaseSchema
 } from './IQuestionBase';
-export type BooleanAsString = 'true' | 'false';
+import { QuestionVariant } from '../../enums';
 
 export interface ICheckboxQuestion
   extends IQuestionBase<ICheckboxAnswer, ICheckboxConfig> {
-  type: QuestionEnum.Q_CHECKBOX;
+  type: QuestionVariant.Q_CHECKBOX;
 }
 
 export interface ICheckboxAnswer extends IAnswerBase {
@@ -24,7 +23,7 @@ export interface ICheckboxConfig extends IConfigBase {
 }
 
 export const CheckboxQuestionSchema = QuestionBaseSchema.keys({
-  type: CustomJoi.string().equal(QuestionEnum.Q_CHECKBOX).required(),
+  type: CustomJoi.string().equal(QuestionVariant.Q_CHECKBOX).required(),
   config: ConfigBaseSchema.keys({
     preferedAlternative: CustomJoi.boolean(),
     pointsNonPrefered: CustomJoi.number().min(0).max(100)

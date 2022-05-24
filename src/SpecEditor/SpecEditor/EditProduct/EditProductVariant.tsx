@@ -1,17 +1,18 @@
 import { Box, Typography } from '@mui/material';
 import React, { useEffect, useState } from 'react';
-import { useTranslation } from 'react-i18next';
-import theme from '../../../theme';
-import { IVariant } from '../../../Nexus/entities/IVariant';
-import ProductQuestionList from './ProductQuestionList';
-import { IRequirement } from '../../../Nexus/entities/IRequirement';
-import { DFOCheckbox } from '../../../components/DFOCheckbox/DFOCheckbox';
-import { IRequirementAnswer } from '../../../models/IRequirementAnswer';
 import { useFormContext, useWatch } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
+
 import Nexus from '../../../Nexus/Nexus';
+import ProductQuestionList from './ProductQuestionList';
 import SliderCtrl from '../../../FormProvider/SliderCtrl';
+import theme from '../../../theme';
+import { DFOCheckbox } from '../../../components/DFOCheckbox/DFOCheckbox';
 import { IMark } from '../../../Nexus/entities/IMark';
-import { WeightEnum } from '../../../models/WeightEnum';
+import { IRequirement } from '../../../Nexus/entities/IRequirement';
+import { IRequirementAnswer } from '../../../models/IRequirementAnswer';
+import { IVariant } from '../../../Nexus/entities/IVariant';
+import { Weighting } from '../../../enums';
 
 interface IProps {
   requirement: IRequirement;
@@ -29,11 +30,11 @@ export default function EditProductVariant({
   const defaultValues =
     nexus.specificationService.generateDefaultRequirementAnswer(requirement);
   const [sliderMark, setSliderMark] = useState<IMark[]>([
-    { value: WeightEnum.MEDIUM, label: t(WeightEnum[WeightEnum.MEDIUM]) }
+    { value: Weighting.MEDIUM, label: t(Weighting[Weighting.MEDIUM]) }
   ]);
 
   useEffect(() => {
-    setSliderMark([{ value: useWeight, label: t(WeightEnum[useWeight]) }]);
+    setSliderMark([{ value: useWeight, label: t(Weighting[useWeight]) }]);
   }, [t, useWeight]);
 
   const onCancel = () => {
@@ -43,7 +44,7 @@ export default function EditProductVariant({
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', marginLeft: 6 }}>
       <Box sx={{ display: 'flex', flexDirection: 'row', marginLeft: -6 }}>
-        <DFOCheckbox value={true} onClick={onCancel} />
+        <DFOCheckbox checked={true} onClick={onCancel} />
         <Typography variant={'lg'} sx={{ alignSelf: 'center', marginLeft: 2 }}>
           {variant.description}
         </Typography>
@@ -51,9 +52,9 @@ export default function EditProductVariant({
           <SliderCtrl
             name={'weight'}
             label={`${t('Weighting')}:`}
-            min={WeightEnum.LOWEST}
+            min={Weighting.LOWEST}
             step={10}
-            max={WeightEnum.HIGHEST}
+            max={Weighting.HIGHEST}
             showValue={false}
             marks={sliderMark}
           />
