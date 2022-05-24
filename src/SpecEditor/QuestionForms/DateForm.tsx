@@ -1,4 +1,3 @@
-import { joiResolver } from '@hookform/resolvers/joi';
 import Button from '@mui/material/Button';
 import React from 'react';
 import Card from 'react-bootstrap/Card';
@@ -6,21 +5,23 @@ import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 import { FormProvider, useForm } from 'react-hook-form';
+import { joiResolver } from '@hookform/resolvers/joi';
 import { useTranslation } from 'react-i18next';
-import ErrorSummary from '../../Form/ErrorSummary';
+
 import DateCtrl from '../../FormProvider/DateCtrl';
-import { IRequirementAnswer } from '../../models/IRequirementAnswer';
-import ModelType from '../../models/ModelType';
-import {
-  IPeriodDateQuestion,
-  PeriodDateSpecSchema
-} from '../../Nexus/entities/IPeriodDateQuestion';
-import { useAppDispatch, useAppSelector } from '../../store/hooks';
+import DateScoreArray from './DateScores';
+import ErrorSummary from '../../Form/ErrorSummary';
 import {
   addAnswer,
   addProductAnswer
 } from '../../store/reducers/spesification-reducer';
-import DateScoreArray from './DateScores';
+import {
+  IPeriodDateQuestion,
+  PeriodDateSpecSchema
+} from '../../Nexus/entities/IPeriodDateQuestion';
+import { IRequirementAnswer } from '../../models/IRequirementAnswer';
+import { ModelType } from '../../enums';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
 
 interface IProps {
   parentAnswer: IRequirementAnswer;

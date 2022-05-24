@@ -1,18 +1,18 @@
 import CustomJoi from '../common/CustomJoi';
-import { CheckboxQuestionAnswerSchema } from '../Nexus/entities/ICheckboxQuestion';
-import { CodelistQuestionAnswerSchema } from '../Nexus/entities/ICodelistQuestion';
-import { FileUploadAnswerSchema } from '../Nexus/entities/IFileUploadQuestion';
-import { PeriodDateAnswerSchema } from '../Nexus/entities/IPeriodDateQuestion';
 import {
   BaseRequirementSchema,
   IRequirement
 } from '../Nexus/entities/IRequirement';
+import { CheckboxQuestionAnswerSchema } from '../Nexus/entities/ICheckboxQuestion';
+import { CodelistQuestionAnswerSchema } from '../Nexus/entities/ICodelistQuestion';
+import { FileUploadAnswerSchema } from '../Nexus/entities/IFileUploadQuestion';
+import { ModelType, QuestionVariant } from '../enums';
+import { PeriodDateAnswerSchema } from '../Nexus/entities/IPeriodDateQuestion';
+import { QuestionType } from './QuestionType';
 import { SliderQuestionAnswerSchema } from '../Nexus/entities/ISliderQuestion';
 import { TextQuestionAnswerSchema } from '../Nexus/entities/ITextQuestion';
 import { TimeAnswerSchema } from '../Nexus/entities/ITimeQuestion';
-import ModelType from './ModelType';
-import QuestionEnum from './QuestionEnum';
-import { QuestionType } from './QuestionType';
+
 export interface IRequirementAnswer {
   id: string;
   questionId: string;
@@ -39,13 +39,13 @@ export const RequirementAnswerSchema = CustomJoi.object().keys({
     .required(),
   question: CustomJoi.alternatives().conditional('.type', {
     switch: [
-      { is: QuestionEnum.Q_SLIDER, then: SliderQuestionAnswerSchema },
-      { is: QuestionEnum.Q_CODELIST, then: CodelistQuestionAnswerSchema },
-      { is: QuestionEnum.Q_TEXT, then: TextQuestionAnswerSchema },
-      { is: QuestionEnum.Q_PERIOD_DATE, then: PeriodDateAnswerSchema },
-      { is: QuestionEnum.Q_TIME, then: TimeAnswerSchema },
-      { is: QuestionEnum.Q_CHECKBOX, then: CheckboxQuestionAnswerSchema },
-      { is: QuestionEnum.Q_FILEUPLOAD, then: FileUploadAnswerSchema }
+      { is: QuestionVariant.Q_SLIDER, then: SliderQuestionAnswerSchema },
+      { is: QuestionVariant.Q_CODELIST, then: CodelistQuestionAnswerSchema },
+      { is: QuestionVariant.Q_TEXT, then: TextQuestionAnswerSchema },
+      { is: QuestionVariant.Q_PERIOD_DATE, then: PeriodDateAnswerSchema },
+      { is: QuestionVariant.Q_TIME, then: TimeAnswerSchema },
+      { is: QuestionVariant.Q_CHECKBOX, then: CheckboxQuestionAnswerSchema },
+      { is: QuestionVariant.Q_FILEUPLOAD, then: FileUploadAnswerSchema }
     ]
   }),
   type: CustomJoi.string()

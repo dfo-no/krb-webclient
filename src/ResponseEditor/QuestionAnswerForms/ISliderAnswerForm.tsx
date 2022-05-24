@@ -1,25 +1,26 @@
-import { joiResolver } from '@hookform/resolvers/joi';
 import Button from '@mui/material/Button';
-import { get } from 'lodash';
-import React from 'react';
 import Card from 'react-bootstrap/Card';
 import Form from 'react-bootstrap/Form';
+import React from 'react';
 import Row from 'react-bootstrap/Row';
 import { FieldError, useForm } from 'react-hook-form';
+import { get } from 'lodash';
+import { joiResolver } from '@hookform/resolvers/joi';
 import { useTranslation } from 'react-i18next';
+
 import ControlledSlider from '../../Form/ControlledSlider';
 import ErrorSummary from '../../Form/ErrorSummary';
-import {
-  IRequirementAnswer,
-  RequirementAnswerSchema
-} from '../../models/IRequirementAnswer';
-import ModelType from '../../models/ModelType';
-import { ISliderQuestion } from '../../Nexus/entities/ISliderQuestion';
-import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import {
   addProductAnswer,
   addRequirementAnswer
 } from '../../store/reducers/response-reducer';
+import {
+  IRequirementAnswer,
+  RequirementAnswerSchema
+} from '../../models/IRequirementAnswer';
+import { ISliderQuestion } from '../../Nexus/entities/ISliderQuestion';
+import { ModelType } from '../../enums';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
 
 interface IProps {
   parentAnswer: IRequirementAnswer;

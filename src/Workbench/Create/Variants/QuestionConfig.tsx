@@ -1,20 +1,21 @@
-import VerticalTextCtrl from '../../../FormProvider/VerticalTextCtrl';
 import { Box, styled, Typography } from '@mui/material';
-import { ITimeQuestion } from '../../../Nexus/entities/ITimeQuestion';
-import { ITextQuestion } from '../../../Nexus/entities/ITextQuestion';
-import { ISliderQuestion } from '../../../Nexus/entities/ISliderQuestion';
-import { IPeriodDateQuestion } from '../../../Nexus/entities/IPeriodDateQuestion';
-import { IFileUploadQuestion } from '../../../Nexus/entities/IFileUploadQuestion';
-import { ICodelistQuestion } from '../../../Nexus/entities/ICodelistQuestion';
-import { ICheckboxQuestion } from '../../../Nexus/entities/ICheckboxQuestion';
-import QuestionEnum from '../../../models/QuestionEnum';
+import { useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+
+import CheckboxCtrl from '../../../FormProvider/CheckboxCtrl';
+import { QuestionVariant } from '../../../enums/QuestionVariant';
 import RadioCtrl from '../../../FormProvider/RadioCtrl';
 import SelectionSingularCtrl from '../../../FormProvider/SelectionSingularCtrl';
-import { useParams } from 'react-router-dom';
+import VerticalTextCtrl from '../../../FormProvider/VerticalTextCtrl';
+import { ICheckboxQuestion } from '../../../Nexus/entities/ICheckboxQuestion';
+import { ICodelistQuestion } from '../../../Nexus/entities/ICodelistQuestion';
+import { IFileUploadQuestion } from '../../../Nexus/entities/IFileUploadQuestion';
+import { IPeriodDateQuestion } from '../../../Nexus/entities/IPeriodDateQuestion';
 import { IRouteParams } from '../../Models/IRouteParams';
+import { ISliderQuestion } from '../../../Nexus/entities/ISliderQuestion';
+import { ITextQuestion } from '../../../Nexus/entities/ITextQuestion';
+import { ITimeQuestion } from '../../../Nexus/entities/ITimeQuestion';
 import { useGetProjectQuery } from '../../../store/api/bankApi';
-import CheckboxCtrl from '../../../FormProvider/CheckboxCtrl';
 
 const ConfigBox = styled(Box)(() => ({
   display: 'flex',
@@ -44,7 +45,7 @@ const QuestionConfig = ({ item, index }: IProps) => {
   }
 
   switch (item.type) {
-    case QuestionEnum.Q_TEXT:
+    case QuestionVariant.Q_TEXT:
       return (
         <ConfigBox>
           <VerticalTextCtrl
@@ -54,7 +55,7 @@ const QuestionConfig = ({ item, index }: IProps) => {
           />
         </ConfigBox>
       );
-    case QuestionEnum.Q_CHECKBOX:
+    case QuestionVariant.Q_CHECKBOX:
       return (
         <ConfigBox>
           <Typography variant={'smBold'} sx={{ marginBottom: 2 }}>
@@ -71,7 +72,7 @@ const QuestionConfig = ({ item, index }: IProps) => {
           />
         </ConfigBox>
       );
-    case QuestionEnum.Q_SLIDER:
+    case QuestionVariant.Q_SLIDER:
       return (
         <ConfigBox>
           <VerticalTextCtrl
@@ -95,7 +96,7 @@ const QuestionConfig = ({ item, index }: IProps) => {
           />
         </ConfigBox>
       );
-    case QuestionEnum.Q_CODELIST:
+    case QuestionVariant.Q_CODELIST:
       return (
         <ConfigBox>
           <SelectionSingularCtrl
@@ -108,7 +109,7 @@ const QuestionConfig = ({ item, index }: IProps) => {
           />
         </ConfigBox>
       );
-    case QuestionEnum.Q_PERIOD_DATE:
+    case QuestionVariant.Q_PERIOD_DATE:
       return (
         <ConfigBox>
           <CheckboxCtrl
@@ -119,7 +120,7 @@ const QuestionConfig = ({ item, index }: IProps) => {
           />
         </ConfigBox>
       );
-    case QuestionEnum.Q_TIME:
+    case QuestionVariant.Q_TIME:
       return (
         <ConfigBox>
           <CheckboxCtrl

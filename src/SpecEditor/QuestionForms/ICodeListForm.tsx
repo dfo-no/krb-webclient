@@ -1,26 +1,27 @@
-import { joiResolver } from '@hookform/resolvers/joi';
 import Button from '@mui/material/Button';
-import React, { useState } from 'react';
 import Card from 'react-bootstrap/Card';
 import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
+import React, { useState } from 'react';
 import Row from 'react-bootstrap/Row';
+import { joiResolver } from '@hookform/resolvers/joi';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import Utils from '../../common/Utils';
+
 import ErrorSummary from '../../Form/ErrorSummary';
-import { IRequirementAnswer } from '../../models/IRequirementAnswer';
-import ModelType from '../../models/ModelType';
-import { ICode } from '../../Nexus/entities/ICode';
-import {
-  CodelistQuestionSchema,
-  ICodelistQuestion
-} from '../../Nexus/entities/ICodelistQuestion';
-import { useAppDispatch, useAppSelector } from '../../store/hooks';
+import Utils from '../../common/Utils';
 import {
   addAnswer,
   addProductAnswer
 } from '../../store/reducers/spesification-reducer';
+import {
+  CodelistQuestionSchema,
+  ICodelistQuestion
+} from '../../Nexus/entities/ICodelistQuestion';
+import { ICode } from '../../Nexus/entities/ICode';
+import { IRequirementAnswer } from '../../models/IRequirementAnswer';
+import { ModelType } from '../../enums';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
 
 interface IProps {
   parentAnswer: IRequirementAnswer;

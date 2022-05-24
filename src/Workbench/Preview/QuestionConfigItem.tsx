@@ -1,18 +1,19 @@
 import React from 'react';
 import { Box, styled, Typography } from '@mui/material';
 import { useParams } from 'react-router-dom';
-import { IRouteParams } from '../Models/IRouteParams';
-import { useGetProjectQuery } from '../../store/api/bankApi';
-import theme from '../../theme';
 import { useTranslation } from 'react-i18next';
-import QuestionEnum from '../../models/QuestionEnum';
-import { ITextQuestion } from '../../Nexus/entities/ITextQuestion';
+
+import theme from '../../theme';
 import { ICheckboxQuestion } from '../../Nexus/entities/ICheckboxQuestion';
-import { ISliderQuestion } from '../../Nexus/entities/ISliderQuestion';
 import { ICodelistQuestion } from '../../Nexus/entities/ICodelistQuestion';
-import { ITimeQuestion } from '../../Nexus/entities/ITimeQuestion';
-import { IPeriodDateQuestion } from '../../Nexus/entities/IPeriodDateQuestion';
 import { IFileUploadQuestion } from '../../Nexus/entities/IFileUploadQuestion';
+import { IPeriodDateQuestion } from '../../Nexus/entities/IPeriodDateQuestion';
+import { IRouteParams } from '../Models/IRouteParams';
+import { ISliderQuestion } from '../../Nexus/entities/ISliderQuestion';
+import { ITextQuestion } from '../../Nexus/entities/ITextQuestion';
+import { ITimeQuestion } from '../../Nexus/entities/ITimeQuestion';
+import { QuestionVariant } from '../../enums';
+import { useGetProjectQuery } from '../../store/api/bankApi';
 
 const ConfigBox = styled(Box)(() => ({
   display: 'flex',
@@ -51,7 +52,7 @@ export default function QuestionConfigItem({
   };
 
   switch (item.type) {
-    case QuestionEnum.Q_TEXT:
+    case QuestionVariant.Q_TEXT:
       return (
         <ConfigBox>
           <Typography variant={'smBold'} color={theme.palette.primary.main}>
@@ -61,7 +62,7 @@ export default function QuestionConfigItem({
         </ConfigBox>
       );
 
-    case QuestionEnum.Q_CHECKBOX:
+    case QuestionVariant.Q_CHECKBOX:
       return (
         <ConfigBox>
           <Typography variant={'smBold'} color={theme.palette.primary.main}>
@@ -73,7 +74,7 @@ export default function QuestionConfigItem({
         </ConfigBox>
       );
 
-    case QuestionEnum.Q_SLIDER:
+    case QuestionVariant.Q_SLIDER:
       return (
         <ConfigBox sx={{ gap: 2 }}>
           <Box>
@@ -103,7 +104,7 @@ export default function QuestionConfigItem({
         </ConfigBox>
       );
 
-    case QuestionEnum.Q_CODELIST:
+    case QuestionVariant.Q_CODELIST:
       return (
         <ConfigBox>
           <Typography variant={'smBold'} color={theme.palette.primary.main}>
@@ -115,7 +116,7 @@ export default function QuestionConfigItem({
         </ConfigBox>
       );
 
-    case QuestionEnum.Q_PERIOD_DATE:
+    case QuestionVariant.Q_PERIOD_DATE:
       return (
         <ConfigBox>
           <Typography variant={'smBold'} color={theme.palette.primary.main}>
@@ -127,7 +128,7 @@ export default function QuestionConfigItem({
         </ConfigBox>
       );
 
-    case QuestionEnum.Q_TIME:
+    case QuestionVariant.Q_TIME:
       return (
         <ConfigBox>
           <Typography variant={'smBold'} color={theme.palette.primary.main}>
