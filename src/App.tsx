@@ -1,9 +1,5 @@
 import { PublicClientApplication } from '@azure/msal-browser';
-import {
-  AuthenticatedTemplate,
-  MsalProvider,
-  UnauthenticatedTemplate
-} from '@azure/msal-react';
+import { MsalProvider } from '@azure/msal-react';
 import { CssBaseline } from '@mui/material';
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
@@ -14,7 +10,6 @@ import Header from './components/Header/Header';
 import Evaluation from './Evaluation/Evaluation';
 import HomePage from './pages/Home/HomePage';
 import useConfirmTabClose from './hooks/useConfirmTabClose';
-import PageLayout from './PageLayout';
 import PrefilledResponseModule from './PrefilledResponseEditor/PrefilledResponseModule';
 import ResponseModule from './ResponseEditor/ResponseModule';
 import ResponsePage from './ResponseEditor/ResponsePage';
@@ -35,22 +30,15 @@ function App(): React.ReactElement {
             <HomePage />
           </BankProvider>
         </Route>
-        <PageLayout>
-          <AuthenticatedTemplate>
-            <Route path="/workbench" component={WorkbenchModule} />
-            <Route path="/specification" component={SpecModule} />
-            <Route path="/response/:id" component={ResponseModule} />
-            <Route exact path="/response" component={ResponsePage} />
-            <Route path="/evaluation" component={Evaluation} />
-            <Route
-              path="/prefilledresponse/:id"
-              component={PrefilledResponseModule}
-            />
-          </AuthenticatedTemplate>
-          <UnauthenticatedTemplate>
-            <h5 className="card-title">Please sign-in to access this page</h5>
-          </UnauthenticatedTemplate>
-        </PageLayout>
+        <Route path="/workbench" component={WorkbenchModule} />
+        <Route path="/specification" component={SpecModule} />
+        <Route path="/response/:id" component={ResponseModule} />
+        <Route exact path="/response" component={ResponsePage} />
+        <Route path="/evaluation" component={Evaluation} />
+        <Route
+          path="/prefilledresponse/:id"
+          component={PrefilledResponseModule}
+        />
       </Switch>
     );
   }

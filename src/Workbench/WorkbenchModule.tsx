@@ -5,6 +5,7 @@ import { Route, Switch } from 'react-router-dom';
 import theme from '../theme';
 import ProjectGuard from './ProjectGuard';
 import Projects from './Projects/Projects';
+import AuthenticatedLayout from '../components/AuthenticatedLayout/AuthenticatedLayout';
 
 const useStyles = makeStyles({
   workbenchContainer: {
@@ -19,15 +20,17 @@ export default function WorkbenchModule(): React.ReactElement {
   const classes = useStyles();
 
   return (
-    <Box className={classes.workbenchContainer}>
-      <Switch>
-        <Route exact path="/workbench">
-          <Projects />
-        </Route>
-        <Route path="/workbench/:projectId">
-          <ProjectGuard />
-        </Route>
-      </Switch>
-    </Box>
+    <AuthenticatedLayout>
+      <Box className={classes.workbenchContainer}>
+        <Switch>
+          <Route exact path="/workbench">
+            <Projects />
+          </Route>
+          <Route path="/workbench/:projectId">
+            <ProjectGuard />
+          </Route>
+        </Switch>
+      </Box>
+    </AuthenticatedLayout>
   );
 }
