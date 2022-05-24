@@ -26,43 +26,27 @@ export default function ProductQuestionAnswer({
 }: IProps): React.ReactElement {
   const { t } = useTranslation();
 
+  const noAnswer = (): React.ReactElement => {
+    return (
+      <Typography variant={'smBold'} sx={{ marginBottom: 2 }}>
+        {t('No answer implemented')}
+      </Typography>
+    );
+  };
+
   switch (question.type) {
     case QuestionVariant.Q_TEXT:
-      return (
-        <Typography variant={'smBold'} sx={{ marginBottom: 2 }}>
-          {t('No answer implemented')}
-        </Typography>
-      );
+      return noAnswer();
     case QuestionVariant.Q_CHECKBOX:
-      return (
-        <Typography variant={'smBold'} sx={{ marginBottom: 2 }}>
-          {t('No answer implemented')}
-        </Typography>
-      );
+      return noAnswer();
     case QuestionVariant.Q_SLIDER:
-      return (
-        <Typography variant={'smBold'} sx={{ marginBottom: 2 }}>
-          {t('No answer implemented')}
-        </Typography>
-      );
+      return noAnswer();
     case QuestionVariant.Q_CODELIST:
-      return (
-        <Typography variant={'smBold'} sx={{ marginBottom: 2 }}>
-          {t('No answer implemented')}
-        </Typography>
-      );
+      return noAnswer();
     case QuestionVariant.Q_PERIOD_DATE:
-      return (
-        <Typography variant={'smBold'} sx={{ marginBottom: 2 }}>
-          {t('No answer implemented')}
-        </Typography>
-      );
+      return noAnswer();
     case QuestionVariant.Q_TIME:
-      return (
-        <Typography variant={'smBold'} sx={{ marginBottom: 2 }}>
-          {t('No answer implemented')}
-        </Typography>
-      );
+      return noAnswer();
   }
   return <></>;
 }

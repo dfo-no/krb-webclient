@@ -23,15 +23,14 @@ export default function ProductHeader(): React.ReactElement {
           }}
         >
           <Typography variant="lgBold">
-            {responseProductIndex !== -1
-              ? response.spesification.products[responseProductIndex].title
-              : t('General requirement')}
+            {response.spesification.products[responseProductIndex]?.title ??
+              t('General requirement')}
           </Typography>
         </Box>
         <Box sx={{ display: 'flex', flexDirection: 'row', paddingTop: 1 }}>
           <Typography variant="smBold">
-            {responseProductIndex !== -1 &&
-              response.spesification.products[responseProductIndex].description}
+            {response.spesification.products[responseProductIndex]
+              ?.description ?? ''}
           </Typography>
 
           {responseProductIndex !== -1 && (

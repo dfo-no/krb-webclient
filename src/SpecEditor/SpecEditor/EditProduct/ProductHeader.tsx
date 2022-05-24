@@ -28,9 +28,8 @@ export default function ProductHeader(): React.ReactElement {
           }}
         >
           <Typography variant="lgBold">
-            {specificationProductIndex !== -1
-              ? spec.products[specificationProductIndex].title
-              : t('General requirement')}
+            {spec.products[specificationProductIndex]?.title ??
+              t('General requirement')}
           </Typography>
           {specificationProductIndex !== -1 && (
             <DFOCardHeaderIconButton
@@ -43,8 +42,7 @@ export default function ProductHeader(): React.ReactElement {
         </Box>
         <Box sx={{ display: 'flex', flexDirection: 'row', paddingTop: 1 }}>
           <Typography variant="smBold">
-            {specificationProductIndex !== -1 &&
-              spec.products[specificationProductIndex].description}
+            {spec.products[specificationProductIndex]?.description ?? ''}
           </Typography>
 
           {specificationProductIndex !== -1 && (
