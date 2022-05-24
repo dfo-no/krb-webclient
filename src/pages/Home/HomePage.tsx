@@ -9,7 +9,7 @@ import { Link } from 'react-router-dom';
 import Footer from '../../Footer/Footer';
 import HomeSearchBar from './HomeSearchBar';
 import { useGetBanksQuery } from '../../store/api/bankApi';
-import { ScrollableContainer } from '../../Workbench/Components/ScrollableContainer';
+import { ScrollableContainer } from '../../components/ScrollableContainer/ScrollableContainer';
 import HomeDisplayList from './HomeDisplayList';
 import ProjectSelectionModal from './ProjectSelectionModal';
 import { useBankState } from '../../components/BankContext/BankContext';

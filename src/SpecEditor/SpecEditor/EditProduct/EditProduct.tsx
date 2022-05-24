@@ -7,7 +7,7 @@ import Utils from '../../../common/Utils';
 import ProductNeed from './ProductNeed';
 import { useAppSelector } from '../../../store/hooks';
 import { useSpecificationState } from '../../SpecificationContext';
-import { ScrollableContainer } from '../../../Workbench/Components/ScrollableContainer';
+import { ScrollableContainer } from '../../../components/ScrollableContainer/ScrollableContainer';
 
 const useStyles = makeStyles({
   newProduct: {

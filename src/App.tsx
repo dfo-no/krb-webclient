@@ -14,7 +14,7 @@ import PrefilledResponseModule from './PrefilledResponseEditor/PrefilledResponse
 import ResponseModule from './ResponseEditor/ResponseModule';
 import ResponsePage from './ResponseEditor/ResponsePage';
 import SpecModule from './SpecEditor/SpecModule';
-import WorkbenchModule from './Workbench/WorkbenchModule';
+import WorkbenchModule from './pages/Workbench/WorkbenchModule';
 import { BankProvider } from './components/BankContext/BankContext';
 
 const msalInstance = new PublicClientApplication(msalConfig);

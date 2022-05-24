@@ -7,7 +7,7 @@ import { useTranslation } from 'react-i18next';
 import { useFieldArray, useFormContext, useWatch } from 'react-hook-form';
 import { IRequirementAnswer } from '../../../models/IRequirementAnswer';
 import DeleteIcon from '@mui/icons-material/Delete';
-import { FormIconButton } from '../../../Workbench/Components/Form/FormIconButton';
+import { FormIconButton } from '../../../components/Form/FormIconButton';
 import theme from '../../../theme';
 
 interface IProps {
