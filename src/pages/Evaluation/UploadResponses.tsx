@@ -1,11 +1,12 @@
-import { AxiosResponse } from 'axios';
-import React from 'react';
 import Col from 'react-bootstrap/Col';
 import InputGroup from 'react-bootstrap/InputGroup';
-import { httpPost } from '../api/http';
-import { IResponse } from '../models/IResponse';
-import { useAppDispatch, useAppSelector } from '../store/hooks';
-import { setResponses } from '../store/reducers/evaluation-reducer';
+import React from 'react';
+import { AxiosResponse } from 'axios';
+
+import { httpPost } from '../../api/http';
+import { IResponse } from '../../models/IResponse';
+import { setResponses } from '../../store/reducers/evaluation-reducer';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
 
 export default function UploadResponses(): React.ReactElement {
   const { responses } = useAppSelector((state) => state.evaluation);
@@ -42,7 +43,9 @@ export default function UploadResponses(): React.ReactElement {
     return results;
   };
 
-  const handleResponseUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleResponseUpload = (
+    e: React.ChangeEvent<HTMLInputElement>
+  ): void => {
     const allFiles: File[] = [];
     if (e.target.files) {
       for (let i = 0; i < e.target.files.length; i += 1) {
