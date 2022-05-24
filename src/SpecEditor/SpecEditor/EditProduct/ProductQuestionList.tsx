@@ -5,7 +5,6 @@ import { useFormContext, useWatch } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
 import QuestionSpecification from './QuestionSpecification';
-import { QuestionVariant } from '../../../enums/QuestionVariant';
 import theme from '../../../theme';
 import { DFORadioButton } from '../../../components/DFORadioButton/DFORadioButton';
 import { ICheckboxQuestion } from '../../../Nexus/entities/ICheckboxQuestion';
@@ -89,7 +88,7 @@ const ProductQuestionsList = ({ variant }: IProps) => {
                 variant={'md'}
                 sx={{ display: 'flex', paddingLeft: 2, alignSelf: 'center' }}
               >
-                {t(QuestionVariant[item.type])}
+                {t(item.type)}
               </Typography>
             </Box>
             {index === selectedRadioIndex && (

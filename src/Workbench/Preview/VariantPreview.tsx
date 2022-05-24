@@ -16,7 +16,6 @@ import QuestionConfigItem from './QuestionConfigItem';
 import theme from '../../theme';
 import { IRouteParams } from '../Models/IRouteParams';
 import { IVariant } from '../../Nexus/entities/IVariant';
-import { QuestionVariant } from '../../enums';
 import { useGetProjectQuery } from '../../store/api/bankApi';
 import { useVariantState } from '../Components/VariantContext';
 
@@ -98,9 +97,7 @@ export default function VariantPreview({
                   <Box
                     sx={{ display: 'flex', flexDirection: 'row', margin: 2 }}
                   >
-                    <Typography variant={'smBold'}>
-                      {t(QuestionVariant[item.type])}
-                    </Typography>
+                    <Typography variant={'smBold'}>{t(item.type)}</Typography>
                   </Box>
                   <Divider />
                   <Box sx={{ display: 'flex', paddingLeft: 1 }}>

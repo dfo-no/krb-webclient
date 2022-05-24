@@ -1,31 +1,31 @@
-import EditIcon from '@mui/icons-material/Edit';
 import Button from '@mui/material/Button';
-import React, { useEffect } from 'react';
+import EditIcon from '@mui/icons-material/Edit';
 import Col from 'react-bootstrap/Col';
 import Container from 'react-bootstrap/Container';
 import Form from 'react-bootstrap/Form';
 import ListGroup from 'react-bootstrap/ListGroup';
+import React, { useEffect } from 'react';
 import Row from 'react-bootstrap/Row';
+import { Link, useParams } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import { Link, useParams } from 'react-router-dom';
-import { v4 as uuidv4 } from 'uuid';
+
+import ErrorSummary from '../../Form/ErrorSummary';
 import LoaderSpinner from '../../common/LoaderSpinner';
 import Utils from '../../common/Utils';
-import ErrorSummary from '../../Form/ErrorSummary';
-import { ISpecificationProduct } from '../../models/ISpecificationProduct';
-import { Nestable } from '../../models/Nestable';
-import { IProduct } from '../../Nexus/entities/IProduct';
-import { useGetBankQuery } from '../../store/api/bankApi';
-import { useAppDispatch, useAppSelector } from '../../store/hooks';
-import { selectBank } from '../../store/reducers/selectedBank-reducer';
-import { selectSpecificationProduct } from '../../store/reducers/selectedSpecProduct-reducer';
+import styles from './ProductSpecEditor.module.scss';
+import Nexus from '../../Nexus/Nexus';
 import {
   addProduct,
   setBank
 } from '../../store/reducers/spesification-reducer';
-import styles from './ProductSpecEditor.module.scss';
-import Nexus from '../../Nexus/Nexus';
+import { ISpecificationProduct } from '../../models/ISpecificationProduct';
+import { IProduct } from '../../Nexus/entities/IProduct';
+import { Nestable } from '../../models/Nestable';
+import { selectBank } from '../../store/reducers/selectedBank-reducer';
+import { selectSpecificationProduct } from '../../store/reducers/selectedSpecProduct-reducer';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
+import { useGetBankQuery } from '../../store/api/bankApi';
 
 type FormInput = {
   product: string;
@@ -102,7 +102,7 @@ export default function ProductSpecList(): React.ReactElement {
   };
 
   const addProductToSpecification = (post: FormInput) => {
-    const selectedProduct = Utils.ensure(
+    Utils.ensure(
       bankSelected.products.find(
         (product: IProduct) => product.id === post.product
       )
