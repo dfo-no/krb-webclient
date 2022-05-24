@@ -1,14 +1,14 @@
-import QuestionEnum from '../../models/QuestionEnum';
 import {
   CheckboxQuestionAnswerSchema,
   CheckboxQuestionSchema
 } from './ICheckboxQuestion';
+import { QuestionVariant } from '../../enums';
 
 describe('CheckboxQuestionSchema should validate', () => {
   test('CheckboxQuestionSchema can post null answer', () => {
     const question = {
       id: 'e56367af-d48d-422d-a4f6-ba52ee17af23',
-      type: QuestionEnum.Q_CHECKBOX,
+      type: QuestionVariant.Q_CHECKBOX,
       answer: {
         point: 0,
         value: false
@@ -29,7 +29,7 @@ describe('CheckboxQuestionSchema should validate', () => {
   test('CheckboxQuestionAnswerSchema can post answer', () => {
     const question = {
       id: 'e56367af-d48d-422d-a4f6-ba52ee17af23',
-      type: QuestionEnum.Q_CHECKBOX,
+      type: QuestionVariant.Q_CHECKBOX,
       answer: {
         value: true,
         point: 5

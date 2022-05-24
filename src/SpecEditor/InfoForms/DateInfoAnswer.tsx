@@ -1,24 +1,25 @@
-import { joiResolver } from '@hookform/resolvers/joi';
 import Button from '@mui/material/Button';
-import React from 'react';
 import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
+import React from 'react';
 import Row from 'react-bootstrap/Row';
+import { joiResolver } from '@hookform/resolvers/joi';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { v4 as uuidv4 } from 'uuid';
+
 import ErrorSummary from '../../Form/ErrorSummary';
 import DateCtrl from '../../FormProvider/DateCtrl';
-import { IRequirementAnswer } from '../../models/IRequirementAnswer';
-import ModelType from '../../models/ModelType';
-import { QuestionType } from '../../models/QuestionType';
+import { addAnswer } from '../../store/reducers/spesification-reducer';
 import {
   IPeriodDateQuestion,
   PeriodDateAnswerSchema
 } from '../../Nexus/entities/IPeriodDateQuestion';
 import { IRequirement } from '../../Nexus/entities/IRequirement';
+import { IRequirementAnswer } from '../../models/IRequirementAnswer';
+import { ModelType } from '../../enums';
+import { QuestionType } from '../../models/QuestionType';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
-import { addAnswer } from '../../store/reducers/spesification-reducer';
 
 interface IProps {
   question: QuestionType;

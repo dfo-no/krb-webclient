@@ -1,16 +1,17 @@
 import DeleteIcon from '@mui/icons-material/Delete';
-import { Box, Button, Card, Divider, Typography } from '@mui/material';
 import makeStyles from '@mui/styles/makeStyles';
-import { useFieldArray, useFormContext } from 'react-hook-form';
 import React, { useState } from 'react';
+import { Box, Button, Card, Divider, Typography } from '@mui/material';
+import { useFieldArray, useFormContext } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import QuestionEnum from '../../../models/QuestionEnum';
-import QuestionService from '../../../Nexus/services/QuestionService';
-import { IVariant } from '../../../Nexus/entities/IVariant';
-import SelectQuestionDialog from './SelectQuestionDialog';
-import { FormIconButton } from '../../Components/Form/FormIconButton';
-import theme from '../../../theme';
+
 import QuestionConfig from './QuestionConfig';
+import QuestionService from '../../../Nexus/services/QuestionService';
+import SelectQuestionDialog from './SelectQuestionDialog';
+import theme from '../../../theme';
+import { FormIconButton } from '../../Components/Form/FormIconButton';
+import { IVariant } from '../../../Nexus/entities/IVariant';
+import { QuestionVariant } from '../../../enums';
 
 const useStyles = makeStyles({
   list: {
@@ -31,13 +32,13 @@ const QuestionsList = () => {
   const classes = useStyles();
 
   const [isOpen, setOpen] = useState(false);
-  const [selectedValue, setSelectedValue] = useState(QuestionEnum.Q_TEXT);
+  const [selectedValue, setSelectedValue] = useState(QuestionVariant.Q_TEXT);
 
   const handleClickOpen = () => {
     setOpen(true);
   };
 
-  const handleClose = (value: QuestionEnum) => {
+  const handleClose = (value: QuestionVariant) => {
     setOpen(false);
     setSelectedValue(value);
     const questionService = new QuestionService();

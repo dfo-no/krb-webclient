@@ -1,13 +1,15 @@
-import React, { useState } from 'react';
-import { useAppDispatch } from '../../../store/hooks';
-import Nexus from '../../../Nexus/Nexus';
-import { useTranslation } from 'react-i18next';
+import React from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { joiResolver } from '@hookform/resolvers/joi';
-import { IAlert } from '../../../models/IAlert';
+import { useTranslation } from 'react-i18next';
 import { v4 as uuidv4 } from 'uuid';
-import { addAlert } from '../../../store/reducers/alert-reducer';
+
+import FormButtons from '../../Components/Form/FormButtons';
+import Nexus from '../../../Nexus/Nexus';
 import VerticalTextCtrl from '../../../FormProvider/VerticalTextCtrl';
+import { addAlert } from '../../../store/reducers/alert-reducer';
+import { FormItemBox } from '../../Components/Form/FormItemBox';
+import { IAlert } from '../../../models/IAlert';
 import { IBank } from '../../../Nexus/entities/IBank';
 import {
   IPublication,
@@ -17,9 +19,8 @@ import {
   useAddBankMutation,
   usePutProjectMutation
 } from '../../../store/api/bankApi';
-import { FormItemBox } from '../../Components/Form/FormItemBox';
+import { useAppDispatch } from '../../../store/hooks';
 import { useFormStyles } from '../../Components/Form/FormStyles';
-import FormButtons from '../../Components/Form/FormButtons';
 
 interface IProps {
   project: IBank;
@@ -36,7 +37,6 @@ export default function NewPublicationForm({
   const [putProject] = usePutProjectMutation();
   const { t } = useTranslation();
   const classes = useFormStyles();
-  const [isSubmitting, setSubmitting] = useState(false);
 
   const defaultValues = nexus.publicationService.defaultPublication(project.id);
   const methods = useForm<IPublication>({
@@ -45,8 +45,6 @@ export default function NewPublicationForm({
   });
 
   async function saveValues(post: IPublication) {
-    setSubmitting(true);
-
     const generatedBank: IBank =
       nexus.publicationService.generateBankFromProject(project);
 
