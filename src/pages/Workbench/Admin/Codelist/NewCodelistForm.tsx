@@ -2,22 +2,23 @@ import React from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { joiResolver } from '@hookform/resolvers/joi';
 import { v4 as uuidv4 } from 'uuid';
-import VerticalTextCtrl from '../../../../FormProvider/VerticalTextCtrl';
 import { useTranslation } from 'react-i18next';
-import { useAppDispatch } from '../../../../store/hooks';
-import { addAlert } from '../../../../store/reducers/alert-reducer';
+
+import FormButtons from '../../../../components/Form/FormButtons';
 import Nexus from '../../../../Nexus/Nexus';
+import useProjectMutations from '../../../../store/api/ProjectMutations';
+import VerticalTextCtrl from '../../../../FormProvider/VerticalTextCtrl';
+import { addAlert } from '../../../../store/reducers/alert-reducer';
+import { FormItemBox } from '../../../../components/Form/FormItemBox';
 import {
   ICodelist,
   PostCodelistSchema
 } from '../../../../Nexus/entities/ICodelist';
 import { IAlert } from '../../../../models/IAlert';
-import { FormItemBox } from '../../../../components/Form/FormItemBox';
+import { IRouteProjectParams } from '../../../../models/IRouteProjectParams';
+import { useAppDispatch } from '../../../../store/hooks';
 import { useFormStyles } from '../../../../components/Form/FormStyles';
 import { useParams } from 'react-router-dom';
-import { IRouteProjectParams } from '../../../../models/IRouteProjectParams';
-import useProjectMutations from '../../../../store/api/ProjectMutations';
-import FormButtons from '../../../../components/Form/FormButtons';
 
 interface IProps {
   handleClose: (newCodelist: ICodelist | null) => void;

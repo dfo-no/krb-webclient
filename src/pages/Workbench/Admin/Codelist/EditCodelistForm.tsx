@@ -1,20 +1,21 @@
-import { joiResolver } from '@hookform/resolvers/joi';
 import React from 'react';
+import { joiResolver } from '@hookform/resolvers/joi';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { v4 as uuidv4 } from 'uuid';
-import { useAppDispatch } from '../../../../store/hooks';
-import { addAlert } from '../../../../store/reducers/alert-reducer';
+
+import FormButtons from '../../../../components/Form/FormButtons';
+import useProjectMutations from '../../../../store/api/ProjectMutations';
 import VerticalTextCtrl from '../../../../FormProvider/VerticalTextCtrl';
+import { addAlert } from '../../../../store/reducers/alert-reducer';
 import { IAlert } from '../../../../models/IAlert';
 import {
   CodelistSchema,
   ICodelist
 } from '../../../../Nexus/entities/ICodelist';
 import { FormItemBox } from '../../../../components/Form/FormItemBox';
+import { useAppDispatch } from '../../../../store/hooks';
 import { useFormStyles } from '../../../../components/Form/FormStyles';
-import useProjectMutations from '../../../../store/api/ProjectMutations';
-import FormButtons from '../../../../components/Form/FormButtons';
 
 interface IProps {
   codelist: ICodelist;

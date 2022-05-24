@@ -1,19 +1,20 @@
-import { joiResolver } from '@hookform/resolvers/joi';
 import React from 'react';
+import { joiResolver } from '@hookform/resolvers/joi';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { v4 as uuidv4 } from 'uuid';
-import { IAlert } from '../../../../models/IAlert';
-import { Parentable } from '../../../../models/Parentable';
-import { BaseCodeSchema, ICode } from '../../../../Nexus/entities/ICode';
-import { ICodelist } from '../../../../Nexus/entities/ICodelist';
-import useProjectMutations from '../../../../store/api/ProjectMutations';
-import { useAppDispatch } from '../../../../store/hooks';
-import { addAlert } from '../../../../store/reducers/alert-reducer';
-import { FormItemBox } from '../../../../components/Form/FormItemBox';
-import { useFormStyles } from '../../../../components/Form/FormStyles';
+
 import FormButtons from '../../../../components/Form/FormButtons';
+import useProjectMutations from '../../../../store/api/ProjectMutations';
 import VerticalTextCtrl from '../../../../FormProvider/VerticalTextCtrl';
+import { addAlert } from '../../../../store/reducers/alert-reducer';
+import { BaseCodeSchema, ICode } from '../../../../Nexus/entities/ICode';
+import { FormItemBox } from '../../../../components/Form/FormItemBox';
+import { IAlert } from '../../../../models/IAlert';
+import { ICodelist } from '../../../../Nexus/entities/ICodelist';
+import { Parentable } from '../../../../models/Parentable';
+import { useAppDispatch } from '../../../../store/hooks';
+import { useFormStyles } from '../../../../components/Form/FormStyles';
 
 interface IProps {
   codelist: ICodelist;

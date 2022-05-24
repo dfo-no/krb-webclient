@@ -1,19 +1,20 @@
-import { joiResolver } from '@hookform/resolvers/joi';
 import React from 'react';
+import { joiResolver } from '@hookform/resolvers/joi';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useParams } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
-import { IAlert } from '../../../../models/IAlert';
-import { Parentable } from '../../../../models/Parentable';
-import { BaseCodeSchema, ICode } from '../../../../Nexus/entities/ICode';
-import { ICodelist } from '../../../../Nexus/entities/ICodelist';
-import { useGetProjectQuery } from '../../../../store/api/bankApi';
-import useProjectMutations from '../../../../store/api/ProjectMutations';
-import { useAppDispatch } from '../../../../store/hooks';
-import { addAlert } from '../../../../store/reducers/alert-reducer';
-import { useEditableState } from '../../../../components/EditableContext/EditableContext';
-import { IRouteProjectParams } from '../../../../models/IRouteProjectParams';
+
 import DeleteFrame from '../../../../components/DeleteFrame/DeleteFrame';
+import useProjectMutations from '../../../../store/api/ProjectMutations';
+import { addAlert } from '../../../../store/reducers/alert-reducer';
+import { BaseCodeSchema, ICode } from '../../../../Nexus/entities/ICode';
+import { IAlert } from '../../../../models/IAlert';
+import { ICodelist } from '../../../../Nexus/entities/ICodelist';
+import { IRouteProjectParams } from '../../../../models/IRouteProjectParams';
+import { Parentable } from '../../../../models/Parentable';
+import { useAppDispatch } from '../../../../store/hooks';
+import { useEditableState } from '../../../../components/EditableContext/EditableContext';
+import { useGetProjectQuery } from '../../../../store/api/bankApi';
 
 interface IProps {
   children: React.ReactElement;
