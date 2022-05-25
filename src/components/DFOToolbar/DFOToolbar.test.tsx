@@ -9,7 +9,7 @@ import DFOToolbar from './DFOToolbar';
 import { IToolbarItem } from '../../models/IToolbarItem';
 
 interface MockProps {
-  location: any;
+  location: Location;
 }
 
 const MockComponent = ({ location }: MockProps): ReactElement => {
@@ -32,7 +32,7 @@ const MockComponent = ({ location }: MockProps): ReactElement => {
 
 describe('DFOToolbar', () => {
   let component: RenderResult;
-  let testLocation: any;
+  let testLocation: Location;
 
   beforeEach(() => {
     component = render(
@@ -40,8 +40,8 @@ describe('DFOToolbar', () => {
         <Route
           path="*"
           render={({ location }) => {
-            testLocation = location;
-            return <MockComponent location={location} />;
+            testLocation = location as unknown as Location;
+            return <MockComponent location={testLocation} />;
           }}
         />
       </MemoryRouter>

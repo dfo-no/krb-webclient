@@ -22,7 +22,7 @@ describe('Breadcrumbs', () => {
     }
   ];
 
-  let testLocation: any;
+  let testLocation: Location;
   let component: RenderResult;
   let rootItem: HTMLElement;
   let pageItem: HTMLElement;
@@ -34,7 +34,7 @@ describe('Breadcrumbs', () => {
         <Route
           path="*"
           render={({ location }) => {
-            testLocation = location;
+            testLocation = location as unknown as Location;
             return <Breadcrumbs breadcrumbs={breadcrumbs} />;
           }}
         />
