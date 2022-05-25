@@ -1,3 +1,8 @@
+:root {
+  --primary-main: #012a4c;
+  --lightBlue-main: #1fa9e6;
+}
+
 body {
   overflow-x: hidden;
 }
@@ -8,4 +13,16 @@ body {
   width: 100vw;
   height: 100vh;
   margin: 0;
+}
+
+a,
+a:link,
+a:visited,
+a:active {
+  color: var(--primary-main);
+  transition: color 220ms ease-out;
+}
+
+a:hover {
+  color: var(--lightBlue-main);
 }

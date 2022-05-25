@@ -6,14 +6,15 @@ import makeStyles from '@mui/styles/makeStyles';
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
+
 import Footer from '../../Footer/Footer';
 import HomeSearchBar from './HomeSearchBar';
 import { useGetBanksQuery } from '../../store/api/bankApi';
 import { ScrollableContainer } from '../../components/ScrollableContainer/ScrollableContainer';
 import HomeDisplayList from './HomeDisplayList';
 import ProjectSelectionModal from './ProjectSelectionModal';
-import { useBankState } from '../../components/BankContext/BankContext';
 import { IBank } from '../../Nexus/entities/IBank';
+import { useBankState } from '../../components/BankContext/BankContext';
 
 const useStyles = makeStyles({
   homepageWrapper: {
