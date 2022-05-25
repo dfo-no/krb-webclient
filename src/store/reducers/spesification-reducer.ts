@@ -1,10 +1,11 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+
 import Utils from '../../common/Utils';
-import { IRequirementAnswer } from '../../models/IRequirementAnswer';
-import { ISpecificationProduct } from '../../models/ISpecificationProduct';
-import ModelType from '../../models/ModelType';
 import { IBank } from '../../Nexus/entities/IBank';
+import { IRequirementAnswer } from '../../models/IRequirementAnswer';
 import { ISpecification } from '../../Nexus/entities/ISpecification';
+import { ISpecificationProduct } from '../../models/ISpecificationProduct';
+import { ModelType } from '../../enums';
 
 interface ISpecificationState {
   spec: ISpecification;

@@ -1,7 +1,7 @@
 import CustomJoi from '../../common/CustomJoi';
-import ModelType from '../../models/ModelType';
-import { IBaseModel } from './IBaseModel';
 import { BaseRequirementSchema, IRequirement } from './IRequirement';
+import { IBaseModel } from './IBaseModel';
+import { ModelType } from '../../enums';
 
 export interface INeed extends IBaseModel {
   title: string;

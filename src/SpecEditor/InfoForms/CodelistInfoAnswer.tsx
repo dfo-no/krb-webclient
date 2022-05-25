@@ -1,21 +1,21 @@
-import { joiResolver } from '@hookform/resolvers/joi';
 import Button from '@mui/material/Button';
-import React from 'react';
 import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
+import React from 'react';
+import { joiResolver } from '@hookform/resolvers/joi';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { v4 as uuidv4 } from 'uuid';
+
 import CustomJoi from '../../common/CustomJoi';
 import ErrorSummary from '../../Form/ErrorSummary';
-import { IRequirementAnswer } from '../../models/IRequirementAnswer';
-import ModelType from '../../models/ModelType';
-import QuestionEnum from '../../models/QuestionEnum';
-import { QuestionType } from '../../models/QuestionType';
+import { addAnswer } from '../../store/reducers/spesification-reducer';
 import { ICodelistQuestion } from '../../Nexus/entities/ICodelistQuestion';
 import { IRequirement } from '../../Nexus/entities/IRequirement';
+import { IRequirementAnswer } from '../../models/IRequirementAnswer';
+import { ModelType, QuestionVariant } from '../../enums';
+import { QuestionType } from '../../models/QuestionType';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
-import { addAnswer } from '../../store/reducers/spesification-reducer';
 
 interface IProps {
   question: QuestionType;
@@ -26,7 +26,7 @@ interface IProps {
 
 export const ResponseCodelistSchema = CustomJoi.object().keys({
   id: CustomJoi.string().required(),
-  type: CustomJoi.string().equal(QuestionEnum.Q_CODELIST).required(),
+  type: CustomJoi.string().equal(QuestionVariant.Q_CODELIST).required(),
   config: CustomJoi.object().keys({
     codelist: CustomJoi.string().required(),
     multipleSelect: CustomJoi.boolean().required()
@@ -37,7 +37,7 @@ export const ResponseCodelistSchema = CustomJoi.object().keys({
 });
 export const ResponseSingleCodelistSchema = CustomJoi.object().keys({
   id: CustomJoi.string().required(),
-  type: CustomJoi.string().equal(QuestionEnum.Q_CODELIST).required(),
+  type: CustomJoi.string().equal(QuestionVariant.Q_CODELIST).required(),
   config: CustomJoi.object().keys({
     codelist: CustomJoi.string().required(),
     multipleSelect: CustomJoi.boolean().required()

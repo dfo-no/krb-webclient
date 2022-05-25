@@ -1,31 +1,32 @@
-import { joiResolver } from '@hookform/resolvers/joi';
 import Button from '@mui/material/Button';
-import Slider from '@mui/material/Slider';
-import React, { useState } from 'react';
 import Col from 'react-bootstrap/Col';
 import Container from 'react-bootstrap/Container';
 import Form from 'react-bootstrap/Form';
+import React, { useState } from 'react';
 import Row from 'react-bootstrap/Row';
+import Slider from '@mui/material/Slider';
 import { Controller, useForm } from 'react-hook-form';
-import { useTranslation } from 'react-i18next';
+import { joiResolver } from '@hookform/resolvers/joi';
 import { Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { v4 as uuidv4 } from 'uuid';
+
 import CustomJoi from '../../common/CustomJoi';
-import Utils from '../../common/Utils';
 import ErrorSummary from '../../Form/ErrorSummary';
-import { IRequirementAnswer } from '../../models/IRequirementAnswer';
-import { ISpecificationProduct } from '../../models/ISpecificationProduct';
-import ModelType from '../../models/ModelType';
-import { IMark } from '../../Nexus/entities/IMark';
-import { IRequirement } from '../../Nexus/entities/IRequirement';
-import { IVariant } from '../../Nexus/entities/IVariant';
-import { useAppDispatch, useAppSelector } from '../../store/hooks';
-import { selectQuestion } from '../../store/reducers/selectedQuestion-reducer';
+import Utils from '../../common/Utils';
 import {
   addProductAnswer,
   deleteProductAnswer,
   editProductAnswer
 } from '../../store/reducers/spesification-reducer';
+import { IMark } from '../../Nexus/entities/IMark';
+import { IRequirement } from '../../Nexus/entities/IRequirement';
+import { IRequirementAnswer } from '../../models/IRequirementAnswer';
+import { ISpecificationProduct } from '../../models/ISpecificationProduct';
+import { IVariant } from '../../Nexus/entities/IVariant';
+import { ModelType } from '../../enums';
+import { selectQuestion } from '../../store/reducers/selectedQuestion-reducer';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
 
 interface IProps {
   requirement: IRequirement;

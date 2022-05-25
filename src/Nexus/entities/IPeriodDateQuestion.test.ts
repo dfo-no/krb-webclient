@@ -1,14 +1,14 @@
-import QuestionEnum from '../../models/QuestionEnum';
 import {
   IPeriodDateQuestion,
   PeriodDateAnswerSchema
 } from './IPeriodDateQuestion';
+import { QuestionVariant } from '../../enums';
 
 describe('IPeriodDateQuestion should validate', () => {
   test('hasToDate true requires valid toDate', () => {
     const question: IPeriodDateQuestion = {
       id: 'e56367af-d48d-422d-a4f6-ba52ee17af23',
-      type: QuestionEnum.Q_PERIOD_DATE,
+      type: QuestionVariant.Q_PERIOD_DATE,
       answer: {
         fromDate: '2021-11-24T23:00:00.000Z',
         toDate: null,
@@ -34,7 +34,7 @@ describe('IPeriodDateQuestion should validate', () => {
   test('hasToDate false requires null toDate', () => {
     const question: IPeriodDateQuestion = {
       id: 'e56367af-d48d-422d-a4f6-ba52ee17af23',
-      type: QuestionEnum.Q_PERIOD_DATE,
+      type: QuestionVariant.Q_PERIOD_DATE,
       answer: {
         fromDate: '2021-11-24T23:00:00.000Z',
         toDate: null,
@@ -60,7 +60,7 @@ describe('IPeriodDateQuestion should validate', () => {
   test('toDate must be more than date', () => {
     const question: IPeriodDateQuestion = {
       id: 'e56367af-d48d-422d-a4f6-ba52ee17af23',
-      type: QuestionEnum.Q_PERIOD_DATE,
+      type: QuestionVariant.Q_PERIOD_DATE,
       answer: {
         fromDate: '2021-11-24T23:00:00.000Z',
         toDate: '2021-11-25T23:00:00.000Z',
@@ -86,7 +86,7 @@ describe('IPeriodDateQuestion should validate', () => {
   test('fromDate less than toDate should fail', () => {
     const question: IPeriodDateQuestion = {
       id: 'e56367af-d48d-422d-a4f6-ba52ee17af23',
-      type: QuestionEnum.Q_PERIOD_DATE,
+      type: QuestionVariant.Q_PERIOD_DATE,
       answer: {
         fromDate: '2021-11-24T23:00:00.000Z',
         toDate: '2021-11-23T23:00:00.000Z',

@@ -1,6 +1,5 @@
 import CustomJoi from '../../common/CustomJoi';
-import QuestionEnum from '../../models/QuestionEnum';
-import { QuestionTypes } from '../../models/QuestionTypes';
+import VariantType from './VariantType';
 import { CheckboxQuestionSchema } from './ICheckboxQuestion';
 import { CodelistQuestionSchema } from './ICodelistQuestion';
 import {
@@ -8,10 +7,11 @@ import {
   FileUploadWorkbenchSchema
 } from './IFileUploadQuestion';
 import { PeriodDateWorkbenchSchema } from './IPeriodDateQuestion';
+import { QuestionTypes } from '../../models/QuestionTypes';
+import { QuestionVariant } from '../../enums';
 import { SliderQuestionSchema } from './ISliderQuestion';
 import { TextQuestionSchema } from './ITextQuestion';
 import { TimeWorkbenchSchema } from './ITimeQuestion';
-import VariantType from './VariantType';
 
 export interface IVariant {
   id: string;
@@ -52,17 +52,17 @@ export const VariantSchema = CustomJoi.object().keys({
       .items(
         CustomJoi.alternatives().conditional('.type', {
           switch: [
-            { is: QuestionEnum.Q_SLIDER, then: SliderQuestionSchema },
-            { is: QuestionEnum.Q_CODELIST, then: CodelistQuestionSchema },
-            { is: QuestionEnum.Q_TEXT, then: TextQuestionSchema },
+            { is: QuestionVariant.Q_SLIDER, then: SliderQuestionSchema },
+            { is: QuestionVariant.Q_CODELIST, then: CodelistQuestionSchema },
+            { is: QuestionVariant.Q_TEXT, then: TextQuestionSchema },
             {
-              is: QuestionEnum.Q_PERIOD_DATE,
+              is: QuestionVariant.Q_PERIOD_DATE,
               then: PeriodDateWorkbenchSchema
             },
-            { is: QuestionEnum.Q_TIME, then: TimeWorkbenchSchema },
-            { is: QuestionEnum.Q_CHECKBOX, then: CheckboxQuestionSchema },
+            { is: QuestionVariant.Q_TIME, then: TimeWorkbenchSchema },
+            { is: QuestionVariant.Q_CHECKBOX, then: CheckboxQuestionSchema },
             {
-              is: QuestionEnum.Q_FILEUPLOAD,
+              is: QuestionVariant.Q_FILEUPLOAD,
               then: FileUploadWorkbenchInfoSchema
             }
           ]
@@ -72,13 +72,16 @@ export const VariantSchema = CustomJoi.object().keys({
     otherwise: CustomJoi.array().items(
       CustomJoi.alternatives().conditional('.type', {
         switch: [
-          { is: QuestionEnum.Q_SLIDER, then: SliderQuestionSchema },
-          { is: QuestionEnum.Q_CODELIST, then: CodelistQuestionSchema },
-          { is: QuestionEnum.Q_TEXT, then: TextQuestionSchema },
-          { is: QuestionEnum.Q_PERIOD_DATE, then: PeriodDateWorkbenchSchema },
-          { is: QuestionEnum.Q_TIME, then: TimeWorkbenchSchema },
-          { is: QuestionEnum.Q_CHECKBOX, then: CheckboxQuestionSchema },
-          { is: QuestionEnum.Q_FILEUPLOAD, then: FileUploadWorkbenchSchema }
+          { is: QuestionVariant.Q_SLIDER, then: SliderQuestionSchema },
+          { is: QuestionVariant.Q_CODELIST, then: CodelistQuestionSchema },
+          { is: QuestionVariant.Q_TEXT, then: TextQuestionSchema },
+          {
+            is: QuestionVariant.Q_PERIOD_DATE,
+            then: PeriodDateWorkbenchSchema
+          },
+          { is: QuestionVariant.Q_TIME, then: TimeWorkbenchSchema },
+          { is: QuestionVariant.Q_CHECKBOX, then: CheckboxQuestionSchema },
+          { is: QuestionVariant.Q_FILEUPLOAD, then: FileUploadWorkbenchSchema }
         ]
       })
     )

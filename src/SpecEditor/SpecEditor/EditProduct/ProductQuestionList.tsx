@@ -1,20 +1,21 @@
-import { useFormContext, useWatch } from 'react-hook-form';
-import { Box, Card, Divider, Typography } from '@mui/material';
-import theme from '../../../theme';
-import React, { useEffect, useState } from 'react';
-import { useTranslation } from 'react-i18next';
 import makeStyles from '@mui/styles/makeStyles';
+import React, { useEffect, useState } from 'react';
+import { Box, Card, Divider, Typography } from '@mui/material';
+import { useFormContext, useWatch } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
+
 import QuestionSpecification from './QuestionSpecification';
+import theme from '../../../theme';
 import { DFORadioButton } from '../../../components/DFORadioButton/DFORadioButton';
-import { IVariant } from '../../../Nexus/entities/IVariant';
-import { IRequirementAnswer } from '../../../models/IRequirementAnswer';
-import { ITimeQuestion } from '../../../Nexus/entities/ITimeQuestion';
-import { ITextQuestion } from '../../../Nexus/entities/ITextQuestion';
-import { ISliderQuestion } from '../../../Nexus/entities/ISliderQuestion';
-import { IPeriodDateQuestion } from '../../../Nexus/entities/IPeriodDateQuestion';
-import { IFileUploadQuestion } from '../../../Nexus/entities/IFileUploadQuestion';
-import { ICodelistQuestion } from '../../../Nexus/entities/ICodelistQuestion';
 import { ICheckboxQuestion } from '../../../Nexus/entities/ICheckboxQuestion';
+import { ICodelistQuestion } from '../../../Nexus/entities/ICodelistQuestion';
+import { IFileUploadQuestion } from '../../../Nexus/entities/IFileUploadQuestion';
+import { IPeriodDateQuestion } from '../../../Nexus/entities/IPeriodDateQuestion';
+import { IRequirementAnswer } from '../../../models/IRequirementAnswer';
+import { ISliderQuestion } from '../../../Nexus/entities/ISliderQuestion';
+import { ITextQuestion } from '../../../Nexus/entities/ITextQuestion';
+import { ITimeQuestion } from '../../../Nexus/entities/ITimeQuestion';
+import { IVariant } from '../../../Nexus/entities/IVariant';
 
 const useStyles = makeStyles({
   list: {

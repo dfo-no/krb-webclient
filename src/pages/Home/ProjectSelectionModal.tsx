@@ -31,7 +31,7 @@ export default function ProjectSelectionModal({
     useState<ISpecification | null>(null);
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
-  let originBankId = '';
+  let originBankId;
   if (selectedBank.projectId) {
     originBankId = selectedBank.projectId;
   } else {

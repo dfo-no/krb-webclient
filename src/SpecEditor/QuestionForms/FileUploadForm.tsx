@@ -1,24 +1,25 @@
-import { joiResolver } from '@hookform/resolvers/joi';
 import Alert from '@mui/lab/Alert/Alert';
 import Button from '@mui/material/Button/Button';
-import React from 'react';
 import Card from 'react-bootstrap/Card';
+import React from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
+import { joiResolver } from '@hookform/resolvers/joi';
 import { useTranslation } from 'react-i18next';
+
 import ErrorSummary from '../../Form/ErrorSummary';
 import FileUploadCtrl from '../../FormProvider/FileUploadCtrl';
 import SwitchCtrl from '../../FormProvider/SwitchCtrl';
-import { IRequirementAnswer } from '../../models/IRequirementAnswer';
-import ModelType from '../../models/ModelType';
-import {
-  FileUploadWorkbenchSchema,
-  IFileUploadQuestion
-} from '../../Nexus/entities/IFileUploadQuestion';
-import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import {
   editAnswer,
   editProductAnswer
 } from '../../store/reducers/spesification-reducer';
+import {
+  FileUploadWorkbenchSchema,
+  IFileUploadQuestion
+} from '../../Nexus/entities/IFileUploadQuestion';
+import { IRequirementAnswer } from '../../models/IRequirementAnswer';
+import { ModelType } from '../../enums';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
 
 interface IProps {
   parentAnswer: IRequirementAnswer;

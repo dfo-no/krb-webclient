@@ -1,9 +1,9 @@
-import ModelType from '../../models/ModelType';
-import { Parentable } from '../../models/Parentable';
-import { ICode } from '../entities/ICode';
-import { ICodelist } from '../entities/ICodelist';
 import StoreService from './StoreService';
 import UuidService from './UuidService';
+import { ICode } from '../entities/ICode';
+import { ICodelist } from '../entities/ICodelist';
+import { ModelType } from '../../enums';
+import { Parentable } from '../../models/Parentable';
 
 export default class CodelistService {
   UuidService = new UuidService();
@@ -15,7 +15,7 @@ export default class CodelistService {
   }
 
   generateDefaultCodelistValues = (projectId: string): ICodelist => {
-    const defaultValues: ICodelist = {
+    return {
       id: '',
       title: '',
       description: '',
@@ -24,11 +24,10 @@ export default class CodelistService {
       sourceOriginal: projectId,
       sourceRel: null
     };
-    return defaultValues;
   };
 
   generateDefaultCodeValues = (projectId: string): Parentable<ICode> => {
-    const defaultValues: Parentable<ICode> = {
+    return {
       id: '',
       title: '',
       description: '',
@@ -37,7 +36,6 @@ export default class CodelistService {
       sourceRel: null,
       parent: ''
     };
-    return defaultValues;
   };
 
   createCodelistWithId = (item: ICodelist): ICodelist => {

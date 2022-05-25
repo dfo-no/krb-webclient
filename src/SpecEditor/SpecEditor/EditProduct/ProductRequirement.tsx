@@ -1,19 +1,15 @@
+import EditIcon from '@mui/icons-material/Edit';
 import makeStyles from '@mui/styles/makeStyles';
-import theme from '../../../theme';
-import { IRequirement } from '../../../Nexus/entities/IRequirement';
-import React, { useState } from 'react';
-import { Box, Typography } from '@mui/material';
-import { useSpecificationState } from '../../SpecificationContext';
-import { DFOCheckbox } from '../../../components/DFOCheckbox/DFOCheckbox';
-import ProductVariant from './ProductVariant';
-import EditProductVariant from './EditProductVariant';
-import { useForm, FormProvider, useWatch } from 'react-hook-form';
+import React, { useEffect, useState } from 'react';
+import { Button, Box, Typography } from '@mui/material';
 import { joiResolver } from '@hookform/resolvers/joi';
-import {
-  IRequirementAnswer,
-  RequirementAnswerSchema
-} from '../../../models/IRequirementAnswer';
-import { useAppDispatch, useAppSelector } from '../../../store/hooks';
+import { useForm, FormProvider, useWatch } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
+
+import EditProductVariant from './EditProductVariant';
+import Nexus from '../../../Nexus/Nexus';
+import ProductVariant from './ProductVariant';
+import theme from '../../../theme';
 import {
   addAnswer,
   addProductAnswer,
@@ -24,12 +20,16 @@ import {
   removeProductRequirement,
   removeRequirement
 } from '../../../store/reducers/spesification-reducer';
+import { DFOCheckbox } from '../../../components/DFOCheckbox/DFOCheckbox';
 import { FormIconButton } from '../../../Workbench/Components/Form/FormIconButton';
-import EditIcon from '@mui/icons-material/Edit';
-import Nexus from '../../../Nexus/Nexus';
-import Button from '@mui/material/Button';
-import { useTranslation } from 'react-i18next';
-import { WeightEnum } from '../../../models/WeightEnum';
+import { IRequirement } from '../../../Nexus/entities/IRequirement';
+import {
+  IRequirementAnswer,
+  RequirementAnswerSchema
+} from '../../../models/IRequirementAnswer';
+import { useAppDispatch, useAppSelector } from '../../../store/hooks';
+import { useSpecificationState } from '../../SpecificationContext';
+import { Weighting } from '../../../enums';
 
 const useStyles = makeStyles({
   card: {
@@ -72,6 +72,10 @@ export default function ProductRequirement({
     resolver: joiResolver(RequirementAnswerSchema),
     defaultValues
   });
+
+  useEffect(() => {
+    methods.reset();
+  }, [methods, specificationProductIndex]);
 
   const useVariant = useWatch({ name: 'variantId', control: methods.control });
   const useWeight = useWatch({ name: 'weight', control: methods.control });
@@ -234,7 +238,7 @@ export default function ProductRequirement({
                 alignSelf: 'center'
               }}
             >
-              {t('Weighting')}: {t(WeightEnum[useWeight])}
+              {t('Weighting')}: {t(Weighting[useWeight])}
             </Typography>
             <FormIconButton onClick={editRequirement}>
               <EditIcon />

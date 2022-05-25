@@ -2,6 +2,7 @@ import { Nestable } from '../models/Nestable';
 import { IBaseModelWithTitleAndDesc } from '../models/IBaseModelWithTitleAndDesc';
 import { Parentable } from '../models/Parentable';
 import Utils from './Utils';
+import { ICodelist } from '../Nexus/entities/ICodelist';
 
 interface SearchableParams {
   inSearch?: boolean;
@@ -10,12 +11,25 @@ interface SearchableParams {
 type Searchable = SearchableParams & Nestable<IBaseModelWithTitleAndDesc>;
 
 class SearchUtils {
+  private static inTitleOrDescription(
+    item: IBaseModelWithTitleAndDesc,
+    searchString: string
+  ) {
+    const inTitle = item.title
+      .toLowerCase()
+      .includes(searchString.toLowerCase());
+    const inDescription =
+      item.description &&
+      item.description.toLowerCase().includes(searchString.toLowerCase());
+    return inTitle || inDescription;
+  }
+
   private static searchRecursive(
     topItem: Nestable<IBaseModelWithTitleAndDesc>,
     searchString: string
   ): Searchable {
-    // Returns item as match if searchtext is in the title
-    if (topItem.title.toLowerCase().includes(searchString.toLowerCase())) {
+    // Returns item as match if searchtext is in the title or description
+    if (this.inTitleOrDescription(topItem, searchString)) {
       return { ...topItem, inSearch: true };
     }
     // Returns item as no-match if no children
@@ -36,7 +50,7 @@ class SearchUtils {
     if (newChilds.length === 0) {
       return { ...topItem, inSearch: false };
     }
-    // Returns item as match
+    // Returns item as match cause match in children
     return {
       ...topItem,
       children: newChilds,
@@ -44,7 +58,7 @@ class SearchUtils {
     };
   }
 
-  static search(
+  static searchParentable(
     items: Parentable<IBaseModelWithTitleAndDesc>[],
     searchString: string
   ): Parentable<IBaseModelWithTitleAndDesc>[] {
@@ -58,6 +72,28 @@ class SearchUtils {
         return seacrhableTypeItem as Nestable<IBaseModelWithTitleAndDesc>;
       });
     return Utils.nestableList2Parentable(returnList);
+  }
+
+  static searchBaseModel(
+    items: IBaseModelWithTitleAndDesc[],
+    searchString: string
+  ): IBaseModelWithTitleAndDesc[] {
+    return items.filter((item) =>
+      this.inTitleOrDescription(item, searchString)
+    );
+  }
+
+  static searchCodelist(items: ICodelist[], searchString: string): ICodelist[] {
+    // Filters only codelist with match in title or with code with match in title
+    return items.filter((codelist) => {
+      if (this.inTitleOrDescription(codelist, searchString)) {
+        return true;
+      }
+
+      return codelist.codes.some((code) => {
+        return this.inTitleOrDescription(code, searchString);
+      });
+    });
   }
 }
 

@@ -1,22 +1,23 @@
-import { joiResolver } from '@hookform/resolvers/joi';
 import Button from '@mui/material/Button';
-import React from 'react';
 import Card from 'react-bootstrap/Card';
 import Form from 'react-bootstrap/Form';
+import React from 'react';
+import { joiResolver } from '@hookform/resolvers/joi';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
+
 import ErrorSummary from '../../Form/ErrorSummary';
-import { IRequirementAnswer } from '../../models/IRequirementAnswer';
-import ModelType from '../../models/ModelType';
-import {
-  CheckboxQuestionAnswerSchema,
-  ICheckboxQuestion
-} from '../../Nexus/entities/ICheckboxQuestion';
-import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import {
   addProductAnswer,
   addRequirementAnswer
 } from '../../store/reducers/response-reducer';
+import {
+  CheckboxQuestionAnswerSchema,
+  ICheckboxQuestion
+} from '../../Nexus/entities/ICheckboxQuestion';
+import { IRequirementAnswer } from '../../models/IRequirementAnswer';
+import { ModelType } from '../../enums';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
 
 interface IProps {
   parentAnswer: IRequirementAnswer;

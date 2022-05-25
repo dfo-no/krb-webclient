@@ -1,6 +1,7 @@
 import CustomJoi from '../../common/CustomJoi';
-import ModelType from '../../models/ModelType';
 import { IBaseModel } from './IBaseModel';
+import { ModelType } from '../../enums';
+
 export interface IProduct extends IBaseModel {
   id: string;
   title: string;

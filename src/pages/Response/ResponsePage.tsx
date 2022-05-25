@@ -6,13 +6,13 @@ import Container from 'react-bootstrap/Container';
 import InputGroup from 'react-bootstrap/InputGroup';
 import Row from 'react-bootstrap/Row';
 import { useHistory } from 'react-router';
-import { httpPost } from '../api/http';
-import { useAppDispatch } from '../store/hooks';
+import { httpPost } from '../../api/http';
+import { useAppDispatch } from '../../store/hooks';
 import {
   setResponse,
   setSpecification
-} from '../store/reducers/response-reducer';
-import { selectBank } from '../store/reducers/selectedBank-reducer';
+} from '../../store/reducers/response-reducer';
+import { selectBank } from '../../store/reducers/selectedBank-reducer';
 
 export default function ResponsePage(): React.ReactElement {
   const dispatch = useAppDispatch();

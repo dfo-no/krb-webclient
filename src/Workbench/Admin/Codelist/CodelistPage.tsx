@@ -17,6 +17,7 @@ import { IRouteParams } from '../../Models/IRouteParams';
 import CodelistPanel from './CodelistPanel';
 import CodePanel from './CodePanel';
 import { useSelectState } from './SelectContext';
+import SearchUtils from '../../../common/SearchUtils';
 
 const useStyles = makeStyles({
   tableContainer: {
@@ -67,16 +68,7 @@ export default function CodeListPage(): React.ReactElement {
   };
 
   const codelistSearch = (searchString: string, list: ICodelist[]) => {
-    // Filters only codelist with match in title or with code with match in title
-    return list.filter((aCodelist) => {
-      if (aCodelist.title.toLowerCase().includes(searchString.toLowerCase())) {
-        return true;
-      }
-
-      return aCodelist.codes.some((code) => {
-        return code.title.toLowerCase().includes(searchString.toLowerCase());
-      });
-    });
+    return SearchUtils.searchCodelist(list, searchString);
   };
 
   const showCodeContainer = () => {

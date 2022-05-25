@@ -1,22 +1,22 @@
-import { joiResolver } from '@hookform/resolvers/joi';
 import Button from '@mui/material/Button';
-import React from 'react';
 import Col from 'react-bootstrap/Col';
+import React from 'react';
+import { joiResolver } from '@hookform/resolvers/joi';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { v4 as uuidv4 } from 'uuid';
+
 import CustomJoi from '../../common/CustomJoi';
-import SliderSelect from '../../components/SliderSelect';
 import ErrorSummary from '../../Form/ErrorSummary';
-import { IRequirementAnswer } from '../../models/IRequirementAnswer';
-import ModelType from '../../models/ModelType';
-import QuestionEnum from '../../models/QuestionEnum';
-import { QuestionType } from '../../models/QuestionType';
+import SliderSelect from '../../components/SliderSelect';
+import { addAnswer } from '../../store/reducers/spesification-reducer';
 import { IMark } from '../../Nexus/entities/IMark';
 import { IRequirement } from '../../Nexus/entities/IRequirement';
+import { IRequirementAnswer } from '../../models/IRequirementAnswer';
 import { ISliderQuestion } from '../../Nexus/entities/ISliderQuestion';
+import { ModelType, QuestionVariant } from '../../enums';
+import { QuestionType } from '../../models/QuestionType';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
-import { addAnswer } from '../../store/reducers/spesification-reducer';
 
 interface IProps {
   question: QuestionType;
@@ -27,7 +27,7 @@ interface IProps {
 
 export const ResponseSliderSchema = CustomJoi.object().keys({
   id: CustomJoi.string().required(),
-  type: CustomJoi.string().equal(QuestionEnum.Q_SLIDER).required(),
+  type: CustomJoi.string().equal(QuestionVariant.Q_SLIDER).required(),
   config: CustomJoi.object().keys({
     step: CustomJoi.number().min(0).max(1000000000).required(),
     min: CustomJoi.number().min(0).max(1000000000).required(),
