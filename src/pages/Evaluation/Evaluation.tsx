@@ -1,15 +1,16 @@
-import { AxiosResponse } from 'axios';
-import React from 'react';
 import Col from 'react-bootstrap/Col';
 import Container from 'react-bootstrap/Container';
 import InputGroup from 'react-bootstrap/InputGroup';
+import React from 'react';
 import Row from 'react-bootstrap/Row';
-import { httpPost } from '../api/http';
-import { useAppDispatch, useAppSelector } from '../store/hooks';
-import { setSpecification } from '../store/reducers/evaluation-reducer';
+import { AxiosResponse } from 'axios';
+
 import DownLoad from './DownLoad';
 import EvaluationList from './EvaluationList';
 import UploadResponses from './UploadResponses';
+import { httpPost } from '../../api/http';
+import { setSpecification } from '../../store/reducers/evaluation-reducer';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
 
 export default function Evaluation(): React.ReactElement {
   const dispatch = useAppDispatch();
@@ -19,7 +20,7 @@ export default function Evaluation(): React.ReactElement {
 
   const onUploadSpecification = (
     event: React.ChangeEvent<HTMLInputElement>
-  ) => {
+  ): void => {
     const formData = new FormData();
     const files = event.target.files as FileList;
     for (let index = 0; index < files.length; index += 1) {

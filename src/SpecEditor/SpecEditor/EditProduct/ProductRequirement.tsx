@@ -1,8 +1,7 @@
-import Button from '@mui/material/Button';
 import EditIcon from '@mui/icons-material/Edit';
 import makeStyles from '@mui/styles/makeStyles';
-import React, { useState } from 'react';
-import { Box, Typography } from '@mui/material';
+import React, { useEffect, useState } from 'react';
+import { Button, Box, Typography } from '@mui/material';
 import { joiResolver } from '@hookform/resolvers/joi';
 import { useForm, FormProvider, useWatch } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
@@ -73,6 +72,10 @@ export default function ProductRequirement({
     resolver: joiResolver(RequirementAnswerSchema),
     defaultValues
   });
+
+  useEffect(() => {
+    methods.reset();
+  }, [methods, specificationProductIndex]);
 
   const useVariant = useWatch({ name: 'variantId', control: methods.control });
   const useWeight = useWatch({ name: 'weight', control: methods.control });

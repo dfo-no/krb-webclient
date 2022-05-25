@@ -14,7 +14,7 @@ export default class TagService {
   }
 
   generateDefaultTaglistValues = (projectId: string): Parentable<ITag> => {
-    const defaultValues: Parentable<ITag> = {
+    return {
       id: '',
       title: '',
       description: '',
@@ -23,7 +23,6 @@ export default class TagService {
       sourceOriginal: projectId,
       sourceRel: null
     };
-    return defaultValues;
   };
 
   generateTag = (item: Parentable<ITag>): Parentable<ITag> => {

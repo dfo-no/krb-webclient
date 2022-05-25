@@ -1,16 +1,16 @@
-import React from 'react';
+import React, { ReactElement } from 'react';
 import { CssBaseline } from '@mui/material';
 import { MsalProvider } from '@azure/msal-react';
 import { PublicClientApplication } from '@azure/msal-browser';
 import { Route, Switch } from 'react-router-dom';
 
 import AlertList from './components/Alert/AlertList';
-import Evaluation from './Evaluation/Evaluation';
+import Evaluation from './pages/Evaluation/Evaluation';
 import Header from './components/Header/Header';
 import HomePage from './pages/Home/HomePage';
 import PrefilledResponseModule from './pages/PrefilledResponseEditor/PrefilledResponseModule';
-import ResponseModule from './ResponseEditor/ResponseModule';
-import ResponsePage from './ResponseEditor/ResponsePage';
+import ResponseModule from './pages/Response/ResponseModule';
+import ResponsePage from './pages/Response/ResponsePage';
 import SpecModule from './SpecEditor/SpecModule';
 import styles from './App.module.scss';
 import useConfirmTabClose from './hooks/useConfirmTabClose';
@@ -20,10 +20,10 @@ import { msalConfig } from './authentication/authConfig';
 
 const msalInstance = new PublicClientApplication(msalConfig);
 
-function App(): React.ReactElement {
+function App(): ReactElement {
   useConfirmTabClose();
 
-  function renderContent() {
+  function renderContent(): ReactElement {
     return (
       <Switch>
         <Route exact path="/">

@@ -21,7 +21,7 @@ export default class ProjectService {
   }
 
   generateDefaultProjectValues = (): IBank => {
-    const defaultValues: IBank = {
+    return {
       id: '',
       title: '',
       description: '',
@@ -39,7 +39,6 @@ export default class ProjectService {
       projectId: null,
       deletedDate: null
     };
-    return defaultValues;
   };
 
   editTitle = (title: string): void => {

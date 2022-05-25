@@ -1,19 +1,22 @@
-import { AxiosResponse } from 'axios';
-import React from 'react';
 import Button from '@mui/material/Button';
-import { httpPost } from '../api/http';
-import { IEvaluation } from '../Nexus/entities/IEvaluation';
-import { useAppSelector } from '../store/hooks';
+import React from 'react';
+import { AxiosResponse } from 'axios';
+
+import { httpPost } from '../../api/http';
+import { IEvaluation } from '../../Nexus/entities/IEvaluation';
+import { useAppSelector } from '../../store/hooks';
 
 export default function DownLoad(): React.ReactElement {
   const { specification, evaluations } = useAppSelector(
     (state) => state.evaluation
   );
-  const onDownLoad = () => {
+
+  const onDownLoad = (): void => {
     const evaluation: IEvaluation = {
       specification,
       responses: evaluations
     };
+
     httpPost<IEvaluation, AxiosResponse<File>>(
       '/java/generateResponse',
       evaluation,
@@ -36,5 +39,6 @@ export default function DownLoad(): React.ReactElement {
       }, 200);
     });
   };
-  return <Button onClick={() => onDownLoad()}>Download</Button>;
+
+  return <Button onClick={onDownLoad}>Download</Button>;
 }
