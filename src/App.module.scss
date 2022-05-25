@@ -2,9 +2,6 @@
   --background-color: #f7f7f7;
   --input-background-color: white;
 
-  --primary-main: #012a4c;
-  --lightBlue-main: #1fa9e6;
-
   --primary-color: #012a4c;
   --primary-light-color: #005b91;
   --primary-inactive-color: #80adc8;
@@ -21,7 +18,7 @@
   --text-primary-color: #333333;
   --text-label-color: var(--text-primary-color);
   --link-color: var(--primary-light-color);
-  --link-hover-color: var(--secondary-color);
+  --link-hover-color: #1fa9e6;
   --line-color: #bcbcbc;
   --line-color-dark: #8898a6;
 }
@@ -44,6 +41,7 @@ body {
   height: 100vh;
   margin: 0;
   padding: 0;
+  background: var(--background-color);
   font-size: 1.8rem;
 }
 
@@ -51,10 +49,10 @@ a,
 a:link,
 a:visited,
 a:active {
-  color: var(--primary-main);
+  color: var(--primary-color);
   transition: color 220ms ease-out;
 }
 
 a:hover {
-  color: var(--lightBlue-main);
+  color: var(--link-hover-color);
 }
