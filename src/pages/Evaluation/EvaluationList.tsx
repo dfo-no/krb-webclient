@@ -1,24 +1,24 @@
-import React from 'react';
 import Button from '@mui/material/Button';
 import Card from 'react-bootstrap/Card';
 import Col from 'react-bootstrap/Col';
+import React, { ReactElement } from 'react';
 import Row from 'react-bootstrap/Row';
-import { IResponse } from '../models/IResponse';
-import { IEvaluatedResponse } from '../Nexus/entities/IEvaluatedResponse';
-import Nexus from '../Nexus/Nexus';
-import { useAppDispatch, useAppSelector } from '../store/hooks';
-import { setEvaluations } from '../store/reducers/evaluation-reducer';
+
+import Nexus from '../../Nexus/Nexus';
+import { IEvaluatedResponse } from '../../Nexus/entities/IEvaluatedResponse';
+import { IResponse } from '../../models/IResponse';
+import { setEvaluations } from '../../store/reducers/evaluation-reducer';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
 
 interface IProps {
   responses: IResponse[];
 }
 
-export default function EvaluationList({
-  responses
-}: IProps): React.ReactElement {
+export default function EvaluationList({ responses }: IProps): ReactElement {
   const { evaluations } = useAppSelector((state) => state.evaluation);
   const nexus = Nexus.getInstance();
   const dispatch = useAppDispatch();
+
   async function evaluateAll() {
     const evaluated = await nexus.evaluationService.evaluateAll(responses);
     return evaluated;
@@ -31,7 +31,7 @@ export default function EvaluationList({
     dispatch(setEvaluations(evaluated));
   }
 
-  const renderEvaluations = () => {
+  const renderEvaluations = (): ReactElement[] => {
     return evaluations.map((response: IEvaluatedResponse) => {
       return (
         <Row key={response.supplier}>
