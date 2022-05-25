@@ -6,7 +6,7 @@ import ListItem from '@mui/material/ListItem';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { QuestionVariant } from '../../../../enums/QuestionVariant';
+import { QuestionVariant } from '../../../../enums';
 
 interface IProps {
   isOpen: boolean;

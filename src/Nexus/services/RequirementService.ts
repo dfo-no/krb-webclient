@@ -17,7 +17,7 @@ export default class RequirementService {
     projectId: string,
     needId: string
   ): IRequirement => {
-    const defaultValues: IRequirement = {
+    return {
       id: '',
       title: '',
       description: '',
@@ -28,7 +28,6 @@ export default class RequirementService {
       sourceOriginal: projectId,
       sourceRel: null
     };
-    return defaultValues;
   };
 
   createRequirementWithId = (item: IRequirement): IRequirement => {
