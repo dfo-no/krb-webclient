@@ -1,16 +1,17 @@
-import { AxiosResponse } from 'axios';
-import React from 'react';
 import Button from '@mui/material/Button';
-import { httpPost } from '../../api/http';
-import { IPrefilledResponse } from '../../models/IPrefilledResponse';
-import { useAppSelector } from '../../store/hooks';
+import React from 'react';
+import { AxiosResponse } from 'axios';
+
+import { httpPost } from '../../../api/http';
+import { IPrefilledResponse } from '../../../models/IPrefilledResponse';
+import { useAppSelector } from '../../../store/hooks';
 
 export default function PrefilledResponseDownLoad(): React.ReactElement {
   const { prefilledResponse } = useAppSelector(
     (state) => state.prefilledResponse
   );
 
-  const onDownLoad = () => {
+  const onDownLoad = (): void => {
     httpPost<IPrefilledResponse, AxiosResponse<File>>(
       '/java/generatePrefilledResponse',
       prefilledResponse,

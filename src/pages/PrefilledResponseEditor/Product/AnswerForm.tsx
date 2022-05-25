@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ReactElement } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 
 import ProductCheckBoxForm from './AnswerForms/ProductCheckBoxForm';
@@ -6,11 +6,11 @@ import ProductCodelistForm from './AnswerForms/ProductCodelistForm';
 import ProductDateForm from './AnswerForms/ProductDateForm';
 import ProductSliderForm from './AnswerForms/ProductSliderForm';
 import ProductTextForm from './AnswerForms/ProductTextForm';
-import { INeed } from '../../Nexus/entities/INeed';
-import { IPrefilledResponseProduct } from '../../models/IPrefilledResponseProduct';
-import { IRequirementAnswer } from '../../models/IRequirementAnswer';
-import { Levelable } from '../../models/Levelable';
-import { ModelType, QuestionVariant } from '../../enums';
+import { INeed } from '../../../Nexus/entities/INeed';
+import { IPrefilledResponseProduct } from '../../../models/IPrefilledResponseProduct';
+import { IRequirementAnswer } from '../../../models/IRequirementAnswer';
+import { Levelable } from '../../../models/Levelable';
+import { ModelType, QuestionVariant } from '../../../enums';
 
 interface IProps {
   element: Levelable<INeed>;
@@ -22,7 +22,7 @@ export default function AnswerForm({
   element,
   product,
   searchProductId
-}: IProps): React.ReactElement {
+}: IProps): ReactElement {
   const answers: IRequirementAnswer[] = [];
 
   const requirementAnswers = product.requirementAnswers;
@@ -45,7 +45,7 @@ export default function AnswerForm({
     });
   });
 
-  const renderQuestions = (elem: IRequirementAnswer) => {
+  const renderQuestions = (elem: IRequirementAnswer): ReactElement => {
     const foundIndex = requirementAnswers.findIndex((e) => e.id === elem.id);
     let existingAnswer: IRequirementAnswer | null = null;
     if (foundIndex !== -1) {

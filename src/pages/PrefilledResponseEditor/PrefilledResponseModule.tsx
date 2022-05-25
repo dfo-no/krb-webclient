@@ -1,21 +1,23 @@
-import React from 'react';
 import Col from 'react-bootstrap/Col';
 import Container from 'react-bootstrap/Container';
+import React from 'react';
 import Row from 'react-bootstrap/Row';
 import { Route, Switch, useRouteMatch } from 'react-router';
-import NotFound from '../NotFound';
-import { useAppDispatch, useAppSelector } from '../store/hooks';
-import { selectBank } from '../store/reducers/selectedBank-reducer';
+
+import NotFound from '../../NotFound';
 import PrefilledResponseDownLoad from './Download/PrefilledResponseDownload';
 import PrefilledResponseEditor from './Editor/PrefilledResponseEditor';
 import PrefilledResponseProductEditor from './Product/PrefilledResponseProductEditor';
 import PrefilledResponseProductList from './Product/PrefilledResponseProductList';
-import RequirementList from './Requirement/RequirementList';
 import PrefilledResponseSidebar from './SideBar/PrefilledResponseSidebar';
+import RequirementList from './Requirement/RequirementList';
+import { selectBank } from '../../store/reducers/selectedBank-reducer';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
 
 interface IRouteParams {
   bankId: string;
 }
+
 export default function PrefilledResponseModule(): React.ReactElement {
   const projectMatch = useRouteMatch<IRouteParams>('/responseeditor/:bankId');
   const dispatch = useAppDispatch();

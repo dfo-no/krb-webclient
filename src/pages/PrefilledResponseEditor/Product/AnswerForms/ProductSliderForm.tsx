@@ -1,39 +1,41 @@
-import { joiResolver } from '@hookform/resolvers/joi';
-import Button from '@mui/material/Button';
-import { get } from 'lodash';
-import React from 'react';
 import Badge from 'react-bootstrap/Badge';
+import Button from '@mui/material/Button';
 import Form from 'react-bootstrap/Form';
+import React from 'react';
 import { FieldError, useForm } from 'react-hook-form';
+import { get } from 'lodash';
+import { joiResolver } from '@hookform/resolvers/joi';
 import { useTranslation } from 'react-i18next';
-import CustomJoi from '../../../common/CustomJoi';
-import ControlledSlider from '../../../Form/ControlledSlider';
-import { IPrefilledResponseProduct } from '../../../models/IPrefilledResponseProduct';
-import {
-  IRequirementAnswer,
-  RequirementAnswerSchema
-} from '../../../models/IRequirementAnswer';
-import { IRequirement } from '../../../Nexus/entities/IRequirement';
-import {
-  ISliderQuestion,
-  SliderQuestionAnswerSchema
-} from '../../../Nexus/entities/ISliderQuestion';
-import { useAppDispatch, useAppSelector } from '../../../store/hooks';
+
+import ControlledSlider from '../../../../Form/ControlledSlider';
+import CustomJoi from '../../../../common/CustomJoi';
 import {
   addProductAnswer,
   removeProductAnswer
-} from '../../../store/reducers/PrefilledResponseReducer';
+} from '../../../../store/reducers/PrefilledResponseReducer';
+import { AnswerUtils } from './AnswerUtils';
+import { IPrefilledResponseProduct } from '../../../../models/IPrefilledResponseProduct';
+import { IRequirement } from '../../../../Nexus/entities/IRequirement';
+import {
+  IRequirementAnswer,
+  RequirementAnswerSchema
+} from '../../../../models/IRequirementAnswer';
+import {
+  ISliderQuestion,
+  SliderQuestionAnswerSchema
+} from '../../../../Nexus/entities/ISliderQuestion';
+import { useAppDispatch, useAppSelector } from '../../../../store/hooks';
 
 interface IProps {
   elem: IRequirementAnswer;
-  product: IPrefilledResponseProduct;
   existingAnswer: IRequirementAnswer | null;
+  product: IPrefilledResponseProduct;
 }
 
 const ProductSliderForm = ({
   elem,
-  product,
-  existingAnswer
+  existingAnswer,
+  product
 }: IProps): React.ReactElement => {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
@@ -42,23 +44,6 @@ const ProductSliderForm = ({
   const { prefilledResponse } = useAppSelector(
     (state) => state.prefilledResponse
   );
-
-  const isValueSet = (productId: string, answerId: string) => {
-    let value = false;
-
-    const productIndex = prefilledResponse.products.findIndex(
-      (entity) => entity.id === productId
-    );
-    if (productIndex !== -1) {
-      const reqIndex = prefilledResponse.products[
-        productIndex
-      ].requirementAnswers.findIndex((e) => e.id === answerId);
-      if (reqIndex !== -1) {
-        value = true;
-      }
-    }
-    return value;
-  };
 
   // Override default schema with values set in config.
   const ProductSliderSchema = RequirementAnswerSchema.keys({
@@ -83,15 +68,18 @@ const ProductSliderForm = ({
     resolver: joiResolver(ProductSliderSchema)
   });
 
-  const onSubmit = (post: IRequirementAnswer) => {
+  const onSubmit = (post: IRequirementAnswer): void => {
     dispatch(addProductAnswer({ answer: post, productId: product.id }));
   };
 
-  const handleResetQuestion = (elemId: string, productId: string) => {
+  const handleResetQuestion = (elemId: string, productId: string): void => {
     dispatch(removeProductAnswer({ answerId: elemId, productId }));
   };
 
-  const getVariantText = (requirement: IRequirement, variantId: string) => {
+  const getVariantText = (
+    requirement: IRequirement,
+    variantId: string
+  ): [string, string] => {
     const variantIndex = requirement.variants.findIndex(
       (v) => v.id === variantId
     );
@@ -144,7 +132,7 @@ const ProductSliderForm = ({
           />
         )}
         <div className="d-flex justify-content-end">
-          {isValueSet(product.id, elem.id) ? (
+          {AnswerUtils.isValueSet(product.id, elem.id, prefilledResponse) ? (
             <Badge bg="success" className="mx-2">
               Set
             </Badge>

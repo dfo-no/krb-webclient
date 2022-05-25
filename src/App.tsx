@@ -8,7 +8,7 @@ import AlertList from './components/Alert/AlertList';
 import Evaluation from './pages/Evaluation/Evaluation';
 import Header from './components/Header/Header';
 import HomePage from './pages/Home/HomePage';
-import PrefilledResponseModule from './PrefilledResponseEditor/PrefilledResponseModule';
+import PrefilledResponseModule from './pages/PrefilledResponseEditor/PrefilledResponseModule';
 import ResponseModule from './pages/Response/ResponseModule';
 import ResponsePage from './pages/Response/ResponsePage';
 import SpecModule from './SpecEditor/SpecModule';

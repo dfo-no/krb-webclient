@@ -1,21 +1,22 @@
-import { joiResolver } from '@hookform/resolvers/joi';
 import Button from '@mui/material/Button';
-import React, { useEffect } from 'react';
 import Col from 'react-bootstrap/Col';
 import Container from 'react-bootstrap/Container';
 import Form from 'react-bootstrap/Form';
 import FormControl from 'react-bootstrap/FormControl';
+import React, { useEffect } from 'react';
 import Row from 'react-bootstrap/Row';
+import { joiResolver } from '@hookform/resolvers/joi';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import CustomJoi from '../../common/CustomJoi';
-import ErrorSummary from '../../Form/ErrorSummary';
-import { useGetBankQuery } from '../../store/api/bankApi';
-import { useAppDispatch, useAppSelector } from '../../store/hooks';
+
+import CustomJoi from '../../../common/CustomJoi';
+import ErrorSummary from '../../../Form/ErrorSummary';
 import {
   editSupplier,
   setBank
-} from '../../store/reducers/PrefilledResponseReducer';
+} from '../../../store/reducers/PrefilledResponseReducer';
+import { useAppDispatch, useAppSelector } from '../../../store/hooks';
+import { useGetBankQuery } from '../../../store/api/bankApi';
 
 interface IResponseInfoForm {
   supplier: string;

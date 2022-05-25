@@ -1,39 +1,40 @@
-import { joiResolver } from '@hookform/resolvers/joi';
-import Button from '@mui/material/Button';
-import React from 'react';
 import Badge from 'react-bootstrap/Badge';
+import Button from '@mui/material/Button';
 import Form from 'react-bootstrap/Form';
+import React, { ReactElement } from 'react';
+import { joiResolver } from '@hookform/resolvers/joi';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import CustomJoi from '../../../common/CustomJoi';
-import ErrorSummary from '../../../Form/ErrorSummary';
-import { IPrefilledResponseProduct } from '../../../models/IPrefilledResponseProduct';
-import {
-  IRequirementAnswer,
-  RequirementAnswerSchema
-} from '../../../models/IRequirementAnswer';
-import {
-  CheckboxQuestionAnswerSchema,
-  ICheckboxQuestion
-} from '../../../Nexus/entities/ICheckboxQuestion';
-import { IRequirement } from '../../../Nexus/entities/IRequirement';
-import { useAppDispatch, useAppSelector } from '../../../store/hooks';
+
+import CustomJoi from '../../../../common/CustomJoi';
+import ErrorSummary from '../../../../Form/ErrorSummary';
 import {
   addProductAnswer,
   removeProductAnswer
-} from '../../../store/reducers/PrefilledResponseReducer';
+} from '../../../../store/reducers/PrefilledResponseReducer';
+import { AnswerUtils } from './AnswerUtils';
+import {
+  CheckboxQuestionAnswerSchema,
+  ICheckboxQuestion
+} from '../../../../Nexus/entities/ICheckboxQuestion';
+import { IPrefilledResponseProduct } from '../../../../models/IPrefilledResponseProduct';
+import {
+  IRequirementAnswer,
+  RequirementAnswerSchema
+} from '../../../../models/IRequirementAnswer';
+import { useAppDispatch, useAppSelector } from '../../../../store/hooks';
 
 interface IProps {
   answer: IRequirementAnswer;
-  product: IPrefilledResponseProduct;
   existingAnswer: IRequirementAnswer | null;
+  product: IPrefilledResponseProduct;
 }
 
 const ProductCheckBoxForm = ({
   answer,
-  product,
-  existingAnswer
-}: IProps): React.ReactElement => {
+  existingAnswer,
+  product
+}: IProps): ReactElement => {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
   const determinedAnswer = existingAnswer || answer;
@@ -41,23 +42,6 @@ const ProductCheckBoxForm = ({
   const { prefilledResponse } = useAppSelector(
     (state) => state.prefilledResponse
   );
-
-  const isValueSet = (productId: string, answerId: string) => {
-    let value = false;
-
-    const productIndex = prefilledResponse.products.findIndex(
-      (entity) => entity.id === productId
-    );
-    if (productIndex !== -1) {
-      const reqIndex = prefilledResponse.products[
-        productIndex
-      ].requirementAnswers.findIndex((e) => e.id === answerId);
-      if (reqIndex !== -1) {
-        value = true;
-      }
-    }
-    return value;
-  };
 
   // Override default schema with values set in config.
   const ProductCheckboxSchema = RequirementAnswerSchema.keys({
@@ -78,34 +62,18 @@ const ProductCheckBoxForm = ({
     resolver: joiResolver(ProductCheckboxSchema)
   });
 
-  const onSubmit = (post: IRequirementAnswer) => {
+  const onSubmit = (post: IRequirementAnswer): void => {
     dispatch(addProductAnswer({ answer: post, productId: product.id }));
   };
 
-  const handleResetQuestion = (elemId: string, productId: string) => {
+  const handleResetQuestion = (elemId: string, productId: string): void => {
     dispatch(removeProductAnswer({ answerId: elemId, productId }));
   };
 
-  const getVariantText = (requirement: IRequirement, variantId: string) => {
-    const variantIndex = requirement.variants.findIndex(
-      (v) => v.id === variantId
-    );
-    let tuple: [string, string] = ['', ''];
-    if (variantIndex !== -1) {
-      tuple = [
-        requirement.variants[variantIndex].requirementText,
-        requirement.variants[variantIndex].instruction
-      ];
-    }
-    return tuple;
-  };
-  const checkIfPreferedAlternative = (value: string) => {
-    if (value === 'Yes' && question.config.preferedAlternative === true) {
+  const checkIfPreferedAlternative = (value: string): ReactElement => {
+    if (value === 'Yes' && question.config.preferedAlternative) {
       return <b>Yes</b>;
-    } else if (
-      value === 'No' &&
-      question.config.preferedAlternative === false
-    ) {
+    } else if (value === 'No' && !question.config.preferedAlternative) {
       return <b>No</b>;
     }
     return <>{value}</>;
@@ -113,10 +81,12 @@ const ProductCheckBoxForm = ({
 
   return (
     <div>
-      <h5>{getVariantText(answer.requirement, answer.variantId)[0]}</h5>
+      <h5>
+        {AnswerUtils.getVariantText(answer.requirement, answer.variantId)[0]}
+      </h5>
       <h6>
         <small className="text-muted">
-          {getVariantText(answer.requirement, answer.variantId)[1]}
+          {AnswerUtils.getVariantText(answer.requirement, answer.variantId)[1]}
         </small>
       </h6>
       <form
@@ -147,7 +117,7 @@ const ProductCheckBoxForm = ({
           </Form.Label>
         </Form.Group>
         <div className="d-flex justify-content-end">
-          {isValueSet(product.id, answer.id) ? (
+          {AnswerUtils.isValueSet(product.id, answer.id, prefilledResponse) ? (
             <Badge bg="success" className="mx-2">
               Set
             </Badge>

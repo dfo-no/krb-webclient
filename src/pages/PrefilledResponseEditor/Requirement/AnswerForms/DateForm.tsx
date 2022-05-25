@@ -1,28 +1,29 @@
-import { joiResolver } from '@hookform/resolvers/joi';
-import Button from '@mui/material/Button';
-import React from 'react';
 import Badge from 'react-bootstrap/Badge';
+import Button from '@mui/material/Button';
 import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
+import React from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
+import { joiResolver } from '@hookform/resolvers/joi';
 import { useTranslation } from 'react-i18next';
-import CustomJoi from '../../../common/CustomJoi';
-import ErrorSummary from '../../../Form/ErrorSummary';
-import DateCtrl from '../../../FormProvider/DateCtrl';
-import {
-  IRequirementAnswer,
-  RequirementAnswerSchema
-} from '../../../models/IRequirementAnswer';
-import {
-  IPeriodDateQuestion,
-  PeriodDateAnswerSchema
-} from '../../../Nexus/entities/IPeriodDateQuestion';
-import { IRequirement } from '../../../Nexus/entities/IRequirement';
-import { useAppDispatch, useAppSelector } from '../../../store/hooks';
+
+import CustomJoi from '../../../../common/CustomJoi';
+import DateCtrl from '../../../../FormProvider/DateCtrl';
+import ErrorSummary from '../../../../Form/ErrorSummary';
 import {
   addAnswer,
   removeAnswer
-} from '../../../store/reducers/PrefilledResponseReducer';
+} from '../../../../store/reducers/PrefilledResponseReducer';
+import { AnswerUtils } from '../../Product/AnswerForms/AnswerUtils';
+import {
+  IRequirementAnswer,
+  RequirementAnswerSchema
+} from '../../../../models/IRequirementAnswer';
+import {
+  IPeriodDateQuestion,
+  PeriodDateAnswerSchema
+} from '../../../../Nexus/entities/IPeriodDateQuestion';
+import { useAppDispatch, useAppSelector } from '../../../../store/hooks';
 
 interface IProps {
   answer: IRequirementAnswer;
@@ -57,44 +58,25 @@ export default function DateForm({
     (state) => state.prefilledResponse
   );
 
-  const onSubmit = (post: IRequirementAnswer) => {
+  const onSubmit = (post: IRequirementAnswer): void => {
     dispatch(addAnswer(post));
   };
 
-  const handleResetQuestion = (elemId: string) => {
+  const handleResetQuestion = (elemId: string): void => {
     dispatch(removeAnswer(elemId));
   };
 
-  const getVariantText = (requirement: IRequirement, variantId: string) => {
-    const variantIndex = requirement.variants.findIndex(
-      (v) => v.id === variantId
+  const isValueSet = (answerId: string): boolean => {
+    return !!prefilledResponse.requirementAnswers.find(
+      (a) => a.id === answerId
     );
-    let tuple: [string, string] = ['', ''];
-    if (variantIndex !== -1) {
-      tuple = [
-        requirement.variants[variantIndex].requirementText,
-        requirement.variants[variantIndex].instruction
-      ];
-    }
-    return tuple;
-  };
-
-  const isValueSet = (answerId: string) => {
-    let value = false;
-    const reqIndex = prefilledResponse.requirementAnswers.findIndex(
-      (e) => e.id === answerId
-    );
-    if (reqIndex !== -1) {
-      value = true;
-    }
-    return value;
   };
 
   return (
     <div>
       <h5>
         {
-          getVariantText(
+          AnswerUtils.getVariantText(
             determinedAnswer.requirement,
             determinedAnswer.variantId
           )[0]
@@ -103,7 +85,7 @@ export default function DateForm({
       <h6>
         <small className="text-muted">
           {
-            getVariantText(
+            AnswerUtils.getVariantText(
               determinedAnswer.requirement,
               determinedAnswer.variantId
             )[1]
