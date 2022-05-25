@@ -33,7 +33,7 @@ export const usePanelStyles = makeStyles({
     flexDirection: 'row',
     minHeight: 70,
     width: '100%',
-    border: `1px solid ${theme.palette.gray400.main}`,
+    border: `0.1rem solid ${theme.palette.gray400.main}`,
     backgroundColor: theme.palette.white.main
   },
   withHover: {
@@ -58,7 +58,7 @@ export const usePanelStyles = makeStyles({
     flexDirection: 'column',
     flexGrow: 1,
     minHeight: 0,
-    gap: '8px',
+    gap: '0.8rem',
     listStyle: 'none'
   },
   handlerIcon: {
@@ -83,7 +83,7 @@ export const usePanelStyles = makeStyles({
     display: 'flex',
     paddingTop: 5,
     paddingBottom: 5,
-    borderBottom: '1px solid'
+    borderBottom: '0.1rem solid'
   },
   textItemDescription: {
     paddingTop: 5

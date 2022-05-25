@@ -34,15 +34,15 @@ const useStyles = makeStyles({
     }
   },
   listItemParent: {
-    border: `1px solid ${theme.palette.gray400.main}`,
+    border: `0.1rem solid ${theme.palette.gray400.main}`,
     '&:not(:first-child)': {
-      marginTop: '16px'
+      marginTop: '1.6rem'
     }
   },
   listItemChild: {
-    borderLeft: `1px solid ${theme.palette.gray400.main}`,
-    borderRight: `1px solid ${theme.palette.gray400.main}`,
-    borderBottom: `1px solid ${theme.palette.gray400.main}`
+    borderLeft: `0.1rem solid ${theme.palette.gray400.main}`,
+    borderRight: `0.1rem solid ${theme.palette.gray400.main}`,
+    borderBottom: `0.1rem solid ${theme.palette.gray400.main}`
   },
   selectedListItem: {
     background: theme.palette.primary.main,
@@ -87,8 +87,8 @@ export default function PreviewSideBar({
                       } 
                       ${isSelected ? classes.selectedListItem : ''}`}
           sx={{
-            marginLeft: `${element.level * 25}px`,
-            width: `calc(100% - ${element.level * 25}px)`
+            marginLeft: `${element.level * 2.5}rem`,
+            width: `calc(100% - ${element.level * 2.5}rem)`
           }}
           onClick={() => handleListItemClick(element, index + 1)}
         >
@@ -117,8 +117,8 @@ export default function PreviewSideBar({
             ${selectedIndex === 0 ? classes.selectedListItem : ''}`}
             onClick={() => handleListItemClick(null, 0)}
             sx={{
-              marginLeft: `${1 * 25}px`,
-              width: `calc(100% - ${1 * 25}px)`
+              marginLeft: `${1 * 2.5}rem`,
+              width: `calc(100% - ${1 * 2.5}rem)`
             }}
           >
             <Typography className={classes.itemNameText} variant="smBold">

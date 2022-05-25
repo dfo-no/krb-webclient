@@ -8,7 +8,7 @@ import { Parentable } from '../../models/Parentable';
 const useStyles = makeStyles({
   needListItem: {
     backgroundColor: theme.palette.white.main,
-    borderBottom: `1px solid ${theme.palette.silver.main}`
+    borderBottom: `0.1rem solid ${theme.palette.silver.main}`
   },
   needListItemTitle: {
     flexBasis: '50%',
@@ -20,7 +20,7 @@ const useStyles = makeStyles({
   needListItemDescription: {
     display: 'flex',
     flexBasis: '50%',
-    borderLeft: `1px solid ${theme.palette.silver.main}`,
+    borderLeft: `0.1rem solid ${theme.palette.silver.main}`,
     paddingLeft: 20
   }
 });

@@ -22,7 +22,7 @@ const StyledListItem = styled(ListItem)<ListItemProps>(({ theme: t }) => {
   return {
     '&.MuiListItem-root': {
       '&.MuiListItem-divider': {
-        borderBottom: `1px solid ${t.palette.lightBlue.main}`
+        borderBottom: `0.1rem solid ${t.palette.lightBlue.main}`
       }
     }
   };
@@ -68,7 +68,7 @@ const Footer = () => {
               <Divider
                 component="li"
                 sx={{
-                  borderTop: `1px solid ${theme.palette.lightBlue.main}`
+                  borderTop: `0.1rem solid ${theme.palette.lightBlue.main}`
                 }}
               />
               {links.map((link) => (

@@ -25,13 +25,16 @@ const useStyles = makeStyles({
   },
   scrollableContent: {
     height: '100%',
-    width: '100%'
+    width: '100%',
+    margin: '0 auto',
+    padding: '2rem'
   },
   actionContainer: {
     display: 'flex',
+    flexBasis: '50%',
     margin: 8,
     marginBottom: 0,
-    gap: 10
+    gap: '2rem'
   },
   navigation: {
     flexBasis: '50%'
@@ -103,7 +106,7 @@ export default function HomePage(): React.ReactElement {
               </List>
             </Box>
           </Box>
-          <Box className={classes.actionContainer}>
+          <Box className={classes.actionContainer} sx={{ flexBasis: '50%' }}>
             <HomeDisplayList
               title={t('Newest banks')}
               list={latestPublishedProjects}

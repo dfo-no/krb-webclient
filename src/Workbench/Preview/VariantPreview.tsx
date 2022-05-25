@@ -85,7 +85,7 @@ export default function VariantPreview({
             flexDirection: 'column',
             gap: 2,
             marginTop: 1.5,
-            border: `1px solid ${theme.palette.black.main}`,
+            border: `0.1rem solid ${theme.palette.black.main}`,
             backgroundColor: theme.palette.gray100.main,
             padding: 5.5
           }}

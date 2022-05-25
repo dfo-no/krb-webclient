@@ -24,13 +24,13 @@ const useStyles = makeStyles({
   autocompleteContainer: {
     '& .MuiOutlinedInput-root': {
       '& fieldset': {
-        border: `2px solid ${theme.palette.primary.main}`
+        border: `0.2rem solid ${theme.palette.primary.main}`
       },
       '&.Mui-focused fieldset': {
-        border: `3px solid ${theme.palette.primary.main}`
+        border: `0.3rem solid ${theme.palette.primary.main}`
       },
       '&:hover fieldset': {
-        border: `3px solid ${theme.palette.primary.main}`
+        border: `0.3rem solid ${theme.palette.primary.main}`
       }
     }
   }

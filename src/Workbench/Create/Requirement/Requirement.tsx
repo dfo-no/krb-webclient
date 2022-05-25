@@ -23,8 +23,8 @@ const useStyles = makeStyles({
     width: '100%'
   },
   active: {
-    border: `2px solid ${theme.palette.secondary.main}`,
-    borderTop: `12px solid ${theme.palette.secondary.main}`
+    border: `0.2rem solid ${theme.palette.secondary.main}`,
+    borderTop: `1.2rem solid ${theme.palette.secondary.main}`
   }
 });
 
@@ -61,7 +61,7 @@ const Requirement = ({ requirementIndex }: IProps) => {
             margin: 2,
             paddingRight: 1,
             paddingBottom: 1,
-            borderBottom: `1px solid ${theme.palette.silver.main}`
+            borderBottom: `0.1rem solid ${theme.palette.silver.main}`
           }}
         >
           <Typography variant="mdBold" sx={{ alignSelf: 'center' }}>

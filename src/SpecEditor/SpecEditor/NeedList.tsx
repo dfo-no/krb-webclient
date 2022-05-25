@@ -15,7 +15,7 @@ const useStyles = makeStyles({
     display: 'flex',
     flexDirection: 'column',
     gap: 20,
-    border: `1px solid ${theme.palette.lightBlue.main}`,
+    border: `0.1rem solid ${theme.palette.lightBlue.main}`,
     backgroundColor: theme.palette.gray200.main,
     width: '100%',
     padding: 30,
@@ -27,7 +27,7 @@ const useStyles = makeStyles({
     alignItems: 'center'
   },
   needsList: {
-    border: `1px solid ${theme.palette.silver.main}`,
+    border: `0.1rem solid ${theme.palette.silver.main}`,
     '&:last-child': {
       borderBottom: 'none'
     },

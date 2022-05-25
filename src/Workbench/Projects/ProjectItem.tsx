@@ -20,7 +20,7 @@ const useStyles = makeStyles({
   projectListItemCard: {
     height: 100,
     boxShadow: 'none',
-    border: `1px solid ${theme.palette.gray300.main}`,
+    border: `0.1rem solid ${theme.palette.gray300.main}`,
     textDecoration: 'none',
     width: '100%',
     cursor: 'pointer',

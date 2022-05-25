@@ -83,10 +83,10 @@ const useStyles = makeStyles({
     '& .MuiSvgIcon-root': {
       cursor: 'pointer',
       color: theme.palette.black.main,
-      width: '24px',
-      height: '40px',
-      paddingBottom: '8px',
-      paddingTop: '8px',
+      width: '2.4rem',
+      height: '4rem',
+      paddingBottom: '0.8rem',
+      paddingTop: '0.8rem',
       '&:hover': {
         color: theme.palette.lightBlue.main
       }
@@ -95,11 +95,11 @@ const useStyles = makeStyles({
   selectedIcon: {
     '& .MuiSvgIcon-root': {
       color: theme.palette.primary.main,
-      width: '24px',
-      height: '40px',
-      paddingTop: '8px',
-      paddingBottom: '4px',
-      borderBottom: '4px solid'
+      width: '2.4rem',
+      height: '4rem',
+      paddingTop: '0.8rem',
+      paddingBottom: '0.4rem',
+      borderBottom: '0.4rem solid'
     }
   },
   projectTitleVersion: {
@@ -132,7 +132,7 @@ export default function Header(): React.ReactElement {
         position="sticky"
         sx={{
           backgroundColor: theme.palette.white.main,
-          borderBottom: `2px solid ${theme.palette.gray300.main}`
+          borderBottom: `0.2rem solid ${theme.palette.gray300.main}`
         }}
       >
         <Toolbar disableGutters>
@@ -168,7 +168,7 @@ export default function Header(): React.ReactElement {
       position="sticky"
       sx={{
         backgroundColor: theme.palette.white.main,
-        borderBottom: `2px solid ${theme.palette.gray300.main}`
+        borderBottom: `0.2rem solid ${theme.palette.gray300.main}`
       }}
     >
       <Toolbar>

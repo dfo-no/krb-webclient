@@ -18,7 +18,7 @@ const useStyles = makeStyles({
     marginBottom: 2,
     marginRight: 10,
     color: theme.palette.secondary.main,
-    fontSize: '30px !important',
+    fontSize: '3rem !important',
     zIndex: 1
   },
   adornedEnd: {

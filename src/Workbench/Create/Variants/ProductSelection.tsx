@@ -18,20 +18,20 @@ const useStyles = makeStyles({
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-    width: '22px',
-    height: '22px',
+    width: '2.2rem',
+    height: '2.2rem',
     marginRight: 32,
     marginLeft: 16
   },
   list: {
-    border: `1px solid ${theme.palette.black.main}`,
+    border: `0.1rem solid ${theme.palette.black.main}`,
     backgroundColor: theme.palette.gray100.main,
     maxHeight: 400,
     padding: 32
   },
   listItem: {
     display: 'flex',
-    border: `1px solid ${theme.palette.silver.main}`,
+    border: `0.1rem solid ${theme.palette.silver.main}`,
     minHeight: 50,
     padding: 0,
     paddingTop: 8,
@@ -48,7 +48,7 @@ const useStyles = makeStyles({
   },
   itemDescription: {
     marginLeft: 'auto',
-    borderLeft: `1px solid ${theme.palette.silver.main}`,
+    borderLeft: `0.1rem solid ${theme.palette.silver.main}`,
     paddingLeft: 20,
     flex: '0 0 30vw'
   },
@@ -97,9 +97,9 @@ const ProductSelection = (): React.ReactElement => {
     return `repeating-linear-gradient(
               -55deg, 
               ${theme.palette.white.main}, 
-              ${theme.palette.white.main} 10px, 
-              ${theme.palette.gray100.main} 10px, 
-              ${theme.palette.gray100.main} 20px
+              ${theme.palette.white.main} 1rem, 
+              ${theme.palette.gray100.main} 1rem, 
+              ${theme.palette.gray100.main} 2rem
             )`;
   };
 
@@ -127,7 +127,7 @@ const ProductSelection = (): React.ReactElement => {
                       background: isDeletedAndUnused(item, selected)
                         ? deletedBackground()
                         : theme.palette.white.main,
-                      marginTop: item.level === 1 ? 2 : -0.125, // -0.125 is equal to 1px to prevent double border
+                      marginTop: item.level === 1 ? '0.2rem' : '-0.1rem',
                       marginLeft: `${(item.level - 1) * 2}%`,
                       width: `${100 - (item.level - 1) * 2}%`
                     }}
