@@ -26,7 +26,6 @@ export default function EditProduct(): React.ReactElement {
   const { specificationProductIndex } = useSpecificationState();
 
   const renderNeeds = () => {
-    console.log('render needs');
     if (specificationProductIndex === -1) {
       const needs = Utils.findVariantsUsedBySpesification(spec.bank);
       return needs.map((need) => {
