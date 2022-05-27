@@ -15,7 +15,7 @@ export default class NeedService {
   }
 
   generateDefaultNeedValues = (projectId: string): Parentable<INeed> => {
-    const defaultValues: Parentable<INeed> = {
+    return {
       id: '',
       title: '',
       description: '',
@@ -25,7 +25,6 @@ export default class NeedService {
       sourceOriginal: projectId,
       sourceRel: null
     };
-    return defaultValues;
   };
 
   createNeedWithId = (item: Parentable<INeed>): Parentable<INeed> => {

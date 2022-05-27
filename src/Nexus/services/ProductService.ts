@@ -14,7 +14,7 @@ export default class ProductService {
   }
 
   generateDefaultProductValues = (projectId: string): Parentable<IProduct> => {
-    const defaultValues: Parentable<IProduct> = {
+    return {
       id: '',
       title: '',
       description: '',
@@ -24,7 +24,6 @@ export default class ProductService {
       sourceRel: null,
       deletedDate: null
     };
-    return defaultValues;
   };
 
   createProductWithId = (item: Parentable<IProduct>): Parentable<IProduct> => {
