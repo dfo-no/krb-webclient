@@ -2,9 +2,9 @@ import React from 'react';
 import { Box, Typography } from '@mui/material';
 
 import ProductRequirement from './ProductRequirement';
-import theme from '../../../../theme';
-import { INeed } from '../../../../Nexus/entities/INeed';
-import { Parentable } from '../../../../models/Parentable';
+import theme from '../../../theme';
+import { INeed } from '../../../Nexus/entities/INeed';
+import { Parentable } from '../../../models/Parentable';
 
 interface IProps {
   need: Parentable<INeed>;

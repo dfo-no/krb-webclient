@@ -3,13 +3,13 @@ import React, { useState } from 'react';
 import { Box, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 
-import DFODialog from '../../../../components/DFODialog/DFODialog';
+import DFODialog from '../../../components/DFODialog/DFODialog';
 import EditProductForm from './EditProductForm';
-import { DFOCardHeader } from '../../../../components/DFOCard/DFOCardHeader';
-import { DFOCardHeaderIconButton } from '../../../../components/DFOCard/DFOCardHeaderIconButton';
-import { DFOHeaderContentBox } from '../../../../components/DFOCard/DFOHeaderContentBox';
-import { useAppSelector } from '../../../../store/hooks';
-import { useSpecificationState } from '../../SpecificationContext';
+import { DFOCardHeader } from '../../../components/DFOCard/DFOCardHeader';
+import { DFOCardHeaderIconButton } from '../../../components/DFOCard/DFOCardHeaderIconButton';
+import { DFOHeaderContentBox } from '../../../components/DFOCard/DFOHeaderContentBox';
+import { useAppSelector } from '../../../store/hooks';
+import { useSpecificationState } from '../SpecificationContext';
 
 export default function ProductHeader(): React.ReactElement {
   const { t } = useTranslation();

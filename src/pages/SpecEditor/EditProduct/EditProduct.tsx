@@ -2,13 +2,13 @@ import React from 'react';
 import makeStyles from '@mui/styles/makeStyles';
 import { Box } from '@mui/material';
 
-import theme from '../../../../theme';
+import theme from '../../../theme';
 import ProductHeader from './ProductHeader';
 import ProductNeed from './ProductNeed';
-import Utils from '../../../../common/Utils';
-import { ScrollableContainer } from '../../../../Workbench/Components/ScrollableContainer';
-import { useAppSelector } from '../../../../store/hooks';
-import { useSpecificationState } from '../../SpecificationContext';
+import Utils from '../../../common/Utils';
+import { ScrollableContainer } from '../../../Workbench/Components/ScrollableContainer';
+import { useAppSelector } from '../../../store/hooks';
+import { useSpecificationState } from '../SpecificationContext';
 
 const useStyles = makeStyles({
   newProduct: {

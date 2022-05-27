@@ -3,11 +3,11 @@ import React, { ReactElement } from 'react';
 import { Box } from '@mui/material';
 
 import EditProduct from './EditProduct/EditProduct';
-import NewProduct from './NewProduct';
-import NoProducts from './NoProducts';
-import SpecSideBar from '../SideBar/SpecSideBar';
-import theme from '../../../theme';
-import { useSpecificationState } from '../SpecificationContext';
+import NewProduct from './NewProduct/NewProduct';
+import NoProducts from './NoProducts/NoProducts';
+import SpecSideBar from './SideBar/SpecSideBar';
+import theme from '../../theme';
+import { useSpecificationState } from './SpecificationContext';
 
 const useStyles = makeStyles({
   page: {

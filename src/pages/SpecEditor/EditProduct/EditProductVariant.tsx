@@ -3,16 +3,16 @@ import { Box, Typography } from '@mui/material';
 import { useFormContext, useWatch } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
-import Nexus from '../../../../Nexus/Nexus';
-import ProductQuestionList from './ProductQuestionList';
-import SliderCtrl from '../../../../FormProvider/SliderCtrl';
-import theme from '../../../../theme';
-import { DFOCheckbox } from '../../../../components/DFOCheckbox/DFOCheckbox';
-import { IMark } from '../../../../Nexus/entities/IMark';
-import { IRequirement } from '../../../../Nexus/entities/IRequirement';
-import { IRequirementAnswer } from '../../../../models/IRequirementAnswer';
-import { IVariant } from '../../../../Nexus/entities/IVariant';
-import { Weighting } from '../../../../enums';
+import Nexus from '../../../Nexus/Nexus';
+import ProductQuestionList from './QuestionSpecification/ProductQuestionList';
+import SliderCtrl from '../../../FormProvider/SliderCtrl';
+import theme from '../../../theme';
+import { DFOCheckbox } from '../../../components/DFOCheckbox/DFOCheckbox';
+import { IMark } from '../../../Nexus/entities/IMark';
+import { IRequirement } from '../../../Nexus/entities/IRequirement';
+import { IRequirementAnswer } from '../../../models/IRequirementAnswer';
+import { IVariant } from '../../../Nexus/entities/IVariant';
+import { Weighting } from '../../../enums';
 
 interface IProps {
   requirement: IRequirement;

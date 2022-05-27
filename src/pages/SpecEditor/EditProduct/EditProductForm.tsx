@@ -4,20 +4,20 @@ import { FormProvider, useForm } from 'react-hook-form';
 import { joiResolver } from '@hookform/resolvers/joi';
 import { useTranslation } from 'react-i18next';
 
-import theme from '../../../../theme';
-import VerticalTextCtrl from '../../../../FormProvider/VerticalTextCtrl';
-import { editSpecProduct } from '../../../../store/reducers/spesification-reducer';
+import theme from '../../../theme';
+import VerticalTextCtrl from '../../../FormProvider/VerticalTextCtrl';
+import { editSpecProduct } from '../../../store/reducers/spesification-reducer';
 import {
   ISpecificationProduct,
   SpecificationProductSchema
-} from '../../../../models/ISpecificationProduct';
+} from '../../../models/ISpecificationProduct';
 import {
   ModalBox,
   ModalFieldsBox,
   ModalButtonsBox,
   ModalButton
-} from '../../../../Workbench/Components/ModalBox';
-import { useAppDispatch } from '../../../../store/hooks';
+} from '../../../Workbench/Components/ModalBox';
+import { useAppDispatch } from '../../../store/hooks';
 
 interface IProps {
   handleClose: () => void;

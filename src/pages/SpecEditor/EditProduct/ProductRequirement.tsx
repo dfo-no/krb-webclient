@@ -7,9 +7,9 @@ import { useForm, FormProvider, useWatch } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
 import EditProductVariant from './EditProductVariant';
-import Nexus from '../../../../Nexus/Nexus';
+import Nexus from '../../../Nexus/Nexus';
 import ProductVariant from './ProductVariant';
-import theme from '../../../../theme';
+import theme from '../../../theme';
 import {
   addAnswer,
   addProductAnswer,
@@ -19,17 +19,17 @@ import {
   deleteProductAnswer,
   removeProductRequirement,
   removeRequirement
-} from '../../../../store/reducers/spesification-reducer';
-import { DFOCheckbox } from '../../../../components/DFOCheckbox/DFOCheckbox';
-import { FormIconButton } from '../../../../Workbench/Components/Form/FormIconButton';
-import { IRequirement } from '../../../../Nexus/entities/IRequirement';
+} from '../../../store/reducers/spesification-reducer';
+import { DFOCheckbox } from '../../../components/DFOCheckbox/DFOCheckbox';
+import { FormIconButton } from '../../../Workbench/Components/Form/FormIconButton';
+import { IRequirement } from '../../../Nexus/entities/IRequirement';
 import {
   IRequirementAnswer,
   RequirementAnswerSchema
-} from '../../../../models/IRequirementAnswer';
-import { useAppDispatch, useAppSelector } from '../../../../store/hooks';
-import { useSpecificationState } from '../../SpecificationContext';
-import { Weighting } from '../../../../enums';
+} from '../../../models/IRequirementAnswer';
+import { useAppDispatch, useAppSelector } from '../../../store/hooks';
+import { useSpecificationState } from '../SpecificationContext';
+import { Weighting } from '../../../enums';
 
 const useStyles = makeStyles({
   card: {
