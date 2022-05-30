@@ -16,7 +16,7 @@ import {
   ModalFieldsBox,
   ModalButtonsBox,
   ModalButton
-} from '../../../Workbench/Components/ModalBox';
+} from '../../../components/ModalBox/ModalBox';
 import { useAppDispatch } from '../../../store/hooks';
 
 interface IProps {

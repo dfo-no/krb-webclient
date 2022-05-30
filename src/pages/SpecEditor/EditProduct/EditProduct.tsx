@@ -6,7 +6,7 @@ import theme from '../../../theme';
 import ProductHeader from './ProductHeader';
 import ProductNeed from './ProductNeed';
 import Utils from '../../../common/Utils';
-import { ScrollableContainer } from '../../../Workbench/Components/ScrollableContainer';
+import { ScrollableContainer } from '../../../components/ScrollableContainer/ScrollableContainer';
 import { useAppSelector } from '../../../store/hooks';
 import { useSpecificationState } from '../SpecificationContext';
 

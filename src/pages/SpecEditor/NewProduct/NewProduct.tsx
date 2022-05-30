@@ -19,9 +19,9 @@ import {
   PostSpecificationProductSchema
 } from '../../../models/ISpecificationProduct';
 import { Parentable } from '../../../models/Parentable';
-import { ScrollableContainer } from '../../../Workbench/Components/ScrollableContainer';
+import { ScrollableContainer } from '../../../components/ScrollableContainer/ScrollableContainer';
 import { useAppDispatch, useAppSelector } from '../../../store/hooks';
-import { useFormStyles } from '../../../Workbench/Components/Form/FormStyles';
+import { useFormStyles } from '../../../components/Form/FormStyles';
 import { useSpecificationState } from '../SpecificationContext';
 
 const useStyles = makeStyles({

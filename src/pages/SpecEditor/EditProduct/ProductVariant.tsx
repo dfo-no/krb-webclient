@@ -4,7 +4,7 @@ import { Box, Typography } from '@mui/material';
 import { useFormContext } from 'react-hook-form';
 
 import { DFOCheckbox } from '../../../components/DFOCheckbox/DFOCheckbox';
-import { FormIconButton } from '../../../Workbench/Components/Form/FormIconButton';
+import { FormIconButton } from '../../../components/Form/FormIconButton';
 import { IRequirementAnswer } from '../../../models/IRequirementAnswer';
 import { IVariant } from '../../../Nexus/entities/IVariant';
 

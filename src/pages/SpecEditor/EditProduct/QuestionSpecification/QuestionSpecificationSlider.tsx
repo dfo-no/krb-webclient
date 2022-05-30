@@ -7,7 +7,7 @@ import { useTranslation } from 'react-i18next';
 
 import HorizontalTextCtrl from '../../../../FormProvider/HorizontalTextCtrl';
 import theme from '../../../../theme';
-import { FormIconButton } from '../../../../Workbench/Components/Form/FormIconButton';
+import { FormIconButton } from '../../../../components/Form/FormIconButton';
 import { IRequirementAnswer } from '../../../../models/IRequirementAnswer';
 import { ISliderQuestion } from '../../../../Nexus/entities/ISliderQuestion';
 

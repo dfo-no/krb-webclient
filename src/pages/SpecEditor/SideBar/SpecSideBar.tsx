@@ -12,7 +12,7 @@ import { useTranslation } from 'react-i18next';
 import DownloadButton from '../Download/DownloadButton';
 import theme from '../../../theme';
 import { ISpecificationProduct } from '../../../models/ISpecificationProduct';
-import { ScrollableContainer } from '../../../Workbench/Components/ScrollableContainer';
+import { ScrollableContainer } from '../../../components/ScrollableContainer/ScrollableContainer';
 import { useAppSelector } from '../../../store/hooks';
 import { useSpecificationState } from '../SpecificationContext';
 

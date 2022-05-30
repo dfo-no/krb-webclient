@@ -13,7 +13,7 @@ import { Controller } from 'react-hook-form';
 import { t } from 'i18next';
 
 import theme from '../../../../theme';
-import { FormIconButton } from '../../../../Workbench/Components/Form/FormIconButton';
+import { FormIconButton } from '../../../../components/Form/FormIconButton';
 import { IOption } from '../../../../Nexus/entities/IOption';
 
 interface IProps {

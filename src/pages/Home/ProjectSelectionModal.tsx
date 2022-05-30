@@ -14,10 +14,10 @@ import {
   ModalBox,
   ModalButton,
   ModalButtonsBox
-} from '../../Workbench/Components/ModalBox';
+} from '../../components/ModalBox/ModalBox';
+import { setSpecification } from '../../store/reducers/spesification-reducer';
 import { useAppDispatch } from '../../store/hooks';
 import { useBankState } from '../../components/BankContext/BankContext';
-import { setSpecification } from '../../store/reducers/spesification-reducer';
 import { useGetBankQuery } from '../../store/api/bankApi';
 
 interface IProps {

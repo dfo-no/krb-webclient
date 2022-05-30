@@ -14,7 +14,7 @@ import ResponsePage from './pages/Response/ResponsePage';
 import SpecModule from './pages/SpecEditor/SpecModule';
 import styles from './App.module.scss';
 import useConfirmTabClose from './hooks/useConfirmTabClose';
-import WorkbenchModule from './Workbench/WorkbenchModule';
+import WorkbenchModule from './pages/Workbench/WorkbenchModule';
 import { BankProvider } from './components/BankContext/BankContext';
 import { msalConfig } from './authentication/authConfig';
 
