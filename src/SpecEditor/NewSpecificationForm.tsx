@@ -15,7 +15,7 @@ import {
   ModalFieldsBox,
   ModalButtonsBox,
   ModalButton
-} from '../Workbench/Components/ModalBox';
+} from '../components/ModalBox/ModalBox';
 import { setSpecification } from '../store/reducers/spesification-reducer';
 import { useAppDispatch } from '../store/hooks';
 

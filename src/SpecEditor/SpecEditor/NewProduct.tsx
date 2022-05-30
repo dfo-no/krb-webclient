@@ -20,8 +20,8 @@ import SelectionSingularCtrl from '../../FormProvider/SelectionSingularCtrl';
 import NeedList from './NeedList';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { addProduct } from '../../store/reducers/spesification-reducer';
-import { ScrollableContainer } from '../../Workbench/Components/ScrollableContainer';
-import { useFormStyles } from '../../Workbench/Components/Form/FormStyles';
+import { ScrollableContainer } from '../../components/ScrollableContainer/ScrollableContainer';
+import { useFormStyles } from '../../components/Form/FormStyles';
 
 const useStyles = makeStyles({
   newProduct: {

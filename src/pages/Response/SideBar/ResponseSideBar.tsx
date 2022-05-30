@@ -3,7 +3,7 @@ import makeStyles from '@mui/styles/makeStyles';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import theme from '../../../theme';
-import { ScrollableContainer } from '../../../Workbench/Components/ScrollableContainer';
+import { ScrollableContainer } from '../../../components/ScrollableContainer/ScrollableContainer';
 import { useResponseState } from '../ResponseContext';
 import { ISpecificationProduct } from '../../../models/ISpecificationProduct';
 import { useAppSelector } from '../../../store/hooks';

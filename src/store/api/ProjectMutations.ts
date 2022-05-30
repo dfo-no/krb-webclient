@@ -6,7 +6,7 @@ import { ICode } from '../../Nexus/entities/ICode';
 import { ICodelist } from '../../Nexus/entities/ICodelist';
 import { IProduct } from '../../Nexus/entities/IProduct';
 import { ITag } from '../../Nexus/entities/ITag';
-import { IRouteParams } from '../../Workbench/Models/IRouteParams';
+import { IRouteProjectParams } from '../../models/IRouteProjectParams';
 import { useGetProjectQuery, usePutProjectMutation } from './bankApi';
 import { INeed } from '../../Nexus/entities/INeed';
 import { IRequirement } from '../../Nexus/entities/IRequirement';
@@ -20,7 +20,7 @@ type BankOrError =
   | { error: FetchBaseQueryError | SerializedError };
 
 function useProjectMutations() {
-  const { projectId } = useParams<IRouteParams>();
+  const { projectId } = useParams<IRouteProjectParams>();
   const { data: project } = useGetProjectQuery(projectId);
   const [putProject] = usePutProjectMutation();
 

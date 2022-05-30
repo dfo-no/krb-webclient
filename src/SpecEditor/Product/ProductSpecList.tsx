@@ -45,7 +45,7 @@ export default function ProductSpecList(): React.ReactElement {
   const { id } = useParams<IRouteParams>();
   const dispatch = useAppDispatch();
   const nexus = Nexus.getInstance();
-  // const projectMatch = useRouteMatch<IRouteParams>('/specification/:bankId');
+  // const projectMatch = useRouteMatch<IRouteProjectParams>('/specification/:bankId');
   // const { id } = useAppSelector((state) => state.selectedBank);
   // const { normalizedList } = useAppSelector((state) => state.bank);
   const { spec } = useAppSelector((state) => state.specification);

@@ -4,7 +4,8 @@ import makeStyles from '@mui/styles/makeStyles';
 import theme from '../../../theme';
 import { useAppSelector } from '../../../store/hooks';
 import { useResponseState } from '../ResponseContext';
-import { ScrollableContainer } from '../../../Workbench/Components/ScrollableContainer';
+import { ScrollableContainer } from '../../../components/ScrollableContainer/ScrollableContainer';
+
 import ProductNeed from './ProductNeed';
 import ProductHeader from './ProductHeader';
 import ProductRequirementAnswer from './ProductRequirementAnswer';

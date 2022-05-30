@@ -9,12 +9,12 @@ import { Link } from 'react-router-dom';
 
 import Footer from '../../Footer/Footer';
 import HomeSearchBar from './HomeSearchBar';
+import { useGetBanksQuery } from '../../store/api/bankApi';
+import { ScrollableContainer } from '../../components/ScrollableContainer/ScrollableContainer';
 import HomeDisplayList from './HomeDisplayList';
 import ProjectSelectionModal from './ProjectSelectionModal';
 import { IBank } from '../../Nexus/entities/IBank';
-import { ScrollableContainer } from '../../Workbench/Components/ScrollableContainer';
 import { useBankState } from '../../components/BankContext/BankContext';
-import { useGetBanksQuery } from '../../store/api/bankApi';
 
 const useStyles = makeStyles({
   homepageWrapper: {

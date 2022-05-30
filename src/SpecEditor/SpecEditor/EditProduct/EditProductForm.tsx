@@ -9,7 +9,7 @@ import {
   ModalFieldsBox,
   ModalButtonsBox,
   ModalButton
-} from '../../../Workbench/Components/ModalBox';
+} from '../../../components/ModalBox/ModalBox';
 import {
   ISpecificationProduct,
   SpecificationProductSchema
