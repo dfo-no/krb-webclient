@@ -8,7 +8,7 @@ import {
   ModalBox,
   ModalButton,
   ModalButtonsBox
-} from '../../Workbench/Components/ModalBox';
+} from '../../components/ModalBox/ModalBox';
 import { Box } from '@mui/material';
 import Typography from '@mui/material/Typography';
 import theme from '../../theme';

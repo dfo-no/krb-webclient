@@ -3,7 +3,7 @@ import { Box, Typography } from '@mui/material';
 import { IVariant } from '../../../Nexus/entities/IVariant';
 import { DFOCheckbox } from '../../../components/DFOCheckbox/DFOCheckbox';
 import EditIcon from '@mui/icons-material/Edit';
-import { FormIconButton } from '../../../Workbench/Components/Form/FormIconButton';
+import { FormIconButton } from '../../../components/Form/FormIconButton';
 import { useFormContext } from 'react-hook-form';
 import { IRequirementAnswer } from '../../../models/IRequirementAnswer';
 

@@ -9,7 +9,7 @@ import {
 } from '@mui/material';
 import makeStyles from '@mui/styles/makeStyles';
 import { Controller } from 'react-hook-form';
-import { FormIconButton } from '../../../Workbench/Components/Form/FormIconButton';
+import { FormIconButton } from '../../../components/Form/FormIconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { t } from 'i18next';
 import theme from '../../../theme';

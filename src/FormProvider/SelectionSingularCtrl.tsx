@@ -6,7 +6,7 @@ import LoaderSpinner from '../common/LoaderSpinner';
 import theme from '../theme';
 import Utils from '../common/Utils';
 import { Levelable } from '../models/Levelable';
-import { ScrollableContainer } from '../Workbench/Components/ScrollableContainer';
+import { ScrollableContainer } from '../components/ScrollableContainer/ScrollableContainer';
 import { Parentable } from '../models/Parentable';
 import { IBaseModelWithTitleAndDesc } from '../models/IBaseModelWithTitleAndDesc';
 

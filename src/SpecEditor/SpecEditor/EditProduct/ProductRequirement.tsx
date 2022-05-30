@@ -21,7 +21,7 @@ import {
   removeRequirement
 } from '../../../store/reducers/spesification-reducer';
 import { DFOCheckbox } from '../../../components/DFOCheckbox/DFOCheckbox';
-import { FormIconButton } from '../../../Workbench/Components/Form/FormIconButton';
+import { FormIconButton } from '../../../components/Form/FormIconButton';
 import { IRequirement } from '../../../Nexus/entities/IRequirement';
 import {
   IRequirementAnswer,
