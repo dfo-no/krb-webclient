@@ -11,8 +11,7 @@ const useStyles = makeStyles({
   workbenchContainer: {
     width: '100%',
     flexGrow: 1,
-    minHeight: 0,
-    backgroundColor: theme.palette.backgroundBlue.main
+    minHeight: 0
   }
 });
 

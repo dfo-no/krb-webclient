@@ -11,6 +11,10 @@ const theme = createTheme({
   typography: {
     htmlFontSize: 10,
     fontFamily: baseFont,
+    h1: {
+      fontSize: '5rem',
+      fontFamily: headerFont
+    },
     xs: {
       fontSize: '1.2rem'
     },
