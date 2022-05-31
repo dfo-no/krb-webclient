@@ -21,6 +21,9 @@ interface IProps {
 }
 
 const useStyles = makeStyles({
+  header: {
+    color: 'var(--primary-color)'
+  },
   item: {
     display: 'grid',
     gridTemplateColumns: '3rem auto 8rem',
@@ -115,7 +118,7 @@ export default function HomeDisplayList({
 
   return (
     <Card sx={{ flexBasis: '50%' }}>
-      <CardHeader title={title} />
+      <CardHeader title={title} className={classes.header} />
       <CardContent>
         <List>{filteredElements()}</List>
       </CardContent>
