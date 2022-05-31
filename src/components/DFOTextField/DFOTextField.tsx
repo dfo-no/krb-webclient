@@ -3,7 +3,7 @@ import { styled } from '@mui/material/styles';
 
 const DFOTextField = styled(Input)(({ theme }) => ({
   width: '100%',
-  border: `0.1rem solid ${theme.palette.primary.main}`,
+  border: `0.2rem solid ${theme.palette.primary.main}`,
   backgroundColor: theme.palette.white.main,
   height: 45,
   paddingLeft: '1rem',
