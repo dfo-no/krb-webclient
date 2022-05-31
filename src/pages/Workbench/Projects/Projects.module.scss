@@ -10,12 +10,12 @@
     display: grid;
     grid-template-columns: 3fr 2fr;
     gap: 4rem;
-    padding: 8rem 4rem;
+    padding: 8rem 4rem 4rem;
 
     > div {
       display: flex;
       flex-direction: column;
-      gap: 1.5rem;
+      gap: 1.6rem;
     }
 
     img {
@@ -42,9 +42,9 @@
     .List {
       display: flex;
       flex-direction: column;
-      gap: 1.5rem;
-      height: 100%;
+      gap: 1.6rem;
       width: 100%;
+      height: 100%;
       padding-top: 0;
       list-style: none;
     }
@@ -54,9 +54,20 @@
 @media only screen and (max-width: 650px) {
   .Projects {
     .TitleContainer {
-      padding: 4rem 2rem;
-      grid-template-columns: auto;
-      grid-template-rows: 1fr auto;
+      display: block;
+      padding: 4rem 2rem 2rem;
+
+      img {
+        display: none;
+      }
+    }
+
+    .SearchContainer {
+      padding: 0 2rem;
+    }
+
+    .ListContainer {
+      padding: 0 1rem 0 2rem;
     }
   }
 }
