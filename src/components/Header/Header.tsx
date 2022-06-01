@@ -141,16 +141,19 @@ export default function Header(): React.ReactElement {
 
     toolbarItems.push({
       icon: <ConstructionOutlinedIcon />,
+      label: t('Tooltip-menu-Create'),
       selected: isLocationCreate,
       url: baseUrl?.url + '/create'
     });
     toolbarItems.push({
       icon: <VisibilityOutlinedIcon />,
+      label: t('Tooltip-menu-Preview'),
       selected: isLocationPreview,
       url: baseUrl?.url + '/preview'
     });
     toolbarItems.push({
       icon: <SettingsOutlinedIcon />,
+      label: t('Tooltip-menu-Admin'),
       selected: isLocationAdmin,
       url: baseUrl?.url + '/admin'
     });
