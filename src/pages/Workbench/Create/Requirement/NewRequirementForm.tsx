@@ -1,30 +1,31 @@
 import { joiResolver } from '@hookform/resolvers/joi';
 import React from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
+import { useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import { Typography } from '@mui/material';
 import { v4 as uuidv4 } from 'uuid';
+
+import Nexus from '../../../../Nexus/Nexus';
+import theme from '../../../../theme';
+import useProjectMutations from '../../../../store/api/ProjectMutations';
+import VerticalTextCtrl from '../../../../FormProvider/VerticalTextCtrl';
+import { addAlert } from '../../../../store/reducers/alert-reducer';
 import { IAlert } from '../../../../models/IAlert';
-import { Parentable } from '../../../../models/Parentable';
 import { INeed } from '../../../../Nexus/entities/INeed';
 import {
   IRequirement,
   PostRequirementSchema
 } from '../../../../Nexus/entities/IRequirement';
-import { useAppDispatch } from '../../../../store/hooks';
-import { addAlert } from '../../../../store/reducers/alert-reducer';
-import Nexus from '../../../../Nexus/Nexus';
-import { useParams } from 'react-router-dom';
 import { IRouteProjectParams } from '../../../../models/IRouteProjectParams';
-import useProjectMutations from '../../../../store/api/ProjectMutations';
 import {
   ModalBox,
   ModalButton,
   ModalButtonsBox,
   ModalFieldsBox
 } from '../../../../components/ModalBox/ModalBox';
-import VerticalTextCtrl from '../../../../FormProvider/VerticalTextCtrl';
-import { Typography } from '@mui/material';
-import theme from '../../../../theme';
+import { Parentable } from '../../../../models/Parentable';
+import { useAppDispatch } from '../../../../store/hooks';
 
 interface IProps {
   need: Parentable<INeed>;
@@ -79,7 +80,7 @@ function NewRequirementForm({ need, handleClose }: IProps): React.ReactElement {
             <VerticalTextCtrl
               name="title"
               label={t('Title')}
-              placeholder="Tittel på behov"
+              placeholder="Tittel på krav"
             />
           </ModalFieldsBox>
           <ModalButtonsBox>

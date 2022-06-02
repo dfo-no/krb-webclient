@@ -1,14 +1,15 @@
 import Box from '@mui/material/Box/Box';
 import Button from '@mui/material/Button';
 import React, { useState } from 'react';
+import { useParams } from 'react-router-dom';
+
 import Dialog from '../../../../components/DFODialog/DFODialog';
 import NewNeedForm from './NewNeedForm';
-import { useSelectState } from '../SelectContext';
-import { Parentable } from '../../../../models/Parentable';
 import { INeed } from '../../../../Nexus/entities/INeed';
-import { useParams } from 'react-router-dom';
 import { IRouteProjectParams } from '../../../../models/IRouteProjectParams';
+import { Parentable } from '../../../../models/Parentable';
 import { useGetProjectQuery } from '../../../../store/api/bankApi';
+import { useSelectState } from '../SelectContext';
 
 interface IProps {
   buttonText: string;
@@ -41,7 +42,11 @@ const NewNeed = ({ buttonText }: IProps) => {
         paddingBottom: 2
       }}
     >
-      <Button variant="primary" onClick={() => setOpen(true)}>
+      <Button
+        disableRipple={true}
+        variant="primary"
+        onClick={() => setOpen(true)}
+      >
         {buttonText}
       </Button>
       <Dialog

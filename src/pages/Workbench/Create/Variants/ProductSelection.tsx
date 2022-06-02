@@ -25,10 +25,10 @@ const useStyles = makeStyles({
     marginLeft: 16
   },
   list: {
-    border: `0.1rem solid ${theme.palette.black.main}`,
+    border: `0.1rem solid var(--primary-light-color)`,
     backgroundColor: theme.palette.gray100.main,
     maxHeight: 400,
-    padding: 32
+    padding: 'var(--tiny-gap) var(--normal-gap) var(--small-gap)'
   },
   listItem: {
     display: 'flex',
@@ -51,7 +51,7 @@ const useStyles = makeStyles({
     marginLeft: 'auto',
     borderLeft: `0.1rem solid ${theme.palette.silver.main}`,
     paddingLeft: 20,
-    flex: '0 0 30vw'
+    flex: '0 0 15vw'
   },
   itemTitle: {
     alignSelf: 'center',
@@ -135,7 +135,10 @@ const ProductSelection = (): React.ReactElement => {
                     onClick={() => onClick(item, selected, onChange)}
                   >
                     <Box className={classes.checkbox}>
-                      <DFOCheckbox checked={productChecked(item, selected)} />
+                      <DFOCheckbox
+                        checked={productChecked(item, selected)}
+                        disableRipple={true}
+                      />
                     </Box>
                     <Typography
                       className={classes.itemTitle}

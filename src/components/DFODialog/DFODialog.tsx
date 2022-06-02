@@ -1,8 +1,10 @@
-import DialogContent from '@mui/material/DialogContent';
 import Dialog from '@mui/material/Dialog/Dialog';
-import theme from '../../theme';
+import DialogContent from '@mui/material/DialogContent';
 import makeStyles from '@mui/styles/makeStyles';
+import React from 'react';
 import { Box } from '@mui/material';
+
+import theme from '../../theme';
 
 interface IProps {
   title?: string;
@@ -19,7 +21,6 @@ const useStyles = makeStyles({
     backgroundColor: theme.palette.gray100.main,
     paddingTop: 35,
     paddingBottom: 35,
-    width: '50vw',
     overflow: 'hidden'
   }
 });

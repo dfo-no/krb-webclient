@@ -1,9 +1,10 @@
 import React from 'react';
 import { Box, Typography } from '@mui/material/';
 import { FormDeleteBox } from './FormDeleteBox';
+import { t } from 'i18next';
+
 import theme from '../../theme';
 import { FormTextButton } from './FormTextButton';
-import { t } from 'i18next';
 
 interface IProps {
   children: React.ReactNode;
@@ -34,14 +35,14 @@ export default function DeleteFrame({
           marginLeft: 1
         }}
       >
-        <Typography variant={'mdBold'}>
+        <Typography variant={'mdBold'} sx={{ color: theme.palette.white.main }}>
           {infoText} {canBeDeleted ? t('Wish to delete') : ''}
         </Typography>
         {canBeDeleted && (
           <FormTextButton
-            hoverColor={theme.palette.errorRed.main}
+            disableRipple={true}
             type="submit"
-            aria-label="delete"
+            aria-label={t('Delete')}
             onClick={onDelete}
             sx={{ marginLeft: 'auto' }}
           >
@@ -49,9 +50,9 @@ export default function DeleteFrame({
           </FormTextButton>
         )}
         <FormTextButton
-          hoverColor={theme.palette.gray500.main}
+          disableRipple={true}
           onClick={handleClose}
-          aria-label="close"
+          aria-label={t('Cancel')}
           sx={!canBeDeleted ? { marginLeft: 'auto' } : {}}
         >
           {t('Cancel')}

@@ -2,10 +2,10 @@ import Box from '@mui/material/Box';
 import makeStyles from '@mui/styles/makeStyles';
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
-import theme from '../../theme';
+
+import AuthenticatedLayout from '../../components/AuthenticatedLayout/AuthenticatedLayout';
 import ProjectGuard from './ProjectGuard';
 import Projects from './Projects/Projects';
-import AuthenticatedLayout from '../../components/AuthenticatedLayout/AuthenticatedLayout';
 
 const useStyles = makeStyles({
   workbenchContainer: {

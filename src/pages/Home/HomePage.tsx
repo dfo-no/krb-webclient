@@ -114,7 +114,7 @@ export default function HomePage(): React.ReactElement {
               orderedByDate={true}
             />
             <HomeDisplayList
-              title={t('Alfabetically sorted')}
+              title={t('Alphabetically sorted')}
               list={latestPublishedProjects}
             />
           </Box>

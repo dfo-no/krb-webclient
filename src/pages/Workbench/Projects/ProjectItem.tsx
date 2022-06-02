@@ -95,7 +95,7 @@ const ProjectItem = ({ project }: IProps) => {
                 <Typography
                   variant="mdBold"
                   sx={{
-                    fontFamily: 'Source Pro Serif, serif',
+                    fontFamily: 'var(--header-font)',
                     fontSize: '2.2rem'
                   }}
                 >

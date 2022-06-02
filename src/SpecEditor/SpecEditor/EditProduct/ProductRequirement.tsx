@@ -44,7 +44,8 @@ const useStyles = makeStyles({
   },
   active: {
     border: `0.2rem solid ${theme.palette.secondary.main}`,
-    borderTop: `1.2rem solid ${theme.palette.secondary.main}`
+    borderTop: `1.2rem solid ${theme.palette.secondary.main}`,
+    borderRadius: '0.5rem'
   },
   selected: {
     border: `0.2rem solid ${theme.palette.primary.main}`

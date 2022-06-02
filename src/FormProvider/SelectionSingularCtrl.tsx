@@ -9,49 +9,53 @@ import Utils from '../common/Utils';
 import { IBaseModelWithTitleAndDesc } from '../models/IBaseModelWithTitleAndDesc';
 import { Levelable } from '../models/Levelable';
 import { Parentable } from '../models/Parentable';
-import { ScrollableContainer } from '../components/ScrollableContainer/ScrollableContainer';
 
 const useStyles = makeStyles({
   checkbox: {
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
+    alignSelf: 'baseline',
     width: '2.2rem',
     height: '2.2rem',
-    marginRight: 32,
+    marginRight: 0,
     marginLeft: 16,
+    paddingTop: 8,
+    '&:hover span': {
+      background: 'transparent'
+    },
     '& .MuiSvgIcon-root': {
-      color: theme.palette.primary.main
+      color: 'var(--primary-light-color)',
+      transition: 'color 220ms ease-out'
     }
-  },
-  list: {
-    border: `0.1rem solid ${theme.palette.black.main}`,
-    backgroundColor: theme.palette.gray100.main,
-    maxHeight: 400,
-    padding: 32
   },
   listItem: {
     display: 'flex',
     backgroundColor: theme.palette.white.main,
     border: `0.1rem solid ${theme.palette.silver.main}`,
     minHeight: 50,
+    marginTop: 0,
     padding: 0,
     paddingTop: 8,
     paddingBottom: 8,
     cursor: 'pointer',
+    transition: 'all 220ms ease-out',
     '&:hover': {
       backgroundColor: theme.palette.lightBlue.main,
       color: theme.palette.white.main,
       '& .MuiSvgIcon-root': {
         color: theme.palette.white.main
       }
+    },
+    '& + li': {
+      marginTop: '-0.1rem'
     }
   },
   itemDescription: {
     marginLeft: 'auto',
     borderLeft: `0.1rem solid ${theme.palette.silver.main}`,
     paddingLeft: 20,
-    flex: '0 0 30vw'
+    flex: '0 0 15vw'
   },
   itemTitle: {
     alignSelf: 'center',
@@ -118,7 +122,7 @@ const SelectionSingularCtrl = <T extends IBaseModelWithTitleAndDesc>({
   return (
     <Controller
       render={({ field: { value: selected = initValue, onChange } }) => (
-        <ScrollableContainer className={classes.list}>
+        <Box>
           <List>
             {levelableItems.map((item) => {
               return (
@@ -126,14 +130,18 @@ const SelectionSingularCtrl = <T extends IBaseModelWithTitleAndDesc>({
                   key={item.id}
                   className={classes.listItem}
                   sx={{
-                    marginTop: item.level === 1 ? '1.6rem' : '-0.1rem',
+                    marginTop:
+                      item.level === 1 ? 'var(--small-gap)' : '-0.1rem',
                     marginLeft: `${(item.level - 1) * 2}%`,
                     width: `${100 - (item.level - 1) * 2}%`
                   }}
                   onClick={() => onClick(item, selected, onChange)}
                 >
                   <Box className={classes.checkbox}>
-                    <Radio checked={itemChecked(item, selected)} />
+                    <Radio
+                      checked={itemChecked(item, selected)}
+                      disableRipple={true}
+                    />
                   </Box>
                   <Typography
                     className={classes.itemTitle}
@@ -151,7 +159,7 @@ const SelectionSingularCtrl = <T extends IBaseModelWithTitleAndDesc>({
               );
             })}
           </List>
-        </ScrollableContainer>
+        </Box>
       )}
       name={name}
     />
