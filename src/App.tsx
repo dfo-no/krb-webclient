@@ -11,7 +11,7 @@ import HomePage from './pages/Home/HomePage';
 import PrefilledResponseModule from './pages/PrefilledResponseEditor/PrefilledResponseModule';
 import ResponseModule from './pages/Response/ResponseModule';
 import ResponsePage from './pages/Response/ResponsePage';
-import SpecModule from './SpecEditor/SpecModule';
+import SpecModule from './pages/SpecEditor/SpecModule';
 import styles from './App.module.scss';
 import useConfirmTabClose from './hooks/useConfirmTabClose';
 import WorkbenchModule from './pages/Workbench/WorkbenchModule';
