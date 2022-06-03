@@ -6,6 +6,7 @@ import { Box, Typography } from '@mui/material';
 import { DFOCheckbox } from '../../../components/DFOCheckbox/DFOCheckbox';
 import VerticalTextCtrl from '../../../FormProvider/VerticalTextCtrl';
 import RadioCtrl from '../../../FormProvider/RadioCtrl';
+import { FlexColumnBox } from '../../../components/FlexBox/FlexColumnBox';
 
 const QuestionSpecificationCheckbox = () => {
   const { t } = useTranslation();
@@ -30,7 +31,7 @@ const QuestionSpecificationCheckbox = () => {
   };
 
   return (
-    <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+    <FlexColumnBox>
       <Typography variant={'smBold'}>{t('Preferred alternative')}</Typography>
       <RadioCtrl
         name={'question.config.preferedAlternative'}
@@ -55,7 +56,7 @@ const QuestionSpecificationCheckbox = () => {
           />
         </Box>
       )}
-    </Box>
+    </FlexColumnBox>
   );
 };
 

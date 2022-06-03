@@ -38,7 +38,7 @@ export const PostNeedSchema = BaseNeedSchema.keys({
   id: CustomJoi.string().equal('').required()
 });
 
-export const PutNeedSchema = BaseNeedSchema.keys({});
+export const PutNeedSchema = BaseNeedSchema;
 
 export const DeleteNeedSchema = BaseNeedSchema.keys({
   id: CustomJoi.string()

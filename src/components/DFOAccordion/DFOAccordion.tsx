@@ -1,30 +1,20 @@
 import makeStyles from '@mui/styles/makeStyles';
-import { AccordionContext } from './AccordionContext';
+import { useAccordionState } from './AccordionContext';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import Accordion from '@mui/material/Accordion';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import AccordionSummary from '@mui/material/AccordionSummary';
-import React, { SyntheticEvent, useContext, useState } from 'react';
+import React, { SyntheticEvent, ReactElement } from 'react';
 import theme from '../../theme';
 import Box from '@mui/material/Box';
 
 interface DFOAccordionElementProps {
   eventKey: string;
-  header: React.ReactElement;
-  body: React.ReactElement;
-}
-
-interface DFOAccordionProviderProps {
-  body: React.ReactElement;
+  header: ReactElement;
+  body: ReactElement;
 }
 
 const useStyles = makeStyles({
-  root: {
-    borderTop: `12px solid ${theme.palette.secondary.main}`
-  },
-  accordionBody: {
-    borderTop: `2px solid ${theme.palette.gray300.main}`
-  },
   expandIcon: {
     '& .MuiSvgIcon-root': {
       color: theme.palette.gray700.main,
@@ -39,23 +29,23 @@ export const DFOAccordionElement = ({
   body
 }: DFOAccordionElementProps): React.ReactElement => {
   const classes = useStyles();
-  const { activeKey, onOpenClose } = useContext(AccordionContext);
+  const { activeKey, setActiveKey } = useAccordionState();
 
   const handleAccordionChange =
     (key: string) =>
     (event: SyntheticEvent<Element, Event>, isExpanded: boolean) => {
       if (isExpanded) {
-        onOpenClose(key);
+        setActiveKey(key);
       } else {
-        onOpenClose('');
+        setActiveKey('');
       }
     };
 
   return (
     <Accordion
-      className={classes.root}
       expanded={eventKey === activeKey}
       onChange={handleAccordionChange(eventKey)}
+      elevation={0}
     >
       <AccordionSummary
         expandIcon={
@@ -68,29 +58,7 @@ export const DFOAccordionElement = ({
       >
         {header}
       </AccordionSummary>
-      <AccordionDetails className={classes.accordionBody}>
-        {body}
-      </AccordionDetails>
+      <AccordionDetails>{body}</AccordionDetails>
     </Accordion>
-  );
-};
-
-export const DFOAccordionProvider = ({
-  body
-}: DFOAccordionProviderProps): React.ReactElement => {
-  const [activeKey, setActiveKey] = useState('');
-
-  const onOpenClose = (e: string | string[] | null | undefined) => {
-    if (typeof e === 'string') {
-      setActiveKey(e);
-    } else {
-      setActiveKey('');
-    }
-  };
-
-  return (
-    <AccordionContext.Provider value={{ activeKey, onOpenClose }}>
-      {body}
-    </AccordionContext.Provider>
   );
 };
