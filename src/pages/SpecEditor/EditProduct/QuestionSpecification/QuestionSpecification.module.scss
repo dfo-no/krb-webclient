@@ -1,0 +1,26 @@
+.QuestionSpecificationGrid {
+  row-gap: 0.8rem;
+
+  .arrow {
+    display: flex;
+    align-self: center;
+    justify-content: center;
+  }
+  .centeredText {
+    align-self: center;
+    text-align: center;
+  }
+  .text {
+    align-self: center;
+  }
+
+  .delete {
+    align-self: center;
+    margin-left: 0.8rem;
+    cursor: pointer;
+  }
+  .unit {
+    align-self: center;
+    margin-left: 0.8rem;
+  }
+}

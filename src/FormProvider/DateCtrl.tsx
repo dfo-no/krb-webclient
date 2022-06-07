@@ -71,9 +71,11 @@ const DateCtrl = ({
       locale={localeMap[i18n.language]}
     >
       <Box sx={{ display: 'flex', gap: 1, flexDirection: 'column' }}>
-        <Typography variant={'smBold'} color={theme.palette.primary.main}>
-          {label}
-        </Typography>
+        {label && (
+          <Typography variant={'smBold'} color={theme.palette.primary.main}>
+            {label}
+          </Typography>
+        )}
         <Controller
           name={name}
           render={({ field }) => (

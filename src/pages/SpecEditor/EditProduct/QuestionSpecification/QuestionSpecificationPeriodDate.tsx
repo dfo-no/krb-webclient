@@ -1,111 +1,134 @@
-import { Box, Button, styled, Typography } from '@mui/material';
+import { Button, Grid, Typography } from '@mui/material';
+import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import DeleteIcon from '@mui/icons-material/Delete';
-import { useEffect, useState } from 'react';
+import React, { ReactElement, useEffect, useState } from 'react';
 import { useFieldArray, useFormContext, useWatch } from 'react-hook-form';
 import { t } from 'i18next';
 
+import CheckboxCtrl from '../../../../FormProvider/CheckboxCtrl';
+import css from './QuestionSpecification.module.scss';
 import DateCtrl from '../../../../FormProvider/DateCtrl';
+import HorizontalTextCtrl from '../../../../FormProvider/HorizontalTextCtrl';
 import theme from '../../../../theme';
-import VerticalTextCtrl from '../../../../FormProvider/VerticalTextCtrl';
 import { FormIconButton } from '../../../../components/Form/FormIconButton';
 import { IRequirementAnswer } from '../../../../models/IRequirementAnswer';
 
-const FieldBox = styled(Box)(() => ({
-  width: 200
-}));
-
-const QuestionSpecificationPeriodDate = () => {
+const QuestionSpecificationPeriodDate = (): ReactElement => {
   const [isPeriod, setIsPeriod] = useState(false);
   const { control } = useFormContext<IRequirementAnswer>();
-  const useIsPeriod = useWatch({
-    name: 'question.config.isPeriod',
-    control
-  });
 
   const { fields, append, remove } = useFieldArray({
     control,
     name: 'question.config.dateScores'
   });
 
-  const renderDeleteAdornment = (index: number) => {
-    return (
-      <FormIconButton
-        onClick={() => remove(index)}
-        hoverColor={theme.palette.errorRed.main}
-        sx={{
-          display: 'flex',
-          cursor: 'pointer',
-          color: theme.palette.primary.main
-        }}
-      >
-        <DeleteIcon />
-      </FormIconButton>
-    );
-  };
+  const useFromBoundary = useWatch({
+    name: 'question.config.fromBoundary',
+    control
+  });
+
+  const useIsPeriod = useWatch({
+    name: 'question.config.isPeriod',
+    control
+  });
 
   useEffect(() => {
-    if (!useIsPeriod) {
-      setIsPeriod(false);
-      return;
-    }
-
-    setIsPeriod(true);
+    setIsPeriod(useIsPeriod);
   }, [useIsPeriod]);
 
   return (
-    <Box
-      sx={{
-        display: 'flex',
-        margin: '0 auto',
-        justifyContent: 'center',
-        flexDirection: 'column',
-        gap: 3
-      }}
-    >
-      <Box sx={{ display: 'flex', margin: '0 auto' }}>
-        <Typography variant="smBold">Fra/til dato</Typography>
-      </Box>
-      <Box sx={{ display: 'flex', gap: 2, width: '90%', margin: '0 auto' }}>
-        <DateCtrl label="Fra" name={'name'} />
-        <DateCtrl label="Til" name={'name'} />
-      </Box>
-      <Box sx={{ display: 'flex', margin: '0 auto' }}>
-        <Typography variant="smBold">Periode</Typography>
-      </Box>
-      <Box sx={{ display: 'flex', gap: 2, width: '90%', margin: '0 auto' }}>
-        <VerticalTextCtrl
-          label="Minimum"
-          placeholder="0"
-          name="Hei2"
-          type={'number'}
+    <Grid container columns={20} className={css.QuestionSpecificationGrid}>
+      <Grid item xs={20}>
+        <Typography variant={'smBold'}>Fra/til dato</Typography>
+      </Grid>
+      <Grid item xs={8}>
+        <DateCtrl name={'question.config.fromBoundary'} />
+      </Grid>
+      <Grid item xs={1} className={css.centeredText}>
+        /
+      </Grid>
+      <Grid item xs={8}>
+        <DateCtrl name={'question.config.toBoundary'} />
+      </Grid>
+      <Grid item xs={20}>
+        <CheckboxCtrl
+          name={'question.config.isPeriod'}
+          label={t<string>('Include to date')}
         />
-        <VerticalTextCtrl
-          label="Maximum"
-          placeholder="1"
-          name="Hei2"
-          type={'number'}
-        />
-      </Box>
-      <Box sx={{ display: 'flex', margin: '0 auto' }}>
-        <Typography variant="smBold">Date scores</Typography>
-      </Box>
-      {fields.map((scoreValue, id) => {
+      </Grid>
+      {isPeriod && (
+        <Grid item xs={20}>
+          <Typography variant="smBold">{t('Period')}</Typography>
+        </Grid>
+      )}
+      {isPeriod && (
+        <Grid item xs={8}>
+          <HorizontalTextCtrl
+            placeholder={t('Minimum')}
+            name={'question.config.periodMin'}
+            type={'number'}
+          />
+        </Grid>
+      )}
+      {isPeriod && (
+        <Grid item xs={1} className={css.arrow}>
+          <ArrowForwardIcon />
+        </Grid>
+      )}
+      {isPeriod && (
+        <Grid item xs={8}>
+          <HorizontalTextCtrl
+            placeholder={t('Maximum')}
+            name={'question.config.periodMax'}
+            type={'number'}
+          />
+        </Grid>
+      )}
+      <Grid item xs={20}>
+        <Typography variant={'smBold'}>{t('Evaluation')}</Typography>
+      </Grid>
+      {fields.map((scoreValue, idx) => {
         return (
-          <Box sx={{ display: 'flex', gap: 2, width: '90%', margin: '0 auto' }}>
-            <DateCtrl label={''} name={'name'} />
-            <DateCtrl label={''} name={'name'} />
-          </Box>
+          <Grid item container key={scoreValue.id} xs={20} columns={20}>
+            <Grid item xs={8}>
+              <DateCtrl
+                name={
+                  `question.config.dateScores.${idx}.date` as 'question.config.dateScores.0.date'
+                }
+              />
+            </Grid>
+            <Grid item xs={1} className={css.arrow}>
+              <ArrowForwardIcon />
+            </Grid>
+            <Grid item xs={8}>
+              <HorizontalTextCtrl
+                name={
+                  `question.config.dateScores.${idx}.score` as 'question.config.dateScores.0.score'
+                }
+                placeholder={t('Score')}
+                type={'number'}
+              />
+            </Grid>
+            <Grid item xs={2} className={css.delete}>
+              <FormIconButton
+                hoverColor={theme.palette.errorRed.main}
+                onClick={() => remove(idx)}
+              >
+                <DeleteIcon />
+              </FormIconButton>
+            </Grid>
+          </Grid>
         );
       })}
-
-      <Button
-        variant="primary"
-        sx={{ width: 200, display: 'flex', margin: '0 auto' }}
-        onClick={() => append({})}
-      >
-        {t('Add new value score')}
-      </Button>
-    </Box>
+      <Grid item xs={20}>
+        <Button
+          variant="primary"
+          onClick={() => append({ date: useFromBoundary, score: 0 })}
+        >
+          {t('Add new date score')}
+        </Button>
+      </Grid>
+    </Grid>
   );
 };
 
