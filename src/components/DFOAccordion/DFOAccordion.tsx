@@ -33,12 +33,8 @@ export const DFOAccordionElement = ({
 
   const handleAccordionChange =
     (key: string) =>
-    (event: SyntheticEvent<Element, Event>, isExpanded: boolean) => {
-      if (isExpanded) {
-        setActiveKey(key);
-      } else {
-        setActiveKey('');
-      }
+    (event: SyntheticEvent<Element, Event>, isExpanded: boolean): void => {
+      setActiveKey(isExpanded ? key : '');
     };
 
   return (

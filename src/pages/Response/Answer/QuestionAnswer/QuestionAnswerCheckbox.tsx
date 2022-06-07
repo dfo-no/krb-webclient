@@ -23,7 +23,10 @@ interface IProps {
   existingAnswer?: IRequirementAnswer;
 }
 
-const QuestionAnswerCheckbox = ({ item, parent }: IProps) => {
+const QuestionAnswerCheckbox = ({
+  item,
+  parent
+}: IProps): React.ReactElement => {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
   const { response } = useAppSelector((state) => state.response);
@@ -72,7 +75,7 @@ const QuestionAnswerCheckbox = ({ item, parent }: IProps) => {
         autoComplete="off"
         noValidate
       >
-        <CheckboxCtrl name={'answer.value'} label={`${t('Yes')}/${t('No')}`} />
+        <CheckboxCtrl name={'answer.value'} label={t('Yes/No')} />
         <Box sx={{ display: 'flex', flexDirection: 'row', marginTop: 2 }}>
           <Button
             variant="cancel"

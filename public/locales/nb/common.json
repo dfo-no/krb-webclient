@@ -148,6 +148,7 @@
   "Workbench": "Arbeidsbenk",
   "You are now building your spec": "Du er nå i gang med å bygge din kravspesifikasjon.",
   "Yes": "Ja",
+  "Yes/No": "Ja / Nei",
   "date": {
     "P": "{{date, P}}",
     "PP": "{{date, PP}}",

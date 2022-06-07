@@ -40,7 +40,6 @@ export default function ResponsePage(): React.ReactElement {
       dispatch(selectBank(specification.bank.id));
       dispatch(setSpecification(specification));
       specification.products.forEach((product: ISpecificationProduct) => {
-        console.log(product);
         dispatch(
           addProduct({
             id: product.id,
@@ -71,7 +70,6 @@ export default function ResponsePage(): React.ReactElement {
       responseType: 'json'
     })
       .then((response) => {
-        console.log('response');
         dispatch(selectBank(response.data.spesification.bank.id));
         dispatch(setResponse(response.data));
         history.push(`/response/${response.data.spesification.bank.id}`);
