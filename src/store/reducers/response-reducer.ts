@@ -1,11 +1,12 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+
 import Utils from '../../common/Utils';
+import { IBank } from '../../Nexus/entities/IBank';
 import { IRequirementAnswer } from '../../models/IRequirementAnswer';
 import { IResponse } from '../../models/IResponse';
 import { IResponseProduct } from '../../models/IResponseProduct';
-import ModelType from '../../models/ModelType';
-import { IBank } from '../../Nexus/entities/IBank';
 import { ISpecification } from '../../Nexus/entities/ISpecification';
+import { ModelType } from '../../enums';
 
 interface IResponseState {
   response: IResponse;

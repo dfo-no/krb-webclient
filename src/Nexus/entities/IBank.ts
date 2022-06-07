@@ -1,13 +1,13 @@
 import CustomJoi from '../../common/CustomJoi';
-import { IInheritedBank } from '../../models/IInheritedBank';
-import ModelType from '../../models/ModelType';
-import { Parentable } from '../../models/Parentable';
-import { IBaseModel } from './IBaseModel';
-import { CodelistSchema, ICodelist } from './ICodelist';
 import { BaseNeedSchema, INeed } from './INeed';
 import { BaseProductSchema, IProduct } from './IProduct';
 import { BasePublicationSchema, IPublication } from './IPublication';
 import { BaseTagSchema, ITag } from './ITag';
+import { CodelistSchema, ICodelist } from './ICodelist';
+import { IBaseModel } from './IBaseModel';
+import { IInheritedBank } from '../../models/IInheritedBank';
+import { ModelType } from '../../enums';
+import { Parentable } from '../../models/Parentable';
 
 export const BaseBankSchema = CustomJoi.object().keys({
   id: CustomJoi.string()

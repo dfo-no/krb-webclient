@@ -179,13 +179,6 @@ theme.components = {
       }
     ]
   },
-  MuiCheckbox: {
-    styleOverrides: {
-      root: {
-        paddingLeft: 0
-      }
-    }
-  },
   MuiListItemButton: {
     styleOverrides: {
       root: {
@@ -207,6 +200,13 @@ theme.components = {
             }
           }
         }
+      }
+    }
+  },
+  MuiToolbar: {
+    styleOverrides: {
+      root: {
+        paddingLeft: 0
       }
     }
   },

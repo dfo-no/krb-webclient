@@ -1,16 +1,24 @@
-import ConstructionOutlinedIcon from '@mui/icons-material/ConstructionOutlined';
-import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
-import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
+import ConstructionOutlinedIcon from '@mui/icons-material/ConstructionOutlined';
+import makeStyles from '@mui/styles/makeStyles';
+import React, { useEffect, useState } from 'react';
+import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
-import makeStyles from '@mui/styles/makeStyles';
+import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
 import { skipToken } from '@reduxjs/toolkit/query/react';
-import React from 'react';
-import { Link, useLocation, useRouteMatch } from 'react-router-dom';
-import { useGetProjectQuery } from '../../store/api/bankApi';
+import { useLocation, useRouteMatch } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
+
+import Breadcrumbs from '../Breadcrumbs/Breadcrumbs';
+import DFOToolbar from '../DFOToolbar/DFOToolbar';
 import theme from '../../theme';
+import { IBank } from '../../Nexus/entities/IBank';
+import { IBreadcrumb } from '../../models/IBreadcrumb';
+import { IToolbarItem } from '../../models/IToolbarItem';
+import { useGetProjectQuery } from '../../store/api/bankApi';
+import { useAppSelector } from '../../store/hooks';
 
 const useStyles = makeStyles({
   header: {
@@ -24,13 +32,6 @@ const useStyles = makeStyles({
     display: 'flex',
     flexDirection: 'column',
     gap: 3
-  },
-  projectPath: {
-    marginLeft: 2.5,
-    color: theme.palette.black.main,
-    [theme.breakpoints.down('mddd')]: {
-      marginLeft: 1
-    }
   },
   viewingProjectTitle: {
     display: 'flex',
@@ -67,41 +68,6 @@ const useStyles = makeStyles({
       paddingBottom: 8
     }
   },
-  projectIcons: {
-    display: 'flex',
-    gap: 50,
-    alignItems: 'center',
-    color: theme.palette.primary.main,
-    height: '100%',
-
-    [theme.breakpoints.down('mddd')]: {
-      paddingRight: 13,
-      gap: 20
-    }
-  },
-  icon: {
-    '& .MuiSvgIcon-root': {
-      cursor: 'pointer',
-      color: theme.palette.black.main,
-      width: '24px',
-      height: '40px',
-      paddingBottom: '8px',
-      paddingTop: '8px',
-      '&:hover': {
-        color: theme.palette.lightBlue.main
-      }
-    }
-  },
-  selectedIcon: {
-    '& .MuiSvgIcon-root': {
-      color: theme.palette.primary.main,
-      width: '24px',
-      height: '40px',
-      paddingTop: '8px',
-      paddingBottom: '4px',
-      borderBottom: '4px solid'
-    }
-  },
   projectTitleVersion: {
     display: 'flex',
     flexDirection: 'row',
@@ -115,52 +81,90 @@ const useStyles = makeStyles({
 
 export default function Header(): React.ReactElement {
   const classes = useStyles();
+  const { t } = useTranslation();
+  const { spec } = useAppSelector((state) => state.specification);
 
   const baseUrl = useRouteMatch<{ projectId: string }>('/workbench/:projectId');
   const location = useLocation();
+  const [project, setProject] = useState<IBank>();
 
-  const { data: project } = useGetProjectQuery(
+  const breadcrumbs: IBreadcrumb[] = [
+    {
+      label: t('app_title'),
+      url: '/'
+    }
+  ];
+  const toolbarItems: IToolbarItem[] = [];
+
+  const { data: fetchedProject } = useGetProjectQuery(
     baseUrl?.params?.projectId ?? skipToken
   );
-
-  const projectPath = 'Anskaffelser.no / Kravbank';
-
-  if (!project) {
-    return (
-      <AppBar
-        elevation={0}
-        position="sticky"
-        sx={{
-          backgroundColor: theme.palette.white.main,
-          borderBottom: `2px solid ${theme.palette.gray300.main}`
-        }}
-      >
-        <Toolbar>
-          <Box className={classes.header}>
-            <Box className={classes.headerContent}>
-              <Box className={classes.projectPath}>
-                <Typography variant="sm">{projectPath}</Typography>
-              </Box>
-              <Box className={classes.notViewingProjectTitle}>
-                <Typography variant="xlBold">Kravbank</Typography>
-              </Box>
-            </Box>
-          </Box>
-        </Toolbar>
-      </AppBar>
-    );
-  }
-
-  const projectTitle = project.title;
 
   const tabName = location.pathname
     .replace(baseUrl ? baseUrl.url : '', '')
     .split('/')
-    .filter((elem) => elem !== '')
+    .filter((elem: string) => elem !== '')
     .shift();
+
+  const isWorkbench = location.pathname.startsWith('/workbench');
+  const isSpecification = location.pathname.startsWith('/specification');
   const isLocationAdmin = tabName === 'admin';
   const isLocationCreate = tabName === 'create';
   const isLocationPreview = tabName === 'preview';
+
+  useEffect(() => {
+    setProject(fetchedProject);
+  }, [fetchedProject]);
+
+  useEffect(() => {
+    setProject(baseUrl?.params.projectId ? fetchedProject : undefined);
+  }, [baseUrl, fetchedProject]);
+
+  if (isSpecification) {
+    breadcrumbs.push({
+      label: t('Requirement specification'),
+      url: '/specification'
+    });
+  }
+  if (isWorkbench) {
+    breadcrumbs.push({
+      label: t('Workbench'),
+      url: '/workbench'
+    });
+  }
+
+  if (project) {
+    breadcrumbs.push({
+      label: t('Project'),
+      url: project.id
+    });
+
+    toolbarItems.push({
+      icon: <ConstructionOutlinedIcon />,
+      selected: isLocationCreate,
+      url: baseUrl?.url + '/create'
+    });
+    toolbarItems.push({
+      icon: <VisibilityOutlinedIcon />,
+      selected: isLocationPreview,
+      url: baseUrl?.url + '/preview'
+    });
+    toolbarItems.push({
+      icon: <SettingsOutlinedIcon />,
+      selected: isLocationAdmin,
+      url: baseUrl?.url + '/admin'
+    });
+  }
+
+  const getTitle = (): string => {
+    if (project) {
+      return project.title;
+    }
+    if (isSpecification) {
+      return spec.title ?? t('Requirement specification');
+    }
+    return t('app_title');
+  };
 
   return (
     <AppBar
@@ -175,51 +179,12 @@ export default function Header(): React.ReactElement {
         <Box className={classes.header}>
           <Box>
             <Box className={classes.headerContent}>
-              <Box className={classes.projectPath}>
-                <Typography variant="sm">
-                  {projectPath + ' / '}
-                  <Typography
-                    color={theme.palette.primary.main}
-                    variant="smBold"
-                    sx={{
-                      textDecoration: 'underline',
-                      cursor: 'pointer'
-                    }}
-                  >
-                    {projectTitle}
-                  </Typography>
-                </Typography>
-              </Box>
+              <Breadcrumbs breadcrumbs={breadcrumbs} />
               <Box className={classes.viewingProjectTitle}>
                 <Box className={classes.projectData}>
-                  <Typography variant="xlBold">{project.title}</Typography>
+                  <Typography variant="xlBold">{getTitle()}</Typography>
                 </Box>
-                <Box className={classes.projectIcons}>
-                  <Link
-                    to={`${baseUrl?.url}/create`}
-                    className={
-                      isLocationCreate ? classes.selectedIcon : classes.icon
-                    }
-                  >
-                    <ConstructionOutlinedIcon />
-                  </Link>
-                  <Link
-                    to={`${baseUrl?.url}/preview`}
-                    className={
-                      isLocationPreview ? classes.selectedIcon : classes.icon
-                    }
-                  >
-                    <VisibilityOutlinedIcon />
-                  </Link>
-                  <Link
-                    to={`${baseUrl?.url}/admin`}
-                    className={
-                      isLocationAdmin ? classes.selectedIcon : classes.icon
-                    }
-                  >
-                    <SettingsOutlinedIcon />
-                  </Link>
-                </Box>
+                {project && <DFOToolbar items={toolbarItems} />}
               </Box>
             </Box>
           </Box>

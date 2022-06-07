@@ -1,5 +1,4 @@
 import CustomJoi from '../../common/CustomJoi';
-import QuestionEnum from '../../models/QuestionEnum';
 import {
   ConfigBaseSchema,
   IAnswerBase,
@@ -7,9 +6,11 @@ import {
   IQuestionBase,
   QuestionBaseSchema
 } from './IQuestionBase';
+import { QuestionVariant } from '../../enums';
+
 export interface IPeriodDateQuestion
   extends IQuestionBase<IPeriodDateAnswer, IPeriodDateConfig> {
-  type: QuestionEnum.Q_PERIOD_DATE;
+  type: QuestionVariant.Q_PERIOD_DATE;
 }
 
 export interface IPeriodDateAnswer extends IAnswerBase {
@@ -32,7 +33,7 @@ export interface DateScorePair {
 }
 
 export const PeriodDateWorkbenchSchema = QuestionBaseSchema.keys({
-  type: CustomJoi.string().equal(QuestionEnum.Q_PERIOD_DATE).required(),
+  type: CustomJoi.string().equal(QuestionVariant.Q_PERIOD_DATE).required(),
   config: ConfigBaseSchema.keys({
     isPeriod: CustomJoi.boolean().required(),
     fromBoundary: CustomJoi.string().allow(null).required(),
@@ -57,7 +58,7 @@ export const PeriodDateWorkbenchSchema = QuestionBaseSchema.keys({
 });
 
 export const PeriodDateSpecSchema = QuestionBaseSchema.keys({
-  type: CustomJoi.string().equal(QuestionEnum.Q_PERIOD_DATE).required(),
+  type: CustomJoi.string().equal(QuestionVariant.Q_PERIOD_DATE).required(),
   config: ConfigBaseSchema.keys({
     isPeriod: CustomJoi.boolean().required(),
     fromBoundary: CustomJoi.string().allow(null).required(),

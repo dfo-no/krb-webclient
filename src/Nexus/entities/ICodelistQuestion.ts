@@ -1,5 +1,4 @@
 import CustomJoi from '../../common/CustomJoi';
-import QuestionEnum from '../../models/QuestionEnum';
 import {
   ConfigBaseSchema,
   IAnswerBase,
@@ -7,9 +6,11 @@ import {
   IQuestionBase,
   QuestionBaseSchema
 } from './IQuestionBase';
+import { QuestionVariant } from '../../enums';
+
 export interface ICodelistQuestion
   extends IQuestionBase<ICodelistAnswer, ICodelistConfig> {
-  type: QuestionEnum.Q_CODELIST;
+  type: QuestionVariant.Q_CODELIST;
 }
 
 export interface ICodelistConfig extends IConfigBase {
@@ -25,7 +26,7 @@ export interface ICodelistAnswer extends IAnswerBase {
 }
 
 export const CodelistQuestionSchema = QuestionBaseSchema.keys({
-  type: CustomJoi.string().equal(QuestionEnum.Q_CODELIST).required(),
+  type: CustomJoi.string().equal(QuestionVariant.Q_CODELIST).required(),
   config: ConfigBaseSchema.keys({
     codelist: CustomJoi.string().length(36).required(),
     mandatoryCodes: CustomJoi.array()

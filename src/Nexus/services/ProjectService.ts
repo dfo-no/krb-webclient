@@ -1,7 +1,7 @@
-import ModelType from '../../models/ModelType';
-import { IBank } from '../entities/IBank';
 import StoreService from './StoreService';
 import UuidService from './UuidService';
+import { IBank } from '../entities/IBank';
+import { ModelType } from '../../enums';
 
 export default class ProjectService {
   UuidService = new UuidService();
@@ -21,7 +21,7 @@ export default class ProjectService {
   }
 
   generateDefaultProjectValues = (): IBank => {
-    const defaultValues: IBank = {
+    return {
       id: '',
       title: '',
       description: '',
@@ -39,7 +39,6 @@ export default class ProjectService {
       projectId: null,
       deletedDate: null
     };
-    return defaultValues;
   };
 
   editTitle = (title: string): void => {

@@ -1,20 +1,21 @@
-import { joiResolver } from '@hookform/resolvers/joi';
 import Button from '@mui/material/Button';
-import React from 'react';
 import Card from 'react-bootstrap/Card';
 import Form from 'react-bootstrap/Form';
+import React from 'react';
+import { joiResolver } from '@hookform/resolvers/joi';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
+
 import ErrorSummary from '../../Form/ErrorSummary';
+import { addRequirementAnswer } from '../../store/reducers/response-reducer';
+import { addProductAnswer } from '../../store/reducers/spesification-reducer';
 import { IRequirementAnswer } from '../../models/IRequirementAnswer';
-import ModelType from '../../models/ModelType';
 import {
   ITextQuestion,
   TextQuestionAnswerSchema
 } from '../../Nexus/entities/ITextQuestion';
+import { ModelType } from '../../enums';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
-import { addRequirementAnswer } from '../../store/reducers/response-reducer';
-import { addProductAnswer } from '../../store/reducers/spesification-reducer';
 
 interface IProps {
   parentAnswer: IRequirementAnswer;
@@ -104,7 +105,7 @@ export default function ITextAnswerForm({
           <input type="text" {...register('answer.point')} value={0} />
 
           <Button variant="primary" type="submit">
-            {t('save')}
+            {t('Save')}
           </Button>
           <ErrorSummary errors={errors} />
         </form>

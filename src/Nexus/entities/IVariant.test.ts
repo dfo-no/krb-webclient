@@ -1,7 +1,7 @@
-import QuestionEnum from '../../models/QuestionEnum';
+import VariantType from './VariantType';
 import { ITextQuestion } from './ITextQuestion';
 import { IVariant, VariantSchema } from './IVariant';
-import VariantType from './VariantType';
+import { QuestionVariant } from '../../enums';
 
 describe('IVariant', () => {
   test('Valid WB form should validate', () => {
@@ -24,7 +24,7 @@ describe('IVariant', () => {
 
   test('Requirement variant can have 2 questions', () => {
     const question1: ITextQuestion = {
-      type: QuestionEnum.Q_TEXT,
+      type: QuestionVariant.Q_TEXT,
       id: 'ac0b5d89-0b6d-4882-b7c9-ff9f2bd2904e',
       answer: {
         text: 'foo',
@@ -39,7 +39,7 @@ describe('IVariant', () => {
     };
 
     const question2: ITextQuestion = {
-      type: QuestionEnum.Q_TEXT,
+      type: QuestionVariant.Q_TEXT,
       id: 'bc0b5d89-0b6d-4882-b7c9-ff9f2bd2904e',
       answer: {
         text: 'foo',
@@ -73,7 +73,7 @@ describe('IVariant', () => {
 
   test('Info variant can only have 1 question', () => {
     const question1: ITextQuestion = {
-      type: QuestionEnum.Q_TEXT,
+      type: QuestionVariant.Q_TEXT,
       id: 'ac0b5d89-0b6d-4882-b7c9-ff9f2bd2904e',
       answer: {
         text: 'foo',
@@ -88,7 +88,7 @@ describe('IVariant', () => {
     };
 
     const question2: ITextQuestion = {
-      type: QuestionEnum.Q_TEXT,
+      type: QuestionVariant.Q_TEXT,
       id: 'bc0b5d89-0b6d-4882-b7c9-ff9f2bd2904e',
       answer: {
         text: 'foo',
@@ -125,7 +125,7 @@ describe('IVariant', () => {
 
   test('Variant schema should fail on wrongly configured questions', () => {
     const question1: ITextQuestion = {
-      type: QuestionEnum.Q_TEXT,
+      type: QuestionVariant.Q_TEXT,
       id: 'ac0b5d89-0b6d-4882-b7c9-ff9f2bd2904e',
       answer: {
         text: 'foo',
@@ -140,7 +140,7 @@ describe('IVariant', () => {
     };
 
     const question2: ITextQuestion = {
-      type: QuestionEnum.Q_TEXT,
+      type: QuestionVariant.Q_TEXT,
       id: 'bc0b5d89-0b6d-4882-b7c9-ff9f2bd2904e',
       answer: {
         text: 'foo',

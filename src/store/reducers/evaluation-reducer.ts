@@ -1,8 +1,8 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { IResponse } from '../../models/IResponse';
-import ModelType from '../../models/ModelType';
 import { IEvaluatedResponse } from '../../Nexus/entities/IEvaluatedResponse';
+import { IResponse } from '../../models/IResponse';
 import { ISpecification } from '../../Nexus/entities/ISpecification';
+import { ModelType } from '../../enums';
 
 interface ISelectedBankState {
   specification: ISpecification;

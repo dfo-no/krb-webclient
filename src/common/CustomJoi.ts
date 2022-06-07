@@ -39,31 +39,6 @@ const assertEmptyRequirements = (joi: Joi.Root) => ({
   }
 });
 
-/* const assertNoSubNeeds = (joi: Joi.Root) => ({
-  type: 'assertNoSubNeeds',
-  base: joi.array(),
-  messages: {
-    'context:needList': 'Missing context "needList". Validation aborted',
-    'array:assertNoSubNeeds':
-      'Kan ikke slette et behov som har et under-Behov. Slett underbehovet først'
-  },
-  validate(value: any, helpers: Joi.CustomHelpers<any>) {
-    // console.log(helpers.prefs.context);
-    // console.log(value);
-    const needList = helpers.prefs.context?.needList;
-    // console.log(value);
-    if (!needList) {
-      // throw Error('context does not provide "needList"');
-      return { value, errors: helpers.error('context:needList') };
-    }
-    if (needList.length > 0) {
-      if (Utils.checkIfParent(needList, value.id)) {
-        return { value, errors: helpers.error('array:assertNoSubNeeds') };
-      }
-    }
-  }
-}); */
-
 const CustomJoi = i18nJoi.extend(
   millionValidator,
   assertEmptyRequirements

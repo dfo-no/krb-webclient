@@ -1,8 +1,8 @@
-import ModelType from '../../models/ModelType';
-import { IRequirement } from '../entities/IRequirement';
-import { IVariant } from '../entities/IVariant';
 import StoreService from './StoreService';
 import UuidService from './UuidService';
+import { IRequirement } from '../entities/IRequirement';
+import { IVariant } from '../entities/IVariant';
+import { ModelType } from '../../enums';
 
 export default class RequirementService {
   UuidService = new UuidService();
@@ -17,7 +17,7 @@ export default class RequirementService {
     projectId: string,
     needId: string
   ): IRequirement => {
-    const defaultValues: IRequirement = {
+    return {
       id: '',
       title: '',
       description: '',
@@ -28,7 +28,6 @@ export default class RequirementService {
       sourceOriginal: projectId,
       sourceRel: null
     };
-    return defaultValues;
   };
 
   createRequirementWithId = (item: IRequirement): IRequirement => {
