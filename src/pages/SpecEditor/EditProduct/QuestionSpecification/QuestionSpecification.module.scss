@@ -1,0 +1,20 @@
+.QuestionCard {
+  padding: 0.8rem;
+
+  .cardHeader {
+    display: flex;
+    flex-direction: row;
+    margin-left: 1.6rem;
+    margin-right: 1.6rem;
+  }
+
+  .cardTitle {
+    display: flex;
+    padding-left: 1.6rem;
+    align-self: center;
+  }
+
+  .cardContent {
+    margin: 1.6rem;
+  }
+}

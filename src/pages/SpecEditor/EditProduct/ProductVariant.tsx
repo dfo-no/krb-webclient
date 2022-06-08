@@ -2,11 +2,14 @@ import EditIcon from '@mui/icons-material/Edit';
 import React from 'react';
 import { Box, Typography } from '@mui/material';
 import { useFormContext } from 'react-hook-form';
+import { t } from 'i18next';
 
 import { DFOCheckbox } from '../../../components/DFOCheckbox/DFOCheckbox';
+import { DFOChip } from '../../../components/DFOChip/DFOChip';
 import { FormIconButton } from '../../../components/Form/FormIconButton';
 import { IRequirementAnswer } from '../../../models/IRequirementAnswer';
 import { IVariant } from '../../../Nexus/entities/IVariant';
+import VariantType from '../../../Nexus/entities/VariantType';
 
 interface IProps {
   variant: IVariant;
@@ -27,9 +30,12 @@ export default function ProductVariant({
       <Typography variant={'lg'} sx={{ alignSelf: 'center', marginLeft: 2 }}>
         {variant.description}
       </Typography>
-      <FormIconButton sx={{ marginLeft: 'auto' }}>
-        <EditIcon />
-      </FormIconButton>
+      <Box sx={{ display: 'flex', marginLeft: 'auto' }}>
+        {variant.type === VariantType.info && <DFOChip label={t('Info')} />}
+        <FormIconButton>
+          <EditIcon />
+        </FormIconButton>
+      </Box>
     </Box>
   );
 }

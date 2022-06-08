@@ -1,9 +1,10 @@
 import makeStyles from '@mui/styles/makeStyles';
-import React, { useEffect, useState } from 'react';
+import React, { ReactElement, useEffect, useState } from 'react';
 import { Box, Card, Divider, Typography } from '@mui/material';
 import { useFormContext, useWatch } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
+import css from './QuestionSpecification.module.scss';
 import QuestionSpecification from './QuestionSpecification';
 import theme from '../../../../theme';
 import { DFORadioButton } from '../../../../components/DFORadioButton/DFORadioButton';
@@ -16,6 +17,7 @@ import { ISliderQuestion } from '../../../../Nexus/entities/ISliderQuestion';
 import { ITextQuestion } from '../../../../Nexus/entities/ITextQuestion';
 import { ITimeQuestion } from '../../../../Nexus/entities/ITimeQuestion';
 import { IVariant } from '../../../../Nexus/entities/IVariant';
+import VariantType from '../../../../Nexus/entities/VariantType';
 
 const useStyles = makeStyles({
   list: {
@@ -67,39 +69,55 @@ const ProductQuestionsList = ({ variant }: IProps) => {
     setValue('questionId', item.id);
   };
 
+  const getInfoQuestion = (): ReactElement => {
+    if (variant.questions.length === 0) {
+      return <></>;
+    }
+    const item = variant.questions[0];
+    return (
+      <Card className={css.QuestionCard}>
+        <Box className={css.cardHeader}>
+          <Typography variant={'md'} className={css.cardTitle}>
+            {t(item.type)}
+          </Typography>
+        </Box>
+        <Box className={css.cardContent}>
+          <Divider />
+          <QuestionSpecification item={item} />
+        </Box>
+      </Card>
+    );
+  };
+
+  const getRequirementQuestions = (): ReactElement[] => {
+    return variant.questions.map((item, index) => {
+      return (
+        <Card key={index} className={css.QuestionCard}>
+          <Box className={css.cardHeader}>
+            <DFORadioButton
+              checked={selectedRadioIndex === index}
+              onClick={() => questionSelected(item, index)}
+            />
+            <Typography variant={'md'} className={css.cardTitle}>
+              {t(item.type)}
+            </Typography>
+          </Box>
+          {index === selectedRadioIndex && (
+            <Box className={css.cardContent}>
+              <Divider />
+              <QuestionSpecification item={item} />
+            </Box>
+          )}
+        </Card>
+      );
+    });
+  };
+
   return (
     <Box className={classes.list}>
-      {variant.questions.map((item, index) => {
-        return (
-          <Card key={index} sx={{ padding: 1 }}>
-            <Box
-              sx={{
-                display: 'flex',
-                flexDirection: 'row',
-                marginLeft: 2,
-                marginRight: 2
-              }}
-            >
-              <DFORadioButton
-                checked={selectedRadioIndex === index}
-                onClick={() => questionSelected(item, index)}
-              />
-              <Typography
-                variant={'md'}
-                sx={{ display: 'flex', paddingLeft: 2, alignSelf: 'center' }}
-              >
-                {t(item.type)}
-              </Typography>
-            </Box>
-            {index === selectedRadioIndex && (
-              <Box sx={{ margin: 2 }}>
-                <Divider />
-                <QuestionSpecification item={item} />
-              </Box>
-            )}
-          </Card>
-        );
-      })}
+      {variant.type === VariantType.info
+        ? getInfoQuestion()
+        : getRequirementQuestions()}
     </Box>
   );
 };

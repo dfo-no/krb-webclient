@@ -209,16 +209,6 @@ theme.components = {
         paddingLeft: 0
       }
     }
-  },
-  MuiChip: {
-    styleOverrides: {
-      root: {
-        height: '100%',
-        '&.MuiChip-root': {
-          fontWeight: 'bold'
-        }
-      }
-    }
   }
 };
 
