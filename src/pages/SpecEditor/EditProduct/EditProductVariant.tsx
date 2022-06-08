@@ -4,7 +4,7 @@ import { useFormContext, useWatch } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
 import Nexus from '../../../Nexus/Nexus';
-import ProductQuestionList from './QuestionSpecification/ProductQuestionList';
+import ProductQuestionList from './ProductQuestionList';
 import SliderCtrl from '../../../FormProvider/SliderCtrl';
 import theme from '../../../theme';
 import { DFOCheckbox } from '../../../components/DFOCheckbox/DFOCheckbox';

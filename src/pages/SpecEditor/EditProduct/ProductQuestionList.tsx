@@ -4,20 +4,21 @@ import { Box, Card, Divider, Typography } from '@mui/material';
 import { useFormContext, useWatch } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
-import css from './QuestionSpecification.module.scss';
-import QuestionSpecification from './QuestionSpecification';
-import theme from '../../../../theme';
-import { DFORadioButton } from '../../../../components/DFORadioButton/DFORadioButton';
-import { ICheckboxQuestion } from '../../../../Nexus/entities/ICheckboxQuestion';
-import { ICodelistQuestion } from '../../../../Nexus/entities/ICodelistQuestion';
-import { IFileUploadQuestion } from '../../../../Nexus/entities/IFileUploadQuestion';
-import { IPeriodDateQuestion } from '../../../../Nexus/entities/IPeriodDateQuestion';
-import { IRequirementAnswer } from '../../../../models/IRequirementAnswer';
-import { ISliderQuestion } from '../../../../Nexus/entities/ISliderQuestion';
-import { ITextQuestion } from '../../../../Nexus/entities/ITextQuestion';
-import { ITimeQuestion } from '../../../../Nexus/entities/ITimeQuestion';
-import { IVariant } from '../../../../Nexus/entities/IVariant';
-import VariantType from '../../../../Nexus/entities/VariantType';
+import css from './QuestionCard.module.scss';
+import QuestionAnswer from './QuestionAnswer/QuestionAnswer';
+import QuestionSpecification from './QuestionSpecification/QuestionSpecification';
+import theme from '../../../theme';
+import VariantType from '../../../Nexus/entities/VariantType';
+import { DFORadioButton } from '../../../components/DFORadioButton/DFORadioButton';
+import { ICheckboxQuestion } from '../../../Nexus/entities/ICheckboxQuestion';
+import { ICodelistQuestion } from '../../../Nexus/entities/ICodelistQuestion';
+import { IFileUploadQuestion } from '../../../Nexus/entities/IFileUploadQuestion';
+import { IPeriodDateQuestion } from '../../../Nexus/entities/IPeriodDateQuestion';
+import { IRequirementAnswer } from '../../../models/IRequirementAnswer';
+import { ISliderQuestion } from '../../../Nexus/entities/ISliderQuestion';
+import { ITextQuestion } from '../../../Nexus/entities/ITextQuestion';
+import { ITimeQuestion } from '../../../Nexus/entities/ITimeQuestion';
+import { IVariant } from '../../../Nexus/entities/IVariant';
 
 const useStyles = makeStyles({
   list: {
@@ -83,7 +84,7 @@ const ProductQuestionsList = ({ variant }: IProps) => {
         </Box>
         <Box className={css.cardContent}>
           <Divider />
-          <QuestionSpecification item={item} />
+          <QuestionAnswer item={item} />
         </Box>
       </Card>
     );
