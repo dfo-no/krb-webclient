@@ -1,8 +1,8 @@
 import CustomJoi from '../../common/CustomJoi';
-import ModelType from '../../models/ModelType';
-import { Parentable } from '../../models/Parentable';
-import { IBaseModel } from './IBaseModel';
 import { BaseCodeSchema, ICode } from './ICode';
+import { IBaseModel } from './IBaseModel';
+import { ModelType } from '../../enums';
+import { Parentable } from '../../models/Parentable';
 
 export interface ICodelist extends IBaseModel {
   id: string;

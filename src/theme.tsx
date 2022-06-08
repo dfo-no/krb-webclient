@@ -179,16 +179,6 @@ theme.components = {
       }
     ]
   },
-  MuiCheckbox: {
-    styleOverrides: {
-      root: {
-        width: '40px',
-        height: '40px',
-        paddingTop: '0',
-        paddingBottom: '0'
-      }
-    }
-  },
   MuiListItemButton: {
     styleOverrides: {
       root: {
@@ -209,6 +199,23 @@ theme.components = {
               color: 'inherit'
             }
           }
+        }
+      }
+    }
+  },
+  MuiToolbar: {
+    styleOverrides: {
+      root: {
+        paddingLeft: 0
+      }
+    }
+  },
+  MuiChip: {
+    styleOverrides: {
+      root: {
+        height: '100%',
+        '&.MuiChip-root': {
+          fontWeight: 'bold'
         }
       }
     }

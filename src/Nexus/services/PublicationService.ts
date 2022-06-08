@@ -1,7 +1,7 @@
+import DateService from './DateService';
 import { IBank } from '../entities/IBank';
 import { IPublication } from '../entities/IPublication';
-import DateService from './DateService';
-import ModelType from '../../models/ModelType';
+import { ModelType } from '../../enums';
 
 export default class PublicationService {
   getNextVersion = (publications: IPublication[]): number => {

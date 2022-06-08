@@ -1,11 +1,12 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { cloneDeep } from 'lodash';
+
 import Utils from '../../common/Utils';
+import { IBank } from '../../Nexus/entities/IBank';
 import { IPrefilledResponse } from '../../models/IPrefilledResponse';
 import { IPrefilledResponseProduct } from '../../models/IPrefilledResponseProduct';
 import { IRequirementAnswer } from '../../models/IRequirementAnswer';
-import ModelType from '../../models/ModelType';
-import { IBank } from '../../Nexus/entities/IBank';
+import { ModelType } from '../../enums';
 
 interface IPrefilledResponseState {
   prefilledResponse: IPrefilledResponse;
@@ -49,7 +50,8 @@ const initialState: IPrefilledResponseState = {
       children: [],
       type: ModelType.product,
       sourceOriginal: null,
-      sourceRel: null
+      sourceRel: null,
+      deletedDate: null
     },
     answeredVariants: [],
     requirementAnswers: [],

@@ -1,9 +1,9 @@
 /* eslint-disable class-methods-use-this */
-import ModelType from '../../models/ModelType';
-import { Parentable } from '../../models/Parentable';
-import { INeed } from '../entities/INeed';
 import StoreService from './StoreService';
 import UuidService from './UuidService';
+import { INeed } from '../entities/INeed';
+import { ModelType } from '../../enums';
+import { Parentable } from '../../models/Parentable';
 
 export default class NeedService {
   UuidService = new UuidService();
@@ -15,7 +15,7 @@ export default class NeedService {
   }
 
   generateDefaultNeedValues = (projectId: string): Parentable<INeed> => {
-    const defaultValues: Parentable<INeed> = {
+    return {
       id: '',
       title: '',
       description: '',
@@ -25,7 +25,6 @@ export default class NeedService {
       sourceOriginal: projectId,
       sourceRel: null
     };
-    return defaultValues;
   };
 
   createNeedWithId = (item: Parentable<INeed>): Parentable<INeed> => {

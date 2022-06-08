@@ -1,7 +1,7 @@
-import ModelType from '../../models/ModelType';
-import { IProduct } from '../entities/IProduct';
 import StoreService from './StoreService';
 import UuidService from './UuidService';
+import { IProduct } from '../entities/IProduct';
+import { ModelType } from '../../enums';
 import { Parentable } from '../../models/Parentable';
 
 export default class ProductService {
@@ -14,16 +14,16 @@ export default class ProductService {
   }
 
   generateDefaultProductValues = (projectId: string): Parentable<IProduct> => {
-    const defaultValues: Parentable<IProduct> = {
+    return {
       id: '',
       title: '',
       description: '',
       type: ModelType.product,
       parent: '',
       sourceOriginal: projectId,
-      sourceRel: null
+      sourceRel: null,
+      deletedDate: null
     };
-    return defaultValues;
   };
 
   createProductWithId = (item: Parentable<IProduct>): Parentable<IProduct> => {

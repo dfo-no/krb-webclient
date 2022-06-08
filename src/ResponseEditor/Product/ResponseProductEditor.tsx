@@ -116,7 +116,7 @@ export default function ResponseProductEditor(): React.ReactElement {
             </Form.Group>
             <Col className="p-0 d-flex justify-content-end">
               <Button variant="primary" type="submit">
-                {t('save')}
+                {t('Save')}
               </Button>
             </Col>
             <ErrorSummary errors={errors} />

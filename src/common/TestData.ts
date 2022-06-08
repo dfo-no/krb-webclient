@@ -1,11 +1,10 @@
-import { IBaseModel } from '../Nexus/entities/IBaseModel';
-import ModelType from '../models/ModelType';
-import { Parentable } from '../models/Parentable';
-import { Nestable } from '../models/Nestable';
 import VariantType from '../Nexus/entities/VariantType';
-import { INeed } from '../Nexus/entities/INeed';
 import { IBank } from '../Nexus/entities/IBank';
-import QuestionEnum from '../models/QuestionEnum';
+import { IBaseModel } from '../Nexus/entities/IBaseModel';
+import { INeed } from '../Nexus/entities/INeed';
+import { ModelType, QuestionVariant } from '../enums';
+import { Nestable } from '../models/Nestable';
+import { Parentable } from '../models/Parentable';
 
 interface ICar extends IBaseModel {
   id: string;
@@ -187,7 +186,8 @@ export const productsTestData = [
     parent: '',
     type: ModelType.product,
     sourceOriginal: null,
-    sourceRel: null
+    sourceRel: null,
+    deletedDate: null
   },
   {
     id: 'fb55c57e-af4a-11ec-b909-0242ac120002',
@@ -196,7 +196,8 @@ export const productsTestData = [
     parent: '',
     type: ModelType.product,
     sourceOriginal: null,
-    sourceRel: null
+    sourceRel: null,
+    deletedDate: null
   },
   {
     id: '38c1b14e-b742-11ec-b909-0242ac120002',
@@ -205,7 +206,8 @@ export const productsTestData = [
     parent: '',
     type: ModelType.product,
     sourceOriginal: null,
-    sourceRel: null
+    sourceRel: null,
+    deletedDate: null
   }
 ];
 
@@ -288,7 +290,7 @@ export const needHierarchyTestData: Parentable<INeed>[] = [
             questions: [
               {
                 id: '523acdad-95fa-4515-ac1f-f785f3000260',
-                type: QuestionEnum.Q_CODELIST,
+                type: QuestionVariant.Q_CODELIST,
                 config: {
                   mandatoryCodes: [],
                   optionalCodes: [],

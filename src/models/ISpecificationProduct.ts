@@ -1,8 +1,8 @@
 import CustomJoi from '../common/CustomJoi';
 import { BaseProductSchema, IProduct } from '../Nexus/entities/IProduct';
-import { IRequirementAnswer } from './IRequirementAnswer';
 import { IBaseModel } from '../Nexus/entities/IBaseModel';
-import ModelType from './ModelType';
+import { IRequirementAnswer } from './IRequirementAnswer';
+import { ModelType } from '../enums';
 
 export interface ISpecificationProduct extends IBaseModel {
   title: string;

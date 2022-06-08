@@ -1,59 +1,45 @@
-import { PublicClientApplication } from '@azure/msal-browser';
-import {
-  AuthenticatedTemplate,
-  MsalProvider,
-  UnauthenticatedTemplate
-} from '@azure/msal-react';
+import React, { ReactElement } from 'react';
 import { CssBaseline } from '@mui/material';
-import React from 'react';
+import { MsalProvider } from '@azure/msal-react';
+import { PublicClientApplication } from '@azure/msal-browser';
 import { Route, Switch } from 'react-router-dom';
-import styles from './App.module.scss';
-import { msalConfig } from './authentication/authConfig';
+
 import AlertList from './components/Alert/AlertList';
+import Evaluation from './pages/Evaluation/Evaluation';
 import Header from './components/Header/Header';
-import Evaluation from './Evaluation/Evaluation';
-import HomePage from './Home/HomePage';
+import HomePage from './pages/Home/HomePage';
+import PrefilledResponseModule from './pages/PrefilledResponseEditor/PrefilledResponseModule';
+import ResponseModule from './pages/Response/ResponseModule';
+import ResponsePage from './pages/Response/ResponsePage';
+import SpecModule from './pages/SpecEditor/SpecModule';
+import styles from './App.module.scss';
 import useConfirmTabClose from './hooks/useConfirmTabClose';
-import KitchenSink from './KitchenSink';
-import PageLayout from './PageLayout';
-import PrefilledResponseModule from './PrefilledResponseEditor/PrefilledResponseModule';
-import ResponseModule from './ResponseEditor/ResponseModule';
-import ResponsePage from './ResponseEditor/ResponsePage';
-import SpecModule from './SpecEditor/SpecModule';
-import WorkbenchModule from './Workbench/WorkbenchModule';
+import WorkbenchModule from './pages/Workbench/WorkbenchModule';
+import { BankProvider } from './components/BankContext/BankContext';
+import { msalConfig } from './authentication/authConfig';
 
 const msalInstance = new PublicClientApplication(msalConfig);
 
-function App(): React.ReactElement {
+function App(): ReactElement {
   useConfirmTabClose();
 
-  function renderContent() {
+  function renderContent(): ReactElement {
     return (
       <Switch>
         <Route exact path="/">
-          <HomePage />
+          <BankProvider>
+            <HomePage />
+          </BankProvider>
         </Route>
-        <PageLayout>
-          <AuthenticatedTemplate>
-            <Route path="/workbench" component={WorkbenchModule} />
-            <Route path="/specification" component={SpecModule} />
-            <Route path="/response/:id" component={ResponseModule} />
-            <Route exact path="/response" component={ResponsePage} />
-            <Route path="/evaluation" component={Evaluation} />
-            <Route
-              path="/prefilledresponse/:id"
-              component={PrefilledResponseModule}
-            />
-          </AuthenticatedTemplate>
-          {process.env.NODE_ENV === 'development' ? (
-            <Route path="/kitchensink" component={KitchenSink} />
-          ) : (
-            <></>
-          )}
-          <UnauthenticatedTemplate>
-            <h5 className="card-title">Please sign-in to access this page</h5>
-          </UnauthenticatedTemplate>
-        </PageLayout>
+        <Route path="/workbench" component={WorkbenchModule} />
+        <Route path="/specification" component={SpecModule} />
+        <Route path="/response/:id" component={ResponseModule} />
+        <Route exact path="/response" component={ResponsePage} />
+        <Route path="/evaluation" component={Evaluation} />
+        <Route
+          path="/prefilledresponse/:id"
+          component={PrefilledResponseModule}
+        />
       </Switch>
     );
   }

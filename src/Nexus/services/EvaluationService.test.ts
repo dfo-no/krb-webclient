@@ -1,8 +1,7 @@
-import { IResponse } from '../../models/IResponse';
-import ModelType from '../../models/ModelType';
-import QuestionEnum from '../../models/QuestionEnum';
-import VariantType from '../entities/VariantType';
 import Nexus from '../Nexus';
+import VariantType from '../entities/VariantType';
+import { IResponse } from '../../models/IResponse';
+import { ModelType, QuestionVariant } from '../../enums';
 
 describe('EvaluationService', () => {
   it('Can get EvauateSlider', async () => {
@@ -34,7 +33,7 @@ describe('EvaluationService', () => {
                       products: [],
                       questions: [
                         {
-                          type: QuestionEnum.Q_SLIDER,
+                          type: QuestionVariant.Q_SLIDER,
                           config: {
                             min: 0,
                             max: 50,
@@ -91,7 +90,7 @@ describe('EvaluationService', () => {
                       products: [],
                       questions: [
                         {
-                          type: QuestionEnum.Q_PERIOD_DATE,
+                          type: QuestionVariant.Q_PERIOD_DATE,
                           config: {
                             isPeriod: false,
                             periodMax: 0,
@@ -147,7 +146,7 @@ describe('EvaluationService', () => {
                       products: [],
                       questions: [
                         {
-                          type: QuestionEnum.Q_CHECKBOX,
+                          type: QuestionVariant.Q_CHECKBOX,
                           config: {
                             pointsNonPrefered: 0,
                             defaultPoint: 1,
@@ -198,7 +197,7 @@ describe('EvaluationService', () => {
                       products: [],
                       questions: [
                         {
-                          type: QuestionEnum.Q_CODELIST,
+                          type: QuestionVariant.Q_CODELIST,
                           config: {
                             mandatoryCodes: [],
                             optionalCodes: [],
@@ -252,7 +251,7 @@ describe('EvaluationService', () => {
                       products: [],
                       questions: [
                         {
-                          type: QuestionEnum.Q_TEXT,
+                          type: QuestionVariant.Q_TEXT,
                           config: {
                             max: 1000,
                             defaultPoint: 1
@@ -320,7 +319,8 @@ describe('EvaluationService', () => {
               type: ModelType.product,
               parent: '',
               sourceOriginal: '61cdf70d-9ef5-4ae1-a006-b2e2f5242273',
-              sourceRel: null
+              sourceRel: null,
+              deletedDate: null
             },
             {
               id: 'd9e879da-7a51-4738-80e9-991f5269f549',
@@ -329,7 +329,8 @@ describe('EvaluationService', () => {
               type: ModelType.product,
               parent: '',
               sourceOriginal: '61cdf70d-9ef5-4ae1-a006-b2e2f5242273',
-              sourceRel: null
+              sourceRel: null,
+              deletedDate: null
             },
             {
               id: 'c7edb0ea-b097-4e03-b5f2-6fe46d5c3291',
@@ -338,7 +339,8 @@ describe('EvaluationService', () => {
               type: ModelType.product,
               parent: '',
               sourceOriginal: '61cdf70d-9ef5-4ae1-a006-b2e2f5242273',
-              sourceRel: null
+              sourceRel: null,
+              deletedDate: null
             }
           ],
           publications: [],
@@ -387,7 +389,7 @@ describe('EvaluationService', () => {
             weight: 90,
             variantId: 'b2f218dc-d5e6-49b4-9a60-f906db1ec74e',
             question: {
-              type: QuestionEnum.Q_SLIDER,
+              type: QuestionVariant.Q_SLIDER,
               config: {
                 min: 0,
                 max: 50,
@@ -423,7 +425,7 @@ describe('EvaluationService', () => {
                   products: [],
                   questions: [
                     {
-                      type: QuestionEnum.Q_SLIDER,
+                      type: QuestionVariant.Q_SLIDER,
                       config: {
                         min: 0,
                         max: 50,
@@ -461,7 +463,7 @@ describe('EvaluationService', () => {
             weight: 70,
             variantId: '2fbd3495-b95e-473c-923c-6aec0a9e4305',
             question: {
-              type: QuestionEnum.Q_PERIOD_DATE,
+              type: QuestionVariant.Q_PERIOD_DATE,
               config: {
                 isPeriod: false,
                 periodMax: 0,
@@ -496,7 +498,7 @@ describe('EvaluationService', () => {
                   products: [],
                   questions: [
                     {
-                      type: QuestionEnum.Q_PERIOD_DATE,
+                      type: QuestionVariant.Q_PERIOD_DATE,
                       config: {
                         isPeriod: false,
                         periodMax: 0,
@@ -533,7 +535,7 @@ describe('EvaluationService', () => {
             weight: 50,
             variantId: 'b8dadd61-3f16-462c-9eb7-a72c61732fbf',
             question: {
-              type: QuestionEnum.Q_CHECKBOX,
+              type: QuestionVariant.Q_CHECKBOX,
               config: {
                 pointsNonPrefered: 0,
                 defaultPoint: 1,
@@ -563,7 +565,7 @@ describe('EvaluationService', () => {
                   products: [],
                   questions: [
                     {
-                      type: QuestionEnum.Q_CHECKBOX,
+                      type: QuestionVariant.Q_CHECKBOX,
                       config: {
                         pointsNonPrefered: 0,
                         defaultPoint: 1,
@@ -595,7 +597,7 @@ describe('EvaluationService', () => {
             weight: 30,
             variantId: 'd9c55f57-d22f-4ebc-a53e-9133ce7885d2',
             question: {
-              type: QuestionEnum.Q_CODELIST,
+              type: QuestionVariant.Q_CODELIST,
               config: {
                 mandatoryCodes: [],
                 optionalCodes: [],
@@ -628,7 +630,7 @@ describe('EvaluationService', () => {
                   products: [],
                   questions: [
                     {
-                      type: QuestionEnum.Q_CODELIST,
+                      type: QuestionVariant.Q_CODELIST,
                       config: {
                         mandatoryCodes: [],
                         optionalCodes: [],
@@ -663,7 +665,7 @@ describe('EvaluationService', () => {
             weight: 10,
             variantId: 'ccb83429-07f0-4142-a120-c5b384185177',
             question: {
-              type: QuestionEnum.Q_TEXT,
+              type: QuestionVariant.Q_TEXT,
               config: {
                 max: 1000,
                 defaultPoint: 1
@@ -692,7 +694,7 @@ describe('EvaluationService', () => {
                   products: [],
                   questions: [
                     {
-                      type: QuestionEnum.Q_TEXT,
+                      type: QuestionVariant.Q_TEXT,
                       config: {
                         max: 1000,
                         defaultPoint: 1
@@ -728,7 +730,7 @@ describe('EvaluationService', () => {
           weight: 90,
           variantId: 'b2f218dc-d5e6-49b4-9a60-f906db1ec74e',
           question: {
-            type: QuestionEnum.Q_SLIDER,
+            type: QuestionVariant.Q_SLIDER,
             config: {
               min: 0,
               max: 50,
@@ -764,7 +766,7 @@ describe('EvaluationService', () => {
                 products: [],
                 questions: [
                   {
-                    type: QuestionEnum.Q_SLIDER,
+                    type: QuestionVariant.Q_SLIDER,
                     config: {
                       min: 0,
                       max: 10,
