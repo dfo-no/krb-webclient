@@ -115,7 +115,7 @@ const Variant = ({ variant, requirementIndex }: IProps) => {
             <Typography>{variant.description}</Typography>
             <Box sx={{ display: 'flex', marginLeft: 'auto' }}>
               {useTypeWatch === VariantType.info && (
-                  <DFOChip label={t('Info')} />
+                <DFOChip label={t('Info')} />
               )}
               <FormIconButton
                 disableRipple={true}
