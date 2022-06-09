@@ -57,7 +57,7 @@ export default function ProductRequirementAnswer({
         <Typography variant="lgBold">
           {requirementAnswer.requirement.title}
         </Typography>
-        <Divider sx={{ marginTop: '1,6rem' }} />
+        <Divider sx={{ marginTop: '1.6rem' }} />
         {existingAnswer && <ChosenAnswer requirementAnswer={existingAnswer} />}
       </FlexColumnBox>
     );
