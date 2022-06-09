@@ -40,7 +40,6 @@ export default function DeleteFrame({
         </Typography>
         {canBeDeleted && (
           <FormTextButton
-            disableRipple={true}
             type="submit"
             aria-label={t('Delete')}
             onClick={onDelete}
@@ -50,7 +49,6 @@ export default function DeleteFrame({
           </FormTextButton>
         )}
         <FormTextButton
-          disableRipple={true}
           onClick={handleClose}
           aria-label={t('Cancel')}
           sx={!canBeDeleted ? { marginLeft: 'auto' } : {}}

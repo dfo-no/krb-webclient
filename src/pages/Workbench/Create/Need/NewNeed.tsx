@@ -42,11 +42,7 @@ const NewNeed = ({ buttonText }: IProps) => {
         paddingBottom: 2
       }}
     >
-      <Button
-        disableRipple={true}
-        variant="primary"
-        onClick={() => setOpen(true)}
-      >
+      <Button variant="primary" onClick={() => setOpen(true)}>
         {buttonText}
       </Button>
       <Dialog

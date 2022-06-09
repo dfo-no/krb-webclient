@@ -79,7 +79,6 @@ const Requirement = ({ requirementIndex }: IProps) => {
             }
           />
           <FormIconButton
-            disableRipple={true}
             hoverColor={theme.palette.errorRed.main}
             onClick={() =>
               setDeleteMode(
@@ -91,7 +90,6 @@ const Requirement = ({ requirementIndex }: IProps) => {
             <DeleteIcon />
           </FormIconButton>
           <FormIconButton
-            disableRipple={true}
             hoverColor={theme.palette.green.main}
             sx={{ alignSelf: 'baseline', marginLeft: 0, marginRight: -2 }}
             onClick={() =>

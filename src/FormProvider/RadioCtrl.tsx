@@ -10,6 +10,7 @@ import { Typography } from '@mui/material';
 
 import theme from '../theme';
 import { IOption } from '../Nexus/entities/IOption';
+import { DFORadio } from '../components/DFORadio/DFORadio';
 
 interface IProps {
   name: string;
@@ -29,8 +30,7 @@ const RadioCtrl = ({ name, label, options }: IProps): React.ReactElement => {
           key={option.value}
           value={option.value}
           control={
-            <Radio
-              disableRipple={true}
+            <DFORadio
               sx={{
                 color: 'var(--primary-light-color)',
                 '& .MuiSvgIcon-root': {
@@ -42,7 +42,7 @@ const RadioCtrl = ({ name, label, options }: IProps): React.ReactElement => {
           }
           label={
             <Typography variant={'sm'} color={theme.palette.black.main}>
-              {option.label}
+              XX{option.label}YY
             </Typography>
           }
         />

@@ -87,14 +87,13 @@ function NewVariantForm({
             <VariantFormContent control={methods.control} />
             <Box sx={{ display: 'flex', flexDirection: 'row', marginTop: 2 }}>
               <Button
-                disableRipple={true}
                 variant="cancel"
                 onClick={() => closeAndReset()}
                 sx={{ marginLeft: 'auto', marginRight: 2 }}
               >
                 {t('Cancel')}
               </Button>
-              <Button disableRipple={true} variant="save" type="submit">
+              <Button variant="save" type="submit">
                 {t('Save')}
               </Button>
             </Box>

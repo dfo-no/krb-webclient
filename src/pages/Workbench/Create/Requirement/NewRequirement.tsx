@@ -31,11 +31,7 @@ const NewRequirement = ({ need }: IProps) => {
         marginRight: 0
       }}
     >
-      <Button
-        disableRipple={true}
-        variant="primary"
-        onClick={() => setNewOpen(true)}
-      >
+      <Button variant="primary" onClick={() => setNewOpen(true)}>
         {t('Add new requirement')}
       </Button>
       <Dialog

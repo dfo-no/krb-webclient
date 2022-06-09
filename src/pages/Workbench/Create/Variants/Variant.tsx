@@ -125,7 +125,6 @@ const Variant = ({ variant, requirementIndex }: IProps) => {
               />
             )}
             <FormIconButton
-              disableRipple={true}
               hoverColor={theme.palette.errorRed.main}
               onClick={(event) =>
                 confirmDelete(variant.id, event as unknown as MouseEvent)
@@ -143,19 +142,18 @@ const Variant = ({ variant, requirementIndex }: IProps) => {
               sx={{
                 display: 'flex',
                 flexDirection: 'row',
-                marginTop: 2,
+                marginTop: 'var(--small-gap)',
                 marginBottom: 'var(--normal-gap)'
               }}
             >
               <Button
-                disableRipple={true}
                 variant="cancel"
                 onClick={() => methods.reset()}
-                sx={{ marginLeft: 'auto', marginRight: 2 }}
+                sx={{ marginLeft: 'auto', marginRight: 'var(--small-gap)' }}
               >
                 {t('Reset')}
               </Button>
-              <Button disableRipple={true} variant="save" type="submit">
+              <Button variant="save" type="submit">
                 {t('Save')}
               </Button>
             </Box>

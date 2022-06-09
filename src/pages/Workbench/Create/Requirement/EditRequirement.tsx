@@ -30,7 +30,6 @@ const EditRequirement = ({ requirement, need }: IProps) => {
   return (
     <>
       <FormIconButton
-        disableRipple={true}
         sx={{ alignSelf: 'baseline', marginLeft: 'auto' }}
         onClick={handleOpen}
       >
