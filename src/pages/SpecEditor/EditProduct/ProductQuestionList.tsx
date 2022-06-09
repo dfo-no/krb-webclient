@@ -24,11 +24,11 @@ const useStyles = makeStyles({
   list: {
     display: 'flex',
     flexDirection: 'column',
-    gap: 16,
+    gap: 'var(--small-gap)',
     border: `1px solid ${theme.palette.black.main}`,
     backgroundColor: theme.palette.gray100.main,
-    padding: 32,
-    marginBottom: 16
+    padding: 'var(--normal-gap)',
+    marginBottom: 'var(--small-gap)'
   }
 });
 

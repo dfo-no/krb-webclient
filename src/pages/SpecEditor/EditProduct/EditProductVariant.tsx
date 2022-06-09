@@ -55,7 +55,7 @@ export default function EditProductVariant({
             display: 'flex',
             flex: '0 0 30%',
             marginLeft: 'auto',
-            paddingLeft: 4
+            paddingLeft: 'var(--normal-gap)'
           }}
         >
           <Box sx={{ flexGrow: 1 }}>
@@ -75,13 +75,13 @@ export default function EditProductVariant({
       <Typography variant={'smBold'} color={theme.palette.primary.main}>
         {t('Requirement text')}
       </Typography>
-      <Typography sx={{ marginBottom: 2 }}>
+      <Typography sx={{ marginBottom: 'var(--small-gap)' }}>
         {variant.requirementText ? variant.requirementText : '-'}
       </Typography>
       <Typography variant={'smBold'} color={theme.palette.primary.main}>
         {t('Instruction')}
       </Typography>
-      <Typography sx={{ marginBottom: 2 }}>
+      <Typography sx={{ marginBottom: 'var(--small-gap)' }}>
         {variant.instruction ? variant.instruction : '-'}
       </Typography>
       <Typography variant={'smBold'} color={theme.palette.primary.main}>
