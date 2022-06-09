@@ -20,11 +20,11 @@ const useStyles = makeStyles({
     paddingRight: 32,
     margin: 32,
     marginBottom: 0,
-    border: `1px solid ${theme.palette.silver.main}`
+    border: `0.1rem solid ${theme.palette.silver.main}`
   },
   active: {
-    border: `2px solid ${theme.palette.secondary.main}`,
-    borderTop: `12px solid ${theme.palette.secondary.main}`
+    border: `0.2rem solid ${theme.palette.secondary.main}`,
+    borderTop: `1.2rem solid ${theme.palette.secondary.main}`
   }
 });
 
@@ -50,7 +50,7 @@ export default function RequirementPreview({
 
   return (
     <Box className={`${classes.card} ${isActive() ? classes.active : ''}`}>
-      <Box sx={{ borderBottom: '1px solid' }}>
+      <Box sx={{ borderBottom: '0.1rem solid' }}>
         <Typography variant="lgBold">{requirement.title}</Typography>
       </Box>
       {requirement.variants.map((variant) => {

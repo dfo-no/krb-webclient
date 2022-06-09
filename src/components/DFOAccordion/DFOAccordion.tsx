@@ -18,7 +18,7 @@ const useStyles = makeStyles({
   expandIcon: {
     '& .MuiSvgIcon-root': {
       color: theme.palette.gray700.main,
-      fontSize: '40px'
+      fontSize: '4rem'
     }
   }
 });

@@ -17,7 +17,7 @@ const useStyles = makeStyles({
     display: 'flex',
     flexDirection: 'row',
     alignItems: 'space-between',
-    border: `1px solid ${theme.palette.lightBlue.main}`,
+    border: `0.1rem solid ${theme.palette.lightBlue.main}`,
     '&:hover': {
       background: theme.palette.lightBlue.main,
       color: theme.palette.white.main,

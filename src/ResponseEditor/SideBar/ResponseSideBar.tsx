@@ -1,9 +1,10 @@
-import React from 'react';
 import Nav from 'react-bootstrap/Nav';
-import { RouteComponentProps, withRouter } from 'react-router';
+import React from 'react';
 import { NavLink } from 'react-router-dom';
-import { useAppSelector } from '../../store/hooks';
+import { RouteComponentProps, withRouter } from 'react-router';
+
 import css from './ResponseSideBar.module.scss';
+import { useAppSelector } from '../../store/hooks';
 
 interface IRouteLink {
   link: string;

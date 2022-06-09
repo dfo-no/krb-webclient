@@ -22,7 +22,7 @@ const useStyles = makeStyles({
     display: 'flex',
     flexDirection: 'column',
     gap: 16,
-    border: `1px solid ${theme.palette.black.main}`,
+    border: `0.1rem solid ${theme.palette.black.main}`,
     backgroundColor: theme.palette.gray100.main,
     padding: 32,
     marginBottom: 16

@@ -11,17 +11,17 @@ export const ScrollableContainer = styled(Box)(({ theme }) => ({
   marginBottom: 16,
 
   '::-webkit-scrollbar': {
-    width: '10px'
+    width: '1rem'
   },
   '::-webkit-scrollbar-track': {
-    boxShadow: `inset 0 0 5px ${theme.palette.primary.main}`,
-    borderRadius: '10px'
+    boxShadow: `inset 0 0 0.5rem ${theme.palette.primary.main}`,
+    borderRadius: '1rem'
   },
 
   /* Handle */
   '::-webkit-scrollbar-thumb': {
     background: theme.palette.primary.main,
-    borderRadius: '10px'
+    borderRadius: '1rem'
   },
 
   /* Handle on hover */
