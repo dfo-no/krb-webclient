@@ -128,7 +128,8 @@ const ProductSelection = (): React.ReactElement => {
                       background: isDeletedAndUnused(item, selected)
                         ? deletedBackground()
                         : theme.palette.white.main,
-                      marginTop: item.level === 1 ? '1.6rem' : '-0.1rem',
+                      marginTop:
+                        item.level === 1 ? 'var(--small-gap)' : '-0.1rem',
                       marginLeft: `${(item.level - 1) * 2}%`,
                       width: `${100 - (item.level - 1) * 2}%`
                     }}

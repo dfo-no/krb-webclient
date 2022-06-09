@@ -38,21 +38,21 @@ const VariantFormContent = ({ control }: IProps) => {
         <VerticalTextCtrl
           name={`description`}
           label={t('Description')}
-          placeholder="Kort beskrivelse av kravet"
+          placeholder={t('Requirement short description')}
         />
       </Box>
       <Box sx={{ marginBottom: 4 }}>
         <TextAreaCtrl
           name={`requirementText`}
           label={t('Requirement text')}
-          placeholder="Her skriver du selve kravteksten som leverandør må besvare"
+          placeholder={t('Requirement vendor text')}
         />
       </Box>
       <Box sx={{ marginBottom: 4 }}>
         <TextAreaCtrl
           name={`instruction`}
           label={t('Instruction')}
-          placeholder="Her skriver du veiledning til når og hvordan oppdragsgiver kan bruke dette kravet"
+          placeholder={t('Requirement guide for supplier')}
         />
       </Box>
       <Typography

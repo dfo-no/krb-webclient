@@ -36,7 +36,7 @@ const useStyles = makeStyles({
   listItemParent: {
     border: `0.1rem solid ${theme.palette.gray400.main}`,
     '&:not(:first-child)': {
-      marginTop: '1.6rem'
+      marginTop: 'var(--small-gap)'
     }
   },
   listItemChild: {

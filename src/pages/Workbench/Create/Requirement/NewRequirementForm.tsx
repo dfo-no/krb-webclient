@@ -57,7 +57,7 @@ function NewRequirementForm({ need, handleClose }: IProps): React.ReactElement {
       const alert: IAlert = {
         id: uuidv4(),
         style: 'success',
-        text: 'Successfully created new requirement'
+        text: t('Successfully created new requirement')
       };
       dispatch(addAlert({ alert }));
       handleClose(newRequirement.id);
@@ -80,7 +80,7 @@ function NewRequirementForm({ need, handleClose }: IProps): React.ReactElement {
             <VerticalTextCtrl
               name="title"
               label={t('Title')}
-              placeholder="Tittel på krav"
+              placeholder={t('Requirement title')}
             />
           </ModalFieldsBox>
           <ModalButtonsBox>
