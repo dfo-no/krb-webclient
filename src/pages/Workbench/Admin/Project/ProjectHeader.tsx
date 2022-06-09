@@ -22,7 +22,7 @@ function ProjectHeader(): React.ReactElement {
       <Typography
         variant={'sm'}
         sx={{
-          borderTop: `1px solid ${theme.palette.silver.main}`,
+          borderTop: `0.1rem solid ${theme.palette.silver.main}`,
           paddingTop: 1
         }}
       >

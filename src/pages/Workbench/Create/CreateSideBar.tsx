@@ -22,8 +22,8 @@ const useStyles = makeStyles({
     cursor: 'pointer',
     backgroundColor: theme.palette.white.main,
     verticalAlign: 'middle',
-    borderLeft: `1px solid ${theme.palette.gray400.main}`,
-    borderRight: `1px solid ${theme.palette.gray400.main}`,
+    borderLeft: `0.1rem solid ${theme.palette.gray400.main}`,
+    borderRight: `0.1rem solid ${theme.palette.gray400.main}`,
     '&:hover': {
       background: theme.palette.lightBlue.main,
       color: theme.palette.white.main
@@ -35,11 +35,11 @@ const useStyles = makeStyles({
     },
     '& .nestable-item': {
       '&:not(:first-child)': {
-        marginTop: '16px'
+        marginTop: '1.6rem'
       },
       '& .nestable-item-name': {
-        borderTop: `1px solid ${theme.palette.gray400.main}`,
-        borderBottom: `1px solid ${theme.palette.gray400.main}`
+        borderTop: `0.1rem solid ${theme.palette.gray400.main}`,
+        borderBottom: `0.1rem solid ${theme.palette.gray400.main}`
       }
     },
     '& .nestable-list > .nestable-item > .nestable-list': {
@@ -47,7 +47,7 @@ const useStyles = makeStyles({
       '& .nestable-item': {
         margin: '0',
         '& .nestable-item-name': {
-          marginTop: '-1px'
+          marginTop: '-0.1rem'
         }
       }
     },
@@ -61,14 +61,14 @@ const useStyles = makeStyles({
   collapseIcon: {
     display: 'flex',
     alignSelf: 'center',
-    paddingRight: '4px',
+    paddingRight: '0.4rem',
     justifySelf: 'flex-end',
     marginLeft: 'auto'
   },
   handlerIcon: {
     paddingTop: 6,
     display: 'flex',
-    paddingRight: '4px',
+    paddingRight: '0.4rem',
     alignSelf: 'center',
     justifySelf: 'flex-end'
   },

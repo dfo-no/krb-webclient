@@ -172,7 +172,7 @@ export default function Header(): React.ReactElement {
       position="sticky"
       sx={{
         backgroundColor: theme.palette.white.main,
-        borderBottom: `2px solid ${theme.palette.gray300.main}`
+        borderBottom: `0.2rem solid ${theme.palette.gray300.main}`
       }}
     >
       <Toolbar>
