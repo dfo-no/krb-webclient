@@ -249,16 +249,7 @@ export default function ProductRequirement({
             color={theme.palette.silver.main}
             sx={{ marginBottom: 0.5 }}
           />
-          <Box>
-            <Typography
-              variant={'smBold'}
-              color={theme.palette.primary.main}
-              sx={{ marginRight: 1 }}
-            >
-              {t('Chosen')}
-            </Typography>
-            <ChosenConfiguration requirement={requirement} />
-          </Box>
+          <ChosenConfiguration requirement={requirement} />
         </Box>
       )}
       {!isSelected() && (
