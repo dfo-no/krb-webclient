@@ -1,36 +1,77 @@
-import MenuBookIcon from '@mui/icons-material/MenuBook';
-import Divider from '@mui/material/Divider';
+import Box from '@mui/material/Box';
+import Card from '@mui/material/Card';
+import CardContent from '@mui/material/CardContent';
+import CardHeader from '@mui/material/CardHeader';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemIcon from '@mui/material/ListItemIcon';
-import Typography from '@mui/material/Typography';
+import makeStyles from '@mui/styles/makeStyles';
+import MenuBookIcon from '@mui/icons-material/MenuBook';
 import React from 'react';
+import Typography from '@mui/material/Typography';
 import { useTranslation } from 'react-i18next';
+
 import { IBank } from '../../Nexus/entities/IBank';
-import { Box } from '@mui/material/';
 import { useBankState } from '../../components/BankContext/BankContext';
-import CardHeader from '@mui/material/CardHeader';
-import Card from '@mui/material/Card';
-import CardContent from '@mui/material/CardContent';
 
 interface IProps {
-  title: string;
   list: IBank[];
   orderedByDate?: boolean;
+  title: string;
 }
 
+const useStyles = makeStyles({
+  header: {
+    color: 'var(--primary-color)'
+  },
+  item: {
+    display: 'grid',
+    gridTemplateColumns: '3rem auto 8rem',
+    justifyContent: 'initial',
+    padding: '1.5rem 2rem',
+    borderBottom: '0.1rem solid var(--secondary-color)',
+    color: 'var(--primary-color)',
+    cursor: 'pointer',
+    transition: 'color 180ms ease-out',
+
+    '& .MuiSvgIcon-root': {
+      color: 'var(--primary-color)',
+      transition: 'color 180ms ease-out'
+    },
+
+    '&:hover': {
+      color: 'var(--link-hover-color)',
+
+      '& .MuiSvgIcon-root': {
+        color: 'var(--link-hover-color)'
+      }
+    },
+
+    '&:first-child': {
+      borderTop: '0.1rem solid var(--secondary-color)'
+    }
+  },
+  time: {
+    color: 'var(--disabled-color)',
+    fontSize: '1.4rem',
+    textAlign: 'right',
+    whiteSpace: 'nowrap'
+  }
+});
+
 export default function HomeDisplayList({
-  title,
   list,
-  orderedByDate = false
+  orderedByDate = false,
+  title
 }: IProps): React.ReactElement {
   const { setSelectedBank } = useBankState();
   const { t } = useTranslation();
+  const classes = useStyles();
 
-  const alfabeticOrderedList = (): IBank[] => {
-    const alfabeticOrdered = [...list];
-    alfabeticOrdered.sort((a, b) => (a.title > b.title ? 1 : -1));
-    return alfabeticOrdered;
+  const alphabeticalOrderedList = (): IBank[] => {
+    const alphabeticallyOrdered = [...list];
+    alphabeticallyOrdered.sort((a, b) => (a.title > b.title ? 1 : -1));
+    return alphabeticallyOrdered;
   };
 
   const dateOrderedList = (): IBank[] => {
@@ -49,44 +90,38 @@ export default function HomeDisplayList({
   const getList = (): IBank[] => {
     const orderedList = orderedByDate
       ? dateOrderedList()
-      : alfabeticOrderedList();
+      : alphabeticalOrderedList();
     return orderedList.slice(0, 5);
   };
 
   const filteredElements = () => {
     return getList().map((bank: IBank) => {
       return (
-        <div key={bank.id}>
-          <ListItem>
-            <ListItemIcon>
-              <MenuBookIcon />
-            </ListItemIcon>
-            <Box
-              sx={{ cursor: 'pointer' }}
-              onClick={() => setSelectedBank(bank)}
-            >
-              {bank.title}
-            </Box>
-            {bank.publishedDate && (
-              <Typography variant="subtitle1" sx={{ mx: 2 }}>
-                {t('date.ago', { date: new Date(bank.publishedDate) })}
-              </Typography>
-            )}
-          </ListItem>
-          <Divider component="li" />
-        </div>
+        <ListItem
+          key={bank.id}
+          className={classes.item}
+          onClick={() => setSelectedBank(bank)}
+        >
+          <ListItemIcon>
+            <MenuBookIcon />
+          </ListItemIcon>
+          <Box>{bank.title}</Box>
+          {bank.publishedDate && (
+            <Typography className={classes.time} variant="subtitle2">
+              {t('date.ago', { date: new Date(bank.publishedDate) })}
+            </Typography>
+          )}
+        </ListItem>
       );
     });
   };
 
   return (
-    <Box sx={{ flexBasis: '50%' }}>
-      <Card>
-        <CardHeader title={title} />
-        <CardContent>
-          <List>{filteredElements()}</List>
-        </CardContent>
-      </Card>
-    </Box>
+    <Card sx={{ flexBasis: '50%' }}>
+      <CardHeader title={title} className={classes.header} />
+      <CardContent>
+        <List>{filteredElements()}</List>
+      </CardContent>
+    </Card>
   );
 }

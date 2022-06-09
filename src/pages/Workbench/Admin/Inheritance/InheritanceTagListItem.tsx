@@ -13,8 +13,8 @@ const useStyles = makeStyles({
   tagListItem: {
     display: 'flex',
     backgroundColor: theme.palette.white.main,
-    borderBottom: `1px solid ${theme.palette.silver.main}`,
-    height: '42px',
+    borderBottom: `0.1rem solid ${theme.palette.silver.main}`,
+    height: '4.2rem',
     '&:hover': {
       background: theme.palette.lightBlue.main,
       '& $tagListItemText': {
@@ -32,10 +32,10 @@ const useStyles = makeStyles({
   tagListItemDescription: {
     display: 'flex',
     alignItems: 'center',
-    borderLeft: `1px solid ${theme.palette.silver.main}`,
-    paddingLeft: 10,
+    borderLeft: `0.1rem solid ${theme.palette.silver.main}`,
+    paddingLeft: '1rem',
     width: '90%',
-    height: '42px'
+    height: '4.2rem'
   }
 });
 

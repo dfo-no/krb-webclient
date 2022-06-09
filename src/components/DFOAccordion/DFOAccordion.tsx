@@ -20,15 +20,15 @@ interface DFOAccordionProviderProps {
 
 const useStyles = makeStyles({
   root: {
-    borderTop: `12px solid ${theme.palette.secondary.main}`
+    borderTop: `1.2rem solid ${theme.palette.secondary.main}`
   },
   accordionBody: {
-    borderTop: `2px solid ${theme.palette.gray300.main}`
+    borderTop: `0.2rem solid ${theme.palette.gray300.main}`
   },
   expandIcon: {
     '& .MuiSvgIcon-root': {
       color: theme.palette.gray700.main,
-      fontSize: '40px'
+      fontSize: '4rem'
     }
   }
 });

@@ -8,5 +8,5 @@ export const FormDeleteBox = styled(Box, {
   width: '100%',
   height: '100%',
   backgroundColor: boxColor,
-  border: `2px solid ${boxColor}`
+  border: `0.2rem solid ${boxColor}`
 }));
