@@ -19,10 +19,10 @@ const useStyles = makeStyles({
     flexDirection: 'column',
     color: theme.palette.black.main,
     border: `0.1rem solid ${theme.palette.primary.main}`,
-    padding: 16,
-    paddingLeft: 32,
-    paddingRight: 32,
-    margin: 32
+    padding: '1.6rem',
+    paddingLeft: '3.2rem',
+    paddingRight: '3.2rem',
+    margin: '3.2rem'
   }
 });
 
@@ -53,11 +53,11 @@ export default function ProductRequirementAnswer({
 
   const header = (): ReactElement => {
     return (
-      <FlexColumnBox sx={{ width: '100%', marginRight: 4 }}>
+      <FlexColumnBox sx={{ width: '100%', marginRight: '3.2rem' }}>
         <Typography variant="lgBold">
           {requirementAnswer.requirement.title}
         </Typography>
-        <Divider sx={{ marginTop: 2 }} />
+        <Divider sx={{ marginTop: '1,6rem' }} />
         {existingAnswer && <ChosenAnswer requirementAnswer={existingAnswer} />}
       </FlexColumnBox>
     );
@@ -70,7 +70,7 @@ export default function ProductRequirementAnswer({
         <Typography
           variant={'smBold'}
           color={theme.palette.primary.main}
-          sx={{ marginBottom: 1 }}
+          sx={{ marginBottom: '0.8rem' }}
         >
           {t('Requirement answer')}
         </Typography>
