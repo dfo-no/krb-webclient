@@ -29,20 +29,10 @@ const RadioCtrl = ({ name, label, options }: IProps): React.ReactElement => {
         <FormControlLabel
           key={option.value}
           value={option.value}
-          control={
-            <DFORadio
-              sx={{
-                color: 'var(--primary-light-color)',
-                '& .MuiSvgIcon-root': {
-                  fill: 'var(--primary-light-color)'
-                },
-                '&:hover': { background: 'transparent' }
-              }}
-            />
-          }
+          control={<DFORadio />}
           label={
             <Typography variant={'sm'} color={theme.palette.black.main}>
-              XX{option.label}YY
+              {option.label}
             </Typography>
           }
         />
