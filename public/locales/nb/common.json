@@ -109,7 +109,7 @@
   "Remember that you have to download the specification and save it locally on your computer": "Husk at du må laste ned kravspesifikasjonen og lagre den lokalt på din PC.",
   "Requirement": "Krav",
   "Requirement answer": "Kravsbesvarelse",
-  "Requirement guide for supplier": "Her skriver du veiledning til når og hvordan oppdragsgiver kan bruke dette kravet",
+  "Requirement guide for client": "Her skriver du veiledning til når og hvordan oppdragsgiver kan bruke dette kravet",
   "Requirement has children": "Kravet har varianter.",
   "Requirement short description": "Kort beskrivelse av kravet",
   "Requirement specification": "Kravspesifikasjon",
