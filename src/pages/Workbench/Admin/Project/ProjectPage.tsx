@@ -26,7 +26,7 @@ const useStyles = makeStyles({
     display: 'flex',
     height: '100%',
     paddingLeft: 15,
-    borderLeft: '1px solid',
+    borderLeft: '0.1rem solid',
     marginLeft: 'auto',
     width: '40vw'
   }
@@ -42,7 +42,7 @@ const PlainListBox = styled(Box)(({ theme }) => ({
   paddingRight: 15,
   marginBottom: 15,
   backgroundColor: theme.palette.white.main,
-  border: `1px solid ${theme.palette.gray500.main}`
+  border: `0.1rem solid ${theme.palette.gray500.main}`
 }));
 
 function ProjectPage(): React.ReactElement {

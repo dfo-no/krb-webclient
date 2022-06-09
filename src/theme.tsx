@@ -1,50 +1,61 @@
 import '@fontsource/source-sans-pro';
+import '@fontsource/source-serif-pro';
 import { createTheme } from '@mui/material/styles';
+
+const baseFont = ['Source Sans Pro', 'Helvetica', 'Arial', 'sans-serif'].join(
+  ','
+);
+const headerFont = ['Source Serif Pro', 'Times New Roman', 'Serif'].join(',');
 
 const theme = createTheme({
   typography: {
-    fontFamily: ['Source Sans Pro', 'Helvetica', 'Arial'].join(','),
+    htmlFontSize: 10,
+    fontFamily: baseFont,
+    h1: {
+      fontSize: '5rem',
+      fontFamily: headerFont
+    },
     xs: {
-      fontSize: '0.75rem'
+      fontSize: '1.2rem'
     },
     sm: {
-      fontSize: '0.875rem'
+      fontSize: '1.4rem'
     },
     md: {
-      fontSize: '1.125rem'
+      fontSize: '1.8rem'
     },
     lg: {
-      fontSize: '1.375rem'
+      fontSize: '2.2rem'
     },
     xl: {
-      fontSize: '2.25rem'
+      fontSize: '3.6rem'
     },
     xxl: {
-      fontSize: '3.125rem',
+      fontSize: '5.0rem',
       fontWeight: 'bold'
     },
     xsBold: {
-      fontSize: '0.75rem',
+      fontSize: '1.2rem',
       fontWeight: 'bold'
     },
     smBold: {
-      fontSize: '0.875rem',
+      fontSize: '1.4rem',
       fontWeight: 'bold'
     },
     mdBold: {
-      fontSize: '1.125rem',
+      fontSize: '1.8rem',
       fontWeight: 'bold'
     },
     lgBold: {
-      fontSize: '1.375rem',
+      fontSize: '2.2rem',
       fontWeight: 'bold'
     },
     xlBold: {
-      fontSize: '2.25rem',
+      fontSize: '3.6rem',
       fontWeight: 'bold'
     },
     xxlBold: {
-      fontSize: '3.125rem',
+      fontSize: '5.0rem',
       fontWeight: 'bold'
     }
   },
@@ -183,7 +194,7 @@ theme.components = {
     styleOverrides: {
       root: {
         '&.sidebar': {
-          border: '1px solid black',
+          border: '0.1rem solid black',
           backgroundColor: theme.palette.white.main,
           '&.Mui-selected': {
             backgroundColor: theme.palette.primary.main,
@@ -210,11 +221,11 @@ theme.components = {
       }
     }
   },
-  MuiChip: {
+  MuiCardHeader: {
     styleOverrides: {
       root: {
-        height: '100%',
-        '&.MuiChip-root': {
+        '& .MuiCardHeader-title': {
+          fontFamily: headerFont,
           fontWeight: 'bold'
         }
       }

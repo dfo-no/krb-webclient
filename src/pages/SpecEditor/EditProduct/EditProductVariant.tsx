@@ -4,7 +4,7 @@ import { useFormContext, useWatch } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
 import Nexus from '../../../Nexus/Nexus';
-import ProductQuestionList from './QuestionSpecification/ProductQuestionList';
+import ProductQuestionList from './ProductQuestionList';
 import SliderCtrl from '../../../FormProvider/SliderCtrl';
 import theme from '../../../theme';
 import { DFOCheckbox } from '../../../components/DFOCheckbox/DFOCheckbox';
@@ -13,6 +13,8 @@ import { IRequirement } from '../../../Nexus/entities/IRequirement';
 import { IRequirementAnswer } from '../../../models/IRequirementAnswer';
 import { IVariant } from '../../../Nexus/entities/IVariant';
 import { Weighting } from '../../../enums';
+import VariantType from '../../../Nexus/entities/VariantType';
+import { DFOChip } from '../../../components/DFOChip/DFOChip';
 
 interface IProps {
   requirement: IRequirement;
@@ -48,16 +50,26 @@ export default function EditProductVariant({
         <Typography variant={'lg'} sx={{ alignSelf: 'center', marginLeft: 2 }}>
           {variant.description}
         </Typography>
-        <Box sx={{ flex: '0 0 15%', marginLeft: 'auto', paddingLeft: 4 }}>
-          <SliderCtrl
-            name={'weight'}
-            label={`${t('Weighting')}:`}
-            min={Weighting.LOWEST}
-            step={10}
-            max={Weighting.HIGHEST}
-            showValue={false}
-            marks={sliderMark}
-          />
+        <Box
+          sx={{
+            display: 'flex',
+            flex: '0 0 30%',
+            marginLeft: 'auto',
+            paddingLeft: 4
+          }}
+        >
+          <Box sx={{ flexGrow: 1 }}>
+            <SliderCtrl
+              name={'weight'}
+              label={`${t('Weighting')}:`}
+              min={Weighting.LOWEST}
+              step={10}
+              max={Weighting.HIGHEST}
+              showValue={false}
+              marks={sliderMark}
+            />
+          </Box>
+          {variant.type === VariantType.info && <DFOChip label={t('Info')} />}
         </Box>
       </Box>
       <Typography variant={'smBold'} color={theme.palette.primary.main}>
@@ -72,7 +84,7 @@ export default function EditProductVariant({
       <Typography sx={{ marginBottom: 2 }}>
         {variant.instruction ? variant.instruction : '-'}
       </Typography>
-      <Typography variant={'smBold'}>
+      <Typography variant={'smBold'} color={theme.palette.primary.main}>
         {t('How to answer requirement')}
       </Typography>
       <ProductQuestionList variant={variant} />

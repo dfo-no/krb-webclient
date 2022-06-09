@@ -1,9 +1,5 @@
-import { Typography } from '@mui/material';
-import { useTranslation } from 'react-i18next';
-
-import QuestionSpecificationSlider from './QuestionSpecificationSlider';
-import QuestionSpecificationCheckbox from './QuestionSpecificationCheckbox';
-import QuestionSpecificationCodelist from './QuestionSpecificationCodelist';
+import QuestionAnswerCheckbox from './QuestionAnswerCheckbox';
+import QuestionAnswerSlider from './QuestionAnswerSlider';
 import { ICheckboxQuestion } from '../../../../Nexus/entities/ICheckboxQuestion';
 import { ICodelistQuestion } from '../../../../Nexus/entities/ICodelistQuestion';
 import { IFileUploadQuestion } from '../../../../Nexus/entities/IFileUploadQuestion';
@@ -25,21 +21,13 @@ interface IProps {
 }
 
 const QuestionSpecification = ({ item }: IProps) => {
-  const { t } = useTranslation();
-
   switch (item.type) {
-    case QuestionVariant.Q_TEXT:
-      return (
-        <Typography variant={'smBold'} sx={{ marginBottom: 2 }}>
-          {t('No specification needed')}
-        </Typography>
-      );
     case QuestionVariant.Q_CHECKBOX:
-      return <QuestionSpecificationCheckbox />;
+      return <QuestionAnswerCheckbox />;
     case QuestionVariant.Q_SLIDER:
-      return <QuestionSpecificationSlider item={item} />;
+      return <QuestionAnswerSlider item={item} />;
+    case QuestionVariant.Q_TEXT:
     case QuestionVariant.Q_CODELIST:
-      return <QuestionSpecificationCodelist item={item} />;
     case QuestionVariant.Q_PERIOD_DATE:
     case QuestionVariant.Q_TIME:
     case QuestionVariant.Q_FILEUPLOAD:

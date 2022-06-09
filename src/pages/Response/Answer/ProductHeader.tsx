@@ -19,7 +19,7 @@ export default function ProductHeader(): React.ReactElement {
             display: 'flex',
             flexDirection: 'row',
             paddingBottom: 0.5,
-            borderBottom: '1px solid'
+            borderBottom: '0.1rem solid'
           }}
         >
           <Typography variant="lgBold">

@@ -20,9 +20,9 @@ const useStyles = makeStyles({
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'baseline',
-    borderBottom: `1px solid ${theme.palette.black.main}`,
+    borderBottom: `0.1rem solid ${theme.palette.black.main}`,
     paddingBottom: 6,
-    marginRight: 30
+    marginRight: '3rem'
   },
   titleVersion: {
     display: 'flex',
@@ -33,7 +33,7 @@ const useStyles = makeStyles({
   },
   closeIcon: {
     color: theme.palette.gray700.main,
-    fontSize: '28px'
+    fontSize: '2.8rem'
   },
   description: { paddingTop: 5 }
 });

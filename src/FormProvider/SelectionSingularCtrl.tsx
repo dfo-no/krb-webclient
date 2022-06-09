@@ -1,22 +1,23 @@
-import { Controller } from 'react-hook-form';
-import { List, ListItem, Typography, Box, Radio } from '@mui/material';
 import makeStyles from '@mui/styles/makeStyles';
 import React from 'react';
+import { Controller } from 'react-hook-form';
+import { List, ListItem, Typography, Box, Radio } from '@mui/material';
+
 import LoaderSpinner from '../common/LoaderSpinner';
 import theme from '../theme';
 import Utils from '../common/Utils';
-import { Levelable } from '../models/Levelable';
-import { ScrollableContainer } from '../components/ScrollableContainer/ScrollableContainer';
-import { Parentable } from '../models/Parentable';
 import { IBaseModelWithTitleAndDesc } from '../models/IBaseModelWithTitleAndDesc';
+import { Levelable } from '../models/Levelable';
+import { Parentable } from '../models/Parentable';
+import { ScrollableContainer } from '../components/ScrollableContainer/ScrollableContainer';
 
 const useStyles = makeStyles({
   checkbox: {
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-    width: '22px',
-    height: '22px',
+    width: '2.2rem',
+    height: '2.2rem',
     marginRight: 32,
     marginLeft: 16,
     '& .MuiSvgIcon-root': {
@@ -24,7 +25,7 @@ const useStyles = makeStyles({
     }
   },
   list: {
-    border: `1px solid ${theme.palette.black.main}`,
+    border: `0.1rem solid ${theme.palette.black.main}`,
     backgroundColor: theme.palette.gray100.main,
     maxHeight: 400,
     padding: 32
@@ -32,7 +33,7 @@ const useStyles = makeStyles({
   listItem: {
     display: 'flex',
     backgroundColor: theme.palette.white.main,
-    border: `1px solid ${theme.palette.silver.main}`,
+    border: `0.1rem solid ${theme.palette.silver.main}`,
     minHeight: 50,
     padding: 0,
     paddingTop: 8,
@@ -48,7 +49,7 @@ const useStyles = makeStyles({
   },
   itemDescription: {
     marginLeft: 'auto',
-    borderLeft: `1px solid ${theme.palette.silver.main}`,
+    borderLeft: `0.1rem solid ${theme.palette.silver.main}`,
     paddingLeft: 20,
     flex: '0 0 30vw'
   },
@@ -125,7 +126,7 @@ const SelectionSingularCtrl = <T extends IBaseModelWithTitleAndDesc>({
                   key={item.id}
                   className={classes.listItem}
                   sx={{
-                    marginTop: item.level === 1 ? 2 : -0.125, // -0.125 is equal to 1px to prevent double border
+                    marginTop: item.level === 1 ? '1.6rem' : '-0.1rem',
                     marginLeft: `${(item.level - 1) * 2}%`,
                     width: `${100 - (item.level - 1) * 2}%`
                   }}

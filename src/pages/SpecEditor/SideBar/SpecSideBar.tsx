@@ -42,7 +42,7 @@ const useStyles = makeStyles({
   productListItemCard: {
     minHeight: 100,
     boxShadow: 'none',
-    border: `1px solid ${theme.palette.gray300.main}`,
+    border: `0.1rem solid ${theme.palette.gray300.main}`,
     width: '100%',
     cursor: 'pointer',
     '&:hover': {

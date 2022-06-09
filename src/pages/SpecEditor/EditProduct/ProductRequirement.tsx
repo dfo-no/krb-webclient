@@ -44,11 +44,11 @@ const useStyles = makeStyles({
     margin: 32
   },
   active: {
-    border: `2px solid ${theme.palette.secondary.main}`,
-    borderTop: `12px solid ${theme.palette.secondary.main}`
+    border: `0.2rem solid ${theme.palette.secondary.main}`,
+    borderTop: `1.2rem solid ${theme.palette.secondary.main}`
   },
   selected: {
-    border: `2px solid ${theme.palette.primary.main}`
+    border: `0.2rem solid ${theme.palette.primary.main}`
   }
 });
 
@@ -263,7 +263,7 @@ export default function ProductRequirement({
       )}
       {!isSelected() && (
         <Box className={`${classes.card} ${isActive() ? classes.active : ''}`}>
-          <Box sx={{ marginLeft: 6, borderBottom: '1px solid' }}>
+          <Box sx={{ marginLeft: 6, borderBottom: '0.1rem solid' }}>
             <Typography variant="lgBold">{requirement.title}</Typography>
           </Box>
           <FormProvider {...methods}>

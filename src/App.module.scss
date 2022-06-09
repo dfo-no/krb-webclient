@@ -1,10 +1,41 @@
 :root {
-  --primary-main: #012a4c;
-  --lightBlue-main: #1fa9e6;
+  --background-color: #f7f7f7;
+  --secondary-background-color: #bfe7f8;
+  --input-background-color: white;
+
+  --primary-color: #012a4c;
+  --primary-light-color: #005b91;
+  --primary-inactive-color: #80adc8;
+  --secondary-color: #009fe3;
+  --tertiary-color: #00a982;
+  --error-color: #e83f53;
+  --warning-color: #f7b715;
+  --disabled-color: #bbbbbb;
+  --light-color: #bfd6e3;
+  --frontpage-header-color: var(--light-color);
+  --border-color: #798281;
+  --border-color-secondary: #d1d1d1;
+  --text-color: #0e2a49;
+  --text-primary-color: #333333;
+  --text-label-color: var(--text-primary-color);
+  --link-color: var(--primary-light-color);
+  --link-hover-color: #1fa9e6;
+  --line-color: #bcbcbc;
+  --line-color-dark: #8898a6;
+
+  --header-height: 10.1rem;
+}
+
+html {
+  font-size: 62.5%;
+  background: var(--background-color);
 }
 
 body {
   overflow-x: hidden;
+  background: var(--background-color);
+  color: var(--text-primary-color);
+  font-size: 62.5%;
 }
 
 .App {
@@ -13,16 +44,19 @@ body {
   width: 100vw;
   height: 100vh;
   margin: 0;
+  padding: 0;
+  background: var(--background-color);
+  font-size: 1.8rem;
 }
 
 a,
 a:link,
 a:visited,
 a:active {
-  color: var(--primary-main);
+  color: var(--primary-color);
   transition: color 220ms ease-out;
 }
 
 a:hover {
-  color: var(--lightBlue-main);
+  color: var(--link-hover-color);
 }

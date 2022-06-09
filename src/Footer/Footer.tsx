@@ -1,5 +1,5 @@
-import ArrowForwardIos from '@mui/icons-material/ArrowForwardIos';
 import AppBar from '@mui/material/AppBar';
+import ArrowForwardIos from '@mui/icons-material/ArrowForwardIos';
 import CardMedia from '@mui/material/CardMedia';
 import Divider from '@mui/material/Divider';
 import Grid from '@mui/material/Grid';
@@ -12,9 +12,11 @@ import ListItem, {
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-import { styled } from '@mui/material/styles';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
+import { styled } from '@mui/material/styles';
+
+import css from './Footer.module.scss';
 import logoWhite from '../assets/images/logo-white.svg';
 import theme from '../theme';
 
@@ -22,7 +24,7 @@ const StyledListItem = styled(ListItem)<ListItemProps>(({ theme: t }) => {
   return {
     '&.MuiListItem-root': {
       '&.MuiListItem-divider': {
-        borderBottom: `1px solid ${t.palette.lightBlue.main}`
+        borderBottom: `0.1rem solid ${t.palette.white.main}`
       }
     }
   };
@@ -39,7 +41,7 @@ const Footer = () => {
   return (
     <AppBar position="sticky">
       <Toolbar>
-        <Grid container>
+        <Grid container className={css.Footer}>
           <Grid
             item
             xs={12}
@@ -68,7 +70,7 @@ const Footer = () => {
               <Divider
                 component="li"
                 sx={{
-                  borderTop: `1px solid ${theme.palette.lightBlue.main}`
+                  borderTop: `0.1rem solid ${theme.palette.white.main}`
                 }}
               />
               {links.map((link) => (
@@ -79,13 +81,7 @@ const Footer = () => {
                 >
                   <ListItemButton component={Link} href={link.href}>
                     <ListItemText primary={link.title} />
-                    <ListItemIcon
-                      sx={{
-                        color: 'white',
-                        display: 'flex',
-                        justifyContent: 'flex-end'
-                      }}
-                    >
+                    <ListItemIcon className={css.icon}>
                       <ArrowForwardIos />
                     </ListItemIcon>
                   </ListItemButton>

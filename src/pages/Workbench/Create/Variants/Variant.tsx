@@ -30,6 +30,7 @@ import { FormIconButton } from '../../../../components/Form/FormIconButton';
 import VariantFormContent from './VariantFormContent';
 import GeneralErrorMessage from '../../../../Form/GeneralErrorMessage';
 import VariantType from '../../../../Nexus/entities/VariantType';
+import { DFOChip } from '../../../../components/DFOChip/DFOChip';
 
 interface IProps {
   variant: IVariant;
@@ -105,26 +106,17 @@ const Variant = ({ variant, requirementIndex }: IProps) => {
         >
           <AccordionSummary expandIcon={<ExpandMoreIcon />}>
             <Typography>{variant.description}</Typography>
-            {useTypeWatch === VariantType.info && (
-              <Chip
-                color={'primary'}
-                label={t('Info')}
-                sx={{
-                  marginLeft: 'auto',
-                  marginRight: 2,
-                  alignSelf: 'center'
-                }}
-              />
-            )}
-            <FormIconButton
-              hoverColor={theme.palette.errorRed.main}
-              onClick={() => setDeleteMode(variant.id)}
-              sx={
-                useTypeWatch === VariantType.info ? {} : { marginLeft: 'auto' }
-              }
-            >
-              <DeleteIcon />
-            </FormIconButton>
+            <Box sx={{ display: 'flex', marginLeft: 'auto' }}>
+              {useTypeWatch === VariantType.info && (
+                <DFOChip label={t('Info')} />
+              )}
+              <FormIconButton
+                hoverColor={theme.palette.errorRed.main}
+                onClick={() => setDeleteMode(variant.id)}
+              >
+                <DeleteIcon />
+              </FormIconButton>
+            </Box>
           </AccordionSummary>
           <AccordionDetails sx={{ display: 'flex', flexDirection: 'column' }}>
             <VariantFormContent control={methods.control} />

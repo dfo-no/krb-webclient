@@ -20,7 +20,7 @@ const useStyles = makeStyles({
     display: 'flex',
     flexDirection: 'column',
     color: theme.palette.black.main,
-    border: `1px solid ${theme.palette.primary.main}`,
+    border: `0.1rem solid ${theme.palette.primary.main}`,
     padding: 16,
     paddingLeft: 32,
     paddingRight: 32,
@@ -45,7 +45,7 @@ export default function ProductRequirementAnswer({
       <Accordion key={requirementAnswer.id} sx={{ boxShadow: 'none' }}>
         <AccordionSummary expandIcon={<ExpandMoreIcon />}>
           <Box
-            sx={{ borderBottom: '1px solid', width: '100%', marginRight: 4 }}
+            sx={{ borderBottom: '0.1rem solid', width: '100%', marginRight: 4 }}
           >
             <Typography variant="lgBold">
               {requirementAnswer.requirement.title}
