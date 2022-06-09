@@ -2,7 +2,7 @@ import { IconButton, styled } from '@mui/material/';
 
 export const FormIconButton = styled(IconButton, {
   shouldForwardProp: (prop) => prop !== 'hoverColor'
-})<{ hoverColor?: string }>(({ theme, hoverColor }) => ({
+})<{ hoverColor?: string }>(({ hoverColor }) => ({
   display: 'flex',
   alignSelf: 'center',
   padding: 0,
