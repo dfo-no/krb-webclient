@@ -114,13 +114,14 @@ const ProductQuestionsList = ({ variant }: IProps) => {
     });
   };
 
-  return (
-    <Box className={classes.list}>
-      {variant.type === VariantType.info
-        ? getInfoQuestion()
-        : getRequirementQuestions()}
-    </Box>
-  );
+  const getQuestions = (): ReactElement | ReactElement[] => {
+    if (variant.type === VariantType.info) {
+      return getInfoQuestion();
+    }
+    return getRequirementQuestions();
+  };
+
+  return <Box className={classes.list}>{getQuestions()}</Box>;
 };
 
 export default ProductQuestionsList;

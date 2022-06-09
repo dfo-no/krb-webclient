@@ -1,3 +1,5 @@
+import { ReactElement } from 'react';
+
 import QuestionAnswerCheckbox from './QuestionAnswerCheckbox';
 import QuestionAnswerSlider from './QuestionAnswerSlider';
 import { ICheckboxQuestion } from '../../../../Nexus/entities/ICheckboxQuestion';
@@ -20,7 +22,7 @@ interface IProps {
     | ICheckboxQuestion;
 }
 
-const QuestionSpecification = ({ item }: IProps) => {
+const QuestionSpecification = ({ item }: IProps): ReactElement => {
   switch (item.type) {
     case QuestionVariant.Q_CHECKBOX:
       return <QuestionAnswerCheckbox />;
