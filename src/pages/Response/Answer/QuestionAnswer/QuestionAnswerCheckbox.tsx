@@ -1,20 +1,21 @@
 import React, { useEffect } from 'react';
-import { useTranslation } from 'react-i18next';
+import { Box, Button } from '@mui/material';
 import { FormProvider, useForm, useWatch } from 'react-hook-form';
-import CheckboxCtrl from '../../../../FormProvider/CheckboxCtrl';
-import {
-  CheckboxQuestionAnswerSchema,
-  ICheckboxQuestion
-} from '../../../../Nexus/entities/ICheckboxQuestion';
 import { joiResolver } from '@hookform/resolvers/joi';
+import { useTranslation } from 'react-i18next';
+
+import RadioCtrl from '../../../../FormProvider/RadioCtrl';
 import {
   addProductAnswer,
   addRequirementAnswer
 } from '../../../../store/reducers/response-reducer';
-import { useAppDispatch, useAppSelector } from '../../../../store/hooks';
+import {
+  CheckboxQuestionAnswerSchema,
+  ICheckboxQuestion
+} from '../../../../Nexus/entities/ICheckboxQuestion';
 import { IRequirementAnswer } from '../../../../models/IRequirementAnswer';
+import { useAppDispatch, useAppSelector } from '../../../../store/hooks';
 import { useResponseState } from '../../ResponseContext';
-import { Box, Button } from '@mui/material';
 import { useAccordionState } from '../../../../components/DFOAccordion/AccordionContext';
 
 interface IProps {
@@ -75,12 +76,20 @@ const QuestionAnswerCheckbox = ({
         autoComplete="off"
         noValidate
       >
-        <CheckboxCtrl name={'answer.value'} label={t('Yes/No')} />
-        <Box sx={{ display: 'flex', flexDirection: 'row', marginTop: 2 }}>
+        <RadioCtrl
+          name={'answer.value'}
+          options={[
+            { value: 'true', label: t('Yes') },
+            { value: 'false', label: t('No') }
+          ]}
+        />
+        <Box
+          sx={{ display: 'flex', flexDirection: 'row', marginTop: '1.6rem' }}
+        >
           <Button
             variant="cancel"
             onClick={() => methods.reset()}
-            sx={{ marginLeft: 'auto', marginRight: 2 }}
+            sx={{ marginLeft: 'auto', marginRight: '1.6rem' }}
           >
             {t('Reset')}
           </Button>

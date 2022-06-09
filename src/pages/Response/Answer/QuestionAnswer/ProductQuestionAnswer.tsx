@@ -1,8 +1,9 @@
 import React from 'react';
 import { Typography } from '@mui/material';
-import { QuestionVariant } from '../../../../enums';
+
 import QuestionAnswerCheckbox from './QuestionAnswerCheckbox';
 import { IRequirementAnswer } from '../../../../models/IRequirementAnswer';
+import { QuestionVariant } from '../../../../enums';
 
 interface IProps {
   requirementAnswer: IRequirementAnswer;

@@ -1,9 +1,10 @@
 import React from 'react';
+import { t } from 'i18next';
+import { Typography } from '@mui/material';
+
+import theme from '../../../theme';
 import { IRequirementAnswer } from '../../../models/IRequirementAnswer';
 import { QuestionVariant } from '../../../enums';
-import { Typography } from '@mui/material';
-import theme from '../../../theme';
-import { t } from 'i18next';
 
 interface IProps {
   requirementAnswer: IRequirementAnswer;
