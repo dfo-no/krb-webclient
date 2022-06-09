@@ -1,10 +1,11 @@
 import EditIcon from '@mui/icons-material/Edit';
 import React, { useState } from 'react';
+
 import Dialog from '../../../../components/DFODialog/DFODialog';
-import { Parentable } from '../../../../models/Parentable';
-import { INeed } from '../../../../Nexus/entities/INeed';
 import EditNeedForm from './EditNeedForm';
 import { DFOCardHeaderIconButton } from '../../../../components/DFOCard/DFOCardHeaderIconButton';
+import { INeed } from '../../../../Nexus/entities/INeed';
+import { Parentable } from '../../../../models/Parentable';
 import { useSelectState } from '../SelectContext';
 
 interface IProps {
@@ -27,7 +28,12 @@ const EditNeed = ({ need }: IProps) => {
   return (
     <>
       <DFOCardHeaderIconButton
-        sx={{ marginLeft: 'auto', paddingRight: 2 }}
+        disableRipple={true}
+        sx={{
+          alignSelf: 'baseline',
+          marginLeft: 'auto',
+          paddingRight: 'var(--small-gap)'
+        }}
         onClick={handleOpen}
       >
         <EditIcon />

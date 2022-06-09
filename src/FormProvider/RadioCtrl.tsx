@@ -3,12 +3,13 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import FormLabel from '@mui/material/FormLabel';
 import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup/RadioGroup';
-import { get } from 'lodash';
 import React from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
-import { IOption } from '../Nexus/entities/IOption';
+import { get } from 'lodash';
 import { Typography } from '@mui/material';
+
 import theme from '../theme';
+import { IOption } from '../Nexus/entities/IOption';
 
 interface IProps {
   name: string;
@@ -27,7 +28,18 @@ const RadioCtrl = ({ name, label, options }: IProps): React.ReactElement => {
         <FormControlLabel
           key={option.value}
           value={option.value}
-          control={<Radio />}
+          control={
+            <Radio
+              disableRipple={true}
+              sx={{
+                color: 'var(--primary-light-color)',
+                '& .MuiSvgIcon-root': {
+                  fill: 'var(--primary-light-color)'
+                },
+                '&:hover': { background: 'transparent' }
+              }}
+            />
+          }
           label={
             <Typography variant={'sm'} color={theme.palette.black.main}>
               {option.label}

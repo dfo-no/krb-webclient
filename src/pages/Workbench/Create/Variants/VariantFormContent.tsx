@@ -1,18 +1,19 @@
-import { Box, Divider, Typography } from '@mui/material';
 import React from 'react';
+import { Box, Typography } from '@mui/material';
 import { Control, useWatch } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
+
 import CheckboxCtrl from '../../../../FormProvider/CheckboxCtrl';
+import ProductSelection from './ProductSelection';
+import QuestionsList from './QuestionsList';
 import RadioCtrl from '../../../../FormProvider/RadioCtrl';
 import TextAreaCtrl from '../../../../FormProvider/TextAreaCtrl';
-import VerticalTextCtrl from '../../../../FormProvider/VerticalTextCtrl';
-import { IVariant } from '../../../../Nexus/entities/IVariant';
 import VariantType from '../../../../Nexus/entities/VariantType';
-import { useGetProjectQuery } from '../../../../store/api/bankApi';
+import VerticalTextCtrl from '../../../../FormProvider/VerticalTextCtrl';
 import { IRouteProjectParams } from '../../../../models/IRouteProjectParams';
-import QuestionsList from './QuestionsList';
-import ProductSelection from './ProductSelection';
+import { IVariant } from '../../../../Nexus/entities/IVariant';
+import { useGetProjectQuery } from '../../../../store/api/bankApi';
 
 interface IProps {
   control: Control<IVariant>;
@@ -33,39 +34,44 @@ const VariantFormContent = ({ control }: IProps) => {
 
   return (
     <>
-      <Divider sx={{ marginBottom: 2 }} />
       <Box sx={{ marginBottom: 4 }}>
         <VerticalTextCtrl
           name={`description`}
           label={t('Description')}
-          placeholder=""
+          placeholder={t('Requirement short description')}
         />
       </Box>
       <Box sx={{ marginBottom: 4 }}>
         <TextAreaCtrl
           name={`requirementText`}
           label={t('Requirement text')}
-          placeholder=""
+          placeholder={t('Requirement vendor text')}
         />
       </Box>
       <Box sx={{ marginBottom: 4 }}>
         <TextAreaCtrl
           name={`instruction`}
           label={t('Instruction')}
-          placeholder=""
+          placeholder={t('Requirement guide for supplier')}
         />
       </Box>
-      <Typography variant={'smBold'} sx={{ marginBottom: 2 }}>
+      <Typography
+        variant={'smBold'}
+        sx={{ marginBottom: 2, color: 'var(--primary-color)' }}
+      >
         {t('Type variant')}
       </Typography>
       <RadioCtrl
         name="type"
         options={[
-          { value: VariantType.requirement, label: 'Krav' },
-          { value: VariantType.info, label: 'Info' }
+          { value: VariantType.requirement, label: t('Requirement') },
+          { value: VariantType.info, label: t('Info') }
         ]}
       />
-      <Typography variant={'smBold'} sx={{ marginTop: 4, marginBottom: 2 }}>
+      <Typography
+        variant={'smBold'}
+        sx={{ marginTop: 4, marginBottom: 2, color: 'var(--primary-color)' }}
+      >
         {t('How to use this requirement')}
       </Typography>
       <Box sx={{ display: 'flex', width: '100%', marginBottom: 2, gap: 2 }}>
@@ -76,7 +82,10 @@ const VariantFormContent = ({ control }: IProps) => {
         />
       </Box>
       {useProduct && <ProductSelection />}
-      <Typography variant={'smBold'} sx={{ marginTop: 4, marginBottom: 2 }}>
+      <Typography
+        variant={'smBold'}
+        sx={{ marginTop: 4, marginBottom: 2, color: 'var(--primary-color)' }}
+      >
         {t('How to answer requirement')}
       </Typography>
       <QuestionsList />

@@ -1,0 +1,54 @@
+.Dialog {
+  h2 {
+    min-width: 30rem;
+    margin-bottom: var(--normal-gap);
+    padding: 0;
+    color: var(--primary-color);
+    text-align: left;
+  }
+
+  .DialogList {
+    padding-top: 0;
+    padding-bottom: 0;
+
+    .ListItem {
+      &:hover {
+        background: var(--secondary-color);
+        color: white;
+        cursor: pointer;
+      }
+    }
+  }
+}
+
+.QuestionList {
+  padding: var(--small-gap);
+  border: 0.1rem solid var(--primary-light-color);
+  background: var(--background-color);
+
+  .Card {
+    padding: 0;
+
+    + .Card {
+      margin-top: var(--normal-gap);
+    }
+
+    .IconButton {
+      margin-left: auto;
+      margin-right: -0.5rem;
+      padding-right: 0;
+    }
+
+    .Content {
+      display: flex;
+      flex-direction: row;
+      margin: var(--small-gap);
+    }
+  }
+
+  .InputField {
+    + .InputField {
+      padding-top: var(--small-gap);
+    }
+  }
+}

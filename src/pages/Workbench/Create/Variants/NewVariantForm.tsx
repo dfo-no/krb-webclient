@@ -1,29 +1,30 @@
-import { joiResolver } from '@hookform/resolvers/joi';
 import Button from '@mui/material/Button';
 import React from 'react';
+import Typography from '@mui/material/Typography';
+import { Box } from '@mui/material';
 import { FormProvider, useForm } from 'react-hook-form';
+import { joiResolver } from '@hookform/resolvers/joi';
+import { useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { v4 as uuidv4 } from 'uuid';
+
+import GeneralErrorMessage from '../../../../Form/GeneralErrorMessage';
+import LoaderSpinner from '../../../../common/LoaderSpinner';
+import Nexus from '../../../../Nexus/Nexus';
+import useProjectMutations from '../../../../store/api/ProjectMutations';
+import VariantFormContent from './VariantFormContent';
+import { addAlert } from '../../../../store/reducers/alert-reducer';
 import { IAlert } from '../../../../models/IAlert';
-import { Parentable } from '../../../../models/Parentable';
 import { INeed } from '../../../../Nexus/entities/INeed';
+import { IRequirement } from '../../../../Nexus/entities/IRequirement';
+import { IRouteProjectParams } from '../../../../models/IRouteProjectParams';
 import {
   IVariant,
   PostVariantSchema
 } from '../../../../Nexus/entities/IVariant';
+import { Parentable } from '../../../../models/Parentable';
 import { useAppDispatch } from '../../../../store/hooks';
-import { addAlert } from '../../../../store/reducers/alert-reducer';
-import Nexus from '../../../../Nexus/Nexus';
-import useProjectMutations from '../../../../store/api/ProjectMutations';
-import { IRequirement } from '../../../../Nexus/entities/IRequirement';
-import Typography from '@mui/material/Typography';
-import { useParams } from 'react-router-dom';
-import { IRouteProjectParams } from '../../../../models/IRouteProjectParams';
 import { useGetProjectQuery } from '../../../../store/api/bankApi';
-import LoaderSpinner from '../../../../common/LoaderSpinner';
-import { Box } from '@mui/material';
-import VariantFormContent from './VariantFormContent';
-import GeneralErrorMessage from '../../../../Form/GeneralErrorMessage';
 
 interface IProps {
   need: Parentable<INeed>;
@@ -82,17 +83,18 @@ function NewVariantForm({
           noValidate
         >
           <Box sx={{ display: 'flex', flexDirection: 'column', padding: 4 }}>
-            <Typography>{t('Add Variant')}</Typography>
+            <Typography>{t('Add variant')}</Typography>
             <VariantFormContent control={methods.control} />
             <Box sx={{ display: 'flex', flexDirection: 'row', marginTop: 2 }}>
               <Button
+                disableRipple={true}
                 variant="cancel"
                 onClick={() => closeAndReset()}
                 sx={{ marginLeft: 'auto', marginRight: 2 }}
               >
                 {t('Cancel')}
               </Button>
-              <Button variant="save" type="submit">
+              <Button disableRipple={true} variant="save" type="submit">
                 {t('Save')}
               </Button>
             </Box>
