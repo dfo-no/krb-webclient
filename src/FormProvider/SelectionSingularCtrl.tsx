@@ -19,8 +19,8 @@ const useStyles = makeStyles({
     width: '2.2rem',
     height: '2.2rem',
     marginRight: 0,
-    marginLeft: 16,
-    paddingTop: 8,
+    marginLeft: 'var(--small-gap)',
+    paddingTop: 'var(--tiny-gap)',
     '&:hover span': {
       background: 'transparent'
     },
@@ -36,8 +36,8 @@ const useStyles = makeStyles({
     minHeight: 50,
     marginTop: 0,
     padding: 0,
-    paddingTop: 8,
-    paddingBottom: 8,
+    paddingTop: 'var(--tiny-gap)',
+    paddingBottom: 'var(--tiny-gap)',
     cursor: 'pointer',
     transition: 'all 220ms ease-out',
     '&:hover': {
@@ -138,10 +138,7 @@ const SelectionSingularCtrl = <T extends IBaseModelWithTitleAndDesc>({
                   onClick={() => onClick(item, selected, onChange)}
                 >
                   <Box className={classes.checkbox}>
-                    <Radio
-                      checked={itemChecked(item, selected)}
-                      disableRipple={true}
-                    />
+                    <Radio checked={itemChecked(item, selected)} />
                   </Box>
                   <Typography
                     className={classes.itemTitle}

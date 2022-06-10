@@ -1,7 +1,6 @@
 import FormControl from '@mui/material/FormControl';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import FormLabel from '@mui/material/FormLabel';
-import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup/RadioGroup';
 import React from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
@@ -9,6 +8,7 @@ import { get } from 'lodash';
 import { Typography } from '@mui/material';
 
 import theme from '../theme';
+import { DFORadio } from '../components/DFORadio/DFORadio';
 import { IOption } from '../Nexus/entities/IOption';
 
 interface IProps {
@@ -28,18 +28,7 @@ const RadioCtrl = ({ name, label, options }: IProps): React.ReactElement => {
         <FormControlLabel
           key={option.value}
           value={option.value}
-          control={
-            <Radio
-              disableRipple={true}
-              sx={{
-                color: 'var(--primary-light-color)',
-                '& .MuiSvgIcon-root': {
-                  fill: 'var(--primary-light-color)'
-                },
-                '&:hover': { background: 'transparent' }
-              }}
-            />
-          }
+          control={<DFORadio />}
           label={
             <Typography variant={'sm'} color={theme.palette.black.main}>
               {option.label}
@@ -55,7 +44,6 @@ const RadioCtrl = ({ name, label, options }: IProps): React.ReactElement => {
       {label && <FormLabel id={name}>{label}</FormLabel>}
       <Controller
         name={name}
-        defaultValue={options[0]}
         render={({ field }) => (
           <RadioGroup row={true} {...field}>
             {renderOptions(options)}

@@ -4,6 +4,7 @@ import Divider from '@mui/material/Divider';
 import React, { SyntheticEvent } from 'react';
 import {
   Box,
+  Chip,
   Button,
   Typography,
   Accordion,
@@ -31,7 +32,6 @@ import { useAppDispatch } from '../../../../store/hooks';
 import { useGetProjectQuery } from '../../../../store/api/bankApi';
 import { useSelectState } from '../SelectContext';
 import { useVariantState } from '../../VariantContext';
-import { DFOChip } from '../../../../components/DFOChip/DFOChip';
 
 interface IProps {
   variant: IVariant;
@@ -113,20 +113,28 @@ const Variant = ({ variant, requirementIndex }: IProps) => {
         >
           <AccordionSummary expandIcon={<ExpandMoreIcon />}>
             <Typography>{variant.description}</Typography>
-            <Box sx={{ display: 'flex', marginLeft: 'auto' }}>
-              {useTypeWatch === VariantType.info && (
-                <DFOChip label={t('Info')} />
-              )}
-              <FormIconButton
-                disableRipple={true}
-                hoverColor={theme.palette.errorRed.main}
-                onClick={(event) =>
-                  confirmDelete(variant.id, event as unknown as MouseEvent)
-                }
-              >
-                <DeleteIcon />
-              </FormIconButton>
-            </Box>
+            {useTypeWatch === VariantType.info && (
+              <Chip
+                color={'primary'}
+                label={t('Info')}
+                sx={{
+                  marginLeft: 'auto',
+                  marginRight: 2,
+                  alignSelf: 'center'
+                }}
+              />
+            )}
+            <FormIconButton
+              hoverColor={theme.palette.errorRed.main}
+              onClick={(event) =>
+                confirmDelete(variant.id, event as unknown as MouseEvent)
+              }
+              sx={
+                useTypeWatch === VariantType.info ? {} : { marginLeft: 'auto' }
+              }
+            >
+              <DeleteIcon />
+            </FormIconButton>
           </AccordionSummary>
           <AccordionDetails sx={{ display: 'flex', flexDirection: 'column' }}>
             <VariantFormContent control={methods.control} />
@@ -134,19 +142,18 @@ const Variant = ({ variant, requirementIndex }: IProps) => {
               sx={{
                 display: 'flex',
                 flexDirection: 'row',
-                marginTop: 2,
+                marginTop: 'var(--small-gap)',
                 marginBottom: 'var(--normal-gap)'
               }}
             >
               <Button
-                disableRipple={true}
                 variant="cancel"
                 onClick={() => methods.reset()}
-                sx={{ marginLeft: 'auto', marginRight: 2 }}
+                sx={{ marginLeft: 'auto', marginRight: 'var(--small-gap)' }}
               >
                 {t('Reset')}
               </Button>
-              <Button disableRipple={true} variant="save" type="submit">
+              <Button variant="save" type="submit">
                 {t('Save')}
               </Button>
             </Box>

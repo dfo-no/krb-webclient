@@ -93,12 +93,8 @@ export default function Create(): React.ReactElement {
   };
 
   return renderCreatePageWithContent(
-    <Box>
-      <DeleteNeed
-        children={renderNeedCard()}
-        need={project.needs[needIndex]}
-        handleClose={needDeleted}
-      />
-    </Box>
+    <DeleteNeed need={project.needs[needIndex]} handleClose={needDeleted}>
+      {renderNeedCard()}
+    </DeleteNeed>
   );
 }

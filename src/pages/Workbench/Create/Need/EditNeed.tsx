@@ -28,7 +28,6 @@ const EditNeed = ({ need }: IProps) => {
   return (
     <>
       <DFOCardHeaderIconButton
-        disableRipple={true}
         sx={{
           alignSelf: 'baseline',
           marginLeft: 'auto',

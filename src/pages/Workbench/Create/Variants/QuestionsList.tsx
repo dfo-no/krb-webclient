@@ -41,7 +41,6 @@ const QuestionsList = () => {
   return (
     <>
       <Button
-        disableRipple={true}
         sx={{ marginBottom: 1, marginRight: 'auto' }}
         variant="primary"
         onClick={handleClickOpen}
@@ -58,7 +57,6 @@ const QuestionsList = () => {
                   <Typography variant={'smBold'}>{t(item.type)}</Typography>
                   <FormIconButton
                     className={css.IconButton}
-                    disableRipple={true}
                     hoverColor={theme.palette.errorRed.main}
                     onClick={() => remove(index)}
                   >
