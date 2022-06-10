@@ -9,6 +9,7 @@ import { useTranslation } from 'react-i18next';
 import css from './ProductRequirement.module.scss';
 import EditProductVariant from './EditProductVariant';
 import Nexus from '../../../Nexus/Nexus';
+import VariantType from '../../../Nexus/entities/VariantType';
 import ProductVariant from './ProductVariant';
 import {
   addAnswer,
@@ -21,6 +22,7 @@ import {
   removeRequirement
 } from '../../../store/reducers/spesification-reducer';
 import { DFOCheckbox } from '../../../components/DFOCheckbox/DFOCheckbox';
+import { DFOChip } from '../../../components/DFOChip/DFOChip';
 import { FormIconButton } from '../../../components/Form/FormIconButton';
 import { IRequirement } from '../../../Nexus/entities/IRequirement';
 import {
@@ -30,8 +32,6 @@ import {
 import { useAppDispatch, useAppSelector } from '../../../store/hooks';
 import { useSpecificationState } from '../SpecificationContext';
 import { Weighting } from '../../../enums';
-import VariantType from '../../../Nexus/entities/VariantType';
-import { DFOChip } from '../../../components/DFOChip/DFOChip';
 
 interface IProps {
   requirement: IRequirement;
@@ -190,26 +190,16 @@ export default function ProductRequirement({
               variant={activeVariant}
             />
 
-            <Box
-              sx={{
-                display: 'flex',
-                flexDirection: 'row',
-                marginTop: 'var(--small-gap)'
-              }}
-            >
+            <Box className={css.formButtons}>
               <Button
                 variant="cancel"
                 onClick={onCancel}
-                sx={{ marginLeft: 'auto' }}
+                className={css.cancel}
               >
                 {t('Cancel')}
               </Button>
               {activeVariant.questions.length > 0 && (
-                <Button
-                  variant="save"
-                  type="submit"
-                  sx={{ marginLeft: 'var(--small-gap)' }}
-                >
+                <Button variant="save" type="submit" className={css.save}>
                   {t('Save and chose requirement')}
                 </Button>
               )}

@@ -46,4 +46,18 @@
       align-self: center;
     }
   }
+
+  .formButtons {
+    display: flex;
+    flex-direction: row;
+    margin-top: var(--small-gap);
+
+    .cancel {
+      margin-left: auto;
+    }
+
+    .save {
+      margin-left: var(--small-gap);
+    }
+  }
 }
