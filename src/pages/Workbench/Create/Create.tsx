@@ -1,21 +1,20 @@
-import { Box, Card } from '@mui/material/';
-import React, { useEffect } from 'react';
+import React, { ReactElement, useEffect } from 'react';
+import { Box } from '@mui/material/';
 import { useParams } from 'react-router-dom';
+
+import css from './Create.module.scss';
+import CreateSideBar from './CreateSideBar';
+import DeleteNeed from './Need/DeleteNeed';
 import LoaderSpinner from '../../../common/LoaderSpinner';
-import { useGetProjectQuery } from '../../../store/api/bankApi';
-import theme from '../../../theme';
 import NeedHeader from './Need/NeedHeader';
-import NewNeed from './Need/NewNeed';
 import NewRequirement from './Requirement/NewRequirement';
 import ProjectStart from './ProjectStart';
 import Requirement from './Requirement/Requirement';
-import { useSelectState } from './SelectContext';
-import { ScrollableContainer } from '../../../components/ScrollableContainer/ScrollableContainer';
-import { StandardContainer } from '../../../components/StandardContainer/StandardContainer';
-import DeleteNeed from './Need/DeleteNeed';
-import CreateSideBar from './CreateSideBar';
-import { VariantProvider } from '../VariantContext';
 import { IRouteProjectParams } from '../../../models/IRouteProjectParams';
+import { ScrollableContainer } from '../../../components/ScrollableContainer/ScrollableContainer';
+import { useGetProjectQuery } from '../../../store/api/bankApi';
+import { useSelectState } from './SelectContext';
+import { VariantProvider } from '../VariantContext';
 
 export default function Create(): React.ReactElement {
   const { projectId } = useParams<IRouteProjectParams>();
@@ -43,50 +42,24 @@ export default function Create(): React.ReactElement {
     return <></>;
   }
 
-  const renderCreatePageWithContent = (children: React.ReactElement) => {
+  const renderCreatePageWithContent = (
+    children: ReactElement
+  ): ReactElement => {
     return (
-      <Box
-        sx={{
-          display: 'flex',
-          width: '100%',
-          height: '100%',
-          backgroundColor: theme.palette.gray100.main
-        }}
-      >
-        <Box
-          sx={{
-            display: 'flex',
-            flexDirection: 'column',
-            flex: '1 1 0',
-            height: '100%'
-          }}
-        >
-          <NewNeed buttonText={'Legg til nytt behov'} />
-          <CreateSideBar />
-        </Box>
-        <Box sx={{ flex: '3 1 0', height: '100%', minWidth: 0 }}>
-          {children}
-        </Box>
+      <Box className={css.Create}>
+        <CreateSideBar />
+        <Box className={css.MainContent}>{children}</Box>
       </Box>
     );
   };
 
   if (needIndex === null || !project.needs[needIndex]) {
     return renderCreatePageWithContent(
-      <Box
-        sx={{
-          display: 'flex',
-          width: '100%',
-          height: '100%',
-          backgroundColor: theme.palette.gray100.main
-        }}
-      >
-        <>{project.needs.length === 0 && <ProjectStart project={project} />}</>
-      </Box>
+      <>{project.needs.length === 0 && <ProjectStart project={project} />}</>
     );
   }
 
-  const needDeleted = () => {
+  const needDeleted = (): void => {
     setDeleteMode('');
     if (project.needs.length === 1) {
       setNeedIndex(null);
@@ -98,32 +71,13 @@ export default function Create(): React.ReactElement {
     }
   };
 
-  const renderNeedCard = () => {
+  const renderNeedCard = (): ReactElement => {
     return (
-      <Card
-        sx={{
-          display: 'flex',
-          flexDirection: 'column',
-          backgroundColor: theme.palette.gray200.main,
-          height: '100%',
-          width: '100%',
-          paddingBottom: 2
-        }}
-      >
+      <Box className={css.Need}>
         <NeedHeader />
-        <Box
-          sx={{
-            display: 'flex',
-            flexDirection: 'column',
-            paddingLeft: 6,
-            paddingRight: 6,
-            flexGrow: 1,
-            minHeight: 0,
-            width: '100%'
-          }}
-        >
+        <Box className={css.Requirements}>
           <NewRequirement need={project.needs[needIndex]} />
-          <ScrollableContainer sx={{ gap: 4 }}>
+          <ScrollableContainer className={css.List}>
             {project.needs[needIndex] &&
               project.needs[needIndex].requirements.map((req, index) => {
                 return (
@@ -134,17 +88,13 @@ export default function Create(): React.ReactElement {
               })}
           </ScrollableContainer>
         </Box>
-      </Card>
+      </Box>
     );
   };
 
   return renderCreatePageWithContent(
-    <StandardContainer sx={{ width: '90%', maxHeight: '100%' }}>
-      <DeleteNeed
-        children={renderNeedCard()}
-        need={project.needs[needIndex]}
-        handleClose={needDeleted}
-      />
-    </StandardContainer>
+    <DeleteNeed need={project.needs[needIndex]} handleClose={needDeleted}>
+      {renderNeedCard()}
+    </DeleteNeed>
   );
 }

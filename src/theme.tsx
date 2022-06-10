@@ -5,7 +5,7 @@ import { createTheme } from '@mui/material/styles';
 const baseFont = ['Source Sans Pro', 'Helvetica', 'Arial', 'sans-serif'].join(
   ','
 );
-const headerFont = ['Source Serif Pro', 'Times New Roman', 'Serif'].join(',');
+const headerFont = ['Source Serif Pro', 'Times New Roman', 'serif'].join(',');
 
 const theme = createTheme({
   typography: {
@@ -138,6 +138,11 @@ const theme = createTheme({
 });
 
 theme.components = {
+  MuiButtonBase: {
+    defaultProps: {
+      disableRipple: true
+    }
+  },
   MuiButton: {
     variants: [
       {
