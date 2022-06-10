@@ -40,7 +40,6 @@ export default function NeedHeader(): React.ReactElement {
           </Typography>
           <EditNeed need={project.needs[needIndex]} />
           <DFOCardHeaderIconButton
-            disableRipple={true}
             hoverColor={theme.palette.errorRed.main}
             onClick={() => setDeleteMode(project.needs[needIndex].id)}
             sx={{ alignSelf: 'baseline' }}

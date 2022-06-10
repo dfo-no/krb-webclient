@@ -136,10 +136,7 @@ const ProductSelection = (): React.ReactElement => {
                     onClick={() => onClick(item, selected, onChange)}
                   >
                     <Box className={classes.checkbox}>
-                      <DFOCheckbox
-                        checked={productChecked(item, selected)}
-                        disableRipple={true}
-                      />
+                      <DFOCheckbox checked={productChecked(item, selected)} />
                     </Box>
                     <Typography
                       className={classes.itemTitle}

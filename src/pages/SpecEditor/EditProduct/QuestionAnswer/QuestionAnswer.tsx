@@ -33,7 +33,6 @@ const QuestionSpecification = ({ item }: IProps): ReactElement => {
     case QuestionVariant.Q_PERIOD_DATE:
     case QuestionVariant.Q_TIME:
     case QuestionVariant.Q_FILEUPLOAD:
-      return <> Ikke definert </>;
   }
   return <></>;
 };
