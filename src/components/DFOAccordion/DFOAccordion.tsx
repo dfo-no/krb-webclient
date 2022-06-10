@@ -1,12 +1,15 @@
 import makeStyles from '@mui/styles/makeStyles';
-import { useAccordionState } from './AccordionContext';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import Accordion from '@mui/material/Accordion';
-import AccordionDetails from '@mui/material/AccordionDetails';
-import AccordionSummary from '@mui/material/AccordionSummary';
 import React, { SyntheticEvent, ReactElement } from 'react';
+import {
+  Accordion,
+  AccordionDetails,
+  AccordionSummary,
+  Box
+} from '@mui/material/';
+
 import theme from '../../theme';
-import Box from '@mui/material/Box';
+import { useAccordionState } from './AccordionContext';
 
 interface DFOAccordionElementProps {
   eventKey: string;

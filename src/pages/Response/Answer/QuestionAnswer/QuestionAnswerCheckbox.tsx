@@ -4,7 +4,8 @@ import { FormProvider, useForm, useWatch } from 'react-hook-form';
 import { joiResolver } from '@hookform/resolvers/joi';
 import { useTranslation } from 'react-i18next';
 
-import RadioCtrl from '../../../../FormProvider/RadioCtrl';
+import css from '../ProductRequirementAnswer.module.scss';
+import YesNoSelection from '../../../../components/YesNoSelection/YesNoSelection';
 import {
   addProductAnswer,
   addRequirementAnswer
@@ -76,24 +77,19 @@ const QuestionAnswerCheckbox = ({
         autoComplete="off"
         noValidate
       >
-        <RadioCtrl
+        <YesNoSelection
           name={'answer.value'}
-          options={[
-            { value: 'true', label: t('Yes') },
-            { value: 'false', label: t('No') }
-          ]}
+          recommendedAlternative={item.config.preferedAlternative}
         />
-        <Box
-          sx={{ display: 'flex', flexDirection: 'row', marginTop: '1.6rem' }}
-        >
+        <Box className={css.buttons}>
           <Button
             variant="cancel"
             onClick={() => methods.reset()}
-            sx={{ marginLeft: 'auto', marginRight: '1.6rem' }}
+            className={css.cancel}
           >
             {t('Reset')}
           </Button>
-          <Button variant="save" type="submit">
+          <Button variant="save" type="submit" className={css.save}>
             {t('Save')}
           </Button>
         </Box>

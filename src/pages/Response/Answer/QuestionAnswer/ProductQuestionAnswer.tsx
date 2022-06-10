@@ -1,5 +1,4 @@
 import React from 'react';
-import { Typography } from '@mui/material';
 
 import QuestionAnswerCheckbox from './QuestionAnswerCheckbox';
 import { IRequirementAnswer } from '../../../../models/IRequirementAnswer';
@@ -14,17 +13,7 @@ export default function ProductQuestionAnswer({
   requirementAnswer,
   existingAnswer
 }: IProps): React.ReactElement {
-  const noAnswer = (): React.ReactElement => {
-    return (
-      <Typography variant={'smBold'} sx={{ marginBottom: 2 }}>
-        {'Answer not implemented'}
-      </Typography>
-    );
-  };
-
   switch (requirementAnswer.question.type) {
-    case QuestionVariant.Q_TEXT:
-      return noAnswer();
     case QuestionVariant.Q_CHECKBOX:
       return (
         <QuestionAnswerCheckbox
@@ -38,14 +27,11 @@ export default function ProductQuestionAnswer({
           existingAnswer={existingAnswer}
         />
       );
+    case QuestionVariant.Q_TEXT:
     case QuestionVariant.Q_SLIDER:
-      return noAnswer();
     case QuestionVariant.Q_CODELIST:
-      return noAnswer();
     case QuestionVariant.Q_PERIOD_DATE:
-      return noAnswer();
     case QuestionVariant.Q_TIME:
-      return noAnswer();
   }
   return <></>;
 }

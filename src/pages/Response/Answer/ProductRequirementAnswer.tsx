@@ -1,30 +1,16 @@
-import makeStyles from '@mui/styles/makeStyles';
-import theme from '../../../theme';
-import React, { ReactElement } from 'react';
 import { Box, Divider, Typography } from '@mui/material';
-import { IRequirementAnswer } from '../../../models/IRequirementAnswer';
-import ProductVariant from './ProductVariant';
-import { t } from 'i18next';
+import React, { ReactElement } from 'react';
+
+import ChosenAnswer from './ChosenAnswer';
+import css from './ProductRequirementAnswer.module.scss';
 import ProductQuestionAnswer from './QuestionAnswer/ProductQuestionAnswer';
+import ProductVariant from './ProductVariant';
+import theme from '../../../theme';
 import { DFOAccordionElement } from '../../../components/DFOAccordion/DFOAccordion';
-import { FlexColumnBox } from '../../../components/FlexBox/FlexColumnBox';
+import { IRequirementAnswer } from '../../../models/IRequirementAnswer';
+import { t } from 'i18next';
 import { useAppSelector } from '../../../store/hooks';
 import { useResponseState } from '../ResponseContext';
-import ChosenAnswer from './ChosenAnswer';
-
-const useStyles = makeStyles({
-  card: {
-    backgroundColor: theme.palette.white.main,
-    display: 'flex',
-    flexDirection: 'column',
-    color: theme.palette.black.main,
-    border: `0.1rem solid ${theme.palette.primary.main}`,
-    padding: '1.6rem',
-    paddingLeft: '3.2rem',
-    paddingRight: '3.2rem',
-    margin: '3.2rem'
-  }
-});
 
 interface IProps {
   requirementAnswer: IRequirementAnswer;
@@ -33,7 +19,6 @@ interface IProps {
 export default function ProductRequirementAnswer({
   requirementAnswer
 }: IProps): ReactElement {
-  const classes = useStyles();
   const { response } = useAppSelector((state) => state.response);
   const { responseProductIndex } = useResponseState();
   const requirementVariant = requirementAnswer.requirement.variants.find(
@@ -53,24 +38,24 @@ export default function ProductRequirementAnswer({
 
   const header = (): ReactElement => {
     return (
-      <FlexColumnBox sx={{ width: '100%', marginRight: '3.2rem' }}>
+      <Box className={css.header}>
         <Typography variant="lgBold">
           {requirementAnswer.requirement.title}
         </Typography>
-        <Divider sx={{ marginTop: '1.6rem' }} />
+        <Divider className={css.divider} />
         {existingAnswer && <ChosenAnswer requirementAnswer={existingAnswer} />}
-      </FlexColumnBox>
+      </Box>
     );
   };
 
   const body = (): ReactElement => {
     return (
-      <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+      <Box className={css.body}>
         {requirementVariant && <ProductVariant variant={requirementVariant} />}
         <Typography
           variant={'smBold'}
           color={theme.palette.primary.main}
-          sx={{ marginBottom: '0.8rem' }}
+          className={css.title}
         >
           {t('Requirement answer')}
         </Typography>
@@ -80,7 +65,7 @@ export default function ProductRequirementAnswer({
   };
 
   return (
-    <Box className={`${classes.card}`}>
+    <Box className={`${css.ProductRequirementAnswer}`}>
       <DFOAccordionElement
         eventKey={requirementAnswer.id}
         header={header()}

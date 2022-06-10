@@ -106,16 +106,15 @@ const QuestionSpecificationCodelist = ({ item }: IProps) => {
     setShowMandatoryCodes((prev) => !prev);
   };
 
-  const codesList: IOption[] = [];
-  Object.values(codelist.codes).forEach((code, i) => {
-    codesList[i] = { label: code.title, value: code.id };
-  });
-
   const uniqueCodes = new Set();
-  const filteredCodes: IOption[] = codesList.filter((obj) => {
-    const isPresentInSet = uniqueCodes.has(obj.label);
-    return !isPresentInSet;
-  });
+  const filteredCodes: IOption[] = Object.values(codelist.codes)
+    .map((code) => {
+      return { label: code.title, value: code.id, recommended: false };
+    })
+    .filter((obj) => {
+      const isPresentInSet = uniqueCodes.has(obj.label);
+      return !isPresentInSet;
+    });
 
   return (
     <Box>

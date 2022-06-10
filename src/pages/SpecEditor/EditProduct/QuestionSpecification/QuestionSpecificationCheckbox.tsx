@@ -3,8 +3,8 @@ import { Box, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { useFormContext, useWatch } from 'react-hook-form';
 
-import RadioCtrl from '../../../../FormProvider/RadioCtrl';
 import VerticalTextCtrl from '../../../../FormProvider/VerticalTextCtrl';
+import YesNoSelection from '../../../../components/YesNoSelection/YesNoSelection';
 import { DFOCheckbox } from '../../../../components/DFOCheckbox/DFOCheckbox';
 import { FlexColumnBox } from '../../../../components/FlexBox/FlexColumnBox';
 import { IRequirementAnswer } from '../../../../models/IRequirementAnswer';
@@ -34,13 +34,7 @@ const QuestionSpecificationCheckbox = (): ReactElement => {
   return (
     <FlexColumnBox>
       <Typography variant={'smBold'}>{t('Preferred alternative')}</Typography>
-      <RadioCtrl
-        name={'question.config.preferedAlternative'}
-        options={[
-          { value: 'true', label: t('Yes') },
-          { value: 'false', label: t('No') }
-        ]}
-      />
+      <YesNoSelection name={'question.config.preferedAlternative'} />
       <Box onClick={onCheckboxClick} sx={{ paddingTop: 1 }}>
         <DFOCheckbox checked={preferredScore} />
         <Typography variant={'smBold'} sx={{ marginLeft: 1 }}>

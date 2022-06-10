@@ -1,6 +1,7 @@
 import {
   createContext,
   Dispatch,
+  ReactNode,
   SetStateAction,
   useContext,
   useState
@@ -22,7 +23,7 @@ export const AccordionContext =
   createContext<IAccordionContext>(initialContext);
 
 interface IProps {
-  children: React.ReactNode;
+  children: ReactNode;
 }
 
 export const AccordionProvider = ({ children }: IProps) => {

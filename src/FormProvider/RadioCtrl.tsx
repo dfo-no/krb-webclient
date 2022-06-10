@@ -2,7 +2,7 @@ import FormControl from '@mui/material/FormControl';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import FormLabel from '@mui/material/FormLabel';
 import RadioGroup from '@mui/material/RadioGroup/RadioGroup';
-import React from 'react';
+import React, { ReactElement } from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
 import { get } from 'lodash';
 import { Typography } from '@mui/material';
@@ -17,14 +17,14 @@ interface IProps {
   label?: string;
 }
 
-const RadioCtrl = ({ name, label, options }: IProps): React.ReactElement => {
+const RadioCtrl = ({ name, options, label }: IProps): ReactElement => {
   const {
     formState: { errors }
   } = useFormContext();
 
-  const renderOptions = (opts: IOption[]) => {
+  const renderOptions = (opts: IOption[]): ReactElement[] => {
     return opts.map((option) => {
-      return (
+      const formLabel: ReactElement = (
         <FormControlLabel
           key={option.value}
           value={option.value}
@@ -36,6 +36,10 @@ const RadioCtrl = ({ name, label, options }: IProps): React.ReactElement => {
           }
         />
       );
+      if (option.recommended) {
+        return <b>{formLabel}</b>;
+      }
+      return formLabel;
     });
   };
 
