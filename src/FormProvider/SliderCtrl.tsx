@@ -50,6 +50,7 @@ const SliderCtrl = ({
           )}
           <Controller
             name={name}
+            defaultValue={min}
             render={({ field }) => (
               <Slider
                 valueLabelDisplay={showValue ? 'on' : 'off'}

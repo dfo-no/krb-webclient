@@ -1,0 +1,27 @@
+.EditProductVariant {
+  display: flex;
+  flex-direction: column;
+  margin-left: var(--big-gap);
+
+  .titleRow {
+    display: flex;
+    flex-direction: row;
+    margin-left: calc(var(--big-gap) * -1);
+
+    .title {
+      align-self: center;
+      margin-left: var(--from-checkbox-gap);
+    }
+
+    .slider {
+      display: flex;
+      flex: 0 0 30%;
+      margin-left: auto;
+      padding-left: var(--normal-gap);
+    }
+  }
+
+  .infoText {
+    margin-bottom: var(--small-gap);
+  }
+}

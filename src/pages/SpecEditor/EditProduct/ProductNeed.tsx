@@ -18,8 +18,8 @@ export default function ProductNeed({ need }: IProps): React.ReactElement {
           backgroundColor: theme.palette.darkBlue.main,
           color: theme.palette.white.main,
           padding: 0.5,
-          paddingLeft: 4,
-          margin: 4
+          paddingLeft: 'var(--normal-gap)',
+          margin: 'var(--normal-gap)'
         }}
       >
         <Typography variant="smBold">{need.title}</Typography>

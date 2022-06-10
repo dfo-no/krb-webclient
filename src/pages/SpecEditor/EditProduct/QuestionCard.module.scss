@@ -1,0 +1,23 @@
+.QuestionCard {
+  padding: var(--tiny-gap);
+
+  .cardHeader {
+    display: flex;
+    flex-direction: row;
+    margin-left: var(--small-gap);
+    margin-right: var(--small-gap);
+  }
+
+  .cardTitle {
+    display: flex;
+    padding-left: var(--small-gap);
+    align-self: center;
+  }
+
+  .cardContent {
+    display: flex;
+    flex-direction: column;
+    gap: var(--tiny-gap);
+    margin: var(--tiny-gap);
+  }
+}

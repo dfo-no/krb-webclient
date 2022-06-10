@@ -133,7 +133,7 @@ export default function NewProduct(): React.ReactElement {
                   label={t(
                     'How many of this product do you need in this procurement'
                   )}
-                  placeholder={t('quantity')}
+                  placeholder={t('Quantity')}
                   type={'number'}
                 />
                 <Divider sx={{ marginBottom: 4 }} />
