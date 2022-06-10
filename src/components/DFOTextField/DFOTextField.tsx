@@ -3,26 +3,24 @@ import { styled } from '@mui/material/styles';
 
 const DFOTextField = styled(Input)(({ theme }) => ({
   width: '100%',
-  border: `0.2rem solid ${theme.palette.primary.main}`,
+  border: `0.2rem solid var(--primary-light-color)`,
   backgroundColor: theme.palette.white.main,
   height: 45,
   paddingLeft: '1rem',
 
   '&:hover': {
-    border: `0.3rem solid ${theme.palette.primary.main}`
+    border: `0.3rem solid var(--primary-light-color)`
   },
   '&.Mui-focused': {
-    border: `0.3rem solid ${theme.palette.primary.main}`
+    border: `0.3rem solid var(--primary-light-color)`
   },
   '&.Mui-error': {
-    border: `0.2rem solid ${theme.palette.errorRed.main}`,
+    border: `0.2rem solid var(--error-color)`,
     '&:hover': {
-      borderColor: theme.palette.errorRed.main,
-      borderWidth: 3
+      border: '0.3rem solid var(--error-color)'
     },
     '&.Mui-focused': {
-      borderColor: theme.palette.errorRed.main,
-      borderWidth: 3
+      border: '0.3rem solid var(--error-color)'
     }
   }
 }));

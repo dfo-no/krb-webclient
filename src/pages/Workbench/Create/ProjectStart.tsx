@@ -5,9 +5,10 @@ import CardMedia from '@mui/material/CardMedia';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import React from 'react';
+
 import mainIllustration from '../../../assets/images/main-illustration.svg';
-import { IBank } from '../../../Nexus/entities/IBank';
 import NewNeed from './Need/NewNeed';
+import { IBank } from '../../../Nexus/entities/IBank';
 
 interface IProps {
   project: IBank;
@@ -15,7 +16,7 @@ interface IProps {
 
 const ProjectStart = ({ project }: IProps) => {
   return (
-    <Card sx={{ width: '100%', margin: 16 }}>
+    <Card sx={{ width: '100%', margin: '16rem 0' }}>
       <div style={{ display: 'flex', justifyContent: 'center' }}>
         <CardMedia
           component="img"

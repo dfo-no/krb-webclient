@@ -12,7 +12,6 @@
   --warning-color: #f7b715;
   --disabled-color: #bbbbbb;
   --light-color: #bfd6e3;
-  --frontpage-header-color: var(--light-color);
   --border-color: #798281;
   --border-color-secondary: #d1d1d1;
   --text-color: #0e2a49;
@@ -24,6 +23,21 @@
   --line-color-dark: #8898a6;
 
   --header-height: 10.1rem;
+  --header-font: 'Source Pro Serif, Times New Roman, serif';
+
+  --large-gap: 8rem;
+  --big-gap: 4rem;
+  --normal-gap: 2.4rem;
+  --small-gap: 1.6rem;
+  --tiny-gap: 0.8rem;
+
+  @media only screen and (max-width: 768px) {
+    --large-gap: 4rem;
+    --big-gap: 2rem;
+    --normal-gap: 1.7rem;
+    --small-gap: 0.8rem;
+    --tiny-gap: 0.4rem;
+  }
 }
 
 html {

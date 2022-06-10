@@ -1,12 +1,13 @@
 import EditIcon from '@mui/icons-material/Edit';
 import React, { useState } from 'react';
+
 import Dialog from '../../../../components/DFODialog/DFODialog';
-import { Parentable } from '../../../../models/Parentable';
-import { IRequirement } from '../../../../Nexus/entities/IRequirement';
 import EditRequirementForm from './EditRequirementForm';
-import { useSelectState } from '../SelectContext';
-import { INeed } from '../../../../Nexus/entities/INeed';
 import { FormIconButton } from '../../../../components/Form/FormIconButton';
+import { INeed } from '../../../../Nexus/entities/INeed';
+import { IRequirement } from '../../../../Nexus/entities/IRequirement';
+import { Parentable } from '../../../../models/Parentable';
+import { useSelectState } from '../SelectContext';
 
 interface IProps {
   requirement: IRequirement;
@@ -28,7 +29,10 @@ const EditRequirement = ({ requirement, need }: IProps) => {
 
   return (
     <>
-      <FormIconButton sx={{ marginLeft: 'auto' }} onClick={handleOpen}>
+      <FormIconButton
+        sx={{ alignSelf: 'baseline', marginLeft: 'auto' }}
+        onClick={handleOpen}
+      >
         <EditIcon />
       </FormIconButton>
       <Dialog
