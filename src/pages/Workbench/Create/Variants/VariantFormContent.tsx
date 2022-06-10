@@ -52,7 +52,7 @@ const VariantFormContent = ({ control }: IProps) => {
         <TextAreaCtrl
           name={`instruction`}
           label={t('Instruction')}
-          placeholder={t('Requirement guide for supplier')}
+          placeholder={t('Requirement guide for client')}
         />
       </Box>
       <Typography
