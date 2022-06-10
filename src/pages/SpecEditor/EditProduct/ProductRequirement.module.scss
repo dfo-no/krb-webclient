@@ -1,0 +1,49 @@
+.ProductRequirement {
+  --from-checkbox-gap: 1.2rem;
+
+  .card {
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    color: black;
+    padding: var(--small-gap);
+    padding-left: var(--normal-gap);
+    padding-right: var(--normal-gap);
+    margin: var(--normal-gap);
+
+    .title {
+      margin-left: var(--big-gap);
+      border-bottom: 0.1rem solid;
+    }
+  }
+
+  .active {
+    border: 0.2rem solid var(--secondary-color);
+    border-top: 1.2rem solid var(--secondary-color);
+  }
+
+  .selected {
+    border: 0.2rem solid var(--primary-color);
+    flex-direction: row;
+
+    .title {
+      margin-left: var(--small-gap);
+      align-self: center;
+      border-bottom: none;
+    }
+  }
+
+  .weighting {
+    display: flex;
+    flex: 0 0 30%;
+    margin-left: auto;
+    padding-left: var(--small-gap);
+    margin-right: var(--small-gap);
+
+    .weightingText {
+      display: flex;
+      margin-left: auto;
+      align-self: center;
+    }
+  }
+}
