@@ -37,7 +37,7 @@ const RadioCtrl = ({ name, options, label }: IProps): ReactElement => {
         />
       );
       if (option.recommended) {
-        return <b>{formLabel}</b>;
+        return <b key={option.value}>{formLabel}</b>;
       }
       return formLabel;
     });

@@ -13,10 +13,10 @@ const YesNoSelection = ({
   recommendedAlternative
 }: IProps): ReactElement => {
   const isRecommended = (alternative: boolean): boolean => {
-    if (recommendedAlternative !== undefined) {
-      return alternative === recommendedAlternative;
-    }
-    return false;
+    return (
+      recommendedAlternative !== undefined &&
+      alternative === recommendedAlternative
+    );
   };
   return (
     <RadioCtrl

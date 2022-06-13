@@ -1,5 +1,5 @@
 import { Box, Divider, Typography } from '@mui/material';
-import React, { ReactElement } from 'react';
+import React, { ReactElement, useEffect, useState } from 'react';
 
 import ChosenAnswer from './ChosenAnswer';
 import css from './ProductRequirementAnswer.module.scss';
@@ -21,20 +21,25 @@ export default function ProductRequirementAnswer({
 }: IProps): ReactElement {
   const { response } = useAppSelector((state) => state.response);
   const { responseProductIndex } = useResponseState();
+  const [existingAnswer, setExistingAnswer] = useState<
+    IRequirementAnswer | undefined
+  >(undefined);
   const requirementVariant = requirementAnswer.requirement.variants.find(
     (variant) => variant.id === requirementAnswer.variantId
   );
-  let existingAnswer: IRequirementAnswer | undefined;
-  if (
-    responseProductIndex >= 0 &&
-    response.products.length > responseProductIndex
-  ) {
-    existingAnswer = response.products[
-      responseProductIndex
-    ].requirementAnswers.find((reqAns) => {
+
+  useEffect(() => {
+    const answer = (
+      responseProductIndex >= 0
+        ? response.products[responseProductIndex]
+        : response
+    ).requirementAnswers.find((reqAns) => {
       return reqAns.id === requirementAnswer.id;
     });
-  }
+    if (answer) {
+      setExistingAnswer(answer);
+    }
+  }, [requirementAnswer.id, responseProductIndex, response]);
 
   const header = (): ReactElement => {
     return (
@@ -59,7 +64,10 @@ export default function ProductRequirementAnswer({
         >
           {t('Requirement answer')}
         </Typography>
-        <ProductQuestionAnswer requirementAnswer={requirementAnswer} />
+        <ProductQuestionAnswer
+          requirementAnswer={requirementAnswer}
+          existingAnswer={existingAnswer}
+        />
       </Box>
     );
   };

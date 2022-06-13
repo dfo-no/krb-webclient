@@ -22,12 +22,13 @@ import { useAccordionState } from '../../../../components/DFOAccordion/Accordion
 interface IProps {
   item: ICheckboxQuestion;
   parent: IRequirementAnswer;
-  existingAnswer?: IRequirementAnswer;
+  existingAnswer?: ICheckboxQuestion;
 }
 
 const QuestionAnswerCheckbox = ({
   item,
-  parent
+  parent,
+  existingAnswer
 }: IProps): React.ReactElement => {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
@@ -45,12 +46,20 @@ const QuestionAnswerCheckbox = ({
   });
 
   useEffect(() => {
-    if (item.config.preferedAlternative === useAnswerWatch) {
+    if (existingAnswer) {
+      methods.reset(existingAnswer);
+    }
+  }, [existingAnswer, methods]);
+
+  useEffect(() => {
+    const preferred = `${item.config.preferedAlternative}`;
+    const newAnswer = `${useAnswerWatch}`;
+    if (preferred === newAnswer) {
       methods.setValue('answer.point', 100);
     } else {
       methods.setValue('answer.point', item.config.pointsNonPrefered);
     }
-  }, [item, useAnswerWatch, methods]);
+  }, [item.config, useAnswerWatch, methods]);
 
   const onSubmit = (post: ICheckboxQuestion): void => {
     const newAnswer = {

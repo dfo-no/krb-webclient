@@ -17,14 +17,14 @@ export default function ProductQuestionAnswer({
     case QuestionVariant.Q_CHECKBOX:
       return (
         <QuestionAnswerCheckbox
+          item={requirementAnswer.question}
           parent={requirementAnswer}
-          item={
+          existingAnswer={
             existingAnswer &&
             existingAnswer.question.type === QuestionVariant.Q_CHECKBOX
               ? existingAnswer.question
-              : requirementAnswer.question
+              : undefined
           }
-          existingAnswer={existingAnswer}
         />
       );
     case QuestionVariant.Q_TEXT:
