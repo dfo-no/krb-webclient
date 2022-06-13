@@ -1,3 +1,12 @@
+.QuestionCardList {
+  display: flex;
+  flex-direction: column;
+  gap: var(--small-gap);
+  border: 0.1rem solid black;
+  background-color: var(--light-gray-color);
+  padding: var(--normal-gap);
+  margin-bottom: var(--small-gap);
+}
 .QuestionCard {
   padding: var(--tiny-gap);
 
