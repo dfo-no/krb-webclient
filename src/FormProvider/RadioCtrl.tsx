@@ -44,6 +44,7 @@ const RadioCtrl = ({ name, label, options }: IProps): React.ReactElement => {
       {label && <FormLabel id={name}>{label}</FormLabel>}
       <Controller
         name={name}
+        defaultValue={options[0]}
         render={({ field }) => (
           <RadioGroup row={true} {...field}>
             {renderOptions(options)}
