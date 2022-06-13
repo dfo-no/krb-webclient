@@ -1,4 +1,3 @@
-import makeStyles from '@mui/styles/makeStyles';
 import React, { ReactElement, useEffect, useState } from 'react';
 import { Box, Card, Divider, Typography } from '@mui/material';
 import { useFormContext, useWatch } from 'react-hook-form';
@@ -7,7 +6,6 @@ import { useTranslation } from 'react-i18next';
 import css from './QuestionCard.module.scss';
 import QuestionAnswer from './QuestionAnswer/QuestionAnswer';
 import QuestionSpecification from './QuestionSpecification/QuestionSpecification';
-import theme from '../../../theme';
 import VariantType from '../../../Nexus/entities/VariantType';
 import { DFORadioButton } from '../../../components/DFORadioButton/DFORadioButton';
 import { ICheckboxQuestion } from '../../../Nexus/entities/ICheckboxQuestion';
@@ -20,25 +18,12 @@ import { ITextQuestion } from '../../../Nexus/entities/ITextQuestion';
 import { ITimeQuestion } from '../../../Nexus/entities/ITimeQuestion';
 import { IVariant } from '../../../Nexus/entities/IVariant';
 
-const useStyles = makeStyles({
-  list: {
-    display: 'flex',
-    flexDirection: 'column',
-    gap: 'var(--small-gap)',
-    border: `1px solid ${theme.palette.black.main}`,
-    backgroundColor: theme.palette.gray100.main,
-    padding: 'var(--normal-gap)',
-    marginBottom: 'var(--small-gap)'
-  }
-});
-
 interface IProps {
   variant: IVariant;
 }
 
 const ProductQuestionsList = ({ variant }: IProps) => {
   const { t } = useTranslation();
-  const classes = useStyles();
   const [selectedRadioIndex, setSelectedRadioIndex] = useState(-1);
   const { control, setValue } = useFormContext<IRequirementAnswer>();
   const useQuestionId = useWatch({ name: 'questionId', control });
@@ -121,7 +106,7 @@ const ProductQuestionsList = ({ variant }: IProps) => {
     return getRequirementQuestions();
   };
 
-  return <Box className={classes.list}>{getQuestions()}</Box>;
+  return <Box className={css.QuestionCardList}>{getQuestions()}</Box>;
 };
 
 export default ProductQuestionsList;
