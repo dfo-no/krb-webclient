@@ -4,9 +4,9 @@ import { useTranslation } from 'react-i18next';
 
 import css from './Variant.module.scss';
 import CheckboxCtrl from '../../../../FormProvider/CheckboxCtrl';
-import RadioCtrl from '../../../../FormProvider/RadioCtrl';
 import SelectionSingularCtrl from '../../../../FormProvider/SelectionSingularCtrl';
 import VerticalTextCtrl from '../../../../FormProvider/VerticalTextCtrl';
+import YesNoSelection from '../../../../components/YesNoSelection/YesNoSelection';
 import { ICheckboxQuestion } from '../../../../Nexus/entities/ICheckboxQuestion';
 import { ICodelistQuestion } from '../../../../Nexus/entities/ICodelistQuestion';
 import { IFileUploadQuestion } from '../../../../Nexus/entities/IFileUploadQuestion';
@@ -63,14 +63,10 @@ const QuestionConfig = ({ item, index }: IProps) => {
           <Typography variant={'smBold'} sx={{ marginBottom: 2 }}>
             {t('Preferred alternative')}
           </Typography>
-          <RadioCtrl
+          <YesNoSelection
             name={
               `questions.${index}.config.preferedAlternative` as 'questions.0.config.preferedAlternative'
             }
-            options={[
-              { value: 'true', label: t('Yes') },
-              { value: 'false', label: t('No') }
-            ]}
           />
         </ConfigBox>
       );

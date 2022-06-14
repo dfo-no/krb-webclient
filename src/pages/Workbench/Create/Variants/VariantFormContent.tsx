@@ -64,8 +64,12 @@ const VariantFormContent = ({ control }: IProps) => {
       <RadioCtrl
         name="type"
         options={[
-          { value: VariantType.requirement, label: t('Requirement') },
-          { value: VariantType.info, label: t('Info') }
+          {
+            value: VariantType.requirement,
+            label: t('Requirement'),
+            recommended: false
+          },
+          { value: VariantType.info, label: t('Info'), recommended: false }
         ]}
       />
       <Typography

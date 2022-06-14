@@ -9,7 +9,7 @@ import { ResponseProvider } from './ResponseContext';
 interface IRouteParams {
   bankId: string;
 }
-export default function SpecModule(): React.ReactElement {
+export default function ResponseModule(): React.ReactElement {
   const projectMatch = useRouteMatch<IRouteParams>('/responseeditor/:bankId');
   const dispatch = useAppDispatch();
   const { id } = useAppSelector((state) => state.selectedBank);
