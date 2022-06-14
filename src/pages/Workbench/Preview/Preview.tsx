@@ -1,12 +1,14 @@
-import Box from '@mui/material/Box';
 import React from 'react';
+import { Box } from '@mui/material/';
 import { useParams } from 'react-router-dom';
+
+import css from './Preview.module.scss';
 import LoaderSpinner from '../../../common/LoaderSpinner';
-import { useGetProjectQuery } from '../../../store/api/bankApi';
-import { IRouteProjectParams } from '../../../models/IRouteProjectParams';
 import PreviewSideBar from './PreviewSideBar';
 import ProductPreview from './ProductPreview';
-import theme from '../../../theme';
+import { IProduct } from '../../../Nexus/entities/IProduct';
+import { IRouteProjectParams } from '../../../models/IRouteProjectParams';
+import { useGetProjectQuery } from '../../../store/api/bankApi';
 
 export default function Preview(): React.ReactElement {
   const { projectId } = useParams<IRouteProjectParams>();
@@ -16,21 +18,14 @@ export default function Preview(): React.ReactElement {
     return <LoaderSpinner />;
   }
 
+  const nonDeletedProducts = (): IProduct[] => {
+    return project.products.filter((product) => product.deletedDate === null);
+  };
+
   return (
-    <Box
-      sx={{
-        display: 'flex',
-        height: '100%',
-        width: '100%',
-        backgroundColor: theme.palette.gray100.main
-      }}
-    >
-      <Box sx={{ height: '100%', flex: '1 1 0' }}>
-        <PreviewSideBar parentableArray={project.products} />
-      </Box>
-      <Box sx={{ height: '100%', flex: '3 1 0' }}>
-        <ProductPreview />
-      </Box>
+    <Box className={css.Preview}>
+      <PreviewSideBar parentableArray={nonDeletedProducts()} />
+      <ProductPreview />
     </Box>
   );
 }

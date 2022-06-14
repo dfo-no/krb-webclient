@@ -1,0 +1,42 @@
+.ProductRequirementAnswer {
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  color: black;
+  border: 0.1rem solid var(--primary-color);
+  padding: var(--small-gap);
+  padding-left: var(--normal-gap);
+  padding-right: var(--normal-gap);
+  margin: var(--normal-gap);
+
+  .header {
+    width: 100%;
+    margin-right: var(--normal-gap);
+
+    .divider {
+      margin-top: var(--small-gap);
+    }
+  }
+
+  .body {
+    margin-top: var(--small-gap);
+
+    .title {
+      margin-bottom: var(--tiny-gap);
+    }
+
+    .buttons {
+      display: flex;
+      flex-direction: row;
+      margin-top: var(--small-gap);
+
+      .cancel {
+        margin-left: auto;
+      }
+
+      .save {
+        margin-left: var(--small-gap);
+      }
+    }
+  }
+}
