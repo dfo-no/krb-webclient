@@ -26,7 +26,7 @@ const useStyles = makeStyles({
   }
 });
 
-export const DFOAccordionElement = ({
+export const DFOAccordion = ({
   eventKey,
   header,
   body

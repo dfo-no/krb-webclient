@@ -6,7 +6,7 @@ import css from './ProductRequirementAnswer.module.scss';
 import ProductQuestionAnswer from './QuestionAnswer/ProductQuestionAnswer';
 import ProductVariant from './ProductVariant';
 import theme from '../../../theme';
-import { DFOAccordionElement } from '../../../components/DFOAccordion/DFOAccordion';
+import { DFOAccordion } from '../../../components/DFOAccordion/DFOAccordion';
 import { IRequirementAnswer } from '../../../models/IRequirementAnswer';
 import { t } from 'i18next';
 import { useAppSelector } from '../../../store/hooks';
@@ -74,7 +74,7 @@ export default function ProductRequirementAnswer({
 
   return (
     <Box className={`${css.ProductRequirementAnswer}`}>
-      <DFOAccordionElement
+      <DFOAccordion
         eventKey={requirementAnswer.id}
         header={header()}
         body={body()}

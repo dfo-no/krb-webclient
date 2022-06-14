@@ -1,17 +1,17 @@
-import { Box } from '@mui/material';
 import React, { ReactElement } from 'react';
 import makeStyles from '@mui/styles/makeStyles';
-import theme from '../../../theme';
-import { useAppSelector } from '../../../store/hooks';
-import { useResponseState } from '../ResponseContext';
-import { ScrollableContainer } from '../../../components/ScrollableContainer/ScrollableContainer';
+import { Box } from '@mui/material';
 
-import ProductNeed from './ProductNeed';
 import ProductHeader from './ProductHeader';
+import ProductNeed from './ProductNeed';
 import ProductRequirementAnswer from './ProductRequirementAnswer';
+import theme from '../../../theme';
+import { AccordionProvider } from '../../../components/DFOAccordion/AccordionContext';
 import { INeed } from '../../../Nexus/entities/INeed';
 import { IRequirementAnswer } from '../../../models/IRequirementAnswer';
-import { AccordionProvider } from '../../../components/DFOAccordion/AccordionContext';
+import { ScrollableContainer } from '../../../components/ScrollableContainer/ScrollableContainer';
+import { useAppSelector } from '../../../store/hooks';
+import { useResponseState } from '../ResponseContext';
 
 const useStyles = makeStyles({
   newProduct: {

@@ -19,8 +19,7 @@ const initialContext: IAccordionContext = {
   }
 };
 
-export const AccordionContext =
-  createContext<IAccordionContext>(initialContext);
+const AccordionContext = createContext<IAccordionContext>(initialContext);
 
 interface IProps {
   children: ReactNode;

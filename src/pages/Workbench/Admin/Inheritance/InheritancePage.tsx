@@ -2,7 +2,7 @@ import Box from '@mui/material/Box';
 import makeStyles from '@mui/styles/makeStyles';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { DFOAccordionElement } from '../../../../components/DFOAccordion/DFOAccordion';
+import { DFOAccordion } from '../../../../components/DFOAccordion/DFOAccordion';
 import DFOSearchBar from '../../../../components/DFOSearchBar/DFOSearchBar';
 import { IInheritedBank } from '../../../../models/IInheritedBank';
 import { IBaseModel } from '../../../../Nexus/entities/IBaseModel';
@@ -43,7 +43,7 @@ export default function InheritancePage(): React.ReactElement {
         {inheritedBanksList.map((bank: IInheritedBank) => {
           return (
             <Box className={classes.accordionElement} key={bank.id}>
-              <DFOAccordionElement
+              <DFOAccordion
                 eventKey={bank.id}
                 header={<InheritanceBankHeader bank={bank} />}
                 body={<InheritanceBankBody bank={bank} />}
