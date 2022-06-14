@@ -1,5 +1,6 @@
 import React from 'react';
 import { Box, Typography } from '@mui/material';
+import { useParams } from 'react-router-dom';
 
 import css from './Preview.module.scss';
 import RequirementPreview from './RequirementPreview';
@@ -7,7 +8,6 @@ import Utils from '../../../common/Utils';
 import { INeed } from '../../../Nexus/entities/INeed';
 import { IRouteProjectParams } from '../../../models/IRouteProjectParams';
 import { Parentable } from '../../../models/Parentable';
-import { useParams } from 'react-router-dom';
 import { useGetProjectQuery } from '../../../store/api/bankApi';
 import { VariantProvider } from '../VariantContext';
 

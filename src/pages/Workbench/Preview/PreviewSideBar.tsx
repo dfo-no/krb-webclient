@@ -1,3 +1,4 @@
+import classnames from 'classnames';
 import React from 'react';
 import { Box, Typography, List, ListItem } from '@mui/material';
 import { t } from 'i18next';
@@ -7,7 +8,6 @@ import Utils from '../../../common/Utils';
 import { IProduct } from '../../../Nexus/entities/IProduct';
 import { Parentable } from '../../../models/Parentable';
 import { usePreviewState } from './PreviewContext';
-import classnames from 'classnames';
 
 interface IProps {
   parentableArray: Parentable<IProduct>[];

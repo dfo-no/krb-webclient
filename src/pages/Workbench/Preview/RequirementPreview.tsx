@@ -1,13 +1,13 @@
 import classnames from 'classnames';
 import React from 'react';
 import { Box, Divider, Typography } from '@mui/material';
+import { useParams } from 'react-router-dom';
 
 import css from './Preview.module.scss';
 import VariantPreview from './VariantPreview';
 import { IRequirement } from '../../../Nexus/entities/IRequirement';
 import { IRouteProjectParams } from '../../../models/IRouteProjectParams';
 import { useGetProjectQuery } from '../../../store/api/bankApi';
-import { useParams } from 'react-router-dom';
 import { useVariantState } from '../VariantContext';
 
 interface IProps {
