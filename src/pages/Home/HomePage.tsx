@@ -12,7 +12,6 @@ import HomeDisplayList from './HomeDisplayList';
 import HomeSearchBar from './HomeSearchBar';
 import ProjectSelectionModal from './ProjectSelectionModal';
 import { IBank } from '../../Nexus/entities/IBank';
-import { ScrollableContainer } from '../../components/ScrollableContainer/ScrollableContainer';
 import { useBankState } from '../../components/BankContext/BankContext';
 import { useGetBanksQuery } from '../../store/api/bankApi';
 
@@ -79,7 +78,7 @@ export default function HomePage(): React.ReactElement {
 
   return (
     <div className={classes.homepageWrapper}>
-      <ScrollableContainer>
+      <div>
         <Box className={classes.scrollableContent}>
           <Box className={classes.actionContainer}>
             <Box className={classes.navigation}>
@@ -119,7 +118,7 @@ export default function HomePage(): React.ReactElement {
             />
           </Box>
         </Box>
-      </ScrollableContainer>
+      </div>
       <Footer />
       {selectedBank && <ProjectSelectionModal selectedBank={selectedBank} />}
     </div>
