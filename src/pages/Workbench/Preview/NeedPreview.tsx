@@ -1,14 +1,15 @@
 import React from 'react';
 import { Box, Typography } from '@mui/material';
-import { INeed } from '../../../Nexus/entities/INeed';
-import { Parentable } from '../../../models/Parentable';
-import theme from '../../../theme';
-import { useParams } from 'react-router-dom';
-import { IRouteProjectParams } from '../../../models/IRouteProjectParams';
-import { useGetProjectQuery } from '../../../store/api/bankApi';
+
+import css from './Preview.module.scss';
 import RequirementPreview from './RequirementPreview';
-import { VariantProvider } from '../VariantContext';
 import Utils from '../../../common/Utils';
+import { INeed } from '../../../Nexus/entities/INeed';
+import { IRouteProjectParams } from '../../../models/IRouteProjectParams';
+import { Parentable } from '../../../models/Parentable';
+import { useParams } from 'react-router-dom';
+import { useGetProjectQuery } from '../../../store/api/bankApi';
+import { VariantProvider } from '../VariantContext';
 
 interface IProps {
   need: Parentable<INeed>;
@@ -37,25 +38,19 @@ export default function NeedPreview({ need }: IProps): React.ReactElement {
 
   return (
     <Box>
-      <Box
-        sx={{
-          backgroundColor: theme.palette.darkBlue.main,
-          color: theme.palette.white.main,
-          padding: 0.5,
-          paddingLeft: 4,
-          margin: 4
-        }}
-      >
+      <Box className={css.Need}>
         <Typography variant="sm">{getFullPath()}</Typography>
         <Typography variant="smBold">{need.title}</Typography>
       </Box>
-      {need.requirements.map((req) => {
-        return (
-          <VariantProvider key={req.id}>
-            <RequirementPreview requirement={req} />
-          </VariantProvider>
-        );
-      })}
+      <Box className={css.Requirement}>
+        {need.requirements.map((req) => {
+          return (
+            <VariantProvider key={req.id}>
+              <RequirementPreview requirement={req} />
+            </VariantProvider>
+          );
+        })}
+      </Box>
     </Box>
   );
 }

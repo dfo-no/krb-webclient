@@ -1,64 +1,22 @@
-import { Box, Typography } from '@mui/material';
-import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
-import makeStyles from '@mui/styles/makeStyles';
-import { t } from 'i18next';
 import React from 'react';
+import { Box, Typography, List, ListItem } from '@mui/material';
+import { t } from 'i18next';
+
+import css from './Preview.module.scss';
 import Utils from '../../../common/Utils';
-import { Parentable } from '../../../models/Parentable';
 import { IProduct } from '../../../Nexus/entities/IProduct';
-import theme from '../../../theme';
-import { ScrollableContainer } from '../../../components/ScrollableContainer/ScrollableContainer';
+import { Parentable } from '../../../models/Parentable';
 import { usePreviewState } from './PreviewContext';
+import classnames from 'classnames';
 
 interface IProps {
   parentableArray: Parentable<IProduct>[];
 }
 
-const useStyles = makeStyles({
-  sideBarList: {
-    position: 'sticky',
-    height: '100%',
-    width: '100%',
-    minWidth: 230,
-    paddingLeft: '5%',
-    paddingTop: 0
-  },
-  listItem: {
-    cursor: 'pointer',
-    minHeight: 36,
-    background: theme.palette.white.main,
-    '&:hover': {
-      background: theme.palette.lightBlue.main,
-      color: theme.palette.white.main
-    }
-  },
-  listItemParent: {
-    border: `0.1rem solid ${theme.palette.gray400.main}`,
-    '&:not(:first-child)': {
-      marginTop: 'var(--small-gap)'
-    }
-  },
-  listItemChild: {
-    borderLeft: `0.1rem solid ${theme.palette.gray400.main}`,
-    borderRight: `0.1rem solid ${theme.palette.gray400.main}`,
-    borderBottom: `0.1rem solid ${theme.palette.gray400.main}`
-  },
-  selectedListItem: {
-    background: theme.palette.primary.main,
-    color: theme.palette.white.main
-  },
-  itemNameText: {
-    display: 'flex',
-    alignSelf: 'center'
-  }
-});
-
 export default function PreviewSideBar({
   parentableArray
 }: IProps): React.ReactElement {
   const { setSelected } = usePreviewState();
-  const classes = useStyles();
   const [selectedIndex, setSelectedIndex] = React.useState(0);
 
   const handleListItemClick = (
@@ -79,13 +37,11 @@ export default function PreviewSideBar({
       return (
         <ListItem
           key={element.id}
-          className={`${classes.listItem} 
-                      ${
-                        isParent
-                          ? classes.listItemParent
-                          : classes.listItemChild
-                      } 
-                      ${isSelected ? classes.selectedListItem : ''}`}
+          className={classnames(
+            css.item,
+            isParent ? css.parent : css.child,
+            isSelected ? css.selected : undefined
+          )}
           sx={{
             marginLeft: `${element.level * 2.5}rem`,
             width: `calc(100% - ${element.level * 2.5}rem)`
@@ -93,7 +49,7 @@ export default function PreviewSideBar({
           onClick={() => handleListItemClick(element, index + 1)}
         >
           <Typography
-            className={classes.itemNameText}
+            className={css.title}
             variant={element.parent === '' ? 'smBold' : 'sm'}
           >
             {element.title}
@@ -104,30 +60,27 @@ export default function PreviewSideBar({
   };
 
   return (
-    <Box
-      sx={{ paddingBottom: 5, paddingTop: 5, height: '100%', width: '100%' }}
-    >
-      <ScrollableContainer sx={{ height: '100%' }}>
-        <List className={classes.sideBarList}>
-          <ListItem
-            key="generic"
-            className={`${classes.listItem} ${
-              classes.listItemParent
-            }            
-            ${selectedIndex === 0 ? classes.selectedListItem : ''}`}
-            onClick={() => handleListItemClick(null, 0)}
-            sx={{
-              marginLeft: `${1 * 2.5}rem`,
-              width: `calc(100% - ${1 * 2.5}rem)`
-            }}
-          >
-            <Typography className={classes.itemNameText} variant="smBold">
-              {t('General requirements')}
-            </Typography>
-          </ListItem>
-          {renderProducts(parentableArray)}
-        </List>
-      </ScrollableContainer>
+    <Box className={css.SideBar}>
+      <List className={css.list}>
+        <ListItem
+          key="generic"
+          className={classnames(
+            css.item,
+            css.parent,
+            selectedIndex === 0 ? css.selected : undefined
+          )}
+          onClick={() => handleListItemClick(null, 0)}
+          sx={{
+            marginLeft: `2.5rem`,
+            width: `calc(100% - 2.5rem)`
+          }}
+        >
+          <Typography className={css.title} variant="smBold">
+            {t('General requirements')}
+          </Typography>
+        </ListItem>
+        {renderProducts(parentableArray)}
+      </List>
     </Box>
   );
 }
