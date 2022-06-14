@@ -1,16 +1,17 @@
-import DeleteIcon from '@mui/icons-material/Delete';
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
+import DeleteIcon from '@mui/icons-material/Delete';
 import Divider from '@mui/material/Divider';
 import ListItem from '@mui/material/ListItem';
-import Typography from '@mui/material/Typography';
 import makeStyles from '@mui/styles/makeStyles';
+import Typography from '@mui/material/Typography';
 import { Link } from 'react-router-dom';
-import { IBank } from '../../../Nexus/entities/IBank';
-import theme from '../../../theme';
-import { useEditableState } from '../../../components/EditableContext/EditableContext';
-import { FormIconButton } from '../../../components/Form/FormIconButton';
+
 import DeleteProjectForm from './DeleteProjectForm';
+import theme from '../../../theme';
+import { FormIconButton } from '../../../components/Form/FormIconButton';
+import { IBank } from '../../../Nexus/entities/IBank';
+import { useEditableState } from '../../../components/EditableContext/EditableContext';
 
 interface IProps {
   project: IBank;
@@ -20,7 +21,7 @@ const useStyles = makeStyles({
   projectListItemCard: {
     height: 100,
     boxShadow: 'none',
-    border: `1px solid ${theme.palette.gray300.main}`,
+    border: `0.1rem solid ${theme.palette.gray300.main}`,
     textDecoration: 'none',
     width: '100%',
     cursor: 'pointer',
@@ -91,7 +92,15 @@ const ProjectItem = ({ project }: IProps) => {
           <Card className={classes.projectListItemCard}>
             <Box className={classes.projectListItemCardContent}>
               <Box className={classes.projectListItemTitleButton}>
-                <Typography variant="mdBold">{project.title}</Typography>
+                <Typography
+                  variant="mdBold"
+                  sx={{
+                    fontFamily: 'var(--header-font)',
+                    fontSize: '2.2rem'
+                  }}
+                >
+                  {project.title}
+                </Typography>
               </Box>
               <Divider className={classes.projectListItemDivider} />
               <Typography variant="sm">{project.description}</Typography>

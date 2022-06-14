@@ -9,7 +9,7 @@ export const SearchContainer = styled(Box)(({}) => ({
 }));
 
 export const SearchFieldContainer = styled(Box)(({}) => ({
-  width: '25vw',
+  width: '50%',
   alignSelf: 'center'
 }));
 

@@ -2,11 +2,15 @@ import EditIcon from '@mui/icons-material/Edit';
 import React from 'react';
 import { Box, Typography } from '@mui/material';
 import { useFormContext } from 'react-hook-form';
+import { t } from 'i18next';
 
+import css from './ProductVariant.module.scss';
 import { DFOCheckbox } from '../../../components/DFOCheckbox/DFOCheckbox';
+import { DFOChip } from '../../../components/DFOChip/DFOChip';
 import { FormIconButton } from '../../../components/Form/FormIconButton';
 import { IRequirementAnswer } from '../../../models/IRequirementAnswer';
 import { IVariant } from '../../../Nexus/entities/IVariant';
+import VariantType from '../../../Nexus/entities/VariantType';
 
 interface IProps {
   variant: IVariant;
@@ -22,14 +26,17 @@ export default function ProductVariant({
   };
 
   return (
-    <Box onClick={openVariant} sx={{ display: 'flex', flexDirection: 'row' }}>
+    <Box onClick={openVariant} className={css.ProductVariant}>
       <DFOCheckbox checked={false} />
-      <Typography variant={'lg'} sx={{ alignSelf: 'center', marginLeft: 2 }}>
+      <Typography variant={'lg'} className={css.title}>
         {variant.description}
       </Typography>
-      <FormIconButton sx={{ marginLeft: 'auto' }}>
-        <EditIcon />
-      </FormIconButton>
+      <Box className={css.icons}>
+        {variant.type === VariantType.info && <DFOChip label={t('Info')} />}
+        <FormIconButton>
+          <EditIcon />
+        </FormIconButton>
+      </Box>
     </Box>
   );
 }

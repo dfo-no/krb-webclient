@@ -1,7 +1,9 @@
 import Autocomplete from '@mui/material/Autocomplete';
-import TextField from '@mui/material/TextField';
+import makeStyles from '@mui/styles/makeStyles';
 import React from 'react';
+import TextField from '@mui/material/TextField';
 import { useTranslation } from 'react-i18next';
+
 import { IBank } from '../../Nexus/entities/IBank';
 import { useBankState } from '../../components/BankContext/BankContext';
 
@@ -14,10 +16,16 @@ interface ILabel {
   value: string;
 }
 
-export default function HomeSearchBar({ list }: IProps): React.ReactElement {
-  const { setSelectedBank } = useBankState();
+const useStyles = makeStyles({
+  autocomplete: {
+    background: 'var(--input-background-color)'
+  }
+});
 
+const HomeSearchBar = ({ list }: IProps): React.ReactElement => {
+  const { setSelectedBank } = useBankState();
   const { t } = useTranslation();
+  const classes = useStyles();
 
   const bankMap: Map<string, IBank> = new Map<string, IBank>();
   const displayList: ILabel[] = list.map((item) => {
@@ -36,6 +44,7 @@ export default function HomeSearchBar({ list }: IProps): React.ReactElement {
 
   return (
     <Autocomplete
+      className={classes.autocomplete}
       options={displayList}
       disablePortal={true}
       onChange={(event, newValue) => onValueSelected(newValue)}
@@ -45,4 +54,6 @@ export default function HomeSearchBar({ list }: IProps): React.ReactElement {
       )}
     />
   );
-}
+};
+
+export default HomeSearchBar;

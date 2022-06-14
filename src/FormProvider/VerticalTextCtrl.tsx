@@ -1,55 +1,58 @@
-import { Box, FormControl, FormLabel, Typography } from '@mui/material';
-import { get } from 'lodash';
 import React from 'react';
+import { FormControl, FormLabel, Typography } from '@mui/material';
 import { Controller, useFormContext } from 'react-hook-form';
+import { get } from 'lodash';
+
+import DFOInput from '../components/DFOTextField/DFOTextField';
 import DFOTextField from '../components/DFOTextField/DFOTextField';
 import theme from '../theme';
 
 interface IProps {
+  className?: string;
   name: string;
   label: string;
   placeholder?: string;
   type?: string;
-  endAdornment?: object;
 }
 
 const VerticalTextCtrl = ({
+  className,
   name,
   label = '',
   placeholder = '',
-  type = 'text',
-  endAdornment
+  type = 'text'
 }: IProps): React.ReactElement => {
   const {
     formState: { errors }
   } = useFormContext();
 
   return (
-    <FormControl error={!!get(errors, name)} sx={{ width: '100%' }}>
-      <Box sx={{ display: 'flex', gap: 1, flexDirection: 'column' }}>
-        <Typography variant={'smBold'} color={theme.palette.primary.main}>
-          {label}
-        </Typography>
-        <Controller
-          name={name}
-          render={({ field }) => (
-            <Box sx={{ display: 'flex', gap: 1 }}>
-              <DFOTextField
-                {...field}
-                placeholder={placeholder}
-                type={type}
-                disableUnderline
-              />
-              {endAdornment && (
-                <Box sx={{ alignSelf: 'center' }}>{endAdornment}</Box>
-              )}
-            </Box>
-          )}
-        />
-        {!!get(errors, name) && (
-          <FormLabel>{get(errors, name)?.message ?? ''}</FormLabel>
+    <FormControl
+      className={className}
+      error={!!get(errors, name)}
+      sx={{ width: '100%' }}
+    >
+      <Typography
+        variant={'smBold'}
+        color={theme.palette.primary.main}
+        sx={{ marginBottom: 1 }}
+      >
+        {label}
+      </Typography>
+      <Controller
+        name={name}
+        render={({ field }) => (
+          <DFOInput
+            {...field}
+            placeholder={placeholder}
+            type={type}
+            disableUnderline
+          />
         )}
-      </Box>
+      />
+      {!!get(errors, name) && (
+        <FormLabel>{get(errors, name)?.message ?? ''}</FormLabel>
+      )}
     </FormControl>
   );
 };

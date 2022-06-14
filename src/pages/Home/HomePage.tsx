@@ -1,20 +1,20 @@
 import Box from '@mui/material/Box';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
-import Typography from '@mui/material/Typography';
 import makeStyles from '@mui/styles/makeStyles';
 import React, { useEffect, useState } from 'react';
-import { useTranslation } from 'react-i18next';
+import Typography from '@mui/material/Typography';
 import { Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 import Footer from '../../Footer/Footer';
-import HomeSearchBar from './HomeSearchBar';
-import { useGetBanksQuery } from '../../store/api/bankApi';
-import { ScrollableContainer } from '../../components/ScrollableContainer/ScrollableContainer';
 import HomeDisplayList from './HomeDisplayList';
+import HomeSearchBar from './HomeSearchBar';
 import ProjectSelectionModal from './ProjectSelectionModal';
 import { IBank } from '../../Nexus/entities/IBank';
+import { ScrollableContainer } from '../../components/ScrollableContainer/ScrollableContainer';
 import { useBankState } from '../../components/BankContext/BankContext';
+import { useGetBanksQuery } from '../../store/api/bankApi';
 
 const useStyles = makeStyles({
   homepageWrapper: {
@@ -26,13 +26,16 @@ const useStyles = makeStyles({
   },
   scrollableContent: {
     height: '100%',
-    width: '100%'
+    width: '100%',
+    margin: '0 auto',
+    padding: '2rem'
   },
   actionContainer: {
     display: 'flex',
+    flexBasis: '50%',
     margin: 8,
     marginBottom: 0,
-    gap: 10
+    gap: '2rem'
   },
   navigation: {
     flexBasis: '50%'
@@ -111,7 +114,7 @@ export default function HomePage(): React.ReactElement {
               orderedByDate={true}
             />
             <HomeDisplayList
-              title={t('Alfabetically sorted')}
+              title={t('Alphabetically sorted')}
               list={latestPublishedProjects}
             />
           </Box>

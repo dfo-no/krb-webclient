@@ -1,0 +1,14 @@
+.ProductVariant {
+  display: flex;
+  flex-direction: row;
+
+  .title {
+    align-self: center;
+    margin-left: var(--from-checkbox-gap);
+  }
+
+  .icons {
+    display: flex;
+    margin-left: auto;
+  }
+}

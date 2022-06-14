@@ -1,18 +1,19 @@
+import AddIcon from '@mui/icons-material/Add';
 import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
-import VariantsList from '../Variants/VariantsList';
-import DeleteRequirement from './DeleteRequirement';
-import makeStyles from '@mui/styles/makeStyles';
-import theme from '../../../../theme';
-import { FormIconButton } from '../../../../components/Form/FormIconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
-import EditRequirement from './EditRequirement';
-import { useVariantState } from '../../VariantContext';
-import { useSelectState } from '../SelectContext';
+import Typography from '@mui/material/Typography';
+import makeStyles from '@mui/styles/makeStyles';
 import { useParams } from 'react-router-dom';
+
+import DeleteRequirement from './DeleteRequirement';
+import EditRequirement from './EditRequirement';
+import theme from '../../../../theme';
+import VariantsList from '../Variants/VariantsList';
+import { FormIconButton } from '../../../../components/Form/FormIconButton';
 import { IRouteProjectParams } from '../../../../models/IRouteProjectParams';
 import { useGetProjectQuery } from '../../../../store/api/bankApi';
-import AddIcon from '@mui/icons-material/Add';
+import { useSelectState } from '../SelectContext';
+import { useVariantState } from '../../VariantContext';
 
 const useStyles = makeStyles({
   card: {
@@ -23,8 +24,9 @@ const useStyles = makeStyles({
     width: '100%'
   },
   active: {
-    border: `2px solid ${theme.palette.secondary.main}`,
-    borderTop: `12px solid ${theme.palette.secondary.main}`
+    border: `0.2rem solid ${theme.palette.secondary.main}`,
+    borderTop: `1.2rem solid ${theme.palette.secondary.main}`,
+    borderRadius: '0.5rem'
   }
 });
 
@@ -61,10 +63,13 @@ const Requirement = ({ requirementIndex }: IProps) => {
             margin: 2,
             paddingRight: 1,
             paddingBottom: 1,
-            borderBottom: `1px solid ${theme.palette.silver.main}`
+            borderBottom: `0.1rem solid ${theme.palette.silver.main}`
           }}
         >
-          <Typography variant="mdBold" sx={{ alignSelf: 'center' }}>
+          <Typography
+            variant="mdBold"
+            sx={{ alignSelf: 'center', fontFamily: 'var(--header-font)' }}
+          >
             {project.needs[needIndex].requirements[requirementIndex].title}
           </Typography>
           <EditRequirement
@@ -80,12 +85,13 @@ const Requirement = ({ requirementIndex }: IProps) => {
                 project.needs[needIndex].requirements[requirementIndex].id
               )
             }
+            sx={{ alignSelf: 'baseline' }}
           >
             <DeleteIcon />
           </FormIconButton>
           <FormIconButton
             hoverColor={theme.palette.green.main}
-            sx={{ marginLeft: 0, marginRight: -2 }}
+            sx={{ alignSelf: 'baseline', marginLeft: 0, marginRight: -2 }}
             onClick={() =>
               setCreateVariant(
                 project.needs[needIndex].requirements[requirementIndex].id

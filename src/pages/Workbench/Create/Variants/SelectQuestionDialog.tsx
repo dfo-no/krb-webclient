@@ -6,6 +6,7 @@ import ListItem from '@mui/material/ListItem';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 
+import css from './Variant.module.scss';
 import { QuestionVariant } from '../../../../enums';
 
 interface IProps {
@@ -16,23 +17,25 @@ interface IProps {
 
 const SelectQuestionDialog = ({ onClose, selectedValue, isOpen }: IProps) => {
   const { t } = useTranslation();
-  const handleClose = () => {
+
+  const handleClose = (): void => {
     onClose(selectedValue);
   };
 
-  const handleListItemClick = (value: QuestionVariant) => {
+  const handleListItemClick = (value: QuestionVariant): void => {
     onClose(value);
   };
 
   return (
-    <Dialog onClose={handleClose} open={isOpen}>
+    <Dialog className={css.Dialog} onClose={handleClose} open={isOpen}>
       <DialogContent>
-        <DialogTitle>Velg svar type</DialogTitle>
-        <List sx={{ pt: 0 }}>
+        <DialogTitle>{t('DialogTitle-Select-Response-Type')}</DialogTitle>
+        <List className={css.DialogList}>
           {(
             Object.keys(QuestionVariant) as Array<keyof typeof QuestionVariant>
           ).map((key) => (
             <ListItem
+              className={css.ListItem}
               value={key}
               key={key}
               onClick={() => handleListItemClick(QuestionVariant[key])}

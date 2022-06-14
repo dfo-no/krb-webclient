@@ -1,89 +1,30 @@
+import Box from '@mui/material/Box';
+import classnames from 'classnames';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
-import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
-import makeStyles from '@mui/styles/makeStyles';
 import React, { useEffect, useState } from 'react';
-import 'react-nestable/dist/styles/index.css';
-import { Parentable } from '../../../models/Parentable';
-import theme from '../../../theme';
-import NestableHierarcy from '../../../components/NestableHierarchy/NestableHierarcy';
 import { useParams } from 'react-router-dom';
-import { IRouteProjectParams } from '../../../models/IRouteProjectParams';
-import { useGetProjectQuery } from '../../../store/api/bankApi';
-import { INeed } from '../../../Nexus/entities/INeed';
-import { useSelectState } from './SelectContext';
-import useProjectMutations from '../../../store/api/ProjectMutations';
-import { ScrollableContainer } from '../../../components/ScrollableContainer/ScrollableContainer';
+import { useTranslation } from 'react-i18next';
+import 'react-nestable/dist/styles/index.css';
 
-const useStyles = makeStyles({
-  nestableItemCustom: {
-    display: 'flex',
-    cursor: 'pointer',
-    backgroundColor: theme.palette.white.main,
-    verticalAlign: 'middle',
-    borderLeft: `1px solid ${theme.palette.gray400.main}`,
-    borderRight: `1px solid ${theme.palette.gray400.main}`,
-    '&:hover': {
-      background: theme.palette.lightBlue.main,
-      color: theme.palette.white.main
-    }
-  },
-  nestableCustom: {
-    '& .nestable-list': {
-      paddingLeft: 25
-    },
-    '& .nestable-item': {
-      '&:not(:first-child)': {
-        marginTop: '16px'
-      },
-      '& .nestable-item-name': {
-        borderTop: `1px solid ${theme.palette.gray400.main}`,
-        borderBottom: `1px solid ${theme.palette.gray400.main}`
-      }
-    },
-    '& .nestable-list > .nestable-item > .nestable-list': {
-      margin: '0',
-      '& .nestable-item': {
-        margin: '0',
-        '& .nestable-item-name': {
-          marginTop: '-1px'
-        }
-      }
-    },
-    paddingLeft: '5%'
-  },
-  itemNameText: {
-    display: 'flex',
-    alignSelf: 'center',
-    width: '95%'
-  },
-  collapseIcon: {
-    display: 'flex',
-    alignSelf: 'center',
-    paddingRight: '4px',
-    justifySelf: 'flex-end',
-    marginLeft: 'auto'
-  },
-  handlerIcon: {
-    paddingTop: 6,
-    display: 'flex',
-    paddingRight: '4px',
-    alignSelf: 'center',
-    justifySelf: 'flex-end'
-  },
-  selectedItem: {
-    background: theme.palette.primary.main,
-    color: theme.palette.white.main
-  }
-});
+import css from './Create.module.scss';
+import NestableHierarcy from '../../../components/NestableHierarchy/NestableHierarcy';
+import NewNeed from './Need/NewNeed';
+import useProjectMutations from '../../../store/api/ProjectMutations';
+import { INeed } from '../../../Nexus/entities/INeed';
+import { IRouteProjectParams } from '../../../models/IRouteProjectParams';
+import { Parentable } from '../../../models/Parentable';
+import { ScrollableContainer } from '../../../components/ScrollableContainer/ScrollableContainer';
+import { useGetProjectQuery } from '../../../store/api/bankApi';
+import { useSelectState } from './SelectContext';
 
 const CreateSideBar = (): React.ReactElement => {
   const { projectId } = useParams<IRouteProjectParams>();
   const { data: project } = useGetProjectQuery(projectId);
-  const classes = useStyles();
   const { needId, setNeedId, setNeedIndex } = useSelectState();
   const { editNeeds } = useProjectMutations();
+  const { t } = useTranslation();
   const [needs, setNeeds] = useState<Parentable<INeed>[]>([]);
 
   useEffect(() => {
@@ -95,6 +36,10 @@ const CreateSideBar = (): React.ReactElement => {
   if (!project) {
     return <></>;
   }
+
+  const hasNeeds = (): boolean => {
+    return needs.length !== 0;
+  };
 
   const updateNeedsArrangement = (newNeedList: Parentable<INeed>[]) => {
     if (needId) {
@@ -122,28 +67,31 @@ const CreateSideBar = (): React.ReactElement => {
   ) => {
     return (
       <Box
-        className={`${classes.nestableItemCustom} ${
-          needId && needId === item.id ? classes.selectedItem : ''
-        }`}
+        className={classnames(
+          css.NestableItem,
+          needId && needId === item.id ? css.Selected : null
+        )}
         onClick={() => itemClicked(item)}
       >
-        <Box className={classes.handlerIcon}>{handler}</Box>
+        <Box className={css.Handle}>{handler}</Box>
         <Typography
           variant={item.parent === '' ? 'smBold' : 'sm'}
-          className={classes.itemNameText}
+          className={css.ItemName}
         >
           {item.title}
         </Typography>
-        <Box className={classes.collapseIcon}>{collapseIcon}</Box>
+        <Box className={css.CollapseIcon}>{collapseIcon}</Box>
       </Box>
     );
   };
 
   return (
-    <ScrollableContainer sx={{ marginBottom: 5 }}>
+    <ScrollableContainer className={css.SideBar}>
+      {hasNeeds() && <NewNeed buttonText={t('Add new need')} />}
+
       <NestableHierarcy
         inputlist={needs}
-        className={classes.nestableCustom}
+        className={css.Nestable}
         renderItem={renderItem}
         dispatchfunc={updateNeedsArrangement}
         depth={8}

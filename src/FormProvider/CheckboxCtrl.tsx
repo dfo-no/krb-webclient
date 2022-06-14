@@ -1,10 +1,11 @@
-import { Box, FormControl, FormLabel } from '@mui/material';
-import { get } from 'lodash';
 import React, { ReactElement } from 'react';
+import { Box, FormControl, FormLabel } from '@mui/material';
 import { Controller, useFormContext } from 'react-hook-form';
-import { DFOCheckbox } from '../components/DFOCheckbox/DFOCheckbox';
+import { get } from 'lodash';
 import { Typography } from '@mui/material/';
+
 import theme from '../theme';
+import { DFOCheckbox } from '../components/DFOCheckbox/DFOCheckbox';
 
 interface IProps {
   name: string;

@@ -24,7 +24,8 @@ export default function AdminGuard(): React.ReactElement {
         sx={{
           display: 'flex',
           height: '100%',
-          width: '100%'
+          width: '100%',
+          background: 'var(--secondary-background-color)'
         }}
       >
         <Route exact path="/workbench/:projectId/admin/">

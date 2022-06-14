@@ -1,0 +1,21 @@
+.Footer {
+  span {
+    font-size: 1.8rem;
+  }
+
+  a,
+  a:visited,
+  a:active {
+    color: white;
+
+    &:hover {
+      color: var(--link-hover-color);
+    }
+  }
+
+  .icon {
+    display: flex;
+    justify-content: flex-end;
+    color: white;
+  }
+}

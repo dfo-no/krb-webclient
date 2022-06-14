@@ -18,7 +18,7 @@ const useStyles = makeStyles({
     display: 'flex',
     paddingTop: 8,
     paddingBottom: 8,
-    border: `1px solid ${theme.palette.gray500.main}`,
+    border: `0.1rem solid ${theme.palette.gray500.main}`,
     backgroundColor: theme.palette.white.main
   },
   nestableCustom: {
@@ -30,7 +30,7 @@ const useStyles = makeStyles({
       }
     },
     '& .nestable-item': {
-      marginTop: '16px',
+      marginTop: '1.6rem',
       '&:first-child': {
         marginTop: '0'
       }
@@ -40,7 +40,7 @@ const useStyles = makeStyles({
       '& .nestable-item': {
         margin: '0',
         '& .nestable-item-name': {
-          marginTop: '-1px'
+          marginTop: '-0.1rem'
         }
       }
     }
@@ -53,7 +53,7 @@ const useStyles = makeStyles({
   textItemDescription: {
     alignSelf: 'center',
     paddingLeft: 15,
-    borderLeft: '1px solid',
+    borderLeft: '0.1rem solid',
     marginLeft: 'auto',
     flex: '0 0 25vw'
   },
@@ -66,7 +66,7 @@ const useStyles = makeStyles({
   editIcon: {
     alignSelf: 'center',
     cursor: 'pointer',
-    paddingRight: '8px',
+    paddingRight: '0.8rem',
     '&:hover': {
       color: theme.palette.lightBlue.main
     }
