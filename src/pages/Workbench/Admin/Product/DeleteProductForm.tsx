@@ -57,7 +57,10 @@ export default function DeleteProductForm({
     return <></>;
   }
 
-  const hasChildren = Utils.checkIfHasChildren(product, project.products);
+  const hasChildren = Utils.checkIfProductHasChildren(
+    product,
+    project.products
+  );
   const isInUse = Utils.productUsedInVariants(product, project);
 
   let infoText = '';

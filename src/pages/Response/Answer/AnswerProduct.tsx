@@ -1,16 +1,17 @@
-import { Box } from '@mui/material';
 import React, { ReactElement } from 'react';
 import makeStyles from '@mui/styles/makeStyles';
-import theme from '../../../theme';
-import { useAppSelector } from '../../../store/hooks';
-import { useResponseState } from '../ResponseContext';
-import { ScrollableContainer } from '../../../components/ScrollableContainer/ScrollableContainer';
+import { Box } from '@mui/material';
 
-import ProductNeed from './ProductNeed';
 import ProductHeader from './ProductHeader';
+import ProductNeed from './ProductNeed';
 import ProductRequirementAnswer from './ProductRequirementAnswer';
+import theme from '../../../theme';
+import { AccordionProvider } from '../../../components/DFOAccordion/AccordionContext';
 import { INeed } from '../../../Nexus/entities/INeed';
 import { IRequirementAnswer } from '../../../models/IRequirementAnswer';
+import { ScrollableContainer } from '../../../components/ScrollableContainer/ScrollableContainer';
+import { useAppSelector } from '../../../store/hooks';
+import { useResponseState } from '../ResponseContext';
 
 const useStyles = makeStyles({
   newProduct: {
@@ -37,12 +38,9 @@ export default function AnswerProduct(): React.ReactElement {
     if (requirementNeed && !existingNeeds.has(requirementNeed)) {
       existingNeeds.add(requirementNeed);
       return (
-        <Box>
+        <Box key={requirementAnswer.id}>
           <ProductNeed need={requirementNeed} />
-          <ProductRequirementAnswer
-            key={requirementAnswer.id}
-            requirementAnswer={requirementAnswer}
-          />
+          <ProductRequirementAnswer requirementAnswer={requirementAnswer} />
         </Box>
       );
     } else {
@@ -70,10 +68,11 @@ export default function AnswerProduct(): React.ReactElement {
       return response.spesification.products[
         responseProductIndex
       ].requirements.map((requirementId) => {
-        const requirementAnswer =
-          response.spesification.requirementAnswers.find(
-            (reqAns) => reqAns.requirement.id === requirementId
-          );
+        const requirementAnswer = response.spesification.products[
+          responseProductIndex
+        ].requirementAnswers.find(
+          (reqAns) => reqAns.requirement.id === requirementId
+        );
         if (requirementAnswer) {
           return renderRequirementAnswer(requirementAnswer);
         }
@@ -85,7 +84,7 @@ export default function AnswerProduct(): React.ReactElement {
     <Box className={classes.newProduct}>
       <ProductHeader />
       <ScrollableContainer sx={{ marginBottom: 0 }}>
-        {renderRequirements()}
+        <AccordionProvider>{renderRequirements()}</AccordionProvider>
       </ScrollableContainer>
     </Box>
   );
