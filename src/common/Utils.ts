@@ -286,7 +286,7 @@ class Utils {
     list: Parentable<T>[]
   ): boolean {
     return list.some(
-      (listItem) => listItem.parent === item.id && listItem.deletedDate === null
+      (listItem) => listItem.parent === item.id && !listItem.deletedDate
     );
   }
 
