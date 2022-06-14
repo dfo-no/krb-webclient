@@ -281,6 +281,15 @@ class Utils {
     return list.some((listItem) => listItem.parent === item.id);
   }
 
+  static checkIfProductHasChildren<T extends Parentable<IProduct>>(
+    item: Parentable<T>,
+    list: Parentable<T>[]
+  ): boolean {
+    return list.some(
+      (listItem) => listItem.parent === item.id && !listItem.deletedDate
+    );
+  }
+
   static findNeedParents(
     element: Nestable<INeed>,
     parents: Nestable<INeed>[],

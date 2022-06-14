@@ -104,12 +104,13 @@ const ProductSelection = (): React.ReactElement => {
             )`;
   };
 
-  const isDeletedAndUnused = (item: IProduct, selected: string[]): boolean => {
-    return !!item.deletedDate && productChecked(item, selected);
-  };
-
   const isDeleted = (item: IProduct, selected: string[]): boolean => {
-    return !!item.deletedDate && !productChecked(item, selected);
+    const childrenIsDeleted = levelableItems
+      .filter((child) => child.parent === item.id)
+      .every((child) => isDeleted(child, selected));
+    return (
+      !!item.deletedDate && !productChecked(item, selected) && childrenIsDeleted
+    );
   };
 
   return (
@@ -125,7 +126,7 @@ const ProductSelection = (): React.ReactElement => {
                     key={item.id}
                     className={classes.listItem}
                     sx={{
-                      background: isDeletedAndUnused(item, selected)
+                      background: !!item.deletedDate
                         ? deletedBackground()
                         : theme.palette.white.main,
                       marginTop:
