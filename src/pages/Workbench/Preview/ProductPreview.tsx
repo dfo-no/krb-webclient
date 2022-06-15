@@ -1,17 +1,17 @@
-import { StandardContainer } from '../../../components/StandardContainer/StandardContainer';
 import React from 'react';
+import { Box, Divider, Typography } from '@mui/material';
+import { useParams } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
+
+import css from './Preview.module.scss';
+import NeedPreview from './NeedPreview';
 import theme from '../../../theme';
-import { Box, Card, Typography } from '@mui/material';
+import Utils from '../../../common/Utils';
 import { DFOCardHeader } from '../../../components/DFOCard/DFOCardHeader';
 import { DFOHeaderContentBox } from '../../../components/DFOCard/DFOHeaderContentBox';
-import Utils from '../../../common/Utils';
-import { useParams } from 'react-router-dom';
 import { IRouteProjectParams } from '../../../models/IRouteProjectParams';
 import { useGetProjectQuery } from '../../../store/api/bankApi';
 import { usePreviewState } from './PreviewContext';
-import NeedPreview from './NeedPreview';
-import { ScrollableContainer } from '../../../components/ScrollableContainer/ScrollableContainer';
-import { useTranslation } from 'react-i18next';
 
 export default function ProductPreview(): React.ReactElement {
   const { t } = useTranslation();
@@ -39,37 +39,19 @@ export default function ProductPreview(): React.ReactElement {
   };
 
   return (
-    <StandardContainer sx={{ width: '90%', maxHeight: '100%' }}>
-      <Card
-        sx={{
-          display: 'flex',
-          flexDirection: 'column',
-          backgroundColor: theme.palette.gray200.main,
-          height: '100%',
-          paddingBottom: 2
-        }}
-      >
-        <DFOCardHeader>
-          <DFOHeaderContentBox>
-            <Box
-              sx={{
-                display: 'flex',
-                flexDirection: 'row',
-                paddingBottom: 0.5,
-                borderBottom: `0.1rem solid ${theme.palette.silver.main}`
-              }}
-            >
-              <Typography variant="lgBold">
-                {selected ? selected.title : t('General requirements')}
-              </Typography>
-            </Box>
-            <Typography variant="smBold" sx={{ paddingTop: 1 }}>
-              {selected ? selected.description : ''}
-            </Typography>
-          </DFOHeaderContentBox>
-        </DFOCardHeader>
-        <ScrollableContainer>{renderNeeds()}</ScrollableContainer>
-      </Card>
-    </StandardContainer>
+    <Box className={css.MainContent}>
+      <DFOCardHeader>
+        <DFOHeaderContentBox>
+          <Typography variant="lgBold" className={css.headerTitle}>
+            {selected ? selected.title : t('General requirements')}
+          </Typography>
+          <Divider color={theme.palette.silver.main} />
+          <Typography variant="smBold" className={css.headerDescription}>
+            {selected ? selected.description : ''}
+          </Typography>
+        </DFOHeaderContentBox>
+      </DFOCardHeader>
+      {renderNeeds()}
+    </Box>
   );
 }

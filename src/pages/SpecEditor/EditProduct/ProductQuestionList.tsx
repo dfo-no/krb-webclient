@@ -100,10 +100,9 @@ const ProductQuestionsList = ({ variant }: IProps) => {
   };
 
   const getQuestions = (): ReactElement | ReactElement[] => {
-    if (variant.type === VariantType.info) {
-      return getInfoQuestion();
-    }
-    return getRequirementQuestions();
+    return variant.type === VariantType.info
+      ? getInfoQuestion()
+      : getRequirementQuestions();
   };
 
   return <Box className={css.QuestionCardList}>{getQuestions()}</Box>;

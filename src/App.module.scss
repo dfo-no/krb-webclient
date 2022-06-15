@@ -22,6 +22,7 @@
   --line-color: #bcbcbc;
   --line-color-dark: #8898a6;
   --light-gray-color: #f7f7f7;
+  --gray-color: #c4c4c4;
 
   --header-height: 10.1rem;
   --header-font: 'Source Pro Serif, Times New Roman, serif';
@@ -31,6 +32,7 @@
   --normal-gap: 2.4rem;
   --small-gap: 1.6rem;
   --tiny-gap: 0.8rem;
+  --micro-gap: 0.4rem;
 
   @media only screen and (max-width: 768px) {
     --large-gap: 4rem;
@@ -38,6 +40,7 @@
     --normal-gap: 1.7rem;
     --small-gap: 0.8rem;
     --tiny-gap: 0.4rem;
+    --micro-gap: 0.2rem;
   }
 }
 

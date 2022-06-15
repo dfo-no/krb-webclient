@@ -10,7 +10,6 @@ import mainIllustration from '../../../assets/images/main-illustration.svg';
 import NewProjectForm from './NewProjectForm';
 import ProjectItem from './ProjectItem';
 import SearchUtils from '../../../common/SearchUtils';
-import theme from '../../../theme';
 import { EditableProvider } from '../../../components/EditableContext/EditableContext';
 import { IBank } from '../../../Nexus/entities/IBank';
 import {
@@ -19,7 +18,6 @@ import {
   SearchFieldContainer
 } from '../../../components/SearchContainer/SearchContainer';
 import { PAGE_SIZE } from '../../../common/Constants';
-import { ScrollableContainer } from '../../../components/ScrollableContainer/ScrollableContainer';
 import { useGetProjectsQuery } from '../../../store/api/bankApi';
 
 export default function Projects(): React.ReactElement {
@@ -72,53 +70,59 @@ export default function Projects(): React.ReactElement {
     );
   };
 
-  return (
-    <Box className={css.Projects}>
-      <Box className={css.TitleContainer}>
-        <Box>
-          <Typography
-            variant="h1"
-            color={theme.palette.primary.main}
-            sx={{
-              letterSpacing: 0.2
-            }}
-          >
-            {t('Welcome to the workbench')}
-          </Typography>
-          <Box>
-            <Typography>
-              {t('In the workbench you can create new banks')}
-            </Typography>
-          </Box>
-        </Box>
-        <img src={mainIllustration} alt="main illustration" />
-      </Box>
-      {allProjects && (
-        <Box className={css.ContentContainer}>
-          <SearchContainer className={css.SearchContainer}>
-            <SearchFieldContainer>
-              <DFOSearchBar
-                list={allProjects}
-                placeholder={t('Search for banks')}
-                callback={searchFieldCallback}
-                searchFunction={searchFunction}
-              />
-            </SearchFieldContainer>
-            <NewButtonContainer>{renderNewBankButton()}</NewButtonContainer>
-          </SearchContainer>
-          <ScrollableContainer className={css.ListContainer}>
-            <List className={css.List} aria-label="projects">
-              {projectList && renderProjects(projectList)}
-            </List>
-          </ScrollableContainer>
-        </Box>
-      )}
-
+  const renderNewProjectDialog = (): ReactElement => {
+    return (
       <DFODialog
         isOpen={isOpen}
         handleClose={() => setOpen(false)}
         children={<NewProjectForm handleClose={() => setOpen(false)} />}
       />
+    );
+  };
+
+  if (!allProjects?.length) {
+    return (
+      <Box className={css.Projects}>
+        <Box className={css.TitleContainer}>
+          <Box>
+            <Typography variant="h1">
+              {t('Welcome to the workbench')}
+            </Typography>
+            <Box>
+              <Typography>
+                {t('In the workbench you can create new banks')}
+              </Typography>
+            </Box>
+          </Box>
+          <img src={mainIllustration} alt="main illustration" />
+          <NewButtonContainer>{renderNewBankButton()}</NewButtonContainer>
+        </Box>
+        {renderNewProjectDialog()}
+      </Box>
+    );
+  }
+
+  return (
+    <Box className={css.Projects}>
+      <div className={css.ContentContainer}>
+        <SearchContainer className={css.SearchContainer}>
+          <SearchFieldContainer>
+            <DFOSearchBar
+              list={allProjects}
+              placeholder={t('Search for banks')}
+              callback={searchFieldCallback}
+              searchFunction={searchFunction}
+            />
+          </SearchFieldContainer>
+          <NewButtonContainer>{renderNewBankButton()}</NewButtonContainer>
+        </SearchContainer>
+        <div className={css.ListContainer}>
+          <List className={css.List} aria-label="projects">
+            {projectList && renderProjects(projectList)}
+          </List>
+        </div>
+      </div>
+      {renderNewProjectDialog()}
     </Box>
   );
 }

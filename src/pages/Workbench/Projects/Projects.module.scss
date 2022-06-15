@@ -12,6 +12,10 @@
     gap: 4rem;
     padding: 8rem 4rem 4rem;
 
+    h1 {
+      color: var(--primary-color);
+    }
+
     > div {
       display: flex;
       flex-direction: column;

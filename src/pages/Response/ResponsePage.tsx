@@ -9,10 +9,13 @@ import { useHistory } from 'react-router';
 import { httpPost } from '../../api/http';
 import { useAppDispatch } from '../../store/hooks';
 import {
+  addProduct,
   setResponse,
   setSpecification
 } from '../../store/reducers/response-reducer';
 import { selectBank } from '../../store/reducers/selectedBank-reducer';
+import { ISpecificationProduct } from '../../models/ISpecificationProduct';
+import { ISpecification } from '../../Nexus/entities/ISpecification';
 
 export default function ResponsePage(): React.ReactElement {
   const dispatch = useAppDispatch();
@@ -33,8 +36,21 @@ export default function ResponsePage(): React.ReactElement {
       },
       responseType: 'json'
     }).then((response) => {
-      dispatch(selectBank(response.data.bank.id));
-      dispatch(setSpecification(response.data));
+      const specification: ISpecification = response.data;
+      dispatch(selectBank(specification.bank.id));
+      dispatch(setSpecification(specification));
+      specification.products.forEach((product: ISpecificationProduct) => {
+        dispatch(
+          addProduct({
+            id: product.id,
+            title: product.title,
+            description: product.description,
+            originProduct: product,
+            price: 0,
+            requirementAnswers: []
+          })
+        );
+      });
       history.push(`/response/${response.data.bank.id}`);
       return response;
     });
