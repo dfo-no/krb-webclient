@@ -30,7 +30,7 @@ const QuestionSpecification = ({ item }: IProps) => {
   switch (item.type) {
     case QuestionVariant.Q_TEXT:
       return (
-        <Typography variant={'smBold'} sx={{ marginBottom: 2 }}>
+        <Typography variant={'smBold'}>
           {t('No specification needed')}
         </Typography>
       );
@@ -43,7 +43,6 @@ const QuestionSpecification = ({ item }: IProps) => {
     case QuestionVariant.Q_PERIOD_DATE:
     case QuestionVariant.Q_TIME:
     case QuestionVariant.Q_FILEUPLOAD:
-      return <> Ikke definert </>;
   }
   return <></>;
 };

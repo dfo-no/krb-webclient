@@ -1,6 +1,7 @@
-import { joiResolver } from '@hookform/resolvers/joi';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import DeleteIcon from '@mui/icons-material/Delete';
+import Divider from '@mui/material/Divider';
+import React, { SyntheticEvent } from 'react';
 import {
   Box,
   Chip,
@@ -10,27 +11,28 @@ import {
   AccordionSummary,
   AccordionDetails
 } from '@mui/material';
+import { joiResolver } from '@hookform/resolvers/joi';
 import { useForm, FormProvider, useWatch } from 'react-hook-form';
-import { useAppDispatch } from '../../../../store/hooks';
-import { IAlert } from '../../../../models/IAlert';
-import { v4 as uuidv4 } from 'uuid';
-import { addAlert } from '../../../../store/reducers/alert-reducer';
-import { IVariant, VariantSchema } from '../../../../Nexus/entities/IVariant';
-import useProjectMutations from '../../../../store/api/ProjectMutations';
 import { useParams } from 'react-router-dom';
-import { useGetProjectQuery } from '../../../../store/api/bankApi';
-import LoaderSpinner from '../../../../common/LoaderSpinner';
-import React, { SyntheticEvent } from 'react';
-import { IRouteProjectParams } from '../../../../models/IRouteProjectParams';
-import { useVariantState } from '../../VariantContext';
 import { useTranslation } from 'react-i18next';
-import { useSelectState } from '../SelectContext';
-import theme from '../../../../theme';
-import { FormIconButton } from '../../../../components/Form/FormIconButton';
-import VariantFormContent from './VariantFormContent';
+import { v4 as uuidv4 } from 'uuid';
+
 import GeneralErrorMessage from '../../../../Form/GeneralErrorMessage';
+import LoaderSpinner from '../../../../common/LoaderSpinner';
+import theme from '../../../../theme';
+import useProjectMutations from '../../../../store/api/ProjectMutations';
+import VariantFormContent from './VariantFormContent';
 import VariantType from '../../../../Nexus/entities/VariantType';
+import { addAlert } from '../../../../store/reducers/alert-reducer';
+import { FormIconButton } from '../../../../components/Form/FormIconButton';
 import { DFOChip } from '../../../../components/DFOChip/DFOChip';
+import { IAlert } from '../../../../models/IAlert';
+import { IRouteProjectParams } from '../../../../models/IRouteProjectParams';
+import { IVariant, VariantSchema } from '../../../../Nexus/entities/IVariant';
+import { useAppDispatch } from '../../../../store/hooks';
+import { useGetProjectQuery } from '../../../../store/api/bankApi';
+import { useSelectState } from '../SelectContext';
+import { useVariantState } from '../../VariantContext';
 
 interface IProps {
   variant: IVariant;
@@ -79,7 +81,8 @@ const Variant = ({ variant, requirementIndex }: IProps) => {
   };
 
   const accordionChange =
-    () => (event: SyntheticEvent<Element, Event>, isExpanded: boolean) => {
+    () =>
+    (event: SyntheticEvent<Element, Event>, isExpanded: boolean): void => {
       if (isExpanded) {
         setOpenVariants((ov) => [...ov, variant.id]);
       } else {
@@ -90,6 +93,11 @@ const Variant = ({ variant, requirementIndex }: IProps) => {
         });
       }
     };
+
+  const confirmDelete = (id: string, event: MouseEvent): void => {
+    event.stopPropagation();
+    setDeleteMode(id);
+  };
 
   return (
     <FormProvider {...methods}>
@@ -106,25 +114,33 @@ const Variant = ({ variant, requirementIndex }: IProps) => {
         >
           <AccordionSummary expandIcon={<ExpandMoreIcon />}>
             <Typography>{variant.description}</Typography>
-            <Box sx={{ display: 'flex', marginLeft: 'auto' }}>
-              {useTypeWatch === VariantType.info && (
-                <DFOChip label={t('Info')} />
-              )}
-              <FormIconButton
-                hoverColor={theme.palette.errorRed.main}
-                onClick={() => setDeleteMode(variant.id)}
-              >
-                <DeleteIcon />
-              </FormIconButton>
-            </Box>
+            {useTypeWatch === VariantType.info && <DFOChip label={t('Info')} />}
+            <FormIconButton
+              hoverColor={theme.palette.errorRed.main}
+              onClick={(event) =>
+                confirmDelete(variant.id, event as unknown as MouseEvent)
+              }
+              sx={
+                useTypeWatch === VariantType.info ? {} : { marginLeft: 'auto' }
+              }
+            >
+              <DeleteIcon />
+            </FormIconButton>
           </AccordionSummary>
           <AccordionDetails sx={{ display: 'flex', flexDirection: 'column' }}>
             <VariantFormContent control={methods.control} />
-            <Box sx={{ display: 'flex', flexDirection: 'row', marginTop: 2 }}>
+            <Box
+              sx={{
+                display: 'flex',
+                flexDirection: 'row',
+                marginTop: 'var(--small-gap)',
+                marginBottom: 'var(--normal-gap)'
+              }}
+            >
               <Button
                 variant="cancel"
                 onClick={() => methods.reset()}
-                sx={{ marginLeft: 'auto', marginRight: 2 }}
+                sx={{ marginLeft: 'auto', marginRight: 'var(--small-gap)' }}
               >
                 {t('Reset')}
               </Button>
@@ -132,6 +148,7 @@ const Variant = ({ variant, requirementIndex }: IProps) => {
                 {t('Save')}
               </Button>
             </Box>
+            <Divider />
             <GeneralErrorMessage errors={methods.formState.errors} />
           </AccordionDetails>
         </Accordion>

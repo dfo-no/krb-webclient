@@ -1,4 +1,3 @@
-import makeStyles from '@mui/styles/makeStyles';
 import React, { ReactElement, useEffect, useState } from 'react';
 import { Box, Card, Divider, Typography } from '@mui/material';
 import { useFormContext, useWatch } from 'react-hook-form';
@@ -7,7 +6,6 @@ import { useTranslation } from 'react-i18next';
 import css from './QuestionCard.module.scss';
 import QuestionAnswer from './QuestionAnswer/QuestionAnswer';
 import QuestionSpecification from './QuestionSpecification/QuestionSpecification';
-import theme from '../../../theme';
 import VariantType from '../../../Nexus/entities/VariantType';
 import { DFORadioButton } from '../../../components/DFORadioButton/DFORadioButton';
 import { ICheckboxQuestion } from '../../../Nexus/entities/ICheckboxQuestion';
@@ -20,25 +18,12 @@ import { ITextQuestion } from '../../../Nexus/entities/ITextQuestion';
 import { ITimeQuestion } from '../../../Nexus/entities/ITimeQuestion';
 import { IVariant } from '../../../Nexus/entities/IVariant';
 
-const useStyles = makeStyles({
-  list: {
-    display: 'flex',
-    flexDirection: 'column',
-    gap: 16,
-    border: `1px solid ${theme.palette.black.main}`,
-    backgroundColor: theme.palette.gray100.main,
-    padding: 32,
-    marginBottom: 16
-  }
-});
-
 interface IProps {
   variant: IVariant;
 }
 
 const ProductQuestionsList = ({ variant }: IProps) => {
   const { t } = useTranslation();
-  const classes = useStyles();
   const [selectedRadioIndex, setSelectedRadioIndex] = useState(-1);
   const { control, setValue } = useFormContext<IRequirementAnswer>();
   const useQuestionId = useWatch({ name: 'questionId', control });
@@ -114,13 +99,13 @@ const ProductQuestionsList = ({ variant }: IProps) => {
     });
   };
 
-  return (
-    <Box className={classes.list}>
-      {variant.type === VariantType.info
-        ? getInfoQuestion()
-        : getRequirementQuestions()}
-    </Box>
-  );
+  const getQuestions = (): ReactElement | ReactElement[] => {
+    return variant.type === VariantType.info
+      ? getInfoQuestion()
+      : getRequirementQuestions();
+  };
+
+  return <Box className={css.QuestionCardList}>{getQuestions()}</Box>;
 };
 
 export default ProductQuestionsList;

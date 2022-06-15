@@ -1,16 +1,18 @@
+import classnames from 'classnames';
 import EditIcon from '@mui/icons-material/Edit';
-import makeStyles from '@mui/styles/makeStyles';
-import React, { useEffect, useState } from 'react';
-import { Button, Box, Typography, Divider } from '@mui/material';
+import React, { ReactElement, useEffect, useState } from 'react';
+import { Box, Button, Divider, Typography } from '@mui/material';
 import { joiResolver } from '@hookform/resolvers/joi';
-import { useForm, FormProvider, useWatch } from 'react-hook-form';
+import { FormProvider, useForm, useWatch } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
 import ChosenConfiguration from './ChosenConfiguration';
+import css from './ProductRequirement.module.scss';
 import EditProductVariant from './EditProductVariant';
 import Nexus from '../../../Nexus/Nexus';
 import ProductVariant from './ProductVariant';
 import theme from '../../../theme';
+import VariantType from '../../../Nexus/entities/VariantType';
 import {
   addAnswer,
   addProductAnswer,
@@ -22,6 +24,7 @@ import {
   removeRequirement
 } from '../../../store/reducers/spesification-reducer';
 import { DFOCheckbox } from '../../../components/DFOCheckbox/DFOCheckbox';
+import { DFOChip } from '../../../components/DFOChip/DFOChip';
 import { FormIconButton } from '../../../components/Form/FormIconButton';
 import { IRequirement } from '../../../Nexus/entities/IRequirement';
 import {
@@ -31,26 +34,6 @@ import {
 import { useAppDispatch, useAppSelector } from '../../../store/hooks';
 import { useSpecificationState } from '../SpecificationContext';
 import { Weighting } from '../../../enums';
-
-const useStyles = makeStyles({
-  card: {
-    backgroundColor: theme.palette.white.main,
-    display: 'flex',
-    flexDirection: 'column',
-    color: theme.palette.black.main,
-    padding: 16,
-    paddingLeft: 32,
-    paddingRight: 32,
-    margin: 32
-  },
-  active: {
-    border: `0.2rem solid ${theme.palette.secondary.main}`,
-    borderTop: `1.2rem solid ${theme.palette.secondary.main}`
-  },
-  selected: {
-    border: `0.2rem solid ${theme.palette.primary.main}`
-  }
-});
 
 interface IProps {
   requirement: IRequirement;
@@ -65,7 +48,6 @@ export default function ProductRequirement({
   const nexus = Nexus.getInstance();
   const { specificationProductIndex } = useSpecificationState();
   const [original, setOriginal] = useState<null | IRequirementAnswer>(null);
-  const classes = useStyles();
 
   const defaultValues =
     nexus.specificationService.generateDefaultRequirementAnswer(requirement);
@@ -80,6 +62,10 @@ export default function ProductRequirement({
 
   const useVariant = useWatch({ name: 'variantId', control: methods.control });
   const useWeight = useWatch({ name: 'weight', control: methods.control });
+
+  const activeVariant = requirement.variants.find(
+    (variant) => variant.id === useVariant
+  );
 
   const onSubmit = async (put: IRequirementAnswer) => {
     if (specificationProductIndex === -1) {
@@ -105,7 +91,7 @@ export default function ProductRequirement({
     }
   };
 
-  const onCancel = () => {
+  const onCancel = (): void => {
     if (original) {
       onSubmit(original);
       setOriginal(null);
@@ -114,11 +100,7 @@ export default function ProductRequirement({
     }
   };
 
-  const activeVariant = requirement.variants.find(
-    (variant) => variant.id === useVariant
-  );
-
-  const isSelected = () => {
+  const isSelected = (): boolean => {
     if (specificationProductIndex !== -1) {
       return spec.products[specificationProductIndex].requirements.some(
         (req) => req === requirement.id
@@ -127,11 +109,30 @@ export default function ProductRequirement({
     return spec.requirements.some((req) => req === requirement.id);
   };
 
-  const isActive = () => {
+  const isInfo = (): boolean => {
+    const selected = (
+      specificationProductIndex === -1
+        ? spec
+        : spec.products[specificationProductIndex]
+    ).requirementAnswers.find(
+      (reqAns) => reqAns.requirement.id === requirement.id
+    );
+    if (selected) {
+      const selectedVariant = requirement.variants.find(
+        (variant) => variant.id === selected.variantId
+      );
+      if (selectedVariant && selectedVariant.type === VariantType.info) {
+        return true;
+      }
+    }
+    return false;
+  };
+
+  const isActive = (): boolean => {
     return useVariant !== '';
   };
 
-  const unsaveRequirement = () => {
+  const unsaveRequirement = (): IRequirementAnswer | undefined => {
     if (specificationProductIndex === -1) {
       const answer = spec.requirementAnswers.find(
         (reqAnswer) => reqAnswer.requirement.id === requirement.id
@@ -168,12 +169,12 @@ export default function ProductRequirement({
     }
   };
 
-  const uncheckRequirement = () => {
+  const uncheckRequirement = (): void => {
     unsaveRequirement();
     methods.reset();
   };
 
-  const editRequirement = () => {
+  const editRequirement = (): void => {
     const answer = unsaveRequirement();
     if (answer) {
       methods.reset(answer);
@@ -181,7 +182,7 @@ export default function ProductRequirement({
     }
   };
 
-  const renderActiveVariant = () => {
+  const renderActiveVariant = (): ReactElement => {
     return (
       <Box>
         {activeVariant && (
@@ -191,22 +192,16 @@ export default function ProductRequirement({
               variant={activeVariant}
             />
 
-            <Box
-              sx={{
-                display: 'flex',
-                flexDirection: 'row',
-                marginTop: 2
-              }}
-            >
+            <Box className={css.formButtons}>
               <Button
                 variant="cancel"
                 onClick={onCancel}
-                sx={{ marginLeft: 'auto' }}
+                className={css.cancel}
               >
                 {t('Cancel')}
               </Button>
               {activeVariant.questions.length > 0 && (
-                <Button variant="save" type="submit" sx={{ marginLeft: 2 }}>
+                <Button variant="save" type="submit" className={css.save}>
                   {t('Save and chose requirement')}
                 </Button>
               )}
@@ -218,43 +213,36 @@ export default function ProductRequirement({
   };
 
   return (
-    <Box key={requirement.id}>
-      {isSelected() && (
-        <Box className={`${classes.card} ${classes.selected}`}>
-          <Box sx={{ display: 'flex', flexDirection: 'row' }}>
-            <DFOCheckbox checked={true} onClick={uncheckRequirement} />
-            <Typography
-              variant={'lgBold'}
-              sx={{ marginLeft: 1, alignSelf: 'center' }}
-            >
-              {requirement.title}
-            </Typography>
-            <Typography
-              variant={'mdBold'}
-              sx={{
-                flex: '0 0 20%',
-                marginLeft: 'auto',
-                paddingLeft: 2,
-                marginRight: 2,
-                alignSelf: 'center'
-              }}
-            >
-              {t('Weighting')}: {t(Weighting[useWeight])}
-            </Typography>
-            <FormIconButton onClick={editRequirement}>
-              <EditIcon />
-            </FormIconButton>
+    <Box key={requirement.id} className={css.ProductRequirement}>
+      {isSelected() ? (
+        <Box className={classnames(css.card, css.selected)}>
+          <DFOCheckbox checked={true} onClick={uncheckRequirement} />
+          <Typography variant={'lgBold'} className={css.title}>
+            {requirement.title}
+          </Typography>
+          <Box className={css.weighting}>
+            {isInfo() ? (
+              <DFOChip label={t('Info')} className={css.weightingText} />
+            ) : (
+              <Typography variant={'mdBold'} className={css.weightingText}>
+                {t('Weighting')}: {t(Weighting[useWeight])}
+              </Typography>
+            )}
           </Box>
+          <FormIconButton onClick={editRequirement}>
+            <EditIcon />
+          </FormIconButton>
           <Divider
             color={theme.palette.silver.main}
             sx={{ marginBottom: 0.5 }}
           />
           <ChosenConfiguration requirement={requirement} />
         </Box>
-      )}
-      {!isSelected() && (
-        <Box className={`${classes.card} ${isActive() ? classes.active : ''}`}>
-          <Box sx={{ marginLeft: 6, borderBottom: '0.1rem solid' }}>
+      ) : (
+        <Box
+          className={classnames(css.card, isActive() ? css.active : undefined)}
+        >
+          <Box className={css.title}>
             <Typography variant="lgBold">{requirement.title}</Typography>
           </Box>
           <FormProvider {...methods}>

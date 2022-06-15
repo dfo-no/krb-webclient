@@ -1,3 +1,5 @@
+import { ReactElement } from 'react';
+
 import QuestionAnswerCheckbox from './QuestionAnswerCheckbox';
 import QuestionAnswerSlider from './QuestionAnswerSlider';
 import { ICheckboxQuestion } from '../../../../Nexus/entities/ICheckboxQuestion';
@@ -20,7 +22,7 @@ interface IProps {
     | ICheckboxQuestion;
 }
 
-const QuestionSpecification = ({ item }: IProps) => {
+const QuestionSpecification = ({ item }: IProps): ReactElement => {
   switch (item.type) {
     case QuestionVariant.Q_CHECKBOX:
       return <QuestionAnswerCheckbox />;
@@ -31,7 +33,6 @@ const QuestionSpecification = ({ item }: IProps) => {
     case QuestionVariant.Q_PERIOD_DATE:
     case QuestionVariant.Q_TIME:
     case QuestionVariant.Q_FILEUPLOAD:
-      return <> Ikke definert </>;
   }
   return <></>;
 };
