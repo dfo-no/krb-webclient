@@ -10,8 +10,7 @@ import Projects from './Projects/Projects';
 const useStyles = makeStyles({
   workbenchContainer: {
     width: '100%',
-    flexGrow: 1,
-    minHeight: 0
+    height: '100%'
   }
 });
 

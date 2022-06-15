@@ -1,42 +1,42 @@
+import React, { ReactElement } from 'react';
 import {
   AuthenticatedTemplate,
   UnauthenticatedTemplate,
   useMsal
 } from '@azure/msal-react';
-import { Typography, Button } from '@mui/material/';
-import React from 'react';
+import { Box, Button, Typography } from '@mui/material/';
+
+import css from './AuthenticatedLayout.module.scss';
 import { loginRequest } from '../../authentication/authConfig';
 import { useTranslation } from 'react-i18next';
-import { FlexColumnBox } from '../FlexBox/FlexColumnBox';
-import { Flex100Box } from '../FlexBox/Flex100Box';
 
 interface IProps {
-  children: JSX.Element | JSX.Element[];
+  children: ReactElement | ReactElement[];
 }
 
 export default function AuthenticatedLayout({
   children
-}: IProps): React.ReactElement {
+}: IProps): ReactElement {
   const { instance } = useMsal();
   const { t } = useTranslation();
 
   return (
-    <Flex100Box>
+    <Box className={css.AuthenticatedLayout}>
       <AuthenticatedTemplate>{children}</AuthenticatedTemplate>
       <UnauthenticatedTemplate>
-        <FlexColumnBox sx={{ paddingTop: 10, paddingLeft: '5%' }}>
+        <Box className={css.signInBox}>
           <Typography variant={'md'}>
             {t('Please sign-in to access this page')}
           </Typography>
           <Button
             variant="primary"
-            sx={{ marginRight: 'auto', marginTop: 2 }}
+            className={css.signInButton}
             onClick={() => instance.loginPopup(loginRequest)}
           >
             {t('Sign in')}
           </Button>
-        </FlexColumnBox>
+        </Box>
       </UnauthenticatedTemplate>
-    </Flex100Box>
+    </Box>
   );
 }
