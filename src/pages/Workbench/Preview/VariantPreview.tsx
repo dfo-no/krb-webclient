@@ -12,8 +12,8 @@ import {
 import { useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 
+import css from './Preview.module.scss';
 import QuestionConfigItem from './QuestionConfigItem';
-import theme from '../../../theme';
 import { IRouteProjectParams } from '../../../models/IRouteProjectParams';
 import { IVariant } from '../../../Nexus/entities/IVariant';
 import { useGetProjectQuery } from '../../../store/api/bankApi';
@@ -52,57 +52,43 @@ export default function VariantPreview({
     <Accordion
       key={variant.id}
       onChange={accordionChange()}
-      sx={{ boxShadow: 'none' }}
+      className={css.Variant}
     >
       <AccordionSummary expandIcon={<ExpandMoreIcon />}>
         <Typography>{variant.description}</Typography>
       </AccordionSummary>
       <AccordionDetails>
-        <Typography variant="smBold" color={theme.palette.primary.main}>
+        <Typography variant="smBold" className={css.title}>
           {t('Description')}
         </Typography>
-        <Typography sx={{ marginBottom: 2 }}>
+        <Typography className={css.text}>
           {variant.description ? variant.description : '-'}
         </Typography>
-        <Typography variant="smBold" color={theme.palette.primary.main}>
+        <Typography variant="smBold" className={css.title}>
           {t('Requirement text')}
         </Typography>
-        <Typography sx={{ marginBottom: 2 }}>
+        <Typography className={css.text}>
           {variant.requirementText ? variant.requirementText : '-'}
         </Typography>
-        <Typography variant="smBold" color={theme.palette.primary.main}>
+        <Typography variant="smBold" className={css.title}>
           {t('Instruction')}
         </Typography>
-        <Typography sx={{ marginBottom: 2 }}>
+        <Typography className={css.text}>
           {variant.instruction ? variant.instruction : '-'}
         </Typography>
-        <Typography variant="smBold" color={theme.palette.primary.main}>
+        <Typography variant="smBold" className={css.title}>
           {t('How to answer requirement')}
         </Typography>
-        <Box
-          sx={{
-            display: 'flex',
-            flexDirection: 'column',
-            gap: 2,
-            marginTop: 1.5,
-            border: `0.1rem solid ${theme.palette.black.main}`,
-            backgroundColor: theme.palette.gray100.main,
-            padding: 5.5
-          }}
-        >
+        <Box className={css.questions}>
           {variant.questions.length > 0 ? (
             variant.questions.map((item) => {
               return (
-                <Card key={item.id} sx={{ padding: 1 }}>
-                  <Box
-                    sx={{ display: 'flex', flexDirection: 'row', margin: 2 }}
-                  >
+                <Card key={item.id} className={css.question}>
+                  <Box className={css.title}>
                     <Typography variant={'smBold'}>{t(item.type)}</Typography>
                   </Box>
                   <Divider />
-                  <Box sx={{ display: 'flex', paddingLeft: 1 }}>
-                    <QuestionConfigItem item={item} />
-                  </Box>
+                  <QuestionConfigItem item={item} />
                 </Card>
               );
             })

@@ -1,11 +1,13 @@
-import { FormControl, FormLabel, Typography } from '@mui/material';
-import { get } from 'lodash';
 import React from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
+import { FormControl, FormLabel, Typography } from '@mui/material';
+import { get } from 'lodash';
+
 import DFOInput from '../components/DFOTextField/DFOTextField';
 import theme from '../theme';
 
 interface IProps {
+  className?: string;
   name: string;
   label: string;
   placeholder?: string;
@@ -13,6 +15,7 @@ interface IProps {
 }
 
 const VerticalTextCtrl = ({
+  className,
   name,
   label = '',
   placeholder = '',
@@ -23,7 +26,11 @@ const VerticalTextCtrl = ({
   } = useFormContext();
 
   return (
-    <FormControl error={!!get(errors, name)} sx={{ width: '100%' }}>
+    <FormControl
+      className={className}
+      error={!!get(errors, name)}
+      sx={{ width: '100%' }}
+    >
       <Typography
         variant={'smBold'}
         color={theme.palette.primary.main}

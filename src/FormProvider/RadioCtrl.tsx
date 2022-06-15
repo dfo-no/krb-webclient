@@ -1,14 +1,15 @@
 import FormControl from '@mui/material/FormControl';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import FormLabel from '@mui/material/FormLabel';
-import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup/RadioGroup';
-import { get } from 'lodash';
-import React from 'react';
+import React, { ReactElement } from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
-import { IOption } from '../Nexus/entities/IOption';
+import { get } from 'lodash';
 import { Typography } from '@mui/material';
+
 import theme from '../theme';
+import { DFORadio } from '../components/DFORadio/DFORadio';
+import { IOption } from '../Nexus/entities/IOption';
 
 interface IProps {
   name: string;
@@ -16,18 +17,18 @@ interface IProps {
   label?: string;
 }
 
-const RadioCtrl = ({ name, label, options }: IProps): React.ReactElement => {
+const RadioCtrl = ({ name, options, label }: IProps): ReactElement => {
   const {
     formState: { errors }
   } = useFormContext();
 
-  const renderOptions = (opts: IOption[]) => {
+  const renderOptions = (opts: IOption[]): ReactElement[] => {
     return opts.map((option) => {
-      return (
+      const formLabel: ReactElement = (
         <FormControlLabel
           key={option.value}
           value={option.value}
-          control={<Radio />}
+          control={<DFORadio />}
           label={
             <Typography variant={'sm'} color={theme.palette.black.main}>
               {option.label}
@@ -35,6 +36,10 @@ const RadioCtrl = ({ name, label, options }: IProps): React.ReactElement => {
           }
         />
       );
+      if (option.recommended) {
+        return <b key={option.value}>{formLabel}</b>;
+      }
+      return formLabel;
     });
   };
 

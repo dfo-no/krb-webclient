@@ -2,11 +2,11 @@ import { Box, styled, Typography } from '@mui/material';
 import { useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 
+import css from './Variant.module.scss';
 import CheckboxCtrl from '../../../../FormProvider/CheckboxCtrl';
-import { QuestionVariant } from '../../../../enums/QuestionVariant';
-import RadioCtrl from '../../../../FormProvider/RadioCtrl';
 import SelectionSingularCtrl from '../../../../FormProvider/SelectionSingularCtrl';
 import VerticalTextCtrl from '../../../../FormProvider/VerticalTextCtrl';
+import YesNoSelection from '../../../../components/YesNoSelection/YesNoSelection';
 import { ICheckboxQuestion } from '../../../../Nexus/entities/ICheckboxQuestion';
 import { ICodelistQuestion } from '../../../../Nexus/entities/ICodelistQuestion';
 import { IFileUploadQuestion } from '../../../../Nexus/entities/IFileUploadQuestion';
@@ -15,12 +15,13 @@ import { IRouteProjectParams } from '../../../../models/IRouteProjectParams';
 import { ISliderQuestion } from '../../../../Nexus/entities/ISliderQuestion';
 import { ITextQuestion } from '../../../../Nexus/entities/ITextQuestion';
 import { ITimeQuestion } from '../../../../Nexus/entities/ITimeQuestion';
+import { QuestionVariant } from '../../../../enums';
 import { useGetProjectQuery } from '../../../../store/api/bankApi';
 
 const ConfigBox = styled(Box)(() => ({
   display: 'flex',
   flexDirection: 'column',
-  margin: 16
+  margin: 'var(--small-gap)'
 }));
 
 interface IProps {
@@ -55,47 +56,50 @@ const QuestionConfig = ({ item, index }: IProps) => {
           />
         </ConfigBox>
       );
+
     case QuestionVariant.Q_CHECKBOX:
       return (
         <ConfigBox>
           <Typography variant={'smBold'} sx={{ marginBottom: 2 }}>
             {t('Preferred alternative')}
           </Typography>
-          <RadioCtrl
+          <YesNoSelection
             name={
               `questions.${index}.config.preferedAlternative` as 'questions.0.config.preferedAlternative'
             }
-            options={[
-              { value: 'true', label: t('Yes') },
-              { value: 'false', label: t('No') }
-            ]}
           />
         </ConfigBox>
       );
+
     case QuestionVariant.Q_SLIDER:
       return (
         <ConfigBox>
           <VerticalTextCtrl
+            className={css.InputField}
             name={`questions.${index}.config.min` as 'questions.0.config.min'}
             label={t('Minimum')}
             type={'number'}
           />
           <VerticalTextCtrl
+            className={css.InputField}
             name={`questions.${index}.config.max` as 'questions.0.config.max'}
             label={t('Maximum')}
             type={'number'}
           />
           <VerticalTextCtrl
+            className={css.InputField}
             name={`questions.${index}.config.unit` as 'questions.0.config.unit'}
             label={t('Unit')}
           />
           <VerticalTextCtrl
+            className={css.InputField}
             name={`questions.${index}.config.step` as 'questions.0.config.step'}
             label={t('Step')}
             type={'number'}
           />
         </ConfigBox>
       );
+
     case QuestionVariant.Q_CODELIST:
       return (
         <ConfigBox>
@@ -109,6 +113,7 @@ const QuestionConfig = ({ item, index }: IProps) => {
           />
         </ConfigBox>
       );
+
     case QuestionVariant.Q_PERIOD_DATE:
       return (
         <ConfigBox>
@@ -120,6 +125,7 @@ const QuestionConfig = ({ item, index }: IProps) => {
           />
         </ConfigBox>
       );
+
     case QuestionVariant.Q_TIME:
       return (
         <ConfigBox>
@@ -132,6 +138,7 @@ const QuestionConfig = ({ item, index }: IProps) => {
         </ConfigBox>
       );
   }
+
   return <></>;
 };
 

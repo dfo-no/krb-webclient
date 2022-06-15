@@ -12,7 +12,6 @@ import HomeDisplayList from './HomeDisplayList';
 import HomeSearchBar from './HomeSearchBar';
 import ProjectSelectionModal from './ProjectSelectionModal';
 import { IBank } from '../../Nexus/entities/IBank';
-import { ScrollableContainer } from '../../components/ScrollableContainer/ScrollableContainer';
 import { useBankState } from '../../components/BankContext/BankContext';
 import { useGetBanksQuery } from '../../store/api/bankApi';
 
@@ -24,7 +23,7 @@ const useStyles = makeStyles({
     flexDirection: 'column',
     justifyContent: 'space-between'
   },
-  scrollableContent: {
+  content: {
     height: '100%',
     width: '100%',
     margin: '0 auto',
@@ -79,47 +78,43 @@ export default function HomePage(): React.ReactElement {
 
   return (
     <div className={classes.homepageWrapper}>
-      <ScrollableContainer>
-        <Box className={classes.scrollableContent}>
-          <Box className={classes.actionContainer}>
-            <Box className={classes.navigation}>
-              <HomeSearchBar list={latestPublishedProjects} />
-            </Box>
-            <Box className={classes.navigation}>
-              <List>
-                <ListItem>
-                  <Link to="/workbench">
-                    <Typography variant="h5">{t('Create projects')}</Typography>
-                  </Link>
-                </ListItem>
-                <ListItem>
-                  <Link to="/response">
-                    <Typography variant="h5">{t('Create response')}</Typography>
-                  </Link>
-                </ListItem>
-                <ListItem>
-                  <Link to="/evaluation">
-                    <Typography variant="h5">
-                      {t('Create evaluation')}
-                    </Typography>
-                  </Link>
-                </ListItem>
-              </List>
-            </Box>
+      <Box className={classes.content}>
+        <Box className={classes.actionContainer}>
+          <Box className={classes.navigation}>
+            <HomeSearchBar list={latestPublishedProjects} />
           </Box>
-          <Box className={classes.actionContainer}>
-            <HomeDisplayList
-              title={t('Newest banks')}
-              list={latestPublishedProjects}
-              orderedByDate={true}
-            />
-            <HomeDisplayList
-              title={t('Alfabetically sorted')}
-              list={latestPublishedProjects}
-            />
+          <Box className={classes.navigation}>
+            <List>
+              <ListItem>
+                <Link to="/workbench">
+                  <Typography variant="h5">{t('Create projects')}</Typography>
+                </Link>
+              </ListItem>
+              <ListItem>
+                <Link to="/response">
+                  <Typography variant="h5">{t('Create response')}</Typography>
+                </Link>
+              </ListItem>
+              <ListItem>
+                <Link to="/evaluation">
+                  <Typography variant="h5">{t('Create evaluation')}</Typography>
+                </Link>
+              </ListItem>
+            </List>
           </Box>
         </Box>
-      </ScrollableContainer>
+        <Box className={classes.actionContainer}>
+          <HomeDisplayList
+            title={t('Newest banks')}
+            list={latestPublishedProjects}
+            orderedByDate={true}
+          />
+          <HomeDisplayList
+            title={t('Alphabetically sorted')}
+            list={latestPublishedProjects}
+          />
+        </Box>
+      </Box>
       <Footer />
       {selectedBank && <ProjectSelectionModal selectedBank={selectedBank} />}
     </div>
