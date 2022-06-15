@@ -1,21 +1,42 @@
 .Footer {
-  span {
-    font-size: 1.8rem;
-  }
+  margin-top: var(--small-gap);
+  background: var(--primary-color);
+  color: white;
 
-  a,
-  a:visited,
-  a:active {
-    color: white;
+  .content {
+    display: grid;
+    grid-template-columns: auto 33.4rem;
+    grid-gap: 10rem;
+    max-width: 124rem;
+    margin: var(--big-gap) auto;
 
-    &:hover {
-      color: var(--link-hover-color);
+    span {
+      font-size: 1.8rem;
     }
-  }
 
-  .icon {
-    display: flex;
-    justify-content: flex-end;
-    color: white;
+    a,
+    a:visited,
+    a:active {
+      color: white;
+
+      &:hover {
+        color: var(--link-hover-color);
+      }
+    }
+
+    .icon {
+      display: flex;
+      justify-content: flex-end;
+      color: white;
+    }
+
+    .details {
+      align-self: center;
+    }
+
+    .address {
+      padding-top: var(--small-gap);
+      padding-left: 9rem;
+    }
   }
 }

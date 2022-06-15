@@ -1,8 +1,6 @@
-import AppBar from '@mui/material/AppBar';
 import ArrowForwardIos from '@mui/icons-material/ArrowForwardIos';
 import CardMedia from '@mui/material/CardMedia';
 import Divider from '@mui/material/Divider';
-import Grid from '@mui/material/Grid';
 import Link from '@mui/material/Link';
 import List from '@mui/material/List';
 import ListItem, {
@@ -12,12 +10,11 @@ import ListItem, {
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import { styled } from '@mui/material/styles';
 
 import css from './Footer.module.scss';
-import logoWhite from '../assets/images/logo-white.svg';
+import logoWhite from '../assets/images/logo-white-2-lines.svg';
 import theme from '../theme';
 
 const StyledListItem = styled(ListItem)<ListItemProps>(({ theme: t }) => {
@@ -32,89 +29,67 @@ const StyledListItem = styled(ListItem)<ListItemProps>(({ theme: t }) => {
 
 const Footer = () => {
   const links = [
-    { title: 'Kontakt', href: '/' },
-    { title: 'English', href: '/' },
-    { title: 'Personvern', href: '/' },
-    { title: 'Offentlig postjournal', href: '/' }
+    { title: 'Kontakt', href: 'https://dfo.no/om-dfo/kontakt-oss' },
+    { title: 'English', href: 'https://dfo.no/english' },
+    { title: 'Personvern', href: 'https://dfo.no/om-dfo/personvern' },
+    { title: 'Offentlig postjournal', href: 'https://einnsyn.no/' }
   ];
 
   return (
-    <AppBar position="sticky">
-      <Toolbar>
-        <Grid container className={css.Footer}>
-          <Grid
-            item
-            xs={12}
-            sm={6}
+    <footer className={css.Footer}>
+      <div className={css.content}>
+        <div>
+          <List
+            dense
             sx={{
-              display: 'flex',
-              justifyContent: 'flex-end',
-              p: 4
-            }}
-          >
-            <List
-              dense
-              sx={{
-                width: '100%',
-                maxWidth: 460,
-                height: '90%',
-                [`& .${listItemClasses.root}:hover`]: {
-                  color: theme.palette.lightBlue.main,
-                  fontWeight: 'bold',
-                  '& svg': {
-                    fill: theme.palette.lightBlue.main
-                  }
+              width: '100%',
+              height: '90%',
+              [`& .${listItemClasses.root}:hover`]: {
+                color: theme.palette.lightBlue.main,
+                fontWeight: 'bold',
+                '& svg': {
+                  fill: theme.palette.lightBlue.main
                 }
-              }}
-            >
-              <Divider
-                component="li"
-                sx={{
-                  borderTop: `0.1rem solid ${theme.palette.white.main}`
-                }}
-              />
-              {links.map((link) => (
-                <StyledListItem
-                  divider={true}
-                  alignItems="flex-start"
-                  key={link.title}
-                >
-                  <ListItemButton component={Link} href={link.href}>
-                    <ListItemText primary={link.title} />
-                    <ListItemIcon className={css.icon}>
-                      <ArrowForwardIos />
-                    </ListItemIcon>
-                  </ListItemButton>
-                </StyledListItem>
-              ))}
-            </List>
-          </Grid>
-          <Grid
-            item
-            xs={12}
-            sm={6}
-            sx={{
-              display: 'flex',
-              flexDirection: 'column',
-              justifyContent: 'center',
-              pl: 8,
-              pt: 2,
-              pb: 2
+              }
             }}
           >
-            <CardMedia
-              component="img"
-              image={logoWhite}
-              sx={{ width: 137, height: 38 }}
+            <Divider
+              component="li"
+              sx={{
+                borderTop: `0.1rem solid ${theme.palette.white.main}`
+              }}
             />
-            <Typography>Karl Johans gate 37B</Typography>
-            <Typography>Pb 7154 St. Olavs plass, 0130 Oslo</Typography>
+            {links.map((link) => (
+              <StyledListItem
+                divider={true}
+                alignItems="flex-start"
+                key={link.title}
+              >
+                <ListItemButton component={Link} href={link.href}>
+                  <ListItemText primary={link.title} />
+                  <ListItemIcon className={css.icon}>
+                    <ArrowForwardIos />
+                  </ListItemIcon>
+                </ListItemButton>
+              </StyledListItem>
+            ))}
+          </List>
+        </div>
+        <div className={css.details}>
+          <CardMedia
+            component="img"
+            image={logoWhite}
+            sx={{ width: 334, height: 47 }}
+          />
+          <div className={css.address}>
+            <Typography>Lørenfaret 1 C</Typography>
+            <Typography>Pb 7154 St. Olavs plass, 0133 Oslo</Typography>
             <Typography>Tlf: 400 07 997</Typography>
             <Typography>Org. nr. 986 252 932</Typography>
-          </Grid>
-        </Grid>
-      </Toolbar>
-    </AppBar>
+          </div>
+        </div>
+      </div>
+    </footer>
   );
 };
 
