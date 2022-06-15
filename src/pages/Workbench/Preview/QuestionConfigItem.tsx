@@ -69,7 +69,7 @@ export default function QuestionConfigItem({
             {t('Preferred alternative')}
           </Typography>
           <Typography sx={{ marginTop: 1 }}>
-            {item.config.preferedAlternative ? t('Yes') : t('No')}
+            {item.config?.preferedAlternative ? t('Yes') : t('No')}
           </Typography>
         </ConfigBox>
       );
