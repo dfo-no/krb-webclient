@@ -14,7 +14,6 @@ import { FormIconButton } from '../../../../components/Form/FormIconButton';
 import { IRequirementAnswer } from '../../../../models/IRequirementAnswer';
 
 const QuestionSpecificationPeriodDate = (): ReactElement => {
-  const [isPeriod, setIsPeriod] = useState(false);
   const { control } = useFormContext<IRequirementAnswer>();
 
   const { fields, append, remove } = useFieldArray({
@@ -27,6 +26,8 @@ const QuestionSpecificationPeriodDate = (): ReactElement => {
     control
   });
 
+  /* TODO: Enable view for period selection
+  const [isPeriod, setIsPeriod] = useState(false);
   const useIsPeriod = useWatch({
     name: 'question.config.isPeriod',
     control
@@ -35,6 +36,40 @@ const QuestionSpecificationPeriodDate = (): ReactElement => {
   useEffect(() => {
     setIsPeriod(useIsPeriod);
   }, [useIsPeriod]);
+
+  const periodGrid = (): ReactElement => {
+    return (
+      <Grid>
+        <Grid item xs={20}>
+          <CheckboxCtrl
+            name={'question.config.isPeriod'}
+            label={t<string>('Include to date')}
+          />
+        </Grid>
+        <Grid item xs={20}>
+          <Typography variant="smBold">{t('Period')}</Typography>
+        </Grid>
+        <Grid item xs={8}>
+          <HorizontalTextCtrl
+            placeholder={t('Minimum')}
+            name={'question.config.periodMin'}
+            type={'number'}
+          />
+        </Grid>
+        <Grid item xs={1} className={css.arrow}>
+          <ArrowForwardIcon />
+        </Grid>
+        <Grid item xs={8}>
+          <HorizontalTextCtrl
+            placeholder={t('Maximum')}
+            name={'question.config.periodMax'}
+            type={'number'}
+          />
+        </Grid>
+      </Grid>
+    );
+  };
+  */
 
   return (
     <Grid container columns={20} className={css.QuestionSpecificationGrid}>
@@ -50,40 +85,6 @@ const QuestionSpecificationPeriodDate = (): ReactElement => {
       <Grid item xs={8}>
         <DateCtrl name={'question.config.toBoundary'} />
       </Grid>
-      <Grid item xs={20}>
-        <CheckboxCtrl
-          name={'question.config.isPeriod'}
-          label={t<string>('Include to date')}
-        />
-      </Grid>
-      {isPeriod && (
-        <Grid item xs={20}>
-          <Typography variant="smBold">{t('Period')}</Typography>
-        </Grid>
-      )}
-      {isPeriod && (
-        <Grid item xs={8}>
-          <HorizontalTextCtrl
-            placeholder={t('Minimum')}
-            name={'question.config.periodMin'}
-            type={'number'}
-          />
-        </Grid>
-      )}
-      {isPeriod && (
-        <Grid item xs={1} className={css.arrow}>
-          <ArrowForwardIcon />
-        </Grid>
-      )}
-      {isPeriod && (
-        <Grid item xs={8}>
-          <HorizontalTextCtrl
-            placeholder={t('Maximum')}
-            name={'question.config.periodMax'}
-            type={'number'}
-          />
-        </Grid>
-      )}
       <Grid item xs={20}>
         <Typography variant={'smBold'}>{t('Evaluation')}</Typography>
       </Grid>
