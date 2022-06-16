@@ -33,6 +33,7 @@ export default function PreviewSideBar({
     return displayNeeds.map((element, index) => {
       const isParent = element.parent === '';
       const isSelected = index === selectedIndex - 1;
+      const itemWidth = (element.level - 1) * 1.6;
 
       return (
         <ListItem
@@ -43,8 +44,8 @@ export default function PreviewSideBar({
             isSelected ? css.selected : undefined
           )}
           sx={{
-            marginLeft: `${element.level * 2.5}rem`,
-            width: `calc(100% - ${element.level * 2.5}rem)`
+            marginLeft: `${itemWidth}rem`,
+            width: `calc(100% - ${itemWidth}rem)`
           }}
           onClick={() => handleListItemClick(element, index + 1)}
         >
@@ -70,10 +71,6 @@ export default function PreviewSideBar({
             selectedIndex === 0 ? css.selected : undefined
           )}
           onClick={() => handleListItemClick(null, 0)}
-          sx={{
-            marginLeft: `2.5rem`,
-            width: `calc(100% - 2.5rem)`
-          }}
         >
           <Typography className={css.title} variant="smBold">
             {t('General requirements')}
