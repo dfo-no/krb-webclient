@@ -11,7 +11,6 @@ import css from './ProductRequirement.module.scss';
 import EditProductVariant from './EditProductVariant';
 import Nexus from '../../../Nexus/Nexus';
 import ProductVariant from './ProductVariant';
-import theme from '../../../theme';
 import VariantType from '../../../Nexus/entities/VariantType';
 import {
   addAnswer,
@@ -217,26 +216,27 @@ export default function ProductRequirement({
       {isSelected() ? (
         <Box className={classnames(css.card, css.selected)}>
           <DFOCheckbox checked={true} onClick={uncheckRequirement} />
-          <Typography variant={'lgBold'} className={css.title}>
-            {requirement.title}
-          </Typography>
-          <Box className={css.weighting}>
-            {isInfo() ? (
-              <DFOChip label={t('Info')} className={css.weightingText} />
-            ) : (
-              <Typography variant={'mdBold'} className={css.weightingText}>
-                {t('Weighting')}: {t(Weighting[useWeight])}
+          <Box className={css.info}>
+            <Box className={css.aboveDivider}>
+              <Typography variant={'lgBold'} className={css.title}>
+                {requirement.title}
               </Typography>
-            )}
+              <Box className={css.weighting}>
+                {isInfo() ? (
+                  <DFOChip label={t('Info')} className={css.weightingText} />
+                ) : (
+                  <Typography variant={'mdBold'} className={css.weightingText}>
+                    {t('Weighting')}: {t(Weighting[useWeight])}
+                  </Typography>
+                )}
+              </Box>
+              <FormIconButton onClick={editRequirement}>
+                <EditIcon />
+              </FormIconButton>
+            </Box>
+            <Divider className={css.divider} />
+            <ChosenConfiguration requirement={requirement} />
           </Box>
-          <FormIconButton onClick={editRequirement}>
-            <EditIcon />
-          </FormIconButton>
-          <Divider
-            color={theme.palette.silver.main}
-            sx={{ marginBottom: 0.5 }}
-          />
-          <ChosenConfiguration requirement={requirement} />
         </Box>
       ) : (
         <Box

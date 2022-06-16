@@ -191,12 +191,8 @@ export default function ChosenConfiguration({
 
   return (
     <Box>
-      <Typography
-        variant={'smBold'}
-        color={theme.palette.primary.main}
-        sx={{ marginRight: 1 }}
-      >
-        {showAnswer ? `${t('Answer')}:` : `${t('Chosen')}:`}
+      <Typography variant={'smBold'} color={theme.palette.primary.main}>
+        {showAnswer ? `${t('Answer')}: ` : `${t('Chosen')}: `}
       </Typography>
       {showAnswer ? getAnswerText() : getConfigText()}
     </Box>
