@@ -1,0 +1,105 @@
+.HomePage {
+  display: flex;
+  min-height: 0;
+  flex-grow: 1;
+  flex-direction: column;
+  justify-content: space-between;
+
+  .Content {
+    width: 100%;
+    max-width: 250rem;
+    height: 100%;
+    margin: 0 auto;
+    padding: var(--big-gap);
+  }
+
+  .Columns {
+    display: flex;
+    flex-basis: 50%;
+    margin: 0;
+    gap: var(--big-gap);
+
+    .Column {
+      flex-basis: 50%;
+      margin-bottom: var(--big-gap);
+    }
+  }
+
+  .Cards {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: var(--normal-gap);
+  }
+
+  .Card {
+    position: relative;
+    border-radius: 0.5rem;
+    background: var(--primary-color);
+    color: white;
+    overflow: hidden;
+    transition: all 220ms ease-out;
+
+    &:hover {
+      background: white;
+      color: var(--primary-color);
+    }
+
+    &.Tertiary {
+      background: var(--tertiary-color);
+
+      &:hover {
+        color: white;
+      }
+    }
+
+    > div {
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+      height: 100%;
+      padding: 0 var(--small-gap);
+      justify-content: center;
+      align-items: center;
+    }
+
+    a {
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+      height: 100%;
+      padding: var(--normal-gap);
+      color: inherit;
+      justify-content: center;
+      align-items: center;
+      text-decoration: none;
+      transition: all 220ms ease-out;
+
+      &:hover {
+        color: inherit;
+      }
+    }
+
+    label {
+      display: block;
+      font-family: var(--header-font);
+      font-size: 2.4rem;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    input[type='file'] {
+      position: absolute;
+      left: 0;
+      top: 0;
+      z-index: 5;
+      width: 100%;
+      height: 100%;
+      opacity: 0;
+      cursor: pointer;
+    }
+
+    span {
+      display: block;
+    }
+  }
+}
