@@ -22,10 +22,11 @@ import { useAppSelector } from '../../store/hooks';
 
 const useStyles = makeStyles({
   header: {
+    width: '100%',
+    maxWidth: '250rem',
     height: '100%',
-    paddingTop: 10,
-    paddingBottom: 6,
-    marginLeft: '5%',
+    padding: '1rem var(--big-gap) 0.6rem',
+    margin: '0 auto',
     color: theme.palette.black.main
   },
   headerContent: {
@@ -36,7 +37,7 @@ const useStyles = makeStyles({
   viewingProjectTitle: {
     display: 'flex',
     paddingBottom: 3,
-    width: '90vw',
+    width: '100%',
     [theme.breakpoints.down('mddd')]: {
       paddingBottom: 0
     }
@@ -185,25 +186,25 @@ export default function Header(): React.ReactElement {
       elevation={0}
       position="sticky"
       sx={{
+        margin: 0,
+        padding: 0,
         backgroundColor: theme.palette.white.main,
         borderBottom: `0.2rem solid ${theme.palette.gray300.main}`
       }}
     >
-      <Toolbar>
-        <Box className={classes.header}>
-          <Box>
-            <Box className={classes.headerContent}>
-              <Breadcrumbs breadcrumbs={breadcrumbs} />
-              <Box className={classes.viewingProjectTitle}>
-                <Box className={classes.projectData}>
-                  <Typography variant="xlBold">{getTitle()}</Typography>
-                </Box>
-                {project && <DFOToolbar items={toolbarItems} />}
+      <Box className={classes.header}>
+        <Box>
+          <Box className={classes.headerContent}>
+            <Breadcrumbs breadcrumbs={breadcrumbs} />
+            <Box className={classes.viewingProjectTitle}>
+              <Box className={classes.projectData}>
+                <Typography variant="xlBold">{getTitle()}</Typography>
               </Box>
+              {project && <DFOToolbar items={toolbarItems} />}
             </Box>
           </Box>
         </Box>
-      </Toolbar>
+      </Box>
     </AppBar>
   );
 }
