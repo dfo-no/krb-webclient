@@ -73,7 +73,7 @@ const QuestionSpecificationPeriodDate = (): ReactElement => {
   return (
     <Grid container columns={20} className={css.QuestionSpecificationGrid}>
       <Grid item xs={20}>
-        <Typography variant={'smBold'}>Fra/til dato</Typography>
+        <Typography variant={'smBold'}>{t('From/to date')}</Typography>
       </Grid>
       <Grid item xs={8}>
         <DateCtrl name={'question.config.fromBoundary'} />
