@@ -1,16 +1,17 @@
 import classnames from 'classnames';
 import EditIcon from '@mui/icons-material/Edit';
 import React, { ReactElement, useEffect, useState } from 'react';
-import { Box, Button, Typography } from '@mui/material';
+import { Box, Button, Divider, Typography } from '@mui/material';
 import { joiResolver } from '@hookform/resolvers/joi';
 import { FormProvider, useForm, useWatch } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
+import ChosenConfiguration from './ChosenConfiguration/ChosenConfiguration';
 import css from './ProductRequirement.module.scss';
 import EditProductVariant from './EditProductVariant';
 import Nexus from '../../../Nexus/Nexus';
-import VariantType from '../../../Nexus/entities/VariantType';
 import ProductVariant from './ProductVariant';
+import VariantType from '../../../Nexus/entities/VariantType';
 import {
   addAnswer,
   addProductAnswer,
@@ -215,21 +216,27 @@ export default function ProductRequirement({
       {isSelected() ? (
         <Box className={classnames(css.card, css.selected)}>
           <DFOCheckbox checked={true} onClick={uncheckRequirement} />
-          <Typography variant={'lgBold'} className={css.title}>
-            {requirement.title}
-          </Typography>
-          <Box className={css.weighting}>
-            {isInfo() ? (
-              <DFOChip label={t('Info')} className={css.weightingText} />
-            ) : (
-              <Typography variant={'mdBold'} className={css.weightingText}>
-                {t('Weighting')}: {t(Weighting[useWeight])}
+          <Box className={css.info}>
+            <Box className={css.aboveDivider}>
+              <Typography variant={'lgBold'} className={css.title}>
+                {requirement.title}
               </Typography>
-            )}
+              <Box className={css.weighting}>
+                {isInfo() ? (
+                  <DFOChip label={t('Info')} className={css.weightingText} />
+                ) : (
+                  <Typography variant={'mdBold'} className={css.weightingText}>
+                    {t('Weighting')}: {t(Weighting[useWeight])}
+                  </Typography>
+                )}
+              </Box>
+              <FormIconButton onClick={editRequirement}>
+                <EditIcon />
+              </FormIconButton>
+            </Box>
+            <Divider className={css.divider} />
+            <ChosenConfiguration requirement={requirement} />
           </Box>
-          <FormIconButton onClick={editRequirement}>
-            <EditIcon />
-          </FormIconButton>
         </Box>
       ) : (
         <Box
