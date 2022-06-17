@@ -1,5 +1,5 @@
 .QuestionSpecificationGrid {
-  row-gap: 0.8rem;
+  row-gap: var(--tiny-gap);
 
   .arrow {
     display: flex;
@@ -16,11 +16,11 @@
 
   .delete {
     align-self: center;
-    margin-left: 0.8rem;
+    margin-left: var(--tiny-gap);
     cursor: pointer;
   }
   .unit {
     align-self: center;
-    margin-left: 0.8rem;
+    margin-left: var(--tiny-gap);
   }
 }

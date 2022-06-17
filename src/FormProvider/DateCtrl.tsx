@@ -1,18 +1,20 @@
 import AdapterDateFns from '@mui/lab/AdapterDateFns';
 import DatePicker from '@mui/lab/DatePicker';
-import LocalizationProvider from '@mui/lab/LocalizationProvider';
-import TextField from '@mui/material/TextField';
-import { isDate, isValid } from 'date-fns';
 import enLocale from 'date-fns/locale/en-US';
 import nbLocale from 'date-fns/locale/nb';
-import { get } from 'lodash';
+import LocalizationProvider from '@mui/lab/LocalizationProvider';
+import makeStyles from '@mui/styles/makeStyles';
 import React from 'react';
+import TextField from '@mui/material/TextField';
+import { Box, Typography } from '@mui/material';
 import { Controller, useFormContext } from 'react-hook-form';
+import { get } from 'lodash';
+import { isDate, isValid } from 'date-fns';
+import { t } from 'i18next';
 import { useTranslation } from 'react-i18next';
+
 import formatDate from '../common/DateUtils';
 import theme from '../theme';
-import makeStyles from '@mui/styles/makeStyles';
-import { Box, Typography } from '@mui/material';
 
 interface IProps {
   name: string;
@@ -65,6 +67,18 @@ const DateCtrl = ({
   const min = minDate !== undefined ? new Date(minDate) : minDate;
   const max = maxDate !== undefined ? new Date(maxDate) : maxDate;
 
+  const getDate = (e: Date | null): string | Date | null => {
+    if (e) {
+      if (isDate(e) && isValid(e)) {
+        return formatDate(e);
+      } else {
+        return e;
+      }
+    } else {
+      return null;
+    }
+  };
+
   return (
     <LocalizationProvider
       dateAdapter={AdapterDateFns}
@@ -86,19 +100,8 @@ const DateCtrl = ({
               maxDate={max}
               value={field.value}
               clearable
-              clearText="Clear"
-              onChange={(e: Date | null) => {
-                if (e) {
-                  if (isDate(e) && isValid(e)) {
-                    const newValue = formatDate(e);
-                    field.onChange(newValue);
-                  } else {
-                    field.onChange(e);
-                  }
-                } else {
-                  field.onChange(null);
-                }
-              }}
+              clearText={t('Clear')}
+              onChange={(e) => field.onChange(getDate(e))}
               renderInput={(params) => (
                 <TextField
                   className={classes.datePicker}

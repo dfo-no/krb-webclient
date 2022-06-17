@@ -1,11 +1,10 @@
 import { Button, Grid, Typography } from '@mui/material';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import DeleteIcon from '@mui/icons-material/Delete';
-import React, { ReactElement, useEffect, useState } from 'react';
+import React, { ReactElement } from 'react';
 import { useFieldArray, useFormContext, useWatch } from 'react-hook-form';
 import { t } from 'i18next';
 
-import CheckboxCtrl from '../../../../FormProvider/CheckboxCtrl';
 import css from './QuestionSpecification.module.scss';
 import DateCtrl from '../../../../FormProvider/DateCtrl';
 import HorizontalTextCtrl from '../../../../FormProvider/HorizontalTextCtrl';
