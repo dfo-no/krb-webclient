@@ -21,11 +21,18 @@
   --link-hover-color: #1fa9e6;
   --line-color: #bcbcbc;
   --line-color-dark: #8898a6;
-  --light-gray-color: #f7f7f7;
+  --light-gray-color: var(--background-color);
   --gray-color: #c4c4c4;
 
   --header-height: 10.1rem;
   --header-font: 'Source Pro Serif, Times New Roman, serif';
+
+  --giant-fontsize: 5rem;
+  --huge-fontsize: 3.6rem;
+  --large-fontsize: 2.4rem;
+  --big-fontsize: 2.2rem;
+  --normal-fontsize: 1.8rem;
+  --small-fontsize: 1.4rem;
 
   --large-gap: 8rem;
   --big-gap: 4rem;
@@ -64,7 +71,7 @@ body {
   margin: 0;
   padding: 0;
   background: var(--background-color);
-  font-size: 1.8rem;
+  font-size: var(--normal-fontsize);
 }
 
 a,
