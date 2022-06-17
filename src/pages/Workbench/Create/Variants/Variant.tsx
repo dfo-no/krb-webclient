@@ -25,6 +25,7 @@ import VariantFormContent from './VariantFormContent';
 import VariantType from '../../../../Nexus/entities/VariantType';
 import { addAlert } from '../../../../store/reducers/alert-reducer';
 import { FormIconButton } from '../../../../components/Form/FormIconButton';
+import { DFOChip } from '../../../../components/DFOChip/DFOChip';
 import { IAlert } from '../../../../models/IAlert';
 import { IRouteProjectParams } from '../../../../models/IRouteProjectParams';
 import { IVariant, VariantSchema } from '../../../../Nexus/entities/IVariant';
@@ -113,17 +114,7 @@ const Variant = ({ variant, requirementIndex }: IProps) => {
         >
           <AccordionSummary expandIcon={<ExpandMoreIcon />}>
             <Typography>{variant.description}</Typography>
-            {useTypeWatch === VariantType.info && (
-              <Chip
-                color={'primary'}
-                label={t('Info')}
-                sx={{
-                  marginLeft: 'auto',
-                  marginRight: 2,
-                  alignSelf: 'center'
-                }}
-              />
-            )}
+            {useTypeWatch === VariantType.info && <DFOChip label={t('Info')} />}
             <FormIconButton
               hoverColor={theme.palette.errorRed.main}
               onClick={(event) =>

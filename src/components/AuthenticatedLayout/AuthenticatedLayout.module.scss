@@ -1,0 +1,17 @@
+.AuthenticatedLayout {
+  flex-grow: 1;
+  min-height: 0;
+  width: 100%;
+
+  .signInBox {
+    display: flex;
+    flex-direction: column;
+    padding-top: var(--big-gap);
+    padding-left: var(--big-gap);
+  }
+
+  .signInButton {
+    margin-right: auto;
+    margin-top: var(--small-gap);
+  }
+}
