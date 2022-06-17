@@ -1,3 +1,4 @@
+import classnames from 'classnames';
 import React from 'react';
 import { Box, Card, Divider, List, ListItem, Typography } from '@mui/material/';
 import { useTranslation } from 'react-i18next';
@@ -7,7 +8,6 @@ import theme from '../../../theme';
 import { ISpecificationProduct } from '../../../models/ISpecificationProduct';
 import { useResponseState } from '../ResponseContext';
 import { useAppSelector } from '../../../store/hooks';
-import classnames from 'classnames';
 
 function ResponseSideBar(): React.ReactElement {
   const { t } = useTranslation();

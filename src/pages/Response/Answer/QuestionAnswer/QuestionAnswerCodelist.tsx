@@ -4,20 +4,20 @@ import { FormProvider, useForm, useWatch } from 'react-hook-form';
 import { joiResolver } from '@hookform/resolvers/joi';
 import { useTranslation } from 'react-i18next';
 
+import CodeSelection from './CodeSelection';
 import css from '../ProductRequirementAnswer.module.scss';
 import {
   addProductAnswer,
   addRequirementAnswer
 } from '../../../../store/reducers/response-reducer';
-import { IRequirementAnswer } from '../../../../models/IRequirementAnswer';
-import { useAppDispatch, useAppSelector } from '../../../../store/hooks';
-import { useResponseState } from '../../ResponseContext';
-import { useAccordionState } from '../../../../components/DFOAccordion/AccordionContext';
 import {
   CodelistQuestionAnswerSchema,
   ICodelistQuestion
 } from '../../../../Nexus/entities/ICodelistQuestion';
-import CodeSelection from './CodeSelection';
+import { IRequirementAnswer } from '../../../../models/IRequirementAnswer';
+import { useAppDispatch, useAppSelector } from '../../../../store/hooks';
+import { useResponseState } from '../../ResponseContext';
+import { useAccordionState } from '../../../../components/DFOAccordion/AccordionContext';
 
 interface IProps {
   item: ICodelistQuestion;

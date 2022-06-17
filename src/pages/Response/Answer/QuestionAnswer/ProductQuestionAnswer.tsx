@@ -1,11 +1,11 @@
 import React from 'react';
 
 import QuestionAnswerCheckbox from './QuestionAnswerCheckbox';
+import QuestionAnswerCodelist from './QuestionAnswerCodelist';
 import QuestionAnswerSlider from './QuestionAnswerSlider';
+import QuestionAnswerText from './QuestionAnswerText';
 import { IRequirementAnswer } from '../../../../models/IRequirementAnswer';
 import { QuestionVariant } from '../../../../enums';
-import QuestionAnswerText from './QuestionAnswerText';
-import QuestionAnswerCodelist from './QuestionAnswerCodelist';
 
 interface IProps {
   requirementAnswer: IRequirementAnswer;

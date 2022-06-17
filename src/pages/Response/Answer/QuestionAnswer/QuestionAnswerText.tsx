@@ -5,19 +5,19 @@ import { joiResolver } from '@hookform/resolvers/joi';
 import { useTranslation } from 'react-i18next';
 
 import css from '../ProductRequirementAnswer.module.scss';
+import TextAreaCtrl from '../../../../FormProvider/TextAreaCtrl';
 import {
   addProductAnswer,
   addRequirementAnswer
 } from '../../../../store/reducers/response-reducer';
 import { IRequirementAnswer } from '../../../../models/IRequirementAnswer';
-import { useAppDispatch, useAppSelector } from '../../../../store/hooks';
-import { useResponseState } from '../../ResponseContext';
-import { useAccordionState } from '../../../../components/DFOAccordion/AccordionContext';
 import {
   ITextQuestion,
   TextQuestionAnswerSchema
 } from '../../../../Nexus/entities/ITextQuestion';
-import TextAreaCtrl from '../../../../FormProvider/TextAreaCtrl';
+import { useAppDispatch, useAppSelector } from '../../../../store/hooks';
+import { useResponseState } from '../../ResponseContext';
+import { useAccordionState } from '../../../../components/DFOAccordion/AccordionContext';
 
 interface IProps {
   item: ITextQuestion;

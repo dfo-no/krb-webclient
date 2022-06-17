@@ -9,12 +9,12 @@ import ProductSelection from './ProductSelection';
 import QuestionsList from './QuestionsList';
 import RadioCtrl from '../../../../FormProvider/RadioCtrl';
 import TextAreaCtrl from '../../../../FormProvider/TextAreaCtrl';
+import theme from '../../../../theme';
 import VariantType from '../../../../Nexus/entities/VariantType';
 import VerticalTextCtrl from '../../../../FormProvider/VerticalTextCtrl';
 import { IRouteProjectParams } from '../../../../models/IRouteProjectParams';
 import { IVariant } from '../../../../Nexus/entities/IVariant';
 import { useGetProjectQuery } from '../../../../store/api/bankApi';
-import theme from '../../../../theme';
 
 interface IProps {
   control: Control<IVariant>;

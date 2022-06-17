@@ -1,8 +1,8 @@
 import React from 'react';
 import { Box } from '@mui/material';
 
-import css from './ResponseEditor.module.scss';
 import AnswerProduct from './Answer/AnswerProduct';
+import css from './ResponseEditor.module.scss';
 import ResponseSideBar from './SideBar/ResponseSideBar';
 
 export default function ResponseEditor(): React.ReactElement {

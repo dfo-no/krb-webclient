@@ -1,15 +1,20 @@
+import RadioGroup from '@mui/material/RadioGroup/RadioGroup';
 import React, { useEffect, useState } from 'react';
-import { Box, Button, Typography } from '@mui/material';
+import { Box, Button, FormControlLabel, Typography } from '@mui/material';
 import { FormProvider, useForm, useWatch } from 'react-hook-form';
 import { joiResolver } from '@hookform/resolvers/joi';
 import { useTranslation } from 'react-i18next';
 
 import css from '../ProductRequirementAnswer.module.scss';
+import HorizontalTextCtrl from '../../../../FormProvider/HorizontalTextCtrl';
 import SliderCtrl from '../../../../FormProvider/SliderCtrl';
+import theme from '../../../../theme';
+import Utils from '../../../../common/Utils';
 import {
   addProductAnswer,
   addRequirementAnswer
 } from '../../../../store/reducers/response-reducer';
+import { DFORadio } from '../../../../components/DFORadio/DFORadio';
 import { IMark } from '../../../../Nexus/entities/IMark';
 import { IRequirementAnswer } from '../../../../models/IRequirementAnswer';
 import {
@@ -19,13 +24,6 @@ import {
 import { useAppDispatch, useAppSelector } from '../../../../store/hooks';
 import { useResponseState } from '../../ResponseContext';
 import { useAccordionState } from '../../../../components/DFOAccordion/AccordionContext';
-import Utils from '../../../../common/Utils';
-import HorizontalTextCtrl from '../../../../FormProvider/HorizontalTextCtrl';
-import RadioCtrl from '../../../../FormProvider/RadioCtrl';
-import RadioGroup from '@mui/material/RadioGroup/RadioGroup';
-import { DFORadio } from '../../../../components/DFORadio/DFORadio';
-import theme from '../../../../theme';
-import FormControlLabel from '@mui/material/FormControlLabel';
 
 interface IProps {
   item: ISliderQuestion;
