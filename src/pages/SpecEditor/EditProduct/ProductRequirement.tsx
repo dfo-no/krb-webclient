@@ -6,7 +6,7 @@ import { joiResolver } from '@hookform/resolvers/joi';
 import { FormProvider, useForm, useWatch } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
-import ChosenConfiguration from './ChosenConfiguration';
+import ChosenConfiguration from './ChosenConfiguration/ChosenConfiguration';
 import css from './ProductRequirement.module.scss';
 import EditProductVariant from './EditProductVariant';
 import Nexus from '../../../Nexus/Nexus';
