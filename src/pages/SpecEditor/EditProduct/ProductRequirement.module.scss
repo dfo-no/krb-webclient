@@ -26,24 +26,37 @@
     border: 0.2rem solid var(--primary-color);
     flex-direction: row;
 
-    .title {
+    .info {
+      width: 100%;
       margin-left: var(--small-gap);
-      align-self: center;
-      border-bottom: none;
-    }
-  }
 
-  .weighting {
-    display: flex;
-    flex: 0 0 30%;
-    margin-left: auto;
-    padding-left: var(--small-gap);
-    margin-right: var(--small-gap);
+      .aboveDivider {
+        display: flex;
+        flex-direction: row;
 
-    .weightingText {
-      display: flex;
-      margin-left: auto;
-      align-self: center;
+        .title {
+          margin-left: 0;
+          border-bottom: none;
+        }
+
+        .weighting {
+          display: flex;
+          flex: 0 0 30%;
+          margin-left: auto;
+          padding-left: var(--small-gap);
+          margin-right: var(--small-gap);
+
+          .weightingText {
+            display: flex;
+            margin-left: auto;
+            align-self: center;
+          }
+        }
+      }
+      .divider {
+        color: black;
+        margin: var(--micro-gap) 0;
+      }
     }
   }
 
