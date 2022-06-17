@@ -21,11 +21,11 @@ export default function AnswerPreviewBox({
     codes: string | string[],
     configCodelist: string
   ) => {
-    const codelistIndex = response.spesification.bank.codelist.findIndex(
+    const codelistIndex = response.specification.bank.codelist.findIndex(
       (list: ICodelist) => list.id === configCodelist
     );
 
-    const codelist = response.spesification.bank.codelist[codelistIndex];
+    const codelist = response.specification.bank.codelist[codelistIndex];
     const usedCodes: string[] = [];
     if (Array.isArray(codes)) {
       codes.forEach((selectedCode: string) => {

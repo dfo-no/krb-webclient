@@ -5,14 +5,14 @@ import NeedHierarchy from '../Components/NeedHierarchy';
 export default function RequirementPage(): React.ReactElement {
   const { response } = useAppSelector((state) => state.response);
 
-  const selectedBank = response.spesification.bank;
+  const selectedBank = response.specification.bank;
 
   return (
     <NeedHierarchy
       key={selectedBank.id}
       needs={selectedBank.needs}
-      searchList={response.spesification.requirements}
-      specificationSearchList={response.spesification.requirementAnswers}
+      searchList={response.specification.requirements}
+      specificationSearchList={response.specification.requirementAnswers}
       responseSearchList={response.requirementAnswers}
     />
   );

@@ -14,6 +14,7 @@ import VerticalTextCtrl from '../../../../FormProvider/VerticalTextCtrl';
 import { IRouteProjectParams } from '../../../../models/IRouteProjectParams';
 import { IVariant } from '../../../../Nexus/entities/IVariant';
 import { useGetProjectQuery } from '../../../../store/api/bankApi';
+import theme from '../../../../theme';
 
 interface IProps {
   control: Control<IVariant>;
@@ -41,17 +42,29 @@ const VariantFormContent = ({ control }: IProps) => {
           placeholder={t('Requirement short description')}
         />
       </Box>
+      <Typography
+        variant={'smBold'}
+        color={theme.palette.primary.main}
+        sx={{ marginBottom: 1 }}
+      >
+        {t('Requirement text')}
+      </Typography>
       <Box sx={{ marginBottom: 4 }}>
         <TextAreaCtrl
           name={`requirementText`}
-          label={t('Requirement text')}
           placeholder={t('Requirement vendor text')}
         />
       </Box>
+      <Typography
+        variant={'smBold'}
+        color={theme.palette.primary.main}
+        sx={{ marginBottom: 1 }}
+      >
+        {t('Instruction')}
+      </Typography>
       <Box sx={{ marginBottom: 4 }}>
         <TextAreaCtrl
           name={`instruction`}
-          label={t('Instruction')}
           placeholder={t('Requirement guide for client')}
         />
       </Box>

@@ -1,42 +1,37 @@
-import { FormControl, FormLabel, Typography } from '@mui/material';
+import { FormControl, FormLabel } from '@mui/material';
 import { get } from 'lodash';
 import React from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
 import DFOTextarea from '../components/DFOTextarea/DFOTextarea';
-import theme from '../theme';
 
 interface IProps {
   name: string;
-  label: string;
   placeholder?: string;
   type?: string;
+  rows?: number;
 }
 
 const TextAreaCtrl = ({
   name,
-  label = '',
   placeholder = '',
-  type = 'text'
+  type = 'text',
+  rows = 3
 }: IProps): React.ReactElement => {
   const {
     formState: { errors }
   } = useFormContext();
 
   return (
-    <FormControl error={!!get(errors, name)} sx={{ width: '100%' }}>
-      <Typography
-        variant={'smBold'}
-        color={theme.palette.primary.main}
-        sx={{ marginBottom: 2 }}
-      >
-        {label}
-      </Typography>
+    <FormControl
+      error={!!get(errors, name)}
+      sx={{ height: '100%', width: '100%' }}
+    >
       <Controller
         name={name}
         render={({ field }) => (
           <DFOTextarea
-            maxRows={3}
-            minRows={3}
+            maxRows={rows}
+            minRows={rows}
             multiline={true}
             {...field}
             placeholder={placeholder}

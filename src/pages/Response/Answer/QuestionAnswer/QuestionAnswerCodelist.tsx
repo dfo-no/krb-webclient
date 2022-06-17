@@ -5,27 +5,27 @@ import { joiResolver } from '@hookform/resolvers/joi';
 import { useTranslation } from 'react-i18next';
 
 import css from '../ProductRequirementAnswer.module.scss';
-import YesNoSelection from '../../../../components/YesNoSelection/YesNoSelection';
 import {
   addProductAnswer,
   addRequirementAnswer
 } from '../../../../store/reducers/response-reducer';
-import {
-  CheckboxQuestionAnswerSchema,
-  ICheckboxQuestion
-} from '../../../../Nexus/entities/ICheckboxQuestion';
 import { IRequirementAnswer } from '../../../../models/IRequirementAnswer';
 import { useAppDispatch, useAppSelector } from '../../../../store/hooks';
 import { useResponseState } from '../../ResponseContext';
 import { useAccordionState } from '../../../../components/DFOAccordion/AccordionContext';
+import {
+  CodelistQuestionAnswerSchema,
+  ICodelistQuestion
+} from '../../../../Nexus/entities/ICodelistQuestion';
+import CodeSelection from './CodeSelection';
 
 interface IProps {
-  item: ICheckboxQuestion;
+  item: ICodelistQuestion;
   parent: IRequirementAnswer;
-  existingAnswer?: ICheckboxQuestion;
+  existingAnswer?: ICodelistQuestion;
 }
 
-const QuestionAnswerCheckbox = ({
+const QuestionAnswerCodelist = ({
   item,
   parent,
   existingAnswer
@@ -33,15 +33,18 @@ const QuestionAnswerCheckbox = ({
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
   const { response } = useAppSelector((state) => state.response);
+  const codelist = response.specification.bank.codelist.find(
+    (cl) => cl.id === item.config.codelist
+  );
   const { responseProductIndex } = useResponseState();
   const { setActiveKey } = useAccordionState();
-  const methods = useForm<ICheckboxQuestion>({
-    resolver: joiResolver(CheckboxQuestionAnswerSchema),
+  const methods = useForm<ICodelistQuestion>({
+    resolver: joiResolver(CodelistQuestionAnswerSchema),
     defaultValues: item
   });
 
   const useAnswerWatch = useWatch({
-    name: 'answer.value',
+    name: 'answer.codes',
     control: methods.control
   });
 
@@ -52,16 +55,10 @@ const QuestionAnswerCheckbox = ({
   }, [existingAnswer, methods]);
 
   useEffect(() => {
-    const preferred = `${item.config.preferedAlternative}`;
-    const newAnswer = `${useAnswerWatch}`;
-    if (preferred === newAnswer) {
-      methods.setValue('answer.point', 100);
-    } else {
-      methods.setValue('answer.point', item.config.pointsNonPrefered);
-    }
-  }, [item.config, useAnswerWatch, methods]);
+    methods.setValue('answer.point', 0);
+  }, [useAnswerWatch, methods]);
 
-  const onSubmit = (post: ICheckboxQuestion): void => {
+  const onSubmit = (post: ICodelistQuestion): void => {
     const newAnswer = {
       ...parent,
       question: post
@@ -86,10 +83,7 @@ const QuestionAnswerCheckbox = ({
         autoComplete="off"
         noValidate
       >
-        <YesNoSelection
-          name={'answer.value'}
-          recommendedAlternative={item.config.preferedAlternative}
-        />
+        <CodeSelection codes={codelist ? codelist.codes : []} />
         <Box className={css.buttons}>
           <Button
             variant="cancel"
@@ -107,4 +101,4 @@ const QuestionAnswerCheckbox = ({
   );
 };
 
-export default QuestionAnswerCheckbox;
+export default QuestionAnswerCodelist;

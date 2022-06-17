@@ -4,10 +4,8 @@
   flex-direction: column;
   color: black;
   border: 0.1rem solid var(--primary-color);
-  padding: var(--small-gap);
-  padding-left: var(--normal-gap);
-  padding-right: var(--normal-gap);
-  margin: var(--normal-gap);
+  padding: var(--small-gap) var(--normal-gap);
+  margin: var(--normal-gap) 0;
 
   .header {
     width: 100%;
@@ -20,6 +18,10 @@
 
   .body {
     margin-top: var(--small-gap);
+
+    .label {
+      margin-bottom: var(--small-gap);
+    }
 
     .title {
       margin-bottom: var(--tiny-gap);

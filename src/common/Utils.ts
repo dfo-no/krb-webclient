@@ -12,6 +12,7 @@ import { Nestable } from '../models/Nestable';
 import { Parentable } from '../models/Parentable';
 import { QuestionType } from '../models/QuestionType';
 import { QuestionVariant } from '../enums';
+import { ScoreValuePair } from '../Nexus/entities/ISliderQuestion';
 
 class Utils {
   static ensure<T>(
@@ -118,6 +119,30 @@ class Utils {
       newList.splice(index, 1);
     }
     return newList;
+  }
+
+  static findScoreFromValue(value: number, pairs: ScoreValuePair[]): number {
+    const exact = pairs.find((svp) => svp.value === value);
+    if (exact) {
+      return exact.score;
+    }
+    const sortedHigher = pairs
+      .filter((svp) => svp.value > value)
+      .sort((a, b) => a.value - b.value);
+    const sortedLower = pairs
+      .filter((svp) => svp.value < value)
+      .sort((a, b) => b.value - a.value);
+
+    if (sortedHigher.length > 0 && sortedLower.length > 0) {
+      const higher = sortedHigher[0];
+      const lower = sortedLower[0];
+      return (
+        lower.score +
+        ((higher.score - lower.score) / (higher.value - lower.value)) *
+          (value - lower.value)
+      );
+    }
+    return 0;
   }
 
   private static flattenNestable<T extends IBaseModel>(

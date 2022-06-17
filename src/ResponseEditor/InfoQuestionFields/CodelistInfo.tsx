@@ -19,11 +19,11 @@ export default function CodelistInfo({
   const alternative = answer.question as ICodelistQuestion;
   const variant = parent_requirement.variants[0];
 
-  const codelistIndex = response.spesification.bank.codelist.findIndex(
+  const codelistIndex = response.specification.bank.codelist.findIndex(
     (list) => list.id === alternative.config.codelist
   );
 
-  const codelist = response.spesification.bank.codelist[codelistIndex];
+  const codelist = response.specification.bank.codelist[codelistIndex];
 
   const codes = () => {
     if (Array.isArray(alternative.answer?.codes)) {

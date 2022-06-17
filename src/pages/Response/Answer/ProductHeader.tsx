@@ -23,13 +23,13 @@ export default function ProductHeader(): React.ReactElement {
           }}
         >
           <Typography variant="lgBold">
-            {response.spesification.products[responseProductIndex]?.title ??
+            {response.specification.products[responseProductIndex]?.title ??
               t('General requirement')}
           </Typography>
         </Box>
         <Box sx={{ display: 'flex', flexDirection: 'row', paddingTop: 1 }}>
           <Typography variant="smBold">
-            {response.spesification.products[responseProductIndex]
+            {response.specification.products[responseProductIndex]
               ?.description ?? ''}
           </Typography>
 
@@ -42,7 +42,7 @@ export default function ProductHeader(): React.ReactElement {
               {': '}
               <i>
                 {
-                  response.spesification.products[responseProductIndex]
+                  response.specification.products[responseProductIndex]
                     .originProduct.title
                 }
               </i>

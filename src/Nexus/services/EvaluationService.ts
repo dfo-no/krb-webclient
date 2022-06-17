@@ -181,7 +181,7 @@ export default class EvaluationService {
 
     response.requirementAnswers.forEach((requirementAnswer) => {
       // check if answer also exist in specification
-      const ix = response.spesification.requirementAnswers.findIndex(
+      const ix = response.specification.requirementAnswers.findIndex(
         (elem) => elem.questionId === requirementAnswer.questionId
       );
       if (ix === -1) {

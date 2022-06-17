@@ -13,9 +13,9 @@ export default function ResponseProductRequirementSelector({
 }: IInputProps): React.ReactElement {
   const { response } = useAppSelector((state) => state.response);
 
-  const selectedBank = response.spesification.bank;
+  const selectedBank = response.specification.bank;
 
-  const productIndex = response.spesification.products.findIndex(
+  const productIndex = response.specification.products.findIndex(
     (specProduct: ISpecificationProduct) => specProduct.id === product.id
   );
 
@@ -27,9 +27,9 @@ export default function ResponseProductRequirementSelector({
   return (
     <NeedHierarchy
       needs={selectedBank.needs}
-      searchList={response.spesification.products[productIndex].requirements}
+      searchList={response.specification.products[productIndex].requirements}
       specificationSearchList={
-        response.spesification.products[productIndex].requirementAnswers
+        response.specification.products[productIndex].requirementAnswers
       }
       responseSearchList={
         response.products[responseProductIndex].requirementAnswers
