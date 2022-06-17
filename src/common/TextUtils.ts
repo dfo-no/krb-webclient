@@ -2,6 +2,7 @@ import { t } from 'i18next';
 
 import { ICheckboxQuestion } from '../Nexus/entities/ICheckboxQuestion';
 import { ICode } from '../Nexus/entities/ICode';
+import { ICodelist } from '../Nexus/entities/ICodelist';
 import { ICodelistQuestion } from '../Nexus/entities/ICodelistQuestion';
 import { IFileUploadQuestion } from '../Nexus/entities/IFileUploadQuestion';
 import { IPeriodDateQuestion } from '../Nexus/entities/IPeriodDateQuestion';
@@ -43,6 +44,17 @@ class TextUtils {
     return t('No configuration');
   };
 
+  private static getCodesText = (
+    codes: string[],
+    codelist: ICodelist
+  ): string => {
+    return codes
+      .map((codeId) => codelist.codes.find((code) => code.id === codeId))
+      .filter((item): item is Parentable<ICode> => !!item)
+      .map((code) => code.title)
+      .join(', ');
+  };
+
   static getCodelistConfig = (
     question: ICodelistQuestion,
     specification: ISpecification
@@ -58,28 +70,26 @@ class TextUtils {
     if (!codelist) {
       return '';
     }
-    const optionalText = optional
-      .map((codeId) => codelist.codes.find((code) => code.id === codeId))
-      .filter((item): item is Parentable<ICode> => !!item)
-      .map((code) => code.title)
-      .join(', ');
-    const mandatoryText = mandatory
-      .map((codeId) => codelist.codes.find((code) => code.id === codeId))
-      .filter((item): item is Parentable<ICode> => !!item)
-      .map((code) => code.title)
-      .join(', ');
     if (mandatory.length === 0 && optional.length === 0) {
       return t('No codes selected');
     }
     return `${
-      mandatory.length > 0 ? `${t('Mandatory codes')}: ${mandatoryText}, ` : ''
+      mandatory.length > 0
+        ? `${t('Mandatory codes')}: ${TextUtils.getCodesText(
+            mandatory,
+            codelist
+          )}, `
+        : ''
     } ${
       optional.length > 0
         ? `${t('Optional codes')}: ${t(
             'Minimum'
           )}: ${optionalCodeMinAmount}, ${t(
             'Maximum'
-          )}: ${optionalCodeMaxAmount}, ${t('Codes')}: ${optionalText}`
+          )}: ${optionalCodeMaxAmount}, ${t('Codes')}: ${TextUtils.getCodesText(
+            optional,
+            codelist
+          )}`
         : ''
     }`;
   };
