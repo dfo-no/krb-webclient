@@ -1,9 +1,10 @@
 import classnames from 'classnames';
 import React, { ChangeEvent, useEffect, useState } from 'react';
-import { AxiosError, AxiosResponse } from 'axios';
+import { AxiosResponse } from 'axios';
 import { Link } from 'react-router-dom';
 import { useHistory } from 'react-router';
 import { useTranslation } from 'react-i18next';
+import { v4 as uuidv4 } from 'uuid';
 
 import css from './HomePage.module.scss';
 import Footer from '../../Footer/Footer';
@@ -14,7 +15,9 @@ import {
   addProduct,
   setSpecification
 } from '../../store/reducers/response-reducer';
+import { addAlert } from '../../store/reducers/alert-reducer';
 import { httpPost } from '../../api/http';
+import { IAlert } from '../../models/IAlert';
 import { IBank } from '../../Nexus/entities/IBank';
 import { ISpecification } from '../../Nexus/entities/ISpecification';
 import { ISpecificationProduct } from '../../models/ISpecificationProduct';
@@ -80,7 +83,12 @@ export default function HomePage(): React.ReactElement {
     }
 
     if (disableUploadMessage !== '') {
-      alert(disableUploadMessage);
+      const alert: IAlert = {
+        id: uuidv4(),
+        style: 'error',
+        text: disableUploadMessage
+      };
+      dispatch(addAlert({ alert }));
       return;
     }
 
@@ -107,10 +115,16 @@ export default function HomePage(): React.ReactElement {
           );
         });
         history.push(`/response/${response.data.bank.id}`);
-        return response;
+        return;
       })
-      .catch((error: AxiosError) => {
-        console.error(error);
+      .catch(() => {
+        const alert: IAlert = {
+          id: uuidv4(),
+          style: 'error',
+          text: t('HOME_FILEUPL_UPLOAD_ERROR')
+        };
+        dispatch(addAlert({ alert }));
+        return;
       });
   };
 
