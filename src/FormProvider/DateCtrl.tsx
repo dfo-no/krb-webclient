@@ -50,12 +50,10 @@ const DateCtrl = ({
     if (e) {
       if (isDate(e) && isValid(e)) {
         return DateUtils.formatDate(e);
-      } else {
-        return e;
       }
-    } else {
-      return null;
+      return e;
     }
+    return null;
   };
 
   return (
