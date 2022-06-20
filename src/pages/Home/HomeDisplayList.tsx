@@ -12,7 +12,7 @@ import Typography from '@mui/material/Typography';
 import { useTranslation } from 'react-i18next';
 
 import { IBank } from '../../Nexus/entities/IBank';
-import { useBankState } from '../../components/BankContext/BankContext';
+import { useHomeState } from './HomeContext';
 
 interface IProps {
   list: IBank[];
@@ -64,7 +64,7 @@ export default function HomeDisplayList({
   orderedByDate = false,
   title
 }: IProps): React.ReactElement {
-  const { setSelectedBank } = useBankState();
+  const { setSelectedBank } = useHomeState();
   const { t } = useTranslation();
   const classes = useStyles();
 

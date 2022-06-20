@@ -11,7 +11,7 @@ import { useAppDispatch } from '../../store/hooks';
 import {
   addProduct,
   setResponse,
-  setSpecification
+  setResponseSpecification
 } from '../../store/reducers/response-reducer';
 import { selectBank } from '../../store/reducers/selectedBank-reducer';
 import { ISpecificationProduct } from '../../models/ISpecificationProduct';
@@ -38,7 +38,7 @@ export default function ResponsePage(): React.ReactElement {
     }).then((response) => {
       const specification: ISpecification = response.data;
       dispatch(selectBank(specification.bank.id));
-      dispatch(setSpecification(specification));
+      dispatch(setResponseSpecification(specification));
       specification.products.forEach((product: ISpecificationProduct) => {
         dispatch(
           addProduct({

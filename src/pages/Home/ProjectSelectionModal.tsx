@@ -17,7 +17,7 @@ import {
 } from '../../components/ModalBox/ModalBox';
 import { setSpecification } from '../../store/reducers/spesification-reducer';
 import { useAppDispatch } from '../../store/hooks';
-import { useBankState } from '../../components/BankContext/BankContext';
+import { useHomeState } from './HomeContext';
 import { useGetBankQuery } from '../../store/api/bankApi';
 
 interface IProps {
@@ -27,7 +27,7 @@ interface IProps {
 export default function ProjectSelectionModal({
   selectedBank
 }: IProps): React.ReactElement {
-  const { setSelectedBank } = useBankState();
+  const { setSelectedBank } = useHomeState();
   const [selectedSpecification, setSelectedSpecification] =
     useState<ISpecification | null>(null);
   const { t } = useTranslation();

@@ -15,7 +15,7 @@ import SpecModule from './pages/SpecEditor/SpecModule';
 import styles from './App.module.scss';
 import useConfirmTabClose from './hooks/useConfirmTabClose';
 import WorkbenchModule from './pages/Workbench/WorkbenchModule';
-import { BankProvider } from './components/BankContext/BankContext';
+import { HomeProvider } from './pages/Home/HomeContext';
 import { msalConfig } from './authentication/authConfig';
 
 const msalInstance = new PublicClientApplication(msalConfig);
@@ -27,9 +27,9 @@ function App(): ReactElement {
     return (
       <Switch>
         <Route exact path="/">
-          <BankProvider>
+          <HomeProvider>
             <HomePage />
-          </BankProvider>
+          </HomeProvider>
         </Route>
         <Route path="/workbench" component={WorkbenchModule} />
         <Route path="/specification" component={SpecModule} />
