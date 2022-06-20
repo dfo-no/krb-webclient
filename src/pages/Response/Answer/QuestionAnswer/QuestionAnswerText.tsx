@@ -5,27 +5,27 @@ import { joiResolver } from '@hookform/resolvers/joi';
 import { useTranslation } from 'react-i18next';
 
 import css from '../ProductRequirementAnswer.module.scss';
-import YesNoSelection from '../../../../components/YesNoSelection/YesNoSelection';
+import TextAreaCtrl from '../../../../FormProvider/TextAreaCtrl';
 import {
   addProductAnswer,
   addRequirementAnswer
 } from '../../../../store/reducers/response-reducer';
-import {
-  CheckboxQuestionAnswerSchema,
-  ICheckboxQuestion
-} from '../../../../Nexus/entities/ICheckboxQuestion';
 import { IRequirementAnswer } from '../../../../models/IRequirementAnswer';
+import {
+  ITextQuestion,
+  TextQuestionAnswerSchema
+} from '../../../../Nexus/entities/ITextQuestion';
 import { useAppDispatch, useAppSelector } from '../../../../store/hooks';
 import { useResponseState } from '../../ResponseContext';
 import { useAccordionState } from '../../../../components/DFOAccordion/AccordionContext';
 
 interface IProps {
-  item: ICheckboxQuestion;
+  item: ITextQuestion;
   parent: IRequirementAnswer;
-  existingAnswer?: ICheckboxQuestion;
+  existingAnswer?: ITextQuestion;
 }
 
-const QuestionAnswerCheckbox = ({
+const QuestionAnswerText = ({
   item,
   parent,
   existingAnswer
@@ -35,13 +35,13 @@ const QuestionAnswerCheckbox = ({
   const { response } = useAppSelector((state) => state.response);
   const { responseProductIndex } = useResponseState();
   const { setActiveKey } = useAccordionState();
-  const methods = useForm<ICheckboxQuestion>({
-    resolver: joiResolver(CheckboxQuestionAnswerSchema),
+  const methods = useForm<ITextQuestion>({
+    resolver: joiResolver(TextQuestionAnswerSchema),
     defaultValues: item
   });
 
   const useAnswerWatch = useWatch({
-    name: 'answer.value',
+    name: 'answer.text',
     control: methods.control
   });
 
@@ -52,16 +52,14 @@ const QuestionAnswerCheckbox = ({
   }, [existingAnswer, methods]);
 
   useEffect(() => {
-    const preferred = `${item.config.preferedAlternative}`;
-    const newAnswer = `${useAnswerWatch}`;
-    if (preferred === newAnswer) {
+    if (useAnswerWatch.length > 0) {
       methods.setValue('answer.point', 100);
     } else {
-      methods.setValue('answer.point', item.config.pointsNonPrefered);
+      methods.setValue('answer.point', 0);
     }
-  }, [item.config, useAnswerWatch, methods]);
+  }, [useAnswerWatch, methods]);
 
-  const onSubmit = (post: ICheckboxQuestion): void => {
+  const onSubmit = (post: ITextQuestion): void => {
     const newAnswer = {
       ...parent,
       question: post
@@ -86,9 +84,10 @@ const QuestionAnswerCheckbox = ({
         autoComplete="off"
         noValidate
       >
-        <YesNoSelection
-          name={'answer.value'}
-          recommendedAlternative={item.config.preferedAlternative}
+        <TextAreaCtrl
+          name={'answer.text'}
+          placeholder={t('Answer')}
+          rows={10}
         />
         <Box className={css.buttons}>
           <Button
@@ -107,4 +106,4 @@ const QuestionAnswerCheckbox = ({
   );
 };
 
-export default QuestionAnswerCheckbox;
+export default QuestionAnswerText;

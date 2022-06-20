@@ -68,7 +68,7 @@ export default function ResponseEditor(): React.ReactElement {
       },
       responseType: 'json'
     }).then((result) => {
-      if (result.data.bank.id !== response.spesification.bank.id) {
+      if (result.data.bank.id !== response.specification.bank.id) {
         const alert: IAlert = {
           id: uuidv4(),
           style: 'error',
@@ -79,13 +79,13 @@ export default function ResponseEditor(): React.ReactElement {
         dispatch(setPrefilledResponse(result.data));
         const [requirementAnswers, markedQuestions] =
           nexus.responseService.matchPreAnsweredQuestions(
-            response.spesification.requirementAnswers,
+            response.specification.requirementAnswers,
             result.data.requirementAnswers
           );
         dispatch(setRequirementAnswers(requirementAnswers));
         dispatch(setMarkedRequirements(markedQuestions));
 
-        history.push(`/response/${response.spesification.bank.id}/requirement`);
+        history.push(`/response/${response.specification.bank.id}/requirement`);
       }
     });
   };
@@ -99,7 +99,7 @@ export default function ResponseEditor(): React.ReactElement {
           </Row>
           <Row className="mt-4 mb-4">
             <Col sm={6}>
-              <h5>Spesifikasjon :{response.spesification.title}</h5>
+              <h5>Spesifikasjon :{response.specification.title}</h5>
             </Col>
             <Col sm={4}>
               <h6>Last opp preutfylt besvarelse</h6>
@@ -113,7 +113,7 @@ export default function ResponseEditor(): React.ReactElement {
             </Col>
           </Row>
           <Row>
-            <h6>Kravbank: {response.spesification.bank.title}</h6>
+            <h6>Kravbank: {response.specification.bank.title}</h6>
           </Row>
           <form onSubmit={handleSubmit(saveSupplier)}>
             <Form.Group as={Row}>

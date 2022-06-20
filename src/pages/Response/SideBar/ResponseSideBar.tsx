@@ -1,70 +1,17 @@
-import { Box, Card, Divider, List, ListItem, Typography } from '@mui/material/';
-import makeStyles from '@mui/styles/makeStyles';
+import classnames from 'classnames';
 import React from 'react';
+import { Box, Card, Divider, List, ListItem, Typography } from '@mui/material/';
 import { useTranslation } from 'react-i18next';
-import theme from '../../../theme';
-import { ScrollableContainer } from '../../../components/ScrollableContainer/ScrollableContainer';
-import { useResponseState } from '../ResponseContext';
-import { ISpecificationProduct } from '../../../models/ISpecificationProduct';
-import { useAppSelector } from '../../../store/hooks';
 
-const useStyles = makeStyles({
-  specSideBar: {
-    display: 'flex',
-    flexDirection: 'column',
-    flex: '1 1 0',
-    height: '100%',
-    alignItems: 'center',
-    paddingTop: 20
-  },
-  list: {
-    display: 'flex',
-    paddingLeft: 64,
-    flexDirection: 'column',
-    listStyle: 'none',
-    alignSelf: 'center',
-    width: '100%',
-    flexGrow: 1,
-    minHeight: 0
-  },
-  productListItem: {
-    padding: 0,
-    textDecoration: 'none'
-  },
-  productListItemCard: {
-    minHeight: 100,
-    boxShadow: 'none',
-    border: `0.1rem solid ${theme.palette.gray300.main}`,
-    width: '100%',
-    cursor: 'pointer',
-    '&:hover': {
-      backgroundColor: theme.palette.lightBlue.main,
-      color: theme.palette.white.main
-    }
-  },
-  selectedProduct: {
-    color: theme.palette.white.main,
-    backgroundColor: theme.palette.primary.main
-  },
-  productListItemCardContent: {
-    display: 'flex',
-    flexDirection: 'column',
-    gap: 5,
-    padding: 25,
-    paddingBottom: 0
-  },
-  buttonContainer: {
-    display: 'flex',
-    justifyContent: 'flex-end',
-    width: '100%',
-    paddingBottom: 25
-  }
-});
+import css from '../ResponseEditor.module.scss';
+import theme from '../../../theme';
+import { ISpecificationProduct } from '../../../models/ISpecificationProduct';
+import { useResponseState } from '../ResponseContext';
+import { useAppSelector } from '../../../store/hooks';
 
 function ResponseSideBar(): React.ReactElement {
   const { t } = useTranslation();
 
-  const classes = useStyles();
   const { response } = useAppSelector((state) => state.response);
   const { responseProductIndex, setResponseProductIndex } = useResponseState();
 
@@ -80,16 +27,17 @@ function ResponseSideBar(): React.ReactElement {
     const isSelected = index === responseProductIndex;
     return (
       <ListItem
-        className={classes.productListItem}
+        className={css.item}
         key={product.id}
         onClick={() => productPressed(index)}
       >
         <Card
-          className={`${classes.productListItemCard} ${
-            isSelected ? classes.selectedProduct : ''
-          }`}
+          className={classnames(
+            css.card,
+            isSelected ? css.selected : undefined
+          )}
         >
-          <Box className={classes.productListItemCardContent}>
+          <Box className={css.content}>
             <Box sx={{ display: 'flex' }}>
               <Typography variant="mdBold">{product.title}</Typography>
               <Typography
@@ -112,19 +60,20 @@ function ResponseSideBar(): React.ReactElement {
   };
 
   return (
-    <Box className={classes.specSideBar}>
-      <List className={classes.list} aria-label="products">
+    <Box className={css.sidebar}>
+      <List className={css.list} aria-label="products">
         <ListItem
-          className={classes.productListItem}
+          className={css.item}
           key={'generic'}
           onClick={() => genericPressed()}
         >
           <Card
-            className={`${classes.productListItemCard} ${
-              responseProductIndex === -1 ? classes.selectedProduct : ''
-            }`}
+            className={classnames(
+              css.card,
+              responseProductIndex === -1 ? css.selected : undefined
+            )}
           >
-            <Box className={classes.productListItemCardContent}>
+            <Box className={css.content}>
               <Typography variant="mdBold">
                 {t('General requirements')}
               </Typography>
@@ -132,15 +81,10 @@ function ResponseSideBar(): React.ReactElement {
             </Box>
           </Card>
         </ListItem>
-        <Divider
-          color={theme.palette.gray300.main}
-          sx={{ marginTop: 4, marginBottom: 4 }}
-        />
-        <ScrollableContainer sx={{ gap: 2 }}>
-          {response.spesification.products.map((element, index) => {
-            return renderProducts(element, index);
-          })}
-        </ScrollableContainer>
+        <Divider color={theme.palette.silver.main} />
+        {response.specification.products.map((element, index) => {
+          return renderProducts(element, index);
+        })}
       </List>
     </Box>
   );

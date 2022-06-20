@@ -1,10 +1,10 @@
 import React from 'react';
 import { Route, Switch, useRouteMatch } from 'react-router';
-import { useAppDispatch, useAppSelector } from '../../store/hooks';
-import { selectBank } from '../../store/reducers/selectedBank-reducer';
+
 import ResponseEditor from './ResponseEditor';
-import { Box } from '@mui/material/';
 import { ResponseProvider } from './ResponseContext';
+import { selectBank } from '../../store/reducers/selectedBank-reducer';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
 
 interface IRouteParams {
   bankId: string;
@@ -19,14 +19,12 @@ export default function ResponseModule(): React.ReactElement {
   }
 
   return (
-    <Box sx={{ width: '100%', height: '100%' }}>
-      <Switch>
-        <Route exact path="/response/:id">
-          <ResponseProvider>
-            <ResponseEditor />
-          </ResponseProvider>
-        </Route>
-      </Switch>
-    </Box>
+    <Switch>
+      <Route exact path="/response/:id">
+        <ResponseProvider>
+          <ResponseEditor />
+        </ResponseProvider>
+      </Route>
+    </Switch>
   );
 }

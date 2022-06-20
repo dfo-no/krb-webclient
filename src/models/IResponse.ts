@@ -3,7 +3,7 @@ import { IRequirementAnswer } from './IRequirementAnswer';
 import { IResponseProduct } from './IResponseProduct';
 
 export interface IResponse {
-  spesification: ISpecification;
+  specification: ISpecification;
   supplier: string;
   products: IResponseProduct[];
   requirementAnswers: IRequirementAnswer[];

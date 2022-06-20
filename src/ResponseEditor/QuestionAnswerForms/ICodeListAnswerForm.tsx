@@ -86,11 +86,11 @@ export default function ICodelistAnswerForm({
       );
   };
 
-  const codelistIndex = response.spesification.bank.codelist.findIndex(
+  const codelistIndex = response.specification.bank.codelist.findIndex(
     (list) => list.id === item.config.codelist
   );
 
-  const codelist = response.spesification.bank.codelist[codelistIndex];
+  const codelist = response.specification.bank.codelist[codelistIndex];
   return (
     <Card className="m-3 ">
       <Card.Header>
