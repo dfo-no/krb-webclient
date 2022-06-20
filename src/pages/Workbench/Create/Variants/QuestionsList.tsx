@@ -9,6 +9,7 @@ import QuestionConfig from './QuestionConfig';
 import QuestionService from '../../../../Nexus/services/QuestionService';
 import SelectQuestionDialog from './SelectQuestionDialog';
 import theme from '../../../../theme';
+import { FlexColumnBox } from '../../../../components/FlexBox/FlexColumnBox';
 import { FormIconButton } from '../../../../components/Form/FormIconButton';
 import { IVariant } from '../../../../Nexus/entities/IVariant';
 import { QuestionVariant } from '../../../../enums';
@@ -39,7 +40,7 @@ const QuestionsList = () => {
   };
 
   return (
-    <>
+    <FlexColumnBox>
       <Button
         sx={{ marginBottom: 1, marginRight: 'auto' }}
         variant="primary"
@@ -75,7 +76,7 @@ const QuestionsList = () => {
         isOpen={isOpen}
         onClose={handleClose}
       />
-    </>
+    </FlexColumnBox>
   );
 };
 

@@ -63,12 +63,9 @@
       .need {
         background-color: var(--primary-light-color);
         color: white;
-        padding: var(--micro-gap) var(--micro-gap) var(--micro-gap)
-          var(--normal-gap);
+        padding: var(--micro-gap);
+        padding-left: var(--normal-gap);
         margin: var(--normal-gap) 0;
-      }
-
-      .requirement {
       }
     }
   }

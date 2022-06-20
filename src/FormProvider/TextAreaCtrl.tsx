@@ -5,6 +5,7 @@ import { Controller, useFormContext } from 'react-hook-form';
 import DFOTextarea from '../components/DFOTextarea/DFOTextarea';
 
 interface IProps {
+  className?: string;
   name: string;
   placeholder?: string;
   type?: string;
@@ -12,6 +13,7 @@ interface IProps {
 }
 
 const TextAreaCtrl = ({
+  className,
   name,
   placeholder = '',
   type = 'text',
@@ -23,6 +25,7 @@ const TextAreaCtrl = ({
 
   return (
     <FormControl
+      className={className}
       error={!!get(errors, name)}
       sx={{ height: '100%', width: '100%' }}
     >

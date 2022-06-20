@@ -1,3 +1,4 @@
+import classnames from 'classnames';
 import React from 'react';
 import { Box, Typography } from '@mui/material';
 import { Control, useWatch } from 'react-hook-form';
@@ -5,13 +6,13 @@ import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
 
 import CheckboxCtrl from '../../../../FormProvider/CheckboxCtrl';
+import css from './Variant.module.scss';
+import HorizontalTextCtrl from '../../../../FormProvider/HorizontalTextCtrl';
 import ProductSelection from './ProductSelection';
 import QuestionsList from './QuestionsList';
 import RadioCtrl from '../../../../FormProvider/RadioCtrl';
 import TextAreaCtrl from '../../../../FormProvider/TextAreaCtrl';
-import theme from '../../../../theme';
 import VariantType from '../../../../Nexus/entities/VariantType';
-import VerticalTextCtrl from '../../../../FormProvider/VerticalTextCtrl';
 import { IRouteProjectParams } from '../../../../models/IRouteProjectParams';
 import { IVariant } from '../../../../Nexus/entities/IVariant';
 import { useGetProjectQuery } from '../../../../store/api/bankApi';
@@ -34,47 +35,36 @@ const VariantFormContent = ({ control }: IProps) => {
   }
 
   return (
-    <>
-      <Box sx={{ marginBottom: 4 }}>
-        <VerticalTextCtrl
-          name={`description`}
-          label={t('Description')}
-          placeholder={t('Requirement short description')}
-        />
-      </Box>
-      <Typography
-        variant={'smBold'}
-        color={theme.palette.primary.main}
-        sx={{ marginBottom: 1 }}
-      >
+    <div className={css.VariantContent}>
+      <Typography className={css.TextTitle} variant={'smBold'}>
+        {t('Description')}
+      </Typography>
+      <HorizontalTextCtrl
+        className={css.TextField}
+        name={`description`}
+        placeholder={t('Requirement short description')}
+      />
+      <Typography className={css.TextTitle} variant={'smBold'}>
         {t('Requirement text')}
       </Typography>
-      <Box sx={{ marginBottom: 4 }}>
-        <TextAreaCtrl
-          name={`requirementText`}
-          placeholder={t('Requirement vendor text')}
-        />
-      </Box>
-      <Typography
-        variant={'smBold'}
-        color={theme.palette.primary.main}
-        sx={{ marginBottom: 1 }}
-      >
+      <TextAreaCtrl
+        className={classnames(css.TextField, css.TextAreaField)}
+        name={`requirementText`}
+        placeholder={t('Requirement vendor text')}
+      />
+      <Typography className={css.TextTitle} variant={'smBold'}>
         {t('Instruction')}
       </Typography>
-      <Box sx={{ marginBottom: 4 }}>
-        <TextAreaCtrl
-          name={`instruction`}
-          placeholder={t('Requirement guide for client')}
-        />
-      </Box>
-      <Typography
-        variant={'smBold'}
-        sx={{ marginBottom: 2, color: 'var(--primary-color)' }}
-      >
+      <TextAreaCtrl
+        className={classnames(css.TextField, css.TextAreaField)}
+        name={`instruction`}
+        placeholder={t('Requirement guide for client')}
+      />
+      <Typography className={css.TextTitle} variant={'smBold'}>
         {t('Type variant')}
       </Typography>
       <RadioCtrl
+        className={classnames(css.TextField, css.RadioField)}
         name="type"
         options={[
           {
@@ -85,13 +75,10 @@ const VariantFormContent = ({ control }: IProps) => {
           { value: VariantType.info, label: t('Info'), recommended: false }
         ]}
       />
-      <Typography
-        variant={'smBold'}
-        sx={{ marginTop: 4, marginBottom: 2, color: 'var(--primary-color)' }}
-      >
+      <Typography className={css.TextTitle} variant={'smBold'}>
         {t('How to use this requirement')}
       </Typography>
-      <Box sx={{ display: 'flex', width: '100%', marginBottom: 2, gap: 2 }}>
+      <Box className={classnames(css.TextField, css.CheckboxField)}>
         <CheckboxCtrl name={`useProduct`} label={`${t('Product')}`} />
         <CheckboxCtrl
           name={`useSpesification`}
@@ -99,14 +86,11 @@ const VariantFormContent = ({ control }: IProps) => {
         />
       </Box>
       {useProduct && <ProductSelection />}
-      <Typography
-        variant={'smBold'}
-        sx={{ marginTop: 4, marginBottom: 2, color: 'var(--primary-color)' }}
-      >
+      <Typography className={css.TextTitle} variant={'smBold'}>
         {t('How to answer requirement')}
       </Typography>
       <QuestionsList />
-    </>
+    </div>
   );
 };
 
