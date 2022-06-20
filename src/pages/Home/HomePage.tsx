@@ -1,50 +1,39 @@
-import Box from '@mui/material/Box';
-import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
-import makeStyles from '@mui/styles/makeStyles';
-import React, { useEffect, useState } from 'react';
-import Typography from '@mui/material/Typography';
+import classnames from 'classnames';
+import React, { ChangeEvent, useEffect, useState } from 'react';
+import { AxiosResponse } from 'axios';
 import { Link } from 'react-router-dom';
+import { useHistory } from 'react-router';
 import { useTranslation } from 'react-i18next';
+import { v4 as uuidv4 } from 'uuid';
 
+import css from './HomePage.module.scss';
 import Footer from '../../Footer/Footer';
 import HomeDisplayList from './HomeDisplayList';
 import HomeSearchBar from './HomeSearchBar';
 import ProjectSelectionModal from './ProjectSelectionModal';
+import {
+  addProduct,
+  setSpecification
+} from '../../store/reducers/response-reducer';
+import { addAlert } from '../../store/reducers/alert-reducer';
+import { httpPost } from '../../api/http';
+import { IAlert } from '../../models/IAlert';
 import { IBank } from '../../Nexus/entities/IBank';
+import { ISpecification } from '../../Nexus/entities/ISpecification';
+import { ISpecificationProduct } from '../../models/ISpecificationProduct';
+import { selectBank } from '../../store/reducers/selectedBank-reducer';
+import { useAppDispatch } from '../../store/hooks';
 import { useBankState } from '../../components/BankContext/BankContext';
 import { useGetBanksQuery } from '../../store/api/bankApi';
 
-const useStyles = makeStyles({
-  homepageWrapper: {
-    flexGrow: 1,
-    minHeight: 0,
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'space-between'
-  },
-  content: {
-    height: '100%',
-    width: '100%',
-    margin: '0 auto',
-    padding: '2rem'
-  },
-  actionContainer: {
-    display: 'flex',
-    flexBasis: '50%',
-    margin: 8,
-    marginBottom: 0,
-    gap: '2rem'
-  },
-  navigation: {
-    flexBasis: '50%'
-  }
-});
+const MAX_UPLOAD_SIZE = 10000000; // 10M
 
 export default function HomePage(): React.ReactElement {
+  const dispatch = useAppDispatch();
+  const history = useHistory();
   const { t } = useTranslation();
-  const classes = useStyles();
   const { selectedBank } = useBankState();
+
   const [latestPublishedProjects, setLatestPublishedProjects] = useState<
     IBank[]
   >([]);
@@ -76,34 +65,97 @@ export default function HomePage(): React.ReactElement {
     }
   }, [list]);
 
+  const onUpload = (event: ChangeEvent<HTMLInputElement>): void => {
+    const formData = new FormData();
+    const files = event.target.files as FileList;
+    let disableUploadMessage = '';
+    for (let index = 0; index < files.length; index += 1) {
+      const file = files[index];
+      if (file.size > MAX_UPLOAD_SIZE) {
+        disableUploadMessage = t('HOME_FILEUPL_TOO_LARGE');
+        break;
+      }
+      if (file.type !== 'application/pdf') {
+        disableUploadMessage = t('HOME_FILEUPL_WRONG_TYPE');
+        break;
+      }
+      formData.append('file', file);
+    }
+
+    if (disableUploadMessage !== '') {
+      const alert: IAlert = {
+        id: uuidv4(),
+        style: 'error',
+        text: disableUploadMessage
+      };
+      dispatch(addAlert({ alert }));
+      return;
+    }
+
+    httpPost<FormData, AxiosResponse>('/java/uploadPdf', formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      },
+      responseType: 'json'
+    })
+      .then((response) => {
+        const specification: ISpecification = response.data;
+        dispatch(selectBank(specification.bank.id));
+        dispatch(setSpecification(specification));
+        specification.products.forEach((product: ISpecificationProduct) => {
+          dispatch(
+            addProduct({
+              id: product.id,
+              title: product.title,
+              description: product.description,
+              originProduct: product,
+              price: 0,
+              requirementAnswers: []
+            })
+          );
+        });
+        history.push(`/response/${response.data.bank.id}`);
+        return;
+      })
+      .catch(() => {
+        const alert: IAlert = {
+          id: uuidv4(),
+          style: 'error',
+          text: t('HOME_FILEUPL_UPLOAD_ERROR')
+        };
+        dispatch(addAlert({ alert }));
+        return;
+      });
+  };
+
   return (
-    <div className={classes.homepageWrapper}>
-      <Box className={classes.content}>
-        <Box className={classes.actionContainer}>
-          <Box className={classes.navigation}>
+    <div className={css.HomePage}>
+      <div className={css.Content}>
+        <div className={css.Columns}>
+          <div className={css.Column}>
             <HomeSearchBar list={latestPublishedProjects} />
-          </Box>
-          <Box className={classes.navigation}>
-            <List>
-              <ListItem>
-                <Link to="/workbench">
-                  <Typography variant="h5">{t('Create projects')}</Typography>
-                </Link>
-              </ListItem>
-              <ListItem>
-                <Link to="/response">
-                  <Typography variant="h5">{t('Create response')}</Typography>
-                </Link>
-              </ListItem>
-              <ListItem>
-                <Link to="/evaluation">
-                  <Typography variant="h5">{t('Create evaluation')}</Typography>
-                </Link>
-              </ListItem>
-            </List>
-          </Box>
-        </Box>
-        <Box className={classes.actionContainer}>
+          </div>
+          <div className={classnames(css.Column, css.Cards)}>
+            <div className={css.Card}>
+              <Link to={'/workbench'}>
+                <label>{t('Workbench')}</label>
+                <span>{t('Create projects')}</span>
+              </Link>
+            </div>
+            <div className={classnames(css.Card, css.Tertiary)}>
+              <div>
+                <label>{t('HOME_FILEUPL_LABEL')}</label>
+                <input
+                  type="file"
+                  accept="application/pdf"
+                  onChange={(e) => onUpload(e)}
+                />
+                <span>{t('HOME_FILEUPL_DESCRIPTION')}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className={css.Columns}>
           <HomeDisplayList
             title={t('Newest banks')}
             list={latestPublishedProjects}
@@ -113,8 +165,8 @@ export default function HomePage(): React.ReactElement {
             title={t('Alphabetically sorted')}
             list={latestPublishedProjects}
           />
-        </Box>
-      </Box>
+        </div>
+      </div>
       <Footer />
       {selectedBank && <ProjectSelectionModal selectedBank={selectedBank} />}
     </div>

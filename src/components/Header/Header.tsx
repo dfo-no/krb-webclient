@@ -4,7 +4,6 @@ import ConstructionOutlinedIcon from '@mui/icons-material/ConstructionOutlined';
 import makeStyles from '@mui/styles/makeStyles';
 import React, { useEffect, useState } from 'react';
 import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
-import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
 import { skipToken } from '@reduxjs/toolkit/query/react';
