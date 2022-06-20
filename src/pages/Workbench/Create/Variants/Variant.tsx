@@ -4,7 +4,6 @@ import Divider from '@mui/material/Divider';
 import React, { SyntheticEvent } from 'react';
 import {
   Box,
-  Chip,
   Button,
   Typography,
   Accordion,

@@ -4,7 +4,6 @@ import { Controller, useFormContext } from 'react-hook-form';
 import { get } from 'lodash';
 
 import DFOInput from '../components/DFOTextField/DFOTextField';
-import DFOTextField from '../components/DFOTextField/DFOTextField';
 import theme from '../theme';
 
 interface IProps {

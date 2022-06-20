@@ -3,9 +3,7 @@ import DatePicker from '@mui/lab/DatePicker';
 import enLocale from 'date-fns/locale/en-US';
 import nbLocale from 'date-fns/locale/nb';
 import LocalizationProvider from '@mui/lab/LocalizationProvider';
-import makeStyles from '@mui/styles/makeStyles';
 import React from 'react';
-import TextField from '@mui/material/TextField';
 import { Box, Typography } from '@mui/material';
 import { Controller, useFormContext } from 'react-hook-form';
 import { get } from 'lodash';
@@ -13,8 +11,9 @@ import { isDate, isValid } from 'date-fns';
 import { t } from 'i18next';
 import { useTranslation } from 'react-i18next';
 
-import formatDate from '../common/DateUtils';
+import DateUtils from '../common/DateUtils';
 import theme from '../theme';
+import DFOPickerField from '../components/DFOPickerField/DFOPickerField';
 
 interface IProps {
   name: string;
@@ -23,32 +22,12 @@ interface IProps {
   maxDate?: string;
 }
 
-const useStyles = makeStyles({
-  datePicker: {
-    '& .MuiOutlinedInput-root': {
-      height: 45,
-      borderRadius: 0,
-      '& fieldset': {
-        border: `2px solid ${theme.palette.primary.main}`
-      },
-      '&.Mui-focused fieldset': {
-        border: `3px solid ${theme.palette.primary.main}`
-      },
-      '&:hover fieldset': {
-        border: `3px solid ${theme.palette.primary.main}`
-      }
-    }
-  }
-});
-
 const DateCtrl = ({
   name,
   label,
   minDate,
   maxDate
 }: IProps): React.ReactElement => {
-  const classes = useStyles();
-
   const {
     formState: { errors }
   } = useFormContext();
@@ -64,13 +43,13 @@ const DateCtrl = ({
     nb: '__.__.____'
   };
 
-  const min = minDate !== undefined ? new Date(minDate) : minDate;
-  const max = maxDate !== undefined ? new Date(maxDate) : maxDate;
+  const min = !!minDate ? new Date(minDate) : minDate;
+  const max = !!maxDate ? new Date(maxDate) : maxDate;
 
   const getDate = (e: Date | null): string | Date | null => {
     if (e) {
       if (isDate(e) && isValid(e)) {
-        return formatDate(e);
+        return DateUtils.formatDate(e);
       } else {
         return e;
       }
@@ -103,8 +82,7 @@ const DateCtrl = ({
               clearText={t('Clear')}
               onChange={(e) => field.onChange(getDate(e))}
               renderInput={(params) => (
-                <TextField
-                  className={classes.datePicker}
+                <DFOPickerField
                   {...params}
                   error={!!get(errors, name)}
                   helperText={get(errors, name)?.message ?? ''}
