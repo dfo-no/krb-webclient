@@ -10,11 +10,13 @@ import Footer from '../../Footer/Footer';
 import HomeDisplayList from './HomeDisplayList';
 import HomeSearchBar from './HomeSearchBar';
 import ProjectSelectionModal from './ProjectSelectionModal';
+import ResponseSelectionModal from './ResponseSelectionModal';
 import SpecificationSelectionModal from './SpecificationSelectionModal';
 import { addAlert } from '../../store/reducers/alert-reducer';
 import { httpPost } from '../../api/http';
 import { IAlert } from '../../models/IAlert';
 import { IBank } from '../../Nexus/entities/IBank';
+import { IResponse } from '../../models/IResponse';
 import { ISpecification } from '../../Nexus/entities/ISpecification';
 import { useAppDispatch } from '../../store/hooks';
 import { useHomeState } from './HomeContext';
@@ -26,8 +28,13 @@ export default function HomePage(): React.ReactElement {
   const dispatch = useAppDispatch();
   const { t } = useTranslation();
   const [inputKey, setInputKey] = useState(0);
-  const { selectedBank, selectedSpecification, setSelectedSpecification } =
-    useHomeState();
+  const {
+    selectedBank,
+    selectedSpecification,
+    setSelectedSpecification,
+    selectedResponse,
+    setSelectedResponse
+  } = useHomeState();
 
   const [latestPublishedProjects, setLatestPublishedProjects] = useState<
     IBank[]
@@ -95,9 +102,14 @@ export default function HomePage(): React.ReactElement {
       responseType: 'json'
     })
       .then((httpResponse) => {
-        const specification: ISpecification = httpResponse.data;
-        setSelectedSpecification(specification);
-        return;
+        if (httpResponse.data.title) {
+          const specification: ISpecification = httpResponse.data;
+          setSelectedSpecification(specification);
+          return;
+        } else {
+          const response: IResponse = httpResponse.data;
+          setSelectedResponse(response);
+        }
       })
       .catch(() => {
         const alert: IAlert = {
@@ -156,6 +168,9 @@ export default function HomePage(): React.ReactElement {
         <SpecificationSelectionModal
           selectedSpecification={selectedSpecification}
         />
+      )}
+      {selectedResponse && (
+        <ResponseSelectionModal selectedResponse={selectedResponse} />
       )}
     </div>
   );
