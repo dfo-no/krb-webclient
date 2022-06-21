@@ -1,27 +1,120 @@
 import { t } from 'i18next';
 
+import DateUtils from './DateUtils';
 import { ICheckboxQuestion } from '../Nexus/entities/ICheckboxQuestion';
-import { ICode } from '../Nexus/entities/ICode';
 import { ICodelist } from '../Nexus/entities/ICodelist';
 import { ICodelistQuestion } from '../Nexus/entities/ICodelistQuestion';
 import { IFileUploadQuestion } from '../Nexus/entities/IFileUploadQuestion';
 import { IPeriodDateQuestion } from '../Nexus/entities/IPeriodDateQuestion';
 import { ISliderQuestion } from '../Nexus/entities/ISliderQuestion';
 import { ISpecification } from '../Nexus/entities/ISpecification';
+import { ITextQuestion } from '../Nexus/entities/ITextQuestion';
 import { ITimeQuestion } from '../Nexus/entities/ITimeQuestion';
-import { Parentable } from '../models/Parentable';
-import DateUtils from './DateUtils';
+import { IRequirementAnswer } from '../models/IRequirementAnswer';
+import { QuestionVariant } from '../enums';
 
 class TextUtils {
-  static getCheckboxAnswer = (question: ICheckboxQuestion): string => {
+  static getAnswerText = (
+    reqAnswer: IRequirementAnswer,
+    specification: ISpecification
+  ): string => {
+    switch (reqAnswer.question.type) {
+      case QuestionVariant.Q_CHECKBOX:
+        return TextUtils.getCheckboxAnswer(reqAnswer.question);
+      case QuestionVariant.Q_SLIDER:
+        return TextUtils.getSliderAnswer(reqAnswer.question);
+      case QuestionVariant.Q_TEXT:
+        return TextUtils.getTextAnswer(reqAnswer.question);
+      case QuestionVariant.Q_CODELIST:
+        return TextUtils.getCodelistAnswer(reqAnswer.question, specification);
+      case QuestionVariant.Q_PERIOD_DATE:
+        return TextUtils.getDateAnswer(reqAnswer.question);
+      case QuestionVariant.Q_TIME:
+        return TextUtils.getTimeAnswer(reqAnswer.question);
+      case QuestionVariant.Q_FILEUPLOAD:
+        return TextUtils.getFileUploadAnswer(reqAnswer.question);
+    }
+    return '';
+  };
+
+  static getConfigText = (
+    reqAnswer: IRequirementAnswer,
+    specification: ISpecification
+  ): string => {
+    switch (reqAnswer.question.type) {
+      case QuestionVariant.Q_TEXT:
+        return TextUtils.getTextConfig();
+      case QuestionVariant.Q_CHECKBOX:
+        return TextUtils.getCheckboxConfig(reqAnswer.question);
+      case QuestionVariant.Q_SLIDER:
+        return TextUtils.getSliderConfig(reqAnswer.question);
+      case QuestionVariant.Q_CODELIST:
+        return TextUtils.getCodelistConfig(reqAnswer.question, specification);
+      case QuestionVariant.Q_PERIOD_DATE:
+        return TextUtils.getDateConfig(reqAnswer.question);
+      case QuestionVariant.Q_TIME:
+        return TextUtils.getTimeConfig(reqAnswer.question);
+      case QuestionVariant.Q_FILEUPLOAD:
+        return TextUtils.getFileUploadConfig(reqAnswer.question);
+    }
+  };
+
+  private static getCodesText = (
+    codes: string[],
+    codelist: ICodelist
+  ): string => {
+    return codes
+      .reduce((accumulator, codeId) => {
+        const foundCode = codelist.codes.find((code) => codeId === code.id);
+        if (foundCode) {
+          accumulator.push(foundCode.title);
+        }
+        return accumulator;
+      }, [] as string[])
+      .join(', ');
+  };
+
+  private static getCheckboxAnswer = (question: ICheckboxQuestion): string => {
     return question.answer.value ? t('Yes') : t('No');
   };
 
-  static getSliderAnswer = (question: ISliderQuestion): string => {
+  private static getSliderAnswer = (question: ISliderQuestion): string => {
     return `${question.answer.value} ${question.config.unit}`;
   };
 
-  static getCheckboxConfig = (question: ICheckboxQuestion): string => {
+  private static getTextAnswer = (question: ITextQuestion): string => {
+    return question.answer.text;
+  };
+
+  private static getCodelistAnswer = (
+    question: ICodelistQuestion,
+    specification: ISpecification
+  ): string => {
+    const codelistId = question.config.codelist;
+    const codelist = specification.bank.codelist.find(
+      (cl) => cl.id === codelistId
+    );
+    if (codelist) {
+      return TextUtils.getCodesText(question.answer.codes, codelist);
+    }
+    return '';
+  };
+
+  private static getDateAnswer = (question: IPeriodDateQuestion): string => {
+    return question.answer.fromDate ?? '';
+  };
+
+  private static getTimeAnswer = (question: ITimeQuestion): string => {
+    return question.answer.fromTime ?? '';
+  };
+
+  private static getFileUploadAnswer = (
+    question: IFileUploadQuestion
+  ): string => {
+    return question.answer.files.join(', ');
+  };
+
+  private static getCheckboxConfig = (question: ICheckboxQuestion): string => {
     const preferedAlternative = question.config.preferedAlternative;
     const pointsNonPrefered = question.config.pointsNonPrefered;
     return `${preferedAlternative ? t('Yes') : t('No')} 100 ${t('score')}, ${
@@ -29,7 +122,7 @@ class TextUtils {
     } ${pointsNonPrefered} ${t('score')}`;
   };
 
-  static getSliderConfig = (question: ISliderQuestion): string => {
+  private static getSliderConfig = (question: ISliderQuestion): string => {
     const config = question.config;
     const scoreValues = config.scoreValues
       .map((sv) => `${sv.value}: ${sv.score}`)
@@ -41,22 +134,11 @@ class TextUtils {
     )}: ${scoreValues}`;
   };
 
-  static getTextConfig = (): string => {
+  private static getTextConfig = (): string => {
     return t('No configuration');
   };
 
-  private static getCodesText = (
-    codes: string[],
-    codelist: ICodelist
-  ): string => {
-    return codes
-      .map((codeId) => codelist.codes.find((code) => code.id === codeId))
-      .filter((item): item is Parentable<ICode> => !!item)
-      .map((code) => code.title)
-      .join(', ');
-  };
-
-  static getCodelistConfig = (
+  private static getCodelistConfig = (
     question: ICodelistQuestion,
     specification: ISpecification
   ): string => {
@@ -95,7 +177,7 @@ class TextUtils {
     }`;
   };
 
-  static getDateConfig = (question: IPeriodDateQuestion): string => {
+  private static getDateConfig = (question: IPeriodDateQuestion): string => {
     const from = DateUtils.prettyFormatDate(question.config.fromBoundary);
     const to = DateUtils.prettyFormatDate(question.config.toBoundary);
     const isPeriod = question.config.isPeriod;
@@ -106,7 +188,7 @@ class TextUtils {
     } ${isPeriod ? `, ${t('Minimum')}: ${min}, ${t('Maximum')}: ${max}` : ''}`;
   };
 
-  static getTimeConfig = (question: ITimeQuestion): string => {
+  private static getTimeConfig = (question: ITimeQuestion): string => {
     const from = question.config.fromBoundary;
     const to = question.config.toBoundary;
     const isPeriod = question.config.isPeriod;
@@ -123,7 +205,9 @@ class TextUtils {
     }`;
   };
 
-  static getFileUploadConfig = (question: IFileUploadQuestion): string => {
+  private static getFileUploadConfig = (
+    question: IFileUploadQuestion
+  ): string => {
     const filetypes = question.config.fileEndings.join(', ');
     const template = question.config.template;
     const uploadInSpec = question.config.uploadInSpec;
