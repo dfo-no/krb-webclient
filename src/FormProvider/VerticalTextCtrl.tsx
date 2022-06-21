@@ -1,6 +1,6 @@
 import React from 'react';
-import { Controller, useFormContext } from 'react-hook-form';
 import { FormControl, FormLabel, Typography } from '@mui/material';
+import { Controller, useFormContext } from 'react-hook-form';
 import { get } from 'lodash';
 
 import DFOInput from '../components/DFOTextField/DFOTextField';

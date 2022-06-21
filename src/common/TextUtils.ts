@@ -10,6 +10,7 @@ import { ISliderQuestion } from '../Nexus/entities/ISliderQuestion';
 import { ISpecification } from '../Nexus/entities/ISpecification';
 import { ITimeQuestion } from '../Nexus/entities/ITimeQuestion';
 import { Parentable } from '../models/Parentable';
+import DateUtils from './DateUtils';
 
 class TextUtils {
   static getCheckboxAnswer = (question: ICheckboxQuestion): string => {
@@ -95,8 +96,8 @@ class TextUtils {
   };
 
   static getDateConfig = (question: IPeriodDateQuestion): string => {
-    const from = question.config.fromBoundary;
-    const to = question.config.toBoundary;
+    const from = DateUtils.prettyFormatDate(question.config.fromBoundary);
+    const to = DateUtils.prettyFormatDate(question.config.toBoundary);
     const isPeriod = question.config.isPeriod;
     const min = question.config.periodMin;
     const max = question.config.periodMax;

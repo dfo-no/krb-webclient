@@ -1,15 +1,16 @@
 import AdapterDateFns from '@mui/lab/AdapterDateFns';
 import DesktopTimePicker from '@mui/lab/DesktopTimePicker';
+import enLocale from 'date-fns/locale/en-US';
 import LocalizationProvider from '@mui/lab/LocalizationProvider';
+import nbLocale from 'date-fns/locale/nb';
+import React from 'react';
 import TextField from '@mui/material/TextField';
 import { isDate, isValid } from 'date-fns';
-import enLocale from 'date-fns/locale/en-US';
-import nbLocale from 'date-fns/locale/nb';
 import { get } from 'lodash';
-import React from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import formatDate from '../common/DateUtils';
+
+import DateUtils from '../common/DateUtils';
 
 interface IProps {
   name: string;
@@ -60,7 +61,7 @@ const TimeCtrl = ({
             onChange={(e: Date | null) => {
               if (e) {
                 if (isDate(e) && isValid(e)) {
-                  const newValue = formatDate(e);
+                  const newValue = DateUtils.formatDate(e);
                   field.onChange(newValue);
                 } else {
                   field.onChange(e);

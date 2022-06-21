@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 
 import QuestionSpecificationSlider from './QuestionSpecificationSlider';
 import QuestionSpecificationCheckbox from './QuestionSpecificationCheckbox';
+import QuestionSpecificationPeriodDate from './QuestionSpecificationPeriodDate';
 import QuestionSpecificationCodelist from './QuestionSpecificationCodelist';
 import { ICheckboxQuestion } from '../../../../Nexus/entities/ICheckboxQuestion';
 import { ICodelistQuestion } from '../../../../Nexus/entities/ICodelistQuestion';
@@ -41,6 +42,7 @@ const QuestionSpecification = ({ item }: IProps) => {
     case QuestionVariant.Q_CODELIST:
       return <QuestionSpecificationCodelist item={item} />;
     case QuestionVariant.Q_PERIOD_DATE:
+      return <QuestionSpecificationPeriodDate />;
     case QuestionVariant.Q_TIME:
     case QuestionVariant.Q_FILEUPLOAD:
   }

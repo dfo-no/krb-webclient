@@ -51,22 +51,14 @@ export default function NoProducts(): React.ReactElement {
           {spec.title}
         </Typography>
         <Box className={classes.specEditorDescription}>
+          <Typography variant="md">{t('SPEC_BUILDING_SPEC')}</Typography>
           <Typography variant="md">
-            {t('You are now building your spec')}
+            {t('SPEC_CREATE_PRODUCT_PROCUREMENT')}
           </Typography>
           <Typography variant="md">
-            {t('Start by creating the products you need for your procurement')}
+            {t('SPEC_FIND_PREDEF_PROCUREMENT')}
           </Typography>
-          <Typography variant="md">
-            {t(
-              'For every product you can find predefined banks that can fit your procurement'
-            )}
-          </Typography>
-          <Typography variant="md">
-            {t(
-              'Remember that you have to download the specification and save it locally on your computer'
-            )}
-          </Typography>
+          <Typography variant="md">{t('SPEC_DOWNLOAD_SPEC')}</Typography>
         </Box>
       </Box>
       <Button variant="primary" onClick={() => setCreate(true)}>
