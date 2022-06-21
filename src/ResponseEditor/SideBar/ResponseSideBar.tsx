@@ -38,7 +38,7 @@ function ResponseSideBar({
   const routes = [
     {
       link: `${match.url}`,
-      name: `Response: ${response.spesification.title}`
+      name: `Response: ${response.specification.title}`
     },
     { link: `${match.url}/requirement`, name: 'Requirements' },
     { link: `${match.url}/download`, name: 'Download' },

@@ -113,18 +113,19 @@ const Variant = ({ variant, requirementIndex }: IProps) => {
         >
           <AccordionSummary expandIcon={<ExpandMoreIcon />}>
             <Typography>{variant.description}</Typography>
-            {useTypeWatch === VariantType.info && <DFOChip label={t('Info')} />}
-            <FormIconButton
-              hoverColor={theme.palette.errorRed.main}
-              onClick={(event) =>
-                confirmDelete(variant.id, event as unknown as MouseEvent)
-              }
-              sx={
-                useTypeWatch === VariantType.info ? {} : { marginLeft: 'auto' }
-              }
-            >
-              <DeleteIcon />
-            </FormIconButton>
+            <Box sx={{ display: 'flex', marginLeft: 'auto' }}>
+              {useTypeWatch === VariantType.info && (
+                <DFOChip label={t('Info')} />
+              )}
+              <FormIconButton
+                hoverColor={theme.palette.errorRed.main}
+                onClick={(event) =>
+                  confirmDelete(variant.id, event as unknown as MouseEvent)
+                }
+              >
+                <DeleteIcon />
+              </FormIconButton>
+            </Box>
           </AccordionSummary>
           <AccordionDetails sx={{ display: 'flex', flexDirection: 'column' }}>
             <VariantFormContent control={methods.control} />

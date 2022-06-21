@@ -5,12 +5,14 @@ import { Controller, useFormContext } from 'react-hook-form';
 import DFOInput from '../components/DFOTextField/DFOTextField';
 
 interface IProps {
+  className?: string;
   name: string;
   placeholder: string;
   type?: string;
 }
 
 const HorizontalTextCtrl = ({
+  className,
   name,
   placeholder = '',
   type = 'text'
@@ -20,7 +22,11 @@ const HorizontalTextCtrl = ({
   } = useFormContext();
 
   return (
-    <FormControl error={!!get(errors, name)} sx={{ width: '100%' }}>
+    <FormControl
+      className={className}
+      error={!!get(errors, name)}
+      sx={{ width: '100%' }}
+    >
       <Controller
         name={name}
         render={({ field }) => (
@@ -30,6 +36,7 @@ const HorizontalTextCtrl = ({
             type={type}
             error={!!get(errors, name)}
             disableUnderline
+            sx={{ height: 45 }}
           />
         )}
       />

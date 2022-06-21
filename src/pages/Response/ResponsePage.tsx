@@ -70,9 +70,9 @@ export default function ResponsePage(): React.ReactElement {
       responseType: 'json'
     })
       .then((response) => {
-        dispatch(selectBank(response.data.spesification.bank.id));
+        dispatch(selectBank(response.data.specification.bank.id));
         dispatch(setResponse(response.data));
-        history.push(`/response/${response.data.spesification.bank.id}`);
+        history.push(`/response/${response.data.specification.bank.id}`);
         return response;
       })
       .catch((error) => {

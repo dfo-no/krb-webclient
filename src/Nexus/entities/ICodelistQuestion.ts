@@ -22,7 +22,7 @@ export interface ICodelistConfig extends IConfigBase {
 }
 
 export interface ICodelistAnswer extends IAnswerBase {
-  codes: string[] | string;
+  codes: string[];
 }
 
 export const CodelistQuestionSchema = QuestionBaseSchema.keys({

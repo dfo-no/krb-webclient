@@ -20,7 +20,7 @@ export default class ResponseStoreService {
 
   public createResponseFromSpecification(specification: ISpecification): void {
     ResponseStoreService.response = {
-      spesification: specification,
+      specification: specification,
       supplier: '',
       products: [],
       requirementAnswers: []

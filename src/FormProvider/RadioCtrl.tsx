@@ -12,12 +12,18 @@ import { DFORadio } from '../components/DFORadio/DFORadio';
 import { IOption } from '../Nexus/entities/IOption';
 
 interface IProps {
+  className?: string;
   name: string;
   options: IOption[];
   label?: string;
 }
 
-const RadioCtrl = ({ name, options, label }: IProps): ReactElement => {
+const RadioCtrl = ({
+  className,
+  name,
+  options,
+  label
+}: IProps): ReactElement => {
   const {
     formState: { errors }
   } = useFormContext();
@@ -44,7 +50,7 @@ const RadioCtrl = ({ name, options, label }: IProps): ReactElement => {
   };
 
   return (
-    <FormControl error={!!get(errors, name)}>
+    <FormControl className={className} error={!!get(errors, name)}>
       {label && <FormLabel id={name}>{label}</FormLabel>}
       <Controller
         name={name}

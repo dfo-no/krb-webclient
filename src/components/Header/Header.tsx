@@ -184,7 +184,7 @@ export default function Header(): React.ReactElement {
       return spec.title;
     }
     if (isResponse) {
-      return response.spesification.title;
+      return response.specification.title;
     }
     if (isEvaluation) {
       return specification.title;

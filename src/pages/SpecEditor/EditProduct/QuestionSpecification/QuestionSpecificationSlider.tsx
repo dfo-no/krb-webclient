@@ -1,10 +1,11 @@
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { Button, Grid, Typography } from '@mui/material';
-import { useEffect } from 'react';
+import React, { ReactElement, useEffect } from 'react';
 import { useFieldArray, useFormContext, useWatch } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
+import css from './QuestionSpecification.module.scss';
 import HorizontalTextCtrl from '../../../../FormProvider/HorizontalTextCtrl';
 import theme from '../../../../theme';
 import { FormIconButton } from '../../../../components/Form/FormIconButton';
@@ -15,7 +16,7 @@ interface IProps {
   item: ISliderQuestion;
 }
 
-const QuestionSpecificationSlider = ({ item }: IProps) => {
+const QuestionSpecificationSlider = ({ item }: IProps): ReactElement => {
   const { t } = useTranslation();
   const { control } = useFormContext<IRequirementAnswer>();
 
@@ -45,14 +46,7 @@ const QuestionSpecificationSlider = ({ item }: IProps) => {
   }, [useMaxValue, useMaxScore, update]);
 
   return (
-    <Grid
-      container
-      columns={20}
-      sx={{
-        display: 'flex',
-        alignItems: 'center'
-      }}
-    >
+    <Grid container columns={20} className={css.QuestionSpecificationGrid}>
       <Grid item xs={8}>
         <HorizontalTextCtrl
           name={'question.config.min'}
@@ -60,14 +54,7 @@ const QuestionSpecificationSlider = ({ item }: IProps) => {
           type={'number'}
         />
       </Grid>
-      <Grid
-        item
-        xs={1}
-        sx={{
-          display: 'flex',
-          justifyContent: 'center'
-        }}
-      >
+      <Grid item xs={1} className={css.arrow}>
         <ArrowForwardIcon />
       </Grid>
       <Grid item xs={8}>
@@ -77,110 +64,71 @@ const QuestionSpecificationSlider = ({ item }: IProps) => {
           type={'number'}
         />
       </Grid>
-      <Grid item xs={3}>
-        <Typography variant={'md'} sx={{ paddingLeft: 2 }}>
+      <Grid item xs={3} className={css.text}>
+        <Typography variant={'md'} className={css.unit}>
           {item.config.unit}
         </Typography>
       </Grid>
-      <Grid
-        item
-        xs={8}
-        sx={{
-          display: 'flex',
-          justifyContent: 'center'
-        }}
-      >
+      <Grid item xs={8} className={css.centeredText}>
         <Typography variant={'sm'}>
           {t('Minimum')}: {item.config.min}
         </Typography>
       </Grid>
-      <Grid
-        item
-        xs={1}
-        sx={{
-          display: 'flex',
-          justifyContent: 'center'
-        }}
-      >
-        <Typography variant={'sm'}>{item.config.step} step</Typography>
+      <Grid item xs={1} className={css.centeredText}>
+        <Typography variant={'sm'}>{item.config.step}</Typography>
       </Grid>
-      <Grid
-        item
-        xs={8}
-        sx={{
-          display: 'flex',
-          justifyContent: 'center'
-        }}
-      >
+      <Grid item xs={8} className={css.centeredText}>
         <Typography variant={'sm'}>
           {t('Maximum')}: {item.config.max}
         </Typography>
       </Grid>
       <Grid item xs={20}>
-        <Typography variant={'smBold'}>Evaluering:</Typography>
+        <Typography variant={'smBold'}>{t('Evaluation')}</Typography>
       </Grid>
-      {fields.map((scoreValue, id) => {
+      {fields.map((scoreValue, idx) => {
         return (
-          <Grid
-            item
-            container
-            key={scoreValue.id}
-            xs={20}
-            columns={20}
-            sx={{
-              display: 'flex',
-              alignItems: 'center',
-              paddingTop: 1
-            }}
-          >
-            <Grid item xs={8}>
-              {id < 2 ? (
+          <Grid item container key={scoreValue.id} xs={20} columns={20}>
+            <Grid item xs={8} className={css.centeredText}>
+              {idx < 2 ? (
                 <Typography variant={'smBold'}>{scoreValue.value}</Typography>
               ) : (
                 <HorizontalTextCtrl
                   name={
-                    `question.config.scoreValues.${id}.value` as 'question.config.scoreValues.0.value'
+                    `question.config.scoreValues.${idx}.value` as 'question.config.scoreValues.0.value'
                   }
                   placeholder={t('Value')}
                   type={'number'}
                 />
               )}
             </Grid>
-            <Grid
-              item
-              xs={1}
-              sx={{
-                display: 'flex',
-                justifyContent: 'center'
-              }}
-            >
+            <Grid item xs={1} className={css.arrow}>
               <ArrowForwardIcon />
             </Grid>
             <Grid item xs={8}>
               <HorizontalTextCtrl
                 name={
-                  `question.config.scoreValues.${id}.score` as 'question.config.scoreValues.0.score'
+                  `question.config.scoreValues.${idx}.score` as 'question.config.scoreValues.0.score'
                 }
                 placeholder={t('Score')}
                 type={'number'}
               />
             </Grid>
-            {id > 1 && (
-              <FormIconButton
-                hoverColor={theme.palette.errorRed.main}
-                onClick={() => remove(id)}
-                sx={{ marginLeft: 2, cursor: 'pointer' }}
-              >
-                <DeleteIcon />
-              </FormIconButton>
+            {idx > 1 && (
+              <Grid item xs={2} className={css.delete}>
+                <FormIconButton
+                  hoverColor={theme.palette.errorRed.main}
+                  onClick={() => remove(idx)}
+                >
+                  <DeleteIcon />
+                </FormIconButton>
+              </Grid>
             )}
           </Grid>
         );
       })}
-      <Grid item>
+      <Grid item xs={20}>
         <Button
           variant="primary"
-          sx={{ marginTop: 2 }}
           onClick={() => append({ value: useMinValue, score: 0 })}
         >
           {t('Add new value score')}

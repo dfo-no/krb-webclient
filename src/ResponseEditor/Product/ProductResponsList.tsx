@@ -91,7 +91,7 @@ export default function ProductResponseList(): React.ReactElement {
         <h4>Products</h4>
       </Row>
       <Row className=" ml-4">
-        {productList(response.spesification.products)}
+        {productList(response.specification.products)}
       </Row>
     </Container>
   );

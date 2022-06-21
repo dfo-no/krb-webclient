@@ -8,6 +8,7 @@ import {
   productsTestData,
   projectTestData
 } from './TestData';
+import { ScoreValuePair } from '../Nexus/entities/ISliderQuestion';
 
 describe('Utils functions should work', () => {
   test('Utils.parentable2Nestable', () => {
@@ -204,5 +205,27 @@ describe('Utils functions should work', () => {
       project
     );
     expect(isInUse2).toBeFalsy();
+  });
+
+  it('Utils.findScoreFromValue returns correct value for scores', () => {
+    const scoreValuePairs: ScoreValuePair[] = [
+      { value: 0, score: 0 },
+      { value: 2, score: 12 },
+      { value: 3, score: 16 },
+      { value: 10, score: 30 },
+      { value: 20, score: 50 },
+      { value: 22, score: 60 },
+      { value: 25, score: 70 },
+      { value: 30, score: 100 }
+    ];
+
+    const result1 = Utils.findScoreFromValue(2, scoreValuePairs);
+    const result2 = Utils.findScoreFromValue(27.5, scoreValuePairs);
+    const result3 = Utils.findScoreFromValue(2.1, scoreValuePairs);
+    const result4 = Utils.findScoreFromValue(18, scoreValuePairs);
+    expect(result1).toEqual(12);
+    expect(result2).toEqual(85);
+    expect(result3).toEqual(12.4);
+    expect(result4).toEqual(46);
   });
 });

@@ -23,15 +23,17 @@ const SelectCtrl = ({ name, label, options }: IProps): React.ReactElement => {
 
   return (
     <FormControl error={!!get(errors, name)} fullWidth>
-      <FormLabel>
-        <Typography variant="sm" color={theme.palette.primary.main}>
-          {label}
-        </Typography>
-      </FormLabel>
+      {label && (
+        <FormLabel>
+          <Typography variant="sm" color={theme.palette.primary.main}>
+            {label}
+          </Typography>
+        </FormLabel>
+      )}
       <Controller
         name={name}
         render={({ field }) => (
-          <Select input={<DFOTextField />} {...field}>
+          <Select input={<DFOTextField />} {...field} disableUnderline>
             {options.map((option) => {
               return (
                 <MenuItem value={option.value} key={option.value}>

@@ -52,3 +52,31 @@
     }
   }
 }
+
+.VariantContent {
+  padding-top: var(--small-gap);
+
+  .TextField {
+    margin-bottom: var(--normal-gap);
+  }
+
+  .TextAreaField {
+    height: 9rem;
+  }
+
+  .TextTitle {
+    width: 100%;
+    margin-bottom: var(--tiny-gap);
+    color: var(--primary-color);
+  }
+
+  .RadioField {
+    width: 100%;
+  }
+
+  .CheckboxField {
+    display: flex;
+    width: 100%;
+    gap: var(--small-gap);
+  }
+}

@@ -4,7 +4,6 @@ const DFOTextarea = styled(Input)(({ theme }) => ({
   width: '100%',
   border: `0.2rem solid ${theme.palette.indigo.main}`,
   backgroundColor: theme.palette.white.main,
-  height: 90,
   paddingLeft: '1rem',
 
   '&:hover': {
