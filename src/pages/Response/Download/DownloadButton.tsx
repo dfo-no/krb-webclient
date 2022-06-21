@@ -1,11 +1,13 @@
-import { AxiosResponse } from 'axios';
 import React from 'react';
-import Button from '@mui/material/Button';
-import { httpPost } from '../../api/http';
-import { IResponse } from '../../models/IResponse';
-import { useAppSelector } from '../../store/hooks';
+import { AxiosResponse } from 'axios';
+import { Button } from '@mui/material/';
+import { t } from 'i18next';
 
-export default function ResponseDownLoad(): React.ReactElement {
+import { httpPost } from '../../../api/http';
+import { IResponse } from '../../../models/IResponse';
+import { useAppSelector } from '../../../store/hooks';
+
+export default function DownloadButton(): React.ReactElement {
   const { response } = useAppSelector((state) => state.response);
 
   const onDownLoad = () => {
@@ -33,8 +35,8 @@ export default function ResponseDownLoad(): React.ReactElement {
   };
 
   return (
-    <Button type="submit" onClick={onDownLoad}>
-      Download Response
+    <Button variant="save" type="submit" onClick={onDownLoad}>
+      {t('Download response')}
     </Button>
   );
 }
