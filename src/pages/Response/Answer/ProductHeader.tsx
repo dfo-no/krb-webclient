@@ -1,8 +1,9 @@
 import React from 'react';
+import { Box, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
+
 import { DFOCardHeader } from '../../../components/DFOCard/DFOCardHeader';
 import { DFOHeaderContentBox } from '../../../components/DFOCard/DFOHeaderContentBox';
-import { Box, Typography } from '@mui/material';
 import { useAppSelector } from '../../../store/hooks';
 import { useResponseState } from '../ResponseContext';
 
@@ -23,13 +24,13 @@ export default function ProductHeader(): React.ReactElement {
           }}
         >
           <Typography variant="lgBold">
-            {response.spesification.products[responseProductIndex]?.title ??
+            {response.specification.products[responseProductIndex]?.title ??
               t('General requirement')}
           </Typography>
         </Box>
         <Box sx={{ display: 'flex', flexDirection: 'row', paddingTop: 1 }}>
           <Typography variant="smBold">
-            {response.spesification.products[responseProductIndex]
+            {response.specification.products[responseProductIndex]
               ?.description ?? ''}
           </Typography>
 
@@ -42,7 +43,7 @@ export default function ProductHeader(): React.ReactElement {
               {': '}
               <i>
                 {
-                  response.spesification.products[responseProductIndex]
+                  response.specification.products[responseProductIndex]
                     .originProduct.title
                 }
               </i>

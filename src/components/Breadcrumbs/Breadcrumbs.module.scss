@@ -1,6 +1,6 @@
 .Breadcrumbs {
   padding-top: 0.2rem;
-  font-size: 1.4rem;
+  font-size: var(--small-fontsize);
 
   span + span:before {
     content: ' / ';

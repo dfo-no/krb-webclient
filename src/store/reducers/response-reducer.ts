@@ -14,7 +14,7 @@ interface IResponseState {
 
 const initialState: IResponseState = {
   response: {
-    spesification: {
+    specification: {
       bank: {
         id: '',
         title: '',
@@ -54,7 +54,7 @@ const responseSlice = createSlice({
       state.response = payload;
     },
     setSpecification(state, { payload }: PayloadAction<ISpecification>) {
-      state.response.spesification = payload;
+      state.response.specification = payload;
     },
     editSupplier(state, { payload }: PayloadAction<string>) {
       state.response.supplier = payload;
@@ -82,7 +82,7 @@ const responseSlice = createSlice({
       state.response.requirementAnswers = payload;
     },
     setBank(state, { payload }: PayloadAction<IBank>) {
-      state.response.spesification.bank = payload;
+      state.response.specification.bank = payload;
     },
     addProduct(state, { payload }: PayloadAction<IResponseProduct>) {
       state.response.products.push(payload);

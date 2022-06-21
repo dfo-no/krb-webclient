@@ -1,0 +1,46 @@
+.Selection {
+  border: 0.1rem solid var(--primary-light-color);
+  max-height: 400px;
+  padding: var(--tiny-gap) var(--small-gap);
+
+  .listItem {
+    display: flex;
+    border: 0.1rem solid silver;
+    min-height: 4rem;
+    padding: var(--tiny-gap) 0;
+    margin-top: -0.1rem;
+    cursor: pointer;
+
+    &:hover {
+      background: var(--link-hover-color);
+      color: white;
+      & .MuiSvgIcon-root {
+        background: transparent;
+        color: white;
+      }
+    }
+
+    .checkbox {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 2.2rem;
+      height: 2.2rem;
+      margin-right: var(--normal-gap);
+      margin-left: var(--small-gap);
+    }
+
+    .itemTitle {
+      align-self: center;
+      padding-left: var(--small-gap);
+      flex: 1 1 auto;
+    }
+
+    .itemDescription {
+      margin-left: auto;
+      border-left: 0.1rem solid silver;
+      padding-left: var(--small-gap);
+      flex: 0 0 25vw;
+    }
+  }
+}

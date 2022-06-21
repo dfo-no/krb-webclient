@@ -6,7 +6,7 @@ import { ModelType, QuestionVariant } from '../../enums';
 describe('EvaluationService', () => {
   it('Can get EvauateSlider', async () => {
     const response: IResponse = {
-      spesification: {
+      specification: {
         bank: {
           id: 'a4d0ef8b-8e23-4ef2-9f30-eb9fc847ff93',
           title: 'Trond 2',

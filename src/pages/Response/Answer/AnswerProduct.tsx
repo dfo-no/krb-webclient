@@ -1,30 +1,17 @@
 import React, { ReactElement } from 'react';
-import makeStyles from '@mui/styles/makeStyles';
 import { Box } from '@mui/material';
 
+import css from '../ResponseEditor.module.scss';
 import ProductHeader from './ProductHeader';
 import ProductNeed from './ProductNeed';
 import ProductRequirementAnswer from './ProductRequirementAnswer';
-import theme from '../../../theme';
 import { AccordionProvider } from '../../../components/DFOAccordion/AccordionContext';
 import { INeed } from '../../../Nexus/entities/INeed';
 import { IRequirementAnswer } from '../../../models/IRequirementAnswer';
-import { ScrollableContainer } from '../../../components/ScrollableContainer/ScrollableContainer';
 import { useAppSelector } from '../../../store/hooks';
 import { useResponseState } from '../ResponseContext';
 
-const useStyles = makeStyles({
-  newProduct: {
-    display: 'flex',
-    flexDirection: 'column',
-    width: '100%',
-    height: '100%',
-    backgroundColor: theme.palette.gray200.main
-  }
-});
-
 export default function AnswerProduct(): React.ReactElement {
-  const classes = useStyles();
   const { response } = useAppSelector((state) => state.response);
   const { responseProductIndex } = useResponseState();
   const existingNeeds = new Set<INeed>();
@@ -32,7 +19,7 @@ export default function AnswerProduct(): React.ReactElement {
   const renderRequirementAnswer = (
     requirementAnswer: IRequirementAnswer
   ): ReactElement => {
-    const requirementNeed = response.spesification.bank.needs.find(
+    const requirementNeed = response.specification.bank.needs.find(
       (need) => need.id === requirementAnswer.requirement.needId
     );
     if (requirementNeed && !existingNeeds.has(requirementNeed)) {
@@ -55,9 +42,9 @@ export default function AnswerProduct(): React.ReactElement {
 
   const renderRequirements = (): (ReactElement | undefined)[] => {
     if (responseProductIndex === -1) {
-      return response.spesification.requirements.map((requirementId) => {
+      return response.specification.requirements.map((requirementId) => {
         const requirementAnswer =
-          response.spesification.requirementAnswers.find(
+          response.specification.requirementAnswers.find(
             (reqAns) => reqAns.requirement.id === requirementId
           );
         if (requirementAnswer) {
@@ -65,10 +52,10 @@ export default function AnswerProduct(): React.ReactElement {
         }
       });
     } else {
-      return response.spesification.products[
+      return response.specification.products[
         responseProductIndex
       ].requirements.map((requirementId) => {
-        const requirementAnswer = response.spesification.products[
+        const requirementAnswer = response.specification.products[
           responseProductIndex
         ].requirementAnswers.find(
           (reqAns) => reqAns.requirement.id === requirementId
@@ -81,11 +68,9 @@ export default function AnswerProduct(): React.ReactElement {
   };
 
   return (
-    <Box className={classes.newProduct}>
+    <Box className={css.product}>
       <ProductHeader />
-      <ScrollableContainer sx={{ marginBottom: 0 }}>
-        <AccordionProvider>{renderRequirements()}</AccordionProvider>
-      </ScrollableContainer>
+      <AccordionProvider>{renderRequirements()}</AccordionProvider>
     </Box>
   );
 }
