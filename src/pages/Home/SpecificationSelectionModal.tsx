@@ -4,19 +4,16 @@ import { useHistory } from 'react-router';
 import { useTranslation } from 'react-i18next';
 
 import DFODialog from '../../components/DFODialog/DFODialog';
+import Nexus from '../../Nexus/Nexus';
 import theme from '../../theme';
 import { ISpecification } from '../../Nexus/entities/ISpecification';
-import { ISpecificationProduct } from '../../models/ISpecificationProduct';
 import {
   ModalBox,
   ModalButton,
   ModalButtonsBox
 } from '../../components/ModalBox/ModalBox';
 import { setEvaluationSpecification } from '../../store/reducers/evaluation-reducer';
-import {
-  setResponseSpecification,
-  addProduct
-} from '../../store/reducers/response-reducer';
+import { setResponse } from '../../store/reducers/response-reducer';
 import { setSpecification } from '../../store/reducers/spesification-reducer';
 import { selectBank } from '../../store/reducers/selectedBank-reducer';
 import { useAppDispatch } from '../../store/hooks';
@@ -33,6 +30,7 @@ export default function SpecificationSelectionModal({
   const history = useHistory();
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
+  const nexus = Nexus.getInstance();
 
   const editSpecification = (): void => {
     dispatch(selectBank(selectedSpecification.bank.id));
@@ -42,19 +40,10 @@ export default function SpecificationSelectionModal({
 
   const createResponse = (): void => {
     dispatch(selectBank(selectedSpecification.bank.id));
-    dispatch(setResponseSpecification(selectedSpecification));
-    selectedSpecification.products.forEach((product: ISpecificationProduct) => {
-      dispatch(
-        addProduct({
-          id: product.id,
-          title: product.title,
-          description: product.description,
-          originProduct: product,
-          price: 0,
-          requirementAnswers: []
-        })
-      );
-    });
+    const response = nexus.responseService.createResponseFromSpecification(
+      selectedSpecification
+    );
+    dispatch(setResponse(response));
     history.push(`/response/${selectedSpecification.bank.id}`);
   };
 
@@ -80,7 +69,7 @@ export default function SpecificationSelectionModal({
           <ModalButton variant="primary" onClick={createResponse}>
             {t('Create response')}
           </ModalButton>
-          <ModalButton variant="primary" type="submit" disabled={true}>
+          <ModalButton variant="cancel" type="submit" disabled={true}>
             {t('Create prepared response')}
           </ModalButton>
           <ModalButton variant="primary" onClick={doEvaluation}>

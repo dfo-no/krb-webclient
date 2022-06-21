@@ -96,7 +96,7 @@ export default function ProjectSelectionModal({
           >
             {t('Create specification')}
           </ModalButton>
-          <ModalButton variant="primary" type="submit" disabled={true}>
+          <ModalButton variant="cancel" type="submit" disabled={true}>
             {t('Create prepared response')}
           </ModalButton>
           <ModalButtonsBox>
