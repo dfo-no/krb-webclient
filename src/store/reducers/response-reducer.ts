@@ -53,7 +53,10 @@ const responseSlice = createSlice({
     setResponse(state, { payload }: PayloadAction<IResponse>) {
       state.response = payload;
     },
-    setSpecification(state, { payload }: PayloadAction<ISpecification>) {
+    setResponseSpecification(
+      state,
+      { payload }: PayloadAction<ISpecification>
+    ) {
       state.response.specification = payload;
     },
     editSupplier(state, { payload }: PayloadAction<string>) {
@@ -136,7 +139,7 @@ const responseSlice = createSlice({
 });
 
 export const {
-  setSpecification,
+  setResponseSpecification,
   editSupplier,
   setBank,
   addProduct,

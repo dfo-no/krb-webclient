@@ -84,6 +84,7 @@ export default function Header(): React.ReactElement {
   const { t } = useTranslation();
   const { spec } = useAppSelector((state) => state.specification);
   const { response } = useAppSelector((state) => state.response);
+  const { specification } = useAppSelector((state) => state.evaluation);
 
   const baseUrl = useRouteMatch<{ projectId: string }>('/workbench/:projectId');
   const location = useLocation();
@@ -110,6 +111,7 @@ export default function Header(): React.ReactElement {
   const isWorkbench = location.pathname.startsWith('/workbench');
   const isSpecification = location.pathname.startsWith('/specification');
   const isResponse = location.pathname.startsWith('/response');
+  const isEvaluation = location.pathname.startsWith('/evaluation');
   const isLocationAdmin = tabName === 'admin';
   const isLocationCreate = tabName === 'create';
   const isLocationPreview = tabName === 'preview';
@@ -121,6 +123,13 @@ export default function Header(): React.ReactElement {
   useEffect(() => {
     setProject(baseUrl?.params.projectId ? fetchedProject : undefined);
   }, [baseUrl, fetchedProject]);
+
+  if (isEvaluation) {
+    breadcrumbs.push({
+      label: t('Evaluation'),
+      url: '/evaluering'
+    });
+  }
 
   if (isResponse) {
     breadcrumbs.push({
@@ -176,6 +185,9 @@ export default function Header(): React.ReactElement {
     }
     if (isResponse) {
       return response.specification.title;
+    }
+    if (isEvaluation) {
+      return specification.title;
     }
     return t('app_title');
   };

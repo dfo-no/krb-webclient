@@ -2,7 +2,6 @@ import classnames from 'classnames';
 import React, { ChangeEvent, useEffect, useState } from 'react';
 import { AxiosResponse } from 'axios';
 import { Link } from 'react-router-dom';
-import { useHistory } from 'react-router';
 import { useTranslation } from 'react-i18next';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -11,28 +10,24 @@ import Footer from '../../Footer/Footer';
 import HomeDisplayList from './HomeDisplayList';
 import HomeSearchBar from './HomeSearchBar';
 import ProjectSelectionModal from './ProjectSelectionModal';
-import {
-  addProduct,
-  setSpecification
-} from '../../store/reducers/response-reducer';
+import SpecificationSelectionModal from './SpecificationSelectionModal';
 import { addAlert } from '../../store/reducers/alert-reducer';
 import { httpPost } from '../../api/http';
 import { IAlert } from '../../models/IAlert';
 import { IBank } from '../../Nexus/entities/IBank';
 import { ISpecification } from '../../Nexus/entities/ISpecification';
-import { ISpecificationProduct } from '../../models/ISpecificationProduct';
-import { selectBank } from '../../store/reducers/selectedBank-reducer';
 import { useAppDispatch } from '../../store/hooks';
-import { useBankState } from '../../components/BankContext/BankContext';
+import { useHomeState } from './HomeContext';
 import { useGetBanksQuery } from '../../store/api/bankApi';
 
 const MAX_UPLOAD_SIZE = 10000000; // 10M
 
 export default function HomePage(): React.ReactElement {
   const dispatch = useAppDispatch();
-  const history = useHistory();
   const { t } = useTranslation();
-  const { selectedBank } = useBankState();
+  const [inputKey, setInputKey] = useState(0);
+  const { selectedBank, selectedSpecification, setSelectedSpecification } =
+    useHomeState();
 
   const [latestPublishedProjects, setLatestPublishedProjects] = useState<
     IBank[]
@@ -66,6 +61,7 @@ export default function HomePage(): React.ReactElement {
   }, [list]);
 
   const onUpload = (event: ChangeEvent<HTMLInputElement>): void => {
+    setInputKey((key) => key + 1);
     const formData = new FormData();
     const files = event.target.files as FileList;
     let disableUploadMessage = '';
@@ -98,23 +94,9 @@ export default function HomePage(): React.ReactElement {
       },
       responseType: 'json'
     })
-      .then((response) => {
-        const specification: ISpecification = response.data;
-        dispatch(selectBank(specification.bank.id));
-        dispatch(setSpecification(specification));
-        specification.products.forEach((product: ISpecificationProduct) => {
-          dispatch(
-            addProduct({
-              id: product.id,
-              title: product.title,
-              description: product.description,
-              originProduct: product,
-              price: 0,
-              requirementAnswers: []
-            })
-          );
-        });
-        history.push(`/response/${response.data.bank.id}`);
+      .then((httpResponse) => {
+        const specification: ISpecification = httpResponse.data;
+        setSelectedSpecification(specification);
         return;
       })
       .catch(() => {
@@ -146,6 +128,7 @@ export default function HomePage(): React.ReactElement {
               <div>
                 <label>{t('HOME_FILEUPL_LABEL')}</label>
                 <input
+                  key={inputKey}
                   type="file"
                   accept="application/pdf"
                   onChange={(e) => onUpload(e)}
@@ -169,6 +152,11 @@ export default function HomePage(): React.ReactElement {
       </div>
       <Footer />
       {selectedBank && <ProjectSelectionModal selectedBank={selectedBank} />}
+      {selectedSpecification && (
+        <SpecificationSelectionModal
+          selectedSpecification={selectedSpecification}
+        />
+      )}
     </div>
   );
 }

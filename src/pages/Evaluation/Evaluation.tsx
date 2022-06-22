@@ -9,7 +9,7 @@ import DownLoad from './DownLoad';
 import EvaluationList from './EvaluationList';
 import UploadResponses from './UploadResponses';
 import { httpPost } from '../../api/http';
-import { setSpecification } from '../../store/reducers/evaluation-reducer';
+import { setEvaluationSpecification } from '../../store/reducers/evaluation-reducer';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 
 export default function Evaluation(): React.ReactElement {
@@ -33,7 +33,7 @@ export default function Evaluation(): React.ReactElement {
       },
       responseType: 'json'
     }).then((response) => {
-      dispatch(setSpecification(response.data));
+      dispatch(setEvaluationSpecification(response.data));
       return response;
     });
   };

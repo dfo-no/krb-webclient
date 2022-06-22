@@ -1,11 +1,12 @@
 import { isEqual } from 'lodash';
+
+import ResponseStoreService from './ResponseStoreService';
+import UuidService from './UuidService';
 import { IPrefilledResponse } from '../../models/IPrefilledResponse';
 import { IRequirementAnswer } from '../../models/IRequirementAnswer';
 import { IResponse } from '../../models/IResponse';
 import { IResponseProduct } from '../../models/IResponseProduct';
 import { ISpecification } from '../entities/ISpecification';
-import ResponseStoreService from './ResponseStoreService';
-import UuidService from './UuidService';
 
 export default class ResponseService {
   UuidService = new UuidService();
@@ -14,6 +15,26 @@ export default class ResponseService {
 
   public constructor(store: ResponseStoreService) {
     this.store = store;
+  }
+
+  public createResponseFromSpecification(
+    specification: ISpecification
+  ): IResponse {
+    return {
+      specification: specification,
+      supplier: '',
+      products: specification.products.map((specProduct) => {
+        return {
+          id: this.UuidService.generateId(),
+          title: specProduct.title,
+          description: specProduct.description,
+          originProduct: specProduct,
+          price: 0,
+          requirementAnswers: []
+        };
+      }),
+      requirementAnswers: []
+    };
   }
 
   async setResponse(response: IResponse): Promise<void> {
