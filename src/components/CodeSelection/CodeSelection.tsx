@@ -5,14 +5,16 @@ import { List, ListItem, Typography, Box } from '@mui/material';
 import css from '../../pages/Response/Answer/QuestionAnswer/Selection.module.scss';
 import { DFOCheckbox } from '../DFOCheckbox/DFOCheckbox';
 import { ICode } from '../../Nexus/entities/ICode';
+import { ICodelist } from '../../Nexus/entities/ICodelist';
 import { ScrollableContainer } from '../ScrollableContainer/ScrollableContainer';
 
 interface IProps {
   name: string;
-  codes: ICode[];
+  codelist?: ICodelist;
 }
 
-const CodeSelection = ({ name, codes }: IProps): React.ReactElement => {
+const CodeSelection = ({ name, codelist }: IProps): React.ReactElement => {
+  const codes = codelist ? codelist.codes : [];
   const onClick = (
     item: ICode,
     selected: string[],

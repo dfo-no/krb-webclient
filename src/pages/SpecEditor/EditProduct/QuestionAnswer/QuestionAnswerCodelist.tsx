@@ -21,10 +21,7 @@ const QuestionAnswerCodelist = ({ item }: IProps): ReactElement => {
   return (
     <FlexColumnBox>
       <Typography variant={'smBold'}>{t('Answer')}</Typography>
-      <CodeSelection
-        name={'question.answer.codes'}
-        codes={codelist ? codelist.codes : []}
-      />
+      <CodeSelection name={'question.answer.codes'} codelist={codelist} />
     </FlexColumnBox>
   );
 };

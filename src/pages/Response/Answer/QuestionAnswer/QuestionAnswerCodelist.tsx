@@ -83,10 +83,7 @@ const QuestionAnswerCodelist = ({
         autoComplete="off"
         noValidate
       >
-        <CodeSelection
-          name={'answer.codes'}
-          codes={codelist ? codelist.codes : []}
-        />
+        <CodeSelection name={'answer.codes'} codelist={codelist} />
         <Box className={css.buttons}>
           <Button
             variant="cancel"
