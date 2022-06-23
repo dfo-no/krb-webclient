@@ -4,7 +4,7 @@ import { FormProvider, useForm, useWatch } from 'react-hook-form';
 import { joiResolver } from '@hookform/resolvers/joi';
 import { useTranslation } from 'react-i18next';
 
-import CodeSelection from './CodeSelection';
+import CodeSelection from '../../../../components/CodeSelection/CodeSelection';
 import css from '../ProductRequirementAnswer.module.scss';
 import {
   addProductAnswer,
@@ -83,7 +83,10 @@ const QuestionAnswerCodelist = ({
         autoComplete="off"
         noValidate
       >
-        <CodeSelection codes={codelist ? codelist.codes : []} />
+        <CodeSelection
+          name={'answer.codes'}
+          codes={codelist ? codelist.codes : []}
+        />
         <Box className={css.buttons}>
           <Button
             variant="cancel"

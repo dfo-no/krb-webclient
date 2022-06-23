@@ -2,16 +2,17 @@ import React from 'react';
 import { Controller } from 'react-hook-form';
 import { List, ListItem, Typography, Box } from '@mui/material';
 
-import css from './Selection.module.scss';
-import { DFOCheckbox } from '../../../../components/DFOCheckbox/DFOCheckbox';
-import { ScrollableContainer } from '../../../../components/ScrollableContainer/ScrollableContainer';
-import { ICode } from '../../../../Nexus/entities/ICode';
+import css from '../../pages/Response/Answer/QuestionAnswer/Selection.module.scss';
+import { DFOCheckbox } from '../DFOCheckbox/DFOCheckbox';
+import { ICode } from '../../Nexus/entities/ICode';
+import { ScrollableContainer } from '../ScrollableContainer/ScrollableContainer';
 
 interface IProps {
+  name: string;
   codes: ICode[];
 }
 
-const CodeSelection = ({ codes }: IProps): React.ReactElement => {
+const CodeSelection = ({ name, codes }: IProps): React.ReactElement => {
   const onClick = (
     item: ICode,
     selected: string[],
@@ -60,7 +61,7 @@ const CodeSelection = ({ codes }: IProps): React.ReactElement => {
           </List>
         </ScrollableContainer>
       )}
-      name={'answer.codes'}
+      name={name}
     />
   );
 };
