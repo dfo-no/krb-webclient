@@ -97,9 +97,7 @@ const QuestionSpecificationSlider = ({ item }: IProps): ReactElement => {
                 <Typography variant={'smBold'}>{scoreValue.value}</Typography>
               ) : (
                 <HorizontalTextCtrl
-                  name={
-                    `question.config.scoreValues.${idx}.value` as 'question.config.scoreValues.0.value'
-                  }
+                  name={`question.config.scoreValues.${idx}.value`}
                   placeholder={t('Value')}
                   type={'number'}
                 />
@@ -110,9 +108,7 @@ const QuestionSpecificationSlider = ({ item }: IProps): ReactElement => {
             </Grid>
             <Grid item xs={8}>
               <HorizontalTextCtrl
-                name={
-                  `question.config.scoreValues.${idx}.score` as 'question.config.scoreValues.0.score'
-                }
+                name={`question.config.scoreValues.${idx}.score`}
                 placeholder={t('Score')}
                 type={'number'}
               />

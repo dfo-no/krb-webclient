@@ -9,17 +9,7 @@ class DateUtils {
   };
 
   static formatDate = (date: Date): string => {
-    const dateStr = date.toISOString();
-
-    const year = dateStr.substring(0, 4);
-    const month = dateStr.substring(5, 7);
-    const day = dateStr.substring(8, 10);
-    const hour = dateStr.substring(11, 13);
-    const minutes = dateStr.substring(14, 16);
-    const seconds = dateStr.substring(17, 19);
-    const milli = dateStr.substring(20, 23);
-
-    return `${year}-${month}-${day}T${hour}:${minutes}:${seconds}.${milli}Z`;
+    return date.toISOString();
   };
 
   static sameTime = (time1: string | null, time2: string | null): boolean => {
@@ -52,12 +42,10 @@ class DateUtils {
   static prettyFormatTime = (time: string | null): string => {
     if (time) {
       const date = new Date(time);
-      const hour = date.getHours();
-      const hourStr = hour < 10 ? `0${hour}` : hour;
-      const minutes = date.getMinutes();
-      const minutesStr = minutes < 10 ? `0${minutes}` : minutes;
+      const hour = String(date.getHours()).padStart(2, '0');
+      const minutes = String(date.getMinutes()).padStart(2, '0');
 
-      return `${hourStr}:${minutesStr}`;
+      return `${hour}:${minutes}`;
     }
     return '-';
   };

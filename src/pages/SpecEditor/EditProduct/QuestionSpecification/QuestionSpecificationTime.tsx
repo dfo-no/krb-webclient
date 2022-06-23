@@ -85,11 +85,7 @@ const QuestionSpecificationTime = (): ReactElement => {
                   {DateUtils.prettyFormatTime(scoreValue.time)}
                 </Typography>
               ) : (
-                <TimeCtrl
-                  name={
-                    `question.config.timeScores.${idx}.time` as 'question.config.timeScores.0.time'
-                  }
-                />
+                <TimeCtrl name={`question.config.timeScores.${idx}.time`} />
               )}
             </Grid>
             <Grid item xs={1} className={css.arrow}>
@@ -97,9 +93,7 @@ const QuestionSpecificationTime = (): ReactElement => {
             </Grid>
             <Grid item xs={8}>
               <HorizontalTextCtrl
-                name={
-                  `question.config.timeScores.${idx}.score` as 'question.config.timeScores.0.score'
-                }
+                name={`question.config.timeScores.${idx}.score`}
                 placeholder={t('Score')}
                 type={'number'}
               />

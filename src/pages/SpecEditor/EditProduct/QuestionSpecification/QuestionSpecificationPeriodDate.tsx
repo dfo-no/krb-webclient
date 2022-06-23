@@ -130,11 +130,7 @@ const QuestionSpecificationPeriodDate = (): ReactElement => {
                   {DateUtils.prettyFormatDate(scoreValue.date)}
                 </Typography>
               ) : (
-                <DateCtrl
-                  name={
-                    `question.config.dateScores.${idx}.date` as 'question.config.dateScores.0.date'
-                  }
-                />
+                <DateCtrl name={`question.config.dateScores.${idx}.date`} />
               )}
             </Grid>
             <Grid item xs={1} className={css.arrow}>
@@ -142,9 +138,7 @@ const QuestionSpecificationPeriodDate = (): ReactElement => {
             </Grid>
             <Grid item xs={8}>
               <HorizontalTextCtrl
-                name={
-                  `question.config.dateScores.${idx}.score` as 'question.config.dateScores.0.score'
-                }
+                name={`question.config.dateScores.${idx}.score`}
                 placeholder={t('Score')}
                 type={'number'}
               />
