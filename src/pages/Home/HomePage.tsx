@@ -103,12 +103,9 @@ export default function HomePage(): React.ReactElement {
     })
       .then((httpResponse) => {
         if (httpResponse.data.title) {
-          const specification: ISpecification = httpResponse.data;
-          setSelectedSpecification(specification);
-          return;
+          setSelectedSpecification(httpResponse.data);
         } else {
-          const response: IResponse = httpResponse.data;
-          setSelectedResponse(response);
+          setSelectedResponse(httpResponse.data);
         }
       })
       .catch(() => {
@@ -118,7 +115,6 @@ export default function HomePage(): React.ReactElement {
           text: t('HOME_FILEUPL_UPLOAD_ERROR')
         };
         dispatch(addAlert({ alert }));
-        return;
       });
   };
 
