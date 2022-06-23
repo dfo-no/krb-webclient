@@ -51,7 +51,7 @@ const QuestionSpecificationPeriodDate = (): ReactElement => {
 
   useEffect(() => {
     if (!useMaxScore) {
-      append({ date: null, score: 0 });
+      append({ date: null, score: 100 });
       return;
     }
     if (!DateUtils.sameTime(useToBoundary, useMaxScore.date)) {
