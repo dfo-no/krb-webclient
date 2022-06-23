@@ -1,6 +1,7 @@
 import { ReactElement } from 'react';
 
 import QuestionAnswerCheckbox from './QuestionAnswerCheckbox';
+import QuestionAnswerCodelist from './QuestionAnswerCodelist';
 import QuestionAnswerSlider from './QuestionAnswerSlider';
 import QuestionAnswerText from './QuestionAnswerText';
 import { ICheckboxQuestion } from '../../../../Nexus/entities/ICheckboxQuestion';
@@ -32,6 +33,7 @@ const QuestionSpecification = ({ item }: IProps): ReactElement => {
     case QuestionVariant.Q_TEXT:
       return <QuestionAnswerText />;
     case QuestionVariant.Q_CODELIST:
+      return <QuestionAnswerCodelist item={item} />;
     case QuestionVariant.Q_PERIOD_DATE:
     case QuestionVariant.Q_TIME:
     case QuestionVariant.Q_FILEUPLOAD:

@@ -117,9 +117,9 @@ class TextUtils {
   private static getCheckboxConfig = (question: ICheckboxQuestion): string => {
     const preferedAlternative = question.config.preferedAlternative;
     const pointsNonPrefered = question.config.pointsNonPrefered;
-    return `${preferedAlternative ? t('Yes') : t('No')} 100 ${t('score')}, ${
+    return `${preferedAlternative ? t('Yes') : t('No')} 100 ${t('Score')}, ${
       preferedAlternative ? t('No') : t('Yes')
-    } ${pointsNonPrefered} ${t('score')}`;
+    } ${pointsNonPrefered} ${t('Score')}`;
   };
 
   private static getSliderConfig = (question: ISliderQuestion): string => {
@@ -158,7 +158,7 @@ class TextUtils {
     }
     return `${
       mandatory.length > 0
-        ? `${t('Mandatory codes')}: ${TextUtils.getCodesText(
+        ? `${t('Obligatory codes')}: ${TextUtils.getCodesText(
             mandatory,
             codelist
           )}, `
