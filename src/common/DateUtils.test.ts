@@ -14,6 +14,6 @@ describe('DateUtils', () => {
 
     expect(result).toEqual('2021-12-02T16:00:00.000Z');
     expect(resultPrettyDate).toEqual('2. MONTH_11 2021');
-    expect(resultPrettyTime).toEqual(`${d.getHours()} : 00`);
+    expect(resultPrettyTime).toEqual(`${d.getHours()}:00`);
   });
 });

@@ -57,7 +57,7 @@ class DateUtils {
       const minutes = date.getMinutes();
       const minutesStr = minutes < 10 ? `0${minutes}` : minutes;
 
-      return `${hourStr} : ${minutesStr}`;
+      return `${hourStr}:${minutesStr}`;
     }
     return '-';
   };
