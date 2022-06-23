@@ -4,6 +4,7 @@ import { Box, Card, Divider, List, ListItem, Typography } from '@mui/material/';
 import { useTranslation } from 'react-i18next';
 
 import css from '../ResponseEditor.module.scss';
+import DownloadButton from '../Download/DownloadButton';
 import theme from '../../../theme';
 import { ISpecificationProduct } from '../../../models/ISpecificationProduct';
 import { useResponseState } from '../ResponseContext';
@@ -86,6 +87,9 @@ function ResponseSideBar(): React.ReactElement {
           return renderProducts(element, index);
         })}
       </List>
+      <Box className={css.buttonContainer}>
+        <DownloadButton />
+      </Box>
     </Box>
   );
 }
