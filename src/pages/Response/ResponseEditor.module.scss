@@ -10,6 +10,13 @@
     align-items: center;
     padding: var(--normal-gap) 0;
 
+    .buttonContainer {
+      display: flex;
+      justify-content: flex-end;
+      width: 100%;
+      padding: var(--normal-gap) var(--big-gap);
+    }
+
     .list {
       display: flex;
       padding: 0 var(--big-gap);
