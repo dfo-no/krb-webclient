@@ -1,7 +1,7 @@
-import Col from 'react-bootstrap/Col';
 import InputGroup from 'react-bootstrap/InputGroup';
 import React from 'react';
 import { AxiosResponse } from 'axios';
+import { useTranslation } from 'react-i18next';
 
 import { httpPost } from '../../api/http';
 import { IResponse } from '../../models/IResponse';
@@ -10,6 +10,7 @@ import { useAppDispatch, useAppSelector } from '../../store/hooks';
 
 export default function UploadResponses(): React.ReactElement {
   const { responses } = useAppSelector((state) => state.evaluation);
+  const { t } = useTranslation();
   const dispatch = useAppDispatch();
 
   const readFileContents = async (file: File) => {
@@ -63,8 +64,8 @@ export default function UploadResponses(): React.ReactElement {
     }
   };
   return (
-    <Col>
-      <h6>Upload Responses</h6>
+    <div>
+      <h1>{t('EVAL_UPLOAD_RESPS')}</h1>
       <InputGroup className="mb-5">
         <form>
           <input
@@ -76,6 +77,6 @@ export default function UploadResponses(): React.ReactElement {
           />
         </form>
       </InputGroup>
-    </Col>
+    </div>
   );
 }

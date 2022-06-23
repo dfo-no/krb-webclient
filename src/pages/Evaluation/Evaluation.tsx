@@ -1,76 +1,65 @@
-import Col from 'react-bootstrap/Col';
-import Container from 'react-bootstrap/Container';
-import InputGroup from 'react-bootstrap/InputGroup';
-import React from 'react';
-import Row from 'react-bootstrap/Row';
-import { AxiosResponse } from 'axios';
+import classnames from 'classnames';
+import React, { ReactElement } from 'react';
+import { useTranslation } from 'react-i18next';
 
-import DownLoad from './DownLoad';
+import css from './Evaluation.module.scss';
 import EvaluationList from './EvaluationList';
+import EvaluationSideBar from './EvaluationSideBar';
+import EvaluationSpec from './EvaluationSpec';
 import UploadResponses from './UploadResponses';
-import { httpPost } from '../../api/http';
-import { setEvaluationSpecification } from '../../store/reducers/evaluation-reducer';
-import { useAppDispatch, useAppSelector } from '../../store/hooks';
+import { useAppSelector } from '../../store/hooks';
+import { useEvaluationState } from './EvaluationContext';
+import EvaluationProcess from './EvaluationProcess';
 
-export default function Evaluation(): React.ReactElement {
-  const dispatch = useAppDispatch();
-  const { responses, specification } = useAppSelector(
-    (state) => state.evaluation
-  );
-
-  const onUploadSpecification = (
-    event: React.ChangeEvent<HTMLInputElement>
-  ): void => {
-    const formData = new FormData();
-    const files = event.target.files as FileList;
-    for (let index = 0; index < files.length; index += 1) {
-      const file = files[index];
-      formData.append('file', file);
-    }
-    httpPost<FormData, AxiosResponse>('/java/uploadPdf', formData, {
-      headers: {
-        'Content-Type': 'multipart/form-data'
-      },
-      responseType: 'json'
-    }).then((response) => {
-      dispatch(setEvaluationSpecification(response.data));
-      return response;
-    });
-  };
-
-  if (specification.bank.id === '') {
-    return (
-      <Col>
-        <h4>Upload a spesification to start the evaluation</h4>
-        <InputGroup className="mb-5">
-          <form>
-            <input
-              type="file"
-              onChange={(e) => onUploadSpecification(e)}
-              name="responseFiles"
-              multiple
-              accept=".pdf"
-            />
-          </form>
-        </InputGroup>
-      </Col>
-    );
-  }
+const Evaluation = (): ReactElement => {
+  const { responses } = useAppSelector((state) => state.evaluation);
+  const { t } = useTranslation();
+  const evaluationState = useEvaluationState();
 
   return (
-    <Container fluid>
-      <Row className="m-4">
-        <UploadResponses />
-        <Col>
-          <DownLoad />
-        </Col>
-      </Row>
+    <div className={css.Evaluation}>
+      <EvaluationSideBar />
 
-      <Row className="m-4">
-        <Col>
-          {responses.length !== 0 && <EvaluationList responses={responses} />}
-        </Col>
-      </Row>
-    </Container>
+      <div className={css.Content}>
+        <div
+          className={classnames(
+            css.Tab,
+            evaluationState.tab === 0 ? css.Active : null
+          )}
+        >
+          <EvaluationSpec />
+        </div>
+
+        <div
+          className={classnames(
+            css.Tab,
+            evaluationState.tab === 1 ? css.Active : null
+          )}
+        >
+          <UploadResponses />
+        </div>
+
+        <div
+          className={classnames(
+            css.Tab,
+            evaluationState.tab === 2 ? css.Active : null
+          )}
+        >
+          <EvaluationProcess />
+        </div>
+
+        <div
+          className={classnames(
+            css.Tab,
+            evaluationState.tab === 3 ? css.Active : null
+          )}
+        >
+          <h1>{t('EVAL_RESULTS')}</h1>
+          {responses.length !== 0 && <EvaluationList />}
+        </div>
+      </div>
+    </div>
   );
-}
+};
+
+export default Evaluation;
