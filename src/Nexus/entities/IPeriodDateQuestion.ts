@@ -51,7 +51,7 @@ export const PeriodDateWorkbenchSchema = QuestionBaseSchema.keys({
     dateScores: CustomJoi.array().items(
       CustomJoi.object().keys({
         score: CustomJoi.number().required().min(0).max(100),
-        date: CustomJoi.string().required()
+        date: CustomJoi.string().allow(null).required()
       })
     )
   })

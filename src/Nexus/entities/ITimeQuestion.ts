@@ -50,7 +50,7 @@ export const TimeWorkbenchSchema = QuestionBaseSchema.keys({
     timeScores: CustomJoi.array().items(
       CustomJoi.object().keys({
         score: CustomJoi.number().required().min(0).max(100),
-        time: CustomJoi.string().required()
+        time: CustomJoi.string().allow(null).required()
       })
     )
   })
