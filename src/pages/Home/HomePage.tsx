@@ -16,8 +16,6 @@ import { addAlert } from '../../store/reducers/alert-reducer';
 import { httpPost } from '../../api/http';
 import { IAlert } from '../../models/IAlert';
 import { IBank } from '../../Nexus/entities/IBank';
-import { IResponse } from '../../models/IResponse';
-import { ISpecification } from '../../Nexus/entities/ISpecification';
 import { useAppDispatch } from '../../store/hooks';
 import { useHomeState } from './HomeContext';
 import { useGetBanksQuery } from '../../store/api/bankApi';
