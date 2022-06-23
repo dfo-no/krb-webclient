@@ -27,7 +27,10 @@ export default class QuestionService {
             periodMinutes: 0,
             periodHours: 0,
             defaultPoint: 1,
-            timeScores: []
+            timeScores: [
+              { time: null, score: 0 },
+              { time: null, score: 100 }
+            ]
           },
           answer: {
             point: 0,
@@ -65,7 +68,7 @@ export default class QuestionService {
             unit: 'GB',
             defaultPoint: 1,
             scoreValues: [
-              { score: 0, value: 0 },
+              { value: 0, score: 0 },
               { value: 10, score: 100 }
             ]
           },
@@ -88,7 +91,10 @@ export default class QuestionService {
             periodMin: 0,
             periodMax: 1,
             defaultPoint: 1,
-            dateScores: []
+            dateScores: [
+              { date: null, score: 0 },
+              { date: null, score: 100 }
+            ]
           },
           answer: {
             point: 0,

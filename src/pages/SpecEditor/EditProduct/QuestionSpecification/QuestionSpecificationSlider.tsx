@@ -24,11 +24,11 @@ const QuestionSpecificationSlider = ({ item }: IProps): ReactElement => {
   const useMaxValue = useWatch({ name: 'question.config.max', control });
 
   const useMinScore = useWatch({
-    name: 'question.config.scoreValues.0.score',
+    name: 'question.config.scoreValues.0',
     control
   });
   const useMaxScore = useWatch({
-    name: 'question.config.scoreValues.1.score',
+    name: 'question.config.scoreValues.1',
     control
   });
 
@@ -38,11 +38,15 @@ const QuestionSpecificationSlider = ({ item }: IProps): ReactElement => {
   });
 
   useEffect(() => {
-    update(0, { value: useMinValue, score: useMinScore });
+    if (useMinValue !== useMinScore.value) {
+      update(0, { value: useMinValue, score: useMinScore.score });
+    }
   }, [useMinValue, useMinScore, update]);
 
   useEffect(() => {
-    update(1, { value: useMaxValue, score: useMaxScore });
+    if (useMaxValue !== useMaxScore.value) {
+      update(1, { value: useMaxValue, score: useMaxScore.score });
+    }
   }, [useMaxValue, useMaxScore, update]);
 
   return (

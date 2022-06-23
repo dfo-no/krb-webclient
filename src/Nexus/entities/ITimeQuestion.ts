@@ -87,7 +87,7 @@ export const TimeAnswerSchema = TimeSpecSchema.keys({
       .iso()
       .raw()
       .min(CustomJoi.ref('/config.fromBoundary'))
-      .required(),
+      .allow(null),
     toTime: CustomJoi.when('/config.isPeriod', {
       is: true,
       then: CustomJoi.date()
@@ -95,7 +95,7 @@ export const TimeAnswerSchema = TimeSpecSchema.keys({
         .raw()
         .greater(CustomJoi.ref('fromTime'))
         .max(CustomJoi.ref('/config.toBoundary'))
-        .required(),
+        .allow(null),
       otherwise: CustomJoi.string().allow(null)
     }),
     point: CustomJoi.number().required()

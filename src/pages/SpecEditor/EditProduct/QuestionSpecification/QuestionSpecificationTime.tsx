@@ -6,14 +6,14 @@ import { t } from 'i18next';
 import { useFieldArray, useFormContext, useWatch } from 'react-hook-form';
 
 import css from './QuestionSpecification.module.scss';
-import DateCtrl from '../../../../FormProvider/DateCtrl';
 import DateUtils from '../../../../common/DateUtils';
 import HorizontalTextCtrl from '../../../../FormProvider/HorizontalTextCtrl';
 import theme from '../../../../theme';
+import TimeCtrl from '../../../../FormProvider/TimeCtrl';
 import { FormIconButton } from '../../../../components/Form/FormIconButton';
 import { IRequirementAnswer } from '../../../../models/IRequirementAnswer';
 
-const QuestionSpecificationPeriodDate = (): ReactElement => {
+const QuestionSpecificationTime = (): ReactElement => {
   const { control } = useFormContext<IRequirementAnswer>();
 
   const useFromBoundary = useWatch({
@@ -26,97 +26,52 @@ const QuestionSpecificationPeriodDate = (): ReactElement => {
   });
 
   const useMinScore = useWatch({
-    name: 'question.config.dateScores.0',
+    name: 'question.config.timeScores.0',
     control
   });
   const useMaxScore = useWatch({
-    name: 'question.config.dateScores.1',
+    name: 'question.config.timeScores.1',
     control
   });
 
   const { fields, append, remove, update } = useFieldArray({
     control,
-    name: 'question.config.dateScores'
+    name: 'question.config.timeScores'
   });
 
   useEffect(() => {
     if (!useMinScore) {
-      append({ date: null, score: 0 });
+      append({ time: null, score: 0 });
       return;
     }
-    if (!DateUtils.sameTime(useFromBoundary, useMinScore.date)) {
-      update(0, { date: useFromBoundary, score: useMinScore.score });
+    if (!DateUtils.sameTime(useFromBoundary, useMinScore.time)) {
+      update(0, { time: useFromBoundary, score: useMinScore.score });
     }
   }, [useFromBoundary, useMinScore, update, append]);
 
   useEffect(() => {
     if (!useMaxScore) {
-      append({ date: null, score: 0 });
+      append({ time: null, score: 100 });
       return;
     }
-    if (!DateUtils.sameTime(useToBoundary, useMaxScore.date)) {
-      update(1, { date: useToBoundary, score: useMaxScore.score });
+    if (useToBoundary && !DateUtils.sameTime(useToBoundary, useMaxScore.time)) {
+      update(1, { time: useToBoundary, score: useMaxScore.score });
     }
   }, [useToBoundary, useMaxScore, update, append]);
-
-  /* TODO: Enable view for period selection
-  const [isPeriod, setIsPeriod] = useState(false);
-  const useIsPeriod = useWatch({
-    name: 'question.config.isPeriod',
-    control
-  });
-
-  useEffect(() => {
-    setIsPeriod(useIsPeriod);
-  }, [useIsPeriod]);
-
-  const periodGrid = (): ReactElement => {
-    return (
-      <Grid>
-        <Grid item xs={20}>
-          <CheckboxCtrl
-            name={'question.config.isPeriod'}
-            label={t<string>('Include to date')}
-          />
-        </Grid>
-        <Grid item xs={20}>
-          <Typography variant="smBold">{t('Period')}</Typography>
-        </Grid>
-        <Grid item xs={8}>
-          <HorizontalTextCtrl
-            placeholder={t('Minimum')}
-            name={'question.config.periodMin'}
-            type={'number'}
-          />
-        </Grid>
-        <Grid item xs={1} className={css.arrow}>
-          <ArrowForwardIcon />
-        </Grid>
-        <Grid item xs={8}>
-          <HorizontalTextCtrl
-            placeholder={t('Maximum')}
-            name={'question.config.periodMax'}
-            type={'number'}
-          />
-        </Grid>
-      </Grid>
-    );
-  };
-  */
 
   return (
     <Grid container columns={20} className={css.QuestionSpecificationGrid}>
       <Grid item xs={20}>
-        <Typography variant={'smBold'}>{t('From/to date')}</Typography>
+        <Typography variant={'smBold'}>{t('From/to time')}</Typography>
       </Grid>
       <Grid item xs={8}>
-        <DateCtrl name={'question.config.fromBoundary'} />
+        <TimeCtrl name={'question.config.fromBoundary'} />
       </Grid>
       <Grid item xs={1} className={css.centeredText}>
         /
       </Grid>
       <Grid item xs={8}>
-        <DateCtrl name={'question.config.toBoundary'} />
+        <TimeCtrl name={'question.config.toBoundary'} />
       </Grid>
       <Grid item xs={20}>
         <Typography variant={'smBold'}>{t('Evaluation')}</Typography>
@@ -127,12 +82,12 @@ const QuestionSpecificationPeriodDate = (): ReactElement => {
             <Grid item xs={8}>
               {idx < 2 ? (
                 <Typography variant={'smBold'} className={css.centeredText}>
-                  {DateUtils.prettyFormatDate(scoreValue.date)}
+                  {DateUtils.prettyFormatTime(scoreValue.time)}
                 </Typography>
               ) : (
-                <DateCtrl
+                <TimeCtrl
                   name={
-                    `question.config.dateScores.${idx}.date` as 'question.config.dateScores.0.date'
+                    `question.config.timeScores.${idx}.time` as 'question.config.timeScores.0.time'
                   }
                 />
               )}
@@ -143,7 +98,7 @@ const QuestionSpecificationPeriodDate = (): ReactElement => {
             <Grid item xs={8}>
               <HorizontalTextCtrl
                 name={
-                  `question.config.dateScores.${idx}.score` as 'question.config.dateScores.0.score'
+                  `question.config.timeScores.${idx}.score` as 'question.config.timeScores.0.score'
                 }
                 placeholder={t('Score')}
                 type={'number'}
@@ -165,13 +120,13 @@ const QuestionSpecificationPeriodDate = (): ReactElement => {
       <Grid item xs={20}>
         <Button
           variant="primary"
-          onClick={() => append({ date: useFromBoundary, score: 0 })}
+          onClick={() => append({ time: useFromBoundary, score: 0 })}
         >
-          {t('Add new date score')}
+          {t('Add new time score')}
         </Button>
       </Grid>
     </Grid>
   );
 };
 
-export default QuestionSpecificationPeriodDate;
+export default QuestionSpecificationTime;
