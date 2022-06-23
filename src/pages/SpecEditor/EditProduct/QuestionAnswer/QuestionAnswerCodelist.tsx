@@ -2,10 +2,10 @@ import React, { ReactElement } from 'react';
 import { Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 
-import { FlexColumnBox } from '../../../../components/FlexBox/FlexColumnBox';
-import { useAppSelector } from '../../../../store/hooks';
-import { ICodelistQuestion } from '../../../../Nexus/entities/ICodelistQuestion';
 import CodeSelection from '../../../../components/CodeSelection/CodeSelection';
+import { FlexColumnBox } from '../../../../components/FlexBox/FlexColumnBox';
+import { ICodelistQuestion } from '../../../../Nexus/entities/ICodelistQuestion';
+import { useAppSelector } from '../../../../store/hooks';
 
 interface IProps {
   item: ICodelistQuestion;
