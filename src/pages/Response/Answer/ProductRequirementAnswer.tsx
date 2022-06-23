@@ -1,14 +1,16 @@
-import { Box, Divider, Typography } from '@mui/material';
 import React, { ReactElement, useEffect, useState } from 'react';
+import { Box, Divider, Typography } from '@mui/material';
+import { t } from 'i18next';
 
 import ChosenAnswer from './ChosenAnswer';
 import css from './ProductRequirementAnswer.module.scss';
 import ProductQuestionAnswer from './QuestionAnswer/ProductQuestionAnswer';
 import ProductVariant from './ProductVariant';
+import TextUtils from '../../../common/TextUtils';
 import theme from '../../../theme';
+import VariantType from '../../../Nexus/entities/VariantType';
 import { DFOAccordion } from '../../../components/DFOAccordion/DFOAccordion';
 import { IRequirementAnswer } from '../../../models/IRequirementAnswer';
-import { t } from 'i18next';
 import { useAppSelector } from '../../../store/hooks';
 import { useResponseState } from '../ResponseContext';
 
@@ -27,6 +29,8 @@ export default function ProductRequirementAnswer({
   const requirementVariant = requirementAnswer.requirement.variants.find(
     (variant) => variant.id === requirementAnswer.variantId
   );
+  const isInfo =
+    requirementVariant && requirementVariant.type === VariantType.info;
 
   useEffect(() => {
     const answer = (
@@ -48,7 +52,12 @@ export default function ProductRequirementAnswer({
           {requirementAnswer.requirement.title}
         </Typography>
         <Divider className={css.divider} />
-        {existingAnswer && <ChosenAnswer requirementAnswer={existingAnswer} />}
+        {(existingAnswer || isInfo) && (
+          <ChosenAnswer
+            requirementAnswer={requirementAnswer}
+            existingAnswer={existingAnswer}
+          />
+        )}
       </Box>
     );
   };
@@ -64,10 +73,16 @@ export default function ProductRequirementAnswer({
         >
           {t('Requirement answer')}
         </Typography>
-        <ProductQuestionAnswer
-          requirementAnswer={requirementAnswer}
-          existingAnswer={existingAnswer}
-        />
+        {isInfo ? (
+          <Typography className={css.label}>
+            {TextUtils.getAnswerText(requirementAnswer, response.specification)}
+          </Typography>
+        ) : (
+          <ProductQuestionAnswer
+            requirementAnswer={requirementAnswer}
+            existingAnswer={existingAnswer}
+          />
+        )}
       </Box>
     );
   };

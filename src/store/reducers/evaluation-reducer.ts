@@ -45,7 +45,10 @@ const evaluationSlice = createSlice({
   name: 'evaluation',
   initialState,
   reducers: {
-    setSpecification(state, { payload }: PayloadAction<ISpecification>) {
+    setEvaluationSpecification(
+      state,
+      { payload }: PayloadAction<ISpecification>
+    ) {
       state.specification = payload;
     },
     setResponses(state, { payload }: PayloadAction<IResponse[]>) {
@@ -57,7 +60,7 @@ const evaluationSlice = createSlice({
   }
 });
 
-export const { setSpecification, setResponses, setEvaluations } =
+export const { setEvaluationSpecification, setResponses, setEvaluations } =
   evaluationSlice.actions;
 
 export default evaluationSlice.reducer;
