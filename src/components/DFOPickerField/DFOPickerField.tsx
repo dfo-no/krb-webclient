@@ -2,6 +2,7 @@ import { TextField } from '@mui/material';
 import { styled } from '@mui/material/styles';
 
 const DFOPickerField = styled(TextField)(() => ({
+  width: '100%',
   '& .MuiOutlinedInput-root': {
     height: 45,
     borderRadius: 0,

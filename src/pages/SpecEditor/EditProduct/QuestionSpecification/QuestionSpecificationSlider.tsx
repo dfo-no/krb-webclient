@@ -24,11 +24,11 @@ const QuestionSpecificationSlider = ({ item }: IProps): ReactElement => {
   const useMaxValue = useWatch({ name: 'question.config.max', control });
 
   const useMinScore = useWatch({
-    name: 'question.config.scoreValues.0.score',
+    name: 'question.config.scoreValues.0',
     control
   });
   const useMaxScore = useWatch({
-    name: 'question.config.scoreValues.1.score',
+    name: 'question.config.scoreValues.1',
     control
   });
 
@@ -38,11 +38,15 @@ const QuestionSpecificationSlider = ({ item }: IProps): ReactElement => {
   });
 
   useEffect(() => {
-    update(0, { value: useMinValue, score: useMinScore });
+    if (useMinValue !== useMinScore.value) {
+      update(0, { value: useMinValue, score: useMinScore.score });
+    }
   }, [useMinValue, useMinScore, update]);
 
   useEffect(() => {
-    update(1, { value: useMaxValue, score: useMaxScore });
+    if (useMaxValue !== useMaxScore.value) {
+      update(1, { value: useMaxValue, score: useMaxScore.score });
+    }
   }, [useMaxValue, useMaxScore, update]);
 
   return (
@@ -93,9 +97,7 @@ const QuestionSpecificationSlider = ({ item }: IProps): ReactElement => {
                 <Typography variant={'smBold'}>{scoreValue.value}</Typography>
               ) : (
                 <HorizontalTextCtrl
-                  name={
-                    `question.config.scoreValues.${idx}.value` as 'question.config.scoreValues.0.value'
-                  }
+                  name={`question.config.scoreValues.${idx}.value`}
                   placeholder={t('Value')}
                   type={'number'}
                 />
@@ -106,9 +108,7 @@ const QuestionSpecificationSlider = ({ item }: IProps): ReactElement => {
             </Grid>
             <Grid item xs={8}>
               <HorizontalTextCtrl
-                name={
-                  `question.config.scoreValues.${idx}.score` as 'question.config.scoreValues.0.score'
-                }
+                name={`question.config.scoreValues.${idx}.score`}
                 placeholder={t('Score')}
                 type={'number'}
               />

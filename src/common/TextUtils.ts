@@ -189,8 +189,8 @@ class TextUtils {
   };
 
   private static getTimeConfig = (question: ITimeQuestion): string => {
-    const from = question.config.fromBoundary;
-    const to = question.config.toBoundary;
+    const from = DateUtils.prettyFormatTime(question.config.fromBoundary);
+    const to = DateUtils.prettyFormatTime(question.config.toBoundary);
     const isPeriod = question.config.isPeriod;
     const minutes = question.config.periodMinutes;
     const hours = question.config.periodHours;
