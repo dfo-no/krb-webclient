@@ -1,4 +1,5 @@
 import { get } from 'lodash';
+
 import Utils from './Utils';
 import {
   codelistsTestData,
@@ -8,6 +9,7 @@ import {
   productsTestData,
   projectTestData
 } from './TestData';
+import { DateScorePair } from '../Nexus/entities/IPeriodDateQuestion';
 import { ScoreValuePair } from '../Nexus/entities/ISliderQuestion';
 
 describe('Utils functions should work', () => {
@@ -207,7 +209,7 @@ describe('Utils functions should work', () => {
     expect(isInUse2).toBeFalsy();
   });
 
-  it('Utils.findScoreFromValue returns correct value for scores', () => {
+  it('Utils.findScoreFromValue returns correct score for values', () => {
     const scoreValuePairs: ScoreValuePair[] = [
       { value: 0, score: 0 },
       { value: 2, score: 12 },
@@ -226,6 +228,40 @@ describe('Utils functions should work', () => {
     expect(result1).toEqual(12);
     expect(result2).toEqual(85);
     expect(result3).toEqual(12.4);
+    expect(result4).toEqual(46);
+  });
+
+  it('Utils.findScoreFromDate returns correct value for dates', () => {
+    const scoreDatePairs: DateScorePair[] = [
+      { date: '2022-02-10T12:00:00.000Z', score: 0 },
+      { date: '2022-02-12T12:00:00.000Z', score: 12 },
+      { date: '2022-02-13T12:00:00.000Z', score: 16 },
+      { date: '2022-02-200T12:00:00.000Z', score: 30 },
+      { date: '2022-03-02T12:00:00.000Z', score: 50 },
+      { date: '2022-03-04T12:00:00.000Z', score: 60 },
+      { date: '2022-03-07T12:00:00.000Z', score: 70 },
+      { date: '2022-03-12T12:00:00.000Z', score: 100 }
+    ];
+
+    const result1 = Utils.findScoreFromDate(
+      '2022-02-12T12:00:00.000Z',
+      scoreDatePairs
+    );
+    const result2 = Utils.findScoreFromDate(
+      '2022-03-10T12:00:00.000Z',
+      scoreDatePairs
+    );
+    const result3 = Utils.findScoreFromDate(
+      '2022-02-11T12:00:00.000Z',
+      scoreDatePairs
+    );
+    const result4 = Utils.findScoreFromDate(
+      '2022-02-28T12:00:00.000Z',
+      scoreDatePairs
+    );
+    expect(result1).toEqual(12);
+    expect(result2).toEqual(88);
+    expect(result3).toEqual(6);
     expect(result4).toEqual(46);
   });
 });
