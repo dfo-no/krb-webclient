@@ -101,7 +101,7 @@ class TextUtils {
   };
 
   private static getDateAnswer = (question: IPeriodDateQuestion): string => {
-    return question.answer.fromDate ?? '';
+    return DateUtils.prettyFormatDate(question.answer.fromDate);
   };
 
   private static getTimeAnswer = (question: ITimeQuestion): string => {

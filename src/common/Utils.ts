@@ -1,3 +1,4 @@
+import { DateScorePair } from '../Nexus/entities/IPeriodDateQuestion';
 import { IBank } from '../Nexus/entities/IBank';
 import { IBaseModel } from '../Nexus/entities/IBaseModel';
 import { ICodelist } from '../Nexus/entities/ICodelist';
@@ -119,6 +120,33 @@ class Utils {
       newList.splice(index, 1);
     }
     return newList;
+  }
+
+  private static dateToValue(dateStr: string): number {
+    const date = new Date(dateStr);
+    return date.getTime();
+  }
+
+  static findScoreFromDate(
+    date: string | null,
+    pairs: DateScorePair[]
+  ): number {
+    if (!date) {
+      return 0;
+    }
+    const valuePairs = pairs.reduce(
+      (allPairs: ScoreValuePair[], pair: DateScorePair) => {
+        if (pair.date) {
+          allPairs.push({
+            value: this.dateToValue(pair.date),
+            score: pair.score
+          });
+        }
+        return allPairs;
+      },
+      []
+    );
+    return this.findScoreFromValue(this.dateToValue(date), valuePairs);
   }
 
   static findScoreFromValue(value: number, pairs: ScoreValuePair[]): number {

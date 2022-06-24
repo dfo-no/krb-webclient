@@ -2,6 +2,7 @@ import React from 'react';
 
 import QuestionAnswerCheckbox from './QuestionAnswerCheckbox';
 import QuestionAnswerCodelist from './QuestionAnswerCodelist';
+import QuestionAnswerPeriodDate from './QuestionAnswerPeriodDate';
 import QuestionAnswerSlider from './QuestionAnswerSlider';
 import QuestionAnswerText from './QuestionAnswerText';
 import { IRequirementAnswer } from '../../../../models/IRequirementAnswer';
@@ -70,6 +71,18 @@ export default function ProductQuestionAnswer({
         />
       );
     case QuestionVariant.Q_PERIOD_DATE:
+      return (
+        <QuestionAnswerPeriodDate
+          item={requirementAnswer.question}
+          parent={requirementAnswer}
+          existingAnswer={
+            existingAnswer &&
+            existingAnswer.question.type === QuestionVariant.Q_PERIOD_DATE
+              ? existingAnswer.question
+              : undefined
+          }
+        />
+      );
     case QuestionVariant.Q_TIME:
     case QuestionVariant.Q_FILEUPLOAD:
   }
