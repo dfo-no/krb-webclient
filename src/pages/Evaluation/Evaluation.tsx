@@ -4,12 +4,12 @@ import { useTranslation } from 'react-i18next';
 
 import css from './Evaluation.module.scss';
 import EvaluationList from './EvaluationList';
+import EvaluationProcess from './EvaluationProcess';
 import EvaluationSideBar from './EvaluationSideBar';
 import EvaluationSpec from './EvaluationSpec';
 import UploadResponses from './UploadResponses';
 import { useAppSelector } from '../../store/hooks';
 import { useEvaluationState } from './EvaluationContext';
-import EvaluationProcess from './EvaluationProcess';
 
 const Evaluation = (): ReactElement => {
   const { responses } = useAppSelector((state) => state.evaluation);

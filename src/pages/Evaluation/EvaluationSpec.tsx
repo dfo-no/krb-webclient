@@ -1,13 +1,12 @@
 import React, { ReactElement } from 'react';
+import { AxiosResponse } from 'axios';
+import { useTranslation } from 'react-i18next';
 
 import css from './Evaluation.module.scss';
-import Col from 'react-bootstrap/Col';
-import InputGroup from 'react-bootstrap/InputGroup';
+import FileUpload from '../../components/FileUpload/FileUpload';
 import { httpPost } from '../../api/http';
-import { AxiosResponse } from 'axios';
 import { setEvaluationSpecification } from '../../store/reducers/evaluation-reducer';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
-import { useTranslation } from 'react-i18next';
 
 const EvaluationSpec = (): ReactElement => {
   const dispatch = useAppDispatch();
@@ -20,11 +19,8 @@ const EvaluationSpec = (): ReactElement => {
       : t('EVAL_UPLOAD_SPEC');
   };
 
-  const onUploadSpecification = (
-    event: React.ChangeEvent<HTMLInputElement>
-  ): void => {
+  const onUploadSpecification = (files: FileList): void => {
     const formData = new FormData();
-    const files = event.target.files as FileList;
     for (let index = 0; index < files.length; index += 1) {
       const file = files[index];
       formData.append('file', file);
@@ -43,19 +39,16 @@ const EvaluationSpec = (): ReactElement => {
 
   return (
     <div className={css.Element}>
-      <Col>
-        <h1>{getSpecTitle()}</h1>
-        <InputGroup className="mb-5">
-          <form>
-            <input
-              type="file"
-              onChange={(e) => onUploadSpecification(e)}
-              name="responseFiles"
-              accept=".pdf"
-            />
-          </form>
-        </InputGroup>
-      </Col>
+      <h1>{getSpecTitle()}</h1>
+      <div className={css.Card}>
+        <FileUpload
+          accept={'application/pdf'}
+          description={t('EVAL_SPEC_FILE_UPL_DESCR')}
+          label={t('EVAL_SPEC_FILE_UPL_LABEL')}
+          onChange={onUploadSpecification}
+          variant={'Tertiary'}
+        />
+      </div>
     </div>
   );
 };
