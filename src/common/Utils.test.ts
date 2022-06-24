@@ -231,12 +231,12 @@ describe('Utils functions should work', () => {
     expect(result4).toEqual(46);
   });
 
-  it('Utils.findScoreFromDate returns correct value for dates', () => {
+  it('Utils.findScoreFromDate returns correct score for dates', () => {
     const scoreDatePairs: DateScorePair[] = [
       { date: '2022-02-10T12:00:00.000Z', score: 0 },
       { date: '2022-02-12T12:00:00.000Z', score: 12 },
       { date: '2022-02-13T12:00:00.000Z', score: 16 },
-      { date: '2022-02-200T12:00:00.000Z', score: 30 },
+      { date: '2022-02-20T12:00:00.000Z', score: 30 },
       { date: '2022-03-02T12:00:00.000Z', score: 50 },
       { date: '2022-03-04T12:00:00.000Z', score: 60 },
       { date: '2022-03-07T12:00:00.000Z', score: 70 },

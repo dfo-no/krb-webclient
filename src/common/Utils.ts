@@ -122,12 +122,15 @@ class Utils {
     return newList;
   }
 
-  private static dateToValue(dateStr: string) {
+  private static dateToValue(dateStr: string): number {
     const date = new Date(dateStr);
     return date.getTime();
   }
 
-  static findScoreFromDate(date: string | null, pairs: DateScorePair[]) {
+  static findScoreFromDate(
+    date: string | null,
+    pairs: DateScorePair[]
+  ): number {
     if (!date) {
       return 0;
     }
