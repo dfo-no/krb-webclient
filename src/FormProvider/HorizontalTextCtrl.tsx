@@ -34,6 +34,7 @@ const HorizontalTextCtrl = ({
             {...field}
             placeholder={placeholder}
             type={type}
+            onWheel={(e) => (e.target as HTMLElement).blur()}
             error={!!get(errors, name)}
             disableUnderline
             sx={{ height: 45 }}
