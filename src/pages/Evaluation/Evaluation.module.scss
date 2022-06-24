@@ -1,0 +1,63 @@
+.Evaluation {
+  display: grid;
+  grid-template-columns: 25% auto;
+  width: 100%;
+  max-width: 250rem;
+  gap: var(--big-gap);
+  margin: 0 auto;
+  padding: var(--big-gap);
+
+  .Content {
+    position: relative;
+
+    .TabBody {
+      position: absolute;
+      width: 100%;
+      opacity: 0;
+      transition: opacity 300ms ease-out;
+      display: none;
+
+      &.Active {
+        opacity: 1;
+        display: block;
+      }
+    }
+  }
+
+  .SideBar {
+    ul {
+      list-style: none;
+      margin: 0;
+      padding: var(--big-gap) 0;
+
+      li {
+        padding: var(--small-gap);
+        border: 0.1rem var(--border-color-secondary) solid;
+        border-radius: 0.5rem;
+        background: white;
+        transition: all 220ms ease-out;
+        cursor: pointer;
+
+        &:hover {
+          background: var(--link-hover-color);
+        }
+
+        &.Active {
+          background: var(--primary-color);
+          color: white;
+          cursor: default;
+        }
+
+        + li {
+          margin-top: var(--small-gap);
+        }
+      }
+    }
+  }
+
+  .Button {
+    &:disabled {
+      background: var(--disabled-color);
+    }
+  }
+}

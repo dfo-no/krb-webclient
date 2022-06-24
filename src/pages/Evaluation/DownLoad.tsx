@@ -40,5 +40,9 @@ export default function DownLoad(): React.ReactElement {
     });
   };
 
-  return <Button onClick={onDownLoad}>Download</Button>;
+  return (
+    <Button variant={'save'} onClick={onDownLoad}>
+      Download
+    </Button>
+  );
 }

@@ -137,12 +137,14 @@ export default function Header(): React.ReactElement {
       url: '/response'
     });
   }
+
   if (isSpecification) {
     breadcrumbs.push({
       label: t('Requirement specification'),
       url: '/specification'
     });
   }
+
   if (isWorkbench) {
     breadcrumbs.push({
       label: t('Workbench'),
@@ -187,7 +189,7 @@ export default function Header(): React.ReactElement {
       return response.specification.title;
     }
     if (isEvaluation) {
-      return specification.title;
+      return specification.title || t('Evaluation');
     }
     return t('app_title');
   };

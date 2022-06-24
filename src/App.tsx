@@ -5,7 +5,7 @@ import { PublicClientApplication } from '@azure/msal-browser';
 import { Route, Switch } from 'react-router-dom';
 
 import AlertList from './components/Alert/AlertList';
-import Evaluation from './pages/Evaluation/Evaluation';
+import EvaluationModule from './pages/Evaluation/EvaluationModule';
 import Header from './components/Header/Header';
 import HomePage from './pages/Home/HomePage';
 import PrefilledResponseModule from './pages/PrefilledResponseEditor/PrefilledResponseModule';
@@ -33,7 +33,7 @@ function App(): ReactElement {
         <Route path="/workbench" component={WorkbenchModule} />
         <Route path="/specification" component={SpecModule} />
         <Route path="/response" component={ResponseModule} />
-        <Route path="/evaluation" component={Evaluation} />
+        <Route path="/evaluation" component={EvaluationModule} />
         <Route
           path="/prefilledresponse/:id"
           component={PrefilledResponseModule}
