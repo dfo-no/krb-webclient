@@ -38,7 +38,7 @@ const CodeSelection = ({ name, codelist }: IProps): React.ReactElement => {
 
   return (
     <Controller
-      render={({ field: { value: selected, onChange } }) => (
+      render={({ field: { value: selected = [], onChange } }) => (
         <ScrollableContainer className={css.Selection}>
           <List>
             {codes.map((item) => {
