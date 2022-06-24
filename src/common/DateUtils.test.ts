@@ -9,9 +9,11 @@ describe('DateUtils', () => {
     const d = new Date(dStr);
 
     const result = DateUtils.formatDate(d);
-    const resultPretty = DateUtils.prettyFormatDate(dStr);
+    const resultPrettyDate = DateUtils.prettyFormatDate(dStr);
+    const resultPrettyTime = DateUtils.prettyFormatTime(dStr);
 
     expect(result).toEqual('2021-12-02T16:00:00.000Z');
-    expect(resultPretty).toEqual('2. MONTH_12 2021');
+    expect(resultPrettyDate).toEqual('2. MONTH_11 2021');
+    expect(resultPrettyTime).toEqual(`${d.getHours()}:00`);
   });
 });

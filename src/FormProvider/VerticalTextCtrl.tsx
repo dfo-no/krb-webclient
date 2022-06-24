@@ -45,6 +45,7 @@ const VerticalTextCtrl = ({
             {...field}
             placeholder={placeholder}
             type={type}
+            onWheel={(e) => (e.target as HTMLElement).blur()}
             disableUnderline
           />
         )}

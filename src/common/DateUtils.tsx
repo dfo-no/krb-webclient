@@ -1,31 +1,51 @@
+import enLocale from 'date-fns/locale/en-US';
+import nbLocale from 'date-fns/locale/nb';
 import { t } from 'i18next';
 
 class DateUtils {
-  static formatDate = (date: Date): string => {
-    const dateStr = date.toISOString();
-
-    const year = dateStr.substring(0, 4);
-    const month = dateStr.substring(5, 7);
-    const day = dateStr.substring(8, 10);
-    const hour = dateStr.substring(11, 13);
-    const minutes = dateStr.substring(14, 16);
-    const seconds = dateStr.substring(17, 19);
-    const milli = dateStr.substring(20, 23);
-
-    return `${year}-${month}-${day}T${hour}:${minutes}:${seconds}.${milli}Z`;
+  static localeMap: { [key: string]: Locale } = {
+    en: enLocale,
+    nb: nbLocale
   };
 
-  static prettyFormatDate = (date: string | null): string => {
-    if (date) {
-      const dateStr = new Date(date).toISOString();
+  static formatDate = (date: Date): string => {
+    return date.toISOString();
+  };
 
-      const year = dateStr.substring(0, 4);
-      const month = dateStr.substring(5, 7);
+  static sameTime = (time1: string | null, time2: string | null): boolean => {
+    if (time1 && time2) {
+      return time1.substring(11, 16) === time2.substring(11, 16);
+    }
+    return time1 === time2;
+  };
+
+  static sameDate = (date1: string | null, date2: string | null): boolean => {
+    if (date1 && date2) {
+      return date1.substring(0, 10) === date2.substring(0, 10);
+    }
+    return false;
+  };
+
+  static prettyFormatDate = (dateStr: string | null): string => {
+    if (dateStr) {
+      const date = new Date(dateStr);
+      const year = date.getFullYear();
+      const month = date.getMonth();
       const monthStr = t(`MONTH_${month}`);
-      const day = dateStr.substring(8, 10);
-      const dayNum = +day;
+      const day = date.getDate();
 
-      return `${dayNum}. ${monthStr} ${year}`;
+      return `${day}. ${monthStr} ${year}`;
+    }
+    return '-';
+  };
+
+  static prettyFormatTime = (time: string | null): string => {
+    if (time) {
+      const date = new Date(time);
+      const hour = String(date.getHours()).padStart(2, '0');
+      const minutes = String(date.getMinutes()).padStart(2, '0');
+
+      return `${hour}:${minutes}`;
     }
     return '-';
   };

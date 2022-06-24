@@ -1,10 +1,11 @@
 import { Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 
-import QuestionSpecificationSlider from './QuestionSpecificationSlider';
 import QuestionSpecificationCheckbox from './QuestionSpecificationCheckbox';
-import QuestionSpecificationPeriodDate from './QuestionSpecificationPeriodDate';
 import QuestionSpecificationCodelist from './QuestionSpecificationCodelist';
+import QuestionSpecificationPeriodDate from './QuestionSpecificationPeriodDate';
+import QuestionSpecificationSlider from './QuestionSpecificationSlider';
+import QuestionSpecificationTime from './QuestionSpecificationTime';
 import { ICheckboxQuestion } from '../../../../Nexus/entities/ICheckboxQuestion';
 import { ICodelistQuestion } from '../../../../Nexus/entities/ICodelistQuestion';
 import { IFileUploadQuestion } from '../../../../Nexus/entities/IFileUploadQuestion';
@@ -44,6 +45,7 @@ const QuestionSpecification = ({ item }: IProps) => {
     case QuestionVariant.Q_PERIOD_DATE:
       return <QuestionSpecificationPeriodDate />;
     case QuestionVariant.Q_TIME:
+      return <QuestionSpecificationTime />;
     case QuestionVariant.Q_FILEUPLOAD:
   }
   return <></>;
