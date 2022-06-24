@@ -16,44 +16,31 @@ const Evaluation = (): ReactElement => {
   const { t } = useTranslation();
   const evaluationState = useEvaluationState();
 
+  const getClassForTabBody = (tab: number): string => {
+    return classnames(
+      css.TabBody,
+      evaluationState.tab === tab ? css.Active : null
+    );
+  };
+
   return (
     <div className={css.Evaluation}>
       <EvaluationSideBar />
 
       <div className={css.Content}>
-        <div
-          className={classnames(
-            css.Tab,
-            evaluationState.tab === 0 ? css.Active : null
-          )}
-        >
+        <div className={getClassForTabBody(0)}>
           <EvaluationSpec />
         </div>
 
-        <div
-          className={classnames(
-            css.Tab,
-            evaluationState.tab === 1 ? css.Active : null
-          )}
-        >
+        <div className={getClassForTabBody(1)}>
           <UploadResponses />
         </div>
 
-        <div
-          className={classnames(
-            css.Tab,
-            evaluationState.tab === 2 ? css.Active : null
-          )}
-        >
+        <div className={getClassForTabBody(2)}>
           <EvaluationProcess />
         </div>
 
-        <div
-          className={classnames(
-            css.Tab,
-            evaluationState.tab === 3 ? css.Active : null
-          )}
-        >
+        <div className={getClassForTabBody(3)}>
           <h1>{t('EVAL_RESULTS')}</h1>
           {responses.length !== 0 && <EvaluationList />}
         </div>
