@@ -1,7 +1,4 @@
-import Card from 'react-bootstrap/Card';
-import Col from 'react-bootstrap/Col';
 import React, { ReactElement } from 'react';
-import Row from 'react-bootstrap/Row';
 
 import { IEvaluatedResponse } from '../../Nexus/entities/IEvaluatedResponse';
 import { useAppSelector } from '../../store/hooks';
@@ -13,14 +10,14 @@ export default function EvaluationList(): ReactElement {
   const renderEvaluations = (): ReactElement[] => {
     return evaluations.map((response: IEvaluatedResponse) => {
       return (
-        <Row key={response.supplier}>
-          <Col>
+        <div key={response.supplier}>
+          <div>
             <p> {response.supplier} </p>
-          </Col>
-          <Col>
+          </div>
+          <div>
             <p>{response.points}</p>
-          </Col>
-        </Row>
+          </div>
+        </div>
       );
     });
   };
@@ -28,21 +25,21 @@ export default function EvaluationList(): ReactElement {
   return (
     <>
       {evaluations.length > 0 && (
-        <Card className="bg-light">
-          <Card.Body>
-            <Row>
-              <Col>
+        <div className="bg-light">
+          <div>
+            <div>
+              <div>
                 <h6>Responders name </h6>
                 <hr />
-              </Col>
-              <Col>
+              </div>
+              <div>
                 <h6>Calculated score : </h6>
                 <hr />
-              </Col>
-            </Row>
+              </div>
+            </div>
             {renderEvaluations()}
-          </Card.Body>
-        </Card>
+          </div>
+        </div>
       )}
       <DownLoad />
     </>
