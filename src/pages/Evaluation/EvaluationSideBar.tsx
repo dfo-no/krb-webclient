@@ -1,4 +1,4 @@
-import React, { MouseEventHandler, ReactElement, useCallback } from 'react';
+import React, { ReactElement } from 'react';
 
 import css from './Evaluation.module.scss';
 import { useEvaluationState } from './EvaluationContext';
@@ -19,15 +19,6 @@ const EvaluationSideBar = (): ReactElement => {
   const { t } = useTranslation();
   const evaluationState = useEvaluationState();
 
-  const handleTabChange = useCallback(
-    (selectedTab: number): MouseEventHandler<HTMLLIElement> => {
-      return async () => {
-        evaluationState.setTab(selectedTab);
-      };
-    },
-    [evaluationState]
-  );
-
   return (
     <div className={css.SideBar}>
       <ul>
@@ -35,7 +26,7 @@ const EvaluationSideBar = (): ReactElement => {
           <li
             key={index}
             className={index === evaluationState.tab ? css.Active : undefined}
-            onClick={handleTabChange(index)}
+            onClick={() => evaluationState.setTab(index)}
           >
             {t(item.label)}
           </li>
