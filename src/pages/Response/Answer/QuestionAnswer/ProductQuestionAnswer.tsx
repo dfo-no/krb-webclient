@@ -5,6 +5,7 @@ import QuestionAnswerCodelist from './QuestionAnswerCodelist';
 import QuestionAnswerPeriodDate from './QuestionAnswerPeriodDate';
 import QuestionAnswerSlider from './QuestionAnswerSlider';
 import QuestionAnswerText from './QuestionAnswerText';
+import QuestionAnswerTime from './QuestionAnswerTime';
 import { IRequirementAnswer } from '../../../../models/IRequirementAnswer';
 import { QuestionVariant } from '../../../../enums';
 
@@ -84,6 +85,18 @@ export default function ProductQuestionAnswer({
         />
       );
     case QuestionVariant.Q_TIME:
+      return (
+        <QuestionAnswerTime
+          item={requirementAnswer.question}
+          parent={requirementAnswer}
+          existingAnswer={
+            existingAnswer &&
+            existingAnswer.question.type === QuestionVariant.Q_TIME
+              ? existingAnswer.question
+              : undefined
+          }
+        />
+      );
     case QuestionVariant.Q_FILEUPLOAD:
   }
   return <></>;

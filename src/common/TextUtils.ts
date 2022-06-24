@@ -105,7 +105,7 @@ class TextUtils {
   };
 
   private static getTimeAnswer = (question: ITimeQuestion): string => {
-    return question.answer.fromTime ?? '';
+    return DateUtils.prettyFormatDate(question.answer.fromTime);
   };
 
   private static getFileUploadAnswer = (
