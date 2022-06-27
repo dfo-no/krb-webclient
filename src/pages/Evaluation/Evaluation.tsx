@@ -1,10 +1,9 @@
 import classnames from 'classnames';
-import React, { ReactElement } from 'react';
-import { useTranslation } from 'react-i18next';
+import React, { ReactElement, useEffect } from 'react';
 
 import css from './Evaluation.module.scss';
-import EvaluationList from './EvaluationList';
 import EvaluationProcess from './EvaluationProcess';
+import EvaluationResult from './EvaluationResult';
 import EvaluationSideBar from './EvaluationSideBar';
 import EvaluationSpec from './EvaluationSpec';
 import UploadResponses from './UploadResponses';
@@ -12,15 +11,17 @@ import { useAppSelector } from '../../store/hooks';
 import { useEvaluationState } from './EvaluationContext';
 
 const Evaluation = (): ReactElement => {
-  const { responses } = useAppSelector((state) => state.evaluation);
-  const { t } = useTranslation();
-  const evaluationState = useEvaluationState();
+  const { specification } = useAppSelector((state) => state.evaluation);
+  const { setTab, tab } = useEvaluationState();
 
-  const getClassForTabBody = (tab: number): string => {
-    return classnames(
-      css.TabBody,
-      evaluationState.tab === tab ? css.Active : null
-    );
+  useEffect(() => {
+    if (!!specification.bank.id) {
+      setTab(1);
+    }
+  }, [specification, setTab]);
+
+  const getClassForTabBody = (currentTab: number): string => {
+    return classnames(css.TabBody, tab === currentTab ? css.Active : null);
   };
 
   return (
@@ -41,8 +42,7 @@ const Evaluation = (): ReactElement => {
         </div>
 
         <div className={getClassForTabBody(3)}>
-          <h1>{t('EVAL_RESULTS')}</h1>
-          {responses.length !== 0 && <EvaluationList />}
+          <EvaluationResult />
         </div>
       </div>
     </div>
