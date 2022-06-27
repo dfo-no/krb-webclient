@@ -5,28 +5,29 @@ import { joiResolver } from '@hookform/resolvers/joi';
 import { useTranslation } from 'react-i18next';
 
 import css from '../ProductRequirementAnswer.module.scss';
-import YesNoSelection from '../../../../components/YesNoSelection/YesNoSelection';
+import DateCtrl from '../../../../FormProvider/DateCtrl';
+import Utils from '../../../../common/Utils';
 import {
   addProductAnswer,
   addRequirementAnswer
 } from '../../../../store/reducers/response-reducer';
 import {
-  CheckboxQuestionAnswerSchema,
-  ICheckboxQuestion
-} from '../../../../Nexus/entities/ICheckboxQuestion';
+  IPeriodDateQuestion,
+  PeriodDateAnswerSchema
+} from '../../../../Nexus/entities/IPeriodDateQuestion';
 import { QuestionVariant } from '../../../../enums';
 import { IRequirementAnswer } from '../../../../models/IRequirementAnswer';
+import { useAccordionState } from '../../../../components/DFOAccordion/AccordionContext';
 import { useAppDispatch, useAppSelector } from '../../../../store/hooks';
 import { useResponseState } from '../../ResponseContext';
-import { useAccordionState } from '../../../../components/DFOAccordion/AccordionContext';
 
 interface IProps {
-  item: ICheckboxQuestion;
+  item: IPeriodDateQuestion;
   parent: IRequirementAnswer;
   existingAnswer?: IRequirementAnswer;
 }
 
-const QuestionAnswerCheckbox = ({
+const QuestionAnswerPeriodDate = ({
   item,
   parent,
   existingAnswer
@@ -36,36 +37,34 @@ const QuestionAnswerCheckbox = ({
   const { response } = useAppSelector((state) => state.response);
   const { responseProductIndex } = useResponseState();
   const { setActiveKey } = useAccordionState();
-  const methods = useForm<ICheckboxQuestion>({
-    resolver: joiResolver(CheckboxQuestionAnswerSchema),
+  const methods = useForm<IPeriodDateQuestion>({
+    resolver: joiResolver(PeriodDateAnswerSchema),
     defaultValues: item
   });
 
   const useAnswerWatch = useWatch({
-    name: 'answer.value',
+    name: 'answer.fromDate',
     control: methods.control
   });
 
   useEffect(() => {
     if (
       existingAnswer &&
-      existingAnswer.question.type === QuestionVariant.Q_CHECKBOX
+      existingAnswer.question.type === QuestionVariant.Q_PERIOD_DATE
     ) {
       methods.reset(existingAnswer.question);
     }
   }, [existingAnswer, methods]);
 
   useEffect(() => {
-    const preferred = `${item.config.preferedAlternative}`;
-    const newAnswer = `${useAnswerWatch}`;
-    if (preferred === newAnswer) {
-      methods.setValue('answer.point', 100);
-    } else {
-      methods.setValue('answer.point', item.config.pointsNonPrefered);
-    }
-  }, [item.config, useAnswerWatch, methods]);
+    const score = Utils.findScoreFromDate(
+      useAnswerWatch,
+      item.config.dateScores
+    );
+    methods.setValue('answer.point', score);
+  }, [useAnswerWatch, item.config, methods]);
 
-  const onSubmit = (post: ICheckboxQuestion): void => {
+  const onSubmit = (post: IPeriodDateQuestion): void => {
     const newAnswer = {
       ...parent,
       question: post
@@ -90,9 +89,10 @@ const QuestionAnswerCheckbox = ({
         autoComplete="off"
         noValidate
       >
-        <YesNoSelection
-          name={'answer.value'}
-          recommendedAlternative={item.config.preferedAlternative}
+        <DateCtrl
+          minDate={item.config.fromBoundary ?? undefined}
+          maxDate={item.config.toBoundary ?? undefined}
+          name={'answer.fromDate'}
         />
         <Box className={css.buttons}>
           <Button
@@ -111,4 +111,4 @@ const QuestionAnswerCheckbox = ({
   );
 };
 
-export default QuestionAnswerCheckbox;
+export default QuestionAnswerPeriodDate;
