@@ -1,8 +1,10 @@
 import React, { ReactElement } from 'react';
+import { useTranslation } from 'react-i18next';
 
 import css from './Evaluation.module.scss';
+import DownLoad from './DownLoad';
 import { useEvaluationState } from './EvaluationContext';
-import { useTranslation } from 'react-i18next';
+import { useAppSelector } from '../../store/hooks';
 
 interface ISideBarItem {
   label: string;
@@ -17,6 +19,7 @@ const menuItems: ISideBarItem[] = [
 
 const EvaluationSideBar = (): ReactElement => {
   const { t } = useTranslation();
+  const { evaluations } = useAppSelector((state) => state.evaluation);
   const evaluationState = useEvaluationState();
 
   return (
@@ -32,6 +35,11 @@ const EvaluationSideBar = (): ReactElement => {
           </li>
         ))}
       </ul>
+      {evaluations.length > 0 && (
+        <div className={css.Download}>
+          <DownLoad />
+        </div>
+      )}
     </div>
   );
 };

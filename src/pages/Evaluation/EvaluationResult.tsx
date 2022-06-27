@@ -3,7 +3,6 @@ import React, { ReactElement } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import css from './Evaluation.module.scss';
-import DownLoad from './DownLoad';
 import { IEvaluatedResponse } from '../../Nexus/entities/IEvaluatedResponse';
 import { useAppSelector } from '../../store/hooks';
 
@@ -42,7 +41,6 @@ export default function EvaluationResult(): ReactElement {
     <div className={classnames(css.Content, css.Result)}>
       <h1>{t('EVAL_RESULTS')}</h1>
       <ul>{renderEvaluations()}</ul>
-      <DownLoad />
     </div>
   );
 }
