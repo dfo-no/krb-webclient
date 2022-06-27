@@ -15,6 +15,7 @@ import {
   IPeriodDateQuestion,
   PeriodDateAnswerSchema
 } from '../../../../Nexus/entities/IPeriodDateQuestion';
+import { QuestionVariant } from '../../../../enums';
 import { IRequirementAnswer } from '../../../../models/IRequirementAnswer';
 import { useAccordionState } from '../../../../components/DFOAccordion/AccordionContext';
 import { useAppDispatch, useAppSelector } from '../../../../store/hooks';
@@ -23,7 +24,7 @@ import { useResponseState } from '../../ResponseContext';
 interface IProps {
   item: IPeriodDateQuestion;
   parent: IRequirementAnswer;
-  existingAnswer?: IPeriodDateQuestion;
+  existingAnswer?: IRequirementAnswer;
 }
 
 const QuestionAnswerPeriodDate = ({
@@ -47,8 +48,11 @@ const QuestionAnswerPeriodDate = ({
   });
 
   useEffect(() => {
-    if (existingAnswer) {
-      methods.reset(existingAnswer);
+    if (
+      existingAnswer &&
+      existingAnswer.question.type === QuestionVariant.Q_PERIOD_DATE
+    ) {
+      methods.reset(existingAnswer.question);
     }
   }, [existingAnswer, methods]);
 

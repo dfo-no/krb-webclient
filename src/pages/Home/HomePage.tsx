@@ -1,11 +1,12 @@
 import classnames from 'classnames';
-import React, { ChangeEvent, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { AxiosResponse } from 'axios';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { v4 as uuidv4 } from 'uuid';
 
 import css from './HomePage.module.scss';
+import FileUpload from '../../components/FileUpload/FileUpload';
 import Footer from '../../Footer/Footer';
 import HomeDisplayList from './HomeDisplayList';
 import HomeSearchBar from './HomeSearchBar';
@@ -17,15 +18,14 @@ import { httpPost } from '../../api/http';
 import { IAlert } from '../../models/IAlert';
 import { IBank } from '../../Nexus/entities/IBank';
 import { useAppDispatch } from '../../store/hooks';
-import { useHomeState } from './HomeContext';
 import { useGetBanksQuery } from '../../store/api/bankApi';
+import { useHomeState } from './HomeContext';
 
 const MAX_UPLOAD_SIZE = 10000000; // 10M
 
 export default function HomePage(): React.ReactElement {
   const dispatch = useAppDispatch();
   const { t } = useTranslation();
-  const [inputKey, setInputKey] = useState(0);
   const {
     selectedBank,
     selectedSpecification,
@@ -65,10 +65,8 @@ export default function HomePage(): React.ReactElement {
     }
   }, [list]);
 
-  const onUpload = (event: ChangeEvent<HTMLInputElement>): void => {
-    setInputKey((key) => key + 1);
+  const onUpload = (files: FileList): void => {
     const formData = new FormData();
-    const files = event.target.files as FileList;
     let disableUploadMessage = '';
     for (let index = 0; index < files.length; index += 1) {
       const file = files[index];
@@ -124,24 +122,20 @@ export default function HomePage(): React.ReactElement {
             <HomeSearchBar list={latestPublishedProjects} />
           </div>
           <div className={classnames(css.Column, css.Cards)}>
-            <div className={css.Card}>
+            <div className={classnames(css.Card, css.Primary)}>
               <Link to={'/workbench'}>
                 <label>{t('Workbench')}</label>
                 <span>{t('Create projects')}</span>
               </Link>
             </div>
-            <div className={classnames(css.Card, css.Tertiary)}>
-              <div>
-                <label>{t('HOME_FILEUPL_LABEL')}</label>
-                <input
-                  key={inputKey}
-                  type="file"
-                  accept="application/pdf"
-                  onChange={(e) => onUpload(e)}
-                />
-                <span>{t('HOME_FILEUPL_DESCRIPTION')}</span>
-              </div>
-            </div>
+            <FileUpload
+              accept={'application/pdf'}
+              className={css.Card}
+              description={t('HOME_FILEUPL_DESCRIPTION')}
+              label={t('HOME_FILEUPL_LABEL')}
+              onChange={onUpload}
+              variant={'Tertiary'}
+            />
           </div>
         </div>
         <div className={css.Columns}>

@@ -10,6 +10,7 @@ import {
   addProductAnswer,
   addRequirementAnswer
 } from '../../../../store/reducers/response-reducer';
+import { QuestionVariant } from '../../../../enums';
 import { IRequirementAnswer } from '../../../../models/IRequirementAnswer';
 import {
   ITextQuestion,
@@ -22,7 +23,7 @@ import { useAccordionState } from '../../../../components/DFOAccordion/Accordion
 interface IProps {
   item: ITextQuestion;
   parent: IRequirementAnswer;
-  existingAnswer?: ITextQuestion;
+  existingAnswer?: IRequirementAnswer;
 }
 
 const QuestionAnswerText = ({
@@ -46,8 +47,11 @@ const QuestionAnswerText = ({
   });
 
   useEffect(() => {
-    if (existingAnswer) {
-      methods.reset(existingAnswer);
+    if (
+      existingAnswer &&
+      existingAnswer.question.type === QuestionVariant.Q_TEXT
+    ) {
+      methods.reset(existingAnswer.question);
     }
   }, [existingAnswer, methods]);
 
