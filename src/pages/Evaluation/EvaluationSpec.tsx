@@ -6,18 +6,11 @@ import css from './Evaluation.module.scss';
 import FileUpload from '../../components/FileUpload/FileUpload';
 import { httpPost } from '../../api/http';
 import { setEvaluationSpecification } from '../../store/reducers/evaluation-reducer';
-import { useAppDispatch, useAppSelector } from '../../store/hooks';
+import { useAppDispatch } from '../../store/hooks';
 
 const EvaluationSpec = (): ReactElement => {
   const dispatch = useAppDispatch();
-  const { specification } = useAppSelector((state) => state.evaluation);
   const { t } = useTranslation();
-
-  const getSpecTitle = (): string => {
-    return specification.bank.id
-      ? t('EVAL_CURRENT_SPEC') + ': ' + specification.title
-      : t('EVAL_UPLOAD_SPEC');
-  };
 
   const onUploadSpecification = (files: FileList): void => {
     const formData = new FormData();
