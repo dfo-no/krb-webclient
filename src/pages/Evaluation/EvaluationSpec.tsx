@@ -5,7 +5,11 @@ import { useTranslation } from 'react-i18next';
 import css from './Evaluation.module.scss';
 import FileUpload from '../../components/FileUpload/FileUpload';
 import { httpPost } from '../../api/http';
-import { setEvaluationSpecification } from '../../store/reducers/evaluation-reducer';
+import {
+  setEvaluations,
+  setEvaluationSpecification,
+  setResponses
+} from '../../store/reducers/evaluation-reducer';
 import { useAppDispatch } from '../../store/hooks';
 
 const EvaluationSpec = (): ReactElement => {
@@ -13,6 +17,9 @@ const EvaluationSpec = (): ReactElement => {
   const { t } = useTranslation();
 
   const onUploadSpecification = (files: FileList): void => {
+    dispatch(setEvaluations([]));
+    dispatch(setResponses([]));
+
     const formData = new FormData();
     for (let index = 0; index < files.length; index += 1) {
       const file = files[index];
