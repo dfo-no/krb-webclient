@@ -1,3 +1,4 @@
+import classnames from 'classnames';
 import React, { ReactElement } from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -11,7 +12,7 @@ export default function EvaluationResult(): ReactElement {
   const { t } = useTranslation();
 
   const getScoreAsPercentage = (points: number): number => {
-    return Math.round(points / 0.01);
+    return Math.round(points * 100);
   };
 
   const getSupplierNameFor = (response: IEvaluatedResponse): string => {
@@ -31,14 +32,14 @@ export default function EvaluationResult(): ReactElement {
 
   if (!evaluations.length) {
     return (
-      <div className={css.Result}>
+      <div className={css.Content}>
         <h1>{t('EVAL_NOT_RUN')}</h1>
       </div>
     );
   }
 
   return (
-    <div className={css.Result}>
+    <div className={classnames(css.Content, css.Result)}>
       <h1>{t('EVAL_RESULTS')}</h1>
       <ul>{renderEvaluations()}</ul>
       <DownLoad />
