@@ -17,6 +17,10 @@ import { addAlert } from '../../store/reducers/alert-reducer';
 import { httpPost } from '../../api/http';
 import { IAlert } from '../../models/IAlert';
 import { IBank } from '../../Nexus/entities/IBank';
+import {
+  setEvaluations,
+  setResponses
+} from '../../store/reducers/evaluation-reducer';
 import { useAppDispatch } from '../../store/hooks';
 import { useGetBanksQuery } from '../../store/api/bankApi';
 import { useHomeState } from './HomeContext';
@@ -66,6 +70,9 @@ export default function HomePage(): React.ReactElement {
   }, [list]);
 
   const onUpload = (files: FileList): void => {
+    dispatch(setEvaluations([]));
+    dispatch(setResponses([]));
+
     const formData = new FormData();
     let disableUploadMessage = '';
     for (let index = 0; index < files.length; index += 1) {
