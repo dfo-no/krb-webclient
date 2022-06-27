@@ -39,7 +39,6 @@ export default function EvaluationResult(): ReactElement {
 
   return (
     <div className={classnames(css.Content, css.Result)}>
-      <h1>{t('EVAL_RESULTS')}</h1>
       <ul>{renderEvaluations()}</ul>
     </div>
   );
