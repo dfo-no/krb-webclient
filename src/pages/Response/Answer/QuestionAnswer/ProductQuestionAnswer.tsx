@@ -24,12 +24,7 @@ export default function ProductQuestionAnswer({
         <QuestionAnswerCheckbox
           item={requirementAnswer.question}
           parent={requirementAnswer}
-          existingAnswer={
-            existingAnswer &&
-            existingAnswer.question.type === QuestionVariant.Q_CHECKBOX
-              ? existingAnswer.question
-              : undefined
-          }
+          existingAnswer={existingAnswer}
         />
       );
     case QuestionVariant.Q_SLIDER:
@@ -37,12 +32,7 @@ export default function ProductQuestionAnswer({
         <QuestionAnswerSlider
           item={requirementAnswer.question}
           parent={requirementAnswer}
-          existingAnswer={
-            existingAnswer &&
-            existingAnswer.question.type === QuestionVariant.Q_SLIDER
-              ? existingAnswer.question
-              : undefined
-          }
+          existingAnswer={existingAnswer}
         />
       );
     case QuestionVariant.Q_TEXT:
@@ -50,12 +40,7 @@ export default function ProductQuestionAnswer({
         <QuestionAnswerText
           item={requirementAnswer.question}
           parent={requirementAnswer}
-          existingAnswer={
-            existingAnswer &&
-            existingAnswer.question.type === QuestionVariant.Q_TEXT
-              ? existingAnswer.question
-              : undefined
-          }
+          existingAnswer={existingAnswer}
         />
       );
     case QuestionVariant.Q_CODELIST:
@@ -63,12 +48,7 @@ export default function ProductQuestionAnswer({
         <QuestionAnswerCodelist
           item={requirementAnswer.question}
           parent={requirementAnswer}
-          existingAnswer={
-            existingAnswer &&
-            existingAnswer.question.type === QuestionVariant.Q_CODELIST
-              ? existingAnswer.question
-              : undefined
-          }
+          existingAnswer={existingAnswer}
         />
       );
     case QuestionVariant.Q_PERIOD_DATE:
@@ -76,12 +56,7 @@ export default function ProductQuestionAnswer({
         <QuestionAnswerPeriodDate
           item={requirementAnswer.question}
           parent={requirementAnswer}
-          existingAnswer={
-            existingAnswer &&
-            existingAnswer.question.type === QuestionVariant.Q_PERIOD_DATE
-              ? existingAnswer.question
-              : undefined
-          }
+          existingAnswer={existingAnswer}
         />
       );
     case QuestionVariant.Q_TIME:
@@ -89,12 +64,7 @@ export default function ProductQuestionAnswer({
         <QuestionAnswerTime
           item={requirementAnswer.question}
           parent={requirementAnswer}
-          existingAnswer={
-            existingAnswer &&
-            existingAnswer.question.type === QuestionVariant.Q_TIME
-              ? existingAnswer.question
-              : undefined
-          }
+          existingAnswer={existingAnswer}
         />
       );
     case QuestionVariant.Q_FILEUPLOAD:

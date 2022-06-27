@@ -11,6 +11,7 @@ import {
   addProductAnswer,
   addRequirementAnswer
 } from '../../../../store/reducers/response-reducer';
+import { QuestionVariant } from '../../../../enums';
 import { IRequirementAnswer } from '../../../../models/IRequirementAnswer';
 import {
   ITimeQuestion,
@@ -23,7 +24,7 @@ import { useResponseState } from '../../ResponseContext';
 interface IProps {
   item: ITimeQuestion;
   parent: IRequirementAnswer;
-  existingAnswer?: ITimeQuestion;
+  existingAnswer?: IRequirementAnswer;
 }
 
 const QuestionAnswerTime = ({
@@ -47,8 +48,11 @@ const QuestionAnswerTime = ({
   });
 
   useEffect(() => {
-    if (existingAnswer) {
-      methods.reset(existingAnswer);
+    if (
+      existingAnswer &&
+      existingAnswer.question.type === QuestionVariant.Q_TIME
+    ) {
+      methods.reset(existingAnswer.question);
     }
   }, [existingAnswer, methods]);
 

@@ -14,6 +14,7 @@ import {
   CheckboxQuestionAnswerSchema,
   ICheckboxQuestion
 } from '../../../../Nexus/entities/ICheckboxQuestion';
+import { QuestionVariant } from '../../../../enums';
 import { IRequirementAnswer } from '../../../../models/IRequirementAnswer';
 import { useAppDispatch, useAppSelector } from '../../../../store/hooks';
 import { useResponseState } from '../../ResponseContext';
@@ -22,7 +23,7 @@ import { useAccordionState } from '../../../../components/DFOAccordion/Accordion
 interface IProps {
   item: ICheckboxQuestion;
   parent: IRequirementAnswer;
-  existingAnswer?: ICheckboxQuestion;
+  existingAnswer?: IRequirementAnswer;
 }
 
 const QuestionAnswerCheckbox = ({
@@ -46,8 +47,11 @@ const QuestionAnswerCheckbox = ({
   });
 
   useEffect(() => {
-    if (existingAnswer) {
-      methods.reset(existingAnswer);
+    if (
+      existingAnswer &&
+      existingAnswer.question.type === QuestionVariant.Q_CHECKBOX
+    ) {
+      methods.reset(existingAnswer.question);
     }
   }, [existingAnswer, methods]);
 
