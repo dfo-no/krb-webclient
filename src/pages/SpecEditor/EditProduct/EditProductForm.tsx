@@ -24,7 +24,7 @@ interface IProps {
   specificationProduct: ISpecificationProduct;
 }
 
-const NewProductForm = ({ handleClose, specificationProduct }: IProps) => {
+const EditProductForm = ({ handleClose, specificationProduct }: IProps) => {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
 
@@ -83,4 +83,4 @@ const NewProductForm = ({ handleClose, specificationProduct }: IProps) => {
   );
 };
 
-export default NewProductForm;
+export default EditProductForm;

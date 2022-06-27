@@ -87,7 +87,7 @@ export const PeriodDateAnswerSchema = PeriodDateSpecSchema.keys({
     fromDate: CustomJoi.date()
       .iso()
       .raw()
-      .min(CustomJoi.ref('/config.fromBoundary'))
+      .min(CustomJoi.ref('config.fromBoundary', { ancestor: 2 }))
       .allow(null),
     toDate: CustomJoi.when('/config.isPeriod', {
       is: true,
@@ -95,7 +95,7 @@ export const PeriodDateAnswerSchema = PeriodDateSpecSchema.keys({
         .iso()
         .raw()
         .greater(CustomJoi.ref('fromDate'))
-        .max(CustomJoi.ref('/config.toBoundary'))
+        .max(CustomJoi.ref('config.toBoundary', { ancestor: 2 }))
         .allow(null),
       otherwise: CustomJoi.string().allow(null)
     }),

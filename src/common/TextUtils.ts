@@ -101,11 +101,21 @@ class TextUtils {
   };
 
   private static getDateAnswer = (question: IPeriodDateQuestion): string => {
+    if (question.config.isPeriod && question.answer.toDate) {
+      return `${DateUtils.prettyFormatDate(
+        question.answer.fromDate
+      )} - ${DateUtils.prettyFormatDate(question.answer.toDate)}`;
+    }
     return DateUtils.prettyFormatDate(question.answer.fromDate);
   };
 
   private static getTimeAnswer = (question: ITimeQuestion): string => {
-    return DateUtils.prettyFormatDate(question.answer.fromTime);
+    if (question.config.isPeriod && question.answer.toTime) {
+      return `${DateUtils.prettyFormatTime(
+        question.answer.fromTime
+      )} - ${DateUtils.prettyFormatTime(question.answer.toTime)}`;
+    }
+    return DateUtils.prettyFormatTime(question.answer.fromTime);
   };
 
   private static getFileUploadAnswer = (
