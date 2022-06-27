@@ -5,7 +5,7 @@ import { useFormContext, useWatch } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
 import css from '../QuestionContent.module.scss';
-import TimeCtrl from '../../../../FormProvider/DateCtrl';
+import TimeCtrl from '../../../../FormProvider/TimeCtrl';
 import { IRequirementAnswer } from '../../../../models/IRequirementAnswer';
 import { ITimeQuestion } from '../../../../Nexus/entities/ITimeQuestion';
 
