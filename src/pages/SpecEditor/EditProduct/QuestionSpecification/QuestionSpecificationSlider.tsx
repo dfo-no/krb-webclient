@@ -1,11 +1,12 @@
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
+import classnames from 'classnames';
 import DeleteIcon from '@mui/icons-material/Delete';
-import { Button, Grid, Typography } from '@mui/material';
+import { Button, Typography } from '@mui/material';
 import React, { ReactElement, useEffect } from 'react';
 import { useFieldArray, useFormContext, useWatch } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
-import css from './QuestionSpecification.module.scss';
+import css from '../QuestionContent.module.scss';
 import HorizontalTextCtrl from '../../../../FormProvider/HorizontalTextCtrl';
 import theme from '../../../../theme';
 import { FormIconButton } from '../../../../components/Form/FormIconButton';
@@ -50,91 +51,78 @@ const QuestionSpecificationSlider = ({ item }: IProps): ReactElement => {
   }, [useMaxValue, useMaxScore, update]);
 
   return (
-    <Grid container columns={20} className={css.QuestionSpecificationGrid}>
-      <Grid item xs={8}>
-        <HorizontalTextCtrl
-          name={'question.config.min'}
-          placeholder={t('Minimum')}
-          type={'number'}
-        />
-      </Grid>
-      <Grid item xs={1} className={css.arrow}>
+    <div className={css.QuestionGrid}>
+      <HorizontalTextCtrl
+        name={'question.config.min'}
+        placeholder={t('Minimum')}
+        type={'number'}
+      />
+      <div className={css.Arrow}>
         <ArrowForwardIcon />
-      </Grid>
-      <Grid item xs={8}>
-        <HorizontalTextCtrl
-          name={'question.config.max'}
-          placeholder={t('Maximum')}
-          type={'number'}
-        />
-      </Grid>
-      <Grid item xs={3} className={css.text}>
-        <Typography variant={'md'} className={css.unit}>
-          {item.config.unit}
-        </Typography>
-      </Grid>
-      <Grid item xs={8} className={css.centeredText}>
-        <Typography variant={'sm'}>
-          {t('Minimum')}: {item.config.min}
-        </Typography>
-      </Grid>
-      <Grid item xs={1} className={css.centeredText}>
-        <Typography variant={'sm'}>{item.config.step}</Typography>
-      </Grid>
-      <Grid item xs={8} className={css.centeredText}>
-        <Typography variant={'sm'}>
-          {t('Maximum')}: {item.config.max}
-        </Typography>
-      </Grid>
-      <Grid item xs={20}>
-        <Typography variant={'smBold'}>{t('Evaluation')}</Typography>
-      </Grid>
+      </div>
+      <HorizontalTextCtrl
+        name={'question.config.max'}
+        placeholder={t('Maximum')}
+        type={'number'}
+      />
+      <Typography variant={'md'} className={css.Unit}>
+        {item.config.unit}
+      </Typography>
+      <Typography className={css.CenteredText} variant={'sm'}>
+        {t('Minimum')}: {item.config.min}
+      </Typography>
+      <Typography className={css.CenteredText} variant={'sm'}>
+        {item.config.step}
+      </Typography>
+      <Typography className={css.CenteredText} variant={'sm'}>
+        {t('Maximum')}: {item.config.max}
+      </Typography>
+      <Typography
+        className={classnames(css.FullRow, css.TopMargin)}
+        variant={'smBold'}
+      >
+        {t('Evaluation')}
+      </Typography>
       {fields.map((scoreValue, idx) => {
         return (
-          <Grid item container key={scoreValue.id} xs={20} columns={20}>
-            <Grid item xs={8} className={css.centeredText}>
-              {idx < 2 ? (
-                <Typography variant={'smBold'}>{scoreValue.value}</Typography>
-              ) : (
-                <HorizontalTextCtrl
-                  name={`question.config.scoreValues.${idx}.value`}
-                  placeholder={t('Value')}
-                  type={'number'}
-                />
-              )}
-            </Grid>
-            <Grid item xs={1} className={css.arrow}>
-              <ArrowForwardIcon />
-            </Grid>
-            <Grid item xs={8}>
+          <div key={idx} className={classnames(css.QuestionGrid, css.FullRow)}>
+            {idx < 2 ? (
+              <Typography variant={'smBold'}>{scoreValue.value}</Typography>
+            ) : (
               <HorizontalTextCtrl
-                name={`question.config.scoreValues.${idx}.score`}
-                placeholder={t('Score')}
+                name={`question.config.scoreValues.${idx}.value`}
+                placeholder={t('Value')}
                 type={'number'}
               />
-            </Grid>
+            )}
+            <div className={css.Arrow}>
+              <ArrowForwardIcon />
+            </div>
+            <HorizontalTextCtrl
+              name={`question.config.scoreValues.${idx}.score`}
+              placeholder={t('Score')}
+              type={'number'}
+            />
             {idx > 1 && (
-              <Grid item xs={2} className={css.delete}>
+              <div className={css.Delete}>
                 <FormIconButton
                   hoverColor={theme.palette.errorRed.main}
                   onClick={() => remove(idx)}
                 >
                   <DeleteIcon />
                 </FormIconButton>
-              </Grid>
+              </div>
             )}
-          </Grid>
+          </div>
         );
       })}
-      <Grid item xs={20}>
-        <Button
-          variant="primary"
-          onClick={() => append({ value: useMinValue, score: 0 })}
-        >
-          {t('Add new value score')}
-        </Button>
-      </Grid>
-    </Grid>
+      <Button
+        variant="primary"
+        onClick={() => append({ value: useMinValue, score: 0 })}
+      >
+        {t('Add new value score')}
+      </Button>
+    </div>
   );
 };
 
