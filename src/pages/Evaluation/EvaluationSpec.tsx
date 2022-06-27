@@ -38,8 +38,7 @@ const EvaluationSpec = (): ReactElement => {
   };
 
   return (
-    <div className={css.Element}>
-      <h1>{getSpecTitle()}</h1>
+    <div className={css.Content}>
       <div className={css.Card}>
         <FileUpload
           accept={'application/pdf'}

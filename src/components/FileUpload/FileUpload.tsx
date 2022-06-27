@@ -67,6 +67,7 @@ const FileUpload = ({
           multiple={multiple}
           onChange={handleOnChange}
           type="file"
+          title={''}
         />
         {description && <span>{description}</span>}
       </div>

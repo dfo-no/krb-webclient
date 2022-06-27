@@ -9,6 +9,8 @@
 
   .Content {
     position: relative;
+    margin-top: var(--small-gap);
+    padding-top: 0.4rem;
 
     .TabBody {
       position: absolute;

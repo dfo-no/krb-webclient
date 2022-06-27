@@ -68,14 +68,14 @@ export default function UploadResponses(): React.ReactElement {
   };
 
   return (
-    <div>
-      <h1>{t('EVAL_UPLOAD_RESPS')}</h1>
+    <div className={css.Content}>
       <div className={css.Card}>
         <FileUpload
           accept={'application/pdf'}
           description={t('EVAL_RESPS_FILE_UPL_DESCR')}
           disabled={!hasSpecification()}
           label={t('EVAL_RESPS_FILE_UPL_LABEL')}
+          multiple={true}
           onChange={handleResponseUpload}
           variant={'Tertiary'}
         />
