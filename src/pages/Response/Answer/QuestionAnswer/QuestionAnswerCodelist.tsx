@@ -14,6 +14,7 @@ import {
   CodelistQuestionAnswerSchema,
   ICodelistQuestion
 } from '../../../../Nexus/entities/ICodelistQuestion';
+import { QuestionVariant } from '../../../../enums';
 import { IRequirementAnswer } from '../../../../models/IRequirementAnswer';
 import { useAppDispatch, useAppSelector } from '../../../../store/hooks';
 import { useResponseState } from '../../ResponseContext';
@@ -22,7 +23,7 @@ import { useAccordionState } from '../../../../components/DFOAccordion/Accordion
 interface IProps {
   item: ICodelistQuestion;
   parent: IRequirementAnswer;
-  existingAnswer?: ICodelistQuestion;
+  existingAnswer?: IRequirementAnswer;
 }
 
 const QuestionAnswerCodelist = ({
@@ -49,8 +50,11 @@ const QuestionAnswerCodelist = ({
   });
 
   useEffect(() => {
-    if (existingAnswer) {
-      methods.reset(existingAnswer);
+    if (
+      existingAnswer &&
+      existingAnswer.question.type === QuestionVariant.Q_CODELIST
+    ) {
+      methods.reset(existingAnswer.question);
     }
   }, [existingAnswer, methods]);
 

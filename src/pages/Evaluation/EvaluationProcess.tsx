@@ -36,18 +36,15 @@ const EvaluationProcess = (): ReactElement => {
   };
 
   return (
-    <div>
-      <h1>{t('EVAL_EVALUATE')}</h1>
-      <div>
-        <Button
-          className={css.Button}
-          variant={'primary'}
-          disabled={isEvaluationDisabled()}
-          onClick={evaluate}
-        >
-          {t('EVAL_EVALUATE')}
-        </Button>
-      </div>
+    <div className={css.Content}>
+      <Button
+        className={css.Button}
+        variant={'primary'}
+        disabled={isEvaluationDisabled()}
+        onClick={evaluate}
+      >
+        {t('EVAL_EVALUATE')}
+      </Button>
     </div>
   );
 };

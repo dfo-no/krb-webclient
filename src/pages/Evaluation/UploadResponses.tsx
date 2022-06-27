@@ -3,6 +3,7 @@ import { AxiosResponse } from 'axios';
 import { useTranslation } from 'react-i18next';
 
 import css from './Evaluation.module.scss';
+import FileUpload from '../../components/FileUpload/FileUpload';
 import { httpPost } from '../../api/http';
 import { IResponse } from '../../models/IResponse';
 import { setResponses } from '../../store/reducers/evaluation-reducer';
@@ -15,8 +16,8 @@ export default function UploadResponses(): React.ReactElement {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
 
-  const isDisabled = (): boolean => {
-    return !specification.bank.id;
+  const hasSpecification = (): boolean => {
+    return !!specification.bank.id;
   };
 
   const readFileContents = async (file: File) => {
@@ -50,39 +51,36 @@ export default function UploadResponses(): React.ReactElement {
     return results;
   };
 
-  const handleResponseUpload = (
-    e: React.ChangeEvent<HTMLInputElement>
-  ): void => {
+  const handleResponseUpload = (files: FileList): void => {
     const allFiles: File[] = [];
-    if (e.target.files) {
-      for (let i = 0; i < e.target.files.length; i += 1) {
-        const element: File = e.target.files[i];
-        allFiles.push(element);
-      }
-      readAllFiles(allFiles)
-        .then((result) => {
-          const newResponses = [...responses, ...(result as IResponse[])];
-          dispatch(setResponses(newResponses));
-        })
-        .catch((err) => {
-          alert(err);
-        });
+    for (let i = 0; i < files.length; i += 1) {
+      allFiles.push(files[i]);
     }
+
+    readAllFiles(allFiles)
+      .then((result) => {
+        const newResponses = [...responses, ...(result as IResponse[])];
+        dispatch(setResponses(newResponses));
+      })
+      .catch((err) => {
+        alert(err);
+      });
   };
+
   return (
-    <div>
-      <h1>{t('EVAL_UPLOAD_RESPS')}</h1>
-      <form>
-        <input
-          type="file"
-          onChange={(e) => handleResponseUpload(e)}
-          name="responseFiles"
-          disabled={isDisabled()}
-          multiple
-          accept=".pdf"
+    <div className={css.Content}>
+      <div className={css.Card}>
+        <FileUpload
+          accept={'application/pdf'}
+          description={t('EVAL_RESPS_FILE_UPL_DESCR')}
+          disabled={!hasSpecification()}
+          label={t('EVAL_RESPS_FILE_UPL_LABEL')}
+          multiple={true}
+          onChange={handleResponseUpload}
+          variant={'Tertiary'}
         />
-      </form>
-      {isDisabled() && (
+      </div>
+      {!hasSpecification() && (
         <div className={css.Error}>{t('EVAL_SPEC_MISSING')}</div>
       )}
     </div>
