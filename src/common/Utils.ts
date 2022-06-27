@@ -14,6 +14,7 @@ import { Parentable } from '../models/Parentable';
 import { QuestionType } from '../models/QuestionType';
 import { QuestionVariant } from '../enums';
 import { ScoreValuePair } from '../Nexus/entities/ISliderQuestion';
+import { TimeScorePair } from '../Nexus/entities/ITimeQuestion';
 
 class Utils {
   static ensure<T>(
@@ -147,6 +148,33 @@ class Utils {
       []
     );
     return this.findScoreFromValue(this.dateToValue(date), valuePairs);
+  }
+
+  private static timeToValue(timeStr: string): number {
+    const date = new Date(timeStr);
+    return date.getMinutes() + 60 * date.getHours();
+  }
+
+  static findScoreFromTime(
+    time: string | null,
+    pairs: TimeScorePair[]
+  ): number {
+    if (!time) {
+      return 0;
+    }
+    const valuePairs = pairs.reduce(
+      (allPairs: ScoreValuePair[], pair: TimeScorePair) => {
+        if (pair.time) {
+          allPairs.push({
+            value: this.timeToValue(pair.time),
+            score: pair.score
+          });
+        }
+        return allPairs;
+      },
+      []
+    );
+    return this.findScoreFromValue(this.timeToValue(time), valuePairs);
   }
 
   static findScoreFromValue(value: number, pairs: ScoreValuePair[]): number {

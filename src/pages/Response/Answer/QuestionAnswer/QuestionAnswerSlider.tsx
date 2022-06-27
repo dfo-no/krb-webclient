@@ -16,6 +16,7 @@ import {
 } from '../../../../store/reducers/response-reducer';
 import { DFORadio } from '../../../../components/DFORadio/DFORadio';
 import { IMark } from '../../../../Nexus/entities/IMark';
+import { QuestionVariant } from '../../../../enums';
 import { IRequirementAnswer } from '../../../../models/IRequirementAnswer';
 import {
   ISliderQuestion,
@@ -28,7 +29,7 @@ import { useAccordionState } from '../../../../components/DFOAccordion/Accordion
 interface IProps {
   item: ISliderQuestion;
   parent: IRequirementAnswer;
-  existingAnswer?: ISliderQuestion;
+  existingAnswer?: IRequirementAnswer;
 }
 
 const QuestionAnswerSlider = ({
@@ -52,8 +53,11 @@ const QuestionAnswerSlider = ({
   });
 
   useEffect(() => {
-    if (existingAnswer) {
-      methods.reset(existingAnswer);
+    if (
+      existingAnswer &&
+      existingAnswer.question.type === QuestionVariant.Q_SLIDER
+    ) {
+      methods.reset(existingAnswer.question);
     }
   }, [existingAnswer, methods]);
 

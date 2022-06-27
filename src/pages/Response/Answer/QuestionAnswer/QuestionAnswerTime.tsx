@@ -5,28 +5,29 @@ import { joiResolver } from '@hookform/resolvers/joi';
 import { useTranslation } from 'react-i18next';
 
 import css from '../ProductRequirementAnswer.module.scss';
-import YesNoSelection from '../../../../components/YesNoSelection/YesNoSelection';
+import TimeCtrl from '../../../../FormProvider/TimeCtrl';
+import Utils from '../../../../common/Utils';
 import {
   addProductAnswer,
   addRequirementAnswer
 } from '../../../../store/reducers/response-reducer';
-import {
-  CheckboxQuestionAnswerSchema,
-  ICheckboxQuestion
-} from '../../../../Nexus/entities/ICheckboxQuestion';
 import { QuestionVariant } from '../../../../enums';
 import { IRequirementAnswer } from '../../../../models/IRequirementAnswer';
+import {
+  ITimeQuestion,
+  TimeAnswerSchema
+} from '../../../../Nexus/entities/ITimeQuestion';
+import { useAccordionState } from '../../../../components/DFOAccordion/AccordionContext';
 import { useAppDispatch, useAppSelector } from '../../../../store/hooks';
 import { useResponseState } from '../../ResponseContext';
-import { useAccordionState } from '../../../../components/DFOAccordion/AccordionContext';
 
 interface IProps {
-  item: ICheckboxQuestion;
+  item: ITimeQuestion;
   parent: IRequirementAnswer;
   existingAnswer?: IRequirementAnswer;
 }
 
-const QuestionAnswerCheckbox = ({
+const QuestionAnswerTime = ({
   item,
   parent,
   existingAnswer
@@ -36,36 +37,34 @@ const QuestionAnswerCheckbox = ({
   const { response } = useAppSelector((state) => state.response);
   const { responseProductIndex } = useResponseState();
   const { setActiveKey } = useAccordionState();
-  const methods = useForm<ICheckboxQuestion>({
-    resolver: joiResolver(CheckboxQuestionAnswerSchema),
+  const methods = useForm<ITimeQuestion>({
+    resolver: joiResolver(TimeAnswerSchema),
     defaultValues: item
   });
 
   const useAnswerWatch = useWatch({
-    name: 'answer.value',
+    name: 'answer.fromTime',
     control: methods.control
   });
 
   useEffect(() => {
     if (
       existingAnswer &&
-      existingAnswer.question.type === QuestionVariant.Q_CHECKBOX
+      existingAnswer.question.type === QuestionVariant.Q_TIME
     ) {
       methods.reset(existingAnswer.question);
     }
   }, [existingAnswer, methods]);
 
   useEffect(() => {
-    const preferred = `${item.config.preferedAlternative}`;
-    const newAnswer = `${useAnswerWatch}`;
-    if (preferred === newAnswer) {
-      methods.setValue('answer.point', 100);
-    } else {
-      methods.setValue('answer.point', item.config.pointsNonPrefered);
-    }
-  }, [item.config, useAnswerWatch, methods]);
+    const score = Utils.findScoreFromTime(
+      useAnswerWatch,
+      item.config.timeScores
+    );
+    methods.setValue('answer.point', score);
+  }, [useAnswerWatch, item.config, methods]);
 
-  const onSubmit = (post: ICheckboxQuestion): void => {
+  const onSubmit = (post: ITimeQuestion): void => {
     const newAnswer = {
       ...parent,
       question: post
@@ -90,9 +89,10 @@ const QuestionAnswerCheckbox = ({
         autoComplete="off"
         noValidate
       >
-        <YesNoSelection
-          name={'answer.value'}
-          recommendedAlternative={item.config.preferedAlternative}
+        <TimeCtrl
+          minTime={item.config.fromBoundary ?? undefined}
+          maxTime={item.config.toBoundary ?? undefined}
+          name={'answer.fromTime'}
         />
         <Box className={css.buttons}>
           <Button
@@ -111,4 +111,4 @@ const QuestionAnswerCheckbox = ({
   );
 };
 
-export default QuestionAnswerCheckbox;
+export default QuestionAnswerTime;
