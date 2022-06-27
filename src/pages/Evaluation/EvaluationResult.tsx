@@ -1,11 +1,13 @@
 import React, { ReactElement } from 'react';
+import { useTranslation } from 'react-i18next';
 
+import DownLoad from './DownLoad';
 import { IEvaluatedResponse } from '../../Nexus/entities/IEvaluatedResponse';
 import { useAppSelector } from '../../store/hooks';
-import DownLoad from './DownLoad';
 
-export default function EvaluationList(): ReactElement {
+export default function EvaluationResult(): ReactElement {
   const { evaluations } = useAppSelector((state) => state.evaluation);
+  const { t } = useTranslation();
 
   const renderEvaluations = (): ReactElement[] => {
     return evaluations.map((response: IEvaluatedResponse) => {
@@ -24,6 +26,7 @@ export default function EvaluationList(): ReactElement {
 
   return (
     <>
+      <h1>{t('EVAL_RESULTS')}</h1>
       {evaluations.length > 0 && (
         <div className="bg-light">
           <div>
