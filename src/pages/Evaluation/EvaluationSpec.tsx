@@ -1,10 +1,8 @@
-import React, { ReactElement } from 'react';
+import React, { ReactElement, useEffect, useState } from 'react';
 
 import css from './Evaluation.module.scss';
-import Col from 'react-bootstrap/Col';
-import InputGroup from 'react-bootstrap/InputGroup';
-import { httpPost } from '../../api/http';
 import { AxiosResponse } from 'axios';
+import { httpPost } from '../../api/http';
 import { setEvaluationSpecification } from '../../store/reducers/evaluation-reducer';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { useTranslation } from 'react-i18next';
@@ -13,6 +11,11 @@ const EvaluationSpec = (): ReactElement => {
   const dispatch = useAppDispatch();
   const { specification } = useAppSelector((state) => state.evaluation);
   const { t } = useTranslation();
+  const [uploadError, setUploadError] = useState('');
+
+  useEffect(() => {
+    setUploadError('');
+  }, []);
 
   const getSpecTitle = (): string => {
     return specification.bank.id
@@ -23,6 +26,8 @@ const EvaluationSpec = (): ReactElement => {
   const onUploadSpecification = (
     event: React.ChangeEvent<HTMLInputElement>
   ): void => {
+    setUploadError('');
+
     const formData = new FormData();
     const files = event.target.files as FileList;
     for (let index = 0; index < files.length; index += 1) {
@@ -35,27 +40,33 @@ const EvaluationSpec = (): ReactElement => {
         'Content-Type': 'multipart/form-data'
       },
       responseType: 'json'
-    }).then((response) => {
-      dispatch(setEvaluationSpecification(response.data));
-      return response;
-    });
+    })
+      .then((response) => {
+        if (!response.data.bank) {
+          setUploadError(t('EVAL_SPEC_ERROR_INVALID_FILE'));
+          return response;
+        }
+        dispatch(setEvaluationSpecification(response.data));
+        return response;
+      })
+      .catch((error) => {
+        setUploadError(t('EVAL_SPEC_ERROR_UPLOADING'));
+        console.error(error);
+      });
   };
 
   return (
     <div className={css.Element}>
-      <Col>
-        <h1>{getSpecTitle()}</h1>
-        <InputGroup className="mb-5">
-          <form>
-            <input
-              type="file"
-              onChange={(e) => onUploadSpecification(e)}
-              name="responseFiles"
-              accept=".pdf"
-            />
-          </form>
-        </InputGroup>
-      </Col>
+      <h1>{getSpecTitle()}</h1>
+      <form>
+        <input
+          type="file"
+          onChange={(e) => onUploadSpecification(e)}
+          name="responseFiles"
+          accept=".pdf"
+        />
+      </form>
+      {!!uploadError && <div className={css.Error}>{uploadError}</div>}
     </div>
   );
 };

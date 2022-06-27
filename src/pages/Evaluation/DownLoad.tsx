@@ -1,12 +1,14 @@
 import Button from '@mui/material/Button';
 import React from 'react';
 import { AxiosResponse } from 'axios';
+import { useTranslation } from 'react-i18next';
 
 import { httpPost } from '../../api/http';
 import { IEvaluation } from '../../Nexus/entities/IEvaluation';
 import { useAppSelector } from '../../store/hooks';
 
 export default function DownLoad(): React.ReactElement {
+  const { t } = useTranslation();
   const { specification, evaluations } = useAppSelector(
     (state) => state.evaluation
   );
@@ -42,7 +44,7 @@ export default function DownLoad(): React.ReactElement {
 
   return (
     <Button variant={'save'} onClick={onDownLoad}>
-      Download
+      {t('Download evaluation')}
     </Button>
   );
 }

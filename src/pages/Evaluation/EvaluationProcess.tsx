@@ -5,6 +5,7 @@ import css from './Evaluation.module.scss';
 import Nexus from '../../Nexus/Nexus';
 import { setEvaluations } from '../../store/reducers/evaluation-reducer';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
+import { useEvaluationState } from './EvaluationContext';
 import { useTranslation } from 'react-i18next';
 
 const EvaluationProcess = (): ReactElement => {
@@ -12,6 +13,7 @@ const EvaluationProcess = (): ReactElement => {
   const { specification, responses } = useAppSelector(
     (state) => state.evaluation
   );
+  const { setTab } = useEvaluationState();
 
   const nexus = Nexus.getInstance();
   const dispatch = useAppDispatch();
@@ -26,6 +28,7 @@ const EvaluationProcess = (): ReactElement => {
       return result;
     });
     dispatch(setEvaluations(evaluated));
+    setTab(3);
   };
 
   const isEvaluationDisabled = (): boolean => {

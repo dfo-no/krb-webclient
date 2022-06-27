@@ -1,17 +1,23 @@
-import InputGroup from 'react-bootstrap/InputGroup';
 import React from 'react';
 import { AxiosResponse } from 'axios';
 import { useTranslation } from 'react-i18next';
 
+import css from './Evaluation.module.scss';
 import { httpPost } from '../../api/http';
 import { IResponse } from '../../models/IResponse';
 import { setResponses } from '../../store/reducers/evaluation-reducer';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 
 export default function UploadResponses(): React.ReactElement {
-  const { responses } = useAppSelector((state) => state.evaluation);
+  const { responses, specification } = useAppSelector(
+    (state) => state.evaluation
+  );
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
+
+  const isDisabled = (): boolean => {
+    return !specification.bank.id;
+  };
 
   const readFileContents = async (file: File) => {
     const formData = new FormData();
@@ -66,17 +72,19 @@ export default function UploadResponses(): React.ReactElement {
   return (
     <div>
       <h1>{t('EVAL_UPLOAD_RESPS')}</h1>
-      <InputGroup className="mb-5">
-        <form>
-          <input
-            type="file"
-            onChange={(e) => handleResponseUpload(e)}
-            name="responseFiles"
-            multiple
-            accept=".pdf"
-          />
-        </form>
-      </InputGroup>
+      <form>
+        <input
+          type="file"
+          onChange={(e) => handleResponseUpload(e)}
+          name="responseFiles"
+          disabled={isDisabled()}
+          multiple
+          accept=".pdf"
+        />
+      </form>
+      {isDisabled() && (
+        <div className={css.Error}>{t('EVAL_SPEC_MISSING')}</div>
+      )}
     </div>
   );
 }
