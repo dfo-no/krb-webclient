@@ -1,28 +1,34 @@
-.QuestionSpecificationGrid {
+.QuestionGrid {
+  display: grid;
+  grid-template-columns: 8fr 1fr 8fr 3fr;
   row-gap: var(--tiny-gap);
 
-  .arrow {
+  .FullRow {
+    grid-column: 1 / 5;
+  }
+
+  .TopMargin {
+    margin-top: var(--small-gap);
+  }
+
+  .Arrow {
     display: flex;
     align-self: center;
     justify-content: center;
   }
 
-  .centeredText {
+  .CenteredText {
     align-self: center;
     text-align: center;
   }
 
-  .text {
-    align-self: center;
-  }
-
-  .delete {
+  .Delete {
     align-self: center;
     margin-left: var(--tiny-gap);
     cursor: pointer;
   }
 
-  .unit {
+  .Unit {
     align-self: center;
     margin-left: var(--tiny-gap);
   }

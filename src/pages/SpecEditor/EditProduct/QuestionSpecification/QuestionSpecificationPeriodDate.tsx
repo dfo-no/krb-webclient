@@ -1,11 +1,12 @@
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
+import classnames from 'classnames';
 import DeleteIcon from '@mui/icons-material/Delete';
 import React, { ReactElement, useEffect } from 'react';
-import { Button, Grid, Typography } from '@mui/material';
+import { Button, Typography } from '@mui/material';
 import { t } from 'i18next';
 import { useFieldArray, useFormContext, useWatch } from 'react-hook-form';
 
-import css from './QuestionSpecification.module.scss';
+import css from '../QuestionContent.module.scss';
 import DateCtrl from '../../../../FormProvider/DateCtrl';
 import DateUtils from '../../../../common/DateUtils';
 import HorizontalTextCtrl from '../../../../FormProvider/HorizontalTextCtrl';
@@ -59,112 +60,60 @@ const QuestionSpecificationPeriodDate = (): ReactElement => {
     }
   }, [useToBoundary, useMaxScore, update, append]);
 
-  /* TODO: Enable view for period selection
-  const [isPeriod, setIsPeriod] = useState(false);
-  const useIsPeriod = useWatch({
-    name: 'question.config.isPeriod',
-    control
-  });
-
-  useEffect(() => {
-    setIsPeriod(useIsPeriod);
-  }, [useIsPeriod]);
-
-  const periodGrid = (): ReactElement => {
-    return (
-      <Grid>
-        <Grid item xs={20}>
-          <CheckboxCtrl
-            name={'question.config.isPeriod'}
-            label={t<string>('Include to date')}
-          />
-        </Grid>
-        <Grid item xs={20}>
-          <Typography variant="smBold">{t('Period')}</Typography>
-        </Grid>
-        <Grid item xs={8}>
-          <HorizontalTextCtrl
-            placeholder={t('Minimum')}
-            name={'question.config.periodMin'}
-            type={'number'}
-          />
-        </Grid>
-        <Grid item xs={1} className={css.arrow}>
-          <ArrowForwardIcon />
-        </Grid>
-        <Grid item xs={8}>
-          <HorizontalTextCtrl
-            placeholder={t('Maximum')}
-            name={'question.config.periodMax'}
-            type={'number'}
-          />
-        </Grid>
-      </Grid>
-    );
-  };
-  */
-
   return (
-    <Grid container columns={20} className={css.QuestionSpecificationGrid}>
-      <Grid item xs={20}>
-        <Typography variant={'smBold'}>{t('From/to date')}</Typography>
-      </Grid>
-      <Grid item xs={8}>
-        <DateCtrl name={'question.config.fromBoundary'} />
-      </Grid>
-      <Grid item xs={1} className={css.centeredText}>
-        /
-      </Grid>
-      <Grid item xs={8}>
-        <DateCtrl name={'question.config.toBoundary'} />
-      </Grid>
-      <Grid item xs={20}>
-        <Typography variant={'smBold'}>{t('Evaluation')}</Typography>
-      </Grid>
+    <div className={css.QuestionGrid}>
+      <Typography className={css.FullRow} variant={'smBold'}>
+        {t('From/to date')}
+      </Typography>
+      <DateCtrl name={'question.config.fromBoundary'} />
+      <Typography className={css.CenteredText} variant={'lgBold'}>
+        -
+      </Typography>
+      <DateCtrl name={'question.config.toBoundary'} />
+      <Typography
+        className={classnames(css.FullRow, css.TopMargin)}
+        variant={'smBold'}
+      >
+        {t('Evaluation')}
+      </Typography>
       {fields.map((scoreValue, idx) => {
         return (
-          <Grid item container key={scoreValue.id} xs={20} columns={20}>
-            <Grid item xs={8}>
-              {idx < 2 ? (
-                <Typography variant={'smBold'} className={css.centeredText}>
-                  {DateUtils.prettyFormatDate(scoreValue.date)}
-                </Typography>
-              ) : (
-                <DateCtrl name={`question.config.dateScores.${idx}.date`} />
-              )}
-            </Grid>
-            <Grid item xs={1} className={css.arrow}>
+          <div key={idx} className={classnames(css.QuestionGrid, css.FullRow)}>
+            {idx < 2 ? (
+              <Typography variant={'smBold'} className={css.CenteredText}>
+                {DateUtils.prettyFormatDate(scoreValue.date)}
+              </Typography>
+            ) : (
+              <DateCtrl name={`question.config.dateScores.${idx}.date`} />
+            )}
+            <div className={css.Arrow}>
               <ArrowForwardIcon />
-            </Grid>
-            <Grid item xs={8}>
-              <HorizontalTextCtrl
-                name={`question.config.dateScores.${idx}.score`}
-                placeholder={t('Score')}
-                type={'number'}
-              />
-            </Grid>
+            </div>
+            <HorizontalTextCtrl
+              name={`question.config.dateScores.${idx}.score`}
+              placeholder={t('Score')}
+              type={'number'}
+            />
             {idx > 1 && (
-              <Grid item xs={2} className={css.delete}>
+              <div className={css.Delete}>
                 <FormIconButton
                   hoverColor={theme.palette.errorRed.main}
                   onClick={() => remove(idx)}
                 >
                   <DeleteIcon />
                 </FormIconButton>
-              </Grid>
+              </div>
             )}
-          </Grid>
+          </div>
         );
       })}
-      <Grid item xs={20}>
-        <Button
-          variant="primary"
-          onClick={() => append({ date: useFromBoundary, score: 0 })}
-        >
-          {t('Add new date score')}
-        </Button>
-      </Grid>
-    </Grid>
+      <Button
+        variant="primary"
+        onClick={() => append({ date: useFromBoundary, score: 0 })}
+      >
+        {t('Add new date score')}
+      </Button>
+    </div>
   );
 };
 
