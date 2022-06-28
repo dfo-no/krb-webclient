@@ -15,7 +15,7 @@ import { IMark } from '../../../Nexus/entities/IMark';
 import { IRequirement } from '../../../Nexus/entities/IRequirement';
 import { IRequirementAnswer } from '../../../models/IRequirementAnswer';
 import { IVariant } from '../../../Nexus/entities/IVariant';
-import { Weighting } from '../../../enums';
+import { Weighting, WeightingStep } from '../../../enums';
 
 interface IProps {
   requirement: IRequirement;
@@ -60,7 +60,7 @@ export default function EditProductVariant({
                 name={'weight'}
                 label={`${t('Weighting')}:`}
                 min={Weighting.LOWEST}
-                step={10}
+                step={WeightingStep}
                 max={Weighting.HIGHEST}
                 showValue={false}
                 marks={sliderMark}
