@@ -85,9 +85,9 @@ export default function UploadResponses(): React.ReactElement {
     });
   };
 
-  const readAllFiles = async (AllFiles: File[]) => {
+  const readAllFiles = async (allFiles: FileList) => {
     const results = await Promise.all(
-      AllFiles.map(async (file: File) => {
+      Array.from(allFiles).map(async (file: File) => {
         const contents = await readFileContents(file).then((response) => {
           return response;
         });
@@ -107,23 +107,21 @@ export default function UploadResponses(): React.ReactElement {
     dispatch(setEvaluations([]));
   };
 
-  const handleResponseUpload = (fileList: FileList): void => {
-    const allFiles: File[] = [];
-    for (let i = 0; i < fileList.length; i += 1) {
-      allFiles.push(fileList[i]);
-    }
-
-    const prevFiles = [...files];
-    const newFiles = [...files];
-    allFiles.forEach((file) =>
-      newFiles.push({
-        name: file.name,
-        lastModified: file.lastModified
+  const handleResponseUpload = (newFiles: FileList): void => {
+    const allFiles = [
+      ...files,
+      ...Array.from(newFiles).map((file) => {
+        return {
+          name: file.name,
+          lastModified: file.lastModified
+        };
       })
-    );
-    dispatch(setFiles(newFiles));
+    ];
+    const prevFiles = [...files];
 
-    readAllFiles(allFiles)
+    dispatch(setFiles(allFiles));
+
+    readAllFiles(newFiles)
       .then((result) => {
         const newResponses = [...responses, ...(result as IResponse[])];
         dispatch(setResponses(newResponses));

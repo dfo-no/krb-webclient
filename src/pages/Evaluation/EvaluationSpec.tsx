@@ -9,23 +9,20 @@ import { httpPost } from '../../api/http';
 import {
   setEvaluations,
   setEvaluationSpecification,
-  setFiles,
-  setResponses
+  setFiles
 } from '../../store/reducers/evaluation-reducer';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
-
-const initialFiles: File[] = [];
 
 const EvaluationSpec = (): ReactElement => {
   const { t } = useTranslation();
   const { specification } = useAppSelector((state) => state.evaluation);
-  const [spec, setSpec] = useState(initialFiles);
+  const [spec, setSpec] = useState<File | null>(null);
   const [uploadError, setUploadError] = useState('');
   const dispatch = useAppDispatch();
 
   useEffect(() => {
     setUploadError('');
-    setSpec([]);
+    setSpec(null);
     dispatch(setFiles([]));
   }, [dispatch]);
 
@@ -45,13 +42,11 @@ const EvaluationSpec = (): ReactElement => {
   const onUploadSpecification = (fileList: FileList): void => {
     setUploadError('');
     dispatch(setEvaluations([]));
-    dispatch(setResponses([]));
-    dispatch(setFiles([]));
 
     const formData = new FormData();
-    for (let index = 0; index < fileList.length; index += 1) {
-      const file = fileList[index];
-      setSpec([file]);
+    if (fileList.length) {
+      const file = fileList[0];
+      setSpec(file);
       formData.append('file', file);
     }
 
@@ -70,7 +65,7 @@ const EvaluationSpec = (): ReactElement => {
         return response;
       })
       .catch((error) => {
-        setSpec([]);
+        setSpec(null);
         setUploadError(t('EVAL_SPEC_ERROR_UPLOADING'));
         console.error(error);
       });
@@ -86,19 +81,15 @@ const EvaluationSpec = (): ReactElement => {
           onChange={onUploadSpecification}
           variant={'Tertiary'}
         />
-        {spec.length > 0 && (
+        {spec !== null && (
           <ul className={css.Files}>
-            {spec.map((file: File, index) => (
-              <li key={index} className={css.File}>
-                <div>{getSpecificationName()}</div>
-                <div>
-                  <div>{file.name}</div>
-                  <div className={css.Date}>
-                    {formatDate(file.lastModified)}
-                  </div>
-                </div>
-              </li>
-            ))}
+            <li className={css.File}>
+              <div>{getSpecificationName()}</div>
+              <div>
+                <div>{spec.name}</div>
+                <div className={css.Date}>{formatDate(spec.lastModified)}</div>
+              </div>
+            </li>
           </ul>
         )}
       </div>
