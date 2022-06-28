@@ -64,10 +64,17 @@ function ResponseSideBar(): React.ReactElement {
             <Divider color={theme.palette.silver.main} />
           </div>
         </li>
-        {response.specification.products.map((element, index) => {
-          return renderProducts(element, index);
-        })}
       </ul>
+      {response.specification.products.length > 0 && (
+        <div>
+          <Divider className={css.Divider} color={theme.palette.silver.main} />
+          <ul>
+            {response.specification.products.map((element, index) => {
+              return renderProducts(element, index);
+            })}
+          </ul>
+        </div>
+      )}
       <div className={css.Button}>
         <DownloadButton />
       </div>
