@@ -64,7 +64,6 @@ function ResponseSideBar(): React.ReactElement {
             <Divider color={theme.palette.silver.main} />
           </div>
         </li>
-        <Divider color={theme.palette.silver.main} />
         {response.specification.products.map((element, index) => {
           return renderProducts(element, index);
         })}

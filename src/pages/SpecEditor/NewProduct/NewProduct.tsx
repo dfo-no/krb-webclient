@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Box, Button, Typography } from '@mui/material';
+import { Button, Typography } from '@mui/material';
 import { FormProvider, useForm } from 'react-hook-form';
 import { joiResolver } from '@hookform/resolvers/joi';
 import { useTranslation } from 'react-i18next';
@@ -63,7 +63,7 @@ export default function NewProduct(): React.ReactElement {
   );
 
   return (
-    <Box className={css.NewProduct}>
+    <div className={css.NewProduct}>
       <FormProvider {...methods}>
         <form
           className={formStyles.singlePageForm}
@@ -107,6 +107,6 @@ export default function NewProduct(): React.ReactElement {
           </div>
         </form>
       </FormProvider>
-    </Box>
+    </div>
   );
 }

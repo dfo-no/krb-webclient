@@ -88,7 +88,6 @@ function SpecSideBar(): ReactElement {
             <Divider color={theme.palette.silver.main} />
           </div>
         </li>
-        <Divider color={theme.palette.silver.main} />
         {spec.products.map((element, index) => {
           return renderProducts(element, index);
         })}
