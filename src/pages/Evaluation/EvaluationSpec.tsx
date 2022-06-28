@@ -1,4 +1,4 @@
-import React, { ReactElement } from 'react';
+import React, { ReactElement, useEffect, useState } from 'react';
 import { AxiosResponse } from 'axios';
 import { useTranslation } from 'react-i18next';
 
@@ -15,8 +15,14 @@ import { useAppDispatch } from '../../store/hooks';
 const EvaluationSpec = (): ReactElement => {
   const dispatch = useAppDispatch();
   const { t } = useTranslation();
+  const [uploadError, setUploadError] = useState('');
+
+  useEffect(() => {
+    setUploadError('');
+  }, []);
 
   const onUploadSpecification = (files: FileList): void => {
+    setUploadError('');
     dispatch(setEvaluations([]));
     dispatch(setResponses([]));
 
@@ -31,10 +37,19 @@ const EvaluationSpec = (): ReactElement => {
         'Content-Type': 'multipart/form-data'
       },
       responseType: 'json'
-    }).then((response) => {
-      dispatch(setEvaluationSpecification(response.data));
-      return response;
-    });
+    })
+      .then((response) => {
+        if (!response.data.bank) {
+          setUploadError(t('EVAL_SPEC_ERROR_INVALID_FILE'));
+          return response;
+        }
+        dispatch(setEvaluationSpecification(response.data));
+        return response;
+      })
+      .catch((error) => {
+        setUploadError(t('EVAL_SPEC_ERROR_UPLOADING'));
+        console.error(error);
+      });
   };
 
   return (
@@ -48,6 +63,7 @@ const EvaluationSpec = (): ReactElement => {
           variant={'Tertiary'}
         />
       </div>
+      {!!uploadError && <div className={css.Error}>{uploadError}</div>}
     </div>
   );
 };

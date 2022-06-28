@@ -6,7 +6,10 @@ import css from './Evaluation.module.scss';
 import FileUpload from '../../components/FileUpload/FileUpload';
 import { httpPost } from '../../api/http';
 import { IResponse } from '../../models/IResponse';
-import { setResponses } from '../../store/reducers/evaluation-reducer';
+import {
+  setEvaluations,
+  setResponses
+} from '../../store/reducers/evaluation-reducer';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 
 export default function UploadResponses(): React.ReactElement {
@@ -61,6 +64,7 @@ export default function UploadResponses(): React.ReactElement {
       .then((result) => {
         const newResponses = [...responses, ...(result as IResponse[])];
         dispatch(setResponses(newResponses));
+        dispatch(setEvaluations([]));
       })
       .catch((err) => {
         alert(err);
@@ -80,6 +84,9 @@ export default function UploadResponses(): React.ReactElement {
           variant={'Tertiary'}
         />
       </div>
+      {!hasSpecification() && (
+        <div className={css.Error}>{t('EVAL_SPEC_MISSING')}</div>
+      )}
     </div>
   );
 }
