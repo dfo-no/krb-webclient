@@ -1,26 +1,69 @@
+import classnames from 'classnames';
+import DeleteIcon from '@mui/icons-material/Delete';
 import React from 'react';
 import { AxiosResponse } from 'axios';
 import { useTranslation } from 'react-i18next';
 
 import css from './Evaluation.module.scss';
+import DateUtils from '../../common/DateUtils';
 import FileUpload from '../../components/FileUpload/FileUpload';
+import { FormIconButton } from '../../components/Form/FormIconButton';
 import { httpPost } from '../../api/http';
+import { IFile } from '../../models/IFile';
 import { IResponse } from '../../models/IResponse';
 import {
   setEvaluations,
+  setFiles,
   setResponses
 } from '../../store/reducers/evaluation-reducer';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 
 export default function UploadResponses(): React.ReactElement {
-  const { responses, specification } = useAppSelector(
+  const { files, responses, specification } = useAppSelector(
     (state) => state.evaluation
   );
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
 
+  const formatDate = (time: number): string => {
+    const date = new Date(time);
+    return DateUtils.prettyFormat(date.toISOString());
+  };
+
+  const getSupplierNameForResponseWith = (index: number): string => {
+    if (index < 0 || index >= responses.length) {
+      return '...';
+    }
+
+    const response = responses[index];
+    if (!response.specification || !response.requirementAnswers) {
+      return t('FILE_ERROR_NOT_A_RESPONSE');
+    }
+
+    if (response.specification.bank.id !== specification.bank.id) {
+      return t('FILE_ERROR_NOT_MATCHING_SPEC');
+    }
+
+    return response.supplier !== ''
+      ? response.supplier
+      : t('EVAL_SUPPLIER_NAME_MISSING');
+  };
+
   const hasSpecification = (): boolean => {
     return !!specification.bank.id;
+  };
+
+  const isValidResponse = (index: number): boolean => {
+    if (index < 0 || index >= responses.length) {
+      return true;
+    }
+
+    const response = responses[index];
+    if (!response.specification || !response.requirementAnswers) {
+      return false;
+    }
+
+    return response.specification.bank.id === specification.bank.id;
   };
 
   const readFileContents = async (file: File) => {
@@ -42,9 +85,9 @@ export default function UploadResponses(): React.ReactElement {
     });
   };
 
-  const readAllFiles = async (AllFiles: File[]) => {
+  const readAllFiles = async (allFiles: FileList) => {
     const results = await Promise.all(
-      AllFiles.map(async (file: File) => {
+      Array.from(allFiles).map(async (file: File) => {
         const contents = await readFileContents(file).then((response) => {
           return response;
         });
@@ -54,19 +97,38 @@ export default function UploadResponses(): React.ReactElement {
     return results;
   };
 
-  const handleResponseUpload = (files: FileList): void => {
-    const allFiles: File[] = [];
-    for (let i = 0; i < files.length; i += 1) {
-      allFiles.push(files[i]);
-    }
+  const removeFile = (index: number): void => {
+    const newResponses = [...responses];
+    const newFiles = [...files];
+    newResponses.splice(index, 1);
+    newFiles.splice(index, 1);
+    dispatch(setResponses(newResponses));
+    dispatch(setFiles(newFiles));
+    dispatch(setEvaluations([]));
+  };
 
-    readAllFiles(allFiles)
+  const handleResponseUpload = (newFiles: FileList): void => {
+    const allFiles = [
+      ...files,
+      ...Array.from(newFiles).map((file) => {
+        return {
+          name: file.name,
+          lastModified: file.lastModified
+        };
+      })
+    ];
+    const prevFiles = [...files];
+
+    dispatch(setFiles(allFiles));
+
+    readAllFiles(newFiles)
       .then((result) => {
         const newResponses = [...responses, ...(result as IResponse[])];
         dispatch(setResponses(newResponses));
         dispatch(setEvaluations([]));
       })
       .catch((err) => {
+        dispatch(setFiles(prevFiles));
         alert(err);
       });
   };
@@ -83,6 +145,38 @@ export default function UploadResponses(): React.ReactElement {
           onChange={handleResponseUpload}
           variant={'Tertiary'}
         />
+        {files.length > 0 && (
+          <ul className={css.Files}>
+            {files.map((file: IFile, index) => (
+              <li
+                key={index}
+                className={classnames(
+                  css.File,
+                  isValidResponse(index) ? null : css.Invalid
+                )}
+              >
+                <div>
+                  <div>{getSupplierNameForResponseWith(index)}</div>
+                  <div className={css.Tools}>
+                    <FormIconButton
+                      color={'primary'}
+                      hoverColor={'var(--error-color)'}
+                      onClick={() => removeFile(index)}
+                    >
+                      <DeleteIcon />
+                    </FormIconButton>
+                  </div>
+                </div>
+                <div>
+                  <div>{file.name}</div>
+                  <div className={css.Date}>
+                    {formatDate(file.lastModified)}
+                  </div>
+                </div>
+              </li>
+            ))}
+          </ul>
+        )}
       </div>
       {!hasSpecification() && (
         <div className={css.Error}>{t('EVAL_SPEC_MISSING')}</div>

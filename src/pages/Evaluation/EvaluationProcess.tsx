@@ -3,6 +3,7 @@ import React, { ReactElement } from 'react';
 
 import css from './Evaluation.module.scss';
 import Nexus from '../../Nexus/Nexus';
+import { IResponse } from '../../models/IResponse';
 import { setEvaluations } from '../../store/reducers/evaluation-reducer';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { useEvaluationState } from './EvaluationContext';
@@ -18,8 +19,20 @@ const EvaluationProcess = (): ReactElement => {
   const nexus = Nexus.getInstance();
   const dispatch = useAppDispatch();
 
+  const isValid = (response: IResponse): boolean => {
+    if (!response.specification || !response.requirementAnswers) {
+      return false;
+    }
+    if (response.specification.bank.id !== specification.bank.id) {
+      return false;
+    }
+    return true;
+  };
+
   const evaluateAll = async () => {
-    const evaluated = await nexus.evaluationService.evaluateAll(responses);
+    const evaluated = await nexus.evaluationService.evaluateAll(
+      responses.filter((response) => isValid(response))
+    );
     return evaluated;
   };
 

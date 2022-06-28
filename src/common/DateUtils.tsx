@@ -26,6 +26,21 @@ class DateUtils {
     return false;
   };
 
+  static prettyFormat = (date: string | Date | null): string => {
+    if (!date) {
+      return '-';
+    }
+
+    let dateStr = date as string;
+    if (typeof date !== typeof '') {
+      dateStr = new Date(date).toISOString();
+    }
+
+    return (
+      this.prettyFormatDate(dateStr) + ', ' + this.prettyFormatTime(dateStr)
+    );
+  };
+
   static prettyFormatDate = (dateStr: string | null): string => {
     if (dateStr) {
       const date = new Date(dateStr);
