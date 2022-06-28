@@ -1,0 +1,13 @@
+.NoProducts {
+  display: flex;
+  flex-direction: column;
+  gap: var(--normal-gap);
+  align-items: center;
+
+  .Text {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    gap: var(--micro-gap);
+  }
+}

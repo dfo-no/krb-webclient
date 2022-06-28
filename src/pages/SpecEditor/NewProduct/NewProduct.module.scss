@@ -1,0 +1,105 @@
+.NewProduct {
+  .HeaderContent {
+    padding: var(--normal-gap);
+    gap: var(--small-gap);
+  }
+
+  .Content {
+    display: flex;
+    flex-direction: column;
+    background: white;
+    padding: var(--normal-gap);
+    gap: var(--small-gap);
+
+    .Button {
+      margin-left: auto;
+      width: 20rem;
+    }
+
+    ul {
+      border: 0.1rem solid var(--gray-color);
+      background: var(--light-gray-color);
+      width: 100%;
+      padding: var(--small-gap);
+      list-style: none;
+
+      li {
+        display: flex;
+        background: white;
+        margin-top: var(--small-gap);
+
+        &.Product {
+          border: 0.1rem solid var(--gray-color);
+          min-height: 5rem;
+          padding: var(--tiny-gap) 0;
+          cursor: pointer;
+          transition: all 220ms ease-out;
+
+          &:hover {
+            background: var(--link-hover-color);
+            color: white;
+
+            & .MuiSvgIcon-root {
+              color: white;
+            }
+          }
+
+          & + li {
+            margin-top: -0.1rem;
+          }
+
+          .Checkbox {
+            display: flex;
+            justify-content: center;
+            align-self: center;
+            align-items: center;
+            width: 2.2rem;
+            height: 2.2rem;
+            margin-right: 0;
+            margin-left: var(--small-gap);
+
+            &:hover span {
+              background: transparent;
+            }
+
+            & .MuiSvgIcon-root {
+              color: var(--primary-light-color);
+              transition: color 220ms ease-out;
+            }
+          }
+
+          .Title {
+            align-self: center;
+            padding-left: var(--small-gap);
+            flex: 1 1 auto;
+          }
+
+          .Description {
+            margin-left: auto;
+            border-left: 0.1rem solid var(--gray-color);
+            padding-left: var(--small-gap);
+            flex: 0 0 30vw;
+          }
+        }
+
+        &.Need {
+          border: 0.1rem solid var(--gray-color);
+          padding: var(--tiny-gap) var(--small-gap);
+
+          .Title {
+            flex-basis: 50%;
+          }
+
+          .Description {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            flex-basis: 50%;
+            border-left: 0.1rem solid var(--gray-color);
+            padding-left: var(--small-gap);
+          }
+        }
+      }
+    }
+  }
+}

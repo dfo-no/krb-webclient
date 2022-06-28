@@ -1,17 +1,16 @@
 import React from 'react';
-import { Box } from '@mui/material';
 
 import AnswerProduct from './Answer/AnswerProduct';
-import css from './ResponseEditor.module.scss';
+import css from '../Stylesheets/Editor.module.scss';
 import ResponseSideBar from './SideBar/ResponseSideBar';
 
 export default function ResponseEditor(): React.ReactElement {
   return (
-    <Box className={css.ResponseEditor}>
+    <div className={css.Editor}>
       <ResponseSideBar />
-      <Box className={css.content}>
+      <div className={css.Content}>
         <AnswerProduct />
-      </Box>
-    </Box>
+      </div>
+    </div>
   );
 }

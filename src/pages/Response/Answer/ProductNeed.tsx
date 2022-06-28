@@ -1,7 +1,7 @@
 import React from 'react';
-import { Box, Typography } from '@mui/material';
+import { Typography } from '@mui/material';
 
-import css from '../ResponseEditor.module.scss';
+import css from '../../Stylesheets/Editor.module.scss';
 import { Parentable } from '../../../models/Parentable';
 import { INeed } from '../../../Nexus/entities/INeed';
 
@@ -11,8 +11,8 @@ interface IProps {
 
 export default function ProductNeed({ need }: IProps): React.ReactElement {
   return (
-    <Box className={css.need}>
+    <div className={css.Need}>
       <Typography variant="smBold">{need.title}</Typography>
-    </Box>
+    </div>
   );
 }
