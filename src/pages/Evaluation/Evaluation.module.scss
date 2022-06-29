@@ -88,14 +88,14 @@
       grid-template-columns: auto 5rem;
       gap: var(--normal-gap);
       padding: var(--small-gap) var(--normal-gap);
-      border: 0.1rem solid var(--gray-color);
+      border: 0.1rem solid var(--border-color-secondary);
       border-radius: 0.5rem;
       background: white;
       font-family: var(--header-font);
       font-size: var(--big-fontsize);
 
       > div:first-child {
-        border-bottom: 0.1rem solid var(--gray-color);
+        border-bottom: 0.2rem solid var(--line-color);
       }
 
       > div:last-child {
@@ -107,6 +107,57 @@
         margin-top: var(--normal-gap);
       }
     }
+  }
+}
+
+.Files {
+  list-style: none;
+  margin: var(--big-gap) 0;
+  padding: 0;
+
+  .File {
+    padding: var(--small-gap) var(--normal-gap);
+    border: 0.1rem solid var(--gray-color);
+    border-radius: 0.5rem;
+    background: white;
+
+    > div:first-child {
+      display: grid;
+      grid-template-columns: auto 5rem;
+      margin-bottom: var(--tiny-gap);
+      border-bottom: 0.1rem solid var(--line-color);
+      font-family: var(--header-font);
+      font-size: var(--big-fontsize);
+
+      .Tools {
+        justify-self: end;
+        color: var(--text-color);
+      }
+
+      button * {
+        justify-self: center;
+      }
+    }
+
+    > div:last-child {
+      display: grid;
+      grid-template-columns: auto 20rem;
+      font-size: var(--small-fontsize);
+      color: var(--gray-color);
+    }
+
+    + .File {
+      margin-top: var(--normal-gap);
+    }
+
+    &.Invalid {
+      background: var(--disabled-color);
+      color: var(--error-color);
+    }
+  }
+
+  .Date {
+    text-align: right;
   }
 }
 

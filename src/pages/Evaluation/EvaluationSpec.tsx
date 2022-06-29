@@ -3,32 +3,50 @@ import { AxiosResponse } from 'axios';
 import { useTranslation } from 'react-i18next';
 
 import css from './Evaluation.module.scss';
+import DateUtils from '../../common/DateUtils';
 import FileUpload from '../../components/FileUpload/FileUpload';
 import { httpPost } from '../../api/http';
 import {
   setEvaluations,
   setEvaluationSpecification,
-  setResponses
+  setFiles
 } from '../../store/reducers/evaluation-reducer';
-import { useAppDispatch } from '../../store/hooks';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
 
 const EvaluationSpec = (): ReactElement => {
-  const dispatch = useAppDispatch();
   const { t } = useTranslation();
+  const { specification } = useAppSelector((state) => state.evaluation);
+  const [spec, setSpec] = useState<File | null>(null);
   const [uploadError, setUploadError] = useState('');
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
     setUploadError('');
-  }, []);
+    setSpec(null);
+    dispatch(setFiles([]));
+  }, [dispatch]);
 
-  const onUploadSpecification = (files: FileList): void => {
+  const formatDate = (time: number): string => {
+    const date = new Date(time);
+    return DateUtils.prettyFormat(date.toISOString());
+  };
+
+  const getSpecificationName = (): string => {
+    if (specification.bank.id === '') {
+      return '...';
+    }
+
+    return specification.title + ', ' + specification.organization;
+  };
+
+  const onUploadSpecification = (fileList: FileList): void => {
     setUploadError('');
     dispatch(setEvaluations([]));
-    dispatch(setResponses([]));
 
     const formData = new FormData();
-    for (let index = 0; index < files.length; index += 1) {
-      const file = files[index];
+    if (fileList.length) {
+      const file = fileList[0];
+      setSpec(file);
       formData.append('file', file);
     }
 
@@ -47,6 +65,7 @@ const EvaluationSpec = (): ReactElement => {
         return response;
       })
       .catch((error) => {
+        setSpec(null);
         setUploadError(t('EVAL_SPEC_ERROR_UPLOADING'));
         console.error(error);
       });
@@ -62,6 +81,17 @@ const EvaluationSpec = (): ReactElement => {
           onChange={onUploadSpecification}
           variant={'Tertiary'}
         />
+        {spec !== null && (
+          <ul className={css.Files}>
+            <li className={css.File}>
+              <div>{getSpecificationName()}</div>
+              <div>
+                <div>{spec.name}</div>
+                <div className={css.Date}>{formatDate(spec.lastModified)}</div>
+              </div>
+            </li>
+          </ul>
+        )}
       </div>
       {!!uploadError && <div className={css.Error}>{uploadError}</div>}
     </div>
