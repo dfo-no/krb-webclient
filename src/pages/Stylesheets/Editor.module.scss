@@ -82,5 +82,16 @@
       padding-left: var(--normal-gap);
       margin: var(--normal-gap) 0;
     }
+
+    .Percentage {
+      display: flex;
+      justify-content: flex-end;
+      color: var(--gray-color);
+      margin-top: var(--normal-gap);
+
+      + .Need {
+        margin-top: 0;
+      }
+    }
   }
 }
