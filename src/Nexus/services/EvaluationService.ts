@@ -35,6 +35,17 @@ export default class EvaluationService {
     return max === 0 ? { total: 0, max: 0 } : { total, max };
   }
 
+  calculateGeneralPoints(response: IResponse): IPointsCalculation {
+    let total = 0;
+    let max = 0;
+    response.requirementAnswers.forEach((requirementAnswer) => {
+      const calc = EvaluationService.calculatePoints(requirementAnswer);
+      total += calc.total;
+      max += calc.max;
+    });
+    return max === 0 ? { total: 0, max: 0 } : { total, max };
+  }
+
   evaluate(response: IResponse): IEvaluatedResponse {
     const evaluation: IEvaluatedResponse = {
       supplier: response.supplier,
@@ -43,17 +54,15 @@ export default class EvaluationService {
     let maxPoints = 0;
     let totPoints = 0;
 
-    response.requirementAnswers.forEach((requirementAnswer) => {
-      const calc = EvaluationService.calculatePoints(requirementAnswer);
-      totPoints += calc.total;
-      maxPoints += calc.max;
-    });
+    const calc = this.calculateGeneralPoints(response);
+    totPoints += calc.total;
+    maxPoints += calc.max;
 
     response.products.forEach((product) => {
       // TODO: Add product weighting
-      const calc = this.calculateProductPoints(product);
-      totPoints += calc.total;
-      maxPoints += calc.max;
+      const productCalc = this.calculateProductPoints(product);
+      totPoints += productCalc.total;
+      maxPoints += productCalc.max;
     });
 
     evaluation.points = totPoints / maxPoints;
