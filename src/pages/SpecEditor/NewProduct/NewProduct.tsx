@@ -28,8 +28,7 @@ export default function NewProduct(): React.ReactElement {
   const { spec } = useAppSelector((state) => state.specification);
   const formStyles = useFormStyles();
   const dispatch = useAppDispatch();
-  const { setSpecificationProductIndex, setGenericRequirement, setCreate } =
-    useSpecificationState();
+  const { setSpecificationProductIndex, setCreate } = useSpecificationState();
   const [product, setProduct] = useState<Parentable<IProduct> | null>(null);
 
   const defaultValues: ISpecificationProduct =
@@ -54,7 +53,6 @@ export default function NewProduct(): React.ReactElement {
     const newId = spec.products.length;
     dispatch(addProduct({ product: newProduct }));
     setSpecificationProductIndex(newId);
-    setGenericRequirement(false);
     setCreate(false);
   };
 
