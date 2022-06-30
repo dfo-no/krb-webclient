@@ -22,6 +22,12 @@
       list-style: none;
       width: 100%;
 
+      + ul {
+        padding-top: var(--normal-gap);
+        margin-top: var(--tiny-gap);
+        border-top: 0.1rem solid var(--line-color);
+      }
+
       li {
         border: 0.1rem var(--border-color-secondary) solid;
         border-radius: 0.5rem;
