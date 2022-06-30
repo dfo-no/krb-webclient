@@ -17,7 +17,7 @@ export default function AnswerProduct(): React.ReactElement {
 
   const renderRequirementAnswer = (
     requirementAnswer: IRequirementAnswer,
-    first?: boolean
+    showPercentage?: boolean
   ): ReactElement => {
     const requirementNeed = response.specification.bank.needs.find(
       (need) => need.id === requirementAnswer.requirement.needId
@@ -26,7 +26,7 @@ export default function AnswerProduct(): React.ReactElement {
       existingNeeds.add(requirementNeed);
       return (
         <div key={requirementAnswer.id}>
-          {first && <CalculatedPercentage />}
+          {showPercentage && <CalculatedPercentage />}
           <ProductNeed need={requirementNeed} />
           <ProductRequirementAnswer requirementAnswer={requirementAnswer} />
         </div>

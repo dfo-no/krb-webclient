@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { t } from 'i18next';
-import { Typography } from '@mui/material';
 
 import css from '../../Stylesheets/Editor.module.scss';
 import Nexus from '../../../Nexus/Nexus';
@@ -35,11 +34,7 @@ export default function CalculatedPercentage(): React.ReactElement {
 
   return (
     <div className={css.Percentage}>
-      {evaluation && (
-        <Typography variant="lgBold">{`${t('Achieved')}: ${calcEvaluation(
-          evaluation
-        )}%`}</Typography>
-      )}
+      {evaluation && `${t('Achieved')}: ${calcEvaluation(evaluation)}%`}
     </div>
   );
 }

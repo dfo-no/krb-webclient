@@ -92,7 +92,9 @@
     .Percentage {
       display: flex;
       justify-content: flex-end;
-      color: var(--gray-color);
+      font-size: var(--large-fontsize);
+      font-weight: 600;
+      color: var(--dark-gray-color);
       margin-top: var(--normal-gap);
 
       + .Need {
