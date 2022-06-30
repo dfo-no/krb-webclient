@@ -132,6 +132,7 @@ export default class QuestionService {
             mandatoryCodes: [],
             optionalCodes: [],
             codelist: '',
+            codes: [],
             defaultPoint: 1,
             optionalCodeMinAmount: 0,
             optionalCodeMaxAmount: 1

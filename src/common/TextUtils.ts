@@ -154,8 +154,7 @@ class TextUtils {
   ): string => {
     const optionalCodeMinAmount = question.config.optionalCodeMinAmount;
     const optionalCodeMaxAmount = question.config.optionalCodeMaxAmount;
-    const mandatory = question.config.mandatoryCodes;
-    const optional = question.config.optionalCodes;
+    const codes = question.config.codes;
     const codelistId = question.config.codelist;
     const codelist = specification.bank.codelist.find(
       (cl) => cl.id === codelistId
@@ -163,28 +162,15 @@ class TextUtils {
     if (!codelist) {
       return '';
     }
-    if (mandatory.length === 0 && optional.length === 0) {
+    if (codes.length === 0) {
       return t('No codes selected');
     }
-    return `${
-      mandatory.length > 0
-        ? `${t('Obligatory codes')}: ${TextUtils.getCodesText(
-            mandatory,
-            codelist
-          )}, `
-        : ''
-    } ${
-      optional.length > 0
-        ? `${t('Optional codes')}: ${t(
-            'Minimum'
-          )}: ${optionalCodeMinAmount}, ${t(
-            'Maximum'
-          )}: ${optionalCodeMaxAmount}, ${t('Codes')}: ${TextUtils.getCodesText(
-            optional,
-            codelist
-          )}`
-        : ''
-    }`;
+    return `${t('Minimum')}: ${optionalCodeMinAmount}, ${t(
+      'Maximum'
+    )}: ${optionalCodeMaxAmount} ${t('Codes')}: ${TextUtils.getCodesText(
+      codes.map((codeSelection) => codeSelection.code),
+      codelist
+    )}`;
   };
 
   private static getDateConfig = (question: IPeriodDateQuestion): string => {

@@ -19,6 +19,13 @@ export interface ICodelistConfig extends IConfigBase {
   optionalCodes: string[];
   optionalCodeMinAmount: number;
   optionalCodeMaxAmount: number;
+  codes: ICodeSelection[];
+}
+
+export interface ICodeSelection {
+  code: string;
+  mandatory: boolean;
+  score: number;
 }
 
 export interface ICodelistAnswer extends IAnswerBase {
@@ -38,7 +45,14 @@ export const CodelistQuestionSchema = QuestionBaseSchema.keys({
       .min(0)
       .required(),
     optionalCodeMinAmount: CustomJoi.number().min(0).required(),
-    optionalCodeMaxAmount: CustomJoi.number().min(1).required()
+    optionalCodeMaxAmount: CustomJoi.number().min(1).required(),
+    codes: CustomJoi.array().items(
+      CustomJoi.object().keys({
+        code: CustomJoi.string().required(),
+        mandatory: CustomJoi.boolean().required(),
+        score: CustomJoi.number().required().min(0).max(100)
+      })
+    )
   })
 });
 

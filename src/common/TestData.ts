@@ -295,6 +295,7 @@ export const needHierarchyTestData: Parentable<INeed>[] = [
                   mandatoryCodes: [],
                   optionalCodes: [],
                   codelist: '7aa1c0e8-d8f0-45f5-9bfc-3584ef3ba052',
+                  codes: [],
                   defaultPoint: 1,
                   optionalCodeMinAmount: 0,
                   optionalCodeMaxAmount: 1

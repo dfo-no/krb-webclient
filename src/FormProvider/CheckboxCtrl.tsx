@@ -8,17 +8,22 @@ import theme from '../theme';
 import { DFOCheckbox } from '../components/DFOCheckbox/DFOCheckbox';
 
 interface IProps {
+  className?: string;
   name: string;
-  label: string | number | ReactElement;
+  label?: string | number | ReactElement;
 }
 
-const CheckboxCtrl = ({ name, label }: IProps): React.ReactElement => {
+const CheckboxCtrl = ({
+  className,
+  name,
+  label
+}: IProps): React.ReactElement => {
   const {
     formState: { errors }
   } = useFormContext();
 
   return (
-    <FormControl error={!!get(errors, name)}>
+    <FormControl className={className} error={!!get(errors, name)}>
       <Box sx={{ display: 'flex', alignItems: 'center' }}>
         <Controller
           name={name}

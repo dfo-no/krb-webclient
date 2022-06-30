@@ -9,13 +9,15 @@ interface IProps {
   name: string;
   placeholder: string;
   type?: string;
+  size?: string;
 }
 
 const HorizontalTextCtrl = ({
   className,
   name,
   placeholder = '',
-  type = 'text'
+  type = 'text',
+  size = ''
 }: IProps): React.ReactElement => {
   const {
     formState: { errors }
@@ -37,7 +39,7 @@ const HorizontalTextCtrl = ({
             onWheel={(e) => (e.target as HTMLElement).blur()}
             error={!!get(errors, name)}
             disableUnderline
-            sx={{ height: 45 }}
+            sx={size === 'small' ? { height: 26 } : { height: 45 }}
           />
         )}
       />

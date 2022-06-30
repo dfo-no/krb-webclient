@@ -1,10 +1,12 @@
 .Selection {
+  background: var(--light-gray-color);
   border: 0.1rem solid var(--primary-light-color);
   max-height: 400px;
   padding: var(--tiny-gap) var(--small-gap);
 
   .listItem {
     display: flex;
+    background: white;
     border: 0.1rem solid silver;
     min-height: 4rem;
     padding: var(--tiny-gap) 0;

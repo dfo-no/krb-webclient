@@ -2,7 +2,10 @@ import { DateScorePair } from '../Nexus/entities/IPeriodDateQuestion';
 import { IBank } from '../Nexus/entities/IBank';
 import { IBaseModel } from '../Nexus/entities/IBaseModel';
 import { ICodelist } from '../Nexus/entities/ICodelist';
-import { ICodelistQuestion } from '../Nexus/entities/ICodelistQuestion';
+import {
+  ICodelistConfig,
+  ICodelistQuestion
+} from '../Nexus/entities/ICodelistQuestion';
 import { IInheritedBank } from '../models/IInheritedBank';
 import { INeed } from '../Nexus/entities/INeed';
 import { IProduct } from '../Nexus/entities/IProduct';
@@ -121,6 +124,45 @@ class Utils {
       newList.splice(index, 1);
     }
     return newList;
+  }
+
+  static findScoreFromCodes(codes: string[], config: ICodelistConfig): number {
+    const mandatorySelected = codes.reduce((sum, code) => {
+      const foundCode = config.codes.find(
+        (selection) => selection.code === code
+      );
+      return foundCode && foundCode.mandatory ? sum + 1 : sum;
+    }, 0);
+    if (mandatorySelected < config.optionalCodeMinAmount) {
+      return 0;
+    }
+
+    const topMandatory = config.codes
+      .filter((selection) => selection.mandatory)
+      .sort((a, b) => b.score - a.score)
+      .slice(0, config.optionalCodeMinAmount);
+    const topRest = config.codes
+      .filter(
+        (selection) =>
+          !topMandatory.some(
+            (mandatorySelection) => selection.code === mandatorySelection.code
+          )
+      )
+      .sort((a, b) => b.score - a.score)
+      .slice(0, config.optionalCodeMaxAmount - config.optionalCodeMinAmount);
+    const maxScore = [...topMandatory, ...topRest].reduce(
+      (sum, selection) => sum + selection.score,
+      0
+    );
+
+    const score = codes.reduce((sum, code) => {
+      const foundCode = config.codes.find(
+        (selection) => selection.code === code
+      );
+      return foundCode ? sum + foundCode.score : sum;
+    }, 0);
+
+    return maxScore > 0 ? Math.min(score / maxScore, 1) * 100 : 100;
   }
 
   private static dateToValue(dateStr: string): number {

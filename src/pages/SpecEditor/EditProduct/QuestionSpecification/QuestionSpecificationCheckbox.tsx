@@ -1,12 +1,12 @@
 import React, { ReactElement, useEffect, useState } from 'react';
-import { Box, Typography } from '@mui/material';
+import { Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { useFormContext, useWatch } from 'react-hook-form';
 
+import css from '../QuestionContent.module.scss';
 import VerticalTextCtrl from '../../../../FormProvider/VerticalTextCtrl';
 import YesNoSelection from '../../../../components/YesNoSelection/YesNoSelection';
 import { DFOCheckbox } from '../../../../components/DFOCheckbox/DFOCheckbox';
-import { FlexColumnBox } from '../../../../components/FlexBox/FlexColumnBox';
 import { IRequirementAnswer } from '../../../../models/IRequirementAnswer';
 
 const QuestionSpecificationCheckbox = (): ReactElement => {
@@ -32,26 +32,26 @@ const QuestionSpecificationCheckbox = (): ReactElement => {
   };
 
   return (
-    <FlexColumnBox>
+    <div className={css.QuestionFlex}>
       <Typography variant={'smBold'}>{t('Preferred alternative')}</Typography>
       <YesNoSelection name={'question.config.preferedAlternative'} />
-      <Box onClick={onCheckboxClick} sx={{ paddingTop: 1 }}>
+      <div onClick={onCheckboxClick}>
         <DFOCheckbox checked={preferredScore} />
-        <Typography variant={'smBold'} sx={{ marginLeft: 1 }}>
+        <Typography className={css.CheckboxLabel} variant={'smBold'}>
           {t('Give score for non-preferred alternative')}
         </Typography>
-      </Box>
+      </div>
       {preferredScore && (
-        <Box sx={{ paddingLeft: 3, paddingTop: 1 }}>
+        <div>
           <VerticalTextCtrl
             name={'question.config.pointsNonPrefered'}
             label={t('Score for non-preferred')}
             placeholder={''}
             type={'number'}
           />
-        </Box>
+        </div>
       )}
-    </FlexColumnBox>
+    </div>
   );
 };
 
