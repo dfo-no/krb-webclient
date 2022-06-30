@@ -6,13 +6,41 @@ import css from './Evaluation.module.scss';
 import DateUtils from '../../common/DateUtils';
 import FileUpload from '../../components/FileUpload/FileUpload';
 import { httpPost } from '../../api/http';
+import { ISpecification } from '../../Nexus/entities/ISpecification';
+import { ModelType } from '../../enums';
 import {
   setEvaluations,
   setEvaluationSpecification,
-  setFiles,
   setSpecFile
 } from '../../store/reducers/evaluation-reducer';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
+
+const initialSpecification: ISpecification = {
+  bank: {
+    id: '',
+    title: '',
+    description: '',
+    needs: [],
+    products: [],
+    codelist: [],
+    tags: [],
+    version: 0,
+    type: ModelType.bank,
+    publications: [],
+    inheritedBanks: [],
+    publishedDate: null,
+    sourceOriginal: null,
+    sourceRel: null,
+    projectId: null,
+    deletedDate: null
+  },
+  title: '',
+  organization: '',
+  organizationNumber: '',
+  products: [],
+  requirements: [],
+  requirementAnswers: []
+};
 
 const EvaluationSpec = (): ReactElement => {
   const { specFile, specification } = useAppSelector(
@@ -24,7 +52,6 @@ const EvaluationSpec = (): ReactElement => {
 
   useEffect(() => {
     setUploadError('');
-    dispatch(setFiles([]));
   }, [dispatch]);
 
   const formatDate = (time: number): string => {
@@ -65,12 +92,14 @@ const EvaluationSpec = (): ReactElement => {
       .then((response) => {
         if (!response.data.bank) {
           setUploadError(t('EVAL_SPEC_ERROR_INVALID_FILE'));
+          dispatch(setEvaluationSpecification(initialSpecification));
           return response;
         }
         dispatch(setEvaluationSpecification(response.data));
         return response;
       })
       .catch((error) => {
+        console.log('xx');
         dispatch(setSpecFile(null));
         setUploadError(t('EVAL_SPEC_ERROR_UPLOADING'));
         console.error(error);
