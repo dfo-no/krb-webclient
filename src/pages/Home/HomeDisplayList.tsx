@@ -73,9 +73,7 @@ export default function HomeDisplayList({
         className={css.item}
         onClick={() => setSelectedBank(bank)}
       >
-        <div>
-          <MenuBookIcon />
-        </div>
+        <MenuBookIcon />
         <div>{bank.title}</div>
         {bank.publishedDate && (
           <div className={css.Time}>{getDateChangeInfo(bank)}</div>
