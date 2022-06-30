@@ -1,4 +1,3 @@
-import classnames from 'classnames';
 import React, { ReactElement, useEffect } from 'react';
 
 import css from './Evaluation.module.scss';
@@ -20,31 +19,30 @@ const Evaluation = (): ReactElement => {
     }
   }, [specification, setTab]);
 
-  const getClassForTabBody = (currentTab: number): string => {
-    return classnames(css.TabBody, tab === currentTab ? css.Active : null);
+  const renderTabContent = (): ReactElement => {
+    switch (tab) {
+      case 0:
+        return <EvaluationSpec />;
+
+      case 1:
+        return <UploadResponses />;
+
+      case 2:
+        return <EvaluationProcess />;
+
+      case 3:
+        return <EvaluationResult />;
+
+      default:
+        return <></>;
+    }
   };
 
   return (
     <div className={css.Evaluation}>
       <EvaluationSideBar />
 
-      <div className={css.Content}>
-        <div className={getClassForTabBody(0)}>
-          <EvaluationSpec />
-        </div>
-
-        <div className={getClassForTabBody(1)}>
-          <UploadResponses />
-        </div>
-
-        <div className={getClassForTabBody(2)}>
-          <EvaluationProcess />
-        </div>
-
-        <div className={getClassForTabBody(3)}>
-          <EvaluationResult />
-        </div>
-      </div>
+      <div className={css.Content}>{renderTabContent()}</div>
     </div>
   );
 };
