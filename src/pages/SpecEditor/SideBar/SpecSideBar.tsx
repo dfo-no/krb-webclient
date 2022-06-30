@@ -13,29 +13,21 @@ function SpecSideBar(): ReactElement {
   const { t } = useTranslation();
 
   const { spec } = useAppSelector((state) => state.specification);
-  const {
-    specificationProductIndex,
-    setSpecificationProductIndex,
-    genericRequirement,
-    setGenericRequirement,
-    setCreate
-  } = useSpecificationState();
+  const { specificationProductIndex, setSpecificationProductIndex, setCreate } =
+    useSpecificationState();
 
   const genericPressed = (): void => {
     setSpecificationProductIndex(-1);
-    setGenericRequirement(true);
     setCreate(false);
   };
 
   const productPressed = (index: number): void => {
     setSpecificationProductIndex(index);
-    setGenericRequirement(false);
     setCreate(false);
   };
 
   const createPressed = (): void => {
     setSpecificationProductIndex(-1);
-    setGenericRequirement(false);
     setCreate(true);
   };
 
@@ -75,7 +67,7 @@ function SpecSideBar(): ReactElement {
       </div>
       <ul aria-label="products">
         <li
-          className={genericRequirement ? css.Active : undefined}
+          className={specificationProductIndex === -1 ? css.Active : undefined}
           key={'generic'}
           onClick={() => genericPressed()}
         >

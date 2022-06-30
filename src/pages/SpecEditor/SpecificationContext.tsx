@@ -9,8 +9,6 @@ import React, {
 interface ISpecificationContext {
   specificationProductIndex: number;
   setSpecificationProductIndex: Dispatch<SetStateAction<number>>;
-  genericRequirement: boolean;
-  setGenericRequirement: Dispatch<SetStateAction<boolean>>;
   create: boolean;
   setCreate: Dispatch<SetStateAction<boolean>>;
 }
@@ -18,10 +16,6 @@ interface ISpecificationContext {
 const initialContext: ISpecificationContext = {
   specificationProductIndex: -1,
   setSpecificationProductIndex: function (): void {
-    throw new Error('Function not implemented.');
-  },
-  genericRequirement: false,
-  setGenericRequirement: function (): void {
     throw new Error('Function not implemented.');
   },
   create: false,
@@ -42,7 +36,6 @@ export const SpecificationProvider = ({
 }: IProps): React.ReactElement => {
   const [specificationProductIndex, setSpecificationProductIndex] =
     useState(-1);
-  const [genericRequirement, setGenericRequirement] = useState(false);
   const [create, setCreate] = useState(false);
 
   return (
@@ -50,8 +43,6 @@ export const SpecificationProvider = ({
       value={{
         specificationProductIndex,
         setSpecificationProductIndex,
-        genericRequirement,
-        setGenericRequirement,
         create,
         setCreate
       }}
