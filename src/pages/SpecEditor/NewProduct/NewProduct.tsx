@@ -1,15 +1,14 @@
-import Divider from '@mui/material/Divider';
-import makeStyles from '@mui/styles/makeStyles';
 import React, { useEffect, useState } from 'react';
-import { Box, Button, Typography } from '@mui/material';
+import { Button, Typography } from '@mui/material';
 import { FormProvider, useForm } from 'react-hook-form';
 import { joiResolver } from '@hookform/resolvers/joi';
 import { useTranslation } from 'react-i18next';
 
+import css from './NewProduct.module.scss';
 import NewProductHeader from './NewProductHeader';
 import Nexus from '../../../Nexus/Nexus';
 import NeedList from './NeedList';
-import SelectionSingularCtrl from '../../../FormProvider/SelectionSingularCtrl';
+import ProductSelection from './ProductSelection';
 import theme from '../../../theme';
 import VerticalTextCtrl from '../../../FormProvider/VerticalTextCtrl';
 import { addProduct } from '../../../store/reducers/spesification-reducer';
@@ -19,53 +18,9 @@ import {
   PostSpecificationProductSchema
 } from '../../../models/ISpecificationProduct';
 import { Parentable } from '../../../models/Parentable';
-import { ScrollableContainer } from '../../../components/ScrollableContainer/ScrollableContainer';
 import { useAppDispatch, useAppSelector } from '../../../store/hooks';
 import { useFormStyles } from '../../../components/Form/FormStyles';
 import { useSpecificationState } from '../SpecificationContext';
-
-const useStyles = makeStyles({
-  newProduct: {
-    width: '100%',
-    height: '100%',
-    backgroundColor: theme.palette.gray200.main
-  },
-  newProductContainer: {
-    display: 'flex',
-    backgroundColor: theme.palette.primary.main,
-    padding: 20
-  },
-  newProductFormContainer: {
-    display: 'flex',
-    flexBasis: '80%',
-    paddingLeft: 100,
-    flexDirection: 'column',
-    gap: 12
-  },
-  optionButtons: {
-    display: 'flex'
-  },
-  mainContainer: {
-    paddingTop: 32,
-    paddingBottom: 32,
-    margin: '0 auto',
-    width: '90%',
-    backgroundColor: theme.palette.white.main,
-    padding: 20
-  },
-  productTypeContainer: {
-    marginTop: 8
-  },
-  saveButtonContainer: {
-    display: 'flex',
-    width: '100%',
-    marginTop: 20,
-    justifyContent: 'flex-end'
-  },
-  saveButton: {
-    width: 45
-  }
-});
 
 export default function NewProduct(): React.ReactElement {
   const { t } = useTranslation();
@@ -76,7 +31,6 @@ export default function NewProduct(): React.ReactElement {
   const { setSpecificationProductIndex, setGenericRequirement, setCreate } =
     useSpecificationState();
   const [product, setProduct] = useState<Parentable<IProduct> | null>(null);
-  const classes = useStyles();
 
   const defaultValues: ISpecificationProduct =
     nexus.specificationService.generateDefaultSpecificationProductValues();
@@ -109,7 +63,7 @@ export default function NewProduct(): React.ReactElement {
   );
 
   return (
-    <Box className={classes.newProduct}>
+    <div className={css.NewProduct}>
       <FormProvider {...methods}>
         <form
           className={formStyles.singlePageForm}
@@ -117,62 +71,42 @@ export default function NewProduct(): React.ReactElement {
           autoComplete="off"
           noValidate
         >
-          <Box
-            sx={{
-              display: 'flex',
-              flexDirection: 'column',
-              width: '100%',
-              height: '100%'
-            }}
-          >
+          <div>
             <NewProductHeader />
-            <ScrollableContainer>
-              <Box className={classes.mainContainer}>
-                <VerticalTextCtrl
-                  name="amount"
-                  label={t(
-                    'How many of this product do you need in this procurement'
-                  )}
-                  placeholder={t('Quantity')}
-                  type={'number'}
+            <div className={css.Content}>
+              <VerticalTextCtrl
+                name="amount"
+                label={t(
+                  'How many of this product do you need in this procurement'
+                )}
+                placeholder={t('Quantity')}
+                type={'number'}
+              />
+              <Typography variant={'smBold'} color={theme.palette.primary.main}>
+                {t('Choose a product type from the requirement set')}{' '}
+                <i>{spec.bank.title}</i> {t('that fits the product best')}
+              </Typography>
+              {nonDeletedProducts.length && (
+                <ProductSelection
+                  products={nonDeletedProducts}
+                  postChange={(selection: Parentable<IProduct>) => {
+                    setProduct(selection);
+                  }}
                 />
-                <Divider sx={{ marginBottom: 4 }} />
-                <Typography
-                  variant={'smBold'}
-                  color={theme.palette.primary.main}
-                >
-                  {t('Choose a product type from the requirement set')}{' '}
-                  <i>{spec.bank.title}</i> {t('that fits the product best')}
-                </Typography>
-                <Box className={classes.productTypeContainer}>
-                  {nonDeletedProducts.length && (
-                    <SelectionSingularCtrl
-                      name={'originProduct'}
-                      initValue={nonDeletedProducts[0]}
-                      saveAsString={false}
-                      parentableItems={nonDeletedProducts}
-                      postChange={(selection: Parentable<IProduct>) => {
-                        setProduct(selection);
-                      }}
-                    />
-                  )}
-                </Box>
-                <Box className={classes.saveButtonContainer}>
-                  <Button
-                    className={classes.saveButton}
-                    type="submit"
-                    aria-label={t('Save')}
-                    variant="save"
-                  >
-                    {t('Save')}
-                  </Button>
-                </Box>
-                {product && <NeedList product={product} />}
-              </Box>
-            </ScrollableContainer>
-          </Box>
+              )}
+              <Button
+                className={css.Button}
+                type="submit"
+                aria-label={t('Save')}
+                variant="save"
+              >
+                {t('Save')}
+              </Button>
+              {product && <NeedList product={product} />}
+            </div>
+          </div>
         </form>
       </FormProvider>
-    </Box>
+    </div>
   );
 }

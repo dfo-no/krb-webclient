@@ -1,7 +1,5 @@
 import React, { ReactElement } from 'react';
-import { Box } from '@mui/material';
 
-import css from '../ResponseEditor.module.scss';
 import ProductHeader from './ProductHeader';
 import ProductNeed from './ProductNeed';
 import ProductRequirementAnswer from './ProductRequirementAnswer';
@@ -25,10 +23,10 @@ export default function AnswerProduct(): React.ReactElement {
     if (requirementNeed && !existingNeeds.has(requirementNeed)) {
       existingNeeds.add(requirementNeed);
       return (
-        <Box key={requirementAnswer.id}>
+        <div key={requirementAnswer.id}>
           <ProductNeed need={requirementNeed} />
           <ProductRequirementAnswer requirementAnswer={requirementAnswer} />
-        </Box>
+        </div>
       );
     } else {
       return (
@@ -68,9 +66,9 @@ export default function AnswerProduct(): React.ReactElement {
   };
 
   return (
-    <Box className={css.product}>
+    <div>
       <ProductHeader />
       <AccordionProvider>{renderRequirements()}</AccordionProvider>
-    </Box>
+    </div>
   );
 }
