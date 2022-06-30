@@ -1,4 +1,4 @@
-import React, { ReactElement, useEffect } from 'react';
+import React, { ReactElement, useEffect, useState } from 'react';
 
 import css from '../Stylesheets/Editor.module.scss';
 import EditProduct from './EditProduct/EditProduct';
@@ -10,36 +10,16 @@ import { useSpecificationState } from './SpecificationContext';
 
 export default function SpecEditor(): ReactElement {
   const { spec } = useAppSelector((state) => state.specification);
-  const {
-    create,
-    genericRequirement,
-    setGenericRequirement,
-    specificationProductIndex
-  } = useSpecificationState();
-
-  useEffect(() => {
-    if (
-      !genericRequirement &&
-      specificationProductIndex === -1 &&
-      spec.products.length
-    ) {
-      setGenericRequirement(true);
-    }
-  }, [
-    genericRequirement,
-    setGenericRequirement,
-    spec,
-    specificationProductIndex
-  ]);
+  const { create } = useSpecificationState();
 
   const renderProduct = (): ReactElement => {
     if (create) {
       return <NewProduct />;
     }
-    if (specificationProductIndex !== -1 || genericRequirement) {
-      return <EditProduct />;
+    if (!spec.products.length) {
+      return <NoProducts />;
     }
-    return <NoProducts />;
+    return <EditProduct />;
   };
 
   return (
