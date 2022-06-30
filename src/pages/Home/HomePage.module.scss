@@ -95,4 +95,44 @@
       display: block;
     }
   }
+
+  .DisplayList {
+    flex-basis: 50%;
+
+    .Header {
+      color: var(--primary-color);
+    }
+
+    .Time {
+      color: var(--gray-color);
+      font-size: var(--small-fontsize);
+      text-align: right;
+      white-space: nowrap;
+    }
+
+    ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+
+      li {
+        display: grid;
+        grid-template-columns: 3rem auto 8rem;
+        justify-content: initial;
+        padding: 1.5rem 2rem;
+        border-bottom: 0.1rem solid var(--secondary-color);
+        color: var(--primary-color);
+        cursor: pointer;
+        transition: color 180ms ease-out;
+
+        &:first-child {
+          border-top: 0.1rem solid var(--secondary-color);
+        }
+
+        &:hover {
+          color: var(--link-hover-color);
+        }
+      }
+    }
+  }
 }

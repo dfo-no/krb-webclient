@@ -1,16 +1,12 @@
-import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardHeader from '@mui/material/CardHeader';
-import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
-import ListItemIcon from '@mui/material/ListItemIcon';
-import makeStyles from '@mui/styles/makeStyles';
 import MenuBookIcon from '@mui/icons-material/MenuBook';
 import React from 'react';
-import Typography from '@mui/material/Typography';
 import { useTranslation } from 'react-i18next';
 
+import css from './HomePage.module.scss';
+import DateUtils from '../../common/DateUtils';
 import { IBank } from '../../Nexus/entities/IBank';
 import { useHomeState } from './HomeContext';
 
@@ -20,44 +16,7 @@ interface IProps {
   title: string;
 }
 
-const useStyles = makeStyles({
-  header: {
-    color: 'var(--primary-color)'
-  },
-  item: {
-    display: 'grid',
-    gridTemplateColumns: '3rem auto 8rem',
-    justifyContent: 'initial',
-    padding: '1.5rem 2rem',
-    borderBottom: '0.1rem solid var(--secondary-color)',
-    color: 'var(--primary-color)',
-    cursor: 'pointer',
-    transition: 'color 180ms ease-out',
-
-    '& .MuiSvgIcon-root': {
-      color: 'var(--primary-color)',
-      transition: 'color 180ms ease-out'
-    },
-
-    '&:hover': {
-      color: 'var(--link-hover-color)',
-
-      '& .MuiSvgIcon-root': {
-        color: 'var(--link-hover-color)'
-      }
-    },
-
-    '&:first-child': {
-      borderTop: '0.1rem solid var(--secondary-color)'
-    }
-  },
-  time: {
-    color: 'var(--disabled-color)',
-    fontSize: '1.4rem',
-    textAlign: 'right',
-    whiteSpace: 'nowrap'
-  }
-});
+const MILLISEC_PER_DAY = 86400000;
 
 export default function HomeDisplayList({
   list,
@@ -66,7 +25,6 @@ export default function HomeDisplayList({
 }: IProps): React.ReactElement {
   const { setSelectedBank } = useHomeState();
   const { t } = useTranslation();
-  const classes = useStyles();
 
   const alphabeticalOrderedList = (): IBank[] => {
     const alphabeticallyOrdered = [...list];
@@ -87,6 +45,20 @@ export default function HomeDisplayList({
     return dateOrdered;
   };
 
+  const getDateChangeInfo = (bank: IBank): string => {
+    if (!bank.publishedDate) {
+      return '';
+    }
+
+    const now = new Date();
+    const publishedDate = new Date(bank.publishedDate);
+    if (now.getTime() - publishedDate.getTime() < 27 * MILLISEC_PER_DAY) {
+      return t('date.ago', { date: publishedDate });
+    }
+
+    return DateUtils.prettyFormatDate(bank.publishedDate);
+  };
+
   const getList = (): IBank[] => {
     const orderedList = orderedByDate
       ? dateOrderedList()
@@ -95,32 +67,28 @@ export default function HomeDisplayList({
   };
 
   const filteredElements = () => {
-    return getList().map((bank: IBank) => {
-      return (
-        <ListItem
-          key={bank.id}
-          className={classes.item}
-          onClick={() => setSelectedBank(bank)}
-        >
-          <ListItemIcon>
-            <MenuBookIcon />
-          </ListItemIcon>
-          <Box>{bank.title}</Box>
-          {bank.publishedDate && (
-            <Typography className={classes.time} variant="subtitle2">
-              {t('date.ago', { date: new Date(bank.publishedDate) })}
-            </Typography>
-          )}
-        </ListItem>
-      );
-    });
+    return getList().map((bank: IBank) => (
+      <li
+        key={bank.id}
+        className={css.item}
+        onClick={() => setSelectedBank(bank)}
+      >
+        <div>
+          <MenuBookIcon />
+        </div>
+        <div>{bank.title}</div>
+        {bank.publishedDate && (
+          <div className={css.Time}>{getDateChangeInfo(bank)}</div>
+        )}
+      </li>
+    ));
   };
 
   return (
-    <Card sx={{ flexBasis: '50%' }}>
-      <CardHeader title={title} className={classes.header} />
+    <Card className={css.DisplayList}>
+      <CardHeader title={title} className={css.Header} />
       <CardContent>
-        <List>{filteredElements()}</List>
+        <ul>{filteredElements()}</ul>
       </CardContent>
     </Card>
   );
