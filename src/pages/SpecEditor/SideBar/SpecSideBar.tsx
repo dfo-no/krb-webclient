@@ -90,14 +90,11 @@ function SpecSideBar(): ReactElement {
         </li>
       </ul>
       {spec.products.length > 0 && (
-        <div>
-          <Divider className={css.Divider} color={theme.palette.silver.main} />
-          <ul>
-            {spec.products.map((element, index) => {
-              return renderProducts(element, index);
-            })}
-          </ul>
-        </div>
+        <ul>
+          {spec.products.map((element, index) => {
+            return renderProducts(element, index);
+          })}
+        </ul>
       )}
       <div className={css.Button}>
         <DownloadButton />
