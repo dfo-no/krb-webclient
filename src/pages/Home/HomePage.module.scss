@@ -119,7 +119,7 @@
         display: grid;
         grid-template-columns: 3rem auto 8rem;
         justify-content: initial;
-        padding: 1.5rem 2rem;
+        padding: var(--small-gap) var(--normal-gap);
         border-bottom: 0.1rem solid var(--secondary-color);
         color: var(--primary-color);
         cursor: pointer;
