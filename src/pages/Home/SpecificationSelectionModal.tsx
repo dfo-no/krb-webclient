@@ -1,11 +1,13 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Box, Typography } from '@mui/material';
 import { useHistory } from 'react-router';
 import { useTranslation } from 'react-i18next';
 
 import DFODialog from '../../components/DFODialog/DFODialog';
+import NewResponseForm from './NewResponseForm';
 import Nexus from '../../Nexus/Nexus';
 import theme from '../../theme';
+import { IResponse } from '../../models/IResponse';
 import { ISpecification } from '../../Nexus/entities/ISpecification';
 import {
   ModalBox,
@@ -13,7 +15,6 @@ import {
   ModalButtonsBox
 } from '../../components/ModalBox/ModalBox';
 import { setEvaluationSpecification } from '../../store/reducers/evaluation-reducer';
-import { setResponse } from '../../store/reducers/response-reducer';
 import { setSpecification } from '../../store/reducers/spesification-reducer';
 import { selectBank } from '../../store/reducers/selectedBank-reducer';
 import { useAppDispatch } from '../../store/hooks';
@@ -27,6 +28,7 @@ export default function SpecificationSelectionModal({
   selectedSpecification
 }: IProps): React.ReactElement {
   const { setSelectedSpecification } = useHomeState();
+  const [newResponse, setNewResponse] = useState<IResponse | null>(null);
   const history = useHistory();
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
@@ -43,8 +45,7 @@ export default function SpecificationSelectionModal({
     const response = nexus.responseService.createResponseFromSpecification(
       selectedSpecification
     );
-    dispatch(setResponse(response));
-    history.push(`/response/${selectedSpecification.bank.id}`);
+    setNewResponse(response);
   };
 
   const doEvaluation = (): void => {
@@ -54,6 +55,7 @@ export default function SpecificationSelectionModal({
 
   const cancel = (): void => {
     setSelectedSpecification(null);
+    setNewResponse(null);
   };
 
   const modalBox = (): React.ReactElement => {
@@ -85,5 +87,17 @@ export default function SpecificationSelectionModal({
     );
   };
 
-  return <DFODialog isOpen={true} handleClose={cancel} children={modalBox()} />;
+  return (
+    <DFODialog
+      isOpen={true}
+      handleClose={cancel}
+      children={
+        newResponse ? (
+          <NewResponseForm handleClose={cancel} response={newResponse} />
+        ) : (
+          modalBox()
+        )
+      }
+    />
+  );
 }
