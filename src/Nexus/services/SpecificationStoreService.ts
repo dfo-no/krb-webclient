@@ -1,10 +1,12 @@
 /* eslint-disable no-param-reassign */
 /* eslint-disable class-methods-use-this */
 import produce from 'immer';
-import { IRequirementAnswer } from '../../models/IRequirementAnswer';
-import { ISpecificationProduct } from '../../models/ISpecificationProduct';
+
+import { ModelType } from '../../enums';
 import { IBank } from '../entities/IBank';
+import { IRequirementAnswer } from '../../models/IRequirementAnswer';
 import { ISpecification } from '../entities/ISpecification';
+import { ISpecificationProduct } from '../../models/ISpecificationProduct';
 
 export default class SpecificationStoreService {
   private static specification: ISpecification;
@@ -13,14 +15,30 @@ export default class SpecificationStoreService {
     SpecificationStoreService.specification = specification;
   }
 
-  // eslint-disable-next-line class-methods-use-this
   public getSpecification(): ISpecification {
     return SpecificationStoreService.specification;
   }
 
-  public createSpecificationFromBank(bank: IBank): void {
-    SpecificationStoreService.specification = {
-      bank,
+  public static generateDefaultSpecification(): ISpecification {
+    return {
+      bank: {
+        id: '',
+        title: '',
+        description: '',
+        needs: [],
+        products: [],
+        codelist: [],
+        tags: [],
+        version: 0,
+        type: ModelType.bank,
+        publications: [],
+        inheritedBanks: [],
+        publishedDate: null,
+        sourceOriginal: null,
+        sourceRel: null,
+        projectId: null,
+        deletedDate: null
+      },
       title: '',
       organization: '',
       organizationNumber: '',
@@ -31,7 +49,7 @@ export default class SpecificationStoreService {
   }
 
   public static getSpecificationFromBank(bank: IBank): ISpecification {
-    const spec: ISpecification = {
+    return {
       bank,
       title: '',
       organization: '',
@@ -40,7 +58,6 @@ export default class SpecificationStoreService {
       requirements: [],
       requirementAnswers: []
     };
-    return spec;
   }
 
   public editTitle(title: string): void {
@@ -52,7 +69,7 @@ export default class SpecificationStoreService {
     );
   }
 
-  public addSpesificationProduct(product: ISpecificationProduct): void {
+  public addSpecificationProduct(product: ISpecificationProduct): void {
     SpecificationStoreService.specification = produce(
       SpecificationStoreService.specification,
       (draft) => {
@@ -61,7 +78,7 @@ export default class SpecificationStoreService {
     );
   }
 
-  public editSpesificationProduct(product: ISpecificationProduct): void {
+  public editSpecificationProduct(product: ISpecificationProduct): void {
     const index = SpecificationStoreService.specification.products.findIndex(
       (specificationproduct: ISpecificationProduct) =>
         specificationproduct.id === product.id
@@ -74,7 +91,7 @@ export default class SpecificationStoreService {
     );
   }
 
-  public deleteSpesificationProduct(product: ISpecificationProduct): void {
+  public deleteSpecificationProduct(product: ISpecificationProduct): void {
     const index = SpecificationStoreService.specification.products.findIndex(
       (specificationproduct: ISpecificationProduct) =>
         specificationproduct.id === product.id

@@ -5,42 +5,14 @@ import { useTranslation } from 'react-i18next';
 import css from './Evaluation.module.scss';
 import DateUtils from '../../common/DateUtils';
 import FileUpload from '../../components/FileUpload/FileUpload';
+import SpecificationStoreService from '../../Nexus/services/SpecificationStoreService';
 import { httpPost } from '../../api/http';
-import { ISpecification } from '../../Nexus/entities/ISpecification';
-import { ModelType } from '../../enums';
 import {
   setEvaluations,
   setEvaluationSpecification,
   setSpecFile
 } from '../../store/reducers/evaluation-reducer';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
-
-const initialSpecification: ISpecification = {
-  bank: {
-    id: '',
-    title: '',
-    description: '',
-    needs: [],
-    products: [],
-    codelist: [],
-    tags: [],
-    version: 0,
-    type: ModelType.bank,
-    publications: [],
-    inheritedBanks: [],
-    publishedDate: null,
-    sourceOriginal: null,
-    sourceRel: null,
-    projectId: null,
-    deletedDate: null
-  },
-  title: '',
-  organization: '',
-  organizationNumber: '',
-  products: [],
-  requirements: [],
-  requirementAnswers: []
-};
 
 const EvaluationSpec = (): ReactElement => {
   const { specFile, specification } = useAppSelector(
@@ -92,7 +64,11 @@ const EvaluationSpec = (): ReactElement => {
       .then((response) => {
         if (!response.data.bank) {
           setUploadError(t('EVAL_SPEC_ERROR_INVALID_FILE'));
-          dispatch(setEvaluationSpecification(initialSpecification));
+          dispatch(
+            setEvaluationSpecification(
+              SpecificationStoreService.generateDefaultSpecification()
+            )
+          );
           return response;
         }
         dispatch(setEvaluationSpecification(response.data));
