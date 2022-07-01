@@ -24,6 +24,9 @@
       padding: var(--big-gap) 0;
 
       li {
+        display: grid;
+        grid-template-columns: auto 3rem;
+        align-items: center;
         padding: var(--small-gap);
         border: 0.1rem var(--border-color-secondary) solid;
         border-radius: 0.5rem;

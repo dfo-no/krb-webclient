@@ -1,10 +1,11 @@
+import CheckIcon from '@mui/icons-material/Check';
 import React, { ReactElement } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import css from './Evaluation.module.scss';
 import DownLoad from './DownLoad';
-import { useEvaluationState } from './EvaluationContext';
 import { useAppSelector } from '../../store/hooks';
+import { useEvaluationState } from './EvaluationContext';
 
 interface ISideBarItem {
   label: string;
@@ -19,8 +20,23 @@ const menuItems: ISideBarItem[] = [
 
 const EvaluationSideBar = (): ReactElement => {
   const { t } = useTranslation();
-  const { evaluations } = useAppSelector((state) => state.evaluation);
+  const { evaluations, responses, specification } = useAppSelector(
+    (state) => state.evaluation
+  );
   const evaluationState = useEvaluationState();
+
+  const isDone = (step: number): boolean => {
+    switch (step) {
+      case 0:
+        return !!specification.bank.id;
+      case 1:
+        return responses.length > 0;
+      case 2:
+        return evaluations.length > 0;
+      default:
+        return false;
+    }
+  };
 
   return (
     <div className={css.SideBar}>
@@ -31,7 +47,8 @@ const EvaluationSideBar = (): ReactElement => {
             className={index === evaluationState.tab ? css.Active : undefined}
             onClick={() => evaluationState.setTab(index)}
           >
-            {t(item.label)}
+            <div>{t(item.label)}</div>
+            {isDone(index) && <CheckIcon />}
           </li>
         ))}
       </ul>
