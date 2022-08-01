@@ -23,10 +23,16 @@ const EvaluationProcess = (): ReactElement => {
     if (!response.specification || !response.requirementAnswers) {
       return false;
     }
+
     if (response.specification.bank.id !== specification.bank.id) {
       return false;
     }
-    return true;
+
+    return response.specification.id === specification.id;
+  };
+
+  const hasValidResponses = (): boolean => {
+    return responses.filter((response) => isValid(response)).length > 0;
   };
 
   const evaluateAll = async () => {
@@ -45,7 +51,7 @@ const EvaluationProcess = (): ReactElement => {
   };
 
   const isEvaluationDisabled = (): boolean => {
-    return responses.length === 0 || specification.bank.id === '';
+    return specification.bank.id === '' || !hasValidResponses();
   };
 
   return (

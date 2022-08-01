@@ -25,12 +25,20 @@ const EvaluationSideBar = (): ReactElement => {
   );
   const evaluationState = useEvaluationState();
 
+  const hasValidResponses = (): boolean => {
+    return (
+      responses.filter(
+        (response) => response.specification?.id === specification.id
+      ).length > 0
+    );
+  };
+
   const isDone = (step: number): boolean => {
     switch (step) {
       case 0:
         return !!specification.bank.id;
       case 1:
-        return responses.length > 0;
+        return hasValidResponses();
       case 2:
         return evaluations.length > 0;
       default:

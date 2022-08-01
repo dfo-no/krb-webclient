@@ -3,18 +3,26 @@ import React from 'react';
 import { AxiosResponse } from 'axios';
 import { useTranslation } from 'react-i18next';
 
+import UuidService from '../../../Nexus/services/UuidService';
 import { httpPost } from '../../../api/http';
 import { ISpecification } from '../../../Nexus/entities/ISpecification';
 import { useAppSelector } from '../../../store/hooks';
+
+const uuidService = new UuidService();
 
 export default function DownloadButton(): React.ReactElement {
   const { t } = useTranslation();
   const { spec } = useAppSelector((state) => state.specification);
 
-  const onDownLoad = () => {
+  const onDownLoad = (): void => {
+    const uniqueSpec: ISpecification = {
+      ...spec,
+      id: uuidService.generateId()
+    };
+
     httpPost<ISpecification, AxiosResponse<File>>(
       '/java/generateSpecification',
-      spec,
+      uniqueSpec,
       {
         headers: {
           'Content-Type': 'application/json',

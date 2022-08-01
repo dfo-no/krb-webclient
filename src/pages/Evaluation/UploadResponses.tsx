@@ -40,7 +40,7 @@ export default function UploadResponses(): React.ReactElement {
       return t('FILE_ERROR_NOT_A_RESPONSE');
     }
 
-    if (response.specification.bank.id !== specification.bank.id) {
+    if (response.specification.id !== specification.id) {
       return t('FILE_ERROR_NOT_MATCHING_SPEC');
     }
 
@@ -63,7 +63,7 @@ export default function UploadResponses(): React.ReactElement {
       return false;
     }
 
-    return response.specification.bank.id === specification.bank.id;
+    return response.specification.id === specification.id;
   };
 
   const readFileContents = async (file: File) => {
