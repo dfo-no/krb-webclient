@@ -6,15 +6,39 @@ import css from '../../pages/Response/Answer/QuestionAnswer/Selection.module.scs
 import { DFOCheckbox } from '../DFOCheckbox/DFOCheckbox';
 import { ICode } from '../../Nexus/entities/ICode';
 import { ICodelist } from '../../Nexus/entities/ICodelist';
+import { ICodeSelection } from '../../Nexus/entities/ICodelistQuestion';
 import { ScrollableContainer } from '../ScrollableContainer/ScrollableContainer';
 
 interface IProps {
   name: string;
-  codelist?: ICodelist;
+  codelist: ICodelist;
+  codeSelection?: ICodeSelection[];
 }
 
-const CodeSelection = ({ name, codelist }: IProps): React.ReactElement => {
-  const codes = codelist ? codelist.codes : [];
+const CodeSelection = ({
+  name,
+  codelist,
+  codeSelection
+}: IProps): React.ReactElement => {
+  const sortCodes = (codesToBeSorted: ICode[]): ICode[] => {
+    return [...codesToBeSorted].sort((a, b) => {
+      const aSelection = codeSelection?.find((cs) => cs.code === a.id);
+      const bSelection = codeSelection?.find((cs) => cs.code === b.id);
+      if (!aSelection) {
+        return 1;
+      }
+      if (!bSelection) {
+        return -1;
+      }
+      if (aSelection.mandatory !== bSelection.mandatory) {
+        return +bSelection.mandatory - +aSelection.mandatory;
+      }
+      return bSelection.score - aSelection.score;
+    });
+  };
+
+  const codes = codeSelection ? sortCodes(codelist.codes) : codelist.codes;
+
   const onClick = (
     item: ICode,
     selected: string[],
@@ -36,6 +60,11 @@ const CodeSelection = ({ name, codelist }: IProps): React.ReactElement => {
     return selected.some((elem) => elem === item.id);
   };
 
+  const codeMandatory = (item: ICode): boolean => {
+    const selection = codeSelection?.find((cs) => cs.code === item.id);
+    return selection ? selection.mandatory : false;
+  };
+
   return (
     <Controller
       render={({ field: { value: selected = [], onChange } }) => (
@@ -51,9 +80,15 @@ const CodeSelection = ({ name, codelist }: IProps): React.ReactElement => {
                   <Box className={css.checkbox}>
                     <DFOCheckbox checked={codeChecked(item, selected)} />
                   </Box>
-                  <Typography className={css.itemTitle}>
-                    {item.title}
-                  </Typography>
+                  {codeMandatory(item) ? (
+                    <Typography variant={'smBold'} className={css.itemTitle}>
+                      {item.title}
+                    </Typography>
+                  ) : (
+                    <Typography variant={'sm'} className={css.itemTitle}>
+                      {item.title}
+                    </Typography>
+                  )}
                   <Typography className={css.itemDescription} variant={'sm'}>
                     {item.description}
                   </Typography>

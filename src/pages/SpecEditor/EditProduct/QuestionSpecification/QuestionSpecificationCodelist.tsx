@@ -1,22 +1,15 @@
-import {
-  Box,
-  FormControl,
-  FormControlLabel,
-  RadioGroup,
-  Typography
-} from '@mui/material';
-import { useEffect, useState } from 'react';
-import { useFormContext, useWatch } from 'react-hook-form';
+import React from 'react';
+import { Typography } from '@mui/material';
+import { useFieldArray, useFormContext } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
-import QuestionSpecificationCodelistPicker from './QuestionSpecificationCodelistPicker';
-import theme from '../../../../theme';
-import VerticalTextCtrl from '../../../../FormProvider/VerticalTextCtrl';
+import CheckboxCtrl from '../../../../FormProvider/CheckboxCtrl';
+import css from '../QuestionContent.module.scss';
+import HorizontalTextCtrl from '../../../../FormProvider/HorizontalTextCtrl';
 import { DFOCheckbox } from '../../../../components/DFOCheckbox/DFOCheckbox';
-import { DFORadioButton } from '../../../../components/DFORadioButton/DFORadioButton';
+import { ICode } from '../../../../Nexus/entities/ICode';
 import { ICodelist } from '../../../../Nexus/entities/ICodelist';
 import { ICodelistQuestion } from '../../../../Nexus/entities/ICodelistQuestion';
-import { IOption } from '../../../../Nexus/entities/IOption';
 import { IRequirementAnswer } from '../../../../models/IRequirementAnswer';
 import { useAppSelector } from '../../../../store/hooks';
 
@@ -25,181 +18,104 @@ interface IProps {
 }
 
 const QuestionSpecificationCodelist = ({ item }: IProps) => {
+  const { t } = useTranslation();
+  const { control } = useFormContext<IRequirementAnswer>();
+  const { fields, append, remove } = useFieldArray({
+    control,
+    name: 'question.config.codes'
+  });
+
   const { spec } = useAppSelector((state) => state.specification);
   const codelist = spec.bank.codelist.find((cl: ICodelist) => {
     return cl.id === item.config.codelist;
   });
-
-  const { t } = useTranslation();
-
-  const { control, setValue } = useFormContext<IRequirementAnswer>();
-
-  const useMandatoryCodes = useWatch({
-    name: 'question.config.mandatoryCodes',
-    control
-  });
-
-  const useOptionalCodes = useWatch({
-    name: 'question.config.optionalCodes',
-    control
-  });
-
-  const [showOptionalCodes, setShowOptionalCodes] = useState(false);
-  const [showMandatoryCodes, setShowMandatoryCodes] = useState(false);
-
-  const [showSelectedCodes, setShowSelectedCodes] = useState(false);
-  const [radiogroupValue, setRadiogroupValue] = useState('allCodes');
-
-  useEffect(() => {
-    if (useMandatoryCodes.length > 0) {
-      setShowMandatoryCodes(true);
-    }
-  }, [useMandatoryCodes]);
-
-  useEffect(() => {
-    if (useOptionalCodes.length > 0) {
-      if (codelist && useOptionalCodes.length < codelist?.codes.length) {
-        setShowSelectedCodes(true);
-        setRadiogroupValue('pickedCodes');
-      }
-
-      setShowOptionalCodes(true);
-    }
-  }, [useOptionalCodes, codelist]);
-
   if (!codelist) return <></>;
 
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
-    setRadiogroupValue((event.target as HTMLInputElement).value);
+  const codeChecked = (code: ICode): boolean => {
+    return fields.some((elem) => elem.code === code.id);
+  };
 
-    if (event.target.value === 'pickedCodes') {
-      setShowSelectedCodes(true);
-      setValue('question.config.optionalCodes', []);
+  const codeIndex = (code: ICode): number => {
+    return fields.findIndex((elem) => elem.code === code.id);
+  };
+
+  const onSelect = (code: ICode): void => {
+    const index = codeIndex(code);
+    if (index === -1) {
+      append({ code: code.id, mandatory: false, score: 0 });
     } else {
-      setShowSelectedCodes(false);
-      setValue(
-        'question.config.optionalCodes',
-        codelist.codes.map((code) => code.id)
-      );
+      remove(index);
     }
   };
-
-  const onOptionalCodesClick = (): void => {
-    if (showOptionalCodes) {
-      setValue('question.config.optionalCodes', []);
-    } else {
-      setValue(
-        'question.config.optionalCodes',
-        codelist.codes.map((code) => code.id)
-      );
-      setShowSelectedCodes(false);
-      setRadiogroupValue('allCodes');
-    }
-    setShowOptionalCodes((prev) => !prev);
-  };
-
-  const onMandatoryCodesClick = (): void => {
-    if (showMandatoryCodes) {
-      setValue('question.config.mandatoryCodes', []);
-    }
-
-    setShowMandatoryCodes((prev) => !prev);
-  };
-
-  const uniqueCodes = new Set();
-  const filteredCodes: IOption[] = Object.values(codelist.codes)
-    .map((code) => {
-      return { label: code.title, value: code.id, recommended: false };
-    })
-    .filter((obj) => {
-      const isPresentInSet = uniqueCodes.has(obj.label);
-      return !isPresentInSet;
-    });
 
   return (
-    <Box>
-      <Box>
-        <Box onClick={onMandatoryCodesClick}>
-          <DFOCheckbox checked={showMandatoryCodes} />
-          <Typography variant={'smBold'} sx={{ marginLeft: 1 }}>
-            {t('Obligatory codes')}
-          </Typography>
-        </Box>
-        {showMandatoryCodes && (
-          <Box sx={{ padding: 3 }}>
-            <QuestionSpecificationCodelistPicker
-              codes={filteredCodes}
-              name="question.config.mandatoryCodes"
-            />
-          </Box>
-        )}
-        <Box onClick={onOptionalCodesClick}>
-          <DFOCheckbox checked={showOptionalCodes} />
-          <Typography variant={'smBold'} sx={{ marginLeft: 1 }}>
-            {t('Optional codes')}
-          </Typography>
-        </Box>
-      </Box>
-      {showOptionalCodes && (
-        <Box
-          sx={{
-            display: 'flex',
-            paddingTop: 3,
-            paddingLeft: 3,
-            paddingRight: 3,
-            flexDirection: 'column',
-            justifyItems: 'center'
-          }}
-        >
-          <Box
-            sx={{
-              display: 'flex',
-              flexDirection: 'column',
-              gap: 2
-            }}
-          >
-            <VerticalTextCtrl
-              name={'question.config.optionalCodeMinAmount'}
-              label={t('Minimum')}
-              placeholder={''}
-              type={'number'}
-            />
-            <VerticalTextCtrl
-              name={'question.config.optionalCodeMaxAmount'}
-              label={t('Maximum')}
-              placeholder={''}
-              type={'number'}
-            />
-          </Box>
-          <FormControl sx={{ paddingTop: 2 }}>
-            <RadioGroup value={radiogroupValue} onChange={handleChange}>
-              <FormControlLabel
-                value="allCodes"
-                control={
-                  <DFORadioButton radioColor={theme.palette.primary.main} />
-                }
-                label={String(t('All codes'))}
+    <div className={css.QuestionFlex}>
+      <Typography variant={'smBold'}>{t('Minimum codes')}</Typography>
+      <HorizontalTextCtrl
+        name={'question.config.optionalCodeMinAmount'}
+        placeholder={t('Minimum')}
+        type={'number'}
+      />
+      <Typography className={css.TopMargin} variant={'smBold'}>
+        {t('Maximum codes')}
+      </Typography>
+      <HorizontalTextCtrl
+        name={'question.config.optionalCodeMaxAmount'}
+        placeholder={t('Maximum')}
+        type={'number'}
+      />
+      <Typography className={css.TopMargin} variant={'smBold'}>
+        {t('Codes')}
+      </Typography>
+      <ul>
+        {codelist.codes.map((code) => {
+          return (
+            <li key={code.id}>
+              <DFOCheckbox
+                className={css.Ctrl}
+                onClick={() => onSelect(code)}
+                checked={codeChecked(code)}
               />
-              <FormControlLabel
-                value="pickedCodes"
-                control={
-                  <DFORadioButton radioColor={theme.palette.primary.main} />
-                }
-                label={String(t('Chosen codes'))}
-              />
-            </RadioGroup>
-          </FormControl>
-          {showSelectedCodes && (
-            <Box sx={{ padding: 3 }}>
-              <QuestionSpecificationCodelistPicker
-                codes={filteredCodes}
-                name="question.config.optionalCodes"
-              />
-            </Box>
-          )}
-        </Box>
-      )}
-    </Box>
+              <Typography
+                className={css.Title}
+                variant={'smBold'}
+                onClick={() => onSelect(code)}
+              >
+                {code.title}
+              </Typography>
+              <Typography
+                className={css.Description}
+                variant={'sm'}
+                onClick={() => onSelect(code)}
+              >
+                {code.description}
+              </Typography>
+              {codeChecked(code) && (
+                <>
+                  <div className={css.Ctrl}>
+                    <CheckboxCtrl
+                      name={`question.config.codes.${codeIndex(
+                        code
+                      )}.mandatory`}
+                    />
+                    <Typography variant={'sm'}>{t('Mandatory')}</Typography>
+                  </div>
+                  <div className={css.Ctrl}>
+                    <HorizontalTextCtrl
+                      name={`question.config.codes.${codeIndex(code)}.score`}
+                      placeholder={t('Score')}
+                      type={'number'}
+                      size={'small'}
+                    />
+                    <Typography variant={'sm'}>{t('Score')}</Typography>
+                  </div>
+                </>
+              )}
+            </li>
+          );
+        })}
+      </ul>
+    </div>
   );
 };
 
