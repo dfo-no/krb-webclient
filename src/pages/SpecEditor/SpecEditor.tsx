@@ -1,4 +1,4 @@
-import React, { ReactElement, useEffect, useState } from 'react';
+import React, { ReactElement } from 'react';
 
 import css from '../Stylesheets/Editor.module.scss';
 import EditProduct from './EditProduct/EditProduct';

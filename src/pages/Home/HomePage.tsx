@@ -19,7 +19,9 @@ import { IAlert } from '../../models/IAlert';
 import { IBank } from '../../Nexus/entities/IBank';
 import {
   setEvaluations,
-  setResponses
+  setFiles,
+  setResponses,
+  setSpecFile
 } from '../../store/reducers/evaluation-reducer';
 import { useAppDispatch } from '../../store/hooks';
 import { useGetBanksQuery } from '../../store/api/bankApi';
@@ -71,7 +73,9 @@ export default function HomePage(): React.ReactElement {
 
   const onUpload = (files: FileList): void => {
     dispatch(setEvaluations([]));
+    dispatch(setFiles([]));
     dispatch(setResponses([]));
+    dispatch(setSpecFile(null));
 
     const formData = new FormData();
     let disableUploadMessage = '';
@@ -106,6 +110,12 @@ export default function HomePage(): React.ReactElement {
     })
       .then((httpResponse) => {
         if (httpResponse.data.title) {
+          dispatch(
+            setSpecFile({
+              name: files[0].name,
+              lastModified: files[0].lastModified
+            })
+          );
           setSelectedSpecification(httpResponse.data);
         } else {
           setSelectedResponse(httpResponse.data);

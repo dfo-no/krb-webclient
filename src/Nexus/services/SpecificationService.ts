@@ -86,19 +86,19 @@ export default class SpecificationService {
   }
 
   async addSpecificationProduct(product: ISpecificationProduct): Promise<void> {
-    return this.store.addSpesificationProduct(product);
+    return this.store.addSpecificationProduct(product);
   }
 
   async editSpecificationProduct(
     product: ISpecificationProduct
   ): Promise<void> {
-    return this.store.editSpesificationProduct(product);
+    return this.store.editSpecificationProduct(product);
   }
 
   async deleteSpecificationProduct(
     product: ISpecificationProduct
   ): Promise<void> {
-    return this.store.deleteSpesificationProduct(product);
+    return this.store.deleteSpecificationProduct(product);
   }
 
   async addRequirement(requirementId: string): Promise<void> {

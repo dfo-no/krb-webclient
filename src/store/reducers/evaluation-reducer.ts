@@ -7,6 +7,7 @@ import { ModelType } from '../../enums';
 
 interface ISelectedBankState {
   files: IFile[];
+  specFile: IFile | null;
   specification: ISpecification;
   responses: IResponse[];
   evaluations: IEvaluatedResponse[];
@@ -14,6 +15,7 @@ interface ISelectedBankState {
 
 const initialState: ISelectedBankState = {
   files: [],
+  specFile: null,
   specification: {
     bank: {
       id: '',
@@ -62,15 +64,19 @@ const evaluationSlice = createSlice({
     },
     setFiles(state, { payload }: PayloadAction<IFile[]>) {
       state.files = payload;
+    },
+    setSpecFile(state, { payload }: PayloadAction<IFile | null>) {
+      state.specFile = payload;
     }
   }
 });
 
 export const {
   setEvaluationSpecification,
+  setEvaluations,
   setFiles,
   setResponses,
-  setEvaluations
+  setSpecFile
 } = evaluationSlice.actions;
 
 export default evaluationSlice.reducer;
