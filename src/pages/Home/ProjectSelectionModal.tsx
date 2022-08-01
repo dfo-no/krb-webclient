@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 
 import DFODialog from '../../components/DFODialog/DFODialog';
 import LoaderSpinner from '../../common/LoaderSpinner';
-import NewSpecificationForm from '../SpecEditor/NewSpecificationForm';
+import NewSpecificationForm from './NewSpecificationForm';
 import SpecificationStoreService from '../../Nexus/services/SpecificationStoreService';
 import theme from '../../theme';
 import { IBank } from '../../Nexus/entities/IBank';
@@ -15,8 +15,6 @@ import {
   ModalButton,
   ModalButtonsBox
 } from '../../components/ModalBox/ModalBox';
-import { setSpecification } from '../../store/reducers/spesification-reducer';
-import { useAppDispatch } from '../../store/hooks';
 import { useHomeState } from './HomeContext';
 import { useGetBankQuery } from '../../store/api/bankApi';
 
@@ -28,10 +26,9 @@ export default function ProjectSelectionModal({
   selectedBank
 }: IProps): React.ReactElement {
   const { setSelectedBank } = useHomeState();
-  const [selectedSpecification, setSelectedSpecification] =
+  const [newSpecification, setNewSpecification] =
     useState<ISpecification | null>(null);
   const { t } = useTranslation();
-  const dispatch = useAppDispatch();
   let originBankId;
   if (selectedBank.projectId) {
     originBankId = selectedBank.projectId;
@@ -65,18 +62,17 @@ export default function ProjectSelectionModal({
   };
 
   const goToSpecification = (): void => {
-    const newSpecification =
+    const specification =
       SpecificationStoreService.getSpecificationFromBank(selectedBank);
-    dispatch(setSpecification(newSpecification));
-    setSelectedSpecification(newSpecification);
+    setNewSpecification(specification);
   };
 
   const cancel = (): void => {
     setSelectedBank(null);
-    setSelectedSpecification(null);
+    setNewSpecification(null);
   };
 
-  const projectModalBox = (): React.ReactElement => {
+  const modalBox = (): React.ReactElement => {
     return (
       <ModalBox>
         <Box>
@@ -109,25 +105,19 @@ export default function ProjectSelectionModal({
     );
   };
 
-  if (!selectedSpecification) {
-    return (
-      <DFODialog
-        isOpen={true}
-        handleClose={cancel}
-        children={projectModalBox()}
-      />
-    );
-  }
-
   return (
     <DFODialog
       isOpen={true}
       handleClose={cancel}
       children={
-        <NewSpecificationForm
-          specification={selectedSpecification}
-          handleClose={cancel}
-        />
+        newSpecification ? (
+          <NewSpecificationForm
+            specification={newSpecification}
+            handleClose={cancel}
+          />
+        ) : (
+          modalBox()
+        )
       }
     />
   );

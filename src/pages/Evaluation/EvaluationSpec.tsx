@@ -8,8 +8,7 @@ import FileUpload from '../../components/FileUpload/FileUpload';
 import { httpPost } from '../../api/http';
 import {
   setEvaluations,
-  setEvaluationSpecification,
-  setFiles
+  setEvaluationSpecification
 } from '../../store/reducers/evaluation-reducer';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 
@@ -23,7 +22,6 @@ const EvaluationSpec = (): ReactElement => {
   useEffect(() => {
     setUploadError('');
     setSpec(null);
-    dispatch(setFiles([]));
   }, [dispatch]);
 
   const formatDate = (time: number): string => {

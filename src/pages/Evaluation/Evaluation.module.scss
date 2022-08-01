@@ -12,21 +12,8 @@
     margin-top: var(--small-gap);
     padding-top: var(--micro-gap);
 
-    .TabBody {
-      position: absolute;
-      width: 100%;
-      opacity: 0;
-      transition: opacity 300ms ease-out;
-      display: none;
-
-      &.Active {
-        opacity: 1;
-        display: block;
-      }
-
-      h1 {
-        margin-top: 0;
-      }
+    h1 {
+      margin-top: 0;
     }
   }
 
