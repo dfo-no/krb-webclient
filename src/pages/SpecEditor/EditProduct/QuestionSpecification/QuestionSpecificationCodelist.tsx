@@ -91,23 +91,25 @@ const QuestionSpecificationCodelist = ({ item }: IProps) => {
                 {code.description}
               </Typography>
               {codeChecked(code) && (
-                <div className={css.Ctrl}>
-                  <CheckboxCtrl
-                    name={`question.config.codes.${codeIndex(code)}.mandatory`}
-                  />
-                  <Typography variant={'sm'}>{t('Mandatory')}</Typography>
-                </div>
-              )}
-              {codeChecked(code) && (
-                <div className={css.Ctrl}>
-                  <HorizontalTextCtrl
-                    name={`question.config.codes.${codeIndex(code)}.score`}
-                    placeholder={t('Score')}
-                    type={'number'}
-                    size={'small'}
-                  />
-                  <Typography variant={'sm'}>{t('Score')}</Typography>
-                </div>
+                <>
+                  <div className={css.Ctrl}>
+                    <CheckboxCtrl
+                      name={`question.config.codes.${codeIndex(
+                        code
+                      )}.mandatory`}
+                    />
+                    <Typography variant={'sm'}>{t('Mandatory')}</Typography>
+                  </div>
+                  <div className={css.Ctrl}>
+                    <HorizontalTextCtrl
+                      name={`question.config.codes.${codeIndex(code)}.score`}
+                      placeholder={t('Score')}
+                      type={'number'}
+                      size={'small'}
+                    />
+                    <Typography variant={'sm'}>{t('Score')}</Typography>
+                  </div>
+                </>
               )}
             </li>
           );
