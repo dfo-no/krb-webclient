@@ -1,6 +1,6 @@
 import DeleteIcon from '@mui/icons-material/Delete';
-import React, { useState } from 'react';
-import { Box, Button, Card, Typography } from '@mui/material';
+import React, { ReactElement, useState } from 'react';
+import { Button, Card, Typography } from '@mui/material';
 import { useFieldArray, useFormContext } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
@@ -14,7 +14,7 @@ import { FormIconButton } from '../../../../components/Form/FormIconButton';
 import { IVariant } from '../../../../Nexus/entities/IVariant';
 import { QuestionVariant } from '../../../../enums';
 
-const QuestionsList = () => {
+const QuestionsList = (): ReactElement => {
   const { t } = useTranslation();
   const { control } = useFormContext<IVariant>();
   const { fields, append, remove } = useFieldArray({
@@ -25,11 +25,11 @@ const QuestionsList = () => {
   const [isOpen, setOpen] = useState(false);
   const [selectedValue, setSelectedValue] = useState(QuestionVariant.Q_TEXT);
 
-  const handleClickOpen = () => {
+  const handleClickOpen = (): void => {
     setOpen(true);
   };
 
-  const handleClose = (value: QuestionVariant) => {
+  const handleClose = (value: QuestionVariant): void => {
     setOpen(false);
     setSelectedValue(value);
     const questionService = new QuestionService();
@@ -39,9 +39,15 @@ const QuestionsList = () => {
     }
   };
 
+  const hasResponseType = (): boolean => {
+    return fields.length > 0;
+  };
+
   return (
     <FlexColumnBox>
       <Button
+        className={hasResponseType() ? css.Disabled : undefined}
+        disabled={hasResponseType()}
         sx={{ marginBottom: 1, marginRight: 'auto' }}
         variant="primary"
         onClick={handleClickOpen}
@@ -50,11 +56,11 @@ const QuestionsList = () => {
       </Button>
 
       {fields.length > 0 && (
-        <Box className={css.QuestionList}>
+        <div className={css.QuestionList}>
           {fields.map((item, index) => {
             return (
               <Card className={css.Card} key={item.id}>
-                <Box className={css.Content}>
+                <div className={css.Content}>
                   <Typography variant={'smBold'}>{t(item.type)}</Typography>
                   <FormIconButton
                     className={css.IconButton}
@@ -63,12 +69,12 @@ const QuestionsList = () => {
                   >
                     <DeleteIcon />
                   </FormIconButton>
-                </Box>
+                </div>
                 <QuestionConfig item={item} index={index} />
               </Card>
             );
           })}
-        </Box>
+        </div>
       )}
 
       <SelectQuestionDialog
