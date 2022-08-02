@@ -15,7 +15,7 @@ export default function AdminGuard(): React.ReactElement {
     <Box
       sx={{
         display: 'flex',
-        height: '100%',
+        minHeight: '100vh',
         width: '100%'
       }}
     >
@@ -23,7 +23,7 @@ export default function AdminGuard(): React.ReactElement {
       <Box
         sx={{
           display: 'flex',
-          height: '100%',
+          minHeight: '100%',
           width: '100%',
           background: 'var(--secondary-background-color)'
         }}

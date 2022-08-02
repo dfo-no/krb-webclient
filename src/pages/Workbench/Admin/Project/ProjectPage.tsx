@@ -1,52 +1,23 @@
-import { Box, Button, List, Typography, styled } from '@mui/material/';
-import makeStyles from '@mui/styles/makeStyles';
 import React, { useState } from 'react';
-import { useTranslation } from 'react-i18next';
+import { Button, List, Typography } from '@mui/material/';
 import { useParams } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
+
+import css from './ProjectPage.module.scss';
+import DateUtils from '../../../../common/DateUtils';
 import LoaderSpinner from '../../../../common/LoaderSpinner';
+import NewPublicationForm from './NewPublicationForm';
+import { FormContainerBox } from '../../../../components/Form/FormContainerBox';
 import { IPublication } from '../../../../Nexus/entities/IPublication';
-import { useGetProjectQuery } from '../../../../store/api/bankApi';
-import { ScrollableContainer } from '../../../../components/ScrollableContainer/ScrollableContainer';
+import { IRouteProjectParams } from '../../../../models/IRouteProjectParams';
 import {
   NewButtonContainer,
   SearchContainer
 } from '../../../../components/SearchContainer/SearchContainer';
 import { StandardContainer } from '../../../../components/StandardContainer/StandardContainer';
-import { IRouteProjectParams } from '../../../../models/IRouteProjectParams';
-import NewPublicationForm from './NewPublicationForm';
-import { FormContainerBox } from '../../../../components/Form/FormContainerBox';
-
-const useStyles = makeStyles({
-  versionText: {
-    alignSelf: 'center',
-    paddingLeft: 15,
-    paddingRight: 15
-  },
-  commentText: {
-    display: 'flex',
-    height: '100%',
-    paddingLeft: 15,
-    borderLeft: '0.1rem solid',
-    marginLeft: 'auto',
-    width: '40vw'
-  }
-});
-
-const PlainListBox = styled(Box)(({ theme }) => ({
-  display: 'flex',
-  flexDirection: 'row',
-  width: '100%',
-  paddingTop: 10,
-  paddingBottom: 10,
-  paddingLeft: 15,
-  paddingRight: 15,
-  marginBottom: 15,
-  backgroundColor: theme.palette.white.main,
-  border: `0.1rem solid ${theme.palette.gray500.main}`
-}));
+import { useGetProjectQuery } from '../../../../store/api/bankApi';
 
 function ProjectPage(): React.ReactElement {
-  const classes = useStyles();
   const { t } = useTranslation();
   const [isCreating, setCreating] = useState(false);
 
@@ -61,30 +32,40 @@ function ProjectPage(): React.ReactElement {
     return <></>;
   }
 
+  const getOrderedPublications = (): IPublication[] => {
+    const publications = [...project.publications];
+    publications.reverse();
+    return publications;
+  };
+
   const renderItem = (item: IPublication, i: number) => {
     return (
-      <Box key={i}>
-        <PlainListBox>
-          <Box className={classes.versionText}>
-            <Typography variant="smBold">{`${t('Version')} ${
-              item.version
-            }`}</Typography>
-          </Box>
-          <Box className={classes.commentText}>
-            <Typography sx={{ alignSelf: 'center' }} variant="sm">
-              {item.comment}
-            </Typography>
-          </Box>
-        </PlainListBox>
-      </Box>
+      <li key={i} className={css.Publication}>
+        <div className={css.Version}>
+          <Typography variant="smBold">{`${t('Version')} ${
+            item.version
+          }`}</Typography>
+          <time>{DateUtils.prettyFormat(item.date)}</time>
+        </div>
+        <div className={css.Comment}>
+          <Typography sx={{ alignSelf: 'center' }} variant="sm">
+            {item.comment}
+          </Typography>
+        </div>
+      </li>
     );
   };
 
   return (
-    <StandardContainer>
+    <StandardContainer className={css.ProjectPage}>
       <SearchContainer>
         <NewButtonContainer>
-          <Button variant="primary" onClick={() => setCreating(true)}>
+          <Button
+            className={isCreating ? css.Disabled : undefined}
+            disabled={isCreating}
+            variant="primary"
+            onClick={() => setCreating(true)}
+          >
             {t('New publication')}
           </Button>
         </NewButtonContainer>
@@ -98,11 +79,9 @@ function ProjectPage(): React.ReactElement {
           />
         </FormContainerBox>
       )}
-      <ScrollableContainer>
-        <List aria-label="publications">
-          {project.publications.map(renderItem)}
-        </List>
-      </ScrollableContainer>
+      <List aria-label="publications" className={css.Publications}>
+        {getOrderedPublications().map(renderItem)}
+      </List>
     </StandardContainer>
   );
 }
