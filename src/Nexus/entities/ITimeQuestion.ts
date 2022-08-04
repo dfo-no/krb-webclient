@@ -57,9 +57,9 @@ export const TimeWorkbenchSchema = QuestionBaseSchema.keys({
 });
 
 export const TimeSpecSchema = QuestionBaseSchema.keys({
-  type: CustomJoi.string().equal(QuestionVariant.Q_TIME).required(),
+  type: CustomJoi.validateType(QuestionVariant.Q_TIME),
   config: ConfigBaseSchema.keys({
-    isPeriod: CustomJoi.boolean().required(),
+    isPeriod: CustomJoi.validateBoolean(),
     fromBoundary: CustomJoi.string().allow(null).required(),
     toBoundary: CustomJoi.string().allow(null).required(),
     periodMinutes: CustomJoi.alternatives().conditional('isPeriod', {
@@ -100,4 +100,4 @@ export const TimeAnswerSchema = TimeSpecSchema.keys({
     }),
     point: CustomJoi.number().required()
   })
-});
+}).id('TimeAnswerSchema');

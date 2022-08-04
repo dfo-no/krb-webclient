@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { v4 as uuidv4 } from 'uuid';
 import { IAlert } from '../../../../models/IAlert';
 import { Parentable } from '../../../../models/Parentable';
-import { INeed, PutNeedSchema } from '../../../../Nexus/entities/INeed';
+import { INeed, BaseNeedSchema } from '../../../../Nexus/entities/INeed';
 import { useAppDispatch } from '../../../../store/hooks';
 import { addAlert } from '../../../../store/reducers/alert-reducer';
 import useProjectMutations from '../../../../store/api/ProjectMutations';
@@ -31,7 +31,7 @@ function EditNeedForm({ need, handleClose }: IProps): React.ReactElement {
 
   const methods = useForm<Parentable<INeed>>({
     defaultValues: need,
-    resolver: joiResolver(PutNeedSchema)
+    resolver: joiResolver(BaseNeedSchema)
   });
 
   const onSubmit = async (put: Parentable<INeed>) => {

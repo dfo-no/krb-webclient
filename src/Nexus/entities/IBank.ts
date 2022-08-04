@@ -8,44 +8,28 @@ import { IBaseModel } from './IBaseModel';
 import { IInheritedBank } from '../../models/IInheritedBank';
 import { ModelType } from '../../enums';
 import { Parentable } from '../../models/Parentable';
+import { t } from 'i18next';
 
 export const BaseBankSchema = CustomJoi.object().keys({
-  id: CustomJoi.string()
-    .guid({ version: ['uuidv4'] })
-    .length(36)
-    .required(),
-  title: CustomJoi.string().min(3).required(),
-  description: CustomJoi.string().allow('').required(),
-  needs: CustomJoi.array().items(BaseNeedSchema).required(),
-  products: CustomJoi.array().items(BaseProductSchema).required(),
-  codelist: CustomJoi.array().items(CodelistSchema).required(),
-  tags: CustomJoi.array().items(BaseTagSchema).required(),
-  version: CustomJoi.number().min(0).required(),
-  type: CustomJoi.string().equal(ModelType.bank).required(),
-  publications: CustomJoi.array().items(BasePublicationSchema).required(),
-  publishedDate: CustomJoi.alternatives([
-    CustomJoi.date().iso().raw(),
-    CustomJoi.string().valid(null)
-  ]).required(),
-  projectId: CustomJoi.alternatives([
-    CustomJoi.string().length(36),
-    CustomJoi.string().allow(null)
-  ]).required(),
-  inheritedBanks: CustomJoi.array().required(),
-  sourceOriginal: CustomJoi.string()
-    .guid({ version: ['uuidv4'] })
-    .length(36)
-    .allow(null)
-    .required(),
-  sourceRel: CustomJoi.string()
-    .guid({ version: ['uuidv4'] })
-    .length(36)
-    .allow(null)
-    .required(),
-  deletedDate: CustomJoi.alternatives([
-    CustomJoi.date().iso().raw(),
-    CustomJoi.string().valid(null)
-  ])
+  id: CustomJoi.validateId(),
+  title: CustomJoi.validateLongText(t('Title')),
+  description: CustomJoi.validateOptionalText(),
+  needs: CustomJoi.validateItems(BaseNeedSchema, t('Needs')),
+  products: CustomJoi.validateItems(BaseProductSchema, t('Products')),
+  codelist: CustomJoi.validateItems(CodelistSchema, t('Codelists')),
+  tags: CustomJoi.validateItems(BaseTagSchema, t('Tags')),
+  version: CustomJoi.validateVersion(),
+  type: CustomJoi.validateType(ModelType.bank),
+  publications: CustomJoi.validateItems(
+    BasePublicationSchema,
+    t('Publications')
+  ),
+  publishedDate: CustomJoi.validateDeletedDate(),
+  projectId: CustomJoi.validateProjectId(),
+  inheritedBanks: CustomJoi.array(),
+  sourceOriginal: CustomJoi.validateSource(),
+  sourceRel: CustomJoi.validateSource(),
+  deletedDate: CustomJoi.validatePublishedDate()
 });
 
 export interface IBank extends IBaseModel {

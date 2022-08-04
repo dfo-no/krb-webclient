@@ -26,21 +26,12 @@ export const ConfigBaseSchema = CustomJoi.object().keys({
 });
 
 export const QuestionBaseSchema = CustomJoi.object().keys({
-  id: CustomJoi.string()
-    .guid({ version: ['uuidv4'] })
-    .length(36)
+  id: CustomJoi.validateId(),
+  type: CustomJoi.string()
+    .valid(...Object.values(QuestionVariant))
     .required(),
-  type: CustomJoi.string().valid(QuestionVariant).required(),
   answer: CustomJoi.any().required(),
   config: CustomJoi.any().required(),
-  sourceOriginal: CustomJoi.string()
-    .guid({ version: ['uuidv4'] })
-    .length(36)
-    .allow(null)
-    .required(),
-  sourceRel: CustomJoi.string()
-    .guid({ version: ['uuidv4'] })
-    .length(36)
-    .allow(null)
-    .required()
+  sourceOriginal: CustomJoi.validateSource(),
+  sourceRel: CustomJoi.validateSource()
 });

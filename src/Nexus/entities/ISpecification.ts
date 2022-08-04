@@ -8,6 +8,7 @@ import {
   SpecificationProductSchema
 } from '../../models/ISpecificationProduct';
 import { BaseBankSchema, IBank } from './IBank';
+import { t } from 'i18next';
 
 export interface ISpecification {
   bank: IBank;
@@ -21,14 +22,13 @@ export interface ISpecification {
 
 export const BaseSpecificationSchema = CustomJoi.object().keys({
   bank: BaseBankSchema,
-  title: CustomJoi.string().required(),
-  organization: CustomJoi.string().required(),
-  organizationNumber: CustomJoi.string().length(9).required(),
-  products: CustomJoi.array().items(SpecificationProductSchema).required(),
-  requirements: CustomJoi.array().items(CustomJoi.string()).required(),
-  // TODO: change to productSchema when finished refactoring workbench
-  // answeredVariants: CustomJoi.array().items(CustomJoi.string()),
-  requirementAnswers: CustomJoi.array()
-    .items(RequirementAnswerSchema)
-    .required()
+  title: CustomJoi.validateText(t('Title')),
+  organization: CustomJoi.validateText(t('Organization')),
+  organizationNumber: CustomJoi.validateOrgNr(),
+  products: CustomJoi.validateItems(SpecificationProductSchema, t('Products')),
+  requirements: CustomJoi.validateItems(CustomJoi.string(), t('Requirements')),
+  requirementAnswers: CustomJoi.validateItems(
+    RequirementAnswerSchema,
+    t('Requirement answers')
+  )
 });

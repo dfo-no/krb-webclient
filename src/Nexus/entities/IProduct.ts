@@ -1,6 +1,7 @@
 import CustomJoi from '../../common/CustomJoi';
 import { IBaseModel } from './IBaseModel';
 import { ModelType } from '../../enums';
+import { t } from 'i18next';
 
 export interface IProduct extends IBaseModel {
   id: string;
@@ -12,33 +13,16 @@ export interface IProduct extends IBaseModel {
 }
 
 export const BaseProductSchema = CustomJoi.object().keys({
-  id: CustomJoi.string()
-    .guid({ version: ['uuidv4'] })
-    .length(36)
-    .required(),
-  title: CustomJoi.string().required(),
-  description: CustomJoi.string().allow(null, '').required(),
-  parent: CustomJoi.alternatives([
-    CustomJoi.string().length(36),
-    CustomJoi.string().valid('')
-  ]),
-  type: CustomJoi.string().equal(ModelType.product).required(),
-  sourceOriginal: CustomJoi.string()
-    .guid({ version: ['uuidv4'] })
-    .length(36)
-    .allow(null)
-    .required(),
-  sourceRel: CustomJoi.string()
-    .guid({ version: ['uuidv4'] })
-    .length(36)
-    .allow(null)
-    .required(),
-  deletedDate: CustomJoi.alternatives([
-    CustomJoi.date().iso().raw(),
-    CustomJoi.string().valid(null)
-  ])
+  id: CustomJoi.validateId(),
+  title: CustomJoi.validateText(t('Title')),
+  description: CustomJoi.validateOptionalText(),
+  parent: CustomJoi.validateParent(),
+  type: CustomJoi.validateType(ModelType.product),
+  sourceOriginal: CustomJoi.validateSource(),
+  sourceRel: CustomJoi.validateSource(),
+  deletedDate: CustomJoi.validateDeletedDate()
 });
 
 export const PostProductSchema = BaseProductSchema.keys({
-  id: CustomJoi.string().equal('').required()
+  id: CustomJoi.validateEmptyId()
 });

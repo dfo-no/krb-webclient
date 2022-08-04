@@ -15,21 +15,10 @@ export interface IBaseModel {
 }
 
 export const BaseModelSchema = CustomJoi.object().keys({
-  id: CustomJoi.string()
-    .guid({ version: ['uuidv4'] })
-    .length(36)
-    .required(),
+  id: CustomJoi.validateId(),
   type: CustomJoi.string()
     .equal(...Object.values(ModelType))
     .required(),
-  sourceRel: CustomJoi.string()
-    .guid({ version: ['uuidv4'] })
-    .length(36)
-    .allow(null)
-    .required(),
-  sourceOriginal: CustomJoi.string()
-    .guid({ version: ['uuidv4'] })
-    .length(36)
-    .allow(null)
-    .required()
+  sourceRel: CustomJoi.validateSource(),
+  sourceOriginal: CustomJoi.validateSource()
 });

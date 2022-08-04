@@ -33,32 +33,20 @@ export interface ICodelistAnswer extends IAnswerBase {
 }
 
 export const CodelistQuestionSchema = QuestionBaseSchema.keys({
-  type: CustomJoi.string().equal(QuestionVariant.Q_CODELIST).required(),
+  type: CustomJoi.validateType(QuestionVariant.Q_CODELIST),
   config: ConfigBaseSchema.keys({
-    codelist: CustomJoi.string().length(36).required(),
-    mandatoryCodes: CustomJoi.array()
-      .items(CustomJoi.string())
-      .min(0)
-      .required(),
-    optionalCodes: CustomJoi.array()
-      .items(CustomJoi.string())
-      .min(0)
-      .required(),
-    optionalCodeMinAmount: CustomJoi.number().min(0).required(),
-    optionalCodeMaxAmount: CustomJoi.number().min(1).required(),
-    codes: CustomJoi.array().items(
-      CustomJoi.object().keys({
-        code: CustomJoi.string().required(),
-        mandatory: CustomJoi.boolean().required(),
-        score: CustomJoi.number().required().min(0).max(100)
-      })
-    )
+    codelist: CustomJoi.validateId(),
+    mandatoryCodes: CustomJoi.any(),
+    optionalCodes: CustomJoi.any(),
+    optionalCodeMinAmount: CustomJoi.validateMinCodes(),
+    optionalCodeMaxAmount: CustomJoi.validateMaxCodes(),
+    codes: CustomJoi.validateQuestionCodes()
   })
 });
 
 export const CodelistQuestionAnswerSchema = CodelistQuestionSchema.keys({
   answer: CustomJoi.object().keys({
     codes: CustomJoi.array().items(CustomJoi.string().length(36)).required(),
-    point: CustomJoi.number().required()
+    point: CustomJoi.validateScore()
   })
-});
+}).id('CodelistQuestionAnswerSchema');

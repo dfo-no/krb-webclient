@@ -30,7 +30,7 @@ describe('BasePublicationSchema works', () => {
       id: '',
       comment: '',
       date: '',
-      version: 0,
+      version: -1,
       bankId: '',
       type: ModelType.bank,
       sourceOriginal: null,

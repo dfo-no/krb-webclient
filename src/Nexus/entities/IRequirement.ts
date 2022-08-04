@@ -2,6 +2,7 @@ import CustomJoi from '../../common/CustomJoi';
 import { IBaseModel } from './IBaseModel';
 import { IVariant, VariantSchema } from './IVariant';
 import { ModelType } from '../../enums';
+import { t } from 'i18next';
 
 export interface IRequirement extends IBaseModel {
   id: string;
@@ -13,30 +14,19 @@ export interface IRequirement extends IBaseModel {
 }
 
 export const BaseRequirementSchema = CustomJoi.object().keys({
-  id: CustomJoi.string()
-    .guid({ version: ['uuidv4'] })
-    .length(36)
-    .required(),
-  title: CustomJoi.string().required(),
-  description: CustomJoi.string().allow(null, '').required(),
-  needId: CustomJoi.string().length(36).required(),
-  variants: CustomJoi.array().items(VariantSchema).required(),
-  tags: CustomJoi.array().items(CustomJoi.string()),
-  type: CustomJoi.string().equal(ModelType.requirement).required(),
-  sourceOriginal: CustomJoi.string()
-    .guid({ version: ['uuidv4'] })
-    .length(36)
-    .allow(null)
-    .required(),
-  sourceRel: CustomJoi.string()
-    .guid({ version: ['uuidv4'] })
-    .length(36)
-    .allow(null)
-    .required()
+  id: CustomJoi.validateId(),
+  title: CustomJoi.validateText(t('Title')),
+  description: CustomJoi.validateOptionalText(),
+  needId: CustomJoi.validateNeedId(),
+  variants: CustomJoi.validateItems(VariantSchema, t('Variants')),
+  tags: CustomJoi.validateItems(CustomJoi.string(), t('Tags')),
+  type: CustomJoi.validateType(ModelType.requirement),
+  sourceOriginal: CustomJoi.validateSource(),
+  sourceRel: CustomJoi.validateSource()
 });
 
 export const PutRequirementSchema = BaseRequirementSchema;
 
 export const PostRequirementSchema = BaseRequirementSchema.keys({
-  id: CustomJoi.string().equal('').required()
+  id: CustomJoi.validateEmptyId()
 });

@@ -21,15 +21,15 @@ export interface ITextAnswer extends IAnswerBase {
 }
 
 export const TextQuestionSchema = QuestionBaseSchema.keys({
-  type: CustomJoi.string().equal(QuestionVariant.Q_TEXT).required(),
+  type: CustomJoi.validateType(QuestionVariant.Q_TEXT),
   config: ConfigBaseSchema.keys({
-    max: CustomJoi.number().required().min(0)
+    max: CustomJoi.validateMaxText()
   })
 });
 
 export const TextQuestionAnswerSchema = TextQuestionSchema.keys({
   answer: CustomJoi.object().keys({
-    text: CustomJoi.string().allow('').required(),
-    point: CustomJoi.number().required()
+    text: CustomJoi.validateAnswerText(),
+    point: CustomJoi.validateScore()
   })
-});
+}).id('TextQuestionAnswerSchema');

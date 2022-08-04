@@ -54,4 +54,4 @@ export const SliderQuestionAnswerSchema = SliderQuestionSchema.keys({
     value: CustomJoi.number().required(),
     point: CustomJoi.number().required()
   })
-});
+}).id('SliderQuestionAnswerSchema');

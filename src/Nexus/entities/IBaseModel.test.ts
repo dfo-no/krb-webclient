@@ -32,13 +32,13 @@ describe('IBaseModel', () => {
     expect(report.error?.details.length).toEqual(3);
 
     expect(report.error?.details[0].message).toEqual(
-      '"id" must be a valid GUID'
+      'Noe har gått galt med skjemaet. Id til objektet er ugyldig'
     );
     expect(report.error?.details[1].message).toEqual(
-      '"sourceRel" must be a valid GUID'
+      'Noe har gått galt med skjemaet. Kilden til objektet er ugyldig'
     );
     expect(report.error?.details[2].message).toEqual(
-      '"sourceOriginal" must be a valid GUID'
+      'Noe har gått galt med skjemaet. Kilden til objektet er ugyldig'
     );
 
     expect(report.error?.details[0].type).toEqual('string.guid');

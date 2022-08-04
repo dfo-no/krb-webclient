@@ -49,10 +49,3 @@ export const FileUploadAnswerSchema = FileUploadWorkbenchSchema.keys({
     point: CustomJoi.number().required()
   })
 });
-
-export const FileUploadInfoAnswerSchema = FileUploadWorkbenchInfoSchema.keys({
-  answer: CustomJoi.object().keys({
-    file: CustomJoi.array().items(CustomJoi.string()).required(),
-    point: CustomJoi.number().required()
-  })
-});

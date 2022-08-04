@@ -23,16 +23,16 @@ export interface ICheckboxConfig extends IConfigBase {
 }
 
 export const CheckboxQuestionSchema = QuestionBaseSchema.keys({
-  type: CustomJoi.string().equal(QuestionVariant.Q_CHECKBOX).required(),
+  type: CustomJoi.validateType(QuestionVariant.Q_CHECKBOX),
   config: ConfigBaseSchema.keys({
-    preferedAlternative: CustomJoi.boolean(),
-    pointsNonPrefered: CustomJoi.number().min(0).max(100)
+    preferedAlternative: CustomJoi.validateBoolean(),
+    pointsNonPrefered: CustomJoi.validateScore()
   })
 });
 
 export const CheckboxQuestionAnswerSchema = CheckboxQuestionSchema.keys({
   answer: CustomJoi.object().keys({
-    value: CustomJoi.boolean().required(),
-    point: CustomJoi.number().required()
+    value: CustomJoi.validateBoolean(),
+    point: CustomJoi.validateScore()
   })
-});
+}).id('CheckboxQuestionAnswerSchema');
