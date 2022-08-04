@@ -41,7 +41,7 @@
   }
 
   .ListContainer {
-    padding: 0 3rem 0 4rem;
+    padding: 0 var(--big-gap);
 
     .List {
       display: flex;
@@ -51,6 +51,75 @@
       height: 100%;
       padding-top: 0;
       list-style: none;
+
+      .Item {
+        width: 100%;
+        padding: 0;
+        overflow: hidden;
+        text-decoration: none;
+        transition: all 120ms ease-out;
+
+        .IconButton {
+          color: var(--primary-color);
+          transition: all 120ms ease-out;
+        }
+
+        .TitleButton {
+          display: flex;
+          justify-content: space-between;
+          font-family: var(--header-font);
+          font-size: var(--big-fontsize);
+        }
+
+        .ItemCard {
+          width: 100%;
+          height: 10rem;
+          border: 0.1rem solid var(--border-color-secondary);
+          box-shadow: none;
+          background: white;
+          color: inherit;
+          text-decoration: none;
+          cursor: pointer;
+          transition: all 120ms ease-out;
+
+          .CardContent {
+            display: flex;
+            flex-direction: column;
+            gap: var(--tiny-gap);
+            padding: var(--small-gap) var(--normal-gap);
+            padding-right: var(--large-gap);
+          }
+        }
+
+        &:hover {
+          color: white;
+
+          .ItemCard {
+            background-color: var(--primary-color);
+          }
+
+          .IconButton {
+            color: inherit;
+            transition: all 120ms ease-out;
+
+            &:hover {
+              color: var(--error-color);
+            }
+          }
+        }
+      }
+
+      .Divider {
+        color: var(--line-color);
+        border-color: var(--line-color);
+        transition: all 120ms ease-out;
+      }
+
+      .Link {
+        width: 100%;
+        text-decoration: none;
+        color: inherit;
+      }
     }
   }
 }
