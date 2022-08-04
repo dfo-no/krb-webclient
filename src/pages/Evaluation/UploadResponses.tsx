@@ -7,6 +7,7 @@ import { useTranslation } from 'react-i18next';
 import css from './Evaluation.module.scss';
 import DateUtils from '../../common/DateUtils';
 import FileUpload from '../../components/FileUpload/FileUpload';
+import Utils from '../../common/Utils';
 import { FormIconButton } from '../../components/Form/FormIconButton';
 import { httpPost } from '../../api/http';
 import { IFile } from '../../models/IFile';
@@ -58,12 +59,7 @@ export default function UploadResponses(): React.ReactElement {
       return true;
     }
 
-    const response = responses[index];
-    if (!response.specification || !response.requirementAnswers) {
-      return false;
-    }
-
-    return response.specification.id === specification.id;
+    return Utils.isValidResponse(responses[index], specification);
   };
 
   const readFileContents = async (file: File) => {

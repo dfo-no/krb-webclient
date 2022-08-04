@@ -57,6 +57,13 @@ export default class SpecificationService {
     };
   };
 
+  createSpecificationWithId = (item: ISpecification): ISpecification => {
+    return {
+      ...item,
+      id: this.UuidService.generateId()
+    };
+  };
+
   createSpecificationProductWithId = (
     item: ISpecificationProduct
   ): ISpecificationProduct => {

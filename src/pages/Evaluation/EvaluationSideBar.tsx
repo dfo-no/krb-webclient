@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 
 import css from './Evaluation.module.scss';
 import DownLoad from './DownLoad';
+import Utils from '../../common/Utils';
 import { useAppSelector } from '../../store/hooks';
 import { useEvaluationState } from './EvaluationContext';
 
@@ -25,20 +26,12 @@ const EvaluationSideBar = (): ReactElement => {
   );
   const evaluationState = useEvaluationState();
 
-  const hasValidResponses = (): boolean => {
-    return (
-      responses.filter(
-        (response) => response.specification?.id === specification.id
-      ).length > 0
-    );
-  };
-
   const isDone = (step: number): boolean => {
     switch (step) {
       case 0:
         return !!specification.bank.id;
       case 1:
-        return hasValidResponses();
+        return Utils.hasValidResponses(responses, specification);
       case 2:
         return evaluations.length > 0;
       default:

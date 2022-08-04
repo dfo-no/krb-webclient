@@ -1,4 +1,5 @@
 import CustomJoi from '../../common/CustomJoi';
+import { BaseBankSchema, IBank } from './IBank';
 import {
   IRequirementAnswer,
   RequirementAnswerSchema
@@ -7,11 +8,10 @@ import {
   ISpecificationProduct,
   SpecificationProductSchema
 } from '../../models/ISpecificationProduct';
-import { BaseBankSchema, IBank } from './IBank';
 
 export interface ISpecification {
   bank: IBank;
-  id?: string;
+  id: string;
   organization: string;
   organizationNumber: string;
   products: ISpecificationProduct[];
@@ -22,7 +22,7 @@ export interface ISpecification {
 
 export const BaseSpecificationSchema = CustomJoi.object().keys({
   bank: BaseBankSchema,
-  id: CustomJoi.string().optional(),
+  id: CustomJoi.string().required().valid(''),
   organization: CustomJoi.string().required(),
   organizationNumber: CustomJoi.string().length(9).required(),
   products: CustomJoi.array().items(SpecificationProductSchema).required(),
