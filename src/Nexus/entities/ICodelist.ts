@@ -3,7 +3,6 @@ import { BaseCodeSchema, ICode } from './ICode';
 import { IBaseModel } from './IBaseModel';
 import { ModelType } from '../../enums';
 import { Parentable } from '../../models/Parentable';
-import { t } from 'i18next';
 
 export interface ICodelist extends IBaseModel {
   id: string;
@@ -14,12 +13,12 @@ export interface ICodelist extends IBaseModel {
 
 export const CodelistSchema = CustomJoi.object().keys({
   id: CustomJoi.validateId(),
-  title: CustomJoi.validateText(t('Title')),
+  title: CustomJoi.validateText(),
   description: CustomJoi.validateOptionalText(),
-  codes: CustomJoi.validateItems(BaseCodeSchema, t('Codes')),
+  codes: CustomJoi.validateItems(BaseCodeSchema),
   type: CustomJoi.validateType(ModelType.codelist),
-  sourceOriginal: CustomJoi.validateSource(),
-  sourceRel: CustomJoi.validateSource()
+  sourceOriginal: CustomJoi.validateOptionalId(),
+  sourceRel: CustomJoi.validateOptionalId()
 });
 
 export const PostCodelistSchema = CodelistSchema.keys({

@@ -13,13 +13,10 @@ export default class TagService {
     this.storeService = store;
   }
 
-  generateDefaultTaglistValues = (
-    projectId: string,
-    title: string
-  ): Parentable<ITag> => {
+  generateDefaultTaglistValues = (projectId: string): Parentable<ITag> => {
     return {
       id: '',
-      title: title,
+      title: '',
       description: '',
       type: ModelType.tag,
       parent: '',

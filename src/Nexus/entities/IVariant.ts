@@ -1,7 +1,6 @@
 import CustomJoi from '../../common/CustomJoi';
 import VariantType from './VariantType';
 import { QuestionTypes } from '../../models/QuestionTypes';
-import { t } from 'i18next';
 import { QuestionSpecificationSchema } from './QuestionSchema';
 
 export interface IVariant {
@@ -19,7 +18,7 @@ export interface IVariant {
 
 export const VariantSchema = CustomJoi.object().keys({
   id: CustomJoi.validateId(),
-  description: CustomJoi.validateText(t('Description')),
+  description: CustomJoi.validateText(),
   requirementText: CustomJoi.validateOptionalText(),
   instruction: CustomJoi.validateOptionalText(),
   useProduct: CustomJoi.validateBoolean(),
@@ -27,10 +26,7 @@ export const VariantSchema = CustomJoi.object().keys({
   useQualification: CustomJoi.validateBoolean(),
   products: CustomJoi.validateVariantProducts(),
   type: CustomJoi.validateVariantType(),
-  questions: CustomJoi.validateItems(
-    QuestionSpecificationSchema,
-    t('Questions')
-  )
+  questions: CustomJoi.validateItems(QuestionSpecificationSchema)
 });
 
 export const PostVariantSchema = VariantSchema.keys({

@@ -12,10 +12,10 @@ export const BaseTagSchema = CustomJoi.object().keys({
   id: CustomJoi.validateId(),
   title: CustomJoi.validateText(t('Title')),
   description: CustomJoi.validateOptionalText(),
-  parent: CustomJoi.validateParent(),
+  parent: CustomJoi.validateParentId(),
   type: CustomJoi.validateType(ModelType.tag),
-  sourceOriginal: CustomJoi.validateSource(),
-  sourceRel: CustomJoi.validateSource()
+  sourceOriginal: CustomJoi.validateOptionalId(),
+  sourceRel: CustomJoi.validateOptionalId()
 });
 
 export const PostTagSchema = BaseTagSchema.keys({

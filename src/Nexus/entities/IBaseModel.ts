@@ -19,6 +19,6 @@ export const BaseModelSchema = CustomJoi.object().keys({
   type: CustomJoi.string()
     .equal(...Object.values(ModelType))
     .required(),
-  sourceRel: CustomJoi.validateSource(),
-  sourceOriginal: CustomJoi.validateSource()
+  sourceRel: CustomJoi.validateOptionalId(),
+  sourceOriginal: CustomJoi.validateOptionalId()
 });

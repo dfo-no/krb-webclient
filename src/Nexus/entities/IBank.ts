@@ -8,28 +8,24 @@ import { IBaseModel } from './IBaseModel';
 import { IInheritedBank } from '../../models/IInheritedBank';
 import { ModelType } from '../../enums';
 import { Parentable } from '../../models/Parentable';
-import { t } from 'i18next';
 
 export const BaseBankSchema = CustomJoi.object().keys({
   id: CustomJoi.validateId(),
-  title: CustomJoi.validateLongText(t('Title')),
+  title: CustomJoi.validateLongText(),
   description: CustomJoi.validateOptionalText(),
-  needs: CustomJoi.validateItems(BaseNeedSchema, t('Needs')),
-  products: CustomJoi.validateItems(BaseProductSchema, t('Products')),
-  codelist: CustomJoi.validateItems(CodelistSchema, t('Codelists')),
-  tags: CustomJoi.validateItems(BaseTagSchema, t('Tags')),
+  needs: CustomJoi.validateItems(BaseNeedSchema),
+  products: CustomJoi.validateItems(BaseProductSchema),
+  codelist: CustomJoi.validateItems(CodelistSchema),
+  tags: CustomJoi.validateItems(BaseTagSchema),
   version: CustomJoi.validateVersion(),
   type: CustomJoi.validateType(ModelType.bank),
-  publications: CustomJoi.validateItems(
-    BasePublicationSchema,
-    t('Publications')
-  ),
-  publishedDate: CustomJoi.validateDeletedDate(),
-  projectId: CustomJoi.validateProjectId(),
+  publications: CustomJoi.validateItems(BasePublicationSchema),
+  publishedDate: CustomJoi.validateOptionalDate(),
+  projectId: CustomJoi.validateOptionalId(),
   inheritedBanks: CustomJoi.array(),
-  sourceOriginal: CustomJoi.validateSource(),
-  sourceRel: CustomJoi.validateSource(),
-  deletedDate: CustomJoi.validatePublishedDate()
+  sourceOriginal: CustomJoi.validateOptionalId(),
+  sourceRel: CustomJoi.validateOptionalId(),
+  deletedDate: CustomJoi.validateOptionalDate()
 });
 
 export interface IBank extends IBaseModel {

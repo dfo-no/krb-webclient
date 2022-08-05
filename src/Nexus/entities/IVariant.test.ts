@@ -170,10 +170,10 @@ describe('IVariant', () => {
     const report = VariantSchema.validate(variant);
 
     expect(report.error?.details[0].message).toEqual(
-      'Maksverdi må være et positivt heltall'
+      'Må være et positivt heltall'
     );
     expect(report.error?.details[1].message).toEqual(
-      'Maksverdi må være et positivt heltall'
+      'Må være et positivt heltall'
     );
 
     expect(report.error?.details[0].type).toEqual('number.min');

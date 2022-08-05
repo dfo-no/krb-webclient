@@ -4,8 +4,8 @@ const scoreValidator = (joi: Joi.Root) => ({
   type: 'validateScore',
   messages: {
     'number.base': 'Poeng må være et gyldig tall',
-    'number.max': 'Poeng må være 100 eller lavere',
-    'number.min': 'Poeng må være 0 eller høyere'
+    'number.max': 'Poeng må være maksimum 100',
+    'number.min': 'Poeng må være minimum 0'
   },
   base: joi.number().min(0).max(100).required()
 });
@@ -13,9 +13,9 @@ const scoreValidator = (joi: Joi.Root) => ({
 const maxTextValidator = (joi: Joi.Root) => ({
   type: 'validateMaxText',
   messages: {
-    'number.base': 'Maksverdi må være et gyldig tall',
-    'number.integer': 'Maksverdi må være et positivt heltall',
-    'number.min': 'Maksverdi må være et positivt heltall'
+    'number.base': 'Må være et gyldig tall',
+    'number.integer': 'Må være et positivt heltall',
+    'number.min': 'Må være et positivt heltall'
   },
   base: joi.number().integer().min(0).required()
 });
@@ -42,9 +42,9 @@ const answerTextValidator = (joi: Joi.Root) => ({
 const maxCodeValidator = (joi: Joi.Root) => ({
   type: 'validateMaxCodes',
   messages: {
-    'number.base': 'Maksverdi må være et gyldig tall',
-    'number.integer': 'Maksverdi må være et positivt heltall',
-    'number.min': 'Maksverdi må være større eller lik 1'
+    'number.base': 'Må være et tall',
+    'number.integer': 'Må være et positivt heltall',
+    'number.min': 'Må være minimum 1'
   },
   base: joi.number().integer().min(1).required()
 });
@@ -52,9 +52,9 @@ const maxCodeValidator = (joi: Joi.Root) => ({
 const minCodeValidator = (joi: Joi.Root) => ({
   type: 'validateMinCodes',
   messages: {
-    'number.base': 'Minimumsverdi må være et gyldig tall',
-    'number.integer': 'Minimumsverdi må være et positivt heltall',
-    'number.min': 'Minimumsverdi må være et positivt heltall'
+    'number.base': 'Må være et tall',
+    'number.integer': 'Må være et positivt heltall',
+    'number.min': 'Må være et positivt heltall'
   },
   base: joi.number().integer().min(0).required()
 });
@@ -63,16 +63,18 @@ const QuestionCodesValidator = (joi: Joi.Root) => ({
   type: 'validateQuestionCodes',
   base: joi.array().items(
     joi.object().keys({
-      code: joi.string().required(),
+      code: joi
+        .string()
+        .guid({ version: ['uuidv4'] })
+        .required(),
       mandatory: joi.boolean().required(),
-      score: joi.number().required().min(0).max(100)
+      score: joi.number().required().min(0).max(100).messages({
+        'number.base': 'Må være et gyldig tall',
+        'number.min': 'Må være minimum 0',
+        'number.max': 'Må være maksimum 100'
+      })
     })
-  ),
-  messages: {
-    'number.base': 'Poeng må være et gyldig tall',
-    'number.min': 'Poeng må være større eller lik 0',
-    'number.max': 'Poeng må være mindre eller lik 100'
-  }
+  )
 });
 
 const QuestionJoi = [

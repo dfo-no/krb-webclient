@@ -2,7 +2,6 @@ import CustomJoi from '../../common/CustomJoi';
 import { BaseRequirementSchema, IRequirement } from './IRequirement';
 import { IBaseModel } from './IBaseModel';
 import { ModelType } from '../../enums';
-import { t } from 'i18next';
 
 export interface INeed extends IBaseModel {
   title: string;
@@ -12,16 +11,13 @@ export interface INeed extends IBaseModel {
 
 export const BaseNeedSchema = CustomJoi.object().keys({
   id: CustomJoi.validateId(),
-  title: CustomJoi.validateText(t('Title')),
+  title: CustomJoi.validateText(),
   description: CustomJoi.validateOptionalText(),
-  requirements: CustomJoi.validateItems(
-    BaseRequirementSchema,
-    t('Requirements')
-  ),
+  requirements: CustomJoi.validateItems(BaseRequirementSchema),
   type: CustomJoi.validateType(ModelType.need),
-  sourceOriginal: CustomJoi.validateSource(),
-  sourceRel: CustomJoi.validateSource(),
-  parent: CustomJoi.validateParent()
+  sourceOriginal: CustomJoi.validateOptionalId(),
+  sourceRel: CustomJoi.validateOptionalId(),
+  parent: CustomJoi.validateParentId()
 });
 
 export const PostNeedSchema = BaseNeedSchema.keys({

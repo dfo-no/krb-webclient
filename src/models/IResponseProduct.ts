@@ -7,7 +7,6 @@ import {
   ISpecificationProduct,
   SpecificationProductSchema
 } from './ISpecificationProduct';
-import { t } from 'i18next';
 
 export interface IResponseProduct {
   id: string;
@@ -20,12 +19,9 @@ export interface IResponseProduct {
 
 export const ResponseProductSchema = CustomJoi.object().keys({
   id: CustomJoi.validateId(),
-  title: CustomJoi.validateText(t('Title')),
+  title: CustomJoi.validateText(),
   description: CustomJoi.validateOptionalText(),
   originProduct: SpecificationProductSchema.required(),
-  requirementAnswers: CustomJoi.validateItems(
-    RequirementAnswerSchema,
-    t('Requirement answers')
-  ),
+  requirementAnswers: CustomJoi.validateItems(RequirementAnswerSchema),
   price: CustomJoi.number().integer().required()
 });

@@ -32,6 +32,6 @@ export const QuestionBaseSchema = CustomJoi.object().keys({
     .required(),
   answer: CustomJoi.any().required(),
   config: CustomJoi.any().required(),
-  sourceOriginal: CustomJoi.validateSource(),
-  sourceRel: CustomJoi.validateSource()
+  sourceOriginal: CustomJoi.validateOptionalId(),
+  sourceRel: CustomJoi.validateOptionalId()
 });

@@ -8,10 +8,10 @@ export const BasePublicationSchema = CustomJoi.object().keys({
   comment: CustomJoi.validateText(t('Comment')),
   date: CustomJoi.validateDate(),
   version: CustomJoi.validateVersion(),
-  bankId: CustomJoi.validateBankId(),
+  bankId: CustomJoi.validateId(),
   type: CustomJoi.validateType(ModelType.publication),
-  sourceOriginal: CustomJoi.validateSource(),
-  sourceRel: CustomJoi.validateSource()
+  sourceOriginal: CustomJoi.validateOptionalId(),
+  sourceRel: CustomJoi.validateOptionalId()
 });
 
 export const PostPublicationSchema = BasePublicationSchema.keys({

@@ -32,7 +32,7 @@ export default function NewTagForm({
   const { addTag } = useProjectMutations();
 
   const defaultValues: Parentable<ITag> =
-    nexus.tagService.generateDefaultTaglistValues(projectId, '');
+    nexus.tagService.generateDefaultTaglistValues(projectId);
 
   const methods = useForm<Parentable<ITag>>({
     resolver: joiResolver(PostTagSchema),

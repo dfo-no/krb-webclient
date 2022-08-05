@@ -5,7 +5,24 @@ import QuestionJoi from './QuestionJoi';
 
 const i18nJoi = Joi.defaults((schema) =>
   schema.options({
-    abortEarly: false
+    abortEarly: false,
+    messages: {
+      'any.required':
+        'Noe har gått galt med skjemaet. Kan ikke finne {{#label}}',
+      'any.only': 'Noe har gått galt med skjemaet. {{#label}} er ugyldig',
+      'string.base': `Noe har gått galt med skjemaet. {{#label}} er ikke en tekststreng`,
+      'string.guid':
+        'Noe har gått galt med skjemaet. {{#label}} er ikke en gyldig guid',
+      'boolean.base':
+        'Noe har gått galt med skjemaet. {{#label}} er ikke en boolsk verdi',
+      'date.base': 'Noe har gått galt med skjemaet. {{#label}} er ikke en dato',
+      'date.format':
+        'Noe har gått galt med skjemaet. {{#label}} er på et ugyldig format',
+      'date.isoDate':
+        'Noe har gått galt med skjemaet. {{#label}} er ikke på ISO format',
+      'array.base':
+        'Noe har gått galt med skjemaet. {{#label}} er ikke en liste'
+    }
   })
 );
 
@@ -14,76 +31,62 @@ const i18nJoi = Joi.defaults((schema) =>
  * https://joi.dev/api/?v=17.6.0#extensions
  */
 
-const textValidator = (joi: Joi.Root) => ({
-  type: 'validateText',
-  args(value: any, type: string) {
-    return joi
-      .string()
-      .messages({
-        'string.empty': `${type} kan ikke være tom`,
-        'string.base': `Noe har gått galt med skjemaet. ${type} er ikke en tekststreng`,
-        'any.required': `Noe har gått galt med skjemaet. Kan ikke finne ${type}`
-      })
-      .required();
-  }
-});
-
-const longTextValidator = (joi: Joi.Root) => ({
-  type: 'validateLongText',
-  args(value: any, type: string) {
-    return joi
-      .string()
-      .min(3)
-      .messages({
-        'string.empty': `${type} kan ikke være tom`,
-        'string.min': `${type} må ha minimum 3 karakterer`,
-        'string.base': `Noe har gått galt med skjemaet. ${type} er ikke en tekststreng`,
-        'any.required': `Noe har gått galt med skjemaet. Kan ikke finne ${type}`
-      })
-      .required();
-  }
-});
-
 const idValidator = (joi: Joi.Root) => ({
   type: 'validateId',
   base: joi
     .string()
     .guid({ version: ['uuidv4'] })
-    .required(),
-  messages: {
-    'string.base': `Noe har gått galt med skjemaet. Id er ikke en tekststreng`,
-    'string.guid': 'Noe har gått galt med skjemaet. Id til objektet er ugyldig',
-    'any.required': 'Noe har gått galt med skjemaet. Kan ikke finne id'
-  }
+    .required()
 });
 
 const emptyIdValidator = (joi: Joi.Root) => ({
   type: 'validateEmptyId',
-  base: joi.string().equal('').required(),
+  base: joi.string().equal('').required()
+});
+
+const optionalIdValidator = (joi: Joi.Root) => ({
+  type: 'validateOptionalId',
+  base: joi
+    .string()
+    .guid({ version: ['uuidv4'] })
+    .allow(null)
+    .required()
+});
+
+const parentIdValidator = (joi: Joi.Root) => ({
+  type: 'validateParentId',
+  base: joi
+    .string()
+    .guid({ version: ['uuidv4'] })
+    .allow('')
+    .required()
+});
+
+const textValidator = (joi: Joi.Root) => ({
+  type: 'validateText',
+  base: joi.string().required(),
   messages: {
-    'string.base': `Noe har gått galt med skjemaet. Id er ikke en tekststreng`,
-    'any.only': 'Noe har gått galt med skjemaet. Id til objektet er ugyldig',
-    'any.required': 'Noe har gått galt med skjemaet. Kan ikke finne id'
+    'string.empty': `Kan ikke være tom`
+  }
+});
+
+const longTextValidator = (joi: Joi.Root) => ({
+  type: 'validateLongText',
+  base: joi.string().min(3).required(),
+  messages: {
+    'string.empty': `Kan ikke være tom`,
+    'string.min': `Må ha minimum 3 karakterer`
   }
 });
 
 const optionalTextValidator = (joi: Joi.Root) => ({
   type: 'validateOptionalText',
-  base: joi.string().allow('').required(),
-  messages: {
-    'string.base': `Noe har gått galt med skjemaet. {{label}} er ikke en tekststreng`,
-    'any.required': 'Noe har gått galt med skjemaet. Kan ikke finne {{label}}'
-  }
+  base: joi.string().allow('').required()
 });
 
 const booleanValidator = (joi: Joi.Root) => ({
   type: 'validateBoolean',
-  base: joi.boolean().required(),
-  messages: {
-    'boolean.base':
-      'Noe har gått galt med skjemaet. {{label}} er ikke en boolsk verdi',
-    'any.required': 'Noe har gått galt med skjemaet. Kan ikke finne {{label}}'
-  }
+  base: joi.boolean().required()
 });
 
 const typeValidator = (joi: Joi.Root) => ({
@@ -91,11 +94,6 @@ const typeValidator = (joi: Joi.Root) => ({
   base: joi.string().required(),
   args(value: any, type: string) {
     return value.equal(type);
-  },
-  messages: {
-    'string.base': `Noe har gått galt med skjemaet. Type er ikke en tekststreng`,
-    'any.only': 'Noe har gått galt med skjemaet. Typen til objektet er ugyldig',
-    'any.required': 'Noe har gått galt med skjemaet. Kan ikke finne type'
   }
 });
 
@@ -103,11 +101,7 @@ const typeVariantValidator = (joi: Joi.Root) => ({
   type: 'validateVariantType',
   base: joi.string().required(),
   messages: {
-    'array.max': 'For mange spørsmål for variant av typen Info',
-    'string.base': `Noe har gått galt med skjemaet. Type er ikke en tekststreng`,
-    'any.invalid':
-      'Noe har gått galt med skjemaet. Typen til objektet er ugyldig',
-    'any.required': 'Noe har gått galt med skjemaet. Kan ikke finne type'
+    'array.max': 'For mange spørsmål for variant av typen Info'
   },
   validate(value: string, helpers: Joi.CustomHelpers) {
     if (value === VariantType.info) {
@@ -116,40 +110,10 @@ const typeVariantValidator = (joi: Joi.Root) => ({
       }
     } else {
       if (value !== VariantType.requirement) {
-        return { value, errors: helpers.error('any.invalid') };
+        return { value, errors: helpers.error('any.only') };
       }
     }
     return { value };
-  }
-});
-
-const parentValidator = (joi: Joi.Root) => ({
-  type: 'validateParent',
-  base: joi
-    .string()
-    .guid({ version: ['uuidv4'] })
-    .allow('')
-    .required(),
-  messages: {
-    'string.base': `Noe har gått galt med skjemaet. Forelder id er ikke en tekststreng`,
-    'string.guid':
-      'Noe har gått galt med skjemaet. Forelder id til objektet er ugyldig',
-    'any.required': 'Noe har gått galt med skjemaet. Kan ikke finne forelder'
-  }
-});
-
-const sourceValidator = (joi: Joi.Root) => ({
-  type: 'validateSource',
-  base: joi
-    .string()
-    .guid({ version: ['uuidv4'] })
-    .allow(null)
-    .required(),
-  messages: {
-    'string.base': `Noe har gått galt med skjemaet. Kilde er ikke en tekststreng`,
-    'string.guid':
-      'Noe har gått galt med skjemaet. Kilden til objektet er ugyldig',
-    'any.required': 'Noe har gått galt med skjemaet. Kan ikke finne kilde'
   }
 });
 
@@ -157,111 +121,31 @@ const versionValidator = (joi: Joi.Root) => ({
   type: 'validateVersion',
   base: joi.number().min(0).required(),
   messages: {
-    'number.base': 'Noe har gått galt med skjemaet. Versjonsnummer er ugyldig',
-    'number.min': 'Noe har gått galt med skjemaet. Versjonsnummer er ugyldig',
-    'any.required':
-      'Noe har gått galt med skjemaet. Kan ikke finne versjonsnummer'
+    'number.base':
+      'Noe har gått galt med skjemaet. Versjonsnummer er ikke et tall',
+    'number.min': 'Noe har gått galt med skjemaet. Versjonsnummer er ugyldig'
   }
 });
 
 const dateValidator = (joi: Joi.Root) => ({
   type: 'validateDate',
-  base: joi.date().iso().raw().required(),
-  messages: {
-    'date.base': 'Noe har gått galt med skjemaet. Dato er på et ugyldig format',
-    'date.isoDate':
-      'Noe har gått galt med skjemaet. Dato er på et ugyldig format',
-    'any.required': 'Noe har gått galt med skjemaet. Kan ikke finne dato'
-  }
+  base: joi.date().iso().raw().required()
 });
 
 const emptyDateValidator = (joi: Joi.Root) => ({
   type: 'validateEmptyDate',
-  base: joi.string().equal(null).required(),
-  messages: {
-    'string.base': `Noe har gått galt med skjemaet. Dato er ikke en tekststreng`,
-    'any.only': 'Noe har gått galt med skjemaet. Dato er på et ugyldig format',
-    'any.required': 'Noe har gått galt med skjemaet. Kan ikke finne dato'
-  }
+  base: joi.string().equal(null).required()
 });
 
-const deletedDateValidator = (joi: Joi.Root) => ({
-  type: 'validateDeletedDate',
-  base: joi.date().iso().raw().allow(null).required(),
-  messages: {
-    'string.base':
-      'Noe har gått galt med skjemaet. Slettet dato er på et ugyldig format',
-    'date.format':
-      'Noe har gått galt med skjemaet. Slettet dato er på et ugyldig format',
-    'any.required':
-      'Noe har gått galt med skjemaet. Kan ikke finne slettet dato'
-  }
-});
-
-const publishedDateValidator = (joi: Joi.Root) => ({
-  type: 'validatePublishedDate',
-  base: joi.date().iso().raw().allow(null).required(),
-  messages: {
-    'string.base':
-      'Noe har gått galt med skjemaet. Publisert dato er på et ugyldig format',
-    'date.format':
-      'Noe har gått galt med skjemaet. Publisert dato er på et ugyldig format',
-    'any.required':
-      'Noe har gått galt med skjemaet. Kan ikke finne publisert dato'
-  }
+const optionalDateValidator = (joi: Joi.Root) => ({
+  type: 'validateOptionalDate',
+  base: joi.date().iso().raw().allow(null).required()
 });
 
 const itemsValidator = (joi: Joi.Root) => ({
   type: 'validateItems',
-  args(value: any, type: Schema, name: string) {
-    return joi
-      .array()
-      .items(type)
-      .messages({
-        'array.base': `Noe har gått galt med skjemaet. ${name} er ikke en liste`,
-        'any.required': `Noe har gått galt med skjemaet. ${name} har et ugyldig element`
-      })
-      .required();
-  }
-});
-
-const projectIdValidator = (joi: Joi.Root) => ({
-  type: 'validateProjectId',
-  base: joi
-    .string()
-    .guid({ version: ['uuidv4'] })
-    .allow(null)
-    .required(),
-  messages: {
-    'string.base': `Noe har gått galt med skjemaet. Prosjektets id er ikke en tekststreng`,
-    'string.guid': 'Noe har gått galt med skjemaet. Prosjektets id er ugyldig',
-    'any.required': 'Noe har gått galt med skjemaet. Kan ikke finne prosjekt id'
-  }
-});
-
-const bankIdValidator = (joi: Joi.Root) => ({
-  type: 'validateBankId',
-  base: joi
-    .string()
-    .guid({ version: ['uuidv4'] })
-    .required(),
-  messages: {
-    'string.base': `Noe har gått galt med skjemaet. Bankens id er ikke en tekststreng`,
-    'string.guid': 'Noe har gått galt med skjemaet. Bankens id er ugyldig',
-    'any.required': 'Noe har gått galt med skjemaet. Kan ikke finne bank id'
-  }
-});
-
-const needIdValidator = (joi: Joi.Root) => ({
-  type: 'validateNeedId',
-  base: joi
-    .string()
-    .guid({ version: ['uuidv4'] })
-    .required(),
-  messages: {
-    'string.base': `Noe har gått galt med skjemaet. Behovets id er ikke en tekststreng`,
-    'string.guid': 'Noe har gått galt med skjemaet. Behovets id er ugyldig',
-    'any.required': 'Noe har gått galt med skjemaet. Kan ikke finne behov id'
+  args(value: any, type: Schema) {
+    return joi.array().items(type).required();
   }
 });
 
@@ -269,11 +153,9 @@ const organizationNumberValidator = (joi: Joi.Root) => ({
   type: 'validateOrgNr',
   base: joi.string().required(),
   messages: {
-    'string.base': `Noe har gått galt med skjemaet. Organisasjonsnummer er ikke en tekststreng`,
-    'string.length': 'Organisasjonsnummer består av 9 siffre',
-    'string.void': 'Ugyldig organisasjonsnummer',
-    'any.required':
-      'Noe har gått galt med skjemaet. Kan ikke finne organisasjonsnummer'
+    'string.empty': 'Kan ikke være tom',
+    'string.length': 'Består av 9 siffre',
+    'string.void': 'Ugyldig organisasjonsnummer'
   },
   validate(value: string, helpers: Joi.CustomHelpers) {
     const weights = [3, 2, 7, 6, 5, 4, 3, 2];
@@ -297,18 +179,10 @@ const variantProductsValidator = (joi: Joi.Root) => ({
   base: joi
     .array()
     .items(joi.string().guid({ version: ['uuidv4'] }))
-    .messages({
-      'string.base': `Noe har gått galt med skjemaet. Et av produktene har feilformatert id`,
-      'string.guid':
-        'Noe har gått galt med skjemaet. Et av produktene har ugyldig id'
-    })
     .required(),
   messages: {
-    'array.base':
-      'Noe har gått galt med skjemaet. Produkter er ikke formatert som en liste',
     'array.empty': 'Det må velges produkter for varianten',
-    'array.filled': 'Produkter er lagt til, men ikke valgt for varianten',
-    'any.required': 'Noe har gått galt med skjemaet. Kan ikke finne produkter'
+    'array.filled': 'Produkter er lagt til, men ikke valgt for varianten'
   },
   validate(value: string, helpers: Joi.CustomHelpers) {
     if (helpers.state.ancestors[0].useProduct) {
@@ -324,28 +198,47 @@ const variantProductsValidator = (joi: Joi.Root) => ({
   }
 });
 
+const weightValidator = (joi: Joi.Root) => ({
+  type: 'validateWeight',
+  base: joi.number().integer().min(1).max(100).required(),
+  messages: {
+    'number.base': 'Må være et tall',
+    'number.integer': 'Må være et heltall',
+    'number.min': 'Må være minimum 1',
+    'number.max': 'Må være maksimum 100'
+  }
+});
+
+const amountValidator = (joi: Joi.Root) => ({
+  type: 'validateAmount',
+  base: joi.number().integer().min(1).required(),
+  messages: {
+    'number.base': 'Må være et tall',
+    'number.integer': 'Må være et heltall',
+    'number.min': 'Må være minimum 1'
+  }
+});
+
 const CustomJoi = i18nJoi.extend(
-  textValidator,
-  longTextValidator,
   idValidator,
   emptyIdValidator,
+  optionalIdValidator,
+  parentIdValidator,
+  textValidator,
+  longTextValidator,
   optionalTextValidator,
   booleanValidator,
   typeValidator,
   typeVariantValidator,
-  parentValidator,
-  sourceValidator,
   versionValidator,
   dateValidator,
   emptyDateValidator,
-  deletedDateValidator,
-  publishedDateValidator,
+  optionalDateValidator,
   itemsValidator,
-  projectIdValidator,
-  bankIdValidator,
-  needIdValidator,
   organizationNumberValidator,
   variantProductsValidator,
+  weightValidator,
+  amountValidator,
   ...QuestionJoi
 );
 

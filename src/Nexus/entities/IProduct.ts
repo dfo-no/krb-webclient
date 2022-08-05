@@ -16,11 +16,11 @@ export const BaseProductSchema = CustomJoi.object().keys({
   id: CustomJoi.validateId(),
   title: CustomJoi.validateText(t('Title')),
   description: CustomJoi.validateOptionalText(),
-  parent: CustomJoi.validateParent(),
+  parent: CustomJoi.validateParentId(),
   type: CustomJoi.validateType(ModelType.product),
-  sourceOriginal: CustomJoi.validateSource(),
-  sourceRel: CustomJoi.validateSource(),
-  deletedDate: CustomJoi.validateDeletedDate()
+  sourceOriginal: CustomJoi.validateOptionalId(),
+  sourceRel: CustomJoi.validateOptionalId(),
+  deletedDate: CustomJoi.validateOptionalDate()
 });
 
 export const PostProductSchema = BaseProductSchema.keys({

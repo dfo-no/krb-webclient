@@ -14,9 +14,9 @@ export const BaseCodeSchema = CustomJoi.object().keys({
   title: CustomJoi.validateText(t('Title')),
   description: CustomJoi.validateOptionalText(),
   type: CustomJoi.validateType(ModelType.code),
-  parent: CustomJoi.validateParent(),
-  sourceOriginal: CustomJoi.validateSource(),
-  sourceRel: CustomJoi.validateSource()
+  parent: CustomJoi.validateParentId(),
+  sourceOriginal: CustomJoi.validateOptionalId(),
+  sourceRel: CustomJoi.validateOptionalId()
 });
 
 export const PostCodeSchema = BaseCodeSchema.keys({

@@ -6,7 +6,6 @@ import {
   RequirementAnswerSchema
 } from './IRequirementAnswer';
 import { ModelType } from '../enums';
-import { t } from 'i18next';
 
 export interface ISpecificationProduct extends IBaseModel {
   title: string;
@@ -20,19 +19,16 @@ export interface ISpecificationProduct extends IBaseModel {
 
 export const SpecificationProductSchema = CustomJoi.object().keys({
   id: CustomJoi.validateId(),
-  title: CustomJoi.validateText(t('Title')),
+  title: CustomJoi.validateText(),
   originProduct: BaseProductSchema,
   description: CustomJoi.validateOptionalText(),
-  amount: CustomJoi.number().integer().min(1).required(),
-  requirements: CustomJoi.validateItems(CustomJoi.string(), t('Requirements')),
-  weight: CustomJoi.number().integer().min(1).required(),
-  requirementAnswers: CustomJoi.validateItems(
-    RequirementAnswerSchema,
-    t('Requirement answers')
-  ),
+  amount: CustomJoi.validateAmount(),
+  requirements: CustomJoi.validateItems(CustomJoi.string()),
+  weight: CustomJoi.validateWeight(),
+  requirementAnswers: CustomJoi.validateItems(RequirementAnswerSchema),
   type: CustomJoi.validateType(ModelType.specificationProduct),
-  sourceOriginal: CustomJoi.validateSource(),
-  sourceRel: CustomJoi.validateSource()
+  sourceOriginal: CustomJoi.validateOptionalId(),
+  sourceRel: CustomJoi.validateOptionalId()
 });
 
 export const PostSpecificationProductSchema = SpecificationProductSchema.keys({

@@ -13,46 +13,6 @@ describe('CustomJoi', () => {
     })
   }));
 
-  test('Joi validateText() should show error message if text is empty', () => {
-    const schema = CustomJoi.object().keys({
-      title: CustomJoi.validateText('Tittel')
-    });
-
-    const reportError = schema.validate({
-      title: ''
-    });
-    const reportSuccess = schema.validate({
-      title: 'Dette er en tittel'
-    });
-    expect(reportError?.error?.details[0].message).toEqual(
-      'Tittel kan ikke være tom'
-    );
-    expect(reportSuccess?.error?.details[0].message).toBeUndefined();
-  });
-
-  test('Joi validateLongText() should show error message if text is empty or shorter than 3 chars', () => {
-    const schema = CustomJoi.object().keys({
-      title: CustomJoi.validateLongText('Tittel')
-    });
-
-    const reportError1 = schema.validate({
-      title: ''
-    });
-    const reportError2 = schema.validate({
-      title: 'sd'
-    });
-    const reportSuccess = schema.validate({
-      title: 'Dette er en tittel'
-    });
-    expect(reportError1?.error?.details[0].message).toEqual(
-      'Tittel kan ikke være tom'
-    );
-    expect(reportError2?.error?.details[0].message).toEqual(
-      'Tittel må ha minimum 3 karakterer'
-    );
-    expect(reportSuccess?.error?.details[0].message).toBeUndefined();
-  });
-
   test('Joi validateId() should show error message if not a valid guid is empty', () => {
     const schema = CustomJoi.object().keys({
       id: CustomJoi.validateId()
@@ -65,7 +25,7 @@ describe('CustomJoi', () => {
       id: uuidv4()
     });
     expect(reportError?.error?.details[0].message).toEqual(
-      'Noe har gått galt med skjemaet. Id til objektet er ugyldig'
+      'Noe har gått galt med skjemaet. "id" er ikke en gyldig guid'
     );
     expect(reportSuccess?.error?.details[0].message).toBeUndefined();
   });
@@ -82,7 +42,45 @@ describe('CustomJoi', () => {
       id: ''
     });
     expect(reportError?.error?.details[0].message).toEqual(
-      'Noe har gått galt med skjemaet. Id til objektet er ugyldig'
+      'Noe har gått galt med skjemaet. "id" er ugyldig'
+    );
+    expect(reportSuccess?.error?.details[0].message).toBeUndefined();
+  });
+
+  test('Joi validateText() should show error message if text is empty', () => {
+    const schema = CustomJoi.object().keys({
+      title: CustomJoi.validateText()
+    });
+
+    const reportError = schema.validate({
+      title: ''
+    });
+    const reportSuccess = schema.validate({
+      title: 'Dette er en tittel'
+    });
+    expect(reportError?.error?.details[0].message).toEqual('Kan ikke være tom');
+    expect(reportSuccess?.error?.details[0].message).toBeUndefined();
+  });
+
+  test('Joi validateLongText() should show error message if text is empty or shorter than 3 chars', () => {
+    const schema = CustomJoi.object().keys({
+      text: CustomJoi.validateLongText()
+    });
+
+    const reportError1 = schema.validate({
+      text: ''
+    });
+    const reportError2 = schema.validate({
+      text: 'sd'
+    });
+    const reportSuccess = schema.validate({
+      text: 'Dette er en tekst'
+    });
+    expect(reportError1?.error?.details[0].message).toEqual(
+      'Kan ikke være tom'
+    );
+    expect(reportError2?.error?.details[0].message).toEqual(
+      'Må ha minimum 3 karakterer'
     );
     expect(reportSuccess?.error?.details[0].message).toBeUndefined();
   });
@@ -121,7 +119,7 @@ describe('CustomJoi', () => {
       type: ModelType.need
     });
     expect(reportError?.error?.details[0].message).toEqual(
-      'Noe har gått galt med skjemaet. Typen til objektet er ugyldig'
+      'Noe har gått galt med skjemaet. "type" er ugyldig'
     );
     expect(reportSuccess?.error?.details[0].message).toBeUndefined();
   });
@@ -194,10 +192,30 @@ describe('CustomJoi', () => {
     expect(reportSuccess2?.error?.details[0].message).toBeUndefined();
   });
 
-  test('Joi validateParent() should show error message on wrong id', () => {
+  test('Joi validateOptionalId() should show error message on not a valid id', () => {
     const schema = CustomJoi.object().keys({
-      parent1: CustomJoi.validateParent(),
-      parent2: CustomJoi.validateParent()
+      id1: CustomJoi.validateOptionalId(),
+      id2: CustomJoi.validateOptionalId()
+    });
+
+    const reportError = schema.validate({
+      id1: uuidv1(),
+      id2: null
+    });
+    const reportSuccess = schema.validate({
+      id1: uuidv4(),
+      id2: null
+    });
+    expect(reportError?.error?.details[0].message).toEqual(
+      'Noe har gått galt med skjemaet. "id1" er ikke en gyldig guid'
+    );
+    expect(reportSuccess?.error?.details[0].message).toBeUndefined();
+  });
+
+  test('Joi validateParentId() should show error message on wrong id', () => {
+    const schema = CustomJoi.object().keys({
+      parent1: CustomJoi.validateParentId(),
+      parent2: CustomJoi.validateParentId()
     });
 
     const reportError = schema.validate({
@@ -209,27 +227,7 @@ describe('CustomJoi', () => {
       parent2: ''
     });
     expect(reportError?.error?.details[0].message).toEqual(
-      'Noe har gått galt med skjemaet. Forelder id til objektet er ugyldig'
-    );
-    expect(reportSuccess?.error?.details[0].message).toBeUndefined();
-  });
-
-  test('Joi validateSource() should show error message on wrong id', () => {
-    const schema = CustomJoi.object().keys({
-      sourceOriginal: CustomJoi.validateSource(),
-      sourceRel: CustomJoi.validateSource()
-    });
-
-    const reportError = schema.validate({
-      sourceOriginal: uuidv1(),
-      sourceRel: uuidv1()
-    });
-    const reportSuccess = schema.validate({
-      sourceOriginal: uuidv4(),
-      sourceRel: null
-    });
-    expect(reportError?.error?.details[0].message).toEqual(
-      'Noe har gått galt med skjemaet. Kilden til objektet er ugyldig'
+      'Noe har gått galt med skjemaet. "parent1" er ikke en gyldig guid'
     );
     expect(reportSuccess?.error?.details[0].message).toBeUndefined();
   });
@@ -263,7 +261,7 @@ describe('CustomJoi', () => {
       date: '2021-12-02T16:00:00.000Z'
     });
     expect(reportError?.error?.details[0].message).toEqual(
-      'Noe har gått galt med skjemaet. Dato er på et ugyldig format'
+      'Noe har gått galt med skjemaet. "date" er ikke en dato'
     );
     expect(reportSuccess?.error?.details[0].message).toBeUndefined();
   });
@@ -280,47 +278,27 @@ describe('CustomJoi', () => {
       date: null
     });
     expect(reportError?.error?.details[0].message).toEqual(
-      'Noe har gått galt med skjemaet. Dato er på et ugyldig format'
+      'Noe har gått galt med skjemaet. "date" er ugyldig'
     );
     expect(reportSuccess?.error?.details[0].message).toBeUndefined();
   });
 
-  test('Joi validateDeletedDate() should show error message on not iso formatted date', () => {
+  test('Joi validateOptionalDate() should show error message on not iso formatted date', () => {
     const schema = CustomJoi.object().keys({
-      date1: CustomJoi.validateDeletedDate(),
-      date2: CustomJoi.validateDeletedDate()
+      date1: CustomJoi.validateOptionalDate(),
+      date2: CustomJoi.validateOptionalDate()
     });
 
     const reportError = schema.validate({
       date1: 'Dette er ingen dato',
-      date2: 'Dette er ingen dato'
+      date2: null
     });
     const reportSuccess = schema.validate({
       date1: '2021-12-02T16:00:00.000Z',
       date2: null
     });
     expect(reportError?.error?.details[0].message).toEqual(
-      'Noe har gått galt med skjemaet. Slettet dato er på et ugyldig format'
-    );
-    expect(reportSuccess?.error?.details[0].message).toBeUndefined();
-  });
-
-  test('Joi validatePublishedDate() should show error message on not iso formatted date', () => {
-    const schema = CustomJoi.object().keys({
-      date1: CustomJoi.validatePublishedDate(),
-      date2: CustomJoi.validatePublishedDate()
-    });
-
-    const reportError = schema.validate({
-      date1: 'Dette er ingen dato',
-      date2: 'Dette er ingen dato'
-    });
-    const reportSuccess = schema.validate({
-      date1: '2021-12-02T16:00:00.000Z',
-      date2: null
-    });
-    expect(reportError?.error?.details[0].message).toEqual(
-      'Noe har gått galt med skjemaet. Publisert dato er på et ugyldig format'
+      'Noe har gått galt med skjemaet. "date1" er på et ugyldig format'
     );
     expect(reportSuccess?.error?.details[0].message).toBeUndefined();
   });
@@ -331,7 +309,7 @@ describe('CustomJoi', () => {
     });
 
     const schema = CustomJoi.object().keys({
-      children: CustomJoi.validateItems(childSchema, 'Test')
+      children: CustomJoi.validateItems(childSchema)
     });
 
     const reportError = schema.validate({
@@ -345,61 +323,7 @@ describe('CustomJoi', () => {
       ]
     });
     expect(reportError?.error?.details[0].message).toEqual(
-      'Noe har gått galt med skjemaet. Test har et ugyldig element'
-    );
-    expect(reportSuccess?.error?.details[0].message).toBeUndefined();
-  });
-
-  test('Joi validateProjectId() should show error message on not a valid id', () => {
-    const schema = CustomJoi.object().keys({
-      id1: CustomJoi.validateProjectId(),
-      id2: CustomJoi.validateProjectId()
-    });
-
-    const reportError = schema.validate({
-      id1: uuidv1(),
-      id2: uuidv1()
-    });
-    const reportSuccess = schema.validate({
-      id1: uuidv4(),
-      id2: null
-    });
-    expect(reportError?.error?.details[0].message).toEqual(
-      'Noe har gått galt med skjemaet. Prosjektets id er ugyldig'
-    );
-    expect(reportSuccess?.error?.details[0].message).toBeUndefined();
-  });
-
-  test('Joi validateBankId() should show error message on not a valid id', () => {
-    const schema = CustomJoi.object().keys({
-      id: CustomJoi.validateBankId()
-    });
-
-    const reportError = schema.validate({
-      id: uuidv1()
-    });
-    const reportSuccess = schema.validate({
-      id: uuidv4()
-    });
-    expect(reportError?.error?.details[0].message).toEqual(
-      'Noe har gått galt med skjemaet. Bankens id er ugyldig'
-    );
-    expect(reportSuccess?.error?.details[0].message).toBeUndefined();
-  });
-
-  test('Joi validateNeedId() should show error message on not a valid id', () => {
-    const schema = CustomJoi.object().keys({
-      id: CustomJoi.validateNeedId()
-    });
-
-    const reportError = schema.validate({
-      id: uuidv1()
-    });
-    const reportSuccess = schema.validate({
-      id: uuidv4()
-    });
-    expect(reportError?.error?.details[0].message).toEqual(
-      'Noe har gått galt med skjemaet. Behovets id er ugyldig'
+      'Noe har gått galt med skjemaet. Kan ikke finne "children[0].id"'
     );
     expect(reportSuccess?.error?.details[0].message).toBeUndefined();
   });
@@ -419,7 +343,7 @@ describe('CustomJoi', () => {
       number: '986352325'
     });
     expect(reportError1?.error?.details[0].message).toEqual(
-      'Organisasjonsnummer består av 9 siffre'
+      'Består av 9 siffre'
     );
     expect(reportError2?.error?.details[0].message).toEqual(
       'Ugyldig organisasjonsnummer'
@@ -449,7 +373,6 @@ describe('CustomJoi', () => {
       useProduct: true,
       products: [uuidv4()]
     });
-    console.log(reportError3?.error);
     expect(reportError1?.error?.details[0].message).toEqual(
       'Produkter er lagt til, men ikke valgt for varianten'
     );
@@ -457,7 +380,7 @@ describe('CustomJoi', () => {
       'Det må velges produkter for varianten'
     );
     expect(reportError3?.error?.details[0].message).toEqual(
-      'Noe har gått galt med skjemaet. Et av produktene har ugyldig id'
+      'Noe har gått galt med skjemaet. "products[0]" er ikke en gyldig guid'
     );
     expect(reportSuccess?.error?.details[0].message).toBeUndefined();
   });
