@@ -22,7 +22,10 @@ export interface ISpecification {
 
 export const BaseSpecificationSchema = CustomJoi.object().keys({
   bank: BaseBankSchema,
-  id: CustomJoi.string().required().valid(''),
+  id: CustomJoi.alternatives([
+    CustomJoi.string().length(36),
+    CustomJoi.string().valid('')
+  ]).required(),
   organization: CustomJoi.string().required(),
   organizationNumber: CustomJoi.string().length(9).required(),
   products: CustomJoi.array().items(SpecificationProductSchema).required(),
