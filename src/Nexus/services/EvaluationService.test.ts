@@ -268,6 +268,7 @@ describe('EvaluationService', () => {
     };
 
     const specification: ISpecification = {
+      id: 'c1d0ee23-8f8b-ff22-aced-47ff93eb9fc8',
       bank: {
         id: 'a4d0ef8b-8e23-4ef2-9f30-eb9fc847ff93',
         title: 'Bank',

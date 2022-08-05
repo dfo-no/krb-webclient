@@ -1,43 +1,18 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
+import SpecificationStoreService from '../../Nexus/services/SpecificationStoreService';
 import Utils from '../../common/Utils';
 import { IBank } from '../../Nexus/entities/IBank';
 import { IRequirementAnswer } from '../../models/IRequirementAnswer';
 import { ISpecification } from '../../Nexus/entities/ISpecification';
 import { ISpecificationProduct } from '../../models/ISpecificationProduct';
-import { ModelType } from '../../enums';
 
 interface ISpecificationState {
   spec: ISpecification;
 }
 
 const initialState: ISpecificationState = {
-  spec: {
-    bank: {
-      id: '',
-      title: '',
-      description: '',
-      needs: [],
-      products: [],
-      codelist: [],
-      tags: [],
-      version: 0,
-      type: ModelType.bank,
-      publications: [],
-      inheritedBanks: [],
-      publishedDate: null,
-      sourceOriginal: null,
-      sourceRel: null,
-      projectId: null,
-      deletedDate: null
-    },
-    title: '',
-    organization: '',
-    organizationNumber: '',
-    products: [],
-    requirements: [],
-    requirementAnswers: []
-  }
+  spec: SpecificationStoreService.generateDefaultSpecification()
 };
 
 const specificationSlice = createSlice({
