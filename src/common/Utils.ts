@@ -9,7 +9,9 @@ import {
 import { IInheritedBank } from '../models/IInheritedBank';
 import { INeed } from '../Nexus/entities/INeed';
 import { IProduct } from '../Nexus/entities/IProduct';
+import { IResponse } from '../models/IResponse';
 import { IRequirement } from '../Nexus/entities/IRequirement';
+import { ISpecification } from '../Nexus/entities/ISpecification';
 import { IVariant } from '../Nexus/entities/IVariant';
 import { Levelable } from '../models/Levelable';
 import { Nestable } from '../models/Nestable';
@@ -829,6 +831,26 @@ class Utils {
     newProject.inheritedBanks = inheritedBanks;
     return newProject;
   }
+
+  static isValidResponse = (
+    response: IResponse,
+    specification: ISpecification
+  ): boolean => {
+    if (!response.specification || !response.requirementAnswers) {
+      return false;
+    }
+
+    return response.specification.id === specification.id;
+  };
+
+  static hasValidResponses = (
+    responses: IResponse[],
+    specification: ISpecification
+  ): boolean => {
+    return responses.some((response) =>
+      this.isValidResponse(response, specification)
+    );
+  };
 }
 
 export default Utils;
