@@ -1,7 +1,6 @@
 import CustomJoi from '../../common/CustomJoi';
 import { IBaseModel } from './IBaseModel';
 import { ModelType } from '../../enums';
-import { t } from 'i18next';
 
 export interface IProduct extends IBaseModel {
   id: string;
@@ -14,7 +13,7 @@ export interface IProduct extends IBaseModel {
 
 export const BaseProductSchema = CustomJoi.object().keys({
   id: CustomJoi.validateId(),
-  title: CustomJoi.validateText(t('Title')),
+  title: CustomJoi.validateText(),
   description: CustomJoi.validateOptionalText(),
   parent: CustomJoi.validateParentId(),
   type: CustomJoi.validateType(ModelType.product),

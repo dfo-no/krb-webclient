@@ -19,15 +19,9 @@ export interface IRequirementAnswer {
 
 export const RequirementAnswerSchema = CustomJoi.object().keys({
   id: CustomJoi.validateId(),
-  questionId: CustomJoi.string()
-    .guid({ version: ['uuidv4'] })
-    .length(36)
-    .required(),
+  questionId: CustomJoi.validateId(),
   weight: CustomJoi.number().required(),
-  variantId: CustomJoi.string()
-    .guid({ version: ['uuidv4'] })
-    .length(36)
-    .required(),
+  variantId: CustomJoi.validateId(),
   question: QuestionAnswerSchema,
   type: CustomJoi.validateType(...Object.values(ModelType)),
   requirement: BaseRequirementSchema

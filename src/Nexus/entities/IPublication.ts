@@ -1,11 +1,10 @@
 import CustomJoi from '../../common/CustomJoi';
 import { IBaseModel } from './IBaseModel';
 import { ModelType } from '../../enums';
-import { t } from 'i18next';
 
 export const BasePublicationSchema = CustomJoi.object().keys({
   id: CustomJoi.validateId(),
-  comment: CustomJoi.validateText(t('Comment')),
+  comment: CustomJoi.validateText(),
   date: CustomJoi.validateDate(),
   version: CustomJoi.validateVersion(),
   bankId: CustomJoi.validateId(),

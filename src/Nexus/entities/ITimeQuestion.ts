@@ -100,4 +100,4 @@ export const TimeAnswerSchema = TimeSpecSchema.keys({
     }),
     point: CustomJoi.number().required()
   })
-}).id('TimeAnswerSchema');
+});

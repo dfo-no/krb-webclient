@@ -35,4 +35,4 @@ export const CheckboxQuestionAnswerSchema = CheckboxQuestionSchema.keys({
     value: CustomJoi.validateBoolean(),
     point: CustomJoi.validateScore()
   })
-}).id('CheckboxQuestionAnswerSchema');
+});

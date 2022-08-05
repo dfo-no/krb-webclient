@@ -46,7 +46,7 @@ export const CodelistQuestionSchema = QuestionBaseSchema.keys({
 
 export const CodelistQuestionAnswerSchema = CodelistQuestionSchema.keys({
   answer: CustomJoi.object().keys({
-    codes: CustomJoi.array().items(CustomJoi.string().length(36)).required(),
+    codes: CustomJoi.validateItems(CustomJoi.validateId()),
     point: CustomJoi.validateScore()
   })
-}).id('CodelistQuestionAnswerSchema');
+});

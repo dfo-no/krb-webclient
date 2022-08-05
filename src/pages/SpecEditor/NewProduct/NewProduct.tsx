@@ -39,7 +39,6 @@ export default function NewProduct(): React.ReactElement {
     defaultValues
   });
 
-  console.log(methods.formState.errors);
   useEffect(() => {
     if (!product) {
       const firstProduct = spec.bank.products[0];

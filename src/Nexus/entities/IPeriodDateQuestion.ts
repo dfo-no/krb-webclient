@@ -101,4 +101,4 @@ export const PeriodDateAnswerSchema = PeriodDateSpecSchema.keys({
     }),
     point: CustomJoi.number().required()
   })
-}).id('PeriodDateAnswerSchema');
+});

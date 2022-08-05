@@ -32,4 +32,4 @@ export const TextQuestionAnswerSchema = TextQuestionSchema.keys({
     text: CustomJoi.validateAnswerText(),
     point: CustomJoi.validateScore()
   })
-}).id('TextQuestionAnswerSchema');
+});

@@ -1,7 +1,6 @@
 import CustomJoi from '../../common/CustomJoi';
 import { IBaseModel } from './IBaseModel';
 import { ModelType } from '../../enums';
-import { t } from 'i18next';
 
 export interface ITag extends IBaseModel {
   title: string;
@@ -10,7 +9,7 @@ export interface ITag extends IBaseModel {
 
 export const BaseTagSchema = CustomJoi.object().keys({
   id: CustomJoi.validateId(),
-  title: CustomJoi.validateText(t('Title')),
+  title: CustomJoi.validateText(),
   description: CustomJoi.validateOptionalText(),
   parent: CustomJoi.validateParentId(),
   type: CustomJoi.validateType(ModelType.tag),
