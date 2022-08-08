@@ -3,6 +3,7 @@ import React from 'react';
 import { AxiosResponse } from 'axios';
 import { useTranslation } from 'react-i18next';
 
+import Nexus from '../../../Nexus/Nexus';
 import { httpPost } from '../../../api/http';
 import { ISpecification } from '../../../Nexus/entities/ISpecification';
 import { useAppSelector } from '../../../store/hooks';
@@ -10,11 +11,15 @@ import { useAppSelector } from '../../../store/hooks';
 export default function DownloadButton(): React.ReactElement {
   const { t } = useTranslation();
   const { spec } = useAppSelector((state) => state.specification);
+  const nexus = Nexus.getInstance();
 
-  const onDownLoad = () => {
+  const onDownLoad = (): void => {
+    const uniqueSpec =
+      nexus.specificationService.createSpecificationWithId(spec);
+
     httpPost<ISpecification, AxiosResponse<File>>(
       '/java/generateSpecification',
-      spec,
+      uniqueSpec,
       {
         headers: {
           'Content-Type': 'application/json',

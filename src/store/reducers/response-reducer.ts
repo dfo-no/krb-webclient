@@ -15,6 +15,7 @@ interface IResponseState {
 const initialState: IResponseState = {
   response: {
     specification: {
+      id: '',
       bank: {
         id: '',
         title: '',

@@ -17,6 +17,7 @@ const initialState: ISelectedBankState = {
   files: [],
   specFile: null,
   specification: {
+    id: '',
     bank: {
       id: '',
       title: '',

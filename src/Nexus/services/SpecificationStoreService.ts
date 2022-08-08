@@ -21,6 +21,7 @@ export default class SpecificationStoreService {
 
   public static generateDefaultSpecification(): ISpecification {
     return {
+      id: '',
       bank: {
         id: '',
         title: '',
@@ -50,6 +51,7 @@ export default class SpecificationStoreService {
 
   public static getSpecificationFromBank(bank: IBank): ISpecification {
     return {
+      id: '',
       bank,
       title: '',
       organization: '',

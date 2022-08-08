@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 
 import css from './Evaluation.module.scss';
 import DownLoad from './DownLoad';
+import Utils from '../../common/Utils';
 import { useAppSelector } from '../../store/hooks';
 import { useEvaluationState } from './EvaluationContext';
 
@@ -30,7 +31,7 @@ const EvaluationSideBar = (): ReactElement => {
       case 0:
         return !!specification.bank.id;
       case 1:
-        return responses.length > 0;
+        return Utils.hasValidResponses(responses, specification);
       case 2:
         return evaluations.length > 0;
       default:
