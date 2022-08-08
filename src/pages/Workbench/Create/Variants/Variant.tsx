@@ -128,7 +128,7 @@ const Variant = ({ variant, requirementIndex }: IProps) => {
             </Box>
           </AccordionSummary>
           <AccordionDetails sx={{ display: 'flex', flexDirection: 'column' }}>
-            <VariantFormContent control={methods.control} />
+            <VariantFormContent control={methods.control} variant={variant} />
             <Box
               sx={{
                 display: 'flex',

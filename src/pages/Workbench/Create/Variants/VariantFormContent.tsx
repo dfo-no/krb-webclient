@@ -19,9 +19,10 @@ import { useGetProjectQuery } from '../../../../store/api/bankApi';
 
 interface IProps {
   control: Control<IVariant>;
+  variant?: IVariant;
 }
 
-const VariantFormContent = ({ control }: IProps) => {
+const VariantFormContent = ({ control, variant }: IProps) => {
   const { t } = useTranslation();
   const { projectId } = useParams<IRouteProjectParams>();
   const { data: project } = useGetProjectQuery(projectId);
@@ -89,7 +90,7 @@ const VariantFormContent = ({ control }: IProps) => {
       <Typography className={css.TextTitle} variant={'smBold'}>
         {t('How to answer requirement')}
       </Typography>
-      <QuestionsList />
+      <QuestionsList variant={variant} />
     </div>
   );
 };
