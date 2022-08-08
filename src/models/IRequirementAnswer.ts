@@ -23,6 +23,6 @@ export const RequirementAnswerSchema = CustomJoi.object().keys({
   weight: CustomJoi.number().required(),
   variantId: CustomJoi.validateId(),
   question: QuestionAnswerSchema,
-  type: CustomJoi.validateType(...Object.values(ModelType)),
+  type: CustomJoi.validateTypes(ModelType),
   requirement: BaseRequirementSchema
 });

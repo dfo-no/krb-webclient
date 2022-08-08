@@ -92,8 +92,16 @@ const booleanValidator = (joi: Joi.Root) => ({
 const typeValidator = (joi: Joi.Root) => ({
   type: 'validateType',
   base: joi.string().required(),
-  args(value: any, type: string) {
+  args(value: Schema, type: string) {
     return value.equal(type);
+  }
+});
+
+const typesValidator = (joi: Joi.Root) => ({
+  type: 'validateTypes',
+  base: joi.string().required(),
+  args(value: Schema, types: Record<string, string>) {
+    return value.valid(...Object.values(types));
   }
 });
 
@@ -229,6 +237,7 @@ const CustomJoi = i18nJoi.extend(
   optionalTextValidator,
   booleanValidator,
   typeValidator,
+  typesValidator,
   typeVariantValidator,
   versionValidator,
   dateValidator,

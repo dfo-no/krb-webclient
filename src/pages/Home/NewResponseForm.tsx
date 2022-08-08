@@ -15,6 +15,7 @@ import {
 } from '../../components/ModalBox/ModalBox';
 import { setResponse } from '../../store/reducers/response-reducer';
 import { useAppDispatch } from '../../store/hooks';
+import ErrorSummary from '../../Form/ErrorSummary';
 
 interface IProps {
   handleClose: () => void;
@@ -35,6 +36,8 @@ const NewResponseForm = ({ handleClose, response }: IProps) => {
     dispatch(setResponse(post));
     history.push(`/response/${post.specification.bank.id}`);
   };
+
+  console.log(response);
 
   return (
     <FormProvider {...methods}>
@@ -67,6 +70,8 @@ const NewResponseForm = ({ handleClose, response }: IProps) => {
               {t('Create response')}
             </ModalButton>
           </ModalButtonsBox>
+
+          <ErrorSummary errors={methods.formState.errors} />
         </ModalBox>
       </form>
     </FormProvider>
