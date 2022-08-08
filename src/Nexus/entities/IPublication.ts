@@ -21,7 +21,11 @@ export const BasePublicationSchema = CustomJoi.object().keys({
     .guid({ version: ['uuidv4'] })
     .length(36)
     .allow(null)
-    .required()
+    .required(),
+  deletedDate: CustomJoi.alternatives([
+    CustomJoi.date().iso().raw(),
+    CustomJoi.string().valid(null)
+  ])
 });
 
 export const PostPublicationSchema = BasePublicationSchema.keys({
@@ -51,4 +55,5 @@ export interface IPublication extends IBaseModel {
   date: string | null;
   version: number;
   bankId: string;
+  deletedDate?: string | null;
 }

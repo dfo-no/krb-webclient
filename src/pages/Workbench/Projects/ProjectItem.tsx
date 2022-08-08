@@ -7,7 +7,6 @@ import { Link } from 'react-router-dom';
 
 import css from './Projects.module.scss';
 import DeleteProjectForm from './DeleteProjectForm';
-import theme from '../../../theme';
 import { FormIconButton } from '../../../components/Form/FormIconButton';
 import { IBank } from '../../../Nexus/entities/IBank';
 import { useEditableState } from '../../../components/EditableContext/EditableContext';
@@ -35,7 +34,7 @@ const ProjectItem = ({ project }: IProps) => {
         secondaryAction={
           <FormIconButton
             className={css.IconButton}
-            hoverColor={theme.palette.errorRed.main}
+            hoverColor={'var(--error-color)'}
             edge="end"
             aria-label="delete"
             onClick={() => enterDeleteMode(project)}

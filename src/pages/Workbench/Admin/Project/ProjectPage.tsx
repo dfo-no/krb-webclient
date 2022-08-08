@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
-import { Button, List, Typography } from '@mui/material/';
+import { Button, List } from '@mui/material/';
 import { useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 
 import css from './ProjectPage.module.scss';
-import DateUtils from '../../../../common/DateUtils';
 import LoaderSpinner from '../../../../common/LoaderSpinner';
 import NewPublicationForm from './NewPublicationForm';
+import PublicationItem from './PublicationItem';
+import { EditableProvider } from '../../../../components/EditableContext/EditableContext';
 import { FormContainerBox } from '../../../../components/Form/FormContainerBox';
 import { IPublication } from '../../../../Nexus/entities/IPublication';
 import { IRouteProjectParams } from '../../../../models/IRouteProjectParams';
@@ -38,20 +39,10 @@ function ProjectPage(): React.ReactElement {
     return publications;
   };
 
-  const renderItem = (item: IPublication, i: number) => {
+  const renderPublication = (publication: IPublication, i: number) => {
     return (
       <li key={i} className={css.Publication}>
-        <div className={css.Version}>
-          <Typography variant="smBold">{`${t('Version')} ${
-            item.version
-          }`}</Typography>
-          <time>{DateUtils.prettyFormat(item.date)}</time>
-        </div>
-        <div className={css.Comment}>
-          <Typography sx={{ alignSelf: 'center' }} variant="sm">
-            {item.comment}
-          </Typography>
-        </div>
+        <PublicationItem publication={publication} />
       </li>
     );
   };
@@ -79,9 +70,11 @@ function ProjectPage(): React.ReactElement {
           />
         </FormContainerBox>
       )}
-      <List aria-label="publications" className={css.Publications}>
-        {getOrderedPublications().map(renderItem)}
-      </List>
+      <EditableProvider>
+        <List aria-label="publications" className={css.Publications}>
+          {getOrderedPublications().map(renderPublication)}
+        </List>
+      </EditableProvider>
     </StandardContainer>
   );
 }

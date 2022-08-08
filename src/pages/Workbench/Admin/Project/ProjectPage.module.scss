@@ -8,14 +8,19 @@
   .Publications {
     list-style: none;
 
+    li + li {
+      margin-top: var(--small-gap);
+    }
+
     .Publication {
-      display: flex;
-      flex-direction: row;
-      width: 100%;
-      padding: var(--tiny-gap) var(--small-gap);
-      margin-bottom: var(--small-gap);
-      border: 0.1rem solid var(--border-color-secondary);
-      background: white;
+      .Item {
+        display: flex;
+        flex-direction: row;
+        width: 100%;
+        padding: var(--tiny-gap) var(--small-gap);
+        border: 0.1rem solid var(--border-color-secondary);
+        background: white;
+      }
 
       .Version {
         align-self: center;
@@ -34,6 +39,10 @@
         color: var(--text-label-color);
       }
 
+      .IconButton {
+        visibility: visible;
+      }
+
       time {
         display: block;
         color: var(--border-color);
@@ -41,4 +50,8 @@
       }
     }
   }
+}
+
+form .IconButton {
+  visibility: hidden !important;
 }
