@@ -16,9 +16,7 @@ export interface IBaseModel {
 
 export const BaseModelSchema = CustomJoi.object().keys({
   id: CustomJoi.validateId(),
-  type: CustomJoi.string()
-    .equal(...Object.values(ModelType))
-    .required(),
+  type: CustomJoi.validateTypes(ModelType),
   sourceRel: CustomJoi.validateOptionalId(),
   sourceOriginal: CustomJoi.validateOptionalId()
 });
