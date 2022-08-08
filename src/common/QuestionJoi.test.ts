@@ -31,20 +31,26 @@ describe('QuestionJoi', () => {
       config: {
         max: CustomJoi.number()
       },
-      text: CustomJoi.validateAnswerText()
+      answer: {
+        text: CustomJoi.validateAnswerText()
+      }
     });
 
     const reportError = schema.validate({
       config: {
         max: 10
       },
-      text: 'Dette er en alt for lang setning'
+      answer: {
+        text: 'Dette er en alt for lang setning'
+      }
     });
     const reportSuccess = schema.validate({
       config: {
         max: 10
       },
-      text: 'Kort setni'
+      answer: {
+        text: 'Kort setni'
+      }
     });
     expect(reportError?.error?.details[0].message).toEqual(
       'Lengde på tekst må være mindre enn 10 tegn'

@@ -39,6 +39,11 @@ const idValidator = (joi: Joi.Root) => ({
     .required()
 });
 
+const idItemsValidator = (joi: Joi.Root) => ({
+  type: 'validateIdItems',
+  base: joi.string().guid({ version: ['uuidv4'] })
+});
+
 const emptyIdValidator = (joi: Joi.Root) => ({
   type: 'validateEmptyId',
   base: joi.string().equal('').required()
@@ -232,6 +237,7 @@ const CustomJoi = i18nJoi.extend(
   emptyIdValidator,
   optionalIdValidator,
   parentIdValidator,
+  idItemsValidator,
   textValidator,
   longTextValidator,
   optionalTextValidator,

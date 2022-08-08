@@ -47,6 +47,27 @@ describe('CustomJoi', () => {
     expect(reportSuccess?.error?.details[0].message).toBeUndefined();
   });
 
+  test('Joi validateItems() should validate with validateItemsId for a list of strings', () => {
+    const schema = CustomJoi.object().keys({
+      list: CustomJoi.validateItems(CustomJoi.validateIdItems())
+    });
+
+    const reportError = schema.validate({
+      list: [uuidv1()]
+    });
+    const reportSuccess1 = schema.validate({
+      list: [uuidv4(), uuidv4()]
+    });
+    const reportSuccess2 = schema.validate({
+      list: []
+    });
+    expect(reportError?.error?.details[0].message).toEqual(
+      'Noe har gått galt med skjemaet. "list[0]" er ikke en gyldig guid'
+    );
+    expect(reportSuccess1?.error?.details[0].message).toBeUndefined();
+    expect(reportSuccess2?.error?.details[0].message).toBeUndefined();
+  });
+
   test('Joi validateText() should show error message if text is empty', () => {
     const schema = CustomJoi.object().keys({
       title: CustomJoi.validateText()

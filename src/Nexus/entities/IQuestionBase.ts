@@ -27,9 +27,7 @@ export const ConfigBaseSchema = CustomJoi.object().keys({
 
 export const QuestionBaseSchema = CustomJoi.object().keys({
   id: CustomJoi.validateId(),
-  type: CustomJoi.string()
-    .valid(...Object.values(QuestionVariant))
-    .required(),
+  type: CustomJoi.validateTypes(QuestionVariant),
   answer: CustomJoi.any().required(),
   config: CustomJoi.any().required(),
   sourceOriginal: CustomJoi.validateOptionalId(),

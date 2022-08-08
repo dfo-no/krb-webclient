@@ -27,11 +27,19 @@ const answerTextValidator = (joi: Joi.Root) => ({
   },
   base: joi.string().allow('').required(),
   validate(value: string, helpers: Joi.CustomHelpers) {
-    if (helpers.state.ancestors[0].config.max < value.length) {
+    if (!helpers.state.ancestors[1].config.max) {
+      return {
+        value,
+        errors: helpers.error('any.required', {
+          label: 'ancestors[1].config.max'
+        })
+      };
+    }
+    if (helpers.state.ancestors[1].config.max < value.length) {
       return {
         value,
         errors: helpers.error('string.max', {
-          limit: helpers.state.ancestors[0].config.max
+          limit: helpers.state.ancestors[1].config.max
         })
       };
     }
