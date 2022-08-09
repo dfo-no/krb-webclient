@@ -33,9 +33,9 @@ const PublicationItem = ({ publication }: IProps): ReactElement => {
     >
       <div className={css.Item}>
         <div className={css.Version}>
-          <Typography variant="smBold">{`${t('Version')} ${
-            publication.version
-          }`}</Typography>
+          <Typography variant="smBold">
+            {t('Version')} {publication.version}
+          </Typography>
           <time>{DateUtils.prettyFormat(publication.date)}</time>
         </div>
         <div className={css.Comment}>
