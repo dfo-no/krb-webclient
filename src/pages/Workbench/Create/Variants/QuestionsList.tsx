@@ -1,7 +1,7 @@
 import DeleteIcon from '@mui/icons-material/Delete';
 import React, { ReactElement, useState } from 'react';
 import { Button, Card, Typography } from '@mui/material';
-import { useFieldArray, useFormContext } from 'react-hook-form';
+import { useFieldArray, useFormContext, useWatch } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
 import css from './Variant.module.scss';
@@ -14,19 +14,7 @@ import { FormIconButton } from '../../../../components/Form/FormIconButton';
 import { IVariant } from '../../../../Nexus/entities/IVariant';
 import { QuestionVariant } from '../../../../enums';
 
-interface IProps {
-  variant?: IVariant;
-}
-
-interface ISelected {
-  variant: QuestionVariant | null;
-}
-
-const defaultSelectedVariant: ISelected = {
-  variant: null
-};
-
-const QuestionsList = ({ variant }: IProps): ReactElement => {
+const QuestionsList = (): ReactElement => {
   const { t } = useTranslation();
   const { control } = useFormContext<IVariant>();
   const { fields, append, remove } = useFieldArray({
@@ -35,16 +23,20 @@ const QuestionsList = ({ variant }: IProps): ReactElement => {
   });
 
   const [isOpen, setOpen] = useState(false);
-  const [selectedValue, setSelectedValue] = useState(defaultSelectedVariant);
+  const [selectedValue, setSelectedValue] = useState<QuestionVariant | null>(
+    null
+  );
+
+  const variantType = useWatch({ name: 'type', control });
 
   const handleClickOpen = (): void => {
     setOpen(true);
-    setSelectedValue(defaultSelectedVariant);
+    setSelectedValue(null);
   };
 
   const handleClose = (value: QuestionVariant | null): void => {
     setOpen(false);
-    setSelectedValue({ variant: value });
+    setSelectedValue(value);
 
     if (value !== null) {
       const questionService = new QuestionService();
@@ -56,7 +48,7 @@ const QuestionsList = ({ variant }: IProps): ReactElement => {
   };
 
   const hasResponseType = (): boolean => {
-    return variant?.type !== VariantType.requirement && fields.length > 0;
+    return variantType !== VariantType.requirement && fields.length > 0;
   };
 
   return (
@@ -92,7 +84,7 @@ const QuestionsList = ({ variant }: IProps): ReactElement => {
         </div>
       )}
       <SelectQuestionDialog
-        selectedValue={selectedValue.variant}
+        selectedValue={selectedValue}
         isOpen={isOpen}
         onClose={handleClose}
       />

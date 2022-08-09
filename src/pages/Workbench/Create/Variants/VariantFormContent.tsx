@@ -90,7 +90,7 @@ const VariantFormContent = ({ control, variant }: IProps) => {
       <Typography className={css.TextTitle} variant={'smBold'}>
         {t('How to answer requirement')}
       </Typography>
-      <QuestionsList variant={variant} />
+      <QuestionsList />
     </div>
   );
 };
