@@ -75,7 +75,6 @@ const EvaluationSpec = (): ReactElement => {
         return response;
       })
       .catch((error) => {
-        console.log('xx');
         dispatch(setSpecFile(null));
         setUploadError(t('EVAL_SPEC_ERROR_UPLOADING'));
         console.error(error);
