@@ -23,7 +23,6 @@ const PublicationItem = ({ publication }: IProps): ReactElement => {
   };
 
   const enterDeleteMode = (item: IPublication): void => {
-    console.log('delete this?', item.id);
     setDeleteMode(item.id);
   };
 

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { ReactElement, useState } from 'react';
 import { Button, List } from '@mui/material/';
 import { useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
@@ -18,7 +18,7 @@ import {
 import { StandardContainer } from '../../../../components/StandardContainer/StandardContainer';
 import { useGetProjectQuery } from '../../../../store/api/bankApi';
 
-function ProjectPage(): React.ReactElement {
+function ProjectPage(): ReactElement {
   const { t } = useTranslation();
   const [isCreating, setCreating] = useState(false);
 
@@ -39,7 +39,14 @@ function ProjectPage(): React.ReactElement {
     return publications;
   };
 
-  const renderPublication = (publication: IPublication, i: number) => {
+  const renderPublication = (
+    publication: IPublication,
+    i: number
+  ): ReactElement | undefined => {
+    if (publication.deletedDate) {
+      return undefined;
+    }
+
     return (
       <li key={i} className={css.Publication}>
         <PublicationItem publication={publication} />

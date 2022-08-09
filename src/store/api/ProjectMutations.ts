@@ -1,19 +1,21 @@
+import { FetchBaseQueryError } from '@reduxjs/toolkit/query';
+import { SerializedError } from '@reduxjs/toolkit';
 import { useParams } from 'react-router-dom';
+
+import DateService from '../../Nexus/services/DateService';
 import Utils from '../../common/Utils';
-import { Parentable } from '../../models/Parentable';
 import { IBank } from '../../Nexus/entities/IBank';
 import { ICode } from '../../Nexus/entities/ICode';
 import { ICodelist } from '../../Nexus/entities/ICodelist';
-import { IProduct } from '../../Nexus/entities/IProduct';
-import { ITag } from '../../Nexus/entities/ITag';
-import { IRouteProjectParams } from '../../models/IRouteProjectParams';
-import { useGetProjectQuery, usePutProjectMutation } from './bankApi';
 import { INeed } from '../../Nexus/entities/INeed';
+import { IProduct } from '../../Nexus/entities/IProduct';
+import { IPublication } from '../../Nexus/entities/IPublication';
 import { IRequirement } from '../../Nexus/entities/IRequirement';
+import { IRouteProjectParams } from '../../models/IRouteProjectParams';
+import { ITag } from '../../Nexus/entities/ITag';
 import { IVariant } from '../../Nexus/entities/IVariant';
-import DateService from '../../Nexus/services/DateService';
-import { SerializedError } from '@reduxjs/toolkit';
-import { FetchBaseQueryError } from '@reduxjs/toolkit/query';
+import { Parentable } from '../../models/Parentable';
+import { useGetProjectQuery, usePutProjectMutation } from './bankApi';
 
 type BankOrError =
   | { data: IBank }
@@ -33,6 +35,27 @@ function useProjectMutations() {
       });
     }
     throw Error('Cant save changes to Project');
+  }
+
+  // PUBLICATIONS
+  async function deletePublication(
+    publicationToDelete: IPublication
+  ): Promise<BankOrError> {
+    if (project && publicationToDelete) {
+      const updatedProject = JSON.parse(JSON.stringify(project, null));
+      updatedProject.publications = project.publications.map((publication) => {
+        if (publication.id === publicationToDelete.id) {
+          return {
+            ...publication,
+            deletedDate: DateService.getNowString()
+          };
+        }
+        return publication;
+      });
+      console.log('>delete', projectId, project);
+      return putProject(updatedProject);
+    }
+    throw Error('Cant delete publication');
   }
 
   // PRODUCTS
@@ -322,6 +345,7 @@ function useProjectMutations() {
 
   return {
     deleteProject,
+    deletePublication,
     addProduct,
     editProduct,
     deleteProduct,
