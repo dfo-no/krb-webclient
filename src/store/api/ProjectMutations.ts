@@ -52,7 +52,6 @@ function useProjectMutations() {
         }
         return publication;
       });
-      console.log('>delete', projectId, project);
       return putProject(updatedProject);
     }
     throw Error('Cant delete publication');
