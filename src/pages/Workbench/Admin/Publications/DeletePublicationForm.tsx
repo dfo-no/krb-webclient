@@ -28,7 +28,7 @@ const DeletePublicationForm = ({
 }: IProps): ReactElement => {
   const { deleteMode } = useEditableState();
   const { deletePublication } = useProjectMutations();
-  const { data: publicationBank, isLoading } = useGetBankQuery(publication.id, {
+  const { data: publicationBank } = useGetBankQuery(publication.id, {
     skip: deleteMode !== publication.id
   });
   const dispatch = useAppDispatch();

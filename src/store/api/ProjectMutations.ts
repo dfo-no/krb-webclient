@@ -47,7 +47,7 @@ function useProjectMutations() {
       await putProject({
         ...publicationBank,
         deletedDate: now
-      }).catch((e) => {
+      }).catch(() => {
         throw Error('Cant delete Publication');
       });
 
