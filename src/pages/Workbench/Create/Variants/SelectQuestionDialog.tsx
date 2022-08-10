@@ -11,15 +11,15 @@ import { QuestionVariant } from '../../../../enums';
 
 interface IProps {
   isOpen: boolean;
-  selectedValue: QuestionVariant;
-  onClose: (value: QuestionVariant) => void;
+  selectedValue: QuestionVariant | null;
+  onClose: (value: QuestionVariant | null) => void;
 }
 
 const SelectQuestionDialog = ({ onClose, selectedValue, isOpen }: IProps) => {
   const { t } = useTranslation();
 
   const handleClose = (): void => {
-    onClose(selectedValue);
+    onClose(selectedValue ?? null);
   };
 
   const handleListItemClick = (value: QuestionVariant): void => {
