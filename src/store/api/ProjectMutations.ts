@@ -39,22 +39,31 @@ function useProjectMutations() {
 
   // PUBLICATIONS
   async function deletePublication(
-    publicationToDelete: IPublication
+    publicationToDelete: IPublication,
+    publicationBank?: IBank
   ): Promise<BankOrError> {
-    if (project && publicationToDelete) {
+    if (project && publicationBank && publicationToDelete) {
+      const now = DateService.getNowString();
+      await putProject({
+        ...publicationBank,
+        deletedDate: now
+      }).catch((e) => {
+        throw Error('Cant delete Publication');
+      });
+
       const updatedProject = JSON.parse(JSON.stringify(project, null));
       updatedProject.publications = project.publications.map((publication) => {
         if (publication.id === publicationToDelete.id) {
           return {
             ...publication,
-            deletedDate: DateService.getNowString()
+            deletedDate: now
           };
         }
         return publication;
       });
       return putProject(updatedProject);
     }
-    throw Error('Cant delete publication');
+    throw Error('Cant delete Publication');
   }
 
   // PRODUCTS

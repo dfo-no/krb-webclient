@@ -3,7 +3,7 @@ import { Button, List } from '@mui/material/';
 import { useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 
-import css from './ProjectPage.module.scss';
+import css from './PublicationsPage.module.scss';
 import LoaderSpinner from '../../../../common/LoaderSpinner';
 import NewPublicationForm from './NewPublicationForm';
 import PublicationItem from './PublicationItem';
@@ -18,7 +18,7 @@ import {
 import { StandardContainer } from '../../../../components/StandardContainer/StandardContainer';
 import { useGetProjectQuery } from '../../../../store/api/bankApi';
 
-function ProjectPage(): ReactElement {
+function PublicationsPage(): ReactElement {
   const { t } = useTranslation();
   const [isCreating, setCreating] = useState(false);
 
@@ -55,7 +55,7 @@ function ProjectPage(): ReactElement {
   };
 
   return (
-    <StandardContainer className={css.ProjectPage}>
+    <StandardContainer className={css.PublicationsPage}>
       <SearchContainer>
         <NewButtonContainer>
           <Button
@@ -86,4 +86,4 @@ function ProjectPage(): ReactElement {
   );
 }
 
-export default ProjectPage;
+export default PublicationsPage;

@@ -3,9 +3,9 @@ import React, { ReactElement } from 'react';
 import { Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 
-import css from './ProjectPage.module.scss';
+import css from './PublicationsPage.module.scss';
 import DateUtils from '../../../../common/DateUtils';
-import DeleteVersionForm from './DeleteVersionForm';
+import DeletePublicationForm from './DeletePublicationForm';
 import { FormIconButton } from '../../../../components/Form/FormIconButton';
 import { IPublication } from '../../../../Nexus/entities/IPublication';
 import { useEditableState } from '../../../../components/EditableContext/EditableContext';
@@ -27,7 +27,7 @@ const PublicationItem = ({ publication }: IProps): ReactElement => {
   };
 
   return (
-    <DeleteVersionForm
+    <DeletePublicationForm
       publication={publication}
       handleClose={handleCloseDelete}
     >
@@ -53,7 +53,7 @@ const PublicationItem = ({ publication }: IProps): ReactElement => {
           <DeleteIcon color="inherit" />
         </FormIconButton>
       </div>
-    </DeleteVersionForm>
+    </DeletePublicationForm>
   );
 };
 

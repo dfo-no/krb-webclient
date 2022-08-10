@@ -13,6 +13,7 @@ import {
 import { IAlert } from '../../../../models/IAlert';
 import { useAppDispatch } from '../../../../store/hooks';
 import { useEditableState } from '../../../../components/EditableContext/EditableContext';
+import { useGetBankQuery } from '../../../../store/api/bankApi';
 
 interface IProps {
   children: ReactElement;
@@ -20,13 +21,16 @@ interface IProps {
   handleClose: () => void;
 }
 
-const DeleteVersionForm = ({
+const DeletePublicationForm = ({
   children,
   publication,
   handleClose
 }: IProps): ReactElement => {
   const { deleteMode } = useEditableState();
   const { deletePublication } = useProjectMutations();
+  const { data: publicationBank, isLoading } = useGetBankQuery(publication.id, {
+    skip: deleteMode !== publication.id
+  });
   const dispatch = useAppDispatch();
 
   const methods = useForm<IPublication>({
@@ -34,8 +38,8 @@ const DeleteVersionForm = ({
     resolver: joiResolver(BasePublicationSchema)
   });
 
-  const onSubmit = async () => {
-    await deletePublication(publication)
+  const onSubmit = async (): Promise<void> => {
+    await deletePublication(publication, publicationBank)
       .then(() => {
         const alert: IAlert = {
           id: uuidv4(),
@@ -80,4 +84,4 @@ const DeleteVersionForm = ({
   );
 };
 
-export default DeleteVersionForm;
+export default DeletePublicationForm;

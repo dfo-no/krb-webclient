@@ -6,8 +6,8 @@ import AdminSideBar from './AdminSideBar';
 import CodelistGuard from './Codelist/CodelistGuard';
 import InheritancePage from './Inheritance/InheritancePage';
 import ProductGuard from './Product/ProductGuard';
-import ProjectPage from './Project/ProjectPage';
 import PropertiesPage from './Properties/PropertiesPage';
+import PublicationsPage from './Publications/PublicationsPage';
 import TagGuard from './Tags/TagGuard';
 
 export default function AdminGuard(): React.ReactElement {
@@ -29,7 +29,7 @@ export default function AdminGuard(): React.ReactElement {
         }}
       >
         <Route exact path="/workbench/:projectId/admin/">
-          <ProjectPage />
+          <PublicationsPage />
         </Route>
         <Route exact path="/workbench/:projectId/admin/tags">
           <TagGuard />

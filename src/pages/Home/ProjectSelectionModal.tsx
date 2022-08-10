@@ -29,14 +29,12 @@ export default function ProjectSelectionModal({
   const [newSpecification, setNewSpecification] =
     useState<ISpecification | null>(null);
   const { t } = useTranslation();
-  let originBankId;
-  if (selectedBank.projectId) {
-    originBankId = selectedBank.projectId;
-  } else {
-    originBankId = selectedBank.id;
-  }
+  const originBankId = selectedBank.projectId
+    ? selectedBank.projectId
+    : selectedBank.id;
 
   const { data: bank, isLoading } = useGetBankQuery(originBankId);
+
   if (!selectedBank) {
     return <></>;
   }
@@ -51,11 +49,16 @@ export default function ProjectSelectionModal({
     );
   }
 
-  const isPublished = bank.publications.length > 0;
+  const isPublished = bank.publications.some(
+    (p) => p.deletedDate === undefined
+  );
   const versionText = (): string => {
     if (isPublished) {
+      const publishedBanks = bank.publications.filter(
+        (p) => p.deletedDate === undefined
+      );
       return `${t('Version')} ${
-        bank.publications[bank.publications.length - 1].version
+        publishedBanks[publishedBanks.length - 1].version
       }`;
     }
     return t('Not published');
