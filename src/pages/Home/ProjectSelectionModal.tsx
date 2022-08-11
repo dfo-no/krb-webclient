@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { ReactElement, useState } from 'react';
 import Typography from '@mui/material/Typography';
 import { Box } from '@mui/material';
 import { useTranslation } from 'react-i18next';
@@ -6,9 +6,12 @@ import { useTranslation } from 'react-i18next';
 import DFODialog from '../../components/DFODialog/DFODialog';
 import LoaderSpinner from '../../common/LoaderSpinner';
 import NewSpecificationForm from './NewSpecificationForm';
+import NewPrefilledResponseForm from './NewPrefilledResponseForm';
+import Nexus from '../../Nexus/Nexus';
 import SpecificationStoreService from '../../Nexus/services/SpecificationStoreService';
 import theme from '../../theme';
 import { IBank } from '../../Nexus/entities/IBank';
+import { IPrefilledResponse } from '../../models/IPrefilledResponse';
 import { ISpecification } from '../../Nexus/entities/ISpecification';
 import {
   ModalBox,
@@ -28,6 +31,9 @@ export default function ProjectSelectionModal({
   const { setSelectedBank } = useHomeState();
   const [newSpecification, setNewSpecification] =
     useState<ISpecification | null>(null);
+  const [newPrefilledResponse, setNewPrefilledResponse] =
+    useState<IPrefilledResponse | null>(null);
+  const nexus = Nexus.getInstance();
   const { t } = useTranslation();
   let originBankId;
   if (selectedBank.projectId) {
@@ -67,9 +73,18 @@ export default function ProjectSelectionModal({
     setNewSpecification(specification);
   };
 
+  const goToPrefilledResponse = (): void => {
+    const prefilledResponse =
+      nexus.prefilledResponseService.createPrefilledResponseFromBank(
+        selectedBank
+      );
+    setNewPrefilledResponse(prefilledResponse);
+  };
+
   const cancel = (): void => {
     setSelectedBank(null);
     setNewSpecification(null);
+    setNewPrefilledResponse(null);
   };
 
   const modalBox = (): React.ReactElement => {
@@ -92,7 +107,11 @@ export default function ProjectSelectionModal({
           >
             {t('Create specification')}
           </ModalButton>
-          <ModalButton variant="cancel" type="submit" disabled={true}>
+          <ModalButton
+            variant="primary"
+            onClick={goToPrefilledResponse}
+            disabled={!isPublished}
+          >
             {t('Create prepared response')}
           </ModalButton>
           <ModalButtonsBox>
@@ -105,20 +124,27 @@ export default function ProjectSelectionModal({
     );
   };
 
+  const getDialog = (): ReactElement => {
+    if (newSpecification) {
+      return (
+        <NewSpecificationForm
+          specification={newSpecification}
+          handleClose={cancel}
+        />
+      );
+    }
+    if (newPrefilledResponse) {
+      return (
+        <NewPrefilledResponseForm
+          handleClose={cancel}
+          prefilledResponse={newPrefilledResponse}
+        />
+      );
+    }
+    return modalBox();
+  };
+
   return (
-    <DFODialog
-      isOpen={true}
-      handleClose={cancel}
-      children={
-        newSpecification ? (
-          <NewSpecificationForm
-            specification={newSpecification}
-            handleClose={cancel}
-          />
-        ) : (
-          modalBox()
-        )
-      }
-    />
+    <DFODialog isOpen={true} handleClose={cancel} children={getDialog()} />
   );
 }

@@ -8,7 +8,7 @@ import AlertList from './components/Alert/AlertList';
 import EvaluationModule from './pages/Evaluation/EvaluationModule';
 import Header from './components/Header/Header';
 import HomePage from './pages/Home/HomePage';
-import PrefilledResponseModule from './pages/PrefilledResponseEditor/PrefilledResponseModule';
+import PrefilledResponseModule from './pages/PrefilledResponse/PrefilledResponseModule';
 import ResponseModule from './pages/Response/ResponseModule';
 import SpecModule from './pages/SpecEditor/SpecModule';
 import styles from './App.module.scss';
@@ -34,10 +34,7 @@ function App(): ReactElement {
         <Route path="/specification" component={SpecModule} />
         <Route path="/response" component={ResponseModule} />
         <Route path="/evaluation" component={EvaluationModule} />
-        <Route
-          path="/prefilledresponse/:id"
-          component={PrefilledResponseModule}
-        />
+        <Route path="/prefilledresponse" component={PrefilledResponseModule} />
       </Switch>
     );
   }

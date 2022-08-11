@@ -31,6 +31,7 @@ const initialState: UploadedResponseState = {
     },
     supplier: '',
     products: [],
+    answeredVariants: [],
     requirementAnswers: []
   },
   markedRequirements: [],

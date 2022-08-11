@@ -1,7 +1,7 @@
 import React from 'react';
 import { AxiosResponse } from 'axios';
 import { Button } from '@mui/material/';
-import { t } from 'i18next';
+import { useTranslation } from 'react-i18next';
 
 import { httpPost } from '../../../api/http';
 import { IResponse } from '../../../models/IResponse';
@@ -9,6 +9,7 @@ import { useAppSelector } from '../../../store/hooks';
 
 export default function DownloadButton(): React.ReactElement {
   const { response } = useAppSelector((state) => state.response);
+  const { t } = useTranslation();
 
   const onDownLoad = () => {
     httpPost<IResponse, AxiosResponse<File>>(

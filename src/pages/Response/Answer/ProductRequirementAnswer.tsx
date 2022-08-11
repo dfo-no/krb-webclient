@@ -12,7 +12,7 @@ import VariantType from '../../../Nexus/entities/VariantType';
 import { DFOAccordion } from '../../../components/DFOAccordion/DFOAccordion';
 import { IRequirementAnswer } from '../../../models/IRequirementAnswer';
 import { useAppSelector } from '../../../store/hooks';
-import { useResponseState } from '../ResponseContext';
+import { useProductIndexState } from '../../../components/ProductIndexContext/ProductIndexContext';
 
 interface IProps {
   requirementAnswer: IRequirementAnswer;
@@ -22,7 +22,7 @@ export default function ProductRequirementAnswer({
   requirementAnswer
 }: IProps): ReactElement {
   const { response } = useAppSelector((state) => state.response);
-  const { responseProductIndex } = useResponseState();
+  const { productIndex } = useProductIndexState();
   const [existingAnswer, setExistingAnswer] = useState<
     IRequirementAnswer | undefined
   >(undefined);
@@ -34,16 +34,14 @@ export default function ProductRequirementAnswer({
 
   useEffect(() => {
     const answer = (
-      responseProductIndex >= 0
-        ? response.products[responseProductIndex]
-        : response
+      productIndex >= 0 ? response.products[productIndex] : response
     ).requirementAnswers.find((reqAns) => {
       return reqAns.id === requirementAnswer.id;
     });
     if (answer) {
       setExistingAnswer(answer);
     }
-  }, [requirementAnswer.id, responseProductIndex, response]);
+  }, [requirementAnswer.id, productIndex, response]);
 
   const header = (): ReactElement => {
     return (
@@ -75,7 +73,10 @@ export default function ProductRequirementAnswer({
         </Typography>
         {isInfo ? (
           <Typography className={css.label}>
-            {TextUtils.getAnswerText(requirementAnswer, response.specification)}
+            {TextUtils.getAnswerText(
+              requirementAnswer,
+              response.specification.bank
+            )}
           </Typography>
         ) : (
           <ProductQuestionAnswer

@@ -33,9 +33,9 @@ const initialState: IPrefilledResponseState = {
       projectId: null,
       deletedDate: null
     },
-    // answeredVariants: [], // list over string med id som er besvart, uavhengig questiontype, drit i denne
     supplier: '',
     products: [],
+    answeredVariants: [],
     requirementAnswers: [] // RequirementAnswer[]
   },
   selectedProduct: {
@@ -74,8 +74,7 @@ const responseSlice = createSlice({
       { payload }: PayloadAction<{ cart: IRequirementAnswer[] }>
     ) {
       // TODO: Why is cloneDeep nesccecary here???
-      const cloned = cloneDeep(payload.cart);
-      state.prefilledResponse.requirementAnswers = cloned;
+      state.prefilledResponse.requirementAnswers = cloneDeep(payload.cart);
     },
     addAnswer(state, { payload }: PayloadAction<IRequirementAnswer>) {
       if (

@@ -19,7 +19,7 @@ import {
 } from '../../../../Nexus/entities/ITimeQuestion';
 import { useAccordionState } from '../../../../components/DFOAccordion/AccordionContext';
 import { useAppDispatch, useAppSelector } from '../../../../store/hooks';
-import { useResponseState } from '../../ResponseContext';
+import { useProductIndexState } from '../../../../components/ProductIndexContext/ProductIndexContext';
 
 interface IProps {
   item: ITimeQuestion;
@@ -35,7 +35,7 @@ const QuestionAnswerTime = ({
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
   const { response } = useAppSelector((state) => state.response);
-  const { responseProductIndex } = useResponseState();
+  const { productIndex } = useProductIndexState();
   const { setActiveKey } = useAccordionState();
   const methods = useForm<ITimeQuestion>({
     resolver: joiResolver(TimeAnswerSchema),
@@ -69,13 +69,13 @@ const QuestionAnswerTime = ({
       ...parent,
       question: post
     };
-    if (responseProductIndex === -1) {
+    if (productIndex === -1) {
       dispatch(addRequirementAnswer(newAnswer));
     } else {
       dispatch(
         addProductAnswer({
           answer: newAnswer,
-          productId: response.products[responseProductIndex].id
+          productId: response.products[productIndex].id
         })
       );
     }

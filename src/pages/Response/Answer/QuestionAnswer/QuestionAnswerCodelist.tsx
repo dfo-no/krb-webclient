@@ -18,8 +18,8 @@ import {
 import { QuestionVariant } from '../../../../enums';
 import { IRequirementAnswer } from '../../../../models/IRequirementAnswer';
 import { useAppDispatch, useAppSelector } from '../../../../store/hooks';
-import { useResponseState } from '../../ResponseContext';
 import { useAccordionState } from '../../../../components/DFOAccordion/AccordionContext';
+import { useProductIndexState } from '../../../../components/ProductIndexContext/ProductIndexContext';
 
 interface IProps {
   item: ICodelistQuestion;
@@ -38,7 +38,7 @@ const QuestionAnswerCodelist = ({
   const codelist = response.specification.bank.codelist.find(
     (cl) => cl.id === item.config.codelist
   );
-  const { responseProductIndex } = useResponseState();
+  const { productIndex } = useProductIndexState();
   const { setActiveKey } = useAccordionState();
   const methods = useForm<ICodelistQuestion>({
     resolver: joiResolver(CodelistQuestionAnswerSchema),
@@ -69,13 +69,13 @@ const QuestionAnswerCodelist = ({
       ...parent,
       question: post
     };
-    if (responseProductIndex === -1) {
+    if (productIndex === -1) {
       dispatch(addRequirementAnswer(newAnswer));
     } else {
       dispatch(
         addProductAnswer({
           answer: newAnswer,
-          productId: response.products[responseProductIndex].id
+          productId: response.products[productIndex].id
         })
       );
     }

@@ -539,7 +539,7 @@ class Utils {
     return associatedNeeds;
   }
 
-  static findVariantsUsedBySpesification(
+  static findVariantsUsedBySpecification(
     selectedProject: IBank
   ): Parentable<INeed>[] {
     const associatedNeeds: Parentable<INeed>[] = [];

@@ -1,12 +1,12 @@
 import React from 'react';
 
-import ResponseEditor from './ResponseEditor';
+import PrefilledResponseEditor from './PrefilledResponseEditor';
 import { ProductIndexProvider } from '../../components/ProductIndexContext/ProductIndexContext';
 
-export default function ResponseModule(): React.ReactElement {
+export default function PrefilledResponseModule(): React.ReactElement {
   return (
     <ProductIndexProvider>
-      <ResponseEditor />
+      <PrefilledResponseEditor />
     </ProductIndexProvider>
   );
 }

@@ -5,25 +5,25 @@ import css from '../../Stylesheets/Editor.module.scss';
 import Nexus from '../../../Nexus/Nexus';
 import { IPointsCalculation } from '../../../Nexus/entities/IPointsCalculation';
 import { useAppSelector } from '../../../store/hooks';
-import { useResponseState } from '../ResponseContext';
+import { useProductIndexState } from '../../../components/ProductIndexContext/ProductIndexContext';
 
 export default function CalculatedPercentage(): React.ReactElement {
   const { response } = useAppSelector((state) => state.response);
-  const { responseProductIndex } = useResponseState();
+  const { productIndex } = useProductIndexState();
   const nexus = Nexus.getInstance();
   const [evaluation, setEvaluation] = useState<IPointsCalculation | null>(null);
 
   useEffect(() => {
-    if (responseProductIndex === -1) {
+    if (productIndex === -1) {
       setEvaluation(nexus.evaluationService.calculateGeneralPoints(response));
     } else {
       setEvaluation(
         nexus.evaluationService.calculateProductPoints(
-          response.products[responseProductIndex]
+          response.products[productIndex]
         )
       );
     }
-  }, [nexus, responseProductIndex, response]);
+  }, [nexus, productIndex, response]);
 
   const calcEvaluation = (calc: IPointsCalculation) => {
     if (calc.max === 0) {

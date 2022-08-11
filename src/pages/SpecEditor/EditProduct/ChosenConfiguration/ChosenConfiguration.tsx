@@ -43,8 +43,8 @@ export default function ChosenConfiguration({
       </Typography>
       <Typography variant={'smBold'} color={theme.palette.gray600.main}>
         {showAnswer
-          ? TextUtils.getAnswerText(requirementAnswer, spec)
-          : TextUtils.getConfigText(requirementAnswer, spec)}
+          ? TextUtils.getAnswerText(requirementAnswer, spec.bank)
+          : TextUtils.getConfigText(requirementAnswer, spec.bank)}
       </Typography>
     </Box>
   );

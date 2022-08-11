@@ -7,16 +7,16 @@ import { ICodelistQuestion } from '../Nexus/entities/ICodelistQuestion';
 import { IFileUploadQuestion } from '../Nexus/entities/IFileUploadQuestion';
 import { IPeriodDateQuestion } from '../Nexus/entities/IPeriodDateQuestion';
 import { ISliderQuestion } from '../Nexus/entities/ISliderQuestion';
-import { ISpecification } from '../Nexus/entities/ISpecification';
 import { ITextQuestion } from '../Nexus/entities/ITextQuestion';
 import { ITimeQuestion } from '../Nexus/entities/ITimeQuestion';
 import { IRequirementAnswer } from '../models/IRequirementAnswer';
 import { QuestionVariant } from '../enums';
+import { IBank } from '../Nexus/entities/IBank';
 
 class TextUtils {
   static getAnswerText = (
     reqAnswer: IRequirementAnswer,
-    specification: ISpecification
+    bank: IBank
   ): string => {
     switch (reqAnswer.question.type) {
       case QuestionVariant.Q_CHECKBOX:
@@ -26,7 +26,7 @@ class TextUtils {
       case QuestionVariant.Q_TEXT:
         return TextUtils.getTextAnswer(reqAnswer.question);
       case QuestionVariant.Q_CODELIST:
-        return TextUtils.getCodelistAnswer(reqAnswer.question, specification);
+        return TextUtils.getCodelistAnswer(reqAnswer.question, bank);
       case QuestionVariant.Q_PERIOD_DATE:
         return TextUtils.getDateAnswer(reqAnswer.question);
       case QuestionVariant.Q_TIME:
@@ -39,7 +39,7 @@ class TextUtils {
 
   static getConfigText = (
     reqAnswer: IRequirementAnswer,
-    specification: ISpecification
+    bank: IBank
   ): string => {
     switch (reqAnswer.question.type) {
       case QuestionVariant.Q_TEXT:
@@ -49,7 +49,7 @@ class TextUtils {
       case QuestionVariant.Q_SLIDER:
         return TextUtils.getSliderConfig(reqAnswer.question);
       case QuestionVariant.Q_CODELIST:
-        return TextUtils.getCodelistConfig(reqAnswer.question, specification);
+        return TextUtils.getCodelistConfig(reqAnswer.question, bank);
       case QuestionVariant.Q_PERIOD_DATE:
         return TextUtils.getDateConfig(reqAnswer.question);
       case QuestionVariant.Q_TIME:
@@ -88,12 +88,10 @@ class TextUtils {
 
   private static getCodelistAnswer = (
     question: ICodelistQuestion,
-    specification: ISpecification
+    bank: IBank
   ): string => {
     const codelistId = question.config.codelist;
-    const codelist = specification.bank.codelist.find(
-      (cl) => cl.id === codelistId
-    );
+    const codelist = bank.codelist.find((cl) => cl.id === codelistId);
     if (codelist) {
       return TextUtils.getCodesText(question.answer.codes, codelist);
     }
@@ -150,15 +148,13 @@ class TextUtils {
 
   private static getCodelistConfig = (
     question: ICodelistQuestion,
-    specification: ISpecification
+    bank: IBank
   ): string => {
     const optionalCodeMinAmount = question.config.optionalCodeMinAmount;
     const optionalCodeMaxAmount = question.config.optionalCodeMaxAmount;
     const codes = question.config.codes;
     const codelistId = question.config.codelist;
-    const codelist = specification.bank.codelist.find(
-      (cl) => cl.id === codelistId
-    );
+    const codelist = bank.codelist.find((cl) => cl.id === codelistId);
     if (!codelist) {
       return '';
     }

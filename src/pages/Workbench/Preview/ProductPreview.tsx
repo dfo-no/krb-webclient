@@ -25,7 +25,7 @@ export default function ProductPreview(): React.ReactElement {
 
   const renderNeeds = () => {
     if (!selected) {
-      const needs = Utils.findVariantsUsedBySpesification(project);
+      const needs = Utils.findVariantsUsedBySpecification(project);
 
       return needs.map((need) => {
         return <NeedPreview need={need} key={need.id} />;

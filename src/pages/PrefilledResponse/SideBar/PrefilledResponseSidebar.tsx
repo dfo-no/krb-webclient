@@ -5,14 +5,16 @@ import { useTranslation } from 'react-i18next';
 import css from '../../Stylesheets/Editor.module.scss';
 import DownloadButton from '../Download/DownloadButton';
 import theme from '../../../theme';
-import { ISpecificationProduct } from '../../../models/ISpecificationProduct';
+import { IPrefilledResponseProduct } from '../../../models/IPrefilledResponseProduct';
 import { useAppSelector } from '../../../store/hooks';
 import { useProductIndexState } from '../../../components/ProductIndexContext/ProductIndexContext';
 
-function ResponseSideBar(): React.ReactElement {
+function PrefilledResponseSideBar(): React.ReactElement {
   const { t } = useTranslation();
 
-  const { response } = useAppSelector((state) => state.response);
+  const { prefilledResponse } = useAppSelector(
+    (state) => state.prefilledResponse
+  );
   const { productIndex, setProductIndex } = useProductIndexState();
 
   const genericPressed = () => {
@@ -23,7 +25,10 @@ function ResponseSideBar(): React.ReactElement {
     setProductIndex(index);
   };
 
-  const renderProducts = (product: ISpecificationProduct, index: number) => {
+  const renderProducts = (
+    product: IPrefilledResponseProduct,
+    index: number
+  ) => {
     const isSelected = productIndex === index;
     return (
       <li
@@ -36,7 +41,6 @@ function ResponseSideBar(): React.ReactElement {
             <Typography className={css.Text} variant="mdBold">
               {product.title}
             </Typography>
-            <Typography variant="mdBold">{product.amount}</Typography>
           </div>
           <Divider color={theme.palette.silver.main} />
           <Typography className={css.Text} variant="sm">
@@ -65,9 +69,9 @@ function ResponseSideBar(): React.ReactElement {
           </div>
         </li>
       </ul>
-      {response.specification.products.length > 0 && (
+      {prefilledResponse.products.length > 0 && (
         <ul>
-          {response.specification.products.map((element, index) => {
+          {prefilledResponse.products.map((element, index) => {
             return renderProducts(element, index);
           })}
         </ul>
@@ -79,4 +83,4 @@ function ResponseSideBar(): React.ReactElement {
   );
 }
 
-export default ResponseSideBar;
+export default PrefilledResponseSideBar;

@@ -23,8 +23,8 @@ import {
   SliderQuestionAnswerSchema
 } from '../../../../Nexus/entities/ISliderQuestion';
 import { useAppDispatch, useAppSelector } from '../../../../store/hooks';
-import { useResponseState } from '../../ResponseContext';
 import { useAccordionState } from '../../../../components/DFOAccordion/AccordionContext';
+import { useProductIndexState } from '../../../../components/ProductIndexContext/ProductIndexContext';
 
 interface IProps {
   item: ISliderQuestion;
@@ -40,7 +40,7 @@ const QuestionAnswerSlider = ({
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
   const { response } = useAppSelector((state) => state.response);
-  const { responseProductIndex } = useResponseState();
+  const { productIndex } = useProductIndexState();
   const { setActiveKey } = useAccordionState();
   const [sliderView, setSliderView] = useState(true);
   const options = [
@@ -83,13 +83,13 @@ const QuestionAnswerSlider = ({
       ...parent,
       question: post
     };
-    if (responseProductIndex === -1) {
+    if (productIndex === -1) {
       dispatch(addRequirementAnswer(newAnswer));
     } else {
       dispatch(
         addProductAnswer({
           answer: newAnswer,
-          productId: response.products[responseProductIndex].id
+          productId: response.products[productIndex].id
         })
       );
     }
