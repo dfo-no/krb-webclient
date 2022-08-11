@@ -1,15 +1,17 @@
 import Button from '@mui/material/Button';
 import React from 'react';
 import { AxiosResponse } from 'axios';
+import { useTranslation } from 'react-i18next';
 
 import { httpPost } from '../../../api/http';
 import { IPrefilledResponse } from '../../../models/IPrefilledResponse';
 import { useAppSelector } from '../../../store/hooks';
 
-export default function PrefilledResponseDownLoad(): React.ReactElement {
+export default function DownloadButton(): React.ReactElement {
   const { prefilledResponse } = useAppSelector(
     (state) => state.prefilledResponse
   );
+  const { t } = useTranslation();
 
   const onDownLoad = (): void => {
     httpPost<IPrefilledResponse, AxiosResponse<File>>(
@@ -40,7 +42,7 @@ export default function PrefilledResponseDownLoad(): React.ReactElement {
 
   return (
     <Button type="button" onClick={onDownLoad}>
-      Download Prefilled Response
+      {t('Download prefilled response')}
     </Button>
   );
 }

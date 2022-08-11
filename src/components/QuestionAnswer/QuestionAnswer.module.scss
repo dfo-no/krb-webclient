@@ -1,0 +1,15 @@
+.QuestionAnswer {
+  .Buttons {
+    display: flex;
+    flex-direction: row;
+    margin-top: var(--small-gap);
+
+    .Cancel {
+      margin-left: auto;
+    }
+
+    .Save {
+      margin-left: var(--small-gap);
+    }
+  }
+}
