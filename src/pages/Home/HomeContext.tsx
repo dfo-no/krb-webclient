@@ -9,6 +9,7 @@ import React, {
 import { IBank } from '../../Nexus/entities/IBank';
 import { ISpecification } from '../../Nexus/entities/ISpecification';
 import { IResponse } from '../../models/IResponse';
+import { IPrefilledResponse } from '../../models/IPrefilledResponse';
 
 interface IHomeContext {
   selectedBank: IBank | null;
@@ -17,6 +18,10 @@ interface IHomeContext {
   setSelectedSpecification: Dispatch<SetStateAction<ISpecification | null>>;
   selectedResponse: IResponse | null;
   setSelectedResponse: Dispatch<SetStateAction<IResponse | null>>;
+  selectedPrefilledResponse: IPrefilledResponse | null;
+  setSelectedPrefilledResponse: Dispatch<
+    SetStateAction<IPrefilledResponse | null>
+  >;
 }
 
 const initialContext: IHomeContext = {
@@ -30,6 +35,10 @@ const initialContext: IHomeContext = {
   },
   selectedResponse: null,
   setSelectedResponse: function (): void {
+    throw new Error('Function not implemented.');
+  },
+  selectedPrefilledResponse: null,
+  setSelectedPrefilledResponse: function (): void {
     throw new Error('Function not implemented.');
   }
 };
@@ -47,6 +56,8 @@ export const HomeProvider = ({ children }: IProps): React.ReactElement => {
   const [selectedResponse, setSelectedResponse] = useState<IResponse | null>(
     null
   );
+  const [selectedPrefilledResponse, setSelectedPrefilledResponse] =
+    useState<IPrefilledResponse | null>(null);
 
   return (
     <HomeContext.Provider
@@ -56,7 +67,9 @@ export const HomeProvider = ({ children }: IProps): React.ReactElement => {
         selectedSpecification,
         setSelectedSpecification,
         selectedResponse,
-        setSelectedResponse
+        setSelectedResponse,
+        selectedPrefilledResponse,
+        setSelectedPrefilledResponse
       }}
     >
       {children}
