@@ -1,15 +1,16 @@
-import { Box } from '@mui/material';
 import makeStyles from '@mui/styles/makeStyles';
 import React from 'react';
+import { Box } from '@mui/material';
 import { Route, useParams } from 'react-router-dom';
-import LoaderSpinner from '../../common/LoaderSpinner';
-import { useGetProjectQuery } from '../../store/api/bankApi';
+
 import AdminGuard from './Admin/AdminGuard';
-import ProjectNotFound from '../../components/ProjectNotFound/ProjectNotFound';
 import Create from './Create/Create';
-import { SelectProvider } from './Create/SelectContext';
+import LoaderSpinner from '../../common/LoaderSpinner';
 import Preview from './Preview/Preview';
+import ProjectNotFound from '../../components/ProjectNotFound/ProjectNotFound';
 import { PreviewProvider } from './Preview/PreviewContext';
+import { SelectProvider } from './Create/SelectContext';
+import { useGetProjectQuery } from '../../store/api/bankApi';
 
 interface IRouteParams {
   projectId: string;
@@ -17,7 +18,7 @@ interface IRouteParams {
 
 const useStyles = makeStyles({
   wrapperContainer: {
-    height: '100%',
+    minHeight: '100vh',
     width: '100%'
   }
 });
