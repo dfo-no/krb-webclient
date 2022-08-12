@@ -59,6 +59,7 @@ export default function NewPublicationForm({
         publication.bankId = result.id;
         publication.version = result.version;
         publication.date = result.publishedDate ?? null;
+        publication.deletedDate = null;
         // add publication to selected Bank
         newPublications.push(publication);
 

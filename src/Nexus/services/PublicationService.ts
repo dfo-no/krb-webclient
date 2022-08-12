@@ -20,6 +20,7 @@ export default class PublicationService {
     newBank.projectId = item.id;
     newBank.publications = [];
     newBank.version = this.getNextVersion(item.publications);
+    newBank.deletedDate = null;
 
     return newBank;
   };

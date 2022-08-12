@@ -51,17 +51,12 @@ function useProjectMutations() {
         throw Error('Cant delete Publication');
       });
 
-      const updatedProject = JSON.parse(JSON.stringify(project, null));
-      updatedProject.publications = project.publications.map((publication) => {
-        if (publication.id === publicationToDelete.id) {
-          return {
-            ...publication,
-            deletedDate: now
-          };
-        }
-        return publication;
-      });
-      return putProject(updatedProject);
+      const editedPublications = Utils.replaceElementInList(
+        { ...publicationToDelete, deletedDate: now },
+        project.publications
+      );
+
+      return putProject({ ...project, publications: editedPublications });
     }
     throw Error('Cant delete Publication');
   }

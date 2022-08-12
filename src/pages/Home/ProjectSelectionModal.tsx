@@ -29,10 +29,8 @@ export default function ProjectSelectionModal({
   const [newSpecification, setNewSpecification] =
     useState<ISpecification | null>(null);
   const { t } = useTranslation();
-  const originBankId = selectedBank.projectId
-    ? selectedBank.projectId
-    : selectedBank.id;
 
+  const originBankId = selectedBank.projectId ?? selectedBank.id;
   const { data: bank, isLoading } = useGetBankQuery(originBankId);
 
   if (!selectedBank) {

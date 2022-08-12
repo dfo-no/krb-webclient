@@ -34,7 +34,9 @@ function PublicationsPage(): ReactElement {
   }
 
   const getOrderedPublications = (): IPublication[] => {
-    const publications = [...project.publications];
+    const publications = [
+      ...project.publications.filter((publication) => !publication.deletedDate)
+    ];
     publications.reverse();
     return publications;
   };
@@ -43,10 +45,6 @@ function PublicationsPage(): ReactElement {
     publication: IPublication,
     i: number
   ): ReactElement | undefined => {
-    if (publication.deletedDate) {
-      return undefined;
-    }
-
     return (
       <li key={i} className={css.Publication}>
         <PublicationItem publication={publication} />
