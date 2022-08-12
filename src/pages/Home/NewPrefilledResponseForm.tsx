@@ -68,7 +68,7 @@ const NewPrefilledResponseForm = ({
               {t('Cancel')}
             </ModalButton>
             <ModalButton variant="save" type="submit">
-              {t('Create response')}
+              {t('Create prepared response')}
             </ModalButton>
           </ModalButtonsBox>
         </ModalBox>
