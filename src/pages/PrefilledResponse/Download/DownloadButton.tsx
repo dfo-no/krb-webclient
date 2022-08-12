@@ -41,7 +41,7 @@ export default function DownloadButton(): React.ReactElement {
   };
 
   return (
-    <Button type="button" onClick={onDownLoad}>
+    <Button variant="save" type="submit" onClick={onDownLoad}>
       {t('Download prefilled response')}
     </Button>
   );
