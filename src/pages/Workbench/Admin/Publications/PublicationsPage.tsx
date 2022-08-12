@@ -41,12 +41,9 @@ function PublicationsPage(): ReactElement {
     return publications;
   };
 
-  const renderPublication = (
-    publication: IPublication,
-    i: number
-  ): ReactElement | undefined => {
+  const renderPublication = (publication: IPublication): ReactElement => {
     return (
-      <li key={i} className={css.Publication}>
+      <li key={publication.id} className={css.Publication}>
         <PublicationItem publication={publication} />
       </li>
     );
