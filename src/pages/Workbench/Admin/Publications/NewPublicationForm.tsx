@@ -54,11 +54,12 @@ export default function NewPublicationForm({
       .then((result: IBank) => {
         const publication = { ...post };
         const newPublications = [...project.publications];
-        // Update Publication with new data
+        // Update Publications with new data
         publication.id = result.id;
         publication.bankId = result.id;
         publication.version = result.version;
         publication.date = result.publishedDate ?? null;
+        publication.deletedDate = null;
         // add publication to selected Bank
         newPublications.push(publication);
 

@@ -14,6 +14,7 @@ describe('BasePublicationSchema works', () => {
       version: 1,
       bankId: 'e56367af-d48d-422d-a4f6-ba52ee17af23',
       type: ModelType.publication,
+      deletedDate: null,
       sourceOriginal: null,
       sourceRel: null
     };
@@ -33,6 +34,7 @@ describe('BasePublicationSchema works', () => {
       version: -1,
       bankId: '',
       type: ModelType.bank,
+      deletedDate: null,
       sourceOriginal: null,
       sourceRel: null
     };
@@ -51,6 +53,7 @@ describe('BasePublicationSchema works', () => {
       version: 1,
       bankId: 'e56367af-d48d-422d-a4f6-ba52ee17af23',
       type: ModelType.publication,
+      deletedDate: null,
       sourceOriginal: null,
       sourceRel: null
     };
@@ -69,6 +72,7 @@ describe('BasePublicationSchema works', () => {
       version: 0, // error
       bankId: '', // error
       type: ModelType.bank, // error
+      deletedDate: null,
       sourceOriginal: null,
       sourceRel: null
     };

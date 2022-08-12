@@ -10,7 +10,8 @@ export const BasePublicationSchema = CustomJoi.object().keys({
   bankId: CustomJoi.validateId(),
   type: CustomJoi.validateType(ModelType.publication),
   sourceOriginal: CustomJoi.validateOptionalId(),
-  sourceRel: CustomJoi.validateOptionalId()
+  sourceRel: CustomJoi.validateOptionalId(),
+  deletedDate: CustomJoi.validateOptionalDate()
 });
 
 export const PostPublicationSchema = BasePublicationSchema.keys({
@@ -26,4 +27,5 @@ export interface IPublication extends IBaseModel {
   date: string | null;
   version: number;
   bankId: string;
+  deletedDate?: string | null;
 }
