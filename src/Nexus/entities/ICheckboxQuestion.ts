@@ -22,7 +22,7 @@ export interface ICheckboxConfig extends IConfigBase {
   pointsNonPrefered: number;
 }
 
-export const CheckboxQuestionSchema = QuestionBaseSchema.keys({
+export const CheckboxQuestionWorkbenchSchema = QuestionBaseSchema.keys({
   type: CustomJoi.validateType(QuestionVariant.Q_CHECKBOX),
   config: ConfigBaseSchema.keys({
     preferedAlternative: CustomJoi.validateBoolean(),
@@ -30,9 +30,10 @@ export const CheckboxQuestionSchema = QuestionBaseSchema.keys({
   })
 });
 
-export const CheckboxQuestionAnswerSchema = CheckboxQuestionSchema.keys({
-  answer: CustomJoi.object().keys({
-    value: CustomJoi.validateBoolean(),
-    point: CustomJoi.validateScore()
-  })
-});
+export const CheckboxQuestionAnswerSchema =
+  CheckboxQuestionWorkbenchSchema.keys({
+    answer: CustomJoi.object().keys({
+      value: CustomJoi.validateBoolean(),
+      point: CustomJoi.validateScore()
+    })
+  });

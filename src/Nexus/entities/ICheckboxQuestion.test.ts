@@ -1,6 +1,6 @@
 import {
   CheckboxQuestionAnswerSchema,
-  CheckboxQuestionSchema
+  CheckboxQuestionWorkbenchSchema
 } from './ICheckboxQuestion';
 import { QuestionVariant } from '../../enums';
 
@@ -22,7 +22,7 @@ describe('CheckboxQuestionSchema should validate', () => {
       sourceOriginal: null
     };
 
-    const report = CheckboxQuestionSchema.validate(question);
+    const report = CheckboxQuestionWorkbenchSchema.validate(question);
     expect(report.error).toBeUndefined();
   });
 

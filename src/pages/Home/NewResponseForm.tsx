@@ -5,6 +5,7 @@ import { useHistory } from 'react-router';
 import { useTranslation } from 'react-i18next';
 
 import theme from '../../theme';
+import GeneralErrorMessage from '../../Form/GeneralErrorMessage';
 import VerticalTextCtrl from '../../FormProvider/VerticalTextCtrl';
 import { BaseResponseSchema, IResponse } from '../../models/IResponse';
 import {
@@ -68,6 +69,7 @@ const NewResponseForm = ({ handleClose, response }: IProps) => {
             </ModalButton>
           </ModalButtonsBox>
         </ModalBox>
+        <GeneralErrorMessage errors={methods.formState.errors} />
       </form>
     </FormProvider>
   );

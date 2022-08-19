@@ -1,13 +1,11 @@
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
-import React, { ReactElement, useEffect } from 'react';
+import React, { ReactElement } from 'react';
 import { Typography } from '@mui/material';
-import { useFormContext, useWatch } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
 import css from '../QuestionContent.module.scss';
 import DateCtrl from '../../../../FormProvider/DateCtrl';
 import { IPeriodDateQuestion } from '../../../../Nexus/entities/IPeriodDateQuestion';
-import { IRequirementAnswer } from '../../../../models/IRequirementAnswer';
 
 interface IProps {
   item: IPeriodDateQuestion;
@@ -15,18 +13,6 @@ interface IProps {
 
 const QuestionAnswerPeriodDate = ({ item }: IProps): ReactElement => {
   const { t } = useTranslation();
-  const { control, setValue } = useFormContext<IRequirementAnswer>();
-
-  const useFromDate = useWatch({ name: 'question.answer.fromDate', control });
-  const useToDate = useWatch({ name: 'question.answer.toDate', control });
-
-  useEffect(() => {
-    setValue('question.config.fromBoundary', useFromDate);
-  }, [useFromDate, setValue]);
-
-  useEffect(() => {
-    setValue('question.config.toBoundary', useToDate);
-  }, [useToDate, setValue]);
 
   return (
     <div className={css.QuestionGrid}>

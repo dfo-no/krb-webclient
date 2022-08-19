@@ -63,9 +63,9 @@ export default class QuestionService {
           type: QuestionVariant.Q_SLIDER,
           config: {
             min: 0,
-            max: 10,
+            max: 1,
             step: 1,
-            unit: 'GB',
+            unit: '',
             defaultPoint: 1,
             scoreValues: [
               { value: 0, score: 0 },

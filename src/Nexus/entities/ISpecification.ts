@@ -25,8 +25,8 @@ export const BaseSpecificationSchema = CustomJoi.object().keys({
   id: CustomJoi.validateParentId(),
   organization: CustomJoi.validateText(),
   organizationNumber: CustomJoi.validateOrgNr(),
-  products: CustomJoi.validateItems(SpecificationProductSchema),
-  requirements: CustomJoi.validateItems(CustomJoi.validateIdItems()),
-  requirementAnswers: CustomJoi.validateItems(RequirementAnswerSchema),
+  products: CustomJoi.validateUniqueArray(SpecificationProductSchema),
+  requirements: CustomJoi.validateIdArray(),
+  requirementAnswers: CustomJoi.validateUniqueArray(RequirementAnswerSchema),
   title: CustomJoi.validateText()
 });

@@ -2,8 +2,8 @@ import { Box, styled, Typography } from '@mui/material';
 import { useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 
-import css from './Variant.module.scss';
 import CheckboxCtrl from '../../../../FormProvider/CheckboxCtrl';
+import QuestionConfigSlider from './QuestionConfigSlider';
 import SelectionSingularCtrl from '../../../../FormProvider/SelectionSingularCtrl';
 import VerticalTextCtrl from '../../../../FormProvider/VerticalTextCtrl';
 import YesNoSelection from '../../../../components/YesNoSelection/YesNoSelection';
@@ -50,7 +50,7 @@ const QuestionConfig = ({ item, index }: IProps) => {
       return (
         <ConfigBox>
           <VerticalTextCtrl
-            name={`questions.${index}.config.max` as 'questions.0.config.max'}
+            name={`questions.${index}.config.max`}
             label={t('Max characters')}
             type={'number'}
           />
@@ -64,49 +64,19 @@ const QuestionConfig = ({ item, index }: IProps) => {
             {t('Preferred alternative')}
           </Typography>
           <YesNoSelection
-            name={
-              `questions.${index}.config.preferedAlternative` as 'questions.0.config.preferedAlternative'
-            }
+            name={`questions.${index}.config.preferedAlternative`}
           />
         </ConfigBox>
       );
 
     case QuestionVariant.Q_SLIDER:
-      return (
-        <ConfigBox>
-          <VerticalTextCtrl
-            className={css.InputField}
-            name={`questions.${index}.config.min` as 'questions.0.config.min'}
-            label={t('Minimum')}
-            type={'number'}
-          />
-          <VerticalTextCtrl
-            className={css.InputField}
-            name={`questions.${index}.config.max` as 'questions.0.config.max'}
-            label={t('Maximum')}
-            type={'number'}
-          />
-          <VerticalTextCtrl
-            className={css.InputField}
-            name={`questions.${index}.config.unit` as 'questions.0.config.unit'}
-            label={t('Unit')}
-          />
-          <VerticalTextCtrl
-            className={css.InputField}
-            name={`questions.${index}.config.step` as 'questions.0.config.step'}
-            label={t('Step')}
-            type={'number'}
-          />
-        </ConfigBox>
-      );
+      return <QuestionConfigSlider index={index} />;
 
     case QuestionVariant.Q_CODELIST:
       return (
         <ConfigBox>
           <SelectionSingularCtrl
-            name={
-              `questions.${index}.config.codelist` as 'questions.0.config.codelist'
-            }
+            name={`questions.${index}.config.codelist`}
             saveAsString={true}
             initValue={project.codelist[0]}
             items={project.codelist}
@@ -118,9 +88,7 @@ const QuestionConfig = ({ item, index }: IProps) => {
       return (
         <ConfigBox>
           <CheckboxCtrl
-            name={
-              `questions.${index}.config.isPeriod` as 'questions.0.config.isPeriod'
-            }
+            name={`questions.${index}.config.isPeriod`}
             label={`${t('Include to date')}`}
           />
         </ConfigBox>
@@ -130,9 +98,7 @@ const QuestionConfig = ({ item, index }: IProps) => {
       return (
         <ConfigBox>
           <CheckboxCtrl
-            name={
-              `questions.${index}.config.isPeriod` as 'questions.0.config.isPeriod'
-            }
+            name={`questions.${index}.config.isPeriod`}
             label={`${t('Include to time')}`}
           />
         </ConfigBox>

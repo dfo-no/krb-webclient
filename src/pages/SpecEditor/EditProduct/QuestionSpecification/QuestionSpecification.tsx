@@ -43,9 +43,9 @@ const QuestionSpecification = ({ item }: IProps) => {
     case QuestionVariant.Q_CODELIST:
       return <QuestionSpecificationCodelist item={item} />;
     case QuestionVariant.Q_PERIOD_DATE:
-      return <QuestionSpecificationPeriodDate />;
+      return <QuestionSpecificationPeriodDate item={item} />;
     case QuestionVariant.Q_TIME:
-      return <QuestionSpecificationTime />;
+      return <QuestionSpecificationTime item={item} />;
     case QuestionVariant.Q_FILEUPLOAD:
   }
   return <></>;

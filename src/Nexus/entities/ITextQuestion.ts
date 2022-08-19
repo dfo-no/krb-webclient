@@ -20,14 +20,14 @@ export interface ITextAnswer extends IAnswerBase {
   text: string;
 }
 
-export const TextQuestionSchema = QuestionBaseSchema.keys({
+export const TextQuestionWorkbenchSchema = QuestionBaseSchema.keys({
   type: CustomJoi.validateType(QuestionVariant.Q_TEXT),
   config: ConfigBaseSchema.keys({
     max: CustomJoi.validateMaxText()
   })
 });
 
-export const TextQuestionAnswerSchema = TextQuestionSchema.keys({
+export const TextQuestionAnswerSchema = TextQuestionWorkbenchSchema.keys({
   answer: CustomJoi.object().keys({
     text: CustomJoi.validateAnswerText(),
     point: CustomJoi.validateScore()

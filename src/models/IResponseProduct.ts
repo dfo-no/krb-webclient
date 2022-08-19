@@ -22,6 +22,6 @@ export const ResponseProductSchema = CustomJoi.object().keys({
   title: CustomJoi.validateText(),
   description: CustomJoi.validateOptionalText(),
   originProduct: SpecificationProductSchema.required(),
-  requirementAnswers: CustomJoi.validateItems(RequirementAnswerSchema),
+  requirementAnswers: CustomJoi.validateUniqueArray(RequirementAnswerSchema),
   price: CustomJoi.number().integer().required()
 });

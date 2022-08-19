@@ -20,7 +20,7 @@ export interface IRequirementAnswer {
 export const RequirementAnswerSchema = CustomJoi.object().keys({
   id: CustomJoi.validateId(),
   questionId: CustomJoi.validateId(),
-  weight: CustomJoi.number().required(),
+  weight: CustomJoi.validateWeight(),
   variantId: CustomJoi.validateId(),
   question: QuestionAnswerSchema,
   type: CustomJoi.validateTypes(ModelType),

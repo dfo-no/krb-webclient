@@ -15,7 +15,7 @@ export const CodelistSchema = CustomJoi.object().keys({
   id: CustomJoi.validateId(),
   title: CustomJoi.validateText(),
   description: CustomJoi.validateOptionalText(),
-  codes: CustomJoi.validateItems(BaseCodeSchema),
+  codes: CustomJoi.validateUniqueArray(BaseCodeSchema),
   type: CustomJoi.validateType(ModelType.codelist),
   sourceOriginal: CustomJoi.validateOptionalId(),
   sourceRel: CustomJoi.validateOptionalId()

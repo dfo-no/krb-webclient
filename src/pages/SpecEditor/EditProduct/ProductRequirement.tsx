@@ -9,6 +9,7 @@ import { useTranslation } from 'react-i18next';
 import ChosenConfiguration from './ChosenConfiguration/ChosenConfiguration';
 import css from './ProductRequirement.module.scss';
 import EditProductVariant from './EditProductVariant';
+import GeneralErrorMessage from '../../../Form/GeneralErrorMessage';
 import Nexus from '../../../Nexus/Nexus';
 import ProductVariant from './ProductVariant';
 import VariantType from '../../../Nexus/entities/VariantType';
@@ -61,7 +62,6 @@ export default function ProductRequirement({
 
   const useVariant = useWatch({ name: 'variantId', control: methods.control });
   const useWeight = useWatch({ name: 'weight', control: methods.control });
-
   const activeVariant = requirement.variants.find(
     (variant) => variant.id === useVariant
   );
@@ -261,6 +261,7 @@ export default function ProductRequirement({
                   })}
                 {renderActiveVariant()}
               </Box>
+              <GeneralErrorMessage errors={methods.formState.errors} />
             </form>
           </FormProvider>
         </Box>

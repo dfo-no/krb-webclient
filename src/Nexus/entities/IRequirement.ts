@@ -17,8 +17,8 @@ export const BaseRequirementSchema = CustomJoi.object().keys({
   title: CustomJoi.validateText(),
   description: CustomJoi.validateOptionalText(),
   needId: CustomJoi.validateId(),
-  variants: CustomJoi.validateItems(VariantSchema),
-  tags: CustomJoi.validateItems(CustomJoi.validateIdItems()),
+  variants: CustomJoi.validateUniqueArray(VariantSchema),
+  tags: CustomJoi.validateIdArray(),
   type: CustomJoi.validateType(ModelType.requirement),
   sourceOriginal: CustomJoi.validateOptionalId(),
   sourceRel: CustomJoi.validateOptionalId()

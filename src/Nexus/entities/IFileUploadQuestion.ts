@@ -24,7 +24,7 @@ export interface IFileUploadConfig extends IConfigBase {
 }
 
 export const FileUploadWorkbenchSchema = QuestionBaseSchema.keys({
-  type: CustomJoi.string().equal(QuestionVariant.Q_FILEUPLOAD).required(),
+  type: CustomJoi.validateType(QuestionVariant.Q_FILEUPLOAD),
   config: ConfigBaseSchema.keys({
     fileEndings: CustomJoi.array().items(CustomJoi.string()).required(),
     template: CustomJoi.string().allow(null, '').required(),

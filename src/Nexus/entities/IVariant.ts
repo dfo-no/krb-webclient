@@ -1,7 +1,7 @@
 import CustomJoi from '../../common/CustomJoi';
 import VariantType from './VariantType';
 import { QuestionTypes } from '../../models/QuestionTypes';
-import { QuestionSpecificationSchema } from './QuestionSchema';
+import { QuestionVariantSchema } from './QuestionSchema';
 
 export interface IVariant {
   id: string;
@@ -26,7 +26,7 @@ export const VariantSchema = CustomJoi.object().keys({
   useQualification: CustomJoi.validateBoolean(),
   products: CustomJoi.validateVariantProducts(),
   type: CustomJoi.validateVariantType(),
-  questions: CustomJoi.validateItems(QuestionSpecificationSchema)
+  questions: CustomJoi.validateUniqueArray(QuestionVariantSchema)
 });
 
 export const PostVariantSchema = VariantSchema.keys({

@@ -106,6 +106,6 @@ describe('IPeriodDateQuestion should validate', () => {
     };
 
     const report = PeriodDateAnswerSchema.validate(question);
-    expect(report.error?.details[0].type).toEqual('date.greater');
+    expect(report.error?.details[0].type).toEqual('date.min');
   });
 });

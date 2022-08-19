@@ -13,7 +13,7 @@ export const BaseNeedSchema = CustomJoi.object().keys({
   id: CustomJoi.validateId(),
   title: CustomJoi.validateText(),
   description: CustomJoi.validateOptionalText(),
-  requirements: CustomJoi.validateItems(BaseRequirementSchema),
+  requirements: CustomJoi.validateUniqueArray(BaseRequirementSchema),
   type: CustomJoi.validateType(ModelType.need),
   sourceOriginal: CustomJoi.validateOptionalId(),
   sourceRel: CustomJoi.validateOptionalId(),

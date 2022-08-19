@@ -15,7 +15,7 @@ import { QuestionVariant } from '../../../../enums';
 import { IRequirementAnswer } from '../../../../models/IRequirementAnswer';
 import {
   ITimeQuestion,
-  TimeAnswerSchema
+  TimeQuestionAnswerSchema
 } from '../../../../Nexus/entities/ITimeQuestion';
 import { useAccordionState } from '../../../../components/DFOAccordion/AccordionContext';
 import { useAppDispatch, useAppSelector } from '../../../../store/hooks';
@@ -38,7 +38,7 @@ const QuestionAnswerTime = ({
   const { responseProductIndex } = useResponseState();
   const { setActiveKey } = useAccordionState();
   const methods = useForm<ITimeQuestion>({
-    resolver: joiResolver(TimeAnswerSchema),
+    resolver: joiResolver(TimeQuestionAnswerSchema),
     defaultValues: item
   });
 

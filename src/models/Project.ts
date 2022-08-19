@@ -4,11 +4,8 @@ import { PutPublicationSchema } from '../Nexus/entities/IPublication';
 import { ModelType } from '../enums';
 
 export const PutProjectSchema = BaseBankSchema.keys({
-  id: CustomJoi.string()
-    .guid({ version: ['uuidv4'] })
-    .length(36)
-    .required(),
-  type: CustomJoi.string().equal(ModelType.bank).required(),
+  id: CustomJoi.validateId(),
+  type: CustomJoi.validateType(ModelType.bank),
   publications: CustomJoi.array()
     .items(PutPublicationSchema)
     .unique('id')
@@ -17,7 +14,7 @@ export const PutProjectSchema = BaseBankSchema.keys({
 });
 
 export const PostProjectSchema = BaseBankSchema.keys({
-  id: CustomJoi.string().equal('').required(),
-  description: CustomJoi.string().allow('').required(),
-  publishedDate: CustomJoi.string().equal(null).required()
+  id: CustomJoi.validateEmptyId(),
+  description: CustomJoi.validateOptionalText(),
+  publishedDate: CustomJoi.validateEmptyDate()
 });

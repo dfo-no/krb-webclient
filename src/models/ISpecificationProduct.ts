@@ -23,9 +23,9 @@ export const SpecificationProductSchema = CustomJoi.object().keys({
   originProduct: BaseProductSchema,
   description: CustomJoi.validateOptionalText(),
   amount: CustomJoi.validateAmount(),
-  requirements: CustomJoi.validateItems(CustomJoi.validateIdItems()),
+  requirements: CustomJoi.validateIdArray(),
   weight: CustomJoi.validateWeight(),
-  requirementAnswers: CustomJoi.validateItems(RequirementAnswerSchema),
+  requirementAnswers: CustomJoi.validateUniqueArray(RequirementAnswerSchema),
   type: CustomJoi.validateType(ModelType.specificationProduct),
   sourceOriginal: CustomJoi.validateOptionalId(),
   sourceRel: CustomJoi.validateOptionalId()

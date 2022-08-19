@@ -6,6 +6,7 @@ import { Button, Typography } from '@mui/material';
 import { t } from 'i18next';
 import { useFieldArray, useFormContext, useWatch } from 'react-hook-form';
 
+import ArrayUniqueErrorMessage from '../../../../Form/ArrayUniqueErrorMessage';
 import css from '../QuestionContent.module.scss';
 import DateUtils from '../../../../common/DateUtils';
 import HorizontalTextCtrl from '../../../../FormProvider/HorizontalTextCtrl';
@@ -13,9 +14,14 @@ import theme from '../../../../theme';
 import TimeCtrl from '../../../../FormProvider/TimeCtrl';
 import { FormIconButton } from '../../../../components/Form/FormIconButton';
 import { IRequirementAnswer } from '../../../../models/IRequirementAnswer';
+import { ITimeQuestion } from '../../../../Nexus/entities/ITimeQuestion';
 
-const QuestionSpecificationTime = (): ReactElement => {
-  const { control } = useFormContext<IRequirementAnswer>();
+interface IProps {
+  item: ITimeQuestion;
+}
+
+const QuestionSpecificationTime = ({ item }: IProps): ReactElement => {
+  const { control, formState, setValue } = useFormContext<IRequirementAnswer>();
 
   const useFromBoundary = useWatch({
     name: 'question.config.fromBoundary',
@@ -39,6 +45,15 @@ const QuestionSpecificationTime = (): ReactElement => {
     control,
     name: 'question.config.timeScores'
   });
+
+  useEffect(() => {
+    if (useFromBoundary) {
+      setValue('question.answer.fromTime', useFromBoundary);
+      if (item.config.isPeriod) {
+        setValue('question.answer.toTime', useFromBoundary);
+      }
+    }
+  }, [useFromBoundary, setValue, item.config.isPeriod]);
 
   useEffect(() => {
     if (!useMinScore) {
@@ -107,6 +122,13 @@ const QuestionSpecificationTime = (): ReactElement => {
           </div>
         );
       })}
+      <div className={css.FullRow}>
+        <ArrayUniqueErrorMessage
+          errors={formState.errors}
+          path={'question.config.timeScores'}
+          length={fields.length}
+        />
+      </div>
       <Button
         variant="primary"
         onClick={() => append({ time: useFromBoundary, score: 0 })}

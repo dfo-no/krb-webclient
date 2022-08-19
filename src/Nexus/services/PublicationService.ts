@@ -34,7 +34,8 @@ export default class PublicationService {
       type: ModelType.publication,
       version: 1,
       sourceOriginal: null,
-      sourceRel: null
+      sourceRel: null,
+      deletedDate: null
     };
   };
 }

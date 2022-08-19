@@ -32,7 +32,7 @@ export interface ICodelistAnswer extends IAnswerBase {
   codes: string[];
 }
 
-export const CodelistQuestionSchema = QuestionBaseSchema.keys({
+export const CodelistQuestionWorkbenchSchema = QuestionBaseSchema.keys({
   type: CustomJoi.validateType(QuestionVariant.Q_CODELIST),
   config: ConfigBaseSchema.keys({
     codelist: CustomJoi.validateId(),
@@ -44,9 +44,10 @@ export const CodelistQuestionSchema = QuestionBaseSchema.keys({
   })
 });
 
-export const CodelistQuestionAnswerSchema = CodelistQuestionSchema.keys({
-  answer: CustomJoi.object().keys({
-    codes: CustomJoi.validateItems(CustomJoi.validateIdItems()),
-    point: CustomJoi.validateScore()
-  })
-});
+export const CodelistQuestionAnswerSchema =
+  CodelistQuestionWorkbenchSchema.keys({
+    answer: CustomJoi.object().keys({
+      codes: CustomJoi.validateIdArray(),
+      point: CustomJoi.validateScore()
+    })
+  });

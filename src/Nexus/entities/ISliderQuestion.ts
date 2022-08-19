@@ -29,29 +29,37 @@ export interface ScoreValuePair {
   value: number;
 }
 
-export const SliderQuestionSchema = QuestionBaseSchema.keys({
-  type: CustomJoi.string().equal(QuestionVariant.Q_SLIDER).required(),
+const WorkbenchScoreValueSchema = CustomJoi.object().keys({
+  score: CustomJoi.validateScore(),
+  value: CustomJoi.validateNumber()
+});
+
+export const SliderQuestionWorkbenchSchema = QuestionBaseSchema.keys({
+  type: CustomJoi.validateType(QuestionVariant.Q_SLIDER),
   config: ConfigBaseSchema.keys({
-    step: CustomJoi.number().min(0).max(1000000000).required(),
-    min: CustomJoi.number().min(0).max(1000000000).required(),
-    max: CustomJoi.number()
-      .min(1)
-      .max(1000000000)
-      .required()
-      .greater(CustomJoi.ref('min')),
-    unit: CustomJoi.string().required(),
-    scoreValues: CustomJoi.array().items(
-      CustomJoi.object().keys({
-        score: CustomJoi.number().required().min(0).max(100),
-        value: CustomJoi.number().required()
-      })
-    )
+    step: CustomJoi.validateSliderStep(),
+    min: CustomJoi.validateSliderMin(),
+    max: CustomJoi.validateSliderMax(),
+    unit: CustomJoi.validateOptionalText(),
+    scoreValues: CustomJoi.validateArray(WorkbenchScoreValueSchema)
   })
 });
 
-export const SliderQuestionAnswerSchema = SliderQuestionSchema.keys({
+const ScoreValueSchema = CustomJoi.object().keys({
+  score: CustomJoi.validateScore(),
+  value: CustomJoi.validateSliderValue()
+});
+
+export const SliderQuestionAnswerSchema = SliderQuestionWorkbenchSchema.keys({
+  config: ConfigBaseSchema.keys({
+    step: CustomJoi.validateSliderStep(),
+    min: CustomJoi.validateSliderMin(),
+    max: CustomJoi.validateSliderMax(),
+    unit: CustomJoi.validateOptionalText(),
+    scoreValues: CustomJoi.validateSliderValues(ScoreValueSchema)
+  }),
   answer: CustomJoi.object().keys({
-    value: CustomJoi.number().required(),
-    point: CustomJoi.number().required()
+    value: CustomJoi.validateSliderAnswer(),
+    point: CustomJoi.validateScore()
   })
 });
