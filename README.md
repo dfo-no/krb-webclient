@@ -5,7 +5,7 @@ This receipe is written for Mac users.
 ## Prerequisites
 
 1. You need a client id in order to run the application. Send an email to an project owner to request a key.
-2. Create a .env.local file in your src directory, and add the following lines:
+2. Create a .env.local file in krb-webclient directory, and add the following lines:
 
    > REACT_APP_CLIENTID="Key attained from developer"
    > REACT_APP_API_URL=https://krb-api-man-dev.azure-api.net
