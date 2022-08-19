@@ -5,13 +5,10 @@ This receipe is written for Mac users.
 ## Prerequisites
 
 1. You need a client id in order to run the application. Send an email to an project owner to request a key.
-2. Open existing or create a new .zshrc file in your home directory, and add the following line:
+2. Create a .env.local file in your src directory, and add the following lines:
 
-   > export REACT_APP_CLIENTID="Key attained from developer"
-
-3. Execute .zshrc file:
-
-   > source .zshrc
+   > REACT_APP_CLIENTID="Key attained from developer"
+   > REACT_APP_API_URL=https://krb-api-man-dev.azure-api.net
 
 ## Installation
 
