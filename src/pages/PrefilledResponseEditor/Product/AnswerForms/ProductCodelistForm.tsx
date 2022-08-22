@@ -2,13 +2,11 @@ import Badge from 'react-bootstrap/Badge';
 import Button from '@mui/material/Button';
 import Form from 'react-bootstrap/Form';
 import React from 'react';
-import { get } from 'lodash';
 import { joiResolver } from '@hookform/resolvers/joi';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
 import CustomJoi from '../../../../common/CustomJoi';
-import ErrorSummary from '../../../../Form/ErrorSummary';
 import {
   addProductAnswer,
   removeProductAnswer
@@ -59,11 +57,7 @@ export default function ProductCodelistForm({
     (state) => state.prefilledResponse
   );
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors }
-  } = useForm<IRequirementAnswer>({
+  const { register, handleSubmit } = useForm<IRequirementAnswer>({
     resolver: joiResolver(ResponseCodelistSchema),
     defaultValues: answer
   });
@@ -130,7 +124,6 @@ export default function ProductCodelistForm({
             {t('Reset')}
           </Button>
         </div>
-        <ErrorSummary errors={get(errors, `question.answer.value`)} />
       </form>
     </div>
   );
