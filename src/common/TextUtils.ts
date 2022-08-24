@@ -10,8 +10,8 @@ import { ISliderQuestion } from '../Nexus/entities/ISliderQuestion';
 import { ISpecification } from '../Nexus/entities/ISpecification';
 import { ITextQuestion } from '../Nexus/entities/ITextQuestion';
 import { ITimeQuestion } from '../Nexus/entities/ITimeQuestion';
-import { IRequirementAnswer } from '../models/IRequirementAnswer';
-import { QuestionVariant } from '../enums';
+import { IRequirementAnswer } from '../Nexus/entities/IRequirementAnswer';
+import { QuestionVariant } from '../Nexus/enums';
 
 class TextUtils {
   static getAnswerText = (

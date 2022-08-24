@@ -16,7 +16,7 @@ import { IProduct } from '../../../Nexus/entities/IProduct';
 import {
   ISpecificationProduct,
   PostSpecificationProductSchema
-} from '../../../models/ISpecificationProduct';
+} from '../../../Nexus/entities/ISpecificationProduct';
 import { Parentable } from '../../../models/Parentable';
 import { useAppDispatch, useAppSelector } from '../../../store/hooks';
 import { useFormStyles } from '../../../components/Form/FormStyles';

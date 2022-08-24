@@ -1,20 +1,17 @@
-import CustomJoi from '../../common/CustomJoi';
-import { IBaseModel } from './IBaseModel';
-import { ModelType } from '../../enums';
+import CustomJoi from '../Joi/CustomJoi';
+import { BaseModelSchema, IBaseModel } from './IBaseModel';
+import { ModelType } from '../enums';
 
 export interface ITag extends IBaseModel {
   title: string;
   description?: string;
 }
 
-export const BaseTagSchema = CustomJoi.object().keys({
-  id: CustomJoi.validateId(),
+export const BaseTagSchema = BaseModelSchema.keys({
   title: CustomJoi.validateText(),
   description: CustomJoi.validateOptionalText(),
   parent: CustomJoi.validateParentId(),
-  type: CustomJoi.validateType(ModelType.tag),
-  sourceOriginal: CustomJoi.validateOptionalId(),
-  sourceRel: CustomJoi.validateOptionalId()
+  type: CustomJoi.validateType(ModelType.tag)
 });
 
 export const PostTagSchema = BaseTagSchema.keys({

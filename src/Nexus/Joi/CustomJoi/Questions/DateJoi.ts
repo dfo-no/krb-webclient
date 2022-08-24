@@ -1,5 +1,5 @@
 import Joi, { Schema } from 'joi';
-import DateUtils from '../../DateUtils';
+import DateUtils from '../../../../common/DateUtils';
 
 const PeriodMinValidator = (joi: Joi.Root) => ({
   type: 'validatePeriodMin',

@@ -12,7 +12,7 @@ import VariantType from '../../../../Nexus/entities/VariantType';
 import { FlexColumnBox } from '../../../../components/FlexBox/FlexColumnBox';
 import { FormIconButton } from '../../../../components/Form/FormIconButton';
 import { IVariant } from '../../../../Nexus/entities/IVariant';
-import { QuestionVariant } from '../../../../enums';
+import { QuestionVariant } from '../../../../Nexus/enums';
 
 const QuestionsList = (): ReactElement => {
   const { t } = useTranslation();

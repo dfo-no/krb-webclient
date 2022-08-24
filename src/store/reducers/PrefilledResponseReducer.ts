@@ -3,10 +3,10 @@ import { cloneDeep } from 'lodash';
 
 import Utils from '../../common/Utils';
 import { IBank } from '../../Nexus/entities/IBank';
-import { IPrefilledResponse } from '../../models/IPrefilledResponse';
-import { IPrefilledResponseProduct } from '../../models/IPrefilledResponseProduct';
-import { IRequirementAnswer } from '../../models/IRequirementAnswer';
-import { ModelType } from '../../enums';
+import { IPrefilledResponse } from '../../Nexus/entities/IPrefilledResponse';
+import { IPrefilledResponseProduct } from '../../Nexus/entities/IPrefilledResponseProduct';
+import { IRequirementAnswer } from '../../Nexus/entities/IRequirementAnswer';
+import { ModelType } from '../../Nexus/enums';
 
 interface IPrefilledResponseState {
   prefilledResponse: IPrefilledResponse;

@@ -1,4 +1,4 @@
-import { ModelType } from '../../enums';
+import { ModelType } from '../enums';
 import {
   BasePublicationSchema,
   IPublication,

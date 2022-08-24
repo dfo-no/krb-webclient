@@ -1,6 +1,6 @@
 import CustomJoi from '../CustomJoi';
-import { QuestionBaseSchema } from '../../Nexus/entities/IQuestionBase';
-import VariantType from '../../Nexus/entities/VariantType';
+import { QuestionBaseSchema } from '../../entities/IQuestionBase';
+import VariantType from '../../entities/VariantType';
 import { v1 as uuidv1, v4 as uuidv4 } from 'uuid';
 import { QuestionVariant } from '../../enums';
 

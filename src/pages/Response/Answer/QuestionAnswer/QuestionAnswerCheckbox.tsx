@@ -14,8 +14,8 @@ import {
   CheckboxQuestionAnswerSchema,
   ICheckboxQuestion
 } from '../../../../Nexus/entities/ICheckboxQuestion';
-import { QuestionVariant } from '../../../../enums';
-import { IRequirementAnswer } from '../../../../models/IRequirementAnswer';
+import { QuestionVariant } from '../../../../Nexus/enums';
+import { IRequirementAnswer } from '../../../../Nexus/entities/IRequirementAnswer';
 import { useAppDispatch, useAppSelector } from '../../../../store/hooks';
 import { useResponseState } from '../../ResponseContext';
 import { useAccordionState } from '../../../../components/DFOAccordion/AccordionContext';

@@ -1,5 +1,5 @@
-import CustomJoi from '../common/CustomJoi';
-import { BaseBankSchema, IBank } from '../Nexus/entities/IBank';
+import CustomJoi from '../Joi/CustomJoi';
+import { BaseBankSchema, IBank } from './IBank';
 import { IPrefilledResponseProduct } from './IPrefilledResponseProduct';
 import {
   IRequirementAnswer,

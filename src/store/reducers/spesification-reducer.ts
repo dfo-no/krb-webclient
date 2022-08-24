@@ -3,9 +3,9 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import SpecificationStoreService from '../../Nexus/services/SpecificationStoreService';
 import Utils from '../../common/Utils';
 import { IBank } from '../../Nexus/entities/IBank';
-import { IRequirementAnswer } from '../../models/IRequirementAnswer';
+import { IRequirementAnswer } from '../../Nexus/entities/IRequirementAnswer';
 import { ISpecification } from '../../Nexus/entities/ISpecification';
-import { ISpecificationProduct } from '../../models/ISpecificationProduct';
+import { ISpecificationProduct } from '../../Nexus/entities/ISpecificationProduct';
 
 interface ISpecificationState {
   spec: ISpecification;

@@ -12,7 +12,7 @@ import { ICheckboxQuestion } from '../../../Nexus/entities/ICheckboxQuestion';
 import { ICodelistQuestion } from '../../../Nexus/entities/ICodelistQuestion';
 import { IFileUploadQuestion } from '../../../Nexus/entities/IFileUploadQuestion';
 import { IPeriodDateQuestion } from '../../../Nexus/entities/IPeriodDateQuestion';
-import { IRequirementAnswer } from '../../../models/IRequirementAnswer';
+import { IRequirementAnswer } from '../../../Nexus/entities/IRequirementAnswer';
 import { ISliderQuestion } from '../../../Nexus/entities/ISliderQuestion';
 import { ITextQuestion } from '../../../Nexus/entities/ITextQuestion';
 import { ITimeQuestion } from '../../../Nexus/entities/ITimeQuestion';

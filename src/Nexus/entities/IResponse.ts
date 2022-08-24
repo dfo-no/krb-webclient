@@ -1,8 +1,5 @@
-import CustomJoi from '../common/CustomJoi';
-import {
-  BaseSpecificationSchema,
-  ISpecification
-} from '../Nexus/entities/ISpecification';
+import CustomJoi from '../Joi/CustomJoi';
+import { BaseSpecificationSchema, ISpecification } from './ISpecification';
 import {
   IRequirementAnswer,
   RequirementAnswerSchema

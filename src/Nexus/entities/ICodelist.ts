@@ -1,7 +1,7 @@
-import CustomJoi from '../../common/CustomJoi';
+import CustomJoi from '../Joi/CustomJoi';
 import { BaseCodeSchema, ICode } from './ICode';
-import { IBaseModel } from './IBaseModel';
-import { ModelType } from '../../enums';
+import { BaseModelSchema, IBaseModel } from './IBaseModel';
+import { ModelType } from '../enums';
 import { Parentable } from '../../models/Parentable';
 
 export interface ICodelist extends IBaseModel {
@@ -11,7 +11,7 @@ export interface ICodelist extends IBaseModel {
   codes: Parentable<ICode>[];
 }
 
-export const CodelistSchema = CustomJoi.object().keys({
+export const CodelistSchema = BaseModelSchema.keys({
   id: CustomJoi.validateId(),
   title: CustomJoi.validateText(),
   description: CustomJoi.validateOptionalText(),

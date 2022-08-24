@@ -1,6 +1,6 @@
-import CustomJoi from '../../common/CustomJoi';
-import { IBaseModel } from './IBaseModel';
-import { ModelType } from '../../enums';
+import CustomJoi from '../Joi/CustomJoi';
+import { BaseModelSchema, IBaseModel } from './IBaseModel';
+import { ModelType } from '../enums';
 
 export interface IProduct extends IBaseModel {
   id: string;
@@ -11,14 +11,11 @@ export interface IProduct extends IBaseModel {
   deletedDate: string | null;
 }
 
-export const BaseProductSchema = CustomJoi.object().keys({
-  id: CustomJoi.validateId(),
+export const BaseProductSchema = BaseModelSchema.keys({
   title: CustomJoi.validateText(),
   description: CustomJoi.validateOptionalText(),
   parent: CustomJoi.validateParentId(),
   type: CustomJoi.validateType(ModelType.product),
-  sourceOriginal: CustomJoi.validateOptionalId(),
-  sourceRel: CustomJoi.validateOptionalId(),
   deletedDate: CustomJoi.validateOptionalDate()
 });
 

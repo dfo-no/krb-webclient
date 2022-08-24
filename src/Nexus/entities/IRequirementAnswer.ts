@@ -1,11 +1,8 @@
-import CustomJoi from '../common/CustomJoi';
-import {
-  BaseRequirementSchema,
-  IRequirement
-} from '../Nexus/entities/IRequirement';
+import CustomJoi from '../Joi/CustomJoi';
+import { BaseRequirementSchema, IRequirement } from './IRequirement';
 import { ModelType } from '../enums';
-import { QuestionType } from './QuestionType';
-import { QuestionAnswerSchema } from '../Nexus/entities/QuestionSchema';
+import { QuestionType } from '../../models/QuestionType';
+import { QuestionAnswerSchema } from './QuestionSchema';
 
 export interface IRequirementAnswer {
   id: string;

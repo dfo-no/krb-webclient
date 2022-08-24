@@ -7,7 +7,7 @@ import { IPeriodDateQuestion } from '../entities/IPeriodDateQuestion';
 import { ISliderQuestion } from '../entities/ISliderQuestion';
 import { ITextQuestion } from '../entities/ITextQuestion';
 import { ITimeQuestion } from '../entities/ITimeQuestion';
-import { QuestionVariant } from '../../enums';
+import { QuestionVariant } from '../enums';
 
 export default class QuestionService {
   UuidService = new UuidService();

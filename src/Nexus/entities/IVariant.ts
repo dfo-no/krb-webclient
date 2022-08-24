@@ -1,4 +1,4 @@
-import CustomJoi from '../../common/CustomJoi';
+import CustomJoi from '../Joi/CustomJoi';
 import VariantType from './VariantType';
 import { QuestionTypes } from '../../models/QuestionTypes';
 import { QuestionVariantSchema } from './QuestionSchema';

@@ -6,7 +6,7 @@ import { IBank } from '../entities/IBank';
 import { IBaseModel } from '../entities/IBaseModel';
 import { IInheritedBank } from '../../models/IInheritedBank';
 import { INeed } from '../entities/INeed';
-import { ModelType } from '../../enums';
+import { ModelType } from '../enums';
 import { Parentable } from '../../models/Parentable';
 
 export default class InheritanceService {

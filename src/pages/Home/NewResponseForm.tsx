@@ -7,7 +7,7 @@ import { useTranslation } from 'react-i18next';
 import theme from '../../theme';
 import GeneralErrorMessage from '../../Form/GeneralErrorMessage';
 import VerticalTextCtrl from '../../FormProvider/VerticalTextCtrl';
-import { BaseResponseSchema, IResponse } from '../../models/IResponse';
+import { BaseResponseSchema, IResponse } from '../../Nexus/entities/IResponse';
 import {
   ModalBox,
   ModalFieldsBox,

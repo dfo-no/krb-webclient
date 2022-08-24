@@ -2,7 +2,7 @@ import {
   CheckboxQuestionAnswerSchema,
   CheckboxQuestionWorkbenchSchema
 } from './ICheckboxQuestion';
-import { QuestionVariant } from '../../enums';
+import { QuestionVariant } from '../enums';
 
 describe('CheckboxQuestionSchema should validate', () => {
   test('CheckboxQuestionSchema can post null answer', () => {

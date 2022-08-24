@@ -13,7 +13,7 @@ import HorizontalTextCtrl from '../../../../FormProvider/HorizontalTextCtrl';
 import theme from '../../../../theme';
 import TimeCtrl from '../../../../FormProvider/TimeCtrl';
 import { FormIconButton } from '../../../../components/Form/FormIconButton';
-import { IRequirementAnswer } from '../../../../models/IRequirementAnswer';
+import { IRequirementAnswer } from '../../../../Nexus/entities/IRequirementAnswer';
 import { ITimeQuestion } from '../../../../Nexus/entities/ITimeQuestion';
 
 interface IProps {

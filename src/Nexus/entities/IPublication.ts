@@ -1,16 +1,13 @@
-import CustomJoi from '../../common/CustomJoi';
-import { IBaseModel } from './IBaseModel';
-import { ModelType } from '../../enums';
+import CustomJoi from '../Joi/CustomJoi';
+import { BaseModelSchema, IBaseModel } from './IBaseModel';
+import { ModelType } from '../enums';
 
-export const BasePublicationSchema = CustomJoi.object().keys({
-  id: CustomJoi.validateId(),
+export const BasePublicationSchema = BaseModelSchema.keys({
   comment: CustomJoi.validateText(),
   date: CustomJoi.validateDate(),
   version: CustomJoi.validateVersion(),
   bankId: CustomJoi.validateId(),
   type: CustomJoi.validateType(ModelType.publication),
-  sourceOriginal: CustomJoi.validateOptionalId(),
-  sourceRel: CustomJoi.validateOptionalId(),
   deletedDate: CustomJoi.validateOptionalDate()
 });
 

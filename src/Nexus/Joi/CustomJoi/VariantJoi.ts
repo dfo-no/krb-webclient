@@ -1,5 +1,5 @@
 import Joi from 'joi';
-import VariantType from '../../Nexus/entities/VariantType';
+import VariantType from '../../entities/VariantType';
 const VariantTypeValidator = (joi: Joi.Root) => ({
   type: 'validateVariantType',
   base: joi.string().required(),

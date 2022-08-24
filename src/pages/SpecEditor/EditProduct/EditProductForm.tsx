@@ -10,7 +10,7 @@ import { editSpecProduct } from '../../../store/reducers/spesification-reducer';
 import {
   ISpecificationProduct,
   SpecificationProductSchema
-} from '../../../models/ISpecificationProduct';
+} from '../../../Nexus/entities/ISpecificationProduct';
 import {
   ModalBox,
   ModalFieldsBox,

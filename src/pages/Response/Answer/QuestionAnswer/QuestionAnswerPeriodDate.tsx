@@ -15,8 +15,8 @@ import {
   IPeriodDateQuestion,
   PeriodDateAnswerSchema
 } from '../../../../Nexus/entities/IPeriodDateQuestion';
-import { QuestionVariant } from '../../../../enums';
-import { IRequirementAnswer } from '../../../../models/IRequirementAnswer';
+import { QuestionVariant } from '../../../../Nexus/enums';
+import { IRequirementAnswer } from '../../../../Nexus/entities/IRequirementAnswer';
 import { useAccordionState } from '../../../../components/DFOAccordion/AccordionContext';
 import { useAppDispatch, useAppSelector } from '../../../../store/hooks';
 import { useResponseState } from '../../ResponseContext';

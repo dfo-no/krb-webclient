@@ -1,6 +1,6 @@
 import { format, formatISO } from 'date-fns';
 import { DATETIME_ISO8601UTC } from '../common/Constants';
-import CustomJoi from '../common/CustomJoi';
+import CustomJoi from '../Nexus/Joi/CustomJoi';
 
 describe('Joi date should validate', () => {
   const now = new Date();

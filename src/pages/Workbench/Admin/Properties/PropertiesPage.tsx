@@ -7,7 +7,7 @@ import { useParams } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
 import LoaderSpinner from '../../../../common/LoaderSpinner';
 import { IAlert } from '../../../../models/IAlert';
-import { PutProjectSchema } from '../../../../models/Project';
+import { PutProjectSchema } from '../../../../Nexus/entities/Project';
 import { IRouteProjectParams } from '../../../../models/IRouteProjectParams';
 import { IBank } from '../../../../Nexus/entities/IBank';
 import {

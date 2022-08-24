@@ -1,7 +1,7 @@
 import StoreService from './StoreService';
 import UuidService from './UuidService';
 import { IBank } from '../entities/IBank';
-import { ModelType } from '../../enums';
+import { ModelType } from '../enums';
 
 export default class ProjectService {
   UuidService = new UuidService();

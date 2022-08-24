@@ -4,7 +4,7 @@ import { useHistory } from 'react-router';
 import { useTranslation } from 'react-i18next';
 
 import DFODialog from '../../components/DFODialog/DFODialog';
-import { IResponse } from '../../models/IResponse';
+import { IResponse } from '../../Nexus/entities/IResponse';
 import {
   ModalBox,
   ModalButton,

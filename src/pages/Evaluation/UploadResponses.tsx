@@ -11,7 +11,7 @@ import Utils from '../../common/Utils';
 import { FormIconButton } from '../../components/Form/FormIconButton';
 import { httpPost } from '../../api/http';
 import { IFile } from '../../models/IFile';
-import { IResponse } from '../../models/IResponse';
+import { IResponse } from '../../Nexus/entities/IResponse';
 import {
   setEvaluations,
   setFiles,

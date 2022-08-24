@@ -7,7 +7,7 @@ import css from '../QuestionContent.module.scss';
 import VerticalTextCtrl from '../../../../FormProvider/VerticalTextCtrl';
 import YesNoSelection from '../../../../components/YesNoSelection/YesNoSelection';
 import { DFOCheckbox } from '../../../../components/DFOCheckbox/DFOCheckbox';
-import { IRequirementAnswer } from '../../../../models/IRequirementAnswer';
+import { IRequirementAnswer } from '../../../../Nexus/entities/IRequirementAnswer';
 
 const QuestionSpecificationCheckbox = (): ReactElement => {
   const { t } = useTranslation();

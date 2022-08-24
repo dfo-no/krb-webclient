@@ -2,7 +2,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 import { ICode } from '../../Nexus/entities/ICode';
 import { ICodelist } from '../../Nexus/entities/ICodelist';
-import { ModelType } from '../../enums';
+import { ModelType } from '../../Nexus/enums';
 import { Parentable } from '../../models/Parentable';
 
 interface ISelectedCodeListState {

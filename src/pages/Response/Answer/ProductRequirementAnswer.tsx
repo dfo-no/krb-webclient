@@ -10,7 +10,7 @@ import TextUtils from '../../../common/TextUtils';
 import theme from '../../../theme';
 import VariantType from '../../../Nexus/entities/VariantType';
 import { DFOAccordion } from '../../../components/DFOAccordion/DFOAccordion';
-import { IRequirementAnswer } from '../../../models/IRequirementAnswer';
+import { IRequirementAnswer } from '../../../Nexus/entities/IRequirementAnswer';
 import { useAppSelector } from '../../../store/hooks';
 import { useResponseState } from '../ResponseContext';
 

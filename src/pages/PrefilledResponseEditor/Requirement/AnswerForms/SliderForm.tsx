@@ -6,7 +6,7 @@ import { FormProvider, useForm } from 'react-hook-form';
 import { joiResolver } from '@hookform/resolvers/joi';
 import { useTranslation } from 'react-i18next';
 
-import CustomJoi from '../../../../common/CustomJoi';
+import CustomJoi from '../../../../Nexus/Joi/CustomJoi';
 import SliderCtrl from '../../../../FormProvider/SliderCtrl';
 import {
   addAnswer,
@@ -16,7 +16,7 @@ import { AnswerUtils } from '../../Product/AnswerForms/AnswerUtils';
 import {
   IRequirementAnswer,
   RequirementAnswerSchema
-} from '../../../../models/IRequirementAnswer';
+} from '../../../../Nexus/entities/IRequirementAnswer';
 import {
   ISliderQuestion,
   SliderQuestionAnswerSchema

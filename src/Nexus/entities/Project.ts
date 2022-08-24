@@ -1,6 +1,6 @@
-import CustomJoi from '../common/CustomJoi';
-import { BaseBankSchema } from '../Nexus/entities/IBank';
-import { PutPublicationSchema } from '../Nexus/entities/IPublication';
+import CustomJoi from '../Joi/CustomJoi';
+import { BaseBankSchema } from './IBank';
+import { PutPublicationSchema } from './IPublication';
 import { ModelType } from '../enums';
 
 export const PutProjectSchema = BaseBankSchema.keys({

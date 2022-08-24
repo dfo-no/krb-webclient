@@ -1,4 +1,4 @@
-import CustomJoi from '../../common/CustomJoi';
+import CustomJoi from '../Joi/CustomJoi';
 import {
   CheckboxQuestionAnswerSchema,
   CheckboxQuestionWorkbenchSchema
@@ -15,7 +15,7 @@ import {
   PeriodDateAnswerSchema,
   PeriodDateWorkbenchSchema
 } from './IPeriodDateQuestion';
-import { QuestionVariant } from '../../enums';
+import { QuestionVariant } from '../enums';
 import {
   SliderQuestionAnswerSchema,
   SliderQuestionWorkbenchSchema

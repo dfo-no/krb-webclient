@@ -8,7 +8,7 @@ import css from './ProductVariant.module.scss';
 import { DFOCheckbox } from '../../../components/DFOCheckbox/DFOCheckbox';
 import { DFOChip } from '../../../components/DFOChip/DFOChip';
 import { FormIconButton } from '../../../components/Form/FormIconButton';
-import { IRequirementAnswer } from '../../../models/IRequirementAnswer';
+import { IRequirementAnswer } from '../../../Nexus/entities/IRequirementAnswer';
 import { IVariant } from '../../../Nexus/entities/IVariant';
 import VariantType from '../../../Nexus/entities/VariantType';
 

@@ -10,8 +10,8 @@ import {
   addProductAnswer,
   addRequirementAnswer
 } from '../../../../store/reducers/response-reducer';
-import { QuestionVariant } from '../../../../enums';
-import { IRequirementAnswer } from '../../../../models/IRequirementAnswer';
+import { QuestionVariant } from '../../../../Nexus/enums';
+import { IRequirementAnswer } from '../../../../Nexus/entities/IRequirementAnswer';
 import {
   ITextQuestion,
   TextQuestionAnswerSchema

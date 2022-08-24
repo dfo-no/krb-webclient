@@ -1,8 +1,8 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-import { IResponseProduct } from '../../models/IResponseProduct';
-import { ISpecificationProduct } from '../../models/ISpecificationProduct';
-import { ModelType } from '../../enums';
+import { IResponseProduct } from '../../Nexus/entities/IResponseProduct';
+import { ISpecificationProduct } from '../../Nexus/entities/ISpecificationProduct';
+import { ModelType } from '../../Nexus/enums';
 
 interface ISelectedResponseProductState {
   selectedResponseProduct: IResponseProduct;

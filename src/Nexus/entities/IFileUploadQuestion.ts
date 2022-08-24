@@ -1,4 +1,4 @@
-import CustomJoi from '../../common/CustomJoi';
+import CustomJoi from '../Joi/CustomJoi';
 import {
   ConfigBaseSchema,
   IAnswerBase,
@@ -6,7 +6,7 @@ import {
   IQuestionBase,
   QuestionBaseSchema
 } from './IQuestionBase';
-import { QuestionVariant } from '../../enums';
+import { QuestionVariant } from '../enums';
 
 export interface IFileUploadQuestion
   extends IQuestionBase<IFileUploadAnswer, IFileUploadConfig> {

@@ -1,6 +1,6 @@
-import CustomJoi from '../../common/CustomJoi';
-import { IBaseModel } from './IBaseModel';
-import { ModelType } from '../../enums';
+import CustomJoi from '../Joi/CustomJoi';
+import { BaseModelSchema, IBaseModel } from './IBaseModel';
+import { ModelType } from '../enums';
 
 export interface ICode extends IBaseModel {
   id: string;
@@ -8,14 +8,11 @@ export interface ICode extends IBaseModel {
   description: string;
 }
 
-export const BaseCodeSchema = CustomJoi.object().keys({
-  id: CustomJoi.validateId(),
+export const BaseCodeSchema = BaseModelSchema.keys({
   title: CustomJoi.validateText(),
   description: CustomJoi.validateOptionalText(),
   type: CustomJoi.validateType(ModelType.code),
-  parent: CustomJoi.validateParentId(),
-  sourceOriginal: CustomJoi.validateOptionalId(),
-  sourceRel: CustomJoi.validateOptionalId()
+  parent: CustomJoi.validateParentId()
 });
 
 export const PostCodeSchema = BaseCodeSchema.keys({

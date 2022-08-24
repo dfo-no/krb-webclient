@@ -2,7 +2,7 @@ import Utils from './Utils';
 import { cloneDeep } from 'lodash';
 import { IBaseModel } from '../Nexus/entities/IBaseModel';
 import { Levelable } from '../models/Levelable';
-import { ModelType } from '../enums';
+import { ModelType } from '../Nexus/enums';
 import { Nestable } from '../models/Nestable';
 import { Parentable } from '../models/Parentable';
 

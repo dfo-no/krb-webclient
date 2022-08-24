@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { v4 as uuidv4 } from 'uuid';
 import VerticalTextCtrl from '../../../FormProvider/VerticalTextCtrl';
 import { IAlert } from '../../../models/IAlert';
-import { PostProjectSchema } from '../../../models/Project';
+import { PostProjectSchema } from '../../../Nexus/entities/Project';
 import { IBank } from '../../../Nexus/entities/IBank';
 import Nexus from '../../../Nexus/Nexus';
 import { usePostProjectMutation } from '../../../store/api/bankApi';

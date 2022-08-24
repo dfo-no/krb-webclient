@@ -1,6 +1,6 @@
-import CustomJoi from '../../common/CustomJoi';
-import { IBaseModel } from './IBaseModel';
-import { QuestionVariant } from '../../enums';
+import CustomJoi from '../Joi/CustomJoi';
+import { BaseModelSchema, IBaseModel } from './IBaseModel';
+import { QuestionVariant } from '../enums';
 
 export interface IAnswerBase {
   point: number | null;
@@ -25,11 +25,8 @@ export const ConfigBaseSchema = CustomJoi.object().keys({
   defaultPoint: CustomJoi.number().required()
 });
 
-export const QuestionBaseSchema = CustomJoi.object().keys({
-  id: CustomJoi.validateId(),
+export const QuestionBaseSchema = BaseModelSchema.keys({
   type: CustomJoi.validateTypes(QuestionVariant),
   answer: CustomJoi.any().required(),
-  config: CustomJoi.any().required(),
-  sourceOriginal: CustomJoi.validateOptionalId(),
-  sourceRel: CustomJoi.validateOptionalId()
+  config: CustomJoi.any().required()
 });

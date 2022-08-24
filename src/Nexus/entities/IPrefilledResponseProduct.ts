@@ -1,5 +1,5 @@
-import CustomJoi from '../common/CustomJoi';
-import { BaseProductSchema, IProduct } from '../Nexus/entities/IProduct';
+import CustomJoi from '../Joi/CustomJoi';
+import { BaseProductSchema, IProduct } from './IProduct';
 import {
   IRequirementAnswer,
   RequirementAnswerSchema

@@ -13,9 +13,9 @@ import { DFOCheckbox } from '../../../components/DFOCheckbox/DFOCheckbox';
 import { DFOChip } from '../../../components/DFOChip/DFOChip';
 import { IMark } from '../../../Nexus/entities/IMark';
 import { IRequirement } from '../../../Nexus/entities/IRequirement';
-import { IRequirementAnswer } from '../../../models/IRequirementAnswer';
+import { IRequirementAnswer } from '../../../Nexus/entities/IRequirementAnswer';
 import { IVariant } from '../../../Nexus/entities/IVariant';
-import { Weighting, WeightingStep } from '../../../enums';
+import { Weighting, WeightingStep } from '../../../Nexus/enums';
 
 interface IProps {
   requirement: IRequirement;

@@ -8,9 +8,9 @@ import FileUploadForm from './AnswerForms/FileUploadForm';
 import SliderForm from './AnswerForms/SliderForm';
 import TextForm from './AnswerForms/TextForm';
 import { INeed } from '../../../Nexus/entities/INeed';
-import { IRequirementAnswer } from '../../../models/IRequirementAnswer';
+import { IRequirementAnswer } from '../../../Nexus/entities/IRequirementAnswer';
 import { Levelable } from '../../../models/Levelable';
-import { ModelType, QuestionVariant } from '../../../enums';
+import { ModelType, QuestionVariant } from '../../../Nexus/enums';
 import { useAppSelector } from '../../../store/hooks';
 
 interface IProps {

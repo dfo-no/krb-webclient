@@ -3,7 +3,7 @@ import React from 'react';
 import { AxiosResponse } from 'axios';
 
 import { httpPost } from '../../../api/http';
-import { IPrefilledResponse } from '../../../models/IPrefilledResponse';
+import { IPrefilledResponse } from '../../../Nexus/entities/IPrefilledResponse';
 import { useAppSelector } from '../../../store/hooks';
 
 export default function PrefilledResponseDownLoad(): React.ReactElement {

@@ -14,7 +14,7 @@ import HorizontalTextCtrl from '../../../../FormProvider/HorizontalTextCtrl';
 import theme from '../../../../theme';
 import { FormIconButton } from '../../../../components/Form/FormIconButton';
 import { IPeriodDateQuestion } from '../../../../Nexus/entities/IPeriodDateQuestion';
-import { IRequirementAnswer } from '../../../../models/IRequirementAnswer';
+import { IRequirementAnswer } from '../../../../Nexus/entities/IRequirementAnswer';
 
 interface IProps {
   item: IPeriodDateQuestion;

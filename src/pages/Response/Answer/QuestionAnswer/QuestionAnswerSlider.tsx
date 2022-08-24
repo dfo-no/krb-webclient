@@ -16,8 +16,8 @@ import {
 } from '../../../../store/reducers/response-reducer';
 import { DFORadio } from '../../../../components/DFORadio/DFORadio';
 import { IMark } from '../../../../Nexus/entities/IMark';
-import { QuestionVariant } from '../../../../enums';
-import { IRequirementAnswer } from '../../../../models/IRequirementAnswer';
+import { QuestionVariant } from '../../../../Nexus/enums';
+import { IRequirementAnswer } from '../../../../Nexus/entities/IRequirementAnswer';
 import {
   ISliderQuestion,
   SliderQuestionAnswerSchema

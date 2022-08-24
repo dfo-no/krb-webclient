@@ -4,10 +4,10 @@ import { ICheckboxQuestion } from '../entities/ICheckboxQuestion';
 import { INeed } from '../entities/INeed';
 import { IPeriodDateQuestion } from '../entities/IPeriodDateQuestion';
 import { IProduct } from '../entities/IProduct';
-import { IResponse } from '../../models/IResponse';
+import { IResponse } from '../entities/IResponse';
 import { ISliderQuestion } from '../entities/ISliderQuestion';
 import { ISpecification } from '../entities/ISpecification';
-import { ModelType, QuestionVariant } from '../../enums';
+import { ModelType, QuestionVariant } from '../enums';
 import { Parentable } from '../../models/Parentable';
 
 describe('EvaluationService', () => {

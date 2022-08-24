@@ -1,4 +1,4 @@
-import CustomJoi from '../common/CustomJoi';
+import CustomJoi from '../Joi/CustomJoi';
 import {
   IRequirementAnswer,
   RequirementAnswerSchema

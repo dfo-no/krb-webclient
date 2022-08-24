@@ -1,13 +1,13 @@
-import CustomJoi from '../../common/CustomJoi';
+import CustomJoi from '../Joi/CustomJoi';
 import { BaseBankSchema, IBank } from './IBank';
 import {
   IRequirementAnswer,
   RequirementAnswerSchema
-} from '../../models/IRequirementAnswer';
+} from './IRequirementAnswer';
 import {
   ISpecificationProduct,
   SpecificationProductSchema
-} from '../../models/ISpecificationProduct';
+} from './ISpecificationProduct';
 
 export interface ISpecification {
   bank: IBank;

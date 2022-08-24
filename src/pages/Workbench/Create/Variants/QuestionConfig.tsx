@@ -15,7 +15,7 @@ import { IRouteProjectParams } from '../../../../models/IRouteProjectParams';
 import { ISliderQuestion } from '../../../../Nexus/entities/ISliderQuestion';
 import { ITextQuestion } from '../../../../Nexus/entities/ITextQuestion';
 import { ITimeQuestion } from '../../../../Nexus/entities/ITimeQuestion';
-import { QuestionVariant } from '../../../../enums';
+import { QuestionVariant } from '../../../../Nexus/enums';
 import { useGetProjectQuery } from '../../../../store/api/bankApi';
 
 const ConfigBox = styled(Box)(() => ({

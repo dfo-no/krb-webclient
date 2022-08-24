@@ -2,7 +2,7 @@ import { v1 as uuidv1 } from 'uuid';
 
 import UuidService from '../services/UuidService';
 import { BaseModelSchema, IBaseModel } from './IBaseModel';
-import { ModelType } from '../../enums';
+import { ModelType } from '../enums';
 
 describe('IBaseModel', () => {
   test('Should validate on v4', () => {

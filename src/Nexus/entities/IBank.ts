@@ -1,16 +1,15 @@
-import CustomJoi from '../../common/CustomJoi';
+import CustomJoi from '../Joi/CustomJoi';
 import { BaseNeedSchema, INeed } from './INeed';
 import { BaseProductSchema, IProduct } from './IProduct';
 import { BasePublicationSchema, IPublication } from './IPublication';
 import { BaseTagSchema, ITag } from './ITag';
 import { CodelistSchema, ICodelist } from './ICodelist';
-import { IBaseModel } from './IBaseModel';
+import { BaseModelSchema, IBaseModel } from './IBaseModel';
 import { IInheritedBank } from '../../models/IInheritedBank';
-import { ModelType } from '../../enums';
+import { ModelType } from '../enums';
 import { Parentable } from '../../models/Parentable';
 
-export const BaseBankSchema = CustomJoi.object().keys({
-  id: CustomJoi.validateId(),
+export const BaseBankSchema = BaseModelSchema.keys({
   title: CustomJoi.validateLongText(),
   description: CustomJoi.validateOptionalText(),
   needs: CustomJoi.validateUniqueArray(BaseNeedSchema),
@@ -23,8 +22,6 @@ export const BaseBankSchema = CustomJoi.object().keys({
   publishedDate: CustomJoi.validateOptionalDate(),
   projectId: CustomJoi.validateOptionalId(),
   inheritedBanks: CustomJoi.array(),
-  sourceOriginal: CustomJoi.validateOptionalId(),
-  sourceRel: CustomJoi.validateOptionalId(),
   deletedDate: CustomJoi.validateOptionalDate()
 });
 

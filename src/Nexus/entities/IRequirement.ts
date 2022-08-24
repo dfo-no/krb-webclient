@@ -1,7 +1,7 @@
-import CustomJoi from '../../common/CustomJoi';
-import { IBaseModel } from './IBaseModel';
+import CustomJoi from '../Joi/CustomJoi';
+import { BaseModelSchema, IBaseModel } from './IBaseModel';
 import { IVariant, VariantSchema } from './IVariant';
-import { ModelType } from '../../enums';
+import { ModelType } from '../enums';
 
 export interface IRequirement extends IBaseModel {
   id: string;
@@ -12,16 +12,13 @@ export interface IRequirement extends IBaseModel {
   tags: string[];
 }
 
-export const BaseRequirementSchema = CustomJoi.object().keys({
-  id: CustomJoi.validateId(),
+export const BaseRequirementSchema = BaseModelSchema.keys({
   title: CustomJoi.validateText(),
   description: CustomJoi.validateOptionalText(),
   needId: CustomJoi.validateId(),
   variants: CustomJoi.validateUniqueArray(VariantSchema),
   tags: CustomJoi.validateIdArray(),
-  type: CustomJoi.validateType(ModelType.requirement),
-  sourceOriginal: CustomJoi.validateOptionalId(),
-  sourceRel: CustomJoi.validateOptionalId()
+  type: CustomJoi.validateType(ModelType.requirement)
 });
 
 export const PutRequirementSchema = BaseRequirementSchema;

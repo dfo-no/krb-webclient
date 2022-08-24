@@ -2,11 +2,11 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 import Utils from '../../common/Utils';
 import { IBank } from '../../Nexus/entities/IBank';
-import { IRequirementAnswer } from '../../models/IRequirementAnswer';
-import { IResponse } from '../../models/IResponse';
-import { IResponseProduct } from '../../models/IResponseProduct';
+import { IRequirementAnswer } from '../../Nexus/entities/IRequirementAnswer';
+import { IResponse } from '../../Nexus/entities/IResponse';
+import { IResponseProduct } from '../../Nexus/entities/IResponseProduct';
 import { ISpecification } from '../../Nexus/entities/ISpecification';
-import { ModelType } from '../../enums';
+import { ModelType } from '../../Nexus/enums';
 
 interface IResponseState {
   response: IResponse;

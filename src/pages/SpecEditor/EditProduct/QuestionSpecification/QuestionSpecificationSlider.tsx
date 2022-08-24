@@ -11,7 +11,7 @@ import css from '../QuestionContent.module.scss';
 import HorizontalTextCtrl from '../../../../FormProvider/HorizontalTextCtrl';
 import theme from '../../../../theme';
 import { FormIconButton } from '../../../../components/Form/FormIconButton';
-import { IRequirementAnswer } from '../../../../models/IRequirementAnswer';
+import { IRequirementAnswer } from '../../../../Nexus/entities/IRequirementAnswer';
 import { ISliderQuestion } from '../../../../Nexus/entities/ISliderQuestion';
 
 interface IProps {

@@ -1,7 +1,7 @@
 import SearchUtils from './SearchUtils';
 import { ICodelist } from '../Nexus/entities/ICodelist';
 import { ITag } from '../Nexus/entities/ITag';
-import { ModelType } from '../enums';
+import { ModelType } from '../Nexus/enums';
 import { Parentable } from '../models/Parentable';
 
 describe('SearchUtils functions should work', () => {

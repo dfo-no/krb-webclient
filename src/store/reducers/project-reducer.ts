@@ -10,7 +10,7 @@ import { IProduct } from '../../Nexus/entities/IProduct';
 import { IPublication } from '../../Nexus/entities/IPublication';
 import { IRequirement } from '../../Nexus/entities/IRequirement';
 import { ITag } from '../../Nexus/entities/ITag';
-import { ModelType } from '../../enums';
+import { ModelType } from '../../Nexus/enums';
 import { Parentable } from '../../models/Parentable';
 
 interface IProjectState {

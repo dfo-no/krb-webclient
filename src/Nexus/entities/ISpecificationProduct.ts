@@ -1,6 +1,6 @@
-import CustomJoi from '../common/CustomJoi';
-import { BaseProductSchema, IProduct } from '../Nexus/entities/IProduct';
-import { IBaseModel } from '../Nexus/entities/IBaseModel';
+import CustomJoi from '../Joi/CustomJoi';
+import { BaseProductSchema, IProduct } from './IProduct';
+import { BaseModelSchema, IBaseModel } from './IBaseModel';
 import {
   IRequirementAnswer,
   RequirementAnswerSchema
@@ -17,8 +17,7 @@ export interface ISpecificationProduct extends IBaseModel {
   requirementAnswers: IRequirementAnswer[];
 }
 
-export const SpecificationProductSchema = CustomJoi.object().keys({
-  id: CustomJoi.validateId(),
+export const SpecificationProductSchema = BaseModelSchema.keys({
   title: CustomJoi.validateText(),
   originProduct: BaseProductSchema,
   description: CustomJoi.validateOptionalText(),
@@ -26,9 +25,7 @@ export const SpecificationProductSchema = CustomJoi.object().keys({
   requirements: CustomJoi.validateIdArray(),
   weight: CustomJoi.validateWeight(),
   requirementAnswers: CustomJoi.validateUniqueArray(RequirementAnswerSchema),
-  type: CustomJoi.validateType(ModelType.specificationProduct),
-  sourceOriginal: CustomJoi.validateOptionalId(),
-  sourceRel: CustomJoi.validateOptionalId()
+  type: CustomJoi.validateType(ModelType.specificationProduct)
 });
 
 export const PostSpecificationProductSchema = SpecificationProductSchema.keys({

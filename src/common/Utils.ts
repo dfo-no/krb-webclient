@@ -9,7 +9,7 @@ import {
 import { IInheritedBank } from '../models/IInheritedBank';
 import { INeed } from '../Nexus/entities/INeed';
 import { IProduct } from '../Nexus/entities/IProduct';
-import { IResponse } from '../models/IResponse';
+import { IResponse } from '../Nexus/entities/IResponse';
 import { IRequirement } from '../Nexus/entities/IRequirement';
 import { ISpecification } from '../Nexus/entities/ISpecification';
 import { IVariant } from '../Nexus/entities/IVariant';
@@ -17,7 +17,7 @@ import { Levelable } from '../models/Levelable';
 import { Nestable } from '../models/Nestable';
 import { Parentable } from '../models/Parentable';
 import { QuestionType } from '../models/QuestionType';
-import { QuestionVariant } from '../enums';
+import { QuestionVariant } from '../Nexus/enums';
 import { ScoreValuePair } from '../Nexus/entities/ISliderQuestion';
 import { TimeScorePair } from '../Nexus/entities/ITimeQuestion';
 

@@ -1,9 +1,9 @@
 /* eslint-disable no-param-reassign */
 /* eslint-disable class-methods-use-this */
 import produce from 'immer';
-import { IRequirementAnswer } from '../../models/IRequirementAnswer';
-import { IResponse } from '../../models/IResponse';
-import { IResponseProduct } from '../../models/IResponseProduct';
+import { IRequirementAnswer } from '../entities/IRequirementAnswer';
+import { IResponse } from '../entities/IResponse';
+import { IResponseProduct } from '../entities/IResponseProduct';
 import { ISpecification } from '../entities/ISpecification';
 
 export default class ResponseStoreService {

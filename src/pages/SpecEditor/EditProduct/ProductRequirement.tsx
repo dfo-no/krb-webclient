@@ -30,10 +30,10 @@ import { IRequirement } from '../../../Nexus/entities/IRequirement';
 import {
   IRequirementAnswer,
   RequirementAnswerSchema
-} from '../../../models/IRequirementAnswer';
+} from '../../../Nexus/entities/IRequirementAnswer';
 import { useAppDispatch, useAppSelector } from '../../../store/hooks';
 import { useSpecificationState } from '../SpecificationContext';
-import { Weighting } from '../../../enums';
+import { Weighting } from '../../../Nexus/enums';
 
 interface IProps {
   requirement: IRequirement;
