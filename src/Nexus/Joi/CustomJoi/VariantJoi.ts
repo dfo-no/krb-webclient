@@ -1,5 +1,7 @@
 import Joi from 'joi';
-import VariantType from '../../entities/VariantType';
+
+import { VariantType } from '../../enums';
+
 const VariantTypeValidator = (joi: Joi.Root) => ({
   type: 'validateVariantType',
   base: joi.string().required(),

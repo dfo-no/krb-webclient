@@ -10,7 +10,7 @@ import { DFOChip } from '../../../components/DFOChip/DFOChip';
 import { FormIconButton } from '../../../components/Form/FormIconButton';
 import { IRequirementAnswer } from '../../../Nexus/entities/IRequirementAnswer';
 import { IVariant } from '../../../Nexus/entities/IVariant';
-import VariantType from '../../../Nexus/entities/VariantType';
+import { VariantType } from '../../../Nexus/enums';
 
 interface IProps {
   variant: IVariant;

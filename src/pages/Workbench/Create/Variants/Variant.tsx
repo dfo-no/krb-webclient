@@ -21,7 +21,6 @@ import LoaderSpinner from '../../../../common/LoaderSpinner';
 import theme from '../../../../theme';
 import useProjectMutations from '../../../../store/api/ProjectMutations';
 import VariantFormContent from './VariantFormContent';
-import VariantType from '../../../../Nexus/entities/VariantType';
 import { addAlert } from '../../../../store/reducers/alert-reducer';
 import { FormIconButton } from '../../../../components/Form/FormIconButton';
 import { DFOChip } from '../../../../components/DFOChip/DFOChip';
@@ -32,6 +31,7 @@ import { useAppDispatch } from '../../../../store/hooks';
 import { useGetProjectQuery } from '../../../../store/api/bankApi';
 import { useSelectState } from '../SelectContext';
 import { useVariantState } from '../../VariantContext';
+import { VariantType } from '../../../../Nexus/enums';
 
 interface IProps {
   variant: IVariant;

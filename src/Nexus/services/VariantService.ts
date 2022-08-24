@@ -1,7 +1,7 @@
 import { IVariant } from '../entities/IVariant';
 import StoreService from './StoreService';
 import UuidService from './UuidService';
-import VariantType from '../entities/VariantType';
+import { VariantType } from '../enums';
 
 export default class VariantService {
   UuidService = new UuidService();
@@ -13,7 +13,7 @@ export default class VariantService {
   }
 
   generateDefaultVariantValues = (): IVariant => {
-    const defaultValues: IVariant = {
+    return {
       id: '',
       requirementText: '',
       instruction: '',
@@ -25,7 +25,6 @@ export default class VariantService {
       type: VariantType.requirement,
       description: ''
     };
-    return defaultValues;
   };
 
   createVariantWithId = (item: IVariant): IVariant => {

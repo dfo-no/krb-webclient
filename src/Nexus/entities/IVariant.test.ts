@@ -1,7 +1,6 @@
-import VariantType from './VariantType';
 import { ITextQuestion } from './ITextQuestion';
 import { IVariant, VariantSchema } from './IVariant';
-import { QuestionVariant } from '../enums';
+import { QuestionVariant, VariantType } from '../enums';
 
 describe('IVariant', () => {
   test('Valid WB form should validate', () => {

@@ -8,11 +8,10 @@ import css from './Variant.module.scss';
 import QuestionConfig from './QuestionConfig';
 import QuestionService from '../../../../Nexus/services/QuestionService';
 import SelectQuestionDialog from './SelectQuestionDialog';
-import VariantType from '../../../../Nexus/entities/VariantType';
 import { FlexColumnBox } from '../../../../components/FlexBox/FlexColumnBox';
 import { FormIconButton } from '../../../../components/Form/FormIconButton';
 import { IVariant } from '../../../../Nexus/entities/IVariant';
-import { QuestionVariant } from '../../../../Nexus/enums';
+import { QuestionVariant, VariantType } from '../../../../Nexus/enums';
 
 const QuestionsList = (): ReactElement => {
   const { t } = useTranslation();

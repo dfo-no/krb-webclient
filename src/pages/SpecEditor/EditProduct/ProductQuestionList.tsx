@@ -6,7 +6,6 @@ import { useTranslation } from 'react-i18next';
 import css from './QuestionCard.module.scss';
 import QuestionAnswer from './QuestionAnswer/QuestionAnswer';
 import QuestionSpecification from './QuestionSpecification/QuestionSpecification';
-import VariantType from '../../../Nexus/entities/VariantType';
 import { DFORadioButton } from '../../../components/DFORadioButton/DFORadioButton';
 import { ICheckboxQuestion } from '../../../Nexus/entities/ICheckboxQuestion';
 import { ICodelistQuestion } from '../../../Nexus/entities/ICodelistQuestion';
@@ -17,6 +16,7 @@ import { ISliderQuestion } from '../../../Nexus/entities/ISliderQuestion';
 import { ITextQuestion } from '../../../Nexus/entities/ITextQuestion';
 import { ITimeQuestion } from '../../../Nexus/entities/ITimeQuestion';
 import { IVariant } from '../../../Nexus/entities/IVariant';
+import { VariantType } from '../../../Nexus/enums';
 
 interface IProps {
   variant: IVariant;

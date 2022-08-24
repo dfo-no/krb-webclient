@@ -1,8 +1,7 @@
 import CustomJoi from '../CustomJoi';
 import { QuestionBaseSchema } from '../../entities/IQuestionBase';
-import VariantType from '../../entities/VariantType';
 import { v1 as uuidv1, v4 as uuidv4 } from 'uuid';
-import { QuestionVariant } from '../../enums';
+import { QuestionVariant, VariantType } from '../../enums';
 
 describe('VariantJoi', () => {
   test('Joi validateVariantType() should show error message if multiple question', () => {

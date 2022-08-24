@@ -1,7 +1,7 @@
 import CustomJoi from '../Joi/CustomJoi';
-import VariantType from './VariantType';
 import { QuestionTypes } from '../../models/QuestionTypes';
 import { QuestionVariantSchema } from './QuestionSchema';
+import { VariantType } from '../enums';
 
 export interface IVariant {
   id: string;

@@ -12,7 +12,6 @@ import EditProductVariant from './EditProductVariant';
 import GeneralErrorMessage from '../../../Form/GeneralErrorMessage';
 import Nexus from '../../../Nexus/Nexus';
 import ProductVariant from './ProductVariant';
-import VariantType from '../../../Nexus/entities/VariantType';
 import {
   addAnswer,
   addProductAnswer,
@@ -33,7 +32,7 @@ import {
 } from '../../../Nexus/entities/IRequirementAnswer';
 import { useAppDispatch, useAppSelector } from '../../../store/hooks';
 import { useSpecificationState } from '../SpecificationContext';
-import { Weighting } from '../../../Nexus/enums';
+import { VariantType, Weighting } from '../../../Nexus/enums';
 
 interface IProps {
   requirement: IRequirement;
