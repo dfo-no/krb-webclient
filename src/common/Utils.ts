@@ -505,7 +505,8 @@ class Utils {
 
   static findVariantsUsedByProduct(
     selectedProduct: IProduct,
-    selectedProject: IBank
+    selectedProject: IBank,
+    extraProducts?: string[]
   ): Parentable<INeed>[] {
     const associatedNeeds: Parentable<INeed>[] = [];
 
@@ -516,7 +517,11 @@ class Utils {
         requirement.variants.forEach((variant: IVariant) => {
           if (
             variant.useProduct &&
-            variant.products.some((p) => p === selectedProduct.id)
+            variant.products.some(
+              (pid) =>
+                pid === selectedProduct.id ||
+                (extraProducts && extraProducts.some((p) => p === pid))
+            )
           ) {
             associatedVariants.push(variant);
           }

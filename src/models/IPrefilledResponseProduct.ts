@@ -4,6 +4,7 @@ import {
   IRequirementAnswer,
   RequirementAnswerSchema
 } from './IRequirementAnswer';
+
 export interface IPrefilledResponseProduct {
   id: string;
   title: string;
@@ -26,3 +27,8 @@ export const PrefilledResponseProductSchema = CustomJoi.object().keys({
   requirementAnswers: CustomJoi.array().items(RequirementAnswerSchema),
   relatedProducts: CustomJoi.array().items(CustomJoi.string().length(36))
 });
+
+export const PostPrefilledResponseProductSchema =
+  PrefilledResponseProductSchema.keys({
+    id: CustomJoi.string().equal('').required()
+  });

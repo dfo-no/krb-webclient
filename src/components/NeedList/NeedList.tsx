@@ -2,27 +2,32 @@ import React from 'react';
 import { Typography } from '@mui/material/';
 import { useTranslation } from 'react-i18next';
 
-import css from './NewProduct.module.scss';
-import theme from '../../../theme';
-import Utils from '../../../common/Utils';
-import { INeed } from '../../../Nexus/entities/INeed';
-import { IProduct } from '../../../Nexus/entities/IProduct';
-import { Parentable } from '../../../models/Parentable';
-import { useAppSelector } from '../../../store/hooks';
+import css from '../../pages/Stylesheets/NewProduct.module.scss';
+import theme from '../../theme';
+import Utils from '../../common/Utils';
+import { IBank } from '../../Nexus/entities/IBank';
+import { INeed } from '../../Nexus/entities/INeed';
+import { IProduct } from '../../Nexus/entities/IProduct';
+import { Parentable } from '../../models/Parentable';
 
 interface IProps {
   product: Parentable<IProduct>;
+  bank: IBank;
+  relatedProducts?: string[];
 }
 
-export default function NeedList({ product }: IProps): React.ReactElement {
+export default function NeedList({
+  product,
+  bank,
+  relatedProducts
+}: IProps): React.ReactElement {
   const { t } = useTranslation();
-  const { spec } = useAppSelector((state) => state.specification);
 
-  if (!spec.bank || !product) {
+  if (!bank || !product) {
     return <></>;
   }
 
-  const needs = Utils.findVariantsUsedByProduct(product, spec.bank);
+  const needs = Utils.findVariantsUsedByProduct(product, bank, relatedProducts);
 
   const renderNeed = (need: Parentable<INeed>) => {
     return (

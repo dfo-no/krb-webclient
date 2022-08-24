@@ -1,6 +1,7 @@
 {
   "Achieved": "Oppnådd",
   "Add": "Legg til",
+  "Add additional related products": "Legg til flere relaterte produkter?",
   "Add new code": "Legg til ny kode",
   "Add new codelist": "Legg til ny kodeliste",
   "Add new date score": "Legg til dato-score",
@@ -153,6 +154,10 @@
   "Please sign-in to access this page": "Vennligst logg inn for adgang til denne siden",
   "Preferred alternative": "Antatt preferert alternativ",
   "Prefilled Response": "Forberedt besvarelse",
+  "PREF_RES_BUILDING_SPEC": "Du er nå i gang med å bygge din forberedte besvarelse.",
+  "PREF_RES_CREATE_PRODUCT_PROCUREMENT": "Start med å opprette de produktene du kan tilby.",
+  "PREF_RES_DOWNLOAD_SPEC": "Husk at du må laste ned kravspesifikasjonen og lagre den lokalt på din PC.",
+  "PREF_RES_FIND_PREDEF_PROCUREMENT": "For hvert produkt finner du forhåndsdefinerte krav som kan svares på.",
   "Project": "Prosjekt",
   "Project not found": "Prosjektet ble ikke funnet",
   "Product selection": "Velg produkter",

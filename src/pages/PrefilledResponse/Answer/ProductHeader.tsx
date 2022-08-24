@@ -20,13 +20,13 @@ export default function ProductHeader(): React.ReactElement {
       <DFOHeaderContentBox>
         <div className={css.HeaderTop}>
           <Typography variant="lgBold">
-            {prefilledResponse.bank.products[productIndex]?.title ??
+            {prefilledResponse.products[productIndex]?.title ??
               t('General requirement')}
           </Typography>
         </div>
         <div className={css.HeaderBottom}>
           <Typography variant="smBold">
-            {prefilledResponse.bank.products[productIndex]?.description ?? ''}
+            {prefilledResponse.products[productIndex]?.description ?? ''}
           </Typography>
         </div>
       </DFOHeaderContentBox>

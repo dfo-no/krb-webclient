@@ -1,10 +1,10 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 
-import css from './NewProduct.module.scss';
-import HorizontalTextCtrl from '../../../FormProvider/HorizontalTextCtrl';
-import { DFOCardHeader } from '../../../components/DFOCard/DFOCardHeader';
-import { DFOHeaderContentBox } from '../../../components/DFOCard/DFOHeaderContentBox';
+import css from '../../pages/Stylesheets/NewProduct.module.scss';
+import HorizontalTextCtrl from '../../FormProvider/HorizontalTextCtrl';
+import { DFOCardHeader } from '../DFOCard/DFOCardHeader';
+import { DFOHeaderContentBox } from '../DFOCard/DFOHeaderContentBox';
 
 export default function NewProductHeader(): React.ReactElement {
   const { t } = useTranslation();

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Divider, Typography } from '@mui/material/';
+import { Button, Divider, Typography } from '@mui/material/';
 import { useTranslation } from 'react-i18next';
 
 import css from '../../Stylesheets/Editor.module.scss';
@@ -15,14 +15,21 @@ function PrefilledResponseSideBar(): React.ReactElement {
   const { prefilledResponse } = useAppSelector(
     (state) => state.prefilledResponse
   );
-  const { productIndex, setProductIndex } = useProductIndexState();
+  const { productIndex, setProductIndex, setCreate } = useProductIndexState();
 
   const genericPressed = () => {
     setProductIndex(-1);
+    setCreate(false);
   };
 
   const productPressed = (index: number) => {
     setProductIndex(index);
+    setCreate(false);
+  };
+
+  const createPressed = (): void => {
+    setProductIndex(-1);
+    setCreate(true);
   };
 
   const renderProducts = (
@@ -53,6 +60,11 @@ function PrefilledResponseSideBar(): React.ReactElement {
 
   return (
     <div className={css.SideBar}>
+      <div className={css.Button}>
+        <Button variant="primary" onClick={createPressed}>
+          {t('Create a new product')}
+        </Button>
+      </div>
       <ul aria-label="products">
         <li
           className={productIndex === -1 ? css.Active : undefined}

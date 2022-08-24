@@ -4,6 +4,7 @@ import { joiResolver } from '@hookform/resolvers/joi';
 import { useHistory } from 'react-router';
 import { useTranslation } from 'react-i18next';
 
+import GeneralErrorMessage from '../../Form/GeneralErrorMessage';
 import theme from '../../theme';
 import VerticalTextCtrl from '../../FormProvider/VerticalTextCtrl';
 import {
@@ -18,7 +19,6 @@ import {
 } from '../../components/ModalBox/ModalBox';
 import { setResponse } from '../../store/reducers/PrefilledResponseReducer';
 import { useAppDispatch } from '../../store/hooks';
-import ErrorSummary from '../../Form/ErrorSummary';
 
 interface IProps {
   handleClose: () => void;
@@ -72,7 +72,7 @@ const NewPrefilledResponseForm = ({
             </ModalButton>
           </ModalButtonsBox>
         </ModalBox>
-        <ErrorSummary errors={methods.formState.errors} />
+        <GeneralErrorMessage errors={methods.formState.errors} />
       </form>
     </FormProvider>
   );

@@ -4,11 +4,11 @@ import { FormProvider, useForm } from 'react-hook-form';
 import { joiResolver } from '@hookform/resolvers/joi';
 import { useTranslation } from 'react-i18next';
 
-import css from './NewProduct.module.scss';
-import NewProductHeader from './NewProductHeader';
+import css from '../../Stylesheets/NewProduct.module.scss';
+import NewProductHeader from '../../../components/NewProductHeader/NewProductHeader';
 import Nexus from '../../../Nexus/Nexus';
-import NeedList from './NeedList';
-import ProductSelection from './ProductSelection';
+import NeedList from '../../../components/NeedList/NeedList';
+import ProductSelection from '../../../components/ProductSelection/ProductSelection';
 import theme from '../../../theme';
 import VerticalTextCtrl from '../../../FormProvider/VerticalTextCtrl';
 import { addProduct } from '../../../store/reducers/spesification-reducer';
@@ -100,7 +100,7 @@ export default function NewProduct(): React.ReactElement {
               >
                 {t('Save')}
               </Button>
-              {product && <NeedList product={product} />}
+              {product && <NeedList product={product} bank={spec.bank} />}
             </div>
           </div>
         </form>

@@ -23,7 +23,8 @@ export default function AnswerProduct(): React.ReactElement {
     } else {
       return Utils.findVariantsUsedByProduct(
         prefilledResponse.products[productIndex].originProduct,
-        prefilledResponse.bank
+        prefilledResponse.bank,
+        prefilledResponse.products[productIndex].relatedProducts
       ).map((need) => {
         return <ProductNeed key={need.id} need={need} />;
       });
