@@ -28,6 +28,7 @@ import {
   TimeQuestionAnswerSchema,
   TimeQuestionWorkbenchSchema
 } from './ITimeQuestion';
+import { ObjectSchema } from 'joi';
 
 export const QuestionAnswerSchema = CustomJoi.alternatives().conditional(
   '.type',
@@ -58,3 +59,13 @@ export const QuestionVariantSchema = CustomJoi.alternatives().conditional(
     ]
   }
 );
+
+export const AnswerSchemaMap = new Map<QuestionVariant, ObjectSchema>([
+  [QuestionVariant.Q_CHECKBOX, CheckboxQuestionAnswerSchema],
+  [QuestionVariant.Q_CODELIST, CodelistQuestionAnswerSchema],
+  [QuestionVariant.Q_FILEUPLOAD, FileUploadAnswerSchema],
+  [QuestionVariant.Q_PERIOD_DATE, PeriodDateAnswerSchema],
+  [QuestionVariant.Q_SLIDER, SliderQuestionAnswerSchema],
+  [QuestionVariant.Q_TEXT, TextQuestionAnswerSchema],
+  [QuestionVariant.Q_TIME, TimeQuestionAnswerSchema]
+]);

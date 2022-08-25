@@ -10,7 +10,6 @@ import {
   AccordionSummary,
   AccordionDetails
 } from '@mui/material';
-import { joiResolver } from '@hookform/resolvers/joi';
 import { useForm, FormProvider, useWatch } from 'react-hook-form';
 import { useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
@@ -18,6 +17,7 @@ import { v4 as uuidv4 } from 'uuid';
 
 import GeneralErrorMessage from '../../../../Form/GeneralErrorMessage';
 import LoaderSpinner from '../../../../common/LoaderSpinner';
+import Nexus from '../../../../Nexus/Nexus';
 import theme from '../../../../theme';
 import useProjectMutations from '../../../../store/api/ProjectMutations';
 import VariantFormContent from './VariantFormContent';
@@ -26,12 +26,12 @@ import { FormIconButton } from '../../../../components/Form/FormIconButton';
 import { DFOChip } from '../../../../components/DFOChip/DFOChip';
 import { IAlert } from '../../../../models/IAlert';
 import { IRouteProjectParams } from '../../../../models/IRouteProjectParams';
-import { IVariant, VariantSchema } from '../../../../Nexus/entities/IVariant';
+import { IVariant } from '../../../../Nexus/entities/IVariant';
+import { ModelType, VariantType } from '../../../../Nexus/enums';
 import { useAppDispatch } from '../../../../store/hooks';
 import { useGetProjectQuery } from '../../../../store/api/bankApi';
 import { useSelectState } from '../SelectContext';
 import { useVariantState } from '../../VariantContext';
-import { VariantType } from '../../../../Nexus/enums';
 
 interface IProps {
   variant: IVariant;
@@ -40,16 +40,17 @@ interface IProps {
 
 const Variant = ({ variant, requirementIndex }: IProps) => {
   const { t } = useTranslation();
+  const dispatch = useAppDispatch();
+  const nexus = Nexus.getInstance();
   const { projectId } = useParams<IRouteProjectParams>();
   const { data: project } = useGetProjectQuery(projectId);
 
   const { editVariant } = useProjectMutations();
   const { openVariants, setOpenVariants } = useVariantState();
   const { needIndex, setDeleteMode } = useSelectState();
-  const dispatch = useAppDispatch();
 
   const methods = useForm<IVariant>({
-    resolver: joiResolver(VariantSchema),
+    resolver: nexus.resolverService.resolver(ModelType.variant),
     defaultValues: variant
   });
   const useTypeWatch = useWatch({ name: 'type', control: methods.control });

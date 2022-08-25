@@ -1,20 +1,18 @@
 import React from 'react';
-import { joiResolver } from '@hookform/resolvers/joi';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
 
 import DeleteFrame from '../../../../components/DeleteFrame/DeleteFrame';
+import Nexus from '../../../../Nexus/Nexus';
 import useProjectMutations from '../../../../store/api/ProjectMutations';
 import Utils from '../../../../common/Utils';
 import { addAlert } from '../../../../store/reducers/alert-reducer';
-import {
-  CodelistSchema,
-  ICodelist
-} from '../../../../Nexus/entities/ICodelist';
+import { ICodelist } from '../../../../Nexus/entities/ICodelist';
 import { IAlert } from '../../../../models/IAlert';
 import { IRouteProjectParams } from '../../../../models/IRouteProjectParams';
+import { ModelType } from '../../../../Nexus/enums';
 import { useAppDispatch } from '../../../../store/hooks';
 import { useEditableState } from '../../../../components/EditableContext/EditableContext';
 import { useGetProjectQuery } from '../../../../store/api/bankApi';
@@ -32,12 +30,13 @@ export default function DeleteCodelistForm({
 }: IProps): React.ReactElement {
   const { deleteCodelist } = useProjectMutations();
   const dispatch = useAppDispatch();
+  const nexus = Nexus.getInstance();
   const { t } = useTranslation();
   const { deleteMode } = useEditableState();
 
   const methods = useForm<ICodelist>({
     defaultValues: codelist,
-    resolver: joiResolver(CodelistSchema)
+    resolver: nexus.resolverService.resolver(ModelType.codelist)
   });
 
   const { projectId } = useParams<IRouteProjectParams>();

@@ -1,16 +1,17 @@
 import React from 'react';
-import { joiResolver } from '@hookform/resolvers/joi';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useParams } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
 
 import DeleteFrame from '../../../../components/DeleteFrame/DeleteFrame';
+import Nexus from '../../../../Nexus/Nexus';
 import useProjectMutations from '../../../../store/api/ProjectMutations';
 import { addAlert } from '../../../../store/reducers/alert-reducer';
-import { BaseCodeSchema, ICode } from '../../../../Nexus/entities/ICode';
 import { IAlert } from '../../../../models/IAlert';
+import { ICode } from '../../../../Nexus/entities/ICode';
 import { ICodelist } from '../../../../Nexus/entities/ICodelist';
 import { IRouteProjectParams } from '../../../../models/IRouteProjectParams';
+import { ModelType } from '../../../../Nexus/enums';
 import { Parentable } from '../../../../models/Parentable';
 import { useAppDispatch } from '../../../../store/hooks';
 import { useEditableState } from '../../../../components/EditableContext/EditableContext';
@@ -31,11 +32,12 @@ export default function DeleteCodeForm({
 }: IProps): React.ReactElement {
   const { deleteCode } = useProjectMutations();
   const dispatch = useAppDispatch();
+  const nexus = Nexus.getInstance();
   const { deleteMode } = useEditableState();
 
   const methods = useForm<Parentable<ICode>>({
     defaultValues: code,
-    resolver: joiResolver(BaseCodeSchema)
+    resolver: nexus.resolverService.resolver(ModelType.code)
   });
 
   const { projectId } = useParams<IRouteProjectParams>();

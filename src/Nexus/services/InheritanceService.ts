@@ -4,7 +4,7 @@ import Utils from '../../common/Utils';
 import UuidService from './UuidService';
 import { IBank } from '../entities/IBank';
 import { IBaseModel } from '../entities/IBaseModel';
-import { IInheritedBank } from '../../models/IInheritedBank';
+import { IInheritedBank } from '../entities/IInheritedBank';
 import { INeed } from '../entities/INeed';
 import { ModelType } from '../enums';
 import { Parentable } from '../../models/Parentable';

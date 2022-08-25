@@ -1,23 +1,25 @@
-import { joiResolver } from '@hookform/resolvers/joi';
 import React from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
+import { Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { v4 as uuidv4 } from 'uuid';
-import { IAlert } from '../../../../models/IAlert';
-import { Parentable } from '../../../../models/Parentable';
-import { INeed, BaseNeedSchema } from '../../../../Nexus/entities/INeed';
-import { useAppDispatch } from '../../../../store/hooks';
-import { addAlert } from '../../../../store/reducers/alert-reducer';
+
+import Nexus from '../../../../Nexus/Nexus';
+import theme from '../../../../theme';
 import useProjectMutations from '../../../../store/api/ProjectMutations';
 import VerticalTextCtrl from '../../../../FormProvider/VerticalTextCtrl';
+import { addAlert } from '../../../../store/reducers/alert-reducer';
+import { IAlert } from '../../../../models/IAlert';
+import { INeed } from '../../../../Nexus/entities/INeed';
 import {
   ModalBox,
   ModalButton,
   ModalButtonsBox,
   ModalFieldsBox
 } from '../../../../components/ModalBox/ModalBox';
-import { Typography } from '@mui/material';
-import theme from '../../../../theme';
+import { ModelType } from '../../../../Nexus/enums';
+import { Parentable } from '../../../../models/Parentable';
+import { useAppDispatch } from '../../../../store/hooks';
 
 interface IProps {
   handleClose: (need: Parentable<INeed> | null) => void;
@@ -26,12 +28,13 @@ interface IProps {
 
 function EditNeedForm({ need, handleClose }: IProps): React.ReactElement {
   const dispatch = useAppDispatch();
+  const nexus = Nexus.getInstance();
   const { t } = useTranslation();
   const { editNeed } = useProjectMutations();
 
   const methods = useForm<Parentable<INeed>>({
     defaultValues: need,
-    resolver: joiResolver(BaseNeedSchema)
+    resolver: nexus.resolverService.resolver(ModelType.need)
   });
 
   const onSubmit = async (put: Parentable<INeed>) => {

@@ -13,7 +13,3 @@ export const BaseTagSchema = BaseModelSchema.keys({
   parent: CustomJoi.validateParentId(),
   type: CustomJoi.validateType(ModelType.tag)
 });
-
-export const PostTagSchema = BaseTagSchema.keys({
-  id: CustomJoi.validateEmptyId()
-});

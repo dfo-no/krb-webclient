@@ -1,16 +1,15 @@
-import { joiResolver } from '@hookform/resolvers/joi';
-import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
-import Typography from '@mui/material/Typography';
 import makeStyles from '@mui/styles/makeStyles';
-import Joi from 'joi';
 import React from 'react';
+import { Box, Button, Typography } from '@mui/material/';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
+
 import CheckboxCtrl from '../../../../FormProvider/CheckboxCtrl';
-import { IInheritedBank } from '../../../../models/IInheritedBank';
-import theme from '../../../../theme';
 import InheritanceTagList from './InheritedBankTagList';
+import Nexus from '../../../../Nexus/Nexus';
+import theme from '../../../../theme';
+import { IInheritedBank } from '../../../../Nexus/entities/IInheritedBank';
+import { ModelType } from '../../../../Nexus/enums';
 
 export interface IProps {
   bank: IInheritedBank;
@@ -22,13 +21,6 @@ interface IFormValues {
     part: string | null;
   };
 }
-
-const FormSchema = Joi.object().keys({
-  inherit: Joi.object().keys({
-    version: Joi.string().max(20).required(),
-    part: Joi.number().required()
-  })
-});
 
 const useStyles = makeStyles({
   bankBodyContainer: {
@@ -70,6 +62,7 @@ export default function InheritedBankAccordionBody({
   bank
 }: IProps): React.ReactElement {
   const { t } = useTranslation();
+  const nexus = Nexus.getInstance();
   const classes = useStyles();
 
   const defaultValues: IFormValues = {
@@ -80,7 +73,7 @@ export default function InheritedBankAccordionBody({
   };
 
   const methods = useForm<IFormValues>({
-    resolver: joiResolver(FormSchema),
+    resolver: nexus.resolverService.resolver(ModelType.inheritedBank),
     defaultValues
   });
 

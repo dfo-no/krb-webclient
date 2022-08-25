@@ -20,7 +20,3 @@ export const CodelistSchema = BaseModelSchema.keys({
   sourceOriginal: CustomJoi.validateOptionalId(),
   sourceRel: CustomJoi.validateOptionalId()
 });
-
-export const PostCodelistSchema = CodelistSchema.keys({
-  id: CustomJoi.validateEmptyId()
-});

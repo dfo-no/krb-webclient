@@ -20,9 +20,3 @@ export const BaseRequirementSchema = BaseModelSchema.keys({
   tags: CustomJoi.validateIdArray(),
   type: CustomJoi.validateType(ModelType.requirement)
 });
-
-export const PutRequirementSchema = BaseRequirementSchema;
-
-export const PostRequirementSchema = BaseRequirementSchema.keys({
-  id: CustomJoi.validateEmptyId()
-});

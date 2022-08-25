@@ -18,7 +18,3 @@ export const BaseProductSchema = BaseModelSchema.keys({
   type: CustomJoi.validateType(ModelType.product),
   deletedDate: CustomJoi.validateOptionalDate()
 });
-
-export const PostProductSchema = BaseProductSchema.keys({
-  id: CustomJoi.validateEmptyId()
-});

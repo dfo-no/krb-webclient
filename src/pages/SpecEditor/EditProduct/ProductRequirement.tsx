@@ -2,7 +2,6 @@ import classnames from 'classnames';
 import EditIcon from '@mui/icons-material/Edit';
 import React, { ReactElement, useEffect, useState } from 'react';
 import { Box, Button, Divider, Typography } from '@mui/material';
-import { joiResolver } from '@hookform/resolvers/joi';
 import { FormProvider, useForm, useWatch } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
@@ -26,13 +25,10 @@ import { DFOCheckbox } from '../../../components/DFOCheckbox/DFOCheckbox';
 import { DFOChip } from '../../../components/DFOChip/DFOChip';
 import { FormIconButton } from '../../../components/Form/FormIconButton';
 import { IRequirement } from '../../../Nexus/entities/IRequirement';
-import {
-  IRequirementAnswer,
-  RequirementAnswerSchema
-} from '../../../Nexus/entities/IRequirementAnswer';
+import { IRequirementAnswer } from '../../../Nexus/entities/IRequirementAnswer';
+import { ModelType, VariantType, Weighting } from '../../../Nexus/enums';
 import { useAppDispatch, useAppSelector } from '../../../store/hooks';
 import { useSpecificationState } from '../SpecificationContext';
-import { VariantType, Weighting } from '../../../Nexus/enums';
 
 interface IProps {
   requirement: IRequirement;
@@ -51,7 +47,7 @@ export default function ProductRequirement({
   const defaultValues =
     nexus.specificationService.generateDefaultRequirementAnswer(requirement);
   const methods = useForm<IRequirementAnswer>({
-    resolver: joiResolver(RequirementAnswerSchema),
+    resolver: nexus.resolverService.resolver(ModelType.requirementAnswer),
     defaultValues
   });
 

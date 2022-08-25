@@ -28,7 +28,3 @@ export const VariantSchema = CustomJoi.object().keys({
   type: CustomJoi.validateVariantType(),
   questions: CustomJoi.validateUniqueArray(QuestionVariantSchema)
 });
-
-export const PostVariantSchema = VariantSchema.keys({
-  id: CustomJoi.validateEmptyId()
-});

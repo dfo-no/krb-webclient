@@ -1,20 +1,22 @@
 import React from 'react';
-import { Parentable } from '../../../../models/Parentable';
-import { BaseTagSchema, ITag } from '../../../../Nexus/entities/ITag';
-import useProjectMutations from '../../../../store/api/ProjectMutations';
 import { FormProvider, useForm } from 'react-hook-form';
-import { joiResolver } from '@hookform/resolvers/joi';
-import { v4 as uuidv4 } from 'uuid';
-import { IAlert } from '../../../../models/IAlert';
-import { addAlert } from '../../../../store/reducers/alert-reducer';
-import { useAppDispatch } from '../../../../store/hooks';
-import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
-import { IRouteProjectParams } from '../../../../models/IRouteProjectParams';
-import { useGetProjectQuery } from '../../../../store/api/bankApi';
-import Utils from '../../../../common/Utils';
-import { useEditableState } from '../../../../components/EditableContext/EditableContext';
+import { useTranslation } from 'react-i18next';
+import { v4 as uuidv4 } from 'uuid';
+
 import DeleteFrame from '../../../../components/DeleteFrame/DeleteFrame';
+import Nexus from '../../../../Nexus/Nexus';
+import useProjectMutations from '../../../../store/api/ProjectMutations';
+import Utils from '../../../../common/Utils';
+import { addAlert } from '../../../../store/reducers/alert-reducer';
+import { IAlert } from '../../../../models/IAlert';
+import { ITag } from '../../../../Nexus/entities/ITag';
+import { IRouteProjectParams } from '../../../../models/IRouteProjectParams';
+import { ModelType } from '../../../../Nexus/enums';
+import { Parentable } from '../../../../models/Parentable';
+import { useAppDispatch } from '../../../../store/hooks';
+import { useEditableState } from '../../../../components/EditableContext/EditableContext';
+import { useGetProjectQuery } from '../../../../store/api/bankApi';
 
 interface IProps {
   children: React.ReactElement;
@@ -28,13 +30,14 @@ export default function DeleteTagForm({
   handleClose
 }: IProps): React.ReactElement {
   const { deleteTag } = useProjectMutations();
+  const nexus = Nexus.getInstance();
   const dispatch = useAppDispatch();
   const { t } = useTranslation();
   const { deleteMode } = useEditableState();
 
   const methods = useForm<Parentable<ITag>>({
     defaultValues: tag,
-    resolver: joiResolver(BaseTagSchema)
+    resolver: nexus.resolverService.resolver(ModelType.tag)
   });
 
   const { projectId } = useParams<IRouteProjectParams>();

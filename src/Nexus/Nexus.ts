@@ -9,6 +9,7 @@ import ProductService from './services/ProductService';
 import ProjectService from './services/ProjectService';
 import PublicationService from './services/PublicationService';
 import RequirementService from './services/RequirementService';
+import ResolverService from './services/ResolverService';
 import ResponseService from './services/ResponseService';
 import ResponseStoreService from './services/ResponseStoreService';
 import SpecificationService from './services/SpecificationService';
@@ -52,6 +53,8 @@ export default class Nexus {
   public responseService = new ResponseService(this.responseStore);
 
   public evaluationService = new EvaluationService();
+
+  public resolverService = new ResolverService();
 
   private constructor(adapter: Adapter) {
     this.adapter = adapter;

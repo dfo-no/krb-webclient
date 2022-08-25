@@ -1,6 +1,5 @@
 import React from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
-import { joiResolver } from '@hookform/resolvers/joi';
 import { useTranslation } from 'react-i18next';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -12,10 +11,8 @@ import { addAlert } from '../../../../store/reducers/alert-reducer';
 import { FormItemBox } from '../../../../components/Form/FormItemBox';
 import { IAlert } from '../../../../models/IAlert';
 import { IBank } from '../../../../Nexus/entities/IBank';
-import {
-  IPublication,
-  PostPublicationSchema
-} from '../../../../Nexus/entities/IPublication';
+import { IPublication } from '../../../../Nexus/entities/IPublication';
+import { ModelType } from '../../../../Nexus/enums';
 import {
   useAddBankMutation,
   usePutProjectMutation
@@ -41,7 +38,7 @@ export default function NewPublicationForm({
 
   const defaultValues = nexus.publicationService.defaultPublication(project.id);
   const methods = useForm<IPublication>({
-    resolver: joiResolver(PostPublicationSchema),
+    resolver: nexus.resolverService.postResolver(ModelType.publication),
     defaultValues
   });
 

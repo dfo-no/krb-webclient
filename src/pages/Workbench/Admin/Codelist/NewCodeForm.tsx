@@ -1,7 +1,7 @@
 import React from 'react';
-import { useTranslation } from 'react-i18next';
 import { FormProvider, useForm } from 'react-hook-form';
-import { joiResolver } from '@hookform/resolvers/joi';
+import { useParams } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { v4 as uuidv4 } from 'uuid';
 
 import FormButtons from '../../../../components/Form/FormButtons';
@@ -10,14 +10,14 @@ import useProjectMutations from '../../../../store/api/ProjectMutations';
 import VerticalTextCtrl from '../../../../FormProvider/VerticalTextCtrl';
 import { addAlert } from '../../../../store/reducers/alert-reducer';
 import { FormItemBox } from '../../../../components/Form/FormItemBox';
-import { ICode, PostCodeSchema } from '../../../../Nexus/entities/ICode';
-import { ICodelist } from '../../../../Nexus/entities/ICodelist';
 import { IAlert } from '../../../../models/IAlert';
+import { ICode } from '../../../../Nexus/entities/ICode';
+import { ICodelist } from '../../../../Nexus/entities/ICodelist';
 import { IRouteProjectParams } from '../../../../models/IRouteProjectParams';
+import { ModelType } from '../../../../Nexus/enums';
 import { Parentable } from '../../../../models/Parentable';
 import { useAppDispatch } from '../../../../store/hooks';
 import { useFormStyles } from '../../../../components/Form/FormStyles';
-import { useParams } from 'react-router-dom';
 
 interface IProps {
   codelist: ICodelist;
@@ -39,7 +39,7 @@ export default function NewCodeForm({
     nexus.codelistService.generateDefaultCodeValues(projectId);
 
   const methods = useForm<Parentable<ICode>>({
-    resolver: joiResolver(PostCodeSchema),
+    resolver: nexus.resolverService.postResolver(ModelType.code),
     defaultValues
   });
 

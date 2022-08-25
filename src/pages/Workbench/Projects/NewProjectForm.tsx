@@ -1,23 +1,23 @@
-import { joiResolver } from '@hookform/resolvers/joi';
-import Typography from '@mui/material/Typography';
+import { Typography } from '@mui/material/';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { v4 as uuidv4 } from 'uuid';
-import VerticalTextCtrl from '../../../FormProvider/VerticalTextCtrl';
-import { IAlert } from '../../../models/IAlert';
-import { PostProjectSchema } from '../../../Nexus/entities/Project';
-import { IBank } from '../../../Nexus/entities/IBank';
+
 import Nexus from '../../../Nexus/Nexus';
-import { usePostProjectMutation } from '../../../store/api/bankApi';
-import { useAppDispatch } from '../../../store/hooks';
-import { addAlert } from '../../../store/reducers/alert-reducer';
 import theme from '../../../theme';
+import VerticalTextCtrl from '../../../FormProvider/VerticalTextCtrl';
+import { addAlert } from '../../../store/reducers/alert-reducer';
+import { IAlert } from '../../../models/IAlert';
+import { IBank } from '../../../Nexus/entities/IBank';
 import {
   ModalBox,
   ModalButton,
   ModalButtonsBox,
   ModalFieldsBox
 } from '../../../components/ModalBox/ModalBox';
+import { ModelType } from '../../../Nexus/enums';
+import { usePostProjectMutation } from '../../../store/api/bankApi';
+import { useAppDispatch } from '../../../store/hooks';
 
 interface IProps {
   handleClose: () => void;
@@ -32,7 +32,7 @@ const NewProjectForm = ({ handleClose }: IProps) => {
   const defaultValues = nexus.projectService.generateDefaultProjectValues();
   const [postProject] = usePostProjectMutation();
   const methods = useForm<IBank>({
-    resolver: joiResolver(PostProjectSchema),
+    resolver: nexus.resolverService.postResolver(ModelType.bank),
     defaultValues
   });
 

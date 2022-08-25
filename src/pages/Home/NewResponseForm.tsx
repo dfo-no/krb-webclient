@@ -1,19 +1,20 @@
 import { Box, Typography } from '@mui/material/';
 import { FormProvider, useForm } from 'react-hook-form';
-import { joiResolver } from '@hookform/resolvers/joi';
 import { useHistory } from 'react-router';
 import { useTranslation } from 'react-i18next';
 
 import theme from '../../theme';
 import GeneralErrorMessage from '../../Form/GeneralErrorMessage';
+import Nexus from '../../Nexus/Nexus';
 import VerticalTextCtrl from '../../FormProvider/VerticalTextCtrl';
-import { BaseResponseSchema, IResponse } from '../../Nexus/entities/IResponse';
+import { IResponse } from '../../Nexus/entities/IResponse';
 import {
   ModalBox,
   ModalFieldsBox,
   ModalButtonsBox,
   ModalButton
 } from '../../components/ModalBox/ModalBox';
+import { ModelType } from '../../Nexus/enums';
 import { setResponse } from '../../store/reducers/response-reducer';
 import { useAppDispatch } from '../../store/hooks';
 
@@ -24,11 +25,12 @@ interface IProps {
 
 const NewResponseForm = ({ handleClose, response }: IProps) => {
   const { t } = useTranslation();
+  const nexus = Nexus.getInstance();
   const history = useHistory();
   const dispatch = useAppDispatch();
 
   const methods = useForm<IResponse>({
-    resolver: joiResolver(BaseResponseSchema),
+    resolver: nexus.resolverService.resolver(ModelType.response),
     defaultValues: response
   });
 

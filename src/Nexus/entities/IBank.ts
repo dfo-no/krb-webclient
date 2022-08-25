@@ -5,7 +5,7 @@ import { BasePublicationSchema, IPublication } from './IPublication';
 import { BaseTagSchema, ITag } from './ITag';
 import { CodelistSchema, ICodelist } from './ICodelist';
 import { BaseModelSchema, IBaseModel } from './IBaseModel';
-import { IInheritedBank } from '../../models/IInheritedBank';
+import { IInheritedBank } from './IInheritedBank';
 import { ModelType } from '../enums';
 import { Parentable } from '../../models/Parentable';
 

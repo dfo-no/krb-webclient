@@ -1,22 +1,20 @@
 import React from 'react';
 import Typography from '@mui/material/Typography';
 import { FormProvider, useForm } from 'react-hook-form';
-import { joiResolver } from '@hookform/resolvers/joi';
 import { useTranslation } from 'react-i18next';
 
+import Nexus from '../../../Nexus/Nexus';
 import theme from '../../../theme';
 import VerticalTextCtrl from '../../../FormProvider/VerticalTextCtrl';
 import { editSpecProduct } from '../../../store/reducers/spesification-reducer';
-import {
-  ISpecificationProduct,
-  SpecificationProductSchema
-} from '../../../Nexus/entities/ISpecificationProduct';
+import { ISpecificationProduct } from '../../../Nexus/entities/ISpecificationProduct';
 import {
   ModalBox,
   ModalFieldsBox,
   ModalButtonsBox,
   ModalButton
 } from '../../../components/ModalBox/ModalBox';
+import { ModelType } from '../../../Nexus/enums';
 import { useAppDispatch } from '../../../store/hooks';
 
 interface IProps {
@@ -27,9 +25,10 @@ interface IProps {
 const EditProductForm = ({ handleClose, specificationProduct }: IProps) => {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
+  const nexus = Nexus.getInstance();
 
   const methods = useForm<ISpecificationProduct>({
-    resolver: joiResolver(SpecificationProductSchema),
+    resolver: nexus.resolverService.resolver(ModelType.specificationProduct),
     defaultValues: specificationProduct
   });
 

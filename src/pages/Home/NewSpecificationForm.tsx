@@ -1,22 +1,20 @@
 import { Box, Typography } from '@mui/material/';
 import { FormProvider, useForm } from 'react-hook-form';
-import { joiResolver } from '@hookform/resolvers/joi';
 import { useHistory } from 'react-router';
 import { useTranslation } from 'react-i18next';
 
 import theme from '../../theme';
 import GeneralErrorMessage from '../../Form/GeneralErrorMessage';
+import Nexus from '../../Nexus/Nexus';
 import VerticalTextCtrl from '../../FormProvider/VerticalTextCtrl';
-import {
-  BaseSpecificationSchema,
-  ISpecification
-} from '../../Nexus/entities/ISpecification';
+import { ISpecification } from '../../Nexus/entities/ISpecification';
 import {
   ModalBox,
   ModalFieldsBox,
   ModalButtonsBox,
   ModalButton
 } from '../../components/ModalBox/ModalBox';
+import { ModelType } from '../../Nexus/enums';
 import { setSpecification } from '../../store/reducers/spesification-reducer';
 import { useAppDispatch } from '../../store/hooks';
 
@@ -29,9 +27,10 @@ const NewSpecificationForm = ({ handleClose, specification }: IProps) => {
   const { t } = useTranslation();
   const history = useHistory();
   const dispatch = useAppDispatch();
+  const nexus = Nexus.getInstance();
 
   const methods = useForm<ISpecification>({
-    resolver: joiResolver(BaseSpecificationSchema),
+    resolver: nexus.resolverService.resolver(ModelType.specification),
     defaultValues: specification
   });
 

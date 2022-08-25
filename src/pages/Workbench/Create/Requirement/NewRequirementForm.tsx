@@ -1,4 +1,3 @@
-import { joiResolver } from '@hookform/resolvers/joi';
 import React from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useParams } from 'react-router-dom';
@@ -13,10 +12,7 @@ import VerticalTextCtrl from '../../../../FormProvider/VerticalTextCtrl';
 import { addAlert } from '../../../../store/reducers/alert-reducer';
 import { IAlert } from '../../../../models/IAlert';
 import { INeed } from '../../../../Nexus/entities/INeed';
-import {
-  IRequirement,
-  PostRequirementSchema
-} from '../../../../Nexus/entities/IRequirement';
+import { IRequirement } from '../../../../Nexus/entities/IRequirement';
 import { IRouteProjectParams } from '../../../../models/IRouteProjectParams';
 import {
   ModalBox,
@@ -24,6 +20,7 @@ import {
   ModalButtonsBox,
   ModalFieldsBox
 } from '../../../../components/ModalBox/ModalBox';
+import { ModelType } from '../../../../Nexus/enums';
 import { Parentable } from '../../../../models/Parentable';
 import { useAppDispatch } from '../../../../store/hooks';
 
@@ -46,7 +43,7 @@ function NewRequirementForm({ need, handleClose }: IProps): React.ReactElement {
     );
 
   const methods = useForm<IRequirement>({
-    resolver: joiResolver(PostRequirementSchema),
+    resolver: nexus.resolverService.postResolver(ModelType.requirement),
     defaultValues
   });
 

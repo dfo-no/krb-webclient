@@ -6,7 +6,7 @@ import {
   ICodelistConfig,
   ICodelistQuestion
 } from '../Nexus/entities/ICodelistQuestion';
-import { IInheritedBank } from '../models/IInheritedBank';
+import { IInheritedBank } from '../Nexus/entities/IInheritedBank';
 import { INeed } from '../Nexus/entities/INeed';
 import { IProduct } from '../Nexus/entities/IProduct';
 import { IResponse } from '../Nexus/entities/IResponse';
