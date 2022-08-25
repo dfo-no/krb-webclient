@@ -3,7 +3,6 @@ import React from 'react';
 import Typography from '@mui/material/Typography';
 import { Box } from '@mui/material';
 import { FormProvider, useForm } from 'react-hook-form';
-import { joiResolver } from '@hookform/resolvers/joi';
 import { useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { v4 as uuidv4 } from 'uuid';
@@ -18,10 +17,8 @@ import { IAlert } from '../../../../models/IAlert';
 import { INeed } from '../../../../Nexus/entities/INeed';
 import { IRequirement } from '../../../../Nexus/entities/IRequirement';
 import { IRouteProjectParams } from '../../../../models/IRouteProjectParams';
-import {
-  IVariant,
-  PostVariantSchema
-} from '../../../../Nexus/entities/IVariant';
+import { IVariant } from '../../../../Nexus/entities/IVariant';
+import { ModelType } from '../../../../Nexus/enums';
 import { Parentable } from '../../../../models/Parentable';
 import { useAppDispatch } from '../../../../store/hooks';
 import { useGetProjectQuery } from '../../../../store/api/bankApi';
@@ -48,7 +45,7 @@ function NewVariantForm({
     nexus.variantService.generateDefaultVariantValues();
 
   const methods = useForm<IVariant>({
-    resolver: joiResolver(PostVariantSchema),
+    resolver: nexus.resolverService.postResolver(ModelType.variant),
     defaultValues
   });
 

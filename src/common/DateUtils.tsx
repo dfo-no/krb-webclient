@@ -54,6 +54,18 @@ class DateUtils {
     return '-';
   };
 
+  static prettyFormatDateError = (dateStr: string | null): string => {
+    if (dateStr) {
+      const date = new Date(dateStr);
+      const year = date.getFullYear();
+      const month = String(date.getMonth() + 1).padStart(2, '0');
+      const day = date.getDate();
+
+      return `${day}.${month}.${year}`;
+    }
+    return '-';
+  };
+
   static prettyFormatTime = (time: string | null): string => {
     if (time) {
       const date = new Date(time);

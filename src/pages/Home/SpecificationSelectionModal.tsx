@@ -7,7 +7,7 @@ import DFODialog from '../../components/DFODialog/DFODialog';
 import NewResponseForm from './NewResponseForm';
 import Nexus from '../../Nexus/Nexus';
 import theme from '../../theme';
-import { IResponse } from '../../models/IResponse';
+import { IResponse } from '../../Nexus/entities/IResponse';
 import { ISpecification } from '../../Nexus/entities/ISpecification';
 import {
   ModalBox,

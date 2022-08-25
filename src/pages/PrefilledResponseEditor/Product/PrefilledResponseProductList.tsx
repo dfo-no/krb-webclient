@@ -19,7 +19,7 @@ import {
   removeProduct,
   selectProduct
 } from '../../../store/reducers/PrefilledResponseReducer';
-import { IPrefilledResponseProduct } from '../../../models/IPrefilledResponseProduct';
+import { IPrefilledResponseProduct } from '../../../Nexus/entities/IPrefilledResponseProduct';
 import { IProduct } from '../../../Nexus/entities/IProduct';
 import { Parentable } from '../../../models/Parentable';
 import { useAppDispatch, useAppSelector } from '../../../store/hooks';

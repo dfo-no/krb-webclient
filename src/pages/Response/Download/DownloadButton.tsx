@@ -4,7 +4,7 @@ import { Button } from '@mui/material/';
 import { t } from 'i18next';
 
 import { httpPost } from '../../../api/http';
-import { IResponse } from '../../../models/IResponse';
+import { IResponse } from '../../../Nexus/entities/IResponse';
 import { useAppSelector } from '../../../store/hooks';
 
 export default function DownloadButton(): React.ReactElement {

@@ -4,8 +4,8 @@ import React from 'react';
 import AnswerForm from './AnswerForm';
 import { getPaths } from '../../../common/Tree';
 import { INeed } from '../../../Nexus/entities/INeed';
-import { IPrefilledResponse } from '../../../models/IPrefilledResponse';
-import { IPrefilledResponseProduct } from '../../../models/IPrefilledResponseProduct';
+import { IPrefilledResponse } from '../../../Nexus/entities/IPrefilledResponse';
+import { IPrefilledResponseProduct } from '../../../Nexus/entities/IPrefilledResponseProduct';
 import { Levelable } from '../../../models/Levelable';
 
 interface IProps {

@@ -8,18 +8,18 @@ import { joiResolver } from '@hookform/resolvers/joi';
 import { useTranslation } from 'react-i18next';
 
 import ControlledSlider from '../../../../Form/ControlledSlider';
-import CustomJoi from '../../../../common/CustomJoi';
+import CustomJoi from '../../../../Nexus/Joi/CustomJoi';
 import {
   addProductAnswer,
   removeProductAnswer
 } from '../../../../store/reducers/PrefilledResponseReducer';
 import { AnswerUtils } from './AnswerUtils';
-import { IPrefilledResponseProduct } from '../../../../models/IPrefilledResponseProduct';
+import { IPrefilledResponseProduct } from '../../../../Nexus/entities/IPrefilledResponseProduct';
 import { IRequirement } from '../../../../Nexus/entities/IRequirement';
 import {
   IRequirementAnswer,
   RequirementAnswerSchema
-} from '../../../../models/IRequirementAnswer';
+} from '../../../../Nexus/entities/IRequirementAnswer';
 import {
   ISliderQuestion,
   SliderQuestionAnswerSchema

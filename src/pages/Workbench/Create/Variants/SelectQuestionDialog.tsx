@@ -7,7 +7,7 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 
 import css from './Variant.module.scss';
-import { QuestionVariant } from '../../../../enums';
+import { QuestionVariant } from '../../../../Nexus/enums';
 
 interface IProps {
   isOpen: boolean;

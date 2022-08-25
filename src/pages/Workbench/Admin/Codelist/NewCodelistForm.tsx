@@ -1,6 +1,5 @@
 import React from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
-import { joiResolver } from '@hookform/resolvers/joi';
 import { v4 as uuidv4 } from 'uuid';
 import { useTranslation } from 'react-i18next';
 
@@ -10,12 +9,10 @@ import useProjectMutations from '../../../../store/api/ProjectMutations';
 import VerticalTextCtrl from '../../../../FormProvider/VerticalTextCtrl';
 import { addAlert } from '../../../../store/reducers/alert-reducer';
 import { FormItemBox } from '../../../../components/Form/FormItemBox';
-import {
-  ICodelist,
-  PostCodelistSchema
-} from '../../../../Nexus/entities/ICodelist';
+import { ICodelist } from '../../../../Nexus/entities/ICodelist';
 import { IAlert } from '../../../../models/IAlert';
 import { IRouteProjectParams } from '../../../../models/IRouteProjectParams';
+import { ModelType } from '../../../../Nexus/enums';
 import { useAppDispatch } from '../../../../store/hooks';
 import { useFormStyles } from '../../../../components/Form/FormStyles';
 import { useParams } from 'react-router-dom';
@@ -38,7 +35,7 @@ export default function NewCodelistForm({
     nexus.codelistService.generateDefaultCodelistValues(projectId);
 
   const methods = useForm<ICodelist>({
-    resolver: joiResolver(PostCodelistSchema),
+    resolver: nexus.resolverService.postResolver(ModelType.codelist),
     defaultValues
   });
 

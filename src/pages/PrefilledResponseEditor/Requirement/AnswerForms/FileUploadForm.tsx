@@ -6,7 +6,7 @@ import { FormProvider, useForm } from 'react-hook-form';
 import { joiResolver } from '@hookform/resolvers/joi';
 import { useTranslation } from 'react-i18next';
 
-import CustomJoi from '../../../../common/CustomJoi';
+import CustomJoi from '../../../../Nexus/Joi/CustomJoi';
 import ErrorSummary from '../../../../Form/ErrorSummary';
 import {
   addAnswer,
@@ -20,7 +20,7 @@ import {
 import {
   IRequirementAnswer,
   RequirementAnswerSchema
-} from '../../../../models/IRequirementAnswer';
+} from '../../../../Nexus/entities/IRequirementAnswer';
 import { useAppDispatch, useAppSelector } from '../../../../store/hooks';
 
 interface IProps {

@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 import css from '../../Stylesheets/Editor.module.scss';
 import DownloadButton from '../Download/DownloadButton';
 import theme from '../../../theme';
-import { ISpecificationProduct } from '../../../models/ISpecificationProduct';
+import { ISpecificationProduct } from '../../../Nexus/entities/ISpecificationProduct';
 import { useAppSelector } from '../../../store/hooks';
 import { useSpecificationState } from '../SpecificationContext';
 

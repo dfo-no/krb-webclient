@@ -2,7 +2,7 @@ import {
   IPeriodDateQuestion,
   PeriodDateAnswerSchema
 } from './IPeriodDateQuestion';
-import { QuestionVariant } from '../../enums';
+import { QuestionVariant } from '../enums';
 
 describe('IPeriodDateQuestion should validate', () => {
   test('hasToDate true requires valid toDate', () => {
@@ -106,6 +106,6 @@ describe('IPeriodDateQuestion should validate', () => {
     };
 
     const report = PeriodDateAnswerSchema.validate(question);
-    expect(report.error?.details[0].type).toEqual('date.greater');
+    expect(report.error?.details[0].type).toEqual('date.min');
   });
 });

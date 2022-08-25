@@ -1,7 +1,6 @@
-import VariantType from './VariantType';
 import { ITextQuestion } from './ITextQuestion';
 import { IVariant, VariantSchema } from './IVariant';
-import { QuestionVariant } from '../../enums';
+import { QuestionVariant, VariantType } from '../enums';
 
 describe('IVariant', () => {
   test('Valid WB form should validate', () => {
@@ -119,7 +118,7 @@ describe('IVariant', () => {
 
     expect(report.error?.details[0].type).toEqual('array.max');
     expect(report.error?.details[0].message).toEqual(
-      '"questions" must contain less than or equal to 1 items'
+      'For mange spørsmål for variant av typen Info'
     );
   });
 
@@ -170,10 +169,10 @@ describe('IVariant', () => {
     const report = VariantSchema.validate(variant);
 
     expect(report.error?.details[0].message).toEqual(
-      '"questions[0].config.max" must be greater than or equal to 0'
+      'Må være et positivt heltall'
     );
     expect(report.error?.details[1].message).toEqual(
-      '"questions[1].config.max" must be greater than or equal to 0'
+      'Må være et positivt heltall'
     );
 
     expect(report.error?.details[0].type).toEqual('number.min');

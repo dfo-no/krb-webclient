@@ -1,4 +1,4 @@
-import { IPrefilledResponse } from '../../../../models/IPrefilledResponse';
+import { IPrefilledResponse } from '../../../../Nexus/entities/IPrefilledResponse';
 import { IRequirement } from '../../../../Nexus/entities/IRequirement';
 
 export class AnswerUtils {

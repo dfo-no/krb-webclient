@@ -4,7 +4,7 @@ import Typography from '@mui/material/Typography';
 import makeStyles from '@mui/styles/makeStyles';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { IInheritedBank } from '../../../../models/IInheritedBank';
+import { IInheritedBank } from '../../../../Nexus/entities/IInheritedBank';
 import theme from '../../../../theme';
 
 export interface IProps {

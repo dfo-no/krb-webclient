@@ -1,5 +1,5 @@
-import CustomJoi from '../common/CustomJoi';
-import { BaseBankSchema, IBank } from '../Nexus/entities/IBank';
+import CustomJoi from '../Joi/CustomJoi';
+import { BaseBankSchema, IBank } from './IBank';
 import { IPrefilledResponseProduct } from './IPrefilledResponseProduct';
 import {
   IRequirementAnswer,
@@ -16,10 +16,8 @@ export interface IPrefilledResponse {
 
 export const BasePrefilledResponseSchema = CustomJoi.object().keys({
   bank: BaseBankSchema,
-  supplier: CustomJoi.string().required(),
+  supplier: CustomJoi.validateText(),
   // TODO: change to productSchema when finished refactoring workbench
   // answeredVariants: CustomJoi.array().items(CustomJoi.string()),
-  requirementAnswers: CustomJoi.array()
-    .items(RequirementAnswerSchema)
-    .required()
+  requirementAnswers: CustomJoi.validateUniqueArray(RequirementAnswerSchema)
 });

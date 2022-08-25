@@ -21,7 +21,7 @@ import { INeed } from '../../../Nexus/entities/INeed';
 import {
   IPrefilledResponseProduct,
   PrefilledResponseProductSchema
-} from '../../../models/IPrefilledResponseProduct';
+} from '../../../Nexus/entities/IPrefilledResponseProduct';
 import { IProduct } from '../../../Nexus/entities/IProduct';
 import { Levelable } from '../../../models/Levelable';
 import { useAppDispatch, useAppSelector } from '../../../store/hooks';

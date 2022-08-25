@@ -1,13 +1,13 @@
-import CustomJoi from '../../common/CustomJoi';
+import CustomJoi from '../Joi/CustomJoi';
 import { BaseBankSchema, IBank } from './IBank';
 import {
   IRequirementAnswer,
   RequirementAnswerSchema
-} from '../../models/IRequirementAnswer';
+} from './IRequirementAnswer';
 import {
   ISpecificationProduct,
   SpecificationProductSchema
-} from '../../models/ISpecificationProduct';
+} from './ISpecificationProduct';
 
 export interface ISpecification {
   bank: IBank;
@@ -22,18 +22,11 @@ export interface ISpecification {
 
 export const BaseSpecificationSchema = CustomJoi.object().keys({
   bank: BaseBankSchema,
-  id: CustomJoi.alternatives([
-    CustomJoi.string().length(36),
-    CustomJoi.string().valid('')
-  ]).required(),
-  organization: CustomJoi.string().required(),
-  organizationNumber: CustomJoi.string().length(9).required(),
-  products: CustomJoi.array().items(SpecificationProductSchema).required(),
-  requirements: CustomJoi.array().items(CustomJoi.string()).required(),
-  // TODO: change to productSchema when finished refactoring workbench
-  // answeredVariants: CustomJoi.array().items(CustomJoi.string()),
-  requirementAnswers: CustomJoi.array()
-    .items(RequirementAnswerSchema)
-    .required(),
-  title: CustomJoi.string().required()
+  id: CustomJoi.validateParentId(),
+  organization: CustomJoi.validateText(),
+  organizationNumber: CustomJoi.validateOrgNr(),
+  products: CustomJoi.validateUniqueArray(SpecificationProductSchema),
+  requirements: CustomJoi.validateIdArray(),
+  requirementAnswers: CustomJoi.validateUniqueArray(RequirementAnswerSchema),
+  title: CustomJoi.validateText()
 });

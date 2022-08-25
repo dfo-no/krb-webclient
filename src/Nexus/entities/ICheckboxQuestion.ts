@@ -1,4 +1,4 @@
-import CustomJoi from '../../common/CustomJoi';
+import CustomJoi from '../Joi/CustomJoi';
 import {
   ConfigBaseSchema,
   IAnswerBase,
@@ -6,7 +6,7 @@ import {
   IQuestionBase,
   QuestionBaseSchema
 } from './IQuestionBase';
-import { QuestionVariant } from '../../enums';
+import { QuestionVariant } from '../enums';
 
 export interface ICheckboxQuestion
   extends IQuestionBase<ICheckboxAnswer, ICheckboxConfig> {
@@ -22,17 +22,18 @@ export interface ICheckboxConfig extends IConfigBase {
   pointsNonPrefered: number;
 }
 
-export const CheckboxQuestionSchema = QuestionBaseSchema.keys({
-  type: CustomJoi.string().equal(QuestionVariant.Q_CHECKBOX).required(),
+export const CheckboxQuestionWorkbenchSchema = QuestionBaseSchema.keys({
+  type: CustomJoi.validateType(QuestionVariant.Q_CHECKBOX),
   config: ConfigBaseSchema.keys({
-    preferedAlternative: CustomJoi.boolean(),
-    pointsNonPrefered: CustomJoi.number().min(0).max(100)
+    preferedAlternative: CustomJoi.validateBoolean(),
+    pointsNonPrefered: CustomJoi.validateScore()
   })
 });
 
-export const CheckboxQuestionAnswerSchema = CheckboxQuestionSchema.keys({
-  answer: CustomJoi.object().keys({
-    value: CustomJoi.boolean().required(),
-    point: CustomJoi.number().required()
-  })
-});
+export const CheckboxQuestionAnswerSchema =
+  CheckboxQuestionWorkbenchSchema.keys({
+    answer: CustomJoi.object().keys({
+      value: CustomJoi.validateBoolean(),
+      point: CustomJoi.validateScore()
+    })
+  });

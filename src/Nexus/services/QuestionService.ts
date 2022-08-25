@@ -7,7 +7,7 @@ import { IPeriodDateQuestion } from '../entities/IPeriodDateQuestion';
 import { ISliderQuestion } from '../entities/ISliderQuestion';
 import { ITextQuestion } from '../entities/ITextQuestion';
 import { ITimeQuestion } from '../entities/ITimeQuestion';
-import { QuestionVariant } from '../../enums';
+import { QuestionVariant } from '../enums';
 
 export default class QuestionService {
   UuidService = new UuidService();
@@ -63,9 +63,9 @@ export default class QuestionService {
           type: QuestionVariant.Q_SLIDER,
           config: {
             min: 0,
-            max: 10,
+            max: 1,
             step: 1,
-            unit: 'GB',
+            unit: '',
             defaultPoint: 1,
             scoreValues: [
               { value: 0, score: 0 },

@@ -1,22 +1,19 @@
 import React, { useEffect } from 'react';
 import { Box, Button } from '@mui/material';
 import { FormProvider, useForm, useWatch } from 'react-hook-form';
-import { joiResolver } from '@hookform/resolvers/joi';
 import { useTranslation } from 'react-i18next';
 
 import css from '../ProductRequirementAnswer.module.scss';
+import Nexus from '../../../../Nexus/Nexus';
 import TimeCtrl from '../../../../FormProvider/TimeCtrl';
 import Utils from '../../../../common/Utils';
 import {
   addProductAnswer,
   addRequirementAnswer
 } from '../../../../store/reducers/response-reducer';
-import { QuestionVariant } from '../../../../enums';
-import { IRequirementAnswer } from '../../../../models/IRequirementAnswer';
-import {
-  ITimeQuestion,
-  TimeAnswerSchema
-} from '../../../../Nexus/entities/ITimeQuestion';
+import { QuestionVariant } from '../../../../Nexus/enums';
+import { IRequirementAnswer } from '../../../../Nexus/entities/IRequirementAnswer';
+import { ITimeQuestion } from '../../../../Nexus/entities/ITimeQuestion';
 import { useAccordionState } from '../../../../components/DFOAccordion/AccordionContext';
 import { useAppDispatch, useAppSelector } from '../../../../store/hooks';
 import { useResponseState } from '../../ResponseContext';
@@ -34,11 +31,13 @@ const QuestionAnswerTime = ({
 }: IProps): React.ReactElement => {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
+  const nexus = Nexus.getInstance();
   const { response } = useAppSelector((state) => state.response);
   const { responseProductIndex } = useResponseState();
   const { setActiveKey } = useAccordionState();
+
   const methods = useForm<ITimeQuestion>({
-    resolver: joiResolver(TimeAnswerSchema),
+    resolver: nexus.resolverService.answerResolver(QuestionVariant.Q_TIME),
     defaultValues: item
   });
 

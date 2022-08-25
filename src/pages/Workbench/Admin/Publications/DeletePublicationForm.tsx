@@ -1,16 +1,14 @@
 import React, { ReactElement } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
-import { joiResolver } from '@hookform/resolvers/joi/dist/joi';
 import { v4 as uuidv4 } from 'uuid';
 
 import DeleteFrame from '../../../../components/DeleteFrame/DeleteFrame';
+import Nexus from '../../../../Nexus/Nexus';
 import useProjectMutations from '../../../../store/api/ProjectMutations';
 import { addAlert } from '../../../../store/reducers/alert-reducer';
-import {
-  BasePublicationSchema,
-  IPublication
-} from '../../../../Nexus/entities/IPublication';
+import { IPublication } from '../../../../Nexus/entities/IPublication';
 import { IAlert } from '../../../../models/IAlert';
+import { ModelType } from '../../../../Nexus/enums';
 import { useAppDispatch } from '../../../../store/hooks';
 import { useEditableState } from '../../../../components/EditableContext/EditableContext';
 import { useGetBankQuery } from '../../../../store/api/bankApi';
@@ -32,10 +30,11 @@ const DeletePublicationForm = ({
     skip: deleteMode !== publication.id
   });
   const dispatch = useAppDispatch();
+  const nexus = Nexus.getInstance();
 
   const methods = useForm<IPublication>({
     defaultValues: publication,
-    resolver: joiResolver(BasePublicationSchema)
+    resolver: nexus.resolverService.resolver(ModelType.publication)
   });
 
   const onSubmit = async (): Promise<void> => {

@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 import SliderCtrl from '../../../../FormProvider/SliderCtrl';
 import { FlexColumnBox } from '../../../../components/FlexBox/FlexColumnBox';
 import { IMark } from '../../../../Nexus/entities/IMark';
-import { IRequirementAnswer } from '../../../../models/IRequirementAnswer';
+import { IRequirementAnswer } from '../../../../Nexus/entities/IRequirementAnswer';
 import { ISliderQuestion } from '../../../../Nexus/entities/ISliderQuestion';
 import { useFormContext, useWatch } from 'react-hook-form';
 

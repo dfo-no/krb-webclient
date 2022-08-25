@@ -1,7 +1,7 @@
 import StoreService from './StoreService';
 import UuidService from './UuidService';
 import { IProduct } from '../entities/IProduct';
-import { ModelType } from '../../enums';
+import { ModelType } from '../enums';
 import { Parentable } from '../../models/Parentable';
 
 export default class ProductService {

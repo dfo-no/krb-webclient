@@ -1,20 +1,18 @@
 import React from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
-import { joiResolver } from '@hookform/resolvers/joi';
 import { useTranslation } from 'react-i18next';
 import { v4 as uuidv4 } from 'uuid';
 
 import FormButtons from '../../../../components/Form/FormButtons';
+import GeneralErrorMessage from '../../../../Form/GeneralErrorMessage';
 import Nexus from '../../../../Nexus/Nexus';
 import VerticalTextCtrl from '../../../../FormProvider/VerticalTextCtrl';
 import { addAlert } from '../../../../store/reducers/alert-reducer';
 import { FormItemBox } from '../../../../components/Form/FormItemBox';
 import { IAlert } from '../../../../models/IAlert';
 import { IBank } from '../../../../Nexus/entities/IBank';
-import {
-  IPublication,
-  PostPublicationSchema
-} from '../../../../Nexus/entities/IPublication';
+import { IPublication } from '../../../../Nexus/entities/IPublication';
+import { ModelType } from '../../../../Nexus/enums';
 import {
   useAddBankMutation,
   usePutProjectMutation
@@ -40,7 +38,7 @@ export default function NewPublicationForm({
 
   const defaultValues = nexus.publicationService.defaultPublication(project.id);
   const methods = useForm<IPublication>({
-    resolver: joiResolver(PostPublicationSchema),
+    resolver: nexus.resolverService.postResolver(ModelType.publication),
     defaultValues
   });
 
@@ -91,6 +89,7 @@ export default function NewPublicationForm({
             />
             <FormButtons handleClose={() => handleClose()} />
           </FormItemBox>
+          <GeneralErrorMessage errors={methods.formState.errors} />
         </form>
       </FormProvider>
     </>

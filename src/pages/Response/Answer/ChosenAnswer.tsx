@@ -4,7 +4,7 @@ import { t } from 'i18next';
 
 import TextUtils from '../../../common/TextUtils';
 import theme from '../../../theme';
-import { IRequirementAnswer } from '../../../models/IRequirementAnswer';
+import { IRequirementAnswer } from '../../../Nexus/entities/IRequirementAnswer';
 import { useAppSelector } from '../../../store/hooks';
 
 interface IProps {

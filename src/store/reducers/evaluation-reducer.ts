@@ -1,9 +1,9 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { IEvaluatedResponse } from '../../Nexus/entities/IEvaluatedResponse';
 import { IFile } from '../../models/IFile';
-import { IResponse } from '../../models/IResponse';
+import { IResponse } from '../../Nexus/entities/IResponse';
 import { ISpecification } from '../../Nexus/entities/ISpecification';
-import { ModelType } from '../../enums';
+import { ModelType } from '../../Nexus/enums';
 
 interface ISelectedBankState {
   files: IFile[];

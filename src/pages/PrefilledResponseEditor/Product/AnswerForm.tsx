@@ -7,10 +7,10 @@ import ProductDateForm from './AnswerForms/ProductDateForm';
 import ProductSliderForm from './AnswerForms/ProductSliderForm';
 import ProductTextForm from './AnswerForms/ProductTextForm';
 import { INeed } from '../../../Nexus/entities/INeed';
-import { IPrefilledResponseProduct } from '../../../models/IPrefilledResponseProduct';
-import { IRequirementAnswer } from '../../../models/IRequirementAnswer';
+import { IPrefilledResponseProduct } from '../../../Nexus/entities/IPrefilledResponseProduct';
+import { IRequirementAnswer } from '../../../Nexus/entities/IRequirementAnswer';
 import { Levelable } from '../../../models/Levelable';
-import { ModelType, QuestionVariant } from '../../../enums';
+import { ModelType, QuestionVariant } from '../../../Nexus/enums';
 
 interface IProps {
   element: Levelable<INeed>;

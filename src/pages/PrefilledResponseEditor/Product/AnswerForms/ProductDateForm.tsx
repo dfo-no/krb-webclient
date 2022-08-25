@@ -17,8 +17,8 @@ import {
   IPeriodDateQuestion,
   PeriodDateAnswerSchema
 } from '../../../../Nexus/entities/IPeriodDateQuestion';
-import { IPrefilledResponseProduct } from '../../../../models/IPrefilledResponseProduct';
-import { IRequirementAnswer } from '../../../../models/IRequirementAnswer';
+import { IPrefilledResponseProduct } from '../../../../Nexus/entities/IPrefilledResponseProduct';
+import { IRequirementAnswer } from '../../../../Nexus/entities/IRequirementAnswer';
 import { useAppDispatch, useAppSelector } from '../../../../store/hooks';
 
 interface IProps {

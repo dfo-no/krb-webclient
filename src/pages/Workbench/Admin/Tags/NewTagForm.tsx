@@ -1,21 +1,22 @@
-import { joiResolver } from '@hookform/resolvers/joi';
 import React from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
-import { IAlert } from '../../../../models/IAlert';
-import { Parentable } from '../../../../models/Parentable';
-import { ITag, PostTagSchema } from '../../../../Nexus/entities/ITag';
+
+import FormButtons from '../../../../components/Form/FormButtons';
 import Nexus from '../../../../Nexus/Nexus';
 import useProjectMutations from '../../../../store/api/ProjectMutations';
-import { useAppDispatch } from '../../../../store/hooks';
+import VerticalTextCtrl from '../../../../FormProvider/VerticalTextCtrl';
 import { addAlert } from '../../../../store/reducers/alert-reducer';
 import { FormItemBox } from '../../../../components/Form/FormItemBox';
-import { useFormStyles } from '../../../../components/Form/FormStyles';
+import { IAlert } from '../../../../models/IAlert';
 import { IRouteProjectParams } from '../../../../models/IRouteProjectParams';
-import FormButtons from '../../../../components/Form/FormButtons';
-import VerticalTextCtrl from '../../../../FormProvider/VerticalTextCtrl';
+import { ITag } from '../../../../Nexus/entities/ITag';
+import { ModelType } from '../../../../Nexus/enums';
+import { Parentable } from '../../../../models/Parentable';
+import { useAppDispatch } from '../../../../store/hooks';
+import { useFormStyles } from '../../../../components/Form/FormStyles';
 
 interface IProps {
   handleClose: () => void;
@@ -35,7 +36,7 @@ export default function NewTagForm({
     nexus.tagService.generateDefaultTaglistValues(projectId);
 
   const methods = useForm<Parentable<ITag>>({
-    resolver: joiResolver(PostTagSchema),
+    resolver: nexus.resolverService.postResolver(ModelType.tag),
     defaultValues
   });
 

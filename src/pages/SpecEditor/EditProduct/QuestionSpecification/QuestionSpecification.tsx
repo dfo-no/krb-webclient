@@ -13,7 +13,7 @@ import { IPeriodDateQuestion } from '../../../../Nexus/entities/IPeriodDateQuest
 import { ISliderQuestion } from '../../../../Nexus/entities/ISliderQuestion';
 import { ITextQuestion } from '../../../../Nexus/entities/ITextQuestion';
 import { ITimeQuestion } from '../../../../Nexus/entities/ITimeQuestion';
-import { QuestionVariant } from '../../../../enums';
+import { QuestionVariant } from '../../../../Nexus/enums';
 
 interface IProps {
   item:
@@ -43,9 +43,9 @@ const QuestionSpecification = ({ item }: IProps) => {
     case QuestionVariant.Q_CODELIST:
       return <QuestionSpecificationCodelist item={item} />;
     case QuestionVariant.Q_PERIOD_DATE:
-      return <QuestionSpecificationPeriodDate />;
+      return <QuestionSpecificationPeriodDate item={item} />;
     case QuestionVariant.Q_TIME:
-      return <QuestionSpecificationTime />;
+      return <QuestionSpecificationTime item={item} />;
     case QuestionVariant.Q_FILEUPLOAD:
   }
   return <></>;

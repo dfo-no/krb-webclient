@@ -2,7 +2,6 @@ import RadioGroup from '@mui/material/RadioGroup/RadioGroup';
 import React, { useEffect, useState } from 'react';
 import { Box, Button, FormControlLabel, Typography } from '@mui/material';
 import { FormProvider, useForm, useWatch } from 'react-hook-form';
-import { joiResolver } from '@hookform/resolvers/joi';
 import { useTranslation } from 'react-i18next';
 
 import css from '../ProductRequirementAnswer.module.scss';
@@ -16,15 +15,13 @@ import {
 } from '../../../../store/reducers/response-reducer';
 import { DFORadio } from '../../../../components/DFORadio/DFORadio';
 import { IMark } from '../../../../Nexus/entities/IMark';
-import { QuestionVariant } from '../../../../enums';
-import { IRequirementAnswer } from '../../../../models/IRequirementAnswer';
-import {
-  ISliderQuestion,
-  SliderQuestionAnswerSchema
-} from '../../../../Nexus/entities/ISliderQuestion';
+import { QuestionVariant } from '../../../../Nexus/enums';
+import { IRequirementAnswer } from '../../../../Nexus/entities/IRequirementAnswer';
+import { ISliderQuestion } from '../../../../Nexus/entities/ISliderQuestion';
 import { useAppDispatch, useAppSelector } from '../../../../store/hooks';
 import { useResponseState } from '../../ResponseContext';
 import { useAccordionState } from '../../../../components/DFOAccordion/AccordionContext';
+import Nexus from '../../../../Nexus/Nexus';
 
 interface IProps {
   item: ISliderQuestion;
@@ -39,6 +36,7 @@ const QuestionAnswerSlider = ({
 }: IProps): React.ReactElement => {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
+  const nexus = Nexus.getInstance();
   const { response } = useAppSelector((state) => state.response);
   const { responseProductIndex } = useResponseState();
   const { setActiveKey } = useAccordionState();
@@ -48,7 +46,7 @@ const QuestionAnswerSlider = ({
     { value: 'Input', label: t('Input'), recommended: false }
   ];
   const methods = useForm<ISliderQuestion>({
-    resolver: joiResolver(SliderQuestionAnswerSchema),
+    resolver: nexus.resolverService.answerResolver(QuestionVariant.Q_SLIDER),
     defaultValues: item
   });
 

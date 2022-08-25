@@ -2,7 +2,7 @@ import { format } from 'date-fns';
 
 import { BaseBankSchema, IBank } from './IBank';
 import { DATETIME_ISO8601UTC } from '../../common/Constants';
-import { ModelType } from '../../enums';
+import { ModelType } from '../enums';
 
 describe('BankSchema should validate', () => {
   test('basebankSchema works', () => {

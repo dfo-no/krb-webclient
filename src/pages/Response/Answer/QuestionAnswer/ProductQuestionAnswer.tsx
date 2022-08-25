@@ -6,8 +6,8 @@ import QuestionAnswerPeriodDate from './QuestionAnswerPeriodDate';
 import QuestionAnswerSlider from './QuestionAnswerSlider';
 import QuestionAnswerText from './QuestionAnswerText';
 import QuestionAnswerTime from './QuestionAnswerTime';
-import { IRequirementAnswer } from '../../../../models/IRequirementAnswer';
-import { QuestionVariant } from '../../../../enums';
+import { IRequirementAnswer } from '../../../../Nexus/entities/IRequirementAnswer';
+import { QuestionVariant } from '../../../../Nexus/enums';
 
 interface IProps {
   requirementAnswer: IRequirementAnswer;

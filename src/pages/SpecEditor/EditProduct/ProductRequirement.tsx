@@ -2,16 +2,15 @@ import classnames from 'classnames';
 import EditIcon from '@mui/icons-material/Edit';
 import React, { ReactElement, useEffect, useState } from 'react';
 import { Box, Button, Divider, Typography } from '@mui/material';
-import { joiResolver } from '@hookform/resolvers/joi';
 import { FormProvider, useForm, useWatch } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
 import ChosenConfiguration from './ChosenConfiguration/ChosenConfiguration';
 import css from './ProductRequirement.module.scss';
 import EditProductVariant from './EditProductVariant';
+import GeneralErrorMessage from '../../../Form/GeneralErrorMessage';
 import Nexus from '../../../Nexus/Nexus';
 import ProductVariant from './ProductVariant';
-import VariantType from '../../../Nexus/entities/VariantType';
 import {
   addAnswer,
   addProductAnswer,
@@ -26,13 +25,10 @@ import { DFOCheckbox } from '../../../components/DFOCheckbox/DFOCheckbox';
 import { DFOChip } from '../../../components/DFOChip/DFOChip';
 import { FormIconButton } from '../../../components/Form/FormIconButton';
 import { IRequirement } from '../../../Nexus/entities/IRequirement';
-import {
-  IRequirementAnswer,
-  RequirementAnswerSchema
-} from '../../../models/IRequirementAnswer';
+import { IRequirementAnswer } from '../../../Nexus/entities/IRequirementAnswer';
+import { ModelType, VariantType, Weighting } from '../../../Nexus/enums';
 import { useAppDispatch, useAppSelector } from '../../../store/hooks';
 import { useSpecificationState } from '../SpecificationContext';
-import { Weighting } from '../../../enums';
 
 interface IProps {
   requirement: IRequirement;
@@ -51,7 +47,7 @@ export default function ProductRequirement({
   const defaultValues =
     nexus.specificationService.generateDefaultRequirementAnswer(requirement);
   const methods = useForm<IRequirementAnswer>({
-    resolver: joiResolver(RequirementAnswerSchema),
+    resolver: nexus.resolverService.resolver(ModelType.requirementAnswer),
     defaultValues
   });
 
@@ -61,7 +57,6 @@ export default function ProductRequirement({
 
   const useVariant = useWatch({ name: 'variantId', control: methods.control });
   const useWeight = useWatch({ name: 'weight', control: methods.control });
-
   const activeVariant = requirement.variants.find(
     (variant) => variant.id === useVariant
   );
@@ -261,6 +256,7 @@ export default function ProductRequirement({
                   })}
                 {renderActiveVariant()}
               </Box>
+              <GeneralErrorMessage errors={methods.formState.errors} />
             </form>
           </FormProvider>
         </Box>

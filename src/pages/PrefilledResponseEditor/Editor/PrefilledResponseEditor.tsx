@@ -9,7 +9,7 @@ import { joiResolver } from '@hookform/resolvers/joi';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
-import CustomJoi from '../../../common/CustomJoi';
+import CustomJoi from '../../../Nexus/Joi/CustomJoi';
 import ErrorSummary from '../../../Form/ErrorSummary';
 import {
   editSupplier,
