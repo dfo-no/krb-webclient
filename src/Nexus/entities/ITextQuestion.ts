@@ -1,4 +1,4 @@
-import CustomJoi from '../../common/CustomJoi';
+import CustomJoi from '../Joi/CustomJoi';
 import {
   ConfigBaseSchema,
   IAnswerBase,
@@ -6,7 +6,7 @@ import {
   IQuestionBase,
   QuestionBaseSchema
 } from './IQuestionBase';
-import { QuestionVariant } from '../../enums';
+import { QuestionVariant } from '../enums';
 
 export interface ITextQuestion extends IQuestionBase<ITextAnswer, ITextConfig> {
   type: QuestionVariant.Q_TEXT;
@@ -20,16 +20,16 @@ export interface ITextAnswer extends IAnswerBase {
   text: string;
 }
 
-export const TextQuestionSchema = QuestionBaseSchema.keys({
-  type: CustomJoi.string().equal(QuestionVariant.Q_TEXT).required(),
+export const TextQuestionWorkbenchSchema = QuestionBaseSchema.keys({
+  type: CustomJoi.validateType(QuestionVariant.Q_TEXT),
   config: ConfigBaseSchema.keys({
-    max: CustomJoi.number().required().min(0)
+    max: CustomJoi.validateMaxText()
   })
 });
 
-export const TextQuestionAnswerSchema = TextQuestionSchema.keys({
+export const TextQuestionAnswerSchema = TextQuestionWorkbenchSchema.keys({
   answer: CustomJoi.object().keys({
-    text: CustomJoi.string().allow('').required(),
-    point: CustomJoi.number().required()
+    text: CustomJoi.validateAnswerText(),
+    point: CustomJoi.validateScore()
   })
 });

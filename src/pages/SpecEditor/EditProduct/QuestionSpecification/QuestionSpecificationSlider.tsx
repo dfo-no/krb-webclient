@@ -6,11 +6,12 @@ import React, { ReactElement, useEffect } from 'react';
 import { useFieldArray, useFormContext, useWatch } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
+import ArrayUniqueErrorMessage from '../../../../Form/ArrayUniqueErrorMessage';
 import css from '../QuestionContent.module.scss';
 import HorizontalTextCtrl from '../../../../FormProvider/HorizontalTextCtrl';
 import theme from '../../../../theme';
 import { FormIconButton } from '../../../../components/Form/FormIconButton';
-import { IRequirementAnswer } from '../../../../models/IRequirementAnswer';
+import { IRequirementAnswer } from '../../../../Nexus/entities/IRequirementAnswer';
 import { ISliderQuestion } from '../../../../Nexus/entities/ISliderQuestion';
 
 interface IProps {
@@ -19,7 +20,7 @@ interface IProps {
 
 const QuestionSpecificationSlider = ({ item }: IProps): ReactElement => {
   const { t } = useTranslation();
-  const { control } = useFormContext<IRequirementAnswer>();
+  const { control, setValue, formState } = useFormContext<IRequirementAnswer>();
 
   const useMinValue = useWatch({ name: 'question.config.min', control });
   const useMaxValue = useWatch({ name: 'question.config.max', control });
@@ -41,8 +42,9 @@ const QuestionSpecificationSlider = ({ item }: IProps): ReactElement => {
   useEffect(() => {
     if (useMinValue !== useMinScore.value) {
       update(0, { value: useMinValue, score: useMinScore.score });
+      setValue('question.answer.value', useMinValue);
     }
-  }, [useMinValue, useMinScore, update]);
+  }, [useMinValue, useMinScore, update, setValue]);
 
   useEffect(() => {
     if (useMaxValue !== useMaxScore.value) {
@@ -116,6 +118,13 @@ const QuestionSpecificationSlider = ({ item }: IProps): ReactElement => {
           </div>
         );
       })}
+      <div className={css.FullRow}>
+        <ArrayUniqueErrorMessage
+          errors={formState.errors}
+          path={'question.config.scoreValues'}
+          length={fields.length}
+        />
+      </div>
       <Button
         variant="primary"
         onClick={() => append({ value: useMinValue, score: 0 })}

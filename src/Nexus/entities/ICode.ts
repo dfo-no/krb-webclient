@@ -1,6 +1,6 @@
-import CustomJoi from '../../common/CustomJoi';
-import { IBaseModel } from './IBaseModel';
-import { ModelType } from '../../enums';
+import CustomJoi from '../Joi/CustomJoi';
+import { BaseModelSchema, IBaseModel } from './IBaseModel';
+import { ModelType } from '../enums';
 
 export interface ICode extends IBaseModel {
   id: string;
@@ -8,30 +8,13 @@ export interface ICode extends IBaseModel {
   description: string;
 }
 
-export const BaseCodeSchema = CustomJoi.object().keys({
-  id: CustomJoi.string()
-    .guid({ version: ['uuidv4'] })
-    .length(36)
-    .required(),
-  title: CustomJoi.string().required(),
-  description: CustomJoi.string().allow(null, '').required(),
-  type: CustomJoi.string().equal(ModelType.code).required(),
-  parent: CustomJoi.alternatives([
-    CustomJoi.string().length(36),
-    CustomJoi.string().valid('')
-  ]),
-  sourceOriginal: CustomJoi.string()
-    .guid({ version: ['uuidv4'] })
-    .length(36)
-    .allow(null)
-    .required(),
-  sourceRel: CustomJoi.string()
-    .guid({ version: ['uuidv4'] })
-    .length(36)
-    .allow(null)
-    .required()
+export const BaseCodeSchema = BaseModelSchema.keys({
+  title: CustomJoi.validateText(),
+  description: CustomJoi.validateOptionalText(),
+  type: CustomJoi.validateType(ModelType.code),
+  parent: CustomJoi.validateParentId()
 });
 
 export const PostCodeSchema = BaseCodeSchema.keys({
-  id: CustomJoi.string().equal('').required()
+  id: CustomJoi.validateEmptyId()
 });

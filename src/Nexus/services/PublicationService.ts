@@ -1,7 +1,7 @@
 import DateService from './DateService';
 import { IBank } from '../entities/IBank';
 import { IPublication } from '../entities/IPublication';
-import { ModelType } from '../../enums';
+import { ModelType } from '../enums';
 
 export default class PublicationService {
   getNextVersion = (publications: IPublication[]): number => {
@@ -20,6 +20,7 @@ export default class PublicationService {
     newBank.projectId = item.id;
     newBank.publications = [];
     newBank.version = this.getNextVersion(item.publications);
+    newBank.deletedDate = null;
 
     return newBank;
   };
@@ -33,7 +34,8 @@ export default class PublicationService {
       type: ModelType.publication,
       version: 1,
       sourceOriginal: null,
-      sourceRel: null
+      sourceRel: null,
+      deletedDate: null
     };
   };
 }

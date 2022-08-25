@@ -1,14 +1,10 @@
 import React from 'react';
-import {
-  IProduct,
-  PostProductSchema
-} from '../../../../Nexus/entities/IProduct';
+import { IProduct } from '../../../../Nexus/entities/IProduct';
 import { v4 as uuidv4 } from 'uuid';
 import { IAlert } from '../../../../models/IAlert';
 import { useAppDispatch } from '../../../../store/hooks';
 import { useTranslation } from 'react-i18next';
 import { FormProvider, useForm } from 'react-hook-form';
-import { joiResolver } from '@hookform/resolvers/joi';
 import Nexus from '../../../../Nexus/Nexus';
 import { addAlert } from '../../../../store/reducers/alert-reducer';
 import { FormItemBox } from '../../../../components/Form/FormItemBox';
@@ -19,6 +15,7 @@ import { useParams } from 'react-router-dom';
 import { IRouteProjectParams } from '../../../../models/IRouteProjectParams';
 import VerticalTextCtrl from '../../../../FormProvider/VerticalTextCtrl';
 import FormButtons from '../../../../components/Form/FormButtons';
+import { ModelType } from '../../../../Nexus/enums';
 
 interface IProps {
   handleClose: () => void;
@@ -38,7 +35,7 @@ export default function NewProductForm({
     nexus.productService.generateDefaultProductValues(projectId);
 
   const methods = useForm<Parentable<IProduct>>({
-    resolver: joiResolver(PostProductSchema),
+    resolver: nexus.resolverService.postResolver(ModelType.product),
     defaultValues
   });
 

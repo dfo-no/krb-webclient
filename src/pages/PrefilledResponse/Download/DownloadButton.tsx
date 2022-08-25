@@ -4,7 +4,7 @@ import { AxiosResponse } from 'axios';
 import { useTranslation } from 'react-i18next';
 
 import { httpPost } from '../../../api/http';
-import { IPrefilledResponse } from '../../../models/IPrefilledResponse';
+import { IPrefilledResponse } from '../../../Nexus/entities/IPrefilledResponse';
 import { useAppSelector } from '../../../store/hooks';
 
 export default function DownloadButton(): React.ReactElement {

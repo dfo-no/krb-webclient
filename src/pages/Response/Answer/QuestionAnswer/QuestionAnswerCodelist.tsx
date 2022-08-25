@@ -1,22 +1,19 @@
 import React, { useEffect } from 'react';
 import { Box, Button, Typography } from '@mui/material';
 import { FormProvider, useForm, useWatch } from 'react-hook-form';
-import { joiResolver } from '@hookform/resolvers/joi';
 import { useTranslation } from 'react-i18next';
 
 import CodeSelection from '../../../../components/CodeSelection/CodeSelection';
 import css from '../ProductRequirementAnswer.module.scss';
+import Nexus from '../../../../Nexus/Nexus';
 import Utils from '../../../../common/Utils';
 import {
   addProductAnswer,
   addRequirementAnswer
 } from '../../../../store/reducers/response-reducer';
-import {
-  CodelistQuestionAnswerSchema,
-  ICodelistQuestion
-} from '../../../../Nexus/entities/ICodelistQuestion';
-import { QuestionVariant } from '../../../../enums';
-import { IRequirementAnswer } from '../../../../models/IRequirementAnswer';
+import { ICodelistQuestion } from '../../../../Nexus/entities/ICodelistQuestion';
+import { QuestionVariant } from '../../../../Nexus/enums';
+import { IRequirementAnswer } from '../../../../Nexus/entities/IRequirementAnswer';
 import { useAppDispatch, useAppSelector } from '../../../../store/hooks';
 import { useAccordionState } from '../../../../components/DFOAccordion/AccordionContext';
 import { useProductIndexState } from '../../../../components/ProductIndexContext/ProductIndexContext';
@@ -34,14 +31,16 @@ const QuestionAnswerCodelist = ({
 }: IProps): React.ReactElement => {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
+  const nexus = Nexus.getInstance();
   const { response } = useAppSelector((state) => state.response);
   const codelist = response.specification.bank.codelist.find(
     (cl) => cl.id === item.config.codelist
   );
   const { productIndex } = useProductIndexState();
   const { setActiveKey } = useAccordionState();
+
   const methods = useForm<ICodelistQuestion>({
-    resolver: joiResolver(CodelistQuestionAnswerSchema),
+    resolver: nexus.resolverService.answerResolver(QuestionVariant.Q_CODELIST),
     defaultValues: item
   });
 

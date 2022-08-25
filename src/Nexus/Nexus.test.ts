@@ -17,11 +17,14 @@ describe('Nexus', () => {
 
   it('Nexus can generate tag in tagService based on self-generated defaultValues', () => {
     const nexus = Nexus.getInstance();
-    const tag = nexus.tagService.generateTag(
-      nexus.tagService.generateDefaultTaglistValues(
-        'b3f7f5ac-c22d-4e71-a06a-8951a2d864f2'
-      )
-    );
+    const tag = {
+      ...nexus.tagService.generateTag(
+        nexus.tagService.generateDefaultTaglistValues(
+          'b3f7f5ac-c22d-4e71-a06a-8951a2d864f2'
+        )
+      ),
+      title: 'Title'
+    };
     const report = BaseTagSchema.validate(tag);
 
     expect(report.error).toBeUndefined();

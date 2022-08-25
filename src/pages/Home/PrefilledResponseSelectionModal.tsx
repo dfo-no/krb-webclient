@@ -4,7 +4,7 @@ import { useHistory } from 'react-router';
 import { useTranslation } from 'react-i18next';
 
 import DFODialog from '../../components/DFODialog/DFODialog';
-import { IPrefilledResponse } from '../../models/IPrefilledResponse';
+import { IPrefilledResponse } from '../../Nexus/entities/IPrefilledResponse';
 import {
   ModalBox,
   ModalButton,

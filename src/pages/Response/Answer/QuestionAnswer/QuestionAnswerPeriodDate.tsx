@@ -1,22 +1,19 @@
 import React, { useEffect } from 'react';
 import { Box, Button } from '@mui/material';
 import { FormProvider, useForm, useWatch } from 'react-hook-form';
-import { joiResolver } from '@hookform/resolvers/joi';
 import { useTranslation } from 'react-i18next';
 
 import css from '../ProductRequirementAnswer.module.scss';
 import DateCtrl from '../../../../FormProvider/DateCtrl';
+import Nexus from '../../../../Nexus/Nexus';
 import Utils from '../../../../common/Utils';
 import {
   addProductAnswer,
   addRequirementAnswer
 } from '../../../../store/reducers/response-reducer';
-import {
-  IPeriodDateQuestion,
-  PeriodDateAnswerSchema
-} from '../../../../Nexus/entities/IPeriodDateQuestion';
-import { QuestionVariant } from '../../../../enums';
-import { IRequirementAnswer } from '../../../../models/IRequirementAnswer';
+import { IPeriodDateQuestion } from '../../../../Nexus/entities/IPeriodDateQuestion';
+import { QuestionVariant } from '../../../../Nexus/enums';
+import { IRequirementAnswer } from '../../../../Nexus/entities/IRequirementAnswer';
 import { useAccordionState } from '../../../../components/DFOAccordion/AccordionContext';
 import { useAppDispatch, useAppSelector } from '../../../../store/hooks';
 import { useProductIndexState } from '../../../../components/ProductIndexContext/ProductIndexContext';
@@ -34,11 +31,14 @@ const QuestionAnswerPeriodDate = ({
 }: IProps): React.ReactElement => {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
+  const nexus = Nexus.getInstance();
   const { response } = useAppSelector((state) => state.response);
   const { productIndex } = useProductIndexState();
   const { setActiveKey } = useAccordionState();
   const methods = useForm<IPeriodDateQuestion>({
-    resolver: joiResolver(PeriodDateAnswerSchema),
+    resolver: nexus.resolverService.answerResolver(
+      QuestionVariant.Q_PERIOD_DATE
+    ),
     defaultValues: item
   });
 

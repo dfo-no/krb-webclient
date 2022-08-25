@@ -4,7 +4,7 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { PAGE_SIZE } from '../../../../common/Constants';
 import DFOSearchBar from '../../../../components/DFOSearchBar/DFOSearchBar';
-import { IInheritedBank } from '../../../../models/IInheritedBank';
+import { IInheritedBank } from '../../../../Nexus/entities/IInheritedBank';
 import { IBaseModel } from '../../../../Nexus/entities/IBaseModel';
 import { ITag } from '../../../../Nexus/entities/ITag';
 import { useGetBanksQuery } from '../../../../store/api/bankApi';

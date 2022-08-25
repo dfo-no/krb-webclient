@@ -10,7 +10,7 @@ import { DFOCheckbox } from '../../../../components/DFOCheckbox/DFOCheckbox';
 import { ICode } from '../../../../Nexus/entities/ICode';
 import { ICodelist } from '../../../../Nexus/entities/ICodelist';
 import { ICodelistQuestion } from '../../../../Nexus/entities/ICodelistQuestion';
-import { IRequirementAnswer } from '../../../../models/IRequirementAnswer';
+import { IRequirementAnswer } from '../../../../Nexus/entities/IRequirementAnswer';
 import { useAppSelector } from '../../../../store/hooks';
 
 interface IProps {

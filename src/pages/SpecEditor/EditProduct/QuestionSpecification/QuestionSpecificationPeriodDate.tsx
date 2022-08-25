@@ -6,16 +6,22 @@ import { Button, Typography } from '@mui/material';
 import { t } from 'i18next';
 import { useFieldArray, useFormContext, useWatch } from 'react-hook-form';
 
+import ArrayUniqueErrorMessage from '../../../../Form/ArrayUniqueErrorMessage';
 import css from '../QuestionContent.module.scss';
 import DateCtrl from '../../../../FormProvider/DateCtrl';
 import DateUtils from '../../../../common/DateUtils';
 import HorizontalTextCtrl from '../../../../FormProvider/HorizontalTextCtrl';
 import theme from '../../../../theme';
 import { FormIconButton } from '../../../../components/Form/FormIconButton';
-import { IRequirementAnswer } from '../../../../models/IRequirementAnswer';
+import { IPeriodDateQuestion } from '../../../../Nexus/entities/IPeriodDateQuestion';
+import { IRequirementAnswer } from '../../../../Nexus/entities/IRequirementAnswer';
 
-const QuestionSpecificationPeriodDate = (): ReactElement => {
-  const { control } = useFormContext<IRequirementAnswer>();
+interface IProps {
+  item: IPeriodDateQuestion;
+}
+
+const QuestionSpecificationPeriodDate = ({ item }: IProps): ReactElement => {
+  const { control, formState, setValue } = useFormContext<IRequirementAnswer>();
 
   const useFromBoundary = useWatch({
     name: 'question.config.fromBoundary',
@@ -39,6 +45,15 @@ const QuestionSpecificationPeriodDate = (): ReactElement => {
     control,
     name: 'question.config.dateScores'
   });
+
+  useEffect(() => {
+    if (useFromBoundary) {
+      setValue('question.answer.fromDate', useFromBoundary);
+      if (item.config.isPeriod) {
+        setValue('question.answer.toDate', useFromBoundary);
+      }
+    }
+  }, [useFromBoundary, setValue, item.config.isPeriod]);
 
   useEffect(() => {
     if (!useMinScore) {
@@ -107,6 +122,13 @@ const QuestionSpecificationPeriodDate = (): ReactElement => {
           </div>
         );
       })}
+      <div className={css.FullRow}>
+        <ArrayUniqueErrorMessage
+          errors={formState.errors}
+          path={'question.config.dateScores'}
+          length={fields.length}
+        />
+      </div>
       <Button
         variant="primary"
         onClick={() => append({ date: useFromBoundary, score: 0 })}

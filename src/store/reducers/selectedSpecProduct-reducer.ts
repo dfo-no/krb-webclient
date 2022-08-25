@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-import { ISpecificationProduct } from '../../models/ISpecificationProduct';
-import { ModelType } from '../../enums';
+import { ISpecificationProduct } from '../../Nexus/entities/ISpecificationProduct';
+import { ModelType } from '../../Nexus/enums';
 
 interface ISelectedSpecProductState {
   selectedSpecificationProduct: ISpecificationProduct;

@@ -1,4 +1,4 @@
-import CustomJoi from '../../common/CustomJoi';
+import CustomJoi from '../Joi/CustomJoi';
 import {
   ConfigBaseSchema,
   IAnswerBase,
@@ -6,7 +6,7 @@ import {
   IQuestionBase,
   QuestionBaseSchema
 } from './IQuestionBase';
-import { QuestionVariant } from '../../enums';
+import { QuestionVariant } from '../enums';
 
 export interface IPeriodDateQuestion
   extends IQuestionBase<IPeriodDateAnswer, IPeriodDateConfig> {
@@ -32,73 +32,40 @@ export interface DateScorePair {
   score: number;
 }
 
+const WorkbenchDateScoreSchema = CustomJoi.object().keys({
+  score: CustomJoi.validateScore(),
+  date: CustomJoi.validateEmptyDate()
+});
+
 export const PeriodDateWorkbenchSchema = QuestionBaseSchema.keys({
-  type: CustomJoi.string().equal(QuestionVariant.Q_PERIOD_DATE).required(),
+  type: CustomJoi.validateType(QuestionVariant.Q_PERIOD_DATE),
   config: ConfigBaseSchema.keys({
-    isPeriod: CustomJoi.boolean().required(),
-    fromBoundary: CustomJoi.string().allow(null).required(),
-    toBoundary: CustomJoi.string().allow(null).required(),
-    periodMin: CustomJoi.alternatives().conditional('isPeriod', {
-      is: true,
-      then: CustomJoi.number().required().min(0),
-      otherwise: CustomJoi.number()
-    }),
-    periodMax: CustomJoi.alternatives().conditional('isPeriod', {
-      is: true,
-      then: CustomJoi.number().greater(CustomJoi.ref('periodMin')).required(),
-      otherwise: CustomJoi.number()
-    }),
-    dateScores: CustomJoi.array().items(
-      CustomJoi.object().keys({
-        score: CustomJoi.number().required().min(0).max(100),
-        date: CustomJoi.string().allow(null).required()
-      })
-    )
+    isPeriod: CustomJoi.validateBoolean(),
+    fromBoundary: CustomJoi.validateOptionalDate(),
+    toBoundary: CustomJoi.validateOptionalDate(),
+    periodMin: CustomJoi.validateNumber(),
+    periodMax: CustomJoi.validateNumber(),
+    dateScores: CustomJoi.validateArray(WorkbenchDateScoreSchema)
   })
 });
 
-export const PeriodDateSpecSchema = QuestionBaseSchema.keys({
-  type: CustomJoi.string().equal(QuestionVariant.Q_PERIOD_DATE).required(),
-  config: ConfigBaseSchema.keys({
-    isPeriod: CustomJoi.boolean().required(),
-    fromBoundary: CustomJoi.string().allow(null).required(),
-    toBoundary: CustomJoi.string().allow(null).required(),
-    periodMin: CustomJoi.when('isPeriod', {
-      is: true,
-      then: CustomJoi.number().required().min(0),
-      otherwise: CustomJoi.number()
-    }),
-    periodMax: CustomJoi.when('isPeriod', {
-      is: true,
-      then: CustomJoi.number().greater(CustomJoi.ref('periodMin')).required(),
-      otherwise: CustomJoi.number()
-    }),
-    dateScores: CustomJoi.array().items(
-      CustomJoi.object().keys({
-        score: CustomJoi.number().required().min(0).max(100),
-        date: CustomJoi.string().required()
-      })
-    )
-  })
+const DateScoreSchema = CustomJoi.object().keys({
+  date: CustomJoi.validateDateScore(),
+  score: CustomJoi.validateScore()
 });
 
-export const PeriodDateAnswerSchema = PeriodDateSpecSchema.keys({
+export const PeriodDateAnswerSchema = PeriodDateWorkbenchSchema.keys({
+  config: ConfigBaseSchema.keys({
+    isPeriod: CustomJoi.validateBoolean(),
+    fromBoundary: CustomJoi.validateFromBoundaryDate(),
+    toBoundary: CustomJoi.validateToBoundaryDate(),
+    periodMin: CustomJoi.validatePeriodMin(),
+    periodMax: CustomJoi.validatePeriodMax(),
+    dateScores: CustomJoi.validateDateScoreValues(DateScoreSchema)
+  }),
   answer: CustomJoi.object().keys({
-    fromDate: CustomJoi.date()
-      .iso()
-      .raw()
-      .min(CustomJoi.ref('config.fromBoundary', { ancestor: 2 }))
-      .allow(null),
-    toDate: CustomJoi.when('/config.isPeriod', {
-      is: true,
-      then: CustomJoi.date()
-        .iso()
-        .raw()
-        .greater(CustomJoi.ref('fromDate'))
-        .max(CustomJoi.ref('config.toBoundary', { ancestor: 2 }))
-        .allow(null),
-      otherwise: CustomJoi.string().allow(null)
-    }),
-    point: CustomJoi.number().required()
+    fromDate: CustomJoi.validateFromDate(),
+    toDate: CustomJoi.validateToDate(),
+    point: CustomJoi.validateScore()
   })
 });

@@ -13,7 +13,7 @@ import { IPeriodDateQuestion } from '../../../../Nexus/entities/IPeriodDateQuest
 import { ISliderQuestion } from '../../../../Nexus/entities/ISliderQuestion';
 import { ITextQuestion } from '../../../../Nexus/entities/ITextQuestion';
 import { ITimeQuestion } from '../../../../Nexus/entities/ITimeQuestion';
-import { QuestionVariant } from '../../../../enums';
+import { QuestionVariant } from '../../../../Nexus/enums';
 
 interface IProps {
   item:

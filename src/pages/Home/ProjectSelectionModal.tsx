@@ -11,7 +11,7 @@ import Nexus from '../../Nexus/Nexus';
 import SpecificationStoreService from '../../Nexus/services/SpecificationStoreService';
 import theme from '../../theme';
 import { IBank } from '../../Nexus/entities/IBank';
-import { IPrefilledResponse } from '../../models/IPrefilledResponse';
+import { IPrefilledResponse } from '../../Nexus/entities/IPrefilledResponse';
 import { ISpecification } from '../../Nexus/entities/ISpecification';
 import {
   ModalBox,
@@ -35,14 +35,10 @@ export default function ProjectSelectionModal({
     useState<IPrefilledResponse | null>(null);
   const nexus = Nexus.getInstance();
   const { t } = useTranslation();
-  let originBankId;
-  if (selectedBank.projectId) {
-    originBankId = selectedBank.projectId;
-  } else {
-    originBankId = selectedBank.id;
-  }
 
+  const originBankId = selectedBank.projectId ?? selectedBank.id;
   const { data: bank, isLoading } = useGetBankQuery(originBankId);
+
   if (!selectedBank) {
     return <></>;
   }
@@ -57,11 +53,16 @@ export default function ProjectSelectionModal({
     );
   }
 
-  const isPublished = bank.publications.length > 0;
+  const isPublished = bank.publications.some(
+    (p) => p.deletedDate === undefined
+  );
   const versionText = (): string => {
     if (isPublished) {
+      const publishedBanks = bank.publications.filter(
+        (p) => p.deletedDate === undefined
+      );
       return `${t('Version')} ${
-        bank.publications[bank.publications.length - 1].version
+        publishedBanks[publishedBanks.length - 1].version
       }`;
     }
     return t('Not published');

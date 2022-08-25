@@ -1,8 +1,5 @@
-import CustomJoi from '../common/CustomJoi';
-import {
-  BaseSpecificationSchema,
-  ISpecification
-} from '../Nexus/entities/ISpecification';
+import CustomJoi from '../Joi/CustomJoi';
+import { BaseSpecificationSchema, ISpecification } from './ISpecification';
 import {
   IRequirementAnswer,
   RequirementAnswerSchema
@@ -18,9 +15,7 @@ export interface IResponse {
 
 export const BaseResponseSchema = CustomJoi.object().keys({
   specification: BaseSpecificationSchema,
-  supplier: CustomJoi.string().min(3).required(),
-  products: CustomJoi.array().items(ResponseProductSchema).required(),
-  requirementAnswers: CustomJoi.array()
-    .items(RequirementAnswerSchema)
-    .required()
+  supplier: CustomJoi.validateLongText(),
+  products: CustomJoi.validateUniqueArray(ResponseProductSchema),
+  requirementAnswers: CustomJoi.validateUniqueArray(RequirementAnswerSchema)
 });

@@ -1,17 +1,16 @@
-import { joiResolver } from '@hookform/resolvers/joi';
 import React from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
+import { Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { v4 as uuidv4 } from 'uuid';
-import VerticalTextCtrl from '../../../../FormProvider/VerticalTextCtrl';
-import { IAlert } from '../../../../models/IAlert';
-import { Parentable } from '../../../../models/Parentable';
-import { INeed, PostNeedSchema } from '../../../../Nexus/entities/INeed';
+
 import Nexus from '../../../../Nexus/Nexus';
-import { useAppDispatch } from '../../../../store/hooks';
-import { addAlert } from '../../../../store/reducers/alert-reducer';
+import theme from '../../../../theme';
+import VerticalTextCtrl from '../../../../FormProvider/VerticalTextCtrl';
 import useProjectMutations from '../../../../store/api/ProjectMutations';
-import { useParams } from 'react-router-dom';
+import { addAlert } from '../../../../store/reducers/alert-reducer';
+import { IAlert } from '../../../../models/IAlert';
+import { INeed } from '../../../../Nexus/entities/INeed';
 import { IRouteProjectParams } from '../../../../models/IRouteProjectParams';
 import {
   ModalBox,
@@ -19,8 +18,10 @@ import {
   ModalButtonsBox,
   ModalFieldsBox
 } from '../../../../components/ModalBox/ModalBox';
-import { Typography } from '@mui/material';
-import theme from '../../../../theme';
+import { ModelType } from '../../../../Nexus/enums';
+import { Parentable } from '../../../../models/Parentable';
+import { useAppDispatch } from '../../../../store/hooks';
+import { useParams } from 'react-router-dom';
 
 interface IProps {
   handleClose: (newNeed: Parentable<INeed> | null) => void;
@@ -38,7 +39,7 @@ function NewNeedForm({ handleClose }: IProps): React.ReactElement {
   const { t } = useTranslation();
 
   const methods = useForm<Parentable<INeed>>({
-    resolver: joiResolver(PostNeedSchema),
+    resolver: nexus.resolverService.postResolver(ModelType.need),
     defaultValues
   });
 

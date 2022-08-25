@@ -6,7 +6,6 @@ import {
   RadioGroup
 } from '@mui/material';
 import { FormProvider, useForm, useWatch } from 'react-hook-form';
-import { joiResolver } from '@hookform/resolvers/joi';
 import { useTranslation } from 'react-i18next';
 
 import css from '../../Stylesheets/NewProduct.module.scss';
@@ -19,11 +18,9 @@ import ProductSelection from '../../../components/ProductSelection/ProductSelect
 import theme from '../../../theme';
 import { addProduct } from '../../../store/reducers/PrefilledResponseReducer';
 import { DFORadio } from '../../../components/DFORadio/DFORadio';
-import {
-  IPrefilledResponseProduct,
-  PostPrefilledResponseProductSchema
-} from '../../../models/IPrefilledResponseProduct';
+import { IPrefilledResponseProduct } from '../../../Nexus/entities/IPrefilledResponseProduct';
 import { IProduct } from '../../../Nexus/entities/IProduct';
+import { ModelType } from '../../../Nexus/enums';
 import { Parentable } from '../../../models/Parentable';
 import { useAppDispatch, useAppSelector } from '../../../store/hooks';
 import { useFormStyles } from '../../../components/Form/FormStyles';
@@ -49,7 +46,9 @@ export default function NewProduct(): React.ReactElement {
     nexus.prefilledResponseService.generateDefaultPrefilledResponseProductValues();
 
   const methods = useForm<IPrefilledResponseProduct>({
-    resolver: joiResolver(PostPrefilledResponseProductSchema),
+    resolver: nexus.resolverService.postResolver(
+      ModelType.prefilledResponseProduct
+    ),
     defaultValues
   });
 

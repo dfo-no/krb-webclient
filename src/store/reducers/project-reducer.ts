@@ -4,13 +4,13 @@ import Utils from '../../common/Utils';
 import { IBank } from '../../Nexus/entities/IBank';
 import { ICode } from '../../Nexus/entities/ICode';
 import { ICodelist } from '../../Nexus/entities/ICodelist';
-import { IInheritedBank } from '../../models/IInheritedBank';
+import { IInheritedBank } from '../../Nexus/entities/IInheritedBank';
 import { INeed } from '../../Nexus/entities/INeed';
 import { IProduct } from '../../Nexus/entities/IProduct';
 import { IPublication } from '../../Nexus/entities/IPublication';
 import { IRequirement } from '../../Nexus/entities/IRequirement';
 import { ITag } from '../../Nexus/entities/ITag';
-import { ModelType } from '../../enums';
+import { ModelType } from '../../Nexus/enums';
 import { Parentable } from '../../models/Parentable';
 
 interface IProjectState {

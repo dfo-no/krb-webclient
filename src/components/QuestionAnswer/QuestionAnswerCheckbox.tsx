@@ -1,17 +1,14 @@
 import React, { useEffect } from 'react';
 import { Box, Button } from '@mui/material';
 import { FormProvider, useForm, useWatch } from 'react-hook-form';
-import { joiResolver } from '@hookform/resolvers/joi';
 import { useTranslation } from 'react-i18next';
 
 import css from './QuestionAnswer.module.scss';
+import Nexus from '../../Nexus/Nexus';
 import YesNoSelection from '../YesNoSelection/YesNoSelection';
-import {
-  CheckboxQuestionAnswerSchema,
-  ICheckboxQuestion
-} from '../../Nexus/entities/ICheckboxQuestion';
-import { IRequirementAnswer } from '../../models/IRequirementAnswer';
-import { QuestionVariant } from '../../enums';
+import { ICheckboxQuestion } from '../../Nexus/entities/ICheckboxQuestion';
+import { IRequirementAnswer } from '../../Nexus/entities/IRequirementAnswer';
+import { QuestionVariant } from '../../Nexus/enums';
 
 interface IProps {
   item: ICheckboxQuestion;
@@ -25,8 +22,10 @@ const QuestionAnswerCheckbox = ({
   onSubmit
 }: IProps): React.ReactElement => {
   const { t } = useTranslation();
+  const nexus = Nexus.getInstance();
+
   const methods = useForm<ICheckboxQuestion>({
-    resolver: joiResolver(CheckboxQuestionAnswerSchema),
+    resolver: nexus.resolverService.answerResolver(QuestionVariant.Q_CHECKBOX),
     defaultValues: item
   });
 

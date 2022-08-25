@@ -1,8 +1,8 @@
 import UuidService from './UuidService';
 import { IBank } from '../entities/IBank';
-import { IPrefilledResponse } from '../../models/IPrefilledResponse';
-import { IPrefilledResponseProduct } from '../../models/IPrefilledResponseProduct';
-import { ModelType } from '../../enums';
+import { IPrefilledResponse } from '../entities/IPrefilledResponse';
+import { IPrefilledResponseProduct } from '../entities/IPrefilledResponseProduct';
+import { ModelType } from '../enums';
 
 export default class PrefilledResponseService {
   UuidService = new UuidService();

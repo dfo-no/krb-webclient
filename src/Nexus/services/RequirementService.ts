@@ -2,7 +2,7 @@ import StoreService from './StoreService';
 import UuidService from './UuidService';
 import { IRequirement } from '../entities/IRequirement';
 import { IVariant } from '../entities/IVariant';
-import { ModelType } from '../../enums';
+import { ModelType } from '../enums';
 
 export default class RequirementService {
   UuidService = new UuidService();

@@ -3,10 +3,10 @@ import QuestionService from './QuestionService';
 import SpecificationStoreService from './SpecificationStoreService';
 import UuidService from './UuidService';
 import { IRequirement } from '../entities/IRequirement';
-import { IRequirementAnswer } from '../../models/IRequirementAnswer';
+import { IRequirementAnswer } from '../entities/IRequirementAnswer';
 import { ISpecification } from '../entities/ISpecification';
-import { ISpecificationProduct } from '../../models/ISpecificationProduct';
-import { ModelType, QuestionVariant, Weighting } from '../../enums';
+import { ISpecificationProduct } from '../entities/ISpecificationProduct';
+import { ModelType, QuestionVariant, Weighting } from '../enums';
 import { QuestionType } from '../../models/QuestionType';
 
 export default class SpecificationService {

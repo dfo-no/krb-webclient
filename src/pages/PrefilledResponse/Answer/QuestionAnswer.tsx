@@ -5,9 +5,9 @@ import {
   addProductAnswer,
   addAnswer
 } from '../../../store/reducers/PrefilledResponseReducer';
-import { IRequirementAnswer } from '../../../models/IRequirementAnswer';
+import { IRequirementAnswer } from '../../../Nexus/entities/IRequirementAnswer';
 import { QuestionType } from '../../../models/QuestionType';
-import { QuestionVariant } from '../../../enums';
+import { QuestionVariant } from '../../../Nexus/enums';
 import { useAppDispatch, useAppSelector } from '../../../store/hooks';
 import { useProductIndexState } from '../../../components/ProductIndexContext/ProductIndexContext';
 import { useAccordionState } from '../../../components/DFOAccordion/AccordionContext';

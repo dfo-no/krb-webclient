@@ -4,7 +4,7 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { DFOAccordion } from '../../../../components/DFOAccordion/DFOAccordion';
 import DFOSearchBar from '../../../../components/DFOSearchBar/DFOSearchBar';
-import { IInheritedBank } from '../../../../models/IInheritedBank';
+import { IInheritedBank } from '../../../../Nexus/entities/IInheritedBank';
 import { IBaseModel } from '../../../../Nexus/entities/IBaseModel';
 import { useAppSelector } from '../../../../store/hooks';
 import {

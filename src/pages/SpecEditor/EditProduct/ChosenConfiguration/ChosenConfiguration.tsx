@@ -4,10 +4,10 @@ import { t } from 'i18next';
 
 import TextUtils from '../../../../common/TextUtils';
 import theme from '../../../../theme';
-import VariantType from '../../../../Nexus/entities/VariantType';
 import { IRequirement } from '../../../../Nexus/entities/IRequirement';
 import { useAppSelector } from '../../../../store/hooks';
 import { useSpecificationState } from '../../SpecificationContext';
+import { VariantType } from '../../../../Nexus/enums';
 
 interface IProps {
   requirement: IRequirement;

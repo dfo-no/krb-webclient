@@ -12,10 +12,10 @@ import MultipleProductSelection from '../../../../components/ProductSelection/Mu
 import QuestionsList from './QuestionsList';
 import RadioCtrl from '../../../../FormProvider/RadioCtrl';
 import TextAreaCtrl from '../../../../FormProvider/TextAreaCtrl';
-import VariantType from '../../../../Nexus/entities/VariantType';
 import { IRouteProjectParams } from '../../../../models/IRouteProjectParams';
 import { IVariant } from '../../../../Nexus/entities/IVariant';
 import { useGetProjectQuery } from '../../../../store/api/bankApi';
+import { VariantType } from '../../../../Nexus/enums';
 
 interface IProps {
   control: Control<IVariant>;

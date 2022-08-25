@@ -1,8 +1,8 @@
 import { IEvaluatedResponse } from '../entities/IEvaluatedResponse';
 import { IPointsCalculation } from '../entities/IPointsCalculation';
-import { IRequirementAnswer } from '../../models/IRequirementAnswer';
-import { IResponse } from '../../models/IResponse';
-import { IResponseProduct } from '../../models/IResponseProduct';
+import { IRequirementAnswer } from '../entities/IRequirementAnswer';
+import { IResponse } from '../entities/IResponse';
+import { IResponseProduct } from '../entities/IResponseProduct';
 
 export default class EvaluationService {
   private static calculatePoints(

@@ -3,8 +3,8 @@ import { Divider, Typography } from '@mui/material';
 
 import css from './PrefilledResponse.module.scss';
 import ProductVariant from './ProductVariant';
-import VariantType from '../../../Nexus/entities/VariantType';
 import { IRequirement } from '../../../Nexus/entities/IRequirement';
+import { VariantType } from '../../../Nexus/enums';
 
 interface IProps {
   requirement: IRequirement;

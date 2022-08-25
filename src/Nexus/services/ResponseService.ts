@@ -2,10 +2,10 @@ import { isEqual } from 'lodash';
 
 import ResponseStoreService from './ResponseStoreService';
 import UuidService from './UuidService';
-import { IPrefilledResponse } from '../../models/IPrefilledResponse';
-import { IRequirementAnswer } from '../../models/IRequirementAnswer';
-import { IResponse } from '../../models/IResponse';
-import { IResponseProduct } from '../../models/IResponseProduct';
+import { IPrefilledResponse } from '../entities/IPrefilledResponse';
+import { IRequirementAnswer } from '../entities/IRequirementAnswer';
+import { IResponse } from '../entities/IResponse';
+import { IResponseProduct } from '../entities/IResponseProduct';
 import { ISpecification } from '../entities/ISpecification';
 
 export default class ResponseService {

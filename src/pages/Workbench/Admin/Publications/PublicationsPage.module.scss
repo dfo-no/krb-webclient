@@ -1,0 +1,57 @@
+.PublicationsPage {
+  min-height: 100%;
+
+  .Disabled {
+    background: var(--disabled-color);
+  }
+
+  .Publications {
+    list-style: none;
+
+    li + li {
+      margin-top: var(--small-gap);
+    }
+
+    .Publication {
+      .Item {
+        display: flex;
+        flex-direction: row;
+        width: 100%;
+        padding: var(--tiny-gap) var(--small-gap);
+        border: 0.1rem solid var(--border-color-secondary);
+        background: white;
+      }
+
+      .Version {
+        align-self: center;
+        padding-left: var(--small-gap);
+        padding-right: var(--small-gap);
+      }
+
+      .Comment {
+        display: flex;
+        width: 70%;
+        height: 100%;
+        padding-left: var(--small-gap);
+        border-left: 0.1rem solid var(--border-color-secondary);
+        margin-left: auto;
+        align-self: center;
+        color: var(--text-label-color);
+      }
+
+      .IconButton {
+        visibility: visible;
+      }
+
+      time {
+        display: block;
+        color: var(--border-color);
+        font-size: var(--small-fontsize);
+      }
+    }
+  }
+}
+
+form .IconButton {
+  visibility: hidden !important;
+}

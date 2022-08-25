@@ -1,17 +1,19 @@
-import { joiResolver } from '@hookform/resolvers/joi';
-import React from 'react';
+import React, { ReactElement } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
-import { IAlert } from '../../../models/IAlert';
-import { BaseBankSchema, IBank } from '../../../Nexus/entities/IBank';
-import UuidService from '../../../Nexus/services/UuidService';
-import { useAppDispatch } from '../../../store/hooks';
-import { addAlert } from '../../../store/reducers/alert-reducer';
-import { useEditableState } from '../../../components/EditableContext/EditableContext';
+
 import DeleteFrame from '../../../components/DeleteFrame/DeleteFrame';
+import Nexus from '../../../Nexus/Nexus';
 import useProjectMutations from '../../../store/api/ProjectMutations';
+import UuidService from '../../../Nexus/services/UuidService';
+import { addAlert } from '../../../store/reducers/alert-reducer';
+import { IBank } from '../../../Nexus/entities/IBank';
+import { IAlert } from '../../../models/IAlert';
+import { ModelType } from '../../../Nexus/enums';
+import { useAppDispatch } from '../../../store/hooks';
+import { useEditableState } from '../../../components/EditableContext/EditableContext';
 
 interface IProps {
-  children: React.ReactElement;
+  children: ReactElement;
   bank: IBank;
   handleClose: () => void;
 }
@@ -20,15 +22,16 @@ export default function DeleteProjectForm({
   children,
   bank,
   handleClose
-}: IProps): React.ReactElement {
+}: IProps): ReactElement {
   const dispatch = useAppDispatch();
+  const nexus = Nexus.getInstance();
   const { deleteProject } = useProjectMutations();
   const { deleteMode } = useEditableState();
   const uuidService = new UuidService();
 
   const methods = useForm<IBank>({
     defaultValues: bank,
-    resolver: joiResolver(BaseBankSchema)
+    resolver: nexus.resolverService.resolver(ModelType.bank)
   });
 
   if (deleteMode !== bank.id) {

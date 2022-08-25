@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 import css from '../../Stylesheets/Editor.module.scss';
 import DownloadButton from '../Download/DownloadButton';
 import theme from '../../../theme';
-import { IPrefilledResponseProduct } from '../../../models/IPrefilledResponseProduct';
+import { IPrefilledResponseProduct } from '../../../Nexus/entities/IPrefilledResponseProduct';
 import { useAppSelector } from '../../../store/hooks';
 import { useProductIndexState } from '../../../components/ProductIndexContext/ProductIndexContext';
 

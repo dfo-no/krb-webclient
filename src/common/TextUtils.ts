@@ -1,6 +1,7 @@
 import { t } from 'i18next';
 
 import DateUtils from './DateUtils';
+import { IBank } from '../Nexus/entities/IBank';
 import { ICheckboxQuestion } from '../Nexus/entities/ICheckboxQuestion';
 import { ICodelist } from '../Nexus/entities/ICodelist';
 import { ICodelistQuestion } from '../Nexus/entities/ICodelistQuestion';
@@ -9,9 +10,8 @@ import { IPeriodDateQuestion } from '../Nexus/entities/IPeriodDateQuestion';
 import { ISliderQuestion } from '../Nexus/entities/ISliderQuestion';
 import { ITextQuestion } from '../Nexus/entities/ITextQuestion';
 import { ITimeQuestion } from '../Nexus/entities/ITimeQuestion';
-import { IRequirementAnswer } from '../models/IRequirementAnswer';
-import { QuestionVariant } from '../enums';
-import { IBank } from '../Nexus/entities/IBank';
+import { IRequirementAnswer } from '../Nexus/entities/IRequirementAnswer';
+import { QuestionVariant } from '../Nexus/enums';
 
 class TextUtils {
   static getAnswerText = (

@@ -2,7 +2,7 @@
 import Adapter from './Adapter';
 import Utils from '../../common/Utils';
 import { IBank } from '../entities/IBank';
-import { ModelType } from '../../enums';
+import { ModelType } from '../enums';
 
 export default class LocalStorageAdapter extends Adapter {
   save(bank: IBank): void {

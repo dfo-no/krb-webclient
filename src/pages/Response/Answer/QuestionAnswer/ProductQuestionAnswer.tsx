@@ -1,21 +1,21 @@
 import React from 'react';
 
+import QuestionAnswerCheckbox from '../../../../components/QuestionAnswer/QuestionAnswerCheckbox';
 import QuestionAnswerCodelist from './QuestionAnswerCodelist';
 import QuestionAnswerPeriodDate from './QuestionAnswerPeriodDate';
 import QuestionAnswerSlider from './QuestionAnswerSlider';
 import QuestionAnswerText from './QuestionAnswerText';
 import QuestionAnswerTime from './QuestionAnswerTime';
-import { IRequirementAnswer } from '../../../../models/IRequirementAnswer';
-import { QuestionVariant } from '../../../../enums';
-import { QuestionType } from '../../../../models/QuestionType';
 import {
   addProductAnswer,
   addRequirementAnswer
 } from '../../../../store/reducers/response-reducer';
+import { IRequirementAnswer } from '../../../../Nexus/entities/IRequirementAnswer';
+import { QuestionType } from '../../../../models/QuestionType';
+import { QuestionVariant } from '../../../../Nexus/enums';
+import { useAccordionState } from '../../../../components/DFOAccordion/AccordionContext';
 import { useAppDispatch, useAppSelector } from '../../../../store/hooks';
 import { useProductIndexState } from '../../../../components/ProductIndexContext/ProductIndexContext';
-import { useAccordionState } from '../../../../components/DFOAccordion/AccordionContext';
-import QuestionAnswerCheckbox from '../../../../components/QuestionAnswer/QuestionAnswerCheckbox';
 
 interface IProps {
   requirementAnswer: IRequirementAnswer;

@@ -1,27 +1,29 @@
-import { joiResolver } from '@hookform/resolvers/joi';
-import { Box, Button } from '@mui/material/';
 import React from 'react';
+import { Box, Button } from '@mui/material/';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
+
 import LoaderSpinner from '../../../../common/LoaderSpinner';
+import Nexus from '../../../../Nexus/Nexus';
+import VerticalTextCtrl from '../../../../FormProvider/VerticalTextCtrl';
+import { addAlert } from '../../../../store/reducers/alert-reducer';
 import { IAlert } from '../../../../models/IAlert';
-import { PutProjectSchema } from '../../../../models/Project';
-import { IRouteProjectParams } from '../../../../models/IRouteProjectParams';
 import { IBank } from '../../../../Nexus/entities/IBank';
+import { IRouteProjectParams } from '../../../../models/IRouteProjectParams';
+import { ModelType } from '../../../../Nexus/enums';
+import { StandardContainer } from '../../../../components/StandardContainer/StandardContainer';
+import { useAppDispatch } from '../../../../store/hooks';
 import {
   useGetProjectQuery,
   usePutProjectMutation
 } from '../../../../store/api/bankApi';
-import { useAppDispatch } from '../../../../store/hooks';
-import { addAlert } from '../../../../store/reducers/alert-reducer';
-import { StandardContainer } from '../../../../components/StandardContainer/StandardContainer';
 import { useFormStyles } from '../../../../components/Form/FormStyles';
-import VerticalTextCtrl from '../../../../FormProvider/VerticalTextCtrl';
 
 function PropertiesPage(): React.ReactElement {
   const dispatch = useAppDispatch();
+  const nexus = Nexus.getInstance();
   const { t } = useTranslation();
   const formStyles = useFormStyles();
   const { projectId } = useParams<IRouteProjectParams>();
@@ -29,7 +31,7 @@ function PropertiesPage(): React.ReactElement {
   const [putProject] = usePutProjectMutation();
 
   const methods = useForm<IBank>({
-    resolver: joiResolver(PutProjectSchema),
+    resolver: nexus.resolverService.resolver(ModelType.bank),
     defaultValues: project
   });
 

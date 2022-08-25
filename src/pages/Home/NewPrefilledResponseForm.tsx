@@ -1,22 +1,20 @@
 import { Box, Typography } from '@mui/material/';
 import { FormProvider, useForm } from 'react-hook-form';
-import { joiResolver } from '@hookform/resolvers/joi';
 import { useHistory } from 'react-router';
 import { useTranslation } from 'react-i18next';
 
 import GeneralErrorMessage from '../../Form/GeneralErrorMessage';
+import Nexus from '../../Nexus/Nexus';
 import theme from '../../theme';
 import VerticalTextCtrl from '../../FormProvider/VerticalTextCtrl';
-import {
-  BasePrefilledResponseSchema,
-  IPrefilledResponse
-} from '../../models/IPrefilledResponse';
+import { IPrefilledResponse } from '../../Nexus/entities/IPrefilledResponse';
 import {
   ModalBox,
   ModalFieldsBox,
   ModalButtonsBox,
   ModalButton
 } from '../../components/ModalBox/ModalBox';
+import { ModelType } from '../../Nexus/enums';
 import { setResponse } from '../../store/reducers/PrefilledResponseReducer';
 import { useAppDispatch } from '../../store/hooks';
 
@@ -32,9 +30,10 @@ const NewPrefilledResponseForm = ({
   const { t } = useTranslation();
   const history = useHistory();
   const dispatch = useAppDispatch();
+  const nexus = Nexus.getInstance();
 
   const methods = useForm<IPrefilledResponse>({
-    resolver: joiResolver(BasePrefilledResponseSchema),
+    resolver: nexus.resolverService.resolver(ModelType.prefilledResponse),
     defaultValues: prefilledResponse
   });
 

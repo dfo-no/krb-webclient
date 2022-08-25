@@ -8,8 +8,8 @@ import NewPrefilledResponseForm from './NewPrefilledResponseForm';
 import NewResponseForm from './NewResponseForm';
 import Nexus from '../../Nexus/Nexus';
 import theme from '../../theme';
-import { IPrefilledResponse } from '../../models/IPrefilledResponse';
-import { IResponse } from '../../models/IResponse';
+import { IPrefilledResponse } from '../../Nexus/entities/IPrefilledResponse';
+import { IResponse } from '../../Nexus/entities/IResponse';
 import { ISpecification } from '../../Nexus/entities/ISpecification';
 import {
   ModalBox,

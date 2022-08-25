@@ -8,7 +8,7 @@ import Nexus from '../../../Nexus/Nexus';
 import QuestionAnswer from './QuestionAnswer';
 import { DFOAccordion } from '../../../components/DFOAccordion/DFOAccordion';
 import { IRequirement } from '../../../Nexus/entities/IRequirement';
-import { IRequirementAnswer } from '../../../models/IRequirementAnswer';
+import { IRequirementAnswer } from '../../../Nexus/entities/IRequirementAnswer';
 import { IVariant } from '../../../Nexus/entities/IVariant';
 import { QuestionType } from '../../../models/QuestionType';
 import { useAppSelector } from '../../../store/hooks';

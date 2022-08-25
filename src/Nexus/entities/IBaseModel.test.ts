@@ -2,7 +2,7 @@ import { v1 as uuidv1 } from 'uuid';
 
 import UuidService from '../services/UuidService';
 import { BaseModelSchema, IBaseModel } from './IBaseModel';
-import { ModelType } from '../../enums';
+import { ModelType } from '../enums';
 
 describe('IBaseModel', () => {
   test('Should validate on v4', () => {
@@ -32,13 +32,13 @@ describe('IBaseModel', () => {
     expect(report.error?.details.length).toEqual(3);
 
     expect(report.error?.details[0].message).toEqual(
-      '"id" must be a valid GUID'
+      'Noe har gått galt med skjemaet. "id" er ikke en gyldig guid'
     );
     expect(report.error?.details[1].message).toEqual(
-      '"sourceRel" must be a valid GUID'
+      'Noe har gått galt med skjemaet. "sourceRel" er ikke en gyldig guid'
     );
     expect(report.error?.details[2].message).toEqual(
-      '"sourceOriginal" must be a valid GUID'
+      'Noe har gått galt med skjemaet. "sourceOriginal" er ikke en gyldig guid'
     );
 
     expect(report.error?.details[0].type).toEqual('string.guid');

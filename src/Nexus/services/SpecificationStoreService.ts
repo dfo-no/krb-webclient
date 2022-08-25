@@ -2,11 +2,11 @@
 /* eslint-disable class-methods-use-this */
 import produce from 'immer';
 
-import { ModelType } from '../../enums';
+import { ModelType } from '../enums';
 import { IBank } from '../entities/IBank';
-import { IRequirementAnswer } from '../../models/IRequirementAnswer';
+import { IRequirementAnswer } from '../entities/IRequirementAnswer';
 import { ISpecification } from '../entities/ISpecification';
-import { ISpecificationProduct } from '../../models/ISpecificationProduct';
+import { ISpecificationProduct } from '../entities/ISpecificationProduct';
 
 export default class SpecificationStoreService {
   private static specification: ISpecification;

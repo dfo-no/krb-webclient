@@ -1,18 +1,18 @@
-import React from 'react';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import CodeIcon from '@mui/icons-material/Code';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import Inventory2Icon from '@mui/icons-material/Inventory2';
 import LocalOfferIcon from '@mui/icons-material/LocalOffer';
-import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
 import makeStyles from '@mui/styles/makeStyles';
+import React from 'react';
+import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
 import { Box, List, ListItem, ListItemText } from '@mui/material';
 import { withRouter } from 'react-router';
 import { Link, useRouteMatch } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 import theme from '../../../theme';
 import { IRouteProjectParams } from '../../../models/IRouteProjectParams';
-import { useTranslation } from 'react-i18next';
 
 interface IRouteLink {
   link: string;
@@ -22,7 +22,7 @@ interface IRouteLink {
 
 const useStyles = makeStyles({
   sideBar: {
-    height: '100%',
+    minHeight: '100%',
     [theme.breakpoints.down('md')]: {
       paddingTop: 0
     }

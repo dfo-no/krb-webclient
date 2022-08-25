@@ -8,8 +8,8 @@ import React, {
 
 import { IBank } from '../../Nexus/entities/IBank';
 import { ISpecification } from '../../Nexus/entities/ISpecification';
-import { IResponse } from '../../models/IResponse';
-import { IPrefilledResponse } from '../../models/IPrefilledResponse';
+import { IResponse } from '../../Nexus/entities/IResponse';
+import { IPrefilledResponse } from '../../Nexus/entities/IPrefilledResponse';
 
 interface IHomeContext {
   selectedBank: IBank | null;
