@@ -1,6 +1,9 @@
+import timezoneMock from 'timezone-mock';
+
 import CustomJoi from '../../CustomJoi';
 
 describe('DateJoi', () => {
+  timezoneMock.register('UTC');
   test('Joi validatePeriodMin() should show error message if not a valid number', () => {
     const schema = CustomJoi.object().keys({
       periodMin: CustomJoi.validatePeriodMin()
