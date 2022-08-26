@@ -1,6 +1,9 @@
+import timezoneMock from 'timezone-mock';
+
 import CustomJoi from '../../CustomJoi';
 
 describe('TimeJoi', () => {
+  timezoneMock.register('UTC');
   test('Joi validatePeriodMinutes() should show error message if not a minute', () => {
     const schema = CustomJoi.object().keys({
       minutes: CustomJoi.validatePeriodMinutes()
@@ -176,10 +179,10 @@ describe('TimeJoi', () => {
       ]
     });
     expect(reportError1?.error?.details[0].message).toEqual(
-      'Tidspunkt kan ikke være før 18:00'
+      'Tidspunkt kan ikke være før 16:00'
     );
     expect(reportError2?.error?.details[0].message).toEqual(
-      'Tidspunkt kan ikke være etter 22:00'
+      'Tidspunkt kan ikke være etter 20:00'
     );
     expect(reportError3?.error?.details[0].message).toEqual(
       'Tidspunkt må ha en verdi'
@@ -235,10 +238,10 @@ describe('TimeJoi', () => {
       }
     });
     expect(reportError1?.error?.details[0].message).toEqual(
-      'Tidspunkt kan ikke være før 18:00'
+      'Tidspunkt kan ikke være før 16:00'
     );
     expect(reportError2?.error?.details[0].message).toEqual(
-      'Tidspunkt kan ikke være etter 22:00'
+      'Tidspunkt kan ikke være etter 20:00'
     );
     expect(reportSuccess1?.error?.details[0].message).toBeUndefined();
     expect(reportSuccess2?.error?.details[0].message).toBeUndefined();
@@ -314,10 +317,10 @@ describe('TimeJoi', () => {
       }
     });
     expect(reportError1?.error?.details[0].message).toEqual(
-      'Tidspunkt kan ikke være etter 22:00'
+      'Tidspunkt kan ikke være etter 20:00'
     );
     expect(reportError2?.error?.details[0].message).toEqual(
-      'Tidspunkt kan ikke være før 20:00'
+      'Tidspunkt kan ikke være før 18:00'
     );
     expect(reportError3?.error?.details[0].message).toEqual(
       'Tidspunkt må være fylt ut'
