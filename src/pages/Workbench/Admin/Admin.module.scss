@@ -1,0 +1,12 @@
+.Admin {
+  display: flex;
+  min-height: calc(100vh - var(--header-height));
+  width: 100%;
+
+  .Content {
+    display: flex;
+    min-height: 100%;
+    width: 100%;
+    background: var(--secondary-background-color);
+  }
+}

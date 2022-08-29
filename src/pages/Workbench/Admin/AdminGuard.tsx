@@ -1,7 +1,7 @@
-import Box from '@mui/material/Box';
 import React from 'react';
 import { Route } from 'react-router';
 
+import css from './Admin.module.scss';
 import AdminSideBar from './AdminSideBar';
 import CodelistGuard from './Codelist/CodelistGuard';
 import InheritancePage from './Inheritance/InheritancePage';
@@ -12,22 +12,9 @@ import TagGuard from './Tags/TagGuard';
 
 export default function AdminGuard(): React.ReactElement {
   return (
-    <Box
-      sx={{
-        display: 'flex',
-        minHeight: '100vh',
-        width: '100%'
-      }}
-    >
+    <div className={css.Admin}>
       <AdminSideBar />
-      <Box
-        sx={{
-          display: 'flex',
-          minHeight: '100%',
-          width: '100%',
-          background: 'var(--secondary-background-color)'
-        }}
-      >
+      <div className={css.Content}>
         <Route exact path="/workbench/:projectId/admin/">
           <PublicationsPage />
         </Route>
@@ -46,7 +33,7 @@ export default function AdminGuard(): React.ReactElement {
         <Route exact path="/workbench/:projectId/admin/properties">
           <PropertiesPage />
         </Route>
-      </Box>
-    </Box>
+      </div>
+    </div>
   );
 }

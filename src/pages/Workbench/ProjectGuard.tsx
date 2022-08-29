@@ -1,6 +1,4 @@
-import makeStyles from '@mui/styles/makeStyles';
 import React from 'react';
-import { Box } from '@mui/material';
 import { Route, useParams } from 'react-router-dom';
 
 import AdminGuard from './Admin/AdminGuard';
@@ -16,16 +14,7 @@ interface IRouteParams {
   projectId: string;
 }
 
-const useStyles = makeStyles({
-  wrapperContainer: {
-    minHeight: '100vh',
-    width: '100%'
-  }
-});
-
 export default function ProjectGuard(): React.ReactElement {
-  const classes = useStyles();
-
   const { projectId } = useParams<IRouteParams>();
   const { data: project, isLoading } = useGetProjectQuery(projectId);
 
@@ -38,7 +27,7 @@ export default function ProjectGuard(): React.ReactElement {
   }
 
   return (
-    <Box className={classes.wrapperContainer}>
+    <div>
       <Route path="/workbench/:projectId/admin">
         <AdminGuard />
       </Route>
@@ -52,6 +41,6 @@ export default function ProjectGuard(): React.ReactElement {
           <Preview />
         </PreviewProvider>
       </Route>
-    </Box>
+    </div>
   );
 }
