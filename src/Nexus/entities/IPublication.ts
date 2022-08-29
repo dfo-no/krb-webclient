@@ -13,7 +13,7 @@ export interface IPublication extends IBaseModel {
 
 export const BasePublicationSchema = BaseModelSchema.keys({
   comment: CustomJoi.validateText(),
-  date: CustomJoi.validateDate(),
+  date: CustomJoi.validateOptionalDate(),
   version: CustomJoi.validateVersion(),
   bankId: CustomJoi.validateId(),
   type: CustomJoi.validateType(ModelType.publication),
