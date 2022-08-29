@@ -12,6 +12,7 @@ interface IProps {
   label: string;
   placeholder?: string;
   type?: string;
+  autoFocus?: boolean;
 }
 
 const VerticalTextCtrl = ({
@@ -19,7 +20,8 @@ const VerticalTextCtrl = ({
   name,
   label = '',
   placeholder = '',
-  type = 'text'
+  type = 'text',
+  autoFocus
 }: IProps): React.ReactElement => {
   const {
     formState: { errors }
@@ -43,6 +45,7 @@ const VerticalTextCtrl = ({
         render={({ field }) => (
           <DFOInput
             {...field}
+            autoFocus={autoFocus}
             placeholder={placeholder}
             type={type}
             onWheel={(e) => (e.target as HTMLElement).blur()}

@@ -78,6 +78,7 @@ function NewRequirementForm({ need, handleClose }: IProps): React.ReactElement {
               name="title"
               label={t('Title')}
               placeholder={t('Requirement title')}
+              autoFocus
             />
           </ModalFieldsBox>
           <ModalButtonsBox>

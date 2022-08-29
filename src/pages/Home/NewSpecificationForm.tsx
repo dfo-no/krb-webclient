@@ -60,6 +60,7 @@ const NewSpecificationForm = ({ handleClose, specification }: IProps) => {
               name="title"
               label={t('What will be the name of the procurement?')}
               placeholder={t('Name of specification')}
+              autoFocus
             />
             <VerticalTextCtrl
               name="organization"
