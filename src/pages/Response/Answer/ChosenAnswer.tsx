@@ -26,7 +26,7 @@ export default function ChosenAnswer({
       <Typography variant={'smBold'} color={theme.palette.gray600.main}>
         {TextUtils.getAnswerText(
           existingAnswer ? existingAnswer : requirementAnswer,
-          response.specification
+          response.specification.bank
         )}
       </Typography>
     </Box>

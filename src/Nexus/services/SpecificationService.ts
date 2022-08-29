@@ -7,6 +7,7 @@ import { IRequirementAnswer } from '../entities/IRequirementAnswer';
 import { ISpecification } from '../entities/ISpecification';
 import { ISpecificationProduct } from '../entities/ISpecificationProduct';
 import { ModelType, QuestionVariant, Weighting } from '../enums';
+import { QuestionType } from '../../models/QuestionType';
 
 export default class SpecificationService {
   UuidService = new UuidService();
@@ -43,15 +44,17 @@ export default class SpecificationService {
   };
 
   generateDefaultRequirementAnswer = (
-    requirement: IRequirement
+    requirement: IRequirement,
+    variantId?: string,
+    question?: QuestionType
   ): IRequirementAnswer => {
     const questionService = new QuestionService();
     return {
       id: this.UuidService.generateId(),
       questionId: '',
       weight: Weighting.MEDIUM,
-      variantId: '',
-      question: questionService.getQuestion(QuestionVariant.Q_TEXT),
+      variantId: variantId ?? '',
+      question: question ?? questionService.getQuestion(QuestionVariant.Q_TEXT),
       type: ModelType.requirementAnswer,
       requirement: requirement
     };

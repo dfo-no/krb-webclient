@@ -132,7 +132,7 @@ describe('Utils functions should work', () => {
 
   it('Utils.findVariantsUsedBySpesification returns only variants with useSpesification true', () => {
     const project = { ...projectTestData, needs: needHierarchyTestData };
-    const needs = Utils.findVariantsUsedBySpesification(project);
+    const needs = Utils.findVariantsUsedBySpecification(project);
 
     expect(needs.length).toEqual(1);
     expect(needs[0].requirements.length).toEqual(1);

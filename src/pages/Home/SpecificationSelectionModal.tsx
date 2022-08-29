@@ -1,12 +1,14 @@
-import React, { useState } from 'react';
+import React, { ReactElement, useState } from 'react';
 import { Box, Typography } from '@mui/material';
 import { useHistory } from 'react-router';
 import { useTranslation } from 'react-i18next';
 
 import DFODialog from '../../components/DFODialog/DFODialog';
+import NewPrefilledResponseForm from './NewPrefilledResponseForm';
 import NewResponseForm from './NewResponseForm';
 import Nexus from '../../Nexus/Nexus';
 import theme from '../../theme';
+import { IPrefilledResponse } from '../../Nexus/entities/IPrefilledResponse';
 import { IResponse } from '../../Nexus/entities/IResponse';
 import { ISpecification } from '../../Nexus/entities/ISpecification';
 import {
@@ -29,6 +31,8 @@ export default function SpecificationSelectionModal({
 }: IProps): React.ReactElement {
   const { setSelectedSpecification } = useHomeState();
   const [newResponse, setNewResponse] = useState<IResponse | null>(null);
+  const [newPrefilledResponse, setNewPrefilledResponse] =
+    useState<IPrefilledResponse | null>(null);
   const history = useHistory();
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
@@ -46,6 +50,14 @@ export default function SpecificationSelectionModal({
       selectedSpecification
     );
     setNewResponse(response);
+  };
+
+  const createPrefilledResponse = (): void => {
+    const prefilledResponse =
+      nexus.prefilledResponseService.createPrefilledResponseFromBank(
+        selectedSpecification.bank
+      );
+    setNewPrefilledResponse(prefilledResponse);
   };
 
   const doEvaluation = (): void => {
@@ -71,7 +83,7 @@ export default function SpecificationSelectionModal({
           <ModalButton variant="primary" onClick={createResponse}>
             {t('Create response')}
           </ModalButton>
-          <ModalButton variant="cancel" type="submit" disabled={true}>
+          <ModalButton variant="primary" onClick={createPrefilledResponse}>
             {t('Create prepared response')}
           </ModalButton>
           <ModalButton variant="primary" onClick={doEvaluation}>
@@ -87,17 +99,22 @@ export default function SpecificationSelectionModal({
     );
   };
 
+  const getDialog = (): ReactElement => {
+    if (newResponse) {
+      return <NewResponseForm handleClose={cancel} response={newResponse} />;
+    }
+    if (newPrefilledResponse) {
+      return (
+        <NewPrefilledResponseForm
+          handleClose={cancel}
+          prefilledResponse={newPrefilledResponse}
+        />
+      );
+    }
+    return modalBox();
+  };
+
   return (
-    <DFODialog
-      isOpen={true}
-      handleClose={cancel}
-      children={
-        newResponse ? (
-          <NewResponseForm handleClose={cancel} response={newResponse} />
-        ) : (
-          modalBox()
-        )
-      }
-    />
+    <DFODialog isOpen={true} handleClose={cancel} children={getDialog()} />
   );
 }

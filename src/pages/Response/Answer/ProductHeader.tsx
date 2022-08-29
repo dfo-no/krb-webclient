@@ -1,55 +1,45 @@
 import React from 'react';
-import { Box, Typography } from '@mui/material';
+import { Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 
+import css from '../../Stylesheets/Editor.module.scss';
 import { DFOCardHeader } from '../../../components/DFOCard/DFOCardHeader';
 import { DFOHeaderContentBox } from '../../../components/DFOCard/DFOHeaderContentBox';
 import { useAppSelector } from '../../../store/hooks';
-import { useResponseState } from '../ResponseContext';
+import { useProductIndexState } from '../../../components/ProductIndexContext/ProductIndexContext';
 
 export default function ProductHeader(): React.ReactElement {
   const { t } = useTranslation();
   const { response } = useAppSelector((state) => state.response);
-  const { responseProductIndex } = useResponseState();
+  const { productIndex } = useProductIndexState();
 
   return (
     <DFOCardHeader>
       <DFOHeaderContentBox>
-        <Box
-          sx={{
-            display: 'flex',
-            flexDirection: 'row',
-            paddingBottom: 0.5,
-            borderBottom: '0.1rem solid'
-          }}
-        >
+        <div className={css.HeaderTop}>
           <Typography variant="lgBold">
-            {response.specification.products[responseProductIndex]?.title ??
+            {response.specification.products[productIndex]?.title ??
               t('General requirement')}
           </Typography>
-        </Box>
-        <Box sx={{ display: 'flex', flexDirection: 'row', paddingTop: 1 }}>
+        </div>
+        <div className={css.HeaderBottom}>
           <Typography variant="smBold">
-            {response.specification.products[responseProductIndex]
-              ?.description ?? ''}
+            {response.specification.products[productIndex]?.description ?? ''}
           </Typography>
 
-          {responseProductIndex !== -1 && (
-            <Typography
-              variant="smBold"
-              sx={{ marginLeft: 'auto', paddingRight: 2 }}
-            >
+          {productIndex !== -1 && (
+            <Typography className={css.ProductType} variant="smBold">
               {t('From product type')}
               {': '}
               <i>
                 {
-                  response.specification.products[responseProductIndex]
-                    .originProduct.title
+                  response.specification.products[productIndex].originProduct
+                    .title
                 }
               </i>
             </Typography>
           )}
-        </Box>
+        </div>
       </DFOHeaderContentBox>
     </DFOCardHeader>
   );

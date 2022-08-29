@@ -12,7 +12,7 @@ export default function EditProduct(): React.ReactElement {
 
   const renderNeeds = () => {
     if (specificationProductIndex === -1) {
-      const needs = Utils.findVariantsUsedBySpesification(spec.bank);
+      const needs = Utils.findVariantsUsedBySpecification(spec.bank);
       return needs.map((need) => {
         return <ProductNeed key={need.id} need={need} />;
       });

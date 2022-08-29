@@ -10,6 +10,7 @@ import FileUpload from '../../components/FileUpload/FileUpload';
 import Footer from '../../Footer/Footer';
 import HomeDisplayList from './HomeDisplayList';
 import HomeSearchBar from './HomeSearchBar';
+import PrefilledResponseSelectionModal from './PrefilledResponseSelectionModal';
 import ProjectSelectionModal from './ProjectSelectionModal';
 import ResponseSelectionModal from './ResponseSelectionModal';
 import SpecificationSelectionModal from './SpecificationSelectionModal';
@@ -37,7 +38,9 @@ export default function HomePage(): React.ReactElement {
     selectedSpecification,
     setSelectedSpecification,
     selectedResponse,
-    setSelectedResponse
+    setSelectedResponse,
+    selectedPrefilledResponse,
+    setSelectedPrefilledResponse
   } = useHomeState();
 
   const [latestPublishedProjects, setLatestPublishedProjects] = useState<
@@ -118,7 +121,11 @@ export default function HomePage(): React.ReactElement {
           );
           setSelectedSpecification(httpResponse.data);
         } else {
-          setSelectedResponse(httpResponse.data);
+          if (!httpResponse.data.specification) {
+            setSelectedPrefilledResponse(httpResponse.data);
+          } else {
+            setSelectedResponse(httpResponse.data);
+          }
         }
       })
       .catch(() => {
@@ -176,6 +183,11 @@ export default function HomePage(): React.ReactElement {
       )}
       {selectedResponse && (
         <ResponseSelectionModal selectedResponse={selectedResponse} />
+      )}
+      {selectedPrefilledResponse && (
+        <PrefilledResponseSelectionModal
+          selectedPrefilledResponse={selectedPrefilledResponse}
+        />
       )}
     </div>
   );

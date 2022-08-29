@@ -6,6 +6,7 @@ import { useTranslation } from 'react-i18next';
 
 import css from '../ProductRequirementAnswer.module.scss';
 import HorizontalTextCtrl from '../../../../FormProvider/HorizontalTextCtrl';
+import Nexus from '../../../../Nexus/Nexus';
 import SliderCtrl from '../../../../FormProvider/SliderCtrl';
 import theme from '../../../../theme';
 import Utils from '../../../../common/Utils';
@@ -19,9 +20,8 @@ import { QuestionVariant } from '../../../../Nexus/enums';
 import { IRequirementAnswer } from '../../../../Nexus/entities/IRequirementAnswer';
 import { ISliderQuestion } from '../../../../Nexus/entities/ISliderQuestion';
 import { useAppDispatch, useAppSelector } from '../../../../store/hooks';
-import { useResponseState } from '../../ResponseContext';
 import { useAccordionState } from '../../../../components/DFOAccordion/AccordionContext';
-import Nexus from '../../../../Nexus/Nexus';
+import { useProductIndexState } from '../../../../components/ProductIndexContext/ProductIndexContext';
 
 interface IProps {
   item: ISliderQuestion;
@@ -38,7 +38,7 @@ const QuestionAnswerSlider = ({
   const dispatch = useAppDispatch();
   const nexus = Nexus.getInstance();
   const { response } = useAppSelector((state) => state.response);
-  const { responseProductIndex } = useResponseState();
+  const { productIndex } = useProductIndexState();
   const { setActiveKey } = useAccordionState();
   const [sliderView, setSliderView] = useState(true);
   const options = [
@@ -81,13 +81,13 @@ const QuestionAnswerSlider = ({
       ...parent,
       question: post
     };
-    if (responseProductIndex === -1) {
+    if (productIndex === -1) {
       dispatch(addRequirementAnswer(newAnswer));
     } else {
       dispatch(
         addProductAnswer({
           answer: newAnswer,
-          productId: response.products[responseProductIndex].id
+          productId: response.products[productIndex].id
         })
       );
     }

@@ -1,0 +1,79 @@
+.ProductSelection {
+  ul {
+    border: 0.1rem solid var(--gray-color);
+    background: var(--light-gray-color);
+    width: 100%;
+    padding: var(--small-gap);
+    list-style: none;
+
+    li {
+      display: flex;
+      background: white;
+      margin-top: var(--small-gap);
+
+      &.Deleted {
+        background: repeating-linear-gradient(
+          -55deg,
+          white,
+          white 1rem,
+          var(--light-gray-color) 1rem,
+          var(--light-gray-color) 2rem
+        );
+      }
+
+      &.Product {
+        border: 0.1rem solid var(--gray-color);
+        min-height: 5rem;
+        padding: var(--tiny-gap) 0;
+        cursor: pointer;
+        transition: all 220ms ease-out;
+
+        &:hover {
+          background: var(--link-hover-color);
+          color: white;
+
+          & .MuiSvgIcon-root {
+            color: white;
+          }
+        }
+
+        + li {
+          margin-top: -0.1rem;
+        }
+
+        .Checkbox {
+          display: flex;
+          justify-content: center;
+          align-self: center;
+          align-items: center;
+          width: 2.2rem;
+          height: 2.2rem;
+          margin-right: 0;
+          margin-left: var(--small-gap);
+
+          &:hover span {
+            background: transparent;
+          }
+
+          & .MuiSvgIcon-root {
+            color: var(--primary-light-color);
+            transition: color 220ms ease-out;
+          }
+        }
+
+        .Title {
+          align-self: center;
+          padding-left: var(--small-gap);
+          flex: 1 1 auto;
+        }
+
+        .Description {
+          margin-left: auto;
+          border-left: 0.1rem solid var(--gray-color);
+          padding-left: var(--small-gap);
+          flex: 0 0 30vw;
+        }
+      }
+    }
+  }
+}

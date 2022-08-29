@@ -6,25 +6,25 @@ import css from '../../Stylesheets/Editor.module.scss';
 import DownloadButton from '../Download/DownloadButton';
 import theme from '../../../theme';
 import { ISpecificationProduct } from '../../../Nexus/entities/ISpecificationProduct';
-import { useResponseState } from '../ResponseContext';
 import { useAppSelector } from '../../../store/hooks';
+import { useProductIndexState } from '../../../components/ProductIndexContext/ProductIndexContext';
 
 function ResponseSideBar(): React.ReactElement {
   const { t } = useTranslation();
 
   const { response } = useAppSelector((state) => state.response);
-  const { responseProductIndex, setResponseProductIndex } = useResponseState();
+  const { productIndex, setProductIndex } = useProductIndexState();
 
   const genericPressed = () => {
-    setResponseProductIndex(-1);
+    setProductIndex(-1);
   };
 
   const productPressed = (index: number) => {
-    setResponseProductIndex(index);
+    setProductIndex(index);
   };
 
   const renderProducts = (product: ISpecificationProduct, index: number) => {
-    const isSelected = index === responseProductIndex;
+    const isSelected = productIndex === index;
     return (
       <li
         className={isSelected ? css.Active : undefined}
@@ -51,7 +51,7 @@ function ResponseSideBar(): React.ReactElement {
     <div className={css.SideBar}>
       <ul aria-label="products">
         <li
-          className={responseProductIndex === -1 ? css.Active : undefined}
+          className={productIndex === -1 ? css.Active : undefined}
           key={'generic'}
           onClick={() => genericPressed()}
         >

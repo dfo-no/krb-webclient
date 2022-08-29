@@ -16,7 +16,7 @@ import { QuestionVariant } from '../../../../Nexus/enums';
 import { IRequirementAnswer } from '../../../../Nexus/entities/IRequirementAnswer';
 import { useAccordionState } from '../../../../components/DFOAccordion/AccordionContext';
 import { useAppDispatch, useAppSelector } from '../../../../store/hooks';
-import { useResponseState } from '../../ResponseContext';
+import { useProductIndexState } from '../../../../components/ProductIndexContext/ProductIndexContext';
 
 interface IProps {
   item: IPeriodDateQuestion;
@@ -33,7 +33,7 @@ const QuestionAnswerPeriodDate = ({
   const dispatch = useAppDispatch();
   const nexus = Nexus.getInstance();
   const { response } = useAppSelector((state) => state.response);
-  const { responseProductIndex } = useResponseState();
+  const { productIndex } = useProductIndexState();
   const { setActiveKey } = useAccordionState();
   const methods = useForm<IPeriodDateQuestion>({
     resolver: nexus.resolverService.answerResolver(
@@ -69,13 +69,13 @@ const QuestionAnswerPeriodDate = ({
       ...parent,
       question: post
     };
-    if (responseProductIndex === -1) {
+    if (productIndex === -1) {
       dispatch(addRequirementAnswer(newAnswer));
     } else {
       dispatch(
         addProductAnswer({
           answer: newAnswer,
-          productId: response.products[responseProductIndex].id
+          productId: response.products[productIndex].id
         })
       );
     }

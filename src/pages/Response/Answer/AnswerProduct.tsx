@@ -8,11 +8,11 @@ import { AccordionProvider } from '../../../components/DFOAccordion/AccordionCon
 import { INeed } from '../../../Nexus/entities/INeed';
 import { IRequirementAnswer } from '../../../Nexus/entities/IRequirementAnswer';
 import { useAppSelector } from '../../../store/hooks';
-import { useResponseState } from '../ResponseContext';
+import { useProductIndexState } from '../../../components/ProductIndexContext/ProductIndexContext';
 
 export default function AnswerProduct(): React.ReactElement {
   const { response } = useAppSelector((state) => state.response);
-  const { responseProductIndex } = useResponseState();
+  const { productIndex } = useProductIndexState();
   const existingNeeds = new Set<INeed>();
 
   const renderRequirementAnswer = (
@@ -43,9 +43,9 @@ export default function AnswerProduct(): React.ReactElement {
 
   const renderRequirements = (): (ReactElement | undefined)[] => {
     const specOrProduct =
-      responseProductIndex === -1
+      productIndex === -1
         ? response.specification
-        : response.specification.products[responseProductIndex];
+        : response.specification.products[productIndex];
     return specOrProduct.requirements.map((requirementId, idx) => {
       const requirementAnswer = specOrProduct.requirementAnswers.find(
         (reqAns) => reqAns.requirement.id === requirementId

@@ -1,6 +1,9 @@
 import CustomJoi from '../Joi/CustomJoi';
 import { BaseBankSchema, IBank } from './IBank';
-import { IPrefilledResponseProduct } from './IPrefilledResponseProduct';
+import {
+  IPrefilledResponseProduct,
+  PrefilledResponseProductSchema
+} from './IPrefilledResponseProduct';
 import {
   IRequirementAnswer,
   RequirementAnswerSchema
@@ -10,14 +13,14 @@ export interface IPrefilledResponse {
   bank: IBank;
   supplier: string;
   products: IPrefilledResponseProduct[];
-  // answeredVariants: string[];
+  answeredVariants: string[];
   requirementAnswers: IRequirementAnswer[];
 }
 
 export const BasePrefilledResponseSchema = CustomJoi.object().keys({
   bank: BaseBankSchema,
   supplier: CustomJoi.validateText(),
-  // TODO: change to productSchema when finished refactoring workbench
-  // answeredVariants: CustomJoi.array().items(CustomJoi.string()),
+  products: CustomJoi.validateArray(PrefilledResponseProductSchema),
+  answeredVariants: CustomJoi.validateIdArray(),
   requirementAnswers: CustomJoi.validateUniqueArray(RequirementAnswerSchema)
 });

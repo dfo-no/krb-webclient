@@ -3,7 +3,7 @@ import { Button, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 
 import byggernIllustration from '../../../assets/images/byggern-illustration.svg';
-import css from './NoProducts.module.scss';
+import css from '../../Stylesheets/NoProducts.module.scss';
 import theme from '../../../theme';
 import { useAppSelector } from '../../../store/hooks';
 import { useSpecificationState } from '../SpecificationContext';

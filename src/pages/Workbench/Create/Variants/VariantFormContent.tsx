@@ -8,7 +8,7 @@ import { useParams } from 'react-router-dom';
 import CheckboxCtrl from '../../../../FormProvider/CheckboxCtrl';
 import css from './Variant.module.scss';
 import HorizontalTextCtrl from '../../../../FormProvider/HorizontalTextCtrl';
-import ProductSelection from './ProductSelection';
+import MultipleProductSelection from '../../../../components/ProductSelection/MultipleProductSelection';
 import QuestionsList from './QuestionsList';
 import RadioCtrl from '../../../../FormProvider/RadioCtrl';
 import TextAreaCtrl from '../../../../FormProvider/TextAreaCtrl';
@@ -85,7 +85,12 @@ const VariantFormContent = ({ control }: IProps) => {
           label={`${t('General requirement')}`}
         />
       </Box>
-      {useProduct && <ProductSelection />}
+      {useProduct && (
+        <MultipleProductSelection
+          name={'products'}
+          products={project.products}
+        />
+      )}
       <Typography className={css.TextTitle} variant={'smBold'}>
         {t('How to answer requirement')}
       </Typography>

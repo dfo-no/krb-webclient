@@ -15,6 +15,7 @@ interface DFOAccordionElementProps {
   eventKey: string;
   header: ReactElement;
   body: ReactElement;
+  className?: string;
 }
 
 const useStyles = makeStyles({
@@ -29,7 +30,8 @@ const useStyles = makeStyles({
 export const DFOAccordion = ({
   eventKey,
   header,
-  body
+  body,
+  className = ''
 }: DFOAccordionElementProps): React.ReactElement => {
   const classes = useStyles();
   const { activeKey, setActiveKey } = useAccordionState();
@@ -47,6 +49,7 @@ export const DFOAccordion = ({
       elevation={0}
     >
       <AccordionSummary
+        className={className}
         expandIcon={
           <Box className={classes.expandIcon}>
             <ExpandMoreIcon />

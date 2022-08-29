@@ -81,6 +81,24 @@
     display: flex;
     flex-direction: column;
 
+    .HeaderTop {
+      display: flex;
+      flex-direction: row;
+      padding-bottom: var(--micro-gap);
+      border-bottom: 0.1rem solid;
+    }
+
+    .HeaderBottom {
+      display: flex;
+      flex-direction: row;
+      padding-top: var(--small-gap);
+
+      .ProductType {
+        margin-left: auto;
+        padding-right: var(--normal-gap);
+      }
+    }
+
     .Need {
       background: var(--primary-light-color);
       color: white;

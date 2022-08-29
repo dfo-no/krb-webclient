@@ -85,6 +85,9 @@ export default function Header(): React.ReactElement {
   const { spec } = useAppSelector((state) => state.specification);
   const { response } = useAppSelector((state) => state.response);
   const { specification } = useAppSelector((state) => state.evaluation);
+  const { prefilledResponse } = useAppSelector(
+    (state) => state.prefilledResponse
+  );
 
   const baseUrl = useRouteMatch<{ projectId: string }>('/workbench/:projectId');
   const location = useLocation();
@@ -112,6 +115,8 @@ export default function Header(): React.ReactElement {
   const isSpecification = location.pathname.startsWith('/specification');
   const isResponse = location.pathname.startsWith('/response');
   const isEvaluation = location.pathname.startsWith('/evaluation');
+  const isPrefilledResponse =
+    location.pathname.startsWith('/prefilledresponse');
   const isLocationAdmin = tabName === 'admin';
   const isLocationCreate = tabName === 'create';
   const isLocationPreview = tabName === 'preview';
@@ -152,6 +157,13 @@ export default function Header(): React.ReactElement {
     });
   }
 
+  if (isPrefilledResponse) {
+    breadcrumbs.push({
+      label: t('Prefilled Response'),
+      url: '/prefilledresponse'
+    });
+  }
+
   if (project) {
     breadcrumbs.push({
       label: t('Project'),
@@ -180,16 +192,19 @@ export default function Header(): React.ReactElement {
 
   const getTitle = (): string => {
     if (project) {
-      return project.title;
+      return project.title || t('Project');
     }
     if (isSpecification) {
-      return spec.title;
+      return spec.title || t('Specification');
     }
     if (isResponse) {
-      return response.specification.title;
+      return response.specification.title || t('Response');
     }
     if (isEvaluation) {
       return specification.title || t('Evaluation');
+    }
+    if (isPrefilledResponse) {
+      return prefilledResponse.bank.title || t('Prefilled response');
     }
     return t('app_title');
   };
