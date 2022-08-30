@@ -18,6 +18,7 @@ import StoreService from './services/StoreService';
 import TagService from './services/TagService';
 import VariantService from './services/VariantService';
 import PrefilledResponseService from './services/PrefilledResponseService';
+import QuestionService from './services/QuestionService';
 
 export default class Nexus {
   private static instance: Nexus;
@@ -56,6 +57,8 @@ export default class Nexus {
   public responseService = new ResponseService(this.responseStore);
 
   public evaluationService = new EvaluationService();
+
+  public questionService = new QuestionService();
 
   public resolverService = new ResolverService();
 

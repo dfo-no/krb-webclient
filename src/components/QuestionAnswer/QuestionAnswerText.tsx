@@ -5,18 +5,18 @@ import { useTranslation } from 'react-i18next';
 
 import css from './QuestionAnswer.module.scss';
 import Nexus from '../../Nexus/Nexus';
-import YesNoSelection from '../YesNoSelection/YesNoSelection';
-import { ICheckboxQuestion } from '../../Nexus/entities/ICheckboxQuestion';
+import TextAreaCtrl from '../../FormProvider/TextAreaCtrl';
 import { IRequirementAnswer } from '../../Nexus/entities/IRequirementAnswer';
+import { ITextQuestion } from '../../Nexus/entities/ITextQuestion';
 import { QuestionVariant } from '../../Nexus/enums';
 
 interface IProps {
-  item: ICheckboxQuestion;
+  item: ITextQuestion;
   existingAnswer?: IRequirementAnswer;
-  onSubmit: (post: ICheckboxQuestion) => void;
+  onSubmit: (post: ITextQuestion) => void;
 }
 
-const QuestionAnswerCheckbox = ({
+const QuestionAnswerText = ({
   item,
   existingAnswer,
   onSubmit
@@ -24,15 +24,15 @@ const QuestionAnswerCheckbox = ({
   const { t } = useTranslation();
   const nexus = Nexus.getInstance();
 
-  const methods = useForm<ICheckboxQuestion>({
-    resolver: nexus.resolverService.answerResolver(QuestionVariant.Q_CHECKBOX),
+  const methods = useForm<ITextQuestion>({
+    resolver: nexus.resolverService.answerResolver(QuestionVariant.Q_TEXT),
     defaultValues: item
   });
 
   useEffect(() => {
     if (
       existingAnswer &&
-      existingAnswer.question.type === QuestionVariant.Q_CHECKBOX
+      existingAnswer.question.type === QuestionVariant.Q_TEXT
     ) {
       methods.reset(existingAnswer.question);
     }
@@ -46,9 +46,10 @@ const QuestionAnswerCheckbox = ({
           autoComplete="off"
           noValidate
         >
-          <YesNoSelection
-            name={'answer.value'}
-            recommendedAlternative={item.config.preferedAlternative}
+          <TextAreaCtrl
+            name={'answer.text'}
+            placeholder={t('Answer')}
+            rows={10}
           />
           <Box className={css.Buttons}>
             <Button
@@ -68,4 +69,4 @@ const QuestionAnswerCheckbox = ({
   );
 };
 
-export default QuestionAnswerCheckbox;
+export default QuestionAnswerText;

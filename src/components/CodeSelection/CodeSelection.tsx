@@ -2,7 +2,7 @@ import React from 'react';
 import { Controller } from 'react-hook-form';
 import { List, ListItem, Typography, Box } from '@mui/material';
 
-import css from '../../pages/Response/Answer/QuestionAnswer/Selection.module.scss';
+import css from './Selection.module.scss';
 import { DFOCheckbox } from '../DFOCheckbox/DFOCheckbox';
 import { ICode } from '../../Nexus/entities/ICode';
 import { ICodelist } from '../../Nexus/entities/ICodelist';

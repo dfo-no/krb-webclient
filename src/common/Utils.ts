@@ -139,11 +139,11 @@ class Utils {
       return 0;
     }
 
-    const topMandatory = config.codes
+    const topMandatory = (config.codes ?? [])
       .filter((selection) => selection.mandatory)
       .sort((a, b) => b.score - a.score)
       .slice(0, config.optionalCodeMinAmount);
-    const topRest = config.codes
+    const topRest = (config.codes ?? [])
       .filter(
         (selection) =>
           !topMandatory.some(
