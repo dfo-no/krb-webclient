@@ -2,6 +2,10 @@ import Alert from '@mui/material/Alert';
 import React from 'react';
 import { FieldError, FieldErrors } from 'react-hook-form';
 
+/*
+ * Test class used to show errormessages under development
+ */
+
 function isFieldError(object: unknown): object is FieldError {
   return (
     Object.prototype.hasOwnProperty.call(object, 'message') &&

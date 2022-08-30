@@ -59,23 +59,6 @@ describe('Utils functions should work', () => {
     expect(leveled.length).toBe(7);
   });
 
-  test('Utils.truncate', () => {
-    expect(Utils.truncate(undefined)).toEqual('');
-
-    // Possible bug: integer variable is included in the total: Expected result could be 'abcde$'
-    expect(Utils.truncate('abcdefghijk', 5, '$')).toEqual('abcd$');
-
-    // Possible bug: emojii is two bytes, and is included in the integer. Expected result should be 'abcde⚛️'
-    expect(Utils.truncate('abcdefghijk', 5, '⚛️')).toEqual('abc⚛️');
-  });
-
-  test('Utils.capitalizeFirstLetter', () => {
-    expect(Utils.capitalizeFirstLetter('bobbo')).toEqual('Bobbo');
-    expect(Utils.capitalizeFirstLetter('A')).toEqual('A');
-    expect(Utils.capitalizeFirstLetter('a')).toEqual('A');
-    expect(Utils.capitalizeFirstLetter('')).toEqual('');
-  });
-
   it('Utils.getNextIndexAfterDelete', () => {
     const ary1 = ['a'];
     const foundIndex1 = ary1.findIndex((n) => n === 'a');

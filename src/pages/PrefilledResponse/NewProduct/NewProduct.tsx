@@ -16,7 +16,7 @@ import Nexus from '../../../Nexus/Nexus';
 import NeedList from '../../../components/NeedList/NeedList';
 import ProductSelection from '../../../components/ProductSelection/ProductSelection';
 import theme from '../../../theme';
-import { addProduct } from '../../../store/reducers/PrefilledResponseReducer';
+import { addProduct } from '../../../store/reducers/prefilled-response-reducer';
 import { DFORadio } from '../../../components/DFORadio/DFORadio';
 import { IPrefilledResponseProduct } from '../../../Nexus/entities/IPrefilledResponseProduct';
 import { IProduct } from '../../../Nexus/entities/IProduct';

@@ -2,7 +2,6 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 import SpecificationStoreService from '../../Nexus/services/SpecificationStoreService';
 import Utils from '../../common/Utils';
-import { IBank } from '../../Nexus/entities/IBank';
 import { IRequirementAnswer } from '../../Nexus/entities/IRequirementAnswer';
 import { ISpecification } from '../../Nexus/entities/ISpecification';
 import { ISpecificationProduct } from '../../Nexus/entities/ISpecificationProduct';
@@ -21,12 +20,6 @@ const specificationSlice = createSlice({
   reducers: {
     setSpecification(state, { payload }: PayloadAction<ISpecification>) {
       state.spec = payload;
-    },
-    editTitle(state, { payload }: PayloadAction<string>) {
-      state.spec.title = payload;
-    },
-    setBank(state, { payload }: PayloadAction<IBank>) {
-      state.spec.bank = payload;
     },
     addProduct(
       state,
@@ -69,23 +62,6 @@ const specificationSlice = createSlice({
         state.spec.products[index].requirementAnswers.splice(oldSelectIndex, 1);
       }
       state.spec.products[index].requirementAnswers.push(payload.answer);
-    },
-    editProductAnswer(
-      state,
-      {
-        payload
-      }: PayloadAction<{ answer: IRequirementAnswer; productId: string }>
-    ) {
-      const productIndex = Utils.ensure(
-        state.spec.products.findIndex(
-          (product) => product.id === payload.productId
-        )
-      );
-      const index = state.spec.products[
-        productIndex
-      ].requirementAnswers.findIndex((req) => req.id === payload.answer.id);
-      state.spec.products[productIndex].requirementAnswers[index] =
-        payload.answer;
     },
     deleteProductAnswer(
       state,
@@ -142,15 +118,6 @@ const specificationSlice = createSlice({
       }
       state.spec.requirementAnswers.push(payload.answer);
     },
-    editAnswer(
-      state,
-      { payload }: PayloadAction<{ answer: IRequirementAnswer }>
-    ) {
-      const index = state.spec.requirementAnswers.findIndex(
-        (req) => req.id === payload.answer.id
-      );
-      state.spec.requirementAnswers[index] = payload.answer;
-    },
 
     deleteAnswer(state, { payload }: PayloadAction<{ answer: string }>) {
       const index = state.spec.requirementAnswers.findIndex(
@@ -175,15 +142,11 @@ export const {
   addRequirement,
   removeRequirement,
   setSpecification,
-  editTitle,
-  setBank,
   addProductAnswer,
   addProductRequirement,
   removeProductRequirement,
   deleteProductAnswer,
-  deleteAnswer,
-  editAnswer,
-  editProductAnswer
+  deleteAnswer
 } = specificationSlice.actions;
 
 export default specificationSlice.reducer;

@@ -4,7 +4,6 @@ import { Route } from 'react-router';
 import css from './Admin.module.scss';
 import AdminSideBar from './AdminSideBar';
 import CodelistGuard from './Codelist/CodelistGuard';
-import InheritancePage from './Inheritance/InheritancePage';
 import ProductGuard from './Product/ProductGuard';
 import PropertiesPage from './Properties/PropertiesPage';
 import PublicationsPage from './Publications/PublicationsPage';
@@ -26,9 +25,6 @@ export default function AdminGuard(): React.ReactElement {
         </Route>
         <Route exact path="/workbench/:projectId/admin/products">
           <ProductGuard />
-        </Route>
-        <Route exact path="/workbench/:projectId/admin/inheritance">
-          <InheritancePage />
         </Route>
         <Route exact path="/workbench/:projectId/admin/properties">
           <PropertiesPage />

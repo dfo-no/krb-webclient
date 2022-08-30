@@ -15,7 +15,7 @@ import {
   ModalButton
 } from '../../components/ModalBox/ModalBox';
 import { ModelType } from '../../Nexus/enums';
-import { setSpecification } from '../../store/reducers/spesification-reducer';
+import { setSpecification } from '../../store/reducers/specification-reducer';
 import { useAppDispatch } from '../../store/hooks';
 
 interface IProps {

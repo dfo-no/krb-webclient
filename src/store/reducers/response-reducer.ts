@@ -1,11 +1,8 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 import Utils from '../../common/Utils';
-import { IBank } from '../../Nexus/entities/IBank';
 import { IRequirementAnswer } from '../../Nexus/entities/IRequirementAnswer';
 import { IResponse } from '../../Nexus/entities/IResponse';
-import { IResponseProduct } from '../../Nexus/entities/IResponseProduct';
-import { ISpecification } from '../../Nexus/entities/ISpecification';
 import { ModelType } from '../../Nexus/enums';
 
 interface IResponseState {
@@ -54,15 +51,6 @@ const responseSlice = createSlice({
     setResponse(state, { payload }: PayloadAction<IResponse>) {
       state.response = payload;
     },
-    setResponseSpecification(
-      state,
-      { payload }: PayloadAction<ISpecification>
-    ) {
-      state.response.specification = payload;
-    },
-    editSupplier(state, { payload }: PayloadAction<string>) {
-      state.response.supplier = payload;
-    },
     addRequirementAnswer(
       state,
       { payload }: PayloadAction<IRequirementAnswer>
@@ -78,18 +66,6 @@ const responseSlice = createSlice({
         state.response.requirementAnswers.splice(oldSelectIndex, 1);
       }
       state.response.requirementAnswers.push(payload);
-    },
-    setRequirementAnswers(
-      state,
-      { payload }: PayloadAction<IRequirementAnswer[]>
-    ) {
-      state.response.requirementAnswers = payload;
-    },
-    setBank(state, { payload }: PayloadAction<IBank>) {
-      state.response.specification.bank = payload;
-    },
-    addProduct(state, { payload }: PayloadAction<IResponseProduct>) {
-      state.response.products.push(payload);
     },
     addProductAnswer(
       state,
@@ -118,38 +94,11 @@ const responseSlice = createSlice({
         );
       }
       state.response.products[index].requirementAnswers.push(payload.answer);
-    },
-    editProduct(
-      state,
-      {
-        payload
-      }: PayloadAction<{ product: IResponseProduct; productIndex: number }>
-    ) {
-      state.response.products[payload.productIndex] = payload.product;
-    },
-    setProductRequirementAnswers(
-      state,
-      {
-        payload
-      }: PayloadAction<{ answers: IRequirementAnswer[]; productIndex: number }>
-    ) {
-      state.response.products[payload.productIndex].requirementAnswers =
-        payload.answers;
     }
   }
 });
 
-export const {
-  setResponseSpecification,
-  editSupplier,
-  setBank,
-  addProduct,
-  editProduct,
-  setResponse,
-  addRequirementAnswer,
-  addProductAnswer,
-  setRequirementAnswers,
-  setProductRequirementAnswers
-} = responseSlice.actions;
+export const { setResponse, addRequirementAnswer, addProductAnswer } =
+  responseSlice.actions;
 
 export default responseSlice.reducer;
