@@ -12,7 +12,11 @@ export default function NewProductHeader(): React.ReactElement {
   return (
     <DFOCardHeader>
       <DFOHeaderContentBox className={css.HeaderContent}>
-        <HorizontalTextCtrl name="title" placeholder={t('Name of product')} />
+        <HorizontalTextCtrl
+          name="title"
+          placeholder={t('Name of product')}
+          autoFocus
+        />
         <HorizontalTextCtrl
           name="description"
           placeholder={t('Description of the product')}

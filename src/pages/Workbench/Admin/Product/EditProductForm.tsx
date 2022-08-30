@@ -57,7 +57,12 @@ export default function EditProductForm({
         noValidate
       >
         <FormItemBox>
-          <VerticalTextCtrl name="title" label={t('Title')} placeholder={''} />
+          <VerticalTextCtrl
+            name="title"
+            label={t('Title')}
+            placeholder={''}
+            autoFocus
+          />
           <VerticalTextCtrl
             name="description"
             label={t('Description')}
