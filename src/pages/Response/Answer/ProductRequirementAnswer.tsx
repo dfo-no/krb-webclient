@@ -4,7 +4,7 @@ import { t } from 'i18next';
 
 import ChosenAnswer from './ChosenAnswer';
 import css from './ProductRequirementAnswer.module.scss';
-import ProductQuestionAnswer from './QuestionAnswer/ProductQuestionAnswer';
+import ProductQuestionAnswer from './ProductQuestionAnswer';
 import ProductVariant from './ProductVariant';
 import TextUtils from '../../../common/TextUtils';
 import theme from '../../../theme';

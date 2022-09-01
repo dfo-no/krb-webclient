@@ -5,18 +5,18 @@ import { useTranslation } from 'react-i18next';
 
 import css from './QuestionAnswer.module.scss';
 import Nexus from '../../Nexus/Nexus';
-import YesNoSelection from '../YesNoSelection/YesNoSelection';
-import { ICheckboxQuestion } from '../../Nexus/entities/ICheckboxQuestion';
+import TimeCtrl from '../../FormProvider/TimeCtrl';
 import { IRequirementAnswer } from '../../Nexus/entities/IRequirementAnswer';
+import { ITimeQuestion } from '../../Nexus/entities/ITimeQuestion';
 import { QuestionVariant } from '../../Nexus/enums';
 
 interface IProps {
-  item: ICheckboxQuestion;
+  item: ITimeQuestion;
   existingAnswer?: IRequirementAnswer;
-  onSubmit: (post: ICheckboxQuestion) => void;
+  onSubmit: (post: ITimeQuestion) => void;
 }
 
-const QuestionAnswerCheckbox = ({
+const QuestionAnswerTime = ({
   item,
   existingAnswer,
   onSubmit
@@ -24,15 +24,15 @@ const QuestionAnswerCheckbox = ({
   const { t } = useTranslation();
   const nexus = Nexus.getInstance();
 
-  const methods = useForm<ICheckboxQuestion>({
-    resolver: nexus.resolverService.answerResolver(QuestionVariant.Q_CHECKBOX),
+  const methods = useForm<ITimeQuestion>({
+    resolver: nexus.resolverService.answerResolver(QuestionVariant.Q_TIME),
     defaultValues: item
   });
 
   useEffect(() => {
     if (
       existingAnswer &&
-      existingAnswer.question.type === QuestionVariant.Q_CHECKBOX
+      existingAnswer.question.type === QuestionVariant.Q_TIME
     ) {
       methods.reset(existingAnswer.question);
     }
@@ -46,9 +46,10 @@ const QuestionAnswerCheckbox = ({
           autoComplete="off"
           noValidate
         >
-          <YesNoSelection
-            name={'answer.value'}
-            recommendedAlternative={item.config.preferedAlternative}
+          <TimeCtrl
+            minTime={item.config.fromBoundary ?? undefined}
+            maxTime={item.config.toBoundary ?? undefined}
+            name={'answer.fromTime'}
           />
           <Box className={css.Buttons}>
             <Button
@@ -68,4 +69,4 @@ const QuestionAnswerCheckbox = ({
   );
 };
 
-export default QuestionAnswerCheckbox;
+export default QuestionAnswerTime;

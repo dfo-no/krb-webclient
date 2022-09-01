@@ -26,19 +26,5 @@
     .title {
       margin-bottom: var(--tiny-gap);
     }
-
-    .buttons {
-      display: flex;
-      flex-direction: row;
-      margin-top: var(--small-gap);
-
-      .cancel {
-        margin-left: auto;
-      }
-
-      .save {
-        margin-left: var(--small-gap);
-      }
-    }
   }
 }

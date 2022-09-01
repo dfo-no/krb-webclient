@@ -1,5 +1,6 @@
 import React from 'react';
 
+import Nexus from '../../../Nexus/Nexus';
 import QuestionAnswerCheckbox from '../../../components/QuestionAnswer/QuestionAnswerCheckbox';
 import QuestionAnswerCodelist from '../../../components/QuestionAnswer/QuestionAnswerCodelist';
 import QuestionAnswerPeriodDate from '../../../components/QuestionAnswer/QuestionAnswerPeriodDate';
@@ -8,8 +9,8 @@ import QuestionAnswerText from '../../../components/QuestionAnswer/QuestionAnswe
 import QuestionAnswerTime from '../../../components/QuestionAnswer/QuestionAnswerTime';
 import {
   addProductAnswer,
-  addAnswer
-} from '../../../store/reducers/PrefilledResponseReducer';
+  addRequirementAnswer
+} from '../../../store/reducers/response-reducer';
 import { IRequirementAnswer } from '../../../Nexus/entities/IRequirementAnswer';
 import { QuestionType } from '../../../models/QuestionType';
 import { QuestionVariant } from '../../../Nexus/enums';
@@ -22,29 +23,35 @@ interface IProps {
   existingAnswer?: IRequirementAnswer;
 }
 
-export default function QuestionAnswer({
+export default function ProductQuestionAnswer({
   requirementAnswer,
   existingAnswer
 }: IProps): React.ReactElement {
   const dispatch = useAppDispatch();
-  const { prefilledResponse } = useAppSelector(
-    (state) => state.prefilledResponse
-  );
+  const { response } = useAppSelector((state) => state.response);
+  const nexus = Nexus.getInstance();
   const { productIndex } = useProductIndexState();
   const { setActiveKey } = useAccordionState();
 
   const onSubmit = (post: QuestionType): void => {
+    const calulatedPoints = {
+      ...post,
+      answer: {
+        ...post.answer,
+        point: nexus.questionService.calculatePoints(post)
+      }
+    } as QuestionType;
     const newAnswer = {
       ...requirementAnswer,
-      question: post
+      question: calulatedPoints
     };
     if (productIndex === -1) {
-      dispatch(addAnswer(newAnswer));
+      dispatch(addRequirementAnswer(newAnswer));
     } else {
       dispatch(
         addProductAnswer({
           answer: newAnswer,
-          productId: prefilledResponse.products[productIndex].id
+          productId: response.products[productIndex].id
         })
       );
     }
@@ -62,7 +69,7 @@ export default function QuestionAnswer({
       );
     case QuestionVariant.Q_CODELIST:
       const codelistId = requirementAnswer.question.config.codelist;
-      const codelist = prefilledResponse.bank.codelist.find(
+      const codelist = response.specification.bank.codelist.find(
         (cl) => cl.id === codelistId
       );
       return (

@@ -1,42 +1,51 @@
 import React, { useEffect } from 'react';
-import { Box, Button } from '@mui/material';
+import { Box, Button, Typography } from '@mui/material';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
+import CodeSelection from '../CodeSelection/CodeSelection';
 import css from './QuestionAnswer.module.scss';
 import Nexus from '../../Nexus/Nexus';
-import YesNoSelection from '../YesNoSelection/YesNoSelection';
-import { ICheckboxQuestion } from '../../Nexus/entities/ICheckboxQuestion';
+import { ICodelist } from '../../Nexus/entities/ICodelist';
+import { ICodelistQuestion } from '../../Nexus/entities/ICodelistQuestion';
 import { IRequirementAnswer } from '../../Nexus/entities/IRequirementAnswer';
 import { QuestionVariant } from '../../Nexus/enums';
 
 interface IProps {
-  item: ICheckboxQuestion;
+  item: ICodelistQuestion;
   existingAnswer?: IRequirementAnswer;
-  onSubmit: (post: ICheckboxQuestion) => void;
+  onSubmit: (post: ICodelistQuestion) => void;
+  codelist?: ICodelist;
 }
 
-const QuestionAnswerCheckbox = ({
+const QuestionAnswerCodelist = ({
   item,
   existingAnswer,
-  onSubmit
+  onSubmit,
+  codelist
 }: IProps): React.ReactElement => {
   const { t } = useTranslation();
   const nexus = Nexus.getInstance();
 
-  const methods = useForm<ICheckboxQuestion>({
-    resolver: nexus.resolverService.answerResolver(QuestionVariant.Q_CHECKBOX),
+  const methods = useForm<ICodelistQuestion>({
+    resolver: nexus.resolverService.answerResolver(QuestionVariant.Q_CODELIST),
     defaultValues: item
   });
 
   useEffect(() => {
     if (
       existingAnswer &&
-      existingAnswer.question.type === QuestionVariant.Q_CHECKBOX
+      existingAnswer.question.type === QuestionVariant.Q_CODELIST
     ) {
       methods.reset(existingAnswer.question);
     }
   }, [existingAnswer, methods]);
+
+  const getInfoText = () => {
+    return `${t('RESP_ANS_CODELIST_INFO_MIN')} ${
+      item.config.optionalCodeMinAmount
+    }, ${t('RESP_ANS_CODELIST_INFO_MAX')} ${item.config.optionalCodeMaxAmount}`;
+  };
 
   return (
     <div className={css.QuestionAnswer}>
@@ -46,10 +55,14 @@ const QuestionAnswerCheckbox = ({
           autoComplete="off"
           noValidate
         >
-          <YesNoSelection
-            name={'answer.value'}
-            recommendedAlternative={item.config.preferedAlternative}
-          />
+          <Typography variant={'sm'}>{getInfoText()}</Typography>
+          {codelist && (
+            <CodeSelection
+              name={'answer.codes'}
+              codelist={codelist}
+              codeSelection={item.config.codes}
+            />
+          )}
           <Box className={css.Buttons}>
             <Button
               variant="cancel"
@@ -68,4 +81,4 @@ const QuestionAnswerCheckbox = ({
   );
 };
 
-export default QuestionAnswerCheckbox;
+export default QuestionAnswerCodelist;

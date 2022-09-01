@@ -8,6 +8,7 @@ import { ISliderQuestion } from '../entities/ISliderQuestion';
 import { ITextQuestion } from '../entities/ITextQuestion';
 import { ITimeQuestion } from '../entities/ITimeQuestion';
 import { QuestionVariant } from '../enums';
+import { QuestionType } from '../../models/QuestionType';
 
 export default class QuestionService {
   UuidService = new UuidService();
@@ -164,6 +165,39 @@ export default class QuestionService {
         return q7;
       default:
         Utils.assertUnreachable(type);
+    }
+  };
+
+  calculatePoints = (question: QuestionType): number => {
+    switch (question.type) {
+      case QuestionVariant.Q_CHECKBOX:
+        const preferred = `${question.config.preferedAlternative}`;
+        const newAnswer = `${question.answer}`;
+        return preferred === newAnswer
+          ? 100
+          : question.config.pointsNonPrefered;
+      case QuestionVariant.Q_CODELIST:
+        return Utils.findScoreFromCodes(question.answer.codes, question.config);
+      case QuestionVariant.Q_PERIOD_DATE:
+        return Utils.findScoreFromDate(
+          question.answer.fromDate,
+          question.config.dateScores
+        );
+      case QuestionVariant.Q_SLIDER:
+        return Utils.findScoreFromValue(
+          question.answer.value,
+          question.config.scoreValues
+        );
+      case QuestionVariant.Q_TEXT:
+        return question.answer.text.length > 0 ? 100 : 0;
+      case QuestionVariant.Q_TIME:
+        return Utils.findScoreFromTime(
+          question.answer.fromTime,
+          question.config.timeScores
+        );
+      case QuestionVariant.Q_FILEUPLOAD:
+      default:
+        return 0;
     }
   };
 }

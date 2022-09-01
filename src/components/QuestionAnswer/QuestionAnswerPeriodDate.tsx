@@ -4,19 +4,19 @@ import { FormProvider, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
 import css from './QuestionAnswer.module.scss';
+import DateCtrl from '../../FormProvider/DateCtrl';
 import Nexus from '../../Nexus/Nexus';
-import YesNoSelection from '../YesNoSelection/YesNoSelection';
-import { ICheckboxQuestion } from '../../Nexus/entities/ICheckboxQuestion';
+import { IPeriodDateQuestion } from '../../Nexus/entities/IPeriodDateQuestion';
 import { IRequirementAnswer } from '../../Nexus/entities/IRequirementAnswer';
 import { QuestionVariant } from '../../Nexus/enums';
 
 interface IProps {
-  item: ICheckboxQuestion;
+  item: IPeriodDateQuestion;
   existingAnswer?: IRequirementAnswer;
-  onSubmit: (post: ICheckboxQuestion) => void;
+  onSubmit: (post: IPeriodDateQuestion) => void;
 }
 
-const QuestionAnswerCheckbox = ({
+const QuestionAnswerPeriodDate = ({
   item,
   existingAnswer,
   onSubmit
@@ -24,15 +24,17 @@ const QuestionAnswerCheckbox = ({
   const { t } = useTranslation();
   const nexus = Nexus.getInstance();
 
-  const methods = useForm<ICheckboxQuestion>({
-    resolver: nexus.resolverService.answerResolver(QuestionVariant.Q_CHECKBOX),
+  const methods = useForm<IPeriodDateQuestion>({
+    resolver: nexus.resolverService.answerResolver(
+      QuestionVariant.Q_PERIOD_DATE
+    ),
     defaultValues: item
   });
 
   useEffect(() => {
     if (
       existingAnswer &&
-      existingAnswer.question.type === QuestionVariant.Q_CHECKBOX
+      existingAnswer.question.type === QuestionVariant.Q_PERIOD_DATE
     ) {
       methods.reset(existingAnswer.question);
     }
@@ -46,9 +48,10 @@ const QuestionAnswerCheckbox = ({
           autoComplete="off"
           noValidate
         >
-          <YesNoSelection
-            name={'answer.value'}
-            recommendedAlternative={item.config.preferedAlternative}
+          <DateCtrl
+            minDate={item.config.fromBoundary ?? undefined}
+            maxDate={item.config.toBoundary ?? undefined}
+            name={'answer.fromDate'}
           />
           <Box className={css.Buttons}>
             <Button
@@ -68,4 +71,4 @@ const QuestionAnswerCheckbox = ({
   );
 };
 
-export default QuestionAnswerCheckbox;
+export default QuestionAnswerPeriodDate;
