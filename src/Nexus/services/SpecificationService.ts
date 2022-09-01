@@ -7,7 +7,7 @@ import { IRequirementAnswer } from '../entities/IRequirementAnswer';
 import { ISpecification } from '../entities/ISpecification';
 import { ISpecificationProduct } from '../entities/ISpecificationProduct';
 import { ModelType, QuestionVariant, Weighting } from '../enums';
-import { QuestionType } from '../../models/QuestionType';
+import { QuestionType } from '../entities/QuestionType';
 
 export default class SpecificationService {
   UuidService = new UuidService();

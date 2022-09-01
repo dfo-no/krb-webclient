@@ -3,7 +3,7 @@ import { Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 
 import CodeSelection from '../../../../components/CodeSelection/CodeSelection';
-import { FlexColumnBox } from '../../../../components/FlexBox/FlexColumnBox';
+import css from '../QuestionContent.module.scss';
 import { ICodelistQuestion } from '../../../../Nexus/entities/ICodelistQuestion';
 import { useAppSelector } from '../../../../store/hooks';
 
@@ -19,12 +19,12 @@ const QuestionAnswerCodelist = ({ item }: IProps): ReactElement => {
   );
 
   return (
-    <FlexColumnBox>
+    <div className={css.QuestionFlex}>
       <Typography variant={'smBold'}>{t('Answer')}</Typography>
       {codelist && (
         <CodeSelection name={'question.answer.codes'} codelist={codelist} />
       )}
-    </FlexColumnBox>
+    </div>
   );
 };
 

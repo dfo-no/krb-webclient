@@ -1,3 +1,3 @@
-import { QuestionType } from './QuestionType';
+import { QuestionType } from '../Nexus/entities/QuestionType';
 
 export type QuestionTypes = Array<QuestionType>;
