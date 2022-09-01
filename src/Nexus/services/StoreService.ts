@@ -2,7 +2,7 @@
 /* eslint-disable class-methods-use-this */
 import produce from 'immer';
 import { Parentable } from '../../models/Parentable';
-import { QuestionType } from '../../models/QuestionType';
+import { QuestionType } from '../entities/QuestionType';
 import { IBank } from '../entities/IBank';
 import { ICode } from '../entities/ICode';
 import { ICodelist } from '../entities/ICodelist';

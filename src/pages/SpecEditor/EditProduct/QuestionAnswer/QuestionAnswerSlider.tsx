@@ -2,8 +2,8 @@ import React, { ReactElement, useEffect, useState } from 'react';
 import { Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 
+import css from '../QuestionContent.module.scss';
 import SliderCtrl from '../../../../FormProvider/SliderCtrl';
-import { FlexColumnBox } from '../../../../components/FlexBox/FlexColumnBox';
 import { IMark } from '../../../../Nexus/entities/IMark';
 import { IRequirementAnswer } from '../../../../Nexus/entities/IRequirementAnswer';
 import { ISliderQuestion } from '../../../../Nexus/entities/ISliderQuestion';
@@ -29,7 +29,7 @@ const QuestionAnswerSlider = ({ item }: IProps): ReactElement => {
   }, [useAnswer, item.config.unit]);
 
   return (
-    <FlexColumnBox>
+    <div className={css.QuestionFlex}>
       <Typography variant={'smBold'}>{t('Answer')}</Typography>
       <SliderCtrl
         name={'question.answer.value'}
@@ -39,7 +39,7 @@ const QuestionAnswerSlider = ({ item }: IProps): ReactElement => {
         showValue={false}
         marks={sliderMark}
       />
-    </FlexColumnBox>
+    </div>
   );
 };
 

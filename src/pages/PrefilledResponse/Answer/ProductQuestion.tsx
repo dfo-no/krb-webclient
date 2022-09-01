@@ -10,7 +10,7 @@ import { DFOAccordion } from '../../../components/DFOAccordion/DFOAccordion';
 import { IRequirement } from '../../../Nexus/entities/IRequirement';
 import { IRequirementAnswer } from '../../../Nexus/entities/IRequirementAnswer';
 import { IVariant } from '../../../Nexus/entities/IVariant';
-import { QuestionType } from '../../../models/QuestionType';
+import { QuestionType } from '../../../Nexus/entities/QuestionType';
 import { useAppSelector } from '../../../store/hooks';
 import { useProductIndexState } from '../../../components/ProductIndexContext/ProductIndexContext';
 

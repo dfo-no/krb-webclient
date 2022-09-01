@@ -15,7 +15,7 @@ import { IVariant } from '../Nexus/entities/IVariant';
 import { Levelable } from '../models/Levelable';
 import { Nestable } from '../models/Nestable';
 import { Parentable } from '../models/Parentable';
-import { QuestionType } from '../models/QuestionType';
+import { QuestionType } from '../Nexus/entities/QuestionType';
 import { QuestionVariant } from '../Nexus/enums';
 import { ScoreValuePair } from '../Nexus/entities/ISliderQuestion';
 import { TimeScorePair } from '../Nexus/entities/ITimeQuestion';

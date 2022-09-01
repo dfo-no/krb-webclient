@@ -5,6 +5,7 @@ import { IBank } from '../Nexus/entities/IBank';
 import { ICheckboxQuestion } from '../Nexus/entities/ICheckboxQuestion';
 import { ICodelist } from '../Nexus/entities/ICodelist';
 import { ICodelistQuestion } from '../Nexus/entities/ICodelistQuestion';
+import { IConfirmationQuestion } from '../Nexus/entities/IConfirmationQuestion';
 import { IFileUploadQuestion } from '../Nexus/entities/IFileUploadQuestion';
 import { IPeriodDateQuestion } from '../Nexus/entities/IPeriodDateQuestion';
 import { ISliderQuestion } from '../Nexus/entities/ISliderQuestion';
@@ -21,18 +22,20 @@ class TextUtils {
     switch (reqAnswer.question.type) {
       case QuestionVariant.Q_CHECKBOX:
         return TextUtils.getCheckboxAnswer(reqAnswer.question);
+      case QuestionVariant.Q_CODELIST:
+        return TextUtils.getCodelistAnswer(reqAnswer.question, bank);
+      case QuestionVariant.Q_CONFIRMATION:
+        return TextUtils.getConfirmationAnswer(reqAnswer.question);
+      case QuestionVariant.Q_FILEUPLOAD:
+        return TextUtils.getFileUploadAnswer(reqAnswer.question);
+      case QuestionVariant.Q_PERIOD_DATE:
+        return TextUtils.getDateAnswer(reqAnswer.question);
       case QuestionVariant.Q_SLIDER:
         return TextUtils.getSliderAnswer(reqAnswer.question);
       case QuestionVariant.Q_TEXT:
         return TextUtils.getTextAnswer(reqAnswer.question);
-      case QuestionVariant.Q_CODELIST:
-        return TextUtils.getCodelistAnswer(reqAnswer.question, bank);
-      case QuestionVariant.Q_PERIOD_DATE:
-        return TextUtils.getDateAnswer(reqAnswer.question);
       case QuestionVariant.Q_TIME:
         return TextUtils.getTimeAnswer(reqAnswer.question);
-      case QuestionVariant.Q_FILEUPLOAD:
-        return TextUtils.getFileUploadAnswer(reqAnswer.question);
     }
     return '';
   };
@@ -42,20 +45,22 @@ class TextUtils {
     bank: IBank
   ): string => {
     switch (reqAnswer.question.type) {
-      case QuestionVariant.Q_TEXT:
-        return TextUtils.getTextConfig();
       case QuestionVariant.Q_CHECKBOX:
         return TextUtils.getCheckboxConfig(reqAnswer.question);
-      case QuestionVariant.Q_SLIDER:
-        return TextUtils.getSliderConfig(reqAnswer.question);
       case QuestionVariant.Q_CODELIST:
         return TextUtils.getCodelistConfig(reqAnswer.question, bank);
-      case QuestionVariant.Q_PERIOD_DATE:
-        return TextUtils.getDateConfig(reqAnswer.question);
-      case QuestionVariant.Q_TIME:
-        return TextUtils.getTimeConfig(reqAnswer.question);
+      case QuestionVariant.Q_CONFIRMATION:
+        return TextUtils.getConfirmationConfig(reqAnswer.question);
       case QuestionVariant.Q_FILEUPLOAD:
         return TextUtils.getFileUploadConfig(reqAnswer.question);
+      case QuestionVariant.Q_PERIOD_DATE:
+        return TextUtils.getDateConfig(reqAnswer.question);
+      case QuestionVariant.Q_SLIDER:
+        return TextUtils.getSliderConfig(reqAnswer.question);
+      case QuestionVariant.Q_TEXT:
+        return TextUtils.getTextConfig();
+      case QuestionVariant.Q_TIME:
+        return TextUtils.getTimeConfig(reqAnswer.question);
     }
   };
 
@@ -76,6 +81,12 @@ class TextUtils {
 
   private static getCheckboxAnswer = (question: ICheckboxQuestion): string => {
     return question.answer.value ? t('Yes') : t('No');
+  };
+
+  private static getConfirmationAnswer = (
+    question: IConfirmationQuestion
+  ): string => {
+    return question.answer.value ? t('Confirmed') : t('Not confirmed');
   };
 
   private static getSliderAnswer = (question: ISliderQuestion): string => {
@@ -128,6 +139,13 @@ class TextUtils {
     return `${preferedAlternative ? t('Yes') : t('No')} 100 ${t('Score')}, ${
       preferedAlternative ? t('No') : t('Yes')
     } ${pointsNonPrefered} ${t('Score')}`;
+  };
+
+  private static getConfirmationConfig = (
+    question: IConfirmationQuestion
+  ): string => {
+    const pointsUnconfirmed = question.config.pointsUnconfirmed;
+    return `${t('Score for unconfirmed')}: ${pointsUnconfirmed}`;
   };
 
   private static getSliderConfig = (question: ISliderQuestion): string => {

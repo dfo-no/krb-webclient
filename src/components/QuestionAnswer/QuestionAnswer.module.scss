@@ -1,4 +1,11 @@
 .QuestionAnswer {
+  .HorizontalContent {
+    display: flex;
+    flex-direction: row;
+    gap: var(--tiny-gap);
+    align-items: center;
+  }
+
   .Buttons {
     display: flex;
     flex-direction: row;

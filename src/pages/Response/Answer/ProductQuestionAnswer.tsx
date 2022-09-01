@@ -3,6 +3,7 @@ import React from 'react';
 import Nexus from '../../../Nexus/Nexus';
 import QuestionAnswerCheckbox from '../../../components/QuestionAnswer/QuestionAnswerCheckbox';
 import QuestionAnswerCodelist from '../../../components/QuestionAnswer/QuestionAnswerCodelist';
+import QuestionAnswerConfirmation from '../../../components/QuestionAnswer/QuestionAnswerConfirmation';
 import QuestionAnswerPeriodDate from '../../../components/QuestionAnswer/QuestionAnswerPeriodDate';
 import QuestionAnswerSlider from '../../../components/QuestionAnswer/QuestionAnswerSlider';
 import QuestionAnswerText from '../../../components/QuestionAnswer/QuestionAnswerText';
@@ -12,7 +13,7 @@ import {
   addRequirementAnswer
 } from '../../../store/reducers/response-reducer';
 import { IRequirementAnswer } from '../../../Nexus/entities/IRequirementAnswer';
-import { QuestionType } from '../../../models/QuestionType';
+import { QuestionType } from '../../../Nexus/entities/QuestionType';
 import { QuestionVariant } from '../../../Nexus/enums';
 import { useAccordionState } from '../../../components/DFOAccordion/AccordionContext';
 import { useAppDispatch, useAppSelector } from '../../../store/hooks';
@@ -78,6 +79,14 @@ export default function ProductQuestionAnswer({
           existingAnswer={existingAnswer}
           onSubmit={onSubmit}
           codelist={codelist}
+        />
+      );
+    case QuestionVariant.Q_CONFIRMATION:
+      return (
+        <QuestionAnswerConfirmation
+          item={requirementAnswer.question}
+          existingAnswer={existingAnswer}
+          onSubmit={onSubmit}
         />
       );
     case QuestionVariant.Q_PERIOD_DATE:

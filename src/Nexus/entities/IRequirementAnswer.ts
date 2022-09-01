@@ -1,7 +1,7 @@
 import CustomJoi from '../Joi/CustomJoi';
 import { BaseRequirementSchema, IRequirement } from './IRequirement';
 import { ModelType } from '../enums';
-import { QuestionType } from '../../models/QuestionType';
+import { QuestionType } from './QuestionType';
 import { QuestionAnswerSchema } from './QuestionSchema';
 
 export interface IRequirementAnswer {

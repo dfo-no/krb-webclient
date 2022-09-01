@@ -32,7 +32,9 @@ const SelectQuestionDialog = ({ onClose, selectedValue, isOpen }: IProps) => {
         <DialogTitle>{t('DialogTitle-Select-Response-Type')}</DialogTitle>
         <List className={css.DialogList}>
           {(
-            Object.keys(QuestionVariant) as Array<keyof typeof QuestionVariant>
+            Object.keys(QuestionVariant).filter(
+              (value) => value != QuestionVariant.Q_FILEUPLOAD
+            ) as Array<keyof typeof QuestionVariant>
           ).map((key) => (
             <ListItem
               className={css.ListItem}

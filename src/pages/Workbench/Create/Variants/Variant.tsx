@@ -32,6 +32,7 @@ import { useAppDispatch } from '../../../../store/hooks';
 import { useGetProjectQuery } from '../../../../store/api/bankApi';
 import { useSelectState } from '../SelectContext';
 import { useVariantState } from '../../VariantContext';
+import ErrorSummary from '../../../../Form/ErrorSummary';
 
 interface IProps {
   variant: IVariant;
@@ -151,6 +152,7 @@ const Variant = ({ variant, requirementIndex }: IProps) => {
             </Box>
             <Divider />
             <GeneralErrorMessage errors={methods.formState.errors} />
+            <ErrorSummary errors={methods.formState.errors} />
           </AccordionDetails>
         </Accordion>
       </form>

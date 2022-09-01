@@ -4,16 +4,10 @@ import { useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 
 import theme from '../../../theme';
-import { ICheckboxQuestion } from '../../../Nexus/entities/ICheckboxQuestion';
-import { ICodelistQuestion } from '../../../Nexus/entities/ICodelistQuestion';
-import { IFileUploadQuestion } from '../../../Nexus/entities/IFileUploadQuestion';
-import { IPeriodDateQuestion } from '../../../Nexus/entities/IPeriodDateQuestion';
 import { IRouteProjectParams } from '../../../models/IRouteProjectParams';
-import { ISliderQuestion } from '../../../Nexus/entities/ISliderQuestion';
-import { ITextQuestion } from '../../../Nexus/entities/ITextQuestion';
-import { ITimeQuestion } from '../../../Nexus/entities/ITimeQuestion';
 import { QuestionVariant } from '../../../Nexus/enums';
 import { useGetProjectQuery } from '../../../store/api/bankApi';
+import { QuestionType } from '../../../Nexus/entities/QuestionType';
 
 const ConfigBox = styled(Box)(() => ({
   display: 'flex',
@@ -22,14 +16,7 @@ const ConfigBox = styled(Box)(() => ({
 }));
 
 interface IProps {
-  item:
-    | ITimeQuestion
-    | ITextQuestion
-    | ISliderQuestion
-    | IPeriodDateQuestion
-    | IFileUploadQuestion
-    | ICodelistQuestion
-    | ICheckboxQuestion;
+  item: QuestionType;
 }
 
 export default function QuestionConfigItem({
@@ -52,16 +39,6 @@ export default function QuestionConfigItem({
   };
 
   switch (item.type) {
-    case QuestionVariant.Q_TEXT:
-      return (
-        <ConfigBox>
-          <Typography variant={'smBold'} color={theme.palette.primary.main}>
-            {t('Max characters')}
-          </Typography>
-          <Typography sx={{ marginTop: 1 }}>{item.config.max}</Typography>
-        </ConfigBox>
-      );
-
     case QuestionVariant.Q_CHECKBOX:
       return (
         <ConfigBox>
@@ -70,6 +47,30 @@ export default function QuestionConfigItem({
           </Typography>
           <Typography sx={{ marginTop: 1 }}>
             {item.config?.preferedAlternative ? t('Yes') : t('No')}
+          </Typography>
+        </ConfigBox>
+      );
+
+    case QuestionVariant.Q_CODELIST:
+      return (
+        <ConfigBox>
+          <Typography variant={'smBold'} color={theme.palette.primary.main}>
+            {t('Name of codelist')}
+          </Typography>
+          <Typography sx={{ marginTop: 1 }}>
+            {getCodelistNameById(item.config.codelist)}
+          </Typography>
+        </ConfigBox>
+      );
+
+    case QuestionVariant.Q_PERIOD_DATE:
+      return (
+        <ConfigBox>
+          <Typography variant={'smBold'} color={theme.palette.primary.main}>
+            {t('Include to date')}
+          </Typography>
+          <Typography sx={{ marginTop: 1 }}>
+            {item.config.isPeriod ? t('Yes') : t('No')}
           </Typography>
         </ConfigBox>
       );
@@ -104,27 +105,13 @@ export default function QuestionConfigItem({
         </ConfigBox>
       );
 
-    case QuestionVariant.Q_CODELIST:
+    case QuestionVariant.Q_TEXT:
       return (
         <ConfigBox>
           <Typography variant={'smBold'} color={theme.palette.primary.main}>
-            {t('Name of codelist')}
+            {t('Max characters')}
           </Typography>
-          <Typography sx={{ marginTop: 1 }}>
-            {getCodelistNameById(item.config.codelist)}
-          </Typography>
-        </ConfigBox>
-      );
-
-    case QuestionVariant.Q_PERIOD_DATE:
-      return (
-        <ConfigBox>
-          <Typography variant={'smBold'} color={theme.palette.primary.main}>
-            {t('Include to date')}
-          </Typography>
-          <Typography sx={{ marginTop: 1 }}>
-            {item.config.isPeriod ? t('Yes') : t('No')}
-          </Typography>
+          <Typography sx={{ marginTop: 1 }}>{item.config.max}</Typography>
         </ConfigBox>
       );
 
