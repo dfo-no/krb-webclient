@@ -34,7 +34,7 @@ export default function NewProduct(): React.ReactElement {
   );
   const formStyles = useFormStyles();
   const dispatch = useAppDispatch();
-  const { setProductIndex, setCreate } = useProductIndexState();
+  const { setProductIndex } = useProductIndexState();
   const [product, setProduct] = useState<Parentable<IProduct> | null>(null);
   const [relatedProducts, setRelatedProducts] = useState(false);
   const options = [
@@ -71,7 +71,6 @@ export default function NewProduct(): React.ReactElement {
     const newId = prefilledResponse.products.length;
     dispatch(addProduct(newProduct));
     setProductIndex(newId);
-    setCreate(false);
   };
 
   const relatedProductsClicked = () => {

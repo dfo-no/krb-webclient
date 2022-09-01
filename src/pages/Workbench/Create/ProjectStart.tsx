@@ -1,54 +1,39 @@
-import Card from '@mui/material/Card';
-import CardActions from '@mui/material/CardActions';
-import CardContent from '@mui/material/CardContent';
-import CardMedia from '@mui/material/CardMedia';
-import Stack from '@mui/material/Stack';
-import Typography from '@mui/material/Typography';
 import React from 'react';
+import Typography from '@mui/material/Typography';
 
+import css from '../../Stylesheets/NoProducts.module.scss';
 import mainIllustration from '../../../assets/images/main-illustration.svg';
 import NewNeed from './Need/NewNeed';
+import theme from '../../../theme';
 import { IBank } from '../../../Nexus/entities/IBank';
+import { useTranslation } from 'react-i18next';
 
 interface IProps {
   project: IBank;
 }
 
-const ProjectStart = ({ project }: IProps) => {
+export default function ProjectStart({ project }: IProps): React.ReactElement {
+  const { t } = useTranslation();
+
   return (
-    <Card sx={{ width: '100%', margin: '16rem 0' }}>
-      <div style={{ display: 'flex', justifyContent: 'center' }}>
-        <CardMedia
-          component="img"
-          alt=""
-          image={mainIllustration}
-          sx={{
-            maxWidth: 500,
-            mt: 4
-          }}
-        />
-      </div>
-      <CardContent component={Stack}>
-        <Typography variant="h3" alignSelf="center">
+    <div className={css.NoProducts}>
+      <img
+        src={mainIllustration}
+        alt="main illustration"
+        height="385"
+        width="594"
+      />
+      <div className={css.Text}>
+        <Typography variant="lgBold" color={theme.palette.primary.main}>
           {project.title}
         </Typography>
-        <Typography variant="subtitle1" alignSelf="center">
-          Du er nå i gang med å bygge et nytt kravsett.
+        <Typography variant="md">{t('PROJ_BUILDING_PROJ')}</Typography>
+        <Typography variant="md">
+          {t('PROJ_DEFINE_NEEDS_PROCUREMENT')}
         </Typography>
-        <Typography variant="subtitle1" alignSelf="center">
-          Start med å definere behov som skal treffe brukerne av dette
-          kravsettet.
-        </Typography>
-        <Typography variant="subtitle1" alignSelf="center">
-          Organiser behovene i hierarki og formuler krav som hører til de ulike
-          behovene.
-        </Typography>
-      </CardContent>
-      <CardActions sx={{ justifyContent: 'center' }}>
-        <NewNeed buttonText="Lag ditt første behov" />
-      </CardActions>
-    </Card>
+        <Typography variant="md">{t('PROJ_CREATE_REQ_PROCUREMENT')}</Typography>
+      </div>
+      <NewNeed buttonText={t('Create your first need')} />
+    </div>
   );
-};
-
-export default ProjectStart;
+}

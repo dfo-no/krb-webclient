@@ -5,23 +5,19 @@ import PrefilledResponseSidebar from './SideBar/PrefilledResponseSidebar';
 import AnswerProduct from './Answer/AnswerProduct';
 import NewProduct from './NewProduct/NewProduct';
 import NoProducts from './NoProducts/NoProducts';
-import { useAppSelector } from '../../store/hooks';
 import { useProductIndexState } from '../../components/ProductIndexContext/ProductIndexContext';
 
 export default function PrefilledResponseEditor(): React.ReactElement {
-  const { prefilledResponse } = useAppSelector(
-    (state) => state.prefilledResponse
-  );
-  const { create } = useProductIndexState();
+  const { create, productIndex } = useProductIndexState();
 
   const renderProduct = (): ReactElement => {
     if (create) {
       return <NewProduct />;
     }
-    if (!prefilledResponse.products.length) {
-      return <NoProducts />;
+    if (productIndex >= -1) {
+      return <AnswerProduct />;
     }
-    return <AnswerProduct />;
+    return <NoProducts />;
   };
 
   return (

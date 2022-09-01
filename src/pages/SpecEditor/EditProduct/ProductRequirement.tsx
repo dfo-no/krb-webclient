@@ -28,7 +28,7 @@ import { IRequirement } from '../../../Nexus/entities/IRequirement';
 import { IRequirementAnswer } from '../../../Nexus/entities/IRequirementAnswer';
 import { ModelType, VariantType, Weighting } from '../../../Nexus/enums';
 import { useAppDispatch, useAppSelector } from '../../../store/hooks';
-import { useSpecificationState } from '../SpecificationContext';
+import { useProductIndexState } from '../../../components/ProductIndexContext/ProductIndexContext';
 
 interface IProps {
   requirement: IRequirement;
@@ -41,7 +41,7 @@ export default function ProductRequirement({
   const { spec } = useAppSelector((state) => state.specification);
   const dispatch = useAppDispatch();
   const nexus = Nexus.getInstance();
-  const { specificationProductIndex } = useSpecificationState();
+  const { productIndex } = useProductIndexState();
   const [original, setOriginal] = useState<null | IRequirementAnswer>(null);
 
   const defaultValues =
@@ -53,7 +53,7 @@ export default function ProductRequirement({
 
   useEffect(() => {
     methods.reset();
-  }, [methods, specificationProductIndex]);
+  }, [methods, productIndex]);
 
   const useVariant = useWatch({ name: 'variantId', control: methods.control });
   const useWeight = useWatch({ name: 'weight', control: methods.control });
@@ -62,7 +62,7 @@ export default function ProductRequirement({
   );
 
   const onSubmit = async (put: IRequirementAnswer) => {
-    if (specificationProductIndex === -1) {
+    if (productIndex === -1) {
       dispatch(
         addAnswer({
           answer: put
@@ -73,13 +73,13 @@ export default function ProductRequirement({
       dispatch(
         addProductAnswer({
           answer: put,
-          productId: spec.products[specificationProductIndex].id
+          productId: spec.products[productIndex].id
         })
       );
       dispatch(
         addProductRequirement({
           requirement: requirement.id,
-          productId: spec.products[specificationProductIndex].id
+          productId: spec.products[productIndex].id
         })
       );
     }
@@ -95,8 +95,8 @@ export default function ProductRequirement({
   };
 
   const isSelected = (): boolean => {
-    if (specificationProductIndex !== -1) {
-      return spec.products[specificationProductIndex].requirements.some(
+    if (productIndex !== -1) {
+      return spec.products[productIndex].requirements.some(
         (req) => req === requirement.id
       );
     }
@@ -105,9 +105,7 @@ export default function ProductRequirement({
 
   const isInfo = (): boolean => {
     const selected = (
-      specificationProductIndex === -1
-        ? spec
-        : spec.products[specificationProductIndex]
+      productIndex === -1 ? spec : spec.products[productIndex]
     ).requirementAnswers.find(
       (reqAns) => reqAns.requirement.id === requirement.id
     );
@@ -127,7 +125,7 @@ export default function ProductRequirement({
   };
 
   const unsaveRequirement = (): IRequirementAnswer | undefined => {
-    if (specificationProductIndex === -1) {
+    if (productIndex === -1) {
       const answer = spec.requirementAnswers.find(
         (reqAnswer) => reqAnswer.requirement.id === requirement.id
       );
@@ -141,7 +139,7 @@ export default function ProductRequirement({
       dispatch(removeRequirement(requirement.id));
       return answer;
     } else {
-      const product = spec.products[specificationProductIndex];
+      const product = spec.products[productIndex];
       const answer = product.requirementAnswers.find(
         (reqAnswer) => reqAnswer.requirement.id === requirement.id
       );

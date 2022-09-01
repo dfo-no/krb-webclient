@@ -3,6 +3,7 @@ import React, {
   Dispatch,
   SetStateAction,
   useContext,
+  useEffect,
   useState
 } from 'react';
 
@@ -33,8 +34,20 @@ interface IProps {
 export const ProductIndexProvider = ({
   children
 }: IProps): React.ReactElement => {
-  const [productIndex, setProductIndex] = useState(-1);
+  const [productIndex, setProductIndex] = useState(-2);
   const [create, setCreate] = useState(false);
+
+  useEffect(() => {
+    if (create) {
+      setProductIndex(-2);
+    }
+  }, [create]);
+
+  useEffect(() => {
+    if (productIndex !== -2) {
+      setCreate(false);
+    }
+  }, [productIndex]);
 
   return (
     <IndexContext.Provider

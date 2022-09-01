@@ -19,16 +19,13 @@ function PrefilledResponseSideBar(): React.ReactElement {
 
   const genericPressed = () => {
     setProductIndex(-1);
-    setCreate(false);
   };
 
   const productPressed = (index: number) => {
     setProductIndex(index);
-    setCreate(false);
   };
 
   const createPressed = (): void => {
-    setProductIndex(-1);
     setCreate(true);
   };
 

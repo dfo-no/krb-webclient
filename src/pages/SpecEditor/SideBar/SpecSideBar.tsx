@@ -7,27 +7,23 @@ import DownloadButton from '../Download/DownloadButton';
 import theme from '../../../theme';
 import { ISpecificationProduct } from '../../../Nexus/entities/ISpecificationProduct';
 import { useAppSelector } from '../../../store/hooks';
-import { useSpecificationState } from '../SpecificationContext';
+import { useProductIndexState } from '../../../components/ProductIndexContext/ProductIndexContext';
 
 function SpecSideBar(): ReactElement {
   const { t } = useTranslation();
 
   const { spec } = useAppSelector((state) => state.specification);
-  const { specificationProductIndex, setSpecificationProductIndex, setCreate } =
-    useSpecificationState();
+  const { productIndex, setProductIndex, setCreate } = useProductIndexState();
 
   const genericPressed = (): void => {
-    setSpecificationProductIndex(-1);
-    setCreate(false);
+    setProductIndex(-1);
   };
 
   const productPressed = (index: number): void => {
-    setSpecificationProductIndex(index);
-    setCreate(false);
+    setProductIndex(index);
   };
 
   const createPressed = (): void => {
-    setSpecificationProductIndex(-1);
     setCreate(true);
   };
 
@@ -35,7 +31,7 @@ function SpecSideBar(): ReactElement {
     product: ISpecificationProduct,
     index: number
   ): ReactElement => {
-    const isSelected = index === specificationProductIndex;
+    const isSelected = index === productIndex;
     return (
       <li
         className={isSelected ? css.Active : undefined}
@@ -67,7 +63,7 @@ function SpecSideBar(): ReactElement {
       </div>
       <ul aria-label="products">
         <li
-          className={specificationProductIndex === -1 ? css.Active : undefined}
+          className={productIndex === -1 ? css.Active : undefined}
           key={'generic'}
           onClick={() => genericPressed()}
         >

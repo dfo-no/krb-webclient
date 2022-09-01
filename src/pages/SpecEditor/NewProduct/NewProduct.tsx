@@ -17,7 +17,7 @@ import { ModelType } from '../../../Nexus/enums';
 import { Parentable } from '../../../models/Parentable';
 import { useAppDispatch, useAppSelector } from '../../../store/hooks';
 import { useFormStyles } from '../../../components/Form/FormStyles';
-import { useSpecificationState } from '../SpecificationContext';
+import { useProductIndexState } from '../../../components/ProductIndexContext/ProductIndexContext';
 
 export default function NewProduct(): React.ReactElement {
   const { t } = useTranslation();
@@ -25,7 +25,7 @@ export default function NewProduct(): React.ReactElement {
   const { spec } = useAppSelector((state) => state.specification);
   const formStyles = useFormStyles();
   const dispatch = useAppDispatch();
-  const { setSpecificationProductIndex, setCreate } = useSpecificationState();
+  const { setProductIndex } = useProductIndexState();
   const [product, setProduct] = useState<Parentable<IProduct> | null>(null);
 
   const defaultValues: ISpecificationProduct =
@@ -51,8 +51,7 @@ export default function NewProduct(): React.ReactElement {
       nexus.specificationService.createSpecificationProductWithId(post);
     const newId = spec.products.length;
     dispatch(addProduct({ product: newProduct }));
-    setSpecificationProductIndex(newId);
-    setCreate(false);
+    setProductIndex(newId);
   };
 
   const nonDeletedProducts: Parentable<IProduct>[] = spec.bank.products.filter(
