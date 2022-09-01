@@ -20,7 +20,7 @@ import {
   deleteProductAnswer,
   removeProductRequirement,
   removeRequirement
-} from '../../../store/reducers/spesification-reducer';
+} from '../../../store/reducers/specification-reducer';
 import { DFOCheckbox } from '../../../components/DFOCheckbox/DFOCheckbox';
 import { DFOChip } from '../../../components/DFOChip/DFOChip';
 import { FormIconButton } from '../../../components/Form/FormIconButton';

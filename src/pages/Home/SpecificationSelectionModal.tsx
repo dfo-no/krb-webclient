@@ -17,7 +17,7 @@ import {
   ModalButtonsBox
 } from '../../components/ModalBox/ModalBox';
 import { setEvaluationSpecification } from '../../store/reducers/evaluation-reducer';
-import { setSpecification } from '../../store/reducers/spesification-reducer';
+import { setSpecification } from '../../store/reducers/specification-reducer';
 import { selectBank } from '../../store/reducers/selectedBank-reducer';
 import { useAppDispatch } from '../../store/hooks';
 import { useHomeState } from './HomeContext';

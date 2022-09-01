@@ -9,7 +9,7 @@ import QuestionAnswerTime from '../../../components/QuestionAnswer/QuestionAnswe
 import {
   addProductAnswer,
   addAnswer
-} from '../../../store/reducers/PrefilledResponseReducer';
+} from '../../../store/reducers/prefilled-response-reducer';
 import { IRequirementAnswer } from '../../../Nexus/entities/IRequirementAnswer';
 import { QuestionType } from '../../../models/QuestionType';
 import { QuestionVariant } from '../../../Nexus/enums';

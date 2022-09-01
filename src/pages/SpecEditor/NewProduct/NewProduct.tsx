@@ -10,7 +10,7 @@ import NeedList from '../../../components/NeedList/NeedList';
 import ProductSelection from '../../../components/ProductSelection/ProductSelection';
 import theme from '../../../theme';
 import VerticalTextCtrl from '../../../FormProvider/VerticalTextCtrl';
-import { addProduct } from '../../../store/reducers/spesification-reducer';
+import { addProduct } from '../../../store/reducers/specification-reducer';
 import { IProduct } from '../../../Nexus/entities/IProduct';
 import { ISpecificationProduct } from '../../../Nexus/entities/ISpecificationProduct';
 import { ModelType } from '../../../Nexus/enums';

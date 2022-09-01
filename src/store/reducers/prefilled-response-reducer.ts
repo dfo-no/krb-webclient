@@ -1,8 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { cloneDeep } from 'lodash';
 
 import Utils from '../../common/Utils';
-import { IBank } from '../../Nexus/entities/IBank';
 import { IPrefilledResponse } from '../../Nexus/entities/IPrefilledResponse';
 import { IPrefilledResponseProduct } from '../../Nexus/entities/IPrefilledResponseProduct';
 import { IRequirementAnswer } from '../../Nexus/entities/IRequirementAnswer';
@@ -66,16 +64,6 @@ const responseSlice = createSlice({
     setResponse(state, { payload }: PayloadAction<IPrefilledResponse>) {
       state.prefilledResponse = payload;
     },
-    editSupplier(state, { payload }: PayloadAction<string>) {
-      state.prefilledResponse.supplier = payload;
-    },
-    setRequirementAnswers(
-      state,
-      { payload }: PayloadAction<{ cart: IRequirementAnswer[] }>
-    ) {
-      // TODO: Why is cloneDeep nesccecary here???
-      state.prefilledResponse.requirementAnswers = cloneDeep(payload.cart);
-    },
     addAnswer(state, { payload }: PayloadAction<IRequirementAnswer>) {
       if (
         state.prefilledResponse.requirementAnswers.find(
@@ -97,10 +85,6 @@ const responseSlice = createSlice({
       if (index !== -1) {
         state.prefilledResponse.requirementAnswers.splice(index, 1);
       }
-    },
-
-    setBank(state, { payload }: PayloadAction<IBank>) {
-      state.prefilledResponse.bank = payload;
     },
     addProduct(state, { payload }: PayloadAction<IPrefilledResponseProduct>) {
       state.prefilledResponse.products.push(payload);
@@ -175,9 +159,6 @@ const responseSlice = createSlice({
         payload.requirement
       );
     },
-    /* addVariant(state, { payload }: PayloadAction<string>) {
-      state.prefilledResponse.answeredVariants.push(payload);
-    }, */
     editProduct(
       state,
       {
@@ -188,19 +169,11 @@ const responseSlice = createSlice({
       }>
     ) {
       state.prefilledResponse.products[payload.productIndex] = payload.product;
-    },
-    selectProduct(
-      state,
-      { payload }: PayloadAction<IPrefilledResponseProduct>
-    ) {
-      state.selectedProduct = payload;
     }
   }
 });
 
 export const {
-  editSupplier,
-  setBank,
   addProduct,
   removeProduct,
   editProduct,
@@ -208,9 +181,7 @@ export const {
   addAnswer,
   removeAnswer,
   addProductAnswer,
-  removeProductAnswer,
-  setRequirementAnswers,
-  selectProduct
+  removeProductAnswer
 } = responseSlice.actions;
 
 export default responseSlice.reducer;

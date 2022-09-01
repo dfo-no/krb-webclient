@@ -15,7 +15,7 @@ import {
   ModalButton
 } from '../../components/ModalBox/ModalBox';
 import { ModelType } from '../../Nexus/enums';
-import { setResponse } from '../../store/reducers/PrefilledResponseReducer';
+import { setResponse } from '../../store/reducers/prefilled-response-reducer';
 import { useAppDispatch } from '../../store/hooks';
 
 interface IProps {

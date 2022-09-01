@@ -6,7 +6,7 @@ import { useTranslation } from 'react-i18next';
 import Nexus from '../../../Nexus/Nexus';
 import theme from '../../../theme';
 import VerticalTextCtrl from '../../../FormProvider/VerticalTextCtrl';
-import { editSpecProduct } from '../../../store/reducers/spesification-reducer';
+import { editSpecProduct } from '../../../store/reducers/specification-reducer';
 import { ISpecificationProduct } from '../../../Nexus/entities/ISpecificationProduct';
 import {
   ModalBox,

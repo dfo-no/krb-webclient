@@ -11,7 +11,7 @@ import {
   ModalButtonsBox
 } from '../../components/ModalBox/ModalBox';
 import { selectBank } from '../../store/reducers/selectedBank-reducer';
-import { setResponse } from '../../store/reducers/PrefilledResponseReducer';
+import { setResponse } from '../../store/reducers/prefilled-response-reducer';
 import { useAppDispatch } from '../../store/hooks';
 import { useHomeState } from './HomeContext';
 
