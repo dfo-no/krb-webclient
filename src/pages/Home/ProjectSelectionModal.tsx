@@ -53,14 +53,10 @@ export default function ProjectSelectionModal({
     );
   }
 
-  const isPublished = bank.publications.some(
-    (p) => p.deletedDate === undefined
-  );
+  const isPublished = bank.publications.some((p) => !p.deletedDate);
   const versionText = (): string => {
     if (isPublished) {
-      const publishedBanks = bank.publications.filter(
-        (p) => p.deletedDate === undefined
-      );
+      const publishedBanks = bank.publications.filter((p) => !p.deletedDate);
       return `${t('Version')} ${
         publishedBanks[publishedBanks.length - 1].version
       }`;
