@@ -3,11 +3,11 @@ import { Route, Switch } from 'react-router';
 
 import SpecEditor from './SpecEditor';
 import SpecificationGuard from './SpecificationGuard';
-import { SpecificationProvider } from './SpecificationContext';
+import { ProductIndexProvider } from '../../components/ProductIndexContext/ProductIndexContext';
 
 export default function SpecModule(): React.ReactElement {
   return (
-    <SpecificationProvider>
+    <ProductIndexProvider>
       <Switch>
         <Route exact path="/specification/:id">
           <SpecificationGuard>
@@ -15,6 +15,6 @@ export default function SpecModule(): React.ReactElement {
           </SpecificationGuard>
         </Route>
       </Switch>
-    </SpecificationProvider>
+    </ProductIndexProvider>
   );
 }

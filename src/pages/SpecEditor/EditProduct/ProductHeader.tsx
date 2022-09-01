@@ -9,12 +9,12 @@ import { DFOCardHeader } from '../../../components/DFOCard/DFOCardHeader';
 import { DFOCardHeaderIconButton } from '../../../components/DFOCard/DFOCardHeaderIconButton';
 import { DFOHeaderContentBox } from '../../../components/DFOCard/DFOHeaderContentBox';
 import { useAppSelector } from '../../../store/hooks';
-import { useSpecificationState } from '../SpecificationContext';
+import { useProductIndexState } from '../../../components/ProductIndexContext/ProductIndexContext';
 
 export default function ProductHeader(): React.ReactElement {
   const { t } = useTranslation();
   const { spec } = useAppSelector((state) => state.specification);
-  const { specificationProductIndex } = useSpecificationState();
+  const { productIndex } = useProductIndexState();
   const [editingProduct, setEditingProduct] = useState(false);
 
   return (
@@ -29,10 +29,9 @@ export default function ProductHeader(): React.ReactElement {
           }}
         >
           <Typography variant="lgBold">
-            {spec.products[specificationProductIndex]?.title ??
-              t('General requirement')}
+            {spec.products[productIndex]?.title ?? t('General requirement')}
           </Typography>
-          {specificationProductIndex !== -1 && (
+          {productIndex !== -1 && (
             <DFOCardHeaderIconButton
               sx={{ marginLeft: 'auto', paddingRight: 2 }}
               onClick={() => setEditingProduct(true)}
@@ -43,19 +42,17 @@ export default function ProductHeader(): React.ReactElement {
         </Box>
         <Box sx={{ display: 'flex', flexDirection: 'row', paddingTop: 1 }}>
           <Typography variant="smBold">
-            {spec.products[specificationProductIndex]?.description ?? ''}
+            {spec.products[productIndex]?.description ?? ''}
           </Typography>
 
-          {specificationProductIndex !== -1 && (
+          {productIndex !== -1 && (
             <Typography
               variant="smBold"
               sx={{ marginLeft: 'auto', paddingRight: 2 }}
             >
               {t('From product type')}
               {': '}
-              <i>
-                {spec.products[specificationProductIndex].originProduct.title}
-              </i>
+              <i>{spec.products[productIndex].originProduct.title}</i>
             </Typography>
           )}
         </Box>
@@ -66,7 +63,7 @@ export default function ProductHeader(): React.ReactElement {
             children={
               <EditProductForm
                 handleClose={() => setEditingProduct(false)}
-                specificationProduct={spec.products[specificationProductIndex]}
+                specificationProduct={spec.products[productIndex]}
               />
             }
           />

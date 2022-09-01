@@ -6,12 +6,12 @@ import byggernIllustration from '../../../assets/images/byggern-illustration.svg
 import css from '../../Stylesheets/NoProducts.module.scss';
 import theme from '../../../theme';
 import { useAppSelector } from '../../../store/hooks';
-import { useSpecificationState } from '../SpecificationContext';
+import { useProductIndexState } from '../../../components/ProductIndexContext/ProductIndexContext';
 
 export default function NoProducts(): React.ReactElement {
   const { t } = useTranslation();
   const { spec } = useAppSelector((state) => state.specification);
-  const { setCreate } = useSpecificationState();
+  const { setCreate } = useProductIndexState();
 
   return (
     <div className={css.NoProducts}>

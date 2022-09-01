@@ -27,14 +27,14 @@ export default function NoProducts(): React.ReactElement {
         <Typography variant="lgBold" color={theme.palette.primary.main}>
           {prefilledResponse.bank.title}
         </Typography>
-        <Typography variant="md">{t('PREF_RES_BUILDING_SPEC')}</Typography>
+        <Typography variant="md">{t('PREF_RES_BUILDING')}</Typography>
         <Typography variant="md">
           {t('PREF_RES_CREATE_PRODUCT_PROCUREMENT')}
         </Typography>
         <Typography variant="md">
           {t('PREF_RES_FIND_PREDEF_PROCUREMENT')}
         </Typography>
-        <Typography variant="md">{t('PREF_RES_DOWNLOAD_SPEC')}</Typography>
+        <Typography variant="md">{t('PREF_RES_DOWNLOAD')}</Typography>
       </div>
       <Button variant="primary" onClick={() => setCreate(true)}>
         {t('Create your first product')}

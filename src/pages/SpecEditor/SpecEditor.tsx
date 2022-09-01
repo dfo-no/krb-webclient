@@ -5,21 +5,19 @@ import EditProduct from './EditProduct/EditProduct';
 import NewProduct from './NewProduct/NewProduct';
 import NoProducts from './NoProducts/NoProducts';
 import SpecSideBar from './SideBar/SpecSideBar';
-import { useAppSelector } from '../../store/hooks';
-import { useSpecificationState } from './SpecificationContext';
+import { useProductIndexState } from '../../components/ProductIndexContext/ProductIndexContext';
 
 export default function SpecEditor(): ReactElement {
-  const { spec } = useAppSelector((state) => state.specification);
-  const { create } = useSpecificationState();
+  const { create, productIndex } = useProductIndexState();
 
   const renderProduct = (): ReactElement => {
     if (create) {
       return <NewProduct />;
     }
-    if (!spec.products.length) {
-      return <NoProducts />;
+    if (productIndex >= -1) {
+      return <EditProduct />;
     }
-    return <EditProduct />;
+    return <NoProducts />;
   };
 
   return (
