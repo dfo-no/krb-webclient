@@ -53,6 +53,7 @@ const EditProductForm = ({ handleClose, specificationProduct }: IProps) => {
               name="title"
               label={t('Name of product')}
               placeholder={t('Name of product')}
+              autoFocus
             />
             <VerticalTextCtrl
               name="description"

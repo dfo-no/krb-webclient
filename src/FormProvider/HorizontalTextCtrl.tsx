@@ -10,6 +10,7 @@ interface IProps {
   placeholder: string;
   type?: string;
   size?: string;
+  autoFocus?: boolean;
 }
 
 const HorizontalTextCtrl = ({
@@ -17,7 +18,8 @@ const HorizontalTextCtrl = ({
   name,
   placeholder = '',
   type = 'text',
-  size = ''
+  size = '',
+  autoFocus
 }: IProps): React.ReactElement => {
   const {
     formState: { errors }
@@ -40,6 +42,7 @@ const HorizontalTextCtrl = ({
             error={!!get(errors, name)}
             disableUnderline
             sx={size === 'small' ? { height: 26 } : { height: 45 }}
+            autoFocus={autoFocus}
           />
         )}
       />

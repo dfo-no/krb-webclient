@@ -65,6 +65,7 @@ const NewProjectForm = ({ handleClose }: IProps) => {
               name="title"
               label={t('What is the name of the project?')}
               placeholder={t('Name of project')}
+              autoFocus
             />
             <VerticalTextCtrl
               name="description"

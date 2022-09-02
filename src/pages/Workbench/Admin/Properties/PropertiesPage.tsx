@@ -68,6 +68,7 @@ function PropertiesPage(): React.ReactElement {
               name="title"
               label={t('Title')}
               placeholder={t('Title')}
+              autoFocus
             />
             <VerticalTextCtrl
               name="description"

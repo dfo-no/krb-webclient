@@ -84,6 +84,7 @@ function EditRequirementForm({
               name="title"
               label={t('Title')}
               placeholder={''}
+              autoFocus
             />
           </ModalFieldsBox>
           <ModalButtonsBox>

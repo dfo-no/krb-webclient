@@ -43,6 +43,7 @@ const VariantFormContent = ({ control }: IProps) => {
         className={css.TextField}
         name={`description`}
         placeholder={t('Requirement short description')}
+        autoFocus
       />
       <Typography className={css.TextTitle} variant={'smBold'}>
         {t('Requirement text')}

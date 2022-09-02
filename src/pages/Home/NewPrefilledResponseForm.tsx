@@ -60,6 +60,7 @@ const NewPrefilledResponseForm = ({
               name="supplier"
               label={t('RESP_SUPP_NAME')}
               placeholder={t('RESP_SUPP_NAME')}
+              autoFocus
             />
           </ModalFieldsBox>
           <ModalButtonsBox>

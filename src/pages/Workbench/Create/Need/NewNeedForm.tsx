@@ -73,6 +73,7 @@ function NewNeedForm({ handleClose }: IProps): React.ReactElement {
               name="title"
               label={t('Title')}
               placeholder={''}
+              autoFocus
             />
             <VerticalTextCtrl
               name="description"
