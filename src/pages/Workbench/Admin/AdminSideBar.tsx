@@ -7,7 +7,7 @@ import makeStyles from '@mui/styles/makeStyles';
 import React from 'react';
 import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
 import { Box, List, ListItem, ListItemText } from '@mui/material';
-import { withRouter } from 'react-router';
+import { withRouter } from 'react-router-dom';
 import { Link, useRouteMatch } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 
