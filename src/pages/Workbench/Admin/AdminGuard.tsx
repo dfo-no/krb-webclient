@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route } from 'react-router';
+import { Route } from 'react-router-dom';
 
 import css from './Admin.module.scss';
 import AdminSideBar from './AdminSideBar';

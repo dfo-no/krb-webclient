@@ -3,7 +3,7 @@ import makeStyles from '@mui/styles/makeStyles';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import ErrorIcon from '@mui/icons-material/Error';
-import { useHistory } from 'react-router';
+import { useHistory } from 'react-router-dom';
 import theme from '../../theme';
 
 const useStyles = makeStyles({

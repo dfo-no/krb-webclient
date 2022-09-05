@@ -1,6 +1,6 @@
 import React, { ReactElement, useState } from 'react';
 import { Box, Typography } from '@mui/material';
-import { useHistory } from 'react-router';
+import { useHistory } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 
 import DFODialog from '../../components/DFODialog/DFODialog';

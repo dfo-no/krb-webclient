@@ -1,6 +1,6 @@
 import { Box, Typography } from '@mui/material/';
 import { FormProvider, useForm } from 'react-hook-form';
-import { useHistory } from 'react-router';
+import { useHistory } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 
 import theme from '../../theme';
