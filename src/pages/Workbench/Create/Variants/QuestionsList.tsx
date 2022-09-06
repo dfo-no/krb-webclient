@@ -44,21 +44,22 @@ const QuestionsList = (): ReactElement => {
     }
   };
 
-  const hasMoreThanResponseType = (): boolean => {
+  const hasQuestion = (): boolean => {
     return fields.length > 0;
   };
 
   return (
     <FlexColumnBox>
-      <Button
-        className={hasMoreThanResponseType() ? css.Hidden : undefined}
-        sx={{ marginBottom: 1, marginRight: 'auto' }}
-        variant="primary"
-        onClick={handleClickOpen}
-      >
-        {t('Create response type')}
-      </Button>
-      {fields.length > 0 && (
+      {!hasQuestion() && (
+        <Button
+          sx={{ marginBottom: 1, marginRight: 'auto' }}
+          variant="primary"
+          onClick={handleClickOpen}
+        >
+          {t('Create response type')}
+        </Button>
+      )}
+      {hasQuestion() && (
         <div className={css.QuestionList}>
           {fields.map((item, index) => {
             return (

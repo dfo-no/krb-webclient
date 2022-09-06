@@ -81,10 +81,10 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "build:ci": "CI=false react-scripts build",
+    "build:ci": "cross-env CI=false react-scripts build",
     "test": "react-scripts test",
     "test:ci": "cross-env CI=true react-scripts test",
-    "test:coverage": "CI=true react-scripts test --coverage",
+    "test:coverage": "cross-env CI=true react-scripts test --coverage",
     "eslint": "eslint 'src/**/*.{js,jsx,ts,tsx,json,css,md}'",
     "lint:ci": "tsc --noEmit && eslint ./ --ignore-path .gitignore",
     "lint:fix": "tsc --noEmit && eslint ./ --ignore-path .gitignore --fix",
