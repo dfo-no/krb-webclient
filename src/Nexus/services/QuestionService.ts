@@ -172,11 +172,11 @@ export default class QuestionService {
   calculatePoints = (question: QuestionType): number => {
     switch (question.type) {
       case QuestionVariant.Q_CHECKBOX:
-        const preferred = `${question.config.preferedAlternative}`;
-        const newAnswer = `${question.answer}`;
-        return preferred === newAnswer
-          ? 100
-          : question.config.pointsNonPrefered;
+        const preferred = question.config.preferedAlternative;
+        const answer = question.answer.value;
+        return preferred === answer ? 100 : question.config.pointsNonPrefered;
+      case QuestionVariant.Q_CONFIRMATION:
+        return question.answer.value ? 100 : question.config.pointsUnconfirmed;
       case QuestionVariant.Q_CODELIST:
         return Utils.findScoreFromCodes(question.answer.codes, question.config);
       case QuestionVariant.Q_PERIOD_DATE:
