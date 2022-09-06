@@ -11,7 +11,7 @@ import SelectQuestionDialog from './SelectQuestionDialog';
 import { FlexColumnBox } from '../../../../components/FlexBox/FlexColumnBox';
 import { FormIconButton } from '../../../../components/Form/FormIconButton';
 import { IVariant } from '../../../../Nexus/entities/IVariant';
-import { QuestionVariant, VariantType } from '../../../../Nexus/enums';
+import { QuestionVariant } from '../../../../Nexus/enums';
 
 const QuestionsList = (): ReactElement => {
   const { t } = useTranslation();
