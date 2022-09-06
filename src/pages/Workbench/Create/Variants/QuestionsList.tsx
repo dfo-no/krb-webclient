@@ -1,7 +1,7 @@
 import DeleteIcon from '@mui/icons-material/Delete';
 import React, { ReactElement, useState } from 'react';
 import { Button, Card, Typography } from '@mui/material';
-import { useFieldArray, useFormContext, useWatch } from 'react-hook-form';
+import { useFieldArray, useFormContext } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
 import css from './Variant.module.scss';
@@ -26,8 +26,6 @@ const QuestionsList = (): ReactElement => {
     null
   );
 
-  const variantType = useWatch({ name: 'type', control });
-
   const handleClickOpen = (): void => {
     setOpen(true);
     setSelectedValue(null);
@@ -46,15 +44,14 @@ const QuestionsList = (): ReactElement => {
     }
   };
 
-  const hasResponseType = (): boolean => {
-    return variantType !== VariantType.requirement && fields.length > 0;
+  const hasMoreThanResponseType = (): boolean => {
+    return fields.length > 0;
   };
 
   return (
     <FlexColumnBox>
       <Button
-        className={hasResponseType() ? css.Disabled : undefined}
-        disabled={hasResponseType()}
+        className={hasMoreThanResponseType() ? css.Hidden : undefined}
         sx={{ marginBottom: 1, marginRight: 'auto' }}
         variant="primary"
         onClick={handleClickOpen}
