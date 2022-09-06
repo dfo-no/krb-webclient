@@ -2,7 +2,9 @@ name: Continuous Deployment
 
 on:
   push:
-    branches: [develop]
+    branches:
+      - develop
+      - krb-*
 
 env:
   AZURE_WEBAPP_NAME: krb-webclient # set this to your application's name
@@ -13,8 +15,11 @@ jobs:
   Build_and_Deploy_to_Azure_Dev:
     runs-on: ubuntu-18.04
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v2
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Setup Node ${{ env.NODE_VERSION }}
+        uses: actions/setup-node@v2
         with:
           node-version: ${{ env.NODE_VERSION }}
 
@@ -29,11 +34,13 @@ jobs:
         if: steps.cache.outputs.cache-hit != 'true'
         run: npm install
 
-      - name: Lint and test
+      - name: Lint
         shell: bash
-        run: |
-          npm run-script lint:ci
-          npm run-script test --coverage
+        run: npm run-script lint:ci
+
+      - name: Test
+        shell: bash
+        run: npm run-script test --coverage
 
       - name: Build
         run: npm run-script build
@@ -42,6 +49,8 @@ jobs:
           REACT_APP_API_URL: ${{ secrets.REACT_APP_API_URL_DEV }}
           CI: false
 
+      # Steps triggered only on develop branch
+
       - name: Sonarcube
         if: github.ref == 'refs/heads/develop'
         uses: SonarSource/sonarcloud-github-action@master
@@ -49,8 +58,9 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
-      - name: 'Deploy to Azure WebApp'
+      - name: Deploy to Azure WebApp
         uses: azure/webapps-deploy@v2
+        if: github.ref == 'refs/heads/develop'
         with:
           app-name: ${{ env.AZURE_WEBAPP_NAME }}
           publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
