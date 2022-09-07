@@ -1,7 +1,7 @@
 import DeleteIcon from '@mui/icons-material/Delete';
 import React, { ReactElement, useState } from 'react';
 import { Button, Card, Typography } from '@mui/material';
-import { useFieldArray, useFormContext, useWatch } from 'react-hook-form';
+import { useFieldArray, useFormContext } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
 import css from './Variant.module.scss';
@@ -11,7 +11,7 @@ import SelectQuestionDialog from './SelectQuestionDialog';
 import { FlexColumnBox } from '../../../../components/FlexBox/FlexColumnBox';
 import { FormIconButton } from '../../../../components/Form/FormIconButton';
 import { IVariant } from '../../../../Nexus/entities/IVariant';
-import { QuestionVariant, VariantType } from '../../../../Nexus/enums';
+import { QuestionVariant } from '../../../../Nexus/enums';
 
 const QuestionsList = (): ReactElement => {
   const { t } = useTranslation();
@@ -25,8 +25,6 @@ const QuestionsList = (): ReactElement => {
   const [selectedValue, setSelectedValue] = useState<QuestionVariant | null>(
     null
   );
-
-  const variantType = useWatch({ name: 'type', control });
 
   const handleClickOpen = (): void => {
     setOpen(true);
@@ -46,22 +44,22 @@ const QuestionsList = (): ReactElement => {
     }
   };
 
-  const hasResponseType = (): boolean => {
-    return variantType !== VariantType.requirement && fields.length > 0;
+  const hasQuestion = (): boolean => {
+    return fields.length > 0;
   };
 
   return (
     <FlexColumnBox>
-      <Button
-        className={hasResponseType() ? css.Disabled : undefined}
-        disabled={hasResponseType()}
-        sx={{ marginBottom: 1, marginRight: 'auto' }}
-        variant="primary"
-        onClick={handleClickOpen}
-      >
-        {t('Create response type')}
-      </Button>
-      {fields.length > 0 && (
+      {!hasQuestion() && (
+        <Button
+          sx={{ marginBottom: 1, marginRight: 'auto' }}
+          variant="primary"
+          onClick={handleClickOpen}
+        >
+          {t('Create response type')}
+        </Button>
+      )}
+      {hasQuestion() && (
         <div className={css.QuestionList}>
           {fields.map((item, index) => {
             return (
