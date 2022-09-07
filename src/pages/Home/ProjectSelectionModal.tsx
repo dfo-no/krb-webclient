@@ -8,7 +8,7 @@ import LoaderSpinner from '../../common/LoaderSpinner';
 import NewSpecificationForm from './NewSpecificationForm';
 import NewPrefilledResponseForm from './NewPrefilledResponseForm';
 import Nexus from '../../Nexus/Nexus';
-import SpecificationStoreService from '../../Nexus/services/SpecificationStoreService';
+import SpecificationService from '../../Nexus/services/SpecificationService';
 import theme from '../../theme';
 import { IBank } from '../../Nexus/entities/IBank';
 import { IPrefilledResponse } from '../../Nexus/entities/IPrefilledResponse';
@@ -66,7 +66,7 @@ export default function ProjectSelectionModal({
 
   const goToSpecification = (): void => {
     const specification =
-      SpecificationStoreService.getSpecificationFromBank(selectedBank);
+      SpecificationService.getSpecificationFromBank(selectedBank);
     setNewSpecification(specification);
   };
 

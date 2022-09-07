@@ -6,7 +6,6 @@ import { useTranslation } from 'react-i18next';
 import Nexus from '../../../Nexus/Nexus';
 import theme from '../../../theme';
 import VerticalTextCtrl from '../../../FormProvider/VerticalTextCtrl';
-import { editSpecProduct } from '../../../store/reducers/specification-reducer';
 import { ISpecificationProduct } from '../../../Nexus/entities/ISpecificationProduct';
 import {
   ModalBox,
@@ -15,7 +14,7 @@ import {
   ModalButton
 } from '../../../components/ModalBox/ModalBox';
 import { ModelType } from '../../../Nexus/enums';
-import { useAppDispatch } from '../../../store/hooks';
+import { useSpecificationState } from '../SpecificationContext';
 
 interface IProps {
   handleClose: () => void;
@@ -24,7 +23,7 @@ interface IProps {
 
 const EditProductForm = ({ handleClose, specificationProduct }: IProps) => {
   const { t } = useTranslation();
-  const dispatch = useAppDispatch();
+  const { editSpecificationProduct } = useSpecificationState();
   const nexus = Nexus.getInstance();
 
   const methods = useForm<ISpecificationProduct>({
@@ -33,7 +32,7 @@ const EditProductForm = ({ handleClose, specificationProduct }: IProps) => {
   });
 
   const onSubmit = (put: ISpecificationProduct): void => {
-    dispatch(editSpecProduct({ product: put }));
+    editSpecificationProduct(put);
     handleClose();
   };
 

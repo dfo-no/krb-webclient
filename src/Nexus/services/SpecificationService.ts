@@ -2,6 +2,7 @@
 import QuestionService from './QuestionService';
 import SpecificationStoreService from './SpecificationStoreService';
 import UuidService from './UuidService';
+import { IBank } from '../entities/IBank';
 import { IRequirement } from '../entities/IRequirement';
 import { IRequirementAnswer } from '../entities/IRequirementAnswer';
 import { ISpecification } from '../entities/ISpecification';
@@ -10,12 +11,55 @@ import { ModelType, QuestionVariant, Weighting } from '../enums';
 import { QuestionType } from '../entities/QuestionType';
 
 export default class SpecificationService {
-  UuidService = new UuidService();
+  private UuidService = new UuidService();
 
   private store: SpecificationStoreService;
 
-  public constructor(store: SpecificationStoreService) {
-    this.store = store;
+  public constructor() {
+    this.store = new SpecificationStoreService();
+  }
+
+  public static getSpecificationFromBank(bank: IBank): ISpecification {
+    return {
+      id: '',
+      bank,
+      title: '',
+      organization: '',
+      organizationNumber: '',
+      products: [],
+      requirements: [],
+      requirementAnswers: []
+    };
+  }
+
+  public static defaultSpecification(): ISpecification {
+    return {
+      id: '',
+      bank: {
+        id: '',
+        title: '',
+        description: '',
+        needs: [],
+        products: [],
+        codelist: [],
+        tags: [],
+        version: 0,
+        type: ModelType.bank,
+        publications: [],
+        inheritedBanks: [],
+        publishedDate: null,
+        sourceOriginal: null,
+        sourceRel: null,
+        projectId: null,
+        deletedDate: null
+      },
+      title: '',
+      organization: '',
+      organizationNumber: '',
+      products: [],
+      requirements: [],
+      requirementAnswers: []
+    };
   }
 
   generateDefaultSpecificationProductValues = (): ISpecificationProduct => {
@@ -83,92 +127,65 @@ export default class SpecificationService {
     return reqAns;
   };
 
-  async setSpecification(specification: ISpecification): Promise<void> {
+  async setSpecification(
+    specification: ISpecification
+  ): Promise<ISpecification> {
+    console.log(specification);
     return this.store.setSpecification(specification);
   }
 
-  async getSpecification(): Promise<ISpecification> {
-    return this.store.getSpecification();
+  async getSpecification(id: string): Promise<ISpecification> {
+    return this.store.getSpecification(id);
   }
 
-  async editTtile(title: string): Promise<void> {
-    return this.store.editTitle(title);
-  }
-
-  async addSpecificationProduct(product: ISpecificationProduct): Promise<void> {
+  async addSpecificationProduct(
+    product: ISpecificationProduct
+  ): Promise<ISpecification> {
     return this.store.addSpecificationProduct(product);
   }
 
   async editSpecificationProduct(
     product: ISpecificationProduct
-  ): Promise<void> {
+  ): Promise<ISpecification> {
     return this.store.editSpecificationProduct(product);
   }
 
   async deleteSpecificationProduct(
     product: ISpecificationProduct
-  ): Promise<void> {
+  ): Promise<ISpecification> {
     return this.store.deleteSpecificationProduct(product);
-  }
-
-  async addRequirement(requirementId: string): Promise<void> {
-    return this.store.addRequirement(requirementId);
-  }
-
-  async removeRequirement(requirementId: string): Promise<void> {
-    return this.store.removeRequirement(requirementId);
-  }
-
-  async addProductRequirement(
-    requirementId: string,
-    productId: string
-  ): Promise<void> {
-    return this.store.addSpecificationProductRequirement(
-      requirementId,
-      productId
-    );
-  }
-
-  async removeProductRequirement(
-    requirementId: string,
-    productId: string
-  ): Promise<void> {
-    return this.store.removeSpecificationProductRequirement(
-      requirementId,
-      productId
-    );
   }
 
   async addProductAnswer(
     answer: IRequirementAnswer,
     productId: string
-  ): Promise<void> {
+  ): Promise<ISpecification> {
     return this.store.addProductAnswer(answer, productId);
   }
 
   async editProductAnswer(
     answer: IRequirementAnswer,
     productId: string
-  ): Promise<void> {
+  ): Promise<ISpecification> {
     return this.store.editProductAnswer(answer, productId);
   }
 
   async deleteProductAnswer(
     answer: IRequirementAnswer,
     productId: string
-  ): Promise<void> {
+  ): Promise<ISpecification> {
     return this.store.deleteProductAnswer(answer, productId);
   }
 
-  async addAnswer(answer: IRequirementAnswer): Promise<void> {
+  async addAnswer(answer: IRequirementAnswer): Promise<ISpecification> {
     return this.store.addAnswer(answer);
   }
 
-  async editAnswer(answer: IRequirementAnswer): Promise<void> {
+  async editAnswer(answer: IRequirementAnswer): Promise<ISpecification> {
     return this.store.editAnswer(answer);
   }
 
-  async deleteAnswer(answer: IRequirementAnswer): Promise<void> {
+  async deleteAnswer(answer: IRequirementAnswer): Promise<ISpecification> {
     return this.store.deleteAnswer(answer);
   }
 }

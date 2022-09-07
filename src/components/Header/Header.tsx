@@ -16,8 +16,9 @@ import theme from '../../theme';
 import { IBank } from '../../Nexus/entities/IBank';
 import { IBreadcrumb } from '../../models/IBreadcrumb';
 import { IToolbarItem } from '../../models/IToolbarItem';
-import { useGetProjectQuery } from '../../store/api/bankApi';
 import { useAppSelector } from '../../store/hooks';
+import { useGetProjectQuery } from '../../store/api/bankApi';
+import { useHeaderState } from './HeaderContext';
 
 const useStyles = makeStyles({
   header: {
@@ -82,7 +83,7 @@ const useStyles = makeStyles({
 export default function Header(): React.ReactElement {
   const classes = useStyles();
   const { t } = useTranslation();
-  const { spec } = useAppSelector((state) => state.specification);
+  const { title } = useHeaderState();
   const { response } = useAppSelector((state) => state.response);
   const { specification } = useAppSelector((state) => state.evaluation);
   const { prefilledResponse } = useAppSelector(
@@ -195,7 +196,7 @@ export default function Header(): React.ReactElement {
       return project.title || t('Project');
     }
     if (isSpecification) {
-      return spec.title || t('Specification');
+      return title || t('Requirement specification');
     }
     if (isResponse) {
       return response.specification.title || t('Response');

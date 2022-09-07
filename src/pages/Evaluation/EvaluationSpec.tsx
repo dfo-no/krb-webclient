@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 import css from './Evaluation.module.scss';
 import DateUtils from '../../common/DateUtils';
 import FileUpload from '../../components/FileUpload/FileUpload';
-import SpecificationStoreService from '../../Nexus/services/SpecificationStoreService';
+import SpecificationService from '../../Nexus/services/SpecificationService';
 import { httpPost } from '../../api/http';
 import {
   setEvaluations,
@@ -66,7 +66,7 @@ const EvaluationSpec = (): ReactElement => {
           setUploadError(t('EVAL_SPEC_ERROR_INVALID_FILE'));
           dispatch(
             setEvaluationSpecification(
-              SpecificationStoreService.generateDefaultSpecification()
+              SpecificationService.defaultSpecification()
             )
           );
           return response;
