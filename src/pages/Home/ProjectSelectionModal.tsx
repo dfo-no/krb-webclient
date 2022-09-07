@@ -18,17 +18,17 @@ import {
   ModalButton,
   ModalButtonsBox
 } from '../../components/ModalBox/ModalBox';
-import { useHomeState } from './HomeContext';
 import { useGetBankQuery } from '../../store/api/bankApi';
 
 interface IProps {
   selectedBank: IBank;
+  setSelectedBank: (bank: IBank | null) => void;
 }
 
 export default function ProjectSelectionModal({
-  selectedBank
+  selectedBank,
+  setSelectedBank
 }: IProps): React.ReactElement {
-  const { setSelectedBank } = useHomeState();
   const [newSpecification, setNewSpecification] =
     useState<ISpecification | null>(null);
   const [newPrefilledResponse, setNewPrefilledResponse] =

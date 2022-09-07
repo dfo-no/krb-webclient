@@ -35,6 +35,7 @@ export default function HomePage(): React.ReactElement {
   const { t } = useTranslation();
   const {
     selectedBank,
+    setSelectedBank,
     selectedSpecification,
     setSelectedSpecification,
     selectedResponse,
@@ -175,7 +176,12 @@ export default function HomePage(): React.ReactElement {
         </div>
       </div>
       <Footer />
-      {selectedBank && <ProjectSelectionModal selectedBank={selectedBank} />}
+      {selectedBank && (
+        <ProjectSelectionModal
+          selectedBank={selectedBank}
+          setSelectedBank={setSelectedBank}
+        />
+      )}
       {selectedSpecification && (
         <SpecificationSelectionModal
           selectedSpecification={selectedSpecification}
