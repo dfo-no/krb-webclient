@@ -61,23 +61,19 @@ const QuestionsList = (): ReactElement => {
       )}
       {hasQuestion() && (
         <div className={css.QuestionList}>
-          {fields.map((item, index) => {
-            return (
-              <Card className={css.Card} key={item.id}>
-                <div className={css.Content}>
-                  <Typography variant={'smBold'}>{t(item.type)}</Typography>
-                  <FormIconButton
-                    className={css.IconButton}
-                    hoverColor={'var(--error-color)'}
-                    onClick={() => remove(index)}
-                  >
-                    <DeleteIcon />
-                  </FormIconButton>
-                </div>
-                <QuestionConfig item={item} index={index} />
-              </Card>
-            );
-          })}
+          <Card className={css.Card} key={fields[0].id}>
+            <div className={css.Content}>
+              <Typography variant={'smBold'}>{t(fields[0].type)}</Typography>
+              <FormIconButton
+                className={css.IconButton}
+                hoverColor={'var(--error-color)'}
+                onClick={() => remove(0)}
+              >
+                <DeleteIcon />
+              </FormIconButton>
+            </div>
+            <QuestionConfig item={fields[0]} index={0} />
+          </Card>
         </div>
       )}
       <SelectQuestionDialog

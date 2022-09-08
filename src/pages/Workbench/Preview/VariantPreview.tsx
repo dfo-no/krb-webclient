@@ -81,17 +81,15 @@ export default function VariantPreview({
         </Typography>
         <Box className={css.questions}>
           {variant.questions.length > 0 ? (
-            variant.questions.map((item) => {
-              return (
-                <Card key={item.id} className={css.question}>
-                  <Box className={css.title}>
-                    <Typography variant={'smBold'}>{t(item.type)}</Typography>
-                  </Box>
-                  <Divider />
-                  <QuestionConfigItem item={item} />
-                </Card>
-              );
-            })
+            <Card key={variant.questions[0].id} className={css.question}>
+              <Box className={css.title}>
+                <Typography variant={'smBold'}>
+                  {t(variant.questions[0].type)}
+                </Typography>
+              </Box>
+              <Divider />
+              <QuestionConfigItem item={variant.questions[0]} />
+            </Card>
           ) : (
             <Typography>-</Typography>
           )}
