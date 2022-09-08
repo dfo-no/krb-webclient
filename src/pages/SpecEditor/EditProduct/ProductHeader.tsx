@@ -45,16 +45,14 @@ export default function ProductHeader(): React.ReactElement {
             {spec.products[productIndex]?.description ?? ''}
           </Typography>
 
-          {productIndex !== -1 && (
+          {productIndex !== -1 && spec.products[productIndex].originProduct && (
             <Typography
               variant="smBold"
               sx={{ marginLeft: 'auto', paddingRight: 2 }}
             >
               {t('From product type')}
               {': '}
-              {spec.products[productIndex].originProduct && (
-                <i>{spec.products[productIndex].originProduct.title}</i>
-              )}
+              <i>{spec.products[productIndex].originProduct.title}</i>
             </Typography>
           )}
         </Box>
