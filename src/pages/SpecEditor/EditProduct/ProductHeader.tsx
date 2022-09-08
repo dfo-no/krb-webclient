@@ -46,7 +46,7 @@ export default function ProductHeader(): React.ReactElement {
             {specification.products[productIndex]?.description ?? ''}
           </Typography>
 
-          {productIndex !== -1 && (
+          {productIndex !== -1 && spec.products[productIndex].originProduct && (
             <Typography
               variant="smBold"
               sx={{ marginLeft: 'auto', paddingRight: 2 }}

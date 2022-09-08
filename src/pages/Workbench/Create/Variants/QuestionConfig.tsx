@@ -37,7 +37,7 @@ const QuestionConfig = ({ item, index }: IProps) => {
       return (
         <ConfigBox>
           <Typography variant={'smBold'} sx={{ marginBottom: 2 }}>
-            {t('Preferred alternative')}
+            {t('Assumed preferred alternative')}
           </Typography>
           <YesNoSelection
             name={`questions.${index}.config.preferedAlternative`}

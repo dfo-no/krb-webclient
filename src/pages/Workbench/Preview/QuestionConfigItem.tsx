@@ -43,7 +43,7 @@ export default function QuestionConfigItem({
       return (
         <ConfigBox>
           <Typography variant={'smBold'} color={theme.palette.primary.main}>
-            {t('Preferred alternative')}
+            {t('Assumed preferred alternative')}
           </Typography>
           <Typography sx={{ marginTop: 1 }}>
             {item.config?.preferedAlternative ? t('Yes') : t('No')}
