@@ -52,7 +52,9 @@ export default function ProductHeader(): React.ReactElement {
             >
               {t('From product type')}
               {': '}
-              <i>{spec.products[productIndex].originProduct.title}</i>
+              {spec.products[productIndex].originProduct && (
+                <i>{spec.products[productIndex].originProduct.title}</i>
+              )}
             </Typography>
           )}
         </Box>

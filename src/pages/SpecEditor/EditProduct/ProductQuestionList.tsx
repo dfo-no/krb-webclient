@@ -23,13 +23,13 @@ const ProductQuestionsList = ({ variant }: IProps): ReactElement => {
       (question) => question.id === useQuestionId
     );
     if (variant.questions.length > 0 && index < 0) {
-      setValue('question', variant.questions[0]);
-      setValue('questionId', variant.questions[0].id);
+      setValue('question', item);
+      setValue('questionId', item.id);
     }
-  }, [useQuestionId, setValue, variant]);
+  }, [useQuestionId, setValue, variant, item]);
 
-  if (variant.questions.length === 0) {
-    return <></>;
+  if (!item) {
+    return <>-</>;
   }
 
   return (
