@@ -46,16 +46,19 @@ export default function ProductHeader(): React.ReactElement {
             {specification.products[productIndex]?.description ?? ''}
           </Typography>
 
-          {productIndex !== -1 && spec.products[productIndex].originProduct && (
-            <Typography
-              variant="smBold"
-              sx={{ marginLeft: 'auto', paddingRight: 2 }}
-            >
-              {t('From product type')}
-              {': '}
-              <i>{specification.products[productIndex].originProduct.title}</i>
-            </Typography>
-          )}
+          {productIndex !== -1 &&
+            specification.products[productIndex].originProduct && (
+              <Typography
+                variant="smBold"
+                sx={{ marginLeft: 'auto', paddingRight: 2 }}
+              >
+                {t('From product type')}
+                {': '}
+                <i>
+                  {specification.products[productIndex].originProduct.title}
+                </i>
+              </Typography>
+            )}
         </Box>
         {editingProduct && (
           <DFODialog
