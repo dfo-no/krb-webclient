@@ -8,6 +8,7 @@ import NewProductHeader from '../../../components/NewProductHeader/NewProductHea
 import Nexus from '../../../Nexus/Nexus';
 import NeedList from '../../../components/NeedList/NeedList';
 import ProductSelection from '../../../components/ProductSelection/ProductSelection';
+import SpecificationService from '../../../Nexus/services/SpecificationService';
 import theme from '../../../theme';
 import VerticalTextCtrl from '../../../FormProvider/VerticalTextCtrl';
 import { IProduct } from '../../../Nexus/entities/IProduct';
@@ -27,7 +28,7 @@ export default function NewProduct(): React.ReactElement {
   const [product, setProduct] = useState<Parentable<IProduct> | null>(null);
 
   const defaultValues: ISpecificationProduct =
-    nexus.specificationService.generateDefaultSpecificationProductValues();
+    SpecificationService.defaultSpecificationProduct();
 
   const methods = useForm<ISpecificationProduct>({
     resolver: nexus.resolverService.postResolver(
@@ -45,8 +46,7 @@ export default function NewProduct(): React.ReactElement {
   }, [specification, product, setProduct, methods]);
 
   const onSubmit = (post: ISpecificationProduct): void => {
-    const newProduct =
-      nexus.specificationService.createSpecificationProductWithId(post);
+    const newProduct = nexus.specificationService.withId(post);
     const newId = specification.products.length;
     addSpecificationProduct(newProduct);
     setProductIndex(newId);

@@ -66,7 +66,7 @@ export default function ProjectSelectionModal({
 
   const goToSpecification = (): void => {
     const specification =
-      SpecificationService.getSpecificationFromBank(selectedBank);
+      SpecificationService.defaultSpecification(selectedBank);
     setNewSpecification(specification);
   };
 

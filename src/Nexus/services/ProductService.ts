@@ -13,14 +13,14 @@ export default class ProductService {
     this.storeService = store;
   }
 
-  generateDefaultProductValues = (projectId: string): Parentable<IProduct> => {
+  public static defaultProduct = (projectId?: string): Parentable<IProduct> => {
     return {
       id: '',
       title: '',
       description: '',
       type: ModelType.product,
       parent: '',
-      sourceOriginal: projectId,
+      sourceOriginal: projectId ?? null,
       sourceRel: null,
       deletedDate: null
     };

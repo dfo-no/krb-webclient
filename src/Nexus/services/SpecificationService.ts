@@ -1,7 +1,10 @@
 /* eslint-disable class-methods-use-this */
+import BaseService from './BaseService';
+import ProductService from './ProductService';
+import ProjectService from './ProjectService';
 import QuestionService from './QuestionService';
+import RequirementService from './RequirementService';
 import SpecificationStoreService from './SpecificationStoreService';
-import UuidService from './UuidService';
 import { IBank } from '../entities/IBank';
 import { IRequirement } from '../entities/IRequirement';
 import { IRequirementAnswer } from '../entities/IRequirementAnswer';
@@ -9,20 +12,20 @@ import { ISpecification } from '../entities/ISpecification';
 import { ISpecificationProduct } from '../entities/ISpecificationProduct';
 import { ModelType, QuestionVariant, Weighting } from '../enums';
 import { QuestionType } from '../entities/QuestionType';
+import { IProduct } from '../entities/IProduct';
 
-export default class SpecificationService {
-  private UuidService = new UuidService();
-
+export default class SpecificationService extends BaseService {
   private store: SpecificationStoreService;
 
   public constructor() {
+    super();
     this.store = new SpecificationStoreService();
   }
 
-  public static getSpecificationFromBank(bank: IBank): ISpecification {
+  public static defaultSpecification(bank?: IBank): ISpecification {
     return {
       id: '',
-      bank,
+      bank: bank ?? ProjectService.defaultProject(),
       title: '',
       organization: '',
       organizationNumber: '',
@@ -32,51 +35,14 @@ export default class SpecificationService {
     };
   }
 
-  public static defaultSpecification(): ISpecification {
-    return {
-      id: '',
-      bank: {
-        id: '',
-        title: '',
-        description: '',
-        needs: [],
-        products: [],
-        codelist: [],
-        tags: [],
-        version: 0,
-        type: ModelType.bank,
-        publications: [],
-        inheritedBanks: [],
-        publishedDate: null,
-        sourceOriginal: null,
-        sourceRel: null,
-        projectId: null,
-        deletedDate: null
-      },
-      title: '',
-      organization: '',
-      organizationNumber: '',
-      products: [],
-      requirements: [],
-      requirementAnswers: []
-    };
-  }
-
-  generateDefaultSpecificationProductValues = (): ISpecificationProduct => {
+  public static defaultSpecificationProduct = (
+    product?: IProduct
+  ): ISpecificationProduct => {
     return {
       id: '',
       title: '',
       description: '',
-      originProduct: {
-        id: '',
-        title: '',
-        description: '',
-        type: ModelType.product,
-        parent: '',
-        sourceOriginal: '',
-        sourceRel: null,
-        deletedDate: null
-      },
+      originProduct: product ?? ProductService.defaultProduct(),
       weight: Weighting.MEDIUM,
       amount: 1,
       requirements: [],
@@ -87,50 +53,26 @@ export default class SpecificationService {
     };
   };
 
-  generateDefaultRequirementAnswer = (
-    requirement: IRequirement,
+  public static defaultRequirementAnswer = (
+    requirement?: IRequirement,
     variantId?: string,
     question?: QuestionType
   ): IRequirementAnswer => {
     const questionService = new QuestionService();
     return {
-      id: this.UuidService.generateId(),
+      id: '',
       questionId: '',
       weight: Weighting.MEDIUM,
       variantId: variantId ?? '',
       question: question ?? questionService.getQuestion(QuestionVariant.Q_TEXT),
       type: ModelType.requirementAnswer,
-      requirement: requirement
+      requirement: requirement ?? RequirementService.defaultRequirement()
     };
-  };
-
-  createSpecificationWithId = (item: ISpecification): ISpecification => {
-    return {
-      ...item,
-      id: this.UuidService.generateId()
-    };
-  };
-
-  createSpecificationProductWithId = (
-    item: ISpecificationProduct
-  ): ISpecificationProduct => {
-    const specProd = { ...item };
-    specProd.id = this.UuidService.generateId();
-    return specProd;
-  };
-
-  createRequirementAnswerWithId = (
-    item: IRequirementAnswer
-  ): IRequirementAnswer => {
-    const reqAns = { ...item };
-    reqAns.id = this.UuidService.generateId();
-    return reqAns;
   };
 
   async setSpecification(
     specification: ISpecification
   ): Promise<ISpecification> {
-    console.log(specification);
     return this.store.setSpecification(specification);
   }
 

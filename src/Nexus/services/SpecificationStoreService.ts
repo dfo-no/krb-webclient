@@ -90,8 +90,10 @@ export default class SpecificationStoreService {
     const index = this.specification.products.findIndex(
       (product) => product.id === productId
     );
-    this.specification.products[index].requirementAnswers.push(answer);
-    this.specification.products[index].requirements.push(answer.requirement.id);
+    this.specification = produce(this.specification, (draft) => {
+      draft.products[index].requirementAnswers.push(answer);
+      draft.products[index].requirements.push(answer.requirement.id);
+    });
     await this.storeSpecification();
     return this.specification;
   }
@@ -108,7 +110,9 @@ export default class SpecificationStoreService {
     ].requirementAnswers.findIndex(
       (element) => element.variantId === answer.variantId
     );
-    this.specification.products[index].requirementAnswers[answerIndex] = answer;
+    this.specification = produce(this.specification, (draft) => {
+      draft.products[index].requirementAnswers[answerIndex] = answer;
+    });
     await this.storeSpecification();
     return this.specification;
   }
@@ -128,18 +132,19 @@ export default class SpecificationStoreService {
     const requirementIndex = this.specification.products[
       index
     ].requirements.findIndex((element) => element === answer.requirement.id);
-    this.specification.products[index].requirementAnswers.splice(
-      answerIndex,
-      1
-    );
-    this.specification.products[index].requirements.splice(requirementIndex, 1);
+    this.specification = produce(this.specification, (draft) => {
+      draft.products[index].requirementAnswers.splice(answerIndex, 1);
+      draft.products[index].requirements.splice(requirementIndex, 1);
+    });
     await this.storeSpecification();
     return this.specification;
   }
 
   async addAnswer(answer: IRequirementAnswer): Promise<ISpecification> {
-    this.specification.requirementAnswers.push(answer);
-    this.specification.requirements.push(answer.requirement.id);
+    this.specification = produce(this.specification, (draft) => {
+      draft.requirementAnswers.push(answer);
+      draft.requirements.push(answer.requirement.id);
+    });
     await this.storeSpecification();
     return this.specification;
   }
@@ -148,7 +153,9 @@ export default class SpecificationStoreService {
     const answerIndex = this.specification.requirementAnswers.findIndex(
       (element) => element.variantId === answer.variantId
     );
-    this.specification.requirementAnswers[answerIndex] = answer;
+    this.specification = produce(this.specification, (draft) => {
+      draft.requirementAnswers[answerIndex] = answer;
+    });
     await this.storeSpecification();
     return this.specification;
   }
@@ -160,8 +167,10 @@ export default class SpecificationStoreService {
     const requirementIndex = this.specification.requirements.findIndex(
       (element) => element === answer.requirement.id
     );
-    this.specification.requirementAnswers.splice(answerIndex, 1);
-    this.specification.requirements.splice(requirementIndex, 1);
+    this.specification = produce(this.specification, (draft) => {
+      draft.requirementAnswers.splice(answerIndex, 1);
+      draft.requirements.splice(requirementIndex, 1);
+    });
     await this.storeSpecification();
     return this.specification;
   }

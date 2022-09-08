@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { v4 as uuidv4 } from 'uuid';
 
 import Nexus from '../../../Nexus/Nexus';
+import ProjectService from '../../../Nexus/services/ProjectService';
 import theme from '../../../theme';
 import VerticalTextCtrl from '../../../FormProvider/VerticalTextCtrl';
 import { addAlert } from '../../../store/reducers/alert-reducer';
@@ -29,7 +30,7 @@ const NewProjectForm = ({ handleClose }: IProps) => {
   const nexus = Nexus.getInstance();
 
   // TODO: Should contain a defaultValue from options to fully control the Select
-  const defaultValues = nexus.projectService.generateDefaultProjectValues();
+  const defaultValues = ProjectService.defaultProject();
   const [postProject] = usePostProjectMutation();
   const methods = useForm<IBank>({
     resolver: nexus.resolverService.postResolver(ModelType.bank),

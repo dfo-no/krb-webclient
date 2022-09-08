@@ -32,8 +32,7 @@ const NewSpecificationForm = ({ handleClose, specification }: IProps) => {
   });
 
   const onSubmit = async (post: ISpecification) => {
-    const specificationWithId =
-      nexus.specificationService.createSpecificationWithId(post);
+    const specificationWithId = nexus.specificationService.withId(post);
     nexus.specificationService
       .setSpecification(specificationWithId)
       .then(() => history.push(`/specification/${specificationWithId.id}`));

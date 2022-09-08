@@ -11,6 +11,7 @@ import EditProductVariant from './EditProductVariant';
 import GeneralErrorMessage from '../../../Form/GeneralErrorMessage';
 import Nexus from '../../../Nexus/Nexus';
 import ProductVariant from './ProductVariant';
+import SpecificationService from '../../../Nexus/services/SpecificationService';
 import { DFOCheckbox } from '../../../components/DFOCheckbox/DFOCheckbox';
 import { DFOChip } from '../../../components/DFOChip/DFOChip';
 import { FormIconButton } from '../../../components/Form/FormIconButton';
@@ -40,9 +41,9 @@ export default function ProductRequirement({
   const [original, setOriginal] = useState<null | IRequirementAnswer>(null);
 
   const defaultValues =
-    nexus.specificationService.generateDefaultRequirementAnswer(requirement);
+    SpecificationService.defaultRequirementAnswer(requirement);
   const methods = useForm<IRequirementAnswer>({
-    resolver: nexus.resolverService.resolver(ModelType.requirementAnswer),
+    resolver: nexus.resolverService.postResolver(ModelType.requirementAnswer),
     defaultValues
   });
 
@@ -57,10 +58,11 @@ export default function ProductRequirement({
   );
 
   const onSubmit = (put: IRequirementAnswer) => {
+    const reqAnsWithId = nexus.specificationService.withId(put);
     if (productIndex === -1) {
-      addGeneralAnswer(put);
+      addGeneralAnswer(reqAnsWithId);
     } else {
-      addProductAnswer(put, specification.products[productIndex].id);
+      addProductAnswer(reqAnsWithId, specification.products[productIndex].id);
     }
   };
 
