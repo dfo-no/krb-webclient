@@ -107,13 +107,6 @@
         }
 
         .questions {
-          display: flex;
-          flex-direction: column;
-          gap: var(--small-gap);
-          border: 0.1rem solid var(--primary-color);
-          background-color: var(--light-gray-color);
-          padding: var(--small-gap);
-
           .question {
             padding: var(--tiny-gap);
 
