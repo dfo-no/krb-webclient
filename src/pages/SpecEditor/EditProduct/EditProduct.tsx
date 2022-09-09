@@ -5,6 +5,7 @@ import ProductNeed from './ProductNeed';
 import Utils from '../../../common/Utils';
 import { useAppSelector } from '../../../store/hooks';
 import { useProductIndexState } from '../../../components/ProductIndexContext/ProductIndexContext';
+import { SelectProvider } from '../../Workbench/Create/SelectContext';
 
 export default function EditProduct(): React.ReactElement {
   const { spec } = useAppSelector((state) => state.specification);
@@ -29,7 +30,9 @@ export default function EditProduct(): React.ReactElement {
 
   return (
     <div>
-      <ProductHeader />
+      <SelectProvider>
+        <ProductHeader />
+      </SelectProvider>
       {renderNeeds()}
     </div>
   );
