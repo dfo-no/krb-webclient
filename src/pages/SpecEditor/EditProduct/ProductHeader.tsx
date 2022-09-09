@@ -1,4 +1,5 @@
 import EditIcon from '@mui/icons-material/Edit';
+import DeleteIcon from '@mui/icons-material/Delete';
 import React, { useState } from 'react';
 import { Box, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
@@ -8,14 +9,21 @@ import EditProductForm from './EditProductForm';
 import { DFOCardHeader } from '../../../components/DFOCard/DFOCardHeader';
 import { DFOCardHeaderIconButton } from '../../../components/DFOCard/DFOCardHeaderIconButton';
 import { DFOHeaderContentBox } from '../../../components/DFOCard/DFOHeaderContentBox';
-import { useAppSelector } from '../../../store/hooks';
+import { useAppDispatch, useAppSelector } from '../../../store/hooks';
 import { useProductIndexState } from '../../../components/ProductIndexContext/ProductIndexContext';
+import theme from '../../../theme';
+import { deleteSpecProduct } from '../../../store/reducers/specification-reducer';
 
 export default function ProductHeader(): React.ReactElement {
   const { t } = useTranslation();
   const { spec } = useAppSelector((state) => state.specification);
   const { productIndex } = useProductIndexState();
   const [editingProduct, setEditingProduct] = useState(false);
+  const dispatch = useAppDispatch();
+
+  const onDelete = () => {
+    dispatch(deleteSpecProduct({ index: productIndex }));
+  };
 
   return (
     <DFOCardHeader>
@@ -32,12 +40,20 @@ export default function ProductHeader(): React.ReactElement {
             {spec.products[productIndex]?.title ?? t('General requirement')}
           </Typography>
           {productIndex !== -1 && (
-            <DFOCardHeaderIconButton
-              sx={{ marginLeft: 'auto', paddingRight: 2 }}
-              onClick={() => setEditingProduct(true)}
-            >
-              <EditIcon />
-            </DFOCardHeaderIconButton>
+            <>
+              <DFOCardHeaderIconButton
+                sx={{ marginLeft: 'auto', paddingRight: 2 }}
+                onClick={() => setEditingProduct(true)}
+              >
+                <EditIcon />
+              </DFOCardHeaderIconButton>
+              <DFOCardHeaderIconButton
+                hoverColor={theme.palette.errorRed.main}
+                onClick={() => onDelete()}
+              >
+                <DeleteIcon />
+              </DFOCardHeaderIconButton>
+            </>
           )}
         </Box>
         <Box sx={{ display: 'flex', flexDirection: 'row', paddingTop: 1 }}>
@@ -45,7 +61,7 @@ export default function ProductHeader(): React.ReactElement {
             {spec.products[productIndex]?.description ?? ''}
           </Typography>
 
-          {productIndex !== -1 && (
+          {productIndex !== -1 && spec.products[productIndex].originProduct && (
             <Typography
               variant="smBold"
               sx={{ marginLeft: 'auto', paddingRight: 2 }}
