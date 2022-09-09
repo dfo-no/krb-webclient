@@ -59,9 +59,9 @@ const PublicationItem = ({
         {specification && (
           <FormIconButton
             className={css.IconButton}
-            hoverColor={'var(--error-color)'}
+            hoverColor={'var(--link-hover-color)'}
             edge="end"
-            aria-label="delete"
+            aria-label="create specification from publication"
             onClick={() => chooseSpecification(specification)}
           >
             <AddIcon />

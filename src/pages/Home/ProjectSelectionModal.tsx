@@ -20,6 +20,10 @@ import {
 } from '../../components/ModalBox/ModalBox';
 import { useHomeState } from './HomeContext';
 import { useGetBankQuery } from '../../store/api/bankApi';
+// import { useVersion } from '../../hooks/useVersion';
+import { Version } from '../../components/Version';
+
+// import { Version } from '../../components/Version';
 
 interface IProps {
   selectedBank: IBank;
@@ -38,6 +42,9 @@ export default function ProjectSelectionModal({
 
   const originBankId = selectedBank.projectId ?? selectedBank.id;
   const { data: bank, isLoading } = useGetBankQuery(originBankId);
+  const isPublished = !!bank?.publications.some((p) => !p.deletedDate);
+
+  // const { version, isPublished } = useVersion(bank);
 
   if (!selectedBank) {
     return <></>;
@@ -52,17 +59,6 @@ export default function ProjectSelectionModal({
       />
     );
   }
-
-  const isPublished = bank.publications.some((p) => !p.deletedDate);
-  const versionText = (): string => {
-    if (isPublished) {
-      const publishedBanks = bank.publications.filter((p) => !p.deletedDate);
-      return `${t('Version')} ${
-        publishedBanks[publishedBanks.length - 1].version
-      }`;
-    }
-    return t('Not published');
-  };
 
   const goToSpecification = (): void => {
     const specification =
@@ -94,7 +90,9 @@ export default function ProjectSelectionModal({
           <Typography sx={{ marginLeft: 0.16 }}>
             {selectedBank.description}
           </Typography>
-          <Typography sx={{ marginLeft: 0.16 }}>{versionText()}</Typography>
+          <Typography sx={{ marginLeft: 0.16 }}>
+            {t('Version')}: <Version bank={bank} />
+          </Typography>
         </Box>
         <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
           <ModalButton

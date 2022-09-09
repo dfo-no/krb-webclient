@@ -4,10 +4,10 @@ import { useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 
 import css from './PublicationsPage.module.scss';
+import DFODialog from '../../../../components/DFODialog/DFODialog';
 import LoaderSpinner from '../../../../common/LoaderSpinner';
 import NewPublicationForm from './NewPublicationForm';
 import NewSpecificationForm from '../../../Home/NewSpecificationForm';
-import DFODialog from '../../../../components/DFODialog/DFODialog';
 import PublicationItem from './PublicationItem';
 import { EditableProvider } from '../../../../components/EditableContext/EditableContext';
 import { FormContainerBox } from '../../../../components/Form/FormContainerBox';
