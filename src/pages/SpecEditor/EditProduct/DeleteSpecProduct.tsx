@@ -14,7 +14,7 @@ import { useSelectState } from '../../Workbench/Create/SelectContext';
 
 interface IProps {
   children: React.ReactElement;
-  product: ISpecificationProduct;
+  product?: ISpecificationProduct;
   handleClose: () => void;
 }
 
@@ -28,25 +28,31 @@ export default function DeleteSpecProduct({
   const { setProductIndex } = useProductIndexState();
   const { deleteMode } = useSelectState();
 
-  const hasChildren = product.requirements.length > 0;
-
-  if (deleteMode !== product.id) {
+  if (product && deleteMode !== product.id) {
     return children;
   }
+
+  if (!product && deleteMode === '') {
+    return children;
+  }
+
+  const hasChildren = product && product.requirements.length > 0;
 
   const infoText = hasChildren
     ? `${t('Cant delete this product')} ${t('Product has children')}`
     : '';
 
   const onDelete = (): void => {
-    dispatch(deleteSpecProduct({ productId: product.id }));
-    const alert: IAlert = {
-      id: uuidv4(),
-      style: 'success',
-      text: 'Successfully deleted product'
-    };
-    dispatch(addAlert({ alert }));
-    setProductIndex(-2);
+    if (product) {
+      dispatch(deleteSpecProduct({ productId: product.id }));
+      const alert: IAlert = {
+        id: uuidv4(),
+        style: 'success',
+        text: 'Successfully deleted product'
+      };
+      dispatch(addAlert({ alert }));
+      setProductIndex(-2);
+    }
     handleClose();
   };
 
