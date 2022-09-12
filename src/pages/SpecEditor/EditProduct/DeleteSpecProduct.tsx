@@ -35,7 +35,9 @@ export default function DeleteSpecProduct({
   const hasChildren = product && product.requirements.length > 0;
 
   const infoText = hasChildren
-    ? `${t('Cant delete this product')} ${t('Product has children')}`
+    ? `${t('Cant delete this product')} ${t(
+        'Product has answered requirements'
+      )}`
     : '';
 
   const onDelete = (): void => {
