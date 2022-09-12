@@ -6,6 +6,7 @@ import NewProduct from './NewProduct/NewProduct';
 import NoProducts from './NoProducts/NoProducts';
 import SpecSideBar from './SideBar/SpecSideBar';
 import { useProductIndexState } from '../../components/ProductIndexContext/ProductIndexContext';
+import { SelectProvider } from '../Workbench/Create/SelectContext';
 
 export default function SpecEditor(): ReactElement {
   const { create, productIndex } = useProductIndexState();
@@ -15,7 +16,11 @@ export default function SpecEditor(): ReactElement {
       return <NewProduct />;
     }
     if (productIndex >= -1) {
-      return <EditProduct />;
+      return (
+        <SelectProvider>
+          <EditProduct />
+        </SelectProvider>
+      );
     }
     return <NoProducts />;
   };
