@@ -10,6 +10,7 @@ import { useHeaderState } from '../../components/Header/HeaderContext';
 interface ISpecificationContext {
   specification: ISpecification;
   addSpecificationProduct: (spec: ISpecificationProduct) => void;
+  deleteSpecificationProduct: (spec: ISpecificationProduct) => void;
   editSpecificationProduct: (spec: ISpecificationProduct) => void;
   addGeneralAnswer: (answer: IRequirementAnswer) => void;
   deleteGeneralAnswer: (answer: IRequirementAnswer) => void;
@@ -23,6 +24,9 @@ const initialContext: ISpecificationContext = {
     throw new Error('Function not implemented.');
   },
   editSpecificationProduct: (): void => {
+    throw new Error('Function not implemented.');
+  },
+  deleteSpecificationProduct: (): void => {
     throw new Error('Function not implemented.');
   },
   addGeneralAnswer: (): void => {
@@ -79,6 +83,14 @@ export const SpecificationProvider = ({ children }: IProps) => {
       });
   };
 
+  const deleteSpecificationProduct = (product: ISpecificationProduct) => {
+    nexus.specificationService
+      .deleteSpecificationProduct(product)
+      .then((spec) => {
+        setSpecification(spec);
+      });
+  };
+
   const addGeneralAnswer = (answer: IRequirementAnswer) => {
     nexus.specificationService.addAnswer(answer).then((spec) => {
       setSpecification(spec);
@@ -116,6 +128,7 @@ export const SpecificationProvider = ({ children }: IProps) => {
         specification,
         addSpecificationProduct,
         editSpecificationProduct,
+        deleteSpecificationProduct,
         addGeneralAnswer,
         deleteGeneralAnswer,
         addProductAnswer,

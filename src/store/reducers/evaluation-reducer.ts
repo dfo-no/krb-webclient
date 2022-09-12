@@ -3,7 +3,7 @@ import { IEvaluatedResponse } from '../../Nexus/entities/IEvaluatedResponse';
 import { IFile } from '../../models/IFile';
 import { IResponse } from '../../Nexus/entities/IResponse';
 import { ISpecification } from '../../Nexus/entities/ISpecification';
-import { ModelType } from '../../Nexus/enums';
+import { ModelType, Weighting } from '../../Nexus/enums';
 
 interface ISelectedBankState {
   files: IFile[];
@@ -41,7 +41,8 @@ const initialState: ISelectedBankState = {
     organizationNumber: '',
     products: [],
     requirements: [],
-    requirementAnswers: []
+    requirementAnswers: [],
+    weight: Weighting.MEDIUM
   },
   responses: [],
   evaluations: []

@@ -18,6 +18,7 @@ export interface ISpecification {
   requirements: string[];
   requirementAnswers: IRequirementAnswer[];
   title: string;
+  weight: number;
 }
 
 export const BaseSpecificationSchema = CustomJoi.object().keys({
@@ -28,5 +29,6 @@ export const BaseSpecificationSchema = CustomJoi.object().keys({
   products: CustomJoi.validateUniqueArray(SpecificationProductSchema),
   requirements: CustomJoi.validateIdArray(),
   requirementAnswers: CustomJoi.validateUniqueArray(RequirementAnswerSchema),
-  title: CustomJoi.validateText()
+  title: CustomJoi.validateText(),
+  weight: CustomJoi.validateWeight()
 });
