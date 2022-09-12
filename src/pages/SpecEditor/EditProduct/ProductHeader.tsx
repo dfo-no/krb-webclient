@@ -12,7 +12,6 @@ import { DFOHeaderContentBox } from '../../../components/DFOCard/DFOHeaderConten
 import { useAppSelector } from '../../../store/hooks';
 import { useProductIndexState } from '../../../components/ProductIndexContext/ProductIndexContext';
 import theme from '../../../theme';
-import DeleteSpecProduct from './DeleteSpecProduct';
 import { useSelectState } from '../../Workbench/Create/SelectContext';
 
 export default function ProductHeader(): React.ReactElement {
@@ -22,72 +21,66 @@ export default function ProductHeader(): React.ReactElement {
   const [editingProduct, setEditingProduct] = useState(false);
   const { setDeleteMode } = useSelectState();
 
-  const onDelete = (): void => {
-    setDeleteMode('');
-  };
-
   return (
-    <DeleteSpecProduct product={spec.products} handleClose={onDelete}>
-      <DFOCardHeader>
-        <DFOHeaderContentBox>
-          <Box
-            sx={{
-              display: 'flex',
-              flexDirection: 'row',
-              paddingBottom: 0.5,
-              borderBottom: '0.1rem solid'
-            }}
-          >
-            <Typography variant="lgBold">
-              {spec.products[productIndex]?.title ?? t('General requirement')}
-            </Typography>
-            {productIndex !== -1 && (
-              <>
-                <DFOCardHeaderIconButton
-                  sx={{ marginLeft: 'auto', paddingRight: 2 }}
-                  onClick={() => setEditingProduct(true)}
-                >
-                  <EditIcon />
-                </DFOCardHeaderIconButton>
-                <DFOCardHeaderIconButton
-                  hoverColor={theme.palette.errorRed.main}
-                  onClick={() => setDeleteMode(spec.products[productIndex].id)}
-                >
-                  <DeleteIcon />
-                </DFOCardHeaderIconButton>
-              </>
-            )}
-          </Box>
-          <Box sx={{ display: 'flex', flexDirection: 'row', paddingTop: 1 }}>
-            <Typography variant="smBold">
-              {spec.products[productIndex]?.description ?? ''}
-            </Typography>
-
-            {productIndex !== -1 && spec.products[productIndex].originProduct && (
-              <Typography
-                variant="smBold"
+    <DFOCardHeader>
+      <DFOHeaderContentBox>
+        <Box
+          sx={{
+            display: 'flex',
+            flexDirection: 'row',
+            paddingBottom: 0.5,
+            borderBottom: '0.1rem solid'
+          }}
+        >
+          <Typography variant="lgBold">
+            {spec.products[productIndex]?.title ?? t('General requirement')}
+          </Typography>
+          {productIndex !== -1 && (
+            <>
+              <DFOCardHeaderIconButton
                 sx={{ marginLeft: 'auto', paddingRight: 2 }}
+                onClick={() => setEditingProduct(true)}
               >
-                {t('From product type')}
-                {': '}
-                <i>{spec.products[productIndex].originProduct.title}</i>
-              </Typography>
-            )}
-          </Box>
-          {editingProduct && (
-            <DFODialog
-              isOpen={true}
-              handleClose={() => setEditingProduct(false)}
-              children={
-                <EditProductForm
-                  handleClose={() => setEditingProduct(false)}
-                  specificationProduct={spec.products[productIndex]}
-                />
-              }
-            />
+                <EditIcon />
+              </DFOCardHeaderIconButton>
+              <DFOCardHeaderIconButton
+                hoverColor={theme.palette.errorRed.main}
+                onClick={() => setDeleteMode(spec.products[productIndex].id)}
+              >
+                <DeleteIcon />
+              </DFOCardHeaderIconButton>
+            </>
           )}
-        </DFOHeaderContentBox>
-      </DFOCardHeader>
-    </DeleteSpecProduct>
+        </Box>
+        <Box sx={{ display: 'flex', flexDirection: 'row', paddingTop: 1 }}>
+          <Typography variant="smBold">
+            {spec.products[productIndex]?.description ?? ''}
+          </Typography>
+
+          {productIndex !== -1 && spec.products[productIndex].originProduct && (
+            <Typography
+              variant="smBold"
+              sx={{ marginLeft: 'auto', paddingRight: 2 }}
+            >
+              {t('From product type')}
+              {': '}
+              <i>{spec.products[productIndex].originProduct.title}</i>
+            </Typography>
+          )}
+        </Box>
+        {editingProduct && (
+          <DFODialog
+            isOpen={true}
+            handleClose={() => setEditingProduct(false)}
+            children={
+              <EditProductForm
+                handleClose={() => setEditingProduct(false)}
+                specificationProduct={spec.products[productIndex]}
+              />
+            }
+          />
+        )}
+      </DFOHeaderContentBox>
+    </DFOCardHeader>
   );
 }
