@@ -134,7 +134,7 @@ export default function ProductRequirement({
   const editRequirement = (): void => {
     const answer = unsaveRequirement();
     if (answer) {
-      methods.reset(answer);
+      methods.reset({ ...answer, id: '' });
       setOriginal(answer);
     }
   };
