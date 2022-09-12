@@ -28,11 +28,7 @@ export default function DeleteSpecProduct({
   const { setProductIndex } = useProductIndexState();
   const { deleteMode } = useSelectState();
 
-  if (product && deleteMode !== product.id) {
-    return children;
-  }
-
-  if (!product && deleteMode === '') {
+  if (!product || deleteMode !== product.id) {
     return children;
   }
 
@@ -43,16 +39,14 @@ export default function DeleteSpecProduct({
     : '';
 
   const onDelete = (): void => {
-    if (product) {
-      dispatch(deleteSpecProduct({ productId: product.id }));
-      const alert: IAlert = {
-        id: uuidv4(),
-        style: 'success',
-        text: 'Successfully deleted product'
-      };
-      dispatch(addAlert({ alert }));
-      setProductIndex(-2);
-    }
+    dispatch(deleteSpecProduct({ productId: product.id }));
+    const alert: IAlert = {
+      id: uuidv4(),
+      style: 'success',
+      text: 'Successfully deleted product'
+    };
+    dispatch(addAlert({ alert }));
+    setProductIndex(-2);
     handleClose();
   };
 
