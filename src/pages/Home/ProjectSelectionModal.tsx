@@ -20,10 +20,7 @@ import {
 } from '../../components/ModalBox/ModalBox';
 import { useHomeState } from './HomeContext';
 import { useGetBankQuery } from '../../store/api/bankApi';
-// import { useVersion } from '../../hooks/useVersion';
 import { Version } from '../../components/Version';
-
-// import { Version } from '../../components/Version';
 
 interface IProps {
   selectedBank: IBank;
@@ -43,8 +40,6 @@ export default function ProjectSelectionModal({
   const originBankId = selectedBank.projectId ?? selectedBank.id;
   const { data: bank, isLoading } = useGetBankQuery(originBankId);
   const isPublished = !!bank?.publications.some((p) => !p.deletedDate);
-
-  // const { version, isPublished } = useVersion(bank);
 
   if (!selectedBank) {
     return <></>;

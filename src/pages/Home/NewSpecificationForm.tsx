@@ -17,6 +17,7 @@ import {
 import { ModelType } from '../../Nexus/enums';
 import { setSpecification } from '../../store/reducers/specification-reducer';
 import { useAppDispatch } from '../../store/hooks';
+import { Version } from '../../components/Version';
 
 interface IProps {
   handleClose: () => void;
@@ -57,7 +58,7 @@ const NewSpecificationForm = ({ handleClose, specification }: IProps) => {
             {specification.bank.version && (
               <Typography sx={{ marginLeft: 0.16, marginTop: 3 }}>
                 <em>
-                  {t('Based on version')} {specification.bank.version}
+                  {t('Based on version')} <Version bank={specification.bank} />
                 </em>
               </Typography>
             )}
