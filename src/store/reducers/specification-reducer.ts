@@ -27,6 +27,17 @@ const specificationSlice = createSlice({
     ) {
       state.spec.products.push(payload.product);
     },
+    deleteSpecProduct(
+      state,
+      { payload }: PayloadAction<{ productId: string }>
+    ) {
+      const index = Utils.ensure(
+        state.spec.products.findIndex(
+          (product) => product.id === payload.productId
+        )
+      );
+      state.spec.products.splice(index, 1);
+    },
     editSpecProduct(
       state,
       { payload }: PayloadAction<{ product: ISpecificationProduct }>
@@ -137,6 +148,7 @@ const specificationSlice = createSlice({
 
 export const {
   addProduct,
+  deleteSpecProduct,
   editSpecProduct,
   addAnswer,
   addRequirement,
