@@ -5,10 +5,17 @@ import ProductNeed from './ProductNeed';
 import Utils from '../../../common/Utils';
 import { useAppSelector } from '../../../store/hooks';
 import { useProductIndexState } from '../../../components/ProductIndexContext/ProductIndexContext';
+import { useSelectState } from '../../Workbench/Create/SelectContext';
+import DeleteSpecProduct from './DeleteSpecProduct';
 
 export default function EditProduct(): React.ReactElement {
   const { spec } = useAppSelector((state) => state.specification);
   const { productIndex } = useProductIndexState();
+  const { setDeleteMode } = useSelectState();
+
+  const onDelete = (): void => {
+    setDeleteMode('');
+  };
 
   const renderNeeds = () => {
     if (productIndex === -1) {
@@ -28,9 +35,14 @@ export default function EditProduct(): React.ReactElement {
   };
 
   return (
-    <div>
-      <ProductHeader />
-      {renderNeeds()}
-    </div>
+    <DeleteSpecProduct
+      product={spec.products[productIndex]}
+      handleClose={onDelete}
+    >
+      <>
+        <ProductHeader />
+        {renderNeeds()}
+      </>
+    </DeleteSpecProduct>
   );
 }

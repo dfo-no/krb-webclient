@@ -1,6 +1,7 @@
-import EditIcon from '@mui/icons-material/Edit';
 import React, { useState } from 'react';
 import { Box, Typography } from '@mui/material';
+import EditIcon from '@mui/icons-material/Edit';
+import DeleteIcon from '@mui/icons-material/Delete';
 import { useTranslation } from 'react-i18next';
 
 import DFODialog from '../../../components/DFODialog/DFODialog';
@@ -10,12 +11,15 @@ import { DFOCardHeaderIconButton } from '../../../components/DFOCard/DFOCardHead
 import { DFOHeaderContentBox } from '../../../components/DFOCard/DFOHeaderContentBox';
 import { useAppSelector } from '../../../store/hooks';
 import { useProductIndexState } from '../../../components/ProductIndexContext/ProductIndexContext';
+import theme from '../../../theme';
+import { useSelectState } from '../../Workbench/Create/SelectContext';
 
 export default function ProductHeader(): React.ReactElement {
   const { t } = useTranslation();
   const { spec } = useAppSelector((state) => state.specification);
   const { productIndex } = useProductIndexState();
   const [editingProduct, setEditingProduct] = useState(false);
+  const { setDeleteMode } = useSelectState();
 
   return (
     <DFOCardHeader>
@@ -32,12 +36,20 @@ export default function ProductHeader(): React.ReactElement {
             {spec.products[productIndex]?.title ?? t('General requirement')}
           </Typography>
           {productIndex !== -1 && (
-            <DFOCardHeaderIconButton
-              sx={{ marginLeft: 'auto', paddingRight: 2 }}
-              onClick={() => setEditingProduct(true)}
-            >
-              <EditIcon />
-            </DFOCardHeaderIconButton>
+            <>
+              <DFOCardHeaderIconButton
+                sx={{ marginLeft: 'auto', paddingRight: 2 }}
+                onClick={() => setEditingProduct(true)}
+              >
+                <EditIcon />
+              </DFOCardHeaderIconButton>
+              <DFOCardHeaderIconButton
+                hoverColor={theme.palette.errorRed.main}
+                onClick={() => setDeleteMode(spec.products[productIndex].id)}
+              >
+                <DeleteIcon />
+              </DFOCardHeaderIconButton>
+            </>
           )}
         </Box>
         <Box sx={{ display: 'flex', flexDirection: 'row', paddingTop: 1 }}>
