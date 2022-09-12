@@ -6,7 +6,7 @@ import { IProduct } from '../entities/IProduct';
 import { IResponse } from '../entities/IResponse';
 import { ISliderQuestion } from '../entities/ISliderQuestion';
 import { ISpecification } from '../entities/ISpecification';
-import { ModelType, QuestionVariant, VariantType } from '../enums';
+import { ModelType, QuestionVariant, VariantType, Weighting } from '../enums';
 import { Parentable } from '../../models/Parentable';
 
 describe('EvaluationService', () => {
@@ -323,7 +323,8 @@ describe('EvaluationService', () => {
           requirement: need3.requirements[0],
           type: ModelType.requirementAnswer
         }
-      ]
+      ],
+      weight: Weighting.MEDIUM
     };
 
     const response: IResponse = {
