@@ -5,8 +5,10 @@ import { useTranslation } from 'react-i18next';
 
 import css from './QuestionCard.module.scss';
 import QuestionAnswer from './QuestionAnswer/QuestionAnswer';
+import QuestionSpecification from './QuestionSpecification/QuestionSpecification';
 import { IRequirementAnswer } from '../../../Nexus/entities/IRequirementAnswer';
 import { IVariant } from '../../../Nexus/entities/IVariant';
+import { VariantType } from '../../../Nexus/enums';
 
 interface IProps {
   variant: IVariant;
@@ -19,10 +21,7 @@ const ProductQuestionsList = ({ variant }: IProps): ReactElement => {
   const item = variant.questions[0];
 
   useEffect(() => {
-    const index = variant.questions.findIndex(
-      (question) => question.id === useQuestionId
-    );
-    if (variant.questions.length > 0 && index < 0) {
+    if (variant.questions.length > 0) {
       setValue('question', item);
       setValue('questionId', item.id);
     }
@@ -31,6 +30,10 @@ const ProductQuestionsList = ({ variant }: IProps): ReactElement => {
   if (!item) {
     return <>-</>;
   }
+
+  const isInfoType = () => {
+    return variant.type === VariantType.info;
+  };
 
   return (
     <Card className={css.QuestionCard}>
@@ -41,7 +44,11 @@ const ProductQuestionsList = ({ variant }: IProps): ReactElement => {
       </Box>
       <Box className={css.cardContent}>
         <Divider />
-        <QuestionAnswer item={item} />
+        {isInfoType() ? (
+          <QuestionAnswer item={item} />
+        ) : (
+          <QuestionSpecification item={item} />
+        )}
       </Box>
     </Card>
   );

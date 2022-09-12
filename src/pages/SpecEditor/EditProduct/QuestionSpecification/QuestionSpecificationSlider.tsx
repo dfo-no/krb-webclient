@@ -40,14 +40,14 @@ const QuestionSpecificationSlider = ({ item }: IProps): ReactElement => {
   });
 
   useEffect(() => {
-    if (useMinValue !== useMinScore.value) {
+    if (useMinScore && useMinValue !== useMinScore.value) {
       update(0, { value: useMinValue, score: useMinScore.score });
       setValue('question.answer.value', useMinValue);
     }
   }, [useMinValue, useMinScore, update, setValue]);
 
   useEffect(() => {
-    if (useMaxValue !== useMaxScore.value) {
+    if (useMaxScore && useMaxValue !== useMaxScore.value) {
       update(1, { value: useMaxValue, score: useMaxScore.score });
     }
   }, [useMaxValue, useMaxScore, update]);
