@@ -1,4 +1,5 @@
 import { get } from 'lodash';
+import { v4 as uuidv4 } from 'uuid';
 
 import Utils from './Utils';
 import {
@@ -195,14 +196,14 @@ describe('Utils functions should work', () => {
 
   it('Utils.findScoreFromValue returns correct score for values', () => {
     const scoreValuePairs: ScoreValuePair[] = [
-      { value: 0, score: 0 },
-      { value: 30, score: 100 },
-      { value: 2, score: 12 },
-      { value: 3, score: 16 },
-      { value: 10, score: 30 },
-      { value: 20, score: 50 },
-      { value: 22, score: 60 },
-      { value: 25, score: 70 }
+      { id: uuidv4(), value: 0, score: 0 },
+      { id: uuidv4(), value: 30, score: 100 },
+      { id: uuidv4(), value: 2, score: 12 },
+      { id: uuidv4(), value: 3, score: 16 },
+      { id: uuidv4(), value: 10, score: 30 },
+      { id: uuidv4(), value: 20, score: 50 },
+      { id: uuidv4(), value: 22, score: 60 },
+      { id: uuidv4(), value: 25, score: 70 }
     ];
 
     const result1 = Utils.findScoreFromValue(2, scoreValuePairs);
@@ -217,14 +218,14 @@ describe('Utils functions should work', () => {
 
   it('Utils.findScoreFromDate returns correct score for dates', () => {
     const scoreDatePairs: DateScorePair[] = [
-      { date: '2022-02-10T12:00:00.000Z', score: 0 },
-      { date: '2022-03-12T12:00:00.000Z', score: 100 },
-      { date: '2022-02-12T12:00:00.000Z', score: 12 },
-      { date: '2022-02-13T12:00:00.000Z', score: 16 },
-      { date: '2022-02-20T12:00:00.000Z', score: 30 },
-      { date: '2022-03-02T12:00:00.000Z', score: 50 },
-      { date: '2022-03-04T12:00:00.000Z', score: 60 },
-      { date: '2022-03-07T12:00:00.000Z', score: 70 }
+      { id: uuidv4(), date: '2022-02-10T12:00:00.000Z', score: 0 },
+      { id: uuidv4(), date: '2022-03-12T12:00:00.000Z', score: 100 },
+      { id: uuidv4(), date: '2022-02-12T12:00:00.000Z', score: 12 },
+      { id: uuidv4(), date: '2022-02-13T12:00:00.000Z', score: 16 },
+      { id: uuidv4(), date: '2022-02-20T12:00:00.000Z', score: 30 },
+      { id: uuidv4(), date: '2022-03-02T12:00:00.000Z', score: 50 },
+      { id: uuidv4(), date: '2022-03-04T12:00:00.000Z', score: 60 },
+      { id: uuidv4(), date: '2022-03-07T12:00:00.000Z', score: 70 }
     ];
 
     const result1 = Utils.findScoreFromDate(
@@ -251,14 +252,14 @@ describe('Utils functions should work', () => {
 
   it('Utils.findScoreFromTime returns correct score for times', () => {
     const scoreTimePairs: TimeScorePair[] = [
-      { time: '2022-02-10T07:00:00.000Z', score: 0 },
-      { time: '2022-02-10T12:00:00.000Z', score: 100 },
-      { time: '2022-02-10T07:20:00.000Z', score: 12 },
-      { time: '2022-02-10T07:30:00.000Z', score: 16 },
-      { time: '2022-02-10T08:40:00.000Z', score: 30 },
-      { time: '2022-02-10T10:20:00.000Z', score: 50 },
-      { time: '2022-02-10T10:40:00.000Z', score: 60 },
-      { time: '2022-02-10T11:10:00.000Z', score: 70 }
+      { id: uuidv4(), time: '2022-02-10T07:00:00.000Z', score: 0 },
+      { id: uuidv4(), time: '2022-02-10T12:00:00.000Z', score: 100 },
+      { id: uuidv4(), time: '2022-02-10T07:20:00.000Z', score: 12 },
+      { id: uuidv4(), time: '2022-02-10T07:30:00.000Z', score: 16 },
+      { id: uuidv4(), time: '2022-02-10T08:40:00.000Z', score: 30 },
+      { id: uuidv4(), time: '2022-02-10T10:20:00.000Z', score: 50 },
+      { id: uuidv4(), time: '2022-02-10T10:40:00.000Z', score: 60 },
+      { id: uuidv4(), time: '2022-02-10T11:10:00.000Z', score: 70 }
     ];
 
     const result1 = Utils.findScoreFromTime(

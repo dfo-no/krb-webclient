@@ -25,6 +25,7 @@ export interface ISliderConfig extends IConfigBase {
 }
 
 export interface ScoreValuePair {
+  id?: string;
   score: number;
   value: number;
 }
@@ -46,6 +47,7 @@ export const SliderQuestionWorkbenchSchema = QuestionBaseSchema.keys({
 });
 
 const ScoreValueSchema = CustomJoi.object().keys({
+  id: CustomJoi.validateId(),
   score: CustomJoi.validateScore(),
   value: CustomJoi.validateSliderValue()
 });

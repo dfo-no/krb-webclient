@@ -28,6 +28,7 @@ export interface IPeriodDateConfig extends IConfigBase {
 }
 
 export interface DateScorePair {
+  id?: string;
   date: string | null;
   score: number;
 }
@@ -50,6 +51,7 @@ export const PeriodDateWorkbenchSchema = QuestionBaseSchema.keys({
 });
 
 const DateScoreSchema = CustomJoi.object().keys({
+  id: CustomJoi.validateId(),
   date: CustomJoi.validateDateScore(),
   score: CustomJoi.validateScore()
 });

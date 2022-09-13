@@ -10,6 +10,7 @@ import ArrayUniqueErrorMessage from '../../../../Form/ArrayUniqueErrorMessage';
 import css from '../QuestionContent.module.scss';
 import HorizontalTextCtrl from '../../../../FormProvider/HorizontalTextCtrl';
 import theme from '../../../../theme';
+import UuidService from '../../../../Nexus/services/UuidService';
 import { FormIconButton } from '../../../../components/Form/FormIconButton';
 import { IRequirementAnswer } from '../../../../Nexus/entities/IRequirementAnswer';
 import { ISliderQuestion } from '../../../../Nexus/entities/ISliderQuestion';
@@ -40,17 +41,40 @@ const QuestionSpecificationSlider = ({ item }: IProps): ReactElement => {
   });
 
   useEffect(() => {
-    if (useMinValue !== useMinScore.value) {
-      update(0, { value: useMinValue, score: useMinScore.score });
-      setValue('question.answer.value', useMinValue);
+    if (!fields.length) {
+      append({
+        id: new UuidService().generateId(),
+        value: 0,
+        score: 0
+      });
+      append({
+        id: new UuidService().generateId(),
+        value: 0,
+        score: 100
+      });
     }
-  }, [useMinValue, useMinScore, update, setValue]);
+  }, [fields, append]);
 
   useEffect(() => {
-    if (useMaxValue !== useMaxScore.value) {
-      update(1, { value: useMaxValue, score: useMaxScore.score });
+    if (useMinScore && (useMinValue !== useMinScore.value || !useMinScore.id)) {
+      update(0, {
+        id: useMinScore.id ?? new UuidService().generateId(),
+        value: useMinValue,
+        score: useMinScore.score
+      });
+      setValue('question.answer.value', useMinValue);
     }
-  }, [useMaxValue, useMaxScore, update]);
+  }, [useMinValue, useMinScore, append, update, setValue]);
+
+  useEffect(() => {
+    if (useMaxScore && (useMaxValue !== useMaxScore.value || !useMaxScore.id)) {
+      update(1, {
+        id: useMaxScore.id ?? new UuidService().generateId(),
+        value: useMaxValue,
+        score: useMaxScore.score
+      });
+    }
+  }, [useMaxValue, useMaxScore, append, update]);
 
   return (
     <div className={css.QuestionGrid}>
@@ -87,12 +111,15 @@ const QuestionSpecificationSlider = ({ item }: IProps): ReactElement => {
       </Typography>
       {fields.map((scoreValue, idx) => {
         return (
-          <div key={idx} className={classnames(css.QuestionGrid, css.FullRow)}>
+          <div
+            key={scoreValue.id}
+            className={classnames(css.QuestionGrid, css.FullRow)}
+          >
             {idx < 2 ? (
               <Typography variant={'smBold'}>{scoreValue.value}</Typography>
             ) : (
               <HorizontalTextCtrl
-                name={`question.config.scoreValues.${idx}.value`}
+                name={`question.config.scoreValues[${idx}].value`}
                 placeholder={t('Value')}
                 type={'number'}
               />
@@ -101,7 +128,7 @@ const QuestionSpecificationSlider = ({ item }: IProps): ReactElement => {
               <ArrowForwardIcon />
             </div>
             <HorizontalTextCtrl
-              name={`question.config.scoreValues.${idx}.score`}
+              name={`question.config.scoreValues[${idx}].score`}
               placeholder={t('Score')}
               type={'number'}
             />
@@ -127,7 +154,13 @@ const QuestionSpecificationSlider = ({ item }: IProps): ReactElement => {
       </div>
       <Button
         variant="primary"
-        onClick={() => append({ value: useMinValue, score: 0 })}
+        onClick={() =>
+          append({
+            id: new UuidService().generateId(),
+            value: useMinValue,
+            score: 0
+          })
+        }
       >
         {t('Add new value score')}
       </Button>
