@@ -18,7 +18,6 @@ import { addAlert } from '../../store/reducers/alert-reducer';
 import { httpPost } from '../../api/http';
 import { IAlert } from '../../models/IAlert';
 import { IBank } from '../../Nexus/entities/IBank';
-import { setSpecFile } from '../../store/reducers/evaluation-reducer';
 import { useAppDispatch } from '../../store/hooks';
 import { useGetBanksQuery } from '../../store/api/bankApi';
 import { useHomeState } from './HomeContext';
@@ -39,7 +38,8 @@ export default function HomePage(): React.ReactElement {
     setSelectedPrefilledResponse
   } = useHomeState();
 
-  const { setEvaluations, setFiles, setResponses } = useEvaluationState();
+  const { setEvaluations, setFiles, setResponses, setSpecFile } =
+    useEvaluationState();
 
   const [latestPublishedProjects, setLatestPublishedProjects] = useState<
     IBank[]
@@ -76,7 +76,7 @@ export default function HomePage(): React.ReactElement {
     setEvaluations([]);
     setFiles([]);
     setResponses([]);
-    dispatch(setSpecFile(null));
+    setSpecFile(null);
 
     const formData = new FormData();
     let disableUploadMessage = '';
@@ -111,12 +111,10 @@ export default function HomePage(): React.ReactElement {
     })
       .then((httpResponse) => {
         if (httpResponse.data.title) {
-          dispatch(
-            setSpecFile({
-              name: files[0].name,
-              lastModified: files[0].lastModified
-            })
-          );
+          setSpecFile({
+            name: files[0].name,
+            lastModified: files[0].lastModified
+          });
           setSelectedSpecification(httpResponse.data);
         } else {
           if (!httpResponse.data.specification) {

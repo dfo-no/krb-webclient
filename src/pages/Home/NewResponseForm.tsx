@@ -21,7 +21,6 @@ import { useFeatureFlags } from '../../hooks/useFeatureFlag';
 import css from './HomePage.module.scss';
 import FileUpload from '../../components/FileUpload/FileUpload';
 import React from 'react';
-import { setSpecFile } from '../../store/reducers/evaluation-reducer';
 import { IAlert } from '../../models/IAlert';
 import { v4 as uuidv4 } from 'uuid';
 import { addAlert } from '../../store/reducers/alert-reducer';
@@ -47,7 +46,8 @@ const NewResponseForm = ({ handleClose, response }: IProps) => {
     setSelectedPrefilledResponse,
     setSelectedResponse
   } = useHomeState();
-  const { setEvaluations, setFiles, setResponses } = useEvaluationState();
+  const { setEvaluations, setFiles, setResponses, setSpecFile } =
+    useEvaluationState();
   const featureFlags = useFeatureFlags();
 
   const methods = useForm<IResponse>({
@@ -65,7 +65,7 @@ const NewResponseForm = ({ handleClose, response }: IProps) => {
     setEvaluations([]);
     setFiles([]);
     setResponses([]);
-    dispatch(setSpecFile(null));
+    setSpecFile(null);
 
     const formData = new FormData();
     let disableUploadMessage = '';
@@ -100,12 +100,10 @@ const NewResponseForm = ({ handleClose, response }: IProps) => {
     })
       .then((httpResponse) => {
         if (httpResponse.data.title) {
-          dispatch(
-            setSpecFile({
-              name: files[0].name,
-              lastModified: files[0].lastModified
-            })
-          );
+          setSpecFile({
+            name: files[0].name,
+            lastModified: files[0].lastModified
+          });
           setSelectedSpecification(httpResponse.data);
         } else {
           if (!httpResponse.data.specification) {

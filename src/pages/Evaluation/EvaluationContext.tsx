@@ -16,12 +16,14 @@ type IEvaluationContext = {
   setTab: Dispatch<SetStateAction<number>>;
   evaluations: IEvaluatedResponse[];
   setEvaluations: Dispatch<SetStateAction<IEvaluatedResponse[]>>;
+  evaluationSpecification: ISpecification;
+  setEvaluationSpecification: Dispatch<SetStateAction<ISpecification>>;
   files: IFile[];
   setFiles: Dispatch<SetStateAction<IFile[]>>;
   responses: IResponse[];
   setResponses: Dispatch<SetStateAction<IResponse[]>>;
-  evaluationSpecification: ISpecification;
-  setEvaluationSpecification: Dispatch<SetStateAction<ISpecification>>;
+  specFile: IFile | null;
+  setSpecFile: Dispatch<SetStateAction<IFile | null>>;
 };
 
 interface IProps {
@@ -35,10 +37,6 @@ const initialContext: IEvaluationContext = {
   },
   evaluations: [],
   setEvaluations: () => {},
-  files: [],
-  setFiles: () => {},
-  responses: [],
-  setResponses: () => {},
   evaluationSpecification: {
     id: '',
     bank: {
@@ -66,7 +64,13 @@ const initialContext: IEvaluationContext = {
     requirements: [],
     requirementAnswers: []
   },
-  setEvaluationSpecification: () => {}
+  setEvaluationSpecification: () => {},
+  files: [],
+  setFiles: () => {},
+  responses: [],
+  setResponses: () => {},
+  specFile: null,
+  setSpecFile: () => {}
 };
 
 export const EvaluationContext =
@@ -75,8 +79,6 @@ export const EvaluationContext =
 export const EvaluationProvider = ({ children }: IProps) => {
   const [tab, setTab] = useState(0);
   const [evaluations, setEvaluations] = useState<IEvaluatedResponse[]>([]);
-  const [files, setFiles] = useState<IFile[]>([]);
-  const [responses, setResponses] = useState<IResponse[]>([]);
   const [evaluationSpecification, setEvaluationSpecification] =
     useState<ISpecification>({
       id: '',
@@ -105,6 +107,9 @@ export const EvaluationProvider = ({ children }: IProps) => {
       requirements: [],
       requirementAnswers: []
     });
+  const [files, setFiles] = useState<IFile[]>([]);
+  const [responses, setResponses] = useState<IResponse[]>([]);
+  const [specFile, setSpecFile] = useState<IFile | null>(null);
 
   return (
     <EvaluationContext.Provider
@@ -113,12 +118,14 @@ export const EvaluationProvider = ({ children }: IProps) => {
         setTab,
         evaluations,
         setEvaluations,
+        evaluationSpecification,
+        setEvaluationSpecification,
         files,
         setFiles,
         responses,
         setResponses,
-        evaluationSpecification,
-        setEvaluationSpecification
+        specFile,
+        setSpecFile
       }}
     >
       {children}
