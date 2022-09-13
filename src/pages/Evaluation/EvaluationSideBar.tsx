@@ -21,7 +21,7 @@ const menuItems: ISideBarItem[] = [
 
 const EvaluationSideBar = (): ReactElement => {
   const { t } = useTranslation();
-  const { evaluations, responses, specification } = useAppSelector(
+  const { responses, specification } = useAppSelector(
     (state) => state.evaluation
   );
   const evaluationState = useEvaluationState();
@@ -33,7 +33,7 @@ const EvaluationSideBar = (): ReactElement => {
       case 1:
         return Utils.hasValidResponses(responses, specification);
       case 2:
-        return evaluations.length > 0;
+        return evaluationState.evaluations.length > 0;
       default:
         return false;
     }
@@ -53,7 +53,7 @@ const EvaluationSideBar = (): ReactElement => {
           </li>
         ))}
       </ul>
-      {evaluations.length > 0 && (
+      {evaluationState.evaluations.length > 0 && (
         <div className={css.Download}>
           <DownLoad />
         </div>

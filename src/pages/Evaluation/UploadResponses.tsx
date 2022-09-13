@@ -13,11 +13,11 @@ import { httpPost } from '../../api/http';
 import { IFile } from '../../models/IFile';
 import { IResponse } from '../../Nexus/entities/IResponse';
 import {
-  setEvaluations,
   setFiles,
   setResponses
 } from '../../store/reducers/evaluation-reducer';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
+import { useEvaluationState } from './EvaluationContext';
 
 export default function UploadResponses(): React.ReactElement {
   const { files, responses, specification } = useAppSelector(
@@ -25,6 +25,7 @@ export default function UploadResponses(): React.ReactElement {
   );
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
+  const { setEvaluations } = useEvaluationState();
 
   const formatDate = (time: number): string => {
     const date = new Date(time);
@@ -100,7 +101,7 @@ export default function UploadResponses(): React.ReactElement {
     newFiles.splice(index, 1);
     dispatch(setResponses(newResponses));
     dispatch(setFiles(newFiles));
-    dispatch(setEvaluations([]));
+    setEvaluations([]);
   };
 
   const handleResponseUpload = (newFiles: FileList): void => {
@@ -121,7 +122,7 @@ export default function UploadResponses(): React.ReactElement {
       .then((result) => {
         const newResponses = [...responses, ...(result as IResponse[])];
         dispatch(setResponses(newResponses));
-        dispatch(setEvaluations([]));
+        setEvaluations([]);
       })
       .catch((err) => {
         dispatch(setFiles(prevFiles));

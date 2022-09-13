@@ -8,11 +8,11 @@ import FileUpload from '../../components/FileUpload/FileUpload';
 import SpecificationStoreService from '../../Nexus/services/SpecificationStoreService';
 import { httpPost } from '../../api/http';
 import {
-  setEvaluations,
   setEvaluationSpecification,
   setSpecFile
 } from '../../store/reducers/evaluation-reducer';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
+import { useEvaluationState } from './EvaluationContext';
 
 const EvaluationSpec = (): ReactElement => {
   const { specFile, specification } = useAppSelector(
@@ -25,6 +25,8 @@ const EvaluationSpec = (): ReactElement => {
   useEffect(() => {
     setUploadError('');
   }, [dispatch]);
+
+  const { setEvaluations } = useEvaluationState();
 
   const formatDate = (time: number): string => {
     const date = new Date(time);
@@ -41,7 +43,7 @@ const EvaluationSpec = (): ReactElement => {
 
   const onUploadSpecification = (fileList: FileList): void => {
     setUploadError('');
-    dispatch(setEvaluations([]));
+    setEvaluations([]);
 
     const formData = new FormData();
     if (fileList.length) {

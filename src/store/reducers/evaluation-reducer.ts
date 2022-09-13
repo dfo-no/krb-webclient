@@ -1,5 +1,4 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { IEvaluatedResponse } from '../../Nexus/entities/IEvaluatedResponse';
 import { IFile } from '../../models/IFile';
 import { IResponse } from '../../Nexus/entities/IResponse';
 import { ISpecification } from '../../Nexus/entities/ISpecification';
@@ -10,10 +9,9 @@ interface ISelectedBankState {
   specFile: IFile | null;
   specification: ISpecification;
   responses: IResponse[];
-  evaluations: IEvaluatedResponse[];
 }
 
-const initialState: ISelectedBankState = {
+export const initialEvaluationsState: ISelectedBankState = {
   files: [],
   specFile: null,
   specification: {
@@ -44,13 +42,12 @@ const initialState: ISelectedBankState = {
     requirementAnswers: [],
     weight: Weighting.MEDIUM
   },
-  responses: [],
-  evaluations: []
+  responses: []
 };
 
 const evaluationSlice = createSlice({
   name: 'evaluation',
-  initialState,
+  initialState: initialEvaluationsState,
   reducers: {
     setEvaluationSpecification(
       state,
@@ -60,9 +57,6 @@ const evaluationSlice = createSlice({
     },
     setResponses(state, { payload }: PayloadAction<IResponse[]>) {
       state.responses = payload;
-    },
-    setEvaluations(state, { payload }: PayloadAction<IEvaluatedResponse[]>) {
-      state.evaluations = payload;
     },
     setFiles(state, { payload }: PayloadAction<IFile[]>) {
       state.files = payload;
@@ -75,7 +69,6 @@ const evaluationSlice = createSlice({
 
 export const {
   setEvaluationSpecification,
-  setEvaluations,
   setFiles,
   setResponses,
   setSpecFile

@@ -4,11 +4,11 @@ import { useTranslation } from 'react-i18next';
 
 import css from './Evaluation.module.scss';
 import { IEvaluatedResponse } from '../../Nexus/entities/IEvaluatedResponse';
-import { useAppSelector } from '../../store/hooks';
+import { useEvaluationState } from './EvaluationContext';
 
 export default function EvaluationResult(): ReactElement {
-  const { evaluations } = useAppSelector((state) => state.evaluation);
   const { t } = useTranslation();
+  const { evaluations } = useEvaluationState();
 
   const getScoreAsPercentage = (points: number): number => {
     return Math.round(points * 100);

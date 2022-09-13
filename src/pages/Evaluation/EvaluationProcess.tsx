@@ -4,8 +4,7 @@ import React, { ReactElement } from 'react';
 import css from './Evaluation.module.scss';
 import Nexus from '../../Nexus/Nexus';
 import Utils from '../../common/Utils';
-import { setEvaluations } from '../../store/reducers/evaluation-reducer';
-import { useAppDispatch, useAppSelector } from '../../store/hooks';
+import { useAppSelector } from '../../store/hooks';
 import { useEvaluationState } from './EvaluationContext';
 import { useTranslation } from 'react-i18next';
 
@@ -14,10 +13,9 @@ const EvaluationProcess = (): ReactElement => {
   const { specification, responses } = useAppSelector(
     (state) => state.evaluation
   );
-  const { setTab } = useEvaluationState();
+  const { setTab, setEvaluations } = useEvaluationState();
 
   const nexus = Nexus.getInstance();
-  const dispatch = useAppDispatch();
 
   const evaluateAll = async () => {
     const evaluated = await nexus.evaluationService.evaluateAll(
@@ -32,7 +30,7 @@ const EvaluationProcess = (): ReactElement => {
     const evaluated = await evaluateAll().then((result) => {
       return result;
     });
-    dispatch(setEvaluations(evaluated));
+    setEvaluations(evaluated);
     setTab(3);
   };
 

@@ -19,7 +19,6 @@ import { httpPost } from '../../api/http';
 import { IAlert } from '../../models/IAlert';
 import { IBank } from '../../Nexus/entities/IBank';
 import {
-  setEvaluations,
   setFiles,
   setResponses,
   setSpecFile
@@ -27,6 +26,7 @@ import {
 import { useAppDispatch } from '../../store/hooks';
 import { useGetBanksQuery } from '../../store/api/bankApi';
 import { useHomeState } from './HomeContext';
+import { useEvaluationState } from '../Evaluation/EvaluationContext';
 
 const MAX_UPLOAD_SIZE = 10000000; // 10M
 
@@ -42,6 +42,8 @@ export default function HomePage(): React.ReactElement {
     selectedPrefilledResponse,
     setSelectedPrefilledResponse
   } = useHomeState();
+
+  const { setEvaluations } = useEvaluationState();
 
   const [latestPublishedProjects, setLatestPublishedProjects] = useState<
     IBank[]
@@ -75,7 +77,7 @@ export default function HomePage(): React.ReactElement {
   }, [list]);
 
   const onUpload = (files: FileList): void => {
-    dispatch(setEvaluations([]));
+    setEvaluations([]);
     dispatch(setFiles([]));
     dispatch(setResponses([]));
     dispatch(setSpecFile(null));
