@@ -21,19 +21,18 @@ const ProductQuestionsList = ({ variant }: IProps): ReactElement => {
   const item = variant.questions[0];
 
   useEffect(() => {
-    if (variant.questions.length > 0) {
+    if (
+      variant.questions.length > 0 &&
+      variant.questions[0].id !== useQuestionId
+    ) {
       setValue('question', item);
       setValue('questionId', item.id);
     }
   }, [useQuestionId, setValue, variant, item]);
 
   if (!item) {
-    return <>-</>;
+    return <Typography className={css.infoText}>-</Typography>;
   }
-
-  const isInfoType = () => {
-    return variant.type === VariantType.info;
-  };
 
   return (
     <Card className={css.QuestionCard}>
@@ -44,7 +43,7 @@ const ProductQuestionsList = ({ variant }: IProps): ReactElement => {
       </Box>
       <Box className={css.cardContent}>
         <Divider />
-        {isInfoType() ? (
+        {variant.type === VariantType.info ? (
           <QuestionAnswer item={item} />
         ) : (
           <QuestionSpecification item={item} />

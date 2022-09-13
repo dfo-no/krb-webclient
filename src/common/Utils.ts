@@ -157,6 +157,7 @@ class Utils {
       (allPairs: ScoreValuePair[], pair: DateScorePair) => {
         if (pair.date) {
           allPairs.push({
+            id: pair.id,
             value: this.dateToValue(pair.date),
             score: pair.score
           });
@@ -184,6 +185,7 @@ class Utils {
       (allPairs: ScoreValuePair[], pair: TimeScorePair) => {
         if (pair.time) {
           allPairs.push({
+            id: pair.id,
             value: this.timeToValue(pair.time),
             score: pair.score
           });
