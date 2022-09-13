@@ -28,13 +28,12 @@ export interface IPeriodDateConfig extends IConfigBase {
 }
 
 export interface DateScorePair {
-  id: string;
+  id?: string;
   date: string | null;
   score: number;
 }
 
 const WorkbenchDateScoreSchema = CustomJoi.object().keys({
-  id: CustomJoi.validateId(),
   score: CustomJoi.validateScore(),
   date: CustomJoi.validateEmptyDate()
 });

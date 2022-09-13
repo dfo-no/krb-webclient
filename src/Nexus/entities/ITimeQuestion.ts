@@ -27,13 +27,12 @@ export interface ITimeConfig extends IConfigBase {
 }
 
 export interface TimeScorePair {
-  id: string;
+  id?: string;
   time: string | null;
   score: number;
 }
 
 const WorkbenchTimeScoreSchema = CustomJoi.object().keys({
-  id: CustomJoi.validateId(),
   score: CustomJoi.validateScore(),
   time: CustomJoi.validateEmptyDate()
 });
