@@ -8,7 +8,7 @@ import React, {
 import { IEvaluatedResponse } from '../../Nexus/entities/IEvaluatedResponse';
 import { IResponse } from '../../Nexus/entities/IResponse';
 import { IFile } from '../../models/IFile';
-import { ModelType } from '../../Nexus/enums';
+import { ModelType, Weighting } from '../../Nexus/enums';
 import { ISpecification } from '../../Nexus/entities/ISpecification';
 
 type IEvaluationContext = {
@@ -62,7 +62,8 @@ const initialContext: IEvaluationContext = {
     organizationNumber: '',
     products: [],
     requirements: [],
-    requirementAnswers: []
+    requirementAnswers: [],
+    weight: Weighting.MEDIUM
   },
   setEvaluationSpecification: () => {},
   files: [],
@@ -105,7 +106,8 @@ export const EvaluationProvider = ({ children }: IProps) => {
       organizationNumber: '',
       products: [],
       requirements: [],
-      requirementAnswers: []
+      requirementAnswers: [],
+      weight: Weighting.MEDIUM
     });
   const [files, setFiles] = useState<IFile[]>([]);
   const [responses, setResponses] = useState<IResponse[]>([]);
