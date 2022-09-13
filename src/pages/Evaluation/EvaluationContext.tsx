@@ -7,12 +7,15 @@ import React, {
 } from 'react';
 import { IEvaluatedResponse } from '../../Nexus/entities/IEvaluatedResponse';
 import { IResponse } from '../../Nexus/entities/IResponse';
+import { IFile } from '../../models/IFile';
 
 type IEvaluationContext = {
   tab: number;
   setTab: Dispatch<SetStateAction<number>>;
   evaluations: IEvaluatedResponse[];
   setEvaluations: Dispatch<SetStateAction<IEvaluatedResponse[]>>;
+  files: IFile[];
+  setFiles: Dispatch<SetStateAction<IFile[]>>;
   responses: IResponse[];
   setResponses: Dispatch<SetStateAction<IResponse[]>>;
 };
@@ -28,6 +31,8 @@ const initialContext: IEvaluationContext = {
   },
   evaluations: [],
   setEvaluations: () => {},
+  files: [],
+  setFiles: () => {},
   responses: [],
   setResponses: () => {}
 };
@@ -38,6 +43,7 @@ export const EvaluationContext =
 export const EvaluationProvider = ({ children }: IProps) => {
   const [tab, setTab] = useState(0);
   const [evaluations, setEvaluations] = useState<IEvaluatedResponse[]>([]);
+  const [files, setFiles] = useState<IFile[]>([]);
   const [responses, setResponses] = useState<IResponse[]>([]);
 
   return (
@@ -47,6 +53,8 @@ export const EvaluationProvider = ({ children }: IProps) => {
         setTab,
         evaluations,
         setEvaluations,
+        files,
+        setFiles,
         responses,
         setResponses
       }}
