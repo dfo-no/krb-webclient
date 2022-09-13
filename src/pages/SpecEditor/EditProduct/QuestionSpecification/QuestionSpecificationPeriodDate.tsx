@@ -108,7 +108,10 @@ const QuestionSpecificationPeriodDate = ({ item }: IProps): ReactElement => {
       </Typography>
       {fields.map((dateScore, idx) => {
         return (
-          <div key={idx} className={classnames(css.QuestionGrid, css.FullRow)}>
+          <div
+            key={dateScore.id}
+            className={classnames(css.QuestionGrid, css.FullRow)}
+          >
             {idx < 2 ? (
               <Typography variant={'smBold'} className={css.CenteredText}>
                 {DateUtils.prettyFormatDate(dateScore.date)}
