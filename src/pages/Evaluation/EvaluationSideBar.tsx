@@ -21,9 +21,7 @@ const menuItems: ISideBarItem[] = [
 
 const EvaluationSideBar = (): ReactElement => {
   const { t } = useTranslation();
-  const { responses, specification } = useAppSelector(
-    (state) => state.evaluation
-  );
+  const { specification } = useAppSelector((state) => state.evaluation);
   const evaluationState = useEvaluationState();
 
   const isDone = (step: number): boolean => {
@@ -31,7 +29,10 @@ const EvaluationSideBar = (): ReactElement => {
       case 0:
         return !!specification.bank.id;
       case 1:
-        return Utils.hasValidResponses(responses, specification);
+        return Utils.hasValidResponses(
+          evaluationState.responses,
+          specification
+        );
       case 2:
         return evaluationState.evaluations.length > 0;
       default:

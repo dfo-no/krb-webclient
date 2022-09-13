@@ -12,20 +12,15 @@ import { FormIconButton } from '../../components/Form/FormIconButton';
 import { httpPost } from '../../api/http';
 import { IFile } from '../../models/IFile';
 import { IResponse } from '../../Nexus/entities/IResponse';
-import {
-  setFiles,
-  setResponses
-} from '../../store/reducers/evaluation-reducer';
+import { setFiles } from '../../store/reducers/evaluation-reducer';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { useEvaluationState } from './EvaluationContext';
 
 export default function UploadResponses(): React.ReactElement {
-  const { files, responses, specification } = useAppSelector(
-    (state) => state.evaluation
-  );
+  const { files, specification } = useAppSelector((state) => state.evaluation);
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
-  const { setEvaluations } = useEvaluationState();
+  const { setEvaluations, responses, setResponses } = useEvaluationState();
 
   const formatDate = (time: number): string => {
     const date = new Date(time);
@@ -99,7 +94,7 @@ export default function UploadResponses(): React.ReactElement {
     const newFiles = [...files];
     newResponses.splice(index, 1);
     newFiles.splice(index, 1);
-    dispatch(setResponses(newResponses));
+    setResponses(newResponses);
     dispatch(setFiles(newFiles));
     setEvaluations([]);
   };
@@ -121,7 +116,7 @@ export default function UploadResponses(): React.ReactElement {
     readAllFiles(newFiles)
       .then((result) => {
         const newResponses = [...responses, ...(result as IResponse[])];
-        dispatch(setResponses(newResponses));
+        setResponses(newResponses);
         setEvaluations([]);
       })
       .catch((err) => {

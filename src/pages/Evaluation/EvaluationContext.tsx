@@ -6,12 +6,15 @@ import React, {
   useState
 } from 'react';
 import { IEvaluatedResponse } from '../../Nexus/entities/IEvaluatedResponse';
+import { IResponse } from '../../Nexus/entities/IResponse';
 
 type IEvaluationContext = {
   tab: number;
   setTab: Dispatch<SetStateAction<number>>;
   evaluations: IEvaluatedResponse[];
   setEvaluations: Dispatch<SetStateAction<IEvaluatedResponse[]>>;
+  responses: IResponse[];
+  setResponses: Dispatch<SetStateAction<IResponse[]>>;
 };
 
 interface IProps {
@@ -24,7 +27,9 @@ const initialContext: IEvaluationContext = {
     throw new Error('Function not implemented yet');
   },
   evaluations: [],
-  setEvaluations: () => {}
+  setEvaluations: () => {},
+  responses: [],
+  setResponses: () => {}
 };
 
 export const EvaluationContext =
@@ -33,10 +38,18 @@ export const EvaluationContext =
 export const EvaluationProvider = ({ children }: IProps) => {
   const [tab, setTab] = useState(0);
   const [evaluations, setEvaluations] = useState<IEvaluatedResponse[]>([]);
+  const [responses, setResponses] = useState<IResponse[]>([]);
 
   return (
     <EvaluationContext.Provider
-      value={{ tab, setTab, evaluations, setEvaluations }}
+      value={{
+        tab,
+        setTab,
+        evaluations,
+        setEvaluations,
+        responses,
+        setResponses
+      }}
     >
       {children}
     </EvaluationContext.Provider>

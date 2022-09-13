@@ -1,14 +1,12 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { IFile } from '../../models/IFile';
-import { IResponse } from '../../Nexus/entities/IResponse';
 import { ISpecification } from '../../Nexus/entities/ISpecification';
-import { ModelType, Weighting } from '../../Nexus/enums';
+import { ModelType } from '../../Nexus/enums';
 
 interface ISelectedBankState {
   files: IFile[];
   specFile: IFile | null;
   specification: ISpecification;
-  responses: IResponse[];
 }
 
 export const initialEvaluationsState: ISelectedBankState = {
@@ -39,10 +37,8 @@ export const initialEvaluationsState: ISelectedBankState = {
     organizationNumber: '',
     products: [],
     requirements: [],
-    requirementAnswers: [],
-    weight: Weighting.MEDIUM
-  },
-  responses: []
+    requirementAnswers: []
+  }
 };
 
 const evaluationSlice = createSlice({
@@ -55,9 +51,6 @@ const evaluationSlice = createSlice({
     ) {
       state.specification = payload;
     },
-    setResponses(state, { payload }: PayloadAction<IResponse[]>) {
-      state.responses = payload;
-    },
     setFiles(state, { payload }: PayloadAction<IFile[]>) {
       state.files = payload;
     },
@@ -67,11 +60,7 @@ const evaluationSlice = createSlice({
   }
 });
 
-export const {
-  setEvaluationSpecification,
-  setFiles,
-  setResponses,
-  setSpecFile
-} = evaluationSlice.actions;
+export const { setEvaluationSpecification, setFiles, setSpecFile } =
+  evaluationSlice.actions;
 
 export default evaluationSlice.reducer;

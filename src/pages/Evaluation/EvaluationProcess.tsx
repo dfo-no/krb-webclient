@@ -10,10 +10,8 @@ import { useTranslation } from 'react-i18next';
 
 const EvaluationProcess = (): ReactElement => {
   const { t } = useTranslation();
-  const { specification, responses } = useAppSelector(
-    (state) => state.evaluation
-  );
-  const { setTab, setEvaluations } = useEvaluationState();
+  const { specification } = useAppSelector((state) => state.evaluation);
+  const { setTab, setEvaluations, responses } = useEvaluationState();
 
   const nexus = Nexus.getInstance();
 

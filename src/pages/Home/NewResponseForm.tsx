@@ -21,11 +21,7 @@ import { useFeatureFlags } from '../../hooks/useFeatureFlag';
 import css from './HomePage.module.scss';
 import FileUpload from '../../components/FileUpload/FileUpload';
 import React from 'react';
-import {
-  setFiles,
-  setResponses,
-  setSpecFile
-} from '../../store/reducers/evaluation-reducer';
+import { setFiles, setSpecFile } from '../../store/reducers/evaluation-reducer';
 import { IAlert } from '../../models/IAlert';
 import { v4 as uuidv4 } from 'uuid';
 import { addAlert } from '../../store/reducers/alert-reducer';
@@ -51,7 +47,7 @@ const NewResponseForm = ({ handleClose, response }: IProps) => {
     setSelectedPrefilledResponse,
     setSelectedResponse
   } = useHomeState();
-  const { setEvaluations } = useEvaluationState();
+  const { setEvaluations, setResponses } = useEvaluationState();
   const featureFlags = useFeatureFlags();
 
   const methods = useForm<IResponse>({
@@ -68,7 +64,7 @@ const NewResponseForm = ({ handleClose, response }: IProps) => {
     // se src/pages/Home/HomePage.tsx:155
     setEvaluations([]);
     dispatch(setFiles([]));
-    dispatch(setResponses([]));
+    setResponses([]);
     dispatch(setSpecFile(null));
 
     const formData = new FormData();

@@ -18,11 +18,7 @@ import { addAlert } from '../../store/reducers/alert-reducer';
 import { httpPost } from '../../api/http';
 import { IAlert } from '../../models/IAlert';
 import { IBank } from '../../Nexus/entities/IBank';
-import {
-  setFiles,
-  setResponses,
-  setSpecFile
-} from '../../store/reducers/evaluation-reducer';
+import { setFiles, setSpecFile } from '../../store/reducers/evaluation-reducer';
 import { useAppDispatch } from '../../store/hooks';
 import { useGetBanksQuery } from '../../store/api/bankApi';
 import { useHomeState } from './HomeContext';
@@ -43,7 +39,7 @@ export default function HomePage(): React.ReactElement {
     setSelectedPrefilledResponse
   } = useHomeState();
 
-  const { setEvaluations } = useEvaluationState();
+  const { setEvaluations, setResponses } = useEvaluationState();
 
   const [latestPublishedProjects, setLatestPublishedProjects] = useState<
     IBank[]
@@ -79,7 +75,7 @@ export default function HomePage(): React.ReactElement {
   const onUpload = (files: FileList): void => {
     setEvaluations([]);
     dispatch(setFiles([]));
-    dispatch(setResponses([]));
+    setResponses([]);
     dispatch(setSpecFile(null));
 
     const formData = new FormData();
