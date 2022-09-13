@@ -6,12 +6,14 @@ import EvaluationResult from './EvaluationResult';
 import EvaluationSideBar from './EvaluationSideBar';
 import EvaluationSpec from './EvaluationSpec';
 import UploadResponses from './UploadResponses';
-import { useAppSelector } from '../../store/hooks';
 import { useEvaluationState } from './EvaluationContext';
 
 const Evaluation = (): ReactElement => {
-  const { specification } = useAppSelector((state) => state.evaluation);
-  const { setTab, tab } = useEvaluationState();
+  const {
+    setTab,
+    tab,
+    evaluationSpecification: specification
+  } = useEvaluationState();
 
   useEffect(() => {
     if (!!specification.bank.id) {

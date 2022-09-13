@@ -16,11 +16,11 @@ import {
   ModalButton,
   ModalButtonsBox
 } from '../../components/ModalBox/ModalBox';
-import { setEvaluationSpecification } from '../../store/reducers/evaluation-reducer';
 import { setSpecification } from '../../store/reducers/specification-reducer';
 import { selectBank } from '../../store/reducers/selectedBank-reducer';
 import { useAppDispatch } from '../../store/hooks';
 import { useHomeState } from './HomeContext';
+import { useEvaluationState } from '../Evaluation/EvaluationContext';
 
 interface IProps {
   selectedSpecification: ISpecification;
@@ -30,6 +30,7 @@ export default function SpecificationSelectionModal({
   selectedSpecification
 }: IProps): React.ReactElement {
   const { setSelectedSpecification } = useHomeState();
+  const { setEvaluationSpecification } = useEvaluationState();
   const [newResponse, setNewResponse] = useState<IResponse | null>(null);
   const [newPrefilledResponse, setNewPrefilledResponse] =
     useState<IPrefilledResponse | null>(null);
@@ -61,7 +62,7 @@ export default function SpecificationSelectionModal({
   };
 
   const doEvaluation = (): void => {
-    dispatch(setEvaluationSpecification(selectedSpecification));
+    setEvaluationSpecification(selectedSpecification);
     history.push(`/evaluation/${selectedSpecification.bank.id}`);
   };
 

@@ -5,7 +5,6 @@ import { useTranslation } from 'react-i18next';
 import css from './Evaluation.module.scss';
 import DownLoad from './DownLoad';
 import Utils from '../../common/Utils';
-import { useAppSelector } from '../../store/hooks';
 import { useEvaluationState } from './EvaluationContext';
 
 interface ISideBarItem {
@@ -21,17 +20,16 @@ const menuItems: ISideBarItem[] = [
 
 const EvaluationSideBar = (): ReactElement => {
   const { t } = useTranslation();
-  const { specification } = useAppSelector((state) => state.evaluation);
   const evaluationState = useEvaluationState();
 
   const isDone = (step: number): boolean => {
     switch (step) {
       case 0:
-        return !!specification.bank.id;
+        return !!evaluationState.evaluationSpecification.bank.id;
       case 1:
         return Utils.hasValidResponses(
           evaluationState.responses,
-          specification
+          evaluationState.evaluationSpecification
         );
       case 2:
         return evaluationState.evaluations.length > 0;

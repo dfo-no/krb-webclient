@@ -4,14 +4,17 @@ import React, { ReactElement } from 'react';
 import css from './Evaluation.module.scss';
 import Nexus from '../../Nexus/Nexus';
 import Utils from '../../common/Utils';
-import { useAppSelector } from '../../store/hooks';
 import { useEvaluationState } from './EvaluationContext';
 import { useTranslation } from 'react-i18next';
 
 const EvaluationProcess = (): ReactElement => {
   const { t } = useTranslation();
-  const { specification } = useAppSelector((state) => state.evaluation);
-  const { setTab, setEvaluations, responses } = useEvaluationState();
+  const {
+    setTab,
+    setEvaluations,
+    responses,
+    evaluationSpecification: specification
+  } = useEvaluationState();
 
   const nexus = Nexus.getInstance();
 

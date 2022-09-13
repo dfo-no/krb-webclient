@@ -18,6 +18,7 @@ import { IBreadcrumb } from '../../models/IBreadcrumb';
 import { IToolbarItem } from '../../models/IToolbarItem';
 import { useGetProjectQuery } from '../../store/api/bankApi';
 import { useAppSelector } from '../../store/hooks';
+import { useEvaluationState } from '../../pages/Evaluation/EvaluationContext';
 
 const useStyles = makeStyles({
   header: {
@@ -84,7 +85,6 @@ export default function Header(): React.ReactElement {
   const { t } = useTranslation();
   const { spec } = useAppSelector((state) => state.specification);
   const { response } = useAppSelector((state) => state.response);
-  const { specification } = useAppSelector((state) => state.evaluation);
   const { prefilledResponse } = useAppSelector(
     (state) => state.prefilledResponse
   );
@@ -92,6 +92,8 @@ export default function Header(): React.ReactElement {
   const baseUrl = useRouteMatch<{ projectId: string }>('/workbench/:projectId');
   const location = useLocation();
   const [project, setProject] = useState<IBank>();
+
+  const evaluationState = useEvaluationState();
 
   const breadcrumbs: IBreadcrumb[] = [
     {
@@ -201,7 +203,7 @@ export default function Header(): React.ReactElement {
       return response.specification.title || t('Response');
     }
     if (isEvaluation) {
-      return specification.title || t('Evaluation');
+      return evaluationState.evaluationSpecification.title || t('Evaluation');
     }
     if (isPrefilledResponse) {
       return prefilledResponse.bank.title || t('Prefilled response');

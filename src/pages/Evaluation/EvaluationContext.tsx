@@ -8,6 +8,8 @@ import React, {
 import { IEvaluatedResponse } from '../../Nexus/entities/IEvaluatedResponse';
 import { IResponse } from '../../Nexus/entities/IResponse';
 import { IFile } from '../../models/IFile';
+import { ModelType } from '../../Nexus/enums';
+import { ISpecification } from '../../Nexus/entities/ISpecification';
 
 type IEvaluationContext = {
   tab: number;
@@ -18,6 +20,8 @@ type IEvaluationContext = {
   setFiles: Dispatch<SetStateAction<IFile[]>>;
   responses: IResponse[];
   setResponses: Dispatch<SetStateAction<IResponse[]>>;
+  evaluationSpecification: ISpecification;
+  setEvaluationSpecification: Dispatch<SetStateAction<ISpecification>>;
 };
 
 interface IProps {
@@ -34,7 +38,35 @@ const initialContext: IEvaluationContext = {
   files: [],
   setFiles: () => {},
   responses: [],
-  setResponses: () => {}
+  setResponses: () => {},
+  evaluationSpecification: {
+    id: '',
+    bank: {
+      id: '',
+      title: '',
+      description: '',
+      needs: [],
+      products: [],
+      codelist: [],
+      tags: [],
+      version: 0,
+      type: ModelType.bank,
+      publications: [],
+      inheritedBanks: [],
+      publishedDate: null,
+      sourceOriginal: null,
+      sourceRel: null,
+      projectId: null,
+      deletedDate: null
+    },
+    title: '',
+    organization: '',
+    organizationNumber: '',
+    products: [],
+    requirements: [],
+    requirementAnswers: []
+  },
+  setEvaluationSpecification: () => {}
 };
 
 export const EvaluationContext =
@@ -45,6 +77,34 @@ export const EvaluationProvider = ({ children }: IProps) => {
   const [evaluations, setEvaluations] = useState<IEvaluatedResponse[]>([]);
   const [files, setFiles] = useState<IFile[]>([]);
   const [responses, setResponses] = useState<IResponse[]>([]);
+  const [evaluationSpecification, setEvaluationSpecification] =
+    useState<ISpecification>({
+      id: '',
+      bank: {
+        id: '',
+        title: '',
+        description: '',
+        needs: [],
+        products: [],
+        codelist: [],
+        tags: [],
+        version: 0,
+        type: ModelType.bank,
+        publications: [],
+        inheritedBanks: [],
+        publishedDate: null,
+        sourceOriginal: null,
+        sourceRel: null,
+        projectId: null,
+        deletedDate: null
+      },
+      title: '',
+      organization: '',
+      organizationNumber: '',
+      products: [],
+      requirements: [],
+      requirementAnswers: []
+    });
 
   return (
     <EvaluationContext.Provider
@@ -56,7 +116,9 @@ export const EvaluationProvider = ({ children }: IProps) => {
         files,
         setFiles,
         responses,
-        setResponses
+        setResponses,
+        evaluationSpecification,
+        setEvaluationSpecification
       }}
     >
       {children}

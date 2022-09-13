@@ -7,17 +7,12 @@ import DateUtils from '../../common/DateUtils';
 import FileUpload from '../../components/FileUpload/FileUpload';
 import SpecificationStoreService from '../../Nexus/services/SpecificationStoreService';
 import { httpPost } from '../../api/http';
-import {
-  setEvaluationSpecification,
-  setSpecFile
-} from '../../store/reducers/evaluation-reducer';
+import { setSpecFile } from '../../store/reducers/evaluation-reducer';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { useEvaluationState } from './EvaluationContext';
 
 const EvaluationSpec = (): ReactElement => {
-  const { specFile, specification } = useAppSelector(
-    (state) => state.evaluation
-  );
+  const { specFile } = useAppSelector((state) => state.evaluation);
   const { t } = useTranslation();
   const [uploadError, setUploadError] = useState('');
   const dispatch = useAppDispatch();
@@ -26,7 +21,11 @@ const EvaluationSpec = (): ReactElement => {
     setUploadError('');
   }, [dispatch]);
 
-  const { setEvaluations } = useEvaluationState();
+  const {
+    setEvaluations,
+    evaluationSpecification: specification,
+    setEvaluationSpecification
+  } = useEvaluationState();
 
   const formatDate = (time: number): string => {
     const date = new Date(time);
@@ -66,14 +65,13 @@ const EvaluationSpec = (): ReactElement => {
       .then((response) => {
         if (!response.data.bank) {
           setUploadError(t('EVAL_SPEC_ERROR_INVALID_FILE'));
-          dispatch(
-            setEvaluationSpecification(
-              SpecificationStoreService.generateDefaultSpecification()
-            )
+
+          setEvaluationSpecification(
+            SpecificationStoreService.generateDefaultSpecification()
           );
           return response;
         }
-        dispatch(setEvaluationSpecification(response.data));
+        setEvaluationSpecification(response.data);
         return response;
       })
       .catch((error) => {

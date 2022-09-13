@@ -12,14 +12,18 @@ import { FormIconButton } from '../../components/Form/FormIconButton';
 import { httpPost } from '../../api/http';
 import { IFile } from '../../models/IFile';
 import { IResponse } from '../../Nexus/entities/IResponse';
-import { useAppSelector } from '../../store/hooks';
 import { useEvaluationState } from './EvaluationContext';
 
 export default function UploadResponses(): React.ReactElement {
-  const { specification } = useAppSelector((state) => state.evaluation);
   const { t } = useTranslation();
-  const { setEvaluations, files, setFiles, responses, setResponses } =
-    useEvaluationState();
+  const {
+    setEvaluations,
+    files,
+    evaluationSpecification: specification,
+    setFiles,
+    responses,
+    setResponses
+  } = useEvaluationState();
 
   const formatDate = (time: number): string => {
     const date = new Date(time);

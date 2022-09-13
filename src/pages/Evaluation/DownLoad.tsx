@@ -5,13 +5,12 @@ import { useTranslation } from 'react-i18next';
 
 import { httpPost } from '../../api/http';
 import { IEvaluation } from '../../Nexus/entities/IEvaluation';
-import { useAppSelector } from '../../store/hooks';
 import { useEvaluationState } from './EvaluationContext';
 
 export default function DownLoad(): React.ReactElement {
   const { t } = useTranslation();
-  const { specification } = useAppSelector((state) => state.evaluation);
-  const { evaluations } = useEvaluationState();
+  const { evaluations, evaluationSpecification: specification } =
+    useEvaluationState();
 
   const onDownLoad = (): void => {
     const evaluation: IEvaluation = {
