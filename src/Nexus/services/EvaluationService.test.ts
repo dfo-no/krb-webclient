@@ -214,7 +214,7 @@ describe('EvaluationService', () => {
       title: 'Spec product',
       description: '',
       originProduct: product1,
-      weight: 70,
+      weight: Weighting.HIGH,
       amount: 1,
       requirements: [need2.requirements[0].id, need3.requirements[0].id],
       requirementAnswers: [
@@ -247,7 +247,7 @@ describe('EvaluationService', () => {
       title: 'Spec product 2',
       description: '',
       originProduct: product2,
-      weight: 50,
+      weight: Weighting.MEDIUM,
       amount: 1,
       requirements: [need3.requirements[0].id],
       requirementAnswers: [
@@ -418,6 +418,6 @@ describe('EvaluationService', () => {
     // Sum: product1: 0.35 + 0.5, product2: 0.07, general: 0.18 + 0.7 + 0.2 = 2
     // Max: product1: 0.7 + 0.5, product2: 0.7, general: 0.9 + 0.7, 0.5 = 4
     // Without product-weight: 2 / 4 = 0.5
-    expect(result[0].points).toBe(0.5);
+    expect(result[0].points).toBe(0.5223214285714286);
   });
 });

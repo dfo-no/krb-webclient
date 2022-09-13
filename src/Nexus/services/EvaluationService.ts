@@ -29,8 +29,8 @@ export default class EvaluationService {
     let max = 0;
     product.requirementAnswers.forEach((requirementAnswer) => {
       const calc = EvaluationService.calculatePoints(requirementAnswer);
-      total += calc.total;
-      max += calc.max;
+      total += (product.originProduct.weight / 100) * calc.total;
+      max += (product.originProduct.weight / 100) * calc.max;
     });
     return max === 0 ? { total: 0, max: 0 } : { total, max };
   }
@@ -40,8 +40,8 @@ export default class EvaluationService {
     let max = 0;
     response.requirementAnswers.forEach((requirementAnswer) => {
       const calc = EvaluationService.calculatePoints(requirementAnswer);
-      total += calc.total;
-      max += calc.max;
+      total += (response.specification.weight / 100) * calc.total;
+      max += (response.specification.weight / 100) * calc.max;
     });
     return max === 0 ? { total: 0, max: 0 } : { total, max };
   }
@@ -59,7 +59,6 @@ export default class EvaluationService {
     maxPoints += calc.max;
 
     response.products.forEach((product) => {
-      // TODO: Add product weighting
       const productCalc = this.calculateProductPoints(product);
       totPoints += productCalc.total;
       maxPoints += productCalc.max;

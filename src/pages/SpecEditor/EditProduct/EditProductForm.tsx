@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Typography from '@mui/material/Typography';
-import { FormProvider, useForm } from 'react-hook-form';
+import { FormProvider, useForm, useWatch } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
+import { Box } from '@mui/material';
 
 import Nexus from '../../../Nexus/Nexus';
 import theme from '../../../theme';
@@ -14,8 +15,10 @@ import {
   ModalButtonsBox,
   ModalButton
 } from '../../../components/ModalBox/ModalBox';
-import { ModelType } from '../../../Nexus/enums';
+import { ModelType, Weighting, WeightingStep } from '../../../Nexus/enums';
 import { useAppDispatch } from '../../../store/hooks';
+import { IMark } from '../../../Nexus/entities/IMark';
+import SliderCtrl from '../../../FormProvider/SliderCtrl';
 
 interface IProps {
   handleClose: () => void;
@@ -26,11 +29,20 @@ const EditProductForm = ({ handleClose, specificationProduct }: IProps) => {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
   const nexus = Nexus.getInstance();
+  const [sliderMark, setSliderMark] = useState<IMark[]>([
+    { value: Weighting.MEDIUM, label: t(Weighting[Weighting.MEDIUM]) }
+  ]);
 
   const methods = useForm<ISpecificationProduct>({
     resolver: nexus.resolverService.resolver(ModelType.specificationProduct),
     defaultValues: specificationProduct
   });
+
+  const useWeight = useWatch({ name: 'weight', control: methods.control });
+
+  useEffect(() => {
+    setSliderMark([{ value: useWeight, label: t(Weighting[useWeight]) }]);
+  }, [t, useWeight]);
 
   const onSubmit = (put: ISpecificationProduct): void => {
     dispatch(editSpecProduct({ product: put }));
@@ -68,6 +80,23 @@ const EditProductForm = ({ handleClose, specificationProduct }: IProps) => {
               placeholder={t('quantity')}
               type={'number'}
             />
+            <Box sx={{ flexGrow: 1 }}>
+              <Typography
+                variant={'smBold'}
+                color={theme.palette.primary.main}
+                sx={{ marginBottom: 1 }}
+              >
+                {t('Product weighting')}
+              </Typography>
+              <SliderCtrl
+                name={'weight'}
+                min={Weighting.LOWEST}
+                step={WeightingStep}
+                max={Weighting.HIGHEST}
+                showValue={false}
+                marks={sliderMark}
+              />
+            </Box>
           </ModalFieldsBox>
           <ModalButtonsBox>
             <ModalButton variant="cancel" onClick={() => handleClose()}>

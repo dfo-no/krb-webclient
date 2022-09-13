@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
-import { Box, Typography } from '@mui/material';
+import React, { useEffect, useState } from 'react';
+import { FormProvider, useForm, useWatch } from 'react-hook-form';
+import { Box, Button, Typography } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { useTranslation } from 'react-i18next';
@@ -13,74 +14,141 @@ import { useAppSelector } from '../../../store/hooks';
 import { useProductIndexState } from '../../../components/ProductIndexContext/ProductIndexContext';
 import theme from '../../../theme';
 import { useSelectState } from '../../Workbench/Create/SelectContext';
+import Nexus from '../../../Nexus/Nexus';
+import { IMark } from '../../../Nexus/entities/IMark';
+import { ModelType, Weighting, WeightingStep } from '../../../Nexus/enums';
+import SliderCtrl from '../../../FormProvider/SliderCtrl';
+import { ISpecification } from '../../../Nexus/entities/ISpecification';
 
 export default function ProductHeader(): React.ReactElement {
   const { t } = useTranslation();
   const { spec } = useAppSelector((state) => state.specification);
   const { productIndex } = useProductIndexState();
   const [editingProduct, setEditingProduct] = useState(false);
+  const [editingSpec, setEditingSpec] = useState(false);
   const { setDeleteMode } = useSelectState();
+  const nexus = Nexus.getInstance();
+  const [sliderMark, setSliderMark] = useState<IMark[]>([
+    { value: Weighting.MEDIUM, label: t(Weighting[Weighting.MEDIUM]) }
+  ]);
+
+  const methods = useForm<ISpecification>({
+    resolver: nexus.resolverService.resolver(ModelType.specification),
+    defaultValues: spec
+  });
+
+  const useWeight = useWatch({ name: 'weight', control: methods.control });
+
+  useEffect(() => {
+    setSliderMark([{ value: useWeight, label: t(Weighting[useWeight]) }]);
+  }, [t, useWeight]);
 
   return (
-    <DFOCardHeader>
-      <DFOHeaderContentBox>
-        <Box
-          sx={{
-            display: 'flex',
-            flexDirection: 'row',
-            paddingBottom: 0.5,
-            borderBottom: '0.1rem solid'
-          }}
-        >
-          <Typography variant="lgBold">
-            {spec.products[productIndex]?.title ?? t('General requirement')}
-          </Typography>
-          {productIndex !== -1 && (
-            <>
+    <FormProvider {...methods}>
+      <DFOCardHeader>
+        <DFOHeaderContentBox>
+          <Box
+            sx={{
+              display: 'flex',
+              flexDirection: 'row',
+              paddingBottom: 0.5,
+              borderBottom: '0.1rem solid'
+            }}
+          >
+            <Typography variant="lgBold">
+              {spec.products[productIndex]?.title ?? t('General requirement')}
+            </Typography>
+            {productIndex === -1 && (
               <DFOCardHeaderIconButton
                 sx={{ marginLeft: 'auto', paddingRight: 2 }}
-                onClick={() => setEditingProduct(true)}
+                onClick={() => setEditingSpec(true)}
               >
                 <EditIcon />
               </DFOCardHeaderIconButton>
-              <DFOCardHeaderIconButton
-                hoverColor={theme.palette.errorRed.main}
-                onClick={() => setDeleteMode(spec.products[productIndex].id)}
-              >
-                <DeleteIcon />
-              </DFOCardHeaderIconButton>
-            </>
-          )}
-        </Box>
-        <Box sx={{ display: 'flex', flexDirection: 'row', paddingTop: 1 }}>
-          <Typography variant="smBold">
-            {spec.products[productIndex]?.description ?? ''}
-          </Typography>
-
-          {productIndex !== -1 && spec.products[productIndex].originProduct && (
-            <Typography
-              variant="smBold"
-              sx={{ marginLeft: 'auto', paddingRight: 2 }}
-            >
-              {t('From product type')}
-              {': '}
-              <i>{spec.products[productIndex].originProduct.title}</i>
+            )}
+            {productIndex !== -1 && (
+              <>
+                <DFOCardHeaderIconButton
+                  sx={{ marginLeft: 'auto', paddingRight: 2 }}
+                  onClick={() => setEditingProduct(true)}
+                >
+                  <EditIcon />
+                </DFOCardHeaderIconButton>
+                <DFOCardHeaderIconButton
+                  hoverColor={theme.palette.errorRed.main}
+                  onClick={() => setDeleteMode(spec.products[productIndex].id)}
+                >
+                  <DeleteIcon />
+                </DFOCardHeaderIconButton>
+              </>
+            )}
+          </Box>
+          <Box sx={{ display: 'flex', flexDirection: 'row', paddingTop: 1 }}>
+            <Typography variant="smBold">
+              {spec.products[productIndex]?.description ?? ''}
             </Typography>
+
+            {productIndex !== -1 && spec.products[productIndex].originProduct && (
+              <Typography
+                variant="smBold"
+                sx={{ marginLeft: 'auto', paddingRight: 2 }}
+              >
+                {t('From product type')}
+                {': '}
+                <i>{spec.products[productIndex].originProduct.title}</i>
+              </Typography>
+            )}
+          </Box>
+          {editingProduct && (
+            <DFODialog
+              isOpen={true}
+              handleClose={() => setEditingProduct(false)}
+              children={
+                <EditProductForm
+                  handleClose={() => setEditingProduct(false)}
+                  specificationProduct={spec.products[productIndex]}
+                />
+              }
+            />
           )}
+        </DFOHeaderContentBox>
+      </DFOCardHeader>
+      {editingSpec && (
+        <Box
+          sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            backgroundColor: theme.palette.common.white,
+            paddingTop: 'var(--big-gap)',
+            paddingBottom: 'var(--tiny-gap)',
+            paddingRight: 'var(--small-gap)'
+          }}
+        >
+          <Box
+            sx={{
+              marginRight: 'var(--large-gap)',
+              marginLeft: 'var(--large-gap)'
+            }}
+          >
+            <SliderCtrl
+              label={`${t('Weighting')}:`}
+              name={'weight'}
+              min={Weighting.LOWEST}
+              step={WeightingStep}
+              max={Weighting.HIGHEST}
+              showValue={false}
+              marks={sliderMark}
+            />
+          </Box>
+          <Button
+            sx={{ marginTop: 'var(--small-gap)', marginLeft: 'auto' }}
+            variant={'primary'}
+            onClick={() => setEditingSpec(false)}
+          >
+            {t('Close')}
+          </Button>
         </Box>
-        {editingProduct && (
-          <DFODialog
-            isOpen={true}
-            handleClose={() => setEditingProduct(false)}
-            children={
-              <EditProductForm
-                handleClose={() => setEditingProduct(false)}
-                specificationProduct={spec.products[productIndex]}
-              />
-            }
-          />
-        )}
-      </DFOHeaderContentBox>
-    </DFOCardHeader>
+      )}
+    </FormProvider>
   );
 }
