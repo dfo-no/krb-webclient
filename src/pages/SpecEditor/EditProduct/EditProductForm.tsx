@@ -80,7 +80,13 @@ const EditProductForm = ({ handleClose, specificationProduct }: IProps) => {
               placeholder={t('quantity')}
               type={'number'}
             />
-            <Box sx={{ flexGrow: 1 }}>
+            <Box
+              sx={{
+                display: 'flex',
+                flexDirection: 'column',
+                gap: 'var(--micro-gap)'
+              }}
+            >
               <Typography
                 variant={'smBold'}
                 color={theme.palette.primary.main}
@@ -88,14 +94,16 @@ const EditProductForm = ({ handleClose, specificationProduct }: IProps) => {
               >
                 {t('Product weighting')}
               </Typography>
-              <SliderCtrl
-                name={'weight'}
-                min={Weighting.LOWEST}
-                step={WeightingStep}
-                max={Weighting.HIGHEST}
-                showValue={false}
-                marks={sliderMark}
-              />
+              <Box sx={{ padding: 1 }}>
+                <SliderCtrl
+                  name={'weight'}
+                  min={Weighting.LOWEST}
+                  step={WeightingStep}
+                  max={Weighting.HIGHEST}
+                  showValue={false}
+                  marks={sliderMark}
+                />
+              </Box>
             </Box>
           </ModalFieldsBox>
           <ModalButtonsBox>
