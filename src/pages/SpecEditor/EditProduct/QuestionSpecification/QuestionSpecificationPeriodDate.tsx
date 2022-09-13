@@ -12,6 +12,7 @@ import DateCtrl from '../../../../FormProvider/DateCtrl';
 import DateUtils from '../../../../common/DateUtils';
 import HorizontalTextCtrl from '../../../../FormProvider/HorizontalTextCtrl';
 import theme from '../../../../theme';
+import UuidService from '../../../../Nexus/services/UuidService';
 import { FormIconButton } from '../../../../components/Form/FormIconButton';
 import { IPeriodDateQuestion } from '../../../../Nexus/entities/IPeriodDateQuestion';
 import { IRequirementAnswer } from '../../../../Nexus/entities/IRequirementAnswer';
@@ -56,22 +57,36 @@ const QuestionSpecificationPeriodDate = ({ item }: IProps): ReactElement => {
   }, [useFromBoundary, setValue, item.config.isPeriod]);
 
   useEffect(() => {
-    if (!useMinScore) {
-      append({ date: null, score: 0 });
-      return;
+    if (!fields.length) {
+      append({ id: new UuidService().generateId(), date: null, score: 0 });
+      append({ id: new UuidService().generateId(), date: null, score: 100 });
     }
-    if (!DateUtils.sameTime(useFromBoundary, useMinScore.date)) {
-      update(0, { date: useFromBoundary, score: useMinScore.score });
+  }, [fields, append]);
+
+  useEffect(() => {
+    if (
+      useMinScore &&
+      (!DateUtils.sameTime(useFromBoundary, useMinScore.date) ||
+        !useMinScore.id)
+    ) {
+      update(0, {
+        id: useMinScore.id ?? new UuidService().generateId(),
+        date: useFromBoundary,
+        score: useMinScore.score
+      });
     }
   }, [useFromBoundary, useMinScore, update, append]);
 
   useEffect(() => {
-    if (!useMaxScore) {
-      append({ date: null, score: 100 });
-      return;
-    }
-    if (!DateUtils.sameTime(useToBoundary, useMaxScore.date)) {
-      update(1, { date: useToBoundary, score: useMaxScore.score });
+    if (
+      useMaxScore &&
+      (!DateUtils.sameTime(useToBoundary, useMaxScore.date) || !useMaxScore.id)
+    ) {
+      update(1, {
+        id: useMaxScore.id ?? new UuidService().generateId(),
+        date: useToBoundary,
+        score: useMaxScore.score
+      });
     }
   }, [useToBoundary, useMaxScore, update, append]);
 
@@ -91,21 +106,21 @@ const QuestionSpecificationPeriodDate = ({ item }: IProps): ReactElement => {
       >
         {t('Evaluation')}
       </Typography>
-      {fields.map((scoreValue, idx) => {
+      {fields.map((dateScore, idx) => {
         return (
           <div key={idx} className={classnames(css.QuestionGrid, css.FullRow)}>
             {idx < 2 ? (
               <Typography variant={'smBold'} className={css.CenteredText}>
-                {DateUtils.prettyFormatDate(scoreValue.date)}
+                {DateUtils.prettyFormatDate(dateScore.date)}
               </Typography>
             ) : (
-              <DateCtrl name={`question.config.dateScores.${idx}.date`} />
+              <DateCtrl name={`question.config.dateScores[${idx}].date`} />
             )}
             <div className={css.Arrow}>
               <ArrowForwardIcon />
             </div>
             <HorizontalTextCtrl
-              name={`question.config.dateScores.${idx}.score`}
+              name={`question.config.dateScores[${idx}].score`}
               placeholder={t('Score')}
               type={'number'}
             />
@@ -131,7 +146,13 @@ const QuestionSpecificationPeriodDate = ({ item }: IProps): ReactElement => {
       </div>
       <Button
         variant="primary"
-        onClick={() => append({ date: useFromBoundary, score: 0 })}
+        onClick={() =>
+          append({
+            id: new UuidService().generateId(),
+            date: useFromBoundary,
+            score: 0
+          })
+        }
       >
         {t('Add new date score')}
       </Button>

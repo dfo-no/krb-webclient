@@ -14,7 +14,7 @@ interface IProps {
   item: QuestionType;
 }
 
-const QuestionSpecification = ({ item }: IProps): ReactElement => {
+const QuestionAnswer = ({ item }: IProps): ReactElement => {
   switch (item.type) {
     case QuestionVariant.Q_CHECKBOX:
       return <QuestionAnswerCheckbox />;
@@ -35,4 +35,4 @@ const QuestionSpecification = ({ item }: IProps): ReactElement => {
   return <></>;
 };
 
-export default QuestionSpecification;
+export default QuestionAnswer;
