@@ -53,6 +53,9 @@ const NewSpecificationForm = ({ handleClose, specification }: IProps) => {
             <Typography sx={{ marginLeft: 0.16 }}>
               {specification.bank.description}
             </Typography>
+            <Typography sx={{ marginLeft: 0.16 }}>
+              {t('Version')} {specification.bank.version}
+            </Typography>
           </Box>
           <ModalFieldsBox>
             <VerticalTextCtrl

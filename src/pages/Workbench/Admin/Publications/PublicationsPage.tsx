@@ -4,12 +4,15 @@ import { useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 
 import css from './PublicationsPage.module.scss';
+import DFODialog from '../../../../components/DFODialog/DFODialog';
 import LoaderSpinner from '../../../../common/LoaderSpinner';
 import NewPublicationForm from './NewPublicationForm';
+import NewSpecificationForm from '../../../Home/NewSpecificationForm';
 import PublicationItem from './PublicationItem';
 import { EditableProvider } from '../../../../components/EditableContext/EditableContext';
 import { FormContainerBox } from '../../../../components/Form/FormContainerBox';
 import { IPublication } from '../../../../Nexus/entities/IPublication';
+import { ISpecification } from '../../../../Nexus/entities/ISpecification';
 import { IRouteProjectParams } from '../../../../models/IRouteProjectParams';
 import {
   NewButtonContainer,
@@ -18,12 +21,15 @@ import {
 import { StandardContainer } from '../../../../components/StandardContainer/StandardContainer';
 import { useGetProjectQuery } from '../../../../store/api/bankApi';
 
-function PublicationsPage(): ReactElement {
+export function PublicationsPage(): ReactElement {
   const { t } = useTranslation();
   const [isCreating, setCreating] = useState(false);
 
   const { projectId } = useParams<IRouteProjectParams>();
   const { data: project, isLoading } = useGetProjectQuery(projectId);
+
+  const [selectedSpecification, setSelectedSpecification] =
+    useState<ISpecification | null>(null);
 
   if (isLoading) {
     return <LoaderSpinner />;
@@ -44,7 +50,10 @@ function PublicationsPage(): ReactElement {
   const renderPublication = (publication: IPublication): ReactElement => {
     return (
       <li key={publication.id} className={css.Publication}>
-        <PublicationItem publication={publication} />
+        <PublicationItem
+          publication={publication}
+          chooseSpecification={setSelectedSpecification}
+        />
       </li>
     );
   };
@@ -77,8 +86,17 @@ function PublicationsPage(): ReactElement {
           {getOrderedPublications().map(renderPublication)}
         </List>
       </EditableProvider>
+      {selectedSpecification && (
+        <DFODialog
+          isOpen={true}
+          handleClose={() => setSelectedSpecification(null)}
+        >
+          <NewSpecificationForm
+            specification={selectedSpecification}
+            handleClose={() => setSelectedSpecification(null)}
+          />
+        </DFODialog>
+      )}
     </StandardContainer>
   );
 }
-
-export default PublicationsPage;
