@@ -1,5 +1,6 @@
 import { BaseTagSchema } from './entities/ITag';
 import Nexus from './Nexus';
+import ProjectService from './services/ProjectService';
 import PublicationService from './services/PublicationService';
 
 describe('Nexus', () => {
@@ -31,8 +32,7 @@ describe('Nexus', () => {
   });
   it('Nexus can create project, set bank in store and add a need', () => {
     const nexus = Nexus.getInstance();
-    const projectDefaultValues =
-      nexus.projectService.generateDefaultProjectValues();
+    const projectDefaultValues = ProjectService.defaultProject();
     nexus.projectService.setProject(projectDefaultValues);
     const need = nexus.needService.generateDefaultNeedValues(
       projectDefaultValues.id
@@ -44,8 +44,7 @@ describe('Nexus', () => {
 
   it('Nexus can create project, set bank in store and add a codelist with a code', () => {
     const nexus = Nexus.getInstance();
-    const projectDefaultValues =
-      nexus.projectService.generateDefaultProjectValues();
+    const projectDefaultValues = ProjectService.defaultProject();
     nexus.projectService.setProject(projectDefaultValues);
     const codelist = nexus.codelistService.createCodelistWithId(
       nexus.codelistService.generateDefaultCodelistValues(
@@ -63,8 +62,7 @@ describe('Nexus', () => {
 
   it('Nexus can save and load bank using adapter', () => {
     const nexus = Nexus.getInstance();
-    const projectDefaultValues =
-      nexus.projectService.generateDefaultProjectValues();
+    const projectDefaultValues = ProjectService.defaultProject();
     nexus.projectService.setProject(projectDefaultValues);
     const need = nexus.needService.generateDefaultNeedValues(
       projectDefaultValues.id

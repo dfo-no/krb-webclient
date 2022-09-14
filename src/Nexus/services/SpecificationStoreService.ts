@@ -1,221 +1,177 @@
 /* eslint-disable no-param-reassign */
 /* eslint-disable class-methods-use-this */
+import localforage from 'localforage';
 import produce from 'immer';
 
-import { ModelType, Weighting } from '../enums';
-import { IBank } from '../entities/IBank';
+import SpecificationService from './SpecificationService';
 import { IRequirementAnswer } from '../entities/IRequirementAnswer';
 import { ISpecification } from '../entities/ISpecification';
 import { ISpecificationProduct } from '../entities/ISpecificationProduct';
 
 export default class SpecificationStoreService {
-  private static specification: ISpecification;
+  private specification: ISpecification;
 
-  public setSpecification(specification: ISpecification): void {
-    SpecificationStoreService.specification = specification;
+  private db: LocalForage;
+
+  constructor() {
+    this.specification = SpecificationService.defaultSpecification();
+    this.db = localforage.createInstance({
+      name: 'specifications'
+    });
   }
 
-  public getSpecification(): ISpecification {
-    return SpecificationStoreService.specification;
+  private async storeSpecification(): Promise<ISpecification> {
+    return this.db.setItem(this.specification.id, this.specification);
   }
 
-  public static generateDefaultSpecification(): ISpecification {
-    return {
-      id: '',
-      bank: {
-        id: '',
-        title: '',
-        description: '',
-        needs: [],
-        products: [],
-        codelist: [],
-        tags: [],
-        version: 0,
-        type: ModelType.bank,
-        publications: [],
-        inheritedBanks: [],
-        publishedDate: null,
-        sourceOriginal: null,
-        sourceRel: null,
-        projectId: null,
-        deletedDate: null
-      },
-      title: '',
-      organization: '',
-      organizationNumber: '',
-      products: [],
-      requirements: [],
-      requirementAnswers: [],
-      weight: Weighting.MEDIUM
-    };
+  async setSpecification(
+    specification: ISpecification
+  ): Promise<ISpecification> {
+    this.specification = specification;
+    await this.storeSpecification();
+    return specification;
   }
 
-  public static getSpecificationFromBank(bank: IBank): ISpecification {
-    return {
-      id: '',
-      bank,
-      title: '',
-      organization: '',
-      organizationNumber: '',
-      products: [],
-      requirements: [],
-      requirementAnswers: [],
-      weight: Weighting.MEDIUM
-    };
+  async getSpecification(id: string): Promise<ISpecification> {
+    if (this.specification && this.specification.id === id) {
+      return this.specification;
+    }
+    const storedSpecification = await this.db.getItem(id);
+    if (storedSpecification) {
+      this.specification = storedSpecification as ISpecification;
+      return storedSpecification as ISpecification;
+    }
+    this.specification = SpecificationService.defaultSpecification();
+    return SpecificationService.defaultSpecification();
   }
 
-  public editTitle(title: string): void {
-    SpecificationStoreService.specification = produce(
-      SpecificationStoreService.specification,
-      (draft) => {
-        draft.title = title;
-      }
-    );
+  async addSpecificationProduct(
+    product: ISpecificationProduct
+  ): Promise<ISpecification> {
+    this.specification = produce(this.specification, (draft) => {
+      draft.products.push(product);
+    });
+    await this.storeSpecification();
+    return this.specification;
   }
 
-  public addSpecificationProduct(product: ISpecificationProduct): void {
-    SpecificationStoreService.specification = produce(
-      SpecificationStoreService.specification,
-      (draft) => {
-        draft.products.push(product);
-      }
-    );
-  }
-
-  public editSpecificationProduct(product: ISpecificationProduct): void {
-    const index = SpecificationStoreService.specification.products.findIndex(
+  async editSpecificationProduct(
+    product: ISpecificationProduct
+  ): Promise<ISpecification> {
+    const index = this.specification.products.findIndex(
       (specificationproduct: ISpecificationProduct) =>
         specificationproduct.id === product.id
     );
-    SpecificationStoreService.specification = produce(
-      SpecificationStoreService.specification,
-      (draft) => {
-        draft.products[index] = product;
-      }
-    );
+    this.specification = produce(this.specification, (draft) => {
+      draft.products[index] = product;
+    });
+    await this.storeSpecification();
+    return this.specification;
   }
 
-  public deleteSpecificationProduct(product: ISpecificationProduct): void {
-    const index = SpecificationStoreService.specification.products.findIndex(
+  async deleteSpecificationProduct(
+    product: ISpecificationProduct
+  ): Promise<ISpecification> {
+    const index = this.specification.products.findIndex(
       (specificationproduct: ISpecificationProduct) =>
         specificationproduct.id === product.id
     );
-    SpecificationStoreService.specification = produce(
-      SpecificationStoreService.specification,
-      (draft) => {
-        draft.products.splice(index, 1);
-      }
-    );
+    this.specification = produce(this.specification, (draft) => {
+      draft.products.splice(index, 1);
+    });
+    await this.storeSpecification();
+    return this.specification;
   }
 
-  addRequirement(requirement: string): void {
-    const index =
-      SpecificationStoreService.specification.requirements.findIndex(
-        (element) => element === requirement
-      );
-    SpecificationStoreService.specification.products[index].requirements.push(
-      requirement
-    );
-  }
-
-  removeRequirement(requirement: string): void {
-    const index =
-      SpecificationStoreService.specification.requirements.findIndex(
-        (element) => element === requirement
-      );
-    SpecificationStoreService.specification.products[index].requirements.splice(
-      index,
-      1
-    );
-  }
-
-  addSpecificationProductRequirement(
-    requirement: string,
+  async addProductAnswer(
+    answer: IRequirementAnswer,
     productId: string
-  ): void {
-    const index = SpecificationStoreService.specification.products.findIndex(
+  ): Promise<ISpecification> {
+    const index = this.specification.products.findIndex(
       (product) => product.id === productId
     );
-    SpecificationStoreService.specification.products[index].requirements.push(
-      requirement
-    );
+    this.specification = produce(this.specification, (draft) => {
+      draft.products[index].requirementAnswers.push(answer);
+      draft.products[index].requirements.push(answer.requirement.id);
+    });
+    await this.storeSpecification();
+    return this.specification;
   }
 
-  removeSpecificationProductRequirement(
-    requirement: string,
+  async editProductAnswer(
+    answer: IRequirementAnswer,
     productId: string
-  ): void {
-    const productIndex =
-      SpecificationStoreService.specification.products.findIndex(
-        (product) => product.id === productId
-      );
-    const index =
-      SpecificationStoreService.specification.requirements.findIndex(
-        (req) => req === requirement
-      );
-    SpecificationStoreService.specification.products[
-      productIndex
-    ].requirements.splice(index, 1);
-  }
-
-  addProductAnswer(answer: IRequirementAnswer, productId: string): void {
-    const index = SpecificationStoreService.specification.products.findIndex(
+  ): Promise<ISpecification> {
+    const index = this.specification.products.findIndex(
       (product) => product.id === productId
     );
-    SpecificationStoreService.specification.products[
-      index
-    ].requirementAnswers.push(answer);
-  }
-
-  editProductAnswer(answer: IRequirementAnswer, productId: string): void {
-    const index = SpecificationStoreService.specification.products.findIndex(
-      (product) => product.id === productId
-    );
-    const answerIndex = SpecificationStoreService.specification.products[
+    const answerIndex = this.specification.products[
       index
     ].requirementAnswers.findIndex(
       (element) => element.variantId === answer.variantId
     );
-    SpecificationStoreService.specification.products[index].requirementAnswers[
-      answerIndex
-    ] = answer;
+    this.specification = produce(this.specification, (draft) => {
+      draft.products[index].requirementAnswers[answerIndex] = answer;
+    });
+    await this.storeSpecification();
+    return this.specification;
   }
 
-  deleteProductAnswer(answer: IRequirementAnswer, productId: string): void {
-    const index = SpecificationStoreService.specification.products.findIndex(
+  async deleteProductAnswer(
+    answer: IRequirementAnswer,
+    productId: string
+  ): Promise<ISpecification> {
+    const index = this.specification.products.findIndex(
       (product) => product.id === productId
     );
-    const answerIndex = SpecificationStoreService.specification.products[
+    const answerIndex = this.specification.products[
       index
     ].requirementAnswers.findIndex(
       (element) => element.variantId === answer.variantId
     );
-    SpecificationStoreService.specification.products[
+    const requirementIndex = this.specification.products[
       index
-    ].requirementAnswers.splice(answerIndex, 1);
+    ].requirements.findIndex((element) => element === answer.requirement.id);
+    this.specification = produce(this.specification, (draft) => {
+      draft.products[index].requirementAnswers.splice(answerIndex, 1);
+      draft.products[index].requirements.splice(requirementIndex, 1);
+    });
+    await this.storeSpecification();
+    return this.specification;
   }
 
-  addAnswer(answer: IRequirementAnswer): void {
-    SpecificationStoreService.specification.requirementAnswers.push(answer);
+  async addAnswer(answer: IRequirementAnswer): Promise<ISpecification> {
+    this.specification = produce(this.specification, (draft) => {
+      draft.requirementAnswers.push(answer);
+      draft.requirements.push(answer.requirement.id);
+    });
+    await this.storeSpecification();
+    return this.specification;
   }
 
-  editAnswer(answer: IRequirementAnswer): void {
-    const answerIndex =
-      SpecificationStoreService.specification.requirementAnswers.findIndex(
-        (element) => element.variantId === answer.variantId
-      );
-    SpecificationStoreService.specification.requirementAnswers[answerIndex] =
-      answer;
-  }
-
-  deleteAnswer(answer: IRequirementAnswer): void {
-    const answerIndex =
-      SpecificationStoreService.specification.requirementAnswers.findIndex(
-        (element) => element.variantId === answer.variantId
-      );
-    SpecificationStoreService.specification.requirementAnswers.splice(
-      answerIndex,
-      1
+  async editAnswer(answer: IRequirementAnswer): Promise<ISpecification> {
+    const answerIndex = this.specification.requirementAnswers.findIndex(
+      (element) => element.variantId === answer.variantId
     );
+    this.specification = produce(this.specification, (draft) => {
+      draft.requirementAnswers[answerIndex] = answer;
+    });
+    await this.storeSpecification();
+    return this.specification;
+  }
+
+  async deleteAnswer(answer: IRequirementAnswer): Promise<ISpecification> {
+    const answerIndex = this.specification.requirementAnswers.findIndex(
+      (element) => element.variantId === answer.variantId
+    );
+    const requirementIndex = this.specification.requirements.findIndex(
+      (element) => element === answer.requirement.id
+    );
+    this.specification = produce(this.specification, (draft) => {
+      draft.requirementAnswers.splice(answerIndex, 1);
+      draft.requirements.splice(requirementIndex, 1);
+    });
+    await this.storeSpecification();
+    return this.specification;
   }
 }

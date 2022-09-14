@@ -13,19 +13,19 @@ export default class RequirementService {
     this.storeService = store;
   }
 
-  generateDefaultRequirementValues = (
-    projectId: string,
-    needId: string
+  public static defaultRequirement = (
+    projectId?: string,
+    needId?: string
   ): IRequirement => {
     return {
       id: '',
       title: '',
       description: '',
-      needId: needId,
+      needId: needId ?? '',
       type: ModelType.requirement,
       variants: [],
       tags: [],
-      sourceOriginal: projectId,
+      sourceOriginal: projectId ?? null,
       sourceRel: null
     };
   };

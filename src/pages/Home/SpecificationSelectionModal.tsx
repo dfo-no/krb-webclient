@@ -41,7 +41,7 @@ export default function SpecificationSelectionModal({
 
   const editSpecification = (): void => {
     dispatch(selectBank(selectedSpecification.bank.id));
-    dispatch(setSpecification(selectedSpecification));
+    nexus.specificationService.setSpecification(selectedSpecification);
     history.push(`/specification/${selectedSpecification.bank.id}`);
   };
 

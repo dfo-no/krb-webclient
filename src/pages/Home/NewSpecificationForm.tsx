@@ -15,8 +15,6 @@ import {
   ModalButton
 } from '../../components/ModalBox/ModalBox';
 import { ModelType } from '../../Nexus/enums';
-import { setSpecification } from '../../store/reducers/specification-reducer';
-import { useAppDispatch } from '../../store/hooks';
 
 interface IProps {
   handleClose: () => void;
@@ -26,7 +24,6 @@ interface IProps {
 const NewSpecificationForm = ({ handleClose, specification }: IProps) => {
   const { t } = useTranslation();
   const history = useHistory();
-  const dispatch = useAppDispatch();
   const nexus = Nexus.getInstance();
 
   const methods = useForm<ISpecification>({
@@ -35,8 +32,10 @@ const NewSpecificationForm = ({ handleClose, specification }: IProps) => {
   });
 
   const onSubmit = async (post: ISpecification) => {
-    dispatch(setSpecification(post));
-    history.push(`/specification/${post.bank.id}`);
+    const specificationWithId = nexus.specificationService.withId(post);
+    nexus.specificationService
+      .setSpecification(specificationWithId)
+      .then(() => history.push(`/specification/${specificationWithId.id}`));
   };
 
   return (
@@ -53,6 +52,9 @@ const NewSpecificationForm = ({ handleClose, specification }: IProps) => {
             </Typography>
             <Typography sx={{ marginLeft: 0.16 }}>
               {specification.bank.description}
+            </Typography>
+            <Typography sx={{ marginLeft: 0.16 }}>
+              {t('Version')} {specification.bank.version}
             </Typography>
           </Box>
           <ModalFieldsBox>

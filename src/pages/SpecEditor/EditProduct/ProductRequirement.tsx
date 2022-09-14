@@ -11,24 +11,15 @@ import EditProductVariant from './EditProductVariant';
 import GeneralErrorMessage from '../../../Form/GeneralErrorMessage';
 import Nexus from '../../../Nexus/Nexus';
 import ProductVariant from './ProductVariant';
-import {
-  addAnswer,
-  addProductAnswer,
-  addProductRequirement,
-  addRequirement,
-  deleteAnswer,
-  deleteProductAnswer,
-  removeProductRequirement,
-  removeRequirement
-} from '../../../store/reducers/specification-reducer';
+import SpecificationService from '../../../Nexus/services/SpecificationService';
 import { DFOCheckbox } from '../../../components/DFOCheckbox/DFOCheckbox';
 import { DFOChip } from '../../../components/DFOChip/DFOChip';
 import { FormIconButton } from '../../../components/Form/FormIconButton';
 import { IRequirement } from '../../../Nexus/entities/IRequirement';
 import { IRequirementAnswer } from '../../../Nexus/entities/IRequirementAnswer';
 import { ModelType, VariantType, Weighting } from '../../../Nexus/enums';
-import { useAppDispatch, useAppSelector } from '../../../store/hooks';
 import { useProductIndexState } from '../../../components/ProductIndexContext/ProductIndexContext';
+import { useSpecificationState } from '../SpecificationContext';
 
 interface IProps {
   requirement: IRequirement;
@@ -38,16 +29,21 @@ export default function ProductRequirement({
   requirement
 }: IProps): React.ReactElement {
   const { t } = useTranslation();
-  const { spec } = useAppSelector((state) => state.specification);
-  const dispatch = useAppDispatch();
+  const {
+    specification,
+    addGeneralAnswer,
+    deleteGeneralAnswer,
+    addProductAnswer,
+    deleteProductAnswer
+  } = useSpecificationState();
   const nexus = Nexus.getInstance();
   const { productIndex } = useProductIndexState();
   const [original, setOriginal] = useState<null | IRequirementAnswer>(null);
 
   const defaultValues =
-    nexus.specificationService.generateDefaultRequirementAnswer(requirement);
+    SpecificationService.defaultRequirementAnswer(requirement);
   const methods = useForm<IRequirementAnswer>({
-    resolver: nexus.resolverService.resolver(ModelType.requirementAnswer),
+    resolver: nexus.resolverService.postResolver(ModelType.requirementAnswer),
     defaultValues
   });
 
@@ -61,27 +57,12 @@ export default function ProductRequirement({
     (variant) => variant.id === useVariant
   );
 
-  const onSubmit = async (put: IRequirementAnswer) => {
+  const onSubmit = (put: IRequirementAnswer) => {
+    const reqAnsWithId = nexus.specificationService.withId(put);
     if (productIndex === -1) {
-      dispatch(
-        addAnswer({
-          answer: put
-        })
-      );
-      dispatch(addRequirement(requirement.id));
+      addGeneralAnswer(reqAnsWithId);
     } else {
-      dispatch(
-        addProductAnswer({
-          answer: put,
-          productId: spec.products[productIndex].id
-        })
-      );
-      dispatch(
-        addProductRequirement({
-          requirement: requirement.id,
-          productId: spec.products[productIndex].id
-        })
-      );
+      addProductAnswer(reqAnsWithId, specification.products[productIndex].id);
     }
   };
 
@@ -96,16 +77,16 @@ export default function ProductRequirement({
 
   const isSelected = (): boolean => {
     if (productIndex !== -1) {
-      return spec.products[productIndex].requirements.some(
+      return specification.products[productIndex].requirements.some(
         (req) => req === requirement.id
       );
     }
-    return spec.requirements.some((req) => req === requirement.id);
+    return specification.requirements.some((req) => req === requirement.id);
   };
 
   const isInfo = (): boolean => {
     const selected = (
-      productIndex === -1 ? spec : spec.products[productIndex]
+      productIndex === -1 ? specification : specification.products[productIndex]
     ).requirementAnswers.find(
       (reqAns) => reqAns.requirement.id === requirement.id
     );
@@ -126,37 +107,21 @@ export default function ProductRequirement({
 
   const unsaveRequirement = (): IRequirementAnswer | undefined => {
     if (productIndex === -1) {
-      const answer = spec.requirementAnswers.find(
+      const answer = specification.requirementAnswers.find(
         (reqAnswer) => reqAnswer.requirement.id === requirement.id
       );
       if (answer) {
-        dispatch(
-          deleteAnswer({
-            answer: answer.id
-          })
-        );
+        deleteGeneralAnswer(answer);
       }
-      dispatch(removeRequirement(requirement.id));
       return answer;
     } else {
-      const product = spec.products[productIndex];
+      const product = specification.products[productIndex];
       const answer = product.requirementAnswers.find(
         (reqAnswer) => reqAnswer.requirement.id === requirement.id
       );
       if (answer) {
-        dispatch(
-          deleteProductAnswer({
-            answer: answer.id,
-            productId: product.id
-          })
-        );
+        deleteProductAnswer(answer, product.id);
       }
-      dispatch(
-        removeProductRequirement({
-          requirement: requirement.id,
-          productId: product.id
-        })
-      );
       return answer;
     }
   };
@@ -169,7 +134,7 @@ export default function ProductRequirement({
   const editRequirement = (): void => {
     const answer = unsaveRequirement();
     if (answer) {
-      methods.reset(answer);
+      methods.reset({ ...answer, id: '' });
       setOriginal(answer);
     }
   };

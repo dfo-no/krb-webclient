@@ -21,10 +21,10 @@ const ProductQuestionsList = ({ variant }: IProps): ReactElement => {
   const item = variant.questions[0];
 
   useEffect(() => {
-    const index = variant.questions.findIndex(
-      (question) => question.id === useQuestionId
-    );
-    if (variant.questions.length > 0 && index < 0) {
+    if (
+      variant.questions.length > 0 &&
+      variant.questions[0].id !== useQuestionId
+    ) {
       setValue('question', item);
       setValue('questionId', item.id);
     }

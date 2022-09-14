@@ -14,6 +14,7 @@ import SpecModule from './pages/SpecEditor/SpecModule';
 import styles from './App.module.scss';
 import useConfirmTabClose from './hooks/useConfirmTabClose';
 import WorkbenchModule from './pages/Workbench/WorkbenchModule';
+import { HeaderProvider } from './components/Header/HeaderContext';
 import { HomeProvider } from './pages/Home/HomeContext';
 import { msalConfig } from './authentication/authConfig';
 
@@ -45,8 +46,10 @@ function App(): ReactElement {
         <CssBaseline />
         <AlertList />
         <div className={styles.App}>
-          <Header />
-          {renderContent()}
+          <HeaderProvider>
+            <Header />
+            {renderContent()}
+          </HeaderProvider>
         </div>
       </MsalProvider>
     </div>

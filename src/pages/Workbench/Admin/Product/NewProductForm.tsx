@@ -1,21 +1,23 @@
 import React from 'react';
-import { IProduct } from '../../../../Nexus/entities/IProduct';
-import { v4 as uuidv4 } from 'uuid';
-import { IAlert } from '../../../../models/IAlert';
-import { useAppDispatch } from '../../../../store/hooks';
-import { useTranslation } from 'react-i18next';
 import { FormProvider, useForm } from 'react-hook-form';
+import { useParams } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
+import { v4 as uuidv4 } from 'uuid';
+
+import FormButtons from '../../../../components/Form/FormButtons';
 import Nexus from '../../../../Nexus/Nexus';
+import ProductService from '../../../../Nexus/services/ProductService';
+import useProjectMutations from '../../../../store/api/ProjectMutations';
+import VerticalTextCtrl from '../../../../FormProvider/VerticalTextCtrl';
 import { addAlert } from '../../../../store/reducers/alert-reducer';
 import { FormItemBox } from '../../../../components/Form/FormItemBox';
-import { Parentable } from '../../../../models/Parentable';
-import { useFormStyles } from '../../../../components/Form/FormStyles';
-import useProjectMutations from '../../../../store/api/ProjectMutations';
-import { useParams } from 'react-router-dom';
+import { IAlert } from '../../../../models/IAlert';
+import { IProduct } from '../../../../Nexus/entities/IProduct';
 import { IRouteProjectParams } from '../../../../models/IRouteProjectParams';
-import VerticalTextCtrl from '../../../../FormProvider/VerticalTextCtrl';
-import FormButtons from '../../../../components/Form/FormButtons';
 import { ModelType } from '../../../../Nexus/enums';
+import { Parentable } from '../../../../models/Parentable';
+import { useAppDispatch } from '../../../../store/hooks';
+import { useFormStyles } from '../../../../components/Form/FormStyles';
 
 interface IProps {
   handleClose: () => void;
@@ -32,7 +34,7 @@ export default function NewProductForm({
   const { addProduct } = useProjectMutations();
 
   const defaultValues: Parentable<IProduct> =
-    nexus.productService.generateDefaultProductValues(projectId);
+    ProductService.defaultProduct(projectId);
 
   const methods = useForm<Parentable<IProduct>>({
     resolver: nexus.resolverService.postResolver(ModelType.product),

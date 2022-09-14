@@ -5,9 +5,9 @@ import { t } from 'i18next';
 import TextUtils from '../../../../common/TextUtils';
 import theme from '../../../../theme';
 import { IRequirement } from '../../../../Nexus/entities/IRequirement';
-import { useAppSelector } from '../../../../store/hooks';
 import { VariantType } from '../../../../Nexus/enums';
 import { useProductIndexState } from '../../../../components/ProductIndexContext/ProductIndexContext';
+import { useSpecificationState } from '../../SpecificationContext';
 
 interface IProps {
   requirement: IRequirement;
@@ -16,11 +16,11 @@ interface IProps {
 export default function ChosenConfiguration({
   requirement
 }: IProps): React.ReactElement {
-  const { spec } = useAppSelector((state) => state.specification);
+  const { specification } = useSpecificationState();
   const { productIndex } = useProductIndexState();
 
   const requirementAnswer = (
-    productIndex === -1 ? spec : spec.products[productIndex]
+    productIndex === -1 ? specification : specification.products[productIndex]
   ).requirementAnswers.find(
     (reqAns) => reqAns.requirement.id === requirement.id
   );
@@ -41,8 +41,8 @@ export default function ChosenConfiguration({
       </Typography>
       <Typography variant={'smBold'} color={theme.palette.gray600.main}>
         {showAnswer
-          ? TextUtils.getAnswerText(requirementAnswer, spec.bank)
-          : TextUtils.getConfigText(requirementAnswer, spec.bank)}
+          ? TextUtils.getAnswerText(requirementAnswer, specification.bank)
+          : TextUtils.getConfigText(requirementAnswer, specification.bank)}
       </Typography>
     </Box>
   );

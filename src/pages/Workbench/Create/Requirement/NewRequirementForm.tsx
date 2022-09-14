@@ -6,6 +6,7 @@ import { Typography } from '@mui/material';
 import { v4 as uuidv4 } from 'uuid';
 
 import Nexus from '../../../../Nexus/Nexus';
+import RequirementService from '../../../../Nexus/services/RequirementService';
 import theme from '../../../../theme';
 import useProjectMutations from '../../../../store/api/ProjectMutations';
 import VerticalTextCtrl from '../../../../FormProvider/VerticalTextCtrl';
@@ -36,11 +37,10 @@ function NewRequirementForm({ need, handleClose }: IProps): React.ReactElement {
   const { projectId } = useParams<IRouteProjectParams>();
   const { addRequirement } = useProjectMutations();
 
-  const defaultValues: IRequirement =
-    nexus.requirementService.generateDefaultRequirementValues(
-      projectId,
-      need.id
-    );
+  const defaultValues: IRequirement = RequirementService.defaultRequirement(
+    projectId,
+    need.id
+  );
 
   const methods = useForm<IRequirement>({
     resolver: nexus.resolverService.postResolver(ModelType.requirement),
