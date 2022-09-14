@@ -5,8 +5,10 @@ import { useTranslation } from 'react-i18next';
 
 import css from './QuestionCard.module.scss';
 import QuestionAnswer from './QuestionAnswer/QuestionAnswer';
+import QuestionSpecification from './QuestionSpecification/QuestionSpecification';
 import { IRequirementAnswer } from '../../../Nexus/entities/IRequirementAnswer';
 import { IVariant } from '../../../Nexus/entities/IVariant';
+import { VariantType } from '../../../Nexus/enums';
 
 interface IProps {
   variant: IVariant;
@@ -29,7 +31,7 @@ const ProductQuestionsList = ({ variant }: IProps): ReactElement => {
   }, [useQuestionId, setValue, variant, item]);
 
   if (!item) {
-    return <>-</>;
+    return <Typography className={css.infoText}>-</Typography>;
   }
 
   return (
@@ -41,7 +43,11 @@ const ProductQuestionsList = ({ variant }: IProps): ReactElement => {
       </Box>
       <Box className={css.cardContent}>
         <Divider />
-        <QuestionAnswer item={item} />
+        {variant.type === VariantType.info ? (
+          <QuestionAnswer item={item} />
+        ) : (
+          <QuestionSpecification item={item} />
+        )}
       </Box>
     </Card>
   );

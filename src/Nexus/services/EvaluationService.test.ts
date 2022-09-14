@@ -6,7 +6,7 @@ import { IProduct } from '../entities/IProduct';
 import { IResponse } from '../entities/IResponse';
 import { ISliderQuestion } from '../entities/ISliderQuestion';
 import { ISpecification } from '../entities/ISpecification';
-import { ModelType, QuestionVariant, VariantType } from '../enums';
+import { ModelType, QuestionVariant, VariantType, Weighting } from '../enums';
 import { Parentable } from '../../models/Parentable';
 
 describe('EvaluationService', () => {
@@ -20,8 +20,8 @@ describe('EvaluationService', () => {
         unit: 'TB',
         defaultPoint: 1,
         scoreValues: [
-          { value: 0, score: 0 },
-          { value: 10, score: 100 }
+          { id: 'd7f3cd3b-5428-470a-97fe-ce001ac096a6', value: 0, score: 0 },
+          { id: 'ec712301-4bf7-4d22-8d33-e96630ed0440', value: 10, score: 100 }
         ]
       },
       answer: {
@@ -44,10 +44,12 @@ describe('EvaluationService', () => {
         toBoundary: '2021-12-30T00:00:00.0000000Z',
         dateScores: [
           {
+            id: '8175d0e1-de2c-4d5e-ae97-d1dc837d5f55',
             date: '2021-10-01T00:00:00.0000000Z',
             score: 0
           },
           {
+            id: 'b6f872ed-3497-4622-bee5-8117c5fa5e51',
             date: '2021-12-30T00:00:00.0000000Z',
             score: 100
           }
@@ -323,7 +325,8 @@ describe('EvaluationService', () => {
           requirement: need3.requirements[0],
           type: ModelType.requirementAnswer
         }
-      ]
+      ],
+      weight: Weighting.MEDIUM
     };
 
     const response: IResponse = {

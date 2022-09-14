@@ -27,6 +27,7 @@ export interface ITimeConfig extends IConfigBase {
 }
 
 export interface TimeScorePair {
+  id?: string;
   time: string | null;
   score: number;
 }
@@ -49,6 +50,7 @@ export const TimeQuestionWorkbenchSchema = QuestionBaseSchema.keys({
 });
 
 const TimeScoreSchema = CustomJoi.object().keys({
+  id: CustomJoi.validateId(),
   score: CustomJoi.validateScore(),
   time: CustomJoi.validateTimeScore()
 });

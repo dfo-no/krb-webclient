@@ -2,7 +2,7 @@
 /* eslint-disable class-methods-use-this */
 import produce from 'immer';
 
-import { ModelType } from '../enums';
+import { ModelType, Weighting } from '../enums';
 import { IBank } from '../entities/IBank';
 import { IRequirementAnswer } from '../entities/IRequirementAnswer';
 import { ISpecification } from '../entities/ISpecification';
@@ -45,7 +45,8 @@ export default class SpecificationStoreService {
       organizationNumber: '',
       products: [],
       requirements: [],
-      requirementAnswers: []
+      requirementAnswers: [],
+      weight: Weighting.MEDIUM
     };
   }
 
@@ -58,7 +59,8 @@ export default class SpecificationStoreService {
       organizationNumber: '',
       products: [],
       requirements: [],
-      requirementAnswers: []
+      requirementAnswers: [],
+      weight: Weighting.MEDIUM
     };
   }
 
