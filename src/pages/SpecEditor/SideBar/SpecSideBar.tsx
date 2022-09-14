@@ -6,13 +6,13 @@ import css from '../../Stylesheets/Editor.module.scss';
 import DownloadButton from '../Download/DownloadButton';
 import theme from '../../../theme';
 import { ISpecificationProduct } from '../../../Nexus/entities/ISpecificationProduct';
-import { useAppSelector } from '../../../store/hooks';
 import { useProductIndexState } from '../../../components/ProductIndexContext/ProductIndexContext';
+import { useSpecificationState } from '../SpecificationContext';
 
 function SpecSideBar(): ReactElement {
   const { t } = useTranslation();
 
-  const { spec } = useAppSelector((state) => state.specification);
+  const { specification } = useSpecificationState();
   const { productIndex, setProductIndex, setCreate } = useProductIndexState();
 
   const genericPressed = (): void => {
@@ -77,9 +77,9 @@ function SpecSideBar(): ReactElement {
           </div>
         </li>
       </ul>
-      {spec.products.length > 0 && (
+      {specification.products.length > 0 && (
         <ul>
-          {spec.products.map((element, index) => {
+          {specification.products.map((element, index) => {
             return renderProducts(element, index);
           })}
         </ul>

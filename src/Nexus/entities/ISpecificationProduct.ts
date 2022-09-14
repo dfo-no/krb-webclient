@@ -27,7 +27,3 @@ export const SpecificationProductSchema = BaseModelSchema.keys({
   requirementAnswers: CustomJoi.validateUniqueArray(RequirementAnswerSchema),
   type: CustomJoi.validateType(ModelType.specificationProduct)
 });
-
-export const PostSpecificationProductSchema = SpecificationProductSchema.keys({
-  id: CustomJoi.validateEmptyId()
-});

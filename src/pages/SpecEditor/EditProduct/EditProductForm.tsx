@@ -7,7 +7,6 @@ import { Box } from '@mui/material';
 import Nexus from '../../../Nexus/Nexus';
 import theme from '../../../theme';
 import VerticalTextCtrl from '../../../FormProvider/VerticalTextCtrl';
-import { editSpecProduct } from '../../../store/reducers/specification-reducer';
 import { ISpecificationProduct } from '../../../Nexus/entities/ISpecificationProduct';
 import {
   ModalBox,
@@ -15,8 +14,8 @@ import {
   ModalButtonsBox,
   ModalButton
 } from '../../../components/ModalBox/ModalBox';
+import { useSpecificationState } from '../SpecificationContext';
 import { ModelType, Weighting, WeightingStep } from '../../../Nexus/enums';
-import { useAppDispatch } from '../../../store/hooks';
 import { IMark } from '../../../Nexus/entities/IMark';
 import SliderCtrl from '../../../FormProvider/SliderCtrl';
 
@@ -27,7 +26,7 @@ interface IProps {
 
 const EditProductForm = ({ handleClose, specificationProduct }: IProps) => {
   const { t } = useTranslation();
-  const dispatch = useAppDispatch();
+  const { editSpecificationProduct } = useSpecificationState();
   const nexus = Nexus.getInstance();
   const [sliderMark, setSliderMark] = useState<IMark[]>([
     { value: Weighting.MEDIUM, label: t(Weighting[Weighting.MEDIUM]) }
@@ -45,7 +44,7 @@ const EditProductForm = ({ handleClose, specificationProduct }: IProps) => {
   }, [t, useWeight]);
 
   const onSubmit = (put: ISpecificationProduct): void => {
-    dispatch(editSpecProduct({ product: put }));
+    editSpecificationProduct(put);
     handleClose();
   };
 

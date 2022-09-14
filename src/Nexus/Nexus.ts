@@ -1,24 +1,23 @@
 /* eslint-disable class-methods-use-this */
 import Adapter from './Adapters/Adapter';
-import LocalStorageAdapter from './Adapters/LocalStorageAdapter';
-import { IBank } from './entities/IBank';
 import CodelistService from './services/CodelistService';
 import EvaluationService from './services/EvaluationService';
+import LocalStorageAdapter from './Adapters/LocalStorageAdapter';
 import NeedService from './services/NeedService';
+import PrefilledResponseService from './services/PrefilledResponseService';
 import ProductService from './services/ProductService';
 import ProjectService from './services/ProjectService';
 import PublicationService from './services/PublicationService';
+import QuestionService from './services/QuestionService';
 import RequirementService from './services/RequirementService';
 import ResolverService from './services/ResolverService';
 import ResponseService from './services/ResponseService';
 import ResponseStoreService from './services/ResponseStoreService';
 import SpecificationService from './services/SpecificationService';
-import SpecificationStoreService from './services/SpecificationStoreService';
 import StoreService from './services/StoreService';
 import TagService from './services/TagService';
 import VariantService from './services/VariantService';
-import PrefilledResponseService from './services/PrefilledResponseService';
-import QuestionService from './services/QuestionService';
+import { IBank } from './entities/IBank';
 
 export default class Nexus {
   private static instance: Nexus;
@@ -26,8 +25,6 @@ export default class Nexus {
   private adapter: Adapter;
 
   public store = new StoreService();
-
-  public specificationStore = new SpecificationStoreService();
 
   public responseStore = new ResponseStoreService();
 
@@ -48,9 +45,7 @@ export default class Nexus {
 
   public projectService = new ProjectService(this.store);
 
-  public specificationService = new SpecificationService(
-    this.specificationStore
-  );
+  public specificationService = new SpecificationService();
 
   public prefilledResponseService = new PrefilledResponseService();
 

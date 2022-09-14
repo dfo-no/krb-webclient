@@ -5,12 +5,12 @@ import { useTranslation } from 'react-i18next';
 import byggernIllustration from '../../../assets/images/byggern-illustration.svg';
 import css from '../../Stylesheets/NoProducts.module.scss';
 import theme from '../../../theme';
-import { useAppSelector } from '../../../store/hooks';
 import { useProductIndexState } from '../../../components/ProductIndexContext/ProductIndexContext';
+import { useSpecificationState } from '../SpecificationContext';
 
 export default function NoProducts(): React.ReactElement {
   const { t } = useTranslation();
-  const { spec } = useAppSelector((state) => state.specification);
+  const { specification } = useSpecificationState();
   const { setCreate } = useProductIndexState();
 
   return (
@@ -23,7 +23,7 @@ export default function NoProducts(): React.ReactElement {
       />
       <div className={css.Text}>
         <Typography variant="lgBold" color={theme.palette.primary.main}>
-          {spec.title}
+          {specification.title}
         </Typography>
         <Typography variant="md">{t('SPEC_BUILDING_SPEC')}</Typography>
         <Typography variant="md">

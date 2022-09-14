@@ -4,9 +4,9 @@ import { useFormContext, useWatch } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
 import css from './EditProductVariant.module.scss';
-import Nexus from '../../../Nexus/Nexus';
 import ProductQuestionList from './ProductQuestionList';
 import SliderCtrl from '../../../FormProvider/SliderCtrl';
+import SpecificationService from '../../../Nexus/services/SpecificationService';
 import theme from '../../../theme';
 import { DFOCheckbox } from '../../../components/DFOCheckbox/DFOCheckbox';
 import { DFOChip } from '../../../components/DFOChip/DFOChip';
@@ -26,11 +26,10 @@ export default function EditProductVariant({
   variant
 }: IProps): React.ReactElement {
   const { t } = useTranslation();
-  const nexus = Nexus.getInstance();
   const { control, reset } = useFormContext<IRequirementAnswer>();
   const useWeight = useWatch({ name: 'weight', control });
   const defaultValues =
-    nexus.specificationService.generateDefaultRequirementAnswer(requirement);
+    SpecificationService.defaultRequirementAnswer(requirement);
   const [sliderMark, setSliderMark] = useState<IMark[]>([
     { value: Weighting.MEDIUM, label: t(Weighting[Weighting.MEDIUM]) }
   ]);
