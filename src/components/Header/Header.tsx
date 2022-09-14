@@ -94,7 +94,7 @@ export default function Header(): React.ReactElement {
   const location = useLocation();
   const [project, setProject] = useState<IBank>();
 
-  const evaluationState = useEvaluationState();
+  const { specification } = useEvaluationState();
 
   const breadcrumbs: IBreadcrumb[] = [
     {
@@ -204,7 +204,7 @@ export default function Header(): React.ReactElement {
       return response.specification.title || t('Response');
     }
     if (isEvaluation) {
-      return evaluationState.specification.title || t('Evaluation');
+      return specification.title || t('Evaluation');
     }
     if (isPrefilledResponse) {
       return prefilledResponse.bank.title || t('Prefilled response');

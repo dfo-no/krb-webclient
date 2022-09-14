@@ -20,19 +20,17 @@ const menuItems: ISideBarItem[] = [
 
 const EvaluationSideBar = (): ReactElement => {
   const { t } = useTranslation();
-  const evaluationState = useEvaluationState();
+  const { evaluations, responses, specification, tab, setTab } =
+    useEvaluationState();
 
   const isDone = (step: number): boolean => {
     switch (step) {
       case 0:
-        return !!evaluationState.specification.bank.id;
+        return !!specification.bank.id;
       case 1:
-        return Utils.hasValidResponses(
-          evaluationState.responses,
-          evaluationState.specification
-        );
+        return Utils.hasValidResponses(responses, specification);
       case 2:
-        return evaluationState.evaluations.length > 0;
+        return evaluations.length > 0;
       default:
         return false;
     }
@@ -44,15 +42,15 @@ const EvaluationSideBar = (): ReactElement => {
         {menuItems.map((item, index) => (
           <li
             key={index}
-            className={index === evaluationState.tab ? css.Active : undefined}
-            onClick={() => evaluationState.setTab(index)}
+            className={index === tab ? css.Active : undefined}
+            onClick={() => setTab(index)}
           >
             <div>{t(item.label)}</div>
             {isDone(index) && <CheckIcon />}
           </li>
         ))}
       </ul>
-      {evaluationState.evaluations.length > 0 && (
+      {evaluations.length > 0 && (
         <div className={css.Download}>
           <DownLoad />
         </div>
