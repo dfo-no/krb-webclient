@@ -1,15 +1,16 @@
 import { createContext, useContext, useEffect, useState } from 'react';
-import { ISpecification } from '../../Nexus/entities/ISpecification';
-import { ISpecificationProduct } from '../../Nexus/entities/ISpecificationProduct';
-import SpecificationService from '../../Nexus/services/SpecificationService';
 import { useHistory, useRouteMatch } from 'react-router-dom';
+
+import SpecificationService from '../../Nexus/services/SpecificationService';
 import Nexus from '../../Nexus/Nexus';
 import { IRequirementAnswer } from '../../Nexus/entities/IRequirementAnswer';
-import { useHeaderState } from '../../components/Header/HeaderContext';
 import {
   IRouteSpecificationParams,
   SpecificationPath
 } from '../../models/IRouteSpecificationParams';
+import { ISpecification } from '../../Nexus/entities/ISpecification';
+import { ISpecificationProduct } from '../../Nexus/entities/ISpecificationProduct';
+import { useHeaderState } from '../../components/Header/HeaderContext';
 
 interface ISpecificationContext {
   specification: ISpecification;
@@ -77,7 +78,6 @@ export const SpecificationProvider = ({ children }: IProps) => {
   const addSpecificationProduct = (product: ISpecificationProduct) => {
     nexus.specificationService.addSpecificationProduct(product).then((spec) => {
       setSpecification(spec);
-      console.log(spec);
       history.push(`/specification/${specId}/${product.id}`);
     });
   };

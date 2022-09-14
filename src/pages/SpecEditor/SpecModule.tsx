@@ -1,7 +1,7 @@
 import React from 'react';
 
-import { SpecificationProvider } from './SpecificationContext';
 import SpecEditor from './SpecEditor';
+import { SpecificationProvider } from './SpecificationContext';
 
 export default function SpecModule(): React.ReactElement {
   return (
