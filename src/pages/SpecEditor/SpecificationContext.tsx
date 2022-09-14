@@ -2,10 +2,14 @@ import { createContext, useContext, useEffect, useState } from 'react';
 import { ISpecification } from '../../Nexus/entities/ISpecification';
 import { ISpecificationProduct } from '../../Nexus/entities/ISpecificationProduct';
 import SpecificationService from '../../Nexus/services/SpecificationService';
-import { useParams } from 'react-router-dom';
+import { useHistory, useRouteMatch } from 'react-router-dom';
 import Nexus from '../../Nexus/Nexus';
 import { IRequirementAnswer } from '../../Nexus/entities/IRequirementAnswer';
 import { useHeaderState } from '../../components/Header/HeaderContext';
+import {
+  IRouteSpecificationParams,
+  SpecificationPath
+} from '../../models/IRouteSpecificationParams';
 
 interface ISpecificationContext {
   specification: ISpecification;
@@ -50,28 +54,31 @@ interface IProps {
   children: React.ReactNode;
 }
 
-interface IRouteParams {
-  id: string;
-}
-
 export const SpecificationProvider = ({ children }: IProps) => {
+  const routeMatch =
+    useRouteMatch<IRouteSpecificationParams>(SpecificationPath);
+  const specId = routeMatch?.params?.specId;
+  const history = useHistory();
   const { setTitle } = useHeaderState();
   const [specification, setSpecification] = useState(
     SpecificationService.defaultSpecification()
   );
-  const { id } = useParams<IRouteParams>();
   const nexus = Nexus.getInstance();
 
   useEffect(() => {
-    nexus.specificationService.getSpecification(id).then((spec) => {
-      setSpecification(spec);
-      setTitle(spec.title);
-    });
-  }, [id, nexus, setTitle]);
+    if (specId) {
+      nexus.specificationService.getSpecification(specId).then((spec) => {
+        setSpecification(spec);
+        setTitle(spec.title);
+      });
+    }
+  }, [specId, nexus, setTitle]);
 
   const addSpecificationProduct = (product: ISpecificationProduct) => {
     nexus.specificationService.addSpecificationProduct(product).then((spec) => {
       setSpecification(spec);
+      console.log(spec);
+      history.push(`/specification/${specId}/${product.id}`);
     });
   };
 

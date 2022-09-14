@@ -1,46 +1,41 @@
 import React from 'react';
+import { useParams } from 'react-router-dom';
 
 import DeleteSpecProduct from './DeleteSpecProduct';
 import ProductHeader from './ProductHeader';
 import ProductNeed from './ProductNeed';
 import Utils from '../../../common/Utils';
-import { useProductIndexState } from '../../../components/ProductIndexContext/ProductIndexContext';
+import { IRouteSpecificationParams } from '../../../models/IRouteSpecificationParams';
 import { useSelectState } from '../../Workbench/Create/SelectContext';
 import { useSpecificationState } from '../SpecificationContext';
 
 export default function EditProduct(): React.ReactElement {
+  const { productId } = useParams<IRouteSpecificationParams>();
   const { specification } = useSpecificationState();
-  const { productIndex } = useProductIndexState();
   const { setDeleteMode } = useSelectState();
+
+  const product = specification.products.find((prod) => prod.id === productId);
 
   const onDelete = (): void => {
     setDeleteMode('');
   };
 
   const renderNeeds = () => {
-    if (productIndex === -1) {
-      const needs = Utils.findVariantsUsedBySpecification(specification.bank);
-      return needs.map((need) => {
-        return <ProductNeed key={need.id} need={need} />;
-      });
-    } else {
-      const needs = Utils.findVariantsUsedByProduct(
-        specification.products[productIndex].originProduct,
-        specification.bank
-      );
-      return needs.map((need) => {
-        return <ProductNeed key={need.id} need={need} />;
-      });
-    }
+    const needs = product
+      ? Utils.findVariantsUsedByProduct(
+          product.originProduct,
+          specification.bank
+        )
+      : Utils.findVariantsUsedBySpecification(specification.bank);
+    return needs.map((need) => {
+      return <ProductNeed key={need.id} need={need} product={product} />;
+    });
   };
 
   return (
-    <DeleteSpecProduct
-      product={specification.products[productIndex]}
-      handleClose={onDelete}
-    >
+    <DeleteSpecProduct product={product} handleClose={onDelete}>
       <div>
-        <ProductHeader />
+        <ProductHeader product={product} />
         {renderNeeds()}
       </div>
     </DeleteSpecProduct>

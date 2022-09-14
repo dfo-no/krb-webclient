@@ -17,16 +17,18 @@ import { DFOChip } from '../../../components/DFOChip/DFOChip';
 import { FormIconButton } from '../../../components/Form/FormIconButton';
 import { IRequirement } from '../../../Nexus/entities/IRequirement';
 import { IRequirementAnswer } from '../../../Nexus/entities/IRequirementAnswer';
+import { ISpecificationProduct } from '../../../Nexus/entities/ISpecificationProduct';
 import { ModelType, VariantType, Weighting } from '../../../Nexus/enums';
-import { useProductIndexState } from '../../../components/ProductIndexContext/ProductIndexContext';
 import { useSpecificationState } from '../SpecificationContext';
 
 interface IProps {
   requirement: IRequirement;
+  product?: ISpecificationProduct;
 }
 
 export default function ProductRequirement({
-  requirement
+  requirement,
+  product
 }: IProps): React.ReactElement {
   const { t } = useTranslation();
   const {
@@ -37,7 +39,6 @@ export default function ProductRequirement({
     deleteProductAnswer
   } = useSpecificationState();
   const nexus = Nexus.getInstance();
-  const { productIndex } = useProductIndexState();
   const [original, setOriginal] = useState<null | IRequirementAnswer>(null);
 
   const defaultValues =
@@ -49,7 +50,7 @@ export default function ProductRequirement({
 
   useEffect(() => {
     methods.reset();
-  }, [methods, productIndex]);
+  }, [methods, product]);
 
   const useVariant = useWatch({ name: 'variantId', control: methods.control });
   const useWeight = useWatch({ name: 'weight', control: methods.control });
@@ -59,10 +60,10 @@ export default function ProductRequirement({
 
   const onSubmit = (put: IRequirementAnswer) => {
     const reqAnsWithId = nexus.specificationService.withId(put);
-    if (productIndex === -1) {
+    if (!product) {
       addGeneralAnswer(reqAnsWithId);
     } else {
-      addProductAnswer(reqAnsWithId, specification.products[productIndex].id);
+      addProductAnswer(reqAnsWithId, product.id);
     }
   };
 
@@ -76,18 +77,14 @@ export default function ProductRequirement({
   };
 
   const isSelected = (): boolean => {
-    if (productIndex !== -1) {
-      return specification.products[productIndex].requirements.some(
-        (req) => req === requirement.id
-      );
+    if (product) {
+      return product.requirements.some((req) => req === requirement.id);
     }
     return specification.requirements.some((req) => req === requirement.id);
   };
 
   const isInfo = (): boolean => {
-    const selected = (
-      productIndex === -1 ? specification : specification.products[productIndex]
-    ).requirementAnswers.find(
+    const selected = (product ?? specification).requirementAnswers.find(
       (reqAns) => reqAns.requirement.id === requirement.id
     );
     if (selected) {
@@ -106,7 +103,7 @@ export default function ProductRequirement({
   };
 
   const unsaveRequirement = (): IRequirementAnswer | undefined => {
-    if (productIndex === -1) {
+    if (!product) {
       const answer = specification.requirementAnswers.find(
         (reqAnswer) => reqAnswer.requirement.id === requirement.id
       );
@@ -115,7 +112,6 @@ export default function ProductRequirement({
       }
       return answer;
     } else {
-      const product = specification.products[productIndex];
       const answer = product.requirementAnswers.find(
         (reqAnswer) => reqAnswer.requirement.id === requirement.id
       );
@@ -193,7 +189,7 @@ export default function ProductRequirement({
               </FormIconButton>
             </Box>
             <Divider className={css.divider} />
-            <ChosenConfiguration requirement={requirement} />
+            <ChosenConfiguration requirement={requirement} product={product} />
           </Box>
         </Box>
       ) : (
