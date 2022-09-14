@@ -25,46 +25,12 @@ const QuestionConfigSlider = ({ index }: IProps) => {
     name: `questions.${index}.config.min`,
     control
   });
-  const useSliderMax = useWatch({
-    name: `questions.${index}.config.max`,
-    control
-  });
-
-  const useSliderMinScore = useWatch({
-    name: `questions.${index}.config.scoreValues.0`,
-    control
-  });
-  const useSliderMaxScore = useWatch({
-    name: `questions.${index}.config.scoreValues.1`,
-    control
-  });
 
   useEffect(() => {
-    if (
-      useSliderMin &&
-      useSliderMinScore &&
-      useSliderMin !== useSliderMinScore.value
-    ) {
-      setValue(`questions.${index}.config.scoreValues.0`, {
-        value: useSliderMin,
-        score: 0
-      });
+    if (useSliderMin) {
       setValue(`questions.${index}.answer.value`, useSliderMin);
     }
-  }, [index, useSliderMin, useSliderMinScore, setValue]);
-
-  useEffect(() => {
-    if (
-      useSliderMax &&
-      useSliderMaxScore &&
-      useSliderMax !== useSliderMaxScore.value
-    ) {
-      setValue(`questions.${index}.config.scoreValues.1`, {
-        value: useSliderMax,
-        score: 100
-      });
-    }
-  }, [index, useSliderMax, useSliderMaxScore, setValue]);
+  }, [index, useSliderMin, setValue]);
 
   return (
     <ConfigBox>

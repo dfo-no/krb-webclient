@@ -6,8 +6,8 @@ import AdminSideBar from './AdminSideBar';
 import CodelistGuard from './Codelist/CodelistGuard';
 import ProductGuard from './Product/ProductGuard';
 import PropertiesPage from './Properties/PropertiesPage';
-import PublicationsPage from './Publications/PublicationsPage';
 import TagGuard from './Tags/TagGuard';
+import { PublicationsPage } from './Publications/PublicationsPage';
 
 export default function AdminGuard(): React.ReactElement {
   return (

@@ -90,10 +90,7 @@ export default class QuestionService {
             periodMin: 0,
             periodMax: 1,
             defaultPoint: 1,
-            dateScores: [
-              { date: null, score: 0 },
-              { date: null, score: 100 }
-            ]
+            dateScores: []
           },
           answer: {
             point: 0,
@@ -113,10 +110,7 @@ export default class QuestionService {
             step: 1,
             unit: '',
             defaultPoint: 1,
-            scoreValues: [
-              { value: 0, score: 0 },
-              { value: 10, score: 100 }
-            ]
+            scoreValues: []
           },
           answer: {
             point: 0,
@@ -151,10 +145,7 @@ export default class QuestionService {
             periodMinutes: 0,
             periodHours: 0,
             defaultPoint: 1,
-            timeScores: [
-              { time: null, score: 0 },
-              { time: null, score: 100 }
-            ]
+            timeScores: []
           },
           answer: {
             point: 0,

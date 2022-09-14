@@ -15,6 +15,7 @@ import TimeCtrl from '../../../../FormProvider/TimeCtrl';
 import { FormIconButton } from '../../../../components/Form/FormIconButton';
 import { IRequirementAnswer } from '../../../../Nexus/entities/IRequirementAnswer';
 import { ITimeQuestion } from '../../../../Nexus/entities/ITimeQuestion';
+import UuidService from '../../../../Nexus/services/UuidService';
 
 interface IProps {
   item: ITimeQuestion;
@@ -56,22 +57,37 @@ const QuestionSpecificationTime = ({ item }: IProps): ReactElement => {
   }, [useFromBoundary, setValue, item.config.isPeriod]);
 
   useEffect(() => {
-    if (!useMinScore) {
-      append({ time: null, score: 0 });
-      return;
+    if (!fields.length) {
+      append({ id: new UuidService().generateId(), time: null, score: 0 });
+      append({ id: new UuidService().generateId(), time: null, score: 100 });
     }
-    if (!DateUtils.sameTime(useFromBoundary, useMinScore.time)) {
-      update(0, { time: useFromBoundary, score: useMinScore.score });
-    }
-  }, [useFromBoundary, useMinScore, update, append]);
+  }, [fields, append]);
 
   useEffect(() => {
-    if (!useMaxScore) {
-      append({ time: null, score: 100 });
-      return;
+    if (
+      useMinScore &&
+      (!DateUtils.sameTime(useFromBoundary, useMinScore.time) ||
+        !useMinScore.id)
+    ) {
+      update(0, {
+        id: useMinScore.id ?? new UuidService().generateId(),
+        time: useFromBoundary,
+        score: useMinScore.score
+      });
     }
-    if (useToBoundary && !DateUtils.sameTime(useToBoundary, useMaxScore.time)) {
-      update(1, { time: useToBoundary, score: useMaxScore.score });
+  }, [useFromBoundary, useMinScore, update]);
+
+  useEffect(() => {
+    if (
+      useMaxScore &&
+      useToBoundary &&
+      (!DateUtils.sameTime(useToBoundary, useMaxScore.time) || !useMaxScore.id)
+    ) {
+      update(1, {
+        id: useMaxScore.id ?? new UuidService().generateId(),
+        time: useToBoundary,
+        score: useMaxScore.score
+      });
     }
   }, [useToBoundary, useMaxScore, update, append]);
 
@@ -91,21 +107,24 @@ const QuestionSpecificationTime = ({ item }: IProps): ReactElement => {
       >
         {t('Evaluation')}
       </Typography>
-      {fields.map((scoreValue, idx) => {
+      {fields.map((timeScore, idx) => {
         return (
-          <div key={idx} className={classnames(css.QuestionGrid, css.FullRow)}>
+          <div
+            key={timeScore.id}
+            className={classnames(css.QuestionGrid, css.FullRow)}
+          >
             {idx < 2 ? (
               <Typography variant={'smBold'} className={css.CenteredText}>
-                {DateUtils.prettyFormatTime(scoreValue.time)}
+                {DateUtils.prettyFormatTime(timeScore.time)}
               </Typography>
             ) : (
-              <TimeCtrl name={`question.config.timeScores.${idx}.time`} />
+              <TimeCtrl name={`question.config.timeScores[${idx}].time`} />
             )}
             <div className={css.Arrow}>
               <ArrowForwardIcon />
             </div>
             <HorizontalTextCtrl
-              name={`question.config.timeScores.${idx}.score`}
+              name={`question.config.timeScores[${idx}].score`}
               placeholder={t('Score')}
               type={'number'}
             />
@@ -131,7 +150,13 @@ const QuestionSpecificationTime = ({ item }: IProps): ReactElement => {
       </div>
       <Button
         variant="primary"
-        onClick={() => append({ time: useFromBoundary, score: 0 })}
+        onClick={() =>
+          append({
+            id: new UuidService().generateId(),
+            time: useFromBoundary,
+            score: 0
+          })
+        }
       >
         {t('Add new time score')}
       </Button>
