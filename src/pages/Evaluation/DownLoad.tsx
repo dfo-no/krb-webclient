@@ -9,8 +9,7 @@ import { useEvaluationState } from './EvaluationContext';
 
 export default function DownLoad(): React.ReactElement {
   const { t } = useTranslation();
-  const { evaluations, evaluationSpecification: specification } =
-    useEvaluationState();
+  const { evaluations, specification } = useEvaluationState();
 
   const onDownLoad = (): void => {
     const evaluation: IEvaluation = {

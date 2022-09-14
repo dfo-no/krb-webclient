@@ -9,12 +9,8 @@ import { useTranslation } from 'react-i18next';
 
 const EvaluationProcess = (): ReactElement => {
   const { t } = useTranslation();
-  const {
-    setTab,
-    setEvaluations,
-    responses,
-    evaluationSpecification: specification
-  } = useEvaluationState();
+  const { setTab, setEvaluations, responses, specification } =
+    useEvaluationState();
 
   const nexus = Nexus.getInstance();
 

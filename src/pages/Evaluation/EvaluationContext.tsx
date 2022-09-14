@@ -16,7 +16,7 @@ type IEvaluationContext = {
   setTab: Dispatch<SetStateAction<number>>;
   evaluations: IEvaluatedResponse[];
   setEvaluations: Dispatch<SetStateAction<IEvaluatedResponse[]>>;
-  evaluationSpecification: ISpecification;
+  specification: ISpecification;
   setEvaluationSpecification: Dispatch<SetStateAction<ISpecification>>;
   files: IFile[];
   setFiles: Dispatch<SetStateAction<IFile[]>>;
@@ -37,7 +37,7 @@ const initialContext: IEvaluationContext = {
   },
   evaluations: [],
   setEvaluations: () => {},
-  evaluationSpecification: {
+  specification: {
     id: '',
     bank: {
       id: '',
@@ -120,7 +120,7 @@ export const EvaluationProvider = ({ children }: IProps) => {
         setTab,
         evaluations,
         setEvaluations,
-        evaluationSpecification,
+        specification: evaluationSpecification,
         setEvaluationSpecification,
         files,
         setFiles,

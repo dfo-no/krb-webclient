@@ -19,7 +19,7 @@ export default function UploadResponses(): React.ReactElement {
   const {
     setEvaluations,
     files,
-    evaluationSpecification: specification,
+    specification,
     setFiles,
     responses,
     setResponses

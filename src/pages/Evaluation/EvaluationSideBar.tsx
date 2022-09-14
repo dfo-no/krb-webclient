@@ -25,11 +25,11 @@ const EvaluationSideBar = (): ReactElement => {
   const isDone = (step: number): boolean => {
     switch (step) {
       case 0:
-        return !!evaluationState.evaluationSpecification.bank.id;
+        return !!evaluationState.specification.bank.id;
       case 1:
         return Utils.hasValidResponses(
           evaluationState.responses,
-          evaluationState.evaluationSpecification
+          evaluationState.specification
         );
       case 2:
         return evaluationState.evaluations.length > 0;

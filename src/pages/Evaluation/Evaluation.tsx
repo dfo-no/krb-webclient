@@ -9,11 +9,7 @@ import UploadResponses from './UploadResponses';
 import { useEvaluationState } from './EvaluationContext';
 
 const Evaluation = (): ReactElement => {
-  const {
-    setTab,
-    tab,
-    evaluationSpecification: specification
-  } = useEvaluationState();
+  const { setTab, tab, specification } = useEvaluationState();
 
   useEffect(() => {
     if (!!specification.bank.id) {

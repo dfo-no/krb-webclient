@@ -204,7 +204,7 @@ export default function Header(): React.ReactElement {
       return response.specification.title || t('Response');
     }
     if (isEvaluation) {
-      return evaluationState.evaluationSpecification.title || t('Evaluation');
+      return evaluationState.specification.title || t('Evaluation');
     }
     if (isPrefilledResponse) {
       return prefilledResponse.bank.title || t('Prefilled response');

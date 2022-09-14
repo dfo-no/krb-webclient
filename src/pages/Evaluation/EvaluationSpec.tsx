@@ -21,7 +21,7 @@ const EvaluationSpec = (): ReactElement => {
 
   const {
     setEvaluations,
-    evaluationSpecification: specification,
+    specification,
     setEvaluationSpecification,
     specFile,
     setSpecFile
