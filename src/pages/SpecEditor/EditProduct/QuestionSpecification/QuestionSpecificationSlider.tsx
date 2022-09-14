@@ -64,7 +64,7 @@ const QuestionSpecificationSlider = ({ item }: IProps): ReactElement => {
       });
       setValue('question.answer.value', useMinValue);
     }
-  }, [useMinValue, useMinScore, append, update, setValue]);
+  }, [useMinValue, useMinScore, update, setValue]);
 
   useEffect(() => {
     if (useMaxScore && (useMaxValue !== useMaxScore.value || !useMaxScore.id)) {
@@ -74,7 +74,7 @@ const QuestionSpecificationSlider = ({ item }: IProps): ReactElement => {
         score: useMaxScore.score
       });
     }
-  }, [useMaxValue, useMaxScore, append, update]);
+  }, [useMaxValue, useMaxScore, update]);
 
   return (
     <div className={css.QuestionGrid}>

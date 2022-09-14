@@ -11,7 +11,7 @@ import { ICode } from '../../../../Nexus/entities/ICode';
 import { ICodelist } from '../../../../Nexus/entities/ICodelist';
 import { ICodelistQuestion } from '../../../../Nexus/entities/ICodelistQuestion';
 import { IRequirementAnswer } from '../../../../Nexus/entities/IRequirementAnswer';
-import { useAppSelector } from '../../../../store/hooks';
+import { useSpecificationState } from '../../SpecificationContext';
 
 interface IProps {
   item: ICodelistQuestion;
@@ -25,8 +25,8 @@ const QuestionSpecificationCodelist = ({ item }: IProps) => {
     name: 'question.config.codes'
   });
 
-  const { spec } = useAppSelector((state) => state.specification);
-  const codelist = spec.bank.codelist.find((cl: ICodelist) => {
+  const { specification } = useSpecificationState();
+  const codelist = specification.bank.codelist.find((cl: ICodelist) => {
     return cl.id === item.config.codelist;
   });
   if (!codelist) return <></>;

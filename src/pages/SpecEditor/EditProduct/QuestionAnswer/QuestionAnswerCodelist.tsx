@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 import CodeSelection from '../../../../components/CodeSelection/CodeSelection';
 import css from '../QuestionContent.module.scss';
 import { ICodelistQuestion } from '../../../../Nexus/entities/ICodelistQuestion';
-import { useAppSelector } from '../../../../store/hooks';
+import { useSpecificationState } from '../../SpecificationContext';
 
 interface IProps {
   item: ICodelistQuestion;
@@ -13,8 +13,8 @@ interface IProps {
 
 const QuestionAnswerCodelist = ({ item }: IProps): ReactElement => {
   const { t } = useTranslation();
-  const { spec } = useAppSelector((state) => state.specification);
-  const codelist = spec.bank.codelist.find(
+  const { specification } = useSpecificationState();
+  const codelist = specification.bank.codelist.find(
     (cl) => cl.id === item.config.codelist
   );
 

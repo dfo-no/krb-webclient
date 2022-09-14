@@ -6,6 +6,7 @@ import ChosenAnswer from './ChosenAnswer';
 import css from './PrefilledResponse.module.scss';
 import Nexus from '../../../Nexus/Nexus';
 import QuestionAnswer from './QuestionAnswer';
+import SpecificationService from '../../../Nexus/services/SpecificationService';
 import { DFOAccordion } from '../../../components/DFOAccordion/DFOAccordion';
 import { IRequirement } from '../../../Nexus/entities/IRequirement';
 import { IRequirementAnswer } from '../../../Nexus/entities/IRequirementAnswer';
@@ -36,7 +37,7 @@ export default function ProductQuestion({
   >(undefined);
   const [requirementAnswer, setRequirementAnswer] =
     useState<IRequirementAnswer>(
-      nexus.specificationService.generateDefaultRequirementAnswer(
+      SpecificationService.defaultRequirementAnswer(
         requirement,
         variant.id,
         question

@@ -8,28 +8,27 @@ import NewProductHeader from '../../../components/NewProductHeader/NewProductHea
 import Nexus from '../../../Nexus/Nexus';
 import NeedList from '../../../components/NeedList/NeedList';
 import ProductSelection from '../../../components/ProductSelection/ProductSelection';
+import SpecificationService from '../../../Nexus/services/SpecificationService';
 import theme from '../../../theme';
 import VerticalTextCtrl from '../../../FormProvider/VerticalTextCtrl';
-import { addProduct } from '../../../store/reducers/specification-reducer';
 import { IProduct } from '../../../Nexus/entities/IProduct';
 import { ISpecificationProduct } from '../../../Nexus/entities/ISpecificationProduct';
 import { ModelType } from '../../../Nexus/enums';
 import { Parentable } from '../../../models/Parentable';
-import { useAppDispatch, useAppSelector } from '../../../store/hooks';
 import { useFormStyles } from '../../../components/Form/FormStyles';
 import { useProductIndexState } from '../../../components/ProductIndexContext/ProductIndexContext';
+import { useSpecificationState } from '../SpecificationContext';
 
 export default function NewProduct(): React.ReactElement {
   const { t } = useTranslation();
   const nexus = Nexus.getInstance();
-  const { spec } = useAppSelector((state) => state.specification);
   const formStyles = useFormStyles();
-  const dispatch = useAppDispatch();
+  const { specification, addSpecificationProduct } = useSpecificationState();
   const { setProductIndex } = useProductIndexState();
   const [product, setProduct] = useState<Parentable<IProduct> | null>(null);
 
   const defaultValues: ISpecificationProduct =
-    nexus.specificationService.generateDefaultSpecificationProductValues();
+    SpecificationService.defaultSpecificationProduct();
 
   const methods = useForm<ISpecificationProduct>({
     resolver: nexus.resolverService.postResolver(
@@ -40,23 +39,21 @@ export default function NewProduct(): React.ReactElement {
 
   useEffect(() => {
     if (!product) {
-      const firstProduct = spec.bank.products[0];
+      const firstProduct = specification.bank.products[0];
       setProduct(firstProduct);
       methods.setValue('originProduct', firstProduct);
     }
-  }, [spec, product, setProduct, methods]);
+  }, [specification, product, setProduct, methods]);
 
   const onSubmit = (post: ISpecificationProduct): void => {
-    const newProduct =
-      nexus.specificationService.createSpecificationProductWithId(post);
-    const newId = spec.products.length;
-    dispatch(addProduct({ product: newProduct }));
+    const newProduct = nexus.specificationService.withId(post);
+    const newId = specification.products.length;
+    addSpecificationProduct(newProduct);
     setProductIndex(newId);
   };
 
-  const nonDeletedProducts: Parentable<IProduct>[] = spec.bank.products.filter(
-    (item) => !item.deletedDate
-  );
+  const nonDeletedProducts: Parentable<IProduct>[] =
+    specification.bank.products.filter((item) => !item.deletedDate);
 
   return (
     <div className={css.NewProduct}>
@@ -80,7 +77,8 @@ export default function NewProduct(): React.ReactElement {
               />
               <Typography variant={'smBold'} color={theme.palette.primary.main}>
                 {t('Choose a product type from the requirement set')}{' '}
-                <i>{spec.bank.title}</i> {t('that fits the product best')}
+                <i>{specification.bank.title}</i>{' '}
+                {t('that fits the product best')}
               </Typography>
               {nonDeletedProducts.length && (
                 <ProductSelection
@@ -98,7 +96,9 @@ export default function NewProduct(): React.ReactElement {
               >
                 {t('Save')}
               </Button>
-              {product && <NeedList product={product} bank={spec.bank} />}
+              {product && (
+                <NeedList product={product} bank={specification.bank} />
+              )}
             </div>
           </div>
         </form>

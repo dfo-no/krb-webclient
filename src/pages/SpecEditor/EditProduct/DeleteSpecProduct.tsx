@@ -1,16 +1,16 @@
 import React from 'react';
-import { useTranslation } from 'react-i18next';
 import { Box } from '@mui/material/';
+import { useTranslation } from 'react-i18next';
 import { v4 as uuidv4 } from 'uuid';
 
-import { IAlert } from '../../../models/IAlert';
-import { useAppDispatch } from '../../../store/hooks';
-import { addAlert } from '../../../store/reducers/alert-reducer';
 import DeleteFrame from '../../../components/DeleteFrame/DeleteFrame';
-import { deleteSpecProduct } from '../../../store/reducers/specification-reducer';
-import { useProductIndexState } from '../../../components/ProductIndexContext/ProductIndexContext';
+import { addAlert } from '../../../store/reducers/alert-reducer';
+import { IAlert } from '../../../models/IAlert';
 import { ISpecificationProduct } from '../../../Nexus/entities/ISpecificationProduct';
+import { useAppDispatch } from '../../../store/hooks';
+import { useProductIndexState } from '../../../components/ProductIndexContext/ProductIndexContext';
 import { useSelectState } from '../../Workbench/Create/SelectContext';
+import { useSpecificationState } from '../SpecificationContext';
 
 interface IProps {
   children: React.ReactElement;
@@ -26,6 +26,7 @@ export default function DeleteSpecProduct({
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
   const { setProductIndex } = useProductIndexState();
+  const { deleteSpecificationProduct } = useSpecificationState();
   const { deleteMode } = useSelectState();
 
   if (!product || deleteMode !== product.id) {
@@ -41,7 +42,7 @@ export default function DeleteSpecProduct({
     : '';
 
   const onDelete = (): void => {
-    dispatch(deleteSpecProduct({ productId: product.id }));
+    deleteSpecificationProduct(product);
     const alert: IAlert = {
       id: uuidv4(),
       style: 'success',

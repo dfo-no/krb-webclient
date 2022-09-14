@@ -7,7 +7,7 @@ import { useTranslation } from 'react-i18next';
 import css from './PublicationsPage.module.scss';
 import DateUtils from '../../../../common/DateUtils';
 import DeletePublicationForm from './DeletePublicationForm';
-import SpecificationStoreService from '../../../../Nexus/services/SpecificationStoreService';
+import SpecificationService from '../../../../Nexus/services/SpecificationService';
 import { FormIconButton } from '../../../../components/Form/FormIconButton';
 import { IPublication } from '../../../../Nexus/entities/IPublication';
 import { useEditableState } from '../../../../components/EditableContext/EditableContext';
@@ -28,7 +28,7 @@ const PublicationItem = ({
 
   const { data: bank } = useGetBankQuery(publication.bankId);
   const specification = bank
-    ? SpecificationStoreService.getSpecificationFromBank(bank)
+    ? SpecificationService.defaultSpecification(bank)
     : null;
 
   const handleCloseDelete = () => {
