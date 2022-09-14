@@ -10,6 +10,7 @@ import {
 } from '../../models/IRouteSpecificationParams';
 import { ISpecification } from '../../Nexus/entities/ISpecification';
 import { ISpecificationProduct } from '../../Nexus/entities/ISpecificationProduct';
+import { PRODUCTS, SPECIFICATION } from '../../common/PathConstants';
 import { useHeaderState } from '../../components/Header/HeaderContext';
 
 interface ISpecificationContext {
@@ -78,7 +79,7 @@ export const SpecificationProvider = ({ children }: IProps) => {
   const addSpecificationProduct = (product: ISpecificationProduct) => {
     nexus.specificationService.addSpecificationProduct(product).then((spec) => {
       setSpecification(spec);
-      history.push(`/specification/${specId}/${product.id}`);
+      history.push(`/${SPECIFICATION}/${specId}/${PRODUCTS}/${product.id}`);
     });
   };
 

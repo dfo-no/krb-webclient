@@ -1,8 +1,9 @@
+import { SPECIFICATION, PRODUCTS } from '../common/PathConstants';
+
 export interface IRouteSpecificationParams {
   specId: string;
-  productId?: string;
+  productId: string;
 }
 
-export const SpecificationPath = '/specification/:specId';
-export const SpecificationProductPath =
-  '/specification/:specId/products/:productId?';
+export const SpecificationPath = `/${SPECIFICATION}/:specId`;
+export const SpecificationProductPath = `/${SPECIFICATION}/:specId/${PRODUCTS}/:productId`;

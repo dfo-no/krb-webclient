@@ -12,6 +12,7 @@ import {
   IRouteSpecificationParams,
   SpecificationProductPath
 } from '../../../models/IRouteSpecificationParams';
+import { PRODUCTS, SPECIFICATION } from '../../../common/PathConstants';
 
 function SpecSideBar(): ReactElement {
   const { t } = useTranslation();
@@ -23,15 +24,15 @@ function SpecSideBar(): ReactElement {
   const productId = routeMatch?.params?.productId;
 
   const genericPressed = (): void => {
-    history.push(`/specification/${specification.id}/products/general/`);
+    history.push(`/${SPECIFICATION}/${specification.id}/${PRODUCTS}/general/`);
   };
 
   const productPressed = (pid: string): void => {
-    history.push(`/specification/${specification.id}/products/${pid}/`);
+    history.push(`/${SPECIFICATION}/${specification.id}/${PRODUCTS}/${pid}/`);
   };
 
   const createPressed = (): void => {
-    history.push(`/specification/${specification.id}/create/`);
+    history.push(`/${SPECIFICATION}/${specification.id}/create/`);
   };
 
   const isGeneric = (): boolean => {
