@@ -66,7 +66,7 @@ const EvaluationSpec = (): ReactElement => {
 
           setEvaluationSpecification(
             SpecificationService.defaultSpecification()
-          )
+          );
           return response;
         }
         setEvaluationSpecification(response.data);
