@@ -164,7 +164,6 @@
   },
   "pre-commit": [
     "prettier:ci",
-    "lint:ci",
     "test:ci"
   ]
 }
