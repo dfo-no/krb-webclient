@@ -94,7 +94,7 @@ export default function Header(): React.ReactElement {
   const location = useLocation();
   const [project, setProject] = useState<IBank>();
 
-  const { specification } = useEvaluationState();
+  const { specification } = useEvaluationState(); // TODO: Needs to go
 
   const breadcrumbs: IBreadcrumb[] = [
     {

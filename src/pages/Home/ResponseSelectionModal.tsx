@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Dispatch, SetStateAction } from 'react';
 import { Box } from '@mui/material';
 import { useHistory } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
@@ -13,16 +13,16 @@ import {
 import { selectBank } from '../../store/reducers/selectedBank-reducer';
 import { setResponse } from '../../store/reducers/response-reducer';
 import { useAppDispatch } from '../../store/hooks';
-import { useHomeState } from './HomeContext';
 
 interface IProps {
   selectedResponse: IResponse;
+  setSelectedResponse: Dispatch<SetStateAction<IResponse | null>>;
 }
 
 export default function ResponseSelectionModal({
-  selectedResponse
+  selectedResponse,
+  setSelectedResponse
 }: IProps): React.ReactElement {
-  const { setSelectedResponse } = useHomeState();
   const history = useHistory();
   const { t } = useTranslation();
   const dispatch = useAppDispatch();

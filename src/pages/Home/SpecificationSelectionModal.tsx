@@ -1,4 +1,4 @@
-import React, { ReactElement, useState } from 'react';
+import React, { Dispatch, ReactElement, SetStateAction, useState } from 'react';
 import { Box, Typography } from '@mui/material';
 import { useHistory } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
@@ -18,18 +18,18 @@ import {
 } from '../../components/ModalBox/ModalBox';
 import { selectBank } from '../../store/reducers/selectedBank-reducer';
 import { useAppDispatch } from '../../store/hooks';
-import { useHomeState } from './HomeContext';
-import { useEvaluationState } from '../Evaluation/EvaluationContext';
 
 interface IProps {
   selectedSpecification: ISpecification;
+  setSelectedSpecification: Dispatch<SetStateAction<ISpecification | null>>;
+  setEvaluationSpecification: Dispatch<SetStateAction<ISpecification | null>>;
 }
 
 export default function SpecificationSelectionModal({
-  selectedSpecification
+  selectedSpecification,
+  setSelectedSpecification,
+  setEvaluationSpecification
 }: IProps): React.ReactElement {
-  const { setSelectedSpecification } = useHomeState();
-  const { setEvaluationSpecification } = useEvaluationState();
   const [newResponse, setNewResponse] = useState<IResponse | null>(null);
   const [newPrefilledResponse, setNewPrefilledResponse] =
     useState<IPrefilledResponse | null>(null);

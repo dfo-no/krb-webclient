@@ -17,19 +17,9 @@ import {
 import { ModelType } from '../../Nexus/enums';
 import { setResponse } from '../../store/reducers/response-reducer';
 import { useAppDispatch } from '../../store/hooks';
-import { useFeatureFlags } from '../../hooks/useFeatureFlag';
-import css from './HomePage.module.scss';
-import FileUpload from '../../components/FileUpload/FileUpload';
+// import { useFeatureFlags } from '../../hooks/useFeatureFlag';
+// import FileUpload from '../../components/FileUpload/FileUpload';
 import React from 'react';
-import { IAlert } from '../../models/IAlert';
-import { v4 as uuidv4 } from 'uuid';
-import { addAlert } from '../../store/reducers/alert-reducer';
-import { httpPost } from '../../api/http';
-import { AxiosResponse } from 'axios';
-import { useEvaluationState } from '../Evaluation/EvaluationContext';
-import { useHomeState } from './HomeContext';
-
-const MAX_UPLOAD_SIZE = 10000000; // 10M
 
 interface IProps {
   handleClose: () => void;
@@ -41,14 +31,7 @@ const NewResponseForm = ({ handleClose, response }: IProps) => {
   const nexus = Nexus.getInstance();
   const history = useHistory();
   const dispatch = useAppDispatch();
-  const {
-    setSelectedSpecification,
-    setSelectedPrefilledResponse,
-    setSelectedResponse
-  } = useHomeState();
-  const { setEvaluations, setFiles, setResponses, setSpecFile } =
-    useEvaluationState();
-  const featureFlags = useFeatureFlags();
+  // const featureFlags = useFeatureFlags();
 
   const methods = useForm<IResponse>({
     resolver: nexus.resolverService.resolver(ModelType.response),
@@ -58,69 +41,6 @@ const NewResponseForm = ({ handleClose, response }: IProps) => {
   const onSubmit = async (post: IResponse) => {
     dispatch(setResponse(post));
     history.push(`/response/${post.specification.bank.id}`);
-  };
-
-  const onUpload = (files: FileList): void => {
-    // se src/pages/Home/HomePage.tsx:155
-    setEvaluations([]);
-    setFiles([]);
-    setResponses([]);
-    setSpecFile(null);
-
-    const formData = new FormData();
-    let disableUploadMessage = '';
-    for (let index = 0; index < files.length; index += 1) {
-      const file = files[index];
-      if (file.size > MAX_UPLOAD_SIZE) {
-        disableUploadMessage = t('HOME_FILEUPL_TOO_LARGE');
-        break;
-      }
-      if (file.type !== 'application/pdf') {
-        disableUploadMessage = t('HOME_FILEUPL_WRONG_TYPE');
-        break;
-      }
-      formData.append('file', file);
-    }
-
-    if (disableUploadMessage !== '') {
-      const alert: IAlert = {
-        id: uuidv4(),
-        style: 'error',
-        text: disableUploadMessage
-      };
-      dispatch(addAlert({ alert }));
-      return;
-    }
-
-    httpPost<FormData, AxiosResponse>('/java/uploadPdf', formData, {
-      headers: {
-        'Content-Type': 'multipart/form-data'
-      },
-      responseType: 'json'
-    })
-      .then((httpResponse) => {
-        if (httpResponse.data.title) {
-          setSpecFile({
-            name: files[0].name,
-            lastModified: files[0].lastModified
-          });
-          setSelectedSpecification(httpResponse.data);
-        } else {
-          if (!httpResponse.data.specification) {
-            setSelectedPrefilledResponse(httpResponse.data);
-          } else {
-            setSelectedResponse(httpResponse.data);
-          }
-        }
-      })
-      .catch(() => {
-        const alert: IAlert = {
-          id: uuidv4(),
-          style: 'error',
-          text: t('HOME_FILEUPL_UPLOAD_ERROR')
-        };
-        dispatch(addAlert({ alert }));
-      });
   };
 
   return (
@@ -139,16 +59,17 @@ const NewResponseForm = ({ handleClose, response }: IProps) => {
               {response.specification.organization}
             </Typography>
           </Box>
+          {/*
           {featureFlags.includes('test') && (
             <FileUpload
               accept={'application/pdf'}
               className={css.Card}
               description={t('HOME_FILEUPL_DESCRIPTION')}
               label={t('HOME_FILEUPL_LABEL')}
-              onChange={onUpload}
               variant={'Tertiary'}
             />
           )}
+*/}
 
           <ModalFieldsBox>
             <VerticalTextCtrl

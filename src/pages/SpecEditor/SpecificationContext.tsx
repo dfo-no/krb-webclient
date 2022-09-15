@@ -67,6 +67,9 @@ export const SpecificationProvider = ({ children }: IProps) => {
       setSpecification(spec);
       setTitle(spec.title);
     });
+    return function cleanup() {
+      setTitle('');
+    };
   }, [id, nexus, setTitle]);
 
   const addSpecificationProduct = (product: ISpecificationProduct) => {
