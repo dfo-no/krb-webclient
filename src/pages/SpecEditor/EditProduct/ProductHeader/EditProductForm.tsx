@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Typography from '@mui/material/Typography';
-import { FormProvider, useForm } from 'react-hook-form';
+import { FormProvider, useForm, useWatch } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { Box } from '@mui/material';
 
@@ -15,9 +15,10 @@ import {
   ModalButton
 } from '../../../../components/ModalBox/ModalBox';
 import { useSpecificationState } from '../../SpecificationContext';
-import { ModelType } from '../../../../Nexus/enums';
+import { ModelType, Weighting, WeightingStep } from '../../../../Nexus/enums';
 import css from './ProductHeader.module.scss';
-import SliderCtrlComponent from '../../../../components/SliderCtrlComponent/SliderCtrlComponent';
+import SliderCtrl from '../../../../FormProvider/SliderCtrl';
+import { IMark } from '../../../../Nexus/entities/IMark';
 
 interface IProps {
   handleClose: () => void;
@@ -28,11 +29,20 @@ const EditProductForm = ({ handleClose, specificationProduct }: IProps) => {
   const { t } = useTranslation();
   const { editSpecificationProduct } = useSpecificationState();
   const nexus = Nexus.getInstance();
+  const [sliderMark, setSliderMark] = useState<IMark[]>([
+    { value: Weighting.MEDIUM, label: t(Weighting[Weighting.MEDIUM]) }
+  ]);
 
   const methods = useForm<ISpecificationProduct>({
     resolver: nexus.resolverService.resolver(ModelType.specificationProduct),
     defaultValues: specificationProduct
   });
+
+  const useWeight = useWatch({ name: 'weight', control: methods.control });
+
+  useEffect(() => {
+    setSliderMark([{ value: useWeight, label: t(Weighting[useWeight]) }]);
+  }, [t, useWeight]);
 
   const onSubmit = (put: ISpecificationProduct): void => {
     editSpecificationProduct(put);
@@ -79,7 +89,16 @@ const EditProductForm = ({ handleClose, specificationProduct }: IProps) => {
               >
                 {t('Product weighting')}
               </Typography>
-              <SliderCtrlComponent className={css.SlideBox} methods={methods} />
+              <Box className={css.SlideBox}>
+                <SliderCtrl
+                  name={'weight'}
+                  min={Weighting.LOWEST}
+                  step={WeightingStep}
+                  max={Weighting.HIGHEST}
+                  showValue={false}
+                  marks={sliderMark}
+                />
+              </Box>
             </Box>
           </ModalFieldsBox>
           <ModalButtonsBox>

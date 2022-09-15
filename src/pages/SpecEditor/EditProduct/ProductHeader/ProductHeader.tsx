@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Box, Button, Typography } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { useTranslation } from 'react-i18next';
@@ -13,12 +13,9 @@ import { DFOHeaderContentBox } from '../../../../components/DFOCard/DFOHeaderCon
 import { useProductIndexState } from '../../../../components/ProductIndexContext/ProductIndexContext';
 import { useSelectState } from '../../../Workbench/Create/SelectContext';
 import { useSpecificationState } from '../../SpecificationContext';
-import { ModelType } from '../../../../Nexus/enums';
 import css from './ProductHeader.module.scss';
-import SliderCtrlComponent from '../../../../components/SliderCtrlComponent/SliderCtrlComponent';
-import { useForm } from 'react-hook-form';
 import { ISpecificationProduct } from '../../../../Nexus/entities/ISpecificationProduct';
-import Nexus from '../../../../Nexus/Nexus';
+import { GeneralProductEditForm } from './GeneralProductEditForm';
 
 interface IProps {
   product?: ISpecificationProduct;
@@ -31,12 +28,6 @@ export default function ProductHeader({ product }: IProps): React.ReactElement {
   const [editingProduct, setEditingProduct] = useState(false);
   const [editingSpec, setEditingSpec] = useState(false);
   const { setDeleteMode } = useSelectState();
-  const nexus = Nexus.getInstance();
-
-  const methods = useForm<ISpecificationProduct>({
-    resolver: nexus.resolverService.resolver(ModelType.specificationProduct),
-    defaultValues: specification
-  });
 
   return (
     <div className={css.HeaderWrapper}>
@@ -44,8 +35,7 @@ export default function ProductHeader({ product }: IProps): React.ReactElement {
         <DFOHeaderContentBox>
           <Box className={css.HeaderBox}>
             <Typography variant="lgBold">
-              {specification.products[productIndex]?.title ??
-                t('General requirement')}
+              {product?.title ?? t('General requirement')}
             </Typography>
             {!product && productIndex === -1 && (
               <DFOCardHeaderIconButton
@@ -103,20 +93,16 @@ export default function ProductHeader({ product }: IProps): React.ReactElement {
         </DFOHeaderContentBox>
       </DFOCardHeader>
       {!product && editingSpec && (
-        <Box className={css.SlideBoxWrapper}>
-          <SliderCtrlComponent
-            className={css.SlideBox}
-            methods={methods}
-            label={`${t('Weighting')}:`}
-          />
-          <Button
-            className={css.SlideBox__button}
-            variant={'primary'}
-            onClick={() => setEditingSpec(false)}
-          >
-            {t('Close')}
-          </Button>
-        </Box>
+        <DFODialog
+          isOpen={true}
+          handleClose={() => setEditingSpec(false)}
+          children={
+            <GeneralProductEditForm
+              specification={specification}
+              handleClose={() => setEditingSpec(false)}
+            />
+          }
+        />
       )}
     </div>
   );
