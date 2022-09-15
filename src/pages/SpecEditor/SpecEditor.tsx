@@ -1,7 +1,7 @@
 import React, { ReactElement } from 'react';
 
 import css from '../Stylesheets/Editor.module.scss';
-import EditProduct from './EditProduct/EditProduct';
+import EditProduct from './EditProduct/ProductHeader/EditProduct';
 import LoaderSpinner from '../../common/LoaderSpinner';
 import NewProduct from './NewProduct/NewProduct';
 import NoProducts from './NoProducts/NoProducts';

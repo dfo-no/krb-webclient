@@ -1,24 +1,24 @@
-import React, { useEffect, useState } from 'react';
-import { FormProvider, useForm, useWatch } from 'react-hook-form';
+import React, { useState } from 'react';
 import { Box, Button, Typography } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { useTranslation } from 'react-i18next';
 
-import DFODialog from '../../../components/DFODialog/DFODialog';
+import DFODialog from '../../../../components/DFODialog/DFODialog';
 import EditProductForm from './EditProductForm';
-import theme from '../../../theme';
-import { DFOCardHeader } from '../../../components/DFOCard/DFOCardHeader';
-import { DFOCardHeaderIconButton } from '../../../components/DFOCard/DFOCardHeaderIconButton';
-import { DFOHeaderContentBox } from '../../../components/DFOCard/DFOHeaderContentBox';
-import { useProductIndexState } from '../../../components/ProductIndexContext/ProductIndexContext';
-import { useSelectState } from '../../Workbench/Create/SelectContext';
-import { useSpecificationState } from '../SpecificationContext';
-import Nexus from '../../../Nexus/Nexus';
-import { IMark } from '../../../Nexus/entities/IMark';
-import { ModelType, Weighting, WeightingStep } from '../../../Nexus/enums';
-import SliderCtrl from '../../../FormProvider/SliderCtrl';
-import { ISpecification } from '../../../Nexus/entities/ISpecification';
+import theme from '../../../../theme';
+import { DFOCardHeader } from '../../../../components/DFOCard/DFOCardHeader';
+import { DFOCardHeaderIconButton } from '../../../../components/DFOCard/DFOCardHeaderIconButton';
+import { DFOHeaderContentBox } from '../../../../components/DFOCard/DFOHeaderContentBox';
+import { useProductIndexState } from '../../../../components/ProductIndexContext/ProductIndexContext';
+import { useSelectState } from '../../../Workbench/Create/SelectContext';
+import { useSpecificationState } from '../../SpecificationContext';
+import { ModelType } from '../../../../Nexus/enums';
+import css from './ProductHeader.module.scss';
+import SliderCtrlComponent from '../../../../components/SliderCtrlComponent/SliderCtrlComponent';
+import { useForm } from 'react-hook-form';
+import { ISpecificationProduct } from '../../../../Nexus/entities/ISpecificationProduct';
+import Nexus from '../../../../Nexus/Nexus';
 
 export default function ProductHeader(): React.ReactElement {
   const { t } = useTranslation();
@@ -28,40 +28,24 @@ export default function ProductHeader(): React.ReactElement {
   const [editingSpec, setEditingSpec] = useState(false);
   const { setDeleteMode } = useSelectState();
   const nexus = Nexus.getInstance();
-  const [sliderMark, setSliderMark] = useState<IMark[]>([
-    { value: Weighting.MEDIUM, label: t(Weighting[Weighting.MEDIUM]) }
-  ]);
 
-  const methods = useForm<ISpecification>({
-    resolver: nexus.resolverService.resolver(ModelType.specification),
+  const methods = useForm<ISpecificationProduct>({
+    resolver: nexus.resolverService.resolver(ModelType.specificationProduct),
     defaultValues: specification
   });
 
-  const useWeight = useWatch({ name: 'weight', control: methods.control });
-
-  useEffect(() => {
-    setSliderMark([{ value: useWeight, label: t(Weighting[useWeight]) }]);
-  }, [t, useWeight]);
-
   return (
-    <FormProvider {...methods}>
+    <div className={css.HeaderWrapper}>
       <DFOCardHeader>
         <DFOHeaderContentBox>
-          <Box
-            sx={{
-              display: 'flex',
-              flexDirection: 'row',
-              paddingBottom: 0.5,
-              borderBottom: '0.1rem solid'
-            }}
-          >
+          <Box className={css.HeaderBox}>
             <Typography variant="lgBold">
               {specification.products[productIndex]?.title ??
                 t('General requirement')}
             </Typography>
             {productIndex === -1 && (
               <DFOCardHeaderIconButton
-                sx={{ marginLeft: 'auto', paddingRight: 2 }}
+                className={css.HeaderBox__generalEditIcon}
                 onClick={() => setEditingSpec(true)}
               >
                 <EditIcon />
@@ -70,7 +54,7 @@ export default function ProductHeader(): React.ReactElement {
             {productIndex !== -1 && (
               <>
                 <DFOCardHeaderIconButton
-                  sx={{ marginLeft: 'auto', paddingRight: 2 }}
+                  className={css.HeaderBox__productEditIcon}
                   onClick={() => setEditingProduct(true)}
                 >
                   <EditIcon />
@@ -86,7 +70,7 @@ export default function ProductHeader(): React.ReactElement {
               </>
             )}
           </Box>
-          <Box sx={{ display: 'flex', flexDirection: 'row', paddingTop: 1 }}>
+          <Box className={css.Description}>
             <Typography variant="smBold">
               {specification.products[productIndex]?.description ?? ''}
             </Typography>
@@ -119,35 +103,15 @@ export default function ProductHeader(): React.ReactElement {
           )}
         </DFOHeaderContentBox>
       </DFOCardHeader>
-      {editingSpec && (
-        <Box
-          sx={{
-            display: 'flex',
-            flexDirection: 'column',
-            backgroundColor: theme.palette.common.white,
-            paddingTop: 'var(--big-gap)',
-            paddingBottom: 'var(--tiny-gap)',
-            paddingRight: 'var(--small-gap)'
-          }}
-        >
-          <Box
-            sx={{
-              marginRight: 'var(--large-gap)',
-              marginLeft: 'var(--large-gap)'
-            }}
-          >
-            <SliderCtrl
-              label={`${t('Weighting')}:`}
-              name={'weight'}
-              min={Weighting.LOWEST}
-              step={WeightingStep}
-              max={Weighting.HIGHEST}
-              showValue={false}
-              marks={sliderMark}
-            />
-          </Box>
+      {editingSpec && productIndex === -1 && (
+        <Box className={css.SlideBoxWrapper}>
+          <SliderCtrlComponent
+            className={css.SlideBox}
+            methods={methods}
+            label={`${t('Weighting')}:`}
+          />
           <Button
-            sx={{ marginTop: 'var(--small-gap)', marginLeft: 'auto' }}
+            className={css.SlideBox__button}
             variant={'primary'}
             onClick={() => setEditingSpec(false)}
           >
@@ -155,6 +119,6 @@ export default function ProductHeader(): React.ReactElement {
           </Button>
         </Box>
       )}
-    </FormProvider>
+    </div>
   );
 }

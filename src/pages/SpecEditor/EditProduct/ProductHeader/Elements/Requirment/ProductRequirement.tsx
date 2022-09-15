@@ -5,21 +5,25 @@ import { Box, Button, Divider, Typography } from '@mui/material';
 import { FormProvider, useForm, useWatch } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
-import ChosenConfiguration from './ChosenConfiguration/ChosenConfiguration';
+import ChosenConfiguration from '../../../ChosenConfiguration/ChosenConfiguration';
 import css from './ProductRequirement.module.scss';
-import EditProductVariant from './EditProductVariant';
-import GeneralErrorMessage from '../../../Form/GeneralErrorMessage';
-import Nexus from '../../../Nexus/Nexus';
-import ProductVariant from './ProductVariant';
-import SpecificationService from '../../../Nexus/services/SpecificationService';
-import { DFOCheckbox } from '../../../components/DFOCheckbox/DFOCheckbox';
-import { DFOChip } from '../../../components/DFOChip/DFOChip';
-import { FormIconButton } from '../../../components/Form/FormIconButton';
-import { IRequirement } from '../../../Nexus/entities/IRequirement';
-import { IRequirementAnswer } from '../../../Nexus/entities/IRequirementAnswer';
-import { ModelType, VariantType, Weighting } from '../../../Nexus/enums';
-import { useProductIndexState } from '../../../components/ProductIndexContext/ProductIndexContext';
-import { useSpecificationState } from '../SpecificationContext';
+import EditProductVariant from '../Variant/EditProductVariant';
+import GeneralErrorMessage from '../../../../../../Form/GeneralErrorMessage';
+import Nexus from '../../../../../../Nexus/Nexus';
+import ProductVariant from '../Variant/ProductVariant';
+import SpecificationService from '../../../../../../Nexus/services/SpecificationService';
+import { DFOCheckbox } from '../../../../../../components/DFOCheckbox/DFOCheckbox';
+import { DFOChip } from '../../../../../../components/DFOChip/DFOChip';
+import { FormIconButton } from '../../../../../../components/Form/FormIconButton';
+import { IRequirement } from '../../../../../../Nexus/entities/IRequirement';
+import { IRequirementAnswer } from '../../../../../../Nexus/entities/IRequirementAnswer';
+import {
+  ModelType,
+  VariantType,
+  Weighting
+} from '../../../../../../Nexus/enums';
+import { useProductIndexState } from '../../../../../../components/ProductIndexContext/ProductIndexContext';
+import { useSpecificationState } from '../../../../SpecificationContext';
 
 interface IProps {
   requirement: IRequirement;

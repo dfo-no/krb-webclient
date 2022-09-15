@@ -4,17 +4,21 @@ import { useFormContext, useWatch } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
 import css from './EditProductVariant.module.scss';
-import ProductQuestionList from './ProductQuestionList';
-import SliderCtrl from '../../../FormProvider/SliderCtrl';
-import SpecificationService from '../../../Nexus/services/SpecificationService';
-import theme from '../../../theme';
-import { DFOCheckbox } from '../../../components/DFOCheckbox/DFOCheckbox';
-import { DFOChip } from '../../../components/DFOChip/DFOChip';
-import { IMark } from '../../../Nexus/entities/IMark';
-import { IRequirement } from '../../../Nexus/entities/IRequirement';
-import { IRequirementAnswer } from '../../../Nexus/entities/IRequirementAnswer';
-import { IVariant } from '../../../Nexus/entities/IVariant';
-import { VariantType, Weighting, WeightingStep } from '../../../Nexus/enums';
+import ProductQuestionList from '../QuestionList/ProductQuestionList';
+import SliderCtrl from '../../../../../../FormProvider/SliderCtrl';
+import SpecificationService from '../../../../../../Nexus/services/SpecificationService';
+import theme from '../../../../../../theme';
+import { DFOCheckbox } from '../../../../../../components/DFOCheckbox/DFOCheckbox';
+import { DFOChip } from '../../../../../../components/DFOChip/DFOChip';
+import { IMark } from '../../../../../../Nexus/entities/IMark';
+import { IRequirement } from '../../../../../../Nexus/entities/IRequirement';
+import { IRequirementAnswer } from '../../../../../../Nexus/entities/IRequirementAnswer';
+import { IVariant } from '../../../../../../Nexus/entities/IVariant';
+import {
+  VariantType,
+  Weighting,
+  WeightingStep
+} from '../../../../../../Nexus/enums';
 
 interface IProps {
   requirement: IRequirement;

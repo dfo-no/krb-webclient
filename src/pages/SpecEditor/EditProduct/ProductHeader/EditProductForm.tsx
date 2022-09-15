@@ -1,23 +1,23 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import Typography from '@mui/material/Typography';
-import { FormProvider, useForm, useWatch } from 'react-hook-form';
+import { FormProvider, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { Box } from '@mui/material';
 
-import Nexus from '../../../Nexus/Nexus';
-import theme from '../../../theme';
-import VerticalTextCtrl from '../../../FormProvider/VerticalTextCtrl';
-import { ISpecificationProduct } from '../../../Nexus/entities/ISpecificationProduct';
+import Nexus from '../../../../Nexus/Nexus';
+import theme from '../../../../theme';
+import VerticalTextCtrl from '../../../../FormProvider/VerticalTextCtrl';
+import { ISpecificationProduct } from '../../../../Nexus/entities/ISpecificationProduct';
 import {
   ModalBox,
   ModalFieldsBox,
   ModalButtonsBox,
   ModalButton
-} from '../../../components/ModalBox/ModalBox';
-import { useSpecificationState } from '../SpecificationContext';
-import { ModelType, Weighting, WeightingStep } from '../../../Nexus/enums';
-import { IMark } from '../../../Nexus/entities/IMark';
-import SliderCtrl from '../../../FormProvider/SliderCtrl';
+} from '../../../../components/ModalBox/ModalBox';
+import { useSpecificationState } from '../../SpecificationContext';
+import { ModelType } from '../../../../Nexus/enums';
+import css from './ProductHeader.module.scss';
+import SliderCtrlComponent from '../../../../components/SliderCtrlComponent/SliderCtrlComponent';
 
 interface IProps {
   handleClose: () => void;
@@ -28,20 +28,11 @@ const EditProductForm = ({ handleClose, specificationProduct }: IProps) => {
   const { t } = useTranslation();
   const { editSpecificationProduct } = useSpecificationState();
   const nexus = Nexus.getInstance();
-  const [sliderMark, setSliderMark] = useState<IMark[]>([
-    { value: Weighting.MEDIUM, label: t(Weighting[Weighting.MEDIUM]) }
-  ]);
 
   const methods = useForm<ISpecificationProduct>({
     resolver: nexus.resolverService.resolver(ModelType.specificationProduct),
     defaultValues: specificationProduct
   });
-
-  const useWeight = useWatch({ name: 'weight', control: methods.control });
-
-  useEffect(() => {
-    setSliderMark([{ value: useWeight, label: t(Weighting[useWeight]) }]);
-  }, [t, useWeight]);
 
   const onSubmit = (put: ISpecificationProduct): void => {
     editSpecificationProduct(put);
@@ -51,6 +42,7 @@ const EditProductForm = ({ handleClose, specificationProduct }: IProps) => {
   return (
     <FormProvider {...methods}>
       <form
+        className={css.EditHeader}
         onSubmit={methods.handleSubmit(onSubmit)}
         autoComplete="off"
         noValidate
@@ -79,13 +71,7 @@ const EditProductForm = ({ handleClose, specificationProduct }: IProps) => {
               placeholder={t('quantity')}
               type={'number'}
             />
-            <Box
-              sx={{
-                display: 'flex',
-                flexDirection: 'column',
-                gap: 'var(--micro-gap)'
-              }}
-            >
+            <Box className={css.SlideBoxWrapper}>
               <Typography
                 variant={'smBold'}
                 color={theme.palette.primary.main}
@@ -93,16 +79,7 @@ const EditProductForm = ({ handleClose, specificationProduct }: IProps) => {
               >
                 {t('Product weighting')}
               </Typography>
-              <Box sx={{ padding: 1 }}>
-                <SliderCtrl
-                  name={'weight'}
-                  min={Weighting.LOWEST}
-                  step={WeightingStep}
-                  max={Weighting.HIGHEST}
-                  showValue={false}
-                  marks={sliderMark}
-                />
-              </Box>
+              <SliderCtrlComponent className={css.SlideBox} methods={methods} />
             </Box>
           </ModalFieldsBox>
           <ModalButtonsBox>

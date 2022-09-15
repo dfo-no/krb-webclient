@@ -29,9 +29,11 @@ export default class EvaluationService {
     let max = 0;
     product.requirementAnswers.forEach((requirementAnswer) => {
       const calc = EvaluationService.calculatePoints(requirementAnswer);
-      total += (product.originProduct.weight / 100) * calc.total;
-      max += (product.originProduct.weight / 100) * calc.max;
+      total += calc.total;
+      max += calc.max;
     });
+    total *= product.originProduct.weight / 100;
+    max *= product.originProduct.weight / 100;
     return max === 0 ? { total: 0, max: 0 } : { total, max };
   }
 
@@ -40,9 +42,11 @@ export default class EvaluationService {
     let max = 0;
     response.requirementAnswers.forEach((requirementAnswer) => {
       const calc = EvaluationService.calculatePoints(requirementAnswer);
-      total += (response.specification.weight / 100) * calc.total;
-      max += (response.specification.weight / 100) * calc.max;
+      total += calc.total;
+      max += calc.max;
     });
+    total *= response.specification.weight / 100;
+    max *= response.specification.weight / 100;
     return max === 0 ? { total: 0, max: 0 } : { total, max };
   }
 

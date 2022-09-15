@@ -1,10 +1,10 @@
 import React from 'react';
 import { Typography } from '@mui/material';
 
-import css from '../../Stylesheets/Editor.module.scss';
-import ProductRequirement from './ProductRequirement';
-import { INeed } from '../../../Nexus/entities/INeed';
-import { Parentable } from '../../../models/Parentable';
+import css from '../../../../../Stylesheets/Editor.module.scss';
+import ProductRequirement from '../Requirment/ProductRequirement';
+import { INeed } from '../../../../../../Nexus/entities/INeed';
+import { Parentable } from '../../../../../../models/Parentable';
 
 interface IProps {
   need: Parentable<INeed>;

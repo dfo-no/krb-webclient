@@ -1,12 +1,12 @@
 import React from 'react';
 
-import DeleteSpecProduct from './DeleteSpecProduct';
+import DeleteSpecProduct from '../DeleteSpecProduct';
 import ProductHeader from './ProductHeader';
-import ProductNeed from './ProductNeed';
-import Utils from '../../../common/Utils';
-import { useProductIndexState } from '../../../components/ProductIndexContext/ProductIndexContext';
-import { useSelectState } from '../../Workbench/Create/SelectContext';
-import { useSpecificationState } from '../SpecificationContext';
+import ProductNeed from './Elements/Needs/ProductNeed';
+import Utils from '../../../../common/Utils';
+import { useProductIndexState } from '../../../../components/ProductIndexContext/ProductIndexContext';
+import { useSelectState } from '../../../Workbench/Create/SelectContext';
+import { useSpecificationState } from '../../SpecificationContext';
 
 export default function EditProduct(): React.ReactElement {
   const { specification } = useSpecificationState();

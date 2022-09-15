@@ -1,0 +1,51 @@
+.HeaderWrapper {
+  .HeaderBox {
+    display: flex;
+    flex-direction: row;
+    padding-bottom: 0.5rem;
+    border-bottom: 0.1rem solid;
+
+    &__generalEditIcon,
+    &__productEditIcon {
+      margin-left: auto;
+      padding-right: 2rem;
+    }
+  }
+
+  .Description {
+    display: flex;
+    flex-direction: row;
+    padding-top: 1rem;
+  }
+
+  .SlideBoxWrapper {
+    display: flex;
+    flex-direction: column;
+    background-color: var(--white-color);
+    padding-top: var(--big-gap);
+    padding-bottom: var(--tiny-gap);
+    padding-right: var(--small-gap);
+
+    .SlideBox {
+      margin-right: var(--large-gap);
+      margin-left: var(--large-gap);
+
+      &__button {
+        margin-top: var(--small-gap);
+        margin-left: auto;
+      }
+    }
+  }
+}
+
+.EditHeader {
+  .SlideBoxWrapper {
+    display: flex;
+    flex-direction: column;
+    gap: var(--micro-gap);
+  }
+
+  .SlideBox {
+    padding: 1rem;
+  }
+}
