@@ -15,6 +15,7 @@ import {
   ModalButton
 } from '../../components/ModalBox/ModalBox';
 import { ModelType } from '../../Nexus/enums';
+import { SPECIFICATION } from '../../common/PathConstants';
 
 interface IProps {
   handleClose: () => void;
@@ -35,7 +36,7 @@ const NewSpecificationForm = ({ handleClose, specification }: IProps) => {
     const specificationWithId = nexus.specificationService.withId(post);
     nexus.specificationService
       .setSpecification(specificationWithId)
-      .then(() => history.push(`/specification/${specificationWithId.id}`));
+      .then(() => history.push(`/${SPECIFICATION}/${specificationWithId.id}`));
   };
 
   return (

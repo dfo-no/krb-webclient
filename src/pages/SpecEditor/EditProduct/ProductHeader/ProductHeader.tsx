@@ -20,7 +20,11 @@ import { useForm } from 'react-hook-form';
 import { ISpecificationProduct } from '../../../../Nexus/entities/ISpecificationProduct';
 import Nexus from '../../../../Nexus/Nexus';
 
-export default function ProductHeader(): React.ReactElement {
+interface IProps {
+  product?: ISpecificationProduct;
+}
+
+export default function ProductHeader({ product }: IProps): React.ReactElement {
   const { t } = useTranslation();
   const { specification } = useSpecificationState();
   const { productIndex } = useProductIndexState();
@@ -43,7 +47,7 @@ export default function ProductHeader(): React.ReactElement {
               {specification.products[productIndex]?.title ??
                 t('General requirement')}
             </Typography>
-            {productIndex === -1 && (
+            {!product && productIndex === -1 && (
               <DFOCardHeaderIconButton
                 className={css.HeaderBox__generalEditIcon}
                 onClick={() => setEditingSpec(true)}
@@ -51,7 +55,7 @@ export default function ProductHeader(): React.ReactElement {
                 <EditIcon />
               </DFOCardHeaderIconButton>
             )}
-            {productIndex !== -1 && (
+            {product && (
               <>
                 <DFOCardHeaderIconButton
                   className={css.HeaderBox__productEditIcon}
@@ -61,9 +65,7 @@ export default function ProductHeader(): React.ReactElement {
                 </DFOCardHeaderIconButton>
                 <DFOCardHeaderIconButton
                   hoverColor={theme.palette.errorRed.main}
-                  onClick={() =>
-                    setDeleteMode(specification.products[productIndex].id)
-                  }
+                  onClick={() => setDeleteMode(product.id)}
                 >
                   <DeleteIcon />
                 </DFOCardHeaderIconButton>
@@ -72,38 +74,35 @@ export default function ProductHeader(): React.ReactElement {
           </Box>
           <Box className={css.Description}>
             <Typography variant="smBold">
-              {specification.products[productIndex]?.description ?? ''}
+              {product?.description ?? ''}
             </Typography>
 
-            {productIndex !== -1 &&
-              specification.products[productIndex].originProduct && (
-                <Typography
-                  variant="smBold"
-                  sx={{ marginLeft: 'auto', paddingRight: 2 }}
-                >
-                  {t('From product type')}
-                  {': '}
-                  <i>
-                    {specification.products[productIndex].originProduct.title}
-                  </i>
-                </Typography>
-              )}
+            {productIndex !== -1 && product?.originProduct && (
+              <Typography
+                variant="smBold"
+                sx={{ marginLeft: 'auto', paddingRight: 2 }}
+              >
+                {t('From product type')}
+                {': '}
+                <i>{product.originProduct.title}</i>
+              </Typography>
+            )}
           </Box>
-          {editingProduct && (
+          {product && editingProduct && (
             <DFODialog
               isOpen={true}
               handleClose={() => setEditingProduct(false)}
               children={
                 <EditProductForm
                   handleClose={() => setEditingProduct(false)}
-                  specificationProduct={specification.products[productIndex]}
+                  specificationProduct={product}
                 />
               }
             />
           )}
         </DFOHeaderContentBox>
       </DFOCardHeader>
-      {editingSpec && productIndex === -1 && (
+      {!product && editingSpec && (
         <Box className={css.SlideBoxWrapper}>
           <SliderCtrlComponent
             className={css.SlideBox}
