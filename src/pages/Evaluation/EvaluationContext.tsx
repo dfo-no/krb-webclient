@@ -8,8 +8,8 @@ import React, {
 import { IEvaluatedResponse } from '../../Nexus/entities/IEvaluatedResponse';
 import { IResponse } from '../../Nexus/entities/IResponse';
 import { IFile } from '../../models/IFile';
-import { ModelType, Weighting } from '../../Nexus/enums';
 import { ISpecification } from '../../Nexus/entities/ISpecification';
+import SpecificationService from '../../Nexus/services/SpecificationService';
 
 type IEvaluationContext = {
   tab: number;
@@ -37,34 +37,7 @@ const initialContext: IEvaluationContext = {
   },
   evaluations: [],
   setEvaluations: () => {},
-  specification: {
-    id: '',
-    bank: {
-      id: '',
-      title: '',
-      description: '',
-      needs: [],
-      products: [],
-      codelist: [],
-      tags: [],
-      version: 0,
-      type: ModelType.bank,
-      publications: [],
-      inheritedBanks: [],
-      publishedDate: null,
-      sourceOriginal: null,
-      sourceRel: null,
-      projectId: null,
-      deletedDate: null
-    },
-    title: '',
-    organization: '',
-    organizationNumber: '',
-    products: [],
-    requirements: [],
-    requirementAnswers: [],
-    weight: Weighting.MEDIUM
-  },
+  specification: SpecificationService.defaultSpecification(),
   setEvaluationSpecification: () => {},
   files: [],
   setFiles: () => {},
@@ -81,34 +54,7 @@ export const EvaluationProvider = ({ children }: IProps) => {
   const [tab, setTab] = useState(0);
   const [evaluations, setEvaluations] = useState<IEvaluatedResponse[]>([]);
   const [evaluationSpecification, setEvaluationSpecification] =
-    useState<ISpecification>({
-      id: '',
-      bank: {
-        id: '',
-        title: '',
-        description: '',
-        needs: [],
-        products: [],
-        codelist: [],
-        tags: [],
-        version: 0,
-        type: ModelType.bank,
-        publications: [],
-        inheritedBanks: [],
-        publishedDate: null,
-        sourceOriginal: null,
-        sourceRel: null,
-        projectId: null,
-        deletedDate: null
-      },
-      title: '',
-      organization: '',
-      organizationNumber: '',
-      products: [],
-      requirements: [],
-      requirementAnswers: [],
-      weight: Weighting.MEDIUM
-    });
+    useState<ISpecification>(SpecificationService.defaultSpecification());
   const [files, setFiles] = useState<IFile[]>([]);
   const [responses, setResponses] = useState<IResponse[]>([]);
   const [specFile, setSpecFile] = useState<IFile | null>(null);
