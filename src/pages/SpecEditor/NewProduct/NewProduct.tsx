@@ -16,7 +16,6 @@ import { ISpecificationProduct } from '../../../Nexus/entities/ISpecificationPro
 import { ModelType } from '../../../Nexus/enums';
 import { Parentable } from '../../../models/Parentable';
 import { useFormStyles } from '../../../components/Form/FormStyles';
-import { useProductIndexState } from '../../../components/ProductIndexContext/ProductIndexContext';
 import { useSpecificationState } from '../SpecificationContext';
 
 export default function NewProduct(): React.ReactElement {
@@ -24,7 +23,6 @@ export default function NewProduct(): React.ReactElement {
   const nexus = Nexus.getInstance();
   const formStyles = useFormStyles();
   const { specification, addSpecificationProduct } = useSpecificationState();
-  const { setProductIndex } = useProductIndexState();
   const [product, setProduct] = useState<Parentable<IProduct> | null>(null);
 
   const defaultValues: ISpecificationProduct =
@@ -47,9 +45,7 @@ export default function NewProduct(): React.ReactElement {
 
   const onSubmit = (post: ISpecificationProduct): void => {
     const newProduct = nexus.specificationService.withId(post);
-    const newId = specification.products.length;
     addSpecificationProduct(newProduct);
-    setProductIndex(newId);
   };
 
   const nonDeletedProducts: Parentable<IProduct>[] =
