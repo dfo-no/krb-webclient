@@ -1,4 +1,11 @@
-import { createContext, useContext, useEffect, useState } from 'react';
+import {
+  createContext,
+  Dispatch,
+  SetStateAction,
+  useContext,
+  useEffect,
+  useState
+} from 'react';
 import { useHistory, useRouteMatch } from 'react-router-dom';
 
 import SpecificationService from '../../Nexus/services/SpecificationService';
@@ -22,6 +29,10 @@ interface ISpecificationContext {
   deleteGeneralAnswer: (answer: IRequirementAnswer) => void;
   addProductAnswer: (answer: IRequirementAnswer, productId: string) => void;
   deleteProductAnswer: (answer: IRequirementAnswer, productId: string) => void;
+  openProductSelection: boolean;
+  setOpenProductSelection: Dispatch<SetStateAction<boolean>>;
+  newProductCreate: boolean;
+  setNewProductCreate: Dispatch<SetStateAction<boolean>>;
 }
 
 const initialContext: ISpecificationContext = {
@@ -46,6 +57,14 @@ const initialContext: ISpecificationContext = {
   },
   deleteProductAnswer: (): void => {
     throw new Error('Function not implemented.');
+  },
+  openProductSelection: false,
+  setOpenProductSelection: function (): void {
+    throw new Error('Function not implemented.');
+  },
+  newProductCreate: false,
+  setNewProductCreate: function (): void {
+    throw new Error('Function not implemented.');
   }
 };
 
@@ -65,6 +84,8 @@ export const SpecificationProvider = ({ children }: IProps) => {
   const [specification, setSpecification] = useState(
     SpecificationService.defaultSpecification()
   );
+  const [openProductSelection, setOpenProductSelection] = useState(false);
+  const [newProductCreate, setNewProductCreate] = useState(false);
   const nexus = Nexus.getInstance();
 
   useEffect(() => {
@@ -140,7 +161,11 @@ export const SpecificationProvider = ({ children }: IProps) => {
         addGeneralAnswer,
         deleteGeneralAnswer,
         addProductAnswer,
-        deleteProductAnswer
+        deleteProductAnswer,
+        openProductSelection,
+        setOpenProductSelection,
+        newProductCreate,
+        setNewProductCreate
       }}
     >
       {children}

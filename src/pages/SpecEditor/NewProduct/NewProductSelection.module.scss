@@ -1,0 +1,46 @@
+.NewProductSelection {
+  ul {
+    background: var(--light-gray-color);
+    width: 100%;
+    list-style: none;
+
+    li {
+      display: flex;
+      background: white;
+      margin-top: var(--small-gap);
+
+      &.Product {
+        border: 0.1rem solid var(--gray-color);
+        min-height: 4rem;
+        padding: var(--tiny-gap) 0;
+        transition: all 220ms ease-out;
+
+        &:hover {
+          background: var(--link-hover-color);
+          color: white;
+        }
+
+        + li {
+          margin-top: -0.1rem;
+        }
+
+        .Title {
+          align-self: center;
+          padding-left: var(--small-gap);
+          flex: 1 1 auto;
+        }
+
+        .Description {
+          margin-left: auto;
+          padding-left: var(--small-gap);
+        }
+
+        .Choose {
+          margin-left: auto;
+          padding-left: var(--small-gap);
+          padding-right: var(--small-gap);
+        }
+      }
+    }
+  }
+}

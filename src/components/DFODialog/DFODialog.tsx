@@ -11,6 +11,7 @@ interface IProps {
   isOpen: boolean;
   handleClose: () => void;
   children: React.ReactNode;
+  scroll?: 'body' | 'paper' | undefined;
 }
 
 const useStyles = makeStyles({
@@ -21,23 +22,29 @@ const useStyles = makeStyles({
     backgroundColor: theme.palette.gray100.main,
     paddingTop: 35,
     paddingBottom: 35,
-    overflow: 'hidden'
+    overflow: 'visible'
   }
 });
 
-const DFODialog = ({ children, isOpen, handleClose }: IProps) => {
+const DFODialog = ({
+  children,
+  isOpen,
+  handleClose,
+  scroll = 'body'
+}: IProps) => {
   const classes = useStyles();
 
   return (
     <Box>
       <Dialog
+        scroll={scroll}
         open={isOpen}
         onClose={handleClose}
         maxWidth="xl"
         sx={{
           '& .MuiDialog-container': {
             '& .MuiPaper-root': {
-              marginBottom: 30
+              marginBottom: 10
             }
           }
         }}
