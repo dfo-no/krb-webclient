@@ -31,7 +31,7 @@ export default class PrefilledResponseService {
         sourceOriginal: '',
         sourceRel: null,
         deletedDate: null,
-        unit: ''
+        unit: 'stk'
       },
       answeredVariants: [],
       requirementAnswers: [],

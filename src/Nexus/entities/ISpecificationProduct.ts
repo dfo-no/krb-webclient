@@ -15,7 +15,7 @@ export interface ISpecificationProduct extends IBaseModel {
   amount: number;
   requirements: string[];
   requirementAnswers: IRequirementAnswer[];
-  unit: string;
+  unit?: string;
 }
 
 export const SpecificationProductSchema = BaseModelSchema.keys({
@@ -27,5 +27,5 @@ export const SpecificationProductSchema = BaseModelSchema.keys({
   weight: CustomJoi.validateWeight(),
   requirementAnswers: CustomJoi.validateUniqueArray(RequirementAnswerSchema),
   type: CustomJoi.validateType(ModelType.specificationProduct),
-  unit: CustomJoi.validateText()
+  unit: CustomJoi.validateOptionalText()
 });
