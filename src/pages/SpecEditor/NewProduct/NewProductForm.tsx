@@ -102,7 +102,7 @@ export default function NewProductForm({
                   {t('Cancel')}
                 </ModalButton>
                 <ModalButton variant="save" type="submit">
-                  {t('save')}
+                  {t('Save')}
                 </ModalButton>
               </ModalButtonsBox>
               {specProduct && (
