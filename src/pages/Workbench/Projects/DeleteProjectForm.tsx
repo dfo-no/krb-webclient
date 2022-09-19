@@ -1,5 +1,6 @@
 import React, { ReactElement } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
 
 import DeleteFrame from '../../../components/DeleteFrame/DeleteFrame';
 import Nexus from '../../../Nexus/Nexus';
@@ -23,6 +24,7 @@ export default function DeleteProjectForm({
   bank,
   handleClose
 }: IProps): ReactElement {
+  const { t } = useTranslation();
   const dispatch = useAppDispatch();
   const nexus = Nexus.getInstance();
   const { deleteProject } = useProjectMutations();
@@ -37,6 +39,10 @@ export default function DeleteProjectForm({
   if (deleteMode !== bank.id) {
     return children;
   }
+
+  const isPublished = bank.publications.length > 0;
+
+  const infoText = isPublished ? t('Project is published') : '';
 
   const onSubmit = (post: IBank): void => {
     deleteProject(post).then(() => {
@@ -59,7 +65,7 @@ export default function DeleteProjectForm({
         <DeleteFrame
           children={children}
           canBeDeleted={true}
-          infoText={''}
+          infoText={infoText}
           handleClose={handleClose}
         />
       </form>
