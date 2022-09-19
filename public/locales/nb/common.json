@@ -250,6 +250,7 @@
   "What is the name of the project?": "Hva er navnet på prosjektet?",
   "What will be the name of the procurement?": "Hva skal anskaffelsen hete?",
   "Wish to delete": "Ønsker du å slette?",
+  "Project is published": "Publiseringer knyttet til prosjektet vil fortsatt være tilgjengelig etter sletting av prosjektet. ",
   "Workbench": "Arbeidsbenk",
   "Yes": "Ja",
   "date": {
