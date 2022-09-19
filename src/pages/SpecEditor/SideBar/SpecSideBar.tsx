@@ -1,5 +1,5 @@
 import React, { ReactElement } from 'react';
-import { Button, Divider, Typography } from '@mui/material/';
+import { Divider, Typography } from '@mui/material/';
 import { useHistory, useRouteMatch } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 
@@ -13,6 +13,7 @@ import {
   SpecificationProductPath
 } from '../../../models/IRouteSpecificationParams';
 import { PRODUCTS, SPECIFICATION } from '../../../common/PathConstants';
+import NewProductButton from '../NewProduct/NewProductButton';
 
 function SpecSideBar(): ReactElement {
   const { t } = useTranslation();
@@ -29,10 +30,6 @@ function SpecSideBar(): ReactElement {
 
   const productPressed = (pid: string): void => {
     history.push(`/${SPECIFICATION}/${specification.id}/${PRODUCTS}/${pid}/`);
-  };
-
-  const createPressed = (): void => {
-    history.push(`/${SPECIFICATION}/${specification.id}/create/`);
   };
 
   const isGeneric = (): boolean => {
@@ -65,11 +62,7 @@ function SpecSideBar(): ReactElement {
 
   return (
     <div className={css.SideBar}>
-      <div className={css.Button}>
-        <Button variant="primary" onClick={createPressed}>
-          {t('Create a new product')}
-        </Button>
-      </div>
+      <NewProductButton label={t('Create a new product')} />
       <ul aria-label="products">
         <li
           className={isGeneric() ? css.Active : undefined}
