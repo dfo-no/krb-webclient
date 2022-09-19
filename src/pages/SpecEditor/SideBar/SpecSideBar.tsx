@@ -41,6 +41,8 @@ function SpecSideBar(): ReactElement {
 
   const renderProducts = (product: ISpecificationProduct): ReactElement => {
     const isSelected = product.id === productId;
+    const productUnit = product.unit ? product.unit : 'stk';
+    console.log(productUnit);
     return (
       <li
         className={isSelected ? css.Active : undefined}
@@ -52,7 +54,10 @@ function SpecSideBar(): ReactElement {
             <Typography className={css.Text} variant="mdBold">
               {product.title}
             </Typography>
-            <Typography variant="mdBold">{product.amount}</Typography>
+            <div>
+              <Typography variant="mdBold">{product.amount}</Typography>{' '}
+              <Typography variant="mdBold">{productUnit}</Typography>
+            </div>
           </div>
           <Divider color={theme.palette.silver.main} />
           <Typography className={css.Text} variant="sm">

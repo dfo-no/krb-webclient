@@ -30,7 +30,8 @@ export default class PrefilledResponseService {
         parent: '',
         sourceOriginal: '',
         sourceRel: null,
-        deletedDate: null
+        deletedDate: null,
+        unit: ''
       },
       answeredVariants: [],
       requirementAnswers: [],
