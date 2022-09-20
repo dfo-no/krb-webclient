@@ -13,8 +13,11 @@
     flex-direction: column;
 
     .Button {
-      margin-left: auto;
-      width: 10rem;
+      position: -webkit-sticky;
+      position: sticky;
+      bottom: 0;
+      width: 100%;
+      padding: 1rem;
     }
 
     .HeaderTop {

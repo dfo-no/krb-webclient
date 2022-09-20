@@ -8,7 +8,7 @@ import Utils from '../../../common/Utils';
 import { IRouteSpecificationParams } from '../../../models/IRouteSpecificationParams';
 import { useSelectState } from '../../Workbench/Create/SelectContext';
 import { useSpecificationState } from '../SpecificationContext';
-import { Button } from '@mui/material';
+import { Box, Button } from '@mui/material';
 import { SPECIFICATION } from '../../../common/PathConstants';
 import { useTranslation } from 'react-i18next';
 import css from '../../Stylesheets/Editor.module.scss';
@@ -45,11 +45,18 @@ export default function EditProduct(): React.ReactElement {
       <div>
         <ProductHeader product={product} />
         {renderNeeds()}
-        <div className={css.Button}>
+        <Box
+          className={css.Button}
+          sx={{
+            display: 'flex',
+            flexDirection: 'row-reverse',
+            border: '2px solid black'
+          }}
+        >
           <Button variant="primary" onClick={toOverviewPage}>
             {t('Save')}
           </Button>
-        </div>
+        </Box>
       </div>
     </DeleteSpecProduct>
   );
