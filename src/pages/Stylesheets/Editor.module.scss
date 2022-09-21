@@ -8,6 +8,66 @@
   padding: var(--big-gap);
   background: white;
 
+  .overview {
+    display: flex;
+    flex-direction: column;
+    gap: var(--small-gap);
+
+    ul {
+      display: flex;
+      flex-direction: column;
+      gap: var(--normal-gap);
+      align-self: center;
+      padding: 0;
+      margin: 0;
+      list-style: none;
+      width: 100%;
+
+      + ul {
+        padding-top: var(--normal-gap);
+        margin-top: var(--tiny-gap);
+        border-top: 0.1rem solid var(--line-color);
+      }
+
+      li {
+        border: 0.1rem var(--border-color-secondary) solid;
+        border-radius: 0.5rem;
+        background: white;
+        transition: all 220ms ease-out;
+        min-height: 10rem;
+
+        &.Active {
+          background: var(--primary-color);
+          color: white;
+          cursor: default;
+        }
+
+        .CardContent {
+          display: flex;
+          flex-direction: column;
+          gap: var(--tiny-gap);
+          padding: var(--small-gap);
+
+          .CardTitle {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            gap: var(--normal-gap);
+          }
+
+          .Text {
+            overflow: hidden;
+            text-overflow: ellipsis;
+          }
+        }
+      }
+    }
+
+    .Divider {
+      margin-bottom: var(--small-gap);
+    }
+  }
+
   .Content {
     display: flex;
     flex-direction: column;
