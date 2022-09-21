@@ -1,30 +1,38 @@
+import React, { ReactElement } from 'react';
 import { Box, Divider, Typography } from '@mui/material/';
 import { useHistory, useRouteMatch } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import DeleteSpecProduct from '../EditProduct/DeleteSpecProduct';
 import EditIcon from '@mui/icons-material/Edit';
+import DeleteIcon from '@mui/icons-material/Delete';
 import css from '../../Stylesheets/Editor.module.scss';
 import DownloadButton from '../Download/DownloadButton';
 import theme from '../../../theme';
 import { ISpecificationProduct } from '../../../Nexus/entities/ISpecificationProduct';
-import { useSpecificationState } from '../SpecificationContext';
 import {
   IRouteSpecificationParams,
   SpecificationProductPath
 } from '../../../models/IRouteSpecificationParams';
+import { useSelectState } from '../../Workbench/Create/SelectContext';
+import { useSpecificationState } from '../SpecificationContext';
 import { PRODUCTS, SPECIFICATION } from '../../../common/PathConstants';
 import NewProductButton from '../NewProduct/NewProductButton';
-import React, { ReactElement } from 'react';
 import { DFOCardHeaderIconButton } from '../../../components/DFOCard/DFOCardHeaderIconButton';
 import { FormIconButton } from '../../../components/Form/FormIconButton';
 
 export default function NewProduct(): React.ReactElement {
   const { t } = useTranslation();
   const history = useHistory();
+  const { setDeleteMode } = useSelectState();
   const { specification } = useSpecificationState();
   const routeMatch = useRouteMatch<IRouteSpecificationParams>(
     SpecificationProductPath
   );
   const productId = routeMatch?.params?.productId;
+
+  const onDelete = (): void => {
+    setDeleteMode('');
+  };
 
   const genericPressed = (): void => {
     history.push(`/${SPECIFICATION}/${specification.id}/${PRODUCTS}/general/`);
@@ -42,28 +50,36 @@ export default function NewProduct(): React.ReactElement {
     const isSelected = product.id === productId;
     return (
       <li className={isSelected ? css.Active : undefined} key={product.id}>
-        <div className={css.CardContent}>
-          <div className={css.CardTitle}>
-            <Typography className={css.Text} variant="mdBold">
-              {product.title}
-            </Typography>
-            <FormIconButton onClick={() => productPressed(product.id)}>
-              <EditIcon />
-            </FormIconButton>
+        <DeleteSpecProduct product={product} handleClose={onDelete}>
+          <div className={css.CardContent}>
+            <div className={css.CardTitle}>
+              <Typography className={css.Text} variant="mdBold">
+                {product.title}
+              </Typography>
+              <FormIconButton
+                sx={{ marginLeft: 'auto', paddingRight: 0 }}
+                onClick={() => setDeleteMode(product.id)}
+              >
+                <DeleteIcon />
+              </FormIconButton>
+              <FormIconButton onClick={() => productPressed(product.id)}>
+                <EditIcon />
+              </FormIconButton>
+            </div>
+            <Divider color={theme.palette.silver.main} />
+            <Box sx={{ display: 'flex', flexDirection: 'row' }}>
+              <Typography className={css.Text} variant="sm">
+                {product.description}
+              </Typography>
+              <Typography
+                sx={{ marginLeft: 'auto', paddingRight: 3 }}
+                variant="mdBold"
+              >
+                {product.amount}
+              </Typography>
+            </Box>
           </div>
-          <Divider color={theme.palette.silver.main} />
-          <Box sx={{ display: 'flex', flexDirection: 'row' }}>
-            <Typography className={css.Text} variant="sm">
-              {product.description}
-            </Typography>
-            <Typography
-              sx={{ marginLeft: 'auto', paddingRight: 3 }}
-              variant="mdBold"
-            >
-              {product.amount}
-            </Typography>
-          </Box>
-        </div>
+        </DeleteSpecProduct>
       </li>
     );
   };

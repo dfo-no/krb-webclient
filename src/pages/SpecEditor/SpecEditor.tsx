@@ -21,7 +21,9 @@ export default function SpecEditor(): ReactElement {
       <div className={css.Content}>
         <Switch>
           <Route exact path={`/${SPECIFICATION}/:specId/create`}>
-            <NewProduct />
+            <SelectProvider>
+              <NewProduct />
+            </SelectProvider>
           </Route>
           <Route path={`/${SPECIFICATION}/:specId/${PRODUCTS}/:productId`}>
             <SelectProvider>
