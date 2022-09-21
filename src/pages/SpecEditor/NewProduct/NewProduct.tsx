@@ -116,7 +116,7 @@ export default function NewProduct(): React.ReactElement {
         sx={{
           display: 'flex',
           flexDirection: 'row-reverse',
-          border: '2px solid black'
+          borderTop: '2px solid black'
         }}
       >
         <NewProductButton label={t('Create a new product')} />
