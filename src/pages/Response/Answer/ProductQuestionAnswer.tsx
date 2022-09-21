@@ -18,7 +18,6 @@ import { QuestionVariant } from '../../../Nexus/enums';
 import { useAccordionState } from '../../../components/DFOAccordion/AccordionContext';
 import { useAppDispatch, useAppSelector } from '../../../store/hooks';
 import { useProductIndexState } from '../../../components/ProductIndexContext/ProductIndexContext';
-import { ICodeSelection } from '../../../Nexus/entities/ICodelistQuestion';
 
 interface IProps {
   requirementAnswer: IRequirementAnswer;

@@ -5,7 +5,6 @@ import { List, ListItem, Typography, Box } from '@mui/material';
 import css from './Selection.module.scss';
 import { DFOCheckbox } from '../DFOCheckbox/DFOCheckbox';
 import { ICode } from '../../Nexus/entities/ICode';
-import { ICodelist } from '../../Nexus/entities/ICodelist';
 import { ICodeSelection } from '../../Nexus/entities/ICodelistQuestion';
 import { ScrollableContainer } from '../ScrollableContainer/ScrollableContainer';
 import { Parentable } from '../../models/Parentable';
