@@ -50,7 +50,7 @@ export default function EditProduct(): React.ReactElement {
           sx={{
             display: 'flex',
             flexDirection: 'row-reverse',
-            border: '2px solid black'
+            borderTop: '2px solid black'
           }}
         >
           <Button variant="primary" onClick={toOverviewPage}>
