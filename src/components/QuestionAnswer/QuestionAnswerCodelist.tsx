@@ -10,19 +10,21 @@ import { ICodelist } from '../../Nexus/entities/ICodelist';
 import { ICodelistQuestion } from '../../Nexus/entities/ICodelistQuestion';
 import { IRequirementAnswer } from '../../Nexus/entities/IRequirementAnswer';
 import { QuestionVariant } from '../../Nexus/enums';
+import { ICode } from '../../Nexus/entities/ICode';
+import { Parentable } from '../../models/Parentable';
 
 interface IProps {
   item: ICodelistQuestion;
   existingAnswer?: IRequirementAnswer;
   onSubmit: (post: ICodelistQuestion) => void;
-  codelist?: ICodelist;
+  codesList?: Parentable<ICode>[];
 }
 
 const QuestionAnswerCodelist = ({
   item,
   existingAnswer,
   onSubmit,
-  codelist
+  codesList
 }: IProps): React.ReactElement => {
   const { t } = useTranslation();
   const nexus = Nexus.getInstance();
@@ -56,10 +58,10 @@ const QuestionAnswerCodelist = ({
           noValidate
         >
           <Typography variant={'sm'}>{getInfoText()}</Typography>
-          {codelist && (
+          {codesList && (
             <CodeSelection
               name={'answer.codes'}
-              codelist={codelist}
+              codesList={codesList}
               codeSelection={item.config.codes}
             />
           )}

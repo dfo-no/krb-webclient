@@ -18,6 +18,7 @@ import { QuestionVariant } from '../../../Nexus/enums';
 import { useAccordionState } from '../../../components/DFOAccordion/AccordionContext';
 import { useAppDispatch, useAppSelector } from '../../../store/hooks';
 import { useProductIndexState } from '../../../components/ProductIndexContext/ProductIndexContext';
+import { ICodeSelection } from '../../../Nexus/entities/ICodelistQuestion';
 
 interface IProps {
   requirementAnswer: IRequirementAnswer;
@@ -73,12 +74,18 @@ export default function ProductQuestionAnswer({
       const codelist = response.specification.bank.codelist.find(
         (cl) => cl.id === codelistId
       );
+      const codesId = requirementAnswer.question.config.codes.map(
+        (c) => c.code
+      );
+      const codesList = codelist?.codes.filter(function (cl) {
+        return codesId.indexOf(cl.id) > -1;
+      });
       return (
         <QuestionAnswerCodelist
           item={requirementAnswer.question}
           existingAnswer={existingAnswer}
           onSubmit={onSubmit}
-          codelist={codelist}
+          codesList={codesList}
         />
       );
     case QuestionVariant.Q_CONFIRMATION:
