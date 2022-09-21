@@ -186,7 +186,8 @@ export const productsTestData = [
     type: ModelType.product,
     sourceOriginal: null,
     sourceRel: null,
-    deletedDate: null
+    deletedDate: null,
+    unit: 'stk'
   },
   {
     id: 'fb55c57e-af4a-11ec-b909-0242ac120002',
@@ -196,7 +197,8 @@ export const productsTestData = [
     type: ModelType.product,
     sourceOriginal: null,
     sourceRel: null,
-    deletedDate: null
+    deletedDate: null,
+    unit: 'stk'
   },
   {
     id: '38c1b14e-b742-11ec-b909-0242ac120002',
@@ -206,7 +208,8 @@ export const productsTestData = [
     type: ModelType.product,
     sourceOriginal: null,
     sourceRel: null,
-    deletedDate: null
+    deletedDate: null,
+    unit: 'stk'
   }
 ];
 

@@ -71,6 +71,11 @@ export default function NewProduct(): React.ReactElement {
                 placeholder={t('Quantity')}
                 type={'number'}
               />
+              <VerticalTextCtrl
+                name="unit"
+                label={t('Unit')}
+                placeholder={''}
+              />
               <Typography variant={'smBold'} color={theme.palette.primary.main}>
                 {t('Choose a product type from the requirement set')}{' '}
                 <i>{specification.bank.title}</i>{' '}
