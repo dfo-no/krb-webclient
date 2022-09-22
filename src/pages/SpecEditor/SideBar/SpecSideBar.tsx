@@ -49,7 +49,10 @@ function SpecSideBar(): ReactElement {
             <Typography className={css.Text} variant="mdBold">
               {product.title}
             </Typography>
-            <Typography variant="mdBold">{product.amount}</Typography>
+            <div>
+              <Typography variant="mdBold">{product.amount}</Typography>{' '}
+              <Typography variant="mdBold">{product.unit}</Typography>
+            </div>
           </div>
           <Divider color={theme.palette.silver.main} />
           <Typography className={css.Text} variant="sm">

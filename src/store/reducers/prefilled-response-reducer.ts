@@ -49,7 +49,8 @@ const initialState: IPrefilledResponseState = {
       type: ModelType.product,
       sourceOriginal: null,
       sourceRel: null,
-      deletedDate: null
+      deletedDate: null,
+      unit: ''
     },
     answeredVariants: [],
     requirementAnswers: [],

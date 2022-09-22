@@ -50,7 +50,8 @@ export default class SpecificationService extends BaseService {
       requirementAnswers: [],
       type: ModelType.specificationProduct,
       sourceOriginal: null,
-      sourceRel: null
+      sourceRel: null,
+      unit: 'stk'
     };
   };
 
