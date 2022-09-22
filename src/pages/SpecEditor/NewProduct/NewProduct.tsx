@@ -19,6 +19,7 @@ import { PRODUCTS, SPECIFICATION } from '../../../common/PathConstants';
 import NewProductButton from '../NewProduct/NewProductButton';
 import { DFOCardHeaderIconButton } from '../../../components/DFOCard/DFOCardHeaderIconButton';
 import { FormIconButton } from '../../../components/Form/FormIconButton';
+import { ISpecification } from '../../../Nexus/entities/ISpecification';
 
 export default function NewProduct(): React.ReactElement {
   const { t } = useTranslation();
@@ -44,6 +45,33 @@ export default function NewProduct(): React.ReactElement {
 
   const isGeneric = (): boolean => {
     return specification.products.every((product) => product.id !== productId);
+  };
+
+  const editSpecification = (): void => {
+    history.push(`/${SPECIFICATION}/${specification.id}/edit`);
+  };
+
+  const renderEditSpecifcationBar = (spec: ISpecification): ReactElement => {
+    return (
+      <Box
+        className={css.Button}
+        sx={{
+          display: 'flex',
+          flexDirection: 'row-reverse'
+        }}
+      >
+        <Typography
+          className={css.editLink}
+          variant="md"
+          onClick={() => editSpecification()}
+        >
+          {t('Edit')}
+        </Typography>
+        <Typography sx={{ paddingRight: 2 }} variant="md">
+          {spec.organization}
+        </Typography>
+      </Box>
+    );
   };
 
   const renderProducts = (product: ISpecificationProduct): ReactElement => {
@@ -72,10 +100,13 @@ export default function NewProduct(): React.ReactElement {
                 {product.description}
               </Typography>
               <Typography
-                sx={{ marginLeft: 'auto', paddingRight: 3 }}
+                sx={{ marginLeft: 'auto', paddingRight: 1 }}
                 variant="mdBold"
               >
                 {product.amount}
+              </Typography>
+              <Typography sx={{ paddingRight: 2 }} variant="mdBold">
+                {product.unit}
               </Typography>
             </Box>
           </div>
@@ -86,6 +117,7 @@ export default function NewProduct(): React.ReactElement {
 
   return (
     <div className={css.overview}>
+      {renderEditSpecifcationBar(specification)}
       <ul aria-label="products">
         <li className={isGeneric() ? css.Active : undefined} key={'generic'}>
           <div className={css.CardContent}>
@@ -115,8 +147,7 @@ export default function NewProduct(): React.ReactElement {
         className={css.Button}
         sx={{
           display: 'flex',
-          flexDirection: 'row-reverse',
-          borderTop: '2px solid black'
+          flexDirection: 'row-reverse'
         }}
       >
         <NewProductButton label={t('Create a new product')} />
