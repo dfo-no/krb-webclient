@@ -5,7 +5,6 @@ import css from '../Stylesheets/Editor.module.scss';
 import EditProduct from './EditProduct/EditProduct';
 import LoaderSpinner from '../../common/LoaderSpinner';
 import NewProduct from './NewProduct/NewProduct';
-import SpecSideBar from './SideBar/SpecSideBar';
 import { SelectProvider } from '../Workbench/Create/SelectContext';
 import { useSpecificationState } from './SpecificationContext';
 import { PRODUCTS, SPECIFICATION } from '../../common/PathConstants';
@@ -19,9 +18,6 @@ export default function SpecEditor(): ReactElement {
 
   return (
     <div className={css.Editor}>
-      <div className={css.SideBar}>
-        <SpecSideBar />
-      </div>
       <div className={css.Content}>
         <Switch>
           <Route exact path={`/${SPECIFICATION}/:specId/create`}>
