@@ -26,7 +26,7 @@ export default function EditProduct(): React.ReactElement {
     setDeleteMode('');
   };
   const toOverviewPage = (): void => {
-    history.push(`/${SPECIFICATION}/${specification.id}/create/`);
+    history.push(`/${SPECIFICATION}/${specification.id}`);
   };
   const renderNeeds = () => {
     const needs = product
@@ -49,8 +49,7 @@ export default function EditProduct(): React.ReactElement {
           className={css.Button}
           sx={{
             display: 'flex',
-            flexDirection: 'row-reverse',
-            borderTop: '2px solid black'
+            flexDirection: 'row-reverse'
           }}
         >
           <Button variant="primary" onClick={toOverviewPage}>
