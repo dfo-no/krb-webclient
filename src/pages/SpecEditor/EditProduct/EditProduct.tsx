@@ -26,7 +26,7 @@ export default function EditProduct(): React.ReactElement {
     setDeleteMode('');
   };
   const toOverviewPage = (): void => {
-    history.push(`/${SPECIFICATION}/${specification.id}/create/`);
+    history.push(`/${SPECIFICATION}/${specification.id}`);
   };
   const renderNeeds = () => {
     const needs = product
