@@ -13,7 +13,6 @@ import {
   SpecificationProductPath
 } from '../../../models/IRouteSpecificationParams';
 import { PRODUCTS, SPECIFICATION } from '../../../common/PathConstants';
-import NewProductButton from '../NewProduct/NewProductButton';
 
 function SpecSideBar(): ReactElement {
   const { t } = useTranslation();
@@ -62,7 +61,6 @@ function SpecSideBar(): ReactElement {
 
   return (
     <div className={css.SideBar}>
-      <NewProductButton label={t('Create a new product')} />
       <ul aria-label="products">
         <li
           className={isGeneric() ? css.Active : undefined}
