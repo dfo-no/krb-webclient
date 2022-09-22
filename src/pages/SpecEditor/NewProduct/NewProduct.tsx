@@ -19,6 +19,7 @@ import { PRODUCTS, SPECIFICATION } from '../../../common/PathConstants';
 import { DFOCardHeaderIconButton } from '../../../components/DFOCard/DFOCardHeaderIconButton';
 import { FormIconButton } from '../../../components/Form/FormIconButton';
 import NewProductSelection from './NewProductSelection';
+import { ISpecification } from '../../../Nexus/entities/ISpecification';
 
 export default function NewProduct(): React.ReactElement {
   const { t } = useTranslation();
@@ -49,6 +50,33 @@ export default function NewProduct(): React.ReactElement {
 
   const isGeneric = (): boolean => {
     return specification.products.every((product) => product.id !== productId);
+  };
+
+  const editSpecification = (): void => {
+    history.push(`/${SPECIFICATION}/${specification.id}/edit`);
+  };
+
+  const renderEditSpecifcationBar = (spec: ISpecification): ReactElement => {
+    return (
+      <Box
+        className={css.Button}
+        sx={{
+          display: 'flex',
+          flexDirection: 'row-reverse'
+        }}
+      >
+        <Typography
+          className={css.editLink}
+          variant="md"
+          onClick={() => editSpecification()}
+        >
+          {t('Edit')}
+        </Typography>
+        <Typography sx={{ paddingRight: 2 }} variant="md">
+          {spec.organization}
+        </Typography>
+      </Box>
+    );
   };
 
   const renderProducts = (product: ISpecificationProduct): ReactElement => {
@@ -82,6 +110,9 @@ export default function NewProduct(): React.ReactElement {
               >
                 {product.amount}
               </Typography>
+              <Typography sx={{ paddingRight: 2 }} variant="mdBold">
+                {product.unit}
+              </Typography>
             </Box>
           </div>
         </DeleteSpecProduct>
@@ -91,6 +122,7 @@ export default function NewProduct(): React.ReactElement {
 
   return (
     <div className={css.overview}>
+      {renderEditSpecifcationBar(specification)}
       <ul aria-label="products">
         <li className={isGeneric() ? css.Active : undefined} key={'generic'}>
           <div className={css.CardContent}>
