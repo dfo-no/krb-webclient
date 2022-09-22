@@ -84,7 +84,7 @@ export default function ProjectSelectionModal({
     setNewPrefilledResponse(null);
   };
 
-  const BankActionsChoice = (): React.ReactElement => {
+  const defaultActionsChoiceDialog = (): React.ReactElement => {
     return (
       <ModalBox>
         <Box>
@@ -138,7 +138,7 @@ export default function ProjectSelectionModal({
         />
       );
     }
-    return BankActionsChoice();
+    return defaultActionsChoiceDialog();
   };
 
   return (

@@ -70,7 +70,7 @@ export default function SpecificationSelectionModal({
     setNewResponse(null);
   };
 
-  const SpecificationsActionsChoice = (): React.ReactElement => {
+  const defaultActionsChoiceDialog = (): React.ReactElement => {
     return (
       <ModalBox>
         <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
@@ -110,7 +110,7 @@ export default function SpecificationSelectionModal({
         />
       );
     } else {
-      return SpecificationsActionsChoice();
+      return defaultActionsChoiceDialog();
     }
   };
 

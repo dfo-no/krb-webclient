@@ -37,7 +37,7 @@ export default function ResponseSelectionModal({
     setSelectedResponse(null);
   };
 
-  const ResponseActionsChoice = (): React.ReactElement => {
+  const defaultActionsChoiceDialog = (): React.ReactElement => {
     return (
       <ModalBox>
         <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
@@ -61,7 +61,7 @@ export default function ResponseSelectionModal({
     <DFODialog
       isOpen={true}
       handleClose={cancel}
-      children={ResponseActionsChoice()}
+      children={defaultActionsChoiceDialog()}
     />
   );
 }

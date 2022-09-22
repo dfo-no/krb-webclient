@@ -37,7 +37,7 @@ export default function PrefilledResponseSelectionModal({
     setSelectedPrefilledResponse(null);
   };
 
-  const PrefilledResponseActionsChoice = (): React.ReactElement => {
+  const defaultActionsChoiceDialog = (): React.ReactElement => {
     return (
       <ModalBox>
         <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
@@ -61,7 +61,7 @@ export default function PrefilledResponseSelectionModal({
     <DFODialog
       isOpen={true}
       handleClose={cancel}
-      children={PrefilledResponseActionsChoice()}
+      children={defaultActionsChoiceDialog()}
     />
   );
 }
