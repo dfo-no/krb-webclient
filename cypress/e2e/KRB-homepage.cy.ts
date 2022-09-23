@@ -24,11 +24,22 @@ describe('check front page', () => {
     cy.get('input[placeholder=\"Navn på spesifikasjon\"]').type('Nye møbler 2022-10')
     cy.get('input[placeholder=\"Navn\"]').type('Horten kommune')
     cy.get('input[placeholder=\"Organisasjonsnummer\"]').type('964951284')
+    // Maybe the rest of this should go into another test file
     cy.contains('Opprett kravspesifikasjon').click()
     cy.url().should('include', 'http://localhost:3000/specification/')
     cy.contains('Nye møbler 2022-10')
     cy.contains('Lag et nytt produkt')
     cy.contains('Last ned spesifikasjon')
-
   })
+
+  it('can upload specification', () => {
+    cy.visit('localhost:3000')
+    cy.contains('Last opp kravbank-fil').selectFile('./cypress/filesForUploadTesting/specification-1.pdf')
+    cy.contains('Rediger spesifikasjon')
+    cy.contains('Lag Besvarelse')
+    cy.contains('Lag forberedt besvarelse')
+    cy.contains('Gjennomfør evaluering')
+  })
+
+
 })
