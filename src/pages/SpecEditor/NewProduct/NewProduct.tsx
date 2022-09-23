@@ -1,5 +1,5 @@
 import React, { ReactElement } from 'react';
-import { Box, Divider, Typography } from '@mui/material/';
+import { Box, Button, Divider, Typography } from '@mui/material/';
 import { useHistory, useRouteMatch } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import DeleteSpecProduct from '../EditProduct/DeleteSpecProduct';
@@ -16,13 +16,15 @@ import {
 import { useSelectState } from '../../Workbench/Create/SelectContext';
 import { useSpecificationState } from '../SpecificationContext';
 import { PRODUCTS, SPECIFICATION } from '../../../common/PathConstants';
-import NewProductButton from '../NewProduct/NewProductButton';
 import { DFOCardHeaderIconButton } from '../../../components/DFOCard/DFOCardHeaderIconButton';
 import { FormIconButton } from '../../../components/Form/FormIconButton';
+import NewProductSelection from './NewProductSelection';
 import { ISpecification } from '../../../Nexus/entities/ISpecification';
 
 export default function NewProduct(): React.ReactElement {
   const { t } = useTranslation();
+  const { openProductSelection, setOpenProductSelection } =
+    useSpecificationState();
   const history = useHistory();
   const { setDeleteMode } = useSelectState();
   const { specification } = useSpecificationState();
@@ -31,6 +33,9 @@ export default function NewProduct(): React.ReactElement {
   );
   const productId = routeMatch?.params?.productId;
 
+  const open = (): void => {
+    setOpenProductSelection(true);
+  };
   const onDelete = (): void => {
     setDeleteMode('');
   };
@@ -100,7 +105,7 @@ export default function NewProduct(): React.ReactElement {
                 {product.description}
               </Typography>
               <Typography
-                sx={{ marginLeft: 'auto', paddingRight: 1 }}
+                sx={{ marginLeft: 'auto', paddingRight: 3 }}
                 variant="mdBold"
               >
                 {product.amount}
@@ -150,8 +155,17 @@ export default function NewProduct(): React.ReactElement {
           flexDirection: 'row-reverse'
         }}
       >
-        <NewProductButton label={t('Create a new product')} />
+        <Button
+          sx={{
+            marginLeft: 2
+          }}
+          variant="primary"
+          onClick={open}
+        >
+          {t('Create a new product')}
+        </Button>
         <DownloadButton />
+        {openProductSelection && <NewProductSelection />}
       </Box>
     </div>
   );
