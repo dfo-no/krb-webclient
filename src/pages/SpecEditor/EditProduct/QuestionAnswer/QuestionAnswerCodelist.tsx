@@ -14,15 +14,15 @@ interface IProps {
 const QuestionAnswerCodelist = ({ item }: IProps): ReactElement => {
   const { t } = useTranslation();
   const { specification } = useSpecificationState();
-  const codelist = specification.bank.codelist.find(
+  const codesList = specification.bank.codelist.find(
     (cl) => cl.id === item.config.codelist
-  );
+  )?.codes;
 
   return (
     <div className={css.QuestionFlex}>
       <Typography variant={'smBold'}>{t('Answer')}</Typography>
-      {codelist && (
-        <CodeSelection name={'question.answer.codes'} codelist={codelist} />
+      {codesList && (
+        <CodeSelection name={'question.answer.codes'} codesList={codesList} />
       )}
     </div>
   );

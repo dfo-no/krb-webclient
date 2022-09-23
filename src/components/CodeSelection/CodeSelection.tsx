@@ -5,19 +5,19 @@ import { List, ListItem, Typography, Box } from '@mui/material';
 import css from './Selection.module.scss';
 import { DFOCheckbox } from '../DFOCheckbox/DFOCheckbox';
 import { ICode } from '../../Nexus/entities/ICode';
-import { ICodelist } from '../../Nexus/entities/ICodelist';
 import { ICodeSelection } from '../../Nexus/entities/ICodelistQuestion';
 import { ScrollableContainer } from '../ScrollableContainer/ScrollableContainer';
+import { Parentable } from '../../models/Parentable';
 
 interface IProps {
   name: string;
-  codelist: ICodelist;
+  codesList: Parentable<ICode>[];
   codeSelection?: ICodeSelection[];
 }
 
 const CodeSelection = ({
   name,
-  codelist,
+  codesList,
   codeSelection
 }: IProps): React.ReactElement => {
   const sortCodes = (codesToBeSorted: ICode[]): ICode[] => {
@@ -37,7 +37,7 @@ const CodeSelection = ({
     });
   };
 
-  const codes = codeSelection ? sortCodes(codelist.codes) : codelist.codes;
+  const codes = codeSelection ? sortCodes(codesList) : codesList;
 
   const onClick = (
     item: ICode,
