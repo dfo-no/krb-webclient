@@ -6,7 +6,7 @@ import DeleteSpecProduct from '../DeleteSpecProduct';
 import ProductHeader from './ProductHeader';
 import { Box, Button } from '@mui/material';
 import { SPECIFICATION } from '../../../../common/PathConstants';
-import css from '../../Stylesheets/Editor.module.scss';
+import css from '../../../Stylesheets/Editor.module.scss';
 import ProductNeed from './Elements/Needs/ProductNeed';
 import Utils from '../../../../common/Utils';
 import { useSelectState } from '../../../Workbench/Create/SelectContext';
@@ -26,7 +26,7 @@ export default function EditProduct(): React.ReactElement {
     setDeleteMode('');
   };
   const toOverviewPage = (): void => {
-    history.push(`/${SPECIFICATION}/${specification.id}/create/`);
+    history.push(`/${SPECIFICATION}/${specification.id}`);
   };
   const renderNeeds = () => {
     const needs = product

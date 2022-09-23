@@ -1,7 +1,9 @@
 import React, { ReactElement, useEffect, useState } from 'react';
 import { FormProvider, useForm, useWatch } from 'react-hook-form';
+import { useHistory } from 'react-router-dom';
 import { Box, Button } from '@mui/material';
 import { useTranslation } from 'react-i18next';
+import Typography from '@mui/material/Typography';
 
 import Nexus from '../../../../Nexus/Nexus';
 import { ModelType, Weighting, WeightingStep } from '../../../../Nexus/enums';
@@ -13,6 +15,9 @@ import {
 import { IMark } from '../../../../Nexus/entities/IMark';
 import SliderCtrl from '../../../../FormProvider/SliderCtrl';
 import css from './ProductHeader.module.scss';
+import GeneralErrorMessage from '../../../../Form/GeneralErrorMessage';
+import { SPECIFICATION } from '../../../../common/PathConstants';
+import theme from '../../../../theme';
 
 interface IProps {
   handleClose: () => void;
@@ -25,6 +30,7 @@ export function GeneralProductEditForm({
 }: IProps): ReactElement {
   const { t } = useTranslation();
   const nexus = Nexus.getInstance();
+  const history = useHistory();
   const [sliderMark, setSliderMark] = useState<IMark[]>([
     { value: Weighting.MEDIUM, label: t(Weighting[Weighting.MEDIUM]) }
   ]);
@@ -40,10 +46,11 @@ export function GeneralProductEditForm({
     setSliderMark([{ value: useWeight, label: t(Weighting[useWeight]) }]);
   }, [t, useWeight]);
 
-  const onSubmit = (): void => {
+  const onSubmit = (post: ISpecification): void => {
+    const specificationWithId = nexus.specificationService.withId(post);
     nexus.specificationService
-      .setSpecification(specification)
-      .then(() => handleClose());
+      .setSpecification(specificationWithId)
+      .then(() => history.push(`/${SPECIFICATION}/${specificationWithId.id}`));
   };
 
   return (
@@ -54,27 +61,36 @@ export function GeneralProductEditForm({
         noValidate
       >
         <ModalBox>
-          <Box className={css.SlideBox}>
-            <SliderCtrl
-              label={`${t('Weighting')}:`}
-              name={'weight'}
-              min={Weighting.LOWEST}
-              step={WeightingStep}
-              max={Weighting.HIGHEST}
-              showValue={false}
-              marks={sliderMark}
-            />
+          <Box className={css.SlideBoxWrapper}>
+            <Typography
+              variant={'smBold'}
+              color={theme.palette.primary.main}
+              sx={{ marginBottom: 1 }}
+            >
+              {t('Product weighting')}
+            </Typography>
+            <Box className={css.SlideBox}>
+              <SliderCtrl
+                name={'weight'}
+                min={Weighting.LOWEST}
+                step={WeightingStep}
+                max={Weighting.HIGHEST}
+                showValue={false}
+                marks={sliderMark}
+              />
+            </Box>
           </Box>
           <ModalButtonsBox>
             <Button
               className={css.SlideBox__button}
-              variant={'primary'}
-              onClick={() => onSubmit()}
+              variant={'save'}
+              onClick={() => handleClose()}
             >
-              {t('Close')}
+              {t('Save')}
             </Button>
           </ModalButtonsBox>
         </ModalBox>
+        <GeneralErrorMessage errors={methods.formState.errors} />
       </form>
     </FormProvider>
   );

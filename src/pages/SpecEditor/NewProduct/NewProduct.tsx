@@ -1,4 +1,4 @@
-import React, { ReactElement } from 'react';
+import React, { ReactElement, useState } from 'react';
 import { Box, Divider, Typography } from '@mui/material/';
 import { useHistory, useRouteMatch } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
@@ -16,16 +16,19 @@ import {
 import { useSelectState } from '../../Workbench/Create/SelectContext';
 import { useSpecificationState } from '../SpecificationContext';
 import { PRODUCTS, SPECIFICATION } from '../../../common/PathConstants';
-import NewProductButton from '../NewProduct/NewProductButton';
 import { DFOCardHeaderIconButton } from '../../../components/DFOCard/DFOCardHeaderIconButton';
 import { FormIconButton } from '../../../components/Form/FormIconButton';
 import { ISpecification } from '../../../Nexus/entities/ISpecification';
+import NewProductButton from './NewProductButton';
+import DFODialog from '../../../components/DFODialog/DFODialog';
+import { GeneralProductEditForm } from '../EditProduct/ProductHeader/GeneralProductEditForm';
 
 export default function NewProduct(): React.ReactElement {
   const { t } = useTranslation();
   const history = useHistory();
   const { setDeleteMode } = useSelectState();
   const { specification } = useSpecificationState();
+  const [editingSpec, setEditingSpec] = useState(false);
   const routeMatch = useRouteMatch<IRouteSpecificationParams>(
     SpecificationProductPath
   );
@@ -33,10 +36,6 @@ export default function NewProduct(): React.ReactElement {
 
   const onDelete = (): void => {
     setDeleteMode('');
-  };
-
-  const genericPressed = (): void => {
-    history.push(`/${SPECIFICATION}/${specification.id}/${PRODUCTS}/general/`);
   };
 
   const productPressed = (pid: string): void => {
@@ -127,7 +126,7 @@ export default function NewProduct(): React.ReactElement {
               </Typography>
               <DFOCardHeaderIconButton
                 sx={{ marginLeft: 'auto', paddingRight: 2 }}
-                onClick={() => genericPressed()}
+                onClick={() => setEditingSpec(true)}
               >
                 <EditIcon />
               </DFOCardHeaderIconButton>
@@ -136,6 +135,18 @@ export default function NewProduct(): React.ReactElement {
           </div>
         </li>
       </ul>
+      {editingSpec && (
+        <DFODialog
+          isOpen={true}
+          handleClose={() => setEditingSpec(false)}
+          children={
+            <GeneralProductEditForm
+              specification={specification}
+              handleClose={() => setEditingSpec(false)}
+            />
+          }
+        />
+      )}
       {specification.products.length > 0 && (
         <ul>
           {specification.products.map((element) => {

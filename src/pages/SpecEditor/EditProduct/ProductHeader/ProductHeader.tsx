@@ -12,10 +12,8 @@ import { DFOCardHeaderIconButton } from '../../../../components/DFOCard/DFOCardH
 import { DFOHeaderContentBox } from '../../../../components/DFOCard/DFOHeaderContentBox';
 import { useProductIndexState } from '../../../../components/ProductIndexContext/ProductIndexContext';
 import { useSelectState } from '../../../Workbench/Create/SelectContext';
-import { useSpecificationState } from '../../SpecificationContext';
 import css from './ProductHeader.module.scss';
 import { ISpecificationProduct } from '../../../../Nexus/entities/ISpecificationProduct';
-import { GeneralProductEditForm } from './GeneralProductEditForm';
 
 interface IProps {
   product?: ISpecificationProduct;
@@ -23,10 +21,8 @@ interface IProps {
 
 export default function ProductHeader({ product }: IProps): React.ReactElement {
   const { t } = useTranslation();
-  const { specification } = useSpecificationState();
   const { productIndex } = useProductIndexState();
   const [editingProduct, setEditingProduct] = useState(false);
-  const [editingSpec, setEditingSpec] = useState(false);
   const { setDeleteMode } = useSelectState();
 
   return (
@@ -37,14 +33,6 @@ export default function ProductHeader({ product }: IProps): React.ReactElement {
             <Typography variant="lgBold">
               {product?.title ?? t('General requirement')}
             </Typography>
-            {!product && productIndex === -1 && (
-              <DFOCardHeaderIconButton
-                className={css.HeaderBox__generalEditIcon}
-                onClick={() => setEditingSpec(true)}
-              >
-                <EditIcon />
-              </DFOCardHeaderIconButton>
-            )}
             {product && (
               <>
                 <DFOCardHeaderIconButton
@@ -92,18 +80,6 @@ export default function ProductHeader({ product }: IProps): React.ReactElement {
           )}
         </DFOHeaderContentBox>
       </DFOCardHeader>
-      {!product && editingSpec && (
-        <DFODialog
-          isOpen={true}
-          handleClose={() => setEditingSpec(false)}
-          children={
-            <GeneralProductEditForm
-              specification={specification}
-              handleClose={() => setEditingSpec(false)}
-            />
-          }
-        />
-      )}
     </div>
   );
 }
