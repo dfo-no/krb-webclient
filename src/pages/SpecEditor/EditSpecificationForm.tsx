@@ -35,12 +35,10 @@ const EditSpecificationForm = ({ specification }: IProps) => {
     const specificationWithId = nexus.specificationService.withId(post);
     nexus.specificationService
       .setSpecification(specificationWithId)
-      .then(() =>
-        history.push(`/${SPECIFICATION}/${specificationWithId.id}/create`)
-      );
+      .then(() => history.push(`/${SPECIFICATION}/${specificationWithId.id}`));
   };
   const cancel = (): void => {
-    history.push(`/${SPECIFICATION}/${specification.id}/create`);
+    history.push(`/${SPECIFICATION}/${specification.id}`);
   };
 
   return (
