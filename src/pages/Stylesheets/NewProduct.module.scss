@@ -15,6 +15,20 @@
       margin-left: auto;
       width: 20rem;
     }
+    .Columns {
+      display: flex;
+      flex-basis: 50%;
+      margin: 0;
+      gap: var(--big-gap);
+
+      .Column {
+        flex-basis: 50%;
+        margin-bottom: var(--big-gap);
+      }
+      .Column:last-child {
+        text-align: right;
+      }
+    }
 
     ul {
       border: 0.1rem solid var(--gray-color);

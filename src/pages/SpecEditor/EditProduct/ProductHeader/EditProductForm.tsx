@@ -100,6 +100,7 @@ const EditProductForm = ({ handleClose, specificationProduct }: IProps) => {
                 />
               </Box>
             </Box>
+            <VerticalTextCtrl name="unit" label={t('Unit')} placeholder={''} />
           </ModalFieldsBox>
           <ModalButtonsBox>
             <ModalButton variant="cancel" onClick={() => handleClose()}>

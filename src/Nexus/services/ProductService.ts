@@ -22,7 +22,8 @@ export default class ProductService {
       parent: '',
       sourceOriginal: projectId ?? null,
       sourceRel: null,
-      deletedDate: null
+      deletedDate: null,
+      unit: 'stk'
     };
   };
 

@@ -41,7 +41,7 @@ export default function SpecificationSelectionModal({
   const editSpecification = (): void => {
     dispatch(selectBank(selectedSpecification.bank.id));
     nexus.specificationService.setSpecification(selectedSpecification);
-    history.push(`/${SPECIFICATION}/${selectedSpecification.bank.id}`);
+    history.push(`/${SPECIFICATION}/${selectedSpecification.id}`);
   };
 
   const createResponse = (): void => {
@@ -70,7 +70,7 @@ export default function SpecificationSelectionModal({
     setNewResponse(null);
   };
 
-  const modalBox = (): React.ReactElement => {
+  const defaultActionsChoiceDialog = (): React.ReactElement => {
     return (
       <ModalBox>
         <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
@@ -102,16 +102,16 @@ export default function SpecificationSelectionModal({
   const getDialog = (): ReactElement => {
     if (newResponse) {
       return <NewResponseForm handleClose={cancel} response={newResponse} />;
-    }
-    if (newPrefilledResponse) {
+    } else if (newPrefilledResponse) {
       return (
         <NewPrefilledResponseForm
           handleClose={cancel}
           prefilledResponse={newPrefilledResponse}
         />
       );
+    } else {
+      return defaultActionsChoiceDialog();
     }
-    return modalBox();
   };
 
   return (

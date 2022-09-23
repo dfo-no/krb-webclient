@@ -9,6 +9,7 @@ export interface IProduct extends IBaseModel {
   parent: string;
   children?: [];
   deletedDate: string | null;
+  unit?: string;
 }
 
 export const BaseProductSchema = BaseModelSchema.keys({
@@ -16,5 +17,6 @@ export const BaseProductSchema = BaseModelSchema.keys({
   description: CustomJoi.validateOptionalText(),
   parent: CustomJoi.validateParentId(),
   type: CustomJoi.validateType(ModelType.product),
-  deletedDate: CustomJoi.validateOptionalDate()
+  deletedDate: CustomJoi.validateOptionalDate(),
+  unit: CustomJoi.validateOptionalText()
 });

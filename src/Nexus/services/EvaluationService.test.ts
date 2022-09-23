@@ -89,7 +89,8 @@ describe('EvaluationService', () => {
       parent: '',
       sourceOriginal: '61cdf70d-9ef5-4ae1-a006-b2e2f5242273',
       sourceRel: null,
-      deletedDate: null
+      deletedDate: null,
+      unit: 'stk'
     };
 
     const product2: Parentable<IProduct> = {
@@ -100,7 +101,8 @@ describe('EvaluationService', () => {
       parent: '',
       sourceOriginal: '61cdf70d-9ef5-4ae1-a006-b2e2f5242273',
       sourceRel: null,
-      deletedDate: null
+      deletedDate: null,
+      unit: 'stk'
     };
 
     const need1: Parentable<INeed> = {
@@ -241,7 +243,8 @@ describe('EvaluationService', () => {
       ],
       type: ModelType.specificationProduct,
       sourceRel: null,
-      sourceOriginal: null
+      sourceOriginal: null,
+      unit: 'stk'
     };
 
     const specProduct2 = {
@@ -265,7 +268,8 @@ describe('EvaluationService', () => {
       ],
       type: ModelType.specificationProduct,
       sourceRel: null,
-      sourceOriginal: null
+      sourceOriginal: null,
+      unit: 'stk'
     };
 
     const specification: ISpecification = {

@@ -27,18 +27,19 @@ export default function ProductHeader(): React.ReactElement {
             {response.specification.products[productIndex]?.description ?? ''}
           </Typography>
 
-          {productIndex !== -1 && (
-            <Typography className={css.ProductType} variant="smBold">
-              {t('From product type')}
-              {': '}
-              <i>
-                {
-                  response.specification.products[productIndex].originProduct
-                    .title
-                }
-              </i>
-            </Typography>
-          )}
+          {productIndex !== -1 &&
+            response.specification.products[productIndex].originProduct && (
+              <Typography className={css.ProductType} variant="smBold">
+                {t('From product type')}
+                {': '}
+                <i>
+                  {
+                    response.specification.products[productIndex].originProduct
+                      .title
+                  }
+                </i>
+              </Typography>
+            )}
         </div>
       </DFOHeaderContentBox>
     </DFOCardHeader>
