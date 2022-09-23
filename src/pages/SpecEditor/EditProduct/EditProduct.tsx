@@ -1,5 +1,5 @@
 import React from 'react';
-import { useParams } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 
 import DeleteSpecProduct from './DeleteSpecProduct';
 import ProductHeader from './ProductHeader';
@@ -8,8 +8,14 @@ import Utils from '../../../common/Utils';
 import { IRouteSpecificationParams } from '../../../models/IRouteSpecificationParams';
 import { useSelectState } from '../../Workbench/Create/SelectContext';
 import { useSpecificationState } from '../SpecificationContext';
+import { Box, Button } from '@mui/material';
+import { SPECIFICATION } from '../../../common/PathConstants';
+import { useTranslation } from 'react-i18next';
+import css from '../../Stylesheets/Editor.module.scss';
 
 export default function EditProduct(): React.ReactElement {
+  const { t } = useTranslation();
+  const history = useHistory();
   const { productId } = useParams<IRouteSpecificationParams>();
   const { specification } = useSpecificationState();
   const { setDeleteMode } = useSelectState();
@@ -19,7 +25,9 @@ export default function EditProduct(): React.ReactElement {
   const onDelete = (): void => {
     setDeleteMode('');
   };
-
+  const toOverviewPage = (): void => {
+    history.push(`/${SPECIFICATION}/${specification.id}/create/`);
+  };
   const renderNeeds = () => {
     const needs = product
       ? Utils.findVariantsUsedByProduct(
@@ -37,6 +45,17 @@ export default function EditProduct(): React.ReactElement {
       <div>
         <ProductHeader product={product} />
         {renderNeeds()}
+        <Box
+          className={css.Button}
+          sx={{
+            display: 'flex',
+            flexDirection: 'row-reverse'
+          }}
+        >
+          <Button variant="primary" onClick={toOverviewPage}>
+            {t('Save')}
+          </Button>
+        </Box>
       </div>
     </DeleteSpecProduct>
   );

@@ -5,10 +5,10 @@ import css from '../Stylesheets/Editor.module.scss';
 import EditProduct from './EditProduct/EditProduct';
 import LoaderSpinner from '../../common/LoaderSpinner';
 import NewProduct from './NewProduct/NewProduct';
-import SpecSideBar from './SideBar/SpecSideBar';
 import { SelectProvider } from '../Workbench/Create/SelectContext';
 import { useSpecificationState } from './SpecificationContext';
 import { PRODUCTS, SPECIFICATION } from '../../common/PathConstants';
+import EditSpecificationForm from './EditSpecificationForm';
 
 export default function SpecEditor(): ReactElement {
   const { specification } = useSpecificationState();
@@ -19,18 +19,20 @@ export default function SpecEditor(): ReactElement {
 
   return (
     <div className={css.Editor}>
-      <div className={css.SideBar}>
-        <SpecSideBar />
-      </div>
       <div className={css.Content}>
         <Switch>
-          <Route exact path={`/${SPECIFICATION}/:specId/create`}>
-            <NewProduct />
+          <Route exact path={`/${SPECIFICATION}/:specId`}>
+            <SelectProvider>
+              <NewProduct />
+            </SelectProvider>
           </Route>
           <Route path={`/${SPECIFICATION}/:specId/${PRODUCTS}/:productId`}>
             <SelectProvider>
               <EditProduct />
             </SelectProvider>
+          </Route>
+          <Route path={`/${SPECIFICATION}/:specId/edit`}>
+            <EditSpecificationForm specification={specification} />
           </Route>
         </Switch>
       </div>
