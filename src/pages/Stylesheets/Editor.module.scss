@@ -66,6 +66,21 @@
     .Divider {
       margin-bottom: var(--small-gap);
     }
+
+    .editLink {
+      border-left: 0.1rem solid var(--gray-color);
+      padding-left: var(--small-gap);
+      cursor: pointer;
+      text-decoration: underline;
+
+      &:hover {
+        color: var(--link-hover-color);
+      }
+    }
+  }
+
+  .editPage {
+    align-self: center;
   }
 
   .Content {
