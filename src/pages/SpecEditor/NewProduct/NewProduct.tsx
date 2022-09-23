@@ -105,7 +105,7 @@ export default function NewProduct(): React.ReactElement {
                 {product.description}
               </Typography>
               <Typography
-                sx={{ marginLeft: 'auto', paddingRight: 1 }}
+                sx={{ marginLeft: 'auto', paddingRight: 3 }}
                 variant="mdBold"
               >
                 {product.amount}
