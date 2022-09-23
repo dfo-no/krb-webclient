@@ -41,5 +41,13 @@ describe('check front page', () => {
     cy.contains('Gjennomfør evaluering')
   })
 
-
+  it('can upload prefilled response', () => {
+    cy.visit('localhost:3000')
+    cy.contains('Last opp kravbank-fil').selectFile('./cypress/filesForUploadTesting/prefilledesponse-Kriterieveiviseren TestProsjekt.pdf')
+    cy.contains('Rediger forberedt besvarelse')
+    // Litt usikker på om jeg skal ha med .should('be.disabled') nedenfor, men
+    // det er greit som et eksempel og veldig raskt å fjerne når den blir
+    // aktivert.
+    cy.contains('Lag Besvarelse').should('be.disabled')
+  })
 })
