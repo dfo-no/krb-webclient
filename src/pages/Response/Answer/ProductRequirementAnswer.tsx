@@ -40,10 +40,8 @@ export default function ProductRequirementAnswer({
     ).requirementAnswers.find((reqAns) => {
       return reqAns.id === requirementAnswer.id;
     });
-    if (answer) {
-      setExistingAnswer(answer);
-    }
-    setActiveKey(requirementAnswer.id);
+    if (answer) setExistingAnswer(answer);
+    else setActiveKey(requirementAnswer.id);
   }, [requirementAnswer.id, productIndex, response, setActiveKey]);
 
   const header = (): ReactElement => {
