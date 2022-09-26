@@ -96,6 +96,11 @@ export default function NewProductForm({
                   placeholder={t('Quantity')}
                   type={'number'}
                 />
+                <VerticalTextCtrl
+                  name="unit"
+                  label={t('Unit')}
+                  placeholder={''}
+                />
               </ModalFieldsBox>
               <ModalButtonsBox>
                 <ModalButton variant="cancel" onClick={() => handleClose()}>
