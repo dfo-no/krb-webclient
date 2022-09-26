@@ -13,6 +13,7 @@ import { IRequirementAnswer } from '../../../Nexus/entities/IRequirementAnswer';
 import { useAppSelector } from '../../../store/hooks';
 import { useProductIndexState } from '../../../components/ProductIndexContext/ProductIndexContext';
 import { VariantType } from '../../../Nexus/enums';
+import { useAccordionState } from '../../../components/DFOAccordion/AccordionContext';
 
 interface IProps {
   requirementAnswer: IRequirementAnswer;
@@ -26,6 +27,7 @@ export default function ProductRequirementAnswer({
   const [existingAnswer, setExistingAnswer] = useState<
     IRequirementAnswer | undefined
   >(undefined);
+  const { setActiveKey } = useAccordionState();
   const requirementVariant = requirementAnswer.requirement.variants.find(
     (variant) => variant.id === requirementAnswer.variantId
   );
@@ -38,10 +40,9 @@ export default function ProductRequirementAnswer({
     ).requirementAnswers.find((reqAns) => {
       return reqAns.id === requirementAnswer.id;
     });
-    if (answer) {
-      setExistingAnswer(answer);
-    }
-  }, [requirementAnswer.id, productIndex, response]);
+    if (answer) setExistingAnswer(answer);
+    else setActiveKey(requirementAnswer.id);
+  }, [requirementAnswer.id, productIndex, response, setActiveKey]);
 
   const header = (): ReactElement => {
     return (
