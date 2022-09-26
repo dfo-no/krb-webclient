@@ -70,6 +70,7 @@
     "eslint-config-airbnb": "^19.0.4",
     "eslint-config-airbnb-typescript": "^17.0.0",
     "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-cypress": "^2.12.1",
     "eslint-plugin-import": "^2.26.0",
     "eslint-plugin-jest": "^26.8.2",
     "eslint-plugin-jsx-a11y": "^6.6.1",
@@ -149,7 +150,22 @@
       ],
       "react/jsx-props-no-spreading": 0
     },
-    "ignorePatterns": "analyse.js"
+    "ignorePatterns": "analyse.js",
+    "overrides": [
+      {
+        "files": [
+          "./cypress.config.ts"
+        ],
+        "rules": {
+          "import/no-extraneous-dependencies": [
+            "error",
+            {
+              "devDependencies": true
+            }
+          ]
+        }
+      }
+    ]
   },
   "browserslist": {
     "production": [

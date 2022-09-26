@@ -1,7 +1,7 @@
 describe('check front page', () => {
   it('has multiple banks on the front page', () => {
     cy.visit('localhost:3000')
-    // Can break if not testet for a long time since for dates more than a
+    // Can break if not tested for a long time since for dates more than a
     // certain number of days above will display as an actual date instead as a
     // relative number compared to today
     cy.get('li:contains(dager siden)').its('length').should('be.at.least', 5)
@@ -21,9 +21,9 @@ describe('check front page', () => {
     cy.contains('Kriterieveiviseren TestProsjekt').click()
     cy.contains('Test av Nye møbler')
     cy.contains('Opprett kravspesifikasjon').click()
-    cy.get('input[placeholder=\"Navn på spesifikasjon\"]').type('Nye møbler 2022-10')
-    cy.get('input[placeholder=\"Navn\"]').type('Horten kommune')
-    cy.get('input[placeholder=\"Organisasjonsnummer\"]').type('964951284')
+    cy.get('input[placeholder="Navn på spesifikasjon"]').type('Nye møbler 2022-10')
+    cy.get('input[placeholder="Navn"]').type('Horten kommune')
+    cy.get('input[placeholder="Organisasjonsnummer"]').type('964951284')
     // Maybe the rest of this should go into another test file
     cy.contains('Opprett kravspesifikasjon').click()
     cy.url().should('include', 'http://localhost:3000/specification/')
