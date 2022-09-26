@@ -18,6 +18,7 @@ import { useSpecificationState } from '../SpecificationContext';
 import { PRODUCTS, SPECIFICATION } from '../../../common/PathConstants';
 import { DFOCardHeaderIconButton } from '../../../components/DFOCard/DFOCardHeaderIconButton';
 import { FormIconButton } from '../../../components/Form/FormIconButton';
+import NewProductSelection from './NewProductSelection';
 import { ISpecification } from '../../../Nexus/entities/ISpecification';
 import NewProductButton from './NewProductButton';
 import DFODialog from '../../../components/DFODialog/DFODialog';
@@ -25,6 +26,8 @@ import { GeneralProductEditForm } from '../EditProduct/ProductHeader/GeneralProd
 
 export default function NewProduct(): React.ReactElement {
   const { t } = useTranslation();
+  const { openProductSelection, setOpenProductSelection } =
+    useSpecificationState();
   const history = useHistory();
   const { setDeleteMode } = useSelectState();
   const { specification } = useSpecificationState();
@@ -34,6 +37,9 @@ export default function NewProduct(): React.ReactElement {
   );
   const productId = routeMatch?.params?.productId;
 
+  const open = (): void => {
+    setOpenProductSelection(true);
+  };
   const onDelete = (): void => {
     setDeleteMode('');
   };
@@ -99,7 +105,7 @@ export default function NewProduct(): React.ReactElement {
                 {product.description}
               </Typography>
               <Typography
-                sx={{ marginLeft: 'auto', paddingRight: 1 }}
+                sx={{ marginLeft: 'auto', paddingRight: 3 }}
                 variant="mdBold"
               >
                 {product.amount}
@@ -161,8 +167,17 @@ export default function NewProduct(): React.ReactElement {
           flexDirection: 'row-reverse'
         }}
       >
-        <NewProductButton label={t('Create a new product')} />
+        <Button
+          sx={{
+            marginLeft: 2
+          }}
+          variant="primary"
+          onClick={open}
+        >
+          {t('Create a new product')}
+        </Button>
         <DownloadButton />
+        {openProductSelection && <NewProductSelection />}
       </Box>
     </div>
   );
