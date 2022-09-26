@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 import DeleteSpecProduct from '../EditProduct/DeleteSpecProduct';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
-import css from '../../Stylesheets/Editor.module.scss';
+import css from '../../Stylesheets/EditorFullPage.module.scss';
 import DownloadButton from '../Download/DownloadButton';
 import theme from '../../../theme';
 import { ISpecificationProduct } from '../../../Nexus/entities/ISpecificationProduct';

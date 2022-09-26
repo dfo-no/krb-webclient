@@ -11,7 +11,7 @@ import { useSpecificationState } from '../SpecificationContext';
 import { Box, Button } from '@mui/material';
 import { SPECIFICATION } from '../../../common/PathConstants';
 import { useTranslation } from 'react-i18next';
-import css from '../../Stylesheets/Editor.module.scss';
+import css from '../../Stylesheets/EditorFullPage.module.scss';
 
 export default function EditProduct(): React.ReactElement {
   const { t } = useTranslation();
