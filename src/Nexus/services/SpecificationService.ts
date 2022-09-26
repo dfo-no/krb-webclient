@@ -31,8 +31,7 @@ export default class SpecificationService extends BaseService {
       organizationNumber: '',
       products: [],
       requirements: [],
-      requirementAnswers: [],
-      weight: Weighting.MEDIUM
+      requirementAnswers: []
     };
   }
 

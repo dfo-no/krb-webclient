@@ -329,12 +329,11 @@ describe('EvaluationService', () => {
           requirement: need3.requirements[0],
           type: ModelType.requirementAnswer
         }
-      ],
-      weight: Weighting.MEDIUM
+      ]
     };
 
     const response: IResponse = {
-      specification: specification, // 50 weight
+      specification: specification,
       supplier: 'Firma A',
       products: [
         {
@@ -421,9 +420,9 @@ describe('EvaluationService', () => {
     };
     const nexus = Nexus.getInstance();
     const result = await nexus.evaluationService.evaluateAll([response]);
-    // Sum: product1: (0.35 + 0.5) * 0.7 , product2: 0.07 * 0.5, general: (0.18 + 0.7 + 0.2) * 0.5 = 1,17
-    // Max: product1:( 0.7 + 0.5) * 0.7 , product2: 0.7 * 0.5, general: (0.9 + 0.7 + 0.5) * 0.5 = 2,24
-    // Calculated percentage = 1.17 / 2.24 = 0.5223214285714286
-    expect(result[0].points).toBe(0.5223214285714286);
+    // Sum: product1: (0.35 + 0.5) * 0.7 , product2: 0.07 * 0.5, general: 0.18 + 0.7 + 0.2 = 1,71
+    // Max: product1:( 0.7 + 0.5) * 0.7 , product2: 0.7 * 0.5, general: 0.9 + 0.7 + 0.5 = 3,29
+    // Calculated percentage = 1.71 / 3,29 = 0.5197568389057751
+    expect(result[0].points).toBe(0.5197568389057751);
   });
 });

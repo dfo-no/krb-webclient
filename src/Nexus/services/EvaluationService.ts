@@ -45,8 +45,6 @@ export default class EvaluationService {
       total += calc.total;
       max += calc.max;
     });
-    total *= response.specification.weight / 100;
-    max *= response.specification.weight / 100;
     return max === 0 ? { total: 0, max: 0 } : { total, max };
   }
 

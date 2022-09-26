@@ -102,11 +102,6 @@ export default function NewProductForm({
                   placeholder={''}
                 />
               </ModalFieldsBox>
-              <VerticalTextCtrl
-                name="unit"
-                label={t('Unit')}
-                placeholder={''}
-              />
               <ModalButtonsBox>
                 <ModalButton variant="cancel" onClick={() => handleClose()}>
                   {t('Cancel')}

@@ -1,5 +1,5 @@
-import React, { ReactElement, useState } from 'react';
-import { Box, Divider, Typography } from '@mui/material/';
+import React, { ReactElement } from 'react';
+import { Box, Button, Divider, Typography } from '@mui/material/';
 import { useHistory, useRouteMatch } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import DeleteSpecProduct from '../EditProduct/DeleteSpecProduct';
@@ -16,13 +16,9 @@ import {
 import { useSelectState } from '../../Workbench/Create/SelectContext';
 import { useSpecificationState } from '../SpecificationContext';
 import { PRODUCTS, SPECIFICATION } from '../../../common/PathConstants';
-import { DFOCardHeaderIconButton } from '../../../components/DFOCard/DFOCardHeaderIconButton';
 import { FormIconButton } from '../../../components/Form/FormIconButton';
 import NewProductSelection from './NewProductSelection';
 import { ISpecification } from '../../../Nexus/entities/ISpecification';
-import NewProductButton from './NewProductButton';
-import DFODialog from '../../../components/DFODialog/DFODialog';
-import { GeneralProductEditForm } from '../EditProduct/ProductHeader/GeneralProductEditForm';
 
 export default function NewProduct(): React.ReactElement {
   const { t } = useTranslation();
@@ -31,7 +27,6 @@ export default function NewProduct(): React.ReactElement {
   const history = useHistory();
   const { setDeleteMode } = useSelectState();
   const { specification } = useSpecificationState();
-  const [editingSpec, setEditingSpec] = useState(false);
   const routeMatch = useRouteMatch<IRouteSpecificationParams>(
     SpecificationProductPath
   );
@@ -130,29 +125,11 @@ export default function NewProduct(): React.ReactElement {
               <Typography variant="mdBold">
                 {t('General requirements')}
               </Typography>
-              <DFOCardHeaderIconButton
-                sx={{ marginLeft: 'auto', paddingRight: 2 }}
-                onClick={() => setEditingSpec(true)}
-              >
-                <EditIcon />
-              </DFOCardHeaderIconButton>
             </div>
             <Divider color={theme.palette.silver.main} />
           </div>
         </li>
       </ul>
-      {editingSpec && (
-        <DFODialog
-          isOpen={true}
-          handleClose={() => setEditingSpec(false)}
-          children={
-            <GeneralProductEditForm
-              specification={specification}
-              handleClose={() => setEditingSpec(false)}
-            />
-          }
-        />
-      )}
       {specification.products.length > 0 && (
         <ul>
           {specification.products.map((element) => {
