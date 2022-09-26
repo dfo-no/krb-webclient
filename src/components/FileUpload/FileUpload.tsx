@@ -59,18 +59,16 @@ const FileUpload = ({
       )}
     >
       <div>
-        <label>
-          {label}
-          <input
-            accept={accept ?? '*'}
-            disabled={disabled}
-            key={inputKey}
-            multiple={multiple}
-            onChange={handleOnChange}
-            type="file"
-            title={''}
-          />
-        </label>
+        <label>{label}</label>
+        <input
+          accept={accept ?? '*'}
+          disabled={disabled}
+          key={inputKey}
+          multiple={multiple}
+          onChange={handleOnChange}
+          type="file"
+          title={''}
+        />
         {description && <span>{description}</span>}
       </div>
     </div>
