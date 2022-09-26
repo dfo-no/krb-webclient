@@ -27,5 +27,5 @@ export const SpecificationProductSchema = BaseModelSchema.keys({
   weight: CustomJoi.validateWeight(),
   requirementAnswers: CustomJoi.validateUniqueArray(RequirementAnswerSchema),
   type: CustomJoi.validateType(ModelType.specificationProduct),
-  unit: CustomJoi.validateOptionalText()
+  unit: CustomJoi.validateOptionalTextNotRequired()
 });
