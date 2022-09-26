@@ -1,0 +1,32 @@
+.HeaderWrapper {
+  .HeaderBox {
+    display: flex;
+    flex-direction: row;
+    padding-bottom: 0.5rem;
+    border-bottom: 0.1rem solid;
+
+    &__generalEditIcon,
+    &__productEditIcon {
+      margin-left: auto;
+      padding-right: 2rem;
+    }
+  }
+
+  .Description {
+    display: flex;
+    flex-direction: row;
+    padding-top: 1rem;
+  }
+}
+
+.EditHeader {
+  .SlideBoxWrapper {
+    display: flex;
+    flex-direction: column;
+    gap: var(--micro-gap);
+  }
+
+  .SlideBox {
+    padding: 1rem;
+  }
+}

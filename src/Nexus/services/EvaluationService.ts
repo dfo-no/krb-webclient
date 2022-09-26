@@ -32,6 +32,8 @@ export default class EvaluationService {
       total += calc.total;
       max += calc.max;
     });
+    total *= product.originProduct.weight / 100;
+    max *= product.originProduct.weight / 100;
     return max === 0 ? { total: 0, max: 0 } : { total, max };
   }
 
@@ -59,7 +61,6 @@ export default class EvaluationService {
     maxPoints += calc.max;
 
     response.products.forEach((product) => {
-      // TODO: Add product weighting
       const productCalc = this.calculateProductPoints(product);
       totPoints += productCalc.total;
       maxPoints += productCalc.max;

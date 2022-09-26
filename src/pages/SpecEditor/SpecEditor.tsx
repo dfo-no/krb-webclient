@@ -2,7 +2,7 @@ import React, { ReactElement } from 'react';
 import { Route, Switch } from 'react-router-dom';
 
 import css from '../Stylesheets/Editor.module.scss';
-import EditProduct from './EditProduct/EditProduct';
+import EditProduct from './EditProduct/ProductHeader/EditProduct';
 import LoaderSpinner from '../../common/LoaderSpinner';
 import NewProduct from './NewProduct/NewProduct';
 import { SelectProvider } from '../Workbench/Create/SelectContext';
