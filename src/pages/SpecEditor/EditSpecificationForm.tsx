@@ -16,7 +16,7 @@ import {
 } from '../../components/ModalBox/ModalBox';
 import { ModelType } from '../../Nexus/enums';
 import { SPECIFICATION } from '../../common/PathConstants';
-import css from '../Stylesheets/Editor.module.scss';
+import css from '../Stylesheets/EditorFullPage.module.scss';
 import React from 'react';
 interface IProps {
   specification: ISpecification;
