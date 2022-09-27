@@ -31,7 +31,8 @@ export default class SpecificationService extends BaseService {
       organizationNumber: '',
       products: [],
       requirements: [],
-      requirementAnswers: []
+      requirementAnswers: [],
+      caseNumber: ''
     };
   }
 

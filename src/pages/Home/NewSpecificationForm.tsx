@@ -64,16 +64,24 @@ const NewSpecificationForm = ({ handleClose, specification }: IProps) => {
               label={t('What will be the name of the procurement?')}
               placeholder={t('Name of specification')}
               autoFocus
+              required={true}
+            />
+            <VerticalTextCtrl
+              name="caseNumber"
+              label={t('Procurement case number')}
+              placeholder={t('Case number')}
             />
             <VerticalTextCtrl
               name="organization"
               label={t('Name of your organization')}
               placeholder={t('Name')}
+              required={true}
             />
             <VerticalTextCtrl
               name="organizationNumber"
               label={t('Organization number')}
               placeholder={t('Organization number')}
+              required={true}
             />
           </ModalFieldsBox>
           <ModalButtonsBox>

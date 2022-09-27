@@ -1,0 +1,13 @@
+.VerticalTextCtrl {
+  span:first-child {
+    &[data-required='true'] {
+      &:after {
+        position: absolute;
+        content: '*';
+        color: var(--error-color);
+        font-size: var(--normal-fontsize);
+        margin-left: var(--micro-gap);
+      }
+    }
+  }
+}
