@@ -2,9 +2,11 @@ import React from 'react';
 import { FormControl, FormLabel, Typography } from '@mui/material';
 import { Controller, useFormContext } from 'react-hook-form';
 import { get } from 'lodash';
+import classNames from 'classnames';
 
 import DFOInput from '../components/DFOTextField/DFOTextField';
 import theme from '../theme';
+import css from './FormProvider.module.scss';
 
 interface IProps {
   className?: string;
@@ -13,6 +15,7 @@ interface IProps {
   placeholder?: string;
   type?: string;
   autoFocus?: boolean;
+  required?: boolean;
 }
 
 const VerticalTextCtrl = ({
@@ -21,7 +24,8 @@ const VerticalTextCtrl = ({
   label = '',
   placeholder = '',
   type = 'text',
-  autoFocus
+  autoFocus,
+  required
 }: IProps): React.ReactElement => {
   const {
     formState: { errors }
@@ -29,7 +33,7 @@ const VerticalTextCtrl = ({
 
   return (
     <FormControl
-      className={className}
+      className={classNames([css.VerticalTextCtrl, className])}
       error={!!get(errors, name)}
       sx={{ width: '100%' }}
     >
@@ -37,6 +41,7 @@ const VerticalTextCtrl = ({
         variant={'smBold'}
         color={theme.palette.primary.main}
         sx={{ marginBottom: 1 }}
+        data-required={required}
       >
         {label}
       </Typography>
