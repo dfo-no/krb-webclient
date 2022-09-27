@@ -66,12 +66,18 @@ export default function QuestionAnswer({
       const codelist = prefilledResponse.bank.codelist.find(
         (cl) => cl.id === codelistId
       );
+      const codesId = requirementAnswer.question.config.codes.map(
+        (c) => c.code
+      );
+      const codesList = codelist?.codes.filter(function (cl) {
+        return codesId.indexOf(cl.id) > -1;
+      });
       return (
         <QuestionAnswerCodelist
           item={requirementAnswer.question}
           existingAnswer={existingAnswer}
           onSubmit={onSubmit}
-          codelist={codelist}
+          codesList={codesList}
         />
       );
     case QuestionVariant.Q_CONFIRMATION:

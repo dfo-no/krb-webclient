@@ -13,6 +13,7 @@ export enum ModelType {
   response = 'response',
   responseProduct = 'responseProduct',
   specification = 'specification',
+  specificationGeneralProduct = 'specificationGeneralProduct',
   specificationProduct = 'specificationProduct',
   tag = 'tag',
   variant = 'variant'

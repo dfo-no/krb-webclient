@@ -68,6 +68,7 @@ export default function EditProductForm({
             label={t('Description')}
             placeholder={''}
           />
+          <VerticalTextCtrl name="unit" label={t('Unit')} placeholder={''} />
           <FormButtons handleClose={() => handleClose(null)} />
         </FormItemBox>
       </form>

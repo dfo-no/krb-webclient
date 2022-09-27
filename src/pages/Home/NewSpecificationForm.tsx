@@ -15,6 +15,7 @@ import {
   ModalButton
 } from '../../components/ModalBox/ModalBox';
 import { ModelType } from '../../Nexus/enums';
+import { SPECIFICATION } from '../../common/PathConstants';
 
 interface IProps {
   handleClose: () => void;
@@ -35,7 +36,7 @@ const NewSpecificationForm = ({ handleClose, specification }: IProps) => {
     const specificationWithId = nexus.specificationService.withId(post);
     nexus.specificationService
       .setSpecification(specificationWithId)
-      .then(() => history.push(`/specification/${specificationWithId.id}`));
+      .then(() => history.push(`/${SPECIFICATION}/${specificationWithId.id}`));
   };
 
   return (
@@ -63,16 +64,24 @@ const NewSpecificationForm = ({ handleClose, specification }: IProps) => {
               label={t('What will be the name of the procurement?')}
               placeholder={t('Name of specification')}
               autoFocus
+              required={true}
+            />
+            <VerticalTextCtrl
+              name="caseNumber"
+              label={t('Procurement case number')}
+              placeholder={t('Case number')}
             />
             <VerticalTextCtrl
               name="organization"
               label={t('Name of your organization')}
               placeholder={t('Name')}
+              required={true}
             />
             <VerticalTextCtrl
               name="organizationNumber"
               label={t('Organization number')}
               placeholder={t('Organization number')}
+              required={true}
             />
           </ModalFieldsBox>
           <ModalButtonsBox>

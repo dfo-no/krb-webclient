@@ -4,24 +4,23 @@ import { t } from 'i18next';
 
 import TextUtils from '../../../../common/TextUtils';
 import theme from '../../../../theme';
+import { ISpecificationProduct } from '../../../../Nexus/entities/ISpecificationProduct';
 import { IRequirement } from '../../../../Nexus/entities/IRequirement';
 import { VariantType } from '../../../../Nexus/enums';
-import { useProductIndexState } from '../../../../components/ProductIndexContext/ProductIndexContext';
 import { useSpecificationState } from '../../SpecificationContext';
 
 interface IProps {
   requirement: IRequirement;
+  product?: ISpecificationProduct;
 }
 
 export default function ChosenConfiguration({
-  requirement
+  requirement,
+  product
 }: IProps): React.ReactElement {
   const { specification } = useSpecificationState();
-  const { productIndex } = useProductIndexState();
 
-  const requirementAnswer = (
-    productIndex === -1 ? specification : specification.products[productIndex]
-  ).requirementAnswers.find(
+  const requirementAnswer = (product ?? specification).requirementAnswers.find(
     (reqAns) => reqAns.requirement.id === requirement.id
   );
 

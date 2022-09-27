@@ -84,7 +84,7 @@ export default function ProjectSelectionModal({
     setNewPrefilledResponse(null);
   };
 
-  const modalBox = (): React.ReactElement => {
+  const defaultActionsChoiceDialog = (): React.ReactElement => {
     return (
       <ModalBox>
         <Box>
@@ -138,7 +138,7 @@ export default function ProjectSelectionModal({
         />
       );
     }
-    return modalBox();
+    return defaultActionsChoiceDialog();
   };
 
   return (

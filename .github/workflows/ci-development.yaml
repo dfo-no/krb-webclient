@@ -5,6 +5,7 @@ on:
     branches:
       - develop
       - krb-*
+      - KRB-*
 
 env:
   AZURE_WEBAPP_NAME: krb-webclient # set this to your application's name

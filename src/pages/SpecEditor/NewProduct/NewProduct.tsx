@@ -1,108 +1,161 @@
-import React, { useEffect, useState } from 'react';
-import { Button, Typography } from '@mui/material';
-import { FormProvider, useForm } from 'react-hook-form';
+import React, { ReactElement } from 'react';
+import { Box, Button, Divider, Typography } from '@mui/material/';
+import { useHistory, useRouteMatch } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-
-import css from '../../Stylesheets/NewProduct.module.scss';
-import NewProductHeader from '../../../components/NewProductHeader/NewProductHeader';
-import Nexus from '../../../Nexus/Nexus';
-import NeedList from '../../../components/NeedList/NeedList';
-import ProductSelection from '../../../components/ProductSelection/ProductSelection';
-import SpecificationService from '../../../Nexus/services/SpecificationService';
+import DeleteSpecProduct from '../EditProduct/DeleteSpecProduct';
+import EditIcon from '@mui/icons-material/Edit';
+import DeleteIcon from '@mui/icons-material/Delete';
+import css from '../../Stylesheets/Editor.module.scss';
+import DownloadButton from '../Download/DownloadButton';
 import theme from '../../../theme';
-import VerticalTextCtrl from '../../../FormProvider/VerticalTextCtrl';
-import { IProduct } from '../../../Nexus/entities/IProduct';
 import { ISpecificationProduct } from '../../../Nexus/entities/ISpecificationProduct';
-import { ModelType } from '../../../Nexus/enums';
-import { Parentable } from '../../../models/Parentable';
-import { useFormStyles } from '../../../components/Form/FormStyles';
-import { useProductIndexState } from '../../../components/ProductIndexContext/ProductIndexContext';
+import {
+  IRouteSpecificationParams,
+  SpecificationProductPath
+} from '../../../models/IRouteSpecificationParams';
+import { useSelectState } from '../../Workbench/Create/SelectContext';
 import { useSpecificationState } from '../SpecificationContext';
+import { PRODUCTS, SPECIFICATION } from '../../../common/PathConstants';
+import { FormIconButton } from '../../../components/Form/FormIconButton';
+import NewProductSelection from './NewProductSelection';
+import { ISpecification } from '../../../Nexus/entities/ISpecification';
 
 export default function NewProduct(): React.ReactElement {
   const { t } = useTranslation();
-  const nexus = Nexus.getInstance();
-  const formStyles = useFormStyles();
-  const { specification, addSpecificationProduct } = useSpecificationState();
-  const { setProductIndex } = useProductIndexState();
-  const [product, setProduct] = useState<Parentable<IProduct> | null>(null);
+  const { openProductSelection, setOpenProductSelection } =
+    useSpecificationState();
+  const history = useHistory();
+  const { setDeleteMode } = useSelectState();
+  const { specification } = useSpecificationState();
+  const routeMatch = useRouteMatch<IRouteSpecificationParams>(
+    SpecificationProductPath
+  );
+  const productId = routeMatch?.params?.productId;
 
-  const defaultValues: ISpecificationProduct =
-    SpecificationService.defaultSpecificationProduct();
-
-  const methods = useForm<ISpecificationProduct>({
-    resolver: nexus.resolverService.postResolver(
-      ModelType.specificationProduct
-    ),
-    defaultValues
-  });
-
-  useEffect(() => {
-    if (!product) {
-      const firstProduct = specification.bank.products[0];
-      setProduct(firstProduct);
-      methods.setValue('originProduct', firstProduct);
-    }
-  }, [specification, product, setProduct, methods]);
-
-  const onSubmit = (post: ISpecificationProduct): void => {
-    const newProduct = nexus.specificationService.withId(post);
-    const newId = specification.products.length;
-    addSpecificationProduct(newProduct);
-    setProductIndex(newId);
+  const open = (): void => {
+    setOpenProductSelection(true);
+  };
+  const onDelete = (): void => {
+    setDeleteMode('');
   };
 
-  const nonDeletedProducts: Parentable<IProduct>[] =
-    specification.bank.products.filter((item) => !item.deletedDate);
+  const productPressed = (pid: string): void => {
+    history.push(`/${SPECIFICATION}/${specification.id}/${PRODUCTS}/${pid}/`);
+  };
+
+  const isGeneric = (): boolean => {
+    return specification.products.every((product) => product.id !== productId);
+  };
+
+  const editSpecification = (): void => {
+    history.push(`/${SPECIFICATION}/${specification.id}/edit`);
+  };
+
+  const renderEditSpecifcationBar = (spec: ISpecification): ReactElement => {
+    return (
+      <Box
+        className={css.Button}
+        sx={{
+          display: 'flex',
+          flexDirection: 'row-reverse'
+        }}
+      >
+        <Typography
+          className={css.editLink}
+          variant="md"
+          onClick={() => editSpecification()}
+        >
+          {t('Edit')}
+        </Typography>
+        <Typography sx={{ paddingRight: 2 }} variant="md">
+          {spec.organization}
+        </Typography>
+      </Box>
+    );
+  };
+
+  const renderProducts = (product: ISpecificationProduct): ReactElement => {
+    const isSelected = product.id === productId;
+    return (
+      <li className={isSelected ? css.Active : undefined} key={product.id}>
+        <DeleteSpecProduct product={product} handleClose={onDelete}>
+          <div className={css.CardContent}>
+            <div className={css.CardTitle}>
+              <Typography className={css.Text} variant="mdBold">
+                {product.title}
+              </Typography>
+              <FormIconButton
+                sx={{ marginLeft: 'auto', paddingRight: 0 }}
+                onClick={() => setDeleteMode(product.id)}
+              >
+                <DeleteIcon />
+              </FormIconButton>
+              <FormIconButton onClick={() => productPressed(product.id)}>
+                <EditIcon />
+              </FormIconButton>
+            </div>
+            <Divider color={theme.palette.silver.main} />
+            <Box sx={{ display: 'flex', flexDirection: 'row' }}>
+              <Typography className={css.Text} variant="sm">
+                {product.description}
+              </Typography>
+              <Typography
+                sx={{ marginLeft: 'auto', paddingRight: 3 }}
+                variant="mdBold"
+              >
+                {product.amount}
+              </Typography>
+              <Typography sx={{ paddingRight: 2 }} variant="mdBold">
+                {product.unit}
+              </Typography>
+            </Box>
+          </div>
+        </DeleteSpecProduct>
+      </li>
+    );
+  };
 
   return (
-    <div className={css.NewProduct}>
-      <FormProvider {...methods}>
-        <form
-          className={formStyles.singlePageForm}
-          onSubmit={methods.handleSubmit(onSubmit)}
-          autoComplete="off"
-          noValidate
-        >
-          <div>
-            <NewProductHeader />
-            <div className={css.Content}>
-              <VerticalTextCtrl
-                name="amount"
-                label={t(
-                  'How many of this product do you need in this procurement'
-                )}
-                placeholder={t('Quantity')}
-                type={'number'}
-              />
-              <Typography variant={'smBold'} color={theme.palette.primary.main}>
-                {t('Choose a product type from the requirement set')}{' '}
-                <i>{specification.bank.title}</i>{' '}
-                {t('that fits the product best')}
+    <div className={css.overview}>
+      {renderEditSpecifcationBar(specification)}
+      <ul aria-label="products">
+        <li className={isGeneric() ? css.Active : undefined} key={'generic'}>
+          <div className={css.CardContent}>
+            <div className={css.CardTitle}>
+              <Typography variant="mdBold">
+                {t('General requirements')}
               </Typography>
-              {nonDeletedProducts.length && (
-                <ProductSelection
-                  products={nonDeletedProducts}
-                  postChange={(selection: Parentable<IProduct>) => {
-                    setProduct(selection);
-                  }}
-                />
-              )}
-              <Button
-                className={css.Button}
-                type="submit"
-                aria-label={t('Save')}
-                variant="save"
-              >
-                {t('Save')}
-              </Button>
-              {product && (
-                <NeedList product={product} bank={specification.bank} />
-              )}
             </div>
+            <Divider color={theme.palette.silver.main} />
           </div>
-        </form>
-      </FormProvider>
+        </li>
+      </ul>
+      {specification.products.length > 0 && (
+        <ul>
+          {specification.products.map((element) => {
+            return renderProducts(element);
+          })}
+        </ul>
+      )}
+      <Box
+        className={css.Button}
+        sx={{
+          display: 'flex',
+          flexDirection: 'row-reverse'
+        }}
+      >
+        <Button
+          sx={{
+            marginLeft: 2
+          }}
+          variant="primary"
+          onClick={open}
+        >
+          {t('Create a new product')}
+        </Button>
+        <DownloadButton />
+        {openProductSelection && <NewProductSelection />}
+      </Box>
     </div>
   );
 }

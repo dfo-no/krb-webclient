@@ -116,9 +116,9 @@
       padding: 0;
 
       li {
-        display: grid;
-        grid-template-columns: 3rem auto 8rem;
-        justify-content: initial;
+        display: flex;
+        flex-direction: row;
+        gap: var(--tiny-gap);
         padding: var(--small-gap) var(--normal-gap);
         border-bottom: 0.1rem solid var(--secondary-color);
         color: var(--primary-color);
@@ -127,6 +127,10 @@
 
         &:first-child {
           border-top: 0.1rem solid var(--secondary-color);
+        }
+
+        .Time {
+          margin-left: auto;
         }
 
         &:hover {

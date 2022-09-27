@@ -4,11 +4,11 @@ import { useFormContext, useWatch } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
 import css from './QuestionCard.module.scss';
-import QuestionAnswer from './QuestionAnswer/QuestionAnswer';
-import QuestionSpecification from './QuestionSpecification/QuestionSpecification';
-import { IRequirementAnswer } from '../../../Nexus/entities/IRequirementAnswer';
-import { IVariant } from '../../../Nexus/entities/IVariant';
-import { VariantType } from '../../../Nexus/enums';
+import QuestionAnswer from '../../../QuestionAnswer/QuestionAnswer';
+import QuestionSpecification from '../../../QuestionSpecification/QuestionSpecification';
+import { IRequirementAnswer } from '../../../../../../Nexus/entities/IRequirementAnswer';
+import { IVariant } from '../../../../../../Nexus/entities/IVariant';
+import { VariantType } from '../../../../../../Nexus/enums';
 
 interface IProps {
   variant: IVariant;

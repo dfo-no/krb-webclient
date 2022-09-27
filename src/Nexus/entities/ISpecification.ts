@@ -18,7 +18,7 @@ export interface ISpecification {
   requirements: string[];
   requirementAnswers: IRequirementAnswer[];
   title: string;
-  weight: number;
+  caseNumber?: string;
 }
 
 export const BaseSpecificationSchema = CustomJoi.object().keys({
@@ -30,5 +30,5 @@ export const BaseSpecificationSchema = CustomJoi.object().keys({
   requirements: CustomJoi.validateIdArray(),
   requirementAnswers: CustomJoi.validateUniqueArray(RequirementAnswerSchema),
   title: CustomJoi.validateText(),
-  weight: CustomJoi.validateWeight()
+  caseNumber: CustomJoi.validateOptionalTextNotRequired()
 });

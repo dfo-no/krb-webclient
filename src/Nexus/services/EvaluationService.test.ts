@@ -89,7 +89,8 @@ describe('EvaluationService', () => {
       parent: '',
       sourceOriginal: '61cdf70d-9ef5-4ae1-a006-b2e2f5242273',
       sourceRel: null,
-      deletedDate: null
+      deletedDate: null,
+      unit: 'stk'
     };
 
     const product2: Parentable<IProduct> = {
@@ -100,7 +101,8 @@ describe('EvaluationService', () => {
       parent: '',
       sourceOriginal: '61cdf70d-9ef5-4ae1-a006-b2e2f5242273',
       sourceRel: null,
-      deletedDate: null
+      deletedDate: null,
+      unit: 'stk'
     };
 
     const need1: Parentable<INeed> = {
@@ -216,7 +218,7 @@ describe('EvaluationService', () => {
       title: 'Spec product',
       description: '',
       originProduct: product1,
-      weight: 70,
+      weight: Weighting.HIGH,
       amount: 1,
       requirements: [need2.requirements[0].id, need3.requirements[0].id],
       requirementAnswers: [
@@ -241,7 +243,8 @@ describe('EvaluationService', () => {
       ],
       type: ModelType.specificationProduct,
       sourceRel: null,
-      sourceOriginal: null
+      sourceOriginal: null,
+      unit: 'stk'
     };
 
     const specProduct2 = {
@@ -249,7 +252,7 @@ describe('EvaluationService', () => {
       title: 'Spec product 2',
       description: '',
       originProduct: product2,
-      weight: 50,
+      weight: Weighting.MEDIUM,
       amount: 1,
       requirements: [need3.requirements[0].id],
       requirementAnswers: [
@@ -265,7 +268,8 @@ describe('EvaluationService', () => {
       ],
       type: ModelType.specificationProduct,
       sourceRel: null,
-      sourceOriginal: null
+      sourceOriginal: null,
+      unit: 'stk'
     };
 
     const specification: ISpecification = {
@@ -325,8 +329,7 @@ describe('EvaluationService', () => {
           requirement: need3.requirements[0],
           type: ModelType.requirementAnswer
         }
-      ],
-      weight: Weighting.MEDIUM
+      ]
     };
 
     const response: IResponse = {
@@ -417,9 +420,9 @@ describe('EvaluationService', () => {
     };
     const nexus = Nexus.getInstance();
     const result = await nexus.evaluationService.evaluateAll([response]);
-    // Sum: product1: 0.35 + 0.5, product2: 0.07, general: 0.18 + 0.7 + 0.2 = 2
-    // Max: product1: 0.7 + 0.5, product2: 0.7, general: 0.9 + 0.7, 0.5 = 4
-    // Without product-weight: 2 / 4 = 0.5
-    expect(result[0].points).toBe(0.5);
+    // Sum: product1: (0.35 + 0.5) * 0.7 , product2: 0.07 * 0.5, general: 0.18 + 0.7 + 0.2 = 1,71
+    // Max: product1:( 0.7 + 0.5) * 0.7 , product2: 0.7 * 0.5, general: 0.9 + 0.7 + 0.5 = 3,29
+    // Calculated percentage = 1.71 / 3,29 = 0.5197568389057751
+    expect(result[0].points).toBe(0.5197568389057751);
   });
 });

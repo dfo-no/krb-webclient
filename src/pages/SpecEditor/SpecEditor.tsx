@@ -1,40 +1,41 @@
 import React, { ReactElement } from 'react';
+import { Route, Switch } from 'react-router-dom';
 
 import css from '../Stylesheets/Editor.module.scss';
-import EditProduct from './EditProduct/EditProduct';
+import EditProduct from './EditProduct/ProductHeader/EditProduct';
 import LoaderSpinner from '../../common/LoaderSpinner';
 import NewProduct from './NewProduct/NewProduct';
-import NoProducts from './NoProducts/NoProducts';
-import SpecSideBar from './SideBar/SpecSideBar';
 import { SelectProvider } from '../Workbench/Create/SelectContext';
-import { useProductIndexState } from '../../components/ProductIndexContext/ProductIndexContext';
 import { useSpecificationState } from './SpecificationContext';
+import { PRODUCTS, SPECIFICATION } from '../../common/PathConstants';
+import EditSpecificationForm from './EditSpecificationForm';
 
 export default function SpecEditor(): ReactElement {
   const { specification } = useSpecificationState();
-  const { create, productIndex } = useProductIndexState();
 
-  const renderProduct = (): ReactElement => {
-    if (create) {
-      return <NewProduct />;
-    }
-    if (productIndex >= specification.products.length) {
-      return <LoaderSpinner />;
-    }
-    if (productIndex >= -1) {
-      return (
-        <SelectProvider>
-          <EditProduct />
-        </SelectProvider>
-      );
-    }
-    return <NoProducts />;
-  };
+  if (!specification.id) {
+    return <LoaderSpinner />;
+  }
 
   return (
     <div className={css.Editor}>
-      <SpecSideBar />
-      <div className={css.Content} children={renderProduct()} />
+      <div className={css.Content}>
+        <Switch>
+          <Route exact path={`/${SPECIFICATION}/:specId`}>
+            <SelectProvider>
+              <NewProduct />
+            </SelectProvider>
+          </Route>
+          <Route path={`/${SPECIFICATION}/:specId/${PRODUCTS}/:productId`}>
+            <SelectProvider>
+              <EditProduct />
+            </SelectProvider>
+          </Route>
+          <Route path={`/${SPECIFICATION}/:specId/edit`}>
+            <EditSpecificationForm specification={specification} />
+          </Route>
+        </Switch>
+      </div>
     </div>
   );
 }
