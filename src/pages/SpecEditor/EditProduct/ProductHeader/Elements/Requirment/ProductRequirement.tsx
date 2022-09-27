@@ -5,21 +5,25 @@ import { Box, Button, Divider, Typography } from '@mui/material';
 import { FormProvider, useForm, useWatch } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
-import ChosenConfiguration from './ChosenConfiguration/ChosenConfiguration';
 import css from './ProductRequirement.module.scss';
-import EditProductVariant from './EditProductVariant';
-import GeneralErrorMessage from '../../../Form/GeneralErrorMessage';
-import Nexus from '../../../Nexus/Nexus';
-import ProductVariant from './ProductVariant';
-import SpecificationService from '../../../Nexus/services/SpecificationService';
-import { DFOCheckbox } from '../../../components/DFOCheckbox/DFOCheckbox';
-import { DFOChip } from '../../../components/DFOChip/DFOChip';
-import { FormIconButton } from '../../../components/Form/FormIconButton';
-import { IRequirement } from '../../../Nexus/entities/IRequirement';
-import { IRequirementAnswer } from '../../../Nexus/entities/IRequirementAnswer';
-import { ISpecificationProduct } from '../../../Nexus/entities/ISpecificationProduct';
-import { ModelType, VariantType, Weighting } from '../../../Nexus/enums';
-import { useSpecificationState } from '../SpecificationContext';
+import { ISpecificationProduct } from '../../../../../../Nexus/entities/ISpecificationProduct';
+import { IRequirement } from '../../../../../../Nexus/entities/IRequirement';
+import { useSpecificationState } from '../../../../SpecificationContext';
+import Nexus from '../../../../../../Nexus/Nexus';
+import SpecificationService from '../../../../../../Nexus/services/SpecificationService';
+import { IRequirementAnswer } from '../../../../../../Nexus/entities/IRequirementAnswer';
+import {
+  ModelType,
+  VariantType,
+  Weighting
+} from '../../../../../../Nexus/enums';
+import EditProductVariant from '../Variant/EditProductVariant';
+import { DFOCheckbox } from '../../../../../../components/DFOCheckbox/DFOCheckbox';
+import { DFOChip } from '../../../../../../components/DFOChip/DFOChip';
+import { FormIconButton } from '../../../../../../components/Form/FormIconButton';
+import ChosenConfiguration from '../../../ChosenConfiguration/ChosenConfiguration';
+import ProductVariant from '../Variant/ProductVariant';
+import GeneralErrorMessage from '../../../../../../Form/GeneralErrorMessage';
 
 interface IProps {
   requirement: IRequirement;

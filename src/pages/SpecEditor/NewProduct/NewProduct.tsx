@@ -16,7 +16,6 @@ import {
 import { useSelectState } from '../../Workbench/Create/SelectContext';
 import { useSpecificationState } from '../SpecificationContext';
 import { PRODUCTS, SPECIFICATION } from '../../../common/PathConstants';
-import { DFOCardHeaderIconButton } from '../../../components/DFOCard/DFOCardHeaderIconButton';
 import { FormIconButton } from '../../../components/Form/FormIconButton';
 import NewProductSelection from './NewProductSelection';
 import { ISpecification } from '../../../Nexus/entities/ISpecification';
@@ -38,10 +37,6 @@ export default function NewProduct(): React.ReactElement {
   };
   const onDelete = (): void => {
     setDeleteMode('');
-  };
-
-  const genericPressed = (): void => {
-    history.push(`/${SPECIFICATION}/${specification.id}/${PRODUCTS}/general/`);
   };
 
   const productPressed = (pid: string): void => {
@@ -130,12 +125,6 @@ export default function NewProduct(): React.ReactElement {
               <Typography variant="mdBold">
                 {t('General requirements')}
               </Typography>
-              <DFOCardHeaderIconButton
-                sx={{ marginLeft: 'auto', paddingRight: 2 }}
-                onClick={() => genericPressed()}
-              >
-                <EditIcon />
-              </DFOCardHeaderIconButton>
             </div>
             <Divider color={theme.palette.silver.main} />
           </div>

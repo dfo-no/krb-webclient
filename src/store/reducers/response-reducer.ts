@@ -3,7 +3,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import Utils from '../../common/Utils';
 import { IRequirementAnswer } from '../../Nexus/entities/IRequirementAnswer';
 import { IResponse } from '../../Nexus/entities/IResponse';
-import { ModelType, Weighting } from '../../Nexus/enums';
+import { ModelType } from '../../Nexus/enums';
 
 interface IResponseState {
   response: IResponse;
@@ -36,8 +36,7 @@ const initialState: IResponseState = {
       organizationNumber: '',
       products: [],
       requirements: [],
-      requirementAnswers: [],
-      weight: Weighting.MEDIUM
+      requirementAnswers: []
     },
     supplier: '',
     products: [],

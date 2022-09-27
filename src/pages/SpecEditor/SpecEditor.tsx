@@ -1,8 +1,8 @@
 import React, { ReactElement } from 'react';
 import { Route, Switch } from 'react-router-dom';
 
+import EditProduct from './EditProduct/ProductHeader/EditProduct';
 import css from '../Stylesheets/EditorFullPage.module.scss';
-import EditProduct from './EditProduct/EditProduct';
 import LoaderSpinner from '../../common/LoaderSpinner';
 import NewProduct from './NewProduct/NewProduct';
 import { SelectProvider } from '../Workbench/Create/SelectContext';

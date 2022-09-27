@@ -1,17 +1,17 @@
 import React from 'react';
 import { useHistory, useParams } from 'react-router-dom';
-
-import DeleteSpecProduct from './DeleteSpecProduct';
-import ProductHeader from './ProductHeader';
-import ProductNeed from './ProductNeed';
-import Utils from '../../../common/Utils';
-import { IRouteSpecificationParams } from '../../../models/IRouteSpecificationParams';
-import { useSelectState } from '../../Workbench/Create/SelectContext';
-import { useSpecificationState } from '../SpecificationContext';
-import { Box, Button } from '@mui/material';
-import { SPECIFICATION } from '../../../common/PathConstants';
 import { useTranslation } from 'react-i18next';
-import css from '../../Stylesheets/EditorFullPage.module.scss';
+
+import DeleteSpecProduct from '../DeleteSpecProduct';
+import ProductHeader from './ProductHeader';
+import { Box, Button } from '@mui/material';
+import { SPECIFICATION } from '../../../../common/PathConstants';
+import ProductNeed from './Elements/Needs/ProductNeed';
+import Utils from '../../../../common/Utils';
+import { useSelectState } from '../../../Workbench/Create/SelectContext';
+import { useSpecificationState } from '../../SpecificationContext';
+import { IRouteSpecificationParams } from '../../../../models/IRouteSpecificationParams';
+import css from '../../../Stylesheets/EditorFullPage.module.scss';
 
 export default function EditProduct(): React.ReactElement {
   const { t } = useTranslation();
