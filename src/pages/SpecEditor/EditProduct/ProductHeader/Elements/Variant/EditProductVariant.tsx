@@ -6,9 +6,7 @@ import { useTranslation } from 'react-i18next';
 import css from './EditProductVariant.module.scss';
 import ProductQuestionList from '../QuestionList/ProductQuestionList';
 import SliderCtrl from '../../../../../../FormProvider/SliderCtrl';
-import SpecificationService from '../../../../../../Nexus/services/SpecificationService';
 import theme from '../../../../../../theme';
-import { DFOCheckbox } from '../../../../../../components/DFOCheckbox/DFOCheckbox';
 import { DFOChip } from '../../../../../../components/DFOChip/DFOChip';
 import { IMark } from '../../../../../../Nexus/entities/IMark';
 import { IRequirement } from '../../../../../../Nexus/entities/IRequirement';
@@ -26,14 +24,11 @@ interface IProps {
 }
 
 export default function EditProductVariant({
-  requirement,
   variant
 }: IProps): React.ReactElement {
   const { t } = useTranslation();
-  const { control, reset } = useFormContext<IRequirementAnswer>();
+  const { control } = useFormContext<IRequirementAnswer>();
   const useWeight = useWatch({ name: 'weight', control });
-  const defaultValues =
-    SpecificationService.defaultRequirementAnswer(requirement);
   const [sliderMark, setSliderMark] = useState<IMark[]>([
     { value: Weighting.MEDIUM, label: t(Weighting[Weighting.MEDIUM]) }
   ]);
@@ -42,14 +37,9 @@ export default function EditProductVariant({
     setSliderMark([{ value: useWeight, label: t(Weighting[useWeight]) }]);
   }, [t, useWeight]);
 
-  const onCancel = () => {
-    reset(defaultValues);
-  };
-
   return (
     <Box className={css.EditProductVariant}>
       <Box className={css.titleRow}>
-        <DFOCheckbox checked={true} onClick={onCancel} />
         <Typography variant={'lg'} className={css.title}>
           {variant.description}
         </Typography>
