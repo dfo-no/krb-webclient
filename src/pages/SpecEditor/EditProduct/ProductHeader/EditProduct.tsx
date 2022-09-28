@@ -6,12 +6,12 @@ import DeleteSpecProduct from '../DeleteSpecProduct';
 import ProductHeader from './ProductHeader';
 import { Box, Button } from '@mui/material';
 import { SPECIFICATION } from '../../../../common/PathConstants';
-import css from '../../../Stylesheets/Editor.module.scss';
 import ProductNeed from './Elements/Needs/ProductNeed';
 import Utils from '../../../../common/Utils';
 import { useSelectState } from '../../../Workbench/Create/SelectContext';
 import { useSpecificationState } from '../../SpecificationContext';
 import { IRouteSpecificationParams } from '../../../../models/IRouteSpecificationParams';
+import css from '../../../Stylesheets/EditorFullPage.module.scss';
 
 export default function EditProduct(): React.ReactElement {
   const { t } = useTranslation();
