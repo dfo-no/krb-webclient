@@ -102,10 +102,6 @@ export default function ProductRequirement({
     return false;
   };
 
-  const isActive = (): boolean => {
-    return useVariant !== '';
-  };
-
   const unsaveRequirement = (): IRequirementAnswer | undefined => {
     if (!product) {
       const answer = specification.requirementAnswers.find(
@@ -143,7 +139,7 @@ export default function ProductRequirement({
     return (
       <Box>
         {activeVariant && (
-          <Box>
+          <Box className={css.active}>
             <EditProductVariant
               requirement={requirement}
               variant={activeVariant}
@@ -197,9 +193,7 @@ export default function ProductRequirement({
           </Box>
         </Box>
       ) : (
-        <Box
-          className={classnames(css.card, isActive() ? css.active : undefined)}
-        >
+        <Box className={classnames(css.card)}>
           <Box className={css.title}>
             <Typography variant="lgBold">{requirement.title}</Typography>
           </Box>
@@ -210,13 +204,9 @@ export default function ProductRequirement({
               noValidate
             >
               <Box>
-                {requirement.variants
-                  .filter((variant) => variant.id !== useVariant)
-                  .map((variant) => {
-                    return (
-                      <ProductVariant key={variant.id} variant={variant} />
-                    );
-                  })}
+                {requirement.variants.map((variant) => {
+                  return <ProductVariant key={variant.id} variant={variant} />;
+                })}
                 {renderActiveVariant()}
               </Box>
               <GeneralErrorMessage errors={methods.formState.errors} />
