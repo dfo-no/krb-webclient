@@ -12,6 +12,7 @@
     padding-bottom: 0;
 
     .ListItem {
+      font-size: var(--normal-fontsize);
       &:hover {
         background: var(--secondary-color);
         color: white;
