@@ -1,6 +1,10 @@
-describe('create prefilled response', () => {
+import { v4 as uuidv4 } from 'uuid';
 
-  it('has a working search field', () => {
+describe('prefilled response', () => {
+
+  it('can create and download prefilled response', () => {
+
+    const somewhatRandomString = uuidv4().split('-')[0]
     cy.visit('localhost:3000')
     cy.contains('Søk etter').parent().click().type('Kjøretøy til hjemmetjenesten')
     cy.contains('Kjøretøy til hjemmetjenesten').click()
@@ -8,7 +12,7 @@ describe('create prefilled response', () => {
 
     // Her starter "Lag forberedt besvarelse"
     cy.contains('Lag forberedt besvarelse').click()
-    cy.get('input[placeholder="Navn på leverandør"]').type('leverandør e77f5faf-9b3f-49ba-b216-d9951c11ab11')
+    cy.get('input[placeholder="Navn på leverandør"]').type('leverandør ' + somewhatRandomString)
     cy.contains('Lag forberedt besvarelse').click()
     cy.url().should('include', 'http://localhost:3000/prefilledresponse/')
     cy.contains('Kjøretøy til hjemmetjenesten')
@@ -16,7 +20,7 @@ describe('create prefilled response', () => {
 
     // Her legger vi til et nytt produkt og sjekker at alt ser riktig ut
     cy.contains('Lag et nytt produkt').click()
-    cy.get('input[placeholder="Navn på produkt"]').type('bil 5783d780-d4a4-49aa-90e9-1b2f3ef86da3')
+    cy.get('input[placeholder="Navn på produkt"]').type('bil ' + somewhatRandomString)
     cy.get('input[placeholder="Beskrivelse av produktet"]').type('enkel elbil')
     cy.contains('Krav du finner under Bil')
     cy.contains('Kjøreegenskaper')
@@ -49,6 +53,14 @@ describe('create prefilled response', () => {
     cy.contains('Seter foran').parent().should('not.contain', 'Ikke besvart').click()
     cy.contains('Seter foran').parent().contains('Svar: 2 sete(r)')
 
+    // Her prøver vi å laste ned den foreløpige forberedte besvarelsen
+    cy.intercept('POST', 'https://krb-api-man-dev.azure-api.net/java/generatePrefilledResponse').as('generatePrefilledResponse')
+    cy.contains('Last ned forberedt besvarelse').click()
+    cy.wait('@generatePrefilledResponse').then((interception) => {
+      expect(interception.response.statusCode).gte(200).lt(300)
+      // console.log(interception)
+      expect(interception.response.body.byteLength).gt(5000)
+    })
   })
 
 })
