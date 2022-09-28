@@ -80,8 +80,12 @@ const EditProductForm = ({ handleClose, specificationProduct }: IProps) => {
               )}
               placeholder={t('quantity')}
               type={'number'}
+              children={
+                <Typography variant={'lg'} color={theme.palette.primary.main}>
+                  {specificationProduct.unit}
+                </Typography>
+              }
             />
-            <VerticalTextCtrl name="unit" label={t('Unit')} placeholder={''} />
             <Box className={css.SlideBoxWrapper}>
               <Typography
                 variant={'smBold'}

@@ -1,14 +1,11 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Typography } from '@mui/material';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
-import NewProductHeader from '../../../components/NewProductHeader/NewProductHeader';
 import Nexus from '../../../Nexus/Nexus';
-
 import theme from '../../../theme';
 import VerticalTextCtrl from '../../../FormProvider/VerticalTextCtrl';
-import NeedList from '../../../components/NeedList/NeedList';
 import { IProduct } from '../../../Nexus/entities/IProduct';
 import { ISpecificationProduct } from '../../../Nexus/entities/ISpecificationProduct';
 import { ModelType } from '../../../Nexus/enums';
@@ -36,7 +33,7 @@ export default function NewProductForm({
   const { t } = useTranslation();
   const nexus = Nexus.getInstance();
   const formStyles = useFormStyles();
-  const { specification, addSpecificationProduct, setNewProductCreate } =
+  const { addSpecificationProduct, setNewProductCreate } =
     useSpecificationState();
   const defaultValues: ISpecificationProduct =
     SpecificationService.defaultSpecificationProduct();
@@ -51,6 +48,16 @@ export default function NewProductForm({
   } else {
     handleClose();
   }
+
+  useEffect(() => {
+    if (specProduct?.title) {
+      methods.setValue('title', specProduct.title);
+    }
+    if (specProduct?.unit) {
+      methods.setValue('unit', specProduct.unit);
+    }
+  }, [methods, specProduct?.title, specProduct?.unit]);
+
   const changeProduct = (): void => {
     setNewProductCreate(false);
   };
@@ -70,24 +77,30 @@ export default function NewProductForm({
         >
           <ModalBox>
             <div className={css.Content}>
-              <div className={css.Columns}>
-                <div className={css.Column}>
-                  <Typography
-                    variant={'smBold'}
-                    color={theme.palette.primary.main}
-                  >
-                    {t('Product')}
-                    {': '} {specProduct?.title}
-                  </Typography>
-                </div>
-                <div className={css.Column}>
-                  <ModalButton variant="contained" onClick={changeProduct}>
-                    {t('Change')}
-                  </ModalButton>
-                </div>
+              <div className={css.Content__header}>
+                <Typography
+                  variant={'smBold'}
+                  color={theme.palette.primary.main}
+                >
+                  {t('Product')}
+                  {': '} {specProduct?.title}
+                </Typography>
+                <ModalButton variant="contained" onClick={changeProduct}>
+                  {t('Change')}
+                </ModalButton>
               </div>
-              <NewProductHeader />
               <ModalFieldsBox>
+                <VerticalTextCtrl
+                  name="title"
+                  label={t('Name of product')}
+                  placeholder={t('Name')}
+                  autoFocus
+                />
+                <VerticalTextCtrl
+                  name="description"
+                  label={t('Description of the product')}
+                  placeholder={t('Description')}
+                />
                 <VerticalTextCtrl
                   name="amount"
                   label={t(
@@ -95,11 +108,14 @@ export default function NewProductForm({
                   )}
                   placeholder={t('Quantity')}
                   type={'number'}
-                />
-                <VerticalTextCtrl
-                  name="unit"
-                  label={t('Unit')}
-                  placeholder={''}
+                  children={
+                    <Typography
+                      variant={'lg'}
+                      color={theme.palette.primary.main}
+                    >
+                      {specProduct?.unit}
+                    </Typography>
+                  }
                 />
               </ModalFieldsBox>
               <ModalButtonsBox>
@@ -110,9 +126,6 @@ export default function NewProductForm({
                   {t('Save')}
                 </ModalButton>
               </ModalButtonsBox>
-              {specProduct && (
-                <NeedList product={specProduct} bank={specification.bank} />
-              )}
             </div>
           </ModalBox>
         </form>

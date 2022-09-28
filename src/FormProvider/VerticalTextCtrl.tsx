@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ReactNode } from 'react';
 import { FormControl, FormLabel, Typography } from '@mui/material';
 import { Controller, useFormContext } from 'react-hook-form';
 import { get } from 'lodash';
@@ -16,6 +16,7 @@ interface IProps {
   type?: string;
   autoFocus?: boolean;
   required?: boolean;
+  children?: ReactNode;
 }
 
 const VerticalTextCtrl = ({
@@ -25,7 +26,8 @@ const VerticalTextCtrl = ({
   placeholder = '',
   type = 'text',
   autoFocus,
-  required
+  required,
+  children
 }: IProps): React.ReactElement => {
   const {
     formState: { errors }
@@ -48,14 +50,17 @@ const VerticalTextCtrl = ({
       <Controller
         name={name}
         render={({ field }) => (
-          <DFOInput
-            {...field}
-            autoFocus={autoFocus}
-            placeholder={placeholder}
-            type={type}
-            onWheel={(e) => (e.target as HTMLElement).blur()}
-            disableUnderline
-          />
+          <div data-children={!!children}>
+            <DFOInput
+              {...field}
+              autoFocus={autoFocus}
+              placeholder={placeholder}
+              type={type}
+              onWheel={(e) => (e.target as HTMLElement).blur()}
+              disableUnderline
+            />
+            {children}
+          </div>
         )}
       />
       {!!get(errors, name) && (
