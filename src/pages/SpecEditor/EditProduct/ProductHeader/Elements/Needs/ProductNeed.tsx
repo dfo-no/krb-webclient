@@ -1,7 +1,7 @@
 import React from 'react';
 import { Typography } from '@mui/material';
 
-import css from '../../../../../Stylesheets/Editor.module.scss';
+import css from '../../../../../Stylesheets/EditorFullPage.module.scss';
 import ProductRequirement from '../Requirment/ProductRequirement';
 import { INeed } from '../../../../../../Nexus/entities/INeed';
 import { Parentable } from '../../../../../../models/Parentable';

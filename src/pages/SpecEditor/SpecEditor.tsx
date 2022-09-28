@@ -1,8 +1,8 @@
 import React, { ReactElement } from 'react';
 import { Route, Switch } from 'react-router-dom';
 
-import css from '../Stylesheets/Editor.module.scss';
 import EditProduct from './EditProduct/ProductHeader/EditProduct';
+import css from '../Stylesheets/EditorFullPage.module.scss';
 import LoaderSpinner from '../../common/LoaderSpinner';
 import NewProduct from './NewProduct/NewProduct';
 import { SelectProvider } from '../Workbench/Create/SelectContext';
@@ -18,7 +18,7 @@ export default function SpecEditor(): ReactElement {
   }
 
   return (
-    <div className={css.Editor}>
+    <div className={css.EditorFullPage}>
       <div className={css.Content}>
         <Switch>
           <Route exact path={`/${SPECIFICATION}/:specId`}>

@@ -4,14 +4,14 @@ import { useTranslation } from 'react-i18next';
 
 import DeleteSpecProduct from '../DeleteSpecProduct';
 import ProductHeader from './ProductHeader';
-import { Box, Button } from '@mui/material';
+import { Button } from '@mui/material';
 import { SPECIFICATION } from '../../../../common/PathConstants';
-import css from '../../../Stylesheets/Editor.module.scss';
 import ProductNeed from './Elements/Needs/ProductNeed';
 import Utils from '../../../../common/Utils';
 import { useSelectState } from '../../../Workbench/Create/SelectContext';
 import { useSpecificationState } from '../../SpecificationContext';
 import { IRouteSpecificationParams } from '../../../../models/IRouteSpecificationParams';
+import Panel from '../../../../components/UI/Panel/Panel';
 
 export default function EditProduct(): React.ReactElement {
   const { t } = useTranslation();
@@ -45,17 +45,15 @@ export default function EditProduct(): React.ReactElement {
       <div>
         <ProductHeader product={product} />
         {renderNeeds()}
-        <Box
-          className={css.Button}
-          sx={{
-            display: 'flex',
-            flexDirection: 'row-reverse'
-          }}
-        >
-          <Button variant="primary" onClick={toOverviewPage}>
-            {t('Save')}
-          </Button>
-        </Box>
+        <Panel
+          sticky={true}
+          panelColor={'white'}
+          children={
+            <Button variant="primary" onClick={toOverviewPage}>
+              {t('Save')}
+            </Button>
+          }
+        />
       </div>
     </DeleteSpecProduct>
   );

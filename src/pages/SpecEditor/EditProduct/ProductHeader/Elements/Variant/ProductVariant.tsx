@@ -1,7 +1,7 @@
 import EditIcon from '@mui/icons-material/Edit';
 import React from 'react';
 import { Box, Typography } from '@mui/material';
-import { useFormContext } from 'react-hook-form';
+import { Controller, useFormContext, useWatch } from 'react-hook-form';
 import { t } from 'i18next';
 
 import css from './ProductVariant.module.scss';
@@ -19,24 +19,43 @@ interface IProps {
 export default function ProductVariant({
   variant
 }: IProps): React.ReactElement {
-  const { setValue } = useFormContext<IRequirementAnswer>();
+  const { setValue, control } = useFormContext<IRequirementAnswer>();
+  const useVariant = useWatch({ name: 'variantId', control });
 
-  const openVariant = () => {
-    setValue('variantId', variant.id);
+  const openVariant = (checkedId: string, variantId: string) => {
+    if (variantId === checkedId) {
+      setValue('variantId', '');
+      return false;
+    } else {
+      setValue('variantId', variantId);
+      return true;
+    }
+  };
+
+  const variantChecked = (checkedId: string, variantId: string) => {
+    return variantId === checkedId;
   };
 
   return (
-    <Box onClick={openVariant} className={css.ProductVariant}>
-      <DFOCheckbox checked={false} />
-      <Typography variant={'lg'} className={css.title}>
-        {variant.description}
-      </Typography>
-      <Box className={css.icons}>
-        {variant.type === VariantType.info && <DFOChip label={t('Info')} />}
-        <FormIconButton>
-          <EditIcon />
-        </FormIconButton>
-      </Box>
-    </Box>
+    <Controller
+      render={({ field: { value: checkedVariantId = useVariant } }) => (
+        <Box
+          onClick={() => openVariant(checkedVariantId, variant.id)}
+          className={css.ProductVariant}
+        >
+          <DFOCheckbox checked={variantChecked(checkedVariantId, variant.id)} />
+          <Typography variant={'lg'} className={css.title}>
+            {variant.description}
+          </Typography>
+          <Box className={css.icons}>
+            {variant.type === VariantType.info && <DFOChip label={t('Info')} />}
+            <FormIconButton>
+              <EditIcon />
+            </FormIconButton>
+          </Box>
+        </Box>
+      )}
+      name={''}
+    />
   );
 }

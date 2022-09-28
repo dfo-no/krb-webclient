@@ -18,8 +18,7 @@
   }
 
   .active {
-    border: 0.2rem solid var(--secondary-color);
-    border-top: 1.2rem solid var(--secondary-color);
+    padding: var(--small-gap);
   }
 
   .selected {

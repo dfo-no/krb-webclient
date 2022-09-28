@@ -10,4 +10,13 @@
       }
     }
   }
+  div {
+    &[data-children='true'] {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+      gap: var(--tiny-gap);
+    }
+  }
 }

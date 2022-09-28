@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 import DeleteSpecProduct from '../EditProduct/DeleteSpecProduct';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
-import css from '../../Stylesheets/Editor.module.scss';
+import css from '../../Stylesheets/EditorFullPage.module.scss';
 import DownloadButton from '../Download/DownloadButton';
 import theme from '../../../theme';
 import { ISpecificationProduct } from '../../../Nexus/entities/ISpecificationProduct';
@@ -19,6 +19,7 @@ import { PRODUCTS, SPECIFICATION } from '../../../common/PathConstants';
 import { FormIconButton } from '../../../components/Form/FormIconButton';
 import NewProductSelection from './NewProductSelection';
 import { ISpecification } from '../../../Nexus/entities/ISpecification';
+import { DFOCardHeaderIconButton } from '../../../components/DFOCard/DFOCardHeaderIconButton';
 
 export default function NewProduct(): React.ReactElement {
   const { t } = useTranslation();
@@ -41,6 +42,10 @@ export default function NewProduct(): React.ReactElement {
 
   const productPressed = (pid: string): void => {
     history.push(`/${SPECIFICATION}/${specification.id}/${PRODUCTS}/${pid}/`);
+  };
+
+  const genericPressed = (): void => {
+    history.push(`/${SPECIFICATION}/${specification.id}/${PRODUCTS}/general/`);
   };
 
   const isGeneric = (): boolean => {
@@ -100,7 +105,7 @@ export default function NewProduct(): React.ReactElement {
                 {product.description}
               </Typography>
               <Typography
-                sx={{ marginLeft: 'auto', paddingRight: 3 }}
+                sx={{ marginLeft: 'auto', paddingRight: 0.5 }}
                 variant="mdBold"
               >
                 {product.amount}
@@ -125,6 +130,12 @@ export default function NewProduct(): React.ReactElement {
               <Typography variant="mdBold">
                 {t('General requirements')}
               </Typography>
+              <DFOCardHeaderIconButton
+                sx={{ marginLeft: 'auto', paddingRight: 2 }}
+                onClick={() => genericPressed()}
+              >
+                <EditIcon />
+              </DFOCardHeaderIconButton>
             </div>
             <Divider color={theme.palette.silver.main} />
           </div>

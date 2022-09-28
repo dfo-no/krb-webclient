@@ -1,13 +1,14 @@
-.Editor {
-  display: grid;
-  grid-template-columns: 25% auto;
+.EditorFullPage {
+  display: flex;
+  flex-direction: column;
   width: 100%;
   max-width: 250rem;
   gap: var(--big-gap);
   margin: 0 auto;
   padding: var(--big-gap);
+  background: var(--light-gray-color);
 
-  .SideBar {
+  .overview {
     display: flex;
     flex-direction: column;
     gap: var(--small-gap);
@@ -33,12 +34,7 @@
         border-radius: 0.5rem;
         background: white;
         transition: all 220ms ease-out;
-        cursor: pointer;
         min-height: 10rem;
-
-        &:hover {
-          background: var(--link-hover-color);
-        }
 
         &.Active {
           background: var(--primary-color);
@@ -67,19 +63,37 @@
       }
     }
 
-    .Button {
-      display: flex;
-      justify-content: flex-end;
-    }
-
     .Divider {
       margin-bottom: var(--small-gap);
     }
+
+    .editLink {
+      border-left: 0.1rem solid var(--gray-color);
+      padding-left: var(--small-gap);
+      cursor: pointer;
+      text-decoration: underline;
+
+      &:hover {
+        color: var(--link-hover-color);
+      }
+    }
+  }
+
+  .editPage {
+    align-self: center;
   }
 
   .Content {
     display: flex;
     flex-direction: column;
+
+    .Button {
+      position: -webkit-sticky;
+      position: sticky;
+      bottom: 0;
+      width: 100%;
+      padding: 1rem;
+    }
 
     .HeaderTop {
       display: flex;

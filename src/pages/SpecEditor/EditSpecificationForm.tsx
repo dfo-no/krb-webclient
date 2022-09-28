@@ -11,13 +11,13 @@ import { ISpecification } from '../../Nexus/entities/ISpecification';
 import {
   ModalBox,
   ModalFieldsBox,
-  ModalButtonsBox,
   ModalButton
 } from '../../components/ModalBox/ModalBox';
 import { ModelType } from '../../Nexus/enums';
 import { SPECIFICATION } from '../../common/PathConstants';
-import css from '../Stylesheets/Editor.module.scss';
+import css from '../Stylesheets/EditorFullPage.module.scss';
 import React from 'react';
+import Panel from '../../components/UI/Panel/Panel';
 interface IProps {
   specification: ISpecification;
 }
@@ -87,22 +87,19 @@ const EditSpecificationForm = ({ specification }: IProps) => {
                 required={true}
               />
             </ModalFieldsBox>
-            <Box
-              className={css.Button}
-              sx={{
-                display: 'flex',
-                flexDirection: 'row-reverse'
-              }}
-            >
-              <ModalButtonsBox>
-                <ModalButton variant="cancel" onClick={cancel}>
-                  {t('Cancel')}
-                </ModalButton>
-                <ModalButton variant="save" type="submit">
-                  {t('Save')}
-                </ModalButton>
-              </ModalButtonsBox>
-            </Box>
+            <Panel
+              panelColor={'white'}
+              children={
+                <>
+                  <ModalButton variant="cancel" onClick={cancel}>
+                    {t('Cancel')}
+                  </ModalButton>
+                  <ModalButton variant="save" type="submit">
+                    {t('Save')}
+                  </ModalButton>
+                </>
+              }
+            />
           </ModalBox>
           <GeneralErrorMessage errors={methods.formState.errors} />
         </form>
