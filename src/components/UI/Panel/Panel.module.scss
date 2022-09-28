@@ -1,0 +1,38 @@
+.Panel {
+  --panel--padding--base: 2rem;
+
+  display: flex;
+  flex-direction: row-reverse;
+  align-items: center;
+  top: 0;
+
+  .Content {
+    display: flex;
+    gap: var(--tiny-gap);
+    padding: var(--panel--padding--base);
+  }
+
+  &[data-color] {
+    &[data-color='primary'] {
+      background-color: var(--primary-color);
+    }
+    &[data-color='secondary'] {
+      background-color: var(--secondary-color);
+    }
+    &[data-color='white'] {
+      background-color: var(--white-color);
+    }
+    &[data-color='error'] {
+      background-color: var(--error-color);
+    }
+    &[data-color='warning'] {
+      background-color: var(--warning-color);
+    }
+  }
+
+  &.Sticky {
+    position: -webkit-sticky;
+    position: sticky;
+    bottom: 0;
+  }
+}
