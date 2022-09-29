@@ -243,7 +243,7 @@
   "Tooltip-menu-Preview": "Forhåndsvisning",
   "Type variant": "Type:",
   "Unit": "Enhet",
-  "unit_default_value": "stk",
+  "UNIT_DEFAULT_VALUE": "stk",
   "Value": "Verdi",
   "Version": "Versjon",
   "version": "versjon",
