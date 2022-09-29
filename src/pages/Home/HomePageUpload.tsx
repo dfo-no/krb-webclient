@@ -13,11 +13,11 @@ import { IBank } from '../../Nexus/entities/IBank';
 import { ISpecification } from '../../Nexus/entities/ISpecification';
 import { IResponse } from '../../Nexus/entities/IResponse';
 import { IPrefilledResponse } from '../../Nexus/entities/IPrefilledResponse';
-import { IFile } from '../../models/IFile';
 import { IAlert } from '../../models/IAlert';
 import { addAlert } from '../../store/reducers/alert-reducer';
 import { httpPost } from '../../api/http';
 import { useAppDispatch } from '../../store/hooks';
+import { TemporarySpecFileService } from '../../Nexus/services/TemporarySpecFileService';
 
 type Props = {
   selectedBank: IBank | null;
@@ -27,8 +27,7 @@ type Props = {
 export function HomePageUpload({ selectedBank, setSelectedBank }: Props) {
   const dispatch = useAppDispatch();
   const { t } = useTranslation();
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [specFile, setSpecFile] = useState<IFile | null>(null); // TODO: Fix
+
   const [selectedSpecification, setSelectedSpecification] =
     useState<ISpecification | null>(null);
   const [selectedResponse, setSelectedResponse] = useState<IResponse | null>(
@@ -36,8 +35,7 @@ export function HomePageUpload({ selectedBank, setSelectedBank }: Props) {
   );
   const [selectedPrefilledResponse, setSelectedPrefilledResponse] =
     useState<IPrefilledResponse | null>(null);
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [xyz, setXys] = useState<ISpecification | null>(null); // TODO: This should go away
+  const specFileService = new TemporarySpecFileService();
 
   const onUpload = (files: FileList): void => {
     const MAX_UPLOAD_SIZE = 10000000; // 10M
@@ -75,11 +73,12 @@ export function HomePageUpload({ selectedBank, setSelectedBank }: Props) {
     })
       .then((httpResponse) => {
         if (httpResponse.data.title) {
-          setSpecFile({
-            name: files[0].name,
-            lastModified: files[0].lastModified
-          });
-          setSelectedSpecification(httpResponse.data);
+          specFileService
+            .storeSpecFile({
+              name: files[0].name,
+              lastModified: files[0].lastModified
+            })
+            .then(() => setSelectedSpecification(httpResponse.data));
         } else {
           if (!httpResponse.data.specification) {
             setSelectedPrefilledResponse(httpResponse.data);
@@ -118,7 +117,6 @@ export function HomePageUpload({ selectedBank, setSelectedBank }: Props) {
         <SpecificationSelectionModal
           selectedSpecification={selectedSpecification}
           setSelectedSpecification={setSelectedSpecification}
-          setEvaluationSpecification={setXys}
         />
       )}
       {selectedResponse && (

@@ -19,17 +19,16 @@ import {
 import { selectBank } from '../../store/reducers/selectedBank-reducer';
 import { SPECIFICATION } from '../../common/PathConstants';
 import { useAppDispatch } from '../../store/hooks';
+import { EvaluationSpecificationStoreService } from '../../Nexus/services/EvaluationSpecificationStoreService';
 
 interface IProps {
   selectedSpecification: ISpecification;
   setSelectedSpecification: Dispatch<SetStateAction<ISpecification | null>>;
-  setEvaluationSpecification: Dispatch<SetStateAction<ISpecification | null>>;
 }
 
 export default function SpecificationSelectionModal({
   selectedSpecification,
-  setSelectedSpecification,
-  setEvaluationSpecification
+  setSelectedSpecification
 }: IProps): React.ReactElement {
   const [newResponse, setNewResponse] = useState<IResponse | null>(null);
   const [newPrefilledResponse, setNewPrefilledResponse] =
@@ -38,6 +37,8 @@ export default function SpecificationSelectionModal({
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
   const nexus = Nexus.getInstance();
+  const evaluationSpecificationStoreService =
+    new EvaluationSpecificationStoreService();
 
   const editSpecification = (): void => {
     dispatch(selectBank(selectedSpecification.bank.id));
@@ -61,9 +62,11 @@ export default function SpecificationSelectionModal({
     setNewPrefilledResponse(prefilledResponse);
   };
 
-  const doEvaluation = (): void => {
-    setEvaluationSpecification(selectedSpecification);
-    history.push(`/evaluation/${selectedSpecification.bank.id}`);
+  const doEvaluation = async () => {
+    await evaluationSpecificationStoreService.storeEvaluationSpecification(
+      selectedSpecification
+    );
+    history.push(`/evaluation/${selectedSpecification.id}`);
   };
 
   const cancel = (): void => {
