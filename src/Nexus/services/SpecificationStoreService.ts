@@ -1,5 +1,4 @@
 /* eslint-disable no-param-reassign */
-/* eslint-disable class-methods-use-this */
 import localforage from 'localforage';
 import produce from 'immer';
 
