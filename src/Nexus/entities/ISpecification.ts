@@ -19,6 +19,7 @@ export interface ISpecification {
   requirementAnswers: IRequirementAnswer[];
   title: string;
   caseNumber?: string;
+  currencyUnit: string;
 }
 
 export const BaseSpecificationSchema = CustomJoi.object().keys({
@@ -30,5 +31,6 @@ export const BaseSpecificationSchema = CustomJoi.object().keys({
   requirements: CustomJoi.validateIdArray(),
   requirementAnswers: CustomJoi.validateUniqueArray(RequirementAnswerSchema),
   title: CustomJoi.validateText(),
-  caseNumber: CustomJoi.validateOptionalTextNotRequired()
+  caseNumber: CustomJoi.validateOptionalTextNotRequired(),
+  currencyUnit: CustomJoi.validateOptionalTextNotRequired()
 });

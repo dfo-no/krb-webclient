@@ -1,4 +1,16 @@
-.VerticalTextCtrl {
+.FormProvider {
+  .VerticalTextCtrl {
+    div {
+      &[data-children='true'] {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        gap: var(--tiny-gap);
+      }
+    }
+  }
+
   span:first-child {
     &[data-required='true'] {
       &:after {
@@ -8,15 +20,6 @@
         font-size: var(--normal-fontsize);
         margin-left: var(--micro-gap);
       }
-    }
-  }
-  div {
-    &[data-children='true'] {
-      display: flex;
-      flex-direction: row;
-      justify-content: space-between;
-      align-items: center;
-      gap: var(--tiny-gap);
     }
   }
 }

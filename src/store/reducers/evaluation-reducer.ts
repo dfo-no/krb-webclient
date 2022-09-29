@@ -41,7 +41,8 @@ const initialState: ISelectedBankState = {
     organizationNumber: '',
     products: [],
     requirements: [],
-    requirementAnswers: []
+    requirementAnswers: [],
+    currencyUnit: 'NOK'
   },
   responses: [],
   evaluations: []

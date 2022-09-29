@@ -35,7 +35,7 @@ const VerticalTextCtrl = ({
 
   return (
     <FormControl
-      className={classNames([css.VerticalTextCtrl, className])}
+      className={classNames([css.FormProvider, className])}
       error={!!get(errors, name)}
       sx={{ width: '100%' }}
     >
@@ -50,7 +50,7 @@ const VerticalTextCtrl = ({
       <Controller
         name={name}
         render={({ field }) => (
-          <div data-children={!!children}>
+          <div className={css.VerticalTextCtrl} data-children={!!children}>
             <DFOInput
               {...field}
               autoFocus={autoFocus}

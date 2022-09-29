@@ -329,7 +329,8 @@ describe('EvaluationService', () => {
           requirement: need3.requirements[0],
           type: ModelType.requirementAnswer
         }
-      ]
+      ],
+      currencyUnit: 'NOK'
     };
 
     const response: IResponse = {
