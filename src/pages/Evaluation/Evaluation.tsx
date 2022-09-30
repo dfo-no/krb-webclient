@@ -6,18 +6,35 @@ import EvaluationResult from './EvaluationResult';
 import EvaluationSideBar from './EvaluationSideBar';
 import EvaluationSpec from './EvaluationSpec';
 import UploadResponses from './UploadResponses';
-import { useAppSelector } from '../../store/hooks';
 import { useEvaluationState } from './EvaluationContext';
+import { EvaluationSpecificationStoreService } from '../../Nexus/services/EvaluationSpecificationStoreService';
+import { useRouteMatch } from 'react-router-dom';
 
 const Evaluation = (): ReactElement => {
-  const { specification } = useAppSelector((state) => state.evaluation);
-  const { setTab, tab } = useEvaluationState();
+  const { setSpecificationUpload, setTab, tab, specificationUpload } =
+    useEvaluationState();
 
   useEffect(() => {
-    if (!!specification.bank.id) {
+    if (!!specificationUpload.specification.bank.id) {
       setTab(1);
     }
-  }, [specification, setTab]);
+  }, [specificationUpload, setTab]);
+
+  const routeMatch = useRouteMatch<{ bankId: string }>('/evaluation/:bankId');
+
+  useEffect(() => {
+    const evaluationSpecificationStoreService =
+      new EvaluationSpecificationStoreService();
+    (async () => {
+      evaluationSpecificationStoreService
+        .getEvaluationSpecification(
+          routeMatch?.params.bankId || 'could_not_find_id_in_route'
+        )
+        .then((result) => {
+          setSpecificationUpload(result);
+        });
+    })();
+  }, [routeMatch?.params.bankId, setSpecificationUpload]);
 
   const renderTabContent = (): ReactElement => {
     switch (tab) {

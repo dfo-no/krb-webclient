@@ -17,6 +17,7 @@ import { IBank } from '../../Nexus/entities/IBank';
 import { IBreadcrumb } from '../../models/IBreadcrumb';
 import { IToolbarItem } from '../../models/IToolbarItem';
 import { useAppSelector } from '../../store/hooks';
+import { useEvaluationState } from '../../pages/Evaluation/EvaluationContext';
 import { useGetProjectQuery } from '../../store/api/bankApi';
 import { useHeaderState } from './HeaderContext';
 
@@ -85,7 +86,6 @@ export default function Header(): React.ReactElement {
   const { t } = useTranslation();
   const { title } = useHeaderState();
   const { response } = useAppSelector((state) => state.response);
-  const { specification } = useAppSelector((state) => state.evaluation);
   const { prefilledResponse } = useAppSelector(
     (state) => state.prefilledResponse
   );
@@ -93,6 +93,8 @@ export default function Header(): React.ReactElement {
   const baseUrl = useRouteMatch<{ projectId: string }>('/workbench/:projectId');
   const location = useLocation();
   const [project, setProject] = useState<IBank>();
+
+  const { specificationUpload } = useEvaluationState(); // TODO: Needs to go
 
   const breadcrumbs: IBreadcrumb[] = [
     {
@@ -202,7 +204,7 @@ export default function Header(): React.ReactElement {
       return response.specification.title || t('Response');
     }
     if (isEvaluation) {
-      return specification.title || t('Evaluation');
+      return specificationUpload.specification.title || t('Evaluation');
     }
     if (isPrefilledResponse) {
       return prefilledResponse.bank.title || t('Prefilled response');

@@ -17,6 +17,9 @@ import {
 import { ModelType } from '../../Nexus/enums';
 import { setResponse } from '../../store/reducers/response-reducer';
 import { useAppDispatch } from '../../store/hooks';
+// import { useFeatureFlags } from '../../hooks/useFeatureFlag';
+// import FileUpload from '../../components/FileUpload/FileUpload';
+import React from 'react';
 
 interface IProps {
   handleClose: () => void;
@@ -28,6 +31,7 @@ const NewResponseForm = ({ handleClose, response }: IProps) => {
   const nexus = Nexus.getInstance();
   const history = useHistory();
   const dispatch = useAppDispatch();
+  // const featureFlags = useFeatureFlags();
 
   const methods = useForm<IResponse>({
     resolver: nexus.resolverService.resolver(ModelType.response),
@@ -55,6 +59,18 @@ const NewResponseForm = ({ handleClose, response }: IProps) => {
               {response.specification.organization}
             </Typography>
           </Box>
+          {/*
+          {featureFlags.includes('test') && (
+            <FileUpload
+              accept={'application/pdf'}
+              className={css.Card}
+              description={t('HOME_FILEUPL_DESCRIPTION')}
+              label={t('HOME_FILEUPL_LABEL')}
+              variant={'Tertiary'}
+            />
+          )}
+*/}
+
           <ModalFieldsBox>
             <VerticalTextCtrl
               name="supplier"

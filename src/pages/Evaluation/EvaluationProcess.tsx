@@ -4,25 +4,20 @@ import React, { ReactElement } from 'react';
 import css from './Evaluation.module.scss';
 import Nexus from '../../Nexus/Nexus';
 import Utils from '../../common/Utils';
-import { setEvaluations } from '../../store/reducers/evaluation-reducer';
-import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { useEvaluationState } from './EvaluationContext';
 import { useTranslation } from 'react-i18next';
 
 const EvaluationProcess = (): ReactElement => {
   const { t } = useTranslation();
-  const { specification, responses } = useAppSelector(
-    (state) => state.evaluation
-  );
-  const { setTab } = useEvaluationState();
+  const { setTab, setEvaluations, responses, specificationUpload } =
+    useEvaluationState();
 
   const nexus = Nexus.getInstance();
-  const dispatch = useAppDispatch();
 
   const evaluateAll = async () => {
     const evaluated = await nexus.evaluationService.evaluateAll(
       responses.filter((response) =>
-        Utils.isValidResponse(response, specification)
+        Utils.isValidResponse(response, specificationUpload.specification)
       )
     );
     return evaluated;
@@ -32,14 +27,14 @@ const EvaluationProcess = (): ReactElement => {
     const evaluated = await evaluateAll().then((result) => {
       return result;
     });
-    dispatch(setEvaluations(evaluated));
+    setEvaluations(evaluated);
     setTab(3);
   };
 
   const isEvaluationDisabled = (): boolean => {
     return (
-      specification.bank.id === '' ||
-      !Utils.hasValidResponses(responses, specification)
+      specificationUpload.specification.bank.id === '' ||
+      !Utils.hasValidResponses(responses, specificationUpload.specification)
     );
   };
 

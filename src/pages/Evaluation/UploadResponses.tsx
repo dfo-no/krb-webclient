@@ -12,19 +12,18 @@ import { FormIconButton } from '../../components/Form/FormIconButton';
 import { httpPost } from '../../api/http';
 import { IFile } from '../../models/IFile';
 import { IResponse } from '../../Nexus/entities/IResponse';
-import {
-  setEvaluations,
-  setFiles,
-  setResponses
-} from '../../store/reducers/evaluation-reducer';
-import { useAppDispatch, useAppSelector } from '../../store/hooks';
+import { useEvaluationState } from './EvaluationContext';
 
 export default function UploadResponses(): React.ReactElement {
-  const { files, responses, specification } = useAppSelector(
-    (state) => state.evaluation
-  );
   const { t } = useTranslation();
-  const dispatch = useAppDispatch();
+  const {
+    setEvaluations,
+    files,
+    specificationUpload,
+    setFiles,
+    responses,
+    setResponses
+  } = useEvaluationState();
 
   const formatDate = (time: number): string => {
     const date = new Date(time);
@@ -41,7 +40,7 @@ export default function UploadResponses(): React.ReactElement {
       return t('FILE_ERROR_NOT_A_RESPONSE');
     }
 
-    if (response.specification.id !== specification.id) {
+    if (response.specification.id !== specificationUpload.id) {
       return t('FILE_ERROR_NOT_MATCHING_SPEC');
     }
 
@@ -51,7 +50,7 @@ export default function UploadResponses(): React.ReactElement {
   };
 
   const hasSpecification = (): boolean => {
-    return !!specification.bank.id;
+    return !!specificationUpload.specification.bank.id;
   };
 
   const isValidResponse = (index: number): boolean => {
@@ -59,7 +58,10 @@ export default function UploadResponses(): React.ReactElement {
       return true;
     }
 
-    return Utils.isValidResponse(responses[index], specification);
+    return Utils.isValidResponse(
+      responses[index],
+      specificationUpload.specification
+    );
   };
 
   const readFileContents = async (file: File) => {
@@ -98,9 +100,9 @@ export default function UploadResponses(): React.ReactElement {
     const newFiles = [...files];
     newResponses.splice(index, 1);
     newFiles.splice(index, 1);
-    dispatch(setResponses(newResponses));
-    dispatch(setFiles(newFiles));
-    dispatch(setEvaluations([]));
+    setResponses(newResponses);
+    setFiles(newFiles);
+    setEvaluations([]);
   };
 
   const handleResponseUpload = (newFiles: FileList): void => {
@@ -115,16 +117,16 @@ export default function UploadResponses(): React.ReactElement {
     ];
     const prevFiles = [...files];
 
-    dispatch(setFiles(allFiles));
+    setFiles(allFiles);
 
     readAllFiles(newFiles)
       .then((result) => {
         const newResponses = [...responses, ...(result as IResponse[])];
-        dispatch(setResponses(newResponses));
-        dispatch(setEvaluations([]));
+        setResponses(newResponses);
+        setEvaluations([]);
       })
       .catch((err) => {
-        dispatch(setFiles(prevFiles));
+        setFiles(prevFiles);
         alert(err);
       });
   };

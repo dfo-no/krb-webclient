@@ -1,4 +1,4 @@
-import React, { ReactElement, useState } from 'react';
+import React, { Dispatch, ReactElement, SetStateAction, useState } from 'react';
 import Typography from '@mui/material/Typography';
 import { Box } from '@mui/material';
 import { useTranslation } from 'react-i18next';
@@ -18,17 +18,17 @@ import {
   ModalButton,
   ModalButtonsBox
 } from '../../components/ModalBox/ModalBox';
-import { useHomeState } from './HomeContext';
 import { useGetBankQuery } from '../../store/api/bankApi';
 
 interface IProps {
   selectedBank: IBank;
+  setSelectedBank: Dispatch<SetStateAction<IBank | null>>;
 }
 
 export default function ProjectSelectionModal({
-  selectedBank
+  selectedBank,
+  setSelectedBank
 }: IProps): React.ReactElement {
-  const { setSelectedBank } = useHomeState();
   const [newSpecification, setNewSpecification] =
     useState<ISpecification | null>(null);
   const [newPrefilledResponse, setNewPrefilledResponse] =

@@ -1,53 +1,26 @@
 import classnames from 'classnames';
 import React, { useEffect, useState } from 'react';
-import { AxiosResponse } from 'axios';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { v4 as uuidv4 } from 'uuid';
 
 import css from './HomePage.module.scss';
-import FileUpload from '../../components/FileUpload/FileUpload';
 import Footer from '../../Footer/Footer';
 import HomeDisplayList from './HomeDisplayList';
 import HomeSearchBar from './HomeSearchBar';
-import PrefilledResponseSelectionModal from './PrefilledResponseSelectionModal';
-import ProjectSelectionModal from './ProjectSelectionModal';
-import ResponseSelectionModal from './ResponseSelectionModal';
-import SpecificationSelectionModal from './SpecificationSelectionModal';
-import { addAlert } from '../../store/reducers/alert-reducer';
-import { httpPost } from '../../api/http';
-import { IAlert } from '../../models/IAlert';
 import { IBank } from '../../Nexus/entities/IBank';
-import {
-  setEvaluations,
-  setFiles,
-  setResponses,
-  setSpecFile
-} from '../../store/reducers/evaluation-reducer';
-import { useAppDispatch } from '../../store/hooks';
 import { useGetBanksQuery } from '../../store/api/bankApi';
-import { useHomeState } from './HomeContext';
 
-const MAX_UPLOAD_SIZE = 10000000; // 10M
+import { HomePageUpload } from './HomePageUpload';
 
 export default function HomePage(): React.ReactElement {
-  const dispatch = useAppDispatch();
   const { t } = useTranslation();
-  const {
-    selectedBank,
-    selectedSpecification,
-    setSelectedSpecification,
-    selectedResponse,
-    setSelectedResponse,
-    selectedPrefilledResponse,
-    setSelectedPrefilledResponse
-  } = useHomeState();
+  const [selectedBank, setSelectedBank] = useState<IBank | null>(null);
 
   const [latestPublishedProjects, setLatestPublishedProjects] = useState<
     IBank[]
   >([]);
 
-  const { data: list } = useGetBanksQuery({
+  const { data: listOfBanks } = useGetBanksQuery({
     pageSize: 500,
     page: 1,
     fieldName: 'title',
@@ -55,9 +28,9 @@ export default function HomePage(): React.ReactElement {
   });
 
   useEffect(() => {
-    if (list) {
+    if (listOfBanks) {
       const latestPublishedMap = new Map<string, IBank>();
-      Object.values(list).forEach((bank) => {
+      Object.values(listOfBanks).forEach((bank) => {
         if (!bank.publishedDate || !bank.projectId) {
           return;
         }
@@ -72,78 +45,17 @@ export default function HomePage(): React.ReactElement {
       });
       setLatestPublishedProjects(Array.from(latestPublishedMap.values()));
     }
-  }, [list]);
-
-  const onUpload = (files: FileList): void => {
-    dispatch(setEvaluations([]));
-    dispatch(setFiles([]));
-    dispatch(setResponses([]));
-    dispatch(setSpecFile(null));
-
-    const formData = new FormData();
-    let disableUploadMessage = '';
-    for (let index = 0; index < files.length; index += 1) {
-      const file = files[index];
-      if (file.size > MAX_UPLOAD_SIZE) {
-        disableUploadMessage = t('HOME_FILEUPL_TOO_LARGE');
-        break;
-      }
-      if (file.type !== 'application/pdf') {
-        disableUploadMessage = t('HOME_FILEUPL_WRONG_TYPE');
-        break;
-      }
-      formData.append('file', file);
-    }
-
-    if (disableUploadMessage !== '') {
-      const alert: IAlert = {
-        id: uuidv4(),
-        style: 'error',
-        text: disableUploadMessage
-      };
-      dispatch(addAlert({ alert }));
-      return;
-    }
-
-    httpPost<FormData, AxiosResponse>('/java/uploadPdf', formData, {
-      headers: {
-        'Content-Type': 'multipart/form-data'
-      },
-      responseType: 'json'
-    })
-      .then((httpResponse) => {
-        if (httpResponse.data.title) {
-          dispatch(
-            setSpecFile({
-              name: files[0].name,
-              lastModified: files[0].lastModified
-            })
-          );
-          setSelectedSpecification(httpResponse.data);
-        } else {
-          if (!httpResponse.data.specification) {
-            setSelectedPrefilledResponse(httpResponse.data);
-          } else {
-            setSelectedResponse(httpResponse.data);
-          }
-        }
-      })
-      .catch(() => {
-        const alert: IAlert = {
-          id: uuidv4(),
-          style: 'error',
-          text: t('HOME_FILEUPL_UPLOAD_ERROR')
-        };
-        dispatch(addAlert({ alert }));
-      });
-  };
+  }, [listOfBanks]);
 
   return (
     <div className={css.HomePage}>
       <div className={css.Content}>
         <div className={css.Columns}>
           <div className={css.Column}>
-            <HomeSearchBar list={latestPublishedProjects} />
+            <HomeSearchBar
+              list={latestPublishedProjects}
+              setSelectedBank={setSelectedBank}
+            />
           </div>
           <div className={classnames(css.Column, css.Cards)}>
             <div className={classnames(css.Card, css.Primary)}>
@@ -152,13 +64,9 @@ export default function HomePage(): React.ReactElement {
                 <span>{t('Create projects')}</span>
               </Link>
             </div>
-            <FileUpload
-              accept={'application/pdf'}
-              className={css.Card}
-              description={t('HOME_FILEUPL_DESCRIPTION')}
-              label={t('HOME_FILEUPL_LABEL')}
-              onChange={onUpload}
-              variant={'Tertiary'}
+            <HomePageUpload
+              selectedBank={selectedBank}
+              setSelectedBank={setSelectedBank}
             />
           </div>
         </div>
@@ -167,28 +75,16 @@ export default function HomePage(): React.ReactElement {
             title={t('Newest banks')}
             list={latestPublishedProjects}
             orderedByDate={true}
+            setSelectedBank={setSelectedBank}
           />
           <HomeDisplayList
             title={t('Alphabetically sorted')}
             list={latestPublishedProjects}
+            setSelectedBank={setSelectedBank}
           />
         </div>
       </div>
       <Footer />
-      {selectedBank && <ProjectSelectionModal selectedBank={selectedBank} />}
-      {selectedSpecification && (
-        <SpecificationSelectionModal
-          selectedSpecification={selectedSpecification}
-        />
-      )}
-      {selectedResponse && (
-        <ResponseSelectionModal selectedResponse={selectedResponse} />
-      )}
-      {selectedPrefilledResponse && (
-        <PrefilledResponseSelectionModal
-          selectedPrefilledResponse={selectedPrefilledResponse}
-        />
-      )}
     </div>
   );
 }

@@ -2,18 +2,18 @@ import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardHeader from '@mui/material/CardHeader';
 import MenuBookIcon from '@mui/icons-material/MenuBook';
-import React from 'react';
+import React, { Dispatch, SetStateAction } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import css from './HomePage.module.scss';
 import DateUtils from '../../common/DateUtils';
 import { IBank } from '../../Nexus/entities/IBank';
-import { useHomeState } from './HomeContext';
 
 interface IProps {
   list: IBank[];
   orderedByDate?: boolean;
   title: string;
+  setSelectedBank: Dispatch<SetStateAction<IBank | null>>;
 }
 
 const MILLISEC_PER_DAY = 86400000;
@@ -21,9 +21,9 @@ const MILLISEC_PER_DAY = 86400000;
 export default function HomeDisplayList({
   list,
   orderedByDate = false,
-  title
+  title,
+  setSelectedBank
 }: IProps): React.ReactElement {
-  const { setSelectedBank } = useHomeState();
   const { t } = useTranslation();
 
   const alphabeticalOrderedList = (): IBank[] => {

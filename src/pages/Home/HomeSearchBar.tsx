@@ -1,14 +1,14 @@
 import Autocomplete from '@mui/material/Autocomplete';
 import makeStyles from '@mui/styles/makeStyles';
-import React from 'react';
+import React, { Dispatch, SetStateAction } from 'react';
 import TextField from '@mui/material/TextField';
 import { useTranslation } from 'react-i18next';
 
 import { IBank } from '../../Nexus/entities/IBank';
-import { useHomeState } from './HomeContext';
 
 interface IProps {
   list: IBank[];
+  setSelectedBank: Dispatch<SetStateAction<IBank | null>>;
 }
 
 interface ILabel {
@@ -22,8 +22,10 @@ const useStyles = makeStyles({
   }
 });
 
-const HomeSearchBar = ({ list }: IProps): React.ReactElement => {
-  const { setSelectedBank } = useHomeState();
+const HomeSearchBar = ({
+  list,
+  setSelectedBank
+}: IProps): React.ReactElement => {
   const { t } = useTranslation();
   const classes = useStyles();
 

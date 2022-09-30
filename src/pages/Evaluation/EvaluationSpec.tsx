@@ -5,19 +5,16 @@ import { useTranslation } from 'react-i18next';
 import css from './Evaluation.module.scss';
 import DateUtils from '../../common/DateUtils';
 import FileUpload from '../../components/FileUpload/FileUpload';
-import SpecificationService from '../../Nexus/services/SpecificationService';
 import { httpPost } from '../../api/http';
+import { useAppDispatch } from '../../store/hooks';
+import { useEvaluationState } from './EvaluationContext';
 import {
-  setEvaluations,
-  setEvaluationSpecification,
-  setSpecFile
-} from '../../store/reducers/evaluation-reducer';
-import { useAppDispatch, useAppSelector } from '../../store/hooks';
+  getDefaultSpecificationFile,
+  getInvalidSpecificationFile,
+  INVALID_ID
+} from '../../Nexus/services/EvaluationSpecificationStoreService';
 
 const EvaluationSpec = (): ReactElement => {
-  const { specFile, specification } = useAppSelector(
-    (state) => state.evaluation
-  );
   const { t } = useTranslation();
   const [uploadError, setUploadError] = useState('');
   const dispatch = useAppDispatch();
@@ -26,59 +23,60 @@ const EvaluationSpec = (): ReactElement => {
     setUploadError('');
   }, [dispatch]);
 
+  const { setEvaluations, setSpecificationUpload, specificationUpload } =
+    useEvaluationState();
+
   const formatDate = (time: number): string => {
     const date = new Date(time);
     return DateUtils.prettyFormat(date.toISOString());
   };
 
   const getSpecificationName = (): string => {
-    if (specification.bank.id === '') {
+    if (
+      specificationUpload.id === INVALID_ID ||
+      specificationUpload.specification.bank.id === ''
+    ) {
       return '...';
     }
 
-    return specification.title + ', ' + specification.organization;
+    return (
+      specificationUpload.specification.title +
+      ', ' +
+      specificationUpload.specification.organization
+    );
   };
 
   const onUploadSpecification = (fileList: FileList): void => {
     setUploadError('');
-    dispatch(setEvaluations([]));
+    setEvaluations([]);
 
     const formData = new FormData();
     if (fileList.length) {
       const file = fileList[0];
-      dispatch(
-        setSpecFile({
-          name: file.name,
-          lastModified: file.lastModified
-        })
-      );
       formData.append('file', file);
-    }
+      httpPost<FormData, AxiosResponse>('/java/uploadPdf', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        },
+        responseType: 'json'
+      })
+        .then((response) => {
+          if (!response.data.bank) {
+            setUploadError(t('EVAL_SPEC_ERROR_INVALID_FILE'));
 
-    httpPost<FormData, AxiosResponse>('/java/uploadPdf', formData, {
-      headers: {
-        'Content-Type': 'multipart/form-data'
-      },
-      responseType: 'json'
-    })
-      .then((response) => {
-        if (!response.data.bank) {
-          setUploadError(t('EVAL_SPEC_ERROR_INVALID_FILE'));
-          dispatch(
-            setEvaluationSpecification(
-              SpecificationService.defaultSpecification()
-            )
+            setSpecificationUpload(getInvalidSpecificationFile());
+            return response;
+          }
+          setSpecificationUpload(
+            getDefaultSpecificationFile(file, response.data)
           );
           return response;
-        }
-        dispatch(setEvaluationSpecification(response.data));
-        return response;
-      })
-      .catch((error) => {
-        dispatch(setSpecFile(null));
-        setUploadError(t('EVAL_SPEC_ERROR_UPLOADING'));
-        console.error(error);
-      });
+        })
+        .catch((error) => {
+          setUploadError(t('EVAL_SPEC_ERROR_UPLOADING'));
+          console.error(error);
+        });
+    }
   };
 
   return (
@@ -91,14 +89,14 @@ const EvaluationSpec = (): ReactElement => {
           onChange={onUploadSpecification}
           variant={'Tertiary'}
         />
-        {specFile !== null && (
+        {specificationUpload.specification !== null && (
           <ul className={css.Files}>
             <li className={css.File}>
               <div>{getSpecificationName()}</div>
               <div>
-                <div>{specFile.name}</div>
+                <div>{specificationUpload.file.name}</div>
                 <div className={css.Date}>
-                  {formatDate(specFile.lastModified)}
+                  {formatDate(specificationUpload.file.lastModified)}
                 </div>
               </div>
             </li>

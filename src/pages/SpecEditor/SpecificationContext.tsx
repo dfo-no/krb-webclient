@@ -1,4 +1,4 @@
-import {
+import React, {
   createContext,
   Dispatch,
   SetStateAction,
@@ -94,6 +94,9 @@ export const SpecificationProvider = ({ children }: IProps) => {
         setSpecification(spec);
         setTitle(spec.title);
       });
+      return function cleanup() {
+        setTitle('');
+      };
     }
   }, [specId, nexus, setTitle]);
 
