@@ -93,6 +93,7 @@ const EditSpecificationForm = ({ specification }: IProps) => {
                 name={'currencyUnit'}
                 label={t('CURRENCY_UNIT')}
                 options={currencyUnitOptions}
+                required={true}
               />
               <VerticalTextCtrl
                 name="organization"

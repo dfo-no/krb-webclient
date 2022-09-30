@@ -32,5 +32,5 @@ export const BaseSpecificationSchema = CustomJoi.object().keys({
   requirementAnswers: CustomJoi.validateUniqueArray(RequirementAnswerSchema),
   title: CustomJoi.validateText(),
   caseNumber: CustomJoi.validateOptionalTextNotRequired(),
-  currencyUnit: CustomJoi.validateOptionalTextNotRequired()
+  currencyUnit: CustomJoi.validateText()
 });
