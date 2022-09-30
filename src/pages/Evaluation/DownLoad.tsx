@@ -9,11 +9,11 @@ import { useEvaluationState } from './EvaluationContext';
 
 export default function DownLoad(): React.ReactElement {
   const { t } = useTranslation();
-  const { evaluations, specification } = useEvaluationState();
+  const { evaluations, specificationUpload } = useEvaluationState();
 
   const onDownLoad = (): void => {
     const evaluation: IEvaluation = {
-      specification,
+      specification: specificationUpload.specification,
       responses: evaluations
     };
 

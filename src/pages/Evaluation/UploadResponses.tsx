@@ -19,7 +19,7 @@ export default function UploadResponses(): React.ReactElement {
   const {
     setEvaluations,
     files,
-    specification,
+    specificationUpload,
     setFiles,
     responses,
     setResponses
@@ -40,7 +40,7 @@ export default function UploadResponses(): React.ReactElement {
       return t('FILE_ERROR_NOT_A_RESPONSE');
     }
 
-    if (response.specification.id !== specification.id) {
+    if (response.specification.id !== specificationUpload.id) {
       return t('FILE_ERROR_NOT_MATCHING_SPEC');
     }
 
@@ -50,7 +50,7 @@ export default function UploadResponses(): React.ReactElement {
   };
 
   const hasSpecification = (): boolean => {
-    return !!specification.bank.id;
+    return !!specificationUpload.specification.bank.id;
   };
 
   const isValidResponse = (index: number): boolean => {
@@ -58,7 +58,10 @@ export default function UploadResponses(): React.ReactElement {
       return true;
     }
 
-    return Utils.isValidResponse(responses[index], specification);
+    return Utils.isValidResponse(
+      responses[index],
+      specificationUpload.specification
+    );
   };
 
   const readFileContents = async (file: File) => {

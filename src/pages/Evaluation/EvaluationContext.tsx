@@ -8,22 +8,20 @@ import React, {
 import { IEvaluatedResponse } from '../../Nexus/entities/IEvaluatedResponse';
 import { IResponse } from '../../Nexus/entities/IResponse';
 import { IFile } from '../../models/IFile';
-import { ISpecification } from '../../Nexus/entities/ISpecification';
-import SpecificationService from '../../Nexus/services/SpecificationService';
+import { SpecificationFile } from '../../Nexus/entities/SpecificationFile';
+import { getInvalidSpecificationFile } from '../../Nexus/services/EvaluationSpecificationStoreService';
 
 type IEvaluationContext = {
   tab: number;
   setTab: Dispatch<SetStateAction<number>>;
   evaluations: IEvaluatedResponse[];
   setEvaluations: Dispatch<SetStateAction<IEvaluatedResponse[]>>;
-  specification: ISpecification;
-  setEvaluationSpecification: Dispatch<SetStateAction<ISpecification>>;
+  specificationUpload: SpecificationFile;
+  setSpecificationUpload: Dispatch<SetStateAction<SpecificationFile>>;
   files: IFile[];
   setFiles: Dispatch<SetStateAction<IFile[]>>;
   responses: IResponse[];
   setResponses: Dispatch<SetStateAction<IResponse[]>>;
-  specFile: IFile | null;
-  setSpecFile: Dispatch<SetStateAction<IFile | null>>;
 };
 
 interface IProps {
@@ -37,14 +35,12 @@ const initialContext: IEvaluationContext = {
   },
   evaluations: [],
   setEvaluations: () => {},
-  specification: SpecificationService.defaultSpecification(),
-  setEvaluationSpecification: () => {},
+  specificationUpload: getInvalidSpecificationFile(),
+  setSpecificationUpload: () => {},
   files: [],
   setFiles: () => {},
   responses: [],
-  setResponses: () => {},
-  specFile: null,
-  setSpecFile: () => {}
+  setResponses: () => {}
 };
 
 export const EvaluationContext =
@@ -53,11 +49,11 @@ export const EvaluationContext =
 export const EvaluationProvider = ({ children }: IProps) => {
   const [tab, setTab] = useState(0);
   const [evaluations, setEvaluations] = useState<IEvaluatedResponse[]>([]);
-  const [evaluationSpecification, setEvaluationSpecification] =
-    useState<ISpecification>(SpecificationService.defaultSpecification());
+  const [specification, setSpecification] = useState<SpecificationFile>(
+    getInvalidSpecificationFile()
+  );
   const [files, setFiles] = useState<IFile[]>([]);
   const [responses, setResponses] = useState<IResponse[]>([]);
-  const [specFile, setSpecFile] = useState<IFile | null>(null);
 
   return (
     <EvaluationContext.Provider
@@ -66,14 +62,12 @@ export const EvaluationProvider = ({ children }: IProps) => {
         setTab,
         evaluations,
         setEvaluations,
-        specification: evaluationSpecification,
-        setEvaluationSpecification,
+        specificationUpload: specification,
+        setSpecificationUpload: setSpecification,
         files,
         setFiles,
         responses,
-        setResponses,
-        specFile,
-        setSpecFile
+        setResponses
       }}
     >
       {children}

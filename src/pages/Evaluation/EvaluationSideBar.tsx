@@ -20,15 +20,18 @@ const menuItems: ISideBarItem[] = [
 
 const EvaluationSideBar = (): ReactElement => {
   const { t } = useTranslation();
-  const { evaluations, responses, specification, tab, setTab } =
+  const { evaluations, responses, specificationUpload, tab, setTab } =
     useEvaluationState();
 
   const isDone = (step: number): boolean => {
     switch (step) {
       case 0:
-        return !!specification.bank.id;
+        return !!specificationUpload.specification.bank.id;
       case 1:
-        return Utils.hasValidResponses(responses, specification);
+        return Utils.hasValidResponses(
+          responses,
+          specificationUpload.specification
+        );
       case 2:
         return evaluations.length > 0;
       default:

@@ -9,7 +9,7 @@ import { useTranslation } from 'react-i18next';
 
 const EvaluationProcess = (): ReactElement => {
   const { t } = useTranslation();
-  const { setTab, setEvaluations, responses, specification } =
+  const { setTab, setEvaluations, responses, specificationUpload } =
     useEvaluationState();
 
   const nexus = Nexus.getInstance();
@@ -17,7 +17,7 @@ const EvaluationProcess = (): ReactElement => {
   const evaluateAll = async () => {
     const evaluated = await nexus.evaluationService.evaluateAll(
       responses.filter((response) =>
-        Utils.isValidResponse(response, specification)
+        Utils.isValidResponse(response, specificationUpload.specification)
       )
     );
     return evaluated;
@@ -33,8 +33,8 @@ const EvaluationProcess = (): ReactElement => {
 
   const isEvaluationDisabled = (): boolean => {
     return (
-      specification.bank.id === '' ||
-      !Utils.hasValidResponses(responses, specification)
+      specificationUpload.specification.bank.id === '' ||
+      !Utils.hasValidResponses(responses, specificationUpload.specification)
     );
   };
 

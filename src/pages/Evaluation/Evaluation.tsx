@@ -9,41 +9,32 @@ import UploadResponses from './UploadResponses';
 import { useEvaluationState } from './EvaluationContext';
 import { EvaluationSpecificationStoreService } from '../../Nexus/services/EvaluationSpecificationStoreService';
 import { useRouteMatch } from 'react-router-dom';
-import { TemporarySpecFileService } from '../../Nexus/services/TemporarySpecFileService';
 
 const Evaluation = (): ReactElement => {
-  const {
-    setEvaluationSpecification,
-    setSpecFile,
-    setTab,
-    tab,
-    specification
-  } = useEvaluationState();
+  const { setSpecificationUpload, setTab, tab, specificationUpload } =
+    useEvaluationState();
 
   useEffect(() => {
-    if (!!specification.bank.id) {
+    if (!!specificationUpload.specification.bank.id) {
       setTab(1);
     }
-  }, [specification, setTab]);
+  }, [specificationUpload, setTab]);
 
   const routeMatch = useRouteMatch<{ bankId: string }>('/evaluation/:bankId');
 
   useEffect(() => {
     const evaluationSpecificationStoreService =
       new EvaluationSpecificationStoreService();
-    const specFileService = new TemporarySpecFileService();
     (async () => {
       evaluationSpecificationStoreService
         .getEvaluationSpecification(
           routeMatch?.params.bankId || 'could_not_find_id_in_route'
         )
         .then((result) => {
-          setEvaluationSpecification(result);
+          setSpecificationUpload(result);
         });
-
-      specFileService.getSpecFile().then((result) => setSpecFile(result));
     })();
-  }, [routeMatch?.params.bankId, setEvaluationSpecification, setSpecFile]);
+  }, [routeMatch?.params.bankId, setSpecificationUpload]);
 
   const renderTabContent = (): ReactElement => {
     switch (tab) {

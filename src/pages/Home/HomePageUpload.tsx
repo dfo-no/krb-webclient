@@ -17,7 +17,8 @@ import { IAlert } from '../../models/IAlert';
 import { addAlert } from '../../store/reducers/alert-reducer';
 import { httpPost } from '../../api/http';
 import { useAppDispatch } from '../../store/hooks';
-import { TemporarySpecFileService } from '../../Nexus/services/TemporarySpecFileService';
+import { getDefaultSpecificationFile } from '../../Nexus/services/EvaluationSpecificationStoreService';
+import { SpecificationFile } from '../../Nexus/entities/SpecificationFile';
 
 type Props = {
   selectedBank: IBank | null;
@@ -29,13 +30,12 @@ export function HomePageUpload({ selectedBank, setSelectedBank }: Props) {
   const { t } = useTranslation();
 
   const [selectedSpecification, setSelectedSpecification] =
-    useState<ISpecification | null>(null);
+    useState<SpecificationFile | null>(null);
   const [selectedResponse, setSelectedResponse] = useState<IResponse | null>(
     null
   );
   const [selectedPrefilledResponse, setSelectedPrefilledResponse] =
     useState<IPrefilledResponse | null>(null);
-  const specFileService = new TemporarySpecFileService();
 
   const onUpload = (files: FileList): void => {
     const MAX_UPLOAD_SIZE = 10000000; // 10M
@@ -73,12 +73,16 @@ export function HomePageUpload({ selectedBank, setSelectedBank }: Props) {
     })
       .then((httpResponse) => {
         if (httpResponse.data.title) {
-          specFileService
-            .storeSpecFile({
-              name: files[0].name,
-              lastModified: files[0].lastModified
-            })
-            .then(() => setSelectedSpecification(httpResponse.data));
+          const file = {
+            name: files[0].name,
+            lastModified: files[0].lastModified
+          };
+
+          const specification: ISpecification = httpResponse.data;
+
+          setSelectedSpecification(
+            getDefaultSpecificationFile(file, specification)
+          );
         } else {
           if (!httpResponse.data.specification) {
             setSelectedPrefilledResponse(httpResponse.data);
