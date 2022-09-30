@@ -32,7 +32,8 @@ export default class SpecificationService extends BaseService {
       products: [],
       requirements: [],
       requirementAnswers: [],
-      caseNumber: ''
+      caseNumber: '',
+      currencyUnit: 'NOK'
     };
   }
 

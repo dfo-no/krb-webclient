@@ -36,7 +36,8 @@ const initialState: IResponseState = {
       organizationNumber: '',
       products: [],
       requirements: [],
-      requirementAnswers: []
+      requirementAnswers: [],
+      currencyUnit: 'NOK'
     },
     supplier: '',
     products: [],

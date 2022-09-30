@@ -30,7 +30,7 @@ export default function ProductHeader({ product }: IProps): React.ReactElement {
       <DFOCardHeader>
         <DFOHeaderContentBox>
           <Box className={css.HeaderBox}>
-            {product && (
+            {product ? (
               <>
                 <Typography variant="lgBold">{product?.title}</Typography>
                 <DFOCardHeaderIconButton
@@ -46,6 +46,10 @@ export default function ProductHeader({ product }: IProps): React.ReactElement {
                   <DeleteIcon />
                 </DFOCardHeaderIconButton>
               </>
+            ) : (
+              <Typography variant="lgBold">
+                {t('General requirements')}
+              </Typography>
             )}
           </Box>
           <Box className={css.Description}>

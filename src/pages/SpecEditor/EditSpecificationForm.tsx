@@ -1,3 +1,4 @@
+import React from 'react';
 import { Box, Typography } from '@mui/material/';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useHistory } from 'react-router-dom';
@@ -16,8 +17,9 @@ import {
 import { ModelType } from '../../Nexus/enums';
 import { SPECIFICATION } from '../../common/PathConstants';
 import css from '../Stylesheets/EditorFullPage.module.scss';
-import React from 'react';
 import Panel from '../../components/UI/Panel/Panel';
+import SelectCtrl from '../../FormProvider/SelectCtrl';
+import { IOption } from '../../Nexus/entities/IOption';
 interface IProps {
   specification: ISpecification;
 }
@@ -30,6 +32,19 @@ const EditSpecificationForm = ({ specification }: IProps) => {
     resolver: nexus.resolverService.resolver(ModelType.specification),
     defaultValues: specification
   });
+
+  const currencyUnitOptions: IOption[] = [
+    {
+      value: 'NOK',
+      label: t('CURRENCY_UNIT_NOK'),
+      recommended: true
+    },
+    {
+      value: 'EUR',
+      label: t('CURRENCY_UNIT_EUR'),
+      recommended: false
+    }
+  ];
 
   const onSubmit = async (post: ISpecification) => {
     const specificationWithId = nexus.specificationService.withId(post);
@@ -73,6 +88,12 @@ const EditSpecificationForm = ({ specification }: IProps) => {
                 name="caseNumber"
                 label={t('Procurement case number')}
                 placeholder={t('Case number')}
+              />
+              <SelectCtrl
+                name={'currencyUnit'}
+                label={t('CURRENCY_UNIT')}
+                options={currencyUnitOptions}
+                required={true}
               />
               <VerticalTextCtrl
                 name="organization"

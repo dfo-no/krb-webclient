@@ -113,7 +113,7 @@ export default function NewProductForm({
                       variant={'lg'}
                       color={theme.palette.primary.main}
                     >
-                      {specProduct?.unit ?? t('unit_default_value')}
+                      {specProduct?.unit ?? t('UNIT_DEFAULT_VALUE')}
                     </Typography>
                   }
                 />

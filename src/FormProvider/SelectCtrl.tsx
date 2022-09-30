@@ -6,29 +6,44 @@ import Typography from '@mui/material/Typography';
 import { get } from 'lodash';
 import React from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
+
 import DFOTextField from '../components/DFOTextField/DFOTextField';
 import { IOption } from '../Nexus/entities/IOption';
 import theme from '../theme';
+import css from './FormProvider.module.scss';
 
 interface IProps {
   name: string;
   label: string;
   options: IOption[];
+  required?: boolean;
 }
 
-const SelectCtrl = ({ name, label, options }: IProps): React.ReactElement => {
+const SelectCtrl = ({
+  name,
+  label,
+  options,
+  required
+}: IProps): React.ReactElement => {
   const {
     formState: { errors }
   } = useFormContext();
 
   return (
-    <FormControl error={!!get(errors, name)} fullWidth>
+    <FormControl
+      className={css.FormProvider}
+      error={!!get(errors, name)}
+      fullWidth
+    >
       {label && (
-        <FormLabel>
-          <Typography variant="sm" color={theme.palette.primary.main}>
-            {label}
-          </Typography>
-        </FormLabel>
+        <Typography
+          variant="smBold"
+          color={theme.palette.primary.main}
+          sx={{ marginBottom: 1 }}
+          data-required={required}
+        >
+          {label}
+        </Typography>
       )}
       <Controller
         name={name}
