@@ -145,7 +145,9 @@ class TextUtils {
     question: IConfirmationQuestion
   ): string => {
     const pointsUnconfirmed = question.config.pointsUnconfirmed;
-    return `${t('Score for unconfirmed')}: ${pointsUnconfirmed}`;
+    return `${t('Score for confirmed')}: 100 ${t(
+      'Score for unconfirmed'
+    )}: ${pointsUnconfirmed}`;
   };
 
   private static getSliderConfig = (question: ISliderQuestion): string => {
