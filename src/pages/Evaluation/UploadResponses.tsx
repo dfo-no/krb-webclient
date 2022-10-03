@@ -40,7 +40,7 @@ export default function UploadResponses(): React.ReactElement {
       return t('FILE_ERROR_NOT_A_RESPONSE');
     }
 
-    if (response.specification.id !== specificationUpload.id) {
+    if (response.specification.id !== specificationUpload.specification.id) {
       return t('FILE_ERROR_NOT_MATCHING_SPEC');
     }
 
