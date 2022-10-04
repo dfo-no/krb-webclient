@@ -19,16 +19,28 @@ describe('evaluation', () => {
 
     cy.get('label')
       .contains('Last opp besvarelser')
-      .selectFile('./cypress/filesForUploadTesting/2022-09-30_response-2.pdf');
-    cy.wait(1000);
-    cy.contains('regaergaerg'); // TODO: Create a better response file with a better filename : )
-    cy.contains('2022-09-30_response-2.pdf');
+      .selectFile(
+        './cypress/filesForUploadTesting/2022-10-03-citronen-response-4.pdf'
+      );
+    cy.contains('Citronen');
+    cy.contains('2022-10-03-citronen-response-4.pdf');
 
     cy.contains('Manuell evaluering').click();
 
     cy.contains('Evaluer besvarelser').click();
 
-    cy.contains('regaergaerg 93%').click();
+    cy.contains('Citronen');
+
+    cy.intercept(
+      'POST',
+      'https://krb-api-man-dev.azure-api.net/java/generateResponse'
+    ).as('generateEvaluation');
+    cy.contains('Last ned evaluering').click();
+    cy.wait('@generateEvaluation').then((interception) => {
+      expect(interception.response.statusCode).gte(200).lt(300);
+      // console.log(interception)
+      expect(interception.response.body.byteLength).gt(6500);
+    });
   });
 
   it('fallback works when no specification is uploaded or found', () => {
@@ -39,5 +51,32 @@ describe('evaluation', () => {
     cy.contains('Last opp besvarelser');
     cy.contains('Manuell evaluering');
     cy.contains('Resultat');
+
+    cy.contains('Last opp et kravsett').selectFile(
+      './cypress/filesForUploadTesting/2022-09-30_specification-4.pdf'
+    );
+    cy.wait(1000);
+
+    cy.get('label')
+      .contains('Last opp besvarelser')
+      .selectFile(
+        './cypress/filesForUploadTesting/2022-10-03-citronen-response-4.pdf'
+      );
+    cy.wait(500);
+
+    cy.contains('Manuell evaluering').click();
+
+    cy.contains('Evaluer besvarelser').click();
+
+    cy.intercept(
+      'POST',
+      'https://krb-api-man-dev.azure-api.net/java/generateResponse'
+    ).as('generateEvaluation');
+    cy.contains('Last ned evaluering').click();
+    cy.wait('@generateEvaluation').then((interception) => {
+      expect(interception.response.statusCode).gte(200).lt(300);
+      // console.log(interception)
+      expect(interception.response.body.byteLength).gt(6500);
+    });
   });
 });
