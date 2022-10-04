@@ -8,19 +8,26 @@ import theme from '../../../theme';
 import { ISpecificationProduct } from '../../../Nexus/entities/ISpecificationProduct';
 import { useAppSelector } from '../../../store/hooks';
 import { useProductIndexState } from '../../../components/ProductIndexContext/ProductIndexContext';
+import { useHistory } from 'react-router-dom';
+import { PRODUCTS, RESPONSE } from '../../../common/PathConstants';
 
 function ResponseSideBar(): React.ReactElement {
   const { t } = useTranslation();
-
+  const history = useHistory();
   const { response } = useAppSelector((state) => state.response);
   const { productIndex, setProductIndex } = useProductIndexState();
-
   const genericPressed = () => {
     setProductIndex(-1);
+    history.push(
+      `/${RESPONSE}/${response.specification.bank.id}/${PRODUCTS}/general/`
+    );
   };
 
   const productPressed = (index: number) => {
     setProductIndex(index);
+    history.push(
+      `/${RESPONSE}/${response.specification.bank.id}/${PRODUCTS}/${response.products[index].id}/`
+    );
   };
 
   const renderProducts = (product: ISpecificationProduct, index: number) => {
