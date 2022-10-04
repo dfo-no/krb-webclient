@@ -1,4 +1,5 @@
 :root {
+  /* Colors */
   --background-color: #f7f7f7;
   --secondary-background-color: #bfe7f8;
   --input-background-color: white;
@@ -26,9 +27,11 @@
   --gray-color: #c4c4c4;
   --dark-gray-color: #999999;
 
+  /* App */
   --header-height: 10.1rem;
   --header-font: 'Source Pro Serif, Times New Roman, serif';
 
+  /* Font sizes */
   --giant-fontsize: 5rem;
   --huge-fontsize: 3.6rem;
   --large-fontsize: 2.4rem;
@@ -36,6 +39,12 @@
   --normal-fontsize: 1.8rem;
   --small-fontsize: 1.4rem;
 
+  /* Font weights */
+  --font-weight-normal: 400;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+
+  /* Gap */
   --large-gap: 8rem;
   --big-gap: 4rem;
   --normal-gap: 2.4rem;

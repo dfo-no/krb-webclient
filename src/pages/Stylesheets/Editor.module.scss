@@ -86,6 +86,14 @@
       flex-direction: row;
       padding-bottom: var(--micro-gap);
       border-bottom: 0.1rem solid;
+      justify-content: space-between;
+
+      &__text {
+        font-size: var(--small-fontsize);
+        font-weight: var(--font-weight-semibold);
+        color: var(--white-color);
+        margin-right: 1rem;
+      }
     }
 
     .HeaderBottom {
