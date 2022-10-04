@@ -1,12 +1,6 @@
 name: Cypress Tests using Cypress Docker Image
 
-on:
-  pull_request:
-    branches:
-      - krb-*
-      - KRB-*
-
-
+on: [push]
 
 jobs:
   cypress-run:
