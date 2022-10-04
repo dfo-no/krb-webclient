@@ -16,7 +16,6 @@ function ResponseSideBar(): React.ReactElement {
   const history = useHistory();
   const { response } = useAppSelector((state) => state.response);
   const { productIndex, setProductIndex } = useProductIndexState();
-  console.log(response);
   const genericPressed = () => {
     setProductIndex(-1);
     history.push(
