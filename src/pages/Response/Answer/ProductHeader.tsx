@@ -2,7 +2,7 @@ import React from 'react';
 import { Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 
-import css from '../../Stylesheets/Editor.module.scss';
+import css from '../../Stylesheets/EditorFullPage.module.scss';
 import { DFOCardHeader } from '../../../components/DFOCard/DFOCardHeader';
 import { DFOHeaderContentBox } from '../../../components/DFOCard/DFOHeaderContentBox';
 import { useAppSelector } from '../../../store/hooks';

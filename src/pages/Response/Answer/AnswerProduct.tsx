@@ -9,11 +9,22 @@ import { INeed } from '../../../Nexus/entities/INeed';
 import { IRequirementAnswer } from '../../../Nexus/entities/IRequirementAnswer';
 import { useAppSelector } from '../../../store/hooks';
 import { useProductIndexState } from '../../../components/ProductIndexContext/ProductIndexContext';
+import { RESPONSE } from '../../../common/PathConstants';
+import { useHistory } from 'react-router-dom';
+import { Button } from '@mui/material';
+import Panel from '../../../components/UI/Panel/Panel';
+import { useTranslation } from 'react-i18next';
 
 export default function AnswerProduct(): React.ReactElement {
+  const { t } = useTranslation();
+  const history = useHistory();
   const { response } = useAppSelector((state) => state.response);
   const { productIndex } = useProductIndexState();
   const existingNeeds = new Set<INeed>();
+
+  const toOverviewPage = (): void => {
+    history.push(`/${RESPONSE}/${response.specification.bank.id}`);
+  };
 
   const renderRequirementAnswer = (
     requirementAnswer: IRequirementAnswer,
@@ -60,6 +71,15 @@ export default function AnswerProduct(): React.ReactElement {
     <div>
       <ProductHeader />
       <AccordionProvider>{renderRequirements()}</AccordionProvider>
+      <Panel
+        sticky={true}
+        panelColor={'white'}
+        children={
+          <Button variant="primary" onClick={toOverviewPage}>
+            {t('Save')}
+          </Button>
+        }
+      />
     </div>
   );
 }
