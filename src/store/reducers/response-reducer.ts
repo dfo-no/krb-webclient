@@ -4,6 +4,7 @@ import Utils from '../../common/Utils';
 import { IRequirementAnswer } from '../../Nexus/entities/IRequirementAnswer';
 import { IResponse } from '../../Nexus/entities/IResponse';
 import { ModelType } from '../../Nexus/enums';
+import { IResponseProduct } from '../../Nexus/entities/IResponseProduct';
 
 interface IResponseState {
   response: IResponse;
@@ -52,6 +53,16 @@ const responseSlice = createSlice({
     setResponse(state, { payload }: PayloadAction<IResponse>) {
       state.response = payload;
     },
+    editResponseProduct(state, { payload }: PayloadAction<IResponseProduct>) {
+      if (
+        state.response.products.find((product) => product.id === payload.id)
+      ) {
+        const productIndex = state.response.products.findIndex(
+          (product) => product.id === payload.id
+        );
+        state.response.products[productIndex] = payload;
+      }
+    },
     addRequirementAnswer(
       state,
       { payload }: PayloadAction<IRequirementAnswer>
@@ -99,7 +110,11 @@ const responseSlice = createSlice({
   }
 });
 
-export const { setResponse, addRequirementAnswer, addProductAnswer } =
-  responseSlice.actions;
+export const {
+  setResponse,
+  editResponseProduct,
+  addRequirementAnswer,
+  addProductAnswer
+} = responseSlice.actions;
 
 export default responseSlice.reducer;

@@ -9,6 +9,7 @@ import { INeed } from '../../../Nexus/entities/INeed';
 import { IRequirementAnswer } from '../../../Nexus/entities/IRequirementAnswer';
 import { useAppSelector } from '../../../store/hooks';
 import { useProductIndexState } from '../../../components/ProductIndexContext/ProductIndexContext';
+import EditResponseProduct from '../EditResponseProduct/EditResponseProduct';
 import { RESPONSE } from '../../../common/PathConstants';
 import { useHistory } from 'react-router-dom';
 import { Button } from '@mui/material';
@@ -70,6 +71,7 @@ export default function AnswerProduct(): React.ReactElement {
   return (
     <div>
       <ProductHeader />
+      {productIndex > -1 && <EditResponseProduct />}
       <AccordionProvider>{renderRequirements()}</AccordionProvider>
       <Panel
         sticky={true}
