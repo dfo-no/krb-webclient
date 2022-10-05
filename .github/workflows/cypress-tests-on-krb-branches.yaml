@@ -17,3 +17,4 @@ jobs:
         with:
           # Specify Browser since container image is compile with Firefox
           browser: firefox
+          spec: cypress/e2e/KRB-homepage.cy.ts
