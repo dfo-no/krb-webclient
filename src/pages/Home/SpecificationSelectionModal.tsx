@@ -42,10 +42,11 @@ export default function SpecificationSelectionModal({
 
   const editSpecification = (): void => {
     dispatch(selectBank(selectedSpecification.specification.bank.id));
-    nexus.specificationService.setSpecification(
-      selectedSpecification.specification
-    );
-    history.push(`/${SPECIFICATION}/${selectedSpecification.id}`);
+    nexus.specificationService
+      .setSpecification(selectedSpecification.specification)
+      .then((specification) => {
+        history.push(`/${SPECIFICATION}/${specification.id}`);
+      });
   };
 
   const createResponse = (): void => {
