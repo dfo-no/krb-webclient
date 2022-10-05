@@ -15,6 +15,6 @@ jobs:
       - name: Cypress run
         uses: cypress-io/github-action@v4.2.0 # use the explicit version number
         with:
-          # Specify Browser since container image is compile with Firefox
+          start: npm start
           browser: electron
           spec: cypress/e2e/KRB-homepage.cy.ts
