@@ -86,14 +86,6 @@
       flex-direction: row;
       padding-bottom: var(--micro-gap);
       border-bottom: 0.1rem solid;
-      justify-content: space-between;
-
-      &__text {
-        font-size: var(--small-fontsize);
-        font-weight: var(--font-weight-semibold);
-        color: var(--white-color);
-        margin-right: 1rem;
-      }
     }
 
     .HeaderBottom {
@@ -105,6 +97,16 @@
         margin-left: auto;
         padding-right: var(--normal-gap);
       }
+    }
+
+    .Price {
+      display: flex;
+      flex-direction: row;
+      gap: var(--tiny-gap);
+      width: fit-content;
+      margin-left: auto;
+      margin-top: var(--small-gap);
+      align-items: center;
     }
 
     .Need {

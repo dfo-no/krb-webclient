@@ -1,6 +1,7 @@
 import React, { ReactElement } from 'react';
 import { useTranslation } from 'react-i18next';
 import { FormProvider, useForm } from 'react-hook-form';
+import Typography from '@mui/material/Typography';
 
 import { useProductIndexState } from '../../../components/ProductIndexContext/ProductIndexContext';
 import { useAppDispatch, useAppSelector } from '../../../store/hooks';
@@ -9,24 +10,12 @@ import { useSpecificationState } from '../../SpecEditor/SpecificationContext';
 import { IResponseProduct } from '../../../Nexus/entities/IResponseProduct';
 import { ModelType } from '../../../Nexus/enums';
 import VerticalTextCtrl from '../../../FormProvider/VerticalTextCtrl';
-import Typography from '@mui/material/Typography';
 import theme from '../../../theme';
-import {
-  ModalBox,
-  ModalButton,
-  ModalButtonsBox,
-  ModalFieldsBox
-} from '../../../components/ModalBox/ModalBox';
 import GeneralErrorMessage from '../../../Form/GeneralErrorMessage';
 import { editResponseProduct } from '../../../store/reducers/response-reducer';
+import css from '../../Stylesheets/Editor.module.scss';
 
-interface IProps {
-  handleSubmit: () => void;
-}
-
-export default function EditResponseProduct({
-  handleSubmit
-}: IProps): ReactElement {
+export default function EditResponseProduct(): ReactElement {
   const { t } = useTranslation();
   const { productIndex } = useProductIndexState();
   const { response } = useAppSelector((state) => state.response);
@@ -39,37 +28,28 @@ export default function EditResponseProduct({
     defaultValues: response.products[productIndex]
   });
 
-  const onSubmit = (put: IResponseProduct) => {
+  const handelProductPrice = (put: IResponseProduct) => {
     dispatch(editResponseProduct(put));
-    handleSubmit();
   };
 
   return (
     <FormProvider {...methods}>
       <form
-        onSubmit={methods.handleSubmit(onSubmit)}
+        onBlur={methods.handleSubmit(handelProductPrice)}
         autoComplete="off"
         noValidate
       >
-        <ModalBox>
-          <ModalFieldsBox>
-            <VerticalTextCtrl
-              name="price"
-              label={t('Price of product')}
-              placeholder={t('Price of product')}
-              children={
-                <Typography color={theme.palette.primary.main}>
-                  {specification.currencyUnit}
-                </Typography>
-              }
-            />
-          </ModalFieldsBox>
-          <ModalButtonsBox>
-            <ModalButton variant="save" type="submit">
-              {t('Save')}
-            </ModalButton>
-          </ModalButtonsBox>
-        </ModalBox>
+        <VerticalTextCtrl
+          className={css.Price}
+          name="price"
+          label={t('Price of product')}
+          placeholder={t('Price of product')}
+          children={
+            <Typography color={theme.palette.primary.main}>
+              {specification.currencyUnit}
+            </Typography>
+          }
+        />
         <GeneralErrorMessage errors={methods.formState.errors} />
       </form>
     </FormProvider>

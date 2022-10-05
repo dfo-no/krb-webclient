@@ -9,6 +9,7 @@ import { INeed } from '../../../Nexus/entities/INeed';
 import { IRequirementAnswer } from '../../../Nexus/entities/IRequirementAnswer';
 import { useAppSelector } from '../../../store/hooks';
 import { useProductIndexState } from '../../../components/ProductIndexContext/ProductIndexContext';
+import EditResponseProduct from '../EditResponseProduct/EditResponseProduct';
 
 export default function AnswerProduct(): React.ReactElement {
   const { response } = useAppSelector((state) => state.response);
@@ -59,6 +60,7 @@ export default function AnswerProduct(): React.ReactElement {
   return (
     <div>
       <ProductHeader />
+      {productIndex > -1 && <EditResponseProduct />}
       <AccordionProvider>{renderRequirements()}</AccordionProvider>
     </div>
   );
