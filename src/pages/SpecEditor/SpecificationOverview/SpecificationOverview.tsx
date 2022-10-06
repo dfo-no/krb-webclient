@@ -1,4 +1,4 @@
-import React, { ReactElement } from 'react';
+import React, { ReactElement, useState } from 'react';
 import { Box, Typography } from '@mui/material/';
 import { useHistory } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
@@ -17,6 +17,7 @@ import NewProductSelection from '../NewProduct/NewProductSelection';
 import Toolbar from '../../../components/UI/Toolbar/ToolBar';
 import ToolbarItem from '../../../components/UI/Toolbar/ToolbarItem';
 import { Weighting } from '../../../Nexus/enums';
+import EditSpecificationForm from '../EditSpecificationForm';
 
 export default function SpecificationOverview(): React.ReactElement {
   const { t } = useTranslation();
@@ -25,6 +26,7 @@ export default function SpecificationOverview(): React.ReactElement {
   const history = useHistory();
   const { setDeleteMode } = useSelectState();
   const { specification } = useSpecificationState();
+  const [editingSpecification, setEditingSpecification] = useState(false);
 
   const open = (): void => {
     setOpenProductSelection(true);
@@ -41,17 +43,13 @@ export default function SpecificationOverview(): React.ReactElement {
     history.push(`/${SPECIFICATION}/${specification.id}/${PRODUCTS}/general/`);
   };
 
-  const editSpecification = (): void => {
-    history.push(`/${SPECIFICATION}/${specification.id}/edit`);
-  };
-
   const renderSpecificationActionsToolbar = (): ReactElement => {
     return (
       <Toolbar gapType={'lg'} hasPadding={true}>
         <ToolbarItem
           primaryText={t('Edit specification')}
           icon={<EditIcon />}
-          handleClick={() => editSpecification()}
+          handleClick={() => setEditingSpecification(true)}
         />
         <DownloadButton />
       </Toolbar>
@@ -86,12 +84,14 @@ export default function SpecificationOverview(): React.ReactElement {
             icon={<DeleteIcon />}
             handleClick={() => setDeleteMode(product.id)}
             fontSize={'small'}
+            disabled={editingSpecification}
           />
           <ToolbarItem
             secondaryText={t('Edit product')}
             icon={<EditIcon />}
             handleClick={() => productPressed(product.id)}
             fontSize={'small'}
+            disabled={editingSpecification}
           />
         </Toolbar>
       );
@@ -148,9 +148,17 @@ export default function SpecificationOverview(): React.ReactElement {
 
   return (
     <div className={css.overview}>
-      <Typography variant={'lgBold'}>{specification.title}</Typography>
-      {renderSpecificationActionsToolbar()}
-      {renderSpecificationInfoToolbar()}
+      {!editingSpecification && (
+        <Typography variant={'lgBold'}>{specification.title}</Typography>
+      )}
+      {!editingSpecification && renderSpecificationActionsToolbar()}
+      {!editingSpecification && renderSpecificationInfoToolbar()}
+      {editingSpecification && (
+        <EditSpecificationForm
+          specification={specification}
+          handleCancel={() => setEditingSpecification(false)}
+        />
+      )}
       <Toolbar spacingType={'between'}>
         <ToolbarItem
           secondaryText={t('Products')}
@@ -161,6 +169,7 @@ export default function SpecificationOverview(): React.ReactElement {
           primaryText={t('Create a new product')}
           icon={<AddIcon />}
           handleClick={open}
+          disabled={editingSpecification}
         />
       </Toolbar>
       <ul aria-label="products">
@@ -176,6 +185,7 @@ export default function SpecificationOverview(): React.ReactElement {
                   icon={<EditIcon />}
                   handleClick={() => genericPressed()}
                   fontSize={'small'}
+                  disabled={editingSpecification}
                 />
               </Toolbar>
             </div>

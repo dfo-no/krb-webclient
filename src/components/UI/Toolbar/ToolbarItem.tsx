@@ -12,6 +12,7 @@ export interface ToolbarItemProps {
   disablePadding?: boolean;
   fontWeight?: FontWeight;
   fontSize?: FontSize;
+  disabled?: boolean;
 }
 
 export default function ToolbarItem({
@@ -20,14 +21,16 @@ export default function ToolbarItem({
   icon,
   handleClick,
   fontWeight,
-  fontSize
+  fontSize,
+  disabled
 }: ToolbarItemProps): ReactElement {
   return (
     <div
-      onClick={handleClick}
+      onClick={disabled ? void disabled : handleClick}
       data-font-weight={fontWeight}
       data-change={!!handleClick}
       data-font-size={fontSize}
+      data-disabled={disabled}
     >
       {icon && icon}
       {primaryText && (
