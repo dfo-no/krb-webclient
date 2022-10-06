@@ -44,6 +44,8 @@ export default function ProductVariant({
                 secondaryText={t('Choose variant')}
                 icon={<AddIcon />}
                 handleClick={() => openVariant(checkedVariantId, variant.id)}
+                fontWeight={'bold'}
+                fontSize={'small'}
               />
             </Toolbar>
           </div>

@@ -43,23 +43,20 @@ export default function ProductHeader({ product }: IProps): React.ReactElement {
 
   const renderProductInfoToolbar = (): ReactElement => {
     return (
-      <Toolbar>
+      <Toolbar gapType={'md'}>
         <ToolbarItem
           primaryText={t('Quantity')}
           secondaryText={`${product?.amount} ${product?.unit}`}
-          fontSize={'small'}
         />
         {product?.weight && (
           <ToolbarItem
             primaryText={t('Weighting')}
             secondaryText={t(`${Weighting[product?.weight]}`)}
-            fontSize={'small'}
           />
         )}
         <ToolbarItem
           primaryText={t('Type')}
           secondaryText={product?.originProduct.title}
-          fontSize={'small'}
         />
       </Toolbar>
     );
@@ -72,7 +69,7 @@ export default function ProductHeader({ product }: IProps): React.ReactElement {
           <Typography variant="lgBold">{product?.title}</Typography>
           {renderProductActionsToolbar()}
           {renderProductInfoToolbar()}
-          <Typography variant="sm">{product?.description}</Typography>
+          <Typography variant="md">{product?.description}</Typography>
         </>
       ) : (
         <Typography variant="lgBold">{t('General requirements')}</Typography>
