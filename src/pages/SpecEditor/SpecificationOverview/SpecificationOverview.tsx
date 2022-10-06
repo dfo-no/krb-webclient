@@ -29,18 +29,32 @@ export default function SpecificationOverview(): React.ReactElement {
   const [editingSpecification, setEditingSpecification] = useState(false);
 
   const open = (): void => {
-    setOpenProductSelection(true);
+    if (!editingSpecification) {
+      setOpenProductSelection(true);
+    }
   };
   const onDelete = (): void => {
     setDeleteMode('');
   };
 
+  const handleDelete = (pid: string): void => {
+    if (!editingSpecification) {
+      setDeleteMode(pid);
+    }
+  };
+
   const productPressed = (pid: string): void => {
-    history.push(`/${SPECIFICATION}/${specification.id}/${PRODUCTS}/${pid}/`);
+    if (!editingSpecification) {
+      history.push(`/${SPECIFICATION}/${specification.id}/${PRODUCTS}/${pid}/`);
+    }
   };
 
   const genericPressed = (): void => {
-    history.push(`/${SPECIFICATION}/${specification.id}/${PRODUCTS}/general/`);
+    if (!editingSpecification) {
+      history.push(
+        `/${SPECIFICATION}/${specification.id}/${PRODUCTS}/general/`
+      );
+    }
   };
 
   const renderSpecificationActionsToolbar = (): ReactElement => {
@@ -84,7 +98,7 @@ export default function SpecificationOverview(): React.ReactElement {
           <ToolbarItem
             secondaryText={t('Delete product')}
             icon={<DeleteIcon />}
-            handleClick={() => setDeleteMode(product.id)}
+            handleClick={() => handleDelete(product.id)}
             fontSize={'small'}
             disabled={editingSpecification}
           />

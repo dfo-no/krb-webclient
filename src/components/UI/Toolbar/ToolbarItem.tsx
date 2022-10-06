@@ -26,7 +26,7 @@ export default function ToolbarItem({
 }: ToolbarItemProps): ReactElement {
   return (
     <div
-      onClick={disabled ? void disabled : handleClick}
+      onClick={handleClick}
       data-font-weight={fontWeight}
       data-change={!!handleClick}
       data-font-size={fontSize}
