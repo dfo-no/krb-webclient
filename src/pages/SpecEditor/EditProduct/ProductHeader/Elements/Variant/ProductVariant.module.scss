@@ -11,10 +11,5 @@
   .choose {
     align-self: center;
     margin-left: auto;
-
-    &:hover {
-      color: var(--link-hover-color);
-      cursor: pointer;
-    }
   }
 }
