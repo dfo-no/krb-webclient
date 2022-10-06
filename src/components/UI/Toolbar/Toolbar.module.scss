@@ -3,6 +3,26 @@
   flex-direction: row;
   gap: var(--small-gap);
 
+  &[data-padding='true'] {
+    padding: 1rem;
+  }
+
+  &[data-gap='none'] {
+    gap: 0;
+  }
+
+  &[data-gap='sm'] {
+    gap: calc(var(--small-gap) * 0.5);
+  }
+
+  &[data-gap='md'] {
+    gap: calc(var(--small-gap) * 2);
+  }
+
+  &[data-gap='lg'] {
+    gap: calc(var(--small-gap) * 4);
+  }
+
   p,
   span,
   svg {
@@ -58,13 +78,17 @@
     }
 
     &[data-change='true'] {
-      p,
-      span {
-        cursor: pointer;
-
-        &:hover {
-          color: var(--link-hover-color);
-        }
+      cursor: pointer;
+      &:hover {
+        background-color: var(--hover-gray-color);
+      }
+      &:active {
+        background-color: var(--text-primary-color);
+        color: var(--white-color);
+      }
+      &:focus {
+        border: 0.2rem var(--text-primary-color) solid;
+        background-color: inherit;
       }
     }
 

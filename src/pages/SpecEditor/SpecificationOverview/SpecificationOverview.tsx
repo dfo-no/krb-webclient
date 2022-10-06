@@ -13,13 +13,13 @@ import { ISpecificationProduct } from '../../../Nexus/entities/ISpecificationPro
 import { useSelectState } from '../../Workbench/Create/SelectContext';
 import { useSpecificationState } from '../SpecificationContext';
 import { PRODUCTS, SPECIFICATION } from '../../../common/PathConstants';
-import NewProductSelection from './NewProductSelection';
+import NewProductSelection from '../NewProduct/NewProductSelection';
 import { DFOCardHeaderIconButton } from '../../../components/DFOCard/DFOCardHeaderIconButton';
 import Toolbar from '../../../components/UI/Toolbar/ToolBar';
 import ToolbarItem from '../../../components/UI/Toolbar/ToolbarItem';
 import { Weighting } from '../../../Nexus/enums';
 
-export default function NewProduct(): React.ReactElement {
+export default function SpecificationOverview(): React.ReactElement {
   const { t } = useTranslation();
   const { openProductSelection, setOpenProductSelection } =
     useSpecificationState();
@@ -48,7 +48,7 @@ export default function NewProduct(): React.ReactElement {
 
   const renderSpecificationActionsToolbar = (): ReactElement => {
     return (
-      <Toolbar>
+      <Toolbar gapType={'lg'} hasPadding={true}>
         <ToolbarItem
           primaryText={t('Edit specification')}
           icon={<EditIcon />}
