@@ -17,6 +17,7 @@ import NewProductSelection from './NewProductSelection';
 import { DFOCardHeaderIconButton } from '../../../components/DFOCard/DFOCardHeaderIconButton';
 import Toolbar from '../../../components/UI/Toolbar/ToolBar';
 import ToolbarItem from '../../../components/UI/Toolbar/ToolbarItem';
+import { Weighting } from '../../../Nexus/enums';
 
 export default function NewProduct(): React.ReactElement {
   const { t } = useTranslation();
@@ -107,7 +108,7 @@ export default function NewProduct(): React.ReactElement {
           />
           <ToolbarItem
             primaryText={t('Weighting')}
-            secondaryText={t(`${product.weight}`)}
+            secondaryText={t(`${Weighting[product.weight]}`)}
             fontSize={'small'}
           />
           <ToolbarItem
