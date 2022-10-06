@@ -2,18 +2,11 @@
   --from-checkbox-gap: 1.2rem;
 
   .card {
-    background-color: white;
     display: flex;
     flex-direction: column;
-    color: black;
-    padding: var(--small-gap);
-    padding-left: var(--normal-gap);
-    padding-right: var(--normal-gap);
-    margin: var(--normal-gap) 0;
 
-    .title {
-      margin-left: var(--big-gap);
-      border-bottom: 0.1rem solid;
+    .variant {
+      border: 0.1rem var(--border-color-secondary) solid;
     }
   }
 
