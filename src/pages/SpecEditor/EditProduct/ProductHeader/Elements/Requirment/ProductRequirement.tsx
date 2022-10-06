@@ -193,9 +193,9 @@ export default function ProductRequirement({
           </Box>
         </Box>
       ) : (
-        <Box className={classnames(css.card)}>
+        <Box className={css.card}>
           <Box className={css.title}>
-            <Typography variant="lgBold">{requirement.title}</Typography>
+            <Typography variant="smBold">{requirement.title}</Typography>
           </Box>
           <FormProvider {...methods}>
             <form
@@ -203,7 +203,7 @@ export default function ProductRequirement({
               autoComplete="off"
               noValidate
             >
-              <Box>
+              <Box className={css.variant}>
                 {requirement.variants.map((variant) => {
                   return <ProductVariant key={variant.id} variant={variant} />;
                 })}

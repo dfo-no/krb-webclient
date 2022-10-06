@@ -1,14 +1,19 @@
 .ProductVariant {
   display: flex;
   flex-direction: row;
+  padding: var(--small-gap);
 
-  .title {
-    align-self: center;
-    margin-left: var(--from-checkbox-gap);
-  }
-
-  .icons {
+  .content {
     display: flex;
+    flex-direction: column;
+  }
+  .choose {
+    align-self: center;
     margin-left: auto;
+
+    &:hover {
+      color: var(--link-hover-color);
+      cursor: pointer;
+    }
   }
 }

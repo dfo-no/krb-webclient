@@ -1,16 +1,14 @@
-import EditIcon from '@mui/icons-material/Edit';
+import AddIcon from '@mui/icons-material/Add';
 import React from 'react';
 import { Box, Typography } from '@mui/material';
 import { Controller, useFormContext, useWatch } from 'react-hook-form';
 import { t } from 'i18next';
 
 import css from './ProductVariant.module.scss';
-import { DFOCheckbox } from '../../../../../../components/DFOCheckbox/DFOCheckbox';
-import { DFOChip } from '../../../../../../components/DFOChip/DFOChip';
-import { FormIconButton } from '../../../../../../components/Form/FormIconButton';
 import { IRequirementAnswer } from '../../../../../../Nexus/entities/IRequirementAnswer';
 import { IVariant } from '../../../../../../Nexus/entities/IVariant';
-import { VariantType } from '../../../../../../Nexus/enums';
+import ToolbarItem from '../../../../../../components/UI/Toolbar/ToolbarItem';
+import Toolbar from '../../../../../../components/UI/Toolbar/ToolBar';
 
 interface IProps {
   variant: IVariant;
@@ -32,27 +30,23 @@ export default function ProductVariant({
     }
   };
 
-  const variantChecked = (checkedId: string, variantId: string) => {
-    return variantId === checkedId;
-  };
-
   return (
     <Controller
       render={({ field: { value: checkedVariantId = useVariant } }) => (
-        <Box
-          onClick={() => openVariant(checkedVariantId, variant.id)}
-          className={css.ProductVariant}
-        >
-          <DFOCheckbox checked={variantChecked(checkedVariantId, variant.id)} />
-          <Typography variant={'lg'} className={css.title}>
-            {variant.description}
-          </Typography>
-          <Box className={css.icons}>
-            {variant.type === VariantType.info && <DFOChip label={t('Info')} />}
-            <FormIconButton>
-              <EditIcon />
-            </FormIconButton>
-          </Box>
+        <Box className={css.ProductVariant}>
+          <div className={css.content}>
+            <Typography variant={'smBold'}>{variant.description}</Typography>
+            <Typography variant={'sm'}>{variant.requirementText}</Typography>
+          </div>
+          <div className={css.choose}>
+            <Toolbar>
+              <ToolbarItem
+                secondaryText={t('Choose variant')}
+                icon={<AddIcon />}
+                handleClick={() => openVariant(checkedVariantId, variant.id)}
+              />
+            </Toolbar>
+          </div>
         </Box>
       )}
       name={''}

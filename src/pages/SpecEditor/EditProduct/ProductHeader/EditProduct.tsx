@@ -49,9 +49,14 @@ export default function EditProduct(): React.ReactElement {
           sticky={true}
           panelColor={'white'}
           children={
-            <Button variant="primary" onClick={toOverviewPage}>
-              {t('Save')}
-            </Button>
+            <>
+              <Button variant="cancel" onClick={toOverviewPage}>
+                {t('Cancel')}
+              </Button>
+              <Button variant="primary" onClick={toOverviewPage}>
+                {t('Save product')}
+              </Button>
+            </>
           }
         />
       </div>

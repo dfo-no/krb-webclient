@@ -19,7 +19,7 @@ export default function ProductNeed({
   return (
     <div>
       <div className={css.Need}>
-        <Typography variant="smBold">{need.title}</Typography>
+        <Typography variant="mdBold">{need.title}</Typography>
       </div>
       {need.requirements.map((req) => {
         return (
