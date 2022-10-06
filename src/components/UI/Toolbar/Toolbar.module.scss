@@ -80,7 +80,7 @@
     &[data-change='true'] {
       cursor: pointer;
       &:hover {
-        background-color: var(--hover-gray-color);
+        color: var(--link-hover-color);
       }
       &:active {
         background-color: var(--text-primary-color);
