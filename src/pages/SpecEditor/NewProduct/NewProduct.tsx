@@ -49,7 +49,7 @@ export default function NewProduct(): React.ReactElement {
     return (
       <Toolbar>
         <ToolbarItem
-          primaryText={t('Edit')}
+          primaryText={t('Edit specification')}
           icon={<EditIcon />}
           handleClick={() => editSpecification()}
         />
