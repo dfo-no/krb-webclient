@@ -58,15 +58,17 @@ export default function SpecificationOverview(): React.ReactElement {
 
   const renderSpecificationInfoToolbar = (): ReactElement => {
     return (
-      <Toolbar>
+      <Toolbar gapType={'md'}>
         <ToolbarItem
           primaryText={t('Organization')}
           secondaryText={specification.organization}
         />
-        <ToolbarItem
-          primaryText={t('Case number')}
-          secondaryText={specification.caseNumber}
-        />
+        {specification.caseNumber && (
+          <ToolbarItem
+            primaryText={t('Case number')}
+            secondaryText={specification.caseNumber}
+          />
+        )}
         <ToolbarItem
           primaryText={t('CURRENCY_UNIT')}
           secondaryText={t(`CURRENCY_UNIT_${specification.currencyUnit}`)}
