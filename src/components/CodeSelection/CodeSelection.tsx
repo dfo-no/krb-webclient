@@ -70,7 +70,7 @@ const CodeSelection = ({
       render={({ field: { value: selected = [], onChange } }) => (
         <ScrollableContainer className={css.Selection}>
           <List>
-            {codes.map((item) => {
+            {codes?.map((item) => {
               return (
                 <ListItem
                   key={item.id}
