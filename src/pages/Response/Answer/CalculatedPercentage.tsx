@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { t } from 'i18next';
 
-import css from '../../Stylesheets/Editor.module.scss';
+import css from '../../Stylesheets/EditorFullPage.module.scss';
 import Nexus from '../../../Nexus/Nexus';
 import { IPointsCalculation } from '../../../Nexus/entities/IPointsCalculation';
 import { useAppSelector } from '../../../store/hooks';
