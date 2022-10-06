@@ -1,25 +1,33 @@
-import React, { ReactElement } from 'react';
+import React from 'react';
+import { Route, Switch } from 'react-router-dom';
 
 import AnswerProduct from './Answer/AnswerProduct';
-import css from '../Stylesheets/Editor.module.scss';
-import ResponseStart from './ResponseStart/ResponseStart';
-import ResponseSideBar from './SideBar/ResponseSideBar';
-import { useProductIndexState } from '../../components/ProductIndexContext/ProductIndexContext';
+import css from '../Stylesheets/EditorFullPage.module.scss';
+import ResponseOverview from './Overview/ResponseOverview';
+import { SelectProvider } from '../Workbench/Create/SelectContext';
+import { RESPONSE, PRODUCTS } from '../../common/PathConstants';
+import { useAppSelector } from '../../store/hooks';
 
 export default function ResponseEditor(): React.ReactElement {
-  const { productIndex } = useProductIndexState();
-
-  const renderProduct = (): ReactElement => {
-    if (productIndex >= -1) {
-      return <AnswerProduct />;
-    }
-    return <ResponseStart />;
-  };
-
+  const { response } = useAppSelector((state) => state.response);
   return (
-    <div className={css.Editor}>
-      <ResponseSideBar />
-      <div className={css.Content} children={renderProduct()} />
+    <div className={css.EditorFullPage}>
+      <div className={css.Content}>
+        <Switch>
+          <Route exact path={`/${RESPONSE}/${response.specification.bank.id}`}>
+            <SelectProvider>
+              <ResponseOverview />
+            </SelectProvider>
+          </Route>
+          <Route
+            path={`/${RESPONSE}/${response.specification.bank.id}/${PRODUCTS}/`}
+          >
+            <SelectProvider>
+              <AnswerProduct />
+            </SelectProvider>
+          </Route>
+        </Switch>
+      </div>
     </div>
   );
 }

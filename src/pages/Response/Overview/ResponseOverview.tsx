@@ -1,8 +1,8 @@
 import React from 'react';
-import { Divider, Typography } from '@mui/material/';
+import { Box, Divider, Typography } from '@mui/material/';
 import { useTranslation } from 'react-i18next';
 
-import css from '../../Stylesheets/Editor.module.scss';
+import css from '../../Stylesheets/EditorFullPage.module.scss';
 import DownloadButton from '../Download/DownloadButton';
 import theme from '../../../theme';
 import { ISpecificationProduct } from '../../../Nexus/entities/ISpecificationProduct';
@@ -10,12 +10,16 @@ import { useAppSelector } from '../../../store/hooks';
 import { useProductIndexState } from '../../../components/ProductIndexContext/ProductIndexContext';
 import { useHistory } from 'react-router-dom';
 import { PRODUCTS, RESPONSE } from '../../../common/PathConstants';
+import { FormIconButton } from '../../../components/Form/FormIconButton';
+import EditIcon from '@mui/icons-material/Edit';
+import { DFOCardHeaderIconButton } from '../../../components/DFOCard/DFOCardHeaderIconButton';
+import Panel from '../../../components/UI/Panel/Panel';
 
-function ResponseSideBar(): React.ReactElement {
+function ResponseOverview(): React.ReactElement {
   const { t } = useTranslation();
   const history = useHistory();
   const { response } = useAppSelector((state) => state.response);
-  const { productIndex, setProductIndex } = useProductIndexState();
+  const { setProductIndex } = useProductIndexState();
   const genericPressed = () => {
     setProductIndex(-1);
     history.push(
@@ -31,45 +35,52 @@ function ResponseSideBar(): React.ReactElement {
   };
 
   const renderProducts = (product: ISpecificationProduct, index: number) => {
-    const isSelected = productIndex === index;
     return (
-      <li
-        className={isSelected ? css.Active : undefined}
-        key={product.id}
-        onClick={() => productPressed(index)}
-      >
+      <li key={product.id}>
         <div className={css.CardContent}>
           <div className={css.CardTitle}>
             <Typography className={css.Text} variant="mdBold">
               {product.title}
             </Typography>
-            <div>
-              <Typography variant="mdBold">{product.amount}</Typography>{' '}
-              <Typography variant="mdBold">{product.unit}</Typography>
-            </div>
+            <FormIconButton onClick={() => productPressed(index)}>
+              <EditIcon />
+            </FormIconButton>
           </div>
           <Divider color={theme.palette.silver.main} />
-          <Typography className={css.Text} variant="sm">
-            {product.description}
-          </Typography>
+          <Box sx={{ display: 'flex', flexDirection: 'row' }}>
+            <Typography className={css.Text} variant="sm">
+              {product.description}
+            </Typography>
+            <Typography
+              sx={{ marginLeft: 'auto', paddingRight: 0.5 }}
+              variant="mdBold"
+            >
+              {product.amount}
+            </Typography>
+            <Typography sx={{ paddingRight: 2 }} variant="mdBold">
+              {product.unit}
+            </Typography>
+          </Box>
         </div>
       </li>
     );
   };
 
   return (
-    <div className={css.SideBar}>
+    <div className={css.overview}>
       <ul aria-label="products">
-        <li
-          className={productIndex === -1 ? css.Active : undefined}
-          key={'generic'}
-          onClick={() => genericPressed()}
-        >
+        <li className={css.Active} key={'generic'}>
           <div className={css.CardContent}>
             <div className={css.CardTitle}>
               <Typography variant="mdBold">
                 {t('General requirements')}
               </Typography>
+              <DFOCardHeaderIconButton
+                sx={{ marginLeft: 'auto', paddingRight: 2 }}
+                onClick={() => genericPressed()}
+              >
+                <EditIcon />
+              </DFOCardHeaderIconButton>
             </div>
             <Divider color={theme.palette.silver.main} />
           </div>
@@ -82,11 +93,9 @@ function ResponseSideBar(): React.ReactElement {
           })}
         </ul>
       )}
-      <div className={css.Button}>
-        <DownloadButton />
-      </div>
+      <Panel sticky={true} panelColor={'white'} children={<DownloadButton />} />
     </div>
   );
 }
 
-export default ResponseSideBar;
+export default ResponseOverview;
