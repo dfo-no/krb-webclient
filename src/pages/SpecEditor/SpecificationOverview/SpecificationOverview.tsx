@@ -80,7 +80,7 @@ export default function SpecificationOverview(): React.ReactElement {
   const renderProducts = (product: ISpecificationProduct): ReactElement => {
     const renderProductActionsToolbar = (): ReactElement => {
       return (
-        <Toolbar>
+        <Toolbar gapType={'md'}>
           <ToolbarItem
             secondaryText={t('Delete product')}
             icon={<DeleteIcon />}
