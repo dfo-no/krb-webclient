@@ -166,13 +166,13 @@ export default function SpecificationOverview(): React.ReactElement {
       <ul aria-label="products">
         <li key={'generic'}>
           <div className={css.CardContent}>
-            <div className={css.Genral}>
+            <div className={css.General}>
               <Typography variant={'mdBold'}>
                 {t('General requirements')}
               </Typography>
               <Toolbar>
                 <ToolbarItem
-                  secondaryText={t('Edit General requirements')}
+                  secondaryText={t('Edit general requirements')}
                   icon={<EditIcon />}
                   handleClick={() => genericPressed()}
                   fontSize={'small'}
