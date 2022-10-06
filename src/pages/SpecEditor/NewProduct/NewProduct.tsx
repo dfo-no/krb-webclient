@@ -1,25 +1,22 @@
 import React, { ReactElement } from 'react';
-import { Box, Button, Divider, Typography } from '@mui/material/';
-import { useHistory, useRouteMatch } from 'react-router-dom';
+import { Box, Typography } from '@mui/material/';
+import { useHistory } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import DeleteSpecProduct from '../EditProduct/DeleteSpecProduct';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
+import AddIcon from '@mui/icons-material/Add';
+
 import css from '../../Stylesheets/EditorFullPage.module.scss';
 import DownloadButton from '../Download/DownloadButton';
-import theme from '../../../theme';
+import DeleteSpecProduct from '../EditProduct/DeleteSpecProduct';
 import { ISpecificationProduct } from '../../../Nexus/entities/ISpecificationProduct';
-import {
-  IRouteSpecificationParams,
-  SpecificationProductPath
-} from '../../../models/IRouteSpecificationParams';
 import { useSelectState } from '../../Workbench/Create/SelectContext';
 import { useSpecificationState } from '../SpecificationContext';
 import { PRODUCTS, SPECIFICATION } from '../../../common/PathConstants';
-import { FormIconButton } from '../../../components/Form/FormIconButton';
 import NewProductSelection from './NewProductSelection';
-import { ISpecification } from '../../../Nexus/entities/ISpecification';
 import { DFOCardHeaderIconButton } from '../../../components/DFOCard/DFOCardHeaderIconButton';
+import Toolbar from '../../../components/UI/Toolbar/ToolBar';
+import ToolbarItem from '../../../components/UI/Toolbar/ToolbarItem';
 
 export default function NewProduct(): React.ReactElement {
   const { t } = useTranslation();
@@ -28,10 +25,6 @@ export default function NewProduct(): React.ReactElement {
   const history = useHistory();
   const { setDeleteMode } = useSelectState();
   const { specification } = useSpecificationState();
-  const routeMatch = useRouteMatch<IRouteSpecificationParams>(
-    SpecificationProductPath
-  );
-  const productId = routeMatch?.params?.productId;
 
   const open = (): void => {
     setOpenProductSelection(true);
@@ -48,72 +41,105 @@ export default function NewProduct(): React.ReactElement {
     history.push(`/${SPECIFICATION}/${specification.id}/${PRODUCTS}/general/`);
   };
 
-  const isGeneric = (): boolean => {
-    return specification.products.every((product) => product.id !== productId);
-  };
-
   const editSpecification = (): void => {
     history.push(`/${SPECIFICATION}/${specification.id}/edit`);
   };
 
-  const renderEditSpecifcationBar = (spec: ISpecification): ReactElement => {
+  const renderSpecificationActionsToolbar = (): ReactElement => {
     return (
-      <Box
-        className={css.Button}
-        sx={{
-          display: 'flex',
-          flexDirection: 'row-reverse'
-        }}
-      >
-        <Typography
-          className={css.editLink}
-          variant="md"
-          onClick={() => editSpecification()}
-        >
-          {t('Edit')}
-        </Typography>
-        <Typography sx={{ paddingRight: 2 }} variant="md">
-          {spec.organization}
-        </Typography>
-      </Box>
+      <Toolbar>
+        <ToolbarItem
+          primaryText={t('Edit')}
+          icon={<EditIcon />}
+          handleClick={() => editSpecification()}
+        />
+        <DownloadButton />
+      </Toolbar>
+    );
+  };
+
+  const renderSpecificationInfoToolbar = (): ReactElement => {
+    return (
+      <Toolbar>
+        <ToolbarItem
+          primaryText={t('Organization')}
+          secondaryText={specification.organization}
+        />
+        <ToolbarItem
+          primaryText={t('Case number')}
+          secondaryText={specification.caseNumber}
+        />
+        <ToolbarItem
+          primaryText={t('CURRENCY_UNIT')}
+          secondaryText={t(`CURRENCY_UNIT_${specification.currencyUnit}`)}
+        />
+      </Toolbar>
     );
   };
 
   const renderProducts = (product: ISpecificationProduct): ReactElement => {
-    const isSelected = product.id === productId;
+    const renderProductActionsToolbar = (): ReactElement => {
+      return (
+        <Toolbar>
+          <ToolbarItem
+            secondaryText={t('Delete product')}
+            icon={<DeleteIcon />}
+            handleClick={() => setDeleteMode(product.id)}
+            fontSize={'small'}
+          />
+          <ToolbarItem
+            secondaryText={t('Edit product')}
+            icon={<EditIcon />}
+            handleClick={() => productPressed(product.id)}
+            fontSize={'small'}
+          />
+        </Toolbar>
+      );
+    };
+
+    const renderProductInfoToolbar = (): ReactElement => {
+      return (
+        <Toolbar>
+          <ToolbarItem
+            primaryText={t('Quantity')}
+            secondaryText={`${product.amount} ${product.unit}`}
+            fontSize={'small'}
+          />
+          <ToolbarItem
+            primaryText={t('Weighting')}
+            secondaryText={t(`${product.weight}`)}
+            fontSize={'small'}
+          />
+          <ToolbarItem
+            primaryText={t('Type')}
+            secondaryText={product.originProduct.title}
+            fontSize={'small'}
+          />
+        </Toolbar>
+      );
+    };
     return (
-      <li className={isSelected ? css.Active : undefined} key={product.id}>
+      <li key={product.id}>
         <DeleteSpecProduct product={product} handleClose={onDelete}>
           <div className={css.CardContent}>
             <div className={css.CardTitle}>
               <Typography className={css.Text} variant="mdBold">
                 {product.title}
               </Typography>
-              <FormIconButton
-                sx={{ marginLeft: 'auto', paddingRight: 0 }}
-                onClick={() => setDeleteMode(product.id)}
-              >
-                <DeleteIcon />
-              </FormIconButton>
-              <FormIconButton onClick={() => productPressed(product.id)}>
-                <EditIcon />
-              </FormIconButton>
             </div>
-            <Divider color={theme.palette.silver.main} />
-            <Box sx={{ display: 'flex', flexDirection: 'row' }}>
+            <Box
+              sx={{
+                display: 'flex',
+                flexDirection: 'row',
+                justifyContent: 'space-between'
+              }}
+            >
               <Typography className={css.Text} variant="sm">
                 {product.description}
               </Typography>
-              <Typography
-                sx={{ marginLeft: 'auto', paddingRight: 0.5 }}
-                variant="mdBold"
-              >
-                {product.amount}
-              </Typography>
-              <Typography sx={{ paddingRight: 2 }} variant="mdBold">
-                {product.unit}
-              </Typography>
+              {renderProductActionsToolbar()}
             </Box>
+            {renderProductInfoToolbar()}
           </div>
         </DeleteSpecProduct>
       </li>
@@ -122,9 +148,23 @@ export default function NewProduct(): React.ReactElement {
 
   return (
     <div className={css.overview}>
-      {renderEditSpecifcationBar(specification)}
+      <Typography variant={'lgBold'}>{specification.title}</Typography>
+      {renderSpecificationActionsToolbar()}
+      {renderSpecificationInfoToolbar()}
+      <Toolbar spacingType={'between'}>
+        <ToolbarItem
+          secondaryText={t('Products')}
+          disablePadding={true}
+          fontWeight={'semibold'}
+        />
+        <ToolbarItem
+          primaryText={t('Create a new product')}
+          icon={<AddIcon />}
+          handleClick={open}
+        />
+      </Toolbar>
       <ul aria-label="products">
-        <li className={isGeneric() ? css.Active : undefined} key={'generic'}>
+        <li key={'generic'}>
           <div className={css.CardContent}>
             <div className={css.CardTitle}>
               <Typography variant="mdBold">
@@ -137,7 +177,6 @@ export default function NewProduct(): React.ReactElement {
                 <EditIcon />
               </DFOCardHeaderIconButton>
             </div>
-            <Divider color={theme.palette.silver.main} />
           </div>
         </li>
       </ul>
@@ -148,25 +187,7 @@ export default function NewProduct(): React.ReactElement {
           })}
         </ul>
       )}
-      <Box
-        className={css.Button}
-        sx={{
-          display: 'flex',
-          flexDirection: 'row-reverse'
-        }}
-      >
-        <Button
-          sx={{
-            marginLeft: 2
-          }}
-          variant="primary"
-          onClick={open}
-        >
-          {t('Create a new product')}
-        </Button>
-        <DownloadButton />
-        {openProductSelection && <NewProductSelection />}
-      </Box>
+      {openProductSelection && <NewProductSelection />}
     </div>
   );
 }

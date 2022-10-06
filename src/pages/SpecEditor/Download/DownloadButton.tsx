@@ -1,11 +1,12 @@
-import Button from '@mui/material/Button';
 import React from 'react';
 import { AxiosResponse } from 'axios';
 import { useTranslation } from 'react-i18next';
+import SystemUpdateAltIcon from '@mui/icons-material/SystemUpdateAlt';
 
 import { httpPost } from '../../../api/http';
 import { ISpecification } from '../../../Nexus/entities/ISpecification';
 import { useSpecificationState } from '../SpecificationContext';
+import ToolbarItem from '../../../components/UI/Toolbar/ToolbarItem';
 
 export default function DownloadButton(): React.ReactElement {
   const { t } = useTranslation();
@@ -36,8 +37,10 @@ export default function DownloadButton(): React.ReactElement {
   };
 
   return (
-    <Button variant="save" type="submit" onClick={onDownLoad}>
-      {t('Download specification')}
-    </Button>
+    <ToolbarItem
+      primaryText={t('Download specification')}
+      icon={<SystemUpdateAltIcon />}
+      handleClick={() => onDownLoad()}
+    />
   );
 }

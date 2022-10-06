@@ -7,6 +7,7 @@
   margin: 0 auto;
   padding: var(--big-gap);
   background: var(--light-gray-color);
+  color: var(--primary-color);
 
   .overview {
     display: flex;
@@ -23,24 +24,12 @@
       list-style: none;
       width: 100%;
 
-      + ul {
-        padding-top: var(--normal-gap);
-        margin-top: var(--tiny-gap);
-        border-top: 0.1rem solid var(--line-color);
-      }
-
       li {
-        border: 0.1rem var(--border-color-secondary) solid;
+        border: 0.1rem var(--border-color) solid;
         border-radius: 0.5rem;
         background: white;
         transition: all 220ms ease-out;
         min-height: 10rem;
-
-        &.Active {
-          background: var(--primary-color);
-          color: white;
-          cursor: default;
-        }
 
         .CardContent {
           display: flex;
@@ -65,17 +54,6 @@
 
     .Divider {
       margin-bottom: var(--small-gap);
-    }
-
-    .editLink {
-      border-left: 0.1rem solid var(--gray-color);
-      padding-left: var(--small-gap);
-      cursor: pointer;
-      text-decoration: underline;
-
-      &:hover {
-        color: var(--link-hover-color);
-      }
     }
   }
 
