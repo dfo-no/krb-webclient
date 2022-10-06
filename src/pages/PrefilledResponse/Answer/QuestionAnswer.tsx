@@ -78,7 +78,6 @@ export default function QuestionAnswer({
           existingAnswer={existingAnswer}
           onSubmit={onSubmit}
           codesList={codesList}
-          codeList={codelist}
         />
       );
     case QuestionVariant.Q_CONFIRMATION:

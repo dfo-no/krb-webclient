@@ -8,20 +8,17 @@ import { ICode } from '../../Nexus/entities/ICode';
 import { ICodeSelection } from '../../Nexus/entities/ICodelistQuestion';
 import { ScrollableContainer } from '../ScrollableContainer/ScrollableContainer';
 import { Parentable } from '../../models/Parentable';
-import { ICodelist } from '../../Nexus/entities/ICodelist';
 
 interface IProps {
   name: string;
   codesList: Parentable<ICode>[];
   codeSelection?: ICodeSelection[];
-  codeList?: ICodelist;
 }
 
 const CodeSelection = ({
   name,
   codesList,
-  codeSelection,
-  codeList
+  codeSelection
 }: IProps): React.ReactElement => {
   const sortCodes = (codesToBeSorted: ICode[]): ICode[] => {
     return [...codesToBeSorted].sort((a, b) => {
@@ -38,12 +35,6 @@ const CodeSelection = ({
       }
       return bSelection.score - aSelection.score;
     });
-  };
-
-  const responseCodes = () => {
-    if (codeList) {
-      return codeSelection ? sortCodes(codeList.codes) : codeList?.codes;
-    }
   };
 
   const codes = codeSelection ? sortCodes(codesList) : codesList;
@@ -74,14 +65,12 @@ const CodeSelection = ({
     return selection ? selection.mandatory : false;
   };
 
-  const productCodes = codesList.length > 0 ? codes : responseCodes();
-
   return (
     <Controller
       render={({ field: { value: selected = [], onChange } }) => (
         <ScrollableContainer className={css.Selection}>
           <List>
-            {productCodes?.map((item) => {
+            {codes?.map((item) => {
               return (
                 <ListItem
                   key={item.id}

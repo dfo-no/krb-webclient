@@ -14,7 +14,6 @@ import { useSelectState } from '../../Workbench/Create/SelectContext';
 import { useSpecificationState } from '../SpecificationContext';
 import { PRODUCTS, SPECIFICATION } from '../../../common/PathConstants';
 import NewProductSelection from '../NewProduct/NewProductSelection';
-import { DFOCardHeaderIconButton } from '../../../components/DFOCard/DFOCardHeaderIconButton';
 import Toolbar from '../../../components/UI/Toolbar/ToolBar';
 import ToolbarItem from '../../../components/UI/Toolbar/ToolbarItem';
 import { Weighting } from '../../../Nexus/enums';
@@ -167,16 +166,18 @@ export default function SpecificationOverview(): React.ReactElement {
       <ul aria-label="products">
         <li key={'generic'}>
           <div className={css.CardContent}>
-            <div className={css.CardTitle}>
-              <Typography variant="mdBold">
+            <div className={css.Genral}>
+              <Typography variant={'mdBold'}>
                 {t('General requirements')}
               </Typography>
-              <DFOCardHeaderIconButton
-                sx={{ marginLeft: 'auto', paddingRight: 2 }}
-                onClick={() => genericPressed()}
-              >
-                <EditIcon />
-              </DFOCardHeaderIconButton>
+              <Toolbar>
+                <ToolbarItem
+                  secondaryText={t('Edit General requirements')}
+                  icon={<EditIcon />}
+                  handleClick={() => genericPressed()}
+                  fontSize={'small'}
+                />
+              </Toolbar>
             </div>
           </div>
         </li>

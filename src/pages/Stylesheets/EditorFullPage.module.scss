@@ -5,7 +5,7 @@
   max-width: 250rem;
   gap: var(--big-gap);
   margin: 0 auto;
-  padding: var(--big-gap);
+  padding: var(--big-gap) var(--large-gap);
   background: var(--light-gray-color);
   color: var(--primary-color);
 
@@ -40,16 +40,20 @@
           gap: var(--tiny-gap);
           padding: var(--small-gap);
 
-          .CardTitle {
-            display: flex;
-            flex-direction: row;
-            justify-content: space-between;
-            gap: var(--normal-gap);
-          }
-
           .Text {
             overflow: hidden;
             text-overflow: ellipsis;
+          }
+
+          .Genral {
+            display: flex;
+            flex-direction: column;
+
+            &:last-child {
+              div {
+                margin-left: auto;
+              }
+            }
           }
         }
       }
