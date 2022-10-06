@@ -8,7 +8,6 @@ import SpecificationOverview from './SpecificationOverview/SpecificationOverview
 import { SelectProvider } from '../Workbench/Create/SelectContext';
 import { useSpecificationState } from './SpecificationContext';
 import { PRODUCTS, SPECIFICATION } from '../../common/PathConstants';
-import EditSpecificationForm from './EditSpecificationForm';
 
 export default function SpecEditor(): ReactElement {
   const { specification } = useSpecificationState();
@@ -30,9 +29,6 @@ export default function SpecEditor(): ReactElement {
             <SelectProvider>
               <EditProduct />
             </SelectProvider>
-          </Route>
-          <Route path={`/${SPECIFICATION}/:specId/edit`}>
-            <EditSpecificationForm specification={specification} />
           </Route>
         </Switch>
       </div>
