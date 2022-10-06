@@ -132,6 +132,25 @@ export default function Header(): React.ReactElement {
     setProject(baseUrl?.params.projectId ? fetchedProject : undefined);
   }, [baseUrl, fetchedProject]);
 
+  const getTitle = (): string => {
+    if (project) {
+      return project.title || t('Project');
+    }
+    if (isSpecification) {
+      return title || t('Requirement specification');
+    }
+    if (isResponse) {
+      return response.specification.title || t('Response');
+    }
+    if (isEvaluation) {
+      return specificationUpload.specification.title || t('Evaluation');
+    }
+    if (isPrefilledResponse) {
+      return prefilledResponse.bank.title || t('Prefilled response');
+    }
+    return t('app_title');
+  };
+
   if (isEvaluation) {
     breadcrumbs.push({
       label: t('Evaluation'),
@@ -148,7 +167,7 @@ export default function Header(): React.ReactElement {
 
   if (isSpecification) {
     breadcrumbs.push({
-      label: t('Requirement specification'),
+      label: `${t('Requirement specification')}/${getTitle()}`,
       url: '/specification'
     });
   }
@@ -193,25 +212,6 @@ export default function Header(): React.ReactElement {
     });
   }
 
-  const getTitle = (): string => {
-    if (project) {
-      return project.title || t('Project');
-    }
-    if (isSpecification) {
-      return title || t('Requirement specification');
-    }
-    if (isResponse) {
-      return response.specification.title || t('Response');
-    }
-    if (isEvaluation) {
-      return specificationUpload.specification.title || t('Evaluation');
-    }
-    if (isPrefilledResponse) {
-      return prefilledResponse.bank.title || t('Prefilled response');
-    }
-    return t('app_title');
-  };
-
   return (
     <AppBar
       elevation={0}
@@ -229,7 +229,9 @@ export default function Header(): React.ReactElement {
             <Breadcrumbs breadcrumbs={breadcrumbs} />
             <Box className={classes.viewingProjectTitle}>
               <Box className={classes.projectData}>
-                <Typography variant="xlBold">{getTitle()}</Typography>
+                <Typography variant="xlBold">
+                  {!isSpecification && getTitle()}
+                </Typography>
               </Box>
               {project && <DFOToolbar items={toolbarItems} />}
             </Box>

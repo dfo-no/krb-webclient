@@ -4,7 +4,7 @@ import { Route, Switch } from 'react-router-dom';
 import EditProduct from './EditProduct/ProductHeader/EditProduct';
 import css from '../Stylesheets/EditorFullPage.module.scss';
 import LoaderSpinner from '../../common/LoaderSpinner';
-import NewProduct from './NewProduct/NewProduct';
+import SpecificationOverview from './SpecificationOverview/SpecificationOverview';
 import { SelectProvider } from '../Workbench/Create/SelectContext';
 import { useSpecificationState } from './SpecificationContext';
 import { PRODUCTS, SPECIFICATION } from '../../common/PathConstants';
@@ -23,7 +23,7 @@ export default function SpecEditor(): ReactElement {
         <Switch>
           <Route exact path={`/${SPECIFICATION}/:specId`}>
             <SelectProvider>
-              <NewProduct />
+              <SpecificationOverview />
             </SelectProvider>
           </Route>
           <Route path={`/${SPECIFICATION}/:specId/${PRODUCTS}/:productId`}>
