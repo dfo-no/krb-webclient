@@ -65,7 +65,15 @@
   }
 
   .editPage {
-    align-self: center;
+    background-color: var(--white-color);
+    border: 0.2rem var(--primary-color) solid;
+    padding: var(--normal-gap);
+
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: var(--small-gap);
+    }
   }
 
   .Content {
@@ -99,11 +107,7 @@
     }
 
     .Need {
-      background: var(--primary-light-color);
-      color: white;
-      padding: var(--micro-gap);
-      padding-left: var(--normal-gap);
-      margin: var(--normal-gap) 0;
+      margin: var(--normal-gap) 0 0;
     }
 
     .Percentage {

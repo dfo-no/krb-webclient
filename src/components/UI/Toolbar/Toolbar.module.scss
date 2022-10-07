@@ -90,6 +90,11 @@
         border: 0.2rem var(--text-primary-color) solid;
         background-color: inherit;
       }
+      &[data-disabled='true'] {
+        background-color: var(--border-color-secondary);
+        color: var(--white-color);
+        cursor: auto;
+      }
     }
 
     p {
