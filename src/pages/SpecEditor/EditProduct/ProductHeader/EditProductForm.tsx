@@ -59,7 +59,7 @@ const EditProductForm = ({ handleClose, specificationProduct }: IProps) => {
       >
         <ModalBox>
           <Typography variant="lg" color={theme.palette.primary.main}>
-            {t('Edit product')}
+            {t('Edit the product')}
           </Typography>
           <ModalFieldsBox>
             <VerticalTextCtrl
