@@ -64,8 +64,8 @@ const NewResponseForm = ({ handleClose, response }: IProps) => {
             <FileUpload
               accept={'application/pdf'}
               className={css.Card}
-              description={t('HomePage.HOME_FILEUPL_DESCRIPTION')}
-              label={t('HomePage.HOME_FILEUPL_LABEL')}
+              description={t('HomePage.File_upload_description')}
+              label={t('HomePage.File_upload_label')}
               variant={'Tertiary'}
             />
           )}
