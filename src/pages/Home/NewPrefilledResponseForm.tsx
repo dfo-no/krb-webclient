@@ -58,17 +58,17 @@ const NewPrefilledResponseForm = ({
           <ModalFieldsBox>
             <VerticalTextCtrl
               name="supplier"
-              label={t('RESP_SUPP_NAME')}
-              placeholder={t('RESP_SUPP_NAME')}
+              label={t('HomePage.RESP_SUPP_NAME')}
+              placeholder={t('HomePage.RESP_SUPP_NAME')}
               autoFocus
             />
           </ModalFieldsBox>
           <ModalButtonsBox>
             <ModalButton variant="cancel" onClick={() => handleClose()}>
-              {t('Cancel')}
+              {t('common.Cancel')}
             </ModalButton>
             <ModalButton variant="save" type="submit">
-              {t('Create prepared response')}
+              {t('HomePage.Create prepared response')}
             </ModalButton>
           </ModalButtonsBox>
         </ModalBox>

@@ -52,7 +52,7 @@ const HomeSearchBar = ({
       onChange={(event, newValue) => onValueSelected(newValue)}
       isOptionEqualToValue={(option, value) => option.label === value.label}
       renderInput={(params) => (
-        <TextField {...params} label={t('Search for banks')} />
+        <TextField {...params} label={t('common.Search for banks')} />
       )}
     />
   );

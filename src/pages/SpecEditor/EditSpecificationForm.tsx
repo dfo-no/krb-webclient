@@ -73,13 +73,13 @@ const EditSpecificationForm = ({ specification }: IProps) => {
                 {specification.bank.description}
               </Typography>
               <Typography sx={{ marginLeft: 0.16 }}>
-                {t('Version')} {specification.bank.version}
+                {t('common.Version')} {specification.bank.version}
               </Typography>
             </Box>
             <ModalFieldsBox>
               <VerticalTextCtrl
                 name="title"
-                label={t('What will be the name of the procurement?')}
+                label={t('common.What will be the name of the procurement?')}
                 placeholder={t('Name of specification')}
                 autoFocus
                 required={true}

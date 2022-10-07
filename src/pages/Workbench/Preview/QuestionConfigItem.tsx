@@ -46,7 +46,9 @@ export default function QuestionConfigItem({
             {t('Assumed preferred alternative')}
           </Typography>
           <Typography sx={{ marginTop: 1 }}>
-            {item.config?.preferedAlternative ? t('Yes') : t('No')}
+            {item.config?.preferedAlternative
+              ? t('common.Yes')
+              : t('common.No')}
           </Typography>
         </ConfigBox>
       );
@@ -70,7 +72,7 @@ export default function QuestionConfigItem({
             {t('Include to date')}
           </Typography>
           <Typography sx={{ marginTop: 1 }}>
-            {item.config.isPeriod ? t('Yes') : t('No')}
+            {item.config.isPeriod ? t('common.Yes') : t('common.No')}
           </Typography>
         </ConfigBox>
       );
@@ -123,7 +125,7 @@ export default function QuestionConfigItem({
           </Typography>
           <Typography sx={{ marginTop: 1 }}>
             {' '}
-            {item.config.isPeriod ? t('Yes') : t('No')}
+            {item.config.isPeriod ? t('common.Yes') : t('common.No')}
           </Typography>
         </ConfigBox>
       );

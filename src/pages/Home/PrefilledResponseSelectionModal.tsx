@@ -47,11 +47,11 @@ export default function PrefilledResponseSelectionModal({
             {t('Edit prepared response')}
           </ModalButton>
           <ModalButton variant="cancel" type="submit" disabled={true}>
-            {t('Create response')}
+            {t('HomePage.Create response')}
           </ModalButton>
           <ModalButtonsBox>
             <ModalButton variant="cancel" onClick={cancel}>
-              {t('Cancel')}
+              {t('common.Cancel')}
             </ModalButton>
           </ModalButtonsBox>
         </Box>

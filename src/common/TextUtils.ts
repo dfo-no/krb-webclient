@@ -80,7 +80,7 @@ class TextUtils {
   };
 
   private static getCheckboxAnswer = (question: ICheckboxQuestion): string => {
-    return question.answer.value ? t('Yes') : t('No');
+    return question.answer.value ? t('common.Yes') : t('common.No');
   };
 
   private static getConfirmationAnswer = (
@@ -136,8 +136,10 @@ class TextUtils {
   private static getCheckboxConfig = (question: ICheckboxQuestion): string => {
     const preferedAlternative = question.config.preferedAlternative;
     const pointsNonPrefered = question.config.pointsNonPrefered;
-    return `${preferedAlternative ? t('Yes') : t('No')} 100 ${t('Score')}, ${
-      preferedAlternative ? t('No') : t('Yes')
+    return `${preferedAlternative ? t('common.Yes') : t('common.No')} 100 ${t(
+      'Score'
+    )}, ${
+      preferedAlternative ? t('common.No') : t('common.Yes')
     } ${pointsNonPrefered} ${t('Score')}`;
   };
 

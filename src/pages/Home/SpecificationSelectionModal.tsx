@@ -88,17 +88,17 @@ export default function SpecificationSelectionModal({
             {t('Edit specification')}
           </ModalButton>
           <ModalButton variant="primary" onClick={createResponse}>
-            {t('Create response')}
+            {t('HomePage.Create response')}
           </ModalButton>
           <ModalButton variant="primary" onClick={createPrefilledResponse}>
-            {t('Create prepared response')}
+            {t('HomePage.Create prepared response')}
           </ModalButton>
           <ModalButton variant="primary" onClick={doEvaluation}>
             {t('Do evaluation')}
           </ModalButton>
           <ModalButtonsBox>
             <ModalButton variant="cancel" onClick={cancel}>
-              {t('Cancel')}
+              {t('common.Cancel')}
             </ModalButton>
           </ModalButtonsBox>
         </Box>

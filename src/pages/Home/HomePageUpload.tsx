@@ -45,11 +45,11 @@ export function HomePageUpload({ selectedBank, setSelectedBank }: Props) {
     for (let index = 0; index < files.length; index += 1) {
       const file = files[index];
       if (file.size > MAX_UPLOAD_SIZE) {
-        disableUploadMessage = t('HOME_FILEUPL_TOO_LARGE');
+        disableUploadMessage = t('HomePage.HOME_FILEUPL_TOO_LARGE');
         break;
       }
       if (file.type !== 'application/pdf') {
-        disableUploadMessage = t('HOME_FILEUPL_WRONG_TYPE');
+        disableUploadMessage = t('HomePage.HOME_FILEUPL_WRONG_TYPE');
         break;
       }
       formData.append('file', file);
@@ -95,7 +95,7 @@ export function HomePageUpload({ selectedBank, setSelectedBank }: Props) {
         const alert: IAlert = {
           id: uuidv4(),
           style: 'error',
-          text: t('HOME_FILEUPL_UPLOAD_ERROR')
+          text: t('HomePage.HOME_FILEUPL_UPLOAD_ERROR')
         };
         dispatch(addAlert({ alert }));
       });
@@ -106,8 +106,8 @@ export function HomePageUpload({ selectedBank, setSelectedBank }: Props) {
       <FileUpload
         accept={'application/pdf'}
         className={css.Card}
-        description={t('HOME_FILEUPL_DESCRIPTION')}
-        label={t('HOME_FILEUPL_LABEL')}
+        description={t('HomePage.HOME_FILEUPL_DESCRIPTION')}
+        label={t('HomePage.HOME_FILEUPL_LABEL')}
         onChange={onUpload}
         variant={'Tertiary'}
       />

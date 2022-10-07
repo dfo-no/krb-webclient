@@ -64,8 +64,8 @@ const NewResponseForm = ({ handleClose, response }: IProps) => {
             <FileUpload
               accept={'application/pdf'}
               className={css.Card}
-              description={t('HOME_FILEUPL_DESCRIPTION')}
-              label={t('HOME_FILEUPL_LABEL')}
+              description={t('HomePage.HOME_FILEUPL_DESCRIPTION')}
+              label={t('HomePage.HOME_FILEUPL_LABEL')}
               variant={'Tertiary'}
             />
           )}
@@ -74,17 +74,17 @@ const NewResponseForm = ({ handleClose, response }: IProps) => {
           <ModalFieldsBox>
             <VerticalTextCtrl
               name="supplier"
-              label={t('RESP_SUPP_NAME')}
-              placeholder={t('RESP_SUPP_NAME')}
+              label={t('HomePage.RESP_SUPP_NAME')}
+              placeholder={t('HomePage.RESP_SUPP_NAME')}
               autoFocus
             />
           </ModalFieldsBox>
           <ModalButtonsBox>
             <ModalButton variant="cancel" onClick={() => handleClose()}>
-              {t('Cancel')}
+              {t('common.Cancel')}
             </ModalButton>
             <ModalButton variant="save" type="submit">
-              {t('Create response')}
+              {t('HomePage.Create response')}
             </ModalButton>
           </ModalButtonsBox>
         </ModalBox>
