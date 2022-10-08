@@ -47,7 +47,7 @@ const PublicationItem = ({
       <div className={css.Item}>
         <div className={css.Version}>
           <Typography variant="smBold">
-            {t('Version')} {publication.version}
+            {t('common.Version')} {publication.version}
           </Typography>
           <time>{DateUtils.prettyFormat(publication.date)}</time>
         </div>

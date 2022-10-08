@@ -22,8 +22,16 @@ const YesNoSelection = ({
     <RadioCtrl
       name={name}
       options={[
-        { value: 'true', label: t('Yes'), recommended: isRecommended(true) },
-        { value: 'false', label: t('No'), recommended: isRecommended(false) }
+        {
+          value: 'true',
+          label: t('common.Yes'),
+          recommended: isRecommended(true)
+        },
+        {
+          value: 'false',
+          label: t('common.No'),
+          recommended: isRecommended(false)
+        }
       ]}
     />
   );

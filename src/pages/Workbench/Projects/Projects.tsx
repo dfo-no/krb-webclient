@@ -109,7 +109,7 @@ export default function Projects(): React.ReactElement {
           <SearchFieldContainer>
             <DFOSearchBar
               list={allProjects}
-              placeholder={t('Search for banks')}
+              placeholder={t('common.Search for banks')}
               callback={searchFieldCallback}
               searchFunction={searchFunction}
             />

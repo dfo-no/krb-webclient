@@ -60,8 +60,8 @@ export default function HomePage(): React.ReactElement {
           <div className={classnames(css.Column, css.Cards)}>
             <div className={classnames(css.Card, css.Primary)}>
               <Link to={'/workbench'}>
-                <label>{t('Workbench')}</label>
-                <span>{t('Create projects')}</span>
+                <label>{t('common.Workbench')}</label>
+                <span>{t('HomePage.Create projects')}</span>
               </Link>
             </div>
             <HomePageUpload
@@ -72,13 +72,13 @@ export default function HomePage(): React.ReactElement {
         </div>
         <div className={css.Columns}>
           <HomeDisplayList
-            title={t('Newest banks')}
+            title={t('HomePage.Newest banks')}
             list={latestPublishedProjects}
             orderedByDate={true}
             setSelectedBank={setSelectedBank}
           />
           <HomeDisplayList
-            title={t('Alphabetically sorted')}
+            title={t('HomePage.Alphabetically sorted')}
             list={latestPublishedProjects}
             setSelectedBank={setSelectedBank}
           />

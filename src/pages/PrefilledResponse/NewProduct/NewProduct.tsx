@@ -38,8 +38,8 @@ export default function NewProduct(): React.ReactElement {
   const [product, setProduct] = useState<Parentable<IProduct> | null>(null);
   const [relatedProducts, setRelatedProducts] = useState(false);
   const options = [
-    { value: true, label: t('Yes'), recommended: false },
-    { value: false, label: t('No'), recommended: false }
+    { value: true, label: t('common.Yes'), recommended: false },
+    { value: false, label: t('common.No'), recommended: false }
   ];
 
   const defaultValues: IPrefilledResponseProduct =
