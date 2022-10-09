@@ -64,18 +64,6 @@
     }
   }
 
-  .editPage {
-    background-color: var(--white-color);
-    border: 0.2rem var(--primary-color) solid;
-    padding: var(--normal-gap);
-
-    form {
-      display: flex;
-      flex-direction: column;
-      gap: var(--small-gap);
-    }
-  }
-
   .Content {
     display: flex;
     flex-direction: column;

@@ -8,16 +8,13 @@ import GeneralErrorMessage from '../../Form/GeneralErrorMessage';
 import Nexus from '../../Nexus/Nexus';
 import VerticalTextCtrl from '../../FormProvider/VerticalTextCtrl';
 import { ISpecification } from '../../Nexus/entities/ISpecification';
-import {
-  ModalFieldsBox,
-  ModalButton
-} from '../../components/ModalBox/ModalBox';
+import { ModalButton } from '../../components/ModalBox/ModalBox';
 import { ModelType } from '../../Nexus/enums';
 import { SPECIFICATION } from '../../common/PathConstants';
-import css from '../Stylesheets/EditorFullPage.module.scss';
 import Panel from '../../components/UI/Panel/Panel';
 import SelectCtrl from '../../FormProvider/SelectCtrl';
 import { IOption } from '../../Nexus/entities/IOption';
+import { FormBox, FormFieldsBox } from '../../components/Form/FormBox';
 interface IProps {
   specification: ISpecification;
   handleCancel: () => void;
@@ -56,7 +53,7 @@ const EditSpecificationForm = ({ specification, handleCancel }: IProps) => {
   };
 
   return (
-    <div className={css.editPage}>
+    <FormBox>
       <FormProvider {...methods}>
         <form
           onSubmit={methods.handleSubmit(onSubmit)}
@@ -64,7 +61,7 @@ const EditSpecificationForm = ({ specification, handleCancel }: IProps) => {
           noValidate
         >
           <Typography variant="lgBold">{t('Edit specification')}</Typography>
-          <ModalFieldsBox>
+          <FormFieldsBox>
             <VerticalTextCtrl
               name="title"
               label={t('What will be the name of the procurement?')}
@@ -95,24 +92,24 @@ const EditSpecificationForm = ({ specification, handleCancel }: IProps) => {
               placeholder={t('Organization number')}
               required={true}
             />
-          </ModalFieldsBox>
-          <Panel
-            panelColor={'white'}
-            children={
-              <>
-                <ModalButton variant="cancel" onClick={() => handleCancel()}>
-                  {t('Cancel')}
-                </ModalButton>
-                <ModalButton variant={'primary'} type="submit">
-                  {t('Save')}
-                </ModalButton>
-              </>
-            }
-          />
+            <Panel
+              panelColor={'white'}
+              children={
+                <>
+                  <ModalButton variant="cancel" onClick={() => handleCancel()}>
+                    {t('Cancel')}
+                  </ModalButton>
+                  <ModalButton variant={'primary'} type="submit">
+                    {t('Save')}
+                  </ModalButton>
+                </>
+              }
+            />
+          </FormFieldsBox>
           <GeneralErrorMessage errors={methods.formState.errors} />
         </form>
       </FormProvider>
-    </div>
+    </FormBox>
   );
 };
 
