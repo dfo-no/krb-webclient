@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, Typography } from '@mui/material';
+import { Typography } from '@mui/material';
 import { t } from 'i18next';
 
 import TextUtils from '../../../../common/TextUtils';
@@ -34,8 +34,8 @@ export default function ChosenConfiguration({
   const showAnswer = reqAnsVariant && reqAnsVariant.type === VariantType.info;
 
   return (
-    <Box>
-      <Typography variant={'sm'} color={theme.palette.gray600.main}>
+    <>
+      <Typography variant={'smBold'} color={theme.palette.gray600.main}>
         {showAnswer ? `${t('Answer')}: ` : `${t('Chosen')}: `}
       </Typography>
       <Typography variant={'smBold'} color={theme.palette.gray600.main}>
@@ -43,6 +43,6 @@ export default function ChosenConfiguration({
           ? TextUtils.getAnswerText(requirementAnswer, specification.bank)
           : TextUtils.getConfigText(requirementAnswer, specification.bank)}
       </Typography>
-    </Box>
+    </>
   );
 }

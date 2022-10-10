@@ -8,16 +8,13 @@ import GeneralErrorMessage from '../../Form/GeneralErrorMessage';
 import Nexus from '../../Nexus/Nexus';
 import VerticalTextCtrl from '../../FormProvider/VerticalTextCtrl';
 import { ISpecification } from '../../Nexus/entities/ISpecification';
-import {
-  ModalFieldsBox,
-  ModalButton
-} from '../../components/ModalBox/ModalBox';
+import { ModalButton } from '../../components/ModalBox/ModalBox';
 import { ModelType } from '../../Nexus/enums';
 import { SPECIFICATION } from '../../common/PathConstants';
-import css from '../Stylesheets/EditorFullPage.module.scss';
 import Panel from '../../components/UI/Panel/Panel';
 import SelectCtrl from '../../FormProvider/SelectCtrl';
 import { IOption } from '../../Nexus/entities/IOption';
+import { FormFieldsBox } from '../../components/Form/FormFieldsBox';
 interface IProps {
   specification: ISpecification;
   handleCancel: () => void;
@@ -56,46 +53,44 @@ const EditSpecificationForm = ({ specification, handleCancel }: IProps) => {
   };
 
   return (
-    <div className={css.editPage}>
-      <FormProvider {...methods}>
-        <form
-          onSubmit={methods.handleSubmit(onSubmit)}
-          autoComplete="off"
-          noValidate
-        >
+    <FormProvider {...methods}>
+      <form
+        onSubmit={methods.handleSubmit(onSubmit)}
+        autoComplete="off"
+        noValidate
+      >
+        <FormFieldsBox>
           <Typography variant="lgBold">{t('Edit specification')}</Typography>
-          <ModalFieldsBox>
-            <VerticalTextCtrl
-              name="title"
-              label={t('What will be the name of the procurement?')}
-              placeholder={t('Name of specification')}
-              autoFocus
-              required={true}
-            />
-            <VerticalTextCtrl
-              name="caseNumber"
-              label={t('Procurement case number')}
-              placeholder={t('Case number')}
-            />
-            <SelectCtrl
-              name={'currencyUnit'}
-              label={t('CURRENCY_UNIT')}
-              options={currencyUnitOptions}
-              required={true}
-            />
-            <VerticalTextCtrl
-              name="organization"
-              label={t('Name of your organization')}
-              placeholder={t('Name')}
-              required={true}
-            />
-            <VerticalTextCtrl
-              name="organizationNumber"
-              label={t('Organization number')}
-              placeholder={t('Organization number')}
-              required={true}
-            />
-          </ModalFieldsBox>
+          <VerticalTextCtrl
+            name="title"
+            label={t('What will be the name of the procurement?')}
+            placeholder={t('Name of specification')}
+            autoFocus
+            required={true}
+          />
+          <VerticalTextCtrl
+            name="caseNumber"
+            label={t('Procurement case number')}
+            placeholder={t('Case number')}
+          />
+          <SelectCtrl
+            name={'currencyUnit'}
+            label={t('CURRENCY_UNIT')}
+            options={currencyUnitOptions}
+            required={true}
+          />
+          <VerticalTextCtrl
+            name="organization"
+            label={t('Name of your organization')}
+            placeholder={t('Name')}
+            required={true}
+          />
+          <VerticalTextCtrl
+            name="organizationNumber"
+            label={t('Organization number')}
+            placeholder={t('Organization number')}
+            required={true}
+          />
           <Panel
             panelColor={'white'}
             children={
@@ -109,10 +104,10 @@ const EditSpecificationForm = ({ specification, handleCancel }: IProps) => {
               </>
             }
           />
-          <GeneralErrorMessage errors={methods.formState.errors} />
-        </form>
-      </FormProvider>
-    </div>
+        </FormFieldsBox>
+        <GeneralErrorMessage errors={methods.formState.errors} />
+      </form>
+    </FormProvider>
   );
 };
 

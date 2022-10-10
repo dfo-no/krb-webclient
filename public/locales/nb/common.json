@@ -1,8 +1,6 @@
 {
   "common": {
     "Cancel": "Avbryt",
-    "Create prepared response": "Lag forberedt besvarelse",
-    "Create response": "Lag Besvarelse",
     "Edit response": "Rediger besvarelse",
     "No": "Nei",
     "Search for banks": "Søk etter kravsett",
@@ -14,7 +12,9 @@
   },
   "HomePage": {
     "Alphabetically sorted": "Alfabetisk sortert",
+    "Create prepared response": "Lag forberedt besvarelse",
     "Create projects": "Lag/Rediger Prosjekter",
+    "Create response": "Lag Besvarelse",
     "Newest banks": "Nyeste kravbanker",
     "File_upload_description": "Klikk her eller slipp en fil her for å arbeide med spesifikasjon, besvarelse eller evaluering",
     "File_upload_label": "Last opp kravbank-fil",
@@ -52,6 +52,7 @@
   "Choose": "Velg",
   "Chosen": "Valgt",
   "Chosen codes": "Valgte koder",
+  "Chosen requirements": "Valgte krav",
   "Choose a product type from the requirement set": "Velg en produkttype fra kravsettet",
   "Choose variant": "Velg variant",
   "Code": "Kode",
@@ -85,6 +86,8 @@
   "Edit": "Rediger",
   "Edit need": "Rediger behovet",
   "Edit prepared response": "Rediger forberedt besvarelse",
+  "Edit product": "Rediger produkt",
+  "Edit product details": "Rediger produktdetaljer",
   "Edit the product": "Rediger produktet",
   "Edit requirement": "Rediger kravet",
   "Edit specification": "Rediger spesifikasjon",
@@ -275,7 +278,6 @@
   "Welcome to the workbench": "Velkommen til arbeidsbenken",
   "Welcome to the builder": "Velkommen til byggern",
   "What is the name of the project?": "Hva er navnet på prosjektet?",
-  "Edit product": "Rediger produkt",
   "What will be the name of the procurement?": "Hva skal anskaffelsen hete?",
   "Delete product": "Fjern produkt",
   "Project is published": "Publiseringer knyttet til prosjektet vil fortsatt være tilgjengelig etter sletting av prosjektet. ",

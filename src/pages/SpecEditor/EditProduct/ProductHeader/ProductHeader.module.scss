@@ -19,11 +19,33 @@
   }
 }
 
-.EditHeader {
+.ProductOverview {
+  display: flex;
+  flex-direction: column;
+  gap: var(--small-gap);
+}
+
+.EditProduct {
+  &__description {
+    div {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      height: 10rem;
+    }
+  }
+
+  &__amount {
+    div {
+      max-width: 15rem;
+    }
+  }
+
   .SlideBoxWrapper {
     display: flex;
     flex-direction: column;
     gap: var(--micro-gap);
+    width: 50%;
   }
 
   .SlideBox {

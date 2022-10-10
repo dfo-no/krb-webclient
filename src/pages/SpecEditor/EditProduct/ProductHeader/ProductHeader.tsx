@@ -1,44 +1,37 @@
-import React, { ReactElement, useState } from 'react';
+import React, { ReactElement } from 'react';
 import { Typography } from '@mui/material';
-import EditIcon from '@mui/icons-material/Edit';
-import DeleteIcon from '@mui/icons-material/Delete';
 import { useTranslation } from 'react-i18next';
 
-import DFODialog from '../../../../components/DFODialog/DFODialog';
-import EditProductForm from './EditProductForm';
-import { useSelectState } from '../../../Workbench/Create/SelectContext';
 import css from '../../../Stylesheets/EditorFullPage.module.scss';
 import { ISpecificationProduct } from '../../../../Nexus/entities/ISpecificationProduct';
 import Toolbar from '../../../../components/UI/Toolbar/ToolBar';
 import ToolbarItem from '../../../../components/UI/Toolbar/ToolbarItem';
 import { Weighting } from '../../../../Nexus/enums';
+import Utils from '../../../../common/Utils';
+import { useSpecificationState } from '../../SpecificationContext';
 
 interface IProps {
   product?: ISpecificationProduct;
+  editingProduct: boolean;
 }
 
-export default function ProductHeader({ product }: IProps): React.ReactElement {
+export default function ProductHeader({
+  product,
+  editingProduct
+}: IProps): React.ReactElement {
   const { t } = useTranslation();
-  const [editingProduct, setEditingProduct] = useState(false);
-  const { setDeleteMode } = useSelectState();
+  const { specification } = useSpecificationState();
 
-  const renderProductActionsToolbar = (): ReactElement => {
-    return (
-      <Toolbar gapType={'lg'} hasPadding={true}>
-        <ToolbarItem
-          primaryText={t('Edit product')}
-          icon={<EditIcon />}
-          handleClick={() => setEditingProduct(true)}
-        />
-        {product?.id && (
-          <ToolbarItem
-            primaryText={t('Delete product')}
-            icon={<DeleteIcon />}
-            handleClick={() => setDeleteMode(product?.id)}
-          />
-        )}
-      </Toolbar>
+  const chosenRequirements = (specProduct: ISpecificationProduct): string => {
+    const needs = Utils.findVariantsUsedByProduct(
+      specProduct.originProduct,
+      specification.bank
     );
+    const totalProductRequirements = needs
+      .map((need) => need.requirements.length)
+      .reduce((previousValue, currentValue) => previousValue + currentValue);
+    const answeredRequirements = specProduct?.requirements.length;
+    return `${answeredRequirements}/${totalProductRequirements}`;
   };
 
   const renderProductInfoToolbar = (): ReactElement => {
@@ -58,6 +51,12 @@ export default function ProductHeader({ product }: IProps): React.ReactElement {
           primaryText={t('Type')}
           secondaryText={product?.originProduct.title}
         />
+        {product && (
+          <ToolbarItem
+            primaryText={t('Chosen requirements')}
+            secondaryText={chosenRequirements(product)}
+          />
+        )}
       </Toolbar>
     );
   };
@@ -66,25 +65,13 @@ export default function ProductHeader({ product }: IProps): React.ReactElement {
     <div className={css.overview}>
       {product ? (
         <>
-          <Typography variant="lgBold">{product?.title}</Typography>
-          {renderProductActionsToolbar()}
-          {renderProductInfoToolbar()}
-          <Typography variant="md">{product?.description}</Typography>
+          {!editingProduct && renderProductInfoToolbar()}
+          {!editingProduct && (
+            <Typography variant="md">{product?.description}</Typography>
+          )}
         </>
       ) : (
         <Typography variant="lgBold">{t('General requirements')}</Typography>
-      )}
-      {product && editingProduct && (
-        <DFODialog
-          isOpen={true}
-          handleClose={() => setEditingProduct(false)}
-          children={
-            <EditProductForm
-              handleClose={() => setEditingProduct(false)}
-              specificationProduct={product}
-            />
-          }
-        />
       )}
     </div>
   );
