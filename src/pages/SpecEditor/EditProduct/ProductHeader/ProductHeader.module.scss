@@ -19,6 +19,12 @@
   }
 }
 
+.ProductOverview {
+  display: flex;
+  flex-direction: column;
+  gap: var(--small-gap);
+}
+
 .EditProduct {
   &__description {
     div {

@@ -17,6 +17,7 @@ import Panel from '../../../../components/UI/Panel/Panel';
 import EditProductForm from './EditProductForm';
 import Toolbar from '../../../../components/UI/Toolbar/ToolBar';
 import ToolbarItem from '../../../../components/UI/Toolbar/ToolbarItem';
+import css from './ProductHeader.module.scss';
 
 export default function EditProduct(): React.ReactElement {
   const { t } = useTranslation();
@@ -70,7 +71,7 @@ export default function EditProduct(): React.ReactElement {
 
   return (
     <DeleteSpecProduct product={product} handleClose={onDelete}>
-      <div>
+      <div className={css.ProductOverview}>
         {!editingProduct && (
           <Typography variant="lgBold">{product?.title}</Typography>
         )}
