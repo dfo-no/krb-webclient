@@ -55,7 +55,6 @@ export default function ProductHeader({
           <ToolbarItem
             primaryText={t('Chosen requirements')}
             secondaryText={chosenRequirements(product)}
-            fontSize={'small'}
           />
         )}
       </Toolbar>
