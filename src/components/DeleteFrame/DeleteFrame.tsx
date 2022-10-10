@@ -50,10 +50,10 @@ export default function DeleteFrame({
         )}
         <FormTextButton
           onClick={handleClose}
-          aria-label={t('Cancel')}
+          aria-label={t('common.Cancel')}
           sx={!canBeDeleted ? { marginLeft: 'auto' } : {}}
         >
-          {t('Cancel')}
+          {t('common.Cancel')}
         </FormTextButton>
       </Box>
 

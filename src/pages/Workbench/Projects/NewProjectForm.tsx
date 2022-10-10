@@ -76,7 +76,7 @@ const NewProjectForm = ({ handleClose }: IProps) => {
           </ModalFieldsBox>
           <ModalButtonsBox>
             <ModalButton variant="cancel" onClick={() => handleClose()}>
-              {t('Cancel')}
+              {t('common.Cancel')}
             </ModalButton>
             <ModalButton variant="save" type="submit">
               {t('Create project')}

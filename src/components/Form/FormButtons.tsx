@@ -30,7 +30,7 @@ export default function FormButtons({
         onClick={() => handleClose()}
         aria-label="close"
       >
-        {t('Cancel')}
+        {t('common.Cancel')}
       </Button>
     </FormButtonBox>
   );

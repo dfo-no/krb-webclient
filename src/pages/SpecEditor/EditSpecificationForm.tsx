@@ -96,7 +96,7 @@ const EditSpecificationForm = ({ specification, handleCancel }: IProps) => {
             children={
               <>
                 <ModalButton variant="cancel" onClick={() => handleCancel()}>
-                  {t('Cancel')}
+                  {t('common.Cancel')}
                 </ModalButton>
                 <ModalButton variant={'primary'} type="submit">
                   {t('Save')}

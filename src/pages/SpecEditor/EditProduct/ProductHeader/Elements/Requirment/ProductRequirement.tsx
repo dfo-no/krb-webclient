@@ -145,7 +145,7 @@ export default function ProductRequirement({
                 onClick={onCancel}
                 className={css.cancel}
               >
-                {t('Cancel')}
+                {t('common.Cancel')}
               </Button>
               {activeVariant.questions.length > 0 && (
                 <Button variant="save" type="submit" className={css.save}>

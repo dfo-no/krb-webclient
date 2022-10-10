@@ -83,7 +83,7 @@ function NewRequirementForm({ need, handleClose }: IProps): React.ReactElement {
           </ModalFieldsBox>
           <ModalButtonsBox>
             <ModalButton variant="cancel" onClick={() => handleClose('')}>
-              {t('Cancel')}
+              {t('common.Cancel')}
             </ModalButton>
             <ModalButton variant="save" type="submit">
               {t('Save')}

@@ -88,7 +88,7 @@ function NewVariantForm({
                 onClick={() => closeAndReset()}
                 sx={{ marginLeft: 'auto', marginRight: 2 }}
               >
-                {t('Cancel')}
+                {t('common.Cancel')}
               </Button>
               <Button variant="save" type="submit">
                 {t('Save')}
