@@ -46,7 +46,7 @@ export default function ProductHeader({
         <>
           {!editingProduct && renderProductInfoToolbar()}
           {!editingProduct && (
-            <Typography variant="sm">{product?.description}</Typography>
+            <Typography variant="md">{product?.description}</Typography>
           )}
         </>
       ) : (
