@@ -5,20 +5,16 @@ import { useTranslation } from 'react-i18next';
 import { Box } from '@mui/material';
 
 import Nexus from '../../../../Nexus/Nexus';
-import theme from '../../../../theme';
 import VerticalTextCtrl from '../../../../FormProvider/VerticalTextCtrl';
 import { ISpecificationProduct } from '../../../../Nexus/entities/ISpecificationProduct';
-import {
-  ModalBox,
-  ModalFieldsBox,
-  ModalButtonsBox,
-  ModalButton
-} from '../../../../components/ModalBox/ModalBox';
+import { ModalButton } from '../../../../components/ModalBox/ModalBox';
 import { useSpecificationState } from '../../SpecificationContext';
 import { ModelType, Weighting, WeightingStep } from '../../../../Nexus/enums';
 import css from './ProductHeader.module.scss';
 import SliderCtrl from '../../../../FormProvider/SliderCtrl';
 import { IMark } from '../../../../Nexus/entities/IMark';
+import Panel from '../../../../components/UI/Panel/Panel';
+import { FormFieldsBox } from '../../../../components/Form/FormFieldsBox';
 
 interface IProps {
   handleClose: () => void;
@@ -52,69 +48,62 @@ const EditProductForm = ({ handleClose, specificationProduct }: IProps) => {
   return (
     <FormProvider {...methods}>
       <form
-        className={css.EditHeader}
         onSubmit={methods.handleSubmit(onSubmit)}
         autoComplete="off"
         noValidate
       >
-        <ModalBox>
-          <Typography variant="lg" color={theme.palette.primary.main}>
-            {t('Edit product')}
-          </Typography>
-          <ModalFieldsBox>
-            <VerticalTextCtrl
-              name="title"
-              label={t('Name of product')}
-              placeholder={t('Name of product')}
-              autoFocus
-            />
-            <VerticalTextCtrl
-              name="description"
-              label={t('Description of the product')}
-              placeholder={t('Description of the product')}
-            />
-            <VerticalTextCtrl
-              name="amount"
-              label={t(
-                'How many of this product do you need in this procurement'
-              )}
-              placeholder={t('quantity')}
-              type={'number'}
-              children={
-                <Typography variant={'lg'} color={theme.palette.primary.main}>
-                  {specificationProduct.unit}
-                </Typography>
-              }
-            />
-            <Box className={css.SlideBoxWrapper}>
-              <Typography
-                variant={'smBold'}
-                color={theme.palette.primary.main}
-                sx={{ marginBottom: 1 }}
-              >
-                {t('Product weighting')}
+        <FormFieldsBox className={css.EditProduct}>
+          <Typography variant="lgBold">{t('Edit product details')}</Typography>
+          <VerticalTextCtrl
+            name="title"
+            label={t('Name of product')}
+            placeholder={t('Name of product')}
+            autoFocus
+          />
+          <VerticalTextCtrl
+            className={css.EditProduct__description}
+            name="description"
+            label={t('Description of the product')}
+            placeholder={t('Description of the product')}
+          />
+          <VerticalTextCtrl
+            className={css.EditProduct__amount}
+            name="amount"
+            label={t(
+              'How many of this product do you need in this procurement'
+            )}
+            placeholder={t('quantity')}
+            type={'number'}
+            children={
+              <Typography variant={'md'}>
+                {specificationProduct.unit}
               </Typography>
-              <Box className={css.SlideBox}>
-                <SliderCtrl
-                  name={'weight'}
-                  min={Weighting.LOWEST}
-                  step={WeightingStep}
-                  max={Weighting.HIGHEST}
-                  showValue={false}
-                  marks={sliderMark}
-                />
-              </Box>
+            }
+          />
+          <Box className={css.SlideBoxWrapper}>
+            <Typography variant={'smBold'} sx={{ marginBottom: 1 }}>
+              {t('Weighting')}
+            </Typography>
+            <Box className={css.SlideBox}>
+              <SliderCtrl
+                name={'weight'}
+                min={Weighting.LOWEST}
+                step={WeightingStep}
+                max={Weighting.HIGHEST}
+                showValue={false}
+                marks={sliderMark}
+              />
             </Box>
-          </ModalFieldsBox>
-          <ModalButtonsBox>
+          </Box>
+          <Panel panelColor={'white'}>
             <ModalButton variant="cancel" onClick={() => handleClose()}>
               {t('Cancel')}
             </ModalButton>
-            <ModalButton variant="save" type="submit">
+            <ModalButton variant="primary" type="submit">
               {t('Save')}
             </ModalButton>
-          </ModalButtonsBox>
-        </ModalBox>
+          </Panel>
+        </FormFieldsBox>
       </form>
     </FormProvider>
   );
