@@ -83,7 +83,7 @@ function NewNeedForm({ handleClose }: IProps): React.ReactElement {
           </ModalFieldsBox>
           <ModalButtonsBox>
             <ModalButton variant="cancel" onClick={() => handleClose(null)}>
-              {t('Cancel')}
+              {t('common.Cancel')}
             </ModalButton>
             <ModalButton variant="save" type="submit">
               {t('Save')}

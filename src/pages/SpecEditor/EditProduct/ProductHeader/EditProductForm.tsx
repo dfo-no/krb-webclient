@@ -97,7 +97,7 @@ const EditProductForm = ({ handleClose, specificationProduct }: IProps) => {
           </Box>
           <Panel panelColor={'white'}>
             <ModalButton variant="cancel" onClick={() => handleClose()}>
-              {t('Cancel')}
+              {t('common.Cancel')}
             </ModalButton>
             <ModalButton variant="primary" type="submit">
               {t('Save')}

@@ -82,7 +82,7 @@ export default function NewProductSelection(): React.ReactElement {
         </div>
         <ModalButtonsBox>
           <ModalButton variant="cancel" onClick={cancel}>
-            {t('Cancel')}
+            {t('common.Cancel')}
           </ModalButton>
         </ModalButtonsBox>
       </ModalBox>

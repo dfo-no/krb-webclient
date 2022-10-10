@@ -95,7 +95,7 @@ export default function EditProduct(): React.ReactElement {
                 disabled={editingProduct}
                 sx={{ backgroundColor: editingProduct ? '#d1d1d1' : '' }}
               >
-                {t('Cancel')}
+                {t('common.Cancel')}
               </Button>
               <Button
                 variant="primary"
