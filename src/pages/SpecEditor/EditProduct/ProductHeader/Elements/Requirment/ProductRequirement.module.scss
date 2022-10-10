@@ -1,6 +1,4 @@
 .ProductRequirement {
-  --from-checkbox-gap: 1.2rem;
-
   .card {
     display: flex;
     flex-direction: column;
@@ -15,40 +13,19 @@
   }
 
   .selected {
-    border: 0.2rem solid var(--primary-color);
+    border: 0.2rem solid var(--tertiary-color);
     flex-direction: row;
+    padding: var(--small-gap);
+    background-color: var(--white-color);
+    margin-top: var(--small-gap);
 
-    .info {
-      width: 100%;
-      margin-left: var(--small-gap);
+    .check {
+      color: var(--tertiary-color);
+    }
 
-      .aboveDivider {
-        display: flex;
-        flex-direction: row;
-
-        .title {
-          margin-left: 0;
-          border-bottom: none;
-        }
-
-        .weighting {
-          display: flex;
-          flex: 0 0 30%;
-          margin-left: auto;
-          padding-left: var(--small-gap);
-          margin-right: var(--small-gap);
-
-          .weightingText {
-            display: flex;
-            margin-left: auto;
-            align-self: center;
-          }
-        }
-      }
-      .divider {
-        color: black;
-        margin: var(--micro-gap) 0;
-      }
+    .choose {
+      align-self: center;
+      margin-left: auto;
     }
   }
 

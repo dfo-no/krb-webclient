@@ -42,14 +42,14 @@ export default function ResponseSelectionModal({
       <ModalBox>
         <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
           <ModalButton variant="primary" onClick={editResponse}>
-            {t('Edit response')}
+            {t('HomePage.Edit response')}
           </ModalButton>
           <ModalButton variant="cancel" type="submit" disabled={true}>
-            {t('Create prepared response')}
+            {t('HomePage.Create prepared response')}
           </ModalButton>
           <ModalButtonsBox>
             <ModalButton variant="cancel" onClick={cancel}>
-              {t('Cancel')}
+              {t('common.Cancel')}
             </ModalButton>
           </ModalButtonsBox>
         </Box>

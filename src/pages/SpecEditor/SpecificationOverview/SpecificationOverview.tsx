@@ -103,7 +103,7 @@ export default function SpecificationOverview(): React.ReactElement {
             disabled={editingSpecification}
           />
           <ToolbarItem
-            secondaryText={t('Edit product')}
+            secondaryText={t('Edit the product')}
             icon={<EditIcon />}
             handleClick={() => productPressed(product.id)}
             fontSize={'small'}

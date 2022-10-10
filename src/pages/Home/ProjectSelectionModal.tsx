@@ -57,11 +57,11 @@ export default function ProjectSelectionModal({
   const versionText = (): string => {
     if (isPublished) {
       const publishedBanks = bank.publications.filter((p) => !p.deletedDate);
-      return `${t('Version')} ${
+      return `${t('common.Version')} ${
         publishedBanks[publishedBanks.length - 1].version
       }`;
     }
-    return t('Not published');
+    return t('HomePage.Not published');
   };
 
   const goToSpecification = (): void => {
@@ -109,11 +109,11 @@ export default function ProjectSelectionModal({
             onClick={goToPrefilledResponse}
             disabled={!isPublished}
           >
-            {t('Create prepared response')}
+            {t('HomePage.Create prepared response')}
           </ModalButton>
           <ModalButtonsBox>
             <ModalButton variant="cancel" onClick={cancel}>
-              {t('Cancel')}
+              {t('common.Cancel')}
             </ModalButton>
           </ModalButtonsBox>
         </Box>
