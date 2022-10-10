@@ -14,7 +14,7 @@ import { SPECIFICATION } from '../../common/PathConstants';
 import Panel from '../../components/UI/Panel/Panel';
 import SelectCtrl from '../../FormProvider/SelectCtrl';
 import { IOption } from '../../Nexus/entities/IOption';
-import { FormBox, FormFieldsBox } from '../../components/Form/FormBox';
+import { FormFieldsBox } from '../../components/Form/FormFieldsBox';
 interface IProps {
   specification: ISpecification;
   handleCancel: () => void;
@@ -53,63 +53,61 @@ const EditSpecificationForm = ({ specification, handleCancel }: IProps) => {
   };
 
   return (
-    <FormBox>
-      <FormProvider {...methods}>
-        <form
-          onSubmit={methods.handleSubmit(onSubmit)}
-          autoComplete="off"
-          noValidate
-        >
+    <FormProvider {...methods}>
+      <form
+        onSubmit={methods.handleSubmit(onSubmit)}
+        autoComplete="off"
+        noValidate
+      >
+        <FormFieldsBox>
           <Typography variant="lgBold">{t('Edit specification')}</Typography>
-          <FormFieldsBox>
-            <VerticalTextCtrl
-              name="title"
-              label={t('What will be the name of the procurement?')}
-              placeholder={t('Name of specification')}
-              autoFocus
-              required={true}
-            />
-            <VerticalTextCtrl
-              name="caseNumber"
-              label={t('Procurement case number')}
-              placeholder={t('Case number')}
-            />
-            <SelectCtrl
-              name={'currencyUnit'}
-              label={t('CURRENCY_UNIT')}
-              options={currencyUnitOptions}
-              required={true}
-            />
-            <VerticalTextCtrl
-              name="organization"
-              label={t('Name of your organization')}
-              placeholder={t('Name')}
-              required={true}
-            />
-            <VerticalTextCtrl
-              name="organizationNumber"
-              label={t('Organization number')}
-              placeholder={t('Organization number')}
-              required={true}
-            />
-            <Panel
-              panelColor={'white'}
-              children={
-                <>
-                  <ModalButton variant="cancel" onClick={() => handleCancel()}>
-                    {t('Cancel')}
-                  </ModalButton>
-                  <ModalButton variant={'primary'} type="submit">
-                    {t('Save')}
-                  </ModalButton>
-                </>
-              }
-            />
-          </FormFieldsBox>
-          <GeneralErrorMessage errors={methods.formState.errors} />
-        </form>
-      </FormProvider>
-    </FormBox>
+          <VerticalTextCtrl
+            name="title"
+            label={t('What will be the name of the procurement?')}
+            placeholder={t('Name of specification')}
+            autoFocus
+            required={true}
+          />
+          <VerticalTextCtrl
+            name="caseNumber"
+            label={t('Procurement case number')}
+            placeholder={t('Case number')}
+          />
+          <SelectCtrl
+            name={'currencyUnit'}
+            label={t('CURRENCY_UNIT')}
+            options={currencyUnitOptions}
+            required={true}
+          />
+          <VerticalTextCtrl
+            name="organization"
+            label={t('Name of your organization')}
+            placeholder={t('Name')}
+            required={true}
+          />
+          <VerticalTextCtrl
+            name="organizationNumber"
+            label={t('Organization number')}
+            placeholder={t('Organization number')}
+            required={true}
+          />
+          <Panel
+            panelColor={'white'}
+            children={
+              <>
+                <ModalButton variant="cancel" onClick={() => handleCancel()}>
+                  {t('Cancel')}
+                </ModalButton>
+                <ModalButton variant={'primary'} type="submit">
+                  {t('Save')}
+                </ModalButton>
+              </>
+            }
+          />
+        </FormFieldsBox>
+        <GeneralErrorMessage errors={methods.formState.errors} />
+      </form>
+    </FormProvider>
   );
 };
 

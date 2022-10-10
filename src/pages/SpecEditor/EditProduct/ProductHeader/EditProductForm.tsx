@@ -14,7 +14,7 @@ import css from './ProductHeader.module.scss';
 import SliderCtrl from '../../../../FormProvider/SliderCtrl';
 import { IMark } from '../../../../Nexus/entities/IMark';
 import Panel from '../../../../components/UI/Panel/Panel';
-import { FormBox, FormFieldsBox } from '../../../../components/Form/FormBox';
+import { FormFieldsBox } from '../../../../components/Form/FormFieldsBox';
 
 interface IProps {
   handleClose: () => void;
@@ -46,70 +46,66 @@ const EditProductForm = ({ handleClose, specificationProduct }: IProps) => {
   };
 
   return (
-    <FormBox className={css.EditProduct}>
-      <FormProvider {...methods}>
-        <form
-          onSubmit={methods.handleSubmit(onSubmit)}
-          autoComplete="off"
-          noValidate
-        >
-          <FormFieldsBox>
-            <Typography variant="lgBold">
-              {t('Edit product details')}
-            </Typography>
-            <VerticalTextCtrl
-              name="title"
-              label={t('Name of product')}
-              placeholder={t('Name of product')}
-              autoFocus
-            />
-            <VerticalTextCtrl
-              className={css.EditProduct__description}
-              name="description"
-              label={t('Description of the product')}
-              placeholder={t('Description of the product')}
-            />
-            <VerticalTextCtrl
-              className={css.EditProduct__amount}
-              name="amount"
-              label={t(
-                'How many of this product do you need in this procurement'
-              )}
-              placeholder={t('quantity')}
-              type={'number'}
-              children={
-                <Typography variant={'md'}>
-                  {specificationProduct.unit}
-                </Typography>
-              }
-            />
-            <Box className={css.SlideBoxWrapper}>
-              <Typography variant={'smBold'} sx={{ marginBottom: 1 }}>
-                {t('Weighting')}
+    <FormProvider {...methods}>
+      <form
+        onSubmit={methods.handleSubmit(onSubmit)}
+        autoComplete="off"
+        noValidate
+      >
+        <FormFieldsBox className={css.EditProduct}>
+          <Typography variant="lgBold">{t('Edit product details')}</Typography>
+          <VerticalTextCtrl
+            name="title"
+            label={t('Name of product')}
+            placeholder={t('Name of product')}
+            autoFocus
+          />
+          <VerticalTextCtrl
+            className={css.EditProduct__description}
+            name="description"
+            label={t('Description of the product')}
+            placeholder={t('Description of the product')}
+          />
+          <VerticalTextCtrl
+            className={css.EditProduct__amount}
+            name="amount"
+            label={t(
+              'How many of this product do you need in this procurement'
+            )}
+            placeholder={t('quantity')}
+            type={'number'}
+            children={
+              <Typography variant={'md'}>
+                {specificationProduct.unit}
               </Typography>
-              <Box className={css.SlideBox}>
-                <SliderCtrl
-                  name={'weight'}
-                  min={Weighting.LOWEST}
-                  step={WeightingStep}
-                  max={Weighting.HIGHEST}
-                  showValue={false}
-                  marks={sliderMark}
-                />
-              </Box>
+            }
+          />
+          <Box className={css.SlideBoxWrapper}>
+            <Typography variant={'smBold'} sx={{ marginBottom: 1 }}>
+              {t('Weighting')}
+            </Typography>
+            <Box className={css.SlideBox}>
+              <SliderCtrl
+                name={'weight'}
+                min={Weighting.LOWEST}
+                step={WeightingStep}
+                max={Weighting.HIGHEST}
+                showValue={false}
+                marks={sliderMark}
+              />
             </Box>
-            <Panel panelColor={'white'}>
-              <ModalButton variant="cancel" onClick={() => handleClose()}>
-                {t('Cancel')}
-              </ModalButton>
-              <ModalButton variant="primary" type="submit">
-                {t('Save')}
-              </ModalButton>
-            </Panel>
-          </FormFieldsBox>
-        </form>
-      </FormProvider>
-    </FormBox>
+          </Box>
+          <Panel panelColor={'white'}>
+            <ModalButton variant="cancel" onClick={() => handleClose()}>
+              {t('Cancel')}
+            </ModalButton>
+            <ModalButton variant="primary" type="submit">
+              {t('Save')}
+            </ModalButton>
+          </Panel>
+        </FormFieldsBox>
+      </form>
+    </FormProvider>
   );
 };
 
