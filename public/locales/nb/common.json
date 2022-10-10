@@ -1,8 +1,6 @@
 {
   "common": {
     "Cancel": "Avbryt",
-    "Create prepared response": "Lag forberedt besvarelse",
-    "Create response": "Lag Besvarelse",
     "Edit response": "Rediger besvarelse",
     "No": "Nei",
     "Search for banks": "Søk etter kravsett",
@@ -14,7 +12,9 @@
   },
   "HomePage": {
     "Alphabetically sorted": "Alfabetisk sortert",
+    "Create prepared response": "Lag forberedt besvarelse",
     "Create projects": "Lag/Rediger Prosjekter",
+    "Create response": "Lag Besvarelse",
     "Newest banks": "Nyeste kravbanker",
     "File_upload_description": "Klikk her eller slipp en fil her for å arbeide med spesifikasjon, besvarelse eller evaluering",
     "File_upload_label": "Last opp kravbank-fil",
