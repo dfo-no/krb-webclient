@@ -7,16 +7,14 @@ import { Box } from '@mui/material';
 import Nexus from '../../../../Nexus/Nexus';
 import VerticalTextCtrl from '../../../../FormProvider/VerticalTextCtrl';
 import { ISpecificationProduct } from '../../../../Nexus/entities/ISpecificationProduct';
-import {
-  ModalFieldsBox,
-  ModalButton
-} from '../../../../components/ModalBox/ModalBox';
+import { ModalButton } from '../../../../components/ModalBox/ModalBox';
 import { useSpecificationState } from '../../SpecificationContext';
 import { ModelType, Weighting, WeightingStep } from '../../../../Nexus/enums';
 import css from './ProductHeader.module.scss';
 import SliderCtrl from '../../../../FormProvider/SliderCtrl';
 import { IMark } from '../../../../Nexus/entities/IMark';
 import Panel from '../../../../components/UI/Panel/Panel';
+import { FormFieldsBox } from '../../../../components/Form/FormFieldsBox';
 
 interface IProps {
   handleClose: () => void;
@@ -50,13 +48,12 @@ const EditProductForm = ({ handleClose, specificationProduct }: IProps) => {
   return (
     <FormProvider {...methods}>
       <form
-        className={css.EditProduct}
         onSubmit={methods.handleSubmit(onSubmit)}
         autoComplete="off"
         noValidate
       >
-        <Typography variant="lgBold">{t('Edit product details')}</Typography>
-        <ModalFieldsBox>
+        <FormFieldsBox className={css.EditProduct}>
+          <Typography variant="lgBold">{t('Edit product details')}</Typography>
           <VerticalTextCtrl
             name="title"
             label={t('Name of product')}
@@ -98,15 +95,15 @@ const EditProductForm = ({ handleClose, specificationProduct }: IProps) => {
               />
             </Box>
           </Box>
-        </ModalFieldsBox>
-        <Panel panelColor={'white'}>
-          <ModalButton variant="cancel" onClick={() => handleClose()}>
-            {t('Cancel')}
-          </ModalButton>
-          <ModalButton variant="primary" type="submit">
-            {t('Save')}
-          </ModalButton>
-        </Panel>
+          <Panel panelColor={'white'}>
+            <ModalButton variant="cancel" onClick={() => handleClose()}>
+              {t('Cancel')}
+            </ModalButton>
+            <ModalButton variant="primary" type="submit">
+              {t('Save')}
+            </ModalButton>
+          </Panel>
+        </FormFieldsBox>
       </form>
     </FormProvider>
   );
