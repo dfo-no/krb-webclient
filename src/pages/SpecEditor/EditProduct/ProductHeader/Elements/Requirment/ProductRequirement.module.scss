@@ -19,12 +19,8 @@
     background-color: var(--white-color);
     margin-top: var(--small-gap);
 
-    .info {
-      flex-direction: column;
-
-      .check {
-        color: var(--tertiary-color);
-      }
+    .check {
+      color: var(--tertiary-color);
     }
 
     .choose {

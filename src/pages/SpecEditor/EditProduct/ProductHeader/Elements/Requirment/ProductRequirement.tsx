@@ -87,12 +87,14 @@ export default function ProductRequirement({
     return specification.requirements.some((req) => req === requirement.id);
   };
 
-  const selected = (product ?? specification).requirementAnswers.find(
+  const selectedRequirement = (
+    product ?? specification
+  ).requirementAnswers.find(
     (reqAns) => reqAns.requirement.id === requirement.id
   );
 
   const selectedVariant = requirement.variants.find(
-    (variant) => variant.id === selected?.variantId
+    (variant) => variant.id === selectedRequirement?.variantId
   );
 
   const isInfo = (): boolean => {
@@ -161,17 +163,15 @@ export default function ProductRequirement({
     <Box key={requirement.id} className={css.ProductRequirement}>
       {isSelected() ? (
         <Box className={classnames(css.card, css.selected)}>
-          <div className={css.info}>
-            <div>
-              <Toolbar>
-                <ToolbarItem
-                  primaryText={requirement.title}
-                  icon={<CheckIcon className={css.check} />}
-                  fontSize={'small'}
-                  fontWeight={'bold'}
-                />
-              </Toolbar>
-            </div>
+          <div>
+            <Toolbar>
+              <ToolbarItem
+                primaryText={requirement.title}
+                icon={<CheckIcon className={css.check} />}
+                fontSize={'small'}
+                fontWeight={'bold'}
+              />
+            </Toolbar>
             <div>
               <Typography variant={'sm'}>
                 {selectedVariant?.requirementText}
