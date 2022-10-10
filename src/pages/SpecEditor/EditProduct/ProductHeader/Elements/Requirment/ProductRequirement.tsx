@@ -1,11 +1,13 @@
 import classnames from 'classnames';
 import EditIcon from '@mui/icons-material/Edit';
+import CheckIcon from '@mui/icons-material/Check';
 import React, { ReactElement, useEffect, useState } from 'react';
-import { Box, Button, Divider, Typography } from '@mui/material';
+import { Box, Button, Typography } from '@mui/material';
 import { FormProvider, useForm, useWatch } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
 import css from './ProductRequirement.module.scss';
+import { DFOChip } from '../../../../../../components/DFOChip/DFOChip';
 import { ISpecificationProduct } from '../../../../../../Nexus/entities/ISpecificationProduct';
 import { IRequirement } from '../../../../../../Nexus/entities/IRequirement';
 import { useSpecificationState } from '../../../../SpecificationContext';
@@ -18,12 +20,12 @@ import {
   Weighting
 } from '../../../../../../Nexus/enums';
 import EditProductVariant from '../Variant/EditProductVariant';
-import { DFOCheckbox } from '../../../../../../components/DFOCheckbox/DFOCheckbox';
-import { DFOChip } from '../../../../../../components/DFOChip/DFOChip';
-import { FormIconButton } from '../../../../../../components/Form/FormIconButton';
 import ChosenConfiguration from '../../../ChosenConfiguration/ChosenConfiguration';
 import ProductVariant from '../Variant/ProductVariant';
 import GeneralErrorMessage from '../../../../../../Form/GeneralErrorMessage';
+import ToolbarItem from '../../../../../../components/UI/Toolbar/ToolbarItem';
+import Toolbar from '../../../../../../components/UI/Toolbar/ToolBar';
+import theme from '../../../../../../theme';
 
 interface IProps {
   requirement: IRequirement;
@@ -61,7 +63,6 @@ export default function ProductRequirement({
   const activeVariant = requirement.variants.find(
     (variant) => variant.id === useVariant
   );
-
   const onSubmit = (put: IRequirementAnswer) => {
     const reqAnsWithId = nexus.specificationService.withId(put);
     if (!product) {
@@ -70,7 +71,6 @@ export default function ProductRequirement({
       addProductAnswer(reqAnsWithId, product.id);
     }
   };
-
   const onCancel = (): void => {
     if (original) {
       onSubmit(original);
@@ -87,19 +87,18 @@ export default function ProductRequirement({
     return specification.requirements.some((req) => req === requirement.id);
   };
 
+  const selectedRequirement = (
+    product ?? specification
+  ).requirementAnswers.find(
+    (reqAns) => reqAns.requirement.id === requirement.id
+  );
+
+  const selectedVariant = requirement.variants.find(
+    (variant) => variant.id === selectedRequirement?.variantId
+  );
+
   const isInfo = (): boolean => {
-    const selected = (product ?? specification).requirementAnswers.find(
-      (reqAns) => reqAns.requirement.id === requirement.id
-    );
-    if (selected) {
-      const selectedVariant = requirement.variants.find(
-        (variant) => variant.id === selected.variantId
-      );
-      if (selectedVariant && selectedVariant.type === VariantType.info) {
-        return true;
-      }
-    }
-    return false;
+    return !!(selectedVariant && selectedVariant.type === VariantType.info);
   };
 
   const unsaveRequirement = (): IRequirementAnswer | undefined => {
@@ -120,11 +119,6 @@ export default function ProductRequirement({
       }
       return answer;
     }
-  };
-
-  const uncheckRequirement = (): void => {
-    unsaveRequirement();
-    methods.reset();
   };
 
   const editRequirement = (): void => {
@@ -169,33 +163,54 @@ export default function ProductRequirement({
     <Box key={requirement.id} className={css.ProductRequirement}>
       {isSelected() ? (
         <Box className={classnames(css.card, css.selected)}>
-          <DFOCheckbox checked={true} onClick={uncheckRequirement} />
-          <Box className={css.info}>
-            <Box className={css.aboveDivider}>
-              <Typography variant={'lgBold'} className={css.title}>
-                {requirement.title}
+          <div>
+            <Toolbar>
+              <ToolbarItem
+                primaryText={requirement.title}
+                icon={<CheckIcon className={css.check} />}
+                fontSize={'small'}
+                fontWeight={'bold'}
+              />
+            </Toolbar>
+            <div>
+              <Typography variant={'sm'}>
+                {selectedVariant?.requirementText}
               </Typography>
-              <Box className={css.weighting}>
-                {isInfo() ? (
-                  <DFOChip label={t('Info')} className={css.weightingText} />
-                ) : (
-                  <Typography variant={'mdBold'} className={css.weightingText}>
-                    {t('Weighting')}: {t(Weighting[useWeight])}
-                  </Typography>
-                )}
-              </Box>
-              <FormIconButton onClick={editRequirement}>
-                <EditIcon />
-              </FormIconButton>
-            </Box>
-            <Divider className={css.divider} />
-            <ChosenConfiguration requirement={requirement} product={product} />
-          </Box>
+            </div>
+            <div>
+              <ChosenConfiguration
+                requirement={requirement}
+                product={product}
+              />
+              {isInfo() ? (
+                <DFOChip label={t('Info')} />
+              ) : (
+                <Typography
+                  variant={'smBold'}
+                  color={theme.palette.gray600.main}
+                >
+                  {' '}
+                  {t('Weighting')}: {t(Weighting[useWeight])}
+                </Typography>
+              )}
+            </div>
+          </div>
+          <div className={css.choose}>
+            <Toolbar>
+              <ToolbarItem
+                secondaryText={t('Edit requirement')}
+                icon={<EditIcon />}
+                handleClick={() => editRequirement()}
+                fontWeight={'bold'}
+                fontSize={'small'}
+              />
+            </Toolbar>
+          </div>
         </Box>
       ) : (
         <Box className={css.card}>
           <Box className={css.title}>
-            <Typography variant="smBold">{requirement.title}</Typography>
+            <Typography variant="smBold">{requirement.title}x</Typography>
           </Box>
           <FormProvider {...methods}>
             <form
