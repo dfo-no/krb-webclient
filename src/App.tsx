@@ -16,6 +16,7 @@ import useConfirmTabClose from './hooks/useConfirmTabClose';
 import WorkbenchModule from './pages/Workbench/WorkbenchModule';
 import { HeaderProvider } from './components/Header/HeaderContext';
 import { msalConfig } from './authentication/authConfig';
+import Breadcrumbs from './components/Breadcrumbs/Breadcrumbs';
 
 const msalInstance = new PublicClientApplication(msalConfig);
 
@@ -45,6 +46,7 @@ function App(): ReactElement {
         <div className={styles.App}>
           <HeaderProvider>
             <Header />
+            <Breadcrumbs />
             {renderContent()}
           </HeaderProvider>
         </div>
