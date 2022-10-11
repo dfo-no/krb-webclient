@@ -12,7 +12,6 @@ import { useHistory } from 'react-router-dom';
 import { PRODUCTS, RESPONSE } from '../../../common/PathConstants';
 import { FormIconButton } from '../../../components/Form/FormIconButton';
 import EditIcon from '@mui/icons-material/Edit';
-import { DFOCardHeaderIconButton } from '../../../components/DFOCard/DFOCardHeaderIconButton';
 import Panel from '../../../components/UI/Panel/Panel';
 
 function ResponseOverview(): React.ReactElement {
@@ -42,7 +41,10 @@ function ResponseOverview(): React.ReactElement {
             <Typography className={css.Text} variant="mdBold">
               {product.title}
             </Typography>
-            <FormIconButton onClick={() => productPressed(index)}>
+            <FormIconButton
+              sx={{ marginLeft: 'auto', paddingRight: 2 }}
+              onClick={() => productPressed(index)}
+            >
               <EditIcon />
             </FormIconButton>
           </div>
@@ -75,12 +77,12 @@ function ResponseOverview(): React.ReactElement {
               <Typography variant="mdBold">
                 {t('General requirements')}
               </Typography>
-              <DFOCardHeaderIconButton
+              <FormIconButton
                 sx={{ marginLeft: 'auto', paddingRight: 2 }}
                 onClick={() => genericPressed()}
               >
                 <EditIcon />
-              </DFOCardHeaderIconButton>
+              </FormIconButton>
             </div>
             <Divider color={theme.palette.silver.main} />
           </div>

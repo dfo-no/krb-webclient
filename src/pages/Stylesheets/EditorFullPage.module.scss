@@ -40,6 +40,12 @@
           gap: var(--tiny-gap);
           padding: var(--small-gap);
 
+          .CardTitle {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            gap: var(--normal-gap);
+          }
           .Text {
             overflow: hidden;
             text-overflow: ellipsis;
