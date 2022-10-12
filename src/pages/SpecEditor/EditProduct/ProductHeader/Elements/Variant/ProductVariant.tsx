@@ -41,6 +41,9 @@ export default function ProductVariant({
           <div className={css.choose}>
             <Toolbar>
               <ToolbarItem
+                className={
+                  checkedVariantId === variant.id ? css.variantButton : ''
+                }
                 secondaryText={t('Choose variant')}
                 icon={<AddIcon />}
                 handleClick={() => openVariant(checkedVariantId, variant.id)}

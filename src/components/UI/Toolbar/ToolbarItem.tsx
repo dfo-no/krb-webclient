@@ -13,6 +13,7 @@ export interface ToolbarItemProps {
   fontWeight?: FontWeight;
   fontSize?: FontSize;
   disabled?: boolean;
+  className?: string;
 }
 
 export default function ToolbarItem({
@@ -22,7 +23,8 @@ export default function ToolbarItem({
   handleClick,
   fontWeight,
   fontSize,
-  disabled
+  disabled,
+  className
 }: ToolbarItemProps): ReactElement {
   return (
     <div
@@ -31,6 +33,7 @@ export default function ToolbarItem({
       data-change={!!handleClick}
       data-font-size={fontSize}
       data-disabled={disabled}
+      className={className}
     >
       {icon && icon}
       {primaryText && (

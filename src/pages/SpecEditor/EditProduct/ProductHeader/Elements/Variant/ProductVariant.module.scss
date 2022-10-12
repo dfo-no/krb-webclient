@@ -8,8 +8,13 @@
     display: flex;
     flex-direction: column;
   }
+
   .choose {
     align-self: center;
     margin-left: auto;
+  }
+
+  .variantButton {
+    display: none;
   }
 }
