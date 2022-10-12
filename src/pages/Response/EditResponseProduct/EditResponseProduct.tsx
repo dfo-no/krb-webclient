@@ -13,7 +13,7 @@ import VerticalTextCtrl from '../../../FormProvider/VerticalTextCtrl';
 import theme from '../../../theme';
 import GeneralErrorMessage from '../../../Form/GeneralErrorMessage';
 import { editResponseProduct } from '../../../store/reducers/response-reducer';
-import css from '../../Stylesheets/Editor.module.scss';
+import css from '../../Stylesheets/EditorFullPage.module.scss';
 
 export default function EditResponseProduct(): ReactElement {
   const { t } = useTranslation();

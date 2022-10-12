@@ -38,7 +38,11 @@ export default function ProductVariant({
             <Typography variant={'smBold'}>{variant.description}</Typography>
             <Typography variant={'sm'}>{variant.requirementText}</Typography>
           </div>
-          <div className={css.choose}>
+          <div
+            className={
+              checkedVariantId === variant.id ? css.hidden : css.choose
+            }
+          >
             <Toolbar>
               <ToolbarItem
                 secondaryText={t('Choose variant')}
