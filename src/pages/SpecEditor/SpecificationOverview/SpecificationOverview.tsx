@@ -19,6 +19,25 @@ import ToolbarItem from '../../../components/UI/Toolbar/ToolbarItem';
 import { Weighting } from '../../../Nexus/enums';
 import EditSpecificationForm from '../EditSpecificationForm';
 import Utils from '../../../common/Utils';
+import { ISpecification } from '../../../Nexus/entities/ISpecification';
+
+export const chosenRequirements = (
+  specification: ISpecification,
+  specProduct: ISpecificationProduct
+): string | undefined => {
+  const needs = Utils.findVariantsUsedByProduct(
+    specProduct.originProduct,
+    specification.bank
+  );
+  if (needs.length > 0) {
+    const totalProductRequirements = needs
+      .map((need) => need.requirements.length)
+      .reduce((previousValue, currentValue) => previousValue + currentValue, 0);
+    const answeredRequirements = specProduct?.requirements.length;
+    return `${answeredRequirements}/${totalProductRequirements}`;
+  }
+  return;
+};
 
 export default function SpecificationOverview(): React.ReactElement {
   const { t } = useTranslation();
@@ -56,18 +75,6 @@ export default function SpecificationOverview(): React.ReactElement {
         `/${SPECIFICATION}/${specification.id}/${PRODUCTS}/general/`
       );
     }
-  };
-
-  const chosenRequirements = (specProduct: ISpecificationProduct): string => {
-    const needs = Utils.findVariantsUsedByProduct(
-      specProduct.originProduct,
-      specification.bank
-    );
-    const totalProductRequirements = needs
-      .map((need) => need.requirements.length)
-      .reduce((previousValue, currentValue) => previousValue + currentValue);
-    const answeredRequirements = specProduct?.requirements.length;
-    return `${answeredRequirements}/${totalProductRequirements}`;
   };
 
   const renderSpecificationActionsToolbar = (): ReactElement => {
@@ -127,6 +134,8 @@ export default function SpecificationOverview(): React.ReactElement {
     };
 
     const renderProductInfoToolbar = (): ReactElement => {
+      const hasRequirements =
+        chosenRequirements(specification, product) !== undefined;
       return (
         <Toolbar>
           <ToolbarItem
@@ -144,11 +153,13 @@ export default function SpecificationOverview(): React.ReactElement {
             secondaryText={product.originProduct.title}
             fontSize={'small'}
           />
-          <ToolbarItem
-            primaryText={t('Chosen requirements')}
-            secondaryText={chosenRequirements(product)}
-            fontSize={'small'}
-          />
+          {hasRequirements && (
+            <ToolbarItem
+              primaryText={t('Chosen requirements')}
+              secondaryText={chosenRequirements(specification, product)}
+              fontSize={'small'}
+            />
+          )}
         </Toolbar>
       );
     };

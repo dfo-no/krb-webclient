@@ -7,8 +7,8 @@ import { ISpecificationProduct } from '../../../../Nexus/entities/ISpecification
 import Toolbar from '../../../../components/UI/Toolbar/ToolBar';
 import ToolbarItem from '../../../../components/UI/Toolbar/ToolbarItem';
 import { Weighting } from '../../../../Nexus/enums';
-import Utils from '../../../../common/Utils';
 import { useSpecificationState } from '../../SpecificationContext';
+import { chosenRequirements } from '../../SpecificationOverview/SpecificationOverview';
 
 interface IProps {
   product?: ISpecificationProduct;
@@ -22,19 +22,9 @@ export default function ProductHeader({
   const { t } = useTranslation();
   const { specification } = useSpecificationState();
 
-  const chosenRequirements = (specProduct: ISpecificationProduct): string => {
-    const needs = Utils.findVariantsUsedByProduct(
-      specProduct.originProduct,
-      specification.bank
-    );
-    const totalProductRequirements = needs
-      .map((need) => need.requirements.length)
-      .reduce((previousValue, currentValue) => previousValue + currentValue);
-    const answeredRequirements = specProduct?.requirements.length;
-    return `${answeredRequirements}/${totalProductRequirements}`;
-  };
-
   const renderProductInfoToolbar = (): ReactElement => {
+    const hasRequirements =
+      product && chosenRequirements(specification, product) !== undefined;
     return (
       <Toolbar gapType={'md'}>
         <ToolbarItem
@@ -51,10 +41,10 @@ export default function ProductHeader({
           primaryText={t('Type')}
           secondaryText={product?.originProduct.title}
         />
-        {product && (
+        {hasRequirements && (
           <ToolbarItem
             primaryText={t('Chosen requirements')}
-            secondaryText={chosenRequirements(product)}
+            secondaryText={chosenRequirements(specification, product)}
           />
         )}
       </Toolbar>
