@@ -1,7 +1,8 @@
 .Footer {
-  margin-top: var(--small-gap);
+  margin-top: auto;
   background: var(--primary-color);
   color: white;
+  padding: 0 var(--big-gap);
 
   .content {
     display: grid;

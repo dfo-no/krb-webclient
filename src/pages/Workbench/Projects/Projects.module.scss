@@ -2,8 +2,6 @@
   display: flex;
   flex-direction: column;
   max-width: 124rem;
-  height: calc(100vh - var(--header-height));
-  margin: 0 auto;
   padding: 0;
 
   .TitleContainer {
@@ -36,13 +34,7 @@
     margin-bottom: 2rem;
   }
 
-  .SearchContainer {
-    padding: 0 4rem;
-  }
-
   .ListContainer {
-    padding: 0 var(--big-gap);
-
     .List {
       display: flex;
       flex-direction: column;

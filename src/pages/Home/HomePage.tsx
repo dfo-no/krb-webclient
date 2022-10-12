@@ -4,7 +4,6 @@ import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 
 import css from './HomePage.module.scss';
-import Footer from '../../Footer/Footer';
 import HomeDisplayList from './HomeDisplayList';
 import HomeSearchBar from './HomeSearchBar';
 import { IBank } from '../../Nexus/entities/IBank';
@@ -84,7 +83,6 @@ export default function HomePage(): React.ReactElement {
           />
         </div>
       </div>
-      <Footer />
     </div>
   );
 }

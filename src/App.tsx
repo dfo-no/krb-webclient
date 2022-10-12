@@ -16,6 +16,8 @@ import useConfirmTabClose from './hooks/useConfirmTabClose';
 import WorkbenchModule from './pages/Workbench/WorkbenchModule';
 import { HeaderProvider } from './components/Header/HeaderContext';
 import { msalConfig } from './authentication/authConfig';
+import Breadcrumbs from './components/Breadcrumbs/Breadcrumbs';
+import Footer from './Footer/Footer';
 
 const msalInstance = new PublicClientApplication(msalConfig);
 
@@ -42,12 +44,16 @@ function App(): ReactElement {
       <MsalProvider instance={msalInstance}>
         <CssBaseline />
         <AlertList />
-        <div className={styles.App}>
-          <HeaderProvider>
+        <HeaderProvider>
+          <div className={styles.App}>
             <Header />
-            {renderContent()}
-          </HeaderProvider>
-        </div>
+            <div className={styles.Content}>
+              <Breadcrumbs />
+              {renderContent()}
+            </div>
+            <Footer />
+          </div>
+        </HeaderProvider>
       </MsalProvider>
     </div>
   );

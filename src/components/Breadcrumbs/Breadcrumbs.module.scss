@@ -1,6 +1,8 @@
 .Breadcrumbs {
-  padding-top: 0.2rem;
-  font-size: var(--small-fontsize);
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  font-size: var(--normal-fontsize);
 
   span + span:before {
     content: ' / ';
