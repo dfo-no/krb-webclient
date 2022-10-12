@@ -1,3 +1,4 @@
+// eslint-disable-next-line
 import { render, RenderOptions } from '@testing-library/react';
 import React, { FC, ReactElement } from 'react';
 import { I18nextProvider } from 'react-i18next';
@@ -12,5 +13,6 @@ const customRender = (
   options?: Omit<RenderOptions, 'wrapper'>
 ) => render(ui, { wrapper: AllTheProviders, ...options });
 
+// eslint-disable-next-line
 export * from '@testing-library/react';
 export { customRender as render };
