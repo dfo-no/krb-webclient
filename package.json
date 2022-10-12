@@ -153,9 +153,7 @@
     "ignorePatterns": "analyse.js",
     "overrides": [
       {
-        "files": [
-          "./cypress.config.ts"
-        ],
+        "files": ["cypress.config.ts", "setupTests.ts", "test-utils.tsx"],
         "rules": {
           "import/no-extraneous-dependencies": [
             "error",
