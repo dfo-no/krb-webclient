@@ -40,6 +40,12 @@
           gap: var(--tiny-gap);
           padding: var(--small-gap);
 
+          .CardTitle {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            gap: var(--normal-gap);
+          }
           .Text {
             overflow: hidden;
             text-overflow: ellipsis;
@@ -81,6 +87,16 @@
       flex-direction: row;
       padding-bottom: var(--micro-gap);
       border-bottom: 0.1rem solid;
+    }
+
+    .Price {
+      display: flex;
+      flex-direction: row;
+      gap: var(--tiny-gap);
+      width: fit-content;
+      margin-left: auto;
+      margin-top: var(--small-gap);
+      align-items: center;
     }
 
     .HeaderBottom {
