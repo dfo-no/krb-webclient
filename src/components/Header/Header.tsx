@@ -11,7 +11,6 @@ const useStyles = makeStyles({
     maxWidth: '250rem',
     height: '100%',
     padding: 'var(--small-gap) var(--big-gap)',
-    margin: '0 auto',
     color: theme.palette.black.main
   },
   headerContent: {

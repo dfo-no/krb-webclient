@@ -2,7 +2,6 @@
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  padding: var(--small-gap) var(--xlarge-gap) 0 var(--xlarge-gap);
   font-size: var(--normal-fontsize);
 
   span + span:before {
