@@ -22,7 +22,7 @@ describe('prefilled response', () => {
     cy.contains('Last ned forberedt besvarelse');
 
     // Her legger vi til et nytt produkt og sjekker at alt ser riktig ut
-    cy.contains('Lag et nytt produkt').click();
+    cy.contains('Legg til produkt').click();
     cy.get('input[placeholder="Navn på produkt"]').type(
       'bil ' + somewhatRandomString
     );
