@@ -89,6 +89,16 @@
       border-bottom: 0.1rem solid;
     }
 
+    .Price {
+      display: flex;
+      flex-direction: row;
+      gap: var(--tiny-gap);
+      width: fit-content;
+      margin-left: auto;
+      margin-top: var(--small-gap);
+      align-items: center;
+    }
+
     .HeaderBottom {
       display: flex;
       flex-direction: row;
