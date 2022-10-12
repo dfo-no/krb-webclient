@@ -23,6 +23,8 @@ export default function ProductHeader({
   const { specification } = useSpecificationState();
 
   const renderProductInfoToolbar = (): ReactElement => {
+    const hasRequirements =
+      product && chosenRequirements(specification, product) !== undefined;
     return (
       <Toolbar gapType={'md'}>
         <ToolbarItem
@@ -39,7 +41,7 @@ export default function ProductHeader({
           primaryText={t('Type')}
           secondaryText={product?.originProduct.title}
         />
-        {product && (
+        {hasRequirements && (
           <ToolbarItem
             primaryText={t('Chosen requirements')}
             secondaryText={chosenRequirements(specification, product)}

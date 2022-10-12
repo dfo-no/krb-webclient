@@ -24,16 +24,19 @@ import { ISpecification } from '../../../Nexus/entities/ISpecification';
 export const chosenRequirements = (
   specification: ISpecification,
   specProduct: ISpecificationProduct
-): string => {
+): string | undefined => {
   const needs = Utils.findVariantsUsedByProduct(
     specProduct.originProduct,
     specification.bank
   );
-  const totalProductRequirements = needs
-    .map((need) => need.requirements.length)
-    .reduce((previousValue, currentValue) => previousValue + currentValue, 0);
-  const answeredRequirements = specProduct?.requirements.length;
-  return `${answeredRequirements}/${totalProductRequirements}`;
+  if (needs.length > 0) {
+    const totalProductRequirements = needs
+      .map((need) => need.requirements.length)
+      .reduce((previousValue, currentValue) => previousValue + currentValue, 0);
+    const answeredRequirements = specProduct?.requirements.length;
+    return `${answeredRequirements}/${totalProductRequirements}`;
+  }
+  return;
 };
 
 export default function SpecificationOverview(): React.ReactElement {
@@ -131,6 +134,8 @@ export default function SpecificationOverview(): React.ReactElement {
     };
 
     const renderProductInfoToolbar = (): ReactElement => {
+      const hasRequirements =
+        chosenRequirements(specification, product) !== undefined;
       return (
         <Toolbar>
           <ToolbarItem
@@ -148,11 +153,13 @@ export default function SpecificationOverview(): React.ReactElement {
             secondaryText={product.originProduct.title}
             fontSize={'small'}
           />
-          <ToolbarItem
-            primaryText={t('Chosen requirements')}
-            secondaryText={chosenRequirements(specification, product)}
-            fontSize={'small'}
-          />
+          {hasRequirements && (
+            <ToolbarItem
+              primaryText={t('Chosen requirements')}
+              secondaryText={chosenRequirements(specification, product)}
+              fontSize={'small'}
+            />
+          )}
         </Toolbar>
       );
     };
