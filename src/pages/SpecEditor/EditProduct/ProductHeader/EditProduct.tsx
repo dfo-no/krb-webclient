@@ -43,7 +43,7 @@ export default function EditProduct(): React.ReactElement {
     return (
       <Toolbar gapType={'lg'} hasPadding={true}>
         <ToolbarItem
-          primaryText={t('Edit product')}
+          primaryText={t('Edit product details')}
           icon={<EditIcon />}
           handleClick={() => setEditingProduct(true)}
         />
