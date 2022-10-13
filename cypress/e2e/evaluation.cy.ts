@@ -55,6 +55,7 @@ describe('evaluation', () => {
     cy.contains('Last opp et kravsett').selectFile(
       './cypress/filesForUploadTesting/2022-09-30_specification-4.pdf'
     );
+    // eslint-disable-next-line cypress/no-unnecessary-waiting
     cy.wait(1000);
 
     cy.get('label')
@@ -62,6 +63,7 @@ describe('evaluation', () => {
       .selectFile(
         './cypress/filesForUploadTesting/2022-10-03-citronen-response-4.pdf'
       );
+    // eslint-disable-next-line cypress/no-unnecessary-waiting
     cy.wait(500);
 
     cy.contains('Manuell evaluering').click();

@@ -2,10 +2,12 @@
 module.exports = {
   root: true,
   env: {
-    es2021: true
+    es2021: true,
+    node: true
   },
   extends: [
     'eslint:recommended',
+    'plugin:cypress/recommended',
     'plugin:@typescript-eslint/recommended',
     'plugin:import/typescript',
     'prettier'
@@ -13,6 +15,7 @@ module.exports = {
   parserOptions: {
     ecmaVersion: 12,
     project: './tsconfig.json',
+    tsconfigRootDir: __dirname,
     sourceType: 'module'
   },
   plugins: [
