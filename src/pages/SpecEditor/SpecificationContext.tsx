@@ -33,6 +33,8 @@ interface ISpecificationContext {
   setOpenProductSelection: Dispatch<SetStateAction<boolean>>;
   newProductCreate: boolean;
   setNewProductCreate: Dispatch<SetStateAction<boolean>>;
+  editingRequirement: boolean;
+  setEditingRequirement: Dispatch<SetStateAction<boolean>>;
 }
 
 const initialContext: ISpecificationContext = {
@@ -65,6 +67,10 @@ const initialContext: ISpecificationContext = {
   newProductCreate: false,
   setNewProductCreate: function (): void {
     throw new Error('Function not implemented.');
+  },
+  editingRequirement: false,
+  setEditingRequirement: function (): void {
+    throw new Error('Function not implemented.');
   }
 };
 
@@ -86,6 +92,7 @@ export const SpecificationProvider = ({ children }: IProps) => {
   );
   const [openProductSelection, setOpenProductSelection] = useState(false);
   const [newProductCreate, setNewProductCreate] = useState(false);
+  const [editingRequirement, setEditingRequirement] = useState(false);
   const nexus = Nexus.getInstance();
 
   useEffect(() => {
@@ -168,7 +175,9 @@ export const SpecificationProvider = ({ children }: IProps) => {
         openProductSelection,
         setOpenProductSelection,
         newProductCreate,
-        setNewProductCreate
+        setNewProductCreate,
+        editingRequirement,
+        setEditingRequirement
       }}
     >
       {children}

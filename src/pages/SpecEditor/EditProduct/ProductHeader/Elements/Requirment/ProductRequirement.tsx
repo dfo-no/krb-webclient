@@ -42,7 +42,8 @@ export default function ProductRequirement({
     addGeneralAnswer,
     deleteGeneralAnswer,
     addProductAnswer,
-    deleteProductAnswer
+    deleteProductAnswer,
+    setEditingRequirement
   } = useSpecificationState();
   const nexus = Nexus.getInstance();
   const [original, setOriginal] = useState<null | IRequirementAnswer>(null);
@@ -63,6 +64,7 @@ export default function ProductRequirement({
   const activeVariant = requirement.variants.find(
     (variant) => variant.id === useVariant
   );
+
   const onSubmit = (put: IRequirementAnswer) => {
     const reqAnsWithId = nexus.specificationService.withId(put);
     if (!product) {
@@ -71,6 +73,12 @@ export default function ProductRequirement({
       addProductAnswer(reqAnsWithId, product.id);
     }
   };
+
+  useEffect(() => {
+    if (activeVariant) setEditingRequirement(true);
+    else setEditingRequirement(false);
+  }, [activeVariant, setEditingRequirement]);
+
   const onCancel = (): void => {
     if (original) {
       onSubmit(original);
