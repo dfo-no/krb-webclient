@@ -117,6 +117,7 @@ export default function ProductRequirement({
       );
       if (answer) {
         deleteGeneralAnswer(answer);
+        methods.reset({ ...defaultValues, id: '' });
       }
       return answer;
     } else {
@@ -143,11 +144,12 @@ export default function ProductRequirement({
       <Box>
         {activeVariant && (
           <Box className={css.active}>
-            <EditProductVariant
-              requirement={requirement}
-              variant={activeVariant}
-            />
-
+            {requirement && (
+              <EditProductVariant
+                requirement={requirement}
+                variant={activeVariant}
+              />
+            )}
             <Box className={css.formButtons}>
               <Button
                 variant="cancel"
@@ -172,7 +174,7 @@ export default function ProductRequirement({
     <Box key={requirement.id} className={css.ProductRequirement}>
       {isSelected() ? (
         <Box className={classnames(css.card, css.selected)}>
-          <div>
+          <div className={css.card__description}>
             <Toolbar>
               <ToolbarItem
                 primaryText={requirement.title}
