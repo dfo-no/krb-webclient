@@ -1,5 +1,11 @@
 name: Release
 
+# Information about actions, including latest versions for each, can be found here:
+#
+# - https://github.com/marketplace/actions/checkout
+# - https://github.com/marketplace/actions/setup-node-js-environment
+
+
 on:
   release:
     types: [published]
@@ -13,8 +19,8 @@ jobs:
   Build_and_Release:
     runs-on: ubuntu-22.04
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v2
+      - uses: actions/checkout@v3.1.0
+      - uses: actions/setup-node@v3.5.0
         with:
           node-version: ${{ env.NODE_VERSION }}
 
