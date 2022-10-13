@@ -1,6 +1,7 @@
 import classnames from 'classnames';
 import EditIcon from '@mui/icons-material/Edit';
 import CheckIcon from '@mui/icons-material/Check';
+import DeleteIcon from '@mui/icons-material/Delete';
 import React, { ReactElement, useEffect, useState } from 'react';
 import { Box, Button, Typography } from '@mui/material';
 import { FormProvider, useForm, useWatch } from 'react-hook-form';
@@ -101,7 +102,7 @@ export default function ProductRequirement({
     return !!(selectedVariant && selectedVariant.type === VariantType.info);
   };
 
-  const unsaveRequirement = (): IRequirementAnswer | undefined => {
+  const unsavedRequirement = (): IRequirementAnswer | undefined => {
     if (!product) {
       const answer = specification.requirementAnswers.find(
         (reqAnswer) => reqAnswer.requirement.id === requirement.id
@@ -122,7 +123,7 @@ export default function ProductRequirement({
   };
 
   const editRequirement = (): void => {
-    const answer = unsaveRequirement();
+    const answer = unsavedRequirement();
     if (answer) {
       methods.reset({ ...answer, id: '' });
       setOriginal(answer);
@@ -201,6 +202,13 @@ export default function ProductRequirement({
                 secondaryText={t('Edit requirement')}
                 icon={<EditIcon />}
                 handleClick={() => editRequirement()}
+                fontWeight={'bold'}
+                fontSize={'small'}
+              />
+              <ToolbarItem
+                secondaryText={t('Delete requirement')}
+                icon={<DeleteIcon />}
+                handleClick={() => unsavedRequirement()}
                 fontWeight={'bold'}
                 fontSize={'small'}
               />
