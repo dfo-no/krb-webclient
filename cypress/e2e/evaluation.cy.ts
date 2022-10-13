@@ -37,9 +37,9 @@ describe('evaluation', () => {
     ).as('generateEvaluation');
     cy.contains('Last ned evaluering').click();
     cy.wait('@generateEvaluation').then((interception) => {
-      expect(interception.response.statusCode).gte(200).lt(300);
+      expect(interception?.response?.statusCode).gte(200).lt(300);
       // console.log(interception)
-      expect(interception.response.body.byteLength).gt(6500);
+      expect(interception?.response?.body.byteLength).gt(6500);
     });
   });
 
@@ -74,9 +74,9 @@ describe('evaluation', () => {
     ).as('generateEvaluation');
     cy.contains('Last ned evaluering').click();
     cy.wait('@generateEvaluation').then((interception) => {
-      expect(interception.response.statusCode).gte(200).lt(300);
+      expect(interception?.response?.statusCode).gte(200).lt(300);
       // console.log(interception)
-      expect(interception.response.body.byteLength).gt(6500);
+      expect(interception?.response?.body.byteLength).gt(6500);
     });
   });
 });
