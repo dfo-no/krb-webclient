@@ -3,6 +3,10 @@
     display: flex;
     flex-direction: column;
 
+    &__description {
+      width: 70%;
+    }
+
     .variant {
       border: 0.1rem var(--border-color-secondary) solid;
     }
@@ -26,6 +30,7 @@
     .choose {
       align-self: center;
       margin-left: auto;
+      width: fit-content;
     }
   }
 
