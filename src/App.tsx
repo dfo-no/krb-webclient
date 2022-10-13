@@ -2,7 +2,7 @@ import React, { ReactElement } from 'react';
 import { CssBaseline } from '@mui/material';
 import { MsalProvider } from '@azure/msal-react';
 import { PublicClientApplication } from '@azure/msal-browser';
-import { Route, Switch } from 'react-router-dom';
+import { Route, Switch, useLocation } from 'react-router-dom';
 
 import AlertList from './components/Alert/AlertList';
 import EvaluationModule from './pages/Evaluation/EvaluationModule';
@@ -23,6 +23,9 @@ const msalInstance = new PublicClientApplication(msalConfig);
 
 function App(): ReactElement {
   useConfirmTabClose();
+  const location = useLocation();
+
+  const isHomePage = location.pathname === '/';
 
   function renderContent(): ReactElement {
     return (
@@ -51,7 +54,7 @@ function App(): ReactElement {
               <Breadcrumbs />
               {renderContent()}
             </div>
-            <Footer />
+            {isHomePage && <Footer />}
           </div>
         </HeaderProvider>
       </MsalProvider>
