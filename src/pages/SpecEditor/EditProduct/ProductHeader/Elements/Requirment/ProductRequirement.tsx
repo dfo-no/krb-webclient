@@ -72,6 +72,7 @@ export default function ProductRequirement({
     } else {
       addProductAnswer(reqAnsWithId, product.id);
     }
+    setEditingRequirement(false);
   };
 
   useEffect(() => {
