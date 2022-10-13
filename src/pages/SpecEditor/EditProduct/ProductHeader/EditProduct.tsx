@@ -3,6 +3,7 @@ import { useHistory, useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
+import WarningAmberIcon from '@mui/icons-material/WarningAmber';
 import { Button, Typography } from '@mui/material';
 
 import DeleteSpecProduct from '../DeleteSpecProduct';
@@ -23,7 +24,7 @@ export default function EditProduct(): React.ReactElement {
   const { t } = useTranslation();
   const history = useHistory();
   const { productId } = useParams<IRouteSpecificationParams>();
-  const { specification } = useSpecificationState();
+  const { specification, editingRequirement } = useSpecificationState();
   const { setDeleteMode } = useSelectState();
   const [editingProduct, setEditingProduct] = useState(false);
 
@@ -33,10 +34,10 @@ export default function EditProduct(): React.ReactElement {
     setDeleteMode('');
   };
   const toOverviewPage = (): void => {
-    if (!editingProduct) {
-      history.push(`/${SPECIFICATION}/${specification.id}`);
-    }
+    history.push(`/${SPECIFICATION}/${specification.id}`);
   };
+
+  const isEditing = editingRequirement || editingProduct;
 
   const renderProductActionsToolbar = (): ReactElement => {
     return (
@@ -89,19 +90,27 @@ export default function EditProduct(): React.ReactElement {
           panelColor={'white'}
           children={
             <>
-              <Button
-                variant="cancel"
-                onClick={toOverviewPage}
-                disabled={editingProduct}
-                sx={{ backgroundColor: editingProduct ? '#d1d1d1' : '' }}
-              >
+              {isEditing && (
+                <div className={css.Warning}>
+                  <Toolbar hasPadding={true}>
+                    <ToolbarItem
+                      primaryText={t(
+                        'Close open requirement to save the product'
+                      )}
+                      icon={<WarningAmberIcon />}
+                      fontSize={'small'}
+                    />
+                  </Toolbar>
+                </div>
+              )}
+              <Button variant="cancel" onClick={toOverviewPage}>
                 {t('common.Cancel')}
               </Button>
               <Button
                 variant="primary"
                 onClick={toOverviewPage}
-                disabled={editingProduct}
-                sx={{ backgroundColor: editingProduct ? '#d1d1d1' : '' }}
+                disabled={isEditing}
+                className={isEditing ? css.Disabled : ''}
               >
                 {t('Save product')}
               </Button>
