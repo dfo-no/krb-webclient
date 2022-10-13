@@ -13,12 +13,11 @@ module.exports = {
   parserOptions: {
     ecmaVersion: 12,
     project: './tsconfig.json',
-    tsconfigRootDir: 'cypress',
-    sourceType: 'module',
+    sourceType: 'module'
   },
   plugins: [
     '@typescript-eslint',
-    'cypress',
+    'cypress'
     // 'unused-imports',
     // 'node'
   ]
