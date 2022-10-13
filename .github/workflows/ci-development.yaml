@@ -1,5 +1,12 @@
 name: Continuous Deployment
 
+# Information about actions, including latest versions for each, can be found here:
+#
+# - https://github.com/marketplace/actions/cache
+# - https://github.com/marketplace/actions/checkout
+# - https://github.com/marketplace/actions/setup-node-js-environment
+
+
 on:
   push:
     branches:
@@ -17,16 +24,16 @@ jobs:
     runs-on: ubuntu-22.04
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3.1.0
 
       - name: Setup Node ${{ env.NODE_VERSION }}
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v3.5.0
         with:
           node-version: ${{ env.NODE_VERSION }}
 
       - name: Cache dependencies
         id: cache
-        uses: actions/cache@v2
+        uses: actions/cache@v3.0.10
         with:
           path: ./node_modules
           key: modules-${{ hashFiles('package-lock.json') }}
