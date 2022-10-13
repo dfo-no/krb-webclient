@@ -25,11 +25,11 @@
   gap: var(--small-gap);
 
   .Disabled {
-    background-color: #d1d1d1;
+    background-color: var(--border-color-secondary);
   }
 
   .Warning {
-    color: #828282;
+    color: var(--warning-color-secondary);
   }
 }
 
