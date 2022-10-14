@@ -17,5 +17,5 @@ jobs:
         with:
           start: npm start
           browser: electron
-          spec: cypress/e2e/KRB-homepage.cy.ts
+          spec: e2e/KRB-homepage.cy.ts
           project: ./cypress
