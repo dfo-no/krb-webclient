@@ -8,16 +8,19 @@ import { ICode } from '../../Nexus/entities/ICode';
 import { ICodeSelection } from '../../Nexus/entities/ICodelistQuestion';
 import { ScrollableContainer } from '../ScrollableContainer/ScrollableContainer';
 import { Parentable } from '../../models/Parentable';
+import { ICodelist } from '../../Nexus/entities/ICodelist';
 
 interface IProps {
   name: string;
-  codesList: Parentable<ICode>[];
+  codesList?: Parentable<ICode>[];
+  codeList?: ICodelist;
   codeSelection?: ICodeSelection[];
 }
 
 const CodeSelection = ({
   name,
   codesList,
+  codeList,
   codeSelection
 }: IProps): React.ReactElement => {
   const sortCodes = (codesToBeSorted: ICode[]): ICode[] => {
@@ -37,7 +40,11 @@ const CodeSelection = ({
     });
   };
 
-  const codes = codeSelection ? sortCodes(codesList) : codesList;
+  const resultCode = (
+    codesList && codesList?.length > 0 ? codesList : codeList?.codes
+  ) as Parentable<ICode>[];
+
+  const codes = codeSelection ? sortCodes(resultCode) : resultCode;
 
   const onClick = (
     item: ICode,
