@@ -140,6 +140,8 @@ export default function ProductRequirement({
     }
   };
 
+  const isVariant = () => requirement.variants.length > 1;
+
   const renderActiveVariant = (): ReactElement => {
     return (
       <Box>
@@ -239,7 +241,13 @@ export default function ProductRequirement({
             >
               <Box className={css.variant}>
                 {requirement.variants.map((variant) => {
-                  return <ProductVariant key={variant.id} variant={variant} />;
+                  return (
+                    <ProductVariant
+                      key={variant.id}
+                      variant={variant}
+                      isVariant={isVariant()}
+                    />
+                  );
                 })}
                 {renderActiveVariant()}
               </Box>

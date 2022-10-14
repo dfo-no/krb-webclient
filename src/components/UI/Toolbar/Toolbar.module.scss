@@ -111,3 +111,9 @@
     }
   }
 }
+
+.ToolbarItem {
+  &[data-icon='true'] {
+    padding: var(--micro-gap) var(--small-gap);
+  }
+}

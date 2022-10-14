@@ -1,6 +1,8 @@
 import React, { ReactElement, ReactNode } from 'react';
 import { Typography } from '@mui/material';
 
+import css from './Toolbar.module.scss';
+
 type FontWeight = 'normal' | 'semibold' | 'bold';
 type FontSize = 'small' | 'large' | 'big' | 'giant';
 
@@ -26,11 +28,13 @@ export default function ToolbarItem({
 }: ToolbarItemProps): ReactElement {
   return (
     <div
+      className={css.ToolbarItem}
       onClick={handleClick}
       data-font-weight={fontWeight}
       data-change={!!handleClick}
       data-font-size={fontSize}
       data-disabled={disabled}
+      data-icon={!!icon}
     >
       {icon && icon}
       {primaryText && (
