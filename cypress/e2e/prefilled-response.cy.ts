@@ -74,9 +74,9 @@ describe('prefilled response', () => {
     ).as('generatePrefilledResponse');
     cy.contains('Last ned forberedt besvarelse').click();
     cy.wait('@generatePrefilledResponse').then((interception) => {
-      expect(interception.response.statusCode).gte(200).lt(300);
+      expect(interception?.response?.statusCode).gte(200).lt(300);
       // console.log(interception)
-      expect(interception.response.body.byteLength).gt(5000);
+      expect(interception?.response?.body.byteLength).gt(5000);
     });
   });
 });

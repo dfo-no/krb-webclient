@@ -4,6 +4,7 @@
     "isolatedModules": false,
     "types": ["cypress"]
   },
-  "include": ["../node_modules/cypress", "./**/*.ts", ".eslintrc.js", "../cypress.config.ts"],
+  "include": ["../node_modules/cypress", "./**/*.ts", "./**/*.cy.js", ".eslintrc.js",
+    "./cypress.config.ts", "support/e2e.ts"],
   "exclude": []
 }

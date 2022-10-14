@@ -37,9 +37,9 @@ describe('evaluation', () => {
     ).as('generateEvaluation');
     cy.contains('Last ned evaluering').click();
     cy.wait('@generateEvaluation').then((interception) => {
-      expect(interception.response.statusCode).gte(200).lt(300);
+      expect(interception?.response?.statusCode).gte(200).lt(300);
       // console.log(interception)
-      expect(interception.response.body.byteLength).gt(6500);
+      expect(interception?.response?.body.byteLength).gt(6500);
     });
   });
 
@@ -55,6 +55,7 @@ describe('evaluation', () => {
     cy.contains('Last opp et kravsett').selectFile(
       './cypress/filesForUploadTesting/2022-09-30_specification-4.pdf'
     );
+    // eslint-disable-next-line cypress/no-unnecessary-waiting
     cy.wait(1000);
 
     cy.get('label')
@@ -62,6 +63,7 @@ describe('evaluation', () => {
       .selectFile(
         './cypress/filesForUploadTesting/2022-10-03-citronen-response-4.pdf'
       );
+    // eslint-disable-next-line cypress/no-unnecessary-waiting
     cy.wait(500);
 
     cy.contains('Manuell evaluering').click();
@@ -74,9 +76,9 @@ describe('evaluation', () => {
     ).as('generateEvaluation');
     cy.contains('Last ned evaluering').click();
     cy.wait('@generateEvaluation').then((interception) => {
-      expect(interception.response.statusCode).gte(200).lt(300);
+      expect(interception?.response?.statusCode).gte(200).lt(300);
       // console.log(interception)
-      expect(interception.response.body.byteLength).gt(6500);
+      expect(interception?.response?.body.byteLength).gt(6500);
     });
   });
 });
