@@ -12,10 +12,12 @@ import Toolbar from '../../../../../../components/UI/Toolbar/ToolBar';
 
 interface IProps {
   variant: IVariant;
+  isVariant: boolean;
 }
 
 export default function ProductVariant({
-  variant
+  variant,
+  isVariant
 }: IProps): React.ReactElement {
   const { setValue, control } = useFormContext<IRequirementAnswer>();
   const useVariant = useWatch({ name: 'variantId', control });
@@ -45,7 +47,9 @@ export default function ProductVariant({
           >
             <Toolbar>
               <ToolbarItem
-                secondaryText={t('Choose variant')}
+                secondaryText={
+                  isVariant ? t('Choose variant') : t('Choose requirement')
+                }
                 icon={<AddIcon />}
                 handleClick={() => openVariant(checkedVariantId, variant.id)}
                 fontWeight={'bold'}
