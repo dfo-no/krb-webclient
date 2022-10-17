@@ -12,6 +12,12 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
+
+      -  run: echo pwd
+      -  run: pwd
+      -  run: echo "ls -laR"
+      -  run: ls -laR
+
       - name: Cypress install
         uses: cypress-io/github-action@v4
         with:
@@ -53,6 +59,11 @@ jobs:
 
       - name: Cypress info
         run: npx cypress info
+
+      - run: echo pwd
+      - run: pwd
+      - run: echo "ls -laR"
+      - run: ls -laR
 
       - name: Node info
         run: node -v
