@@ -195,12 +195,9 @@ class TextUtils {
     const chosenConfig: ChosenConfig[] = [];
     TextUtils.setChosenConfigs(chosenConfig, t('Minimum'), `${config.min}`);
     TextUtils.setChosenConfigs(chosenConfig, t('Maximum'), `${config.max}`);
-    TextUtils.setChosenConfigs(chosenConfig, t('Step'), scoreValues);
-    TextUtils.setChosenConfigs(
-      chosenConfig,
-      t('Scorevalues'),
-      `${config.unit}`
-    );
+    TextUtils.setChosenConfigs(chosenConfig, t('Step'), `${config.step}`);
+    TextUtils.setChosenConfigs(chosenConfig, t('Unit'), `${config.unit}`);
+    TextUtils.setChosenConfigs(chosenConfig, t('Scorevalues'), scoreValues);
     return chosenConfig;
   };
 
