@@ -83,3 +83,4 @@ jobs:
 #          group: "UI - Chrome"
           spec: cypress/e2e/*
           project: ./cypress
+          config-file: cypress.config.ts
