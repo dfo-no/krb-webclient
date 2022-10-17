@@ -84,3 +84,6 @@ jobs:
           spec: cypress/e2e/*
 #          project: ./cypress
           config-file: cypress.config.ts
+        env:
+          REACT_APP_CLIENTID: ${{ secrets.REACT_APP_CLIENTID }}
+          REACT_APP_API_URL: ${{ secrets.REACT_APP_API_URL_DEV }}
