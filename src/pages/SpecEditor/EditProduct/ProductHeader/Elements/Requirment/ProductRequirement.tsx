@@ -2,13 +2,13 @@ import classnames from 'classnames';
 import EditIcon from '@mui/icons-material/Edit';
 import CheckIcon from '@mui/icons-material/Check';
 import DeleteIcon from '@mui/icons-material/Delete';
+import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import React, { ReactElement, useEffect, useState } from 'react';
 import { Box, Button, Typography } from '@mui/material';
 import { FormProvider, useForm, useWatch } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
 import css from './ProductRequirement.module.scss';
-import { DFOChip } from '../../../../../../components/DFOChip/DFOChip';
 import { ISpecificationProduct } from '../../../../../../Nexus/entities/ISpecificationProduct';
 import { IRequirement } from '../../../../../../Nexus/entities/IRequirement';
 import { useSpecificationState } from '../../../../SpecificationContext';
@@ -26,7 +26,6 @@ import ProductVariant from '../Variant/ProductVariant';
 import GeneralErrorMessage from '../../../../../../Form/GeneralErrorMessage';
 import ToolbarItem from '../../../../../../components/UI/Toolbar/ToolbarItem';
 import Toolbar from '../../../../../../components/UI/Toolbar/ToolBar';
-import theme from '../../../../../../theme';
 
 interface IProps {
   requirement: IRequirement;
@@ -191,26 +190,31 @@ export default function ProductRequirement({
                 {selectedVariant?.requirementText}
               </Typography>
             </div>
-            <div>
+            <Toolbar>
+              {useWeight && !isInfo() && (
+                <ToolbarItem
+                  primaryText={t('Weighting')}
+                  secondaryText={t(Weighting[useWeight])}
+                  fontSize={'small'}
+                />
+              )}
               <ChosenConfiguration
                 requirement={requirement}
                 product={product}
               />
-              {isInfo() ? (
-                <DFOChip label={t('Info')} />
-              ) : (
-                <Typography
-                  variant={'smBold'}
-                  color={theme.palette.gray600.main}
-                >
-                  {' '}
-                  {t('Weighting')}: {t(Weighting[useWeight])}
-                </Typography>
-              )}
-            </div>
+            </Toolbar>
           </div>
           <div className={css.choose}>
             <Toolbar>
+              {isInfo() && (
+                <ToolbarItem
+                  secondaryText={t('Information')}
+                  icon={<InfoOutlinedIcon />}
+                  fontWeight={'bold'}
+                  fontSize={'small'}
+                  isBadge={true}
+                />
+              )}
               <ToolbarItem
                 secondaryText={t('Edit requirement')}
                 icon={<EditIcon />}

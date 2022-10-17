@@ -15,6 +15,7 @@ export interface ToolbarItemProps {
   fontWeight?: FontWeight;
   fontSize?: FontSize;
   disabled?: boolean;
+  isBadge?: boolean;
 }
 
 export default function ToolbarItem({
@@ -24,7 +25,8 @@ export default function ToolbarItem({
   handleClick,
   fontWeight,
   fontSize,
-  disabled
+  disabled,
+  isBadge
 }: ToolbarItemProps): ReactElement {
   return (
     <div
@@ -35,6 +37,7 @@ export default function ToolbarItem({
       data-font-size={fontSize}
       data-disabled={disabled}
       data-icon={!!icon}
+      data-badge={isBadge}
     >
       {icon && icon}
       {primaryText && (

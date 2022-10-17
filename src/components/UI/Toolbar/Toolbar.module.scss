@@ -109,6 +109,11 @@
     &[data-font-weight='bold'] {
       font-weight: var(--font-weight-bold);
     }
+
+    &[data-badge='true'] {
+      background-color: var(--border-color-secondary);
+      border-radius: 1.5rem;
+    }
   }
 }
 

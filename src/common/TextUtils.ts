@@ -14,6 +14,11 @@ import { ITimeQuestion } from '../Nexus/entities/ITimeQuestion';
 import { IRequirementAnswer } from '../Nexus/entities/IRequirementAnswer';
 import { QuestionVariant } from '../Nexus/enums';
 
+type ChosenConfig = {
+  option: string;
+  value: string;
+};
+
 class TextUtils {
   static getAnswerText = (
     reqAnswer: IRequirementAnswer,
@@ -43,7 +48,7 @@ class TextUtils {
   static getConfigText = (
     reqAnswer: IRequirementAnswer,
     bank: IBank
-  ): string => {
+  ): ChosenConfig[] => {
     switch (reqAnswer.question.type) {
       case QuestionVariant.Q_CHECKBOX:
         return TextUtils.getCheckboxConfig(reqAnswer.question);
@@ -62,6 +67,7 @@ class TextUtils {
       case QuestionVariant.Q_TIME:
         return TextUtils.getTimeConfig(reqAnswer.question);
     }
+    return [];
   };
 
   private static getCodesText = (
@@ -133,102 +139,176 @@ class TextUtils {
     return question.answer.files.join(', ');
   };
 
-  private static getCheckboxConfig = (question: ICheckboxQuestion): string => {
+  private static setChosenConfigs = (
+    chosenConfig: ChosenConfig[],
+    option: string,
+    value: string
+  ) => {
+    if (value && option)
+      chosenConfig.push({
+        option: option,
+        value: value
+      });
+    return chosenConfig;
+  };
+
+  private static getCheckboxConfig = (
+    question: ICheckboxQuestion
+  ): ChosenConfig[] => {
     const preferedAlternative = question.config.preferedAlternative;
     const pointsNonPrefered = question.config.pointsNonPrefered;
-    return `${preferedAlternative ? t('common.Yes') : t('common.No')} 100 ${t(
-      'Score'
-    )}, ${
-      preferedAlternative ? t('common.No') : t('common.Yes')
-    } ${pointsNonPrefered} ${t('Score')}`;
+    const chosenConfig: ChosenConfig[] = [];
+    TextUtils.setChosenConfigs(
+      chosenConfig,
+      `${preferedAlternative ? t('common.Yes') : t('common.No')}`,
+      `100 ${t('Score')}`
+    );
+    TextUtils.setChosenConfigs(
+      chosenConfig,
+      `${preferedAlternative ? t('common.No') : t('common.Yes')}`,
+      `${pointsNonPrefered} ${t('Score')}`
+    );
+    return chosenConfig;
   };
 
   private static getConfirmationConfig = (
     question: IConfirmationQuestion
-  ): string => {
+  ): ChosenConfig[] => {
     const pointsUnconfirmed = question.config.pointsUnconfirmed;
-    return `${t('Score for confirmed')}: 100 ${t(
-      'Score for unconfirmed'
-    )}: ${pointsUnconfirmed}`;
+    const chosenConfig: ChosenConfig[] = [];
+    TextUtils.setChosenConfigs(chosenConfig, t('Score for confirmed'), '100');
+    TextUtils.setChosenConfigs(
+      chosenConfig,
+      t('Score for unconfirmed'),
+      `${pointsUnconfirmed}`
+    );
+    return chosenConfig;
   };
 
-  private static getSliderConfig = (question: ISliderQuestion): string => {
+  private static getSliderConfig = (
+    question: ISliderQuestion
+  ): ChosenConfig[] => {
     const config = question.config;
     const scoreValues = config.scoreValues
       .map((sv) => `${sv.value}: ${sv.score}`)
       .join(', ');
-    return `${t('Minimum')}: ${config.min}, ${t('Maximum')}: ${config.max}, ${t(
-      'Step'
-    )}: ${config.step}, ${t('Unit')}: ${config.unit}, ${t(
-      'Scorevalues'
-    )}: ${scoreValues}`;
+    const chosenConfig: ChosenConfig[] = [];
+    TextUtils.setChosenConfigs(chosenConfig, t('Minimum'), `${config.min}`);
+    TextUtils.setChosenConfigs(chosenConfig, t('Maximum'), `${config.max}`);
+    TextUtils.setChosenConfigs(chosenConfig, t('Step'), scoreValues);
+    TextUtils.setChosenConfigs(
+      chosenConfig,
+      t('Scorevalues'),
+      `${config.unit}`
+    );
+    return chosenConfig;
   };
 
-  private static getTextConfig = (): string => {
-    return t('No configuration');
+  private static getTextConfig = (): ChosenConfig[] => {
+    return [
+      {
+        option: `${t('Chosen')}`,
+        value: `${t('No configuration')}`
+      }
+    ];
   };
 
   private static getCodelistConfig = (
     question: ICodelistQuestion,
     bank: IBank
-  ): string => {
+  ): ChosenConfig[] => {
     const optionalCodeMinAmount = question.config.optionalCodeMinAmount;
     const optionalCodeMaxAmount = question.config.optionalCodeMaxAmount;
     const codes = question.config.codes;
     const codelistId = question.config.codelist;
     const codelist = bank.codelist.find((cl) => cl.id === codelistId);
+    const chosenConfig: ChosenConfig[] = [];
     if (!codelist) {
-      return '';
+      return [];
     }
     if (codes.length === 0) {
-      return t('No codes selected');
+      TextUtils.setChosenConfigs(
+        chosenConfig,
+        t('Codes'),
+        t('No codes selected')
+      );
+      return chosenConfig;
     }
-    return `${t('Minimum')}: ${optionalCodeMinAmount}, ${t(
-      'Maximum'
-    )}: ${optionalCodeMaxAmount} ${t('Codes')}: ${TextUtils.getCodesText(
-      codes.map((codeSelection) => codeSelection.code),
-      codelist
-    )}`;
+    TextUtils.setChosenConfigs(
+      chosenConfig,
+      t('Minimum'),
+      `${optionalCodeMinAmount}`
+    );
+    TextUtils.setChosenConfigs(
+      chosenConfig,
+      t('Maximum'),
+      `${optionalCodeMaxAmount}`
+    );
+    TextUtils.setChosenConfigs(
+      chosenConfig,
+      t('Codes'),
+      `${TextUtils.getCodesText(
+        codes.map((codeSelection) => codeSelection.code),
+        codelist
+      )}`
+    );
+    return chosenConfig;
   };
 
-  private static getDateConfig = (question: IPeriodDateQuestion): string => {
+  private static getDateConfig = (
+    question: IPeriodDateQuestion
+  ): ChosenConfig[] => {
     const from = DateUtils.prettyFormatDate(question.config.fromBoundary);
     const to = DateUtils.prettyFormatDate(question.config.toBoundary);
     const isPeriod = question.config.isPeriod;
     const min = question.config.periodMin;
     const max = question.config.periodMax;
-    return `${from ? `${t('From')}: ${from}` : ''} ${
-      to ? `, ${t('To')}: ${to}` : ''
-    } ${isPeriod ? `, ${t('Minimum')}: ${min}, ${t('Maximum')}: ${max}` : ''}`;
+    const chosenConfig: ChosenConfig[] = [];
+    TextUtils.setChosenConfigs(chosenConfig, t('From'), from);
+    TextUtils.setChosenConfigs(chosenConfig, t('To'), to);
+    if (isPeriod)
+      TextUtils.setChosenConfigs(chosenConfig, t('Minimum'), `${min}`);
+    if (isPeriod)
+      TextUtils.setChosenConfigs(chosenConfig, t('Maximum'), `${max}`);
+    return chosenConfig;
   };
 
-  private static getTimeConfig = (question: ITimeQuestion): string => {
+  private static getTimeConfig = (question: ITimeQuestion): ChosenConfig[] => {
     const from = DateUtils.prettyFormatTime(question.config.fromBoundary);
     const to = DateUtils.prettyFormatTime(question.config.toBoundary);
     const isPeriod = question.config.isPeriod;
     const minutes = question.config.periodMinutes;
     const hours = question.config.periodHours;
-    return `${from ? `${t('From')}: ${from}` : ''} ${
-      to ? `, ${t('To')}: ${to}` : ''
-    } ${
-      isPeriod
-        ? `, ${t('Period')}: ${t('Minutes')}: ${minutes}, ${t(
-            'Hours'
-          )}: ${hours}`
-        : ''
-    }`;
+    const chosenConfig: ChosenConfig[] = [];
+    TextUtils.setChosenConfigs(chosenConfig, t('From'), from);
+    TextUtils.setChosenConfigs(chosenConfig, t('To'), to);
+    if (isPeriod)
+      TextUtils.setChosenConfigs(
+        chosenConfig,
+        t('Period'),
+        `${t('Minutes')}: ${minutes}, ${t('Hours')}: ${hours}`
+      );
+    return chosenConfig;
   };
 
   private static getFileUploadConfig = (
     question: IFileUploadQuestion
-  ): string => {
+  ): ChosenConfig[] => {
     const filetypes = question.config.fileEndings.join(', ');
     const template = question.config.template;
     const uploadInSpec = question.config.uploadInSpec;
     const allowMultipleFiles = question.config.allowMultipleFiles;
-    return `${t('Filetypes')}: ${filetypes}, ${t('Template')}: ${template}, ${
-      uploadInSpec ? t('Upload in specification') : ''
-    }, ${allowMultipleFiles ? t('Allow multiple files') : ''}`;
+    const chosenConfig: ChosenConfig[] = [];
+    TextUtils.setChosenConfigs(chosenConfig, t('Filetypes'), filetypes);
+    if (template)
+      TextUtils.setChosenConfigs(chosenConfig, t('Template'), template);
+    if (uploadInSpec && allowMultipleFiles)
+      TextUtils.setChosenConfigs(
+        chosenConfig,
+        t('Upload in specification'),
+        t('Allow multiple files')
+      );
+    return chosenConfig;
   };
 }
 
