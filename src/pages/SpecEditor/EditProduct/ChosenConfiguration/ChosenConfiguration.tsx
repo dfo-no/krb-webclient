@@ -1,13 +1,11 @@
 import React from 'react';
-import { Typography } from '@mui/material';
 import { t } from 'i18next';
-
 import TextUtils from '../../../../common/TextUtils';
-import theme from '../../../../theme';
 import { ISpecificationProduct } from '../../../../Nexus/entities/ISpecificationProduct';
 import { IRequirement } from '../../../../Nexus/entities/IRequirement';
 import { VariantType } from '../../../../Nexus/enums';
 import { useSpecificationState } from '../../SpecificationContext';
+import ToolbarItem from '../../../../components/UI/Toolbar/ToolbarItem';
 
 interface IProps {
   requirement: IRequirement;
@@ -35,14 +33,29 @@ export default function ChosenConfiguration({
 
   return (
     <>
-      <Typography variant={'smBold'} color={theme.palette.gray600.main}>
-        {showAnswer ? `${t('Answer')}: ` : `${t('Chosen')}: `}
-      </Typography>
-      <Typography variant={'smBold'} color={theme.palette.gray600.main}>
-        {showAnswer
-          ? TextUtils.getAnswerText(requirementAnswer, specification.bank)
-          : TextUtils.getConfigText(requirementAnswer, specification.bank)}
-      </Typography>
+      {showAnswer ? (
+        <ToolbarItem
+          primaryText={t('Answer')}
+          secondaryText={TextUtils.getAnswerText(
+            requirementAnswer,
+            specification.bank
+          )}
+          fontSize={'small'}
+        />
+      ) : (
+        TextUtils.getConfigText(requirementAnswer, specification.bank).map(
+          (chosenConfig, index) => {
+            return (
+              <ToolbarItem
+                key={index}
+                primaryText={chosenConfig.option}
+                secondaryText={chosenConfig.value}
+                fontSize={'small'}
+              />
+            );
+          }
+        )
+      )}
     </>
   );
 }
