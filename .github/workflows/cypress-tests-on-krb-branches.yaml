@@ -18,7 +18,7 @@ jobs:
           runTests: false
       # report machine parameters
       #- run: yarn cypress info
-      - run: npm run cypress info
+      - run: npx cypress info
       - run: node --version
       - run: node -p 'os.cpus()'
       #- run: yarn types
