@@ -82,5 +82,5 @@ jobs:
 #          parallel: true
 #          group: "UI - Chrome"
           spec: cypress/e2e/*
-          project: ./cypress
+#          project: ./cypress
           config-file: cypress.config.ts
