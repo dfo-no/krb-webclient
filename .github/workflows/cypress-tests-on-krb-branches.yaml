@@ -81,5 +81,5 @@ jobs:
 #          record: true
 #          parallel: true
 #          group: "UI - Chrome"
-          spec: cypress/e2e/KRB-homepage.cy.ts
+          spec: cypress/e2e/*
           project: ./cypress
