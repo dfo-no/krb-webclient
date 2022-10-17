@@ -3,19 +3,72 @@ name: Cypress Tests using Cypress Docker Image
 on: [push]
 
 jobs:
-  cypress-run:
+  install:
     runs-on: ubuntu-latest
-    container: cypress/browsers:node16.17.0-chrome106
+    container:
+      image: cypress/browsers:node16.17.0-chrome106
+      options: --user 1001
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
-      # Install NPM dependencies, cache them correctly
-      # and run all Cypress tests
-      - name: Cypress run
-        uses: cypress-io/github-action@v4.2.0 # use the explicit version number
+      - name: Cypress install
+        uses: cypress-io/github-action@v4
+        with:
+          runTests: false
+      # report machine parameters
+      #- run: yarn cypress info
+      - run: npm run cypress info
+      - run: node --version
+      - run: node -p 'os.cpus()'
+      #- run: yarn types
+      #- run: yarn lint
+      #- run: yarn test:unit:ci
+      # - run: yarn build:ci
+      - run: npm run-script build:ci
+
+      - name: Save build folder
+        uses: actions/upload-artifact@v3
+        with:
+          name: build
+          if-no-files-found: error
+          path: build
+
+  cypress-run:
+    timeout-minutes: 15
+    runs-on: ubuntu-latest
+    container:
+      image: cypress/browsers:node16.17.0-chrome106
+      options: --user 1001
+    needs: install
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Download the build folders
+        uses: actions/download-artifact@v3
+        with:
+          name: build
+          path: build
+
+      - name: Cypress info
+        run: npx cypress info
+
+      - name: Node info
+        run: node -v
+
+      - name: __e Dir
+        run: ls /__e
+
+      - name: "UI Tests - Chrome"
+        uses: cypress-io/github-action@v4
         with:
           start: npm start
-          browser: electron
+          wait-on: "http://localhost:3000"
+          wait-on-timeout: 120
+          browser: chrome
+          record: true
+          parallel: true
+          group: "UI - Chrome"
           spec: cypress/e2e/KRB-homepage.cy.ts
           project: ./cypress
