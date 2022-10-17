@@ -70,32 +70,34 @@ function ResponseOverview(): React.ReactElement {
 
   return (
     <div className={css.overview}>
-      <ul aria-label="products">
-        <li className={css.Active} key={'generic'}>
-          <div className={css.CardContent}>
-            <div className={css.CardTitle}>
-              <Typography variant="mdBold">
-                {t('General requirements')}
-              </Typography>
-              <FormIconButton
-                sx={{ marginLeft: 'auto', paddingRight: 2 }}
-                onClick={() => genericPressed()}
-              >
-                <EditIcon />
-              </FormIconButton>
+      <div className={css.overview__content}>
+        <ul aria-label="products">
+          <li className={css.Active} key={'generic'}>
+            <div className={css.CardContent}>
+              <div className={css.CardTitle}>
+                <Typography variant="mdBold">
+                  {t('General requirements')}
+                </Typography>
+                <FormIconButton
+                  sx={{ marginLeft: 'auto', paddingRight: 2 }}
+                  onClick={() => genericPressed()}
+                >
+                  <EditIcon />
+                </FormIconButton>
+              </div>
+              <Divider color={theme.palette.silver.main} />
             </div>
-            <Divider color={theme.palette.silver.main} />
-          </div>
-        </li>
-      </ul>
-      {response.specification.products.length > 0 && (
-        <ul>
-          {response.specification.products.map((element, index) => {
-            return renderProducts(element, index);
-          })}
+          </li>
         </ul>
-      )}
-      <Panel sticky={true} panelColor={'white'} children={<DownloadButton />} />
+        {response.specification.products.length > 0 && (
+          <ul>
+            {response.specification.products.map((element, index) => {
+              return renderProducts(element, index);
+            })}
+          </ul>
+        )}
+      </div>
+      <Panel panelColor={'white'} children={<DownloadButton />} />
     </div>
   );
 }

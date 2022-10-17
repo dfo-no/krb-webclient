@@ -2,15 +2,27 @@
   display: flex;
   flex-direction: column;
   width: 100%;
-  max-width: 250rem;
   gap: var(--big-gap);
   background: var(--light-gray-color);
   color: var(--primary-color);
+
+  .ResponseAnswer {
+    &__content {
+      padding: var(--small-gap) var(--xlarge-gap);
+    }
+  }
 
   .overview {
     display: flex;
     flex-direction: column;
     gap: var(--small-gap);
+
+    &__content {
+      display: flex;
+      flex-direction: column;
+      gap: var(--small-gap);
+      padding: var(--small-gap) var(--xlarge-gap);
+    }
 
     ul {
       display: flex;
@@ -118,6 +130,35 @@
 
       + .Need {
         margin-top: 0;
+      }
+    }
+  }
+
+  .ProductOverview {
+    display: flex;
+    flex-direction: column;
+    gap: var(--small-gap);
+
+    &__content {
+      display: flex;
+      flex-direction: column;
+      gap: var(--small-gap);
+      padding: var(--small-gap) var(--xlarge-gap);
+    }
+
+    .Needs {
+      display: flex;
+      flex-direction: column;
+      gap: var(--small-gap);
+    }
+
+    .Actions {
+      &__disabled {
+        background-color: var(--border-color-secondary);
+      }
+
+      &__warning {
+        color: var(--warning-color-secondary);
       }
     }
   }

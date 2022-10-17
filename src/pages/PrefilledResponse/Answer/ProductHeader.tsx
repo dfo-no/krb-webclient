@@ -1,12 +1,13 @@
 import React from 'react';
-import { Typography } from '@mui/material';
+import { Divider, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 
-import css from '../../Stylesheets/Editor.module.scss';
+import css from '../../Stylesheets/EditorFullPage.module.scss';
 import { DFOCardHeader } from '../../../components/DFOCard/DFOCardHeader';
 import { DFOHeaderContentBox } from '../../../components/DFOCard/DFOHeaderContentBox';
 import { useAppSelector } from '../../../store/hooks';
 import { useProductIndexState } from '../../../components/ProductIndexContext/ProductIndexContext';
+import theme from '../../../theme';
 
 export default function ProductHeader(): React.ReactElement {
   const { t } = useTranslation();
@@ -14,6 +15,9 @@ export default function ProductHeader(): React.ReactElement {
     (state) => state.prefilledResponse
   );
   const { productIndex } = useProductIndexState();
+
+  const productDescription =
+    prefilledResponse.products[productIndex]?.description;
 
   return (
     <DFOCardHeader>
@@ -24,11 +28,16 @@ export default function ProductHeader(): React.ReactElement {
               t('General requirement')}
           </Typography>
         </div>
-        <div className={css.HeaderBottom}>
-          <Typography variant="smBold">
-            {prefilledResponse.products[productIndex]?.description ?? ''}
-          </Typography>
-        </div>
+        {productDescription && (
+          <>
+            <Divider color={theme.palette.white.main} />
+            <div className={css.HeaderBottom}>
+              <Typography variant="smBold">
+                {productDescription ?? ''}
+              </Typography>
+            </div>
+          </>
+        )}
       </DFOHeaderContentBox>
     </DFOCardHeader>
   );

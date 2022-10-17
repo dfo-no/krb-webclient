@@ -4,6 +4,7 @@
   flex-grow: 1;
   flex-direction: column;
   justify-content: space-between;
+  padding: var(--small-gap) var(--xlarge-gap);
 
   .Content {
     width: 100%;

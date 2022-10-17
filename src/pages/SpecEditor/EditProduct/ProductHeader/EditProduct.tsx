@@ -18,7 +18,7 @@ import Panel from '../../../../components/UI/Panel/Panel';
 import EditProductForm from './EditProductForm';
 import Toolbar from '../../../../components/UI/Toolbar/ToolBar';
 import ToolbarItem from '../../../../components/UI/Toolbar/ToolbarItem';
-import css from './ProductHeader.module.scss';
+import css from '../../../Stylesheets/EditorFullPage.module.scss';
 
 export default function EditProduct(): React.ReactElement {
   const { t } = useTranslation();
@@ -73,26 +73,28 @@ export default function EditProduct(): React.ReactElement {
   return (
     <DeleteSpecProduct product={product} handleClose={onDelete}>
       <div className={css.ProductOverview}>
-        {!editingProduct && (
-          <Typography variant="lgBold">{product?.title}</Typography>
-        )}
-        {!editingProduct && renderProductActionsToolbar()}
-        <ProductHeader product={product} editingProduct={editingProduct} />
-        {product && editingProduct && (
-          <EditProductForm
-            handleClose={() => setEditingProduct(false)}
-            specificationProduct={product}
-          />
-        )}
-        {renderNeeds()}
+        <div className={css.ProductOverview__content}>
+          {!editingProduct && (
+            <Typography variant="lgBold">{product?.title}</Typography>
+          )}
+          {product && !editingProduct && renderProductActionsToolbar()}
+          <ProductHeader product={product} editingProduct={editingProduct} />
+          {product && editingProduct && (
+            <EditProductForm
+              handleClose={() => setEditingProduct(false)}
+              specificationProduct={product}
+            />
+          )}
+          {renderNeeds()}
+        </div>
         <Panel
-          sticky={true}
+          classname={css.Actions}
           panelColor={'white'}
           children={
             <>
               {isEditing && (
-                <div className={css.Warning}>
-                  <Toolbar hasPadding={true}>
+                <div className={css.Actions__warning}>
+                  <Toolbar>
                     <ToolbarItem
                       primaryText={t(
                         'Close open requirement to save the product'
@@ -110,7 +112,7 @@ export default function EditProduct(): React.ReactElement {
                 variant="primary"
                 onClick={toOverviewPage}
                 disabled={isEditing}
-                className={isEditing ? css.Disabled : ''}
+                className={isEditing ? css.Actions__disabled : ''}
               >
                 {t('Save product')}
               </Button>

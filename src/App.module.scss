@@ -25,7 +25,7 @@
   --line-color: #e5e5e5;
   --line-color-dark: #8898a6;
   --light-gray-color: var(--background-color);
-  --hover-gray-color: #e6e6e6;
+  --secondary-gray-color: #e6e6e6;
   --gray-color: #c4c4c4;
   --dark-gray-color: #999999;
 
@@ -91,7 +91,6 @@ body {
     display: flex;
     flex-direction: column;
     gap: var(--normal-gap);
-    padding: var(--small-gap) var(--xlarge-gap);
   }
 }
 
