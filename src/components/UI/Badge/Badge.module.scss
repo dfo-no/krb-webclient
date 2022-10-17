@@ -1,0 +1,39 @@
+.Badge {
+  display: flex;
+  flex-direction: row;
+  gap: var(--small-gap);
+  padding: var(--nano-gap) var(--tiny-gap);
+  width: fit-content;
+  align-self: center;
+
+  span {
+    font-size: var(--small-fontsize);
+    font-weight: var(--font-weight-bold);
+  }
+
+  svg {
+    font-size: var(--normal-fontsize);
+    font-weight: var(--font-weight-normal);
+    align-self: center;
+  }
+
+  &[data-badgeType] {
+    &[data-badgeType='information'] {
+      background-color: var(--border-color-secondary);
+      border-radius: 1.5rem;
+    }
+    &[data-badgeType='error'] {
+      background-color: var(--error-color);
+      border-radius: 1.5rem;
+    }
+    &[data-badgeType='warning'] {
+      background-color: var(--warning-color);
+      border-radius: 1.5rem;
+    }
+    &[data-badgeType='primary'] {
+      background-color: var(--primary-color);
+      border-radius: 1.5rem;
+      color: var(--white-color);
+    }
+  }
+}

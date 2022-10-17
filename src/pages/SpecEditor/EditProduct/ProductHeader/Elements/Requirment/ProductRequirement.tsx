@@ -26,6 +26,7 @@ import ProductVariant from '../Variant/ProductVariant';
 import GeneralErrorMessage from '../../../../../../Form/GeneralErrorMessage';
 import ToolbarItem from '../../../../../../components/UI/Toolbar/ToolbarItem';
 import Toolbar from '../../../../../../components/UI/Toolbar/ToolBar';
+import Badge from '../../../../../../components/UI/Badge/Badge';
 
 interface IProps {
   requirement: IRequirement;
@@ -207,12 +208,10 @@ export default function ProductRequirement({
           <div className={css.choose}>
             <Toolbar>
               {isInfo() && (
-                <ToolbarItem
-                  secondaryText={t('Information')}
+                <Badge
+                  type={'information'}
                   icon={<InfoOutlinedIcon />}
-                  fontWeight={'bold'}
-                  fontSize={'small'}
-                  isBadge={true}
+                  displayText={t('Information')}
                 />
               )}
               <ToolbarItem
