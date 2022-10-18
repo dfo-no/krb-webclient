@@ -71,6 +71,7 @@ export default function HomePage(): React.ReactElement {
         </div>
         <div className={css.Columns}>
           <HomeDisplayList
+            dataCy={'newest-banks-container'}
             title={t('HomePage.Newest banks')}
             list={latestPublishedProjects}
             orderedByDate={true}
