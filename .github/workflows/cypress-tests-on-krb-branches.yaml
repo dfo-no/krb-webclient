@@ -12,25 +12,14 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
-
-      -  run: echo pwd
-      -  run: pwd
-      -  run: echo "ls -laR"
-      -  run: ls -laR
-
       - name: Cypress install
         uses: cypress-io/github-action@v4
         with:
           runTests: false
-      # report machine parameters
-      #- run: yarn cypress info
+
       - run: npx cypress info
       - run: node --version
       - run: node -p 'os.cpus()'
-      #- run: yarn types
-      #- run: yarn lint
-      #- run: yarn test:unit:ci
-      # - run: yarn build:ci
       - run: npm run-script build:ci
 
       - name: Save build folder
@@ -60,11 +49,6 @@ jobs:
       - name: Cypress info
         run: npx cypress info
 
-      - run: echo pwd
-      - run: pwd
-      - run: echo "ls -laR"
-      - run: ls -laR
-
       - name: Node info
         run: node -v
 
@@ -78,11 +62,7 @@ jobs:
           wait-on: "http://localhost:3000"
           wait-on-timeout: 120
           browser: chrome
-#          record: true
-#          parallel: true
-#          group: "UI - Chrome"
           spec: cypress/e2e/*
-#          project: ./cypress
           config-file: cypress.config.ts
         env:
           REACT_APP_CLIENTID: ${{ secrets.REACT_APP_CLIENTID }}
