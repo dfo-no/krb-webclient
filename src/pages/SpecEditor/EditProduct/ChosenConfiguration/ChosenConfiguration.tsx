@@ -14,7 +14,7 @@ interface IProps {
 
 export default function ChosenConfiguration({
   requirement,
-  product
+  product,
 }: IProps): React.ReactElement {
   const { specification } = useSpecificationState();
 

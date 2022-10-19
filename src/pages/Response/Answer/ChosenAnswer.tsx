@@ -14,7 +14,7 @@ interface IProps {
 
 export default function ChosenAnswer({
   requirementAnswer,
-  existingAnswer
+  existingAnswer,
 }: IProps): React.ReactElement {
   const { response } = useAppSelector((state) => state.response);
 

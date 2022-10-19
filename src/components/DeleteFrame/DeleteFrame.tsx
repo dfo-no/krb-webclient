@@ -19,7 +19,7 @@ export default function DeleteFrame({
   canBeDeleted,
   infoText,
   handleClose,
-  onDelete = () => {}
+  onDelete = () => {},
 }: IProps): React.ReactElement {
   return (
     <FormDeleteBox
@@ -32,7 +32,7 @@ export default function DeleteFrame({
           display: 'flex',
           flexDirection: 'row',
           padding: 1,
-          marginLeft: 1
+          marginLeft: 1,
         }}
       >
         <Typography variant={'mdBold'} sx={{ color: theme.palette.white.main }}>

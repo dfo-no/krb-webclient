@@ -20,17 +20,17 @@ const DateCtrl = ({
   name,
   label,
   minDate,
-  maxDate
+  maxDate,
 }: IProps): React.ReactElement => {
   const {
-    formState: { errors }
+    formState: { errors },
   } = useFormContext();
 
   const { i18n } = useTranslation();
 
   const maskMap: { [key: string]: string } = {
     en: '__/__/____',
-    nb: '__.__.____'
+    nb: '__.__.____',
   };
 
   const min = !!minDate ? new Date(minDate) : minDate;

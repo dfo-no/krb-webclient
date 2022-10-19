@@ -21,7 +21,7 @@ interface IProps {
 
 const PublicationItem = ({
   publication,
-  chooseSpecification
+  chooseSpecification,
 }: IProps): ReactElement => {
   const { t } = useTranslation();
   const { setDeleteMode } = useEditableState();

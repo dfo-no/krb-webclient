@@ -1,6 +1,6 @@
 {
   "arrowParens": "always",
   "singleQuote": true,
-  "trailingComma": "none",
-  "endOfLine": "auto"
+  "trailingComma": "es5",
+  "endOfLine": "lf"
 }

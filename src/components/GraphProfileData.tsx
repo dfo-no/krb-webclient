@@ -11,7 +11,7 @@ export async function callMsGraph(accessToken: string) {
 
   const options = {
     method: 'GET',
-    headers
+    headers,
   };
 
   return fetch(graphConfig.graphMeEndpoint, options)

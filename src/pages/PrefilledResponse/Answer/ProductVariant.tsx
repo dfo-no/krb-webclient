@@ -15,7 +15,7 @@ interface IProps {
 
 export default function ProductVariant({
   requirement,
-  variant
+  variant,
 }: IProps): ReactElement {
   const { t } = useTranslation();
 

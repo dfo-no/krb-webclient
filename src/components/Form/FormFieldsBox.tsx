@@ -6,5 +6,5 @@ export const FormFieldsBox = styled(Box)(() => ({
   gap: `var(--normal-gap)`,
   backgroundColor: `var(--white-color)`,
   border: `0.2rem var(--primary-color) solid`,
-  padding: `var(--normal-gap)`
+  padding: `var(--normal-gap)`,
 }));

@@ -21,16 +21,16 @@ describe('EvaluationService', () => {
         defaultPoint: 1,
         scoreValues: [
           { id: 'd7f3cd3b-5428-470a-97fe-ce001ac096a6', value: 0, score: 0 },
-          { id: 'ec712301-4bf7-4d22-8d33-e96630ed0440', value: 10, score: 100 }
-        ]
+          { id: 'ec712301-4bf7-4d22-8d33-e96630ed0440', value: 10, score: 100 },
+        ],
       },
       answer: {
         point: 0,
-        value: 0
+        value: 0,
       },
       sourceRel: null,
       sourceOriginal: null,
-      id: '50bf8a0a-e435-4c8f-b7d3-0048810b4491'
+      id: '50bf8a0a-e435-4c8f-b7d3-0048810b4491',
     };
 
     const questionDate: IPeriodDateQuestion = {
@@ -46,23 +46,23 @@ describe('EvaluationService', () => {
           {
             id: '8175d0e1-de2c-4d5e-ae97-d1dc837d5f55',
             date: '2021-10-01T00:00:00.0000000Z',
-            score: 0
+            score: 0,
           },
           {
             id: 'b6f872ed-3497-4622-bee5-8117c5fa5e51',
             date: '2021-12-30T00:00:00.0000000Z',
-            score: 100
-          }
-        ]
+            score: 100,
+          },
+        ],
       },
       answer: {
         point: 0,
         fromDate: null,
-        toDate: null
+        toDate: null,
       },
       sourceRel: null,
       sourceOriginal: null,
-      id: 'fa9ad612-2ab3-4877-8850-c65986347ece'
+      id: 'fa9ad612-2ab3-4877-8850-c65986347ece',
     };
 
     const questionCheckbox: ICheckboxQuestion = {
@@ -70,15 +70,15 @@ describe('EvaluationService', () => {
       config: {
         defaultPoint: 1,
         pointsNonPrefered: 20,
-        preferedAlternative: true
+        preferedAlternative: true,
       },
       answer: {
         point: 0,
-        value: false
+        value: false,
       },
       sourceRel: null,
       sourceOriginal: null,
-      id: '14b047d9-20f1-4681-83c4-519904352027'
+      id: '14b047d9-20f1-4681-83c4-519904352027',
     };
 
     const product1: Parentable<IProduct> = {
@@ -90,7 +90,7 @@ describe('EvaluationService', () => {
       sourceOriginal: '61cdf70d-9ef5-4ae1-a006-b2e2f5242273',
       sourceRel: null,
       deletedDate: null,
-      unit: 'stk'
+      unit: 'stk',
     };
 
     const product2: Parentable<IProduct> = {
@@ -102,7 +102,7 @@ describe('EvaluationService', () => {
       sourceOriginal: '61cdf70d-9ef5-4ae1-a006-b2e2f5242273',
       sourceRel: null,
       deletedDate: null,
-      unit: 'stk'
+      unit: 'stk',
     };
 
     const need1: Parentable<INeed> = {
@@ -127,18 +127,18 @@ describe('EvaluationService', () => {
               questions: [questionSlider],
               id: 'b2f218dc-d5e6-49b4-9a60-f906db1ec74e',
               type: VariantType.requirement,
-              description: ''
-            }
+              description: '',
+            },
           ],
           type: ModelType.requirement,
           sourceOriginal: '61cdf70d-9ef5-4ae1-a006-b2e2f5242273',
-          sourceRel: null
-        }
+          sourceRel: null,
+        },
       ],
       type: ModelType.need,
       parent: '',
       sourceOriginal: '61cdf70d-9ef5-4ae1-a006-b2e2f5242273',
-      sourceRel: null
+      sourceRel: null,
     };
 
     const need2: Parentable<INeed> = {
@@ -163,18 +163,18 @@ describe('EvaluationService', () => {
               questions: [questionDate],
               id: '2fbd3495-b95e-473c-923c-6aec0a9e4305',
               type: VariantType.requirement,
-              description: ''
-            }
+              description: '',
+            },
           ],
           type: ModelType.requirement,
           sourceOriginal: '61cdf70d-9ef5-4ae1-a006-b2e2f5242273',
-          sourceRel: null
-        }
+          sourceRel: null,
+        },
       ],
       type: ModelType.need,
       parent: '',
       sourceOriginal: '61cdf70d-9ef5-4ae1-a006-b2e2f5242273',
-      sourceRel: null
+      sourceRel: null,
     };
 
     const need3: Parentable<INeed> = {
@@ -199,18 +199,18 @@ describe('EvaluationService', () => {
               questions: [questionCheckbox],
               id: 'b8dadd61-3f16-462c-9eb7-a72c61732fbf',
               type: VariantType.requirement,
-              description: ''
-            }
+              description: '',
+            },
           ],
           type: ModelType.requirement,
           sourceOriginal: '61cdf70d-9ef5-4ae1-a006-b2e2f5242273',
-          sourceRel: null
-        }
+          sourceRel: null,
+        },
       ],
       type: ModelType.need,
       parent: '',
       sourceOriginal: '61cdf70d-9ef5-4ae1-a006-b2e2f5242273',
-      sourceRel: null
+      sourceRel: null,
     };
 
     const specProduct1 = {
@@ -229,7 +229,7 @@ describe('EvaluationService', () => {
           variantId: '2fbd3495-b95e-473c-923c-6aec0a9e4305',
           question: questionDate,
           requirement: need2.requirements[0],
-          type: ModelType.requirementAnswer
+          type: ModelType.requirementAnswer,
         },
         {
           id: 'b5773496-f6cd-11ec-b939-0242ac120002',
@@ -238,13 +238,13 @@ describe('EvaluationService', () => {
           variantId: 'b8dadd61-3f16-462c-9eb7-a72c61732fbf',
           question: questionCheckbox,
           requirement: need3.requirements[0],
-          type: ModelType.requirementAnswer
-        }
+          type: ModelType.requirementAnswer,
+        },
       ],
       type: ModelType.specificationProduct,
       sourceRel: null,
       sourceOriginal: null,
-      unit: 'stk'
+      unit: 'stk',
     };
 
     const specProduct2 = {
@@ -263,13 +263,13 @@ describe('EvaluationService', () => {
           variantId: 'b8dadd61-3f16-462c-9eb7-a72c61732fbf',
           question: questionCheckbox,
           requirement: need3.requirements[0],
-          type: ModelType.requirementAnswer
-        }
+          type: ModelType.requirementAnswer,
+        },
       ],
       type: ModelType.specificationProduct,
       sourceRel: null,
       sourceOriginal: null,
-      unit: 'stk'
+      unit: 'stk',
     };
 
     const specification: ISpecification = {
@@ -290,7 +290,7 @@ describe('EvaluationService', () => {
         sourceOriginal: null,
         sourceRel: null,
         projectId: '61cdf70d-9ef5-4ae1-a006-b2e2f5242273',
-        deletedDate: null
+        deletedDate: null,
       },
       title: 'Spesifikasjon test',
       organization: 'Evil Corp',
@@ -299,7 +299,7 @@ describe('EvaluationService', () => {
       requirements: [
         need1.requirements[0].id,
         need2.requirements[0].id,
-        need3.requirements[0].id
+        need3.requirements[0].id,
       ],
       requirementAnswers: [
         {
@@ -309,7 +309,7 @@ describe('EvaluationService', () => {
           variantId: 'b2f218dc-d5e6-49b4-9a60-f906db1ec74e',
           question: questionSlider,
           requirement: need1.requirements[0],
-          type: ModelType.requirementAnswer
+          type: ModelType.requirementAnswer,
         },
         {
           id: '1e506825-1dfe-4133-a6f5-16cb187fbd48',
@@ -318,7 +318,7 @@ describe('EvaluationService', () => {
           variantId: '2fbd3495-b95e-473c-923c-6aec0a9e4305',
           question: questionDate,
           requirement: need2.requirements[0],
-          type: ModelType.requirementAnswer
+          type: ModelType.requirementAnswer,
         },
         {
           id: '92136690-d403-48f4-93b0-a3d3d80c8128',
@@ -327,10 +327,10 @@ describe('EvaluationService', () => {
           variantId: 'b8dadd61-3f16-462c-9eb7-a72c61732fbf',
           question: questionCheckbox,
           requirement: need3.requirements[0],
-          type: ModelType.requirementAnswer
-        }
+          type: ModelType.requirementAnswer,
+        },
       ],
-      currencyUnit: 'NOK'
+      currencyUnit: 'NOK',
     };
 
     const response: IResponse = {
@@ -350,9 +350,9 @@ describe('EvaluationService', () => {
                 ...questionDate,
                 answer: {
                   ...questionDate.answer,
-                  point: 50 // 0.5 * 0.7 = 0.35
-                }
-              }
+                  point: 50, // 0.5 * 0.7 = 0.35
+                },
+              },
             },
             {
               ...specProduct1.requirementAnswers[1], // 50 weight
@@ -360,11 +360,11 @@ describe('EvaluationService', () => {
                 ...questionCheckbox,
                 answer: {
                   ...questionCheckbox.answer,
-                  point: 100 // 1 * 0.5 = 0.5
-                }
-              }
-            }
-          ]
+                  point: 100, // 1 * 0.5 = 0.5
+                },
+              },
+            },
+          ],
         },
         {
           id: '78f788e4-f6ce-11ec-b939-0242ac120002',
@@ -379,12 +379,12 @@ describe('EvaluationService', () => {
                 ...questionCheckbox,
                 answer: {
                   ...questionCheckbox.answer,
-                  point: 10 // 0.1 * 0.7 = 0.07
-                }
-              }
-            }
-          ]
-        }
+                  point: 10, // 0.1 * 0.7 = 0.07
+                },
+              },
+            },
+          ],
+        },
       ],
       requirementAnswers: [
         {
@@ -393,9 +393,9 @@ describe('EvaluationService', () => {
             ...questionSlider,
             answer: {
               ...questionSlider.answer,
-              point: 20 // 0.2 * 0.9 = 0.18
-            }
-          }
+              point: 20, // 0.2 * 0.9 = 0.18
+            },
+          },
         },
         {
           ...specification.requirementAnswers[1], // 70 weight
@@ -403,9 +403,9 @@ describe('EvaluationService', () => {
             ...questionDate,
             answer: {
               ...questionDate.answer,
-              point: 100 // 1 * 0.7 = 0.7
-            }
-          }
+              point: 100, // 1 * 0.7 = 0.7
+            },
+          },
         },
         {
           ...specification.requirementAnswers[2], // 50 weight
@@ -413,11 +413,11 @@ describe('EvaluationService', () => {
             ...questionCheckbox,
             answer: {
               ...questionCheckbox.answer,
-              point: 40 // 0.4 * 0.5 = 0.2
-            }
-          }
-        }
-      ]
+              point: 40, // 0.4 * 0.5 = 0.2
+            },
+          },
+        },
+      ],
     };
     const nexus = Nexus.getInstance();
     const result = await nexus.evaluationService.evaluateAll([response]);

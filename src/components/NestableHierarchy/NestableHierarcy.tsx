@@ -38,7 +38,7 @@ const NestableHierarcy = <T extends IBaseModelWithTitleAndDesc>({
   dispatchfunc,
   renderItem,
   depth,
-  renderCollapseIcon
+  renderCollapseIcon,
 }: IProps<T>): React.ReactElement => {
   const nestedList = Utils.parentable2Nestable(inputlist);
 
@@ -54,8 +54,8 @@ const NestableHierarcy = <T extends IBaseModelWithTitleAndDesc>({
       delete copiedTree.children;
       collection.push(copiedTree);
     }
-    for (let i = 0; i < tree[key].length; i += 1) {
-      const child = tree[key][i];
+    for (const element of tree[key]) {
+      const child = element;
       child.parent = tree.id === undefined ? '' : tree.id;
       convertTreeToList(child, key, collection);
     }

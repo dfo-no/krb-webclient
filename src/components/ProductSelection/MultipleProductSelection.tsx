@@ -17,7 +17,7 @@ interface IProps {
 
 const MultipleProductSelection = ({
   name,
-  products
+  products,
 }: IProps): React.ReactElement => {
   const levelableItems: Levelable<IProduct>[] =
     Utils.parentable2Levelable(products);
@@ -71,7 +71,7 @@ const MultipleProductSelection = ({
                       marginTop:
                         item.level === 1 ? 'var(--small-gap)' : '-0.1rem',
                       marginLeft: `${(item.level - 1) * 2}%`,
-                      width: `${100 - (item.level - 1) * 2}%`
+                      width: `${100 - (item.level - 1) * 2}%`,
                     }}
                     onClick={() => onClick(item, selected, onChange)}
                   >

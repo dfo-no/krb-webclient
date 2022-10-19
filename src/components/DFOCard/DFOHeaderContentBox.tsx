@@ -6,5 +6,5 @@ export const DFOHeaderContentBox = styled(Box)(() => ({
   width: '100%',
   padding: 15,
   paddingLeft: 48,
-  paddingRight: 48
+  paddingRight: 48,
 }));

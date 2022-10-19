@@ -5,12 +5,12 @@ const IdValidator = (joi: Joi.Root) => ({
   base: joi
     .string()
     .guid({ version: ['uuidv4'] })
-    .required()
+    .required(),
 });
 
 const EmptyIdValidator = (joi: Joi.Root) => ({
   type: 'validateEmptyId',
-  base: joi.string().equal('').required()
+  base: joi.string().equal('').required(),
 });
 
 const OptionalIdValidator = (joi: Joi.Root) => ({
@@ -19,7 +19,7 @@ const OptionalIdValidator = (joi: Joi.Root) => ({
     .string()
     .guid({ version: ['uuidv4'] })
     .allow(null)
-    .required()
+    .required(),
 });
 
 const ParentIdValidator = (joi: Joi.Root) => ({
@@ -28,20 +28,20 @@ const ParentIdValidator = (joi: Joi.Root) => ({
     .string()
     .guid({ version: ['uuidv4'] })
     .allow('')
-    .required()
+    .required(),
 });
 
 const IdArrayValidator = (joi: Joi.Root) => ({
   type: 'validateIdArray',
   messages: {
     'array.unique':
-      'Noe har gått galt med skjemaet. 2 like IDer er funnet i skjemaet'
+      'Noe har gått galt med skjemaet. 2 like IDer er funnet i skjemaet',
   },
   base: joi
     .array()
     .items(joi.string().guid({ version: ['uuidv4'] }))
     .required()
-    .unique()
+    .unique(),
 });
 
 const IdJoi = [
@@ -49,7 +49,7 @@ const IdJoi = [
   EmptyIdValidator,
   OptionalIdValidator,
   ParentIdValidator,
-  IdArrayValidator
+  IdArrayValidator,
 ];
 
 export default IdJoi;

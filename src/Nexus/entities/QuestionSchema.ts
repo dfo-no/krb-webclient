@@ -3,36 +3,36 @@ import { ObjectSchema } from 'joi';
 import CustomJoi from '../Joi/CustomJoi';
 import {
   CheckboxQuestionAnswerSchema,
-  CheckboxQuestionWorkbenchSchema
+  CheckboxQuestionWorkbenchSchema,
 } from './ICheckboxQuestion';
 import {
   CodelistQuestionAnswerSchema,
-  CodelistQuestionWorkbenchSchema
+  CodelistQuestionWorkbenchSchema,
 } from './ICodelistQuestion';
 import {
   ConfirmationQuestionAnswerSchema,
-  ConfirmationQuestionWorkbenchSchema
+  ConfirmationQuestionWorkbenchSchema,
 } from './IConfirmationQuestion';
 import {
   FileUploadAnswerSchema,
-  FileUploadWorkbenchSchema
+  FileUploadWorkbenchSchema,
 } from './IFileUploadQuestion';
 import {
   PeriodDateAnswerSchema,
-  PeriodDateWorkbenchSchema
+  PeriodDateWorkbenchSchema,
 } from './IPeriodDateQuestion';
 import { QuestionVariant } from '../enums';
 import {
   SliderQuestionAnswerSchema,
-  SliderQuestionWorkbenchSchema
+  SliderQuestionWorkbenchSchema,
 } from './ISliderQuestion';
 import {
   TextQuestionAnswerSchema,
-  TextQuestionWorkbenchSchema
+  TextQuestionWorkbenchSchema,
 } from './ITextQuestion';
 import {
   TimeQuestionAnswerSchema,
-  TimeQuestionWorkbenchSchema
+  TimeQuestionWorkbenchSchema,
 } from './ITimeQuestion';
 
 export const QuestionAnswerSchema = CustomJoi.alternatives().conditional(
@@ -43,14 +43,14 @@ export const QuestionAnswerSchema = CustomJoi.alternatives().conditional(
       { is: QuestionVariant.Q_CODELIST, then: CodelistQuestionAnswerSchema },
       {
         is: QuestionVariant.Q_CONFIRMATION,
-        then: ConfirmationQuestionAnswerSchema
+        then: ConfirmationQuestionAnswerSchema,
       },
       { is: QuestionVariant.Q_FILEUPLOAD, then: FileUploadAnswerSchema },
       { is: QuestionVariant.Q_PERIOD_DATE, then: PeriodDateAnswerSchema },
       { is: QuestionVariant.Q_SLIDER, then: SliderQuestionAnswerSchema },
       { is: QuestionVariant.Q_TEXT, then: TextQuestionAnswerSchema },
-      { is: QuestionVariant.Q_TIME, then: TimeQuestionAnswerSchema }
-    ]
+      { is: QuestionVariant.Q_TIME, then: TimeQuestionAnswerSchema },
+    ],
   }
 );
 
@@ -62,14 +62,14 @@ export const QuestionVariantSchema = CustomJoi.alternatives().conditional(
       { is: QuestionVariant.Q_CODELIST, then: CodelistQuestionWorkbenchSchema },
       {
         is: QuestionVariant.Q_CONFIRMATION,
-        then: ConfirmationQuestionWorkbenchSchema
+        then: ConfirmationQuestionWorkbenchSchema,
       },
       { is: QuestionVariant.Q_FILEUPLOAD, then: FileUploadWorkbenchSchema },
       { is: QuestionVariant.Q_PERIOD_DATE, then: PeriodDateWorkbenchSchema },
       { is: QuestionVariant.Q_SLIDER, then: SliderQuestionWorkbenchSchema },
       { is: QuestionVariant.Q_TEXT, then: TextQuestionWorkbenchSchema },
-      { is: QuestionVariant.Q_TIME, then: TimeQuestionWorkbenchSchema }
-    ]
+      { is: QuestionVariant.Q_TIME, then: TimeQuestionWorkbenchSchema },
+    ],
   }
 );
 
@@ -81,5 +81,5 @@ export const AnswerSchemaMap = new Map<QuestionVariant, ObjectSchema>([
   [QuestionVariant.Q_PERIOD_DATE, PeriodDateAnswerSchema],
   [QuestionVariant.Q_SLIDER, SliderQuestionAnswerSchema],
   [QuestionVariant.Q_TEXT, TextQuestionAnswerSchema],
-  [QuestionVariant.Q_TIME, TimeQuestionAnswerSchema]
+  [QuestionVariant.Q_TIME, TimeQuestionAnswerSchema],
 ]);

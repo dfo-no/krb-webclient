@@ -12,7 +12,7 @@ import { QuestionType } from '../../../Nexus/entities/QuestionType';
 const ConfigBox = styled(Box)(() => ({
   display: 'flex',
   flexDirection: 'column',
-  margin: 16
+  margin: 16,
 }));
 
 interface IProps {
@@ -20,7 +20,7 @@ interface IProps {
 }
 
 export default function QuestionConfigItem({
-  item
+  item,
 }: IProps): React.ReactElement {
   const { projectId } = useParams<IRouteProjectParams>();
   const { data: project } = useGetProjectQuery(projectId);

@@ -23,14 +23,14 @@ const QuestionAnswerCodelist = ({
   item,
   existingAnswer,
   onSubmit,
-  codesList
+  codesList,
 }: IProps): React.ReactElement => {
   const { t } = useTranslation();
   const nexus = Nexus.getInstance();
 
   const methods = useForm<ICodelistQuestion>({
     resolver: nexus.resolverService.answerResolver(QuestionVariant.Q_CODELIST),
-    defaultValues: item
+    defaultValues: item,
   });
 
   useEffect(() => {

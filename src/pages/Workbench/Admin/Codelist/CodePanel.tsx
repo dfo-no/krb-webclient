@@ -32,7 +32,7 @@ const CodePanel = (): React.ReactElement => {
     isCreating,
     setCreating,
     deleteMode,
-    setDeleteMode
+    setDeleteMode,
   } = useEditableState();
   const [codes, setCodes] = useState<Parentable<ICode>[]>([]);
 

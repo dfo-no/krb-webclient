@@ -19,12 +19,12 @@ const QuestionAnswerSlider = ({ item }: IProps): ReactElement => {
   const useAnswer = useWatch({ name: 'question.answer.value', control });
 
   const [sliderMark, setSliderMark] = useState<IMark[]>([
-    { value: +useAnswer, label: `${useAnswer} ${item.config.unit}` }
+    { value: +useAnswer, label: `${useAnswer} ${item.config.unit}` },
   ]);
 
   useEffect(() => {
     setSliderMark([
-      { value: +useAnswer, label: `${useAnswer} ${item.config.unit}` }
+      { value: +useAnswer, label: `${useAnswer} ${item.config.unit}` },
     ]);
   }, [useAnswer, item.config.unit]);
 

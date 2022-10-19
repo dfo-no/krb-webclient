@@ -30,10 +30,10 @@ export default class ResponseService {
           description: specProduct.description,
           originProduct: specProduct,
           price: 0,
-          requirementAnswers: []
+          requirementAnswers: [],
         };
       }),
-      requirementAnswers: []
+      requirementAnswers: [],
     };
   }
 

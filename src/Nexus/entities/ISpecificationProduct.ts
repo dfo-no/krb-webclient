@@ -3,7 +3,7 @@ import { BaseProductSchema, IProduct } from './IProduct';
 import { BaseModelSchema, IBaseModel } from './IBaseModel';
 import {
   IRequirementAnswer,
-  RequirementAnswerSchema
+  RequirementAnswerSchema,
 } from './IRequirementAnswer';
 import { ModelType } from '../enums';
 
@@ -27,5 +27,5 @@ export const SpecificationProductSchema = BaseModelSchema.keys({
   weight: CustomJoi.validateWeight(),
   requirementAnswers: CustomJoi.validateUniqueArray(RequirementAnswerSchema),
   type: CustomJoi.validateType(ModelType.specificationProduct),
-  unit: CustomJoi.validateOptionalTextNotRequired()
+  unit: CustomJoi.validateOptionalTextNotRequired(),
 });

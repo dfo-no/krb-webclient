@@ -4,7 +4,7 @@ import {
   IAnswerBase,
   IConfigBase,
   IQuestionBase,
-  QuestionBaseSchema
+  QuestionBaseSchema,
 } from './IQuestionBase';
 import { QuestionVariant } from '../enums';
 
@@ -40,14 +40,14 @@ export const CodelistQuestionWorkbenchSchema = QuestionBaseSchema.keys({
     optionalCodes: CustomJoi.any(),
     optionalCodeMinAmount: CustomJoi.validateMinCodes(),
     optionalCodeMaxAmount: CustomJoi.validateMaxCodes(),
-    codes: CustomJoi.validateQuestionCodes()
-  })
+    codes: CustomJoi.validateQuestionCodes(),
+  }),
 });
 
 export const CodelistQuestionAnswerSchema =
   CodelistQuestionWorkbenchSchema.keys({
     answer: CustomJoi.object().keys({
       codes: CustomJoi.validateIdArray(),
-      point: CustomJoi.validateScore()
-    })
+      point: CustomJoi.validateScore(),
+    }),
   });

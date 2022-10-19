@@ -27,7 +27,7 @@ interface IProps {
 export default function DeleteProductForm({
   children,
   product,
-  handleClose
+  handleClose,
 }: IProps): React.ReactElement {
   const { deleteProduct } = useProjectMutations();
   const dispatch = useAppDispatch();
@@ -37,7 +37,7 @@ export default function DeleteProductForm({
 
   const methods = useForm<Parentable<IProduct>>({
     defaultValues: product,
-    resolver: nexus.resolverService.resolver(ModelType.product)
+    resolver: nexus.resolverService.resolver(ModelType.product),
   });
 
   useEffect(() => {
@@ -76,7 +76,7 @@ export default function DeleteProductForm({
       const alert: IAlert = {
         id: uuidv4(),
         style: 'success',
-        text: 'Successfully deleted product'
+        text: 'Successfully deleted product',
       };
       dispatch(addAlert({ alert }));
       handleClose();

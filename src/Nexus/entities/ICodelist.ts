@@ -18,5 +18,5 @@ export const CodelistSchema = BaseModelSchema.keys({
   codes: CustomJoi.validateUniqueArray(BaseCodeSchema),
   type: CustomJoi.validateType(ModelType.codelist),
   sourceOriginal: CustomJoi.validateOptionalId(),
-  sourceRel: CustomJoi.validateOptionalId()
+  sourceRel: CustomJoi.validateOptionalId(),
 });

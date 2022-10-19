@@ -10,7 +10,7 @@ const rootReducer = combineReducers({
   selectedBank: selectedBankReducer,
   response: responseReducer,
   alert: alertReducer,
-  prefilledResponse: PrefilledResponseReducer
+  prefilledResponse: PrefilledResponseReducer,
 });
 
 export default rootReducer;

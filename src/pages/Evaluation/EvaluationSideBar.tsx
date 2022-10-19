@@ -15,7 +15,7 @@ const menuItems: ISideBarItem[] = [
   { label: 'EVAL_MENU_UPLOAD_SPEC' },
   { label: 'EVAL_MENU_UPLOAD_RESPS' },
   { label: 'EVAL_MENU_MANUAL_EVAL' },
-  { label: 'EVAL_MENU_RESULTS' }
+  { label: 'EVAL_MENU_RESULTS' },
 ];
 
 const EvaluationSideBar = (): ReactElement => {

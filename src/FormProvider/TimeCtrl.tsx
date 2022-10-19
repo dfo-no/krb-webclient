@@ -20,16 +20,16 @@ const TimeCtrl = ({
   name,
   label,
   minTime,
-  maxTime
+  maxTime,
 }: IProps): React.ReactElement => {
   const {
-    formState: { errors }
+    formState: { errors },
   } = useFormContext();
 
   const { i18n } = useTranslation();
   const maskMap: { [key: string]: string } = {
     en: '__:__',
-    nb: '__:__'
+    nb: '__:__',
   };
 
   const min = !!minTime ? new Date(minTime) : minTime;

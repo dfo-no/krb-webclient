@@ -8,7 +8,7 @@ import {
   nestableCarsTestData,
   parentableCarsTestData,
   productsTestData,
-  projectTestData
+  projectTestData,
 } from './TestData';
 import { DateScorePair } from '../Nexus/entities/IPeriodDateQuestion';
 import { ScoreValuePair } from '../Nexus/entities/ISliderQuestion';
@@ -130,7 +130,7 @@ describe('Utils functions should work', () => {
     const project = {
       ...projectTestData,
       needs: needHierarchyTestData,
-      products: productsTestData
+      products: productsTestData,
     };
     const needsForProductA = Utils.findVariantsUsedByProduct(
       productsTestData[0],
@@ -166,7 +166,7 @@ describe('Utils functions should work', () => {
     const project = {
       ...projectTestData,
       needs: needHierarchyTestData,
-      products: productsTestData
+      products: productsTestData,
     };
     const isInUse1 = Utils.productUsedInVariants(productsTestData[0], project);
     expect(isInUse1).toBeTruthy();
@@ -179,7 +179,7 @@ describe('Utils functions should work', () => {
     const project = {
       ...projectTestData,
       needs: needHierarchyTestData,
-      codelist: codelistsTestData
+      codelist: codelistsTestData,
     };
     const isInUse1 = Utils.codelistUsedInVariants(
       codelistsTestData[0],
@@ -203,7 +203,7 @@ describe('Utils functions should work', () => {
       { id: uuidv4(), value: 10, score: 30 },
       { id: uuidv4(), value: 20, score: 50 },
       { id: uuidv4(), value: 22, score: 60 },
-      { id: uuidv4(), value: 25, score: 70 }
+      { id: uuidv4(), value: 25, score: 70 },
     ];
 
     const result1 = Utils.findScoreFromValue(2, scoreValuePairs);
@@ -225,7 +225,7 @@ describe('Utils functions should work', () => {
       { id: uuidv4(), date: '2022-02-20T12:00:00.000Z', score: 30 },
       { id: uuidv4(), date: '2022-03-02T12:00:00.000Z', score: 50 },
       { id: uuidv4(), date: '2022-03-04T12:00:00.000Z', score: 60 },
-      { id: uuidv4(), date: '2022-03-07T12:00:00.000Z', score: 70 }
+      { id: uuidv4(), date: '2022-03-07T12:00:00.000Z', score: 70 },
     ];
 
     const result1 = Utils.findScoreFromDate(
@@ -259,7 +259,7 @@ describe('Utils functions should work', () => {
       { id: uuidv4(), time: '2022-02-10T08:40:00.000Z', score: 30 },
       { id: uuidv4(), time: '2022-02-10T10:20:00.000Z', score: 50 },
       { id: uuidv4(), time: '2022-02-10T10:40:00.000Z', score: 60 },
-      { id: uuidv4(), time: '2022-02-10T11:10:00.000Z', score: 70 }
+      { id: uuidv4(), time: '2022-02-10T11:10:00.000Z', score: 70 },
     ];
 
     const result1 = Utils.findScoreFromTime(

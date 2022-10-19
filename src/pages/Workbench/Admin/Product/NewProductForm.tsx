@@ -24,7 +24,7 @@ interface IProps {
 }
 
 export default function NewProductForm({
-  handleClose
+  handleClose,
 }: IProps): React.ReactElement {
   const dispatch = useAppDispatch();
   const { t } = useTranslation();
@@ -38,7 +38,7 @@ export default function NewProductForm({
 
   const methods = useForm<Parentable<IProduct>>({
     resolver: nexus.resolverService.postResolver(ModelType.product),
-    defaultValues
+    defaultValues,
   });
 
   async function onSubmit(post: Parentable<IProduct>) {
@@ -47,7 +47,7 @@ export default function NewProductForm({
       const alert: IAlert = {
         id: uuidv4(),
         style: 'success',
-        text: 'Successfully created product'
+        text: 'Successfully created product',
       };
       dispatch(addAlert({ alert }));
       methods.reset();

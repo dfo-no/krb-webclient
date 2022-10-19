@@ -19,7 +19,7 @@ interface IProps {
 const QuestionAnswerConfirmation = ({
   item,
   existingAnswer,
-  onSubmit
+  onSubmit,
 }: IProps): React.ReactElement => {
   const { t } = useTranslation();
   const nexus = Nexus.getInstance();
@@ -28,12 +28,12 @@ const QuestionAnswerConfirmation = ({
     resolver: nexus.resolverService.answerResolver(
       QuestionVariant.Q_CONFIRMATION
     ),
-    defaultValues: item
+    defaultValues: item,
   });
 
   const useAnswerWatch = useWatch({
     name: 'answer.value',
-    control: methods.control
+    control: methods.control,
   });
 
   useEffect(() => {

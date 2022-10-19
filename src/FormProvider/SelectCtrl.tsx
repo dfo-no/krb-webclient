@@ -23,10 +23,10 @@ const SelectCtrl = ({
   name,
   label,
   options,
-  required
+  required,
 }: IProps): React.ReactElement => {
   const {
-    formState: { errors }
+    formState: { errors },
   } = useFormContext();
 
   return (

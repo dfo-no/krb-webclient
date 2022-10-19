@@ -4,7 +4,7 @@ import {
   IAnswerBase,
   IConfigBase,
   IQuestionBase,
-  QuestionBaseSchema
+  QuestionBaseSchema,
 } from './IQuestionBase';
 import { QuestionVariant } from '../enums';
 
@@ -26,14 +26,14 @@ export const CheckboxQuestionWorkbenchSchema = QuestionBaseSchema.keys({
   type: CustomJoi.validateType(QuestionVariant.Q_CHECKBOX),
   config: ConfigBaseSchema.keys({
     preferedAlternative: CustomJoi.validateBoolean(),
-    pointsNonPrefered: CustomJoi.validateScore()
-  })
+    pointsNonPrefered: CustomJoi.validateScore(),
+  }),
 });
 
 export const CheckboxQuestionAnswerSchema =
   CheckboxQuestionWorkbenchSchema.keys({
     answer: CustomJoi.object().keys({
       value: CustomJoi.validateBoolean(),
-      point: CustomJoi.validateScore()
-    })
+      point: CustomJoi.validateScore(),
+    }),
   });

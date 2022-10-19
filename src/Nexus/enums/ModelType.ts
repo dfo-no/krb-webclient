@@ -16,5 +16,5 @@ export enum ModelType {
   specificationGeneralProduct = 'specificationGeneralProduct',
   specificationProduct = 'specificationProduct',
   tag = 'tag',
-  variant = 'variant'
+  variant = 'variant',
 }

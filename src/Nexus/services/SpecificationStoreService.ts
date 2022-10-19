@@ -15,7 +15,7 @@ export default class SpecificationStoreService {
   constructor() {
     this.specification = SpecificationService.defaultSpecification();
     this.db = localforage.createInstance({
-      name: 'specifications'
+      name: 'specifications',
     });
   }
 

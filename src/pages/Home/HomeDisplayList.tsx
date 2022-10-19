@@ -22,7 +22,7 @@ export default function HomeDisplayList({
   list,
   orderedByDate = false,
   title,
-  setSelectedBank
+  setSelectedBank,
 }: IProps): React.ReactElement {
   const { t } = useTranslation();
 

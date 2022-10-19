@@ -12,7 +12,7 @@ describe('IBaseModel', () => {
       id: uuidService.generateId(),
       type: ModelType.bank,
       sourceRel: uuidService.generateId(),
-      sourceOriginal: uuidService.generateId()
+      sourceOriginal: uuidService.generateId(),
     };
 
     const report = BaseModelSchema.validate(model);
@@ -24,7 +24,7 @@ describe('IBaseModel', () => {
       id: uuidv1(),
       type: ModelType.bank,
       sourceRel: uuidv1(),
-      sourceOriginal: uuidv1()
+      sourceOriginal: uuidv1(),
     };
 
     const report = BaseModelSchema.validate(model, { abortEarly: false });
@@ -52,7 +52,7 @@ describe('IBaseModel', () => {
       id: uuidService.generateId(),
       type: ModelType.bank,
       sourceRel: null,
-      sourceOriginal: null
+      sourceOriginal: null,
     };
 
     const report = BaseModelSchema.validate(model, { abortEarly: false });

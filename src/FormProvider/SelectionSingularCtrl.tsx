@@ -22,12 +22,12 @@ const useStyles = makeStyles({
     marginLeft: 'var(--small-gap)',
     paddingTop: 'var(--tiny-gap)',
     '&:hover span': {
-      background: 'transparent'
+      background: 'transparent',
     },
     '& .MuiSvgIcon-root': {
       color: 'var(--primary-light-color)',
-      transition: 'color 220ms ease-out'
-    }
+      transition: 'color 220ms ease-out',
+    },
   },
   listItem: {
     display: 'flex',
@@ -44,24 +44,24 @@ const useStyles = makeStyles({
       backgroundColor: theme.palette.lightBlue.main,
       color: theme.palette.white.main,
       '& .MuiSvgIcon-root': {
-        color: theme.palette.white.main
-      }
+        color: theme.palette.white.main,
+      },
     },
     '& + li': {
-      marginTop: '-0.1rem'
-    }
+      marginTop: '-0.1rem',
+    },
   },
   itemDescription: {
     marginLeft: 'auto',
     borderLeft: `0.1rem solid ${theme.palette.silver.main}`,
     paddingLeft: 20,
-    flex: '0 0 15vw'
+    flex: '0 0 15vw',
   },
   itemTitle: {
     alignSelf: 'center',
     paddingLeft: 15,
-    flex: '1 1 auto'
-  }
+    flex: '1 1 auto',
+  },
 });
 
 interface IProps<T extends IBaseModelWithTitleAndDesc> {
@@ -79,7 +79,7 @@ const SelectionSingularCtrl = <T extends IBaseModelWithTitleAndDesc>({
   saveAsString,
   items,
   parentableItems,
-  postChange = () => {}
+  postChange = () => {},
 }: IProps<T>): React.ReactElement => {
   const classes = useStyles();
 
@@ -133,7 +133,7 @@ const SelectionSingularCtrl = <T extends IBaseModelWithTitleAndDesc>({
                     marginTop:
                       item.level === 1 ? 'var(--small-gap)' : '-0.1rem',
                     marginLeft: `${(item.level - 1) * 2}%`,
-                    width: `${100 - (item.level - 1) * 2}%`
+                    width: `${100 - (item.level - 1) * 2}%`,
                   }}
                   onClick={() => onClick(item, selected, onChange)}
                 >

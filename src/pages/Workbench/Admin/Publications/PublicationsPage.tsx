@@ -16,7 +16,7 @@ import { ISpecification } from '../../../../Nexus/entities/ISpecification';
 import { IRouteProjectParams } from '../../../../models/IRouteProjectParams';
 import {
   NewButtonContainer,
-  SearchContainer
+  SearchContainer,
 } from '../../../../components/SearchContainer/SearchContainer';
 import { StandardContainer } from '../../../../components/StandardContainer/StandardContainer';
 import { useGetProjectQuery } from '../../../../store/api/bankApi';
@@ -41,7 +41,7 @@ export function PublicationsPage(): ReactElement {
 
   const getOrderedPublications = (): IPublication[] => {
     const publications = [
-      ...project.publications.filter((publication) => !publication.deletedDate)
+      ...project.publications.filter((publication) => !publication.deletedDate),
     ];
     publications.reverse();
     return publications;

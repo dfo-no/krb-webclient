@@ -27,7 +27,7 @@ function DeleteRequirement({
   children,
   requirement,
   need,
-  handleClose
+  handleClose,
 }: IProps): React.ReactElement {
   const { projectId } = useParams<IRouteProjectParams>();
   const { data: project } = useGetProjectQuery(projectId);
@@ -55,7 +55,7 @@ function DeleteRequirement({
       const alert: IAlert = {
         id: uuidv4(),
         style: 'success',
-        text: 'Successfully deleted requirement'
+        text: 'Successfully deleted requirement',
       };
       dispatch(addAlert({ alert }));
       handleClose();

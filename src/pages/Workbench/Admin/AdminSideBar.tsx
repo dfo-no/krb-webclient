@@ -24,8 +24,8 @@ const useStyles = makeStyles({
   sideBar: {
     minHeight: '100%',
     [theme.breakpoints.down('md')]: {
-      paddingTop: 0
-    }
+      paddingTop: 0,
+    },
   },
   sideBarList: {
     position: 'sticky',
@@ -37,8 +37,8 @@ const useStyles = makeStyles({
     [theme.breakpoints.down('md')]: {
       height: 'auto',
       width: '100vw',
-      backgroundColor: theme.palette.white.main
-    }
+      backgroundColor: theme.palette.white.main,
+    },
   },
   sideBarListItem: {
     display: 'flex',
@@ -48,9 +48,9 @@ const useStyles = makeStyles({
     paddingLeft: 30,
     '&:hover': {
       background: theme.palette.primary.main,
-      color: theme.palette.white.main
-    }
-  }
+      color: theme.palette.white.main,
+    },
+  },
 });
 
 function AdminSideBar(): React.ReactElement {
@@ -114,17 +114,17 @@ function AdminSideBar(): React.ReactElement {
     {
       link: `${baseUrl?.url}/admin`,
       name: t('Versions'),
-      icon: <ContentCopyIcon />
+      icon: <ContentCopyIcon />,
     },
     {
       link: `${baseUrl?.url}/admin/products`,
       name: t('Products'),
-      icon: <Inventory2Icon />
+      icon: <Inventory2Icon />,
     },
     {
       link: `${baseUrl?.url}/admin/codelist`,
       name: t('Codelist'),
-      icon: <CodeIcon />
+      icon: <CodeIcon />,
     },
     /*  {
       link: `${baseUrl?.url}/admin/inheritance`,
@@ -134,13 +134,13 @@ function AdminSideBar(): React.ReactElement {
     {
       link: `${baseUrl?.url}/admin/tags`,
       name: t('Tags'),
-      icon: <LocalOfferIcon />
+      icon: <LocalOfferIcon />,
     },
     {
       link: `${baseUrl?.url}/admin/properties`,
       name: t('Properties'),
-      icon: <SettingsOutlinedIcon />
-    }
+      icon: <SettingsOutlinedIcon />,
+    },
   ];
 
   const classes = useStyles();

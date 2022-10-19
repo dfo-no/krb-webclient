@@ -15,7 +15,7 @@ import { IPublication } from '../../../../Nexus/entities/IPublication';
 import { ModelType } from '../../../../Nexus/enums';
 import {
   useAddBankMutation,
-  usePutProjectMutation
+  usePutProjectMutation,
 } from '../../../../store/api/bankApi';
 import { useAppDispatch } from '../../../../store/hooks';
 import { useFormStyles } from '../../../../components/Form/FormStyles';
@@ -27,7 +27,7 @@ interface IProps {
 
 export default function NewPublicationForm({
   project,
-  handleClose
+  handleClose,
 }: IProps): React.ReactElement {
   const dispatch = useAppDispatch();
   const nexus = Nexus.getInstance();
@@ -39,7 +39,7 @@ export default function NewPublicationForm({
   const defaultValues = nexus.publicationService.defaultPublication(project.id);
   const methods = useForm<IPublication>({
     resolver: nexus.resolverService.postResolver(ModelType.publication),
-    defaultValues
+    defaultValues,
   });
 
   async function saveValues(post: IPublication) {
@@ -65,7 +65,7 @@ export default function NewPublicationForm({
           const alert: IAlert = {
             id: uuidv4(),
             style: 'success',
-            text: `successfully published version ${result.version}`
+            text: `successfully published version ${result.version}`,
           };
           dispatch(addAlert({ alert }));
           methods.reset();

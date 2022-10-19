@@ -19,7 +19,7 @@ export interface IOptionsString {
 
 const FileUploadCtrl = ({ name, label }: IProps): React.ReactElement => {
   const {
-    formState: { errors }
+    formState: { errors },
   } = useFormContext();
 
   const fileTypes: IOptionsString[] = [
@@ -29,7 +29,7 @@ const FileUploadCtrl = ({ name, label }: IProps): React.ReactElement => {
     { value: 'odt', label: 'ODT' },
     { value: 'ods', label: 'ODS' },
     { value: 'ppt', label: 'PPT' },
-    { value: 'pptx', label: 'PPTX' }
+    { value: 'pptx', label: 'PPTX' },
   ];
 
   return (
@@ -55,5 +55,5 @@ const FileUploadCtrl = ({ name, label }: IProps): React.ReactElement => {
 export default FileUploadCtrl;
 
 FileUploadCtrl.defaultProps = {
-  label: ''
+  label: '',
 };

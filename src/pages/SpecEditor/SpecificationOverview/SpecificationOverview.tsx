@@ -176,7 +176,7 @@ export default function SpecificationOverview(): React.ReactElement {
               sx={{
                 display: 'flex',
                 flexDirection: 'row',
-                justifyContent: 'space-between'
+                justifyContent: 'space-between',
               }}
             >
               <Typography className={css.Text} variant="sm">

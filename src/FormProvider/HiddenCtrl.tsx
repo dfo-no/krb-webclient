@@ -13,7 +13,7 @@ interface IProps {
  */
 const HiddenCtrl = ({ name }: IProps): React.ReactElement => {
   const {
-    formState: { errors }
+    formState: { errors },
   } = useFormContext();
 
   return (

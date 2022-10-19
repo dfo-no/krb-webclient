@@ -3,7 +3,7 @@ import {
   Dispatch,
   SetStateAction,
   useContext,
-  useState
+  useState,
 } from 'react';
 
 import { ICodelist } from '../../../../Nexus/entities/ICodelist';
@@ -23,7 +23,7 @@ const initialContext: ISelectContext = {
   codelists: [],
   setCodelists: function (): void {
     throw new Error('Function not implemented.');
-  }
+  },
 };
 
 export const SelectContext = createContext<ISelectContext>(initialContext);
@@ -42,7 +42,7 @@ export const SelectProvider = ({ children }: IProps) => {
         codelist,
         setCodelist,
         codelists,
-        setCodelists
+        setCodelists,
       }}
     >
       {children}

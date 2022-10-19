@@ -27,7 +27,7 @@ const CodelistPanel = (): React.ReactElement => {
     isCreating,
     setCreating,
     deleteMode,
-    setDeleteMode
+    setDeleteMode,
   } = useEditableState();
 
   const itemClicked = (item: ICodelist) => {

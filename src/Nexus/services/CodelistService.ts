@@ -22,7 +22,7 @@ export default class CodelistService {
       codes: [],
       type: ModelType.codelist,
       sourceOriginal: projectId,
-      sourceRel: null
+      sourceRel: null,
     };
   };
 
@@ -34,7 +34,7 @@ export default class CodelistService {
       type: ModelType.code,
       sourceOriginal: projectId,
       sourceRel: null,
-      parent: ''
+      parent: '',
     };
   };
 

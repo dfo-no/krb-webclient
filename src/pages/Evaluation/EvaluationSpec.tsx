@@ -11,7 +11,7 @@ import { useEvaluationState } from './EvaluationContext';
 import {
   getDefaultSpecificationFile,
   getInvalidSpecificationFile,
-  INVALID_ID
+  INVALID_ID,
 } from '../../Nexus/services/EvaluationSpecificationStoreService';
 
 const EvaluationSpec = (): ReactElement => {
@@ -56,9 +56,9 @@ const EvaluationSpec = (): ReactElement => {
       formData.append('file', file);
       httpPost<FormData, AxiosResponse>('/java/uploadPdf', formData, {
         headers: {
-          'Content-Type': 'multipart/form-data'
+          'Content-Type': 'multipart/form-data',
         },
-        responseType: 'json'
+        responseType: 'json',
       })
         .then((response) => {
           if (!response.data.bank) {

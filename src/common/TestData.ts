@@ -18,7 +18,7 @@ export const parentableCarsTestData: Parentable<ICar>[] = [
     parent: '',
     type: ModelType.need,
     sourceOriginal: null,
-    sourceRel: null
+    sourceRel: null,
   },
   {
     id: 'bb60be0f-44e9-4ea9-a755-476fbc6dd85d',
@@ -26,7 +26,7 @@ export const parentableCarsTestData: Parentable<ICar>[] = [
     parent: 'aa28e225-7a76-4c57-bb22-ec87b3131762',
     type: ModelType.need,
     sourceOriginal: null,
-    sourceRel: null
+    sourceRel: null,
   },
   {
     id: 'cc60be0f-44e9-4ea9-a755-476fbc6dd855',
@@ -34,7 +34,7 @@ export const parentableCarsTestData: Parentable<ICar>[] = [
     parent: 'aa28e225-7a76-4c57-bb22-ec87b3131762',
     type: ModelType.need,
     sourceOriginal: null,
-    sourceRel: null
+    sourceRel: null,
   },
   {
     id: 'dd029ba3-aa01-4150-bd43-8d754bcfd890',
@@ -42,7 +42,7 @@ export const parentableCarsTestData: Parentable<ICar>[] = [
     parent: 'cc60be0f-44e9-4ea9-a755-476fbc6dd855',
     type: ModelType.need,
     sourceOriginal: null,
-    sourceRel: null
+    sourceRel: null,
   },
   {
     id: '0e998bb7-bc0f-41d8-9199-800b46145ba9',
@@ -50,7 +50,7 @@ export const parentableCarsTestData: Parentable<ICar>[] = [
     parent: 'ee7d9375-aee7-42c2-a6d7-9fa1541d56ef',
     type: ModelType.need,
     sourceOriginal: null,
-    sourceRel: null
+    sourceRel: null,
   },
   {
     id: 'a85deb14-9549-465f-9183-fe9102c4f8e0',
@@ -58,7 +58,7 @@ export const parentableCarsTestData: Parentable<ICar>[] = [
     parent: 'ee7d9375-aee7-42c2-a6d7-9fa1541d56ef',
     type: ModelType.need,
     sourceOriginal: null,
-    sourceRel: null
+    sourceRel: null,
   },
   {
     id: 'ee7d9375-aee7-42c2-a6d7-9fa1541d56ef',
@@ -66,7 +66,7 @@ export const parentableCarsTestData: Parentable<ICar>[] = [
     parent: 'dd029ba3-aa01-4150-bd43-8d754bcfd890',
     type: ModelType.need,
     sourceOriginal: null,
-    sourceRel: null
+    sourceRel: null,
   },
 
   {
@@ -75,7 +75,7 @@ export const parentableCarsTestData: Parentable<ICar>[] = [
     parent: '',
     type: ModelType.need,
     sourceOriginal: null,
-    sourceRel: null
+    sourceRel: null,
   },
   {
     id: '1f22e20c-2777-4ff3-880d-20256f6cb931',
@@ -83,7 +83,7 @@ export const parentableCarsTestData: Parentable<ICar>[] = [
     parent: 'ffb9bfe0-0b87-4e2d-95c8-9b703e655e61',
     type: ModelType.need,
     sourceOriginal: null,
-    sourceRel: null
+    sourceRel: null,
   },
   {
     id: '293b2bc4-a5f5-4c61-9759-814bc68ee9bb',
@@ -91,7 +91,7 @@ export const parentableCarsTestData: Parentable<ICar>[] = [
     parent: '1f22e20c-2777-4ff3-880d-20256f6cb931',
     type: ModelType.need,
     sourceOriginal: null,
-    sourceRel: null
+    sourceRel: null,
   },
   {
     id: 'a85deb14-9549-465f-9183-fe9102c4f8e0',
@@ -99,8 +99,8 @@ export const parentableCarsTestData: Parentable<ICar>[] = [
     parent: '1f22e20c-2777-4ff3-880d-20256f6cb931',
     type: ModelType.need,
     sourceOriginal: null,
-    sourceRel: null
-  }
+    sourceRel: null,
+  },
 ];
 
 export const nestableCarsTestData: Nestable<ICar>[] = [
@@ -120,7 +120,7 @@ export const nestableCarsTestData: Nestable<ICar>[] = [
         type: ModelType.need,
         level: 2,
         sourceOriginal: null,
-        sourceRel: null
+        sourceRel: null,
       },
       {
         id: 'cc60be0f-44e9-4ea9-a755-476fbc6dd855',
@@ -154,17 +154,17 @@ export const nestableCarsTestData: Nestable<ICar>[] = [
                     type: ModelType.need,
                     level: 5,
                     sourceOriginal: null,
-                    sourceRel: null
-                  }
+                    sourceRel: null,
+                  },
                 ],
                 sourceOriginal: null,
-                sourceRel: null
-              }
-            ]
-          }
-        ]
-      }
-    ]
+                sourceRel: null,
+              },
+            ],
+          },
+        ],
+      },
+    ],
   },
   {
     id: 'ffb9bfe0-0b87-4e2d-95c8-9b703e655e61',
@@ -173,8 +173,8 @@ export const nestableCarsTestData: Nestable<ICar>[] = [
     type: ModelType.need,
     level: 1,
     sourceOriginal: null,
-    sourceRel: null
-  }
+    sourceRel: null,
+  },
 ];
 
 export const productsTestData = [
@@ -187,7 +187,7 @@ export const productsTestData = [
     sourceOriginal: null,
     sourceRel: null,
     deletedDate: null,
-    unit: 'stk'
+    unit: 'stk',
   },
   {
     id: 'fb55c57e-af4a-11ec-b909-0242ac120002',
@@ -198,7 +198,7 @@ export const productsTestData = [
     sourceOriginal: null,
     sourceRel: null,
     deletedDate: null,
-    unit: 'stk'
+    unit: 'stk',
   },
   {
     id: '38c1b14e-b742-11ec-b909-0242ac120002',
@@ -209,8 +209,8 @@ export const productsTestData = [
     sourceOriginal: null,
     sourceRel: null,
     deletedDate: null,
-    unit: 'stk'
-  }
+    unit: 'stk',
+  },
 ];
 
 export const codelistsTestData = [
@@ -221,7 +221,7 @@ export const codelistsTestData = [
     codes: [],
     type: ModelType.codelist,
     sourceOriginal: null,
-    sourceRel: null
+    sourceRel: null,
   },
   {
     id: 'c71f3e4a-baf9-4625-969f-58d206f9794b',
@@ -230,8 +230,8 @@ export const codelistsTestData = [
     codes: [],
     type: ModelType.codelist,
     sourceOriginal: null,
-    sourceRel: null
-  }
+    sourceRel: null,
+  },
 ];
 
 export const needHierarchyTestData: Parentable<INeed>[] = [
@@ -263,7 +263,7 @@ export const needHierarchyTestData: Parentable<INeed>[] = [
             useQualification: false,
             products: [],
             questions: [],
-            type: VariantType.requirement
+            type: VariantType.requirement,
           },
           {
             id: 'ebb0c61e-af4a-11ec-b909-0242ac120002',
@@ -275,10 +275,10 @@ export const needHierarchyTestData: Parentable<INeed>[] = [
             useQualification: false,
             products: [
               'ca701c0c-af4a-11ec-b909-0242ac120002',
-              'fb55c57e-af4a-11ec-b909-0242ac120002'
+              'fb55c57e-af4a-11ec-b909-0242ac120002',
             ],
             questions: [],
-            type: VariantType.requirement
+            type: VariantType.requirement,
           },
           {
             id: '157407d6-af4b-11ec-b909-0242ac120002',
@@ -300,22 +300,22 @@ export const needHierarchyTestData: Parentable<INeed>[] = [
                   codes: [],
                   defaultPoint: 1,
                   optionalCodeMinAmount: 0,
-                  optionalCodeMaxAmount: 1
+                  optionalCodeMaxAmount: 1,
                 },
                 answer: {
                   point: 0,
-                  codes: []
+                  codes: [],
                 },
                 sourceRel: null,
-                sourceOriginal: null
-              }
+                sourceOriginal: null,
+              },
             ],
-            type: VariantType.requirement
-          }
+            type: VariantType.requirement,
+          },
         ],
-        tags: []
-      }
-    ]
+        tags: [],
+      },
+    ],
   },
   {
     id: '2c01b5e8-af4b-11ec-b909-0242ac120002',
@@ -345,13 +345,13 @@ export const needHierarchyTestData: Parentable<INeed>[] = [
             useQualification: false,
             products: ['fb55c57e-af4a-11ec-b909-0242ac120002'],
             questions: [],
-            type: VariantType.requirement
-          }
+            type: VariantType.requirement,
+          },
         ],
-        tags: []
-      }
-    ]
-  }
+        tags: [],
+      },
+    ],
+  },
 ];
 
 export const projectTestData: IBank = {
@@ -370,5 +370,5 @@ export const projectTestData: IBank = {
   inheritedBanks: [],
   type: ModelType.bank,
   sourceOriginal: null,
-  sourceRel: null
+  sourceRel: null,
 };

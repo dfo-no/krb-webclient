@@ -13,5 +13,5 @@ export const BaseInheritedBankSchema = BaseModelSchema.keys({
   title: CustomJoi.validateText(),
   type: CustomJoi.validateType(ModelType.inheritedBank),
   date: CustomJoi.validateDate(),
-  projectId: CustomJoi.validateParentId()
+  projectId: CustomJoi.validateParentId(),
 });

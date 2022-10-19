@@ -8,7 +8,7 @@ type Props<T> = {
   errors: FieldErrors<T>;
 };
 export default function GeneralErrorMessage<T>({
-  errors
+  errors,
 }: Props<T>): React.ReactElement {
   const { t } = useTranslation();
   if (Object.keys(errors).length > 0) {

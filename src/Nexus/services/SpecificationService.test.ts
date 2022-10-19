@@ -5,17 +5,17 @@ describe('SpecificationService', () => {
   const specId = 'detteerenspesifikasjonid';
   const specification = {
     ...SpecificationService.defaultSpecification(),
-    id: specId
+    id: specId,
   };
   const prodId = 'detteerenproduktid';
   const product = {
     ...SpecificationService.defaultSpecificationProduct(),
-    id: prodId
+    id: prodId,
   };
   const answId = 'detteerensvarid';
   const answer = {
     ...SpecificationService.defaultRequirementAnswer(),
-    id: answId
+    id: answId,
   };
   const title = 'Tittel';
 
@@ -26,7 +26,7 @@ describe('SpecificationService', () => {
   it('setSpecification sets the specification and returns it correctly', async () => {
     const setResult = await specificationService.setSpecification({
       ...specification,
-      title
+      title,
     });
     expect(setResult.title).toEqual(title);
   });

@@ -14,7 +14,7 @@ interface IProps {
 
 const SwitchCtrl = ({ name, label }: IProps): React.ReactElement => {
   const {
-    formState: { errors }
+    formState: { errors },
   } = useFormContext();
 
   return (

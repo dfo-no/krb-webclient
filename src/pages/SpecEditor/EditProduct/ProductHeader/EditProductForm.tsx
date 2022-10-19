@@ -26,12 +26,12 @@ const EditProductForm = ({ handleClose, specificationProduct }: IProps) => {
   const { editSpecificationProduct } = useSpecificationState();
   const nexus = Nexus.getInstance();
   const [sliderMark, setSliderMark] = useState<IMark[]>([
-    { value: Weighting.MEDIUM, label: t(Weighting[Weighting.MEDIUM]) }
+    { value: Weighting.MEDIUM, label: t(Weighting[Weighting.MEDIUM]) },
   ]);
 
   const methods = useForm<ISpecificationProduct>({
     resolver: nexus.resolverService.resolver(ModelType.specificationProduct),
-    defaultValues: specificationProduct
+    defaultValues: specificationProduct,
   });
 
   const useWeight = useWatch({ name: 'weight', control: methods.control });

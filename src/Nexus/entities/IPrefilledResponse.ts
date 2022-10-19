@@ -2,11 +2,11 @@ import CustomJoi from '../Joi/CustomJoi';
 import { BaseBankSchema, IBank } from './IBank';
 import {
   IPrefilledResponseProduct,
-  PrefilledResponseProductSchema
+  PrefilledResponseProductSchema,
 } from './IPrefilledResponseProduct';
 import {
   IRequirementAnswer,
-  RequirementAnswerSchema
+  RequirementAnswerSchema,
 } from './IRequirementAnswer';
 
 export interface IPrefilledResponse {
@@ -22,5 +22,5 @@ export const BasePrefilledResponseSchema = CustomJoi.object().keys({
   supplier: CustomJoi.validateText(),
   products: CustomJoi.validateArray(PrefilledResponseProductSchema),
   answeredVariants: CustomJoi.validateIdArray(),
-  requirementAnswers: CustomJoi.validateUniqueArray(RequirementAnswerSchema)
+  requirementAnswers: CustomJoi.validateUniqueArray(RequirementAnswerSchema),
 });

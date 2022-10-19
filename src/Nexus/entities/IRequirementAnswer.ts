@@ -21,5 +21,5 @@ export const RequirementAnswerSchema = CustomJoi.object().keys({
   variantId: CustomJoi.validateId(),
   question: QuestionAnswerSchema,
   type: CustomJoi.validateTypes(ModelType),
-  requirement: BaseRequirementSchema
+  requirement: BaseRequirementSchema,
 });

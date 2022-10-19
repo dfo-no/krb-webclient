@@ -26,7 +26,7 @@ interface IProps {
 function EditCodeForm({
   codelist,
   code,
-  handleClose
+  handleClose,
 }: IProps): React.ReactElement {
   const dispatch = useAppDispatch();
   const nexus = Nexus.getInstance();
@@ -36,7 +36,7 @@ function EditCodeForm({
 
   const methods = useForm<Parentable<ICode>>({
     defaultValues: code,
-    resolver: nexus.resolverService.resolver(ModelType.code)
+    resolver: nexus.resolverService.resolver(ModelType.code),
   });
 
   async function onSubmit(put: Parentable<ICode>) {
@@ -44,7 +44,7 @@ function EditCodeForm({
       const alert: IAlert = {
         id: uuidv4(),
         style: 'success',
-        text: 'Successfully edited code'
+        text: 'Successfully edited code',
       };
       dispatch(addAlert({ alert }));
       handleClose(put);

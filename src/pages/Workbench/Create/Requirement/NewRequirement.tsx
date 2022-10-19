@@ -28,7 +28,7 @@ const NewRequirement = ({ need }: IProps) => {
         display: 'flex',
         m: 1,
         flexDirection: 'row-reverse',
-        marginRight: 0
+        marginRight: 0,
       }}
     >
       <Button variant="primary" onClick={() => setNewOpen(true)}>

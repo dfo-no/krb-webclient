@@ -10,7 +10,7 @@ export default function LoaderSpinner(): React.ReactElement {
         width: '100%',
         display: 'flex',
         alignItems: 'center',
-        justifyContent: 'center'
+        justifyContent: 'center',
       }}
     >
       <CircularProgress color="secondary" />

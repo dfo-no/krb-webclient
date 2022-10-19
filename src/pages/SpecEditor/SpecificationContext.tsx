@@ -4,7 +4,7 @@ import React, {
   SetStateAction,
   useContext,
   useEffect,
-  useState
+  useState,
 } from 'react';
 import { useHistory, useRouteMatch } from 'react-router-dom';
 
@@ -13,7 +13,7 @@ import Nexus from '../../Nexus/Nexus';
 import { IRequirementAnswer } from '../../Nexus/entities/IRequirementAnswer';
 import {
   IRouteSpecificationParams,
-  SpecificationPath
+  SpecificationPath,
 } from '../../models/IRouteSpecificationParams';
 import { ISpecification } from '../../Nexus/entities/ISpecification';
 import { ISpecificationProduct } from '../../Nexus/entities/ISpecificationProduct';
@@ -71,7 +71,7 @@ const initialContext: ISpecificationContext = {
   editingRequirement: false,
   setEditingRequirement: function (): void {
     throw new Error('Function not implemented.');
-  }
+  },
 };
 
 export const SpecificationContext =
@@ -177,7 +177,7 @@ export const SpecificationProvider = ({ children }: IProps) => {
         newProductCreate,
         setNewProductCreate,
         editingRequirement,
-        setEditingRequirement
+        setEditingRequirement,
       }}
     >
       {children}

@@ -29,12 +29,12 @@ const initialState: IPrefilledResponseState = {
       sourceOriginal: null,
       sourceRel: null,
       projectId: null,
-      deletedDate: null
+      deletedDate: null,
     },
     supplier: '',
     products: [],
     answeredVariants: [],
-    requirementAnswers: [] // RequirementAnswer[]
+    requirementAnswers: [], // RequirementAnswer[]
   },
   selectedProduct: {
     id: '',
@@ -50,12 +50,12 @@ const initialState: IPrefilledResponseState = {
       sourceOriginal: null,
       sourceRel: null,
       deletedDate: null,
-      unit: ''
+      unit: '',
     },
     answeredVariants: [],
     requirementAnswers: [],
-    relatedProducts: []
-  }
+    relatedProducts: [],
+  },
 };
 
 const responseSlice = createSlice({
@@ -101,7 +101,7 @@ const responseSlice = createSlice({
     addProductAnswer(
       state,
       {
-        payload
+        payload,
       }: PayloadAction<{ answer: IRequirementAnswer; productId: string }>
     ) {
       const index = state.prefilledResponse.products.findIndex(
@@ -163,15 +163,15 @@ const responseSlice = createSlice({
     editProduct(
       state,
       {
-        payload
+        payload,
       }: PayloadAction<{
         product: IPrefilledResponseProduct;
         productIndex: number;
       }>
     ) {
       state.prefilledResponse.products[payload.productIndex] = payload.product;
-    }
-  }
+    },
+  },
 });
 
 export const {
@@ -182,7 +182,7 @@ export const {
   addAnswer,
   removeAnswer,
   addProductAnswer,
-  removeProductAnswer
+  removeProductAnswer,
 } = responseSlice.actions;
 
 export default responseSlice.reducer;

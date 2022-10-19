@@ -26,7 +26,7 @@ interface IProps {
 export default function DeleteCodelistForm({
   children,
   codelist,
-  handleClose
+  handleClose,
 }: IProps): React.ReactElement {
   const { deleteCodelist } = useProjectMutations();
   const dispatch = useAppDispatch();
@@ -36,7 +36,7 @@ export default function DeleteCodelistForm({
 
   const methods = useForm<ICodelist>({
     defaultValues: codelist,
-    resolver: nexus.resolverService.resolver(ModelType.codelist)
+    resolver: nexus.resolverService.resolver(ModelType.codelist),
   });
 
   const { projectId } = useParams<IRouteProjectParams>();
@@ -63,7 +63,7 @@ export default function DeleteCodelistForm({
       const alert: IAlert = {
         id: uuidv4(),
         style: 'success',
-        text: 'Successfully deleted codelist'
+        text: 'Successfully deleted codelist',
       };
       dispatch(addAlert({ alert }));
       handleClose(put);

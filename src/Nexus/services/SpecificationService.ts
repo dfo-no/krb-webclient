@@ -33,7 +33,7 @@ export default class SpecificationService extends BaseService {
       requirements: [],
       requirementAnswers: [],
       caseNumber: '',
-      currencyUnit: 'NOK'
+      currencyUnit: 'NOK',
     };
   }
 
@@ -52,7 +52,7 @@ export default class SpecificationService extends BaseService {
       type: ModelType.specificationProduct,
       sourceOriginal: null,
       sourceRel: null,
-      unit: 'stk'
+      unit: 'stk',
     };
   };
 
@@ -69,7 +69,7 @@ export default class SpecificationService extends BaseService {
       variantId: variantId ?? '',
       question: question ?? questionService.getQuestion(QuestionVariant.Q_TEXT),
       type: ModelType.requirementAnswer,
-      requirement: requirement ?? RequirementService.defaultRequirement()
+      requirement: requirement ?? RequirementService.defaultRequirement(),
     };
   };
 

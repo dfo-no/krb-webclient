@@ -17,7 +17,7 @@ interface IProps {
 
 export default function ProductVariant({
   variant,
-  isVariant
+  isVariant,
 }: IProps): React.ReactElement {
   const { setValue, control } = useFormContext<IRequirementAnswer>();
   const useVariant = useWatch({ name: 'variantId', control });

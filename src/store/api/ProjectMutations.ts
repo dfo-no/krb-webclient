@@ -31,7 +31,7 @@ function useProjectMutations() {
     if (projectToDelete) {
       return putProject({
         ...projectToDelete,
-        deletedDate: DateService.getNowString()
+        deletedDate: DateService.getNowString(),
       });
     }
     throw Error('Cant save changes to Project');
@@ -46,7 +46,7 @@ function useProjectMutations() {
       const now = DateService.getNowString();
       await putProject({
         ...publicationBank,
-        deletedDate: now
+        deletedDate: now,
       }).catch(() => {
         throw Error('Cant delete Publication');
       });
@@ -91,7 +91,7 @@ function useProjectMutations() {
     if (project) {
       return editProduct({
         ...product,
-        deletedDate: DateService.getNowString()
+        deletedDate: DateService.getNowString(),
       });
     }
     throw Error('Cant save changes to Project');
@@ -373,7 +373,7 @@ function useProjectMutations() {
     deleteRequirement,
     addVariant,
     editVariant,
-    deleteVariant
+    deleteVariant,
   };
 }
 

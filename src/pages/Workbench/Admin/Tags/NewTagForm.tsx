@@ -23,7 +23,7 @@ interface IProps {
 }
 
 export default function NewTagForm({
-  handleClose
+  handleClose,
 }: IProps): React.ReactElement {
   const dispatch = useAppDispatch();
   const { t } = useTranslation();
@@ -37,7 +37,7 @@ export default function NewTagForm({
 
   const methods = useForm<Parentable<ITag>>({
     resolver: nexus.resolverService.postResolver(ModelType.tag),
-    defaultValues
+    defaultValues,
   });
 
   async function onSubmit(post: Parentable<ITag>) {
@@ -46,7 +46,7 @@ export default function NewTagForm({
       const alert: IAlert = {
         id: uuidv4(),
         style: 'success',
-        text: 'Successfully created tag'
+        text: 'Successfully created tag',
       };
       dispatch(addAlert({ alert }));
       methods.reset();

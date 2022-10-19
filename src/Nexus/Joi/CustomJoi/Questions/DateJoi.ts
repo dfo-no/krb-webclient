@@ -6,9 +6,9 @@ const PeriodMinValidator = (joi: Joi.Root) => ({
   messages: {
     'number.base': 'Må være et tall',
     'number.integer': 'Må være et positivt heltall',
-    'number.min': 'Må være et positivt heltall'
+    'number.min': 'Må være et positivt heltall',
   },
-  base: joi.number().integer().min(0).required()
+  base: joi.number().integer().min(0).required(),
 });
 
 const PeriodMaxValidator = (joi: Joi.Root) => ({
@@ -16,7 +16,7 @@ const PeriodMaxValidator = (joi: Joi.Root) => ({
   messages: {
     'number.base': 'Må være et tall',
     'number.integer': 'Må være et positivt heltall',
-    'number.min': 'Må være større enn {{#limit}}'
+    'number.min': 'Må være større enn {{#limit}}',
   },
   base: joi.number().integer().required(),
   validate(value: number, helpers: Joi.CustomHelpers) {
@@ -25,18 +25,18 @@ const PeriodMaxValidator = (joi: Joi.Root) => ({
       return {
         value,
         errors: helpers.error('number.min', {
-          limit: helpers.state.ancestors[0].periodMin
-        })
+          limit: helpers.state.ancestors[0].periodMin,
+        }),
       };
     }
     return { value };
-  }
+  },
 });
 
 const FromBoundaryDateValidator = (joi: Joi.Root) => ({
   type: 'validateFromBoundaryDate',
   messages: {
-    'date.only': 'Dato må være fylt ut'
+    'date.only': 'Dato må være fylt ut',
   },
   base: joi.alternatives(joi.date().iso().raw(), null).required(),
   validate(value: string | null, helpers: Joi.CustomHelpers) {
@@ -46,14 +46,14 @@ const FromBoundaryDateValidator = (joi: Joi.Root) => ({
       return { value, errors: helpers.error('date.only') };
     }
     return { value };
-  }
+  },
 });
 
 const ToBoundaryDateValidator = (joi: Joi.Root) => ({
   type: 'validateToBoundaryDate',
   messages: {
     'date.only': 'Dato må være fylt ut',
-    'date.min': 'Til må være senere enn fra'
+    'date.min': 'Til må være senere enn fra',
   },
   base: joi.alternatives(joi.date().iso().raw(), null).required(),
   validate(value: string | null, helpers: Joi.CustomHelpers) {
@@ -68,17 +68,17 @@ const ToBoundaryDateValidator = (joi: Joi.Root) => ({
       }
     }
     return { value };
-  }
+  },
 });
 
 const DateScoreValidator = (joi: Joi.Root) => ({
   type: 'validateDateScore',
   base: joi.date().iso().raw().messages({
-    'date.base': 'Dato må ha en verdi'
+    'date.base': 'Dato må ha en verdi',
   }),
   messages: {
     'date.min': 'Dato kan ikke være før {{#limit}}',
-    'date.max': 'Dato kan ikke være etter {{#limit}}'
+    'date.max': 'Dato kan ikke være etter {{#limit}}',
   },
   validate(value: string | null, helpers: Joi.CustomHelpers) {
     const fromBoundary = helpers.state.ancestors[2].fromBoundary;
@@ -89,21 +89,21 @@ const DateScoreValidator = (joi: Joi.Root) => ({
         return {
           value,
           errors: helpers.error('date.min', {
-            limit: DateUtils.prettyFormatDateError(fromBoundary)
-          })
+            limit: DateUtils.prettyFormatDateError(fromBoundary),
+          }),
         };
       }
       if (date > new Date(toBoundary).getTime()) {
         return {
           value,
           errors: helpers.error('date.max', {
-            limit: DateUtils.prettyFormatDateError(toBoundary)
-          })
+            limit: DateUtils.prettyFormatDateError(toBoundary),
+          }),
         };
       }
     }
     return { value };
-  }
+  },
 });
 
 const FromDateValidator = (joi: Joi.Root) => ({
@@ -111,7 +111,7 @@ const FromDateValidator = (joi: Joi.Root) => ({
   messages: {
     'date.only': 'Dato må være fylt ut',
     'date.min': 'Dato kan ikke være før {{#limit}}',
-    'date.max': 'Dato kan ikke være etter {{#limit}}'
+    'date.max': 'Dato kan ikke være etter {{#limit}}',
   },
   base: joi.alternatives(joi.date().iso().raw(), null).required(),
   validate(value: string | null, helpers: Joi.CustomHelpers) {
@@ -122,27 +122,27 @@ const FromDateValidator = (joi: Joi.Root) => ({
         return {
           value,
           errors: helpers.error('date.min', {
-            limit: DateUtils.prettyFormatDateError(fromBoundary)
-          })
+            limit: DateUtils.prettyFormatDateError(fromBoundary),
+          }),
         };
       }
       if (new Date(value).getTime() > new Date(toBoundary).getTime()) {
         return {
           value,
           errors: helpers.error('date.max', {
-            limit: DateUtils.prettyFormatDateError(toBoundary)
-          })
+            limit: DateUtils.prettyFormatDateError(toBoundary),
+          }),
         };
       }
     }
     if (!value && !fromBoundary && !toBoundary) {
       return {
         value,
-        errors: helpers.error('date.only')
+        errors: helpers.error('date.only'),
       };
     }
     return { value };
-  }
+  },
 });
 
 const ToDateValidator = (joi: Joi.Root) => ({
@@ -150,7 +150,7 @@ const ToDateValidator = (joi: Joi.Root) => ({
   messages: {
     'date.only': 'Dato må være fylt ut',
     'date.min': 'Dato kan ikke være før {{#limit}}',
-    'date.max': 'Dato kan ikke være etter {{#limit}}'
+    'date.max': 'Dato kan ikke være etter {{#limit}}',
   },
   base: joi.alternatives(joi.date().iso().raw(), null).required(),
   validate(value: string | null, helpers: Joi.CustomHelpers) {
@@ -163,8 +163,8 @@ const ToDateValidator = (joi: Joi.Root) => ({
           return {
             value,
             errors: helpers.error('date.max', {
-              limit: DateUtils.prettyFormatDateError(toBoundary)
-            })
+              limit: DateUtils.prettyFormatDateError(toBoundary),
+            }),
           };
         }
       }
@@ -173,8 +173,8 @@ const ToDateValidator = (joi: Joi.Root) => ({
           return {
             value,
             errors: helpers.error('date.min', {
-              limit: DateUtils.prettyFormatDateError(fromDate)
-            })
+              limit: DateUtils.prettyFormatDateError(fromDate),
+            }),
           };
         }
       }
@@ -183,16 +183,16 @@ const ToDateValidator = (joi: Joi.Root) => ({
       return { value, errors: helpers.error('date.only') };
     }
     return { value };
-  }
+  },
 });
 
 const DateScoreValuesValidator = (joi: Joi.Root) => ({
   type: 'validateDateScoreValues',
   args(value: Schema, type: Schema) {
     return joi.array().items(type).required().unique('date').messages({
-      'array.unique': 'Dato kan ikke være like'
+      'array.unique': 'Dato kan ikke være like',
     });
-  }
+  },
 });
 
 const DateJoi = [
@@ -203,7 +203,7 @@ const DateJoi = [
   DateScoreValidator,
   FromDateValidator,
   ToDateValidator,
-  DateScoreValuesValidator
+  DateScoreValuesValidator,
 ];
 
 export default DateJoi;

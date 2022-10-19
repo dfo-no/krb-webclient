@@ -23,7 +23,7 @@ export default class ResponseStoreService {
       specification: specification,
       supplier: '',
       products: [],
-      requirementAnswers: []
+      requirementAnswers: [],
     };
   }
 

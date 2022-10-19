@@ -10,7 +10,7 @@ import { IVariant } from '../../../../Nexus/entities/IVariant';
 const ConfigBox = styled(Box)(() => ({
   display: 'flex',
   flexDirection: 'column',
-  margin: 'var(--small-gap)'
+  margin: 'var(--small-gap)',
 }));
 
 interface IProps {
@@ -23,7 +23,7 @@ const QuestionConfigSlider = ({ index }: IProps) => {
 
   const useSliderMin = useWatch({
     name: `questions.${index}.config.min`,
-    control
+    control,
   });
 
   useEffect(() => {

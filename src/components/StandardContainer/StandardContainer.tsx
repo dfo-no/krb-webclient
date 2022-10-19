@@ -9,5 +9,5 @@ export const StandardContainer = styled(Box)(({}) => ({
   maxWidth: 1350,
   paddingLeft: 16,
   paddingRight: 16,
-  paddingBottom: 40
+  paddingBottom: 40,
 }));

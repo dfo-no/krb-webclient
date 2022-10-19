@@ -9,6 +9,6 @@ export const DFOChip = styled(Chip)(() => ({
   backgroundColor: theme.palette.primary.main,
   color: theme.palette.white.main,
   '&.MuiChip-root': {
-    fontWeight: 'bold'
-  }
+    fontWeight: 'bold',
+  },
 }));

@@ -22,7 +22,7 @@ export const BaseBankSchema = BaseModelSchema.keys({
   publishedDate: CustomJoi.validateOptionalDate(),
   projectId: CustomJoi.validateOptionalId(),
   inheritedBanks: CustomJoi.array(),
-  deletedDate: CustomJoi.validateOptionalDate()
+  deletedDate: CustomJoi.validateOptionalDate(),
 });
 
 export interface IBank extends IBaseModel {

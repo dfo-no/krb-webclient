@@ -26,20 +26,20 @@ const EditSpecificationForm = ({ specification, handleCancel }: IProps) => {
 
   const methods = useForm<ISpecification>({
     resolver: nexus.resolverService.resolver(ModelType.specification),
-    defaultValues: specification
+    defaultValues: specification,
   });
 
   const currencyUnitOptions: IOption[] = [
     {
       value: 'NOK',
       label: t('CURRENCY_UNIT_NOK'),
-      recommended: true
+      recommended: true,
     },
     {
       value: 'EUR',
       label: t('CURRENCY_UNIT_EUR'),
-      recommended: false
-    }
+      recommended: false,
+    },
   ];
 
   const onSubmit = async (post: ISpecification) => {

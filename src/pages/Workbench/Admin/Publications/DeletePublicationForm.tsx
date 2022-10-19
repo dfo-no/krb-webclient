@@ -22,19 +22,19 @@ interface IProps {
 const DeletePublicationForm = ({
   children,
   publication,
-  handleClose
+  handleClose,
 }: IProps): ReactElement => {
   const { deleteMode } = useEditableState();
   const { deletePublication } = useProjectMutations();
   const { data: publicationBank } = useGetBankQuery(publication.id, {
-    skip: deleteMode !== publication.id
+    skip: deleteMode !== publication.id,
   });
   const dispatch = useAppDispatch();
   const nexus = Nexus.getInstance();
 
   const methods = useForm<IPublication>({
     defaultValues: publication,
-    resolver: nexus.resolverService.resolver(ModelType.publication)
+    resolver: nexus.resolverService.resolver(ModelType.publication),
   });
 
   const onSubmit = async (): Promise<void> => {
@@ -43,7 +43,7 @@ const DeletePublicationForm = ({
         const alert: IAlert = {
           id: uuidv4(),
           style: 'success',
-          text: `successfully deleted the published version ${publication.version}`
+          text: `successfully deleted the published version ${publication.version}`,
         };
         dispatch(addAlert({ alert }));
         methods.reset();
@@ -53,7 +53,7 @@ const DeletePublicationForm = ({
         const alert: IAlert = {
           id: uuidv4(),
           style: 'error',
-          text: `failed to delete version ${publication.version}`
+          text: `failed to delete version ${publication.version}`,
         };
         dispatch(addAlert({ alert }));
         methods.reset();

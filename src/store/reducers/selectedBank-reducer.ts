@@ -12,8 +12,8 @@ const selectedBankSlice = createSlice({
   reducers: {
     selectBank(state, { payload }: PayloadAction<string>) {
       state.id = payload;
-    }
-  }
+    },
+  },
 });
 
 export const { selectBank } = selectedBankSlice.actions;

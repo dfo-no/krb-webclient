@@ -16,7 +16,7 @@ import { ISpecification } from '../../Nexus/entities/ISpecification';
 import {
   ModalBox,
   ModalButton,
-  ModalButtonsBox
+  ModalButtonsBox,
 } from '../../components/ModalBox/ModalBox';
 import { useGetBankQuery } from '../../store/api/bankApi';
 
@@ -27,7 +27,7 @@ interface IProps {
 
 export default function ProjectSelectionModal({
   selectedBank,
-  setSelectedBank
+  setSelectedBank,
 }: IProps): React.ReactElement {
   const [newSpecification, setNewSpecification] =
     useState<ISpecification | null>(null);

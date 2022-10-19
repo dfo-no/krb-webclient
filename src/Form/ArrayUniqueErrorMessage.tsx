@@ -11,7 +11,7 @@ type Props<T> = {
 export default function ArrayUniqueErrorMessage<T>({
   errors,
   path,
-  length
+  length,
 }: Props<T>): React.ReactElement {
   const errorMessage = Array.from(Array(length).keys())
     .map((idx) => get(errors, `${path}.${idx}`))

@@ -15,7 +15,7 @@ export interface IProps {
 export default function Panel({
   children,
   panelColor,
-  sticky
+  sticky,
 }: IProps): ReactElement {
   return (
     <Box

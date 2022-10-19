@@ -15,7 +15,7 @@ import {
   ModalBox,
   ModalButton,
   ModalButtonsBox,
-  ModalFieldsBox
+  ModalFieldsBox,
 } from '../../../components/ModalBox/ModalBox';
 import css from '../../Stylesheets/NewProduct.module.scss';
 import { useSpecificationState } from '../SpecificationContext';
@@ -28,7 +28,7 @@ interface IProps {
 
 export default function NewProductForm({
   specProduct,
-  handleClose
+  handleClose,
 }: IProps): React.ReactElement {
   const { t } = useTranslation();
   const nexus = Nexus.getInstance();
@@ -41,7 +41,7 @@ export default function NewProductForm({
     resolver: nexus.resolverService.postResolver(
       ModelType.specificationProduct
     ),
-    defaultValues
+    defaultValues,
   });
   if (specProduct) {
     methods.setValue('originProduct', specProduct);

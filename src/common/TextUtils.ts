@@ -147,7 +147,7 @@ class TextUtils {
     if (value && option)
       chosenConfig.push({
         option: option,
-        value: value
+        value: value,
       });
     return chosenConfig;
   };
@@ -205,8 +205,8 @@ class TextUtils {
     return [
       {
         option: `${t('Chosen')}`,
-        value: `${t('No configuration')}`
-      }
+        value: `${t('No configuration')}`,
+      },
     ];
   };
 

@@ -26,7 +26,7 @@ export default class RequirementService {
       variants: [],
       tags: [],
       sourceOriginal: projectId ?? null,
-      sourceRel: null
+      sourceRel: null,
     };
   };
 

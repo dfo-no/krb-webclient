@@ -22,7 +22,7 @@ interface IProps {
 }
 
 export default function NewCodelistForm({
-  handleClose
+  handleClose,
 }: IProps): React.ReactElement {
   const dispatch = useAppDispatch();
   const { t } = useTranslation();
@@ -36,7 +36,7 @@ export default function NewCodelistForm({
 
   const methods = useForm<ICodelist>({
     resolver: nexus.resolverService.postResolver(ModelType.codelist),
-    defaultValues
+    defaultValues,
   });
 
   async function onSubmit(post: ICodelist) {
@@ -45,7 +45,7 @@ export default function NewCodelistForm({
       const alert: IAlert = {
         id: uuidv4(),
         style: 'success',
-        text: 'Successfully created codelist'
+        text: 'Successfully created codelist',
       };
       dispatch(addAlert({ alert }));
       methods.reset();

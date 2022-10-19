@@ -15,7 +15,7 @@ import { useGetProjectQuery } from '../../../../store/api/bankApi';
 const ConfigBox = styled(Box)(() => ({
   display: 'flex',
   flexDirection: 'column',
-  margin: 'var(--small-gap)'
+  margin: 'var(--small-gap)',
 }));
 
 interface IProps {

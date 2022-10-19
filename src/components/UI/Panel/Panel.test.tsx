@@ -17,7 +17,7 @@ describe('Panel-komponent', () => {
   const setupProps = (additionalProps: IProps) => {
     props = {
       ...initialProps,
-      ...additionalProps
+      ...additionalProps,
     };
   };
 
@@ -44,7 +44,7 @@ describe('Panel-komponent', () => {
     setupProps({
       panelColor: 'primary',
       children: <button>Test button</button>,
-      sticky: true
+      sticky: true,
     });
     renderPanel();
     expect(component.getByText('Test button')).toBeTruthy();

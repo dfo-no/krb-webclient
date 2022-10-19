@@ -8,13 +8,13 @@ export const DFOCheckbox = styled(Checkbox)(() => ({
   marginLeft: '-0.5rem',
 
   '&:hover': {
-    backgroundColor: 'transparent'
+    backgroundColor: 'transparent',
   },
 
   '& .MuiSvgIcon-root': {
     width: '3.2rem',
     height: '3.2rem',
     color: 'var(--primary-light-color)',
-    backgroundColor: 'transparent'
-  }
+    backgroundColor: 'transparent',
+  },
 }));

@@ -1,7 +1,7 @@
 import {
   StyledEngineProvider,
   Theme,
-  ThemeProvider
+  ThemeProvider,
 } from '@mui/material/styles';
 import React, { Suspense } from 'react';
 import ReactDOM from 'react-dom';

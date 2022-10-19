@@ -26,25 +26,25 @@ const QuestionSpecificationPeriodDate = ({ item }: IProps): ReactElement => {
 
   const useFromBoundary = useWatch({
     name: 'question.config.fromBoundary',
-    control
+    control,
   });
   const useToBoundary = useWatch({
     name: 'question.config.toBoundary',
-    control
+    control,
   });
 
   const useMinScore = useWatch({
     name: 'question.config.dateScores.0',
-    control
+    control,
   });
   const useMaxScore = useWatch({
     name: 'question.config.dateScores.1',
-    control
+    control,
   });
 
   const { fields, append, remove, update } = useFieldArray({
     control,
-    name: 'question.config.dateScores'
+    name: 'question.config.dateScores',
   });
 
   useEffect(() => {
@@ -72,7 +72,7 @@ const QuestionSpecificationPeriodDate = ({ item }: IProps): ReactElement => {
       update(0, {
         id: useMinScore.id ?? new UuidService().generateId(),
         date: useFromBoundary,
-        score: useMinScore.score
+        score: useMinScore.score,
       });
     }
   }, [useFromBoundary, useMinScore, update, append]);
@@ -85,7 +85,7 @@ const QuestionSpecificationPeriodDate = ({ item }: IProps): ReactElement => {
       update(1, {
         id: useMaxScore.id ?? new UuidService().generateId(),
         date: useToBoundary,
-        score: useMaxScore.score
+        score: useMaxScore.score,
       });
     }
   }, [useToBoundary, useMaxScore, update, append]);
@@ -153,7 +153,7 @@ const QuestionSpecificationPeriodDate = ({ item }: IProps): ReactElement => {
           append({
             id: new UuidService().generateId(),
             date: useFromBoundary,
-            score: 0
+            score: 0,
           })
         }
       >
