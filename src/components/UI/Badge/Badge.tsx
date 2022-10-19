@@ -11,7 +11,7 @@ interface BadgeProps {
 
 export default function Badge({ type, displayText, icon }: BadgeProps) {
   return (
-    <div className={css.Badge} data-badgeType={type}>
+    <div className={css.Badge} data-badge-type={type}>
       {icon && icon}
       {displayText && <span>{displayText}</span>}
     </div>

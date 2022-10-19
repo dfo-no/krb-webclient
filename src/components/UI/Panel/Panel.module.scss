@@ -1,15 +1,17 @@
 .Panel {
-  --panel--padding--base: 2rem;
-
   display: flex;
   flex-direction: row-reverse;
   align-items: center;
-  top: 0;
+  border-top: 0.125rem var(--secondary-gray-color) solid;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
 
   .Content {
     display: flex;
-    gap: var(--tiny-gap);
-    padding: var(--panel--padding--base);
+    align-items: center;
+    gap: var(--big-gap);
+    padding: var(--micro-gap) var(--xlarge-gap);
   }
 
   &[data-color] {
@@ -28,11 +30,5 @@
     &[data-color='warning'] {
       background-color: var(--warning-color);
     }
-  }
-
-  &.Sticky {
-    position: -webkit-sticky;
-    position: sticky;
-    bottom: 0;
   }
 }

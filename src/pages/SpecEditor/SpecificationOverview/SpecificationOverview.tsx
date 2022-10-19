@@ -193,58 +193,60 @@ export default function SpecificationOverview(): React.ReactElement {
 
   return (
     <div className={css.overview}>
-      {!editingSpecification && (
-        <Typography variant={'lgBold'}>{specification.title}</Typography>
-      )}
-      {!editingSpecification && renderSpecificationActionsToolbar()}
-      {!editingSpecification && renderSpecificationInfoToolbar()}
-      {editingSpecification && (
-        <EditSpecificationForm
-          specification={specification}
-          handleCancel={() => setEditingSpecification(false)}
-        />
-      )}
-      <Toolbar spacingType={'between'}>
-        <ToolbarItem
-          secondaryText={t('Products')}
-          disablePadding={true}
-          fontWeight={'semibold'}
-        />
-        <ToolbarItem
-          primaryText={t('Create a new product')}
-          icon={<AddIcon />}
-          handleClick={open}
-          disabled={editingSpecification}
-        />
-      </Toolbar>
-      <ul aria-label="products">
-        <li key={'generic'}>
-          <div className={css.CardContent}>
-            <div className={css.General}>
-              <Typography variant={'mdBold'}>
-                {t('General requirements')}
-              </Typography>
-              <Toolbar>
-                <ToolbarItem
-                  secondaryText={t('Edit general requirements')}
-                  icon={<EditIcon />}
-                  handleClick={() => genericPressed()}
-                  fontSize={'small'}
-                  disabled={editingSpecification}
-                />
-              </Toolbar>
+      <div className={css.overview__content}>
+        {!editingSpecification && (
+          <Typography variant={'lgBold'}>{specification.title}</Typography>
+        )}
+        {!editingSpecification && renderSpecificationActionsToolbar()}
+        {!editingSpecification && renderSpecificationInfoToolbar()}
+        {editingSpecification && (
+          <EditSpecificationForm
+            specification={specification}
+            handleCancel={() => setEditingSpecification(false)}
+          />
+        )}
+        <Toolbar spacingType={'between'}>
+          <ToolbarItem
+            secondaryText={t('Products')}
+            disablePadding={true}
+            fontWeight={'semibold'}
+          />
+          <ToolbarItem
+            primaryText={t('Create a new product')}
+            icon={<AddIcon />}
+            handleClick={open}
+            disabled={editingSpecification}
+          />
+        </Toolbar>
+        <ul aria-label="products">
+          <li key={'generic'}>
+            <div className={css.CardContent}>
+              <div className={css.General}>
+                <Typography variant={'mdBold'}>
+                  {t('General requirements')}
+                </Typography>
+                <Toolbar>
+                  <ToolbarItem
+                    secondaryText={t('Edit general requirements')}
+                    icon={<EditIcon />}
+                    handleClick={() => genericPressed()}
+                    fontSize={'small'}
+                    disabled={editingSpecification}
+                  />
+                </Toolbar>
+              </div>
             </div>
-          </div>
-        </li>
-      </ul>
-      {specification.products.length > 0 && (
-        <ul>
-          {specification.products.map((element) => {
-            return renderProducts(element);
-          })}
+          </li>
         </ul>
-      )}
-      {openProductSelection && <NewProductSelection />}
+        {specification.products.length > 0 && (
+          <ul>
+            {specification.products.map((element) => {
+              return renderProducts(element);
+            })}
+          </ul>
+        )}
+        {openProductSelection && <NewProductSelection />}
+      </div>
     </div>
   );
 }

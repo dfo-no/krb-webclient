@@ -17,7 +17,7 @@ export default function ProductNeed({
   product,
 }: IProps): React.ReactElement {
   return (
-    <div>
+    <div className={css.Needs}>
       <div className={css.Need}>
         <Typography variant="mdBold">{need.title}</Typography>
       </div>

@@ -2,7 +2,7 @@ import React, { ReactElement } from 'react';
 import { Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 
-import css from '../../../Stylesheets/EditorFullPage.module.scss';
+import css from './ProductHeader.module.scss';
 import { ISpecificationProduct } from '../../../../Nexus/entities/ISpecificationProduct';
 import Toolbar from '../../../../components/UI/Toolbar/ToolBar';
 import ToolbarItem from '../../../../components/UI/Toolbar/ToolbarItem';
@@ -52,7 +52,7 @@ export default function ProductHeader({
   };
 
   return (
-    <div className={css.overview}>
+    <div className={css.ProductHeader}>
       {product ? (
         <>
           {!editingProduct && renderProductInfoToolbar()}

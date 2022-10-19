@@ -7,13 +7,15 @@ import { Box } from '@mui/material';
 import Nexus from '../../../../Nexus/Nexus';
 import VerticalTextCtrl from '../../../../FormProvider/VerticalTextCtrl';
 import { ISpecificationProduct } from '../../../../Nexus/entities/ISpecificationProduct';
-import { ModalButton } from '../../../../components/ModalBox/ModalBox';
+import {
+  ModalButton,
+  ModalButtonsBox
+} from '../../../../components/ModalBox/ModalBox';
 import { useSpecificationState } from '../../SpecificationContext';
 import { ModelType, Weighting, WeightingStep } from '../../../../Nexus/enums';
 import css from './ProductHeader.module.scss';
 import SliderCtrl from '../../../../FormProvider/SliderCtrl';
 import { IMark } from '../../../../Nexus/entities/IMark';
-import Panel from '../../../../components/UI/Panel/Panel';
 import { FormFieldsBox } from '../../../../components/Form/FormFieldsBox';
 
 interface IProps {
@@ -95,14 +97,14 @@ const EditProductForm = ({ handleClose, specificationProduct }: IProps) => {
               />
             </Box>
           </Box>
-          <Panel panelColor={'white'}>
+          <ModalButtonsBox>
             <ModalButton variant="cancel" onClick={() => handleClose()}>
               {t('common.Cancel')}
             </ModalButton>
             <ModalButton variant="primary" type="submit">
               {t('Save')}
             </ModalButton>
-          </Panel>
+          </ModalButtonsBox>
         </FormFieldsBox>
       </form>
     </FormProvider>
