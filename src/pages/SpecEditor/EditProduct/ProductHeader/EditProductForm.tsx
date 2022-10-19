@@ -9,7 +9,7 @@ import VerticalTextCtrl from '../../../../FormProvider/VerticalTextCtrl';
 import { ISpecificationProduct } from '../../../../Nexus/entities/ISpecificationProduct';
 import {
   ModalButton,
-  ModalButtonsBox
+  ModalButtonsBox,
 } from '../../../../components/ModalBox/ModalBox';
 import { useSpecificationState } from '../../SpecificationContext';
 import { ModelType, Weighting, WeightingStep } from '../../../../Nexus/enums';

@@ -10,7 +10,7 @@ import VerticalTextCtrl from '../../FormProvider/VerticalTextCtrl';
 import { ISpecification } from '../../Nexus/entities/ISpecification';
 import {
   ModalButton,
-  ModalButtonsBox
+  ModalButtonsBox,
 } from '../../components/ModalBox/ModalBox';
 import { ModelType } from '../../Nexus/enums';
 import { SPECIFICATION } from '../../common/PathConstants';
