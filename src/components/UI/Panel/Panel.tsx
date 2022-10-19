@@ -9,19 +9,16 @@ type PanelColor = 'primary' | 'secondary' | 'white' | 'error' | 'warning';
 export interface IProps {
   children: ReactNode;
   panelColor?: PanelColor;
-  sticky?: boolean;
+  classname?: string;
 }
 
 export default function Panel({
   children,
   panelColor,
-  sticky
+  classname
 }: IProps): ReactElement {
   return (
-    <Box
-      className={classNames([css.Panel, sticky ? css.Sticky : undefined])}
-      data-color={panelColor}
-    >
+    <Box className={classNames([css.Panel, classname])} data-color={panelColor}>
       <div className={css.Content}>{children}</div>
     </Box>
   );

@@ -2,8 +2,8 @@
   display: grid;
   grid-template-columns: 25% auto;
   width: 100%;
-  max-width: 250rem;
   gap: var(--big-gap);
+  padding: var(--small-gap) var(--xlarge-gap);
 
   .SideBar {
     display: flex;
@@ -72,60 +72,6 @@
 
     .Divider {
       margin-bottom: var(--small-gap);
-    }
-  }
-
-  .Content {
-    display: flex;
-    flex-direction: column;
-
-    .HeaderTop {
-      display: flex;
-      flex-direction: row;
-      padding-bottom: var(--micro-gap);
-      border-bottom: 0.1rem solid;
-    }
-
-    .HeaderBottom {
-      display: flex;
-      flex-direction: row;
-      padding-top: var(--small-gap);
-
-      .ProductType {
-        margin-left: auto;
-        padding-right: var(--normal-gap);
-      }
-    }
-
-    .Price {
-      display: flex;
-      flex-direction: row;
-      gap: var(--tiny-gap);
-      width: fit-content;
-      margin-left: auto;
-      margin-top: var(--small-gap);
-      align-items: center;
-    }
-
-    .Need {
-      background: var(--primary-light-color);
-      color: white;
-      padding: var(--micro-gap);
-      padding-left: var(--normal-gap);
-      margin: var(--normal-gap) 0;
-    }
-
-    .Percentage {
-      display: flex;
-      justify-content: flex-end;
-      font-size: var(--large-fontsize);
-      font-weight: 600;
-      color: var(--dark-gray-color);
-      margin-top: var(--normal-gap);
-
-      + .Need {
-        margin-top: 0;
-      }
     }
   }
 }

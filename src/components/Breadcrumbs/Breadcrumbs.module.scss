@@ -3,6 +3,7 @@
   flex-direction: row;
   justify-content: space-between;
   font-size: var(--normal-fontsize);
+  padding: var(--small-gap) var(--xlarge-gap);
 
   span + span:before {
     content: ' / ';

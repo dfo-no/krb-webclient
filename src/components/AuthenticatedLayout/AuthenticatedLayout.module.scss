@@ -2,6 +2,7 @@
   flex-grow: 1;
   min-height: 0;
   width: 100%;
+  padding: var(--small-gap) var(--xlarge-gap);
 
   .signInBox {
     display: flex;

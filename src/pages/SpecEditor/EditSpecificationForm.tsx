@@ -8,10 +8,12 @@ import GeneralErrorMessage from '../../Form/GeneralErrorMessage';
 import Nexus from '../../Nexus/Nexus';
 import VerticalTextCtrl from '../../FormProvider/VerticalTextCtrl';
 import { ISpecification } from '../../Nexus/entities/ISpecification';
-import { ModalButton } from '../../components/ModalBox/ModalBox';
+import {
+  ModalButton,
+  ModalButtonsBox
+} from '../../components/ModalBox/ModalBox';
 import { ModelType } from '../../Nexus/enums';
 import { SPECIFICATION } from '../../common/PathConstants';
-import Panel from '../../components/UI/Panel/Panel';
 import SelectCtrl from '../../FormProvider/SelectCtrl';
 import { IOption } from '../../Nexus/entities/IOption';
 import { FormFieldsBox } from '../../components/Form/FormFieldsBox';
@@ -91,19 +93,14 @@ const EditSpecificationForm = ({ specification, handleCancel }: IProps) => {
             placeholder={t('Organization number')}
             required={true}
           />
-          <Panel
-            panelColor={'white'}
-            children={
-              <>
-                <ModalButton variant="cancel" onClick={() => handleCancel()}>
-                  {t('common.Cancel')}
-                </ModalButton>
-                <ModalButton variant={'primary'} type="submit">
-                  {t('Save')}
-                </ModalButton>
-              </>
-            }
-          />
+          <ModalButtonsBox>
+            <ModalButton variant="cancel" onClick={() => handleCancel()}>
+              {t('common.Cancel')}
+            </ModalButton>
+            <ModalButton variant={'primary'} type="submit">
+              {t('Save')}
+            </ModalButton>
+          </ModalButtonsBox>
         </FormFieldsBox>
         <GeneralErrorMessage errors={methods.formState.errors} />
       </form>

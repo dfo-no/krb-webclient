@@ -40,15 +40,13 @@ describe('Panel-komponent', () => {
     expect(window.document.querySelector('[class*="Sticky"]')).toBeFalsy();
   });
 
-  it('Skal tegne sticky panel med valgt farge', () => {
+  it('Skal tegne panel med valgt farge', () => {
     setupProps({
       panelColor: 'primary',
-      children: <button>Test button</button>,
-      sticky: true
+      children: <button>Test button</button>
     });
     renderPanel();
     expect(component.getByText('Test button')).toBeTruthy();
-    expect(window.document.querySelector('[class*="Sticky"]')).toBeTruthy();
     expect(
       window.document.querySelector('[data-color="primary"]')
     ).toBeTruthy();
