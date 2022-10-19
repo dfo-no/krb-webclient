@@ -17,20 +17,20 @@
     align-self: center;
   }
 
-  &[data-badgeType] {
-    &[data-badgeType='information'] {
+  &[data-badge-type] {
+    &[data-badge-type='information'] {
       background-color: var(--border-color-secondary);
       border-radius: 1.5rem;
     }
-    &[data-badgeType='error'] {
+    &[data-badge-type='error'] {
       background-color: var(--error-color);
       border-radius: 1.5rem;
     }
-    &[data-badgeType='warning'] {
+    &[data-badge-type='warning'] {
       background-color: var(--warning-color);
       border-radius: 1.5rem;
     }
-    &[data-badgeType='primary'] {
+    &[data-badge-type='primary'] {
       background-color: var(--primary-color);
       border-radius: 1.5rem;
       color: var(--white-color);
