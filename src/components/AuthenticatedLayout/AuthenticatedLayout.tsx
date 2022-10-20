@@ -2,7 +2,7 @@ import React, { ReactElement } from 'react';
 import {
   AuthenticatedTemplate,
   UnauthenticatedTemplate,
-  useMsal
+  useMsal,
 } from '@azure/msal-react';
 import { Box, Button, Typography } from '@mui/material/';
 
@@ -15,7 +15,7 @@ interface IProps {
 }
 
 export default function AuthenticatedLayout({
-  children
+  children,
 }: IProps): ReactElement {
   const { instance } = useMsal();
   const { t } = useTranslation();

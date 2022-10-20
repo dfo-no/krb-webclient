@@ -29,8 +29,8 @@ const Breadcrumbs = (): ReactElement => {
   const breadcrumbs: IBreadcrumb[] = [
     {
       label: t('app_title'),
-      url: '/'
-    }
+      url: '/',
+    },
   ];
 
   const isLast = (index: number): boolean => {
@@ -78,42 +78,42 @@ const Breadcrumbs = (): ReactElement => {
   if (isEvaluation) {
     breadcrumbs.push({
       label: `${t('Evaluation')}/ ${getTitle()}`,
-      url: '/evaluering'
+      url: '/evaluering',
     });
   }
 
   if (isResponse) {
     breadcrumbs.push({
       label: `${t('Response')}/ ${getTitle()}`,
-      url: '/response'
+      url: '/response',
     });
   }
 
   if (isSpecification) {
     breadcrumbs.push({
       label: `${t('Requirement specification')}/ ${getTitle()}`,
-      url: '/specification'
+      url: '/specification',
     });
   }
 
   if (isWorkbench) {
     breadcrumbs.push({
       label: t('Workbench'),
-      url: '/workbench'
+      url: '/workbench',
     });
   }
 
   if (isPrefilledResponse) {
     breadcrumbs.push({
       label: `${t('Prefilled')}/ ${getTitle()}`,
-      url: '/prefilledresponse'
+      url: '/prefilledresponse',
     });
   }
 
   if (project) {
     breadcrumbs.push({
       label: `${t('Project')}/ ${getTitle()}`,
-      url: project.id
+      url: project.id,
     });
   }
 

@@ -18,7 +18,7 @@ import { IRequirementAnswer } from '../../../../../../Nexus/entities/IRequiremen
 import {
   ModelType,
   VariantType,
-  Weighting
+  Weighting,
 } from '../../../../../../Nexus/enums';
 import EditProductVariant from '../Variant/EditProductVariant';
 import ChosenConfiguration from '../../../ChosenConfiguration/ChosenConfiguration';
@@ -35,7 +35,7 @@ interface IProps {
 
 export default function ProductRequirement({
   requirement,
-  product
+  product,
 }: IProps): React.ReactElement {
   const { t } = useTranslation();
   const {
@@ -44,7 +44,7 @@ export default function ProductRequirement({
     deleteGeneralAnswer,
     addProductAnswer,
     deleteProductAnswer,
-    setEditingRequirement
+    setEditingRequirement,
   } = useSpecificationState();
   const nexus = Nexus.getInstance();
   const [original, setOriginal] = useState<null | IRequirementAnswer>(null);
@@ -53,7 +53,7 @@ export default function ProductRequirement({
     SpecificationService.defaultRequirementAnswer(requirement);
   const methods = useForm<IRequirementAnswer>({
     resolver: nexus.resolverService.postResolver(ModelType.requirementAnswer),
-    defaultValues
+    defaultValues,
   });
 
   useEffect(() => {

@@ -8,7 +8,7 @@ import { IResponse } from '../../Nexus/entities/IResponse';
 import {
   ModalBox,
   ModalButton,
-  ModalButtonsBox
+  ModalButtonsBox,
 } from '../../components/ModalBox/ModalBox';
 import { selectBank } from '../../store/reducers/selectedBank-reducer';
 import { setResponse } from '../../store/reducers/response-reducer';
@@ -21,7 +21,7 @@ interface IProps {
 
 export default function ResponseSelectionModal({
   selectedResponse,
-  setSelectedResponse
+  setSelectedResponse,
 }: IProps): React.ReactElement {
   const history = useHistory();
   const { t } = useTranslation();

@@ -1,6 +1,6 @@
 import {
   CheckboxQuestionAnswerSchema,
-  CheckboxQuestionWorkbenchSchema
+  CheckboxQuestionWorkbenchSchema,
 } from './ICheckboxQuestion';
 import { QuestionVariant } from '../enums';
 
@@ -11,15 +11,15 @@ describe('CheckboxQuestionSchema should validate', () => {
       type: QuestionVariant.Q_CHECKBOX,
       answer: {
         point: 0,
-        value: false
+        value: false,
       },
       config: {
         pointsNonPrefered: 0,
         defaultPoint: 1,
-        preferedAlternative: true
+        preferedAlternative: true,
       },
       sourceRel: null,
-      sourceOriginal: null
+      sourceOriginal: null,
     };
 
     const report = CheckboxQuestionWorkbenchSchema.validate(question);
@@ -32,15 +32,15 @@ describe('CheckboxQuestionSchema should validate', () => {
       type: QuestionVariant.Q_CHECKBOX,
       answer: {
         value: true,
-        point: 5
+        point: 5,
       },
       config: {
         pointsNonPrefered: 0,
         defaultPoint: 1,
-        preferedAlternative: true
+        preferedAlternative: true,
       },
       sourceRel: null,
-      sourceOriginal: null
+      sourceOriginal: null,
     };
 
     const report = CheckboxQuestionAnswerSchema.validate(question);

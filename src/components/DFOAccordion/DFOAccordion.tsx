@@ -5,7 +5,7 @@ import {
   Accordion,
   AccordionDetails,
   AccordionSummary,
-  Box
+  Box,
 } from '@mui/material/';
 
 import theme from '../../theme';
@@ -22,16 +22,16 @@ const useStyles = makeStyles({
   expandIcon: {
     '& .MuiSvgIcon-root': {
       color: theme.palette.gray700.main,
-      fontSize: '4rem'
-    }
-  }
+      fontSize: '4rem',
+    },
+  },
 });
 
 export const DFOAccordion = ({
   eventKey,
   header,
   body,
-  className = ''
+  className = '',
 }: DFOAccordionElementProps): React.ReactElement => {
   const classes = useStyles();
   const { activeKey, setActiveKey } = useAccordionState();

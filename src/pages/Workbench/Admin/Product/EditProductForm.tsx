@@ -23,7 +23,7 @@ interface IProps {
 
 export default function EditProductForm({
   product,
-  handleClose
+  handleClose,
 }: IProps): React.ReactElement {
   const dispatch = useAppDispatch();
   const nexus = Nexus.getInstance();
@@ -33,7 +33,7 @@ export default function EditProductForm({
 
   const methods = useForm<Parentable<IProduct>>({
     defaultValues: product,
-    resolver: nexus.resolverService.resolver(ModelType.product)
+    resolver: nexus.resolverService.resolver(ModelType.product),
   });
 
   async function onSubmit(put: Parentable<IProduct>) {
@@ -41,7 +41,7 @@ export default function EditProductForm({
       const alert: IAlert = {
         id: uuidv4(),
         style: 'success',
-        text: 'Successfully edited product'
+        text: 'Successfully edited product',
       };
       dispatch(addAlert({ alert }));
       handleClose(put);

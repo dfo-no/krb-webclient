@@ -3,7 +3,7 @@ import React, {
   Dispatch,
   SetStateAction,
   useContext,
-  useState
+  useState,
 } from 'react';
 
 interface IHeaderContext {
@@ -15,7 +15,7 @@ const initialContext: IHeaderContext = {
   title: '',
   setTitle: function (): void {
     throw new Error('Function not implemented.');
-  }
+  },
 };
 
 export const HeaderContext = createContext<IHeaderContext>(initialContext);
@@ -31,7 +31,7 @@ export const HeaderProvider = ({ children }: IProps): React.ReactElement => {
     <HeaderContext.Provider
       value={{
         title,
-        setTitle
+        setTitle,
       }}
     >
       {children}

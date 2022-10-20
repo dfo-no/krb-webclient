@@ -12,9 +12,9 @@ export const BaseCodeSchema = BaseModelSchema.keys({
   title: CustomJoi.validateText(),
   description: CustomJoi.validateOptionalText(),
   type: CustomJoi.validateType(ModelType.code),
-  parent: CustomJoi.validateParentId()
+  parent: CustomJoi.validateParentId(),
 });
 
 export const PostCodeSchema = BaseCodeSchema.keys({
-  id: CustomJoi.validateEmptyId()
+  id: CustomJoi.validateEmptyId(),
 });

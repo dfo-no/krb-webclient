@@ -19,9 +19,9 @@ export default function DownloadButton(): React.ReactElement {
       {
         headers: {
           'Content-Type': 'application/json',
-          Accept: 'application/pdf'
+          Accept: 'application/pdf',
         },
-        responseType: 'blob'
+        responseType: 'blob',
       }
     ).then((response) => {
       const url = window.URL.createObjectURL(new Blob([response.data]));

@@ -26,7 +26,7 @@ interface IProps {
 
 export default function NewCodeForm({
   codelist,
-  handleClose
+  handleClose,
 }: IProps): React.ReactElement {
   const dispatch = useAppDispatch();
   const { t } = useTranslation();
@@ -40,7 +40,7 @@ export default function NewCodeForm({
 
   const methods = useForm<Parentable<ICode>>({
     resolver: nexus.resolverService.postResolver(ModelType.code),
-    defaultValues
+    defaultValues,
   });
 
   async function onSubmit(post: Parentable<ICode>) {
@@ -49,7 +49,7 @@ export default function NewCodeForm({
       const alert: IAlert = {
         id: uuidv4(),
         style: 'success',
-        text: 'Successfully created code'
+        text: 'Successfully created code',
       };
       dispatch(addAlert({ alert }));
       methods.reset();

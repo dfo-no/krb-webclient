@@ -14,7 +14,7 @@ import NestableHierarcyEditableComponents from '../../../../components/NestableH
 import {
   NewButtonContainer,
   SearchContainer,
-  SearchFieldContainer
+  SearchFieldContainer,
 } from '../../../../components/SearchContainer/SearchContainer';
 import { StandardContainer } from '../../../../components/StandardContainer/StandardContainer';
 import { IRouteProjectParams } from '../../../../models/IRouteProjectParams';

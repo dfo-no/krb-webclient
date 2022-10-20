@@ -4,7 +4,10 @@ describe('check front page', () => {
     // Can break if not tested for a long time since for dates more than a
     // certain number of days above will display as an actual date instead as a
     // relative number compared to today
-    cy.get('li:contains(dager siden)').its('length').should('be.at.least', 3);
+    cy.get('[data-cy="newest-banks-container"]')
+      .get('[data-cy="bank"]')
+      .its('length')
+      .should('be.at.least', 3);
   });
 
   it('has a working search field', () => {

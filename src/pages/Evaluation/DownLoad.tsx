@@ -14,7 +14,7 @@ export default function DownLoad(): React.ReactElement {
   const onDownLoad = (): void => {
     const evaluation: IEvaluation = {
       specification: specificationUpload.specification,
-      responses: evaluations
+      responses: evaluations,
     };
 
     httpPost<IEvaluation, AxiosResponse<File>>(
@@ -23,9 +23,9 @@ export default function DownLoad(): React.ReactElement {
       {
         headers: {
           'Content-Type': 'application/json',
-          Accept: 'application/pdf'
+          Accept: 'application/pdf',
         },
-        responseType: 'blob'
+        responseType: 'blob',
       }
     ).then((response) => {
       const url = window.URL.createObjectURL(new Blob([response.data]));

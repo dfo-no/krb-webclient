@@ -4,7 +4,7 @@ import {
   IAnswerBase,
   IConfigBase,
   IQuestionBase,
-  QuestionBaseSchema
+  QuestionBaseSchema,
 } from './IQuestionBase';
 import { QuestionVariant } from '../enums';
 
@@ -35,7 +35,7 @@ export interface DateScorePair {
 
 const WorkbenchDateScoreSchema = CustomJoi.object().keys({
   score: CustomJoi.validateScore(),
-  date: CustomJoi.validateEmptyDate()
+  date: CustomJoi.validateEmptyDate(),
 });
 
 export const PeriodDateWorkbenchSchema = QuestionBaseSchema.keys({
@@ -46,14 +46,14 @@ export const PeriodDateWorkbenchSchema = QuestionBaseSchema.keys({
     toBoundary: CustomJoi.validateOptionalDate(),
     periodMin: CustomJoi.validateNumber(),
     periodMax: CustomJoi.validateNumber(),
-    dateScores: CustomJoi.validateArray(WorkbenchDateScoreSchema)
-  })
+    dateScores: CustomJoi.validateArray(WorkbenchDateScoreSchema),
+  }),
 });
 
 const DateScoreSchema = CustomJoi.object().keys({
   id: CustomJoi.validateId(),
   date: CustomJoi.validateDateScore(),
-  score: CustomJoi.validateScore()
+  score: CustomJoi.validateScore(),
 });
 
 export const PeriodDateAnswerSchema = PeriodDateWorkbenchSchema.keys({
@@ -63,11 +63,11 @@ export const PeriodDateAnswerSchema = PeriodDateWorkbenchSchema.keys({
     toBoundary: CustomJoi.validateToBoundaryDate(),
     periodMin: CustomJoi.validatePeriodMin(),
     periodMax: CustomJoi.validatePeriodMax(),
-    dateScores: CustomJoi.validateDateScoreValues(DateScoreSchema)
+    dateScores: CustomJoi.validateDateScoreValues(DateScoreSchema),
   }),
   answer: CustomJoi.object().keys({
     fromDate: CustomJoi.validateFromDate(),
     toDate: CustomJoi.validateToDate(),
-    point: CustomJoi.validateScore()
-  })
+    point: CustomJoi.validateScore(),
+  }),
 });

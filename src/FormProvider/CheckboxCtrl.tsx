@@ -16,10 +16,10 @@ interface IProps {
 const CheckboxCtrl = ({
   className,
   name,
-  label
+  label,
 }: IProps): React.ReactElement => {
   const {
-    formState: { errors }
+    formState: { errors },
   } = useFormContext();
 
   return (

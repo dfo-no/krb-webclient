@@ -24,7 +24,7 @@ describe('Nexus', () => {
           'b3f7f5ac-c22d-4e71-a06a-8951a2d864f2'
         )
       ),
-      title: 'Title'
+      title: 'Title',
     };
     const report = BaseTagSchema.validate(tag);
 

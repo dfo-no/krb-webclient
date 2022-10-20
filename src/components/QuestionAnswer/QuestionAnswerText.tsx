@@ -19,14 +19,14 @@ interface IProps {
 const QuestionAnswerText = ({
   item,
   existingAnswer,
-  onSubmit
+  onSubmit,
 }: IProps): React.ReactElement => {
   const { t } = useTranslation();
   const nexus = Nexus.getInstance();
 
   const methods = useForm<ITextQuestion>({
     resolver: nexus.resolverService.answerResolver(QuestionVariant.Q_TEXT),
-    defaultValues: item
+    defaultValues: item,
   });
 
   useEffect(() => {

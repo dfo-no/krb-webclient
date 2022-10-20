@@ -9,7 +9,7 @@ import QuestionAnswerText from '../../../components/QuestionAnswer/QuestionAnswe
 import QuestionAnswerTime from '../../../components/QuestionAnswer/QuestionAnswerTime';
 import {
   addAnswer,
-  addProductAnswer
+  addProductAnswer,
 } from '../../../store/reducers/prefilled-response-reducer';
 import { IRequirementAnswer } from '../../../Nexus/entities/IRequirementAnswer';
 import { QuestionType } from '../../../Nexus/entities/QuestionType';
@@ -25,7 +25,7 @@ interface IProps {
 
 export default function QuestionAnswer({
   requirementAnswer,
-  existingAnswer
+  existingAnswer,
 }: IProps): React.ReactElement {
   const dispatch = useAppDispatch();
   const { prefilledResponse } = useAppSelector(
@@ -37,7 +37,7 @@ export default function QuestionAnswer({
   const onSubmit = (post: QuestionType): void => {
     const newAnswer = {
       ...requirementAnswer,
-      question: post
+      question: post,
     };
     if (productIndex === -1) {
       dispatch(addAnswer(newAnswer));
@@ -45,7 +45,7 @@ export default function QuestionAnswer({
       dispatch(
         addProductAnswer({
           answer: newAnswer,
-          productId: prefilledResponse.products[productIndex].id
+          productId: prefilledResponse.products[productIndex].id,
         })
       );
     }

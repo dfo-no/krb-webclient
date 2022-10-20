@@ -18,14 +18,14 @@ const MockComponent = ({ location }: MockProps): ReactElement => {
       icon: <ConstructionOutlinedIcon />,
       label: 'Construction',
       selected: location.pathname === '/construction',
-      url: '/construction'
+      url: '/construction',
     },
     {
       icon: <SettingsOutlinedIcon />,
       label: 'Settings',
       selected: location.pathname === '/settings',
-      url: '/settings'
-    }
+      url: '/settings',
+    },
   ];
   return <DFOToolbar items={toolbarItems} />;
 };

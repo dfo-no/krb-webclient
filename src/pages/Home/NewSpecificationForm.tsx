@@ -12,7 +12,7 @@ import {
   ModalBox,
   ModalFieldsBox,
   ModalButtonsBox,
-  ModalButton
+  ModalButton,
 } from '../../components/ModalBox/ModalBox';
 import { ModelType } from '../../Nexus/enums';
 import { SPECIFICATION } from '../../common/PathConstants';
@@ -29,7 +29,7 @@ const NewSpecificationForm = ({ handleClose, specification }: IProps) => {
 
   const methods = useForm<ISpecification>({
     resolver: nexus.resolverService.resolver(ModelType.specification),
-    defaultValues: specification
+    defaultValues: specification,
   });
 
   const onSubmit = async (post: ISpecification) => {

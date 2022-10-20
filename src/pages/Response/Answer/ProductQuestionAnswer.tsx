@@ -10,7 +10,7 @@ import QuestionAnswerText from '../../../components/QuestionAnswer/QuestionAnswe
 import QuestionAnswerTime from '../../../components/QuestionAnswer/QuestionAnswerTime';
 import {
   addProductAnswer,
-  addRequirementAnswer
+  addRequirementAnswer,
 } from '../../../store/reducers/response-reducer';
 import { IRequirementAnswer } from '../../../Nexus/entities/IRequirementAnswer';
 import { QuestionType } from '../../../Nexus/entities/QuestionType';
@@ -26,7 +26,7 @@ interface IProps {
 
 export default function ProductQuestionAnswer({
   requirementAnswer,
-  existingAnswer
+  existingAnswer,
 }: IProps): React.ReactElement {
   const dispatch = useAppDispatch();
   const { response } = useAppSelector((state) => state.response);
@@ -39,12 +39,12 @@ export default function ProductQuestionAnswer({
       ...post,
       answer: {
         ...post.answer,
-        point: nexus.questionService.calculatePoints(post)
-      }
+        point: nexus.questionService.calculatePoints(post),
+      },
     } as QuestionType;
     const newAnswer = {
       ...requirementAnswer,
-      question: calulatedPoints
+      question: calulatedPoints,
     };
     if (productIndex === -1) {
       dispatch(addRequirementAnswer(newAnswer));
@@ -52,7 +52,7 @@ export default function ProductQuestionAnswer({
       dispatch(
         addProductAnswer({
           answer: newAnswer,
-          productId: response.products[productIndex].id
+          productId: response.products[productIndex].id,
         })
       );
     }

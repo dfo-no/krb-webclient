@@ -22,11 +22,11 @@ export interface IQuestionBase<A extends IAnswerBase, C extends IConfigBase>
 }
 
 export const ConfigBaseSchema = CustomJoi.object().keys({
-  defaultPoint: CustomJoi.number().required()
+  defaultPoint: CustomJoi.number().required(),
 });
 
 export const QuestionBaseSchema = BaseModelSchema.keys({
   type: CustomJoi.validateTypes(QuestionVariant),
   answer: CustomJoi.any().required(),
-  config: CustomJoi.any().required()
+  config: CustomJoi.any().required(),
 });

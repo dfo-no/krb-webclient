@@ -17,7 +17,7 @@ describe('Panel-komponent', () => {
   const setupProps = (additionalProps: IProps) => {
     props = {
       ...initialProps,
-      ...additionalProps
+      ...additionalProps,
     };
   };
 
@@ -43,7 +43,7 @@ describe('Panel-komponent', () => {
   it('Skal tegne panel med valgt farge', () => {
     setupProps({
       panelColor: 'primary',
-      children: <button>Test button</button>
+      children: <button>Test button</button>,
     });
     renderPanel();
     expect(component.getByText('Test button')).toBeTruthy();

@@ -3,7 +3,7 @@ import {
   Dispatch,
   SetStateAction,
   useContext,
-  useState
+  useState,
 } from 'react';
 import { IProduct } from '../../../Nexus/entities/IProduct';
 import { Parentable } from '../../../models/Parentable';
@@ -17,7 +17,7 @@ const initialContext: IPreviewContext = {
   selected: null,
   setSelected: function (): void {
     throw new Error('Function not implemented.');
-  }
+  },
 };
 
 export const PreviewContext = createContext<IPreviewContext>(initialContext);
@@ -33,7 +33,7 @@ export const PreviewProvider = ({ children }: IProps) => {
     <PreviewContext.Provider
       value={{
         selected,
-        setSelected
+        setSelected,
       }}
     >
       {children}

@@ -17,14 +17,14 @@ export default class QuestionService {
           config: {
             pointsNonPrefered: 0,
             defaultPoint: 1,
-            preferedAlternative: true
+            preferedAlternative: true,
           },
           answer: {
             point: 0,
-            value: false
+            value: false,
           },
           sourceRel: null,
-          sourceOriginal: null
+          sourceOriginal: null,
         };
       case QuestionVariant.Q_CODELIST:
         return {
@@ -37,14 +37,14 @@ export default class QuestionService {
             codes: [],
             defaultPoint: 1,
             optionalCodeMinAmount: 0,
-            optionalCodeMaxAmount: 1
+            optionalCodeMaxAmount: 1,
           },
           answer: {
             point: 0,
-            codes: []
+            codes: [],
           },
           sourceRel: null,
-          sourceOriginal: null
+          sourceOriginal: null,
         };
       case QuestionVariant.Q_CONFIRMATION:
         return {
@@ -52,14 +52,14 @@ export default class QuestionService {
           type: QuestionVariant.Q_CONFIRMATION,
           config: {
             pointsUnconfirmed: 0,
-            defaultPoint: 1
+            defaultPoint: 1,
           },
           answer: {
             point: 0,
-            value: false
+            value: false,
           },
           sourceRel: null,
-          sourceOriginal: null
+          sourceOriginal: null,
         };
       case QuestionVariant.Q_FILEUPLOAD:
         return {
@@ -70,14 +70,14 @@ export default class QuestionService {
             uploadInSpec: false,
             allowMultipleFiles: false,
             fileEndings: [],
-            defaultPoint: 1
+            defaultPoint: 1,
           },
           answer: {
             point: 0,
-            files: ['']
+            files: [''],
           },
           sourceRel: null,
-          sourceOriginal: null
+          sourceOriginal: null,
         };
       case QuestionVariant.Q_PERIOD_DATE:
         return {
@@ -90,15 +90,15 @@ export default class QuestionService {
             periodMin: 0,
             periodMax: 1,
             defaultPoint: 1,
-            dateScores: []
+            dateScores: [],
           },
           answer: {
             point: 0,
             fromDate: null,
-            toDate: null
+            toDate: null,
           },
           sourceRel: null,
-          sourceOriginal: null
+          sourceOriginal: null,
         };
       case QuestionVariant.Q_SLIDER:
         return {
@@ -110,14 +110,14 @@ export default class QuestionService {
             step: 1,
             unit: '',
             defaultPoint: 1,
-            scoreValues: []
+            scoreValues: [],
           },
           answer: {
             point: 0,
-            value: 0
+            value: 0,
           },
           sourceRel: null,
-          sourceOriginal: null
+          sourceOriginal: null,
         };
       case QuestionVariant.Q_TEXT:
         return {
@@ -125,14 +125,14 @@ export default class QuestionService {
           type: QuestionVariant.Q_TEXT,
           config: {
             max: 10000,
-            defaultPoint: 1
+            defaultPoint: 1,
           },
           answer: {
             point: 0,
-            text: ''
+            text: '',
           },
           sourceRel: null,
-          sourceOriginal: null
+          sourceOriginal: null,
         };
       case QuestionVariant.Q_TIME:
         return {
@@ -145,15 +145,15 @@ export default class QuestionService {
             periodMinutes: 0,
             periodHours: 0,
             defaultPoint: 1,
-            timeScores: []
+            timeScores: [],
           },
           answer: {
             point: 0,
             fromTime: null,
-            toTime: null
+            toTime: null,
           },
           sourceRel: null,
-          sourceOriginal: null
+          sourceOriginal: null,
         };
       default:
         Utils.assertUnreachable(type);

@@ -22,7 +22,7 @@ describe('BankSchema should validate', () => {
       sourceOriginal: null,
       sourceRel: null,
       projectId: null,
-      deletedDate: null
+      deletedDate: null,
     };
 
     const report = BaseBankSchema.validate(bank);

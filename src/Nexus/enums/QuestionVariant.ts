@@ -6,5 +6,5 @@ export enum QuestionVariant {
   Q_PERIOD_DATE = 'Q_PERIOD_DATE',
   Q_SLIDER = 'Q_SLIDER',
   Q_TEXT = 'Q_TEXT',
-  Q_TIME = 'Q_TIME'
+  Q_TIME = 'Q_TIME',
 }

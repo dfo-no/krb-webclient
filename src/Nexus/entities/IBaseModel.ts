@@ -18,5 +18,5 @@ export const BaseModelSchema = CustomJoi.object().keys({
   id: CustomJoi.validateId(),
   type: CustomJoi.validateTypes(ModelType),
   sourceRel: CustomJoi.validateOptionalId(),
-  sourceOriginal: CustomJoi.validateOptionalId()
+  sourceOriginal: CustomJoi.validateOptionalId(),
 });

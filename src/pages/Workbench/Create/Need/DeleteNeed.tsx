@@ -21,7 +21,7 @@ interface IProps {
 function DeleteNeed({
   children,
   need,
-  handleClose
+  handleClose,
 }: IProps): React.ReactElement {
   const dispatch = useAppDispatch();
   const { t } = useTranslation();
@@ -43,7 +43,7 @@ function DeleteNeed({
       const alert: IAlert = {
         id: uuidv4(),
         style: 'success',
-        text: 'Successfully deleted need'
+        text: 'Successfully deleted need',
       };
       dispatch(addAlert({ alert }));
       handleClose();

@@ -19,7 +19,7 @@ interface IProps {
 export default function NeedList({
   product,
   bank,
-  relatedProducts
+  relatedProducts,
 }: IProps): React.ReactElement {
   const { t } = useTranslation();
 

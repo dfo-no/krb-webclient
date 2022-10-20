@@ -6,20 +6,20 @@ describe('TimeJoi', () => {
   timezoneMock.register('UTC');
   test('Joi validatePeriodMinutes() should show error message if not a minute', () => {
     const schema = CustomJoi.object().keys({
-      minutes: CustomJoi.validatePeriodMinutes()
+      minutes: CustomJoi.validatePeriodMinutes(),
     });
 
     const reportError1 = schema.validate({
-      minutes: -1
+      minutes: -1,
     });
     const reportError2 = schema.validate({
-      minutes: 1.2
+      minutes: 1.2,
     });
     const reportError3 = schema.validate({
-      minutes: 60
+      minutes: 60,
     });
     const reportSuccess = schema.validate({
-      minutes: 10
+      minutes: 10,
     });
     expect(reportError1?.error?.details[0].message).toEqual(
       'Må være et positivt heltall'
@@ -35,20 +35,20 @@ describe('TimeJoi', () => {
 
   test('Joi validatePeriodHours() should show error message if not an hour', () => {
     const schema = CustomJoi.object().keys({
-      minutes: CustomJoi.validatePeriodHours()
+      minutes: CustomJoi.validatePeriodHours(),
     });
 
     const reportError1 = schema.validate({
-      minutes: -1
+      minutes: -1,
     });
     const reportError2 = schema.validate({
-      minutes: 1.2
+      minutes: 1.2,
     });
     const reportError3 = schema.validate({
-      minutes: 24
+      minutes: 24,
     });
     const reportSuccess = schema.validate({
-      minutes: 10
+      minutes: 10,
     });
     expect(reportError1?.error?.details[0].message).toEqual(
       'Må være et positivt heltall'
@@ -66,57 +66,57 @@ describe('TimeJoi', () => {
     const schema = CustomJoi.object().keys({
       config: {
         fromBoundary: CustomJoi.validateFromBoundaryTime(),
-        toBoundary: CustomJoi.validateToBoundaryTime()
+        toBoundary: CustomJoi.validateToBoundaryTime(),
       },
       answer: {
-        fromTime: CustomJoi.validateOptionalDate()
-      }
+        fromTime: CustomJoi.validateOptionalDate(),
+      },
     });
 
     const reportError1 = schema.validate({
       config: {
         fromBoundary: null,
-        toBoundary: '2022-10-02T16:00:00.000Z'
+        toBoundary: '2022-10-02T16:00:00.000Z',
       },
       answer: {
-        fromTime: '2022-10-02T16:00:00.000Z'
-      }
+        fromTime: '2022-10-02T16:00:00.000Z',
+      },
     });
     const reportError2 = schema.validate({
       config: {
         fromBoundary: '2022-10-02T16:00:00.000Z',
-        toBoundary: null
+        toBoundary: null,
       },
       answer: {
-        fromTime: '2022-10-02T16:00:00.000Z'
-      }
+        fromTime: '2022-10-02T16:00:00.000Z',
+      },
     });
     const reportError3 = schema.validate({
       config: {
         fromBoundary: '2022-10-02T20:00:00.000Z',
-        toBoundary: '2022-10-02T16:00:00.000Z'
+        toBoundary: '2022-10-02T16:00:00.000Z',
       },
       answer: {
-        fromTime: '2022-10-02T16:00:00.000Z'
-      }
+        fromTime: '2022-10-02T16:00:00.000Z',
+      },
     });
     const reportSuccess1 = schema.validate({
       config: {
         fromBoundary: '2022-10-02T16:00:00.000Z',
-        toBoundary: '2022-10-02T20:00:00.000Z'
+        toBoundary: '2022-10-02T20:00:00.000Z',
       },
       answer: {
-        fromTime: '2022-10-02T16:00:00.000Z'
-      }
+        fromTime: '2022-10-02T16:00:00.000Z',
+      },
     });
     const reportSuccess2 = schema.validate({
       config: {
         fromBoundary: null,
-        toBoundary: null
+        toBoundary: null,
       },
       answer: {
-        fromTime: '2022-10-02T16:00:00.000Z'
-      }
+        fromTime: '2022-10-02T16:00:00.000Z',
+      },
     });
     expect(reportError1?.error?.details[0].message).toEqual(
       'Tidspunkt må være fylt ut'
@@ -137,9 +137,9 @@ describe('TimeJoi', () => {
       toBoundary: CustomJoi.validateToBoundaryTime(),
       timeScores: CustomJoi.validateUniqueArray(
         CustomJoi.object().keys({
-          time: CustomJoi.validateTimeScore()
+          time: CustomJoi.validateTimeScore(),
         })
-      )
+      ),
     });
 
     const reportError1 = schema.validate({
@@ -147,36 +147,36 @@ describe('TimeJoi', () => {
       toBoundary: '2022-10-02T20:00:00.000Z',
       timeScores: [
         {
-          time: '2022-10-02T14:00:00.000Z'
-        }
-      ]
+          time: '2022-10-02T14:00:00.000Z',
+        },
+      ],
     });
     const reportError2 = schema.validate({
       fromBoundary: '2022-10-02T16:00:00.000Z',
       toBoundary: '2022-10-02T20:00:00.000Z',
       timeScores: [
         {
-          time: '2022-10-02T22:00:00.000Z'
-        }
-      ]
+          time: '2022-10-02T22:00:00.000Z',
+        },
+      ],
     });
     const reportError3 = schema.validate({
       fromBoundary: '2022-10-02T16:00:00.000Z',
       toBoundary: '2022-10-02T20:00:00.000Z',
       timeScores: [
         {
-          time: null
-        }
-      ]
+          time: null,
+        },
+      ],
     });
     const reportSuccess = schema.validate({
       fromBoundary: '2022-10-02T16:00:00.000Z',
       toBoundary: '2022-10-02T20:00:00.000Z',
       timeScores: [
         {
-          time: '2022-10-02T18:00:00.000Z'
-        }
-      ]
+          time: '2022-10-02T18:00:00.000Z',
+        },
+      ],
     });
     expect(reportError1?.error?.details[0].message).toEqual(
       'Tidspunkt kan ikke være før 16:00'
@@ -194,48 +194,48 @@ describe('TimeJoi', () => {
     const schema = CustomJoi.object().keys({
       config: {
         fromBoundary: CustomJoi.validateFromBoundaryTime(),
-        toBoundary: CustomJoi.validateToBoundaryTime()
+        toBoundary: CustomJoi.validateToBoundaryTime(),
       },
       answer: {
-        fromTime: CustomJoi.validateFromTime()
-      }
+        fromTime: CustomJoi.validateFromTime(),
+      },
     });
 
     const reportError1 = schema.validate({
       config: {
         fromBoundary: '2022-10-02T16:00:00.000Z',
-        toBoundary: '2022-10-02T20:00:00.000Z'
+        toBoundary: '2022-10-02T20:00:00.000Z',
       },
       answer: {
-        fromTime: '2022-10-02T14:00:00.000Z'
-      }
+        fromTime: '2022-10-02T14:00:00.000Z',
+      },
     });
     const reportError2 = schema.validate({
       config: {
         fromBoundary: '2022-10-02T16:00:00.000Z',
-        toBoundary: '2022-10-02T20:00:00.000Z'
+        toBoundary: '2022-10-02T20:00:00.000Z',
       },
       answer: {
-        fromTime: '2022-10-02T22:00:00.000Z'
-      }
+        fromTime: '2022-10-02T22:00:00.000Z',
+      },
     });
     const reportSuccess1 = schema.validate({
       config: {
         fromBoundary: '2022-10-02T16:00:00.000Z',
-        toBoundary: '2022-10-02T20:00:00.000Z'
+        toBoundary: '2022-10-02T20:00:00.000Z',
       },
       answer: {
-        fromTime: null
-      }
+        fromTime: null,
+      },
     });
     const reportSuccess2 = schema.validate({
       config: {
         fromBoundary: '2022-10-02T16:00:00.000Z',
-        toBoundary: '2022-10-02T20:00:00.000Z'
+        toBoundary: '2022-10-02T20:00:00.000Z',
       },
       answer: {
-        fromTime: '2022-10-02T18:00:00.000Z'
-      }
+        fromTime: '2022-10-02T18:00:00.000Z',
+      },
     });
     expect(reportError1?.error?.details[0].message).toEqual(
       'Tidspunkt kan ikke være før 16:00'
@@ -252,69 +252,69 @@ describe('TimeJoi', () => {
       config: {
         fromBoundary: CustomJoi.validateFromBoundaryTime(),
         toBoundary: CustomJoi.validateToBoundaryTime(),
-        isPeriod: CustomJoi.validateBoolean()
+        isPeriod: CustomJoi.validateBoolean(),
       },
       answer: {
         fromTime: CustomJoi.validateFromTime(),
-        toTime: CustomJoi.validateToTime()
-      }
+        toTime: CustomJoi.validateToTime(),
+      },
     });
 
     const reportError1 = schema.validate({
       config: {
         fromBoundary: '2022-10-02T16:00:00.000Z',
         toBoundary: '2022-10-02T20:00:00.000Z',
-        isPeriod: true
+        isPeriod: true,
       },
       answer: {
         fromTime: '2022-10-02T18:00:00.000Z',
-        toTime: '2022-10-02T21:00:00.000Z'
-      }
+        toTime: '2022-10-02T21:00:00.000Z',
+      },
     });
     const reportError2 = schema.validate({
       config: {
         fromBoundary: '2022-10-02T16:00:00.000Z',
         toBoundary: '2022-10-02T20:00:00.000Z',
-        isPeriod: true
+        isPeriod: true,
       },
       answer: {
         fromTime: '2022-10-02T18:00:00.000Z',
-        toTime: '2022-10-02T17:00:00.000Z'
-      }
+        toTime: '2022-10-02T17:00:00.000Z',
+      },
     });
 
     const reportError3 = schema.validate({
       config: {
         fromBoundary: '2022-10-02T16:00:00.000Z',
         toBoundary: '2022-10-02T20:00:00.000Z',
-        isPeriod: true
+        isPeriod: true,
       },
       answer: {
         fromTime: '2022-10-02T18:00:00.000Z',
-        toTime: null
-      }
+        toTime: null,
+      },
     });
     const reportSuccess1 = schema.validate({
       config: {
         fromBoundary: '2022-10-02T16:00:00.000Z',
         toBoundary: '2022-10-02T20:00:00.000Z',
-        isPeriod: false
+        isPeriod: false,
       },
       answer: {
         fromTime: '2022-10-02T18:00:00.000Z',
-        toTime: null
-      }
+        toTime: null,
+      },
     });
     const reportSuccess2 = schema.validate({
       config: {
         fromBoundary: '2022-10-02T16:00:00.000Z',
         toBoundary: '2022-10-02T20:00:00.000Z',
-        isPeriod: true
+        isPeriod: true,
       },
       answer: {
         fromTime: '2022-10-02T18:00:00.000Z',
-        toTime: '2022-10-02T19:00:00.000Z'
-      }
+        toTime: '2022-10-02T19:00:00.000Z',
+      },
     });
     expect(reportError1?.error?.details[0].message).toEqual(
       'Tidspunkt kan ikke være etter 20:00'

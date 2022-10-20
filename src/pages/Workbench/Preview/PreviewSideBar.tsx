@@ -14,7 +14,7 @@ interface IProps {
 }
 
 export default function PreviewSideBar({
-  parentableArray
+  parentableArray,
 }: IProps): React.ReactElement {
   const { setSelected } = usePreviewState();
   const [selectedIndex, setSelectedIndex] = React.useState(0);
@@ -45,7 +45,7 @@ export default function PreviewSideBar({
           )}
           sx={{
             marginLeft: `${itemWidth}rem`,
-            width: `calc(100% - ${itemWidth}rem)`
+            width: `calc(100% - ${itemWidth}rem)`,
           }}
           onClick={() => handleListItemClick(element, index + 1)}
         >

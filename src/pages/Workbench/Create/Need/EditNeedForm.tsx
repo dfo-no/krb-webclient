@@ -15,7 +15,7 @@ import {
   ModalBox,
   ModalButton,
   ModalButtonsBox,
-  ModalFieldsBox
+  ModalFieldsBox,
 } from '../../../../components/ModalBox/ModalBox';
 import { ModelType } from '../../../../Nexus/enums';
 import { Parentable } from '../../../../models/Parentable';
@@ -34,7 +34,7 @@ function EditNeedForm({ need, handleClose }: IProps): React.ReactElement {
 
   const methods = useForm<Parentable<INeed>>({
     defaultValues: need,
-    resolver: nexus.resolverService.resolver(ModelType.need)
+    resolver: nexus.resolverService.resolver(ModelType.need),
   });
 
   const onSubmit = async (put: Parentable<INeed>) => {
@@ -42,7 +42,7 @@ function EditNeedForm({ need, handleClose }: IProps): React.ReactElement {
       const alert: IAlert = {
         id: uuidv4(),
         style: 'success',
-        text: 'Successfully edited need'
+        text: 'Successfully edited need',
       };
       dispatch(addAlert({ alert }));
       handleClose(put);

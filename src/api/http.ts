@@ -6,8 +6,8 @@ const getAxiosInstance = () => {
   const instance = axios.create({
     baseURL: process.env.REACT_APP_API_URL,
     headers: {
-      'Content-type': 'application/json'
-    }
+      'Content-type': 'application/json',
+    },
   });
   instance.interceptors.request.use(
     (conf) => {
@@ -46,8 +46,8 @@ export const httpGet = async <T, R = AxiosResponse<T>>(
   const value = await getAxiosInstance().get<T, R>(url, {
     ...config,
     headers: {
-      ...config?.headers
-    }
+      ...config?.headers,
+    },
   });
   return wait(value);
 };
@@ -60,8 +60,8 @@ export const httpPost = async <T, R = AxiosResponse<T>>(
   const value = await getAxiosInstance().post<T, R>(url, data, {
     ...config,
     headers: {
-      ...config?.headers
-    }
+      ...config?.headers,
+    },
   });
   return wait(value);
 };
@@ -74,8 +74,8 @@ export const httpPut = async <T, R = AxiosResponse<T>>(
   const value = await getAxiosInstance().put<T, R>(url, data, {
     ...config,
     headers: {
-      ...config?.headers
-    }
+      ...config?.headers,
+    },
   });
   return wait(value);
 };
@@ -87,8 +87,8 @@ export const httpDelete = async <T, R = AxiosResponse<T>>(
   const value = await getAxiosInstance().delete<T, R>(url, {
     ...config,
     headers: {
-      ...config?.headers
-    }
+      ...config?.headers,
+    },
   });
   return wait(value);
 };

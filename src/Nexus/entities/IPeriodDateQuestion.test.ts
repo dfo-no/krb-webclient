@@ -1,6 +1,6 @@
 import {
   IPeriodDateQuestion,
-  PeriodDateAnswerSchema
+  PeriodDateAnswerSchema,
 } from './IPeriodDateQuestion';
 import { QuestionVariant } from '../enums';
 
@@ -12,7 +12,7 @@ describe('IPeriodDateQuestion should validate', () => {
       answer: {
         fromDate: '2021-11-24T23:00:00.000Z',
         toDate: null,
-        point: 2
+        point: 2,
       },
       config: {
         defaultPoint: 1,
@@ -21,10 +21,10 @@ describe('IPeriodDateQuestion should validate', () => {
         periodMin: 1,
         fromBoundary: '2021-11-24T23:00:00.000Z',
         toBoundary: '2021-11-24T23:00:00.000Z',
-        dateScores: []
+        dateScores: [],
       },
       sourceRel: null,
-      sourceOriginal: null
+      sourceOriginal: null,
     };
 
     const report = PeriodDateAnswerSchema.validate(question);
@@ -38,7 +38,7 @@ describe('IPeriodDateQuestion should validate', () => {
       answer: {
         fromDate: '2021-11-24T23:00:00.000Z',
         toDate: null,
-        point: 2
+        point: 2,
       },
       config: {
         defaultPoint: 1,
@@ -47,10 +47,10 @@ describe('IPeriodDateQuestion should validate', () => {
         periodMin: 1,
         fromBoundary: '2021-11-24T23:00:00.000Z',
         toBoundary: '2021-11-24T23:00:00.000Z',
-        dateScores: []
+        dateScores: [],
       },
       sourceRel: null,
-      sourceOriginal: null
+      sourceOriginal: null,
     };
 
     const report = PeriodDateAnswerSchema.validate(question);
@@ -64,7 +64,7 @@ describe('IPeriodDateQuestion should validate', () => {
       answer: {
         fromDate: '2021-11-24T23:00:00.000Z',
         toDate: '2021-11-25T23:00:00.000Z',
-        point: 3
+        point: 3,
       },
       config: {
         defaultPoint: 1,
@@ -73,10 +73,10 @@ describe('IPeriodDateQuestion should validate', () => {
         periodMin: 1,
         fromBoundary: '2021-11-24T23:00:00.000Z',
         toBoundary: '2021-11-26T23:00:00.000Z',
-        dateScores: []
+        dateScores: [],
       },
       sourceRel: null,
-      sourceOriginal: null
+      sourceOriginal: null,
     };
 
     const report = PeriodDateAnswerSchema.validate(question);
@@ -90,7 +90,7 @@ describe('IPeriodDateQuestion should validate', () => {
       answer: {
         fromDate: '2021-11-24T23:00:00.000Z',
         toDate: '2021-11-23T23:00:00.000Z',
-        point: 3
+        point: 3,
       },
       config: {
         defaultPoint: 1,
@@ -99,10 +99,10 @@ describe('IPeriodDateQuestion should validate', () => {
         periodMin: 1,
         fromBoundary: '2021-11-24T23:00:00.000Z',
         toBoundary: '2021-11-24T23:00:00.000Z',
-        dateScores: []
+        dateScores: [],
       },
       sourceRel: null,
-      sourceOriginal: null
+      sourceOriginal: null,
     };
 
     const report = PeriodDateAnswerSchema.validate(question);

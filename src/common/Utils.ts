@@ -4,7 +4,7 @@ import { IBaseModel } from '../Nexus/entities/IBaseModel';
 import { ICodelist } from '../Nexus/entities/ICodelist';
 import {
   ICodelistConfig,
-  ICodelistQuestion
+  ICodelistQuestion,
 } from '../Nexus/entities/ICodelistQuestion';
 import { INeed } from '../Nexus/entities/INeed';
 import { IProduct } from '../Nexus/entities/IProduct';
@@ -159,7 +159,7 @@ class Utils {
           allPairs.push({
             id: pair.id,
             value: this.dateToValue(pair.date),
-            score: pair.score
+            score: pair.score,
           });
         }
         return allPairs;
@@ -187,7 +187,7 @@ class Utils {
           allPairs.push({
             id: pair.id,
             value: this.timeToValue(pair.time),
-            score: pair.score
+            score: pair.score,
           });
         }
         return allPairs;
@@ -385,14 +385,14 @@ class Utils {
         if (associatedVariants.length > 0) {
           associatedRequirements.push({
             ...requirement,
-            variants: associatedVariants
+            variants: associatedVariants,
           });
         }
       });
       if (associatedRequirements.length > 0) {
         associatedNeeds.push({
           ...need,
-          requirements: associatedRequirements
+          requirements: associatedRequirements,
         });
       }
     });
@@ -417,14 +417,14 @@ class Utils {
         if (associatedVariants.length > 0) {
           associatedRequirements.push({
             ...requirement,
-            variants: associatedVariants
+            variants: associatedVariants,
           });
         }
       });
       if (associatedRequirements.length > 0) {
         associatedNeeds.push({
           ...need,
-          requirements: associatedRequirements
+          requirements: associatedRequirements,
         });
       }
     });

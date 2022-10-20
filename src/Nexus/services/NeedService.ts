@@ -23,7 +23,7 @@ export default class NeedService {
       type: ModelType.need,
       parent: '',
       sourceOriginal: projectId,
-      sourceRel: null
+      sourceRel: null,
     };
   };
 

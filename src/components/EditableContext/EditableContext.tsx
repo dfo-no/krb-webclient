@@ -4,7 +4,7 @@ import {
   SetStateAction,
   useContext,
   useEffect,
-  useState
+  useState,
 } from 'react';
 
 interface IEditableContext {
@@ -28,7 +28,7 @@ const initialContext: IEditableContext = {
   deleteMode: '',
   setDeleteMode: function (): void {
     throw new Error('Function not implemented.');
-  }
+  },
 };
 
 export const EditableContext = createContext<IEditableContext>(initialContext);
@@ -71,7 +71,7 @@ export const EditableProvider = ({ children }: IProps) => {
         isCreating,
         setCreating,
         deleteMode,
-        setDeleteMode
+        setDeleteMode,
       }}
     >
       {children}

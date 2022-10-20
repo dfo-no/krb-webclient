@@ -14,7 +14,7 @@ describe('SearchUtils functions should work', () => {
         parent: '',
         type: ModelType.tag,
         sourceOriginal: null,
-        sourceRel: null
+        sourceRel: null,
       },
       {
         id: 'bb60be0f-44e9-4ea9-a755-476fbc6dd85d',
@@ -22,7 +22,7 @@ describe('SearchUtils functions should work', () => {
         parent: 'aa28e225-7a76-4c57-bb22-ec87b3131762',
         type: ModelType.tag,
         sourceOriginal: null,
-        sourceRel: null
+        sourceRel: null,
       },
       {
         id: '5d3fd9ec-9096-11ec-b909-0242ac120002',
@@ -30,7 +30,7 @@ describe('SearchUtils functions should work', () => {
         parent: 'aa28e225-7a76-4c57-bb22-ec87b3131762',
         type: ModelType.tag,
         sourceOriginal: null,
-        sourceRel: null
+        sourceRel: null,
       },
       {
         id: 'ffb9bfe0-0b87-4e2d-95c8-9b703e655e61',
@@ -39,7 +39,7 @@ describe('SearchUtils functions should work', () => {
         parent: '',
         type: ModelType.tag,
         sourceOriginal: null,
-        sourceRel: null
+        sourceRel: null,
       },
       {
         id: '1a21a3c0-9096-11ec-b909-0242ac120002',
@@ -47,7 +47,7 @@ describe('SearchUtils functions should work', () => {
         parent: '',
         type: ModelType.tag,
         sourceOriginal: null,
-        sourceRel: null
+        sourceRel: null,
       },
       {
         id: 'bb60be0f-44e9-4ea9-a755-476fbc6dd85d',
@@ -55,8 +55,8 @@ describe('SearchUtils functions should work', () => {
         parent: '1a21a3c0-9096-11ec-b909-0242ac120002',
         type: ModelType.tag,
         sourceOriginal: null,
-        sourceRel: null
-      }
+        sourceRel: null,
+      },
     ];
 
     const result = SearchUtils.searchParentable(tags, 'match');
@@ -76,14 +76,14 @@ describe('SearchUtils functions should work', () => {
         description: '',
         type: ModelType.tag,
         sourceOriginal: null,
-        sourceRel: null
+        sourceRel: null,
       },
       {
         id: 'bb60be0f-44e9-4ea9-a755-476fbc6dd85d',
         title: 'A_match',
         type: ModelType.tag,
         sourceOriginal: null,
-        sourceRel: null
+        sourceRel: null,
       },
       {
         id: 'ffb9bfe0-0b87-4e2d-95c8-9b703e655e61',
@@ -91,15 +91,15 @@ describe('SearchUtils functions should work', () => {
         description: 'description_match',
         type: ModelType.tag,
         sourceOriginal: null,
-        sourceRel: null
+        sourceRel: null,
       },
       {
         id: '1a21a3c0-9096-11ec-b909-0242ac120002',
         title: 'C',
         type: ModelType.tag,
         sourceOriginal: null,
-        sourceRel: null
-      }
+        sourceRel: null,
+      },
     ];
 
     const result = SearchUtils.searchBaseModel(tags, 'match');
@@ -124,12 +124,12 @@ describe('SearchUtils functions should work', () => {
             parent: 'aa28e225-7a76-4c57-bb22-ec87b3131762',
             type: ModelType.code,
             sourceOriginal: null,
-            sourceRel: null
-          }
+            sourceRel: null,
+          },
         ],
         type: ModelType.codelist,
         sourceOriginal: null,
-        sourceRel: null
+        sourceRel: null,
       },
       {
         id: 'bb60be0f-44e9-4ea9-a755-476fbc6dd85d',
@@ -138,7 +138,7 @@ describe('SearchUtils functions should work', () => {
         codes: [],
         type: ModelType.codelist,
         sourceOriginal: null,
-        sourceRel: null
+        sourceRel: null,
       },
       {
         id: '5d3fd9ec-9096-11ec-b909-0242ac120002',
@@ -147,7 +147,7 @@ describe('SearchUtils functions should work', () => {
         codes: [],
         type: ModelType.codelist,
         sourceOriginal: null,
-        sourceRel: null
+        sourceRel: null,
       },
       {
         id: 'ffb9bfe0-0b87-4e2d-95c8-9b703e655e61',
@@ -156,7 +156,7 @@ describe('SearchUtils functions should work', () => {
         codes: [],
         type: ModelType.codelist,
         sourceOriginal: null,
-        sourceRel: null
+        sourceRel: null,
       },
       {
         id: '1a21a3c0-9096-11ec-b909-0242ac120002',
@@ -170,13 +170,13 @@ describe('SearchUtils functions should work', () => {
             parent: '1a21a3c0-9096-11ec-b909-0242ac120002',
             type: ModelType.code,
             sourceOriginal: null,
-            sourceRel: null
-          }
+            sourceRel: null,
+          },
         ],
         type: ModelType.codelist,
         sourceOriginal: null,
-        sourceRel: null
-      }
+        sourceRel: null,
+      },
     ];
 
     const result = SearchUtils.searchCodelist(codelists, 'match');

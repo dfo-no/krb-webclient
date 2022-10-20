@@ -28,16 +28,16 @@ const QuestionSpecificationSlider = ({ item }: IProps): ReactElement => {
 
   const useMinScore = useWatch({
     name: 'question.config.scoreValues.0',
-    control
+    control,
   });
   const useMaxScore = useWatch({
     name: 'question.config.scoreValues.1',
-    control
+    control,
   });
 
   const { fields, append, remove, update } = useFieldArray({
     control,
-    name: 'question.config.scoreValues'
+    name: 'question.config.scoreValues',
   });
 
   useEffect(() => {
@@ -45,12 +45,12 @@ const QuestionSpecificationSlider = ({ item }: IProps): ReactElement => {
       append({
         id: new UuidService().generateId(),
         value: 0,
-        score: 0
+        score: 0,
       });
       append({
         id: new UuidService().generateId(),
         value: 0,
-        score: 100
+        score: 100,
       });
     }
   }, [fields, append]);
@@ -60,7 +60,7 @@ const QuestionSpecificationSlider = ({ item }: IProps): ReactElement => {
       update(0, {
         id: useMinScore.id ?? new UuidService().generateId(),
         value: useMinValue,
-        score: useMinScore.score
+        score: useMinScore.score,
       });
       setValue('question.answer.value', useMinValue);
     }
@@ -71,7 +71,7 @@ const QuestionSpecificationSlider = ({ item }: IProps): ReactElement => {
       update(1, {
         id: useMaxScore.id ?? new UuidService().generateId(),
         value: useMaxValue,
-        score: useMaxScore.score
+        score: useMaxScore.score,
       });
     }
   }, [useMaxValue, useMaxScore, update]);
@@ -158,7 +158,7 @@ const QuestionSpecificationSlider = ({ item }: IProps): ReactElement => {
           append({
             id: new UuidService().generateId(),
             value: useMinValue,
-            score: 0
+            score: 0,
           })
         }
       >

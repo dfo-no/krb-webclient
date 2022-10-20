@@ -2,7 +2,7 @@ import {
   format as formatDate,
   formatDistance,
   formatRelative,
-  isDate
+  isDate,
 } from 'date-fns';
 import { enUS as en, nb } from 'date-fns/locale';
 import i18n from 'i18next';
@@ -40,13 +40,13 @@ i18n
           if (format === 'ago')
             return formatDistance(value, new Date(), {
               locale,
-              addSuffix: true
+              addSuffix: true,
             });
           return formatDate(value, format, { locale });
         }
         return value;
-      }
-    }
+      },
+    },
   });
 
 export default i18n;

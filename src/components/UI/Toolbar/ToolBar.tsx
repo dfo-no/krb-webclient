@@ -16,7 +16,7 @@ export default function Toolbar({
   children,
   spacingType,
   gapType,
-  hasPadding
+  hasPadding,
 }: ToolBarProps): ReactElement {
   return (
     <div

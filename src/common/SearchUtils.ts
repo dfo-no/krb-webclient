@@ -54,7 +54,7 @@ class SearchUtils {
     return {
       ...topItem,
       children: newChilds,
-      inSearch: true
+      inSearch: true,
     };
   }
 

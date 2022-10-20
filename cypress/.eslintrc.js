@@ -3,25 +3,25 @@ module.exports = {
   root: true,
   env: {
     es2021: true,
-    node: true
+    node: true,
   },
   extends: [
     'eslint:recommended',
     'plugin:cypress/recommended',
     'plugin:@typescript-eslint/recommended',
     'plugin:import/typescript',
-    'prettier'
+    'prettier',
   ],
   parserOptions: {
     ecmaVersion: 12,
     project: './tsconfig.json',
     tsconfigRootDir: __dirname,
-    sourceType: 'module'
+    sourceType: 'module',
   },
   plugins: [
     '@typescript-eslint',
-    'cypress'
+    'cypress',
     // 'unused-imports',
     // 'node'
-  ]
+  ],
 };

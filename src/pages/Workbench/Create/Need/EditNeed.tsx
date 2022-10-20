@@ -31,7 +31,7 @@ const EditNeed = ({ need }: IProps) => {
         sx={{
           alignSelf: 'baseline',
           marginLeft: 'auto',
-          paddingRight: 'var(--small-gap)'
+          paddingRight: 'var(--small-gap)',
         }}
         onClick={handleOpen}
       >

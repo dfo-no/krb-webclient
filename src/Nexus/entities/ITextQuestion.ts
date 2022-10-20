@@ -4,7 +4,7 @@ import {
   IAnswerBase,
   IConfigBase,
   IQuestionBase,
-  QuestionBaseSchema
+  QuestionBaseSchema,
 } from './IQuestionBase';
 import { QuestionVariant } from '../enums';
 
@@ -23,13 +23,13 @@ export interface ITextAnswer extends IAnswerBase {
 export const TextQuestionWorkbenchSchema = QuestionBaseSchema.keys({
   type: CustomJoi.validateType(QuestionVariant.Q_TEXT),
   config: ConfigBaseSchema.keys({
-    max: CustomJoi.validateMaxText()
-  })
+    max: CustomJoi.validateMaxText(),
+  }),
 });
 
 export const TextQuestionAnswerSchema = TextQuestionWorkbenchSchema.keys({
   answer: CustomJoi.object().keys({
     text: CustomJoi.validateAnswerText(),
-    point: CustomJoi.validateScore()
-  })
+    point: CustomJoi.validateScore(),
+  }),
 });

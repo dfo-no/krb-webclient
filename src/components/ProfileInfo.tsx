@@ -14,7 +14,7 @@ export default function ProfileContent(): React.ReactElement {
       instance
         .acquireTokenSilent({
           ...loginRequest,
-          account
+          account,
         })
         .then((response) => {
           callMsGraph(response.accessToken).then((resp) => setGraphData(resp));

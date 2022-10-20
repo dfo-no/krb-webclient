@@ -22,10 +22,10 @@ const RadioCtrl = ({
   className,
   name,
   options,
-  label
+  label,
 }: IProps): ReactElement => {
   const {
-    formState: { errors }
+    formState: { errors },
   } = useFormContext();
 
   const renderOptions = (opts: IOption[]): ReactElement[] => {

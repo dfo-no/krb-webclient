@@ -4,7 +4,7 @@ import {
   ReactNode,
   SetStateAction,
   useContext,
-  useState
+  useState,
 } from 'react';
 
 interface IAccordionContext {
@@ -16,7 +16,7 @@ const initialContext: IAccordionContext = {
   activeKey: '',
   setActiveKey: function (): void {
     throw new Error('Function not implemented.');
-  }
+  },
 };
 
 const AccordionContext = createContext<IAccordionContext>(initialContext);
@@ -32,7 +32,7 @@ export const AccordionProvider = ({ children }: IProps) => {
     <AccordionContext.Provider
       value={{
         activeKey,
-        setActiveKey
+        setActiveKey,
       }}
     >
       {children}

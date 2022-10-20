@@ -14,10 +14,10 @@ interface IProps {
 const CodelistCtrl = ({
   name,
   codelists,
-  label
+  label,
 }: IProps): React.ReactElement => {
   const {
-    formState: { errors }
+    formState: { errors },
   } = useFormContext<ICodelist>();
 
   return (
@@ -51,5 +51,5 @@ const CodelistCtrl = ({
 export default CodelistCtrl;
 
 CodelistCtrl.defaultProps = {
-  label: ''
+  label: '',
 };

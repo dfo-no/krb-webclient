@@ -30,7 +30,7 @@ const initialState: IResponseState = {
         sourceOriginal: null,
         sourceRel: null,
         projectId: null,
-        deletedDate: null
+        deletedDate: null,
       },
       title: '',
       organization: '',
@@ -38,12 +38,12 @@ const initialState: IResponseState = {
       products: [],
       requirements: [],
       requirementAnswers: [],
-      currencyUnit: 'NOK'
+      currencyUnit: 'NOK',
     },
     supplier: '',
     products: [],
-    requirementAnswers: []
-  }
+    requirementAnswers: [],
+  },
 };
 
 const responseSlice = createSlice({
@@ -82,7 +82,7 @@ const responseSlice = createSlice({
     addProductAnswer(
       state,
       {
-        payload
+        payload,
       }: PayloadAction<{ answer: IRequirementAnswer; productId: string }>
     ) {
       const index = Utils.ensure(
@@ -106,15 +106,15 @@ const responseSlice = createSlice({
         );
       }
       state.response.products[index].requirementAnswers.push(payload.answer);
-    }
-  }
+    },
+  },
 });
 
 export const {
   setResponse,
   editResponseProduct,
   addRequirementAnswer,
-  addProductAnswer
+  addProductAnswer,
 } = responseSlice.actions;
 
 export default responseSlice.reducer;

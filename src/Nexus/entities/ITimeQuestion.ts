@@ -4,7 +4,7 @@ import {
   IAnswerBase,
   IConfigBase,
   IQuestionBase,
-  QuestionBaseSchema
+  QuestionBaseSchema,
 } from './IQuestionBase';
 import { QuestionVariant } from '../enums';
 
@@ -34,7 +34,7 @@ export interface TimeScorePair {
 
 const WorkbenchTimeScoreSchema = CustomJoi.object().keys({
   score: CustomJoi.validateScore(),
-  time: CustomJoi.validateEmptyDate()
+  time: CustomJoi.validateEmptyDate(),
 });
 
 export const TimeQuestionWorkbenchSchema = QuestionBaseSchema.keys({
@@ -45,14 +45,14 @@ export const TimeQuestionWorkbenchSchema = QuestionBaseSchema.keys({
     toBoundary: CustomJoi.validateOptionalDate(),
     periodMinutes: CustomJoi.validateNumber(),
     periodHours: CustomJoi.validateNumber(),
-    timeScores: CustomJoi.validateArray(WorkbenchTimeScoreSchema)
-  })
+    timeScores: CustomJoi.validateArray(WorkbenchTimeScoreSchema),
+  }),
 });
 
 const TimeScoreSchema = CustomJoi.object().keys({
   id: CustomJoi.validateId(),
   score: CustomJoi.validateScore(),
-  time: CustomJoi.validateTimeScore()
+  time: CustomJoi.validateTimeScore(),
 });
 
 export const TimeQuestionAnswerSchema = TimeQuestionWorkbenchSchema.keys({
@@ -62,11 +62,11 @@ export const TimeQuestionAnswerSchema = TimeQuestionWorkbenchSchema.keys({
     toBoundary: CustomJoi.validateToBoundaryTime(),
     periodMinutes: CustomJoi.validatePeriodMinutes(),
     periodHours: CustomJoi.validatePeriodHours(),
-    timeScores: CustomJoi.validateTimeScoreValues(TimeScoreSchema)
+    timeScores: CustomJoi.validateTimeScoreValues(TimeScoreSchema),
   }),
   answer: CustomJoi.object().keys({
     fromTime: CustomJoi.validateFromTime(),
     toTime: CustomJoi.validateToTime(),
-    point: CustomJoi.validateScore()
-  })
+    point: CustomJoi.validateScore(),
+  }),
 });

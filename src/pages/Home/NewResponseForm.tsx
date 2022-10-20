@@ -12,7 +12,7 @@ import {
   ModalBox,
   ModalFieldsBox,
   ModalButtonsBox,
-  ModalButton
+  ModalButton,
 } from '../../components/ModalBox/ModalBox';
 import { ModelType } from '../../Nexus/enums';
 import { setResponse } from '../../store/reducers/response-reducer';
@@ -35,7 +35,7 @@ const NewResponseForm = ({ handleClose, response }: IProps) => {
 
   const methods = useForm<IResponse>({
     resolver: nexus.resolverService.resolver(ModelType.response),
-    defaultValues: response
+    defaultValues: response,
   });
 
   const onSubmit = async (post: IResponse) => {

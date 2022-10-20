@@ -26,25 +26,25 @@ const QuestionSpecificationTime = ({ item }: IProps): ReactElement => {
 
   const useFromBoundary = useWatch({
     name: 'question.config.fromBoundary',
-    control
+    control,
   });
   const useToBoundary = useWatch({
     name: 'question.config.toBoundary',
-    control
+    control,
   });
 
   const useMinScore = useWatch({
     name: 'question.config.timeScores.0',
-    control
+    control,
   });
   const useMaxScore = useWatch({
     name: 'question.config.timeScores.1',
-    control
+    control,
   });
 
   const { fields, append, remove, update } = useFieldArray({
     control,
-    name: 'question.config.timeScores'
+    name: 'question.config.timeScores',
   });
 
   useEffect(() => {
@@ -72,7 +72,7 @@ const QuestionSpecificationTime = ({ item }: IProps): ReactElement => {
       update(0, {
         id: useMinScore.id ?? new UuidService().generateId(),
         time: useFromBoundary,
-        score: useMinScore.score
+        score: useMinScore.score,
       });
     }
   }, [useFromBoundary, useMinScore, update]);
@@ -86,7 +86,7 @@ const QuestionSpecificationTime = ({ item }: IProps): ReactElement => {
       update(1, {
         id: useMaxScore.id ?? new UuidService().generateId(),
         time: useToBoundary,
-        score: useMaxScore.score
+        score: useMaxScore.score,
       });
     }
   }, [useToBoundary, useMaxScore, update, append]);
@@ -154,7 +154,7 @@ const QuestionSpecificationTime = ({ item }: IProps): ReactElement => {
           append({
             id: new UuidService().generateId(),
             time: useFromBoundary,
-            score: 0
+            score: 0,
           })
         }
       >

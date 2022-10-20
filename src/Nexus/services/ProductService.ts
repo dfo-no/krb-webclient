@@ -23,7 +23,7 @@ export default class ProductService {
       sourceOriginal: projectId ?? null,
       sourceRel: null,
       deletedDate: null,
-      unit: 'stk'
+      unit: 'stk',
     };
   };
 

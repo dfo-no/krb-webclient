@@ -9,7 +9,7 @@ interface IProps {
 }
 
 export default function CodelistAddButton({
-  onClick
+  onClick,
 }: IProps): React.ReactElement {
   const classes = useButtonStyles();
   const { t } = useTranslation();

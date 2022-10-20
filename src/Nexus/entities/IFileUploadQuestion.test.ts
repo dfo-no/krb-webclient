@@ -1,6 +1,6 @@
 import {
   FileUploadWorkbenchSchema,
-  IFileUploadQuestion
+  IFileUploadQuestion,
 } from './IFileUploadQuestion';
 import { QuestionVariant } from '../enums';
 
@@ -11,17 +11,17 @@ describe('IFileUploadQuestion', () => {
       type: QuestionVariant.Q_FILEUPLOAD,
       answer: {
         files: [''],
-        point: 2
+        point: 2,
       },
       config: {
         allowMultipleFiles: true,
         fileEndings: ['pdf', 'doc'],
         template: 'template string',
         uploadInSpec: true,
-        defaultPoint: 1
+        defaultPoint: 1,
       },
       sourceRel: null,
-      sourceOriginal: null
+      sourceOriginal: null,
     };
 
     const report = FileUploadWorkbenchSchema.validate(question);

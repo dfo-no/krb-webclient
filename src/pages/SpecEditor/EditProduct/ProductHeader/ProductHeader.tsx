@@ -17,7 +17,7 @@ interface IProps {
 
 export default function ProductHeader({
   product,
-  editingProduct
+  editingProduct,
 }: IProps): React.ReactElement {
   const { t } = useTranslation();
   const { specification } = useSpecificationState();

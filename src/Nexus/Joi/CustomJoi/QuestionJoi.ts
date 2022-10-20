@@ -11,9 +11,9 @@ const ScoreValidator = (joi: Joi.Root) => ({
   messages: {
     'number.base': 'Poeng må være et gyldig tall',
     'number.max': 'Poeng må være maksimum 100',
-    'number.min': 'Poeng må være minimum 0'
+    'number.min': 'Poeng må være minimum 0',
   },
-  base: joi.number().min(0).max(100).required()
+  base: joi.number().min(0).max(100).required(),
 });
 
 const QuestionJoi = [
@@ -22,7 +22,7 @@ const QuestionJoi = [
   ...DateJoi,
   ...SliderJoi,
   ...TextJoi,
-  ...TimeJoi
+  ...TimeJoi,
 ];
 
 export default QuestionJoi;

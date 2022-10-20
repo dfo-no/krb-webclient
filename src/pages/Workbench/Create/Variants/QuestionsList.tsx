@@ -18,7 +18,7 @@ const QuestionsList = (): ReactElement => {
   const { control } = useFormContext<IVariant>();
   const { fields, append, remove } = useFieldArray({
     control,
-    name: `questions`
+    name: `questions`,
   });
 
   const [isOpen, setOpen] = useState(false);

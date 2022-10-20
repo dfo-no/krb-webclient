@@ -26,5 +26,5 @@ export const VariantSchema = CustomJoi.object().keys({
   useQualification: CustomJoi.validateBoolean(),
   products: CustomJoi.validateVariantProducts(),
   type: CustomJoi.validateVariantType(),
-  questions: CustomJoi.validateUniqueArray(QuestionVariantSchema)
+  questions: CustomJoi.validateUniqueArray(QuestionVariantSchema),
 });

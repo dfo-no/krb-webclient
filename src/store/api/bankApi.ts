@@ -19,23 +19,23 @@ const normalizeBanks = (banks: IBank[]): Record<string, IBank> =>
 export const bankApi = createApi({
   reducerPath: 'bankApi',
   baseQuery: fetchBaseQuery({
-    baseUrl: process.env.REACT_APP_API_URL
+    baseUrl: process.env.REACT_APP_API_URL,
   }),
   tagTypes: ['Banks', 'Projects', 'Project'],
   endpoints: (builder) => ({
     getBank: builder.query<IBank, string>({
-      query: (id) => `/api/bank/${id}`
+      query: (id) => `/api/bank/${id}`,
     }),
     getProject: builder.query<IBank, string>({
       query: (id) => `/api/bank/${id}`,
-      providesTags: [{ type: 'Project' }]
+      providesTags: [{ type: 'Project' }],
     }),
     getBanks: builder.query<Record<string, IBank>, ISortPagination>({
       query: (arg) =>
         `/api/bank/banks?pageSize=${arg.pageSize}&page=${arg.page}&fieldName=${arg.fieldName}&order=${arg.order}`,
       // this transformResponse happens before it's cached by RTK by providesTag
       transformResponse: (response: IBank[]) => normalizeBanks(response),
-      providesTags: [{ type: 'Banks' }]
+      providesTags: [{ type: 'Banks' }],
     }),
 
     getProjects: builder.query<Record<string, IBank>, ISortPagination>({
@@ -43,51 +43,51 @@ export const bankApi = createApi({
         `/api/bank/projects?pageSize=${arg.pageSize}&page=${arg.page}&fieldName=${arg.fieldName}&order=${arg.order}`,
       // this transformResponse happens before it's cached by RTK by providesTag
       transformResponse: (response: IBank[]) => normalizeBanks(response),
-      providesTags: [{ type: 'Projects' }]
+      providesTags: [{ type: 'Projects' }],
     }),
     addBank: builder.mutation<IBank, IBank>({
       query(bank) {
         return {
           url: `/api/bank`,
           method: 'POST',
-          body: bank
+          body: bank,
         };
       },
-      invalidatesTags: [{ type: 'Banks' }]
+      invalidatesTags: [{ type: 'Banks' }],
     }),
 
     postProject: builder.mutation<IBank, IBank>({
       query: (project) => ({
         url: `/api/bank`,
         method: 'POST',
-        body: project
+        body: project,
       }),
-      invalidatesTags: [{ type: 'Projects' }]
+      invalidatesTags: [{ type: 'Projects' }],
     }),
     putProject: builder.mutation<IBank, IBank>({
       query: (project) => ({
         url: `/api/bank/${project.id}`,
         method: 'PUT',
-        body: project
+        body: project,
       }),
-      invalidatesTags: [{ type: 'Projects' }, { type: 'Project' }]
+      invalidatesTags: [{ type: 'Projects' }, { type: 'Project' }],
     }),
     deleteProject: builder.mutation<IBank, IBank>({
       query: (project) => ({
         url: `/api/bank/${project.id}`,
         method: 'DELETE',
-        body: project
+        body: project,
       }),
-      invalidatesTags: [{ type: 'Projects' }]
+      invalidatesTags: [{ type: 'Projects' }],
     }),
     deleteProjectById: builder.mutation<IBank, string>({
       query: (id) => ({
         url: `/api/bank/${id}`,
-        method: 'DELETE'
+        method: 'DELETE',
       }),
-      invalidatesTags: [{ type: 'Projects' }]
-    })
-  })
+      invalidatesTags: [{ type: 'Projects' }],
+    }),
+  }),
 });
 
 export const {
@@ -99,5 +99,5 @@ export const {
   usePostProjectMutation,
   usePutProjectMutation,
   useDeleteProjectMutation,
-  useDeleteProjectByIdMutation
+  useDeleteProjectByIdMutation,
 } = bankApi;

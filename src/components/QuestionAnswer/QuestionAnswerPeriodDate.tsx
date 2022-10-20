@@ -19,7 +19,7 @@ interface IProps {
 const QuestionAnswerPeriodDate = ({
   item,
   existingAnswer,
-  onSubmit
+  onSubmit,
 }: IProps): React.ReactElement => {
   const { t } = useTranslation();
   const nexus = Nexus.getInstance();
@@ -28,7 +28,7 @@ const QuestionAnswerPeriodDate = ({
     resolver: nexus.resolverService.answerResolver(
       QuestionVariant.Q_PERIOD_DATE
     ),
-    defaultValues: item
+    defaultValues: item,
   });
 
   useEffect(() => {

@@ -6,16 +6,16 @@ export const useButtonStyles = makeStyles({
   buttonContainer: {
     display: 'flex',
     alignSelf: 'center',
-    width: '100%'
+    width: '100%',
   },
   buttonTitle: {
     display: 'flex',
     alignSelf: 'center',
-    paddingLeft: 4
+    paddingLeft: 4,
   },
   button: {
-    marginLeft: 'auto'
-  }
+    marginLeft: 'auto',
+  },
 });
 
 export const usePanelStyles = makeStyles({
@@ -26,8 +26,8 @@ export const usePanelStyles = makeStyles({
     minHeight: 0,
     gap: 16,
     '& .MuiList-root': {
-      padding: 0
-    }
+      padding: 0,
+    },
   },
   listItem: {
     display: 'flex',
@@ -35,14 +35,14 @@ export const usePanelStyles = makeStyles({
     minHeight: 70,
     width: '100%',
     border: `0.1rem solid ${theme.palette.gray400.main}`,
-    backgroundColor: theme.palette.white.main
+    backgroundColor: theme.palette.white.main,
   },
   withHover: {
     cursor: 'pointer',
     '&:hover': {
       background: theme.palette.secondary.main,
-      color: theme.palette.white.main
-    }
+      color: theme.palette.white.main,
+    },
   },
   nestableCustom: {
     width: '100%',
@@ -50,9 +50,9 @@ export const usePanelStyles = makeStyles({
       margin: 0,
       paddingBottom: 8,
       '&:last-child': {
-        paddingBottom: 0
-      }
-    }
+        paddingBottom: 0,
+      },
+    },
   },
   list: {
     display: 'flex',
@@ -60,7 +60,7 @@ export const usePanelStyles = makeStyles({
     flexGrow: 1,
     minHeight: 0,
     gap: '0.8rem',
-    listStyle: 'none'
+    listStyle: 'none',
   },
   handlerIcon: {
     display: 'flex',
@@ -68,7 +68,7 @@ export const usePanelStyles = makeStyles({
     cursor: 'pointer',
     justifySelf: 'flex-end',
     paddingLeft: 8,
-    paddingTop: 8
+    paddingTop: 8,
   },
   textItem: {
     display: 'flex',
@@ -78,19 +78,19 @@ export const usePanelStyles = makeStyles({
     paddingTop: 4,
     paddingBottom: 4,
     paddingLeft: 25,
-    paddingRight: 15
+    paddingRight: 15,
   },
   textItemTitle: {
     display: 'flex',
     paddingTop: 5,
     paddingBottom: 5,
-    borderBottom: '0.1rem solid'
+    borderBottom: '0.1rem solid',
   },
   textItemDescription: {
-    paddingTop: 5
+    paddingTop: 5,
   },
   selectedItem: {
     background: theme.palette.primary.main,
-    color: theme.palette.white.main
-  }
+    color: theme.palette.white.main,
+  },
 });

@@ -19,8 +19,8 @@ const alertSlice = createSlice({
       if (index !== -1) {
         state.list.splice(index, 1);
       }
-    }
-  }
+    },
+  },
 });
 
 export const { addAlert, removeAlert } = alertSlice.actions;

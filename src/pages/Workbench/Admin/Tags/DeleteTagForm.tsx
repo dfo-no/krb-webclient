@@ -27,7 +27,7 @@ interface IProps {
 export default function DeleteTagForm({
   children,
   tag,
-  handleClose
+  handleClose,
 }: IProps): React.ReactElement {
   const { deleteTag } = useProjectMutations();
   const nexus = Nexus.getInstance();
@@ -37,7 +37,7 @@ export default function DeleteTagForm({
 
   const methods = useForm<Parentable<ITag>>({
     defaultValues: tag,
-    resolver: nexus.resolverService.resolver(ModelType.tag)
+    resolver: nexus.resolverService.resolver(ModelType.tag),
   });
 
   const { projectId } = useParams<IRouteProjectParams>();
@@ -62,7 +62,7 @@ export default function DeleteTagForm({
       const alert: IAlert = {
         id: uuidv4(),
         style: 'success',
-        text: 'Successfully deleted tag'
+        text: 'Successfully deleted tag',
       };
       dispatch(addAlert({ alert }));
       handleClose();

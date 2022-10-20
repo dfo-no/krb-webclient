@@ -29,7 +29,7 @@ function DeleteVariant({
   variant,
   requirement,
   need,
-  handleClose
+  handleClose,
 }: IProps): React.ReactElement {
   const { projectId } = useParams<IRouteProjectParams>();
   const { data: project } = useGetProjectQuery(projectId);
@@ -51,7 +51,7 @@ function DeleteVariant({
       const alert: IAlert = {
         id: uuidv4(),
         style: 'success',
-        text: 'Successfully deleted variant'
+        text: 'Successfully deleted variant',
       };
       dispatch(addAlert({ alert }));
       handleClose();

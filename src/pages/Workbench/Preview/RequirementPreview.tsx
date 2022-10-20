@@ -15,7 +15,7 @@ interface IProps {
 }
 
 export default function RequirementPreview({
-  requirement
+  requirement,
 }: IProps): React.ReactElement {
   const { projectId } = useParams<IRouteProjectParams>();
   const { data: project } = useGetProjectQuery(projectId);

@@ -7,7 +7,7 @@ const FormButtonBox = styled(Box)(() => ({
   alignSelf: 'center',
   flexGrow: 1,
   flexDirection: 'row',
-  marginLeft: 'auto'
+  marginLeft: 'auto',
 }));
 
 interface IProps {
@@ -15,7 +15,7 @@ interface IProps {
 }
 
 export default function FormButtons({
-  handleClose
+  handleClose,
 }: IProps): React.ReactElement {
   const { t } = useTranslation();
 

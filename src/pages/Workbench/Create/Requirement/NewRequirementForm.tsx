@@ -19,7 +19,7 @@ import {
   ModalBox,
   ModalButton,
   ModalButtonsBox,
-  ModalFieldsBox
+  ModalFieldsBox,
 } from '../../../../components/ModalBox/ModalBox';
 import { ModelType } from '../../../../Nexus/enums';
 import { Parentable } from '../../../../models/Parentable';
@@ -44,7 +44,7 @@ function NewRequirementForm({ need, handleClose }: IProps): React.ReactElement {
 
   const methods = useForm<IRequirement>({
     resolver: nexus.resolverService.postResolver(ModelType.requirement),
-    defaultValues
+    defaultValues,
   });
 
   const onSubmit = async (post: IRequirement) => {
@@ -54,7 +54,7 @@ function NewRequirementForm({ need, handleClose }: IProps): React.ReactElement {
       const alert: IAlert = {
         id: uuidv4(),
         style: 'success',
-        text: t('Successfully created new requirement')
+        text: t('Successfully created new requirement'),
       };
       dispatch(addAlert({ alert }));
       handleClose(newRequirement.id);

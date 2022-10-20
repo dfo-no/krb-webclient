@@ -11,7 +11,7 @@ interface IProps {
 }
 
 export default function ProductVariant({
-  variant
+  variant,
 }: IProps): React.ReactElement {
   return (
     <Box>

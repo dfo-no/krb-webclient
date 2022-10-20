@@ -10,7 +10,7 @@ export default class BaseService {
   withId<T>(obj: T): T {
     return {
       ...obj,
-      id: this.uuidService.generateId()
+      id: this.uuidService.generateId(),
     };
   }
 }

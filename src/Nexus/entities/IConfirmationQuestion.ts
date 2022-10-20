@@ -5,7 +5,7 @@ import {
   IAnswerBase,
   IConfigBase,
   IQuestionBase,
-  QuestionBaseSchema
+  QuestionBaseSchema,
 } from './IQuestionBase';
 import { QuestionVariant } from '../enums';
 
@@ -25,14 +25,14 @@ export interface IConfirmationConfig extends IConfigBase {
 export const ConfirmationQuestionWorkbenchSchema = QuestionBaseSchema.keys({
   type: CustomJoi.validateType(QuestionVariant.Q_CONFIRMATION),
   config: ConfigBaseSchema.keys({
-    pointsUnconfirmed: CustomJoi.validateScore()
-  })
+    pointsUnconfirmed: CustomJoi.validateScore(),
+  }),
 });
 
 export const ConfirmationQuestionAnswerSchema =
   ConfirmationQuestionWorkbenchSchema.keys({
     answer: CustomJoi.object().keys({
       value: CustomJoi.validateBoolean(),
-      point: CustomJoi.validateScore()
-    })
+      point: CustomJoi.validateScore(),
+    }),
   });

@@ -28,10 +28,10 @@ const SliderCtrl = ({
   marks,
   unit,
   label,
-  showValue = true
+  showValue = true,
 }: IProps): React.ReactElement => {
   const {
-    formState: { errors }
+    formState: { errors },
   } = useFormContext();
 
   return (
@@ -86,5 +86,5 @@ const SliderCtrl = ({
 export default SliderCtrl;
 
 SliderCtrl.defaultProps = {
-  label: ''
+  label: '',
 };

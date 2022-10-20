@@ -3,7 +3,7 @@ import {
   Dispatch,
   SetStateAction,
   useContext,
-  useState
+  useState,
 } from 'react';
 
 interface IVariantContext {
@@ -15,7 +15,7 @@ const initialContext: IVariantContext = {
   openVariants: [],
   setOpenVariants: function (): void {
     throw new Error('Function not implemented.');
-  }
+  },
 };
 
 export const VariantContext = createContext<IVariantContext>(initialContext);
@@ -31,7 +31,7 @@ export const VariantProvider = ({ children }: IProps) => {
     <VariantContext.Provider
       value={{
         openVariants,
-        setOpenVariants
+        setOpenVariants,
       }}
     >
       {children}

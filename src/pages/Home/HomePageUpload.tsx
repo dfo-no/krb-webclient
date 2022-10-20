@@ -59,7 +59,7 @@ export function HomePageUpload({ selectedBank, setSelectedBank }: Props) {
       const alert: IAlert = {
         id: uuidv4(),
         style: 'error',
-        text: disableUploadMessage
+        text: disableUploadMessage,
       };
       dispatch(addAlert({ alert }));
       return;
@@ -67,15 +67,15 @@ export function HomePageUpload({ selectedBank, setSelectedBank }: Props) {
 
     httpPost<FormData, AxiosResponse>('/java/uploadPdf', formData, {
       headers: {
-        'Content-Type': 'multipart/form-data'
+        'Content-Type': 'multipart/form-data',
       },
-      responseType: 'json'
+      responseType: 'json',
     })
       .then((httpResponse) => {
         if (httpResponse.data.title) {
           const file = {
             name: files[0].name,
-            lastModified: files[0].lastModified
+            lastModified: files[0].lastModified,
           };
 
           const specification: ISpecification = httpResponse.data;
@@ -95,7 +95,7 @@ export function HomePageUpload({ selectedBank, setSelectedBank }: Props) {
         const alert: IAlert = {
           id: uuidv4(),
           style: 'error',
-          text: t('HomePage.File_upload_error')
+          text: t('HomePage.File_upload_error'),
         };
         dispatch(addAlert({ alert }));
       });

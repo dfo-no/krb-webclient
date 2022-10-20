@@ -32,7 +32,7 @@ interface IProps {
 function NewVariantForm({
   need,
   requirement,
-  handleClose
+  handleClose,
 }: IProps): React.ReactElement {
   const dispatch = useAppDispatch();
   const { t } = useTranslation();
@@ -46,7 +46,7 @@ function NewVariantForm({
 
   const methods = useForm<IVariant>({
     resolver: nexus.resolverService.postResolver(ModelType.variant),
-    defaultValues
+    defaultValues,
   });
 
   if (!project) {
@@ -64,7 +64,7 @@ function NewVariantForm({
       const alert: IAlert = {
         id: uuidv4(),
         style: 'success',
-        text: 'Successfully created new variant'
+        text: 'Successfully created new variant',
       };
       dispatch(addAlert({ alert }));
       closeAndReset();

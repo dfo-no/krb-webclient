@@ -22,15 +22,15 @@ const useStyles = makeStyles({
     backgroundColor: theme.palette.gray100.main,
     paddingTop: 35,
     paddingBottom: 35,
-    overflow: 'visible'
-  }
+    overflow: 'visible',
+  },
 });
 
 const DFODialog = ({
   children,
   isOpen,
   handleClose,
-  scroll = 'body'
+  scroll = 'body',
 }: IProps) => {
   const classes = useStyles();
 
@@ -44,9 +44,9 @@ const DFODialog = ({
         sx={{
           '& .MuiDialog-container': {
             '& .MuiPaper-root': {
-              marginBottom: 10
-            }
-          }
+              marginBottom: 10,
+            },
+          },
         }}
       >
         <DialogContent className={classes.dfoDialogContent}>

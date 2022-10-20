@@ -3,7 +3,7 @@ export enum Weighting {
   LOW = 30,
   MEDIUM = 50,
   HIGH = 70,
-  HIGHEST = 90
+  HIGHEST = 90,
 }
 
 export const WeightingStep = 20;

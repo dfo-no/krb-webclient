@@ -27,7 +27,7 @@ const VariantFormContent = ({ control }: IProps) => {
   const { data: project } = useGetProjectQuery(projectId);
   const useProduct = useWatch({
     control,
-    name: 'useProduct'
+    name: 'useProduct',
   });
 
   if (!project) {
@@ -71,9 +71,9 @@ const VariantFormContent = ({ control }: IProps) => {
           {
             value: VariantType.requirement,
             label: t('Requirement'),
-            recommended: false
+            recommended: false,
           },
-          { value: VariantType.info, label: t('Info'), recommended: false }
+          { value: VariantType.info, label: t('Info'), recommended: false },
         ]}
       />
       <Typography className={css.TextTitle} variant={'smBold'}>

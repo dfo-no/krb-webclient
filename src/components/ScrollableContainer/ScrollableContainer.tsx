@@ -11,21 +11,21 @@ export const ScrollableContainer = styled(Box)(({ theme }) => ({
   marginBottom: 16,
 
   '::-webkit-scrollbar': {
-    width: '1rem'
+    width: '1rem',
   },
   '::-webkit-scrollbar-track': {
     boxShadow: `inset 0 0 0.5rem ${theme.palette.primary.main}`,
-    borderRadius: '1rem'
+    borderRadius: '1rem',
   },
 
   /* Handle */
   '::-webkit-scrollbar-thumb': {
     background: theme.palette.primary.main,
-    borderRadius: '1rem'
+    borderRadius: '1rem',
   },
 
   /* Handle on hover */
   '::-webkit-scrollbar-thumb:hover': {
-    backgroundColor: theme.palette.black.main
-  }
+    backgroundColor: theme.palette.black.main,
+  },
 }));

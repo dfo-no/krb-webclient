@@ -3,7 +3,7 @@ import {
   Button,
   FormControlLabel,
   Typography,
-  RadioGroup
+  RadioGroup,
 } from '@mui/material';
 import { FormProvider, useForm, useWatch } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
@@ -39,7 +39,7 @@ export default function NewProduct(): React.ReactElement {
   const [relatedProducts, setRelatedProducts] = useState(false);
   const options = [
     { value: true, label: t('common.Yes'), recommended: false },
-    { value: false, label: t('common.No'), recommended: false }
+    { value: false, label: t('common.No'), recommended: false },
   ];
 
   const defaultValues: IPrefilledResponseProduct =
@@ -49,7 +49,7 @@ export default function NewProduct(): React.ReactElement {
     resolver: nexus.resolverService.postResolver(
       ModelType.prefilledResponseProduct
     ),
-    defaultValues
+    defaultValues,
   });
 
   useEffect(() => {
@@ -62,7 +62,7 @@ export default function NewProduct(): React.ReactElement {
 
   const useRelatedProducts = useWatch({
     name: 'relatedProducts',
-    control: methods.control
+    control: methods.control,
   });
 
   const onSubmit = (post: IPrefilledResponseProduct): void => {

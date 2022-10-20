@@ -187,5 +187,9 @@
   "pre-commit": [
     "prettier:ci",
     "test:ci"
-  ]
+  ],
+  "volta": {
+    "node": "16.18.0",
+    "npm": "8.19.2"
+  }
 }

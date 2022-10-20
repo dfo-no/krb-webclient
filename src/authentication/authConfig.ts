@@ -6,15 +6,15 @@ export const msalConfig: Configuration = {
   auth: {
     clientId: Utils.ensure(process.env.REACT_APP_CLIENTID),
     redirectUri: window.location.origin,
-    postLogoutRedirectUri: window.location.origin
-  }
+    postLogoutRedirectUri: window.location.origin,
+  },
 };
 
 // Add here scopes for id token to be used at MS Identity Platform endpoints.
 export const loginRequest: PopupRequest = {
-  scopes: ['User.Read']
+  scopes: ['User.Read'],
 };
 
 export const graphConfig = {
-  graphMeEndpoint: 'https://graph.microsoft.com/v1.0/me'
+  graphMeEndpoint: 'https://graph.microsoft.com/v1.0/me',
 };

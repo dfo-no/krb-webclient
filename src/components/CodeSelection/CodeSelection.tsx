@@ -18,7 +18,7 @@ interface IProps {
 const CodeSelection = ({
   name,
   codesList,
-  codeSelection
+  codeSelection,
 }: IProps): React.ReactElement => {
   const sortCodes = (codesToBeSorted: ICode[]): ICode[] => {
     return [...codesToBeSorted].sort((a, b) => {

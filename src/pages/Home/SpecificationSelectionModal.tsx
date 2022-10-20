@@ -13,7 +13,7 @@ import { IResponse } from '../../Nexus/entities/IResponse';
 import {
   ModalBox,
   ModalButton,
-  ModalButtonsBox
+  ModalButtonsBox,
 } from '../../components/ModalBox/ModalBox';
 import { selectBank } from '../../store/reducers/selectedBank-reducer';
 import { SPECIFICATION } from '../../common/PathConstants';
@@ -28,7 +28,7 @@ interface IProps {
 
 export default function SpecificationSelectionModal({
   selectedSpecification,
-  setSelectedSpecification
+  setSelectedSpecification,
 }: IProps): React.ReactElement {
   const [newResponse, setNewResponse] = useState<IResponse | null>(null);
   const [newPrefilledResponse, setNewPrefilledResponse] =

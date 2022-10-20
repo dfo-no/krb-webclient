@@ -28,7 +28,7 @@ export default class LocalStorageAdapter extends Adapter {
       sourceOriginal: null,
       sourceRel: null,
       projectId: null,
-      deletedDate: null
+      deletedDate: null,
     };
 
     // find better solution to this problem not knowing wheter it is null, but not being able to return null as Promise

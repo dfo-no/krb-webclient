@@ -18,7 +18,7 @@ type ErrorSummaryProps<T> = {
   errors: FieldErrors<T>;
 };
 export default function ErrorSummary<T>({
-  errors
+  errors,
 }: ErrorSummaryProps<T>): React.ReactElement | null {
   if (process.env.NODE_ENV !== 'development') {
     return null;

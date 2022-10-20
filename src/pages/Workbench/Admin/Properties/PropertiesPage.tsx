@@ -17,7 +17,7 @@ import { StandardContainer } from '../../../../components/StandardContainer/Stan
 import { useAppDispatch } from '../../../../store/hooks';
 import {
   useGetProjectQuery,
-  usePutProjectMutation
+  usePutProjectMutation,
 } from '../../../../store/api/bankApi';
 import { useFormStyles } from '../../../../components/Form/FormStyles';
 
@@ -32,7 +32,7 @@ function PropertiesPage(): React.ReactElement {
 
   const methods = useForm<IBank>({
     resolver: nexus.resolverService.resolver(ModelType.bank),
-    defaultValues: project
+    defaultValues: project,
   });
 
   const onSubmit = async (put: IBank) => {
@@ -40,7 +40,7 @@ function PropertiesPage(): React.ReactElement {
       const alert: IAlert = {
         id: uuidv4(),
         style: 'success',
-        text: 'Successfully updated project'
+        text: 'Successfully updated project',
       };
       dispatch(addAlert({ alert }));
     });

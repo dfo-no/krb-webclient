@@ -22,7 +22,7 @@ interface IProps {
 export default function DeleteProjectForm({
   children,
   bank,
-  handleClose
+  handleClose,
 }: IProps): ReactElement {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
@@ -33,7 +33,7 @@ export default function DeleteProjectForm({
 
   const methods = useForm<IBank>({
     defaultValues: bank,
-    resolver: nexus.resolverService.resolver(ModelType.bank)
+    resolver: nexus.resolverService.resolver(ModelType.bank),
   });
 
   if (deleteMode !== bank.id) {
@@ -49,7 +49,7 @@ export default function DeleteProjectForm({
       const alert: IAlert = {
         id: uuidService.generateId(),
         style: 'success',
-        text: 'Successfully deleted project'
+        text: 'Successfully deleted project',
       };
       dispatch(addAlert({ alert }));
     });

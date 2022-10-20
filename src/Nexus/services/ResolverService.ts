@@ -21,7 +21,7 @@ export default class ResolverService {
       throw new Error(`Cant find schema for ${type}.`);
     }
     const postSchema = schema.keys({
-      id: CustomJoi.validateEmptyId()
+      id: CustomJoi.validateEmptyId(),
     });
     return joiResolver(postSchema);
   }

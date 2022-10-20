@@ -1,7 +1,7 @@
 import { Button, styled } from '@mui/material/';
 
 export const FormTextButton = styled(Button, {
-  shouldForwardProp: (prop) => prop !== 'hoverColor'
+  shouldForwardProp: (prop) => prop !== 'hoverColor',
 })<{ hoverColor?: string }>(({ theme, hoverColor }) => ({
   backgroundColor: theme.palette.white.main,
   cursor: 'pointer',
@@ -10,6 +10,6 @@ export const FormTextButton = styled(Button, {
   marginBottom: 2,
   marginRight: 16,
   '&:hover': {
-    background: hoverColor ? hoverColor : theme.palette.lightBlue.main
-  }
+    background: hoverColor ? hoverColor : theme.palette.lightBlue.main,
+  },
 }));

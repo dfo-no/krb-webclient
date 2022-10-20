@@ -3,7 +3,7 @@ import React, {
   Dispatch,
   SetStateAction,
   useContext,
-  useState
+  useState,
 } from 'react';
 import { IEvaluatedResponse } from '../../Nexus/entities/IEvaluatedResponse';
 import { IResponse } from '../../Nexus/entities/IResponse';
@@ -40,7 +40,7 @@ const initialContext: IEvaluationContext = {
   files: [],
   setFiles: () => {},
   responses: [],
-  setResponses: () => {}
+  setResponses: () => {},
 };
 
 export const EvaluationContext =
@@ -67,7 +67,7 @@ export const EvaluationProvider = ({ children }: IProps) => {
         files,
         setFiles,
         responses,
-        setResponses
+        setResponses,
       }}
     >
       {children}
