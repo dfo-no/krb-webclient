@@ -14,6 +14,7 @@ interface IProps {
   orderedByDate?: boolean;
   title: string;
   setSelectedBank: Dispatch<SetStateAction<IBank | null>>;
+  dataCy?: string;
 }
 
 const MILLISEC_PER_DAY = 86400000;
@@ -23,6 +24,7 @@ export default function HomeDisplayList({
   orderedByDate = false,
   title,
   setSelectedBank,
+  dataCy = '',
 }: IProps): React.ReactElement {
   const { t } = useTranslation();
 
@@ -69,6 +71,7 @@ export default function HomeDisplayList({
   const filteredElements = () => {
     return getList().map((bank: IBank) => (
       <li
+        data-cy="bank"
         key={bank.id}
         className={css.item}
         onClick={() => setSelectedBank(bank)}
@@ -83,7 +86,7 @@ export default function HomeDisplayList({
   };
 
   return (
-    <Card className={css.DisplayList}>
+    <Card data-cy={dataCy} className={css.DisplayList}>
       <CardHeader title={title} className={css.Header} />
       <CardContent>
         <ul>{filteredElements()}</ul>
