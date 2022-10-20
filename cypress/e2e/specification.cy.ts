@@ -110,7 +110,7 @@ describe('Specification', () => {
     cy.get('ul').find('li').should('have.length', 3);
   });
 
-  // it("can save specification", function() {
-  //   cy.get('div').contains('Last ned spesifikasjon').click();
-  // });
+  it("can save specification", function() {
+    cy.get('div').contains('Last ned spesifikasjon').click();
+  });
 });
