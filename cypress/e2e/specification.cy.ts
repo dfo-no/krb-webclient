@@ -15,6 +15,9 @@ describe('Specification', () => {
   const newCaseNumber = '123456/BB';
   const newCurrency = 'Europeiske euro (EUR)';
 
+  const newProductTitle = 'Test product';
+  const newProductDesc = 'Test description of product';
+
   it('can upload and show specification', () => {
     // upload specification
     cy.visit('localhost:3000');
@@ -49,7 +52,7 @@ describe('Specification', () => {
       .parent()
       .should('have.attr', 'data-disabled', 'false');
 
-    // Liste av produkter
+    // check the length of product
     cy.get('ul').find('li').should('have.length', 2);
   });
 
@@ -88,8 +91,26 @@ describe('Specification', () => {
     cy.contains(newOrganisation);
     cy.contains(newCaseNumber);
     cy.contains(newCurrency);
-
-    // save specification
-    cy.get('div').contains('Last ned spesifikasjon').click();
   });
+
+  it('can add product', () => {
+    cy.contains(addProductButton).click();
+
+    // enter product information
+    cy.get('button').contains('Velg').last().click();
+    cy.get('input[name="title"]').clear().type(newProductTitle);
+    cy.get('input[name="description"]').clear().type(newProductDesc);
+    cy.get('input[name="amount"]').clear().type('2');
+
+    // click save to add the new product
+    cy.get('button').contains('Lagre').click();
+    cy.get('button').contains('Lagre produkt').click();
+
+    // check the length of product
+    cy.get('ul').find('li').should('have.length', 3);
+  });
+
+  // it("can save specification", function() {
+  //   cy.get('div').contains('Last ned spesifikasjon').click();
+  // });
 });
