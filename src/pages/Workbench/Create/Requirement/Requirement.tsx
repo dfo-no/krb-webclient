@@ -21,13 +21,13 @@ const useStyles = makeStyles({
     display: 'flex',
     flexDirection: 'column',
     height: '100%',
-    width: '100%'
+    width: '100%',
   },
   active: {
     border: `0.2rem solid ${theme.palette.secondary.main}`,
     borderTop: `1.2rem solid ${theme.palette.secondary.main}`,
-    borderRadius: '0.5rem'
-  }
+    borderRadius: '0.5rem',
+  },
 });
 
 interface IProps {
@@ -63,7 +63,7 @@ const Requirement = ({ requirementIndex }: IProps) => {
             margin: 2,
             paddingRight: 1,
             paddingBottom: 1,
-            borderBottom: `0.1rem solid ${theme.palette.silver.main}`
+            borderBottom: `0.1rem solid ${theme.palette.silver.main}`,
           }}
         >
           <Typography

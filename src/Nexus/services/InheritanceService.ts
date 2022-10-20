@@ -27,7 +27,7 @@ export default class InheritanceService {
       date: Utils.ensure(inheritedBank.publishedDate),
       type: ModelType.inheritedBank,
       sourceOriginal: inheritedBank.projectId,
-      sourceRel: null
+      sourceRel: null,
     };
   };
 
@@ -67,14 +67,14 @@ export default class InheritanceService {
       ...this.inheritList(
         inheritedBank.products,
         Utils.ensure(inheritedBank.projectId)
-      )
+      ),
     ];
     const newCodelistList = [
       ...project.codelist,
       ...this.inheritList(
         inheritedBank.codelist,
         Utils.ensure(inheritedBank.projectId)
-      )
+      ),
     ];
 
     const newNeedList = [
@@ -85,7 +85,7 @@ export default class InheritanceService {
           Utils.ensure(inheritedBank.projectId)
         ),
         Utils.ensure(inheritedBank.projectId)
-      )
+      ),
     ];
     newProject.needs = newNeedList;
     newProject.products = newProductList;

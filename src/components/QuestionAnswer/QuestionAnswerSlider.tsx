@@ -24,7 +24,7 @@ interface IProps {
 const QuestionAnswerSlider = ({
   item,
   existingAnswer,
-  onSubmit
+  onSubmit,
 }: IProps): React.ReactElement => {
   const { t } = useTranslation();
   const nexus = Nexus.getInstance();
@@ -32,21 +32,21 @@ const QuestionAnswerSlider = ({
   const [sliderView, setSliderView] = useState(true);
   const options = [
     { value: 'Slider', label: t('Slider'), recommended: false },
-    { value: 'Input', label: t('Input'), recommended: false }
+    { value: 'Input', label: t('Input'), recommended: false },
   ];
 
   const methods = useForm<ISliderQuestion>({
     resolver: nexus.resolverService.answerResolver(QuestionVariant.Q_SLIDER),
-    defaultValues: item
+    defaultValues: item,
   });
 
   const useAnswerWatch = useWatch({
     name: 'answer.value',
-    control: methods.control
+    control: methods.control,
   });
 
   const [sliderMark, setSliderMark] = useState<IMark[]>([
-    { value: +useAnswerWatch, label: `${useAnswerWatch} ${item.config.unit}` }
+    { value: +useAnswerWatch, label: `${useAnswerWatch} ${item.config.unit}` },
   ]);
 
   useEffect(() => {
@@ -60,7 +60,10 @@ const QuestionAnswerSlider = ({
 
   useEffect(() => {
     setSliderMark([
-      { value: +useAnswerWatch, label: `${useAnswerWatch} ${item.config.unit}` }
+      {
+        value: +useAnswerWatch,
+        label: `${useAnswerWatch} ${item.config.unit}`,
+      },
     ]);
   }, [item.config, useAnswerWatch]);
 

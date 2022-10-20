@@ -10,7 +10,7 @@ interface IProps {
 
 const YesNoSelection = ({
   name,
-  recommendedAlternative
+  recommendedAlternative,
 }: IProps): ReactElement => {
   const isRecommended = (alternative: boolean): boolean => {
     return (
@@ -25,13 +25,13 @@ const YesNoSelection = ({
         {
           value: 'true',
           label: t('common.Yes'),
-          recommended: isRecommended(true)
+          recommended: isRecommended(true),
         },
         {
           value: 'false',
           label: t('common.No'),
-          recommended: isRecommended(false)
-        }
+          recommended: isRecommended(false),
+        },
       ]}
     />
   );

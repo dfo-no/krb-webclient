@@ -5,7 +5,7 @@ import Link from '@mui/material/Link';
 import List from '@mui/material/List';
 import ListItem, {
   listItemClasses,
-  ListItemProps
+  ListItemProps,
 } from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
@@ -21,9 +21,9 @@ const StyledListItem = styled(ListItem)<ListItemProps>(({ theme: t }) => {
   return {
     '&.MuiListItem-root': {
       '&.MuiListItem-divider': {
-        borderBottom: `0.1rem solid ${t.palette.white.main}`
-      }
-    }
+        borderBottom: `0.1rem solid ${t.palette.white.main}`,
+      },
+    },
   };
 });
 
@@ -32,7 +32,7 @@ const Footer = () => {
     { title: 'Kontakt', href: 'https://dfo.no/om-dfo/kontakt-oss' },
     { title: 'English', href: 'https://dfo.no/english' },
     { title: 'Personvern', href: 'https://dfo.no/om-dfo/personvern' },
-    { title: 'Offentlig postjournal', href: 'https://einnsyn.no/' }
+    { title: 'Offentlig postjournal', href: 'https://einnsyn.no/' },
   ];
 
   return (
@@ -48,15 +48,15 @@ const Footer = () => {
                 color: theme.palette.lightBlue.main,
                 fontWeight: 'bold',
                 '& svg': {
-                  fill: theme.palette.lightBlue.main
-                }
-              }
+                  fill: theme.palette.lightBlue.main,
+                },
+              },
             }}
           >
             <Divider
               component="li"
               sx={{
-                borderTop: `0.1rem solid ${theme.palette.white.main}`
+                borderTop: `0.1rem solid ${theme.palette.white.main}`,
               }}
             />
             {links.map((link) => (

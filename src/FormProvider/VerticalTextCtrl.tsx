@@ -27,10 +27,10 @@ const VerticalTextCtrl = ({
   type = 'text',
   autoFocus,
   required,
-  children
+  children,
 }: IProps): React.ReactElement => {
   const {
-    formState: { errors }
+    formState: { errors },
   } = useFormContext();
 
   return (

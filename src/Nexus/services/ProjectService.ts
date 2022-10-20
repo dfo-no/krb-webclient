@@ -37,7 +37,7 @@ export default class ProjectService {
       sourceOriginal: null,
       sourceRel: null,
       projectId: null,
-      deletedDate: null
+      deletedDate: null,
     };
   };
 

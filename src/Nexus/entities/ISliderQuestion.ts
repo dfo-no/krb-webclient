@@ -4,7 +4,7 @@ import {
   IAnswerBase,
   IConfigBase,
   IQuestionBase,
-  QuestionBaseSchema
+  QuestionBaseSchema,
 } from './IQuestionBase';
 import { QuestionVariant } from '../enums';
 
@@ -32,7 +32,7 @@ export interface ScoreValuePair {
 
 const WorkbenchScoreValueSchema = CustomJoi.object().keys({
   score: CustomJoi.validateScore(),
-  value: CustomJoi.validateNumber()
+  value: CustomJoi.validateNumber(),
 });
 
 export const SliderQuestionWorkbenchSchema = QuestionBaseSchema.keys({
@@ -42,14 +42,14 @@ export const SliderQuestionWorkbenchSchema = QuestionBaseSchema.keys({
     min: CustomJoi.validateSliderMin(),
     max: CustomJoi.validateSliderMax(),
     unit: CustomJoi.validateOptionalText(),
-    scoreValues: CustomJoi.validateArray(WorkbenchScoreValueSchema)
-  })
+    scoreValues: CustomJoi.validateArray(WorkbenchScoreValueSchema),
+  }),
 });
 
 const ScoreValueSchema = CustomJoi.object().keys({
   id: CustomJoi.validateId(),
   score: CustomJoi.validateScore(),
-  value: CustomJoi.validateSliderValue()
+  value: CustomJoi.validateSliderValue(),
 });
 
 export const SliderQuestionAnswerSchema = SliderQuestionWorkbenchSchema.keys({
@@ -58,10 +58,10 @@ export const SliderQuestionAnswerSchema = SliderQuestionWorkbenchSchema.keys({
     min: CustomJoi.validateSliderMin(),
     max: CustomJoi.validateSliderMax(),
     unit: CustomJoi.validateOptionalText(),
-    scoreValues: CustomJoi.validateSliderValues(ScoreValueSchema)
+    scoreValues: CustomJoi.validateSliderValues(ScoreValueSchema),
   }),
   answer: CustomJoi.object().keys({
     value: CustomJoi.validateSliderAnswer(),
-    point: CustomJoi.validateScore()
-  })
+    point: CustomJoi.validateScore(),
+  }),
 });

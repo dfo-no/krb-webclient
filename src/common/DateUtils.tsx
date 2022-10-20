@@ -5,7 +5,7 @@ import { t } from 'i18next';
 class DateUtils {
   static localeMap: { [key: string]: Locale } = {
     en: enLocale,
-    nb: nbLocale
+    nb: nbLocale,
   };
 
   static formatDate = (date: Date): string => {

@@ -12,7 +12,7 @@ import {
   ModalBox,
   ModalFieldsBox,
   ModalButtonsBox,
-  ModalButton
+  ModalButton,
 } from '../../components/ModalBox/ModalBox';
 import { ModelType } from '../../Nexus/enums';
 import { setResponse } from '../../store/reducers/prefilled-response-reducer';
@@ -25,7 +25,7 @@ interface IProps {
 
 const NewPrefilledResponseForm = ({
   handleClose,
-  prefilledResponse
+  prefilledResponse,
 }: IProps) => {
   const { t } = useTranslation();
   const history = useHistory();
@@ -34,7 +34,7 @@ const NewPrefilledResponseForm = ({
 
   const methods = useForm<IPrefilledResponse>({
     resolver: nexus.resolverService.resolver(ModelType.prefilledResponse),
-    defaultValues: prefilledResponse
+    defaultValues: prefilledResponse,
   });
 
   const onSubmit = async (post: IPrefilledResponse) => {

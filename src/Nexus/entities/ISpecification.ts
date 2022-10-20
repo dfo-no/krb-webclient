@@ -2,11 +2,11 @@ import CustomJoi from '../Joi/CustomJoi';
 import { BaseBankSchema, IBank } from './IBank';
 import {
   IRequirementAnswer,
-  RequirementAnswerSchema
+  RequirementAnswerSchema,
 } from './IRequirementAnswer';
 import {
   ISpecificationProduct,
-  SpecificationProductSchema
+  SpecificationProductSchema,
 } from './ISpecificationProduct';
 
 export interface ISpecification {
@@ -32,5 +32,5 @@ export const BaseSpecificationSchema = CustomJoi.object().keys({
   requirementAnswers: CustomJoi.validateUniqueArray(RequirementAnswerSchema),
   title: CustomJoi.validateText(),
   caseNumber: CustomJoi.validateOptionalTextNotRequired(),
-  currencyUnit: CustomJoi.validateText()
+  currencyUnit: CustomJoi.validateText(),
 });

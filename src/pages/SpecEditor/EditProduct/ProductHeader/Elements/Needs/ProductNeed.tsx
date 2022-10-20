@@ -14,7 +14,7 @@ interface IProps {
 
 export default function ProductNeed({
   need,
-  product
+  product,
 }: IProps): React.ReactElement {
   return (
     <div className={css.Needs}>

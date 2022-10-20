@@ -36,5 +36,5 @@ export const ModelSchemaMap = new Map<ModelType, ObjectSchema>([
   [ModelType.specification, BaseSpecificationSchema],
   [ModelType.specificationProduct, SpecificationProductSchema],
   [ModelType.tag, BaseTagSchema],
-  [ModelType.variant, VariantSchema]
+  [ModelType.variant, VariantSchema],
 ]);

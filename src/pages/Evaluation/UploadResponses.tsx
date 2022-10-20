@@ -22,7 +22,7 @@ export default function UploadResponses(): React.ReactElement {
     specificationUpload,
     setFiles,
     responses,
-    setResponses
+    setResponses,
   } = useEvaluationState();
 
   const formatDate = (time: number): string => {
@@ -70,9 +70,9 @@ export default function UploadResponses(): React.ReactElement {
     return new Promise((resolve, reject) => {
       httpPost<FormData, AxiosResponse>('/java/uploadPdf', formData, {
         headers: {
-          'Content-Type': 'multipart/form-data'
+          'Content-Type': 'multipart/form-data',
         },
-        responseType: 'json'
+        responseType: 'json',
       })
         .then((response) => {
           return resolve(response.data);
@@ -111,9 +111,9 @@ export default function UploadResponses(): React.ReactElement {
       ...Array.from(newFiles).map((file) => {
         return {
           name: file.name,
-          lastModified: file.lastModified
+          lastModified: file.lastModified,
         };
-      })
+      }),
     ];
     const prevFiles = [...files];
 

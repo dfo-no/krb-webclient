@@ -17,5 +17,5 @@ export const BasePublicationSchema = BaseModelSchema.keys({
   version: CustomJoi.validateVersion(),
   bankId: CustomJoi.validateId(),
   type: CustomJoi.validateType(ModelType.publication),
-  deletedDate: CustomJoi.validateOptionalDate()
+  deletedDate: CustomJoi.validateOptionalDate(),
 });

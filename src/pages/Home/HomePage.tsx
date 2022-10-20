@@ -23,7 +23,7 @@ export default function HomePage(): React.ReactElement {
     pageSize: 500,
     page: 1,
     fieldName: 'title',
-    order: 'DESC'
+    order: 'DESC',
   });
 
   useEffect(() => {

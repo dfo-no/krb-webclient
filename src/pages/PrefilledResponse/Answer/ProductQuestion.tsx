@@ -24,7 +24,7 @@ interface IProps {
 export default function ProductQuestion({
   requirement,
   variant,
-  question
+  question,
 }: IProps): ReactElement {
   const { t } = useTranslation();
   const { prefilledResponse } = useAppSelector(

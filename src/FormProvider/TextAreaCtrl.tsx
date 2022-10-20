@@ -17,10 +17,10 @@ const TextAreaCtrl = ({
   name,
   placeholder = '',
   type = 'text',
-  rows = 3
+  rows = 3,
 }: IProps): React.ReactElement => {
   const {
-    formState: { errors }
+    formState: { errors },
   } = useFormContext();
 
   return (

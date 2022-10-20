@@ -15,7 +15,7 @@ const QuestionSpecificationCheckbox = (): ReactElement => {
   const { control, setValue } = useFormContext<IRequirementAnswer>();
   const usePointsNonPrefered = useWatch({
     name: 'question.config.pointsNonPrefered',
-    control
+    control,
   });
 
   useEffect(() => {

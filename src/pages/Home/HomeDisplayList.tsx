@@ -24,7 +24,7 @@ export default function HomeDisplayList({
   orderedByDate = false,
   title,
   setSelectedBank,
-  dataCy = ''
+  dataCy = '',
 }: IProps): React.ReactElement {
   const { t } = useTranslation();
 

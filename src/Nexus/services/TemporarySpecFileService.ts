@@ -8,7 +8,7 @@ export class TemporarySpecFileService {
 
   constructor() {
     this.db = localforage.createInstance({
-      name: 'specFiles'
+      name: 'specFiles',
     });
   }
 

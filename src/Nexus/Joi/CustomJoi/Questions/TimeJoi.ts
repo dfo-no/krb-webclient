@@ -7,9 +7,9 @@ const PeriodMinutesValidator = (joi: Joi.Root) => ({
     'number.base': 'Må være et tall',
     'number.integer': 'Må være et positivt heltall',
     'number.min': 'Må være et positivt heltall',
-    'number.max': 'Må være mindre enn 60'
+    'number.max': 'Må være mindre enn 60',
   },
-  base: joi.number().integer().min(0).max(59).required()
+  base: joi.number().integer().min(0).max(59).required(),
 });
 
 const PeriodHoursValidator = (joi: Joi.Root) => ({
@@ -18,15 +18,15 @@ const PeriodHoursValidator = (joi: Joi.Root) => ({
     'number.base': 'Må være et tall',
     'number.integer': 'Må være et positivt heltall',
     'number.min': 'Må være et positivt heltall',
-    'number.max': 'Må være mindre enn 24'
+    'number.max': 'Må være mindre enn 24',
   },
-  base: joi.number().integer().min(0).max(23).required()
+  base: joi.number().integer().min(0).max(23).required(),
 });
 
 const FromBoundaryTimeValidator = (joi: Joi.Root) => ({
   type: 'validateFromBoundaryTime',
   messages: {
-    'date.only': 'Tidspunkt må være fylt ut'
+    'date.only': 'Tidspunkt må være fylt ut',
   },
   base: joi.alternatives(joi.date().iso().raw(), null).required(),
   validate(value: string | null, helpers: Joi.CustomHelpers) {
@@ -36,14 +36,14 @@ const FromBoundaryTimeValidator = (joi: Joi.Root) => ({
       return { value, errors: helpers.error('date.only') };
     }
     return { value };
-  }
+  },
 });
 
 const ToBoundaryTimeValidator = (joi: Joi.Root) => ({
   type: 'validateToBoundaryTime',
   messages: {
     'date.only': 'Tidspunkt må være fylt ut',
-    'date.min': 'Til må være senere enn fra'
+    'date.min': 'Til må være senere enn fra',
   },
   base: joi.alternatives(joi.date().iso().raw(), null).required(),
   validate(value: string | null, helpers: Joi.CustomHelpers) {
@@ -58,17 +58,17 @@ const ToBoundaryTimeValidator = (joi: Joi.Root) => ({
       }
     }
     return { value };
-  }
+  },
 });
 
 const TimeScoreValidator = (joi: Joi.Root) => ({
   type: 'validateTimeScore',
   base: joi.date().iso().raw().required().messages({
-    'date.base': 'Tidspunkt må ha en verdi'
+    'date.base': 'Tidspunkt må ha en verdi',
   }),
   messages: {
     'date.min': 'Tidspunkt kan ikke være før {{#limit}}',
-    'date.max': 'Tidspunkt kan ikke være etter {{#limit}}'
+    'date.max': 'Tidspunkt kan ikke være etter {{#limit}}',
   },
   validate(value: string, helpers: Joi.CustomHelpers) {
     const fromBoundary = helpers.state.ancestors[2].fromBoundary;
@@ -79,21 +79,21 @@ const TimeScoreValidator = (joi: Joi.Root) => ({
         return {
           value,
           errors: helpers.error('date.min', {
-            limit: DateUtils.prettyFormatTime(fromBoundary)
-          })
+            limit: DateUtils.prettyFormatTime(fromBoundary),
+          }),
         };
       }
       if (time > new Date(toBoundary).getTime()) {
         return {
           value,
           errors: helpers.error('date.max', {
-            limit: DateUtils.prettyFormatTime(toBoundary)
-          })
+            limit: DateUtils.prettyFormatTime(toBoundary),
+          }),
         };
       }
     }
     return { value };
-  }
+  },
 });
 
 const FromTimeValidator = (joi: Joi.Root) => ({
@@ -101,7 +101,7 @@ const FromTimeValidator = (joi: Joi.Root) => ({
   messages: {
     'date.only': 'Tidspunkt må være fylt ut',
     'date.min': 'Tidspunkt kan ikke være før {{#limit}}',
-    'date.max': 'Tidspunkt kan ikke være etter {{#limit}}'
+    'date.max': 'Tidspunkt kan ikke være etter {{#limit}}',
   },
   base: joi.alternatives(joi.date().iso().raw(), null).required(),
   validate(value: string | null, helpers: Joi.CustomHelpers) {
@@ -112,21 +112,21 @@ const FromTimeValidator = (joi: Joi.Root) => ({
         return {
           value,
           errors: helpers.error('date.min', {
-            limit: DateUtils.prettyFormatTime(fromBoundary)
-          })
+            limit: DateUtils.prettyFormatTime(fromBoundary),
+          }),
         };
       }
       if (new Date(value).getTime() > new Date(toBoundary).getTime()) {
         return {
           value,
           errors: helpers.error('date.max', {
-            limit: DateUtils.prettyFormatTime(toBoundary)
-          })
+            limit: DateUtils.prettyFormatTime(toBoundary),
+          }),
         };
       }
     }
     return { value };
-  }
+  },
 });
 
 const ToTimeValidator = (joi: Joi.Root) => ({
@@ -134,7 +134,7 @@ const ToTimeValidator = (joi: Joi.Root) => ({
   messages: {
     'date.only': 'Tidspunkt må være fylt ut',
     'date.min': 'Tidspunkt kan ikke være før {{#limit}}',
-    'date.max': 'Tidspunkt kan ikke være etter {{#limit}}'
+    'date.max': 'Tidspunkt kan ikke være etter {{#limit}}',
   },
   base: joi.alternatives(joi.date().iso().raw(), null).required(),
   validate(value: string | null, helpers: Joi.CustomHelpers) {
@@ -147,8 +147,8 @@ const ToTimeValidator = (joi: Joi.Root) => ({
           return {
             value,
             errors: helpers.error('date.max', {
-              limit: DateUtils.prettyFormatTime(toBoundary)
-            })
+              limit: DateUtils.prettyFormatTime(toBoundary),
+            }),
           };
         }
       }
@@ -157,8 +157,8 @@ const ToTimeValidator = (joi: Joi.Root) => ({
           return {
             value,
             errors: helpers.error('date.min', {
-              limit: DateUtils.prettyFormatTime(fromTime)
-            })
+              limit: DateUtils.prettyFormatTime(fromTime),
+            }),
           };
         }
       }
@@ -167,16 +167,16 @@ const ToTimeValidator = (joi: Joi.Root) => ({
       return { value, errors: helpers.error('date.only') };
     }
     return { value };
-  }
+  },
 });
 
 const TimeScoreValuesValidator = (joi: Joi.Root) => ({
   type: 'validateTimeScoreValues',
   args(value: Schema, type: Schema) {
     return joi.array().items(type).required().unique('time').messages({
-      'array.unique': 'Tidspunkt kan ikke være like'
+      'array.unique': 'Tidspunkt kan ikke være like',
     });
-  }
+  },
 });
 
 const TimeJoi = [
@@ -187,7 +187,7 @@ const TimeJoi = [
   TimeScoreValidator,
   FromTimeValidator,
   ToTimeValidator,
-  TimeScoreValuesValidator
+  TimeScoreValuesValidator,
 ];
 
 export default TimeJoi;

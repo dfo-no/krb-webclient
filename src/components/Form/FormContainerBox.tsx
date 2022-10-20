@@ -5,5 +5,5 @@ export const FormContainerBox = styled(Box)(({ theme }) => ({
   backgroundColor: theme.palette.white.main,
   border: `0.1rem solid ${theme.palette.gray400.main}`,
   marginBottom: 16,
-  padding: 32
+  padding: 32,
 }));

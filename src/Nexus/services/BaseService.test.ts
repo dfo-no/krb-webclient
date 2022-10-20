@@ -9,7 +9,7 @@ describe('BaseService', () => {
       id: '',
       type: ModelType.bank,
       sourceRel: null,
-      sourceOriginal: null
+      sourceOriginal: null,
     };
     const result = baseService.withId(obj);
     expect(result.id).not.toEqual('');

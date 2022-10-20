@@ -14,9 +14,9 @@ export const BaseNeedSchema = BaseModelSchema.keys({
   description: CustomJoi.validateOptionalText(),
   requirements: CustomJoi.validateUniqueArray(BaseRequirementSchema),
   type: CustomJoi.validateType(ModelType.need),
-  parent: CustomJoi.validateParentId()
+  parent: CustomJoi.validateParentId(),
 });
 
 export const PostNeedSchema = BaseNeedSchema.keys({
-  id: CustomJoi.validateEmptyId()
+  id: CustomJoi.validateEmptyId(),
 });

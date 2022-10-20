@@ -5,15 +5,15 @@ export const SearchContainer = styled(Box)(({}) => ({
   flexDirection: 'row',
   width: '100%',
   minHeight: 90,
-  paddingBottom: 32
+  paddingBottom: 32,
 }));
 
 export const SearchFieldContainer = styled(Box)(({}) => ({
   width: '50%',
-  alignSelf: 'center'
+  alignSelf: 'center',
 }));
 
 export const NewButtonContainer = styled(Box)(({}) => ({
   marginLeft: 'auto',
-  alignSelf: 'center'
+  alignSelf: 'center',
 }));

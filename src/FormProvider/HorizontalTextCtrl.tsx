@@ -19,10 +19,10 @@ const HorizontalTextCtrl = ({
   placeholder = '',
   type = 'text',
   size = '',
-  autoFocus
+  autoFocus,
 }: IProps): React.ReactElement => {
   const {
-    formState: { errors }
+    formState: { errors },
   } = useFormContext();
 
   return (

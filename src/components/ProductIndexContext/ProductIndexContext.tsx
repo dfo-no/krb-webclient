@@ -4,7 +4,7 @@ import React, {
   SetStateAction,
   useContext,
   useEffect,
-  useState
+  useState,
 } from 'react';
 
 interface IIndexContext {
@@ -22,7 +22,7 @@ const initialContext: IIndexContext = {
   create: false,
   setCreate: function (): void {
     throw new Error('Function not implemented.');
-  }
+  },
 };
 
 export const IndexContext = createContext<IIndexContext>(initialContext);
@@ -32,7 +32,7 @@ interface IProps {
 }
 
 export const ProductIndexProvider = ({
-  children
+  children,
 }: IProps): React.ReactElement => {
   const [productIndex, setProductIndex] = useState(-2);
   const [create, setCreate] = useState(false);
@@ -55,7 +55,7 @@ export const ProductIndexProvider = ({
         productIndex,
         setProductIndex,
         create,
-        setCreate
+        setCreate,
       }}
     >
       {children}

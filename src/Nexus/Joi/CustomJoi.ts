@@ -24,8 +24,8 @@ const i18nJoi = Joi.defaults((schema) =>
       'date.isoDate':
         'Noe har gått galt med skjemaet. {{#label}} er ikke på ISO format',
       'array.base':
-        'Noe har gått galt med skjemaet. {{#label}} er ikke en liste'
-    }
+        'Noe har gått galt med skjemaet. {{#label}} er ikke en liste',
+    },
   })
 );
 
@@ -40,8 +40,8 @@ const VersionValidator = (joi: Joi.Root) => ({
   messages: {
     'number.base':
       'Noe har gått galt med skjemaet. Versjonsnummer er ikke et tall',
-    'number.min': 'Noe har gått galt med skjemaet. Versjonsnummer er ugyldig'
-  }
+    'number.min': 'Noe har gått galt med skjemaet. Versjonsnummer er ugyldig',
+  },
 });
 
 const OrganizationNumberValidator = (joi: Joi.Root) => ({
@@ -50,7 +50,7 @@ const OrganizationNumberValidator = (joi: Joi.Root) => ({
   messages: {
     'string.empty': 'Kan ikke være tom',
     'string.length': 'Består av 9 siffre',
-    'string.void': 'Ugyldig organisasjonsnummer'
+    'string.void': 'Ugyldig organisasjonsnummer',
   },
   validate(value: string, helpers: Joi.CustomHelpers) {
     const weights = [3, 2, 7, 6, 5, 4, 3, 2];
@@ -66,7 +66,7 @@ const OrganizationNumberValidator = (joi: Joi.Root) => ({
       }
     }
     return { value, errors: helpers.error('string.void') };
-  }
+  },
 });
 
 const CustomJoi = i18nJoi.extend(

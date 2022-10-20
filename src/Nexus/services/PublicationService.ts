@@ -35,7 +35,7 @@ export default class PublicationService {
       version: 1,
       sourceOriginal: null,
       sourceRel: null,
-      deletedDate: null
+      deletedDate: null,
     };
   };
 }

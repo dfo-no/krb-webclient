@@ -8,5 +8,5 @@ export const FormItemBox = styled(Box)(({ theme }) => ({
   flexDirection: 'column',
   paddingLeft: 8,
   paddingRight: 8,
-  gap: 32
+  gap: 32,
 }));

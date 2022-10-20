@@ -19,18 +19,18 @@ const useStyles = makeStyles({
     marginBottom: 2,
     marginRight: 10,
     color: theme.palette.secondary.main,
-    zIndex: 1
+    zIndex: 1,
   },
   adornedEnd: {
-    backgroundColor: theme.palette.white.main
-  }
+    backgroundColor: theme.palette.white.main,
+  },
 });
 
 export default function DFOSearchBar<T extends IBaseModel>({
   list,
   callback,
   searchFunction,
-  placeholder
+  placeholder,
 }: DFOSearchBarProps<T>): React.ReactElement {
   const classes = useStyles();
 

@@ -33,7 +33,7 @@ const initialContext: ISelectContext = {
   createVariant: '',
   setCreateVariant: function (): void {
     throw new Error('Function not implemented.');
-  }
+  },
 };
 
 export const SelectContext = createContext<ISelectContext>(initialContext);
@@ -61,7 +61,7 @@ export const SelectProvider = ({ children }: IProps) => {
         deleteMode,
         setDeleteMode,
         createVariant,
-        setCreateVariant
+        setCreateVariant,
       }}
     >
       {children}

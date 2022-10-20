@@ -13,7 +13,7 @@ export default class PrefilledResponseService {
       supplier: '',
       products: [],
       answeredVariants: [],
-      requirementAnswers: []
+      requirementAnswers: [],
     };
   }
 
@@ -31,11 +31,11 @@ export default class PrefilledResponseService {
         sourceOriginal: '',
         sourceRel: null,
         deletedDate: null,
-        unit: 'stk'
+        unit: 'stk',
       },
       answeredVariants: [],
       requirementAnswers: [],
-      relatedProducts: []
+      relatedProducts: [],
     };
   }
 

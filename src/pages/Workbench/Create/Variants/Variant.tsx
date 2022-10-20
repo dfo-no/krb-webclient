@@ -8,7 +8,7 @@ import {
   Typography,
   Accordion,
   AccordionSummary,
-  AccordionDetails
+  AccordionDetails,
 } from '@mui/material';
 import { useForm, FormProvider, useWatch } from 'react-hook-form';
 import { useParams } from 'react-router-dom';
@@ -52,7 +52,7 @@ const Variant = ({ variant, requirementIndex }: IProps) => {
 
   const methods = useForm<IVariant>({
     resolver: nexus.resolverService.resolver(ModelType.variant),
-    defaultValues: variant
+    defaultValues: variant,
   });
   const useTypeWatch = useWatch({ name: 'type', control: methods.control });
 
@@ -69,7 +69,7 @@ const Variant = ({ variant, requirementIndex }: IProps) => {
       const alert: IAlert = {
         id: uuidv4(),
         style: 'success',
-        text: 'successfully updated variant'
+        text: 'successfully updated variant',
       };
       dispatch(addAlert({ alert }));
       methods.reset({ ...put });
@@ -136,7 +136,7 @@ const Variant = ({ variant, requirementIndex }: IProps) => {
                 display: 'flex',
                 flexDirection: 'row',
                 marginTop: 'var(--small-gap)',
-                marginBottom: 'var(--normal-gap)'
+                marginBottom: 'var(--normal-gap)',
               }}
             >
               <Button

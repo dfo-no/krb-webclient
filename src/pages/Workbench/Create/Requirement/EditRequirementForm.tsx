@@ -18,7 +18,7 @@ import {
   ModalBox,
   ModalButton,
   ModalButtonsBox,
-  ModalFieldsBox
+  ModalFieldsBox,
 } from '../../../../components/ModalBox/ModalBox';
 import { ModelType } from '../../../../Nexus/enums';
 import { Parentable } from '../../../../models/Parentable';
@@ -38,7 +38,7 @@ interface IRouteParams {
 function EditRequirementForm({
   requirement,
   need,
-  handleClose
+  handleClose,
 }: IProps): React.ReactElement {
   const { projectId } = useParams<IRouteParams>();
   const { data: project } = useGetProjectQuery(projectId);
@@ -49,7 +49,7 @@ function EditRequirementForm({
 
   const methods = useForm<Parentable<IRequirement>>({
     defaultValues: requirement,
-    resolver: nexus.resolverService.resolver(ModelType.requirement)
+    resolver: nexus.resolverService.resolver(ModelType.requirement),
   });
 
   if (!project) {
@@ -61,7 +61,7 @@ function EditRequirementForm({
       const alert: IAlert = {
         id: uuidv4(),
         style: 'success',
-        text: 'Successfully edited requirement'
+        text: 'Successfully edited requirement',
       };
       dispatch(addAlert({ alert }));
       handleClose();

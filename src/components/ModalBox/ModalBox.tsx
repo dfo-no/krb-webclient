@@ -6,13 +6,13 @@ export const ModalBox = styled(Box)(() => ({
   gap: 25,
   width: '35vw',
   alignSelf: 'center',
-  justifySelf: 'center'
+  justifySelf: 'center',
 }));
 
 export const ModalFieldsBox = styled(Box)(() => ({
   display: 'flex',
   flexDirection: 'column',
-  gap: 16
+  gap: 16,
 }));
 
 export const ModalButtonsBox = styled(Box)(() => ({
@@ -20,9 +20,9 @@ export const ModalButtonsBox = styled(Box)(() => ({
   display: 'flex',
   gap: 5,
   flexDirection: 'row',
-  marginLeft: 'auto'
+  marginLeft: 'auto',
 }));
 
 export const ModalButton = styled(Button)(() => ({
-  height: 32
+  height: 32,
 }));

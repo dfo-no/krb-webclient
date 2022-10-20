@@ -13,7 +13,7 @@ export const getDefaultSpecificationFile = (
 ): SpecificationFile => ({
   id: uuidv4(),
   file,
-  specification
+  specification,
 });
 
 export const getInvalidSpecificationFile = (): SpecificationFile => {
@@ -29,7 +29,7 @@ export class EvaluationSpecificationStoreService {
 
   constructor() {
     this.db = localforage.createInstance({
-      name: 'evaluationSpecifications'
+      name: 'evaluationSpecifications',
     });
   }
 

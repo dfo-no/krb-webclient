@@ -25,7 +25,7 @@ export default function EditResponseProduct(): ReactElement {
 
   const methods = useForm<IResponseProduct>({
     resolver: nexus.resolverService.resolver(ModelType.responseProduct),
-    defaultValues: response.products[productIndex]
+    defaultValues: response.products[productIndex],
   });
 
   const handelProductPrice = (put: IResponseProduct) => {

@@ -9,7 +9,7 @@ describe('DateService', () => {
 
     // Setup: Prove that Axios/JSON dont change the date
     const obj = {
-      now: DateService.getDateString(date)
+      now: DateService.getDateString(date),
     };
 
     interface IDateTest {

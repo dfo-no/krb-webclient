@@ -22,7 +22,7 @@ interface IProps {
 
 export default function EditCodelistForm({
   codelist,
-  handleClose
+  handleClose,
 }: IProps): React.ReactElement {
   const dispatch = useAppDispatch();
   const nexus = Nexus.getInstance();
@@ -32,7 +32,7 @@ export default function EditCodelistForm({
 
   const methods = useForm<ICodelist>({
     defaultValues: codelist,
-    resolver: nexus.resolverService.resolver(ModelType.codelist)
+    resolver: nexus.resolverService.resolver(ModelType.codelist),
   });
 
   async function onSubmit(put: ICodelist) {
@@ -40,7 +40,7 @@ export default function EditCodelistForm({
       const alert: IAlert = {
         id: uuidv4(),
         style: 'success',
-        text: 'Successfully edited codelist'
+        text: 'Successfully edited codelist',
       };
       dispatch(addAlert({ alert }));
       handleClose(put);

@@ -19,58 +19,58 @@ const useStyles = makeStyles({
     paddingTop: 8,
     paddingBottom: 8,
     border: `0.1rem solid ${theme.palette.gray500.main}`,
-    backgroundColor: theme.palette.white.main
+    backgroundColor: theme.palette.white.main,
   },
   nestableCustom: {
     width: '100%',
     '& .nestable-list': {
       paddingLeft: 25,
       '&:first-child': {
-        paddingLeft: 0
-      }
+        paddingLeft: 0,
+      },
     },
     '& .nestable-item': {
       marginTop: '1.6rem',
       '&:first-child': {
-        marginTop: '0'
-      }
+        marginTop: '0',
+      },
     },
     '& .nestable-list > .nestable-item > .nestable-list': {
       margin: '0',
       '& .nestable-item': {
         margin: '0',
         '& .nestable-item-name': {
-          marginTop: '-0.1rem'
-        }
-      }
-    }
+          marginTop: '-0.1rem',
+        },
+      },
+    },
   },
   textItemTitle: {
     alignSelf: 'center',
     paddingLeft: 15,
-    flex: '1 1 auto'
+    flex: '1 1 auto',
   },
   textItemDescription: {
     alignSelf: 'center',
     paddingLeft: 15,
     borderLeft: '0.1rem solid',
     marginLeft: 'auto',
-    flex: '0 0 25vw'
+    flex: '0 0 25vw',
   },
   handlerIcon: {
     alignSelf: 'center',
     cursor: 'pointer',
     paddingLeft: 8,
-    paddingTop: 6
+    paddingTop: 6,
   },
   editIcon: {
     alignSelf: 'center',
     cursor: 'pointer',
     paddingRight: '0.8rem',
     '&:hover': {
-      color: theme.palette.lightBlue.main
-    }
-  }
+      color: theme.palette.lightBlue.main,
+    },
+  },
 });
 
 interface IProps<T extends IBaseModelWithTitleAndDesc> {
@@ -93,7 +93,7 @@ const NestableHierarcyEditableComponents = <
   CreateComponent,
   EditComponent,
   DeleteComponent,
-  depth
+  depth,
 }: IProps<T>): React.ReactElement => {
   const classes = useStyles();
   const { editMode, setEditMode, isCreating, setDeleteMode } =
@@ -149,7 +149,7 @@ const NestableHierarcyEditableComponents = <
         flexDirection: 'column',
         width: '100%',
         flexGrow: 1,
-        minHeight: 0
+        minHeight: 0,
       }}
     >
       {isCreating && <FormContainerBox>{CreateComponent}</FormContainerBox>}

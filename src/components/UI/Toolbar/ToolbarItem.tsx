@@ -26,7 +26,7 @@ export default function ToolbarItem({
   fontWeight,
   fontSize,
   disabled,
-  isBadge
+  isBadge,
 }: ToolbarItemProps): ReactElement {
   return (
     <div

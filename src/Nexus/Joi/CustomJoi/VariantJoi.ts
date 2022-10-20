@@ -6,7 +6,7 @@ const VariantTypeValidator = (joi: Joi.Root) => ({
   type: 'validateVariantType',
   base: joi.string().required(),
   messages: {
-    'array.max': 'For mange spørsmål for variant av typen Info'
+    'array.max': 'For mange spørsmål for variant av typen Info',
   },
   validate(value: string, helpers: Joi.CustomHelpers) {
     if (value === VariantType.info) {
@@ -19,7 +19,7 @@ const VariantTypeValidator = (joi: Joi.Root) => ({
       }
     }
     return { value };
-  }
+  },
 });
 
 const VariantProductsValidator = (joi: Joi.Root) => ({
@@ -30,7 +30,7 @@ const VariantProductsValidator = (joi: Joi.Root) => ({
     .required(),
   messages: {
     'array.empty': 'Det må velges produkter for varianten',
-    'array.filled': 'Produkter er lagt til, men ikke valgt for varianten'
+    'array.filled': 'Produkter er lagt til, men ikke valgt for varianten',
   },
   validate(value: string, helpers: Joi.CustomHelpers) {
     if (helpers.state.ancestors[0].useProduct) {
@@ -43,7 +43,7 @@ const VariantProductsValidator = (joi: Joi.Root) => ({
       }
     }
     return { value };
-  }
+  },
 });
 
 const VariantJoi = [VariantTypeValidator, VariantProductsValidator];

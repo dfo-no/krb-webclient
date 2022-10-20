@@ -4,7 +4,7 @@ import {
   IAnswerBase,
   IConfigBase,
   IQuestionBase,
-  QuestionBaseSchema
+  QuestionBaseSchema,
 } from './IQuestionBase';
 import { QuestionVariant } from '../enums';
 
@@ -29,8 +29,8 @@ export const FileUploadWorkbenchSchema = QuestionBaseSchema.keys({
     fileEndings: CustomJoi.array().items(CustomJoi.string()).required(),
     template: CustomJoi.string().allow(null, '').required(),
     uploadInSpec: CustomJoi.boolean().required(),
-    allowMultipleFiles: CustomJoi.boolean().required()
-  })
+    allowMultipleFiles: CustomJoi.boolean().required(),
+  }),
 });
 
 export const FileUploadWorkbenchInfoSchema = QuestionBaseSchema.keys({
@@ -39,13 +39,13 @@ export const FileUploadWorkbenchInfoSchema = QuestionBaseSchema.keys({
     fileEndings: CustomJoi.array().items(CustomJoi.string()).required(),
     template: CustomJoi.string().allow(null, '').required(),
     uploadInSpec: CustomJoi.boolean().valid(false).required(),
-    allowMultipleFiles: CustomJoi.boolean().required()
-  })
+    allowMultipleFiles: CustomJoi.boolean().required(),
+  }),
 });
 
 export const FileUploadAnswerSchema = FileUploadWorkbenchSchema.keys({
   answer: CustomJoi.object().keys({
     file: CustomJoi.array().items(CustomJoi.string()).required(),
-    point: CustomJoi.number().required()
-  })
+    point: CustomJoi.number().required(),
+  }),
 });

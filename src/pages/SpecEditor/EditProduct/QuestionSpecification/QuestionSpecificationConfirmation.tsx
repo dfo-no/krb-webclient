@@ -14,7 +14,7 @@ const QuestionSpecificationConfirmation = (): ReactElement => {
   const { control, setValue } = useFormContext<IRequirementAnswer>();
   const usePointsNonPrefered = useWatch({
     name: 'question.config.pointsUnconfirmed',
-    control
+    control,
   });
 
   useEffect(() => {

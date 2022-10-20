@@ -18,5 +18,5 @@ export const BaseRequirementSchema = BaseModelSchema.keys({
   needId: CustomJoi.validateId(),
   variants: CustomJoi.validateUniqueArray(VariantSchema),
   tags: CustomJoi.validateIdArray(),
-  type: CustomJoi.validateType(ModelType.requirement)
+  type: CustomJoi.validateType(ModelType.requirement),
 });

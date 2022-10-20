@@ -8,7 +8,7 @@ import { IPrefilledResponse } from '../../Nexus/entities/IPrefilledResponse';
 import {
   ModalBox,
   ModalButton,
-  ModalButtonsBox
+  ModalButtonsBox,
 } from '../../components/ModalBox/ModalBox';
 import { selectBank } from '../../store/reducers/selectedBank-reducer';
 import { setResponse } from '../../store/reducers/prefilled-response-reducer';
@@ -23,7 +23,7 @@ interface IProps {
 
 export default function PrefilledResponseSelectionModal({
   selectedPrefilledResponse,
-  setSelectedPrefilledResponse
+  setSelectedPrefilledResponse,
 }: IProps): React.ReactElement {
   const history = useHistory();
   const { t } = useTranslation();

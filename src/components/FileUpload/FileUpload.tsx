@@ -24,7 +24,7 @@ const FileUpload = ({
   label,
   multiple = false,
   onChange,
-  variant = 'Primary'
+  variant = 'Primary',
 }: IProps): ReactElement => {
   const [inputKey, setInputKey] = useState(0);
 

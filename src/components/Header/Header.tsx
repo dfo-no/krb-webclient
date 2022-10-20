@@ -11,26 +11,26 @@ const useStyles = makeStyles({
     maxWidth: '250rem',
     height: '100%',
     padding: 'var(--small-gap) var(--big-gap)',
-    color: theme.palette.black.main
+    color: theme.palette.black.main,
   },
   headerContent: {
     display: 'flex',
     flexDirection: 'column',
-    gap: 3
+    gap: 3,
   },
   img: {
-    height: '2.625rem'
+    height: '2.625rem',
   },
   viewingProjectTitle: {
     display: 'flex',
     paddingBottom: 3,
     width: '100%',
     [theme.breakpoints.down('mddd')]: {
-      paddingBottom: 0
-    }
+      paddingBottom: 0,
+    },
   },
   notViewingProjectTitle: {
-    paddingBottom: 3
+    paddingBottom: 3,
   },
   projectData: {
     display: 'flex',
@@ -42,9 +42,9 @@ const useStyles = makeStyles({
       flexGrow: 1,
       flexDirection: 'column',
       alignItems: 'flex-start',
-      gap: 0
-    }
-  }
+      gap: 0,
+    },
+  },
 });
 
 export default function Header(): React.ReactElement {
@@ -58,7 +58,7 @@ export default function Header(): React.ReactElement {
         margin: 0,
         padding: 0,
         backgroundColor: theme.palette.white.main,
-        borderBottom: `0.2rem solid ${theme.palette.gray300.main}`
+        borderBottom: `0.2rem solid ${theme.palette.gray300.main}`,
       }}
     >
       <Box className={classes.header}>

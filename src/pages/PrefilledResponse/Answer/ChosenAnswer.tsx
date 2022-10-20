@@ -13,7 +13,7 @@ interface IProps {
 }
 
 export default function ChosenAnswer({
-  requirementAnswer
+  requirementAnswer,
 }: IProps): React.ReactElement {
   const { t } = useTranslation();
   const { prefilledResponse } = useAppSelector(

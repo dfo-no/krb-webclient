@@ -14,7 +14,7 @@ import {
   ModalBox,
   ModalButton,
   ModalButtonsBox,
-  ModalFieldsBox
+  ModalFieldsBox,
 } from '../../../components/ModalBox/ModalBox';
 import { ModelType } from '../../../Nexus/enums';
 import { usePostProjectMutation } from '../../../store/api/bankApi';
@@ -34,7 +34,7 @@ const NewProjectForm = ({ handleClose }: IProps) => {
   const [postProject] = usePostProjectMutation();
   const methods = useForm<IBank>({
     resolver: nexus.resolverService.postResolver(ModelType.bank),
-    defaultValues
+    defaultValues,
   });
 
   const onSubmit = async (post: IBank) => {
@@ -42,7 +42,7 @@ const NewProjectForm = ({ handleClose }: IProps) => {
       const alert: IAlert = {
         id: uuidv4(),
         style: 'success',
-        text: 'Successfully created project'
+        text: 'Successfully created project',
       };
       dispatch(addAlert({ alert }));
       methods.reset();

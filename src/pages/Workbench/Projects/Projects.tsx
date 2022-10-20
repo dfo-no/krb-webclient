@@ -15,7 +15,7 @@ import { IBank } from '../../../Nexus/entities/IBank';
 import {
   NewButtonContainer,
   SearchContainer,
-  SearchFieldContainer
+  SearchFieldContainer,
 } from '../../../components/SearchContainer/SearchContainer';
 import { PAGE_SIZE } from '../../../common/Constants';
 import { useGetProjectsQuery } from '../../../store/api/bankApi';
@@ -30,7 +30,7 @@ export default function Projects(): React.ReactElement {
     pageSize: PAGE_SIZE,
     page: 1,
     fieldName: 'title',
-    order: 'ASC'
+    order: 'ASC',
   });
 
   useEffect(() => {

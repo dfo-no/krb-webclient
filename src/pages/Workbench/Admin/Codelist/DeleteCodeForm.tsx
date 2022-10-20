@@ -28,7 +28,7 @@ export default function DeleteCodeForm({
   children,
   codelist,
   code,
-  handleClose
+  handleClose,
 }: IProps): React.ReactElement {
   const { deleteCode } = useProjectMutations();
   const dispatch = useAppDispatch();
@@ -37,7 +37,7 @@ export default function DeleteCodeForm({
 
   const methods = useForm<Parentable<ICode>>({
     defaultValues: code,
-    resolver: nexus.resolverService.resolver(ModelType.code)
+    resolver: nexus.resolverService.resolver(ModelType.code),
   });
 
   const { projectId } = useParams<IRouteProjectParams>();
@@ -56,7 +56,7 @@ export default function DeleteCodeForm({
       const alert: IAlert = {
         id: uuidv4(),
         style: 'success',
-        text: 'Successfully deleted code'
+        text: 'Successfully deleted code',
       };
       dispatch(addAlert({ alert }));
       handleClose(post);

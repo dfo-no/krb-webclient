@@ -13,51 +13,51 @@ const theme = createTheme({
     fontFamily: baseFont,
     h1: {
       fontSize: '5rem',
-      fontFamily: headerFont
+      fontFamily: headerFont,
     },
     xs: {
-      fontSize: '1.2rem'
+      fontSize: '1.2rem',
     },
     sm: {
-      fontSize: '1.4rem'
+      fontSize: '1.4rem',
     },
     md: {
-      fontSize: '1.8rem'
+      fontSize: '1.8rem',
     },
     lg: {
-      fontSize: '2.2rem'
+      fontSize: '2.2rem',
     },
     xl: {
-      fontSize: '3.6rem'
+      fontSize: '3.6rem',
     },
     xxl: {
       fontSize: '5.0rem',
-      fontWeight: 'bold'
+      fontWeight: 'bold',
     },
     xsBold: {
       fontSize: '1.2rem',
-      fontWeight: 'bold'
+      fontWeight: 'bold',
     },
     smBold: {
       fontSize: '1.4rem',
-      fontWeight: 'bold'
+      fontWeight: 'bold',
     },
     mdBold: {
       fontSize: '1.8rem',
-      fontWeight: 'bold'
+      fontWeight: 'bold',
     },
     lgBold: {
       fontSize: '2.2rem',
-      fontWeight: 'bold'
+      fontWeight: 'bold',
     },
     xlBold: {
       fontSize: '3.6rem',
-      fontWeight: 'bold'
+      fontWeight: 'bold',
     },
     xxlBold: {
       fontSize: '5.0rem',
-      fontWeight: 'bold'
-    }
+      fontWeight: 'bold',
+    },
   },
   breakpoints: {
     values: {
@@ -67,81 +67,81 @@ const theme = createTheme({
       mdd: 906,
       mddd: 956,
       lg: 1200,
-      xl: 1536
-    }
+      xl: 1536,
+    },
   },
   palette: {
     primary: {
-      main: '#012a4c'
+      main: '#012a4c',
     },
     secondary: {
-      main: '#009fe3'
+      main: '#009fe3',
     },
     backgroundBlue: {
-      main: '#bfe7f8'
+      main: '#bfe7f8',
     },
     darkBlue: {
-      main: '#005c91'
+      main: '#005c91',
     },
     lightBlue: {
-      main: '#1fa9e6'
+      main: '#1fa9e6',
     },
     indigo: {
-      main: '#005b91'
+      main: '#005b91',
     },
     white: {
-      main: '#ffffff'
+      main: '#ffffff',
     },
     errorRed: {
-      main: '#d32f2e'
+      main: '#d32f2e',
     },
     errorRedBright: {
-      main: '#e65655'
+      main: '#e65655',
     },
     gray100: {
-      main: '#f7f7f7'
+      main: '#f7f7f7',
     },
     gray200: {
-      main: '#efefef'
+      main: '#efefef',
     },
     gray300: {
-      main: '#e5e5e5'
+      main: '#e5e5e5',
     },
     gray400: {
-      main: '#c4c4c4'
+      main: '#c4c4c4',
     },
     gray500: {
-      main: '#b5b5b5'
+      main: '#b5b5b5',
     },
     gray600: {
-      main: '#828282'
+      main: '#828282',
     },
     gray700: {
-      main: '#848484'
+      main: '#848484',
     },
     gray800: {
-      main: '#333333'
+      main: '#333333',
     },
     black: {
-      main: '#000000'
+      main: '#000000',
     },
     green: {
-      main: '#019b78'
+      main: '#019b78',
     },
     greenHover: {
-      main: '#04ba91'
+      main: '#04ba91',
     },
     silver: {
-      main: '#bbbbbb'
-    }
-  }
+      main: '#bbbbbb',
+    },
+  },
 });
 
 theme.components = {
   MuiButtonBase: {
     defaultProps: {
-      disableRipple: true
-    }
+      disableRipple: true,
+    },
   },
   MuiButton: {
     variants: [
@@ -153,9 +153,9 @@ theme.components = {
           whiteSpace: 'nowrap',
           height: 40,
           '&:hover': {
-            background: theme.palette.primary.main
-          }
-        }
+            background: theme.palette.primary.main,
+          },
+        },
       },
       {
         props: { variant: 'warning' },
@@ -165,9 +165,9 @@ theme.components = {
           whiteSpace: 'nowrap',
           height: 40,
           '&:hover': {
-            background: theme.palette.errorRed.main
-          }
-        }
+            background: theme.palette.errorRed.main,
+          },
+        },
       },
       {
         props: { variant: 'save' },
@@ -177,9 +177,9 @@ theme.components = {
           whiteSpace: 'nowrap',
           height: 40,
           '&:hover': {
-            background: theme.palette.greenHover.main
-          }
-        }
+            background: theme.palette.greenHover.main,
+          },
+        },
       },
       {
         props: { variant: 'cancel' },
@@ -189,11 +189,11 @@ theme.components = {
           whiteSpace: 'nowrap',
           height: 40,
           '&:hover': {
-            background: theme.palette.gray500.main
-          }
-        }
-      }
-    ]
+            background: theme.palette.gray500.main,
+          },
+        },
+      },
+    ],
   },
   MuiListItemButton: {
     styleOverrides: {
@@ -205,37 +205,37 @@ theme.components = {
             backgroundColor: theme.palette.primary.main,
             color: theme.palette.common.white,
             '& .MuiListItemText-root': {
-              color: 'inherit'
-            }
+              color: 'inherit',
+            },
           },
           '&:hover': {
             backgroundColor: theme.palette.primary.main,
             color: theme.palette.common.white,
             '& .MuiListItemText-root': {
-              color: 'inherit'
-            }
-          }
-        }
-      }
-    }
+              color: 'inherit',
+            },
+          },
+        },
+      },
+    },
   },
   MuiToolbar: {
     styleOverrides: {
       root: {
-        paddingLeft: 0
-      }
-    }
+        paddingLeft: 0,
+      },
+    },
   },
   MuiCardHeader: {
     styleOverrides: {
       root: {
         '& .MuiCardHeader-title': {
           fontFamily: headerFont,
-          fontWeight: 'bold'
-        }
-      }
-    }
-  }
+          fontWeight: 'bold',
+        },
+      },
+    },
+  },
 };
 
 export default theme;

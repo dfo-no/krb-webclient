@@ -7,7 +7,7 @@ import {
   Box,
   Card,
   Divider,
-  Typography
+  Typography,
 } from '@mui/material';
 import { useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
@@ -24,7 +24,7 @@ interface IProps {
 }
 
 export default function VariantPreview({
-  variant
+  variant,
 }: IProps): React.ReactElement {
   const { projectId } = useParams<IRouteProjectParams>();
   const { data: project } = useGetProjectQuery(projectId);

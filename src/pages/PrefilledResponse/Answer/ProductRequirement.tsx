@@ -11,7 +11,7 @@ interface IProps {
 }
 
 export default function ProductRequirement({
-  requirement
+  requirement,
 }: IProps): React.ReactElement {
   return (
     <div className={css.PrefilledResponse}>

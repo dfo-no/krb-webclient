@@ -11,5 +11,5 @@ export const BaseTagSchema = BaseModelSchema.keys({
   title: CustomJoi.validateText(),
   description: CustomJoi.validateOptionalText(),
   parent: CustomJoi.validateParentId(),
-  type: CustomJoi.validateType(ModelType.tag)
+  type: CustomJoi.validateType(ModelType.tag),
 });

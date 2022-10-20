@@ -13,21 +13,21 @@ const useStyles = makeStyles({
     gap: 15,
     width: '100vw',
     alignItems: 'center',
-    paddingTop: 200
+    paddingTop: 200,
   },
   projectNotFoundTitle: {
-    fontSize: 20
+    fontSize: 20,
   },
   projectNotFoundPhoto: {
     height: 300,
     width: 300,
-    color: theme.palette.errorRed.main
+    color: theme.palette.errorRed.main,
   },
   projectNotFoundTitleButton: {
     display: 'flex',
     flexDirection: 'column',
-    gap: 12
-  }
+    gap: 12,
+  },
 });
 
 export default function ProjectNotFound(): React.ReactElement {

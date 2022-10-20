@@ -23,7 +23,7 @@ export default class VariantService {
       products: [],
       questions: [],
       type: VariantType.requirement,
-      description: ''
+      description: '',
     };
   };
 

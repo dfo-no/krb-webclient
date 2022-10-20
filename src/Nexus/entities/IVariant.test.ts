@@ -14,7 +14,7 @@ describe('IVariant', () => {
       useQualification: false,
       products: [],
       questions: [],
-      type: VariantType.requirement
+      type: VariantType.requirement,
     };
 
     const report = VariantSchema.validate(variant);
@@ -27,14 +27,14 @@ describe('IVariant', () => {
       id: 'ac0b5d89-0b6d-4882-b7c9-ff9f2bd2904e',
       answer: {
         text: 'foo',
-        point: 10
+        point: 10,
       },
       config: {
         max: 100,
-        defaultPoint: 1
+        defaultPoint: 1,
       },
       sourceRel: null,
-      sourceOriginal: null
+      sourceOriginal: null,
     };
 
     const question2: ITextQuestion = {
@@ -42,14 +42,14 @@ describe('IVariant', () => {
       id: 'bc0b5d89-0b6d-4882-b7c9-ff9f2bd2904e',
       answer: {
         text: 'foo',
-        point: 10
+        point: 10,
       },
       config: {
         max: 100,
-        defaultPoint: 1
+        defaultPoint: 1,
       },
       sourceRel: null,
-      sourceOriginal: null
+      sourceOriginal: null,
     };
 
     const variant: IVariant = {
@@ -62,7 +62,7 @@ describe('IVariant', () => {
       useQualification: false,
       products: [],
       questions: [question1, question2],
-      type: VariantType.requirement
+      type: VariantType.requirement,
     };
 
     const report = VariantSchema.validate(variant);
@@ -76,14 +76,14 @@ describe('IVariant', () => {
       id: 'ac0b5d89-0b6d-4882-b7c9-ff9f2bd2904e',
       answer: {
         text: 'foo',
-        point: 10
+        point: 10,
       },
       config: {
         max: 100,
-        defaultPoint: 1
+        defaultPoint: 1,
       },
       sourceRel: null,
-      sourceOriginal: null
+      sourceOriginal: null,
     };
 
     const question2: ITextQuestion = {
@@ -91,14 +91,14 @@ describe('IVariant', () => {
       id: 'bc0b5d89-0b6d-4882-b7c9-ff9f2bd2904e',
       answer: {
         text: 'foo',
-        point: 10
+        point: 10,
       },
       config: {
         max: 100,
-        defaultPoint: 1
+        defaultPoint: 1,
       },
       sourceRel: null,
-      sourceOriginal: null
+      sourceOriginal: null,
     };
 
     const variant: IVariant = {
@@ -111,7 +111,7 @@ describe('IVariant', () => {
       useQualification: false,
       products: [],
       questions: [question1, question2],
-      type: VariantType.info
+      type: VariantType.info,
     };
 
     const report = VariantSchema.validate(variant);
@@ -128,14 +128,14 @@ describe('IVariant', () => {
       id: 'ac0b5d89-0b6d-4882-b7c9-ff9f2bd2904e',
       answer: {
         text: 'foo',
-        point: 10
+        point: 10,
       },
       config: {
         max: -2,
-        defaultPoint: 1
+        defaultPoint: 1,
       },
       sourceRel: null,
-      sourceOriginal: null
+      sourceOriginal: null,
     };
 
     const question2: ITextQuestion = {
@@ -143,14 +143,14 @@ describe('IVariant', () => {
       id: 'bc0b5d89-0b6d-4882-b7c9-ff9f2bd2904e',
       answer: {
         text: 'foo',
-        point: 10
+        point: 10,
       },
       config: {
         max: -1,
-        defaultPoint: 1
+        defaultPoint: 1,
       },
       sourceRel: null,
-      sourceOriginal: null
+      sourceOriginal: null,
     };
 
     const variant: IVariant = {
@@ -163,7 +163,7 @@ describe('IVariant', () => {
       useQualification: false,
       products: [],
       questions: [question1, question2],
-      type: VariantType.requirement
+      type: VariantType.requirement,
     };
 
     const report = VariantSchema.validate(variant);

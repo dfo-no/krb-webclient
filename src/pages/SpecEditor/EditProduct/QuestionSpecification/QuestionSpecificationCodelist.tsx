@@ -22,7 +22,7 @@ const QuestionSpecificationCodelist = ({ item }: IProps) => {
   const { control } = useFormContext<IRequirementAnswer>();
   const { fields, append, remove } = useFieldArray({
     control,
-    name: 'question.config.codes'
+    name: 'question.config.codes',
   });
 
   const { specification } = useSpecificationState();

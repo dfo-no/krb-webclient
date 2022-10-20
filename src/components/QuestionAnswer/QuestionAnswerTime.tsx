@@ -19,14 +19,14 @@ interface IProps {
 const QuestionAnswerTime = ({
   item,
   existingAnswer,
-  onSubmit
+  onSubmit,
 }: IProps): React.ReactElement => {
   const { t } = useTranslation();
   const nexus = Nexus.getInstance();
 
   const methods = useForm<ITimeQuestion>({
     resolver: nexus.resolverService.answerResolver(QuestionVariant.Q_TIME),
-    defaultValues: item
+    defaultValues: item,
   });
 
   useEffect(() => {

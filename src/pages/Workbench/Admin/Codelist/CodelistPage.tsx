@@ -14,7 +14,7 @@ import { ICodelist } from '../../../../Nexus/entities/ICodelist';
 import { IRouteProjectParams } from '../../../../models/IRouteProjectParams';
 import {
   SearchContainer,
-  SearchFieldContainer
+  SearchFieldContainer,
 } from '../../../../components/SearchContainer/SearchContainer';
 import { StandardContainer } from '../../../../components/StandardContainer/StandardContainer';
 import { useSelectState } from './SelectContext';
@@ -26,20 +26,20 @@ const useStyles = makeStyles({
     flexDirection: 'row',
     flexGrow: 1,
     minHeight: 0,
-    gap: 25
+    gap: 25,
   },
   codelistContainer: {
     display: 'flex',
     flexDirection: 'column',
     flex: '1 0 0',
-    gap: 5
+    gap: 5,
   },
   codeContainer: {
     display: 'flex',
     flexDirection: 'column',
     flex: '1 0 0',
-    gap: 5
-  }
+    gap: 5,
+  },
 });
 
 export default function CodeListPage(): React.ReactElement {

@@ -12,11 +12,11 @@ describe('BasePublicationSchema works', () => {
       type: ModelType.publication,
       deletedDate: null,
       sourceOriginal: null,
-      sourceRel: null
+      sourceRel: null,
     };
 
     const report = BasePublicationSchema.validate(basePublication, {
-      abortEarly: false
+      abortEarly: false,
     });
 
     expect(report.error).toBeUndefined();
@@ -32,11 +32,11 @@ describe('BasePublicationSchema works', () => {
       type: ModelType.bank,
       deletedDate: null,
       sourceOriginal: null,
-      sourceRel: null
+      sourceRel: null,
     };
 
     const report = BasePublicationSchema.validate(basePublication, {
-      abortEarly: false
+      abortEarly: false,
     });
     expect(report.error?.details.length).toEqual(6);
   });

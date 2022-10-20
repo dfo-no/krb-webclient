@@ -21,7 +21,7 @@ interface IProps {
 export default function DeleteSpecProduct({
   children,
   product,
-  handleClose
+  handleClose,
 }: IProps): React.ReactElement {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
@@ -46,7 +46,7 @@ export default function DeleteSpecProduct({
     const alert: IAlert = {
       id: uuidv4(),
       style: 'success',
-      text: 'Successfully deleted product'
+      text: 'Successfully deleted product',
     };
     dispatch(addAlert({ alert }));
     setProductIndex(-2);

@@ -23,7 +23,7 @@ interface IProps {
 
 export default function EditTagForm({
   tag,
-  handleClose
+  handleClose,
 }: IProps): React.ReactElement {
   const dispatch = useAppDispatch();
   const nexus = Nexus.getInstance();
@@ -33,7 +33,7 @@ export default function EditTagForm({
 
   const methods = useForm<Parentable<ITag>>({
     defaultValues: tag,
-    resolver: nexus.resolverService.resolver(ModelType.tag)
+    resolver: nexus.resolverService.resolver(ModelType.tag),
   });
 
   async function onSubmit(put: Parentable<ITag>) {
@@ -41,7 +41,7 @@ export default function EditTagForm({
       const alert: IAlert = {
         id: uuidv4(),
         style: 'success',
-        text: 'Successfully edited tag'
+        text: 'Successfully edited tag',
       };
       dispatch(addAlert({ alert }));
       handleClose();

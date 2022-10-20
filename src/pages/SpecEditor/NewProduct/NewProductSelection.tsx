@@ -8,7 +8,7 @@ import { Parentable } from '../../../models/Parentable';
 import {
   ModalBox,
   ModalButton,
-  ModalButtonsBox
+  ModalButtonsBox,
 } from '../../../components/ModalBox/ModalBox';
 import DFODialog from '../../../components/DFODialog/DFODialog';
 import NewProductForm from './NewProductForm';
@@ -22,7 +22,7 @@ export default function NewProductSelection(): React.ReactElement {
     specification,
     newProductCreate,
     setNewProductCreate,
-    setOpenProductSelection
+    setOpenProductSelection,
   } = useSpecificationState();
   const [product, setProduct] = useState<Parentable<IProduct> | null>(null);
   if (specification.bank.products.length <= 0) setOpenProductSelection(false);
@@ -58,7 +58,7 @@ export default function NewProductSelection(): React.ReactElement {
                     marginTop:
                       item.level === 1 ? 'var(--small-gap)' : '-0.1rem',
                     marginLeft: `${(item.level - 1) * 2}%`,
-                    width: `${100 - (item.level - 1) * 2}%`
+                    width: `${100 - (item.level - 1) * 2}%`,
                   }}
                 >
                   <Typography

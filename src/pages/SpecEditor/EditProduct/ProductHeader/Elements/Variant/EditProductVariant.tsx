@@ -15,7 +15,7 @@ import { IVariant } from '../../../../../../Nexus/entities/IVariant';
 import {
   VariantType,
   Weighting,
-  WeightingStep
+  WeightingStep,
 } from '../../../../../../Nexus/enums';
 
 interface IProps {
@@ -24,13 +24,13 @@ interface IProps {
 }
 
 export default function EditProductVariant({
-  variant
+  variant,
 }: IProps): React.ReactElement {
   const { t } = useTranslation();
   const { control } = useFormContext<IRequirementAnswer>();
   const useWeight = useWatch({ name: 'weight', control });
   const [sliderMark, setSliderMark] = useState<IMark[]>([
-    { value: Weighting.MEDIUM, label: t(Weighting[Weighting.MEDIUM]) }
+    { value: Weighting.MEDIUM, label: t(Weighting[Weighting.MEDIUM]) },
   ]);
 
   useEffect(() => {

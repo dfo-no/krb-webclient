@@ -18,13 +18,13 @@ interface ILabel {
 
 const useStyles = makeStyles({
   autocomplete: {
-    background: 'var(--input-background-color)'
-  }
+    background: 'var(--input-background-color)',
+  },
 });
 
 const HomeSearchBar = ({
   list,
-  setSelectedBank
+  setSelectedBank,
 }: IProps): React.ReactElement => {
   const { t } = useTranslation();
   const classes = useStyles();

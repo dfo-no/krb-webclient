@@ -6,17 +6,17 @@ describe('DateJoi', () => {
   timezoneMock.register('UTC');
   test('Joi validatePeriodMin() should show error message if not a valid number', () => {
     const schema = CustomJoi.object().keys({
-      periodMin: CustomJoi.validatePeriodMin()
+      periodMin: CustomJoi.validatePeriodMin(),
     });
 
     const reportError1 = schema.validate({
-      periodMin: -1
+      periodMin: -1,
     });
     const reportError2 = schema.validate({
-      periodMin: 1.2
+      periodMin: 1.2,
     });
     const reportSuccess = schema.validate({
-      periodMin: 10
+      periodMin: 10,
     });
     expect(reportError1?.error?.details[0].message).toEqual(
       'Må være et positivt heltall'
@@ -30,20 +30,20 @@ describe('DateJoi', () => {
   test('Joi validatePeriodMax() should show error message if smaller than periodMin', () => {
     const schema = CustomJoi.object().keys({
       periodMin: CustomJoi.validatePeriodMin(),
-      periodMax: CustomJoi.validatePeriodMax()
+      periodMax: CustomJoi.validatePeriodMax(),
     });
 
     const reportError1 = schema.validate({
       periodMin: 2,
-      periodMax: 1
+      periodMax: 1,
     });
     const reportError2 = schema.validate({
       periodMin: 1,
-      periodMax: 1.2
+      periodMax: 1.2,
     });
     const reportSuccess = schema.validate({
       periodMin: 1,
-      periodMax: 3
+      periodMax: 3,
     });
     expect(reportError1?.error?.details[0].message).toEqual(
       'Må være større enn 2'
@@ -58,57 +58,57 @@ describe('DateJoi', () => {
     const schema = CustomJoi.object().keys({
       config: {
         fromBoundary: CustomJoi.validateFromBoundaryDate(),
-        toBoundary: CustomJoi.validateToBoundaryDate()
+        toBoundary: CustomJoi.validateToBoundaryDate(),
       },
       answer: {
-        fromDate: CustomJoi.validateOptionalDate()
-      }
+        fromDate: CustomJoi.validateOptionalDate(),
+      },
     });
 
     const reportError1 = schema.validate({
       config: {
         fromBoundary: null,
-        toBoundary: '2022-02-10T12:00:00.000Z'
+        toBoundary: '2022-02-10T12:00:00.000Z',
       },
       answer: {
-        fromDate: '2022-02-10T12:00:00.000Z'
-      }
+        fromDate: '2022-02-10T12:00:00.000Z',
+      },
     });
     const reportError2 = schema.validate({
       config: {
         fromBoundary: '2022-02-10T12:00:00.000Z',
-        toBoundary: null
+        toBoundary: null,
       },
       answer: {
-        fromDate: '2022-02-10T12:00:00.000Z'
-      }
+        fromDate: '2022-02-10T12:00:00.000Z',
+      },
     });
     const reportError3 = schema.validate({
       config: {
         fromBoundary: '2022-02-18T12:00:00.000Z',
-        toBoundary: '2022-02-10T12:00:00.000Z'
+        toBoundary: '2022-02-10T12:00:00.000Z',
       },
       answer: {
-        fromDate: '2022-02-10T12:00:00.000Z'
-      }
+        fromDate: '2022-02-10T12:00:00.000Z',
+      },
     });
     const reportSuccess1 = schema.validate({
       config: {
         fromBoundary: '2022-02-10T12:00:00.000Z',
-        toBoundary: '2022-02-18T12:00:00.000Z'
+        toBoundary: '2022-02-18T12:00:00.000Z',
       },
       answer: {
-        fromDate: '2022-02-10T12:00:00.000Z'
-      }
+        fromDate: '2022-02-10T12:00:00.000Z',
+      },
     });
     const reportSuccess2 = schema.validate({
       config: {
         fromBoundary: null,
-        toBoundary: null
+        toBoundary: null,
       },
       answer: {
-        fromDate: '2022-02-10T12:00:00.000Z'
-      }
+        fromDate: '2022-02-10T12:00:00.000Z',
+      },
     });
     expect(reportError1?.error?.details[0].message).toEqual(
       'Dato må være fylt ut'
@@ -129,9 +129,9 @@ describe('DateJoi', () => {
       toBoundary: CustomJoi.validateToBoundaryDate(),
       dateScores: CustomJoi.validateUniqueArray(
         CustomJoi.object().keys({
-          date: CustomJoi.validateDateScore()
+          date: CustomJoi.validateDateScore(),
         })
-      )
+      ),
     });
 
     const reportError1 = schema.validate({
@@ -139,36 +139,36 @@ describe('DateJoi', () => {
       toBoundary: '2022-02-18T12:00:00.000Z',
       dateScores: [
         {
-          date: '2022-02-08T12:00:00.000Z'
-        }
-      ]
+          date: '2022-02-08T12:00:00.000Z',
+        },
+      ],
     });
     const reportError2 = schema.validate({
       fromBoundary: '2022-02-10T12:00:00.000Z',
       toBoundary: '2022-02-18T12:00:00.000Z',
       dateScores: [
         {
-          date: '2022-02-20T12:00:00.000Z'
-        }
-      ]
+          date: '2022-02-20T12:00:00.000Z',
+        },
+      ],
     });
     const reportError3 = schema.validate({
       fromBoundary: '2022-02-10T12:00:00.000Z',
       toBoundary: '2022-02-18T12:00:00.000Z',
       dateScores: [
         {
-          date: null
-        }
-      ]
+          date: null,
+        },
+      ],
     });
     const reportSuccess = schema.validate({
       fromBoundary: '2022-02-10T12:00:00.000Z',
       toBoundary: '2022-02-18T12:00:00.000Z',
       dateScores: [
         {
-          date: '2022-02-11T12:00:00.000Z'
-        }
-      ]
+          date: '2022-02-11T12:00:00.000Z',
+        },
+      ],
     });
     expect(reportError1?.error?.details[0].message).toEqual(
       'Dato kan ikke være før 10.02.2022'
@@ -186,48 +186,48 @@ describe('DateJoi', () => {
     const schema = CustomJoi.object().keys({
       config: {
         fromBoundary: CustomJoi.validateFromBoundaryDate(),
-        toBoundary: CustomJoi.validateToBoundaryDate()
+        toBoundary: CustomJoi.validateToBoundaryDate(),
       },
       answer: {
-        fromDate: CustomJoi.validateFromDate()
-      }
+        fromDate: CustomJoi.validateFromDate(),
+      },
     });
 
     const reportError1 = schema.validate({
       config: {
         fromBoundary: '2022-02-10T12:00:00.000Z',
-        toBoundary: '2022-02-18T12:00:00.000Z'
+        toBoundary: '2022-02-18T12:00:00.000Z',
       },
       answer: {
-        fromDate: '2022-02-08T12:00:00.000Z'
-      }
+        fromDate: '2022-02-08T12:00:00.000Z',
+      },
     });
     const reportError2 = schema.validate({
       config: {
         fromBoundary: '2022-02-10T12:00:00.000Z',
-        toBoundary: '2022-02-18T12:00:00.000Z'
+        toBoundary: '2022-02-18T12:00:00.000Z',
       },
       answer: {
-        fromDate: '2022-02-20T12:00:00.000Z'
-      }
+        fromDate: '2022-02-20T12:00:00.000Z',
+      },
     });
     const reportSuccess1 = schema.validate({
       config: {
         fromBoundary: '2022-02-10T12:00:00.000Z',
-        toBoundary: '2022-02-18T12:00:00.000Z'
+        toBoundary: '2022-02-18T12:00:00.000Z',
       },
       answer: {
-        fromDate: null
-      }
+        fromDate: null,
+      },
     });
     const reportSuccess2 = schema.validate({
       config: {
         fromBoundary: '2022-02-10T12:00:00.000Z',
-        toBoundary: '2022-02-18T12:00:00.000Z'
+        toBoundary: '2022-02-18T12:00:00.000Z',
       },
       answer: {
-        fromDate: '2022-02-11T12:00:00.000Z'
-      }
+        fromDate: '2022-02-11T12:00:00.000Z',
+      },
     });
     expect(reportError1?.error?.details[0].message).toEqual(
       'Dato kan ikke være før 10.02.2022'
@@ -244,69 +244,69 @@ describe('DateJoi', () => {
       config: {
         fromBoundary: CustomJoi.validateFromBoundaryDate(),
         toBoundary: CustomJoi.validateToBoundaryDate(),
-        isPeriod: CustomJoi.validateBoolean()
+        isPeriod: CustomJoi.validateBoolean(),
       },
       answer: {
         fromDate: CustomJoi.validateFromDate(),
-        toDate: CustomJoi.validateToDate()
-      }
+        toDate: CustomJoi.validateToDate(),
+      },
     });
 
     const reportError1 = schema.validate({
       config: {
         fromBoundary: '2022-02-10T12:00:00.000Z',
         toBoundary: '2022-02-18T12:00:00.000Z',
-        isPeriod: true
+        isPeriod: true,
       },
       answer: {
         fromDate: '2022-02-20T12:00:00.000Z',
-        toDate: '2022-02-22T12:00:00.000Z'
-      }
+        toDate: '2022-02-22T12:00:00.000Z',
+      },
     });
     const reportError2 = schema.validate({
       config: {
         fromBoundary: '2022-02-10T12:00:00.000Z',
         toBoundary: '2022-02-18T12:00:00.000Z',
-        isPeriod: true
+        isPeriod: true,
       },
       answer: {
         fromDate: '2022-02-13T12:00:00.000Z',
-        toDate: '2022-02-12T12:00:00.000Z'
-      }
+        toDate: '2022-02-12T12:00:00.000Z',
+      },
     });
 
     const reportError3 = schema.validate({
       config: {
         fromBoundary: '2022-02-10T12:00:00.000Z',
         toBoundary: '2022-02-18T12:00:00.000Z',
-        isPeriod: true
+        isPeriod: true,
       },
       answer: {
         fromDate: '2022-02-12T12:00:00.000Z',
-        toDate: null
-      }
+        toDate: null,
+      },
     });
     const reportSuccess1 = schema.validate({
       config: {
         fromBoundary: '2022-02-10T12:00:00.000Z',
         toBoundary: '2022-02-18T12:00:00.000Z',
-        isPeriod: false
+        isPeriod: false,
       },
       answer: {
         fromDate: '2022-02-12T12:00:00.000Z',
-        toDate: null
-      }
+        toDate: null,
+      },
     });
     const reportSuccess2 = schema.validate({
       config: {
         fromBoundary: '2022-02-10T12:00:00.000Z',
         toBoundary: '2022-02-18T12:00:00.000Z',
-        isPeriod: true
+        isPeriod: true,
       },
       answer: {
         fromDate: '2022-02-12T12:00:00.000Z',
-        toDate: '2022-02-14T12:00:00.000Z'
-      }
+        toDate: '2022-02-14T12:00:00.000Z',
+      },
     });
     expect(reportError1?.error?.details[0].message).toEqual(
       'Dato kan ikke være etter 18.02.2022'

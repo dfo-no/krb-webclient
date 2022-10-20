@@ -7,8 +7,8 @@ const WeightValidator = (joi: Joi.Root) => ({
     'number.base': 'Må være et tall',
     'number.integer': 'Må være et heltall',
     'number.min': 'Må være minimum 1',
-    'number.max': 'Må være maksimum 100'
-  }
+    'number.max': 'Må være maksimum 100',
+  },
 });
 
 const AmountValidator = (joi: Joi.Root) => ({
@@ -17,8 +17,8 @@ const AmountValidator = (joi: Joi.Root) => ({
   messages: {
     'number.base': 'Må være et tall',
     'number.integer': 'Må være et heltall',
-    'number.min': 'Må være minimum 1'
-  }
+    'number.min': 'Må være minimum 1',
+  },
 });
 
 const SpecProductJoi = [WeightValidator, AmountValidator];

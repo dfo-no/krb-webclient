@@ -21,7 +21,7 @@ export default class TagService {
       type: ModelType.tag,
       parent: '',
       sourceOriginal: projectId,
-      sourceRel: null
+      sourceRel: null,
     };
   };
 

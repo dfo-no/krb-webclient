@@ -2,7 +2,7 @@ import CustomJoi from '../Joi/CustomJoi';
 import { BaseProductSchema, IProduct } from './IProduct';
 import {
   IRequirementAnswer,
-  RequirementAnswerSchema
+  RequirementAnswerSchema,
 } from './IRequirementAnswer';
 export interface IPrefilledResponseProduct {
   id: string;
@@ -21,5 +21,5 @@ export const PrefilledResponseProductSchema = CustomJoi.object().keys({
   description: CustomJoi.validateOptionalText(),
   answeredVariants: CustomJoi.validateIdArray(),
   requirementAnswers: CustomJoi.validateUniqueArray(RequirementAnswerSchema),
-  relatedProducts: CustomJoi.validateIdArray()
+  relatedProducts: CustomJoi.validateIdArray(),
 });

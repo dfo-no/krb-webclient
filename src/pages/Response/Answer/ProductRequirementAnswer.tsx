@@ -20,7 +20,7 @@ interface IProps {
 }
 
 export default function ProductRequirementAnswer({
-  requirementAnswer
+  requirementAnswer,
 }: IProps): ReactElement {
   const { response } = useAppSelector((state) => state.response);
   const { productIndex } = useProductIndexState();

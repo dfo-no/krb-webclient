@@ -51,7 +51,7 @@ export default class EvaluationService {
   evaluate(response: IResponse): IEvaluatedResponse {
     const evaluation: IEvaluatedResponse = {
       supplier: response.supplier,
-      points: 0
+      points: 0,
     };
     let maxPoints = 0;
     let totPoints = 0;

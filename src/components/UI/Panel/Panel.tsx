@@ -15,7 +15,7 @@ export interface IProps {
 export default function Panel({
   children,
   panelColor,
-  classname
+  classname,
 }: IProps): ReactElement {
   return (
     <Box className={classNames([css.Panel, classname])} data-color={panelColor}>
