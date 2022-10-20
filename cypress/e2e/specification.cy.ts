@@ -31,8 +31,6 @@ describe('Specification', () => {
     cy.contains(generalProduct);
     cy.contains(productName);
 
-    console.log('test', cy.get('div').contains(addProductButton).parent());
-
     cy.get('div').contains(addProductButton).parent().should('have.attr', 'data-disabled', "false");
     cy.get('div').contains(editGeneralProductButton).parent().should('have.attr', 'data-disabled', "false");
     cy.get('div').contains(editProductButton).parent().should('have.attr', 'data-disabled', "false");
