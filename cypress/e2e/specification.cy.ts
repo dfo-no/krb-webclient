@@ -58,6 +58,7 @@ describe('Specification', () => {
     // lagre
     cy.get('button').contains('Lagre').click();
 
+    // Ny innhold i spesifikasjon etter redigering
     cy.contains(newTitle);
     cy.contains(newOrganisation);
     cy.contains(newCaseNumber);
