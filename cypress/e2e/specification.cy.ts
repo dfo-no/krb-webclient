@@ -18,16 +18,18 @@ describe('Specification', () => {
   const newProductTitle = 'Test product';
   const newProductDesc = 'Test description of product';
 
-  it('can upload and show specification', () => {
+  beforeEach( () => {
     // upload specification
     cy.visit('localhost:3000');
     cy.contains('Last opp kravbank-fil').selectFile(
       './cypress/filesForUploadTesting/specification-1.pdf'
     );
     cy.contains('Rediger spesifikasjon').click();
-    cy.url().should('include', 'http://localhost:3000/specification/');
+  });
 
+  it('can upload and show specification', () => {
     // Contents of specification
+    cy.url().should('include', 'http://localhost:3000/specification/');
     cy.contains(title);
     cy.contains(organisation);
     cy.contains(caseNumber);
@@ -111,6 +113,11 @@ describe('Specification', () => {
   });
 
   it("can save specification", function() {
+    cy.intercept(
+      'POST',
+      'https://krb-api-man-dev.azure-api.net/java/generateSpecification'
+    ).as('generateSpecification');
     cy.get('div').contains('Last ned spesifikasjon').click();
+    cy.wait('@generateSpecification').its('response.statusCode').should('eq', 200);
   });
 });
