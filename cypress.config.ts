@@ -21,7 +21,6 @@ async function setupNodeEvents(
 
 export default defineConfig({
   e2e: {
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     specPattern: 'cypress/e2e/*.*',
     setupNodeEvents,
     supportFile: 'cypress/support/e2e.ts',
