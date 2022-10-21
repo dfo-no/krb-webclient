@@ -4,6 +4,11 @@
     "isolatedModules": false,
     "types": ["cypress"]
   },
-  "include": ["../node_modules/cypress", "./**/*.ts", "./**/*.cy.js", ".eslintrc.js"],
+  "include": [
+    "../node_modules/cypress",
+    "./**/*.ts",
+    "./**/*.cy.js",
+    ".eslintrc.js"
+  ],
   "exclude": []
 }

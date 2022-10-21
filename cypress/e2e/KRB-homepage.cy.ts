@@ -30,12 +30,6 @@ describe('check front page', () => {
     cy.get('input[placeholder="Saksnummer"]').type('hk-123456');
     cy.get('input[placeholder="Navn"]').type('Horten kommune');
     cy.get('input[placeholder="Organisasjonsnummer"]').type('964951284');
-    // Maybe the rest of this should go into another test file
-    cy.contains('Opprett kravspesifikasjon').click();
-    cy.url().should('include', 'http://localhost:3000/specification/');
-    cy.contains('Nye møbler 2022-10');
-    cy.contains('Legg til produkt');
-    cy.contains('Last ned spesifikasjon');
   });
 
   it('can upload specification', () => {
