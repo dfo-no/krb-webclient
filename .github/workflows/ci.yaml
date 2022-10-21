@@ -1,0 +1,246 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - develop
+      - krb-*
+      - KRB-*
+  release:
+    types: [published]
+
+env:
+  NODE_VERSION: "16.x"
+
+jobs:
+  # Build
+
+  build:
+    name: Build (develop)
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Setup Node ${{ env.NODE_VERSION }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+
+      - name: Cache dependencies
+        id: cache
+        uses: actions/cache@v3
+        with:
+          path: ./node_modules
+          key: modules-${{ hashFiles('package-lock.json') }}
+
+      - name: Install dependencies
+        if: steps.cache.outputs.cache-hit != 'true'
+        run: npm install
+
+      - name: Build
+        run: npm run-script build
+        env:
+          REACT_APP_CLIENTID: ${{ secrets.REACT_APP_CLIENTID }}
+          REACT_APP_API_URL: ${{ secrets.REACT_APP_API_URL_DEV }}
+          CI: false
+
+      - name: Upload build
+        uses: actions/upload-artifact@v3
+        with:
+          name: build
+          path: build
+          if-no-files-found: error
+          retention-days: 1
+
+  build_production:
+    name: Build (production)
+    runs-on: ubuntu-latest
+
+    needs: tests
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Setup Node ${{ env.NODE_VERSION }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+
+      - name: Cache dependencies
+        id: cache
+        uses: actions/cache@v3
+        with:
+          path: ./node_modules
+          key: modules-${{ hashFiles('package-lock.json') }}
+
+      - name: Install dependencies
+        if: steps.cache.outputs.cache-hit != 'true'
+        run: npm install
+
+      - name: Build
+        #change build:ci to build when all warnings are gone
+        run: |
+          npm run-script git-info
+          npm run-script build:ci
+        env:
+          REACT_APP_CLIENTID: ${{ secrets.REACT_APP_CLIENTID }}
+          REACT_APP_API_URL: ${{ secrets.REACT_APP_API_URL_PROD }}
+
+      - name: Upload build
+        uses: actions/upload-artifact@v3
+        with:
+          name: build-production
+          path: build
+          if-no-files-found: error
+          retention-days: 1
+
+  # Testing
+
+  tests:
+    name: Tests
+    runs-on: ubuntu-latest
+
+    needs: build
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Cache dependencies
+        id: cache
+        uses: actions/cache@v3
+        with:
+          path: ./node_modules
+          key: modules-${{ hashFiles('package-lock.json') }}
+
+      - name: Install dependencies
+        if: steps.cache.outputs.cache-hit != 'true'
+        run: npm install
+
+      - name: Lint
+        shell: bash
+        run: npm run-script lint:ci
+
+      - name: Test
+        shell: bash
+        run: npm run-script test --coverage
+
+  sonarcube:
+    name: Sonarcube
+    runs-on: ubuntu-latest
+
+    needs: build
+    if: github.ref == 'refs/heads/develop'
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Sonarcube
+        uses: SonarSource/sonarcloud-github-action@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+
+  cypress:
+    name: Cypress
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    needs: build
+
+    container:
+      image: cypress/browsers:node16.17.0-chrome106
+      options: --user 1001
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Download build
+        uses: actions/download-artifact@v3
+        with:
+          name: build
+          path: build
+
+      - name: Cypress info
+        run: npx cypress info
+
+      - name: "UI Tests - Chrome"
+        uses: cypress-io/github-action@v4
+        with:
+          start: npm start
+          wait-on: "http://localhost:3000"
+          wait-on-timeout: 120
+          browser: chrome
+          spec: cypress/e2e/*
+          config-file: cypress.config.ts
+        env:
+          REACT_APP_CLIENTID: ${{ secrets.REACT_APP_CLIENTID }}
+          REACT_APP_API_URL: ${{ secrets.REACT_APP_API_URL_DEV }}
+
+  # Deploy
+
+  deploy_develop:
+    name: Deploy (develop)
+    runs-on: ubuntu-latest
+
+    needs:
+      - cypress
+      - sonarcube
+      - tests
+    if: github.ref == 'refs/heads/develop'
+
+    env:
+      AZURE_WEBAPP_NAME: krb-webclient # set this to your application's name
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Download build
+        uses: actions/download-artifact@v3
+        with:
+          name: build
+          path: build
+
+      - name: Deploy to Azure WebApp
+        uses: azure/webapps-deploy@v2
+        with:
+          app-name: ${{ env.AZURE_WEBAPP_NAME }}
+          publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
+          package: build
+
+  deploy_production:
+    name: Deploy (production)
+    runs-on: ubuntu-latest
+
+    needs:
+      - build_production
+      - cypress
+    if: startsWith(github.ref, 'refs/tags/')
+
+    env:
+      AZURE_WEBAPP_NAME: krb-webclient-prod # set this to your application's name
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Download build
+        uses: actions/download-artifact@v3
+        with:
+          name: build-production
+          path: build
+
+      - name: "Deploy to Azure WebApp"
+        uses: azure/webapps-deploy@v2
+        with:
+          app-name: ${{ env.AZURE_WEBAPP_NAME }}
+          publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE_PROD }}
+          package: build
