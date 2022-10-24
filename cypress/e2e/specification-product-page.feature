@@ -26,6 +26,6 @@ Feature: Spesifikasjonsprodukt
       Then Jeg besvare kravet "Helt ny bil" som har type ja-nei med "Nei"
       And Jeg klikker på "Lagre og velg krav" knapp for å lagre
       And Ser jeg valgte krav er 1 av 7
-      And Ser jeg valgt krav "Fabrikk-ny" inneholder poeng for ja er "0 Poeng" og poeng for nei er "100 Poeng"
+      And Ser jeg valgt krav "Fabrikk-ny" inneholder "0 Poeng" for ja og "100 Poeng" for nei
       When Jeg klikker på "Fjern kravet" knapp
       Then Ser jeg valgte krav er 0 av 7

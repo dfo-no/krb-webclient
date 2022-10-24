@@ -27,7 +27,7 @@ Then('Jeg besvare kravet {string} som har type ja-nei med {string}', (requiremen
   cy.get("label").contains(answer).click();
 })
 
-Then('Ser jeg valgt krav {string} inneholder poeng for ja er {string} og poeng for nei er {string}',
+Then('Ser jeg valgt krav {string} inneholder {string} for ja og {string} for nei',
   (requirement: string, yesPoint: string, noPoint: string) => {
     cy.get('[data-cy="product-requirement"]').contains(requirement);
     cy.get('[data-cy="chosen-configuration"]').contains('Ja').parent().children().eq(1).contains(yesPoint);
