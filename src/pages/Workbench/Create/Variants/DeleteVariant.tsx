@@ -23,7 +23,7 @@ interface IProps {
   handleClose: () => void;
 }
 
-/* TODO: Needs validating */
+// Needs validating
 function DeleteVariant({
   children,
   variant,

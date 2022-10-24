@@ -24,7 +24,7 @@ const Breadcrumbs = (): ReactElement => {
   const location = useLocation();
   const [project, setProject] = useState<IBank>();
 
-  // TODO: Needs to go
+  // Needs to go
   const { specificationUpload } = useEvaluationState();
 
   const breadcrumbs: IBreadcrumb[] = [

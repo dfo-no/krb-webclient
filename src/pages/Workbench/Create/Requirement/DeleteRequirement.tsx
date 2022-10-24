@@ -22,7 +22,7 @@ interface IProps {
   handleClose: () => void;
 }
 
-/* TODO: Needs validating */
+// Needs validating
 function DeleteRequirement({
   children,
   requirement,
