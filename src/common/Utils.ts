@@ -2,10 +2,7 @@ import { DateScorePair } from '../Nexus/entities/IPeriodDateQuestion';
 import { IBank } from '../Nexus/entities/IBank';
 import { IBaseModel } from '../Nexus/entities/IBaseModel';
 import { ICodelist } from '../Nexus/entities/ICodelist';
-import {
-  ICodelistConfig,
-  ICodelistQuestion,
-} from '../Nexus/entities/ICodelistQuestion';
+import { ICodelistConfig } from '../Nexus/entities/ICodelistQuestion';
 import { INeed } from '../Nexus/entities/INeed';
 import { IProduct } from '../Nexus/entities/IProduct';
 import { IResponse } from '../Nexus/entities/IResponse';
@@ -344,10 +341,7 @@ class Utils {
         requirement.variants.forEach((variant: IVariant) => {
           variant.questions.forEach((question: QuestionType) => {
             if (question.type === QuestionVariant.Q_CODELIST) {
-              if (
-                (question as ICodelistQuestion).config.codelist ===
-                selectedCodelist.id
-              ) {
+              if (question.config.codelist === selectedCodelist.id) {
                 returnValue = true;
               }
             }
