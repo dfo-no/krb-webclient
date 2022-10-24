@@ -18,14 +18,21 @@ Then('Ser jeg {int} krav-ene i side', (value: number) => {
 });
 
 Then('Ser jeg behov {string} inneholder krav {string}', (need: string, requirement: string) => {
-  cy.get('[data-cy="product-need"]').contains(need)
+  cy.get('[data-cy="product-need"]').contains(need);
   cy.get('[data-cy="product-need"]').find('[data-cy="product-requirement"]').contains(requirement);
 });
 
 Then('Jeg besvare kravet {string} som har type ja-nei med {string}', (requirement: string, answer: string) => {
-  cy.get('[class^="ProductVariant"]').contains(requirement)
+  cy.get('[class^="ProductVariant"]').contains(requirement);
   cy.get("label").contains(answer).click();
 })
+
+Then('Ser jeg valgt krav {string} inneholder poeng for ja er {string} og poeng for nei er {string}',
+  (requirement: string, yesPoint: string, noPoint: string) => {
+    cy.get('[data-cy="product-requirement"]').contains(requirement);
+    cy.get('[data-cy="chosen-configuration"]').contains('Ja').parent().children().eq(1).contains(yesPoint);
+    cy.get('[data-cy="chosen-configuration"]').contains('Nei').parent().children().eq(1).contains(noPoint);
+});
 
 Then('Jeg velger {string} på vekting av produkt', (weight: string) => {
   let productWeighting: number | undefined;

@@ -46,12 +46,14 @@ export default function ChosenConfiguration({
         TextUtils.getConfigText(requirementAnswer, specification.bank).map(
           (chosenConfig, index) => {
             return (
-              <ToolbarItem
-                key={index}
-                primaryText={chosenConfig.option}
-                secondaryText={chosenConfig.value}
-                fontSize={'small'}
-              />
+              <div data-cy={'chosen-configuration'}>
+                <ToolbarItem
+                  key={index}
+                  primaryText={chosenConfig.option}
+                  secondaryText={chosenConfig.value}
+                  fontSize={'small'}
+                />
+              </div>
             );
           }
         )
