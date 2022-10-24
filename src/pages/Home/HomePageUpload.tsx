@@ -42,8 +42,7 @@ export function HomePageUpload({ selectedBank, setSelectedBank }: Props) {
 
     const formData = new FormData();
     let disableUploadMessage = '';
-    for (let index = 0; index < files.length; index += 1) {
-      const file = files[index];
+    for (const file of files) {
       if (file.size > MAX_UPLOAD_SIZE) {
         disableUploadMessage = t('HomePage.File_upload_to_large');
         break;
