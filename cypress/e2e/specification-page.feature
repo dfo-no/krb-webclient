@@ -6,7 +6,7 @@ Feature: Spesifikasjon
     Given Jeg åpner startsiden
     When Laste opp kravspesifikasjon
     And Velg rediger spesifikasjon
-    Then Ser jeg "Test kravspesifikasjon", "Itland Data", "123456/AA" og "Norske kroner (NOK)" i side
+    Then Ser jeg tittel er "Test kravspesifikasjon", organisasjon er "Itland Data", saksnummer er "123456/AA" og myntenhet er "Norske kroner (NOK)"
     And Ser jeg 2 produkt-er
     And Ser jeg "Legg til produkt" knapp er aktiv
     And Ser jeg "Rediger generelle krav" knapp er aktiv
