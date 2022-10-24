@@ -25,7 +25,6 @@ export const chosenRequirements = (
   specification: ISpecification,
   specProduct: ISpecificationProduct
 ): string | undefined => {
-  let result: string | undefined;
   const needs = Utils.findVariantsUsedByProduct(
     specProduct.originProduct,
     specification.bank
@@ -35,9 +34,8 @@ export const chosenRequirements = (
       .map((need) => need.requirements.length)
       .reduce((previousValue, currentValue) => previousValue + currentValue, 0);
     const answeredRequirements = specProduct?.requirements.length;
-    result = `${answeredRequirements}/${totalProductRequirements}`;
+    return `${answeredRequirements}/${totalProductRequirements}`;
   }
-  return result;
 };
 
 export default function SpecificationOverview(): React.ReactElement {
