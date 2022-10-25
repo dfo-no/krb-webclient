@@ -1,6 +1,9 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { v4 as uuidv4 } from 'uuid';
+import { useParams } from 'react-router-dom';
+import { Box } from '@mui/material/';
+
 import { IAlert } from '../../../../models/IAlert';
 import { Parentable } from '../../../../models/Parentable';
 import { IRequirement } from '../../../../Nexus/entities/IRequirement';
@@ -9,9 +12,7 @@ import { useAppDispatch } from '../../../../store/hooks';
 import { addAlert } from '../../../../store/reducers/alert-reducer';
 import { INeed } from '../../../../Nexus/entities/INeed';
 import useProjectMutations from '../../../../store/api/ProjectMutations';
-import { useParams } from 'react-router-dom';
 import { IRouteProjectParams } from '../../../../models/IRouteProjectParams';
-import { Box } from '@mui/material/';
 import { useSelectState } from '../SelectContext';
 import DeleteFrame from '../../../../components/DeleteFrame/DeleteFrame';
 

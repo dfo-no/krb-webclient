@@ -2,9 +2,9 @@ import React, { ReactElement } from 'react';
 import userEvent from '@testing-library/user-event';
 import { cleanup, render, RenderResult } from '@testing-library/react';
 import { MemoryRouter, Route } from 'react-router-dom';
-
 import ConstructionOutlinedIcon from '@mui/icons-material/ConstructionOutlined';
 import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
+
 import DFOToolbar from './DFOToolbar';
 import { IToolbarItem } from '../../models/IToolbarItem';
 

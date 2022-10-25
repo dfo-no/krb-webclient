@@ -1,4 +1,5 @@
 import localforage from 'localforage';
+
 import { IFile } from '../../models/IFile';
 
 export class TemporarySpecFileService {

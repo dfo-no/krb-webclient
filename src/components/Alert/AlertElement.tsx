@@ -1,6 +1,7 @@
 import Alert from '@mui/material/Alert/Alert';
 import Snackbar from '@mui/material/Snackbar/Snackbar';
 import React, { useEffect, useState } from 'react';
+
 import { IAlert } from '../../models/IAlert';
 import { useAppDispatch } from '../../store/hooks';
 import { removeAlert } from '../../store/reducers/alert-reducer';

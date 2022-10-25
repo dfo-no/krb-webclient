@@ -1,6 +1,7 @@
+import { v4 as uuidv4 } from 'uuid';
+
 import CustomJoi from '../CustomJoi';
 import { ModelType } from '../../enums';
-import { v4 as uuidv4 } from 'uuid';
 
 describe('GeneralJoi', () => {
   test('Joi validateText() should show error message if text is empty', () => {

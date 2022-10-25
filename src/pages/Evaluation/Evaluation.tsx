@@ -1,4 +1,5 @@
 import React, { ReactElement, useEffect } from 'react';
+import { useRouteMatch } from 'react-router-dom';
 
 import css from './Evaluation.module.scss';
 import EvaluationProcess from './EvaluationProcess';
@@ -8,7 +9,6 @@ import EvaluationSpec from './EvaluationSpec';
 import UploadResponses from './UploadResponses';
 import { useEvaluationState } from './EvaluationContext';
 import { EvaluationSpecificationStoreService } from '../../Nexus/services/EvaluationSpecificationStoreService';
-import { useRouteMatch } from 'react-router-dom';
 
 const Evaluation = (): ReactElement => {
   const { setSpecificationUpload, setTab, tab, specificationUpload } =

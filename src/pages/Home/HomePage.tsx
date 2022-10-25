@@ -8,7 +8,6 @@ import HomeDisplayList from './HomeDisplayList';
 import HomeSearchBar from './HomeSearchBar';
 import { IBank } from '../../Nexus/entities/IBank';
 import { useGetBanksQuery } from '../../store/api/bankApi';
-
 import { HomePageUpload } from './HomePageUpload';
 
 export default function HomePage(): React.ReactElement {

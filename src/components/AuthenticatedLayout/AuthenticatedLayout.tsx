@@ -5,10 +5,10 @@ import {
   useMsal,
 } from '@azure/msal-react';
 import { Box, Button, Typography } from '@mui/material/';
+import { useTranslation } from 'react-i18next';
 
 import css from './AuthenticatedLayout.module.scss';
 import { loginRequest } from '../../authentication/authConfig';
-import { useTranslation } from 'react-i18next';
 
 interface IProps {
   children: ReactElement | ReactElement[];
