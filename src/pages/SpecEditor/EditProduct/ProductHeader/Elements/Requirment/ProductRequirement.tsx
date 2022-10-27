@@ -174,7 +174,11 @@ export default function ProductRequirement({
   };
 
   return (
-    <Box key={requirement.id} className={css.ProductRequirement}>
+    <Box
+      key={requirement.id}
+      className={css.ProductRequirement}
+      data-cy={'product-requirement'}
+    >
       {isSelected() ? (
         <Box className={classnames(css.card, css.selected)}>
           <div className={css.card__description}>
