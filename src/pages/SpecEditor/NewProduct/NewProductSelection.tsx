@@ -1,6 +1,7 @@
 import React, { ReactElement, useState } from 'react';
 import { Button, List, ListItem, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
+
 import css from './NewProductSelection.module.scss';
 import theme from '../../../theme';
 import { IProduct } from '../../../Nexus/entities/IProduct';

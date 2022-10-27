@@ -1,4 +1,5 @@
 import { configureStore } from '@reduxjs/toolkit';
+
 import { bankApi } from './api/bankApi';
 import rootReducer from './rootReducer';
 

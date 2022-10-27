@@ -1,11 +1,11 @@
 import Button from '@mui/material/Button';
 import React, { ReactElement } from 'react';
+import { useTranslation } from 'react-i18next';
 
 import css from './Evaluation.module.scss';
 import Nexus from '../../Nexus/Nexus';
 import Utils from '../../common/Utils';
 import { useEvaluationState } from './EvaluationContext';
-import { useTranslation } from 'react-i18next';
 
 const EvaluationProcess = (): ReactElement => {
   const { t } = useTranslation();

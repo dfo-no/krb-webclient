@@ -1,4 +1,5 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+
 import { IBank } from '../../Nexus/entities/IBank';
 
 // TODO: This interface is duplicated in krb-api as SortPagination

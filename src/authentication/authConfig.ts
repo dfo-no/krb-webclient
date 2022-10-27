@@ -1,4 +1,5 @@
 import { Configuration, PopupRequest } from '@azure/msal-browser';
+
 import Utils from '../common/Utils';
 
 // Config object to be passed to Msal on creation

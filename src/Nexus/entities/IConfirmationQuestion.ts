@@ -1,5 +1,4 @@
 import CustomJoi from '../Joi/CustomJoi';
-
 import {
   ConfigBaseSchema,
   IAnswerBase,
