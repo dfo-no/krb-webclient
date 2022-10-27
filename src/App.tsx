@@ -12,7 +12,6 @@ import PrefilledResponseModule from './pages/PrefilledResponse/PrefilledResponse
 import ResponseModule from './pages/Response/ResponseModule';
 import SpecModule from './pages/SpecEditor/SpecModule';
 import styles from './App.module.scss';
-import useConfirmTabClose from './hooks/useConfirmTabClose';
 import WorkbenchModule from './pages/Workbench/WorkbenchModule';
 import { HeaderProvider } from './components/Header/HeaderContext';
 import { msalConfig } from './authentication/authConfig';
@@ -22,7 +21,6 @@ import Footer from './Footer/Footer';
 const msalInstance = new PublicClientApplication(msalConfig);
 
 function App(): ReactElement {
-  useConfirmTabClose();
   const location = useLocation();
 
   const isHomePage = location.pathname === '/';
