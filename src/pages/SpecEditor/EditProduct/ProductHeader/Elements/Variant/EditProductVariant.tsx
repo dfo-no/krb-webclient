@@ -73,9 +73,6 @@ export default function EditProductVariant({
       <Typography className={css.infoText}>
         {variant.instruction ? variant.instruction : '-'}
       </Typography>
-      <Typography variant={'smBold'} color={theme.palette.primary.main}>
-        {t('How to answer requirement')}
-      </Typography>
       <ProductQuestionList variant={variant} />
     </Box>
   );
