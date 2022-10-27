@@ -1,12 +1,10 @@
 .EditProductVariant {
   display: flex;
   flex-direction: column;
-  margin-left: var(--big-gap);
 
   .titleRow {
     display: flex;
     flex-direction: row;
-    margin-left: calc(var(--big-gap) * -1);
 
     .title {
       align-self: center;
