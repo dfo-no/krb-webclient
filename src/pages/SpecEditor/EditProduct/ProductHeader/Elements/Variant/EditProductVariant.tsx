@@ -77,9 +77,6 @@ export default function EditProductVariant({ variant }: IProps): ReactElement {
           </Typography>
         </>
       )}
-      <Typography variant={'smBold'} color={theme.palette.primary.main}>
-        {t('How to answer requirement')}
-      </Typography>
       <ProductQuestionList variant={variant} />
     </Box>
   );
