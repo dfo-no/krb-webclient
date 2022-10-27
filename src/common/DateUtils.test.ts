@@ -1,5 +1,6 @@
-import DateUtils from './DateUtils';
 import i18n from 'i18next';
+
+import DateUtils from './DateUtils';
 
 describe('DateUtils', () => {
   test('DateUtils.truncate', () => {

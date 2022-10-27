@@ -146,6 +146,18 @@
         }
       ],
       "spaced-comment": "warn",
+      "import/order": [
+        "warn",
+        {
+          "groups": [
+            [
+              "external",
+              "internal"
+            ]
+          ],
+          "newlines-between": "always"
+        }
+      ],
       "linebreak-style": "off",
       "prettier/prettier": [
         "error",

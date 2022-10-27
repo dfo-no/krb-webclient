@@ -1,5 +1,6 @@
-import CustomJoi from '../CustomJoi';
 import { v1 as uuidv1, v4 as uuidv4 } from 'uuid';
+
+import CustomJoi from '../CustomJoi';
 
 describe('IdJoi', () => {
   test('Joi validateId() should show error message if not a valid guid is empty', () => {

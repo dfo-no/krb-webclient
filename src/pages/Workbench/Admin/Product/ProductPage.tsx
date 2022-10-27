@@ -2,6 +2,7 @@ import Button from '@mui/material/Button';
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
+
 import LoaderSpinner from '../../../../common/LoaderSpinner';
 import SearchUtils from '../../../../common/SearchUtils';
 import DFOSearchBar from '../../../../components/DFOSearchBar/DFOSearchBar';

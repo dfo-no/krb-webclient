@@ -5,6 +5,7 @@ import { skipToken } from '@reduxjs/toolkit/dist/query/react';
 import ConstructionOutlinedIcon from '@mui/icons-material/ConstructionOutlined';
 import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
 import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
+
 import { IBank } from '../../../Nexus/entities/IBank';
 import { useGetProjectQuery } from '../../../store/api/bankApi';
 import { IToolbarItem } from '../../../models/IToolbarItem';

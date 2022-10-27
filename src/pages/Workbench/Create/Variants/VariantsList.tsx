@@ -1,12 +1,13 @@
 import Box from '@mui/material/Box';
+import { useParams } from 'react-router-dom';
+import React from 'react';
+
 import { IRequirement } from '../../../../Nexus/entities/IRequirement';
 import Variant from './Variant';
 import DeleteVariant from './DeleteVariant';
-import { useParams } from 'react-router-dom';
 import { IRouteProjectParams } from '../../../../models/IRouteProjectParams';
 import { useGetProjectQuery } from '../../../../store/api/bankApi';
 import { useSelectState } from '../SelectContext';
-import React from 'react';
 import { useVariantState } from '../../VariantContext';
 import NewVariantForm from './NewVariantForm';
 

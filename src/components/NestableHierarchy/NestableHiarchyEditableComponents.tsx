@@ -1,12 +1,13 @@
 import React from 'react';
 import 'react-nestable/dist/styles/index.css';
-import { Parentable } from '../../models/Parentable';
 import { Box, Typography } from '@mui/material';
 import makeStyles from '@mui/styles/makeStyles';
-import theme from '../../theme';
-import NestableHierarcy from './NestableHierarcy';
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
 import DeleteIcon from '@mui/icons-material/Delete';
+
+import theme from '../../theme';
+import NestableHierarcy from './NestableHierarcy';
+import { Parentable } from '../../models/Parentable';
 import { useEditableState } from '../EditableContext/EditableContext';
 import { IBaseModelWithTitleAndDesc } from '../../models/IBaseModelWithTitleAndDesc';
 import { FormContainerBox } from '../Form/FormContainerBox';

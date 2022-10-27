@@ -4,6 +4,7 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import ErrorIcon from '@mui/icons-material/Error';
 import { useHistory } from 'react-router-dom';
+
 import theme from '../../theme';
 
 const useStyles = makeStyles({

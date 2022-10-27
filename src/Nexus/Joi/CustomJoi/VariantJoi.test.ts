@@ -1,6 +1,7 @@
+import { v1 as uuidv1, v4 as uuidv4 } from 'uuid';
+
 import CustomJoi from '../CustomJoi';
 import { QuestionBaseSchema } from '../../entities/IQuestionBase';
-import { v1 as uuidv1, v4 as uuidv4 } from 'uuid';
 import { QuestionVariant, VariantType } from '../../enums';
 
 describe('VariantJoi', () => {

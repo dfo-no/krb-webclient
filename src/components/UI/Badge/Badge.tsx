@@ -1,4 +1,5 @@
 import React, { ReactNode } from 'react';
+
 import css from './Badge.module.scss';
 
 type BadgeType = 'information' | 'warning' | 'error' | 'primary';

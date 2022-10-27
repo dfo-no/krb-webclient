@@ -1,5 +1,6 @@
-import CustomJoi from '../../CustomJoi';
 import { v4 as uuidv4 } from 'uuid';
+
+import CustomJoi from '../../CustomJoi';
 
 describe('CodeJoi', () => {
   test('Joi validateMaxCodes() should show error message if not a positive integer over 1', () => {

@@ -2,6 +2,7 @@ import { Box, Typography } from '@mui/material/';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useHistory } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import React from 'react';
 
 import theme from '../../theme';
 import GeneralErrorMessage from '../../Form/GeneralErrorMessage';
@@ -17,7 +18,6 @@ import {
 import { ModelType } from '../../Nexus/enums';
 import { setResponse } from '../../store/reducers/response-reducer';
 import { useAppDispatch } from '../../store/hooks';
-import React from 'react';
 
 interface IProps {
   handleClose: () => void;
