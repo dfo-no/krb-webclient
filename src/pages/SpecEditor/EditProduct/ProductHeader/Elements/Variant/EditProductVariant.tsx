@@ -1,21 +1,22 @@
-import React, { useEffect, useState } from 'react';
+// import React, { useEffect, useState } from 'react';
+import { ReactElement } from 'react';
 import { Box, Typography } from '@mui/material';
-import { useFormContext, useWatch } from 'react-hook-form';
+// import { useFormContext, useWatch } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
 import css from './EditProductVariant.module.scss';
 import ProductQuestionList from '../QuestionList/ProductQuestionList';
-import SliderCtrl from '../../../../../../FormProvider/SliderCtrl';
+// import SliderCtrl from '../../../../../../FormProvider/SliderCtrl';
 import theme from '../../../../../../theme';
 import { DFOChip } from '../../../../../../components/DFOChip/DFOChip';
-import { IMark } from '../../../../../../Nexus/entities/IMark';
+// import { IMark } from '../../../../../../Nexus/entities/IMark';
 import { IRequirement } from '../../../../../../Nexus/entities/IRequirement';
-import { IRequirementAnswer } from '../../../../../../Nexus/entities/IRequirementAnswer';
+// import { IRequirementAnswer } from '../../../../../../Nexus/entities/IRequirementAnswer';
 import { IVariant } from '../../../../../../Nexus/entities/IVariant';
 import {
   VariantType,
-  Weighting,
-  WeightingStep,
+  // Weighting,
+  // WeightingStep,
 } from '../../../../../../Nexus/enums';
 
 interface IProps {
@@ -23,19 +24,18 @@ interface IProps {
   variant: IVariant;
 }
 
-export default function EditProductVariant({
-  variant,
-}: IProps): React.ReactElement {
+// TODO: Når en stiller tilbake alt etter brukertesten så kan denne linja bare få være som den er nå, og denne kommentaren kan slettes
+export default function EditProductVariant({ variant }: IProps): ReactElement {
   const { t } = useTranslation();
-  const { control } = useFormContext<IRequirementAnswer>();
-  const useWeight = useWatch({ name: 'weight', control });
+  // const { control } = useFormContext<IRequirementAnswer>();
+  /* const useWeight = useWatch({ name: 'weight', control });
   const [sliderMark, setSliderMark] = useState<IMark[]>([
     { value: Weighting.MEDIUM, label: t(Weighting[Weighting.MEDIUM]) },
   ]);
 
   useEffect(() => {
     setSliderMark([{ value: useWeight, label: t(Weighting[useWeight]) }]);
-  }, [t, useWeight]);
+  }, [t, useWeight]);*/
 
   return (
     <Box className={css.EditProductVariant}>
@@ -48,7 +48,7 @@ export default function EditProductVariant({
             <DFOChip label={t('Info')} sx={{ marginLeft: 'auto' }} />
           ) : (
             <Box sx={{ flexGrow: 1 }}>
-              <SliderCtrl
+              {/* <SliderCtrl
                 name={'weight'}
                 label={`${t('Weighting')}:`}
                 min={Weighting.LOWEST}
@@ -56,7 +56,7 @@ export default function EditProductVariant({
                 max={Weighting.HIGHEST}
                 showValue={false}
                 marks={sliderMark}
-              />
+              />*/}
             </Box>
           )}
         </Box>
