@@ -271,7 +271,7 @@ export default function ProductRequirement({
                   return (
                     <Box
                       key={variant.id}
-                      className={!chosenVariantId() ? css.variant : css.hidden}
+                      className={!chosenVariantId() ? css.card : css.hidden}
                     >
                       <ProductVariant
                         key={variant.id}
