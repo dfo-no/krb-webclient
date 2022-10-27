@@ -8,6 +8,7 @@ import SpecificationOverview from './SpecificationOverview/SpecificationOverview
 import { SelectProvider } from '../Workbench/Create/SelectContext';
 import { useSpecificationState } from './SpecificationContext';
 import { PRODUCTS, SPECIFICATION } from '../../common/PathConstants';
+import { ProductIndexProvider } from '../../components/ProductIndexContext/ProductIndexContext';
 
 export default function SpecEditor(): ReactElement {
   const { specification } = useSpecificationState();
@@ -17,21 +18,23 @@ export default function SpecEditor(): ReactElement {
   }
 
   return (
-    <div className={css.EditorFullPage}>
-      <div className={css.Content}>
-        <Switch>
-          <Route exact path={`/${SPECIFICATION}/:specId`}>
-            <SelectProvider>
-              <SpecificationOverview />
-            </SelectProvider>
-          </Route>
-          <Route path={`/${SPECIFICATION}/:specId/${PRODUCTS}/:productId`}>
-            <SelectProvider>
-              <EditProduct />
-            </SelectProvider>
-          </Route>
-        </Switch>
+    <ProductIndexProvider>
+      <div className={css.EditorFullPage}>
+        <div className={css.Content}>
+          <Switch>
+            <Route exact path={`/${SPECIFICATION}/:specId`}>
+              <SelectProvider>
+                <SpecificationOverview />
+              </SelectProvider>
+            </Route>
+            <Route path={`/${SPECIFICATION}/:specId/${PRODUCTS}/:productId`}>
+              <SelectProvider>
+                <EditProduct />
+              </SelectProvider>
+            </Route>
+          </Switch>
+        </div>
       </div>
-    </div>
+    </ProductIndexProvider>
   );
 }
