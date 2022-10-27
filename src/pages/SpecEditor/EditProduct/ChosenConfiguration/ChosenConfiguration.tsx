@@ -48,6 +48,7 @@ export default function ChosenConfiguration({
           (chosenConfig, index) => {
             return (
               <ToolbarItem
+                dataCy={'chosen-configuration'}
                 key={index}
                 primaryText={chosenConfig.option}
                 secondaryText={chosenConfig.value}

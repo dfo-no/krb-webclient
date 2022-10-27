@@ -100,7 +100,7 @@ export default function NewProduct(): React.ReactElement {
                 <i>{prefilledResponse.bank.title}</i>{' '}
                 {t('that fits the product best')}
               </Typography>
-              {nonDeletedProducts.length && (
+              {nonDeletedProducts.length > 0 && (
                 <ProductSelection
                   products={nonDeletedProducts}
                   postChange={(selection: Parentable<IProduct>) => {
@@ -134,7 +134,7 @@ export default function NewProduct(): React.ReactElement {
                   );
                 })}
               </RadioGroup>
-              {nonDeletedProducts.length && relatedProducts && (
+              {nonDeletedProducts.length > 0 && relatedProducts && (
                 <MultipleProductSelection
                   name={'relatedProducts'}
                   products={nonDeletedProducts}

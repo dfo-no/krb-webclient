@@ -18,7 +18,7 @@ interface IProps {
   handleClose: () => void;
 }
 
-/* TODO: Needs validating */
+// TODO Needs validating
 function DeleteNeed({
   children,
   need,

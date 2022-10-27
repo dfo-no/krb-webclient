@@ -67,12 +67,16 @@ export default function EditProductVariant({ variant }: IProps): ReactElement {
       <Typography className={css.infoText}>
         {variant.requirementText ? variant.requirementText : '-'}
       </Typography>
-      <Typography variant={'smBold'} color={theme.palette.primary.main}>
-        {t('Instruction')}
-      </Typography>
-      <Typography className={css.infoText}>
-        {variant.instruction ? variant.instruction : '-'}
-      </Typography>
+      {variant.instruction && (
+        <>
+          <Typography variant={'smBold'} color={theme.palette.primary.main}>
+            {t('Instruction')}
+          </Typography>
+          <Typography className={css.infoText}>
+            {variant.instruction}
+          </Typography>
+        </>
+      )}
       <Typography variant={'smBold'} color={theme.palette.primary.main}>
         {t('How to answer requirement')}
       </Typography>

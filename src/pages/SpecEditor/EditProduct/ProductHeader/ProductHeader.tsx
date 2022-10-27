@@ -43,6 +43,7 @@ export default function ProductHeader({
         />
         {hasRequirements && (
           <ToolbarItem
+            dataCy={'chosen-requirements'}
             primaryText={t('Chosen requirements')}
             secondaryText={chosenRequirements(specification, product)}
           />
