@@ -1,9 +1,9 @@
-import css from './HomePage.module.scss';
 import React, { Dispatch, SetStateAction, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { AxiosResponse } from 'axios';
 import { v4 as uuidv4 } from 'uuid';
 
+import css from './HomePage.module.scss';
 import ProjectSelectionModal from './ProjectSelectionModal';
 import SpecificationSelectionModal from './SpecificationSelectionModal';
 import ResponseSelectionModal from './ResponseSelectionModal';
@@ -42,8 +42,7 @@ export function HomePageUpload({ selectedBank, setSelectedBank }: Props) {
 
     const formData = new FormData();
     let disableUploadMessage = '';
-    for (let index = 0; index < files.length; index += 1) {
-      const file = files[index];
+    for (const file of files) {
       if (file.size > MAX_UPLOAD_SIZE) {
         disableUploadMessage = t('HomePage.File_upload_to_large');
         break;

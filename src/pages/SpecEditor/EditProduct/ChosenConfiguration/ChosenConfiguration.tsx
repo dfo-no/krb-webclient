@@ -1,5 +1,6 @@
 import React from 'react';
 import { t } from 'i18next';
+
 import TextUtils from '../../../../common/TextUtils';
 import { ISpecificationProduct } from '../../../../Nexus/entities/ISpecificationProduct';
 import { IRequirement } from '../../../../Nexus/entities/IRequirement';

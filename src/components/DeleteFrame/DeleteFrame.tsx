@@ -1,8 +1,8 @@
 import React from 'react';
 import { Box, Typography } from '@mui/material/';
-import { FormDeleteBox } from './FormDeleteBox';
 import { t } from 'i18next';
 
+import { FormDeleteBox } from './FormDeleteBox';
 import theme from '../../theme';
 import { FormTextButton } from './FormTextButton';
 

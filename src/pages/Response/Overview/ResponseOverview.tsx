@@ -1,6 +1,8 @@
 import React from 'react';
 import { Box, Divider, Typography } from '@mui/material/';
 import { useTranslation } from 'react-i18next';
+import { useHistory } from 'react-router-dom';
+import EditIcon from '@mui/icons-material/Edit';
 
 import css from '../../Stylesheets/EditorFullPage.module.scss';
 import DownloadButton from '../Download/DownloadButton';
@@ -8,10 +10,8 @@ import theme from '../../../theme';
 import { ISpecificationProduct } from '../../../Nexus/entities/ISpecificationProduct';
 import { useAppSelector } from '../../../store/hooks';
 import { useProductIndexState } from '../../../components/ProductIndexContext/ProductIndexContext';
-import { useHistory } from 'react-router-dom';
 import { PRODUCTS, RESPONSE } from '../../../common/PathConstants';
 import { FormIconButton } from '../../../components/Form/FormIconButton';
-import EditIcon from '@mui/icons-material/Edit';
 import Panel from '../../../components/UI/Panel/Panel';
 
 function ResponseOverview(): React.ReactElement {

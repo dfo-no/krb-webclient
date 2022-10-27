@@ -29,7 +29,7 @@ const NewProjectForm = ({ handleClose }: IProps) => {
   const { t } = useTranslation();
   const nexus = Nexus.getInstance();
 
-  // TODO: Should contain a defaultValue from options to fully control the Select
+  // TODO Should contain a defaultValue from options to fully control the Select
   const defaultValues = ProjectService.defaultProject();
   const [postProject] = usePostProjectMutation();
   const methods = useForm<IBank>({

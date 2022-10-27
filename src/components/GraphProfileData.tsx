@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 import React from 'react';
+
 import { graphConfig } from '../authentication/authConfig';
 import { IGraphData } from '../models/IGraphData';
 

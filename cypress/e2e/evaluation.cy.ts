@@ -38,7 +38,6 @@ describe('evaluation', () => {
     cy.contains('Last ned evaluering').click();
     cy.wait('@generateEvaluation').then((interception) => {
       expect(interception?.response?.statusCode).gte(200).lt(300);
-      // console.log(interception)
       expect(interception?.response?.body.byteLength).gt(6500);
     });
   });

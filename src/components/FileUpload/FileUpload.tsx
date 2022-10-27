@@ -1,7 +1,7 @@
 import React, { ReactElement, useState } from 'react';
+import classnames from 'classnames';
 
 import css from './FileUpload.module.scss';
-import classnames from 'classnames';
 
 export type UploadVariant = 'Primary' | 'Secondary' | 'Tertiary';
 

@@ -1,6 +1,7 @@
 /* eslint-disable no-param-reassign */
 /* eslint-disable class-methods-use-this */
 import produce from 'immer';
+
 import { IRequirementAnswer } from '../entities/IRequirementAnswer';
 import { IResponse } from '../entities/IResponse';
 import { IResponseProduct } from '../entities/IResponseProduct';

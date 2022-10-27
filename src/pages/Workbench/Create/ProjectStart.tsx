@@ -1,12 +1,12 @@
 import React from 'react';
 import Typography from '@mui/material/Typography';
+import { useTranslation } from 'react-i18next';
 
 import css from '../../Stylesheets/NoProducts.module.scss';
 import mainIllustration from '../../../assets/images/main-illustration.svg';
 import NewNeed from './Need/NewNeed';
 import theme from '../../../theme';
 import { IBank } from '../../../Nexus/entities/IBank';
-import { useTranslation } from 'react-i18next';
 
 interface IProps {
   project: IBank;

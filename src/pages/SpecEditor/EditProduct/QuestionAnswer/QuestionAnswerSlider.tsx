@@ -1,13 +1,13 @@
 import React, { ReactElement, useEffect, useState } from 'react';
 import { Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
+import { useFormContext, useWatch } from 'react-hook-form';
 
 import css from '../QuestionContent.module.scss';
 import SliderCtrl from '../../../../FormProvider/SliderCtrl';
 import { IMark } from '../../../../Nexus/entities/IMark';
 import { IRequirementAnswer } from '../../../../Nexus/entities/IRequirementAnswer';
 import { ISliderQuestion } from '../../../../Nexus/entities/ISliderQuestion';
-import { useFormContext, useWatch } from 'react-hook-form';
 
 interface IProps {
   item: ISliderQuestion;

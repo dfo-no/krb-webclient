@@ -42,7 +42,7 @@ export default function ToolbarItem({
       data-badge={isBadge}
       data-cy={dataCy}
     >
-      {icon && icon}
+      {icon}
       {primaryText && (
         <Typography>
           {primaryText} {icon ? '' : ': '}

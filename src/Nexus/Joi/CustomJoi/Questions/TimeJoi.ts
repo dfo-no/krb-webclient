@@ -1,4 +1,5 @@
 import Joi, { Schema } from 'joi';
+
 import DateUtils from '../../../../common/DateUtils';
 
 const PeriodMinutesValidator = (joi: Joi.Root) => ({
