@@ -35,7 +35,7 @@ Then('Ser jeg {int} produkt-er', (value: number) => {
   cy.get('ul').find('li').should('have.length', value);
 });
 
-Then(
+When(
   'Jeg klikker på {string} og velger {string}',
   (fieldName: string, value: string) => {
     cy.get('div').contains(fieldName).click();
@@ -50,14 +50,14 @@ Then('Ser jeg {string} knapp er aktiv', (value: string) => {
     .should('have.attr', 'data-disabled', 'false');
 });
 
-Then('Ser jeg {string} knapp er deaktiv', (value: string) => {
+Then('Ser jeg {string} knapp er inaktiv', (value: string) => {
   cy.get('div')
     .contains(value)
     .parent()
     .should('have.attr', 'data-disabled', 'true');
 });
 
-Then('Velg en produkttype', () => {
+When('Velg en produkttype', () => {
   cy.get('button').contains('Velg').last().click();
 });
 

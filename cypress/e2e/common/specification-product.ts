@@ -1,4 +1,4 @@
-import { Then } from '@badeball/cypress-cucumber-preprocessor';
+import { Then, When } from "@badeball/cypress-cucumber-preprocessor";
 
 Then(
   'Ser jeg tittel er {string}, antall er {string}, vekting er {string}, type er {string} og beskrivelse er {string}',
@@ -17,11 +17,11 @@ Then(
   }
 );
 
-Then('Ser jeg {int} behove i side', (value: number) => {
+Then('Ser jeg {int} behov i siden', (value: number) => {
   cy.get('[data-cy="product-need"]').should('have.length', value);
 });
 
-Then('Ser jeg {int} krav-ene i side', (value: number) => {
+Then('Ser jeg {int} krav i siden', (value: number) => {
   cy.get('[data-cy="product-requirement"]').should('have.length', value);
 });
 
@@ -35,7 +35,7 @@ Then(
   }
 );
 
-Then(
+When(
   'Jeg besvare kravet {string} som har type ja-nei med {string}',
   (requirement: string, answer: string) => {
     cy.get('[class^="ProductVariant"]').contains(requirement);
@@ -62,7 +62,7 @@ Then(
   }
 );
 
-Then('Jeg velger {string} på vekting av produkt', (weight: string) => {
+When('Jeg velger {string} på vekting av produkt', (weight: string) => {
   let productWeighting: number | undefined;
   switch (weight) {
     case 'Lavest': {

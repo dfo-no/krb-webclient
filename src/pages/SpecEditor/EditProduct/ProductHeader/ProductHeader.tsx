@@ -42,12 +42,11 @@ export default function ProductHeader({
           secondaryText={product?.originProduct.title}
         />
         {hasRequirements && (
-          <div data-cy={'chosen-requirements'}>
-            <ToolbarItem
-              primaryText={t('Chosen requirements')}
-              secondaryText={chosenRequirements(specification, product)}
-            />
-          </div>
+          <ToolbarItem
+            dataCy={'chosen-requirements'}
+            primaryText={t('Chosen requirements')}
+            secondaryText={chosenRequirements(specification, product)}
+          />
         )}
       </Toolbar>
     );

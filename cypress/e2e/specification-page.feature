@@ -15,23 +15,23 @@ Feature: Spesifikasjon
   Scenario: Jeg kan rediger spesifikasjon
     Given Jeg åpner spesifikasjon
     When Jeg klikker på "Rediger spesifikasjon" knapp
-    Then Jeg skriver "Test kravspesifikasjon 2" i feltet "Navn på spesifikasjon"
+    And Jeg skriver "Test kravspesifikasjon 2" i feltet "Navn på spesifikasjon"
     And Jeg skriver "111111/bb" i feltet "Saksnummer"
     And Jeg skriver "dfø" i feltet "Navn"
     And Jeg klikker på "Norske kroner (NOK)" og velger "Europeiske euro (EUR)"
-    And Ser jeg "Legg til produkt" knapp er deaktiv
-    And Ser jeg "Rediger generelle krav" knapp er deaktiv
-    And Ser jeg "Rediger produktet" knapp er deaktiv
+    Then Ser jeg "Legg til produkt" knapp er inaktiv
+    And Ser jeg "Rediger generelle krav" knapp er inaktiv
+    And Ser jeg "Rediger produktet" knapp er inaktiv
     And Jeg klikker på "Lagre" knapp for å lagre
 
   Scenario: Jeg kan legge til produkt til spesifikasjonen
     Given Jeg åpner spesifikasjon
     When Jeg klikker på "Legg til produkt" knapp
-    Then Velg en produkttype
+    And Velg en produkttype
     And Jeg skriver "Test produkt" i feltet "Navn"
     And Jeg skriver "Test beskrivelse til produkt" i feltet "Beskrivelse"
     And Jeg skriver 2 i feltet "Antall"
-    And Jeg klikker på "Lagre" knapp for å lagre
+    Then Jeg klikker på "Lagre" knapp for å lagre
     And Jeg klikker på "Lagre produkt" knapp for å lagre
 
   Scenario: Jeg kan laste ned spesifikasjon

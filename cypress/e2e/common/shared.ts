@@ -21,21 +21,21 @@ When('Jeg klikker på {string} knapp', (value: string) => {
   cy.get('div').contains(value).click();
 });
 
-Then(
+When(
   'Jeg skriver {string} i feltet {string}',
   (text: string, fieldName: string) => {
     cy.get(`input[placeholder="${fieldName}"]`).clear().type(text);
   }
 );
 
-Then(
+When(
   'Jeg skriver {int} i feltet {string}',
   (text: string, fieldName: number) => {
     cy.get(`input[placeholder="${fieldName}"]`).clear().type(text);
   }
 );
 
-Then('Ser jeg {string} knappen er deaktiv', (value: string) => {
+Then('Ser jeg {string} knappen er inaktiv', (value: string) => {
   cy.get('button').contains(value).should('be.disabled');
 });
 
