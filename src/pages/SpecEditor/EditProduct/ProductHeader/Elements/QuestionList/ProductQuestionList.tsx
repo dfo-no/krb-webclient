@@ -33,7 +33,7 @@ const ProductQuestionsList = ({ variant }: IProps): ReactElement => {
   }
 
   return (
-    <Box className={css.QuestionsList}>
+    <Box>
       {variant.type === VariantType.info ? (
         <QuestionAnswer item={item} />
       ) : (
