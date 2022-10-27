@@ -11,7 +11,7 @@ interface IProps {
   isOpen: boolean;
   handleClose: () => void;
   children: React.ReactNode;
-  scroll?: 'body' | 'paper' | undefined;
+  scroll?: 'body' | 'paper';
 }
 
 const useStyles = makeStyles({

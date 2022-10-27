@@ -39,7 +39,7 @@ export default function ToolbarItem({
       data-icon={!!icon}
       data-badge={isBadge}
     >
-      {icon && icon}
+      {icon}
       {primaryText && (
         <Typography>
           {primaryText} {icon ? '' : ': '}

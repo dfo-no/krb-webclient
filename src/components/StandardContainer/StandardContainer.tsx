@@ -1,6 +1,6 @@
 import { Box, styled } from '@mui/material/';
 
-export const StandardContainer = styled(Box)(({}) => ({
+export const StandardContainer = styled(Box)(() => ({
   display: 'flex',
   flexDirection: 'column',
   paddingTop: 40,
