@@ -27,6 +27,8 @@ const QuestionSpecificationCheckbox = (): ReactElement => {
   const onCheckboxClick = (): void => {
     if (preferredScore) {
       setValue('question.config.pointsNonPrefered', 0);
+    } else {
+      setValue('question.config.pointsNonPrefered', 70);
     }
     setPreferredScore((prev) => !prev);
   };

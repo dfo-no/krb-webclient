@@ -10,6 +10,10 @@
 
     .variant {
       border: 0.1rem var(--border-color-secondary) solid;
+
+      .hidden {
+        display: none;
+      }
     }
   }
 

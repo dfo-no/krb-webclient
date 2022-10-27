@@ -26,6 +26,8 @@ const QuestionSpecificationConfirmation = (): ReactElement => {
   const onCheckboxClick = (): void => {
     if (preferredScore) {
       setValue('question.config.pointsUnconfirmed', 0);
+    } else {
+      setValue('question.config.pointsUnconfirmed', 70);
     }
     setPreferredScore((prev) => !prev);
   };

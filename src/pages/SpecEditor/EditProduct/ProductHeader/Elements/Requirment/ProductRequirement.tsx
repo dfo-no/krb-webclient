@@ -27,6 +27,7 @@ import GeneralErrorMessage from '../../../../../../Form/GeneralErrorMessage';
 import ToolbarItem from '../../../../../../components/UI/Toolbar/ToolbarItem';
 import Toolbar from '../../../../../../components/UI/Toolbar/ToolBar';
 import Badge from '../../../../../../components/UI/Badge/Badge';
+import style from '../Variant/ProductVariant.module.scss';
 
 interface IProps {
   requirement: IRequirement;
@@ -144,7 +145,19 @@ export default function ProductRequirement({
 
   const renderActiveVariant = (): ReactElement => {
     return (
-      <Box>
+      <Box className={css.variant}>
+        {activeVariant && (
+          <Box className={style.ProductVariant}>
+            <div className={style.content}>
+              <Typography variant={'smBold'}>
+                {activeVariant.description}
+              </Typography>
+              <Typography variant={'sm'}>
+                {activeVariant.requirementText}
+              </Typography>
+            </div>
+          </Box>
+        )}
         {activeVariant && (
           <Box className={css.active}>
             {requirement && (
@@ -248,16 +261,28 @@ export default function ProductRequirement({
             >
               <Box className={css.variant}>
                 {requirement.variants.map((variant) => {
+                  const chosenVariantId = () => {
+                    if (activeVariant) {
+                      return requirement.variants.find(
+                        (v) => v.id === variant?.id
+                      );
+                    }
+                  };
                   return (
-                    <ProductVariant
+                    <Box
                       key={variant.id}
-                      variant={variant}
-                      isVariant={isVariant()}
-                    />
+                      className={!chosenVariantId() ? css.variant : css.hidden}
+                    >
+                      <ProductVariant
+                        key={variant.id}
+                        variant={variant}
+                        isVariant={isVariant()}
+                      />
+                    </Box>
                   );
                 })}
-                {renderActiveVariant()}
               </Box>
+              {renderActiveVariant()}
               <GeneralErrorMessage errors={methods.formState.errors} />
             </form>
           </FormProvider>
