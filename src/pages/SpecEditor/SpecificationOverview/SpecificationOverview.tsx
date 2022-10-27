@@ -36,7 +36,6 @@ export const chosenRequirements = (
     const answeredRequirements = specProduct?.requirements.length;
     return `${answeredRequirements}/${totalProductRequirements}`;
   }
-  return;
 };
 
 export default function SpecificationOverview(): React.ReactElement {
