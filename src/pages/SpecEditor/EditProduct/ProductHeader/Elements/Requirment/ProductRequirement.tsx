@@ -144,7 +144,7 @@ export default function ProductRequirement({
 
   const renderActiveVariant = (): ReactElement => {
     return (
-      <Box>
+      <Box className={css.variant}>
         {activeVariant && (
           <Box className={css.active}>
             {requirement && (
@@ -248,16 +248,28 @@ export default function ProductRequirement({
             >
               <Box className={css.variant}>
                 {requirement.variants.map((variant) => {
+                  const chosenVariantId = () => {
+                    if (activeVariant) {
+                      return requirement.variants.find(
+                        (v) => v.id === variant?.id
+                      );
+                    }
+                  };
                   return (
-                    <ProductVariant
+                    <Box
                       key={variant.id}
-                      variant={variant}
-                      isVariant={isVariant()}
-                    />
+                      className={!chosenVariantId() ? css.card : css.hidden}
+                    >
+                      <ProductVariant
+                        key={variant.id}
+                        variant={variant}
+                        isVariant={isVariant()}
+                      />
+                    </Box>
                   );
                 })}
-                {renderActiveVariant()}
               </Box>
+              {renderActiveVariant()}
               <GeneralErrorMessage errors={methods.formState.errors} />
             </form>
           </FormProvider>
