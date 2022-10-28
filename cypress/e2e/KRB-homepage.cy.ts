@@ -1,9 +1,13 @@
 describe('check front page', () => {
   it('has multiple banks on the front page', () => {
+    cy.intercept(
+      'GET',
+      'https://krb-api-man-dev.azure-api.net/api/bank/banks?pageSize=500&page=1&fieldName=title&order=DESC'
+    ).as('getBanks');
+
     cy.visit('localhost:3000');
-    // Can break if not tested for a long time since for dates more than a
-    // certain number of days above will display as an actual date instead as a
-    // relative number compared to today
+
+    cy.wait('@getBanks');
     cy.get('[data-cy="newest-banks-container"]')
       .get('[data-cy="bank"]')
       .its('length')
