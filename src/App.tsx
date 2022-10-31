@@ -3,6 +3,12 @@ import { CssBaseline } from '@mui/material';
 import { MsalProvider } from '@azure/msal-react';
 import { PublicClientApplication } from '@azure/msal-browser';
 import { Route, Switch, useLocation } from 'react-router-dom';
+import { ApplicationInsights } from '@microsoft/applicationinsights-web';
+import {
+  AppInsightsContext,
+  ReactPlugin,
+} from '@microsoft/applicationinsights-react-js';
+import { createBrowserHistory } from 'history';
 
 import AlertList from './components/Alert/AlertList';
 import EvaluationModule from './pages/Evaluation/EvaluationModule';
@@ -18,6 +24,20 @@ import { msalConfig } from './authentication/authConfig';
 import Breadcrumbs from './components/Breadcrumbs/Breadcrumbs';
 import Footer from './Footer/Footer';
 
+const browserHistory = createBrowserHistory();
+const reactPlugin = new ReactPlugin();
+const appInsights = new ApplicationInsights({
+  config: {
+    connectionString:
+      'InstrumentationKey=8996d772-da45-4cbf-90cc-b07a7f163437;IngestionEndpoint=https://norwayeast-0.in.applicationinsights.azure.com/;LiveEndpoint=https://norwayeast.livediagnostics.monitor.azure.com/',
+    extensions: [reactPlugin],
+    extensionConfig: {
+      [reactPlugin.identifier]: { history: browserHistory },
+    },
+  },
+});
+appInsights.loadAppInsights();
+
 const msalInstance = new PublicClientApplication(msalConfig);
 
 function App(): ReactElement {
@@ -27,16 +47,21 @@ function App(): ReactElement {
 
   function renderContent(): ReactElement {
     return (
-      <Switch>
-        <Route exact path="/">
-          <HomePage />
-        </Route>
-        <Route path="/workbench" component={WorkbenchModule} />
-        <Route path="/specification" component={SpecModule} />
-        <Route path="/response" component={ResponseModule} />
-        <Route path="/evaluation" component={EvaluationModule} />
-        <Route path="/prefilledresponse" component={PrefilledResponseModule} />
-      </Switch>
+      <AppInsightsContext.Provider value={reactPlugin}>
+        <Switch>
+          <Route exact path="/">
+            <HomePage />
+          </Route>
+          <Route path="/workbench" component={WorkbenchModule} />
+          <Route path="/specification" component={SpecModule} />
+          <Route path="/response" component={ResponseModule} />
+          <Route path="/evaluation" component={EvaluationModule} />
+          <Route
+            path="/prefilledresponse"
+            component={PrefilledResponseModule}
+          />
+        </Switch>
+      </AppInsightsContext.Provider>
     );
   }
 
