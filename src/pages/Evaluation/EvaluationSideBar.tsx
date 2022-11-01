@@ -47,6 +47,7 @@ const EvaluationSideBar = (): ReactElement => {
             key={index}
             className={index === tab ? css.Active : undefined}
             onClick={() => setTab(index)}
+            data-cy={'evaluation-menu-item'}
           >
             <div>{t(item.label)}</div>
             {isDone(index) && <CheckIcon />}
