@@ -7,10 +7,10 @@ Given('Jeg laste opp spesifikasjon og velger {string}', (value: string) => {
 });
 
 Then('Ser jeg {string} er aktivert', (text: string) => {
-  cy.get('[data-cy="evaluation-menu-item"][class*="Active"]').contains(text);
+  cy.contains(text).parent().should('have.class', 'Evaluation_Active__WmWgq');
 });
 
-Then('Ser jeg {string} har {string}', (text: string, value: string) => {
+Then('Ser jeg {string} har {string} som resultat', (text: string, value: string) => {
   cy.get('div[class*="Result"]').should('contain', text).and('contain', value);
 });
 

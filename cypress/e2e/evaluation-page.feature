@@ -16,5 +16,5 @@ Feature: Evalueringsside
     And Ser jeg "2022-10-03-citronen-response-4.pdf" på siden
     When Jeg klikker på "Manuell evaluering" knapp
     And Jeg klikker på "Evaluer besvarelser" knappen
-    Then Ser jeg "Citronen" har "93%"
+    Then Ser jeg "Citronen" har "93%" som resultat
     Then Klikker jeg på "Last ned evaluering" knapp for å laste ned evaluering
