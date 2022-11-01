@@ -1,5 +1,5 @@
 import { Given, Then, When } from '@badeball/cypress-cucumber-preprocessor';
-import { clickAndWaitForResponse, uploadFile } from '../common/helpers';
+import { clickAndWaitForResponse, uploadFile } from './helpers';
 
 Given('Jeg åpner forberedt besvarelse', () => {
   cy.visit('localhost:3000');

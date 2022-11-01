@@ -1,5 +1,5 @@
 import { Given, Then, When } from '@badeball/cypress-cucumber-preprocessor';
-import { uploadFile, visitHomePageAndWaitBank } from '../common/helpers';
+import { uploadFile, visitHomePageAndWaitBank } from './helpers';
 
 Given('Jeg åpner hjemmesiden', () => {
   visitHomePageAndWaitBank();

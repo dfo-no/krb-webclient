@@ -1,5 +1,5 @@
 import { Then, When } from '@badeball/cypress-cucumber-preprocessor';
-import { clickAndWaitForResponse } from '../common/helpers';
+import { clickAndWaitForResponse } from './helpers';
 
 When('Velg rediger spesifikasjon', () => {
   cy.contains('Rediger spesifikasjon').click();
