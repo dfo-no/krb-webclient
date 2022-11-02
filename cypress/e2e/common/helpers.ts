@@ -1,18 +1,18 @@
-const intercept = () => {
+const bankIntercept = () => {
   cy.intercept(
     'Get',
     `https://krb-api-man-dev.azure-api.net/api/bank/banks?pageSize=500&page=1&fieldName=title&order=DESC`
   ).as('getBanks');
 };
 
-const wait = () => {
+const waitForBanks = () => {
   cy.wait('@getBanks').its('response.statusCode').should('eq', 200);
 };
 
 const visitHomePageAndWaitBank = () => {
-  intercept();
+  bankIntercept();
   cy.visit('localhost:3000');
-  wait();
+  waitForBanks();
 };
 
 const downloadIntercept = (path: string, alias = 'generatePDF') => {

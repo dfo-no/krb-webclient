@@ -8,7 +8,7 @@ Feature: Hjemmesiden
 
   Scenario: Jeg kan velge en bank fra søkefelt og lage ny spesifikasjon
     Given Jeg åpner startsiden
-    When Jeg søker etter "Test" på hjemmesiden
+    When Jeg søker etter "Test" på hjemmesiden og klikker på det første forslaget
     And Jeg klikker på "Opprett kravspesifikasjon" knapp
     And Jeg skriver "Test kravspesifikasjon 2" i feltet "Navn på spesifikasjon"
     And Jeg skriver "111111/aa" i feltet "Saksnummer"

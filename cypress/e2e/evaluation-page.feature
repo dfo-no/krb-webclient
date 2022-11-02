@@ -3,7 +3,7 @@ Feature: Evalueringsside
   Jeg skal kunne se innholdet og evaluere en spesifikasjon
 
   Scenario: Jeg kan se overskriften av evalueringsside
-    Given Jeg laste opp spesifikasjon og velger "Gjennomfør evaluering"
+    Given Jeg laster opp spesifikasjon og velger "Gjennomfør evaluering"
     Then Ser jeg "Last opp spesifikasjon" på siden
     And Ser jeg "Last opp besvarelser" er aktivert
     And Ser jeg "Manuell evaluering" på siden

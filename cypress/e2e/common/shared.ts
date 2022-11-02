@@ -44,7 +44,7 @@ When(
   }
 );
 
-When('Jeg søker etter {string} på hjemmesiden', (bankName: string) => {
+When('Jeg søker etter {string} på hjemmesiden og klikker på det første forslaget', (bankName: string) => {
   cy.contains('Søk etter').parent().click().type(bankName);
   cy.contains(bankName).click();
 });
