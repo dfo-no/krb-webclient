@@ -16,7 +16,7 @@ Given('Jeg åpner produkt-spesifikasjon side', () => {
   cy.get('div').contains('Rediger produktet').click();
 });
 
-When('Laste opp besvarelse', () => {
+When('Jeg laster opp besvarelse', () => {
   uploadResponseFileForEvaluation(
     './cypress/filesForUploadTesting/2022-10-03-citronen-response-4.pdf'
   );

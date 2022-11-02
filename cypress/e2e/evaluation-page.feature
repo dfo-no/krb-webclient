@@ -10,8 +10,8 @@ Feature: Evalueringsside
     And Ser jeg "Resultat" på siden
 
   Scenario: Jeg kan gjennomføre manuell evaluering og laste ned evaluering
-    Given Jeg laste opp spesifikasjon og velger "Gjennomfør evaluering"
-    When Laste opp besvarelse
+    Given Jeg laster opp spesifikasjon og velger "Gjennomfør evaluering"
+    When Jeg laster opp besvarelse
     Then Ser jeg "Citronen" på siden
     And Ser jeg "2022-10-03-citronen-response-4.pdf" på siden
     When Jeg klikker på "Manuell evaluering" knapp

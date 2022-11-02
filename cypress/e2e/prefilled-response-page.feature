@@ -4,7 +4,7 @@ Feature: Forberedt besvarelse
 
   Scenario: Jeg kan lage forberedt besvarelse
     Given Jeg åpner startsiden
-    When Jeg søker etter "Kjøretøy til hjemmetjenesten" på hjemmesiden
+    When Jeg søker etter "Kjøretøy til hjemmetjenesten" på hjemmesiden og klikker på det første forslaget
     And Jeg klikker på "Lag forberedt besvarelse" knapp
     And Jeg skriver "Test leverandør" i feltet "Navn på leverandør"
     Then Jeg klikker på "Lag forberedt besvarelse" knappen
