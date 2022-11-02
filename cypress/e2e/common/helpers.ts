@@ -40,7 +40,7 @@ const uploadFile = (fileName: string) => {
 };
 
 const uploadResponseFileForEvaluation = (fileName: string) => {
-  cy.get('label').contains('Last opp besvarelser').selectFile(fileName);
+  cy.get('[class*="FileUpload"]').contains('Last opp besvarelser').selectFile(fileName);
 };
 
 export {
