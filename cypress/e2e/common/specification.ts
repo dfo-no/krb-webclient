@@ -1,15 +1,5 @@
-import { Given, Then, When } from '@badeball/cypress-cucumber-preprocessor';
+import { Then, When } from '@badeball/cypress-cucumber-preprocessor';
 import { clickAndWaitForResponse } from './helpers';
-
-Given('Jeg åpner startsiden', () => {
-  cy.visit('localhost:3000');
-});
-
-When('Laste opp kravspesifikasjon', () => {
-  cy.contains('Last opp kravbank-fil').selectFile(
-    './cypress/filesForUploadTesting/specification-1.pdf'
-  );
-});
 
 When('Velg rediger spesifikasjon', () => {
   cy.contains('Rediger spesifikasjon').click();

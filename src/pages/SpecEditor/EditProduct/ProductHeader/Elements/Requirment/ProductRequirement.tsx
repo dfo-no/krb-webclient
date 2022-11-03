@@ -196,7 +196,7 @@ export default function ProductRequirement({
               </Typography>
             </div>
             <Toolbar>
-              {useWeight && !isInfo() && (
+              {!!useWeight && !isInfo() && (
                 <ToolbarItem
                   primaryText={t('Weighting')}
                   secondaryText={t(Weighting[useWeight])}

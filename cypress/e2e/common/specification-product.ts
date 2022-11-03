@@ -1,4 +1,4 @@
-import { Then, When } from "@badeball/cypress-cucumber-preprocessor";
+import { Then, When } from '@badeball/cypress-cucumber-preprocessor';
 
 Then(
   'Ser jeg tittel er {string}, antall er {string}, vekting er {string}, type er {string} og beskrivelse er {string}',
