@@ -3,7 +3,10 @@ import { CssBaseline } from '@mui/material';
 import { MsalProvider } from '@azure/msal-react';
 import { PublicClientApplication } from '@azure/msal-browser';
 import { Route, Switch, useLocation } from 'react-router-dom';
-import { ApplicationInsights } from '@microsoft/applicationinsights-web';
+import {
+  ApplicationInsights,
+  ITelemetryItem,
+} from '@microsoft/applicationinsights-web';
 import {
   AppInsightsContext,
   ReactPlugin,
@@ -34,9 +37,26 @@ const appInsights = new ApplicationInsights({
     extensionConfig: {
       [reactPlugin.identifier]: { history: browserHistory },
     },
+    disableFetchTracking: true,
   },
 });
 appInsights.loadAppInsights();
+
+appInsights.addTelemetryInitializer((env: ITelemetryItem) => {
+  // eslint-disable-next-line no-param-reassign
+  env.tags = env.tags || [];
+
+  // Default is krb-webclient. I don't know where Application Insights get it from, so I'll leave this here as an
+  // example for now.
+
+  // eslint-disable-next-line no-param-reassign
+  // env.tags['ai.cloud.role'] = 'krb-webclient';
+
+  // eslint-disable-next-line no-param-reassign
+  env.data = env.data || [];
+  // eslint-disable-next-line no-param-reassign
+  env.data.environment = process.env.REACT_APP_APPLICATION_INSIGHTS_ENVIRONMENT;
+});
 
 const msalInstance = new PublicClientApplication(msalConfig);
 
