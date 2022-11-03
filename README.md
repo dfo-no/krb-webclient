@@ -6,10 +6,11 @@ This recipe should work for most mainstream OSs, including Windows, Mac and main
 
 1. You need the client id in order to run the application. Log onto portal.azure.com and find it under the Kravbank
    application.
-2. Create a .env.local file in krb-webclient directory, and add the following lines:
+2. Create (or copy from someone else in the team) a .env.local file in krb-webclient directory with the following lines:
 
-   > REACT_APP_CLIENTID="Key attained from Portal"
    > REACT_APP_API_URL=https://krb-api-man-dev.azure-api.net
+   > REACT_APP_CLIENTID="<can be found in Azure Portal>"
+   > REACT_APP_APPLICATION_INSIGHTS_CONNECTION_STRING="<can be found in Azure Portal>"
 
 ## Installation
 

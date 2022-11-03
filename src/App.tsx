@@ -29,7 +29,7 @@ const reactPlugin = new ReactPlugin();
 const appInsights = new ApplicationInsights({
   config: {
     connectionString:
-      'InstrumentationKey=8996d772-da45-4cbf-90cc-b07a7f163437;IngestionEndpoint=https://norwayeast-0.in.applicationinsights.azure.com/;LiveEndpoint=https://norwayeast.livediagnostics.monitor.azure.com/',
+      process.env.REACT_APP_APPLICATION_INSIGHTS_CONNECTION_STRING,
     extensions: [reactPlugin],
     extensionConfig: {
       [reactPlugin.identifier]: { history: browserHistory },

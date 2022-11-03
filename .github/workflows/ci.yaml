@@ -7,7 +7,7 @@ on:
       - krb-*
       - KRB-*
   release:
-    types: [published]
+    types: [ published ]
 
 env:
   NODE_VERSION: "16.x"
@@ -44,6 +44,7 @@ jobs:
         env:
           REACT_APP_CLIENTID: ${{ secrets.REACT_APP_CLIENTID }}
           REACT_APP_API_URL: ${{ secrets.REACT_APP_API_URL_DEV }}
+          REACT_APP_APPLICATION_INSIGHTS_CONNECTION_STRING: ${{ secrets.REACT_APP_APPLICATION_INSIGHTS_CONNECTION_STRING_DEV }}
           CI: false
 
       - name: Upload build
@@ -88,6 +89,7 @@ jobs:
         env:
           REACT_APP_CLIENTID: ${{ secrets.REACT_APP_CLIENTID }}
           REACT_APP_API_URL: ${{ secrets.REACT_APP_API_URL_PROD }}
+          REACT_APP_APPLICATION_INSIGHTS_CONNECTION_STRING: ${{ secrets.REACT_APP_APPLICATION_INSIGHTS_CONNECTION_STRING_PROD }}
 
       - name: Upload build
         uses: actions/upload-artifact@v3
@@ -197,6 +199,7 @@ jobs:
         env:
           REACT_APP_CLIENTID: ${{ secrets.REACT_APP_CLIENTID }}
           REACT_APP_API_URL: ${{ secrets.REACT_APP_API_URL_DEV }}
+          REACT_APP_APPLICATION_INSIGHTS_CONNECTION_STRING: ${{ secrets.REACT_APP_APPLICATION_INSIGHTS_CONNECTION_STRING_DEV }}
 
   # Deploy
 
