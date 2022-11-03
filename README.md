@@ -10,6 +10,7 @@ This recipe should work for most mainstream OSs, including Windows, Mac and main
 
    > REACT_APP_API_URL=https://krb-api-man-dev.azure-api.net
    > REACT_APP_CLIENTID="<can be found in Azure Portal>"
+   > REACT_APP_APPLICATION_INSIGHTS_ENVIRONMENT=localhost
    > REACT_APP_APPLICATION_INSIGHTS_CONNECTION_STRING="<can be found in Azure Portal>"
 
 ## Installation
