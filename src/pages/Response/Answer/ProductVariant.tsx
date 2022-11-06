@@ -25,9 +25,9 @@ export default function ProductVariant({
       <Typography variant={'smBold'} color={theme.palette.primary.main}>
         {t('Instruction')}
       </Typography>
-      <Typography className={css.label}>
-        {variant.instruction ? variant.instruction : '-'}
-      </Typography>
+      {variant.instruction && (
+        <Typography className={css.label}>{variant.instruction}</Typography>
+      )}
     </Box>
   );
 }
