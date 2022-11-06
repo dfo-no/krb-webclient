@@ -10,7 +10,6 @@ import {
   ModalButton,
   ModalButtonsBox,
 } from '../../components/ModalBox/ModalBox';
-import { selectBank } from '../../store/reducers/selectedBank-reducer';
 import { setResponse } from '../../store/reducers/response-reducer';
 import { useAppDispatch } from '../../store/hooks';
 
@@ -28,7 +27,6 @@ export default function ResponseSelectionModal({
   const dispatch = useAppDispatch();
 
   const editResponse = (): void => {
-    dispatch(selectBank(selectedResponse.specification.bank.id));
     dispatch(setResponse(selectedResponse));
     history.push(`/response/${selectedResponse.specification.bank.id}`);
   };
