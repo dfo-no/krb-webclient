@@ -22,11 +22,13 @@ export default function ProductVariant({
       <Typography className={css.label}>
         {variant.requirementText ? variant.requirementText : '-'}
       </Typography>
-      <Typography variant={'smBold'} color={theme.palette.primary.main}>
-        {t('Instruction')}
-      </Typography>
       {variant.instruction && (
-        <Typography className={css.label}>{variant.instruction}</Typography>
+        <>
+          <Typography variant={'smBold'} color={theme.palette.primary.main}>
+            {t('Instruction')}
+          </Typography>
+          <Typography className={css.label}>{variant.instruction}</Typography>
+        </>
       )}
     </Box>
   );
