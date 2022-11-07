@@ -8,16 +8,16 @@ import css from '../../Stylesheets/EditorFullPage.module.scss';
 import DownloadButton from '../Download/DownloadButton';
 import theme from '../../../theme';
 import { ISpecificationProduct } from '../../../Nexus/entities/ISpecificationProduct';
-import { useAppSelector } from '../../../store/hooks';
 import { useProductIndexState } from '../../../components/ProductIndexContext/ProductIndexContext';
 import { PRODUCTS, RESPONSE } from '../../../common/PathConstants';
 import { FormIconButton } from '../../../components/Form/FormIconButton';
 import Panel from '../../../components/UI/Panel/Panel';
+import { useResponseState } from '../ResponseContext';
 
 function ResponseOverview(): React.ReactElement {
   const { t } = useTranslation();
   const history = useHistory();
-  const { response } = useAppSelector((state) => state.response);
+  const { response } = useResponseState();
   const { setProductIndex } = useProductIndexState();
   const genericPressed = () => {
     setProductIndex(-1);

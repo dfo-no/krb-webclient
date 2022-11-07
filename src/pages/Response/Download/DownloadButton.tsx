@@ -5,10 +5,10 @@ import { useTranslation } from 'react-i18next';
 
 import { httpPost } from '../../../api/http';
 import { IResponse } from '../../../Nexus/entities/IResponse';
-import { useAppSelector } from '../../../store/hooks';
+import { useResponseState } from '../ResponseContext';
 
 export default function DownloadButton(): React.ReactElement {
-  const { response } = useAppSelector((state) => state.response);
+  const { response } = useResponseState();
   const { t } = useTranslation();
 
   const onDownLoad = () => {

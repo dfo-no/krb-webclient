@@ -4,11 +4,11 @@ import { t } from 'i18next';
 import css from '../../Stylesheets/EditorFullPage.module.scss';
 import Nexus from '../../../Nexus/Nexus';
 import { IPointsCalculation } from '../../../Nexus/entities/IPointsCalculation';
-import { useAppSelector } from '../../../store/hooks';
 import { useProductIndexState } from '../../../components/ProductIndexContext/ProductIndexContext';
+import { useResponseState } from '../ResponseContext';
 
 export default function CalculatedPercentage(): React.ReactElement {
-  const { response } = useAppSelector((state) => state.response);
+  const { response } = useResponseState();
   const { productIndex } = useProductIndexState();
   const nexus = Nexus.getInstance();
   const [evaluation, setEvaluation] = useState<IPointsCalculation | null>(null);

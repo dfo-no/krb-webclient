@@ -8,12 +8,11 @@ import QuestionAnswerPeriodDate from '../../../components/QuestionAnswer/Questio
 import QuestionAnswerSlider from '../../../components/QuestionAnswer/QuestionAnswerSlider';
 import QuestionAnswerText from '../../../components/QuestionAnswer/QuestionAnswerText';
 import QuestionAnswerTime from '../../../components/QuestionAnswer/QuestionAnswerTime';
-import { addProductAnswer, addRequirementAnswer } from '../response-reducer';
+import { useResponseState } from '../ResponseContext';
 import { IRequirementAnswer } from '../../../Nexus/entities/IRequirementAnswer';
 import { QuestionType } from '../../../Nexus/entities/QuestionType';
 import { QuestionVariant } from '../../../Nexus/enums';
 import { useAccordionState } from '../../../components/DFOAccordion/AccordionContext';
-import { useAppDispatch, useAppSelector } from '../../../store/hooks';
 import { useProductIndexState } from '../../../components/ProductIndexContext/ProductIndexContext';
 
 interface IProps {
@@ -25,14 +24,14 @@ export default function ProductQuestionAnswer({
   requirementAnswer,
   existingAnswer,
 }: IProps): React.ReactElement {
-  const dispatch = useAppDispatch();
-  const { response } = useAppSelector((state) => state.response);
+  const { response, addProductAnswer, addRequirementAnswer } =
+    useResponseState();
   const nexus = Nexus.getInstance();
   const { productIndex } = useProductIndexState();
   const { setActiveKey } = useAccordionState();
 
   const onSubmit = (post: QuestionType): void => {
-    const calulatedPoints = {
+    const calculatedPoints = {
       ...post,
       answer: {
         ...post.answer,
@@ -41,17 +40,15 @@ export default function ProductQuestionAnswer({
     } as QuestionType;
     const newAnswer = {
       ...requirementAnswer,
-      question: calulatedPoints,
+      question: calculatedPoints,
     };
     if (productIndex === -1) {
-      dispatch(addRequirementAnswer(newAnswer));
+      addRequirementAnswer(newAnswer);
     } else {
-      dispatch(
-        addProductAnswer({
-          answer: newAnswer,
-          productId: response.products[productIndex].id,
-        })
-      );
+      addProductAnswer({
+        answer: newAnswer,
+        productId: response.products[productIndex].id,
+      });
     }
     setActiveKey('');
   };

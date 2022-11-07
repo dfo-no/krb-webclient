@@ -26,6 +26,7 @@ import { HeaderProvider } from './components/Header/HeaderContext';
 import { msalConfig } from './authentication/authConfig';
 import Breadcrumbs from './components/Breadcrumbs/Breadcrumbs';
 import Footer from './Footer/Footer';
+import { ResponseProvider } from './pages/Response/ResponseContext';
 
 const browserHistory = createBrowserHistory();
 const reactPlugin = new ReactPlugin();
@@ -68,19 +69,22 @@ function App(): ReactElement {
   function renderContent(): ReactElement {
     return (
       <AppInsightsContext.Provider value={reactPlugin}>
-        <Switch>
-          <Route exact path="/">
-            <HomePage />
-          </Route>
-          <Route path="/workbench" component={WorkbenchModule} />
-          <Route path="/specification" component={SpecModule} />
-          <Route path="/response" component={ResponseModule} />
-          <Route path="/evaluation" component={EvaluationModule} />
-          <Route
-            path="/prefilledresponse"
-            component={PrefilledResponseModule}
-          />
-        </Switch>
+        {/* TODO: Narrow down to only response module */}
+        <ResponseProvider>
+          <Switch>
+            <Route exact path="/">
+              <HomePage />
+            </Route>
+            <Route path="/workbench" component={WorkbenchModule} />
+            <Route path="/specification" component={SpecModule} />
+            <Route path="/response" component={ResponseModule} />
+            <Route path="/evaluation" component={EvaluationModule} />
+            <Route
+              path="/prefilledresponse"
+              component={PrefilledResponseModule}
+            />
+          </Switch>
+        </ResponseProvider>
       </AppInsightsContext.Provider>
     );
   }

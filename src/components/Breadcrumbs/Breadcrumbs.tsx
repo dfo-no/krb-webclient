@@ -11,11 +11,12 @@ import { IBank } from '../../Nexus/entities/IBank';
 import { useEvaluationState } from '../../pages/Evaluation/EvaluationContext';
 import { useGetProjectQuery } from '../../store/api/bankApi';
 import ProjectActionsToolbar from '../../pages/Workbench/Projects/ProjectActionsToolbar';
+import { useResponseState } from '../../pages/Response/ResponseContext';
 
 const Breadcrumbs = (): ReactElement => {
   const { t } = useTranslation();
   const { title } = useHeaderState();
-  const { response } = useAppSelector((state) => state.response);
+  const { response } = useResponseState();
   const { prefilledResponse } = useAppSelector(
     (state) => state.prefilledResponse
   );

@@ -2,14 +2,14 @@ import React from 'react';
 import { Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 
-import { useAppSelector } from '../../../store/hooks';
 import { useProductIndexState } from '../../../components/ProductIndexContext/ProductIndexContext';
 import ToolbarItem from '../../../components/UI/Toolbar/ToolbarItem';
 import Toolbar from '../../../components/UI/Toolbar/ToolBar';
+import { useResponseState } from '../ResponseContext';
 
 export default function ProductHeader(): React.ReactElement {
   const { t } = useTranslation();
-  const { response } = useAppSelector((state) => state.response);
+  const { response } = useResponseState();
   const { productIndex } = useProductIndexState();
 
   const description =

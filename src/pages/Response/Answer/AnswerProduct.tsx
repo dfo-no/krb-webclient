@@ -10,17 +10,17 @@ import ProductRequirementAnswer from './ProductRequirementAnswer';
 import { AccordionProvider } from '../../../components/DFOAccordion/AccordionContext';
 import { INeed } from '../../../Nexus/entities/INeed';
 import { IRequirementAnswer } from '../../../Nexus/entities/IRequirementAnswer';
-import { useAppSelector } from '../../../store/hooks';
 import { useProductIndexState } from '../../../components/ProductIndexContext/ProductIndexContext';
 import EditResponseProduct from '../EditResponseProduct/EditResponseProduct';
 import { RESPONSE } from '../../../common/PathConstants';
 import Panel from '../../../components/UI/Panel/Panel';
 import css from '../../Stylesheets/EditorFullPage.module.scss';
+import { useResponseState } from '../ResponseContext';
 
 export default function AnswerProduct(): React.ReactElement {
   const { t } = useTranslation();
   const history = useHistory();
-  const { response } = useAppSelector((state) => state.response);
+  const { response } = useResponseState();
   const { productIndex } = useProductIndexState();
   const existingNeeds = new Set<INeed>();
 

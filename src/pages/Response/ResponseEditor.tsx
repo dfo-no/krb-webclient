@@ -5,11 +5,11 @@ import AnswerProduct from './Answer/AnswerProduct';
 import css from '../Stylesheets/EditorFullPage.module.scss';
 import ResponseOverview from './Overview/ResponseOverview';
 import { SelectProvider } from '../Workbench/Create/SelectContext';
-import { RESPONSE, PRODUCTS } from '../../common/PathConstants';
-import { useAppSelector } from '../../store/hooks';
+import { PRODUCTS, RESPONSE } from '../../common/PathConstants';
+import { useResponseState } from './ResponseContext';
 
 export default function ResponseEditor(): React.ReactElement {
-  const { response } = useAppSelector((state) => state.response);
+  const { response } = useResponseState();
   return (
     <div className={css.EditorFullPage}>
       <div className={css.Content}>

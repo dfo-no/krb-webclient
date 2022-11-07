@@ -10,7 +10,7 @@ import {
   ModalButton,
   ModalButtonsBox,
 } from '../../components/ModalBox/ModalBox';
-import { setResponse } from '../Response/response-reducer';
+import { useResponseState } from '../Response/ResponseContext';
 import { useAppDispatch } from '../../store/hooks';
 
 interface IProps {
@@ -25,9 +25,10 @@ export default function ResponseSelectionModal({
   const history = useHistory();
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
+  const { setResponse } = useResponseState();
 
   const editResponse = (): void => {
-    dispatch(setResponse(selectedResponse));
+    setResponse(selectedResponse);
     history.push(`/response/${selectedResponse.specification.bank.id}`);
   };
 

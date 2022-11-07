@@ -5,11 +5,11 @@ import { useTranslation } from 'react-i18next';
 import byggernIllustration from '../../../assets/images/byggern-illustration.svg';
 import css from '../../Stylesheets/NoProducts.module.scss';
 import theme from '../../../theme';
-import { useAppSelector } from '../../../store/hooks';
+import { useResponseState } from '../ResponseContext';
 
 export default function ResponseStart(): React.ReactElement {
   const { t } = useTranslation();
-  const { response } = useAppSelector((state) => state.response);
+  const { response } = useResponseState();
 
   return (
     <div className={css.NoProducts}>

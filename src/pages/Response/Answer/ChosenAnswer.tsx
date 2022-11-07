@@ -5,7 +5,7 @@ import { t } from 'i18next';
 import TextUtils from '../../../common/TextUtils';
 import theme from '../../../theme';
 import { IRequirementAnswer } from '../../../Nexus/entities/IRequirementAnswer';
-import { useAppSelector } from '../../../store/hooks';
+import { useResponseState } from '../ResponseContext';
 
 interface IProps {
   requirementAnswer: IRequirementAnswer;
@@ -16,7 +16,7 @@ export default function ChosenAnswer({
   requirementAnswer,
   existingAnswer,
 }: IProps): React.ReactElement {
-  const { response } = useAppSelector((state) => state.response);
+  const { response } = useResponseState();
 
   return (
     <Box>
