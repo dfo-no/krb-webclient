@@ -10,7 +10,6 @@ import {
   ModalButton,
   ModalButtonsBox,
 } from '../../components/ModalBox/ModalBox';
-import { selectBank } from '../../store/reducers/selectedBank-reducer';
 import { setResponse } from '../../store/reducers/prefilled-response-reducer';
 import { useAppDispatch } from '../../store/hooks';
 
@@ -30,7 +29,6 @@ export default function PrefilledResponseSelectionModal({
   const dispatch = useAppDispatch();
 
   const editPrefilledResponse = (): void => {
-    dispatch(selectBank(selectedPrefilledResponse.bank.id));
     dispatch(setResponse(selectedPrefilledResponse));
     history.push(`/prefilledresponse/${selectedPrefilledResponse.bank.id}`);
   };
