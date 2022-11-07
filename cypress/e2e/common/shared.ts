@@ -17,6 +17,8 @@ Given('Jeg åpner produkt-spesifikasjon side', () => {
 });
 
 When('Jeg laster opp besvarelse', () => {
+  // eslint-disable-next-line cypress/no-unnecessary-waiting
+  cy.wait(500);
   uploadResponseFileForEvaluation(
     './cypress/filesForUploadTesting/2022-10-03-citronen-response-4.pdf'
   );
@@ -44,10 +46,13 @@ When(
   }
 );
 
-When('Jeg søker etter {string} på hjemmesiden og klikker på det første forslaget', (bankName: string) => {
-  cy.contains('Søk etter').parent().click().type(bankName);
-  cy.contains(bankName).click();
-});
+When(
+  'Jeg søker etter {string} på hjemmesiden og klikker på det første forslaget',
+  (bankName: string) => {
+    cy.contains('Søk etter').parent().click().type(bankName);
+    cy.contains(bankName).click();
+  }
+);
 
 Then('Ser jeg {string} på siden', (value: string) => {
   cy.contains(value);

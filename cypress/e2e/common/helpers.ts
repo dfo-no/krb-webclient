@@ -37,10 +37,14 @@ const clickAndWaitForResponse = (
 const uploadFile = (fileName: string) => {
   cy.visit('localhost:3000');
   cy.contains('Last opp kravbank-fil').selectFile(fileName);
+  // eslint-disable-next-line cypress/no-unnecessary-waiting
+  cy.wait(500);
 };
 
 const uploadResponseFileForEvaluation = (fileName: string) => {
-  cy.get('[class*="FileUpload"]').contains('Last opp besvarelser').selectFile(fileName);
+  cy.get('[data-cy="file-upload"]')
+    .get('input[type="file"]')
+    .selectFile(fileName);
 };
 
 export {

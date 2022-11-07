@@ -10,9 +10,14 @@ Then('Ser jeg {string} er aktivert', (text: string) => {
   cy.get('[class*=Active]').should('include.text', text);
 });
 
-Then('Ser jeg {string} har {string} som resultat', (text: string, value: string) => {
-  cy.get('div[class*="Result"]').should('contain', text).and('contain', value);
-});
+Then(
+  'Ser jeg {string} har {string} som resultat',
+  (text: string, value: string) => {
+    cy.get('div[class*="Result"]')
+      .should('contain', text)
+      .and('contain', value);
+  }
+);
 
 Then(
   'Klikker jeg på {string} knapp for å laste ned evaluering',
