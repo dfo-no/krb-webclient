@@ -7,6 +7,7 @@ import {
 import { IResponseProduct, ResponseProductSchema } from './IResponseProduct';
 
 export interface IResponse {
+  id: string;
   specification: ISpecification;
   supplier: string;
   products: IResponseProduct[];
@@ -14,6 +15,7 @@ export interface IResponse {
 }
 
 export const BaseResponseSchema = CustomJoi.object().keys({
+  id: CustomJoi.validateParentId(),
   specification: BaseSpecificationSchema,
   supplier: CustomJoi.validateLongText(),
   products: CustomJoi.validateUniqueArray(ResponseProductSchema),

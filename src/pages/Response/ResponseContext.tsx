@@ -13,6 +13,7 @@ import { ModelType } from '../../Nexus/enums';
 import { IResponseProduct } from '../../Nexus/entities/IResponseProduct';
 
 const initialState: IResponse = {
+  id: '',
   specification: {
     id: '',
     bank: {

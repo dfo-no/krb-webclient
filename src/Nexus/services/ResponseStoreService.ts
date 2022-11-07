@@ -2,21 +2,28 @@
 /* eslint-disable class-methods-use-this */
 import produce from 'immer';
 
+import localforage from 'localforage';
+
 import { IRequirementAnswer } from '../entities/IRequirementAnswer';
 import { IResponse } from '../entities/IResponse';
 import { IResponseProduct } from '../entities/IResponseProduct';
 import { ISpecification } from '../entities/ISpecification';
 
 export default class ResponseStoreService {
-  private static response: IResponse;
+  private db: LocalForage;
 
-  public setResponse(response: IResponse): void {
-    ResponseStoreService.response = response;
+  constructor() {
+    this.db = localforage.createInstance({
+      name: 'responses',
+    });
   }
 
-  // eslint-disable-next-line class-methods-use-this
-  public getResponse(): IResponse {
-    return ResponseStoreService.response;
+  public setResponse(response: IResponse): Promise<IResponse> {
+    return this.db.setItem(response.id, response);
+  }
+
+  public async getResponse(id: string): Promise<IResponse | null> {
+    return this.db.getItem(id);
   }
 
   public createResponseFromSpecification(specification: ISpecification): void {

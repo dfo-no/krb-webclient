@@ -334,6 +334,7 @@ describe('EvaluationService', () => {
     };
 
     const response: IResponse = {
+      id: '',
       specification: specification,
       supplier: 'Firma A',
       products: [
