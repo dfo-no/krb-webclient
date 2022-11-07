@@ -10,7 +10,7 @@ import {
   ModalButton,
   ModalButtonsBox,
 } from '../../components/ModalBox/ModalBox';
-import { setResponse } from '../../store/reducers/response-reducer';
+import { setResponse } from '../Response/response-reducer';
 import { useAppDispatch } from '../../store/hooks';
 
 interface IProps {

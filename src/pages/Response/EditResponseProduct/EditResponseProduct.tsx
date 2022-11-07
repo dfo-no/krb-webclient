@@ -12,7 +12,7 @@ import { ModelType } from '../../../Nexus/enums';
 import VerticalTextCtrl from '../../../FormProvider/VerticalTextCtrl';
 import theme from '../../../theme';
 import GeneralErrorMessage from '../../../Form/GeneralErrorMessage';
-import { editResponseProduct } from '../../../store/reducers/response-reducer';
+import { editResponseProduct } from '../response-reducer';
 import css from '../../Stylesheets/EditorFullPage.module.scss';
 
 export default function EditResponseProduct(): ReactElement {
