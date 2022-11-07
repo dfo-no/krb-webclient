@@ -57,6 +57,7 @@ const FileUpload = ({
         variantClass(),
         className ? className : null
       )}
+      data-cy={'file-upload'}
     >
       <div>
         <label>
