@@ -15,9 +15,7 @@ import {
   ModalButton,
   ModalButtonsBox,
 } from '../../components/ModalBox/ModalBox';
-import { selectBank } from '../../store/reducers/selectedBank-reducer';
 import { SPECIFICATION } from '../../common/PathConstants';
-import { useAppDispatch } from '../../store/hooks';
 import { EvaluationSpecificationStoreService } from '../../Nexus/services/EvaluationSpecificationStoreService';
 import { SpecificationFile } from '../../Nexus/entities/SpecificationFile';
 
@@ -35,13 +33,11 @@ export default function SpecificationSelectionModal({
     useState<IPrefilledResponse | null>(null);
   const history = useHistory();
   const { t } = useTranslation();
-  const dispatch = useAppDispatch();
   const nexus = Nexus.getInstance();
   const evaluationSpecificationStoreService =
     new EvaluationSpecificationStoreService();
 
   const editSpecification = (): void => {
-    dispatch(selectBank(selectedSpecification.specification.bank.id));
     nexus.specificationService
       .setSpecification(selectedSpecification.specification)
       .then((specification) => {
@@ -50,7 +46,6 @@ export default function SpecificationSelectionModal({
   };
 
   const createResponse = (): void => {
-    dispatch(selectBank(selectedSpecification.specification.bank.id));
     const response = nexus.responseService.createResponseFromSpecification(
       selectedSpecification.specification
     );
