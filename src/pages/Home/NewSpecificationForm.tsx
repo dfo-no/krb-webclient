@@ -16,6 +16,7 @@ import {
 } from '../../components/ModalBox/ModalBox';
 import { ModelType } from '../../Nexus/enums';
 import { SPECIFICATION } from '../../common/PathConstants';
+import OrganizationField from '../../components/OrgnizationField/OrganizationField';
 
 interface IProps {
   handleClose: () => void;
@@ -71,18 +72,7 @@ const NewSpecificationForm = ({ handleClose, specification }: IProps) => {
               label={t('Procurement case number')}
               placeholder={t('Case number')}
             />
-            <VerticalTextCtrl
-              name="organization"
-              label={t('Name of your organization')}
-              placeholder={t('Name')}
-              required={true}
-            />
-            <VerticalTextCtrl
-              name="organizationNumber"
-              label={t('Organization number')}
-              placeholder={t('Organization number')}
-              required={true}
-            />
+            <OrganizationField />
           </ModalFieldsBox>
           <ModalButtonsBox>
             <ModalButton variant="cancel" onClick={() => handleClose()}>
