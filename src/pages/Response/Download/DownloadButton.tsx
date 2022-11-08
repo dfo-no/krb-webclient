@@ -1,11 +1,13 @@
 import React from 'react';
 import { AxiosResponse } from 'axios';
-import { Button } from '@mui/material/';
 import { useTranslation } from 'react-i18next';
+import SystemUpdateAltIcon from '@mui/icons-material/SystemUpdateAlt';
 
 import { httpPost } from '../../../api/http';
 import { IResponse } from '../../../Nexus/entities/IResponse';
 import { useAppSelector } from '../../../store/hooks';
+import ToolbarItem from '../../../components/UI/Toolbar/ToolbarItem';
+import Toolbar from '../../../components/UI/Toolbar/ToolBar';
 
 export default function DownloadButton(): React.ReactElement {
   const { response } = useAppSelector((state) => state.response);
@@ -36,8 +38,12 @@ export default function DownloadButton(): React.ReactElement {
   };
 
   return (
-    <Button variant="save" type="submit" onClick={onDownLoad}>
-      {t('Download response')}
-    </Button>
+    <Toolbar hasPadding={true}>
+      <ToolbarItem
+        primaryText={t('Download response')}
+        icon={<SystemUpdateAltIcon />}
+        handleClick={() => onDownLoad()}
+      />
+    </Toolbar>
   );
 }
