@@ -12,6 +12,7 @@ import {
 } from '../../components/ModalBox/ModalBox';
 import { setResponse } from '../../store/reducers/response-reducer';
 import { useAppDispatch } from '../../store/hooks';
+import { RESPONSE } from '../../common/PathConstants';
 
 interface IProps {
   selectedResponse: IResponse;
@@ -28,7 +29,7 @@ export default function ResponseSelectionModal({
 
   const editResponse = (): void => {
     dispatch(setResponse(selectedResponse));
-    history.push(`/response/${selectedResponse.specification.bank.id}`);
+    history.push(`/${RESPONSE}/${selectedResponse.specification.bank.id}`);
   };
 
   const cancel = (): void => {
