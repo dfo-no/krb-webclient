@@ -3,14 +3,21 @@ import React, {
   Dispatch,
   SetStateAction,
   useContext,
+  useEffect,
   useState,
 } from 'react';
+import { RouteComponentProps, useRouteMatch } from 'react-router-dom';
 
 import Utils from '../../common/Utils';
 import { IRequirementAnswer } from '../../Nexus/entities/IRequirementAnswer';
 import { IResponse } from '../../Nexus/entities/IResponse';
 import { ModelType } from '../../Nexus/enums';
 import { IResponseProduct } from '../../Nexus/entities/IResponseProduct';
+import {
+  IRouteSpecificationParams,
+  SpecificationPath,
+} from '../../models/IRouteSpecificationParams';
+import Nexus from '../../Nexus/Nexus';
 
 const initialState: IResponse = {
   id: '',
@@ -47,9 +54,15 @@ const initialState: IResponse = {
   requirementAnswers: [],
 };
 
+type RouterProps = {
+  bankId: string;
+};
+
+// type Props = RouteComponentProps<RouterProps>;
+
 type Props = {
   children: React.ReactNode;
-};
+} & RouteComponentProps<RouterProps>;
 
 type ResponseContextType = {
   response: IResponse;
@@ -70,8 +83,24 @@ const initialContext: ResponseContextType = {
 export const ResponseContext =
   createContext<ResponseContextType>(initialContext);
 
-export const ResponseProvider = ({ children }: Props) => {
+export const ResponseProvider = ({ children, match }: Props) => {
+  // const routeMatch =
+  //   useRouteMatch<IRouteSpecificationParams>(SpecificationPath);
+  const responseId = match.params.bankId;
   const [response, setResponse] = useState<IResponse>(initialState);
+  const nexus = Nexus.getInstance();
+
+  useEffect(() => {
+    if (responseId) {
+      nexus.responseService.getResponse(responseId).then((spec) => {
+        setSpecification(spec);
+        setTitle(spec.title);
+      });
+      return function cleanup() {
+        setTitle('');
+      };
+    }
+  }, [responseId, nexus, setTitle]);
 
   const editResponseProduct = (payload: IResponseProduct) => {
     if (response.products.find((product) => product.id === payload.id)) {

@@ -14,7 +14,7 @@ export default function ResponseEditor(): React.ReactElement {
     <div className={css.EditorFullPage}>
       <div className={css.Content}>
         <Switch>
-          <Route exact path={`/${RESPONSE}/${response.specification.bank.id}`}>
+          <Route exact path={`/${RESPONSE}/:bankId`}>
             <SelectProvider>
               <ResponseOverview />
             </SelectProvider>
