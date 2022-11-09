@@ -27,6 +27,13 @@ import { msalConfig } from './authentication/authConfig';
 import Breadcrumbs from './components/Breadcrumbs/Breadcrumbs';
 import Footer from './Footer/Footer';
 import { ResponseProvider } from './pages/Response/ResponseContext';
+import {
+  EVALUATION,
+  PREFILLED_RESPONSE,
+  RESPONSE,
+  SPECIFICATION,
+  WORKBENCH,
+} from './common/PathConstants';
 
 const browserHistory = createBrowserHistory();
 const reactPlugin = new ReactPlugin();
@@ -75,12 +82,12 @@ function App(): ReactElement {
             <Route exact path="/">
               <HomePage />
             </Route>
-            <Route path="/workbench" component={WorkbenchModule} />
-            <Route path="/specification" component={SpecModule} />
-            <Route path="/response" component={ResponseModule} />
-            <Route path="/evaluation" component={EvaluationModule} />
+            <Route path={`/${WORKBENCH}`} component={WorkbenchModule} />
+            <Route path={`/${SPECIFICATION}`} component={SpecModule} />
+            <Route path={`/${RESPONSE}`} component={ResponseModule} />
+            <Route path={`/${EVALUATION}`} component={EvaluationModule} />
             <Route
-              path="/prefilledresponse"
+              path={`/${PREFILLED_RESPONSE}`}
               component={PrefilledResponseModule}
             />
           </Switch>

@@ -12,6 +12,7 @@ import {
 } from '../../components/ModalBox/ModalBox';
 import { useResponseState } from '../Response/ResponseContext';
 import { useAppDispatch } from '../../store/hooks';
+import { RESPONSE } from '../../common/PathConstants';
 
 interface IProps {
   selectedResponse: IResponse;
@@ -29,7 +30,7 @@ export default function ResponseSelectionModal({
 
   const editResponse = (): void => {
     setResponse(selectedResponse);
-    history.push(`/response/${selectedResponse.specification.bank.id}`);
+    history.push(`/${RESPONSE}/${selectedResponse.specification.bank.id}`);
   };
 
   const cancel = (): void => {

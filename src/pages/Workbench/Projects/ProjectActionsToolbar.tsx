@@ -10,11 +10,14 @@ import { IBank } from '../../../Nexus/entities/IBank';
 import { useGetProjectQuery } from '../../../store/api/bankApi';
 import { IToolbarItem } from '../../../models/IToolbarItem';
 import DFOToolbar from '../../../components/DFOToolbar/DFOToolbar';
+import { WORKBENCH } from '../../../common/PathConstants';
 
 export default function ProjectActionsToolbar(): ReactElement {
   const { t } = useTranslation();
   const [project, setProject] = useState<IBank>();
-  const baseUrl = useRouteMatch<{ projectId: string }>('/workbench/:projectId');
+  const baseUrl = useRouteMatch<{ projectId: string }>(
+    `/${WORKBENCH}/:projectId`
+  );
   const { data: fetchedProject } = useGetProjectQuery(
     baseUrl?.params?.projectId ?? skipToken
   );

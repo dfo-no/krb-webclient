@@ -5,7 +5,7 @@ Feature: Spesifikasjonsprodukt
   Scenario: Jeg kan se overskriften på en spesifikasjon-prudukt
     Given Jeg åpner spesifikasjon
     When Jeg klikker på "Rediger produktet" knapp
-    Then Ser jeg tittel er "El-bil", antall er "1 Stk", vekting er "Middels", type er "El-bil" og beskrivelse er "Test beskrivelse til produkt"
+    Then Ser jeg tittel er "El-bil", antall er "1 Stk", type er "El-bil" og beskrivelse er "Test beskrivelse til produkt"
     And Ser jeg 5 behov i siden
     And Ser jeg 7 krav i siden
     And Ser jeg behov "Tilstand" inneholder krav "Fabrikk-ny"
@@ -16,7 +16,6 @@ Feature: Spesifikasjonsprodukt
     And Jeg skriver "Test produkt 2" i feltet "Navn på produkt"
     And Jeg skriver "Ny beskrivelse til produkt" i feltet "Beskrivelse av produktet"
     And Jeg skriver 2 i feltet "quantity"
-    And Jeg velger "Høy" på vekting av produkt
     Then Ser jeg "Lagre produkt" knappen er inaktiv
     And Jeg klikker på "Lagre" knapp for å lagre
 

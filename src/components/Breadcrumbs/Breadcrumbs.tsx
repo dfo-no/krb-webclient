@@ -12,6 +12,13 @@ import { useEvaluationState } from '../../pages/Evaluation/EvaluationContext';
 import { useGetProjectQuery } from '../../store/api/bankApi';
 import ProjectActionsToolbar from '../../pages/Workbench/Projects/ProjectActionsToolbar';
 import { useResponseState } from '../../pages/Response/ResponseContext';
+import {
+  EVALUATION,
+  PREFILLED_RESPONSE,
+  RESPONSE,
+  SPECIFICATION,
+  WORKBENCH,
+} from '../../common/PathConstants';
 
 const Breadcrumbs = (): ReactElement => {
   const { t } = useTranslation();
@@ -21,7 +28,9 @@ const Breadcrumbs = (): ReactElement => {
     (state) => state.prefilledResponse
   );
 
-  const baseUrl = useRouteMatch<{ projectId: string }>('/workbench/:projectId');
+  const baseUrl = useRouteMatch<{ projectId: string }>(
+    `/${WORKBENCH}/:projectId`
+  );
   const location = useLocation();
   const [project, setProject] = useState<IBank>();
 
@@ -43,12 +52,13 @@ const Breadcrumbs = (): ReactElement => {
     baseUrl?.params?.projectId ?? skipToken
   );
 
-  const isWorkbench = location.pathname.startsWith('/workbench');
-  const isSpecification = location.pathname.startsWith('/specification');
-  const isResponse = location.pathname.startsWith('/response');
-  const isEvaluation = location.pathname.startsWith('/evaluation');
-  const isPrefilledResponse =
-    location.pathname.startsWith('/prefilledresponse');
+  const isWorkbench = location.pathname.startsWith(`/${WORKBENCH}`);
+  const isSpecification = location.pathname.startsWith(`/${SPECIFICATION}`);
+  const isResponse = location.pathname.startsWith(`/${RESPONSE}`);
+  const isEvaluation = location.pathname.startsWith(`/${EVALUATION}`);
+  const isPrefilledResponse = location.pathname.startsWith(
+    `/${PREFILLED_RESPONSE}`
+  );
 
   useEffect(() => {
     setProject(fetchedProject);
@@ -80,35 +90,35 @@ const Breadcrumbs = (): ReactElement => {
   if (isEvaluation) {
     breadcrumbs.push({
       label: `${t('Evaluation')}/ ${getTitle()}`,
-      url: '/evaluering',
+      url: `/${EVALUATION}`,
     });
   }
 
   if (isResponse) {
     breadcrumbs.push({
       label: `${t('Response')}/ ${getTitle()}`,
-      url: '/response',
+      url: `/${RESPONSE}`,
     });
   }
 
   if (isSpecification) {
     breadcrumbs.push({
       label: `${t('Requirement specification')}/ ${getTitle()}`,
-      url: '/specification',
+      url: `/${SPECIFICATION}`,
     });
   }
 
   if (isWorkbench) {
     breadcrumbs.push({
       label: t('Workbench'),
-      url: '/workbench',
+      url: `/${WORKBENCH}`,
     });
   }
 
   if (isPrefilledResponse) {
     breadcrumbs.push({
       label: `${t('Prefilled')}/ ${getTitle()}`,
-      url: '/prefilledresponse',
+      url: `/${PREFILLED_RESPONSE}`,
     });
   }
 

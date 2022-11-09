@@ -5,7 +5,6 @@ import { useTranslation } from 'react-i18next';
 
 import ProductHeader from './ProductHeader';
 import ProductNeed from './ProductNeed';
-import CalculatedPercentage from './CalculatedPercentage';
 import ProductRequirementAnswer from './ProductRequirementAnswer';
 import { AccordionProvider } from '../../../components/DFOAccordion/AccordionContext';
 import { INeed } from '../../../Nexus/entities/INeed';
@@ -29,8 +28,7 @@ export default function AnswerProduct(): React.ReactElement {
   };
 
   const renderRequirementAnswer = (
-    requirementAnswer: IRequirementAnswer,
-    showPercentage?: boolean
+    requirementAnswer: IRequirementAnswer
   ): ReactElement => {
     const requirementNeed = response.specification.bank.needs.find(
       (need) => need.id === requirementAnswer.requirement.needId
@@ -39,7 +37,6 @@ export default function AnswerProduct(): React.ReactElement {
       existingNeeds.add(requirementNeed);
       return (
         <div key={requirementAnswer.id}>
-          {showPercentage && <CalculatedPercentage />}
           <ProductNeed need={requirementNeed} />
           <ProductRequirementAnswer requirementAnswer={requirementAnswer} />
         </div>
@@ -59,12 +56,12 @@ export default function AnswerProduct(): React.ReactElement {
       productIndex === -1
         ? response.specification
         : response.specification.products[productIndex];
-    return specOrProduct.requirements.map((requirementId, idx) => {
+    return specOrProduct.requirements.map((requirementId) => {
       const requirementAnswer = specOrProduct.requirementAnswers.find(
         (reqAns) => reqAns.requirement.id === requirementId
       );
       if (requirementAnswer) {
-        return renderRequirementAnswer(requirementAnswer, idx === 0);
+        return renderRequirementAnswer(requirementAnswer);
       }
     });
   };

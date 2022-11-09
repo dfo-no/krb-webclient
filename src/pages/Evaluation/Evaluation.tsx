@@ -9,6 +9,7 @@ import EvaluationSpec from './EvaluationSpec';
 import UploadResponses from './UploadResponses';
 import { useEvaluationState } from './EvaluationContext';
 import { EvaluationSpecificationStoreService } from '../../Nexus/services/EvaluationSpecificationStoreService';
+import { EVALUATION } from '../../common/PathConstants';
 
 const Evaluation = (): ReactElement => {
   const { setSpecificationUpload, setTab, tab, specificationUpload } =
@@ -20,7 +21,9 @@ const Evaluation = (): ReactElement => {
     }
   }, [specificationUpload, setTab]);
 
-  const routeMatch = useRouteMatch<{ bankId: string }>('/evaluation/:bankId');
+  const routeMatch = useRouteMatch<{ bankId: string }>(
+    `/${EVALUATION}/:bankId`
+  );
 
   useEffect(() => {
     const evaluationSpecificationStoreService =
