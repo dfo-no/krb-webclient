@@ -7,9 +7,8 @@ import { httpPost } from '../../../api/http';
 import { IResponse } from '../../../Nexus/entities/IResponse';
 import { useAppSelector } from '../../../store/hooks';
 import ToolbarItem from '../../../components/UI/Toolbar/ToolbarItem';
-import Toolbar from '../../../components/UI/Toolbar/ToolBar';
 
-export default function DownloadButton(): React.ReactElement {
+export default function DownloadToolbarItem(): React.ReactElement {
   const { response } = useAppSelector((state) => state.response);
   const { t } = useTranslation();
 
@@ -38,12 +37,10 @@ export default function DownloadButton(): React.ReactElement {
   };
 
   return (
-    <Toolbar hasPadding={true}>
-      <ToolbarItem
-        primaryText={t('Download response')}
-        icon={<SystemUpdateAltIcon />}
-        handleClick={() => onDownLoad()}
-      />
-    </Toolbar>
+    <ToolbarItem
+      primaryText={t('Download response')}
+      icon={<SystemUpdateAltIcon />}
+      handleClick={() => onDownLoad()}
+    />
   );
 }

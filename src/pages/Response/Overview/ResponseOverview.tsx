@@ -5,7 +5,7 @@ import { useHistory } from 'react-router-dom';
 import EditIcon from '@mui/icons-material/Edit';
 
 import css from '../../Stylesheets/EditorFullPage.module.scss';
-import DownloadButton from '../Download/DownloadButton';
+import DownloadToolbarItem from '../Download/DownloadToolbarItem';
 import { ISpecificationProduct } from '../../../Nexus/entities/ISpecificationProduct';
 import { useAppSelector } from '../../../store/hooks';
 import { useProductIndexState } from '../../../components/ProductIndexContext/ProductIndexContext';
@@ -77,7 +77,9 @@ function ResponseOverview(): React.ReactElement {
     <div className={css.overview}>
       <div className={css.overview__content}>
         <Typography variant={'lgBold'}>{response.supplier}</Typography>
-        <DownloadButton />
+        <Toolbar hasPadding={true}>
+          <DownloadToolbarItem />
+        </Toolbar>
         <Typography variant={'mdBold'}>{t('Products')}</Typography>
         <ul aria-label="general-products">
           <li className={css.Active} key={'generic'}>
