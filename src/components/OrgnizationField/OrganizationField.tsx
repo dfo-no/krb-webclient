@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useEffect, useState } from 'react';
 import { debounce } from 'lodash';
-import fetchJsonp from 'fetch-jsonp';
 import { useTranslation } from 'react-i18next';
 import { useFormContext } from 'react-hook-form';
 
@@ -18,18 +17,13 @@ const searchFun = (
   queryParam: string,
   setResults: (value: Organization[]) => void
 ) => {
-  fetchJsonp(
-    `https://hotell.difi.no/api/jsonp/brreg/enhetsregisteret?callback=dfø&query=${queryParam}`,
-    {
-      jsonpCallbackFunction: 'dfø',
-    }
-  )
+  fetch(`https://data.brreg.no/enhetsregisteret/api/enheter?navn=${queryParam}`)
     .then((res) => res.json())
     .then((data) => {
       setResults(
-        data.entries.length > 0
-          ? data.entries.map((entry: any) => {
-              return { name: entry.navn, orgNr: entry.orgnr };
+        data._embedded.enheter.length > 0
+          ? data._embedded.enheter.map((entry: any) => {
+              return { name: entry.navn, orgNr: entry.organisasjonsnummer };
             })
           : []
       );
@@ -113,7 +107,6 @@ const OrganizationField = () => {
         <List
           entries={results}
           onSelect={(name: string, orgNr: string) => onSelect(name, orgNr)}
-          onClear={onClear}
         />
       )}
     </>
