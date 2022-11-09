@@ -16,7 +16,6 @@ import { PRODUCTS, SPECIFICATION } from '../../../common/PathConstants';
 import NewProductSelection from '../NewProduct/NewProductSelection';
 import Toolbar from '../../../components/UI/Toolbar/ToolBar';
 import ToolbarItem from '../../../components/UI/Toolbar/ToolbarItem';
-import { Weighting } from '../../../Nexus/enums';
 import EditSpecificationForm from '../EditSpecificationForm';
 import Utils from '../../../common/Utils';
 import { ISpecification } from '../../../Nexus/entities/ISpecification';
@@ -140,11 +139,6 @@ export default function SpecificationOverview(): React.ReactElement {
           <ToolbarItem
             primaryText={t('Quantity')}
             secondaryText={`${product.amount} ${product.unit}`}
-            fontSize={'small'}
-          />
-          <ToolbarItem
-            primaryText={t('Weighting')}
-            secondaryText={t(`${Weighting[product.weight]}`)}
             fontSize={'small'}
           />
           <ToolbarItem

@@ -6,7 +6,6 @@ import css from './ProductHeader.module.scss';
 import { ISpecificationProduct } from '../../../../Nexus/entities/ISpecificationProduct';
 import Toolbar from '../../../../components/UI/Toolbar/ToolBar';
 import ToolbarItem from '../../../../components/UI/Toolbar/ToolbarItem';
-import { Weighting } from '../../../../Nexus/enums';
 import { useSpecificationState } from '../../SpecificationContext';
 import { chosenRequirements } from '../../SpecificationOverview/SpecificationOverview';
 
@@ -31,12 +30,6 @@ export default function ProductHeader({
           primaryText={t('Quantity')}
           secondaryText={`${product?.amount} ${product?.unit}`}
         />
-        {product?.weight && (
-          <ToolbarItem
-            primaryText={t('Weighting')}
-            secondaryText={t(`${Weighting[product?.weight]}`)}
-          />
-        )}
         <ToolbarItem
           primaryText={t('Type')}
           secondaryText={product?.originProduct.title}
