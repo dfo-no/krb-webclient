@@ -10,13 +10,14 @@ import VerticalTextCtrl from '../../FormProvider/VerticalTextCtrl';
 import { IPrefilledResponse } from '../../Nexus/entities/IPrefilledResponse';
 import {
   ModalBox,
-  ModalFieldsBox,
-  ModalButtonsBox,
   ModalButton,
+  ModalButtonsBox,
+  ModalFieldsBox,
 } from '../../components/ModalBox/ModalBox';
 import { ModelType } from '../../Nexus/enums';
 import { setResponse } from '../../store/reducers/prefilled-response-reducer';
 import { useAppDispatch } from '../../store/hooks';
+import { PREFILLED_RESPONSE } from '../../common/PathConstants';
 
 interface IProps {
   handleClose: () => void;
@@ -39,7 +40,7 @@ const NewPrefilledResponseForm = ({
 
   const onSubmit = async (post: IPrefilledResponse) => {
     dispatch(setResponse(post));
-    history.push(`/prefilledresponse/${post.bank.id}`);
+    history.push(`/${PREFILLED_RESPONSE}/${post.bank.id}`);
   };
 
   return (
