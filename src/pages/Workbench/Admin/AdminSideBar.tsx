@@ -12,6 +12,7 @@ import { Box, List, ListItem, ListItemText } from '@mui/material';
 
 import theme from '../../../theme';
 import { IRouteProjectParams } from '../../../models/IRouteProjectParams';
+import { WORKBENCH } from '../../../common/PathConstants';
 
 interface IRouteLink {
   link: string;
@@ -55,24 +56,26 @@ const useStyles = makeStyles({
 function AdminSideBar(): React.ReactElement {
   const { t } = useTranslation();
 
-  const baseUrl = useRouteMatch<IRouteProjectParams>('/workbench/:projectId');
+  const baseUrl = useRouteMatch<IRouteProjectParams>(
+    `/${WORKBENCH}/:projectId`
+  );
 
   const productMatch = useRouteMatch<IRouteProjectParams>(
-    '/workbench/:projectId/admin/products'
+    `/${WORKBENCH}/:projectId/admin/products`
   );
   const codelistMatch = useRouteMatch<IRouteProjectParams>(
-    '/workbench/:projectId/admin/codelist'
+    `/${WORKBENCH}/:projectId/admin/codelist`
   );
   const inheritanceMatch = useRouteMatch<IRouteProjectParams>(
-    '/workbench/:projectId/admin/inheritance'
+    `/${WORKBENCH}/:projectId/admin/inheritance`
   );
 
   const tagsMatch = useRouteMatch<IRouteProjectParams>(
-    '/workbench/:projectId/admin/tags'
+    `/${WORKBENCH}/:projectId/admin/tags`
   );
 
   const propertiesMatch = useRouteMatch<IRouteProjectParams>(
-    '/workbench/:projectId/admin/properties'
+    `/${WORKBENCH}/:projectId/admin/properties`
   );
 
   const getCurrentRoute = () => {

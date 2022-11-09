@@ -6,6 +6,7 @@ import ErrorIcon from '@mui/icons-material/Error';
 import { useHistory } from 'react-router-dom';
 
 import theme from '../../theme';
+import { WORKBENCH } from '../../common/PathConstants';
 
 const useStyles = makeStyles({
   projectNotFoundContainer: {
@@ -43,7 +44,7 @@ export default function ProjectNotFound(): React.ReactElement {
         <Typography className={classes.projectNotFoundTitle}>
           {t('Project not found')}
         </Typography>
-        <Button variant="primary" onClick={() => history.push('/workbench')}>
+        <Button variant="primary" onClick={() => history.push(`/${WORKBENCH}`)}>
           {t('Tilbake til prosjekter')}
         </Button>
       </Box>

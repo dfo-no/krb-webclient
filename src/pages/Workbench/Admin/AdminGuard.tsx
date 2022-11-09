@@ -8,25 +8,26 @@ import ProductGuard from './Product/ProductGuard';
 import PropertiesPage from './Properties/PropertiesPage';
 import TagGuard from './Tags/TagGuard';
 import { PublicationsPage } from './Publications/PublicationsPage';
+import { WORKBENCH } from '../../../common/PathConstants';
 
 export default function AdminGuard(): React.ReactElement {
   return (
     <div className={css.Admin}>
       <AdminSideBar />
       <div className={css.Content}>
-        <Route exact path="/workbench/:projectId/admin/">
+        <Route exact path={`/${WORKBENCH}/:projectId/admin/`}>
           <PublicationsPage />
         </Route>
-        <Route exact path="/workbench/:projectId/admin/tags">
+        <Route exact path={`/${WORKBENCH}/:projectId/admin/tags`}>
           <TagGuard />
         </Route>
-        <Route exact path="/workbench/:projectId/admin/codelist">
+        <Route exact path={`/${WORKBENCH}/:projectId/admin/codelist`}>
           <CodelistGuard />
         </Route>
-        <Route exact path="/workbench/:projectId/admin/products">
+        <Route exact path={`/${WORKBENCH}/:projectId/admin/products`}>
           <ProductGuard />
         </Route>
-        <Route exact path="/workbench/:projectId/admin/properties">
+        <Route exact path={`/${WORKBENCH}/:projectId/admin/properties`}>
           <PropertiesPage />
         </Route>
       </div>

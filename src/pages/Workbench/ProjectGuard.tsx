@@ -9,6 +9,7 @@ import ProjectNotFound from '../../components/ProjectNotFound/ProjectNotFound';
 import { PreviewProvider } from './Preview/PreviewContext';
 import { SelectProvider } from './Create/SelectContext';
 import { useGetProjectQuery } from '../../store/api/bankApi';
+import { WORKBENCH } from '../../common/PathConstants';
 
 interface IRouteParams {
   projectId: string;
@@ -28,15 +29,15 @@ export default function ProjectGuard(): React.ReactElement {
 
   return (
     <div>
-      <Route path="/workbench/:projectId/admin">
+      <Route path={`/${WORKBENCH}/:projectId/admin`}>
         <AdminGuard />
       </Route>
-      <Route path="/workbench/:projectId/create">
+      <Route path={`/${WORKBENCH}/:projectId/create`}>
         <SelectProvider>
           <Create />
         </SelectProvider>
       </Route>
-      <Route path="/workbench/:projectId/preview">
+      <Route path={`${WORKBENCH}/:projectId/preview`}>
         <PreviewProvider>
           <Preview />
         </PreviewProvider>
