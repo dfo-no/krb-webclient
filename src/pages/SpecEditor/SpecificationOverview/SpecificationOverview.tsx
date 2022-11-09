@@ -7,7 +7,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import AddIcon from '@mui/icons-material/Add';
 
 import css from '../../Stylesheets/EditorFullPage.module.scss';
-import DownloadButton from '../Download/DownloadButton';
+import DownloadToolbarItem from '../Download/DownloadToolbarItem';
 import DeleteSpecProduct from '../EditProduct/DeleteSpecProduct';
 import { ISpecificationProduct } from '../../../Nexus/entities/ISpecificationProduct';
 import { useSelectState } from '../../Workbench/Create/SelectContext';
@@ -83,7 +83,7 @@ export default function SpecificationOverview(): React.ReactElement {
           icon={<EditIcon />}
           handleClick={() => setEditingSpecification(true)}
         />
-        <DownloadButton />
+        <DownloadToolbarItem />
       </Toolbar>
     );
   };
