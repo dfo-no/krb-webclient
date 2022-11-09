@@ -11,13 +11,14 @@ import VerticalTextCtrl from '../../FormProvider/VerticalTextCtrl';
 import { IResponse } from '../../Nexus/entities/IResponse';
 import {
   ModalBox,
-  ModalFieldsBox,
-  ModalButtonsBox,
   ModalButton,
+  ModalButtonsBox,
+  ModalFieldsBox,
 } from '../../components/ModalBox/ModalBox';
 import { ModelType } from '../../Nexus/enums';
 import { setResponse } from '../../store/reducers/response-reducer';
 import { useAppDispatch } from '../../store/hooks';
+import { RESPONSE } from '../../common/PathConstants';
 
 interface IProps {
   handleClose: () => void;
@@ -37,7 +38,7 @@ const NewResponseForm = ({ handleClose, response }: IProps) => {
 
   const onSubmit = async (post: IResponse) => {
     dispatch(setResponse(post));
-    history.push(`/response/${post.specification.bank.id}`);
+    history.push(`/${RESPONSE}/${post.specification.bank.id}`);
   };
 
   return (

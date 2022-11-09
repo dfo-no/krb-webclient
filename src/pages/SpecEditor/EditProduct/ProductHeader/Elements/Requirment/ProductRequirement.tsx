@@ -15,11 +15,7 @@ import { useSpecificationState } from '../../../../SpecificationContext';
 import Nexus from '../../../../../../Nexus/Nexus';
 import SpecificationService from '../../../../../../Nexus/services/SpecificationService';
 import { IRequirementAnswer } from '../../../../../../Nexus/entities/IRequirementAnswer';
-import {
-  ModelType,
-  VariantType,
-  Weighting,
-} from '../../../../../../Nexus/enums';
+import { ModelType, VariantType } from '../../../../../../Nexus/enums';
 import EditProductVariant from '../Variant/EditProductVariant';
 import ChosenConfiguration from '../../../ChosenConfiguration/ChosenConfiguration';
 import ProductVariant from '../Variant/ProductVariant';
@@ -61,7 +57,6 @@ export default function ProductRequirement({
   }, [methods, product]);
 
   const useVariant = useWatch({ name: 'variantId', control: methods.control });
-  const useWeight = useWatch({ name: 'weight', control: methods.control });
   const activeVariant = requirement.variants.find(
     (variant) => variant.id === useVariant
   );
@@ -196,13 +191,6 @@ export default function ProductRequirement({
               </Typography>
             </div>
             <Toolbar>
-              {!!useWeight && !isInfo() && (
-                <ToolbarItem
-                  primaryText={t('Weighting')}
-                  secondaryText={t(Weighting[useWeight])}
-                  fontSize={'small'}
-                />
-              )}
               <ChosenConfiguration
                 requirement={requirement}
                 product={product}

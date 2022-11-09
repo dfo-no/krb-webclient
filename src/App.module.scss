@@ -73,6 +73,7 @@ html {
 }
 
 body {
+  overflow-y: scroll;
   overflow-x: hidden;
   background: var(--background-color);
   color: var(--text-primary-color);

@@ -12,6 +12,7 @@ import {
 } from '../../components/ModalBox/ModalBox';
 import { setResponse } from '../../store/reducers/prefilled-response-reducer';
 import { useAppDispatch } from '../../store/hooks';
+import { PREFILLED_RESPONSE } from '../../common/PathConstants';
 
 interface IProps {
   selectedPrefilledResponse: IPrefilledResponse;
@@ -30,7 +31,7 @@ export default function PrefilledResponseSelectionModal({
 
   const editPrefilledResponse = (): void => {
     dispatch(setResponse(selectedPrefilledResponse));
-    history.push(`/prefilledresponse/${selectedPrefilledResponse.bank.id}`);
+    history.push(`/${PREFILLED_RESPONSE}/${selectedPrefilledResponse.bank.id}`);
   };
 
   const cancel = (): void => {

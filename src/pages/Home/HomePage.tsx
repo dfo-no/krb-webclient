@@ -9,6 +9,7 @@ import HomeSearchBar from './HomeSearchBar';
 import { IBank } from '../../Nexus/entities/IBank';
 import { useGetBanksQuery } from '../../store/api/bankApi';
 import { HomePageUpload } from './HomePageUpload';
+import { WORKBENCH } from '../../common/PathConstants';
 
 export default function HomePage(): React.ReactElement {
   const { t } = useTranslation();
@@ -57,7 +58,7 @@ export default function HomePage(): React.ReactElement {
           </div>
           <div className={classnames(css.Column, css.Cards)}>
             <div className={classnames(css.Card, css.Primary)}>
-              <Link to={'/workbench'}>
+              <Link to={`/${WORKBENCH}`}>
                 <label>{t('common.Workbench')}</label>
                 <span>{t('HomePage.Create projects')}</span>
               </Link>
