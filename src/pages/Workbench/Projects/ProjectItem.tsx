@@ -10,6 +10,7 @@ import DeleteProjectForm from './DeleteProjectForm';
 import { FormIconButton } from '../../../components/Form/FormIconButton';
 import { IBank } from '../../../Nexus/entities/IBank';
 import { useEditableState } from '../../../components/EditableContext/EditableContext';
+import { WORKBENCH } from '../../../common/PathConstants';
 
 interface IProps {
   project: IBank;
@@ -43,7 +44,7 @@ const ProjectItem = ({ project }: IProps) => {
           </FormIconButton>
         }
       >
-        <Link to={`/workbench/${project.id}/create`} className={css.Link}>
+        <Link to={`/${WORKBENCH}/${project.id}/create`} className={css.Link}>
           <Card className={css.ItemCard}>
             <div className={css.CardContent}>
               <div className={css.TitleButton}>

@@ -15,7 +15,7 @@ import {
   ModalButton,
   ModalButtonsBox,
 } from '../../components/ModalBox/ModalBox';
-import { SPECIFICATION } from '../../common/PathConstants';
+import { EVALUATION, SPECIFICATION } from '../../common/PathConstants';
 import { EvaluationSpecificationStoreService } from '../../Nexus/services/EvaluationSpecificationStoreService';
 import { SpecificationFile } from '../../Nexus/entities/SpecificationFile';
 
@@ -64,7 +64,7 @@ export default function SpecificationSelectionModal({
     await evaluationSpecificationStoreService.storeEvaluationSpecification(
       selectedSpecification
     );
-    history.push(`/evaluation/${selectedSpecification.id}`);
+    history.push(`/${EVALUATION}/${selectedSpecification.id}`);
   };
 
   const cancel = (): void => {
