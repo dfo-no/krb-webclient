@@ -118,6 +118,9 @@
 }
 
 .ToolbarItem {
+  display: flex;
+  gap: var(--small-gap);
+
   &[data-icon='true'] {
     padding: var(--micro-gap) var(--small-gap);
   }

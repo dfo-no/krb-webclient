@@ -15,7 +15,7 @@ export default function ProductHeader(): React.ReactElement {
   const description =
     response.specification.products[productIndex]?.description;
   const originProduct =
-    response.specification.products[productIndex].originProduct;
+    response.specification.products[productIndex]?.originProduct;
   return (
     <>
       <Typography variant="lgBold">

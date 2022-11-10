@@ -8,7 +8,7 @@ import { ISpecification } from '../../../Nexus/entities/ISpecification';
 import { useSpecificationState } from '../SpecificationContext';
 import ToolbarItem from '../../../components/UI/Toolbar/ToolbarItem';
 
-export default function DownloadButton(): React.ReactElement {
+export default function DownloadToolbarItem(): React.ReactElement {
   const { t } = useTranslation();
   const { specification } = useSpecificationState();
 
