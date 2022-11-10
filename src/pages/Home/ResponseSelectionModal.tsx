@@ -11,7 +11,6 @@ import {
   ModalButtonsBox,
 } from '../../components/ModalBox/ModalBox';
 import { useResponseState } from '../Response/ResponseContext';
-import { useAppDispatch } from '../../store/hooks';
 import { RESPONSE } from '../../common/PathConstants';
 
 interface IProps {
@@ -25,7 +24,6 @@ export default function ResponseSelectionModal({
 }: IProps): React.ReactElement {
   const history = useHistory();
   const { t } = useTranslation();
-  const dispatch = useAppDispatch();
   const { setResponse } = useResponseState();
 
   const editResponse = (): void => {

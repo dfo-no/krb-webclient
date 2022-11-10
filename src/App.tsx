@@ -26,7 +26,6 @@ import { HeaderProvider } from './components/Header/HeaderContext';
 import { msalConfig } from './authentication/authConfig';
 import Breadcrumbs from './components/Breadcrumbs/Breadcrumbs';
 import Footer from './Footer/Footer';
-import { ResponseProvider } from './pages/Response/ResponseContext';
 import {
   EVALUATION,
   PREFILLED_RESPONSE,
@@ -76,22 +75,19 @@ function App(): ReactElement {
   function renderContent(): ReactElement {
     return (
       <AppInsightsContext.Provider value={reactPlugin}>
-        {/* TODO: Narrow down to only response module */}
-        <ResponseProvider>
-          <Switch>
-            <Route exact path="/">
-              <HomePage />
-            </Route>
-            <Route path={`/${WORKBENCH}`} component={WorkbenchModule} />
-            <Route path={`/${SPECIFICATION}`} component={SpecModule} />
-            <Route path={`/${RESPONSE}`} component={ResponseModule} />
-            <Route path={`/${EVALUATION}`} component={EvaluationModule} />
-            <Route
-              path={`/${PREFILLED_RESPONSE}`}
-              component={PrefilledResponseModule}
-            />
-          </Switch>
-        </ResponseProvider>
+        <Switch>
+          <Route exact path="/">
+            <HomePage />
+          </Route>
+          <Route path={`/${WORKBENCH}`} component={WorkbenchModule} />
+          <Route path={`/${SPECIFICATION}`} component={SpecModule} />
+          <Route path={`/${RESPONSE}/:responseId`} component={ResponseModule} />
+          <Route path={`/${EVALUATION}`} component={EvaluationModule} />
+          <Route
+            path={`/${PREFILLED_RESPONSE}`}
+            component={PrefilledResponseModule}
+          />
+        </Switch>
       </AppInsightsContext.Provider>
     );
   }

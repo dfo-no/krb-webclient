@@ -6,63 +6,20 @@ import React, {
   useEffect,
   useState,
 } from 'react';
-import { RouteComponentProps, useRouteMatch } from 'react-router-dom';
+import { RouteComponentProps } from 'react-router-dom';
 
 import Utils from '../../common/Utils';
 import { IRequirementAnswer } from '../../Nexus/entities/IRequirementAnswer';
 import { IResponse } from '../../Nexus/entities/IResponse';
-import { ModelType } from '../../Nexus/enums';
 import { IResponseProduct } from '../../Nexus/entities/IResponseProduct';
-import {
-  IRouteSpecificationParams,
-  SpecificationPath,
-} from '../../models/IRouteSpecificationParams';
 import Nexus from '../../Nexus/Nexus';
-
-const initialState: IResponse = {
-  id: '',
-  specification: {
-    id: '',
-    bank: {
-      id: '',
-      title: '',
-      description: '',
-      needs: [],
-      tags: [],
-      products: [],
-      codelist: [],
-      version: 0,
-      type: ModelType.bank,
-      publications: [],
-      inheritedBanks: [],
-      publishedDate: null,
-      sourceOriginal: null,
-      sourceRel: null,
-      projectId: null,
-      deletedDate: null,
-    },
-    title: '',
-    organization: '',
-    organizationNumber: '',
-    products: [],
-    requirements: [],
-    requirementAnswers: [],
-    currencyUnit: 'NOK',
-  },
-  supplier: '',
-  products: [],
-  requirementAnswers: [],
-};
-
-type RouterProps = {
-  bankId: string;
-};
-
-// type Props = RouteComponentProps<RouterProps>;
+import { MatchParams } from './ResponseModule';
+import { useHeaderState } from '../../components/Header/HeaderContext';
+import ResponseStoreService from '../../Nexus/services/ResponseStoreService';
 
 type Props = {
   children: React.ReactNode;
-} & RouteComponentProps<RouterProps>;
+} & RouteComponentProps<MatchParams>;
 
 type ResponseContextType = {
   response: IResponse;
@@ -73,7 +30,7 @@ type ResponseContextType = {
 };
 
 const initialContext: ResponseContextType = {
-  response: initialState,
+  response: ResponseStoreService.defaultResponse(),
   setResponse: () => {},
   editResponseProduct: () => {},
   addRequirementAnswer: () => {},
@@ -86,15 +43,19 @@ export const ResponseContext =
 export const ResponseProvider = ({ children, match }: Props) => {
   // const routeMatch =
   //   useRouteMatch<IRouteSpecificationParams>(SpecificationPath);
-  const responseId = match.params.bankId;
-  const [response, setResponse] = useState<IResponse>(initialState);
+  const responseId = match.params.responseId;
+  const { setTitle } = useHeaderState();
+
+  const [response, setResponse] = useState<IResponse>(
+    ResponseStoreService.defaultResponse()
+  );
   const nexus = Nexus.getInstance();
 
   useEffect(() => {
     if (responseId) {
-      nexus.responseService.getResponse(responseId).then((spec) => {
-        setSpecification(spec);
-        setTitle(spec.title);
+      nexus.responseService.getResponse(responseId).then((storedResponse) => {
+        setResponse(storedResponse);
+        setTitle(storedResponse.specification.title);
       });
       return function cleanup() {
         setTitle('');

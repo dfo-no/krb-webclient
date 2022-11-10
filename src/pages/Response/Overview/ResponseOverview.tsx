@@ -1,7 +1,7 @@
 import React from 'react';
 import { Box, Divider, Typography } from '@mui/material/';
 import { useTranslation } from 'react-i18next';
-import { RouteComponentProps, useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import EditIcon from '@mui/icons-material/Edit';
 
 import css from '../../Stylesheets/EditorFullPage.module.scss';

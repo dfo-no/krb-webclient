@@ -1,13 +1,44 @@
 /* eslint-disable no-param-reassign */
 /* eslint-disable class-methods-use-this */
-import produce from 'immer';
-
 import localforage from 'localforage';
 
-import { IRequirementAnswer } from '../entities/IRequirementAnswer';
 import { IResponse } from '../entities/IResponse';
-import { IResponseProduct } from '../entities/IResponseProduct';
-import { ISpecification } from '../entities/ISpecification';
+import { ModelType } from '../enums';
+
+const initialState: IResponse = {
+  id: '',
+  specification: {
+    id: '',
+    bank: {
+      id: '',
+      title: '',
+      description: '',
+      needs: [],
+      tags: [],
+      products: [],
+      codelist: [],
+      version: 0,
+      type: ModelType.bank,
+      publications: [],
+      inheritedBanks: [],
+      publishedDate: null,
+      sourceOriginal: null,
+      sourceRel: null,
+      projectId: null,
+      deletedDate: null,
+    },
+    title: '',
+    organization: '',
+    organizationNumber: '',
+    products: [],
+    requirements: [],
+    requirementAnswers: [],
+    currencyUnit: 'NOK',
+  },
+  supplier: '',
+  products: [],
+  requirementAnswers: [],
+};
 
 export default class ResponseStoreService {
   private db: LocalForage;
@@ -22,116 +53,14 @@ export default class ResponseStoreService {
     return this.db.setItem(response.id, response);
   }
 
-  public async getResponse(id: string): Promise<IResponse | null> {
-    return this.db.getItem(id);
+  public async getResponse(id: string): Promise<IResponse> {
+    return this.db.getItem<IResponse | null>(id).then((response) => {
+      if (response) return response;
+      else return ResponseStoreService.defaultResponse();
+    });
   }
 
-  public createResponseFromSpecification(specification: ISpecification): void {
-    ResponseStoreService.response = {
-      specification: specification,
-      supplier: '',
-      products: [],
-      requirementAnswers: [],
-    };
-  }
-
-  public editSupplier(supplier: string): void {
-    ResponseStoreService.response = produce(
-      ResponseStoreService.response,
-      (draft) => {
-        draft.supplier = supplier;
-      }
-    );
-  }
-
-  public addResponseProduct(product: IResponseProduct): void {
-    ResponseStoreService.response = produce(
-      ResponseStoreService.response,
-      (draft) => {
-        draft.products.push(product);
-      }
-    );
-  }
-
-  public editResponseProduct(product: IResponseProduct): void {
-    const index = ResponseStoreService.response.products.findIndex(
-      (responseProduct: IResponseProduct) => responseProduct.id === product.id
-    );
-    ResponseStoreService.response = produce(
-      ResponseStoreService.response,
-      (draft) => {
-        draft.products[index] = product;
-      }
-    );
-  }
-
-  public deleteResponseProduct(product: IResponseProduct): void {
-    const index = ResponseStoreService.response.products.findIndex(
-      (responseProduct: IResponseProduct) => responseProduct.id === product.id
-    );
-    ResponseStoreService.response = produce(
-      ResponseStoreService.response,
-      (draft) => {
-        draft.products.splice(index, 1);
-      }
-    );
-  }
-
-  addProductAnswer(answer: IRequirementAnswer, productId: string): void {
-    const index = ResponseStoreService.response.products.findIndex(
-      (product) => product.id === productId
-    );
-    ResponseStoreService.response.products[index].requirementAnswers.push(
-      answer
-    );
-  }
-
-  editProductAnswer(answer: IRequirementAnswer, productId: string): void {
-    const index = ResponseStoreService.response.products.findIndex(
-      (product) => product.id === productId
-    );
-    const answerIndex = ResponseStoreService.response.products[
-      index
-    ].requirementAnswers.findIndex(
-      (element) => element.variantId === answer.variantId
-    );
-    ResponseStoreService.response.products[index].requirementAnswers[
-      answerIndex
-    ] = answer;
-  }
-
-  deleteProductAnswer(answer: IRequirementAnswer, productId: string): void {
-    const index = ResponseStoreService.response.products.findIndex(
-      (product) => product.id === productId
-    );
-    const answerIndex = ResponseStoreService.response.products[
-      index
-    ].requirementAnswers.findIndex(
-      (element) => element.variantId === answer.variantId
-    );
-    ResponseStoreService.response.products[index].requirementAnswers.splice(
-      answerIndex,
-      1
-    );
-  }
-
-  addAnswer(answer: IRequirementAnswer): void {
-    ResponseStoreService.response.requirementAnswers.push(answer);
-  }
-
-  editAnswer(answer: IRequirementAnswer): void {
-    const answerIndex =
-      ResponseStoreService.response.requirementAnswers.findIndex(
-        (element) => element.variantId === answer.variantId
-      );
-    ResponseStoreService.response.requirementAnswers[answerIndex] = answer;
-  }
-
-  deleteAnswer(answer: IRequirementAnswer): void {
-    const answerIndex =
-      ResponseStoreService.response.requirementAnswers.findIndex(
-        (element) => element.variantId === answer.variantId
-      );
-    ResponseStoreService.response.requirementAnswers.splice(answerIndex, 1);
-  }
+  public static defaultResponse = (): IResponse => {
+    return { ...initialState };
+  };
 }
