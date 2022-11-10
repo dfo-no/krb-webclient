@@ -4,18 +4,18 @@ import { useTranslation } from 'react-i18next';
 import SystemUpdateAltIcon from '@mui/icons-material/SystemUpdateAlt';
 
 import { httpPost } from '../../../api/http';
-import { ISpecification } from '../../../Nexus/entities/ISpecification';
-import { useSpecificationState } from '../SpecificationContext';
+import { IResponse } from '../../../Nexus/entities/IResponse';
+import { useResponseState } from '../ResponseContext';
 import ToolbarItem from '../../../components/UI/Toolbar/ToolbarItem';
 
-export default function DownloadButton(): React.ReactElement {
+export default function DownloadToolbarItem(): React.ReactElement {
+  const { response } = useResponseState();
   const { t } = useTranslation();
-  const { specification } = useSpecificationState();
 
-  const onDownLoad = (): void => {
-    httpPost<ISpecification, AxiosResponse<File>>(
-      '/java/generateSpecification',
-      specification,
+  const onDownLoad = () => {
+    httpPost<IResponse, AxiosResponse<File>>(
+      '/java/generateResponse',
+      response,
       {
         headers: {
           'Content-Type': 'application/json',
@@ -23,11 +23,11 @@ export default function DownloadButton(): React.ReactElement {
         },
         responseType: 'blob',
       }
-    ).then((response) => {
-      const url = window.URL.createObjectURL(new Blob([response.data]));
+    ).then((res: { data: BlobPart }) => {
+      const url = window.URL.createObjectURL(new Blob([res.data]));
       const link = document.createElement('a');
       link.href = url;
-      link.setAttribute('download', 'specification.pdf');
+      link.setAttribute('download', 'response.pdf');
       document.body.appendChild(link);
       link.click();
       setTimeout(() => {
@@ -38,7 +38,7 @@ export default function DownloadButton(): React.ReactElement {
 
   return (
     <ToolbarItem
-      primaryText={t('Download specification')}
+      primaryText={t('Download response')}
       icon={<SystemUpdateAltIcon />}
       handleClick={() => onDownLoad()}
     />
