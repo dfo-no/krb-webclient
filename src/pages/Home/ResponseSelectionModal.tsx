@@ -10,7 +10,7 @@ import {
   ModalButton,
   ModalButtonsBox,
 } from '../../components/ModalBox/ModalBox';
-import { useResponseState } from '../Response/ResponseContext';
+import Nexus from '../../Nexus/Nexus';
 import { RESPONSE } from '../../common/PathConstants';
 
 interface IProps {
@@ -24,11 +24,13 @@ export default function ResponseSelectionModal({
 }: IProps): React.ReactElement {
   const history = useHistory();
   const { t } = useTranslation();
-  const { setResponse } = useResponseState();
+  const nexus = Nexus.getInstance();
 
   const editResponse = (): void => {
-    setResponse(selectedResponse);
-    history.push(`/${RESPONSE}/${selectedResponse.specification.bank.id}`);
+    const responseWithId = nexus.responseService.withId(selectedResponse);
+    nexus.responseService
+      .setResponse(responseWithId)
+      .then(() => history.push(`/${RESPONSE}/${responseWithId.id}`));
   };
 
   const cancel = (): void => {
