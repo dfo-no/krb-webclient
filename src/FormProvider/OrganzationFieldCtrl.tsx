@@ -1,12 +1,11 @@
 import React, { ReactNode } from 'react';
-import { FormControl, FormLabel, Input, Typography } from '@mui/material';
+import { FormControl, FormLabel, Input } from '@mui/material';
 import { Controller, useFormContext } from 'react-hook-form';
 import { get } from 'lodash';
 import classNames from 'classnames';
 import InputAdornment from '@mui/material/InputAdornment';
 import CloseIcon from '@mui/icons-material/Close';
 
-import theme from '../theme';
 import css from './FormProvider.module.scss';
 
 interface IProps {
@@ -44,16 +43,10 @@ const OrganizationFieldCtrl = ({
     <FormControl
       className={classNames([css.FormProvider, className])}
       error={!!get(errors, name)}
-      sx={{ width: '100%' }}
     >
-      <Typography
-        variant={'smBold'}
-        color={theme.palette.primary.main}
-        sx={{ marginBottom: 1 }}
-        data-required={required}
-      >
+      <span className={css.InputLabel} data-required={required}>
         {label}
-      </Typography>
+      </span>
       <Controller
         name={name}
         render={({ field }) => (
