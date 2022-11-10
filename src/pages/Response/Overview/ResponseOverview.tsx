@@ -21,15 +21,13 @@ function ResponseOverview(): React.ReactElement {
   const { setProductIndex } = useProductIndexState();
   const genericPressed = () => {
     setProductIndex(-1);
-    history.push(
-      `/${RESPONSE}/${response.specification.bank.id}/${PRODUCTS}/general/`
-    );
+    history.push(`/${RESPONSE}/${response.id}/${PRODUCTS}/general/`);
   };
 
   const productPressed = (index: number) => {
     setProductIndex(index);
     history.push(
-      `/${RESPONSE}/${response.specification.bank.id}/${PRODUCTS}/${response.products[index].id}/`
+      `/${RESPONSE}/${response.id}/${PRODUCTS}/${response.products[index].id}/`
     );
   };
 

@@ -14,14 +14,14 @@ export default function ResponseEditor(): React.ReactElement {
     <div className={css.EditorFullPage}>
       <div className={css.Content}>
         <Switch>
-          <Route exact path={`/${RESPONSE}/:bankId`}>
+          <Route exact path={`/${RESPONSE}/:responseId`}>
             <SelectProvider>
               <ResponseOverview />
             </SelectProvider>
           </Route>
-          <Route
-            path={`/${RESPONSE}/${response.specification.bank.id}/${PRODUCTS}/`}
-          >
+
+          {/* TODO :  */}
+          <Route path={`/${RESPONSE}/${response.id}/${PRODUCTS}/`}>
             <SelectProvider>
               <AnswerProduct />
             </SelectProvider>

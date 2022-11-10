@@ -24,7 +24,7 @@ export default function AnswerProduct(): React.ReactElement {
   const existingNeeds = new Set<INeed>();
 
   const toOverviewPage = (): void => {
-    history.push(`/${RESPONSE}/${response.specification.bank.id}`);
+    history.push(`/${RESPONSE}/${response.id}`);
   };
 
   const renderRequirementAnswer = (
