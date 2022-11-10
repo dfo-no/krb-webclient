@@ -42,8 +42,7 @@ const OrganizationField = () => {
   const [isClearIcon, setIsClearIcon] = useState<boolean>(false);
   useEffect(() => {
     register('organizationNumber');
-    if (getValues('organizationNumber') && getValues('organizationNumber'))
-      setIsClearIcon(true);
+    if (getValues('organization')) setIsClearIcon(true);
   }, [getValues, register]);
 
   const handleOnSearch = (value: string) => {
@@ -97,11 +96,7 @@ const OrganizationField = () => {
         setSearchInput={handleSetSearchInput}
         onClear={onClear}
         isClearIcon={isClearIcon}
-        children={
-          <div>
-            {getValues('organizationNumber') && getValues('organizationNumber')}
-          </div>
-        }
+        children={<div>{getValues('organizationNumber')}</div>}
       />
       {!!results.length && (
         <List
