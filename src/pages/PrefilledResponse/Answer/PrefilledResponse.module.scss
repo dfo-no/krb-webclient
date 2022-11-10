@@ -11,7 +11,7 @@
     display: flex;
     flex-direction: column;
     .Question {
-      .Accordion {
+      .Accordion > div {
         padding: 0;
       }
       .Header {

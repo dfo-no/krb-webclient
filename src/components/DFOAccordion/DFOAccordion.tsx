@@ -47,9 +47,9 @@ export const DFOAccordion = ({
       expanded={eventKey === activeKey}
       onChange={handleAccordionChange(eventKey)}
       elevation={0}
+      className={className}
     >
       <AccordionSummary
-        className={className}
         expandIcon={
           <Box className={classes.expandIcon}>
             <ExpandMoreIcon />
