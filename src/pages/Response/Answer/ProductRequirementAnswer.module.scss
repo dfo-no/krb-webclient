@@ -1,10 +1,18 @@
 .ProductRequirementAnswer {
   display: flex;
   flex-direction: column;
-  color: black;
-  border: 0.1rem solid var(--primary-color);
-  padding: var(--small-gap) var(--normal-gap);
+  border: 0.1rem solid var(--border-color-secondary);
+  padding: var(--small-gap) var(--nano-gap);
   margin: var(--normal-gap) 0;
+
+  &.answered {
+    border: 0.2rem solid var(--tertiary-color);
+  }
+
+  .title {
+    font-size: var(--small-fontsize);
+    font-weight: bold;
+  }
 
   .header {
     width: 100%;
@@ -24,10 +32,6 @@
 
     .label {
       margin-bottom: var(--small-gap);
-    }
-
-    .title {
-      margin-bottom: var(--tiny-gap);
     }
   }
 }
