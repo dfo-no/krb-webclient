@@ -4,7 +4,6 @@ import { Route, Switch } from 'react-router-dom';
 import css from '../Stylesheets/EditorFullPage.module.scss';
 import AnswerProduct from './Answer/AnswerProduct';
 import NewProduct from './NewProduct/NewProduct';
-import NoProducts from './NoProducts/NoProducts';
 import { useProductIndexState } from '../../components/ProductIndexContext/ProductIndexContext';
 import PrefilledResponseOverview from './PrefilledResponseOverview/PrefilledResponseOverview';
 import { PRODUCTS, PREFILLED_RESPONSE } from '../../common/PathConstants';
@@ -23,9 +22,6 @@ export default function PrefilledResponseEditor(): ReactElement {
     }
     if (productIndex >= -1) {
       return <AnswerProduct />;
-    }
-    if (prefilledResponse.products.length == 0) {
-      return <NoProducts />;
     }
   };
 

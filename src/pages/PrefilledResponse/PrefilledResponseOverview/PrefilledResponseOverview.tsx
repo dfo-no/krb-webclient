@@ -13,6 +13,7 @@ import ToolbarItem from '../../../components/UI/Toolbar/ToolbarItem';
 import { useProductIndexState } from '../../../components/ProductIndexContext/ProductIndexContext';
 import { IPrefilledResponseProduct } from '../../../Nexus/entities/IPrefilledResponseProduct';
 import { PRODUCTS, PREFILLED_RESPONSE } from '../../../common/PathConstants';
+import NoProducts from '../NoProducts/NoProducts';
 
 export default function PrefilledResponseOverview(): ReactElement {
   const { t } = useTranslation();
@@ -119,6 +120,7 @@ export default function PrefilledResponseOverview(): ReactElement {
             })}
           </ul>
         )}
+        {prefilledResponse.products.length == 0 && <NoProducts />}
       </div>
     </div>
   );
