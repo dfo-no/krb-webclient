@@ -7,6 +7,7 @@ import React, {
   useState,
 } from 'react';
 import { RouteComponentProps } from 'react-router-dom';
+import produce from 'immer';
 
 import Utils from '../../common/Utils';
 import { IRequirementAnswer } from '../../Nexus/entities/IRequirementAnswer';
@@ -44,6 +45,8 @@ export const ResponseProvider = ({ children, match }: Props) => {
   // const routeMatch =
   //   useRouteMatch<IRouteSpecificationParams>(SpecificationPath);
   const responseId = match.params.responseId;
+
+  console.log('responseId: ', responseId);
   const { setTitle } = useHeaderState();
 
   const [response, setResponse] = useState<IResponse>(
@@ -64,44 +67,60 @@ export const ResponseProvider = ({ children, match }: Props) => {
   }, [responseId, nexus, setTitle]);
 
   const editResponseProduct = (payload: IResponseProduct) => {
-    if (response.products.find((product) => product.id === payload.id)) {
-      const productIndex = response.products.findIndex(
-        (product) => product.id === payload.id
-      );
-      response.products[productIndex] = payload;
-    }
+    const updatedResponse = produce(response, (draft) => {
+      if (draft.products.find((product) => product.id === payload.id)) {
+        const productIndex = draft.products.findIndex(
+          (product) => product.id === payload.id
+        );
+        draft.products[productIndex] = payload;
+      }
+    });
+    nexus.responseStore
+      .setResponse(updatedResponse)
+      .then(() => setResponse(updatedResponse));
   };
+
   const addRequirementAnswer = (payload: IRequirementAnswer) => {
-    if (
-      response.requirementAnswers.find((answer) => answer.id === payload.id)
-    ) {
-      const oldSelectIndex = response.requirementAnswers.findIndex(
-        (answer) => answer.id === payload.id
-      );
-      response.requirementAnswers.splice(oldSelectIndex, 1);
-    }
-    response.requirementAnswers.push(payload);
+    const updatedResponse = produce(response, (draft) => {
+      if (draft.requirementAnswers.find((answer) => answer.id === payload.id)) {
+        const oldSelectIndex = draft.requirementAnswers.findIndex(
+          (answer) => answer.id === payload.id
+        );
+        draft.requirementAnswers.splice(oldSelectIndex, 1);
+      }
+      draft.requirementAnswers.push(payload);
+    });
+
+    nexus.responseStore
+      .setResponse(updatedResponse)
+      .then(() => setResponse(updatedResponse));
   };
+
   const addProductAnswer = (payload: {
     answer: IRequirementAnswer;
     productId: string;
   }) => {
-    const index = Utils.ensure(
-      response.products.findIndex((product) => product.id === payload.productId)
-    );
-    if (
-      response.products[index].requirementAnswers.find(
-        (answer) => answer.variantId === payload.answer.variantId
-      )
-    ) {
-      const oldSelectIndex = response.products[
-        index
-      ].requirementAnswers.findIndex(
-        (answer) => answer.variantId === payload.answer.variantId
+    const updatedResponse = produce(response, (draft) => {
+      const index = Utils.ensure(
+        draft.products.findIndex((product) => product.id === payload.productId)
       );
-      response.products[index].requirementAnswers.splice(oldSelectIndex, 1);
-    }
-    response.products[index].requirementAnswers.push(payload.answer);
+      if (
+        draft.products[index].requirementAnswers.find(
+          (answer) => answer.variantId === payload.answer.variantId
+        )
+      ) {
+        const oldSelectIndex = draft.products[
+          index
+        ].requirementAnswers.findIndex(
+          (answer) => answer.variantId === payload.answer.variantId
+        );
+        draft.products[index].requirementAnswers.splice(oldSelectIndex, 1);
+      }
+      draft.products[index].requirementAnswers.push(payload.answer);
+    });
+    nexus.responseStore
+      .setResponse(updatedResponse)
+      .then(() => setResponse(updatedResponse));
   };
 
   return (

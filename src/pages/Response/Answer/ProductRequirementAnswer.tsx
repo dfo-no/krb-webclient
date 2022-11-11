@@ -10,20 +10,23 @@ import TextUtils from '../../../common/TextUtils';
 import theme from '../../../theme';
 import { DFOAccordion } from '../../../components/DFOAccordion/DFOAccordion';
 import { IRequirementAnswer } from '../../../Nexus/entities/IRequirementAnswer';
-import { useProductIndexState } from '../../../components/ProductIndexContext/ProductIndexContext';
 import { VariantType } from '../../../Nexus/enums';
 import { useAccordionState } from '../../../components/DFOAccordion/AccordionContext';
 import { useResponseState } from '../ResponseContext';
 
 interface IProps {
+  productIndex: number;
   requirementAnswer: IRequirementAnswer;
 }
 
 export default function ProductRequirementAnswer({
+  productIndex,
   requirementAnswer,
 }: IProps): ReactElement {
   const { response } = useResponseState();
-  const { productIndex } = useProductIndexState();
+
+  console.log('In ProductRequirementAnswer, productIndex = ', productIndex);
+
   const [existingAnswer, setExistingAnswer] = useState<
     IRequirementAnswer | undefined
   >(undefined);
@@ -81,6 +84,7 @@ export default function ProductRequirementAnswer({
           </Typography>
         ) : (
           <ProductQuestionAnswer
+            productIndex={productIndex}
             requirementAnswer={requirementAnswer}
             existingAnswer={existingAnswer}
           />

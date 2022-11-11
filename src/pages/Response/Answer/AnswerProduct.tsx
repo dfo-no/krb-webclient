@@ -1,5 +1,5 @@
 import React, { ReactElement } from 'react';
-import { useHistory } from 'react-router-dom';
+import { RouteComponentProps, useHistory } from 'react-router-dom';
 import { Button } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 
@@ -9,19 +9,27 @@ import ProductRequirementAnswer from './ProductRequirementAnswer';
 import { AccordionProvider } from '../../../components/DFOAccordion/AccordionContext';
 import { INeed } from '../../../Nexus/entities/INeed';
 import { IRequirementAnswer } from '../../../Nexus/entities/IRequirementAnswer';
-import { useProductIndexState } from '../../../components/ProductIndexContext/ProductIndexContext';
 import EditResponseProduct from '../EditResponseProduct/EditResponseProduct';
 import { RESPONSE } from '../../../common/PathConstants';
 import Panel from '../../../components/UI/Panel/Panel';
 import css from '../../Stylesheets/EditorFullPage.module.scss';
 import { useResponseState } from '../ResponseContext';
+import Utils from '../../../common/Utils';
 
-export default function AnswerProduct(): React.ReactElement {
+type AnswerProductMatchParams = { productIndex: string };
+
+type Props = RouteComponentProps<AnswerProductMatchParams>;
+
+export default function AnswerProduct({ match }: Props): React.ReactElement {
   const { t } = useTranslation();
   const history = useHistory();
   const { response } = useResponseState();
-  const { productIndex } = useProductIndexState();
   const existingNeeds = new Set<INeed>();
+
+  const paramsProductIndex = match.params.productIndex;
+  const productIndex = Utils.isNumeric(paramsProductIndex)
+    ? Number(paramsProductIndex)
+    : -1;
 
   const toOverviewPage = (): void => {
     history.push(`/${RESPONSE}/${response.id}`);
@@ -33,18 +41,23 @@ export default function AnswerProduct(): React.ReactElement {
     const requirementNeed = response.specification.bank.needs.find(
       (need) => need.id === requirementAnswer.requirement.needId
     );
+    console.log('response:', response);
     if (requirementNeed && !existingNeeds.has(requirementNeed)) {
       existingNeeds.add(requirementNeed);
       return (
         <div key={requirementAnswer.id}>
           <ProductNeed need={requirementNeed} />
-          <ProductRequirementAnswer requirementAnswer={requirementAnswer} />
+          <ProductRequirementAnswer
+            productIndex={productIndex}
+            requirementAnswer={requirementAnswer}
+          />
         </div>
       );
     } else {
       return (
         <ProductRequirementAnswer
           key={requirementAnswer.id}
+          productIndex={productIndex}
           requirementAnswer={requirementAnswer}
         />
       );
@@ -52,6 +65,7 @@ export default function AnswerProduct(): React.ReactElement {
   };
 
   const renderRequirements = (): (ReactElement | undefined)[] => {
+    console.log('response:', response);
     const specOrProduct =
       productIndex === -1
         ? response.specification

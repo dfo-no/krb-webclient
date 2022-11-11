@@ -1,31 +1,27 @@
 import React from 'react';
-import { Route, Switch } from 'react-router-dom';
+import { Route, RouteComponentProps, Switch } from 'react-router-dom';
 
 import AnswerProduct from './Answer/AnswerProduct';
 import css from '../Stylesheets/EditorFullPage.module.scss';
 import ResponseOverview from './Overview/ResponseOverview';
-import { SelectProvider } from '../Workbench/Create/SelectContext';
-import { PRODUCTS, RESPONSE } from '../../common/PathConstants';
-import { useResponseState } from './ResponseContext';
+import { PRODUCTS } from '../../common/PathConstants';
 
-export default function ResponseEditor(): React.ReactElement {
-  const { response } = useResponseState();
+export type MatchParams = { responseId: string };
+type Props = RouteComponentProps<MatchParams>;
+
+export default function ResponseEditor({ match }: Props): React.ReactElement {
+  console.log('match:', match);
   return (
     <div className={css.EditorFullPage}>
       <div className={css.Content}>
         <Switch>
-          <Route exact path={`/${RESPONSE}/:responseId`}>
-            <SelectProvider>
-              <ResponseOverview />
-            </SelectProvider>
+          <Route exact path={`${match.path}`}>
+            <ResponseOverview />
           </Route>
-
-          {/* TODO :  */}
-          <Route path={`/${RESPONSE}/${response.id}/${PRODUCTS}/`}>
-            <SelectProvider>
-              <AnswerProduct />
-            </SelectProvider>
-          </Route>
+          <Route
+            path={`${match.path}/${PRODUCTS}/:productIndex`}
+            component={AnswerProduct}
+          />
         </Switch>
       </div>
     </div>

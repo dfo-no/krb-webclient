@@ -10,6 +10,7 @@ import { useResponseState } from '../ResponseContext';
 export default function ProductHeader(): React.ReactElement {
   const { t } = useTranslation();
   const { response } = useResponseState();
+  // TODO: Remove
   const { productIndex } = useProductIndexState();
 
   const description =

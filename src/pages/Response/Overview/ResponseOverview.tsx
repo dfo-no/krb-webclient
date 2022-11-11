@@ -7,7 +7,6 @@ import EditIcon from '@mui/icons-material/Edit';
 import css from '../../Stylesheets/EditorFullPage.module.scss';
 import DownloadToolbarItem from '../Download/DownloadToolbarItem';
 import { ISpecificationProduct } from '../../../Nexus/entities/ISpecificationProduct';
-import { useProductIndexState } from '../../../components/ProductIndexContext/ProductIndexContext';
 import { PRODUCTS, RESPONSE } from '../../../common/PathConstants';
 import ToolbarItem from '../../../components/UI/Toolbar/ToolbarItem';
 import Toolbar from '../../../components/UI/Toolbar/ToolBar';
@@ -17,17 +16,13 @@ function ResponseOverview(): React.ReactElement {
   const { t } = useTranslation();
   const history = useHistory();
   const { response } = useResponseState();
-  const { setProductIndex } = useProductIndexState();
+
   const genericPressed = () => {
-    setProductIndex(-1);
-    history.push(`/${RESPONSE}/${response.id}/${PRODUCTS}/general/`);
+    history.push(`/${RESPONSE}/${response.id}/${PRODUCTS}/general`);
   };
 
   const productPressed = (index: number) => {
-    setProductIndex(index);
-    history.push(
-      `/${RESPONSE}/${response.id}/${PRODUCTS}/${response.products[index].id}/`
-    );
+    history.push(`/${RESPONSE}/${response.id}/${PRODUCTS}/${index}`);
   };
 
   const renderProducts = (product: ISpecificationProduct, index: number) => {

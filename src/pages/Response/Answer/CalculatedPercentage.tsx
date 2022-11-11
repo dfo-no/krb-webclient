@@ -7,8 +7,10 @@ import { IPointsCalculation } from '../../../Nexus/entities/IPointsCalculation';
 import { useProductIndexState } from '../../../components/ProductIndexContext/ProductIndexContext';
 import { useResponseState } from '../ResponseContext';
 
+// TODO: Check if we can remove this
 export default function CalculatedPercentage(): React.ReactElement {
   const { response } = useResponseState();
+  // TODO: Or at least this
   const { productIndex } = useProductIndexState();
   const nexus = Nexus.getInstance();
   const [evaluation, setEvaluation] = useState<IPointsCalculation | null>(null);

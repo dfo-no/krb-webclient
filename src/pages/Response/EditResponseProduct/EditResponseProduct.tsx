@@ -16,6 +16,7 @@ import { useResponseState } from '../ResponseContext';
 
 export default function EditResponseProduct(): ReactElement {
   const { t } = useTranslation();
+  // TODO: Remove
   const { productIndex } = useProductIndexState();
   const { response, editResponseProduct } = useResponseState();
   const nexus = Nexus.getInstance();

@@ -1,6 +1,6 @@
 import React from 'react';
 
-import Nexus from '../../../Nexus/Nexus';
+import { useAccordionState } from '../../../components/DFOAccordion/AccordionContext';
 import QuestionAnswerCheckbox from '../../../components/QuestionAnswer/QuestionAnswerCheckbox';
 import QuestionAnswerCodelist from '../../../components/QuestionAnswer/QuestionAnswerCodelist';
 import QuestionAnswerConfirmation from '../../../components/QuestionAnswer/QuestionAnswerConfirmation';
@@ -8,29 +8,31 @@ import QuestionAnswerPeriodDate from '../../../components/QuestionAnswer/Questio
 import QuestionAnswerSlider from '../../../components/QuestionAnswer/QuestionAnswerSlider';
 import QuestionAnswerText from '../../../components/QuestionAnswer/QuestionAnswerText';
 import QuestionAnswerTime from '../../../components/QuestionAnswer/QuestionAnswerTime';
-import { useResponseState } from '../ResponseContext';
 import { IRequirementAnswer } from '../../../Nexus/entities/IRequirementAnswer';
 import { QuestionType } from '../../../Nexus/entities/QuestionType';
 import { QuestionVariant } from '../../../Nexus/enums';
-import { useAccordionState } from '../../../components/DFOAccordion/AccordionContext';
-import { useProductIndexState } from '../../../components/ProductIndexContext/ProductIndexContext';
+import Nexus from '../../../Nexus/Nexus';
+import { useResponseState } from '../ResponseContext';
 
 interface IProps {
+  productIndex: number;
   requirementAnswer: IRequirementAnswer;
   existingAnswer?: IRequirementAnswer;
 }
 
 export default function ProductQuestionAnswer({
+  productIndex,
   requirementAnswer,
   existingAnswer,
 }: IProps): React.ReactElement {
   const { response, addProductAnswer, addRequirementAnswer } =
     useResponseState();
   const nexus = Nexus.getInstance();
-  const { productIndex } = useProductIndexState();
+
   const { setActiveKey } = useAccordionState();
 
   const onSubmit = (post: QuestionType): void => {
+    console.log('onSubmit, productIndex = ', productIndex);
     const calculatedPoints = {
       ...post,
       answer: {
@@ -98,6 +100,7 @@ export default function ProductQuestionAnswer({
         />
       );
     case QuestionVariant.Q_SLIDER:
+      // TODO her ein plass, kanskje onSubmit?
       return (
         <QuestionAnswerSlider
           item={requirementAnswer.question}

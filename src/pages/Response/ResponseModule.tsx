@@ -14,7 +14,7 @@ export default function ResponseModule({
   return (
     <ResponseProvider {...props}>
       <ProductIndexProvider>
-        <ResponseEditor />
+        <ResponseEditor {...props} />
       </ProductIndexProvider>
     </ResponseProvider>
   );
