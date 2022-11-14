@@ -3,7 +3,6 @@ import { Route, Switch } from 'react-router-dom';
 
 import css from '../Stylesheets/EditorFullPage.module.scss';
 import AnswerProduct from './Answer/AnswerProduct';
-import NewProduct from './NewProduct/NewProduct';
 import { useProductIndexState } from '../../components/ProductIndexContext/ProductIndexContext';
 import PrefilledResponseOverview from './PrefilledResponseOverview/PrefilledResponseOverview';
 import { PRODUCTS, PREFILLED_RESPONSE } from '../../common/PathConstants';
@@ -14,12 +13,9 @@ export default function PrefilledResponseEditor(): ReactElement {
   const { prefilledResponse } = useAppSelector(
     (state) => state.prefilledResponse
   );
-  const { create, productIndex } = useProductIndexState();
+  const { productIndex } = useProductIndexState();
 
   const renderProduct = () => {
-    if (create) {
-      return <NewProduct />;
-    }
     if (productIndex >= -1) {
       return <AnswerProduct />;
     }

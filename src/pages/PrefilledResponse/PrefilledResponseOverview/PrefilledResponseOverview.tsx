@@ -13,7 +13,7 @@ import ToolbarItem from '../../../components/UI/Toolbar/ToolbarItem';
 import { useProductIndexState } from '../../../components/ProductIndexContext/ProductIndexContext';
 import { IPrefilledResponseProduct } from '../../../Nexus/entities/IPrefilledResponseProduct';
 import { PRODUCTS, PREFILLED_RESPONSE } from '../../../common/PathConstants';
-import NoProducts from '../NoProducts/NoProducts';
+import NewProductSelection from '../NewProduct/NewProductSelection';
 
 export default function PrefilledResponseOverview(): ReactElement {
   const { t } = useTranslation();
@@ -21,7 +21,8 @@ export default function PrefilledResponseOverview(): ReactElement {
   const { prefilledResponse } = useAppSelector(
     (state) => state.prefilledResponse
   );
-  const { setProductIndex, setCreate } = useProductIndexState();
+  const { setProductIndex, setOpenProductSelection, openProductSelection } =
+    useProductIndexState();
 
   const genericPressed = () => {
     setProductIndex(-1);
@@ -31,7 +32,7 @@ export default function PrefilledResponseOverview(): ReactElement {
   };
 
   const createPressed = (): void => {
-    setCreate(true);
+    setOpenProductSelection(true);
   };
 
   const productPressed = (index: number, productId: string) => {
@@ -120,8 +121,8 @@ export default function PrefilledResponseOverview(): ReactElement {
             })}
           </ul>
         )}
-        {prefilledResponse.products.length == 0 && <NoProducts />}
       </div>
+      {openProductSelection && <NewProductSelection />}
     </div>
   );
 }

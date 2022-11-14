@@ -12,6 +12,8 @@ interface IIndexContext {
   setProductIndex: Dispatch<SetStateAction<number>>;
   create: boolean;
   setCreate: Dispatch<SetStateAction<boolean>>;
+  openProductSelection: boolean;
+  setOpenProductSelection: Dispatch<SetStateAction<boolean>>;
 }
 
 const initialContext: IIndexContext = {
@@ -21,6 +23,10 @@ const initialContext: IIndexContext = {
   },
   create: false,
   setCreate: function (): void {
+    throw new Error('Function not implemented.');
+  },
+  openProductSelection: false,
+  setOpenProductSelection: function (): void {
     throw new Error('Function not implemented.');
   },
 };
@@ -36,6 +42,7 @@ export const ProductIndexProvider = ({
 }: IProps): React.ReactElement => {
   const [productIndex, setProductIndex] = useState(-2);
   const [create, setCreate] = useState(false);
+  const [openProductSelection, setOpenProductSelection] = useState(false);
 
   useEffect(() => {
     if (create) {
@@ -56,6 +63,8 @@ export const ProductIndexProvider = ({
         setProductIndex,
         create,
         setCreate,
+        openProductSelection,
+        setOpenProductSelection,
       }}
     >
       {children}
