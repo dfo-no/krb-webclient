@@ -12,7 +12,7 @@ interface IProps {
 export default function ProductNeed({ need }: IProps): React.ReactElement {
   return (
     <div className={css.Need}>
-      <Typography variant="smBold">{need.title}</Typography>
+      <Typography variant="mdBold">{need.title}</Typography>
     </div>
   );
 }
