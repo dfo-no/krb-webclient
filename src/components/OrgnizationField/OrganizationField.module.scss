@@ -1,0 +1,26 @@
+.OrganizationField {
+  border: 0.2rem solid var(--primary-light-color);
+  list-style: none;
+  margin-top: -2.6rem !important;
+  max-height: 20rem;
+  overflow-y: auto;
+  padding-left: 0;
+  width: 100%;
+  gap: var(--tiny-gap) !important;
+}
+
+.OrganizationField li {
+  border: none !important;
+  min-height: fit-content !important;
+  padding: 1rem;
+  font-size: var(--small-fontsize);
+
+  .Choose {
+    margin-left: auto;
+  }
+}
+
+.OrganizationField li:hover {
+  background-color: var(--input-background-color);
+  cursor: pointer;
+}

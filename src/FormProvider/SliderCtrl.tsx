@@ -65,7 +65,7 @@ const SliderCtrl = ({
                 max={max}
                 step={step}
                 marks={marks}
-                value={field.value}
+                value={+field.value}
                 id={name}
               />
             )}

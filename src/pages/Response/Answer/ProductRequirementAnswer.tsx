@@ -99,6 +99,7 @@ export default function ProductRequirementAnswer({
         eventKey={requirementAnswer.id}
         header={header()}
         body={body()}
+        className={css.Accordion}
       />
     </Box>
   );

@@ -12,8 +12,8 @@ Feature: Hjemmesiden
     And Jeg klikker på "Opprett kravspesifikasjon" knapp
     And Jeg skriver "Test kravspesifikasjon 2" i feltet "Navn på spesifikasjon"
     And Jeg skriver "111111/aa" i feltet "Saksnummer"
-    And Jeg skriver "dfø" i feltet "Navn"
-    And Jeg skriver "123123123" i feltet "Organisasjonsnummer"
+    And Jeg skriver "direktoratet for forvaltning og økonomistyring" i feltet "Navn"
+    And Jeg kan velge navn ved å klikke på "Velg" knappen
     Then Jeg klikker på "Opprett kravspesifikasjon" knappen
 
   Scenario: Jeg kan lasteopp kravspesifikasjon

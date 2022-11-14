@@ -1,23 +1,13 @@
-import React, { useEffect, useState } from 'react';
-import {
-  Button,
-  FormControlLabel,
-  Typography,
-  RadioGroup,
-} from '@mui/material';
-import { FormProvider, useForm, useWatch } from 'react-hook-form';
+import React, { useEffect } from 'react';
+import { Typography } from '@mui/material';
+import { FormProvider, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
 import css from '../../Stylesheets/NewProduct.module.scss';
 import GeneralErrorMessage from '../../../Form/GeneralErrorMessage';
-import MultipleProductSelection from '../../../components/ProductSelection/MultipleProductSelection';
-import NewProductHeader from '../../../components/NewProductHeader/NewProductHeader';
 import Nexus from '../../../Nexus/Nexus';
-import NeedList from '../../../components/NeedList/NeedList';
-import ProductSelection from '../../../components/ProductSelection/ProductSelection';
 import theme from '../../../theme';
 import { addProduct } from '../../../store/reducers/prefilled-response-reducer';
-import { DFORadio } from '../../../components/DFORadio/DFORadio';
 import { IPrefilledResponseProduct } from '../../../Nexus/entities/IPrefilledResponseProduct';
 import { IProduct } from '../../../Nexus/entities/IProduct';
 import { ModelType } from '../../../Nexus/enums';
@@ -25,8 +15,22 @@ import { Parentable } from '../../../models/Parentable';
 import { useAppDispatch, useAppSelector } from '../../../store/hooks';
 import { useFormStyles } from '../../../components/Form/FormStyles';
 import { useProductIndexState } from '../../../components/ProductIndexContext/ProductIndexContext';
+import {
+  ModalBox,
+  ModalButton,
+  ModalButtonsBox,
+  ModalFieldsBox,
+} from '../../../components/ModalBox/ModalBox';
+import VerticalTextCtrl from '../../../FormProvider/VerticalTextCtrl';
 
-export default function NewProduct(): React.ReactElement {
+interface IProps {
+  product: Parentable<IProduct> | null;
+  handleClose: () => void;
+}
+export default function NewProduct({
+  product,
+  handleClose,
+}: IProps): React.ReactElement {
   const { t } = useTranslation();
   const nexus = Nexus.getInstance();
   const { prefilledResponse } = useAppSelector(
@@ -34,13 +38,7 @@ export default function NewProduct(): React.ReactElement {
   );
   const formStyles = useFormStyles();
   const dispatch = useAppDispatch();
-  const { setProductIndex } = useProductIndexState();
-  const [product, setProduct] = useState<Parentable<IProduct> | null>(null);
-  const [relatedProducts, setRelatedProducts] = useState(false);
-  const options = [
-    { value: true, label: t('common.Yes'), recommended: false },
-    { value: false, label: t('common.No'), recommended: false },
-  ];
+  const { setProductIndex, setCreate } = useProductIndexState();
 
   const defaultValues: IPrefilledResponseProduct =
     nexus.prefilledResponseService.generateDefaultPrefilledResponseProductValues();
@@ -52,18 +50,20 @@ export default function NewProduct(): React.ReactElement {
     defaultValues,
   });
 
+  if (product) {
+    methods.setValue('originProduct', product);
+  } else {
+    handleClose();
+  }
   useEffect(() => {
-    if (!product) {
-      const firstProduct = prefilledResponse.bank.products[0];
-      setProduct(firstProduct);
-      methods.setValue('originProduct', firstProduct);
+    if (product?.title) {
+      methods.setValue('title', product.title);
     }
-  }, [prefilledResponse, product, setProduct, methods]);
+  }, [methods, product?.title]);
 
-  const useRelatedProducts = useWatch({
-    name: 'relatedProducts',
-    control: methods.control,
-  });
+  const changeProduct = (): void => {
+    setCreate(false);
+  };
 
   const onSubmit = (post: IPrefilledResponseProduct): void => {
     const newProduct =
@@ -71,17 +71,8 @@ export default function NewProduct(): React.ReactElement {
     const newId = prefilledResponse.products.length;
     dispatch(addProduct(newProduct));
     setProductIndex(newId);
+    handleClose();
   };
-
-  const relatedProductsClicked = () => {
-    if (relatedProducts) {
-      methods.setValue('relatedProducts', []);
-    }
-    setRelatedProducts(!relatedProducts);
-  };
-
-  const nonDeletedProducts: Parentable<IProduct>[] =
-    prefilledResponse.bank.products.filter((item) => !item.deletedDate);
 
   return (
     <div className={css.NewProduct}>
@@ -92,71 +83,43 @@ export default function NewProduct(): React.ReactElement {
           autoComplete="off"
           noValidate
         >
-          <div>
-            <NewProductHeader />
+          <ModalBox>
             <div className={css.Content}>
-              <Typography variant={'smBold'} color={theme.palette.primary.main}>
-                {t('Choose a product type from the requirement set')}{' '}
-                <i>{prefilledResponse.bank.title}</i>{' '}
-                {t('that fits the product best')}
-              </Typography>
-              {nonDeletedProducts.length > 0 && (
-                <ProductSelection
-                  products={nonDeletedProducts}
-                  postChange={(selection: Parentable<IProduct>) => {
-                    setProduct(selection);
-                  }}
+              <div className={css.Content__header}>
+                <Typography
+                  variant={'smBold'}
+                  color={theme.palette.primary.main}
+                >
+                  {t('Product')}
+                  {': '} {product?.title}
+                </Typography>
+                <ModalButton variant="contained" onClick={changeProduct}>
+                  {t('Change')}
+                </ModalButton>
+              </div>
+              <ModalFieldsBox>
+                <VerticalTextCtrl
+                  name="title"
+                  label={t('Name of product')}
+                  placeholder={t('Name')}
+                  autoFocus
                 />
-              )}
-              <Typography variant={'smBold'} color={theme.palette.primary.main}>
-                {t('Add additional related products')}
-              </Typography>
-              <RadioGroup
-                row={true}
-                value={options[relatedProducts ? 0 : 1].value}
-                onClick={relatedProductsClicked}
-              >
-                {options.map((option) => {
-                  return (
-                    <FormControlLabel
-                      key={'' + option.value}
-                      value={option.value}
-                      control={<DFORadio />}
-                      label={
-                        <Typography
-                          variant={'sm'}
-                          color={theme.palette.black.main}
-                        >
-                          {option.label}
-                        </Typography>
-                      }
-                    />
-                  );
-                })}
-              </RadioGroup>
-              {nonDeletedProducts.length > 0 && relatedProducts && (
-                <MultipleProductSelection
-                  name={'relatedProducts'}
-                  products={nonDeletedProducts}
+                <VerticalTextCtrl
+                  name="description"
+                  label={t('Description of the product')}
+                  placeholder={t('Description')}
                 />
-              )}
-              <Button
-                className={css.Button}
-                type="submit"
-                aria-label={t('Save')}
-                variant="save"
-              >
-                {t('Save')}
-              </Button>
-              {product && (
-                <NeedList
-                  product={product}
-                  bank={prefilledResponse.bank}
-                  relatedProducts={useRelatedProducts}
-                />
-              )}
+              </ModalFieldsBox>
+              <ModalButtonsBox>
+                <ModalButton variant="cancel" onClick={() => handleClose()}>
+                  {t('common.Cancel')}
+                </ModalButton>
+                <ModalButton variant="save" type="submit">
+                  {t('Save')}
+                </ModalButton>
+              </ModalButtonsBox>
             </div>
-          </div>
+          </ModalBox>
           <GeneralErrorMessage errors={methods.formState.errors} />
         </form>
       </FormProvider>

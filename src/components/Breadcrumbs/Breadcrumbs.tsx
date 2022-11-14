@@ -117,7 +117,7 @@ const Breadcrumbs = (): ReactElement => {
 
   if (isPrefilledResponse) {
     breadcrumbs.push({
-      label: `${t('Prefilled')}/ ${getTitle()}`,
+      label: `${t('Prefilled Response')}/ ${getTitle()}`,
       url: `/${PREFILLED_RESPONSE}`,
     });
   }

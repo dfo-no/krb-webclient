@@ -1,8 +1,8 @@
-import ResponseStoreService from './ResponseStoreService';
-import UuidService from './UuidService';
 import { IResponse } from '../entities/IResponse';
 import { ISpecification } from '../entities/ISpecification';
 import BaseService from './BaseService';
+import ResponseStoreService from './ResponseStoreService';
+import UuidService from './UuidService';
 
 export default class ResponseService extends BaseService {
   UuidService = new UuidService();
