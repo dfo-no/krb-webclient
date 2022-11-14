@@ -1,13 +1,14 @@
-import Button from '@mui/material/Button';
 import React from 'react';
 import { AxiosResponse } from 'axios';
 import { useTranslation } from 'react-i18next';
+import SystemUpdateAltIcon from '@mui/icons-material/SystemUpdateAlt';
 
 import { httpPost } from '../../../api/http';
 import { IPrefilledResponse } from '../../../Nexus/entities/IPrefilledResponse';
 import { useAppSelector } from '../../../store/hooks';
+import ToolbarItem from '../../../components/UI/Toolbar/ToolbarItem';
 
-export default function DownloadButton(): React.ReactElement {
+export default function DownloadToolbarItem(): React.ReactElement {
   const { prefilledResponse } = useAppSelector(
     (state) => state.prefilledResponse
   );
@@ -41,8 +42,10 @@ export default function DownloadButton(): React.ReactElement {
   };
 
   return (
-    <Button variant="save" type="submit" onClick={onDownLoad}>
-      {t('Download prefilled response')}
-    </Button>
+    <ToolbarItem
+      primaryText={t('Download prefilled response')}
+      icon={<SystemUpdateAltIcon />}
+      handleClick={() => onDownLoad()}
+    />
   );
 }
