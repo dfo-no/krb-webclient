@@ -17,6 +17,7 @@ import { SPECIFICATION } from '../../common/PathConstants';
 import SelectCtrl from '../../FormProvider/SelectCtrl';
 import { IOption } from '../../Nexus/entities/IOption';
 import { FormFieldsBox } from '../../components/Form/FormFieldsBox';
+import OrganizationField from '../../components/OrgnizationField/OrganizationField';
 interface IProps {
   specification: ISpecification;
   handleCancel: () => void;
@@ -81,18 +82,7 @@ const EditSpecificationForm = ({ specification, handleCancel }: IProps) => {
             options={currencyUnitOptions}
             required={true}
           />
-          <VerticalTextCtrl
-            name="organization"
-            label={t('Name of your organization')}
-            placeholder={t('Name')}
-            required={true}
-          />
-          <VerticalTextCtrl
-            name="organizationNumber"
-            label={t('Organization number')}
-            placeholder={t('Organization number')}
-            required={true}
-          />
+          <OrganizationField />
           <ModalButtonsBox>
             <ModalButton variant="cancel" onClick={() => handleCancel()}>
               {t('common.Cancel')}

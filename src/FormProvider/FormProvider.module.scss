@@ -20,4 +20,36 @@
       }
     }
   }
+
+  .InputLabel {
+    color: var(--primary-color);
+    font-size: var(--small-fontsize);
+    font-weight: bold;
+    margin-bottom: 1rem;
+  }
+
+  .OrganizationFieldCtrl {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    background-color: var(--input-background-color);
+    gap: var(--tiny-gap);
+    padding-left: 1rem;
+    font-size: var(--medium-fontsize);
+    color: var(--text-primary-color);
+    border: 0.2rem solid var(--primary-light-color);
+
+    &:focus {
+      border: 0.3rem solid var(--primary-light-color);
+    }
+
+    &:hover {
+      border: 0.3rem solid var(--primary-light-color);
+    }
+  }
+
+  .ClearIcon {
+    cursor: pointer;
+  }
 }

@@ -6,47 +6,46 @@ import css from '../../Stylesheets/NewProductSelection.module.scss';
 import theme from '../../../theme';
 import { IProduct } from '../../../Nexus/entities/IProduct';
 import { Parentable } from '../../../models/Parentable';
+import { useAppSelector } from '../../../store/hooks';
+import { useProductIndexState } from '../../../components/ProductIndexContext/ProductIndexContext';
+import DFODialog from '../../../components/DFODialog/DFODialog';
+import { Levelable } from '../../../models/Levelable';
+import Utils from '../../../common/Utils';
+import NewProduct from './NewProduct';
 import {
   ModalBox,
   ModalButton,
   ModalButtonsBox,
 } from '../../../components/ModalBox/ModalBox';
-import DFODialog from '../../../components/DFODialog/DFODialog';
-import NewProductForm from './NewProductForm';
-import { Levelable } from '../../../models/Levelable';
-import Utils from '../../../common/Utils';
-import { useSpecificationState } from '../SpecificationContext';
 
 export default function NewProductSelection(): React.ReactElement {
   const { t } = useTranslation();
-  const {
-    specification,
-    newProductCreate,
-    setNewProductCreate,
-    setOpenProductSelection,
-  } = useSpecificationState();
+  const { prefilledResponse } = useAppSelector(
+    (state) => state.prefilledResponse
+  );
+  const { setOpenProductSelection, setCreate, create } = useProductIndexState();
   const [product, setProduct] = useState<Parentable<IProduct> | null>(null);
-  if (specification.bank.products.length <= 0) setOpenProductSelection(false);
+
   const onClick = (item: Levelable<IProduct>) => {
-    setNewProductCreate(true);
+    setCreate(true);
     setProduct(Utils.levelable2Parentable(item));
   };
   const cancel = (): void => {
     setOpenProductSelection(false);
-    setNewProductCreate(false);
+    setCreate(false);
   };
 
   const nonDeletedProducts: Parentable<IProduct>[] =
-    specification.bank.products.filter((item) => !item.deletedDate);
+    prefilledResponse.bank.products.filter((item) => !item.deletedDate);
   const levelableProducts: Levelable<IProduct>[] =
     Utils.parentable2Levelable(nonDeletedProducts);
-
   const modalBox = (): React.ReactElement => {
     return (
       <ModalBox>
         <Typography variant={'smBold'} color={theme.palette.primary.main}>
           {t('Choose a product type from the requirement set')}{' '}
-          <i>{specification.bank.title}</i> {t('that fits the product best')}
+          <i>{prefilledResponse.bank.title}</i>{' '}
+          {t('that fits the product best')}
         </Typography>
         <div className={css.NewProductSelection}>
           <List>
@@ -56,8 +55,8 @@ export default function NewProductSelection(): React.ReactElement {
                   key={item.id}
                   className={css.Product}
                   sx={{
-                    marginLeft: `${(item.level - 1) * 2}%`,
-                    width: `${100 - (item.level - 1) * 2}%`,
+                    marginLeft: `${(item.level - 1) * 3}%`,
+                    width: `${100 - (item.level - 1) * 3}%`,
                   }}
                 >
                   <Typography
@@ -65,10 +64,6 @@ export default function NewProductSelection(): React.ReactElement {
                     variant={item.level === 1 ? 'smBold' : 'sm'}
                   >
                     {item.title}
-                    {item.level}
-                  </Typography>
-                  <Typography className={css.Description} variant={'sm'}>
-                    {item.description}
                   </Typography>
                   <Typography className={css.Choose} variant={'sm'}>
                     <Button variant="outlined" onClick={() => onClick(item)}>
@@ -88,10 +83,9 @@ export default function NewProductSelection(): React.ReactElement {
       </ModalBox>
     );
   };
-
   const getDialog = (): ReactElement => {
-    if (newProductCreate) {
-      return <NewProductForm specProduct={product} handleClose={cancel} />;
+    if (create) {
+      return <NewProduct product={product} handleClose={cancel} />;
     }
     return modalBox();
   };
