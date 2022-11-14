@@ -14,8 +14,9 @@ export default function ProductNeed({ need }: IProps): React.ReactElement {
   return (
     <div>
       <div className={css.Need}>
-        <Typography variant="smBold">{need.title}</Typography>
+        <Typography variant="smBold">{need.title}kk</Typography>
       </div>
+      {console.log(need.requirements)}
       {need.requirements.map((requirement) => {
         return (
           <ProductRequirement key={requirement.id} requirement={requirement} />

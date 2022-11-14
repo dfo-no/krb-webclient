@@ -6,12 +6,6 @@
   background: var(--light-gray-color);
   color: var(--primary-color);
 
-  .ResponseAnswer {
-    &__content {
-      padding: var(--small-gap) var(--xlarge-gap);
-    }
-  }
-
   .overview {
     display: flex;
     flex-direction: column;
@@ -110,13 +104,6 @@
       bottom: 0;
       width: 100%;
       padding: 1rem;
-    }
-
-    .HeaderTop {
-      display: flex;
-      flex-direction: row;
-      padding-bottom: var(--micro-gap);
-      border-bottom: 0.1rem solid;
     }
 
     .Price {
