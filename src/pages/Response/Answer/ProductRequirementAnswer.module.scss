@@ -2,8 +2,12 @@
   display: flex;
   flex-direction: column;
   border: 0.1rem solid var(--border-color-secondary);
-  padding: var(--small-gap) var(--nano-gap);
   margin: var(--normal-gap) 0;
+
+  [aria-expanded='false'] {
+    background-color: var(--white-color);
+    padding: var(--small-gap);
+  }
 
   &.answered {
     border: 0.2rem solid var(--tertiary-color);
