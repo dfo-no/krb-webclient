@@ -3,14 +3,18 @@ import { Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 
 import { useAppSelector } from '../../../store/hooks';
-import { useProductIndexState } from '../../../components/ProductIndexContext/ProductIndexContext';
 import ToolbarItem from '../../../components/UI/Toolbar/ToolbarItem';
 import Toolbar from '../../../components/UI/Toolbar/ToolBar';
 
-export default function ProductHeader(): React.ReactElement {
+type Props = {
+  productIndex: number;
+};
+
+export default function ProductHeader({
+  productIndex,
+}: Props): React.ReactElement {
   const { t } = useTranslation();
   const { response } = useAppSelector((state) => state.response);
-  const { productIndex } = useProductIndexState();
 
   const description =
     response.specification.products[productIndex]?.description;
