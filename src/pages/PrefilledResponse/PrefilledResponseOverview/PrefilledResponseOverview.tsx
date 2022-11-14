@@ -13,7 +13,6 @@ import ToolbarItem from '../../../components/UI/Toolbar/ToolbarItem';
 import { useProductIndexState } from '../../../components/ProductIndexContext/ProductIndexContext';
 import { IPrefilledResponseProduct } from '../../../Nexus/entities/IPrefilledResponseProduct';
 import { PRODUCTS, PREFILLED_RESPONSE } from '../../../common/PathConstants';
-import NoProducts from '../NoProducts/NoProducts';
 import NewProductSelection from '../NewProduct/NewProductSelection';
 
 export default function PrefilledResponseOverview(): ReactElement {
@@ -122,7 +121,6 @@ export default function PrefilledResponseOverview(): ReactElement {
             })}
           </ul>
         )}
-        {prefilledResponse.products.length == 0 && <NoProducts />}
       </div>
       {openProductSelection && <NewProductSelection />}
     </div>
