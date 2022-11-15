@@ -48,8 +48,8 @@ export default function AnswerProduct({ match }: Props): React.ReactElement {
         <div key={requirementAnswer.id}>
           <ProductNeed need={requirementNeed} />
           <ProductRequirementAnswer
-            productIndex={productIndex}
             requirementAnswer={requirementAnswer}
+            productIndex={productIndex}
           />
         </div>
       );
@@ -81,8 +81,8 @@ export default function AnswerProduct({ match }: Props): React.ReactElement {
   };
 
   return (
-    <div className={css.ResponseAnswer}>
-      <div className={css.ResponseAnswer__content}>
+    <div>
+      <div className={css.overview__content}>
         <ProductHeader productIndex={productIndex} />
         {productIndex > -1 && (
           <EditResponseProduct productIndex={productIndex} />
