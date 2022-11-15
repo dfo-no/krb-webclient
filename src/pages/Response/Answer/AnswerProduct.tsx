@@ -75,12 +75,12 @@ export default function AnswerProduct({
   };
 
   return (
-    <div className={css.ResponseAnswer}>
-      <div className={css.ResponseAnswer__content}>
+    <div>
+      <div className={css.overview__content}>
+        
         <ProductHeader productIndex={productIndex} />
         {productIndex > -1 && (
           <EditResponseProduct productIndex={productIndex} />
-        )}
         <AccordionProvider>{renderRequirements()}</AccordionProvider>
       </div>
       <Panel
