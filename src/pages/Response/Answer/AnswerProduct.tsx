@@ -67,8 +67,8 @@ export default function AnswerProduct(): React.ReactElement {
   };
 
   return (
-    <div className={css.ResponseAnswer}>
-      <div className={css.ResponseAnswer__content}>
+    <div>
+      <div className={css.overview__content}>
         <ProductHeader />
         {productIndex > -1 && <EditResponseProduct />}
         <AccordionProvider>{renderRequirements()}</AccordionProvider>

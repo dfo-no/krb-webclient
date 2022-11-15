@@ -12,7 +12,7 @@ Feature: Forberedt besvarelse
     And Ser jeg "Kjøretøy til hjemmetjenesten" på siden
     And Ser jeg "Last ned forberedt besvarelse" på siden
 
-  Scenario: Jeg kan lage ny produkt og besvare krav
+  Scenario: Jeg kan lage ny produkt
     Given Jeg åpner forberedt besvarelse
     When Jeg klikker på "Legg til produkt" knapp
     And Velg en produkttype
@@ -20,6 +20,18 @@ Feature: Forberedt besvarelse
     And Jeg skriver "Test beskrivelse" i feltet "Beskrivelse"
     Then Jeg klikker på "Lagre" knapp for å lagre
     And Ser jeg "Test produkt" på siden
+
+    Scenario: Jeg kan besvare krav for produktet
+      Given Jeg åpner forberedt besvarelse
+      When Jeg klikker på "Rediger produktet" knapp
+      And Jeg klikker på "Ikke besvart" av kravet "Tilbehør i kupé" for å besvare
+      And Velger jeg "Koppholder for sjåfør" fra kodeliste
+      And Jeg klikker på "Lagre" knappen for å lagre besvare
+      Then Ser jeg svaret "Koppholder for sjåfør" på siden
+      When Jeg klikker på "Ikke besvart" av kravet "Seter foran" for å besvare
+      And Jeg velger 2 på verdi til kravet "Seter foran"
+      And Jeg klikker på "Lagre" knappen for å lagre besvare
+      Then Ser jeg svaret "2 sete(r)" på siden
 
   Scenario: Jeg kan laste ned forberedt besvarelse
     Given Jeg åpner forberedt besvarelse
