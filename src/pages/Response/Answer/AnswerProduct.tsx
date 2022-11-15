@@ -57,8 +57,8 @@ export default function AnswerProduct({ match }: Props): React.ReactElement {
       return (
         <ProductRequirementAnswer
           key={requirementAnswer.id}
-          productIndex={productIndex}
           requirementAnswer={requirementAnswer}
+          productIndex={productIndex}
         />
       );
     }

@@ -1,13 +1,13 @@
 import React, { ReactElement, useEffect, useState } from 'react';
-import { Box, Divider, Typography } from '@mui/material';
+import { Box } from '@mui/material';
 import { t } from 'i18next';
+import classNames from 'classnames';
 
 import ChosenAnswer from './ChosenAnswer';
 import css from './ProductRequirementAnswer.module.scss';
 import ProductQuestionAnswer from './ProductQuestionAnswer';
 import ProductVariant from './ProductVariant';
 import TextUtils from '../../../common/TextUtils';
-import theme from '../../../theme';
 import { DFOAccordion } from '../../../components/DFOAccordion/DFOAccordion';
 import { IRequirementAnswer } from '../../../Nexus/entities/IRequirementAnswer';
 import { VariantType } from '../../../Nexus/enums';
@@ -15,13 +15,13 @@ import { useAccordionState } from '../../../components/DFOAccordion/AccordionCon
 import { useResponseState } from '../ResponseContext';
 
 interface IProps {
-  productIndex: number;
   requirementAnswer: IRequirementAnswer;
+  productIndex: number;
 }
 
 export default function ProductRequirementAnswer({
-  productIndex,
   requirementAnswer,
+  productIndex,
 }: IProps): ReactElement {
   const { response } = useResponseState();
 
@@ -36,6 +36,7 @@ export default function ProductRequirementAnswer({
   );
   const isInfo =
     requirementVariant && requirementVariant.type === VariantType.info;
+  const isAnswered = !!(existingAnswer || isInfo);
 
   useEffect(() => {
     const answer = (
@@ -50,11 +51,8 @@ export default function ProductRequirementAnswer({
   const header = (): ReactElement => {
     return (
       <Box className={css.header}>
-        <Typography variant="lgBold">
-          {requirementAnswer.requirement.title}
-        </Typography>
-        <Divider className={css.divider} />
-        {(existingAnswer || isInfo) && (
+        <span className={css.title}>{requirementAnswer.requirement.title}</span>
+        {isAnswered && (
           <ChosenAnswer
             requirementAnswer={requirementAnswer}
             existingAnswer={existingAnswer}
@@ -68,25 +66,19 @@ export default function ProductRequirementAnswer({
     return (
       <Box className={css.body}>
         {requirementVariant && <ProductVariant variant={requirementVariant} />}
-        <Typography
-          variant={'smBold'}
-          color={theme.palette.primary.main}
-          className={css.title}
-        >
-          {t('Requirement answer')}
-        </Typography>
+        <span className={css.title}>{t('Requirement answer')}</span>
         {isInfo ? (
-          <Typography className={css.label}>
+          <span className={css.label}>
             {TextUtils.getAnswerText(
               requirementAnswer,
               response.specification.bank
             )}
-          </Typography>
+          </span>
         ) : (
           <ProductQuestionAnswer
-            productIndex={productIndex}
             requirementAnswer={requirementAnswer}
             existingAnswer={existingAnswer}
+            productIndex={productIndex}
           />
         )}
       </Box>
@@ -94,7 +86,12 @@ export default function ProductRequirementAnswer({
   };
 
   return (
-    <Box className={`${css.ProductRequirementAnswer}`}>
+    <Box
+      className={classNames(
+        css.ProductRequirementAnswer,
+        isAnswered ? css.answered : undefined
+      )}
+    >
       <DFOAccordion
         eventKey={requirementAnswer.id}
         header={header()}

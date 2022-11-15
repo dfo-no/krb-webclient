@@ -15,20 +15,19 @@ import Nexus from '../../../Nexus/Nexus';
 import { useResponseState } from '../ResponseContext';
 
 interface IProps {
-  productIndex: number;
   requirementAnswer: IRequirementAnswer;
   existingAnswer?: IRequirementAnswer;
+  productIndex: number;
 }
 
 export default function ProductQuestionAnswer({
-  productIndex,
   requirementAnswer,
   existingAnswer,
+  productIndex,
 }: IProps): React.ReactElement {
   const { response, addProductAnswer, addRequirementAnswer } =
     useResponseState();
   const nexus = Nexus.getInstance();
-
   const { setActiveKey } = useAccordionState();
 
   const onSubmit = (post: QuestionType): void => {
