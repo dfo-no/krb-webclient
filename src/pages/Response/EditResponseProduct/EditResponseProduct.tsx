@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { FormProvider, useForm } from 'react-hook-form';
 import Typography from '@mui/material/Typography';
 
-import { useAppDispatch, useAppSelector } from '../../../store/hooks';
+import { useAppDispatch } from '../../../store/hooks';
 import Nexus from '../../../Nexus/Nexus';
 import { useSpecificationState } from '../../SpecEditor/SpecificationContext';
 import { IResponseProduct } from '../../../Nexus/entities/IResponseProduct';
@@ -13,23 +13,21 @@ import theme from '../../../theme';
 import GeneralErrorMessage from '../../../Form/GeneralErrorMessage';
 import { editResponseProduct } from '../../../store/reducers/response-reducer';
 import css from '../../Stylesheets/EditorFullPage.module.scss';
+import { CombinedProduct } from '../ResponseModule';
 
 type Props = {
-  productIndex: number;
+  product: CombinedProduct;
 };
 
-export default function EditResponseProduct({
-  productIndex,
-}: Props): ReactElement {
+export default function EditResponseProduct({ product }: Props): ReactElement {
   const { t } = useTranslation();
-  const { response } = useAppSelector((state) => state.response);
   const nexus = Nexus.getInstance();
   const { specification } = useSpecificationState();
   const dispatch = useAppDispatch();
 
   const methods = useForm<IResponseProduct>({
     resolver: nexus.resolverService.resolver(ModelType.responseProduct),
-    defaultValues: response.products[productIndex],
+    defaultValues: product.responseProduct,
   });
 
   const handelProductPrice = (put: IResponseProduct) => {

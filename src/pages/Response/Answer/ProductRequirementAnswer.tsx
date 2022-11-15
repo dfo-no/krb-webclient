@@ -13,15 +13,16 @@ import { IRequirementAnswer } from '../../../Nexus/entities/IRequirementAnswer';
 import { useAppSelector } from '../../../store/hooks';
 import { VariantType } from '../../../Nexus/enums';
 import { useAccordionState } from '../../../components/DFOAccordion/AccordionContext';
+import { CombinedProductOrGeneral, GENERAL } from '../ResponseModule';
 
 interface IProps {
   requirementAnswer: IRequirementAnswer;
-  productIndex: number;
+  product: CombinedProductOrGeneral;
 }
 
 export default function ProductRequirementAnswer({
   requirementAnswer,
-  productIndex,
+  product,
 }: IProps): ReactElement {
   const { response } = useAppSelector((state) => state.response);
   const [existingAnswer, setExistingAnswer] = useState<
@@ -37,13 +38,13 @@ export default function ProductRequirementAnswer({
 
   useEffect(() => {
     const answer = (
-      productIndex >= 0 ? response.products[productIndex] : response
+      product !== GENERAL ? product.responseProduct : response
     ).requirementAnswers.find((reqAns) => {
       return reqAns.id === requirementAnswer.id;
     });
     if (answer) setExistingAnswer(answer);
     else setActiveKey(requirementAnswer.id);
-  }, [requirementAnswer.id, productIndex, response, setActiveKey]);
+  }, [requirementAnswer.id, product, response, setActiveKey]);
 
   const header = (): ReactElement => {
     return (
@@ -75,7 +76,7 @@ export default function ProductRequirementAnswer({
           <ProductQuestionAnswer
             requirementAnswer={requirementAnswer}
             existingAnswer={existingAnswer}
-            productIndex={productIndex}
+            product={product}
           />
         )}
       </Box>

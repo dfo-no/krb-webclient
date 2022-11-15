@@ -17,17 +17,18 @@ import { QuestionType } from '../../../Nexus/entities/QuestionType';
 import { QuestionVariant } from '../../../Nexus/enums';
 import { useAccordionState } from '../../../components/DFOAccordion/AccordionContext';
 import { useAppDispatch, useAppSelector } from '../../../store/hooks';
+import { CombinedProductOrGeneral, GENERAL } from '../ResponseModule';
 
 interface IProps {
   requirementAnswer: IRequirementAnswer;
   existingAnswer?: IRequirementAnswer;
-  productIndex: number;
+  product: CombinedProductOrGeneral;
 }
 
 export default function ProductQuestionAnswer({
   requirementAnswer,
   existingAnswer,
-  productIndex,
+  product,
 }: IProps): React.ReactElement {
   const dispatch = useAppDispatch();
   const { response } = useAppSelector((state) => state.response);
@@ -46,13 +47,13 @@ export default function ProductQuestionAnswer({
       ...requirementAnswer,
       question: calulatedPoints,
     };
-    if (productIndex === -1) {
+    if (product === GENERAL) {
       dispatch(addRequirementAnswer(newAnswer));
     } else {
       dispatch(
         addProductAnswer({
           answer: newAnswer,
-          productId: response.products[productIndex].id,
+          productId: product.responseProduct.id,
         })
       );
     }

@@ -14,14 +14,13 @@ import EditResponseProduct from '../EditResponseProduct/EditResponseProduct';
 import { RESPONSE } from '../../../common/PathConstants';
 import Panel from '../../../components/UI/Panel/Panel';
 import css from '../../Stylesheets/EditorFullPage.module.scss';
+import { CombinedProductOrGeneral, GENERAL } from '../ResponseModule';
 
 type Props = {
-  productIndex: number;
+  product: CombinedProductOrGeneral;
 };
 
-export default function AnswerProduct({
-  productIndex,
-}: Props): React.ReactElement {
+export default function AnswerProduct({ product }: Props): React.ReactElement {
   const { t } = useTranslation();
   const history = useHistory();
   const { response } = useAppSelector((state) => state.response);
@@ -44,7 +43,7 @@ export default function AnswerProduct({
           <ProductNeed need={requirementNeed} />
           <ProductRequirementAnswer
             requirementAnswer={requirementAnswer}
-            productIndex={productIndex}
+            product={product}
           />
         </div>
       );
@@ -53,7 +52,7 @@ export default function AnswerProduct({
         <ProductRequirementAnswer
           key={requirementAnswer.id}
           requirementAnswer={requirementAnswer}
-          productIndex={productIndex}
+          product={product}
         />
       );
     }
@@ -61,9 +60,9 @@ export default function AnswerProduct({
 
   const renderRequirements = (): (ReactElement | undefined)[] => {
     const specOrProduct =
-      productIndex === -1
+      product === GENERAL
         ? response.specification
-        : response.specification.products[productIndex];
+        : product.specificationProduct;
     return specOrProduct.requirements.map((requirementId) => {
       const requirementAnswer = specOrProduct.requirementAnswers.find(
         (reqAns) => reqAns.requirement.id === requirementId
@@ -77,10 +76,8 @@ export default function AnswerProduct({
   return (
     <div>
       <div className={css.overview__content}>
-        <ProductHeader productIndex={productIndex} />
-        {productIndex > -1 && (
-          <EditResponseProduct productIndex={productIndex} />
-        )}
+        <ProductHeader product={product} />
+        {product !== GENERAL && <EditResponseProduct product={product} />}
         <AccordionProvider>{renderRequirements()}</AccordionProvider>
       </div>
       <Panel

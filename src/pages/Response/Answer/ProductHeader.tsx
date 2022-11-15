@@ -2,36 +2,35 @@ import React from 'react';
 import { Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 
-import { useAppSelector } from '../../../store/hooks';
 import ToolbarItem from '../../../components/UI/Toolbar/ToolbarItem';
+import Toolbar from '../../../components/UI/Toolbar/ToolBar';
+import { CombinedProductOrGeneral, GENERAL } from '../ResponseModule';
 
 type Props = {
-  productIndex: number;
+  product: CombinedProductOrGeneral;
 };
 
-export default function ProductHeader({
-  productIndex,
-}: Props): React.ReactElement {
+export default function ProductHeader({ product }: Props): React.ReactElement {
   const { t } = useTranslation();
-  const { response } = useAppSelector((state) => state.response);
 
-  const description =
-    response.specification.products[productIndex]?.description;
-  const originProduct =
-    response.specification.products[productIndex]?.originProduct;
-  return (
-    <>
-      <Typography variant="lgBold">
-        {response.specification.products[productIndex]?.title ??
-          t('General requirement')}
-      </Typography>
-      {productIndex !== -1 && originProduct && (
-        <ToolbarItem
-          primaryText={t('From product type')}
-          secondaryText={originProduct.title}
-        />
-      )}
-      {description && <Typography variant="md">{description}</Typography>}
-    </>
-  );
+  if (product === GENERAL) {
+    return <Typography variant="lgBold">{t('General requirement')}</Typography>;
+  } else {
+    const description = product.specificationProduct.description;
+    const originProduct = product.specificationProduct.originProduct;
+    return (
+      <>
+        <Typography variant="lgBold">
+          {product.specificationProduct.title}
+        </Typography>
+        <Toolbar gapType={'md'}>
+          <ToolbarItem primaryText={description} />
+          <ToolbarItem
+            primaryText={t('From product type')}
+            secondaryText={originProduct.title}
+          />
+        </Toolbar>
+      </>
+    );
+  }
 }

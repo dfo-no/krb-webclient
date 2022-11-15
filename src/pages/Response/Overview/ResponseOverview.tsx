@@ -11,30 +11,31 @@ import { useAppSelector } from '../../../store/hooks';
 import { PRODUCTS, RESPONSE } from '../../../common/PathConstants';
 import ToolbarItem from '../../../components/UI/Toolbar/ToolbarItem';
 import Toolbar from '../../../components/UI/Toolbar/ToolBar';
+import { GENERAL } from '../ResponseModule';
 
 type Props = {
-  setProductIndex: (index: number) => void;
+  setProduct: (product: ISpecificationProduct | typeof GENERAL) => void;
 };
 
-function ResponseOverview({ setProductIndex }: Props): React.ReactElement {
+function ResponseOverview({ setProduct }: Props): React.ReactElement {
   const { t } = useTranslation();
   const history = useHistory();
   const { response } = useAppSelector((state) => state.response);
   const genericPressed = () => {
-    setProductIndex(-1);
+    setProduct(GENERAL);
     history.push(
       `/${RESPONSE}/${response.specification.bank.id}/${PRODUCTS}/general/`
     );
   };
 
-  const productPressed = (index: number) => {
-    setProductIndex(index);
+  const productPressed = (product: ISpecificationProduct) => {
+    setProduct(product);
     history.push(
-      `/${RESPONSE}/${response.specification.bank.id}/${PRODUCTS}/${response.products[index].id}/`
+      `/${RESPONSE}/${response.specification.bank.id}/${PRODUCTS}/${product.id}/`
     );
   };
 
-  const renderProducts = (product: ISpecificationProduct, index: number) => {
+  const renderProducts = (product: ISpecificationProduct) => {
     const renderProductInfo = () => {
       return (
         <Toolbar>
@@ -64,7 +65,7 @@ function ResponseOverview({ setProductIndex }: Props): React.ReactElement {
               <ToolbarItem
                 secondaryText={t('Edit the product')}
                 icon={<EditIcon />}
-                handleClick={() => productPressed(index)}
+                handleClick={() => productPressed(product)}
                 fontSize={'small'}
               />
             </Toolbar>
@@ -102,8 +103,8 @@ function ResponseOverview({ setProductIndex }: Props): React.ReactElement {
         </ul>
         {response.specification.products.length > 0 && (
           <ul>
-            {response.specification.products.map((element, index) => {
-              return renderProducts(element, index);
+            {response.specification.products.map((element) => {
+              return renderProducts(element);
             })}
           </ul>
         )}
