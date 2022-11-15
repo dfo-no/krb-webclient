@@ -17,21 +17,21 @@ import { QuestionType } from '../../../Nexus/entities/QuestionType';
 import { QuestionVariant } from '../../../Nexus/enums';
 import { useAccordionState } from '../../../components/DFOAccordion/AccordionContext';
 import { useAppDispatch, useAppSelector } from '../../../store/hooks';
-import { useProductIndexState } from '../../../components/ProductIndexContext/ProductIndexContext';
 
 interface IProps {
   requirementAnswer: IRequirementAnswer;
   existingAnswer?: IRequirementAnswer;
+  productIndex: number;
 }
 
 export default function ProductQuestionAnswer({
   requirementAnswer,
   existingAnswer,
+  productIndex,
 }: IProps): React.ReactElement {
   const dispatch = useAppDispatch();
   const { response } = useAppSelector((state) => state.response);
   const nexus = Nexus.getInstance();
-  const { productIndex } = useProductIndexState();
   const { setActiveKey } = useAccordionState();
 
   const onSubmit = (post: QuestionType): void => {

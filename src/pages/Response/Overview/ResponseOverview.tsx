@@ -8,16 +8,18 @@ import css from '../../Stylesheets/EditorFullPage.module.scss';
 import DownloadToolbarItem from '../Download/DownloadToolbarItem';
 import { ISpecificationProduct } from '../../../Nexus/entities/ISpecificationProduct';
 import { useAppSelector } from '../../../store/hooks';
-import { useProductIndexState } from '../../../components/ProductIndexContext/ProductIndexContext';
 import { PRODUCTS, RESPONSE } from '../../../common/PathConstants';
 import ToolbarItem from '../../../components/UI/Toolbar/ToolbarItem';
 import Toolbar from '../../../components/UI/Toolbar/ToolBar';
 
-function ResponseOverview(): React.ReactElement {
+type Props = {
+  setProductIndex: (index: number) => void;
+};
+
+function ResponseOverview({ setProductIndex }: Props): React.ReactElement {
   const { t } = useTranslation();
   const history = useHistory();
   const { response } = useAppSelector((state) => state.response);
-  const { setProductIndex } = useProductIndexState();
   const genericPressed = () => {
     setProductIndex(-1);
     history.push(

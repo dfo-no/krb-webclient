@@ -3,7 +3,6 @@ import { useTranslation } from 'react-i18next';
 import { FormProvider, useForm } from 'react-hook-form';
 import Typography from '@mui/material/Typography';
 
-import { useProductIndexState } from '../../../components/ProductIndexContext/ProductIndexContext';
 import { useAppDispatch, useAppSelector } from '../../../store/hooks';
 import Nexus from '../../../Nexus/Nexus';
 import { useSpecificationState } from '../../SpecEditor/SpecificationContext';
@@ -15,9 +14,14 @@ import GeneralErrorMessage from '../../../Form/GeneralErrorMessage';
 import { editResponseProduct } from '../../../store/reducers/response-reducer';
 import css from '../../Stylesheets/EditorFullPage.module.scss';
 
-export default function EditResponseProduct(): ReactElement {
+type Props = {
+  productIndex: number;
+};
+
+export default function EditResponseProduct({
+  productIndex,
+}: Props): ReactElement {
   const { t } = useTranslation();
-  const { productIndex } = useProductIndexState();
   const { response } = useAppSelector((state) => state.response);
   const nexus = Nexus.getInstance();
   const { specification } = useSpecificationState();
