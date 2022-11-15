@@ -4,7 +4,6 @@ import { useTranslation } from 'react-i18next';
 
 import css from './PrefilledResponse.module.scss';
 import ProductQuestion from './ProductQuestion';
-import theme from '../../../theme';
 import { IVariant } from '../../../Nexus/entities/IVariant';
 import { IRequirement } from '../../../Nexus/entities/IRequirement';
 
@@ -21,54 +20,33 @@ export default function ProductVariant({
 
   return (
     <div className={css.Variant}>
-      <Typography
-        variant={'smBold'}
-        color={theme.palette.primary.main}
-        className={css.Label}
-      >
-        {t('Description')}
-      </Typography>
-      <Typography
-        variant={'sm'}
-        color={theme.palette.primary.main}
-        className={css.Text}
-      >
-        {variant.description}
-      </Typography>
-      <Typography
-        variant={'smBold'}
-        color={theme.palette.primary.main}
-        className={css.Label}
-      >
+      {variant.description && (
+        <>
+          <Typography variant={'smBold'} className={css.Label}>
+            {t('Description')}
+          </Typography>
+          <Typography variant={'sm'} className={css.Text}>
+            {variant.description}
+          </Typography>
+        </>
+      )}
+      <Typography variant={'smBold'} className={css.Label}>
         {t('Requirement text')}
       </Typography>
-      <Typography
-        variant={'sm'}
-        color={theme.palette.primary.main}
-        className={css.Text}
-      >
+      <Typography variant={'sm'} className={css.Text}>
         {variant.requirementText}
       </Typography>
-      <Typography
-        variant={'smBold'}
-        color={theme.palette.primary.main}
-        className={css.Label}
-      >
-        {t('Instruction')}
-      </Typography>
-      <Typography
-        variant={'sm'}
-        color={theme.palette.primary.main}
-        className={css.Text}
-      >
-        {variant.instruction}
-      </Typography>
-
-      <Typography
-        variant={'smBold'}
-        color={theme.palette.primary.main}
-        className={css.Label}
-      >
+      {variant.instruction && (
+        <>
+          <Typography variant={'smBold'} className={css.Label}>
+            {t('Instruction')}
+          </Typography>
+          <Typography variant={'sm'} className={css.Text}>
+            {variant.instruction}
+          </Typography>
+        </>
+      )}
+      <Typography variant={'smBold'} className={css.Label}>
         {t('Requirement answer')}
       </Typography>
       {variant.questions.map((question) => {

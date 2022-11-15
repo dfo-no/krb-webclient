@@ -4,7 +4,6 @@ import { useTranslation } from 'react-i18next';
 
 import { useAppSelector } from '../../../store/hooks';
 import ToolbarItem from '../../../components/UI/Toolbar/ToolbarItem';
-import Toolbar from '../../../components/UI/Toolbar/ToolBar';
 
 type Props = {
   productIndex: number;
@@ -26,16 +25,13 @@ export default function ProductHeader({
         {response.specification.products[productIndex]?.title ??
           t('General requirement')}
       </Typography>
-      <Toolbar gapType={'md'}>
-        {description && <ToolbarItem primaryText={description} />}
-
-        {productIndex !== -1 && originProduct && (
-          <ToolbarItem
-            primaryText={t('From product type')}
-            secondaryText={originProduct.title}
-          />
-        )}
-      </Toolbar>
+      {productIndex !== -1 && originProduct && (
+        <ToolbarItem
+          primaryText={t('From product type')}
+          secondaryText={originProduct.title}
+        />
+      )}
+      {description && <Typography variant="md">{description}</Typography>}
     </>
   );
 }
