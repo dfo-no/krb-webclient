@@ -83,8 +83,10 @@ export default function AnswerProduct({ match }: Props): React.ReactElement {
   return (
     <div className={css.ResponseAnswer}>
       <div className={css.ResponseAnswer__content}>
-        <ProductHeader />
-        {productIndex > -1 && <EditResponseProduct />}
+        <ProductHeader productIndex={productIndex} />
+        {productIndex > -1 && (
+          <EditResponseProduct productIndex={productIndex} />
+        )}
         <AccordionProvider>{renderRequirements()}</AccordionProvider>
       </div>
       <Panel
