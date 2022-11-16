@@ -63,7 +63,7 @@ export default function EditProductVariant({ variant }: IProps): ReactElement {
         <Badge
           type={'requirement'}
           icon={<Lock />}
-          displayText={t('Absolute requirement')}
+          displayText={t('Mandatory requirement')}
         />
       );
     } else if (
