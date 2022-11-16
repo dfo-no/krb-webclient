@@ -5,11 +5,11 @@ import SystemUpdateAltIcon from '@mui/icons-material/SystemUpdateAlt';
 
 import { httpPost } from '../../../api/http';
 import { IResponse } from '../../../Nexus/entities/IResponse';
-import { useAppSelector } from '../../../store/hooks';
+import { useResponseState } from '../ResponseContext';
 import ToolbarItem from '../../../components/UI/Toolbar/ToolbarItem';
 
 export default function DownloadToolbarItem(): React.ReactElement {
-  const { response } = useAppSelector((state) => state.response);
+  const { response } = useResponseState();
   const { t } = useTranslation();
 
   const onDownLoad = () => {

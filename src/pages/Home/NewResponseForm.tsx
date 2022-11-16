@@ -16,8 +16,6 @@ import {
   ModalFieldsBox,
 } from '../../components/ModalBox/ModalBox';
 import { ModelType } from '../../Nexus/enums';
-import { setResponse } from '../../store/reducers/response-reducer';
-import { useAppDispatch } from '../../store/hooks';
 import { RESPONSE } from '../../common/PathConstants';
 
 interface IProps {
@@ -29,7 +27,6 @@ const NewResponseForm = ({ handleClose, response }: IProps) => {
   const { t } = useTranslation();
   const nexus = Nexus.getInstance();
   const history = useHistory();
-  const dispatch = useAppDispatch();
 
   const methods = useForm<IResponse>({
     resolver: nexus.resolverService.resolver(ModelType.response),
@@ -37,8 +34,10 @@ const NewResponseForm = ({ handleClose, response }: IProps) => {
   });
 
   const onSubmit = async (post: IResponse) => {
-    dispatch(setResponse(post));
-    history.push(`/${RESPONSE}/${post.specification.bank.id}`);
+    const responseWithId = nexus.responseService.withId(post);
+    nexus.responseService
+      .setResponse(responseWithId)
+      .then(() => history.push(`/${RESPONSE}/${responseWithId.id}`));
   };
 
   return (

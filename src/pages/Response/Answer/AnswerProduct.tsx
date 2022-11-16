@@ -1,5 +1,5 @@
 import React, { ReactElement } from 'react';
-import { useHistory } from 'react-router-dom';
+import { RouteComponentProps, useHistory } from 'react-router-dom';
 import { Button } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 
@@ -9,26 +9,30 @@ import ProductRequirementAnswer from './ProductRequirementAnswer';
 import { AccordionProvider } from '../../../components/DFOAccordion/AccordionContext';
 import { INeed } from '../../../Nexus/entities/INeed';
 import { IRequirementAnswer } from '../../../Nexus/entities/IRequirementAnswer';
-import { useAppSelector } from '../../../store/hooks';
 import EditResponseProduct from '../EditResponseProduct/EditResponseProduct';
 import { RESPONSE } from '../../../common/PathConstants';
 import Panel from '../../../components/UI/Panel/Panel';
 import css from '../../Stylesheets/EditorFullPage.module.scss';
+import { useResponseState } from '../ResponseContext';
+import Utils from '../../../common/Utils';
 
-type Props = {
-  productIndex: number;
-};
+type AnswerProductMatchParams = { productIndex: string };
 
-export default function AnswerProduct({
-  productIndex,
-}: Props): React.ReactElement {
+type Props = RouteComponentProps<AnswerProductMatchParams>;
+
+export default function AnswerProduct({ match }: Props): React.ReactElement {
   const { t } = useTranslation();
   const history = useHistory();
-  const { response } = useAppSelector((state) => state.response);
+  const { response } = useResponseState();
   const existingNeeds = new Set<INeed>();
 
+  const paramsProductIndex = match.params.productIndex;
+  const productIndex = Utils.isNumeric(paramsProductIndex)
+    ? Number(paramsProductIndex)
+    : -1;
+
   const toOverviewPage = (): void => {
-    history.push(`/${RESPONSE}/${response.specification.bank.id}`);
+    history.push(`/${RESPONSE}/${response.id}`);
   };
 
   const renderRequirementAnswer = (

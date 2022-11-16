@@ -7,31 +7,22 @@ import EditIcon from '@mui/icons-material/Edit';
 import css from '../../Stylesheets/EditorFullPage.module.scss';
 import DownloadToolbarItem from '../Download/DownloadToolbarItem';
 import { ISpecificationProduct } from '../../../Nexus/entities/ISpecificationProduct';
-import { useAppSelector } from '../../../store/hooks';
 import { PRODUCTS, RESPONSE } from '../../../common/PathConstants';
 import ToolbarItem from '../../../components/UI/Toolbar/ToolbarItem';
 import Toolbar from '../../../components/UI/Toolbar/ToolBar';
+import { useResponseState } from '../ResponseContext';
 
-type Props = {
-  setProductIndex: (index: number) => void;
-};
-
-function ResponseOverview({ setProductIndex }: Props): React.ReactElement {
+function ResponseOverview(): React.ReactElement {
   const { t } = useTranslation();
   const history = useHistory();
-  const { response } = useAppSelector((state) => state.response);
+  const { response } = useResponseState();
+
   const genericPressed = () => {
-    setProductIndex(-1);
-    history.push(
-      `/${RESPONSE}/${response.specification.bank.id}/${PRODUCTS}/general/`
-    );
+    history.push(`/${RESPONSE}/${response.id}/${PRODUCTS}/general`);
   };
 
   const productPressed = (index: number) => {
-    setProductIndex(index);
-    history.push(
-      `/${RESPONSE}/${response.specification.bank.id}/${PRODUCTS}/${response.products[index].id}/`
-    );
+    history.push(`/${RESPONSE}/${response.id}/${PRODUCTS}/${index}`);
   };
 
   const renderProducts = (product: ISpecificationProduct, index: number) => {
