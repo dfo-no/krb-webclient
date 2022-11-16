@@ -18,7 +18,7 @@ import {
 import { ISpecification } from '../../Nexus/entities/ISpecification';
 import { ISpecificationProduct } from '../../Nexus/entities/ISpecificationProduct';
 import { PRODUCTS, SPECIFICATION } from '../../common/PathConstants';
-import { useHeaderState } from '../../components/Header/HeaderContext';
+import { HeaderContainer } from '../../components/Header/HeaderContext';
 
 interface ISpecificationContext {
   specification: ISpecification;
@@ -86,7 +86,7 @@ export const SpecificationProvider = ({ children }: IProps) => {
     useRouteMatch<IRouteSpecificationParams>(SpecificationPath);
   const specId = routeMatch?.params?.specId;
   const history = useHistory();
-  const { setTitle } = useHeaderState();
+  const { setTitle } = HeaderContainer.useContainer();
   const [specification, setSpecification] = useState(
     SpecificationService.defaultSpecification()
   );
