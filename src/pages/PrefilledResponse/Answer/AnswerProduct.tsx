@@ -14,7 +14,7 @@ import Panel from '../../../components/UI/Panel/Panel';
 import { PREFILLED_RESPONSE } from '../../../common/PathConstants';
 import Toolbar from '../../../components/UI/Toolbar/ToolBar';
 import ToolbarItem from '../../../components/UI/Toolbar/ToolbarItem';
-import EditProductForm from './EditProductForm';
+import EditProductForm from '../EditProduct/EditProductForm';
 
 export default function AnswerProduct(): React.ReactElement {
   const { t } = useTranslation();
