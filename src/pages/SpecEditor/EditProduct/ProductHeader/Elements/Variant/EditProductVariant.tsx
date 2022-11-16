@@ -31,7 +31,7 @@ export default function EditProductVariant({ variant }: IProps): ReactElement {
     control,
   });
 
-  const questionsType = () => {
+  const questionsTypeCodeList = () => {
     return variant.questions.filter((q) => q.type === 'Q_CODELIST');
   };
 
@@ -54,7 +54,7 @@ export default function EditProductVariant({ variant }: IProps): ReactElement {
       );
     } else if (
       variant.type === VariantType.requirement &&
-      questionsType().length === 0
+      questionsTypeCodeList().length === 0
     ) {
       return (
         <Badge
@@ -65,7 +65,7 @@ export default function EditProductVariant({ variant }: IProps): ReactElement {
       );
     } else if (
       variant.type === VariantType.requirement &&
-      questionsType().length > 0
+      questionsTypeCodeList().length > 0
     ) {
       return (
         <Badge
