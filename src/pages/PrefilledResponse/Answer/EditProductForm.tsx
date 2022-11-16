@@ -58,11 +58,7 @@ const EditProductForm = ({ handleClose, prefilledResponseProduct }: IProps) => {
     setRelatedProducts(!relatedProducts);
   };
   const nonDeletedRelatedProducts: Parentable<IProduct>[] =
-    prefilledResponse.bank.products.filter(
-      (item) =>
-        !item.deletedDate &&
-        item.id !== prefilledResponseProduct.originProduct.id
-    );
+    prefilledResponse.bank.products.filter((item) => !item.deletedDate);
 
   return (
     <FormProvider {...methods}>
