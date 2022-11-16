@@ -13,7 +13,7 @@ Feature: Spesifikasjon
     And Ser jeg "Rediger produktet" knapp er aktiv
 
   Scenario: Jeg kan rediger spesifikasjon
-    Given Jeg åpner spesifikasjon
+    Given Jeg åpner spesifikasjon "specification-1.pdf"
     When Jeg klikker på "Rediger spesifikasjon" knapp
     And Jeg skriver "Test kravspesifikasjon 2" i feltet "Navn på spesifikasjon"
     And Jeg skriver "111111/bb" i feltet "Saksnummer"
@@ -25,7 +25,7 @@ Feature: Spesifikasjon
     And Jeg klikker på "Lagre" knapp for å lagre
 
   Scenario: Jeg kan legge til produkt til spesifikasjonen
-    Given Jeg åpner spesifikasjon
+    Given Jeg åpner spesifikasjon "specification-1.pdf"
     When Jeg klikker på "Legg til produkt" knapp
     And Velg en produkttype
     And Jeg skriver "Test produkt" i feltet "Navn"
@@ -35,5 +35,5 @@ Feature: Spesifikasjon
     And Jeg klikker på "Lagre produkt" knapp for å lagre
 
   Scenario: Jeg kan laste ned spesifikasjon
-    Given Jeg åpner spesifikasjon
+    Given Jeg åpner spesifikasjon "specification-1.pdf"
     Then Klikker jeg på "Last ned spesifikasjon" knapp for å laste ned spesifikasjon

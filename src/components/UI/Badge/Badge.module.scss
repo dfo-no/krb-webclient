@@ -1,38 +1,50 @@
 .Badge {
+  --badge-border-color: var(--gray-color);
+
   display: flex;
   flex-direction: row;
-  gap: var(--small-gap);
+  gap: var(--tiny-gap);
   padding: var(--nano-gap) var(--tiny-gap);
   width: fit-content;
   align-self: center;
+  align-items: center;
+  border-radius: 0.5rem;
+  border: 0.1rem solid var(--badge-border-color);
 
   span {
     font-size: var(--small-fontsize);
-    font-weight: var(--font-weight-bold);
+    font-weight: var(--font-weight-semibold);
   }
 
   svg {
     font-size: var(--normal-fontsize);
-    font-weight: var(--font-weight-normal);
     align-self: center;
   }
 
   &[data-badge-type] {
     &[data-badge-type='information'] {
       background-color: var(--border-color-secondary);
-      border-radius: 1.5rem;
+    }
+    &[data-badge-type='requirement'] {
+      background-color: var(--tertiary-secondary-color);
+      --badge-border-color: var(--border-tertiary-color);
+    }
+    &[data-badge-type='award'] {
+      background-color: var(--award-color);
+      --badge-border-color: var(--warning-color);
+    }
+    &[data-badge-type='combinationRequirements'] {
+      background-color: var(--combination-color);
+      --badge-border-color: var(--secondary-color);
     }
     &[data-badge-type='error'] {
       background-color: var(--error-color);
-      border-radius: 1.5rem;
     }
     &[data-badge-type='warning'] {
       background-color: var(--warning-color);
-      border-radius: 1.5rem;
     }
     &[data-badge-type='primary'] {
       background-color: var(--primary-color);
-      border-radius: 1.5rem;
       color: var(--white-color);
     }
   }

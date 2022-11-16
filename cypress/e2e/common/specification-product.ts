@@ -1,13 +1,24 @@
 import { Then, When } from '@badeball/cypress-cucumber-preprocessor';
 
+When('Jeg redigerer produkt {string}', (productName: string) => {
+  cy.get('[class*="EditorFullPage"]')
+    .contains(productName)
+    .parent()
+    .parent()
+    .contains('Rediger produktet')
+    .click();
+});
+
+When(
+  'Jeg klkker på {string} til produktkrav {string}',
+  (button: string, requirement: string) => {
+    cy.contains(requirement).parent().parent().contains(button).click();
+  }
+);
+
 Then(
   'Ser jeg tittel er {string}, antall er {string}, type er {string} og beskrivelse er {string}',
-  (
-    title: string,
-    amount: string,
-    type: string,
-    description: string
-  ) => {
+  (title: string, amount: string, type: string, description: string) => {
     cy.contains(title);
     cy.contains(amount);
     cy.contains(type);
@@ -41,6 +52,10 @@ When(
   }
 );
 
+When('Jeg klikker på checkbox', () => {
+  cy.get('input[type="checkbox"]').click();
+});
+
 Then(
   'Ser jeg valgt krav {string} inneholder {string} for ja og {string} for nei',
   (requirement: string, yesPoint: string, noPoint: string) => {
@@ -62,4 +77,8 @@ Then(
 
 Then('Ser jeg valgte krav er {int} av 7', (value: number) => {
   cy.get('[data-cy="chosen-requirements"]').contains(value);
+});
+
+Then('Jeg ser en {string} merkelapp', (text: string) => {
+  cy.get('[class*="Badge"]').contains(text);
 });
