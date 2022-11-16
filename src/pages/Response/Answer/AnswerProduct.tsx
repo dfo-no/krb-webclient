@@ -10,17 +10,21 @@ import { AccordionProvider } from '../../../components/DFOAccordion/AccordionCon
 import { INeed } from '../../../Nexus/entities/INeed';
 import { IRequirementAnswer } from '../../../Nexus/entities/IRequirementAnswer';
 import { useAppSelector } from '../../../store/hooks';
-import { useProductIndexState } from '../../../components/ProductIndexContext/ProductIndexContext';
 import EditResponseProduct from '../EditResponseProduct/EditResponseProduct';
 import { RESPONSE } from '../../../common/PathConstants';
 import Panel from '../../../components/UI/Panel/Panel';
 import css from '../../Stylesheets/EditorFullPage.module.scss';
 
-export default function AnswerProduct(): React.ReactElement {
+type Props = {
+  productIndex: number;
+};
+
+export default function AnswerProduct({
+  productIndex,
+}: Props): React.ReactElement {
   const { t } = useTranslation();
   const history = useHistory();
   const { response } = useAppSelector((state) => state.response);
-  const { productIndex } = useProductIndexState();
   const existingNeeds = new Set<INeed>();
 
   const toOverviewPage = (): void => {
@@ -38,7 +42,10 @@ export default function AnswerProduct(): React.ReactElement {
       return (
         <div key={requirementAnswer.id}>
           <ProductNeed need={requirementNeed} />
-          <ProductRequirementAnswer requirementAnswer={requirementAnswer} />
+          <ProductRequirementAnswer
+            requirementAnswer={requirementAnswer}
+            productIndex={productIndex}
+          />
         </div>
       );
     } else {
@@ -46,6 +53,7 @@ export default function AnswerProduct(): React.ReactElement {
         <ProductRequirementAnswer
           key={requirementAnswer.id}
           requirementAnswer={requirementAnswer}
+          productIndex={productIndex}
         />
       );
     }
@@ -69,8 +77,10 @@ export default function AnswerProduct(): React.ReactElement {
   return (
     <div>
       <div className={css.overview__content}>
-        <ProductHeader />
-        {productIndex > -1 && <EditResponseProduct />}
+        <ProductHeader productIndex={productIndex} />
+        {productIndex > -1 && (
+          <EditResponseProduct productIndex={productIndex} />
+        )}
         <AccordionProvider>{renderRequirements()}</AccordionProvider>
       </div>
       <Panel
