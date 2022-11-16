@@ -1,8 +1,11 @@
 import React, { ReactElement } from 'react';
 import { Box, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
-import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import { useFormContext, useWatch } from 'react-hook-form';
+import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
+import Lock from '@mui/icons-material/Lock';
+import Tune from '@mui/icons-material/Tune';
+import Sort from '@mui/icons-material/Sort';
 
 import css from './EditProductVariant.module.scss';
 import ProductQuestionList from '../QuestionList/ProductQuestionList';
@@ -48,7 +51,7 @@ export default function EditProductVariant({ variant }: IProps): ReactElement {
       return (
         <Badge
           type={'award'}
-          icon={<InfoOutlinedIcon />}
+          icon={<Sort />}
           displayText={t('Award criteria')}
         />
       );
@@ -59,7 +62,7 @@ export default function EditProductVariant({ variant }: IProps): ReactElement {
       return (
         <Badge
           type={'requirement'}
-          icon={<InfoOutlinedIcon />}
+          icon={<Lock />}
           displayText={t('Absolute requirement')}
         />
       );
@@ -70,7 +73,7 @@ export default function EditProductVariant({ variant }: IProps): ReactElement {
       return (
         <Badge
           type={'combinationRequirements'}
-          icon={<InfoOutlinedIcon />}
+          icon={<Tune />}
           displayText={t('Combination requirements')}
         />
       );
