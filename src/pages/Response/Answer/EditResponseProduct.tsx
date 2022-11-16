@@ -28,14 +28,14 @@ export default function EditResponseProduct({
     defaultValues: response.products[productIndex],
   });
 
-  const handelProductPrice = (put: IResponseProduct) => {
+  const handleProductPrice = (put: IResponseProduct) => {
     editResponseProduct(put);
   };
 
   return (
     <FormProvider {...methods}>
       <form
-        onBlur={methods.handleSubmit(handelProductPrice)}
+        onBlur={methods.handleSubmit(handleProductPrice)}
         autoComplete="off"
         noValidate
       >
