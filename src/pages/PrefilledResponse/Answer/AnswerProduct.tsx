@@ -1,9 +1,9 @@
-import React, { ReactElement } from 'react';
-import { Button } from '@mui/material';
+import React, { ReactElement, useState } from 'react';
+import { Button, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
+import EditIcon from '@mui/icons-material/Edit';
 
-import ProductHeader from './ProductHeader';
 import ProductNeed from './ProductNeed';
 import Utils from '../../../common/Utils';
 import { AccordionProvider } from '../../../components/DFOAccordion/AccordionContext';
@@ -12,6 +12,9 @@ import { useProductIndexState } from '../../../components/ProductIndexContext/Pr
 import css from '../../Stylesheets/EditorFullPage.module.scss';
 import Panel from '../../../components/UI/Panel/Panel';
 import { PREFILLED_RESPONSE } from '../../../common/PathConstants';
+import Toolbar from '../../../components/UI/Toolbar/ToolBar';
+import ToolbarItem from '../../../components/UI/Toolbar/ToolbarItem';
+import EditProductForm from './EditProductForm';
 
 export default function AnswerProduct(): React.ReactElement {
   const { t } = useTranslation();
@@ -20,7 +23,9 @@ export default function AnswerProduct(): React.ReactElement {
     (state) => state.prefilledResponse
   );
   const { productIndex } = useProductIndexState();
-
+  const [editingProduct, setEditingProduct] = useState(false);
+  const product = prefilledResponse.products[productIndex];
+  const originProduct = prefilledResponse.products[productIndex]?.originProduct;
   const renderNeeds = (): ReactElement[] => {
     if (productIndex === -1) {
       return Utils.findVariantsUsedBySpecification(prefilledResponse.bank).map(
@@ -39,22 +44,72 @@ export default function AnswerProduct(): React.ReactElement {
     }
   };
 
+  const renderProductActionsToolbar = (): ReactElement => {
+    return (
+      <Toolbar gapType={'lg'} hasPadding={true}>
+        <ToolbarItem
+          primaryText={t('Edit product details')}
+          icon={<EditIcon />}
+          handleClick={() => setEditingProduct(true)}
+        />
+      </Toolbar>
+    );
+  };
+
+  const renderProductInfoToolbar = (): ReactElement => {
+    return (
+      <Toolbar gapType={'md'}>
+        <ToolbarItem
+          primaryText={t('From product type')}
+          secondaryText={originProduct.title}
+        />
+      </Toolbar>
+    );
+  };
+
   const toOverviewPage = (): void => {
     history.push(`/${PREFILLED_RESPONSE}/${prefilledResponse.bank.id}`);
   };
 
   return (
-    <div>
+    <div className={css.ProductOverview}>
       <div className={css.overview__content}>
-        <ProductHeader />
+        {!product && (
+          <Typography variant="lgBold">{t('General requirement')}</Typography>
+        )}
+        {product && !editingProduct && (
+          <>
+            <Typography variant="lgBold">{product?.title}</Typography>
+            {renderProductActionsToolbar()}
+            {renderProductInfoToolbar()}
+            <Typography variant="md">{product?.description}</Typography>
+          </>
+        )}
+        {product && editingProduct && (
+          <EditProductForm
+            prefilledResponseProduct={product}
+            handleClose={() => setEditingProduct(false)}
+          />
+        )}
         <AccordionProvider>{renderNeeds()}</AccordionProvider>
       </div>
       <Panel
+        classname={css.Actions}
         panelColor={'white'}
         children={
-          <Button variant="primary" onClick={toOverviewPage}>
-            {t('Save')}
-          </Button>
+          <>
+            <Button variant="cancel" onClick={toOverviewPage}>
+              {t('common.Cancel')}
+            </Button>
+            <Button
+              variant="primary"
+              onClick={toOverviewPage}
+              disabled={editingProduct}
+              className={editingProduct ? css.Actions__disabled : ''}
+            >
+              {t('Save product')}
+            </Button>
+          </>
         }
       />
     </div>
