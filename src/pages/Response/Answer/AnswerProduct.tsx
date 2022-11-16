@@ -9,7 +9,7 @@ import ProductRequirementAnswer from './ProductRequirementAnswer';
 import { AccordionProvider } from '../../../components/DFOAccordion/AccordionContext';
 import { INeed } from '../../../Nexus/entities/INeed';
 import { IRequirementAnswer } from '../../../Nexus/entities/IRequirementAnswer';
-import EditResponseProduct from '../EditResponseProduct/EditResponseProduct';
+import EditResponseProduct from './EditResponseProduct';
 import { RESPONSE } from '../../../common/PathConstants';
 import Panel from '../../../components/UI/Panel/Panel';
 import css from '../../Stylesheets/EditorFullPage.module.scss';
