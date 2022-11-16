@@ -46,7 +46,6 @@ export const ResponseProvider = ({ children, match }: Props) => {
   //   useRouteMatch<IRouteSpecificationParams>(SpecificationPath);
   const responseId = match.params.responseId;
 
-  console.log('responseId: ', responseId);
   const { setTitle } = useHeaderState();
 
   const [response, setResponse] = useState<IResponse>(

@@ -41,7 +41,6 @@ export default function AnswerProduct({ match }: Props): React.ReactElement {
     const requirementNeed = response.specification.bank.needs.find(
       (need) => need.id === requirementAnswer.requirement.needId
     );
-    console.log('response:', response);
     if (requirementNeed && !existingNeeds.has(requirementNeed)) {
       existingNeeds.add(requirementNeed);
       return (
@@ -65,7 +64,6 @@ export default function AnswerProduct({ match }: Props): React.ReactElement {
   };
 
   const renderRequirements = (): (ReactElement | undefined)[] => {
-    console.log('response:', response);
     const specOrProduct =
       productIndex === -1
         ? response.specification

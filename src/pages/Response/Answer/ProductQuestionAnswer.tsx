@@ -31,7 +31,6 @@ export default function ProductQuestionAnswer({
   const { setActiveKey } = useAccordionState();
 
   const onSubmit = (post: QuestionType): void => {
-    console.log('onSubmit, productIndex = ', productIndex);
     const calculatedPoints = {
       ...post,
       answer: {
@@ -99,7 +98,6 @@ export default function ProductQuestionAnswer({
         />
       );
     case QuestionVariant.Q_SLIDER:
-      // TODO her ein plass, kanskje onSubmit?
       return (
         <QuestionAnswerSlider
           item={requirementAnswer.question}

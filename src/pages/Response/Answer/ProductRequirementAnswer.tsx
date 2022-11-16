@@ -25,8 +25,6 @@ export default function ProductRequirementAnswer({
 }: IProps): ReactElement {
   const { response } = useResponseState();
 
-  console.log('In ProductRequirementAnswer, productIndex = ', productIndex);
-
   const [existingAnswer, setExistingAnswer] = useState<
     IRequirementAnswer | undefined
   >(undefined);
