@@ -4,7 +4,6 @@ import { FormProvider, useForm } from 'react-hook-form';
 import Typography from '@mui/material/Typography';
 
 import Nexus from '../../../Nexus/Nexus';
-import { useSpecificationState } from '../../SpecEditor/SpecificationContext';
 import { IResponseProduct } from '../../../Nexus/entities/IResponseProduct';
 import { ModelType } from '../../../Nexus/enums';
 import VerticalTextCtrl from '../../../FormProvider/VerticalTextCtrl';
@@ -23,21 +22,20 @@ export default function EditResponseProduct({
   const { t } = useTranslation();
   const { response, editResponseProduct } = useResponseState();
   const nexus = Nexus.getInstance();
-  const { specification } = useSpecificationState();
 
   const methods = useForm<IResponseProduct>({
     resolver: nexus.resolverService.resolver(ModelType.responseProduct),
     defaultValues: response.products[productIndex],
   });
 
-  const handelProductPrice = (put: IResponseProduct) => {
+  const handleProductPrice = (put: IResponseProduct) => {
     editResponseProduct(put);
   };
 
   return (
     <FormProvider {...methods}>
       <form
-        onBlur={methods.handleSubmit(handelProductPrice)}
+        onBlur={methods.handleSubmit(handleProductPrice)}
         autoComplete="off"
         noValidate
       >
@@ -48,7 +46,7 @@ export default function EditResponseProduct({
           placeholder={t('Price of product')}
           children={
             <Typography color={theme.palette.primary.main}>
-              {specification.currencyUnit}
+              {response.specification.currencyUnit}
             </Typography>
           }
         />
