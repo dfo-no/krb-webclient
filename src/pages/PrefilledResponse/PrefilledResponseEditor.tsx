@@ -1,4 +1,4 @@
-import React, { ReactElement } from 'react';
+import React, { ReactElement, useEffect } from 'react';
 import { Route, Switch } from 'react-router-dom';
 
 import css from '../Stylesheets/EditorFullPage.module.scss';
@@ -8,12 +8,21 @@ import PrefilledResponseOverview from './PrefilledResponseOverview/PrefilledResp
 import { PRODUCTS, PREFILLED_RESPONSE } from '../../common/PathConstants';
 import { SelectProvider } from '../Workbench/Create/SelectContext';
 import { useAppSelector } from '../../store/hooks';
+import { HeaderContainer } from '../../components/Header/HeaderContext';
 
 export default function PrefilledResponseEditor(): ReactElement {
   const { prefilledResponse } = useAppSelector(
     (state) => state.prefilledResponse
   );
   const { productIndex } = useProductIndexState();
+  const { setTitle } = HeaderContainer.useContainer();
+
+  useEffect(() => {
+    setTitle(prefilledResponse.bank.title);
+    return function cleanup() {
+      setTitle('');
+    };
+  }, [setTitle, prefilledResponse]);
 
   const renderProduct = () => {
     if (productIndex >= -1) {

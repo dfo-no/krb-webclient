@@ -99,7 +99,8 @@ export const SpecificationProvider = ({ children }: IProps) => {
     if (specId) {
       nexus.specificationService.getSpecification(specId).then((spec) => {
         setSpecification(spec);
-        setTitle(spec.title);
+        const caseNumber = spec.caseNumber;
+        setTitle(spec.title + (caseNumber ? ' - ' + caseNumber : ''));
       });
       return function cleanup() {
         setTitle('');
