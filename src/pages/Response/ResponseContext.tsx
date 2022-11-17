@@ -1,13 +1,7 @@
-import React, {
-  createContext,
-  Dispatch,
-  SetStateAction,
-  useContext,
-  useEffect,
-  useState,
-} from 'react';
-import { RouteComponentProps } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
 import produce from 'immer';
+import { createContainer } from 'unstated-next';
 
 import Utils from '../../common/Utils';
 import { IRequirementAnswer } from '../../Nexus/entities/IRequirementAnswer';
@@ -18,42 +12,27 @@ import { MatchParams } from './ResponseModule';
 import { HeaderContainer } from '../../components/Header/HeaderContext';
 import ResponseStoreService from '../../Nexus/services/ResponseStoreService';
 
-type Props = {
-  children: React.ReactNode;
-} & RouteComponentProps<MatchParams>;
+const useResponse = () => {
+  // const e = new Error(); //Bare til debugging
+  // console.log(e.stack);
 
-type ResponseContextType = {
-  response: IResponse;
-  setResponse: Dispatch<SetStateAction<IResponse>>;
-  editResponseProduct: Dispatch<IResponseProduct>;
-  addRequirementAnswer: Dispatch<IRequirementAnswer>;
-  addProductAnswer: Dispatch<{ answer: IRequirementAnswer; productId: string }>;
-};
-
-const initialContext: ResponseContextType = {
-  response: ResponseStoreService.defaultResponse(),
-  setResponse: () => {},
-  editResponseProduct: () => {},
-  addRequirementAnswer: () => {},
-  addProductAnswer: () => {},
-};
-
-export const ResponseContext =
-  createContext<ResponseContextType>(initialContext);
-
-export const ResponseProvider = ({ children, match }: Props) => {
-  // const routeMatch =
-  //   useRouteMatch<IRouteSpecificationParams>(SpecificationPath);
-  const responseId = match.params.responseId;
+  console.log('useResponse in ResponseContext' + Date.now()); // Har brukt denne til å prøve å finne loopen
 
   const { setTitle } = HeaderContainer.useContainer();
+  const params = useParams<MatchParams>();
+  const responseId = params.responseId;
 
   const [response, setResponse] = useState<IResponse>(
     ResponseStoreService.defaultResponse()
   );
+
+  console.log('2222222' + Date.now());
+  setResponse(ResponseStoreService.defaultResponse());
   const nexus = Nexus.getInstance();
 
   useEffect(() => {
+    console.log('======= testst ?????????');
+
     if (responseId) {
       nexus.responseService.getResponse(responseId).then((storedResponse) => {
         setResponse(storedResponse);
@@ -65,7 +44,10 @@ export const ResponseProvider = ({ children, match }: Props) => {
     }
   }, [responseId, nexus, setTitle]);
 
+  console.log('33333333' + Date.now());
+
   const editResponseProduct = (payload: IResponseProduct) => {
+    console.log('editResponseProduct!!!' + Date.now());
     const updatedResponse = produce(response, (draft) => {
       if (draft.products.find((product) => product.id === payload.id)) {
         const productIndex = draft.products.findIndex(
@@ -80,6 +62,7 @@ export const ResponseProvider = ({ children, match }: Props) => {
   };
 
   const addRequirementAnswer = (payload: IRequirementAnswer) => {
+    console.log('addRequirementAnswer' + Date.now());
     const updatedResponse = produce(response, (draft) => {
       if (draft.requirementAnswers.find((answer) => answer.id === payload.id)) {
         const oldSelectIndex = draft.requirementAnswers.findIndex(
@@ -99,6 +82,7 @@ export const ResponseProvider = ({ children, match }: Props) => {
     answer: IRequirementAnswer;
     productId: string;
   }) => {
+    console.log('addProductAnswer' + Date.now());
     const updatedResponse = produce(response, (draft) => {
       const index = Utils.ensure(
         draft.products.findIndex((product) => product.id === payload.productId)
@@ -122,26 +106,14 @@ export const ResponseProvider = ({ children, match }: Props) => {
       .then(() => setResponse(updatedResponse));
   };
 
-  return (
-    <ResponseContext.Provider
-      value={{
-        response,
-        setResponse,
-        editResponseProduct,
-        addRequirementAnswer,
-        addProductAnswer,
-      }}
-    >
-      {children}
-    </ResponseContext.Provider>
-  );
+  console.log('before return' + Date.now());
+
+  return {
+    response,
+    editResponseProduct,
+    addRequirementAnswer,
+    addProductAnswer,
+  };
 };
 
-export const useResponseState = (): ResponseContextType => {
-  const context = useContext(ResponseContext);
-
-  if (context === undefined) {
-    throw new Error('useResponseState must be used within a ResponseProvider');
-  }
-  return context;
-};
+export const ResponseContainer = createContainer(useResponse);

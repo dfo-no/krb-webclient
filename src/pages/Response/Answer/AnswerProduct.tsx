@@ -13,7 +13,7 @@ import EditResponseProduct from '../EditResponseProduct/EditResponseProduct';
 import { RESPONSE } from '../../../common/PathConstants';
 import Panel from '../../../components/UI/Panel/Panel';
 import css from '../../Stylesheets/EditorFullPage.module.scss';
-import { useResponseState } from '../ResponseContext';
+import { ResponseContainer } from '../ResponseContext';
 import Utils from '../../../common/Utils';
 
 type AnswerProductMatchParams = { productIndex: string };
@@ -23,7 +23,7 @@ type Props = RouteComponentProps<AnswerProductMatchParams>;
 export default function AnswerProduct({ match }: Props): React.ReactElement {
   const { t } = useTranslation();
   const history = useHistory();
-  const { response } = useResponseState();
+  const { response } = ResponseContainer.useContainer();
   const existingNeeds = new Set<INeed>();
 
   const paramsProductIndex = match.params.productIndex;

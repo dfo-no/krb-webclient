@@ -5,7 +5,7 @@ import AnswerProduct from './Answer/AnswerProduct';
 import css from '../Stylesheets/EditorFullPage.module.scss';
 import ResponseOverview from './Overview/ResponseOverview';
 import { PRODUCTS } from '../../common/PathConstants';
-import { ResponseProvider } from './ResponseContext';
+import { ResponseContainer } from './ResponseContext';
 
 export type MatchParams = { responseId: string };
 type Props = RouteComponentProps<MatchParams>;
@@ -13,8 +13,10 @@ type Props = RouteComponentProps<MatchParams>;
 export default function ResponseModule({
   ...props
 }: Props): React.ReactElement {
+  console.log('ResponseModule');
+
   return (
-    <ResponseProvider {...props}>
+    <ResponseContainer.Provider {...props}>
       <div className={css.EditorFullPage}>
         <div className={css.Content}>
           <Switch>
@@ -28,6 +30,6 @@ export default function ResponseModule({
           </Switch>
         </div>
       </div>
-    </ResponseProvider>
+    </ResponseContainer.Provider>
   );
 }

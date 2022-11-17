@@ -12,7 +12,7 @@ import { IRequirementAnswer } from '../../../Nexus/entities/IRequirementAnswer';
 import { QuestionType } from '../../../Nexus/entities/QuestionType';
 import { QuestionVariant } from '../../../Nexus/enums';
 import Nexus from '../../../Nexus/Nexus';
-import { useResponseState } from '../ResponseContext';
+import { ResponseContainer } from '../ResponseContext';
 
 interface IProps {
   requirementAnswer: IRequirementAnswer;
@@ -26,7 +26,7 @@ export default function ProductQuestionAnswer({
   productIndex,
 }: IProps): React.ReactElement {
   const { response, addProductAnswer, addRequirementAnswer } =
-    useResponseState();
+    ResponseContainer.useContainer();
   const nexus = Nexus.getInstance();
   const { setActiveKey } = useAccordionState();
 

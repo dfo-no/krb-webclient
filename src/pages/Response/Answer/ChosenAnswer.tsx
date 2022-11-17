@@ -4,7 +4,7 @@ import { t } from 'i18next';
 
 import TextUtils from '../../../common/TextUtils';
 import { IRequirementAnswer } from '../../../Nexus/entities/IRequirementAnswer';
-import { useResponseState } from '../ResponseContext';
+import { ResponseContainer } from '../ResponseContext';
 import Toolbar from '../../../components/UI/Toolbar/ToolBar';
 import ToolbarItem from '../../../components/UI/Toolbar/ToolbarItem';
 interface IProps {
@@ -16,7 +16,7 @@ export default function ChosenAnswer({
   requirementAnswer,
   existingAnswer,
 }: IProps): React.ReactElement {
-  const { response } = useResponseState();
+  const { response } = ResponseContainer.useContainer();
 
   return (
     <Box>

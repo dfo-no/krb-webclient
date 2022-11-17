@@ -11,7 +11,6 @@ import { IBank } from '../../Nexus/entities/IBank';
 import { useEvaluationState } from '../../pages/Evaluation/EvaluationContext';
 import { useGetProjectQuery } from '../../store/api/bankApi';
 import ProjectActionsToolbar from '../../pages/Workbench/Projects/ProjectActionsToolbar';
-import { useResponseState } from '../../pages/Response/ResponseContext';
 import {
   EVALUATION,
   PREFILLED_RESPONSE,
@@ -23,7 +22,7 @@ import {
 const Breadcrumbs = (): ReactElement => {
   const { t } = useTranslation();
   const { title } = HeaderContainer.useContainer();
-  const { response } = useResponseState();
+
   const { prefilledResponse } = useAppSelector(
     (state) => state.prefilledResponse
   );
@@ -62,9 +61,14 @@ const Breadcrumbs = (): ReactElement => {
 
   useEffect(() => {
     setProject(fetchedProject);
+    console.log('setProject(fetchedProject);' + Date.now());
   }, [fetchedProject]);
 
   useEffect(() => {
+    console.log(
+      'setProject(baseUrl?.params.projectId ? fetchedProject : undefined);' +
+        Date.now()
+    );
     setProject(baseUrl?.params.projectId ? fetchedProject : undefined);
   }, [baseUrl, fetchedProject]);
 
@@ -76,7 +80,7 @@ const Breadcrumbs = (): ReactElement => {
       return title || t('Requirement specification');
     }
     if (isResponse) {
-      return response.specification.title || t('Response');
+      return title || t('Response');
     }
     if (isEvaluation) {
       return specificationUpload.specification.title || t('Evaluation');

@@ -3,7 +3,7 @@ import { Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 
 import ToolbarItem from '../../../components/UI/Toolbar/ToolbarItem';
-import { useResponseState } from '../ResponseContext';
+import { ResponseContainer } from '../ResponseContext';
 
 type Props = {
   productIndex: number;
@@ -13,7 +13,7 @@ export default function ProductHeader({
   productIndex,
 }: Props): React.ReactElement {
   const { t } = useTranslation();
-  const { response } = useResponseState();
+  const { response } = ResponseContainer.useContainer();
 
   const description =
     response.specification.products[productIndex]?.description;

@@ -12,7 +12,7 @@ import { DFOAccordion } from '../../../components/DFOAccordion/DFOAccordion';
 import { IRequirementAnswer } from '../../../Nexus/entities/IRequirementAnswer';
 import { VariantType } from '../../../Nexus/enums';
 import { useAccordionState } from '../../../components/DFOAccordion/AccordionContext';
-import { useResponseState } from '../ResponseContext';
+import { ResponseContainer } from '../ResponseContext';
 
 interface IProps {
   requirementAnswer: IRequirementAnswer;
@@ -23,7 +23,7 @@ export default function ProductRequirementAnswer({
   requirementAnswer,
   productIndex,
 }: IProps): ReactElement {
-  const { response } = useResponseState();
+  const { response } = ResponseContainer.useContainer();
 
   const [existingAnswer, setExistingAnswer] = useState<
     IRequirementAnswer | undefined
@@ -37,6 +37,7 @@ export default function ProductRequirementAnswer({
   const isAnswered = !!(existingAnswer || isInfo);
 
   useEffect(() => {
+    console.log('ProductRequirementAnswer useEffect' + Date.now());
     const answer = (
       productIndex >= 0 ? response.products[productIndex] : response
     ).requirementAnswers.find((reqAns) => {

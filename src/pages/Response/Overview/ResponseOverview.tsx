@@ -10,12 +10,12 @@ import { ISpecificationProduct } from '../../../Nexus/entities/ISpecificationPro
 import { PRODUCTS, RESPONSE } from '../../../common/PathConstants';
 import ToolbarItem from '../../../components/UI/Toolbar/ToolbarItem';
 import Toolbar from '../../../components/UI/Toolbar/ToolBar';
-import { useResponseState } from '../ResponseContext';
+import { ResponseContainer } from '../ResponseContext';
 
 function ResponseOverview(): React.ReactElement {
   const { t } = useTranslation();
   const history = useHistory();
-  const { response } = useResponseState();
+  const { response } = ResponseContainer.useContainer();
 
   const genericPressed = () => {
     history.push(`/${RESPONSE}/${response.id}/${PRODUCTS}/general`);

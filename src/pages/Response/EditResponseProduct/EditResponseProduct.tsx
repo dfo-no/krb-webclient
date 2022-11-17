@@ -10,7 +10,7 @@ import VerticalTextCtrl from '../../../FormProvider/VerticalTextCtrl';
 import theme from '../../../theme';
 import GeneralErrorMessage from '../../../Form/GeneralErrorMessage';
 import css from '../../Stylesheets/EditorFullPage.module.scss';
-import { useResponseState } from '../ResponseContext';
+import { ResponseContainer } from '../ResponseContext';
 
 type Props = {
   productIndex: number;
@@ -20,7 +20,7 @@ export default function EditResponseProduct({
   productIndex,
 }: Props): ReactElement {
   const { t } = useTranslation();
-  const { response, editResponseProduct } = useResponseState();
+  const { response, editResponseProduct } = ResponseContainer.useContainer();
   const nexus = Nexus.getInstance();
 
   const methods = useForm<IResponseProduct>({
