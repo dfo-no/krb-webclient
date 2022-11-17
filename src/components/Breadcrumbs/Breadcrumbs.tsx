@@ -8,10 +8,8 @@ import { IBreadcrumb } from '../../models/IBreadcrumb';
 import { HeaderContainer } from '../Header/HeaderContext';
 import { useAppSelector } from '../../store/hooks';
 import { IBank } from '../../Nexus/entities/IBank';
-import { useEvaluationState } from '../../pages/Evaluation/EvaluationContext';
 import { useGetProjectQuery } from '../../store/api/bankApi';
 import ProjectActionsToolbar from '../../pages/Workbench/Projects/ProjectActionsToolbar';
-import { useResponseState } from '../../pages/Response/ResponseContext';
 import {
   EVALUATION,
   PREFILLED_RESPONSE,
@@ -23,7 +21,6 @@ import {
 const Breadcrumbs = (): ReactElement => {
   const { t } = useTranslation();
   const { title } = HeaderContainer.useContainer();
-  const { response } = useResponseState();
   const { prefilledResponse } = useAppSelector(
     (state) => state.prefilledResponse
   );
@@ -33,9 +30,6 @@ const Breadcrumbs = (): ReactElement => {
   );
   const location = useLocation();
   const [project, setProject] = useState<IBank>();
-
-  // TODO Needs to go
-  const { specificationUpload } = useEvaluationState();
 
   const breadcrumbs: IBreadcrumb[] = [
     {
@@ -76,10 +70,10 @@ const Breadcrumbs = (): ReactElement => {
       return title || t('Requirement specification');
     }
     if (isResponse) {
-      return response.specification.title || t('Response');
+      return title || t('Response');
     }
     if (isEvaluation) {
-      return specificationUpload.specification.title || t('Evaluation');
+      return title || t('Evaluation');
     }
     if (isPrefilledResponse) {
       return prefilledResponse.bank.title || t('Prefilled response');

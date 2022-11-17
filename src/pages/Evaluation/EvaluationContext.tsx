@@ -3,6 +3,7 @@ import React, {
   Dispatch,
   SetStateAction,
   useContext,
+  useEffect,
   useState,
 } from 'react';
 
@@ -11,6 +12,7 @@ import { IResponse } from '../../Nexus/entities/IResponse';
 import { IFile } from '../../models/IFile';
 import { SpecificationFile } from '../../Nexus/entities/SpecificationFile';
 import { getInvalidSpecificationFile } from '../../Nexus/services/EvaluationSpecificationStoreService';
+import { HeaderContainer } from '../../components/Header/HeaderContext';
 
 type IEvaluationContext = {
   tab: number;
@@ -50,11 +52,23 @@ export const EvaluationContext =
 export const EvaluationProvider = ({ children }: IProps) => {
   const [tab, setTab] = useState(0);
   const [evaluations, setEvaluations] = useState<IEvaluatedResponse[]>([]);
-  const [specification, setSpecification] = useState<SpecificationFile>(
+  const [specificationFile, setSpecificationFile] = useState<SpecificationFile>(
     getInvalidSpecificationFile()
   );
   const [files, setFiles] = useState<IFile[]>([]);
   const [responses, setResponses] = useState<IResponse[]>([]);
+
+  const { setTitle } = HeaderContainer.useContainer();
+  useEffect(() => {
+    const caseNumber = specificationFile.specification.caseNumber;
+    setTitle(
+      specificationFile.specification.title +
+        (caseNumber ? ' - ' + caseNumber : '')
+    );
+    return function cleanup() {
+      setTitle('');
+    };
+  }, [setTitle, specificationFile]);
 
   return (
     <EvaluationContext.Provider
@@ -63,8 +77,8 @@ export const EvaluationProvider = ({ children }: IProps) => {
         setTab,
         evaluations,
         setEvaluations,
-        specificationUpload: specification,
-        setSpecificationUpload: setSpecification,
+        specificationUpload: specificationFile,
+        setSpecificationUpload: setSpecificationFile,
         files,
         setFiles,
         responses,
