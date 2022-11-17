@@ -15,7 +15,7 @@ import { IResponse } from '../../Nexus/entities/IResponse';
 import { IResponseProduct } from '../../Nexus/entities/IResponseProduct';
 import Nexus from '../../Nexus/Nexus';
 import { MatchParams } from './ResponseModule';
-import { useHeaderState } from '../../components/Header/HeaderContext';
+import { HeaderContainer } from '../../components/Header/HeaderContext';
 import ResponseStoreService from '../../Nexus/services/ResponseStoreService';
 
 type Props = {
@@ -46,7 +46,7 @@ export const ResponseProvider = ({ children, match }: Props) => {
   //   useRouteMatch<IRouteSpecificationParams>(SpecificationPath);
   const responseId = match.params.responseId;
 
-  const { setTitle } = useHeaderState();
+  const { setTitle } = HeaderContainer.useContainer();
 
   const [response, setResponse] = useState<IResponse>(
     ResponseStoreService.defaultResponse()

@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 
 import css from './Breadcrumbs.module.scss';
 import { IBreadcrumb } from '../../models/IBreadcrumb';
-import { useHeaderState } from '../Header/HeaderContext';
+import { HeaderContainer } from '../Header/HeaderContext';
 import { useAppSelector } from '../../store/hooks';
 import { IBank } from '../../Nexus/entities/IBank';
 import { useEvaluationState } from '../../pages/Evaluation/EvaluationContext';
@@ -22,7 +22,7 @@ import {
 
 const Breadcrumbs = (): ReactElement => {
   const { t } = useTranslation();
-  const { title } = useHeaderState();
+  const { title } = HeaderContainer.useContainer();
   const { response } = useResponseState();
   const { prefilledResponse } = useAppSelector(
     (state) => state.prefilledResponse

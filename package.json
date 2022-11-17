@@ -41,6 +41,7 @@
     "react-redux": "^7.2.8",
     "react-router-dom": "^5.3.3",
     "redux-thunk": "^2.4.1",
+    "unstated-next": "^1.1.0",
     "uuid": "^8.3.2",
     "web-vitals": "^2.1.4"
   },
@@ -144,7 +145,8 @@
         {
           "props": true,
           "ignorePropertyModificationsFor": [
-            "state", "draft"
+            "state",
+            "draft"
           ]
         }
       ],

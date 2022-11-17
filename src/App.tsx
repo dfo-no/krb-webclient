@@ -22,7 +22,7 @@ import ResponseModule from './pages/Response/ResponseModule';
 import SpecModule from './pages/SpecEditor/SpecModule';
 import styles from './App.module.scss';
 import WorkbenchModule from './pages/Workbench/WorkbenchModule';
-import { HeaderProvider } from './components/Header/HeaderContext';
+import { HeaderContainer } from './components/Header/HeaderContext';
 import { msalConfig } from './authentication/authConfig';
 import Breadcrumbs from './components/Breadcrumbs/Breadcrumbs';
 import Footer from './Footer/Footer';
@@ -97,7 +97,7 @@ function App(): ReactElement {
       <MsalProvider instance={msalInstance}>
         <CssBaseline />
         <AlertList />
-        <HeaderProvider>
+        <HeaderContainer.Provider>
           <div className={styles.App}>
             <Header />
             <div className={styles.Content}>
@@ -106,7 +106,7 @@ function App(): ReactElement {
             </div>
             {isHomePage && <Footer />}
           </div>
-        </HeaderProvider>
+        </HeaderContainer.Provider>
       </MsalProvider>
     </div>
   );
