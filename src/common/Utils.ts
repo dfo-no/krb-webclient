@@ -462,6 +462,11 @@ class Utils {
       this.isValidResponse(response, specification)
     );
   };
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  static isNumeric = (val: any): boolean => {
+    return !(val instanceof Array) && val - parseFloat(val) + 1 >= 0;
+  };
 }
 
 export default Utils;

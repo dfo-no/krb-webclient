@@ -5,8 +5,8 @@ Given('Jeg åpner startsiden', () => {
   cy.visit('localhost:3000');
 });
 
-Given('Jeg åpner spesifikasjon', () => {
-  uploadFile('./cypress/filesForUploadTesting/specification-1.pdf');
+Given('Jeg åpner spesifikasjon {string}', (pdfName: string) => {
+  uploadFile(`./cypress/filesForUploadTesting/${pdfName}`);
   cy.contains('Rediger spesifikasjon').click();
 });
 
@@ -32,9 +32,12 @@ Then('Jeg klikker på {string} knappen', (button: string) => {
   cy.get('button').contains(button).click();
 });
 
-When('Jeg kan velge navn ved å klikke på {string} knappen', (button: string) => {
-  cy.get('li > div > button').contains(button).click();
-});
+When(
+  'Jeg kan velge navn ved å klikke på {string} knappen',
+  (button: string) => {
+    cy.get('li > div > button').contains(button).click();
+  }
+);
 
 When(
   'Jeg skriver {string} i feltet {string}',

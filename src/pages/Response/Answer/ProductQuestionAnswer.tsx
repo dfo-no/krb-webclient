@@ -1,6 +1,6 @@
 import React from 'react';
 
-import Nexus from '../../../Nexus/Nexus';
+import { useAccordionState } from '../../../components/DFOAccordion/AccordionContext';
 import QuestionAnswerCheckbox from '../../../components/QuestionAnswer/QuestionAnswerCheckbox';
 import QuestionAnswerCodelist from '../../../components/QuestionAnswer/QuestionAnswerCodelist';
 import QuestionAnswerConfirmation from '../../../components/QuestionAnswer/QuestionAnswerConfirmation';
@@ -8,15 +8,11 @@ import QuestionAnswerPeriodDate from '../../../components/QuestionAnswer/Questio
 import QuestionAnswerSlider from '../../../components/QuestionAnswer/QuestionAnswerSlider';
 import QuestionAnswerText from '../../../components/QuestionAnswer/QuestionAnswerText';
 import QuestionAnswerTime from '../../../components/QuestionAnswer/QuestionAnswerTime';
-import {
-  addProductAnswer,
-  addRequirementAnswer,
-} from '../../../store/reducers/response-reducer';
 import { IRequirementAnswer } from '../../../Nexus/entities/IRequirementAnswer';
 import { QuestionType } from '../../../Nexus/entities/QuestionType';
 import { QuestionVariant } from '../../../Nexus/enums';
-import { useAccordionState } from '../../../components/DFOAccordion/AccordionContext';
-import { useAppDispatch, useAppSelector } from '../../../store/hooks';
+import Nexus from '../../../Nexus/Nexus';
+import { useResponseState } from '../ResponseContext';
 
 interface IProps {
   requirementAnswer: IRequirementAnswer;
@@ -29,13 +25,13 @@ export default function ProductQuestionAnswer({
   existingAnswer,
   productIndex,
 }: IProps): React.ReactElement {
-  const dispatch = useAppDispatch();
-  const { response } = useAppSelector((state) => state.response);
+  const { response, addProductAnswer, addRequirementAnswer } =
+    useResponseState();
   const nexus = Nexus.getInstance();
   const { setActiveKey } = useAccordionState();
 
   const onSubmit = (post: QuestionType): void => {
-    const calulatedPoints = {
+    const calculatedPoints = {
       ...post,
       answer: {
         ...post.answer,
@@ -44,17 +40,15 @@ export default function ProductQuestionAnswer({
     } as QuestionType;
     const newAnswer = {
       ...requirementAnswer,
-      question: calulatedPoints,
+      question: calculatedPoints,
     };
     if (productIndex === -1) {
-      dispatch(addRequirementAnswer(newAnswer));
+      addRequirementAnswer(newAnswer);
     } else {
-      dispatch(
-        addProductAnswer({
-          answer: newAnswer,
-          productId: response.products[productIndex].id,
-        })
-      );
+      addProductAnswer({
+        answer: newAnswer,
+        productId: response.products[productIndex].id,
+      });
     }
     setActiveKey('');
   };

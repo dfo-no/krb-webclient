@@ -1,14 +1,16 @@
 import { IResponse } from '../entities/IResponse';
 import { ISpecification } from '../entities/ISpecification';
+import BaseService from './BaseService';
 import ResponseStoreService from './ResponseStoreService';
 import UuidService from './UuidService';
 
-export default class ResponseService {
+export default class ResponseService extends BaseService {
   UuidService = new UuidService();
 
   private store: ResponseStoreService;
 
   public constructor(store: ResponseStoreService) {
+    super();
     this.store = store;
   }
 
@@ -16,6 +18,7 @@ export default class ResponseService {
     specification: ISpecification
   ): IResponse {
     return {
+      id: '',
       specification: specification,
       supplier: '',
       products: specification.products.map((specProduct) => {
@@ -32,7 +35,11 @@ export default class ResponseService {
     };
   }
 
-  async setResponse(response: IResponse): Promise<void> {
+  async setResponse(response: IResponse): Promise<IResponse> {
     return this.store.setResponse(response);
+  }
+
+  async getResponse(id: string): Promise<IResponse> {
+    return this.store.getResponse(id);
   }
 }

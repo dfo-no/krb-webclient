@@ -2,8 +2,8 @@ import React from 'react';
 import { Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 
-import { useAppSelector } from '../../../store/hooks';
 import ToolbarItem from '../../../components/UI/Toolbar/ToolbarItem';
+import { useResponseState } from '../ResponseContext';
 
 type Props = {
   productIndex: number;
@@ -13,7 +13,7 @@ export default function ProductHeader({
   productIndex,
 }: Props): React.ReactElement {
   const { t } = useTranslation();
-  const { response } = useAppSelector((state) => state.response);
+  const { response } = useResponseState();
 
   const description =
     response.specification.products[productIndex]?.description;

@@ -2,7 +2,14 @@ import React, { ReactNode } from 'react';
 
 import css from './Badge.module.scss';
 
-type BadgeType = 'information' | 'warning' | 'error' | 'primary';
+type BadgeType =
+  | 'information'
+  | 'requirement'
+  | 'award'
+  | 'combinationRequirements'
+  | 'warning'
+  | 'error'
+  | 'primary';
 
 interface BadgeProps {
   type: BadgeType;

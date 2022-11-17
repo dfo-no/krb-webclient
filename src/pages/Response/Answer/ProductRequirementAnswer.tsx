@@ -10,9 +10,9 @@ import ProductVariant from './ProductVariant';
 import TextUtils from '../../../common/TextUtils';
 import { DFOAccordion } from '../../../components/DFOAccordion/DFOAccordion';
 import { IRequirementAnswer } from '../../../Nexus/entities/IRequirementAnswer';
-import { useAppSelector } from '../../../store/hooks';
 import { VariantType } from '../../../Nexus/enums';
 import { useAccordionState } from '../../../components/DFOAccordion/AccordionContext';
+import { useResponseState } from '../ResponseContext';
 
 interface IProps {
   requirementAnswer: IRequirementAnswer;
@@ -23,7 +23,8 @@ export default function ProductRequirementAnswer({
   requirementAnswer,
   productIndex,
 }: IProps): ReactElement {
-  const { response } = useAppSelector((state) => state.response);
+  const { response } = useResponseState();
+
   const [existingAnswer, setExistingAnswer] = useState<
     IRequirementAnswer | undefined
   >(undefined);

@@ -1,49 +1,9 @@
-import React, {
-  createContext,
-  Dispatch,
-  SetStateAction,
-  useContext,
-  useState,
-} from 'react';
+import { useState } from 'react';
+import { createContainer } from 'unstated-next';
 
-interface IHeaderContext {
-  title: string;
-  setTitle: Dispatch<SetStateAction<string>>;
-}
-
-const initialContext: IHeaderContext = {
-  title: '',
-  setTitle: function (): void {
-    throw new Error('Function not implemented.');
-  },
-};
-
-export const HeaderContext = createContext<IHeaderContext>(initialContext);
-
-interface IProps {
-  children: React.ReactNode;
-}
-
-export const HeaderProvider = ({ children }: IProps): React.ReactElement => {
+const useHeader = () => {
   const [title, setTitle] = useState('');
-
-  return (
-    <HeaderContext.Provider
-      value={{
-        title,
-        setTitle,
-      }}
-    >
-      {children}
-    </HeaderContext.Provider>
-  );
+  return { title, setTitle };
 };
 
-export const useHeaderState = (): IHeaderContext => {
-  const context = useContext(HeaderContext);
-
-  if (context === undefined) {
-    throw new Error('useHeaderState must be used within a HeaderProvider');
-  }
-  return context;
-};
+export const HeaderContainer = createContainer(useHeader);
