@@ -24,15 +24,19 @@ interface IProps {
 export default function EditProductVariant({ variant }: IProps): ReactElement {
   const { t } = useTranslation();
   const { control } = useFormContext<IRequirementAnswer>();
-  const pointsNonPrefered = useWatch({
+  const nonPreferredDeductibleAmount = useWatch({
     name: 'question.config.pointsNonPrefered',
     control,
   });
 
-  const pointsUnconfirmed = useWatch({
+  const unConfirmedDeductibleAmount = useWatch({
     name: 'question.config.pointsUnconfirmed',
     control,
   });
+
+  const isAwardCriteria = () => {
+    return nonPreferredDeductibleAmount > 0 || unConfirmedDeductibleAmount > 0;
+  };
 
   const questionsTypeCodeList = () => {
     return variant.questions.filter((q) => q.type === 'Q_CODELIST');
@@ -47,7 +51,7 @@ export default function EditProductVariant({ variant }: IProps): ReactElement {
           displayText={t('Information')}
         />
       );
-    } else if (pointsNonPrefered > 0 || pointsUnconfirmed > 0) {
+    } else if (isAwardCriteria()) {
       return (
         <Badge
           type={'award'}
