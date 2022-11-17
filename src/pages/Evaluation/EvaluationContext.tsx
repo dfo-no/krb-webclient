@@ -11,7 +11,6 @@ import { IResponse } from '../../Nexus/entities/IResponse';
 import { IFile } from '../../models/IFile';
 import { SpecificationFile } from '../../Nexus/entities/SpecificationFile';
 import { getInvalidSpecificationFile } from '../../Nexus/services/EvaluationSpecificationStoreService';
-import { HeaderContainer } from '../../components/Header/HeaderContext';
 
 type IEvaluationContext = {
   tab: number;
