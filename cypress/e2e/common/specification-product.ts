@@ -10,7 +10,7 @@ When('Jeg redigerer produkt {string}', (productName: string) => {
 });
 
 When(
-  'Jeg klkker på {string} til produktkrav {string}',
+  'Jeg klikker på {string} til produktkrav {string}',
   (button: string, requirement: string) => {
     cy.contains(requirement).parent().parent().contains(button).click();
   }
@@ -79,6 +79,6 @@ Then('Ser jeg valgte krav er {int} av 7', (value: number) => {
   cy.get('[data-cy="chosen-requirements"]').contains(value);
 });
 
-Then('Jeg ser en {string} merkelapp', (text: string) => {
+Then('Jeg ser en {string}-merkelapp', (text: string) => {
   cy.get('[class*="Badge"]').contains(text);
 });

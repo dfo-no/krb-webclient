@@ -24,18 +24,18 @@ interface IProps {
 export default function EditProductVariant({ variant }: IProps): ReactElement {
   const { t } = useTranslation();
   const { control } = useFormContext<IRequirementAnswer>();
-  const nonPreferredDeductibleAmount = useWatch({
+  const awardCriteriaDiscount = useWatch({
     name: 'question.config.pointsNonPrefered',
     control,
   });
 
-  const unConfirmedDeductibleAmount = useWatch({
+  const awardCriteriaUnConfirmedDiscount = useWatch({
     name: 'question.config.pointsUnconfirmed',
     control,
   });
 
   const isAwardCriteria = () => {
-    return nonPreferredDeductibleAmount > 0 || unConfirmedDeductibleAmount > 0;
+    return awardCriteriaDiscount > 0 || awardCriteriaUnConfirmedDiscount > 0;
   };
 
   const questionsTypeCodeList = () => {

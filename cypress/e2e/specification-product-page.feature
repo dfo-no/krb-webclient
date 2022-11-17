@@ -32,10 +32,10 @@ Feature: Spesifikasjonsprodukt
     Scenario: Skal vise riktig merkelapp
       Given Jeg åpner spesifikasjon "specification_all_answer_typer.pdf"
       When Jeg redigerer produkt "Bekreftelse"
-      And Jeg klkker på "Velg variant" til produktkrav "Bekreftelse som krav"
-      Then Jeg ser en "Absolutt krav" merkelapp
+      And Jeg klikker på "Velg variant" til produktkrav "Bekreftelse som krav"
+      Then Jeg ser en "Absolutt krav"-merkelapp
       When Jeg klikker på checkbox
-      Then Jeg ser en "Tildelingskriterie" merkelapp
+      Then Jeg ser en "Tildelingskriterie"-merkelapp
       And Jeg klikker på "Avbryt" knappen
-      When Jeg klkker på "Velg variant" til produktkrav "Bekreftelse som informasjon"
-      Then Jeg ser en "Informasjon" merkelapp
+      When Jeg klikker på "Velg variant" til produktkrav "Bekreftelse som informasjon"
+      Then Jeg ser en "Informasjon"-merkelapp
