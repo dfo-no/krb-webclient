@@ -19,6 +19,7 @@
 
   .active {
     padding: var(--small-gap);
+    background-color: var(--white-color);
   }
 
   .selected {
@@ -44,12 +45,24 @@
     flex-direction: row;
     margin-top: var(--small-gap);
 
+    button {
+      padding: var(--tiny-gap) var(--small-gap);
+      justify-content: center;
+      border: 0.1rem solid var(--primary-light-color);
+      cursor: pointer;
+      white-space: nowrap;
+      font-size: var(--small-fontsize);
+      color: var(--primary-color);
+    }
+
     .cancel {
       margin-left: auto;
     }
 
     .save {
       margin-left: var(--small-gap);
+      background-color: var(--primary-light-color);
+      color: var(--white-color);
     }
   }
 }

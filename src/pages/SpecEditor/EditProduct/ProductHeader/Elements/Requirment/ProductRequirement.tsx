@@ -4,7 +4,7 @@ import CheckIcon from '@mui/icons-material/Check';
 import DeleteIcon from '@mui/icons-material/Delete';
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import React, { ReactElement, useEffect, useState } from 'react';
-import { Box, Button, Typography } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 import { FormProvider, useForm, useWatch } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
@@ -149,17 +149,13 @@ export default function ProductRequirement({
               />
             )}
             <Box className={css.formButtons}>
-              <Button
-                variant="cancel"
-                onClick={onCancel}
-                className={css.cancel}
-              >
+              <button onClick={onCancel} className={css.cancel}>
                 {t('common.Cancel')}
-              </Button>
+              </button>
               {activeVariant.questions.length > 0 && (
-                <Button variant="save" type="submit" className={css.save}>
-                  {t('Save and chose requirement')}
-                </Button>
+                <button type="submit" className={css.save}>
+                  {t('Save requirement')}
+                </button>
               )}
             </Box>
           </Box>

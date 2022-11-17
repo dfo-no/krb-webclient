@@ -40,7 +40,7 @@ const QuestionSpecificationCheckbox = (): ReactElement => {
       <div onClick={onCheckboxClick}>
         <DFOCheckbox checked={preferredScore} />
         <Typography className={css.CheckboxLabel} variant={'smBold'}>
-          {t('Give score for non-preferred alternative')}
+          {t('Is award requirement')}
         </Typography>
       </div>
       {preferredScore && (

@@ -9,12 +9,12 @@ import Sort from '@mui/icons-material/Sort';
 
 import css from './EditProductVariant.module.scss';
 import ProductQuestionList from '../QuestionList/ProductQuestionList';
-import theme from '../../../../../../theme';
 import { IRequirement } from '../../../../../../Nexus/entities/IRequirement';
 import { IVariant } from '../../../../../../Nexus/entities/IVariant';
 import { VariantType } from '../../../../../../Nexus/enums';
 import Badge from '../../../../../../components/UI/Badge/Badge';
 import { IRequirementAnswer } from '../../../../../../Nexus/entities/IRequirementAnswer';
+import GuidanceText from '../../../../../../components/UI/GuidanceText/GuidanceText';
 
 interface IProps {
   requirement: IRequirement;
@@ -87,27 +87,15 @@ export default function EditProductVariant({ variant }: IProps): ReactElement {
   return (
     <Box className={css.EditProductVariant}>
       <Box className={css.titleRow}>
-        <Typography variant={'lg'} className={css.title}>
-          {variant.description}
-        </Typography>
+        <Typography variant={'mdBold'}>{variant.description}</Typography>
         {renderBadge()}
       </Box>
-      <Typography variant={'smBold'} color={theme.palette.primary.main}>
-        {t('Requirement text')}
-      </Typography>
-      <Typography className={css.infoText}>
-        {variant.requirementText ? variant.requirementText : '-'}
-      </Typography>
-      {variant.instruction && (
-        <>
-          <Typography variant={'smBold'} color={theme.palette.primary.main}>
-            {t('Instruction')}
-          </Typography>
-          <Typography className={css.infoText}>
-            {variant.instruction}
-          </Typography>
-        </>
+      {variant.requirementText && (
+        <Typography className={css.infoText}>
+          {variant.requirementText}
+        </Typography>
       )}
+      {variant.instruction && <GuidanceText text={variant.instruction} />}
       <ProductQuestionList variant={variant} />
     </Box>
   );
