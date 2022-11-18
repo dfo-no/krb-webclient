@@ -2,7 +2,6 @@ import classnames from 'classnames';
 import EditIcon from '@mui/icons-material/Edit';
 import CheckIcon from '@mui/icons-material/Check';
 import DeleteIcon from '@mui/icons-material/Delete';
-import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import React, { ReactElement, useEffect, useState } from 'react';
 import { Box, Typography } from '@mui/material';
 import { FormProvider, useForm, useWatch } from 'react-hook-form';
@@ -22,7 +21,7 @@ import ProductVariant from '../Variant/ProductVariant';
 import GeneralErrorMessage from '../../../../../../Form/GeneralErrorMessage';
 import ToolbarItem from '../../../../../../components/UI/Toolbar/ToolbarItem';
 import Toolbar from '../../../../../../components/UI/Toolbar/ToolBar';
-import Badge from '../../../../../../components/UI/Badge/Badge';
+import Badge, { BadgeType } from '../../../../../../components/UI/Badge/Badge';
 
 interface IProps {
   requirement: IRequirement;
@@ -197,8 +196,7 @@ export default function ProductRequirement({
             <Toolbar>
               {isInfo() && (
                 <Badge
-                  type={'information'}
-                  icon={<InfoOutlinedIcon />}
+                  type={BadgeType.Information}
                   displayText={t('Information')}
                 />
               )}

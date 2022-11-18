@@ -2,17 +2,14 @@ import React, { ReactElement } from 'react';
 import { Box, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { useFormContext, useWatch } from 'react-hook-form';
-import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
-import Lock from '@mui/icons-material/Lock';
 import Tune from '@mui/icons-material/Tune';
-import Sort from '@mui/icons-material/Sort';
 
 import css from './EditProductVariant.module.scss';
 import ProductQuestionList from '../QuestionList/ProductQuestionList';
 import { IRequirement } from '../../../../../../Nexus/entities/IRequirement';
 import { IVariant } from '../../../../../../Nexus/entities/IVariant';
 import { VariantType } from '../../../../../../Nexus/enums';
-import Badge from '../../../../../../components/UI/Badge/Badge';
+import Badge, { BadgeType } from '../../../../../../components/UI/Badge/Badge';
 import { IRequirementAnswer } from '../../../../../../Nexus/entities/IRequirementAnswer';
 import GuidanceText from '../../../../../../components/UI/GuidanceText/GuidanceText';
 
@@ -45,28 +42,17 @@ export default function EditProductVariant({ variant }: IProps): ReactElement {
   const renderBadge = () => {
     if (variant.type === VariantType.info) {
       return (
-        <Badge
-          type={'information'}
-          icon={<InfoOutlinedIcon />}
-          displayText={t('Information')}
-        />
+        <Badge type={BadgeType.Information} displayText={t('Information')} />
       );
     } else if (isAwardCriteria()) {
-      return (
-        <Badge
-          type={'award'}
-          icon={<Sort />}
-          displayText={t('Award criteria')}
-        />
-      );
+      return <Badge type={BadgeType.Award} displayText={t('Award criteria')} />;
     } else if (
       variant.type === VariantType.requirement &&
       questionsTypeCodeList().length === 0
     ) {
       return (
         <Badge
-          type={'requirement'}
-          icon={<Lock />}
+          type={BadgeType.Requirement}
           displayText={t('Mandatory requirement')}
         />
       );
@@ -76,7 +62,7 @@ export default function EditProductVariant({ variant }: IProps): ReactElement {
     ) {
       return (
         <Badge
-          type={'combinationRequirements'}
+          type={BadgeType.CombinationRequirements}
           icon={<Tune />}
           displayText={t('Combination requirements')}
         />
