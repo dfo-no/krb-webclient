@@ -204,12 +204,14 @@ export default function SpecificationOverview(): React.ReactElement {
             disablePadding={true}
             fontWeight={'semibold'}
           />
-          <ToolbarItem
-            primaryText={t('Create a new product')}
-            icon={<AddIcon />}
-            handleClick={open}
-            disabled={editingSpecification}
-          />
+          {specification.bank.products.length > 0 && (
+            <ToolbarItem
+              primaryText={t('Create a new product')}
+              icon={<AddIcon />}
+              handleClick={open}
+              disabled={editingSpecification}
+            />
+          )}
         </Toolbar>
         <ul aria-label="products">
           <li key={'generic'}>
