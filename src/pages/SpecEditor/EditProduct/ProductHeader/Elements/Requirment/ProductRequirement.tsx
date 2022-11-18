@@ -6,6 +6,7 @@ import React, { ReactElement, useEffect, useState } from 'react';
 import { Box, Typography } from '@mui/material';
 import { FormProvider, useForm, useWatch } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
+import { Button, Type, Variant } from '@dfo-no/components.button';
 
 import css from './ProductRequirement.module.scss';
 import { ISpecificationProduct } from '../../../../../../Nexus/entities/ISpecificationProduct';
@@ -147,16 +148,14 @@ export default function ProductRequirement({
                 variant={activeVariant}
               />
             )}
-            <Box className={css.formButtons}>
-              <button onClick={onCancel} className={css.cancel}>
-                {t('common.Cancel')}
-              </button>
+            <div className={css.formButtons}>
               {activeVariant.questions.length > 0 && (
-                <button type="submit" className={css.save}>
-                  {t('Save requirement')}
-                </button>
+                <Button type={Type.Submit}>{t('Save requirement')}</Button>
               )}
-            </Box>
+              <Button variant={Variant.Inverted} onClick={() => onCancel()}>
+                {t('common.Cancel')}
+              </Button>
+            </div>
           </Box>
         )}
       </Box>
