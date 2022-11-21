@@ -35,9 +35,12 @@ const QuestionSpecificationConfirmation = (): ReactElement => {
   return (
     <div className={css.QuestionFlex}>
       <div onClick={onCheckboxClick}>
-        <DFOCheckbox checked={preferredScore} />
+        <DFOCheckbox
+          checked={preferredScore}
+          _color={'var(--text-primary-color)'}
+        />
         <Typography className={css.CheckboxLabel} variant={'smBold'}>
-          {t('Give score for non-accepted alternative')}
+          {t('Is the requirement an award criteria')}
         </Typography>
       </div>
       {preferredScore && (
