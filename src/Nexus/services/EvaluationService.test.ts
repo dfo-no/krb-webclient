@@ -334,11 +334,11 @@ describe('EvaluationService', () => {
           id: 'f5d68f10-f6cc-11ec-b939-0242ac120002',
           title: 'Product 1 answer',
           description: '',
-          originProduct: specProduct1, // 70 weight
+          originProduct: specProduct1,
           price: 0,
           requirementAnswers: [
             {
-              ...specProduct1.requirementAnswers[0], // 70 weight
+              ...specProduct1.requirementAnswers[0],
               question: {
                 ...questionDate,
                 answer: {
@@ -348,7 +348,7 @@ describe('EvaluationService', () => {
               },
             },
             {
-              ...specProduct1.requirementAnswers[1], // 50 weight
+              ...specProduct1.requirementAnswers[1],
               question: {
                 ...questionCheckbox,
                 answer: {
@@ -363,11 +363,11 @@ describe('EvaluationService', () => {
           id: '78f788e4-f6ce-11ec-b939-0242ac120002',
           title: 'Product 2 answer',
           description: '',
-          originProduct: specProduct2, // 50 weight
+          originProduct: specProduct2,
           price: 0,
           requirementAnswers: [
             {
-              ...specProduct2.requirementAnswers[0], // 70 weight
+              ...specProduct2.requirementAnswers[0],
               question: {
                 ...questionCheckbox,
                 answer: {
@@ -381,7 +381,7 @@ describe('EvaluationService', () => {
       ],
       requirementAnswers: [
         {
-          ...specification.requirementAnswers[0], // 90 weight
+          ...specification.requirementAnswers[0],
           question: {
             ...questionSlider,
             answer: {
@@ -391,7 +391,7 @@ describe('EvaluationService', () => {
           },
         },
         {
-          ...specification.requirementAnswers[1], // 70 weight
+          ...specification.requirementAnswers[1],
           question: {
             ...questionDate,
             answer: {
@@ -401,7 +401,7 @@ describe('EvaluationService', () => {
           },
         },
         {
-          ...specification.requirementAnswers[2], // 50 weight
+          ...specification.requirementAnswers[2],
           question: {
             ...questionCheckbox,
             answer: {
