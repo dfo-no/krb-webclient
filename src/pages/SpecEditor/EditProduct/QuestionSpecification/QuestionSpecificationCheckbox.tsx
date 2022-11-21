@@ -35,8 +35,11 @@ const QuestionSpecificationCheckbox = (): ReactElement => {
 
   return (
     <div className={css.QuestionFlex}>
-      <Typography variant={'smBold'}>{t('Preferred alternative')}</Typography>
-      <YesNoSelection name={'question.config.preferedAlternative'} />
+      <YesNoSelection
+        name={'question.config.preferedAlternative'}
+        label={t('Preferred alternative')}
+        color={'var(--text-primary-color)'}
+      />
       <div onClick={onCheckboxClick}>
         <DFOCheckbox
           checked={preferredScore}

@@ -1,16 +1,17 @@
 import { Input, styled } from '@mui/material';
 
 const DFOTextarea = styled(Input)(({ theme }) => ({
-  width: '100%',
-  border: `0.2rem solid ${theme.palette.indigo.main}`,
+  width: '40%',
+  border: `0.2rem solid ${theme.palette.gray800.main}`,
   backgroundColor: theme.palette.white.main,
   paddingLeft: '1rem',
+  paddingRight: '1rem',
 
   '&:hover': {
-    border: `0.3rem solid ${theme.palette.indigo.main}`,
+    border: `0.3rem solid ${theme.palette.gray800.main}`,
   },
   '&.Mui-focused': {
-    border: `0.3rem solid ${theme.palette.indigo.main}`,
+    border: `0.3rem solid ${theme.palette.gray800.main}`,
   },
   '&.Mui-error': {
     border: `0.2rem solid ${theme.palette.errorRed.main}`,
