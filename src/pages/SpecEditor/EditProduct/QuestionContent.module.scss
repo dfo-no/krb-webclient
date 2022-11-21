@@ -52,13 +52,6 @@
     }
   }
 
-  .HorizontalContent {
-    display: flex;
-    flex-direction: row;
-    gap: var(--tiny-gap);
-    align-items: center;
-  }
-
   .TopMargin {
     margin-top: var(--small-gap);
   }

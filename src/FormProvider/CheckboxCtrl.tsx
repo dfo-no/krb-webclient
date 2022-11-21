@@ -11,12 +11,14 @@ interface IProps {
   className?: string;
   name: string;
   label?: string | number | ReactElement;
+  color?: string;
 }
 
 const CheckboxCtrl = ({
   className,
   name,
   label,
+  color,
 }: IProps): React.ReactElement => {
   const {
     formState: { errors },
@@ -29,14 +31,14 @@ const CheckboxCtrl = ({
           name={name}
           render={({ field }) => (
             <>
-              <DFOCheckbox {...field} checked={field.value} />
+              <DFOCheckbox {...field} checked={field.value} _color={color} />
               {label && (
                 <FormLabel
                   id={name}
                   onClick={() => field.onChange(!field.value)}
                   sx={{ cursor: 'pointer', paddingLeft: 1 }}
                 >
-                  <Typography variant={'sm'} color={theme.palette.black.main}>
+                  <Typography color={theme.palette.gray800.main}>
                     {label}
                   </Typography>
                 </FormLabel>

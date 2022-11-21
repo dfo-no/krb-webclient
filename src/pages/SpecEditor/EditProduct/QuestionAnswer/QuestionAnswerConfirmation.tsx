@@ -11,10 +11,11 @@ const QuestionAnswerConfirmation = (): ReactElement => {
   return (
     <div className={css.QuestionFlex}>
       <Typography variant={'smBold'}>{t('Answer')}</Typography>
-      <div className={css.HorizontalContent}>
-        <CheckboxCtrl name={'question.answer.value'} />
-        <Typography>{t('Confirm')}</Typography>
-      </div>
+      <CheckboxCtrl
+        label={t('Confirm')}
+        name={'question.answer.value'}
+        color={'var(--text-primary-color)'}
+      />
     </div>
   );
 };
