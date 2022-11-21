@@ -10,7 +10,7 @@ import { ModelType, QuestionVariant, VariantType } from '../enums';
 import { Parentable } from '../../models/Parentable';
 
 describe('EvaluationService', () => {
-  it('Can get EvauateSlider', async () => {
+  it('Can get EvaluateSlider', async () => {
     const questionSlider: ISliderQuestion = {
       type: QuestionVariant.Q_SLIDER,
       config: {
