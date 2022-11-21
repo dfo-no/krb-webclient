@@ -108,13 +108,6 @@ export default class SpecificationService extends BaseService {
     return this.store.addProductAnswer(answer, productId);
   }
 
-  async editProductAnswer(
-    answer: IRequirementAnswer,
-    productId: string
-  ): Promise<ISpecification> {
-    return this.store.editProductAnswer(answer, productId);
-  }
-
   async deleteProductAnswer(
     answer: IRequirementAnswer,
     productId: string
@@ -124,10 +117,6 @@ export default class SpecificationService extends BaseService {
 
   async addAnswer(answer: IRequirementAnswer): Promise<ISpecification> {
     return this.store.addAnswer(answer);
-  }
-
-  async editAnswer(answer: IRequirementAnswer): Promise<ISpecification> {
-    return this.store.editAnswer(answer);
   }
 
   async deleteAnswer(answer: IRequirementAnswer): Promise<ISpecification> {
