@@ -3,7 +3,6 @@ import FormControl from '@mui/material/FormControl';
 import FormHelperText from '@mui/material/FormHelperText';
 import Slider from '@mui/material/Slider';
 import Stack from '@mui/material/Stack';
-import Typography from '@mui/material/Typography';
 import { get } from 'lodash';
 import React from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
@@ -15,10 +14,11 @@ interface IProps {
   min: number;
   max: number;
   step: number;
-  marks: IMark[];
-  unit?: string;
+  marks?: IMark[];
   label?: string;
+  text?: string;
   showValue?: boolean;
+  className?: string;
 }
 
 const SliderCtrl = ({
@@ -27,28 +27,20 @@ const SliderCtrl = ({
   max,
   step,
   marks,
-  unit,
   label,
+  text,
   showValue = true,
+  className,
 }: IProps): React.ReactElement => {
   const {
     formState: { errors },
   } = useFormContext();
 
   return (
-    <Box>
+    <Box className={className}>
+      {label && <span>{label}</span>}
       <FormControl fullWidth error={!!get(errors, name)}>
         <Stack spacing={2} direction="row" sx={{ mb: 1 }} alignItems="center">
-          {label && (
-            <Typography variant="smBold" sx={{ whiteSpace: 'nowrap' }}>
-              {label}
-            </Typography>
-          )}
-          {unit && (
-            <Typography variant="sm" sx={{ whiteSpace: 'nowrap' }}>
-              {min} {unit}
-            </Typography>
-          )}
           <Controller
             name={name}
             defaultValue={min}
@@ -67,14 +59,15 @@ const SliderCtrl = ({
                 marks={marks}
                 value={+field.value}
                 id={name}
+                sx={{
+                  '& .MuiSlider-rail': {
+                    color: 'var(--line-color-dark)',
+                  },
+                }}
               />
             )}
           />
-          {unit && (
-            <Typography variant="sm" sx={{ whiteSpace: 'nowrap' }}>
-              {max} {unit}
-            </Typography>
-          )}
+          {text && <span>{text}</span>}
         </Stack>
         <FormHelperText id={name}>
           {get(errors, name)?.message ?? ''}

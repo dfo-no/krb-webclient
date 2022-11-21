@@ -18,9 +18,7 @@ export default function ProductNeed({
 }: IProps): React.ReactElement {
   return (
     <div className={css.Needs} data-cy={'product-need'}>
-      <div className={css.Need}>
-        <Typography variant="mdBold">{need.title}</Typography>
-      </div>
+      <Typography variant="mdBold">{need.title}</Typography>
       {need.requirements.map((req) => {
         return (
           <ProductRequirement
