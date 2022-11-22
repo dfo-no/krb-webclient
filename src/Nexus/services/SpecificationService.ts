@@ -10,7 +10,7 @@ import { IRequirement } from '../entities/IRequirement';
 import { IRequirementAnswer } from '../entities/IRequirementAnswer';
 import { ISpecification } from '../entities/ISpecification';
 import { ISpecificationProduct } from '../entities/ISpecificationProduct';
-import { ModelType, QuestionVariant, Weighting } from '../enums';
+import { ModelType, QuestionVariant } from '../enums';
 import { QuestionType } from '../entities/QuestionType';
 import { IProduct } from '../entities/IProduct';
 
@@ -45,7 +45,6 @@ export default class SpecificationService extends BaseService {
       title: '',
       description: '',
       originProduct: product ?? ProductService.defaultProduct(),
-      weight: Weighting.MEDIUM,
       amount: 1,
       requirements: [],
       requirementAnswers: [],
@@ -65,7 +64,6 @@ export default class SpecificationService extends BaseService {
     return {
       id: '',
       questionId: '',
-      weight: Weighting.MEDIUM,
       variantId: variantId ?? '',
       question: question ?? questionService.getQuestion(QuestionVariant.Q_TEXT),
       type: ModelType.requirementAnswer,
@@ -108,13 +106,6 @@ export default class SpecificationService extends BaseService {
     return this.store.addProductAnswer(answer, productId);
   }
 
-  async editProductAnswer(
-    answer: IRequirementAnswer,
-    productId: string
-  ): Promise<ISpecification> {
-    return this.store.editProductAnswer(answer, productId);
-  }
-
   async deleteProductAnswer(
     answer: IRequirementAnswer,
     productId: string
@@ -124,10 +115,6 @@ export default class SpecificationService extends BaseService {
 
   async addAnswer(answer: IRequirementAnswer): Promise<ISpecification> {
     return this.store.addAnswer(answer);
-  }
-
-  async editAnswer(answer: IRequirementAnswer): Promise<ISpecification> {
-    return this.store.editAnswer(answer);
   }
 
   async deleteAnswer(answer: IRequirementAnswer): Promise<ISpecification> {
