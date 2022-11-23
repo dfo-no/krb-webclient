@@ -1,16 +1,12 @@
 .EditProductVariant {
   display: flex;
   flex-direction: column;
+  gap: var(--tiny-gap);
 
   .titleRow {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-
-    .title {
-      align-self: center;
-      margin-left: var(--from-checkbox-gap);
-    }
   }
 
   .infoText {

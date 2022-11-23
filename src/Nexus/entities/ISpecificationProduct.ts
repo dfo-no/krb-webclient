@@ -11,7 +11,6 @@ export interface ISpecificationProduct extends IBaseModel {
   title: string;
   description: string;
   originProduct: IProduct;
-  weight: number;
   amount: number;
   requirements: string[];
   requirementAnswers: IRequirementAnswer[];
@@ -24,7 +23,6 @@ export const SpecificationProductSchema = BaseModelSchema.keys({
   description: CustomJoi.validateOptionalText(),
   amount: CustomJoi.validateAmount(),
   requirements: CustomJoi.validateIdArray(),
-  weight: CustomJoi.validateWeight(),
   requirementAnswers: CustomJoi.validateUniqueArray(RequirementAnswerSchema),
   type: CustomJoi.validateType(ModelType.specificationProduct),
   unit: CustomJoi.validateOptionalTextNotRequired(),
