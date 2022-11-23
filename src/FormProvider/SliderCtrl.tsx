@@ -63,6 +63,10 @@ const SliderCtrl = ({
                   '& .MuiSlider-rail': {
                     color: 'var(--line-color-dark)',
                   },
+                  '& .MuiSlider-thumb': {
+                    width: '1.3rem',
+                    height: '1.3rem',
+                  },
                 }}
               />
             )}
