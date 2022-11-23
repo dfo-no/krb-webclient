@@ -12,6 +12,7 @@ import {
   ReactPlugin,
 } from '@microsoft/applicationinsights-react-js';
 import { createBrowserHistory } from 'history';
+import { Theme } from '@dfo-no/components.design.theme';
 
 import AlertList from './components/Alert/AlertList';
 import EvaluationModule from './pages/Evaluation/EvaluationModule';
@@ -94,20 +95,22 @@ function App(): ReactElement {
 
   return (
     <div>
-      <MsalProvider instance={msalInstance}>
-        <CssBaseline />
-        <AlertList />
-        <HeaderContainer.Provider>
-          <div className={styles.App}>
-            <Header />
-            <div className={styles.Content}>
-              <Breadcrumbs />
-              {renderContent()}
+      <Theme>
+        <MsalProvider instance={msalInstance}>
+          <CssBaseline />
+          <AlertList />
+          <HeaderContainer.Provider>
+            <div className={styles.App}>
+              <Header />
+              <div className={styles.Content}>
+                <Breadcrumbs />
+                {renderContent()}
+              </div>
+              {isHomePage && <Footer />}
             </div>
-            {isHomePage && <Footer />}
-          </div>
-        </HeaderContainer.Provider>
-      </MsalProvider>
+          </HeaderContainer.Provider>
+        </MsalProvider>
+      </Theme>
     </div>
   );
 }

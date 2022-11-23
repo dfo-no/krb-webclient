@@ -8,11 +8,8 @@ export default class EvaluationService {
   private static calculatePoints(
     requirementAnswer: IRequirementAnswer
   ): IPointsCalculation {
-    const weight = requirementAnswer.weight / 100;
     const points = requirementAnswer.question.answer.point;
-    return !!points
-      ? { total: points * weight, max: 100 * weight }
-      : { total: 0, max: 100 * weight };
+    return !!points ? { total: points, max: 100 } : { total: 0, max: 100 };
   }
 
   async evaluateAll(responses: IResponse[]): Promise<IEvaluatedResponse[]> {
@@ -32,8 +29,6 @@ export default class EvaluationService {
       total += calc.total;
       max += calc.max;
     });
-    total *= product.originProduct.weight / 100;
-    max *= product.originProduct.weight / 100;
     return max === 0 ? { total: 0, max: 0 } : { total, max };
   }
 
