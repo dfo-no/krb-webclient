@@ -1,0 +1,15 @@
+.GuidanceText {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: var(--tiny-gap);
+  background-color: var(--light-gray-color);
+  border: 0.1rem solid var(--gray-color);
+  font-size: var(--small-gap);
+  padding: var(--tiny-gap);
+
+  svg {
+    font-size: var(--normal-fontsize);
+    color: var(--dark-gray-color);
+  }
+}

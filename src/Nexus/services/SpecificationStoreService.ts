@@ -97,25 +97,6 @@ export default class SpecificationStoreService {
     return this.specification;
   }
 
-  async editProductAnswer(
-    answer: IRequirementAnswer,
-    productId: string
-  ): Promise<ISpecification> {
-    const index = this.specification.products.findIndex(
-      (product) => product.id === productId
-    );
-    const answerIndex = this.specification.products[
-      index
-    ].requirementAnswers.findIndex(
-      (element) => element.variantId === answer.variantId
-    );
-    this.specification = produce(this.specification, (draft) => {
-      draft.products[index].requirementAnswers[answerIndex] = answer;
-    });
-    await this.storeSpecification();
-    return this.specification;
-  }
-
   async deleteProductAnswer(
     answer: IRequirementAnswer,
     productId: string
@@ -143,17 +124,6 @@ export default class SpecificationStoreService {
     this.specification = produce(this.specification, (draft) => {
       draft.requirementAnswers.push(answer);
       draft.requirements.push(answer.requirement.id);
-    });
-    await this.storeSpecification();
-    return this.specification;
-  }
-
-  async editAnswer(answer: IRequirementAnswer): Promise<ISpecification> {
-    const answerIndex = this.specification.requirementAnswers.findIndex(
-      (element) => element.variantId === answer.variantId
-    );
-    this.specification = produce(this.specification, (draft) => {
-      draft.requirementAnswers[answerIndex] = answer;
     });
     await this.storeSpecification();
     return this.specification;

@@ -83,20 +83,6 @@ describe('SpecificationService', () => {
     expect(addResult.products[0].requirements.length).toBe(1);
   });
 
-  it('editProductAnswer updates a requirement answer on a specification product', async () => {
-    await specificationService.setSpecification(specification);
-    await specificationService.addSpecificationProduct(product);
-    await specificationService.addProductAnswer(answer, prodId);
-    const newAnswer = { ...answer, weight: 2022 };
-    const editResult = await specificationService.editProductAnswer(
-      newAnswer,
-      prodId
-    );
-    const getResult = await specificationService.getSpecification(specId);
-    expect(getResult.products[0].requirementAnswers[0].weight).toEqual(2022);
-    expect(editResult.products[0].requirementAnswers[0].weight).toEqual(2022);
-  });
-
   it('deleteProductAnswer updates a requirement answer on a specification product', async () => {
     await specificationService.setSpecification(specification);
     await specificationService.addSpecificationProduct(product);
@@ -120,16 +106,6 @@ describe('SpecificationService', () => {
     expect(addResult.requirementAnswers.length).toBe(1);
     expect(getResult.requirements.length).toBe(1);
     expect(addResult.requirements.length).toBe(1);
-  });
-
-  it('editAnswer updates a requirement answer on the specification', async () => {
-    await specificationService.setSpecification(specification);
-    await specificationService.addAnswer(answer);
-    const newAnswer = { ...answer, weight: 2022 };
-    const editResult = await specificationService.editAnswer(newAnswer);
-    const getResult = await specificationService.getSpecification(specId);
-    expect(getResult.requirementAnswers[0].weight).toEqual(2022);
-    expect(editResult.requirementAnswers[0].weight).toEqual(2022);
   });
 
   it('deleteAnswer updates a requirement answer on the specification', async () => {

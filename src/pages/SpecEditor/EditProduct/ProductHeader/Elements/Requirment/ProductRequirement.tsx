@@ -2,11 +2,11 @@ import classnames from 'classnames';
 import EditIcon from '@mui/icons-material/Edit';
 import CheckIcon from '@mui/icons-material/Check';
 import DeleteIcon from '@mui/icons-material/Delete';
-import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import React, { ReactElement, useEffect, useState } from 'react';
-import { Box, Button, Typography } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 import { FormProvider, useForm, useWatch } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
+import { Button, Type, Variant } from '@dfo-no/components.button';
 
 import css from './ProductRequirement.module.scss';
 import { ISpecificationProduct } from '../../../../../../Nexus/entities/ISpecificationProduct';
@@ -22,7 +22,7 @@ import ProductVariant from '../Variant/ProductVariant';
 import GeneralErrorMessage from '../../../../../../Form/GeneralErrorMessage';
 import ToolbarItem from '../../../../../../components/UI/Toolbar/ToolbarItem';
 import Toolbar from '../../../../../../components/UI/Toolbar/ToolBar';
-import Badge from '../../../../../../components/UI/Badge/Badge';
+import Badge, { BadgeType } from '../../../../../../components/UI/Badge/Badge';
 
 interface IProps {
   requirement: IRequirement;
@@ -148,20 +148,14 @@ export default function ProductRequirement({
                 variant={activeVariant}
               />
             )}
-            <Box className={css.formButtons}>
-              <Button
-                variant="cancel"
-                onClick={onCancel}
-                className={css.cancel}
-              >
+            <div className={css.formButtons}>
+              {activeVariant.questions.length > 0 && (
+                <Button type={Type.Submit}>{t('Save requirement')}</Button>
+              )}
+              <Button variant={Variant.Inverted} onClick={() => onCancel()}>
                 {t('common.Cancel')}
               </Button>
-              {activeVariant.questions.length > 0 && (
-                <Button variant="save" type="submit" className={css.save}>
-                  {t('Save and chose requirement')}
-                </Button>
-              )}
-            </Box>
+            </div>
           </Box>
         )}
       </Box>
@@ -201,8 +195,7 @@ export default function ProductRequirement({
             <Toolbar>
               {isInfo() && (
                 <Badge
-                  type={'information'}
-                  icon={<InfoOutlinedIcon />}
+                  type={BadgeType.Information}
                   displayText={t('Information')}
                 />
               )}
