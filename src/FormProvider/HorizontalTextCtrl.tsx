@@ -1,4 +1,4 @@
-import { FormControl, FormLabel } from '@mui/material';
+import { FormControl, FormLabel, InputAdornment } from '@mui/material';
 import { get } from 'lodash';
 import React from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
@@ -13,6 +13,7 @@ interface IProps {
   type?: string;
   size?: string;
   autoFocus?: boolean;
+  adornment?: string;
 }
 
 const HorizontalTextCtrl = ({
@@ -23,6 +24,7 @@ const HorizontalTextCtrl = ({
   type = 'text',
   size = '',
   autoFocus,
+  adornment,
 }: IProps): React.ReactElement => {
   const {
     formState: { errors },
@@ -44,6 +46,9 @@ const HorizontalTextCtrl = ({
               _color={'var(--text-primary-color)'}
               placeholder={placeholder}
               type={type}
+              endAdornment={
+                <InputAdornment position="end">{adornment}</InputAdornment>
+              }
               onWheel={(e) => (e.target as HTMLElement).blur()}
               error={!!get(errors, name)}
               disableUnderline

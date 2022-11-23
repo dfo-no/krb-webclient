@@ -78,6 +78,7 @@ const QuestionSpecificationSlider = ({ item }: IProps): ReactElement => {
         label={t('From')}
         placeholder={t('Minimum')}
         type={'number'}
+        adornment={item.config.unit}
       />
       <HorizontalTextCtrl
         className={css.QuestionSlider__textCtrl}
@@ -92,6 +93,7 @@ const QuestionSpecificationSlider = ({ item }: IProps): ReactElement => {
         label={t('To')}
         placeholder={t('Maximum')}
         type={'number'}
+        adornment={item.config.unit}
       />
       <Typography variant={'sm'}>
         {t('Minimum')}: {item.config.min}

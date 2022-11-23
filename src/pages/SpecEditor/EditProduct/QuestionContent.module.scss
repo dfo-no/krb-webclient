@@ -30,6 +30,7 @@
 }
 
 .QuestionSlider {
+  width: 70%;
   display: grid;
   grid-template-columns: 6fr 4fr 6fr;
   gap: var(--small-gap);
