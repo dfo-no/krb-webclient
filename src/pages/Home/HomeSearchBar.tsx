@@ -48,6 +48,11 @@ const HomeSearchBar = ({
     <Autocomplete
       className={classes.autocomplete}
       options={displayList}
+      renderOption={(props, option) => (
+        <li {...props} key={option.value}>
+          {option.label}
+        </li>
+      )}
       disablePortal={true}
       onChange={(event, newValue) => onValueSelected(newValue)}
       isOptionEqualToValue={(option, value) => option.label === value.label}

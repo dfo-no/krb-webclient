@@ -91,11 +91,13 @@ export default function PrefilledResponseOverview(): ReactElement {
             disablePadding={true}
             fontWeight={'semibold'}
           />
-          <ToolbarItem
-            primaryText={t('Create a new product')}
-            icon={<AddIcon />}
-            handleClick={createPressed}
-          />
+          {prefilledResponse.bank.products.length > 0 && (
+            <ToolbarItem
+              primaryText={t('Create a new product')}
+              icon={<AddIcon />}
+              handleClick={createPressed}
+            />
+          )}
         </Toolbar>
         <ul aria-label="general-products">
           <li className={css.Active} key={'generic'}>
