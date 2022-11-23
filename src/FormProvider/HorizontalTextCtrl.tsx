@@ -8,6 +8,7 @@ import DFOInput from '../components/DFOTextField/DFOTextField';
 interface IProps {
   className?: string;
   name: string;
+  label?: string;
   placeholder: string;
   type?: string;
   size?: string;
@@ -17,6 +18,7 @@ interface IProps {
 const HorizontalTextCtrl = ({
   className,
   name,
+  label,
   placeholder = '',
   type = 'text',
   size = '',
@@ -35,16 +37,20 @@ const HorizontalTextCtrl = ({
       <Controller
         name={name}
         render={({ field }) => (
-          <DFOInput
-            {...field}
-            placeholder={placeholder}
-            type={type}
-            onWheel={(e) => (e.target as HTMLElement).blur()}
-            error={!!get(errors, name)}
-            disableUnderline
-            sx={size === 'small' ? { height: 26 } : { height: 45 }}
-            autoFocus={autoFocus}
-          />
+          <>
+            {label && <span aria-label={'label'}>{label}</span>}
+            <DFOInput
+              {...field}
+              _color={'var(--text-primary-color)'}
+              placeholder={placeholder}
+              type={type}
+              onWheel={(e) => (e.target as HTMLElement).blur()}
+              error={!!get(errors, name)}
+              disableUnderline
+              sx={size === 'small' ? { height: 26 } : { height: 45 }}
+              autoFocus={autoFocus}
+            />
+          </>
         )}
       />
       {!!get(errors, name) && (

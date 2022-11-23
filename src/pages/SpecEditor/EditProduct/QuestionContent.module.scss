@@ -17,11 +17,6 @@
     justify-content: center;
   }
 
-  .CenteredText {
-    align-self: center;
-    text-align: center;
-  }
-
   .Delete {
     align-self: center;
     margin-left: var(--tiny-gap);
@@ -31,6 +26,19 @@
   .Unit {
     align-self: center;
     margin-left: var(--tiny-gap);
+  }
+}
+
+.QuestionSlider {
+  display: grid;
+  grid-template-columns: 6fr 4fr 6fr;
+  gap: var(--small-gap);
+
+  &__textCtrl {
+    span[aria-label='label'] {
+      margin-bottom: var(--tiny-gap);
+      font-weight: var(--font-weight-semibold);
+    }
   }
 }
 
