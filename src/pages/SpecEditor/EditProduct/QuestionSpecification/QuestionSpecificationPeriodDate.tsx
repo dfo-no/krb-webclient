@@ -98,8 +98,8 @@ const QuestionSpecificationPeriodDate = ({ item }: IProps): ReactElement => {
 
   return (
     <>
-      <div className={css.QuestionDatePeriod}>
-        <div className={css.QuestionDatePeriod__dateContainer}>
+      <div className={css.QuestionDateAndTimePeriod}>
+        <div className={css.QuestionDateAndTimePeriod__datetimeContainer}>
           <DateCtrl
             label={t('From')}
             name={'question.config.fromBoundary'}

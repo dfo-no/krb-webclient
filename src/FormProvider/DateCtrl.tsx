@@ -56,8 +56,10 @@ const DateCtrl = ({
       <Controller
         name={name}
         render={({ field }) => (
-          <div className={css.FormProvider__DateCtrl}>
-            <span className={css.FormProvider__DateCtrl__label}>{label}</span>
+          <div className={css.FormProvider__DateAndTimeCtrl}>
+            <span className={css.FormProvider__DateAndTimeCtrl__label}>
+              {label}
+            </span>
             <DatePicker
               {...field}
               mask={maskMap[i18n.language]}

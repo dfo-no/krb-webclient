@@ -17,7 +17,7 @@ const QuestionAnswerPeriodDate = ({ item }: IProps): ReactElement => {
   const toDateLabel = t('To');
 
   return (
-    <div className={css.QuestionDate}>
+    <div className={css.QuestionDateAndTime}>
       <DateCtrl
         label={fromDateLabel}
         name={'question.answer.fromDate'}

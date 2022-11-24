@@ -8,12 +8,14 @@ import { useTranslation } from 'react-i18next';
 
 import DateUtils from '../common/DateUtils';
 import DFOPickerField from '../components/DFOPickerField/DFOPickerField';
+import css from './FormProvider.module.scss';
 
 interface IProps {
   name: string;
   label?: string;
   minTime?: string;
   maxTime?: string;
+  color?: string;
 }
 
 const TimeCtrl = ({
@@ -21,6 +23,7 @@ const TimeCtrl = ({
   label,
   minTime,
   maxTime,
+  color,
 }: IProps): React.ReactElement => {
   const {
     formState: { errors },
@@ -52,21 +55,26 @@ const TimeCtrl = ({
       <Controller
         name={name}
         render={({ field }) => (
-          <TimePicker
-            {...field}
-            label={label}
-            mask={maskMap[i18n.language]}
-            minTime={min}
-            maxTime={max}
-            onChange={(e) => field.onChange(getDate(e))}
-            renderInput={(params) => (
-              <DFOPickerField
-                {...params}
-                error={!!get(errors, name)}
-                helperText={get(errors, name)?.message ?? ''}
-              />
-            )}
-          />
+          <div className={css.FormProvider__DateAndTimeCtrl}>
+            <span className={css.FormProvider__DateAndTimeCtrl__label}>
+              {label}
+            </span>
+            <TimePicker
+              {...field}
+              mask={maskMap[i18n.language]}
+              minTime={min}
+              maxTime={max}
+              onChange={(e) => field.onChange(getDate(e))}
+              renderInput={(params) => (
+                <DFOPickerField
+                  _color={color}
+                  {...params}
+                  error={!!get(errors, name)}
+                  helperText={get(errors, name)?.message ?? ''}
+                />
+              )}
+            />
+          </div>
         )}
       />
     </LocalizationProvider>

@@ -104,19 +104,19 @@
   }
 }
 
-.QuestionDate {
+.QuestionDateAndTime {
   display: flex;
   gap: var(--normal-gap);
 }
 
-.QuestionDatePeriod {
+.QuestionDateAndTimePeriod {
   display: flex;
   flex-direction: column;
   gap: var(--normal-gap);
 
-  &__dateContainer {
+  &__datetimeContainer {
     display: flex;
     gap: var(--small-gap);
-    max-width: 70%;
+    max-width: 50%;
   }
 }
