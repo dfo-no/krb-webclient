@@ -40,7 +40,13 @@ const SliderCtrl = ({
     <Box className={className}>
       {label && <span>{label}</span>}
       <FormControl fullWidth error={!!get(errors, name)}>
-        <Stack spacing={2} direction="row" sx={{ mb: 1 }} alignItems="center">
+        <Stack
+          width={'50%'}
+          spacing={2}
+          direction="row"
+          sx={{ mb: 1 }}
+          alignItems="center"
+        >
           <Controller
             name={name}
             defaultValue={min}
