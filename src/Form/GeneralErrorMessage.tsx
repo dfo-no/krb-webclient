@@ -1,13 +1,13 @@
-import { FieldErrors } from 'react-hook-form';
+import { FieldErrors, FieldValues } from 'react-hook-form';
 import React from 'react';
 import Alert from '@mui/material/Alert';
 import { Typography } from '@mui/material/';
 import { useTranslation } from 'react-i18next';
 
-type Props<T> = {
+type Props<T extends FieldValues> = {
   errors: FieldErrors<T>;
 };
-export default function GeneralErrorMessage<T>({
+export default function GeneralErrorMessage<T extends FieldValues>({
   errors,
 }: Props<T>): React.ReactElement {
   const { t } = useTranslation();
