@@ -1,6 +1,6 @@
 import Alert from '@mui/material/Alert';
 import React from 'react';
-import { FieldError, FieldErrors } from 'react-hook-form';
+import { FieldError, FieldErrors, FieldValues } from 'react-hook-form';
 
 /*
  * Test class used to show errormessages under development
@@ -14,10 +14,10 @@ function isFieldError(object: unknown): object is FieldError {
   );
 }
 
-type ErrorSummaryProps<T> = {
+type ErrorSummaryProps<T extends FieldValues> = {
   errors: FieldErrors<T>;
 };
-export default function ErrorSummary<T>({
+export default function ErrorSummary<T extends FieldValues>({
   errors,
 }: ErrorSummaryProps<T>): React.ReactElement | null {
   if (process.env.NODE_ENV !== 'development') {
