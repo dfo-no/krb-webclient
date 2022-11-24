@@ -134,17 +134,17 @@ const QuestionSpecificationSlider = ({ item }: IProps): ReactElement => {
           >
             {t('Evaluation')}
           </Typography>
-          {fields.map((scoreValue, idx) => {
+          {fields.map((scoreValue, index) => {
             return (
               <div
                 key={scoreValue.id}
                 className={classnames(css.QuestionGrid, css.FullRow)}
               >
-                {idx < 2 ? (
+                {index < 2 ? (
                   <Typography variant={'smBold'}>{scoreValue.value}</Typography>
                 ) : (
                   <HorizontalTextCtrl
-                    name={`question.config.scoreValues[${idx}].value`}
+                    name={`question.config.scoreValues[${index}].value`}
                     placeholder={t('Value')}
                     type={'number'}
                   />
@@ -153,15 +153,15 @@ const QuestionSpecificationSlider = ({ item }: IProps): ReactElement => {
                   <ArrowForwardIcon />
                 </div>
                 <HorizontalTextCtrl
-                  name={`question.config.scoreValues[${idx}].score`}
+                  name={`question.config.scoreValues[${index}].score`}
                   placeholder={t('Score')}
                   type={'number'}
                 />
-                {idx > 1 && (
+                {index > 1 && (
                   <div className={css.Delete}>
                     <FormIconButton
                       hoverColor={theme.palette.errorRed.main}
-                      onClick={() => remove(idx)}
+                      onClick={() => remove(index)}
                     >
                       <DeleteIcon />
                     </FormIconButton>
