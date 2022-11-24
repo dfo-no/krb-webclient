@@ -22,12 +22,12 @@ export default function EditProductVariant({ variant }: IProps): ReactElement {
   const { t } = useTranslation();
   const { control } = useFormContext<IRequirementAnswer>();
   const awardCriteriaDiscount = useWatch({
-    name: 'question.config.pointsNonPrefered',
+    name: 'question.config.discountNonPrefered',
     control,
   });
 
   const awardCriteriaUnConfirmedDiscount = useWatch({
-    name: 'question.config.pointsUnconfirmed',
+    name: 'question.config.discountUnconfirmed',
     control,
   });
 

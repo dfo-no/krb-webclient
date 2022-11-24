@@ -10,10 +10,6 @@ export default function EvaluationResult(): ReactElement {
   const { t } = useTranslation();
   const { evaluations } = useEvaluationState();
 
-  const getScoreAsPercentage = (points: number): number => {
-    return Math.round(points * 100);
-  };
-
   const getSupplierNameFor = (response: IEvaluatedResponse): string => {
     return response.supplier !== ''
       ? response.supplier
@@ -24,7 +20,7 @@ export default function EvaluationResult(): ReactElement {
     return evaluations.map((response: IEvaluatedResponse, index) => (
       <li key={index}>
         <div>{getSupplierNameFor(response)}</div>
-        <div>{getScoreAsPercentage(response.points)}%</div>
+        <div>response.discount</div>
       </li>
     ));
   };

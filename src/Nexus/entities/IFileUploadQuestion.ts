@@ -46,6 +46,6 @@ export const FileUploadWorkbenchInfoSchema = QuestionBaseSchema.keys({
 export const FileUploadAnswerSchema = FileUploadWorkbenchSchema.keys({
   answer: CustomJoi.object().keys({
     file: CustomJoi.array().items(CustomJoi.string()).required(),
-    point: CustomJoi.number().required(),
+    discount: CustomJoi.number().required(),
   }),
 });
