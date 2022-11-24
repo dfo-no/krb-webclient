@@ -103,3 +103,20 @@
     }
   }
 }
+
+.QuestionDate {
+  display: flex;
+  gap: var(--normal-gap);
+}
+
+.QuestionDatePeriod {
+  display: flex;
+  flex-direction: column;
+  gap: var(--normal-gap);
+
+  &__dateContainer {
+    display: flex;
+    gap: var(--small-gap);
+    max-width: 70%;
+  }
+}
