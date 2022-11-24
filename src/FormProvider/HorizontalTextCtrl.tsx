@@ -1,4 +1,4 @@
-import { FormControl, FormLabel } from '@mui/material';
+import { FormControl, FormLabel, InputAdornment } from '@mui/material';
 import { get } from 'lodash';
 import React from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
@@ -8,19 +8,23 @@ import DFOInput from '../components/DFOTextField/DFOTextField';
 interface IProps {
   className?: string;
   name: string;
+  label?: string;
   placeholder: string;
   type?: string;
   size?: string;
   autoFocus?: boolean;
+  adornment?: string;
 }
 
 const HorizontalTextCtrl = ({
   className,
   name,
+  label,
   placeholder = '',
   type = 'text',
   size = '',
   autoFocus,
+  adornment,
 }: IProps): React.ReactElement => {
   const {
     formState: { errors },
@@ -35,16 +39,23 @@ const HorizontalTextCtrl = ({
       <Controller
         name={name}
         render={({ field }) => (
-          <DFOInput
-            {...field}
-            placeholder={placeholder}
-            type={type}
-            onWheel={(e) => (e.target as HTMLElement).blur()}
-            error={!!get(errors, name)}
-            disableUnderline
-            sx={size === 'small' ? { height: 26 } : { height: 45 }}
-            autoFocus={autoFocus}
-          />
+          <>
+            {label && <span aria-label={'label'}>{label}</span>}
+            <DFOInput
+              {...field}
+              _color={'var(--text-primary-color)'}
+              placeholder={placeholder}
+              type={type}
+              endAdornment={
+                <InputAdornment position="end">{adornment}</InputAdornment>
+              }
+              onWheel={(e) => (e.target as HTMLElement).blur()}
+              error={!!get(errors, name)}
+              disableUnderline
+              sx={size === 'small' ? { height: 26 } : { height: 45 }}
+              autoFocus={autoFocus}
+            />
+          </>
         )}
       />
       {!!get(errors, name) && (

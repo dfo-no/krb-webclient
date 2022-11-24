@@ -16,6 +16,7 @@ interface IProps {
   name: string;
   options: IOption[];
   label?: string;
+  color?: string;
 }
 
 const RadioCtrl = ({
@@ -23,6 +24,7 @@ const RadioCtrl = ({
   name,
   options,
   label,
+  color,
 }: IProps): ReactElement => {
   const {
     formState: { errors },
@@ -34,7 +36,7 @@ const RadioCtrl = ({
         <FormControlLabel
           key={option.value}
           value={option.value}
-          control={<DFORadio />}
+          control={<DFORadio radioColor={color} />}
           label={
             <Typography variant={'sm'} color={theme.palette.black.main}>
               {option.label}
@@ -51,7 +53,15 @@ const RadioCtrl = ({
 
   return (
     <FormControl className={className} error={!!get(errors, name)}>
-      {label && <FormLabel id={name}>{label}</FormLabel>}
+      {label && (
+        <FormLabel id={name}>
+          {
+            <Typography variant={'smBold'} color={'var(--text-primary-color)'}>
+              {label}
+            </Typography>
+          }
+        </FormLabel>
+      )}
       <Controller
         name={name}
         defaultValue={options[0]}

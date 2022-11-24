@@ -14,7 +14,7 @@ const QuestionAnswerText = (): ReactElement => {
       <TextAreaCtrl
         name={'question.answer.text'}
         placeholder={t('Answer')}
-        rows={10}
+        rows={3}
       />
     </div>
   );
