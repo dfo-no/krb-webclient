@@ -6,8 +6,8 @@
   gap: var(--tiny-gap);
   padding: var(--nano-gap) var(--tiny-gap);
   width: fit-content;
-  align-self: center;
   align-items: center;
+  justify-content: center;
   border-radius: 0.5rem;
   border: 0.1rem solid var(--badge-border-color);
 

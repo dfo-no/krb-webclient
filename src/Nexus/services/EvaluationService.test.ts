@@ -6,11 +6,11 @@ import { IProduct } from '../entities/IProduct';
 import { IResponse } from '../entities/IResponse';
 import { ISliderQuestion } from '../entities/ISliderQuestion';
 import { ISpecification } from '../entities/ISpecification';
-import { ModelType, QuestionVariant, VariantType, Weighting } from '../enums';
+import { ModelType, QuestionVariant, VariantType } from '../enums';
 import { Parentable } from '../../models/Parentable';
 
 describe('EvaluationService', () => {
-  it('Can get EvauateSlider', async () => {
+  it('Can get EvaluateSlider', async () => {
     const questionSlider: ISliderQuestion = {
       type: QuestionVariant.Q_SLIDER,
       config: {
@@ -218,14 +218,12 @@ describe('EvaluationService', () => {
       title: 'Spec product',
       description: '',
       originProduct: product1,
-      weight: Weighting.HIGH,
       amount: 1,
       requirements: [need2.requirements[0].id, need3.requirements[0].id],
       requirementAnswers: [
         {
           id: 'b09c8d5e-f6cd-11ec-b939-0242ac120002',
           questionId: 'fa9ad612-2ab3-4877-8850-c65986347ece',
-          weight: 70,
           variantId: '2fbd3495-b95e-473c-923c-6aec0a9e4305',
           question: questionDate,
           requirement: need2.requirements[0],
@@ -234,7 +232,6 @@ describe('EvaluationService', () => {
         {
           id: 'b5773496-f6cd-11ec-b939-0242ac120002',
           questionId: '14b047d9-20f1-4681-83c4-519904352027',
-          weight: 50,
           variantId: 'b8dadd61-3f16-462c-9eb7-a72c61732fbf',
           question: questionCheckbox,
           requirement: need3.requirements[0],
@@ -252,14 +249,12 @@ describe('EvaluationService', () => {
       title: 'Spec product 2',
       description: '',
       originProduct: product2,
-      weight: Weighting.MEDIUM,
       amount: 1,
       requirements: [need3.requirements[0].id],
       requirementAnswers: [
         {
           id: 'b5773496-f6cd-11ec-b939-0242ac120002',
           questionId: '14b047d9-20f1-4681-83c4-519904352027',
-          weight: 70,
           variantId: 'b8dadd61-3f16-462c-9eb7-a72c61732fbf',
           question: questionCheckbox,
           requirement: need3.requirements[0],
@@ -305,7 +300,6 @@ describe('EvaluationService', () => {
         {
           id: '4c4bd801-6070-4c88-91cc-b5ba36a6c6af',
           questionId: '50bf8a0a-e435-4c8f-b7d3-0048810b4491',
-          weight: 90,
           variantId: 'b2f218dc-d5e6-49b4-9a60-f906db1ec74e',
           question: questionSlider,
           requirement: need1.requirements[0],
@@ -314,7 +308,6 @@ describe('EvaluationService', () => {
         {
           id: '1e506825-1dfe-4133-a6f5-16cb187fbd48',
           questionId: 'fa9ad612-2ab3-4877-8850-c65986347ece',
-          weight: 70,
           variantId: '2fbd3495-b95e-473c-923c-6aec0a9e4305',
           question: questionDate,
           requirement: need2.requirements[0],
@@ -323,7 +316,6 @@ describe('EvaluationService', () => {
         {
           id: '92136690-d403-48f4-93b0-a3d3d80c8128',
           questionId: '14b047d9-20f1-4681-83c4-519904352027',
-          weight: 50,
           variantId: 'b8dadd61-3f16-462c-9eb7-a72c61732fbf',
           question: questionCheckbox,
           requirement: need3.requirements[0],
@@ -342,11 +334,11 @@ describe('EvaluationService', () => {
           id: 'f5d68f10-f6cc-11ec-b939-0242ac120002',
           title: 'Product 1 answer',
           description: '',
-          originProduct: specProduct1, // 70 weight
+          originProduct: specProduct1,
           price: 0,
           requirementAnswers: [
             {
-              ...specProduct1.requirementAnswers[0], // 70 weight
+              ...specProduct1.requirementAnswers[0],
               question: {
                 ...questionDate,
                 answer: {
@@ -356,7 +348,7 @@ describe('EvaluationService', () => {
               },
             },
             {
-              ...specProduct1.requirementAnswers[1], // 50 weight
+              ...specProduct1.requirementAnswers[1],
               question: {
                 ...questionCheckbox,
                 answer: {
@@ -371,11 +363,11 @@ describe('EvaluationService', () => {
           id: '78f788e4-f6ce-11ec-b939-0242ac120002',
           title: 'Product 2 answer',
           description: '',
-          originProduct: specProduct2, // 50 weight
+          originProduct: specProduct2,
           price: 0,
           requirementAnswers: [
             {
-              ...specProduct2.requirementAnswers[0], // 70 weight
+              ...specProduct2.requirementAnswers[0],
               question: {
                 ...questionCheckbox,
                 answer: {
@@ -389,7 +381,7 @@ describe('EvaluationService', () => {
       ],
       requirementAnswers: [
         {
-          ...specification.requirementAnswers[0], // 90 weight
+          ...specification.requirementAnswers[0],
           question: {
             ...questionSlider,
             answer: {
@@ -399,7 +391,7 @@ describe('EvaluationService', () => {
           },
         },
         {
-          ...specification.requirementAnswers[1], // 70 weight
+          ...specification.requirementAnswers[1],
           question: {
             ...questionDate,
             answer: {
@@ -409,7 +401,7 @@ describe('EvaluationService', () => {
           },
         },
         {
-          ...specification.requirementAnswers[2], // 50 weight
+          ...specification.requirementAnswers[2],
           question: {
             ...questionCheckbox,
             answer: {
@@ -425,6 +417,6 @@ describe('EvaluationService', () => {
     // Sum: product1: (0.35 + 0.5) * 0.7 , product2: 0.07 * 0.5, general: 0.18 + 0.7 + 0.2 = 1,71
     // Max: product1:( 0.7 + 0.5) * 0.7 , product2: 0.7 * 0.5, general: 0.9 + 0.7 + 0.5 = 3,29
     // Calculated percentage = 1.71 / 3,29 = 0.5197568389057751
-    expect(result[0].points).toBe(0.5197568389057751);
+    expect(result[0].points).toBe(0.5333333333333333);
   });
 });

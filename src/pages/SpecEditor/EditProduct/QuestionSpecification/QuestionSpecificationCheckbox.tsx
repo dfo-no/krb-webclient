@@ -38,9 +38,12 @@ const QuestionSpecificationCheckbox = (): ReactElement => {
       <Typography variant={'smBold'}>{t('Preferred alternative')}</Typography>
       <YesNoSelection name={'question.config.preferedAlternative'} />
       <div onClick={onCheckboxClick}>
-        <DFOCheckbox checked={preferredScore} />
+        <DFOCheckbox
+          checked={preferredScore}
+          _color={'var(--text-primary-color)'}
+        />
         <Typography className={css.CheckboxLabel} variant={'smBold'}>
-          {t('Give score for non-preferred alternative')}
+          {t('Is the requirement an award criteria')}
         </Typography>
       </div>
       {preferredScore && (
