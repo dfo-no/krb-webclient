@@ -11,7 +11,7 @@ import { IRequirementAnswer } from '../../../../Nexus/entities/IRequirementAnswe
 
 const QuestionSpecificationCheckbox = (): ReactElement => {
   const { t } = useTranslation();
-  const [preferredScore, setPreferredScore] = useState(false);
+  const [awardCriteria, setAwardCriteria] = useState(false);
   const { control, setValue } = useFormContext<IRequirementAnswer>();
   const usePointsNonPrefered = useWatch({
     name: 'question.config.pointsNonPrefered',
@@ -20,17 +20,17 @@ const QuestionSpecificationCheckbox = (): ReactElement => {
 
   useEffect(() => {
     if (usePointsNonPrefered > 0) {
-      setPreferredScore(true);
+      setAwardCriteria(true);
     }
   }, [usePointsNonPrefered]);
 
   const onCheckboxClick = (): void => {
-    if (preferredScore) {
+    if (awardCriteria) {
       setValue('question.config.pointsNonPrefered', 0);
     } else {
       setValue('question.config.pointsNonPrefered', 70);
     }
-    setPreferredScore((prev) => !prev);
+    setAwardCriteria((prev) => !prev);
   };
 
   return (
@@ -42,14 +42,14 @@ const QuestionSpecificationCheckbox = (): ReactElement => {
       />
       <div onClick={onCheckboxClick}>
         <DFOCheckbox
-          checked={preferredScore}
+          checked={awardCriteria}
           _color={'var(--text-primary-color)'}
         />
         <Typography className={css.CheckboxLabel} variant={'smBold'}>
           {t('Is the requirement an award criteria')}
         </Typography>
       </div>
-      {preferredScore && (
+      {awardCriteria && (
         <div>
           <VerticalTextCtrl
             name={'question.config.pointsNonPrefered'}

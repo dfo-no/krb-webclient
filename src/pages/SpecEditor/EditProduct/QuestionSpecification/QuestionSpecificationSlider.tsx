@@ -24,7 +24,7 @@ interface IProps {
 const QuestionSpecificationSlider = ({ item }: IProps): ReactElement => {
   const { t } = useTranslation();
   const { control, setValue, formState } = useFormContext<IRequirementAnswer>();
-  const [preferredScore, setPreferredScore] = useState(false);
+  const [awardCriteria, setAwardCriteria] = useState(false);
 
   const useMinValue = useWatch({ name: 'question.config.min', control });
   const useMaxValue = useWatch({ name: 'question.config.max', control });
@@ -80,7 +80,7 @@ const QuestionSpecificationSlider = ({ item }: IProps): ReactElement => {
   }, [useMaxValue, useMaxScore, update]);
 
   const onCheckboxClick = (): void => {
-    setPreferredScore((prev) => !prev);
+    setAwardCriteria((prev) => !prev);
   };
 
   return (
@@ -118,7 +118,7 @@ const QuestionSpecificationSlider = ({ item }: IProps): ReactElement => {
         </Typography>
         <div onClick={onCheckboxClick}>
           <DFOCheckbox
-            checked={preferredScore}
+            checked={awardCriteria}
             _color={'var(--text-primary-color)'}
           />
           <Typography className={css.CheckboxLabel} variant={'smBold'}>
@@ -126,7 +126,7 @@ const QuestionSpecificationSlider = ({ item }: IProps): ReactElement => {
           </Typography>
         </div>
       </div>
-      {preferredScore && (
+      {awardCriteria && (
         <div className={css.QuestionGrid}>
           <Typography
             className={classnames(css.FullRow, css.TopMargin)}
