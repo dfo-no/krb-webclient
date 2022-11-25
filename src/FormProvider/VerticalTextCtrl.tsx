@@ -1,5 +1,10 @@
 import React, { ReactNode } from 'react';
-import { FormControl, FormLabel, Typography } from '@mui/material';
+import {
+  FormControl,
+  FormLabel,
+  InputAdornment,
+  Typography,
+} from '@mui/material';
 import { Controller, useFormContext } from 'react-hook-form';
 import { get } from 'lodash';
 import classNames from 'classnames';
@@ -17,6 +22,8 @@ interface IProps {
   autoFocus?: boolean;
   required?: boolean;
   children?: ReactNode;
+  adornment?: string;
+  color?: string;
 }
 
 const VerticalTextCtrl = ({
@@ -28,6 +35,8 @@ const VerticalTextCtrl = ({
   autoFocus,
   required,
   children,
+  adornment,
+  color,
 }: IProps): React.ReactElement => {
   const {
     formState: { errors },
@@ -40,7 +49,7 @@ const VerticalTextCtrl = ({
       sx={{ width: '100%' }}
     >
       <Typography
-        variant={'smBold'}
+        variant={'mdBold'}
         color={theme.palette.primary.main}
         sx={{ marginBottom: 1 }}
         data-required={required}
@@ -55,6 +64,10 @@ const VerticalTextCtrl = ({
               {...field}
               autoFocus={autoFocus}
               placeholder={placeholder}
+              endAdornment={
+                <InputAdornment position="end">{adornment}</InputAdornment>
+              }
+              _color={color}
               type={type}
               onWheel={(e) => (e.target as HTMLElement).blur()}
               disableUnderline

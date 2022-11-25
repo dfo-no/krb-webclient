@@ -4,9 +4,9 @@ import { useTranslation } from 'react-i18next';
 import { Typography } from '@mui/material';
 
 import css from '../QuestionContent.module.scss';
-import VerticalTextCtrl from '../../../../FormProvider/VerticalTextCtrl';
 import { IRequirementAnswer } from '../../../../Nexus/entities/IRequirementAnswer';
 import { DFOCheckbox } from '../../../../components/DFOCheckbox/DFOCheckbox';
+import VerticalTextCtrl from '../../../../FormProvider/VerticalTextCtrl';
 
 const QuestionSpecificationConfirmation = (): ReactElement => {
   const { t } = useTranslation();
@@ -39,16 +39,19 @@ const QuestionSpecificationConfirmation = (): ReactElement => {
           checked={awardCriteria}
           _color={'var(--text-primary-color)'}
         />
-        <Typography className={css.CheckboxLabel} variant={'smBold'}>
+        <Typography className={css.CheckboxLabel} variant={'mdBold'}>
           {t('Is the requirement an award criteria')}
         </Typography>
       </div>
       {awardCriteria && (
         <VerticalTextCtrl
+          className={css.QuestionFlex__textCtrl}
           name={'question.config.pointsUnconfirmed'}
-          label={t('Score for unconfirmed')}
+          label={t('Deduction')}
           placeholder={''}
           type={'number'}
+          color={'var(--text-primary-color)'}
+          adornment={t('NOK')}
         />
       )}
     </div>
