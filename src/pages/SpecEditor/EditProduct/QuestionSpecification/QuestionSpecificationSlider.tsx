@@ -93,6 +93,7 @@ const QuestionSpecificationSlider = ({ item }: IProps): ReactElement => {
           placeholder={t('Minimum')}
           type={'number'}
           adornment={item.config.unit}
+          color={'var(--text-primary-color)'}
         />
         <HorizontalTextCtrl
           className={css.QuestionSlider__textCtrl}
@@ -100,6 +101,7 @@ const QuestionSpecificationSlider = ({ item }: IProps): ReactElement => {
           label={t('Increment')}
           placeholder={t('Increment')}
           type={'number'}
+          color={'var(--text-primary-color)'}
         />
         <HorizontalTextCtrl
           className={css.QuestionSlider__textCtrl}
@@ -108,6 +110,7 @@ const QuestionSpecificationSlider = ({ item }: IProps): ReactElement => {
           placeholder={t('Maximum')}
           type={'number'}
           adornment={item.config.unit}
+          color={'var(--text-primary-color)'}
         />
         <Typography variant={'sm'}>
           {t('Minimum')}: {item.config.min}
