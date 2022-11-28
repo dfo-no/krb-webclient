@@ -8,8 +8,13 @@
 
   .Buttons {
     display: flex;
-    flex-direction: row;
+    flex-direction: row-reverse;
+    gap: var(--normal-gap);
     margin-top: var(--small-gap);
+
+    button {
+      font-size: var(--small-fontsize);
+    }
 
     .Cancel {
       margin-left: auto;
