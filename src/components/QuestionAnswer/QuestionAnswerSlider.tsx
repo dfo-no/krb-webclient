@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { Box, Button, FormControlLabel, Typography } from '@mui/material';
+import { FormControlLabel, Typography } from '@mui/material';
 import { FormProvider, useForm, useWatch } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import RadioGroup from '@mui/material/RadioGroup/RadioGroup';
+import { Button, Type, Variant } from '@dfo-no/components.button';
 
 import css from './QuestionAnswer.module.scss';
 import HorizontalTextCtrl from '../../FormProvider/HorizontalTextCtrl';
@@ -111,18 +112,12 @@ const QuestionAnswerSlider = ({
               );
             })}
           </RadioGroup>
-          <Box className={css.Buttons}>
-            <Button
-              variant="cancel"
-              onClick={() => methods.reset()}
-              className={css.Cancel}
-            >
+          <div className={css.Buttons}>
+            <Button type={Type.Submit}>{t('Save')}</Button>
+            <Button variant={Variant.Inverted} onClick={() => methods.reset()}>
               {t('Reset')}
             </Button>
-            <Button variant="save" type="submit" className={css.Save}>
-              {t('Save')}
-            </Button>
-          </Box>
+          </div>
         </form>
       </FormProvider>
     </div>

@@ -1,7 +1,8 @@
 import React, { useEffect } from 'react';
-import { Button, Typography } from '@mui/material';
+import { Typography } from '@mui/material';
 import { FormProvider, useForm, useWatch } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
+import { Button, Type, Variant } from '@dfo-no/components.button';
 
 import CheckboxCtrl from '../../FormProvider/CheckboxCtrl';
 import css from './QuestionAnswer.module.scss';
@@ -65,15 +66,9 @@ const QuestionAnswerConfirmation = ({
             <Typography>{t('Confirm')}</Typography>
           </div>
           <div className={css.Buttons}>
-            <Button
-              variant="cancel"
-              onClick={() => methods.reset()}
-              className={css.Cancel}
-            >
+            <Button type={Type.Submit}>{t('Save')}</Button>
+            <Button variant={Variant.Inverted} onClick={() => methods.reset()}>
               {t('Reset')}
-            </Button>
-            <Button variant="save" type="submit" className={css.Save}>
-              {t('Save')}
             </Button>
           </div>
         </form>
