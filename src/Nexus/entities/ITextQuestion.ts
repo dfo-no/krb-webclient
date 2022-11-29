@@ -30,6 +30,11 @@ const WorkbenchDiscountSchema = CustomJoi.object().keys({
   discount: CustomJoi.validateNumber(),
 });
 
+const DiscountSchema = CustomJoi.object().keys({
+  id: CustomJoi.validateId(),
+  discount: CustomJoi.validateNumber(),
+});
+
 export const TextQuestionWorkbenchSchema = QuestionBaseSchema.keys({
   type: CustomJoi.validateType(QuestionVariant.Q_TEXT),
   config: ConfigBaseSchema.keys({
@@ -39,6 +44,10 @@ export const TextQuestionWorkbenchSchema = QuestionBaseSchema.keys({
 });
 
 export const TextQuestionAnswerSchema = TextQuestionWorkbenchSchema.keys({
+  config: ConfigBaseSchema.keys({
+    max: CustomJoi.validateMaxText(),
+    discountValues: CustomJoi.validateArray(DiscountSchema),
+  }),
   answer: CustomJoi.object().keys({
     text: CustomJoi.validateAnswerText(),
     point: CustomJoi.validateScore(),

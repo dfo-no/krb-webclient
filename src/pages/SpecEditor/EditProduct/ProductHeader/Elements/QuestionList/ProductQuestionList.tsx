@@ -14,7 +14,7 @@ interface IProps {
 }
 
 const ProductQuestionsList = ({ variant }: IProps): ReactElement => {
-  const { control, setValue, formState } = useFormContext<IRequirementAnswer>();
+  const { control, setValue } = useFormContext<IRequirementAnswer>();
   const useQuestionId = useWatch({ name: 'questionId', control });
   const item = variant.questions[0];
 
@@ -39,8 +39,6 @@ const ProductQuestionsList = ({ variant }: IProps): ReactElement => {
       ) : (
         <QuestionSpecification item={item} />
       )}
-      {console.log('item: ', item)}
-      {console.log(formState.errors)}
     </Box>
   );
 };

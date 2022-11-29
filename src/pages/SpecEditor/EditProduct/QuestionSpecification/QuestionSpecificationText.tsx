@@ -35,10 +35,10 @@ export default function QuestionSpecificationText(): ReactElement {
   }, [awardCriteria, fields, append]);
 
   useEffect(() => {
-    if (fields.length > 0) {
+    if (fields.length > 0 && !awardCriteria) {
       setAwardCriteria(true);
     }
-  }, [fields]);
+  }, [fields, awardCriteria]);
 
   const onCheckboxClick = (): void => {
     setAwardCriteria((prev) => !prev);
