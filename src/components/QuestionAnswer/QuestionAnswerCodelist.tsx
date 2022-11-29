@@ -1,7 +1,8 @@
 import React, { useEffect } from 'react';
-import { Box, Button, Typography } from '@mui/material';
+import { Typography } from '@mui/material';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
+import { Button, Type, Variant } from '@dfo-no/components.button';
 
 import CodeSelection from '../CodeSelection/CodeSelection';
 import css from './QuestionAnswer.module.scss';
@@ -64,18 +65,12 @@ const QuestionAnswerCodelist = ({
               codeSelection={item.config.codes}
             />
           )}
-          <Box className={css.Buttons}>
-            <Button
-              variant="cancel"
-              onClick={() => methods.reset()}
-              className={css.Cancel}
-            >
+          <div className={css.Buttons}>
+            <Button type={Type.Submit}>{t('Save')}</Button>
+            <Button variant={Variant.Inverted} onClick={() => methods.reset()}>
               {t('Reset')}
             </Button>
-            <Button variant="save" type="submit" className={css.Save}>
-              {t('Save')}
-            </Button>
-          </Box>
+          </div>
         </form>
       </FormProvider>
     </div>
