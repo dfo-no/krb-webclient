@@ -14,16 +14,27 @@ export interface ITextQuestion extends IQuestionBase<ITextAnswer, ITextConfig> {
 
 export interface ITextConfig extends IConfigBase {
   max: number;
+  discountValues: Discount[];
+}
+
+export interface Discount {
+  id?: string;
+  discount: number;
 }
 
 export interface ITextAnswer extends IAnswerBase {
   text: string;
 }
 
+const WorkbenchDiscountSchema = CustomJoi.object().keys({
+  discount: CustomJoi.validateNumber(),
+});
+
 export const TextQuestionWorkbenchSchema = QuestionBaseSchema.keys({
   type: CustomJoi.validateType(QuestionVariant.Q_TEXT),
   config: ConfigBaseSchema.keys({
     max: CustomJoi.validateMaxText(),
+    discountValues: CustomJoi.validateArray(WorkbenchDiscountSchema),
   }),
 });
 

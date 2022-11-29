@@ -4,7 +4,7 @@ import { styled } from '@mui/material/styles';
 const DFOTextField = styled(Input)(({ _color }: { _color?: string }) => ({
   width: '100%',
   border: `0.2rem solid ${_color ? _color : 'var(--primary-light-color)'}`,
-  backgroundColor: `var(--white--color)`,
+  backgroundColor: `var(--white-color)`,
   height: 45,
   paddingLeft: '1rem',
   paddingRight: '1rem',

@@ -125,6 +125,7 @@ export default class QuestionService {
           type: QuestionVariant.Q_TEXT,
           config: {
             max: 10000,
+            discountValues: [],
             defaultPoint: 1,
           },
           answer: {

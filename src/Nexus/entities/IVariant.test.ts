@@ -31,6 +31,7 @@ describe('IVariant', () => {
       },
       config: {
         max: 100,
+        discountValues: [],
         defaultPoint: 1,
       },
       sourceRel: null,
@@ -46,6 +47,7 @@ describe('IVariant', () => {
       },
       config: {
         max: 100,
+        discountValues: [],
         defaultPoint: 1,
       },
       sourceRel: null,
@@ -80,6 +82,7 @@ describe('IVariant', () => {
       },
       config: {
         max: 100,
+        discountValues: [],
         defaultPoint: 1,
       },
       sourceRel: null,
@@ -95,6 +98,7 @@ describe('IVariant', () => {
       },
       config: {
         max: 100,
+        discountValues: [],
         defaultPoint: 1,
       },
       sourceRel: null,
@@ -132,6 +136,7 @@ describe('IVariant', () => {
       },
       config: {
         max: -2,
+        discountValues: [],
         defaultPoint: 1,
       },
       sourceRel: null,
@@ -147,6 +152,7 @@ describe('IVariant', () => {
       },
       config: {
         max: -1,
+        discountValues: [],
         defaultPoint: 1,
       },
       sourceRel: null,
