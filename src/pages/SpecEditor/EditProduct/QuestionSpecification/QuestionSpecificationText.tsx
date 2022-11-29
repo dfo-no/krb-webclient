@@ -2,8 +2,6 @@ import React, { ReactElement, useEffect, useState } from 'react';
 import { Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { useFieldArray, useFormContext } from 'react-hook-form';
-import { Button, Location, Variant } from '@dfo-no/components.button';
-import { Symbols } from '@dfo-no/components.icon';
 import ClearIcon from '@mui/icons-material/Clear';
 
 import { DFOCheckbox } from '../../../../components/DFOCheckbox/DFOCheckbox';
@@ -26,21 +24,18 @@ export default function QuestionSpecificationText(): ReactElement {
   });
 
   useEffect(() => {
-    if (!fields.length && awardCriteria) {
+    if (fields.length > 0) {
+      setAwardCriteria(true);
+    }
+  }, [fields]);
+
+  const onCheckboxClick = (): void => {
+    if (!fields.length) {
       append({
         id: new UuidService().generateId(),
         discount: 0,
       });
     }
-  }, [awardCriteria, fields, append]);
-
-  useEffect(() => {
-    if (fields.length > 0 && !awardCriteria) {
-      setAwardCriteria(true);
-    }
-  }, [fields, awardCriteria]);
-
-  const onCheckboxClick = (): void => {
     setAwardCriteria((prev) => !prev);
   };
 
@@ -80,22 +75,23 @@ export default function QuestionSpecificationText(): ReactElement {
                       color={'var(--text-primary-color)'}
                     />
                     {index == 0 && (
-                      <Button
+                      <Toolbar
                         className={
                           css.QuestionCriteria__wrapper__textCtrl__action
                         }
-                        icon={Symbols.Plus}
-                        iconLocation={Location.Before}
-                        variant={Variant.Ghost}
-                        onClick={() =>
-                          append({
-                            discount: 0,
-                            id: new UuidService().generateId(),
-                          })
-                        }
                       >
-                        {t('Add row')}
-                      </Button>
+                        <ToolbarItem
+                          secondaryText={t('Add row')}
+                          icon={<ClearIcon />}
+                          handleClick={() =>
+                            append({
+                              discount: 0,
+                              id: new UuidService().generateId(),
+                            })
+                          }
+                          fontSize={'small'}
+                        />
+                      </Toolbar>
                     )}
                     {index > 0 && (
                       <Toolbar>
