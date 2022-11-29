@@ -18,7 +18,7 @@ export interface ITextConfig extends IConfigBase {
 }
 
 export interface Discount {
-  id?: string;
+  id: string;
   discount: number;
 }
 
@@ -39,14 +39,14 @@ export const TextQuestionWorkbenchSchema = QuestionBaseSchema.keys({
   type: CustomJoi.validateType(QuestionVariant.Q_TEXT),
   config: ConfigBaseSchema.keys({
     max: CustomJoi.validateMaxText(),
-    discountValues: CustomJoi.validateArray(WorkbenchDiscountSchema),
+    discountValues: CustomJoi.validateNotRequiredArray(WorkbenchDiscountSchema),
   }),
 });
 
 export const TextQuestionAnswerSchema = TextQuestionWorkbenchSchema.keys({
   config: ConfigBaseSchema.keys({
     max: CustomJoi.validateMaxText(),
-    discountValues: CustomJoi.validateArray(DiscountSchema),
+    discountValues: CustomJoi.validateNotRequiredArray(DiscountSchema),
   }),
   answer: CustomJoi.object().keys({
     text: CustomJoi.validateAnswerText(),
