@@ -27,7 +27,7 @@ export interface ISpecification {
 
 export const BaseSpecificationSchema = CustomJoi.object().keys({
   id: CustomJoi.validateParentId(),
-  customization: CustomJoi.validateText,
+  customization: CustomJoi.validateText(),
   bank: BaseBankSchema,
   organization: CustomJoi.validateText(),
   organizationNumber: CustomJoi.validateOrgNr(),
