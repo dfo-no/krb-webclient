@@ -75,7 +75,7 @@
       padding: var(--micro-gap);
 
       &__horizontalTextCtrl {
-        width: 20rem;
+        max-width: 20rem;
         font-weight: var(--font-weight-semibold);
       }
 

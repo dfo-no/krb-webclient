@@ -13,7 +13,6 @@ import { IRequirementAnswer } from '../../../../Nexus/entities/IRequirementAnswe
 import { ISliderQuestion } from '../../../../Nexus/entities/ISliderQuestion';
 import ArrayUniqueErrorMessage from '../../../../Form/ArrayUniqueErrorMessage';
 import { DFOCheckbox } from '../../../../components/DFOCheckbox/DFOCheckbox';
-import Toolbar from '../../../../components/UI/Toolbar/ToolBar';
 import ToolbarItem from '../../../../components/UI/Toolbar/ToolbarItem';
 
 interface IProps {
@@ -196,14 +195,12 @@ const QuestionSpecificationSlider = ({ item }: IProps): ReactElement => {
                       </Button>
                     )}
                     {index > 0 && (
-                      <Toolbar>
-                        <ToolbarItem
-                          secondaryText={t('Remove')}
-                          icon={<ClearIcon />}
-                          handleClick={() => remove(index)}
-                          fontSize={'small'}
-                        />
-                      </Toolbar>
+                      <ToolbarItem
+                        secondaryText={t('Remove')}
+                        icon={<ClearIcon />}
+                        handleClick={() => remove(index)}
+                        fontSize={'small'}
+                      />
                     )}
                   </div>
                 );

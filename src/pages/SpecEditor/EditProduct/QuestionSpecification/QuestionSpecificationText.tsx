@@ -3,6 +3,8 @@ import { Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { useFieldArray, useFormContext } from 'react-hook-form';
 import ClearIcon from '@mui/icons-material/Clear';
+import { Button, Location, Variant } from '@dfo-no/components.button';
+import { Symbols } from '@dfo-no/components.icon';
 
 import { DFOCheckbox } from '../../../../components/DFOCheckbox/DFOCheckbox';
 import css from '../QuestionContent.module.scss';
@@ -11,7 +13,6 @@ import ArrayUniqueErrorMessage from '../../../../Form/ArrayUniqueErrorMessage';
 import UuidService from '../../../../Nexus/services/UuidService';
 import { IRequirementAnswer } from '../../../../Nexus/entities/IRequirementAnswer';
 import ToolbarItem from '../../../../components/UI/Toolbar/ToolbarItem';
-import Toolbar from '../../../../components/UI/Toolbar/ToolBar';
 
 export default function QuestionSpecificationText(): ReactElement {
   const { t } = useTranslation();
@@ -75,33 +76,31 @@ export default function QuestionSpecificationText(): ReactElement {
                       color={'var(--text-primary-color)'}
                     />
                     {index == 0 && (
-                      <Toolbar
+                      <Button
                         className={
                           css.QuestionCriteria__wrapper__textCtrl__action
                         }
+                        icon={Symbols.Plus}
+                        iconLocation={Location.Before}
+                        variant={Variant.Ghost}
+                        onClick={(e: Event) => {
+                          e.preventDefault();
+                          append({
+                            discount: 0,
+                            id: new UuidService().generateId(),
+                          });
+                        }}
                       >
-                        <ToolbarItem
-                          secondaryText={t('Add row')}
-                          icon={<ClearIcon />}
-                          handleClick={() =>
-                            append({
-                              discount: 0,
-                              id: new UuidService().generateId(),
-                            })
-                          }
-                          fontSize={'small'}
-                        />
-                      </Toolbar>
+                        {t('Add row')}
+                      </Button>
                     )}
                     {index > 0 && (
-                      <Toolbar>
-                        <ToolbarItem
-                          secondaryText={t('Remove')}
-                          icon={<ClearIcon />}
-                          handleClick={() => remove(index)}
-                          fontSize={'small'}
-                        />
-                      </Toolbar>
+                      <ToolbarItem
+                        secondaryText={t('Remove')}
+                        icon={<ClearIcon />}
+                        handleClick={() => remove(index)}
+                        fontSize={'small'}
+                      />
                     )}
                   </div>
                 );

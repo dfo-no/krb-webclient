@@ -48,6 +48,7 @@
   gap: var(--tiny-gap);
   flex-direction: row;
   width: fit-content;
+  align-items: center;
 
   &[data-font-size='small'] {
     p,
