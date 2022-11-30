@@ -48,6 +48,6 @@ export const CodelistQuestionAnswerSchema =
   CodelistQuestionWorkbenchSchema.keys({
     answer: CustomJoi.object().keys({
       codes: CustomJoi.validateIdArray(),
-      point: CustomJoi.validateScore(),
+      discount: CustomJoi.validateScore(),
     }),
   });

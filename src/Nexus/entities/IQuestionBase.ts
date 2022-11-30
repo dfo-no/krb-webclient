@@ -3,11 +3,11 @@ import { BaseModelSchema, IBaseModel } from './IBaseModel';
 import { QuestionVariant } from '../enums';
 
 export interface IAnswerBase {
-  point: number | null;
+  discount: number | null;
 }
 
 export interface IConfigBase {
-  defaultPoint: number;
+  defaultDiscount: number;
 }
 
 export interface IQuestionBase<A extends IAnswerBase, C extends IConfigBase>
@@ -22,7 +22,7 @@ export interface IQuestionBase<A extends IAnswerBase, C extends IConfigBase>
 }
 
 export const ConfigBaseSchema = CustomJoi.object().keys({
-  defaultPoint: CustomJoi.number().required(),
+  defaultDiscount: CustomJoi.number().required(),
 });
 
 export const QuestionBaseSchema = BaseModelSchema.keys({

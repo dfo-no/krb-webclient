@@ -18,14 +18,14 @@ describe('EvaluationService', () => {
         max: 50,
         step: 5,
         unit: 'TB',
-        defaultPoint: 1,
+        defaultDiscount: 1,
         scoreValues: [
           { id: 'd7f3cd3b-5428-470a-97fe-ce001ac096a6', value: 0, score: 0 },
           { id: 'ec712301-4bf7-4d22-8d33-e96630ed0440', value: 10, score: 100 },
         ],
       },
       answer: {
-        point: 0,
+        discount: 0,
         value: 0,
       },
       sourceRel: null,
@@ -39,7 +39,7 @@ describe('EvaluationService', () => {
         isPeriod: false,
         periodMax: 0,
         periodMin: 0,
-        defaultPoint: 1,
+        defaultDiscount: 1,
         fromBoundary: '2021-10-01T00:00:00.0000000Z',
         toBoundary: '2021-12-30T00:00:00.0000000Z',
         dateScores: [
@@ -56,7 +56,7 @@ describe('EvaluationService', () => {
         ],
       },
       answer: {
-        point: 0,
+        discount: 0,
         fromDate: null,
         toDate: null,
       },
@@ -68,12 +68,12 @@ describe('EvaluationService', () => {
     const questionCheckbox: ICheckboxQuestion = {
       type: QuestionVariant.Q_CHECKBOX,
       config: {
-        defaultPoint: 1,
-        pointsNonPrefered: 20,
+        defaultDiscount: 1,
+        discountNonPrefered: 20,
         preferedAlternative: true,
       },
       answer: {
-        point: 0,
+        discount: 0,
         value: false,
       },
       sourceRel: null,
@@ -343,7 +343,7 @@ describe('EvaluationService', () => {
                 ...questionDate,
                 answer: {
                   ...questionDate.answer,
-                  point: 50, // 0.5 * 0.7 = 0.35
+                  discount: 50, // 0.5 * 0.7 = 0.35
                 },
               },
             },
@@ -353,7 +353,7 @@ describe('EvaluationService', () => {
                 ...questionCheckbox,
                 answer: {
                   ...questionCheckbox.answer,
-                  point: 100, // 1 * 0.5 = 0.5
+                  discount: 100, // 1 * 0.5 = 0.5
                 },
               },
             },
@@ -372,7 +372,7 @@ describe('EvaluationService', () => {
                 ...questionCheckbox,
                 answer: {
                   ...questionCheckbox.answer,
-                  point: 10, // 0.1 * 0.7 = 0.07
+                  discount: 10, // 0.1 * 0.7 = 0.07
                 },
               },
             },
@@ -386,7 +386,7 @@ describe('EvaluationService', () => {
             ...questionSlider,
             answer: {
               ...questionSlider.answer,
-              point: 20, // 0.2 * 0.9 = 0.18
+              discount: 20, // 0.2 * 0.9 = 0.18
             },
           },
         },
@@ -396,7 +396,7 @@ describe('EvaluationService', () => {
             ...questionDate,
             answer: {
               ...questionDate.answer,
-              point: 100, // 1 * 0.7 = 0.7
+              discount: 100, // 1 * 0.7 = 0.7
             },
           },
         },
@@ -406,7 +406,7 @@ describe('EvaluationService', () => {
             ...questionCheckbox,
             answer: {
               ...questionCheckbox.answer,
-              point: 40, // 0.4 * 0.5 = 0.2
+              discount: 40, // 0.4 * 0.5 = 0.2
             },
           },
         },
@@ -417,6 +417,6 @@ describe('EvaluationService', () => {
     // Sum: product1: (0.35 + 0.5) * 0.7 , product2: 0.07 * 0.5, general: 0.18 + 0.7 + 0.2 = 1,71
     // Max: product1:( 0.7 + 0.5) * 0.7 , product2: 0.7 * 0.5, general: 0.9 + 0.7 + 0.5 = 3,29
     // Calculated percentage = 1.71 / 3,29 = 0.5197568389057751
-    expect(result[0].points).toBe(0.5333333333333333);
+    expect(result[0].discount).toBe(0.5333333333333333);
   });
 });

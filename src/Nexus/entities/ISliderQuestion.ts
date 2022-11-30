@@ -62,6 +62,6 @@ export const SliderQuestionAnswerSchema = SliderQuestionWorkbenchSchema.keys({
   }),
   answer: CustomJoi.object().keys({
     value: CustomJoi.validateSliderAnswer(),
-    point: CustomJoi.validateScore(),
+    discount: CustomJoi.validateScore(),
   }),
 });
