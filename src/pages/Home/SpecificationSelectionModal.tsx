@@ -85,10 +85,6 @@ export default function SpecificationSelectionModal({
 
           if (isRecord(toCheck)) {
             translate(toCheck);
-            // if (typeof toCheck == 'object') {
-            //   this[k].deepUpdate(toCheck, this[k]);
-            // }
-            // } else this[k] = input[k];
           }
         }
       };
