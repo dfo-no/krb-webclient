@@ -156,7 +156,7 @@ class TextUtils {
     question: ICheckboxQuestion
   ): ChosenConfig[] => {
     const preferedAlternative = question.config.preferedAlternative;
-    const pointsNonPrefered = question.config.pointsNonPrefered;
+    const discountNonPrefered = question.config.discountNonPrefered;
     const chosenConfig: ChosenConfig[] = [];
     TextUtils.setChosenConfigs(
       chosenConfig,
@@ -166,7 +166,7 @@ class TextUtils {
     TextUtils.setChosenConfigs(
       chosenConfig,
       `${preferedAlternative ? t('common.No') : t('common.Yes')}`,
-      `${pointsNonPrefered} ${t('Score')}`
+      `${discountNonPrefered} ${t('Score')}`
     );
     return chosenConfig;
   };
@@ -174,13 +174,13 @@ class TextUtils {
   private static getConfirmationConfig = (
     question: IConfirmationQuestion
   ): ChosenConfig[] => {
-    const pointsUnconfirmed = question.config.pointsUnconfirmed;
+    const discountUnconfirmed = question.config.discountUnconfirmed;
     const chosenConfig: ChosenConfig[] = [];
     TextUtils.setChosenConfigs(chosenConfig, t('Score for confirmed'), '100');
     TextUtils.setChosenConfigs(
       chosenConfig,
       t('Score for unconfirmed'),
-      `${pointsUnconfirmed}`
+      `${discountUnconfirmed}`
     );
     return chosenConfig;
   };

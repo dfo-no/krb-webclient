@@ -1,15 +1,15 @@
 import { IEvaluatedResponse } from '../entities/IEvaluatedResponse';
-import { IPointsCalculation } from '../entities/IPointsCalculation';
+import { IDiscountCalculation } from '../entities/IDiscountCalculation';
 import { IRequirementAnswer } from '../entities/IRequirementAnswer';
 import { IResponse } from '../entities/IResponse';
 import { IResponseProduct } from '../entities/IResponseProduct';
 
 export default class EvaluationService {
-  private static calculatePoints(
+  private static calculateDiscount(
     requirementAnswer: IRequirementAnswer
-  ): IPointsCalculation {
-    const points = requirementAnswer.question.answer.point;
-    return !!points ? { total: points, max: 100 } : { total: 0, max: 100 };
+  ): IDiscountCalculation {
+    const discount = requirementAnswer.question.answer.discount;
+    return !!discount ? { total: discount, max: 100 } : { total: 0, max: 100 };
   }
 
   async evaluateAll(responses: IResponse[]): Promise<IEvaluatedResponse[]> {
@@ -21,22 +21,22 @@ export default class EvaluationService {
     return evaluations;
   }
 
-  calculateProductPoints(product: IResponseProduct): IPointsCalculation {
+  calculateProductDiscount(product: IResponseProduct): IDiscountCalculation {
     let total = 0;
     let max = 0;
     product.requirementAnswers.forEach((requirementAnswer) => {
-      const calc = EvaluationService.calculatePoints(requirementAnswer);
+      const calc = EvaluationService.calculateDiscount(requirementAnswer);
       total += calc.total;
       max += calc.max;
     });
     return max === 0 ? { total: 0, max: 0 } : { total, max };
   }
 
-  calculateGeneralPoints(response: IResponse): IPointsCalculation {
+  calculateGeneralDiscount(response: IResponse): IDiscountCalculation {
     let total = 0;
     let max = 0;
     response.requirementAnswers.forEach((requirementAnswer) => {
-      const calc = EvaluationService.calculatePoints(requirementAnswer);
+      const calc = EvaluationService.calculateDiscount(requirementAnswer);
       total += calc.total;
       max += calc.max;
     });
@@ -46,22 +46,22 @@ export default class EvaluationService {
   evaluate(response: IResponse): IEvaluatedResponse {
     const evaluation: IEvaluatedResponse = {
       supplier: response.supplier,
-      points: 0,
+      discount: 0,
     };
-    let maxPoints = 0;
-    let totPoints = 0;
+    let maxDiscount = 0;
+    let totDiscount = 0;
 
-    const calc = this.calculateGeneralPoints(response);
-    totPoints += calc.total;
-    maxPoints += calc.max;
+    const calc = this.calculateGeneralDiscount(response);
+    totDiscount += calc.total;
+    maxDiscount += calc.max;
 
     response.products.forEach((product) => {
-      const productCalc = this.calculateProductPoints(product);
-      totPoints += productCalc.total;
-      maxPoints += productCalc.max;
+      const productCalc = this.calculateProductDiscount(product);
+      totDiscount += productCalc.total;
+      maxDiscount += productCalc.max;
     });
 
-    evaluation.points = totPoints / maxPoints;
+    evaluation.discount = totDiscount / maxDiscount;
     return evaluation;
   }
 }
