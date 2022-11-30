@@ -48,6 +48,12 @@ export default function SpecificationSelectionModal({
 
       const translate = (input: Input) => {
         for (const key of Object.keys(input)) {
+          if (key.toLowerCase().includes('weight')) {
+            console.log('deleting key: ', key, input[key]);
+            // eslint-disable-next-line no-param-reassign
+            delete input[key];
+          }
+
           if (key.includes('points')) {
             const keyParts = key.split('points');
             const translatedKey = keyParts[0] + 'discount' + keyParts[1];
