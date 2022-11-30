@@ -22,7 +22,7 @@ export default class EvaluationService {
       })
       .reduce((totalDiscount, discount) => {
         return totalDiscount + discount;
-      });
+      }, 0);
   }
 
   calculateGeneralDiscount(response: IResponse): number {
@@ -32,7 +32,7 @@ export default class EvaluationService {
       })
       .reduce((totalDiscount, discount) => {
         return totalDiscount + discount;
-      });
+      }, 0);
   }
 
   evaluate(response: IResponse): IEvaluatedResponse {
