@@ -1,5 +1,4 @@
 import { IEvaluatedResponse } from '../entities/IEvaluatedResponse';
-import { IDiscountCalculation } from '../entities/IDiscountCalculation';
 import { IRequirementAnswer } from '../entities/IRequirementAnswer';
 import { IResponse } from '../entities/IResponse';
 import { IResponseProduct } from '../entities/IResponseProduct';
@@ -7,9 +6,9 @@ import { IResponseProduct } from '../entities/IResponseProduct';
 export default class EvaluationService {
   private static calculateDiscount(
     requirementAnswer: IRequirementAnswer
-  ): IDiscountCalculation {
+  ): number {
     const discount = requirementAnswer.question.answer.discount;
-    return !!discount ? { total: discount, max: 100 } : { total: 0, max: 100 };
+    return !!discount ? discount : 0;
   }
 
   async evaluateAll(responses: IResponse[]): Promise<IEvaluatedResponse[]> {
@@ -21,26 +20,24 @@ export default class EvaluationService {
     return evaluations;
   }
 
-  calculateProductDiscount(product: IResponseProduct): IDiscountCalculation {
+  calculateProductDiscount(product: IResponseProduct): number {
     let total = 0;
-    let max = 0;
+
     product.requirementAnswers.forEach((requirementAnswer) => {
-      const calc = EvaluationService.calculateDiscount(requirementAnswer);
-      total += calc.total;
-      max += calc.max;
+      const discount = EvaluationService.calculateDiscount(requirementAnswer);
+      total += discount;
     });
-    return max === 0 ? { total: 0, max: 0 } : { total, max };
+    return total;
   }
 
-  calculateGeneralDiscount(response: IResponse): IDiscountCalculation {
+  calculateGeneralDiscount(response: IResponse): number {
     let total = 0;
-    let max = 0;
+
     response.requirementAnswers.forEach((requirementAnswer) => {
-      const calc = EvaluationService.calculateDiscount(requirementAnswer);
-      total += calc.total;
-      max += calc.max;
+      const discount = EvaluationService.calculateDiscount(requirementAnswer);
+      total += discount;
     });
-    return max === 0 ? { total: 0, max: 0 } : { total, max };
+    return total;
   }
 
   evaluate(response: IResponse): IEvaluatedResponse {
@@ -48,20 +45,17 @@ export default class EvaluationService {
       supplier: response.supplier,
       discount: 0,
     };
-    let maxDiscount = 0;
     let totDiscount = 0;
 
     const calc = this.calculateGeneralDiscount(response);
-    totDiscount += calc.total;
-    maxDiscount += calc.max;
+    totDiscount += calc;
 
     response.products.forEach((product) => {
       const productCalc = this.calculateProductDiscount(product);
-      totDiscount += productCalc.total;
-      maxDiscount += productCalc.max;
+      totDiscount += productCalc;
     });
 
-    evaluation.discount = totDiscount / maxDiscount;
+    evaluation.discount = totDiscount;
     return evaluation;
   }
 }
