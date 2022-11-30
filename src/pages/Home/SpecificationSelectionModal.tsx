@@ -2,6 +2,7 @@ import React, { Dispatch, ReactElement, SetStateAction, useState } from 'react';
 import { Box, Typography } from '@mui/material';
 import { useHistory } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import produce from 'immer';
 
 import DFODialog from '../../components/DFODialog/DFODialog';
 import NewPrefilledResponseForm from './NewPrefilledResponseForm';
@@ -37,9 +38,71 @@ export default function SpecificationSelectionModal({
   const evaluationSpecificationStoreService =
     new EvaluationSpecificationStoreService();
 
+  const rewriteSpecification = (specificationFile: SpecificationFile) => {
+    return produce(specificationFile, (draft) => {
+      type Input = Record<string, unknown>;
+
+      function isRecord(value: unknown): value is Record<string, unknown> {
+        return typeof value === 'object' && value !== null;
+      }
+
+      const translate = (input: Input) => {
+        for (const key of Object.keys(input)) {
+          if (key.includes('points')) {
+            const keyParts = key.split('points');
+            const translatedKey = keyParts[0] + 'discount' + keyParts[1];
+            // eslint-disable-next-line no-param-reassign
+            input[translatedKey] = input[key];
+            // eslint-disable-next-line no-param-reassign
+            delete input[key];
+          } else if (key.includes('point')) {
+            const keyParts = key.split('point');
+            const translatedKey = keyParts[0] + 'discount' + keyParts[1];
+            // eslint-disable-next-line no-param-reassign
+            input[translatedKey] = input[key];
+            // eslint-disable-next-line no-param-reassign
+            delete input[key];
+          }
+          if (key.includes('Points')) {
+            const keyParts = key.split('Points');
+            const translatedKey = keyParts[0] + 'Discount' + keyParts[1];
+            // eslint-disable-next-line no-param-reassign
+            input[translatedKey] = input[key];
+            // eslint-disable-next-line no-param-reassign
+            delete input[key];
+          } else if (key.includes('Point')) {
+            const keyParts = key.split('Point');
+            const translatedKey = keyParts[0] + 'Discount' + keyParts[1];
+            // eslint-disable-next-line no-param-reassign
+            input[translatedKey] = input[key];
+            // eslint-disable-next-line no-param-reassign
+            delete input[key];
+          }
+
+          // if (typeof input[key] === 'object') {
+          // }
+          const toCheck = input[key];
+
+          if (isRecord(toCheck)) {
+            translate(toCheck);
+            // if (typeof toCheck == 'object') {
+            //   this[k].deepUpdate(toCheck, this[k]);
+            // }
+            // } else this[k] = input[k];
+          }
+        }
+      };
+      translate(draft);
+    });
+  };
+
+  const specificationRewrittenToDiscounts = rewriteSpecification(
+    selectedSpecification
+  );
+
   const editSpecification = (): void => {
     nexus.specificationService
-      .setSpecification(selectedSpecification.specification)
+      .setSpecification(specificationRewrittenToDiscounts.specification)
       .then((specification) => {
         history.push(`/${SPECIFICATION}/${specification.id}`);
       });
@@ -47,7 +110,7 @@ export default function SpecificationSelectionModal({
 
   const createResponse = (): void => {
     const response = nexus.responseService.createResponseFromSpecification(
-      selectedSpecification.specification
+      specificationRewrittenToDiscounts.specification
     );
     setNewResponse(response);
   };
@@ -55,16 +118,16 @@ export default function SpecificationSelectionModal({
   const createPrefilledResponse = (): void => {
     const prefilledResponse =
       nexus.prefilledResponseService.createPrefilledResponseFromBank(
-        selectedSpecification.specification.bank
+        specificationRewrittenToDiscounts.specification.bank
       );
     setNewPrefilledResponse(prefilledResponse);
   };
 
   const doEvaluation = async () => {
     await evaluationSpecificationStoreService.storeEvaluationSpecification(
-      selectedSpecification
+      specificationRewrittenToDiscounts
     );
-    history.push(`/${EVALUATION}/${selectedSpecification.id}`);
+    history.push(`/${EVALUATION}/${specificationRewrittenToDiscounts.id}`);
   };
 
   const cancel = (): void => {
@@ -77,7 +140,7 @@ export default function SpecificationSelectionModal({
       <ModalBox>
         <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
           <Typography variant="lg" color={theme.palette.primary.main}>
-            {selectedSpecification.specification.title}
+            {specificationRewrittenToDiscounts.specification.title}
           </Typography>
           <ModalButton variant="primary" onClick={editSpecification}>
             {t('Edit specification')}
