@@ -9,9 +9,12 @@ import {
   RequirementAnswerSchema,
 } from './IRequirementAnswer';
 
+export const PREFILLED_RESPONSE_CUSTOMIZATION_V1_0 =
+  'kravbank:prefilled_response:v1.0';
+
 export interface IPrefilledResponse {
   bank: IBank;
-  customization: 'kravbank:prefilled_response:v1.0';
+  customization: typeof PREFILLED_RESPONSE_CUSTOMIZATION_V1_0; // In the future:  PREFILLED_RESPONSE_CUSTOMIZATION_V1_0 | typeof PREFILLED_RESPONSE_CUSTOMIZATION_V1_1 | typeof PREFILLED_RESPONSE_CUSTOMIZATION_V2_0 etc
   supplier: string;
   products: IPrefilledResponseProduct[];
   answeredVariants: string[];

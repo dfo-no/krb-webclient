@@ -2,6 +2,7 @@ import React, { Dispatch, SetStateAction, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { AxiosResponse } from 'axios';
 import { v4 as uuidv4 } from 'uuid';
+import produce from 'immer';
 
 import css from './HomePage.module.scss';
 import ProjectSelectionModal from './ProjectSelectionModal';
@@ -9,16 +10,26 @@ import SpecificationSelectionModal from './SpecificationSelectionModal';
 import ResponseSelectionModal from './ResponseSelectionModal';
 import PrefilledResponseSelectionModal from './PrefilledResponseSelectionModal';
 import FileUpload from '../../components/FileUpload/FileUpload';
-import { IBank } from '../../Nexus/entities/IBank';
-import { ISpecification } from '../../Nexus/entities/ISpecification';
-import { IResponse } from '../../Nexus/entities/IResponse';
-import { IPrefilledResponse } from '../../Nexus/entities/IPrefilledResponse';
+import { BANK_CUSTOMIZATION, IBank } from '../../Nexus/entities/IBank';
+import {
+  ISpecification,
+  SPECIFICATION_CUSTOMIZATION,
+} from '../../Nexus/entities/ISpecification';
+import {
+  IResponse,
+  RESPONSE_CUSTOMIZATION,
+} from '../../Nexus/entities/IResponse';
+import {
+  IPrefilledResponse,
+  PREFILLED_RESPONSE_CUSTOMIZATION_V1_0,
+} from '../../Nexus/entities/IPrefilledResponse';
 import { IAlert } from '../../models/IAlert';
 import { addAlert } from '../../store/reducers/alert-reducer';
 import { httpPost } from '../../api/http';
 import { useAppDispatch } from '../../store/hooks';
 import { getDefaultSpecificationFile } from '../../Nexus/services/EvaluationSpecificationStoreService';
 import { SpecificationFile } from '../../Nexus/entities/SpecificationFile';
+import { RESPONSE } from '../../common/PathConstants';
 
 type Props = {
   selectedBank: IBank | null;
@@ -71,22 +82,51 @@ export function HomePageUpload({ selectedBank, setSelectedBank }: Props) {
       responseType: 'json',
     })
       .then((httpResponse) => {
-        if (httpResponse.data.title) {
+        if (
+          httpResponse.data.customization === SPECIFICATION_CUSTOMIZATION ||
+          httpResponse.data.title
+        ) {
           const file = {
             name: files[0].name,
             lastModified: files[0].lastModified,
           };
 
-          const specification: ISpecification = httpResponse.data;
+          const rawSpecification: ISpecification = httpResponse.data;
+
+          const specification = produce(rawSpecification, (draft) => {
+            // eslint-disable-next-line @typescript-eslint/dot-notation
+            if (draft['customization']) return; // This specification has already been upgraded
+            draft.customization = SPECIFICATION_CUSTOMIZATION;
+            draft.bank.customization = BANK_CUSTOMIZATION;
+          });
 
           setSelectedSpecification(
             getDefaultSpecificationFile(file, specification)
           );
         } else {
-          if (!httpResponse.data.specification) {
-            setSelectedPrefilledResponse(httpResponse.data);
+          if (
+            httpResponse.data.customization ===
+              PREFILLED_RESPONSE_CUSTOMIZATION_V1_0 ||
+            !httpResponse.data.specification
+          ) {
+            const rawPrefilledResponse: IPrefilledResponse = httpResponse.data;
+            const prefilledResponse = produce(rawPrefilledResponse, (draft) => {
+              // eslint-disable-next-line @typescript-eslint/dot-notation
+              if (draft['customization']) return; // This prefilledResponse has already been upgraded
+              draft.customization = PREFILLED_RESPONSE_CUSTOMIZATION_V1_0;
+              draft.bank.customization = BANK_CUSTOMIZATION;
+            });
+            setSelectedPrefilledResponse(prefilledResponse);
           } else {
-            setSelectedResponse(httpResponse.data);
+            const rawResponse: IResponse = httpResponse.data;
+            const response = produce(rawResponse, (draft) => {
+              // eslint-disable-next-line @typescript-eslint/dot-notation
+              if (draft['customization']) return; // This response has already been upgraded
+              draft.customization = RESPONSE_CUSTOMIZATION;
+              draft.specification.customization = SPECIFICATION_CUSTOMIZATION;
+              draft.specification.bank.customization = BANK_CUSTOMIZATION;
+            });
+            setSelectedResponse(response);
           }
         }
       })

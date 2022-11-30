@@ -9,9 +9,11 @@ import {
   SpecificationProductSchema,
 } from './ISpecificationProduct';
 
+export const SPECIFICATION_CUSTOMIZATION = 'kravbank:specification:v1.0';
+
 export interface ISpecification {
   id: string;
-  customization: 'kravbank:specification:v1.0';
+  customization: typeof SPECIFICATION_CUSTOMIZATION;
   bank: IBank;
   organization: string;
   organizationNumber: string;
