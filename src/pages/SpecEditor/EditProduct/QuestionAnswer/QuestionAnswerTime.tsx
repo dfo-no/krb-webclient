@@ -1,6 +1,4 @@
-import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import React, { ReactElement } from 'react';
-import { Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 
 import css from '../QuestionContent.module.scss';
@@ -14,18 +12,24 @@ interface IProps {
 const QuestionAnswerTime = ({ item }: IProps): ReactElement => {
   const { t } = useTranslation();
 
+  const fromTimeLabel = `${item.config.isPeriod ? t('From') : t('Time')}`;
+
+  const toTimeLabel = t('To');
+
   return (
-    <div className={css.QuestionGrid}>
-      <Typography className={css.FullRow} variant={'smBold'}>
-        {t('Answer')}
-      </Typography>
-      <TimeCtrl name={'question.answer.fromTime'} />
+    <div className={css.QuestionDateAndTime}>
+      <TimeCtrl
+        label={fromTimeLabel}
+        name={'question.answer.fromTime'}
+        color={'var(--text-primary-color)'}
+      />
       {item.config.isPeriod && (
-        <div className={css.Arrow}>
-          <ArrowForwardIcon />
-        </div>
+        <TimeCtrl
+          label={toTimeLabel}
+          name={'question.answer.toTime'}
+          color={'var(--text-primary-color)'}
+        />
       )}
-      {item.config.isPeriod && <TimeCtrl name={'question.answer.toTime'} />}
     </div>
   );
 };
