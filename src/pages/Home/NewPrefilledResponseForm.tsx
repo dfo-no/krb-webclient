@@ -27,17 +27,17 @@ interface IProps {
 
 const NewPrefilledResponseForm = ({
   handleClose,
-  prefilledResponse,
+  prefilledResponse: rawPrefilledResponse,
 }: IProps) => {
   const { t } = useTranslation();
   const history = useHistory();
   const dispatch = useAppDispatch();
   const nexus = Nexus.getInstance();
-  const updatedPrefilledResponse = updateObject({ ...prefilledResponse });
+  const prefilledResponse = updateObject({ ...rawPrefilledResponse });
 
   const methods = useForm<IPrefilledResponse>({
     resolver: nexus.resolverService.resolver(ModelType.prefilledResponse),
-    defaultValues: updatedPrefilledResponse,
+    defaultValues: prefilledResponse,
   });
 
   const onSubmit = async (post: IPrefilledResponse) => {
@@ -55,7 +55,7 @@ const NewPrefilledResponseForm = ({
         <ModalBox>
           <Box>
             <Typography variant="lg" color={theme.palette.primary.main}>
-              {updatedPrefilledResponse.bank.title}
+              {prefilledResponse.bank.title}
             </Typography>
           </Box>
           <ModalFieldsBox>
