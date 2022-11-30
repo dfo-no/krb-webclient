@@ -5,10 +5,13 @@ import { ModelType } from '../enums';
 
 const initialState: IResponse = {
   id: '',
+  customization: 'kravbank:response:v1.0',
   specification: {
     id: '',
+    customization: 'kravbank:specification:v1.0',
     bank: {
       id: '',
+      customization: 'kravbank:bank:v1.0',
       title: '',
       description: '',
       needs: [],

@@ -25,6 +25,7 @@ export default class SpecificationService extends BaseService {
   public static defaultSpecification(bank?: IBank): ISpecification {
     return {
       id: '',
+      customization: 'kravbank:specification:v1.0',
       bank: bank ?? ProjectService.defaultProject(),
       title: '',
       organization: '',
