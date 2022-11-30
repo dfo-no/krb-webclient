@@ -26,7 +26,7 @@ interface IProps {
 }
 
 export default function SpecificationSelectionModal({
-  selectedSpecification,
+  selectedSpecification: rawSpecification,
   setSelectedSpecification,
 }: IProps): React.ReactElement {
   const [newResponse, setNewResponse] = useState<IResponse | null>(null);
@@ -38,11 +38,11 @@ export default function SpecificationSelectionModal({
   const evaluationSpecificationStoreService =
     new EvaluationSpecificationStoreService();
 
-  const specificationRewrittenToDiscounts = updateObject(selectedSpecification);
+  const selectedSpecification = updateObject(rawSpecification);
 
   const editSpecification = (): void => {
     nexus.specificationService
-      .setSpecification(specificationRewrittenToDiscounts.specification)
+      .setSpecification(selectedSpecification.specification)
       .then((specification) => {
         history.push(`/${SPECIFICATION}/${specification.id}`);
       });
@@ -50,7 +50,7 @@ export default function SpecificationSelectionModal({
 
   const createResponse = (): void => {
     const response = nexus.responseService.createResponseFromSpecification(
-      specificationRewrittenToDiscounts.specification
+      selectedSpecification.specification
     );
     setNewResponse(response);
   };
@@ -58,16 +58,16 @@ export default function SpecificationSelectionModal({
   const createPrefilledResponse = (): void => {
     const prefilledResponse =
       nexus.prefilledResponseService.createPrefilledResponseFromBank(
-        specificationRewrittenToDiscounts.specification.bank
+        selectedSpecification.specification.bank
       );
     setNewPrefilledResponse(prefilledResponse);
   };
 
   const doEvaluation = async () => {
     await evaluationSpecificationStoreService.storeEvaluationSpecification(
-      specificationRewrittenToDiscounts
+      selectedSpecification
     );
-    history.push(`/${EVALUATION}/${specificationRewrittenToDiscounts.id}`);
+    history.push(`/${EVALUATION}/${selectedSpecification.id}`);
   };
 
   const cancel = (): void => {
@@ -80,7 +80,7 @@ export default function SpecificationSelectionModal({
       <ModalBox>
         <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
           <Typography variant="lg" color={theme.palette.primary.main}>
-            {specificationRewrittenToDiscounts.specification.title}
+            {selectedSpecification.specification.title}
           </Typography>
           <ModalButton variant="primary" onClick={editSpecification}>
             {t('Edit specification')}
