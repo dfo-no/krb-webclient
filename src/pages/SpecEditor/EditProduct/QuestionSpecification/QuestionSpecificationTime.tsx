@@ -154,7 +154,7 @@ const QuestionSpecificationTime = ({ item }: IProps): ReactElement => {
                   >
                     <TimeCtrl
                       className={css.QuestionCriteria__Ctrl__inputCtrl}
-                      label={index == 0 ? `${t('Date')}` : ''}
+                      label={index == 0 ? `${t('Time')}` : ''}
                       name={`question.config.timeScores[${index}].time`}
                       color={'var(--text-primary-color)'}
                     />
