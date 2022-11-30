@@ -29,7 +29,6 @@ import { httpPost } from '../../api/http';
 import { useAppDispatch } from '../../store/hooks';
 import { getDefaultSpecificationFile } from '../../Nexus/services/EvaluationSpecificationStoreService';
 import { SpecificationFile } from '../../Nexus/entities/SpecificationFile';
-import { RESPONSE } from '../../common/PathConstants';
 
 type Props = {
   selectedBank: IBank | null;
