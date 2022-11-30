@@ -2,12 +2,16 @@ import { Box, Typography } from '@mui/material/';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useHistory } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import produce from 'immer';
 
 import theme from '../../theme';
 import GeneralErrorMessage from '../../Form/GeneralErrorMessage';
 import Nexus from '../../Nexus/Nexus';
 import VerticalTextCtrl from '../../FormProvider/VerticalTextCtrl';
-import { ISpecification } from '../../Nexus/entities/ISpecification';
+import {
+  ISpecification,
+  SPECIFICATION_CUSTOMIZATION,
+} from '../../Nexus/entities/ISpecification';
 import {
   ModalBox,
   ModalFieldsBox,
@@ -17,16 +21,29 @@ import {
 import { ModelType } from '../../Nexus/enums';
 import { SPECIFICATION } from '../../common/PathConstants';
 import OrganizationField from '../../components/OrgnizationField/OrganizationField';
+import { BANK_CUSTOMIZATION } from '../../Nexus/entities/IBank';
 
 interface IProps {
   handleClose: () => void;
   specification: ISpecification;
 }
 
-const NewSpecificationForm = ({ handleClose, specification }: IProps) => {
+const NewSpecificationForm = ({
+  handleClose,
+  specification: rawSpecification,
+}: IProps) => {
   const { t } = useTranslation();
   const history = useHistory();
   const nexus = Nexus.getInstance();
+
+  const specification = produce(rawSpecification, (draft) => {
+    // eslint-disable-next-line @typescript-eslint/dot-notation
+    if (!draft['customization'])
+      draft.customization = SPECIFICATION_CUSTOMIZATION;
+    // eslint-disable-next-line @typescript-eslint/dot-notation
+    if (!draft.bank['customization'])
+      draft.bank.customization = BANK_CUSTOMIZATION;
+  });
 
   const methods = useForm<ISpecification>({
     resolver: nexus.resolverService.resolver(ModelType.specification),
