@@ -26,9 +26,11 @@ export const BaseBankSchema = BaseModelSchema.keys({
   deletedDate: CustomJoi.validateOptionalDate(),
 });
 
+export const BANK_CUSTOMIZATION = 'kravbank:bank:v1.0';
+
 export interface IBank extends IBaseModel {
   id: string;
-  customization: 'kravbank:bank:v1.0';
+  customization: typeof BANK_CUSTOMIZATION;
   title: string;
   description: string;
   needs: Parentable<INeed>[];
