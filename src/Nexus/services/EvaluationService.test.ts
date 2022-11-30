@@ -413,7 +413,7 @@ describe('EvaluationService', () => {
       ],
     };
     const nexus = Nexus.getInstance();
-    const result = await nexus.evaluationService.evaluateAll([response]);
+    const result = nexus.evaluationService.evaluateAll([response]);
     // TODO: Oppdaterer med mer realistiske dataSum: product1: (0.35 + 0.5) * 0.7 , product2: 0.07 * 0.5, general: 0.18 + 0.7 + 0.2 = 1,71
     expect(result[0].discount).toBe(320);
   });

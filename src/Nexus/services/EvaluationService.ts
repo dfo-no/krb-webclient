@@ -11,7 +11,7 @@ export default class EvaluationService {
     return !!discount ? discount : 0;
   }
 
-  async evaluateAll(responses: IResponse[]): Promise<IEvaluatedResponse[]> {
+  evaluateAll(responses: IResponse[]): IEvaluatedResponse[] {
     const evaluations: IEvaluatedResponse[] = [];
     responses.forEach((response) => {
       const result = this.evaluate(response);
