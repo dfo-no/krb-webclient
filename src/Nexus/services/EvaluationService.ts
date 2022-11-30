@@ -12,50 +12,39 @@ export default class EvaluationService {
   }
 
   evaluateAll(responses: IResponse[]): IEvaluatedResponse[] {
-    const evaluations: IEvaluatedResponse[] = [];
-    responses.forEach((response) => {
-      const result = this.evaluate(response);
-      evaluations.push(result);
-    });
-    return evaluations;
+    return responses.map((response) => this.evaluate(response));
   }
 
   calculateProductDiscount(product: IResponseProduct): number {
-    let total = 0;
-
-    product.requirementAnswers.forEach((requirementAnswer) => {
-      const discount = EvaluationService.calculateDiscount(requirementAnswer);
-      total += discount;
-    });
-    return total;
+    return product.requirementAnswers
+      .map((requirementAnswer) => {
+        return EvaluationService.calculateDiscount(requirementAnswer);
+      })
+      .reduce((totalDiscount, discount) => {
+        return totalDiscount + discount;
+      });
   }
 
   calculateGeneralDiscount(response: IResponse): number {
-    let total = 0;
-
-    response.requirementAnswers.forEach((requirementAnswer) => {
-      const discount = EvaluationService.calculateDiscount(requirementAnswer);
-      total += discount;
-    });
-    return total;
+    return response.requirementAnswers
+      .map((requirementAnswer) => {
+        return EvaluationService.calculateDiscount(requirementAnswer);
+      })
+      .reduce((totalDiscount, discount) => {
+        return totalDiscount + discount;
+      });
   }
 
   evaluate(response: IResponse): IEvaluatedResponse {
-    const evaluation: IEvaluatedResponse = {
-      supplier: response.supplier,
-      discount: 0,
-    };
-    let totDiscount = 0;
-
-    const calc = this.calculateGeneralDiscount(response);
-    totDiscount += calc;
+    let discount = this.calculateGeneralDiscount(response);
 
     response.products.forEach((product) => {
-      const productCalc = this.calculateProductDiscount(product);
-      totDiscount += productCalc;
+      discount += this.calculateProductDiscount(product);
     });
 
-    evaluation.discount = totDiscount;
-    return evaluation;
+    return {
+      supplier: response.supplier,
+      discount: discount,
+    };
   }
 }
