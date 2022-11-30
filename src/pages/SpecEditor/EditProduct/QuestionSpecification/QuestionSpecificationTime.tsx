@@ -107,32 +107,32 @@ const QuestionSpecificationTime = ({ item }: IProps): ReactElement => {
       >
         {t('Evaluation')}
       </Typography>
-      {fields.map((timeScore, idx) => {
+      {fields.map((timeScore, index) => {
         return (
           <div
             key={timeScore.id}
             className={classnames(css.QuestionGrid, css.FullRow)}
           >
-            {idx < 2 ? (
+            {index < 2 ? (
               <Typography variant={'smBold'} className={css.CenteredText}>
                 {DateUtils.prettyFormatTime(timeScore.time)}
               </Typography>
             ) : (
-              <TimeCtrl name={`question.config.timeScores[${idx}].time`} />
+              <TimeCtrl name={`question.config.timeScores[${index}].time`} />
             )}
             <div className={css.Arrow}>
               <ArrowForwardIcon />
             </div>
             <HorizontalTextCtrl
-              name={`question.config.timeScores[${idx}].score`}
+              name={`question.config.timeScores[${index}].score`}
               placeholder={t('Score')}
               type={'number'}
             />
-            {idx > 1 && (
+            {index > 1 && (
               <div className={css.Delete}>
                 <FormIconButton
                   hoverColor={theme.palette.errorRed.main}
-                  onClick={() => remove(idx)}
+                  onClick={() => remove(index)}
                 >
                   <DeleteIcon />
                 </FormIconButton>

@@ -1,5 +1,4 @@
 import React, { ReactElement } from 'react';
-import { Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 
 import css from '../QuestionContent.module.scss';
@@ -10,8 +9,11 @@ const QuestionAnswerCheckbox = (): ReactElement => {
 
   return (
     <div className={css.QuestionFlex}>
-      <Typography variant={'smBold'}>{t('Answer')}</Typography>
-      <YesNoSelection name={'question.answer.value'} />
+      <YesNoSelection
+        name={'question.answer.value'}
+        label={t('Answer')}
+        color={'var(--text-primary-color)'}
+      />
     </div>
   );
 };

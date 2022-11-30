@@ -83,6 +83,7 @@ const NewSpecificationForm = ({ handleClose, specification }: IProps) => {
             </ModalButton>
           </ModalButtonsBox>
         </ModalBox>
+        {console.log(methods.formState.errors)}
         <GeneralErrorMessage errors={methods.formState.errors} />
       </form>
     </FormProvider>

@@ -218,7 +218,7 @@ export default function ProductRequirement({
         </Box>
       ) : (
         <Box className={css.card}>
-          <Box className={css.title}>
+          <Box className={css.card__title}>
             <Typography variant="smBold">{requirement.title}</Typography>
           </Box>
           <FormProvider {...methods}>

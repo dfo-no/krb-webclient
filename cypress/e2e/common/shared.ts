@@ -20,7 +20,7 @@ When('Jeg laster opp besvarelse', () => {
   // eslint-disable-next-line cypress/no-unnecessary-waiting
   cy.wait(500);
   uploadResponseFileForEvaluation(
-    './cypress/filesForUploadTesting/2022-10-03-citronen-response-4.pdf'
+    './cypress/filesForUploadTesting/2022-11-30-citronen-response-5.pdf'
   );
 });
 

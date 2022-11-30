@@ -1,13 +1,9 @@
-import React, { ReactElement, useEffect, useState } from 'react';
-import { Typography } from '@mui/material';
+import React, { ReactElement } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useFormContext, useWatch } from 'react-hook-form';
 
 import css from '../QuestionContent.module.scss';
-import SliderCtrl from '../../../../FormProvider/SliderCtrl';
-import { IMark } from '../../../../Nexus/entities/IMark';
-import { IRequirementAnswer } from '../../../../Nexus/entities/IRequirementAnswer';
 import { ISliderQuestion } from '../../../../Nexus/entities/ISliderQuestion';
+import HorizontalTextCtrl from '../../../../FormProvider/HorizontalTextCtrl';
 
 interface IProps {
   item: ISliderQuestion;
@@ -15,29 +11,18 @@ interface IProps {
 
 const QuestionAnswerSlider = ({ item }: IProps): ReactElement => {
   const { t } = useTranslation();
-  const { control } = useFormContext<IRequirementAnswer>();
-  const useAnswer = useWatch({ name: 'question.answer.value', control });
 
-  const [sliderMark, setSliderMark] = useState<IMark[]>([
-    { value: +useAnswer, label: `${useAnswer} ${item.config.unit}` },
-  ]);
-
-  useEffect(() => {
-    setSliderMark([
-      { value: +useAnswer, label: `${useAnswer} ${item.config.unit}` },
-    ]);
-  }, [useAnswer, item.config.unit]);
+  const sliderLabel = `${t('Quantity')} ${item.config.unit}`;
 
   return (
     <div className={css.QuestionFlex}>
-      <Typography variant={'smBold'}>{t('Answer')}</Typography>
-      <SliderCtrl
+      <HorizontalTextCtrl
+        className={css.QuestionFlex__textCtrl}
         name={'question.answer.value'}
-        min={item.config.min}
-        max={item.config.max}
-        step={item.config.step}
-        showValue={false}
-        marks={sliderMark}
+        label={sliderLabel}
+        placeholder={sliderLabel}
+        type={'number'}
+        adornment={item.config.unit}
       />
     </div>
   );

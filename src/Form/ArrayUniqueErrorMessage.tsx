@@ -1,14 +1,14 @@
 import React from 'react';
-import { FieldErrors } from 'react-hook-form';
+import { FieldErrors, FieldValues } from 'react-hook-form';
 import { FormLabel } from '@mui/material';
 import { get } from 'lodash';
 
-type Props<T> = {
+type Props<T extends FieldValues> = {
   errors: FieldErrors<T>;
   path: string;
   length: number;
 };
-export default function ArrayUniqueErrorMessage<T>({
+export default function ArrayUniqueErrorMessage<T extends FieldValues>({
   errors,
   path,
   length,

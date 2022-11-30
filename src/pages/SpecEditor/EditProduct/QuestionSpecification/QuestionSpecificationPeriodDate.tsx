@@ -106,32 +106,32 @@ const QuestionSpecificationPeriodDate = ({ item }: IProps): ReactElement => {
       >
         {t('Evaluation')}
       </Typography>
-      {fields.map((dateScore, idx) => {
+      {fields.map((dateScore, index) => {
         return (
           <div
             key={dateScore.id}
             className={classnames(css.QuestionGrid, css.FullRow)}
           >
-            {idx < 2 ? (
+            {index < 2 ? (
               <Typography variant={'smBold'} className={css.CenteredText}>
                 {DateUtils.prettyFormatDate(dateScore.date)}
               </Typography>
             ) : (
-              <DateCtrl name={`question.config.dateScores[${idx}].date`} />
+              <DateCtrl name={`question.config.dateScores[${index}].date`} />
             )}
             <div className={css.Arrow}>
               <ArrowForwardIcon />
             </div>
             <HorizontalTextCtrl
-              name={`question.config.dateScores[${idx}].score`}
+              name={`question.config.dateScores[${index}].score`}
               placeholder={t('Score')}
               type={'number'}
             />
-            {idx > 1 && (
+            {index > 1 && (
               <div className={css.Delete}>
                 <FormIconButton
                   hoverColor={theme.palette.errorRed.main}
-                  onClick={() => remove(idx)}
+                  onClick={() => remove(index)}
                 >
                   <DeleteIcon />
                 </FormIconButton>

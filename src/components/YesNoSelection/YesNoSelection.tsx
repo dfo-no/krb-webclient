@@ -5,11 +5,15 @@ import RadioCtrl from '../../FormProvider/RadioCtrl';
 
 interface IProps {
   name: string;
+  label?: string;
+  color?: string;
   recommendedAlternative?: boolean;
 }
 
 const YesNoSelection = ({
   name,
+  label,
+  color,
   recommendedAlternative,
 }: IProps): ReactElement => {
   const isRecommended = (alternative: boolean): boolean => {
@@ -21,6 +25,8 @@ const YesNoSelection = ({
   return (
     <RadioCtrl
       name={name}
+      label={label}
+      color={color}
       options={[
         {
           value: 'true',

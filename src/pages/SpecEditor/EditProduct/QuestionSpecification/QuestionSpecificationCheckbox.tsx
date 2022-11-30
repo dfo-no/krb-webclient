@@ -11,7 +11,7 @@ import { IRequirementAnswer } from '../../../../Nexus/entities/IRequirementAnswe
 
 const QuestionSpecificationCheckbox = (): ReactElement => {
   const { t } = useTranslation();
-  const [preferredScore, setPreferredScore] = useState(false);
+  const [awardCriteria, setAwardCriteria] = useState(false);
   const { control, setValue } = useFormContext<IRequirementAnswer>();
   const useDiscountNonPrefered = useWatch({
     name: 'question.config.discountNonPrefered',
@@ -20,33 +20,36 @@ const QuestionSpecificationCheckbox = (): ReactElement => {
 
   useEffect(() => {
     if (useDiscountNonPrefered > 0) {
-      setPreferredScore(true);
+      setAwardCriteria(true);
     }
   }, [useDiscountNonPrefered]);
 
   const onCheckboxClick = (): void => {
-    if (preferredScore) {
+    if (awardCriteria) {
       setValue('question.config.discountNonPrefered', 0);
     } else {
       setValue('question.config.discountNonPrefered', 70);
     }
-    setPreferredScore((prev) => !prev);
+    setAwardCriteria((prev) => !prev);
   };
 
   return (
     <div className={css.QuestionFlex}>
-      <Typography variant={'smBold'}>{t('Preferred alternative')}</Typography>
-      <YesNoSelection name={'question.config.preferedAlternative'} />
+      <YesNoSelection
+        name={'question.config.preferedAlternative'}
+        label={t('Preferred alternative')}
+        color={'var(--text-primary-color)'}
+      />
       <div onClick={onCheckboxClick}>
         <DFOCheckbox
-          checked={preferredScore}
+          checked={awardCriteria}
           _color={'var(--text-primary-color)'}
         />
         <Typography className={css.CheckboxLabel} variant={'smBold'}>
           {t('Is the requirement an award criteria')}
         </Typography>
       </div>
-      {preferredScore && (
+      {awardCriteria && (
         <div>
           <VerticalTextCtrl
             name={'question.config.discountNonPrefered'}
