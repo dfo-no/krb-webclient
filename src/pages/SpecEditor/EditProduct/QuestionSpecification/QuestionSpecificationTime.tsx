@@ -1,22 +1,21 @@
-import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
-import classnames from 'classnames';
-import DeleteIcon from '@mui/icons-material/Delete';
 import React, { ReactElement, useEffect, useState } from 'react';
-import { Button, Typography } from '@mui/material';
+import { Typography } from '@mui/material';
 import { t } from 'i18next';
 import { useFieldArray, useFormContext, useWatch } from 'react-hook-form';
+import { Button, Location, Variant } from '@dfo-no/components.button';
+import { Symbols } from '@dfo-no/components.icon';
+import ClearIcon from '@mui/icons-material/Clear';
 
 import ArrayUniqueErrorMessage from '../../../../Form/ArrayUniqueErrorMessage';
 import css from '../QuestionContent.module.scss';
 import DateUtils from '../../../../common/DateUtils';
 import HorizontalTextCtrl from '../../../../FormProvider/HorizontalTextCtrl';
-import theme from '../../../../theme';
 import TimeCtrl from '../../../../FormProvider/TimeCtrl';
-import { FormIconButton } from '../../../../components/Form/FormIconButton';
 import { IRequirementAnswer } from '../../../../Nexus/entities/IRequirementAnswer';
 import { ITimeQuestion } from '../../../../Nexus/entities/ITimeQuestion';
 import UuidService from '../../../../Nexus/services/UuidService';
 import { DFOCheckbox } from '../../../../components/DFOCheckbox/DFOCheckbox';
+import ToolbarItem from '../../../../components/UI/Toolbar/ToolbarItem';
 
 interface IProps {
   item: ITimeQuestion;
@@ -59,14 +58,15 @@ const QuestionSpecificationTime = ({ item }: IProps): ReactElement => {
   }, [useFromBoundary, setValue, item.config.isPeriod]);
 
   useEffect(() => {
-    if (!fields.length) {
+    if (!fields.length && awardCriteria) {
       append({ id: new UuidService().generateId(), time: null, score: 0 });
       append({ id: new UuidService().generateId(), time: null, score: 100 });
     }
-  }, [fields, append]);
+  }, [fields, awardCriteria, append]);
 
   useEffect(() => {
     if (
+      awardCriteria &&
       useMinScore &&
       (!DateUtils.sameTime(useFromBoundary, useMinScore.time) ||
         !useMinScore.id)
@@ -77,10 +77,11 @@ const QuestionSpecificationTime = ({ item }: IProps): ReactElement => {
         score: useMinScore.score,
       });
     }
-  }, [useFromBoundary, useMinScore, update]);
+  }, [awardCriteria, useFromBoundary, useMinScore, update]);
 
   useEffect(() => {
     if (
+      awardCriteria &&
       useMaxScore &&
       useToBoundary &&
       (!DateUtils.sameTime(useToBoundary, useMaxScore.time) || !useMaxScore.id)
@@ -91,7 +92,13 @@ const QuestionSpecificationTime = ({ item }: IProps): ReactElement => {
         score: useMaxScore.score,
       });
     }
-  }, [useToBoundary, useMaxScore, update, append]);
+  }, [awardCriteria, useToBoundary, useMaxScore, update, append]);
+
+  useEffect(() => {
+    if (fields.length > 0) {
+      setAwardCriteria(true);
+    }
+  }, [fields]);
 
   const onCheckboxClick = (): void => {
     setAwardCriteria((prev) => !prev);
@@ -136,67 +143,67 @@ const QuestionSpecificationTime = ({ item }: IProps): ReactElement => {
         </div>
       </div>
       {awardCriteria && (
-        <div className={css.QuestionGrid}>
-          <Typography
-            className={classnames(css.FullRow, css.TopMargin)}
-            variant={'smBold'}
-          >
-            {t('Evaluation')}
-          </Typography>
-          {fields.map((timeScore, idx) => {
-            return (
-              <div
-                key={timeScore.id}
-                className={classnames(css.QuestionGrid, css.FullRow)}
-              >
-                {idx < 2 ? (
-                  <Typography variant={'smBold'} className={css.CenteredText}>
-                    {DateUtils.prettyFormatTime(timeScore.time)}
-                  </Typography>
-                ) : (
-                  <TimeCtrl name={`question.config.timeScores[${idx}].time`} />
-                )}
-                <div className={css.Arrow}>
-                  <ArrowForwardIcon />
-                </div>
-                <HorizontalTextCtrl
-                  name={`question.config.timeScores[${idx}].score`}
-                  placeholder={t('Score')}
-                  type={'number'}
-                />
-                {idx > 1 && (
-                  <div className={css.Delete}>
-                    <FormIconButton
-                      hoverColor={theme.palette.errorRed.main}
-                      onClick={() => remove(idx)}
-                    >
-                      <DeleteIcon />
-                    </FormIconButton>
+        <div className={css.QuestionCriteria}>
+          <div className={css.QuestionCriteria__wrapper}>
+            <div className={css.QuestionCriteria__wrapper__CtrlContainer}>
+              {fields.map((timeScore, index) => {
+                return (
+                  <div
+                    key={timeScore.id}
+                    className={css.QuestionCriteria__Ctrl}
+                  >
+                    <TimeCtrl
+                      className={css.QuestionCriteria__Ctrl__inputCtrl}
+                      label={index == 0 ? `${t('Date')}` : ''}
+                      name={`question.config.timeScores[${index}].time`}
+                      color={'var(--text-primary-color)'}
+                    />
+                    <HorizontalTextCtrl
+                      className={css.QuestionCriteria__Ctrl__inputCtrl}
+                      label={index == 0 ? t('Deduction') : ''}
+                      name={`question.config.timeScores[${index}].score`}
+                      placeholder={t('Value')}
+                      type={'number'}
+                      adornment={t('NOK')}
+                      color={'var(--text-primary-color)'}
+                    />
+                    {index == 0 && (
+                      <Button
+                        className={css.QuestionCriteria__Ctrl__action}
+                        icon={Symbols.Plus}
+                        iconLocation={Location.Before}
+                        variant={Variant.Ghost}
+                        onClick={() =>
+                          append({
+                            id: new UuidService().generateId(),
+                            time: useFromBoundary,
+                            score: 0,
+                          })
+                        }
+                      >
+                        {t('Add row')}
+                      </Button>
+                    )}
+                    {index > 0 && (
+                      <ToolbarItem
+                        secondaryText={t('Remove')}
+                        icon={<ClearIcon />}
+                        handleClick={() => remove(index)}
+                        fontSize={'small'}
+                      />
+                    )}
                   </div>
-                )}
+                );
+              })}
+              <div>
+                <ArrayUniqueErrorMessage
+                  errors={formState.errors}
+                  path={'question.config.timeScores'}
+                  length={fields.length}
+                />
               </div>
-            );
-          })}
-          <div className={css.FullRow}>
-            <ArrayUniqueErrorMessage
-              errors={formState.errors}
-              path={'question.config.timeScores'}
-              length={fields.length}
-            />
+            </div>
           </div>
-          <Button
-            variant="primary"
-            onClick={() =>
-              append({
-                id: new UuidService().generateId(),
-                time: useFromBoundary,
-                score: 0,
-              })
-            }
-          >
-            {t('Add new time score')}
-          </Button>
-          <div />
         </div>
       )}
     </>

@@ -39,7 +39,7 @@ const QuestionSpecificationConfirmation = (): ReactElement => {
           checked={awardCriteria}
           _color={'var(--text-primary-color)'}
         />
-        <Typography className={css.CheckboxLabel} variant={'mdBold'}>
+        <Typography className={css.CheckboxLabel} variant={'smBold'}>
           {t('Is the requirement an award criteria')}
         </Typography>
       </div>

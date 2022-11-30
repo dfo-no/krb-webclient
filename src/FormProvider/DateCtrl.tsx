@@ -5,6 +5,7 @@ import { DatePicker, LocalizationProvider } from '@mui/x-date-pickers';
 import { get } from 'lodash';
 import { isDate, isValid } from 'date-fns';
 import { useTranslation } from 'react-i18next';
+import classnames from 'classnames';
 
 import DateUtils from '../common/DateUtils';
 import DFOPickerField from '../components/DFOPickerField/DFOPickerField';
@@ -16,6 +17,7 @@ interface IProps {
   minDate?: string;
   maxDate?: string;
   color?: string;
+  className?: string;
 }
 
 const DateCtrl = ({
@@ -24,6 +26,7 @@ const DateCtrl = ({
   minDate,
   maxDate,
   color,
+  className,
 }: IProps): React.ReactElement => {
   const {
     formState: { errors },
@@ -56,10 +59,14 @@ const DateCtrl = ({
       <Controller
         name={name}
         render={({ field }) => (
-          <div className={css.FormProvider__DateAndTimeCtrl}>
-            <span className={css.FormProvider__DateAndTimeCtrl__label}>
-              {label}
-            </span>
+          <div
+            className={classnames(css.FormProvider__DateAndTimeCtrl, className)}
+          >
+            {label && (
+              <span className={css.FormProvider__DateAndTimeCtrl__label}>
+                {label}
+              </span>
+            )}
             <DatePicker
               {...field}
               mask={maskMap[i18n.language]}

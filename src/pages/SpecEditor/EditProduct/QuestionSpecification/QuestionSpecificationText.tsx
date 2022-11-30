@@ -57,17 +57,15 @@ export default function QuestionSpecificationText(): ReactElement {
           <Typography variant={'smBold'}>{t('Deduction levels')}</Typography>
           <span>{t('Deduction levels text')}</span>
           <div className={css.QuestionCriteria__wrapper}>
-            <div className={css.QuestionCriteria__wrapper__textCtrlContainer}>
+            <div className={css.QuestionCriteria__wrapper__CtrlContainer}>
               {fields.map((discountValues, index) => {
                 return (
                   <div
                     key={discountValues.id}
-                    className={css.QuestionCriteria__wrapper__textCtrl}
+                    className={css.QuestionCriteria__Ctrl}
                   >
                     <HorizontalTextCtrl
-                      className={
-                        css.QuestionCriteria__wrapper__textCtrl__horizontalTextCtrl
-                      }
+                      className={css.QuestionCriteria__Ctrl__inputCtrl}
                       label={index == 0 ? t('Deduction') : ''}
                       name={`question.config.discountValues[${index}].discount`}
                       placeholder={t('Value')}
@@ -77,9 +75,7 @@ export default function QuestionSpecificationText(): ReactElement {
                     />
                     {index == 0 && (
                       <Button
-                        className={
-                          css.QuestionCriteria__wrapper__textCtrl__action
-                        }
+                        className={css.QuestionCriteria__Ctrl__action}
                         icon={Symbols.Plus}
                         iconLocation={Location.Before}
                         variant={Variant.Ghost}
