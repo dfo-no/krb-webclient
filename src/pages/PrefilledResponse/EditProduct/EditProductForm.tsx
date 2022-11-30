@@ -3,13 +3,11 @@ import Typography from '@mui/material/Typography';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { FormControlLabel, RadioGroup } from '@mui/material';
+import { Button, Type, Variant } from '@dfo-no/components.button';
 
+import css from '../../Stylesheets/EditorFullPage.module.scss';
 import Nexus from '../../../Nexus/Nexus';
 import VerticalTextCtrl from '../../../FormProvider/VerticalTextCtrl';
-import {
-  ModalButton,
-  ModalButtonsBox,
-} from '../../../components/ModalBox/ModalBox';
 import { ModelType } from '../../../Nexus/enums';
 import { FormFieldsBox } from '../../../components/Form/FormFieldsBox';
 import { IPrefilledResponseProduct } from '../../../Nexus/entities/IPrefilledResponseProduct';
@@ -105,14 +103,12 @@ const EditProductForm = ({ handleClose, prefilledResponseProduct }: IProps) => {
               products={nonDeletedRelatedProducts}
             />
           )}
-          <ModalButtonsBox>
-            <ModalButton variant="cancel" onClick={() => handleClose()}>
+          <div className={css.formButtons}>
+            <Button type={Type.Submit}>{t('Save')}</Button>
+            <Button variant={Variant.Inverted} onClick={() => handleClose()}>
               {t('common.Cancel')}
-            </ModalButton>
-            <ModalButton variant="primary" type="submit">
-              {t('Save')}
-            </ModalButton>
-          </ModalButtonsBox>
+            </Button>
+          </div>
         </FormFieldsBox>
       </form>
     </FormProvider>

@@ -141,6 +141,16 @@
     }
   }
 
+  .formButtons {
+    display: flex;
+    flex-direction: row-reverse;
+    gap: var(--normal-gap);
+
+    button {
+      font-size: var(--small-fontsize);
+    }
+  }
+
   .ProductOverview {
     display: flex;
     flex-direction: column;

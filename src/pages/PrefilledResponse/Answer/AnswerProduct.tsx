@@ -1,8 +1,9 @@
 import React, { ReactElement, useState } from 'react';
-import { Button, Typography } from '@mui/material';
+import { Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
 import EditIcon from '@mui/icons-material/Edit';
+import { Button, Variant } from '@dfo-no/components.button';
 
 import ProductNeed from './ProductNeed';
 import Utils from '../../../common/Utils';
@@ -98,19 +99,19 @@ export default function AnswerProduct(): React.ReactElement {
         classname={css.Actions}
         panelColor={'white'}
         children={
-          <>
-            <Button variant="cancel" onClick={toOverviewPage}>
-              {t('common.Cancel')}
-            </Button>
+          <div className={css.formButtons}>
             <Button
-              variant="primary"
+              variant={Variant.Action}
               onClick={toOverviewPage}
               disabled={editingProduct}
               className={editingProduct ? css.Actions__disabled : ''}
             >
               {t('Save product')}
             </Button>
-          </>
+            <Button variant={Variant.Inverted} onClick={toOverviewPage}>
+              {t('common.Cancel')}
+            </Button>
+          </div>
         }
       />
     </div>
