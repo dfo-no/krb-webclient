@@ -10,6 +10,7 @@ export default class PrefilledResponseService {
   public createPrefilledResponseFromBank(bank: IBank): IPrefilledResponse {
     return {
       bank: bank,
+      customization: 'kravbank:prefilled_response:v1.0',
       supplier: '',
       products: [],
       answeredVariants: [],

@@ -11,6 +11,7 @@ import {
 
 export interface IPrefilledResponse {
   bank: IBank;
+  customization: 'kravbank:prefilled_response:v1.0';
   supplier: string;
   products: IPrefilledResponseProduct[];
   answeredVariants: string[];
@@ -19,6 +20,7 @@ export interface IPrefilledResponse {
 
 export const BasePrefilledResponseSchema = CustomJoi.object().keys({
   bank: BaseBankSchema,
+  customization: CustomJoi.validateText(),
   supplier: CustomJoi.validateText(),
   products: CustomJoi.validateArray(PrefilledResponseProductSchema),
   answeredVariants: CustomJoi.validateIdArray(),

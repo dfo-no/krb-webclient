@@ -8,6 +8,7 @@ describe('BankSchema should validate', () => {
   test('basebankSchema works', () => {
     const bank: IBank = {
       id: 'e56367af-d48d-422d-a4f6-ba52ee17af23',
+      customization: 'kravbank:bank:v1.0',
       title: 'Test',
       description: '',
       codelist: [],

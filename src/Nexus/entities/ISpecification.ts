@@ -10,8 +10,9 @@ import {
 } from './ISpecificationProduct';
 
 export interface ISpecification {
-  bank: IBank;
   id: string;
+  customization: 'kravbank:specification:v1.0';
+  bank: IBank;
   organization: string;
   organizationNumber: string;
   products: ISpecificationProduct[];
@@ -23,8 +24,9 @@ export interface ISpecification {
 }
 
 export const BaseSpecificationSchema = CustomJoi.object().keys({
-  bank: BaseBankSchema,
   id: CustomJoi.validateParentId(),
+  customization: CustomJoi.validateText,
+  bank: BaseBankSchema,
   organization: CustomJoi.validateText(),
   organizationNumber: CustomJoi.validateOrgNr(),
   products: CustomJoi.validateUniqueArray(SpecificationProductSchema),

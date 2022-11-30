@@ -13,8 +13,10 @@ interface IPrefilledResponseState {
 
 const initialState: IPrefilledResponseState = {
   prefilledResponse: {
+    customization: 'kravbank:prefilled_response:v1.0',
     bank: {
       id: '',
+      customization: 'kravbank:bank:v1.0',
       title: '',
       description: '',
       needs: [],
