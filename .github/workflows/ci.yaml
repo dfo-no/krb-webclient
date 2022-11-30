@@ -199,6 +199,11 @@ jobs:
           browser: chrome
           spec: cypress/e2e/*
           config-file: cypress.config.ts
+        env:
+          REACT_APP_CLIENTID: ${{ secrets.REACT_APP_CLIENTID }}
+          REACT_APP_API_URL: ${{ secrets.REACT_APP_API_URL_DEV }}
+          REACT_APP_APPLICATION_INSIGHTS_CONNECTION_STRING: ${{ secrets.REACT_APP_APPLICATION_INSIGHTS_CONNECTION_STRING }}
+          REACT_APP_APPLICATION_INSIGHTS_ENVIRONMENT: "Cypress E2E-test"
       - uses: actions/upload-artifact@v3
         if: failure()
         with:
@@ -210,11 +215,6 @@ jobs:
         with:
           name: cypress-videos
           path: cypress/videos
-        env:
-          REACT_APP_CLIENTID: ${{ secrets.REACT_APP_CLIENTID }}
-          REACT_APP_API_URL: ${{ secrets.REACT_APP_API_URL_DEV }}
-          REACT_APP_APPLICATION_INSIGHTS_CONNECTION_STRING: ${{ secrets.REACT_APP_APPLICATION_INSIGHTS_CONNECTION_STRING }}
-          REACT_APP_APPLICATION_INSIGHTS_ENVIRONMENT: "Cypress E2E-test"
 
   # Deploy
 
