@@ -45,7 +45,7 @@ const QuestionSpecificationConfirmation = (): ReactElement => {
       </div>
       {awardCriteria && (
         <VerticalTextCtrl
-          name={'question.config.discountsUnconfirmed'}
+          name={'question.config.discountUnconfirmed'}
           label={t('Score for unconfirmed')}
           placeholder={''}
           type={'number'}
