@@ -14,20 +14,16 @@ const EvaluationProcess = (): ReactElement => {
 
   const nexus = Nexus.getInstance();
 
-  const evaluateAll = async () => {
-    const evaluated = await nexus.evaluationService.evaluateAll(
-      responses.filter((response) =>
-        Utils.isValidResponse(response, specificationUpload.specification)
-      )
+  const evaluateValidResponses = () => {
+    const validResponses = responses.filter((response) =>
+      Utils.isValidResponse(response, specificationUpload.specification)
     );
-    return evaluated;
+    return nexus.evaluationService.evaluateAll(validResponses);
   };
 
-  const evaluate = async () => {
-    const evaluated = await evaluateAll().then((result) => {
-      return result;
-    });
-    setEvaluations(evaluated);
+  const evaluate = () => {
+    const evaluatedResponses = evaluateValidResponses();
+    setEvaluations(evaluatedResponses);
     setTab(3);
   };
 
