@@ -2,12 +2,16 @@ import { Box, Typography } from '@mui/material/';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useHistory } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import produce from 'immer';
 
 import GeneralErrorMessage from '../../Form/GeneralErrorMessage';
 import Nexus from '../../Nexus/Nexus';
 import theme from '../../theme';
 import VerticalTextCtrl from '../../FormProvider/VerticalTextCtrl';
-import { IPrefilledResponse } from '../../Nexus/entities/IPrefilledResponse';
+import {
+  IPrefilledResponse,
+  PREFILLED_RESPONSE_CUSTOMIZATION_V1_0,
+} from '../../Nexus/entities/IPrefilledResponse';
 import {
   ModalBox,
   ModalButton,
@@ -18,6 +22,7 @@ import { ModelType } from '../../Nexus/enums';
 import { setResponse } from '../../store/reducers/prefilled-response-reducer';
 import { useAppDispatch } from '../../store/hooks';
 import { PREFILLED_RESPONSE } from '../../common/PathConstants';
+import { BANK_CUSTOMIZATION } from '../../Nexus/entities/IBank';
 
 interface IProps {
   handleClose: () => void;
@@ -26,12 +31,22 @@ interface IProps {
 
 const NewPrefilledResponseForm = ({
   handleClose,
-  prefilledResponse,
+  prefilledResponse: rawPrefilledResponse,
 }: IProps) => {
   const { t } = useTranslation();
   const history = useHistory();
   const dispatch = useAppDispatch();
   const nexus = Nexus.getInstance();
+
+  // TODO Dette er midlertidig og skal erstattes ved å oppdatere updateObject fra KRB-842-branchen
+  const prefilledResponse = produce(rawPrefilledResponse, (draft) => {
+    // eslint-disable-next-line @typescript-eslint/dot-notation
+    if (!draft['customization'])
+      draft.customization = PREFILLED_RESPONSE_CUSTOMIZATION_V1_0;
+    // eslint-disable-next-line @typescript-eslint/dot-notation
+    if (!draft.bank['customization'])
+      draft.bank.customization = BANK_CUSTOMIZATION;
+  });
 
   const methods = useForm<IPrefilledResponse>({
     resolver: nexus.resolverService.resolver(ModelType.prefilledResponse),

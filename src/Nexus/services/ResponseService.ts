@@ -19,6 +19,7 @@ export default class ResponseService extends BaseService {
   ): IResponse {
     return {
       id: '',
+      customization: 'kravbank:response:v1.0',
       specification: specification,
       supplier: '',
       products: specification.products.map((specProduct) => {

@@ -356,6 +356,7 @@ export const needHierarchyTestData: Parentable<INeed>[] = [
 
 export const projectTestData: IBank = {
   id: '97a90620-af4b-11ec-b909-0242ac120002',
+  customization: 'kravbank:bank:v1.0',
   title: 'A Project',
   description: '',
   needs: [],

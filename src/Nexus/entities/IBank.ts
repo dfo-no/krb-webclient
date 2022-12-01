@@ -10,6 +10,7 @@ import { ModelType } from '../enums';
 import { Parentable } from '../../models/Parentable';
 
 export const BaseBankSchema = BaseModelSchema.keys({
+  customization: CustomJoi.validateText(),
   title: CustomJoi.validateLongText(),
   description: CustomJoi.validateOptionalText(),
   needs: CustomJoi.validateUniqueArray(BaseNeedSchema),
@@ -25,8 +26,11 @@ export const BaseBankSchema = BaseModelSchema.keys({
   deletedDate: CustomJoi.validateOptionalDate(),
 });
 
+export const BANK_CUSTOMIZATION = 'kravbank:bank:v1.0';
+
 export interface IBank extends IBaseModel {
   id: string;
+  customization: typeof BANK_CUSTOMIZATION;
   title: string;
   description: string;
   needs: Parentable<INeed>[];

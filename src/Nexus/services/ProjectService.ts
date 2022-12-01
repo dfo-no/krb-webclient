@@ -23,6 +23,7 @@ export default class ProjectService {
   public static defaultProject = (): IBank => {
     return {
       id: '',
+      customization: 'kravbank:bank:v1.0',
       title: '',
       description: '',
       needs: [],

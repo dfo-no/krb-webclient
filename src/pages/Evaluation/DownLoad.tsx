@@ -13,6 +13,7 @@ export default function DownLoad(): React.ReactElement {
 
   const onDownLoad = (): void => {
     const evaluation: IEvaluation = {
+      customization: 'kravbank:evaluation:v1.0',
       specification: specificationUpload.specification,
       responses: evaluations,
     };

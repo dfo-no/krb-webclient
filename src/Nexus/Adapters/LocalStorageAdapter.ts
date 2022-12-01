@@ -14,6 +14,7 @@ export default class LocalStorageAdapter extends Adapter {
       return JSON.parse(Utils.ensure(localStorage.getItem('bank'))) as IBank;
     const defaultValues: IBank = {
       id: '',
+      customization: 'kravbank:bank:v1.0',
       title: '',
       description: '',
       needs: [],
