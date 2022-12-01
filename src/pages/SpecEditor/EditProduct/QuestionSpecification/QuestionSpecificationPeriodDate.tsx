@@ -1,10 +1,10 @@
-import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
-import classnames from 'classnames';
-import DeleteIcon from '@mui/icons-material/Delete';
-import React, { ReactElement, useEffect } from 'react';
+import React, { ReactElement, useEffect, useState } from 'react';
 import { Button, Typography } from '@mui/material';
 import { t } from 'i18next';
 import { useFieldArray, useFormContext, useWatch } from 'react-hook-form';
+import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
+import classnames from 'classnames';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 import ArrayUniqueErrorMessage from '../../../../Form/ArrayUniqueErrorMessage';
 import css from '../QuestionContent.module.scss';
@@ -16,6 +16,7 @@ import UuidService from '../../../../Nexus/services/UuidService';
 import { FormIconButton } from '../../../../components/Form/FormIconButton';
 import { IPeriodDateQuestion } from '../../../../Nexus/entities/IPeriodDateQuestion';
 import { IRequirementAnswer } from '../../../../Nexus/entities/IRequirementAnswer';
+import { DFOCheckbox } from '../../../../components/DFOCheckbox/DFOCheckbox';
 
 interface IProps {
   item: IPeriodDateQuestion;
@@ -23,6 +24,7 @@ interface IProps {
 
 const QuestionSpecificationPeriodDate = ({ item }: IProps): ReactElement => {
   const { control, formState, setValue } = useFormContext<IRequirementAnswer>();
+  const [awardCriteria, setAwardCriteria] = useState(false);
 
   const useFromBoundary = useWatch({
     name: 'question.config.fromBoundary',
@@ -90,76 +92,99 @@ const QuestionSpecificationPeriodDate = ({ item }: IProps): ReactElement => {
     }
   }, [useToBoundary, useMaxScore, update, append]);
 
+  const onCheckboxClick = (): void => {
+    setAwardCriteria((prev) => !prev);
+  };
+
   return (
-    <div className={css.QuestionGrid}>
-      <Typography className={css.FullRow} variant={'smBold'}>
-        {t('From/to date')}
-      </Typography>
-      <DateCtrl name={'question.config.fromBoundary'} />
-      <Typography className={css.CenteredText} variant={'lgBold'}>
-        -
-      </Typography>
-      <DateCtrl name={'question.config.toBoundary'} />
-      <Typography
-        className={classnames(css.FullRow, css.TopMargin)}
-        variant={'smBold'}
-      >
-        {t('Evaluation')}
-      </Typography>
-      {fields.map((dateScore, index) => {
-        return (
-          <div
-            key={dateScore.id}
-            className={classnames(css.QuestionGrid, css.FullRow)}
-          >
-            {index < 2 ? (
-              <Typography variant={'smBold'} className={css.CenteredText}>
-                {DateUtils.prettyFormatDate(dateScore.date)}
-              </Typography>
-            ) : (
-              <DateCtrl name={`question.config.dateScores[${index}].date`} />
-            )}
-            <div className={css.Arrow}>
-              <ArrowForwardIcon />
-            </div>
-            <HorizontalTextCtrl
-              name={`question.config.dateScores[${index}].score`}
-              placeholder={t('Score')}
-              type={'number'}
-            />
-            {index > 1 && (
-              <div className={css.Delete}>
-                <FormIconButton
-                  hoverColor={theme.palette.errorRed.main}
-                  onClick={() => remove(index)}
-                >
-                  <DeleteIcon />
-                </FormIconButton>
-              </div>
-            )}
-          </div>
-        );
-      })}
-      <div className={css.FullRow}>
-        <ArrayUniqueErrorMessage
-          errors={formState.errors}
-          path={'question.config.dateScores'}
-          length={fields.length}
-        />
+    <>
+      <div className={css.QuestionDateAndTimePeriod}>
+        <div className={css.QuestionDateAndTimePeriod__datetimeContainer}>
+          <DateCtrl
+            label={t('From')}
+            name={'question.config.fromBoundary'}
+            color={'var(--text-primary-color)'}
+          />
+          <DateCtrl
+            label={t('To')}
+            name={'question.config.toBoundary'}
+            color={'var(--text-primary-color)'}
+          />
+        </div>
+        <div onClick={onCheckboxClick}>
+          <DFOCheckbox
+            checked={awardCriteria}
+            _color={'var(--text-primary-color)'}
+          />
+          <Typography className={css.CheckboxLabel} variant={'smBold'}>
+            {t('Is the requirement an award criteria')}
+          </Typography>
+        </div>
       </div>
-      <Button
-        variant="primary"
-        onClick={() =>
-          append({
-            id: new UuidService().generateId(),
-            date: useFromBoundary,
-            score: 0,
-          })
-        }
-      >
-        {t('Add new date score')}
-      </Button>
-    </div>
+      {awardCriteria && (
+        <div className={css.QuestionGrid}>
+          <Typography
+            className={classnames(css.FullRow, css.TopMargin)}
+            variant={'smBold'}
+          >
+            {t('Evaluation')}
+          </Typography>
+          {fields.map((dateScore, idx) => {
+            return (
+              <div
+                key={dateScore.id}
+                className={classnames(css.QuestionGrid, css.FullRow)}
+              >
+                {idx < 2 ? (
+                  <Typography variant={'smBold'} className={css.CenteredText}>
+                    {DateUtils.prettyFormatDate(dateScore.date)}
+                  </Typography>
+                ) : (
+                  <DateCtrl name={`question.config.dateScores[${idx}].date`} />
+                )}
+                <div className={css.Arrow}>
+                  <ArrowForwardIcon />
+                </div>
+                <HorizontalTextCtrl
+                  name={`question.config.dateScores[${idx}].score`}
+                  placeholder={t('Score')}
+                  type={'number'}
+                />
+                {idx > 1 && (
+                  <div className={css.Delete}>
+                    <FormIconButton
+                      hoverColor={theme.palette.errorRed.main}
+                      onClick={() => remove(idx)}
+                    >
+                      <DeleteIcon />
+                    </FormIconButton>
+                  </div>
+                )}
+              </div>
+            );
+          })}
+          <div className={css.FullRow}>
+            <ArrayUniqueErrorMessage
+              errors={formState.errors}
+              path={'question.config.dateScores'}
+              length={fields.length}
+            />
+          </div>
+          <Button
+            variant="primary"
+            onClick={() =>
+              append({
+                id: new UuidService().generateId(),
+                date: useFromBoundary,
+                score: 0,
+              })
+            }
+          >
+            {t('Add new date score')}
+          </Button>
+        </div>
+      )}
+    </>
   );
 };
 

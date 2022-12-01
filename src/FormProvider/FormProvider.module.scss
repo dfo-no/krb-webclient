@@ -21,6 +21,17 @@
     }
   }
 
+  &__DateAndTimeCtrl {
+    display: flex;
+    flex-direction: column;
+    gap: var(--tiny-gap);
+    max-width: 50%;
+
+    &__label {
+      font-weight: var(--font-weight-semibold);
+    }
+  }
+
   .InputLabel {
     color: var(--primary-color);
     font-size: var(--small-fontsize);
