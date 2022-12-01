@@ -47,7 +47,7 @@ const QuestionSpecificationConfirmation = (): ReactElement => {
         <VerticalTextCtrl
           className={css.QuestionFlex__textCtrl}
           name={'question.config.pointsUnconfirmed'}
-          label={t('discount')}
+          label={t('Discount')}
           placeholder={''}
           type={'number'}
           color={'var(--text-primary-color)'}
