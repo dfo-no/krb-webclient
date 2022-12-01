@@ -15,6 +15,7 @@ interface IProps {
   autoFocus?: boolean;
   adornment?: string;
   color?: string;
+  defaultValue?: string | number;
 }
 
 const HorizontalTextCtrl = ({
@@ -27,6 +28,7 @@ const HorizontalTextCtrl = ({
   autoFocus,
   adornment,
   color,
+  defaultValue,
 }: IProps): React.ReactElement => {
   const {
     formState: { errors },
@@ -40,6 +42,7 @@ const HorizontalTextCtrl = ({
     >
       <Controller
         name={name}
+        defaultValue={defaultValue}
         render={({ field }) => (
           <>
             {label && <span aria-label={'label'}>{label}</span>}
