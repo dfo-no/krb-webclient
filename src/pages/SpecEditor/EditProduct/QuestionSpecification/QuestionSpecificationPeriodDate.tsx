@@ -118,6 +118,17 @@ const QuestionSpecificationPeriodDate = ({ item }: IProps): ReactElement => {
             color={'var(--text-primary-color)'}
           />
         </div>
+        {item.config.isPeriod && (
+          <HorizontalTextCtrl
+            className={css.QuestionCriteria__Ctrl__inputCtrl}
+            label={t('Duration')}
+            name={`question.config.duration`}
+            placeholder={t('Value')}
+            type={'number'}
+            adornment={t('Days')}
+            color={'var(--text-primary-color)'}
+          />
+        )}
         <div onClick={onCheckboxClick}>
           <DFOCheckbox
             checked={awardCriteria}

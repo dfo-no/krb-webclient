@@ -72,6 +72,16 @@ const ToBoundaryDateValidator = (joi: Joi.Root) => ({
   },
 });
 
+const DurationValidator = (joi: Joi.Root) => ({
+  type: 'validateDuration',
+  messages: {
+    'number.base': 'Må være et tall',
+    'number.integer': 'Må være et positivt heltall',
+    'number.min': 'Må være et positivt heltall',
+  },
+  base: joi.number().integer().min(0),
+});
+
 const DateScoreValidator = (joi: Joi.Root) => ({
   type: 'validateDateScore',
   base: joi.date().iso().raw().messages({
@@ -201,6 +211,7 @@ const DateJoi = [
   PeriodMaxValidator,
   FromBoundaryDateValidator,
   ToBoundaryDateValidator,
+  DurationValidator,
   DateScoreValidator,
   FromDateValidator,
   ToDateValidator,

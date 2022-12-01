@@ -24,6 +24,7 @@ export interface IPeriodDateConfig extends IConfigBase {
   toBoundary: string | null;
   periodMin: number;
   periodMax: number;
+  duration: number;
   dateScores: DateScorePair[];
 }
 
@@ -46,6 +47,7 @@ export const PeriodDateWorkbenchSchema = QuestionBaseSchema.keys({
     toBoundary: CustomJoi.validateOptionalDate(),
     periodMin: CustomJoi.validateNumber(),
     periodMax: CustomJoi.validateNumber(),
+    duration: CustomJoi.validateDuration(),
     dateScores: CustomJoi.validateArray(WorkbenchDateScoreSchema),
   }),
 });
@@ -63,6 +65,7 @@ export const PeriodDateAnswerSchema = PeriodDateWorkbenchSchema.keys({
     toBoundary: CustomJoi.validateToBoundaryDate(),
     periodMin: CustomJoi.validatePeriodMin(),
     periodMax: CustomJoi.validatePeriodMax(),
+    duration: CustomJoi.validateDuration(),
     dateScores: CustomJoi.validateDateScoreValues(DateScoreSchema),
   }),
   answer: CustomJoi.object().keys({
