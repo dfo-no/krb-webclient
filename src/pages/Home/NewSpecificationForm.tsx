@@ -17,17 +17,22 @@ import {
 import { ModelType } from '../../Nexus/enums';
 import { SPECIFICATION } from '../../common/PathConstants';
 import OrganizationField from '../../components/OrgnizationField/OrganizationField';
+import { updateObject } from './UpdateFormatsTools';
 
 interface IProps {
   handleClose: () => void;
   specification: ISpecification;
 }
 
-const NewSpecificationForm = ({ handleClose, specification }: IProps) => {
+const NewSpecificationForm = ({
+  handleClose,
+  specification: rawSpecification,
+}: IProps) => {
   const { t } = useTranslation();
   const history = useHistory();
   const nexus = Nexus.getInstance();
 
+  const specification = updateObject({ ...rawSpecification });
   const methods = useForm<ISpecification>({
     resolver: nexus.resolverService.resolver(ModelType.specification),
     defaultValues: specification,
