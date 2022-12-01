@@ -54,8 +54,8 @@ export default function QuestionSpecificationText(): ReactElement {
       </div>
       {awardCriteria && (
         <div className={css.QuestionCriteria}>
-          <Typography variant={'smBold'}>{t('Deduction levels')}</Typography>
-          <span>{t('Deduction levels text')}</span>
+          <Typography variant={'smBold'}>{t('Discount levels')}</Typography>
+          <span>{t('Discount levels text')}</span>
           <div className={css.QuestionCriteria__wrapper}>
             <div className={css.QuestionCriteria__wrapper__textCtrlContainer}>
               {fields.map((discountValues, index) => {
@@ -68,7 +68,7 @@ export default function QuestionSpecificationText(): ReactElement {
                       className={
                         css.QuestionCriteria__wrapper__textCtrl__horizontalTextCtrl
                       }
-                      label={index == 0 ? t('Deduction') : ''}
+                      label={index == 0 ? t('Discount') : ''}
                       name={`question.config.discountValues[${index}].discount`}
                       placeholder={t('Value')}
                       type={'number'}

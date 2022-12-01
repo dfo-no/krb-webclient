@@ -53,7 +53,7 @@ const QuestionSpecificationCheckbox = (): ReactElement => {
         <VerticalTextCtrl
           className={css.QuestionFlex__textCtrl}
           name={'question.config.pointsNonPrefered'}
-          label={t('Deduction')}
+          label={t('Discount')}
           placeholder={''}
           type={'number'}
           color={'var(--text-primary-color)'}
