@@ -2,7 +2,7 @@ import UuidService from './UuidService';
 import { IBank } from '../entities/IBank';
 import {
   IPrefilledResponse,
-  PREFILLED_RESPONSE_CUSTOMIZATION_V1_0,
+  PREFILLED_RESPONSE_CUSTOMIZATION,
 } from '../entities/IPrefilledResponse';
 import { IPrefilledResponseProduct } from '../entities/IPrefilledResponseProduct';
 import { ModelType } from '../enums';
@@ -13,7 +13,7 @@ export default class PrefilledResponseService {
   public createPrefilledResponseFromBank(bank: IBank): IPrefilledResponse {
     return {
       bank: bank,
-      customization: PREFILLED_RESPONSE_CUSTOMIZATION_V1_0,
+      customization: PREFILLED_RESPONSE_CUSTOMIZATION,
       supplier: '',
       products: [],
       answeredVariants: [],

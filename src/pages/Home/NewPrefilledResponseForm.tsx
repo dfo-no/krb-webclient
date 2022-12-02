@@ -10,7 +10,7 @@ import theme from '../../theme';
 import VerticalTextCtrl from '../../FormProvider/VerticalTextCtrl';
 import {
   IPrefilledResponse,
-  PREFILLED_RESPONSE_CUSTOMIZATION_V1_0,
+  PREFILLED_RESPONSE_CUSTOMIZATION,
 } from '../../Nexus/entities/IPrefilledResponse';
 import {
   ModalBox,
@@ -42,7 +42,7 @@ const NewPrefilledResponseForm = ({
   const prefilledResponse = produce(rawPrefilledResponse, (draft) => {
     // eslint-disable-next-line @typescript-eslint/dot-notation
     if (!draft['customization'])
-      draft.customization = PREFILLED_RESPONSE_CUSTOMIZATION_V1_0;
+      draft.customization = PREFILLED_RESPONSE_CUSTOMIZATION;
     // eslint-disable-next-line @typescript-eslint/dot-notation
     if (!draft.bank['customization'])
       draft.bank.customization = BANK_CUSTOMIZATION;

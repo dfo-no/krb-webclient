@@ -21,7 +21,7 @@ import {
 } from '../../Nexus/entities/IResponse';
 import {
   IPrefilledResponse,
-  PREFILLED_RESPONSE_CUSTOMIZATION_V1_0,
+  PREFILLED_RESPONSE_CUSTOMIZATION,
 } from '../../Nexus/entities/IPrefilledResponse';
 import { IAlert } from '../../models/IAlert';
 import { addAlert } from '../../store/reducers/alert-reducer';
@@ -105,14 +105,14 @@ export function HomePageUpload({ selectedBank, setSelectedBank }: Props) {
         } else {
           if (
             httpResponse.data.customization ===
-              PREFILLED_RESPONSE_CUSTOMIZATION_V1_0 ||
+              PREFILLED_RESPONSE_CUSTOMIZATION ||
             !httpResponse.data.specification
           ) {
             const rawPrefilledResponse: IPrefilledResponse = httpResponse.data;
             const prefilledResponse = produce(rawPrefilledResponse, (draft) => {
               // eslint-disable-next-line @typescript-eslint/dot-notation
               if (draft['customization']) return; // This prefilledResponse has already been upgraded
-              draft.customization = PREFILLED_RESPONSE_CUSTOMIZATION_V1_0;
+              draft.customization = PREFILLED_RESPONSE_CUSTOMIZATION;
               draft.bank.customization = BANK_CUSTOMIZATION;
             });
             setSelectedPrefilledResponse(prefilledResponse);

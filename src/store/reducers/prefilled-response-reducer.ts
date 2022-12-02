@@ -4,7 +4,7 @@ import Utils from '../../common/Utils';
 import { BANK_CUSTOMIZATION } from '../../Nexus/entities/IBank';
 import {
   IPrefilledResponse,
-  PREFILLED_RESPONSE_CUSTOMIZATION_V1_0 as PREFILLED_RESPONSE_CUSTOMIZATION,
+  PREFILLED_RESPONSE_CUSTOMIZATION,
 } from '../../Nexus/entities/IPrefilledResponse';
 import { IPrefilledResponseProduct } from '../../Nexus/entities/IPrefilledResponseProduct';
 import { IRequirementAnswer } from '../../Nexus/entities/IRequirementAnswer';
