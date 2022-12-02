@@ -10,12 +10,12 @@ describe('CheckboxQuestionSchema should validate', () => {
       id: 'e56367af-d48d-422d-a4f6-ba52ee17af23',
       type: QuestionVariant.Q_CHECKBOX,
       answer: {
-        point: 0,
+        discount: 0,
         value: false,
       },
       config: {
-        pointsNonPrefered: 0,
-        defaultPoint: 1,
+        discountNonPrefered: 0,
+        defaultDiscount: 1,
         preferedAlternative: true,
       },
       sourceRel: null,
@@ -32,11 +32,11 @@ describe('CheckboxQuestionSchema should validate', () => {
       type: QuestionVariant.Q_CHECKBOX,
       answer: {
         value: true,
-        point: 5,
+        discount: 5,
       },
       config: {
-        pointsNonPrefered: 0,
-        defaultPoint: 1,
+        discountNonPrefered: 0,
+        defaultDiscount: 1,
         preferedAlternative: true,
       },
       sourceRel: null,

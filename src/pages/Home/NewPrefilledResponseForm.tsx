@@ -18,6 +18,7 @@ import { ModelType } from '../../Nexus/enums';
 import { setResponse } from '../../store/reducers/prefilled-response-reducer';
 import { useAppDispatch } from '../../store/hooks';
 import { PREFILLED_RESPONSE } from '../../common/PathConstants';
+import { updateObject } from './UpdateFormatsTools';
 
 interface IProps {
   handleClose: () => void;
@@ -26,12 +27,13 @@ interface IProps {
 
 const NewPrefilledResponseForm = ({
   handleClose,
-  prefilledResponse,
+  prefilledResponse: rawPrefilledResponse,
 }: IProps) => {
   const { t } = useTranslation();
   const history = useHistory();
   const dispatch = useAppDispatch();
   const nexus = Nexus.getInstance();
+  const prefilledResponse = updateObject({ ...rawPrefilledResponse });
 
   const methods = useForm<IPrefilledResponse>({
     resolver: nexus.resolverService.resolver(ModelType.prefilledResponse),

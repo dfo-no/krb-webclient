@@ -1,7 +1,7 @@
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import classnames from 'classnames';
 import DeleteIcon from '@mui/icons-material/Delete';
-import React, { ReactElement, useEffect } from 'react';
+import React, { ReactElement, useEffect, useState } from 'react';
 import { Button, Typography } from '@mui/material';
 import { t } from 'i18next';
 import { useFieldArray, useFormContext, useWatch } from 'react-hook-form';
@@ -16,6 +16,7 @@ import { FormIconButton } from '../../../../components/Form/FormIconButton';
 import { IRequirementAnswer } from '../../../../Nexus/entities/IRequirementAnswer';
 import { ITimeQuestion } from '../../../../Nexus/entities/ITimeQuestion';
 import UuidService from '../../../../Nexus/services/UuidService';
+import { DFOCheckbox } from '../../../../components/DFOCheckbox/DFOCheckbox';
 
 interface IProps {
   item: ITimeQuestion;
@@ -23,6 +24,7 @@ interface IProps {
 
 const QuestionSpecificationTime = ({ item }: IProps): ReactElement => {
   const { control, formState, setValue } = useFormContext<IRequirementAnswer>();
+  const [awardCriteria, setAwardCriteria] = useState(false);
 
   const useFromBoundary = useWatch({
     name: 'question.config.fromBoundary',
@@ -91,76 +93,113 @@ const QuestionSpecificationTime = ({ item }: IProps): ReactElement => {
     }
   }, [useToBoundary, useMaxScore, update, append]);
 
+  const onCheckboxClick = (): void => {
+    setAwardCriteria((prev) => !prev);
+  };
+
+  const fromTimeLabel = `${
+    item.config.isPeriod
+      ? t('From')
+      : t('Enter the first and last possible time')
+  }`;
+
+  const toTimeLabel = t('To');
+
   return (
-    <div className={css.QuestionGrid}>
-      <Typography className={css.FullRow} variant={'smBold'}>
-        {t('From/to date')}
-      </Typography>
-      <TimeCtrl name={'question.config.fromBoundary'} />
-      <Typography className={css.CenteredText} variant={'lgBold'}>
-        -
-      </Typography>
-      <TimeCtrl name={'question.config.toBoundary'} />
-      <Typography
-        className={classnames(css.FullRow, css.TopMargin)}
-        variant={'smBold'}
-      >
-        {t('Evaluation')}
-      </Typography>
-      {fields.map((timeScore, index) => {
-        return (
-          <div
-            key={timeScore.id}
-            className={classnames(css.QuestionGrid, css.FullRow)}
-          >
-            {index < 2 ? (
-              <Typography variant={'smBold'} className={css.CenteredText}>
-                {DateUtils.prettyFormatTime(timeScore.time)}
-              </Typography>
-            ) : (
-              <TimeCtrl name={`question.config.timeScores[${index}].time`} />
-            )}
-            <div className={css.Arrow}>
-              <ArrowForwardIcon />
-            </div>
-            <HorizontalTextCtrl
-              name={`question.config.timeScores[${index}].score`}
-              placeholder={t('Score')}
-              type={'number'}
-            />
-            {index > 1 && (
-              <div className={css.Delete}>
-                <FormIconButton
-                  hoverColor={theme.palette.errorRed.main}
-                  onClick={() => remove(index)}
-                >
-                  <DeleteIcon />
-                </FormIconButton>
-              </div>
-            )}
-          </div>
-        );
-      })}
-      <div className={css.FullRow}>
-        <ArrayUniqueErrorMessage
-          errors={formState.errors}
-          path={'question.config.timeScores'}
-          length={fields.length}
-        />
+    <>
+      <div className={css.QuestionDateAndTimePeriod}>
+        {!item.config.isPeriod && (
+          <Typography className={css.FullRow} variant={'smBold'}>
+            {fromTimeLabel}
+          </Typography>
+        )}
+        <div className={css.QuestionDateAndTimePeriod__datetimeContainer}>
+          <TimeCtrl
+            label={`${item.config.isPeriod ? fromTimeLabel : ''}`}
+            name={'question.config.fromBoundary'}
+            color={'var(--text-primary-color)'}
+          />
+          <TimeCtrl
+            label={`${item.config.isPeriod ? toTimeLabel : ''}`}
+            name={'question.config.toBoundary'}
+            color={'var(--text-primary-color)'}
+          />
+        </div>
+        <div onClick={onCheckboxClick}>
+          <DFOCheckbox
+            checked={awardCriteria}
+            _color={'var(--text-primary-color)'}
+          />
+          <Typography className={css.CheckboxLabel} variant={'smBold'}>
+            {t('Is the requirement an award criteria')}
+          </Typography>
+        </div>
       </div>
-      <Button
-        variant="primary"
-        onClick={() =>
-          append({
-            id: new UuidService().generateId(),
-            time: useFromBoundary,
-            score: 0,
-          })
-        }
-      >
-        {t('Add new time score')}
-      </Button>
-    </div>
+      {awardCriteria && (
+        <div className={css.QuestionGrid}>
+          <Typography
+            className={classnames(css.FullRow, css.TopMargin)}
+            variant={'smBold'}
+          >
+            {t('Evaluation')}
+          </Typography>
+          {fields.map((timeScore, idx) => {
+            return (
+              <div
+                key={timeScore.id}
+                className={classnames(css.QuestionGrid, css.FullRow)}
+              >
+                {idx < 2 ? (
+                  <Typography variant={'smBold'} className={css.CenteredText}>
+                    {DateUtils.prettyFormatTime(timeScore.time)}
+                  </Typography>
+                ) : (
+                  <TimeCtrl name={`question.config.timeScores[${idx}].time`} />
+                )}
+                <div className={css.Arrow}>
+                  <ArrowForwardIcon />
+                </div>
+                <HorizontalTextCtrl
+                  name={`question.config.timeScores[${idx}].score`}
+                  placeholder={t('Score')}
+                  type={'number'}
+                />
+                {idx > 1 && (
+                  <div className={css.Delete}>
+                    <FormIconButton
+                      hoverColor={theme.palette.errorRed.main}
+                      onClick={() => remove(idx)}
+                    >
+                      <DeleteIcon />
+                    </FormIconButton>
+                  </div>
+                )}
+              </div>
+            );
+          })}
+          <div className={css.FullRow}>
+            <ArrayUniqueErrorMessage
+              errors={formState.errors}
+              path={'question.config.timeScores'}
+              length={fields.length}
+            />
+          </div>
+          <Button
+            variant="primary"
+            onClick={() =>
+              append({
+                id: new UuidService().generateId(),
+                time: useFromBoundary,
+                score: 0,
+              })
+            }
+          >
+            {t('Add new time score')}
+          </Button>
+          <div />
+        </div>
+      )}
+    </>
   );
 };
 
