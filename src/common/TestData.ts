@@ -356,6 +356,9 @@ export const needHierarchyTestData: Parentable<INeed>[] = [
 
 export const projectTestData: IBank = {
   id: '97a90620-af4b-11ec-b909-0242ac120002',
+  // Intentionally left as a string. We could have used a constant here but
+  // I plan to have multiple sets of test data. Also any deviations is actually
+  // caught by the compiler.
   customization: 'kravbank:bank:v1.0',
   title: 'A Project',
   description: '',

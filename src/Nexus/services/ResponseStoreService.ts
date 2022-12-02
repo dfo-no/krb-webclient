@@ -1,17 +1,19 @@
 import localforage from 'localforage';
 
-import { IResponse } from '../entities/IResponse';
+import { BANK_CUSTOMIZATION } from '../entities/IBank';
+import { IResponse, RESPONSE_CUSTOMIZATION } from '../entities/IResponse';
+import { SPECIFICATION_CUSTOMIZATION } from '../entities/ISpecification';
 import { ModelType } from '../enums';
 
 const initialState: IResponse = {
   id: '',
-  customization: 'kravbank:response:v1.0',
+  customization: RESPONSE_CUSTOMIZATION,
   specification: {
     id: '',
-    customization: 'kravbank:specification:v1.0',
+    customization: SPECIFICATION_CUSTOMIZATION,
     bank: {
       id: '',
-      customization: 'kravbank:bank:v1.0',
+      customization: BANK_CUSTOMIZATION,
       title: '',
       description: '',
       needs: [],

@@ -1,6 +1,9 @@
 import UuidService from './UuidService';
 import { IBank } from '../entities/IBank';
-import { IPrefilledResponse } from '../entities/IPrefilledResponse';
+import {
+  IPrefilledResponse,
+  PREFILLED_RESPONSE_CUSTOMIZATION_V1_0,
+} from '../entities/IPrefilledResponse';
 import { IPrefilledResponseProduct } from '../entities/IPrefilledResponseProduct';
 import { ModelType } from '../enums';
 
@@ -10,7 +13,7 @@ export default class PrefilledResponseService {
   public createPrefilledResponseFromBank(bank: IBank): IPrefilledResponse {
     return {
       bank: bank,
-      customization: 'kravbank:prefilled_response:v1.0',
+      customization: PREFILLED_RESPONSE_CUSTOMIZATION_V1_0,
       supplier: '',
       products: [],
       answeredVariants: [],

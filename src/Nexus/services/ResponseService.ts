@@ -1,4 +1,4 @@
-import { IResponse } from '../entities/IResponse';
+import { IResponse, RESPONSE_CUSTOMIZATION } from '../entities/IResponse';
 import { ISpecification } from '../entities/ISpecification';
 import BaseService from './BaseService';
 import ResponseStoreService from './ResponseStoreService';
@@ -19,7 +19,7 @@ export default class ResponseService extends BaseService {
   ): IResponse {
     return {
       id: '',
-      customization: 'kravbank:response:v1.0',
+      customization: RESPONSE_CUSTOMIZATION,
       specification: specification,
       supplier: '',
       products: specification.products.map((specProduct) => {

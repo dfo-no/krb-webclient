@@ -1,7 +1,11 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 import Utils from '../../common/Utils';
-import { IPrefilledResponse } from '../../Nexus/entities/IPrefilledResponse';
+import { BANK_CUSTOMIZATION } from '../../Nexus/entities/IBank';
+import {
+  IPrefilledResponse,
+  PREFILLED_RESPONSE_CUSTOMIZATION_V1_0 as PREFILLED_RESPONSE_CUSTOMIZATION,
+} from '../../Nexus/entities/IPrefilledResponse';
 import { IPrefilledResponseProduct } from '../../Nexus/entities/IPrefilledResponseProduct';
 import { IRequirementAnswer } from '../../Nexus/entities/IRequirementAnswer';
 import { ModelType } from '../../Nexus/enums';
@@ -13,10 +17,10 @@ interface IPrefilledResponseState {
 
 const initialState: IPrefilledResponseState = {
   prefilledResponse: {
-    customization: 'kravbank:prefilled_response:v1.0',
+    customization: PREFILLED_RESPONSE_CUSTOMIZATION,
     bank: {
       id: '',
-      customization: 'kravbank:bank:v1.0',
+      customization: BANK_CUSTOMIZATION,
       title: '',
       description: '',
       needs: [],

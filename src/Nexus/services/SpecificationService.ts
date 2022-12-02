@@ -8,7 +8,10 @@ import SpecificationStoreService from './SpecificationStoreService';
 import { IBank } from '../entities/IBank';
 import { IRequirement } from '../entities/IRequirement';
 import { IRequirementAnswer } from '../entities/IRequirementAnswer';
-import { ISpecification } from '../entities/ISpecification';
+import {
+  ISpecification,
+  SPECIFICATION_CUSTOMIZATION,
+} from '../entities/ISpecification';
 import { ISpecificationProduct } from '../entities/ISpecificationProduct';
 import { ModelType, QuestionVariant } from '../enums';
 import { QuestionType } from '../entities/QuestionType';
@@ -25,7 +28,7 @@ export default class SpecificationService extends BaseService {
   public static defaultSpecification(bank?: IBank): ISpecification {
     return {
       id: '',
-      customization: 'kravbank:specification:v1.0',
+      customization: SPECIFICATION_CUSTOMIZATION,
       bank: bank ?? ProjectService.defaultProject(),
       title: '',
       organization: '',

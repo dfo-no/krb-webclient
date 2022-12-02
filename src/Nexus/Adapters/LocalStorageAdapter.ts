@@ -1,7 +1,7 @@
 /* eslint-disable class-methods-use-this */
 import Adapter from './Adapter';
 import Utils from '../../common/Utils';
-import { IBank } from '../entities/IBank';
+import { BANK_CUSTOMIZATION, IBank } from '../entities/IBank';
 import { ModelType } from '../enums';
 
 export default class LocalStorageAdapter extends Adapter {
@@ -14,7 +14,7 @@ export default class LocalStorageAdapter extends Adapter {
       return JSON.parse(Utils.ensure(localStorage.getItem('bank'))) as IBank;
     const defaultValues: IBank = {
       id: '',
-      customization: 'kravbank:bank:v1.0',
+      customization: BANK_CUSTOMIZATION,
       title: '',
       description: '',
       needs: [],

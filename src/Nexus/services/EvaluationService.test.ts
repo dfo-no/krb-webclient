@@ -269,9 +269,13 @@ describe('EvaluationService', () => {
 
     const specification: ISpecification = {
       id: 'c1d0ee23-8f8b-ff22-aced-47ff93eb9fc8',
+      // Intentionally left as a string. We could have used a constant here but
+      // I plan to have multiple sets of test data. Also any deviations is actually
+      // caught by the compiler.
       customization: 'kravbank:specification:v1.0',
       bank: {
         id: 'a4d0ef8b-8e23-4ef2-9f30-eb9fc847ff93',
+        // See comment above
         customization: 'kravbank:bank:v1.0',
         title: 'Bank',
         description: '',
@@ -329,6 +333,7 @@ describe('EvaluationService', () => {
 
     const response: IResponse = {
       id: '',
+      // See comment about customization above
       customization: 'kravbank:response:v1.0',
       specification: specification,
       supplier: 'Firma A',

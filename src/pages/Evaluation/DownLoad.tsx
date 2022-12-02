@@ -4,7 +4,10 @@ import { AxiosResponse } from 'axios';
 import { useTranslation } from 'react-i18next';
 
 import { httpPost } from '../../api/http';
-import { IEvaluation } from '../../Nexus/entities/IEvaluation';
+import {
+  EVALUATION_CUSTOMIZATION,
+  IEvaluation,
+} from '../../Nexus/entities/IEvaluation';
 import { useEvaluationState } from './EvaluationContext';
 
 export default function DownLoad(): React.ReactElement {
@@ -13,7 +16,7 @@ export default function DownLoad(): React.ReactElement {
 
   const onDownLoad = (): void => {
     const evaluation: IEvaluation = {
-      customization: 'kravbank:evaluation:v1.0',
+      customization: EVALUATION_CUSTOMIZATION,
       specification: specificationUpload.specification,
       responses: evaluations,
     };

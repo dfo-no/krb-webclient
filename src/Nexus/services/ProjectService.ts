@@ -1,6 +1,6 @@
 import StoreService from './StoreService';
 import UuidService from './UuidService';
-import { IBank } from '../entities/IBank';
+import { BANK_CUSTOMIZATION, IBank } from '../entities/IBank';
 import { ModelType } from '../enums';
 
 export default class ProjectService {
@@ -23,7 +23,7 @@ export default class ProjectService {
   public static defaultProject = (): IBank => {
     return {
       id: '',
-      customization: 'kravbank:bank:v1.0',
+      customization: BANK_CUSTOMIZATION,
       title: '',
       description: '',
       needs: [],
