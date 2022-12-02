@@ -31,16 +31,16 @@ export default function ProductQuestionAnswer({
   const { setActiveKey } = useAccordionState();
 
   const onSubmit = (post: QuestionType): void => {
-    const calculatedPoints = {
+    const question = {
       ...post,
       answer: {
         ...post.answer,
-        point: nexus.questionService.calculatePoints(post),
+        discount: nexus.questionService.calculateDiscount(post),
       },
     } as QuestionType;
     const newAnswer = {
       ...requirementAnswer,
-      question: calculatedPoints,
+      question,
     };
     if (productIndex === -1) {
       addRequirementAnswer(newAnswer);

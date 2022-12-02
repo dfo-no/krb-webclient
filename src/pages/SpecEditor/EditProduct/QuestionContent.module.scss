@@ -183,4 +183,8 @@
     gap: var(--small-gap);
     max-width: 50%;
   }
+
+  .CheckboxLabel {
+    margin-left: var(--tiny-gap);
+  }
 }

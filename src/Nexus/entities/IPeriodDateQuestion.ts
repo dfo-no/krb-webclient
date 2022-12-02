@@ -71,6 +71,6 @@ export const PeriodDateAnswerSchema = PeriodDateWorkbenchSchema.keys({
   answer: CustomJoi.object().keys({
     fromDate: CustomJoi.validateFromDate(),
     toDate: CustomJoi.validateToDate(),
-    point: CustomJoi.validateScore(),
+    discount: CustomJoi.validateScore(),
   }),
 });

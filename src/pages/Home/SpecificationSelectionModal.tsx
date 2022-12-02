@@ -18,6 +18,7 @@ import {
 import { EVALUATION, SPECIFICATION } from '../../common/PathConstants';
 import { EvaluationSpecificationStoreService } from '../../Nexus/services/EvaluationSpecificationStoreService';
 import { SpecificationFile } from '../../Nexus/entities/SpecificationFile';
+import { updateObject } from './UpdateFormatsTools';
 
 interface IProps {
   selectedSpecification: SpecificationFile;
@@ -25,7 +26,7 @@ interface IProps {
 }
 
 export default function SpecificationSelectionModal({
-  selectedSpecification,
+  selectedSpecification: rawSpecification,
   setSelectedSpecification,
 }: IProps): React.ReactElement {
   const [newResponse, setNewResponse] = useState<IResponse | null>(null);
@@ -36,6 +37,8 @@ export default function SpecificationSelectionModal({
   const nexus = Nexus.getInstance();
   const evaluationSpecificationStoreService =
     new EvaluationSpecificationStoreService();
+
+  const selectedSpecification = updateObject(rawSpecification);
 
   const editSpecification = (): void => {
     nexus.specificationService

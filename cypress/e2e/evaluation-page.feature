@@ -13,8 +13,8 @@ Feature: Evalueringsside
     Given Jeg laster opp spesifikasjon og velger "Gjennomfør evaluering"
     When Jeg laster opp besvarelse
     Then Ser jeg "Citronen" på siden
-    And Ser jeg "2022-10-03-citronen-response-4.pdf" på siden
+    And Ser jeg "2022-11-30-citronen-response-5.pdf" på siden
     When Jeg klikker på "Manuell evaluering" knapp
     And Jeg klikker på "Evaluer besvarelser" knappen
-    Then Ser jeg "Citronen" har "93%" som resultat
+    Then Ser jeg "Citronen" har "465" som resultat
     Then Klikker jeg på "Last ned evaluering" knapp for å laste ned evaluering

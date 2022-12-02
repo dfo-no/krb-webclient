@@ -19,14 +19,14 @@ export interface ICheckboxAnswer extends IAnswerBase {
 
 export interface ICheckboxConfig extends IConfigBase {
   preferedAlternative: boolean;
-  pointsNonPrefered: number;
+  discountNonPrefered: number;
 }
 
 export const CheckboxQuestionWorkbenchSchema = QuestionBaseSchema.keys({
   type: CustomJoi.validateType(QuestionVariant.Q_CHECKBOX),
   config: ConfigBaseSchema.keys({
     preferedAlternative: CustomJoi.validateBoolean(),
-    pointsNonPrefered: CustomJoi.validateScore(),
+    discountNonPrefered: CustomJoi.validateScore(),
   }),
 });
 
@@ -34,6 +34,6 @@ export const CheckboxQuestionAnswerSchema =
   CheckboxQuestionWorkbenchSchema.keys({
     answer: CustomJoi.object().keys({
       value: CustomJoi.validateBoolean(),
-      point: CustomJoi.validateScore(),
+      discount: CustomJoi.validateScore(),
     }),
   });

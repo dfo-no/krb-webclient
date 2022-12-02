@@ -157,7 +157,7 @@ const QuestionSpecificationPeriodDate = ({ item }: IProps): ReactElement => {
                       />
                       <HorizontalTextCtrl
                         className={css.QuestionCriteria__Ctrl__inputCtrl}
-                        label={index == 0 ? t('Deduction') : ''}
+                        label={index == 0 ? t('Discount') : ''}
                         name={`question.config.dateScores[${index}].score`}
                         placeholder={t('Value')}
                         type={'number'}

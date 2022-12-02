@@ -19,6 +19,7 @@ import { httpPost } from '../../api/http';
 import { useAppDispatch } from '../../store/hooks';
 import { getDefaultSpecificationFile } from '../../Nexus/services/EvaluationSpecificationStoreService';
 import { SpecificationFile } from '../../Nexus/entities/SpecificationFile';
+import { updateObject } from './UpdateFormatsTools';
 
 type Props = {
   selectedBank: IBank | null;
@@ -71,22 +72,23 @@ export function HomePageUpload({ selectedBank, setSelectedBank }: Props) {
       responseType: 'json',
     })
       .then((httpResponse) => {
-        if (httpResponse.data.title) {
+        const unwrappedDocument = updateObject(httpResponse.data);
+        if (unwrappedDocument.title) {
           const file = {
             name: files[0].name,
             lastModified: files[0].lastModified,
           };
 
-          const specification: ISpecification = httpResponse.data;
+          const specification: ISpecification = unwrappedDocument;
 
           setSelectedSpecification(
             getDefaultSpecificationFile(file, specification)
           );
         } else {
-          if (!httpResponse.data.specification) {
-            setSelectedPrefilledResponse(httpResponse.data);
+          if (!unwrappedDocument.specification) {
+            setSelectedPrefilledResponse(unwrappedDocument);
           } else {
-            setSelectedResponse(httpResponse.data);
+            setSelectedResponse(unwrappedDocument);
           }
         }
       })
