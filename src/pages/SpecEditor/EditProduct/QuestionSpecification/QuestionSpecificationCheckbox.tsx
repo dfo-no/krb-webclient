@@ -50,14 +50,15 @@ const QuestionSpecificationCheckbox = (): ReactElement => {
         </Typography>
       </div>
       {awardCriteria && (
-        <div>
-          <VerticalTextCtrl
-            name={'question.config.discountNonPrefered'}
-            label={t('Score for non-preferred')}
-            placeholder={''}
-            type={'number'}
-          />
-        </div>
+        <VerticalTextCtrl
+          className={css.QuestionFlex__textCtrl}
+          name={'question.config.discountNonPrefered'}
+          label={t('Discount')}
+          placeholder={''}
+          type={'number'}
+          color={'var(--text-primary-color)'}
+          adornment={t('NOK')}
+        />
       )}
     </div>
   );

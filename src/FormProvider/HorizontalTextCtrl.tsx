@@ -14,6 +14,7 @@ interface IProps {
   size?: string;
   autoFocus?: boolean;
   adornment?: string;
+  color?: string;
 }
 
 const HorizontalTextCtrl = ({
@@ -25,6 +26,7 @@ const HorizontalTextCtrl = ({
   size = '',
   autoFocus,
   adornment,
+  color,
 }: IProps): React.ReactElement => {
   const {
     formState: { errors },
@@ -43,7 +45,7 @@ const HorizontalTextCtrl = ({
             {label && <span aria-label={'label'}>{label}</span>}
             <DFOInput
               {...field}
-              _color={'var(--text-primary-color)'}
+              _color={color}
               placeholder={placeholder}
               type={type}
               endAdornment={

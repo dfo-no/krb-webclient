@@ -18,12 +18,12 @@ export const DFOCheckbox = styled(Checkbox)(({ _color }: IProps) => ({
   '& .MuiSvgIcon-root': {
     width: '3.2rem',
     height: '3.2rem',
-    color: _color ? 'var(--text-primary-color)' : 'var(--primary-light-color)',
+    color: _color ? _color : 'var(--primary-light-color)',
     backgroundColor: 'transparent',
 
     '&.Mui-checked': {
       '&, & + .MuiFormControlLabel-label': {
-        color: _color,
+        color: _color ? _color : 'var(--primary-light-color)',
       },
     },
   },

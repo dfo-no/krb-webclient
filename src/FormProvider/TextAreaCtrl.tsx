@@ -11,6 +11,7 @@ interface IProps {
   placeholder?: string;
   type?: string;
   rows?: number;
+  color?: string;
 }
 
 const TextAreaCtrl = ({
@@ -19,6 +20,7 @@ const TextAreaCtrl = ({
   placeholder = '',
   type = 'text',
   rows = 3,
+  color,
 }: IProps): React.ReactElement => {
   const {
     formState: { errors },
@@ -41,6 +43,7 @@ const TextAreaCtrl = ({
             placeholder={placeholder}
             type={type}
             disableUnderline
+            _color={color}
           />
         )}
       />

@@ -179,7 +179,7 @@ class TextUtils {
     TextUtils.setChosenConfigs(chosenConfig, t('Score for confirmed'), '100');
     TextUtils.setChosenConfigs(
       chosenConfig,
-      t('Score for unconfirmed'),
+      t('Discount'),
       `${discountUnconfirmed}`
     );
     return chosenConfig;

@@ -2,20 +2,18 @@ import { Typography } from '@mui/material';
 import React, { ReactElement, useEffect, useState } from 'react';
 import { useFieldArray, useFormContext, useWatch } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
-import classnames from 'classnames';
-import DeleteIcon from '@mui/icons-material/Delete';
-import Button from '@mui/material/Button';
+import ClearIcon from '@mui/icons-material/Clear';
+import { Button, Location, Variant } from '@dfo-no/components.button';
+import { Symbols } from '@dfo-no/components.icon';
 
 import css from '../QuestionContent.module.scss';
 import HorizontalTextCtrl from '../../../../FormProvider/HorizontalTextCtrl';
 import UuidService from '../../../../Nexus/services/UuidService';
 import { IRequirementAnswer } from '../../../../Nexus/entities/IRequirementAnswer';
 import { ISliderQuestion } from '../../../../Nexus/entities/ISliderQuestion';
-import { FormIconButton } from '../../../../components/Form/FormIconButton';
-import theme from '../../../../theme';
 import ArrayUniqueErrorMessage from '../../../../Form/ArrayUniqueErrorMessage';
 import { DFOCheckbox } from '../../../../components/DFOCheckbox/DFOCheckbox';
+import ToolbarItem from '../../../../components/UI/Toolbar/ToolbarItem';
 
 interface IProps {
   item: ISliderQuestion;
@@ -44,7 +42,7 @@ const QuestionSpecificationSlider = ({ item }: IProps): ReactElement => {
   });
 
   useEffect(() => {
-    if (!fields.length) {
+    if (!fields.length && awardCriteria) {
       append({
         id: new UuidService().generateId(),
         value: 0,
@@ -56,10 +54,14 @@ const QuestionSpecificationSlider = ({ item }: IProps): ReactElement => {
         score: 100,
       });
     }
-  }, [fields, append]);
+  }, [fields, awardCriteria, append]);
 
   useEffect(() => {
-    if (useMinScore && (useMinValue !== useMinScore.value || !useMinScore.id)) {
+    if (
+      awardCriteria &&
+      useMinScore &&
+      (useMinValue !== useMinScore.value || !useMinScore.id)
+    ) {
       update(0, {
         id: useMinScore.id ?? new UuidService().generateId(),
         value: useMinValue,
@@ -67,24 +69,34 @@ const QuestionSpecificationSlider = ({ item }: IProps): ReactElement => {
       });
       setValue('question.answer.value', useMinValue);
     }
-  }, [useMinValue, useMinScore, update, setValue]);
+  }, [awardCriteria, useMinValue, useMinScore, update, setValue]);
 
   useEffect(() => {
-    if (useMaxScore && (useMaxValue !== useMaxScore.value || !useMaxScore.id)) {
+    if (
+      awardCriteria &&
+      useMaxScore &&
+      (useMaxValue !== useMaxScore.value || !useMaxScore.id)
+    ) {
       update(1, {
         id: useMaxScore.id ?? new UuidService().generateId(),
         value: useMaxValue,
         score: useMaxScore.score,
       });
     }
-  }, [useMaxValue, useMaxScore, update]);
+  }, [awardCriteria, useMaxValue, useMaxScore, update]);
+
+  useEffect(() => {
+    if (fields.length > 0) {
+      setAwardCriteria(true);
+    }
+  }, [fields]);
 
   const onCheckboxClick = (): void => {
     setAwardCriteria((prev) => !prev);
   };
 
   return (
-    <>
+    <div className={css.QuestionSliderContainer}>
       <div className={css.QuestionSlider}>
         <HorizontalTextCtrl
           className={css.QuestionSlider__textCtrl}
@@ -93,6 +105,7 @@ const QuestionSpecificationSlider = ({ item }: IProps): ReactElement => {
           placeholder={t('Minimum')}
           type={'number'}
           adornment={item.config.unit}
+          color={'var(--text-primary-color)'}
         />
         <HorizontalTextCtrl
           className={css.QuestionSlider__textCtrl}
@@ -100,6 +113,7 @@ const QuestionSpecificationSlider = ({ item }: IProps): ReactElement => {
           label={t('Increment')}
           placeholder={t('Increment')}
           type={'number'}
+          color={'var(--text-primary-color)'}
         />
         <HorizontalTextCtrl
           className={css.QuestionSlider__textCtrl}
@@ -108,6 +122,7 @@ const QuestionSpecificationSlider = ({ item }: IProps): ReactElement => {
           placeholder={t('Maximum')}
           type={'number'}
           adornment={item.config.unit}
+          color={'var(--text-primary-color)'}
         />
         <Typography variant={'sm'}>
           {t('Minimum')}: {item.config.min}
@@ -127,71 +142,81 @@ const QuestionSpecificationSlider = ({ item }: IProps): ReactElement => {
         </div>
       </div>
       {awardCriteria && (
-        <div className={css.QuestionGrid}>
-          <Typography
-            className={classnames(css.FullRow, css.TopMargin)}
-            variant={'smBold'}
-          >
-            {t('Evaluation')}
-          </Typography>
-          {fields.map((scoreValue, index) => {
-            return (
-              <div
-                key={scoreValue.id}
-                className={classnames(css.QuestionGrid, css.FullRow)}
-              >
-                {index < 2 ? (
-                  <Typography variant={'smBold'}>{scoreValue.value}</Typography>
-                ) : (
-                  <HorizontalTextCtrl
-                    name={`question.config.scoreValues[${index}].value`}
-                    placeholder={t('Value')}
-                    type={'number'}
-                  />
-                )}
-                <div className={css.Arrow}>
-                  <ArrowForwardIcon />
-                </div>
-                <HorizontalTextCtrl
-                  name={`question.config.scoreValues[${index}].score`}
-                  placeholder={t('Score')}
-                  type={'number'}
-                />
-                {index > 1 && (
-                  <div className={css.Delete}>
-                    <FormIconButton
-                      hoverColor={theme.palette.errorRed.main}
-                      onClick={() => remove(index)}
-                    >
-                      <DeleteIcon />
-                    </FormIconButton>
+        <div className={css.QuestionCriteria}>
+          <div className={css.QuestionCriteria__wrapper}>
+            <div className={css.QuestionCriteria__wrapper__textCtrlContainer}>
+              {fields.map((scoreValue, index) => {
+                return (
+                  <div
+                    key={scoreValue.id}
+                    className={css.QuestionCriteria__wrapper__textCtrl}
+                  >
+                    <HorizontalTextCtrl
+                      className={
+                        css.QuestionCriteria__wrapper__textCtrl__horizontalTextCtrl
+                      }
+                      label={
+                        index == 0 ? `${t('Quantity')} ${item.config.unit}` : ''
+                      }
+                      name={`question.config.scoreValues[${index}].value`}
+                      placeholder={t('Value')}
+                      type={'number'}
+                      adornment={item.config.unit}
+                      color={'var(--text-primary-color)'}
+                    />
+                    <HorizontalTextCtrl
+                      className={
+                        css.QuestionCriteria__wrapper__textCtrl__horizontalTextCtrl
+                      }
+                      label={index == 0 ? t('Discount') : ''}
+                      name={`question.config.scoreValues[${index}].score`}
+                      placeholder={t('Value')}
+                      type={'number'}
+                      adornment={t('NOK')}
+                      color={'var(--text-primary-color)'}
+                    />
+                    {index == 0 && (
+                      <Button
+                        className={
+                          css.QuestionCriteria__wrapper__textCtrl__action
+                        }
+                        icon={Symbols.Plus}
+                        iconLocation={Location.Before}
+                        variant={Variant.Ghost}
+                        onClick={() =>
+                          append({
+                            id: new UuidService().generateId(),
+                            value: useMinValue,
+                            score: 0,
+                          })
+                        }
+                      >
+                        {t('Add row')}
+                      </Button>
+                    )}
+                    {index > 0 && (
+                      <ToolbarItem
+                        secondaryText={t('Remove')}
+                        icon={<ClearIcon />}
+                        handleClick={() => remove(index)}
+                        fontSize={'small'}
+                      />
+                    )}
                   </div>
-                )}
+                );
+              })}
+              <div>
+                <ArrayUniqueErrorMessage
+                  errors={formState.errors}
+                  path={'question.config.scoreValues'}
+                  length={fields.length}
+                />
               </div>
-            );
-          })}
-          <div className={css.FullRow}>
-            <ArrayUniqueErrorMessage
-              errors={formState.errors}
-              path={'question.config.scoreValues'}
-              length={fields.length}
-            />
+            </div>
           </div>
-          <Button
-            variant="primary"
-            onClick={() =>
-              append({
-                id: new UuidService().generateId(),
-                value: useMinValue,
-                score: 0,
-              })
-            }
-          >
-            {t('Add new value score')}
-          </Button>
         </div>
       )}
-    </>
+    </div>
   );
 };
 

@@ -75,6 +75,13 @@ const ArrayValidator = (joi: Joi.Root) => ({
   },
 });
 
+const ArrayNotRequiredValidator = (joi: Joi.Root) => ({
+  type: 'validateNotRequiredArray',
+  args(value: Schema, type: Schema) {
+    return joi.array().items(type);
+  },
+});
+
 const UniqueArrayValidator = (joi: Joi.Root) => ({
   type: 'validateUniqueArray',
   args(value: Schema, type: Schema) {
@@ -98,6 +105,7 @@ const GeneralJoi = [
   EmptyDateValidator,
   OptionalDateValidator,
   ArrayValidator,
+  ArrayNotRequiredValidator,
   UniqueArrayValidator,
 ];
 

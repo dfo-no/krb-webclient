@@ -126,6 +126,7 @@ export default class QuestionService {
           config: {
             max: 10000,
             defaultDiscount: 1,
+            discountValues: [],
           },
           answer: {
             discount: 0,

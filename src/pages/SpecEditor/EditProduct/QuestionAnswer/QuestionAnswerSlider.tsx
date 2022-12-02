@@ -23,6 +23,7 @@ const QuestionAnswerSlider = ({ item }: IProps): ReactElement => {
         placeholder={sliderLabel}
         type={'number'}
         adornment={item.config.unit}
+        color={'var(--text-primary-color)'}
       />
     </div>
   );

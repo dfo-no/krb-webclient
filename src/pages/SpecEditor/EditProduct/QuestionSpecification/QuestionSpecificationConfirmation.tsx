@@ -4,9 +4,9 @@ import { useTranslation } from 'react-i18next';
 import { Typography } from '@mui/material';
 
 import css from '../QuestionContent.module.scss';
-import VerticalTextCtrl from '../../../../FormProvider/VerticalTextCtrl';
 import { IRequirementAnswer } from '../../../../Nexus/entities/IRequirementAnswer';
 import { DFOCheckbox } from '../../../../components/DFOCheckbox/DFOCheckbox';
+import VerticalTextCtrl from '../../../../FormProvider/VerticalTextCtrl';
 
 const QuestionSpecificationConfirmation = (): ReactElement => {
   const { t } = useTranslation();
@@ -45,10 +45,13 @@ const QuestionSpecificationConfirmation = (): ReactElement => {
       </div>
       {awardCriteria && (
         <VerticalTextCtrl
+          className={css.QuestionFlex__textCtrl}
           name={'question.config.discountUnconfirmed'}
-          label={t('Score for unconfirmed')}
+          label={t('Discount')}
           placeholder={''}
           type={'number'}
+          color={'var(--text-primary-color)'}
+          adornment={t('NOK')}
         />
       )}
     </div>
