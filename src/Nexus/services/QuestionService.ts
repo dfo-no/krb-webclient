@@ -15,12 +15,12 @@ export default class QuestionService {
           id: uuid,
           type: QuestionVariant.Q_CHECKBOX,
           config: {
-            pointsNonPrefered: 0,
-            defaultPoint: 1,
+            discountNonPrefered: 0,
+            defaultDiscount: 1,
             preferedAlternative: true,
           },
           answer: {
-            point: 0,
+            discount: 0,
             value: false,
           },
           sourceRel: null,
@@ -35,12 +35,12 @@ export default class QuestionService {
             optionalCodes: [],
             codelist: '',
             codes: [],
-            defaultPoint: 1,
+            defaultDiscount: 1,
             optionalCodeMinAmount: 0,
             optionalCodeMaxAmount: 1,
           },
           answer: {
-            point: 0,
+            discount: 0,
             codes: [],
           },
           sourceRel: null,
@@ -51,11 +51,11 @@ export default class QuestionService {
           id: uuid,
           type: QuestionVariant.Q_CONFIRMATION,
           config: {
-            pointsUnconfirmed: 0,
-            defaultPoint: 1,
+            discountUnconfirmed: 0,
+            defaultDiscount: 1,
           },
           answer: {
-            point: 0,
+            discount: 0,
             value: false,
           },
           sourceRel: null,
@@ -70,10 +70,10 @@ export default class QuestionService {
             uploadInSpec: false,
             allowMultipleFiles: false,
             fileEndings: [],
-            defaultPoint: 1,
+            defaultDiscount: 1,
           },
           answer: {
-            point: 0,
+            discount: 0,
             files: [''],
           },
           sourceRel: null,
@@ -89,11 +89,11 @@ export default class QuestionService {
             isPeriod: false,
             periodMin: 0,
             periodMax: 1,
-            defaultPoint: 1,
+            defaultDiscount: 1,
             dateScores: [],
           },
           answer: {
-            point: 0,
+            discount: 0,
             fromDate: null,
             toDate: null,
           },
@@ -109,11 +109,11 @@ export default class QuestionService {
             max: 1,
             step: 1,
             unit: '',
-            defaultPoint: 1,
+            defaultDiscount: 1,
             scoreValues: [],
           },
           answer: {
-            point: 0,
+            discount: 0,
             value: 0,
           },
           sourceRel: null,
@@ -125,11 +125,11 @@ export default class QuestionService {
           type: QuestionVariant.Q_TEXT,
           config: {
             max: 10000,
+            defaultDiscount: 1,
             discountValues: [],
-            defaultPoint: 1,
           },
           answer: {
-            point: 0,
+            discount: 0,
             text: '',
           },
           sourceRel: null,
@@ -145,11 +145,11 @@ export default class QuestionService {
             isPeriod: false,
             periodMinutes: 0,
             periodHours: 0,
-            defaultPoint: 1,
+            defaultDiscount: 1,
             timeScores: [],
           },
           answer: {
-            point: 0,
+            discount: 0,
             fromTime: null,
             toTime: null,
           },
@@ -161,16 +161,18 @@ export default class QuestionService {
     }
   };
 
-  calculatePoints = (question: QuestionType): number => {
+  calculateDiscount = (question: QuestionType): number => {
     switch (question.type) {
       case QuestionVariant.Q_CHECKBOX:
         const preferred = question.config.preferedAlternative;
         const answer = question.answer.value;
-        return preferred === answer ? 100 : question.config.pointsNonPrefered;
+        return preferred === answer ? 100 : question.config.discountNonPrefered;
       case QuestionVariant.Q_CODELIST:
         return Utils.findScoreFromCodes(question.answer.codes, question.config);
       case QuestionVariant.Q_CONFIRMATION:
-        return question.answer.value ? 100 : question.config.pointsUnconfirmed;
+        return question.answer.value
+          ? 100
+          : question.config.discountUnconfirmed;
       case QuestionVariant.Q_PERIOD_DATE:
         return Utils.findScoreFromDate(
           question.answer.fromDate,

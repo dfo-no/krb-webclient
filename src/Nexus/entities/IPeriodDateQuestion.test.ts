@@ -12,10 +12,10 @@ describe('IPeriodDateQuestion should validate', () => {
       answer: {
         fromDate: '2021-11-24T23:00:00.000Z',
         toDate: null,
-        point: 2,
+        discount: 2,
       },
       config: {
-        defaultPoint: 1,
+        defaultDiscount: 1,
         isPeriod: false,
         periodMax: 2,
         periodMin: 1,
@@ -38,10 +38,10 @@ describe('IPeriodDateQuestion should validate', () => {
       answer: {
         fromDate: '2021-11-24T23:00:00.000Z',
         toDate: null,
-        point: 2,
+        discount: 2,
       },
       config: {
-        defaultPoint: 1,
+        defaultDiscount: 1,
         isPeriod: false,
         periodMax: 2,
         periodMin: 1,
@@ -64,10 +64,10 @@ describe('IPeriodDateQuestion should validate', () => {
       answer: {
         fromDate: '2021-11-24T23:00:00.000Z',
         toDate: '2021-11-25T23:00:00.000Z',
-        point: 3,
+        discount: 3,
       },
       config: {
-        defaultPoint: 1,
+        defaultDiscount: 1,
         isPeriod: false,
         periodMax: 2,
         periodMin: 1,
@@ -90,10 +90,10 @@ describe('IPeriodDateQuestion should validate', () => {
       answer: {
         fromDate: '2021-11-24T23:00:00.000Z',
         toDate: '2021-11-23T23:00:00.000Z',
-        point: 3,
+        discount: 3,
       },
       config: {
-        defaultPoint: 1,
+        defaultDiscount: 1,
         isPeriod: true,
         periodMax: 2,
         periodMin: 1,

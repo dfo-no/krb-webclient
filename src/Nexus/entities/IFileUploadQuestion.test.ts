@@ -11,14 +11,14 @@ describe('IFileUploadQuestion', () => {
       type: QuestionVariant.Q_FILEUPLOAD,
       answer: {
         files: [''],
-        point: 2,
+        discount: 2,
       },
       config: {
         allowMultipleFiles: true,
         fileEndings: ['pdf', 'doc'],
         template: 'template string',
         uploadInSpec: true,
-        defaultPoint: 1,
+        defaultDiscount: 1,
       },
       sourceRel: null,
       sourceOriginal: null,

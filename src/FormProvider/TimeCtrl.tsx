@@ -74,6 +74,7 @@ const TimeCtrl = ({
               onChange={(e) => field.onChange(getDate(e))}
               renderInput={(params) => (
                 <DFOPickerField
+                  sx={{ backgroundColor: 'var(--white-color)' }}
                   _color={color}
                   {...params}
                   error={!!get(errors, name)}

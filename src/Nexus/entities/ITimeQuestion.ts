@@ -67,6 +67,6 @@ export const TimeQuestionAnswerSchema = TimeQuestionWorkbenchSchema.keys({
   answer: CustomJoi.object().keys({
     fromTime: CustomJoi.validateFromTime(),
     toTime: CustomJoi.validateToTime(),
-    point: CustomJoi.validateScore(),
+    discount: CustomJoi.validateScore(),
   }),
 });

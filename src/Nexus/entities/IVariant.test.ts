@@ -27,12 +27,12 @@ describe('IVariant', () => {
       id: 'ac0b5d89-0b6d-4882-b7c9-ff9f2bd2904e',
       answer: {
         text: 'foo',
-        point: 10,
+        discount: 10,
       },
       config: {
         max: 100,
+        defaultDiscount: 1,
         discountValues: [],
-        defaultPoint: 1,
       },
       sourceRel: null,
       sourceOriginal: null,
@@ -43,12 +43,12 @@ describe('IVariant', () => {
       id: 'bc0b5d89-0b6d-4882-b7c9-ff9f2bd2904e',
       answer: {
         text: 'foo',
-        point: 10,
+        discount: 10,
       },
       config: {
         max: 100,
+        defaultDiscount: 1,
         discountValues: [],
-        defaultPoint: 1,
       },
       sourceRel: null,
       sourceOriginal: null,
@@ -78,12 +78,12 @@ describe('IVariant', () => {
       id: 'ac0b5d89-0b6d-4882-b7c9-ff9f2bd2904e',
       answer: {
         text: 'foo',
-        point: 10,
+        discount: 10,
       },
       config: {
         max: 100,
+        defaultDiscount: 1,
         discountValues: [],
-        defaultPoint: 1,
       },
       sourceRel: null,
       sourceOriginal: null,
@@ -94,12 +94,12 @@ describe('IVariant', () => {
       id: 'bc0b5d89-0b6d-4882-b7c9-ff9f2bd2904e',
       answer: {
         text: 'foo',
-        point: 10,
+        discount: 10,
       },
       config: {
         max: 100,
+        defaultDiscount: 1,
         discountValues: [],
-        defaultPoint: 1,
       },
       sourceRel: null,
       sourceOriginal: null,
@@ -132,12 +132,12 @@ describe('IVariant', () => {
       id: 'ac0b5d89-0b6d-4882-b7c9-ff9f2bd2904e',
       answer: {
         text: 'foo',
-        point: 10,
+        discount: 10,
       },
       config: {
         max: -2,
+        defaultDiscount: 1,
         discountValues: [],
-        defaultPoint: 1,
       },
       sourceRel: null,
       sourceOriginal: null,
@@ -148,12 +148,12 @@ describe('IVariant', () => {
       id: 'bc0b5d89-0b6d-4882-b7c9-ff9f2bd2904e',
       answer: {
         text: 'foo',
-        point: 10,
+        discount: 10,
       },
       config: {
         max: -1,
+        defaultDiscount: 1,
         discountValues: [],
-        defaultPoint: 1,
       },
       sourceRel: null,
       sourceOriginal: null,
