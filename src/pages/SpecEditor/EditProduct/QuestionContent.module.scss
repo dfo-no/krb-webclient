@@ -63,38 +63,41 @@
     display: flex;
     gap: var(--normal-gap);
 
-    &__textCtrlContainer {
+    &__CtrlContainer {
       display: flex;
       flex-direction: column;
       gap: var(--tiny-gap);
     }
+  }
 
-    &__textCtrl {
+  &__Ctrl {
+    display: flex;
+    gap: var(--tiny-gap);
+    padding: var(--micro-gap);
+
+    &__inputCtrl {
       display: flex;
+      flex-direction: column;
       gap: var(--tiny-gap);
-      padding: var(--micro-gap);
+      max-width: 20rem;
+      font-weight: var(--font-weight-semibold);
+    }
 
-      &__horizontalTextCtrl {
-        max-width: 20rem;
-        font-weight: var(--font-weight-semibold);
-      }
+    &__action {
+      margin-bottom: 5rem;
+      font-weight: var(--font-weight-semibold);
+      font-size: var(--small-fontsize);
+      padding-top: 0;
+      padding-bottom: 0;
+    }
 
-      &__action {
-        margin-bottom: 5rem;
-        font-weight: var(--font-weight-semibold);
-        font-size: var(--small-fontsize);
-        padding-top: 0;
-        padding-bottom: 0;
-      }
+    &__delete {
+      font-weight: var(--font-weight-semibold);
+      font-size: var(--small-fontsize);
+    }
 
-      &__delete {
-        font-weight: var(--font-weight-semibold);
-        font-size: var(--small-fontsize);
-      }
-
-      &:nth-child(odd) {
-        background-color: var(--secondary-gray-color);
-      }
+    &:nth-child(odd) {
+      background-color: var(--secondary-gray-color);
     }
   }
 }
@@ -178,5 +181,9 @@
     display: flex;
     gap: var(--small-gap);
     max-width: 50%;
+  }
+
+  .CheckboxLabel {
+    margin-left: var(--tiny-gap);
   }
 }

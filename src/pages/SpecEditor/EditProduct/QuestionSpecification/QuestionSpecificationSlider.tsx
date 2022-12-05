@@ -144,17 +144,15 @@ const QuestionSpecificationSlider = ({ item }: IProps): ReactElement => {
       {awardCriteria && (
         <div className={css.QuestionCriteria}>
           <div className={css.QuestionCriteria__wrapper}>
-            <div className={css.QuestionCriteria__wrapper__textCtrlContainer}>
+            <div className={css.QuestionCriteria__wrapper__CtrlContainer}>
               {fields.map((scoreValue, index) => {
                 return (
                   <div
                     key={scoreValue.id}
-                    className={css.QuestionCriteria__wrapper__textCtrl}
+                    className={css.QuestionCriteria__Ctrl}
                   >
                     <HorizontalTextCtrl
-                      className={
-                        css.QuestionCriteria__wrapper__textCtrl__horizontalTextCtrl
-                      }
+                      className={css.QuestionCriteria__Ctrl__inputCtrl}
                       label={
                         index == 0 ? `${t('Quantity')} ${item.config.unit}` : ''
                       }
@@ -165,9 +163,7 @@ const QuestionSpecificationSlider = ({ item }: IProps): ReactElement => {
                       color={'var(--text-primary-color)'}
                     />
                     <HorizontalTextCtrl
-                      className={
-                        css.QuestionCriteria__wrapper__textCtrl__horizontalTextCtrl
-                      }
+                      className={css.QuestionCriteria__Ctrl__inputCtrl}
                       label={index == 0 ? t('Discount') : ''}
                       name={`question.config.scoreValues[${index}].score`}
                       placeholder={t('Value')}
@@ -177,9 +173,7 @@ const QuestionSpecificationSlider = ({ item }: IProps): ReactElement => {
                     />
                     {index == 0 && (
                       <Button
-                        className={
-                          css.QuestionCriteria__wrapper__textCtrl__action
-                        }
+                        className={css.QuestionCriteria__Ctrl__action}
                         icon={Symbols.Plus}
                         iconLocation={Location.Before}
                         variant={Variant.Ghost}

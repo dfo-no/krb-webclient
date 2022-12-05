@@ -135,6 +135,12 @@ export default function ProductRequirement({
     }
   };
 
+  const deleteRequirement = (): void => {
+    unsavedRequirement();
+    methods.reset({ ...defaultValues, id: '' });
+    setOriginal(null);
+  };
+
   const isVariant = () => requirement.variants.length > 1;
 
   const renderActiveVariant = (): ReactElement => {
@@ -209,7 +215,7 @@ export default function ProductRequirement({
               <ToolbarItem
                 secondaryText={t('Delete requirement')}
                 icon={<DeleteIcon />}
-                handleClick={() => unsavedRequirement()}
+                handleClick={() => deleteRequirement()}
                 fontWeight={'bold'}
                 fontSize={'small'}
               />
